@@ -125,12 +125,10 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
   RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
   assert(me);
 
-  RPackage *pkg, *newpkg;
-  RFilter *filter;
+  RPackage *pkg, *newpkg=NULL;
   const char *depType=NULL, *depPkg=NULL;
   char *recstr=NULL;
   bool ok=false;
-  int i;
 
   me->_lister->unregisterObserver(me);
   me->setInterfaceLocked(TRUE);
@@ -140,10 +138,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
   RPackageLister::pkgState state;
   me->_lister->saveState(state);
   me->_lister->saveUndoState(state);
-    
-  // we need to go into "all package" mode 
-  filter = me->_lister->getFilter();
-  me->_lister->setFilter();
+
 
   pkg = (RPackage*)g_object_get_data(G_OBJECT(me->_recList),"pkg");
   assert(pkg);
@@ -153,14 +148,11 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
     if(pkg->enumWDeps(depType, depPkg, ok)) {
       do {
 	if (!ok && !strcmp(depType,"Recommends")) {
-	  i = me->_lister->findPackage((char*)depPkg);
-	  if(i<0) {
-	    cerr << depPkg << _(" not found") << endl;
-	    continue;
-	  }
-	  newpkg=me->_lister->getElement(i);
-	  assert(newpkg);
-	  me->pkgInstallHelper(newpkg);
+	    newpkg = me->_lister->getElement(depPkg);
+	    if(newpkg)
+		me->pkgInstallHelper(newpkg);
+	    else
+		cerr << depPkg << _(" not found") << endl;
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }
@@ -169,14 +161,11 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
     if(pkg->enumWDeps(depType, depPkg, ok)) {
       do {
 	if (!ok && !strcmp(depType,"Suggests")) {
-	  i = me->_lister->findPackage((char*)depPkg);
-	  if(i<0) {
+	  newpkg=me->_lister->getElement(depPkg);
+	  if(newpkg)
+	      me->pkgInstallHelper(newpkg);
+	  else
 	    cerr << depPkg << _(" not found") << endl;
-	    continue;
-	  }
-	  newpkg=me->_lister->getElement(i);
-	  assert(newpkg);
-	  me->pkgInstallHelper(newpkg);
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }
@@ -208,17 +197,11 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	      li=g_list_next(li);
 	      continue;
 	  }
-	  i = me->_lister->findPackage((char*)depPkg);
-	  if(i<0) {
+	  newpkg=(RPackage*)me->_lister->getElement(depPkg);
+	  if(newpkg)
+	      me->pkgInstallHelper(newpkg);
+	  else
 	      cerr << depPkg << _(" not found") << endl;
-	      li=g_list_next(li);
-	      continue;
-	  }
-	  newpkg=(RPackage*)me->_lister->getElement(i);
-	  assert(newpkg);
-
-	  //cout << "installing " << newpkg->name() << endl;
-	  me->pkgInstallHelper(newpkg);
 	  li = g_list_next(li);
       }
 
@@ -231,7 +214,6 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
   }
 
   me->_blockActions = FALSE;
-  me->_lister->setFilter(filter);
   me->_lister->registerObserver(me);
   me->refreshTable(pkg);
   me->setInterfaceLocked(FALSE);
@@ -2422,6 +2404,18 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
   _blockActions = TRUE;
 
   //  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
+
+#if 0
+  // mvo: this is a hack, flat list is slow currently for huge amounts of pkgs
+  if(_lister->count() > 2000 && 
+     mode == RPackageLister::TREE_DISPLAY_FLAT) {
+      if(!_userDialog->confirm(_("More than 2000 pkg will be displayed. \n The list is rather slow to display them. Are you sure?")))
+	  {
+	      mode = RPackageLister::TREE_DISPLAY_SECTIONS;
+	      me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_SECTIONS;
+	  }
+  }
+#endif
 
   _lister->setTreeDisplayMode(mode);
   _lister->reapplyFilter();

@@ -291,7 +291,7 @@ void RPackageLister::unregisterFilter(RFilter *filter)
 	 I != _filterL.end(); I++) {
 	if (*I == filter) {
 	    _filterL.erase(I);
-	    break;
+	    return;
 	}
     }
 }

@@ -55,6 +55,8 @@ public:
 
    virtual bool read(Configuration &conf, string key) = 0;
    virtual bool write(ofstream &out, string pad) = 0;
+
+   RPackageFilter() {};
    RPackageFilter(RPackageLister *lister) : _lister(lister) {};
    virtual ~RPackageFilter() {};
 };
@@ -117,6 +119,7 @@ protected:
    vector<Pattern> _patterns;
    
 public:
+   RPatternPackageFilter(const RPatternPackageFilter &filter) {};
    RPatternPackageFilter(RPackageLister *lister)
 	   : RPackageFilter(lister) {};
    virtual ~RPatternPackageFilter();

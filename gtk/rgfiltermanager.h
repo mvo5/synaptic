@@ -86,7 +86,7 @@ class RGFilterManagerWindow : public RGWindow
 
    static void applyFilterAction(GtkWidget *self, void *data);
 
-   static void closeAction(GtkWidget *self, void *data);
+   static void cancelAction(GtkWidget *self, void *data);
    static void okAction(GtkWidget *self, void *data);
 
    static gint deleteEventAction(GtkWidget *widget, GdkEvent  *event,
@@ -163,6 +163,7 @@ class RGFilterManagerWindow : public RGWindow
 
    // the lister is always needed
    RPackageLister *_lister;  
+   vector<RFilter*> _saveFilters;
 
 public:
    RGFilterManagerWindow(RGWindow *win, RPackageLister *lister);

@@ -1,7 +1,7 @@
 /* rgfiltermanager.cc
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002,2003 Michael Vogt <mvo@debian.org>
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -58,7 +58,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
     glade_xml_signal_connect_data(_gladeXML, 
 				  "on_button_cancel_clicked",
-				  G_CALLBACK(closeAction),
+				  G_CALLBACK(cancelAction),
 				  this);
 
     glade_xml_signal_connect_data(_gladeXML, 
@@ -193,7 +193,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
     g_signal_connect (G_OBJECT(select), "changed",
 		      G_CALLBACK (patternSelectionChanged),
 		      this);
-
 
 }
 
@@ -352,7 +351,7 @@ gint RGFilterManagerWindow::deleteEventAction( GtkWidget *widget,
                    gpointer   data )
 {
   RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-  me->closeAction(widget, data);
+  me->cancelAction(widget, data);
 
   return(TRUE);
 }
@@ -367,7 +366,7 @@ void RGFilterManagerWindow::show()
     gtk_list_store_clear(_filterListStore);
     _lister->getFilterNames(filters);
 
-    for (unsigned int i=1; i<filters.size(); i++) {
+    for (unsigned int i=0; i<filters.size(); i++) {
 	RFilter *filter = _lister->findFilter(i);
 	gtk_list_store_append (_filterListStore, &iter);
 	gtk_list_store_set (_filterListStore, &iter,
@@ -381,6 +380,13 @@ void RGFilterManagerWindow::show()
     if(_selectedPath != NULL) {
 	gtk_tree_selection_select_path(selection, _selectedPath);
 	editFilterAction(_filterEntry, this);
+    }
+
+    // save filter list (do a real copy, needed for cancel)
+    _saveFilters.clear();
+    for(int i=0;i<_lister->nrOfFilters();i++) {
+	RFilter *filter = _lister->findFilter(i);
+	_saveFilters.push_back(new RFilter(*filter));
     }
 
     RGWindow::show();
@@ -401,7 +407,7 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
 
       me->_selectedPath = gtk_tree_model_get_path(model, &iter);
       gtk_tree_model_get (model, &iter, NAME_COLUMN, &filter, -1);
-      g_print ("You selected %s\n", filter);
+      //cout << "You selected" << filter << endl;
       g_free (filter);
       
       me->editFilterAction((GtkWidget*)me, (void*)me);
@@ -796,12 +802,26 @@ void RGFilterManagerWindow::close()
   RGWindow::close();
 }
 
-void RGFilterManagerWindow::closeAction(GtkWidget *self, void *data)
+void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
 {
-  RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-  //cout << "void RGFilterManagerWindow::closeAction()"<<endl;
+    unsigned int i;
+	
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    //cout << "void RGFilterManagerWindow::cancelAction()"<<endl;
 
-  me->close();
+    // unregister all old filters
+    int size = me->_lister->nrOfFilters();
+    for(i=0; i<size; i++) {
+	RFilter *filter = me->_lister->findFilter(0);
+	me->_lister->unregisterFilter(filter);
+	delete filter;
+    }
+
+    // restore the old filters
+    for(i=0;i<me->_saveFilters.size();i++) 
+	me->_lister->registerFilter(me->_saveFilters[i]);
+        
+    me->close();
 }
 
 void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)

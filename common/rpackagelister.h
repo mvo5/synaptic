@@ -175,6 +175,7 @@ public:
    void setFilter(RFilter *filter);
    inline RFilter *getFilter() { return _filter; };
    int getFilterIndex(RFilter *filter=NULL);
+   unsigned int nrOfFilters() { return _filterL.size(); };
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);

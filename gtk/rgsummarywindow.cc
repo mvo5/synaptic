@@ -349,10 +349,10 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
     /* this stuff goes to the msg_space string */
     if (sizeChange > 0) {
-	g_string_append_printf(msg_space,_("\n%s of extra space will be used"),
+	g_string_append_printf(msg_space,_("%s of extra space will be used"),
 			       SizeToStr(sizeChange).c_str());
     } else if (sizeChange < 0) {
-	g_string_append_printf(msg_space, _("\n%s of extra space will be freed"),
+	g_string_append_printf(msg_space, _("%s of extra space will be freed"),
 			       SizeToStr(sizeChange).c_str());
 	sizeChange = -sizeChange;
     }

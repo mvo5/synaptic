@@ -198,7 +198,7 @@ public:
 
    // change status
    void setKeep();
-   void setInstall(bool singlePkg=false);
+   void setInstall();
    void setRemove(bool purge = false); //XXX: purge for debian
 
    void setNotify(bool flag=true);

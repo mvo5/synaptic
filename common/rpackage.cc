@@ -802,14 +802,14 @@ void RPackage::setKeep()
 }
 
 
-// if it's only a single pkg, use a different problem resolver
-// we don't do this for large number of pkgs, because it's a performance
-// killer and will not work reliable (because of Protect()
-void RPackage::setInstall(bool singlePkg)
+void RPackage::setInstall()
 {
     _depcache->MarkInstall(*_package, true);
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
 
-    if(singlePkg) {
+    // if there is something wrong, try to fix it
+    if(!State.Install() || _depcache->BrokenCount() > 0) {
+	cout << "fixing pkgs" << endl;
 	pkgProblemResolver Fix(_depcache);
 	Fix.Clear(*_package);
 	Fix.Protect(*_package);

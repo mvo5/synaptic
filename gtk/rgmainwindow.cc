@@ -1642,8 +1642,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   vector<RPackage*> exclude;
   vector<RPackage*> instPkgs;
   RPackage *pkg = NULL;
-  int len = g_list_length(li);
-  //cout << "selection list len: " << len << endl;
+
   while(li != NULL) {
       //cout << "doPkgAction()/loop" << endl;
       gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
@@ -1668,7 +1667,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  // use a different fixing algorithm when dealing with more than 
 	  // 1 pkgs 
 	  // FIXME: yes, this constant sucks, who knows a better way?
-	  me->pkgInstallHelper(pkg, false, len == 1 ? true : false);
+	  me->pkgInstallHelper(pkg, false);
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      //cout << "auto installing recommended" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
@@ -3170,12 +3169,11 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
   me->setInterfaceLocked(FALSE);
 }
 
-void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, bool singlePkg)
+void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
     //cout << "pkgInstallHelper()/start" << endl;
     // do the work
-    //cout << "pkgInstallHelper(): " << singlePkg << endl;
-    pkg->setInstall(singlePkg);
+    pkg->setInstall();
 
     // check whether something broke
     if (fixBroken && !_lister->check()) {

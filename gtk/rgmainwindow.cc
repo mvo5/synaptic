@@ -1328,8 +1328,7 @@ GtkWidget *RGMainWindow::createViewMenu()
 GtkWidget *RGMainWindow::createFilterMenu()
 {
    GtkWidget *menu, *item;
-   vector<string> filters;
-   _lister->getFilterNames(filters);
+   vector<string> filters = _lister->getFilterNames();
 
    menu = gtk_menu_new();
 

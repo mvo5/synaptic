@@ -191,7 +191,7 @@ class RPackageLister {
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);
-   void getFilterNames(vector<string> &filters);
+   vector<string> getFilterNames();
    inline RFilter *findFilter(unsigned int index) {
       if (index > _filterL.size())
          return NULL;
@@ -307,4 +307,4 @@ class RPackageLister {
 
 #endif
 
-// vim:sts=3:sw=3
+// vim:ts=3:sw=3:et

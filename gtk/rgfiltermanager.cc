@@ -606,12 +606,10 @@ gint RGFilterManagerWindow::deleteEventAction(GtkWidget *widget,
 
 void RGFilterManagerWindow::show()
 {
-   vector<string> filters;
+   vector<string> filters = _lister->getFilterNames();
    GtkTreeIter iter;
-   //cout << "RGFilterManagerWindow::show()" << endl;
 
    gtk_list_store_clear(_filterListStore);
-   _lister->getFilterNames(filters);
 
    for (unsigned int i = 0; i < filters.size(); i++) {
       RFilter *filter = _lister->findFilter(i);

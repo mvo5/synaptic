@@ -717,18 +717,13 @@ int RPackageLister::getFilterIndex(RFilter *filter)
    return -1;
 }
 
-
-void RPackageLister::getFilterNames(vector<string> &filters)
+vector<string> RPackageLister::getFilterNames()
 {
-   filters.erase(filters.begin(), filters.end());
-
-   for (vector<RFilter *>::const_iterator iter = _filterL.begin();
-        iter != _filterL.end(); iter++) {
-      filters.push_back((*iter)->getName());
-   }
-
+   vector<string> filters;
+   for (int i = 0; i != _filterL.size(); i++)
+      filters.push_back(_filterL[i]->getName());
+   return filters;
 }
-
 
 bool RPackageLister::applyFilters(RPackage *package)
 {

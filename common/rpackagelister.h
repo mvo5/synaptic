@@ -196,7 +196,7 @@ public:
 			vector<RPackage*> &toInstall, 
 			vector<RPackage*> &toUpgrade, 
 			vector<RPackage*> &toRemove,
-			RPackage *exclude = NULL);
+			vector<RPackage*> &exclude);
 
    bool openCache(bool reset);
 

@@ -516,18 +516,33 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
 
 RPackage *RGMainWindow::selectedPackage()
 {
-  //cout << "RGMainWindow::selectedPackage()" << endl;
-  GtkTreeSelection *selection;
-  GtkTreeIter iter;
-  RPackage *pkg = NULL;
+    //cout << "RGMainWindow::selectedPackage()" << endl;
+    GtkTreeSelection *selection;
+    GtkTreeIter iter;
+    RPackage *pkg = NULL;
+    GList *li = NULL;
+    GList *list;
 
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
-  if(!gtk_tree_selection_get_selected(selection,
-				      (GtkTreeModel**)(&_pkgTree), &iter))
-    return NULL;
-  gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &iter, 
-		     PKG_COLUMN, &pkg, -1);
-  return pkg;
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+    list = li = gtk_tree_selection_get_selected_rows(selection,
+					      (GtkTreeModel**)(&_pkgTree));
+    // list is empty
+    if(li == NULL) 
+	return NULL;
+  
+    // we are only interessted in the last element
+    li = g_list_last(li);
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(_pkgTree), &iter, 
+			    (GtkTreePath*)(li->data));
+
+    gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &iter, 
+		       PKG_COLUMN, &pkg, -1);
+  
+    // free the list
+    g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+    g_list_free (list);
+
+    return pkg;
 }
 
 
@@ -799,11 +814,19 @@ GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections)
     while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
   }
 
-  GtkTreeSelection *select;
-  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
-  gtk_tree_selection_get_selected (select,
-				   (GtkTreeModel**) &_pkgTree,
-				   &parentIter);
+  GtkTreeSelection *selection;
+  GList *li;
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+  li = gtk_tree_selection_get_selected_rows(selection,
+					    (GtkTreeModel**)(&_pkgTree));
+  // list is empty
+  if(li == NULL) 
+      return parentIter;
+  // we are only interessted in the last element
+  li = g_list_last(li);
+  gtk_tree_model_get_iter(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+			  (GtkTreePath*)(li->data));
+
   return parentIter;
 }
 
@@ -857,6 +880,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 			  GTK_TREE_MODEL(_pkgTree));
   // always set search column after set_model
   gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+
   restoreTableState(expanded_sections, selectedRow);
 
   // not implemented yet
@@ -1276,14 +1300,15 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 
     if(me->_blockActions)
       return;
-    
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
-    if (!gtk_tree_selection_get_selected(selection,
-					 (GtkTreeModel**)(&me->_pkgTree), 
-					 &iter)) {
-      return;
-    }
 
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
+    GList *li, *list;
+    list = li = gtk_tree_selection_get_selected_rows(selection,
+					     (GtkTreeModel**)(&me->_pkgTree));
+    
+    if(li == NULL)
+	return;
+    
     if (me->_unsavedChanges == true && 
 	me->_userDialog->confirm(
 			    _("There are unsaved changes.\n"
@@ -1296,17 +1321,29 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 	return;
       }
 
-    gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
-		       PKG_COLUMN, &pkg, -1);
-    if (pkg == NULL)
-      return;    
-
-    pkg->setPinned(active);
-    _roptions->setPackageLock(pkg->name(), active);
-
     me->setInterfaceLocked(TRUE);
     me->_lister->openCache(TRUE);
+
+    while(li != NULL) {
+	gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+				(GtkTreePath*)(li->data));
+	gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+			   PKG_COLUMN, &pkg, -1);
+	if (pkg == NULL)
+	    continue;    
+
+	pkg->setPinned(active);
+	_roptions->setPackageLock(pkg->name(), active);
+	li=g_list_next(li);
+    }
+
+    // refresh
     me->refreshTable(pkg);
+
+    // free the list
+    g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+    g_list_free (list);
+
     me->setInterfaceLocked(FALSE);
 }
 
@@ -1341,39 +1378,86 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 {
   GtkTreeSelection *selection;
   GtkTreeIter iter;
+  GList *li, *list;
   RPackage *pkg = NULL;
-
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
-  gtk_tree_selection_get_selected (selection, 
-				   (GtkTreeModel**)(&me->_pkgTree), 
-				   &iter);
-  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
-		     PKG_COLUMN, &pkg, -1);
-  if (pkg == NULL)
-    return;
+  vector<RPackage*> exclude;
 
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
 
-  /* do the dirty deed */
-    switch (action) {
-    case PKG_KEEP: // keep
-      me->pkgKeepHelper(pkg);
-      break;
-    case PKG_INSTALL: // install
-      me->pkgInstallHelper(pkg);
-      break;
-    case PKG_DELETE: // delete
-      me->pkgRemoveHelper(pkg);
-      break;
-    case PKG_PURGE:  // purge
-      me->pkgRemoveHelper(pkg, true);
-      break;
-    default:
-      cout <<"uh oh!!!!!!!!!"<<endl;
-      break;
-    }
+  // get list of selected pkgs
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
+  list = li = gtk_tree_selection_get_selected_rows(selection,
+					    (GtkTreeModel**)(&me->_pkgTree));
 
+  // save pkg state
+  RPackageLister::pkgState state;
+  bool ask = _config->FindB("Synaptic::AskRelated", true);
+
+  if (ask) {
+    me->_lister->saveState(state);
+    me->_lister->unregisterObserver(me);
+  }
+
+  // do the work
+  while(li != NULL) {
+      gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+			      (GtkTreePath*)(li->data));
+      gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+			 PKG_COLUMN, &pkg, -1);
+      if (pkg == NULL)
+	  continue;
+
+      // needed for the stateChange 
+      exclude.push_back(pkg);
+      /* do the dirty deed */
+      switch (action) {
+      case PKG_KEEP: // keep
+	  me->pkgKeepHelper(pkg);
+	  break;
+      case PKG_INSTALL: // install
+	  me->pkgInstallHelper(pkg);
+	  break;
+      case PKG_DELETE: // delete
+	  me->pkgRemoveHelper(pkg);
+	  break;
+      case PKG_PURGE:  // purge
+	  me->pkgRemoveHelper(pkg, true);
+	  break;
+      default:
+	  cout <<"uh oh!!!!!!!!!"<<endl;
+	  break;
+      }
+      li=g_list_next(li);
+  }
+
+  vector<RPackage*> kept;
+  vector<RPackage*> toInstall; 
+  vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toRemove;
+
+  // ask if the user really want this changes
+  if (ask && me->_lister->getStateChanges(state, kept, toInstall,
+					  toUpgrade, toRemove, exclude)) {
+      RGChangesWindow *chng;
+      // show a summary of what's gonna happen
+      chng = new RGChangesWindow(me);
+      if (!chng->showAndConfirm(me->_lister, kept, toInstall,
+      			  toUpgrade, toRemove)) {
+          // canceled operation
+          me->_lister->restoreState(state);
+      }
+      delete chng;
+  }
+
+  if (ask) {
+      me->_lister->registerObserver(me);
+  }
+  me->refreshTable(pkg);
+
+  // free the list
+  g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+  g_list_free (list);
 
   me->_blockActions = FALSE;
   me->setInterfaceLocked(FALSE);
@@ -1953,7 +2037,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
     GtkTreeSelection *selection;
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
-    gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE/*MULTIPLE*/);
+    gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
 
     GtkCellRenderer *renderer; 
     GtkTreeViewColumn *column; 
@@ -2197,14 +2281,6 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
-  RPackageLister::pkgState state;
-  bool ask = _config->FindB("Synaptic::AskRelated", true);
-
-  if (ask) {
-    _lister->saveState(state);
-    _lister->unregisterObserver(this);
-  }
-
   pkg->setInstall();
 
   // check whether something broke
@@ -2212,28 +2288,7 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
       _lister->fixBroken();
   }
 
-  vector<RPackage*> kept;
-  vector<RPackage*> toInstall; 
-  vector<RPackage*> toUpgrade; 
-  vector<RPackage*> toRemove;
 
-  if (ask && _lister->getStateChanges(state, kept, toInstall,
-				      toUpgrade, toRemove, pkg)) {
-      RGChangesWindow *chng;
-      // show a summary of what's gonna happen
-      chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, kept, toInstall,
-      			  toUpgrade, toRemove)) {
-          // canceled operation
-          _lister->restoreState(state);
-      }
-      delete chng;
-  }
-
-  if (ask) {
-      _lister->registerObserver(this);
-  }
-  refreshTable(pkg);
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
@@ -2250,93 +2305,43 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
     } 
   }
 
-  RPackageLister::pkgState state;
-  bool ask = _config->FindB("Synaptic::AskRelated", true);
-
-  if (ask) {
-    _lister->saveState(state);
-    _lister->unregisterObserver(this);
-  }
-
   pkg->setRemove(purge);
-
-  vector<RPackage*> kept;
-  vector<RPackage*> toInstall; 
-  vector<RPackage*> toUpgrade; 
-  vector<RPackage*> toRemove;
-
-  if (ask && _lister->getStateChanges(state, kept, toInstall,
-				      toUpgrade, toRemove, pkg)) {
-      RGChangesWindow *chng;
-      // show a summary of what's gonna happen
-      chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, kept, toInstall,
-      			  toUpgrade, toRemove)) {
-          // canceled operation
-          _lister->restoreState(state);
-      }
-      delete chng;
-  }
-
-  if (ask) {
-      _lister->registerObserver(this);
-  }
-  refreshTable(pkg);
 }
 
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)
 {
-  RPackageLister::pkgState state;
-  bool ask = _config->FindB("Synaptic::AskRelated", true);
-
-  if (ask) {
-    _lister->saveState(state);
-    _lister->unregisterObserver(this);
-  }
-
   pkg->setKeep();
-
-  vector<RPackage*> kept;
-  vector<RPackage*> toInstall; 
-  vector<RPackage*> toUpgrade; 
-  vector<RPackage*> toRemove;
-
-  if (ask && _lister->getStateChanges(state, kept, toInstall,
-				      toUpgrade, toRemove, pkg)) {
-      RGChangesWindow *chng;
-      // show a summary of what's gonna happen
-      chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, kept, toInstall,
-      			  toUpgrade, toRemove)) {
-          // canceled operation
-          _lister->restoreState(state);
-      }
-      delete chng;
-  }
-
-  if (ask) {
-      _lister->registerObserver(this);
-  }
-  refreshTable(pkg);
 }
+
 
 void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 { 
-  RGMainWindow *me = (RGMainWindow*)data;
-  GtkTreeIter iter;
-  RPackage *pkg;
-  
-  if (!gtk_tree_selection_get_selected(selection,
-				       (GtkTreeModel**)(&me->_pkgTree), 
-				       &iter)) {
-    return;
-  }
-  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
-		     PKG_COLUMN, &pkg, -1);
-  if (pkg == NULL)
-    return;    
+    RGMainWindow *me = (RGMainWindow*)data;
+    GtkTreeIter iter;
+    RPackage *pkg;
+    GList *li, *list;
 
-  me->updatePackageInfo(pkg);
+    list = li = gtk_tree_selection_get_selected_rows(selection,
+					    (GtkTreeModel**)(&me->_pkgTree));
+    // list is empty
+    if(li == NULL) 
+	return;
+  
+    // we are only interessted in the last element
+    li = g_list_last(li);
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+			    (GtkTreePath*)(li->data));
+
+    gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+		       PKG_COLUMN, &pkg, -1);
+    if (pkg == NULL)
+	return;    
+
+    // free the list
+    g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+    g_list_free (list);
+
+    me->updatePackageInfo(pkg);
 }
 
 void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
@@ -2386,21 +2391,25 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   if( pstatus == RPackage::SNotInstalled) {
     if (mstatus == RPackage::MKeep) {
       // not installed -> installed
-      me->pkgInstallHelper(pkg);
+	//me->pkgInstallHelper(pkg);
+	me->doPkgAction(me, PKG_INSTALL);
     }
     if (mstatus == RPackage::MInstall) 
-      // marked install -> marked don't install
-      me->pkgRemoveHelper(pkg);
+	// marked install -> marked don't install
+	//me->pkgRemoveHelper(pkg);
+	me->doPkgAction(me, PKG_DELETE);
   }
   
   if( pstatus == RPackage::SInstalledOutdated ) {
     if ( mstatus == RPackage::MKeep ) {
-      // keep -> upgrade
-      me->pkgInstallHelper(pkg);
+	// keep -> upgrade
+	//me->pkgInstallHelper(pkg);
+	me->doPkgAction(me, PKG_INSTALL);
     }
     if( mstatus == RPackage::MUpgrade) {
-      // upgrade -> keep
-      me->pkgKeepHelper(pkg);
+	// upgrade -> keep
+	//me->pkgKeepHelper(pkg);
+	me->doPkgAction(me, PKG_KEEP);
     }
   }
   // end double-click

@@ -181,6 +181,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    void updateDynPackageInfo(RPackage *pkg);
    
    RPackage *selectedPackage();
+
    void refreshTable(RPackage *selectedPkg);
    void restoreTableState(vector<string>& expanded_sections, GtkTreeIter it);
    GtkTreeIter saveTableState(vector<string>& expanded_sections);
@@ -207,7 +208,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void onFlatList(GtkWidget *self, void *data);   
 
    static void onAddCDROM(GtkWidget *self, void *data);
-
+   
    static void showSearchPanel(GtkWidget *self, void *data);
    static void showAboutPanel(GtkWidget *self, void *data);
    static void showFilterWindow(GtkWidget *self, void *data);

@@ -64,13 +64,24 @@ This operation requires the following changes.
 	  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
 
 	  <child>
-	    <widget class="GtkTreeView" id="tree">
-	      <property name="border_width">5</property>
+	    <widget class="GtkScrolledWindow" id="scrolledwindow1">
 	      <property name="visible">True</property>
-	      <property name="headers_visible">False</property>
-	      <property name="rules_hint">False</property>
-	      <property name="reorderable">False</property>
-	      <property name="enable_search">False</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	      <child>
+		<widget class="GtkTreeView" id="tree">
+		  <property name="border_width">5</property>
+		  <property name="visible">True</property>
+		  <property name="headers_visible">False</property>
+		  <property name="rules_hint">False</property>
+		  <property name="reorderable">False</property>
+		  <property name="enable_search">False</property>
+		</widget>
+	      </child>
 	    </widget>
 	  </child>
 	</widget>

@@ -854,13 +854,14 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
 				     vector<RPackage*> &toRemove,
-				     RPackage *exclude)
+				     vector<RPackage*> &exclude)
 {
     bool changed = false;
 
     for (unsigned i = 0; i < _count; i++) {
 	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
-	if (state[i] != status && _packages[i] != exclude) {
+	if (state[i] != status && 
+	    find(exclude.begin(),exclude.end(),_packages[i])==exclude.end()) {
 	    switch (status) {
 		case RPackage::MInstall:
 		    toInstall.push_back(_packages[i]);

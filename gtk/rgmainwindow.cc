@@ -1589,7 +1589,13 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 	cerr << "installFromVersion() failed" << endl;
 	return;
     }
-    if(pkg->installedVersion() == string(verInfo)) {
+
+    string instVer;
+    if(pkg->installedVersion() == NULL)
+	instVer = "";
+    else
+	instVer = pkg->installedVersion();
+    if(instVer == string(verInfo)) {
 	pkg->unsetVersion();
 	me->doPkgAction(me,PKG_KEEP);
     } else {

@@ -159,7 +159,10 @@ AC_ARG_WITH(apt-authentication,
 
 AC_ARG_WITH(nice-dpkg-status, 
 	[--with-nice-dpkg-status build with support for dpkg progress bar],
+	[pkg_modules="vte >= 0.10.11"
+	PKG_CHECK_MODULES(VTE, [$pkg_modules])
         AC_DEFINE(WITH_DPKG_STATUSFD, 1, [build with dpkg progress bar] )
+	]
 )
 
 

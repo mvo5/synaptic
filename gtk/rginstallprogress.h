@@ -27,6 +27,7 @@
 
 #include "rinstallprogress.h"
 #include "rggladewindow.h"
+#include "rgslideshow.h"
 
 class RGMainWindow;
 
@@ -60,11 +61,15 @@ class RGInstallProgress : public RInstallProgress, public RGGladeWindow {
    GtkWidget *_pbar;
    GtkWidget *_pbarTotal;
 
+   GtkWidget *_image;
+
    bool _startCounting;
 
    map<string,string> _summaryMap;
 
    RGInstallProgressMsgs _msgs;
+
+   RGSlideShow *_ss;
 
 protected:
    virtual void startUpdate();
@@ -75,6 +80,7 @@ protected:
 
 public:
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
+   ~RGInstallProgress();
 };
 
 #endif

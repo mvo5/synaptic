@@ -77,6 +77,8 @@ synaptic_SOURCES= \
 	rgzvtinstallprogress.h\
 	rginstallprogress.cc\
 	rginstallprogress.h\
+	rgslideshow.cc\
+	rgslideshow.h\
 	rgcdscanner.cc\
 	rgcdscanner.h\
 	rgmainwindow.cc\

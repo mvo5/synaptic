@@ -3,7 +3,7 @@
  *  
  */
 
-#include"sections_trans.h"
+#include "sections_trans.h"
 
 char *transtable[][2] = {
    {"admin",_("System Administration")},

@@ -188,6 +188,11 @@ void RGInstallProgress::updateInterface()
 		    val = ((float)_donePackages)/_numPackages;
 		    gtk_progress_bar_set_fraction(
 				    GTK_PROGRESS_BAR(_pbarTotal), val);
+		    _donePackagesTotal += 1;
+		    if (_ss) {
+			_ss->setTotalSteps(_numPackagesTotal);
+			_ss->step();
+		    }
 		}
 	    } else {
 		sscanf(line + 3, "%f", &val);
@@ -270,6 +275,16 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
     _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
     _pbar = glade_xml_get_widget(_gladeXML, "progress_package");
     _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
+    _image = glade_xml_get_widget(_gladeXML, "image");
+
+    string ssDir = _config->Find("Synaptic::SlideShow", "");
+    if (!ssDir.empty()) {
+	_ss = new RGSlideShow(GTK_IMAGE(_image), ssDir);
+	_ss->refresh();
+	gtk_widget_show(_image);
+    } else {
+	_ss = NULL;
+    }
 
     PangoFontDescription *bfont;
     PangoFontDescription *font;
@@ -285,6 +300,11 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
     gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
     gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
     gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
+}
+
+RGInstallProgress::~RGInstallProgress()
+{
+    delete _ss;
 }
 
 bool GeometryParser::ParseSize(char **size)

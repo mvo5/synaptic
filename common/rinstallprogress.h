@@ -27,7 +27,6 @@
 #define _RINSTALLPROGRESS_H_
 
 #include "config.h"
-#include <pthread.h>
 #include <apt-pkg/packagemanager.h>
 
 
@@ -39,11 +38,12 @@ protected:
    int _stderr;
    int _childin;
    
-   int _thread_id;
-   pthread_t _thread;
+   int _child_id;
 
    int _donePackages;
    int _numPackages;
+   int _donePackagesTotal;
+   int _numPackagesTotal;
 
    virtual void startUpdate() {};
    virtual void updateInterface() {};
@@ -51,8 +51,11 @@ protected:
 
 public:
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0);
+		   				int numPackages = 0,
+						int numPackagesTotal = 0);
 
+
+   RInstallProgress() : _donePackagesTotal(0), _numPackagesTotal(0) {};
 };
 
 

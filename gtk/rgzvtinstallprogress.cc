@@ -213,15 +213,17 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 
 
 pkgPackageManager::OrderResult 
-RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
+RGZvtInstallProgress::start(pkgPackageManager *pm,
+			    int numPackages,
+			    int numPackagesTotal)
 {
   //cout << "RGZvtInstallProgress::start()" << endl;
 
   void *dummy;
   int open_max, ret;
   // this isn't really a id, more a flag
-  _thread_id = 0;
-  _thread_id = pthread_create(&_thread, NULL, loop, this);
+  _child_id = 0;
+  _child_id = pthread_create(&_thread, NULL, loop, this);
 
   // now fork 
 #ifdef HAVE_ZVT
@@ -265,7 +267,7 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
 #endif
     break;
   }
-  _thread_id = -1;
+  _child_id = -1;
   pthread_join(_thread, &dummy);
 
   return res;

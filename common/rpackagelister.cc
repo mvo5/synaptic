@@ -776,7 +776,11 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	{
 	    string sec = pkg->section();
 	    if(itermap.find(sec) == itermap.end()) {
+#ifndef HAVE_RPM
 		string str = trans_section(sec);
+#else
+		string str = sec;
+#endif
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
 		itermap[sec] = it;
@@ -1466,6 +1470,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 {
     FileFd lock;
     int numPackages = 0;
+    int numPackagesTotal = 0;
     bool Ret = true;
     
     _updating = true;
@@ -1506,6 +1511,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	for (pkgAcquire::ItemIterator I = fetcher.ItemsBegin();
 	     I != fetcher.ItemsEnd(); 
 	     I++) {
+
+	    numPackagesTotal += 1;
+
 	    if ((*I)->Status == pkgAcquire::Item::StatDone &&
 		(*I)->Complete)
 	    {
@@ -1564,7 +1572,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	    
 	    _cache->releaseLock();
 
-	    pkgPackageManager::OrderResult Res = iprog->start(_packMan, numPackages);
+	    pkgPackageManager::OrderResult Res = iprog->start(_packMan, numPackages, numPackagesTotal);
 	    if (Res == pkgPackageManager::Failed || _error->PendingError()) {
 		if (Transient == false)
 		    goto gave_wood;

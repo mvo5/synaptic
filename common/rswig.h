@@ -3,6 +3,7 @@
 #include<apt-pkg/configuration.h>
 #include<apt-pkg/init.h>
 #include<apt-pkg/progress.h>
+#include<apt-pkg/acquire.h>
 #include "rinstallprogress.h"
 
 bool RInitSystem();

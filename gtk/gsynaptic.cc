@@ -90,6 +90,8 @@ CommandLine::Args Args[] = {
    , {
    0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
    , {
+   0, "hide-main-window", "Volatile::HideMainwindow", 0}
+   , {
    0, "task-window", "Volatile::TaskWindow", 0}
    , {
    'o', "option", 0, CommandLine::ArbItem}
@@ -247,7 +249,9 @@ int main(int argc, char **argv)
 #else
    mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif
-   mainWindow->show();
+   
+   if(_config->FindB("Volatile::HideMainwindow", false))
+      mainWindow->hide();
 
    RGFlushInterface();
 

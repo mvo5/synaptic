@@ -112,16 +112,6 @@ void cbGetSelectedRows(GtkTreeModel *model,
 #endif
 
 
-void RGMainWindow::showRepositoriesWindow()
-{
-   cbShowSourcesWindow(NULL, (void *)this);
-}
-
-void RGMainWindow::proceed()
-{
-   cbProceedClicked(NULL, (void *)this);
-}
-
 
 void RGMainWindow::changeView(int view, bool sethistory, string subView)
 {
@@ -1436,11 +1426,12 @@ bool RGMainWindow::restoreState()
       g_free(msg);
    }
 
-   int viewNr = _config->FindI("Synaptic::ViewMode", 0);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), viewNr);
-   _lister->setView(viewNr);
-   refreshSubViewList();
-
+   if(!_config->FindB("Volatile::Upgrade-Mode",false)) {
+      int viewNr = _config->FindI("Synaptic::ViewMode", 0);
+      gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), viewNr);
+      _lister->setView(viewNr);
+      refreshSubViewList();
+   }
    setStatusText();
    return true;
 }
@@ -2369,6 +2360,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    // check if we have saved upgrade type
    UpgradeType upgrade =
       (UpgradeType) _config->FindI("Synaptic::UpgradeType", UPGRADE_ASK);
+
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants
       GladeXML *gladeXML;

@@ -77,6 +77,8 @@ CommandLine::Args Args[] = {
    , {
    0, "non-interactive", "Volatile::Non-Interactive", 0}
    , {
+   0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
+   , {
    'o', "option", 0, CommandLine::ArbItem}
    , {
    0, 0, 0, 0}
@@ -180,7 +182,7 @@ int main(int argc, char **argv)
       mainWindow->showErrors();
 
    if (_config->FindB("Volatile::startInRepositories", false)) {
-      mainWindow->showRepositoriesWindow();
+      mainWindow->cbShowSourcesWindow(NULL, mainWindow);
    }
 
    if (_config->FindB("Volatile::Set-Selections", false) == true) {
@@ -194,8 +196,14 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(false);
 
+   if(_config->FindB("Volatile::Upgrade-Mode",false)) {
+      mainWindow->cbUpdateClicked(NULL, mainWindow);
+      mainWindow->cbUpgradeClicked(NULL, mainWindow);
+      mainWindow->changeView(3,false, _("Queued Changes"));
+   }
+
    if (_config->FindB("Volatile::Non-Interactive", false)) {
-      mainWindow->proceed();
+      mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       // show welcome dialog
       if (_config->FindB("Synaptic::showWelcomeDialog", true)) {

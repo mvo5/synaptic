@@ -1065,6 +1065,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    FileFd Lock;
    if (_config->FindB("Debug::NoLocking", false) == false) {
       Lock.Fd(GetLock(_config->FindDir("Dir::State::Lists") + "lock"));
+      //cout << "lock in : " << _config->FindDir("Dir::State::Lists") << endl;
       if (_error->PendingError() == true)
          return _error->Error(_("Unable to lock the list directory"));
    }
@@ -1294,6 +1295,7 @@ bool RPackageLister::lockPackageCache(FileFd &lock)
 
    if (_config->FindB("Debug::NoLocking", false) == false) {
       lock.Fd(GetLock(_config->FindDir("Dir::Cache::Archives") + "lock"));
+      //cout << "lock is: " << _config->FindDir("Dir::Cache::Archives") << endl;
       if (_error->PendingError() == true)
          return _error->Error(_("Unable to lock the download directory"));
    }

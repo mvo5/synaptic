@@ -28,6 +28,7 @@
 
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/sourcelist.h>
+#include <apt-pkg/pkgsystem.h>
 
 class OpProgress;
 

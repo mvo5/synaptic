@@ -72,12 +72,16 @@ void RGPreferencesWindow::applyProxySettings()
       ftpPort = _config->FindI("Synaptic::ftpProxyPort", 3128);
       noProxy = _config->Find("Synaptic::noProxy", "");
 
-      s = g_strdup_printf("http://%s:%i", http.c_str(), httpPort);
-      _config->Set("Acquire::http::Proxy", s);
-      g_free(s);
-      s = g_strdup_printf("http://%s:%i", ftp.c_str(), ftpPort);
-      _config->Set("Acquire::ftp::Proxy", s);
-      g_free(s);
+      if(!http.empty()) {
+	 s = g_strdup_printf("http://%s:%i", http.c_str(), httpPort);
+	 _config->Set("Acquire::http::Proxy", s);
+	 g_free(s);
+      }
+      if(!ftp.empty()) {
+	 s = g_strdup_printf("http://%s:%i", ftp.c_str(), ftpPort);
+	 _config->Set("Acquire::ftp::Proxy", s);
+	 g_free(s);
+      }
       // set the no-proxies
       gchar **noProxyArray = g_strsplit(noProxy.c_str(), ",", 0);
       for (int j = 0; noProxyArray[j] != NULL; j++) {

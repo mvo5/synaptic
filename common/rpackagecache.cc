@@ -33,7 +33,6 @@
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgcachegen.h>
 #include <apt-pkg/configuration.h>
-#include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/policy.h>
 
 

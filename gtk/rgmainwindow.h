@@ -162,7 +162,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 #if 0
    void changeFilter(int filter, bool sethistory = true);
 #endif
-   void changeView(int view, bool sethistory = true, string subView="");
 
    GtkWidget *createViewMenu();
    void refreshSubViewList(string selectedSubView="");
@@ -212,6 +211,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGMainWindow(RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
 
+   void changeView(int view, bool sethistory = true, string subView="");
+
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
    void rebuildTreeView() {
@@ -224,9 +225,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    bool restoreState();
 
    bool showErrors();
-
-   void proceed();
-   void showRepositoriesWindow();
 
    GtkWidget* buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
 

@@ -359,6 +359,10 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 	_potentialBreak = true;
     }
 
+    // remove the trailing newline of msg
+    if(msg->str[msg->len-1] == '\n')
+	msg = g_string_truncate(msg, msg->len-1);
+
     /* this stuff goes to the msg_space string */
     if (sizeChange > 0) {
 	g_string_append_printf(msg_space,_("%s of extra space will be used"),

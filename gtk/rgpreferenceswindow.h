@@ -24,7 +24,15 @@
 #include "rgmainwindow.h"
 
 class RGPreferencesWindow:public RGGladeWindow {
-   enum { LAYOUT_VPANED, LAYOUT_HPANED } _synapticLayout;
+   bool _blockAction;
+
+   enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
+
+   struct column_struct {
+      bool visible;
+      const char *name;
+      const char *visible_name;
+   };
 
    // the names for the VisibleColumnsTreeView
    static const char *column_names[];
@@ -54,19 +62,16 @@ class RGPreferencesWindow:public RGGladeWindow {
 
    // policy settings
    GtkWidget *_optionmenuDefaultDistro;
+   string _defaultDistro;
 
    int columnPos[6];
-
-   void readColors();
 
    // distro selection
    static void onArchiveSelection(GtkWidget *self, void *data);
    bool distroChanged;
 
    // treeview stuff
-   void initTreeView();
    void readTreeViewValues();
-   void saveTreeViewValues();
    GtkListStore *_listColumns;
    GtkWidget *_treeView;
    static void cbMoveColumnUp(GtkWidget *self, void *data);
@@ -80,12 +85,24 @@ class RGPreferencesWindow:public RGGladeWindow {
                                                   void *data);
 
    static void saveAction(GtkWidget *self, void *data);
+   void saveGeneral();
+   void saveColumnsAndFonts();
+   void saveColors();
+   void saveTempFiles();
+   void saveNetwork();
+   void saveExpert();
+
+   void readGeneral();
+   void readColumnsAndFonts();
+   void readColors();
+   void readTempFiles();
+   void readNetwork();
+   void readExpert();
+
+
    static void closeAction(GtkWidget *self, void *data);
    static void doneAction(GtkWidget *self, void *data);
    static void clearCacheAction(GtkWidget *self, void *data);
-
-   static void hpanedClickedAction(GtkWidget *self, void *data);
-   static void vpanedClickedAction(GtkWidget *self, void *data);
 
    static void colorClicked(GtkWidget *self, void *data);
    static void saveColor(GtkWidget *self, void *data);

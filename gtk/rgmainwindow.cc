@@ -2939,7 +2939,7 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
    me->_lister->saveState(state);
    me->_lister->notifyCachePreChange();
 
-   for(int i=0;i<packagenames.size();i++) {
+   for(unsigned int i=0;i<packagenames.size();i++) {
       RPackage *newpkg = (RPackage *) me->_lister->getPackage(packagenames[i]);
       if (newpkg) {
 	 // only install the package if it is not already installed or if

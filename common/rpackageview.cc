@@ -125,7 +125,8 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       tmp = pkg->availableVersion();
       break;
    case RPatternPackageFilter::Description:
-      tmp = pkg->description();
+      str = pkg->name();
+      str += string(pkg->description());
       break;
    case RPatternPackageFilter::Maintainer:
       tmp = pkg->maintainer();
@@ -164,6 +165,7 @@ int RPackageViewSearch::setSearch(string str, int type)
    found = 0;
    searchString = str;
    searchType = type;
+   _view[str].clear();
 
    // reapply search when a new search strng is giben
    for(unsigned int i=0;i<_all.size();i++) 

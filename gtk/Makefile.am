@@ -69,8 +69,8 @@ synaptic_SOURCES= \
 	rgsetoptwindow.h\
 	rgdummyinstallprogress.cc\
 	rgdummyinstallprogress.h\
-	rgzvtinstallprogress.cc\
-	rgzvtinstallprogress.h\
+	rgterminstallprogress.cc\
+	rgterminstallprogress.h\
 	rginstallprogress.cc\
 	rginstallprogress.h\
 	rgslideshow.cc\

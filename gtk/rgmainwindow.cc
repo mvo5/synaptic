@@ -1385,7 +1385,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     GtkWidget *button;
     for(unsigned int i=0;i<versions.size();i++) {
 	button = gtk_button_new_with_label(g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
-	gtk_container_set_border_width(GTK_CONTAINER(button),6);
 	g_object_set_data(G_OBJECT(button),"me",this);
 	g_object_set_data(G_OBJECT(button),"pkg",pkg);
 	g_signal_connect(G_OBJECT(button),"clicked",

@@ -8,14 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-24 04:13+0200\n"
+"POT-Creation-Date: 2005-01-25 14:19+0100\n"
 "PO-Revision-Date: 2005-01-24 04:18+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: common/sections_trans.cc:12
@@ -517,7 +518,7 @@ msgstr "Sugadintas"
 msgid "Not installed (new in repository)"
 msgstr "Neįdiegtas (naujas saugykloje)"
 
-#: common/rpackagecache.cc:50
+#: common/rpackagecache.cc:64
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
@@ -525,21 +526,21 @@ msgstr ""
 "Nepavyko perskaityti šaltinių sąrašo.\n"
 "Norėdami išspręsti šią problemą eikite į saugyklų dialogo langą."
 
-#: common/rpackagecache.cc:58
+#: common/rpackagecache.cc:72
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "Nepavyko perskaityti arba atidaryti paketų sąrašo arba būklės bylos."
 
-#: common/rpackagecache.cc:95
+#: common/rpackagecache.cc:109
 msgid "Internal Error, non-zero counts"
 msgstr "Vidinė klaida, ne nulinis skaičiavimas"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:986
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:1009
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Pavadinimas"
 
 #: common/rpackagefilter.cc:46 gtk/rgpreferenceswindow.cc:48
-#: gtk/rgmainwindow.cc:967 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
+#: gtk/rgmainwindow.cc:971 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_main.glade.h:18 gtk/window_filters.glade.h:13
 #: gtk/rgfiltermanager.h:67 gtk/window_details.glade.h:16
 msgid "Description"
@@ -600,7 +601,7 @@ msgid "Pattern"
 msgstr "Šablonas"
 
 #: common/rpackagefilter.cc:63 gtk/rgpreferenceswindow.cc:46
-#: gtk/rgmainwindow.cc:839 gtk/window_filters.glade.h:52
+#: gtk/rgmainwindow.cc:843 gtk/window_filters.glade.h:52
 msgid "Section"
 msgstr "Skyrius"
 
@@ -622,17 +623,17 @@ msgstr "Vidinė klaida: Nepavyko atidaryti SumažintoVaizdo bylos %s"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "SumažintoVaizdo byloje bloga reguliari išraiška '%s'."
 
-#: common/rpackagelister.cc:298 common/rpackagelister.cc:304
-#: common/rpackagelister.cc:318
+#: common/rpackagelister.cc:302 common/rpackagelister.cc:308
+#: common/rpackagelister.cc:322
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "Vidinė klaida atidarant talpyklą (%d). Prašom pranešti."
 
-#: common/rpackagelister.cc:457
+#: common/rpackagelister.cc:461
 msgid "Unable to correct dependencies"
 msgstr "Nepavyko pataisyti priklausomybių"
 
-#: common/rpackagelister.cc:459
+#: common/rpackagelister.cc:463
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -640,19 +641,19 @@ msgstr ""
 "Nepavyko pažymėti atnaujinimų\n"
 "Patikrinkit Jūsų sistemą dėl klaidų."
 
-#: common/rpackagelister.cc:471
+#: common/rpackagelister.cc:475
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr "Vidinė klaida, AllUpgrade viską sugadino. Prašom pranešti."
 
-#: common/rpackagelister.cc:489
+#: common/rpackagelister.cc:493
 msgid "dist upgrade Failed"
 msgstr "dist upgrade nepavyko"
 
-#: common/rpackagelister.cc:1235
+#: common/rpackagelister.cc:1239
 msgid "Unable to lock the list directory"
 msgstr "Nepavyko užrakinti sąrašo aplanko"
 
-#: common/rpackagelister.cc:1257
+#: common/rpackagelister.cc:1261
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -660,7 +661,7 @@ msgstr ""
 "Iš kai kurių saugyklų nepavyko gauti Release bylų arba nepavyko "
 "autentikuotis. Tokios saugyklos yra ignoruojamos."
 
-#: common/rpackagelister.cc:1329 common/rpackagelister.cc:1335
+#: common/rpackagelister.cc:1333 common/rpackagelister.cc:1339
 #: gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignoruojamas netinkamas įrašas(ai) sources.list byloje!"
@@ -669,7 +670,7 @@ msgstr "Ignoruojamas netinkamas įrašas(ai) sources.list byloje!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1383
+#: common/rpackagelister.cc:1387
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -680,20 +681,20 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: common/rpackagelister.cc:1407
+#: common/rpackagelister.cc:1411
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Kai kurių paketų nepavyko parsiųsti iš serverio(ių).\n"
 
-#: common/rpackagelister.cc:1410
+#: common/rpackagelister.cc:1414
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Ar norite tęsti, ignoruodami šiuos paketus?"
 
-#: common/rpackagelister.cc:1417
+#: common/rpackagelister.cc:1421
 msgid "Unable to correct missing packages"
 msgstr "Nepavyko pataisyti trūkstamų paketų"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1528
+#: common/rpackagelister.cc:1565
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -702,7 +703,7 @@ msgstr ""
 "Buvo pašalinta sekantys ESMINIAI paketai:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1537
+#: common/rpackagelister.cc:1574
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -711,7 +712,7 @@ msgstr ""
 "Buvo pasendinti sekantys paketai:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1546
+#: common/rpackagelister.cc:1583
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -720,7 +721,7 @@ msgstr ""
 "Buvo visiškai pašalinti sekantys paketai:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1555
+#: common/rpackagelister.cc:1592
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -729,7 +730,7 @@ msgstr ""
 "Buvo pašalinti sekantys paketai:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1564
+#: common/rpackagelister.cc:1601
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -738,7 +739,7 @@ msgstr ""
 "Buvo atnaujinti sekantys paketai:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1575
+#: common/rpackagelister.cc:1612
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -747,7 +748,7 @@ msgstr ""
 "Buvo įdiegti sekantys paketai:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1585
+#: common/rpackagelister.cc:1622
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -755,21 +756,21 @@ msgstr ""
 "\n"
 "Buvo pakartotinai įdiegti sekantys paketai:\n"
 
-#: common/rpackagelister.cc:1602
+#: common/rpackagelister.cc:1639
 msgid "Unable to lock the download directory"
 msgstr "Nepavyko užrakinti parsiuntimų aplanko"
 
-#: common/rpackagelister.cc:1680
+#: common/rpackagelister.cc:1717
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Pažymėjimų byloje %u eilutė per ilga."
 
-#: common/rpackagelister.cc:1694 common/rpackagelister.cc:1698
+#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Blogai suformuota %u eilutė pažymėjimų byloje"
 
-#: common/rpackagelister.cc:1710
+#: common/rpackagelister.cc:1747
 msgid "Setting markings..."
 msgstr "Uždedami pažymėjimai..."
 
@@ -894,7 +895,7 @@ msgstr ""
 "<b>Pastaba:</b> Atnaujinimai bus tik pažymėti. Jūs vis dar turėsite po to "
 "juos pritaikyti."
 
-#: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:30
+#: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:31
 msgid "Default Upgrade"
 msgstr "Įprastas atnaujinimas"
 
@@ -1113,11 +1114,11 @@ msgstr "Palaikoma"
 msgid "Package Name"
 msgstr "Paketo pavadinimas"
 
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:860
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:864
 msgid "Component"
 msgstr "Komponentas"
 
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:882
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:886
 msgid "Installed Version"
 msgstr "Įdiegta versija"
 
@@ -1133,20 +1134,20 @@ msgstr "Įdiegto dydis"
 msgid "Download Size"
 msgstr "Parsiuntimo dydis"
 
-#: gtk/rgpreferenceswindow.cc:368 gtk/rgmainwindow.cc:1646
+#: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1650
 #: gtk/rgterminstallprogress.cc:99
 msgid "An error occurred while saving configurations."
 msgstr "Išsaugant konfigūraciją įvyko klaida."
 
-#: gtk/rgpreferenceswindow.cc:413
+#: gtk/rgpreferenceswindow.cc:422
 msgid "Choose font"
 msgstr "Pasirinkite šriftą"
 
-#: gtk/rgpreferenceswindow.cc:831
+#: gtk/rgpreferenceswindow.cc:849
 msgid "Color selection"
 msgstr "Spalvų pasirinkimas"
 
-#: gtk/rgpreferenceswindow.cc:927
+#: gtk/rgpreferenceswindow.cc:950
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1158,7 +1159,7 @@ msgstr ""
 "kitos distribucijos, paketo versija seks tą distribuciją, iki kol ji "
 "atkeliaus į įprastąją distribuciją."
 
-#: gtk/rgpreferenceswindow.cc:935
+#: gtk/rgpreferenceswindow.cc:958
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ carefull with this "
 "option as you will not get security updates automatically! If you manually "
@@ -1169,21 +1170,21 @@ msgstr ""
 "automatiškai! Jeigu Jūs rankiniu būdu priverstinai naudosite tam tikrą "
 "versiją, paketo versija seks pasirinktą distribuciją."
 
-#: gtk/rgpreferenceswindow.cc:943
+#: gtk/rgpreferenceswindow.cc:966
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 "Leisti synaptic parinkti Jums geriausią versiją. Jeigu nesate tikri, "
 "rinkitės šį variantą."
 
-#: gtk/rgpreferenceswindow.cc:980
+#: gtk/rgpreferenceswindow.cc:1003
 msgid "Visible"
 msgstr "Matomas"
 
-#: gtk/rgpreferenceswindow.cc:1054 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:1077 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Nustatymai"
 
-#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:924
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:928
 msgid "Size"
 msgstr "Dydis"
 
@@ -1337,29 +1338,29 @@ msgstr ""
 "priklausomybių valdyme."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: gtk/rgmainwindow.cc:781
+#: gtk/rgmainwindow.cc:785
 msgid "S"
 msgstr "B"
 
 #. TRANSLATORS: Column header for the column "Supported" in the package list
-#: gtk/rgmainwindow.cc:797 gtk/window_preferences.glade.h:1
+#: gtk/rgmainwindow.cc:801 gtk/window_preferences.glade.h:1
 #: gtk/window_summary.glade.h:1 gtk/window_filters.glade.h:1
 msgid " "
 msgstr " "
 
-#: gtk/rgmainwindow.cc:817
+#: gtk/rgmainwindow.cc:821
 msgid "Package"
 msgstr "Paketas"
 
-#: gtk/rgmainwindow.cc:903
+#: gtk/rgmainwindow.cc:907
 msgid "Latest Version"
 msgstr "Naujausia versija"
 
-#: gtk/rgmainwindow.cc:945
+#: gtk/rgmainwindow.cc:949
 msgid "Download"
 msgstr "Parsiųsti"
 
-#: gtk/rgmainwindow.cc:1198
+#: gtk/rgmainwindow.cc:1202
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
@@ -1367,60 +1368,60 @@ msgstr ""
 "Atnaujinkite paketų informaciją tam, kad būtumėte informuoti apie naujus, "
 "pašalintus arba atnaujintus programų paketus."
 
-#: gtk/rgmainwindow.cc:1204
+#: gtk/rgmainwindow.cc:1208
 msgid "Mark all possible upgrades"
 msgstr "Pažymėti visus įmanomus atnaujinimus"
 
-#: gtk/rgmainwindow.cc:1208 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1212 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "Pritaikyti visus pažymėtus atnaujinimus"
 
-#: gtk/rgmainwindow.cc:1387
+#: gtk/rgmainwindow.cc:1391
 msgid "Unmark"
 msgstr "Atžymėti"
 
-#: gtk/rgmainwindow.cc:1395
+#: gtk/rgmainwindow.cc:1399
 msgid "Mark for Installation"
 msgstr "Pažymėti įdiegimui"
 
-#: gtk/rgmainwindow.cc:1403
+#: gtk/rgmainwindow.cc:1407
 msgid "Mark for Reinstallation"
 msgstr "Pažymėti pakartotiniam įdiegimui"
 
-#: gtk/rgmainwindow.cc:1412
+#: gtk/rgmainwindow.cc:1416
 msgid "Mark for Upgrade"
 msgstr "Pažymėti atnaujimui"
 
-#: gtk/rgmainwindow.cc:1420
+#: gtk/rgmainwindow.cc:1424
 msgid "Mark for Removal"
 msgstr "Pažymėti pašalinimui"
 
-#: gtk/rgmainwindow.cc:1429
+#: gtk/rgmainwindow.cc:1433
 msgid "Mark for Complete Removal"
 msgstr "Pažymėti visiškam pašalinimui"
 
-#: gtk/rgmainwindow.cc:1441
+#: gtk/rgmainwindow.cc:1445
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Pašalinti įtraukiant ir nebenaudojamas priklausomybes"
 
-#: gtk/rgmainwindow.cc:1453
+#: gtk/rgmainwindow.cc:1457
 msgid "Hold Current Version"
 msgstr "Palikti šią versiją"
 
-#: gtk/rgmainwindow.cc:1462 gtk/window_main.glade.h:31
+#: gtk/rgmainwindow.cc:1466 gtk/window_main.glade.h:31
 #: gtk/window_filters.glade.h:46
 msgid "Properties"
 msgstr "Savybės"
 
-#: gtk/rgmainwindow.cc:1474
+#: gtk/rgmainwindow.cc:1478
 msgid "Mark Recommended for Installation"
 msgstr "Pažymėti įdiegimui ir rekomenduojamus paketus"
 
-#: gtk/rgmainwindow.cc:1478
+#: gtk/rgmainwindow.cc:1482
 msgid "Mark Suggested for Installation"
 msgstr "Pažymėti įdiegimui ir siūlomus paketus"
 
-#: gtk/rgmainwindow.cc:1563
+#: gtk/rgmainwindow.cc:1567
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1428,7 +1429,7 @@ msgstr ""
 "Šio paketo pašalinimas gali padaryti Jūsų sistemą nebenaudojamą.\n"
 "Ar tikrai norite tai padaryti?"
 
-#: gtk/rgmainwindow.cc:1599
+#: gtk/rgmainwindow.cc:1603
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1437,7 +1438,7 @@ msgstr ""
 "rodoma %i paketų, %i įdiegta, %i sugadinta. %i bus įdiegta/atnaujinta, %i "
 "pašalinta; bus atlaisvinta %s"
 
-#: gtk/rgmainwindow.cc:1605
+#: gtk/rgmainwindow.cc:1609
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1446,7 +1447,7 @@ msgstr ""
 "rodoma %i paketų, %i įdiegta, %i sugadinta. %i bus įdiegta/atnaujinta, %i "
 "pašalinta; bus sunaudota %s"
 
-#: gtk/rgmainwindow.cc:1611
+#: gtk/rgmainwindow.cc:1615
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1455,7 +1456,7 @@ msgstr ""
 "rodoma %i paketų, %i įdiegta, %i sugadinta. %i bus įdiegta/atnaujinta, %i "
 "pašalinta"
 
-#: gtk/rgmainwindow.cc:1663
+#: gtk/rgmainwindow.cc:1667
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1478,11 +1479,11 @@ msgstr[2] ""
 "\n"
 "Norėdami juos rasti pasinaudokite filtru „Sugadinta“."
 
-#: gtk/rgmainwindow.cc:1824
+#: gtk/rgmainwindow.cc:1828
 msgid "Downloading changelog"
 msgstr "Parsiunčiamas pakeitimų žurnalas"
 
-#: gtk/rgmainwindow.cc:1825
+#: gtk/rgmainwindow.cc:1829
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1491,40 +1492,40 @@ msgstr ""
 "ištaisytas klaidas."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1838
+#: gtk/rgmainwindow.cc:1842
 #, c-format
 msgid "%s Changelog"
 msgstr "%s pakeitimų žurnalas"
 
-#: gtk/rgmainwindow.cc:1923
+#: gtk/rgmainwindow.cc:1927
 msgid "Do you want to add another CD-ROM?"
 msgstr "Ar norite pridėti kitą CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1957 gtk/rgmainwindow.cc:2013
+#: gtk/rgmainwindow.cc:1961 gtk/rgmainwindow.cc:2017
 msgid "Open changes"
 msgstr "Atidaryti pakeitimus"
 
-#: gtk/rgmainwindow.cc:1970 gtk/rgmainwindow.cc:2578 gtk/rgmainwindow.cc:2662
-#: gtk/rgmainwindow.cc:2825
+#: gtk/rgmainwindow.cc:1974 gtk/rgmainwindow.cc:2582 gtk/rgmainwindow.cc:2666
+#: gtk/rgmainwindow.cc:2829
 #, c-format
 msgid "Can't read %s"
 msgstr "Nepavyko perskaityti %s"
 
-#: gtk/rgmainwindow.cc:1994 gtk/rgmainwindow.cc:2487 gtk/rgmainwindow.cc:2632
-#: gtk/rgmainwindow.cc:2802
+#: gtk/rgmainwindow.cc:1998 gtk/rgmainwindow.cc:2491 gtk/rgmainwindow.cc:2636
+#: gtk/rgmainwindow.cc:2806
 #, c-format
 msgid "Can't write %s"
 msgstr "Nepavyko įrašyti %s"
 
-#: gtk/rgmainwindow.cc:2020
+#: gtk/rgmainwindow.cc:2024
 msgid "Save full state, not only changes"
 msgstr "Išsaugoti pilną būseną, ne tik pakeitimus"
 
-#: gtk/rgmainwindow.cc:2097
+#: gtk/rgmainwindow.cc:2101
 msgid "Repositories changed"
 msgstr "Saugyklos pakeistos"
 
-#: gtk/rgmainwindow.cc:2098
+#: gtk/rgmainwindow.cc:2102
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1532,20 +1533,20 @@ msgstr ""
 "Pakito saugyklų informacija. Norėdami, kad įsigaliotų pakeitimai, Jūs turite "
 "paspausti „Perkrauti“"
 
-#: gtk/rgmainwindow.cc:2109
+#: gtk/rgmainwindow.cc:2113
 msgid "Never show this message again"
 msgstr "Daugiau niekuomet nerodyti šios žinutės"
 
-#: gtk/rgmainwindow.cc:2163
+#: gtk/rgmainwindow.cc:2167
 #, c-format
 msgid "Found %i packages"
 msgstr "Rasta %i paketų"
 
-#: gtk/rgmainwindow.cc:2204
+#: gtk/rgmainwindow.cc:2208
 msgid "Starting help viewer..."
 msgstr "Paleidžiama pagalbos žiūryklė..."
 
-#: gtk/rgmainwindow.cc:2224
+#: gtk/rgmainwindow.cc:2228
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1564,7 +1565,7 @@ msgstr ""
 "eilutėje komandą „man synaptic“ arba peržiūrėti html versiją esančią "
 "„synaptic/html“ aplanke."
 
-#: gtk/rgmainwindow.cc:2372
+#: gtk/rgmainwindow.cc:2376
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1572,22 +1573,22 @@ msgstr ""
 "Nepavyko paleisti konfigūravimo įrankio!\n"
 "Jums reikia įdiegti reikalingą paketą „libgnome2-perl“."
 
-#: gtk/rgmainwindow.cc:2378
+#: gtk/rgmainwindow.cc:2382
 msgid "Starting package configuration tool..."
 msgstr "Paleidžiamas paketų konfigūravimo įrankis..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2393
+#: gtk/rgmainwindow.cc:2397
 msgid "Starting package documentation viewer..."
 msgstr "Paleidžiama paketų dokumentacijos žiūryklė..."
 
-#: gtk/rgmainwindow.cc:2405
+#: gtk/rgmainwindow.cc:2409
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "Norėdami naršyti paketo dokumentaciją Jūs turite įdiegti „dwww“ paketą"
 
-#: gtk/rgmainwindow.cc:2451
+#: gtk/rgmainwindow.cc:2455
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1595,46 +1596,46 @@ msgstr ""
 "Nepavyko pritaikyti pakeitimų!\n"
 "Pirmiau pataisykite sugadintus paketus."
 
-#: gtk/rgmainwindow.cc:2472
+#: gtk/rgmainwindow.cc:2476
 msgid "Applying marked changes. This may take a while..."
 msgstr "Pritaikomi pažymėti pakeitimai. Tai gali šiek tiek užtrukti..."
 
-#: gtk/rgmainwindow.cc:2476
+#: gtk/rgmainwindow.cc:2480
 msgid "Downloading package files"
 msgstr "Parsiunčiamos paketų bylos"
 
-#: gtk/rgmainwindow.cc:2477
+#: gtk/rgmainwindow.cc:2481
 msgid "The package files will be cached locally for installation."
 msgstr "Paketų bylos bus parsiųstos į šį kompiuterį įdiegimui."
 
-#: gtk/rgmainwindow.cc:2561
+#: gtk/rgmainwindow.cc:2565
 msgid "Do you want to quit Synaptic?"
 msgstr "Ar norite uždaryti Synaptic?"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2621
 msgid "Downloading package information"
 msgstr "Parsiunčiama paketų informacija"
 
-#: gtk/rgmainwindow.cc:2618
+#: gtk/rgmainwindow.cc:2622
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
 "Saugyklos bus patikrintos ar nėra naujų, pašalintų ar atnaujintų paketų."
 
-#: gtk/rgmainwindow.cc:2621
+#: gtk/rgmainwindow.cc:2625
 msgid "Reloading package information..."
 msgstr "Perkraunama paketų informacija..."
 
-#: gtk/rgmainwindow.cc:2687
+#: gtk/rgmainwindow.cc:2691
 msgid "Failed to resolve dependency problems!"
 msgstr "Nepavyko išspręsti priklausomybių problemų!"
 
-#: gtk/rgmainwindow.cc:2689
+#: gtk/rgmainwindow.cc:2693
 msgid "Successfully fixed dependency problems"
 msgstr "Priklausomybių problemos sėkmingai ištaisytos"
 
-#: gtk/rgmainwindow.cc:2705
+#: gtk/rgmainwindow.cc:2709
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1642,15 +1643,15 @@ msgstr ""
 "Sistemos atnaujinti nepavyko!\n"
 "Pirmiau pataisykit sugadintus paketus."
 
-#: gtk/rgmainwindow.cc:2754
+#: gtk/rgmainwindow.cc:2758
 msgid "Marking all available upgrades..."
 msgstr "Pažymimi visi galimi atnaujinimai..."
 
-#: gtk/rgmainwindow.cc:2766
+#: gtk/rgmainwindow.cc:2770
 msgid "Successfully marked available upgrades"
 msgstr "Prieinami atnaujinimai sėkmingai pažymėti"
 
-#: gtk/rgmainwindow.cc:2768
+#: gtk/rgmainwindow.cc:2772
 msgid "Failed to mark all available upgrades!"
 msgstr "Nepavyko pažymėti visų prieinamų atnaujinimų!"
 
@@ -1681,7 +1682,7 @@ msgstr "Tipas"
 msgid "Vendor"
 msgstr "Platintojas"
 
-#: gtk/rgrepositorywin.cc:187 gtk/window_preferences.glade.h:33
+#: gtk/rgrepositorywin.cc:187 gtk/window_preferences.glade.h:34
 msgid "Distribution"
 msgstr "Distribucija"
 
@@ -2369,22 +2370,27 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Šriftai</b>"
 
 #: gtk/window_preferences.glade.h:8
+#, fuzzy
+msgid "<b>History files</b>"
+msgstr "<b>Laikinos bylos</b>"
+
+#: gtk/window_preferences.glade.h:9
 msgid "<b>Marking Changes</b>"
 msgstr "<b>Pakeitimų žymėjimas</b>"
 
-#: gtk/window_preferences.glade.h:9
+#: gtk/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
 msgstr "<b>Paketo atnaujinimo elgsena (įprasta distribucija)</b>"
 
-#: gtk/window_preferences.glade.h:10
+#: gtk/window_preferences.glade.h:11
 msgid "<b>Proxy Server</b>"
 msgstr "<b>Tarpinis serveris</b>"
 
-#: gtk/window_preferences.glade.h:11
+#: gtk/window_preferences.glade.h:12
 msgid "<b>Temporary Files</b>"
 msgstr "<b>Laikinos bylos</b>"
 
-#: gtk/window_preferences.glade.h:12
+#: gtk/window_preferences.glade.h:13
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider any changes carefully.</span>"
@@ -2392,63 +2398,63 @@ msgstr ""
 "<span size=\"large\" weight=\"bold\">Šie nustatymai liečia Jūsų sistemos "
 "šerdį. Būkite labai atsargūs darydami pakeitimus.</span>"
 
-#: gtk/window_preferences.glade.h:13
+#: gtk/window_preferences.glade.h:14
 msgid "A_pplication Font"
 msgstr "_Programos šriftas"
 
-#: gtk/window_preferences.glade.h:14
+#: gtk/window_preferences.glade.h:15
 msgid "Always Ask"
 msgstr "Visada paklausti"
 
-#: gtk/window_preferences.glade.h:15
+#: gtk/window_preferences.glade.h:16
 msgid "Always prefer the highest version"
 msgstr "Visada teikti pirmenybę naujesnei versijai"
 
-#: gtk/window_preferences.glade.h:16
+#: gtk/window_preferences.glade.h:17
 msgid "Always prefer the installed version"
 msgstr "Visada teikti pirmenybę įdiegtai versijai"
 
-#: gtk/window_preferences.glade.h:17
+#: gtk/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
 msgstr "Pritaikyti pakeitimus terminalo lange"
 
-#: gtk/window_preferences.glade.h:18
+#: gtk/window_preferences.glade.h:19
 msgid "Ask to confirm changes that also affect other packages"
 msgstr "Paklausti patvirtinimo pakeitimams, liečiantiems ir kitus paketus"
 
-#: gtk/window_preferences.glade.h:19
+#: gtk/window_preferences.glade.h:20
 msgid "Ask to quit after the changes have been applied successfully"
 msgstr "Sėkmingai atlikus pakeitimus paklausti ar uždaryti"
 
-#: gtk/window_preferences.glade.h:20
+#: gtk/window_preferences.glade.h:21
 msgid "Automatically"
 msgstr "Automatiškai"
 
-#: gtk/window_preferences.glade.h:21
+#: gtk/window_preferences.glade.h:22
 msgid "Broken:"
 msgstr "Sugadinta:"
 
-#: gtk/window_preferences.glade.h:22
+#: gtk/window_preferences.glade.h:23
 msgid "Clicking on the status icon marks the most likely action"
 msgstr "Būsenos piktogramos spragtelėjimas pažymi labiausiai tikėtiną veiksmą"
 
-#: gtk/window_preferences.glade.h:23
+#: gtk/window_preferences.glade.h:24
 msgid "Color"
 msgstr "Spalva"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 msgid "Color packages by their status"
 msgstr "Spalvinti paketus pagal jų būseną"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 msgid "Colors"
 msgstr "Spalvos"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid "Columns and Fonts"
 msgstr "Stulpeliai ir šriftai"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2457,125 +2463,122 @@ msgstr ""
 "susisiekiant tarpinė stotis nebus naudojama (pvz. localhost, 192.168.1.231, ."
 "net)"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Completely"
 msgstr "Visiškai"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Consider recommended packages as dependencies"
 msgstr "Laikyti rekomenduojamus paketus priklausomybėmis"
 
-#: gtk/window_preferences.glade.h:31
-msgid "Delete downloaded packages after installation"
-msgstr "Ištrinti parsiųstus paketus po jų įdiegimo"
-
 #: gtk/window_preferences.glade.h:32
+msgid "Delete _History files older than:"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:33
 msgid "Direct connection to the internet"
 msgstr "Tiesioginis ryšys su Internetu"
 
-#: gtk/window_preferences.glade.h:34
+#: gtk/window_preferences.glade.h:35
 msgid "FTP proxy: "
 msgstr "FTP tarpinė stotis: "
 
-#: gtk/window_preferences.glade.h:35
+#: gtk/window_preferences.glade.h:36
+#, fuzzy
+msgid "Files"
+msgstr "Filtrai"
+
+#: gtk/window_preferences.glade.h:37
 msgid "General"
 msgstr "Bendra"
 
-#: gtk/window_preferences.glade.h:36
+#: gtk/window_preferences.glade.h:38
 msgid "HTTP proxy: "
 msgstr "HTTP tarpinė stotis: "
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:39
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Ftp tarpinės stoties serverio IP adresas arba kompiuterio vardas"
 
-#: gtk/window_preferences.glade.h:38
+#: gtk/window_preferences.glade.h:40
 msgid "IP address or host name of the http proxy server"
 msgstr "Http tarpinės stoties serverio IP adresas arba kompiuterio vardas"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:41
 msgid "Ignore"
 msgstr "Ignoruoti"
 
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:42
 msgid "Installed (locked):"
 msgstr "Įdiegta (prirakinta):"
 
-#: gtk/window_preferences.glade.h:41
+#: gtk/window_preferences.glade.h:43
 msgid "Installed:"
 msgstr "Įdiegta:"
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:44
 msgid "Keep Configuration"
 msgstr "Palikti konfigūraciją"
 
-#: gtk/window_preferences.glade.h:43
-msgid "Leave all downloaded packages in the cache"
-msgstr "Palikti visus parsiųstus paketus talpykloje"
-
-#: gtk/window_preferences.glade.h:44
+#: gtk/window_preferences.glade.h:45
 msgid "Manual proxy configuration"
 msgstr "Rankinis tarpinės stoties konfigūravimas"
 
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:46
 msgid "Marked for complete removal:"
 msgstr "Pažymėti visiškam pašalinimui:"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:47
 msgid "Marked for downgrade:"
 msgstr "Pažymėti pasendinimui:"
 
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:48
 msgid "Marked for installation:"
 msgstr "Pažymėti įdiegimui:"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:49
 msgid "Marked for reinstallation:"
 msgstr "Pažymėti pakartotiniam įdiegimui:"
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:50
 msgid "Marked for removal:"
 msgstr "Pažymėti pašalinimui:"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:51
 msgid "Marked for upgrade:"
 msgstr "Pažymėti atnaujinimui:"
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:52
 msgid "Move D_own"
 msgstr "Perkelti ž_emyn"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:53
 msgid "Move _Up"
 msgstr "Perkelti a_ukštyn"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:54
 msgid "Network"
 msgstr "Tinklas"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:55
 msgid "New in repository:"
 msgstr "Nauji saugykloje:"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:56
 msgid "No proxy for: "
 msgstr "Nereikia tarpinės stoties: "
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:57
 msgid "Not installed (locked):"
 msgstr "Neįdiegti (prirakinti):"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:58
 msgid "Not installed:"
 msgstr "Neįdiegti:"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:59
 msgid "Number of undo operations:"
 msgstr "Atšaukimo operacijų kiekis:"
-
-#: gtk/window_preferences.glade.h:59
-msgid "Only delete packages which are no longer available"
-msgstr "Ištrinti tik tuos paketus, kurie daugiau neprieinami"
 
 #: gtk/window_preferences.glade.h:60
 msgid "Port number of the ftp proxy server"
@@ -2610,28 +2613,48 @@ msgid "System upgrade:"
 msgstr "Sistemos atnaujinimas:"
 
 #: gtk/window_preferences.glade.h:70
-msgid "Temporary Files"
-msgstr "Laikinos bylos"
-
-#: gtk/window_preferences.glade.h:71
 msgid "Upgradable:"
 msgstr "Atnaujintini:"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:71
 msgid "Use custom application font"
 msgstr "Naudoti kitą programos šriftą"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:72
 msgid "Use custom terminal font"
 msgstr "Naudoti kitą terminalo šriftą"
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:73
 msgid "_Delete Cached Package Files"
 msgstr "_Ištrinti kešuotas paketų bylas"
 
+#: gtk/window_preferences.glade.h:74
+#, fuzzy
+msgid "_Delete downloaded packages after installation"
+msgstr "Ištrinti parsiųstus paketus po jų įdiegimo"
+
 #: gtk/window_preferences.glade.h:75
+#, fuzzy
+msgid "_Keep history"
+msgstr "_Istorija"
+
+#: gtk/window_preferences.glade.h:76
+#, fuzzy
+msgid "_Leave all downloaded packages in the cache"
+msgstr "Palikti visus parsiųstus paketus talpykloje"
+
+#: gtk/window_preferences.glade.h:77
+#, fuzzy
+msgid "_Only delete packages which are no longer available"
+msgstr "Ištrinti tik tuos paketus, kurie daugiau neprieinami"
+
+#: gtk/window_preferences.glade.h:78
 msgid "_Terminal Font"
 msgstr "_Terminalo šriftas"
+
+#: gtk/window_preferences.glade.h:79
+msgid "days"
+msgstr ""
 
 #: gtk/window_disc_name.glade.h:2
 msgid ""
@@ -3208,6 +3231,9 @@ msgstr "Istorija"
 #: gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Įdiegtų, atnaujintų ir pašalintų programų paketų istorija."
+
+#~ msgid "Temporary Files"
+#~ msgstr "Laikinos bylos"
 
 #, fuzzy
 #~ msgid "Dependencies of"

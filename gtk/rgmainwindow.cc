@@ -61,7 +61,7 @@
 #include "rguserdialog.h"
 #include "rginstallprogress.h"
 #include "rgdummyinstallprogress.h"
-#include "rgzvtinstallprogress.h"
+#include "rgterminstallprogress.h"
 #include "rgmisc.h"
 #include "sections_trans.h"
 
@@ -135,6 +135,7 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
    // try to set filter
    if (filter > 0) {
       _lister->setFilter(filter - 1);
+
       RFilter *pkgfilter = _lister->getFilter();
       if (pkgfilter == NULL)
          filter = 0;
@@ -175,13 +176,27 @@ void RGMainWindow::refreshSubViewList()
 {
    GtkTreeIter iter;
    vector<string> subViews = _lister->getSubViews();
+
+   gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
+   subViews.insert(subViews.begin(), str);
+   g_free(str);
+   setTreeList("treeview_subviews", subViews, true);
+#if 0
    GtkListStore *store = gtk_list_store_new(1, G_TYPE_STRING);
+   
+   // add "All" entry for all subviews 
+   gtk_list_store_append(store, &iter);
+   gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
+   gtk_list_store_set(store, &iter, 0, str, -1);
+   g_free(str);
+
    for (vector<string>::iterator I = subViews.begin();
         I != subViews.end(); I++) {
       gtk_list_store_append(store, &iter);
       gtk_list_store_set(store, &iter, 0, utf8((*I).c_str()), -1);
    }
    gtk_tree_view_set_model(GTK_TREE_VIEW(_subViewList), GTK_TREE_MODEL(store));
+#endif
 }
 
 
@@ -233,7 +248,14 @@ string RGMainWindow::selectedSubView()
    if (selection != NULL) {
       if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
          gtk_tree_model_get(model, &iter, 0, &subView, -1);
-         ret = utf8_to_locale(subView);
+	 
+	 // check if first item is selected ("All")
+	 gchar *str=gtk_tree_model_get_string_from_iter(model, &iter);
+	 if(str[0] == '0')
+	    ret = "";
+	 else
+	    ret = utf8_to_locale(subView);
+	 g_free(str);
          g_free(subView);
       }
    }
@@ -247,35 +269,6 @@ bool RGMainWindow::showErrors()
    return _userDialog->showErrors();
 }
 
-#if 0
-static void setLabel(GladeXML *xml, const char *widget_name,
-                     const char *value)
-{
-   GtkWidget *widget = glade_xml_get_widget(xml, widget_name);
-   if (widget == NULL)
-      cout << "widget == NULL with: " << widget_name << endl;
-
-   if (!value)
-      value = _("N/A");
-   gtk_label_set_label(GTK_LABEL(widget), utf8(value));
-}
-
-static void setLabel(GladeXML *xml, const char *widget_name, const int value)
-{
-   string strVal;
-   GtkWidget *widget = glade_xml_get_widget(xml, widget_name);
-   if (widget == NULL)
-      cout << "widget == NULL with: " << widget_name << endl;
-
-   // we can never have values of zero or less
-   if (value <= 0)
-      strVal = _("N/A");
-   else
-      strVal = SizeToStr(value);
-   gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
-}
-#endif
-
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
    if (pkg != NULL)
@@ -286,7 +279,6 @@ void RGMainWindow::notifyChange(RPackage *pkg)
 
 void RGMainWindow::forgetNewPackages()
 {
-   //cout << "forgetNewPackages called" << endl;
    int row = 0;
    while (row < _lister->viewPackagesSize()) {
       RPackage *elem = _lister->getViewPackage(row);
@@ -326,13 +318,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
                                _("No package is selected.\n"), -1);
    } else {
       gtk_widget_set_sensitive(_pkginfo, true);
-      gtk_text_buffer_set_text(_pkgCommonTextBuffer,
-                               utf8(pkg->description()), -1);
-
-      GtkTextIter start;
-      gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &start, 0);
-      gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_pkgCommonTextView),
-                                   &start, 0, false, 0, 0);
+      string descr = string(pkg->summary()) + "\n" + string(pkg->description());
+      setTextView("textview_pkgcommon", descr.c_str(), true);
    }
 
    setStatusText();
@@ -1201,13 +1188,15 @@ void RGMainWindow::buildInterface()
 
    _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
    assert(_subViewList);
-
+#if 0
    renderer = gtk_cell_renderer_text_new();
    column = gtk_tree_view_column_new_with_attributes("SubView",
                                                      renderer,
-                                                     "text", 0, NULL);
+                                                     "markup", 0, 
+						     NULL);
+   
    gtk_tree_view_append_column(GTK_TREE_VIEW(_subViewList), column);
-
+#endif
    // Setup the selection handler 
    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
@@ -1509,8 +1498,10 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
       GtkTreeSelection *selection;
       GtkTreeIter iter;
 
+      if(!(event->window == gtk_tree_view_get_bin_window(GTK_TREE_VIEW(treeview))))
+	 return false;
+
       selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-      // FIXME: this is gtk2.2
       if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
                                         (int)event->x, (int)event->y,
                                         &path, &column, NULL, NULL)) {

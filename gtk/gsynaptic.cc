@@ -58,8 +58,9 @@ bool ShowHelp(CommandLine & CmdL)
       _("-r   Open in the repository screen\n") <<
       _("-f=? Give a alternative filter file\n") <<
       _("-i=? Start with the initialFilter with the number given\n") <<
-      _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n");
-
+      _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
+      _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
+      _("--non-interactive Never prompt for user input\n");
    exit(0);
 }
 

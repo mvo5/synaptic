@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: synaptic 0.50\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-18 08:09+0200\n"
-"PO-Revision-Date: 2004-06-12 16:24+0200\n"
+"PO-Revision-Date: 2004-06-22 12:39+0200\n"
 "Last-Translator: Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
 "MIME-Version: 1.0\n"
@@ -257,12 +257,12 @@ msgstr "Fehler beim Auslesen der Dateieinträge"
 #: common/rcdscanner.cc:110 common/rcdscanner.cc:160
 #, c-format
 msgid "Failed to open %s.new"
-msgstr "Öffnen von »%s.new« ist fehlgeschlagen"
+msgstr "»%s.new« konnte nicht geöffnet werden"
 
 #: common/rcdscanner.cc:135 common/rcdscanner.cc:245
 #, c-format
 msgid "Failed to rename %s.new to %s"
-msgstr "Umbennen von »%s.new« in »%s« ist fehlgeschlagen"
+msgstr "»%s.new« konnte nicht in »%s« umbenannt werden"
 
 #: common/rcdscanner.cc:200 common/rcdscanner.cc:233
 msgid "Internal error"
@@ -283,7 +283,7 @@ msgstr "CD wird ausgehängt..."
 
 #: common/rcdscanner.cc:280
 msgid "Waiting for disc..."
-msgstr "Warte auf einen Datenträger..."
+msgstr "Warte auf Datenträger..."
 
 #: common/rcdscanner.cc:281
 msgid "Insert a disc in the drive."
@@ -364,16 +364,16 @@ msgstr "Lesefehler: %s"
 #: common/rconfiguration.cc:83 common/rconfiguration.cc:184
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
-msgstr "FEHLER: Schreibzugriff auf %s ist fehlgeschlagen"
+msgstr "Schreibzugriff auf »%s« war nicht möglich."
 
 #: common/rconfiguration.cc:109
 msgid "ERROR: Could not get password entry for superuser"
-msgstr "Kann keinen Passwort-Eintrag für den Superuser finden"
+msgstr "Das Administratorpasswort konnte nicht ausgelesen werden."
 
 #: common/rconfiguration.cc:118
 #, c-format
 msgid "ERROR: could not create configuration directory %s"
-msgstr "FEHLER: Anlegen des Konfigurationsverzeichnis %s ist fehlgeschlagen"
+msgstr "Das Konfigurationsverzeichnis »%s« konnte nicht angelegt werden."
 
 #: common/rconfiguration.cc:209
 #, c-format
@@ -403,11 +403,8 @@ msgid ""
 "sources.list\n"
 msgstr ""
 "\n"
-"Es konnte keine installierbare Version des Pakets %s gefunden werden, obwohl "
-"ein Eintrag in der Datenbank exisitert.\n"
-"Dies deutet für geöhnlich darauf hin, dass das Paket als Abhängigkeit "
-"erwähnt, aber nie der Paketquelle hinzugefügt wurde, es nicht mehr vorhanden "
-"ist oder die entsprechende Paketquelle in der sources.list fehlt.\n"
+"Es konnte keine installierbare Version des Pakets %s gefunden werden, obwohl ein Eintrag in der Datenbank exisitert.\n"
+"Dies deutet für gewöhnlich darauf hin, dass das Paket als Abhängigkeit erwähnt, aber nie hochgeladen wurde, dass es veraltet ist oder die entsprechende Paketquelle in der »sources.list« fehlt.\n"
 
 #: common/rpackage.cc:584
 msgid " or"
@@ -482,7 +479,7 @@ msgstr "Installiert (aktualisierbar)"
 
 #: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
-msgstr "Installiert (derezeitige Version ist gesperrt)"
+msgstr "Installiert (derzeitige Version ist gesperrt)"
 
 #: common/rpackage.cc:1303 common/rpackageview.cc:373
 #: gtk/window_filters.glade.h:6
@@ -498,13 +495,12 @@ msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
 msgstr ""
-"Einlesen der Liste mit den Paketquellen ist fehlgeschlagen.\n"
-"Beheben Sie das Problem in den Einstellungen zu den Paketquellen."
+"Die Liste der Paketquellen konnte nicht eingelesen werden.\n"
+"Rufen Sie die Einstellungen zu den Paketquellen auf, um das Problem zu beheben."
 
 #: common/rpackagecache.cc:58
 msgid "The package lists or status file could not be parsed or opened."
-msgstr ""
-"Öffnen der Liste mit Paketquellen oder der Status-Datei ist fehlgeschlagen."
+msgstr "Die Liste der Paketquellen oder der Status-Datei konnte nicht geöffnet werden."
 
 #: common/rpackagecache.cc:93
 msgid "Internal Error, non-zero counts"
@@ -598,15 +594,15 @@ msgstr ""
 #: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
-msgstr "Ungültiger regulärer Ausdruck »%s« in der Filterkonfiguration."
+msgstr "Der regulärer Ausdruck »%s« in der ReducedView ist ungültig."
 
 #: common/rpackagelister.cc:291 common/rpackagelister.cc:297
 #: common/rpackagelister.cc:311
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
-"Packetliste konnte nicht geöffnet werden (%d). Bitte melden Sie diesen "
-"Fehler."
+"Die zwischengespeicherte Paketliste konnte nicht geöffnet werden (%d).\n"
+"Hierbei handelt es sich um einen schweren Fehler. Bitte melden Sie den Fehler."
 
 #: common/rpackagelister.cc:451
 msgid "Unable to correct dependencies"
@@ -763,9 +759,7 @@ msgstr ""
 msgid ""
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
-msgstr ""
-"Es wurden noch nicht alle vorgemerkten Änderungen angewendet. Diese gehen "
-"verloren, falls Sie 'Synaptic' beenden."
+msgstr "Es wurden noch nicht alle vorgemerkten Änderungen angewendet. Diese gehen verloren, falls Sie »Synaptic« beenden."
 
 #: gtk/dialog_upgrade.glade.h:1
 msgid ""
@@ -882,9 +876,7 @@ msgstr "-o=? Eine Konfigurationsoption setzen, z.B. -o dir::cache=/tmp\n"
 
 #: gtk/gsynaptic.cc:62
 msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
-msgstr ""
-"--upgrade-mode Auffirschen, Aktualisierungen vormerken und Änderungen "
-"anzeigen\n"
+msgstr "--upgrade-mode Auffrischen, Aktualisierungen vormerken und Änderungen anzeigen\n"
 
 #: gtk/gsynaptic.cc:63
 msgid "--non-interactive Never prompt for user input\n"
@@ -949,7 +941,7 @@ msgstr "Zurückgehaltene Pakete"
 #: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1488
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
-msgstr "Speichern der Konfiguration ist fehlgeschlagen."
+msgstr "Die Konfiguration konnte nicht gespeichert werden."
 
 #: gtk/rgpreferenceswindow.cc:267
 msgid "Choose font"
@@ -1218,7 +1210,7 @@ msgstr "Wollen Sie eine weitere CD als Quelle hinzufügen?"
 #: gtk/rgmainwindow.cc:2585
 #, c-format
 msgid "Can't read %s"
-msgstr "Lesen von »%s« ist fehlgeschlagen "
+msgstr "»%s« konnte nicht gelesen werden."
 
 #: gtk/rgmainwindow.cc:1780
 msgid "Open changes"
@@ -1228,7 +1220,7 @@ msgstr "Änderungen öffnen"
 #: gtk/rgmainwindow.cc:2398 gtk/rgmainwindow.cc:2562
 #, c-format
 msgid "Can't write %s"
-msgstr "Schreiben von »%s« ist fehlgeschlagen"
+msgstr "»%s« konnte nicht gespeichert werden."
 
 #: gtk/rgmainwindow.cc:1830
 msgid "Save changes"
@@ -1272,13 +1264,13 @@ msgstr ""
 "»synaptic/html«."
 
 #: gtk/rgmainwindow.cc:2161
+#, fuzzy
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
-"Starten des Konfigurationswerkzeugs ist fehlgeschlagen.\n"
-"Beachten Sie, dass hierfür erforderliche Paket »libgnome2-perl« installiert "
-"sein muss."
+"Das Konfigurationswerkzeugs konnte nicht ausgeführt werden.\n"
+"Sie müssen das hierfür erforderliche Paket »libgnome2-perl« installieren."
 
 #: gtk/rgmainwindow.cc:2167
 msgid "Starting package configuration tool..."
@@ -2274,9 +2266,7 @@ msgstr "_Terminal-Schrift"
 #: gtk/window_disc_name.glade.h:2
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Geben Sie die Bezeichnung der CD ein?</"
-"span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Geben Sie die Bezeichnung der CD ein.</span>"
 
 #: gtk/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2376,7 +2366,7 @@ msgstr "Enthält nicht"
 
 #: gtk/window_filters.glade.h:15
 msgid "For installation or upgrade"
-msgstr "Zur Installation oder Aktualisierung"
+msgstr "Zum Installieren oder Aktualisieren"
 
 #: gtk/window_filters.glade.h:16
 msgid "For removal"
@@ -2447,7 +2437,7 @@ msgstr "Nicht installierte Pakete"
 
 #: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
-msgstr "Zur Installieren oder Aktualisieren vorgemerkte Pakete"
+msgstr "Zum Installieren oder Aktualisieren vorgemerkte Pakete"
 
 #: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
@@ -2463,7 +2453,7 @@ msgstr "Pakete, welche nicht geändert werden"
 
 #: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
-msgstr "Pakete mit defekte Abhängigkeiten"
+msgstr "Pakete mit defekten Abhängigkeiten"
 
 #: gtk/window_filters.glade.h:42
 msgid "Pinned"
@@ -2758,7 +2748,7 @@ msgstr "Version:"
 
 #: gtk/rgterminstallprogress.cc:86
 msgid "<i>Running...</i>"
-msgstr "<i>Läuft...</i>"
+msgstr "<i>Wird ausgeführt...</i>"
 
 #: gtk/rgterminstallprogress.cc:93
 msgid ""

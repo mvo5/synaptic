@@ -149,15 +149,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkTextBuffer *_pkgCommonTextBuffer;
    GtkTextTag *_pkgCommonBoldTag; 
 
-
-   GtkWidget *_stateL;
    GtkImage *_stateP;
-
    GdkPixbuf *_alertPix;
    
    GtkWidget *_importP;
-   GtkWidget *_importL;   
-   GtkWidget *_infoL;
    
    GtkWidget *_descrView;
    GtkTextBuffer *_descrBuffer;
@@ -166,15 +161,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkTextBuffer *_filesBuffer;
   
    GtkWidget *_depP;
-   
    GtkWidget *_depTab;
 
-   GtkWidget *_removeDepsB;
-   
-   GtkStyle *_redStyle;
-   GtkStyle *_yellowStyle;
-   GtkStyle *_blackStyle;
-   
    GtkWidget *_rdepList; /* gtktreeview */
    GtkListStore *_rdepListStore;
 

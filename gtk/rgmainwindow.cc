@@ -959,7 +959,7 @@ bool RGMainWindow::showErrors()
     return _userDialog->showErrors();
 }
 
-static void appendTag(GladeXML *xml,const char *widget_name, const char *value)
+static void setLabel(GladeXML *xml,const char *widget_name, const char *value)
 {
     GtkWidget *widget = glade_xml_get_widget(xml,widget_name);
     if(widget==NULL)
@@ -970,7 +970,7 @@ static void appendTag(GladeXML *xml,const char *widget_name, const char *value)
     gtk_label_set_label(GTK_LABEL(widget),utf8(value));
 }
 
-static void appendTag(GladeXML *xml, const char *widget_name, const int value)
+static void setLabel(GladeXML *xml, const char *widget_name, const int value)
 {
     string strVal;
     GtkWidget *widget = glade_xml_get_widget(xml,widget_name);
@@ -1095,33 +1095,33 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
      case RPackage::MKeep:
 	_currentB = _actionB[0];
 	if (installed) 
-	    gtk_label_set_text(GTK_LABEL(_stateL), _("Package is installed."));
+	    setLabel(_gladeXML,"label_state", _("Package is installed."));
 	else
-	    gtk_label_set_text(GTK_LABEL(_stateL), _("Package is not installed."));
+	    setLabel(_gladeXML,"label_state", _("Package is not installed."));
 	break;
 
      case RPackage::MInstall:
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package will be installed."));
+	setLabel(_gladeXML,"label_state", _("Package will be installed."));
 	_currentB = _actionB[1];
 	break;
 	
      case RPackage::MUpgrade:
 	_currentB = _actionB[1];
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package will be upgraded."));
+	setLabel(_gladeXML,"label_state", _("Package will be upgraded."));
 	break;
 	
      case RPackage::MDowngrade:
 	gtk_widget_set_sensitive(_actionB[1], TRUE);
 	_currentB = _actionB[1];
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package will be downgraded."));
+	setLabel(_gladeXML,"label_state", _("Package will be downgraded."));
 	break;
 	
      case RPackage::MRemove:
 	_currentB = _actionB[2];
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package will be uninstalled."));
+	setLabel(_gladeXML,"label_state", _("Package will be uninstalled."));
 	break;
     case RPackage::MBroken:
-      gtk_label_set_text(GTK_LABEL(_stateL), _("Package is broken."));
+      setLabel(_gladeXML,"label_state", _("Package is broken."));
       break;
     case RPackage::MPinned:
     case RPackage::MNew:
@@ -1131,7 +1131,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 
     gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
     if(other & RPackage::OPinned) {
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is pinned."));
+	setLabel(_gladeXML,"label_state", _("Package is pinned."));
 	gtk_widget_set_sensitive(_actionB[2], FALSE);
 	gtk_widget_set_sensitive(_installM, FALSE);
 	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
@@ -1141,7 +1141,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_pinM, FALSE);
     }
     if(other & RPackage::ONew) {
-	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is new."));
+	setLabel(_gladeXML,"label_state", _("Package is new."));
     }
 
     if((pkg->dependsOn("debconf")||pkg->dependsOn("debconf-i18n")) && 
@@ -1162,7 +1162,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     gtk_widget_set_sensitive(_actionB[0], TRUE);
 
     if (pkg->wouldBreak()) {
-      gtk_label_set_text(GTK_LABEL(_stateL), _("Broken dependencies."));
+      setLabel(_gladeXML,"label_state", _("Broken dependencies."));
       gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
 				StatusPixbuf[RPackage::MBroken]);
 
@@ -1430,8 +1430,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 				  _("No package is selected.\n"), 
 				  -1);
 
-	gtk_label_set_text(GTK_LABEL(_infoL), "");
-	gtk_label_set_text(GTK_LABEL(_stateL), "");
+	setLabel(_gladeXML,"label_state", "");
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
 	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
 
@@ -1474,17 +1473,17 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     g_free(msg);
 
     // package info
-    appendTag(_gladeXML,"label_section", pkg->section());
-    appendTag(_gladeXML,"label_priority", pkg->priority());
+    setLabel(_gladeXML,"label_section", pkg->section());
+    setLabel(_gladeXML,"label_priority", pkg->priority());
 #ifdef HAVE_DEBTAGS
-    appendTag(_gladeXML,"label_tags", pkg->tags());
+    setLabel(_gladeXML,"label_tags", pkg->tags());
 #endif
-    appendTag(_gladeXML,"label_maintainer", pkg->maintainer());
-    appendTag(_gladeXML,"label_installed_version", pkg->installedVersion());
-    appendTag(_gladeXML,"label_installed_size", pkg->installedSize());
-    appendTag(_gladeXML,"label_latest_version",pkg->availableVersion());
-    appendTag(_gladeXML,"label_latest_size", pkg->availableInstalledSize());
-    appendTag(_gladeXML,"label_latest_download_size", pkg->availablePackageSize());
+    setLabel(_gladeXML,"label_maintainer", pkg->maintainer());
+    setLabel(_gladeXML,"label_installed_version", pkg->installedVersion());
+    setLabel(_gladeXML,"label_installed_size", pkg->installedSize());
+    setLabel(_gladeXML,"label_latest_version",pkg->availableVersion());
+    setLabel(_gladeXML,"label_latest_size", pkg->availableInstalledSize());
+    setLabel(_gladeXML,"label_latest_download_size", pkg->availablePackageSize());
 
 
     // description
@@ -1935,15 +1934,6 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     _configWin = NULL;
     _aboutPanel = NULL;
     _fmanagerWin = NULL;
-    
-    _blackStyle = gtk_widget_get_style(_win);
-    _redStyle = gtk_style_copy(_blackStyle);
-    GdkColor color;
-    color.red = 0xaa00;
-    color.green = 0x2000;
-    color.blue = 0x2000;
-    gdk_colormap_alloc_color(gtk_widget_get_colormap(_win), &color, FALSE, TRUE);
-    _redStyle->fg[0] = color;
 
     GValue value = {0,};
     g_value_init(&value, G_TYPE_STRING);    
@@ -2820,13 +2810,6 @@ void RGMainWindow::buildInterface()
 
     _stateP = GTK_IMAGE(glade_xml_get_widget(_gladeXML, "image_state"));
     assert(_stateP);
-    _stateL = glade_xml_get_widget(_gladeXML, "label_state");
-    assert(_stateL);
-    gtk_misc_set_alignment(GTK_MISC(_stateL), 0.0, 0.0);
-    _infoL =  glade_xml_get_widget(_gladeXML, "label_info");
-    assert(_infoL);
-    gtk_misc_set_alignment(GTK_MISC(_infoL), 0.0, 0.0);
-    gtk_label_set_justify(GTK_LABEL(_infoL), GTK_JUSTIFY_LEFT);
 
     _descrView = glade_xml_get_widget(_gladeXML, "text_descr");
     assert(_descrView);

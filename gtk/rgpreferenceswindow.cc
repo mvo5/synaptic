@@ -271,7 +271,6 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
 
 void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
 {
-    RGMainWindow *me= (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
     const char *fontName, *propName;
 
     switch(GPOINTER_TO_INT(data)) {

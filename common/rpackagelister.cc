@@ -547,59 +547,34 @@ void RPackageLister::reapplyFilter()
    sortPackages(_sortMode);
 }
 
-
 static const int status_sort_magic = (  RPackage::FInstalled 
 				      | RPackage::FOutdated 
 				      | RPackage::FNew);
-struct statusSortFuncAsc {
+struct statusSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return (x->getFlags() & (status_sort_magic))  <
 	     (y->getFlags() & (status_sort_magic));
 }};
-struct statusSortFuncDes {
-   bool operator() (RPackage *x, RPackage *y) {
-      return (x->getFlags() & (status_sort_magic))  > 
-	     (y->getFlags() & (status_sort_magic));
-}};
 
-struct instSizeSortFuncAsc {
+struct instSizeSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return x->installedSize() < y->installedSize();
 }};
-struct instSizeSortFuncDes {
-   bool operator() (RPackage *x, RPackage *y) {
-      return x->installedSize() > y->installedSize();
-}};
 
-struct dlSizeSortFuncAsc {
+struct dlSizeSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return x->availablePackageSize() < y->availablePackageSize();
 }};
-struct dlSizeSortFuncDes {
-   bool operator() (RPackage *x, RPackage *y) {
-      return x->availablePackageSize() > y->availablePackageSize();
-}};
 
-struct componentSortFuncAsc {
+struct componentSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return x->component() < y->component();
 }};
 
-struct componentSortFuncDes {
-   bool operator() (RPackage *x, RPackage *y) {
-      return x->component() > y->component();
-}};
-
-struct sectionSortFuncAsc {
+struct sectionSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return x->section() < y->section();
 }};
-
-struct sectionSortFuncDes {
-   bool operator() (RPackage *x, RPackage *y) {
-      return x->section() > y->section();
-}};
-
 
 // version string compare
 int verstrcmp(const char *x, const char *y)
@@ -612,48 +587,35 @@ int verstrcmp(const char *x, const char *y)
       return false;
    return true;
 }
-struct versionSortFuncAsc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return verstrcmp(x->availableVersion(),
-		      y->availableVersion());
-}};
 
-struct versionSortFuncDes {
+struct versionSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return verstrcmp(y->availableVersion(),
-		      x->availableVersion());
-}};
-struct instVersionSortFuncAsc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return verstrcmp(x->installedVersion(),
-		      y->installedVersion());
-}};
+		       x->availableVersion());
+   }
+};
 
-struct instVersionSortFuncDes {
+struct instVersionSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
       return verstrcmp(y->installedVersion(),
-		      x->installedVersion());
+		       x->installedVersion());
 }};
 
-struct supportedSortFuncAsc {
-protected:
-   RPackageStatus m_status;
-public:
-   supportedSortFuncAsc(RPackageStatus &s) 
-      : m_status(s) {};
+struct supportedSortFunc {
+ protected:
+   bool _ascent;
+   RPackageStatus _status;
+ public:
+   supportedSortFunc::supportedSortFunc(bool ascent, RPackageStatus &s) 
+      : _ascent(ascent), _status(s) {};
    bool operator() (RPackage *x, RPackage *y) {
-      return m_status.isSupported(x) < m_status.isSupported(y);
-}};
+      if(_ascent)
+	 return _status.isSupported(y) < _status.isSupported(x);
+      else
+	 return _status.isSupported(y) > _status.isSupported(x);
+   }
+};
 
-class supportedSortFuncDes {
-protected:
-   RPackageStatus m_status;
-public:
-   supportedSortFuncDes(RPackageStatus &s) 
-      : m_status(s) {};
-   bool operator() (RPackage *x, RPackage *y) {
-      return m_status.isSupported(y) < m_status.isSupported(x);
-}};
 
 
 void RPackageLister::sortPackages(vector<RPackage *> &packages, 
@@ -668,60 +630,76 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
       qsSortByName(packages, 0, packages.size() - 1);
       break;
    case LIST_SORT_SIZE_ASC:
-      stable_sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<instSizeSortFunc>(true));
       break;
    case LIST_SORT_SIZE_DES:
-      stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<instSizeSortFunc>(false));
       break;
    case LIST_SORT_DLSIZE_ASC:
-      stable_sort(packages.begin(), packages.end(), dlSizeSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<dlSizeSortFunc>(true));
       break;
    case LIST_SORT_DLSIZE_DES:
-      stable_sort(packages.begin(), packages.end(), dlSizeSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<dlSizeSortFunc>(false));
       break;
    case LIST_SORT_COMPONENT_ASC:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), componentSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<componentSortFunc>(true));
       break;
    case LIST_SORT_COMPONENT_DES:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), componentSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 		  
+		  sortFunc<componentSortFunc>(false));
       break;
    case LIST_SORT_SECTION_ASC:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), sectionSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<sectionSortFunc>(true));
       break;
    case LIST_SORT_SECTION_DES:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), sectionSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<sectionSortFunc>(false));
       break;
    case LIST_SORT_STATUS_ASC:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), statusSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<statusSortFunc>(true));
       break;
    case LIST_SORT_STATUS_DES:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), statusSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<statusSortFunc>(false));
       break;
    case LIST_SORT_SUPPORTED_ASC:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), supportedSortFuncAsc(_pkgStatus));
+      stable_sort(packages.begin(), packages.end(), 
+		  supportedSortFunc(true, _pkgStatus));
       break;
    case LIST_SORT_SUPPORTED_DES:
       qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), supportedSortFuncDes(_pkgStatus));
+      stable_sort(packages.begin(), packages.end(), 
+		  supportedSortFunc(false, _pkgStatus));
       break;
    case LIST_SORT_VERSION_ASC:
-      stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<versionSortFunc>(true));
       break;
    case LIST_SORT_VERSION_DES:
-      stable_sort(packages.begin(), packages.end(), versionSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<versionSortFunc>(false));
       break;
    case LIST_SORT_INST_VERSION_ASC:
-      stable_sort(packages.begin(), packages.end(), instVersionSortFuncAsc());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<instVersionSortFunc>(true));
       break;
    case LIST_SORT_INST_VERSION_DES:
-      stable_sort(packages.begin(), packages.end(), instVersionSortFuncDes());
+      stable_sort(packages.begin(), packages.end(), 
+		  sortFunc<instVersionSortFunc>(false));
       break;
    }
 }

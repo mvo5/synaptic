@@ -73,6 +73,24 @@ class RCacheObserver {
    virtual void notifyCachePostChange() = 0;
 };
 
+// base sort class
+// for a example use see sortPackages()
+template<class T>
+class sortFunc {
+ protected:
+   bool _ascent;
+   T cmp;
+ public:
+   sortFunc(bool ascent) : _ascent(ascent) {};
+   bool operator() (RPackage *x, RPackage *y) {
+      if(_ascent) 
+	 return cmp(x,y);
+      else
+	 return cmp(y,x);
+   }
+};
+
+
 class RPackageLister {
 
    protected:

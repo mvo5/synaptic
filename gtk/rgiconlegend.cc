@@ -47,7 +47,6 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
    GtkWidget *hbox, *label, *pix;
 
-   int n_status = RGPackageStatus::N_STATUS_COUNT;
    for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       hbox = gtk_hbox_new(FALSE, 12);
 

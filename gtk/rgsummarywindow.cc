@@ -313,32 +313,43 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     lister->getDownloadSummary(dlCount, dlSize);
 
     if (held)
-	g_string_append_printf(msg,_("%d %s are set on hold\n"), 
-			       held, held > 1 ? _("packages") : _("package"));
+	if(held == 1)
+	    g_string_append_printf(msg,_("1 package is set on hold\n"));
+	else
+	    g_string_append_printf(msg,_("%d packages are set on hold\n"),held);
     if (kept)
-	g_string_append_printf(msg,
-			       _("%d %s are kept back and not upgraded\n"), 
-			       kept, kept > 1 ? _("packages") : _("package"));
+	if(kept == 1)
+	    g_string_append_printf(msg,  _("1 package is kept back and not upgraded\n"));
+	else
+	    g_string_append_printf(msg,  _("%d packages are kept back and not upgraded\n"), kept);
 
     if (toInstall)
-	g_string_append_printf(msg,
-			       _("%d new %s will be installed\n"), 
-			       toInstall, 
-			       toInstall > 1 ? _("packages") : _("package"));
-    
+	if(toInstall == 1)
+	    g_string_append_printf(msg,_("1 new package will be installed\n"));
+	else
+	    g_string_append_printf(msg, _("%d new packages will be installed\n"), toInstall);
+	    
     if (toUpgrade)
-	g_string_append_printf(msg,_("%d %s will be upgraded\n"), toUpgrade,
-			       toUpgrade > 1 ? _("packages") : _("package"));
-    
+	if(toUpgrade == 1)
+	    g_string_append_printf(msg,_("1 package will be upgraded\n"));
+	else
+	    g_string_append_printf(msg,_("%d packages will be upgraded\n"), 
+				   toUpgrade);
+
     if (toRemove)
-	g_string_append_printf(msg,_("%d %s will be removed\n"), toRemove,
-			       toRemove > 1 ? _("packages") : _("package"));
+	if(toRemove == 1)
+	    g_string_append_printf(msg,_("1 package will be removed\n"));
+	else
+	    g_string_append_printf(msg,_("%d packages will be removed\n"), 
+				   toRemove);
     
     if (toDowngrade)
-	g_string_append_printf(msg,_("%d %s will be DOWNGRADED\n"), 
-			       toDowngrade, 
-			       toDowngrade > 1 ? _("packages") : _("package"));
-			   
+	if(toDowngrade == 1)
+	    g_string_append_printf(msg,_("1 package will be DOWNGRADED\n"));
+	else
+	    g_string_append_printf(msg,_("%d packages will be DOWNGRADED\n"), 
+				   toDowngrade);
+
     if (essential) {
 	if(essential == 1)
 	    g_string_append_printf(msg, _("<b>Warning</b>: 1 essential package will be removed\n"));

@@ -773,11 +773,12 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	    if(itermap.find(sec) == itermap.end()) {
 #ifndef HAVE_RPM
 		string str = sec;
+		string suffix;
 		// baaaa, special case for stupid debian package naming
 		if(str=="non-US/non-free") {
-		    str = _("Non US <i>(non free)</i>");
-		} else {
-		string suffix;
+		    str = _("Non US");
+		    suffix = _("non free");
+		}
 		// if we have something like "contrib/web", make "contrib" the 
 		// suffix and translate it independently
 		unsigned int n = str.find("/");
@@ -798,14 +799,13 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		    }
 		}
 		// if we have a suffix, add it
-		if(!suffix.empty()) {
+		//if(!suffix.empty()) {
 		    // complicated, but translators friendly
 		    ostringstream out;
-		    ioprintf(out, _("%s <i>(%s)</i>"),
-			     str.c_str(), suffix.c_str());
+		    ioprintf(out, _("%s (%s) <i>%s</i>"),
+			     str.c_str(), sec.c_str(),suffix.c_str());
 		    str = out.str();
-		}
-		}
+		    //}
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
 #else

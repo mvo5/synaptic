@@ -9,7 +9,7 @@
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
-  <property name="default_width">500</property>
+  <property name="default_width">600</property>
   <property name="default_height">400</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
@@ -64,7 +64,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label1">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">&lt;b&gt;Commit logs:&lt;/b&gt;</property>
+	      <property name="label" translatable="yes">&lt;b&gt;Commit logs&lt;/b&gt;</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -100,7 +100,7 @@
 
 		  <child>
 		    <widget class="GtkTreeView" id="treeview_dates">
-		      <property name="width_request">150</property>
+		      <property name="width_request">200</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="headers_visible">False</property>
@@ -138,7 +138,7 @@
 		      <property name="pixels_above_lines">0</property>
 		      <property name="pixels_below_lines">0</property>
 		      <property name="pixels_inside_wrap">0</property>
-		      <property name="left_margin">0</property>
+		      <property name="left_margin">6</property>
 		      <property name="right_margin">0</property>
 		      <property name="indent">0</property>
 		      <property name="text" translatable="yes"></property>
@@ -146,8 +146,8 @@
 		  </child>
 		</widget>
 		<packing>
-		  <property name="shrink">True</property>
-		  <property name="resize">False</property>
+		  <property name="shrink">False</property>
+		  <property name="resize">True</property>
 		</packing>
 	      </child>
 	    </widget>

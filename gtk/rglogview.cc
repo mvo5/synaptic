@@ -27,7 +27,9 @@
 
 #include "i18n.h"
 
-enum { COLUMN_LOG_DAY, COLUMN_LOG_FILENAME, N_LOG_COLUMNS };
+enum { COLUMN_LOG_DAY, 
+       COLUMN_LOG_FILENAME, 
+       N_LOG_COLUMNS };
 
 void RGLogView::readLogs()
 {
@@ -79,7 +81,16 @@ void RGLogView::readLogs()
       g_free(date);
    }
    g_dir_close(dir);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(store));
+
+   GtkTreeModel *sort_model;
+   /* Create the first tree */
+   sort_model = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
+
+   gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model),
+					 COLUMN_LOG_FILENAME, 
+					 GTK_SORT_ASCENDING);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			   GTK_TREE_MODEL(sort_model));
 }
 
 void RGLogView::cbCloseClicked(GtkWidget *self, void *data)

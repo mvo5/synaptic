@@ -33,7 +33,6 @@
 #include "rgmainwindow.h"
 #include "rconfiguration.h"
 #include "stop.xpm"
-#include "galertpanel.h"
 #include "gsynaptic.h"
 
 #include <iostream>
@@ -71,11 +70,9 @@ void RGZvtInstallProgress::finishUpdate()
 	       ? "true" : "false");
   
   if (!RWriteConfigFile(*_config)) {
-    _error->DumpErrors();
-    gtk_run_alert_panel(_win,
-			_("Error"), 
-			_("An error occurred while saving configurations."),
-			_("OK"), NULL, NULL);
+    _error->Error(_("An error occurred while saving configurations."));
+    RGUserDialog userDialog(this);
+    userDialog.showErrors();
   }
   
   if(res==0 && gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF))) {

@@ -20,62 +20,114 @@
  * USA
  */
 
+#include <apt-pkg/error.h>
 
 #include "rguserdialog.h"
 
-
-bool RGUserDialog::confirm(const char *message)
+static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {
-      GtkWidget *dialog;
-      GtkResponseType res;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-		      		      GTK_DIALOG_DESTROY_WITH_PARENT,
-				      GTK_MESSAGE_QUESTION,
-				      GTK_BUTTONS_YES_NO,
-				      "%s", message);
-      g_signal_connect(GTK_OBJECT (dialog), "response",
-		       G_CALLBACK (this->actionResponse),
-		       (gpointer) &res);
-      gtk_dialog_run(GTK_DIALOG(dialog));
-      gtk_widget_destroy(dialog);
-      return (res == GTK_RESPONSE_YES);
+    GtkResponseType *res = (GtkResponseType*) user_data;
+    *res = (GtkResponseType) id;
 }
 
-void RGUserDialog::warning(const char *message)
+bool RGUserDialog::message(const char *msg,
+			   RUserDialog::DialogType dialog,
+			   RUserDialog::ButtonsType buttons,
+			   bool defres)
 {
-      GtkWidget *dialog;
-      GtkResponseType res;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-		      		      GTK_DIALOG_DESTROY_WITH_PARENT,
-				      GTK_MESSAGE_WARNING,
-				      GTK_BUTTONS_OK,
-				      "%s", message);
-      gtk_dialog_run(GTK_DIALOG(dialog));
-      gtk_widget_destroy(dialog);
+    GtkWidget *dia;
+    GtkResponseType res;
+    GtkMessageType gtkmessage;
+    GtkButtonsType gtkbuttons;
+
+    switch(dialog) {
+	case RUserDialog::DialogInfo:
+	    gtkmessage = GTK_MESSAGE_INFO;
+	    gtkbuttons = GTK_BUTTONS_OK;
+	    break;
+	case RUserDialog::DialogWarning:
+	    gtkmessage = GTK_MESSAGE_WARNING;
+	    gtkbuttons = GTK_BUTTONS_OK;
+	    break;
+	case RUserDialog::DialogError:
+	    gtkmessage = GTK_MESSAGE_ERROR;
+	    gtkbuttons = GTK_BUTTONS_OK;
+	    break;
+	case RUserDialog::DialogQuestion:
+	    gtkmessage = GTK_MESSAGE_QUESTION;
+	    gtkbuttons = GTK_BUTTONS_YES_NO;
+	    break;
+    }
+
+    switch(buttons) {
+	case RUserDialog::ButtonsDefault:
+	    break;
+	case RUserDialog::ButtonsOk:
+	    gtkbuttons = GTK_BUTTONS_OK;
+	    break;
+	case RUserDialog::ButtonsOkCancel:
+	    gtkbuttons = GTK_BUTTONS_OK_CANCEL;
+	    break;
+	case RUserDialog::ButtonsYesNo:
+	    gtkbuttons = GTK_BUTTONS_YES_NO;
+	    break;
+    }
+
+    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
+				 GTK_DIALOG_DESTROY_WITH_PARENT,
+				 gtkmessage, gtkbuttons, "%s", msg);
+
+    if (defres == false) {
+	switch(buttons) {
+	    case RUserDialog::ButtonsOkCancel:
+		gtk_dialog_set_default_response(GTK_DIALOG(dia),
+						GTK_RESPONSE_CANCEL);
+		break;
+	    case RUserDialog::ButtonsYesNo:
+		gtk_dialog_set_default_response(GTK_DIALOG(dia),
+						GTK_RESPONSE_NO);
+		break;
+	}
+    }
+
+    g_signal_connect(GTK_OBJECT(dia), "response",
+		     G_CALLBACK(actionResponse), (gpointer) &res);
+    gtk_dialog_run(GTK_DIALOG(dia));
+    gtk_widget_destroy(dia);
+    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
 }
 
-void RGUserDialog::info(const char *message)
+bool RGUserDialog::showErrors()
 {
-      GtkWidget *dialog;
-      GtkResponseType res;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-		      		      GTK_DIALOG_DESTROY_WITH_PARENT,
-				      GTK_MESSAGE_INFO,
-				      GTK_BUTTONS_OK,
-				      "%s", message);
-      gtk_dialog_run(GTK_DIALOG(dialog));
-      gtk_widget_destroy(dialog);
-}
+    if (_error->empty())
+	return false;
+    
+    bool iserror = false;
+    if (_error->PendingError())
+	iserror = true;
+        
+    int lines = 0;
+    string message = "";
+    while (!_error->empty()) {
+	string tmp;
 
-void RGUserDialog::error(const char *message)
-{
-      GtkWidget *dialog;
-      GtkResponseType res;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-		      		      GTK_DIALOG_DESTROY_WITH_PARENT,
-				      GTK_MESSAGE_ERROR,
-				      GTK_BUTTONS_OK,
-				      "%s", message);
-      gtk_dialog_run(GTK_DIALOG(dialog));
-      gtk_widget_destroy(dialog);
+	_error->PopMessage(tmp);
+       
+        // ignore some stupid error messages
+	if (tmp == "Tried to dequeue a fetching object")
+	   continue;
+
+	if (message.empty())
+	    message = tmp;
+	else
+	    message = message + "\n\n" + tmp;
+    }
+
+    if (iserror)
+	error(message.c_str());
+    else
+	warning(message.c_str());
+    
+    return true;
 }
+// vim:sts=4:sw=4

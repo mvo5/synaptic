@@ -34,6 +34,7 @@
 #include <regex.h>
 
 #include "rpackage.h"
+#include "ruserdialog.h"
 #include "tree.hh"
 
 using namespace std;
@@ -56,14 +57,6 @@ public:
    virtual void notifyChange(RPackage *pkg) = 0;
 };
 
-
-class RUserDialog {
-public:
-   virtual bool confirm(const char *message) = 0;
-   virtual void warning(const char *message) = 0;
-   virtual void info(const char *message) = 0;
-   virtual void error(const char *message) = 0;
-};
 
 
 class RPackageLister
@@ -236,3 +229,5 @@ public:
 
 
 #endif
+
+// vim:sts=4:sw=4

@@ -54,7 +54,6 @@
 #include "rgmainwindow.h"
 #include "rgfindwindow.h"
 #include "rpackagefilter.h"
-#include "galertpanel.h"
 #include "raptoptions.h"
 
 #include "rgfiltermanager.h"
@@ -761,39 +760,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
 bool RGMainWindow::showErrors()
 {
-    string message;
-    int lines;
-    
-    if (_error->empty())
-	return FALSE;
-    
-    bool error = false;
-    if (_error->PendingError())
-	error = true;
-        
-    lines = 0;
-    message = "";
-    while (!_error->empty()) {
-	string tmp;
-
-	_error->PopMessage(tmp);
-       
-        // ignore some stupid error messages
-	if (tmp == "Tried to dequeue a fetching object")
-	   continue;
-
-	if (message.empty())
-	    message = tmp;
-	else
-	    message = message + "\n\n" + tmp;
-    }
-
-    if (error)
-	_userDialog->error(message.c_str());
-    else
-	_userDialog->warning(message.c_str());
-    
-    return TRUE;
+    return _userDialog->showErrors();
 }
 
 
@@ -1480,15 +1447,14 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
     me->setInterfaceLocked(TRUE);
     
     if (pkg->isImportant()) {
-	int res;
-	res = me->_userDialog->confirm(
+	bool res;
+	res = me->_userDialog->warning(
 		_("Removing this package may render the system unusable.\n"
-		  "Are you sure you want to do that?"));
-	if (res == GTK_ALERT_DEFAULT) {
+		  "Are you sure you want to do that?"), false);
+	if (res == false) {
 	  me->_blockActions = TRUE;
 	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_currentB), TRUE);
 	  me->_blockActions = FALSE;
-
 	} else {
 	  pkg->setRemoveWithDeps(TRUE);
 	}
@@ -1581,7 +1547,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
     
     refreshFilterMenu();
 
-    _userDialog = new RGUserDialog(_win);
+    _userDialog = new RGUserDialog(this);
 
     packLister->setUserDialog(_userDialog);
     
@@ -2571,8 +2537,8 @@ void RGMainWindow::saveState()
     _config->Set("Synaptic::TreeDisplayMode", _treeDisplayMode);
 
     if (!RWriteConfigFile(*_config)) {
-      _error->DumpErrors();
-      _userDialog->error(_("An error occurred while saving configurations."));
+	_error->Error(_("An error occurred while saving configurations."));
+	_userDialog->showErrors();
     }
     if(!_roptions->store())
       cerr << "error storing raptoptions" << endl;

@@ -270,13 +270,13 @@ GtkWidget *RGSrcEditor::CreateWidget()
 void RGSrcEditor::Run()
 {
   if (lst.ReadSources() == false) {
-    _error->DumpErrors();
-    _userDialog->error(_("Cannot read sources.list file"));
+    _error->Error(_("Cannot read sources.list file"));
+    _userDialog->showErrors();
     return;
   }
   if (lst.ReadVendors() == false) {
-    _error->DumpErrors();
-    _userDialog->error(_("Cannot read vendors.list file"));
+    _error->Error(_("Cannot read vendors.list file"));
+    _userDialog->showErrors();
     return;
   }
 

@@ -32,12 +32,11 @@
 
 #include "rpackagelister.h"
 
-#include "galertpanel.h"
-
 #include <stdio.h>
 #include <string>
 
 #include "rgsummarywindow.h"
+#include "rguserdialog.h"
 
 
 
@@ -391,11 +390,11 @@ bool RGSummaryWindow::showAndConfirm()
     gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
     gtk_main();
 
+    RGUserDialog userDialog(this);
     if (_confirmed && _potentialBreak
-	&& gtk_run_alert_panel(_win, _("WARNING!!!"),
-			   _("Essential packages will be removed.\n"
-			     "That can render your system unusable!!!\n"),
-			   _("Cancel"), _("Proceed System Breakage"), NULL) == GTK_ALERT_DEFAULT)
+	&& userDialog.warning(_("Essential packages will be removed.\n"
+			  	"That can render your system unusable!!!\n")
+			      , false) == false)
 	return false;
     
     _config->Set("Synaptic::Download-Only",

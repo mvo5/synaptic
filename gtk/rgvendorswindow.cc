@@ -3,7 +3,6 @@
 #include "rgsrcwindow.h"
 #include "config.h"
 #include "i18n.h"
-#include "galertpanel.h"
 
 RGVendorsEditor::RGVendorsEditor(RGWindow *parent, SourcesList &_lst)
   : RGWindow(parent, "vendors"), lst(_lst)

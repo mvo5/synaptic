@@ -40,8 +40,8 @@
 #include <unistd.h>
 
 #include "rgmainwindow.h"
+#include "rguserdialog.h"
 #include "locale.h"
-#include "galertpanel.h"
 
 #include "gsynaptic.h"
 
@@ -109,14 +109,14 @@ int main(int argc, char **argv)
     //XSynchronize(dpy, 1);
 
     if (getuid() != 0) {
-	gtk_run_alert_panel(NULL, _("Error"),
-			    _("You must run this program as the root user."),
-			    _("OK"), NULL, NULL);
+	RGUserDialog userDialog;
+	userDialog.error(_("You must run this program as the root user."));
 	exit(1);
     }   
   
     if (!RInitConfiguration("synaptic.conf")) {
-	_error->DumpErrors();
+	RGUserDialog userDialog;
+	userDialog.showErrors();
 	exit(1);
     }
 
@@ -126,8 +126,9 @@ int main(int argc, char **argv)
     // read the cmdline
     CommandLine CmdL(Args, _config);
     if(CmdL.Parse(argc,(const char**)argv) == false) {
-      _error->DumpErrors();
-      exit(1);
+	RGUserDialog userDialog;
+	userDialog.showErrors();
+	exit(1);
     }  
     if(_config->FindB("help") == true)
       ShowHelp(CmdL);

@@ -32,7 +32,7 @@
 #include <apt-pkg/error.h>
 
 #include "rgfetchprogress.h"
-#include "galertpanel.h"
+#include "rguserdialog.h"
 #include "gsynaptic.h"
 
 #include <stdio.h>
@@ -135,22 +135,17 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 bool RGFetchProgress::MediaChange(string Media,string Drive)
 {
     string msg;
-    int res;
     
     msg = _("Please insert the disk labeled:\n")+Media+_("\nin drive ")+Drive;
 
-    res = gtk_run_alert_panel(_win,
-			  _("Disk Change"), (char*)msg.c_str(),
-			  _("Continue"), _("Cancel"), NULL);
+    RGUserDialog userDialog(this);
+    _cancelled = !userDialog.proceed(msg.c_str());
 
     Update = true;
 
     RGFlushInterface();
 
-    if (res != GTK_ALERT_DEFAULT)
-       _cancelled = true;
-   
-    return (res == GTK_ALERT_DEFAULT) ? true : false;
+    return !_cancelled;
 }
 
 

@@ -24,9 +24,6 @@
 #include "i18n.h"
 
 #include "rgfindwindow.h"
-#include "galertpanel.h"
-
-
 
 void RGFindWindow::show()
 {

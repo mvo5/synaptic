@@ -22,32 +22,31 @@
 
 #ifndef RGUSERDIALOG_H
 #define RGUSERDIALOG_H
-#include "rpackagelister.h"
 
-#include "galertpanel.h"
-
+#include "ruserdialog.h"
+#include "rgwindow.h"
 
 class RGUserDialog : public RUserDialog
 {
 
 protected:
 
-   GtkWidget *_parentWindow;
-
-   static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
-   {
-      GtkResponseType *res = (GtkResponseType*) user_data;
-      *res = (GtkResponseType) id;
-   }
+    GtkWidget *_parentWindow;
 
 public:
 
-   RGUserDialog(GtkWidget *parent = NULL) : _parentWindow(parent) {};
+    RGUserDialog() : _parentWindow(0) {};
+    RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
+    RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
 
-   virtual bool confirm(const char *message);
-   virtual void warning(const char *message);
-   virtual void info(const char *message);
-   virtual void error(const char *message);
+    virtual bool message(const char *msg,
+	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
+	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
+	    bool defres=true);
+
+    virtual bool showErrors();
 };
 
 #endif
+
+// vim:sts=4:sw=4

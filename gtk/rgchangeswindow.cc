@@ -32,8 +32,6 @@
 
 #include "rpackagelister.h"
 
-#include "galertpanel.h"
-
 #include <stdio.h>
 #include <string>
 

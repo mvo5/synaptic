@@ -28,8 +28,7 @@
 
 #include "rconfiguration.h"
 #include "rgconfigwindow.h"
-
-#include "galertpanel.h"
+#include "rguserdialog.h"
 
 
 void RGConfigWindow::saveAction(GtkWidget *self, void *data)
@@ -56,10 +55,9 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     
 
   if (!RWriteConfigFile(*_config)) {
-    _error->DumpErrors();
-    gtk_run_alert_panel(me->_win,
-			_("Error"), _("An error occurred while saving configurations."),
-			_("OK"), NULL, NULL);
+    _error->Error(_("An error occurred while saving configurations."));
+    RGUserDialog userDialog(me);
+    userDialog.showErrors();
   }
 }
 

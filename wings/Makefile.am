@@ -36,6 +36,7 @@ wsynaptic_SOURCES=\
 	rwsourceswindow.h\
 	rwsummarywindow.cc\
 	rwsummarywindow.h\
+	rwuserdialog.cc\
 	rwuserdialog.h\
 	rwwindow.cc\
 	rwwindow.h

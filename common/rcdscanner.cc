@@ -291,14 +291,14 @@ bool RCDScanner::start(RCDScanProgress *progress)
         UnmountCdrom(CDROM);
 
         progress->update(_("Waiting for disc..."), STEP_WAIT);
-        _userDialog->info(_("Insert a disc in the drive."));
+	if (_userDialog->proceed(_("Insert a disc in the drive.")) == false)
+	    return false;
 
         // Mount the new CDROM
         progress->update(_("Mounting CD-ROM..."), STEP_MOUNT);
 
-        if (MountCdrom(CDROM) == false) {
+        if (MountCdrom(CDROM) == false)
 	    return _error->Error("Failed to mount the cdrom.");
-	}
         _cdromMounted = true;
     }
     

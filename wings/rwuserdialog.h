@@ -20,38 +20,31 @@
  * USA
  */
 
+#ifndef RWUSERDIALOG_H
+#define RWUSERDIALOG_H
+
 #include <WINGs/WINGs.h>
 
 #include "rpackagelister.h"
 
+class RWUserDialog : public RWserDialog
+{
 
-class RWUserDialog : public RUserDialog {
-   WMScreen *_scr;
+protected:
+
+    WMScreen *_scr;
+    WMWindow *_parentWindow;
 
 public:
 
-   WMWindow *_confirmDialogOwner;
+    RWUserDialog(WMScreen *scr) : _scr(scr), _parentWindow(0) {};
 
-   RWUserDialog(WMScreen *scr) : _scr(scr), _confirmDialogOwner(0) {};
-
-   virtual bool confirm(const char *message) {
-       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Confirm", message,
-			      "Yes", "No", NULL) == WAPRDefault;
-   }
-
-   virtual bool warning(const char *message) {
-       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Warning", message,
-			      "Ok", NULL) == WAPRDefault;
-   }
-
-   virtual bool info(const char *message) {
-       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Info", message,
-			      "Ok", NULL) == WAPRDefault;
-   }
-
-   virtual bool error(const char *message) {
-       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Error", message,
-			      "Ok", NULL) == WAPRDefault;
-   }
-
+    virtual bool message(const char *msg,
+	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
+	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
+	    bool defres=true);
 };
+
+#endif
+
+// vim:sts=4:sw=4

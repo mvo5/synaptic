@@ -49,8 +49,9 @@ enum {
 
 enum {
    FETCH_PIXMAP_COLUMN,
-   SIZE_COLUMN,
-   URL_COLUMN,
+   FETCH_SIZE_COLUMN,
+   FETCH_DESCR_COLUMN,
+   FETCH_URL_COLUMN,
    N_FETCH_COLUMNS
 };
 
@@ -75,9 +76,10 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    assert(_mainProgressBar);
 
    _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
-   _tableListStore = gtk_list_store_new(3,
+   _tableListStore = gtk_list_store_new(N_FETCH_COLUMNS,
                                         GDK_TYPE_PIXBUF,
-                                        G_TYPE_STRING, G_TYPE_STRING);
+                                        G_TYPE_STRING, G_TYPE_STRING, 
+					G_TYPE_STRING);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_table),
                            GTK_TREE_MODEL(_tableListStore));
 
@@ -96,14 +98,22 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    /* size */
    renderer = gtk_cell_renderer_text_new();
    column = gtk_tree_view_column_new_with_attributes(_("Size"), renderer,
-                                                     "text", SIZE_COLUMN,
+                                                     "text", FETCH_SIZE_COLUMN,
                                                      NULL);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
+
+   /* descr */
+   renderer = gtk_cell_renderer_text_new();
+   column = gtk_tree_view_column_new_with_attributes(_("Package"), renderer,
+                                                     "text",FETCH_DESCR_COLUMN,
+						     NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
    /* url */
    renderer = gtk_cell_renderer_text_new();
    column = gtk_tree_view_column_new_with_attributes(_("URI"), renderer,
-                                                     "text", URL_COLUMN, NULL);
+                                                     "text", FETCH_URL_COLUMN, 
+						     NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
 
@@ -214,6 +224,7 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc & Itm, int status)
 
    if (Itm.Owner->ID == 0) {
       Item item;
+      item.descr = Itm.ShortDesc;
       item.uri = Itm.Description;
       item.size = string(SizeToStr(Itm.Owner->FileSize));
       item.status = status;
@@ -443,8 +454,9 @@ void RGFetchProgress::refreshTable(int row, bool append)
    }
    gtk_list_store_set(_tableListStore, &iter,
                       FETCH_PIXMAP_COLUMN, buf,
-                      SIZE_COLUMN, _items[row].size.c_str(),
-                      URL_COLUMN, _items[row].uri.c_str(), -1);
+                      FETCH_SIZE_COLUMN, _items[row].size.c_str(),
+                      FETCH_DESCR_COLUMN, _items[row].descr.c_str(),
+                      FETCH_URL_COLUMN, _items[row].uri.c_str(), -1);
    path = gtk_tree_model_get_path(GTK_TREE_MODEL(_tableListStore), &iter);
    if(!_cursorDirty)
       gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),

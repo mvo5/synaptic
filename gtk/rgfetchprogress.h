@@ -35,6 +35,7 @@
 class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
 
    struct Item {
+      string descr;
       string uri;
       string size;
       int status;

@@ -762,8 +762,6 @@ void RPackage::setInstall()
 void RPackage::setReInstall(bool flag)
 {
     _depcache->SetReInstall(*_package, flag);
-    _config->Set("APT::Get::ReInstall", flag);
-    
     if (_notify)
 	_lister->notifyChange(this);
 }
@@ -780,6 +778,7 @@ void RPackage::setRemove(bool purge)
    Fix.InstallProtect();
    Fix.Resolve(true);
 
+   _depcache->SetReInstall(*_package, false);
    _depcache->MarkDelete(*_package, purge);
 
    if (_notify)

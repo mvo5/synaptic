@@ -1071,7 +1071,7 @@ void RGMainWindow::buildInterface()
    // build popup-menu
    GtkWidget *menuitem, *img;
    _popupMenu = gtk_menu_new();
-   menuitem = gtk_image_menu_item_new_with_label(_("No Changes"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Unmark"));
    img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
@@ -1113,7 +1113,7 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 #ifndef HAVE_RPM
-   menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Configuration"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Remove Completely"));
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);

@@ -59,6 +59,7 @@ void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 bool RGInstallProgressMsgs::close()
 {
     gtk_main_quit();
+    return true;
 }
 
 void RGInstallProgressMsgs::addText(const char *text, bool bold)

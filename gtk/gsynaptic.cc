@@ -33,10 +33,7 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/cmndline.h>
 #include <apt-pkg/error.h>
-
 #include <X11/Xlib.h>
-#include <gdk/gdkx.h>
-
 #include <unistd.h>
 #include <signal.h>
 
@@ -44,7 +41,7 @@
 #include "rguserdialog.h"
 #include "locale.h"
 #include "stdio.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 bool ShowHelp(CommandLine &CmdL)
 {
@@ -76,92 +73,6 @@ CommandLine::Args Args[] = {
   {0,0,0,0}
 };
 
-void RGFlushInterface()
-{
-    XSync(gdk_display, False);
-
-    while (gtk_events_pending()) {
-	gtk_main_iteration();
-    }
-}
-
-bool is_binary_in_path(char *program)
-{
-    gchar **path = g_strsplit(getenv("PATH"), ":",0);
-
-    for(int i=0; path[i]!=NULL;i++) {
-	char *s = g_strdup_printf("%s/%s",path[i],program);
-	if(FileExists(s)) {
-	    g_free(s);
-	    g_strfreev(path);
-	    return true;
-	}
-	g_free(s);
-    }
-    g_strfreev(path);
-    return false;
-}
-
-char* gtk_get_string_from_color(GdkColor *colp)
-{
-    static char *_str = NULL;
-
-    g_free(_str);
-    if(colp == NULL) {
-	_str = g_strdup("");
- 	return _str;
-    }
-    _str = g_strdup_printf("#%4X%4X%4X", colp->red, colp->green, colp->blue);
-    for (char *ptr = _str; *ptr; ptr++)
-	if (*ptr == ' ')
-	    *ptr = '0';
-
-    return _str;
-}
-
-void gtk_get_color_from_string(const char *cpp, GdkColor **colp){
-   GdkColor *new_color;
-   int result;
-
-   // "" means no color
-   if(strlen(cpp) == 0) {
-     *colp = NULL;
-     return;
-   }
-   
-   GdkColormap *colormap = gdk_colormap_get_system ();
-
-   new_color = g_new (GdkColor, 1);
-   result = gdk_color_parse (cpp, new_color);
-   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
-   *colp = new_color;
-}
-
-const char *utf8_to_locale(const char *str)
-{
-    static char *_str = NULL;
-    if (str == NULL)
-	return NULL;
-    g_free(_str);
-    _str = NULL;
-    if (g_utf8_validate(str, -1, NULL) == false)
-	return NULL;
-    _str = g_locale_from_utf8(str, -1, NULL, NULL, NULL);
-    return _str;
-}
-
-const char *utf8(const char *str)
-{
-    static char *_str = NULL;
-    if (str == NULL)
-	return NULL;
-    g_free(_str);
-    _str = NULL;
-    if (g_utf8_validate(str, -1, NULL) == true)
-	return str;
-    _str = g_locale_to_utf8(str, -1, NULL, NULL, NULL);
-    return _str;
-}
 
 static void SetLanguages()
 {
@@ -233,12 +144,16 @@ int main(int argc, char **argv)
     SetLanguages();
 
     // we ignore sigpipe as it is thrown sporadic on 
-    // debian, kernel 2.6 systems
+    // my debian, kernel 2.6 systems
     struct sigaction new_act;
     memset( &new_act, 0, sizeof( new_act ) );
     new_act.sa_handler = SIG_IGN;
     sigaction( SIGPIPE, &new_act, NULL);
 
+    // init the static pkgStatus class. this loads the status pixmaps 
+    // and colors
+    RPackageStatus::pkgStatus.init();
+    
     RPackageLister *packageLister = new RPackageLister();
     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
     RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);
@@ -287,49 +202,5 @@ int main(int argc, char **argv)
     return 0;
 }
 
-/*
- * SizeToStr: Converts a size long into a human-readable SI string
- * ----------------------------------------------------
- * A maximum of four digits are shown before conversion to the next highest
- * unit. The maximum length of the string will be five characters unless the
- * size is more than ten yottabytes.
- *
- * mvo: we use out own SizeToStr function as the SI spec says we need a 
- *      space between the number and the unit (this isn't the case in stock apt
- */
-string SizeToStr(double Size)
-{
-    char S[300];
-    double ASize;
-    if (Size >= 0)
-    {
-        ASize = Size;
-    } else {
-        ASize = -1*Size;
-    }
-
-    /* Bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, exabytes,
-     * zettabytes, yottabytes.
-     */
-    char Ext[] = {'\0', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'};
-    int I = 0;
-    while (I <= 8)
-    {
-        if (ASize < 100 && I != 0)
-        {
-            sprintf(S, "%.1f %cB", ASize, Ext[I]);
-            break;
-        }
-
-        if (ASize < 10000)
-        {
-            sprintf(S, "%.0f %cB", ASize, Ext[I]);
-            break;
-        }
-        ASize /= 1000.0;
-        I++;
-    }
-    return S;
-}
 
 // vim:sts=4:sw=4

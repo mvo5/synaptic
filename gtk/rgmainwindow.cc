@@ -67,16 +67,6 @@
 #include "gsynaptic.h"
 
 // icons and pixmaps
-#include "alert.xpm"
-#include "keepM.xpm"
-#include "brokenM.xpm"
-#include "downgradeM.xpm"
-#include "heldM.xpm"
-#include "installM.xpm"
-#include "removeM.xpm"
-#include "upgradeM.xpm"
-#include "newM.xpm"
-#include "holdM.xpm"
 #include "synaptic_mini.xpm"
 
 
@@ -99,10 +89,6 @@ enum {DEP_NAME_COLUMN,             /* text */
       DEP_IS_NOT_AVAILABLE_COLOR,  /* foreground */
       DEP_PKG_INFO};               /* additional info (install 
 				      not installed) as text */
-
-GdkPixbuf *StatusPixbuf[13];
-GdkColor *StatusColors[13];
-
 
 #define SELECTED_MENU_INDEX(popup) \
     (int)gtk_object_get_data(GTK_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(popup))))), "index")
@@ -1133,9 +1119,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     case RPackage::MBroken:
       setLabel(_gladeXML,"label_state", _("Package is broken."));
       break;
-    case RPackage::MPinned:
-    case RPackage::MNew:
-	/* nothing */
 	break;
     }
 
@@ -1170,25 +1153,9 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
     _blockActions = FALSE;
 
-    if (pkg->wouldBreak()) {
-      setLabel(_gladeXML,"label_state", _("Broken dependencies."));
-      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-				StatusPixbuf[RPackage::MBroken]);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+			      RPackageStatus::pkgStatus.getPixbuf(pkg));
 
-    } else if (mstatus==RPackage::MKeep && status==RPackage::SInstalledOutdated) {
-      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-				StatusPixbuf[RPackage::MHeld]);
-    }  else if(other & RPackage::ONew) {
-      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-				StatusPixbuf[RPackage::MNew]);
-    } else if (locked) {
-      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-				StatusPixbuf[RPackage::MPinned]);
-    } else {
-      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-				StatusPixbuf[(int)mstatus]);
-    }
-    
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_currentB)) == FALSE) {
 	_blockActions = TRUE;
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_currentB), TRUE);
@@ -1444,7 +1411,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 	setLabel(_gladeXML,"label_state", "");
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
-	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
+	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), NULL);
 
 	gtk_widget_set_sensitive(_pkginfo, FALSE);
 
@@ -1841,42 +1808,6 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 }
 
 
-void RGMainWindow::setColors(bool useColors)
-{
-    if(useColors) {
-	/* we use colors */
-	gtk_get_color_from_string(_config->Find("Synaptic::MKeepColor", "").c_str(),
-		      &StatusColors[(int)RPackage::MKeep]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MInstallColor", 
-				    "#ccffcc").c_str(),
-		      &StatusColors[(int)RPackage::MInstall]); 
-	gtk_get_color_from_string(_config->Find("Synaptic::MUpgradeColor", 
-				    "#ffff00").c_str(),
-		      &StatusColors[(int)RPackage::MUpgrade]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
-		      &StatusColors[(int)RPackage::MDowngrade]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MRemoveColor", 
-				    "#f44e80").c_str(),
-		      &StatusColors[(int)RPackage::MRemove]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MHeldColor", "").c_str(),
-		      &StatusColors[(int)RPackage::MHeld]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MBrokenColor", 
-				    "#e00000").c_str(),
-		      &StatusColors[(int)RPackage::MBroken/*broken*/]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MPinColor", 
-				    "#ccccff").c_str(),
-		      &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
-	gtk_get_color_from_string(_config->Find("Synaptic::MNewColor", 
-				    "#ffffaa").c_str(),
-		      &StatusColors[(int)RPackage::MNew/*new*/]);
-    } else {
-	/* no colors */
-	for(int i=0;i<(int)RPackage::MNew;i++)
-	    StatusColors[i] = NULL;
-    }
-}
-
-
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     : RGGladeWindow(NULL, name), _lister(packLister),  _activeTreeModel(0),
       _treeView(0)
@@ -1894,40 +1825,6 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     _toolbarStyle = (GtkToolbarStyle)_config->FindI("Synaptic::ToolbarState",
 						    (int) GTK_TOOLBAR_BOTH);
 
-    // get the pixbufs
-    StatusPixbuf[(int)RPackage::MKeep] = 	
-      gdk_pixbuf_new_from_xpm_data(keepM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MInstall] = 
-      gdk_pixbuf_new_from_xpm_data(installM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MUpgrade] =
-      gdk_pixbuf_new_from_xpm_data(upgradeM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MDowngrade] =
-      gdk_pixbuf_new_from_xpm_data(downgradeM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MRemove] =
-      gdk_pixbuf_new_from_xpm_data(removeM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MHeld] =
-      gdk_pixbuf_new_from_xpm_data(heldM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MBroken] =
-      gdk_pixbuf_new_from_xpm_data(brokenM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MPinned] =
-      gdk_pixbuf_new_from_xpm_data(pinM_xpm);
-  
-    StatusPixbuf[(int)RPackage::MNew] =
-      gdk_pixbuf_new_from_xpm_data(newM_xpm);
-  
-    StatusPixbuf[10] =
-      gdk_pixbuf_new_from_xpm_data(alert_xpm);
-
-
-    // get some color values
-    setColors(_config->FindB("Synaptic::UseStatusColors", TRUE));
 
     buildInterface();
     
@@ -3317,8 +3214,8 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 	// it should be fast enough with the traditional refreshTable
 	// approach, but this is just a educated guess
 	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
-						 GTK_TREE_VIEW(_treeView));
-	_pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree, GTK_TREE_VIEW(_treeView));
+						   GTK_TREE_VIEW(_treeView));
+	_pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree,  GTK_TREE_VIEW(_treeView));
     } 
   
     _blockActions = FALSE;

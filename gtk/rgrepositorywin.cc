@@ -28,7 +28,7 @@
 #include <glib.h>
 #include <cassert>
 #include "rgrepositorywin.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 #include "config.h"
 #include "i18n.h"
 

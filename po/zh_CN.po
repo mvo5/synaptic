@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-03 01:38+0100\n"
+"POT-Creation-Date: 2004-01-03 02:58+0100\n"
 "PO-Revision-Date: 2003-11-30 0:46+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -810,20 +810,20 @@ msgstr "将会全新安装的软件包"
 msgid "To be kept"
 msgstr "将会维持原状的软件包"
 
-#: gtk/rgpreferenceswindow.cc:249 gtk/rgzvtinstallprogress.cc:80
+#: gtk/rgpreferenceswindow.cc:199 gtk/rgzvtinstallprogress.cc:80
 #: gtk/rgmainwindow.cc:3573
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
 
-#: gtk/rgpreferenceswindow.cc:292
+#: gtk/rgpreferenceswindow.cc:242
 msgid "Choose font"
 msgstr "选择字体"
 
-#: gtk/rgpreferenceswindow.cc:547
+#: gtk/rgpreferenceswindow.cc:497
 msgid "Color selection"
 msgstr "颜色选择"
 
-#: gtk/rgpreferenceswindow.cc:727
+#: gtk/rgpreferenceswindow.cc:678
 msgid "ignore"
 msgstr "忽略"
 
@@ -832,7 +832,7 @@ msgstr "忽略"
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gtk/rgpreferenceswindow.cc:769 gtk/window_preferences.glade.strings:7
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.strings:7
 msgid "Preferences"
 msgstr "首选项"
 
@@ -1669,9 +1669,9 @@ msgstr "查找："
 
 #: gtk/window_find.glade.strings:9 gtk/window_main_hpaned.glade.strings:62
 #: gtk/window_main_vpaned.glade.strings:62
-#: gtk/window_preferences.glade.strings:92
-#: gtk/window_preferences.glade.strings:96
-#: gtk/window_preferences.glade.strings:103
+#: gtk/window_preferences.glade.strings:98
+#: gtk/window_preferences.glade.strings:102
+#: gtk/window_preferences.glade.strings:109
 #: gtk/window_disc_name.glade.strings:9 gtk/window_setopt.glade.strings:9
 #: gtk/window_setopt.glade.strings:10 gtk/window_filters.glade.strings:8
 #: gtk/window_filters.glade.strings:72 gtk/window_filters.glade.strings:74
@@ -1723,10 +1723,10 @@ msgstr "软件包名称"
 #: gtk/window_preferences.glade.strings:43
 #: gtk/window_preferences.glade.strings:57
 #: gtk/window_preferences.glade.strings:59
-#: gtk/window_preferences.glade.strings:80
-#: gtk/window_preferences.glade.strings:87
-#: gtk/window_preferences.glade.strings:90
-#: gtk/window_preferences.glade.strings:107
+#: gtk/window_preferences.glade.strings:86
+#: gtk/window_preferences.glade.strings:93
+#: gtk/window_preferences.glade.strings:96
+#: gtk/window_preferences.glade.strings:113
 #: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
 #: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
@@ -2169,7 +2169,7 @@ msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:111
 #: gtk/window_main_vpaned.glade.strings:127
-#: gtk/window_preferences.glade.strings:111
+#: gtk/window_preferences.glade.strings:117
 msgid "Expert"
 msgstr "专家"
 
@@ -2425,8 +2425,9 @@ msgid "Color packages by their status"
 msgstr "依据状态为软件包着色"
 
 #: gtk/window_preferences.glade.strings:60
-msgid "Upgrade:"
-msgstr "升级："
+#, fuzzy
+msgid "Purge: "
+msgstr "彻底删除 (Purge)"
 
 #: gtk/window_preferences.glade.strings:61
 #: gtk/window_preferences.glade.strings:63
@@ -2437,115 +2438,140 @@ msgstr "升级："
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
+#: gtk/window_preferences.glade.strings:79
+#: gtk/window_preferences.glade.strings:81
+#: gtk/window_preferences.glade.strings:83
 msgid "Color"
 msgstr "色彩"
 
 #: gtk/window_preferences.glade.strings:62
-msgid "Downgrade:"
-msgstr "降级："
+#, fuzzy
+msgid "Installed:"
+msgstr "已安装"
 
 #: gtk/window_preferences.glade.strings:64
-msgid "New:"
-msgstr "新增："
+#, fuzzy
+msgid "Available: "
+msgstr "可用的标签"
 
 #: gtk/window_preferences.glade.strings:66
-msgid "Broken:"
-msgstr "已损坏："
+#, fuzzy
+msgid "Update available:"
+msgstr "编辑可用的过滤器"
 
 #: gtk/window_preferences.glade.strings:68
+#, fuzzy
+msgid "Available (locked):"
+msgstr ""
+"\n"
+"最新版软件包：\n"
+
+#: gtk/window_preferences.glade.strings:70
 msgid "Remove:"
 msgstr "删除："
 
-#: gtk/window_preferences.glade.strings:70
+#: gtk/window_preferences.glade.strings:72
 msgid "Install:"
 msgstr "安装："
 
-#: gtk/window_preferences.glade.strings:72
-msgid "Keep:"
-msgstr "维持原状："
-
 #: gtk/window_preferences.glade.strings:74
-msgid "Held:"
-msgstr "保留永不升级的(Hold)："
+msgid "Upgrade:"
+msgstr "升级："
 
 #: gtk/window_preferences.glade.strings:76
-msgid "Pin:"
-msgstr "标记为永不升级的："
+msgid "Downgrade:"
+msgstr "降级："
 
 #: gtk/window_preferences.glade.strings:78
+#, fuzzy
+msgid "Installed (locked):"
+msgstr ""
+"\n"
+"已安装软件包：\n"
+
+#: gtk/window_preferences.glade.strings:80
+msgid "Broken:"
+msgstr "已损坏："
+
+#: gtk/window_preferences.glade.strings:82
+#, fuzzy
+msgid "Available (New):"
+msgstr "最新版本"
+
+#: gtk/window_preferences.glade.strings:84
 msgid "Columns and Colors"
 msgstr "列和颜色"
 
-#: gtk/window_preferences.glade.strings:79
+#: gtk/window_preferences.glade.strings:85
 msgid "<b>Temporary Files</b>"
 msgstr "<b>临时文件</b>"
 
-#: gtk/window_preferences.glade.strings:81
+#: gtk/window_preferences.glade.strings:87
 msgid "Leave all downloaded packages in the cache"
 msgstr "把已下载的软件包留在缓存里"
 
-#: gtk/window_preferences.glade.strings:82
+#: gtk/window_preferences.glade.strings:88
 msgid "Delete downloaded packages after installation"
 msgstr "安装后删除已下载的软件包"
 
-#: gtk/window_preferences.glade.strings:83
+#: gtk/window_preferences.glade.strings:89
 msgid "Delete obsolete packages from cache only"
 msgstr "仅删除缓存里陈旧的软件包"
 
-#: gtk/window_preferences.glade.strings:84
+#: gtk/window_preferences.glade.strings:90
 msgid "Clear"
 msgstr "清除"
 
-#: gtk/window_preferences.glade.strings:85
+#: gtk/window_preferences.glade.strings:91
 msgid "Temporary Files"
 msgstr "临时文件"
 
-#: gtk/window_preferences.glade.strings:86
+#: gtk/window_preferences.glade.strings:92
 msgid "<b>Proxy Server</b>"
 msgstr "<b>代理服务器</b>"
 
-#: gtk/window_preferences.glade.strings:88
+#: gtk/window_preferences.glade.strings:94
 msgid "Direct connection to the internet"
 msgstr "直接连接到国际互联网"
 
-#: gtk/window_preferences.glade.strings:89
+#: gtk/window_preferences.glade.strings:95
 msgid "Manual proxy configuration"
 msgstr "手工代理服务器配置"
 
-#: gtk/window_preferences.glade.strings:91
+#: gtk/window_preferences.glade.strings:97
 msgid "IP address or host name of the http proxy server"
 msgstr "HTTP 代理服务器的 IP 地址或主机名"
 
-#: gtk/window_preferences.glade.strings:93
-#: gtk/window_preferences.glade.strings:97
+#: gtk/window_preferences.glade.strings:99
+#: gtk/window_preferences.glade.strings:103
 msgid "Port: "
 msgstr "端口："
 
-#: gtk/window_preferences.glade.strings:94
+#: gtk/window_preferences.glade.strings:100
 msgid "Port number of the http proxy server"
 msgstr "HTTP 代理服务器的端口号"
 
-#: gtk/window_preferences.glade.strings:95
+#: gtk/window_preferences.glade.strings:101
 msgid "IP address or host name of the ftp proxy server"
 msgstr "FTP 代理服务器的 IP 地址或主机名"
 
-#: gtk/window_preferences.glade.strings:98
+#: gtk/window_preferences.glade.strings:104
 msgid "Port numer of the ftp proxy server"
 msgstr "FTP 代理服务器的端口号"
 
-#: gtk/window_preferences.glade.strings:99
+#: gtk/window_preferences.glade.strings:105
 msgid "No proxy for: "
 msgstr "以下不使用代理服务器："
 
-#: gtk/window_preferences.glade.strings:100
+#: gtk/window_preferences.glade.strings:106
 msgid "FTP proxy: "
 msgstr "FTP 代理服务器："
 
-#: gtk/window_preferences.glade.strings:101
+#: gtk/window_preferences.glade.strings:107
 msgid "HTTP proxy: "
 msgstr "HTTP 代理服务器："
 
-#: gtk/window_preferences.glade.strings:102
+#: gtk/window_preferences.glade.strings:108
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2553,11 +2579,11 @@ msgstr ""
 "以逗号分隔的主机及域列表，它们将不会通过代理服务器通讯(例如：localhost, "
 "192.168.1.231, .net)。"
 
-#: gtk/window_preferences.glade.strings:104
+#: gtk/window_preferences.glade.strings:110
 msgid "Network"
 msgstr "网络"
 
-#: gtk/window_preferences.glade.strings:105
+#: gtk/window_preferences.glade.strings:111
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider changes carefully.</span>"
@@ -2565,21 +2591,21 @@ msgstr ""
 "<span size=\"large\" weight=\"bold\">这些设置会影响您系统的核心。请仔细斟酌您"
 "的变更。</span>"
 
-#: gtk/window_preferences.glade.strings:106
+#: gtk/window_preferences.glade.strings:112
 msgid "<b>Distribution</b>"
 msgstr "<b>发行版本</b>"
 
-#: gtk/window_preferences.glade.strings:108
+#: gtk/window_preferences.glade.strings:114
 msgid "Default archive: "
 msgstr "默认归档："
 
-#: gtk/window_preferences.glade.strings:109
+#: gtk/window_preferences.glade.strings:115
 #, fuzzy
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr "如果在 sources.list 文件里指定了一个以上的发布版，请选择默认的发布版"
 
-#: gtk/window_preferences.glade.strings:110
+#: gtk/window_preferences.glade.strings:116
 msgid ""
 "<b>Note:</b> The package list will need to be reloaded and so all selections "
 "will be lost. Make sure to execute your changes first."
@@ -2894,6 +2920,18 @@ msgstr "包管理器"
 msgid "Synaptic Package Manager"
 msgstr "新立得包管理器"
 
+#~ msgid "New:"
+#~ msgstr "新增："
+
+#~ msgid "Keep:"
+#~ msgstr "维持原状："
+
+#~ msgid "Held:"
+#~ msgstr "保留永不升级的(Hold)："
+
+#~ msgid "Pin:"
+#~ msgstr "标记为永不升级的："
+
 #~ msgid "Broken dependencies."
 #~ msgstr "依赖关系被毁损。"
 
@@ -3027,25 +3065,11 @@ msgstr "新立得包管理器"
 #~ msgid "Apply"
 #~ msgstr "应用"
 
-#~ msgid ""
-#~ "\n"
-#~ "Installed Package:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "已安装软件包：\n"
-
 #~ msgid "\tVersion"
 #~ msgstr "\t版本"
 
 #~ msgid "\tSize"
 #~ msgstr "\t文件大小"
-
-#~ msgid ""
-#~ "\n"
-#~ "Available Package:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "最新版软件包：\n"
 
 #~ msgid "\tPackage Size"
 #~ msgstr "\t软件包大小"
@@ -3140,9 +3164,6 @@ msgstr "新立得包管理器"
 
 #~ msgid "<b>Dependencies</b>"
 #~ msgstr "<b>此软件包依赖的软件包</b>"
-
-#~ msgid "Available version"
-#~ msgstr "最新版本"
 
 #~ msgid "Programmed Changes"
 #~ msgstr "将要进行的修改"
@@ -3430,9 +3451,6 @@ msgstr "新立得包管理器"
 
 #~ msgid "<b>Included fields</b>"
 #~ msgstr "<b>包括的字段</b>"
-
-#~ msgid "Purge"
-#~ msgstr "彻底删除 (Purge)"
 
 #~ msgid "Use terminal window when running the package manager"
 #~ msgstr "运行包管理器的时候使用终端窗口"

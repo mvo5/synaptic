@@ -24,7 +24,7 @@
 #include "i18n.h"
 
 #include "rgcacheprogress.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label) 

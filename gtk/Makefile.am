@@ -5,6 +5,7 @@ INCLUDES= -I${top_srcdir}/common \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DSYNAPTIC_GLADEDIR=\""$(datadir)/synaptic/glade/"\" \
+	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
 	@PACKAGE_CFLAGS@ @ZVT_CFLAGS@ @VTE_CFLAGS@ $(LIBTAGCOLL_CFLAGS)
 
 sbin_PROGRAMS = synaptic 
@@ -61,6 +62,8 @@ synaptic_SOURCES= \
 	rgfiltermanager.h\
 	rgfindwindow.cc\
 	rgfindwindow.h\
+	rgmisc.cc\
+	rgmisc.h\
 	rgsetoptwindow.cc\
 	rgsetoptwindow.h\
 	rgdummyinstallprogress.cc\

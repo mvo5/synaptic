@@ -26,6 +26,7 @@
 #include "rpackagelister.h"
 #include "rcacheactor.h"
 #include "rpackagelistactor.h"
+#include "rgmisc.h"
 
 #define GTK_TYPE_PKG_TREE			(gtk_pkg_tree_get_type ())
 #define GTK_PKG_TREE(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_PKG_TREE, GtkPkgTree))
@@ -76,7 +77,8 @@ class RCacheActorPkgTree : public RCacheActor
 
     RCacheActorPkgTree(RPackageLister *lister, GtkPkgTree *pkgTree, 
 		       GtkTreeView *pkgView) 
-	:  RCacheActor(lister), _pkgTree(pkgTree), _pkgView(pkgView) {};    
+	:  RCacheActor(lister),  _pkgTree(pkgTree),
+	  _pkgView(pkgView)  {};    
 };
 
 class RPackageListActorPkgTree : public RPackageListActor
@@ -89,8 +91,9 @@ class RPackageListActorPkgTree : public RPackageListActor
     virtual void run(vector<RPackage*> &List, int pkgEvent);
 
     RPackageListActorPkgTree(RPackageLister *lister, GtkPkgTree *pkgTree,
-		       GtkTreeView *pkgView)
-	:  RPackageListActor(lister), _pkgTree(pkgTree), _pkgView(pkgView) {};
+			      GtkTreeView *pkgView)
+	:  RPackageListActor(lister), _pkgTree(pkgTree),
+	   _pkgView(pkgView) {};
 };
 
 

@@ -26,7 +26,7 @@
 
 
 #include "rgdummyinstallprogress.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 #include <unistd.h>
 #include <stdio.h>

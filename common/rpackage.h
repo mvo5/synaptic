@@ -55,6 +55,7 @@ class RPackage {
    bool _newPackage;
    bool _pinnedPackage;
    bool _orphanedPackage;
+   bool _purge;
 
    enum ChangeReason {unknown, manual, weak_depends, libapt};
    ChangeReason last_change;
@@ -98,9 +99,7 @@ public:
        MDowngrade,
        MRemove,
        MHeld,
-       MBroken,
-       MPinned, /* only used for the pixmap position (make this go away) */
-       MNew     /* only used for the pixmap position (make this go away) */
+       MBroken
    };
 
    enum OtherStatus {
@@ -108,7 +107,8 @@ public:
      OPinned          = 1<<1, /* apt-pined */
      ONew             = 1<<2,
      OResidualConfig  = 1<<3,
-     ONotInstallable  = 1<<4
+     ONotInstallable  = 1<<4,
+     OPurge           = 1<<5
    };
    
    enum UpdateImportance {

@@ -39,6 +39,7 @@
 #include "rcacheactor.h"
 #include "rpackagelistactor.h"
 #include "rtagcollbuilder.h"
+#include "rgmisc.h"
 
 using namespace std;
 

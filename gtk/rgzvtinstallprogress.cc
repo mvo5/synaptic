@@ -118,6 +118,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
 bool RGZvtInstallProgress::close()
 {
   stopShell(NULL, this);
+  return true;
 }
 
 gboolean RGZvtInstallProgress::zvtFocus (GtkWidget *widget,

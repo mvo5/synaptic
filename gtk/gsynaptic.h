@@ -23,27 +23,5 @@
 #ifndef GSYNAPTIC_H
 #define GSYNAPTIC_H
 
-void RGFlushInterface();
-
-  enum {
-    PIXMAP_COLUMN,
-    NAME_COLUMN,
-    PKG_SIZE_COLUMN,
-    INSTALLED_VERSION_COLUMN,
-    AVAILABLE_VERSION_COLUMN,
-    DESCR_COLUMN,
-    COLOR_COLUMN,
-    PKG_COLUMN,
-    N_COLUMNS
-  };
-
-
-
-const char *utf8(const char *str);
-const char *utf8_to_locale(const char *str);
-void gtk_get_color_from_string(const char *cpp, GdkColor **colp);
-char* gtk_get_string_from_color(GdkColor *colp);
-bool is_binary_in_path(char *s);
-string SizeToStr(double Bytes);
 
 #endif

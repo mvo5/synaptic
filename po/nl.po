@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-03 01:38+0100\n"
+"POT-Creation-Date: 2004-01-03 02:58+0100\n"
 "PO-Revision-Date: 2003-02-13 18:16--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -822,20 +822,20 @@ msgstr "Te installeren"
 msgid "To be kept"
 msgstr "Achtergehouden"
 
-#: gtk/rgpreferenceswindow.cc:249 gtk/rgzvtinstallprogress.cc:80
+#: gtk/rgpreferenceswindow.cc:199 gtk/rgzvtinstallprogress.cc:80
 #: gtk/rgmainwindow.cc:3573
 msgid "An error occurred while saving configurations."
 msgstr "Er is een fout opgetreden bij het opslaan van de instellingen."
 
-#: gtk/rgpreferenceswindow.cc:292
+#: gtk/rgpreferenceswindow.cc:242
 msgid "Choose font"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:547
+#: gtk/rgpreferenceswindow.cc:497
 msgid "Color selection"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:727
+#: gtk/rgpreferenceswindow.cc:678
 msgid "ignore"
 msgstr ""
 
@@ -844,7 +844,7 @@ msgstr ""
 #. * Add this file to your project's POTFILES.in.
 #. * DO NOT compile it as part of your application.
 #.
-#: gtk/rgpreferenceswindow.cc:769 gtk/window_preferences.glade.strings:7
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.strings:7
 msgid "Preferences"
 msgstr "Voorkeuren"
 
@@ -1652,9 +1652,9 @@ msgstr "Zoeken"
 
 #: gtk/window_find.glade.strings:9 gtk/window_main_hpaned.glade.strings:62
 #: gtk/window_main_vpaned.glade.strings:62
-#: gtk/window_preferences.glade.strings:92
-#: gtk/window_preferences.glade.strings:96
-#: gtk/window_preferences.glade.strings:103
+#: gtk/window_preferences.glade.strings:98
+#: gtk/window_preferences.glade.strings:102
+#: gtk/window_preferences.glade.strings:109
 #: gtk/window_disc_name.glade.strings:9 gtk/window_setopt.glade.strings:9
 #: gtk/window_setopt.glade.strings:10 gtk/window_filters.glade.strings:8
 #: gtk/window_filters.glade.strings:72 gtk/window_filters.glade.strings:74
@@ -1708,10 +1708,10 @@ msgstr "Pakketnaam"
 #: gtk/window_preferences.glade.strings:43
 #: gtk/window_preferences.glade.strings:57
 #: gtk/window_preferences.glade.strings:59
-#: gtk/window_preferences.glade.strings:80
-#: gtk/window_preferences.glade.strings:87
-#: gtk/window_preferences.glade.strings:90
-#: gtk/window_preferences.glade.strings:107
+#: gtk/window_preferences.glade.strings:86
+#: gtk/window_preferences.glade.strings:93
+#: gtk/window_preferences.glade.strings:96
+#: gtk/window_preferences.glade.strings:113
 #: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
 #: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
@@ -2212,7 +2212,7 @@ msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:111
 #: gtk/window_main_vpaned.glade.strings:127
-#: gtk/window_preferences.glade.strings:111
+#: gtk/window_preferences.glade.strings:117
 #, fuzzy
 msgid "Expert"
 msgstr "Niet tonen"
@@ -2490,8 +2490,8 @@ msgstr ""
 
 #: gtk/window_preferences.glade.strings:60
 #, fuzzy
-msgid "Upgrade:"
-msgstr "Vernieuwen"
+msgid "Purge: "
+msgstr "Uitroeien"
 
 #: gtk/window_preferences.glade.strings:61
 #: gtk/window_preferences.glade.strings:63
@@ -2502,160 +2502,182 @@ msgstr "Vernieuwen"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
+#: gtk/window_preferences.glade.strings:79
+#: gtk/window_preferences.glade.strings:81
+#: gtk/window_preferences.glade.strings:83
 #, fuzzy
 msgid "Color"
 msgstr "kleur"
 
 #: gtk/window_preferences.glade.strings:62
 #, fuzzy
-msgid "Downgrade:"
-msgstr "MDowngradeColor"
+msgid "Installed:"
+msgstr "Geïnstalleerd"
 
 #: gtk/window_preferences.glade.strings:64
 #, fuzzy
-msgid "New:"
-msgstr "Nieuw"
+msgid "Available: "
+msgstr "Beschikbaar"
 
 #: gtk/window_preferences.glade.strings:66
 #, fuzzy
-msgid "Broken:"
-msgstr "Gebroken"
+msgid "Update available:"
+msgstr "Geselecteerde filter bewerken"
 
 #: gtk/window_preferences.glade.strings:68
+#, fuzzy
+msgid "Available (locked):"
+msgstr ""
+"\n"
+"Beschikbaar pakket:\n"
+
+#: gtk/window_preferences.glade.strings:70
 #, fuzzy
 msgid "Remove:"
 msgstr "Verwijderen"
 
-#: gtk/window_preferences.glade.strings:70
+#: gtk/window_preferences.glade.strings:72
 #, fuzzy
 msgid "Install:"
 msgstr "Installeren"
 
-#: gtk/window_preferences.glade.strings:72
-#, fuzzy
-msgid "Keep:"
-msgstr "Behouden"
-
 #: gtk/window_preferences.glade.strings:74
 #, fuzzy
-msgid "Held:"
-msgstr "Vastzetten"
+msgid "Upgrade:"
+msgstr "Vernieuwen"
 
 #: gtk/window_preferences.glade.strings:76
 #, fuzzy
-msgid "Pin:"
-msgstr "Pinned"
+msgid "Downgrade:"
+msgstr "MDowngradeColor"
 
 #: gtk/window_preferences.glade.strings:78
+#, fuzzy
+msgid "Installed (locked):"
+msgstr ""
+"\n"
+"Geïnstalleerd pakket:\n"
+
+#: gtk/window_preferences.glade.strings:80
+#, fuzzy
+msgid "Broken:"
+msgstr "Gebroken"
+
+#: gtk/window_preferences.glade.strings:82
+#, fuzzy
+msgid "Available (New):"
+msgstr "Beschikbaar"
+
+#: gtk/window_preferences.glade.strings:84
 msgid "Columns and Colors"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:79
+#: gtk/window_preferences.glade.strings:85
 #, fuzzy
 msgid "<b>Temporary Files</b>"
 msgstr "Algemeen"
 
-#: gtk/window_preferences.glade.strings:81
+#: gtk/window_preferences.glade.strings:87
 #, fuzzy
 msgid "Leave all downloaded packages in the cache"
 msgstr "Binnengehaalde pakketten in de buffer laten staan"
 
-#: gtk/window_preferences.glade.strings:82
+#: gtk/window_preferences.glade.strings:88
 msgid "Delete downloaded packages after installation"
 msgstr "Binnengehaalde pakketten verwijderen na installatie"
 
-#: gtk/window_preferences.glade.strings:83
+#: gtk/window_preferences.glade.strings:89
 #, fuzzy
 msgid "Delete obsolete packages from cache only"
 msgstr "Verouderde pakketten verwijderen uit de buffer"
 
-#: gtk/window_preferences.glade.strings:84
+#: gtk/window_preferences.glade.strings:90
 msgid "Clear"
 msgstr "Opschonen"
 
-#: gtk/window_preferences.glade.strings:85
+#: gtk/window_preferences.glade.strings:91
 #, fuzzy
 msgid "Temporary Files"
 msgstr "Algemeen"
 
-#: gtk/window_preferences.glade.strings:86
+#: gtk/window_preferences.glade.strings:92
 #, fuzzy
 msgid "<b>Proxy Server</b>"
 msgstr "Acties"
 
-#: gtk/window_preferences.glade.strings:88
+#: gtk/window_preferences.glade.strings:94
 msgid "Direct connection to the internet"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:89
+#: gtk/window_preferences.glade.strings:95
 msgid "Manual proxy configuration"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:91
+#: gtk/window_preferences.glade.strings:97
 msgid "IP address or host name of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:93
-#: gtk/window_preferences.glade.strings:97
+#: gtk/window_preferences.glade.strings:99
+#: gtk/window_preferences.glade.strings:103
 msgid "Port: "
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:94
+#: gtk/window_preferences.glade.strings:100
 msgid "Port number of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:95
+#: gtk/window_preferences.glade.strings:101
 msgid "IP address or host name of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:98
+#: gtk/window_preferences.glade.strings:104
 msgid "Port numer of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:99
+#: gtk/window_preferences.glade.strings:105
 msgid "No proxy for: "
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:100
+#: gtk/window_preferences.glade.strings:106
 msgid "FTP proxy: "
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:101
+#: gtk/window_preferences.glade.strings:107
 msgid "HTTP proxy: "
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:102
+#: gtk/window_preferences.glade.strings:108
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:104
+#: gtk/window_preferences.glade.strings:110
 #, fuzzy
 msgid "Network"
 msgstr "MNewColor"
 
-#: gtk/window_preferences.glade.strings:105
+#: gtk/window_preferences.glade.strings:111
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider changes carefully.</span>"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:106
+#: gtk/window_preferences.glade.strings:112
 #, fuzzy
 msgid "<b>Distribution</b>"
 msgstr "Distributie"
 
-#: gtk/window_preferences.glade.strings:108
+#: gtk/window_preferences.glade.strings:114
 msgid "Default archive: "
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:109
+#: gtk/window_preferences.glade.strings:115
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:110
+#: gtk/window_preferences.glade.strings:116
 msgid ""
 "<b>Note:</b> The package list will need to be reloaded and so all selections "
 "will be lost. Make sure to execute your changes first."
@@ -3017,6 +3039,22 @@ msgstr "Pakketnaam"
 msgid "Synaptic Package Manager"
 msgstr "Pakketveranderingen"
 
+#, fuzzy
+#~ msgid "New:"
+#~ msgstr "Nieuw"
+
+#, fuzzy
+#~ msgid "Keep:"
+#~ msgstr "Behouden"
+
+#, fuzzy
+#~ msgid "Held:"
+#~ msgstr "Vastzetten"
+
+#, fuzzy
+#~ msgid "Pin:"
+#~ msgstr "Pinned"
+
 #~ msgid "Broken dependencies."
 #~ msgstr "Gebroken afhankelijkheden."
 
@@ -3141,13 +3179,6 @@ msgstr "Pakketveranderingen"
 #~ msgid "Apply"
 #~ msgstr "Toepassen"
 
-#~ msgid ""
-#~ "\n"
-#~ "Installed Package:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Geïnstalleerd pakket:\n"
-
 #, fuzzy
 #~ msgid "\tVersion"
 #~ msgstr "    Versie"
@@ -3155,13 +3186,6 @@ msgstr "Pakketveranderingen"
 #, fuzzy
 #~ msgid "\tSize"
 #~ msgstr "Grootte"
-
-#~ msgid ""
-#~ "\n"
-#~ "Available Package:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Beschikbaar pakket:\n"
 
 #, fuzzy
 #~ msgid "\tPackage Size"
@@ -3242,10 +3266,6 @@ msgstr "Pakketveranderingen"
 #, fuzzy
 #~ msgid "<b>Dependencies</b>"
 #~ msgstr "Afhankelijkheden"
-
-#, fuzzy
-#~ msgid "Available version"
-#~ msgstr "Beschikbaar"
 
 #~ msgid "Programmed Changes"
 #~ msgstr "Aangegeven veranderingen"
@@ -3533,9 +3553,6 @@ msgstr "Pakketveranderingen"
 #, fuzzy
 #~ msgid "<b>Included fields</b>"
 #~ msgstr "Tonen"
-
-#~ msgid "Purge"
-#~ msgstr "Uitroeien"
 
 #, fuzzy
 #~ msgid "_Open Selection"

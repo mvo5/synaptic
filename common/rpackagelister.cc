@@ -679,7 +679,7 @@ bool RPackageLister::distUpgrade()
 
 void RPackageLister::setFilter(int index)
 {
-    if (index < 0 || index >= _filterL.size() ) {
+    if (index < 0 || (unsigned int)index >= _filterL.size() ) {
 	_filter = NULL;
     } else {
 	_filter = findFilter(index);
@@ -1106,8 +1106,6 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
 	    held++;
 	    break;
 	case RPackage::MBroken:
-	case RPackage::MPinned:
-	case RPackage::MNew:
 	    /* nothing */
 	    break;
 	}
@@ -1292,8 +1290,6 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 		deps->MarkKeep(*(pkg->package()), false);
 		break;
 	    case RPackage::MBroken:
-	    case RPackage::MPinned:
-	    case RPackage::MNew:
 		/* nothing */
 		break;
 	    }
@@ -1345,8 +1341,6 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 		break;
 
 	    case RPackage::MBroken:
-	    case RPackage::MPinned:
-	    case RPackage::MNew:
 		/* nothing */
 		break;
 	    }
@@ -1411,8 +1405,6 @@ void RPackageLister::getDetailedSummary(vector<RPackage*> &held,
       held.push_back(pkg);
       break;
     case RPackage::MBroken:
-    case RPackage::MPinned:
-    case RPackage::MNew:
 	/* nothing */
 	break;
     }
@@ -1727,8 +1719,6 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 	    case RPackage::MKeep:
 	    case RPackage::MDowngrade:
 	    case RPackage::MBroken:
-	    case RPackage::MPinned:
-	    case RPackage::MNew:
 		/* nothing */
 		break;
 	}
@@ -1738,6 +1728,10 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 	    case RPackage::SInstalledUpdated:
 	    case RPackage::SInstalledOutdated:
 		out << _packages[i]->name() << "   \t   install" << endl;
+		break;
+	    case RPackage::SInstalledBroken:
+	    case RPackage::SNotInstalled:
+		/* nothing */
 		break;
 	    }
 	}

@@ -33,7 +33,7 @@
 
 #include "rgfetchprogress.h"
 #include "rguserdialog.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 #include <stdio.h>
 #include <pango/pango.h>

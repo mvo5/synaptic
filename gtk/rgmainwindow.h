@@ -344,7 +344,6 @@ public:
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
-   void setColors(bool useColors);
    void rebuildTreeView() { buildTreeView(); };
 
    void setStatusText(char *text = NULL);

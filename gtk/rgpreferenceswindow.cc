@@ -33,21 +33,6 @@
 #include "rguserdialog.h"
 #include "gsynaptic.h"
 
-extern GdkColor *StatusColors[];
-
-char * RGPreferencesWindow::color_buttons[] = {
-      "button_keep_color",
-      "button_install_color",
-      "button_upgrade_color",
-      "button_downgrade_color",
-      "button_remove_color",
-      "button_held_color",
-      "button_broken_color",
-      "button_pin_color",
-      "button_new_color",
-      NULL
-  };
-
 enum {FONT_DEFAULT, FONT_TERMINAL};
 
 void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
@@ -144,39 +129,8 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
     delAction += 2;
     _config->Set("Synaptic::delAction", delAction);
 
-    /* color stuff */
-    char *colstr;
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MKeep]);
-    _config->Set("Synaptic::MKeepColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MInstall]);
-    _config->Set("Synaptic::MInstallColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MUpgrade]);
-    _config->Set("Synaptic::MUpgradeColor", colstr);
-    
-    colstr =gtk_get_string_from_color(StatusColors[(int)RPackage::MDowngrade]);
-    _config->Set("Synaptic::MDowngradeColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MRemove]);
-    _config->Set("Synaptic::MRemoveColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MHeld]);
-    _config->Set("Synaptic::MHeldColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MBroken]);
-    _config->Set("Synaptic::MBrokenColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MPinned]);
-    _config->Set("Synaptic::MPinColor", colstr);
-    
-    colstr = gtk_get_string_from_color(StatusColors[(int)RPackage::MNew]);
-    _config->Set("Synaptic::MNewColor", colstr);
-
-    /* now reread the colors */
-    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseStatusColors));
-    _config->Set("Synaptic::UseStatusColors",  newval ? "true" : "false");
-    me->_mainWin->setColors(newval);
+    // save the colors
+    RPackageStatus::pkgStatus.saveColors();
 
     // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
     i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(me->_gladeXML, "optionmenu_upgrade_method")));
@@ -499,17 +453,20 @@ void RGPreferencesWindow::saveTreeViewValues()
 
 void RGPreferencesWindow::readColors()
 {
-    GdkColor color;
+    GdkColor *color;
+    gchar *color_button;
     GtkWidget *button=NULL;
 
-    for(int i=0; color_buttons[i] != NULL; i++) {
-	button = glade_xml_get_widget(_gladeXML, color_buttons[i]);
+    for(int i=0; i<RPackageStatus::N_STATUS_COUNT; i++) {
+	color_button = g_strdup_printf("button_%s_color", RPackageStatus::pkgStatus.getShortStatusString(RPackageStatus::PkgStatus(i)));
+	button = glade_xml_get_widget(_gladeXML, color_button);
 	assert(button);
-	if(StatusColors[i] != NULL) {
-	    color = *StatusColors[i]; 
-	    gtk_widget_modify_bg(button, GTK_STATE_PRELIGHT, &color);
-	    gtk_widget_modify_bg(button, GTK_STATE_NORMAL, &color);
+	if(RPackageStatus::pkgStatus.getColor(i) != NULL) {
+	    color = RPackageStatus::pkgStatus.getColor(i);
+	    gtk_widget_modify_bg(button, GTK_STATE_PRELIGHT, color);
+	    gtk_widget_modify_bg(button, GTK_STATE_NORMAL, color);
 	}
+	g_free(color_button);
     }
 }
 
@@ -523,7 +480,8 @@ void RGPreferencesWindow::saveColor(GtkWidget *self, void *data)
     
     gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(color_selector->colorsel), &color);
 
-    StatusColors[GPOINTER_TO_INT(data)] = gdk_color_copy(&color);
+    RPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
+				       gdk_color_copy(&color));
     me->readColors();
 }
 
@@ -540,9 +498,11 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
     ok_button = GTK_COLOR_SELECTION_DIALOG(color_dialog)->ok_button;
     cancel_button = GTK_COLOR_SELECTION_DIALOG(color_dialog)->cancel_button;
     color_selection = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
-    if(StatusColors[GPOINTER_TO_INT(data)] != NULL)
-	gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(color_selection),
-					      StatusColors[GPOINTER_TO_INT(data)]);
+
+    GdkColor *color = NULL;
+    color = RPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
+    if(color != NULL)
+	gtk_color_selection_set_current_color(GTK_COLOR_SELECTION(color_selection), color);
 
     g_object_set_data(G_OBJECT(ok_button), "color_selector", color_dialog);
     g_object_set_data(G_OBJECT(ok_button), "me", me);
@@ -749,12 +709,15 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
     checkbuttonUserFontToggled(NULL, this);
 
     // color stuff
-    for(int i=0; color_buttons[i] != NULL; i++) {
-	button = glade_xml_get_widget(_gladeXML, color_buttons[i]);
-	g_object_set_data(G_OBJECT(button), "me", this);
+    char *color_button = NULL;
+    for(int i=0; i<RPackageStatus::N_STATUS_COUNT; i++) {
+	color_button = g_strdup_printf("button_%s_color", RPackageStatus::pkgStatus.getShortStatusString(RPackageStatus::PkgStatus(i)));
+	button = glade_xml_get_widget(_gladeXML, color_button);
 	assert(button);
+	g_object_set_data(G_OBJECT(button), "me", this);
 	g_signal_connect(G_OBJECT(button), "clicked", 
 			 G_CALLBACK(colorClicked), GINT_TO_POINTER(i));
+	g_free(color_button);
     }
 
     setTitle(_("Preferences"));

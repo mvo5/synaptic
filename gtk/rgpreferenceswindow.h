@@ -50,8 +50,6 @@ class RGPreferencesWindow : public RGGladeWindow {
     // policy settings
     GtkWidget *_optionmenuDefaultDistro;
 
-    /* the color buttons */
-    static char * color_buttons[];
     int columnPos[6];
     
     void readColors();

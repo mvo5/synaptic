@@ -71,7 +71,7 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 		   pkgRecords *records, pkgCache::PkgIterator &pkg)
   : _lister(lister), _records(records), _depcache(depcache), 
     _newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
-     _notify(true)
+    _notify(true), _purge(false)
 {
     _package = new pkgCache::PkgIterator(pkg);
     
@@ -275,6 +275,9 @@ int RPackage::getOtherStatus()
     
     if(_orphanedPackage)
 	status |= OOrphaned;
+
+    if(_purge)
+	status |= OPurge;
 
     if((*_package)->CurrentState == pkgCache::State::ConfigFiles) {
       //cout << "ResidentalConfig found for: "<<name()<<endl;
@@ -865,6 +868,7 @@ void RPackage::setRemove(bool purge)
     Fix.Resolve(true);
     
     _depcache->MarkDelete(*_package, purge);
+    _purge = purge;
     
     if (_notify)
 	_lister->notifyChange(this);

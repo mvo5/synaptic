@@ -28,7 +28,7 @@
 #include <assert.h>
 #include "i18n.h"
 #include "rguserdialog.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {
@@ -130,7 +130,7 @@ bool RGUserDialog::showErrors()
 	_error->PopMessage(tmp);
        
         // ignore some stupid error messages
-	if (tmp == _("Tried to dequeue a fetching object"))
+	if (tmp == "Tried to dequeue a fetching object")
 	   continue;
 
 	if (message.empty())

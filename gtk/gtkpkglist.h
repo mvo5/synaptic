@@ -24,7 +24,7 @@
 #include "rpackagelister.h"
 #include "rcacheactor.h"
 #include "rpackagelistactor.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 
 #define GTK_TYPE_PKG_LIST			(gtk_pkg_list_get_type ())
@@ -43,7 +43,7 @@ struct _GtkPkgList
     GObject parent;
 
     RPackageLister *_lister;
-    
+
     gint n_columns;
     GType column_headers[N_COLUMNS];
     // sortable
@@ -94,8 +94,9 @@ class RPackageListActorPkgList : public RPackageListActor
     virtual void run(vector<RPackage*> &List, int pkgEvent);
 
     RPackageListActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
-		       GtkTreeView *pkgView)
-	:  RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
+			      GtkTreeView *pkgView)
+	:  RPackageListActor(lister), _pkgList(pkgList),
+	   _pkgView(pkgView) {};
 };
 
 

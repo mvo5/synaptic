@@ -24,7 +24,7 @@
 #include <apt-pkg/strutl.h>
 #include "i18n.h"
 #include "gtkpkgtree.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 using namespace std;
 
@@ -256,7 +256,6 @@ gtk_pkg_tree_new (RPackageLister *lister)
   DEBUG("pkg_tree_new()");
   retval = (GtkPkgTree*) g_object_new (GTK_TYPE_PKG_TREE, NULL);
   retval->_lister = lister;
-
   return retval;
 }
 
@@ -482,22 +481,7 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
     {
       if(pkg == NULL) return;
       GdkColor *bg;
-      RPackage::MarkedStatus s = pkg->getMarkedStatus();
-      int other = pkg->getOtherStatus();
-      
-      if (pkg->wouldBreak()) {
-	bg =  StatusColors[(int)RPackage::MBroken];
-      } else if (other & RPackage::OPinned) {
-	bg = StatusColors[(int)RPackage::MPinned];
-      } else if (s == RPackage::MKeep 
-		 && pkg->getStatus() == RPackage::SInstalledOutdated) {
-	bg = StatusColors[RPackage::MHeld];
-      } else if ((other & RPackage::ONew) && 
-		 !pkg->getMarkedStatus() == RPackage::MInstall) {
-	bg = StatusColors[(int)RPackage::MNew];
-      } else {
-	bg = StatusColors[(int)s];
-      }
+      bg = RPackageStatus::pkgStatus.getBgColor(pkg);
       g_value_set_boxed(value, bg);
       break;
     }
@@ -505,23 +489,7 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
     {
       if(pkg == NULL) return;
       GdkPixbuf *pix;
-
-      RPackage::MarkedStatus s = pkg->getMarkedStatus();
-      int other = pkg->getOtherStatus();
-      
-      if (pkg->wouldBreak()) {
-	pix = StatusPixbuf[(int)RPackage::MBroken];
-      } else if (other & RPackage::OPinned) {
-	pix = StatusPixbuf[(int)RPackage::MPinned];
-      } else if (s == RPackage::MKeep 
-		 && pkg->getStatus() == RPackage::SInstalledOutdated) {
-	pix = StatusPixbuf[RPackage::MHeld];
-      } else if ((other & RPackage::ONew) && 
-		 !pkg->getMarkedStatus() == RPackage::MInstall) {
-	pix = StatusPixbuf[(int)RPackage::MNew];
-      } else {
-	pix = StatusPixbuf[(int)s];
-      }
+      pix = RPackageStatus::pkgStatus.getPixbuf(pkg);
       g_value_set_object(value, pix);
       break;
     }

@@ -24,7 +24,7 @@
 #include "i18n.h"
 
 #include "rgfindwindow.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 void RGFindWindow::show()
 {

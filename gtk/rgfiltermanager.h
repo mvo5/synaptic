@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 #include "rggladewindow.h"
 #include "rpackagefilter.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
 
 class RPackageLister;
 class RGFilterManagerWindow;

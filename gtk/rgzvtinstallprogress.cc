@@ -101,7 +101,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
   me->hide();
 }
 
-void RGZvtInstallProgress::close()
+bool RGZvtInstallProgress::close()
 {
   stopShell(NULL, this);
 }

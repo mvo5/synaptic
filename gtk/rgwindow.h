@@ -37,8 +37,8 @@ protected:
    GtkWidget *_win;
    GtkWidget *_topBox;
    
-   static void windowCloseCallback(GtkWidget *widget, GdkEvent *event);
-   virtual void close();
+   static bool windowCloseCallback(GtkWidget *widget, GdkEvent *event);
+   virtual bool close();
    
 public:
    inline virtual GtkWidget *window() { return _win; };

@@ -211,7 +211,7 @@ public:
    RGFilterManagerWindow(RGWindow *win, RPackageLister *lister);
 
    void setCloseCallback(RGFilterEditorCloseAction *action, void *data);
-   virtual void close();
+   virtual bool close();
    virtual void show();
   
 };

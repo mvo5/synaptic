@@ -27,11 +27,12 @@
 #include "rgwindow.h"
 
 
-void RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
+bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
 {
+    //cout << "windowCloseCallback" << endl;
     RGWindow *rwin = (RGWindow*)gtk_object_get_data(GTK_OBJECT(window), "me");
-    
-    rwin->close();
+
+    return rwin->close();
 }
 
 RGWindow::RGWindow(string name, bool makeBox)
@@ -89,7 +90,7 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,
 
 RGWindow::~RGWindow()
 {
-    //    cout << "Desotry wind"<<endl;
+    //cout << "~RGWindow"<<endl;
     gtk_widget_destroy(_win);
 }
 
@@ -99,7 +100,9 @@ void RGWindow::setTitle(string title)
     gtk_window_set_title(GTK_WINDOW(_win), (char*)title.c_str());
 }
 
-void RGWindow::close()
+bool RGWindow::close()
 {
+    //cout << "RGWindow::close()" << endl;
     hide();
+    return true;
 }

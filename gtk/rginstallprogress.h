@@ -47,7 +47,7 @@ public:
    
    virtual bool empty();
    virtual void run();
-   virtual void close();
+   virtual bool close();
 
    RGInstallProgressMsgs(RGWindow *win);
 };

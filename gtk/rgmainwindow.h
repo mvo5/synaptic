@@ -215,9 +215,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
 		    GtkTreePath *arg2, gpointer data);
    
-   virtual void close();
-   static void closeWin(GtkWidget *self, void *me) { 
-       ((RGMainWindow*)me)->close(); 
+   virtual bool close();
+   static bool closeWin(GtkWidget *self, void *me) { 
+       return ((RGMainWindow*)me)->close(); 
      };
 
    static void selectedRow(GtkTreeSelection *selection, gpointer data);

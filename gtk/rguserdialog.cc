@@ -170,13 +170,6 @@ bool RGGladeUserDialog::run(const char *name)
     g_free(filename);
     g_free(main_widget);
 
-#if 0
-    gchar *signal_name = g_strdup_printf("on_dialog_%s_response", name);
-    glade_xml_signal_connect_data(gladeXML, signal_name, 
-				  G_CALLBACK(actionResponse),
-				  (gpointer) &res);
-#endif
-    //cout << "RGGladeUserDialog::run()" << endl;
     res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
     gtk_widget_hide(_dialog);
     return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);

@@ -56,7 +56,7 @@ void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
     gtk_main_quit();
 }
 
-void RGInstallProgressMsgs::close()
+bool RGInstallProgressMsgs::close()
 {
     gtk_main_quit();
 }

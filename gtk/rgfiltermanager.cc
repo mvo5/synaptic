@@ -1103,7 +1103,7 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
     }    
 }
 
-void RGFilterManagerWindow::close()
+bool RGFilterManagerWindow::close()
 {
     //cout << "RGFilterManagerWindow::close()" << endl;
     gdk_window_set_cursor(_win->window, _busyCursor);
@@ -1111,7 +1111,7 @@ void RGFilterManagerWindow::close()
 	_closeAction(_closeData, _okcancel);
 
     gdk_window_set_cursor(_win->window, NULL);
-    RGWindow::close();
+    return RGWindow::close();
 }
 
 void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)

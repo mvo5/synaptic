@@ -462,37 +462,6 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
 	    return;
 	ok=true;
     }
-#if 0
-	gtk_tree_model_get(me->_activeTreeModel, &iter,
-			   NAME_COLUMN, &name,
-			   -1);
-	cout << "iter is: " << name << endl;
-	// if iter is toplevel -> next toplevel item and search its children
-	if(current_subtree.user_data == NULL) {
-	    cout << "hello" << endl;
-	    ok = gtk_tree_model_get_iter_first(me->_activeTreeModel, &current_subtree);
-	} else
-	    if(!gtk_tree_model_iter_parent(me->_activeTreeModel, &current_subtree, &selected)) {
-		cout << "no parent" << endl;
-		current_subtree=selected;
-	    }
-	// go to next toplevel item
-	if(!gtk_tree_model_iter_next(me->_activeTreeModel, &current_subtree)) {
-	    cout << "!gtk_tree_model_iter_next()"<<endl;
-	    gtk_tree_model_get(me->_activeTreeModel, &current_subtree,
-			       NAME_COLUMN, &name,
-			       -1);
-	    if(name!=NULL)
-		cout << "name: " << name << endl;
-	    return;
-	}
-	if(!gtk_tree_model_iter_children(me->_activeTreeModel, &iter, &current_subtree)) {
-	    cout << "!gtk_tree_model_iter_children()"<<endl;
-	    return;
-	}
-	ok=true;
-    }
-#endif
 }
 
 
@@ -847,40 +816,6 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
     me->setInterfaceLocked(FALSE);
     me->showErrors();
 }
-
-
-#if 0
-void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
-{
-    RGMainWindow *me = (RGMainWindow*)data;
-    RPackage *pkg = me->selectedPackage();
-    bool res;
-
-    if (!me->_lister->check()) {
-	me->_userDialog->error(
-			_("Automatic upgrade selection not possible\n"
-			  "with broken packages. Please fix them first."));
-	return;
-    }
-
-    me->setInterfaceLocked(TRUE);
-    me->setStatusText(_("Performing selection for distribution upgrade..."));
-
-    // save state
-    me->_lister->saveUndoState();
-
-    res = me->_lister->distUpgrade();
-     me->refreshTable(pkg);
-
-    if (res)
-	me->setStatusText(_("Selection for distribution upgrade done."));
-    else
-	me->setStatusText(_("Selection for distribution upgrade failed."));
-
-    me->setInterfaceLocked(FALSE);
-    me->showErrors();
-}
-#endif
 
 void RGMainWindow::proceed()
 {
@@ -2042,47 +1977,6 @@ GtkWidget *widget;
     gtk_widget_show(widget);
   } 
   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), me->_toolbarStyle);
-  
-#if 0
-  GtkWidget *widget;
-  GList *child;
-  // the buttons we want to show or hide
-  char* buttons[] = {"button_update",
-		     "button_upgrade",
-		     "button_dist_upgrade",
-		     "button_procceed"
-  };
-
-  // save new toolbar state
-  me->_toolbarState = (ToolbarState)GPOINTER_TO_INT(data);
-
-  if(me->_toolbarState == TOOLBAR_HIDE) {
-    widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
-    gtk_widget_hide(widget);
-  } else {
-    widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
-    gtk_widget_show(widget);
-  }
-
-  for(int i=0;i<4;i++) {
-    widget = glade_xml_get_widget(me->_gladeXML, buttons[i]);
-    //first get GtkVBox of button
-    child = gtk_container_get_children(GTK_CONTAINER(widget));
-    
-    // now we get the real children (first GtkImage)
-    child = gtk_container_get_children(GTK_CONTAINER(child->data));
-    if(me->_toolbarState == TOOLBAR_TEXT)
-      gtk_widget_hide(GTK_WIDGET(child->data));
-    else
-      gtk_widget_show(GTK_WIDGET(child->data));
-    // then GtkLabel
-    child = g_list_next(child);
-    if(me->_toolbarState == TOOLBAR_PIXMAPS)
-      gtk_widget_hide(GTK_WIDGET(child->data));
-    else
-      gtk_widget_show(GTK_WIDGET(child->data));
-  }
-#endif
 }
 
 void RGMainWindow::findToolClicked(GtkWidget *self, void *data)
@@ -2534,14 +2428,7 @@ void RGMainWindow::buildInterface()
 				  "on_upgrade_packages",
 				  G_CALLBACK(upgradeClicked),
 				  this); 
-#if 0
-    _distUpgradeB = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
-    _distUpgradeM = glade_xml_get_widget(_gladeXML, "distribution_upgrade1");
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_dist_upgrade_packages",
-				  G_CALLBACK(distUpgradeClicked),
-				  this); 
-#endif
+
     if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
 	gtk_widget_hide(_upgradeB);
 	//gtk_widget_hide(_distUpgradeB);
@@ -2678,11 +2565,6 @@ void RGMainWindow::buildInterface()
     gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
 			 _("Upgrade every installed package to the latest version"),"");
 
-#if 0
-    button = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
-    gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Upgrade every installed package to the latest version. Also include upgrades depending on not yet installed packages"),"");
-#endif
     button = glade_xml_get_widget(_gladeXML, "button_procceed");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
 			 _("Execute the selected changes"),"");
@@ -2975,12 +2857,6 @@ void RGMainWindow::buildInterface()
     _filterMenu = glade_xml_get_widget(_gladeXML, "menu_apply");
     assert(_filterMenu);
 
-#if 0
-    _editFilterB = button = glade_xml_get_widget(_gladeXML, "button_edit_filter");
-    assert(button);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", 
-		       (GtkSignalFunc)showFilterWindow, this);
-#endif
 
     _findText = glade_xml_get_widget(_gladeXML, "entry_find");
     g_object_set_data(G_OBJECT(_findText), "me", this);
@@ -3682,10 +3558,10 @@ bool RGMainWindow::restoreState()
 }
 
 
-void RGMainWindow::close()
+bool RGMainWindow::close()
 {
     if (_interfaceLocked > 0)
-	return;
+	return true;
 
     RGGladeUserDialog dia(this);
     if (_unsavedChanges == false || dia.run("quit")) {
@@ -3694,12 +3570,7 @@ void RGMainWindow::close()
 	showErrors();
 	exit(0);
     }
-
-	
-    //cout << "no exit" << endl;
-    //BUG/FIXME: don't know why this is needed, but if I ommit it, the 
-    //     window will be closed even if I click on "no" in the confirm dialog
-    cout<<endl;
+    return true;
 }
 
 

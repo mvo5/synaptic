@@ -435,14 +435,15 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
 #endif
   if(it == pkgTree->end() || pkgTree->empty())
     return;
+  // this is a error, but we don't want to segfault here
+  if( it == 0)
+      cerr << "Internal Error: gtk_pkg_tree_get_value() it == 0" << endl;
 
 #ifdef DEBUG_TREE_FULL
   cout << "column: " << column << " name: " << (*it).first << endl;
 #endif
 
   const gchar *str;
-  if( it == 0)
-      return;
   RPackage *pkg = (RPackage*)(*it).second;
   switch(column) {
   case NAME_COLUMN:

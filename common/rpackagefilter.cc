@@ -751,13 +751,12 @@ void RFilter::reset()
 void RFilter::setName(string s)
 {
   if(s.empty()) {
-    cerr << _("empty filter name!? should _never_ happen, please report") <<
-	    endl;
-    name ="?";
+    cerr << "Internal Error: empty filter name!? should _never_ happen, please report" << endl;
+    name =_("unkown");
   } else {
     if(s.length() > 55) {
-      cerr << _("filter name is longer than 55 chars!? Will be truncated." 
-	        "Please report") << endl;
+      cerr << "Internal Error: filter name is longer than 55 chars!? "
+	      "Will be truncated.Please report" << endl;
       s.resize(55);
       name = s;
     } else {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-05 00:04+0100\n"
+"POT-Creation-Date: 2003-11-06 11:53+0100\n"
 "PO-Revision-Date: 2003-11-03 23:33-0200\n"
 "Last-Translator: Leonardo F. S. Boiko <leoboiko@fastmail.fm>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -400,9 +400,10 @@ msgstr "Atualizáveis"
 msgid "Broken"
 msgstr "Quebrados"
 
-#: common/rpackagelister.cc:269
-msgid "Programmed Changes"
-msgstr "Mudanças Programadas"
+#: common/rpackagelister.cc:269 gtk/rgsummarywindow.cc:300
+#, fuzzy
+msgid "Queued Changes"
+msgstr "E_xecutar alterações"
 
 #: common/rpackagelister.cc:276 gtk/window_filters.glade.strings:44
 msgid "New in archive"
@@ -685,7 +686,7 @@ msgstr "Créditos"
 msgid "About Synaptic"
 msgstr "Sobre o Synaptic"
 
-#: gtk/rgchangeswindow.cc:69 gtk/rgsummarywindow.cc:300
+#: gtk/rgchangeswindow.cc:69
 msgid "Package changes"
 msgstr "Mudanças nos pacotes"
 
@@ -1153,11 +1154,12 @@ msgid "Update the list of available packages"
 msgstr "Atualiza a lista de pacotes disponíveis"
 
 #: gtk/rgmainwindow.cc:2566
-msgid "Upgrade every installed package to the latest version"
-msgstr "Atualiza todo pacote instalado para a versão mais recente"
+msgid "Queue all possible upgrades"
+msgstr ""
 
 #: gtk/rgmainwindow.cc:2570
-msgid "Execute the selected changes"
+#, fuzzy
+msgid "Execute the queued changes"
 msgstr "Executa as mudanças selecionadas"
 
 #: gtk/rgmainwindow.cc:3206
@@ -1302,25 +1304,30 @@ msgid "Summary"
 msgstr "Resumo"
 
 #: gtk/rgsummarywindow.cc:312
-msgid "Perform package download only."
-msgstr "Executar apenas download de pacotes."
+#, fuzzy
+msgid "Download the packages files only"
+msgstr "Apagar os pacotes baixados após a instalação"
 
 #: gtk/rgsummarywindow.cc:320
-msgid "Show Details"
+#, fuzzy
+msgid "_Show Details"
 msgstr "Mostrar Detalhes"
 
-#: gtk/rgsummarywindow.cc:325
-msgid "Proceed"
-msgstr "Prosseguir"
+#: gtk/rgsummarywindow.cc:325 gtk/window_main_hpaned.glade.strings:51
+#: gtk/window_main_vpaned.glade.strings:54
+#, fuzzy
+msgid "_Execute"
+msgstr "E_xecutar"
 
 #: gtk/rgsummarywindow.cc:331
-msgid "Cancel"
+#, fuzzy
+msgid "_Cancel"
 msgstr "Cancelar"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:354
 #, fuzzy, c-format
-msgid "%d %s were held;\n"
+msgid "%d %s are set on hold\n"
 msgstr "%d %s mantidos(s);\n"
 
 # bad plural on source, should use ngettext(3)
@@ -1344,70 +1351,67 @@ msgstr "pacote"
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:358
 #, fuzzy, c-format
-msgid "%d %s were kept back and not upgraded;\n"
+msgid "%d %s are kept back and not upgraded\n"
 msgstr "%d %s mantido(s) e não atualizado(s);\n"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:363
 #, fuzzy, c-format
-msgid "%d new %s will be installed;\n"
+msgid "%d new %s will be installed\n"
 msgstr "%d %s novo(s) para instalar;\n"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:368
 #, fuzzy, c-format
-msgid "%d %s will be upgraded;\n"
+msgid "%d %s will be upgraded\n"
 msgstr "%d %s para atualizar;\n"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:372
 #, fuzzy, c-format
-msgid "%d %s will be removed;\n"
+msgid "%d %s will be removed\n"
 msgstr "%d %s para remover;\n"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:376
 #, fuzzy, c-format
-msgid "%d %s will be DOWNGRADED;\n"
+msgid "%d %s will be DOWNGRADED\n"
 msgstr "%d %s para DESATUALIZAR;\n"
 
 # bad plural on source, should use ngettext(3)
 #: gtk/rgsummarywindow.cc:382
 #, fuzzy, c-format
-msgid "WARNING: %d essential %s will be removed!\n"
+msgid "WARNING: %d essential %s will be removed\n"
 msgstr "AVISO: %d %s \"essencial\" para remover!\n"
 
 #: gtk/rgsummarywindow.cc:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be used after finished.\n"
+"%s B of extra space will be used\n"
 msgstr ""
-"\n"
-"%sB serão usados depois de terminado.\n"
 
 #: gtk/rgsummarywindow.cc:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be freed after finished.\n"
+"%s B of extra space will be freed\n"
 msgstr ""
-"\n"
-"%sB serão liberados depois de terminado.\n"
 
 #: gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s B need to be downloaded."
+"%s B have to be downloaded"
 msgstr ""
 "\n"
 "%sB precisam ser baixados."
 
 #: gtk/rgsummarywindow.cc:419
+#, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
-"That can render your system unusable!!!\n"
+"This may render your system unusable!\n"
 msgstr ""
 "Pacotes essenciais serão removidos.\n"
 "Isto poderá inutilizar seu sistema!!!\n"
@@ -1418,8 +1422,9 @@ msgid "Tried to dequeue a fetching object"
 msgstr "Tentando desenfileirar um objeto sendo trazido"
 
 #: gtk/rgfindwindow.cc:113
-msgid "Advanced Search"
-msgstr "Busca Avançada"
+#, fuzzy
+msgid "Find"
+msgstr "Procurar:"
 
 #: gtk/window_about.glade.strings:9
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
@@ -1812,12 +1817,6 @@ msgstr "Marcar pacotes para atualização, exceto aqueles com dependências nova
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr ""
 "Realiza mudanças selecionadas nos pacotes, baixando arquivos se necessário"
-
-#: gtk/window_main_hpaned.glade.strings:51
-#: gtk/window_main_vpaned.glade.strings:54
-#, fuzzy
-msgid "_Execute"
-msgstr "E_xecutar"
 
 #: gtk/window_main_hpaned.glade.strings:53
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2318,7 +2317,8 @@ msgid "Clear"
 msgstr "Limpar"
 
 #: gtk/window_preferences.glade.strings:88
-msgid "Temporay Files"
+#, fuzzy
+msgid "Temporary Files"
 msgstr "Arquivos temporários"
 
 #: gtk/window_preferences.glade.strings:89
@@ -2670,6 +2670,37 @@ msgstr ""
 #: gtk/window_repositories.glade.strings:16
 msgid "Vendors..."
 msgstr "Fornecedores..."
+
+#~ msgid "Programmed Changes"
+#~ msgstr "Mudanças Programadas"
+
+#~ msgid "Upgrade every installed package to the latest version"
+#~ msgstr "Atualiza todo pacote instalado para a versão mais recente"
+
+#~ msgid "Perform package download only."
+#~ msgstr "Executar apenas download de pacotes."
+
+#~ msgid "Proceed"
+#~ msgstr "Prosseguir"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be used after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB serão usados depois de terminado.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be freed after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB serão liberados depois de terminado.\n"
+
+#~ msgid "Advanced Search"
+#~ msgstr "Busca Avançada"
 
 #~ msgid "Performing selection for distribution upgrade..."
 #~ msgstr "Selecionando pacotes para atualização da distribuição..."

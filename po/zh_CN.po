@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-05 00:04+0100\n"
+"POT-Creation-Date: 2003-11-06 11:53+0100\n"
 "PO-Revision-Date: 2003-10-22 23:15+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -390,9 +390,10 @@ msgstr "可升级"
 msgid "Broken"
 msgstr "已损坏"
 
-#: common/rpackagelister.cc:269
-msgid "Programmed Changes"
-msgstr "将要进行的修改"
+#: common/rpackagelister.cc:269 gtk/rgsummarywindow.cc:300
+#, fuzzy
+msgid "Queued Changes"
+msgstr "执行更改(_X)"
 
 #: common/rpackagelister.cc:276 gtk/window_filters.glade.strings:44
 msgid "New in archive"
@@ -663,7 +664,7 @@ msgstr "致谢名单"
 msgid "About Synaptic"
 msgstr "关于新立得(Synaptic)"
 
-#: gtk/rgchangeswindow.cc:69 gtk/rgsummarywindow.cc:300
+#: gtk/rgchangeswindow.cc:69
 msgid "Package changes"
 msgstr "软件包更改"
 
@@ -1129,11 +1130,12 @@ msgid "Update the list of available packages"
 msgstr "更新最新软件包的列表"
 
 #: gtk/rgmainwindow.cc:2566
-msgid "Upgrade every installed package to the latest version"
-msgstr "升级每个已安装的软件包到最新版"
+msgid "Queue all possible upgrades"
+msgstr ""
 
 #: gtk/rgmainwindow.cc:2570
-msgid "Execute the selected changes"
+#, fuzzy
+msgid "Execute the queued changes"
 msgstr "执行选中的变更"
 
 #: gtk/rgmainwindow.cc:3206
@@ -1275,24 +1277,29 @@ msgid "Summary"
 msgstr "摘要"
 
 #: gtk/rgsummarywindow.cc:312
-msgid "Perform package download only."
-msgstr "只下载软件包，不安装。"
+#, fuzzy
+msgid "Download the packages files only"
+msgstr "安装后删除已下载的软件包"
 
 #: gtk/rgsummarywindow.cc:320
-msgid "Show Details"
+#, fuzzy
+msgid "_Show Details"
 msgstr "显示详细资料"
 
-#: gtk/rgsummarywindow.cc:325
-msgid "Proceed"
-msgstr "执行"
+#: gtk/rgsummarywindow.cc:325 gtk/window_main_hpaned.glade.strings:51
+#: gtk/window_main_vpaned.glade.strings:54
+#, fuzzy
+msgid "_Execute"
+msgstr "执行(_X)"
 
 #: gtk/rgsummarywindow.cc:331
-msgid "Cancel"
+#, fuzzy
+msgid "_Cancel"
 msgstr "取消"
 
 #: gtk/rgsummarywindow.cc:354
-#, c-format
-msgid "%d %s were held;\n"
+#, fuzzy, c-format
+msgid "%d %s are set on hold\n"
 msgstr "%d 个 %s 维持原状；\n"
 
 #: gtk/rgsummarywindow.cc:355 gtk/rgsummarywindow.cc:359
@@ -1310,66 +1317,63 @@ msgid "package"
 msgstr "软件包"
 
 #: gtk/rgsummarywindow.cc:358
-#, c-format
-msgid "%d %s were kept back and not upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s are kept back and not upgraded\n"
 msgstr "%d 个 %s 维持原状不升级；\n"
 
 #: gtk/rgsummarywindow.cc:363
-#, c-format
-msgid "%d new %s will be installed;\n"
+#, fuzzy, c-format
+msgid "%d new %s will be installed\n"
 msgstr "将会安装 %d 个新 %s；\n"
 
 #: gtk/rgsummarywindow.cc:368
-#, c-format
-msgid "%d %s will be upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s will be upgraded\n"
 msgstr "将会升级 %d 个 %s；\n"
 
 #: gtk/rgsummarywindow.cc:372
-#, c-format
-msgid "%d %s will be removed;\n"
+#, fuzzy, c-format
+msgid "%d %s will be removed\n"
 msgstr "将会删除 %d 个 %s；\n"
 
 #: gtk/rgsummarywindow.cc:376
-#, c-format
-msgid "%d %s will be DOWNGRADED;\n"
+#, fuzzy, c-format
+msgid "%d %s will be DOWNGRADED\n"
 msgstr "%d %s 将会被降级；\n"
 
 #: gtk/rgsummarywindow.cc:382
-#, c-format
-msgid "WARNING: %d essential %s will be removed!\n"
+#, fuzzy, c-format
+msgid "WARNING: %d essential %s will be removed\n"
 msgstr "警告：%d 个必需的 %s 将会被删除！\n"
 
 #: gtk/rgsummarywindow.cc:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be used after finished.\n"
+"%s B of extra space will be used\n"
 msgstr ""
-"\n"
-"完成后将使用 %sB 磁盘空间。\n"
 
 #: gtk/rgsummarywindow.cc:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be freed after finished.\n"
+"%s B of extra space will be freed\n"
 msgstr ""
-"\n"
-"完成后将释放 %sB 磁盘空间。\n"
 
 #: gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s B need to be downloaded."
+"%s B have to be downloaded"
 msgstr ""
 "\n"
 "需要下载 %sB。"
 
 #: gtk/rgsummarywindow.cc:419
+#, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
-"That can render your system unusable!!!\n"
+"This may render your system unusable!\n"
 msgstr ""
 "将要删除系统必需的软件包。\n"
 "那样会令您的系统不能使用!!!\n"
@@ -1380,8 +1384,9 @@ msgid "Tried to dequeue a fetching object"
 msgstr "已尝试剔除一个将要获取的对象"
 
 #: gtk/rgfindwindow.cc:113
-msgid "Advanced Search"
-msgstr "高级搜索"
+#, fuzzy
+msgid "Find"
+msgstr "查找："
 
 #: gtk/window_about.glade.strings:9
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
@@ -1787,12 +1792,6 @@ msgstr "标记可升级的软件包，但不包括有新依赖关系的软件包
 #: gtk/window_main_vpaned.glade.strings:53
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "交付(commit)对已选中的软件包的更改，并在需要时下载软件包"
-
-#: gtk/window_main_hpaned.glade.strings:51
-#: gtk/window_main_vpaned.glade.strings:54
-#, fuzzy
-msgid "_Execute"
-msgstr "执行(_X)"
 
 #: gtk/window_main_hpaned.glade.strings:53
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2284,7 +2283,8 @@ msgid "Clear"
 msgstr "清除"
 
 #: gtk/window_preferences.glade.strings:88
-msgid "Temporay Files"
+#, fuzzy
+msgid "Temporary Files"
 msgstr "临时文件"
 
 #: gtk/window_preferences.glade.strings:89
@@ -2629,6 +2629,37 @@ msgstr "rpm-src"
 #: gtk/window_repositories.glade.strings:16
 msgid "Vendors..."
 msgstr "发行商..."
+
+#~ msgid "Programmed Changes"
+#~ msgstr "将要进行的修改"
+
+#~ msgid "Upgrade every installed package to the latest version"
+#~ msgstr "升级每个已安装的软件包到最新版"
+
+#~ msgid "Perform package download only."
+#~ msgstr "只下载软件包，不安装。"
+
+#~ msgid "Proceed"
+#~ msgstr "执行"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be used after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "完成后将使用 %sB 磁盘空间。\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be freed after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "完成后将释放 %sB 磁盘空间。\n"
+
+#~ msgid "Advanced Search"
+#~ msgstr "高级搜索"
 
 #~ msgid "Performing selection for distribution upgrade..."
 #~ msgstr "正在为全面升级自动选择软件包..."

@@ -277,6 +277,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    // actions menu
    static void undoClicked(GtkWidget *self, void *data);
    static void redoClicked(GtkWidget *self, void *data);
+   static void clearAllChangesClicked(GtkWidget *self, void *data);
    static void updateClicked(GtkWidget *self, void *data);
    static void onAddCDROM(GtkWidget *self, void *data);
    static void fixBrokenClicked(GtkWidget *self, void *data);

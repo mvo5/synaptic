@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-05 00:04+0100\n"
+"POT-Creation-Date: 2003-11-06 11:53+0100\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -405,9 +405,10 @@ msgstr "Aggiornabili"
 msgid "Broken"
 msgstr "Difettosi"
 
-#: common/rpackagelister.cc:269
-msgid "Programmed Changes"
-msgstr "Cambiamenti programmati"
+#: common/rpackagelister.cc:269 gtk/rgsummarywindow.cc:300
+#, fuzzy
+msgid "Queued Changes"
+msgstr "Esegui le modifiche selezionate"
 
 #: common/rpackagelister.cc:276 gtk/window_filters.glade.strings:44
 msgid "New in archive"
@@ -677,7 +678,7 @@ msgstr ""
 msgid "About Synaptic"
 msgstr "Synaptic"
 
-#: gtk/rgchangeswindow.cc:69 gtk/rgsummarywindow.cc:300
+#: gtk/rgchangeswindow.cc:69
 msgid "Package changes"
 msgstr "Modifiche pacchetto"
 
@@ -1152,11 +1153,12 @@ msgid "Update the list of available packages"
 msgstr "il pacchetto è un pacchetto virtuale"
 
 #: gtk/rgmainwindow.cc:2566
-msgid "Upgrade every installed package to the latest version"
+msgid "Queue all possible upgrades"
 msgstr ""
 
 #: gtk/rgmainwindow.cc:2570
-msgid "Execute the selected changes"
+#, fuzzy
+msgid "Execute the queued changes"
 msgstr "Esegui le modifiche selezionate"
 
 #: gtk/rgmainwindow.cc:3206
@@ -1301,24 +1303,29 @@ msgid "Summary"
 msgstr ""
 
 #: gtk/rgsummarywindow.cc:312
-msgid "Perform package download only."
-msgstr "Esegue solo lo scaricamento dei file."
+#, fuzzy
+msgid "Download the packages files only"
+msgstr "Eliminare i pacchetti scaricati dopo l'installazione"
 
 #: gtk/rgsummarywindow.cc:320
-msgid "Show Details"
+#, fuzzy
+msgid "_Show Details"
 msgstr "Visualizza dettagli"
 
-#: gtk/rgsummarywindow.cc:325
-msgid "Proceed"
-msgstr "Procedi"
+#: gtk/rgsummarywindow.cc:325 gtk/window_main_hpaned.glade.strings:51
+#: gtk/window_main_vpaned.glade.strings:54
+#, fuzzy
+msgid "_Execute"
+msgstr "Esegui"
 
 #: gtk/rgsummarywindow.cc:331
-msgid "Cancel"
+#, fuzzy
+msgid "_Cancel"
 msgstr "Annulla"
 
 #: gtk/rgsummarywindow.cc:354
-#, c-format
-msgid "%d %s were held;\n"
+#, fuzzy, c-format
+msgid "%d %s are set on hold\n"
 msgstr "%d %s erano bloccati;\n"
 
 #: gtk/rgsummarywindow.cc:355 gtk/rgsummarywindow.cc:359
@@ -1336,66 +1343,63 @@ msgid "package"
 msgstr "pacchetto"
 
 #: gtk/rgsummarywindow.cc:358
-#, c-format
-msgid "%d %s were kept back and not upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s are kept back and not upgraded\n"
 msgstr "%d %s mantenuti e non aggiornati;\n"
 
 #: gtk/rgsummarywindow.cc:363
-#, c-format
-msgid "%d new %s will be installed;\n"
+#, fuzzy, c-format
+msgid "%d new %s will be installed\n"
 msgstr "%d nuovi %s verranno installati;\n"
 
 #: gtk/rgsummarywindow.cc:368
-#, c-format
-msgid "%d %s will be upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s will be upgraded\n"
 msgstr "%d %s verranno aggiornati;\n"
 
 #: gtk/rgsummarywindow.cc:372
-#, c-format
-msgid "%d %s will be removed;\n"
+#, fuzzy, c-format
+msgid "%d %s will be removed\n"
 msgstr "%d %s verranno rimossi;\n"
 
 #: gtk/rgsummarywindow.cc:376
 #, fuzzy, c-format
-msgid "%d %s will be DOWNGRADED;\n"
+msgid "%d %s will be DOWNGRADED\n"
 msgstr "%d %s verranno rimossi;\n"
 
 #: gtk/rgsummarywindow.cc:382
-#, c-format
-msgid "WARNING: %d essential %s will be removed!\n"
+#, fuzzy, c-format
+msgid "WARNING: %d essential %s will be removed\n"
 msgstr "ATTENZIONE: %d essenziali %s verranno rimossi!\n"
 
 #: gtk/rgsummarywindow.cc:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be used after finished.\n"
+"%s B of extra space will be used\n"
 msgstr ""
-"\n"
-"%sB verranno utilizzati al termine dell'operazione.\n"
 
 #: gtk/rgsummarywindow.cc:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be freed after finished.\n"
+"%s B of extra space will be freed\n"
 msgstr ""
-"\n"
-"%sB verranno liberati ad operazione terminata\n"
 
 #: gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s B need to be downloaded."
+"%s B have to be downloaded"
 msgstr ""
 "\n"
 "%sB da scaricare."
 
 #: gtk/rgsummarywindow.cc:419
+#, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
-"That can render your system unusable!!!\n"
+"This may render your system unusable!\n"
 msgstr ""
 "Alcuni pacchetti essenziali verranno rimossi.\n"
 "Ciò potrebbe rendere il sistema inutilizzabile!\n"
@@ -1407,8 +1411,8 @@ msgstr "Tentativo di togliere dalla coda un oggetto da scaricare"
 
 #: gtk/rgfindwindow.cc:113
 #, fuzzy
-msgid "Advanced Search"
-msgstr "Ricerca avanzata"
+msgid "Find"
+msgstr "Appunto:"
 
 #: gtk/window_about.glade.strings:9
 #, fuzzy
@@ -1810,12 +1814,6 @@ msgstr ""
 #: gtk/window_main_vpaned.glade.strings:53
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Esegue (e scarica se necessario) le modifiche richieste sui pacchetti"
-
-#: gtk/window_main_hpaned.glade.strings:51
-#: gtk/window_main_vpaned.glade.strings:54
-#, fuzzy
-msgid "_Execute"
-msgstr "Esegui"
 
 #: gtk/window_main_hpaned.glade.strings:53
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2341,7 +2339,7 @@ msgstr ""
 
 #: gtk/window_preferences.glade.strings:88
 #, fuzzy
-msgid "Temporay Files"
+msgid "Temporary Files"
 msgstr "<b>File temporanei</b>"
 
 #: gtk/window_preferences.glade.strings:89
@@ -2721,6 +2719,35 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors..."
 msgstr "Venditori"
+
+#~ msgid "Programmed Changes"
+#~ msgstr "Cambiamenti programmati"
+
+#~ msgid "Perform package download only."
+#~ msgstr "Esegue solo lo scaricamento dei file."
+
+#~ msgid "Proceed"
+#~ msgstr "Procedi"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be used after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB verranno utilizzati al termine dell'operazione.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be freed after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB verranno liberati ad operazione terminata\n"
+
+#, fuzzy
+#~ msgid "Advanced Search"
+#~ msgstr "Ricerca avanzata"
 
 #~ msgid "Performing selection for distribution upgrade..."
 #~ msgstr "Selezione per l'aggiornamento della distribuzione..."

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-05 00:04+0100\n"
+"POT-Creation-Date: 2003-11-06 11:53+0100\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -414,10 +414,10 @@ msgstr "Якія абнаўляюцца"
 msgid "Broken"
 msgstr "Сапсаваныя"
 
-# This is filter name, it's better to not translate it
-#: common/rpackagelister.cc:269
-msgid "Programmed Changes"
-msgstr "Заплянаваныя зьмены"
+#: common/rpackagelister.cc:269 gtk/rgsummarywindow.cc:300
+#, fuzzy
+msgid "Queued Changes"
+msgstr "Выключаць вылучаныя падзелы"
 
 #: common/rpackagelister.cc:276 gtk/window_filters.glade.strings:44
 msgid "New in archive"
@@ -688,7 +688,7 @@ msgstr ""
 msgid "About Synaptic"
 msgstr "Synaptic"
 
-#: gtk/rgchangeswindow.cc:69 gtk/rgsummarywindow.cc:300
+#: gtk/rgchangeswindow.cc:69
 msgid "Package changes"
 msgstr "Зьмены ў пакетах"
 
@@ -1166,12 +1166,12 @@ msgid "Update the list of available packages"
 msgstr "пакет зьяўляецца віртуальным"
 
 #: gtk/rgmainwindow.cc:2566
-msgid "Upgrade every installed package to the latest version"
+msgid "Queue all possible upgrades"
 msgstr ""
 
 #: gtk/rgmainwindow.cc:2570
 #, fuzzy
-msgid "Execute the selected changes"
+msgid "Execute the queued changes"
 msgstr "Выключаць вылучаныя падзелы"
 
 #: gtk/rgmainwindow.cc:3206
@@ -1315,24 +1315,29 @@ msgid "Summary"
 msgstr "Кароткае апісаньне"
 
 #: gtk/rgsummarywindow.cc:312
-msgid "Perform package download only."
-msgstr "Выканаць толькі загрузку пакетаў."
+#, fuzzy
+msgid "Download the packages files only"
+msgstr "Выдаліць загружаныя пакеты пасьля ўсталёўкі"
 
 #: gtk/rgsummarywindow.cc:320
-msgid "Show Details"
+#, fuzzy
+msgid "_Show Details"
 msgstr "Паказаць падрабязнасьці"
 
-#: gtk/rgsummarywindow.cc:325
-msgid "Proceed"
-msgstr "Выканаць"
+#: gtk/rgsummarywindow.cc:325 gtk/window_main_hpaned.glade.strings:51
+#: gtk/window_main_vpaned.glade.strings:54
+#, fuzzy
+msgid "_Execute"
+msgstr "Выключыць"
 
 #: gtk/rgsummarywindow.cc:331
-msgid "Cancel"
+#, fuzzy
+msgid "_Cancel"
 msgstr "Адмяніць"
 
 #: gtk/rgsummarywindow.cc:354
-#, c-format
-msgid "%d %s were held;\n"
+#, fuzzy, c-format
+msgid "%d %s are set on hold\n"
 msgstr "%d %s было ўтрымана;\n"
 
 #: gtk/rgsummarywindow.cc:355 gtk/rgsummarywindow.cc:359
@@ -1350,66 +1355,63 @@ msgid "package"
 msgstr "пакет"
 
 #: gtk/rgsummarywindow.cc:358
-#, c-format
-msgid "%d %s were kept back and not upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s are kept back and not upgraded\n"
 msgstr "%d %s было ўтрымана й не абноўлена;\n"
 
 #: gtk/rgsummarywindow.cc:363
-#, c-format
-msgid "%d new %s will be installed;\n"
+#, fuzzy, c-format
+msgid "%d new %s will be installed\n"
 msgstr "%d новы(х) %s будзе ўсталявана;\n"
 
 #: gtk/rgsummarywindow.cc:368
-#, c-format
-msgid "%d %s will be upgraded;\n"
+#, fuzzy, c-format
+msgid "%d %s will be upgraded\n"
 msgstr "%d %s будзе абноўлена;\n"
 
 #: gtk/rgsummarywindow.cc:372
-#, c-format
-msgid "%d %s will be removed;\n"
+#, fuzzy, c-format
+msgid "%d %s will be removed\n"
 msgstr "%d %s будзе выдалена;\n"
 
 #: gtk/rgsummarywindow.cc:376
 #, fuzzy, c-format
-msgid "%d %s will be DOWNGRADED;\n"
+msgid "%d %s will be DOWNGRADED\n"
 msgstr "%d %s будзе выдалена;\n"
 
 #: gtk/rgsummarywindow.cc:382
-#, c-format
-msgid "WARNING: %d essential %s will be removed!\n"
+#, fuzzy, c-format
+msgid "WARNING: %d essential %s will be removed\n"
 msgstr "УВАГА: %d важных %s будзе выдалена!\n"
 
 #: gtk/rgsummarywindow.cc:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be used after finished.\n"
+"%s B of extra space will be used\n"
 msgstr ""
-"\n"
-"%sB будзе выкарыстана.\n"
 
 #: gtk/rgsummarywindow.cc:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
-"%s B will be freed after finished.\n"
+"%s B of extra space will be freed\n"
 msgstr ""
-"\n"
-"%sB будзе вызвалена.\n"
 
 #: gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s B need to be downloaded."
+"%s B have to be downloaded"
 msgstr ""
 "\n"
 "%sB неабходна загрузіць."
 
 #: gtk/rgsummarywindow.cc:419
+#, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
-"That can render your system unusable!!!\n"
+"This may render your system unusable!\n"
 msgstr ""
 "Базавыя пакеты будуць выдаленыя.\n"
 "Гэта можа прывесьці вашу сыстэму ў непрацоўны стан!!!\n"
@@ -1420,8 +1422,9 @@ msgid "Tried to dequeue a fetching object"
 msgstr "Спроба прыбраць з чаргі аб'ект які запампоўваецца"
 
 #: gtk/rgfindwindow.cc:113
-msgid "Advanced Search"
-msgstr ""
+#, fuzzy
+msgid "Find"
+msgstr "Ад_шукаць"
 
 #: gtk/window_about.glade.strings:9
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
@@ -1823,12 +1826,6 @@ msgstr ""
 #: gtk/window_main_vpaned.glade.strings:53
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Выканаць (і загрузіць пры неабходнасьці) выбраныея дзеяньні з пакетамі"
-
-#: gtk/window_main_hpaned.glade.strings:51
-#: gtk/window_main_vpaned.glade.strings:54
-#, fuzzy
-msgid "_Execute"
-msgstr "Выключыць"
 
 #: gtk/window_main_hpaned.glade.strings:53
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2372,7 +2369,7 @@ msgstr "Ачысьціць"
 
 #: gtk/window_preferences.glade.strings:88
 #, fuzzy
-msgid "Temporay Files"
+msgid "Temporary Files"
 msgstr "Асноўнае"
 
 #: gtk/window_preferences.glade.strings:89
@@ -2755,6 +2752,32 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors..."
 msgstr "Пастаўшчыкі"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Programmed Changes"
+#~ msgstr "Заплянаваныя зьмены"
+
+#~ msgid "Perform package download only."
+#~ msgstr "Выканаць толькі загрузку пакетаў."
+
+#~ msgid "Proceed"
+#~ msgstr "Выканаць"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be used after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB будзе выкарыстана.\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "%s B will be freed after finished.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%sB будзе вызвалена.\n"
 
 #~ msgid "Performing selection for distribution upgrade..."
 #~ msgstr "Выконваецца вылучэньне для абнаўленьня дыстрыбютыва..."

@@ -295,7 +295,9 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
     if(FileExists("/usr/bin/yelp"))
 	system("yelp ghelp:synaptic &");
     else
-	me->_userDialog->warning(_("Unable to start yelp"));
+	me->_userDialog->warning(_("You need the gnome \"yelp\" programm "
+				   "to display the synaptic help\n\n"
+				   "This program is not found."));
 }
 
 
@@ -2027,6 +2029,24 @@ void RGMainWindow::findToolClicked(GtkWidget *self, void *data)
 
 }
 
+void RGMainWindow::clearAllChangesClicked(GtkWidget *self, void *data)
+{
+    //cout << "clearAllChangesClicked" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+    me->setInterfaceLocked(TRUE); 
+    me->_lister->unregisterObserver(me);
+    me->setTreeLocked(TRUE);
+
+    // reset
+    me->_lister->openCache(TRUE);
+
+    me->setTreeLocked(FALSE);
+    me->_lister->registerObserver(me);
+    me->refreshTable();
+    me->setInterfaceLocked(FALSE); 
+}
+
+
 void RGMainWindow::undoClicked(GtkWidget *self, void *data)
 {
     //cout << "undoClicked" << endl;
@@ -2498,6 +2518,12 @@ void RGMainWindow::buildInterface()
 				  "on_redo1_activate",
 				  G_CALLBACK(redoClicked),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_clear_all_changes_activate",
+				  G_CALLBACK(clearAllChangesClicked),
+				  this); 
+
 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_open_activate",

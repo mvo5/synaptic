@@ -1330,10 +1330,12 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     gtk_text_buffer_get_iter_at_offset(_descrBuffer, &iter, 0);
     gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_descrView), &iter,0,FALSE,0,0);
 
+#ifndef HAVE_RPM
    // files
     gtk_text_buffer_set_text(_filesBuffer, utf8(pkg->installedFiles()), -1);
     gtk_text_buffer_get_iter_at_offset(_filesBuffer, &iter, 0);
     gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_filesView), &iter,0,FALSE,0,0);
+#endif
 
     updateDynPackageInfo(pkg);
     setStatusText();
@@ -2588,7 +2590,14 @@ void RGMainWindow::buildInterface()
 				  this); 
     
     /* --------------------------------------------------------------- */
-    
+
+    // we don't support "installed files" on rpm currently
+#ifdef HAVE_RPM 
+    widget = glade_xml_get_widget(_gladeXML, "notebook_info");
+    assert(widget);
+    gtk_notebook_remove_page(GTK_NOTEBOOK(widget), -1);
+#endif    
+
     // toolbar menu code
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_pixmaps");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);

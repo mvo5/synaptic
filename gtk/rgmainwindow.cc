@@ -1423,7 +1423,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   /* do the dirty deed */
     switch (action) {
     case PKG_KEEP: // keep
-      pkg->setKeep();
+      me->pkgKeepHelper(pkg);
       break;
     case PKG_INSTALL: // install
       me->pkgInstallHelper(pkg);
@@ -2233,10 +2233,6 @@ void RGMainWindow::onFlatList(GtkWidget *self, void *data)
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
   RPackageLister::pkgState state;
-  vector<RPackage*> kept;
-  vector<RPackage*> toInstall; 
-  vector<RPackage*> toUpgrade; 
-  vector<RPackage*> toRemove;
 
   _lister->saveState(state);
   _lister->unregisterObserver(this);
@@ -2248,6 +2244,11 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
     _lister->fixBroken();
   }
 
+  vector<RPackage*> kept;
+  vector<RPackage*> toInstall; 
+  vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toRemove;
+
   if (_lister->getStateChanges(state, kept, toInstall,
       			 toUpgrade, toRemove, pkg)) {
       RGChangesWindow *chng;
@@ -2258,7 +2259,6 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
           // canceled operation
           _lister->restoreState(state);
       }
-
       delete chng;
   }
 
@@ -2284,7 +2284,65 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
       return;
     } 
   }
+
+  RPackageLister::pkgState state;
+
+  _lister->saveState(state);
+  _lister->unregisterObserver(this);
+
   pkg->setRemove(purge);
+
+  vector<RPackage*> kept;
+  vector<RPackage*> toInstall; 
+  vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toRemove;
+
+  if (_lister->getStateChanges(state, kept, toInstall,
+      			 toUpgrade, toRemove, pkg)) {
+      RGChangesWindow *chng;
+      // show a summary of what's gonna happen
+      chng = new RGChangesWindow(this);
+      if (!chng->showAndConfirm(_lister, kept, toInstall,
+      			  toUpgrade, toRemove)) {
+          // canceled operation
+          _lister->restoreState(state);
+      }
+      delete chng;
+  }
+
+  _lister->registerObserver(this);
+  refreshTable(pkg);
+}
+
+void RGMainWindow::pkgKeepHelper(RPackage *pkg)
+{
+  RPackageLister::pkgState state;
+
+  _lister->saveState(state);
+  _lister->unregisterObserver(this);
+
+  pkg->setKeep();
+
+  vector<RPackage*> kept;
+  vector<RPackage*> toInstall; 
+  vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toRemove;
+
+  if (_lister->getStateChanges(state, kept, toInstall,
+      			 toUpgrade, toRemove, pkg)) {
+      RGChangesWindow *chng;
+      // show a summary of what's gonna happen
+      chng = new RGChangesWindow(this);
+      if (!chng->showAndConfirm(_lister, kept, toInstall,
+      			  toUpgrade, toRemove)) {
+          // canceled operation
+          _lister->restoreState(state);
+      }
+      delete chng;
+  }
+
+  _lister->registerObserver(this);
+  refreshTable(pkg);
 }
 
 void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
@@ -2361,7 +2419,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
     }
     if( mstatus == RPackage::MUpgrade) {
       // upgrade -> keep
-      pkg->setKeep();
+      me->pkgKeepHelper(pkg);
     }
   }
   // end double-click

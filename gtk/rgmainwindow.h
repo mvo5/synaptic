@@ -170,6 +170,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    void pkgInstallHelper(RPackage *pkg);
    void pkgRemoveHelper(RPackage *pkg, bool purge = false);
+   void pkgKeepHelper(RPackage *pkg);
 
    void buildInterface();
    void refreshFilterMenu();

@@ -71,7 +71,19 @@ void RGTermInstallProgress::startUpdate()
 		    G_CALLBACK(child_exited),
 		    this);
  
-   show();
+   // check if we run embedded
+   int id = _config->FindI("Volatile::PlugProgressInto", -1);
+   //cout << "Plug ID: " << id << endl;
+   if (id > 0) {
+      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "window_zvtinstallprogress"));
+      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_terminstall_progress");
+      _sock =  gtk_plug_new(id);
+      gtk_widget_reparent(vbox, _sock);
+      gtk_widget_show(_sock);
+   } else {
+      show();
+   }
+
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
    gtk_widget_set_sensitive(_closeB, false);
    RGFlushInterface();
@@ -118,7 +130,11 @@ void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)
    } 
 
    RGFlushInterface();
-   me->hide();
+   if(me->_sock != NULL) {
+      gtk_widget_destroy(me->_sock);
+   } else {
+      me->hide();
+   }
 }
 
 bool RGTermInstallProgress::close()
@@ -139,7 +155,7 @@ gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
 }
 
 RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
-    : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress")
+   : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"), _sock(NULL)
 {
    setTitle(_("Applying Changes"));
 

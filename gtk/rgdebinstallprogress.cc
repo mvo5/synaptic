@@ -356,7 +356,18 @@ void RGDebInstallProgress::startUpdate()
    g_signal_connect(G_OBJECT(reaper), "child-exited",
 		    G_CALLBACK(child_exited),
 		    this);
-   show();
+
+   // check if we run embedded
+   int id = _config->FindI("Volatile::PlugProgressInto", -1);
+   //cout << "Plug ID: " << id << endl;
+   if (id > 0) {
+      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_rgdebinstall_progress");
+      _sock =  gtk_plug_new(id);
+      gtk_widget_reparent(vbox, _sock);
+      gtk_widget_show(_sock);
+   } else {
+      show();
+   }
    RGFlushInterface();
 }
 
@@ -401,7 +412,7 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister)
    : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
-     _totalActions(0), _progress(0)
+     _totalActions(0), _progress(0), _sock(0)
 
 {
    prepare(lister);
@@ -637,7 +648,11 @@ void RGDebInstallProgress::finishUpdate()
    }
 
    // hide and finish
-   hide();
+   if(_sock != NULL) {
+      gtk_widget_destroy(_sock);
+   } else {
+      hide();
+   }
 }
 
 void RGDebInstallProgress::prepare(RPackageLister *lister)

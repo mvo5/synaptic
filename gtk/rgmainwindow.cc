@@ -37,6 +37,9 @@
 #include <algorithm>
 #include <fstream>
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>

@@ -72,6 +72,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    GtkWidget *_pbarTotal;
    GtkWidget *_term;
 
+   // if we run embedded
+   GtkWidget *_sock;
+
    bool _startCounting;
 
    int _progress;

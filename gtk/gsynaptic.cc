@@ -97,6 +97,8 @@ CommandLine::Args Args[] = {
    , {
    0, "add-cdrom", "Volatile::AddCdrom-Mode", CommandLine::HasArg}
    , {
+   0, "plug-progress-into", "Volatile::PlugProgressInto", CommandLine::HasArg}
+   , {
    0, "update-at-startup", "Volatile::Update-Mode", 0}
    , {
    0, "hide-main-window", "Volatile::HideMainwindow", 0}

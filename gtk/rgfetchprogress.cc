@@ -58,7 +58,7 @@ static const int COLUMN_PERCENT_WIDTH=100;
 static const int COLUMN_PERCENT_HEIGHT=18;
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-   : RGGladeWindow(win, "fetch"), _cursorDirty(false)
+   : RGGladeWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
@@ -106,6 +106,20 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    PangoContext *context = gdk_pango_context_get();
    _layout = pango_layout_new(context);
 
+   // check if we should run embedded somewhere
+   // we need to make the window show before we obtain the _gc
+   int id = _config->FindI("Volatile::PlugProgressInto", -1);
+   //cout << "Plug ID: " << id << endl;
+   if (id > 0) {
+      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "window_fetch"));
+      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_fetch");
+      _sock =  gtk_plug_new(id);
+      gtk_widget_reparent(vbox, _sock);
+      gtk_widget_show_all(_sock);
+      _win = _sock;
+   } 
+   show();
+
    GtkStyle *style = gtk_widget_get_style(_win);
    _font = style->font_desc;
    _gc = style->white_gc;
@@ -121,6 +135,9 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    assert(expander);
    g_signal_connect (expander, "notify::expanded",
 		     G_CALLBACK (expanderActivate), this);
+
+   
+
    
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
@@ -299,7 +316,7 @@ void RGFetchProgress::Start()
    //cout << "RGFetchProgress::Start()" << endl;
    pkgAcquireStatus::Start();
    _cancelled = false;
-   show();
+
    RGFlushInterface();
 }
 
@@ -308,7 +325,11 @@ void RGFetchProgress::Stop()
 {
    //cout << "RGFetchProgress::Stop()" << endl;
    RGFlushInterface();
-   hide();
+   if(_sock != NULL) {
+      gtk_widget_destroy(_sock);
+   } else {
+      hide();
+   }
    pkgAcquireStatus::Stop();
 
    //FIXME: this needs to be handled in a better way (gtk-2 maybe?)

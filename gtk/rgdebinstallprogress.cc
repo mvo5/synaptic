@@ -270,6 +270,7 @@ int ipc_recv_fd()
    read_fd(connfd, &c,1,&fd);
 
    close(connfd);
+   close(listenfd);
 
    return fd;
 }

@@ -130,10 +130,10 @@ There are preselected groups of packages to perform each task. If you select a t
       </child>
 
       <child>
-	<widget class="GtkHButtonBox" id="hbuttonbox1">
+	<widget class="GtkHBox" id="hbox3">
 	  <property name="visible">True</property>
-	  <property name="layout_style">GTK_BUTTONBOX_END</property>
-	  <property name="spacing">6</property>
+	  <property name="homogeneous">False</property>
+	  <property name="spacing">0</property>
 
 	  <child>
 	    <widget class="GtkButton" id="button_details">
@@ -145,31 +145,49 @@ There are preselected groups of packages to perform each task. If you select a t
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <signal name="clicked" handler="on_button_details_clicked" last_modification_time="Thu, 15 Jul 2004 21:59:28 GMT"/>
 	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="button_cancel">
+	    <widget class="GtkHButtonBox" id="hbuttonbox1">
 	      <property name="visible">True</property>
-	      <property name="can_default">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label">gtk-cancel</property>
-	      <property name="use_stock">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <signal name="clicked" handler="on_button_cancel_clicked" last_modification_time="Thu, 15 Jul 2004 21:59:24 GMT"/>
-	    </widget>
-	  </child>
+	      <property name="layout_style">GTK_BUTTONBOX_END</property>
+	      <property name="spacing">6</property>
 
-	  <child>
-	    <widget class="GtkButton" id="button_ok">
-	      <property name="visible">True</property>
-	      <property name="sensitive">False</property>
-	      <property name="can_default">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label">gtk-ok</property>
-	      <property name="use_stock">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <signal name="clicked" handler="on_button_ok_clicked" last_modification_time="Thu, 15 Jul 2004 21:59:17 GMT"/>
+	      <child>
+		<widget class="GtkButton" id="button_cancel">
+		  <property name="visible">True</property>
+		  <property name="can_default">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="label">gtk-cancel</property>
+		  <property name="use_stock">True</property>
+		  <property name="relief">GTK_RELIEF_NORMAL</property>
+		  <signal name="clicked" handler="on_button_cancel_clicked" last_modification_time="Thu, 15 Jul 2004 21:59:24 GMT"/>
+		</widget>
+	      </child>
+
+	      <child>
+		<widget class="GtkButton" id="button_ok">
+		  <property name="visible">True</property>
+		  <property name="sensitive">False</property>
+		  <property name="can_default">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="label">gtk-ok</property>
+		  <property name="use_stock">True</property>
+		  <property name="relief">GTK_RELIEF_NORMAL</property>
+		  <signal name="clicked" handler="on_button_ok_clicked" last_modification_time="Thu, 15 Jul 2004 21:59:17 GMT"/>
+		</widget>
+	      </child>
 	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">True</property>
+	      <property name="fill">True</property>
+	    </packing>
 	  </child>
 	</widget>
 	<packing>

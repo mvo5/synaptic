@@ -42,7 +42,7 @@ string RPMIndexCopy::RipDirectory(string Path)
    return string(Path, 0, Path.rfind('/'));
 }
 
-
+#if 0
 static int strrcmp_(const char *a, const char *b)
 {
    int la = strlen(a);
@@ -56,7 +56,7 @@ static int strrcmp_(const char *a, const char *b)
    else
        return strcmp(&b[lb-la], a);
 }
-
+#endif
 
 bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 {   

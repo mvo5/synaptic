@@ -171,8 +171,8 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL);
-   void restoreTableState(vector<string>& expanded_sections, GtkTreeIter it);
-   GtkTreeIter saveTableState(vector<string>& expanded_sections);
+   void restoreTableState(vector<string>& expanded_sections);
+   void saveTableState(vector<string>& expanded_sections);
    void changeFilter(int filter, bool sethistory=true);
    void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
    

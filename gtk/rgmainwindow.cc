@@ -799,13 +799,14 @@ void RGMainWindow::forgetNewPackages()
     _roptions->forgetNewPackages();
 }
 
-// BUG: returning a GtkTreeIter will not work remotly reliable
-GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections) 
+// BUG: save,restoreTableState() is broken ATM
+void RGMainWindow::saveTableState(vector<string>& expanded_sections) 
 {
   GtkTreeIter parentIter;  /* Parent iter */
+  RPackage *pkg;
 
   if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
-      return parentIter;
+      return;
 
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
     //cout << "saving state" << endl;
@@ -825,74 +826,56 @@ GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections)
     }
     while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
   }
-
-  GtkTreeSelection *selection;
-  GList *li;
-  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
-  li = gtk_tree_selection_get_selected_rows(selection,
-					    (GtkTreeModel**)(&_pkgTree));
-  // list is empty
-  if(li == NULL) 
-      return parentIter;
-  // we are only interessted in the last element
-  li = g_list_last(li);
-  gtk_tree_model_get_iter(GTK_TREE_MODEL(_pkgTree), &parentIter, 
-			  (GtkTreePath*)(li->data));
-
-  return parentIter;
 }
 
-void RGMainWindow::restoreTableState(vector<string>& expanded_sections,
-				     GtkTreeIter iter)
+void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
 {
   GtkTreeIter parentIter;  /* Parent iter */
   
   /* restore state */
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
-    //cout << "restoring state" << endl;
-    do {
-      GtkTreePath *path;
-      gchar *str;
-      path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
-				      &parentIter);
-      gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
-			 NAME_COLUMN, &str, -1);
-      if(str != NULL &&
-	 find(expanded_sections.begin(), 
-	      expanded_sections.end(),
-	      string(str)) != expanded_sections.end())
-	gtk_tree_view_expand_row(GTK_TREE_VIEW(_treeView), path, FALSE);
-      
-      g_free(str);
-      gtk_tree_path_free(path);
-    }
-    while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
+      //cout << "restoring state" << endl;
+      do {
+	  GtkTreePath *path;
+	  gchar *str;
+	  path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
+					  &parentIter);
+	  gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+			     NAME_COLUMN, &str, -1);
+	  if(str != NULL &&
+	     find(expanded_sections.begin(), 
+		  expanded_sections.end(),
+		  string(str)) != expanded_sections.end())
+	      gtk_tree_view_expand_row(GTK_TREE_VIEW(_treeView), path, FALSE);
+	  
+	  g_free(str);
+	  gtk_tree_path_free(path);
+      }
+      while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
   }
-
-  GtkTreeSelection *select;
-  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
-  gtk_tree_selection_select_iter (select, &iter);
 }
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
   vector<string> sections;
   vector<string> expanded_sections;
-  GtkTreeIter selectedRow;
   
 //   cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
 //   cout << "_lister is at: " <<_lister << endl;
+//   if(selectedPkg != NULL)
+//       cout << selectedPkg->name() << endl;
 
-  selectedRow = saveTableState(expanded_sections);
-  
+  saveTableState(expanded_sections);
+
   g_object_unref(_pkgTree);
-  _pkgTree = gtk_pkg_tree_new (_lister);
+  _pkgTree = gtk_pkg_tree_new(_lister);
   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			  GTK_TREE_MODEL(_pkgTree));
   // always set search column after set_model
   gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
-  restoreTableState(expanded_sections, selectedRow);
+  restoreTableState(expanded_sections);
+  //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
 
   // not implemented yet
 //gtk_pkg_tree_refresh(_pkgTree);
@@ -2499,6 +2482,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
     }
   }
   // end double-click
+  me->setStatusText();
   me->setInterfaceLocked(FALSE);
   return;
 }
@@ -2535,7 +2519,8 @@ void RGMainWindow::setStatusText(char *text)
 
     gtk_widget_set_sensitive(_proceedB, (toinstall + toremove) != 0);
     gtk_widget_set_sensitive(_proceedM, (toinstall + toremove) != 0);
-    _unsavedChanges = (toinstall + toremove) != 0;
+    //cout << "toinstall: " << toinstall << " toremove: " << toremove << endl;
+    _unsavedChanges = ((toinstall + toremove) != 0);
     
     gtk_widget_queue_draw(_statusL);
 }
@@ -2626,11 +2611,11 @@ void RGMainWindow::close()
 {
     if (_interfaceLocked > 0)
 	return;
-    
-    if (_unsavedChanges == false || 
+
+    if (_unsavedChanges == false ||
 	_userDialog->confirm(_("There are unsaved changes. Are you sure\n"
 			       "you want to quit Synaptic?"))) {
-	
+
 	_error->Discard();
 	
 	saveState();
@@ -2638,6 +2623,11 @@ void RGMainWindow::close()
 
 	exit(0);
     }
+	
+    //cout << "no exit" << endl;
+    //BUG/FIXME: don't know why this is needed, but if I ommit it, the 
+    //     window will be closed
+    cout<<endl;
 }
 
 

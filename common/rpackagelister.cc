@@ -808,6 +808,11 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
 	 case RPackage::MHeld:
 	    held++;
 	    break;
+	case RPackage::MBroken:
+	case RPackage::MPinned:
+	case RPackage::MNew:
+	    /* nothing */
+	    break;
 	}
     }
 
@@ -829,7 +834,7 @@ void RPackageLister::saveUndoState(pkgState &state)
     undoStack.push_front(state);
     redoStack.clear();
 
-    int maxStackSize = _config->FindI("Synaptic::undoStackSize", 20);
+    unsigned int maxStackSize = _config->FindI("Synaptic::undoStackSize", 20);
     while(undoStack.size() > maxStackSize) 
 	undoStack.pop_back();
 }
@@ -907,6 +912,12 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 		case RPackage::MKeep:
 		    _packages[i]->setKeep();
 		    break;
+	    case RPackage::MDowngrade:
+	    case RPackage::MBroken:
+	    case RPackage::MPinned:
+	    case RPackage::MNew:
+		/* nothing */
+		break;
 	    }
 	}
     }
@@ -926,26 +937,33 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	if (state[i] != status && 
 	    find(exclude.begin(),exclude.end(),_packages[i])==exclude.end()) {
 	    switch (status) {
-		case RPackage::MInstall:
-		    toInstall.push_back(_packages[i]);
-		    changed = true;
-		    break;
-
-		case RPackage::MUpgrade:
-		    toUpgrade.push_back(_packages[i]);
-		    changed = true;
-		    break;
-		    
-		case RPackage::MRemove:
-		    toRemove.push_back(_packages[i]);
-		    changed = true;
-		    break;
+	    case RPackage::MInstall:
+		toInstall.push_back(_packages[i]);
+		changed = true;
+		break;
 		
-		case RPackage::MKeep:
-		case RPackage::MHeld:
-		    kept.push_back(_packages[i]);
-		    changed = true;
-		    break;
+	    case RPackage::MUpgrade:
+		toUpgrade.push_back(_packages[i]);
+		changed = true;
+		break;
+		    
+	    case RPackage::MRemove:
+		toRemove.push_back(_packages[i]);
+		changed = true;
+		break;
+		
+	    case RPackage::MKeep:
+	    case RPackage::MHeld:
+		kept.push_back(_packages[i]);
+		changed = true;
+		break;
+
+	    case RPackage::MDowngrade:
+	    case RPackage::MBroken:
+	    case RPackage::MPinned:
+	    case RPackage::MNew:
+		/* nothing */
+		break;
 	    }
 	}
     }
@@ -995,6 +1013,11 @@ void RPackageLister::getDetailedSummary(vector<RPackage*> &held,
     case RPackage::MHeld:
       held.push_back(pkg);
       break;
+    case RPackage::MBroken:
+    case RPackage::MPinned:
+    case RPackage::MNew:
+	/* nothing */
+	break;
     }
   }
 
@@ -1327,7 +1350,7 @@ bool RPackageLister::readSelections(istream &in)
 	int Size = _displayList.size();
 	_progMeter->OverallProgress(0,Size,Size,_("Setting selections..."));
 	_progMeter->SubProgress(Size);
-        for (unsigned i = 0; i < Size; i++) {
+        for (int i = 0; i < Size; i++) {
 	    RPackage *Pkg = _displayList[i];
 	    map<string,int>::const_iterator I = actionMap.find(Pkg->name());
 	    if (I != actionMap.end()) {
@@ -1348,6 +1371,8 @@ bool RPackageLister::readSelections(istream &in)
     }
     if (!check())
         fixBroken();
+    
+    return true;
 }
 
 // vim:sts=4:sw=4

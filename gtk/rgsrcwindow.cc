@@ -43,15 +43,11 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	GtkWidget *hbox2;
 	//GtkWidget *lblStatus;
 	//GtkWidget *lblType;
-	GtkWidget *lblVendor;
 	GtkWidget *btnEditVendors;
 	GtkWidget *lblURI;
 	GtkWidget *item;
-	GtkWidget *table2;
 	GtkWidget *lblDist;
 	GtkWidget *lblSection;
-	//GtkWidget *hbox3;
-	GtkWidget *lblSectother;
 	GtkWidget *dialog_action_area1;
 	GtkWidget *hbox1;
 	GtkWidget *btnOK;

@@ -26,7 +26,6 @@
 
 class RUserDialog {
 public:
-
     enum ButtonsType {
 	ButtonsDefault,
 	ButtonsOk,

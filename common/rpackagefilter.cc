@@ -238,18 +238,18 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	    } while (pkg->nextWDeps(depName, depPkg, ok));
 	  }
 	} else if (iter->where == RDepends) {
-	  const char *depType, *depPkg, *depName;
-	  if (pkg->enumRDeps(depName, depPkg)) {
-	    do {
-	      if(strstr(depName,iter->pattern.c_str()) != NULL) {
-		found = true;
-		break;
-	      } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
-		found = true;
-		break;
-	      }
-	    } while (pkg->nextRDeps(depName, depPkg));
-	  }
+	    const char *depPkg, *depName;
+	    if (pkg->enumRDeps(depName, depPkg)) {
+		do {
+		    if(strstr(depName,iter->pattern.c_str()) != NULL) {
+			found = true;
+			break;
+		    } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
+			found = true;
+			break;
+		    }
+		} while (pkg->nextRDeps(depName, depPkg));
+	    }
 	}
 	
 	// match the first "found", otherwise look if it was a exclusive rule

@@ -106,7 +106,6 @@ bool RGUserDialog::showErrors()
     if (_error->PendingError())
 	iserror = true;
         
-    int lines = 0;
     string message = "";
     while (!_error->empty()) {
 	string tmp;

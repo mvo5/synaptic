@@ -183,7 +183,7 @@ void RAPTOptions::rereadDebconf()
 	//cerr << "Error opening " << infodir << endl;
 	return;
     }
-    for(int i = 3; dent = readdir(dir); i++) {
+    for(int i = 3; (dent = readdir(dir)); i++) {
 	if ((point = strrchr(dent->d_name, '.')) == NULL)
 	    continue;
 	if (strcmp(point, configext) == 0)

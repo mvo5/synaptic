@@ -615,6 +615,7 @@ string RCDScanner::srcSourceType() const
 #endif
 }
 
+#if 0
 static int strrcmp_(const char *a, const char *b)
 {
    int la = strlen(a);
@@ -628,7 +629,7 @@ static int strrcmp_(const char *a, const char *b)
    else
        return strcmp(&b[lb-la], a);
 }
-
+#endif
 
 bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
 			       int Depth)
@@ -730,7 +731,7 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
         if (S_ISDIR(Buf.st_mode) == 0)
 	    continue;
       
-        unsigned int I;
+        int I;
         for (I = 0; I != Depth; I++)
 	    if (Inodes[I] == Buf.st_ino)
 	        break;

@@ -57,11 +57,6 @@ void RGChangesWindow::clickedCancel(GtkWidget *self, void *data)
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
     : RGWindow(wwin, "changes", false, false, true)
 {
-    GtkWidget *hbox;
-    GtkWidget *button;
-    GtkWidget *scrolled_win;
-    int lines = 0;
-    
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
     _tree = glade_xml_get_widget(_gladeXML, "tree");

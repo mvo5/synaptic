@@ -59,14 +59,6 @@ static gboolean     gtk_pkg_tree_iter_parent     (GtkTreeModel      *tree_model,
 						  GtkTreeIter       *iter,
 						  GtkTreeIter       *child);
 
-
-static void gtk_pkg_tree_set_n_columns   (GtkPkgTree *tree_store,
-					  gint          n_columns);
-static void gtk_pkg_tree_set_column_type (GtkPkgTree *tree_store,
-					  gint          column,
-					  GType         type);
-
-
 static GObjectClass *parent_class = NULL;
 
 extern GdkPixbuf *StatusPixbuf[12];
@@ -176,14 +168,14 @@ gtk_pkg_tree_new (RPackageLister *lister)
 static void
 gtk_pkg_tree_finalize (GObject *object)
 {
-  GtkPkgTree *pkg_tree = GTK_PKG_TREE (object);
+    //  GtkPkgTree *pkg_tree = GTK_PKG_TREE (object);
 
 
-  /* give back all memory */
+    /* give back all memory */
 
-   
-  /* must chain up */
-  (* parent_class->finalize) (object);
+    
+    /* must chain up */
+    (* parent_class->finalize) (object);
 }
 
 
@@ -235,9 +227,8 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
   tree<RPackageLister::pkgPair> *pkgTree;
 
   GtkPkgTree *pkg_tree = (GtkPkgTree *) tree_model;
-  GtkTreeIter parent;
   gint *indices;
-  gint depth, i;
+  gint depth;
 
   //  g_print( "gtk_pkg_tree_get_iter()\n");
   g_return_val_if_fail (GTK_IS_PKG_TREE (pkg_tree), FALSE);
@@ -418,7 +409,6 @@ gtk_pkg_tree_iter_next (GtkTreeModel  *tree_model,
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
   RPackageLister::sibTreeIter it((RPackageLister::treeNode*)iter->user_data);
-  RPackageLister::sibTreeIter it_before(it);
 
   //cout << "iter_next(): " << (*it).first << endl;
   int depth = pkgTree->depth(it);

@@ -28,7 +28,6 @@
 
 class RGUserDialog : public RUserDialog
 {
-
 protected:
 
     GtkWidget *_parentWindow;

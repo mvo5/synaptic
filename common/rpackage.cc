@@ -342,8 +342,8 @@ long RPackage::packageSize()
 
 int RPackage::getOtherStatus()
 {
-    pkgCache::VerIterator ver = _package->CurrentVer();
-    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+    //pkgCache::VerIterator ver = _package->CurrentVer();
+    //pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
     int status = 0;
 

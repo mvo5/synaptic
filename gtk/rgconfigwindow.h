@@ -21,9 +21,7 @@
  */
 
 
-
 #include "rgwindow.h"
-
 
 class RGConfigWindow : public RGWindow {
   GtkWidget *_optionB[5];
@@ -33,12 +31,10 @@ class RGConfigWindow : public RGWindow {
   
   static void saveAction(GtkWidget *self, void *data);
   static void closeAction(GtkWidget *self, void *data);
+  static void doneAction(GtkWidget *self, void *data);
    
  public:
   RGConfigWindow(RGWindow *owner);
   virtual ~RGConfigWindow() {};
   virtual void show();
 };
-
-
-

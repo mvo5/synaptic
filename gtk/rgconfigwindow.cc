@@ -40,7 +40,7 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[0])) ;
   _config->Set("Synaptic::UseRegexp", newval ? "true" : "false");
  
-  newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[1]));
+  newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[2]));
   _config->Set("Synaptic::UseStatusColors",  newval ? "true" : "false");
 
   bool postClean, postAutoClean;
@@ -64,11 +64,15 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
 void RGConfigWindow::closeAction(GtkWidget *self, void *data)
 {
   RGConfigWindow *me = (RGConfigWindow*)data;
-    
   me->close();
 }
 
-
+void RGConfigWindow::doneAction(GtkWidget *self, void *data)
+{
+  RGConfigWindow *me = (RGConfigWindow*)data;
+  me->saveAction(self, data);
+  me->closeAction(self, data);
+}
 
 void RGConfigWindow::show()
 {
@@ -77,7 +81,7 @@ void RGConfigWindow::show()
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[0]),
 			       _config->FindB("Synaptic::UseRegexp", false));
 
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[1]),
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
 			       _config->FindB("Synaptic::UseStatusColors", 
 					      true));
 
@@ -91,7 +95,6 @@ void RGConfigWindow::show()
   else
     gtk_button_clicked(GTK_BUTTON(_cacheB[0]));
 
-
   RGWindow::show();
 }
 
@@ -99,125 +102,29 @@ void RGConfigWindow::show()
 
 
 RGConfigWindow::RGConfigWindow(RGWindow *win) 
-    : RGWindow(win, "options")
+    : RGWindow(win, "options", false, true, true)
 {
     GtkWidget *button;
     GtkWidget *box;
-    int b = -1;
 
-    //gtk_widget_set_usize(_win, 400, 250);
+    _optionB[0] = glade_xml_get_widget(_gladeXML, "check_regexp");
+    _optionB[1] = glade_xml_get_widget(_gladeXML, "check_text_only");
+    _optionB[2] = glade_xml_get_widget(_gladeXML, "check_use_colors");
 
-    GtkWidget *tab;
+    _cacheB[0] = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
+    _cacheB[1] = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");
+    _cacheB[2] = glade_xml_get_widget(_gladeXML, "radio_cache_del_obsolete");
     
-    tab = gtk_notebook_new();
-    gtk_widget_show(tab);
-    gtk_box_pack_start(GTK_BOX(_topBox), tab, TRUE, TRUE, 5);
-    box = gtk_vbox_new(FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(box), 10);
-    
-    {
-	_optionB[++b] = gtk_check_button_new_with_label(
-			_("Use regular expressions during searches or matching"));
-	gtk_box_pack_start(GTK_BOX(box), _optionB[b], FALSE, TRUE, 0);
-	
-	_optionB[++b] = gtk_check_button_new_with_label(
-			_("Use colors in main package list\n(requires a restart to take effect)"));
-	gtk_box_pack_start(GTK_BOX(box), _optionB[b], FALSE, TRUE, 0);
-
-
-	gtk_widget_show_all(box);
-	gtk_notebook_append_page(GTK_NOTEBOOK(tab), box, 
-				 gtk_label_new(_("Options")));
-    }
-
-    {
-	GtkWidget *vbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
-/*
-        GtkWidget *label;
-	label = WMCreateLabel(vbox);
-	WMSetLabelText(label, 
-		       "Packages are stored in the cache when downloaded."
-		       "");
- * 
-	WMAddBoxSubview(vbox, GtkWidgetView(label), False, True, 40, 0, 5);
- */
-	_cacheB[0] = button = gtk_radio_button_new_with_label(NULL,
-				_("Leave downloaded packages in the cache"));
-	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, TRUE, 0);
-
-	_cacheB[1] = button = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(button)),
-				_("Delete downloaded packages after installation"));
-	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, TRUE, 0);
-
-	_cacheB[2] = button = gtk_radio_button_new_with_label(gtk_radio_button_group(GTK_RADIO_BUTTON(button)),
-			       _("Delete obsoleted packages from cache"));
-	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, TRUE, 0);
-	
-/*	box = WMCreateBox(vbox);
-	WMSetBoxHorizontal(box, True);	
-	WMAddBoxSubviewAtEnd(vbox, GtkWidgetView(box), False, True, 20, 0, 0);
-
-	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Max. Cache Size:");
-	WMAddBoxSubview(box, GtkWidgetView(label), False, True, 120, 0, 0);
-	
-	_sizeT = WMCreateTextField(box);
-	WMAddBoxSubview(box, GtkWidgetView(_sizeT), True, True, 80, 0, 2);
-	
-	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Mbytes");
-	WMAddBoxSubview(box, GtkWidgetView(label), False, True, 50, 0, 5);
-
-	button = WMCreateCommandButton(box);
-	WMSetButtonText(button, "Clear Cache");
-	WMAddBoxSubview(box, GtkWidgetView(button), False, True, 100, 0, 0);
-	WMMapSubwidgets(box);
-
-	
-	box = WMCreateBox(vbox);
-	WMSetBoxHorizontal(box, True);	
-	WMAddBoxSubviewAtEnd(vbox, GtkWidgetView(box), False, True, 20, 0, 5);
-
-	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Cache Directory:");
-	WMAddBoxSubview(box, GtkWidgetView(label), False, True, 120, 0, 0);
-	
-	_pathT = WMCreateTextField(box);
-	WMAddBoxSubview(box, GtkWidgetView(_pathT), True, True, 80, 0, 5);
-	
-	button = WMCreateCommandButton(box);
-	WMSetButtonText(button, "Browse...");
-	WMAddBoxSubview(box, GtkWidgetView(button), False, True, 70, 0, 0);
-
-  */  
-	gtk_widget_show_all(vbox);
-	gtk_notebook_append_page(GTK_NOTEBOOK(tab), vbox,
-				 gtk_label_new(_("Cache")));
-    }
-
-    
-    box = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(_topBox), box, FALSE, TRUE, 0);
-
-    
-    button = gtk_button_new_with_label(_("Close"));
-    gtk_widget_set_usize(button, 80, -1);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", 
-		       (GtkSignalFunc)closeAction, this);
-    gtk_box_pack_end(GTK_BOX(box), button, FALSE, TRUE, 0);
-
-    button = gtk_button_new_with_label(_("Save"));
-    gtk_widget_set_usize(button, 80, -1) ;   
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", 
-		       (GtkSignalFunc)saveAction, this);
-    gtk_box_pack_end(GTK_BOX(box), button, FALSE, TRUE, 5);
-
-    gtk_widget_show_all(box);
-    gtk_widget_show(box);
-
-
-    setTitle(_("Preferences"));
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_close_clicked",
+				  G_CALLBACK(closeAction),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_apply_clicked",
+				  G_CALLBACK(saveAction),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_ok_clicked",
+				  G_CALLBACK(doneAction),
+				  this); 
 }
-
-

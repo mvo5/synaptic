@@ -42,11 +42,11 @@
 		  <property name="spacing">5</property>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton_regexp">
+		    <widget class="GtkCheckButton" id="check_regexp">
 		      <property name="border_width">2</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">>Use regular expressions when searching or matching</property>
+		      <property name="label" translatable="yes">Use regular expressions when searching or matching</property>
 		      <property name="use_underline">True</property>
 		      <property name="relief">GTK_RELIEF_NORMAL</property>
 		      <property name="active">False</property>
@@ -61,7 +61,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton_text_only">
+		    <widget class="GtkCheckButton" id="check_text_only">
 		      <property name="border_width">2</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
@@ -80,11 +80,12 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton_use_colors">
+		    <widget class="GtkCheckButton" id="check_use_colors">
 		      <property name="border_width">2</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">Use colors in main package list</property>
+		      <property name="label" translatable="yes">Use colors in main package list
+(requires a restart to take effect)</property>
 		      <property name="use_underline">True</property>
 		      <property name="relief">GTK_RELIEF_NORMAL</property>
 		      <property name="active">False</property>
@@ -139,7 +140,7 @@
 		  <property name="spacing">5</property>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="radiobutton_cache_leave">
+		    <widget class="GtkRadioButton" id="radio_cache_leave">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Leave downloaded packages in the cache</property>
@@ -157,7 +158,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="radiobutton_cache_delete_after_install">
+		    <widget class="GtkRadioButton" id="radio_cache_del_after">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Delete downloaded packages after installation</property>
@@ -166,7 +167,7 @@
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
-		      <property name="group">radiobutton_cache_leave</property>
+		      <property name="group">radio_cache_leave</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -176,7 +177,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkRadioButton" id="radiobutton_cache_delete_obsolete">
+		    <widget class="GtkRadioButton" id="radio_cache_del_obsolete">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="label" translatable="yes">Delete obsolete packages from cache</property>
@@ -185,7 +186,7 @@
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
-		      <property name="group">radiobutton_cache_leave</property>
+		      <property name="group">radio_cache_leave</property>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -223,7 +224,6 @@
 
 	  <child>
 	    <widget class="GtkFrame" id="frame4">
-	      <property name="visible">True</property>
 	      <property name="label_xalign">0</property>
 	      <property name="label_yalign">0.5</property>
 	      <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
@@ -665,35 +665,38 @@
 	  <property name="spacing">10</property>
 
 	  <child>
-	    <widget class="GtkButton" id="button_options_ok">
+	    <widget class="GtkButton" id="ok">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="label">gtk-ok</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <signal name="clicked" handler="on_ok_clicked" last_modification_time="Thu, 06 Feb 2003 15:50:24 GMT"/>
 	    </widget>
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="button_options_apply">
+	    <widget class="GtkButton" id="apply">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="label">gtk-apply</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <signal name="clicked" handler="on_apply_clicked" last_modification_time="Thu, 06 Feb 2003 15:53:47 GMT"/>
 	    </widget>
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="button_options_close">
+	    <widget class="GtkButton" id="close">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <signal name="clicked" handler="on_close_clicked" last_modification_time="Thu, 06 Feb 2003 15:54:11 GMT"/>
 	    </widget>
 	  </child>
 	</widget>

@@ -1551,7 +1551,8 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
          GList *li = NULL;
 
          // Treat click with CONTROL as additional selection
-	 if((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK)
+	 if((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK
+	    && !gtk_tree_selection_path_is_selected(selection, path))
             gtk_tree_selection_unselect_all(selection);
          gtk_tree_selection_select_path(selection, path);
 
@@ -2225,10 +2226,10 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 	 string FullMessage,message;
 	 while (!_error->empty()) {
 	    _error->PopMessage(message);
-	    FullMessage += message;
 	    // Ignore some stupid error messages.
 	    if (message == "Tried to dequeue a fetching object")
 	       continue;
+	    FullMessage += message;
 	 }
 	 RGGladeUserDialog dia(me,"download_error");
 	 GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(), "textview");

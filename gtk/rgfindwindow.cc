@@ -110,7 +110,7 @@ RGFindWindow::RGFindWindow(RGWindow *win)
   GtkWidget *combo = glade_xml_get_widget(_gladeXML, "combo_find");
   gtk_combo_set_value_in_list(GTK_COMBO(combo),FALSE, FALSE);
   
-  setTitle(_("Advanced Search"));
+  setTitle(_("Find"));
 }
 
 

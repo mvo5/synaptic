@@ -170,7 +170,7 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
       ShortOldURI2 = "cdrom:" + _cdOldName + "/";
    }
 
-   const char *Type;
+   string Type;
 
    if (pkg)
       Type = pkgSourceType().c_str();

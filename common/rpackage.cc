@@ -59,6 +59,7 @@
 
 static char descrBuffer[4096];
 
+static char *parseDescription(string descr);
 
 
 RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
@@ -82,6 +83,22 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
   _virtualPackages.push_back(dep);
   _provides.push_back(dep.Name());
 }
+
+#ifdef HAVE_DEBTAGS
+const char *RPackage::tags() 
+{
+    int handle = _lister->_hmaker->getHandle(this);
+    OpSet<string> tags = _lister->_coll.getTagsetForItem(handle);
+    static string s;
+    for(OpSet<string>::const_iterator it = tags.begin(); it != tags.end();
+	it++)
+	if(it == tags.begin())
+	    s = *it;
+	else
+	    s += ", " + *it;
+    return s.c_str();
+}
+#endif
 
 
 const char *RPackage::section()
@@ -159,91 +176,6 @@ bool RPackage::isImportant()
     return false;
 }
 
-
-static char *parseDescription(string descr)
-{
-    const char *end;
-    const char *p;
-    int i;
-
-    if (descr.size() > sizeof(descrBuffer))
-	return "Description Too Long";
-
-    p = descr.c_str();
-    end = p+descr.size(); // mvo: hackish, but works
-
-    /* mvo: don't delete \n etc, honor lists */
-#ifdef SYNAPTIC_DEB_PARSER
-    unsigned int nlpos = descr.find('\n');
-    // delete first line
-    if( nlpos != string::npos )
-      descr.erase(0,nlpos+2); // del "\n " too
-    
-    while( nlpos < descr.length() ) {
-      nlpos = descr.find('\n', nlpos);
-      if( nlpos == string::npos )
-	break;
-
-      i = nlpos;
-      // del char after '\n' (always " ")
-      i++;
-      descr.erase(i,1);
-
-      // delete lines likes this: " .", makeing it a \n
-      if(descr[i] == '.') {
-	descr.erase(i,1);
-	nlpos++;
-	continue;
-      }
-
-      // skip ws
-      while(descr[++i] == ' ');
-
-//      // not a list, erase nl
-//       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
-// 	descr.erase(nlpos,1);
-
-      nlpos++;
-    }
-    strcpy(descrBuffer, descr.c_str());
-#else
-    int state = 0;
-    char *pp = (char*)descrBuffer;
-
-    while (p != end) {
-	switch (state) {
-	 case 0:
-	    if (*p == '\n')
-		state = 1;
-	    else
-		*pp++ = *p;
-	    break;
-	    
-	 case 1:
-	    if (*p == ' ')
-		state = 2;
-	    else {
-		*pp++ = *p;
-		state = 0;
-	    }
-	    break;
-	    
-	 case 2:
-	    if (!(*p == '\n' || *p == '.')) {
-		*pp++ = ' ';
-		*pp++ = *p;
-	    }
-	    state = 0;
-	    break;
-	}
-	p++;
-    }
-    *pp = '\0';
-#endif /* SYNAPTIC_NEW_PARSER */
-    
-    return descrBuffer;
-}
-
 #ifndef HAVE_RPM
 const char *RPackage::installedFiles()
 {
@@ -275,6 +207,7 @@ const char *RPackage::installedFiles()
     return "";
 }
 #endif
+
 
 const char *RPackage::description()
 {
@@ -1002,5 +935,129 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 	depackage->setRemove(purge);
     }
 }
+
+
+// description parser stuff
+static char *debParser(string descr)
+{
+    int i;
+    unsigned int nlpos = descr.find('\n');
+    // delete first line
+    if( nlpos != string::npos )
+      descr.erase(0,nlpos+2); // del "\n " too
+    
+    while( nlpos < descr.length() ) {
+      nlpos = descr.find('\n', nlpos);
+      if( nlpos == string::npos )
+	break;
+
+      i = nlpos;
+      // del char after '\n' (always " ")
+      i++;
+      descr.erase(i,1);
+
+      // delete lines likes this: " .", makeing it a \n
+      if(descr[i] == '.') {
+	descr.erase(i,1);
+	nlpos++;
+	continue;
+      }
+
+      // skip ws
+      while(descr[++i] == ' ');
+
+//      // not a list, erase nl
+//       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
+// 	descr.erase(nlpos,1);
+
+      nlpos++;
+    }
+    strcpy(descrBuffer, descr.c_str());
+    return descrBuffer;
+}
+static char *rpmParser(string descr)
+{
+    int i;
+
+    unsigned int pos = descr.find('\n');
+    // delete first line
+    if( pos != string::npos )
+      descr.erase(0,pos+2); // del "\n " too
+    
+    strcpy(descrBuffer, descr.c_str());
+    return descrBuffer;
+}
+
+static char *stripWsParser(string descr)
+{
+    const char *end;
+    const char *p;
+    int i;
+
+    p = descr.c_str();
+    end = p+descr.size(); // mvo: hackish, but works
+
+
+    int state = 0;
+    char *pp = (char*)descrBuffer;
+
+    while (p != end) {
+	switch (state) {
+	 case 0:
+	    if (*p == '\n')
+		state = 1;
+	    else
+		*pp++ = *p;
+	    break;
+	    
+	 case 1:
+	    if (*p == ' ')
+		state = 2;
+	    else {
+		*pp++ = *p;
+		state = 0;
+	    }
+	    break;
+	    
+	 case 2:
+	    if (!(*p == '\n' || *p == '.')) {
+		*pp++ = ' ';
+		*pp++ = *p;
+	    }
+	    state = 0;
+	    break;
+	}
+	p++;
+    }
+    *pp = '\0';
+
+    return descrBuffer;
+}
+
+static char *parseDescription(string descr)
+{
+
+    if (descr.size() > sizeof(descrBuffer))
+	return "Description Too Long";
+
+#ifdef HAVE_RPM
+    int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
+#else    
+    int parser = _config->FindI("Synaptic::descriptionParser", DEB_PARSER);
+#endif 
+    switch(parser) {
+    case DEB_PARSER:
+	return debParser(descr);
+    case STRIP_WS_PARSER:
+	return stripWsParser(descr);
+    case RPM_PARSER:
+	return rpmParser(descr);
+    case NO_PARSER:
+    default:
+	strcpy(descrBuffer, descr.c_str());
+	return descrBuffer;
+    }
+}
+
 
 // vim:sts=4:sw=4

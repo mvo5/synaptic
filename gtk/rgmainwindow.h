@@ -35,9 +35,19 @@ using namespace std;
 #include <vector>
 #include <set>
 
+#ifdef HAVE_DEBTAGS
+#include <TagcollParser.h>
+#include <StdioParserInput.h>
+#include <SmartHierarchy.h>
+#include <TagcollBuilder.h>
+#include <HandleMaker.h>
+#include <TagCollection.h>
+#endif
+
 #include "rggladewindow.h"
 #include "gtkpkgtree.h"
 #include "gtkpkglist.h"
+#include "gtktagtree.h"
 
 class RGSourcesWindow;
 class RGConfigWindow;
@@ -190,7 +200,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // init stuff 
    void buildInterface();
+   void buildTreeView();
 
+ private:
    // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL); 
    void changeFilter(int filter, bool sethistory=true);
@@ -216,6 +228,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onAlphabeticTree(GtkWidget *self, void *data);   
    static void onStatusTree(GtkWidget *self, void *data);   
    static void onFlatList(GtkWidget *self, void *data);   
+   static void onTagTree(GtkWidget *self, void *data);   
 
    static void searchAction(GtkWidget *self, void *data);
    static void changedFilter(GtkWidget *self);
@@ -319,6 +332,8 @@ public:
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
    void setColors(bool useColors);
+   void rebuildTreeView() { buildTreeView(); };
+
    void setStatusText(char *text = NULL);
    
    void saveState();

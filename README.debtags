@@ -1,0 +1,34 @@
+Synaptic debtags support
+------------------------
+
+From version 0.41 on synaptic has experimental support for the debtag
+system. The debtag system is the work of Erich Schubert and Enrico
+Zini and has a website at:
+http://deb-usability.alioth.debian.org/debtags/
+
+The current synaptic implementation is mostly the work of Enrico Zini
+<enrico@debian.org>. Thanks! 
+
+In a nutshell the system helps to organize the huge collection of
+debian software by extending the traditional section scheme. Instead
+of putting a package into a section (base, net, etc), you can put
+arbitrary "tags" on it. Mutt for example has:
+"client, mail, mail::imap, mail::pop, net, netcomm, protocols"
+
+This makes searching and displaying the packages more flexible. With
+the new "by tag" tab in the filter editor you can add a filter that
+search for packages that e.g. inludes the tags "mail, client" and
+exludes "ui::qt" if you look for a email client that does not use Qt. 
+
+You can also browse the tag hirarchy (that is actually not a real
+hirarchy) with the new "tag tree" view. 
+
+Limitations:
+------------
+The current debtag support is not complete. You have to update the tag
+database by hand (using "debtags update") for now. It's in general
+more experimental than the rest of synaptic. 
+
+I'm looking for help with the debtags integration. Please help by
+filling bugreports and sending patches :) 
+

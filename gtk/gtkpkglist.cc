@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/strutl.h>
 #include "gtkpkglist.h"
 #include "gsynaptic.h"
 
@@ -31,6 +32,7 @@ using namespace std;
 static void         gtk_pkg_list_init            (GtkPkgList      *pkg_tree);
 static void         gtk_pkg_list_class_init      (GtkPkgListClass *klass);
 static void         gtk_pkg_list_tree_model_init (GtkTreeModelIface *iface);
+static void         gtk_pkg_list_sortable_init   (GtkTreeSortableIface *iface);
 static void         gtk_pkg_list_finalize        (GObject           *object);
 static GtkTreeModelFlags gtk_pkg_list_get_flags  (GtkTreeModel      *tree_model);
 static gint         gtk_pkg_list_get_n_columns   (GtkTreeModel      *tree_model);
@@ -61,6 +63,17 @@ static gboolean     gtk_pkg_list_iter_nth_child  (GtkTreeModel      *tree_model,
 static gboolean     gtk_pkg_list_iter_parent     (GtkTreeModel      *tree_model,
 						  GtkTreeIter       *iter,
 						  GtkTreeIter       *child);
+
+/* sortable */
+static void gtk_pkg_list_sort(GtkPkgList *pkg_list);
+static gboolean gtk_pkg_list_get_sort_column_id(GtkTreeSortable *sortable,
+						  gint *sort_column_id,
+						  GtkSortType *order);
+static void gtk_pkg_list_set_sort_column_id(GtkTreeSortable *sortable,
+					      gint sort_column_id,
+					      GtkSortType order);
+static gboolean gtk_pkg_list_has_default_sort_func(GtkTreeSortable *sortable);
+
 
 static GObjectClass *parent_class = NULL;
 
@@ -153,12 +166,22 @@ gtk_pkg_list_get_type (void)
 	NULL
       };
 
+      static const GInterfaceInfo sortable_info =
+      {
+	  (GInterfaceInitFunc) gtk_pkg_list_sortable_init,
+	  NULL,
+	  NULL
+      };
+
       pkg_list_type = g_type_register_static (G_TYPE_OBJECT, "GtkPkgList",
 					      &pkg_list_info, (GTypeFlags)0);
 
       g_type_add_interface_static (pkg_list_type,
 				   GTK_TYPE_TREE_MODEL,
 				   &tree_model_info);
+      g_type_add_interface_static (pkg_list_type,
+				   GTK_TYPE_TREE_SORTABLE,
+				   &sortable_info);
     }
 
   return pkg_list_type;
@@ -192,14 +215,22 @@ gtk_pkg_list_tree_model_init (GtkTreeModelIface *iface)
   iface->iter_parent = gtk_pkg_list_iter_parent;
 }
 
+void gtk_pkg_list_sortable_init (GtkTreeSortableIface *iface)
+{
+    iface->get_sort_column_id = gtk_pkg_list_get_sort_column_id;
+   iface->set_sort_column_id = gtk_pkg_list_set_sort_column_id;
+   iface->set_sort_func = NULL;
+   iface->set_default_sort_func = NULL;
+   iface->has_default_sort_func = gtk_pkg_list_has_default_sort_func;
+}
 
 static void
 gtk_pkg_list_init (GtkPkgList *pkg_list)
 {
     //cout << "list_init()" << endl;
     pkg_list->n_columns = N_COLUMNS;
-    pkg_list->column_headers[0] = G_TYPE_STRING;
-    pkg_list->column_headers[1] = GDK_TYPE_PIXBUF;
+    pkg_list->column_headers[0] = GDK_TYPE_PIXBUF;
+    pkg_list->column_headers[1] = G_TYPE_STRING;
     pkg_list->column_headers[2] = G_TYPE_STRING;
     pkg_list->column_headers[3] = G_TYPE_STRING;
     pkg_list->column_headers[4] = G_TYPE_STRING;
@@ -384,6 +415,13 @@ gtk_pkg_list_get_value (GtkTreeModel *tree_model,
   case NAME_COLUMN: 
       str = utf8(pkg->name());
       g_value_set_string(value, str);
+      break;
+  case PKG_SIZE_COLUMN:
+      if(pkg==NULL) return;
+      if( pkg->installedVersion() ) {
+	  str = SizeToStr(pkg->installedSize()).c_str();
+	  g_value_set_string(value, str);
+      }
       break;
   case INSTALLED_VERSION_COLUMN:
       if(pkg == NULL) return;
@@ -577,5 +615,77 @@ gtk_pkg_list_iter_parent (GtkTreeModel *tree_model,
 }
 
 
+
+// sortable
+static gboolean gtk_pkg_list_get_sort_column_id(GtkTreeSortable *sortable,
+						  gint *sort_column_id,
+						  GtkSortType *order)
+{
+    GtkPkgList *pkg_list = (GtkPkgList *) sortable;
+    g_return_val_if_fail (GTK_IS_PKG_LIST (sortable), FALSE);
+    
+    //cout << " gtk_pkg_list_get_sort_column_id()" << endl;
+            
+    if (sort_column_id)
+	*sort_column_id = pkg_list->sort_column_id;
+    if (order)
+	*order = pkg_list->order;
+    return TRUE;
+}
+
+
+static void gtk_pkg_list_set_sort_column_id(GtkTreeSortable *sortable,
+					      gint sort_column_id,
+					      GtkSortType order)
+{
+    GtkPkgList *pkg_list = (GtkPkgList *) sortable;
+    g_return_if_fail (GTK_IS_PKG_LIST (sortable));
+
+    //cout << "gtk_pkg_list_set_sort_column_id(): " << sort_column_id << endl;
+
+    if ((pkg_list->sort_column_id == sort_column_id) &&
+	(pkg_list->order == order))
+	return;
+
+    pkg_list->sort_column_id = sort_column_id;
+    pkg_list->order = order;
+ 
+    gtk_tree_sortable_sort_column_changed (sortable);
+    gtk_pkg_list_sort(pkg_list);
+}
+
+static gboolean
+gtk_pkg_list_has_default_sort_func (GtkTreeSortable *sortable)
+{
+    GtkPkgList *list_store = (GtkPkgList *) sortable;
+    g_return_val_if_fail (GTK_IS_PKG_LIST (sortable), FALSE);
+    return TRUE;
+}
+
+static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
+{
+    //cout << "gtk_pkg_list_sort(GtkPkgList *pkg_list)" << endl;
+
+    switch(pkg_list->sort_column_id) {
+    case NAME_COLUMN:
+	    pkg_list->_lister->sortPackagesByName();
+	    break;
+    case PKG_SIZE_COLUMN:
+	pkg_list->_lister->sortPackagesByInstSize((int)pkg_list->order);
+	break;
+	//default:
+	//cerr << "unknown sort column" << endl;
+    }
+
+//     GtkTreeIter iter;
+//     if(gtk_tree_model_iter_first(GTK_TREE_MODEL(pkg_list), &iter))
+// 	do {
+// 	    GtkTreePath *path = gtk_tree_path_new();
+
+// 	    gtk_tree_model_row_changed(GTK_TREE_MODEL(pkg_list), 
+// 				       path, &iter))
+// 	} while(gtk_tree_model_iter_next(GTK_TREE_MODEL(pkg_list), &iter));
+				 
+}
 
 

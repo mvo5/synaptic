@@ -1,7 +1,7 @@
 /* rpackagefilter.cc - filters for package listing
  * 
  * Copyright (c) 2000-2003 Conectiva S/A 
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002,2003 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -45,6 +45,68 @@ const char *RPFSection = _("Section");
 const char *RPFPriority = _("Priority");
 const char *RPFReducedView = _("ReducedView");
 
+
+#ifdef HAVE_DEBTAGS
+const char *RPFTags = _("Tags");
+
+bool RTagPackageFilter::read(Configuration &conf, string key)
+{
+    const Configuration::Item *top;
+    
+    reset();
+    
+    top = conf.Tree(string(key+"::include").c_str());
+
+    if(top == NULL)
+	return true;
+
+    for (top = top->Child; top != NULL; top = top->Next) {
+	include(top->Value);
+    }
+    
+    top = conf.Tree(string(key+"::exclude").c_str());
+
+    if(top == NULL)
+	return true;
+
+    for (top = top->Child; top != NULL; top = top->Next) {
+	exclude(top->Value);
+    }
+
+
+    return true;
+
+}
+
+bool RTagPackageFilter::write(ofstream &out, string pad)
+{
+
+    out << pad + "include {" << endl;
+    if(!included.empty()) {
+
+	for (OpSet<string>::const_iterator it=included.begin();
+	     it != included.end(); it++) {
+	    out << pad + "  \"" << *it << "\"; " << endl;
+	}
+    }
+    out << pad + "};" << endl;
+
+
+    out << pad + "exclude {" << endl;
+    if(!excluded.empty()) {
+
+	for (OpSet<string>::const_iterator it=excluded.begin();
+	     it != excluded.end(); it++) {
+	    out << pad + "  \"" << *it << "\"; " << endl;
+	}
+    }
+    out << pad + "};" << endl;
+
+
+    return true;
+
+}
+#endif
 
 int RSectionPackageFilter::count() 
 {
@@ -638,7 +700,10 @@ bool RFilter::apply(RPackage *package)
 
     if (!priority.filter(package))
 	return false;
-
+#ifdef HAVE_DEBTAGS
+    if(!tags.filter(package))
+	return false;
+#endif
     if (!reducedview.filter(package))
 	return false;
 
@@ -652,6 +717,9 @@ void RFilter::reset()
     status.reset();
     pattern.reset();
     priority.reset();
+#ifdef HAVE_DEBTAGS
+    tags.reset();
+#endif
     reducedview.reset();
 }
 
@@ -689,6 +757,9 @@ bool RFilter::read(Configuration &conf, string key)
     res &= status.read(conf, key+"::status");
     res &= pattern.read(conf, key+"::pattern");
     res &= priority.read(conf, key+"::priority");
+#ifdef HAVE_DEBTAGS
+    res &= tags.read(conf, key+"::tags");
+#endif
     res &= reducedview.read(conf, key+"::reducedview");
 
     _view.viewMode=conf.FindI(key+"::view::viewMode", 0);
@@ -729,7 +800,11 @@ bool RFilter::write(ofstream &out)
     out << pad+"priority {" << endl;
     res &= priority.write(out, pad+"  ");
     out << pad+"};" << endl;
-
+#ifdef HAVE_DEBTAGS
+    out << pad+"tags {" << endl;
+    res &= tags.write(out, pad+"  ");
+    out << pad+"};" << endl;
+#endif
     out << pad+"reducedview {" << endl;
     res &= reducedview.write(out, pad+"  ");
     out << pad+"};" << endl;

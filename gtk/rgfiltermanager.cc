@@ -64,11 +64,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 				  this);
 
     glade_xml_signal_connect_data(_gladeXML, 
-				  "on_button_apply_clicked",
-				  G_CALLBACK(applyFilterAction),
-				  this);
-
-    glade_xml_signal_connect_data(_gladeXML, 
 				  "on_button_cancel_clicked",
 				  G_CALLBACK(cancelAction),
 				  this);
@@ -182,13 +177,13 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 					   G_TYPE_STRING,
 					   G_TYPE_STRING);
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes ("Do",
+    column = gtk_tree_view_column_new_with_attributes (_("Do"),
 						       renderer,
 						       "text", PATTERN_DO_COLUMN,
 						       NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_patternList), column);
 
-    column = gtk_tree_view_column_new_with_attributes ("What",
+    column = gtk_tree_view_column_new_with_attributes (_("What"),
 						       renderer,
 						       "text", PATTERN_WHAT_COLUMN,
 						       NULL);
@@ -196,7 +191,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
     renderer = gtk_cell_renderer_text_new ();
     //g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-    column = gtk_tree_view_column_new_with_attributes ("Pattern",
+    column = gtk_tree_view_column_new_with_attributes (_("Pattern"),
 						       renderer,
 						       "text", PATTERN_TEXT_COLUMN,
 						       NULL);
@@ -210,7 +205,224 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 		      G_CALLBACK (patternSelectionChanged),
 		      this);
 
+#ifdef HAVE_DEBTAGS
+    // build the debtags stuff
+    _availableTagsView = (GtkTreeView*)glade_xml_get_widget(_gladeXML, "treeview_available_tags");
+    assert(_availableTagsView);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes (_("Available Tags"),
+						       renderer,
+						       "text", 0,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_availableTagsView), column);
+    _availableTagsList = gtk_list_store_new (1, G_TYPE_STRING);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_availableTagsView), 
+			    GTK_TREE_MODEL(_availableTagsList));
+
+
+    _includedTagsView = (GtkTreeView*)glade_xml_get_widget(_gladeXML, "treeview_included_tags");
+    assert(_includedTagsView);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes (_("Included Tags"),
+						       renderer,
+						       "text", 0,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_includedTagsView), column);
+    _includedTagsList = gtk_list_store_new (1, G_TYPE_STRING);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_includedTagsView), 
+			    GTK_TREE_MODEL(_includedTagsList));
+
+    _excludedTagsView = (GtkTreeView*)glade_xml_get_widget(_gladeXML, "treeview_excluded_tags");
+    assert(_excludedTagsView);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes (_("Excluded Tags"),
+						       renderer,
+						       "text", 0,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_excludedTagsView), column);
+    _excludedTagsList = gtk_list_store_new (1, G_TYPE_STRING);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_excludedTagsView), 
+			    GTK_TREE_MODEL(_excludedTagsList));
+    
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_button_include_clicked",
+				  G_CALLBACK(includeTagAction),
+				  this);
+
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_button_exclude_clicked",
+				  G_CALLBACK(excludeTagAction),
+				  this);
+
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_treeview_included_tags_row_activated",
+				  G_CALLBACK(treeViewIncludeClicked),
+				  this);
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_treeview_excluded_tags_row_activated",
+				  G_CALLBACK(treeViewExcludeClicked),
+				  this);
+
+#endif
+
+    // remove the debtags tab
+#ifndef HAVE_DEBTAGS
+    GtkWidget *notebook = glade_xml_get_widget(_gladeXML, "notebook_details");
+    assert(notebook);
+    //if(first_run)
+    gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), 3);
+#endif
+
 }
+
+#ifdef HAVE_DEBTAGS
+void RGFilterManagerWindow::treeViewIncludeClicked(GtkTreeView *treeview,
+						   GtkTreePath *arg1,
+						   GtkTreeViewColumn *arg2,
+						   gpointer data)
+{
+    //cout << "treeViewIncludeClicked()" << endl;
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    GtkTreeIter iter; 
+    if(gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_includedTagsList), &iter, arg1))
+    {
+	gtk_list_store_remove(me->_includedTagsList, &iter);
+	me->filterAvailableTags();
+    }
+}
+
+void RGFilterManagerWindow::treeViewExcludeClicked(GtkTreeView *treeview,
+						   GtkTreePath *arg1,
+						   GtkTreeViewColumn *arg2,
+						   gpointer data)
+{
+    //cout << "treeViewExcludeClicked(GObject *o, gpointer data) " << endl;
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    GtkTreeIter iter; 
+    if(gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_excludedTagsList), &iter, arg1))
+    {
+	gtk_list_store_remove(me->_excludedTagsList, &iter);
+	me->filterAvailableTags();
+    }
+}
+
+
+void RGFilterManagerWindow::getTagFilter(RTagPackageFilter &f)
+{
+    //cout << "RGFilterManagerWindow::getTagFilter()" << endl;
+
+    GtkTreeIter iter;
+    char *tag;
+
+    f.getIncluded().clear();
+    f.getExcluded().clear();
+
+    if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_includedTagsList),
+				     &iter)) 
+	do  {
+	    gtk_tree_model_get(GTK_TREE_MODEL(_includedTagsList), &iter, 
+			       0, &tag, 
+			       -1);
+	    //cout << "getTag: " << tag << endl;
+	    f.include(tag);
+	} while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_includedTagsList), &iter));
+
+    if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_excludedTagsList),
+				     &iter)) 
+	do  {
+	    gtk_tree_model_get(GTK_TREE_MODEL(_excludedTagsList), &iter, 
+			       0, &tag, 
+			       -1);
+	    f.exclude(tag);
+	} while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_excludedTagsList), &iter));
+
+    
+}
+
+
+void RGFilterManagerWindow::setTagFilter(RTagPackageFilter &f)
+{
+    //cout << "RGFilterManagerWindow::setTagFilter()" << endl;
+    GtkTreeIter iter;
+    
+    OpSet<string> includedTags = f.getIncluded();
+    OpSet<string> excludedTags = f.getExcluded();
+
+    gtk_list_store_clear(_availableTagsList);
+
+    gtk_list_store_clear(_includedTagsList);
+    for(OpSet<string>::const_iterator it = includedTags.begin(); 
+	it != includedTags.end(); it++) {
+	gtk_list_store_append(_includedTagsList, &iter);
+	//cout << "setTag: " << *it << endl;
+	gtk_list_store_set (_includedTagsList, &iter,
+			    0, (*it).c_str(), -1);
+    }
+    
+    gtk_list_store_clear(_excludedTagsList);
+    for(OpSet<string>::const_iterator it = excludedTags.begin(); 
+	it != excludedTags.end(); it++) {
+	gtk_list_store_append(_excludedTagsList, &iter);
+	gtk_list_store_set (_excludedTagsList, &iter,
+			    0, (*it).c_str(), -1);
+    }
+
+    filterAvailableTags();
+
+}
+
+void RGFilterManagerWindow::filterAvailableTags()
+{
+    GtkTreeIter iter;
+    char *tag;
+    gtk_list_store_clear(_availableTagsList);
+
+    OpSet<string> includedTags;
+    OpSet<string> excludedTags;
+
+    if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_includedTagsList),
+				     &iter)) 
+	do  {
+	    gtk_tree_model_get(GTK_TREE_MODEL(_includedTagsList), &iter, 
+			       0, &tag, 
+			       -1);
+	    includedTags.insert(tag);
+	} while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_includedTagsList), &iter));
+
+    if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_excludedTagsList),
+				     &iter)) 
+	do  {
+	    gtk_tree_model_get(GTK_TREE_MODEL(_excludedTagsList), &iter, 
+			       0, &tag, 
+			       -1);
+	    excludedTags.insert(tag);
+	} while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_excludedTagsList), &iter));
+
+    OpSet<string> tags;
+    if (excludedTags.empty())
+	if (includedTags.empty())
+	    tags = _lister->_coll.getAllTags();
+        else
+	    tags = _lister->_coll.getCompanionTags(includedTags);
+    else
+    {
+	TagCollection<int> coll1 = _lister->_coll.getCollectionWithoutTagsetsHavingAnyOf(excludedTags);
+
+	if (!includedTags.empty())
+	    tags = coll1.getCompanionTags(includedTags);
+	else
+	    tags = coll1.getAllTags();
+    }
+
+    for(OpSet<string>::const_iterator it = tags.begin(); it != tags.end();
+	it++) {
+	gtk_list_store_append(_availableTagsList, &iter);
+	gtk_list_store_set (_availableTagsList, &iter,
+			    0, (*it).c_str(), -1);
+    }
+}
+
+#endif
 
 void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
 {
@@ -732,7 +944,9 @@ void RGFilterManagerWindow::editFilter(RFilter *filter)
     setSectionFilter(filter->section);
     setStatusFilter(filter->status);
     setPatternFilter(filter->pattern);
-    
+#ifdef HAVE_DEBTAGS
+    setTagFilter(filter->tags);
+#endif
     setFilterView(filter);
 }
 
@@ -742,7 +956,9 @@ void RGFilterManagerWindow::applyChanges(RFilter *filter)
     getSectionFilter(filter->section);
     getStatusFilter(filter->status);
     getPatternFilter(filter->pattern);
-
+#ifdef HAVE_DEBTAGS
+   getTagFilter(filter->tags);
+#endif
     getFilterView(filter);
 }
 
@@ -856,6 +1072,62 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
     me->_okcancel = FALSE;
     me->close();
 }
+
+#ifdef HAVE_DEBTAGS
+void RGFilterManagerWindow::includeTagAction(GtkWidget *self, void *data)
+{
+    //cout << "RGFilterManagerWindow::includeTagAction()"<<endl;
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    
+    GtkTreeSelection *selection;
+    GtkTreeIter iter;
+    gchar *tag;
+    GtkTreeModel *model = GTK_TREE_MODEL(me->_availableTagsList);
+
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_availableTagsView));
+    if (gtk_tree_selection_get_selected (selection, &model, &iter))
+    {
+	GtkTreeIter insert_iter;
+
+	gtk_tree_model_get (model, &iter, 0, &tag, -1);
+	//cout << "got: " << tag << endl;
+
+	gtk_list_store_append(me->_includedTagsList, &insert_iter);
+	gtk_list_store_set (me->_includedTagsList, &insert_iter,
+			    0, tag,
+			    -1);
+	//g_free (tag);
+    }
+    me->filterAvailableTags();
+}
+
+void RGFilterManagerWindow::excludeTagAction(GtkWidget *self, void *data)
+{
+    //cout << "RGFilterManagerWindow::excludeTagAction()"<<endl;
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+
+    GtkTreeSelection *selection;
+    GtkTreeIter iter;
+    gchar *tag;
+    GtkTreeModel *model = GTK_TREE_MODEL(me->_availableTagsList);
+
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_availableTagsView));
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+    {
+	GtkTreeIter insert_iter;
+
+	gtk_tree_model_get (model, &iter, 0, &tag, -1);
+	//cout << "got: " << tag << endl;
+
+	gtk_list_store_append(me->_excludedTagsList, &insert_iter);
+	gtk_list_store_set (me->_excludedTagsList, &insert_iter,
+			    0, tag,
+			    -1);
+	g_free (tag);
+    }
+
+}
+#endif // HAVE_DEBTAGS
 
 void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
 {

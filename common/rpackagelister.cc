@@ -68,6 +68,7 @@ RPackageLister::RPackageLister()
     _searchData.isRegex = false;
     _displayMode = (treeDisplayMode)_config->FindI("Synaptic::TreeDisplayMode",0);
     _updating = true;
+    _sortMode = TREE_SORT_NAME;
     
     memset(&_searchData, 0, sizeof(_searchData));
 
@@ -420,6 +421,7 @@ bool RPackageLister::openCache(bool reset)
 	return 	_error->Error(_("Internal error recalculating dependency cache."));
     }
 
+    //cout << "    _treeOrganizer.clear();" << endl;
     _treeOrganizer.clear();
 
 #ifdef HAVE_RPM
@@ -727,9 +729,21 @@ bool RPackageLister::applyFilters(RPackage *package)
 
 void RPackageLister::reapplyFilter()
 {
+    //cout << "RPackageLister::reapplyFilter():" << _sortMode << endl;
     getFilteredPackages(_displayList);
 
-    sortPackagesByName(_displayList);    
+    // sort now according to the latest used sort method
+    switch(_sortMode) {
+    case TREE_SORT_NAME:
+	sortPackagesByName();    
+	break;
+    case TREE_SORT_SIZE_ASC:
+	sortPackagesByInstSize(0);
+	break;
+    case TREE_SORT_SIZE_DES:
+	sortPackagesByInstSize(1);
+	break;
+    }
 }
 
 // helper function that actually add the pkg to the right location in 
@@ -813,13 +827,10 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		it = itermap[str];
 	    }
 	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-	} 
-    else if(_displayMode == TREE_DISPLAY_FLAT) {
-	// this is handled via the new gtkpkglist code
-    } else {
-	cerr << "this should never happen, please report" << endl;
-	exit(1);
-    }
+	}
+
+    // _displayMode == TREE_DISPLAY_FLAT) {
+    // is handled via the new gtkpkglist code
 }
 
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
@@ -830,6 +841,7 @@ void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
     return;
 
   packages.erase(packages.begin(), packages.end());
+  //cout << "_treeOrganizer.clear()" << endl;
   _treeOrganizer.clear();
   
   for (unsigned i = 0; i < _count; i++) {
@@ -838,8 +850,6 @@ void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
 	addFilteredPackageToTree(_treeOrganizer, itermap, _packages[i]);
     }
   }
-  _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),true);
-    
 }
 
 
@@ -868,13 +878,68 @@ static void qsSortByName(vector<RPackage*> &packages,
     if (i < end) qsSortByName(packages, i, end);
 }
 
-
 void RPackageLister::sortPackagesByName(vector<RPackage*> &packages)
 {
-    if (!packages.empty())
+    _sortMode = TREE_SORT_NAME;
+    if (!packages.empty()) {
 	qsSortByName(packages, 0, packages.size()-1);
+	_treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),true);
+    }
 }
 
+// various compare functions
+struct instSizeTreeSortFuncAsc {
+    bool operator()(const RPackageLister::pkgPair &x, const RPackageLister::pkgPair &y) {
+	if(x.second != NULL && y.second != NULL) {
+	    return x.second->installedSize() < 
+		y.second->installedSize();
+	} else
+	    // always sort the toplevel by name
+	    return x.first < y.first;
+    }
+};
+struct instSizeTreeSortFuncDes {
+    bool operator()(const RPackageLister::pkgPair &x, const RPackageLister::pkgPair &y) {
+	if(x.second != NULL && y.second != NULL) {
+	    return x.second->installedSize() > y.second->installedSize();
+	} else 
+	    // always sort the toplevel by name
+	    return x.first < y.first;
+    }
+};
+
+struct instSizeSortFuncAsc {
+    bool operator()(RPackage *x, RPackage *y) {
+	return x->installedSize() < y->installedSize();
+    }
+};
+struct instSizeSortFuncDes {
+    bool operator()(RPackage *x, RPackage *y) {
+	return x->installedSize() > y->installedSize();
+    }
+};
+
+
+void RPackageLister::sortPackagesByInstSize(vector<RPackage*> &packages, int order)
+{
+    //cout << "RPackageLister::sortPackagesByInstSize()"<<endl;
+    if(order == 0)
+	_sortMode = TREE_SORT_SIZE_ASC;
+    else
+	_sortMode = TREE_SORT_SIZE_DES;
+
+    if(!packages.empty()) {
+	if(order == 0) {
+	    sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
+	    _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
+				instSizeTreeSortFuncAsc(), true);
+	}else{
+	    sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+	    _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
+				instSizeTreeSortFuncDes(), true);
+	}
+    }
+}
 
 int RPackageLister::findPackage(const char *pattern)
 {

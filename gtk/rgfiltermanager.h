@@ -90,6 +90,9 @@ class RGFilterManagerWindow : public RGGladeWindow
    static void cancelAction(GtkWidget *self, void *data);
    static void okAction(GtkWidget *self, void *data);
 
+   static void includeTagAction(GtkWidget *self, void *data);
+   static void excludeTagAction(GtkWidget *self, void *data);
+
    static gint deleteEventAction(GtkWidget *widget, GdkEvent  *event,
 				 gpointer   data );
 
@@ -110,6 +113,10 @@ class RGFilterManagerWindow : public RGGladeWindow
    void setPatternFilter(RPatternPackageFilter &f);
    void getPatternFilter(RPatternPackageFilter &f);
 
+#ifdef HAVE_DEBTAGS
+   void setTagFilter(RTagPackageFilter &f);
+   void getTagFilter(RTagPackageFilter &f);
+#endif
    void setFilterView(RFilter *f);
    void getFilterView(RFilter *f);
 
@@ -166,10 +173,36 @@ class RGFilterManagerWindow : public RGGladeWindow
    static void statusNoneClicked(GObject *o, gpointer data);
    void applyChanges(RFilter *filter);
    static void filterNameChanged(GObject *o, gpointer data);
+   void filterAvailableTags();
 
+   // the view menu
+   GtkWidget *_optionmenu_view_mode;
+   GtkWidget *_optionmenu_expand_mode;
+   
    // the lister is always needed
    RPackageLister *_lister;  
    vector<RFilter*> _saveFilters;
+
+#ifdef HAVE_DEBTAGS
+   // the tags stuff
+   GtkTreeView *_availableTagsView;
+   GtkListStore *_availableTagsList;
+   
+   GtkTreeView *_includedTagsView;
+   GtkListStore *_includedTagsList;
+
+   GtkTreeView *_excludedTagsView;
+   GtkListStore *_excludedTagsList;
+   
+   static void treeViewExcludeClicked(GtkTreeView *treeview,
+				      GtkTreePath *arg1,
+				      GtkTreeViewColumn *arg2,
+				      gpointer user_data);
+   static void treeViewIncludeClicked(GtkTreeView *treeview,
+				      GtkTreePath *arg1,
+				      GtkTreeViewColumn *arg2,
+				      gpointer user_data);
+#endif
 
 public:
    RGFilterManagerWindow(RGWindow *win, RPackageLister *lister);

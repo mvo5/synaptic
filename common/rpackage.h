@@ -41,6 +41,7 @@ class pkgDepCache;
 class RPackageLister;
 class pkgRecords;
 
+enum {NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER};
 
 class RPackage {
    RPackageLister *_lister;
@@ -126,7 +127,9 @@ public:
    const char *summary();
    const char *description();
    const char *installedFiles();
-
+#ifdef HAVE_DEBTAGS
+   const char *tags();
+#endif
    vector<const char*> provides(); 
 
    bool isImportant();

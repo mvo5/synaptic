@@ -36,6 +36,10 @@ class RGConfigWindow : public RGGladeWindow {
   static char * color_buttons[];
 
   void readColors();
+
+  // treeview stuff
+  void readTreeViewValues();
+  void saveTreeViewValues();
   
   static void saveAction(GtkWidget *self, void *data);
   static void closeAction(GtkWidget *self, void *data);

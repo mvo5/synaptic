@@ -39,11 +39,14 @@ typedef struct _GtkPkgTreeClass  GtkPkgTreeClass;
 
 struct _GtkPkgTree
 {
-  GObject parent;
+    GObject parent;
 
-  RPackageLister *_lister;
-  gint n_columns;
-  GType column_headers[N_COLUMNS];
+    RPackageLister *_lister;
+    gint n_columns;
+    GType column_headers[N_COLUMNS];
+    // sortable
+    gint sort_column_id;
+    GtkSortType order;
 };
 
 struct _GtkPkgTreeClass

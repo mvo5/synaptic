@@ -234,7 +234,8 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 	str = str + _("[Receiving] ");
 
 	if (I->TotalSize > 0)
-	    updateStatus(*I->CurrentItem, I->CurrentSize*100 / I->TotalSize);
+	    updateStatus(*I->CurrentItem, 
+			 long(double(I->CurrentSize*100.0)/double(I->TotalSize)));
 	else
 	    updateStatus(*I->CurrentItem, 100);
     }

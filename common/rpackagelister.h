@@ -33,14 +33,22 @@
 #include <map>
 #include <set>
 #include <regex.h>
+#include <apt-pkg/depcache.h>
 
 #include "rpackage.h"
 #include "ruserdialog.h"
 #include "tree.hh"
-
 #include "config.h"
 
-#include <apt-pkg/depcache.h>
+#ifdef HAVE_DEBTAGS
+#include <TagcollParser.h>
+#include <StdioParserInput.h>
+#include <SmartHierarchy.h>
+#include <TagcollBuilder.h>
+#include <HandleMaker.h>
+#include <TagCollection.h>
+#endif
+
 
 using namespace std;
 
@@ -100,6 +108,13 @@ private:
 #endif
 
 public:
+   //FIXME: this shouldn't be public, but we'll do it for now this way
+#ifdef HAVE_DEBTAGS
+    HierarchyNode<int> *_tagroot;
+    HandleMaker<RPackage*> *_hmaker;
+    TagCollection<int> _coll;
+#endif
+
    typedef pair<string,RPackage*> pkgPair;
    typedef tree<pkgPair>::iterator treeIter;
    typedef tree<pkgPair>::sibling_iterator sibTreeIter;
@@ -108,9 +123,17 @@ public:
      TREE_DISPLAY_SECTIONS,
      TREE_DISPLAY_ALPHABETIC,
      TREE_DISPLAY_STATUS,
-     TREE_DISPLAY_FLAT
+     TREE_DISPLAY_FLAT,
+     TREE_DISPLAY_TAGS
    } treeDisplayMode;
    treeDisplayMode _displayMode;
+
+   typedef enum {
+       TREE_SORT_NAME,
+       TREE_SORT_SIZE_ASC,
+       TREE_SORT_SIZE_DES
+   } treeSortMode;
+   treeSortMode _sortMode;
 
 #ifdef HAVE_RPM
    typedef pkgDepCache::State pkgState;
@@ -137,6 +160,7 @@ private:
 				 RPackage *pkg);
 
    void sortPackagesByName(vector<RPackage*> &packages);
+   void sortPackagesByInstSize(vector<RPackage*> &packages, int order);
    
    struct {
        char *pattern;       
@@ -156,6 +180,9 @@ private:
 
   
 public:
+   void sortPackagesByName() { sortPackagesByName(_displayList); };
+   void sortPackagesByInstSize(int order) { sortPackagesByInstSize(_displayList, order); };
+
    inline void getSections(vector<string> &sections) {sections=_sectionList; };
 
    inline int nrOfSections() { return _sectionList.size(); };

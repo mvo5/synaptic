@@ -33,7 +33,18 @@
 #include <iostream>
 #include <apt-pkg/tagfile.h>
 
+#ifdef HAVE_DEBTAGS
+#include <TagcollParser.h>
+#include <StdioParserInput.h>
+#include <SmartHierarchy.h>
+#include <TagcollBuilder.h>
+#include <HandleMaker.h>
+#include <TagCollection.h>
+#endif
+
 #include <regex.h>
+
+#include "rpackagelister.h"
 
 using namespace std;
 
@@ -223,6 +234,89 @@ public:
    void disable() { _enabled = false; };
 };
 
+#ifdef HAVE_DEBTAGS
+extern const char *RPFTags;
+
+class RTagPackageFilter : public RPackageFilter, public TagcollConsumer<int, string> {
+    protected:
+    OpSet<string> included;
+    OpSet<string> excluded;
+    set<RPackage*> selected;
+    bool dirty;
+
+    void rebuildSelected()
+    {
+	selected.clear();
+	_lister->_coll.output(*this);
+	dirty = false;
+    }
+    
+    public:
+    RTagPackageFilter(RPackageLister *lister) 
+	: RPackageFilter(lister), dirty(true)  {};
+
+    inline virtual void reset() 
+    { 
+	included.clear(); 
+	excluded.clear();
+	selected.clear();
+	dirty = false;
+    };
+    inline virtual const char *type() { return RPFTags; };
+   
+    void include(string tag) { included.insert(tag); dirty = true; }
+    void exclude(string tag) { excluded.insert(tag); dirty = true; }
+
+    OpSet<string>& getIncluded() { return included; };
+    OpSet<string>& getExcluded() { return excluded; };
+
+    virtual bool filter(RPackage *pkg)
+    {
+	// if we do not use tags, ignore them
+	if(included.empty() && excluded.empty())
+	    return true;
+
+	if (dirty)
+	    rebuildSelected();
+
+	return selected.find(pkg) != selected.end();
+    }
+
+    virtual bool read(Configuration &conf, string key);
+    virtual bool write(ofstream &out, string pad);
+
+    virtual void consume(const int& item) throw ()
+    {
+	if (included.empty())
+	    selected.insert(_lister->_hmaker->getItem(item));
+    }
+    virtual void consume(const int& item, const OpSet<string>& tags) throw ()
+    {
+	OpSet<string> inters = tags ^ excluded;
+	if (inters.empty() && tags.contains(included))
+	    selected.insert(_lister->_hmaker->getItem(item));
+    }
+	
+    virtual void consume(const OpSet<int>& items) throw ()
+    {
+	if (included.empty())
+	    for (OpSet<int>::const_iterator i = items.begin();
+		     i != items.end(); i++)
+		selected.insert(_lister->_hmaker->getItem(*i));
+    }
+
+    virtual void consume(const OpSet<int>& items, const OpSet<string>& tags) throw ()
+    {
+	OpSet<string> inters = tags ^ excluded;
+	if (inters.empty() && tags.contains(included))
+	    for (OpSet<int>::const_iterator i = items.begin();
+		     i != items.end(); i++)
+		selected.insert(_lister->_hmaker->getItem(*i));
+    }
+};
+#endif
+
+
 struct RFilterView {
     RFilterView() : viewMode(0),expandMode(0) {};
     int viewMode;
@@ -233,7 +327,11 @@ struct RFilter {
   public:
     RFilter(RPackageLister *lister)
        : section(lister), pattern(lister), status(lister),
-	 priority(lister), reducedview(lister), preset(false)
+	 priority(lister), reducedview(lister),
+#ifdef HAVE_DEBTAGS
+	 tags(lister),
+#endif
+	 preset(false)
     {};
 
     void setName(string name);
@@ -252,6 +350,9 @@ struct RFilter {
     RStatusPackageFilter status;
     RPriorityPackageFilter priority;
     RReducedViewPackageFilter reducedview;
+#ifdef HAVE_DEBTAGS
+    RTagPackageFilter tags;
+#endif
     bool preset;
 
   private:

@@ -199,7 +199,11 @@ int main(int argc, char **argv)
     RGMainWindow *mainWindow = new RGMainWindow(packageLister);
 
 #ifndef HAVE_RPM
-    mainWindow->setTitle(PACKAGE" for Debian "VERSION);
+    #ifndef HAVE_DEBTAGS
+      mainWindow->setTitle(PACKAGE" for Debian "VERSION);
+    #else
+      mainWindow->setTitle("synaptic-debtags for Debian "VERSION);
+    #endif
 #else
     mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif

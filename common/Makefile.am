@@ -2,7 +2,10 @@
 
 noinst_LIBRARIES = libsynaptic.a
 
-INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@
+INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@ \
+	$(LIBTAGCOLL_CFLAGS)
+
+EXTRA_DIST = *.h
 
 libsynaptic_a_SOURCES =\
 	rconfiguration.cc\
@@ -17,8 +20,10 @@ libsynaptic_a_SOURCES =\
 	raptoptions.cc \
 	rsources.cc \
 	rcacheactor.cc \
-	rpackagelistactor.cc 
-#	rrepositoryfile.h\
-#	rrepositoryfile.cc
+	rpackagelistactor.cc \
+	rtagcollbuilder.cc \
+	i18n.h \
+	tree.hh \
+	rtagcollfilter.cc 
 
 

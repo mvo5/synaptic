@@ -118,6 +118,11 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     me->_mainWin->setColors(newval);
 
 
+    // rebuild the treeview
+    me->saveTreeViewValues();
+    me->_mainWin->rebuildTreeView();
+
+
     if (!RWriteConfigFile(*_config)) {
 	_error->Error(_("An error occurred while saving configurations."));
 	RGUserDialog userDialog(me);
@@ -201,6 +206,82 @@ void RGConfigWindow::show()
     
     RGWindow::show();
 }
+
+void RGConfigWindow::readTreeViewValues()
+{
+    GtkWidget *b;
+    int pos;
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_status");
+    assert(b);
+    pos = _config->FindI("Synaptic::statusColumnPos",0);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_name");
+    assert(b);
+    pos = _config->FindI("Synaptic::nameColumnPos",1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_instver");
+    assert(b);
+    pos = _config->FindI("Synaptic::instVerColumnPos",2);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+    
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_availver");
+    assert(b);
+    pos = _config->FindI("Synaptic::availVerColumnPos",3);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_instsize");
+    assert(b);
+    pos = _config->FindI("Synaptic::instSizeColumnPos",4);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_descr");
+    assert(b);
+    pos = _config->FindI("Synaptic::descrColumnPos",5);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(b),pos);
+
+}
+
+void RGConfigWindow::saveTreeViewValues() 
+{
+    GtkWidget *b;
+    int pos;
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_status");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::statusColumnPos",pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_name");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::nameColumnPos",pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_instver");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::instVerColumnPos",pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_availver");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::availVerColumnPos",pos);
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_instsize");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::instSizeColumnPos",pos);
+
+
+    b = glade_xml_get_widget(_gladeXML, "spinbutton_descr");
+    assert(b);
+    pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
+    _config->Set("Synaptic::descrColumnPos",pos);
+  
+}
+
 
 
 void RGConfigWindow::readColors()
@@ -298,7 +379,8 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
 
 
     readColors();
-    
+    readTreeViewValues();
+
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_close_clicked",
 				  G_CALLBACK(closeAction),

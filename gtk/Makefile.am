@@ -5,17 +5,17 @@ INCLUDES= -I${top_srcdir}/common \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DSYNAPTIC_GLADEDIR=\""$(datadir)/synaptic/glade/"\" \
-	@PACKAGE_CFLAGS@ @ZVT_CFLAGS@
+	@PACKAGE_CFLAGS@ @ZVT_CFLAGS@ $(LIBTAGCOLL_CFLAGS)
 
-sbin_PROGRAMS= synaptic 
+sbin_PROGRAMS = synaptic 
 
-synaptic_LDFLAGS=-export-dynamic
+#synaptic_LDFLAGS= --export-dynamic
 
 synaptic_LDADD = \
 	${top_builddir}/common/libsynaptic.a\
 	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
 	@PACKAGE_LIBS@ @ZVT_LIBS@ \
-	-lpthread
+	-lpthread $(LIBTAGCOLL_LIBS) 
 
 glade_DATA =                            \
         window_main.glade window_main.glade.strings \
@@ -32,12 +32,13 @@ glade_DATA =                            \
 	window_repositories.glade window_repositories.glade.strings
 
 
-EXTRA_DIST = $(glade_DATA)
+EXTRA_DIST = $(glade_DATA) *.h
 
 
-synaptic_SOURCES=\
+synaptic_SOURCES= \
 	gsynaptic.cc\
 	gtkpkgtree.cc\
+	gtktagtree.cc\
 	gtkpkglist.cc\
 	rgaboutpanel.cc\
 	rgcacheprogress.cc\

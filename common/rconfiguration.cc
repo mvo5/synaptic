@@ -120,7 +120,13 @@ static bool checkConfigDir(string &path)
 }
 
 
-
+string RConfDir()
+{
+    static string confDir;
+    if(!checkConfigDir(confDir)) 
+        cerr << "checkConfigDir() failed! please report to mvo@debian.org" << endl;
+    return confDir;
+}
 
 bool RInitConfiguration(string confFileName)
 {

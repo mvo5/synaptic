@@ -28,9 +28,10 @@
 /* build with package "hold" feature */
 #undef SYNAPTIC_PKG_HOLD
 
-/* build with alternative description */
-#undef SYNAPTIC_DEB_PARSER
 
 /* build with ZVT as output terminal */
 #undef HAVE_ZVT
+
+/* build with debtags support */
+#undef HAVE_DEBTAGS
 

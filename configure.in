@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(configure.in)
 
-AM_INIT_AUTOMAKE(synaptic, 0.40)
+AM_INIT_AUTOMAKE(synaptic, 0.43.1)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -130,10 +130,13 @@ AC_ARG_WITH(pkg-hold,
 )
 
 
-AC_ARG_WITH(debian-description-parser,
-	[--with-debian-description-parser   build with alternative description parser for debian],
-        AC_DEFINE(SYNAPTIC_DEB_PARSER)
+AC_ARG_WITH(debtags, 
+	[--with-debtags-support   build with experimental debtags support],
+        [AC_DEFINE(HAVE_DEBTAGS)
+	LIBTAGCOLL_DEFS
+	]
 )
+
 
 dnl check for libzvt
 AC_ARG_WITH(zvt, 

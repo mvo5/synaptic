@@ -18,6 +18,7 @@
  */
 
 #include <algorithm>
+#include <iostream>
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
 #include "gtkpkgtree.h"

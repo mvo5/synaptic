@@ -20,6 +20,7 @@
 #ifndef __GTK_PKG_TREE_H__
 #define __GTK_PKG_TREE_H__
 
+#include <iostream>
 #include <gtk/gtk.h>
 #include "gsynaptic.h"
 #include "rpackagelister.h"
@@ -62,7 +63,7 @@ class RCacheActorPkgTree : public RCacheActor
 
  public:
     virtual void notifyCacheOpen() {
-	cout << "notifyCacheOpen()" << endl;
+	    std::cout << "notifyCacheOpen()" << endl;
 	_pkgTree = gtk_pkg_tree_new(_lister);;
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView), 
 				GTK_TREE_MODEL(_pkgTree));

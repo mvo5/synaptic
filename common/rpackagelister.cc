@@ -1162,11 +1162,13 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
     assert(_cache->list() != NULL);
     // Get the source list
     //pkgSourceList List;
+#ifdef HAVW_RPM
     if (_cache->list()->ReadMainList() == false)
 	return false;
-    //if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false)
+#else
+    if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false)
 	return false;
-    
+#endif
     // Lock the list directory
     FileFd Lock;
     if (_config->FindB("Debug::NoLocking",false) == false)

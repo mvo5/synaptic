@@ -176,13 +176,20 @@ void RGDebInstallProgress::updateInterface()
 	 } else {
 
 	    // then go on with the package stuff
+	    char *next_stage_str = NULL;
 	    int next_stage = _stagesMap[pkg];
-	    char *next_stage_str = (_actionsMap[string(pkg)])[next_stage];
-	    cout << "waiting for: " << next_stage_str << endl;
-	    if(strstr(status, next_stage_str) != NULL) {
-	       next_stage++;
-	       _stagesMap[pkg] = next_stage;
-	       _progress++;
+	    // is a element is not found in the map, NULL is returned
+	    // (this happens when dpkg does some work left from a previous
+	    //  session (rare but happens))
+	    char **states = _actionsMap[pkg]; 
+	    if(states) {
+	       next_stage_str = states[next_stage];
+	       cout << "waiting for: " << next_stage_str << endl;
+	       if(next_stage_str && (strstr(status, next_stage_str) != NULL)) {
+		  next_stage++;
+		  _stagesMap[pkg] = next_stage;
+		  _progress++;
+	       }
 	    }
 	 }
 	 

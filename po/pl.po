@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-01 15:22-0300\n"
+"POT-Creation-Date: 2004-05-01 18:02-0300\n"
 "PO-Revision-Date: 2004-01-29 04:40+0100\n"
 "Last-Translator: Emil Nowak <emil5@go2.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -466,9 +466,9 @@ msgstr "Nie udało się przetworzyć lub odczytać listy pakietów lub pliku sta
 msgid "Internal Error, non-zero counts"
 msgstr ""
 
-#: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_main.glade.h:16 gtk/window_preferences.glade.h:81
-#: gtk/window_filters.glade.h:47
+#: common/rpackagefilter.cc:43 common/rpackageview.h:109
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
+#: gtk/window_preferences.glade.h:81 gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "Stan"
 
@@ -634,7 +634,7 @@ msgstr ""
 "użyte będą stare wersje."
 
 #: common/rpackagelister.cc:1381 common/rpackagelister.cc:1387
-#: gtk/rgrepositorywin.cc:320
+#: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Pomijanie niewłaściwego/niewłaściwych wpisu/wpisów z listy źródeł!"
 
@@ -683,6 +683,16 @@ msgid "bzip2 failed, perhaps the disk is full."
 msgstr ""
 "działanie programu bzip2 zakończyło się niepowodzeniem, prawdopodobnie z "
 "braku miejsca na dysku."
+
+#: common/rpackageview.h:82
+#, fuzzy
+msgid "Sections"
+msgstr "Dział"
+
+#: common/rpackageview.h:94
+#, fuzzy
+msgid "Alphabetic"
+msgstr "Alfabetyczne drzewo"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -823,6 +833,11 @@ msgstr "Skanowanie CD-ROMu..."
 #: gtk/rgcdscanner.cc:94
 msgid "Invalid disc name!"
 msgstr "Niewłaściwa nazwa dysku!"
+
+#: gtk/rgcdscanner.cc:105
+#, fuzzy
+msgid "Disc Label"
+msgstr "Nazwa płytki"
 
 #: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
 msgid "Credits"
@@ -1274,16 +1289,16 @@ msgstr "Dystrybucja"
 msgid "Section(s)"
 msgstr "Wybrane"
 
-#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:373
+#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:375
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(brak dostarczyciela)"
 
-#: gtk/rgrepositorywin.cc:327
+#: gtk/rgrepositorywin.cc:329
 msgid "Cannot read vendors.list file"
 msgstr "Nie udało się odczytać pliku vendors.list"
 
-#: gtk/rgrepositorywin.cc:492
+#: gtk/rgrepositorywin.cc:494
 msgid "Unknown source type"
 msgstr "Nieznany rodzaj źródła"
 
@@ -2218,7 +2233,7 @@ msgstr "Czcionka _terminala"
 #: gtk/window_disc_name.glade.h:2
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-Rom</span>"
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Dokonać następujących zmian?</span>"
 

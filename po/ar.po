@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-01 15:22-0300\n"
+"POT-Creation-Date: 2004-05-01 18:02-0300\n"
 "PO-Revision-Date: 2004-01-29 00:55+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -459,9 +459,9 @@ msgstr "لوائح الحزم أو ملف الحالة لم يمكن إعراب�
 msgid "Internal Error, non-zero counts"
 msgstr "خطأ داخلي، non-zero counts"
 
-#: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_main.glade.h:16 gtk/window_preferences.glade.h:81
-#: gtk/window_filters.glade.h:47
+#: common/rpackagefilter.cc:43 common/rpackageview.h:109
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
+#: gtk/window_preferences.glade.h:81 gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "الحالة"
 
@@ -623,7 +623,7 @@ msgstr ""
 "أخفق تنزيل بعض ملفات الفهارس، لقد تمّ تجاهلهم، أو استخدمت القديمة مكانهم."
 
 #: common/rpackagelister.cc:1381 common/rpackagelister.cc:1387
-#: gtk/rgrepositorywin.cc:320
+#: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "تجاهل السجلات الغير صالحة في ملف لائحة المصادر!"
 
@@ -668,6 +668,16 @@ msgstr "خطأ داخلي: لم يمكن تشغيل gzip. رجاء أعلمنا.
 #: common/rpmindexcopy.cc:136
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "أخفق bzip2، يبدو أن القرص مليئ."
+
+#: common/rpackageview.h:82
+#, fuzzy
+msgid "Sections"
+msgstr "قِسْم"
+
+#: common/rpackageview.h:94
+#, fuzzy
+msgid "Alphabetic"
+msgstr "شجرة أبجدية"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -804,6 +814,11 @@ msgstr "مسح القرص المدمج..."
 #: gtk/rgcdscanner.cc:94
 msgid "Invalid disc name!"
 msgstr "اسم قرص غير صالح!"
+
+#: gtk/rgcdscanner.cc:105
+#, fuzzy
+msgid "Disc Label"
+msgstr "اسم القرص"
 
 #: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
 msgid "Credits"
@@ -1250,16 +1265,16 @@ msgstr "التّوزيعة"
 msgid "Section(s)"
 msgstr "قِسْم"
 
-#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:373
+#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:375
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(لا مصنّع)"
 
-#: gtk/rgrepositorywin.cc:327
+#: gtk/rgrepositorywin.cc:329
 msgid "Cannot read vendors.list file"
 msgstr "لا يمكن قراءة ملف لائحة المصنّعين"
 
-#: gtk/rgrepositorywin.cc:492
+#: gtk/rgrepositorywin.cc:494
 msgid "Unknown source type"
 msgstr "نوع مصدر مجهول"
 
@@ -2182,7 +2197,7 @@ msgstr "خط ال_شاشة الطرفية"
 #: gtk/window_disc_name.glade.h:2
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-Rom</span>"
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr "<span weight=\"bold\" size=\"large\">هل أنفّذ التغييرات التالية؟</span>"
 
 #: gtk/window_disc_name.glade.h:3

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-01 15:22-0300\n"
+"POT-Creation-Date: 2004-05-01 18:02-0300\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -479,9 +479,9 @@ msgstr "無法分析或開啟套件清單或狀態檔案。"
 msgid "Internal Error, non-zero counts"
 msgstr ""
 
-#: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_main.glade.h:16 gtk/window_preferences.glade.h:81
-#: gtk/window_filters.glade.h:47
+#: common/rpackagefilter.cc:43 common/rpackageview.h:109
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
+#: gtk/window_preferences.glade.h:81 gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "狀態"
 
@@ -648,7 +648,7 @@ msgid ""
 msgstr "一些索引檔案下載失敗。它們已被略過，或暫由較舊檔案代替。"
 
 #: common/rpackagelister.cc:1381 common/rpackagelister.cc:1387
-#: gtk/rgrepositorywin.cc:320
+#: gtk/rgrepositorywin.cc:322
 #, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "無法讀取 sources.list 套件庫來源清單檔"
@@ -695,6 +695,15 @@ msgstr ""
 
 #: common/rpmindexcopy.cc:136
 msgid "bzip2 failed, perhaps the disk is full."
+msgstr ""
+
+#: common/rpackageview.h:82
+#, fuzzy
+msgid "Sections"
+msgstr "組別"
+
+#: common/rpackageview.h:94
+msgid "Alphabetic"
 msgstr ""
 
 #. vim:sts=3:sw=3
@@ -812,6 +821,11 @@ msgstr "正在裝載 CD-ROM..."
 #: gtk/rgcdscanner.cc:94
 msgid "Invalid disc name!"
 msgstr ""
+
+#: gtk/rgcdscanner.cc:105
+#, fuzzy
+msgid "Disc Label"
+msgstr "更換光碟"
 
 #: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
 msgid "Credits"
@@ -1252,16 +1266,16 @@ msgstr "發行版本"
 msgid "Section(s)"
 msgstr "組別"
 
-#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:373
+#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:375
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(無特定包裝商)"
 
-#: gtk/rgrepositorywin.cc:327
+#: gtk/rgrepositorywin.cc:329
 msgid "Cannot read vendors.list file"
 msgstr "無法讀取 vendors.list 套件包裝商清單檔"
 
-#: gtk/rgrepositorywin.cc:492
+#: gtk/rgrepositorywin.cc:494
 msgid "Unknown source type"
 msgstr "套件來源種類不明"
 
@@ -2175,7 +2189,7 @@ msgstr ""
 
 #: gtk/window_disc_name.glade.h:2
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-Rom</span>"
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr ""
 
 #: gtk/window_disc_name.glade.h:3

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-01 15:22-0300\n"
+"POT-Creation-Date: 2004-05-01 18:02-0300\n"
 "PO-Revision-Date: 2003-11-24 18:06+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -461,9 +461,9 @@ msgstr ""
 msgid "Internal Error, non-zero counts"
 msgstr "VnitÅ™nÃ­ chyba, kontrolnÃ­ souÄet nesouhlasÃ­"
 
-#: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_main.glade.h:16 gtk/window_preferences.glade.h:81
-#: gtk/window_filters.glade.h:47
+#: common/rpackagefilter.cc:43 common/rpackageview.h:109
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
+#: gtk/window_preferences.glade.h:81 gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "Stav"
 
@@ -629,7 +629,7 @@ msgstr ""
 "nebo mÃ­sto nÄ›j Synaptic pouÅ¾ije nÄ›jakÃ½ starÅ¡Ã­."
 
 #: common/rpackagelister.cc:1381 common/rpackagelister.cc:1387
-#: gtk/rgrepositorywin.cc:320
+#: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignoruji chybnÃ© zÃ¡znamy v souboru sources.list!"
 
@@ -674,6 +674,16 @@ msgstr ""
 #: common/rpmindexcopy.cc:136
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 selhal, protoÅ¾e je plnÃ½ disk."
+
+#: common/rpackageview.h:82
+#, fuzzy
+msgid "Sections"
+msgstr "Sekce"
+
+#: common/rpackageview.h:94
+#, fuzzy
+msgid "Alphabetic"
+msgstr "Strom podle _abecedy"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -809,6 +819,15 @@ msgstr "Skenuji CD-ROM"
 #: gtk/rgcdscanner.cc:94
 msgid "Invalid disc name!"
 msgstr "NesouhlasÃ­ nÃ¡zev CD!"
+
+#  * Pøelo¾itelnı øetìzec generovanı pøes Glade.
+#  * Pøidejte soubor POTFILES.in do va¹eho projektu.
+#  * NEKOMPILUJTE tento øetìzec jako souèást
+#  * va¹í aplikace!
+#: gtk/rgcdscanner.cc:105
+#, fuzzy
+msgid "Disc Label"
+msgstr "JmÃ©no disku"
 
 #: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
 msgid "Credits"
@@ -1263,16 +1282,16 @@ msgstr "Seznam balÃ­kÅ¯"
 msgid "Section(s)"
 msgstr "Sekce s balÃ­ky"
 
-#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:373
+#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:375
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(Å¾Ã¡dnÃ½ poskytovatel)"
 
-#: gtk/rgrepositorywin.cc:327
+#: gtk/rgrepositorywin.cc:329
 msgid "Cannot read vendors.list file"
 msgstr "Nelze pÅ™eÄÃ­st seznam poskytovatelÅ¯"
 
-#: gtk/rgrepositorywin.cc:492
+#: gtk/rgrepositorywin.cc:494
 msgid "Unknown source type"
 msgstr "NeznÃ¡mÃ½ typ zdroje"
 
@@ -2219,7 +2238,7 @@ msgstr "Font _terminÃ¡lu"
 #: gtk/window_disc_name.glade.h:2
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-Rom</span>"
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr "<span weight=\"bold\" size=\"large\">ProvÃ©st nÃ¡sledujÃ­cÃ­ zmÄ›ny?</span>"
 
 #  * Pøelo¾itelnı øetìzec generovanı pøes Glade.

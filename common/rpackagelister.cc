@@ -1279,7 +1279,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    if (Failed == true) {
       //cout << failedURI << endl;
       error = failedURI;
-      /* _error->Error(failedURI.c_str());*/
+      //_error->Error(failedURI.c_str());
       return false; 
    }
    return true;
@@ -1354,6 +1354,8 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             Transient = true;
             continue;
          }
+
+	 (*I)->Finished();
 
          string errm = (*I)->ErrorText;
 	 ostringstream tmp;

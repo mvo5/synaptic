@@ -37,6 +37,7 @@
 
 #include "rinstallprogress.h"
 
+#include "rpackagemanager.h"
 #include "i18n.h"
 
 
@@ -51,10 +52,9 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    pid_t _child_id;
 
    //cout << "RInstallProgress::start()" << endl;
-
 #ifdef HAVE_RPM
-
    _config->Set("RPM::Interactive", "false");
+#endif
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
@@ -65,18 +65,31 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
     */
    int fd[2];
    pipe(fd);
+   int fd_control[2];
+   pipe(fd_control);
 
    _child_id = fork();
 
    if (_child_id == 0) {
       // make the write end of the pipe to the child become the new stdout 
       // and stderr (for the child)
+#ifdef HAVE_RPM
       dup2(fd[1], 1);
       dup2(1, 2);
       close(fd[0]);
       close(fd[1]);
-
+#endif
+      // make the read end of the control pipe to the child become the new
+      // stdin
+      dup2(fd_control[0],0);
+      close(fd_control[0]);
+      close(fd_control[1]);
+#ifdef HAVE_RPM
       res = pm->DoInstallPostFork();
+#else
+      //res = pm->DoInstallPostFork(fd[1]);
+      res = pm->DoInstallPostFork();
+#endif
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
       _exit(res);
@@ -84,6 +97,9 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    // this is where we read stuff from the child
    _childin = fd[0];
    close(fd[1]);
+   _child_control = fd_control[1];
+   close(fd_control[0]);
+
 
    // make it nonblocking
    fcntl(_childin, F_SETFL, O_NONBLOCK);
@@ -92,19 +108,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    _numPackages = numPackages;
    _numPackagesTotal = numPackagesTotal;
 
-#else
-
-   res = pm->DoInstallPreFork();
-   if (res == pkgPackageManager::Failed)
-       return res;
-
-   _child_id = fork();
-
-   if (_child_id == 0) {
-      res = pm->DoInstallPostFork();
-      _exit(res);
-   }
-#endif
 
    startUpdate();
    while (waitpid(_child_id, &ret, WNOHANG) == 0)
@@ -114,9 +117,9 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
 
    finishUpdate();
 
-#ifdef HAVE_RPM
+
    close(_childin);
-#endif
+   close(_child_control);
 
    return res;
 }

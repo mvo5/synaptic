@@ -35,7 +35,7 @@ using namespace std;
 #include <vector>
 #include <set>
 
-#include "rgwindow.h"
+#include "rggladewindow.h"
 #include "gtkpkgtree.h"
 #include "gtkpkglist.h"
 
@@ -58,7 +58,7 @@ typedef enum {
 } RGPkgAction;
 
 
-class RGMainWindow : public RGWindow, public RPackageObserver
+class RGMainWindow : public RGGladeWindow, public RPackageObserver
 {
   friend class SynapticInterface;
   enum {

@@ -29,7 +29,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-class RGDiscName : public RGWindow
+class RGDiscName : public RGGladeWindow
 {
 protected:
 
@@ -56,7 +56,7 @@ void RGCDScanner::update(string text, int current)
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-    : RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
+    : RCDScanProgress(), RGGladeWindow(main, "cdscanner")
 {
     setTitle(_("Scanning CD-ROM"));
 
@@ -100,7 +100,7 @@ bool RGCDScanner::run()
 }
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
-    : RGWindow(wwin, "disc_name", false, false, true)
+    : RGGladeWindow(wwin, "disc_name")
 {
     _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
     gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());

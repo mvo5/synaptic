@@ -35,7 +35,7 @@
 #include <stdio.h>
 
 RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
-    : RGWindow(win, "rginstall_progress_msgs", false, false, true),
+    : RGGladeWindow(win, "rginstall_progress_msgs"),
       _currentPackage(0), _hasHeader(false)
 {
     setTitle(_("Package Manager output"));
@@ -251,8 +251,7 @@ class GeometryParser
 RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 				     RPackageLister *lister)
     : RInstallProgress(),
-      RGWindow(main, "rginstall_progress", false, false, true),
-      _msgs(main)
+      RGGladeWindow(main, "rginstall_progress"), _msgs(main)
 {
     prepare(lister);
     setTitle(_("Performing Changes"));

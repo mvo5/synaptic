@@ -32,7 +32,7 @@
 
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win, 
 					     RPackageLister *lister)
-    : RGWindow(win, "filters", false, true, true),  _selectedPath(NULL), 
+    : RGGladeWindow(win, "filters"),  _selectedPath(NULL), 
       _selectedFilter(NULL), _lister(lister)
 {
     setTitle(_("Package Filters"));

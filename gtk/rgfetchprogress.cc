@@ -55,7 +55,7 @@ enum {
     
 
 RGFetchProgress::RGFetchProgress(RGWindow *win) 
-    : RGWindow(win, "fetch", false, true, true)
+    : RGGladeWindow(win, "fetch")
 {   
     GtkCellRenderer *renderer; 
     GtkTreeViewColumn *column; 

@@ -25,10 +25,10 @@
 
 #include <vector>
 #include <set>
-#include "rgwindow.h"
+#include "rggladewindow.h"
 
 
-class RGFetchProgress : public pkgAcquireStatus, public RGWindow
+class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow
 {
    struct Item {
        string uri;

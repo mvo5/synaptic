@@ -94,7 +94,7 @@ void RGFindWindow::doClose(GtkWindow *widget, void *data)
 }
 
 RGFindWindow::RGFindWindow(RGWindow *win) 
-    : RGWindow(win, "find", false, true, true)
+    : RGGladeWindow(win, "find")
 {
   //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
  

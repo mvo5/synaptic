@@ -55,7 +55,7 @@ void RGChangesWindow::clickedCancel(GtkWidget *self, void *data)
 
 
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
-    : RGWindow(wwin, "changes", false, false, true)
+    : RGGladeWindow(wwin, "changes")
 {
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);

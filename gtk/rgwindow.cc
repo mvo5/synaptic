@@ -34,109 +34,62 @@ void RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
     rwin->close();
 }
 
-/* if you use glade, the convention is that the top window is named:
-   "window_$windowname" in your glade-source 
-*/
-RGWindow::RGWindow(string name, bool makeBox, bool useGlade)
+RGWindow::RGWindow(string name, bool makeBox)
 {
-  if(!useGlade) {
+    std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
     _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  } else {
-    // for development
-    gchar *filename = NULL;
-    gchar *main_widget = NULL;
-
-    filename = g_strdup_printf("window_%s.glade",name.c_str());
-    main_widget = g_strdup_printf("window_%s", name.c_str());
-    if(FileExists(filename)) {
-	_gladeXML = glade_xml_new(filename, main_widget, NULL);
-    } else {
-      g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade",name.c_str());
-      _gladeXML = glade_xml_new(filename, main_widget,	NULL);
-    }
-    assert(_gladeXML);
-    _win = glade_xml_get_widget(_gladeXML, main_widget);
-
-    
-    assert(_win);
-    g_free(filename);
-    g_free(main_widget);
-  };
-   
-  gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
-
-  gtk_object_set_data(GTK_OBJECT(_win), "me", this);
-  gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-		     (GtkSignalFunc)windowCloseCallback, this);
-
-  if (makeBox) {
-    _topBox = gtk_vbox_new(FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(_win), _topBox);
-    gtk_widget_show(_topBox);
-    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
-  } else {
-    _topBox = NULL;
-  }
+    gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
   
-  gtk_widget_realize(_win);
+    gtk_object_set_data(GTK_OBJECT(_win), "me", this);
+    gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
+		       (GtkSignalFunc)windowCloseCallback, this);
+
+    if (makeBox) {
+	_topBox = gtk_vbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(_win), _topBox);
+	gtk_widget_show(_topBox);
+	gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
+    } else {
+	_topBox = NULL;
+    }
+  
+    gtk_widget_realize(_win);
 }
 
 
 RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, 
-		   bool closable, bool useGlade)
+		   bool closable)
 {
-  if(!useGlade) {
+    std::cout 
+	<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool closable)"
+	<< endl;
     _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  } else {
-    // For development
-    gchar *filename = NULL;
-    // This code is leaking and must be fixed.
-    filename = g_strdup_printf("window_%s.glade",name.c_str());
-    if(FileExists(filename)) {
-       _gladeXML = glade_xml_new(filename,
-				 g_strdup_printf("window_%s",name.c_str()),
-				 NULL);
+    gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
+
+    gtk_object_set_data(GTK_OBJECT(_win), "me", this);
+
+    gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
+		       (GtkSignalFunc)windowCloseCallback, this);
+
+    if (makeBox) {
+	_topBox = gtk_vbox_new(FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(_win), _topBox);
+	gtk_widget_show(_topBox);
+	gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
     } else {
-      g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade",name.c_str());
-      _gladeXML = glade_xml_new(filename,
-				g_strdup_printf("window_%s",name.c_str()),
-				NULL);
+	_topBox = NULL;
     }
-    assert(_gladeXML);
-    _win = glade_xml_get_widget(_gladeXML, 
-				g_strdup_printf ("window_%s",name.c_str()));
-    assert(_win);
-    g_free(filename);
-  };
-			  
-  gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
 
-  gtk_object_set_data(GTK_OBJECT(_win), "me", this);
-
-  gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-		     (GtkSignalFunc)windowCloseCallback, this);
-
-  if (makeBox) {
-    _topBox = gtk_vbox_new(FALSE, 0);
-    gtk_container_add(GTK_CONTAINER(_win), _topBox);
-    gtk_widget_show(_topBox);
-    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
-  } else {
-    _topBox = NULL;
-  }
-
-  gtk_widget_realize(_win);
-  
-  gtk_window_set_transient_for(GTK_WINDOW(_win), 
-			       GTK_WINDOW(parent->window()));
+    gtk_widget_realize(_win);
+    
+    gtk_window_set_transient_for(GTK_WINDOW(_win), 
+				 GTK_WINDOW(parent->window()));
 }
 
 
 RGWindow::~RGWindow()
 {
-//    cout << "Desotry wind"<<endl;
+    //    cout << "Desotry wind"<<endl;
     gtk_widget_destroy(_win);
 }
 

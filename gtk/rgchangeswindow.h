@@ -26,11 +26,11 @@
 #ifndef RGCHANGESWINDOW_H
 #define RGCHANGESWINDOW_H
 
-#include "rgwindow.h"
+#include "rggladewindow.h"
 
 class RPackageLister;
 
-class RGChangesWindow : public RGWindow {
+class RGChangesWindow : public RGGladeWindow {
    bool _confirmed;
 
    enum {

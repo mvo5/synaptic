@@ -27,15 +27,14 @@
 #define _RGWINDOW_H_
 
 #include <gtk/gtk.h>
-#include <glade/glade.h>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 class RGWindow {   
 protected:
    GtkWidget *_win;
-   GladeXML *_gladeXML;
    GtkWidget *_topBox;
    
    static void windowCloseCallback(GtkWidget *widget, GdkEvent *event);
@@ -49,9 +48,12 @@ public:
    inline virtual void hide() { gtk_widget_hide(_win); };
    inline virtual void show() { gtk_widget_show(_win); };
 
-   RGWindow(string name, bool makeBox = true, bool useGlade = false);
+   RGWindow() : _win(0), _topBox(0) { 
+       std::cout << "RGWindow()" << endl; 
+   };
+   RGWindow(string name, bool makeBox = true);
    RGWindow(RGWindow *parent, string name, bool makeBox = true,
-	    bool closable = true, bool useGlade = false);
+	    bool closable = true);
    virtual ~RGWindow();
 };
 

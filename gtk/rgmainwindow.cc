@@ -54,7 +54,7 @@
 #include "rpackagefilter.h"
 #include "raptoptions.h"
 
-#include "rgsrcwindow.h"
+#include "rgrepositorywin.h"
 #include "rgconfigwindow.h"
 #include "rgaboutpanel.h"
 #include "rgsummarywindow.h"
@@ -324,7 +324,7 @@ void RGMainWindow::showSourcesWindow(GtkWidget *self, void *data)
         
     bool Ok = false;
     {
-    RGSrcEditor w(win);
+    RGRepositoryEditor w(win);
     Ok = w.Run();
     }
     RGFlushInterface();
@@ -1579,9 +1579,12 @@ void RGMainWindow::setColors(bool useColors)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
-    : RGWindow("main", false, true), _lister(packLister), _pkgTree(0), 
-      _pkgCacheObserver(0), _pkgList(0), _pkgListCacheObserver(0),  _activeTreeModel(0)
+    : RGGladeWindow(NULL, "main"), _lister(packLister), _pkgTree(0), 
+      _pkgCacheObserver(0), _pkgList(0), _pkgListCacheObserver(0),  
+      _activeTreeModel(0)
 {
+    assert(_win);
+
 #if !defined(DEBUGUI) || defined(HAVE_RPM)
     //_showUpdateInfo = true; // xxx conectiva only, for now
     _showUpdateInfo = false;

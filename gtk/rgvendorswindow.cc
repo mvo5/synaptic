@@ -1,6 +1,6 @@
 /* $Id: rgvendorswindow.cc,v 1.4 2002/12/06 08:16:40 mvogt Exp $ */
 #include "rgvendorswindow.h"
-#include "rgsrcwindow.h"
+#include "rgrepositorywin.h"
 #include "config.h"
 #include "i18n.h"
 

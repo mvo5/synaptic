@@ -256,7 +256,7 @@ void RGConfigWindow::colorClicked(GtkWidget *self, void *data)
 }
 
 RGConfigWindow::RGConfigWindow(RGWindow *win) 
-    : RGWindow(win, "options", false, true, true)
+    : RGGladeWindow(win, "options")
 {
     GtkWidget *button;
     

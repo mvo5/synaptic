@@ -24,9 +24,9 @@
 #ifndef _RGABOUTPANEL_H_
 #define _RGABOUTPANEL_H_
 
-#include "rgwindow.h"
+#include "rggladewindow.h"
 
-class RGAboutPanel : public RGWindow {
+class RGAboutPanel : public RGGladeWindow {
    
 public:
    RGAboutPanel(RGWindow *parent);

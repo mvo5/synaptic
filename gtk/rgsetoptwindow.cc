@@ -48,7 +48,7 @@ void RGSetOptWindow::DoClose(GtkWindow *widget, void *data)
 }
 
 RGSetOptWindow::RGSetOptWindow(RGWindow *win) 
-    : RGWindow(win, "setopt", false, true, true)
+    : RGGladeWindow(win, "setopt")
 {
   glade_xml_signal_connect_data(_gladeXML,
 				"on_button_apply_clicked",

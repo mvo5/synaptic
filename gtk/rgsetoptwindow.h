@@ -20,9 +20,9 @@
  * USA
  */
 
-#include "rgwindow.h"
+#include "rggladewindow.h"
 
-class RGSetOptWindow : public RGWindow {
+class RGSetOptWindow : public RGGladeWindow {
   
   static void DoApply(GtkWindow *widget, void *data);
   static void DoClose(GtkWindow *widget, void *data);

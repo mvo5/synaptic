@@ -36,7 +36,7 @@ static void closeWindow(GtkWidget *self, void *data)
 
 
 RGAboutPanel::RGAboutPanel(RGWindow *parent) 
-    : RGWindow(parent, "about", false, true, true)
+    : RGGladeWindow(parent, "about")
 {
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_okbutton_clicked",

@@ -66,8 +66,8 @@ synaptic_SOURCES=\
 	rgcdscanner.cc\
 	rgmainwindow.cc\
 	rgmainwindow.h\
-	rgsrcwindow.cc\
-	rgsrcwindow.h\
+	rgrepositorywin.cc\
+	rgrepositorywin.h\
 	rgvendorswindow.cc\
 	rgvendorswindow.h\
 	rgsummarywindow.cc\
@@ -78,6 +78,8 @@ synaptic_SOURCES=\
 	rguserdialog.cc\
 	rgwindow.cc\
 	rgwindow.h \
+	rggladewindow.cc\
+	rggladewindow.h \
 	synapticinterface.cc\
 	synapticinterface.h
 

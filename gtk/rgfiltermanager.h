@@ -26,7 +26,7 @@
 #define _RGFILTERMANAGER_H_
 
 #include <gtk/gtk.h>
-#include "rgwindow.h"
+#include "rggladewindow.h"
 #include "rpackagefilter.h"
 
 class RPackageLister;
@@ -79,7 +79,7 @@ static char *DepOptions[] = {
 
 typedef void RGFilterEditorCloseAction(void *self, bool okcancel);
 
-class RGFilterManagerWindow : public RGWindow 
+class RGFilterManagerWindow : public RGGladeWindow 
 {
    static void addFilterAction(GtkWidget *self, void *data);
    static void removeFilterAction(GtkWidget *self, void *data);

@@ -20,10 +20,10 @@
  * USA
  */
 
-#include "rgwindow.h"
+#include "rggladewindow.h"
 #include "rgmainwindow.h"
 
-class RGConfigWindow : public RGWindow {
+class RGConfigWindow : public RGGladeWindow {
   RGMainWindow *_mainWin;
   GtkWidget *_optionB[6];
   GtkWidget *_cacheB[3];

@@ -3,14 +3,14 @@
 #define _rgsrcwindow_H
 
 #include "rsources.h"
-#include "rgwindow.h"
+#include "rggladewindow.h"
 #include "rgvendorswindow.h"
 #include "rguserdialog.h"
 
 typedef list<SourcesList::SourceRecord*>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord*>::iterator VendorsListIter;
 
-class RGSrcEditor : RGWindow {
+class RGRepositoryEditor : RGWindow {
 	SourcesList lst;
 
 	GtkWidget *dialog;
@@ -49,8 +49,8 @@ class RGSrcEditor : RGWindow {
 	static void VendorsWindow(GtkWidget *, gpointer);
 
 public:
-	RGSrcEditor(RGWindow *parent);
-	~RGSrcEditor();
+	RGRepositoryEditor(RGWindow *parent);
+	~RGRepositoryEditor();
 
 	bool Run();
 };

@@ -24,11 +24,11 @@
 #define RGCDSCANNER_H
 
 #include "rcdscanner.h"
-#include "rgwindow.h"
+#include "rggladewindow.h"
 
 class RGMainWindow;
 
-class RGCDScanner : public RCDScanProgress, public RGWindow
+class RGCDScanner : public RCDScanProgress, public RGGladeWindow
 {
 protected:
 

@@ -1,6 +1,6 @@
 /* $Id: rgsrcwindow.cc,v 1.15 2003/01/23 13:29:49 mvogt Exp $ */
 #include <apt-pkg/error.h>
-#include "rgsrcwindow.h"
+#include "rgrepositorywin.h"
 #include "config.h"
 #include "i18n.h"
 
@@ -16,7 +16,7 @@ enum  {ITEM_TYPE_DEB,
        ITEM_TYPE_RPMSRC};
 #endif
 
-RGSrcEditor::RGSrcEditor(RGWindow *parent)
+RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
   : RGWindow(parent, "sources")
 {
 	selectedrow = -1;
@@ -25,13 +25,13 @@ RGSrcEditor::RGSrcEditor(RGWindow *parent)
 	Applied = false;
 }
 
-RGSrcEditor::~RGSrcEditor()
+RGRepositoryEditor::~RGRepositoryEditor()
 {
 	gtk_widget_destroy(dialog);
 	delete _userDialog;
 }
 
-GtkWidget *RGSrcEditor::CreateWidget()
+GtkWidget *RGRepositoryEditor::CreateWidget()
 {
 	GtkWidget *dlgSrcList;
 	GtkWidget *dialog_vbox1;
@@ -273,7 +273,7 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	return dlgSrcList;
 }
 
-bool RGSrcEditor::Run()
+bool RGRepositoryEditor::Run()
 {
   if (lst.ReadSources() == false) {
     _error->Error(_("Cannot read sources.list file"));
@@ -325,7 +325,7 @@ bool RGSrcEditor::Run()
   return Applied;
 }
 
-void RGSrcEditor::UpdateVendorMenu()
+void RGRepositoryEditor::UpdateVendorMenu()
 {
 	gtk_option_menu_remove_menu(GTK_OPTION_MENU(optVendor));
 	optVendorMenu = gtk_menu_new();
@@ -344,7 +344,7 @@ void RGSrcEditor::UpdateVendorMenu()
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(optVendor), optVendorMenu);
 }
 
-int RGSrcEditor::VendorMenuIndex(string VendorID)
+int RGRepositoryEditor::VendorMenuIndex(string VendorID)
 {
 	int index = 0;
 	for (VendorsListIter it = lst.VendorRecords.begin();
@@ -356,15 +356,15 @@ int RGSrcEditor::VendorMenuIndex(string VendorID)
 	return 0;
 }
 
-void RGSrcEditor::DoClear(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 {
-        RGSrcEditor *me = (RGSrcEditor*)data;
+        RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 	me->UnselectRow(NULL, 0, 0, NULL, data);
 }
 
-void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 {
-        RGSrcEditor *me = (RGSrcEditor*)data;
+        RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 	unsigned char Type = 0;
 	const char *Section;
 	string VendorID;
@@ -441,9 +441,9 @@ void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
 	}
 }
 
-void RGSrcEditor::DoEdit(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoEdit(GtkWidget *, gpointer data)
 {
-        RGSrcEditor *me = (RGSrcEditor*)data;
+        RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 
 	if (me->selectedrow < 0) return; /* no row selected */
 
@@ -522,9 +522,9 @@ void RGSrcEditor::DoEdit(GtkWidget *, gpointer data)
 	}
 }
 
-void RGSrcEditor::DoRemove(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
 {
-	RGSrcEditor *me = (RGSrcEditor*)data;	
+	RGRepositoryEditor *me = (RGRepositoryEditor*)data;	
 	gint row = me->selectedrow;
 	if (row < 0) return;
 	me->selectedrow = -1;
@@ -536,26 +536,26 @@ void RGSrcEditor::DoRemove(GtkWidget *, gpointer data)
 	gtk_clist_remove(GTK_CLIST(me->lstSources), row);
 }
 
-void RGSrcEditor::DoOK(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
 {
 	DoEdit(NULL, data);
-	RGSrcEditor *me = (RGSrcEditor*)data;	
+	RGRepositoryEditor *me = (RGRepositoryEditor*)data;	
 	me->lst.UpdateSources();
 	gtk_main_quit();
 	me->Applied = true;
 }
 
-void RGSrcEditor::DoCancel(GtkWidget *, gpointer data)
+void RGRepositoryEditor::DoCancel(GtkWidget *, gpointer data)
 {
 	//GtkUI::SrcEditor *This = (GtkUI::SrcEditor *)data;
 	gtk_main_quit();
 }
 
-void RGSrcEditor::UnselectRow(GtkCList *clist, gint row, gint col,
+void RGRepositoryEditor::UnselectRow(GtkCList *clist, gint row, gint col,
 	GdkEventButton *event, gpointer data)
 {
 	DoEdit(NULL, data);
-        RGSrcEditor *me = (RGSrcEditor*)data;
+        RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 	me->selectedrow = -1;
 
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->cbDisabled), FALSE);
@@ -567,11 +567,11 @@ void RGSrcEditor::UnselectRow(GtkCList *clist, gint row, gint col,
 	gtk_entry_set_text(GTK_ENTRY(me->sourceFile), "");
 }
 
-void RGSrcEditor::UpdateDisplay(GtkCList *clist, gint row, gint col,
+void RGRepositoryEditor::UpdateDisplay(GtkCList *clist, gint row, gint col,
 	GdkEventButton *event, gpointer data)
 {
 	DoEdit(NULL, data);
-        RGSrcEditor *me = (RGSrcEditor*)data;
+        RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 	me->selectedrow = row;
 
 	const SourcesList::SourceRecord &rec = *((SourcesList::SourceRecord *)gtk_clist_get_row_data(clist, row));
@@ -600,9 +600,9 @@ void RGSrcEditor::UpdateDisplay(GtkCList *clist, gint row, gint col,
 	}
 }
 
-void RGSrcEditor::VendorsWindow(GtkWidget *, void *data)
+void RGRepositoryEditor::VendorsWindow(GtkWidget *, void *data)
 {
-	RGSrcEditor *me = (RGSrcEditor*)data;
+	RGRepositoryEditor *me = (RGRepositoryEditor*)data;
 	RGVendorsEditor w(me, me->lst);
 	w.Run();
 	GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(me->optVendorMenu));

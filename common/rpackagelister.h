@@ -255,6 +255,8 @@ public:
    inline void setUserDialog(RUserDialog *dialog) { _userDialog = dialog; };
 
    // notification stuff about changes in packages
+   void notifyPreChange(RPackage *pkg);
+   void notifyPostChange(RPackage *pkg);
    void notifyChange(RPackage *pkg);
    void registerObserver(RPackageObserver *observer);
    void unregisterObserver(RPackageObserver *observer);

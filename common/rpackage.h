@@ -53,6 +53,8 @@ class RPackage {
    bool _orphanedPackage;
    bool _debconfPackage;
 
+   bool _notify;
+
    // virtual pkgs provided by this one
    vector<pkgCache::PkgIterator> _virtualPackages; 
    // provides list as string
@@ -182,6 +184,8 @@ public:
    void setKeep();
    void setInstall();
    void setRemove(bool purge = false); //XXX: purge for debian
+
+   void setNotify(bool flag=true);
 
    // shallow doesnt remove things other pkgs depend on
    void setRemoveWithDeps(bool shallow, bool purge=false);

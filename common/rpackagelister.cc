@@ -100,19 +100,16 @@ static string getServerErrorMessage(string errm)
    return msg;
 }
 
-
-void RPackageLister::notifyChange(RPackage *pkg)
+void RPackageLister::notifyPreChange(RPackage *pkg)
 {
-    cout << "RPackageLister::notifyChange(RPackage *pkg): " 
-	 << _packageObservers.size() 
-	 << endl;
-
     for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
 	 I != _packageObservers.end(); I++) {
 	(*I)->notifyPreFilteredChange();
-	cout << "(*I): " << (*I) << endl;
     }
+}
 
+void RPackageLister::notifyPostChange(RPackage *pkg)
+{
     reapplyFilter();
 
     for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
@@ -120,10 +117,22 @@ void RPackageLister::notifyChange(RPackage *pkg)
 	(*I)->notifyPostFilteredChange();
     }
 
-    for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
-	 I != _packageObservers.end(); I++) {
-	(*I)->notifyChange(pkg);
+    if (pkg != NULL) {
+	for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
+	     I != _packageObservers.end(); I++) {
+	    (*I)->notifyChange(pkg);
+	}
     }
+}
+
+void RPackageLister::notifyChange(RPackage *pkg)
+{
+    cout << "RPackageLister::notifyChange(RPackage *pkg): " 
+	 << _packageObservers.size() 
+	 << endl;
+
+    notifyPreChange(pkg);
+    notifyPostChange(pkg);
 }
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)

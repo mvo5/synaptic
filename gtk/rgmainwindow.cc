@@ -1467,19 +1467,25 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   }
   me->_lister->notifyCachePreChange();
 
+  // We block notifications in setInstall() and friends, since it'd
+  // kill the algorithm in a long loop with many selected packages.
+  me->_lister->notifyPreChange(NULL);
+
   // do the work
   vector<RPackage*> exclude;
   RPackage *pkg = NULL;
   while(li != NULL) {
+      cout << "doPkgAction()/loop" << endl;
       gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
 			      (GtkTreePath*)(li->data));
       gtk_tree_model_get(me->_activeTreeModel, &iter, 
 			 PKG_COLUMN, &pkg, -1);
-      if (pkg == NULL) {
-	  li=g_list_next(li);
+      li = g_list_next(li);
+      if (pkg == NULL)
 	  continue;
-      }
 
+      pkg->setNotify(false);
+      
       // needed for the stateChange 
       exclude.push_back(pkg);
       /* do the dirty deed */
@@ -1508,12 +1514,15 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  cout <<"uh oh!!!!!!!!!"<<endl;
 	  break;
       }
-      li=g_list_next(li);
+
+      pkg->setNotify(true);
   }
 
   // Do it just once, otherwise it'd kill a long installation list.
   if (!me->_lister->check())
       me->_lister->fixBroken();
+
+  me->_lister->notifyPostChange(NULL);
 
   me->_lister->notifyCachePostChange();
 
@@ -2748,12 +2757,13 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
+    cout << "pkgInstallHelper()/start" << endl;
     // do the work
     pkg->setInstall();
     // check whether something broke
-    if (fixBroken && !_lister->check()) {
+    if (fixBroken && !_lister->check())
 	_lister->fixBroken();
-    }
+    cout << "pkgInstallHelper()/end" << endl;
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)

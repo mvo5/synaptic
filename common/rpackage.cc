@@ -64,7 +64,7 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 		   pkgRecords *records, pkgCache::PkgIterator &pkg)
   : _lister(lister), _records(records), _depcache(depcache), 
     _newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
-    _debconfPackage(false)
+    _debconfPackage(false), _notify(true)
 {
     _package = new pkgCache::PkgIterator(pkg);
 }
@@ -720,17 +720,24 @@ bool RPackage::wouldBreak()
 }
 
 
+void RPackage::setNotify(bool flag)
+{
+    _notify = flag;
+}
+
 void RPackage::setKeep()
 {
     _depcache->MarkKeep(*_package, false);
-    _lister->notifyChange(this);
+    if (_notify)
+	_lister->notifyChange(this);
 }
 
 
 void RPackage::setInstall()
 {
     _depcache->MarkInstall(*_package, true);
-    _lister->notifyChange(this);
+    if (_notify)
+	_lister->notifyChange(this);
 }
 
 
@@ -747,7 +754,8 @@ void RPackage::setRemove(bool purge)
     
     _depcache->MarkDelete(*_package, purge);
     
-    _lister->notifyChange(this);
+    if (_notify)
+	_lister->notifyChange(this);
 }
 
 void create_tmpfile(const char *pattern, char **filename, FILE **out)
@@ -925,5 +933,4 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
     }
 }
 
-
-
+// vim:sts=4:sw=4

@@ -21,6 +21,7 @@ status_icon_DATA = package-available-locked.png \
 		   package-broken.png \
 		   package-downgrade.png  \
 		   package-install.png \
+		   package-reinstall.png \
 		   package-installed-locked.png \
 		   package-installed-outdated.png \
 		   package-installed-updated.png \

@@ -750,7 +750,7 @@ void RFilter::setName(string s)
       cerr <<
          "Internal Error: empty filter name!? should _never_ happen, please report"
          << endl;
-      name = _("unkown");
+      name = _("unknown");
    } else {
       if (s.length() > 55) {
          cerr << "Internal Error: filter name is longer than 55 chars!? "

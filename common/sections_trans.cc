@@ -86,7 +86,7 @@ string trans_section(string sec)
    // if we have a suffix, add it
    if (!suffix.empty()) {
       ostringstream out;
-      ioprintf(out, _("%s <i>(%s)</i>"), str.c_str(), suffix.c_str());
+      ioprintf(out, "%s <i>(%s)</i>", str.c_str(), suffix.c_str());
       str = out.str();
    }
    return str;

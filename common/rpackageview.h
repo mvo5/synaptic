@@ -1,9 +1,9 @@
 /* rpackageview.h - Package sectioning system
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
- *               2002 Michael Vogt <mvo@debian.org>
+ * Copyright (c) 2004 Conectiva S/A 
+ *               2004 Michael Vogt <mvo@debian.org>
  * 
- * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ * Author: Gustavo Niemeyer
  *         Michael Vogt <mvo@debian.org>
  *
  * This program is free software; you can redistribute it and/or 
@@ -42,15 +42,21 @@ class RPackageView {
 
    bool _hasSelection;
    string _selectedName;
+
+   // packages in selected
    vector<RPackage *> _selectedView;
 
+   // all packages in current global filter
+   vector<RPackage *> &_all;
+
  public:
-   RPackageView() {};
+   RPackageView(vector<RPackage *> &allPackages): _all(allPackages) {};
    virtual ~RPackageView() {};
 
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };
    bool setSelected(string name);
+   void showAll() { _selectedView = _all; };
 
    vector<string> getSubViews();
 
@@ -66,8 +72,11 @@ class RPackageView {
    virtual void clearSelection();
 };
 
+
+
 class RPackageViewSections:public RPackageView {
  public:
+   RPackageViewSections(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
 
    string getName() {
       return _("Sections");
@@ -80,7 +89,7 @@ class RPackageViewSections:public RPackageView {
 
 class RPackageViewAlphabetic : public RPackageView {
  public:
-
+   RPackageViewAlphabetic(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
    string getName() {
       return _("Alphabetic");
    };
@@ -94,6 +103,7 @@ class RPackageViewAlphabetic : public RPackageView {
 
 class RPackageViewStatus:public RPackageView {
  public:
+   RPackageViewStatus(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
 
    string getName() {
       return _("Status");
@@ -102,27 +112,6 @@ class RPackageViewStatus:public RPackageView {
    void addPackage(RPackage *package);
 };
 
-
-class RPackageViewAll:public RPackageView {
- public:
-
-   string getName() {
-      return _("All Packages");
-   };
-
-   void addPackage(RPackage *package) {
-      _selectedView.push_back(package);
-   };
-
-   RPackageViewAll() {
-      _hasSelection = true;
-   };
-
-   void clear() {
-      _selectedView.clear();
-   };
-   void clearSelection() {};
-};
 
 
 

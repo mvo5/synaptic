@@ -22,6 +22,7 @@
  * USA
  */
 
+#include <apt-pkg/pkgrecords.h>
 #include <rpackage.h>
 #include <rpackageview.h>
 
@@ -40,7 +41,7 @@ bool RPackageView::setSelected(string name)
    } else {
       clearSelection();
    }
-   return _hasSelection;;
+   return _hasSelection;
 }
 
 vector<string> RPackageView::getSubViews()
@@ -89,5 +90,9 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
 
    _view[str].push_back(pkg);
 }
+
+
+
+
 
 // vim:sts=3:sw=3

@@ -55,6 +55,8 @@ class RPackage {
 
    // virtual pkgs provided by this one
    vector<pkgCache::PkgIterator> _virtualPackages; 
+   // provides list as string
+   vector<const char*> _provides;
    
    // stuff for enumerators
    int _vpackI;
@@ -117,6 +119,7 @@ public:
 
    const char *summary();
    const char *description();
+   vector<const char*> provides(); 
 
    bool isImportant();
 

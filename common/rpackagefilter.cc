@@ -26,8 +26,9 @@
 #include "i18n.h"
 
 #include<iostream>
-# include <cstdio>
-#include <apt-pkg/configuration.h>
+#include<algorithm>
+#include<cstdio>
+#include<apt-pkg/configuration.h>
 
 #include "rpackagefilter.h"
 #include "rpackage.h"
@@ -127,6 +128,7 @@ char *RPatternPackageFilter::TypeName[] = {
     N_("Name"),
     N_("Version"),
     N_("Description"),
+    N_("Maintainer"),
     N_("Depends"),
     N_("Provides"),
     N_("Conflicts"),
@@ -143,6 +145,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
     //int nameLen = strlen(name);
     const char *version = pkg->availableVersion();
     const char *descr = pkg->description();
+    const char *maint = pkg->maintainer();
     bool found = false;
     bool globalfound = false;
     
@@ -171,6 +174,11 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	    found = true;
 	  else if (regexec(&iter->reg, descr, 0, NULL, 0) == 0)
 	    found = true;
+	} else if (iter->where == Maintainer) {
+	  if (strstr(maint, iter->pattern.c_str()) != NULL)
+	    found = true;
+	  else if (regexec(&iter->reg, maint, 0, NULL, 0) == 0)
+	    found = true;
 	} else if (iter->where == Depends) {
 	  const char *depType, *depPkg, *depName, *depVer;
 	  char *summary;
@@ -190,11 +198,16 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		} while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
 	    }
 	} else if (iter->where == Provides) {
-	  
-	  
-	  //FIXME: implement me!
-	  
-	  
+	    vector<const char*> provides = pkg->provides();
+	    for(int i=0;i<provides.size();i++) {
+		if(strstr(provides[i],iter->pattern.c_str()) != NULL) {
+		    found = true;
+		    break;
+		} else if (regexec(&iter->reg, provides[i], 0, NULL, 0) == 0) {
+		    found = true;
+		    break;
+		}
+	    }
 	} else if (iter->where == Conflicts) {
 	  const char *depType, *depPkg, *depName, *depVer;
 	  char *summary;

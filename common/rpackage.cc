@@ -78,6 +78,7 @@ RPackage::~RPackage()
 void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 {
   _virtualPackages.push_back(dep);
+  _provides.push_back(dep.Name());
 }
 
 
@@ -105,9 +106,8 @@ const char *RPackage::maintainer()
     pkgCache::VerIterator ver = _package->VersionList();
     
     if (!ver.end()) {
-//	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
-	
-//	return parser.Maintainer();
+	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+	return parser.Maintainer().c_str();
     }
     return "";
 }
@@ -891,6 +891,10 @@ bool RPackage::isShallowDependency(RPackage *pkg)
   return true;
 }
 
+vector<const char*> RPackage::provides()
+{
+    return _provides;
+}
 
 void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 {

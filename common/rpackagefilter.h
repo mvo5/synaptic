@@ -89,6 +89,7 @@ public:
     Name,
     Version,
     Description,
+    Maintainer,
     Depends,
     Provides,
     Conflicts,

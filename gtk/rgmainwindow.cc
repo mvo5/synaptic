@@ -33,9 +33,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <ctype.h>
-//#include <X11/Xlib.h>
-//#include <X11/Xatom.h>
-//#include <gdk/gdkx.h>
 #include <glade/glade.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -1207,8 +1204,9 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     // common information regardless of state
     appendTag(bufPtr, bufSize, _("Section"), utf8(pkg->section()));
     appendTag(bufPtr, bufSize, _("Priority"), utf8(pkg->priority()));
-    /* XXX Why this is commented out?
     appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
+    /* XXX Why this is commented out? mvo: because we don't support vendor()
+                                           in rpackage yet
     appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
      */
     
@@ -1333,8 +1331,10 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 				(GtkTreePath*)(li->data));
 	gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
 			   PKG_COLUMN, &pkg, -1);
-	if (pkg == NULL)
+	if (pkg == NULL) {
+	    li=g_list_next(li);
 	    continue;    
+	}
 
 	pkg->setPinned(active);
 	_roptions->setPackageLock(pkg->name(), active);
@@ -1411,8 +1411,10 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 			      (GtkTreePath*)(li->data));
       gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
 			 PKG_COLUMN, &pkg, -1);
-      if (pkg == NULL)
+      if (pkg == NULL) {
+	  li=g_list_next(li);
 	  continue;
+      }
 
       // needed for the stateChange 
       exclude.push_back(pkg);

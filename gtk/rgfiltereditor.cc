@@ -50,6 +50,7 @@ static char *DepOptions[] = {
     _("are Named"),
     _("in Version"),
     _("in Description"),
+    _("in Maintainer"),
     _("Depends on"), // depends, predepends etc
     _("Provides"), // provides and name
     _("Conflicts with"), // conflicts

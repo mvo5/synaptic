@@ -786,11 +786,12 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
     else if(_displayMode == TREE_DISPLAY_STATUS)
 	{
 	    string str;
+	    int status = pkg->getStatus();
 	    int ostatus = pkg->getOtherStatus();
 	    if(ostatus & RPackage::ONew)
 		str=_("New in repository");
-	    else if(ostatus & (RPackage::ONotInstallable | 
-			       !RPackage::OResidualConfig))
+	    else if( (ostatus & RPackage::ONotInstallable) &&
+		     !(ostatus & RPackage::OResidualConfig) )
 		str=_("Obsolete and locally installed");
 	    else if(pkg->installedVersion() != NULL) {
 		if(pkg->getStatus() == RPackage::SInstalledOutdated)

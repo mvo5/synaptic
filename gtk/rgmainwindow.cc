@@ -996,26 +996,6 @@ void RGMainWindow::buildTreeView()
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 }
 
-#if INTERACTIVE_SEARCH_ON_KEYPRESS
-gboolean RGMainWindow::cbKeyPressedInTreeView(GtkWidget *widget, GdkEventKey *event, gpointer data)
-{
-   RGMainWindow *me = (RGMainWindow *)data;
-   gboolean res;
-
-   // only react if key is in sane range
-   if(event->keyval < GDK_0 || event->keyval > GDK_z) {
-      return FALSE;
-   }
-
-   // start interactive search
-   g_signal_emit_by_name(G_OBJECT(me->_treeView),
-			 "start-interactive-search", res);
-   gdk_event_put((GdkEvent*)(event));
-
-   return TRUE;
-}
-#endif
-
 void RGMainWindow::buildInterface()
 {
    GtkWidget *img, *menuitem, *widget, *button;
@@ -1557,10 +1537,6 @@ void RGMainWindow::buildInterface()
    g_signal_connect(G_OBJECT(select), "changed",
                     G_CALLBACK(cbChangedSubView), this);
 
-#if INTERACTIVE_SEARCH_ON_KEYPRESS // disabled
-   g_signal_connect(G_OBJECT(_treeView), "key-press-event",
-		    G_CALLBACK(cbKeyPressedInTreeView), this);
-#endif
    GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
@@ -2142,8 +2118,14 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    if (res == GTK_RESPONSE_OK) {
       me->setBusyCursor(true);
       string str = me->_findWin->getFindString();
+
+      // we need to convert here as the DDTP project does not use utf-8
+      const char *locale_str = utf8_to_locale(str.c_str());
+      if(locale_str == NULL) // invalid utf-8
+	 locale_str = str.c_str();
+
       int type = me->_findWin->getSearchType();
-      int found = me->_lister->searchView()->setSearch(str,type,utf8_to_locale(str.c_str()));
+      int found = me->_lister->searchView()->setSearch(str,type, locale_str);
       me->changeView(PACKAGE_VIEW_SEARCH, str);
 
       me->setBusyCursor(false);

@@ -63,7 +63,7 @@ void RGLogView::readLogs()
 
       if(year != last_year || month != last_month) {
 	 gtk_tree_store_append(store, &month_iter, NULL); 
-	 strftime(str, 512, "%B %G", &t);
+	 strftime(str, 512, "%B %Y", &t);
 	 gtk_tree_store_set (store, &month_iter,
 			     COLUMN_LOG_DAY, str, 
 			     COLUMN_LOG_FILENAME, NULL, 

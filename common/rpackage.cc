@@ -825,6 +825,7 @@ void RPackage::setInstall()
       Fix.Protect(*_package);
       Fix.Resolve(true);
    }
+
 #ifdef WITH_LUA
    _lua->SetDepCache(_depcache);
    _lua->SetGlobal("package", ((pkgCache::Package *) * _package));
@@ -1089,6 +1090,7 @@ bool RPackage::setVersion(string verTag)
  
 void RPackage::unsetVersion() 
 { 
+   //cout << "set version to " << _defaultCandVer << endl;
    setVersion(_defaultCandVer); 
    _boolFlags &= ~FOverrideVersion;
 }

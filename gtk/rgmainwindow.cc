@@ -1394,14 +1394,11 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
 	gtk_widget_show(button);
     }
-    gtk_widget_show_all(vbox);
+    gtk_widget_show(vbox);
+
     // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
-    static bool first=true;
-    if(first) {
-	gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
-	gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
-	first=false;
-    }
+    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+    gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
     //-------------------------------
 
 

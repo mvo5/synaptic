@@ -275,9 +275,9 @@ class RPackageLister {
    };
 
    // policy stuff                             
-   vector<string> getPolicyArchives() {
+   vector<string> getPolicyArchives(bool filenames_only=false) {
       if (_cacheValid)
-         return _cache->getPolicyArchives();
+         return _cache->getPolicyArchives(filenames_only);
       else
          return vector<string>();
    };

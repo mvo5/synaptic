@@ -1242,7 +1242,7 @@ void RGMainWindow::buildInterface()
    // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Refresh the list of known packages"), "");
+                        _("Refresh the list of known packages from remote server"), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_upgrade");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
@@ -2683,9 +2683,10 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(error.c_str()), -1);
       dia.run();
-   } else
+   } else {
       me->forgetNewPackages();
-
+      _config->Set("Synaptic::update::last",time(NULL));
+   }
    delete progress;
 
    if (me->_lister->openCache(TRUE)) {

@@ -35,6 +35,8 @@
 #include <apt-pkg/error.h>
 #include <X11/Xlib.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <signal.h>
 #include <cassert>
 
@@ -43,6 +45,13 @@
 #include "locale.h"
 #include "stdio.h"
 #include "rgmisc.h"
+
+typedef enum {
+   UPDATE_ASK,
+   UPDATE_CLOSE,
+   UPDATE_AUTO
+} UpdateType;
+
 
 bool ShowHelp(CommandLine & CmdL)
 {
@@ -109,6 +118,66 @@ static void SetLanguages()
    _config->Set("Volatile::Languages", LangList);
 }
 
+void welcome_dialog(RGMainWindow *mainWindow)
+{
+      // show welcome dialog
+      if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
+	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
+         RGGladeUserDialog dia(mainWindow);
+         dia.run("welcome");
+         GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+                                              "checkbutton_show_again");
+         assert(cb);
+         _config->Set("Synaptic::showWelcomeDialog",
+                      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+      }
+}
+
+void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
+{
+   //cout << "update_check" << endl;
+
+   // check updates
+   UpdateType update =
+      (UpdateType) _config->FindI("Synaptic::update::type", UPDATE_ASK);
+   if(update != UPDATE_CLOSE) {
+      // check when last update happend
+      int lastUpdate = _config->FindI("Synaptic::update::last",0);
+      int minimal= _config->FindI("Synaptic::update::minimalIntervall", 24);
+
+      // check for the mtime of the various package lists
+      vector<string> filenames = lister->getPolicyArchives(true);
+      for (int i=0;i<filenames.size();i++) {
+	 struct stat st;
+	 stat(filenames[i].c_str(), &st);
+// 	 cout << "file: " << filenames[i] << " " 
+// 	      << ctime(&st.st_mtime) << endl;
+	 if(filenames[i] != "/var/lib/dpkg/status")
+	    lastUpdate = max(lastUpdate, (int)st.st_mtime);
+      }
+
+      // 3600s=1h 
+      if((lastUpdate + minimal*3600) < time(NULL)) {
+	 if(update == UPDATE_AUTO) 
+	    mainWindow->cbUpdateClicked(NULL, mainWindow);
+	 else {
+	    RGGladeUserDialog dia(mainWindow);
+	    int res = dia.run("update_outdated",true);
+	    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+						 "checkbutton_remember");
+	    assert(cb);
+	    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
+	       if(res == GTK_RESPONSE_CANCEL)
+		  _config->Set("Synaptic::update::type", UPDATE_CLOSE);
+	       if(res == GTK_RESPONSE_OK)
+		  _config->Set("Synaptic::update::type", UPDATE_AUTO);
+	    }
+	    if(res == GTK_RESPONSE_OK)
+	       mainWindow->cbUpdateClicked(NULL, mainWindow);
+	 }
+      }
+   }
+}
 
 int main(int argc, char **argv)
 {
@@ -214,18 +283,9 @@ int main(int argc, char **argv)
    if (_config->FindB("Volatile::Non-Interactive", false)) {
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
-      // show welcome dialog
-      if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
-	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
-         RGGladeUserDialog dia(mainWindow);
-         dia.run("welcome");
-         GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-                                              "checkbutton_show_again");
-         assert(cb);
-         _config->Set("Synaptic::showWelcomeDialog",
-                      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
-      }
-
+      welcome_dialog(mainWindow);
+      update_check(mainWindow, packageLister);
+      
       gtk_main();
    }
 

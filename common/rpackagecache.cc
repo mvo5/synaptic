@@ -112,7 +112,7 @@ bool RPackageCache::reset(OpProgress &progress)
 }
 
 
-vector<string> RPackageCache::getPolicyArchives()
+vector<string> RPackageCache::getPolicyArchives(bool filenames_only=false)
 {
    //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
 
@@ -123,15 +123,20 @@ vector<string> RPackageCache::getPolicyArchives()
       _list->FindIndex(F, Indx);
       _system->FindIndex(F, Indx);
 
-      if (!F.RelStr().empty()) {
-//              printf("Archive: %s, Origin: %s, Component: %s\n", 
-//                     F.Archive(), F.Origin(), F.Component());
-         if (F.Archive() != NULL) {
-            if (find(archives.begin(), archives.end(), F.Archive())
-                == archives.end()) {
-               archives.push_back(F.Archive());
-            }
-         }
+      if(filenames_only) {
+	 if(F.FileName())
+	    archives.push_back(F.FileName());
+      } else {
+	 if (!F.RelStr().empty()) {
+	    //printf("Archive: %s, Origin: %s, Component: %s, Filename: %s\n", 
+	    //       F.Archive(), F.Origin(), F.Component(), F.FileName());
+	    if (F.Archive() != NULL) {
+	       if (find(archives.begin(), archives.end(), F.Archive())
+		   == archives.end()) {
+		  archives.push_back(F.Archive());
+	       }
+	    }
+	 }
       }
    }
    return archives;

@@ -57,7 +57,7 @@ class RPackageCache {
    bool open(OpProgress &progress);
    bool reset(OpProgress &progress);
 
-   vector<string> getPolicyArchives();
+   vector<string> getPolicyArchives(bool filenames_only);
 
    bool lock();
    void releaseLock();

@@ -166,6 +166,11 @@ void RGPreferencesWindow::saveGeneral()
    i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_upgrade_method")));
    _config->Set("Synaptic::upgradeType", i - 1);
 
+   // package list update date check
+   i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_update_ask")));
+   _config->Set("Synaptic::update::type", i);
+   
+
    // Number of undo operations:
    int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(_maxUndoE));
    _config->Set("Synaptic::undoStackSize", maxUndo);
@@ -427,6 +432,9 @@ void RGPreferencesWindow::readGeneral()
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    int i = _config->FindI("Synaptic::upgradeType", -1);
    gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_upgrade_method")), i + 1);
+
+   i = _config->FindI("Synaptic::update::type", 0);
+   gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_update_ask")), i);
 
 
    // Number of undo operations:

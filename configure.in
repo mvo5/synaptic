@@ -157,6 +157,11 @@ AC_ARG_WITH(apt-authentication,
         AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support] )
 )
 
+AC_ARG_WITH(nice-dpkg-status, 
+	[--with-nice-dpkg-status build with support for dpkg progress bar],
+        AC_DEFINE(WITH_DPKG_STATUSFD, 1, [build with dpkg progress bar] )
+)
+
 
 AC_ARG_WITH(debtags, 
 	[--with-debtags-support   build with experimental debtags support],

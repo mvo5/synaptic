@@ -872,7 +872,6 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    gtk_widget_hide(w);
    int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
    // purge not available 
-   int delAction= gtk_option_menu_get_history(GTK_OPTION_MENU(_optionmenuDel));
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
    gtk_widget_hide(glade_xml_get_widget(_gladeXML, 

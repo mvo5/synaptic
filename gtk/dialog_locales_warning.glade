@@ -32,10 +32,10 @@
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">gtk-ok</property>
+	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="response_id">-5</property>
+	      <property name="response_id">-7</property>
 	    </widget>
 	  </child>
 	</widget>
@@ -78,34 +78,12 @@
 	      <property name="spacing">12</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label1">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Incorrect or incompatible locale settings&lt;/span&gt;</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">True</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">False</property>
-		  <property name="fill">False</property>
-		</packing>
-	      </child>
-
-	      <child>
 		<widget class="GtkLabel" id="label2">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Synaptic may crash!
+		  <property name="can_focus">True</property>
+		  <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;The grafical user interface (xlib) does not support your chosen language environment&lt;/big&gt;&lt;/b&gt;
 
-Xlib does not support your chosen language environment.
-
-Please use locales settings like &quot;fr_FR&quot; or &quot;fr_FR@euro&quot;. Do not use settings like &quot;fr_FR.iso8859-15@euro&quot;.
+Synaptic can crash if you decide to continue with unchanged localisation preferences. Language values like &quot;fr_FR.iso8859-15@euro&quot; are not supported. Use values like &quot;fr_FR&quot; or &quot;fr_FR@euro&quot; for your language.
 
 Contact the mailing list for comments or help:
 &lt;i&gt;synaptic-devel@nongnu.org&lt;/i&gt; 
@@ -114,7 +92,7 @@ Include the output of the &quot;locale&quot; command in your email.</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">True</property>
-		  <property name="selectable">False</property>
+		  <property name="selectable">True</property>
 		  <property name="xalign">0</property>
 		  <property name="yalign">0</property>
 		  <property name="xpad">0</property>

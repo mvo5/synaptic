@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 18:29+0200\n"
+"POT-Creation-Date: 2004-06-27 12:32+0200\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -824,22 +824,13 @@ msgid "This behavior can be changed in the preferences later."
 msgstr ""
 
 #: gtk/dialog_locales_warning.glade.h:1
-#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale "
-"settings</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Segnare ulteriori modifiche richieste?"
-"</span>"
-
-#: gtk/dialog_locales_warning.glade.h:2
-msgid ""
-"Synaptic may crash!\n"
+"<b><big>The grafical user interface (xlib) does not support your chosen "
+"language environment</big></b>\n"
 "\n"
-"Xlib does not support your chosen language environment.\n"
-"\n"
-"Please use locales settings like \"fr_FR\" or \"fr_FR@euro\". Do not use "
-"settings like \"fr_FR.iso8859-15@euro\".\n"
+"Synaptic can crash if you decide to continue with unchanged localisation "
+"preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
+"supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your language.\n"
 "\n"
 "Contact the mailing list for comments or help:\n"
 "<i>synaptic-devel@nongnu.org</i> \n"
@@ -2750,10 +2741,11 @@ msgstr "Segna il pacchetto per l'installazione/aggiornamento"
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Failed to mark all packages for "
+"<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
 "installation or upgrade</span>\n"
 "\n"
-"The following packages have unmet dependencies:"
+"The following packages have unresolvable dependencies. Make sure that all "
+"required repositories are added and enabled in the preferences."
 msgstr ""
 
 #: gtk/dialog_changelog.glade.h:1
@@ -2763,11 +2755,14 @@ msgstr "Dipendenze dell'ultima versione"
 
 #: gtk/dialog_update_failed.glade.h:1
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Failed to download all index files</"
-"span>\n"
+"<span weight=\"bold\" size=\"larger\">Could not download all repository "
+"indexes</span>\n"
 "\n"
-"If available an older version of the failed index will be used. Otherwise "
-"the repository will be ignored."
+"The repository might be no longer available or could not be reached because "
+"of network problems. If available an older version of the failed index will "
+"be used. Otherwise the repository will be ignored. Check your network "
+"connection and the correct writing of the repository address in the "
+"preferences."
 msgstr ""
 
 #: gtk/rgfiltermanager.h:66
@@ -2923,6 +2918,25 @@ msgstr ""
 #: gtk/rgterminstallprogress.cc:153
 msgid "<i>Can't close while running</i>"
 msgstr ""
+
+#. vim:sts=3:sw=3
+#: gtk/dialog_download_error.glade.h:1
+msgid ""
+"<big><b>Could not download all package files</b></big>\n"
+"\n"
+"The version of the package that you want to install might be no longer "
+"available in the repository. Or there might be problems with the source of "
+"the package. Refresh the package list and check the source of the package (e."
+"g. CD or network connection)."
+msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale "
+#~ "settings</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Segnare ulteriori modifiche "
+#~ "richieste?</span>"
 
 #, fuzzy
 #~ msgid "Changelog for %s"

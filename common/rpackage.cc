@@ -565,6 +565,8 @@ vector<string> RPackage::enumDeps()
    const char* or_str;
 
    pkgCache::VerIterator Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
+   if(Cur.end())
+      Cur = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    for(pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
       // clear old values

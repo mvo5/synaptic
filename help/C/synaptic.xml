@@ -340,7 +340,7 @@
 				</term>
 				<listitem>
 					<para>
-						Refresh the list of known packages
+						Refresh the list of known packages.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -350,7 +350,7 @@
 				</term>
 				<listitem>
 					<para>
-						Mark all possible and available upgrades
+						Mark all possible and available upgrades.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -360,7 +360,7 @@
 				</term>
 				<listitem>
 					<para>
-						Apply all marked changes
+						Apply all marked changes.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -370,7 +370,17 @@
 				</term>
 				<listitem>
 					<para>
-						Open the <xref linkend="synaptic-win-properties"/> dialog(s) of the selected package(s)
+						Open the <xref linkend="synaptic-win-properties"/> dialog(s) of the selected package(s).
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Find
+				</term>
+				<listitem>
+					<para>
+						Open the find dialog.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -406,7 +416,7 @@
 	</figure>
 
 	<para>
-		The following categories of packages are available:
+		The following categories are available:
 		
 		<variablelist>
 			<varlistentry>
@@ -415,7 +425,8 @@
 				</term>
 				<listitem>
 					<para>
-						Allows to choose packages by section
+						Show packages belonging to the
+						selected section, only.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -425,7 +436,8 @@
 				</term>
 				<listitem>
 					<para>
-						Allows to choose packages by status
+						Show packages of the
+						selected status, only.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -435,7 +447,30 @@
 				</term>
 				<listitem>
 					<para>
-						Allows to choose packages by their inital letter
+						Show packages with the
+						selected initial letter, only.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Filter
+				</term>
+				<listitem>
+					<para>
+						Show packages that fit to
+						the selected custom criterias, only.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Find histroy
+				</term>
+				<listitem>
+					<para>
+						Show the results of the
+						selected search, only.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -450,8 +485,7 @@
 	</title>
 
 	<para>
-		The package list shows the packages of the selected category. The list can be narrowed
-		down further by applying <xref linkend="synaptic-filter"/>.
+		The package list shows the packages of the selected category.
 	</para>
 
 	<figure>
@@ -570,7 +604,7 @@
 							Description
 						</entry>
 						<entry valign="top">
-							Shows a long description of the package
+							Shows a long description of the package.
 						</entry>
 					</row>
 					<row>
@@ -578,7 +612,7 @@
 							Dependencies
 						</entry>
 						<entry valign="top">
-							Lists required, depending, provided, suggested and recommended packages
+							Lists required, depending, provided, suggested and recommended packages.
 						</entry>
 					</row>
 				</tbody>
@@ -641,38 +675,69 @@
 
 <sect2 id="synaptic-pkg-find"> 
 	<title>
-		To Find Specific Packages (FIXME)
+		To Find and Browse Packages (FIXME)
 	</title> 
 
 <variablelist>
 <varlistentry id="synaptic-pkg-find-quicksearch">
 	<term>	
-		Finding a package in the list of shown packages
+		To find a specific package
 	</term>
 	<listitem>
 	<para>
-		To find a package name in the list of shown packages perform the following steps:
+		To find a specific package follow these steps:
 	</para>
 	<para>
 	<orderedlist>
 		<listitem>
 			<para>
-				Type the name or a part of it into the
-				
-				located in the toolbar. &app; will automatically
-				jump to the first matching package in the list.
+				Open the find dialog:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Press the key combination
+							<keycombo><keycap>Ctrl</keycap><keycap>f</keycap>
+							</keycombo>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Click on
+							<guilabel>Find</guilabel> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose
+							<menuchoice><guimenu>Edit</guimenu><guimenuitem>Find</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				To find the next matching package press the 
-				the forward button next to the find field.
+				Enter the search expression into the
+				<guilabel>Find</guilabel> field. E.g. "music
+				player" if you want to search for music player.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				To begin the search again from the beginning of the
-				package list click on the upward button.
+				Select the fields in which to look. 
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guilabel>Find</guilabel> to start
+				the search. This can take some time on low machines and wide
+				search criterias.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				After the pro FIXME
 			</para>
 		</listitem>
 	</orderedlist>
@@ -733,7 +798,7 @@
 <sect2 id="synaptic-pkg-install"> 
 	<title>To Install Packages</title>
 	<para>
-		To install one or more packages perform the following steps:
+		To install a packages perform the following steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -743,14 +808,14 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
+						Choose <menuchoice><guimenu>Edit</guimenu>
 						<guimenuitem>Refresh Package List</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Refresh List</guibutton> in the toolbar.
+						Click on <guibutton>Refresh</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
@@ -764,16 +829,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				Select the package that you wish to install in the 
-				<xref linkend="synaptic-win-list"/> with a left mouse click. 
-
-				To select further packages hold down the <keycap>Ctrl</keycap> 
-				key while left clicking on the additional package.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Mark the selected packages for installation:
+				Mark the package for installation:
 
 				<itemizedlist>
 					<listitem>
@@ -785,26 +841,28 @@
 		                        <listitem>
 			                        <para>
 				                        Click on the status icon of the package and choose <guimenuitem>
-					                Install Latest Version</guimenuitem> from the menu.
+					                Mark for Installation</guimenuitem> from the menu.
 						</para>
 	                                </listitem>
 					<listitem>
 						<para>
 							Right click on the package and choose <guimenuitem>
-							Install Latest Version</guimenuitem> from the
+							Mark for Installation</guimenuitem> from the
 							context menu.
 						</para>
 					</listitem>
 			                <listitem>
 				                <para>
-					                Choose <menuchoice><guimenu>Package</guimenu>
-						        <guimenuitem>Install Latest Version</guimenuitem>
+					                Select the package and
+							choose <menuchoice><guimenu>Package</guimenu>
+						        <guimenuitem>Mark for Installation</guimenuitem>
 							</menuchoice> from the menu.
 	                                        </para>
 		                        </listitem>
 					<listitem>
 						<para>
-							Press the key combination <keycombo>
+							Select the package and
+							press the key combination <keycombo>
 							<keycap>Ctrl</keycap><keycap>I</keycap></keycombo>.
 						</para>
 					</listitem>
@@ -813,12 +871,12 @@
 		</listitem>
 		<listitem>
 			<para>
-				Apply the marked changes to actually install the package(s):
+				Apply the marked changes to actually install the package:
 
 				<itemizedlist>
 					<listitem>
 						<para>
-							Click on <guibutton>Apply Changes</guibutton> in the toolbar.	
+							Click on <guibutton>Apply</guibutton> in the toolbar.	
 					</para>
 					</listitem>
 					<listitem>
@@ -854,13 +912,13 @@
 			</para>
 			<para>
 				<emphasis>Debian only:</emphasis> To remove all files related to the package
-				choose <menuchoice><guimenuitem>Remove Including 
-				Configuration</guimenuitem></menuchoice> instead of 
+				choose <menuchoice><guimenuitem>Mark for
+				Complete Removal</guimenuitem></menuchoice> instead of 
 				<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
 			</para>
 		</note>
 	</para>
-	<para>
+	<!-- para>
 		<note>
 			<para>
 				<emphasis>Debian only:</emphasis> To also remove packages that are only installed as dependency 
@@ -870,21 +928,14 @@
 				</menuchoice> instead of <menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
 			</para>
 		</note>
-	</para>
+	</para -->
 	<para>
-		To remove one or more packages follow these steps:
+		To remove a packages follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
 			<para>
-				Select the package that you wish to remove in the 
-				<xref linkend="synaptic-win-list"/> with a left click. To select further packages hold
-				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Mark the selected package(s) for removal:
+				Mark the package for removal:
 				<itemizedlist>
 					<listitem>
 						<para>
@@ -895,7 +946,7 @@
 		                        <listitem>
 			                        <para>
 				                        Click on the status icon of the package and choose <guimenuitem>
-					                Install Latest Version</guimenuitem> from the menu.
+					                Mark for Removal</guimenuitem> from the menu.
 						</para>
 	                                </listitem>
 					<listitem>
@@ -906,14 +957,16 @@
 					</listitem>
 					<listitem>
 						<para>
-							Choose <menuchoice><guimenu>Package</guimenu>
-							<guimenuitem>Remove</guimenuitem>
+							Select the package and
+							choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Mark for Removal</guimenuitem>
 							</menuchoice> from the menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Press the key combination <keycombo>
+							Select the package and
+							press the key combination <keycombo>
 							<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
 						</para>
 					</listitem>
@@ -927,7 +980,7 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+							Click on <guibutton>Apply</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
@@ -951,7 +1004,7 @@
 <sect2 id="synaptic-pkg-upgrade"> 
 	<title>To Upgrade Packages</title>
 	<para>
-		To upgrade one or more packages follow these steps:
+		To upgrade a package follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -968,7 +1021,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Click on <guibutton>Refresh List</guibutton> in the toolbar.
+							Click on <guibutton>Refresh</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
@@ -983,14 +1036,7 @@
 
 		<listitem>
 			<para>
-				Select the package that you wish to upgrade in the 
-				<xref linkend="synaptic-win-list"/>. To select further packages hold
-				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Marked the selected packages for upgrade:
+				Marked the package for upgrade:
 
 				<itemizedlist>
 					<listitem>
@@ -1002,26 +1048,28 @@
 					<listitem>
 						<para>
 				                        Click on the status icon of the package and choose <guimenuitem>
-			                                Upgrade</guimenuitem> from the menu.
+			                                Mark for Upgrade</guimenuitem> from the menu.
 						</para>
 	                                </listitem>
 					<listitem>
 						<para>
 							Right click on the package and choose <guimenuitem>
-							Upgrade</guimenuitem> from the
+							Mark for Upgrade</guimenuitem> from the
 							context menu.
 						</para>
 		                        </listitem>
 					<listitem>
 						<para>
-							Choose <menuchoice><guimenu>Package</guimenu>
-							<guimenuitem>Upgrade</guimenuitem>
+							Select the package and
+							choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Mark for Upgrade</guimenuitem>
 							</menuchoice> from the menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Press the key combination 
+							Select the package and
+							press the key combination 
 							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
 						</para>
 					</listitem>
@@ -1030,12 +1078,12 @@
 		</listitem>
 		<listitem>
 			<para>
-				Apply the marked changes to actually upgrade the package(s):
+				Apply the marked changes to actually upgrade the package:
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+						Click on <guibutton>Apply</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
@@ -1131,7 +1179,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Click on <guibutton>Rerfesh List</guibutton> in the toolbar.
+							Click on <guibutton>Rerfesh</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
@@ -1157,7 +1205,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Choose <menuchoice><guimenu>Actions</guimenu>
+							Choose <menuchoice><guimenu>Edit</guimenu>
 							<guimenuitem>Upgrade System</guimenuitem>
 							</menuchoice> from the menu.
 						</para>
@@ -1189,7 +1237,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Choose <menuchoice><guimenu>Actions</guimenu>
+							Choose <menuchoice><guimenu>Edit</guimenu>
 							<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
 							from the menu.
 						</para>
@@ -1213,7 +1261,7 @@
 	</tip>
 </sect2>
 
-<sect2 id="synaptic-pkg-downgrade"> 
+<!-- sect2 id="synaptic-pkg-downgrade"> 
 	<title>
 		To Downgrade Packages
 	</title> 
@@ -1305,7 +1353,7 @@
 			</para>
 		</listitem>
 	</orderedlist>
-</sect2>
+</sect2 -->
 
 <sect2 id="synaptic-pkg-apply">
 	<title>
@@ -1314,8 +1362,8 @@
 
 	<tip>
 		<para>
-			To show only packages that are marked for a status change apply 
-			the "Marked Changes" filter to the package list, see 
+			To show packages that are marked for a status change
+			only choose the "Marked Changes" filter, see 
 			<xref linkend="synaptic-filter-apply"/>.
 		</para>
 	</tip>
@@ -1331,7 +1379,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					Choose <menuchoice><guimenu>Actions</guimenu>
+					Choose <menuchoice><guimenu>Edit</guimenu>
 					<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> from the menu.
 				</para>
 			</listitem>
@@ -1357,7 +1405,7 @@
 	<variablelist>
 		<varlistentry>
 			<term>
-				To undo marked changes to a specific package
+				To undo the marking of specific packages
 			</term>
 			<listitem>
 				<itemizedlist>
@@ -1371,7 +1419,7 @@
 					<listitem>
 						<para>
 							Select the package(s) and choose <menuchoice>
-							<guimenu>Package</guimenu><guimenuitem>Unmark Changes</guimenuitem>
+							<guimenu>Package</guimenu><guimenuitem>Unmark</guimenuitem>
 							</menuchoice>.
 						</para>
 					</listitem>
@@ -1386,23 +1434,23 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				To undo all changes
+				To undo all markings
 			</term>
 			<listitem>
 				<para>
-					Choose <menuchoice><guimenu>Actions</guimenu>
-					<guimenuitem>Undo All Changes</guimenuitem></menuchoice>
+					Choose <menuchoice><guimenu>Edit</guimenu>
+					<guimenuitem>Unmark All</guimenuitem></menuchoice>
 					from the menu.
 				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>
-				To undo the last change(s)
+				To undo the last marking
 			</term>
 			<listitem>
 				<para>
-					Choose <menuchoice><guimenu>Actions</guimenu>
+					Choose <menuchoice><guimenu>Edit</guimenu>
 					<guimenuitem>Undo</guimenuitem></menuchoice>
 					from the menu.
 				</para>
@@ -1454,7 +1502,7 @@
 	</orderedlist>
 	<tip>
 		<para>
-			To get a list off all configurable packages apply the <emphasis>Configurable Packages</emphasis> filter.
+			To get a list of all configurable packages choose the <emphasis>Configurable Packages</emphasis> filter.
 		</para>
 	</tip>
 </sect2>
@@ -1471,13 +1519,15 @@
 	</note>
 	
 	<para>
-		asdasd
+		Dwww provides access to all the installed documentation
+		related to package with a web browser. The whole documentation is
+		hostet via a local HTTP server.
 	</para>
 
 	<orderedlist>
 		<listitem>
 			<para>
-				Select the package from that you wish to read additional documentation 
+				Select the package about that you wish to read additional documentation 
 				in the <xref linkend="synaptic-win-list"/>.
 			</para>
 		</listitem>
@@ -1505,12 +1555,12 @@
 	</para>
 
 	<para>
-		To correct the broken packages choose <menuchoice><guimenu>Actions</guimenu>
+		To correct the broken packages choose <menuchoice><guimenu>Edit</guimenu>
 		<guimenuitem>Fix Broken Packages</guimenuitem></menuchoice> from the menu.
 	</para>
 	<tip>
 		<para>
-			To get a list off all broken packages apply the <emphasis>Broken Packages</emphasis> filter.
+			To show all broken packages choose the <emphasis>Broken</emphasis> filter.
 		</para>
 	</tip>
 </sect2>

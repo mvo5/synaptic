@@ -3147,7 +3147,7 @@ void RGMainWindow::buildInterface()
     // build popup-menu
     GtkWidget *menuitem, *img;
     _popupMenu = gtk_menu_new();
-    menuitem = gtk_image_menu_item_new_with_label(_("_No changes"));
+    menuitem = gtk_image_menu_item_new_with_label(_("No Changes"));
     img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
     g_object_set_data(G_OBJECT(menuitem),"me",this);

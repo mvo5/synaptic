@@ -381,6 +381,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // set info
    gtk_widget_set_sensitive(_pkginfo, true);
    RGPkgDetailsWindow::fillInValues(this, pkg);
+   // work around a stupid gtk-bug (see debian #279447)
+   gtk_widget_queue_resize(glade_xml_get_widget(_gladeXML,"viewport_pkginfo"));
 
    if(_pkgDetails != NULL)
       RGPkgDetailsWindow::fillInValues(_pkgDetails,pkg, true);

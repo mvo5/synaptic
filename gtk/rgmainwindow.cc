@@ -338,10 +338,26 @@ void RGMainWindow::searchNextAction(GtkWidget *self, void *data)
 
 void RGMainWindow::searchLackAction(GtkWidget *self, void *data)
 {
+    GtkTreeIter iter;
     //cout << "search lack called" << endl;
     RGMainWindow *me = (RGMainWindow*)data;
+
+    // check if search string is empty
+    const gchar *searchtext = gtk_entry_get_text (GTK_ENTRY (self));
+    int len = strlen (searchtext);
+    // entry is empty, set search from the begining
+    if(len < 1) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+	gtk_tree_model_get_iter_first(me->_activeTreeModel, &iter);
+	gtk_tree_selection_unselect_all(selection);
+	gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
+	gtk_tree_selection_select_iter(selection, &iter);
+	return;
+    }
+
     if(me->searchLackId)
 	gtk_timeout_remove(me->searchLackId);
+
     me->searchLackId = gtk_timeout_add(1000, searchLackHelper, self);
 }
 
@@ -362,21 +378,17 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
     gboolean ok;
 
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
-    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
 
     // get search string
     const gchar *searchtext = gtk_entry_get_text (GTK_ENTRY (self));
     int len = strlen (searchtext);
     // entry is empty, set search from the begining
     if(len < 1) {
-	gtk_tree_model_get_iter_first(me->_activeTreeModel, &iter);
-	gtk_tree_selection_unselect_all(selection);
-	gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
-	gtk_tree_selection_select_iter(selection, &iter);
 	return;
     }
 
     // get last selected row
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
     list = li = gtk_tree_selection_get_selected_rows(selection,
  						     &me->_activeTreeModel);

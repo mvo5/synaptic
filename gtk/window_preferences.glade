@@ -4,7 +4,6 @@
 <glade-interface>
 
 <widget class="GtkWindow" id="window_preferences">
-  <property name="visible">False</property>
   <property name="title" translatable="yes">Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
@@ -284,7 +283,7 @@
 					  <child>
 					    <widget class="GtkMenuItem" id="menuitem1">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Default</property>
+					      <property name="label" translatable="yes">Keep Configuration</property>
 					      <property name="use_underline">True</property>
 					      <signal name="activate" handler="on_delete1_activate" last_modification_time="Wed, 16 Jul 2003 10:04:23 GMT"/>
 					    </widget>
@@ -293,18 +292,9 @@
 					  <child>
 					    <widget class="GtkMenuItem" id="menuitem_purge">
 					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Include Configuration</property>
+					      <property name="label" translatable="yes">Completely</property>
 					      <property name="use_underline">True</property>
 					      <signal name="activate" handler="on_purge1_activate" last_modification_time="Wed, 16 Jul 2003 10:04:23 GMT"/>
-					    </widget>
-					  </child>
-
-					  <child>
-					    <widget class="GtkMenuItem" id="menuitem3">
-					      <property name="visible">True</property>
-					      <property name="label" translatable="yes">Include Orphaned Dependencies</property>
-					      <property name="use_underline">True</property>
-					      <signal name="activate" handler="on_delete_with_dependencies1_activate" last_modification_time="Wed, 16 Jul 2003 10:04:23 GMT"/>
 					    </widget>
 					  </child>
 					</widget>

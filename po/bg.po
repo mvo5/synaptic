@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-09 16:12+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2004-05-30 10:46+0300\n"
 "Last-Translator: Vladimir Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
@@ -33,7 +33,7 @@ msgstr "Комуникации"
 msgid "Development"
 msgstr "Разработка"
 
-#: common/sections_trans.cc:13 gtk/window_main_vpaned.glade.h:28
+#: common/sections_trans.cc:13
 msgid "Documentation"
 msgstr "Документация"
 
@@ -149,7 +149,7 @@ msgstr "World·Wide·Web"
 msgid "Miscellaneous  - Graphical"
 msgstr "Други - Графични"
 
-#: common/sections_trans.cc:42 common/rpackage.cc:125 gtk/rgmainwindow.cc:76
+#: common/sections_trans.cc:42 common/rpackage.cc:107 gtk/rgmainwindow.cc:75
 msgid "Unknown"
 msgstr "Неизвестни"
 
@@ -173,182 +173,187 @@ msgstr "принос"
 msgid "Non US"
 msgstr "Не САЩ"
 
-#: common/sections_trans.cc:89
+#: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
-msgid "%s <i>(%s)</i>"
-msgstr "%s·<i>(%s)</i>"
+msgid "Stat failed for %s"
+msgstr ""
 
-#: common/indexcopy.cc:51
-#, c-format
-msgid "Failed to access %s"
-msgstr "Неуспешен достъп до %s"
-
-#: common/indexcopy.cc:82 common/rpmindexcopy.cc:112
+#: common/indexcopy.cc:78 common/rpmindexcopy.cc:107
 msgid "Unable to create a tmp file"
 msgstr "Tmp файлът не може да бъде създаден"
 
-#: common/indexcopy.cc:89
-msgid "Unable to start helper process (gzip). Please report."
-msgstr "Процесът за помощ не може да бъде стартиран (gzip). Моля, докладвайте."
+#: common/indexcopy.cc:87
+#, fuzzy
+msgid "Internal Error: Couldn't fork gzip. Please report."
+msgstr "Вътрешна грешка: couldn't·fork·bzip2. Моля, докладвайте."
 
-#: common/indexcopy.cc:110
+#: common/indexcopy.cc:108
 msgid "gzip failed, perhaps the disk is full."
 msgstr "gzip не успя, можеби дискът е пълен."
 
-#: common/indexcopy.cc:131
+#: common/indexcopy.cc:129
 msgid "Failed to reopen fd"
 msgstr "Неуспех при повторно отваряне на fd"
 
-#: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
-#: common/rpmindexcopy.cc:216
+#: common/indexcopy.cc:219 common/indexcopy.cc:243 common/rpmindexcopy.cc:170
+#: common/rpmindexcopy.cc:206
 msgid "Failed to rename"
 msgstr "Неуспех при преименуването"
 
-#: common/indexcopy.cc:285
+#: common/indexcopy.cc:267
 msgid "No valid records were found."
 msgstr "Не са намерени валидни записи."
 
-#: common/indexcopy.cc:464
+#: common/indexcopy.cc:442
 msgid "Cannot find filename or size tag"
 msgstr "Името на файла или тагът за размерът не могат да бъдат намерени"
 
-#: common/indexcopy.cc:505
+#: common/indexcopy.cc:486
 msgid "Error parsing file record"
 msgstr "Грешка при синтактичния разбро на файла"
 
-#: common/rcdscanner.cc:112 common/rcdscanner.cc:165
+#: common/rcdscanner.cc:110 common/rcdscanner.cc:160
 #, c-format
 msgid "Failed to open %s.new"
 msgstr "Неуспех при отварянето на %s.new"
 
-#: common/rcdscanner.cc:139 common/rcdscanner.cc:257
+#: common/rcdscanner.cc:135 common/rcdscanner.cc:245
 #, c-format
 msgid "Failed to rename %s.new to %s"
 msgstr "Неуспех при преименуването на·%s.new·в·%s"
 
-#: common/rcdscanner.cc:208 common/rcdscanner.cc:246
+#: common/rcdscanner.cc:200 common/rcdscanner.cc:233
 msgid "Internal error"
 msgstr "Вътрешна грешка"
 
-#: common/rcdscanner.cc:269
+#: common/rcdscanner.cc:257
 msgid "Preparing..."
 msgstr "Подготвяне..."
 
-#: common/rcdscanner.cc:283
+#: common/rcdscanner.cc:270
 #, c-format
 msgid "Unable to read the cdrom database %s"
 msgstr "Базата данни %s от cdrom-а не може да бъде прочетена"
 
-#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:436
+#: common/rcdscanner.cc:277 common/rcdscanner.cc:319 common/rcdscanner.cc:418
 msgid "Unmounting CD-ROM..."
 msgstr "Демонтира CD-ROM..."
 
-#: common/rcdscanner.cc:295
+#: common/rcdscanner.cc:280
 msgid "Waiting for disc..."
 msgstr "Изчаква за диск..."
 
-#: common/rcdscanner.cc:296
+#: common/rcdscanner.cc:281
 msgid "Insert a disc in the drive."
 msgstr "Моля, поставете диск в устройството."
 
 #. Mount the new CDROM
-#: common/rcdscanner.cc:300
+#: common/rcdscanner.cc:285
 msgid "Mounting CD-ROM..."
 msgstr "Монтира CD-ROM..."
 
-#: common/rcdscanner.cc:303
+#: common/rcdscanner.cc:288
 msgid "Failed to mount the cdrom."
 msgstr "Неуспешно монтиране на cdrom."
 
-#: common/rcdscanner.cc:307
+#: common/rcdscanner.cc:292
 msgid "Identifying disc..."
 msgstr "Идентифицира диск..."
 
-#: common/rcdscanner.cc:310
+#: common/rcdscanner.cc:295
 msgid "Couldn't identify disc."
 msgstr "Дискът не може да бъде идентифициран."
 
-#: common/rcdscanner.cc:313
+#: common/rcdscanner.cc:298
 msgid "Scanning disc..."
 msgstr "Сканира диск..."
 
-#: common/rcdscanner.cc:328
+#: common/rcdscanner.cc:313
 msgid "Cleaning package lists..."
 msgstr "Изчиства списъкът на пакетите..."
 
-#: common/rcdscanner.cc:341
+#: common/rcdscanner.cc:326
 msgid ""
 "Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr ""
-"Програмата не може да намери никакви пакети. Вероятно това не е APT разрешен диск."
+"Програмата не може да намери никакви пакети. Вероятно това не е APT разрешен "
+"диск."
 
-#: common/rcdscanner.cc:394
+#: common/rcdscanner.cc:377
 msgid "Disc not successfuly scanned."
 msgstr "Дискът не е сканиран успешно."
 
-#: common/rcdscanner.cc:398
+#: common/rcdscanner.cc:381
 msgid "Empty disc name."
 msgstr "Празно име на диска."
 
-#: common/rcdscanner.cc:401
+#: common/rcdscanner.cc:384
 msgid "Registering disc..."
 msgstr "Регистриране на диск..."
 
-#: common/rcdscanner.cc:416
+#: common/rcdscanner.cc:398
 msgid "Copying package lists..."
 msgstr "Копиране на списъците за пакетите..."
 
-#: common/rcdscanner.cc:425
+#: common/rcdscanner.cc:407
 msgid "Writing sources list..."
 msgstr "Записване на списъците с първичния код..."
 
-#: common/rcdscanner.cc:440
+#: common/rcdscanner.cc:422
 msgid "Done!"
 msgstr "Готово!"
 
-#: common/rcdscanner.cc:540
+#: common/rcdscanner.cc:520
 #, c-format
 msgid "Failed to stat %s%s"
 msgstr ""
 
-#: common/rcdscanner.cc:646 common/rcdscanner.cc:750
+#: common/rcdscanner.cc:622 common/rcdscanner.cc:718
 #, c-format
 msgid "Unable to change to %s"
 msgstr "Промяната към·%s е невъзможна"
 
-#: common/rcdscanner.cc:688
+#: common/rcdscanner.cc:660
 #, c-format
 msgid "Unable to read %s"
 msgstr "%s не може да бъде прочетен"
 
-#: common/rconfiguration.cc:82 common/rconfiguration.cc:179
+#: common/rconfiguration.cc:83 common/rconfiguration.cc:184
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "ГРЕШКА:·%s·не може да бъде отворен за запис"
 
-#: common/rconfiguration.cc:107
+#: common/rconfiguration.cc:109
 msgid "ERROR: Could not get password entry for superuser"
 msgstr "ГРЕШКА:·Паролата за администратора не може да бъде взета"
 
-#: common/rconfiguration.cc:115
+#: common/rconfiguration.cc:118
 #, c-format
 msgid "ERROR: could not create configuration directory %s"
 msgstr "ГРЕШКА:·конфигурационната директория %s не може да бъде създадена"
 
-#: common/rconfiguration.cc:204
+#: common/rconfiguration.cc:209
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "не може да се стартира %s за писане"
 
-#: common/rpackage.cc:215
+#: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
-msgstr "Списъкът на инсталираните файлове е наличен единствено за инсталираните пакети"
+msgstr ""
+"Списъкът на инсталираните файлове е наличен единствено за инсталираните "
+"пакети"
 
-#: common/rpackage.cc:419
-msgid "OH SHIT DUNNO WTF IS GOIN ON!"
-msgstr "ПОДЯВОЛИТЕ НЯМАМ ИДЕЯ КАКВО СТАВА!"
+#: common/rpackage.cc:396
+#, fuzzy
+msgid "or dependency"
+msgstr "Обръща зависимостите"
 
-#: common/rpackage.cc:600
+#: common/rpackage.cc:400
+#, fuzzy
+msgid "Depended on by"
+msgstr "Зависимости"
+
+#: common/rpackage.cc:508
 #, c-format
 msgid ""
 "\n"
@@ -359,313 +364,363 @@ msgid ""
 msgstr ""
 "\n"
 "Пакетът %s няма налична версия, но съществува в базата данни \n"
-"Това обикновенно означава, че пакетът е бил споменат като зависимост и никога не е бил каче, бил е остарял или не е наличен в съдържанието на sources.list\n"
+"Това обикновенно означава, че пакетът е бил споменат като зависимост и "
+"никога не е бил каче, бил е остарял или не е наличен в съдържанието на "
+"sources.list\n"
 
-#: common/rpackage.cc:667
+#: common/rpackage.cc:584
 msgid " or"
 msgstr " или"
 
-#: common/rpackage.cc:764
+#: common/rpackage.cc:745
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s·е/ще бъде инсталиран"
 
-#: common/rpackage.cc:769
+#: common/rpackage.cc:750
 msgid "package is not installable"
 msgstr "пакетът не е инсталируем"
 
-#: common/rpackage.cc:771
+#: common/rpackage.cc:752
 msgid "package is a virtual package"
 msgstr "пакетът е виртуален пакет"
 
-#: common/rpackage.cc:773
+#: common/rpackage.cc:754
 msgid "package is/will not be installed"
 msgstr "пакетът е/няма да бъде инсталиран"
 
-#: common/rpackage.cc:776
+#: common/rpackage.cc:757
 msgid "dependency is satisfied"
 msgstr "зависимостите са удволетворени"
 
-#: common/rpackage.cc:948
+#: common/rpackage.cc:983
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Невалиден запис във файлът с настройките,·няма·Package·header"
 
-#: common/rpackagecache.cc:51
+#: common/rpackage.cc:1292
+#, fuzzy
+msgid "Marked for installation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: common/rpackage.cc:1293
+#, fuzzy
+msgid "Marked for re-installation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: common/rpackage.cc:1294
+#, fuzzy
+msgid "Marked for upgrade"
+msgstr "Избира всички възможни осъвременявания"
+
+#: common/rpackage.cc:1295
+#, fuzzy
+msgid "Marked for downgrade"
+msgstr "Ще бъдат върнати към стара версия"
+
+#: common/rpackage.cc:1296
+msgid "Marked for removal"
+msgstr ""
+
+#: common/rpackage.cc:1297
+msgid "Marked for complete removal"
+msgstr ""
+
+#: common/rpackage.cc:1298 common/rpackageview.cc:104
+#: gtk/window_filters.glade.h:25
+msgid "Not installed"
+msgstr "Не са инсталирани"
+
+#: common/rpackage.cc:1299
+msgid "Not installed (locked)"
+msgstr "Не са инсталирани (заключени)"
+
+#: common/rpackage.cc:1300 common/rpackageview.cc:99
+#: gtk/window_filters.glade.h:20
+msgid "Installed"
+msgstr "Инсталирани"
+
+#: common/rpackage.cc:1301 common/rpackageview.cc:97
+#, fuzzy
+msgid "Installed (upgradable)"
+msgstr "Инсталирани и с възможност за осъвременяване"
+
+#: common/rpackage.cc:1302
+msgid "Installed (locked to the current version)"
+msgstr "Инсталирани (заключени към текущата си версия)"
+
+#: common/rpackage.cc:1303 common/rpackageview.cc:348
+#: gtk/window_filters.glade.h:6
+msgid "Broken"
+msgstr "Развалени"
+
+#: common/rpackage.cc:1304
+#, fuzzy
+msgid "Not installed (new in repository)"
+msgstr "Нов в склада"
+
+#: common/rpackagecache.cc:50
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
 msgstr ""
 
-#: common/rpackagecache.cc:57
+#: common/rpackagecache.cc:58
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
 
-#: common/rpackagecache.cc:92
+#: common/rpackagecache.cc:93
 msgid "Internal Error, non-zero counts"
 msgstr "Вътрешна грешка,·non-zero·counts"
 
-#: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:70 gtk/window_filters.glade.h:56
+#: common/rpackagefilter.cc:45 gtk/window_find.glade.h:7
+msgid "Name"
+msgstr "Име"
+
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:779
+#: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
+#: gtk/window_details.glade.h:17
+msgid "Description"
+msgstr "Описание"
+
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
+msgid "Maintainer"
+msgstr "Поддържащ пакета"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Версия"
+
+#: common/rpackagefilter.cc:49
+msgid "Depends"
+msgstr "Зависи"
+
+#: common/rpackagefilter.cc:50
+msgid "Provides"
+msgstr "Доставя"
+
+#: common/rpackagefilter.cc:51
+msgid "Conflicts"
+msgstr "Конфликти"
+
+#: common/rpackagefilter.cc:52
+msgid "Replaces"
+msgstr "Замества"
+
+#: common/rpackagefilter.cc:53
+#, fuzzy
+msgid "Recommends"
+msgstr "Препоръчани"
+
+#: common/rpackagefilter.cc:54
+#, fuzzy
+msgid "Suggests"
+msgstr "Предложени:"
+
+#: common/rpackagefilter.cc:55
+msgid "ReverseDepends"
+msgstr ""
+
+#. Reverse Depends
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
+#: gtk/rgfiltermanager.h:77
+msgid "Origin"
+msgstr ""
+
+#: common/rpackagefilter.cc:61 common/rpackageview.h:114
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Състояние"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:44 gtk/rgfiltermanager.cc:201
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
 msgid "Pattern"
 msgstr "Плочка"
 
-#: common/rpackagefilter.cc:45 gtk/window_filters.glade.h:52
+#: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Раздел"
 
-#: common/rpackagefilter.cc:46
+#: common/rpackagefilter.cc:64
 msgid "Priority"
 msgstr "Приоритет"
 
-#: common/rpackagefilter.cc:47
+#: common/rpackagefilter.cc:65
 msgid "ReducedView"
 msgstr ""
 
-#: common/rpackagefilter.cc:51 gtk/window_filters.glade.h:59
-msgid "Tags"
-msgstr "Тагове"
-
-#: common/rpackagefilter.cc:195 gtk/window_preferences.glade.h:53
-msgid "Name"
-msgstr "Име"
-
-#: common/rpackagefilter.cc:196 gtk/window_find.glade.h:10
-msgid "Version"
-msgstr "Версия"
-
-#: common/rpackagefilter.cc:197 gtk/rgmainwindow.cc:2395
-#: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_main_hpaned.glade.h:26
-#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:36
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:71
-msgid "Description"
-msgstr "Описание"
-
-#: common/rpackagefilter.cc:198 gtk/window_find.glade.h:4
-#: gtk/window_filters.glade.h:29 gtk/rgfiltermanager.h:72
-msgid "Maintainer"
-msgstr "Поддържащ пакета"
-
-#: common/rpackagefilter.cc:199 gtk/window_find.glade.h:2
-msgid "Depends"
-msgstr "Зависи"
-
-#: common/rpackagefilter.cc:200 gtk/window_find.glade.h:6
-msgid "Provides"
-msgstr "Доставя"
-
-#: common/rpackagefilter.cc:201
-msgid "Conflicts"
-msgstr "Конфликти"
-
-#: common/rpackagefilter.cc:202
-msgid "Replaces"
-msgstr "Замества"
-
-#: common/rpackagefilter.cc:203
-msgid "WeakDepends"
-msgstr ""
-
-#: common/rpackagefilter.cc:204
-msgid "ReverseDepends"
-msgstr ""
-
-#: common/rpackagefilter.cc:666
+#: common/rpackagefilter.cc:633
 #, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr ""
 
-#: common/rpackagefilter.cc:693
+#: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr ""
 
-#: common/rpackagefilter.cc:763
-msgid "unkown"
-msgstr "непознат"
+#: common/rpackagelister.cc:288 common/rpackagelister.cc:294
+#: common/rpackagelister.cc:308
+#, fuzzy, c-format
+msgid "Internal error opening cache (%d). Please report."
+msgstr "Вътрешна грешка: couldn't·fork·bzip2. Моля, докладвайте."
 
-#: common/rpackagelister.cc:224
-msgid "Search Filter"
-msgstr "Филтър за Търсене"
-
-#: common/rpackagelister.cc:231 common/rpackagelister.cc:846
-#: gtk/window_filters.glade.h:24 gtk/rgmisc.cc:233
-msgid "Installed"
-msgstr "Инсталирани"
-
-#: common/rpackagelister.cc:238
-msgid "Not Installed"
-msgstr "Не са Инсталирани"
-
-#: common/rpackagelister.cc:246
-msgid "Tasks"
-msgstr "Задачи"
-
-#: common/rpackagelister.cc:252
-msgid "Reduced View"
-msgstr "СъкратеИзглед"
-
-#: common/rpackagelister.cc:260
-msgid "Upgradable"
-msgstr "За осъвременяване"
-
-#: common/rpackagelister.cc:267 gtk/window_filters.glade.h:9 gtk/rgmisc.cc:236
-msgid "Broken"
-msgstr "Развалени"
-
-#: common/rpackagelister.cc:276
-msgid "Queued Changes"
-msgstr ""
-
-#: common/rpackagelister.cc:283 gtk/window_filters.glade.h:30
-#: gtk/rgmisc.cc:237
-msgid "New in archive"
-msgstr "Нови в архива"
-
-#: common/rpackagelister.cc:291 gtk/window_filters.glade.h:50
-msgid "Residual config"
-msgstr ""
-
-#: common/rpackagelister.cc:299
-msgid "Pkg with Debconf"
-msgstr "Pkg·с·Debconf"
-
-#: common/rpackagelister.cc:306
-msgid "Obsolete or locally installed"
-msgstr "Остарели или инсталирани локално"
-
-#: common/rpackagelister.cc:431 common/rpackagelister.cc:436
-#: common/rpackagelister.cc:453
-msgid "Internal error recalculating dependency cache. Please report."
-msgstr ""
-
-#: common/rpackagelister.cc:649
+#: common/rpackagelister.cc:448
 msgid "Unable to correct dependencies"
 msgstr "Зависимостите не могат да бъдат поправени"
 
-#: common/rpackagelister.cc:651
-msgid "Unable to minimize the upgrade set"
+#: common/rpackagelister.cc:450
+msgid ""
+"Unable to mark upgrades\n"
+"Check your system for errors."
 msgstr ""
 
-#: common/rpackagelister.cc:662
+#: common/rpackagelister.cc:462
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 
-#: common/rpackagelister.cc:682
+#: common/rpackagelister.cc:480
 msgid "dist upgrade Failed"
 msgstr "dist·upgrade·е Неуспешен"
 
-#: common/rpackagelister.cc:838
-msgid "New in repository"
-msgstr "Нов в склада"
-
-#: common/rpackagelister.cc:841
-msgid "Obsolete and locally installed"
-msgstr "Остарял или инсталиран локално"
-
-#: common/rpackagelister.cc:844 gtk/window_filters.glade.h:25
-msgid "Installed and upgradable"
-msgstr "Инсталирани и с възможност за осъвременяване"
-
-#: common/rpackagelister.cc:849
-msgid "Not installed (residual config)"
-msgstr "Не са инсталирани·(residual·config)"
-
-#: common/rpackagelister.cc:851 gtk/rgmainwindow.cc:1387
-#: gtk/window_filters.glade.h:32 gtk/rgmisc.cc:231
-msgid "Not installed"
-msgstr "Не са инсталирани"
-
-#: common/rpackagelister.cc:1422
+#: common/rpackagelister.cc:1070
 msgid "Unable to lock the list directory"
 msgstr ""
 
-#: common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1092
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
 
-#: common/rpackagelister.cc:1476
-msgid ""
-"Some index files failed to download, they have been ignored, or old ones "
-"used instead."
-msgstr ""
-"Някои индекс файлове не успяха да се изтеглят, те бяха игнорирани или"
-"ня тяхмно място бяха инсталирани стари файлове."
-
-#: common/rpackagelister.cc:1505 common/rpackagelister.cc:1509
-#: gtk/rgrepositorywin.cc:329
+#: common/rpackagelister.cc:1159 common/rpackagelister.cc:1165
+#: gtk/rgrepositorywin.cc:301
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr ""
 
-#: common/rpackagelister.cc:1553
-msgid "Failed to fetch "
+#: common/rpackagelister.cc:1206
+#, fuzzy, c-format
+msgid ""
+"Failed to fetch %s\n"
+"  %s"
 msgstr "Неуспех при вземането"
 
-#: common/rpackagelister.cc:1560
-msgid "More packages failed to fetch. Not displaying.\n"
+#: common/rpackagelister.cc:1227
+msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr ""
 
-#: common/rpackagelister.cc:1581
-#, c-format
-msgid "%i of the packages could not be retrieved from the server(s).\n"
-msgstr ""
-
-#: common/rpackagelister.cc:1585
+#: common/rpackagelister.cc:1230
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Искате ли да продължите, игнорирайки тези пакети?"
 
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1237
 msgid "Unable to correct missing packages"
 msgstr "Липсващите пакети не могат да бъдат поправени"
 
-#: common/rpackagelister.cc:1656
+#: common/rpackagelister.cc:1300
 msgid "Unable to lock the download directory"
 msgstr "Директорията за изтеглянията не може да бъде заключена"
 
-#: common/rpackagelister.cc:1761
+#: common/rpackagelister.cc:1378
 #, c-format
-msgid "Line %u too long in selection file."
+msgid "Line %u too long in markings file."
 msgstr ""
 
-#: common/rpackagelister.cc:1775 common/rpackagelister.cc:1779
+#: common/rpackagelister.cc:1392 common/rpackagelister.cc:1396
 #, c-format
-msgid "Malformed line %u in selection file"
+msgid "Malformed line %u in markings file"
 msgstr ""
 
-#: common/rpackagelister.cc:1791
-msgid "Setting selections..."
+#: common/rpackagelister.cc:1408
+#, fuzzy
+msgid "Setting markings..."
 msgstr "Настройва избраните пакети..."
 
-#: common/rpmindexcopy.cc:75
-#, c-format
-msgid "Stat failed for %s"
-msgstr ""
-
-#: common/rpmindexcopy.cc:119
+#: common/rpmindexcopy.cc:116
 msgid "Internal Error: couldn't fork bzip2. Please report."
 msgstr "Вътрешна грешка: couldn't·fork·bzip2. Моля, докладвайте."
 
-#: common/rpmindexcopy.cc:139
+#: common/rpmindexcopy.cc:136
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2·не успя,·възможно е дискът ви да е пълен."
+
+#: common/rpackageview.h:89
+#, fuzzy
+msgid "Sections"
+msgstr "Раздел"
+
+#: common/rpackageview.h:99
+#, fuzzy
+msgid "Alphabetic"
+msgstr "Азбучна Дървовидна Структура"
+
+#: common/rpackageview.h:130
+msgid "Find History"
+msgstr ""
+
+#: common/rpackageview.h:173
+#, fuzzy
+msgid "Filter"
+msgstr "Филтри"
+
+#: common/rpackageview.cc:90
+msgid "New in repository"
+msgstr "Нов в склада"
+
+#: common/rpackageview.cc:94
+#, fuzzy
+msgid "Installed (obsolete)"
+msgstr "Инсталирани (заключени):"
+
+#: common/rpackageview.cc:102
+msgid "Not installed (residual config)"
+msgstr "Не са инсталирани·(residual·config)"
+
+#: common/rpackageview.cc:326
+msgid "Search Filter"
+msgstr "Филтър за Търсене"
+
+#: common/rpackageview.cc:334
+msgid "Tasks"
+msgstr "Задачи"
+
+#: common/rpackageview.cc:340
+msgid "Reduced View"
+msgstr "СъкратеИзглед"
+
+#: common/rpackageview.cc:357 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:295
+msgid "Marked Changes"
+msgstr "Избрани Промени"
+
+#: common/rpackageview.cc:366
+msgid "Pkg with Debconf"
+msgstr "Pkg·с·Debconf"
+
+#: common/rpackageview.cc:373
+#, fuzzy
+msgid "Upgradable (upstream)"
+msgstr "О_съвременява Системата"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
 msgid ""
 "<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Спиране на програмата и отказване на избраните промени?</span>"
+"<span weight=\"bold\" size=\"large\">Спиране на програмата и отказване на "
+"избраните промени?</span>"
 
 #: gtk/dialog_quit.glade.h:2
 msgid ""
-"There are still marked changes that have not been applied. They will get "
+"There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
 msgstr ""
 
@@ -674,51 +729,58 @@ msgid ""
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to choose 'Smart Upgrade' here."
 msgstr ""
-"<b>Забележка:</b> Ако осъвременявате до нова и основна версия на операционната система,"
-"тук трябва да изберете·\"Умно Осъвременяване\"."
+"<b>Забележка:</b> Ако осъвременявате до нова и основна версия на "
+"операционната система,тук трябва да изберете·\"Умно Осъвременяване\"."
 
 #: gtk/dialog_upgrade.glade.h:2
 msgid ""
-"<span weight=\"bold\" size=\"large\">Use smart upgrade method (dist-upgrade)?"
-"</span>"
+"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
+"afterwards."
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Да бъде ли използван Умния метод за осъвременяване·(dist-upgrade)?"
-"</span>"
 
-#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:32
+#: gtk/dialog_upgrade.glade.h:3
+#, fuzzy
+msgid ""
+"<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Избира изисканите промени?</span>"
+
+#: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:35
 msgid "Default Upgrade"
 msgstr "Стандартно Осъвременяване"
 
-#: gtk/dialog_upgrade.glade.h:4
+#: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr "Помни отговорът за бъдещи осъвременявания"
 
-#: gtk/dialog_upgrade.glade.h:5 gtk/window_preferences.glade.h:69
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:79
 msgid "Smart Upgrade"
 msgstr "Умно Осъвременяване"
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:7
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:7
+#: gtk/dialog_upgrade.glade.h:8
 msgid ""
-"The smart upgrade method attempts to resolve conflicts and to fulfill all "
-"dependencies of upgrades in a smart way."
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fulfill all dependencies of upgrades in a smart way."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:8
+#: gtk/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
-msgstr "Това поведение, може да бъде променено по-късно, в настройките на програмата."
+msgstr ""
+"Това поведение, може да бъде променено по-късно, в настройките на програмата."
 
 #: gtk/dialog_locales_warning.glade.h:1
 msgid ""
 "<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale "
 "settings</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Некоректни или несъвместими локални настройки</span>"
+"<span weight=\"bold\" size=\"large\">Некоректни или несъвместими локални "
+"настройки</span>"
 
 #: gtk/dialog_locales_warning.glade.h:2
 msgid ""
@@ -737,120 +799,138 @@ msgstr ""
 "\n"
 "Xlib не подържа избраниата от вас езикова среда.\n"
 "\n"
-"Моля, използвайте настройки като·\"fr_FR\"·or·\"fr_FR@euro\".·Не използвайте·"
-"настройки като·\"fr_FR.iso8859-15@euro\".\n"
+"Моля, използвайте настройки като·\"fr_FR\"·or·\"fr_FR@euro\".·Не "
+"използвайте·настройки като·\"fr_FR.iso8859-15@euro\".\n"
 "\n"
 "Свържете се с пощенския списък за коментари или помощ:\n"
 "<i>synaptic-devel@nongnu.org</i>·\n"
 "Include·the·output·of·the·\"locale\"·command·in·your·email."
 
-#: gtk/gsynaptic.cc:55
+#: gtk/gsynaptic.cc:56
 msgid "Usage: synaptic [options]\n"
 msgstr "Начин на употреба:·synaptic·[опция]\n"
 
-#: gtk/gsynaptic.cc:56
+#: gtk/gsynaptic.cc:57
 msgid "-h   This help text\n"
 msgstr "-h···Този помощен текст\n"
 
-#: gtk/gsynaptic.cc:57
+#: gtk/gsynaptic.cc:58
 msgid "-r   Open in the repository screen\n"
 msgstr "-r···Отваря екрана със склада\n"
 
-#: gtk/gsynaptic.cc:58
+#: gtk/gsynaptic.cc:59
 msgid "-f=? Give a alternative filter file\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:59
+#: gtk/gsynaptic.cc:60
 msgid "-i=? Start with the initialFilter with the number given\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:60
+#: gtk/gsynaptic.cc:61
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:120
+#: gtk/gsynaptic.cc:62
+msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:63
+msgid "--non-interactive Never prompt for user input\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:132
 msgid "You must run this program as the root user."
 msgstr "Трябва да стартирате тази програма само като root потребител."
 
-#: gtk/gsynaptic.cc:167
+#: gtk/gsynaptic.cc:172
 msgid "Synaptic Package Manager "
 msgstr "Synaptic·Мениджър на Пакети "
 
-#: gtk/rgcdscanner.cc:62
-msgid "Scanning CD-ROM..."
+#: gtk/rgcdscanner.cc:61
+#, fuzzy
+msgid "Scanning CD-ROM"
 msgstr "Сканира·CD-ROM..."
 
-#: gtk/rgcdscanner.cc:95
+#: gtk/rgcdscanner.cc:100
 msgid "Invalid disc name!"
 msgstr "Невалидно име на диска!"
 
-#: gtk/rgaboutpanel.cc:54 gtk/window_about.glade.h:5
+#: gtk/rgcdscanner.cc:111
+#, fuzzy
+msgid "Disc Label"
+msgstr "Име на диска"
+
+#: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
 msgstr "Благодарности"
 
-#: gtk/rgaboutpanel.cc:72 gtk/window_about.glade.h:4
+#: gtk/rgaboutpanel.cc:77 gtk/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr "Относно Synaptic"
 
-#: gtk/rgchangeswindow.cc:70
+#: gtk/rgchangeswindow.cc:69
 msgid "Package changes"
 msgstr "Промени в пакета"
 
-#: gtk/rgchangeswindow.cc:107 gtk/rgsummarywindow.cc:111
-#: gtk/window_filters.glade.h:62 gtk/rgmisc.cc:229
+#: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:109
 msgid "To be removed"
 msgstr "Ще бъдат премахнати"
 
-#: gtk/rgchangeswindow.cc:122 gtk/rgmisc.cc:228
+#: gtk/rgchangeswindow.cc:116
 msgid "To be downgraded"
 msgstr "Ще бъдат върнати към стара версия"
 
-#: gtk/rgchangeswindow.cc:137 gtk/rgsummarywindow.cc:125 gtk/rgmisc.cc:227
+#: gtk/rgchangeswindow.cc:129 gtk/rgsummarywindow.cc:121
 msgid "To be upgraded"
 msgstr "Ще бъдат осъвременени"
 
-#: gtk/rgchangeswindow.cc:151 gtk/rgsummarywindow.cc:139 gtk/rgmisc.cc:226
+#: gtk/rgchangeswindow.cc:141 gtk/rgsummarywindow.cc:133
 msgid "To be installed"
 msgstr "Ще бъдат инсталирани"
 
-#: gtk/rgchangeswindow.cc:165 gtk/window_filters.glade.h:61
+#: gtk/rgchangeswindow.cc:153 gtk/rgsummarywindow.cc:145
+#, fuzzy
+msgid "To be re-installed"
+msgstr "Ще бъдат инсталирани"
+
+#: gtk/rgchangeswindow.cc:164
 msgid "To be kept"
 msgstr "Няма да бъдат променени"
 
-#: gtk/rgpreferenceswindow.cc:202 gtk/rgzvtinstallprogress.cc:109
-#: gtk/rgmainwindow.cc:3605
+#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1408
 msgid "An error occurred while saving configurations."
 msgstr "Появи се грешка докато се запазваха конфигурациите."
 
-#: gtk/rgpreferenceswindow.cc:245
+#: gtk/rgpreferenceswindow.cc:267
 msgid "Choose font"
 msgstr "Избира шрифт"
 
-#: gtk/rgpreferenceswindow.cc:501
+#: gtk/rgpreferenceswindow.cc:550
 msgid "Color selection"
 msgstr "Избор на цветове"
 
-#: gtk/rgpreferenceswindow.cc:703
+#: gtk/rgpreferenceswindow.cc:747
 msgid "ignore"
 msgstr "игнорира"
 
-#: gtk/rgpreferenceswindow.cc:748 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:793 gtk/window_preferences.glade.h:74
 msgid "Preferences"
 msgstr "Настройки"
 
 #: gtk/rgfetchprogress.cc:64
-msgid "Downloading Files..."
+#, fuzzy
+msgid "Downloading Files"
 msgstr "Изтегля Файлове..."
 
-#: gtk/rgfetchprogress.cc:95
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:759
 msgid "Size"
 msgstr "Размер"
 
-#: gtk/rgfetchprogress.cc:102 gtk/rgrepositorywin.cc:154
+#: gtk/rgfetchprogress.cc:102 gtk/rgrepositorywin.cc:156
 msgid "URI"
 msgstr "Адрес"
 
-#: gtk/rgfetchprogress.cc:129
+#: gtk/rgfetchprogress.cc:128
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -861,52 +941,45 @@ msgstr ""
 "%s\n"
 "в устройство·%s"
 
-#: gtk/rgfetchprogress.cc:225
-#, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
+#: gtk/rgfetchprogress.cc:230
+#, fuzzy, c-format
+msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Изтеглени·%li·от·%li·файла·с·%s/s·-·%s·оставащи"
 
-#: gtk/rgfetchprogress.cc:291
+#: gtk/rgfetchprogress.cc:235
+#, fuzzy, c-format
+msgid "Downloading file %li of %li"
+msgstr "Изтегля Файлове..."
+
+#: gtk/rgfetchprogress.cc:300
 msgid "Queued"
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:294
+#: gtk/rgfetchprogress.cc:303
 msgid "Done"
 msgstr "Изтеглено"
 
-#: gtk/rgfetchprogress.cc:297
+#: gtk/rgfetchprogress.cc:306
 msgid "Hit"
 msgstr "Попадение"
 
-#: gtk/rgfetchprogress.cc:300
+#: gtk/rgfetchprogress.cc:309
 msgid "Failed"
 msgstr "Неуспешни"
 
-#: gtk/rgfiltermanager.cc:47 gtk/window_filters.glade.h:19
+#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:14
 msgid "Filters"
 msgstr "Филтри"
 
-#: gtk/rgfiltermanager.cc:187
+#: gtk/rgfiltermanager.cc:171
 msgid "Field"
 msgstr "Поле"
 
-#: gtk/rgfiltermanager.cc:193
+#: gtk/rgfiltermanager.cc:178
 msgid "Operator"
 msgstr "Оператор"
 
-#: gtk/rgfiltermanager.cc:220
-msgid "Available Tags"
-msgstr "Свободни Тагове"
-
-#: gtk/rgfiltermanager.cc:233
-msgid "Included Tags"
-msgstr "Влючени Тагове"
-
-#: gtk/rgfiltermanager.cc:245
-msgid "Excluded Tags"
-msgstr "Изключени Тагове"
-
-#: gtk/rgfiltermanager.cc:1033
+#: gtk/rgfiltermanager.cc:747
 #, c-format
 msgid "New Filter %i"
 msgstr "Нов Филтър·%i"
@@ -915,7 +988,7 @@ msgstr "Нов Филтър·%i"
 msgid "Package Manager output"
 msgstr "Изход на Пакетния Мениджър"
 
-#: gtk/rginstallprogress.cc:82
+#: gtk/rginstallprogress.cc:81
 #, c-format
 msgid ""
 "\n"
@@ -926,7 +999,7 @@ msgstr ""
 "Докато се инсталира пакет %s:\n"
 "\n"
 
-#: gtk/rginstallprogress.cc:86
+#: gtk/rginstallprogress.cc:85
 msgid ""
 "\n"
 "While preparing for installation:\n"
@@ -936,66 +1009,208 @@ msgstr ""
 "Докато се подготвя за инсталация:\n"
 "\n"
 
-#: gtk/rginstallprogress.cc:263 gtk/rgzvtinstallprogress.cc:181
-#: gtk/window_zvtinstallprogress.glade.h:2
-msgid "Applying Changes..."
+#: gtk/rginstallprogress.cc:268
+#, fuzzy
+msgid "Applying Changes"
 msgstr "Прилага Промените..."
 
-#: gtk/rgzvtinstallprogress.cc:83
-msgid "<i>Running...</i>"
-msgstr "<i>Стартиран...</i>"
-
-#: gtk/rgzvtinstallprogress.cc:91
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"Всички промени са приложени успешно.·Вече можете да затворите този прозорец ·"
-
-#: gtk/rgzvtinstallprogress.cc:93
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"Не всички промени са извършени успешно!·Разгледайте този буфер и разберете какво се е объркало ·"
-
-#: gtk/rgzvtinstallprogress.cc:95
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"Всички пакети от текущото устройство са инсталирани успешно. За да "
-"продължите инсталацията от следващото устройство - затворете този прозорец."
-
-#: gtk/rgzvtinstallprogress.cc:143
-msgid "<i>Finished</i>"
-msgstr "<i>Завършени</i>"
-
-#: gtk/rgzvtinstallprogress.cc:152
-msgid "<i>Can't close while running</i>"
-msgstr "<i>Не може да бъде затворен докато работи</i>"
-
-#: gtk/rgmainwindow.cc:77
+#: gtk/rgmainwindow.cc:76
 msgid "Normal"
 msgstr "Обикновен"
 
-#: gtk/rgmainwindow.cc:78
+#: gtk/rgmainwindow.cc:77
 msgid "Critical"
 msgstr "Критичен"
 
-#: gtk/rgmainwindow.cc:79
+#: gtk/rgmainwindow.cc:78
 msgid "Security"
 msgstr "Сигурност"
 
-#: gtk/rgmainwindow.cc:290
+#: gtk/rgmainwindow.cc:165
+msgid "All"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:345 gtk/window_details.glade.h:21
+msgid "No package is selected.\n"
+msgstr "Няма избрани пакети.\n"
+
+#: gtk/rgmainwindow.cc:689
+msgid "Package"
+msgstr "Пакет"
+
+#: gtk/rgmainwindow.cc:714
+msgid "Installed Version"
+msgstr "Инсталирана Версия"
+
+#: gtk/rgmainwindow.cc:733
+msgid "Latest Version"
+msgstr "Последна Версия"
+
+#: gtk/rgmainwindow.cc:988
+#, fuzzy
+msgid "Refresh the list of known packages"
+msgstr "Филтрира списъкът на показаните пакети"
+
+#: gtk/rgmainwindow.cc:992
+msgid "Mark all possible upgrades"
+msgstr "Избира всички възможни осъвременявания"
+
+#: gtk/rgmainwindow.cc:996 gtk/window_summary.glade.h:5
+msgid "Apply all marked changes"
+msgstr "Прилага всички избрани промени"
+
+#: gtk/rgmainwindow.cc:1156
+msgid "Unmark"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1164
+#, fuzzy
+msgid "Mark for Installation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/rgmainwindow.cc:1172
+#, fuzzy
+msgid "Mark for Reinstallation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/rgmainwindow.cc:1181
+#, fuzzy
+msgid "Mark for Upgrade"
+msgstr "Умно Осъвременяване"
+
+#: gtk/rgmainwindow.cc:1189
+msgid "Mark for Removal"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1198
+msgid "Mark for Complete Removal"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1210
+msgid "Remove Including Orphaned Dependencies"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1222
+#, fuzzy
+msgid "Hold Current Version"
+msgstr "Заключва Текущата Версия и Състояние"
+
+#: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
+#: gtk/window_filters.glade.h:43
+msgid "Properties"
+msgstr "Настройки"
+
+#: gtk/rgmainwindow.cc:1243
+msgid "Mark Recommended for Installation"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1247
+msgid "Mark Suggested for Installation"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1298
+msgid ""
+"Removing this package may render the system unusable.\n"
+"Are you sure you want to do that?"
+msgstr ""
+"Премахването на този пакет може де направи системата нестабилна.\n"
+"Сигурни ли сте че искате да направите това?"
+
+#: gtk/rgmainwindow.cc:1337
+#, c-format
+msgid ""
+"%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
+"remove; %s will be freed"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1343
+#, c-format
+msgid ""
+"%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
+"remove; %s will be used"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1349
+#, c-format
+msgid ""
+"%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
+"remove"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1425
+#, fuzzy, c-format
+msgid ""
+"You have %d broken package on your system!\n"
+"\n"
+"Use the \"Broken\" filter to locate it."
+msgid_plural ""
+"You have %i broken packages on your system!\n"
+"\n"
+"Use the \"Broken\" filter to locate them."
+msgstr[0] ""
+"Имате·%d·развален пакет на вашата система!\n"
+"\n"
+"Използвайте филтърът \"Broken\", за да го намерите.Имате %i развалени пакета "
+"на вашата система!\n"
+"\n"
+"Използвайте филтъра \"Broken\" за да ги намерите."
+msgstr[1] ""
+"Имате·%d·развален пакет на вашата система!\n"
+"\n"
+"Използвайте филтърът \"Broken\", за да го намерите.Имате %i развалени пакета "
+"на вашата система!\n"
+"\n"
+"Използвайте филтъра \"Broken\" за да ги намерите."
+
+#: gtk/rgmainwindow.cc:1662
+msgid "Do you want to add another CD-ROM?"
+msgstr "Искате ли да добавите друг CD-ROM?"
+
+#: gtk/rgmainwindow.cc:1685 gtk/rgmainwindow.cc:2239 gtk/rgmainwindow.cc:2318
+#: gtk/rgmainwindow.cc:2478
+#, c-format
+msgid "Can't read %s"
+msgstr "Не може да бъде прочетен·%s"
+
+#: gtk/rgmainwindow.cc:1701
+msgid "Open changes"
+msgstr "Отваря Промени"
+
+#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:1795 gtk/rgmainwindow.cc:2172
+#: gtk/rgmainwindow.cc:2291 gtk/rgmainwindow.cc:2455
+#, c-format
+msgid "Can't write %s"
+msgstr "Не мога да запиша %s"
+
+#: gtk/rgmainwindow.cc:1751
+msgid "Save changes"
+msgstr "Запазва промените"
+
+#: gtk/rgmainwindow.cc:1768
+msgid "Save full state, not only changes"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:1884
+#, fuzzy
+msgid "Searching..."
+msgstr "Подготвяне..."
+
+#: gtk/rgmainwindow.cc:1896
+#, fuzzy, c-format
+msgid "Found %i packages"
+msgstr "Конфликтни пакети"
+
+#: gtk/rgmainwindow.cc:1925
 msgid "Starting help viewer..."
 msgstr "Стартира програмата за помощ..."
 
-#: gtk/rgmainwindow.cc:305
+#: gtk/rgmainwindow.cc:1942
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1007,300 +1222,131 @@ msgid ""
 msgstr ""
 "Не е инсталиран софтуер за преглед на помощта!\n"
 "\n"
-"Трябва ви или програмата за помощ на·GNOME·-·'yelp',·браузърът·'konqueror' или·"
-"браузърът 'mozilla', за да прегледате ръководството на synaptic.\n"
+"Трябва ви или програмата за помощ на·GNOME·-·'yelp',·браузърът·'konqueror' "
+"или·браузърът 'mozilla', за да прегледате ръководството на synaptic.\n"
 "\n"
-"Можете да пробвате да отворите ръководството с командата·'man·synaptic' от командния"
-"интерпретатор или да прегледате html версията, намираща се в папката 'synaptic/html'."
+"Можете да пробвате да отворите ръководството с командата·'man·synaptic' от "
+"команднияинтерпретатор или да прегледате html версията, намираща се в "
+"папката 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:550
+#: gtk/rgmainwindow.cc:2078
+#, fuzzy
 msgid ""
-"Could not start the configuration tool!\n"
+"Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 "Инструментът за настройки на може да бъде стартиран\n"
 "Трябва да инсталирате пакетът·'libgnome2-perl'."
 
-#: gtk/rgmainwindow.cc:556
+#: gtk/rgmainwindow.cc:2084
 msgid "Starting package configuration tool..."
 msgstr "Стартиране на инструментът за настройки..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:568
+#: gtk/rgmainwindow.cc:2096
 msgid "Starting package documentation viewer..."
 msgstr "Стартиране на пакетът за преглед на документацията..."
 
-#: gtk/rgmainwindow.cc:680
-msgid "Retrieving Index Files..."
-msgstr "Получава Индекс Файловете..."
-
-#: gtk/rgmainwindow.cc:682
-msgid "Refreshing package list..."
-msgstr "Презарежда списъкът с пакетите..."
-
-#: gtk/rgmainwindow.cc:692 gtk/rgmainwindow.cc:893 gtk/rgmainwindow.cc:1526
-#: gtk/rgmainwindow.cc:2036 gtk/rgmainwindow.cc:2195
-#, c-format
-msgid "Can't write %s"
-msgstr "Не мога да запиша %s"
-
-#: gtk/rgmainwindow.cc:715 gtk/rgmainwindow.cc:961 gtk/rgmainwindow.cc:1551
-#: gtk/rgmainwindow.cc:1988
-#, c-format
-msgid "Can't read %s"
-msgstr "Не може да бъде прочетен·%s"
-
-#: gtk/rgmainwindow.cc:783
-msgid "Failed to resolve dependency problems!"
-msgstr "Неуспех при решаването на проблемите със зависимостите!"
-
-#: gtk/rgmainwindow.cc:785
-msgid "Successfully fixed dependency problems"
-msgstr "Проблемите със зависимостите са поправени успешно"
-
-#: gtk/rgmainwindow.cc:800
-msgid ""
-"Could not upgrade the system!\n"
-"There are broken packages. Fix broken packages at first."
-msgstr ""
-
-#: gtk/rgmainwindow.cc:827
-msgid "Marking all available upgrades..."
-msgstr "Избира всички налични пакети за осъвременяване..."
-
-#: gtk/rgmainwindow.cc:839
-msgid "Successfully marked all available upgrades"
-msgstr "Всички налични овъвременявания са избрани успешно"
-
-#: gtk/rgmainwindow.cc:841
-msgid "Failed to mark all available upgrades!"
-msgstr "Неуспех при избирането на всички налични пакети за осъвременяване!"
-
-#: gtk/rgmainwindow.cc:860
+#: gtk/rgmainwindow.cc:2139
+#, fuzzy
 msgid ""
 "Could not apply changes!\n"
-"There are broken packages. Fix broken packages at first."
+"Fix broken packages first."
 msgstr ""
 "Промените не могат да бъдат приложени!\n"
 "Има развалени пакети.·Първо поправете развалените пакети."
 
-#: gtk/rgmainwindow.cc:880
+#: gtk/rgmainwindow.cc:2158
 msgid "Applying marked changes. This may take a while..."
 msgstr "Прилагане избраните промени. Това може да отнеме известно време..."
 
-#: gtk/rgmainwindow.cc:884
-msgid "Retrieving Package Files..."
-msgstr "Получаване на Пакетите..."
+#: gtk/rgmainwindow.cc:2162
+#, fuzzy
+msgid "Downloading Package Files"
+msgstr "Изтегля само пакетни файлове"
 
-#: gtk/rgmainwindow.cc:943
+#: gtk/rgmainwindow.cc:2222
 msgid "Do you want to quit Synaptic?"
 msgstr "Искате ли да спрете Synaptic?"
 
-#: gtk/rgmainwindow.cc:988 gtk/rgmainwindow.cc:1001
-msgid "N/A"
-msgstr "Няма"
+#: gtk/rgmainwindow.cc:2278
+#, fuzzy
+msgid "Downloading Index Files"
+msgstr "Изтегля Файлове..."
 
-#: gtk/rgmainwindow.cc:1416 gtk/window_main_hpaned.glade.h:39
-#: gtk/window_main_vpaned.glade.h:41
-msgid "No package is selected.\n"
-msgstr "Няма избрани пакети.\n"
+#: gtk/rgmainwindow.cc:2280
+msgid "Refreshing package list..."
+msgstr "Презарежда списъкът с пакетите..."
 
-#: gtk/rgmainwindow.cc:1438
-msgid "_Downgrade"
-msgstr "_Връща версията"
+#: gtk/rgmainwindow.cc:2343
+msgid "Failed to resolve dependency problems!"
+msgstr "Неуспех при решаването на проблемите със зависимостите!"
 
-#: gtk/rgmainwindow.cc:1441 gtk/window_main_hpaned.glade.h:84
-#: gtk/window_main_vpaned.glade.h:85
-msgid "_Install"
-msgstr "_Инсталира"
+#: gtk/rgmainwindow.cc:2345
+msgid "Successfully fixed dependency problems"
+msgstr "Проблемите със зависимостите са поправени успешно"
 
-#: gtk/rgmainwindow.cc:1444 gtk/window_main_hpaned.glade.h:102
-#: gtk/window_main_vpaned.glade.h:103
-msgid "_Upgrade"
-msgstr "_Осъвременява"
-
-#. standard header in case the installing fails
-#: gtk/rgmainwindow.cc:1770
+#: gtk/rgmainwindow.cc:2361
+#, fuzzy
 msgid ""
-"Some packages could not be installed.\n"
-"\n"
-"The following packages have unmet dependencies:\n"
+"Could not upgrade the system!\n"
+"Fix broken packages first."
 msgstr ""
-"Някои пакети не могат да бъдат инсталирани.\n"
-"\n"
-"Следните пакети имат нерешени зависимости:\n"
+"Промените не могат да бъдат приложени!\n"
+"Има развалени пакети.·Първо поправете развалените пакети."
 
-#: gtk/rgmainwindow.cc:2005
-msgid "Open changes"
-msgstr "Отваря Промени"
+#: gtk/rgmainwindow.cc:2402
+msgid "Marking all available upgrades..."
+msgstr "Избира всички налични пакети за осъвременяване..."
 
-#: gtk/rgmainwindow.cc:2212
-msgid "Save changes"
-msgstr "Запазва промените"
+#: gtk/rgmainwindow.cc:2414
+#, fuzzy
+msgid "Successfully marked available upgrades"
+msgstr "Всички налични овъвременявания са избрани успешно"
 
-#: gtk/rgmainwindow.cc:2228
-msgid "Save full state, not only changes"
-msgstr ""
+#: gtk/rgmainwindow.cc:2416
+msgid "Failed to mark all available upgrades!"
+msgstr "Неуспех при избирането на всички налични пакети за осъвременяване!"
 
-#: gtk/rgmainwindow.cc:2313
-msgid "Package"
-msgstr "Пакет"
-
-#: gtk/rgmainwindow.cc:2336
-msgid "Installed Version"
-msgstr "Инсталирана Версия"
-
-#: gtk/rgmainwindow.cc:2352
-msgid "Latest Version"
-msgstr "Последна Версия"
-
-#: gtk/rgmainwindow.cc:2378
-msgid "Required Space"
-msgstr "Дисково Пространство"
-
-#: gtk/rgmainwindow.cc:2631
-msgid "Update the list of available packages"
-msgstr "Осъвременява списъкът на наличните пакети"
-
-#: gtk/rgmainwindow.cc:2635
-msgid "Mark all possible upgrades"
-msgstr "Избира всички възможни осъвременявания"
-
-#: gtk/rgmainwindow.cc:2639
-msgid "Apply all marked changes"
-msgstr "Прилага всички избрани промени"
-
-#: gtk/rgmainwindow.cc:3084
-msgid "No Changes"
-msgstr "Без Промени"
-
-#: gtk/rgmainwindow.cc:3092
-msgid "Install"
-msgstr "Инсталира"
-
-#: gtk/rgmainwindow.cc:3100
-msgid "Upgrade"
-msgstr "Осъвременява"
-
-#: gtk/rgmainwindow.cc:3106 gtk/rgvendorswindow.cc:136
-msgid "Remove"
-msgstr "Премахва"
-
-#: gtk/rgmainwindow.cc:3114
-msgid "Remove Including Configuration"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:3120
-msgid "Remove Including Orphaned Dependencies"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:3129
-msgid "Lock Current Version and Status"
-msgstr "Заключва Текущата Версия и Състояние"
-
-#: gtk/rgmainwindow.cc:3327
-msgid "Do you want to add another CD-ROM?"
-msgstr "Искате ли да добавите друг CD-ROM?"
-
-#: gtk/rgmainwindow.cc:3356
-msgid ""
-"Removing this package may render the system unusable.\n"
-"Are you sure you want to do that?"
-msgstr ""
-"Премахването на този пакет може де направи системата нестабилна.\n"
-"Сигурни ли сте че искате да направите това?"
-
-#: gtk/rgmainwindow.cc:3515
-#, c-format
-msgid ""
-"%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
-"remove; %s will be freed"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:3519
-#, c-format
-msgid ""
-"%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
-"remove; %s will be used"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:3548 gtk/window_main_hpaned.glade.h:19
-#: gtk/window_main_vpaned.glade.h:20
-msgid "All Packages"
-msgstr "Всички Пакети"
-
-#: gtk/rgmainwindow.cc:3629
-msgid ""
-"The debtags database is not installed\n"
-"\n"
-"Please call \"debtags update\" in a shell to get the database\n"
-"\n"
-"Sorry for this inconvenience, it will go away in one of the next versions "
-"(patches are welcome)!"
-msgstr ""
-"Базата данни·debtags·не е инсталирана\n"
-"\n"
-"Моля, напишете·\"debtags·update\"·в командния интерпретатор, за да я инсталирате\n"
-"\n"
-"Извиняваме се за това неудобство, то ще бъде премахнато в някоя от следващите версии·"
-"(поправките са добре дошли)!"
-
-#: gtk/rgmainwindow.cc:3663
-#, c-format
-msgid ""
-"You have %d broken package on your system!\n"
-"\n"
-"Use the \"Broken\" filter to locate it."
-"You have %i broken packages on your system!\n"
-"\n"
-"Use the \"Broken\" filter to locate them."
-msgstr ""
-"Имате·%d·развален пакет на вашата система!\n"
-"\n"
-"Използвайте филтърът \"Broken\", за да го намерите."
-"Имате %i развалени пакета на вашата система!\n"
-"\n"
-"Използвайте филтъра \"Broken\" за да ги намерите."
-
-#: gtk/rgrepositorywin.cc:101 gtk/window_repositories.glade.h:4
+#: gtk/rgrepositorywin.cc:100 gtk/window_repositories.glade.h:4
 msgid "Repositories"
 msgstr "Складове"
 
-#: gtk/rgrepositorywin.cc:126
+#: gtk/rgrepositorywin.cc:123
 msgid "Enabled"
 msgstr "Разрешен"
 
-#: gtk/rgrepositorywin.cc:136
+#: gtk/rgrepositorywin.cc:133
 msgid "Type"
 msgstr "Тип"
 
-#: gtk/rgrepositorywin.cc:145 gtk/rgvendorswindow.cc:62
+#: gtk/rgrepositorywin.cc:143 gtk/rgvendorswindow.cc:62
 #: gtk/rgvendorswindow.cc:80
 msgid "Vendor"
 msgstr "Производител"
 
-#: gtk/rgrepositorywin.cc:163
+#: gtk/rgrepositorywin.cc:166
 msgid "Distribution"
 msgstr "Дистрибуция"
 
-#: gtk/rgrepositorywin.cc:172
+#: gtk/rgrepositorywin.cc:177
 msgid "Section(s)"
 msgstr "Раздел(и)"
 
-#: gtk/rgrepositorywin.cc:259 gtk/rgrepositorywin.cc:381
+#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(няма производител)"
 
-#: gtk/rgrepositorywin.cc:336
+#: gtk/rgrepositorywin.cc:308
 msgid "Cannot read vendors.list file"
 msgstr "Файлът vendors.list не може да бъде прочетен"
 
-#: gtk/rgrepositorywin.cc:497
+#: gtk/rgrepositorywin.cc:473
 msgid "Unknown source type"
 msgstr "Неизвестен тип източник"
 
-#: gtk/rgsummarywindow.cc:81
+#: gtk/rgsummarywindow.cc:83
 msgid "(ESSENTIAL) to be removed"
 msgstr "(НЕОБХОДИМ)·да бъде премахнат"
 
@@ -1308,89 +1354,111 @@ msgstr "(НЕОБХОДИМ)·да бъде премахнат"
 msgid "To be DOWNGRADED"
 msgstr "Да бъдат ВЪРНАТИ КЪМ ПО-СТАРА ВЕРСИЯ"
 
-#: gtk/rgsummarywindow.cc:153
+#: gtk/rgsummarywindow.cc:160
 msgid "To be kept back"
 msgstr "Няма да бъдат променени"
 
-#: gtk/rgsummarywindow.cc:209
+#: gtk/rgsummarywindow.cc:211
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>необходим</b>)ще бъде премахнат\n"
 
-#: gtk/rgsummarywindow.cc:216
+#: gtk/rgsummarywindow.cc:220
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> ще бъде <b>с по-стара версия</b>\n"
 
-#: gtk/rgsummarywindow.cc:223
+#: gtk/rgsummarywindow.cc:228
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b>ще бъде премахнат\n"
 
-#: gtk/rgsummarywindow.cc:230
+#: gtk/rgsummarywindow.cc:237
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (версия <i>%s</i>) ще бъде осъвременен до версия <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:237
+#: gtk/rgsummarywindow.cc:248
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (версия <i>%s</i>)ще бъде инсталиран\n"
 
 #: gtk/rgsummarywindow.cc:256
+#, fuzzy, c-format
+msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
+msgstr "<b>%s</b> (версия <i>%s</i>)ще бъде инсталиран\n"
+
+#: gtk/rgsummarywindow.cc:275
 msgid "Summary"
 msgstr "Резюме"
 
-#: gtk/rgsummarywindow.cc:273
-msgid "Marked Changes"
-msgstr "Избрани Промени"
-
-#: gtk/rgsummarywindow.cc:314
-#, c-format
+#: gtk/rgsummarywindow.cc:336
+#, fuzzy, c-format
 msgid "%d package is locked\n"
-msgstr "Пакетът %d·е заключен\n"
+msgid_plural "%d packages are locked\n"
+msgstr[0] "Пакетът %d·е заключен\n"
+msgstr[1] "Пакетът %d·е заключен\n"
 
-#: gtk/rgsummarywindow.cc:320
-#, c-format
+#: gtk/rgsummarywindow.cc:343
+#, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
-msgstr "%d·ще бъдат задържани и няма да бъдат осъвременени\n"
+msgid_plural "%d packages will be held back and not upgraded\n"
+msgstr[0] "%d·ще бъдат задържани и няма да бъдат осъвременени\n"
+msgstr[1] "%d·ще бъдат задържани и няма да бъдат осъвременени\n"
 
-#: gtk/rgsummarywindow.cc:327
+#: gtk/rgsummarywindow.cc:350
 #, c-format
 msgid "%d new package will be installed\n"
-msgstr ""
+msgid_plural "%d new packages will be installed\n"
+msgstr[0] ""
+msgstr[1] ""
 
-#: gtk/rgsummarywindow.cc:334
-#, c-format
+#: gtk/rgsummarywindow.cc:357
+#, fuzzy, c-format
+msgid "%d new package will be re-installed\n"
+msgid_plural "%d new packages will be re-installed\n"
+msgstr[0] "%d·пакета ще бъдат осъвременени\n"
+msgstr[1] "%d·пакета ще бъдат осъвременени\n"
+
+#: gtk/rgsummarywindow.cc:364
+#, fuzzy, c-format
 msgid "%d package will be upgraded\n"
-msgstr "%d·пакета ще бъдат осъвременени\n"
+msgid_plural "%d packages will be upgraded\n"
+msgstr[0] "%d·пакета ще бъдат осъвременени\n"
+msgstr[1] "%d·пакета ще бъдат осъвременени\n"
 
-#: gtk/rgsummarywindow.cc:341
+#: gtk/rgsummarywindow.cc:371
 #, c-format
 msgid "%d package will be removed\n"
-msgstr ""
+msgid_plural "%d packages will be removed\n"
+msgstr[0] ""
+msgstr[1] ""
 
-#: gtk/rgsummarywindow.cc:348
+#: gtk/rgsummarywindow.cc:378
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
-msgstr ""
+msgid_plural "%d packages will be <b>downgraded</b>\n"
+msgstr[0] ""
+msgstr[1] ""
 
-#: gtk/rgsummarywindow.cc:355
-#, c-format
+#: gtk/rgsummarywindow.cc:386
+#, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
-msgstr "<b>Внимание:</b>необходимият пакет·%d·ще бъде премахнат\n"
+msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
+msgstr[0] "<b>Внимание:</b>необходимият пакет·%d·ще бъде премахнат\n"
+msgstr[1] "<b>Внимание:</b>необходимият пакет·%d·ще бъде премахнат\n"
 
-#: gtk/rgsummarywindow.cc:368
+#: gtk/rgsummarywindow.cc:398
 #, c-format
 msgid "%s of extra space will be used"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:371
+#: gtk/rgsummarywindow.cc:401
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:377
+#: gtk/rgsummarywindow.cc:407
 #, c-format
 msgid ""
 "\n"
@@ -1399,7 +1467,7 @@ msgstr ""
 "\n"
 "%s·трябва да бъде изтеглен"
 
-#: gtk/rgsummarywindow.cc:401
+#: gtk/rgsummarywindow.cc:432
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -1421,17 +1489,240 @@ msgstr "ОК"
 msgid "Add"
 msgstr "Добавя"
 
+#: gtk/rgvendorswindow.cc:136
+msgid "Remove"
+msgstr "Премахва"
+
 #: gtk/rgvendorswindow.cc:140
 msgid "Cancel"
 msgstr "Отказва"
 
-#: gtk/rgfindwindow.cc:117
+#: gtk/rgfindwindow.cc:111 gtk/window_main.glade.h:4
 msgid "Find"
 msgstr "Намира"
 
+#: gtk/window_main.glade.h:1
+#, fuzzy
+msgid "A_pply Marked Changes"
+msgstr "_Прилага Избраните Промени"
+
+#: gtk/window_main.glade.h:2
+#, fuzzy
+msgid "Alphabet"
+msgstr "Азбучна Дървовидна Структура"
+
+#: gtk/window_main.glade.h:3
+msgid "Apply"
+msgstr ""
+
+#: gtk/window_main.glade.h:5
+#, fuzzy
+msgid "Mark All Up_grades..."
+msgstr "Избира всички налични пакети за осъвременяване..."
+
+#: gtk/window_main.glade.h:6
+#, fuzzy
+msgid "Mark All Upgrades"
+msgstr "Избира всички възможни осъвременявания"
+
+#: gtk/window_main.glade.h:7
+msgid "Mark for Co_mplete Removal"
+msgstr ""
+
+#: gtk/window_main.glade.h:8
+#, fuzzy
+msgid "Mark for R_einstallation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/window_main.glade.h:9
+#, fuzzy
+msgid "Mark for _Installation"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/window_main.glade.h:10
+msgid "Mark for _Removal"
+msgstr ""
+
+#: gtk/window_main.glade.h:11
+#, fuzzy
+msgid "Mark for _Upgrade"
+msgstr "Умно Осъвременяване"
+
+#: gtk/window_main.glade.h:12
+#, fuzzy
+msgid "No package is selected."
+msgstr "Няма избрани пакети.\n"
+
+#: gtk/window_main.glade.h:13
+msgid "Pac_kage"
+msgstr "Па_кет"
+
+#: gtk/window_main.glade.h:14
+msgid "Prefere_nces"
+msgstr "Нас_тройки"
+
+#: gtk/window_main.glade.h:16
+#, fuzzy
+msgid "Refresh"
+msgstr "_Презарежда"
+
+#: gtk/window_main.glade.h:17
+#, fuzzy
+msgid "Release"
+msgstr "Замества"
+
+#: gtk/window_main.glade.h:18
+#, fuzzy
+msgid "Save Markings _As..."
+msgstr "Запазва Избраните _Като"
+
+#: gtk/window_main.glade.h:20
+msgid "Set _Internal Option..."
+msgstr "Постявя _Вътрешна Опция..."
+
+#: gtk/window_main.glade.h:22
+msgid "Synaptic"
+msgstr "Synaptic"
+
+#: gtk/window_main.glade.h:23
+msgid "Text Be_side Icons"
+msgstr "Текст до иконите"
+
+#: gtk/window_main.glade.h:24
+msgid "Text _Below Icons"
+msgstr "Текст·_Под·Иконите"
+
+#: gtk/window_main.glade.h:25
+#, fuzzy
+msgid "U_nmark"
+msgstr "_Маркира"
+
+#: gtk/window_main.glade.h:26
+msgid "U_nmark All"
+msgstr ""
+
+#: gtk/window_main.glade.h:27
+msgid "_About"
+msgstr "_Относно"
+
+#: gtk/window_main.glade.h:28
+#, fuzzy
+msgid "_Add CD-ROM..."
+msgstr "Д_обавя CD-ROM..."
+
+#: gtk/window_main.glade.h:29
+#, fuzzy
+msgid "_Browse Documentation"
+msgstr "_Документация"
+
+#: gtk/window_main.glade.h:30
+#, fuzzy
+msgid "_Configure..."
+msgstr "_Конфигурира"
+
+#: gtk/window_main.glade.h:31
+msgid "_Contents"
+msgstr "_Съдържания"
+
+#: gtk/window_main.glade.h:32
+#, fuzzy
+msgid "_Download Changelog"
+msgstr "Изтегля само пакетни файлове"
+
+#: gtk/window_main.glade.h:33
+#, fuzzy
+msgid "_Edit"
+msgstr "Редактори"
+
+#: gtk/window_main.glade.h:34
+msgid "_File"
+msgstr "_Файл"
+
+#: gtk/window_main.glade.h:35
+#, fuzzy
+msgid "_Filters"
+msgstr "Филтри"
+
+#: gtk/window_main.glade.h:36
+msgid "_Find..."
+msgstr "_Търсeнe..."
+
+#: gtk/window_main.glade.h:37
+msgid "_Fix Broken Packages"
+msgstr "_Поправя Развалените Пакети"
+
+#: gtk/window_main.glade.h:38
+msgid "_Help"
+msgstr "_Помощ"
+
+#: gtk/window_main.glade.h:39
+msgid "_Hide"
+msgstr "_Скрива"
+
+#: gtk/window_main.glade.h:40
+msgid "_Icon Legend"
+msgstr "_Легенда на Иконите"
+
+#: gtk/window_main.glade.h:41
+msgid "_Icons Only"
+msgstr "_Само Икони"
+
+#: gtk/window_main.glade.h:42
+msgid "_Lock Current Status and Version"
+msgstr "_Заключва Текущото Състояние и Версия"
+
+#: gtk/window_main.glade.h:43
+msgid "_Quick Introduction"
+msgstr "_Бързо Въведение"
+
+#: gtk/window_main.glade.h:44
+msgid "_Quit"
+msgstr "_Спира програмата"
+
+#: gtk/window_main.glade.h:45
+#, fuzzy
+msgid "_Read Markings..."
+msgstr "_Прочита Избраните Пакети..."
+
+#: gtk/window_main.glade.h:46
+msgid "_Redo"
+msgstr "_Повтаря"
+
+#: gtk/window_main.glade.h:47
+msgid "_Refresh Package List"
+msgstr "_Презарежда Списъкът с Пакетите"
+
+#: gtk/window_main.glade.h:48
+msgid "_Repositories"
+msgstr "_Склад"
+
+#: gtk/window_main.glade.h:49
+#, fuzzy
+msgid "_Save Markings"
+msgstr "Запазва промените"
+
+#: gtk/window_main.glade.h:50
+msgid "_Text Only"
+msgstr "_Само Текст"
+
+#: gtk/window_main.glade.h:51
+msgid "_Toolbar"
+msgstr "_Лента с Инструменти"
+
+#: gtk/window_main.glade.h:52
+msgid "_Undo"
+msgstr "_Отказва последното действие"
+
 #: gtk/window_about.glade.h:1
+#, fuzzy
 msgid ""
-"<span size=\"small\">Copyright (c) 2001-2004 Conectiva S/A \n"
+"<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2004 Michael Vogt</span>"
 msgstr ""
 "<span size=\"small\">Запазени права·(c)·2001-2004·Conectiva·S/A·\n"
@@ -1450,13 +1741,15 @@ msgid "Documented by"
 msgstr "Документирано от"
 
 #: gtk/window_about.glade.h:8
+#, fuzzy
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
 "Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
 "\n"
 "Manual:\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>"
+"Sebastian Heinlein <sebastain.heinlein@web.de>"
 msgstr ""
 "Man·page:\n"
 "Wybo·Dekker·<wybo@servalys.nl>\n"
@@ -1465,7 +1758,8 @@ msgstr ""
 "Ръководство:\n"
 "Sebastian·Heinlein·<allerlei@renates-welt.de>"
 
-#: gtk/window_about.glade.h:14
+#: gtk/window_about.glade.h:15
+#, fuzzy
 msgid ""
 "Original author:\n"
 "Alfredo K. Kojima <kojima@windowmaker.org>\n"
@@ -1473,10 +1767,10 @@ msgid ""
 "Maintainers:\n"
 "Michael Vogt <mvo@debian.org>\n"
 "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "\n"
 "Contributors:\n"
 "Enrico Zini <enrico@debian.org>\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 msgstr ""
@@ -1493,22 +1787,23 @@ msgstr ""
 "Panu·Matilainen·<pmatilai@welho.com>\n"
 "Sviatoslav·Sviridov·<svd@lintec.minsk.by>"
 
-#: gtk/window_about.glade.h:26
+#: gtk/window_about.glade.h:27
 msgid "Package management software using apt."
 msgstr "Софтуер за управление на пакетите използващ apt."
 
-#: gtk/window_about.glade.h:27
+#: gtk/window_about.glade.h:28
 msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
 msgstr ""
-"Този софтуер е лицензиран под условията на GNU·General·Public·License,·Версия·2"
+"Този софтуер е лицензиран под условията на GNU·General·Public·License,"
+"·Версия·2"
 
-#: gtk/window_about.glade.h:28
+#: gtk/window_about.glade.h:29
 msgid "Translated by"
 msgstr "Преведено от"
 
-#: gtk/window_about.glade.h:29
+#: gtk/window_about.glade.h:30
 msgid ""
 "Visit the home page at \n"
 "http://www.nongnu.org/synaptic/"
@@ -1516,511 +1811,66 @@ msgstr ""
 "Посетете интернет страницата на адрес \n"
 "http://www.nongnu.org/synaptic/"
 
-#: gtk/window_about.glade.h:31
-msgid ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-msgstr ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali·it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail·Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)\n"
-"Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org> (Bulgarian)"
-
-#: gtk/window_about.glade.h:54
+#: gtk/window_about.glade.h:32
 msgid "Written by"
 msgstr "Написано от"
 
-#: gtk/window_find.glade.h:1 gtk/window_main_hpaned.glade.h:3
-#: gtk/window_main_vpaned.glade.h:3 gtk/window_preferences.glade.h:4
+#: gtk/window_about.glade.h:33
+msgid "translators_credits"
+msgstr ""
+
+#: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
 #: gtk/window_filters.glade.h:2 gtk/window_repositories.glade.h:2
 msgid "*"
 msgstr "*"
 
-#: gtk/window_find.glade.h:5 gtk/rgfiltermanager.h:69
-msgid "Package name"
-msgstr "Име на пакета"
+#: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
+#: gtk/rgfiltermanager.h:70 gtk/window_details.glade.h:15
+msgid "Dependencies"
+msgstr "Зависимости"
 
-#: gtk/window_find.glade.h:7
-msgid "Search for:"
-msgstr "Търсене за:"
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Описание"
 
-#: gtk/window_find.glade.h:8
-msgid "Search in:"
-msgstr "Търси в:"
+#: gtk/window_find.glade.h:4
+msgid "Find:"
+msgstr "Търсене:"
 
-#: gtk/window_find.glade.h:9
-msgid "Show only packages matching the searched terms."
-msgstr "Показва пакетите отговарящи на условията за търсене."
+#: gtk/window_find.glade.h:5
+msgid "Look in:"
+msgstr ""
 
-#: gtk/window_fetch.glade.h:1 gtk/window_main_hpaned.glade.h:1
-#: gtk/window_main_vpaned.glade.h:1 gtk/window_preferences.glade.h:2
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
+msgstr "Доставени Пакети"
+
+#: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
+#: gtk/window_details.glade.h:1
 msgid "    "
 msgstr "    "
 
 #: gtk/window_fetch.glade.h:2
-msgid "<b>Single files:</b>"
+#, fuzzy
+msgid "<b>Single Files:</b>"
 msgstr "<b>Отделни файлове:</b>"
 
 #: gtk/window_fetch.glade.h:3
-msgid "<b>Total:</b>"
+#, fuzzy
+msgid "<b>Total Progress:</b>"
 msgstr "<b>Общо:</b>"
 
-#: gtk/window_main_hpaned.glade.h:2 gtk/window_main_vpaned.glade.h:2
-#: gtk/window_preferences.glade.h:3
-msgid "     "
-msgstr "     "
-
-#: gtk/window_main_hpaned.glade.h:4 gtk/window_main_vpaned.glade.h:4
-msgid "<b>Available Versions</b>"
-msgstr "<b>Налични Версии</b>"
-
-#: gtk/window_main_hpaned.glade.h:5 gtk/window_main_vpaned.glade.h:6
-msgid "<b>Install</b>"
-msgstr "<b>Инсталира</b>"
-
-#: gtk/window_main_hpaned.glade.h:6 gtk/window_main_vpaned.glade.h:7
-msgid "<b>Installed Version</b>"
-msgstr "<b>Инсталирана Версия</b>"
-
-#: gtk/window_main_hpaned.glade.h:7 gtk/window_main_vpaned.glade.h:8
-msgid "<b>Latest Available Version</b>"
-msgstr "<b>Последна Налична Версия</b>"
-
-#: gtk/window_main_hpaned.glade.h:8 gtk/window_main_vpaned.glade.h:9
-msgid "<b>Maintainer:</b>"
-msgstr "<b>Поддържащ пакета:</b>"
-
-#: gtk/window_main_hpaned.glade.h:9 gtk/window_main_vpaned.glade.h:10
-msgid "<b>Package Control</b>"
-msgstr "<b>Контрол на Пакетите</b>"
-
-#: gtk/window_main_hpaned.glade.h:10
-msgid "<b>Package:</b>"
-msgstr "<b>Пакет:</b>"
-
-#: gtk/window_main_hpaned.glade.h:11 gtk/window_main_vpaned.glade.h:12
-msgid "<b>Priority:</b>"
-msgstr "<b>Приоритет:</b>"
-
-#: gtk/window_main_hpaned.glade.h:12 gtk/window_main_vpaned.glade.h:13
-msgid "<b>Section:</b>"
-msgstr "<b>Раздел:</b>"
-
-#: gtk/window_main_hpaned.glade.h:13 gtk/window_main_vpaned.glade.h:14
-msgid "<b>Status:</b>"
-msgstr "<b>Състояние:</b>"
-
-#: gtk/window_main_hpaned.glade.h:14 gtk/window_main_vpaned.glade.h:15
-msgid "<b>Tags:</b>"
-msgstr "<b>Тагове:</b>"
-
-#: gtk/window_main_hpaned.glade.h:15
-msgid ""
-"<b>Warning:</b> This can render your package manager unusable.\n"
-"Changes override the version selected by the package manager. "
-msgstr ""
-"<b>Внимание:</b> Това може да направи пакетния мениджър неизползваем.\n"
-"Changes·override·the·version·selected·by·the·package·manager.·"
-
-#: gtk/window_main_hpaned.glade.h:17 gtk/window_main_vpaned.glade.h:18
-msgid "A_dd CD-ROM..."
-msgstr "Д_обавя CD-ROM..."
-
-#: gtk/window_main_hpaned.glade.h:18 gtk/window_main_vpaned.glade.h:19
-msgid "Ac_tions"
-msgstr "Действия"
-
-#: gtk/window_main_hpaned.glade.h:20 gtk/window_main_vpaned.glade.h:21
-msgid "Commit (and download if necessary) selected changes on packages"
-msgstr "Потвърждава·(и изтегля ако е необходимо)·избраните промени в пакетите"
-
-#: gtk/window_main_hpaned.glade.h:21 gtk/window_main_vpaned.glade.h:22
-msgid "Common"
-msgstr ""
-
-#: gtk/window_main_hpaned.glade.h:22 gtk/window_main_vpaned.glade.h:23
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_hpaned.glade.h:23 gtk/window_main_vpaned.glade.h:24
-msgid "Deinstall the package"
-msgstr "Деинсталира пакетът"
-
-#: gtk/window_main_hpaned.glade.h:24 gtk/window_main_vpaned.glade.h:25
-#: gtk/window_filters.glade.h:12 gtk/rgfiltermanager.h:73
-msgid "Dependencies"
-msgstr "Зависимости"
-
-#: gtk/window_main_hpaned.glade.h:25 gtk/window_main_vpaned.glade.h:26
-msgid "Dependencies of the Latest Version"
-msgstr "Зависимости на Последната Версия"
-
-#: gtk/window_main_hpaned.glade.h:27 gtk/window_main_vpaned.glade.h:29
-msgid "Download size:"
-msgstr "Размер на изтегленото:"
-
-#: gtk/window_main_hpaned.glade.h:28 gtk/window_main_vpaned.glade.h:30
-msgid "Edit the available filters"
-msgstr "Редактира наличните филтри"
-
-#: gtk/window_main_hpaned.glade.h:29 gtk/window_main_vpaned.glade.h:31
-#: gtk/window_preferences.glade.h:38
-msgid "Expert"
-msgstr "Експерт"
-
-#: gtk/window_main_hpaned.glade.h:30 gtk/window_main_vpaned.glade.h:32
-msgid "Filter the list of shown packages"
-msgstr "Филтрира списъкът на показаните пакети"
-
-#: gtk/window_main_hpaned.glade.h:31 gtk/window_main_vpaned.glade.h:33
-msgid "Filters..."
-msgstr "Филтри..."
-
-#: gtk/window_main_hpaned.glade.h:32 gtk/window_main_vpaned.glade.h:34
-msgid "Find a package name in the list of shown packages below"
-msgstr "Намира името на пакет в списъка на показаните пакети отдолу"
-
-#: gtk/window_main_hpaned.glade.h:33 gtk/window_main_vpaned.glade.h:35
-msgid "Find next"
-msgstr "Следващо търсене"
-
-#: gtk/window_main_hpaned.glade.h:34 gtk/window_main_vpaned.glade.h:36
-msgid "Find:"
-msgstr "Търсене:"
-
-#: gtk/window_main_hpaned.glade.h:35 gtk/window_main_vpaned.glade.h:37
-msgid "Install the latest version of the package"
-msgstr "Инсталира последната версия на пакета"
-
-#: gtk/window_main_hpaned.glade.h:36 gtk/window_main_vpaned.glade.h:38
-msgid "Installed Files"
-msgstr "Инсталирани Файлове"
-
-#: gtk/window_main_hpaned.glade.h:37 gtk/window_main_vpaned.glade.h:39
-msgid "Keep the package as supplied before and forget selected changes"
-msgstr ""
-
-#: gtk/window_main_hpaned.glade.h:38 gtk/window_main_vpaned.glade.h:40
-msgid "Mark packages for upgrade, except those with new dependencies"
-msgstr "Избира пакетите за осъвременяване, освен тези с нови зависимости"
-
-#: gtk/window_main_hpaned.glade.h:41 gtk/window_main_vpaned.glade.h:43
-msgid "Pac_kage"
-msgstr "Па_кет"
-
-#: gtk/window_main_hpaned.glade.h:42 gtk/window_main_vpaned.glade.h:44
-msgid "Packages Depending on this One"
-msgstr "Пакети Зависещи от Този Пакет"
-
-#: gtk/window_main_hpaned.glade.h:43 gtk/window_main_vpaned.glade.h:45
-msgid "Prefere_nces"
-msgstr "Нас_тройки"
-
-#: gtk/window_main_hpaned.glade.h:44 gtk/window_main_vpaned.glade.h:46
-#: gtk/window_filters.glade.h:48
-msgid "Provided Packages"
-msgstr "Доставени Пакети"
-
-#: gtk/window_main_hpaned.glade.h:45 gtk/window_main_vpaned.glade.h:47
-msgid "Recommended"
-msgstr "Препоръчани"
-
-#: gtk/window_main_hpaned.glade.h:46 gtk/window_main_vpaned.glade.h:48
-msgid "Remove Including Orphaned _Dependencies"
-msgstr ""
-
-#: gtk/window_main_hpaned.glade.h:47 gtk/window_main_vpaned.glade.h:49
-msgid "Remove Including _Configuration"
-msgstr "Премахва Включително _Настройките"
-
-#: gtk/window_main_hpaned.glade.h:48 gtk/window_main_vpaned.glade.h:50
-msgid "Required space:"
-msgstr "Нужно пространство:"
-
-#: gtk/window_main_hpaned.glade.h:49 gtk/window_main_vpaned.glade.h:51
-msgid "Save Selections _As..."
-msgstr "Запазва Избраните _Като"
-
-#: gtk/window_main_hpaned.glade.h:50 gtk/window_main_vpaned.glade.h:52
-msgid "Search again from the beginning"
-msgstr "Търсене отново от началото"
-
-#: gtk/window_main_hpaned.glade.h:51 gtk/window_main_vpaned.glade.h:53
-msgid "Selected"
-msgstr "Избрани"
-
-#: gtk/window_main_hpaned.glade.h:52 gtk/window_main_vpaned.glade.h:54
-msgid "Set _Internal Option..."
-msgstr "Постявя _Вътрешна Опция..."
-
-#: gtk/window_main_hpaned.glade.h:53 gtk/window_main_vpaned.glade.h:55
-msgid "Show:"
-msgstr "Показва:"
-
-#: gtk/window_main_hpaned.glade.h:54 gtk/window_main_vpaned.glade.h:56
-msgid "Stat_us Tree"
-msgstr "Дърво на Със_тоянието"
-
-#: gtk/window_main_hpaned.glade.h:55 gtk/window_main_vpaned.glade.h:57
-msgid "Suggested"
-msgstr "Предложени:"
-
-#: gtk/window_main_hpaned.glade.h:56 gtk/window_main_vpaned.glade.h:58
-msgid "Suggestions and Recommendations"
-msgstr "Предложения и Препоръки"
-
-#: gtk/window_main_hpaned.glade.h:57 gtk/window_main_vpaned.glade.h:59
-msgid "Synaptic"
-msgstr "Synaptic"
-
-#: gtk/window_main_hpaned.glade.h:58 gtk/window_main_vpaned.glade.h:60
-msgid "Synaptic - an apt frontend"
-msgstr "Synaptic·-·apt·графичен интерфейс"
-
-#: gtk/window_main_hpaned.glade.h:59 gtk/window_main_vpaned.glade.h:61
-msgid "Text Be_side Icons"
-msgstr "Текст до иконите"
-
-#: gtk/window_main_hpaned.glade.h:60 gtk/window_main_vpaned.glade.h:62
-msgid "Text _Below Icons"
-msgstr "Текст·_Под·Иконите"
-
-#: gtk/window_main_hpaned.glade.h:61 gtk/window_main_vpaned.glade.h:63
-msgid "Up_grade System"
-msgstr "О_съвременява Системата"
-
-#: gtk/window_main_hpaned.glade.h:62 gtk/window_main_vpaned.glade.h:64
-msgid "Update package cache"
-msgstr "Осъвременява пакетния кеш"
-
-#: gtk/window_main_hpaned.glade.h:63 gtk/window_main_vpaned.glade.h:65
-msgid "Version:"
-msgstr "Версия:"
-
-#: gtk/window_main_hpaned.glade.h:64
-msgid "View installed documentation of the package in a browser"
-msgstr "Преглежда инсталираната документация на пакета в браузър"
-
-#: gtk/window_main_hpaned.glade.h:65 gtk/window_main_vpaned.glade.h:67
-msgid "_About"
-msgstr "_Относно"
-
-#: gtk/window_main_hpaned.glade.h:66 gtk/window_main_vpaned.glade.h:68
-msgid "_Alphabetic Tree"
-msgstr "_Азбучна Дървовидна Структура"
-
-#: gtk/window_main_hpaned.glade.h:67 gtk/window_main_vpaned.glade.h:69
-msgid "_Apply Filter"
-msgstr "_Прилага Филтър"
-
-#: gtk/window_main_hpaned.glade.h:68 gtk/window_main_vpaned.glade.h:70
-msgid "_Apply Marked Changes"
-msgstr "_Прилага Избраните Промени"
-
-#: gtk/window_main_hpaned.glade.h:69 gtk/window_main_vpaned.glade.h:71
-msgid "_Clear All Marked Changes"
-msgstr "_Изчиства Всички Избрани Промени"
-
-#: gtk/window_main_hpaned.glade.h:70
-msgid "_Collapse All"
-msgstr "_Разлиства Всички"
-
-#: gtk/window_main_hpaned.glade.h:71 gtk/window_main_vpaned.glade.h:73
-msgid "_Configure"
-msgstr "_Конфигурира"
-
-#: gtk/window_main_hpaned.glade.h:72 gtk/window_main_vpaned.glade.h:74
-msgid "_Contents"
-msgstr "_Съдържания"
-
-#: gtk/window_main_hpaned.glade.h:73
-msgid "_Documentation"
-msgstr "_Документация"
-
-#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:75
-msgid "_Edit Filters..."
-msgstr "_Редактира Филтри..."
-
-#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:76
-msgid "_Expand All"
-msgstr "_Разглежда Всички"
-
-#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:77
-msgid "_File"
-msgstr "_Файл"
-
-#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:78
-msgid "_Find..."
-msgstr "_Търсeнe..."
-
-#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:79
-msgid "_Fix Broken Packages"
-msgstr "_Поправя Развалените Пакети"
-
-#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:80
-msgid "_Flat List"
-msgstr "_Плосък Списък"
-
-#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:81
-msgid "_Help"
-msgstr "_Помощ"
-
-#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:82
-msgid "_Hide"
-msgstr "_Скрива"
-
-#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:83
-msgid "_Icon Legend"
-msgstr "_Легенда на Иконите"
-
-#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:84
-msgid "_Icons Only"
-msgstr "_Само Икони"
-
-#: gtk/window_main_hpaned.glade.h:85 gtk/window_main_vpaned.glade.h:86
-msgid "_Install Latest Version"
-msgstr "_Инсталира Последната Версия"
-
-#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:87
-msgid "_Lock Current Status and Version"
-msgstr "_Заключва Текущото Състояние и Версия"
-
-#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:88
-msgid "_No Changes"
-msgstr "_Без Промени"
-
-#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:89
-msgid "_Quick Introduction"
-msgstr "_Бързо Въведение"
-
-#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:90
-msgid "_Quit"
-msgstr "_Спира програмата"
-
-#: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:91
-msgid "_Read Selections..."
-msgstr "_Прочита Избраните Пакети..."
-
-#: gtk/window_main_hpaned.glade.h:91 gtk/window_main_vpaned.glade.h:92
-msgid "_Redo"
-msgstr "_Повтаря"
-
-#: gtk/window_main_hpaned.glade.h:92 gtk/window_main_vpaned.glade.h:93
-msgid "_Refresh"
-msgstr "_Презарежда"
-
-#: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:94
-msgid "_Refresh Package List"
-msgstr "_Презарежда Списъкът с Пакетите"
-
-#: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:95
-msgid "_Remove"
-msgstr "_Премахва"
-
-#: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:96
-msgid "_Repositories"
-msgstr "_Склад"
-
-#: gtk/window_main_hpaned.glade.h:96 gtk/window_main_vpaned.glade.h:97
-msgid "_Save Selections"
-msgstr "_Запазва Избраните Пакети"
-
-#: gtk/window_main_hpaned.glade.h:97 gtk/window_main_vpaned.glade.h:98
-msgid "_Section Tree"
-msgstr "_Дървовиден с Раздели"
-
-#: gtk/window_main_hpaned.glade.h:98 gtk/window_main_vpaned.glade.h:99
-msgid "_Tag Tree"
-msgstr "_Дърво на Таговете"
-
-#: gtk/window_main_hpaned.glade.h:99 gtk/window_main_vpaned.glade.h:100
-msgid "_Text Only"
-msgstr "_Само Текст"
-
-#: gtk/window_main_hpaned.glade.h:100 gtk/window_main_vpaned.glade.h:101
-msgid "_Toolbar"
-msgstr "_Лента с Инструменти"
-
-#: gtk/window_main_hpaned.glade.h:101 gtk/window_main_vpaned.glade.h:102
-msgid "_Undo"
-msgstr "_Отказва последното действие"
-
-#: gtk/window_main_hpaned.glade.h:103 gtk/window_main_vpaned.glade.h:104
-msgid "_View"
-msgstr "_Изглед"
-
-#: gtk/window_main_vpaned.glade.h:5
-msgid "<b>Details</b>"
-msgstr "<b>Детайли</b>"
-
-#: gtk/window_main_vpaned.glade.h:11
-msgid "<b>Package</b>"
-msgstr "<b>Пакет</b>"
-
-#: gtk/window_main_vpaned.glade.h:16
-msgid ""
-"<b>Warning:</b> This can render your package\n"
-"manager unusable. Changes override the version selected by the package "
-"manager. "
-msgstr ""
-"<b>Внимание:</b> Това може да направи вашия пакетен\n"
-"мениджър неизползваем. Changes override the version selected by the package·"
-"manager.·"
-
-#: gtk/window_main_vpaned.glade.h:66
-msgid "View installed online documentation related to the package"
-msgstr "Преглежда инсталираната онлайн документация, свързана с пакета"
-
-#: gtk/window_main_vpaned.glade.h:72
-msgid "_Collapse All   "
-msgstr "_Разлиства Всички..."
-
 #: gtk/window_changes.glade.h:1
-msgid "<span weight=\"bold\" size=\"larger\">Mark required changes?</span>"
-msgstr "<span weight=\"bold\" size=\"larger\">Избира изисканите промени?</span>"
+#, fuzzy
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
+"span>"
+msgstr ""
+"<span weight=\"bold\" size=\"larger\">Избира изисканите промени?</span>"
 
 #: gtk/window_changes.glade.h:2
 msgid ""
@@ -2036,6 +1886,10 @@ msgstr "_Маркира"
 msgid " "
 msgstr " "
 
+#: gtk/window_preferences.glade.h:3
+msgid "     "
+msgstr "     "
+
 #: gtk/window_preferences.glade.h:5
 msgid ""
 "1 = Package list\n"
@@ -2045,8 +1899,9 @@ msgstr ""
 "2·=·Информация за пакетите"
 
 #: gtk/window_preferences.glade.h:7
-msgid "<b>Actions</b>"
-msgstr "<b>Действия</b>"
+#, fuzzy
+msgid "<b>Applying Changes</b>"
+msgstr "Прилага Промените..."
 
 #: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
@@ -2065,24 +1920,28 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Шрифтове</b>"
 
 #: gtk/window_preferences.glade.h:12
-msgid "<b>General</b>"
-msgstr "<b>Основни</b>"
-
-#: gtk/window_preferences.glade.h:13
 msgid "<b>Main Window</b>"
 msgstr "<b>Основен Прозорец</b>"
 
+#: gtk/window_preferences.glade.h:13
+#, fuzzy
+msgid "<b>Marking Changes</b>"
+msgstr "<b>Поддържащ пакета:</b>"
+
 #: gtk/window_preferences.glade.h:14
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all marked "
-"changes will get lost. Make sure to apply your changes first."
+"<b>Note:</b> The package list must be reloaded and all marked changes will "
+"be lost. Make sure to apply your changes first."
 msgstr ""
-"<b>Забележка:</b>·Списъкът с пакетите трябва да бъде презареден и затова·"
-"всички избрани промени ще се загубят. Моля, приложете избраните промени, преди това."
+"<b>Забележка:</b>·Списъкът с пакетите трябва да бъде презареден и "
+"затова·всички избрани промени ще се загубят. Моля, приложете избраните "
+"промени, преди това."
 
 #: gtk/window_preferences.glade.h:15
+#, fuzzy
 msgid ""
-"<b>Note:</b> You will need to restart synaptic for \n"
+"<b>Note:</b> You will have to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 "<b>Забележка:</b> Ще трябва да рестатирате·synaptic,·за да·\n"
@@ -2093,257 +1952,333 @@ msgid "<b>Proxy Server</b>"
 msgstr "<b>Proxy·Сървър</b>"
 
 #: gtk/window_preferences.glade.h:18
+#, fuzzy
+msgid "<b>Search</b>"
+msgstr "<b>Резюме</b>"
+
+#: gtk/window_preferences.glade.h:19
 msgid "<b>Temporary Files</b>"
 msgstr "<b>Временни Файлове</b>"
 
-#: gtk/window_preferences.glade.h:19
+#: gtk/window_preferences.glade.h:20
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider changes carefully.</span>"
 msgstr ""
-"<span size=\"large\" weight=\"bold\">Тези промени засягат ядрото на вашата·"
-"система. Обмислете промените внимателно.</span>"
+"<span size=\"large\" weight=\"bold\">Тези промени засягат ядрото на "
+"вашата·система. Обмислете промените внимателно.</span>"
 
-#: gtk/window_preferences.glade.h:20
+#: gtk/window_preferences.glade.h:21
 msgid "Allow regular expressions in searches and filters"
 msgstr "Позволява чести изрази в търсенето и филтрирането"
 
-#: gtk/window_preferences.glade.h:21
+#: gtk/window_preferences.glade.h:22
 msgid "Always Ask"
 msgstr "Винаги Пита"
 
-#: gtk/window_preferences.glade.h:22
+#: gtk/window_preferences.glade.h:23
 msgid "Apply changes in a terminal window"
 msgstr "Прилага промените в терминален прозорец"
 
-#: gtk/window_preferences.glade.h:23
+#: gtk/window_preferences.glade.h:24
 msgid "Ask to confirm changes also affecting other packages"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:24
-msgid "Ask to quit after the changes have been applied successfully"
-msgstr "Предлага да бъде спряна програмата след като всички промени"
-"са приложени успешно"
-
 #: gtk/window_preferences.glade.h:25
+msgid "Ask to quit after the changes have been applied successfully"
+msgstr ""
+"Предлага да бъде спряна програмата след като всички промениса приложени "
+"успешно"
+
+#: gtk/window_preferences.glade.h:26
 msgid "Broken:"
 msgstr "Развалени:"
 
-#: gtk/window_preferences.glade.h:26
-msgid "Clear"
-msgstr "Изчиства"
-
 #: gtk/window_preferences.glade.h:27
+msgid "Clicking on the status icon marks the most likely action"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:28
 msgid "Color"
 msgstr "Цвят"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color packages by their status"
 msgstr "Оцветява пакетите, в зависимост от състоянието им"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
+#, fuzzy
+msgid "Colors"
+msgstr "Цвят"
+
+#: gtk/window_preferences.glade.h:31
+msgid "Columns and Fonts"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:33
+msgid "Completely"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:34
 msgid "Consider recommended packages as dependencies"
 msgstr "Разглежда препоръчаните пакети като зависимости"
 
-#: gtk/window_preferences.glade.h:31
-msgid "Default"
-msgstr "Стандартен"
-
-#: gtk/window_preferences.glade.h:33
+#: gtk/window_preferences.glade.h:36
 msgid "Default archive: "
 msgstr "Стандартен архив:"
 
-#: gtk/window_preferences.glade.h:34
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "Изтрива изтеглените пакети след инсталацията им"
 
-#: gtk/window_preferences.glade.h:35
+#: gtk/window_preferences.glade.h:38
 msgid "Delete packages which are no longer available only"
 msgstr "Изтрива само пакетите, които вече не са налични"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:39
+#, fuzzy
+msgid "Description:"
+msgstr "Описание"
+
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr "Директна връзка с Интернет"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:41 gtk/window_details.glade.h:19
+msgid "Expert"
+msgstr "Експерт"
+
+#: gtk/window_preferences.glade.h:42
 msgid "FTP proxy: "
 msgstr "FTP·proxy: "
 
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:43
 msgid "General"
 msgstr "Основен"
 
-#: gtk/window_preferences.glade.h:41
+#: gtk/window_preferences.glade.h:44
 msgid "HTTP proxy: "
 msgstr "HTTP·proxy:·"
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:45
+#, fuzzy
+msgid "Hide"
+msgstr "_Скрива"
+
+#: gtk/window_preferences.glade.h:46
 msgid "IP address or host name of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the http proxy server"
 msgstr "IP·адрес или хост на·http·proxy·сървъра"
 
-#: gtk/window_preferences.glade.h:44
-msgid "Include Configuration"
-msgstr "Включва Конфигурацията"
-
-#: gtk/window_preferences.glade.h:45
-msgid "Include Orphaned Dependencies"
-msgstr ""
-
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:48
 msgid "Installed (locked):"
 msgstr "Инсталирани (заключени):"
 
-#: gtk/window_preferences.glade.h:47
-msgid "Installed version"
+#: gtk/window_preferences.glade.h:49
+#, fuzzy
+msgid "Installed size:"
+msgstr "Инсталирани Файлове"
+
+#: gtk/window_preferences.glade.h:50
+#, fuzzy
+msgid "Installed version:"
 msgstr "Инсталирана версия"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:51
 msgid "Installed:"
 msgstr "Инсталирана:"
 
-#: gtk/window_preferences.glade.h:49
-msgid "Latest version"
+#: gtk/window_preferences.glade.h:52
+#, fuzzy
+msgid "Keep Configuration"
+msgstr "Включва Конфигурацията"
+
+#: gtk/window_preferences.glade.h:53
+#, fuzzy
+msgid "Latest version:"
 msgstr "Последна версия"
 
-#: gtk/window_preferences.glade.h:50
-msgid "Layout"
-msgstr "Външен изглед"
-
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:54
 msgid "Leave all downloaded packages in the cache"
 msgstr "Оставя всички изтеглени пакети в кеша"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:55
 msgid "Manual proxy configuration"
 msgstr "Ръчна настройка на proxy"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:56
+msgid "Marked for complete removal:"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:57
+#, fuzzy
+msgid "Marked for downgrade:"
+msgstr "Да бъдат върнати назад:"
+
+#: gtk/window_preferences.glade.h:58
+#, fuzzy
+msgid "Marked for installation:"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/window_preferences.glade.h:59
+#, fuzzy
+msgid "Marked for reinstallation:"
+msgstr ""
+"\n"
+"Докато се подготвя за инсталация:\n"
+"\n"
+
+#: gtk/window_preferences.glade.h:60
+msgid "Marked for removal:"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:61
+#, fuzzy
+msgid "Marked for upgrade:"
+msgstr "Избира всички възможни осъвременявания"
+
+#: gtk/window_preferences.glade.h:62
+msgid "Move D_own"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:63
+msgid "Move _Up"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:64
+#, fuzzy
+msgid "Name:"
+msgstr "Име"
+
+#: gtk/window_preferences.glade.h:65
 msgid "Network"
 msgstr "Мрежа"
 
-#: gtk/window_preferences.glade.h:55
-msgid "New in archive:"
-msgstr "Нови в архива:"
+#: gtk/window_preferences.glade.h:66
+#, fuzzy
+msgid "New in respository:"
+msgstr "Нов в склада"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
 msgstr "Няма proxy за: "
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:68
 msgid "Not installed (locked):"
 msgstr "Не са инсталирани (заключени):"
 
-#: gtk/window_preferences.glade.h:58
-msgid "Not installed: "
+#: gtk/window_preferences.glade.h:69
+#, fuzzy
+msgid "Not installed:"
 msgstr "Не са инсталирани: "
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:70
 msgid "Number of undo operations:"
 msgstr "Брой на операциите за връщане назад:"
 
-#: gtk/window_preferences.glade.h:60
-msgid "Package List"
-msgstr "Списък на Пакетите"
-
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:71
 msgid "Port number of the http proxy server"
 msgstr "Номер на порта за http proxy сървъра"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:72
 msgid "Port numer of the ftp proxy server"
 msgstr "Номер на порта за ftp proxy сървъра"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:73
 msgid "Port: "
 msgstr "Порт:"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:75
 msgid "Regular expressions are an advanced method of text matching"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:76
 msgid "Removal of packages: "
 msgstr "Премахване на пакети:"
 
-#: gtk/window_preferences.glade.h:67
-msgid "Required space"
-msgstr "Нужно пространство"
-
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:77
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:71
+#: gtk/window_preferences.glade.h:78
+#, fuzzy
+msgid "Show"
+msgstr "Показва:"
+
+#: gtk/window_preferences.glade.h:80
+#, fuzzy
+msgid "Status:"
+msgstr "Състояние"
+
+#: gtk/window_preferences.glade.h:81
 msgid "System upgrade:"
 msgstr "Осъвременяване на системата:"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:82
 msgid "Temporary Files"
 msgstr "Временни файлове"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:83
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:74
-msgid "To be downgraded:"
-msgstr "Да бъдат върнати назад:"
+#: gtk/window_preferences.glade.h:84
+#, fuzzy
+msgid "Upgradable:"
+msgstr "За осъвременяване"
 
-#: gtk/window_preferences.glade.h:75
-msgid "To be installed:"
-msgstr "Да бъдат инсталирани:"
-
-#: gtk/window_preferences.glade.h:76
-msgid "To be removed including configuration:"
-msgstr "Да бъдат премахнати, включително настройките им:"
-
-#: gtk/window_preferences.glade.h:77
-msgid "To be removed:"
-msgstr "Да бъдат премахнати:"
-
-#: gtk/window_preferences.glade.h:78
-msgid "To be upgraded:"
-msgstr "Да бъдат осъвременени:"
-
-#: gtk/window_preferences.glade.h:79
-msgid "Update available:"
-msgstr "Налични осъвременявания:"
-
-#: gtk/window_preferences.glade.h:80
+#: gtk/window_preferences.glade.h:85
 msgid "Use custom application font"
 msgstr "Използва потребителски програмен шрифт"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:86
 msgid "Use custom terminal font"
 msgstr "Използва потребителски терминален шрифт"
 
-#: gtk/window_preferences.glade.h:82
+#: gtk/window_preferences.glade.h:87
 msgid "_Default Font"
 msgstr "_Стандартен Шрифт"
 
-#: gtk/window_preferences.glade.h:83
+#: gtk/window_preferences.glade.h:88
+#, fuzzy
+msgid "_Delete Cached Package Files"
+msgstr "Заместени Пакети"
+
+#: gtk/window_preferences.glade.h:89
 msgid "_Terminal Font"
 msgstr "_Терминален Шрифт"
 
 #: gtk/window_disc_name.glade.h:2
-msgid "Disc name"
-msgstr "Име на диска"
+#, fuzzy
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">Прилагане на следните промени?</span>"
 
 #: gtk/window_disc_name.glade.h:3
-msgid "Enter the disc name"
-msgstr "Въведете името на диска"
+#, fuzzy
+msgid "Disc label:"
+msgstr "Име на диска"
+
+#: gtk/window_disc_name.glade.h:4
+msgid ""
+"The label will be used to identify the CD-ROM if you want to install "
+"packages from it later."
+msgstr ""
 
 #: gtk/window_setopt.glade.h:2
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
@@ -2371,21 +2306,21 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"large\">Прилагане на следните промени?</span>"
 
-#: gtk/window_summary.glade.h:5
-msgid "Apply the changes"
-msgstr "Прилага всички промени"
-
 #: gtk/window_summary.glade.h:6
 msgid "Download package files only"
 msgstr "Изтегля само пакетни файлове"
 
 #: gtk/window_summary.glade.h:7
-msgid "Return to the main window"
+#, fuzzy
+msgid "Return to the main screen"
 msgstr "Връщане към основния прозорец"
 
 #: gtk/window_summary.glade.h:8
-msgid "The package files will ony be retrieved, but not installed or upgraded"
-msgstr "Пакетните файлове ще бъдат изтеглени, но няма да бъдат инсталирани или осъвременени"
+#, fuzzy
+msgid "The package files will be downloaded only, but not installed"
+msgstr ""
+"Пакетните файлове ще бъдат изтеглени, но няма да бъдат инсталирани или "
+"осъвременени"
 
 #: gtk/window_summary.glade.h:9
 msgid ""
@@ -2409,177 +2344,180 @@ msgstr "<b>Маркирани</b>"
 msgid "<b>Other</b>"
 msgstr "<b>Други</b>"
 
-#: gtk/window_filters.glade.h:6
-msgid "<b>Rules</b>"
-msgstr "<b>Правила</b>"
-
 #: gtk/window_filters.glade.h:7
-msgid "<b>View</b>"
-msgstr "<b>Изглед</b>"
-
-#: gtk/window_filters.glade.h:8
-msgid "Alphabetic Tree"
-msgstr "Азбучна Дървовидна Структура"
-
-#: gtk/window_filters.glade.h:10
-msgid "Collapse All"
-msgstr "Разлиства Всички"
-
-#: gtk/window_filters.glade.h:11
 msgid "Conflicting Packages"
 msgstr "Конфликтни Пакети"
 
-#: gtk/window_filters.glade.h:14
-msgid "Deselect All"
-msgstr "Отказва Всички"
+#. suggests
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
+#: gtk/window_details.glade.h:14
+#, fuzzy
+msgid "Dependants"
+msgstr "Зависи"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:11
 msgid "Exclude"
 msgstr "Изключва"
 
-#: gtk/window_filters.glade.h:16
+#: gtk/window_filters.glade.h:12
 msgid "Exclude selected sections"
 msgstr "Изключва избраните раздели"
 
-#: gtk/window_filters.glade.h:17 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Изключване"
 
-#: gtk/window_filters.glade.h:18
-msgid "Expand All"
+#: gtk/window_filters.glade.h:15
+#, fuzzy
+msgid "For installation or upgrade"
+msgstr "Да бъдат инсталирани или осъвременени"
+
+#: gtk/window_filters.glade.h:16
+msgid "For removal"
 msgstr ""
 
-#: gtk/window_filters.glade.h:20
-msgid "Flat List"
-msgstr "Плосък Списък"
-
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:17
 msgid "Include"
 msgstr "Включва"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:18
 msgid "Include selected sections only"
 msgstr "Чключва само избраните раздели"
 
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Включва"
 
-#: gtk/window_filters.glade.h:26
-msgid "Invert All"
-msgstr "Обръща Всички"
-
-#: gtk/window_filters.glade.h:27
-msgid "Leave Unchanged"
-msgstr "Остявя Непроменен"
-
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:21
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 
-#: gtk/window_filters.glade.h:31
-msgid "Not (no longer) installable"
-msgstr ""
+#: gtk/window_filters.glade.h:23
+msgid "New in archive"
+msgstr "Нови в архива"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:24
+#, fuzzy
+msgid "Not installable"
+msgstr "Не са инсталирани"
+
+#: gtk/window_filters.glade.h:26
+#, fuzzy
+msgid "Not marked"
+msgstr "Не са Инсталирани"
+
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr ""
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "Име на Пакета"
 
-#: gtk/window_filters.glade.h:35
-msgid "Packages that are new in the repository since that last \"Update\" "
+#: gtk/window_filters.glade.h:30
+msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr ""
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr ""
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:32
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr ""
+
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr ""
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr ""
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr ""
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr ""
 
-#: gtk/window_filters.glade.h:42
-msgid "Packages that will be kept"
-msgstr ""
-
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr ""
 
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr ""
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:40
+#, fuzzy
+msgid "Packages that won't be changed"
+msgstr "Промени в пакета"
+
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "Пакети с развалени зависимости"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr ""
 
-#: gtk/window_filters.glade.h:47
-msgid "Properties"
-msgstr "Настройки"
+#. replaces/obsoletes
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Recommendations"
+msgstr "Препоръчани"
 
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "Заместени Пакети"
 
-#: gtk/window_filters.glade.h:51
-msgid "Reverse Dependencies"
+#: gtk/window_filters.glade.h:47
+msgid "Residual config"
 msgstr ""
 
+#. /recommends
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
+#, fuzzy
+msgid "Suggestions"
+msgstr "Предложени:"
+
+#: gtk/window_filters.glade.h:51
+msgid "Tags"
+msgstr "Тагове"
+
+#: gtk/window_filters.glade.h:52
+msgid "Upgradable"
+msgstr "За осъвременяване"
+
 #: gtk/window_filters.glade.h:53
-msgid "Section Tree"
-msgstr "Дърво на Разделите"
+msgid "Upgradable to a later upstream version"
+msgstr ""
 
 #: gtk/window_filters.glade.h:54
-msgid "Select All"
-msgstr "Избира Всички"
-
-#: gtk/window_filters.glade.h:55
-msgid "Sorting:"
-msgstr "Подрежда:"
-
-#: gtk/window_filters.glade.h:57
-msgid "Status Tree"
-msgstr "Дърво на Състоянието"
-
-#: gtk/window_filters.glade.h:58
-msgid "Suggestions or Recommendations"
-msgstr "Предложения и Препоръки"
-
-#: gtk/window_filters.glade.h:60
-msgid "To be installed or upgraded"
-msgstr "Да бъдат инсталирани или осъвременени"
-
-#: gtk/window_filters.glade.h:63
-msgid "Tree: "
-msgstr "Дърво: "
-
-#: gtk/window_filters.glade.h:64
 msgid "Version Number"
 msgstr "Номер на Версията"
+
+#: gtk/window_filters.glade.h:55
+#, fuzzy
+msgid "_Deselect All"
+msgstr "Отказва Всички"
+
+#: gtk/window_filters.glade.h:56
+#, fuzzy
+msgid "_Invert All"
+msgstr "Обръща Всички"
+
+#: gtk/window_filters.glade.h:57
+#, fuzzy
+msgid "_Select All"
+msgstr "Избира Всички"
 
 #: gtk/window_repositories.glade.h:3
 msgid "Distribution:"
@@ -2621,7 +2559,7 @@ msgstr ""
 msgid "<b>Terminal Output:</b>"
 msgstr "<b>Терминален Изход:</b>"
 
-#: gtk/window_zvtinstallprogress.glade.h:3
+#: gtk/window_zvtinstallprogress.glade.h:2
 msgid "Close this dialog after the changes have been applied successfully"
 msgstr "Затваря този прозорец, след като всички промени са приложени успешно"
 
@@ -2638,91 +2576,583 @@ msgid "Synaptic Package Manager"
 msgstr "Synaptic·Мениджър на Пакети"
 
 #: gtk/dialog_welcome.glade.h:1
-msgid ""
-"1. Select the package that you wish to install or remove\n"
-"2. Mark the change in the package control area, package menu or context menu "
-"of the package\n"
-"3. Apply the marked change(s)"
+msgid " - "
 msgstr ""
-"1.·Посочете пакет, който желаете да инсталирате или премахнете\n"
-"2.·Изберете промяната в зоната за контрол на пакетите, пакетното меню"
-"или контекстното меню на пакета\n"
-"3.·Приложете избраните промени"
+
+#: gtk/dialog_welcome.glade.h:2
+msgid ""
+"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
+"all changes and then to apply them."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:3
+#, fuzzy
+msgid "Choose the action from the context menu of the package."
+msgstr "Инсталира последната версия на пакета"
 
 #: gtk/dialog_welcome.glade.h:4
-msgid "<b>Note:</b> Modifications are not applied instantly."
-msgstr "<b>Бележка:</b>·Промените не се прилагат моментално."
+msgid "Click on the status icon to open a menu that contains all actions."
+msgstr ""
 
 #: gtk/dialog_welcome.glade.h:5
+msgid "Double click on the package name."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
 msgstr "Бързо Въведение"
 
-#: gtk/dialog_welcome.glade.h:6
+#: gtk/dialog_welcome.glade.h:7
+msgid "Select the package and choose the action from the 'Package' menu."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
 msgstr ""
 
-#: gtk/dialog_welcome.glade.h:7
+#: gtk/dialog_welcome.glade.h:9
+#, fuzzy
 msgid ""
 "The software on your system is organized in so called <i>packages</i>. The "
-"package manager enables you to remove, install or upgrade software packages:"
+"package manager enables you to install, to upgrade or to remove software "
+"packages."
 msgstr ""
-"Софтуерът във вашата система е организиран в така наречени·<i>пакети</i>.·"
-"Пакетният мениджър ви позволява да премахвате, инсталирате или осъвременявате пакети:"
+"Софтуерът във вашата система е организиран в така наречени·<i>пакети</i>."
+"·Пакетният мениджър ви позволява да премахвате, инсталирате или "
+"осъвременявате пакети:"
 
-#: gtk/rgfiltermanager.h:70
+#: gtk/dialog_welcome.glade.h:10
+msgid ""
+"You can mark packages for installation, upgrade or removal in several ways:"
+msgstr ""
+
+#: gtk/dialog_unmet.glade.h:1
+#, fuzzy
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Failed to mark all packages for "
+"installation or upgrade</span>\n"
+"\n"
+"The following packages have unmet dependencies:"
+msgstr ""
+"Някои пакети не могат да бъдат инсталирани.\n"
+"\n"
+"Следните пакети имат нерешени зависимости:\n"
+
+#: gtk/rgfiltermanager.h:66
+msgid "Package name"
+msgstr "Име на пакета"
+
+#: gtk/rgfiltermanager.h:67
 msgid "Version number"
 msgstr "Версия на програмата"
 
 #. depends, predepends etc
-#: gtk/rgfiltermanager.h:74
+#: gtk/rgfiltermanager.h:71
 msgid "Provided packages"
 msgstr "Доставени пакети"
 
 #. provides and name
-#: gtk/rgfiltermanager.h:75
+#: gtk/rgfiltermanager.h:72
 msgid "Conflicting packages"
 msgstr "Конфликтни пакети"
 
 #. conflicts
-#: gtk/rgfiltermanager.h:76
+#: gtk/rgfiltermanager.h:73
 msgid "Replaced packages"
 msgstr "Заменени пакети"
-
-#. replaces/obsoletes
-#: gtk/rgfiltermanager.h:77
-msgid "Suggestions or recommendations"
-msgstr "Предложения или препоръки"
-
-#. suggests/recommends
-#: gtk/rgfiltermanager.h:78
-msgid "Reverse dependencies"
-msgstr "Обръща зависимостите"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
 msgstr "Легенда на Иконите"
 
-#: gtk/rgmisc.cc:230
-msgid "To be removed including configuration"
-msgstr "Да бъдат премахнати, включително и конфигурацията"
-
-#: gtk/rgmisc.cc:232
-msgid "Not installed (locked)"
-msgstr "Не са инсталирани (заключени)"
-
-#: gtk/rgmisc.cc:234
-msgid "Installed (update available)"
-msgstr "Инсталирани (могат да бъдат осъвременени)"
-
-#: gtk/rgmisc.cc:235
-msgid "Installed (locked to the current version)"
-msgstr "Инсталирани (заключени към текущата си версия)"
-
+#. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
 msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
-"<b>Следните икони се използват за да показват текущото състояние на пакета:"
-"</b>"
+"<b>Следните икони се използват за да показват текущото състояние на пакета:</"
+"b>"
 
+#: gtk/window_details.glade.h:2
+msgid "<b>Available Versions</b>"
+msgstr "<b>Налични Версии</b>"
+
+#: gtk/window_details.glade.h:3
+msgid "<b>Installed Version</b>"
+msgstr "<b>Инсталирана Версия</b>"
+
+#: gtk/window_details.glade.h:4
+msgid "<b>Latest Available Version</b>"
+msgstr "<b>Последна Налична Версия</b>"
+
+#: gtk/window_details.glade.h:5
+msgid "<b>Maintainer:</b>"
+msgstr "<b>Поддържащ пакета:</b>"
+
+#: gtk/window_details.glade.h:6
+msgid "<b>Package:</b>"
+msgstr "<b>Пакет:</b>"
+
+#: gtk/window_details.glade.h:7
+msgid "<b>Priority:</b>"
+msgstr "<b>Приоритет:</b>"
+
+#: gtk/window_details.glade.h:8
+msgid "<b>Section:</b>"
+msgstr "<b>Раздел:</b>"
+
+#: gtk/window_details.glade.h:9
+msgid "<b>Status:</b>"
+msgstr "<b>Състояние:</b>"
+
+#: gtk/window_details.glade.h:10
+msgid "<b>Tags:</b>"
+msgstr "<b>Тагове:</b>"
+
+#: gtk/window_details.glade.h:11
+msgid ""
+"<b>Warning:</b> This can render your package manager unusable.\n"
+"Changes override the version selected by the package manager. "
+msgstr ""
+"<b>Внимание:</b> Това може да направи пакетния мениджър неизползваем.\n"
+"Changes·override·the·version·selected·by·the·package·manager.·"
+
+#: gtk/window_details.glade.h:13
+msgid "Common"
+msgstr ""
+
+#: gtk/window_details.glade.h:16
+msgid "Dependencies of the Latest Version"
+msgstr "Зависимости на Последната Версия"
+
+#: gtk/window_details.glade.h:18
+#, fuzzy
+msgid "Download:"
+msgstr "Размер на изтегленото:"
+
+#: gtk/window_details.glade.h:20
+msgid "Installed Files"
+msgstr "Инсталирани Файлове"
+
+#: gtk/window_details.glade.h:24
+#, fuzzy
+msgid "Size:"
+msgstr "Размер"
+
+#: gtk/window_details.glade.h:25
+msgid "Version:"
+msgstr "Версия:"
+
+#~ msgid "%s <i>(%s)</i>"
+#~ msgstr "%s·<i>(%s)</i>"
+
+#~ msgid "Failed to access %s"
+#~ msgstr "Неуспешен достъп до %s"
+
+#~ msgid "Unable to start helper process (gzip). Please report."
+#~ msgstr ""
+#~ "Процесът за помощ не може да бъде стартиран (gzip). Моля, докладвайте."
+
+#~ msgid "OH SHIT DUNNO WTF IS GOIN ON!"
+#~ msgstr "ПОДЯВОЛИТЕ НЯМАМ ИДЕЯ КАКВО СТАВА!"
+
+#~ msgid "unkown"
+#~ msgstr "непознат"
+
+#~ msgid "Obsolete or locally installed"
+#~ msgstr "Остарели или инсталирани локално"
+
+#~ msgid "Obsolete and locally installed"
+#~ msgstr "Остарял или инсталиран локално"
+
+#~ msgid ""
+#~ "Some index files failed to download, they have been ignored, or old ones "
+#~ "used instead."
+#~ msgstr ""
+#~ "Някои индекс файлове не успяха да се изтеглят, те бяха игнорирани илиня "
+#~ "тяхмно място бяха инсталирани стари файлове."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Use smart upgrade method (dist-"
+#~ "upgrade)?</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"large\">Да бъде ли използван Умния метод за "
+#~ "осъвременяване·(dist-upgrade)?</span>"
+
+#~ msgid "Available Tags"
+#~ msgstr "Свободни Тагове"
+
+#~ msgid "Included Tags"
+#~ msgstr "Влючени Тагове"
+
+#~ msgid "Excluded Tags"
+#~ msgstr "Изключени Тагове"
+
+#~ msgid "<i>Running...</i>"
+#~ msgstr "<i>Стартиран...</i>"
+
+#~ msgid ""
+#~ "\n"
+#~ "Successfully applied all changes. You can close the window now "
+#~ msgstr ""
+#~ "\n"
+#~ "Всички промени са приложени успешно.·Вече можете да затворите този "
+#~ "прозорец ·"
+
+#~ msgid ""
+#~ "\n"
+#~ "Failed to apply all changes! Scroll in this buffer to see what went wrong "
+#~ msgstr ""
+#~ "\n"
+#~ "Не всички промени са извършени успешно!·Разгледайте този буфер и "
+#~ "разберете какво се е объркало ·"
+
+#~ msgid ""
+#~ "\n"
+#~ "Successfully installed all packages of the current medium. To continue "
+#~ "the installation with the next medium close this window."
+#~ msgstr ""
+#~ "\n"
+#~ "Всички пакети от текущото устройство са инсталирани успешно. За да "
+#~ "продължите инсталацията от следващото устройство - затворете този "
+#~ "прозорец."
+
+#~ msgid "<i>Finished</i>"
+#~ msgstr "<i>Завършени</i>"
+
+#~ msgid "<i>Can't close while running</i>"
+#~ msgstr "<i>Не може да бъде затворен докато работи</i>"
+
+#~ msgid "Retrieving Index Files..."
+#~ msgstr "Получава Индекс Файловете..."
+
+#~ msgid "Retrieving Package Files..."
+#~ msgstr "Получаване на Пакетите..."
+
+#~ msgid "N/A"
+#~ msgstr "Няма"
+
+#~ msgid "_Downgrade"
+#~ msgstr "_Връща версията"
+
+#~ msgid "_Install"
+#~ msgstr "_Инсталира"
+
+#~ msgid "_Upgrade"
+#~ msgstr "_Осъвременява"
+
+#~ msgid "Required Space"
+#~ msgstr "Дисково Пространство"
+
+#~ msgid "Update the list of available packages"
+#~ msgstr "Осъвременява списъкът на наличните пакети"
+
+#~ msgid "No Changes"
+#~ msgstr "Без Промени"
+
+#~ msgid "Install"
+#~ msgstr "Инсталира"
+
+#~ msgid "Upgrade"
+#~ msgstr "Осъвременява"
+
+#~ msgid "All Packages"
+#~ msgstr "Всички Пакети"
+
+#~ msgid ""
+#~ "The debtags database is not installed\n"
+#~ "\n"
+#~ "Please call \"debtags update\" in a shell to get the database\n"
+#~ "\n"
+#~ "Sorry for this inconvenience, it will go away in one of the next versions "
+#~ "(patches are welcome)!"
+#~ msgstr ""
+#~ "Базата данни·debtags·не е инсталирана\n"
+#~ "\n"
+#~ "Моля, напишете·\"debtags·update\"·в командния интерпретатор, за да я "
+#~ "инсталирате\n"
+#~ "\n"
+#~ "Извиняваме се за това неудобство, то ще бъде премахнато в някоя от "
+#~ "следващите версии·(поправките са добре дошли)!"
+
+#~ msgid ""
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
+#~ msgstr ""
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali·it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail·Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)\n"
+#~ "Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org> (Bulgarian)"
+
+#~ msgid "Search for:"
+#~ msgstr "Търсене за:"
+
+#~ msgid "Search in:"
+#~ msgstr "Търси в:"
+
+#~ msgid "Show only packages matching the searched terms."
+#~ msgstr "Показва пакетите отговарящи на условията за търсене."
+
+#~ msgid "<b>Install</b>"
+#~ msgstr "<b>Инсталира</b>"
+
+#~ msgid "<b>Package Control</b>"
+#~ msgstr "<b>Контрол на Пакетите</b>"
+
+#~ msgid "Ac_tions"
+#~ msgstr "Действия"
+
+#~ msgid "Commit (and download if necessary) selected changes on packages"
+#~ msgstr ""
+#~ "Потвърждава·(и изтегля ако е необходимо)·избраните промени в пакетите"
+
+#~ msgid "Deinstall the package"
+#~ msgstr "Деинсталира пакетът"
+
+#~ msgid "Edit the available filters"
+#~ msgstr "Редактира наличните филтри"
+
+#~ msgid "Filters..."
+#~ msgstr "Филтри..."
+
+#~ msgid "Find a package name in the list of shown packages below"
+#~ msgstr "Намира името на пакет в списъка на показаните пакети отдолу"
+
+#~ msgid "Find next"
+#~ msgstr "Следващо търсене"
+
+#~ msgid "Mark packages for upgrade, except those with new dependencies"
+#~ msgstr "Избира пакетите за осъвременяване, освен тези с нови зависимости"
+
+#~ msgid "Packages Depending on this One"
+#~ msgstr "Пакети Зависещи от Този Пакет"
+
+#~ msgid "Remove Including _Configuration"
+#~ msgstr "Премахва Включително _Настройките"
+
+#~ msgid "Required space:"
+#~ msgstr "Нужно пространство:"
+
+#~ msgid "Search again from the beginning"
+#~ msgstr "Търсене отново от началото"
+
+#~ msgid "Selected"
+#~ msgstr "Избрани"
+
+#~ msgid "Stat_us Tree"
+#~ msgstr "Дърво на Със_тоянието"
+
+#~ msgid "Suggestions and Recommendations"
+#~ msgstr "Предложения и Препоръки"
+
+#~ msgid "Synaptic - an apt frontend"
+#~ msgstr "Synaptic·-·apt·графичен интерфейс"
+
+#~ msgid "Update package cache"
+#~ msgstr "Осъвременява пакетния кеш"
+
+#~ msgid "View installed documentation of the package in a browser"
+#~ msgstr "Преглежда инсталираната документация на пакета в браузър"
+
+#~ msgid "_Alphabetic Tree"
+#~ msgstr "_Азбучна Дървовидна Структура"
+
+#~ msgid "_Apply Filter"
+#~ msgstr "_Прилага Филтър"
+
+#~ msgid "_Clear All Marked Changes"
+#~ msgstr "_Изчиства Всички Избрани Промени"
+
+#~ msgid "_Collapse All"
+#~ msgstr "_Разлиства Всички"
+
+#~ msgid "_Edit Filters..."
+#~ msgstr "_Редактира Филтри..."
+
+#~ msgid "_Expand All"
+#~ msgstr "_Разглежда Всички"
+
+#~ msgid "_Flat List"
+#~ msgstr "_Плосък Списък"
+
+#~ msgid "_Install Latest Version"
+#~ msgstr "_Инсталира Последната Версия"
+
+#~ msgid "_No Changes"
+#~ msgstr "_Без Промени"
+
+#~ msgid "_Remove"
+#~ msgstr "_Премахва"
+
+#~ msgid "_Save Selections"
+#~ msgstr "_Запазва Избраните Пакети"
+
+#~ msgid "_Section Tree"
+#~ msgstr "_Дървовиден с Раздели"
+
+#~ msgid "_Tag Tree"
+#~ msgstr "_Дърво на Таговете"
+
+#~ msgid "_View"
+#~ msgstr "_Изглед"
+
+#~ msgid "<b>Details</b>"
+#~ msgstr "<b>Детайли</b>"
+
+#~ msgid "<b>Package</b>"
+#~ msgstr "<b>Пакет</b>"
+
+#~ msgid ""
+#~ "<b>Warning:</b> This can render your package\n"
+#~ "manager unusable. Changes override the version selected by the package "
+#~ "manager. "
+#~ msgstr ""
+#~ "<b>Внимание:</b> Това може да направи вашия пакетен\n"
+#~ "мениджър неизползваем. Changes override the version selected by the "
+#~ "package·manager.·"
+
+#~ msgid "View installed online documentation related to the package"
+#~ msgstr "Преглежда инсталираната онлайн документация, свързана с пакета"
+
+#~ msgid "_Collapse All   "
+#~ msgstr "_Разлиства Всички..."
+
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>Действия</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>Основни</b>"
+
+#~ msgid "Clear"
+#~ msgstr "Изчиства"
+
+#~ msgid "Default"
+#~ msgstr "Стандартен"
+
+#~ msgid "Layout"
+#~ msgstr "Външен изглед"
+
+#~ msgid "New in archive:"
+#~ msgstr "Нови в архива:"
+
+#~ msgid "Package List"
+#~ msgstr "Списък на Пакетите"
+
+#~ msgid "Required space"
+#~ msgstr "Нужно пространство"
+
+#~ msgid "To be installed:"
+#~ msgstr "Да бъдат инсталирани:"
+
+#~ msgid "To be removed including configuration:"
+#~ msgstr "Да бъдат премахнати, включително настройките им:"
+
+#~ msgid "To be removed:"
+#~ msgstr "Да бъдат премахнати:"
+
+#~ msgid "To be upgraded:"
+#~ msgstr "Да бъдат осъвременени:"
+
+#~ msgid "Update available:"
+#~ msgstr "Налични осъвременявания:"
+
+#~ msgid "Enter the disc name"
+#~ msgstr "Въведете името на диска"
+
+#~ msgid "Apply the changes"
+#~ msgstr "Прилага всички промени"
+
+#~ msgid "<b>Rules</b>"
+#~ msgstr "<b>Правила</b>"
+
+#~ msgid "<b>View</b>"
+#~ msgstr "<b>Изглед</b>"
+
+#~ msgid "Collapse All"
+#~ msgstr "Разлиства Всички"
+
+#~ msgid "Flat List"
+#~ msgstr "Плосък Списък"
+
+#~ msgid "Leave Unchanged"
+#~ msgstr "Остявя Непроменен"
+
+#~ msgid "Section Tree"
+#~ msgstr "Дърво на Разделите"
+
+#~ msgid "Sorting:"
+#~ msgstr "Подрежда:"
+
+#~ msgid "Status Tree"
+#~ msgstr "Дърво на Състоянието"
+
+#~ msgid "Suggestions or Recommendations"
+#~ msgstr "Предложения и Препоръки"
+
+#~ msgid "Tree: "
+#~ msgstr "Дърво: "
+
+#~ msgid ""
+#~ "1. Select the package that you wish to install or remove\n"
+#~ "2. Mark the change in the package control area, package menu or context "
+#~ "menu of the package\n"
+#~ "3. Apply the marked change(s)"
+#~ msgstr ""
+#~ "1.·Посочете пакет, който желаете да инсталирате или премахнете\n"
+#~ "2.·Изберете промяната в зоната за контрол на пакетите, пакетното менюили "
+#~ "контекстното меню на пакета\n"
+#~ "3.·Приложете избраните промени"
+
+#~ msgid "<b>Note:</b> Modifications are not applied instantly."
+#~ msgstr "<b>Бележка:</b>·Промените не се прилагат моментално."
+
+#~ msgid "Suggestions or recommendations"
+#~ msgstr "Предложения или препоръки"
+
+#~ msgid "To be removed including configuration"
+#~ msgstr "Да бъдат премахнати, включително и конфигурацията"
+
+#~ msgid "Installed (update available)"
+#~ msgstr "Инсталирани (могат да бъдат осъвременени)"

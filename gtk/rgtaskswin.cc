@@ -121,7 +121,7 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
 		      TASK_NAME_COLUMN, &str, -1);
 
    // ask tasksel about the selected task
-   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") + " --task-packages " + string(str);
+   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") + " --task-desc " + string(str);
    string taskDescr;
    char buf[255];
    FILE *f=popen(cmd.c_str(), "r");

@@ -2075,27 +2075,82 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    me->_pkgDetails->show();
 }
 
+// helper to hide the "please wait" message
+void plug_added(GtkWidget *sock, void *data)
+{
+   gtk_widget_show(sock);
+   gtk_widget_hide(GTK_WIDGET(data));
+}
+
 void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 {
-   RGMainWindow *win = (RGMainWindow *) data;
+   RGMainWindow *me = (RGMainWindow *) data;
 
    bool Changed = false;
    {
-      RGRepositoryEditor w(win);
-      Changed = w.Run();
-      
+      if(!g_file_test("/usr/bin/gnome-software-properties", 
+		      G_FILE_TEST_IS_EXECUTABLE) 
+	 || _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) 
+      {
+	 RGRepositoryEditor w(me);
+	 Changed = w.Run();
+      } else {
+	 me->setInterfaceLocked(TRUE);
+	 _config->Set("Synaptic::UpdateAfterSrcChange",true);
+	 GPid pid;
+	 int status;
+	 char *argv[5];
+	 GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	 gtk_window_set_default_size(GTK_WINDOW(win),400,500);
+	 gtk_container_set_border_width(GTK_CONTAINER(win), 6);
+	 gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(me->_win));
+	 gtk_window_set_skip_taskbar_hint(GTK_WINDOW(win), TRUE);
+	 GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
+	 gtk_container_add(GTK_CONTAINER(win), vbox);
+	 gtk_widget_show(vbox);
+
+	 GtkWidget *label = gtk_label_new("");
+	 gtk_label_set_markup(GTK_LABEL(label),
+			      _("<big><b>Building repoitory dialog</b></big>\n\n"
+				"Please wait."));
+	 gtk_box_pack_start_defaults(GTK_BOX(vbox), label);
+	 gtk_widget_show(label);
+	 
+	 GtkWidget *sock = gtk_socket_new();
+	 g_signal_connect(G_OBJECT(sock), "plug-added", G_CALLBACK(plug_added), 
+			  label);
+	 gtk_box_pack_start_defaults(GTK_BOX(vbox), sock);
+	 
+	 argv[0] = "/usr/bin/gnome-software-properties";
+	 argv[1] = "-n";
+	 argv[2] = "-p";
+	 argv[3] = g_strdup_printf("%i", gtk_socket_get_id(GTK_SOCKET(sock)));
+	 argv[4] = NULL;
+	 
+	 g_spawn_async(NULL, argv, NULL, (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
+		       NULL, NULL, &pid, NULL);
+
+	 gtk_widget_show_all(win);
+	 while(waitpid(pid, &status, WNOHANG) == 0) {
+	    usleep(50000);
+	    RGFlushInterface();
+	 }
+	 Changed = WEXITSTATUS(status);    
+	 gtk_widget_destroy(win);
+	 me->setInterfaceLocked(FALSE);
+      }
    }
    RGFlushInterface();
 
    // auto update after repostitory change
    if (Changed == true && 
        _config->FindB("Synaptic::UpdateAfterSrcChange",false)) {
-      win->cbUpdateClicked(NULL, data);
+      me->cbUpdateClicked(NULL, data);
    } else if(Changed == true && 
 	     _config->FindB("Synaptic::AskForUpdateAfterSrcChange",true)) {
       // ask for update after repo change
       GtkWidget *cb, *dialog;
-      dialog = gtk_message_dialog_new (GTK_WINDOW(win->window()),
+      dialog = gtk_message_dialog_new (GTK_WINDOW(me->window()),
 				       GTK_DIALOG_DESTROY_WITH_PARENT,
 				       GTK_MESSAGE_INFO,
 				       GTK_BUTTONS_CLOSE,

@@ -92,8 +92,14 @@ bool RAPTOptions::restore()
       _packageOptions[pkg] = o;
    }
 
+   // upgrade code for older synaptic versions, can go away in the future
+   if(FileExists(RConfDir()+"/preferences"))
+      rename(string(RConfDir()+"/preferences").c_str(),
+	     string(RStateDir()+"/preferences").c_str());
+
+
    // pining stuff
-   string File = RConfDir() + "/preferences";
+   string File = RStateDir() + "/preferences";
 
    if (!FileExists(File))
       return true;

@@ -51,6 +51,10 @@ string RConfDir();
 // small files like changelogs or pinfiles (preferences)
 string RTmpDir();
 
+// state dir - we store the locked packages (preferences file) here
+//             possible other stuff in the future
+string RStateDir();
+
 // we store the commit history here
 string RLogDir();
 

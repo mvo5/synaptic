@@ -443,7 +443,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
       char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
    } else {
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
+      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 8");
    }
    gtk_box_pack_start(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), _term, TRUE, TRUE, 0);
    gtk_widget_show(_term);

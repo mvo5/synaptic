@@ -103,7 +103,8 @@ Go to the repository dialog to correct the problem."));
       return false;
    if (ReadPinFile(*_policy) == false)
       return false;
-   if (ReadPinFile(*_policy, RConfDir() + "/preferences") == false)
+
+   if (ReadPinFile(*_policy, RStateDir() + "/preferences") == false)
       return false;
 
    _dcache = new pkgDepCache(_cache, _policy);

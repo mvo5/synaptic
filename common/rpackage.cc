@@ -851,7 +851,7 @@ void RPackage::setPinned(bool flag)
    FILE *out;
    struct stat stat_buf;
 
-   string File =RConfDir() + "/preferences";
+   string File =RStateDir() + "/preferences";
 
    _boolFlags = flag ? (_boolFlags | FPinned) : (_boolFlags & FPinned);
 

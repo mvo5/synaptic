@@ -137,6 +137,22 @@ string RConfDir()
    return confDir;
 }
 
+string RStateDir()
+{
+   struct stat stbuf;
+   static string stateDir = string(SYNAPTICSTATEDIR);
+   if (stat(stateDir.c_str(), &stbuf) < 0) {
+      if (mkdir(stateDir.c_str(), 0755) < 0) {
+	 _error->Errno("mkdir",
+		       _("ERROR: could not create state directory %s"),
+		       stateDir.c_str());
+	 return "";
+      }
+   }
+
+   return stateDir;
+}
+
 // we use the ConfDir for now to store very small tmpfiles
 string RTmpDir()
 {

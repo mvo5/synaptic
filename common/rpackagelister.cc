@@ -718,11 +718,20 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
     else if(_displayMode == TREE_DISPLAY_STATUS)
 	{
 	    string str;
-	    if(pkg->installedVersion() != NULL) {
-		str="Installed";
+	    if(pkg->getOtherStatus() & RPackage::ONew)
+		str=_("New in repository");
+	    else if(pkg->installedVersion() != NULL) {
+		if(pkg->getStatus() == RPackage::SInstalledOutdated)
+		    str=_("Installed and upgradeable");
+		else
+		    str=_("Installed");
 	    } else {
-		str="Uninstalled";
+		if(pkg->getOtherStatus() & RPackage::OResidualConfig)
+		    str=_("Not installed (residual config)");
+		else
+		    str=_("Not installed");
 	    }
+
 	    if(itermap.find(str) == itermap.end()) {
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));

@@ -69,7 +69,7 @@ bool RGUserDialog::showErrors()
    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
                                 GTK_DIALOG_DESTROY_WITH_PARENT,
                                 msg_type, GTK_BUTTONS_OK,
-				_("The following problems where found "
+				_("The following problems were found "
 				  "on your system:"));
    gtk_widget_set_size_request(dia,500,300);
    gtk_container_set_border_width(GTK_CONTAINER(dia), 5);

@@ -75,9 +75,12 @@ void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
    if(me->_blockAction)
       return;
 
-   me->_defaultDistro = gtk_combo_box_get_active_text(GTK_COMBO_BOX(self));
-   //cout << "new default distro: " << me->_defaultDistro << endl;
-   me->distroChanged = true;
+   gchar *s=gtk_combo_box_get_active_text(GTK_COMBO_BOX(self));
+   if(s!=NULL) {
+      me->_defaultDistro;
+      //cout << "new default distro: " << me->_defaultDistro << endl;
+      me->distroChanged = true;
+   }
 }
 
 void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self, 
@@ -93,7 +96,9 @@ void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self,
    gchar *defaultDistro = (gchar*)g_object_get_data(G_OBJECT(self),"defaultDistro");
    if(strcmp(defaultDistro, "distro") == 0) {
       gtk_widget_set_sensitive(GTK_WIDGET(me->_comboDefaultDistro),TRUE);
-      me->_defaultDistro = gtk_combo_box_get_active_text(GTK_COMBO_BOX(me->_comboDefaultDistro));
+      gchar *s = gtk_combo_box_get_active_text(GTK_COMBO_BOX(me->_comboDefaultDistro));
+      if(s!=NULL)
+	 me->_defaultDistro = s;
    } else {
       gtk_widget_set_sensitive(GTK_WIDGET(me->_comboDefaultDistro),FALSE);
       me->_defaultDistro = defaultDistro;
@@ -620,6 +625,13 @@ void RGPreferencesWindow::readDistribution()
 				 "on_radiobutton_distribution_group_changed",
 				 G_CALLBACK(cbRadioDistributionChanged),
 				 this);
+
+   // clear the combo box
+   GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro));
+   int num = gtk_tree_model_iter_n_children(model, NULL);
+   for(;num >= 0;num--)
+      gtk_combo_box_remove_text(GTK_COMBO_BOX(_comboDefaultDistro), num);
+
    if(defaultDistro == "") {
       button = ignore;
       gtk_widget_set_sensitive(GTK_WIDGET(_comboDefaultDistro),FALSE);
@@ -639,8 +651,8 @@ void RGPreferencesWindow::readDistribution()
 		    G_CALLBACK(cbArchiveSelection), this);
 
    for (unsigned int i = 0; i < archives.size(); i++) {
-      //cout << "archive: " << archives[i] << endl;
-      // ignore "now", it's a combobox item now
+      cout << "archive: " << archives[i] << endl;
+      // ignore "now", it's a toggle button item now
       if(archives[i] == "now")
 	 continue;
       gtk_combo_box_append_text(GTK_COMBO_BOX(_comboDefaultDistro),

@@ -54,7 +54,7 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
    bool act=false;
    gboolean res = FALSE;
    gchar *taskname = NULL;
-   string cmd = "/usr/bin/tasksel";
+   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel");
    do {
       gtk_tree_model_get(model, &iter, 
 			 TASK_CHECKBOX_COLUMN, &res, 
@@ -121,7 +121,7 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
 		      TASK_NAME_COLUMN, &str, -1);
 
    // ask tasksel about the selected task
-   string cmd = "/usr/bin/tasksel --task-packages " + string(str);
+   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") + " --task-packages " + string(str);
    string taskDescr;
    char buf[255];
    FILE *f=popen(cmd.c_str(), "r");
@@ -172,7 +172,9 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    // fiel in tasks
    char buf[255];
    gchar **strArray;
-   FILE *f = popen("/usr/bin/tasksel --list-tasks","r");
+   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") + " --list-tasks";
+   FILE *f = popen(cmd.c_str(),"r");
+
    while(fgets(buf,254,f) != NULL) {
       strArray = g_strsplit(buf, "\t", 2);
       g_strstrip(strArray[1]);

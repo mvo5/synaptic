@@ -81,71 +81,81 @@
 </indexterm>
 
 <sect1 id="synaptic-introduction"> 
-	<title>Introduction</title> 
+	<title>
+		Introduction
+	</title> 
 	<para>
-		The &app; is a graphical frontend to the <emphasis>APT</emphasis> package management system.
-		It allows you to perform all actions of the command line tool <command>apt-get</command> in a graphical 
-		environment.
+		The &app; enables you to install software onto your computer and to manage the software that is 
+		already installed. The software is bundled in so called <emphasis>packages</emphasis>. A single 
+		application can even exist of several packages: e.g. the <application>Mozilla Internet Suite</application> is packaged 
+		to <emphasis>mozilla-browser</emphasis> that contains the actual browser and <emphasis>mozilla-mail
+		</emphasis> that contains the mail client (this example refers to Debian GNU/Linux and can be 
+		different on your distribution). 
 	</para>
+	<para>
+		To avoid duplications most applications reuse the functionality of other applications or libraries 
+		(libraries only provide functions to other libraries or applications and are no stand alone 
+		applications). So the most packages depend on other packages. The &app; resolves the <emphasis>
+		dependencies</emphasis> for you automatically. 
+	</para>
+	<para>
+		Technically the &app; is based on the package manager <application>APT</application> and provides functions that are 
+		similar to the ones of the command line tool <command>apt-get</command> in a graphical environment.
+	</para>
+	<para>
+		In detail &app; provides the following features: 
 
-	<para>
-		The software on your system is organizied in so called <emphasis>packages</emphasis>. The &app; enables you
-		to install, remove or upgrade software packages. 
-		A detailed list of the most important features can be found below.
+	        <itemizedlist>
+		        <listitem>
+			        <para>
+				        Install, remove, configure, upgrade and downgrade single and multiple packages.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+					Upgrade your whole system.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+	                                Manage package repositories.
+		                </para>
+	                </listitem>
+		        <listitem>
+			        <para>
+				        Find packages by name, description and several other attributes.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+					Select packages by status, section, name or a custom filter.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+	                                 Sort packages by name, status, size or version.
+		                </para>
+			</listitem>
+	                <listitem>
+		                <para>
+			                Browse all available online documentation related to a package.
+				</para>
+	                </listitem>
+	                <listitem>
+		                <para>
+			                Lock packages to the current version.
+				</para>
+	                </listitem>
+	                <listitem>
+		                <para>
+			                Force the installation of a specifc package version.
+				</para>
+	                </listitem>
+		</itemizedlist>
 	</para>
-	
 	<note>
 		<para>
-			The modifications are not appled instantly. This allows you to mark several modifications and
-			apply them at once.
-		</para>
-	</note>
-
-
-	<para>
-                &app; provides the following features:
-
-        <itemizedlist>
-                <listitem>
-                        <para>
-                                Install, remove, configure, upgrade and downgrade single and multiple packages.
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Upgrade your whole system.
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Manage package repositories.
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Search list of known packages by name, description...
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Filter list of shown packages by status, section, property and tag.
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Arrange list of shown packages by initial letter, status or tag.
-                        </para>
-                </listitem>
-                <listitem>
-                        <para>
-                                Browse all available online documentation related to a package.
-                        </para>
-                </listitem>
-        </itemizedlist>
-	</para>
-	<note>
-		<para>
-			Root rights are required to apply changes in the package system.
+			You need root rights to install or modify software packages on your computer.
 		</para>
 	</note>
 
@@ -459,13 +469,13 @@
 				<listitem>
 					<para>
 						Show packages that fit to
-						the selected custom criterias, only.
+						the selected custom criteria, only.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>
-					Find histroy
+					Find history
 				</term>
 				<listitem>
 					<para>
@@ -516,7 +526,7 @@
 
 	<tip>
 		<para>
-			The column order and the used colours can be changed in the preferences, see
+			The column order and the used colors can be changed in the preferences, see
 			<xref linkend="synaptic-prefs-ordercolor"/>.
 		</para>	
 	</tip>
@@ -732,7 +742,7 @@
 			<para>
 				Click on <guilabel>Find</guilabel> to start
 				the search. This can take some time on low machines and wide
-				search criterias.
+				search criteria.
 			</para>
 		</listitem>
 		<listitem>
@@ -868,6 +878,11 @@
 					</listitem>
 				</itemizedlist>
 			</para>
+			<para>
+				If the installation of the package(s) requires additional changes, you will be asked 
+				for confirmation. To also mark the additional changes click on the button <guibutton>Mark
+				</guibutton>.
+			</para>
 		</listitem>
 		<listitem>
 			<para>
@@ -895,6 +910,33 @@
 				</itemizedlist>
 			</para>
 		</listitem>
+		<listitem>
+			<para>
+				You will be asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual installation confirm the changes: 
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
+		</listitem>
 	</orderedlist>
 </sect2>
 
@@ -915,7 +957,7 @@
 				<emphasis>Debian only:</emphasis> To remove all files related to the package
 				choose <menuchoice><guimenuitem>Mark for
 				Complete Removal</guimenuitem></menuchoice> instead of 
-				<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
+				<menuchoice><guimenuitem>Mark for Removal</guimenuitem></menuchoice>.
 			</para>
 		</note>
 	</para>
@@ -973,6 +1015,11 @@
 					</listitem>
 				</itemizedlist>
 			</para>
+			<para>
+				If the removal of the package(s) requires additional changes, you will be asked 
+				for confirmation. To also mark the additional changes click on the button <guibutton>Mark
+				</guibutton>.
+			</para>
 		</listitem>
 		<listitem>
 			<para>
@@ -999,6 +1046,33 @@
 					</listitem>
 				</itemizedlist>
 			</para>
+		</listitem>
+		<listitem>
+			<para>
+				You are asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual removal confirm the changes: 
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
 		</listitem>
 	</orderedlist>
 </sect2>
@@ -1076,6 +1150,11 @@
 					</listitem>
 				</itemizedlist>
 			</para>
+			<para>
+				If the upgrade of the package(s) requires additional changes, you will be asked 
+				for confirmation. To also mark the additional changes click on the button <guibutton>Mark
+				</guibutton>.
+			</para>
 		</listitem>
 		<listitem>
 			<para>
@@ -1100,6 +1179,33 @@
 					</para>
 				</listitem>
 			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				You are asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual upgrade confirm the changes: 
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
 		</listitem>
 	</orderedlist>
 	<tip>
@@ -1180,7 +1286,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Click on <guibutton>Rerfesh</guibutton> in the toolbar.
+							Click on <guibutton>Refresh</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
@@ -1251,6 +1357,33 @@
 					</listitem>
 				</itemizedlist>
 			</para>
+		</listitem>
+		<listitem>
+			<para>
+				You are asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual upgrade confirm the changes: 
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
 		</listitem>
 	</orderedlist>
 
@@ -1392,6 +1525,21 @@
 			</listitem>
 		</itemizedlist>
 	</para>
+	<para>
+		You are asked for confirmation. Check the summarized changes that will be applied. 
+		To confirm the changes click on the button <guibutton>Apply</guibutton>.
+	</para>
+	<para>
+		During the processing of the changes you will see a progressbar. Wait until
+		the changes have been applied. This can take some time depending on the size
+		of the changes. Afterwards you will be returned to the main window.
+	</para>				
+	<note>
+		<para>
+			The progressbar is not available on Debian system. Instead you will
+			see a detailed terminal output.
+		  </para>
+	</note>
 </sect2>
 
 <sect2 id="synaptic-pkg-undo">
@@ -1466,13 +1614,13 @@
 
 <sect2 id="synaptic-pkg-config">
 	<title>
-		To Configure Packages
+		To Configure Packages (Debian only)
 	</title>
 
 	<para>
 		<note>
 			<para>
-				<emphasis>Debian only:</emphasis> This feature requires the installation of 
+				To use this feature you have to install the package
 				<emphasis>libgnome2-perl</emphasis>.
 			</para>
 		</note>
@@ -1480,7 +1628,7 @@
 
 	<para>
 		Debian provides a unified method, called <emphasis>debconf</emphasis>, to configure software packages. This feature
-		is not supported by all packages. If a package supports this feautre the configuration can be done 
+		is not supported by all packages. If a package supports this feature the configuration can be done 
 		through an assistant.
 	</para>
 
@@ -1510,12 +1658,12 @@
 
 <sect2 id="synaptic-pkg-docu">
 	<title>
-		To View Documentation for Packages
+		To View Documentation for Packages (Debian only)
  	</title>
 
 	<note>
 		<para>
-			<emphasis>Debian only:</emphasis> This feature requires the installation of <emphasis>dwww</emphasis>.
+			To use this feature you have to install the package <emphasis>dwww</emphasis>.
 		</para>
 	</note>
 	
@@ -1552,7 +1700,7 @@
 	</para>
 	
 	<para>
-		&app; will not allow any further changes to the system before all borken packages are fixed.
+		&app; will not allow any further changes to the system before all broken packages are fixed.
 	</para>
 
 	<para>
@@ -1842,7 +1990,7 @@
 			<listitem>
 				<para>
 					Rules allow you to define which packages should be shown in the list.
-					A package has to fulfil all selected criterions.
+					A package has to fulfill all selected criteria.
 				</para>
 				<variablelist>
 					<varlistentry>
@@ -1946,7 +2094,7 @@
 				<variablelist>
 					<varlistentry>
 						<term>
-							Apply changes in a teriminal window
+							Apply changes in a terminal window
 						</term>
 							<listitem>
 								<para>
@@ -2067,7 +2215,7 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Colours
+				Colors
 			</term>
 			<listitem>
 				<para>
@@ -2093,7 +2241,7 @@
 		Network
 	</title> 
 	<para> 
-		Configure the internet connection and proxy server.
+		Configure the Internet connection and proxy server.
 	</para>
 </sect2> 
 

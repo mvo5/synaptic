@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: synaptic 0.50\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-04 07:06+0200\n"
-"PO-Revision-Date: 2004-06-02 14:06+0200\n"
+"PO-Revision-Date: 2004-06-04 12:45+0200\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -440,9 +440,8 @@ msgid "Installed"
 msgstr "Instal·lat"
 
 #: common/rpackage.cc:1301 common/rpackageview.cc:97
-#, fuzzy
 msgid "Installed (upgradable)"
-msgstr "Instal·lats i actualitzables"
+msgstr "Instal·lats (actualitzables)"
 
 #: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
@@ -454,9 +453,8 @@ msgid "Broken"
 msgstr "Trencat"
 
 #: common/rpackage.cc:1304
-#, fuzzy
 msgid "Not installed (new in repository)"
-msgstr "No instal·lat (nou a l'arxiu)"
+msgstr "No instal·lat (nou al repositori)"
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -682,9 +680,8 @@ msgid "New in repository"
 msgstr "Nou al repositori"
 
 #: common/rpackageview.cc:94
-#, fuzzy
 msgid "Installed (obsolete)"
-msgstr "Instal·lats i obsolets"
+msgstr "Instal·lats (obsolets)"
 
 #: common/rpackageview.cc:102
 msgid "Not installed (residual config)"
@@ -711,9 +708,8 @@ msgid "Pkg with Debconf"
 msgstr "Paquet amb Debconf"
 
 #: common/rpackageview.cc:373
-#, fuzzy
 msgid "Upgradable (upstream)"
-msgstr "Ac_tualitza el sistema"
+msgstr "Actualitzable (original)"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -848,11 +844,11 @@ msgstr ""
 
 #: gtk/gsynaptic.cc:62
 msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
-msgstr ""
+msgstr "--upgrade-mode  Fes «Refresca», «Actualitza» i mostra els canvis\n"
 
 #: gtk/gsynaptic.cc:63
 msgid "--non-interactive Never prompt for user input\n"
-msgstr ""
+msgstr "--non-interactive No demanes mai a l'usuari\n"
 
 #: gtk/gsynaptic.cc:132
 msgid "You must run this program as the root user."
@@ -1142,13 +1138,13 @@ msgstr ""
 "actualitzar, %i per a eliminar; s'utilitzaran %s"
 
 #: gtk/rgmainwindow.cc:1350
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove"
 msgstr ""
 "%i paquets llistats, %i instal·lats, %i trencats. %i per a instal·lar/"
-"actualitzar, %i per a eliminar; s'utilitzaran %s"
+"actualitzar, %i per a eliminar"
 
 #: gtk/rgmainwindow.cc:1426
 #, c-format
@@ -1251,6 +1247,8 @@ msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
+"Heu d'instal·lar el paquet «dwww» per a navegar per la documentació d'un "
+"paquet"
 
 #: gtk/rgmainwindow.cc:2148
 msgid ""
@@ -1301,9 +1299,8 @@ msgid "Marking all available upgrades..."
 msgstr "S'estan marcant totes les actualitzacions disponibles..."
 
 #: gtk/rgmainwindow.cc:2423
-#, fuzzy
 msgid "Successfully marked available upgrades"
-msgstr "S'han marcat amb èxit totes les actualitzacions disponibles"
+msgstr "S'han marcat amb èxit les actualitzacions disponibles"
 
 #: gtk/rgmainwindow.cc:2425
 msgid "Failed to mark all available upgrades!"
@@ -1514,17 +1511,15 @@ msgstr "Alfabet"
 
 #: gtk/window_main.glade.h:3
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #: gtk/window_main.glade.h:5
-#, fuzzy
 msgid "Mark All Up_grades..."
-msgstr "Marca per a actualitzar"
+msgstr "_Marca totes les actualitzacions..."
 
 #: gtk/window_main.glade.h:6
-#, fuzzy
 msgid "Mark All Upgrades"
-msgstr "Marca per a actualitzar"
+msgstr "Marca totes les actualitzacions"
 
 #: gtk/window_main.glade.h:7
 msgid "Mark for Co_mplete Removal"
@@ -1559,9 +1554,8 @@ msgid "Prefere_nces"
 msgstr "Preferè_ncies"
 
 #: gtk/window_main.glade.h:16
-#, fuzzy
 msgid "Refresh"
-msgstr "_Refresca"
+msgstr "Refresca"
 
 #: gtk/window_main.glade.h:17
 msgid "Release"
@@ -1608,9 +1602,8 @@ msgid "_Browse Documentation"
 msgstr "_Navega per la documentació"
 
 #: gtk/window_main.glade.h:30
-#, fuzzy
 msgid "_Configure..."
-msgstr "_Configura"
+msgstr "_Configura..."
 
 #: gtk/window_main.glade.h:31
 msgid "_Contents"
@@ -1739,7 +1732,6 @@ msgstr ""
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
 #: gtk/window_about.glade.h:15
-#, fuzzy
 msgid ""
 "Original author:\n"
 "Alfredo K. Kojima <kojima@windowmaker.org>\n"
@@ -1760,10 +1752,10 @@ msgstr ""
 "Maintainers:\n"
 "Michael Vogt <mvo@debian.org>\n"
 "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "\n"
 "Contributors:\n"
 "Enrico Zini <enrico@debian.org>\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 
@@ -1797,7 +1789,7 @@ msgstr "Escrit per"
 
 #: gtk/window_about.glade.h:33
 msgid "translators_credits"
-msgstr ""
+msgstr "Jordi Mallach <jordi@debian.org>"
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1968,7 +1960,7 @@ msgstr "Trencats:"
 
 #: gtk/window_preferences.glade.h:27
 msgid "Clicking on the status icon marks the most likely action"
-msgstr ""
+msgstr "Fer clic en la icona d'estat marca l'acció més probable"
 
 #: gtk/window_preferences.glade.h:28
 msgid "Color"
@@ -2124,9 +2116,8 @@ msgid "Network"
 msgstr "Xarxa"
 
 #: gtk/window_preferences.glade.h:66
-#, fuzzy
 msgid "New in respository:"
-msgstr "Nou al repositori"
+msgstr "Nou al repositori:"
 
 #: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
@@ -2195,9 +2186,8 @@ msgstr ""
 "La posició de la columna d'esquerra a dreta. Un valor de -1 amaga la columna"
 
 #: gtk/window_preferences.glade.h:84
-#, fuzzy
 msgid "Upgradable:"
-msgstr "Actualitzable"
+msgstr "Actualitzable:"
 
 #: gtk/window_preferences.glade.h:85
 msgid "Use custom application font"
@@ -2324,12 +2314,10 @@ msgid "Excludes"
 msgstr "Exclusions"
 
 #: gtk/window_filters.glade.h:15
-#, fuzzy
 msgid "For installation or upgrade"
 msgstr "Per a instal·lar o actualitzar"
 
 #: gtk/window_filters.glade.h:16
-#, fuzzy
 msgid "For removal"
 msgstr "Per a eliminar"
 
@@ -2355,7 +2343,6 @@ msgid "New in archive"
 msgstr "Nou a l'arxiu"
 
 #: gtk/window_filters.glade.h:24
-#, fuzzy
 msgid "Not installable"
 msgstr "No instal·lat"
 
@@ -2379,15 +2366,16 @@ msgstr "Paquets que són nous al repositori des de l'últim «Refresca»"
 msgid "Packages that are not available in any repository"
 msgstr "Paquets que no són disponibles en cap repositori"
 
+# FIXME "ist"
 #: gtk/window_filters.glade.h:32
-#, fuzzy
 msgid ""
 "Packages that have been installed and a later upstream version ist available"
-msgstr "Paquets que s'han instal·lat i tenen una versió posterior disponible"
+msgstr ""
+"Paquets que s'han instal·lat i tenen una versió original posterior disponible"
 
 #: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
-msgstr "Paquets que s'han instal·lat i tenen una versió posterior disponible"
+msgstr "Paquets que s'han instal·lat i tenen una revisió posterior disponible"
 
 #: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
@@ -2453,7 +2441,7 @@ msgstr "Actualitzable"
 
 #: gtk/window_filters.glade.h:53
 msgid "Upgradable to a later upstream version"
-msgstr ""
+msgstr "Actualitzable a una versió original posterior"
 
 #: gtk/window_filters.glade.h:54
 msgid "Version Number"
@@ -2529,27 +2517,28 @@ msgstr "Gestor de paquets Synaptic"
 
 #: gtk/dialog_welcome.glade.h:1
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #: gtk/dialog_welcome.glade.h:2
-#, fuzzy
 msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then to apply them."
-msgstr "<b>Nota:</b> Els canvis no s'apliquen a l'instant."
+msgstr ""
+"<b>Nota:</b> Els canvis no s'apliquen a l'instant. Primer teniu que marcar "
+"tots els canvis i després aplicar-los."
 
 #: gtk/dialog_welcome.glade.h:3
-#, fuzzy
 msgid "Choose the action from the context menu of the package."
-msgstr "Instal·la l'última versió del paquet"
+msgstr "Seleccioneu l'acció des del menú contextual del paquet."
 
 #: gtk/dialog_welcome.glade.h:4
 msgid "Click on the status icon to open a menu that contains all actions."
 msgstr ""
+"Feu clic en la icona per a obrir un menú que continga totes les accions."
 
 #: gtk/dialog_welcome.glade.h:5
 msgid "Double click on the package name."
-msgstr ""
+msgstr "Feu doble clic sobre el nom del paquet."
 
 #: gtk/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
@@ -2557,27 +2546,29 @@ msgstr "Introducció ràpida"
 
 #: gtk/dialog_welcome.glade.h:7
 msgid "Select the package and choose the action from the 'Package' menu."
-msgstr ""
+msgstr "Seleccioneu el paquet i trieu l'acció des del menú «Paquet»."
 
 #: gtk/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
 msgstr "Mostra aquest diàleg en iniciar"
 
+#  
 #: gtk/dialog_welcome.glade.h:9
-#, fuzzy
 msgid ""
 "The software on your system is organized in so called <i>packages</i>. The "
 "package manager enables you to install, to upgrade or to remove software "
 "packages."
 msgstr ""
-"El gestor de paquets vos permet instal·lar, actualitzar o eliminar paquets "
-"de programari:"
+"El programari del vostre sistema està organitzat en el que s'anomenen "
+"<i>paquets</i>. El gestor de paquet vos permet instal·lar, actualitzar o "
+"eliminar paquets de programari."
 
 #: gtk/dialog_welcome.glade.h:10
-#, fuzzy
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
-msgstr "1. Marqueu paquets per a instal·lar, actualitzar, o eliminar:"
+msgstr ""
+"Podeu marcar paquets per a instal·lar, actualitzar, o eliminar de diverses "
+"maneres:"
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""

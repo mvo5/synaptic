@@ -24,36 +24,41 @@
 #include "rgmainwindow.h"
 
 class RGPreferencesWindow : public RGGladeWindow {
-  RGMainWindow *_mainWin;
-  RPackageLister *_lister;
-  GtkWidget *_optionB[6];
-  GtkWidget *_cacheB[3];
-  GtkWidget *_pathT;
-  GtkWidget *_sizeT;
-  GtkWidget *_maxUndoE;
-  GtkWidget *_optionmenuDel;
+    enum {LAYOUT_VPANED, LAYOUT_HPANED} _synapticLayout;
 
-  /* the color buttons */
-  static char * color_buttons[];
-  int columnPos[6];
-  
-  void readColors();
+    RGMainWindow *_mainWin;
+    RPackageLister *_lister;
+    GtkWidget *_optionB[6];
+    GtkWidget *_cacheB[3];
+    GtkWidget *_pathT;
+    GtkWidget *_sizeT;
+    GtkWidget *_maxUndoE;
+    GtkWidget *_optionmenuDel;
 
-  // treeview stuff
-  void readTreeViewValues();
-  void saveTreeViewValues();
-  
-  static void saveAction(GtkWidget *self, void *data);
-  static void closeAction(GtkWidget *self, void *data);
-  static void doneAction(GtkWidget *self, void *data);
-  static void clearCacheAction(GtkWidget *self, void *data);
+    /* the color buttons */
+    static char * color_buttons[];
+    int columnPos[6];
+    
+    void readColors();
+    
+    // treeview stuff
+    void readTreeViewValues();
+    void saveTreeViewValues();
+    
+    static void saveAction(GtkWidget *self, void *data);
+    static void closeAction(GtkWidget *self, void *data);
+    static void doneAction(GtkWidget *self, void *data);
+    static void clearCacheAction(GtkWidget *self, void *data);
+    
+    static void hpanedClickedAction(GtkWidget *self, void *data);
+    static void vpanedClickedAction(GtkWidget *self, void *data);
 
-  static void colorClicked(GtkWidget *self, void *data);
-  static void saveColor(GtkWidget *self, void *data);
+    static void colorClicked(GtkWidget *self, void *data);
+    static void saveColor(GtkWidget *self, void *data);
   
 
  public:
-  RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
-  virtual ~RGPreferencesWindow() {};
-  virtual void show();
+    RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
+    virtual ~RGPreferencesWindow() {};
+    virtual void show();
 };

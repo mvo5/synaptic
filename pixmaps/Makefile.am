@@ -7,7 +7,9 @@ buttondir =  $(datadir)/synaptic/glade
 button_DATA = update_small.png \
 	      upgrade_small.png \
 	      distupgrade_small.png\
-              proceed_small.png
+              proceed_small.png \
+	      pref_vpaned.xpm \
+	      pref_hpaned.xpm
 
 abouticondir = $(datadir)/synaptic/glade
 abouticon_DATA = deb.png \

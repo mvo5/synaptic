@@ -123,6 +123,16 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
     me->saveTreeViewValues();
     me->_mainWin->rebuildTreeView();
 
+    switch(me->_synapticLayout) {
+    case LAYOUT_VPANED:
+	_config->Set("Synaptic::MainName","main_vpaned");
+	break;
+    case LAYOUT_HPANED:
+	_config->Set("Synaptic::MainName","main_hpaned");
+	break;
+    default:
+	cerr << "uuuoooohhhh" << endl;
+    }	
 
     if (!RWriteConfigFile(*_config)) {
 	_error->Error(_("An error occurred while saving configurations."));
@@ -213,6 +223,15 @@ void RGPreferencesWindow::show()
     else
 	gtk_button_clicked(GTK_BUTTON(_cacheB[0]));
     
+    string mainName =_config->Find("Synaptic::MainName", "main_hpaned");
+    if(mainName == "main_vpaned") {
+	gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML, "button_vpaned")));
+	_synapticLayout = LAYOUT_VPANED;
+    } else {
+	gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML, "button_hpaned")));
+	_synapticLayout = LAYOUT_HPANED;
+    }
+
     RGWindow::show();
 }
 
@@ -359,6 +378,20 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
     gtk_widget_show(color_dialog);
 }
 
+void RGPreferencesWindow::hpanedClickedAction(GtkWidget *self, void *data) 
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;    
+    //cout << "hpanedClickedAction(GtkWidget *self, void *data) " << endl;
+    me->_synapticLayout = LAYOUT_HPANED;
+}
+
+void RGPreferencesWindow::vpanedClickedAction(GtkWidget *self, void *data) 
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+    //cout << "vpanedClickedAction(GtkWidget *self, void *data) " << endl;
+    me->_synapticLayout = LAYOUT_VPANED;
+}
+
 RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister) 
     : RGGladeWindow(win, "preferences")
 {
@@ -406,6 +439,15 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister)
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_button_clean_cache_clicked",
 				  G_CALLBACK(clearCacheAction),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_vpaned_clicked",
+				  G_CALLBACK(vpanedClickedAction),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_hpaned_clicked",
+				  G_CALLBACK(hpanedClickedAction),
 				  this); 
 
 

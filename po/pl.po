@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 16:20-0300\n"
+"POT-Creation-Date: 2004-03-23 17:38-0300\n"
 "PO-Revision-Date: 2004-01-29 04:40+0100\n"
 "Last-Translator: Emil Nowak <emil5@go2.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -467,7 +467,8 @@ msgid "Internal Error, non-zero counts"
 msgstr ""
 
 #: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:47
+#: gtk/window_main.glade.h:17 gtk/window_preferences.glade.h:80
+#: gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "Stan"
 
@@ -476,7 +477,8 @@ msgstr "Stan"
 msgid "Pattern"
 msgstr "Wzorzec"
 
-#: common/rpackagefilter.cc:45 gtk/window_filters.glade.h:45
+#: common/rpackagefilter.cc:45 gtk/window_main.glade.h:14
+#: gtk/window_filters.glade.h:45
 msgid "Section"
 msgstr "Dział"
 
@@ -861,7 +863,7 @@ msgid "To be kept"
 msgstr "Do wstrzymania"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:82
-#: gtk/rgmainwindow.cc:1381
+#: gtk/rgmainwindow.cc:1379
 msgid "An error occurred while saving configurations."
 msgstr "Nastąpił błąd podczas zapisywania konfiguracji."
 
@@ -877,7 +879,7 @@ msgstr "Wybór koloru"
 msgid "ignore"
 msgstr "ignorowanie"
 
-#: gtk/rgpreferenceswindow.cc:784 gtk/window_preferences.glade.h:74
+#: gtk/rgpreferenceswindow.cc:784 gtk/window_preferences.glade.h:75
 msgid "Preferences"
 msgstr "Ustawienia"
 
@@ -1061,55 +1063,55 @@ msgstr "Zainstalowana wersja"
 msgid "Latest Version"
 msgstr "Najnowsza wersja"
 
-#: gtk/rgmainwindow.cc:942
+#: gtk/rgmainwindow.cc:940
 #, fuzzy
 msgid "Refresh the list of known packages"
 msgstr "Filtrowanie listy wyświetlonych pakietów"
 
-#: gtk/rgmainwindow.cc:946
+#: gtk/rgmainwindow.cc:944
 #, fuzzy
 msgid "Mark all possible upgrades"
 msgstr "Zaznacza wszystkie możliwe aktualizacje"
 
-#: gtk/rgmainwindow.cc:950 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:948 gtk/window_summary.glade.h:5
 #, fuzzy
 msgid "Apply all marked changes"
 msgstr "Ukończono dokonywanie wszystkich zmian"
 
-#: gtk/rgmainwindow.cc:1115
+#: gtk/rgmainwindow.cc:1113
 msgid "No Changes"
 msgstr "Bez zmian"
 
-#: gtk/rgmainwindow.cc:1123
+#: gtk/rgmainwindow.cc:1121
 msgid "Install"
 msgstr "Instaluj"
 
-#: gtk/rgmainwindow.cc:1131
+#: gtk/rgmainwindow.cc:1129
 #, fuzzy
 msgid "Reinstall"
 msgstr "Instaluj"
 
-#: gtk/rgmainwindow.cc:1140
+#: gtk/rgmainwindow.cc:1138
 msgid "Upgrade"
 msgstr "Aktualizacja"
 
-#: gtk/rgmainwindow.cc:1148 gtk/rgvendorswindow.cc:136
+#: gtk/rgmainwindow.cc:1146 gtk/rgvendorswindow.cc:136
 msgid "Remove"
 msgstr "Usuń"
 
-#: gtk/rgmainwindow.cc:1157
+#: gtk/rgmainwindow.cc:1155
 msgid "Remove Including Configuration"
 msgstr "Usuń razem z konfiguracją"
 
-#: gtk/rgmainwindow.cc:1165
+#: gtk/rgmainwindow.cc:1163
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Usuń razem z osamotnionymi zależnościami"
 
-#: gtk/rgmainwindow.cc:1177
+#: gtk/rgmainwindow.cc:1175
 msgid "Hold Current Version"
 msgstr "Zatrzymaj aktualną wersję"
 
-#: gtk/rgmainwindow.cc:1237
+#: gtk/rgmainwindow.cc:1235
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1117,7 +1119,7 @@ msgstr ""
 "Usunięcie tego pakietu może spowodować, że system stanie się bezużyteczny.\n"
 "Czy na pewno chcesz to uczynić?"
 
-#: gtk/rgmainwindow.cc:1276
+#: gtk/rgmainwindow.cc:1274
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1126,7 +1128,7 @@ msgstr ""
 "%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
 "aktualizacji, %i do usunięcia; %s zostanie zwolnionych"
 
-#: gtk/rgmainwindow.cc:1282
+#: gtk/rgmainwindow.cc:1280
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1135,11 +1137,11 @@ msgstr ""
 "%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
 "aktualizacji, %i do usunięcia; zostanie dodatkowo użyte %s miejsca na dysku."
 
-#: gtk/rgmainwindow.cc:1331
+#: gtk/rgmainwindow.cc:1329 gtk/window_main.glade.h:3
 msgid "All Packages"
 msgstr "Wszystkie pakiety"
 
-#: gtk/rgmainwindow.cc:1399
+#: gtk/rgmainwindow.cc:1397
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1162,40 +1164,40 @@ msgstr[2] ""
 "\n"
 "Należy je naprawić przechodząc do widoku z włączonym filtrem \"Uszkodzone\""
 
-#: gtk/rgmainwindow.cc:1603
+#: gtk/rgmainwindow.cc:1601
 msgid "Do you want to add another CD-ROM?"
 msgstr "Czy chcesz dodać kolejny CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1734 gtk/rgmainwindow.cc:2305 gtk/rgmainwindow.cc:2379
-#: gtk/rgmainwindow.cc:2522
+#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
+#: gtk/rgmainwindow.cc:2520
 #, c-format
 msgid "Can't read %s"
 msgstr "Nie można odczytać %s"
 
-#: gtk/rgmainwindow.cc:1750
+#: gtk/rgmainwindow.cc:1748
 msgid "Open changes"
 msgstr "Otwórz plik zmian"
 
-#: gtk/rgmainwindow.cc:1781 gtk/rgmainwindow.cc:1844 gtk/rgmainwindow.cc:2238
-#: gtk/rgmainwindow.cc:2357 gtk/rgmainwindow.cc:2499
+#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
+#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
 #, c-format
 msgid "Can't write %s"
 msgstr "Nie można zapisywać %s"
 
-#: gtk/rgmainwindow.cc:1800
+#: gtk/rgmainwindow.cc:1798
 msgid "Save changes"
 msgstr "Zapisz zamiany"
 
-#: gtk/rgmainwindow.cc:1817
+#: gtk/rgmainwindow.cc:1815
 msgid "Save full state, not only changes"
 msgstr "Zapisz pełny stan (nie tylko zmiany)"
 
-#: gtk/rgmainwindow.cc:1995
+#: gtk/rgmainwindow.cc:1993
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Uruchamianie systemu pomocy..."
 
-#: gtk/rgmainwindow.cc:2004
+#: gtk/rgmainwindow.cc:2002
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1215,77 +1217,77 @@ msgstr ""
 "poleceń lub przejrzeć jego wersję html znajdującą się w 'synaptic/html' "
 "folder."
 
-#: gtk/rgmainwindow.cc:2148
+#: gtk/rgmainwindow.cc:2146
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2154
+#: gtk/rgmainwindow.cc:2152
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Uruchamianie dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2166
+#: gtk/rgmainwindow.cc:2164
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Uruchamianie pomocy dotyczącej pakietów..."
 
-#: gtk/rgmainwindow.cc:2205
+#: gtk/rgmainwindow.cc:2203
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2224
+#: gtk/rgmainwindow.cc:2222
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Dokonywanie wybranych wcześniej zmian... może to trochę potrwać"
 
-#: gtk/rgmainwindow.cc:2228
+#: gtk/rgmainwindow.cc:2226
 msgid "Retrieving Package Files..."
 msgstr "Pobieranie Plików z Pakietami..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2286
 msgid "Do you want to quit Synaptic?"
 msgstr "Zakończyć działanie programu Synaptic?"
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 msgid "Retrieving Index Files..."
 msgstr "Pobieranie plików indeksów..."
 
-#: gtk/rgmainwindow.cc:2346
+#: gtk/rgmainwindow.cc:2344
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Czyszczenie listy pakietów..."
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Nie udało się naprawić brakujących zależności"
 
-#: gtk/rgmainwindow.cc:2405
+#: gtk/rgmainwindow.cc:2403
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2420
+#: gtk/rgmainwindow.cc:2418
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2446
+#: gtk/rgmainwindow.cc:2444
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Pakiet będzie zaktualizowany."
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 #, fuzzy
 msgid "Successfully marked all available upgrades"
 msgstr "Zaznacza wszystkie możliwe aktualizacje"
 
-#: gtk/rgmainwindow.cc:2460
+#: gtk/rgmainwindow.cc:2458
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1493,6 +1495,195 @@ msgstr "Anuluj"
 #: gtk/rgfindwindow.cc:116
 msgid "Find"
 msgstr "Szukaj"
+
+#: gtk/window_main.glade.h:1
+#, fuzzy
+msgid "A_pply Marked Changes"
+msgstr "Ukończono dokonywanie wszystkich zmian"
+
+#: gtk/window_main.glade.h:2
+msgid "Ac_tions"
+msgstr "_Działania"
+
+#: gtk/window_main.glade.h:4
+#, fuzzy
+msgid "Alphabet"
+msgstr "Alfabetyczne drzewo"
+
+#: gtk/window_main.glade.h:5
+#, fuzzy
+msgid "Filter the list of shown packages"
+msgstr "Filtrowanie listy wyświetlonych pakietów"
+
+#: gtk/window_main.glade.h:6
+#, fuzzy
+msgid "No package is selected."
+msgstr "Nie wybrano pakietu.\n"
+
+#: gtk/window_main.glade.h:7
+msgid "Pac_kage"
+msgstr "Paki_ety"
+
+#: gtk/window_main.glade.h:8
+msgid "Prefere_nces"
+msgstr "_Ustawienia"
+
+#: gtk/window_main.glade.h:9
+#, fuzzy
+msgid "R_einstall Current Version"
+msgstr "Zatrzymaj aktualną wersję"
+
+#: gtk/window_main.glade.h:10
+#, fuzzy
+msgid "Release"
+msgstr "Zastępuje"
+
+#: gtk/window_main.glade.h:11
+msgid "Remove Including Orphaned _Dependencies"
+msgstr "Usuń razem z osamotnionymi _zależnościami"
+
+#: gtk/window_main.glade.h:12
+msgid "Remove Including _Configuration"
+msgstr "Usuń razem z _konfiguracją"
+
+#: gtk/window_main.glade.h:13
+msgid "Save Selections _As..."
+msgstr "Zapisz Zaznaczenia _jako..."
+
+#: gtk/window_main.glade.h:15
+msgid "Set _Internal Option..."
+msgstr "Ustaw _Wewnętrzne Opcje..."
+
+#: gtk/window_main.glade.h:16
+msgid "Show:"
+msgstr "Pokaż:"
+
+#: gtk/window_main.glade.h:18
+msgid "Synaptic"
+msgstr "Synaptic"
+
+#: gtk/window_main.glade.h:19
+msgid "Text Be_side Icons"
+msgstr "Ikony i Te_kst"
+
+#: gtk/window_main.glade.h:20
+msgid "Text _Below Icons"
+msgstr "Ikony i Te_kst"
+
+#: gtk/window_main.glade.h:21
+msgid "U_nmark"
+msgstr ""
+
+#: gtk/window_main.glade.h:22
+#, fuzzy
+msgid "U_nmark All Changes"
+msgstr "Zadania do wykonania"
+
+#: gtk/window_main.glade.h:23
+msgid "Up_grade System"
+msgstr "Aktualizacja _systemu"
+
+#: gtk/window_main.glade.h:24
+msgid "_About"
+msgstr "_O programie"
+
+#: gtk/window_main.glade.h:25
+msgid "_Add CD-ROM..."
+msgstr "Dod_aj CD-ROM..."
+
+#: gtk/window_main.glade.h:26
+msgid "_Contents"
+msgstr "_Zawartość"
+
+#: gtk/window_main.glade.h:27
+msgid "_File"
+msgstr "_Plik"
+
+#: gtk/window_main.glade.h:28
+#, fuzzy
+msgid "_Filters"
+msgstr "Filtry"
+
+#: gtk/window_main.glade.h:29
+msgid "_Find..."
+msgstr "_Szukaj..."
+
+#: gtk/window_main.glade.h:30
+msgid "_Fix Broken Packages"
+msgstr "_Napraw Uszkodzone Pakiety"
+
+#: gtk/window_main.glade.h:31
+msgid "_Help"
+msgstr "_Pomoc"
+
+#: gtk/window_main.glade.h:32
+msgid "_Hide"
+msgstr "_Ukryj"
+
+#: gtk/window_main.glade.h:33
+msgid "_Icon Legend"
+msgstr "Opis _ikon"
+
+#: gtk/window_main.glade.h:34
+msgid "_Icons Only"
+msgstr "Tylko _ikony"
+
+#: gtk/window_main.glade.h:35
+msgid "_Install Latest Version"
+msgstr "Zainstaluj _najnowszą wersję"
+
+#: gtk/window_main.glade.h:36
+msgid "_Lock Current Status and Version"
+msgstr "Zatrzymaj _aktualną wersję i stan"
+
+#: gtk/window_main.glade.h:37
+#, fuzzy
+msgid "_Quick Introduction"
+msgstr "Krótki wstęp"
+
+#: gtk/window_main.glade.h:38
+msgid "_Quit"
+msgstr "Za_kończ"
+
+#: gtk/window_main.glade.h:39
+msgid "_Read Selections..."
+msgstr "_Odczytaj Zaznaczenia..."
+
+#: gtk/window_main.glade.h:40
+msgid "_Redo"
+msgstr "_Ponów"
+
+#: gtk/window_main.glade.h:41
+msgid "_Refresh Package List"
+msgstr "_Odświerz Listy pakietów"
+
+#: gtk/window_main.glade.h:42
+msgid "_Remove"
+msgstr "_Usuń"
+
+#: gtk/window_main.glade.h:43
+msgid "_Repositories"
+msgstr "_Repozytoria"
+
+#: gtk/window_main.glade.h:44
+msgid "_Save Selections"
+msgstr "_Zapisz Zaznaczenia"
+
+#: gtk/window_main.glade.h:45
+msgid "_Text Only"
+msgstr "Tylko _Tekst"
+
+#: gtk/window_main.glade.h:46
+msgid "_Toolbar"
+msgstr "Pasek _narzędzi"
+
+#: gtk/window_main.glade.h:47
+msgid "_Undo"
+msgstr "_Cofnij"
+
+#: gtk/window_main.glade.h:48
+msgid "_Upgrade"
+msgstr "_Aktualizacja"
 
 #: gtk/window_about.glade.h:1
 msgid ""
@@ -1744,15 +1935,16 @@ msgstr "<b>Pakiet</b>"
 #: gtk/window_preferences.glade.h:14
 #, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all marked "
-"changes will get lost. Make sure to apply your changes first."
+"<b>Note:</b> The package list must be reloaded and all marked changes will "
+"be lost. Make sure to apply your changes first."
 msgstr ""
 "<b>Uwaga:</b> Lista pakietów musi zostać wczytana ponownie. Wszelkie "
 "zaznaczenia zostaną utracone. Należy wcześniej \"wykoać\" wprowadzone zmiany."
 
 #: gtk/window_preferences.glade.h:15
+#, fuzzy
 msgid ""
-"<b>Note:</b> You will need to restart synaptic for \n"
+"<b>Note:</b> You will have to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 "<b>Uwaga:</b> Aby zmiany przyniosły efekt należy ponownie uruchomić program "
@@ -1987,28 +2179,29 @@ msgid "Number of undo operations:"
 msgstr "Liczba możliwych operacji \"Cofnij\":"
 
 #: gtk/window_preferences.glade.h:71
+#, fuzzy
+msgid "One click on status icon marks packages"
+msgstr "Używaj kolorów przy głównej liście pakietów"
+
+#: gtk/window_preferences.glade.h:72
 msgid "Port number of the http proxy server"
 msgstr "Numer portu serwera pośrednika (proxy)"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:73
 msgid "Port numer of the ftp proxy server"
 msgstr "Numer portu serwera pośrednika ftp"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:74
 msgid "Port: "
 msgstr "Port: "
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:76
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "Wyrażenia regularne są zaawansowaną metodą dopasowywania tekstu"
 
-#: gtk/window_preferences.glade.h:76
+#: gtk/window_preferences.glade.h:77
 msgid "Removal of packages: "
 msgstr "Usunięcie wszystkich pakietów: "
-
-#: gtk/window_preferences.glade.h:77
-msgid "Right click on status icon marks most suggest change"
-msgstr ""
 
 #: gtk/window_preferences.glade.h:78
 msgid ""
@@ -2587,9 +2780,6 @@ msgstr ""
 #~ msgid "_Install"
 #~ msgstr "_Instalacja"
 
-#~ msgid "_Upgrade"
-#~ msgstr "_Aktualizacja"
-
 #~ msgid ""
 #~ "The debtags database is not installed\n"
 #~ "\n"
@@ -2646,9 +2836,6 @@ msgstr ""
 #~ "menedżer pakietów przestanie poprawnie funkcjonować.\n"
 #~ "Wprowadzone zmiany unieważniają wersję wybraną przez menedżera pakietów. "
 
-#~ msgid "Ac_tions"
-#~ msgstr "_Działania"
-
 #~ msgid "Clear All _Queued Changes"
 #~ msgstr "_Wyczyść wszystkie zaznaczenia"
 
@@ -2703,38 +2890,17 @@ msgstr ""
 #~ "Zaznacza wszystkie pakiety do aktualizacji, z wyjątkiem tych które mają "
 #~ "nowe zależności"
 
-#~ msgid "Pac_kage"
-#~ msgstr "Paki_ety"
-
 #~ msgid "Packages Depending on this One"
 #~ msgstr "Pakiety zależące od Tego pakietu"
 
-#~ msgid "Prefere_nces"
-#~ msgstr "_Ustawienia"
-
 #~ msgid "Recommended"
 #~ msgstr "Rekomendowane"
-
-#~ msgid "Remove Including Orphaned _Dependencies"
-#~ msgstr "Usuń razem z osamotnionymi _zależnościami"
-
-#~ msgid "Remove Including _Configuration"
-#~ msgstr "Usuń razem z _konfiguracją"
-
-#~ msgid "Save Selections _As..."
-#~ msgstr "Zapisz Zaznaczenia _jako..."
 
 #~ msgid "Search again from the beginning"
 #~ msgstr "Wyszukaj ponownie od początku"
 
 #~ msgid "Selected"
 #~ msgstr "Zaznaczone"
-
-#~ msgid "Set _Internal Option..."
-#~ msgstr "Ustaw _Wewnętrzne Opcje..."
-
-#~ msgid "Show:"
-#~ msgstr "Pokaż:"
 
 #~ msgid "Size:"
 #~ msgstr "Rozmiar:"
@@ -2748,23 +2914,11 @@ msgstr ""
 #~ msgid "Suggestions and Recommendations"
 #~ msgstr "Sugerowane i Zalecane"
 
-#~ msgid "Synaptic"
-#~ msgstr "Synaptic"
-
 #~ msgid "Synaptic - an apt frontend"
 #~ msgstr "Synaptic - interfejs dla apt"
 
-#~ msgid "Text Be_side Icons"
-#~ msgstr "Ikony i Te_kst"
-
-#~ msgid "Text _Below Icons"
-#~ msgstr "Ikony i Te_kst"
-
 #~ msgid "Up_grade All"
 #~ msgstr "Aktualizuj _Wszystko"
-
-#~ msgid "Up_grade System"
-#~ msgstr "Aktualizacja _systemu"
 
 #~ msgid "Update package cache"
 #~ msgstr "Uaktualnia listę pakietów"
@@ -2774,12 +2928,6 @@ msgstr ""
 
 #~ msgid "View installed documentation of the package in a browser"
 #~ msgstr "Podgląd zainstalowanej dokumentacji danego pakietu w przeglądrace."
-
-#~ msgid "_About"
-#~ msgstr "_O programie"
-
-#~ msgid "_Add CD-ROM..."
-#~ msgstr "Dod_aj CD-ROM..."
 
 #~ msgid "_Alphabetic Tree"
 #~ msgstr "_Alfabetyczne drzewo"
@@ -2792,9 +2940,6 @@ msgstr ""
 
 #~ msgid "_Configure"
 #~ msgstr "_Konfiguracja"
-
-#~ msgid "_Contents"
-#~ msgstr "_Zawartość"
 
 #~ msgid "_Documentation"
 #~ msgstr "_Dokumentacja"
@@ -2811,77 +2956,20 @@ msgstr ""
 #~ msgid "_Expand All"
 #~ msgstr "Rozwiń _wszystko"
 
-#~ msgid "_File"
-#~ msgstr "_Plik"
-
-#~ msgid "_Find..."
-#~ msgstr "_Szukaj..."
-
-#~ msgid "_Fix Broken Packages"
-#~ msgstr "_Napraw Uszkodzone Pakiety"
-
 #~ msgid "_Flat List"
 #~ msgstr "Zwykła _lista"
-
-#~ msgid "_Help"
-#~ msgstr "_Pomoc"
-
-#~ msgid "_Hide"
-#~ msgstr "_Ukryj"
-
-#~ msgid "_Icon Legend"
-#~ msgstr "Opis _ikon"
-
-#~ msgid "_Icons Only"
-#~ msgstr "Tylko _ikony"
-
-#~ msgid "_Install Latest Version"
-#~ msgstr "Zainstaluj _najnowszą wersję"
-
-#~ msgid "_Lock Current Status and Version"
-#~ msgstr "Zatrzymaj _aktualną wersję i stan"
 
 #~ msgid "_No Changes"
 #~ msgstr "_Bez zmian"
 
-#~ msgid "_Quit"
-#~ msgstr "Za_kończ"
-
-#~ msgid "_Read Selections..."
-#~ msgstr "_Odczytaj Zaznaczenia..."
-
-#~ msgid "_Redo"
-#~ msgstr "_Ponów"
-
 #~ msgid "_Refresh"
 #~ msgstr "_Odśwież"
-
-#~ msgid "_Refresh Package List"
-#~ msgstr "_Odświerz Listy pakietów"
-
-#~ msgid "_Remove"
-#~ msgstr "_Usuń"
-
-#~ msgid "_Repositories"
-#~ msgstr "_Repozytoria"
-
-#~ msgid "_Save Selections"
-#~ msgstr "_Zapisz Zaznaczenia"
 
 #~ msgid "_Section Tree"
 #~ msgstr "_Drzewo wyborów"
 
 #~ msgid "_Tag Tree"
 #~ msgstr "Drzewo _znaczników"
-
-#~ msgid "_Text Only"
-#~ msgstr "Tylko _Tekst"
-
-#~ msgid "_Toolbar"
-#~ msgstr "Pasek _narzędzi"
-
-#~ msgid "_Undo"
-#~ msgstr "_Cofnij"
 
 #~ msgid "_View"
 #~ msgstr "_Podgląd"
@@ -3433,9 +3521,6 @@ msgstr ""
 #~ msgid "Section tree"
 #~ msgstr "Drzewo pakietów"
 
-#~ msgid "Alphabetic tree"
-#~ msgstr "Alfabetyczne drzewo"
-
 #~ msgid "Status tree"
 #~ msgstr "Drzewo stanu"
 
@@ -3633,9 +3718,6 @@ msgstr ""
 
 #~ msgid "No Proxy example: localhost, ftp.debian.org"
 #~ msgstr "Nie używaj proxy przykład: localhost, ftp.debian.org"
-
-#~ msgid "Use colors in main package list"
-#~ msgstr "Używaj kolorów przy głównej liście pakietów"
 
 #~ msgid "Filter Manager"
 #~ msgstr "Menedżer plików"

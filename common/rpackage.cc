@@ -785,26 +785,6 @@ void RPackage::setRemove(bool purge)
       _lister->notifyChange(this);
 }
 
-void create_tmpfile(const char *pattern, char **filename, FILE **out)
-{
-   char *tmpdir = NULL;
-
-   // remove from pin-file
-   if (!((tmpdir = getenv("TMPDIR")))) {
-      tmpdir = getenv("TMP");
-   }
-   if (!tmpdir) {
-      tmpdir = "/tmp";
-   }
-   *filename = (char *)malloc(strlen(tmpdir) + strlen(pattern) + 2);
-   assert(filename);
-
-   strcpy(*filename, tmpdir);
-   strcat(*filename, "/");
-   strcat(*filename, pattern);
-   int tmp_fd = mkstemp(*filename);
-   *out = fdopen(tmp_fd, "w+b");
-}
 
 string RPackage::getChangelogFile(pkgAcquire *fetcher)
 {
@@ -840,7 +820,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    //cout << "uri is: " << uri << endl;
 
    // no need to translate this, the changelog is in english anyway
-   string filename = RConfDir()+"/tmp_cl";
+   string filename = RTmpDir()+"/tmp_cl";
    ofstream out(filename.c_str());
    out << "Failed to fetch the changelog for " << name() << endl;
    out << "URI was: " << uri << endl;
@@ -868,8 +848,6 @@ string RPackage::getCanidateOrigin()
 void RPackage::setPinned(bool flag)
 {
    FILE *out;
-   char pattern[] = "syn-XXXXXX";
-   char *filename = NULL;
    struct stat stat_buf;
 
    string File =RConfDir() + "/preferences";
@@ -896,7 +874,9 @@ void RPackage::setPinned(bool flag)
    } else {
       // delete package from pinning file
       stat(File.c_str(), &stat_buf);
-      create_tmpfile(pattern, &filename, &out);
+      // create a tmp_pin file in the internal dir
+      string filename = RTmpDir()+"/tmp_pin";
+      FILE *out = fopen(filename.c_str(),"w");
       if (out == NULL)
          cerr << "error opening tmpfile: " << filename << endl;
       FileFd Fd(File, FileFd::ReadOnly);
@@ -922,9 +902,9 @@ void RPackage::setPinned(bool flag)
          }
       }
       fflush(out);
-      rename(filename, File.c_str());
+      rename(filename.c_str(), File.c_str());
       chmod(File.c_str(), stat_buf.st_mode);
-      free(filename);
+      fclose(out);
    }
 }
 

@@ -137,6 +137,24 @@ string RConfDir()
    return confDir;
 }
 
+// we use the ConfDir for now to store very small tmpfiles
+string RTmpDir()
+{
+   struct stat stbuf;
+   static string tmpDir = RConfDir() + string("/tmp/");
+   if (stat(tmpDir.c_str(), &stbuf) < 0) {
+      if (mkdir(tmpDir.c_str(), 0700) < 0) {
+	 _error->Errno("mkdir",
+		       _("ERROR: could not create tmp directory %s"),
+		       tmpDir.c_str());
+	 return "";
+      }
+   }
+
+   return tmpDir;
+}
+
+
 string RLogDir()
 {
    struct stat stbuf;

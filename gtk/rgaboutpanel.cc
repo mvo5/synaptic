@@ -74,5 +74,8 @@ RGAboutPanel::RGAboutPanel(RGWindow *parent)
    gchar *s = g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",
 			      PACKAGE" "VERSION);
    gtk_label_set_markup(GTK_LABEL(w),s);
+#ifndef HAVE_DEBTAGS
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "label_debtags"));
+#endif
    g_free(s);
 }

@@ -156,10 +156,6 @@ static void SetLanguages()
 int main(int argc, char **argv)
 {    
 #ifdef ENABLE_NLS
-    //setlocale(LC_ALL, "");
-    //gtk_set_locale();
-    
-    //bindtextdomain(PACKAGE, "/usr/local/share/locale");
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 #endif
@@ -205,11 +201,7 @@ int main(int argc, char **argv)
 	_config->Set("APT::Default-Release",s);
     
 #ifndef HAVE_RPM
-    #ifndef HAVE_DEBTAGS
-      mainWindow->setTitle(PACKAGE" Package Manager ");
-    #else
-      mainWindow->setTitle(PACKAGE" Package Manager with debtags support");
-    #endif
+      mainWindow->setTitle(_("Synaptic Package Manager "));
 #else
     mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif

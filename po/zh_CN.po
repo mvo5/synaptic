@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
-"POT-Creation-Date: 2003-03-16 21:02-0300\n"
+"POT-Creation-Date: 2003-03-25 16:36-0300\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -266,7 +266,7 @@ msgstr "已符合相依性要求"
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 
-#: common/rpackagecache.cc:49 common/rpackagelister.cc:1240
+#: common/rpackagecache.cc:49 common/rpackagelister.cc:1244
 msgid "The list of sources could not be read."
 msgstr "无法读取软件包来源列表"
 
@@ -278,7 +278,7 @@ msgstr "无法分析或打开软件包列表或状态文件。"
 msgid "Internal Error, non-zero counts"
 msgstr ""
 
-#: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:80
+#: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:82
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "状态"
@@ -290,12 +290,12 @@ msgstr "样板"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1222
+#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1237
 #: wings/rwmainwindow.cc:1196
 msgid "Section"
 msgstr "组别"
 
-#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1223
+#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1238
 #: wings/rwmainwindow.cc:1197
 msgid "Priority"
 msgstr "优先级"
@@ -313,12 +313,12 @@ msgstr "名称"
 msgid "Version"
 msgstr "    　　版本"
 
-#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:2176
+#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:2198
 #: gtk/window_main.glade.strings:36 gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "软件包描述"
 
-#: common/rpackagefilter.cc:136 gtk/rgmainwindow.cc:1224
+#: common/rpackagefilter.cc:136 gtk/rgmainwindow.cc:1239
 msgid "Maintainer"
 msgstr ""
 
@@ -433,54 +433,54 @@ msgstr ""
 msgid "dist upgrade Failed"
 msgstr "全面升级(_D)"
 
-#: common/rpackagelister.cc:1158
+#: common/rpackagelister.cc:1162
 msgid "Unable to lock the list directory"
 msgstr "无法锁定列表目录"
 
-#: common/rpackagelister.cc:1180
+#: common/rpackagelister.cc:1184
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "无法检索或验证某些软件库的 Release 文件，暂时忽略那些软件库。"
 
-#: common/rpackagelister.cc:1212
+#: common/rpackagelister.cc:1216
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr "一些索引文件下载失败。它们已被忽略，或暂由较旧文件代替。"
 
-#: common/rpackagelister.cc:1276
+#: common/rpackagelister.cc:1280
 #, fuzzy
 msgid "Failed to fetch "
 msgstr "撷取 hash 文件失败: "
 
-#: common/rpackagelister.cc:1296
+#: common/rpackagelister.cc:1300
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些软件包未能从服务器检索。\n"
 
-#: common/rpackagelister.cc:1299
+#: common/rpackagelister.cc:1303
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想忽略这些软件包，继续进行吗?"
 
-#: common/rpackagelister.cc:1306
+#: common/rpackagelister.cc:1310
 msgid "Unable to correct missing packages"
 msgstr "无法更正缺少的软件包"
 
-#: common/rpackagelister.cc:1369
+#: common/rpackagelister.cc:1373
 msgid "Unable to lock the download directory"
 msgstr "无法锁定下载区目录"
 
-#: common/rpackagelister.cc:1430
+#: common/rpackagelister.cc:1434
 #, fuzzy, c-format
 msgid "Line %u too long in selection file."
 msgstr "自动选择升级软件包失败。"
 
-#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
+#: common/rpackagelister.cc:1448 common/rpackagelister.cc:1452
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr ""
 
-#: common/rpackagelister.cc:1460
+#: common/rpackagelister.cc:1464
 msgid "Setting selections..."
 msgstr ""
 
@@ -494,35 +494,39 @@ msgstr ""
 
 #: gtk/gsynaptic.cc:57
 #, fuzzy
-msgid "Usage: synaptic [options] \n"
+msgid "Usage: synaptic [options]\n"
 msgstr "配置 Synaptic 选项"
 
 #: gtk/gsynaptic.cc:58
-msgid "-h   This help text \n"
+msgid "-h   This help text\n"
 msgstr ""
 
 #: gtk/gsynaptic.cc:59
-msgid "-f=? Give a alternative filter file\n"
+msgid "-r   Open in the repository screen\n"
 msgstr ""
 
 #: gtk/gsynaptic.cc:60
-msgid "-i=? Start with the initialFilter with the number given\n"
+msgid "-f=? Give a alternative filter file\n"
 msgstr ""
 
 #: gtk/gsynaptic.cc:61
+msgid "-i=? Start with the initialFilter with the number given\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:62
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:168 wings/synaptic.cc:80
+#: gtk/gsynaptic.cc:173 wings/synaptic.cc:80
 msgid "You must run this program as the root user."
 msgstr "您必须以 root 用户身份运行此程序。"
 
-#: gtk/rgconfigwindow.cc:115 gtk/rgmainwindow.cc:2626
+#: gtk/rgconfigwindow.cc:115 gtk/rgmainwindow.cc:2650
 #: wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
 
-#: gtk/rgconfigwindow.cc:232
+#: gtk/rgconfigwindow.cc:238
 msgid "Color selection"
 msgstr ""
 
@@ -695,7 +699,7 @@ msgstr "选择..."
 msgid "Packages that"
 msgstr "软件包的..."
 
-#: gtk/rgfiltereditor.cc:636 gtk/rgsrcwindow.cc:240
+#: gtk/rgfiltereditor.cc:636 gtk/rgsrcwindow.cc:246
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
@@ -715,7 +719,7 @@ msgstr "软件包筛选器"
 msgid "Delete"
 msgstr "删除"
 
-#: gtk/rgfiltermanager.cc:99 gtk/rgfilterwindow.cc:107
+#: gtk/rgfiltermanager.cc:99 gtk/rgfilterwindow.cc:107 gtk/rgsrcwindow.cc:238
 #: wings/rwfiltermanager.cc:95 wings/rwfilterwindow.cc:109
 msgid "Clear"
 msgstr "清除"
@@ -738,7 +742,7 @@ msgstr "新筛选器"
 msgid "Set"
 msgstr "设置"
 
-#: gtk/rgfilterwindow.cc:112 gtk/rgsrcwindow.cc:232 gtk/rgsummarywindow.cc:300
+#: gtk/rgfilterwindow.cc:112 gtk/rgsrcwindow.cc:234 gtk/rgsummarywindow.cc:300
 #: wings/rwfetchprogress.cc:143 wings/rwfilterwindow.cc:104
 #: wings/rwmainwindow.cc:1347 wings/rwmainwindow.cc:1382
 #: wings/rwmainwindow.cc:2083 wings/rwsummarywindow.cc:205
@@ -776,7 +780,7 @@ msgstr ""
 msgid "Performing Changes"
 msgstr "正在进行修改"
 
-#: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1267 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1282 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1241
 msgid "Unknown"
 msgstr "未知"
@@ -805,40 +809,40 @@ msgstr ""
 msgid "clickedRecInstall called with invalid parm: "
 msgstr ""
 
-#: gtk/rgmainwindow.cc:381
+#: gtk/rgmainwindow.cc:393
 msgid ""
 "No libgnome-perl installed\n"
 "\n"
 "You have to install libgnome-perl to use dpkg-reconfigure with synaptic"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:387
+#: gtk/rgmainwindow.cc:399
 msgid "Starting dpkg-reconfigure"
 msgstr ""
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:399
+#: gtk/rgmainwindow.cc:411
 #, fuzzy
 msgid "Starting package help"
 msgstr "更新软件包列表缓存 (apt-get update)"
 
-#: gtk/rgmainwindow.cc:486 wings/rwmainwindow.cc:480
+#: gtk/rgmainwindow.cc:498 wings/rwmainwindow.cc:480
 msgid "Retrieving Index Files"
 msgstr "正在检索索引文件"
 
-#: gtk/rgmainwindow.cc:488 wings/rwmainwindow.cc:483
+#: gtk/rgmainwindow.cc:500 wings/rwmainwindow.cc:483
 msgid "Updating Package Lists from Servers..."
 msgstr "从服务器更新软件包列表..."
 
-#: gtk/rgmainwindow.cc:570 wings/rwmainwindow.cc:536
+#: gtk/rgmainwindow.cc:582 wings/rwmainwindow.cc:536
 msgid "Dependency problem resolver failed."
 msgstr "未能解决相依性问题。"
 
-#: gtk/rgmainwindow.cc:572 wings/rwmainwindow.cc:538
+#: gtk/rgmainwindow.cc:584 wings/rwmainwindow.cc:538
 msgid "Dependency problems successfully fixed."
 msgstr "相依性问题成功修正了。"
 
-#: gtk/rgmainwindow.cc:587 gtk/rgmainwindow.cc:619 wings/rwmainwindow.cc:554
+#: gtk/rgmainwindow.cc:599 gtk/rgmainwindow.cc:631 wings/rwmainwindow.cc:554
 #: wings/rwmainwindow.cc:589
 msgid ""
 "Automatic upgrade selection not possible\n"
@@ -847,31 +851,31 @@ msgstr ""
 "系统上仍有软件包安装不完整或相依关系有问题，\n"
 "所以未能自动选择升级软件包。请先修正问题。"
 
-#: gtk/rgmainwindow.cc:593 wings/rwmainwindow.cc:562
+#: gtk/rgmainwindow.cc:605 wings/rwmainwindow.cc:562
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "正在自动选择可升级软件包..."
 
-#: gtk/rgmainwindow.cc:601 wings/rwmainwindow.cc:569
+#: gtk/rgmainwindow.cc:613 wings/rwmainwindow.cc:569
 msgid "Automatic selection of upgradadable packages done."
 msgstr "自动选择可升级软件包完成。"
 
-#: gtk/rgmainwindow.cc:603 wings/rwmainwindow.cc:571
+#: gtk/rgmainwindow.cc:615 wings/rwmainwindow.cc:571
 msgid "Automatic upgrade selection failed."
 msgstr "自动选择升级软件包失败。"
 
-#: gtk/rgmainwindow.cc:625 wings/rwmainwindow.cc:597
+#: gtk/rgmainwindow.cc:637 wings/rwmainwindow.cc:597
 msgid "Performing selection for distribution upgrade..."
 msgstr "正在为全面升级自动选择软件包..."
 
-#: gtk/rgmainwindow.cc:634 wings/rwmainwindow.cc:604
+#: gtk/rgmainwindow.cc:646 wings/rwmainwindow.cc:604
 msgid "Selection for distribution upgrade done."
 msgstr "为全面升级自动选择软件包完成。"
 
-#: gtk/rgmainwindow.cc:636 wings/rwmainwindow.cc:606
+#: gtk/rgmainwindow.cc:648 wings/rwmainwindow.cc:606
 msgid "Selection for distribution upgrade failed."
 msgstr "为全面升级自动选择软件包失败。"
 
-#: gtk/rgmainwindow.cc:660 wings/rwmainwindow.cc:624
+#: gtk/rgmainwindow.cc:672 wings/rwmainwindow.cc:624
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -879,73 +883,73 @@ msgstr ""
 "系统上仍有软件包安装不完整或相依关系有问题，\n"
 "未能进行这项操作。请先修正问题。"
 
-#: gtk/rgmainwindow.cc:679 wings/rwmainwindow.cc:642
+#: gtk/rgmainwindow.cc:691 wings/rwmainwindow.cc:642
 msgid ""
 "Performing selected changes... See the terminal from where you started "
 "Synaptic for more information."
 msgstr "正在进行已选的更改... 请见您打开 Synaptic 的终端机，以取得更多信息。"
 
-#: gtk/rgmainwindow.cc:683 wings/rwmainwindow.cc:646
+#: gtk/rgmainwindow.cc:695 wings/rwmainwindow.cc:646
 msgid "Retrieving Package Files"
 msgstr "正在检索软件包文件"
 
-#: gtk/rgmainwindow.cc:729
+#: gtk/rgmainwindow.cc:744
 msgid "Do you want to quit Synaptic?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:771 gtk/rgmainwindow.cc:1237 gtk/rgmainwindow.cc:1246
-#: gtk/rgmainwindow.cc:1250 wings/rwmainwindow.cc:811
+#: gtk/rgmainwindow.cc:786 gtk/rgmainwindow.cc:1252 gtk/rgmainwindow.cc:1261
+#: gtk/rgmainwindow.cc:1265 wings/rwmainwindow.cc:811
 #: wings/rwmainwindow.cc:1210 wings/rwmainwindow.cc:1217
 #: wings/rwmainwindow.cc:1220 wings/rwmainwindow.cc:1224
 msgid "N/A"
 msgstr "不适用"
 
-#: gtk/rgmainwindow.cc:949 wings/rwmainwindow.cc:924
+#: gtk/rgmainwindow.cc:964 wings/rwmainwindow.cc:924
 msgid "Package is installed."
 msgstr "软件包已安装。"
 
-#: gtk/rgmainwindow.cc:951 wings/rwmainwindow.cc:926
+#: gtk/rgmainwindow.cc:966 wings/rwmainwindow.cc:926
 msgid "Package is not installed."
 msgstr "此软件包没有安装。"
 
-#: gtk/rgmainwindow.cc:955 wings/rwmainwindow.cc:930
+#: gtk/rgmainwindow.cc:970 wings/rwmainwindow.cc:930
 msgid "Package will be installed."
 msgstr "此软件包将会被安装。"
 
-#: gtk/rgmainwindow.cc:961 wings/rwmainwindow.cc:936
+#: gtk/rgmainwindow.cc:976 wings/rwmainwindow.cc:936
 msgid "Package will be upgraded."
 msgstr "此软件包将会被升级。"
 
 #. not handled yet
-#: gtk/rgmainwindow.cc:966 wings/rwmainwindow.cc:941
+#: gtk/rgmainwindow.cc:981 wings/rwmainwindow.cc:941
 msgid "OH SHIT!!"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:971 wings/rwmainwindow.cc:946
+#: gtk/rgmainwindow.cc:986 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "此软件包将会被解除安装。"
 
-#: gtk/rgmainwindow.cc:974
+#: gtk/rgmainwindow.cc:989
 msgid "Package is broken."
 msgstr "此软件包未完整安装。"
 
-#: gtk/rgmainwindow.cc:985 gtk/rgmainwindow.cc:1004
+#: gtk/rgmainwindow.cc:1000 gtk/rgmainwindow.cc:1019
 msgid "Package is pinned."
 msgstr "此软件包目前被设为永不更新。"
 
-#: gtk/rgmainwindow.cc:988
+#: gtk/rgmainwindow.cc:1003
 msgid "Package is new."
 msgstr "这是新的软件包。"
 
-#: gtk/rgmainwindow.cc:1009 wings/rwmainwindow.cc:951
+#: gtk/rgmainwindow.cc:1024 wings/rwmainwindow.cc:951
 msgid "Broken dependencies."
 msgstr "相依关系有问题。"
 
-#: gtk/rgmainwindow.cc:1207 gtk/window_main.glade.strings:81
+#: gtk/rgmainwindow.cc:1222 gtk/window_main.glade.strings:81
 msgid "_Install"
 msgstr "安装(_I)"
 
-#: gtk/rgmainwindow.cc:1210
+#: gtk/rgmainwindow.cc:1225
 msgid "_Upgrade"
 msgstr "升级(_U)"
 
@@ -954,7 +958,7 @@ msgstr "升级(_U)"
 #. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1232 wings/rwmainwindow.cc:1205
+#: gtk/rgmainwindow.cc:1247 wings/rwmainwindow.cc:1205
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -962,17 +966,17 @@ msgstr ""
 "\n"
 "已安装软件包:\n"
 
-#: gtk/rgmainwindow.cc:1234 gtk/rgmainwindow.cc:1242
+#: gtk/rgmainwindow.cc:1249 gtk/rgmainwindow.cc:1257
 #: wings/rwmainwindow.cc:1207 wings/rwmainwindow.cc:1216
 msgid "    Version"
 msgstr "    　　版本"
 
-#: gtk/rgmainwindow.cc:1236 gtk/rgmainwindow.cc:1245
+#: gtk/rgmainwindow.cc:1251 gtk/rgmainwindow.cc:1260
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1219
 msgid "    Size"
 msgstr "    安装大小"
 
-#: gtk/rgmainwindow.cc:1240 wings/rwmainwindow.cc:1213
+#: gtk/rgmainwindow.cc:1255 wings/rwmainwindow.cc:1213
 msgid ""
 "\n"
 "Available Package:\n"
@@ -980,35 +984,35 @@ msgstr ""
 "\n"
 "最新版软件包:\n"
 
-#: gtk/rgmainwindow.cc:1249 wings/rwmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1264 wings/rwmainwindow.cc:1223
 msgid "    Package Size"
 msgstr "    软件包大小"
 
-#: gtk/rgmainwindow.cc:1264 wings/rwmainwindow.cc:1238
+#: gtk/rgmainwindow.cc:1279 wings/rwmainwindow.cc:1238
 msgid "Not Relevant"
 msgstr "无关系"
 
-#: gtk/rgmainwindow.cc:1272 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1287 wings/rwmainwindow.cc:1246
 msgid "Recommended"
 msgstr "推荐"
 
-#: gtk/rgmainwindow.cc:1274 wings/rwmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1289 wings/rwmainwindow.cc:1248
 msgid "Possible"
 msgstr "可以"
 
-#: gtk/rgmainwindow.cc:1277 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1292 wings/rwmainwindow.cc:1251
 msgid "Package Upgrade"
 msgstr "升级软件包"
 
-#: gtk/rgmainwindow.cc:1279 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1294 wings/rwmainwindow.cc:1253
 msgid "    Importance"
 msgstr "    重要性"
 
-#: gtk/rgmainwindow.cc:1281 wings/rwmainwindow.cc:1255
+#: gtk/rgmainwindow.cc:1296 wings/rwmainwindow.cc:1255
 msgid "    Date"
 msgstr "    　日期"
 
-#: gtk/rgmainwindow.cc:1333
+#: gtk/rgmainwindow.cc:1348
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
@@ -1018,7 +1022,7 @@ msgstr ""
 "Synaptic 必须重新打开它的缓存。\n"
 "您所做的更改将会遗失。您确定要这样做吗？"
 
-#: gtk/rgmainwindow.cc:1513 gtk/rgmainwindow.cc:2400
+#: gtk/rgmainwindow.cc:1528 gtk/rgmainwindow.cc:2422
 #: wings/rwmainwindow.cc:1345 wings/rwmainwindow.cc:1380
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -1027,47 +1031,47 @@ msgstr ""
 "删除这个软件包或会导致您的系统完全失效。\n"
 "您确定要那样做吗?"
 
-#: gtk/rgmainwindow.cc:1894 wings/rwmainwindow.cc:1562
+#: gtk/rgmainwindow.cc:1916 wings/rwmainwindow.cc:1562
 #: gtk/window_main.glade.strings:46
 msgid "Update package cache"
 msgstr "更新软件包列表缓存 (apt-get update)"
 
-#: gtk/rgmainwindow.cc:1898 wings/rwmainwindow.cc:1576
+#: gtk/rgmainwindow.cc:1920 wings/rwmainwindow.cc:1576
 #: gtk/window_main.glade.strings:48
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr "标记可升级的软件包，但不包括有新相依关系的软件包 (apt-get upgrade)"
 
-#: gtk/rgmainwindow.cc:1902 wings/rwmainwindow.cc:1584
+#: gtk/rgmainwindow.cc:1924 wings/rwmainwindow.cc:1584
 #: gtk/window_main.glade.strings:50
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr "升级已安装的发行版本，包括有新相依关系的软件包 (apt-get dist-upgrade)"
 
-#: gtk/rgmainwindow.cc:1906 wings/rwmainwindow.cc:1592
+#: gtk/rgmainwindow.cc:1928 wings/rwmainwindow.cc:1592
 #: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "实行已选择对软件包的更改，并有需要时下载软件包"
 
-#: gtk/rgmainwindow.cc:2151 wings/rwmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:2173 wings/rwmainwindow.cc:1938
 #: gtk/window_main.glade.strings:16
 msgid "Package"
 msgstr "软件包"
 
-#: gtk/rgmainwindow.cc:2159
+#: gtk/rgmainwindow.cc:2181
 #, fuzzy
 msgid "Installed Version"
 msgstr "已安装"
 
-#: gtk/rgmainwindow.cc:2167
+#: gtk/rgmainwindow.cc:2189
 #, fuzzy
 msgid "Available Version"
 msgstr "最新版本"
 
-#: gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2397
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2542 wings/rwmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2564 wings/rwmainwindow.cc:2022
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1076,84 +1080,84 @@ msgstr ""
 "列表共有 %1$i 个软件包，已安装 %2$i 个，坏的有 %3$i 个。将安装/升级 %4$i 个软"
 "件包，删除 %5$i 个软件包；将%7$s %6$sB 磁盘空间。"
 
-#: gtk/rgmainwindow.cc:2545 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2567 wings/rwmainwindow.cc:2025
 msgid "freed"
 msgstr "释放"
 
-#: gtk/rgmainwindow.cc:2545 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2567 wings/rwmainwindow.cc:2025
 msgid "used"
 msgstr "使用"
 
-#: gtk/rgmainwindow.cc:2571 wings/rwmainwindow.cc:1839
+#: gtk/rgmainwindow.cc:2593 wings/rwmainwindow.cc:1839
 #: gtk/window_main.glade.strings:57
 msgid "All Packages"
 msgstr "全部软件包"
 
-#: gtk/rgmainwindow.cc:2655
+#: gtk/rgmainwindow.cc:2679
 #, fuzzy
 msgid ""
 "There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
 msgstr "更改尚未保存，您确定要离开 Synaptic 吗?"
 
-#: gtk/rgsrcwindow.cc:57
+#: gtk/rgsrcwindow.cc:59
 msgid "Setup Repositories"
 msgstr "设置软件库"
 
-#: gtk/rgsrcwindow.cc:81 wings/rwsourceswindow.cc:101
+#: gtk/rgsrcwindow.cc:83 wings/rwsourceswindow.cc:101
 msgid "Type"
 msgstr "种类"
 
-#: gtk/rgsrcwindow.cc:82 wings/rwsourceswindow.cc:107
+#: gtk/rgsrcwindow.cc:84 wings/rwsourceswindow.cc:107
 msgid "Vendor"
 msgstr "发行商"
 
-#: gtk/rgsrcwindow.cc:83 gtk/rgsrcwindow.cc:180 wings/rwsourceswindow.cc:113
+#: gtk/rgsrcwindow.cc:85 gtk/rgsrcwindow.cc:182 wings/rwsourceswindow.cc:113
 msgid "URI"
 msgstr "网址"
 
-#: gtk/rgsrcwindow.cc:84 gtk/rgsrcwindow.cc:194 wings/rwsourceswindow.cc:119
+#: gtk/rgsrcwindow.cc:86 gtk/rgsrcwindow.cc:196 wings/rwsourceswindow.cc:119
 msgid "Distribution"
 msgstr "发行版本"
 
-#: gtk/rgsrcwindow.cc:85 gtk/rgsrcwindow.cc:207
+#: gtk/rgsrcwindow.cc:87 gtk/rgsrcwindow.cc:209
 msgid "Section(s)"
 msgstr "组别"
 
-#: gtk/rgsrcwindow.cc:113
+#: gtk/rgsrcwindow.cc:115
 msgid "Disabled"
 msgstr "停用"
 
-#: gtk/rgsrcwindow.cc:168 gtk/rgsrcwindow.cc:320
+#: gtk/rgsrcwindow.cc:170 gtk/rgsrcwindow.cc:330
 msgid "(no vendor)"
 msgstr "(无特定包装商)"
 
-#: gtk/rgsrcwindow.cc:175 gtk/window_main.glade.strings:26
+#: gtk/rgsrcwindow.cc:177 gtk/window_main.glade.strings:26
 msgid "Edit"
 msgstr "编辑"
 
-#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/rwmainwindow.cc:700
+#: gtk/rgsrcwindow.cc:230 wings/rwconfigwindow.cc:59 wings/rwmainwindow.cc:700
 #: wings/synaptic.cc:81
 msgid "OK"
 msgstr "确定"
 
-#: gtk/rgsrcwindow.cc:236
+#: gtk/rgsrcwindow.cc:242
 msgid "Add"
 msgstr "添加"
 
-#: gtk/rgsrcwindow.cc:269
+#: gtk/rgsrcwindow.cc:277
 msgid "Cannot read sources.list file"
 msgstr "无法读取 sources.list 软件库来源列表文件"
 
-#: gtk/rgsrcwindow.cc:274
+#: gtk/rgsrcwindow.cc:282
 msgid "Cannot read vendors.list file"
 msgstr "无法读取 vendors.list 软件包包装商列表文件"
 
-#: gtk/rgsrcwindow.cc:372 gtk/rgsrcwindow.cc:446
+#: gtk/rgsrcwindow.cc:388 gtk/rgsrcwindow.cc:462
 msgid "Unknown source type"
 msgstr "软件包来源种类未知"
 
-#: gtk/rgsrcwindow.cc:389
+#: gtk/rgsrcwindow.cc:405
 msgid "Invalid URL"
 msgstr "无效的 URL"
 

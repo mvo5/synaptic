@@ -238,7 +238,7 @@ void RPackageLister::restoreFilters()
     filter = new RFilter(this);
     filter->setName(top->Tag);
     
-    string filterkey = "filter::"+filter->getName();
+    string filterkey = "filter::"+top->Tag;
     if (filter->read(config, filterkey)) {
 	registerFilter(filter);
     } else {

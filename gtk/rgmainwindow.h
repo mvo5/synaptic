@@ -294,6 +294,7 @@ public:
    
 
    void proceed();
+   void showRepositoriesWindow();
 };
 
 

@@ -366,8 +366,20 @@ void RGMainWindow::showSourcesWindow(GtkWidget *self, void *data)
 {
     RGMainWindow *win = (RGMainWindow*)data;
         
+    bool Ok = false;
+    {
     RGSrcEditor w(win);
-    w.Run();
+    Ok = w.Run();
+    }
+    RGFlushInterface();
+    if (Ok == true && _config->FindB("Synaptic::UpdateAfterSrcChange")) {
+	win->updateClicked(NULL, data);
+    }
+}
+
+void RGMainWindow::showRepositoriesWindow()
+{
+    showSourcesWindow(NULL, this);
 }
 
 void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)

@@ -29,12 +29,15 @@ class RGSrcEditor : RGWindow {
 
 	RGUserDialog *_userDialog;
 
+	bool Applied;
+
 	GtkWidget *CreateWidget();
 
 	void UpdateVendorMenu();
 	int VendorMenuIndex(string VendorID);
 
 	// static event handlers
+	static void DoClear(GtkWidget *, gpointer);
 	static void DoAdd(GtkWidget *, gpointer);
 	static void DoEdit(GtkWidget *, gpointer);
 	static void DoRemove(GtkWidget *, gpointer);
@@ -44,12 +47,11 @@ class RGSrcEditor : RGWindow {
 	static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
 	static void VendorsWindow(GtkWidget *, gpointer);
 
-
 public:
 	RGSrcEditor(RGWindow *parent);
 	~RGSrcEditor();
 
-	void Run();
+	bool Run();
 };
 
 #endif

@@ -54,8 +54,9 @@ bool ShowHelp(CommandLine &CmdL)
     _config->Find("Synaptic::MyName", PACKAGE)+" "VERSION
 #endif
     "\n\n" <<
-    _("Usage: synaptic [options] \n") <<
-    _("-h   This help text \n") <<
+    _("Usage: synaptic [options]\n") <<
+    _("-h   This help text\n") <<
+    _("-r   Open in the repository screen\n") <<
     _("-f=? Give a alternative filter file\n") <<
     _("-i=? Start with the initialFilter with the number given\n") <<
     _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n");
@@ -66,6 +67,7 @@ bool ShowHelp(CommandLine &CmdL)
 CommandLine::Args Args[] = {
   {'h',"help","help",0},
   {'f',"filter-file","Volatile::filterFile", CommandLine::HasArg}, 
+  {'r',"repositories", "Volatile::startInRepositories", 0},
   {'i',"initial-filter","Volatile::initialFilter", CommandLine::HasArg},
   {0,"set-selections", "Volatile::Set-Selections", 0},
   {0,"non-interactive", "Volatile::Non-Interactive", 0},
@@ -210,6 +212,10 @@ int main(int argc, char **argv)
     if (!packageLister->openCache(false)) {
 	mainWindow->showErrors();
 	//exit(1);
+    }
+
+    if (_config->FindB("Volatile::startInRepositories", false)) {
+	mainWindow->showRepositoriesWindow();
     }
 
     if (_config->FindB("Volatile::Set-Selections", false) == true) {

@@ -22,6 +22,7 @@ RGSrcEditor::RGSrcEditor(RGWindow *parent)
 	selectedrow = -1;
 	dialog = CreateWidget();
 	_userDialog = new RGUserDialog(dialog);
+	Applied = false;
 }
 
 RGSrcEditor::~RGSrcEditor()
@@ -37,6 +38,7 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	GtkWidget *frmMain;
 	GtkWidget *vbox1;
 	GtkWidget *scrolledwindow1;
+	GtkWidget *btnClear;
 	GtkWidget *btnAddNew;
 	GtkWidget *btnRemove;
 	GtkWidget *table1;
@@ -233,6 +235,10 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	gtk_widget_show (btnCancel);
 	gtk_box_pack_end (GTK_BOX (hbox1), btnCancel, TRUE, TRUE, 10);
 
+	btnClear = gtk_button_new_with_label (_("Clear"));
+	gtk_widget_show (btnClear);
+	gtk_box_pack_start (GTK_BOX (hbox1), btnClear, TRUE, TRUE, 10);
+
 	btnAddNew = gtk_button_new_with_label (_("Add"));
 	gtk_widget_show (btnAddNew);
 	gtk_box_pack_start (GTK_BOX (hbox1), btnAddNew, TRUE, TRUE, 10);
@@ -249,6 +255,8 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	gtk_signal_connect(GTK_OBJECT(lstSources), "unselect-row",
 		GTK_SIGNAL_FUNC(UnselectRow), (gpointer)this);
 
+	gtk_signal_connect(GTK_OBJECT(btnClear), "clicked",
+			   GTK_SIGNAL_FUNC(DoClear), (gpointer)this);
 	gtk_signal_connect(GTK_OBJECT(btnAddNew), "clicked",
 			   GTK_SIGNAL_FUNC(DoAdd), (gpointer)this);
 
@@ -263,17 +271,17 @@ GtkWidget *RGSrcEditor::CreateWidget()
 	return dlgSrcList;
 }
 
-void RGSrcEditor::Run()
+bool RGSrcEditor::Run()
 {
   if (lst.ReadSources() == false) {
     _error->Error(_("Cannot read sources.list file"));
     _userDialog->showErrors();
-    return;
+    return false;
   }
   if (lst.ReadVendors() == false) {
     _error->Error(_("Cannot read vendors.list file"));
     _userDialog->showErrors();
-    return;
+    return false;
   }
 
   GdkColormap *cmap = gdk_colormap_get_system();
@@ -311,6 +319,8 @@ void RGSrcEditor::Run()
 
   gtk_widget_show_all(dialog);
   gtk_main();
+
+  return Applied;
 }
 
 void RGSrcEditor::UpdateVendorMenu()
@@ -342,6 +352,12 @@ int RGSrcEditor::VendorMenuIndex(string VendorID)
 			return index;
 	}
 	return 0;
+}
+
+void RGSrcEditor::DoClear(GtkWidget *, gpointer data)
+{
+        RGSrcEditor *me = (RGSrcEditor*)data;
+	me->UnselectRow(NULL, 0, 0, NULL, data);
 }
 
 void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
@@ -520,6 +536,7 @@ void RGSrcEditor::DoOK(GtkWidget *, gpointer data)
 	RGSrcEditor *me = (RGSrcEditor*)data;	
 	me->lst.UpdateSources();
 	gtk_main_quit();
+	me->Applied = true;
 }
 
 void RGSrcEditor::DoCancel(GtkWidget *, gpointer data)

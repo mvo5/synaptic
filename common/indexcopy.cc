@@ -166,7 +166,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 		   ReconstructChop(Chop,*I,File) == false)
 	       {
 		  if (Debug == true)
-		     clog << _("Missed: ") << File << endl;
+		     clog << "Missed: " << File << endl;
 		  NotFound++;
 		  continue;
 	       }
@@ -193,7 +193,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 		   stat(string(CDROM + Prefix + File).c_str(),&Buf) != 0)
 	       {
 		  if (Debug == true)
-		     clog << _("Missed(2): ") << OrigFile << endl;
+		     clog << "Missed(2): " << OrigFile << endl;
 		  NotFound++;
 		  continue;
 	       }	       
@@ -203,7 +203,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	    if ((unsigned)Buf.st_size != Size)
 	    {
 	       if (Debug == true)
-		  clog << _("Wrong Size: ") << File << endl;
+		  clog << "Wrong Size: " << File << endl;
 	       WrongSize++;
 	       continue;
 	    }
@@ -285,7 +285,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       _error->Warning(_("No valid records were found."));
 
    if (NotFound + WrongSize > 10)
-      cout << _("Alot of entries were discarded, something may be wrong.") <<
+      cout << "Alot of entries were discarded, something may be wrong." <<
 	      endl;
 
    return true;

@@ -25,9 +25,11 @@
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/sourcelist.h>
 #include <glib.h>
 #include <cassert>
 #include "rgrepositorywin.h"
+#include "rguserdialog.h"
 #include "rgmisc.h"
 #include "config.h"
 #include "i18n.h"
@@ -560,6 +562,13 @@ void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
 
     me->doEdit();
     me->_lst.UpdateSources();
+
+    pkgSourceList List;
+    if(!List.ReadMainList()) {
+	me->_userDialog->showErrors();
+	return;
+    }
+
     gtk_main_quit();
     me->_applied = true;
 }

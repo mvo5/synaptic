@@ -518,8 +518,11 @@ void RPackageLister::reapplyFilter()
 
    // sort now according to the latest used sort method
    switch (_sortMode) {
-      case LIST_SORT_STATUS:
-         sortPackagesByStatus();
+      case LIST_SORT_STATUS_ASC:
+         sortPackagesByStatus(0);
+         break;
+      case LIST_SORT_STATUS_DES:
+         sortPackagesByStatus(1);
          break;
 
       case LIST_SORT_NAME:
@@ -572,19 +575,33 @@ void RPackageLister::sortPackagesByName(vector<RPackage *> &packages)
 }
 
 
-
-struct statusSortFunc {
-   // hide all other flags but this magic ones
-   static const int magic = (RPackage::FInstalled | RPackage::FOutdated | RPackage::FNew);
+static const int status_sort_magic = (  RPackage::FInstalled 
+				      | RPackage::FOutdated 
+				      | RPackage::FNew);
+struct statusSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
-      return (x->getFlags() & (magic))  > (y->getFlags() & (magic));
+      return (x->getFlags() & (status_sort_magic))  > 
+	     (y->getFlags() & (status_sort_magic));
+}};
+struct statusSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      return (x->getFlags() & (status_sort_magic))  < 
+	     (y->getFlags() & (status_sort_magic));
 }};
 
-void RPackageLister::sortPackagesByStatus(vector<RPackage *> &packages)
+void RPackageLister::sortPackagesByStatus(vector<RPackage *> &packages, 
+					  int order)
 {
-   _sortMode = LIST_SORT_STATUS;
+   if (order == 0)
+      _sortMode = LIST_SORT_STATUS_ASC;
+   else
+      _sortMode = LIST_SORT_STATUS_DES;
+
    if (!packages.empty())
-      stable_sort(packages.begin(), packages.end(), statusSortFunc());
+      if(order==0)
+	 stable_sort(packages.begin(), packages.end(), statusSortFuncAsc());
+      else
+	 stable_sort(packages.begin(), packages.end(), statusSortFuncDes());
 }
 
 
@@ -614,6 +631,7 @@ void RPackageLister::sortPackagesByInstSize(vector<RPackage *> &packages,
          stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
    }
 }
+
 
 int RPackageLister::findPackage(const char *pattern)
 {

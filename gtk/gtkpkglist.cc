@@ -626,7 +626,7 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 
    switch (pkg_list->sort_column_id) {
    case COLOR_COLUMN:
-      pkg_list->_lister->sortPackagesByStatus();
+      pkg_list->_lister->sortPackagesByStatus((int)pkg_list->order);
       break;
    case NAME_COLUMN:
       pkg_list->_lister->sortPackagesByName();

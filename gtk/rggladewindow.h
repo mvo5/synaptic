@@ -30,7 +30,9 @@
 #include <glade/glade.h>
 #include <string>
 #include <iostream>
+
 #include "rgwindow.h"
+#include "rgmisc.h"
 
 using namespace std;
 
@@ -40,6 +42,16 @@ class RGGladeWindow:public RGWindow {
 
  public:
    RGGladeWindow(RGWindow *parent, string name, string main_widget = "");
+
+   // functions to set various widgets
+   bool setLabel(const char *name, const char *value);
+   bool setLabel(const char *name, const long value);
+   bool setTextView(const char *widget_name, const char *value,
+		    bool useHeadline=false);
+   bool setPixmap(const char *widget_name, GdkPixbuf *value);
+   bool setTreeList(const char *widget_name, vector<string> values,
+		    bool useHeadline=false);
+
 };
 
 #endif

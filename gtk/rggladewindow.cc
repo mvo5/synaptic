@@ -73,3 +73,111 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
                                    GTK_WINDOW(parent->window()));
 
 }
+
+bool RGGladeWindow::setLabel(const char *widget_name, const char *value)
+{
+   GtkWidget *widget = glade_xml_get_widget(_gladeXML, widget_name);
+   if (widget == NULL)
+      cout << "widget == NULL with: " << widget_name << endl;
+
+   if (!value)
+      value = _("N/A");
+   gtk_label_set_label(GTK_LABEL(widget), utf8(value));
+}
+
+bool RGGladeWindow::setLabel(const char *widget_name, const long value)
+{
+   string strVal;
+   GtkWidget *widget = glade_xml_get_widget(_gladeXML, widget_name);
+   if (widget == NULL)
+      cout << "widget == NULL with: " << widget_name << endl;
+
+   // we can never have values of zero or less
+   if (value <= 0)
+      strVal = _("N/A");
+   else
+      strVal = SizeToStr(value);
+   gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
+}
+
+bool RGGladeWindow::setTreeList(const char *widget_name, vector<string> values,
+				bool use_markup)
+{
+   char *type;
+   string strVal;
+   GtkWidget *widget = glade_xml_get_widget(_gladeXML, widget_name);
+   if (widget == NULL)
+      cout << "widget == NULL with: " << widget_name << endl;
+
+   // create column (if needed)
+   if(gtk_tree_view_get_column(GTK_TREE_VIEW(widget), 0) == NULL) {
+
+      // cell renderer
+      GtkCellRenderer *renderer;
+      renderer = gtk_cell_renderer_text_new();
+
+      if(use_markup)
+	 type = "markup";
+      else
+	 type = "text";
+      GtkTreeViewColumn *column;
+      column = gtk_tree_view_column_new_with_attributes("SubView",
+							renderer,
+							type, 0, 
+							NULL);
+      gtk_tree_view_append_column(GTK_TREE_VIEW(widget), column);
+   }
+
+   // store stuff
+   GtkListStore *store = gtk_list_store_new(1, G_TYPE_STRING);
+   GtkTreeIter iter;
+   for(int i=0;i<values.size();i++) {
+      gtk_list_store_append(store, &iter);
+      gtk_list_store_set(store, &iter, 0, values[i].c_str(), -1);
+   }
+   gtk_tree_view_set_model(GTK_TREE_VIEW(widget), GTK_TREE_MODEL(store));
+}
+
+
+bool RGGladeWindow::setTextView(const char *widget_name, 
+				     const char* value, 
+				     bool use_headline)
+{
+   GtkTextIter start,end;
+
+   GtkWidget *view = glade_xml_get_widget(_gladeXML, widget_name);
+   if (view == NULL)
+      cout << "textview == NULL with: " << widget_name << endl;
+
+   GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+   gtk_text_buffer_set_text (buffer, utf8(value), -1);
+
+   if(use_headline) {
+      GtkTextTagTable *tag_table = gtk_text_buffer_get_tag_table(buffer);
+      if(gtk_text_tag_table_lookup(tag_table, "bold") == NULL) {
+	 gtk_text_buffer_create_tag(buffer, "bold", 
+				    "weight", PANGO_WEIGHT_BOLD,
+				    "scale", 1.1, 
+				    NULL);
+      }
+      gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
+      
+      gtk_text_buffer_get_iter_at_offset(buffer, &end, 0);
+      gtk_text_iter_forward_line(&end);
+
+      gtk_text_buffer_apply_tag_by_name(buffer, "bold", &start, &end);
+   }
+
+   gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
+   gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(view), &start,0,FALSE,0,0);
+}
+
+bool RGGladeWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
+{
+   GtkWidget *pix = glade_xml_get_widget(_gladeXML, widget_name);
+   if (pix == NULL)
+      cout << "textview == NULL with: " << widget_name << endl;
+   
+   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
+
+}

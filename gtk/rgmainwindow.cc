@@ -2998,8 +2998,6 @@ void RGMainWindow::buildInterface()
 				   mode == 4 ? TRUE : FALSE);
 #else
     gtk_widget_hide(widget);
-    widget = glade_xml_get_widget(_gladeXML, "separator_tag_tree");
-    gtk_widget_hide(widget);
 #endif
 
     glade_xml_signal_connect_data(_gladeXML,

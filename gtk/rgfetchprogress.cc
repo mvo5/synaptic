@@ -124,8 +124,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 void RGFetchProgress::setDescription(string mainText, string secondText)
 {
    gtk_window_set_title(GTK_WINDOW(_win), mainText.c_str());
-   
-   gchar *str = g_strdup_printf(_("<big><b>%s</b></big>\n\n%s"),
+   gchar *str = g_strdup_printf(_("<big><b>%s</b></big> \n\n%s"),
 				  mainText.c_str(), secondText.c_str());
    gtk_label_set_markup(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_description")), str);
 			

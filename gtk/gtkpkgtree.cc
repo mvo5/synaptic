@@ -102,6 +102,18 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
     }
 }
 
+void RPackageListActorPkgTree::run(vector<RPackage*> &List, int pkgEvent)
+{
+    cout << "RPackageListActorPkgTree::run()" << endl;
+
+    //FIXME: workaround for now, this should be more intelligent
+    //       (see gtkpkglist.cc for a example)
+    _pkgTree = gtk_pkg_tree_new(_lister);;
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView), 
+			    GTK_TREE_MODEL(_pkgTree));
+}
+
+
 
 GType
 gtk_pkg_tree_get_type (void)
@@ -480,6 +492,9 @@ gtk_pkg_tree_iter_children (GtkTreeModel *tree_model,
 {
   tree<RPackageLister::pkgPair> *pkgTree;
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
+
+  if(parent == NULL) return FALSE;
+  if(parent->user_data == NULL) return FALSE;
 
   RPackageLister::treeIter it((RPackageLister::treeNode*)parent->user_data);
   //cout << "iter_children: parent: " << (*it).first << endl;  

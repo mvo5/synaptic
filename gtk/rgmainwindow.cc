@@ -1617,9 +1617,7 @@ void RGMainWindow::setColors(bool useColors)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
-    : RGGladeWindow(NULL, "main"), _lister(packLister), _pkgTree(0), 
-      _pkgCacheObserver(0), _pkgList(0), _pkgListCacheObserver(0),  
-      _activeTreeModel(0)
+    : RGGladeWindow(NULL, "main"), _lister(packLister),  _activeTreeModel(0)
 {
     assert(_win);
 
@@ -1837,7 +1835,7 @@ void RGMainWindow::doOpenSelections(GtkWidget *file_selector,
 void RGMainWindow::openClicked(GtkWidget *self, void *data)
 {
     std::cout << "RGMainWindow::openClicked()" << endl;
-    RGMainWindow *me = (RGMainWindow*)data;
+    //RGMainWindow *me = (RGMainWindow*)data;
     
     GtkWidget *filesel;
     filesel = gtk_file_selection_new (_("Open changes"));
@@ -1908,7 +1906,7 @@ void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button,
 void RGMainWindow::saveAsClicked(GtkWidget *self, void *data)
 {
     std::cout << "RGMainWindow::saveAsClicked()" << endl;
-    RGMainWindow *me = (RGMainWindow*)data;
+    //RGMainWindow *me = (RGMainWindow*)data;
     
     GtkWidget *filesel;
     filesel = gtk_file_selection_new (_("Save changes"));
@@ -2620,6 +2618,10 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
   //refreshTable(NULL);
 
   if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
+      GtkPkgList *_pkgList;
+      RCacheActorPkgList *_pkgListCacheObserver;
+      RPackageListActorPkgList *_pkgListPackageListObserver;
+
       _pkgList = gtk_pkg_list_new(_lister);
       _activeTreeModel = GTK_TREE_MODEL(_pkgList);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
@@ -2629,6 +2631,10 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 						     GTK_TREE_VIEW(_treeView));
       _pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
   } else {
+      GtkPkgTree *_pkgTree;
+      RCacheActorPkgTree *_pkgCacheObserver;
+      RPackageListActorPkgTree *_pkgTreePackageListObserver;
+
       _pkgTree = gtk_pkg_tree_new (_lister);
       _activeTreeModel = GTK_TREE_MODEL(_pkgTree);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
@@ -2636,6 +2642,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
       gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
       _pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
 						 GTK_TREE_VIEW(_treeView));
+      _pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree, GTK_TREE_VIEW(_treeView));
   }
   
 
@@ -3052,7 +3059,6 @@ void RGMainWindow::setTreeLocked(bool flag)
     cout << "setTreeLocked()" << endl;
     if (flag == true) {
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
-	_pkgTree = NULL;
     } else {
 	changeTreeDisplayMode(_treeDisplayMode);
     }

@@ -24,11 +24,11 @@ void RPackageListActor::notifyPostFilteredChange()
 
     cout << "there are changes" << endl;
     // init 
-    for(int i=0;i<_lastDisplayList.size();i++) {
+    for(unsigned int i=0;i<_lastDisplayList.size();i++) {
 	removedList.push_back(_lastDisplayList[i]);
     }
 
-    for(int i=0;i<_lister->count();i++) {
+    for(unsigned int i=0;i<_lister->count();i++) {
 	RPackage *pkg = _lister->getElement(i);
 	// FIXME: it would be nice if this find could be optimized
 	if(find(_lastDisplayList.begin(),_lastDisplayList.end(),pkg) != _lastDisplayList.end()) 

@@ -57,7 +57,7 @@ class RPackageListActor : public RPackageObserver
        std::cout << "RPackageListActor::updateState(): " <<_lister->count() << endl;
        _lastDisplayList.clear();
        _lastDisplayList.reserve(_lister->count());
-       for(int i=0;i<_lister->count();i++)
+       for(unsigned int i=0;i<_lister->count();i++)
 	   _lastDisplayList.push_back(_lister->getElement(i));
    };
 

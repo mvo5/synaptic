@@ -28,7 +28,7 @@
 
 class RGMainWindow;
 
-class RGCDScanner : public RCDScanProgress, public RGGladeWindow
+class RGCDScanner : public RCDScanProgress, public RGWindow
 {
 protected:
 

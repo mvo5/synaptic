@@ -20,6 +20,8 @@
  * USA
  */
 
+#include<config.h>
+#ifndef HAVE_APTPKG_CDROM
 
 #include <sys/stat.h>
 #include <sys/fcntl.h>
@@ -725,4 +727,5 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
    return !_error->PendingError();
 }
 
+#endif
 // vim:sts=4:sw=4

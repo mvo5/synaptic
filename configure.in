@@ -143,6 +143,8 @@ dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_C_INLINE
 
+
+
 dnl Checks for library functions.
 AC_FUNC_STRCOLL
 AC_CHECK_FUNCS(regcomp strdup iconv)
@@ -184,6 +186,12 @@ AC_ARG_WITH(vte,
 	      AC_SUBST(VTE_LIBS)
 	      ]
 	      )
+
+AC_LANG([C++])
+AC_CHECK_HEADER(apt-pkg/cdrom.h, 
+                AC_DEFINE(HAVE_APTPKG_CDROM, 1, 
+		[whether apt-pkg/cdrom.h is present]) )
+
 
 AC_OUTPUT([
 common/Makefile 

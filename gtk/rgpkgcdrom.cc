@@ -1,8 +1,10 @@
-/* rgcdscanner.cc - "old" apt-cdrom.cc copied interface
+/* rgpkgcdrom.cc - make use of the apt-pkg/cdrom.h code
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
- *
- * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *               2004 Canonical
+ * 
+ * Authors: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *          Michael Vogt <michael.vogt@ubuntu.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,10 +23,10 @@
  */
 
 #include "config.h"
-#ifndef HAVE_APTPKG_CDROM
+#ifdef HAVE_APTPKG_CDROM
 
 #include "rgmainwindow.h"
-#include "rgcdscanner.h"
+#include "rgpkgcdrom.h"
 #include "gsynaptic.h"
 
 #include <unistd.h>
@@ -32,7 +34,8 @@
 
 #include "i18n.h"
 
-class RGDiscName:public RGGladeWindow {
+class RGDiscName : public RGGladeWindow 
+{
  protected:
 
    GtkWidget *_textEntry;
@@ -48,27 +51,47 @@ class RGDiscName:public RGGladeWindow {
 };
 
 
-void RGCDScanner::update(string text, int current)
+void RGCDScanner::Update(string text, int current)
 {
-   gtk_label_set_text(GTK_LABEL(_label), text.c_str());
-   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
-                                 ((float)current) / _total);
+   if(text.size() > 0)
+      gtk_label_set_text(GTK_LABEL(_label), text.c_str());
+
+   if(current > 0)
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
+				    ((float)current) / totalSteps);
    show();
    RGFlushInterface();
 }
 
+bool RGCDScanner::ChangeCdrom()
+{
+   return _userDialog->proceed(_("Please insert a disc in the drive."));
+}
+
+bool RGCDScanner::AskCdromName(string &name)
+{
+   //cout << "askCdromName()" << endl;
+   RGDiscName discName(this, name);
+   
+   if (!discName.run(name)) {
+      return false;
+   }
+
+   return true;
+}
+
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-: RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
+: pkgCdromStatus(), RGWindow(main, "cdscanner", true, false)
 {
    setTitle(_("Scanning CD-ROM"));
 
    _userDialog = userDialog;
 
-   gtk_widget_set_usize(_win, 320, 90);
+   gtk_window_set_default_size(GTK_WINDOW(_win), 300, 120);
 
    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 
-   _label = gtk_label_new("");
+   _label = gtk_label_new("\n\n");
    gtk_widget_show(_label);
    gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
 
@@ -87,33 +110,13 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 bool RGCDScanner::run()
 {
    bool res = false;
-   RCDScanner scanner(_userDialog);
+   pkgCdrom scanner;
 
-   if (_config->FindB("Volatile::Non-Interactive", false)) {
-      if(scanner.start(this)) {
-	 scanner.setDiscName(scanner.getDiscName());
-	 scanner.finish(this);
-      }
-   } else {
-      if (scanner.start(this)) {
-	 string name;
-	 RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
-	 while (1) {
-	    if (!discName->run(name)) {
-	       delete discName;
-	       scanner.unmount();
-	       return false;
-	    }
-	    if (scanner.setDiscName(name))
-	       break;
-	    _userDialog->error(_("Invalid disc name!"));
-	 }
-	 delete discName;
-	 res = scanner.finish(this);
-      }
-   }
+   scanner.Add(this);
    return res;
 }
+
+
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
 : RGGladeWindow(wwin, "disc_name")
@@ -157,4 +160,5 @@ bool RGDiscName::run(string &discName)
 }
 
 #endif
+
 // vim:sts=4:sw=4

@@ -24,6 +24,8 @@
 #ifndef _RCDSCANNER_H_
 #define _RCDSCANNER_H_
 
+#include<config.h>
+#ifndef HAVE_APTPKG_CDROM
 
 #include <vector>
 #include <string>
@@ -108,5 +110,5 @@ class RCDScanner {
    };
 };
 
-
+#endif
 #endif

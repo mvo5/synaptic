@@ -56,6 +56,7 @@
 #include "rgsummarywindow.h"
 #include "rgchangeswindow.h"
 #include "rgcdscanner.h"
+#include "rgpkgcdrom.h"
 #include "rgsetoptwindow.h"
 
 #include "rgfetchprogress.h"

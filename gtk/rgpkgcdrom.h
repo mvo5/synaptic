@@ -1,9 +1,10 @@
-/* rgcdscanner.h - copy of the apt-cdrom.cc stuff for apt's without a library 
- *                 interface
+/* rgpkgcdrom.h - make use of the new apt-pkg/cdrom.h interface
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
+ *               2004 Canonical
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *         Michael Vogt <michael.vogt@ubuntu.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -21,18 +22,18 @@
  * USA
  */
 
-#ifndef RGCDSCANNER_H
-#define RGCDSCANNER_H
+#ifndef RGPKGCDROM_H
+#define RGPKGCDROM_H
 
 #include <config.h>
-#ifndef HAVE_APTPKG_CDROM
+#ifdef HAVE_APTPKG_CDROM
 
-#include "rcdscanner.h"
 #include "rggladewindow.h"
+#include <apt-pkg/cdrom.h>
 
 class RGMainWindow;
 
-class RGCDScanner:public RCDScanProgress, public RGWindow {
+class RGCDScanner:public pkgCdromStatus, public RGWindow {
  protected:
 
    GtkWidget *_label;
@@ -41,9 +42,12 @@ class RGCDScanner:public RCDScanProgress, public RGWindow {
    RUserDialog *_userDialog;
 
  public:
-
    RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
-   void update(string text, int current);
+
+   bool RGCDScanner::ChangeCdrom();
+   bool RGCDScanner::AskCdromName(string &defaultName);
+   void Update(string text, int current);
+
    bool run();
 
 };

@@ -63,6 +63,8 @@ synaptic_SOURCES= \
 	rgaboutpanel.h\
 	rgcacheprogress.cc\
 	rgcacheprogress.h\
+	rgpkgcdrom.cc \
+	rgpkgcdrom.h \
 	rgpreferenceswindow.cc\
 	rgpreferenceswindow.h\
 	rgfetchprogress.cc\

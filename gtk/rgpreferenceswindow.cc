@@ -38,6 +38,15 @@
 
 enum { FONT_DEFAULT, FONT_TERMINAL };
 
+const char * RGPreferencesWindow::column_names[] = 
+   {"status", "name", "instVer", "availVer", "instSize", "descr", NULL };
+
+const char *RGPreferencesWindow::column_visible_names[] = 
+   {"Status", "Name", "InstalledVersion", "Available Version",
+    "Installed Size", "Description", NULL };
+
+
+
 void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me =
@@ -402,78 +411,166 @@ void RGPreferencesWindow::show()
    RGWindow::show();
 }
 
-void RGPreferencesWindow::readTreeViewValues()
+enum {TREE_CHECKBOX_COLUMN, TREE_NAME_COLUMN};
+
+void RGPreferencesWindow::initTreeView()
 {
-   GtkWidget *b;
-   int pos;
+      
+   GtkWidget *tree = _treeView = glade_xml_get_widget(_gladeXML, "treeview_columns");
+   GtkCellRenderer *renderer;
+   GtkTreeViewColumn *column;
+   renderer = gtk_cell_renderer_toggle_new ();
+   g_object_set(renderer, "activatable", TRUE, NULL);
+   g_signal_connect(renderer, "toggled", 
+ 		    (GCallback) cbToggleColumn, this);
+   column = gtk_tree_view_column_new_with_attributes ("Visible",
+                                                      renderer,
+                                                      "active", TREE_CHECKBOX_COLUMN,
+                                                      NULL);
+   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+   renderer = gtk_cell_renderer_text_new ();
+   column = gtk_tree_view_column_new_with_attributes ("Name",
+						      renderer,
+						      "text", TREE_NAME_COLUMN,
+						      NULL);
+   gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_status");
-   assert(b);
-   pos = _config->FindI("Synaptic::statusColumnPos", 0);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_name");
-   assert(b);
-   pos = _config->FindI("Synaptic::nameColumnPos", 1);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_instver");
-   assert(b);
-   pos = _config->FindI("Synaptic::instVerColumnPos", 2);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_availver");
-   assert(b);
-   pos = _config->FindI("Synaptic::availVerColumnPos", 3);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_instsize");
-   assert(b);
-   pos = _config->FindI("Synaptic::instSizeColumnPos", 4);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_descr");
-   assert(b);
-   pos = _config->FindI("Synaptic::descrColumnPos", 5);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON(b), pos);
 
 }
 
+void RGPreferencesWindow::readTreeViewValues()
+{
+
+   // number of entries in columns is (sizeof(columns)/sizeof(char*))-1 
+   int number_of_columns = sizeof(column_names)/sizeof(char*)-1;
+
+   // the position in this vector is the position of the column
+   vector<pair<bool, string> > columns(number_of_columns);
+
+   // put into right place
+   gchar *name;
+   int pos;
+   bool visible;
+   for(int i=0;column_names[i] != NULL; i++) {
+      // pos
+      name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
+      pos = _config->FindI(name, i);
+      g_free(name);
+      
+      // visible
+      name = g_strdup_printf("Synaptic::%sColumnVisible",column_names[i]);
+      visible = _config->FindB(name, true);
+
+      //FIXME: sanity check pos!
+      columns[pos] = pair<bool, string>(visible, column_names[i]);
+      g_free(name);
+   }
+
+   // put into GtkListStore
+   GtkListStore *store = _listColumns = gtk_list_store_new(2, G_TYPE_BOOLEAN, G_TYPE_STRING);
+   GtkTreeIter iter;
+   for(unsigned int i=0;i<columns.size();i++) {
+      gtk_list_store_append (store, &iter);
+      gtk_list_store_set (store, &iter,
+			  TREE_CHECKBOX_COLUMN, &columns[i].first,
+			  TREE_NAME_COLUMN, columns[i].second.c_str(),
+			  -1);
+      
+   }
+
+   // now set the model
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			   GTK_TREE_MODEL(_listColumns));
+
+}
+
+void RGPreferencesWindow::cbMoveColumnUp(GtkWidget *self, void *data)
+{
+   //cout << "void RGPReferencesWindow::cbMoveColumnUp()" << endl;
+   RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+   GtkTreeIter iter, next;
+      
+   GtkTreeSelection* selection;
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   if(!gtk_tree_selection_get_selected (selection, NULL,
+					&iter)) {
+      return;
+   }
+   next = iter;
+   GtkTreePath *path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_listColumns), &iter);
+   gtk_tree_path_prev(path);
+   gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_listColumns), &next, path);
+   gtk_list_store_move_before(me->_listColumns, &iter, &next);
+   
+}
+
+void RGPreferencesWindow::cbMoveColumnDown(GtkWidget *self, void *data)
+{
+   //cout << "void RGPReferencesW2indow::cbMoveColumnDown()" << endl;
+   RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+   GtkTreeIter iter, next;
+
+   GtkTreeSelection* selection;
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   if(!gtk_tree_selection_get_selected (selection, NULL,
+					&iter)) {
+      return;
+   }
+   next = iter;
+   gtk_tree_model_iter_next(GTK_TREE_MODEL(me->_listColumns), &next);
+   gtk_list_store_move_after(me->_listColumns, &iter, &next);
+}
+
+void RGPreferencesWindow::cbToggleColumn(GtkWidget *self, char*path_string,
+					 void *data)
+{
+   //cout << "void RGPReferencesWindow::cbToggle()" << endl;
+   RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+   GtkTreeIter iter;
+   gboolean res;
+
+   GtkTreeModel *model = (GtkTreeModel*)me->_listColumns;
+   GtkTreePath* path = gtk_tree_path_new_from_string(path_string);
+   gtk_tree_model_get_iter(model, &iter, path);
+   gtk_tree_model_get(GTK_TREE_MODEL(model), &iter,
+		      TREE_CHECKBOX_COLUMN, &res, -1);
+   gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+		      TREE_CHECKBOX_COLUMN, !res,
+		      -1);
+
+}
+
+
 void RGPreferencesWindow::saveTreeViewValues()
 {
-   GtkWidget *b;
-   int pos;
+   // get from GtkListStore
+   GtkListStore *store = _listColumns;
+   GtkTreeIter iter;
+   int i=0;
+   char *column_name, *config_name;
+   bool visible;
+   gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
+   do {
+      gtk_tree_model_get (GTK_TREE_MODEL(store), &iter,
+			  TREE_CHECKBOX_COLUMN, &visible,
+			  TREE_NAME_COLUMN, &column_name,
+			  -1);
 
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_status");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::statusColumnPos", pos);
+      // pos
+      config_name = g_strdup_printf("Synaptic::%sColumnPos",column_name);
+      _config->Set(config_name, i);
+      //cout << column_name << " : " << i << endl;
+      g_free(config_name);
+      
+      // visible
+      config_name = g_strdup_printf("Synaptic::%sColumnVisible",column_name);
+      _config->Set(config_name, visible);
+      g_free(config_name);
 
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_name");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::nameColumnPos", pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_instver");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::instVerColumnPos", pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_availver");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::availVerColumnPos", pos);
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_instsize");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::instSizeColumnPos", pos);
-
-
-   b = glade_xml_get_widget(_gladeXML, "spinbutton_descr");
-   assert(b);
-   pos = (int)gtk_spin_button_get_value(GTK_SPIN_BUTTON(b));
-   _config->Set("Synaptic::descrColumnPos", pos);
+      i++;
+   } while(gtk_tree_model_iter_next(GTK_TREE_MODEL(store), &iter));
 }
 
 
@@ -671,7 +768,14 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    _lister = lister;
 
    readColors();
+   
+   // treeview stuff
+   initTreeView();
    readTreeViewValues();
+   glade_xml_signal_connect_data(_gladeXML, "on_button_column_up_clicked",
+			     (GCallback)cbMoveColumnUp, this);
+   glade_xml_signal_connect_data(_gladeXML, "on_button_column_down_clicked",
+			     (GCallback)cbMoveColumnDown, this);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_close_clicked",

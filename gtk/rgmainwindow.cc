@@ -750,6 +750,7 @@ void RGMainWindow::buildTreeView()
    GtkTreeSelection *selection;
    vector<pair<int, GtkTreeViewColumn *> > all_columns;
    int pos = 0;
+   bool visible;
 
    // remove old tree columns
    if (_treeView) {
@@ -773,7 +774,8 @@ void RGMainWindow::buildTreeView()
 
    /* Status(pixmap) column */
    pos = _config->FindI("Synaptic::statusColumnPos", 0);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::statusColumnVisible", true);
+   if(visible) {
       renderer = gtk_cell_renderer_pixbuf_new();
       column = gtk_tree_view_column_new_with_attributes("S", renderer,
                                                         "pixbuf",
@@ -788,7 +790,8 @@ void RGMainWindow::buildTreeView()
 
    /* Package name */
    pos = _config->FindI("Synaptic::nameColumnPos", 1);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::nameColumnVisible", true);
+   if (visible) {
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -813,7 +816,8 @@ void RGMainWindow::buildTreeView()
 
    /* Installed Version */
    pos = _config->FindI("Synaptic::instVerColumnPos", 2);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::instVerColumnVisible", true);
+   if (visible) {
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -833,7 +837,8 @@ void RGMainWindow::buildTreeView()
 
    /* Available Version */
    pos = _config->FindI("Synaptic::availVerColumnPos", 3);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::availVerColumnVisible", true);
+   if (visible) {
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -852,7 +857,8 @@ void RGMainWindow::buildTreeView()
    }
    // installed size
    pos = _config->FindI("Synaptic::instSizeColumnPos", 4);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::instSizeColumnVisible", true);
+   if (visible) {
       /* Installed size */
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
@@ -880,7 +886,8 @@ void RGMainWindow::buildTreeView()
 
    /* Description */
    pos = _config->FindI("Synaptic::descrColumnPos", 5);
-   if (pos != -1) {
+   visible = _config->FindI("Synaptic::descrColumnVisible", true);
+   if (visible) {
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -917,13 +924,14 @@ void RGMainWindow::buildTreeView()
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
+
    // LEAK!!! FIX THIS!!
    /*
    new RCacheActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
                           GTK_TREE_VIEW(_treeView));
    new RPackageListActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
                                 GTK_TREE_VIEW(_treeView));
-                                */
+   */
 
 }
 

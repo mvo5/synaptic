@@ -26,6 +26,10 @@
 class RGPreferencesWindow:public RGGladeWindow {
    enum { LAYOUT_VPANED, LAYOUT_HPANED } _synapticLayout;
 
+   // the names for the VisibleColumnsTreeView
+   static const char *column_names[];
+   static const char *column_visible_names[];
+
    RGMainWindow *_mainWin;
    RPackageLister *_lister;
    // option buttons
@@ -60,8 +64,14 @@ class RGPreferencesWindow:public RGGladeWindow {
    bool distroChanged;
 
    // treeview stuff
+   void initTreeView();
    void readTreeViewValues();
    void saveTreeViewValues();
+   GtkListStore *_listColumns;
+   GtkWidget *_treeView;
+   static void cbMoveColumnUp(GtkWidget *self, void *data);
+   static void cbMoveColumnDown(GtkWidget *self, void *data);
+   static void cbToggleColumn(GtkWidget *self, char *path, void *data);
 
    // callbacks
    static void changeFontAction(GtkWidget *self, void *data);

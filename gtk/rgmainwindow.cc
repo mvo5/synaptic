@@ -1953,6 +1953,9 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 {
    RGMainWindow *me = (RGMainWindow *) self;
 
+   me->_lister->filterView()->refreshFilters();
+   string currentSubView = me->selectedSubView();
+   me->refreshSubViewList();
    me->refreshTable();
 }
 

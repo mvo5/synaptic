@@ -181,12 +181,18 @@ RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs)
    // restore the filters
    restoreFilters();
 
+   refreshFilters();
+}
+
+void RPackageViewFilter::refreshFilters()
+{
+   _view.clear();
+
    // create a empty sub-views for each filter
    for (vector<RFilter *>::iterator I = _filterL.begin();
 	I != _filterL.end(); I++) {
       _view[(*I)->getName()].push_back(NULL);
    }
-   
 }
 
 RPackageViewFilter::iterator RPackageViewFilter::begin() 

@@ -142,6 +142,8 @@ class RPackageViewFilter : public RPackageView {
  public:
    void storeFilters();
    void restoreFilters();
+   // called after the filtereditor was run
+   void refreshFilters();
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);

@@ -11,11 +11,26 @@ Usability issues:
  - Rework repository and vendor dialog
  - Think about implementing a summary of changes in the upgrade dialog
  - Use HIGified common dialogs (alignments and message text!)
- - Use a tree view for sections containing a "/" (SuSE, RedHat)
- - Merge the message about failed downloads and the "igonre failed downloads"
+ - Use a tree view for sections containing a separator "/" (e.g. SuSE, RedHat)
+ - Merge the message about failed downloads and the "ignore failed downloads"
    dialog
  - Pressing a key should jump to the first package with the same inital letter, 
    if the focus is on the package list
+ - Do not show "0 broken" and other "0" messages in the status bar
+ - Use a warning or error icon in the status bar to get the users attention
+   (e.g. in the case of broken packages)
+ - Always show the progress bar in the main window and move it to left side
+   (this is the default position in GNOME)
+ - Make the status message more contextual: 
+ 	* show available upgrades after refresh
+	* if there are broken packages, this is the only relevant message
+ - Replace the "Running..." label in the "Apply changes" dialog with a
+   progress bar and use a busy cursor (?)
+
+Translation issues:
+ - Add comments for translators
+ - Reword unclear messages
+ - Use plural gettext in the status message
 
 Unsorted:
  - possibility to resume failed installation of half installed packages

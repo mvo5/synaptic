@@ -209,9 +209,18 @@
 </sect2>
 
 <sect2 id="synaptic-win-toolbar">
-	<title>The Toolbar</title>
+	<title>
+		Toolbar
+	</title>
+	
+	<para>
+		The toolbar provides quick access to global actions and a quick search for packages.
+	</para>
+
 	<figure>
-		<title>&app; toolbar</title> 
+		<title>
+			&app; toolbar
+		</title> 
 		<screenshot> 
 			<mediaobject> 
 				<imageobject>
@@ -226,9 +235,7 @@
 			</mediaobject> 
 		</screenshot> 
 	</figure>
-	<para>
-		The toolbar consists of 2 parts:
-	</para>
+
 	<variablelist>
 		<varlistentry>
 			<term>
@@ -242,9 +249,9 @@
 						</term>
 						<listitem>
 							<para>
-								To query all package archives 
-								(repositories) and rebuild the list
-								known packages
+								Queries all package sources 
+								(repositories) and rebuilds the list of
+								known packages.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -254,7 +261,8 @@
 						</term>
 						<listitem>
 							<para>
-								To upgrade all to the latest version
+								Queues all packages with a later version available 
+								than installed for upgrade.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -264,7 +272,7 @@
 						</term>
 						<listitem>
 							<para>
-								To execute all queued
+								Executes all queued changes.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -274,12 +282,12 @@
 		<varlistentry>
 			<term>
 				Find Field
-				<anchor id="anchor-findfield"></anchor>
+				<anchor id="anchor-findfield" xreflabel="find field"></anchor>
 			</term>
 			<listitem>
 				<para>
-					The quick search explained on detail in <xref 
-					linkend="synaptic-find"></xref>
+					For detailed instructons on the quick search, see <xref 
+					linkend="synaptic-find"></xref>.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -288,15 +296,110 @@
 
 <sect2 id="synaptic-win-list" xreflabel="package list">
 	<title>
-		The Package List
+		Package List
 	</title>
-	<para> 
+
+	<para>
+		The package list shows all known packages by default. You can apply filters to narrow
+		down the list of shown packages, see <xref linkend="synaptic-filter"/>.
 	</para>
+
+	<figure>
+		<title>Package List</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagelist.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the package list in the &app; main window.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		You can arrange the packages in the follwing modes from <guimenu>View</guimenu> menu:
+	</para>
+	<table frame="topbot" id="table-synaptic-viewmodes">
+		<title>
+			View Modes
+		</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top">
+						View
+					</entry>
+					<entry valign="top">
+						Description
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						Flat list
+					</entry>
+					<entry valign="top">
+						Lists all packages non hierarchically.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Alphabetic tree
+					</entry>
+					<entry valign="top">
+						Groups the packages by their initial name letter.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Section tree
+					</entry>
+					<entry valign="top">
+						Groups the packages by their section, e.g. "admin", "base", "gnome",
+						etc.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Status tree
+					</entry>
+					<entry valign="top">
+						Groups the packages by their status, e.g. "installed", "not installed",
+						"obsolete" etc.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Tag tree
+					</entry>
+					<entry valign="top">
+						Groups the packages by their tag. Tags are keywords provided by
+						third parity. Only Debian GNU/Linux with installed "debtag"
+						supports this feature.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>	
+	
+	<para>
+		The column order and the used colors can be changed in the preferences, see
+		<xref linkend="synaptic-prefs-ordercolor"/>.
+	</para>
+	
 </sect2>
 
 <sect2 id="synaptic-win-info">
 	<title>
-		The Information Area
+		Information Area
 	</title>
 	<para>
 	</para>
@@ -309,158 +412,173 @@
 	<title>
 		Managing Packages
 	</title> 
-	<tip>
-		<para>
-			All actions can also be applied to more than one package. Just select the
-			in the package list and choose the modifcation in the package control.
-		</para>
-	</tip>
+
 
 <sect2 id="synaptic-find"> 
 	<title>
-		To Find a Specific Package
+		Finding a Specific Package
 	</title> 
-	<para>
-		You can search for a package in two different ways:
-	</para>
-	<itemizedlist>
-		<listitem>
-			<para>
-				Search for a package name in the list of shown:
-			</para>
-			<orderedlist>
-				<listitem>
-					<para>
-						Type the name or a part of it into the
-						<xref linkend="anchor-findfield">find field</xref>
-						located in the toolbar. &app; will automatically
-						jump to the first matching package in the list
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						To find the next matching package press the 
-						the forward button next to the search field
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						To begin the search from the beginning of the
-						package list click on the upward button
-					</para>
-				</listitem>
-			</orderedlist>
-		</listitem>
-		<listitem>
-			<para>
-				Filter the list of shown packages for a pattern e.g.
-				show only packages from the maintainer Joe User or only packages
-				with "german" in the name or description
-			</para>
-			<orderedlist>
-				<listitem>
-					<para>
-						Open the advanced search dialog via
-						<menuchoice><guimenu>Search</guimenu>
-						<guimenuitem>Advanced Search</guimenuitem>
-						</menuchoice>
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Type the search expression into the find field
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Select the fields that you want to search in
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Click on <guibutton>Find</guibutton> to 
-						start the search
-					</para>
-				</listitem>
-			</orderedlist>
-			<tip>
-				<para>
-					You can create more sophisticated filters with the 
-					<xref linkend="synaptic-filter-edit"></xref>
-				</para>
-			</tip>
-		</listitem>
-	</itemizedlist>
-</sect2>
 
-<sect2 id="synaptic-install"> 
-	<title>To Install a New Package</title>
+<sect3 id="synaptic-quicksearch">
+	<title>	
+		Quick Search
+	</title>
 	<para>
-		The following steps describe how to install a new package:
+		Search for a package name in the list of shown:
 	</para>
 	<orderedlist>
 		<listitem>
 			<para>
-				Select the package(s) that you wish to install in the 
-				<xref linkend="synaptic-win-list">
-				</xref>
+				Type the name or a part of it into the
+				<xref linkend="anchor-findfield"/>
+				located in the toolbar. &app; will automatically
+				jump to the first matching package in the list
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Choose one of the following ways to queue the package 
-				for installation:
+				To find the next matching package press the 
+				the forward button next to the search field
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				To begin the search from the beginning of the
+				package list click on the upward button
+			</para>
+		</listitem>
+	</orderedlist>
+</sect3>
+
+<sect3 id="synaptic-advsearch">
+	<title>
+		Advanced Search
+	</title>
+	
+	<para>
+		Filter the list of shown packages for a pattern e.g.
+		show only packages from the maintainer Joe User or only packages
+		with "german" in the name or description
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Open the advanced search dialog via
+				<menuchoice><guimenu>Search</guimenu>
+				<guimenuitem>Advanced Search</guimenuitem>
+				</menuchoice>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Type the search expression into the find field
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Select the fields that you want to search in
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guibutton>Find</guibutton> to 
+				start the search
+			</para>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para>
+			You can create more sophisticated filters with the 
+			<xref linkend="synaptic-filter-edit"></xref>.
+		</para>
+	</tip>
+</sect3>
+</sect2>
+
+<sect2 id="synaptic-install"> 
+	<title>Installing Packages</title>
+	<para>
+		Follow these steps to install one or more packages.
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Query the package repositories for the latest version of the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Install Latest Package
-						</guibutton> in the package control area
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Install Latest Version</guimenuitem>
-						</menuchoice>
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Right click on the package and choose <guimenuitem>
-						Install Latest Version</guimenuitem> from the
-						context menu
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo><keysym>CRTL-I
-						</keysym></keycombo>
+						Click on <guibutton>Update</guibutton> in the toolbar.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</listitem>
 		<listitem>
 			<para>
-				To actually get the package installed you have to execute the queued
-				changes:
+				Select the package(s) that you wish to install in the 
+				<xref linkend="synaptic-win-list">
+				</xref>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Queue the selected packages for installation:
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar
+						Click on <guibutton>Install Latest Package
+						</guibutton> in the package control area.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Choose from the menu <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice>
+						Choose <menuchoice><guimenu>Package</guimenu>
+						<guimenuitem>Install Latest Version</guimenuitem>
+						</menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Install Latest Version</guimenuitem> from the
+						context menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo>
+						<keycap>Ctrl</keycap><keycap>I</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Execute the queued changes to actually install the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Press the key combination 
-						<keycombo><keysym>CTRL-E</keysym></keycombo>
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -469,56 +587,279 @@
 </sect2>
 
 <sect2 id="synaptic-remove"> 
-<title>To Remove a Package</title> 
-<para><orderedlist>
-<listitem><para>Select the package(s) to be removed in the <xref linkend="synaptic-win-list"></xref>.</para></listitem>
-<listitem><para>Choose one of the following ways to select the package for removal:</para>
-    <itemizedlist>
-      <listitem><para>Click on <guibutton>Remove</guibutton> in the
- control of the inforamtion area.</para></listitem>
-      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Remove
-</guimenuitem></menuchoice></para></listitem>
-      <listitem><para>Right click on the package and choose <guimenuitem>Remove
-  </guimenuitem></para></listitem>
-      <listitem><para>Press the key combination <keycombo><keysym>Remove</keysym>
-</keycombo></para></listitem>
-    
-     </itemizedlist>
-    </listitem>
-  </orderedlist></para>
-
+	<title>Removing Packages</title>
+	<para>
+		Follow these steps to remove one or more packages.
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package(s) that you wish to remove in the 
+				<xref linkend="synaptic-win-list">
+				</xref>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Queue the selected package(s) for removal:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Remove
+						</guibutton> in the package control area.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Package</guimenu>
+						<guimenuitem>Remove</guimenuitem>
+						</menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Remove</guimenuitem> from the
+						context menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo>
+						<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Execute the queued changes to actually remove the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</orderedlist>
+	<note>
+		<para>
+			Configuration files and user created data (e.g. a Webiste in /var/www) are not removed
+			from the system by default. You can change this behavior in the
+			<xref linkend="anchor-purge"></xref>.
+		</para>
+		<para>
+			Alternativly, choose <menuchoice><guimenu>Packages</guimenu><guimenuitem>Purge with 
+			Configuration</guimenuitem></menuchoice> from the menu to remove all files related to the
+			package.
+		</para>
+	</note>
 </sect2>
-
 <sect2 id="synaptic-upgrade"> 
-<title>To Upgrade a Package</title> 
-<para>If a later version then the installed one of a package is available the <guibutton>Install Latest Version
-</guibutton> is renamed to <guibutton>Upgrade</guibutton>.</para>
-<para><orderedlist>
-<listitem><para>Select the package(s) to be upgraded in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
-<listitem><para>Choose one of the following ways to select the package for upgrade:</para>
-    <itemizedlist>
-      <listitem><para>Click on <guibutton>Upgrade</guibutton> in the
- control of the inforamtion area.</para></listitem>
-      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Upgrade
-</guimenuitem></menuchoice></para></listitem>
-      <listitem><para>Right click on the package and choose <guimenuitem>Upgrade
-  </guimenuitem></para></listitem>
-      <listitem><para>Press the key combination <keycombo><keysym>CRTL-U</keysym>
-</keycombo></para></listitem>
-    
-     </itemizedlist>
-    </listitem>
-  </orderedlist></para>
+	<title>Upgrading Packages</title>
+	<para>
+		Follow these steps to upgrade one or more packages.
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Query the package repositories for the latest version of the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on <guibutton>Update</guibutton> in the toolbar.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
 
+		<listitem>
+			<para>
+				Select the package(s) that you wish to upgrade in the 
+				<xref linkend="synaptic-win-list">
+				</xref>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Queue the selected packages for upgrade:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Upgrade
+						</guibutton> in the package control area.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Package</guimenu>
+						<guimenuitem>Upgrade</guimenuitem>
+						</menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Upgrade</guimenuitem> from the
+						context menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo>
+						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Execute the queued changes to actually upgrade the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para>
+			To upgrade all installed packages to the latest version,
+			see <xref linkend="synaptic-upgradeall"/>.
+		</para>
+	</tip>
 </sect2>
+
 
 <sect2 id="synaptic-upgradeall"> 
-<title>To Upgrade All Packages</title> 
-<para> </para>
+	<title>Upgrading All Packages</title>
+	<para>
+		&app; can handle upgrades in two ways: BLABLABLA
+	</para>
+
+
+	<para>
+		Follow these steps to upgrade all installed packages to the latest version.
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Query the package repositories for the latest version of the packages:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on <guibutton>Update</guibutton> in the toolbar.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+
+		<listitem>
+			<para>
+				Queue the package(s) for upgrade: 
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Upgrade
+						</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Upgrade All Packages</guimenuitem>
+						</menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo>
+						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Execute the queued changes to actually upgrade the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para>
+			To upgrade all installed packages to the latest version 
+			see <xref linkend="synaptic-upgradeall"/>.
+		</para>
+	</tip>
 </sect2>
 
 <sect2 id="synaptic-downgrade"> 
-<title>To Downgrade a Package</title> 
+<title>Downgrading Packages</title> 
 <warning><para>Downgrading a package is a broken feature, since it is not supported by
 . It may work for you, but it is not recommended.</para></warning>
 <para>The export tab in the information area of the package provides a list of all
@@ -546,7 +887,7 @@
 </sect2>
 </sect1>
 
-<sect1 id="snyaptic-filter">
+<sect1 id="synaptic-filter">
 	<title>
 		Using Filters
 	</title>
@@ -556,7 +897,7 @@
 
 <sect2 id="synaptic-filter-apply"> 
 	<title>
-		To Apply a Predefined Filter
+		Applying Predefined Filters
 	</title> 
 	<para>
 		&app; comes with a list of predifend filters.
@@ -647,7 +988,7 @@
 
 <sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
 	<title>
-		To Edit and Create Filters
+		Editing and Creating Filters
 	</title> 
 
 	<para>
@@ -710,7 +1051,9 @@
 
 <sect2 id="synaptic-prefs-general"> 
 	<title>General</title> 
-	<para> </para>
+	<para>
+		<anchor id="anchor-purge" xreflabel="action preferences"/>
+	 </para>
 </sect2>
 
 <sect2 id="synaptic-prefs-layout"> 

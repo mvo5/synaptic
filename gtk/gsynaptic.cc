@@ -196,7 +196,7 @@ int main(int argc, char **argv)
 #ifndef HAVE_RPM
     mainWindow->setTitle(PACKAGE" for Debian "VERSION);
 #else
-    mainWindow->setTitle(_config->Find("Synaptic::MyName", PACKAGE)+" "VERSION);
+    mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif
     mainWindow->show();
 

@@ -718,7 +718,10 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     delete fprogress;
     delete iprogress;
 
-    me->showErrors();
+    if (_config->FindB("Synaptic::IgnorePMOutput", false) == false)
+	me->showErrors();
+    else
+	_error->Discard();
 
     if (_config->FindB("Volatile::Non-Interactive", false) == true) {
 	g_free(pkgname);

@@ -426,6 +426,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
    _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
+   gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.025);
    _autoClose = glade_xml_get_widget(_gladeXML, "checkbutton_auto_close");
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_autoClose), 
 				_config->FindB("Synaptic::closeZvt", false));

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.31\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 11:10+0100\n"
+"POT-Creation-Date: 2004-01-13 12:02+0100\n"
 "PO-Revision-Date: 2003-11-28 00:11+0100\n"
 "Last-Translator: Jean-Michel Pouré <jm@poure.com>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -419,7 +419,7 @@ msgid "Internal Error, non-zero counts"
 msgstr "Erreur interne, non-zero counts"
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:76 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:74 gtk/window_filters.glade.h:56
 msgid "Status"
 msgstr "Etat"
 
@@ -444,7 +444,7 @@ msgstr "Affichage réduit"
 msgid "Tags"
 msgstr "Marqueurs"
 
-#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:64
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:60
 msgid "Name"
 msgstr "Variable"
 
@@ -455,7 +455,7 @@ msgstr "Version"
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2368
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_main_hpaned.glade.h:26
-#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:42
+#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:39
 #: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:69
 msgid "Description"
 msgstr "Description"
@@ -691,7 +691,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"large\">Activer le dispositif de mise à jour "
 "intelligente (dist-upgrade) ?</span>"
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:35
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "Mise à jour système par défaut :"
@@ -706,7 +706,7 @@ msgstr ""
 msgid "Remember the answer for further upgrades"
 msgstr "Se souvenir de la réponse pour les prochaines mises à jour"
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:73
 #, fuzzy
 msgid "Smart Upgrade"
 msgstr "Mettre à jour"
@@ -843,7 +843,7 @@ msgstr "Sélection des couleurs"
 msgid "ignore"
 msgstr "ignorer"
 
-#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:71
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:67
 msgid "Preferences"
 msgstr "Préférences"
 
@@ -1204,7 +1204,7 @@ msgstr "Aucune modification"
 msgid "Install"
 msgstr "Installer"
 
-#: gtk/rgmainwindow.cc:3067 gtk/window_preferences.glade.h:80
+#: gtk/rgmainwindow.cc:3067
 msgid "Upgrade"
 msgstr "Mettre à jour"
 
@@ -1764,7 +1764,7 @@ msgid "Edit the available filters"
 msgstr "Édite le filtre disponible"
 
 #: gtk/window_main_hpaned.glade.h:29 gtk/window_main_vpaned.glade.h:31
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:43
 msgid "Expert"
 msgstr "Expert"
 
@@ -2120,49 +2120,51 @@ msgstr ""
 "2 = Informations détaillées"
 
 #: gtk/window_preferences.glade.h:7
-msgid "<b>Actions</b>"
-msgstr "<b>Actions</b>"
-
-#: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
 msgstr "<b>Couleurs</b>"
 
-#: gtk/window_preferences.glade.h:9
+#: gtk/window_preferences.glade.h:8
 msgid "<b>Column Order</b>"
 msgstr "<b>Ordre des colonnes</b>"
 
-#: gtk/window_preferences.glade.h:10
+#: gtk/window_preferences.glade.h:9
 msgid "<b>Distribution</b>"
 msgstr "<b>Distribution</b>"
 
-#: gtk/window_preferences.glade.h:11
+#: gtk/window_preferences.glade.h:10
 msgid "<b>Fonts</b>"
 msgstr "<b>Polices</b>"
 
-#: gtk/window_preferences.glade.h:12
+#: gtk/window_preferences.glade.h:11
 msgid "<b>General</b>"
 msgstr "<b>Général</b>"
 
-#: gtk/window_preferences.glade.h:13
+#: gtk/window_preferences.glade.h:12
 msgid "<b>Main Window</b>"
 msgstr "<b>Fenêtre principale</b>"
 
-#: gtk/window_preferences.glade.h:14
+#: gtk/window_preferences.glade.h:13
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all selections "
-"will be lost. Make sure to execute your changes first."
+"<b>Note:</b> The package list will need to be reloaded and so all queued "
+"changes will get lost. Make sure to execute your changes first."
 msgstr ""
 "<b>Remarque :</b> La liste des paquets sera rechargée et par conséquent les "
 "sélections seront perdues. Il est conseillé de lancer les changements "
 "programmés avant de recharger la liste."
 
-#: gtk/window_preferences.glade.h:15
+#: gtk/window_preferences.glade.h:14
 msgid ""
 "<b>Note:</b> You will need to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 "<b>Remarque :</b> Vous devez redémarrez Synaptic pour \n"
 "que ce paramètre prenne effet."
+
+#: gtk/window_preferences.glade.h:16
+#, fuzzy
+msgid "<b>Package Changes</b>"
+msgstr "<b>Paquet</b>"
 
 #: gtk/window_preferences.glade.h:17
 msgid "<b>Proxy Server</b>"
@@ -2191,45 +2193,51 @@ msgid "Always Ask"
 msgstr "Toujours demander"
 
 #: gtk/window_preferences.glade.h:22
-msgid "Ask to quit after the changes have been executed"
-msgstr "Demander à quitter une fois les changements effectuées"
+#, fuzzy
+msgid "Ask to confirm changes also affecting other packages"
+msgstr "Confirmer les actions concernant d'autres paquets"
 
 #: gtk/window_preferences.glade.h:23
+#, fuzzy
+msgid "Ask to quit after the changes have been executed successfully"
+msgstr "Demander à quitter une fois les changements effectuées"
+
+#: gtk/window_preferences.glade.h:24
 #, fuzzy
 msgid "Available (New):"
 msgstr "Marqueurs disponibles"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 #, fuzzy
 msgid "Available (locked):"
 msgstr "Marqueurs disponibles"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 #, fuzzy
 msgid "Available: "
 msgstr "Marqueurs disponibles"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid "Broken:"
 msgstr "Cassés :"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Clear"
 msgstr "Effacer"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color"
 msgstr "Couleur"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Color packages by their status"
 msgstr "Colorer les paquets en fonction de leur état"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 msgid "Columns and Colors"
 msgstr "Colonnes et couleurs"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2237,169 +2245,150 @@ msgstr ""
 "Liste d'hôtes ou de domaines, délimitée par des virgules, à ne pas contacter "
 "à travers le serveur mandataire (e.g., localhost, 192.168.1.231, .net)"
 
-#: gtk/window_preferences.glade.h:32
-msgid "Confirm actions also affecting other packages"
-msgstr "Confirmer les actions concernant d'autres paquets"
-
 #: gtk/window_preferences.glade.h:33
 msgid "Consider recommended packages as dependencies"
 msgstr "Considérer les paquets recommandés comme des dépendances"
 
 #: gtk/window_preferences.glade.h:34
-msgid "Custom application font"
-msgstr "Police personnalisée de l'application"
-
-#: gtk/window_preferences.glade.h:35
-msgid "Custom terminal font"
-msgstr "Custom terminal font"
-
-#: gtk/window_preferences.glade.h:36
 msgid "Default"
 msgstr "Défaut"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:36
 msgid "Default archive: "
 msgstr "Archive par défaut : "
 
-#: gtk/window_preferences.glade.h:38
-msgid "Default remove: "
-msgstr "Default remove: "
-
-#: gtk/window_preferences.glade.h:39
-msgid "Default system upgrade:"
-msgstr "Mise à jour système par défaut :"
-
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "Supprimer les paquets téléchargés une fois installés"
 
-#: gtk/window_preferences.glade.h:41
-msgid "Delete obsolete packages from cache only"
-msgstr "Supprimer les paquets obsolètes uniquement dans le cache"
+#: gtk/window_preferences.glade.h:38
+msgid "Delete packages which are no longer available only"
+msgstr ""
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr "Connection directe à internet"
 
-#: gtk/window_preferences.glade.h:44
-msgid "Distribution Upgrade"
-msgstr "Mettre à jour la distribution"
-
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:41
 msgid "Downgrade:"
 msgstr "Mettre à jour vers une version antérieure :"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:42
 msgid "Execute changes in a terminal window"
 msgstr ""
 "Lancer l'exécution des changements programmés dans une fenêtre de terminal"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:44
 msgid "FTP proxy: "
 msgstr "Mandataire FTP : "
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:45
 msgid "General"
 msgstr "Général"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:46
 msgid "HTTP proxy: "
 msgstr "Mandataire HTTP : "
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Adresse IP ou nom d'hôte du serveur mandataire FTP"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:48
 msgid "IP address or host name of the http proxy server"
 msgstr "Adresse IP ou nom d'hôte du serveur mandataire HTTP"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:49
 msgid "Include Configuration"
 msgstr "Inclure la configuration"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:50
 msgid "Include Orphaned Dependencies"
 msgstr "Include les dépendances orphelines"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:51
 msgid "Install:"
 msgstr "Installer :"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:52
 #, fuzzy
 msgid "Installed (locked):"
 msgstr "Fichiers installés"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:53
 msgid "Installed size"
 msgstr "Taille installé"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:54
 msgid "Installed version"
 msgstr "Version installée"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:55
 #, fuzzy
 msgid "Installed:"
 msgstr "Installés"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:56
 msgid "Latest version"
 msgstr "Dernière version"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:57
 msgid "Layout"
 msgstr "Présentation"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:58
 msgid "Leave all downloaded packages in the cache"
 msgstr "Conserver les paquets téléchargés dans le cache"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:59
 msgid "Manual proxy configuration"
 msgstr "Configuration manuelle du mandataire"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:61
 msgid "Network"
 msgstr "Réseau"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:62
 msgid "No proxy for: "
 msgstr "Pas de mandataire pour : "
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:63
 msgid "Number of undo operations:"
 msgstr "Nombre de niveaux d'annulation :"
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:64
 msgid "Port number of the http proxy server"
 msgstr "Numéro du port pour le serveur mandataire HTTP"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:65
 msgid "Port numer of the ftp proxy server"
 msgstr "Numéro du port du serveur mandataire FTP"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:66
 msgid "Port: "
 msgstr "Port : "
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Purge: "
 msgstr "Port : "
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:69
 msgid "Regular expressions are an advanced method of text matching"
 msgstr ""
 "L'utilisation des expressions rationnelles est une méthode évoluée pour la "
 "recherche de texte"
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:70
+#, fuzzy
+msgid "Removal of packages: "
+msgstr "Paquets remplacés"
+
+#: gtk/window_preferences.glade.h:71
 msgid "Remove:"
 msgstr "Désinstaller :"
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:72
 #, fuzzy
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
@@ -2407,25 +2396,40 @@ msgstr ""
 "Vous devez choisir une release par défaut lorsque le fichier sources.list "
 "contient plusieurs releases."
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:75
 msgid "Temporary Files"
 msgstr "Fichiers temporaires"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:76
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 "Position de la colonne de gauche vers la droite. Une valeur de -1 cache la "
 "colonne."
 
-#: gtk/window_preferences.glade.h:79
+#: gtk/window_preferences.glade.h:77
 #, fuzzy
 msgid "Update available:"
 msgstr "Édite le filtre disponible"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:78
+#, fuzzy
+msgid "Upgrade of all packages:"
+msgstr "Mettre à jour la liste des paquets disponibles"
+
+#: gtk/window_preferences.glade.h:79
 msgid "Upgrade:"
 msgstr "Mettre à jour :"
+
+#: gtk/window_preferences.glade.h:80
+#, fuzzy
+msgid "Use custom application font"
+msgstr "Police personnalisée de l'application"
+
+#: gtk/window_preferences.glade.h:81
+#, fuzzy
+msgid "Use custom terminal font"
+msgstr "Custom terminal font"
 
 #: gtk/window_preferences.glade.h:82
 msgid "_Default Font"
@@ -2872,6 +2876,21 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>Actions</b>"
+
+#~ msgid "Default remove: "
+#~ msgstr "Default remove: "
+
+#~ msgid "Default system upgrade:"
+#~ msgstr "Mise à jour système par défaut :"
+
+#~ msgid "Delete obsolete packages from cache only"
+#~ msgstr "Supprimer les paquets obsolètes uniquement dans le cache"
+
+#~ msgid "Distribution Upgrade"
+#~ msgstr "Mettre à jour la distribution"
 
 #~ msgid ""
 #~ "The default upgrade method skips upgrades that introduce conflicts or "

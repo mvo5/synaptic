@@ -166,7 +166,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label73">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;b&gt;Actions&lt;/b&gt;</property>
+		      <property name="label" translatable="yes">&lt;b&gt;Package Changes&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -242,7 +242,7 @@
 			      <property name="border_width">2</property>
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Ask to quit after the changes have been executed</property>
+			      <property name="label" translatable="yes">Ask to quit after the changes have been executed successfully</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="active">False</property>
@@ -261,7 +261,7 @@
 			      <property name="border_width">2</property>
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Confirm actions also affecting other packages</property>
+			      <property name="label" translatable="yes">Ask to confirm changes also affecting other packages</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="active">False</property>
@@ -348,7 +348,7 @@
 			      <child>
 				<widget class="GtkLabel" id="label76">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Default remove: </property>
+				  <property name="label" translatable="yes">Removal of packages: </property>
 				  <property name="use_underline">True</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -453,7 +453,7 @@
 			      <child>
 				<widget class="GtkLabel" id="label146">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Default system upgrade:</property>
+				  <property name="label" translatable="yes">Upgrade of all packages:</property>
 				  <property name="use_underline">False</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -478,7 +478,7 @@
 				<widget class="GtkOptionMenu" id="optionmenu_upgrade_method">
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
-				  <property name="history">0</property>
+				  <property name="history">2</property>
 
 				  <child>
 				    <widget class="GtkMenu" id="menu4">
@@ -495,7 +495,7 @@
 				      <child>
 					<widget class="GtkMenuItem" id="menu_normal_upgrade">
 					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Upgrade</property>
+					  <property name="label" translatable="yes">Default Upgrade</property>
 					  <property name="use_underline">True</property>
 					  <signal name="activate" handler="on_normal_upgrade_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
 					</widget>
@@ -504,7 +504,7 @@
 				      <child>
 					<widget class="GtkMenuItem" id="distribution_upgrade">
 					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">Distribution Upgrade</property>
+					  <property name="label" translatable="yes">Smart Upgrade</property>
 					  <property name="use_underline">True</property>
 					  <signal name="activate" handler="on_distribution_upgrade_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
 					</widget>
@@ -874,7 +874,7 @@ this setting to take effect.</property>
 			    <widget class="GtkCheckButton" id="checkbutton_user_font">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Custom application font</property>
+			      <property name="label" translatable="yes">Use custom application font</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="active">False</property>
@@ -896,7 +896,7 @@ this setting to take effect.</property>
 			    <widget class="GtkCheckButton" id="checkbutton_user_terminal_font">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Custom terminal font</property>
+			      <property name="label" translatable="yes">Use custom terminal font</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="active">False</property>
@@ -2457,7 +2457,7 @@ this setting to take effect.</property>
 			    <widget class="GtkRadioButton" id="radio_cache_del_obsolete">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Delete obsolete packages from cache only</property>
+			      <property name="label" translatable="yes">Delete packages which are no longer available only</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="active">False</property>
@@ -3214,7 +3214,7 @@ this setting to take effect.</property>
 			      <child>
 				<widget class="GtkLabel" id="label142">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; The package list will need to be reloaded and so all selections will be lost. Make sure to execute your changes first.</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; The package list will need to be reloaded and so all queued changes will get lost. Make sure to execute your changes first.</property>
 				  <property name="use_underline">False</property>
 				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>

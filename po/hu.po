@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 11:10+0100\n"
+"POT-Creation-Date: 2004-01-13 12:02+0100\n"
 "PO-Revision-Date: 2004-01-07 21:56+0100\n"
 "Last-Translator: Gabor Kelemen <kg0021@stud.unideb.hu>\n"
 "Language-Team: Hungarian\n"
@@ -414,7 +414,7 @@ msgid "Internal Error, non-zero counts"
 msgstr "Belső hiba, nem-nulla számolások"
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:76 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:74 gtk/window_filters.glade.h:56
 msgid "Status"
 msgstr "Állapot"
 
@@ -439,7 +439,7 @@ msgstr "CsökkentettNézet"
 msgid "Tags"
 msgstr "Címkék"
 
-#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:64
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:60
 msgid "Name"
 msgstr "Név"
 
@@ -450,7 +450,7 @@ msgstr "Verzió"
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2368
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_main_hpaned.glade.h:26
-#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:42
+#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:39
 #: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:69
 msgid "Description"
 msgstr "Leírás"
@@ -678,7 +678,7 @@ msgid ""
 "<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
 msgstr "Disztrófrissítés bekapcsolása?"
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:35
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "Alapértelmezett rendszerfrissítés:"
@@ -693,7 +693,7 @@ msgstr ""
 msgid "Remember the answer for further upgrades"
 msgstr "Emlékezzen a válaszra későbbi frissítéseknél is"
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:73
 #, fuzzy
 msgid "Smart Upgrade"
 msgstr "Frissít"
@@ -831,7 +831,7 @@ msgstr "Színes kijelölés"
 msgid "ignore"
 msgstr "átlép"
 
-#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:71
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:67
 msgid "Preferences"
 msgstr "Beállítások"
 
@@ -1188,7 +1188,7 @@ msgstr "Változtatások visszavonása"
 msgid "Install"
 msgstr "Telepít"
 
-#: gtk/rgmainwindow.cc:3067 gtk/window_preferences.glade.h:80
+#: gtk/rgmainwindow.cc:3067
 msgid "Upgrade"
 msgstr "Frissít"
 
@@ -1738,7 +1738,7 @@ msgid "Edit the available filters"
 msgstr "Rendelkezésre álló szűrők szerkesztése"
 
 #: gtk/window_main_hpaned.glade.h:29 gtk/window_main_vpaned.glade.h:31
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:43
 msgid "Expert"
 msgstr "Szakértő"
 
@@ -2090,48 +2090,50 @@ msgstr ""
 "2 = Csomagrészletek"
 
 #: gtk/window_preferences.glade.h:7
-msgid "<b>Actions</b>"
-msgstr "<b>Akciók</b>"
-
-#: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
 msgstr "<b>Színek</b>"
 
-#: gtk/window_preferences.glade.h:9
+#: gtk/window_preferences.glade.h:8
 msgid "<b>Column Order</b>"
 msgstr "<b>Oszlopok sorrendje</b>"
 
-#: gtk/window_preferences.glade.h:10
+#: gtk/window_preferences.glade.h:9
 msgid "<b>Distribution</b>"
 msgstr "<b>Disztribúció</b>"
 
-#: gtk/window_preferences.glade.h:11
+#: gtk/window_preferences.glade.h:10
 msgid "<b>Fonts</b>"
 msgstr "<b>Betűtípusok</b>"
 
-#: gtk/window_preferences.glade.h:12
+#: gtk/window_preferences.glade.h:11
 msgid "<b>General</b>"
 msgstr "<b>Általános</b>"
 
-#: gtk/window_preferences.glade.h:13
+#: gtk/window_preferences.glade.h:12
 msgid "<b>Main Window</b>"
 msgstr "<b>Főablak</b>"
 
-#: gtk/window_preferences.glade.h:14
+#: gtk/window_preferences.glade.h:13
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all selections "
-"will be lost. Make sure to execute your changes first."
+"<b>Note:</b> The package list will need to be reloaded and so all queued "
+"changes will get lost. Make sure to execute your changes first."
 msgstr ""
 "<b>Megjegyzés:</b> A csomaglistát újra kell tölteni így minden kiválasztás "
 "elveszik. Először hajtsd végre a változtatásaidat."
 
-#: gtk/window_preferences.glade.h:15
+#: gtk/window_preferences.glade.h:14
 msgid ""
 "<b>Note:</b> You will need to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 "<b>Megjegyzés</b> Ezen beállítás érvényesítéséhez újra kell indítanod\n"
 " a Synaptic-ot"
+
+#: gtk/window_preferences.glade.h:16
+#, fuzzy
+msgid "<b>Package Changes</b>"
+msgstr "Csomag "
 
 #: gtk/window_preferences.glade.h:17
 msgid "<b>Proxy Server</b>"
@@ -2158,45 +2160,51 @@ msgid "Always Ask"
 msgstr "Mindig kérdez"
 
 #: gtk/window_preferences.glade.h:22
-msgid "Ask to quit after the changes have been executed"
-msgstr "Kérdezzen hogy kilépsz-e a változtatások végrehajtása után"
+#, fuzzy
+msgid "Ask to confirm changes also affecting other packages"
+msgstr "Rákérdez, ha más csomagra is hat valamely akció."
 
 #: gtk/window_preferences.glade.h:23
+#, fuzzy
+msgid "Ask to quit after the changes have been executed successfully"
+msgstr "Kérdezzen hogy kilépsz-e a változtatások végrehajtása után"
+
+#: gtk/window_preferences.glade.h:24
 #, fuzzy
 msgid "Available (New):"
 msgstr "Elérhető címkék"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 #, fuzzy
 msgid "Available (locked):"
 msgstr "Elérhető címkék"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 #, fuzzy
 msgid "Available: "
 msgstr "Elérhető címkék"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid "Broken:"
 msgstr "Törött:"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Clear"
 msgstr "Törlés"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color"
 msgstr "<b>Színek</b>"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Color packages by their status"
 msgstr "Csomagok színezése státuszuk szerint"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 msgid "Columns and Colors"
 msgstr "Oszlopok és színek"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2204,166 +2212,147 @@ msgstr ""
 "Kiszolgálók és tartományok vesszővel elválasztott listája, amikhez ne a "
 "proxy-n keresztül kapcsolódjon (pl:localhost, 192.168.1.231, .net)"
 
-#: gtk/window_preferences.glade.h:32
-msgid "Confirm actions also affecting other packages"
-msgstr "Rákérdez, ha más csomagra is hat valamely akció."
-
 #: gtk/window_preferences.glade.h:33
 msgid "Consider recommended packages as dependencies"
 msgstr "Kezelje az ajánlott csomagokat függőségekként"
 
 #: gtk/window_preferences.glade.h:34
-msgid "Custom application font"
-msgstr "Egyéb alkalmazás betűtípus"
-
-#: gtk/window_preferences.glade.h:35
-msgid "Custom terminal font"
-msgstr "Egyéb terminál betűtípus"
-
-#: gtk/window_preferences.glade.h:36
 msgid "Default"
 msgstr "Alapértelmezett"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:36
 msgid "Default archive: "
 msgstr "Alapértelmezett archívum:"
 
-#: gtk/window_preferences.glade.h:38
-msgid "Default remove: "
-msgstr "Alapértelmezett törlés:"
-
-#: gtk/window_preferences.glade.h:39
-msgid "Default system upgrade:"
-msgstr "Alapértelmezett rendszerfrissítés:"
-
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "Letöltött csomagok törlése telepítés után"
 
-#: gtk/window_preferences.glade.h:41
-msgid "Delete obsolete packages from cache only"
-msgstr "Régi csomagok törlése a gyorsítótárból"
+#: gtk/window_preferences.glade.h:38
+msgid "Delete packages which are no longer available only"
+msgstr ""
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr "Közvetlen Internetkapcsolat"
 
-#: gtk/window_preferences.glade.h:44
-msgid "Distribution Upgrade"
-msgstr "Disztribúció Frissítés"
-
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:41
 msgid "Downgrade:"
 msgstr "Visszafejleszt:"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:42
 msgid "Execute changes in a terminal window"
 msgstr "Változtatások végrehajtása terminálablakban"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:44
 msgid "FTP proxy: "
 msgstr "FTP proxy: "
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:45
 msgid "General"
 msgstr "Általános"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:46
 msgid "HTTP proxy: "
 msgstr "HTTP proxy: "
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Az ftp proxy szerver neve vagy IP címe"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:48
 msgid "IP address or host name of the http proxy server"
 msgstr "A http proxy szerver neve vagy IP címe"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:49
 msgid "Include Configuration"
 msgstr "Konfiguráció bevétele"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:50
 msgid "Include Orphaned Dependencies"
 msgstr "Árva függőségek bevétele"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:51
 msgid "Install:"
 msgstr "Telepít:"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:52
 #, fuzzy
 msgid "Installed (locked):"
 msgstr "Telepített fájlok"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:53
 msgid "Installed size"
 msgstr "Telepített méret"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:54
 msgid "Installed version"
 msgstr "Telepített verzió"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:55
 #, fuzzy
 msgid "Installed:"
 msgstr "Telepítve"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:56
 msgid "Latest version"
 msgstr "Legújabb verzió"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:57
 msgid "Layout"
 msgstr "Kiosztás"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:58
 msgid "Leave all downloaded packages in the cache"
 msgstr "Letöltött csomagok gyorsítótárban hagyása"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:59
 msgid "Manual proxy configuration"
 msgstr "Kézi proxy konfiguráció"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:61
 msgid "Network"
 msgstr "Hálózat"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:62
 msgid "No proxy for: "
 msgstr "Nincs proxy a következőkhöz:"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:63
 msgid "Number of undo operations:"
 msgstr "A lehetséges Visszavonás műveletek száma"
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:64
 msgid "Port number of the http proxy server"
 msgstr "A http proxy szerver portszáma"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:65
 msgid "Port numer of the ftp proxy server"
 msgstr "A ftp proxy szerver portszáma"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:66
 msgid "Port: "
 msgstr "Port: "
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Purge: "
 msgstr "Port: "
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:69
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "A reguláris kifejezések a szövegkeresés haladó eljárásai"
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:70
+#, fuzzy
+msgid "Removal of packages: "
+msgstr "Helyettesített csomagok"
+
+#: gtk/window_preferences.glade.h:71
 msgid "Remove:"
 msgstr "Törlés:"
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:72
 #, fuzzy
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
@@ -2371,23 +2360,38 @@ msgstr ""
 "Alapértelmezett kiadás kiválasztása, ha egynél több van megadva a sources."
 "list-ben"
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:75
 msgid "Temporary Files"
 msgstr "Átmeneti fájlok"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:76
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr "Az oszlop helye balról jobbra. A -1 érték elrejti az oszlopot"
 
-#: gtk/window_preferences.glade.h:79
+#: gtk/window_preferences.glade.h:77
 #, fuzzy
 msgid "Update available:"
 msgstr "Rendelkezésre álló szűrők szerkesztése"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:78
+#, fuzzy
+msgid "Upgrade of all packages:"
+msgstr "Elérhető csomagok listájának frissítése"
+
+#: gtk/window_preferences.glade.h:79
 msgid "Upgrade:"
 msgstr "Frissít:"
+
+#: gtk/window_preferences.glade.h:80
+#, fuzzy
+msgid "Use custom application font"
+msgstr "Egyéb alkalmazás betűtípus"
+
+#: gtk/window_preferences.glade.h:81
+#, fuzzy
+msgid "Use custom terminal font"
+msgstr "Egyéb terminál betűtípus"
 
 #: gtk/window_preferences.glade.h:82
 msgid "_Default Font"
@@ -2826,6 +2830,21 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>Akciók</b>"
+
+#~ msgid "Default remove: "
+#~ msgstr "Alapértelmezett törlés:"
+
+#~ msgid "Default system upgrade:"
+#~ msgstr "Alapértelmezett rendszerfrissítés:"
+
+#~ msgid "Delete obsolete packages from cache only"
+#~ msgstr "Régi csomagok törlése a gyorsítótárból"
+
+#~ msgid "Distribution Upgrade"
+#~ msgstr "Disztribúció Frissítés"
 
 #~ msgid ""
 #~ "The default upgrade method skips upgrades that introduce conflicts or "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 11:10+0100\n"
+"POT-Creation-Date: 2004-01-13 12:02+0100\n"
 "PO-Revision-Date: 2003-11-29 03:13+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese\n"
@@ -421,7 +421,7 @@ msgid "Internal Error, non-zero counts"
 msgstr "ナイブエラー、ゼロ以外のカウント"
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:76 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:74 gtk/window_filters.glade.h:56
 msgid "Status"
 msgstr "状態"
 
@@ -446,7 +446,7 @@ msgstr "簡略表示"
 msgid "Tags"
 msgstr "タグ"
 
-#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:64
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:60
 msgid "Name"
 msgstr "パッケージ名"
 
@@ -457,7 +457,7 @@ msgstr "バージョン"
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2368
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_main_hpaned.glade.h:26
-#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:42
+#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:39
 #: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:69
 msgid "Description"
 msgstr "説明"
@@ -688,7 +688,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">スマートアップグレード(dist-upgrade)を"
 "有効にしますか?</span>"
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:35
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "システムアップグレード時のデフォルト:"
@@ -703,7 +703,7 @@ msgstr ""
 msgid "Remember the answer for further upgrades"
 msgstr "今後のアップグレードでもこの選択をする"
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:73
 #, fuzzy
 msgid "Smart Upgrade"
 msgstr "アップグレード:"
@@ -840,7 +840,7 @@ msgstr "色の選択"
 msgid "ignore"
 msgstr "無視"
 
-#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:71
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:67
 msgid "Preferences"
 msgstr "設定"
 
@@ -1199,7 +1199,7 @@ msgstr "変更しない"
 msgid "Install"
 msgstr "インストール"
 
-#: gtk/rgmainwindow.cc:3067 gtk/window_preferences.glade.h:80
+#: gtk/rgmainwindow.cc:3067
 msgid "Upgrade"
 msgstr "アップグレード"
 
@@ -1750,7 +1750,7 @@ msgid "Edit the available filters"
 msgstr "既存のフィルタの編集"
 
 #: gtk/window_main_hpaned.glade.h:29 gtk/window_main_vpaned.glade.h:31
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:43
 msgid "Expert"
 msgstr "エキスパート"
 
@@ -2102,48 +2102,50 @@ msgstr ""
 "2 = パッケージ詳細"
 
 #: gtk/window_preferences.glade.h:7
-msgid "<b>Actions</b>"
-msgstr "<b>アクション</b>"
-
-#: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
 msgstr "<b>色</b>"
 
-#: gtk/window_preferences.glade.h:9
+#: gtk/window_preferences.glade.h:8
 msgid "<b>Column Order</b>"
 msgstr "<b>カラムの順番</b>"
 
-#: gtk/window_preferences.glade.h:10
+#: gtk/window_preferences.glade.h:9
 msgid "<b>Distribution</b>"
 msgstr "<b>ディストリビューション</b>"
 
-#: gtk/window_preferences.glade.h:11
+#: gtk/window_preferences.glade.h:10
 msgid "<b>Fonts</b>"
 msgstr "<b>フォント</b>"
 
-#: gtk/window_preferences.glade.h:12
+#: gtk/window_preferences.glade.h:11
 msgid "<b>General</b>"
 msgstr "<b>全般</b>"
 
-#: gtk/window_preferences.glade.h:13
+#: gtk/window_preferences.glade.h:12
 msgid "<b>Main Window</b>"
 msgstr "<b>メインウインドウ</b>"
 
-#: gtk/window_preferences.glade.h:14
+#: gtk/window_preferences.glade.h:13
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all selections "
-"will be lost. Make sure to execute your changes first."
+"<b>Note:</b> The package list will need to be reloaded and so all queued "
+"changes will get lost. Make sure to execute your changes first."
 msgstr ""
 "<b>注意</b> パッケージリストを再読込する必要があります。このため、全ての選択"
 "は解除されます。あらかじめ変更を適用してください。"
 
-#: gtk/window_preferences.glade.h:15
+#: gtk/window_preferences.glade.h:14
 msgid ""
 "<b>Note:</b> You will need to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 "<b>注意:</b> 設定を反映するためには Synaptic を\n"
 "再起動する必要があります。"
+
+#: gtk/window_preferences.glade.h:16
+#, fuzzy
+msgid "<b>Package Changes</b>"
+msgstr "<b>パッケージ</b>"
 
 #: gtk/window_preferences.glade.h:17
 msgid "<b>Proxy Server</b>"
@@ -2170,47 +2172,53 @@ msgid "Always Ask"
 msgstr "いつも尋ねる"
 
 #: gtk/window_preferences.glade.h:22
-msgid "Ask to quit after the changes have been executed"
-msgstr "変更が適用後、終了の確認をする"
+#, fuzzy
+msgid "Ask to confirm changes also affecting other packages"
+msgstr "他のパッケージに影響する処理を確認する"
 
 #: gtk/window_preferences.glade.h:23
+#, fuzzy
+msgid "Ask to quit after the changes have been executed successfully"
+msgstr "変更が適用後、終了の確認をする"
+
+#: gtk/window_preferences.glade.h:24
 #, fuzzy
 msgid "Available (New):"
 msgstr "インストール可能"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 #, fuzzy
 msgid "Available (locked):"
 msgstr ""
 "\n"
 "利用可能なパッケージ:\n"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 #, fuzzy
 msgid "Available: "
 msgstr "インストール可能"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid "Broken:"
 msgstr "破損:"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Clear"
 msgstr "クリア"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color"
 msgstr "色"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Color packages by their status"
 msgstr "状態に応じてパッケージを色分けする"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 msgid "Columns and Colors"
 msgstr "カラムと色"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2218,168 +2226,149 @@ msgstr ""
 "プロキシを経由しないで接続するホストやドメインをコンマ区切りのリストで指定"
 "(例: localhost, 192.168.1.231, .net)"
 
-#: gtk/window_preferences.glade.h:32
-msgid "Confirm actions also affecting other packages"
-msgstr "他のパッケージに影響する処理を確認する"
-
 #: gtk/window_preferences.glade.h:33
 msgid "Consider recommended packages as dependencies"
 msgstr "依存関係で推奨されたパッケージを考慮する"
 
 #: gtk/window_preferences.glade.h:34
-msgid "Custom application font"
-msgstr "アプリケーションフォントを指定"
-
-#: gtk/window_preferences.glade.h:35
-msgid "Custom terminal font"
-msgstr "端末フォントを指定"
-
-#: gtk/window_preferences.glade.h:36
 msgid "Default"
 msgstr "標準"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:36
 msgid "Default archive: "
 msgstr "標準のアーカイブ: "
 
-#: gtk/window_preferences.glade.h:38
-msgid "Default remove: "
-msgstr "削除時のデフォルト:"
-
-#: gtk/window_preferences.glade.h:39
-msgid "Default system upgrade:"
-msgstr "システムアップグレード時のデフォルト:"
-
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "ダウンロードしたパッケージをインストール後にキャッシュから削除する"
 
-#: gtk/window_preferences.glade.h:41
-msgid "Delete obsolete packages from cache only"
-msgstr "古いパッケージをキャッシュから削除する"
+#: gtk/window_preferences.glade.h:38
+msgid "Delete packages which are no longer available only"
+msgstr ""
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr "直接インターネットに接続"
 
-#: gtk/window_preferences.glade.h:44
-msgid "Distribution Upgrade"
-msgstr "ディストリビューションのアップブレード"
-
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:41
 msgid "Downgrade:"
 msgstr "ダウングレード:"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:42
 msgid "Execute changes in a terminal window"
 msgstr "変更を端末ウインドウで実行する"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:44
 msgid "FTP proxy: "
 msgstr "FTPプロキシ: "
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:45
 msgid "General"
 msgstr "全般"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:46
 msgid "HTTP proxy: "
 msgstr "HTTPプロキシ: "
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the ftp proxy server"
 msgstr "FTPプロキシサーバのIPアドレスまたはホスト名"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:48
 msgid "IP address or host name of the http proxy server"
 msgstr "HTTPプロキシサーバのIPアドレスまたはホスト名"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:49
 msgid "Include Configuration"
 msgstr "設定を含める"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:50
 msgid "Include Orphaned Dependencies"
 msgstr "Orphanされた依存関係も含める"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:51
 msgid "Install:"
 msgstr "インストール:"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:52
 #, fuzzy
 msgid "Installed (locked):"
 msgstr ""
 "\n"
 "インストール済パッケージ:\n"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:53
 msgid "Installed size"
 msgstr "インストール後サイズ"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:54
 msgid "Installed version"
 msgstr "インストール済バージョン"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:55
 #, fuzzy
 msgid "Installed:"
 msgstr "インストール済"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:56
 msgid "Latest version"
 msgstr "最新バージョン"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:57
 msgid "Layout"
 msgstr "レイアウト"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:58
 msgid "Leave all downloaded packages in the cache"
 msgstr "全てのダウンロードしたパッケージをキャッシュに残す"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:59
 msgid "Manual proxy configuration"
 msgstr "手動プロキシ設定"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:61
 msgid "Network"
 msgstr "ネットワーク"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:62
 msgid "No proxy for: "
 msgstr "以下にはプロキシを使用しない:"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:63
 msgid "Number of undo operations:"
 msgstr "アンドゥ可能回数:"
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:64
 msgid "Port number of the http proxy server"
 msgstr "HTTPプロキシサーバのポート番号"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:65
 msgid "Port numer of the ftp proxy server"
 msgstr "FTPプロキシサーバのポート番号"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:66
 msgid "Port: "
 msgstr "ポート:"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Purge: "
 msgstr "完全削除"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:69
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "正規表現はテキスト一致の高度な手法です"
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:70
+#, fuzzy
+msgid "Removal of packages: "
+msgstr "パッケージの削除: "
+
+#: gtk/window_preferences.glade.h:71
 msgid "Remove:"
 msgstr "削除:"
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:72
 #, fuzzy
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
@@ -2387,23 +2376,38 @@ msgstr ""
 "sources.list に一つ以上指定されている場合は、標準のリリースを選択してくださ"
 "い。"
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:75
 msgid "Temporary Files"
 msgstr "テンポラリファイル"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:76
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr "（左から右の）カラム位置を指定。-1を指定することでカラムは隠されます。"
 
-#: gtk/window_preferences.glade.h:79
+#: gtk/window_preferences.glade.h:77
 #, fuzzy
 msgid "Update available:"
 msgstr "インストール可能"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:78
+#, fuzzy
+msgid "Upgrade of all packages:"
+msgstr "パッケージリストの更新"
+
+#: gtk/window_preferences.glade.h:79
 msgid "Upgrade:"
 msgstr "アップグレード:"
+
+#: gtk/window_preferences.glade.h:80
+#, fuzzy
+msgid "Use custom application font"
+msgstr "アプリケーションフォントを指定"
+
+#: gtk/window_preferences.glade.h:81
+#, fuzzy
+msgid "Use custom terminal font"
+msgstr "端末フォントを指定"
 
 #: gtk/window_preferences.glade.h:82
 msgid "_Default Font"
@@ -2839,6 +2843,21 @@ msgid ""
 "</b>"
 msgstr ""
 
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>アクション</b>"
+
+#~ msgid "Default remove: "
+#~ msgstr "削除時のデフォルト:"
+
+#~ msgid "Default system upgrade:"
+#~ msgstr "システムアップグレード時のデフォルト:"
+
+#~ msgid "Delete obsolete packages from cache only"
+#~ msgstr "古いパッケージをキャッシュから削除する"
+
+#~ msgid "Distribution Upgrade"
+#~ msgstr "ディストリビューションのアップブレード"
+
 #~ msgid ""
 #~ "The default upgrade method skips upgrades that introduce conflicts or "
 #~ "require new packages to be installed.\n"
@@ -3167,9 +3186,6 @@ msgstr ""
 
 #~ msgid "   "
 #~ msgstr "   "
-
-#~ msgid "Remove package: "
-#~ msgstr "パッケージの削除: "
 
 #~ msgid "<b>Dependencies</b>"
 #~ msgstr "<b>依存情報</b>"

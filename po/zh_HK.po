@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 11:10+0100\n"
+"POT-Creation-Date: 2004-01-13 12:02+0100\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -425,7 +425,7 @@ msgid "Internal Error, non-zero counts"
 msgstr ""
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:76 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:74 gtk/window_filters.glade.h:56
 msgid "Status"
 msgstr "狀態"
 
@@ -451,7 +451,7 @@ msgstr ""
 msgid "Tags"
 msgstr "任務"
 
-#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:64
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.h:60
 msgid "Name"
 msgstr "名稱"
 
@@ -463,7 +463,7 @@ msgstr "    　　版本"
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2368
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_main_hpaned.glade.h:26
-#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:42
+#: gtk/window_main_vpaned.glade.h:27 gtk/window_preferences.glade.h:39
 #: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:69
 msgid "Description"
 msgstr "套件描述"
@@ -693,7 +693,7 @@ msgid ""
 "<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:35
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "升級"
@@ -708,7 +708,7 @@ msgstr ""
 msgid "Remember the answer for further upgrades"
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:73
 #, fuzzy
 msgid "Smart Upgrade"
 msgstr "升級"
@@ -839,7 +839,7 @@ msgstr ""
 msgid "ignore"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:71
+#: gtk/rgpreferenceswindow.cc:723 gtk/window_preferences.glade.h:67
 msgid "Preferences"
 msgstr "偏好設定"
 
@@ -1190,7 +1190,7 @@ msgstr "預期變動"
 msgid "Install"
 msgstr "安裝"
 
-#: gtk/rgmainwindow.cc:3067 gtk/window_preferences.glade.h:80
+#: gtk/rgmainwindow.cc:3067
 #, fuzzy
 msgid "Upgrade"
 msgstr "升級(_U)"
@@ -1712,7 +1712,7 @@ msgid "Edit the available filters"
 msgstr "編輯已選的篩選器"
 
 #: gtk/window_main_hpaned.glade.h:29 gtk/window_main_vpaned.glade.h:31
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:43
 #, fuzzy
 msgid "Expert"
 msgstr "不包括"
@@ -2100,49 +2100,49 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:7
 #, fuzzy
-msgid "<b>Actions</b>"
-msgstr "動作"
-
-#: gtk/window_preferences.glade.h:8
-#, fuzzy
 msgid "<b>Colors</b>"
 msgstr "色彩"
 
-#: gtk/window_preferences.glade.h:9
+#: gtk/window_preferences.glade.h:8
 #, fuzzy
 msgid "<b>Column Order</b>"
 msgstr "色彩"
 
-#: gtk/window_preferences.glade.h:10
+#: gtk/window_preferences.glade.h:9
 #, fuzzy
 msgid "<b>Distribution</b>"
 msgstr "發行版本"
 
-#: gtk/window_preferences.glade.h:11
+#: gtk/window_preferences.glade.h:10
 #, fuzzy
 msgid "<b>Fonts</b>"
 msgstr "動作"
 
-#: gtk/window_preferences.glade.h:12
+#: gtk/window_preferences.glade.h:11
 #, fuzzy
 msgid "<b>General</b>"
 msgstr "一般資訊"
 
-#: gtk/window_preferences.glade.h:13
+#: gtk/window_preferences.glade.h:12
 msgid "<b>Main Window</b>"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:13
+msgid ""
+"<b>Note:</b> The package list will need to be reloaded and so all queued "
+"changes will get lost. Make sure to execute your changes first."
 msgstr ""
 
 #: gtk/window_preferences.glade.h:14
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all selections "
-"will be lost. Make sure to execute your changes first."
-msgstr ""
-
-#: gtk/window_preferences.glade.h:15
-msgid ""
 "<b>Note:</b> You will need to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
+
+#: gtk/window_preferences.glade.h:16
+#, fuzzy
+msgid "<b>Package Changes</b>"
+msgstr "一般資訊"
 
 #: gtk/window_preferences.glade.h:17
 #, fuzzy
@@ -2170,56 +2170,57 @@ msgid "Always Ask"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:22
-msgid "Ask to quit after the changes have been executed"
+msgid "Ask to confirm changes also affecting other packages"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:23
 #, fuzzy
+msgid "Ask to quit after the changes have been executed successfully"
+msgstr "dpkg 執行完畢後自由關閉此對話框"
+
+#: gtk/window_preferences.glade.h:24
+#, fuzzy
 msgid "Available (New):"
 msgstr "最新版本"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 #, fuzzy
 msgid "Available (locked):"
 msgstr ""
 "\n"
 "最新版套件:\n"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 #, fuzzy
 msgid "Available: "
 msgstr "最新版本"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 #, fuzzy
 msgid "Broken:"
 msgstr "安裝不完整"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Clear"
 msgstr "清除"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 #, fuzzy
 msgid "Color"
 msgstr "色彩"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Color packages by their status"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 msgid "Columns and Colors"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
-msgstr ""
-
-#: gtk/window_preferences.glade.h:32
-msgid "Confirm actions also affecting other packages"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:33
@@ -2228,197 +2229,191 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:34
 #, fuzzy
-msgid "Custom application font"
-msgstr "刪除"
-
-#: gtk/window_preferences.glade.h:35
-msgid "Custom terminal font"
-msgstr ""
-
-#: gtk/window_preferences.glade.h:36
-#, fuzzy
 msgid "Default"
 msgstr "刪除"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:36
 msgid "Default archive: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:38
-#, fuzzy
-msgid "Default remove: "
-msgstr "升級"
-
-#: gtk/window_preferences.glade.h:39
-#, fuzzy
-msgid "Default system upgrade:"
-msgstr "升級"
-
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "安裝後刪除已下載的套件"
 
-#: gtk/window_preferences.glade.h:41
-#, fuzzy
-msgid "Delete obsolete packages from cache only"
-msgstr "刪除緩衝區裏過舊的套件"
+#: gtk/window_preferences.glade.h:38
+msgid "Delete packages which are no longer available only"
+msgstr ""
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:44
-#, fuzzy
-msgid "Distribution Upgrade"
-msgstr "全面升級 (apt-get dist-upgrade)"
-
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:41
 #, fuzzy
 msgid "Downgrade:"
 msgstr "升級"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:42
 msgid "Execute changes in a terminal window"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:44
 msgid "FTP proxy: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:45
 msgid "General"
 msgstr "一般資訊"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:46
 msgid "HTTP proxy: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:48
 msgid "IP address or host name of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:49
 msgid "Include Configuration"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:50
 #, fuzzy
 msgid "Include Orphaned Dependencies"
 msgstr "移除依賴此套件的套件"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:51
 #, fuzzy
 msgid "Install:"
 msgstr "安裝"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:52
 #, fuzzy
 msgid "Installed (locked):"
 msgstr ""
 "\n"
 "已安裝套件:\n"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:53
 #, fuzzy
 msgid "Installed size"
 msgstr "已安裝"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:54
 #, fuzzy
 msgid "Installed version"
 msgstr "已安裝"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:55
 #, fuzzy
 msgid "Installed:"
 msgstr "已安裝"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:56
 #, fuzzy
 msgid "Latest version"
 msgstr "已安裝"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:57
 msgid "Layout"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:58
 #, fuzzy
 msgid "Leave all downloaded packages in the cache"
 msgstr "把已下載的套件留在緩衝區裏"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:59
 msgid "Manual proxy configuration"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:61
 #, fuzzy
 msgid "Network"
 msgstr "色彩"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:62
 msgid "No proxy for: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:63
 msgid "Number of undo operations:"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:64
 msgid "Port number of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:65
 msgid "Port numer of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:66
 msgid "Port: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Purge: "
 msgstr "徹底鏟除 (Purge)"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:69
 #, fuzzy
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "搜尋或匹配時使用正規表達式"
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:70
+#, fuzzy
+msgid "Removal of packages: "
+msgstr "套件"
+
+#: gtk/window_preferences.glade.h:71
 #, fuzzy
 msgid "Remove:"
 msgstr "移除"
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:72
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:75
 #, fuzzy
 msgid "Temporary Files"
 msgstr "一般資訊"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:76
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:79
+#: gtk/window_preferences.glade.h:77
 #, fuzzy
 msgid "Update available:"
 msgstr "編輯已選的篩選器"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:78
+#, fuzzy
+msgid "Upgrade of all packages:"
+msgstr "此套件是一個虛擬套件"
+
+#: gtk/window_preferences.glade.h:79
 #, fuzzy
 msgid "Upgrade:"
 msgstr "升級"
+
+#: gtk/window_preferences.glade.h:80
+#, fuzzy
+msgid "Use custom application font"
+msgstr "刪除"
+
+#: gtk/window_preferences.glade.h:81
+msgid "Use custom terminal font"
+msgstr ""
 
 #: gtk/window_preferences.glade.h:82
 #, fuzzy
@@ -2906,6 +2901,26 @@ msgid ""
 msgstr ""
 
 #, fuzzy
+#~ msgid "<b>Actions</b>"
+#~ msgstr "動作"
+
+#, fuzzy
+#~ msgid "Default remove: "
+#~ msgstr "升級"
+
+#, fuzzy
+#~ msgid "Default system upgrade:"
+#~ msgstr "升級"
+
+#, fuzzy
+#~ msgid "Delete obsolete packages from cache only"
+#~ msgstr "刪除緩衝區裏過舊的套件"
+
+#, fuzzy
+#~ msgid "Distribution Upgrade"
+#~ msgstr "全面升級 (apt-get dist-upgrade)"
+
+#, fuzzy
 #~ msgid "%d package is set on hold\n"
 #~ msgid_plural "%d packages are set on hold\n"
 #~ msgstr[0] "套件已安裝。"
@@ -3167,10 +3182,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "   "
 #~ msgstr "    　日期"
-
-#, fuzzy
-#~ msgid "Remove package: "
-#~ msgstr "套件"
 
 #, fuzzy
 #~ msgid "<b>Dependencies</b>"

@@ -232,8 +232,11 @@ static void gtk_pkg_list_init(GtkPkgList *pkg_list)
    pkg_list->column_headers[3] = G_TYPE_STRING;
    pkg_list->column_headers[4] = G_TYPE_STRING;
    pkg_list->column_headers[5] = G_TYPE_STRING;
-   pkg_list->column_headers[6] = GDK_TYPE_COLOR;
-   pkg_list->column_headers[7] = G_TYPE_POINTER;
+   pkg_list->column_headers[6] = G_TYPE_STRING;
+   pkg_list->column_headers[7] = G_TYPE_STRING;
+   pkg_list->column_headers[8] = G_TYPE_STRING;
+   pkg_list->column_headers[9] = GDK_TYPE_COLOR;
+   pkg_list->column_headers[10] = G_TYPE_POINTER;
 }
 
 /**
@@ -380,6 +383,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
    g_value_init(value, GTK_PKG_LIST(tree_model)->column_headers[column]);
 
    RPackage *pkg = (RPackage *) iter->user_data;
+
 #ifdef DEBUG_LIST_FULL
    if (column == NAME_COLUMN) {
       cout << "get_value: column: " << column;
@@ -405,40 +409,42 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
          g_value_set_string(value, str);
          break;
       case PKG_SIZE_COLUMN:
-         if (pkg == NULL)
-            return;
          if (pkg->installedVersion()) {
             str = SizeToStr(pkg->installedSize()).c_str();
             g_value_set_string(value, str);
          }
          break;
+      case PKG_DOWNLOAD_SIZE_COLUMN:
+	 str = SizeToStr(pkg->availablePackageSize()).c_str();
+	 g_value_set_string(value, str);
+         break;
+      case SECTION_COLUMN:
+	 str = pkg->section();
+	 if(str != NULL)
+	    g_value_set_string(value, str);
+	 break;
+      case COMPONENT_COLUMN:
+	 str = pkg->component().c_str();
+	 if(str)
+	    g_value_set_string(value, str);
+	 break;
       case INSTALLED_VERSION_COLUMN:
-         if (pkg == NULL)
-            return;
          str = pkg->installedVersion();
          g_value_set_string(value, str);
          break;
       case AVAILABLE_VERSION_COLUMN:
-         if (pkg == NULL)
-            return;
          str = pkg->availableVersion();
          g_value_set_string(value, str);
          break;
       case DESCR_COLUMN:
-         if (pkg == NULL)
-            return;
          str = utf8(pkg->summary());
          g_value_set_string(value, str);
          break;
       case PKG_COLUMN:
-         if (pkg == NULL)
-            return;
          g_value_set_pointer(value, pkg);
          break;
       case COLOR_COLUMN:
        {
-          if (pkg == NULL)
-             return;
 	  if(_config->FindB("Synaptic::UseStatusColors", TRUE) == FALSE) 
 	     return;
           GdkColor *bg;
@@ -448,8 +454,6 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
        }
       case PIXMAP_COLUMN:
        {
-          if (pkg == NULL)
-             return;
           GdkPixbuf *pix;
           pix = RGPackageStatus::pkgStatus.getPixbuf(pkg);
           g_value_set_object(value, pix);
@@ -642,6 +646,24 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_ASC);
       else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_DES);
+      break;
+   case COMPONENT_COLUMN:
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_COMPONENT_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_COMPONENT_DES);
+      break;
+   case SECTION_COLUMN:
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SECTION_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SECTION_DES);
+      break;
+   case PKG_DOWNLOAD_SIZE_COLUMN:
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DLSIZE_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DLSIZE_DES);
       break;
    case AVAILABLE_VERSION_COLUMN:
       if(pkg_list->order)

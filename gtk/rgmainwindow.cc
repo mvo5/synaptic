@@ -812,8 +812,51 @@ void RGMainWindow::buildTreeView()
       gtk_tree_view_column_set_sort_column_id(column, NAME_COLUMN);
    }
 
+   // section 
+   pos = _config->FindI("Synaptic::sectionColumnPos", 2);
+   visible = _config->FindI("Synaptic::sectionColumnVisible", false);
+   if (visible) {
+      renderer = gtk_cell_renderer_text_new();
+      gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
+                                                        (renderer), 1);
+      column =
+         gtk_tree_view_column_new_with_attributes(_("Section"),
+                                                  renderer, "text",
+                                                  SECTION_COLUMN,
+                                                  "background-gdk",
+                                                  COLOR_COLUMN, NULL);
+      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+      gtk_tree_view_column_set_fixed_width(column, 130);
+      //gtk_tree_view_insert_column (GTK_TREE_VIEW(_treeView), column, pos);
+      all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
+      gtk_tree_view_column_set_sort_column_id(column, SECTION_COLUMN);
+      gtk_tree_view_column_set_resizable(column, TRUE);
+   }
+
+   // component
+   pos = _config->FindI("Synaptic::componentColumnPos", 3);
+   visible = _config->FindI("Synaptic::componentColumnVisible", false);
+   if (visible) {
+      renderer = gtk_cell_renderer_text_new();
+      gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
+                                                        (renderer), 1);
+      column =
+         gtk_tree_view_column_new_with_attributes(_("Component"),
+                                                  renderer, "text",
+                                                  COMPONENT_COLUMN,
+                                                  "background-gdk",
+                                                  COLOR_COLUMN, NULL);
+      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+      gtk_tree_view_column_set_fixed_width(column, 130);
+      //gtk_tree_view_insert_column (GTK_TREE_VIEW(_treeView), column, pos);
+      all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
+      gtk_tree_view_column_set_sort_column_id(column, COMPONENT_COLUMN);
+      gtk_tree_view_column_set_resizable(column, TRUE);
+   }
+
+
    /* Installed Version */
-   pos = _config->FindI("Synaptic::instVerColumnPos", 2);
+   pos = _config->FindI("Synaptic::instVerColumnPos", 4);
    visible = _config->FindI("Synaptic::instVerColumnVisible", true);
    if (visible) {
       renderer = gtk_cell_renderer_text_new();
@@ -834,7 +877,7 @@ void RGMainWindow::buildTreeView()
    }
 
    /* Available Version */
-   pos = _config->FindI("Synaptic::availVerColumnPos", 3);
+   pos = _config->FindI("Synaptic::availVerColumnPos", 5);
    visible = _config->FindI("Synaptic::availVerColumnVisible", true);
    if (visible) {
       renderer = gtk_cell_renderer_text_new();
@@ -854,24 +897,17 @@ void RGMainWindow::buildTreeView()
       gtk_tree_view_column_set_resizable(column, TRUE);
    }
    // installed size
-   pos = _config->FindI("Synaptic::instSizeColumnPos", 4);
+   pos = _config->FindI("Synaptic::instSizeColumnPos", 6);
    visible = _config->FindI("Synaptic::instSizeColumnVisible", true);
    if (visible) {
       /* Installed size */
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
-      GValue value = { 0, };
-      GValue value2 = { 0, };
-      g_value_init(&value, G_TYPE_FLOAT);
-      g_value_set_float(&value, 1.0);
-      g_object_set_property(G_OBJECT(renderer), "xalign", &value);
-      g_value_init(&value2, G_TYPE_INT);
-      g_value_set_int(&value2, 10);
-      g_object_set_property(G_OBJECT(renderer), "xpad", &value2);
+      g_object_set(G_OBJECT(renderer), "xalign",1.0, "xpad", 10, NULL);
       column = gtk_tree_view_column_new_with_attributes(_("Size"), renderer,
                                                         "text",
-                                                        PKG_SIZE_COLUMN,
+							PKG_SIZE_COLUMN,
                                                         "background-gdk",
                                                         COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
@@ -882,8 +918,30 @@ void RGMainWindow::buildTreeView()
       gtk_tree_view_column_set_sort_column_id(column, PKG_SIZE_COLUMN);
    }
 
+   pos = _config->FindI("Synaptic::downloadSizeColumnPos", 7);
+   visible = _config->FindI("Synaptic::downloadSizeColumnVisible", false);
+   if (visible) {
+      /* Download size */
+      renderer = gtk_cell_renderer_text_new();
+      gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
+                                                        (renderer), 1);
+      g_object_set(G_OBJECT(renderer), "xalign",1.0, "xpad", 10, NULL);
+      column = gtk_tree_view_column_new_with_attributes(_("Download"), 
+							renderer,"text",
+                                                        PKG_DOWNLOAD_SIZE_COLUMN,
+                                                        "background-gdk",
+                                                        COLOR_COLUMN, NULL);
+      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+      gtk_tree_view_column_set_fixed_width(column, 80);
+      //gtk_tree_view_insert_column (GTK_TREE_VIEW(_treeView), column, pos);
+      all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
+      gtk_tree_view_column_set_resizable(column, TRUE);
+      gtk_tree_view_column_set_sort_column_id(column, PKG_DOWNLOAD_SIZE_COLUMN);
+   }
+
+
    /* Description */
-   pos = _config->FindI("Synaptic::descrColumnPos", 5);
+   pos = _config->FindI("Synaptic::descrColumnPos", 8);
    visible = _config->FindI("Synaptic::descrColumnVisible", true);
    if (visible) {
       renderer = gtk_cell_renderer_text_new();
@@ -912,25 +970,14 @@ void RGMainWindow::buildTreeView()
 
 #if GTK_CHECK_VERSION(2,4,0)
 #warning build with new fixed_height_mode
-   GValue value = { 0, };
-   g_value_init(&value, G_TYPE_BOOLEAN);
-   g_value_set_boolean(&value, TRUE);
-   g_object_set_property(G_OBJECT(_treeView), "fixed_height_mode", &value);
+   g_object_set(G_OBJECT(_treeView), 
+		"fixed_height_mode", TRUE,
+		NULL);
 #endif
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-
-
-   // LEAK!!! FIX THIS!!
-   /*
-   new RCacheActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
-                          GTK_TREE_VIEW(_treeView));
-   new RPackageListActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
-                                GTK_TREE_VIEW(_treeView));
-   */
-
 }
 
 #if INTERACTIVE_SEARCH_ON_KEYPRESS

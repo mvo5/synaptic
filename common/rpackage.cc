@@ -1294,6 +1294,30 @@ static char *parseDescription(string descr)
    }
 }
 
+string RPackage::component()
+{
+   string res;
+   pkgCache::VerIterator Ver;
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   if (State.CandidateVer == 0) {
+      //cout << "CanidateVer == 0" << endl;
+      return "";
+   }
+   Ver = State.CandidateVerIter(*_depcache);
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   pkgCache::PkgFileIterator File = VF.File();
+
+   if(File.Component() == NULL) {
+      //cout << "File.Component() == NULL" << endl;
+      return "";
+   }
+
+   res = File.Component();
+
+   return res;
+}
+
+
 // class that finds out what do display to get user
 void RPackageStatus::init()
 {

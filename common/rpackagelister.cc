@@ -569,6 +569,36 @@ struct instSizeSortFuncDes {
       return x->installedSize() > y->installedSize();
 }};
 
+struct dlSizeSortFuncAsc {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->availablePackageSize() < y->availablePackageSize();
+}};
+struct dlSizeSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->availablePackageSize() > y->availablePackageSize();
+}};
+
+struct componentSortFuncAsc {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->component() < y->component();
+}};
+
+struct componentSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->component() > y->component();
+}};
+
+struct sectionSortFuncAsc {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->section() < y->section();
+}};
+
+struct sectionSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      return x->section() > y->section();
+}};
+
+
 // version string compare
 int verstrcmp(const char *x, const char *y)
 {
@@ -621,6 +651,28 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
    case LIST_SORT_SIZE_DES:
       stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
       break;
+   case LIST_SORT_DLSIZE_ASC:
+      stable_sort(packages.begin(), packages.end(), dlSizeSortFuncAsc());
+      break;
+   case LIST_SORT_DLSIZE_DES:
+      stable_sort(packages.begin(), packages.end(), dlSizeSortFuncDes());
+      break;
+   case LIST_SORT_COMPONENT_ASC:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), componentSortFuncAsc());
+      break;
+   case LIST_SORT_COMPONENT_DES:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), componentSortFuncDes());
+      break;
+   case LIST_SORT_SECTION_ASC:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), sectionSortFuncAsc());
+      break;
+   case LIST_SORT_SECTION_DES:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), sectionSortFuncDes());
+      break;
    case LIST_SORT_STATUS_ASC:
       qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), statusSortFuncAsc());
@@ -633,7 +685,6 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
       stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());
       break;
    case LIST_SORT_VERSION_DES:
-
       stable_sort(packages.begin(), packages.end(), versionSortFuncDes());
       break;
    case LIST_SORT_INST_VERSION_ASC:

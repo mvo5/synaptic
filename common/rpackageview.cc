@@ -82,11 +82,24 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
 {
    string str;
    int flags = pkg->getFlags();
+   string component = pkg->component();
 
-   if(flags & RPackage::FInstalled) 
-      str = _("Installed");
-   else
-      str = _("Not installed");
+   if(flags & RPackage::FInstalled) {
+#ifndef HAVE_RPM
+      if(component != "main" && component != "updates/main" &&
+	 !(flags & RPackage::FNotInstallable))
+	 str = _("Installed (unsupported)");
+      else 
+#endif
+	 str = _("Installed");
+   } else {
+#ifndef HAVE_RPM
+      if(component != "main" && component != "updates/main")
+	 str = _("Not installed (unsupported)");
+      else
+#endif
+	 str = _("Not installed");
+   }
    _view[str].push_back(pkg);
 
    str.clear();

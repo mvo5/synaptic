@@ -39,11 +39,13 @@
 enum { FONT_DEFAULT, FONT_TERMINAL };
 
 const char * RGPreferencesWindow::column_names[] = 
-   {"status", "name", "instVer", "availVer", "instSize", "descr", NULL };
+   {"status", "name", "section", "component", "instVer", 
+    "availVer", "instSize", "downloadSize", "descr", NULL };
 
 const char *RGPreferencesWindow::column_visible_names[] = 
-   {_("Status"), _("Package Name"), _("Installed Version"), 
-    _("Available Version"), _("Installed Size"), _("Description"), NULL };
+   {_("Status"), _("Package Name"), _("Section"), _("Component"),
+    _("Installed Version"), _("Available Version"), 
+    _("Installed Size"), _("Download Size"),_("Description"), NULL };
 
 
 
@@ -635,7 +637,7 @@ void RGPreferencesWindow::readTreeViewValues()
       g_free(name);
 
       if(pos > number_of_columns || pos < 0 || columns[pos].name != NULL) {
-	 cerr << "invalid column config found, reseting"<<endl;
+	 //cerr << "invalid column config found, reseting"<<endl;
 	 corrupt=true;
 	 continue;
       }
@@ -644,6 +646,7 @@ void RGPreferencesWindow::readTreeViewValues()
 
    // if corrupt for some reason, repair
    if(corrupt) {
+      cerr << "seting column order to default" << endl;
       for(int i=0;column_names[i] != NULL; i++) {
 	 name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
 	 _config->Set(name, i);
@@ -664,7 +667,7 @@ void RGPreferencesWindow::readTreeViewValues()
    for(unsigned int i=0;i<columns.size();i++) {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-			  TREE_CHECKBOX_COLUMN, &columns[i].visible,
+			  TREE_CHECKBOX_COLUMN, columns[i].visible,
 			  TREE_NAME_COLUMN, columns[i].name,
 			  TREE_VISIBLE_NAME_COLUMN, _(columns[i].visible_name),
 			  -1);

@@ -213,7 +213,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void treeviewPopupMenu(GtkWidget *treeview, 
 				 GdkEventButton *event, 
 				 RGMainWindow *me,
-				 RPackage *pkg);
+				 vector<RPackage*> selected_pkgs);
 
    
    virtual bool close();

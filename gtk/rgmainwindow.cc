@@ -2012,13 +2012,19 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
 
 }
 
-// FIXME: instead of RPackage* take a GList* argument to enable
-//        a popup-menu operation on more than one selected pkg
 void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview, 
 				     GdkEventButton *event,
 				     RGMainWindow *me,
-				     RPackage *pkg)
+				     vector<RPackage*> selected_pkgs)
 {
+    // nothing selected, should happen, but we play save
+    if(selected_pkgs.size() == 0)
+	return;
+
+    // FIXME: we take the first pkg and find out available actions,
+    //        we should calc available actions from all selected pkgs.
+    RPackage *pkg=selected_pkgs[0];
+
     RPackage::PackageStatus pstatus =  pkg->getStatus();
     RPackage::MarkedStatus  mstatus = pkg->getMarkedStatus();
 
@@ -2086,27 +2092,30 @@ gboolean RGMainWindow::onButtonPressed(GtkWidget *treeview,
     /* single click with the right mouse button? */
     if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
 	GtkTreeSelection *selection;
+	GtkTreeIter iter;
+
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
 	// FIXME: this is gtk2.2
 	if(gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
 					 (int)event->x, (int)event->y,
 					 &path, NULL, NULL, NULL)) {
-	    GtkTreeIter iter;
-	    gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
-				    path);
-	    // FIXME: don't unselected, check for selections
-	    gtk_tree_selection_unselect_all(selection);
+	    vector<RPackage*> selected_pkgs;
+	    GList *li=NULL;
+
+	    // treat right click as selection
 	    gtk_tree_selection_select_path(selection, path);
-	    // check if leaf-node, if not -> return
-	    if(gtk_tree_model_iter_has_child(me->_activeTreeModel,
-					     &iter))
-		return FALSE;
-	    gtk_tree_model_get(me->_activeTreeModel, &iter,
-			       PKG_COLUMN, &pkg, 
-			       -1);
-	    gtk_tree_path_free(path);
-	    //FIXME: make it possible to do a popup operation on a list of pkgs
-	    treeviewPopupMenu(treeview, event, me, pkg);
+	    li = gtk_tree_selection_get_selected_rows(selection,&me->_activeTreeModel);
+	    for(li=g_list_first(li);li != NULL; li = g_list_next(li)) {
+		gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
+					(GtkTreePath*)(li->data));
+
+		gtk_tree_model_get(me->_activeTreeModel, &iter, 
+				   PKG_COLUMN, &pkg, -1);
+		if(pkg)
+		    selected_pkgs.push_back(pkg);
+	    }
+
+	    treeviewPopupMenu(treeview, event, me, selected_pkgs);
 	    return TRUE; 
 	}	
     }

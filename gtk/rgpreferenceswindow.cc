@@ -50,20 +50,41 @@ const char *RGPreferencesWindow::column_visible_names[] =
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
-void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
+void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
 {
-   RGPreferencesWindow *me =
-      (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");;
+   RGPreferencesWindow *me = (RGPreferencesWindow *) data;
    //cout << "void RGPreferencesWindow::onArchiveSelection()" << endl;
    //cout << "data is: " << (char*)data << endl;
 
    if(me->_blockAction)
       return;
 
-   me->_defaultDistro = (char *)data;
+   me->_defaultDistro = gtk_combo_box_get_active_text(GTK_COMBO_BOX(self));
+   //cout << "new default distro: " << me->_defaultDistro << endl;
    me->distroChanged = true;
 }
 
+void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self, 
+						     void *data)
+{
+   //cout << "void RGPreferencesWindow::cbRadioDistributionChanged()" << endl;
+   RGPreferencesWindow *me = (RGPreferencesWindow *) data;
+   
+   // we are only interessted in the active one
+   if(me->_blockAction || !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) 
+      return;
+   
+   gchar *defaultDistro = (gchar*)g_object_get_data(G_OBJECT(self),"defaultDistro");
+   if(strcmp(defaultDistro, "distro") == 0) {
+      gtk_widget_set_sensitive(GTK_WIDGET(me->_comboDefaultDistro),TRUE);
+      me->_defaultDistro = gtk_combo_box_get_active_text(GTK_COMBO_BOX(me->_comboDefaultDistro));
+   } else {
+      gtk_widget_set_sensitive(GTK_WIDGET(me->_comboDefaultDistro),FALSE);
+      me->_defaultDistro = defaultDistro;
+   }
+   //cout << "new default distro: " << me->_defaultDistro << endl;
+   me->distroChanged = true;
+}
 
 void RGPreferencesWindow::applyProxySettings()
 {
@@ -299,11 +320,8 @@ void RGPreferencesWindow::saveNetwork()
 
 }
  
-void RGPreferencesWindow::saveExpert()
+void RGPreferencesWindow::saveDistribution()
 {
-   int nr;
-   nr = gtk_option_menu_get_history(GTK_OPTION_MENU(_optionmenuDefaultDistro));
-   
    if (_defaultDistro.empty()) {
       _config->Clear("APT::Default-Release");
       _config->Clear("Synaptic::DefaultDistro");
@@ -323,7 +341,7 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    me->saveColors();
    me->saveTempFiles();
    me->saveNetwork();
-   me->saveExpert();
+   me->saveDistribution();
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
@@ -564,45 +582,61 @@ void RGPreferencesWindow::readNetwork()
 
 }
 
-void RGPreferencesWindow::readExpert()
+void RGPreferencesWindow::readDistribution()
 {
    // distro selection, block actions here because the optionmenu changes
    // and a signal is emited
    _blockAction = true;
 
-   distroChanged = false;
-   string defaultDistro = _config->Find("Synaptic::DefaultDistro", "");
    int distroMatch = 0;
-   gtk_option_menu_remove_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro));
+   string defaultDistro = _config->Find("Synaptic::DefaultDistro", "");
    vector<string> archives = _lister->getPolicyArchives();
-   GtkWidget *menu = gtk_menu_new();
-   GtkWidget *mi = gtk_menu_item_new_with_label(_("ignore"));
-   g_object_set_data(G_OBJECT(mi), "me", this);
-   g_signal_connect(G_OBJECT(mi), "activate",
-                    G_CALLBACK(onArchiveSelection), (void *)"");
-   gtk_widget_show(mi);
-   gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-   mi = gtk_separator_menu_item_new();
-   gtk_widget_show(mi);
-   gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+  
+   // setup the toggle buttons
+   GtkWidget *button, *ignore,*now,*distro;
+   ignore = glade_xml_get_widget(_gladeXML, "radiobutton_ignore");
+   g_object_set_data(G_OBJECT(ignore),"defaultDistro",(void*)"");
+   now = glade_xml_get_widget(_gladeXML, "radiobutton_now");
+   g_object_set_data(G_OBJECT(now),"defaultDistro",(void*)"now");
+   distro = glade_xml_get_widget(_gladeXML, "radiobutton_distro");
+   g_object_set_data(G_OBJECT(distro),"defaultDistro",(void*)"distro");
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_distribution_group_changed",
+				 G_CALLBACK(cbRadioDistributionChanged),
+				 this);
+   if(defaultDistro == "") {
+      button = ignore;
+      gtk_widget_set_sensitive(GTK_WIDGET(_comboDefaultDistro),FALSE);
+   } else if(defaultDistro == "now") {
+      button = now;
+      gtk_widget_set_sensitive(GTK_WIDGET(_comboDefaultDistro),FALSE);
+   } else {
+      button = distro;
+      gtk_widget_set_sensitive(GTK_WIDGET(_comboDefaultDistro),TRUE);
+   }
+   assert(button);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+
+
+   // set up combo-box
+   g_signal_connect(G_OBJECT(_comboDefaultDistro), "changed",
+		    G_CALLBACK(cbArchiveSelection), this);
+
    for (unsigned int i = 0; i < archives.size(); i++) {
       //cout << "archive: " << archives[i] << endl;
-      mi = gtk_menu_item_new_with_label(archives[i].c_str());
-      g_object_set_data(G_OBJECT(mi), "me", this);
-      g_signal_connect(G_OBJECT(mi), "activate",
-                       G_CALLBACK(onArchiveSelection),
-                       g_strdup_printf("%s", archives[i].c_str()));
-      gtk_widget_show(mi);
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+      // ignore "now", it's a combobox item now
+      if(archives[i] == "now")
+	 continue;
+      gtk_combo_box_append_text(GTK_COMBO_BOX(_comboDefaultDistro),
+				 archives[i].c_str());
       if (defaultDistro == archives[i]) {
-         //cout << "match for: " << archives[i] << endl;
-         // i+2 because we have a ignore at pos 0 and a seperator at pos 1
-         distroMatch = i + 2;
+         //cout << "match for: " << archives[i] << " (" << i << ")" << endl;
+	 // we ignored the "now" archive, so we have to subtract by one
+         distroMatch=i-1;
       }
    }
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro), menu);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDefaultDistro),
-                               distroMatch);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboDefaultDistro), distroMatch);
+
    _blockAction = false;
 }
 
@@ -613,7 +647,7 @@ void RGPreferencesWindow::show()
    readColors();
    readTempFiles();
    readNetwork();
-   readExpert();
+   readDistribution();
 
    RGWindow::show();
 }
@@ -826,7 +860,7 @@ void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self,
 
 RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                                          RPackageLister *lister)
-: RGGladeWindow(win, "preferences")
+   : RGGladeWindow(win, "preferences"), distroChanged(false)
 {
    GtkWidget *button;
 
@@ -854,12 +888,12 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
       glade_xml_get_widget(_gladeXML, "optionmenu_delbutton_action");
    assert(_optionmenuDel);
 
-   _optionmenuDefaultDistro =
+   _comboDefaultDistro =
       glade_xml_get_widget(_gladeXML, "combobox_default_distro");
-   assert(_optionmenuDefaultDistro);
+   assert(_comboDefaultDistro);
    GtkTooltips *tips = gtk_tooltips_new();
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(_optionmenuDefaultDistro),
-			_optionmenuDefaultDistro,
+   gtk_tooltips_set_tip(GTK_TOOLTIPS(_comboDefaultDistro),
+			_comboDefaultDistro,
 		       "Prefer package versions from the selected "
 		       "distribution when upgrading packages. If you "
 		       "manually force a verison from a different "

@@ -2,11 +2,12 @@
 _Name=Synaptic Package Manager
 _GenericName=Package Manager
 _Comment=Install, remove and upgrade software packages
-Exec=gksu -u root /usr/sbin/synaptic
-Icon=synaptic.png
+Exec=synaptic
+Icon=synaptic
 Terminal=false
 MultipleArgs=false
 Type=Application
 Encoding=UTF-8
-Categories=PackageManager;GTK;System;Application
-NotShowIn=KDE
+Categories=PackageManager;System;Application
+X-KDE-SubstituteUID=true
+OnlyShowIn=KDE

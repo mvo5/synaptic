@@ -49,7 +49,7 @@
 	<para>
 		To report a bug or make a suggestion regarding 
 		the &app; or this manual, use the bug report 
-		system at <ulink linkend="http://www.nongnu.org/synaptic" 
+		system at <ulink url="http://www.nongnu.org/synaptic" 
 		type="http">Synaptic Web</ulink>, contact the mailing list 
 		<email>synaptic@nongnu.org</email>
 		join the IRC channel #synaptic on irc.freenode.org.
@@ -63,17 +63,9 @@
 </indexterm> 
 <indexterm zone="index"> 
 	<primary>Packages</primary>
-	<secondary>To install</secondary>
-	<secondary>To remove</secondary>
-	<secondary>To upgrade</secondary>
-	<secondary>To downgrade</secondary>
 </indexterm>
 <indexterm zone="index"> 
 	<primary>Software</primary>
-	<secondary>To install</secondary>
-	<secondary>To remove</secondary>
-	<secondary>To upgrade</secondary>
-	<secondary>To downgrade</secondary>
 </indexterm>
 
 <sect1 id="synaptic-introduction"> 
@@ -592,8 +584,7 @@
 		<listitem>
 			<para>
 				Select the package(s) that you wish to install in the 
-				<xref linkend="synaptic-win-list">
-				</xref>.
+				<xref linkend="synaptic-win-list"/>.
 			</para>
 		</listitem>
 		<listitem>
@@ -665,8 +656,7 @@
 		<listitem>
 			<para>
 				Select the package(s) that you wish to remove in the 
-				<xref linkend="synaptic-win-list">
-				</xref>.
+				<xref linkend="synaptic-win-list"/>.
 			</para>
 		</listitem>
 		<listitem>
@@ -775,8 +765,7 @@
 		<listitem>
 			<para>
 				Select the package(s) that you wish to upgrade in the 
-				<xref linkend="synaptic-win-list">
-				</xref>.
+				<xref linkend="synaptic-win-list"/>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1073,6 +1062,72 @@
 		</para>
 	</tip>
 </sect2>
+<sect2 id="synaptic-pkg-undo">
+	<title>
+		Undoing Queued Changes
+	</title>
+	<para>
+		To undo a queued change you have the following ways:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				Remove package from queue
+			</term>
+			<listitem>
+				<para>
+					To remove a package from the queue:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							Right click on package and choose "Do not modify" from 
+							the context menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Select package(s) and choose "Do Not Modify" from the 
+							package control.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Select package(s) and press <keycombo><keycap>Ctrl</keycap>
+							<keycap>N</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Clear all queued changes
+			</term>
+			<listitem>
+				<para>
+					Choose <menuchoice><guimenu>Actions</guimenu>
+					<guimenuitem>Clear All Queued Changes</guimenuitem></menuchoice>
+					from the menu.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Undo last changes
+			</term>
+			<listitem>
+				<para>
+					Choose <menuchoice><guimenu>Actions</guimenu>
+					<guimenuitem>Undo</guimenuitem></menuchoice>
+					from the menu.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
+</sect2>
 
 <sect2 id="synaptic-pkg-config">
 	<title>
@@ -1138,6 +1193,24 @@
 	</note>
 </sect2>
 
+<sect2 id="synaptic-pkg-fix">
+	<title>
+		Fixing Broken Packages
+	</title>
+	<para>
+		Errors in the dependencies of packages or during executing changes can break
+		the dependencies structure.
+	</para>
+	
+	<para>
+		&app; will not allow any further changes on a borken system.
+	</para>
+
+	<para>
+		To correct the broken packages choose <menuchoice><guimenu>Actions</guimenu>
+		<guimenuitem>Fix Broken Packages</guimenuitem></menuchoice> from the menu.
+	</para>
+</sect2>
 
 
 </sect1>
@@ -1391,41 +1464,41 @@
 						<term>
 							Status
 						</term>
-						<listentry>
+						<listitem>
 							<para>
 								Allows you to select packages by their status.
 							</para>
-						</listentry>
+						</listitem>
 					</varlistentry>
 					<varlistentry>
 						<term>
 							Section
 						</term>
-						<listentry>
+						<listitem>
 							<para>
 								Allows you to select packages by their section.
 							</para>
-						</listentry>
+						</listitem>
 					</varlistentry>
 					<varlistentry>
 						<term>
 							Properties
 						</term>
-						<listentry>
+						<listitem>
 							<para>
 							</para>
-						</listentry>
+						</listitem>
 					</varlistentry>
 					<varlistentry>
 						<term>
 							Keywords
 						</term>
-						<listentry>
+						<listitem>
 							<para>
 								Keywords are based on debtags. Only Debian GNU/Linux 
 								with installed "debtags" supports this feature.
 							</para>
-						</listentry>
+						</listitem>
 					</varlistentry>
 				</variablelist>
 			</listitem>
@@ -1469,11 +1542,11 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
-			<anchor id="synaptic-prefs-actions" xreflabel="action settings"/>
 			<term>
 				Actions
 			</term>
 			<listitem>
+				<anchor id="synaptic-prefs-actions" xreflabel="action settings"/>
 				<variablelist>
 					<varlistentry>
 						<term>

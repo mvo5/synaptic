@@ -866,8 +866,7 @@ void RGMainWindow::buildTreeView()
 
 void RGMainWindow::buildInterface()
 {
-   GtkWidget *button;
-   GtkWidget *widget;
+   GtkWidget *img, *menuitem, *widget, *button;
 
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
@@ -997,25 +996,42 @@ void RGMainWindow::buildInterface()
                                  "on_save_as_activate",
                                  G_CALLBACK(cbSaveAsClicked), this);
 
-
    widget = _keepM = glade_xml_get_widget(_gladeXML, "menu_keep");
    assert(_keepM);
+   img = get_gtk_image("package-available");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
    widget = _installM = glade_xml_get_widget(_gladeXML, "menu_install");
    assert(_installM);
+   img = get_gtk_image("package-install");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
    widget = _reinstallM = glade_xml_get_widget(_gladeXML, "menu_reinstall");
    assert(_reinstallM);
+   img = get_gtk_image("package-reinstall");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
    widget = _pkgupgradeM = glade_xml_get_widget(_gladeXML, "menu_upgrade");
    assert(_upgradeM);
+   img = get_gtk_image("package-upgrade");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
    widget = _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
-   g_object_set_data(G_OBJECT(widget), "me", this);
    assert(_removeM);
-   widget = _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
+   img = get_gtk_image("package-remove");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
+   widget = _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
    assert(_purgeM);
+   img = get_gtk_image("package-purge");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
+   g_object_set_data(G_OBJECT(widget), "me", this);
+
 #if 0
    _remove_w_depsM = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(_remove_w_depsM);
@@ -1200,7 +1216,6 @@ void RGMainWindow::buildInterface()
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
    // build popup-menu
-   GtkWidget *menuitem, *img;
    _popupMenu = gtk_menu_new();
    menuitem = gtk_image_menu_item_new_with_label(_("Unmark"));
    img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
@@ -1245,7 +1260,7 @@ void RGMainWindow::buildInterface()
 
 
    menuitem = gtk_image_menu_item_new_with_label(_("Mark for Complete Removal"));
-   img = get_gtk_image("package-remove");
+   img = get_gtk_image("package-purge");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",

@@ -91,6 +91,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkPkgTree *_pkgTree;
    GtkWidget *_treeView;
    RPackageLister::treeDisplayMode _treeDisplayMode;
+   RPackageLister::treeDisplayMode _menuDisplayMode;
 
    GtkWidget *_statusL;
 

@@ -76,8 +76,6 @@ protected:
    virtual void prepare(RPackageLister *lister);
 
 public:
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0);
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
 };
 

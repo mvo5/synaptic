@@ -56,7 +56,6 @@ class RGFetchProgress : public pkgAcquireStatus, public RGWindow
    
    void reloadTable();
    void refreshTable(int row);
-   void appendTable(int row);
    GdkPixmap *statusDraw(int width, int height, int status);
    
 public:

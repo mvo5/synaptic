@@ -79,18 +79,7 @@ bool RGUserDialog::message(const char *msg,
 				 GTK_DIALOG_DESTROY_WITH_PARENT,
 				 gtkmessage, gtkbuttons, "%s", msg);
 
-    if (defres == true) {
-	switch(buttons) {
-	    case RUserDialog::ButtonsOkCancel:
-		gtk_dialog_set_default_response(GTK_DIALOG(dia),
-						GTK_RESPONSE_OK);
-		break;
-	    case RUserDialog::ButtonsYesNo:
-		gtk_dialog_set_default_response(GTK_DIALOG(dia),
-						GTK_RESPONSE_YES);
-		break;
-	}
-    } else {
+    if (defres == false) {
 	switch(buttons) {
 	    case RUserDialog::ButtonsOkCancel:
 		gtk_dialog_set_default_response(GTK_DIALOG(dia),
@@ -136,9 +125,9 @@ bool RGUserDialog::showErrors()
     }
 
     if (iserror)
-	error(utf8(message.c_str()));
+	error(message.c_str());
     else
-	warning(utf8(message.c_str()));
+	warning(message.c_str());
     
     return true;
 }

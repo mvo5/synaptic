@@ -222,6 +222,11 @@ public:
    void disable() { _enabled = false; };
 };
 
+struct RFilterView {
+    RFilterView() : viewMode(0),expandMode(0) {};
+    int viewMode;
+    int expandMode;
+};
 
 struct RFilter {
   public:
@@ -229,12 +234,18 @@ struct RFilter {
        : section(lister), pattern(lister), status(lister),
 	 priority(lister), reducedview(lister), preset(false)
     {};
+
     void setName(string name);
     string getName();
+
+    void setViewMode(RFilterView view) {_view=view;};
+    RFilterView getViewMode() {return _view;};
+
     bool read(Configuration &conf, string key);
     bool write(ofstream &out);
     bool apply(RPackage *package);
     void reset();
+
     RSectionPackageFilter section;
     RPatternPackageFilter pattern;
     RStatusPackageFilter status;
@@ -244,6 +255,7 @@ struct RFilter {
 
   private:
     string name;
+    RFilterView _view;
 };
 
 

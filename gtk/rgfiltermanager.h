@@ -1,7 +1,7 @@
 /* rgfiltermanager.h
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002,2003 Michael Vogt <mvo@debian.org>
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -22,54 +22,150 @@
  * USA
  */
 
-#ifndef _RWFILTERMANAGER_H_
-#define _RWFILTERMANAGER_H_
+#ifndef _RGFILTERMANAGER_H_
+#define _RGFILTERMANAGER_H_
 
 #include <gtk/gtk.h>
-
 #include "rgwindow.h"
-
-
+#include "rpackagefilter.h"
 
 class RPackageLister;
-
-class RGFilterEditor;
-
 class RGFilterManagerWindow;
+
+// must be in the same order as of the check buttons
+static const RStatusPackageFilter::Types StatusMasks[] =  {
+    RStatusPackageFilter::NotInstalled,
+    RStatusPackageFilter::Upgradable,
+    RStatusPackageFilter::Installed,
+    RStatusPackageFilter::MarkKeep,
+    RStatusPackageFilter::MarkInstall,
+    RStatusPackageFilter::MarkRemove,
+    RStatusPackageFilter::Broken,
+    RStatusPackageFilter::NewPackage,
+    RStatusPackageFilter::PinnedPackage,
+    RStatusPackageFilter::OrphanedPackage, // debian only (for now)
+    RStatusPackageFilter::ResidualConfig,
+    RStatusPackageFilter::DebconfPackage   // debian only
+};
+// FIXME: if you add a new status change this const! (calc automaticlly)
+#ifndef HAVE_RPM
+static const int NrOfStatusBits = 12;
+#else
+static const int NrOfStatusBits = 10;
+#endif
+
+static char  *ActOptions[] = {
+    _("Include"),
+    _("Exclude"),
+    NULL
+};
+
+
+static char *DepOptions[] = {
+    _("are Named"),
+    _("in Version"),
+    _("in Description"),
+    _("in Maintainer"),
+    _("Depends on"), // depends, predepends etc
+    _("Provides"), // provides and name
+    _("Conflicts with"), // conflicts
+    _("Replaces"), // replaces/obsoletes
+    _("Suggests or Recommends"), // suggests/recommends
+    _("Reverse Depends"), // Reverse Depends
+    NULL
+};
+
 
 
 typedef void RGFilterEditorCloseAction(void *self, RGFilterManagerWindow *win);
 
-
 class RGFilterManagerWindow : public RGWindow 
 {
-   static void newFilterAction(GtkWidget *self, void *data);
-   static void deleteFilterAction(GtkWidget *self, void *data);
+   static void addFilterAction(GtkWidget *self, void *data);
+   static void removeFilterAction(GtkWidget *self, void *data);
+
+   static void applyFilterAction(GtkWidget *self, void *data);
+
    static void closeAction(GtkWidget *self, void *data);
+   static void okAction(GtkWidget *self, void *data);
+
    static gint deleteEventAction(GtkWidget *widget, GdkEvent  *event,
 				 gpointer   data );
-   static void applyFilterAction(GtkWidget *self, void *data);
-   static void clearFilterAction(GtkWidget *self, void *data);
-   //static void editFilterAction(GtkWidget *self, void *data);   
+
    static void editFilterAction(GtkWidget *self, void *data);   
-   static void selectAction(GtkWidget *self,gint row, gint column, 
- 			    GdkEventButton *event, gpointer user_data); 
+   static void selectAction(GtkTreeSelection *selection, gpointer data);
 
+   // load a given filter
+   void editFilter(RFilter *filter);
 
+   // helpers
+   void setSectionFilter(RSectionPackageFilter &f);
+   void getSectionFilter(RSectionPackageFilter &f);
+   
+   void setStatusFilter(RStatusPackageFilter &f);
+   void getStatusFilter(RStatusPackageFilter &f);
+   
+   void setPatternFilter(RPatternPackageFilter &f);
+   void getPatternFilter(RPatternPackageFilter &f);
+
+   void setFilterView(RFilter *f);
+   void getFilterView(RFilter *f);
+
+   GtkTreePath* treeview_find_path_from_text(GtkTreeModel *model, char *text);
+
+   // close callbacks
    RGFilterEditorCloseAction *_closeAction;
    void *_closeData;
 
-   GtkWidget *_newB;    /* GtkButton */
-   GtkWidget *_filterL; /* GtkCList */
-   int selected_row;    /* the currently selected row in GtkCList */
-   GtkWidget *_nameT;   /* GtkEntry */
+   GtkWidget *_filterEntry;  /* GtkEntry */
 
-   RPackageLister *_lister;
-   RGFilterEditor *_editor;
+   // the filter list
+   GtkWidget *_filterList;   /* GtkTreeView */
+   GtkListStore *_filterListStore;
+   GtkTreePath *_selectedPath;
+   enum {
+       NAME_COLUMN,
+       FILTER_COLUMN,
+       N_COLUMNS
+   };
+
+   // the section list
+   GtkWidget *_sectionList;   /* GtkTreeView */
+   GtkListStore *_sectionListStore;
+   enum {
+       SECTION_COLUMN,
+       SECTION_N_COLUMNS
+   };
+
+   // status filter buttons
+   GtkWidget *_statusB[NrOfStatusBits];
+
+   // the pattern list
+   enum {
+       PATTERN_DO_COLUMN,
+       PATTERN_WHAT_COLUMN,
+       PATTERN_TEXT_COLUMN,       
+       PATTERN_N_COLUMNS
+   };
+   GtkWidget *_patternList;   /* GtkTreeView */
+   GtkListStore *_patternListStore;
+   bool setPatternRow(int row, bool exclude,
+		      RPatternPackageFilter::DepType type, string pattern);
+   static void patternSelectionChanged(GtkTreeSelection *selection,
+				       gpointer data);
+   static void patternChanged(GObject *o, gpointer data);
+   static void patternNew(GObject *o, gpointer data);
+   static void patternDelete(GObject *o, gpointer data);
+   static void statusAllClicked(GObject *o, gpointer data);
+   static void statusNoneClicked(GObject *o, gpointer data);
+   void applyChanges(RFilter *filter);
    
+
+   // the lister is always needed
+   RPackageLister *_lister;  
+
 public:
    RGFilterManagerWindow(RGWindow *win, RPackageLister *lister);
-   virtual ~RGFilterManagerWindow();
 
    void setCloseCallback(RGFilterEditorCloseAction *action, void *data);
    virtual void close();

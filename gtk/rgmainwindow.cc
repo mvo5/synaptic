@@ -50,11 +50,10 @@
 #include "rconfiguration.h"
 #include "rgmainwindow.h"
 #include "rgfindwindow.h"
+#include "rgfiltermanager.h"
 #include "rpackagefilter.h"
 #include "raptoptions.h"
 
-#include "rgfiltermanager.h"
-#include "rgfilterwindow.h"
 #include "rgsrcwindow.h"
 #include "rgconfigwindow.h"
 #include "rgaboutpanel.h"
@@ -136,6 +135,11 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
   me->_lister->unregisterObserver(me);
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
+
+  // save undo state
+  RPackageLister::pkgState state;
+  me->_lister->saveState(state);
+  me->_lister->saveUndoState(state);
     
   // we need to go into "all package" mode 
   filter = me->_lister->getFilter();
@@ -292,67 +296,6 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
     me->changeFilter(1);
 }
 
-void RGMainWindow::saveFilterAction(void *self, RGFilterWindow *rwin)
-{
-    RGMainWindow *me = (RGMainWindow*)self;
-    RPackage *pkg = me->selectedPackage();
-    bool filterEditable;
-    
-    filterEditable = SELECTED_MENU_INDEX(me->_filterPopup) != 0;    
-    
-    gtk_widget_set_sensitive(me->_filtersB, TRUE);
-    //gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
-    gtk_widget_set_sensitive(me->_filterPopup, TRUE);
-    gtk_widget_set_sensitive(me->_filterMenu, TRUE);
-
-    me->_lister->reapplyFilter();
-    me->setStatusText();
-
-    me->refreshTable(pkg);
-    
-    rwin->hide();
-}
-
-
-
-void RGMainWindow::closeFilterAction(void *self, RGFilterWindow *rwin)
-{
-    RGMainWindow *me = (RGMainWindow*)self;
-    bool filterEditable;
-    
-    filterEditable = SELECTED_MENU_INDEX(me->_filterPopup) != 0;
-
-    //gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
-    gtk_widget_set_sensitive(me->_filtersB, TRUE);
-    gtk_widget_set_sensitive(me->_filterPopup, TRUE);
-    gtk_widget_set_sensitive(me->_filterMenu, TRUE);
-
-    rwin->hide();
-}
-
-#if 0 // one filter window is enough
-void RGMainWindow::showFilterWindow(GtkWidget *self, void *data)
-{
-    RGMainWindow *win = (RGMainWindow*)data;
-
-    if (win->_filterWin == NULL) {
-	win->_filterWin = new RGFilterWindow(win, win->_lister);
-
-	win->_filterWin->setSaveCallback(saveFilterAction, win);
-	win->_filterWin->setCloseCallback(closeFilterAction, win);
-    }
-    
-    if (win->_lister->getFilter() == 0)
-	return;
-    
-    win->_filterWin->editFilter(win->_lister->getFilter());
-    
-    //gtk_widget_set_sensitive(win->_editFilterB, FALSE);
-    gtk_widget_set_sensitive(win->_filtersB, FALSE);
-    gtk_widget_set_sensitive(win->_filterPopup, FALSE);
-    gtk_widget_set_sensitive(win->_filterMenu, FALSE);
-}
-#endif
 
 void RGMainWindow::closeFilterManagerAction(void *self, 
 					    RGFilterManagerWindow *win)
@@ -477,38 +420,48 @@ void RGMainWindow::changedFilter(GtkWidget *self)
 
 void RGMainWindow::changeFilter(int filter, bool sethistory)
 {
-  if (sethistory)
-    gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
+    if (sethistory)
+	gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
   
-  RPackage *pkg = selectedPackage();
+    RPackage *pkg = selectedPackage();
     
-  setInterfaceLocked(TRUE);    
-  if (filter == 0) { // no filter
-    _lister->setFilter();
-    //gtk_widget_set_sensitive(_editFilterB, FALSE);
-  } else {
-    _lister->setFilter(filter-1);
-    //gtk_widget_set_sensitive(_editFilterB, TRUE);
-  }
-  
-  refreshTable(pkg);
+    setInterfaceLocked(TRUE);    
+    if (filter == 0) { // no filter
+	_lister->setFilter();
+	changeTreeDisplayMode(_menuDisplayMode);
+    } else {
+	_lister->setFilter(filter-1);
+	RFilter *filter = _lister->getFilter();
+	// -2 because "0" is "unchanged" and "1" is the spacer in the menu
+	// FIXME: yes I know this sucks
+	int mode = filter->getViewMode().viewMode-2; 
+	if(mode>=0)
+	    changeTreeDisplayMode((RPackageLister::treeDisplayMode)mode);
+	else
+            changeTreeDisplayMode(_menuDisplayMode);
 
-  int index = -1;
-
-  if (pkg) {	
-    index = _lister->getElementIndex(pkg);
-  }    
+	// FIXME: same problem as above, this magic numbers suck
+	int expand=filter->getViewMode().expandMode;
+	if(expand == 2)
+	    gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
+	if(expand == 3)
+	    gtk_tree_view_collapse_all(GTK_TREE_VIEW(_treeView));
+    }
+    refreshTable(pkg);
 
 #if 0    
-  if (index >= 0) 
-    gtk_clist_moveto(GTK_CLIST(_table), index, 0, 0.5, 0.0);
-  else
-    updatePackageInfo(NULL);
+    int index = -1;
+    if (pkg) {	
+	index = _lister->getElementIndex(pkg);
+    }    
+    if (index >= 0) 
+	gtk_clist_moveto(GTK_CLIST(_table), index, 0, 0.5, 0.0);
+    else
+	updatePackageInfo(NULL);
 #endif  
 
-  setInterfaceLocked(FALSE);
-  
-  setStatusText();
+    setInterfaceLocked(FALSE);
+    setStatusText();
 }
 
 
@@ -1085,7 +1038,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 
 void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 {
-  //cout << "updateDynPackageInfo()" << endl;
+    //cout << "updateDynPackageInfo()" << endl;
 
     if(_blockActions)
 	return;
@@ -1100,7 +1053,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     bool byProvider = TRUE;
 
     char buffer[512];
-    const char *ubuffer;
     GtkTreeIter iter;
 
     const char *depType, *depPkg, *depName, *depVer;
@@ -1108,6 +1060,8 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     bool ok;
     if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
+	    char buffer[512];
+
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 depType, depPkg ? depPkg : depName, depVer);
@@ -1116,8 +1070,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 			 depType, depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
-
-	    ubuffer = utf8(buffer);
 
 	    // check if this item is duplicated
 	    bool dup = FALSE;
@@ -1128,7 +1080,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 		gtk_tree_model_get(GTK_TREE_MODEL(_depListStore), &iter,
 				   DEP_NAME_COLUMN, &str, 
 				   -1);
-		if (strcmp(str, ubuffer) == 0) {
+		if (strcmp(str, buffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
@@ -1138,13 +1090,12 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	    if (!dup) {
 		gtk_list_store_append(_depListStore, &iter);
 		gtk_list_store_set(_depListStore, &iter,
-				   DEP_NAME_COLUMN, ubuffer,
+				   DEP_NAME_COLUMN, buffer,
 				   DEP_IS_NOT_AVAILABLE, !ok,  
 				   DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
 				   DEP_PKG_INFO, g_strdup(summary),
 				   -1);
 	    }
-	    
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
     }
 
@@ -1171,7 +1122,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 		     depType, depPkg);
 	    gtk_list_store_append(_recListStore, &iter);
 	    gtk_list_store_set(_recListStore, &iter, 
-			       DEP_NAME_COLUMN, utf8(buffer), 
+			       DEP_NAME_COLUMN, buffer, 
 			       DEP_IS_NOT_AVAILABLE, !ok,  
 			       DEP_IS_NOT_AVAILABLE_COLOR,  "#E0E000000000",
 			       -1); 
@@ -1184,6 +1135,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     byProvider = TRUE;
     if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
+	    char buffer[512];
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 depType, depPkg ? depPkg : depName, depVer);
@@ -1192,9 +1144,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 			 depType, depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
-
-	    ubuffer = utf8(buffer);
-	    
 	    // check if this item is duplicated
 	    bool dup = FALSE;
 	    bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_availDepListStore), &iter);
@@ -1204,7 +1153,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 				   DEP_NAME_COLUMN, &str, 
 				   -1);
 
-		if (strcmp(str, ubuffer) == 0) {
+		if (strcmp(str, buffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
@@ -1213,7 +1162,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	    if (!dup) {
 		gtk_list_store_append(_availDepListStore, &iter);
 		gtk_list_store_set(_availDepListStore, &iter,
-				   DEP_NAME_COLUMN, ubuffer,
+				   DEP_NAME_COLUMN, buffer,
 				   DEP_IS_NOT_AVAILABLE, !ok,  
 				   DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
 				   DEP_PKG_INFO, g_strdup(summary),
@@ -1222,16 +1171,14 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
     }
 
-
-// PORTME
 #if 0
-    if (pkg->getStatus() != RPackage::SNotInstalled)
-	gtk_widget_set_sensitive(_removeDepsB, TRUE);
-    else
-	gtk_widget_set_sensitive(_removeDepsB, FALSE);
+	// PORTME (maybe)
+	if (pkg->getStatus() != RPackage::SNotInstalled)
+	    gtk_widget_set_sensitive(_removeDepsB, TRUE);
+	else
+	    gtk_widget_set_sensitive(_removeDepsB, FALSE);
 #endif
 }
-
 
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
@@ -1503,9 +1450,13 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  break;
       case PKG_INSTALL: // install
 	  me->pkgInstallHelper(pkg);
-	  if(_config->FindB("Synaptic::AutoInstallRecommended",0)) {
+	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      cout << "auto installing recommended" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
+	  }
+	  if(_config->FindB("Synaptic::UseSuggests",0)) {
+	      cout << "auto installing suggested" << endl;
+	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallSuggested));
 	  }
 	  break;
       case PKG_DELETE: // delete
@@ -2355,6 +2306,7 @@ void RGMainWindow::buildInterface()
 
     int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
     _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
+    _menuDisplayMode = _treeDisplayMode;
     widget = glade_xml_get_widget(_gladeXML, "section_tree");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
 				   mode == 0 ? TRUE : FALSE);
@@ -2486,32 +2438,40 @@ void RGMainWindow::onSectionTree(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_SECTIONS)
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_SECTIONS) {
     me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_SECTIONS);
+    me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_SECTIONS;
+  }
 }
 
 void RGMainWindow::onAlphabeticTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_ALPHABETIC)
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_ALPHABETIC) {
     me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_ALPHABETIC);
+    me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_ALPHABETIC;
+  }
 }
 
 void RGMainWindow::onStatusTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_STATUS)
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_STATUS) {
     me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_STATUS);
+    me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_STATUS;
+  }
 }
 
 void RGMainWindow::onFlatList(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_FLAT)
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_FLAT) {
     me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_FLAT);
+    me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_FLAT;
+  }
 }
 
 void RGMainWindow::onAddCDROM(GtkWidget *self, void *data) 
@@ -2540,56 +2500,11 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
-    RGMainWindow *me = this;
-
-    // save pkg state
-    RPackageLister::pkgState state;
-    bool ask = _config->FindB("Synaptic::AskRelated", true);
-    
-    // we always save the state (for undo)
-    me->_lister->saveState(state);
-    if (ask) {
-	me->_lister->unregisterObserver(me);
-    }
-    me->_lister->notifyCachePreChange();
-    
     // do the work
     pkg->setInstall();
     // check whether something broke
     if (!_lister->check()) {
 	_lister->fixBroken();
-    }
-    
-    me->_lister->notifyCachePostChange();
-
-    vector<RPackage*> toKeep;
-    vector<RPackage*> toInstall; 
-    vector<RPackage*> toUpgrade; 
-    vector<RPackage*> toRemove;
-    vector<RPackage*> exclude;    
-    exclude.push_back(pkg);
-
-    // ask if the user really want this changes
-    bool changed=true;
-    if (ask && me->_lister->getStateChanges(state, toKeep, toInstall,
-					    toUpgrade, toRemove, exclude)) {
-	RGChangesWindow *chng;
-	// show a summary of what's gonna happen
-	chng = new RGChangesWindow(me);
-	if (!chng->showAndConfirm(me->_lister, toKeep, toInstall,
-				  toUpgrade, toRemove)) {
-	    // canceled operation
-	    me->_lister->restoreState(state);
-	    changed=false;
-	}
-	delete chng;
-  }
-    
-    if(changed)
-	me->_lister->saveUndoState(state);
-    
-    if (ask) {
-	me->_lister->registerObserver(me);
     }
 }
 
@@ -2821,7 +2736,7 @@ void RGMainWindow::saveState()
     _config->Set("Synaptic::windowX", x);
     _config->Set("Synaptic::windowY", y);
     _config->Set("Synaptic::ToolbarState", (int)_toolbarState);
-    _config->Set("Synaptic::TreeDisplayMode", _treeDisplayMode);
+    _config->Set("Synaptic::TreeDisplayMode", _menuDisplayMode);
 
     if (!RWriteConfigFile(*_config)) {
 	_error->Error(_("An error occurred while saving configurations."));

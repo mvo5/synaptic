@@ -204,7 +204,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	    }
 	} else if (iter->where == Provides) {
 	    vector<const char*> provides = pkg->provides();
-	    for(int i=0;i<provides.size();i++) {
+	    for(unsigned int i=0;i<provides.size();i++) {
 		if(strstr(provides[i],iter->pattern.c_str()) != NULL) {
 		    found = true;
 		    break;
@@ -650,6 +650,9 @@ bool RFilter::read(Configuration &conf, string key)
     res &= priority.read(conf, key+"::priority");
     res &= reducedview.read(conf, key+"::reducedview");
 
+    _view.viewMode=conf.FindI(key+"::view::viewMode", 0);
+    _view.expandMode=conf.FindI(key+"::view::expandMode", 0);
+
     return res;
 }
 
@@ -688,6 +691,11 @@ bool RFilter::write(ofstream &out)
 
     out << pad+"reducedview {" << endl;
     res &= reducedview.write(out, pad+"  ");
+    out << pad+"};" << endl;
+   
+    out << pad+"view {" << endl;
+    out << pad+pad+"viewMode " << _view.viewMode << ";" << endl;
+    out << pad+pad+"expandMode " << _view.expandMode << ";" << endl;
     out << pad+"};" << endl;
     
     out << "};" << endl;

@@ -20,6 +20,7 @@ synaptic_LDADD = \
 glade_DATA =                            \
         window_main.glade window_main.glade.strings \
 	window_find.glade window_find.glade.strings \
+	window_filters.glade window_filters.glade.strings \
 	window_about.glade window_about.glade.strings \
 	window_changes.glade window_changes.glade.strings \
 	window_options.glade window_options.glade.strings \
@@ -46,12 +47,8 @@ synaptic_SOURCES=\
 	rgconfigwindow.cc\
 	rgfetchprogress.cc\
 	rgfetchprogress.h\
-	rgfiltereditor.cc\
-	rgfiltereditor.h\
 	rgfiltermanager.cc\
 	rgfiltermanager.h\
-	rgfilterwindow.cc\
-	rgfilterwindow.h\
 	rgfindwindow.cc\
 	rgfindwindow.h\
 	rgsetoptwindow.cc\

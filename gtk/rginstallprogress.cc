@@ -52,6 +52,7 @@ RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 {
+    //RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
     gtk_main_quit();
 }
 
@@ -107,29 +108,6 @@ void RGInstallProgressMsgs::run()
     hide();
 }
 
-
-pkgPackageManager::OrderResult RGInstallProgress::start(pkgPackageManager *pm,
-						        int numPackages)
-{
-    gtk_label_set_text(GTK_LABEL(_label), "");
-    gtk_label_set_text(GTK_LABEL(_labelSummary), "");
-    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
-    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
-    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
-    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
-
-    _startCounting = false;
-
-    pkgPackageManager::OrderResult Res;
-    Res = RInstallProgress::start(pm, numPackages);
-
-    if (_msgs.empty() == false &&
-	_config->FindB("Synaptic::IgnorePMOutput", false) == false)
-	_msgs.run();
-
-    return Res;
-}
-
 void RGInstallProgress::startUpdate()
 {
     show();
@@ -143,6 +121,10 @@ void RGInstallProgress::finishUpdate()
         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);
     }
 
+    if (_msgs.empty() == false &&
+	_config->FindB("Synaptic::IgnorePMOutput", false) == false)
+	_msgs.run();
+    
     RGFlushInterface();
     
     hide();
@@ -275,6 +257,8 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
     prepare(lister);
     setTitle(_("Performing Changes"));
 
+    _startCounting = false;
+
     string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");
     GeometryParser Geo(GeoStr);
     if (Geo.HasSize())
@@ -294,6 +278,13 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 
     gtk_widget_modify_font(_label, bfont);
     gtk_widget_modify_font(_labelSummary, font);
+
+    gtk_label_set_text(GTK_LABEL(_label), "");
+    gtk_label_set_text(GTK_LABEL(_labelSummary), "");
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
 }
 
 bool GeometryParser::ParseSize(char **size)

@@ -157,7 +157,7 @@ void RGConfigWindow::show()
 
     bool UseTerminal = false;
 #ifndef HAVE_ZVT
-    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[3]), false);
+    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
     _config->Set("Synaptic::UseTerminal", false);
 #else
 #ifndef HAVE_RPM
@@ -167,15 +167,9 @@ void RGConfigWindow::show()
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
 				 _config->FindB("Synaptic::UseTerminal", 
 						UseTerminal));
-    bool UseRecommends = false;
-#ifdef HAVE_RPM
-    UseRecommends = true;
-#else
-    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
-#endif
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[4]),
 				 _config->FindB("Synaptic::UseRecommends",
-					 	UseRecommends));
+					 	true));
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[5]),
 				 _config->FindB("Synaptic::AskQuitOnProceed", 

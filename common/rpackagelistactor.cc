@@ -15,16 +15,17 @@ void RPackageListActor::notifyPostFilteredChange()
    vector<RPackage *> removedList;
    vector<RPackage *> insertedList;
 
+   const vector<RPackage *> &currentList = _lister->getViewPackages();
+
    removedList = _lastDisplayList;
 
-   for (unsigned int i = 0; i < _lister->count(); i++) {
-      RPackage *pkg = _lister->getElement(i);
-      vector<RPackage *>::iterator I;
-      I = find(removedList.begin(), removedList.end(), pkg);
+   vector<RPackage *>::iterator I;
+   for (unsigned int i = 0; i < currentList.size(); i++) {
+      I = find(removedList.begin(), removedList.end(), currentList[i]);
       if (I != removedList.end())
 	 removedList.erase(I);
       else
-         insertedList.push_back(pkg);
+         insertedList.push_back(currentList[i]);
    }
 
    if (removedList.empty() == false)
@@ -33,4 +34,4 @@ void RPackageListActor::notifyPostFilteredChange()
       run(insertedList, PKG_ADDED);
 }
 
-// vim:sts=3:sw=3
+// vim:ts=3:sw=3:et

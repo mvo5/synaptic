@@ -67,7 +67,7 @@
 using namespace std;
 
 RPackageLister::RPackageLister()
-: _records(0), _packages(0), _packageindex(0), _filter(0)
+   : _records(0), _filter(0)
 {
    _cache = new RPackageCache();
 
@@ -109,7 +109,6 @@ void RPackageLister::setView(int index)
 {
    _config->Set("Synaptic::ViewMode", index);
    _selectedView = _views[index];
-   //_selectedView->clearSelection();
 }
 
 vector<string> RPackageLister::getViews()
@@ -120,7 +119,6 @@ vector<string> RPackageLister::getViews()
    return views;
 }
 
-// get all subviews for a given view
 vector<string> RPackageLister::getSubViews()
 {
    return _selectedView->getSubViews();
@@ -176,26 +174,17 @@ void RPackageLister::notifyPostChange(RPackage *pkg)
 
 void RPackageLister::notifyChange(RPackage *pkg)
 {
-//     cout << "RPackageLister::notifyChange(RPackage *pkg): " 
-//       << _packageObservers.size() 
-//       << endl;
-
    notifyPreChange(pkg);
    notifyPostChange(pkg);
 }
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
-//     cout << "RPackageLister::unregisterObserver(RPackageObserver *observer)" << endl;
 
    vector<RPackageObserver *>::iterator I;
    I = find(_packageObservers.begin(), _packageObservers.end(), observer);
    if (I != _packageObservers.end())
       _packageObservers.erase(I);
-#if 0
-   else
-      cout << "unregisterObserver() failed" << endl;
-#endif
 }
 
 void RPackageLister::registerObserver(RPackageObserver *observer)
@@ -233,16 +222,10 @@ void RPackageLister::notifyCachePostChange()
 
 void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
 {
-   //cout << "RPackageLister::unregisterCacheObserver(RCacheObserver *observer)"<< endl;
-   //remove(_cacheObservers.begin(), _cacheObservers.end(), observer);
    vector<RCacheObserver *>::iterator I;
    I = find(_cacheObservers.begin(), _cacheObservers.end(), observer);
    if (I != _cacheObservers.end())
       _cacheObservers.erase(I);
-#if 0
-   else
-      cout << "unregisterCacheObserver() failed" << endl;
-#endif
 }
 
 void RPackageLister::registerCacheObserver(RCacheObserver *observer)
@@ -449,15 +432,11 @@ bool RPackageLister::upgradable()
    return _cache != NULL && _cache->deps() != NULL;
 }
 
-
-
-// We have to reread the cache if we're using "pin". 
 bool RPackageLister::openCache(bool reset)
 {
    static bool firstRun = true;
-   //cout << "RPackageLister::openCache(bool reset)" << endl;
 
-   // flush old errors
+   // Flush old errors
    _error->Discard();
 
    if (reset) {
@@ -480,57 +459,47 @@ bool RPackageLister::openCache(bool reset)
    // Apply corrections for half-installed packages
    if (pkgApplyStatus(*deps) == false) {
       _cacheValid = false;
-      return _error->
-         Error(_
-               ("Internal error recalculating dependency cache. Please report."));
+      return _error->Error(_("Internal error opening cache (%d). "
+                             "Please report."), 1);
    }
 
    if (_error->PendingError()) {
       _cacheValid = false;
-      return _error->
-         Error(_
-               ("Internal error recalculating dependency cache. Please report."));
+      return _error->Error(_("Internal error opening cache (%d). "
+                             "Please report."), 2);
    }
-   //cout << "    _treeOrganizer.clear();" << endl;
-#if 0
-   _treeOrganizer.clear();
-#endif
 
 #ifdef HAVE_RPM
-   if (_records) {
-      // mvo: BUG: this will sometimes segfault. maybe bug in apt?
-      //      segfault can be triggered by changing the repositories
+   // APT used to have a bug where the destruction order made
+   // this code segfault. APT-RPM has the right fix for this. -- niemeyer
+   if (_records)
       delete _records;
-   }
 #endif
 
    _records = new pkgRecords(*deps);
    if (_error->PendingError()) {
       _cacheValid = false;
-      return _error->
-         Error(_
-               ("Internal error recalculating dependency cache. Please report."));
+      return _error->Error(_("Internal error opening cache (%d). "
+                             "Please report."), 3);
    }
 
-   if (_packages) {
-      for (int i = 0; _packages[i] != NULL; i++)
-         delete _packages[i];
-      delete[]_packages;
-      delete[]_packageindex;
-   }
+   for (vector<RPackage *>::iterator I = _packages.begin();
+        I != _packages.end(); I++)
+      delete (*I);
 
-   int PackageCount = deps->Head().PackageCount;
-   _packages = new RPackage *[PackageCount];
-   memset(_packages, 0, sizeof(*_packages) * PackageCount);
+   int packageCount = deps->Head().PackageCount;
+   _packages.resize(packageCount);
 
-   _packageindex = new int[PackageCount];
-   fill_n(_packageindex, PackageCount, -1);
+   _packagesIndex.clear();
+   _packagesIndex.resize(packageCount, -1);
 
    pkgCache::PkgIterator I = deps->PkgBegin();
 
    string pkgName;
-   _count = 0;
+   int count = 0;
+
    _installedCount = 0;
+
    map<string, RPackage *> pkgmap;
    set<string> sectionSet;
 
@@ -542,22 +511,20 @@ bool RPackageLister::openCache(bool reset)
       if (I->CurrentVer != 0)
          _installedCount++;
       else if (I->VersionList == 0)
-         // exclude virtual packages
-         continue;
+         continue; // Exclude virtual packages.
 
       RPackage *pkg = new RPackage(this, deps, _records, I);
-      _packageindex[I->ID] = _count;
-      _packages[_count++] = pkg;
+      _packagesIndex[I->ID] = count;
+      _packages[count++] = pkg;
 
       pkgName = pkg->name();
 
       pkgmap[pkgName] = pkg;
 
-
       for (int i = 0; i != _views.size(); i++)
          _views[i]->addPackage(pkg);
 
-      // find out about new packages
+      // Find out about new packages.
       if (firstRun) {
          allPackages.insert(pkgName);
       } else if (allPackages.find(pkgName) == allPackages.end()) {
@@ -565,79 +532,41 @@ bool RPackageLister::openCache(bool reset)
          _roptions->setPackageNew(pkgName.c_str());
          allPackages.insert(pkgName);
       }
-      // gather list of sections
-      if (I.Section()) {
+
+      // Gather list of sections.
+      if (I.Section())
          sectionSet.insert(I.Section());
-      } else {
+      else
          cerr << "Package " << I.Name() << " has no section?!" << endl;
-      }
-#if 0
-      // gather tree of virtual packages (using the provides field)
-      // format:
-      //  c-compiler
-      //     - gcc-2.95
-      //     - gcc-3.2 
-      static map<string, tree<string>::iterator> itermap;
-
-      if (pkg->provides().size() > 1) {
-         string name(pkg->name());
-         //cout << "pkg: " << name << " provides: " << endl;
-         vector<const char *> p = pkg->provides();
-         tree<string>::iterator it;
-         for (int i = 0; i < p.size(); i++) {
-            string provides(p[i]);
-
-            if (itermap.find(provides) == itermap.end()) {
-               it = virtualPackages.insert(virtualPackages.begin(), provides);
-               itermap[provides] = it;
-            } else
-               it = itermap[provides];
-            virtualPackages.append_child(it, name);
-         }
-      }
-#endif
    }
 
-#if 0
-   // output the virtualPackages Tree
-   tree<string>::iterator it = virtualPackages.begin();
-   while (it != virtualPackages.end()) {
-      if (virtualPackages.depth(it) > 0)
-         cout << "\t";
-      cout << (*it) << endl;
-      ++it;
-   }
-#endif
+   // Truncate due to virtual packages which were skipped above.
+   _packages.resize(count);
 
    _sectionList.resize(sectionSet.size());
    copy(sectionSet.begin(), sectionSet.end(), _sectionList.begin());
 
-
    for (I = deps->PkgBegin(); I.end() == false; I++) {
-      // this is a virtual pkg
+      // This is a virtual package.
       if (I->VersionList == 0) {
-         // find the owner of this virtual package and attach it there
+         // This is a virtual package. Find the owner and attach it there.
          if (I->ProvidesList == 0)
             continue;
          string name = I.ProvidesList().OwnerPkg().Name();
-         //cout << I.Name() << " provides: " << name << endl;
          map<string, RPackage *>::iterator I2 = pkgmap.find(name);
-         if (I2 != pkgmap.end()) {
+         if (I2 != pkgmap.end())
             (*I2).second->addVirtualPackage(I);
-            //cout << (*I2).first << " provides: " << name << endl;
-         }
       }
    }
 
    applyInitialSelection();
 
    _updating = false;
-   if (reset) {
+
+   if (reset)
       reapplyFilter();
-   } else {
-      // set default filter (no filter)
-      setFilter();
-   }
+   else
+      setFilter(); // Set default filter (no filter)
 
    // mvo: put it here for now
    notifyCacheOpen();
@@ -652,53 +581,46 @@ bool RPackageLister::openCache(bool reset)
 
 void RPackageLister::applyInitialSelection()
 {
-   //cout << "RPackageLister::applyInitialSelection()" << endl;
-
    _roptions->rereadOrphaned();
    _roptions->rereadDebconf();
 
-   for (unsigned i = 0; i < _count; i++) {
-      if (_roptions->getPackageLock(_packages[i]->name())) {
+   for (unsigned i = 0; i < _packages.size(); i++) {
+
+      if (_roptions->getPackageLock(_packages[i]->name()))
          _packages[i]->setPinned(true);
-      }
 
-      if (_roptions->getPackageNew(_packages[i]->name())) {
+      if (_roptions->getPackageNew(_packages[i]->name()))
          _packages[i]->setNew(true);
-      }
 
-      if (_roptions->getPackageOrphaned(_packages[i]->name())) {
-         //cout << "orphaned: " << _packages[i]->name() << endl;
+      if (_roptions->getPackageOrphaned(_packages[i]->name()))
          _packages[i]->setOrphaned(true);
-      }
    }
 }
 
-
-
-RPackage *RPackageLister::getElement(pkgCache::PkgIterator &iter)
+RPackage *RPackageLister::getPackage(pkgCache::PkgIterator &iter)
 {
-   int index = _packageindex[iter->ID];
+   int index = _packagesIndex[iter->ID];
    if (index != -1)
       return _packages[index];
    return NULL;
 }
 
-RPackage *RPackageLister::getElement(string Name)
+RPackage *RPackageLister::getPackage(string name)
 {
-   pkgCache::PkgIterator Pkg = _cache->deps()->FindPkg(Name);
-   if (Pkg.end() == false)
-      return getElement(Pkg);
+   pkgCache::PkgIterator pkg = _cache->deps()->FindPkg(name);
+   if (pkg.end() == false)
+      return getPackage(pkg);
    return NULL;
 }
 
-
-int RPackageLister::getElementIndex(RPackage *pkg)
+int RPackageLister::getPackageIndex(RPackage *pkg)
 {
-   for (unsigned int i = 0; i < _displayList.size(); i++) {
-      if (_displayList[i] == pkg)
-         return i;
-   }
-   return -1;
+   return _packagesIndex[(*pkg->package())->ID];
+}
+
+int RPackageLister::getViewPackageIndex(RPackage *pkg)
+{
+   return _viewPackagesIndex[(*pkg->package())->ID];
 }
 
 bool RPackageLister::fixBroken()
@@ -819,135 +741,37 @@ bool RPackageLister::applyFilters(RPackage *package)
 
 void RPackageLister::reapplyFilter()
 {
-   //cout << "RPackageLister::reapplyFilter():" << _sortMode << endl;
-   getFilteredPackages(_displayList);
+   if (_updating)
+      return;
+
+   _viewPackages.clear();
+   _viewPackagesIndex.clear();
+   _viewPackagesIndex.resize(_packagesIndex.size(), -1);
+
+   for (RPackageView::iterator I = _selectedView->begin();
+        I != _selectedView->end(); I++) {
+      if (applyFilters(*I)) {
+         _viewPackagesIndex[(*(*I)->package())->ID] = _viewPackages.size();
+         _viewPackages.push_back(*I);
+      }
+   }
 
    // sort now according to the latest used sort method
    switch (_sortMode) {
+
       case LIST_SORT_NAME:
          sortPackagesByName();
          break;
+
       case LIST_SORT_SIZE_ASC:
          sortPackagesByInstSize(0);
          break;
+
       case LIST_SORT_SIZE_DES:
          sortPackagesByInstSize(1);
          break;
    }
 }
-
-#if 0                           // PORTME
-// helper function that actually add the pkg to the right location in 
-// the tree
-void RPackageLister::addFilteredPackageToTree(tree<pkgPair > &pkgTree,
-					  map<string, tree<pkgPair >::iterator>
-					  &itermap, RPackage *pkg)
-{
-   if (pkg == NULL) {
-      cerr << "pkg == NULL in addFilteredPackageToTree" << endl;
-      cerr << "this shouldn't happen, please report" << endl;
-      return;
-   }
-   tree<pkgPair>::iterator it;
-
-   if (_displayMode == TREE_DISPLAY_SECTIONS) {
-      string sec = pkg->section();
-      if (itermap.find(sec) == itermap.end()) {
-#ifndef HAVE_RPM
-         string str = trans_section(sec);
-#else
-         string str = sec;
-#endif
-         it = _treeOrganizer.insert(_treeOrganizer.begin(),
-                                    pkgPair(str, NULL));
-         itermap[sec] = it;
-      } else {
-         it = itermap[sec];
-      }
-      pkgPair pair(pkg->name(), pkg);
-      it = _treeOrganizer.append_child(it, pair);
-#if 0                           // this code was a experiment for a dependencie list under each pkg
-      if ((*it).second) {
-         vector<RPackage *> deps = ((*it).second)->getInstalledDeps();
-         for (int i = 0; i < deps.size(); i++) {
-            if (deps[i] != NULL) {
-               pkgPair pair(deps[i]->name(), deps[i]);
-               _treeOrganizer.append_child(it, pair);
-            }
-         }
-      }
-#endif
-   } else if (_displayMode == TREE_DISPLAY_ALPHABETIC) {
-      char s[2] = { 0, 0 };     // get initial letter
-      s[0] = (pkg->name())[0];
-      string initial(s);
-      if (itermap.find(initial) == itermap.end()) {
-         it = _treeOrganizer.insert(_treeOrganizer.begin(),
-                                    pkgPair(initial, NULL));
-         itermap[initial] = it;
-      } else {
-         it = itermap[initial];
-      }
-      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-   } else if (_displayMode == TREE_DISPLAY_STATUS) {
-      string str;
-      int ostatus = pkg->getOtherStatus();
-      if (ostatus & RPackage::ONew)
-         str = _("New in repository");
-      else if ((ostatus & RPackage::ONotInstallable) &&
-               !(ostatus & RPackage::OResidualConfig))
-         str = _("Obsolete and locally installed");
-      else if (pkg->installedVersion() != NULL) {
-         if (pkg->getStatus() == RPackage::SInstalledOutdated)
-            str = _("Installed and upgradable");
-         else
-            str = _("Installed");
-      } else {
-         if (pkg->getOtherStatus() & RPackage::OResidualConfig)
-            str = _("Not installed (residual config)");
-         else
-            str = _("Not installed");
-      }
-
-      if (itermap.find(str) == itermap.end()) {
-         it = _treeOrganizer.insert(_treeOrganizer.begin(),
-                                    pkgPair(str, NULL));
-         itermap[str] = it;
-      } else {
-         it = itermap[str];
-      }
-      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-   }
-   // _displayMode == TREE_DISPLAY_FLAT) {
-   // is handled via the new gtkpkglist code
-}
-#endif
-
-void RPackageLister::getFilteredPackages(vector<RPackage *> &packages)
-{
-   if (_updating)
-      return;
-
-   // erase old display list
-   packages.clear();
-
-#if 0
-   vector<RPackage *> view_packages = _view[_selectedSubView];
-
-   for (unsigned i = 0; i < view_packages.size(); i++) {
-      if (applyFilters(view_packages[i])) {
-         packages.push_back(view_packages[i]);
-      }
-   }
-#endif
-
-   for (RPackageView::iterator I = _selectedView->begin();
-        I != _selectedView->end(); I++) {
-      if (applyFilters(*I))
-         packages.push_back(*I);
-   }
-}
-
 
 static void qsSortByName(vector<RPackage *> &packages, int start, int end)
 {
@@ -980,37 +804,9 @@ static void qsSortByName(vector<RPackage *> &packages, int start, int end)
 void RPackageLister::sortPackagesByName(vector<RPackage *> &packages)
 {
    _sortMode = LIST_SORT_NAME;
-   if (!packages.empty()) {
+   if (!packages.empty())
       qsSortByName(packages, 0, packages.size() - 1);
-#if 0
-      _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(), true);
-#endif
-   }
 }
-
-#if 0                           //DELME?
-// various compare functions
-struct instSizeTreeSortFuncAsc {
-   bool operator() (const RPackageLister::pkgPair & x,
-                    const RPackageLister::pkgPair & y) {
-      if (x.second != NULL && y.second != NULL) {
-         return x.second->installedSize() < y.second->installedSize();
-      } else
-         // always sort the toplevel by name
-         return x.first < y.first;
-   }
-};
-struct instSizeTreeSortFuncDes {
-   bool operator() (const RPackageLister::pkgPair & x,
-                    const RPackageLister::pkgPair & y) {
-      if (x.second != NULL && y.second != NULL) {
-         return x.second->installedSize() > y.second->installedSize();
-      } else
-         // always sort the toplevel by name
-         return x.first < y.first;
-   }
-};
-#endif
 
 struct instSizeSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
@@ -1032,19 +828,10 @@ void RPackageLister::sortPackagesByInstSize(vector<RPackage *> &packages,
       _sortMode = LIST_SORT_SIZE_DES;
 
    if (!packages.empty()) {
-      if (order == 0) {
+      if (order == 0)
          sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
-#if 0                           // DELME?
-         _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
-                             instSizeTreeSortFuncAsc(), true);
-#endif
-      } else {
+      else
          sort(packages.begin(), packages.end(), instSizeSortFuncDes());
-#if 0                           // DELME ?
-         _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
-                             instSizeTreeSortFuncDes(), true);
-#endif
-      }
    }
 }
 
@@ -1073,22 +860,22 @@ int RPackageLister::findPackage(const char *pattern)
 int RPackageLister::findNextPackage()
 {
    if (!_searchData.pattern) {
-      if (_searchData.last >= (int)_displayList.size())
+      if (_searchData.last >= (int)_viewPackages.size())
          _searchData.last = -1;
       return ++_searchData.last;
    }
 
    int len = strlen(_searchData.pattern);
 
-   for (unsigned i = _searchData.last + 1; i < _displayList.size(); i++) {
+   for (unsigned i = _searchData.last + 1; i < _viewPackages.size(); i++) {
       if (_searchData.isRegex) {
-         if (regexec(&_searchData.regex, _displayList[i]->name(),
+         if (regexec(&_searchData.regex, _viewPackages[i]->name(),
                      0, NULL, 0) == 0) {
             _searchData.last = i;
             return i;
          }
       } else {
-         if (strncasecmp(_searchData.pattern, _displayList[i]->name(),
+         if (strncasecmp(_searchData.pattern, _viewPackages[i]->name(),
                          len) == 0) {
             _searchData.last = i;
             return i;
@@ -1141,7 +928,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
    toDowngrade = 0;
    toRemove = 0;
 
-   for (i = 0; i < _count; i++) {
+   for (i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
 
       switch (pkg->getMarkedStatus()) {
@@ -1187,7 +974,6 @@ struct bla:public binary_function<RPackage *, RPackage *, bool> {
 
 void RPackageLister::saveUndoState(pkgState &state)
 {
-   //cout << "RPackageLister::saveUndoState(state)" << endl;
    undoStack.push_front(state);
    redoStack.clear();
 
@@ -1202,7 +988,6 @@ void RPackageLister::saveUndoState(pkgState &state)
 
 void RPackageLister::saveUndoState()
 {
-   //cout << "RPackageLister::saveUndoState()" << endl;
    pkgState state;
    saveState(state);
    saveUndoState(state);
@@ -1211,17 +996,13 @@ void RPackageLister::saveUndoState()
 
 void RPackageLister::undo()
 {
-   //cout << "RPackageLister::undo()" << endl;
    pkgState state;
-   if (undoStack.empty()) {
-      //cout << "undoStack empty" << endl;
+   if (undoStack.empty())
       return;
-   }
-   // save redo information
+
    saveState(state);
    redoStack.push_front(state);
 
-   // undo 
    state = undoStack.front();
    undoStack.pop_front();
 
@@ -1276,7 +1057,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
    }
 
    pkgDepCache &Cache = *_cache->deps();
-   for (unsigned int i = 0; i != _count; i++) {
+   for (unsigned int i = 0; i != _packages.size(); i++) {
       RPackage *RPkg = _packages[i];
       pkgCache::PkgIterator &Pkg = *RPkg->package();
       pkgDepCache::StateCache & PkgState = Cache[Pkg];
@@ -1325,8 +1106,8 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
    //cout << "RPackageLister::saveState()" << endl;
    state.clear();
-   state.reserve(_count);
-   for (unsigned i = 0; i < _count; i++) {
+   state.reserve(_packages.size());
+   for (unsigned i = 0; i < _packages.size(); i++) {
       state.push_back(_packages[i]->getMarkedStatus());
    }
 }
@@ -1336,7 +1117,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
    pkgDepCache *deps = _cache->deps();
    RPackage *pkg;
 
-   for (unsigned i = 0; i < _count; i++) {
+   for (unsigned i = 0; i < _packages.size(); i++) {
       pkg = _packages[i];
       RPackage::MarkedStatus status = pkg->getMarkedStatus();
 
@@ -1382,7 +1163,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 {
    bool changed = false;
 
-   for (unsigned i = 0; i < _count; i++) {
+   for (unsigned i = 0; i < _packages.size(); i++) {
       RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
       if (state[i] != status &&
           find(exclude.begin(), exclude.end(),
@@ -1457,41 +1238,49 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
-   unsigned i;
 
-   for (i = 0; i < _count; i++) {
+   for (int i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
 
       switch (pkg->getMarkedStatus()) {
-         case RPackage::MKeep:{
+
+         case RPackage::MKeep: {
              if (pkg->getStatus() == RPackage::SInstalledOutdated)
                 kept.push_back(pkg);
              break;
           }
+
          case RPackage::MInstall:
             toInstall.push_back(pkg);
             break;
+
          case RPackage::MReInstall:
-	    toReInstall.push_back(pkg);
-	    break;
+            toReInstall.push_back(pkg);
+            break;
+
          case RPackage::MUpgrade:
             toUpgrade.push_back(pkg);
             break;
+
          case RPackage::MDowngrade:
             toDowngrade.push_back(pkg);
             break;
+
          case RPackage::MRemove:
             if (pkg->isImportant())
                essential.push_back(pkg);
             else
                toRemove.push_back(pkg);
             break;
+
          case RPackage::MHeld:
             held.push_back(pkg);
             break;
+
          case RPackage::MBroken:
             /* nothing */
             break;
+
       }
    }
 
@@ -1792,7 +1581,7 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
    //cout << "bool RPackageLister::writeSelections(out,fullState)"<<endl;
 
-   for (unsigned i = 0; i < _count; i++) {
+   for (unsigned i = 0; i < _packages.size(); i++) {
       RPackage::MarkedStatus mstatus = _packages[i]->getMarkedStatus();
       RPackage::PackageStatus status = _packages[i]->getStatus();
       switch (mstatus) {
@@ -1912,4 +1701,4 @@ bool RPackageLister::readSelections(istream &in)
    return true;
 }
 
-// vim:sts=4:sw=4
+// vim:ts=3:sw=3:et

@@ -571,8 +571,7 @@ vector < RPackage *>RPackage::getInstalledDeps()
    while (!depIter.end()) {
       pkgCache::PkgIterator depPkg = depIter.TargetPkg();
       string name = depPkg.Name();
-      RPackage *pkg = _lister->getElement(name);
-      deps.push_back(pkg);
+      deps.push_back(_lister->getPackage(name));
       depIter++;
    }
 
@@ -1143,7 +1142,7 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
          }
       }
 
-      RPackage *depackage = _lister->getElement(depPkg);
+      RPackage *depackage = _lister->getPackage(depPkg);
       //cout << "testing(RPackage): " << depackage->name() << endl;
 
       if (!depackage)

@@ -132,8 +132,8 @@ void RGInstallProgress::finishUpdate()
 
 void RGInstallProgress::prepare(RPackageLister *lister)
 {
-   for (unsigned int row = 0; row < lister->count(); row++) {
-      RPackage *elem = lister->getElement(row);
+   for (unsigned int row = 0; row < lister->viewPackagesSize(); row++) {
+      RPackage *elem = lister->getViewPackage(row);
 
       // Is it going to be seen?
       RPackage::MarkedStatus mark = elem->getMarkedStatus();

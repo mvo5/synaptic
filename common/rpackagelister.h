@@ -83,31 +83,39 @@ class RCacheObserver {
 };
 
 class RPackageLister {
- private:
+
+   protected:
+
+   // Internal APT stuff.
    RPackageCache * _cache;
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-   RPackage **_packages;        // all packages
+   // Other members.
+   vector<RPackage *> _packages;
+   vector<int> _packagesIndex;
 
-   int *_packageindex;
-   unsigned _count;
-   set<string> allPackages;  //all known packages (needed identifing "new" pkgs)
+   vector<RPackage *> _viewPackages;
+   vector<int> _viewPackagesIndex;
 
-   bool _updating;              // can't access anything while this is true
+   // It shouldn't be needed to control this inside this class. -- niemeyer
+   bool _updating;
+
+   // Need a better name here. -- niemeyer
+   set<string> allPackages;  // all known packages (needed identifing "new" pkgs)
+
    bool _cacheValid;            // is the cache valid?
 
    int _installedCount;         // # of installed packages
 
-   vector<RFilter *>_filterL;
+   vector<RFilter *> _filterL;
    RFilter *_filter;            // effective filter, NULL for none
-   vector<RPackage *>_displayList;   // list of packages after filter
 
    vector<string> _sectionList;      // list of all available package sections
 
-   vector<RCacheActor *>_actors;
+   vector<RCacheActor *> _actors;
 
- public:
+   public:
 
    int _viewMode;
 
@@ -124,10 +132,7 @@ class RPackageLister {
    typedef vector<RPackage::MarkedStatus> pkgState;
 #endif
 
- private:
-   //tree<pkgPair> _treeOrganizer;
-   //map<string, vector<RPackage*> > _view;
-   //string _selectedSubView;
+   private:
 
    vector<RPackageView *> _views;
    RPackageView *_selectedView;
@@ -140,12 +145,6 @@ class RPackageLister {
 
    bool lockPackageCache(FileFd &lock);
 
-   void getFilteredPackages(vector<RPackage *> &packages);
-#if 0
-   void addFilteredPackageToTree(tree<pkgPair> &tree, */
-                                 map <string, tree<pkgPair>::iterator> &itermap,
-                                 RPackage *pkg);
-#endif
    void sortPackagesByName(vector<RPackage *> &packages);
    void sortPackagesByInstSize(vector<RPackage *> &packages, int order);
 
@@ -165,22 +164,16 @@ class RPackageLister {
    list<pkgState> undoStack;
    list<pkgState> redoStack;
 
+   public:
 
- public:
    void sortPackagesByName() {
-      sortPackagesByName(_displayList);
+      sortPackagesByName(_viewPackages);
    };
    void sortPackagesByInstSize(int order) {
-      sortPackagesByInstSize(_displayList, order);
+      sortPackagesByInstSize(_viewPackages, order);
    };
 
-   inline void getSections(vector<string> &sections) {
-      sections = _sectionList;
-   };
-
-   inline int nrOfSections() {
-      return _sectionList.size();
-   };
+   const vector<string> &getSections() { return _sectionList; };
 
    void setView(int index);
    vector<string> getViews();
@@ -218,18 +211,29 @@ class RPackageLister {
    int findPackage(const char *pattern);
    int findNextPackage();
 
+   const vector<RPackage *> &getPackages() { return _packages; };
+   const vector<RPackage *> &getViewPackages() { return _viewPackages; };
+   RPackage *getPackage(int index) { return _packages.at(index); };
+   RPackage *getViewPackage(int index) { return _viewPackages.at(index); };
+   RPackage *getPackage(pkgCache::PkgIterator &pkg);
+   RPackage *getPackage(string name);
+   int getPackageIndex(RPackage *pkg);
+   int getViewPackageIndex(RPackage *pkg);
+
+   int packagesSize() { return _packages.size(); };
+   int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); };
+
+#if 0
    inline unsigned count() {
-      return _updating ? 0 : _displayList.size();
+      return _updating ? 0 : _viewPackages.size();
    };
    inline RPackage *getElement(int row) {
-      if (!_updating && row < (int)_displayList.size())
-         return _displayList[row];
+      if (!_updating && row < (int)_viewPackages.size())
+         return _viewPackages[row];
       else
          return NULL;
    };
-   int getElementIndex(RPackage *pkg);
-   RPackage *getElement(pkgCache::PkgIterator &pkg);
-   RPackage *getElement(string Name);
+#endif
 
    void getStats(int &installed, int &broken, int &toInstall, int &toReInstall,
 		 int &toRemove, double &sizeChange);

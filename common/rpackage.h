@@ -44,6 +44,9 @@ class pkgRecords;
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 class RPackage {
+
+   protected:
+
    RPackageLister *_lister;
 
    pkgRecords *_records;
@@ -85,6 +88,9 @@ class RPackage {
    bool isWeakDep(pkgCache::DepIterator &dep);
 
  public:
+
+   typedef vector<RPackage *> List;
+
    enum PackageStatus {
       SInstalledUpdated,
       SInstalledOutdated,
@@ -119,14 +125,9 @@ class RPackage {
       ISecurity
    };
 
-   pkgCache::PkgIterator *package() {
-      return _package;
-   };
+   pkgCache::PkgIterator *package() { return _package; };
 
-
-   inline const char *name() {
-      return _package->Name();
-   };
+   inline const char *name() { return _package->Name(); };
 
    const char *section();
    const char *priority();
@@ -134,12 +135,8 @@ class RPackage {
    const char *summary();
    const char *description();
    const char *installedFiles();
-#if 0                           //PORTME
-#ifdef HAVE_DEBTAGS
-   const char *tags();
-#endif
-#endif
-   vector<const char *>provides();
+
+   vector<const char *> provides();
 
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
@@ -211,7 +208,7 @@ class RPackage {
    void setKeep();
    void setInstall();
    void setReInstall(bool flag);
-   void setRemove(bool purge = false);  //XXX: purge for debian
+   void setRemove(bool purge = false);
 
    void setNotify(bool flag = true);
 

@@ -37,7 +37,6 @@ using namespace std;
 
 #include "rggladewindow.h"
 #include "rgiconlegend.h"
-#include "gtkpkgtree.h"
 #include "gtkpkglist.h"
 #include "gtktagtree.h"
 

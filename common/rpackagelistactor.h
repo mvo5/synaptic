@@ -52,10 +52,7 @@ class RPackageListActor : public RPackageObserver {
    virtual void notifyChange(RPackage *pkg) {};
 
    virtual void updateState() {
-      _lastDisplayList.clear();
-      _lastDisplayList.reserve(_lister->count());
-      for (unsigned int i = 0; i < _lister->count(); i++)
-         _lastDisplayList.push_back(_lister->getElement(i));
+      _lastDisplayList = _lister->getPackages();
    };
 
    RPackageListActor(RPackageLister *lister)

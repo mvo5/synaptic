@@ -125,8 +125,7 @@ _selectedFilter(NULL), _lister(lister)
                     G_CALLBACK(selectAction), this);
 
    // section list
-   vector<string> sections;
-   _lister->getSections(sections);
+   const vector<string> &sections = _lister->getSections();
    _sectionList = glade_xml_get_widget(_gladeXML, "treeview_sections");
    _sectionListStore = gtk_list_store_new(SECTION_N_COLUMNS, G_TYPE_STRING);
    renderer = gtk_cell_renderer_text_new();

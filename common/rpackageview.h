@@ -45,17 +45,11 @@ class RPackageView {
    vector<RPackage *> _selectedView;
 
  public:
-   RPackageView() {
-   };
-   virtual ~ RPackageView() {
-   };
+   RPackageView() {};
+   virtual ~RPackageView() {};
 
-   bool hasSelection() {
-      return _hasSelection;
-   };
-   string getSelected() {
-      return _selectedName;
-   };
+   bool hasSelection() { return _hasSelection; };
+   string getSelected() { return _selectedName; };
    bool setSelected(string name);
 
    vector<string> getSubViews();
@@ -65,12 +59,8 @@ class RPackageView {
 
    typedef vector<RPackage *>::iterator iterator;
 
-   iterator begin() {
-      return _selectedView.begin();
-   };
-   iterator end() {
-      return _selectedView.end();
-   };
+   iterator begin() { return _selectedView.begin(); };
+   iterator end() { return _selectedView.end(); };
 
    virtual void clear();
    virtual void clearSelection();

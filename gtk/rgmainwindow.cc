@@ -295,8 +295,8 @@ void RGMainWindow::forgetNewPackages()
 {
    //cout << "forgetNewPackages called" << endl;
    unsigned int row = 0;
-   while (row < _lister->count()) {
-      RPackage *elem = _lister->getElement(row);
+   while (row < _lister->viewPackagesSize()) {
+      RPackage *elem = _lister->getViewPackage(row);
       if (elem->getOtherStatus() && RPackage::ONew)
          elem->setNew(false);
    }
@@ -1294,11 +1294,10 @@ void RGMainWindow::setStatusText(char *text)
    } else {
       gchar *buffer;
       // we need to make this two strings for i18n reasons
-      listed = _lister->count();
+      listed = _lister->viewPackagesSize();
       if (size < 0) {
          buffer =
-            g_strdup_printf(_
-                            ("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be freed"),
+            g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be freed"),
                             listed, installed, broken, toInstall, toRemove,
                             SizeToStr(fabs(size)).c_str());
       } else {
@@ -1678,11 +1677,11 @@ void RGMainWindow::cbInstallWDeps(GtkWidget *self, void *data)
    if (pkg->enumWDeps(depType, depName, satisfied)) {
       do {
          if (!satisfied && strcmp(depType, installDepType) == 0) {
-            RPackage *newpkg = me->_lister->getElement(depName);
+            RPackage *newpkg = me->_lister->getPackage(depName);
             if (newpkg)
                me->pkgInstallHelper(newpkg);
             else
-               cerr << depName << " not found" << endl;
+               cerr << "Dependency " << depName << " not found." << endl;
          }
       } while (pkg->nextWDeps(depType, depName, satisfied));
    }
@@ -1741,7 +1740,7 @@ void RGMainWindow::cbInstallSelected(GtkWidget *self, void *data)
          continue;
       }
 
-      RPackage *newpkg = (RPackage *) me->_lister->getElement(depName);
+      RPackage *newpkg = (RPackage *) me->_lister->getPackage(depName);
       if (newpkg)
          me->pkgInstallHelper(newpkg);
       else
@@ -2169,7 +2168,7 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
    RPackage *pkg = NULL;
-   pkg = me->_lister->getElement("libgnome2-perl");
+   pkg = me->_lister->getPackage("libgnome2-perl");
    if (pkg && pkg->installedVersion() == NULL) {
       me->_userDialog->error(_("No libgnome2-perl installed\n\n"
                                "You have to install libgnome2-perl to "

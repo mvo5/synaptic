@@ -88,8 +88,8 @@ class RCacheActorRecommends:public RCacheActor {
 
    void setLanguageCache();
 
-   inline bool actOnPkg(string Name, int Action) {
-      RPackage *Pkg = _lister->getElement(Name);
+   inline bool actOnPkg(string name, int Action) {
+      RPackage *Pkg = _lister->getPackage(name);
       if (Pkg != NULL) {
          switch (Action) {
             case ACTION_KEEP:

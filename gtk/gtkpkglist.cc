@@ -85,7 +85,7 @@ void RCacheActorPkgList::run(vector<RPackage *> &List, int Action)
    for (unsigned int i = 0; i < List.size(); i++) {
       RPackage *pkg = List[i];
 
-      j = _lister->getElementIndex(pkg);
+      j = _lister->getViewPackageIndex(pkg);
       if (j == -1)
          continue;
 
@@ -131,8 +131,7 @@ void RPackageListActorPkgList::run(vector<RPackage *> &List, int listEvent)
    } else if (listEvent == PKG_ADDED) {
       static GtkTreeIter iter;
       for (int i = 0; i < (int)List.size(); i++) {
-      //for (int i = (int)List.size() - 1; i >= 0; i--) {
-         int j = _lister->getElementIndex(List[i]);
+         int j = _lister->getViewPackageIndex(List[i]);
          cout << "Inserted " << List[i]->name() << " at pos: " << j << endl;
          GtkTreePath *path = gtk_tree_path_new();
          gtk_tree_path_append_index(path, j);
@@ -320,16 +319,16 @@ gtk_pkg_list_get_iter(GtkTreeModel *tree_model,
    cout << "get_iter: index " << element << "  path: " << path << endl;
 #endif
 
-   if (element >= pkg_list->_lister->count()) {
+   if (element >= pkg_list->_lister->viewPackagesSize()) {
 #ifdef DEBUG_LIST
       cout << "indices[0] > pkg_list->_lister->count()" << endl;
-      cout << indices[0] << " >= " << pkg_list->_lister->count() << endl;
+      cout << indices[0] << " >= " << pkg_list->_lister->viewPackagesSize() << endl;
 #endif
       //gtk_tree_model_row_deleted(GTK_TREE_MODEL(pkg_list),path);
       return FALSE;
    }
 
-   pkg = pkg_list->_lister->getElement(element);
+   pkg = pkg_list->_lister->getViewPackage(element);
    assert(pkg);
    iter->stamp = 140677;
    iter->user_data = pkg;
@@ -387,10 +386,8 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 
    GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
    unsigned int element = GPOINTER_TO_INT(iter->user_data2);
-   if (element >= pkg_list->_lister->count()) {
-      //cout << "get_value > pkg_list->_lister->count()" << endl;
+   if (element >= pkg_list->_lister->viewPackagesSize())
       return;
-   }
 
    if (pkg == NULL) {
       cout << "get_value: pkg == NULL" << endl;
@@ -469,10 +466,11 @@ gtk_pkg_list_iter_next(GtkTreeModel *tree_model, GtkTreeIter *iter)
    old = GPOINTER_TO_INT(iter->user_data2);
 
    i = old + 1;
-   RPackage *pkg = (RPackage *) pkg_list->_lister->getElement(i);
-   if (i >= pkg_list->_lister->count()) {
+   if (i >= pkg_list->_lister->viewPackagesSize())
       return FALSE;
-   }
+
+   RPackage *pkg = pkg_list->_lister->getViewPackage(i);
+
 #ifdef DEBUG_LIST_FULL
    RPackage *oldpkg = (RPackage *) iter->user_data;
    cout << "iter_next()  " << endl;
@@ -502,7 +500,8 @@ gtk_pkg_list_iter_children(GtkTreeModel *tree_model,
 
    GtkPkgList *pkg_list = (GtkPkgList *) tree_model;
 
-   RPackage *pkg = pkg_list->_lister->getElement(0);
+   RPackage *pkg = pkg_list->_lister->getViewPackage(0);
+
    iter->stamp = 140677;
    iter->user_data = pkg;
    iter->user_data2 = 0;
@@ -528,7 +527,7 @@ gtk_pkg_list_iter_n_children(GtkTreeModel *tree_model, GtkTreeIter *iter)
 #endif
 
    if (iter == NULL)
-      return pkg_list->_lister->count();
+      return pkg_list->_lister->viewPackagesSize();
 
    return 0;
 }
@@ -545,12 +544,10 @@ gtk_pkg_list_iter_nth_child(GtkTreeModel *tree_model,
       return FALSE;
    }
 
-   if (n >= (gint) pkg_list->_lister->count()) {
-      //cerr << "nth_child(): n>=_lister->count()" << endl;
+   if (n >= (gint) pkg_list->_lister->viewPackagesSize())
       return FALSE;
-   }
 
-   RPackage *pkg = pkg_list->_lister->getElement(n);
+   RPackage *pkg = pkg_list->_lister->getViewPackage(n);
    assert(pkg);
 
 #ifdef DEBUG_LIST

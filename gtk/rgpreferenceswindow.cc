@@ -756,41 +756,14 @@ void RGPreferencesWindow::cbToggleColumn(GtkWidget *self, char*path_string,
 }
 
 
-
-
-
-
-void RGPreferencesWindow::saveColor(GtkWidget *self, void *data)
-{
-   GdkColor color;
-   GtkColorSelectionDialog *color_selector;
-
-   RGPreferencesWindow *me =
-      (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
-   color_selector =
-      (GtkColorSelectionDialog *) g_object_get_data(G_OBJECT(self),
-                                                    "color_selector");
-
-   gtk_color_selection_get_current_color(GTK_COLOR_SELECTION
-                                         (color_selector->colorsel), &color);
-
-   RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
-                                      gdk_color_copy(&color));
-   me->readColors();
-}
-
 void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
 {
    GtkWidget *color_dialog;
    GtkWidget *color_selection;
-   GtkWidget *ok_button, *cancel_button;
    RGPreferencesWindow *me;
-
    me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
    color_dialog = gtk_color_selection_dialog_new(_("Color selection"));
-   ok_button = GTK_COLOR_SELECTION_DIALOG(color_dialog)->ok_button;
-   cancel_button = GTK_COLOR_SELECTION_DIALOG(color_dialog)->cancel_button;
    color_selection = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
 
    GdkColor *color = NULL;
@@ -799,22 +772,14 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
       gtk_color_selection_set_current_color(GTK_COLOR_SELECTION
                                             (color_selection), color);
 
-   g_object_set_data(G_OBJECT(ok_button), "color_selector", color_dialog);
-   g_object_set_data(G_OBJECT(ok_button), "me", me);
-
-   g_signal_connect(GTK_OBJECT(ok_button), "clicked",
-                    G_CALLBACK(saveColor), data);
-
-   g_signal_connect_swapped(GTK_OBJECT(ok_button), "clicked",
-                            G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) color_dialog);
-
-   g_signal_connect_swapped(GTK_OBJECT(cancel_button),
-                            "clicked",
-                            G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) color_dialog);
-
-   gtk_widget_show(color_dialog);
+   if (gtk_dialog_run(GTK_DIALOG(color_dialog)) == GTK_RESPONSE_OK) {
+      GdkColor current_color;
+      gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(color_selection), &current_color);
+      RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
+					  gdk_color_copy(&current_color));
+      me->readColors();
+   }
+   gtk_widget_destroy(color_dialog);
 }
 
 void RGPreferencesWindow::useProxyToggled(GtkWidget *self, void *data)

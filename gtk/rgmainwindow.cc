@@ -2184,41 +2184,49 @@ void RGMainWindow::onCollapseAll(GtkWidget *self, void *data)
 void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 {
   setInterfaceLocked(TRUE);
+  _blockActions = TRUE;
+
   _lister->setTreeDisplayMode(mode);
   _lister->reapplyFilter();
+  _treeDisplayMode = mode;
   refreshTable(NULL);
-  setInterfaceLocked(FALSE);
-  setStatusText();
 
-  _config->Set("Synaptic::TreeDisplayMode", mode);
+  _blockActions = FALSE;
+  setInterfaceLocked(FALSE);
+
+  setStatusText();
 }
 
 void RGMainWindow::onSectionTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_SECTIONS);
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_SECTIONS)
+    me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_SECTIONS);
 }
 
 void RGMainWindow::onAlphabeticTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_ALPHABETIC);
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_ALPHABETIC)
+    me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_ALPHABETIC);
 }
 
 void RGMainWindow::onStatusTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_STATUS);
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_STATUS)
+    me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_STATUS);
 }
 
 void RGMainWindow::onFlatList(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
 
-  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_FLAT);
+  if(me->_treeDisplayMode != RPackageLister::TREE_DISPLAY_FLAT)
+    me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_FLAT);
 }
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
@@ -2421,6 +2429,7 @@ void RGMainWindow::saveState()
     _config->Set("Synaptic::windowWidth", _win->allocation.width);
     _config->Set("Synaptic::windowHeight", _win->allocation.height);
     _config->Set("Synaptic::ToolbarState", (int)_toolbarState);
+    _config->Set("Synaptic::TreeDisplayMode", _treeDisplayMode);
 
     if (!RWriteConfigFile(*_config)) {
       _error->DumpErrors();

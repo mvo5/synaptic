@@ -279,43 +279,11 @@ bool RPackageLister::upgradable()
     return _cache!=NULL && _cache->deps()!=NULL;
 }
 
-// int RPackageLister::getNrElementsOfSection(int section)
-// {
-//   RPackage *pkg;
-//   int j=0;
-
-//   if(_updating)
-//     return 0;
-  
-//   vector<RPackage*> sec_pkgs = _treeOrganizer[_sectionList[section]];
-  
-//   return sec_pkgs.size();
-// }
-
-// RPackage* RPackageLister::getElementOfSection(int section, int row) 
-// {
-//   RPackage *pkg = NULL;
-
-//   if(_updating)
-//     return NULL;
-
-//   vector<RPackage*> sec_pkgs = _treeOrganizer[_sectionList[section]];
-
-//   if(row == sec_pkgs.size()) {
-//     cout <<"row == sec_pkgs.size(): " << sec_pkgs.size() << endl;
-//     return NULL;
-//   }
-// //   cout << "section: " << section << " ; " << "row: " << row 
-// //        << " ; size: " << sec_pkgs.size() << endl;
-//   return sec_pkgs[row]; 
-// }
 
 
 // We have to reread the cache if we're using "pin". 
 bool RPackageLister::openCache(bool reset)
 {
-//     map<string,tree<pkgPair>::pre_order_iterator> itermap;
-//     tree<pkgPair>::pre_order_iterator it;
     map<string,RPackage*> *pkgmap;
     static bool firstRun=true;
     string pkgName;
@@ -416,13 +384,6 @@ bool RPackageLister::openCache(bool reset)
 
 	if (!sec.empty()) {
 	  _sectionList.push_back(sec);
-// 	  it = _treeOrganizer.insert(_treeOrganizer.begin(), 
-// 				     pkgPair(sec,NULL));
-// 	  _treeOrganizer.append_child(it, pkgPair(pkg->name(),pkg));
-// 	  itermap[sec] = it;
-// 	} else {
-// 	  it = itermap[I.Section()];
-// 	  _treeOrganizer.append_child(it, pkgPair(pkg->name(),pkg));
 	}
 	
     }

@@ -1,5 +1,5 @@
 /* gtkpkgtree.c
- * Copyright (C) 2002  Michael Vogt
+ * Copyright (C) 2002,2003  Michael Vogt
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
 #include "gtkpkgtree.h"
+
+using namespace std;
 
 static void         gtk_pkg_tree_init            (GtkPkgTree      *pkg_tree);
 static void         gtk_pkg_tree_class_init      (GtkPkgTreeClass *klass);
@@ -189,8 +191,14 @@ gtk_pkg_tree_get_flags (GtkTreeModel *tree_model)
 {
   g_return_val_if_fail (GTK_IS_PKG_TREE (tree_model), (GtkTreeModelFlags)0);
 
+//   RPackageLister::treeDisplayMode mode = GTK_PKG_TREE(tree_model)->_lister->getTreeDisplayMode();
+
+//   if(mode == RPackageLister::TREE_DISPLAY_FLAT)
+//     return GTK_TREE_MODEL_LIST_ONLY|GTK_TREE_MODEL_ITERS_PERSIST);
+//   else
   return GTK_TREE_MODEL_ITERS_PERSIST;
 }
+
 
 static gint
 gtk_pkg_tree_get_n_columns (GtkTreeModel *tree_model)

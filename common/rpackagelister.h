@@ -137,7 +137,11 @@ public:
      return &_treeOrganizer; 
    };
    inline void setTreeDisplayMode(treeDisplayMode mode) {
+     //cout << "setTreeDisplayMode() " << mode << endl;
      _displayMode = mode;
+   };
+   inline treeDisplayMode getTreeDisplayMode() {
+     return _displayMode;
    };
    
    void storeFilters();
@@ -168,11 +172,7 @@ public:
 	   return NULL;
    };
    int getElementIndex(RPackage *pkg);
-   
    RPackage *getElement(pkgCache::PkgIterator &pkg);
-
-/*    RPackage *getElementOfSection(int section, int row); */
-/*    int getNrElementsOfSection(int section); */
 
    void getStats(int &installed, int &broken, int &toinstall, int &toremove,
 		 double &sizeChange);

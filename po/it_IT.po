@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-26 11:35+0100\n"
+"POT-Creation-Date: 2003-11-26 14:25+0100\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -171,7 +171,7 @@ msgstr ""
 msgid "non free"
 msgstr "Albero sezioni"
 
-#: common/sections_trans.h:43
+#: common/sections_trans.h:43 common/rpackagelister.cc:784
 msgid "contrib"
 msgstr ""
 
@@ -185,8 +185,8 @@ msgid "Unable to create a tmp file"
 msgstr "Impossibile creare un file temporaneo"
 
 #: common/indexcopy.cc:89
-msgid "Couldn't fork gzip"
-msgstr "Creazione processo gzip non riuscita"
+msgid "Internal Error: Couldn't fork gzip. Please report."
+msgstr ""
 
 #: common/indexcopy.cc:110
 msgid "gzip failed, perhaps the disk is full."
@@ -196,18 +196,6 @@ msgstr "errore di gzip, probabilmente il disco è pieno"
 msgid "Failed to reopen fd"
 msgstr "Riapertura di fd fallita"
 
-#: common/indexcopy.cc:169
-msgid "Missed: "
-msgstr "Manca: "
-
-#: common/indexcopy.cc:196
-msgid "Missed(2): "
-msgstr "Manca(2): "
-
-#: common/indexcopy.cc:206
-msgid "Wrong Size: "
-msgstr "Dimensione errata: "
-
 #: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
 #: common/rpmindexcopy.cc:216
 msgid "Failed to rename"
@@ -216,11 +204,6 @@ msgstr "Rinomina fallita"
 #: common/indexcopy.cc:285
 msgid "No valid records were found."
 msgstr "Sono stati trovati record errati."
-
-#: common/indexcopy.cc:288
-msgid "Alot of entries were discarded, something may be wrong."
-msgstr ""
-"Alcune voci sono state scartate, qualcosa potrebbe essere andato storto."
 
 #: common/indexcopy.cc:464
 msgid "Cannot find filename or size tag"
@@ -380,57 +363,38 @@ msgid ""
 "sources.list\n"
 msgstr ""
 
-#: common/rpackage.cc:636
-#, fuzzy, c-format
-msgid "but %s is to be installed"
-msgstr "%s è/verrà installato"
-
-#: common/rpackage.cc:640
-#, fuzzy
-msgid "but it is not installable"
-msgstr "il pacchetto non è installabile"
-
-#: common/rpackage.cc:642
-#, fuzzy
-msgid "but it is a virtual package"
-msgstr "il pacchetto è un pacchetto virtuale"
-
-#: common/rpackage.cc:645
-msgid "but it is not going to be installed"
-msgstr ""
-
-#: common/rpackage.cc:649
+#: common/rpackage.cc:660
 msgid " or"
 msgstr ""
 
-#: common/rpackage.cc:746
+#: common/rpackage.cc:757
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s è/verrà installato"
 
-#: common/rpackage.cc:751
+#: common/rpackage.cc:762
 msgid "package is not installable"
 msgstr "il pacchetto non è installabile"
 
-#: common/rpackage.cc:753
+#: common/rpackage.cc:764
 msgid "package is a virtual package"
 msgstr "il pacchetto è un pacchetto virtuale"
 
-#: common/rpackage.cc:755
+#: common/rpackage.cc:766
 msgid "package is/will not be installed"
 msgstr "il pacchetto non è/verrà installato"
 
-#: common/rpackage.cc:758
+#: common/rpackage.cc:769
 msgid "dependency is satisfied"
 msgstr "la dipendenza è soddisfatta"
 
-#: common/rpackage.cc:922
+#: common/rpackage.cc:933
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Record invalido del file delle preferenze, nessuna intestazione (header) del "
 "pacchetto"
 
-#: common/rpackage.cc:1017
+#: common/rpackage.cc:1028
 #, c-format
 msgid "Version '%s' for '%s' was not found"
 msgstr ""
@@ -534,22 +498,16 @@ msgstr "impossibile aprire il file %s per la vista ridotta"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Espressione regolare errata '%s' nel file per la vista ridotta."
 
-#: common/rpackagefilter.cc:754
-msgid "empty filter name!? should _never_ happen, please report"
-msgstr ""
-"Nome file inesistente!? non dovrebbe _mai_ accadere, segnalacelo grazie!"
-
-#: common/rpackagefilter.cc:759
-msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
-msgstr ""
-"il nome del filtro è più lungo di 55 caratteri? Verrà troncato. Segnalacelo "
-"grazie!"
+#: common/rpackagefilter.cc:755
+#, fuzzy
+msgid "unkown"
+msgstr "sconosciuto"
 
 #: common/rpackagelister.cc:222
 msgid "Search Filter"
 msgstr "Filtro di ricerca"
 
-#: common/rpackagelister.cc:229 common/rpackagelister.cc:859
+#: common/rpackagelister.cc:229 common/rpackagelister.cc:863
 #: gtk/window_filters.glade.strings:26
 msgid "Installed"
 msgstr "Installati"
@@ -574,7 +532,7 @@ msgstr "Aggiornabili"
 msgid "Broken"
 msgstr "Difettosi"
 
-#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:275
+#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:276
 #, fuzzy
 msgid "Queued Changes"
 msgstr "Esegui le modifiche selezionate"
@@ -597,60 +555,54 @@ msgstr "Obsoleti o localmente installati"
 
 #: common/rpackagelister.cc:426 common/rpackagelister.cc:429
 #: common/rpackagelister.cc:445
-msgid "Internal error recalculating dependency cache."
+#, fuzzy
+msgid "Internal error recalculating dependency cache. Please report."
 msgstr "Errore interno riaggiornando la cache delle dipendenze"
 
-#: common/rpackagelister.cc:499
-msgid "Package "
-msgstr "Pacchetto "
-
-#: common/rpackagelister.cc:499
-msgid " has no section?!"
-msgstr " non ha sezioni?!"
-
 #: common/rpackagelister.cc:654
-msgid "Internal Error, AllUpgrade broke stuff"
+#, fuzzy
+msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr "Errore interno, AggiornaTutto ha generato errori"
 
 #: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
 msgstr "aggiorna distribuzione fallito"
 
-#: common/rpackagelister.cc:779
+#: common/rpackagelister.cc:779 common/rpackagelister.cc:783
 msgid "Non US"
 msgstr ""
 
-#: common/rpackagelister.cc:804
+#: common/rpackagelister.cc:808
 #, c-format
 msgid "%s <i>(%s)</i>"
 msgstr ""
 
-#: common/rpackagelister.cc:851
+#: common/rpackagelister.cc:855
 msgid "New in repository"
 msgstr "Nuovi nel repertorio"
 
-#: common/rpackagelister.cc:854
+#: common/rpackagelister.cc:858
 msgid "Obsolete and locally installed"
 msgstr "Obsoleti o localmente installati"
 
-#: common/rpackagelister.cc:857 gtk/window_filters.glade.strings:28
+#: common/rpackagelister.cc:861 gtk/window_filters.glade.strings:28
 #, fuzzy
 msgid "Installed and upgradable"
 msgstr "Installati e aggiornabili"
 
-#: common/rpackagelister.cc:862
+#: common/rpackagelister.cc:866
 msgid "Not installed (residual config)"
 msgstr "Non installati (configurazione residua)"
 
-#: common/rpackagelister.cc:864 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "Non installati"
 
-#: common/rpackagelister.cc:1443
+#: common/rpackagelister.cc:1447
 msgid "Unable to lock the list directory"
 msgstr "Impossibile bloccare la cartella con la lista"
 
-#: common/rpackagelister.cc:1465
+#: common/rpackagelister.cc:1469
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -658,7 +610,7 @@ msgstr ""
 "I file di rilascio di alcuni repertori non possono essere scaricati o "
 "autenticati. Questi repertori verranno ignorati."
 
-#: common/rpackagelister.cc:1497
+#: common/rpackagelister.cc:1501
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -666,48 +618,48 @@ msgstr ""
 "Errore nello scaricamento di alcuni file di indice, verranno ignorati\n"
 "o verrà utilizzata la versione precedente"
 
-#: common/rpackagelister.cc:1522 common/rpackagelister.cc:1526
+#: common/rpackagelister.cc:1526 common/rpackagelister.cc:1530
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Vengono ignorati i record non validi nel file sources.list"
 
-#: common/rpackagelister.cc:1563
+#: common/rpackagelister.cc:1567
 msgid "Failed to fetch "
 msgstr "Scaricamento fallito "
 
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1587
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Non è stato possibile scaricare alcuni pacchetti dai server\n"
 
-#: common/rpackagelister.cc:1586
+#: common/rpackagelister.cc:1590
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Si vuole continuare, ignorando questi pacchetti?"
 
-#: common/rpackagelister.cc:1593
+#: common/rpackagelister.cc:1597
 msgid "Unable to correct missing packages"
 msgstr "Impossibile correggere i pacchetti mancanti"
 
-#: common/rpackagelister.cc:1656
+#: common/rpackagelister.cc:1660
 msgid "Unable to lock the download directory"
 msgstr "Impossibile bloccare la cartella di download"
 
-#: common/rpackagelister.cc:1759
+#: common/rpackagelister.cc:1763
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr "Riga %u troppo lunga nella selezione dei file"
 
-#: common/rpackagelister.cc:1773 common/rpackagelister.cc:1777
+#: common/rpackagelister.cc:1777 common/rpackagelister.cc:1781
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr "Riga %u errata nella selezione del file"
 
-#: common/rpackagelister.cc:1789
+#: common/rpackagelister.cc:1793
 msgid "Setting selections..."
 msgstr "Impostazione selezione..."
 
 #: common/rpmindexcopy.cc:119
-msgid "Couldn't fork bzip2"
-msgstr "Impossibile creare il processo bzip2"
+msgid "Internal Error: couldn't fork bzip2. Please report."
+msgstr ""
 
 #: common/rpmindexcopy.cc:139
 msgid "bzip2 failed, perhaps the disk is full."
@@ -1062,10 +1014,6 @@ msgstr "Impossibile chiudere, il Gestore Pacchetti è ancora in funzione"
 msgid "Close dialog after Package Manager is finished"
 msgstr "Chiudi finestra quando il Gestore Pacchetti è terminato"
 
-#: gtk/rgzvtinstallprogress.cc:240
-msgid "can't fork children, so I die"
-msgstr "impossibile creare processi figli"
-
 #: gtk/rgmainwindow.cc:85
 msgid "Normal"
 msgstr "Normale"
@@ -1077,18 +1025,6 @@ msgstr "Critico"
 #: gtk/rgmainwindow.cc:87
 msgid "Security"
 msgstr "Sicurezza"
-
-#: gtk/rgmainwindow.cc:169 gtk/rgmainwindow.cc:182 gtk/rgmainwindow.cc:225
-msgid " not found"
-msgstr " non trovato"
-
-#: gtk/rgmainwindow.cc:211
-msgid "gtk_tree_model_get returned no text"
-msgstr "gtk_tree_model_get non ha ritornato del testo"
-
-#: gtk/rgmainwindow.cc:235
-msgid "clickedRecInstall called with invalid parm: "
-msgstr "clickedRecInstall chimato con un parametro invalido: "
 
 #: gtk/rgmainwindow.cc:292
 #, fuzzy
@@ -1467,95 +1403,116 @@ msgstr ""
 msgid "To be kept back"
 msgstr "Da mantenere"
 
-#: gtk/rgsummarywindow.cc:208
-#, c-format
-msgid "%s: (ESSENTIAL) will be Removed\n"
+#: gtk/rgsummarywindow.cc:209
+#, fuzzy, c-format
+msgid "<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"
 msgstr "%s: (ESSENZIALE) verrà rimosso\n"
 
-#: gtk/rgsummarywindow.cc:215
+#: gtk/rgsummarywindow.cc:216
 #, fuzzy, c-format
-msgid "%s: will be DOWNGRADED\n"
+msgid "<b>%s</b> will be <b>DOWNGRADED</b>\n"
 msgstr "%s: verrà rimosso\n"
 
-#: gtk/rgsummarywindow.cc:222
-#, c-format
-msgid "%s: will be Removed\n"
+#: gtk/rgsummarywindow.cc:223
+#, fuzzy, c-format
+msgid "<b>%s</b> will be Removed\n"
 msgstr "%s: verrà rimosso\n"
 
-#: gtk/rgsummarywindow.cc:229
+#: gtk/rgsummarywindow.cc:230
 #, c-format
-msgid "%s %s: will be Upgraded to %s\n"
-msgstr "%s %s: verrà aggiornato a %s \n"
+msgid "<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"
+msgstr ""
 
-#: gtk/rgsummarywindow.cc:236
-#, c-format
-msgid "%s %s: will be Installed\n"
+#: gtk/rgsummarywindow.cc:237
+#, fuzzy, c-format
+msgid "<b>%s</b> (version <i>%s</i>): will be Installed\n"
 msgstr "%s %s: verrà installato\n"
 
-#: gtk/rgsummarywindow.cc:255
+#: gtk/rgsummarywindow.cc:256
 msgid "Summary"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:316
-#, fuzzy, c-format
-msgid "%d %s are set on hold\n"
-msgstr "%d %s erano bloccati;\n"
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "packages"
-msgstr "pacchetti "
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "package"
-msgstr "pacchetto"
+#: gtk/rgsummarywindow.cc:318
+#, fuzzy
+msgid "1 package is set on hold\n"
+msgstr "Pacchetto installato."
 
 #: gtk/rgsummarywindow.cc:320
 #, fuzzy, c-format
-msgid "%d %s are kept back and not upgraded\n"
+msgid "%d packages are set on hold\n"
+msgstr "%d %s erano bloccati;\n"
+
+#: gtk/rgsummarywindow.cc:323
+#, fuzzy
+msgid "1 package is kept back and not upgraded\n"
 msgstr "%d %s mantenuti e non aggiornati;\n"
 
 #: gtk/rgsummarywindow.cc:325
 #, fuzzy, c-format
-msgid "%d new %s will be installed\n"
+msgid "%d packages are kept back and not upgraded\n"
+msgstr "%d %s mantenuti e non aggiornati;\n"
+
+#: gtk/rgsummarywindow.cc:329
+#, fuzzy
+msgid "1 new package will be installed\n"
+msgstr "Il pacchetto verrà installato."
+
+#: gtk/rgsummarywindow.cc:331
+#, fuzzy, c-format
+msgid "%d new packages will be installed\n"
 msgstr "%d nuovi %s verranno installati;\n"
 
-#: gtk/rgsummarywindow.cc:330
-#, fuzzy, c-format
-msgid "%d %s will be upgraded\n"
-msgstr "%d %s verranno aggiornati;\n"
+#: gtk/rgsummarywindow.cc:335
+#, fuzzy
+msgid "1 package will be upgraded\n"
+msgstr "Il pacchetto verrà aggiornato."
 
-#: gtk/rgsummarywindow.cc:334
+#: gtk/rgsummarywindow.cc:337
 #, fuzzy, c-format
-msgid "%d %s will be removed\n"
-msgstr "%d %s verranno rimossi;\n"
+msgid "%d packages will be upgraded\n"
+msgstr "Il pacchetto verrà aggiornato."
 
-#: gtk/rgsummarywindow.cc:338
-#, fuzzy, c-format
-msgid "%d %s will be DOWNGRADED\n"
-msgstr "%d %s verranno rimossi;\n"
+#: gtk/rgsummarywindow.cc:342
+#, fuzzy
+msgid "1 package will be removed\n"
+msgstr "Pacchetti che verranno eliminati"
 
 #: gtk/rgsummarywindow.cc:344
 #, fuzzy, c-format
-msgid "WARNING: %d essential %s will be removed\n"
+msgid "%d packages will be removed\n"
+msgstr "%d %s verranno rimossi;\n"
+
+#: gtk/rgsummarywindow.cc:349
+#, fuzzy
+msgid "1 package will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s verranno rimossi;\n"
+
+#: gtk/rgsummarywindow.cc:351
+#, fuzzy, c-format
+msgid "%d packages will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s verranno rimossi;\n"
+
+#: gtk/rgsummarywindow.cc:356
+#, fuzzy
+msgid "<b>Warning</b>: 1 essential package will be removed\n"
 msgstr "ATTENZIONE: %d essenziali %s verranno rimossi!\n"
 
-#: gtk/rgsummarywindow.cc:352
+#: gtk/rgsummarywindow.cc:358
+#, fuzzy, c-format
+msgid "<b>Warning</b>: %d essential packages will be removed\n"
+msgstr "ATTENZIONE: %d essenziali %s verranno rimossi!\n"
+
+#: gtk/rgsummarywindow.cc:368
 #, fuzzy, c-format
 msgid "%s of extra space will be used"
 msgstr "%d nuovi %s verranno installati;\n"
 
-#: gtk/rgsummarywindow.cc:355
+#: gtk/rgsummarywindow.cc:371
 #, fuzzy, c-format
 msgid "%s of extra space will be freed"
 msgstr "%d %s verranno rimossi;\n"
 
-#: gtk/rgsummarywindow.cc:361
+#: gtk/rgsummarywindow.cc:377
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1564,7 +1521,7 @@ msgstr ""
 "\n"
 "%sB da scaricare."
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:401
 #, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
@@ -3049,15 +3006,6 @@ msgstr "rpm-src"
 msgid "Vendors..."
 msgstr "Venditori"
 
-#: gtk/window_rginstall_progress.glade.strings:8
-#, fuzzy
-msgid "label_name"
-msgstr "ha come nome"
-
-#: gtk/window_rginstall_progress.glade.strings:9
-msgid "label_summary"
-msgstr ""
-
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr ""
@@ -3076,6 +3024,82 @@ msgstr "Nome pacchetto"
 #, fuzzy
 msgid "Synaptic Package Manager"
 msgstr "Synaptic Gestore Pacchetti"
+
+#~ msgid "Couldn't fork gzip"
+#~ msgstr "Creazione processo gzip non riuscita"
+
+#~ msgid "Missed: "
+#~ msgstr "Manca: "
+
+#~ msgid "Missed(2): "
+#~ msgstr "Manca(2): "
+
+#~ msgid "Wrong Size: "
+#~ msgstr "Dimensione errata: "
+
+#~ msgid "Alot of entries were discarded, something may be wrong."
+#~ msgstr ""
+#~ "Alcune voci sono state scartate, qualcosa potrebbe essere andato storto."
+
+#, fuzzy
+#~ msgid "but %s is to be installed"
+#~ msgstr "%s è/verrà installato"
+
+#, fuzzy
+#~ msgid "but it is not installable"
+#~ msgstr "il pacchetto non è installabile"
+
+#, fuzzy
+#~ msgid "but it is a virtual package"
+#~ msgstr "il pacchetto è un pacchetto virtuale"
+
+#~ msgid "empty filter name!? should _never_ happen, please report"
+#~ msgstr ""
+#~ "Nome file inesistente!? non dovrebbe _mai_ accadere, segnalacelo grazie!"
+
+#~ msgid ""
+#~ "filter name is longer than 55 chars!? Will be truncated.Please report"
+#~ msgstr ""
+#~ "il nome del filtro è più lungo di 55 caratteri? Verrà troncato. "
+#~ "Segnalacelo grazie!"
+
+#~ msgid "Package "
+#~ msgstr "Pacchetto "
+
+#~ msgid " has no section?!"
+#~ msgstr " non ha sezioni?!"
+
+#~ msgid "Couldn't fork bzip2"
+#~ msgstr "Impossibile creare il processo bzip2"
+
+#~ msgid "can't fork children, so I die"
+#~ msgstr "impossibile creare processi figli"
+
+#~ msgid " not found"
+#~ msgstr " non trovato"
+
+#~ msgid "gtk_tree_model_get returned no text"
+#~ msgstr "gtk_tree_model_get non ha ritornato del testo"
+
+#~ msgid "clickedRecInstall called with invalid parm: "
+#~ msgstr "clickedRecInstall chimato con un parametro invalido: "
+
+#~ msgid "%s %s: will be Upgraded to %s\n"
+#~ msgstr "%s %s: verrà aggiornato a %s \n"
+
+#~ msgid "packages"
+#~ msgstr "pacchetti "
+
+#~ msgid "package"
+#~ msgstr "pacchetto"
+
+#, fuzzy
+#~ msgid "%d %s will be upgraded\n"
+#~ msgstr "%d %s verranno aggiornati;\n"
+
+#, fuzzy
+#~ msgid "label_name"
+#~ msgstr "ha come nome"
 
 #, fuzzy
 #~ msgid "_Tag tree"

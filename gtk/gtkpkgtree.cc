@@ -436,8 +436,10 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
   if(it == pkgTree->end() || pkgTree->empty())
     return;
   // this is a error, but we don't want to segfault here
-  if( it == 0)
+  if( it == 0) {
       cerr << "Internal Error: gtk_pkg_tree_get_value() it == 0" << endl;
+      return;
+  }
 
 #ifdef DEBUG_TREE_FULL
   cout << "column: " << column << " name: " << (*it).first << endl;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-26 11:35+0100\n"
+"POT-Creation-Date: 2003-11-26 14:25+0100\n"
 "PO-Revision-Date: 2003-10-22 23:15+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -172,7 +172,7 @@ msgstr ""
 msgid "non free"
 msgstr "释放"
 
-#: common/sections_trans.h:43
+#: common/sections_trans.h:43 common/rpackagelister.cc:784
 msgid "contrib"
 msgstr ""
 
@@ -186,8 +186,8 @@ msgid "Unable to create a tmp file"
 msgstr "无法创建临时文件"
 
 #: common/indexcopy.cc:89
-msgid "Couldn't fork gzip"
-msgstr "无法派生 gzip"
+msgid "Internal Error: Couldn't fork gzip. Please report."
+msgstr ""
 
 #: common/indexcopy.cc:110
 msgid "gzip failed, perhaps the disk is full."
@@ -197,18 +197,6 @@ msgstr "gzip 失败，可能磁盘已满。"
 msgid "Failed to reopen fd"
 msgstr "重新打开 fd 失败"
 
-#: common/indexcopy.cc:169
-msgid "Missed: "
-msgstr "缺少："
-
-#: common/indexcopy.cc:196
-msgid "Missed(2): "
-msgstr "缺少(2)："
-
-#: common/indexcopy.cc:206
-msgid "Wrong Size: "
-msgstr "错误大小："
-
 #: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
 #: common/rpmindexcopy.cc:216
 msgid "Failed to rename"
@@ -217,10 +205,6 @@ msgstr "重命名失败"
 #: common/indexcopy.cc:285
 msgid "No valid records were found."
 msgstr "未发现有效的记录。"
-
-#: common/indexcopy.cc:288
-msgid "Alot of entries were discarded, something may be wrong."
-msgstr "许多项目被放弃了，某些可能是错误的。"
 
 #: common/indexcopy.cc:464
 msgid "Cannot find filename or size tag"
@@ -375,53 +359,36 @@ msgid ""
 "sources.list\n"
 msgstr ""
 
-#: common/rpackage.cc:636
-#, c-format
-msgid "but %s is to be installed"
-msgstr "但是 %s 将会被安装"
-
-#: common/rpackage.cc:640
-msgid "but it is not installable"
-msgstr "但是此软件包不能安装"
-
-#: common/rpackage.cc:642
-msgid "but it is a virtual package"
-msgstr "但是此软件包是一个虚拟软件包"
-
-#: common/rpackage.cc:645
-msgid "but it is not going to be installed"
-msgstr "但是此软件包将不会被安装"
-
-#: common/rpackage.cc:649
+#: common/rpackage.cc:660
 msgid " or"
 msgstr " 或者"
 
-#: common/rpackage.cc:746
+#: common/rpackage.cc:757
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s 已安装或将会安装"
 
-#: common/rpackage.cc:751
+#: common/rpackage.cc:762
 msgid "package is not installable"
 msgstr "此软件包不能安装"
 
-#: common/rpackage.cc:753
+#: common/rpackage.cc:764
 msgid "package is a virtual package"
 msgstr "此软件包是一个虚拟软件包"
 
-#: common/rpackage.cc:755
+#: common/rpackage.cc:766
 msgid "package is/will not be installed"
 msgstr "此软件包未安装/不会被安装"
 
-#: common/rpackage.cc:758
+#: common/rpackage.cc:769
 msgid "dependency is satisfied"
 msgstr "依赖关系已满足"
 
-#: common/rpackage.cc:922
+#: common/rpackage.cc:933
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "首选项文件里的无效记录，没有软件包头文件"
 
-#: common/rpackage.cc:1017
+#: common/rpackage.cc:1028
 #, c-format
 msgid "Version '%s' for '%s' was not found"
 msgstr "“%2$s”的发布版“%1$s”没有找到"
@@ -523,19 +490,16 @@ msgstr "无法打开简化视图文件 %s"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "简化视图文件里的错误正则表达式“%s”。"
 
-#: common/rpackagefilter.cc:754
-msgid "empty filter name!? should _never_ happen, please report"
-msgstr "清空筛选器名！？永远都不应发生，请报告"
-
-#: common/rpackagefilter.cc:759
-msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
-msgstr "筛选器名长度超过 55 个字符！？将被截短。请报告"
+#: common/rpackagefilter.cc:755
+#, fuzzy
+msgid "unkown"
+msgstr "未知"
 
 #: common/rpackagelister.cc:222
 msgid "Search Filter"
 msgstr "搜索筛选器"
 
-#: common/rpackagelister.cc:229 common/rpackagelister.cc:859
+#: common/rpackagelister.cc:229 common/rpackagelister.cc:863
 #: gtk/window_filters.glade.strings:26
 msgid "Installed"
 msgstr "已安装"
@@ -560,7 +524,7 @@ msgstr "可升级"
 msgid "Broken"
 msgstr "已损坏"
 
-#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:275
+#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:276
 #, fuzzy
 msgid "Queued Changes"
 msgstr "执行更改(_X)"
@@ -583,113 +547,107 @@ msgstr "过期的或本地安装的"
 
 #: common/rpackagelister.cc:426 common/rpackagelister.cc:429
 #: common/rpackagelister.cc:445
-msgid "Internal error recalculating dependency cache."
+#, fuzzy
+msgid "Internal error recalculating dependency cache. Please report."
 msgstr "重新计算依赖关系时隐藏有内部错误。"
 
-#: common/rpackagelister.cc:499
-msgid "Package "
-msgstr "软件包"
-
-#: common/rpackagelister.cc:499
-msgid " has no section?!"
-msgstr " 不具备分组？！"
-
 #: common/rpackagelister.cc:654
-msgid "Internal Error, AllUpgrade broke stuff"
+#, fuzzy
+msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr "内部错误，全部升级破坏了原有内容"
 
 #: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
 msgstr "软件发布版升级失败"
 
-#: common/rpackagelister.cc:779
+#: common/rpackagelister.cc:779 common/rpackagelister.cc:783
 msgid "Non US"
 msgstr ""
 
-#: common/rpackagelister.cc:804
+#: common/rpackagelister.cc:808
 #, c-format
 msgid "%s <i>(%s)</i>"
 msgstr ""
 
-#: common/rpackagelister.cc:851
+#: common/rpackagelister.cc:855
 msgid "New in repository"
 msgstr "软件库里的新内容"
 
-#: common/rpackagelister.cc:854
+#: common/rpackagelister.cc:858
 msgid "Obsolete and locally installed"
 msgstr "陈旧的和本地已安装的"
 
-#: common/rpackagelister.cc:857 gtk/window_filters.glade.strings:28
+#: common/rpackagelister.cc:861 gtk/window_filters.glade.strings:28
 #, fuzzy
 msgid "Installed and upgradable"
 msgstr "已安装的和可升级的"
 
-#: common/rpackagelister.cc:862
+#: common/rpackagelister.cc:866
 msgid "Not installed (residual config)"
 msgstr "未安装的(残存配置)"
 
-#: common/rpackagelister.cc:864 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "未安装的"
 
-#: common/rpackagelister.cc:1443
+#: common/rpackagelister.cc:1447
 msgid "Unable to lock the list directory"
 msgstr "无法锁定列表目录"
 
-#: common/rpackagelister.cc:1465
+#: common/rpackagelister.cc:1469
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "无法检索或验证某些软件库的 Release 文件，暂时忽略那些软件库。"
 
-#: common/rpackagelister.cc:1497
+#: common/rpackagelister.cc:1501
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr "一些索引文件下载失败，它们已被忽略，或由较旧文件代替。"
 
-#: common/rpackagelister.cc:1522 common/rpackagelister.cc:1526
+#: common/rpackagelister.cc:1526 common/rpackagelister.cc:1530
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "正在忽略 sources.list 文件里无效的记录！"
 
-#: common/rpackagelister.cc:1563
+#: common/rpackagelister.cc:1567
 msgid "Failed to fetch "
 msgstr "未能取回 "
 
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1587
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些软件包未能从服务器检索。\n"
 
-#: common/rpackagelister.cc:1586
+#: common/rpackagelister.cc:1590
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想忽略这些软件包，继续进行吗?"
 
-#: common/rpackagelister.cc:1593
+#: common/rpackagelister.cc:1597
 msgid "Unable to correct missing packages"
 msgstr "无法更正缺少的软件包"
 
-#: common/rpackagelister.cc:1656
+#: common/rpackagelister.cc:1660
 msgid "Unable to lock the download directory"
 msgstr "无法锁定下载目录"
 
-#: common/rpackagelister.cc:1759
+#: common/rpackagelister.cc:1763
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr "选择文件里的行 %u 太长。"
 
-#: common/rpackagelister.cc:1773 common/rpackagelister.cc:1777
+#: common/rpackagelister.cc:1777 common/rpackagelister.cc:1781
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr "选择文件里的行 %u 畸形"
 
-#: common/rpackagelister.cc:1789
+#: common/rpackagelister.cc:1793
 msgid "Setting selections..."
 msgstr "设定选择..."
 
 #: common/rpmindexcopy.cc:119
-msgid "Couldn't fork bzip2"
-msgstr "无法派生 bzip2"
+msgid "Internal Error: couldn't fork bzip2. Please report."
+msgstr ""
 
 #: common/rpmindexcopy.cc:139
 msgid "bzip2 failed, perhaps the disk is full."
@@ -1047,10 +1005,6 @@ msgstr "不能关闭，软件包管理器仍在运行"
 msgid "Close dialog after Package Manager is finished"
 msgstr "软件包管理器运行完毕后关闭对话框"
 
-#: gtk/rgzvtinstallprogress.cc:240
-msgid "can't fork children, so I die"
-msgstr "无法派生下层，因此我将消亡"
-
 #: gtk/rgmainwindow.cc:85
 msgid "Normal"
 msgstr "一般"
@@ -1062,18 +1016,6 @@ msgstr "重大更新"
 #: gtk/rgmainwindow.cc:87
 msgid "Security"
 msgstr "安全更新"
-
-#: gtk/rgmainwindow.cc:169 gtk/rgmainwindow.cc:182 gtk/rgmainwindow.cc:225
-msgid " not found"
-msgstr "未找到"
-
-#: gtk/rgmainwindow.cc:211
-msgid "gtk_tree_model_get returned no text"
-msgstr "gtk_tree_model_get 未返回任何文本"
-
-#: gtk/rgmainwindow.cc:235
-msgid "clickedRecInstall called with invalid parm: "
-msgstr "clickedRecInstall 调用使用了无效参数："
 
 #: gtk/rgmainwindow.cc:292
 #, fuzzy
@@ -1449,95 +1391,116 @@ msgstr "将会被降级"
 msgid "To be kept back"
 msgstr "将会维持原状不升级的软件包"
 
-#: gtk/rgsummarywindow.cc:208
-#, c-format
-msgid "%s: (ESSENTIAL) will be Removed\n"
+#: gtk/rgsummarywindow.cc:209
+#, fuzzy, c-format
+msgid "<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"
 msgstr "%s：(必需软件包) 将会被删除\n"
 
-#: gtk/rgsummarywindow.cc:215
-#, c-format
-msgid "%s: will be DOWNGRADED\n"
+#: gtk/rgsummarywindow.cc:216
+#, fuzzy, c-format
+msgid "<b>%s</b> will be <b>DOWNGRADED</b>\n"
 msgstr "%s：将会被降级\n"
 
-#: gtk/rgsummarywindow.cc:222
-#, c-format
-msgid "%s: will be Removed\n"
+#: gtk/rgsummarywindow.cc:223
+#, fuzzy, c-format
+msgid "<b>%s</b> will be Removed\n"
 msgstr "%s：将会被删除\n"
 
-#: gtk/rgsummarywindow.cc:229
+#: gtk/rgsummarywindow.cc:230
 #, c-format
-msgid "%s %s: will be Upgraded to %s\n"
-msgstr "%s %s：将会升级到 %s\n"
+msgid "<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"
+msgstr ""
 
-#: gtk/rgsummarywindow.cc:236
-#, c-format
-msgid "%s %s: will be Installed\n"
+#: gtk/rgsummarywindow.cc:237
+#, fuzzy, c-format
+msgid "<b>%s</b> (version <i>%s</i>): will be Installed\n"
 msgstr "%s %s：将会被安装\n"
 
-#: gtk/rgsummarywindow.cc:255
+#: gtk/rgsummarywindow.cc:256
 msgid "Summary"
 msgstr "摘要"
 
-#: gtk/rgsummarywindow.cc:316
-#, fuzzy, c-format
-msgid "%d %s are set on hold\n"
-msgstr "%d 个 %s 维持原状；\n"
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "packages"
-msgstr "软件包"
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "package"
-msgstr "软件包"
+#: gtk/rgsummarywindow.cc:318
+#, fuzzy
+msgid "1 package is set on hold\n"
+msgstr "软件包已安装。"
 
 #: gtk/rgsummarywindow.cc:320
 #, fuzzy, c-format
-msgid "%d %s are kept back and not upgraded\n"
+msgid "%d packages are set on hold\n"
+msgstr "%d 个 %s 维持原状；\n"
+
+#: gtk/rgsummarywindow.cc:323
+#, fuzzy
+msgid "1 package is kept back and not upgraded\n"
 msgstr "%d 个 %s 维持原状不升级；\n"
 
 #: gtk/rgsummarywindow.cc:325
 #, fuzzy, c-format
-msgid "%d new %s will be installed\n"
+msgid "%d packages are kept back and not upgraded\n"
+msgstr "%d 个 %s 维持原状不升级；\n"
+
+#: gtk/rgsummarywindow.cc:329
+#, fuzzy
+msgid "1 new package will be installed\n"
+msgstr "此软件包将会被安装。"
+
+#: gtk/rgsummarywindow.cc:331
+#, fuzzy, c-format
+msgid "%d new packages will be installed\n"
 msgstr "将会安装 %d 个新 %s；\n"
 
-#: gtk/rgsummarywindow.cc:330
-#, fuzzy, c-format
-msgid "%d %s will be upgraded\n"
-msgstr "将会升级 %d 个 %s；\n"
+#: gtk/rgsummarywindow.cc:335
+#, fuzzy
+msgid "1 package will be upgraded\n"
+msgstr "此软件包将会被升级。"
 
-#: gtk/rgsummarywindow.cc:334
+#: gtk/rgsummarywindow.cc:337
 #, fuzzy, c-format
-msgid "%d %s will be removed\n"
-msgstr "将会删除 %d 个 %s；\n"
+msgid "%d packages will be upgraded\n"
+msgstr "此软件包将会被升级。"
 
-#: gtk/rgsummarywindow.cc:338
-#, fuzzy, c-format
-msgid "%d %s will be DOWNGRADED\n"
-msgstr "%d %s 将会被降级；\n"
+#: gtk/rgsummarywindow.cc:342
+#, fuzzy
+msgid "1 package will be removed\n"
+msgstr "将会被删除的软件包"
 
 #: gtk/rgsummarywindow.cc:344
 #, fuzzy, c-format
-msgid "WARNING: %d essential %s will be removed\n"
+msgid "%d packages will be removed\n"
+msgstr "将会删除 %d 个 %s；\n"
+
+#: gtk/rgsummarywindow.cc:349
+#, fuzzy
+msgid "1 package will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s 将会被降级；\n"
+
+#: gtk/rgsummarywindow.cc:351
+#, fuzzy, c-format
+msgid "%d packages will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s 将会被降级；\n"
+
+#: gtk/rgsummarywindow.cc:356
+#, fuzzy
+msgid "<b>Warning</b>: 1 essential package will be removed\n"
 msgstr "警告：%d 个必需的 %s 将会被删除！\n"
 
-#: gtk/rgsummarywindow.cc:352
+#: gtk/rgsummarywindow.cc:358
+#, fuzzy, c-format
+msgid "<b>Warning</b>: %d essential packages will be removed\n"
+msgstr "警告：%d 个必需的 %s 将会被删除！\n"
+
+#: gtk/rgsummarywindow.cc:368
 #, fuzzy, c-format
 msgid "%s of extra space will be used"
 msgstr "将会安装 %d 个新 %s；\n"
 
-#: gtk/rgsummarywindow.cc:355
+#: gtk/rgsummarywindow.cc:371
 #, fuzzy, c-format
 msgid "%s of extra space will be freed"
 msgstr "将会删除 %d 个 %s；\n"
 
-#: gtk/rgsummarywindow.cc:361
+#: gtk/rgsummarywindow.cc:377
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1546,7 +1509,7 @@ msgstr ""
 "\n"
 "需要下载 %sB。"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:401
 #, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
@@ -2984,16 +2947,6 @@ msgstr "rpm-src"
 msgid "Vendors..."
 msgstr "发行商..."
 
-#: gtk/window_rginstall_progress.glade.strings:8
-#, fuzzy
-msgid "label_name"
-msgstr "名称为"
-
-#: gtk/window_rginstall_progress.glade.strings:9
-#, fuzzy
-msgid "label_summary"
-msgstr "摘要"
-
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr ""
@@ -3012,6 +2965,82 @@ msgstr "软件包名称"
 #, fuzzy
 msgid "Synaptic Package Manager"
 msgstr "新立得软件包管理器"
+
+#~ msgid "Couldn't fork gzip"
+#~ msgstr "无法派生 gzip"
+
+#~ msgid "Missed: "
+#~ msgstr "缺少："
+
+#~ msgid "Missed(2): "
+#~ msgstr "缺少(2)："
+
+#~ msgid "Wrong Size: "
+#~ msgstr "错误大小："
+
+#~ msgid "Alot of entries were discarded, something may be wrong."
+#~ msgstr "许多项目被放弃了，某些可能是错误的。"
+
+#~ msgid "but %s is to be installed"
+#~ msgstr "但是 %s 将会被安装"
+
+#~ msgid "but it is not installable"
+#~ msgstr "但是此软件包不能安装"
+
+#~ msgid "but it is a virtual package"
+#~ msgstr "但是此软件包是一个虚拟软件包"
+
+#~ msgid "but it is not going to be installed"
+#~ msgstr "但是此软件包将不会被安装"
+
+#~ msgid "empty filter name!? should _never_ happen, please report"
+#~ msgstr "清空筛选器名！？永远都不应发生，请报告"
+
+#~ msgid ""
+#~ "filter name is longer than 55 chars!? Will be truncated.Please report"
+#~ msgstr "筛选器名长度超过 55 个字符！？将被截短。请报告"
+
+#~ msgid "Package "
+#~ msgstr "软件包"
+
+#~ msgid " has no section?!"
+#~ msgstr " 不具备分组？！"
+
+#~ msgid "Couldn't fork bzip2"
+#~ msgstr "无法派生 bzip2"
+
+#~ msgid "can't fork children, so I die"
+#~ msgstr "无法派生下层，因此我将消亡"
+
+#~ msgid " not found"
+#~ msgstr "未找到"
+
+#~ msgid "gtk_tree_model_get returned no text"
+#~ msgstr "gtk_tree_model_get 未返回任何文本"
+
+#~ msgid "clickedRecInstall called with invalid parm: "
+#~ msgstr "clickedRecInstall 调用使用了无效参数："
+
+#~ msgid "%s %s: will be Upgraded to %s\n"
+#~ msgstr "%s %s：将会升级到 %s\n"
+
+#~ msgid "packages"
+#~ msgstr "软件包"
+
+#~ msgid "package"
+#~ msgstr "软件包"
+
+#, fuzzy
+#~ msgid "%d %s will be upgraded\n"
+#~ msgstr "将会升级 %d 个 %s；\n"
+
+#, fuzzy
+#~ msgid "label_name"
+#~ msgstr "名称为"
+
+#, fuzzy
+#~ msgid "label_summary"
+#~ msgstr "摘要"
 
 #~ msgid "_Tag tree"
 #~ msgstr "依标记排列的树状视图(_T)"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.31\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-26 11:35+0100\n"
+"POT-Creation-Date: 2003-11-26 14:25+0100\n"
 "PO-Revision-Date: 2003-11-26 11:57+0100\n"
 "Last-Translator: Jean-Michel Pouré <jm@poure.com>\n"
 "Language-Team: French <traduc@traduc.org>\n"
@@ -161,7 +161,7 @@ msgstr "Certaines restrictions s'appliquent à l'export"
 msgid "non free"
 msgstr "Non-libre"
 
-#: common/sections_trans.h:43
+#: common/sections_trans.h:43 common/rpackagelister.cc:784
 msgid "contrib"
 msgstr "contrib"
 
@@ -175,7 +175,7 @@ msgid "Unable to create a tmp file"
 msgstr "Impossible de créer un fichier temporaire"
 
 #: common/indexcopy.cc:89
-msgid "Couldn't fork gzip"
+msgid "Internal Error: Couldn't fork gzip. Please report."
 msgstr ""
 
 #: common/indexcopy.cc:110
@@ -186,18 +186,6 @@ msgstr "Échec de gzip. Le disque est peut-être plein."
 msgid "Failed to reopen fd"
 msgstr "Impossible d'ouvrir fd"
 
-#: common/indexcopy.cc:169
-msgid "Missed: "
-msgstr "Manquant : "
-
-#: common/indexcopy.cc:196
-msgid "Missed(2): "
-msgstr "Manquant (2) : "
-
-#: common/indexcopy.cc:206
-msgid "Wrong Size: "
-msgstr "Taille incorrecte : "
-
 #: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
 #: common/rpmindexcopy.cc:216
 msgid "Failed to rename"
@@ -206,10 +194,6 @@ msgstr "Impossible de renommer"
 #: common/indexcopy.cc:285
 msgid "No valid records were found."
 msgstr "Pas d'enregistrements valides trouvés."
-
-#: common/indexcopy.cc:288
-msgid "Alot of entries were discarded, something may be wrong."
-msgstr "Alot of entries were discarded, something may be wrong."
 
 #: common/indexcopy.cc:464
 msgid "Cannot find filename or size tag"
@@ -376,54 +360,37 @@ msgstr ""
 "sans jamais avoir été publié, qu'il est devenu obsolète ou qu'il n'est pas "
 "listé dans le fichier sources.list\n"
 
-#: common/rpackage.cc:636
-#, c-format
-msgid "but %s is to be installed"
-msgstr "mais %s va être installé"
-
-#: common/rpackage.cc:640
-msgid "but it is not installable"
-msgstr "mais il n'est pas possible de l'installer"
-
-#: common/rpackage.cc:642
-msgid "but it is a virtual package"
-msgstr "mais c'est un paquet virtuel"
-
-#: common/rpackage.cc:645
-msgid "but it is not going to be installed"
-msgstr "mais ne sera pas installé"
-
-#: common/rpackage.cc:649
+#: common/rpackage.cc:660
 msgid " or"
 msgstr " ou"
 
-#: common/rpackage.cc:746
+#: common/rpackage.cc:757
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s est/va être installé"
 
-#: common/rpackage.cc:751
+#: common/rpackage.cc:762
 msgid "package is not installable"
 msgstr "ce paquet ne peut pas être installé"
 
-#: common/rpackage.cc:753
+#: common/rpackage.cc:764
 msgid "package is a virtual package"
 msgstr "ce paquet est un paquet virtuel"
 
-#: common/rpackage.cc:755
+#: common/rpackage.cc:766
 msgid "package is/will not be installed"
 msgstr "ce paquet n'est/ne sera pas installé"
 
-#: common/rpackage.cc:758
+#: common/rpackage.cc:769
 msgid "dependency is satisfied"
 msgstr "la dépendance est satisfaite"
 
-#: common/rpackage.cc:922
+#: common/rpackage.cc:933
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Information invalide dans le fichier de préférence, pas d'entête de paquet"
 
-#: common/rpackage.cc:1017
+#: common/rpackage.cc:1028
 #, c-format
 msgid "Version '%s' for '%s' was not found"
 msgstr "La version « %s » de « %s » n'a pas été trouvée"
@@ -530,19 +497,16 @@ msgid "Bad regular expression '%s' in ReducedView file."
 msgstr ""
 "Mauvaise expression rationnelle « %s » dans le fichier d'affichage réduit."
 
-#: common/rpackagefilter.cc:754
-msgid "empty filter name!? should _never_ happen, please report"
-msgstr ""
-
-#: common/rpackagefilter.cc:759
-msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
-msgstr ""
+#: common/rpackagefilter.cc:755
+#, fuzzy
+msgid "unkown"
+msgstr "inconnu"
 
 #: common/rpackagelister.cc:222
 msgid "Search Filter"
 msgstr "Filtre de recherche"
 
-#: common/rpackagelister.cc:229 common/rpackagelister.cc:859
+#: common/rpackagelister.cc:229 common/rpackagelister.cc:863
 #: gtk/window_filters.glade.strings:26
 msgid "Installed"
 msgstr "Installé(s)"
@@ -567,7 +531,7 @@ msgstr "Peut être mis à jour"
 msgid "Broken"
 msgstr "Cassé(s)"
 
-#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:275
+#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:276
 msgid "Queued Changes"
 msgstr "Changements programmés"
 
@@ -589,59 +553,52 @@ msgstr "Obsolète(s) ou installé(s) localement"
 
 #: common/rpackagelister.cc:426 common/rpackagelister.cc:429
 #: common/rpackagelister.cc:445
-msgid "Internal error recalculating dependency cache."
+#, fuzzy
+msgid "Internal error recalculating dependency cache. Please report."
 msgstr "Erreur interne en recalculant le cache des dépendances."
 
-#: common/rpackagelister.cc:499
-msgid "Package "
-msgstr "Paquet "
-
-#: common/rpackagelister.cc:499
-msgid " has no section?!"
-msgstr ""
-
 #: common/rpackagelister.cc:654
-msgid "Internal Error, AllUpgrade broke stuff"
+msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 
 #: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
 msgstr "Échec de dist upgrade"
 
-#: common/rpackagelister.cc:779
+#: common/rpackagelister.cc:779 common/rpackagelister.cc:783
 msgid "Non US"
 msgstr "Non US"
 
-#: common/rpackagelister.cc:804
+#: common/rpackagelister.cc:808
 #, c-format
 msgid "%s <i>(%s)</i>"
 msgstr "%s <i>(%s)</i>"
 
-#: common/rpackagelister.cc:851
+#: common/rpackagelister.cc:855
 msgid "New in repository"
 msgstr "Nouveau(x) dans le dépôt"
 
-#: common/rpackagelister.cc:854
+#: common/rpackagelister.cc:858
 msgid "Obsolete and locally installed"
 msgstr "Obsolète(s) ou installé(s) localement"
 
-#: common/rpackagelister.cc:857 gtk/window_filters.glade.strings:28
+#: common/rpackagelister.cc:861 gtk/window_filters.glade.strings:28
 msgid "Installed and upgradable"
 msgstr "Installés et pouvant être mis à jour"
 
-#: common/rpackagelister.cc:862
+#: common/rpackagelister.cc:866
 msgid "Not installed (residual config)"
 msgstr "Non installés (Résidus de configuration)"
 
-#: common/rpackagelister.cc:864 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "Non installé"
 
-#: common/rpackagelister.cc:1443
+#: common/rpackagelister.cc:1447
 msgid "Unable to lock the list directory"
 msgstr "Impossible de verrouiller le dossier de la liste"
 
-#: common/rpackagelister.cc:1465
+#: common/rpackagelister.cc:1469
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -649,7 +606,7 @@ msgstr ""
 "Les fichiers de release de quelques dépôts n'ont pas pu être obtenues ou "
 "authentifiées. Ces dépôts vont être ignorés."
 
-#: common/rpackagelister.cc:1497
+#: common/rpackagelister.cc:1501
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -657,47 +614,47 @@ msgstr ""
 "Certains index n'ont pas pu être téléchargés. Ils ont été ignorés, où les "
 "anciens ont été utilisés à la place."
 
-#: common/rpackagelister.cc:1522 common/rpackagelister.cc:1526
+#: common/rpackagelister.cc:1526 common/rpackagelister.cc:1530
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Les entrées invalides de sources.list ont été ignorées."
 
-#: common/rpackagelister.cc:1563
+#: common/rpackagelister.cc:1567
 msgid "Failed to fetch "
 msgstr "Echec dans la récupération "
 
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1587
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Certains paquets ne peuvent pas être téléchargés.\n"
 
-#: common/rpackagelister.cc:1586
+#: common/rpackagelister.cc:1590
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Voulez-vous continuer, en ignorant ces paquets ?"
 
-#: common/rpackagelister.cc:1593
+#: common/rpackagelister.cc:1597
 msgid "Unable to correct missing packages"
 msgstr "Impossible de corriger les paquets manquants"
 
-#: common/rpackagelister.cc:1656
+#: common/rpackagelister.cc:1660
 msgid "Unable to lock the download directory"
 msgstr "Impossible de verrouiller le dossier de téléchargement"
 
-#: common/rpackagelister.cc:1759
+#: common/rpackagelister.cc:1763
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr "Ligne %u trop longue dans le fichier de sélection."
 
-#: common/rpackagelister.cc:1773 common/rpackagelister.cc:1777
+#: common/rpackagelister.cc:1777 common/rpackagelister.cc:1781
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr "Ligne %u incorrecte dans le fichier de sélection"
 
-#: common/rpackagelister.cc:1789
+#: common/rpackagelister.cc:1793
 msgid "Setting selections..."
 msgstr "Définition des sélections ..."
 
 #: common/rpmindexcopy.cc:119
-msgid "Couldn't fork bzip2"
+msgid "Internal Error: couldn't fork bzip2. Please report."
 msgstr ""
 
 #: common/rpmindexcopy.cc:139
@@ -1046,10 +1003,6 @@ msgstr "Fermeture impossible, le gestionnaire de paquets fonctionne toujours"
 msgid "Close dialog after Package Manager is finished"
 msgstr "Ferme la fenêtre lorsque le gestionnaire de paquets aura terminé"
 
-#: gtk/rgzvtinstallprogress.cc:240
-msgid "can't fork children, so I die"
-msgstr ""
-
 #: gtk/rgmainwindow.cc:85
 msgid "Normal"
 msgstr "Normal"
@@ -1061,18 +1014,6 @@ msgstr "Critique"
 #: gtk/rgmainwindow.cc:87
 msgid "Security"
 msgstr "Sécurité"
-
-#: gtk/rgmainwindow.cc:169 gtk/rgmainwindow.cc:182 gtk/rgmainwindow.cc:225
-msgid " not found"
-msgstr " non trouvé"
-
-#: gtk/rgmainwindow.cc:211
-msgid "gtk_tree_model_get returned no text"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:235
-msgid "clickedRecInstall called with invalid parm: "
-msgstr ""
 
 #: gtk/rgmainwindow.cc:292
 msgid "Starting help system..."
@@ -1454,95 +1395,116 @@ msgstr "Va être mis à jour vers une version ANTERIEURE"
 msgid "To be kept back"
 msgstr "A conserver"
 
-#: gtk/rgsummarywindow.cc:208
-#, c-format
-msgid "%s: (ESSENTIAL) will be Removed\n"
+#: gtk/rgsummarywindow.cc:209
+#, fuzzy, c-format
+msgid "<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"
 msgstr "%s : (ESSENTIEL) va être désinstallé\n"
 
-#: gtk/rgsummarywindow.cc:215
-#, c-format
-msgid "%s: will be DOWNGRADED\n"
+#: gtk/rgsummarywindow.cc:216
+#, fuzzy, c-format
+msgid "<b>%s</b> will be <b>DOWNGRADED</b>\n"
 msgstr "%s : va être mis à jour avec une ancienne version\n"
 
-#: gtk/rgsummarywindow.cc:222
-#, c-format
-msgid "%s: will be Removed\n"
+#: gtk/rgsummarywindow.cc:223
+#, fuzzy, c-format
+msgid "<b>%s</b> will be Removed\n"
 msgstr "%s : va être désinstallé\n"
 
-#: gtk/rgsummarywindow.cc:229
+#: gtk/rgsummarywindow.cc:230
 #, c-format
-msgid "%s %s: will be Upgraded to %s\n"
-msgstr "%s %s : va être mis à jour vers %s\n"
+msgid "<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"
+msgstr ""
 
-#: gtk/rgsummarywindow.cc:236
-#, c-format
-msgid "%s %s: will be Installed\n"
+#: gtk/rgsummarywindow.cc:237
+#, fuzzy, c-format
+msgid "<b>%s</b> (version <i>%s</i>): will be Installed\n"
 msgstr "%s %s : va être installé\n"
 
-#: gtk/rgsummarywindow.cc:255
+#: gtk/rgsummarywindow.cc:256
 msgid "Summary"
 msgstr "Résumé"
 
-#: gtk/rgsummarywindow.cc:316
-#, c-format
-msgid "%d %s are set on hold\n"
-msgstr "%d %s ont été marqués pour être conservés\n"
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "packages"
-msgstr "paquets"
-
-#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
-#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
-#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
-#: gtk/rgsummarywindow.cc:346
-msgid "package"
-msgstr "paquet"
+#: gtk/rgsummarywindow.cc:318
+#, fuzzy
+msgid "1 package is set on hold\n"
+msgstr "Aucun paquet sélectionné.\n"
 
 #: gtk/rgsummarywindow.cc:320
-#, c-format
-msgid "%d %s are kept back and not upgraded\n"
+#, fuzzy, c-format
+msgid "%d packages are set on hold\n"
+msgstr "%d %s ont été marqués pour être conservés\n"
+
+#: gtk/rgsummarywindow.cc:323
+#, fuzzy
+msgid "1 package is kept back and not upgraded\n"
 msgstr "%d %s ont été conservés et non mis à jour\n"
 
 #: gtk/rgsummarywindow.cc:325
-#, c-format
-msgid "%d new %s will be installed\n"
+#, fuzzy, c-format
+msgid "%d packages are kept back and not upgraded\n"
+msgstr "%d %s ont été conservés et non mis à jour\n"
+
+#: gtk/rgsummarywindow.cc:329
+#, fuzzy
+msgid "1 new package will be installed\n"
+msgstr "Paquet qui sera installé."
+
+#: gtk/rgsummarywindow.cc:331
+#, fuzzy, c-format
+msgid "%d new packages will be installed\n"
 msgstr "%d nouveaux %s seront mis à jour\n"
 
-#: gtk/rgsummarywindow.cc:330
-#, c-format
-msgid "%d %s will be upgraded\n"
-msgstr "%d %s seront mis à jour\n"
+#: gtk/rgsummarywindow.cc:335
+#, fuzzy
+msgid "1 package will be upgraded\n"
+msgstr "Paquet qui sera mis à jour."
 
-#: gtk/rgsummarywindow.cc:334
-#, c-format
-msgid "%d %s will be removed\n"
-msgstr "%d %s seront désinstallés\n"
+#: gtk/rgsummarywindow.cc:337
+#, fuzzy, c-format
+msgid "%d packages will be upgraded\n"
+msgstr "Paquet qui sera mis à jour."
 
-#: gtk/rgsummarywindow.cc:338
-#, c-format
-msgid "%d %s will be DOWNGRADED\n"
-msgstr "%d %s seront désinstallés\n"
+#: gtk/rgsummarywindow.cc:342
+#, fuzzy
+msgid "1 package will be removed\n"
+msgstr "Paquets qui seront supprimés"
 
 #: gtk/rgsummarywindow.cc:344
-#, c-format
-msgid "WARNING: %d essential %s will be removed\n"
+#, fuzzy, c-format
+msgid "%d packages will be removed\n"
+msgstr "%d %s seront désinstallés\n"
+
+#: gtk/rgsummarywindow.cc:349
+#, fuzzy
+msgid "1 package will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s seront désinstallés\n"
+
+#: gtk/rgsummarywindow.cc:351
+#, fuzzy, c-format
+msgid "%d packages will be <b>DOWNGRADED</b>\n"
+msgstr "%d %s seront désinstallés\n"
+
+#: gtk/rgsummarywindow.cc:356
+#, fuzzy
+msgid "<b>Warning</b>: 1 essential package will be removed\n"
 msgstr "Attention : %d paquets essentiels %s vont être supprimés !\n"
 
-#: gtk/rgsummarywindow.cc:352
+#: gtk/rgsummarywindow.cc:358
+#, fuzzy, c-format
+msgid "<b>Warning</b>: %d essential packages will be removed\n"
+msgstr "Attention : %d paquets essentiels %s vont être supprimés !\n"
+
+#: gtk/rgsummarywindow.cc:368
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s d'espace disque supplémentaires seront utilisés"
 
-#: gtk/rgsummarywindow.cc:355
+#: gtk/rgsummarywindow.cc:371
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%so d'espace disque seront libérés"
 
-#: gtk/rgsummarywindow.cc:361
+#: gtk/rgsummarywindow.cc:377
 #, c-format
 msgid ""
 "\n"
@@ -1551,7 +1513,7 @@ msgstr ""
 "\n"
 "%s seront téléchargés"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:401
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2967,14 +2929,6 @@ msgstr "rpm-src"
 msgid "Vendors..."
 msgstr "Fournisseurs..."
 
-#: gtk/window_rginstall_progress.glade.strings:8
-msgid "label_name"
-msgstr ""
-
-#: gtk/window_rginstall_progress.glade.strings:9
-msgid "label_summary"
-msgstr ""
-
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr "Des messages supplémentaires sont été générés durant l'opération "
@@ -2990,3 +2944,45 @@ msgstr "Gestionnaire de paquets"
 #: data/synaptic.desktop.in.h:3
 msgid "Synaptic Package Manager"
 msgstr "Gestionnaire de paquets Synaptic "
+
+#~ msgid "Missed: "
+#~ msgstr "Manquant : "
+
+#~ msgid "Missed(2): "
+#~ msgstr "Manquant (2) : "
+
+#~ msgid "Wrong Size: "
+#~ msgstr "Taille incorrecte : "
+
+#~ msgid "Alot of entries were discarded, something may be wrong."
+#~ msgstr "Alot of entries were discarded, something may be wrong."
+
+#~ msgid "but %s is to be installed"
+#~ msgstr "mais %s va être installé"
+
+#~ msgid "but it is not installable"
+#~ msgstr "mais il n'est pas possible de l'installer"
+
+#~ msgid "but it is a virtual package"
+#~ msgstr "mais c'est un paquet virtuel"
+
+#~ msgid "but it is not going to be installed"
+#~ msgstr "mais ne sera pas installé"
+
+#~ msgid "Package "
+#~ msgstr "Paquet "
+
+#~ msgid " not found"
+#~ msgstr " non trouvé"
+
+#~ msgid "%s %s: will be Upgraded to %s\n"
+#~ msgstr "%s %s : va être mis à jour vers %s\n"
+
+#~ msgid "packages"
+#~ msgstr "paquets"
+
+#~ msgid "package"
+#~ msgstr "paquet"
+
+#~ msgid "%d %s will be upgraded\n"
+#~ msgstr "%d %s seront mis à jour\n"

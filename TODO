@@ -5,9 +5,10 @@ Configure:
 
 GUI:
    - make a the used font in the treeview configurable 
-   - add a button to undo all programmed changes
+   - add a button to undo all programmed changes 
+	(do we need this now that we have a "real" undo?)
    - add context-menu on right-click (del/inst/upgr/show descr in own window)
-   - display all files of a installed packages (like dpkg -L) 
+   - display all files of a installed packages (like dpkg -L or apt-file) 
    - convert all GtkCList to GtkTreeView
 
 Filter:
@@ -18,14 +19,14 @@ Filter:
    - obsolete packages (installed, but no install version available)
 
 General:
-   - implement "undo" :) 
    - make log-file
    - current task support is broken, try to fix it
    - implement raptoptions save/restore for getFlags/setFlags 
-   - add something that adds cdrom uris to the sources
    - make deporhan a native synaptic filter (should be easy)
 
 Done:
+   - add something that adds cdrom uris to the sources
+   - implement "undo" :) 
    - configure whether we want text under icons or not (done)
    - problem if a pkglist is not available on startup (rpm only)
    - implement some kind of deborphan functionality (make it a filter)

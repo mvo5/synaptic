@@ -84,7 +84,6 @@
 #include "upgradeM.xpm"
 #include "newM.xpm"
 #include "holdM.xpm"
-#include "logo.xpm"
 #include "synaptic_mini.xpm"
 
 
@@ -302,7 +301,7 @@ void RGMainWindow::closeFilterAction(void *self, RGFilterWindow *rwin)
     rwin->hide();
 }
 
-
+#if 0 // one filter window is enough
 void RGMainWindow::showFilterWindow(GtkWidget *self, void *data)
 {
     RGMainWindow *win = (RGMainWindow*)data;
@@ -324,7 +323,7 @@ void RGMainWindow::showFilterWindow(GtkWidget *self, void *data)
     gtk_widget_set_sensitive(win->_filterPopup, FALSE);
     gtk_widget_set_sensitive(win->_filterMenu, FALSE);
 }
-
+#endif
 
 void RGMainWindow::closeFilterManagerAction(void *self, 
 					    RGFilterManagerWindow *win)
@@ -369,7 +368,26 @@ void RGMainWindow::showSourcesWindow(GtkWidget *self, void *data)
         
     RGSrcEditor w(win);
     w.Run();
-      
+}
+
+void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
+{
+    char frontend[] = "gnome";
+    char *cmd;
+    RGMainWindow *me = (RGMainWindow*)data;
+    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
+
+    if(me->_lister->findPackage("libgnome-perl") < 0) {
+	me->_userDialog->error(_("No libgnome-perl installed\n\n"
+				 "You have to install libgnome-perl to "
+				 "use dpkg-reconfigure with synaptic"));
+	return;
+    }
+
+    me->setStatusText(_("Starting dpkg-reconfigure"));
+    cmd = g_strdup_printf("dpkg-reconfigure -f%s %s &", 
+			  frontend, me->selectedPackage()->name());
+    system(cmd);
 }
 
 
@@ -378,6 +396,7 @@ void RGMainWindow::pkgHelpClicked(GtkWidget *self, void *data)
     RGMainWindow *me = (RGMainWindow*)data;
 
     //cout << "RGMainWindow::pkgHelpClicked()" << endl;
+    me->setStatusText(_("Starting package help"));
     
     system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
 }
@@ -444,18 +463,6 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
 }
 
 
-void RGMainWindow::switchCommandPanel(GtkWidget *self, void *data)
-{
-    RGMainWindow *mainw = (RGMainWindow*)data;
-    
-    if (mainw->_panelSwitched) {
-	gtk_notebook_set_page(GTK_NOTEBOOK(mainw->_cmdPanel), 0);
-	mainw->_panelSwitched = FALSE;
-    } else {
-	gtk_notebook_set_page(GTK_NOTEBOOK(mainw->_cmdPanel), 1);
-	mainw->_panelSwitched = TRUE;	
-    }
-}
 
 
 void RGMainWindow::updateClicked(GtkWidget *self, void *data)
@@ -782,24 +789,23 @@ void RGMainWindow::notifyChange(RPackage *pkg)
 
 void RGMainWindow::forgetNewPackages()
 {
-  //cout << "forgetNewPackages called" << endl;
-  int row=0;
-  while (row < _lister->count()) {
-    RPackage *elem = _lister->getElement(row);
-    if(elem->getOtherStatus() && RPackage::ONew)
-      elem->setNew(false);
-  }
-  _roptions->forgetNewPackages();
+    //cout << "forgetNewPackages called" << endl;
+    unsigned int row=0;
+    while (row < _lister->count()) {
+	RPackage *elem = _lister->getElement(row);
+	if(elem->getOtherStatus() && RPackage::ONew)
+	    elem->setNew(false);
+    }
+    _roptions->forgetNewPackages();
 }
 
 // BUG: returning a GtkTreeIter will not work remotly reliable
 GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections) 
 {
   GtkTreeIter parentIter;  /* Parent iter */
-  GtkTreeIter childIter;   /* Child iter  */
 
   if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
-      parentIter;
+      return parentIter;
 
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
     //cout << "saving state" << endl;
@@ -840,7 +846,6 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections,
 				     GtkTreeIter iter)
 {
   GtkTreeIter parentIter;  /* Parent iter */
-  GtkTreeIter childIter;   /* Child iter  */
   
   /* restore state */
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
@@ -972,15 +977,23 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     case RPackage::MBroken:
       gtk_label_set_text(GTK_LABEL(_stateL), _("Package is broken."));
       break;
+    case RPackage::MPinned:
+    case RPackage::MNew:
+	/* nothing */
+	break;
     }
 
+    gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
     switch(other){
     case RPackage::OPinned:
-      gtk_label_set_text(GTK_LABEL(_stateL), _("Package is pinned."));
-      break;
+	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is pinned."));
+	break;
     case RPackage::ONew:
-      gtk_label_set_text(GTK_LABEL(_stateL), _("Package is new."));
-      break;
+	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is new."));
+	break;
+    case RPackage::ODebconf:
+	gtk_widget_set_sensitive(_pkgReconfigure, TRUE);
+	break;
     }
 
     // set button, but disable toggle signal
@@ -1475,6 +1488,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   me->setInterfaceLocked(FALSE);
 }
 
+#if 0 // we don't use this ATM
 void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -1501,13 +1515,11 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
     } else {
 	pkg->setRemoveWithDeps(TRUE);
     }
-#if 0
     gtk_clist_select_row(GTK_CLIST(me->_table), 
 			 me->_lister->getElementIndex(pkg), 0);
-#endif
     me->setInterfaceLocked(FALSE);
 }
-
+#endif
 
 void RGMainWindow::setColors(bool useColors)
 {
@@ -1837,6 +1849,11 @@ void RGMainWindow::buildInterface()
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_pkgreconfigure_clicked",
+				  G_CALLBACK(pkgReconfigureClicked),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
 				  "on_search_description",
 				  G_CALLBACK(searchPkgDescriptionClicked),
 				  this); 
@@ -1962,12 +1979,17 @@ void RGMainWindow::buildInterface()
     // only for debian 
     _pkgHelp = glade_xml_get_widget(_gladeXML, "button_pkghelp");
     assert(_pkgHelp);
+    _pkgReconfigure = glade_xml_get_widget(_gladeXML, "button_pkgreconfigure");
+    assert(_pkgHelp);
 
-    if(!FileExists("/usr/bin/dwww")) {
+    if(!FileExists("/usr/bin/dwww")) 
 	gtk_widget_hide(_pkgHelp);
-	gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
-    }
-    
+    if(!FileExists("/usr/sbin/dpkg-reconfigure"))
+	gtk_widget_hide(_pkgReconfigure);
+#ifdef HAVE_RPM
+    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
+#endif    
+
     _tabview = glade_xml_get_widget(_gladeXML, "notebook_info");
     assert(_tabview);
 
@@ -2415,7 +2437,6 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
 				  gpointer data)
 {
   RGMainWindow *me = (RGMainWindow*)data;
-  GtkTreeSelection *selection;
   GtkTreeIter iter;
   RPackage *pkg = NULL;
 

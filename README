@@ -5,18 +5,21 @@ Synaptic (previously known as raptor) is a graphical package management
 program for apt. It provides the same features as the apt-get command line 
 utility with a GUI front-end based on Gtk+ or WINGs. 
 
-Synaptic was developed by Alfredo K. Kojima <kojima@conectiva.com.br>. His
-last offical released was 0.16. I took over his CVS version, where he added
-a nearly complette port to Gtk+. I completted the port and add some
-new features. See the NEWS file for the user visible changes from that
-point on. 
+Synaptic was developed by Alfredo K. Kojima <kojima@conectiva.com.br>
+from Connectiva. His last offical released was 0.16. I took over his
+CVS version, where he added a nearly complette port to Gtk+. I
+completted the port and add some new features. See the NEWS file for
+the user visible changes from that point on. Connectiva is still
+supporting the development of synaptic. Gustavo Niemeyer
+<niemeyer@conectiva.com> is a active developer of synaptic.
 
-If you want to use synaptic from the gnome menu, you should use gksu 
-(default) or xsu to obtain root privileges. Get it from 
-gksu from http://www.nongnu.org/gksu/ or http://xsu.freax.eu.org/
-Currently, gksu is the default because it does not depend on all the gnome
-libs like xsu. Maybe someone can write a configure test to find out which
-one is installed (hint, hint :)
+If you want to use synaptic from the gnome menu, you should use gksu
+(default) or Gnome SuperUser (gnomesu) to obtain root privileges. Get
+it from gksu from http://www.nongnu.org/gksu/ or
+http://xsu.sourceforge.net/ Currently, gksu is the default because it
+does not depend on all the gnome libs like gnomesu. Maybe someone can
+write a configure test to find out which one is installed (hint, hint
+:)
 
 All development is done at http://savannah.gnu.org/projects/synaptic
 
@@ -50,15 +53,15 @@ main package list.
 Keybindings:
 ------------
 From version 0.20 on, the gtk has some global keybings:
-* ALT-k keep
-* ALT-i install
-* ALT-r remove
-* ALT-n search next
-* ALT-u Update individual package
-* ALT-l Update Package List
-* ALT-g upgrade
-* ALT-d DistUpgrade
-* ALT-p proceed
+* ALT-k  keep
+* ALT-i  install
+* ALT-r  remove
+* ALT-u  Update individual package
+* ALT-l  Update Package List
+* ALT-g  upgrade
+* ALT-d  DistUpgrade
+* ALT-p  proceed
+* CTRL-f find
 
 Command line options:
 ---------------------
@@ -67,6 +70,9 @@ options:
  '-f <filename>' or "--filter-file <filename>" = give a alternative filter file
  '-i <int>' or "--initial-filter <int>" = start with filter nr. <int>
  '-o <option>' or "--option <option>" = set a synaptic/apt option (expert only)
+ '--set-selections' = feed packages inside synaptic (format is like
+                      dpkg --get-selections)
+ '--non-interactive' = non-interactive mode
 
 Selecting Multiple Packages
 ----------------------------

@@ -52,7 +52,7 @@ RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 {
-    RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
+    //RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
     gtk_main_quit();
 }
 
@@ -64,7 +64,6 @@ void RGInstallProgressMsgs::close()
 void RGInstallProgressMsgs::addText(const char *text, bool bold)
 {
     GtkTextIter enditer;
-    GtkTextMark *mark;
     gtk_text_buffer_get_end_iter(_textBuffer, &enditer);
     if (bold == true)
 	gtk_text_buffer_insert_with_tags_by_name(_textBuffer, &enditer,
@@ -133,7 +132,7 @@ void RGInstallProgress::finishUpdate()
 
 void RGInstallProgress::prepare(RPackageLister *lister)
 {
-    for (int row=0; row < lister->count(); row++) {
+    for (unsigned int row=0; row < lister->count(); row++) {
 	RPackage *elem = lister->getElement(row);
 
 	// Is it going to be seen?

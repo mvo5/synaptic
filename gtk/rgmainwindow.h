@@ -99,6 +99,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkWidget *_pinB;
    GtkWidget *_pinM;
    GtkWidget *_pkgHelp;
+   GtkWidget *_pkgReconfigure;
 
    GtkWidget *_proceedB;
    GtkWidget *_proceedM;
@@ -109,7 +110,6 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkWidget *_fixBrokenM;
 
    // filter/find panel   
-   bool _panelSwitched;
    GtkWidget *_cmdPanel;
    
    GtkWidget *_findText;
@@ -166,26 +166,13 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
 
-   void pkgInstallHelper(RPackage *pkg);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false);
-   void pkgKeepHelper(RPackage *pkg);
-
+   // init stuff 
    void buildInterface();
-   GtkWidget *createFilterMenu();
-   void refreshFilterMenu();
-   void forgetNewPackages();
 
-   void updatePackageInfo(RPackage *pkg);
-   
-   void updatePackageStatus(RPackage *pkg);
-   void updateDynPackageInfo(RPackage *pkg);
-   
-   RPackage *selectedPackage();
-
+   // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL);
    void restoreTableState(vector<string>& expanded_sections, GtkTreeIter it);
    GtkTreeIter saveTableState(vector<string>& expanded_sections);
-
    void changeFilter(int filter, bool sethistory=true);
    void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
    
@@ -207,21 +194,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void onStatusTree(GtkWidget *self, void *data);   
    static void onFlatList(GtkWidget *self, void *data);   
 
-   static void onAddCDROM(GtkWidget *self, void *data);
-   
-   static void showSearchPanel(GtkWidget *self, void *data);
-   static void showAboutPanel(GtkWidget *self, void *data);
-   static void showFilterWindow(GtkWidget *self, void *data);
-   static void showFilterManagerWindow(GtkWidget *self, void *data);   
-   static void showSourcesWindow(GtkWidget *self, void *data);
-   static void showConfigWindow(GtkWidget *self, void *data);
-
-   static void pkgHelpClicked(GtkWidget *self, void *data);
-
    static void searchAction(GtkWidget *self, void *data);
-   
-   static void switchCommandPanel(GtkWidget *self, void *data);
-
    static void changedFilter(GtkWidget *self);
    
    static void changedDepView(GtkWidget *self, void *data);
@@ -230,41 +203,80 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void clickedDepList(GtkWidget *self, int row, int col, GdkEvent *ev);
    static void clickedAvailDepList(GtkWidget *self, int row, int col, 
 				   GdkEvent *ev, void* data);
+
+   // misc
+   GtkWidget *createFilterMenu();
+   void refreshFilterMenu();
+   void forgetNewPackages();
+   
+   // package info
+   void updatePackageInfo(RPackage *pkg);
+   void updatePackageStatus(RPackage *pkg);
+   void updateDynPackageInfo(RPackage *pkg);
+   RPackage *selectedPackage();
+
+   
+   
+
+   // menu stuff
+
+   // actions menu
+   static void undoClicked(GtkWidget *self, void *data);
+   static void redoClicked(GtkWidget *self, void *data);
    static void updateClicked(GtkWidget *self, void *data);
+   static void onAddCDROM(GtkWidget *self, void *data);
    static void fixBrokenClicked(GtkWidget *self, void *data);
    static void upgradeClicked(GtkWidget *self, void *data);
    static void distUpgradeClicked(GtkWidget *self, void *data);
    static void proceedClicked(GtkWidget *self, void *data);
    
-   // callbacks for toolbar menu
-   static void menuToolbarClicked(GtkWidget *self, void *data);
-
-   // callbacks for package actions
+   // packages menu
    static void menuActionClicked(GtkWidget *self, void *data);
-   static void actionClicked(GtkWidget *clickedB, void *data);
-   // this does the actual work
-   static void doPkgAction(RGMainWindow *me, RGPkgAction action);
+   static void menuPinClicked(GtkWidget *self, void *data);
 
+   // filter menu
+   static void showFilterManagerWindow(GtkWidget *self, void *data);   
+   static void saveFilterAction(void *self, RGFilterWindow *rwin);
+   static void closeFilterAction(void *self, RGFilterWindow *rwin);
+   static void closeFilterManagerAction(void *self,RGFilterManagerWindow *win);
+   
+   // search menu
    static void searchPkgDescriptionClicked(GtkWidget *self, void *data);
    static void searchPkgNameClicked(GtkWidget *self, void *data);
    static void searchPkgAction(void *self, RGFindWindow *data);
 
+   // preferences menu
+   static void showConfigWindow(GtkWidget *self, void *data);
+   static void showSourcesWindow(GtkWidget *self, void *data);
+   static void menuToolbarClicked(GtkWidget *self, void *data);
+
+   // help menu
+   static void showAboutPanel(GtkWidget *self, void *data); 
+
+   // end menu
+
+
+   // the buttons 
+   static void actionClicked(GtkWidget *clickedB, void *data);
    static void pinClicked(GtkWidget *self, void *data);
-   static void menuPinClicked(GtkWidget *self, void *data);
+   static void pkgHelpClicked(GtkWidget *self, void *data);
+   static void pkgReconfigureClicked(GtkWidget *self, void *data);
 
-   static void undoClicked(GtkWidget *self, void *data);
-   static void redoClicked(GtkWidget *self, void *data);
 
-   static void removeDepsClicked(GtkWidget *self, void *data);
+   // helpers
 
-   static void actionVisibleClicked(GtkWidget *self, void *data);
+   // this does the actual pkgAction work (install, remove, upgrade)
+   static void doPkgAction(RGMainWindow *me, RGPkgAction action);
+   void pkgInstallHelper(RPackage *pkg);
+   void pkgRemoveHelper(RPackage *pkg, bool purge = false);
+   void pkgKeepHelper(RPackage *pkg);
 
-   static void saveFilterAction(void *self, RGFilterWindow *rwin);
-   static void closeFilterAction(void *self, RGFilterWindow *rwin);
-   
-   static void closeFilterManagerAction(void *self, RGFilterManagerWindow *win);
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
+
+   // obsolete
+   //static void removeDepsClicked(GtkWidget *self, void *data);
+   //static void actionVisibleClicked(GtkWidget *self, void *data);
 
 public:
    RGMainWindow(RPackageLister *packLister);

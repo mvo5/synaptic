@@ -243,7 +243,6 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
     : RGWindow(win, "options", false, true, true)
 {
     GtkWidget *button;
-    GtkWidget *box;
     
     _optionB[0] = glade_xml_get_widget(_gladeXML, "check_regexp");
     _optionB[1] = glade_xml_get_widget(_gladeXML, "check_use_colors");

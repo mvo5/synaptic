@@ -36,7 +36,7 @@ class RAPTOptions {
   class packageOptions  {
   public:
     packageOptions() 
-      : isLocked(false), isNew(false), isOrphaned(false), isDebconf(false) {};
+      : isLocked(false), isOrphaned(false), isNew(false),  isDebconf(false) {};
      bool isLocked;
      bool isOrphaned;
      bool isNew;

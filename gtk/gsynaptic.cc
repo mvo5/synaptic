@@ -83,16 +83,6 @@ void RGFlushInterface()
     }
 }
 
-static double
-scale_round (double val, double factor)
-{
-  val = floor (val * factor + 0.5);
-  val = MAX (val, 0);
-  val = MIN (val, factor);
-  return val;
-}
-
-
 char * gtk_get_string_from_color(GdkColor *colp)
 {
     static char *_str = NULL;

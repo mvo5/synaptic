@@ -112,7 +112,8 @@ void RGZvtInstallProgress::finishUpdate()
       userDialog.showErrors();
    }
   
-   if(res == 0 && gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF))) {
+   if(res == 0 &&(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF)) ||
+		  _config->FindB("Volatile::Non-Interactive", false))) {
       hide();
       return;
    }

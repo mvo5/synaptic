@@ -62,6 +62,8 @@ class RUserDialog {
       message(msg, DialogError);
    };
 
+   virtual bool showErrors();
+
 };
 
 #endif

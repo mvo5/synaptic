@@ -182,11 +182,8 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(true);
 
-   bool openCacheError = false;
-   if (!packageLister->openCache(false)) {
+   if (!packageLister->openCache(false))
       mainWindow->showErrors();
-      openCacheError = true;
-   }
 
    if (_config->FindB("Volatile::startInRepositories", false)) {
       mainWindow->showRepositoriesWindow();

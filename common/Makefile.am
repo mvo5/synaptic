@@ -43,6 +43,7 @@ libsynaptic_a_SOURCES =\
 	rtagcollfilter.cc \
 	rtagcollfilter.h \
 	ruserdialog.h \
+	ruserdialog.cc \
 	sections_trans.h \
 	sections_trans.cc 
 

@@ -110,39 +110,6 @@ bool RGUserDialog::message(const char *msg,
    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
 }
 
-bool RGUserDialog::showErrors()
-{
-   if (_error->empty())
-      return false;
-
-   bool iserror = false;
-   if (_error->PendingError())
-      iserror = true;
-
-   string message = "";
-   while (!_error->empty()) {
-      string tmp;
-
-      _error->PopMessage(tmp);
-
-      // ignore some stupid error messages
-      if (tmp == "Tried to dequeue a fetching object")
-         continue;
-
-      if (message.empty())
-         message = tmp;
-      else
-         message = message + "\n\n" + tmp;
-   }
-
-   if (iserror)
-      error(utf8(message.c_str()));
-   else
-      warning(utf8(message.c_str()));
-
-   return true;
-}
-
 // RGGladeUserDialog
 bool RGGladeUserDialog::run(const char *name)
 {

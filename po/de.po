@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de.po2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-26 15:33+0100\n"
-"PO-Revision-Date: 2003-11-26 11:37+0100\n"
+"POT-Creation-Date: 2003-11-26 17:57+0100\n"
+"PO-Revision-Date: 2003-11-26 18:11+0100\n"
 "Last-Translator: Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
 "MIME-Version: 1.0\n"
@@ -183,6 +183,8 @@ msgstr "Erzeugen einer temporären Datei ist fehlgeschlagen"
 #: common/indexcopy.cc:89
 msgid "Internal Error: Couldn't fork gzip. Please report."
 msgstr ""
+"Interner Fehler: gzip konnte nicht abgespalten werden! Bitte diesen Fehler "
+"melden."
 
 #: common/indexcopy.cc:110
 msgid "gzip failed, perhaps the disk is full."
@@ -494,7 +496,6 @@ msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Ungültiger regulärer Ausdruck '%s' in Filter-Datei"
 
 #: common/rpackagefilter.cc:755
-#, fuzzy
 msgid "unkown"
 msgstr "Unbekannt"
 
@@ -549,14 +550,15 @@ msgstr "Hinfällig"
 
 #: common/rpackagelister.cc:426 common/rpackagelister.cc:429
 #: common/rpackagelister.cc:445
-#, fuzzy
 msgid "Internal error recalculating dependency cache. Please report."
-msgstr "Interner Fehler beim Neuberechnen der Abhängigkeiten"
+msgstr ""
+"Interner Fehler beim Neuberechnen der Abhängigkeiten! Bitte melden Sie "
+"diesen Fehler."
 
 #: common/rpackagelister.cc:654
-#, fuzzy
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
-msgstr "Interner Fehler"
+msgstr ""
+"Interner Fehler: AllUpgrade ging schief! Bitte melden Sie diesen Fehler."
 
 #: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
@@ -654,6 +656,8 @@ msgstr "Setze Auswahlen..."
 #: common/rpmindexcopy.cc:119
 msgid "Internal Error: couldn't fork bzip2. Please report."
 msgstr ""
+"Interner Fehler: bzip2 konnte nicht abgespalten werden. Bitte melden Sie "
+"diesen Fehler."
 
 #: common/rpmindexcopy.cc:139
 msgid "bzip2 failed, perhaps the disk is full."
@@ -1425,103 +1429,96 @@ msgid "To be kept back"
 msgstr "Zurückgehaltene Pakete"
 
 #: gtk/rgsummarywindow.cc:209
-#, fuzzy, c-format
-msgid "<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"
-msgstr "%s: (ESSENTIELL) wird gelöscht!\n"
+#, c-format
+msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
+msgstr "<b>%s</b> (<b>essentiell</b>) wird entfernt\\n"
 
 #: gtk/rgsummarywindow.cc:216
-#, fuzzy, c-format
-msgid "<b>%s</b> will be <b>DOWNGRADED</b>\n"
-msgstr "%s: wird DEAKTUALISIERT!\n"
+#, c-format
+msgid "<b>%s</b> will be <b>downgraded</b>\n"
+msgstr "<b>%s</b> wird <b>deaktualisiert<b>\n"
 
 #: gtk/rgsummarywindow.cc:223
-#, fuzzy, c-format
-msgid "<b>%s</b> will be Removed\n"
-msgstr "%s: wird gelöscht!\n"
+#, c-format
+msgid "<b>%s</b> will be removed\n"
+msgstr "<b>%s</b> wird entfernt\n"
 
 #: gtk/rgsummarywindow.cc:230
 #, c-format
-msgid "<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"
-msgstr ""
+msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
+msgstr "<b>%s</b> (Version <i>%s</i>) wird auf die Version <i>%s</i> aktualisiert\n"
 
 #: gtk/rgsummarywindow.cc:237
-#, fuzzy, c-format
-msgid "<b>%s</b> (version <i>%s</i>): will be Installed\n"
-msgstr "%s %s: wird installiert\n"
+#, c-format
+msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
+msgstr "<b>%s</b> (version <i>%s</i>) wird installiert\n"
 
 #: gtk/rgsummarywindow.cc:256
 msgid "Summary"
 msgstr "Zusammenfassung"
 
 #: gtk/rgsummarywindow.cc:318
-#, fuzzy
 msgid "1 package is set on hold\n"
-msgstr "Kein Paket ist ausgewählt.\n"
+msgstr "Ein Paket ist gesperrt\n"
 
 #: gtk/rgsummarywindow.cc:320
-#, fuzzy, c-format
+#, c-format
 msgid "%d packages are set on hold\n"
-msgstr "%d %s beibehalten\n"
+msgstr "%d Pakete sind gesperrt\n"
 
 #: gtk/rgsummarywindow.cc:323
-#, fuzzy
 msgid "1 package is kept back and not upgraded\n"
-msgstr "%d %s zurückgehalten und nicht aktualisiert\n"
+msgstr "Ein Paket wird zurückgehalten und nicht aktualisiert\n"
 
 #: gtk/rgsummarywindow.cc:325
-#, fuzzy, c-format
+#, c-format
 msgid "%d packages are kept back and not upgraded\n"
-msgstr "%d %s zurückgehalten und nicht aktualisiert\n"
+msgstr "%d Pakete werden zurückgehalten und nicht aktualisiert\n"
 
 #: gtk/rgsummarywindow.cc:329
-#, fuzzy
 msgid "1 new package will be installed\n"
-msgstr "Paket wird installiert."
+msgstr "Ein neues Paket wird installiert\n"
 
 #: gtk/rgsummarywindow.cc:331
-#, fuzzy, c-format
+#, c-format
 msgid "%d new packages will be installed\n"
-msgstr "%d %s neu installiert\n"
+msgstr "%d neue Pakete werden installiert\n"
 
 #: gtk/rgsummarywindow.cc:335
-#, fuzzy
 msgid "1 package will be upgraded\n"
-msgstr "Paket wird aktualisiert."
+msgstr "Ein Paket wird aktualisiert\n"
 
 #: gtk/rgsummarywindow.cc:337
-#, fuzzy, c-format
+#, c-format
 msgid "%d packages will be upgraded\n"
-msgstr "Paket wird aktualisiert."
+msgstr "%d Pakete werden aktualisiert\n"
 
 #: gtk/rgsummarywindow.cc:342
-#, fuzzy
 msgid "1 package will be removed\n"
-msgstr "Zum Entfernen vorgemerkte Pakete einbeziehen"
+msgstr "Ein Paket wird entfernt"
 
 #: gtk/rgsummarywindow.cc:344
-#, fuzzy, c-format
+#, c-format
 msgid "%d packages will be removed\n"
-msgstr "%d %s gelöscht\n"
+msgstr "%d Pakete werden gelöscht\n"
 
 #: gtk/rgsummarywindow.cc:349
-#, fuzzy
-msgid "1 package will be <b>DOWNGRADED</b>\n"
-msgstr "%d %s wird DEAKTUALISIERT;\n"
+msgid "1 package will be <b>downgraded</b>\n"
+msgstr "Ein Paket wird <b>deaktualisiert</b>\n"
 
 #: gtk/rgsummarywindow.cc:351
-#, fuzzy, c-format
-msgid "%d packages will be <b>DOWNGRADED</b>\n"
-msgstr "%d %s wird DEAKTUALISIERT;\n"
+#, c-format
+msgid "%d packages will be <b>downgraded</b>\n"
+msgstr "%d Pakete werden <b>deaktualisiert</b>\n"
 
 #: gtk/rgsummarywindow.cc:356
-#, fuzzy
-msgid "<b>Warning</b>: 1 essential package will be removed\n"
-msgstr "WARNUNG: %d essentielle %s gelöscht!\n"
+msgid "<b>Warning:</b> 1 essential package will be removed\n"
+msgstr "<b>Warnung:</b> Ein essentielles Paket wird entfernt\n"
 
 #: gtk/rgsummarywindow.cc:358
-#, fuzzy, c-format
-msgid "<b>Warning</b>: %d essential packages will be removed\n"
-msgstr "WARNUNG: %d essentielle %s gelöscht!\n"
+#, c-format
+msgid "<b>Warning:</b> %d essential packages will be removed\n"
+msgstr "<b>Warnung:</b> %d essentielle Pakete werden entfernt\n"
 
 #: gtk/rgsummarywindow.cc:368
 #, c-format
@@ -2965,6 +2962,14 @@ msgstr "Paketverwaltung"
 #: data/synaptic.desktop.in.h:3
 msgid "Synaptic Package Manager"
 msgstr "Synaptic Paketverwaltung"
+
+#, fuzzy
+#~ msgid "1 package will be <b>DOWNGRADED</b>\n"
+#~ msgstr "%d %s wird DEAKTUALISIERT;\n"
+
+#, fuzzy
+#~ msgid "%d packages will be <b>DOWNGRADED</b>\n"
+#~ msgstr "%d %s wird DEAKTUALISIERT;\n"
 
 #~ msgid "Couldn't fork gzip"
 #~ msgstr "Konnte gzip nicht starten"

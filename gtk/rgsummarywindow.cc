@@ -206,35 +206,35 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 
     for (vector<RPackage*>::const_iterator p = essential.begin();
 	 p != essential.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"),(*p)->name());
+	str = g_strdup_printf(_("<b>%s</b> (<b>essential</b>) will be removed\n"),(*p)->name());
 	text += str;
 	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
 	 p != toDowngrade.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> will be <b>DOWNGRADED</b>\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b> will be <b>downgraded</b>\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
 	 p != toRemove.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> will be Removed\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b> will be removed\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
 	 p != toUpgrade.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
+	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
 	text += str;
 	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
 	 p != toInstall.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>): will be Installed\n"),(*p)->name(), (*p)->availableVersion());
+	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>) will be installed\n"),(*p)->name(), (*p)->availableVersion());
 	text += str;
 	g_free(str);
     }
@@ -346,16 +346,16 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     
     if (toDowngrade)
 	if(toDowngrade == 1)
-	    g_string_append_printf(msg,_("1 package will be <b>DOWNGRADED</b>\n"));
+	    g_string_append_printf(msg,_("1 package will be <b>downgraded</b>\n"));
 	else
-	    g_string_append_printf(msg,_("%d packages will be <b>DOWNGRADED</b>\n"), 
+	    g_string_append_printf(msg,_("%d packages will be <b>downgraded</b>\n"), 
 				   toDowngrade);
 
     if (essential) {
 	if(essential == 1)
-	    g_string_append_printf(msg, _("<b>Warning</b>: 1 essential package will be removed\n"));
+	    g_string_append_printf(msg, _("<b>Warning:</b> 1 essential package will be removed\n"));
 	else
-	    g_string_append_printf(msg, _("<b>Warning</b>: %d essential packages will be removed\n"), essential);
+	    g_string_append_printf(msg, _("<b>Warning:</b> %d essential packages will be removed\n"), essential);
 	_potentialBreak = true;
     }
 

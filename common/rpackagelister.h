@@ -265,7 +265,8 @@ class RPackageLister {
 			vector<RPackage *> &notAuthenticated,
                         vector<RPackage *> &exclude, bool sorted = true);
 
-   bool openCache(bool reset, bool lock=true);
+   // open it with lock
+   bool openCache(bool lock=true);
 
    bool fixBroken();
 

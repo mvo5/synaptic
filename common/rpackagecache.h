@@ -67,14 +67,15 @@ class RPackageCache {
    };
 
    bool open(OpProgress &progress, bool lock=true);
-   bool reset(OpProgress &progress, bool lock=true);
 
    vector<string> getPolicyArchives(bool filenames_only);
 
    bool lock();
    void releaseLock();
 
-   RPackageCache() : _map(0), _cache(0), _policy(0), _dcache(0) {
+   RPackageCache() 
+     : _map(0), _cache(0), _policy(0), _dcache(0), _locked(false) 
+   {
       _list = new pkgSourceList();
    };
    ~RPackageCache() {

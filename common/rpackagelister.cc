@@ -273,25 +273,17 @@ bool RPackageLister::upgradable()
    return _cache != NULL && _cache->deps() != NULL;
 }
 
-bool RPackageLister::openCache(bool reset, bool lock)
+bool RPackageLister::openCache(bool lock)
 {
    static bool firstRun = true;
 
    // Flush old errors
    _error->Discard();
 
-   if (reset) {
-      if (!_cache->reset(*_progMeter,lock)) {
-         _progMeter->Done();
-         _cacheValid = false;
-         return false;
-      }
-   } else {
-      if (!_cache->open(*_progMeter,lock)) {
-         _progMeter->Done();
-         _cacheValid = false;
-         return false;
-      }
+   if (!_cache->open(*_progMeter,lock)) {
+      _progMeter->Done();
+      _cacheValid = false;
+      return false;
    }
    _progMeter->Done();
 
@@ -397,8 +389,7 @@ bool RPackageLister::openCache(bool reset, bool lock)
 
    _updating = false;
 
-   if (reset)
-      reapplyFilter();
+   reapplyFilter();
 
    // mvo: put it here for now
    notifyCacheOpen();

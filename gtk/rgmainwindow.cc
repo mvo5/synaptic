@@ -1937,7 +1937,7 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
    scan.hide();
    if (updateCache) {
       me->setTreeLocked(TRUE);
-      me->_lister->openCache(TRUE);
+      me->_lister->openCache();
       me->setTreeLocked(FALSE);
       me->refreshTable(me->selectedPackage());
    }
@@ -2396,7 +2396,7 @@ void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
    me->setTreeLocked(TRUE);
 
    // reset
-   me->_lister->openCache(TRUE);
+   me->_lister->openCache();
 
    me->setTreeLocked(FALSE);
    me->_lister->registerObserver(me);
@@ -2658,7 +2658,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    if (_config->FindB("Volatile::Download-Only", false) == false) {
       // reset the cache
-      if (!me->_lister->openCache(true)) {
+      if (!me->_lister->openCache()) {
          me->showErrors();
          exit(1);
       }
@@ -2745,7 +2745,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    // show errors and warnings (like the gpg failures for the package list)
    me->showErrors();
 
-   if(me->_lister->openCache(TRUE))
+   if(me->_lister->openCache())
       me->showErrors();
 
    // reread saved selections
@@ -2909,7 +2909,7 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
       _roptions->setPackageLock(pkg->name(), active);
       li = g_list_next(li);
    }
-   me->_lister->openCache(TRUE);
+   me->_lister->openCache();
 
    // reread saved selections
    ifstream in(file);

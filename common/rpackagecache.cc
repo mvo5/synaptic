@@ -50,13 +50,19 @@ bool RPkgPolicy::IsImportantDep(pkgCache::DepIterator dep)
   }
 }
 
-bool RPackageCache::open(OpProgress &progress, bool lock)
+bool RPackageCache::open(OpProgress &progress, bool locking)
 {
-   if(lock)
-      _system->Lock();
+   if(locking)
+      lock();
 
    if (_error->PendingError())
       return false;
+
+   // delete any old structures
+   if(_dcache != NULL)
+      delete _dcache;
+   if(_map != NULL)
+      delete _map;
 
    // Read the source list
    //pkgSourceList list;
@@ -65,7 +71,7 @@ bool RPackageCache::open(OpProgress &progress, bool lock)
       return _error->Error(_("The list of sources could not be read.\n\
 Go to the repository dialog to correct the problem."));
 
-   if(lock)
+   if(locking)
       pkgMakeStatusCache(*_list, progress);
    else
       pkgMakeStatusCache(*_list, progress, 0, true);
@@ -112,25 +118,8 @@ Go to the repository dialog to correct the problem."));
    if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
       return _error->Error(_("Internal Error, non-zero counts"));
 
-   _locked = lock;
-
    return true;
 }
-
-
-
-bool RPackageCache::reset(OpProgress &progress, bool lock)
-{
-   delete _dcache;
-   delete _map;
-
-
-   if(_locked)
-      releaseLock();
-
-   return open(progress, lock);
-}
-
 
 vector<string> RPackageCache::getPolicyArchives(bool filenames_only=false)
 {

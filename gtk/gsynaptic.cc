@@ -486,11 +486,13 @@ int main(int argc, char **argv)
 
    //no need to open a cache that will invalid after the update
    if(!UpdateMode) {
-      packageLister->openCache(false);
+      mainWindow->setTreeLocked(true);
+      packageLister->openCache();
       mainWindow->restoreState();
       mainWindow->showErrors();
+      mainWindow->setTreeLocked(false);
    }
-
+   
    if (_config->FindB("Volatile::startInRepositories", false)) {
       mainWindow->cbShowSourcesWindow(NULL, mainWindow);
    }
@@ -503,10 +505,12 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(false);
 
-if(UpdateMode) {
+   if(UpdateMode) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
-      packageLister->openCache(false);
+      mainWindow->setTreeLocked(true);
+      packageLister->openCache();
       mainWindow->restoreState();
+      mainWindow->setTreeLocked(false);
       mainWindow->showErrors();
       mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
    }

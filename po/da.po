@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-12 00:37+0200\n"
+"POT-Creation-Date: 2004-05-19 12:05+0200\n"
 "PO-Revision-Date: 2003-04-11 12:50+0200\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -148,7 +148,7 @@ msgstr ""
 msgid "Miscellaneous  - Graphical"
 msgstr ""
 
-#: common/sections_trans.cc:42 common/rpackage.cc:106 gtk/rgmainwindow.cc:74
+#: common/sections_trans.cc:42 common/rpackage.cc:107 gtk/rgmainwindow.cc:75
 msgid "Unknown"
 msgstr "Ukendt"
 
@@ -338,21 +338,21 @@ msgstr "kunne ikke oprette konfigurationskatalog %s"
 msgid "couldn't open %s for writing"
 msgstr "kunne ikke åbne %s for skrivning"
 
-#: common/rpackage.cc:186
+#: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
 
-#: common/rpackage.cc:384
+#: common/rpackage.cc:395
 #, fuzzy
 msgid "or dependency"
 msgstr "Omvendte afhængigheder"
 
-#: common/rpackage.cc:388
+#: common/rpackage.cc:399
 #, fuzzy
 msgid "Reverse Depends"
 msgstr "Omvendte afhængigheder"
 
-#: common/rpackage.cc:496
+#: common/rpackage.cc:507
 #, c-format
 msgid ""
 "\n"
@@ -362,92 +362,96 @@ msgid ""
 "sources.list\n"
 msgstr ""
 
-#: common/rpackage.cc:572
+#: common/rpackage.cc:583
 msgid " or"
 msgstr ""
 
-#: common/rpackage.cc:728
+#: common/rpackage.cc:739
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s er/vil blive installeret"
 
-#: common/rpackage.cc:733
+#: common/rpackage.cc:744
 msgid "package is not installable"
 msgstr "pakke kan ikke installeres"
 
-#: common/rpackage.cc:735
+#: common/rpackage.cc:746
 msgid "package is a virtual package"
 msgstr "pakke er en virtuel pakke"
 
-#: common/rpackage.cc:737
+#: common/rpackage.cc:748
 msgid "package is/will not be installed"
 msgstr "pakke er ikke/vil ikke blive installeret"
 
-#: common/rpackage.cc:740
+#: common/rpackage.cc:751
 msgid "dependency is satisfied"
 msgstr "afhængighed er opfyldt"
 
-#: common/rpackage.cc:911
+#: common/rpackage.cc:977
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Ygyldig post i filen med foretrukne, intet pakkehoved"
 
-#: common/rpackage.cc:1220
+#: common/rpackage.cc:1286
 #, fuzzy
 msgid "Marked for installation"
 msgstr "Markér valgte pakke til installation/opgradering"
 
-#: common/rpackage.cc:1221
+#: common/rpackage.cc:1287
 #, fuzzy
 msgid "Marked for re-installation"
 msgstr "Markér valgte pakke til installation/opgradering"
 
-#: common/rpackage.cc:1222
+#: common/rpackage.cc:1288
 #, fuzzy
 msgid "Marked for upgrade"
 msgstr "Markeret til at installeres eller opgraderes"
 
-#: common/rpackage.cc:1223
+#: common/rpackage.cc:1289
 #, fuzzy
 msgid "Marked for downgrade"
 msgstr "Markeret til at installeres eller opgraderes"
 
-#: common/rpackage.cc:1224
+#: common/rpackage.cc:1290
 #, fuzzy
 msgid "Marked for removal"
 msgstr "Markeret til at fjernes"
 
-#: common/rpackage.cc:1225
-msgid "Marked for removal including configuration"
-msgstr ""
+#: common/rpackage.cc:1291
+#, fuzzy
+msgid "Marked for complete removal"
+msgstr "Markeret til at fjernes"
 
-#: common/rpackage.cc:1226 gtk/window_filters.glade.h:23
+#: common/rpackage.cc:1292 common/rpackageview.cc:103
+#: gtk/window_filters.glade.h:23
 #, fuzzy
 msgid "Not installed"
 msgstr "Ikke installeret"
 
-#: common/rpackage.cc:1227
+#: common/rpackage.cc:1293
 #, fuzzy
 msgid "Not installed (locked)"
 msgstr "Ikke installeret"
 
-#: common/rpackage.cc:1228 gtk/window_filters.glade.h:17
+#: common/rpackage.cc:1294 common/rpackageview.cc:98
+#: gtk/window_filters.glade.h:17
 msgid "Installed"
 msgstr "Installeret"
 
-#: common/rpackage.cc:1229
+#: common/rpackage.cc:1295
 #, fuzzy
 msgid "Installed (update available)"
 msgstr "Installerede og kan opgraderes"
 
-#: common/rpackage.cc:1230
+#: common/rpackage.cc:1296
 msgid "Installed (locked to the current version)"
 msgstr ""
 
-#: common/rpackage.cc:1231 gtk/window_filters.glade.h:6
+#: common/rpackage.cc:1297 common/rpackageview.cc:334
+#: gtk/window_filters.glade.h:6
 msgid "Broken"
 msgstr "Beskadiget"
 
-#: common/rpackage.cc:1232
+#: common/rpackage.cc:1298
 #, fuzzy
 msgid "Not installed (new in archive)"
 msgstr "Ikke installeret"
@@ -466,86 +470,99 @@ msgstr "Pakkelisten eller statusfilen kunne ikke åbnes eller forstås."
 msgid "Internal Error, non-zero counts"
 msgstr "Intern fejl, tællere er forskellig fra nul"
 
-#: common/rpackagefilter.cc:43 common/rpackageview.h:112
-#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:13
-#: gtk/window_preferences.glade.h:81 gtk/window_filters.glade.h:46
-msgid "Status"
-msgstr "Status"
-
-#. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:44 gtk/rgfiltermanager.cc:182
-msgid "Pattern"
-msgstr "Mønster"
-
-#: common/rpackagefilter.cc:45 gtk/window_main.glade.h:11
-#: gtk/window_filters.glade.h:45
-msgid "Section"
-msgstr "Sektion"
-
-#: common/rpackagefilter.cc:46
-msgid "Priority"
-msgstr "Prioritet"
-
-#: common/rpackagefilter.cc:47
-msgid "ReducedView"
-msgstr "ReduceretVisning"
-
-#: common/rpackagefilter.cc:127 gtk/window_find.glade.h:5
-#: gtk/window_preferences.glade.h:65
+#: common/rpackagefilter.cc:45 gtk/window_find.glade.h:5
+#: gtk/window_preferences.glade.h:64
 msgid "Name"
 msgstr "Navn"
 
-#: common/rpackagefilter.cc:128 gtk/window_find.glade.h:10
+#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:10
 msgid "Version"
 msgstr "Version"
 
-#: common/rpackagefilter.cc:129 gtk/rgmainwindow.cc:683
+#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:705
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_preferences.glade.h:37
 #: gtk/window_filters.glade.h:9 gtk/rgfiltermanager.h:71
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: common/rpackagefilter.cc:130 gtk/window_find.glade.h:4
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:4
 #: gtk/window_filters.glade.h:20 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Vedligeholder"
 
-#: common/rpackagefilter.cc:131 gtk/window_find.glade.h:2
+#: common/rpackagefilter.cc:49 gtk/window_find.glade.h:2
 msgid "Depends"
 msgstr "Afhæng."
 
-#: common/rpackagefilter.cc:132 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:50 gtk/window_find.glade.h:6
 msgid "Provides"
 msgstr "Indeholder"
 
-#: common/rpackagefilter.cc:133
+#: common/rpackagefilter.cc:51
 msgid "Conflicts"
 msgstr "Er i konflikt med"
 
-#: common/rpackagefilter.cc:134
+#: common/rpackagefilter.cc:52
 msgid "Replaces"
 msgstr "Erstatter"
 
-#: common/rpackagefilter.cc:135
-msgid "WeakDepends"
-msgstr "Svage afhængigheder"
+#. replaces/obsoletes
+#: common/rpackagefilter.cc:53 gtk/rgfiltermanager.h:77
+#, fuzzy
+msgid "Recommends"
+msgstr "Anbefalet"
 
-#: common/rpackagefilter.cc:136
+#. /recommends
+#: common/rpackagefilter.cc:54 gtk/rgfiltermanager.h:78
+msgid "Suggests"
+msgstr "Foreslår"
+
+#: common/rpackagefilter.cc:55
 msgid "ReverseDepends"
 msgstr "Omvendte afhængigheder"
 
-#: common/rpackagefilter.cc:587
+#. Reverse Depends
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:25
+#: gtk/rgfiltermanager.h:80
+msgid "Origin"
+msgstr ""
+
+#: common/rpackagefilter.cc:61 common/rpackageview.h:110
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
+#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:47
+msgid "Status"
+msgstr "Status"
+
+#. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:182
+msgid "Pattern"
+msgstr "Mønster"
+
+#: common/rpackagefilter.cc:63 gtk/window_main.glade.h:14
+#: gtk/window_filters.glade.h:46
+msgid "Section"
+msgstr "Sektion"
+
+#: common/rpackagefilter.cc:64
+msgid "Priority"
+msgstr "Prioritet"
+
+#: common/rpackagefilter.cc:65
+msgid "ReducedView"
+msgstr "ReduceretVisning"
+
+#: common/rpackagefilter.cc:612
 #, fuzzy, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "kunne ikke åbne ReduceretVisnings-fil %s"
 
-#: common/rpackagefilter.cc:615
+#: common/rpackagefilter.cc:640
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr ""
 
-#: common/rpackagefilter.cc:679
+#: common/rpackagefilter.cc:704
 #, fuzzy
 msgid "unknown"
 msgstr "Ukendt"
@@ -562,9 +579,10 @@ msgid "Unable to correct dependencies"
 msgstr "Kan ikke rette manglende pakker"
 
 #: common/rpackagelister.cc:448
-#, fuzzy
-msgid "Unable to minimize the upgrade set"
-msgstr "Kunne ikke læse cdrom-databasen %s"
+msgid ""
+"Unable to mark upgrades\n"
+"Check your system for errors."
+msgstr ""
 
 #: common/rpackagelister.cc:460
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
@@ -594,7 +612,7 @@ msgstr ""
 "gamle udgaver er blevet brugt i stedet."
 
 #: common/rpackagelister.cc:1146 common/rpackagelister.cc:1152
-#: gtk/rgrepositorywin.cc:322
+#: gtk/rgrepositorywin.cc:330
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr ""
 
@@ -622,16 +640,16 @@ msgstr "Kan ikke låse nedhentningskataloget"
 
 #: common/rpackagelister.cc:1363
 #, fuzzy, c-format
-msgid "Line %u too long in selection file."
+msgid "Line %u too long in markings file."
 msgstr "Automatisk opgraderingsudvælgelse mislykkedes."
 
 #: common/rpackagelister.cc:1377 common/rpackagelister.cc:1381
 #, c-format
-msgid "Malformed line %u in selection file"
+msgid "Malformed line %u in markings file"
 msgstr ""
 
 #: common/rpackagelister.cc:1393
-msgid "Setting selections..."
+msgid "Setting markings..."
 msgstr ""
 
 #: common/rpmindexcopy.cc:116
@@ -647,20 +665,64 @@ msgstr ""
 msgid "Sections"
 msgstr "Sektion"
 
-#: common/rpackageview.h:97
+#: common/rpackageview.h:95
 msgid "Alphabetic"
 msgstr ""
 
 #
-#: common/rpackageview.h:127
+#: common/rpackageview.h:125
 #, fuzzy
-msgid "Search History"
+msgid "Find History"
 msgstr "Søgefilter"
 
-#: common/rpackageview.h:168
+#: common/rpackageview.h:166
 #, fuzzy
 msgid "Filter"
 msgstr "Filtre..."
+
+#: common/rpackageview.cc:90
+#, fuzzy
+msgid "New in repository"
+msgstr "Tilføj arkiv"
+
+#: common/rpackageview.cc:93
+#, fuzzy
+msgid "Installed and obsolete"
+msgstr "Installerede og kan opgraderes"
+
+#: common/rpackageview.cc:96 gtk/window_filters.glade.h:18
+#, fuzzy
+msgid "Installed and upgradable"
+msgstr "Installerede og kan opgraderes"
+
+#: common/rpackageview.cc:101
+#, fuzzy
+msgid "Not installed (residual config)"
+msgstr "Ikke installeret"
+
+#
+#: common/rpackageview.cc:312
+#, fuzzy
+msgid "Search Filter"
+msgstr "Søgefilter"
+
+#: common/rpackageview.cc:320
+msgid "Tasks"
+msgstr "Opgaver"
+
+#: common/rpackageview.cc:326
+#, fuzzy
+msgid "Reduced View"
+msgstr "ReduceretVisning"
+
+#: common/rpackageview.cc:343
+#, fuzzy
+msgid "Queued Changes"
+msgstr "Forventede ændringer"
+
+#: common/rpackageview.cc:352
+msgid "Pkg with Debconf"
+msgstr ""
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -682,36 +744,42 @@ msgstr ""
 
 #: gtk/dialog_upgrade.glade.h:2
 msgid ""
-"<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
+"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
+"afterwards."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:33
+#: gtk/dialog_upgrade.glade.h:3
+msgid ""
+"<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:33
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "DistUpgrade"
 
-#: gtk/dialog_upgrade.glade.h:4
+#: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:5 gtk/window_preferences.glade.h:80
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:79
 #, fuzzy
 msgid "Smart Upgrade"
 msgstr "Opgradér"
 
-#: gtk/dialog_upgrade.glade.h:6
+#: gtk/dialog_upgrade.glade.h:7
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:7
+#: gtk/dialog_upgrade.glade.h:8
 msgid ""
-"The smart upgrade attempts to resolve conflicts and to fulfill all "
-"dependencies of upgrades in a smart way."
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fulfill all dependencies of upgrades in a smart way."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:8
+#: gtk/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr ""
 
@@ -735,50 +803,50 @@ msgid ""
 "Include the output of the \"locale\" command in your email."
 msgstr ""
 
-#: gtk/gsynaptic.cc:55
+#: gtk/gsynaptic.cc:56
 #, fuzzy
 msgid "Usage: synaptic [options]\n"
 msgstr "Konfigurér valgmuligheder i Synaptic"
 
-#: gtk/gsynaptic.cc:56
+#: gtk/gsynaptic.cc:57
 msgid "-h   This help text\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:57
+#: gtk/gsynaptic.cc:58
 msgid "-r   Open in the repository screen\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:58
+#: gtk/gsynaptic.cc:59
 msgid "-f=? Give a alternative filter file\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:59
+#: gtk/gsynaptic.cc:60
 msgid "-i=? Start with the initialFilter with the number given\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:60
+#: gtk/gsynaptic.cc:61
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:128
+#: gtk/gsynaptic.cc:129
 msgid "You must run this program as the root user."
 msgstr "Du skal køre dette program som brugeren root."
 
-#: gtk/gsynaptic.cc:168
+#: gtk/gsynaptic.cc:169
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "Pakken er installeret"
 
 #: gtk/rgcdscanner.cc:61
 #, fuzzy
-msgid "Scanning CD-ROM..."
+msgid "Scanning CD-ROM"
 msgstr "Afmonterer cdrom..."
 
-#: gtk/rgcdscanner.cc:94
+#: gtk/rgcdscanner.cc:100
 msgid "Invalid disc name!"
 msgstr ""
 
-#: gtk/rgcdscanner.cc:105
+#: gtk/rgcdscanner.cc:111
 #, fuzzy
 msgid "Disc Label"
 msgstr "Skift diskette"
@@ -796,8 +864,8 @@ msgstr ""
 msgid "Package changes"
 msgstr "Pakker som"
 
-#: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:108
-#: gtk/window_filters.glade.h:50
+#: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:109
+#: gtk/window_filters.glade.h:51
 #, fuzzy
 msgid "To be removed"
 msgstr ": vil blive fjernet\n"
@@ -807,17 +875,17 @@ msgstr ": vil blive fjernet\n"
 msgid "To be downgraded"
 msgstr "%d %s vil blive opgraderet;\n"
 
-#: gtk/rgchangeswindow.cc:129 gtk/rgsummarywindow.cc:120
+#: gtk/rgchangeswindow.cc:129 gtk/rgsummarywindow.cc:121
 #, fuzzy
 msgid "To be upgraded"
 msgstr "%d %s vil blive opgraderet;\n"
 
-#: gtk/rgchangeswindow.cc:141 gtk/rgsummarywindow.cc:132
+#: gtk/rgchangeswindow.cc:141 gtk/rgsummarywindow.cc:133
 #, fuzzy
 msgid "To be installed"
 msgstr "Ikke installeret"
 
-#: gtk/rgchangeswindow.cc:153 gtk/rgsummarywindow.cc:144
+#: gtk/rgchangeswindow.cc:153 gtk/rgsummarywindow.cc:145
 #, fuzzy
 msgid "To be re-installed"
 msgstr "Ikke installeret"
@@ -827,31 +895,32 @@ msgstr "Ikke installeret"
 msgid "To be kept"
 msgstr ": vil blive fjernet\n"
 
-#: gtk/rgpreferenceswindow.cc:218 gtk/rgmainwindow.cc:1258
+#: gtk/rgpreferenceswindow.cc:220 gtk/rgmainwindow.cc:1320
 msgid "An error occurred while saving configurations."
 msgstr "En fejl skete ved gemning af konfigurationer."
 
-#: gtk/rgpreferenceswindow.cc:261
+#: gtk/rgpreferenceswindow.cc:263
 msgid "Choose font"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:544
+#: gtk/rgpreferenceswindow.cc:546
 msgid "Color selection"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:738
+#: gtk/rgpreferenceswindow.cc:743
 msgid "ignore"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:784 gtk/window_preferences.glade.h:75
+#: gtk/rgpreferenceswindow.cc:789 gtk/window_preferences.glade.h:74
 msgid "Preferences"
 msgstr "Foretrukne"
 
 #: gtk/rgfetchprogress.cc:64
-msgid "Downloading Files..."
-msgstr ""
+#, fuzzy
+msgid "Downloading Files"
+msgstr "Skift til panel for pakkefilter"
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:663
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:685
 msgid "Size"
 msgstr "Størrelse"
 
@@ -869,13 +938,13 @@ msgstr "Indsæt diskette mærket:\n"
 
 #: gtk/rgfetchprogress.cc:230
 #, fuzzy, c-format
-msgid "Retrieving %li of %li files at %s/s - %s remaining"
+msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "%-3li/%-3li filer    %4sB/s  rest %6s\n"
 
 #: gtk/rgfetchprogress.cc:235
 #, fuzzy, c-format
-msgid "Retrieving %li of %li files"
-msgstr "Henter indeksfiler"
+msgid "Downloading file %li of %li"
+msgstr "Skift til panel for pakkefilter"
 
 #: gtk/rgfetchprogress.cc:300
 msgid "Queued"
@@ -934,103 +1003,121 @@ msgid ""
 "\n"
 msgstr ""
 
-#: gtk/rginstallprogress.cc:268 gtk/window_zvtinstallprogress.glade.h:2
+#: gtk/rginstallprogress.cc:268
 #, fuzzy
-msgid "Applying Changes..."
+msgid "Applying Changes"
 msgstr "Forventede ændringer"
 
-#: gtk/rgmainwindow.cc:75
+#: gtk/rgmainwindow.cc:76
 msgid "Normal"
 msgstr "Normal"
 
-#: gtk/rgmainwindow.cc:76
+#: gtk/rgmainwindow.cc:77
 msgid "Critical"
 msgstr "Kritisk"
 
-#: gtk/rgmainwindow.cc:77
+#: gtk/rgmainwindow.cc:78
 msgid "Security"
 msgstr "Sikkerhed"
 
-#: gtk/rgmainwindow.cc:150
+#: gtk/rgmainwindow.cc:171
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:272
+#: gtk/rgmainwindow.cc:293
 #, fuzzy
 msgid "No package is selected.\n"
 msgstr "Pakken er installeret"
 
 #. standard header in case the installing fails
-#: gtk/rgmainwindow.cc:446
+#: gtk/rgmainwindow.cc:467
 msgid ""
 "Some packages could not be installed.\n"
 "\n"
 "The following packages have unmet dependencies:\n"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:593
+#: gtk/rgmainwindow.cc:615
 msgid "Package"
 msgstr "Pakke"
 
-#: gtk/rgmainwindow.cc:618
+#: gtk/rgmainwindow.cc:640
 msgid "Installed Version"
 msgstr "Installeret version"
 
-#: gtk/rgmainwindow.cc:637
+#: gtk/rgmainwindow.cc:659
 #, fuzzy
 msgid "Latest Version"
 msgstr "    Version"
 
-#: gtk/rgmainwindow.cc:874
+#: gtk/rgmainwindow.cc:904
 #, fuzzy
 msgid "Refresh the list of known packages"
 msgstr "pakke er en virtuel pakke"
 
-#: gtk/rgmainwindow.cc:878
+#: gtk/rgmainwindow.cc:908
 msgid "Mark all possible upgrades"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:882 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:912 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1039
-#, fuzzy
-msgid "No Changes"
-msgstr "Udfører ændringer"
-
-#: gtk/rgmainwindow.cc:1047
-msgid "Install"
-msgstr "Installér"
-
-#: gtk/rgmainwindow.cc:1055
-#, fuzzy
-msgid "Reinstall"
-msgstr "Installér"
-
-#: gtk/rgmainwindow.cc:1064
-msgid "Upgrade"
-msgstr "Opgradér"
-
-#: gtk/rgmainwindow.cc:1072 gtk/rgvendorswindow.cc:136
-msgid "Remove"
-msgstr "Fjern"
-
-#: gtk/rgmainwindow.cc:1081
-msgid "Remove Including Configuration"
+#: gtk/rgmainwindow.cc:1074
+msgid "Unmark"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1089
+#: gtk/rgmainwindow.cc:1082
+#, fuzzy
+msgid "Mark for Installation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/rgmainwindow.cc:1090
+#, fuzzy
+msgid "Mark for Reinstallation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/rgmainwindow.cc:1099
+#, fuzzy
+msgid "Mark for Upgrade"
+msgstr "Markeret til at installeres eller opgraderes"
+
+#: gtk/rgmainwindow.cc:1107
+#, fuzzy
+msgid "Mark for Removal"
+msgstr "Markeret til at fjernes"
+
+#: gtk/rgmainwindow.cc:1116
+#, fuzzy
+msgid "Mark for Complete Removal"
+msgstr "Markeret til at fjernes"
+
+#: gtk/rgmainwindow.cc:1128
 #, fuzzy
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Fjern med afhængigheder"
 
-#: gtk/rgmainwindow.cc:1101
+#: gtk/rgmainwindow.cc:1140
 #, fuzzy
 msgid "Hold Current Version"
 msgstr "    Version"
 
-#: gtk/rgmainwindow.cc:1154
+#: gtk/rgmainwindow.cc:1149 gtk/window_filters.glade.h:40
+#, fuzzy
+msgid "Properties"
+msgstr "Indeholder"
+
+#: gtk/rgmainwindow.cc:1161
+#, fuzzy
+msgid "Mark Recommended for Installation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/rgmainwindow.cc:1165
+#, fuzzy
+msgid "Mark Suggested for Installation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/rgmainwindow.cc:1216
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1038,7 +1125,7 @@ msgstr ""
 "Fjernelse af denne pakke kan gøre dit system ubrugeligt.\n"
 "Er du sikker på at du ønsker at gøre dette?"
 
-#: gtk/rgmainwindow.cc:1193
+#: gtk/rgmainwindow.cc:1255
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1047,7 +1134,7 @@ msgstr ""
 "%i pakker víst, %i installeret, %i beskadiget. %i at installere/opgradere, %"
 "i at fjerne; %sB vil blive %s"
 
-#: gtk/rgmainwindow.cc:1199
+#: gtk/rgmainwindow.cc:1261
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1056,7 +1143,7 @@ msgstr ""
 "%i pakker víst, %i installeret, %i beskadiget. %i at installere/opgradere, %"
 "i at fjerne; %sB vil blive %s"
 
-#: gtk/rgmainwindow.cc:1275
+#: gtk/rgmainwindow.cc:1337
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1069,42 +1156,42 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gtk/rgmainwindow.cc:1473
+#: gtk/rgmainwindow.cc:1571
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1604 gtk/rgmainwindow.cc:2131 gtk/rgmainwindow.cc:2203
-#: gtk/rgmainwindow.cc:2347
+#: gtk/rgmainwindow.cc:1702 gtk/rgmainwindow.cc:2233 gtk/rgmainwindow.cc:2305
+#: gtk/rgmainwindow.cc:2463
 #, fuzzy, c-format
 msgid "Can't read %s"
 msgstr "Kunne ikke læse %s"
 
-#: gtk/rgmainwindow.cc:1620
+#: gtk/rgmainwindow.cc:1718
 #, fuzzy
 msgid "Open changes"
 msgstr "Pakker som"
 
-#: gtk/rgmainwindow.cc:1651 gtk/rgmainwindow.cc:1714 gtk/rgmainwindow.cc:2064
-#: gtk/rgmainwindow.cc:2181 gtk/rgmainwindow.cc:2324
+#: gtk/rgmainwindow.cc:1749 gtk/rgmainwindow.cc:1812 gtk/rgmainwindow.cc:2166
+#: gtk/rgmainwindow.cc:2283 gtk/rgmainwindow.cc:2440
 #, c-format
 msgid "Can't write %s"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1670
+#: gtk/rgmainwindow.cc:1768
 #, fuzzy
 msgid "Save changes"
 msgstr "Pakker som"
 
-#: gtk/rgmainwindow.cc:1687
+#: gtk/rgmainwindow.cc:1785
 msgid "Save full state, not only changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1843
+#: gtk/rgmainwindow.cc:1934
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Opdatér pakkecache"
 
-#: gtk/rgmainwindow.cc:1852
+#: gtk/rgmainwindow.cc:1951
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1115,77 +1202,77 @@ msgid ""
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1985
+#: gtk/rgmainwindow.cc:2084
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1991
+#: gtk/rgmainwindow.cc:2090
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Opdatér pakkecache"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2003
+#: gtk/rgmainwindow.cc:2102
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Opdatér pakkecache"
 
-#: gtk/rgmainwindow.cc:2031
+#: gtk/rgmainwindow.cc:2133
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2050
+#: gtk/rgmainwindow.cc:2152
 msgid "Applying marked changes. This may take a while..."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2054
+#: gtk/rgmainwindow.cc:2156
 #, fuzzy
-msgid "Retrieving Package Files..."
-msgstr "Henter pakkefiler"
+msgid "Downloading Package Files"
+msgstr "Skift til panel for pakkefilter"
 
-#: gtk/rgmainwindow.cc:2114
+#: gtk/rgmainwindow.cc:2216
 msgid "Do you want to quit Synaptic?"
 msgstr "Vil du afslutte Synaptic?"
 
-#: gtk/rgmainwindow.cc:2168
+#: gtk/rgmainwindow.cc:2270
 #, fuzzy
-msgid "Retrieving Index Files..."
-msgstr "Henter indeksfiler"
+msgid "Downloading Index Files"
+msgstr "Skift til panel for pakkefilter"
 
-#: gtk/rgmainwindow.cc:2170
+#: gtk/rgmainwindow.cc:2272
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Renser pakkelister..."
 
-#: gtk/rgmainwindow.cc:2227
+#: gtk/rgmainwindow.cc:2329
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Reparér afhængighedsproblemer"
 
-#: gtk/rgmainwindow.cc:2229
+#: gtk/rgmainwindow.cc:2331
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "Reparér afhængighedsproblemer"
 
-#: gtk/rgmainwindow.cc:2245
+#: gtk/rgmainwindow.cc:2347
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2271
+#: gtk/rgmainwindow.cc:2387
 msgid "Marking all available upgrades..."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2283
+#: gtk/rgmainwindow.cc:2399
 msgid "Successfully marked all available upgrades"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2285
+#: gtk/rgmainwindow.cc:2401
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1216,138 +1303,138 @@ msgstr "Distribution"
 msgid "Section(s)"
 msgstr "Sektioner"
 
-#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:375
+#: gtk/rgrepositorywin.cc:261 gtk/rgrepositorywin.cc:383
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(ingen leverandør)"
 
-#: gtk/rgrepositorywin.cc:329
+#: gtk/rgrepositorywin.cc:337
 msgid "Cannot read vendors.list file"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:494
+#: gtk/rgrepositorywin.cc:502
 msgid "Unknown source type"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:82
+#: gtk/rgsummarywindow.cc:83
 #, fuzzy
 msgid "(ESSENTIAL) to be removed"
 msgstr ": (ESSENTIEL) vil blive fjernet\n"
 
-#: gtk/rgsummarywindow.cc:95
+#: gtk/rgsummarywindow.cc:96
 msgid "To be DOWNGRADED"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:159
+#: gtk/rgsummarywindow.cc:160
 msgid "To be kept back"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:210
+#: gtk/rgsummarywindow.cc:211
 #, fuzzy, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "ADVARSEL: %d essentielle %s vil blive fjernet!\n"
 
-#: gtk/rgsummarywindow.cc:219
+#: gtk/rgsummarywindow.cc:220
 #, fuzzy, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "%d %s vil blive opgraderet;\n"
 
-#: gtk/rgsummarywindow.cc:227
+#: gtk/rgsummarywindow.cc:228
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "%d %s vil blive fjernet;\n"
 
-#: gtk/rgsummarywindow.cc:236
+#: gtk/rgsummarywindow.cc:237
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:247
+#: gtk/rgsummarywindow.cc:248
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "%d nye %s vil blive installeret;\n"
 
-#: gtk/rgsummarywindow.cc:255
+#: gtk/rgsummarywindow.cc:256
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "%d nye %s vil blive installeret;\n"
 
-#: gtk/rgsummarywindow.cc:274
+#: gtk/rgsummarywindow.cc:275
 msgid "Summary"
 msgstr "Oversigt"
 
-#: gtk/rgsummarywindow.cc:294
+#: gtk/rgsummarywindow.cc:295
 #, fuzzy
 msgid "Marked Changes"
 msgstr "Forventede ændringer"
 
-#: gtk/rgsummarywindow.cc:334
+#: gtk/rgsummarywindow.cc:335
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "Pakken er ødelagt."
 msgstr[1] "Pakken er ødelagt."
 
-#: gtk/rgsummarywindow.cc:340
+#: gtk/rgsummarywindow.cc:341
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d %s blev tilbageholdt og ikke opgraderet;\n"
 msgstr[1] "%d %s blev tilbageholdt og ikke opgraderet;\n"
 
-#: gtk/rgsummarywindow.cc:347
+#: gtk/rgsummarywindow.cc:348
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d nye %s vil blive installeret;\n"
 msgstr[1] "%d nye %s vil blive installeret;\n"
 
-#: gtk/rgsummarywindow.cc:354
+#: gtk/rgsummarywindow.cc:355
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d nye %s vil blive installeret;\n"
 msgstr[1] "%d nye %s vil blive installeret;\n"
 
-#: gtk/rgsummarywindow.cc:361
+#: gtk/rgsummarywindow.cc:362
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "Pakken vil blive opgraderet."
 msgstr[1] "Pakken vil blive opgraderet."
 
-#: gtk/rgsummarywindow.cc:368
+#: gtk/rgsummarywindow.cc:369
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d %s vil blive fjernet;\n"
 msgstr[1] "%d %s vil blive fjernet;\n"
 
-#: gtk/rgsummarywindow.cc:375
+#: gtk/rgsummarywindow.cc:376
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "Pakken vil blive opgraderet."
 msgstr[1] "Pakken vil blive opgraderet."
 
-#: gtk/rgsummarywindow.cc:383
+#: gtk/rgsummarywindow.cc:384
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "ADVARSEL: %d essentielle %s vil blive fjernet!\n"
 msgstr[1] "ADVARSEL: %d essentielle %s vil blive fjernet!\n"
 
-#: gtk/rgsummarywindow.cc:395
+#: gtk/rgsummarywindow.cc:396
 #, c-format
 msgid "%s of extra space will be used"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:398
+#: gtk/rgsummarywindow.cc:399
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:404
+#: gtk/rgsummarywindow.cc:405
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1356,7 +1443,7 @@ msgstr ""
 "\n"
 "%sB skal hentes."
 
-#: gtk/rgsummarywindow.cc:429
+#: gtk/rgsummarywindow.cc:430
 #, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
@@ -1382,6 +1469,10 @@ msgstr "O.k."
 msgid "Add"
 msgstr ""
 
+#: gtk/rgvendorswindow.cc:136
+msgid "Remove"
+msgstr "Fjern"
+
 #: gtk/rgvendorswindow.cc:140
 msgid "Cancel"
 msgstr "Annullér"
@@ -1402,197 +1493,210 @@ msgstr ""
 
 #: gtk/window_main.glade.h:3
 #, fuzzy
+msgid "Mark for Co_mplete Removal"
+msgstr "Markeret til at fjernes"
+
+#: gtk/window_main.glade.h:4
+#, fuzzy
+msgid "Mark for R_einstallation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/window_main.glade.h:5
+#, fuzzy
+msgid "Mark for _Installation"
+msgstr "Markér valgte pakke til installation/opgradering"
+
+#: gtk/window_main.glade.h:6
+#, fuzzy
+msgid "Mark for _Removal"
+msgstr "Markeret til at fjernes"
+
+#: gtk/window_main.glade.h:7
+#, fuzzy
+msgid "Mark for _Upgrade"
+msgstr "Markeret til at installeres eller opgraderes"
+
+#: gtk/window_main.glade.h:8
+#, fuzzy
 msgid "No package is selected."
 msgstr "Pakken er installeret"
 
-#: gtk/window_main.glade.h:4
+#: gtk/window_main.glade.h:9
 #, fuzzy
 msgid "Pac_kage"
 msgstr "Pakke"
 
-#: gtk/window_main.glade.h:5
+#: gtk/window_main.glade.h:10
 #, fuzzy
 msgid "Prefere_nces"
 msgstr "Foretrukne"
 
-#: gtk/window_main.glade.h:6
-#, fuzzy
-msgid "R_einstall Current Version"
-msgstr "    Version"
-
-#: gtk/window_main.glade.h:7
+#: gtk/window_main.glade.h:11
 #, fuzzy
 msgid "Release"
 msgstr "Erstatter"
 
-#: gtk/window_main.glade.h:8
+#: gtk/window_main.glade.h:12
 #, fuzzy
 msgid "Remove Including Orphaned _Dependencies"
 msgstr "Fjern med afhængigheder"
 
-#: gtk/window_main.glade.h:9
-msgid "Remove Including _Configuration"
-msgstr ""
-
-#: gtk/window_main.glade.h:10
-msgid "Save Selections _As..."
-msgstr ""
-
-#: gtk/window_main.glade.h:12
-msgid "Set _Internal Option..."
-msgstr ""
-
-#: gtk/window_main.glade.h:14
-msgid "Synaptic"
+#: gtk/window_main.glade.h:13
+msgid "Save Markings _As..."
 msgstr ""
 
 #: gtk/window_main.glade.h:15
-msgid "Text Be_side Icons"
-msgstr ""
-
-#: gtk/window_main.glade.h:16
-msgid "Text _Below Icons"
+msgid "Set _Internal Option..."
 msgstr ""
 
 #: gtk/window_main.glade.h:17
-msgid "U_nmark"
+msgid "Synaptic"
 msgstr ""
 
 #: gtk/window_main.glade.h:18
-#, fuzzy
-msgid "U_nmark All Changes"
-msgstr "Forventede ændringer"
+msgid "Text Be_side Icons"
+msgstr ""
 
 #: gtk/window_main.glade.h:19
+msgid "Text _Below Icons"
+msgstr ""
+
+#: gtk/window_main.glade.h:20
+msgid "U_nmark"
+msgstr ""
+
+#: gtk/window_main.glade.h:21
+#, fuzzy
+msgid "U_nmark All"
+msgstr "Forventede ændringer"
+
+#: gtk/window_main.glade.h:22
 #, fuzzy
 msgid "Up_grade System"
 msgstr "Opgradér"
 
-#: gtk/window_main.glade.h:20
+#: gtk/window_main.glade.h:23
 #, fuzzy
 msgid "_About"
 msgstr "Om"
 
-#: gtk/window_main.glade.h:21
+#: gtk/window_main.glade.h:24
 #, fuzzy
 msgid "_Add CD-ROM..."
 msgstr "Tilføj cd-rom"
 
-#: gtk/window_main.glade.h:22
+#: gtk/window_main.glade.h:25
+msgid "_Browse Documentation"
+msgstr ""
+
+#: gtk/window_main.glade.h:26
+#, fuzzy
+msgid "_Configure"
+msgstr "Fortsæt"
+
+#: gtk/window_main.glade.h:27
 #, fuzzy
 msgid "_Contents"
 msgstr "Komponenter"
 
-#: gtk/window_main.glade.h:23
-msgid "_Documentation"
-msgstr ""
+#: gtk/window_main.glade.h:28
+#, fuzzy
+msgid "_Download Changelog"
+msgstr "Skift til panel for pakkefilter"
 
-#: gtk/window_main.glade.h:24
+#: gtk/window_main.glade.h:29
 #, fuzzy
 msgid "_Edit"
 msgstr "Redigér"
 
-#: gtk/window_main.glade.h:25
+#: gtk/window_main.glade.h:30
 #, fuzzy
 msgid "_File"
 msgstr "Mislykkedes"
 
-#: gtk/window_main.glade.h:26
+#: gtk/window_main.glade.h:31
 #, fuzzy
 msgid "_Filters"
 msgstr "Filtre..."
 
-#: gtk/window_main.glade.h:27
+#: gtk/window_main.glade.h:32
 #, fuzzy
 msgid "_Find..."
 msgstr "Færdig."
 
-#: gtk/window_main.glade.h:28
+#: gtk/window_main.glade.h:33
 #, fuzzy
 msgid "_Fix Broken Packages"
 msgstr "Find pakke"
 
-#: gtk/window_main.glade.h:29
+#: gtk/window_main.glade.h:34
 #, fuzzy
 msgid "_Help"
 msgstr "Behold"
 
-#: gtk/window_main.glade.h:30
+#: gtk/window_main.glade.h:35
 #, fuzzy
 msgid "_Hide"
 msgstr "Mislykkedes"
 
-#: gtk/window_main.glade.h:31
+#: gtk/window_main.glade.h:36
 msgid "_Icon Legend"
 msgstr ""
 
-#: gtk/window_main.glade.h:32
-msgid "_Icons Only"
-msgstr ""
-
-#: gtk/window_main.glade.h:33
-#, fuzzy
-msgid "_Install Latest Version"
-msgstr "Installeret version"
-
-#: gtk/window_main.glade.h:34
-#, fuzzy
-msgid "_Lock Current Status and Version"
-msgstr "    Version"
-
-#: gtk/window_main.glade.h:35
-msgid "_Quick Introduction"
-msgstr ""
-
-#: gtk/window_main.glade.h:36
-#, fuzzy
-msgid "_Quit"
-msgstr "Afslut"
-
 #: gtk/window_main.glade.h:37
-msgid "_Read Selections..."
+msgid "_Icons Only"
 msgstr ""
 
 #: gtk/window_main.glade.h:38
 #, fuzzy
+msgid "_Lock Current Status and Version"
+msgstr "    Version"
+
+#: gtk/window_main.glade.h:39
+msgid "_Quick Introduction"
+msgstr ""
+
+#: gtk/window_main.glade.h:40
+#, fuzzy
+msgid "_Quit"
+msgstr "Afslut"
+
+#: gtk/window_main.glade.h:41
+#, fuzzy
+msgid "_Read Markings..."
+msgstr "Forbereder..."
+
+#: gtk/window_main.glade.h:42
+#, fuzzy
 msgid "_Redo"
 msgstr "Fjern"
 
-#: gtk/window_main.glade.h:39
+#: gtk/window_main.glade.h:43
 #, fuzzy
 msgid "_Refresh Package List"
 msgstr "Renser pakkelister..."
 
-#: gtk/window_main.glade.h:40
-#, fuzzy
-msgid "_Remove"
-msgstr "Fjern"
-
-#: gtk/window_main.glade.h:41
+#: gtk/window_main.glade.h:44
 #, fuzzy
 msgid "_Repositories"
 msgstr "Tilføj arkiv"
 
-#: gtk/window_main.glade.h:42
+#: gtk/window_main.glade.h:45
 #, fuzzy
-msgid "_Save Selections"
-msgstr "Sektioner"
+msgid "_Save Markings"
+msgstr "Pakker som"
 
-#: gtk/window_main.glade.h:43
+#: gtk/window_main.glade.h:46
 msgid "_Text Only"
 msgstr ""
 
-#: gtk/window_main.glade.h:44
+#: gtk/window_main.glade.h:47
 msgid "_Toolbar"
 msgstr ""
 
-#: gtk/window_main.glade.h:45
+#: gtk/window_main.glade.h:48
 msgid "_Undo"
 msgstr ""
-
-#: gtk/window_main.glade.h:46
-msgid "_Upgrade"
-msgstr "_Opgradér"
 
 #: gtk/window_about.glade.h:1
 msgid ""
@@ -1633,7 +1737,7 @@ msgid ""
 "\n"
 "Contributors:\n"
 "Enrico Zini <enrico@debian.org>\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 msgstr ""
@@ -1663,7 +1767,7 @@ msgid ""
 "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
 "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
 "Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
+"Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
 "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
 "Mathieu Roy <yeupou@gnu.org> (French)\n"
 "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
@@ -1867,13 +1971,12 @@ msgid ""
 msgstr ""
 
 #: gtk/window_preferences.glade.h:31
-msgid "Consider recommended packages as dependencies"
+msgid "Completely"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:32
-#, fuzzy
-msgid "Default"
-msgstr "Slet"
+msgid "Consider recommended packages as dependencies"
+msgstr ""
 
 #: gtk/window_preferences.glade.h:34
 msgid "Default archive: "
@@ -1925,185 +2028,180 @@ msgid "IP address or host name of the http proxy server"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:47
-msgid "Include Configuration"
-msgstr ""
-
-#: gtk/window_preferences.glade.h:48
-#, fuzzy
-msgid "Include Orphaned Dependencies"
-msgstr "Inkludér kun valgte sektioner"
-
-#: gtk/window_preferences.glade.h:49
 #, fuzzy
 msgid "Installed (locked):"
 msgstr ""
 "\n"
 "Installeret pakke:\n"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:48
 #, fuzzy
 msgid "Installed size"
 msgstr "Installeret"
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:49
 #, fuzzy
 msgid "Installed version"
 msgstr "Installeret version"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:50
 #, fuzzy
 msgid "Installed:"
 msgstr "Installeret"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:51
+msgid "Keep Configuration"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:52
 msgid "Latest version"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:53
 #, fuzzy
 msgid "Leave all downloaded packages in the cache"
 msgstr "Lad hentede pakker blive i cachen"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:54
 msgid "Manual proxy configuration"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:55
 msgid "Mark most likely change by clicking on the status icon"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:56
 #, fuzzy
 msgid "Marked for downgrade:"
 msgstr "Markeret til at installeres eller opgraderes"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:57
 #, fuzzy
 msgid "Marked for installation:"
 msgstr "Markér valgte pakke til installation/opgradering"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:58
 #, fuzzy
 msgid "Marked for reinstallation:"
 msgstr "Markér valgte pakke til installation/opgradering"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:59
 msgid "Marked for removal including config:"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:60
 #, fuzzy
 msgid "Marked for removal:"
 msgstr "Markeret til at fjernes"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:61
 #, fuzzy
 msgid "Marked for upgrade:"
 msgstr "Markeret til at installeres eller opgraderes"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:62
 msgid "Move D_own"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:64
+#: gtk/window_preferences.glade.h:63
 msgid "Move _Up"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:65
 #, fuzzy
 msgid "Network"
 msgstr "Ny"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:66
 msgid "New in archive:"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Not installed (locked):"
 msgstr "Ikke installeret"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:69
 #, fuzzy
 msgid "Not installed:"
 msgstr "Ikke installeret"
 
-#: gtk/window_preferences.glade.h:71
+#: gtk/window_preferences.glade.h:70
 msgid "Number of undo operations:"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:71
 msgid "Port number of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:72
 msgid "Port numer of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:74
+#: gtk/window_preferences.glade.h:73
 msgid "Port: "
 msgstr ""
 
-#: gtk/window_preferences.glade.h:76
+#: gtk/window_preferences.glade.h:75
 #, fuzzy
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "Brug regulære udtryk ved søgning og matchning"
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:76
 #, fuzzy
 msgid "Removal of packages: "
 msgstr "Alle pakker"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:77
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:79
+#: gtk/window_preferences.glade.h:78
 msgid "Show"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:82
+#: gtk/window_preferences.glade.h:81
 #, fuzzy
 msgid "System upgrade:"
 msgstr "DistUpgrade"
 
-#: gtk/window_preferences.glade.h:83
+#: gtk/window_preferences.glade.h:82
 msgid "Temporary Files"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:84
+#: gtk/window_preferences.glade.h:83
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:85
+#: gtk/window_preferences.glade.h:84
 #, fuzzy
 msgid "Update available:"
 msgstr "Tilgængelige"
 
-#: gtk/window_preferences.glade.h:86
+#: gtk/window_preferences.glade.h:85
 msgid "Use custom application font"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:87
+#: gtk/window_preferences.glade.h:86
 msgid "Use custom terminal font"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:88
+#: gtk/window_preferences.glade.h:87
 msgid "_Default Font"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:89
+#: gtk/window_preferences.glade.h:88
 #, fuzzy
 msgid "_Delete Cached Package Files"
 msgstr "Alle pakker"
 
-#: gtk/window_preferences.glade.h:90
+#: gtk/window_preferences.glade.h:89
 msgid "_Terminal Font"
 msgstr ""
 
@@ -2161,7 +2259,7 @@ msgstr ""
 
 #: gtk/window_summary.glade.h:8
 #, fuzzy
-msgid "The package files will only be retrieved, but not installed or upgraded"
+msgid "The package files will be downloaded only, but not installed"
 msgstr "Pakken vil blive installeret."
 
 #: gtk/window_summary.glade.h:9
@@ -2226,11 +2324,6 @@ msgstr "Inkludér kun valgte sektioner"
 msgid "Includes"
 msgstr "Ekskl."
 
-#: gtk/window_filters.glade.h:18
-#, fuzzy
-msgid "Installed and upgradable"
-msgstr "Installerede og kan opgraderes"
-
 #: gtk/window_filters.glade.h:19
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
@@ -2249,129 +2342,124 @@ msgstr "Ikke installeret"
 msgid "Not marked"
 msgstr "Ikke installeret"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Orphaned"
 msgstr ""
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 #, fuzzy
 msgid "Package Name"
 msgstr "Pakkeopgradering"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:28
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr ""
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:29
 msgid "Packages that are not available in any repository"
 msgstr ""
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Packages that have been installed and a later version is available"
 msgstr ""
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Packages that have been installed and are up to date"
 msgstr ""
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 #, fuzzy
 msgid "Packages that have not been installed"
 msgstr "Pakken er ikke installeret"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Packages that will be installed or upgraded"
 msgstr "Pakken vil blive installeret."
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 #, fuzzy
 msgid "Packages that will be removed"
 msgstr "Pakken vil blive opgraderet."
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 #, fuzzy
 msgid "Packages that will never be upgraded"
 msgstr "Pakken vil blive opgraderet."
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Pakker som"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 #, fuzzy
 msgid "Packages with broken dependencies"
 msgstr "Beskadigede afhængigheder."
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Pinned"
 msgstr ""
 
-#: gtk/window_filters.glade.h:39
-#, fuzzy
-msgid "Properties"
-msgstr "Indeholder"
-
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Provided Packages"
 msgstr "Find pakke"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 #, fuzzy
 msgid "Recommendations"
 msgstr "Anbefalet"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:43
 #, fuzzy
 msgid "Replaced Packages"
 msgstr "Alle pakker"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:44
 msgid "Residual config"
 msgstr ""
 
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:45
 #, fuzzy
 msgid "Reverse Dependencies"
 msgstr "Omvendte afhængigheder"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:48
 #, fuzzy
 msgid "Suggestions"
 msgstr "Foreslår"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:49
 #, fuzzy
 msgid "Tags"
 msgstr "Opgaver"
 
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:50
 #, fuzzy
 msgid "To be installed or upgraded"
 msgstr "Ikke installeret"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:52
 #, fuzzy
 msgid "Version Number"
 msgstr "Version"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:53
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Sektion"
 
-#: gtk/window_filters.glade.h:53
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "_Invert All"
 msgstr "_Installér"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Select All"
 msgstr "Sektion"
@@ -2420,7 +2508,7 @@ msgstr ""
 msgid "<b>Terminal Output:</b>"
 msgstr ""
 
-#: gtk/window_zvtinstallprogress.glade.h:3
+#: gtk/window_zvtinstallprogress.glade.h:2
 msgid "Close this dialog after the changes have been applied successfully"
 msgstr ""
 
@@ -2505,17 +2593,6 @@ msgstr "Kopierer pakkelister..."
 msgid "Replaced packages"
 msgstr "Alle pakker"
 
-#. replaces/obsoletes
-#: gtk/rgfiltermanager.h:77
-#, fuzzy
-msgid "Recommends"
-msgstr "Anbefalet"
-
-#. /recommends
-#: gtk/rgfiltermanager.h:78
-msgid "Suggests"
-msgstr "Foreslår"
-
 #. suggests
 #: gtk/rgfiltermanager.h:79
 #, fuzzy
@@ -2533,18 +2610,71 @@ msgid ""
 "</b>"
 msgstr ""
 
+#, fuzzy
+#~ msgid "_Save Selections"
+#~ msgstr "Sektioner"
+
+#, fuzzy
+#~ msgid "Unable to minimize the upgrade set"
+#~ msgstr "Kunne ikke læse cdrom-databasen %s"
+
+#, fuzzy
+#~ msgid "Retrieving %li of %li files"
+#~ msgstr "Henter indeksfiler"
+
+#, fuzzy
+#~ msgid "Retrieving Package Files"
+#~ msgstr "Henter pakkefiler"
+
+#, fuzzy
+#~ msgid "Retrieving Index Files"
+#~ msgstr "Henter indeksfiler"
+
+#~ msgid "WeakDepends"
+#~ msgstr "Svage afhængigheder"
+
+#, fuzzy
+#~ msgid "No Changes"
+#~ msgstr "Udfører ændringer"
+
+#~ msgid "Install"
+#~ msgstr "Installér"
+
+#, fuzzy
+#~ msgid "Reinstall"
+#~ msgstr "Installér"
+
+#~ msgid "Upgrade"
+#~ msgstr "Opgradér"
+
+#, fuzzy
+#~ msgid "R_einstall Current Version"
+#~ msgstr "    Version"
+
+#, fuzzy
+#~ msgid "_Install Latest Version"
+#~ msgstr "Installeret version"
+
+#, fuzzy
+#~ msgid "_Remove"
+#~ msgstr "Fjern"
+
+#~ msgid "_Upgrade"
+#~ msgstr "_Opgradér"
+
+#, fuzzy
+#~ msgid "Default"
+#~ msgstr "Slet"
+
+#, fuzzy
+#~ msgid "Include Orphaned Dependencies"
+#~ msgstr "Inkludér kun valgte sektioner"
+
 #~ msgid "Not Installed"
 #~ msgstr "Ikke installeret"
 
-#~ msgid "Tasks"
-#~ msgstr "Opgaver"
-
 #~ msgid "Upgradable"
 #~ msgstr "Kan opgraderes"
-
-#, fuzzy
-#~ msgid "Queued Changes"
-#~ msgstr "Forventede ændringer"
 
 #~ msgid "All Packages"
 #~ msgstr "Alle pakker"
@@ -2585,10 +2715,6 @@ msgstr ""
 
 #~ msgid "OH SHIT DUNNO WTF IS GOIN ON!"
 #~ msgstr "FOR HEVLEDE, JEG VED IKKE HVAD POKKER DER FOREGÅR!"
-
-#, fuzzy
-#~ msgid "New in repository"
-#~ msgstr "Tilføj arkiv"
 
 #, fuzzy
 #~ msgid "Available Tags"
@@ -2905,17 +3031,11 @@ msgstr ""
 #~ msgid "Disk Change"
 #~ msgstr "Skift diskette"
 
-#~ msgid "Continue"
-#~ msgstr "Fortsæt"
-
 #~ msgid "by Section"
 #~ msgstr "efter sektion"
 
 #~ msgid "Include packages that are..."
 #~ msgstr "Inkludér pakker som er..."
-
-#~ msgid "Installed and Upgradable"
-#~ msgstr "Installerede og kan opgraderes"
 
 #~ msgid "Marked to Keep"
 #~ msgstr "Markeret til at beholdes"

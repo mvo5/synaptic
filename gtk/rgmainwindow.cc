@@ -166,7 +166,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	    if(newpkg)
 		me->pkgInstallHelper(newpkg);
 	    else
-		cerr << depPkg << _(" not found") << endl;
+		cerr << depPkg << " not found" << endl;
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }
@@ -179,7 +179,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	  if(newpkg)
 	      me->pkgInstallHelper(newpkg);
 	  else
-	    cerr << depPkg << _(" not found") << endl;
+	    cerr << depPkg << " not found" << endl;
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }

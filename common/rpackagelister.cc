@@ -496,7 +496,7 @@ bool RPackageLister::openCache(bool reset)
 	if (I.Section()) {
 	    sectionSet.insert(I.Section());
 	} else {
-	    cerr << _("Package ") << I.Name() << _(" has no section?!") << endl;
+	    cerr << "Package " << I.Name() << " has no section?!" << endl;
 	}
 #if 0
 	// gather tree of virtual packages (using the provides field)

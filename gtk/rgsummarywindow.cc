@@ -340,10 +340,10 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 			       toDowngrade > 1 ? _("packages") : _("package"));
 			   
     if (essential) {
-	g_string_append_printf(msg,
-			      _("WARNING: %d essential %s will be removed\n"),
-			       essential, 
-			       essential > 1 ? _("packages") : _("package"));
+	if(essential == 1)
+	    g_string_append_printf(msg, _("<b>Warning</b>: 1 essential package will be removed\n"));
+	else
+	    g_string_append_printf(msg, _("<b>Warning</b>: %d essential packages will be removed\n"), essential);
 	_potentialBreak = true;
     }
 
@@ -362,8 +362,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 			       SizeToStr(dlSize).c_str());
     }
     
-    gtk_label_set_text(GTK_LABEL(_summaryL), msg->str);
-    gtk_label_set_text(GTK_LABEL(_summarySpaceL), msg_space->str);
+    gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
+    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
     g_string_free(msg,TRUE);
     g_string_free(msg_space,TRUE);
     

@@ -578,6 +578,9 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
       dia.run();
+      // we informaed the user about the problem, we can clear the
+      // apt error stack
+      _error->discardErrors();
    }
       
    return failed;

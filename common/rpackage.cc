@@ -947,19 +947,19 @@ bool RPackage::isShallowDependency(RPackage *pkg)
 vector<pair<string,string> > RPackage::getAvailableVersions()
 {
     string VerTag;
-    static vector<pair<string,string> > versions;
+    vector<pair<string,string> > versions;
 
     //cout << "vector<string> RPackage::getAvailableVersions()"<<endl;
     
     // get available Versions
     for(pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
-	cout << "Ver: " << Ver.VerStr() << endl;
+	//cout << "Ver: " << Ver.VerStr() << endl;
 	// we always take the first available version 
 	pkgCache::VerFileIterator VF = Ver.FileList();
 	if(!VF.end()) {
 	    pkgCache::PkgFileIterator File = VF.File();
-	    cout << "  Archive: " << File.Archive() << endl;
-	    cout << "  Site (origin): " << File.Site() << endl;
+	    //cout << "  Archive: " << File.Archive() << endl;
+	    //cout << "  Site (origin): " << File.Site() << endl;
 	    
 	    if(File->Archive != 0)
 		versions.push_back(pair<string,string>(Ver.VerStr(),File.Archive()));

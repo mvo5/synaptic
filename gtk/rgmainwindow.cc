@@ -1375,6 +1375,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
     // get available versions (FIXME: make this a function)
     static vector<pair<string,string> > versions;
+    versions.clear();
     versions = pkg->getAvailableVersions();
     GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
     // remove old widgets

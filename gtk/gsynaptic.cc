@@ -89,7 +89,24 @@ void RGFlushInterface()
     }
 }
 
-char * gtk_get_string_from_color(GdkColor *colp)
+bool is_binary_in_path(char *program)
+{
+    gchar **path = g_strsplit(getenv("PATH"), ":",0);
+
+    for(int i=0; path[i]!=NULL;i++) {
+	char *s = g_strdup_printf("%s/%s",path[i],program);
+	if(FileExists(s)) {
+	    g_free(s);
+	    g_strfreev(path);
+	    return true;
+	}
+	g_free(s);
+    }
+    g_strfreev(path);
+    return false;
+}
+
+char* gtk_get_string_from_color(GdkColor *colp)
 {
     static char *_str = NULL;
 

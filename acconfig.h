@@ -22,6 +22,7 @@
 /* */
 #undef HAVE_STPCPY
 
+
 /* */
 #undef GETTEXT_PACKAGE
 

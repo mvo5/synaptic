@@ -92,11 +92,12 @@ class RGFilterManagerWindow : public RGWindow
    static gint deleteEventAction(GtkWidget *widget, GdkEvent  *event,
 				 gpointer   data );
 
-   static void editFilterAction(GtkWidget *self, void *data);   
    static void selectAction(GtkTreeSelection *selection, gpointer data);
 
    // load a given filter
    void editFilter(RFilter *filter);
+   // no argument -> load selected filter
+   void editFilter();
 
    // helpers
    void setSectionFilter(RSectionPackageFilter &f);
@@ -123,6 +124,7 @@ class RGFilterManagerWindow : public RGWindow
    GtkWidget *_filterList;   /* GtkTreeView */
    GtkListStore *_filterListStore;
    GtkTreePath *_selectedPath;
+   RFilter *_selectedFilter;
    enum {
        NAME_COLUMN,
        FILTER_COLUMN,
@@ -159,7 +161,7 @@ class RGFilterManagerWindow : public RGWindow
    static void statusAllClicked(GObject *o, gpointer data);
    static void statusNoneClicked(GObject *o, gpointer data);
    void applyChanges(RFilter *filter);
-   
+   static void filterNameChanged(GObject *o, gpointer data);
 
    // the lister is always needed
    RPackageLister *_lister;  

@@ -154,19 +154,19 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   gtk_box_pack_start(GTK_BOX(hbox), _statusL, TRUE, TRUE, 5);
 
   GtkWidget *btn;
-  btn = gtk_button_new();
-  GtkWidget *pix;
-  {
-    GdkPixmap *xpm;
-    GdkBitmap *mask;
+  btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
+//   GtkWidget *pix;
+//   {
+//     GdkPixmap *xpm;
+//     GdkBitmap *mask;
     
-    xpm = gdk_pixmap_create_from_xpm_d(_win->window, &mask, NULL, stop_xpm);
-    pix = gtk_pixmap_new(xpm, mask);
-  }
-  gtk_container_add(GTK_CONTAINER(btn), pix);
+//     xpm = gdk_pixmap_create_from_xpm_d(_win->window, &mask, NULL, stop_xpm);
+//     pix = gtk_pixmap_new(xpm, mask);
+//   }
+//  gtk_container_add(GTK_CONTAINER(btn), pix);
   gtk_signal_connect(GTK_OBJECT(btn), "clicked",
 		     (GtkSignalFunc)stopShell, this);
-  gtk_box_pack_start(GTK_BOX(hbox), btn, FALSE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox), btn, FALSE, TRUE, 5);
 
   gtk_widget_show_all(GTK_WIDGET(_topBox));
 

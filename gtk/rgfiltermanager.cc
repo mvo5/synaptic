@@ -32,7 +32,8 @@
 
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win, 
 					     RPackageLister *lister)
-    : RGWindow(win, "filters", false, true, true),  _selectedPath(NULL), _lister(lister)
+    : RGWindow(win, "filters", false, true, true),  _selectedPath(NULL), 
+      _selectedFilter(NULL), _lister(lister)
 {
     setTitle(_("Package Filters"));
 
@@ -91,6 +92,10 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 				  G_CALLBACK(statusNoneClicked),
 				  this);
 
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_entry_filters_changed",
+				  G_CALLBACK(filterNameChanged),
+				  this);
 
     gtk_signal_connect(GTK_OBJECT(_win), "delete_event",
 		       GTK_SIGNAL_FUNC(deleteEventAction), this);
@@ -194,6 +199,29 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 		      G_CALLBACK (patternSelectionChanged),
 		      this);
 
+}
+
+void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
+{
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    //cout << "RGFilterManagerWindow::filterNameChanged()"<<endl;
+    
+    if(me->_selectedPath == NULL || me->_selectedFilter == NULL) 
+	return;
+
+    const gchar *s = gtk_entry_get_text(GTK_ENTRY(me->_filterEntry));
+    // test for empty filtername
+    if(s == NULL || !strcmp(s,"") )
+	return;
+    me->_selectedFilter->setName(s);
+
+    GtkTreeIter iter;
+    if(gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore), &iter,
+			       me->_selectedPath)) {
+	gtk_list_store_set(me->_filterListStore, &iter,
+			   NAME_COLUMN, s,
+			   -1);
+    }
 }
 
 void RGFilterManagerWindow::statusAllClicked(GObject *o, gpointer data)
@@ -379,12 +407,12 @@ void RGFilterManagerWindow::show()
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_filterList));
     if(_selectedPath != NULL) {
 	gtk_tree_selection_select_path(selection, _selectedPath);
-	editFilterAction(_filterEntry, this);
+	editFilter();
     }
 
     // save filter list (do a real copy, needed for cancel)
     _saveFilters.clear();
-    for(int i=0;i<_lister->nrOfFilters();i++) {
+    for(guint i=0;i<_lister->nrOfFilters();i++) {
 	RFilter *filter = _lister->findFilter(i);
 	_saveFilters.push_back(new RFilter(*filter));
     }
@@ -399,42 +427,27 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
   RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
   GtkTreeIter iter;
   GtkTreeModel *model;
-  gchar *filter;
+  RFilter *filter;
+  gchar *filtername;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
       if(me->_selectedPath != NULL)
 	  gtk_tree_path_free(me->_selectedPath);
 
+      gtk_tree_model_get (model, &iter, 
+			  NAME_COLUMN, &filtername, 
+			  FILTER_COLUMN, &filter, 
+			  -1);
       me->_selectedPath = gtk_tree_model_get_path(model, &iter);
-      gtk_tree_model_get (model, &iter, NAME_COLUMN, &filter, -1);
+      me->_selectedFilter = filter;
       //cout << "You selected" << filter << endl;
-      g_free (filter);
+      gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
+      //g_free (filtername);
       
-      me->editFilterAction((GtkWidget*)me, (void*)me);
+      me->editFilter();
   }
 }
 
-void RGFilterManagerWindow::editFilterAction(GtkWidget *self, void *data)
-{
-    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-    GtkTreeIter iter;
-    RFilter *filter=NULL;
-
-    //cout << "RGFilterManagerWindow::editFilterAction()"<<endl;
-    
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
-			    &iter, me->_selectedPath);
-
-    gtk_tree_model_get(GTK_TREE_MODEL(me->_filterListStore), &iter,
-		       FILTER_COLUMN, &filter,
-		       -1);
-    if(filter != NULL) {
-	gtk_entry_set_text(GTK_ENTRY(me->_filterEntry),
-			   (char*)filter->getName().c_str());
-    }
-
-    me->editFilter(filter);
-}
 
 // mvo: helper function 
 GtkTreePath* RGFilterManagerWindow::treeview_find_path_from_text(GtkTreeModel *model, char *text)
@@ -687,6 +700,12 @@ void RGFilterManagerWindow::getFilterView(RFilter *filter)
     filter->setViewMode(view);
 }
 
+void RGFilterManagerWindow::editFilter()
+{
+    if(_selectedFilter != NULL)
+	editFilter(_selectedFilter);
+}
+
 // set the filter setting
 void RGFilterManagerWindow::editFilter(RFilter *filter)
 {
@@ -733,12 +752,7 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
     gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
 			    &iter, me->_selectedPath);
 
-#if 0    
-    gtk_clist_set_text(GTK_CLIST(me->_filterL), row, 0, 
-		       (char*)filter->getName().c_str());
-    gtk_clist_moveto(GTK_CLIST(me->_filterL), row, 0,0,0);
-#endif
-    editFilterAction(GTK_WIDGET(me), me);
+    me->editFilter();
 }
 
 
@@ -747,28 +761,20 @@ void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
 {
 
     RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+
     GtkTreeIter iter;
     RFilter *filter;
     //cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
-
     if(me->_selectedPath == NULL) 
 	return;
-
     gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
 			    &iter, me->_selectedPath);
-
     gtk_tree_model_get(GTK_TREE_MODEL(me->_filterListStore), &iter,
 		       FILTER_COLUMN, &filter,
 		       -1);
-
     if(filter == NULL)
       return;
-
-    filter->setName(string(gtk_entry_get_text(GTK_ENTRY(me->_filterEntry))));
     me->applyChanges(filter);
-    gtk_list_store_set(me->_filterListStore, &iter,
-		       NAME_COLUMN, (char*)filter->getName().c_str(),
-		       -1);
 }
 
 
@@ -810,7 +816,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
     //cout << "void RGFilterManagerWindow::cancelAction()"<<endl;
 
     // unregister all old filters
-    int size = me->_lister->nrOfFilters();
+    guint size = me->_lister->nrOfFilters();
     for(i=0; i<size; i++) {
 	RFilter *filter = me->_lister->findFilter(0);
 	me->_lister->unregisterFilter(filter);

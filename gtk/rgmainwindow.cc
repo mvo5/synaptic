@@ -1046,7 +1046,15 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
-    if(pkg==NULL) return;
+    if(pkg==NULL) {
+	gtk_widget_set_sensitive(_installM, FALSE);
+	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+	gtk_widget_set_sensitive(_removeM, FALSE);
+	gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
+	gtk_widget_set_sensitive(_purgeM, FALSE);
+	gtk_widget_set_sensitive(_pinM, FALSE);
+	return;
+    }
 
     bool installed = FALSE;
     RPackage::PackageStatus status = pkg->getStatus();
@@ -1057,6 +1065,11 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
      case RPackage::SInstalledUpdated:
 	gtk_widget_set_sensitive(_actionB[1], FALSE);
 	gtk_widget_set_sensitive(_actionB[2], TRUE);
+	gtk_widget_set_sensitive(_installM, FALSE);
+	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+	gtk_widget_set_sensitive(_removeM, TRUE);
+	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
+	gtk_widget_set_sensitive(_purgeM, TRUE);
 	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
@@ -1066,6 +1079,11 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
      case RPackage::SInstalledOutdated:
 	gtk_widget_set_sensitive(_actionB[1], TRUE);
 	gtk_widget_set_sensitive(_actionB[2], TRUE);
+	gtk_widget_set_sensitive(_installM, FALSE);
+	gtk_widget_set_sensitive(_pkgupgradeM, TRUE);
+	gtk_widget_set_sensitive(_removeM, TRUE);
+	gtk_widget_set_sensitive(_purgeM, TRUE);
+	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
 	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
@@ -1075,6 +1093,11 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
      case RPackage::SInstalledBroken:
 	gtk_widget_set_sensitive(_actionB[1], FALSE);
 	gtk_widget_set_sensitive(_actionB[2], TRUE);
+	gtk_widget_set_sensitive(_installM, FALSE);
+	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+	gtk_widget_set_sensitive(_removeM, TRUE);
+	gtk_widget_set_sensitive(_purgeM, TRUE);
+	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
 	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
@@ -1084,6 +1107,11 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
      case RPackage::SNotInstalled:
 	gtk_widget_set_sensitive(_actionB[1], TRUE);
 	gtk_widget_set_sensitive(_actionB[2], FALSE);
+	gtk_widget_set_sensitive(_installM, TRUE);
+	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+	gtk_widget_set_sensitive(_removeM, FALSE);
+	gtk_widget_set_sensitive(_purgeM, FALSE);
+	gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
 	gtk_widget_set_sensitive(_pinB, FALSE);
 	gtk_widget_set_sensitive(_pinM, FALSE);
 	gtk_widget_set_sensitive(_pkgHelp, FALSE);
@@ -1146,6 +1174,9 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     {
 	gtk_widget_set_sensitive(_pkgReconfigure, TRUE);
     }
+
+    if(RPackage::OResidualConfig & pkg->getOtherStatus())
+	gtk_widget_set_sensitive(_purgeM, TRUE);
 
     // set button, but disable toggle signal
     bool locked = (RPackage::OPinned & pkg->getOtherStatus());
@@ -1435,6 +1466,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_widget_set_sensitive(_pkginfo, FALSE);
 
 	updateVersionButtons(NULL);
+	updatePackageStatus(NULL);
 	return;
     }
     gtk_widget_set_sensitive(_pkginfo, TRUE);
@@ -2568,7 +2600,18 @@ void RGMainWindow::buildInterface()
 						    "button_sel_install")),
 		      "me", this);
 
-
+    _keepM = glade_xml_get_widget(_gladeXML,"menu_keep");
+    assert(_keepM);
+    _installM = glade_xml_get_widget(_gladeXML,"menu_install");
+    assert(_installM);
+    _pkgupgradeM = glade_xml_get_widget(_gladeXML,"menu_upgrade");
+    assert(_upgradeM);
+    _removeM = glade_xml_get_widget(_gladeXML,"menu_remove");
+    assert(_removeM);
+    _remove_w_depsM = glade_xml_get_widget(_gladeXML,"menu_remove_with_deps");
+    assert(_remove_w_depsM);
+    _purgeM = glade_xml_get_widget(_gladeXML,"menu_purge");
+    assert(_purgeM);
 
     // workaround for a bug in libglade
     button = glade_xml_get_widget(_gladeXML, "button_update");

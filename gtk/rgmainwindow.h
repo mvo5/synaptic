@@ -110,7 +110,11 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_statusL;
 
    GtkWidget *_currentB; // ptr to one of below
-   GtkWidget *_actionB[3];
+   GtkWidget *_actionB[3]; // keep, install, delete
+   // menu items 
+   GtkWidget *_keepM, *_installM, *_pkgupgradeM, *_removeM;
+   GtkWidget *_remove_w_depsM, *_purgeM;
+
    GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinB;
    GtkWidget *_pinM;

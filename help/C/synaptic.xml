@@ -180,6 +180,18 @@
 				</para> 
 			</listitem>
 		</varlistentry>
+		<varlistentry>
+			<term>Red Hat and Fedora <guimenu>Applications</guimenu> menu</term>
+			<listitem>
+				<para>
+					Choose 
+					<menuchoice>
+					<guisubmenu>System Tools</guisubmenu>
+					<guimenuitem>Software</guimenuitem>
+					</menuchoice>. 
+				</para>
+			</listitem>
+		</varlistentry>
 	</variablelist>
 </sect1>
 
@@ -190,7 +202,7 @@
 	<title>Overview</title>
 	<para>
 		When you start <application>&app;</application>, the 
-		following is displayed.
+		following window is displayed.
 	</para>
 
 	<figure id="mainwindow-fig"> 
@@ -247,7 +259,7 @@
 					</entry>
 				</row>
 				<row>
-					<entry valign="top">Information area</entry>
+					<entry valign="top">Package details</entry>
 					<entry valign="top">
 						Provides information about a selected package
 					</entry>
@@ -270,7 +282,7 @@
 	</title>
 	
 	<para>
-		The toolbar provides quick access to global actions and a quick search for packages.
+		The toolbar provides access to global actions and a quick search for packages.
 	</para>
 
 	<figure>
@@ -305,8 +317,8 @@
 						</term>
 						<listitem>
 							<para>
-								Queries all package sources 
-								(repositories) and rebuilds the list of
+								Querie all package sources 
+								(repositories) and rebuild the list of
 								known packages.
 							</para>
 						</listitem>
@@ -317,7 +329,7 @@
 						</term>
 						<listitem>
 							<para>
-								Queues all packages with a later version available 
+								Queue all packages with a later version available 
 								than installed for upgrade.
 							</para>
 						</listitem>
@@ -328,7 +340,7 @@
 						</term>
 						<listitem>
 							<para>
-								Executes all queued changes.
+								Execute all queued changes.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -342,9 +354,14 @@
 			</term>
 			<listitem>
 				<para>
-					For detailed instructions on the quick search, see <xref 
-					linkend="synaptic-pkg-find"></xref>.
+					Jump to the fist package whose name matches the entry.
 				</para>
+				<tip>
+					<para>
+						For detailed instructions on the quick search, see <xref 
+						linkend="synaptic-pkg-find"></xref>.
+					</para>
+				</tip>
 			</listitem>
 		</varlistentry>
 	</variablelist>
@@ -403,7 +420,7 @@
 						Flat list
 					</entry>
 					<entry valign="top">
-						Lists all packages non hierarchically.
+						List all packages non hierarchically.
 					</entry>
 				</row>
 				<row>
@@ -411,7 +428,7 @@
 						Alphabetic tree
 					</entry>
 					<entry valign="top">
-						Groups the packages by their initial name letter.
+						Group the packages by their initial name letter.
 					</entry>
 				</row>
 				<row>
@@ -419,7 +436,7 @@
 						Section tree
 					</entry>
 					<entry valign="top">
-						Groups the packages by their section, e.g. "admin", "base", "gnome",
+						Group the packages by their section, e.g. "admin", "base", "gnome",
 						etc.
 					</entry>
 				</row>
@@ -428,7 +445,7 @@
 						Status tree
 					</entry>
 					<entry valign="top">
-						Groups the packages by their status, e.g. "installed", "not installed",
+						Group the packages by their status, e.g. "installed", "not installed",
 						"obsolete" etc.
 					</entry>
 				</row>
@@ -437,7 +454,7 @@
 						Tag tree
 					</entry>
 					<entry valign="top">
-						Groups the packages by their tag. Tags are keywords provided by
+						Group the packages by their tag. Tags are keywords provided by
 						third parity. Only Debian GNU/Linux with installed "debtag"
 						supports this feature.
 					</entry>
@@ -455,7 +472,7 @@
 
 <sect2 id="synaptic-win-info">
 	<title>
-		Information Area
+		Package Details
 	</title>
 	<para>
 	</para>
@@ -480,7 +497,7 @@
 		Quick Search
 	</title>
 	<para>
-		To find a package name in the list of shown packages follow these steps:
+		To find a package name in the list of shown packages perform the follwong steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -544,7 +561,7 @@
 	</orderedlist>
 	<tip>
 		<para>
-			You can create more sophisticated filters with the 
+			You can create more complex filters with the 
 			<xref linkend="synaptic-filter-edit"></xref>.
 		</para>
 	</tip>
@@ -594,21 +611,20 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Install Latest Package
-						</guibutton> in the package control area.
+						Click on <guibutton>Install</guibutton> in the package control area.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Install Latest Version</guimenuitem>
+						<guimenuitem>Install</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Right click on the package and choose <guimenuitem>
-						Install Latest Version</guimenuitem> from the
+						Install</guimenuitem> from the
 						context menu.
 					</para>
 				</listitem>
@@ -1082,13 +1098,14 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							Right click on package and choose "Do not modify" from 
+							Right click on package and choose <menuchoice>
+							<guimenuitem>No Changes</guimenuitem></menuchoice> from 
 							the context menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Select package(s) and choose "Do Not Modify" from the 
+							Select package(s) and choose <guibutton>No Changes</guibutton> from the 
 							package control.
 						</para>
 					</listitem>
@@ -1296,71 +1313,71 @@
 				<row>
 					<entry valign="top">All packages</entry>
 					<entry valign="top">
-						Displays all known packages.
+						Display all known packages.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Install</entry>
 					<entry valign="top">
-						Displays only currently installed packages.
+						Display only currently installed packages.
 					</entry>
 			        </row>
 				<row>
 					<entry valign="top">Not installed</entry>
 					<entry valign="top">
-						Displays only currently not installed packages.
+						Display only currently not installed packages.
 			                </entry>
 				</row>
 				<row>
 					<entry valign="top">Upgradable</entry>
 					<entry valign="top">
-						Displays only packages with a later version available.
+						Display only packages with a later version available.
 			                </entry>
 				</row>
 				<row>
 					<entry valign="top">Broken</entry>
 					<entry valign="top">
-						Displays only packages with broken dependencies.
+						Display only packages with broken dependencies.
 			                </entry>
 				</row>
 				<row>
 					<entry valign="top">Programmed Changes</entry>
 					<entry valign="top">
-						Displays only packages queued to be modified.
+						Display only packages queued to be modified.
 			                </entry>
 				</row>
 				<row>
 					<entry valign="top">New in archive</entry>
 					<entry valign="top">
-						Displays only new packages since the last 
+						Display only new packages since the last 
 						repository update.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Residual</entry>
 					<entry valign="top">
-						Displays only former installed packages that left
+						Display only former installed packages that left
 						data or configuration files on the system.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Pkg with Debconf</entry>
 					<entry valign="top">
-						Displays only packages that can be configured through
+						Display only packages that can be configured through
 						the debian package configuration system, so called debconf.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Oboslete or locally installed</entry>
 					<entry valign="top">
-						Displays only packages that are not (for longer)
+						Display only packages that are not (for longer)
 						included in one of the specified repositories.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Search Filter</entry>
 					<entry valign="top">
-						Displays the last results of the advanced package
+						Display the last results of the advanced package
 						package search, see <xref linkend="synaptic-pkg-find-advsearch"/>.
 					</entry>
 				</row>
@@ -1671,7 +1688,7 @@
 </sect2> 
 </sect1>
 
-<sect1 id="synaptic-bugs">
+<!-- sect1 id="synaptic-bugs">
 	<title>
 		Known Bugs and Limitations
 	</title>
@@ -1711,7 +1728,7 @@
 			</tbody>
 		</tgroup>
 	</table>
-</sect1>
+</sect1 -->
 
 <sect1 id="synaptic-shortcuts">
 	<title>
@@ -1731,7 +1748,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Executes all queued changes.
+						Execute all queued changes.
 					</entry>
 				</row>
 				<row>
@@ -1739,7 +1756,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Opens the package find dialog.
+						Open the package find dialog.
 					</entry>
 				</row>
 				<row>
@@ -1747,7 +1764,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queues the whole system for upgrade.
+						Queue all possible upgrades.
 					</entry>
 				</row>
 				<row>
@@ -1755,7 +1772,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queues the selected package(s) for installation.
+						Queue the selected package(s) for installation.
 					</entry>
 				</row>
 				<row>
@@ -1771,7 +1788,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Opens the package find dialog.
+						Open the package find dialog.
 					</entry>
 				</row>
 				<row>
@@ -1779,7 +1796,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queues the whole system for upgrade.
+						Queue the whole system for upgrade.
 					</entry>
 				</row>
 				<row>
@@ -1787,7 +1804,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queues the selected package(s) for installation.
+						Queue the selected package(s) for installation.
 					</entry>
 				</row>
 				<row>
@@ -1803,7 +1820,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Quits &app;.
+						Quit &app;.
 					</entry>
 				</row>
 				<row>
@@ -1811,7 +1828,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queues the selected package(s) for removal.
+						Queue the selected package(s) for removal.
 					</entry>
 				</row>
 				<row>
@@ -1819,7 +1836,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Updates the list of known package.
+						Update the list of known package.
 					</entry>
 				</row>
 			</tbody>
@@ -1829,19 +1846,21 @@
 
 
 <sect1 id="myapp-about"> 
-	<title>About &app;</title> 
+	<title>
+		About &app;
+	</title> 
 	<para> 
-		&app; was originally written by .... and is now maintained by Michael Vogt 
-		(<email>mvo@debian.org</email>) and Alfredo K. Kojima 
-		(<email>kojima@conectiva.com.br</email>). To find more information about
-		&app;, please visit the <ulink url="http://www.nongnu.org/synaptic" type="http">
-		Synaptic Web</ulink>. 
+		&app; was originally written by Alfredo K. Kojima (<email>kojima@windowmaker.org</email>)
+		and is now maintained by Michael Vogt (<email>mvo@debian.org</email>) and
+		Gustavo Niemeyer (<email>niemeyer@conectiva.com</email>).
+		To get more information about &app;, please visit the 
+		<ulink url="http://www.nongnu.org/synaptic" type="http">Synaptic Web Page</ulink>.
 	</para>
 	<para>
-		To report a bug or make a suggestion regarding the &app; 
+		To report a bug or make a suggestion regarding &app; 
 		or this manual, use the bug report system at <ulink 
 		url="http://www.nongnu.org/synaptic" type="http">Synaptic Web</ulink>, contact 
-		the mailing list <email>synaptic@nongnu.org</email> join the IRC channel 
+		the mailing list <email>synaptic@nongnu.org</email> or join the IRC channel 
 		#synaptic on irc.freenode.org.
 	</para>
 	<para> 

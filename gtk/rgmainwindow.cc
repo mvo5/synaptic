@@ -174,7 +174,6 @@ void RGMainWindow::changeView(int view, bool sethistory)
 
 void RGMainWindow::refreshSubViewList()
 {
-   GtkTreeIter iter;
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
@@ -777,8 +776,6 @@ void RGMainWindow::buildInterface()
 {
    GtkWidget *button;
    GtkWidget *widget;
-   GtkCellRenderer *renderer;
-   GtkTreeViewColumn *column;
 
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);

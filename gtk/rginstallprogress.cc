@@ -258,7 +258,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
     prepare(lister);
     setTitle(_("Performing Changes"));
 
-    _donePackages = 0;
     _startCounting = false;
 
     string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");

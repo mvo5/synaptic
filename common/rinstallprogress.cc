@@ -89,6 +89,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
     fcntl(_childin, F_SETFL, O_NONBLOCK);
 #endif /* HAVE_RPM */
 
+    _donePackages = 0;
     _numPackages = numPackages;
 
     _thread_id = pthread_create(&_thread, NULL, loop, this);

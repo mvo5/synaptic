@@ -62,7 +62,6 @@ class RGInstallProgress : public RInstallProgress, public RGWindow {
    GtkWidget *_pbar;
    GtkWidget *_pbarTotal;
 
-   int _donePackages;
    bool _startCounting;
 
    map<string,string> _summaryMap;

@@ -42,6 +42,7 @@ protected:
    int _thread_id;
    pthread_t _thread;
 
+   int _donePackages;
    int _numPackages;
 
    virtual void startUpdate() {};

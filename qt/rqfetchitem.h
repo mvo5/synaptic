@@ -28,7 +28,7 @@ class RQFetchItem : public QListViewItem
    
    public:
 
-   bool setProgress(int current, int total);
+   bool setProgress(int progress);
    void setDone();
    void setFailed();
 

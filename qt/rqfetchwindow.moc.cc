@@ -1,7 +1,7 @@
 /****************************************************************************
 ** RQFetchWindow meta object code from reading C++ file 'rqfetchwindow.h'
 **
-** Created: Mon Feb 16 18:49:35 2004
+** Created: Tue Feb 17 12:17:52 2004
 **      by: The Qt MOC ()
 **
 ** WARNING! All changes made in this file will be lost!

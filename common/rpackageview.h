@@ -124,7 +124,7 @@ class RPackageViewSearch : public RPackageView {
    void setSearch(string str, int type);
 
    string getName() {
-      return _("Search History");
+      return _("Find History");
    };
 
    void addPackage(RPackage *package);

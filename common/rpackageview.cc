@@ -136,6 +136,10 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
 
    if(!str.empty() && strstr(str.c_str(), searchString.c_str()))
       _view[searchString].push_back(pkg);
+
+   // push a empty package in the view to make sure that the view is actually
+   // displayed
+   _view[searchString].push_back(NULL);
 }
 
 void RPackageViewSearch::setSearch(string str, int type)

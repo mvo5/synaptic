@@ -1,5 +1,6 @@
 /* $Id: rgsrcwindow.cc,v 1.15 2003/01/23 13:29:49 mvogt Exp $ */
 #include <apt-pkg/error.h>
+#include <apt-pkg/configuration.h>
 #include <glib.h>
 #include <assert.h>
 #include "rgrepositorywin.h"
@@ -69,6 +70,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 						       renderer,
 						       "active", STATUS_COLUMN,
 						       NULL);
+    // For now, let it hidden. When it is visible, it looks like the
+    // user could click in the toggle button.
+    gtk_tree_view_column_set_visible(column, FALSE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_sourcesListView), column);
     
     // type
@@ -203,10 +207,12 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 				  G_CALLBACK(VendorsWindow),
 				  this);
 
+    /*
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_button_clear_clicked",
 				  G_CALLBACK(DoClear),
 				  this);
+				  */
 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_button_add_clicked",
@@ -324,71 +330,31 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 {
     RGRepositoryEditor *me = (RGRepositoryEditor*)data;
     cout << "RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)"<<endl;
- 
-   unsigned char Type = 0;
-    const char *Section;
-    string VendorID;
-    string URI;
-    string Dist;
-    string Sections[5];
-    unsigned short count = 0;
-    // XXX user added entries go to sources.list for now..
-    string SourceFile = "/etc/apt/sources.list";
 
-    if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cbEnabled)))
-	Type |= SourcesList::Disabled;
-    
-    GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(me->_optTypeMenu));
-    switch ((int)(gtk_object_get_data(GTK_OBJECT(menuitem), "id"))) {
-    case ITEM_TYPE_DEB:
-	Type |= SourcesList::Deb; break;
-    case ITEM_TYPE_DEBSRC:
-	Type |= SourcesList::DebSrc; break;
-    case ITEM_TYPE_RPM:
-	Type |= SourcesList::Rpm; break;
-    case ITEM_TYPE_RPMSRC:
-	Type |= SourcesList::RpmSrc; break;
-    default:
-	me->_userDialog->error(_("Unknown source type"));
-	return;
-    }
-
-    menuitem = gtk_menu_get_active(GTK_MENU(me->_optVendorMenu));
-    VendorID = (char*)gtk_object_get_data(GTK_OBJECT(menuitem), "id");
-    
-    URI = gtk_entry_get_text(GTK_ENTRY(me->_entryURI));
-    Dist = gtk_entry_get_text(GTK_ENTRY(me->_entryDist));
-    Section = gtk_entry_get_text(GTK_ENTRY(me->_entrySect));
-
-    if (Section != 0 && Section[0] != 0)
-	Sections[count++] = Section;
-    
-    SourcesList::SourceRecord *rec = me->_lst.AddSource((SourcesList::RecType)Type, VendorID, URI, Dist, Sections, count, SourceFile);
-
-    if(rec == NULL) {
-	me->_userDialog->error(_("Invalid URL"));
-	return;
-    }
-
-    string Sects;
-    for (unsigned short J = 0; J < rec->NumSections; J++) {
-	Sects += rec->Sections[J];
-	Sects += " ";
-    }
+    SourcesList::SourceRecord *rec = me->_lst.AddEmptySource();
 
     GtkTreeIter iter;
     gtk_list_store_append(me->_sourcesListStore, &iter);  
     gtk_list_store_set(me->_sourcesListStore, &iter,
-		       STATUS_COLUMN, !(rec->Type & 
-					SourcesList::Disabled),
-		       TYPE_COLUMN,   utf8(rec->GetType().c_str()),
-		       VENDOR_COLUMN, utf8(rec->VendorID.c_str()), 
-		       URI_COLUMN,    utf8(rec->URI.c_str()),
-		       DISTRIBUTION_COLUMN, utf8(rec->Dist.c_str()), 
-		       SECTIONS_COLUMN, utf8(Sects.c_str()),
+		       STATUS_COLUMN, 1,
+		       TYPE_COLUMN, "", 
+		       VENDOR_COLUMN, "",
+		       URI_COLUMN, "",
+		       DISTRIBUTION_COLUMN, "",
+		       SECTIONS_COLUMN, "",
 		       RECORD_COLUMN, (gpointer)(rec),
-		       DISABLED_COLOR_COLUMN, (rec->Type & SourcesList::Disabled ? &me->_gray : NULL),
+		       DISABLED_COLOR_COLUMN, NULL,
 		       -1);
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
+    gtk_tree_selection_unselect_all(selection);
+    gtk_tree_selection_select_iter(selection, &iter);
+    GtkTreePath *path;
+    path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_sourcesListStore),
+		    		   &iter);
+    gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_sourcesListView),
+		    	     path, NULL, false);
+    gtk_tree_path_free(path);
 }
 
 void RGRepositoryEditor::doEdit()

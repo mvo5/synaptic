@@ -61,6 +61,7 @@ public:
 				string *Sections,
 				unsigned short count,
 				string SourceFile);
+	SourceRecord *AddEmptySource();
 	void RemoveSource(SourceRecord *&);
 	bool ReadSourcePart(string listpath);
 	bool ReadSourceDir(string Dir);

@@ -190,6 +190,21 @@ bool SourcesList::ReadSources()
 	return Res;
 }
 
+SourcesList::SourceRecord *SourcesList::AddEmptySource()
+{
+	SourceRecord rec;
+#ifdef HAVE_RPM
+	rec.Type = Rpm;
+#else
+	rec.Type = Deb;
+#endif
+	rec.VendorID = "";
+	rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
+	rec.Dist = "";
+	rec.NumSections = 0;
+	return AddSourceNode(rec);
+}
+
 SourcesList::SourceRecord *SourcesList::AddSource(RecType Type, string VendorID, string URI, string Dist, string *Sections, unsigned short count, string SourceFile)
 {
 	SourceRecord rec;
@@ -218,50 +233,51 @@ void SourcesList::RemoveSource(SourceRecord *&rec)
 
 bool SourcesList::UpdateSources()
 {
-	list<string> filenames;
+    list<string> filenames;
     for(list<SourceRecord*>::iterator it = SourceRecords.begin();
         it != SourceRecords.end(); it++)
-	{
+    {
     	if ((*it)->SourceFile == "") continue;
-		filenames.push_front((*it)->SourceFile);
-	}
-	filenames.sort();
-	filenames.unique();
+	    filenames.push_front((*it)->SourceFile);
+    }
+    filenames.sort();
+    filenames.unique();
 
-    for(list<string>::iterator fi = filenames.begin(); fi != filenames.end(); fi++)
-	{
+    for(list<string>::iterator fi = filenames.begin();
+	fi != filenames.end(); fi++)
+    {
     	ofstream ofs((*fi).c_str(), ios::out);
     	if (!ofs != 0) return false;
                                                                                 
     	for(list<SourceRecord*>::iterator it = SourceRecords.begin();
-        	it != SourceRecords.end(); it++)
+	    it != SourceRecords.end(); it++)
         {
-			if ((*fi) != (*it)->SourceFile) {
-				continue;
-			} 
-			string S;
-			if (((*it)->Type & Comment) != 0) {
-				S = (*it)->Comment;
-        	} else {
+	    if ((*fi) != (*it)->SourceFile)
+		continue;
+	    string S;
+	    if (((*it)->Type & Comment) != 0) {
+		S = (*it)->Comment;
+	    } else if ((*it)->URI.empty() || (*it)->Dist.empty()) {
+		continue;
+	    } else {
             	if (((*it)->Type & Disabled) != 0)
-                	S = "# ";
+		    S = "# ";
                                                                                 
             	S += (*it)->GetType() + " ";
                                                                                 
-            	if ((*it)->VendorID.empty() == false) {
-                	S += "[" + (*it)->VendorID + "] ";
-            	}
-                                                                                
+            	if ((*it)->VendorID.empty() == false)
+		    S += "[" + (*it)->VendorID + "] ";
+
             	S += (*it)->URI + " ";
             	S += (*it)->Dist + " ";
-                                                                                
+
             	for (unsigned int J = 0; J < (*it)->NumSections; J++)
-                	S += (*it)->Sections[J] + " ";
-        	}
-        	ofs << S << endl;
+		    S += (*it)->Sections[J] + " ";
+	    }
+	    ofs << S << endl;
     	}
     	ofs.close();
-	}
+    }
     return true;
 }
 
@@ -447,3 +463,5 @@ ostream &operator<< (ostream &os, const SourcesList::VendorRecord &rec)
 	os << "Description: " << rec.Description << endl;
 	return os;
 }
+
+// vim:sts=4:sw=4

@@ -634,7 +634,8 @@ void RFilter::setName(string s)
 
 string RFilter::getName()
 {
-  return name;
+  // Return name with i18n conversion. Filters names are saved without i18n.
+  return _(name.c_str());
 }
 
 bool RFilter::read(Configuration &conf, string key)

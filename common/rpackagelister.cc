@@ -162,81 +162,66 @@ void RPackageLister::registerCacheObserver(RCacheObserver *observer)
 void RPackageLister::makePresetFilters()
 {
     RFilter *filter;
-    // create preset filters
 
+    // Notice that there's a little hack in filter names below. They're
+    // saved *without* i18n, but there's an i18n version for i18n. This
+    // allows i18n to be done in RFilter.getName().
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-    
-	filter->setName(_("Search Filter"));
-
+	filter->setName("Search Filter"); _("Search Filter");
 	registerFilter(filter);
     }
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-    
 	filter->status.setStatus((int)RStatusPackageFilter::Installed);
-	filter->setName(_("Installed"));
-	
+	filter->setName("Installed"); _("Installed");
 	registerFilter(filter);
     }
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-    
 	filter->status.setStatus((int)RStatusPackageFilter::NotInstalled);
-	filter->setName(_("Not Installed"));
-
+	filter->setName("Not Installed"); _("Not Installed");
 	registerFilter(filter);
     }
 #ifdef HAVE_RPM
     {
 	filter = new RFilter(this);
-    
 	filter->pattern.addPattern(RPatternPackageFilter::Name,
 				  "^task-.*", false);
-	filter->setName(_("Tasks"));
-
+	filter->setName("Tasks"); _("Tasks");
 	registerFilter(filter);
     }
     {
 	filter = new RFilter(this);
-	
 	filter->reducedview.enable();
-	
-	filter->setName(_("Reduced view"));
-	
+	filter->setName("Reduced View"); _("Reduced View");
 	registerFilter(filter);
     }
 #endif
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-    
 	filter->status.setStatus((int)RStatusPackageFilter::Upgradable);
-	filter->setName(_("Upgradable"));
-	
+	filter->setName("Upgradable"); _("Upgradable");
 	registerFilter(filter);
     }
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-
 	filter->status.setStatus(RStatusPackageFilter::Broken);
-	filter->setName(_("Broken"));
-    
+	filter->setName("Broken"); _("Broken");
 	registerFilter(filter);
     }
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-
 	filter->status.setStatus(RStatusPackageFilter::MarkInstall
 				 |RStatusPackageFilter::MarkRemove
 				 |RStatusPackageFilter::Broken);
-	filter->setName(_("Programmed Changes"));
-	
+	filter->setName("Programmed Changes"); _("Programmed Changes");
 	registerFilter(filter);
     }
 }

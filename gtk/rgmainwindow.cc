@@ -1794,6 +1794,9 @@ void RGMainWindow::buildInterface()
     gtk_window_resize(GTK_WINDOW(_win),
  				_config->FindI("Synaptic::windowWidth", 640),
  				_config->FindI("Synaptic::windowHeight", 480));
+    gtk_window_move(GTK_WINDOW(_win),
+ 				_config->FindI("Synaptic::windowX", 100),
+ 				_config->FindI("Synaptic::windowY", 100));
     RGFlushInterface();
 
 
@@ -2006,7 +2009,9 @@ void RGMainWindow::buildInterface()
 
     _vpaned =  glade_xml_get_widget(_gladeXML, "vpaned_main");
     assert(_vpaned);
-    RGFlushInterface();
+    // If the pane position is restored before the window is shown, it's
+    // not restored in the same place as it was.
+    show(); RGFlushInterface();
     gtk_paned_set_position(GTK_PANED(_vpaned), 
  			   _config->FindI("Synaptic::vpanedPos", 140));
 
@@ -2610,6 +2615,10 @@ void RGMainWindow::saveState()
 		 gtk_paned_get_position(GTK_PANED(_vpaned)));
     _config->Set("Synaptic::windowWidth", _win->allocation.width);
     _config->Set("Synaptic::windowHeight", _win->allocation.height);
+    gint x, y;
+    gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
+    _config->Set("Synaptic::windowX", x);
+    _config->Set("Synaptic::windowY", y);
     _config->Set("Synaptic::ToolbarState", (int)_toolbarState);
     _config->Set("Synaptic::TreeDisplayMode", _treeDisplayMode);
 

@@ -39,11 +39,10 @@ void *RInstallProgress::loop(void *data)
     RInstallProgress *me = (RInstallProgress*)data;
 
     me->startUpdate();
-    while (me->_thread_id >= 0) {
+    while (me->_thread_id >= 0)
 	me->updateInterface();
-    }
-
     me->finishUpdate();
+
     pthread_exit(NULL);
     
     return NULL;
@@ -62,25 +61,24 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 #ifdef HAVE_RPM
     _config->Set("RPM::Interactive", "false");
     
-    int fd[2];
     /*
      * This will make a pipe from where we can read child's output
      */
+
     // our stdout will be _stdout from now on, and our stderr will be _stderr
     _stdout = dup(1); 
     _stderr = dup(2);
 
     // create our comm. channel with the child
+    int fd[2];
     pipe(fd);
 
-    // close our official stdout and stderr
-    close(1);
-    close(2);
-    
     // make the write end of the pipe to the child become the new stdout 
     // and stderr (for the child)
     dup2(fd[1],1);
-    dup2(fd[1],2);
+    dup2(1,2);
+
+    close(fd[1]);
 
     // this is where we read stuff from the child
     _childin = fd[0];
@@ -91,6 +89,11 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
     _donePackages = 0;
     _numPackages = numPackages;
+
+    // We must reset the _thread_id *before* calling pthread_create(),
+    // otherwise the loop might test for its value before that function
+    // returned.
+    _thread_id = 0;
 
     _thread_id = pthread_create(&_thread, NULL, loop, this);
 
@@ -103,14 +106,13 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
     /*
      * Clean-up stuff so that everything is like before
      */
-    close(1);
-    close(2);
     close(_childin);
     dup2(_stdout, 1);
     dup2(_stderr, 2);
     close(_stdout);
     close(_stderr);
 #endif /* HAVE_RPM */
+
     return res;
 }
 

@@ -193,17 +193,24 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
 {
    gchar *msg;
 
-   msg =
-      g_strdup_printf(_("Please insert the disk labeled:\n%s\nin drive %s"),
-                      Media.c_str(), Drive.c_str());
+   msg = g_strdup_printf(_("Please insert the disk labeled:\n%s\nin drive %s"),
+			 Media.c_str(), Drive.c_str());
 
    RGUserDialog userDialog(this);
-   bool res = !userDialog.proceed(msg);
+   _cancelled = !userDialog.proceed(msg);
 
    RGFlushInterface();
    g_free(msg);
+   return true;
 
+
+
+#if 0 // this code can be used when apt fixed ubuntu #2281 (patch pending)
+   bool res = !userDialog.proceed(msg);
    //cout << "Media change " << res << endl;
+
+   RGFlushInterface();
+   g_free(msg);
 
    if(res) {
       return false;
@@ -211,6 +218,7 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
       Update = true;
       return true;
    }
+#endif
 }
 
 

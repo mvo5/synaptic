@@ -35,7 +35,7 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 
     gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-    gtk_box_pack_start(GTK_BOX(_parent), _prog, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
 
     _mapped = false;
 }

@@ -160,7 +160,7 @@ class RPackageViewFilter : public RPackageView {
    virtual iterator begin();
 
    // we never need to clear because we build the view "on-demand"
-   virtual void clear() {};
+   virtual void clear() {clearSelection();};
 
    string getName() {
       return _("Filter");

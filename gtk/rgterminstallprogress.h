@@ -58,6 +58,8 @@ protected:
   static void stopShell(GtkWidget *self, void* data);
   virtual bool close();
 
+  pid_t _child_id;
+
 public:
    RGZvtInstallProgress(RGMainWindow *main);
    ~RGZvtInstallProgress() {};

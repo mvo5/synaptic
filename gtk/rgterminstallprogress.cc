@@ -62,10 +62,13 @@ void RGZvtInstallProgress::child_exited(VteReaper *vtereaper,
 					gpointer data)
 {
    RGZvtInstallProgress *me = (RGZvtInstallProgress*)data;
-   //    cout << "child exited" << endl;
-   //    cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
-   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
-   me->child_has_exited=true;
+   if(child_pid == me->_child_id) {
+      cout << "child exited" << endl;
+      cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
+      
+      me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+      me->child_has_exited=true;
+   }
 }
 #endif
 
@@ -263,7 +266,6 @@ RGZvtInstallProgress::start(RPackageManager *pm,
 
    void *dummy;
    int open_max, ret = 250;
-   pid_t _child_id;
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
@@ -303,10 +305,10 @@ RGZvtInstallProgress::start(RPackageManager *pm,
    }
 
    startUpdate();
+#ifdef HAVE_ZVT
    while (waitpid(_child_id, &ret, WNOHANG) == 0)
       updateInterface();
 
-#ifdef HAVE_ZVT
    res = (pkgPackageManager::OrderResult)zvt_term_closepty(ZVT_TERM(_term));
    ::close(dupfd);
 #endif
@@ -327,7 +329,8 @@ void RGZvtInstallProgress::updateInterface()
    if (gtk_events_pending()) {
       while (gtk_events_pending()) gtk_main_iteration();
    } else {
-      usleep(1000);
+      // 0.1 secs
+      usleep(100000);
    }
 }
 

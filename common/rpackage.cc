@@ -535,35 +535,42 @@ string RPackage::showWhyInstBroken()
             ioprintf(out, " ");
             pkgCache::VerIterator Ver =
                (*_depcache)[Targ].InstVerIter(*_depcache);
+	    // add minimal version information
+	    string requiredVersion;
+	    if(Start.TargetVer() != 0)
+	       requiredVersion = "("+string(Start.CompType())+string(Start.TargetVer())+")";
             if (Ver.end() == false) {
                if (FirstOr == false)
-                  ioprintf(out, "\t%s but %s is to be installed",
-                           Start.TargetPkg().Name(), Ver.VerStr());
+                  ioprintf(out, _("\t%s %s but %s is to be installed"),
+                           Start.TargetPkg().Name(), requiredVersion.c_str(),
+			   Ver.VerStr());
                else
-                  ioprintf(out, " %s: %s but %s is to be installed",
+                  ioprintf(out, _(" %s: %s %s but %s is to be installed"),
                            End.DepType(), Start.TargetPkg().Name(),
-                           Ver.VerStr());
+			   requiredVersion.c_str(), Ver.VerStr());
             } else {
                if ((*_depcache)[Targ].CandidateVerIter(*_depcache).end() ==
                    true) {
                   if (Targ->ProvidesList == 0)
                      if (FirstOr == false)
-                        ioprintf(out, "\t%s but it is not installable",
-                                 Start.TargetPkg().Name());
+                        ioprintf(out, _("\t%s %s but it is not installable"),
+                                 Start.TargetPkg().Name(), 
+				 requiredVersion.c_str());
                      else
-                        ioprintf(out, "%s: %s but it is not installable",
-                                 End.DepType(), Start.TargetPkg().Name());
+                        ioprintf(out, "%s: %s %s but it is not installable",
+                                 End.DepType(), Start.TargetPkg().Name(),
+				 requiredVersion.c_str());
                   else if (FirstOr == false)
-                     ioprintf(out, "\t%s but it is a virtual package",
+                     ioprintf(out, _("\t%s but it is a virtual package"),
                               Start.TargetPkg().Name());
                   else
-                     ioprintf(out, "%s: %s but it is a virtual package",
+                     ioprintf(out, _("%s: %s but it is a virtual package"),
                               End.DepType(), Start.TargetPkg().Name());
                } else if (FirstOr == false)
-                  ioprintf(out, "\t%s but it is not going to be installed",
+                  ioprintf(out, _("\t%s but it is not going to be installed"),
                            Start.TargetPkg().Name());
                else
-                  ioprintf(out, "%s: %s but it is not going to be installed",
+                  ioprintf(out, _("%s: %s but it is not going to be installed"),
                            End.DepType(), Start.TargetPkg().Name());
             }
          } else {

@@ -21,7 +21,9 @@
  */
 
 #include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
 
+#include <assert.h>
 #include "i18n.h"
 #include "rguserdialog.h"
 #include "gsynaptic.h"
@@ -142,4 +144,42 @@ bool RGUserDialog::showErrors()
     
     return true;
 }
+
+// RGGladeUserDialog
+RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
+{
+    GladeXML *gladeXML;
+    gchar *filename = NULL;
+    gchar *main_widget = NULL;
+
+    filename = g_strdup_printf("dialog_%s.glade",name);
+    main_widget = g_strdup_printf("dialog_%s", name);
+    if(FileExists(filename)) {
+	gladeXML = glade_xml_new(filename, main_widget, NULL);
+    } else {
+	g_free(filename);
+	filename = g_strdup_printf(SYNAPTIC_GLADEDIR "dialog_%s.glade",name);
+	gladeXML = glade_xml_new(filename, main_widget, NULL);
+    }
+    assert(gladeXML);
+    _dialog = glade_xml_get_widget(gladeXML, main_widget);
+    assert(_dialog);
+    g_free(filename);
+    g_free(main_widget);
+
+    gchar *signal_name = g_strdup_printf("on_dialog_%s_response", name);
+    glade_xml_signal_connect_data(gladeXML, signal_name, 
+				  G_CALLBACK(actionResponse),
+				  (gpointer) &res);
+
+}
+
+bool RGGladeUserDialog::run()
+{
+    gtk_dialog_run(GTK_DIALOG(_dialog));
+    gtk_widget_destroy(_dialog);
+    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
+}
+
+
 // vim:sts=4:sw=4

@@ -3441,16 +3441,16 @@ void RGMainWindow::close()
     if (_interfaceLocked > 0)
 	return;
 
-    if (_unsavedChanges == false ||
-	_userDialog->confirm(_("There are unsaved changes. Are you sure\n"
-			       "you want to quit Synaptic?"))) {
-
-	_error->Discard();
-	
-	saveState();
-	showErrors();
-
-	exit(0);
+    if (_unsavedChanges == true) {
+	RGGladeUserDialog *dia = new RGGladeUserDialog(this, "quit");
+	// return true is user clicked on "quit"
+	if(dia->run()) {
+	    _error->Discard();
+	    saveState();
+	    showErrors();
+	    exit(0);
+	}
+	delete dia;
     }
 	
     //cout << "no exit" << endl;

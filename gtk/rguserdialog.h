@@ -1,8 +1,10 @@
 /* rguserdialog.h
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
+ *               2003 Michael Vogt
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *         Michael Vogt <mvo@debian.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -23,6 +25,7 @@
 #ifndef RGUSERDIALOG_H
 #define RGUSERDIALOG_H
 
+#include <glade/glade.h>
 #include "ruserdialog.h"
 #include "rgwindow.h"
 
@@ -46,6 +49,34 @@ public:
     virtual bool showErrors();
 };
 
+
+/*
+ * A alternative interface for the ruserdialog, here is how it works:
+ * the glade file must called "dialog_$NAME.glade"
+ * the "response" signal must be called "on_dialog_$NAME_response"
+ * the buttons must have valid RESPONSE_IDs attached
+ * see gtk/dialog_quit.glade as an example
+ * Example:
+  	RGGladeUserDialog *dia = new RGGladeUserDialog(this, "quit");
+	// return true is user clicked on a button with GTK_RESPONSE_OK
+	if(dia->run()) {
+	    do_response_ok_stuff();
+	} else {
+            do_not_ok_stuff();
+        }
+	delete dia;
+ *
+*/
+class RGGladeUserDialog : public RGUserDialog
+{
+ protected:
+    GtkWidget *_dialog;
+    GtkResponseType res;
+
+ public:
+    RGGladeUserDialog(RGWindow *parent, const char *name);
+    bool run();
+};
 #endif
 
 // vim:sts=4:sw=4

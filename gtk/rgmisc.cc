@@ -220,7 +220,7 @@ void RPackageStatus::initPixbufs()
       }
       StatusPixbuf[i] = gdk_pixbuf_new_from_file(filename, NULL);
       if (StatusPixbuf[i] == NULL)
-         cerr << "Warning, failed to load: " << filename << endl;
+         std::cerr << "Warning, failed to load: " << filename << std::endl;
       g_free(filename);
    }
 }

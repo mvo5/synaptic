@@ -102,6 +102,17 @@ class RPackageViewAlphabetic : public RPackageView {
    };
 };
 
+class RPackageViewStatus:public RPackageView {
+ public:
+
+   string getName() {
+      return _("Status");
+   };
+
+   void addPackage(RPackage *package);
+};
+
+
 class RPackageViewAll:public RPackageView {
  public:
 
@@ -122,6 +133,8 @@ class RPackageViewAll:public RPackageView {
    };
    void clearSelection() {};
 };
+
+
 
 #endif
 

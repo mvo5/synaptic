@@ -959,24 +959,30 @@ bool RGMainWindow::showErrors()
     return _userDialog->showErrors();
 }
 
-
-static void appendTag(GString *str, const char *tag, const char *value)
+static void appendTag(GladeXML *xml,const char *widget_name, const char *value)
 {
+    GtkWidget *widget = glade_xml_get_widget(xml,widget_name);
+    if(widget==NULL)
+	cout << "widget == NULL with: " << widget_name << endl;
+
     if (!value)
 	value = _("N/A");
-
-    g_string_append_printf(str, "%s: %s\n", tag, utf8(value));
+    gtk_label_set_label(GTK_LABEL(widget),utf8(value));
 }
 
-static void appendTag(GString *str, const char *tag, const int value)
+static void appendTag(GladeXML *xml, const char *widget_name, const int value)
 {
     string strVal;
+    GtkWidget *widget = glade_xml_get_widget(xml,widget_name);
+    if(widget==NULL)
+	cout << "widget == NULL with: " << widget_name << endl;
+
     // we can never have values of zero or less
     if (value <= 0)
 	strVal = _("N/A");
     else
 	strVal = SizeToStr(value);
-    g_string_append_printf(str, "%s: %s\n", tag, utf8(strVal.c_str()));
+    gtk_label_set_label(GTK_LABEL(widget),utf8(strVal.c_str()));
 }
 
 
@@ -1468,27 +1474,17 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     g_free(msg);
 
     // package info
-    
-    // common information regardless of state
-    GString *info = g_string_new("");
-    appendTag(info, _("Section"), pkg->section());
-    appendTag(info,_("Priority"), pkg->priority());
+    appendTag(_gladeXML,"label_section", pkg->section());
+    appendTag(_gladeXML,"label_priority", pkg->priority());
 #ifdef HAVE_DEBTAGS
-    appendTag(info,_("Tags"), pkg->tags());
+    //appendTag(_gladeXML,"label_tags", pkg->tags());
 #endif
-    appendTag(info,_("Maintainer"), pkg->maintainer());
+    appendTag(_gladeXML,"label_maintainer", pkg->maintainer());
+    appendTag(_gladeXML,"label_installed_version", pkg->installedVersion());
+    appendTag(_gladeXML,"label_installed_size", pkg->installedSize());
+    appendTag(_gladeXML,"label_latest_version",pkg->availableVersion());
+    appendTag(_gladeXML,"label_latest_size", pkg->availablePackageSize());
 
-    g_string_append(info, _("\nInstalled Package:\n"));
-    appendTag(info,_("\tVersion"), pkg->installedVersion());
-    appendTag(info, _("\tSize"), pkg->installedSize());
-
-    g_string_append(info, _("\nAvailable Package:\n"));
-    appendTag(info,_("\tVersion"),pkg->availableVersion());
-    appendTag(info, _("\tSize"), pkg->availableInstalledSize());
-    appendTag(info, _("\tPackage Size"), pkg->availablePackageSize());
-
-    gtk_label_set_text(GTK_LABEL(_infoL), info->str);
-    g_string_free(info, TRUE);
 
     // description
     GtkTextIter iter;

@@ -453,6 +453,9 @@ void RGPreferencesWindow::readTreeViewValues()
    // the position in this vector is the position of the column
    vector<column_struct> columns(number_of_columns);
 
+   // make sure that we fail gracefully
+   bool corrupt=false;
+
    // put into right place
    gchar *name;
    int pos;
@@ -466,13 +469,30 @@ void RGPreferencesWindow::readTreeViewValues()
       // visible
       name = g_strdup_printf("Synaptic::%sColumnVisible",column_names[i]);
       c.visible = _config->FindB(name, true);
-
       c.name = column_names[i];
       c.visible_name = column_visible_names[i];
-      //FIXME: sanity check for the pos var!
-      columns[pos] = c;
       g_free(name);
+
+      if(pos > number_of_columns || pos < 0 || columns[pos].name != NULL) {
+	 cerr << "invalid column config found, reseting"<<endl;
+	 corrupt=true;
+	 continue;
+      }
+      columns[pos] = c;
    }
+
+   // if corrupt for some reason, repair
+   if(corrupt) {
+      for(int i=0;column_names[i] != NULL; i++) {
+	 name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
+	 _config->Set(name, i);
+	 c.visible = true;
+	 c.name = column_names[i];
+	 c.visible_name = column_visible_names[i];
+	 columns[i] = c;
+      }
+   }
+
 
    // put into GtkListStore
    GtkListStore *store = _listColumns = gtk_list_store_new(3, 

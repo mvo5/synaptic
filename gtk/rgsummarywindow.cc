@@ -170,29 +170,17 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
     GtkWidget *info;
 
     gtk_widget_set_sensitive(self, FALSE);
-    gtk_widget_destroy(me->_summaryL);
-    gtk_widget_destroy(me->_middleF);
+    gtk_widget_destroy(me->_tree);
+    gtk_widget_hide(self);
 
-    gtk_box_set_child_packing(GTK_BOX(me->_topBox), 
-			      me->_topF, 
-			      TRUE, TRUE, 5, GTK_PACK_START);
-
-    gtk_window_set_default_size(GTK_WINDOW(me->_win), 400, 440);
-
-    gtk_frame_set_shadow_type(GTK_FRAME(me->_topF), GTK_SHADOW_IN);
-    view = gtk_scrolled_window_new(NULL, NULL);
-    gtk_widget_show(view);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(view), 
-				   GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
-    
-    //TODO: make this a gtk_clist instead of a label
     info = gtk_label_new("");
     gtk_label_set_justify(GTK_LABEL(info), GTK_JUSTIFY_LEFT);
     gtk_misc_set_alignment(GTK_MISC(info), 0.0f, 0.0f);
     gtk_widget_show(info);
     
+    view = glade_xml_get_widget(me->_gladeXML,"scrolledwindow_summary");
+    assert(view);
     gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(view), info);
-    gtk_container_add(GTK_CONTAINER(me->_topF), view);
 
     string text;
     gchar *str;
@@ -257,43 +245,27 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 
 
 RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
-    : RGWindow(wwin, "summary", true, false)
+    : RGGladeWindow(wwin, "summary")
 {
-    GtkWidget *hbox;
     GtkWidget *button;
-    GtkWidget *scrolled_win;
-    
+
     _potentialBreak = false;
     _lister = lister;
     
     setTitle(_("Summary"));
-    gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
+    //gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
         
-    _topF = gtk_frame_new(NULL);
-    gtk_widget_show(_topF);
-    gtk_box_pack_start(GTK_BOX(_topBox), _topF, FALSE, FALSE, 5);
 
-    _summaryL = gtk_label_new(NULL);
-    gtk_label_set_selectable(GTK_LABEL(_summaryL), true);
-    gtk_widget_show(_summaryL);
-    gtk_container_add(GTK_CONTAINER(_topF), _summaryL);
-
+    _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
+    assert(_summaryL);
     
-    _middleF = gtk_frame_new(NULL);
-    scrolled_win = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				    GTK_POLICY_AUTOMATIC,
-				    GTK_POLICY_AUTOMATIC);
-    gtk_widget_set_usize (scrolled_win, 150, 200);
-    gtk_container_add (GTK_CONTAINER(_middleF), scrolled_win);
-    gtk_widget_show (scrolled_win);
-
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
     buildTree(this);
-    _tree = gtk_tree_view_new_with_model(GTK_TREE_MODEL(_treeStore));
-    gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW(scrolled_win),
-					   _tree);
+    _tree = glade_xml_get_widget(_gladeXML, "treeview_summary");
+    assert(_tree);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
+
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
     //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
     GtkTreeViewColumn *column;
@@ -305,39 +277,25 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_tree_view_append_column (GTK_TREE_VIEW (_tree), column);
    gtk_widget_show (_tree);
 
+   _dlonlyB = glade_xml_get_widget(_gladeXML, "checkbutton_download_only");
 
-    gtk_widget_show(_middleF);
-    gtk_box_pack_start(GTK_BOX(_topBox), _middleF, TRUE, TRUE, 5);
 
-    _dlonlyB = gtk_check_button_new_with_label(_("Download the packages files only"));
-    gtk_widget_show(_dlonlyB);
-    gtk_box_pack_start(GTK_BOX(_topBox), _dlonlyB, FALSE, TRUE, 10);
 
-    
-    hbox = gtk_hbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
-
-    button = gtk_button_new_with_label(_("Show Details"));
+    button = glade_xml_get_widget(_gladeXML, "togglebutton_details");
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedDetails, this);
-    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 20);
 
-    _defBtn = button = gtk_button_new_with_label(_("Execute"));
+
+
+    button = _defBtn = glade_xml_get_widget(_gladeXML, "button_execute");
+    assert(button);
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedOk, this);
 
-    gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 0);
-
-    button = gtk_button_new_with_label(_("Cancel"));
+    button =  glade_xml_get_widget(_gladeXML, "button_cancel");
+    assert(button);
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)clickedCancel, this);
-    gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 5);
-
-    gtk_widget_show_all(hbox);
-    gtk_widget_show(hbox);
-
-    gtk_widget_show(_topBox);
-
 
     int toInstall, toRemove, toUpgrade, toDowngrade;
     int held, kept, essential;
@@ -386,16 +344,16 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     }
 
     if (sizeChange > 0) {
-	g_string_append_printf(msg, _("\n%s B of extra space will be used\n"),
+	g_string_append_printf(msg, _("\n%s of extra space will be used\n"),
 			       SizeToStr(sizeChange).c_str());
     } else if (sizeChange < 0) {
-	g_string_append_printf(msg, _("\n%s B of extra space will be freed\n"),
+	g_string_append_printf(msg, _("\n%s of extra space will be freed\n"),
 			       SizeToStr(sizeChange).c_str());
 	sizeChange = -sizeChange;
     }
     
     if (dlSize > 0) {
-	g_string_append_printf(msg, _("\n%s B have to be downloaded"),
+	g_string_append_printf(msg, _("\n%s have to be downloaded"),
 			       SizeToStr(dlSize).c_str());
     }
     

@@ -843,7 +843,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 			      "Please fix them first."));
 	return;
     }
-    
+
     if (_config->FindB("Volatile::Non-Interactive", false) == false) {
 	// show a summary of what's gonna happen
 	summ = new RGSummaryWindow(me, me->_lister);
@@ -1019,6 +1019,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
   setStatusText();
 }
 
+// mvo: this function needs a cleanup :)
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
     if(pkg==NULL) {
@@ -1087,6 +1088,15 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, FALSE);
 	break;
+    }
+
+    // only activate "keep" if it's actually applyable
+    if(mstatus == RPackage::MKeep) {
+	gtk_widget_set_sensitive(_actionB[0], FALSE);
+	gtk_widget_set_sensitive(_keepM, FALSE);
+    } else {
+	gtk_widget_set_sensitive(_actionB[0], TRUE);
+	gtk_widget_set_sensitive(_keepM, TRUE);
     }
 
     _currentB = NULL;
@@ -1159,7 +1169,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     _blockActions = TRUE;
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
     _blockActions = FALSE;
-    gtk_widget_set_sensitive(_actionB[0], TRUE);
 
     if (pkg->wouldBreak()) {
       setLabel(_gladeXML,"label_state", _("Broken dependencies."));
@@ -3563,11 +3572,11 @@ void RGMainWindow::setStatusText(char *text)
 	// we need to make this two strings for i18n reasons
 	listed = _lister->count();
 	if(size < 0) {
-	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be freed"),
+	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be freed"),
 				     listed, installed, broken, toinstall, toremove,
 				     SizeToStr(fabs(size)).c_str());
 	} else {
-	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be used"),
+	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be used"),
 				     listed, installed, broken, toinstall, toremove,
 				     SizeToStr(fabs(size)).c_str());
 	}; 		    

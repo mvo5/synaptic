@@ -277,4 +277,49 @@ int main(int argc, char **argv)
     return 0;
 }
 
+/*
+ * SizeToStr: Converts a size long into a human-readable SI string
+ * ----------------------------------------------------
+ * A maximum of four digits are shown before conversion to the next highest
+ * unit. The maximum length of the string will be five characters unless the
+ * size is more than ten yottabytes.
+ *
+ * mvo: we use out own SizeToStr function as the SI spec says we need a 
+ *      space between the number and the unit (this isn't the case in stock apt
+ */
+string SizeToStr(double Size)
+{
+    char S[300];
+    double ASize;
+    if (Size >= 0)
+    {
+        ASize = Size;
+    } else {
+        ASize = -1*Size;
+    }
+
+    /* Bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, exabytes,
+     * zettabytes, yottabytes.
+     */
+    char Ext[] = {'\0', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'};
+    int I = 0;
+    while (I <= 8)
+    {
+        if (ASize < 100 && I != 0)
+        {
+            sprintf(S, "%.1f %cB", ASize, Ext[I]);
+            break;
+        }
+
+        if (ASize < 10000)
+        {
+            sprintf(S, "%.0f %cB", ASize, Ext[I]);
+            break;
+        }
+        ASize /= 1000.0;
+        I++;
+    }
+    return S;
+}
+
 // vim:sts=4:sw=4

@@ -44,5 +44,6 @@ const char *utf8_to_locale(const char *str);
 void gtk_get_color_from_string(const char *cpp, GdkColor **colp);
 char* gtk_get_string_from_color(GdkColor *colp);
 bool is_binary_in_path(char *s);
+string SizeToStr(double Bytes);
 
 #endif

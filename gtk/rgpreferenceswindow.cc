@@ -135,7 +135,7 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    _config->Set("Synaptic::delAction", delAction);
 
    // save the colors
-   RPackageStatus::pkgStatus.saveColors();
+   RGPackageStatus::pkgStatus.saveColors();
 
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
    i = gtk_option_menu_get_history(
@@ -497,15 +497,15 @@ void RGPreferencesWindow::readColors()
    gchar *color_button;
    GtkWidget *button = NULL;
 
-   for (int i = 0; i < RPackageStatus::N_STATUS_COUNT; i++) {
+   for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       color_button =
          g_strdup_printf("button_%s_color",
-                         RPackageStatus::pkgStatus.
-                         getShortStatusString(RPackageStatus::PkgStatus(i)));
+                         RGPackageStatus::pkgStatus.
+                         getShortStatusString(RGPackageStatus::PkgStatus(i)));
       button = glade_xml_get_widget(_gladeXML, color_button);
       assert(button);
-      if (RPackageStatus::pkgStatus.getColor(i) != NULL) {
-         color = RPackageStatus::pkgStatus.getColor(i);
+      if (RGPackageStatus::pkgStatus.getColor(i) != NULL) {
+         color = RGPackageStatus::pkgStatus.getColor(i);
          gtk_widget_modify_bg(button, GTK_STATE_PRELIGHT, color);
          gtk_widget_modify_bg(button, GTK_STATE_NORMAL, color);
       }
@@ -527,7 +527,7 @@ void RGPreferencesWindow::saveColor(GtkWidget *self, void *data)
    gtk_color_selection_get_current_color(GTK_COLOR_SELECTION
                                          (color_selector->colorsel), &color);
 
-   RPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
+   RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
                                       gdk_color_copy(&color));
    me->readColors();
 }
@@ -547,7 +547,7 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
    color_selection = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
 
    GdkColor *color = NULL;
-   color = RPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
+   color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
    if (color != NULL)
       gtk_color_selection_set_current_color(GTK_COLOR_SELECTION
                                             (color_selection), color);
@@ -768,11 +768,11 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    // color stuff
    char *color_button = NULL;
-   for (int i = 0; i < RPackageStatus::N_STATUS_COUNT; i++) {
+   for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       color_button =
          g_strdup_printf("button_%s_color",
-                         RPackageStatus::pkgStatus.
-                         getShortStatusString(RPackageStatus::PkgStatus(i)));
+                         RGPackageStatus::pkgStatus.
+                         getShortStatusString(RGPackageStatus::PkgStatus(i)));
       button = glade_xml_get_widget(_gladeXML, color_button);
       assert(button);
       g_object_set_data(G_OBJECT(button), "me", this);

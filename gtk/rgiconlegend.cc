@@ -47,14 +47,14 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
    GtkWidget *hbox, *label, *pix;
 
-   int n_status = RPackageStatus::N_STATUS_COUNT;
-   for (int i = 0; i < RPackageStatus::N_STATUS_COUNT; i++) {
+   int n_status = RGPackageStatus::N_STATUS_COUNT;
+   for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       hbox = gtk_hbox_new(FALSE, 12);
 
-      pix = gtk_image_new_from_pixbuf(RPackageStatus::pkgStatus.getPixbuf(i));
+      pix = gtk_image_new_from_pixbuf(RGPackageStatus::pkgStatus.getPixbuf(i));
       gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
 
-      label = gtk_label_new(RPackageStatus::pkgStatus.getLongStatusString(i));
+      label = gtk_label_new(RGPackageStatus::pkgStatus.getLongStatusString(i));
       gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
       gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);

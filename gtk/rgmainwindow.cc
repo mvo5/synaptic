@@ -56,6 +56,7 @@
 #include "rgsetoptwindow.h"
 
 #include "rgfetchprogress.h"
+#include "rgpkgdetails.h"
 #include "rgcacheprogress.h"
 #include "rguserdialog.h"
 #include "rginstallprogress.h"
@@ -255,6 +256,7 @@ bool RGMainWindow::showErrors()
    return _userDialog->showErrors();
 }
 
+#if 0
 static void setLabel(GladeXML *xml, const char *widget_name,
                      const char *value)
 {
@@ -281,7 +283,7 @@ static void setLabel(GladeXML *xml, const char *widget_name, const int value)
       strVal = SizeToStr(value);
    gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
 }
-
+#endif
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
@@ -294,7 +296,7 @@ void RGMainWindow::notifyChange(RPackage *pkg)
 void RGMainWindow::forgetNewPackages()
 {
    //cout << "forgetNewPackages called" << endl;
-   unsigned int row = 0;
+   int row = 0;
    while (row < _lister->viewPackagesSize()) {
       RPackage *elem = _lister->getViewPackage(row);
       if (elem->getFlags() && RPackage::FNew)
@@ -797,10 +799,8 @@ void RGMainWindow::buildInterface()
 {
    GtkWidget *button;
    GtkWidget *widget;
-   GtkWidget *item;
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
-   GtkTreeSelection *selection;
 
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
@@ -839,6 +839,10 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_update_packages",
                                  G_CALLBACK(cbUpdateClicked), this);
+
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_details_clicked",
+                                 G_CALLBACK(cbDetailsWindow), this);
 
    _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
    _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
@@ -1204,7 +1208,6 @@ void RGMainWindow::buildInterface()
    gtk_option_menu_remove_menu(GTK_OPTION_MENU(_viewPopup));
    gtk_option_menu_set_menu(GTK_OPTION_MENU(_viewPopup), createViewMenu());
 
-   GtkTreeIter iter;
    _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
    assert(_subViewList);
 
@@ -1877,6 +1880,18 @@ void RGMainWindow::cbShowSetOptWindow(GtkWidget *self, void *data)
    win->_setOptWin->show();
 }
 
+void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = static_cast<RGMainWindow *>(data);
+   assert(data);
+
+   RPackage *pkg = me->selectedPackage();
+   if(me!=NULL) {
+      RGPkgDetailsWindow *win = new RGPkgDetailsWindow(me,pkg);
+      win->show();
+   }
+}
+
 void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 {
    RGMainWindow *win = (RGMainWindow *) data;
@@ -2138,7 +2153,7 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    if (pkg && pkg->installedVersion() == NULL) {
       me->_userDialog->error(_("Cannot start configuration tool!\n"
                                "You have to install the required package "
-			       	'libgnome2-perl'."));
+			       "'libgnome2-perl'."));
       return;
    }
 
@@ -2193,9 +2208,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // check whether we can really do it
    if (!me->_lister->check()) {
-             _("Could not apply changes!\n"
-             "There are broken packages.\n"
-             "Fix broken packages at first."));
+      me->_userDialog->error(_("Could not apply changes!\n"
+			       "There are broken packages.\n"
+			       "Fix broken packages at first."));
       return;
    }
 
@@ -2409,9 +2424,9 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 
    if (!me->_lister->check()) {
       me->_userDialog->error(
-	                      _("Could not upgrade the system!\n
-	                        "There are broken packages. "
-				"Fix broken packages at first."));
+			     _("Could not upgrade the system!\n"
+			       "There are broken packages. "
+			       "Fix broken packages at first."));
       return;
    }
    // check if we have saved upgrade type

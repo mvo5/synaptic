@@ -52,56 +52,26 @@ GtkWidget *get_gtk_image(const char *name);
 
 string SizeToStr(double Bytes);
 
-// the information for the treeview
-class RPackageStatus {
- public:
-   enum PkgStatus {
-      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
-      NotInstalled, NotInstalledLocked,
-      InstalledUpdated, InstalledOutdated, InstalledLocked,
-      IsBroken, IsNew,
-      N_STATUS_COUNT
-   };
-
+class RGPackageStatus : public RPackageStatus {
  protected:
-   // this is the short string to load the icons
-   const char *PackageStatusShortString[N_STATUS_COUNT];
-   // this is the long string for the gui description of the state
-   const char *PackageStatusLongString[N_STATUS_COUNT];
-
    GdkPixbuf *StatusPixbuf[N_STATUS_COUNT];
    GdkColor *StatusColors[N_STATUS_COUNT];
-
-   // this does the actual work
-   int getStatus(RPackage *pkg);
 
    void initColors();
    void initPixbufs();
 
  public:
    // this static object is used for all access
-   static RPackageStatus pkgStatus;
+   static RGPackageStatus pkgStatus;
 
-   RPackageStatus() {
-   };
-
-   // this reads the pixmaps and the colors
-   void init();
-
+   virtual void init();
+   
    // this is what the package listers use
    GdkColor *getBgColor(RPackage *pkg);
    GdkPixbuf *getPixbuf(RPackage *pkg);
    GdkPixbuf *getPixbuf(int i) {
       return StatusPixbuf[i];
    }
-
-   // here we get the description for the States
-   const char *getLongStatusString(int i) {
-      return PackageStatusLongString[i];
-   };
-   const char *getLongStatusString(RPackage *pkg) {
-      return PackageStatusLongString[getStatus(pkg)];
-   };
 
    // this is for the configuration of the colors
    void setColor(int i, GdkColor * new_color);
@@ -110,10 +80,6 @@ class RPackageStatus {
    };
    // save color configuration to disk
    void saveColors();
-   const char *getShortStatusString(int i) {
-      return PackageStatusShortString[i];
-   };
 };
-
 
 #endif

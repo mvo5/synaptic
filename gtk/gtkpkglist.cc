@@ -313,7 +313,7 @@ gtk_pkg_list_get_iter(GtkTreeModel *tree_model,
    // we do not support more 
    assert(depth <= 1);
 
-   unsigned int element = indices[0];
+   int element = indices[0];
 
 #ifdef DEBUG_LIST
    cout << "get_iter: index " << element << "  path: " << path << endl;
@@ -385,7 +385,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 #endif
 
    GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
-   unsigned int element = GPOINTER_TO_INT(iter->user_data2);
+   int element = GPOINTER_TO_INT(iter->user_data2);
    if (element >= pkg_list->_lister->viewPackagesSize())
       return;
 
@@ -436,7 +436,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
           if (pkg == NULL)
              return;
           GdkColor *bg;
-          bg = RPackageStatus::pkgStatus.getBgColor(pkg);
+          bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
           g_value_set_boxed(value, bg);
           break;
        }
@@ -445,7 +445,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
           if (pkg == NULL)
              return;
           GdkPixbuf *pix;
-          pix = RPackageStatus::pkgStatus.getPixbuf(pkg);
+          pix = RGPackageStatus::pkgStatus.getPixbuf(pkg);
           g_value_set_object(value, pix);
           break;
        }
@@ -461,7 +461,7 @@ gtk_pkg_list_iter_next(GtkTreeModel *tree_model, GtkTreeIter *iter)
       return FALSE;
 
    GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
-   unsigned int i, old;
+   int i, old;
 
    old = GPOINTER_TO_INT(iter->user_data2);
 

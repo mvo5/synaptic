@@ -205,6 +205,48 @@ class RPackage {
    ~RPackage();
 };
 
+
+class RPackageStatus {
+ public:
+   enum PkgStatus {
+      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
+      NotInstalled, NotInstalledLocked,
+      InstalledUpdated, InstalledOutdated, InstalledLocked,
+      IsBroken, IsNew,
+      N_STATUS_COUNT
+   };
+
+ protected:
+   // this is the short string to load the icons
+   const char *PackageStatusShortString[N_STATUS_COUNT];
+   // this is the long string for the gui description of the state
+   const char *PackageStatusLongString[N_STATUS_COUNT];
+
+
+   // this does the actual work
+   int getStatus(RPackage *pkg);
+
+
+ public:
+   RPackageStatus() {
+   };
+
+   // this reads the pixmaps and the colors
+   virtual void init();
+
+   // here we get the description for the States
+   const char *getLongStatusString(int i) {
+      return PackageStatusLongString[i];
+   };
+   const char *getLongStatusString(RPackage *pkg) {
+      return PackageStatusLongString[getStatus(pkg)];
+   };
+
+   const char *getShortStatusString(int i) {
+      return PackageStatusShortString[i];
+   };
+};
+
 #endif
 
 // vim:ts=3:sw=3:et

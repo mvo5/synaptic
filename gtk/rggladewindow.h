@@ -24,6 +24,8 @@
 #ifndef _RGGLADEWINDOW_H_
 #define _RGGLADEWINDOW_H_
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 #include <string>

@@ -21,6 +21,7 @@ synaptic_LDADD = \
 glade_DATA =                            \
 	window_about.glade  \
 	window_changes.glade  \
+	window_details.glade \
 	window_disc_name.glade  \
 	window_fetch.glade  \
 	window_find.glade  \
@@ -78,6 +79,8 @@ synaptic_SOURCES= \
 	rgcdscanner.h\
 	rgmainwindow.cc\
 	rgmainwindow.h\
+	rgpkgdetails.cc \
+	rgpkgdetails.h \
 	rgrepositorywin.cc\
 	rgrepositorywin.h\
 	rgvendorswindow.cc\

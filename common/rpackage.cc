@@ -1121,5 +1121,72 @@ static char *parseDescription(string descr)
    }
 }
 
+// class that finds out what do display to get user
+void RPackageStatus::init()
+{
+   char *status_short[N_STATUS_COUNT] = {
+      "install", "reinstall", "upgrade", "downgrade", "remove",
+      "purge", "available", "available-locked",
+      "installed-updated", "installed-outdated", "installed-locked",
+      "broken", "new"
+   };
+   memcpy(PackageStatusShortString, status_short, sizeof(status_short));
+
+   char *status_long[N_STATUS_COUNT] = {
+      _("Marked for installation"),
+      _("Marked for re-installation"),
+      _("Marked for upgrade"),
+      _("Marked for downgrade"),
+      _("Marked for removal"),
+      _("Marked for removal including configuration"),
+      _("Not installed"),
+      _("Not installed (locked)"),
+      _("Installed"),
+      _("Installed (update available)"),
+      _("Installed (locked to the current version)"),
+      _("Broken"),
+      _("Not installed (new in archive)")
+   };
+   memcpy(PackageStatusLongString, status_long, sizeof(status_long));
+}
+
+int RPackageStatus::getStatus(RPackage *pkg)
+{
+   int flags = pkg->getFlags();
+   int ret = NotInstalled;
+
+   if (pkg->wouldBreak()) {
+      ret = IsBroken;
+   } else if (flags & RPackage::FNewInstall) {
+      ret = ToInstall;
+   } else if (flags & RPackage::FUpgrade) {
+      ret = ToUpgrade;
+   } else if (flags & RPackage::FReInstall) {
+      ret = ToReInstall;
+   } else if (flags & RPackage::FDowngrade) {
+      ret = ToDowngrade;
+   } else if (flags & RPackage::FPurge) {
+      ret = ToPurge;
+   } else if (flags & RPackage::FRemove) {
+      ret = ToRemove;
+   } else if (flags & RPackage::FInstalled) {
+      if (flags & RPackage::FPinned)
+         ret = InstalledLocked;
+      else if (flags & RPackage::FOutdated)
+         ret = InstalledOutdated;
+      else
+         ret = InstalledUpdated;
+   } else {
+      if (flags & RPackage::FPinned)
+         ret = NotInstalledLocked;
+      else if (flags & RPackage::FNew)
+         ret = IsNew;
+      else
+         ret = NotInstalled;
+   }
+
+   return ret;
+}
+
 
 // vim:ts=3:sw=3:et

@@ -40,6 +40,7 @@ using namespace std;
 #include "gtkpkglist.h"
 #include "gtktagtree.h"
 
+
 #define TOOLBAR_HIDE -1
 
 class RGSourcesWindow;
@@ -246,6 +247,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbChangedFilter(GtkWidget *self);
    static void cbChangedView(GtkWidget *self);
    static void cbChangedSubView(GtkTreeSelection *selection, gpointer data);
+
+   static void cbDetailsWindow(GtkWidget *self, void *data);
 
    // file menu
    static void cbOpenClicked(GtkWidget *self, void *data);

@@ -152,7 +152,7 @@ int main(int argc, char **argv)
 
    // init the static pkgStatus class. this loads the status pixmaps 
    // and colors
-   RPackageStatus::pkgStatus.init();
+   RGPackageStatus::pkgStatus.init();
 
    RPackageLister *packageLister = new RPackageLister();
 //     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");

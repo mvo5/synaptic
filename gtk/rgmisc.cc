@@ -191,8 +191,9 @@ GtkWidget *get_gtk_image(const char *name)
 
 // -------------------------------------------------------------------
 // RPackageStatus stuff
+RGPackageStatus RGPackageStatus::pkgStatus;
 
-void RPackageStatus::initColors()
+void RGPackageStatus::initColors()
 {
    char *default_status_colors[N_STATUS_COUNT] = {
       "#83a67f",  // install
@@ -222,7 +223,7 @@ void RPackageStatus::initColors()
    }
 }
 
-void RPackageStatus::initPixbufs()
+void RGPackageStatus::initPixbufs()
 {
    gchar *filename = NULL;
 
@@ -241,95 +242,32 @@ void RPackageStatus::initPixbufs()
    }
 }
 
-RPackageStatus RPackageStatus::pkgStatus;
-
 // class that finds out what do display to get user
-void RPackageStatus::init()
+void RGPackageStatus::init()
 {
-   char *status_short[N_STATUS_COUNT] = {
-      "install", "reinstall", "upgrade", "downgrade", "remove",
-      "purge", "available", "available-locked",
-      "installed-updated", "installed-outdated", "installed-locked",
-      "broken", "new"
-   };
-   memcpy(PackageStatusShortString, status_short, sizeof(status_short));
-
-   char *status_long[N_STATUS_COUNT] = {
-      _("Marked for installation"),
-      _("Marked for re-installation"),
-      _("Marked for upgrade"),
-      _("Marked for downgrade"),
-      _("Marked for removal"),
-      _("Marked for removal including configuration"),
-      _("Not installed"),
-      _("Not installed (locked)"),
-      _("Installed"),
-      _("Installed (update available)"),
-      _("Installed (locked to the current version)"),
-      _("Broken"),
-      _("Not installed (new in archive)")
-   };
-   memcpy(PackageStatusLongString, status_long, sizeof(status_long));
-
+   RPackageStatus::init();
 
    initColors();
    initPixbufs();
 }
 
-int RPackageStatus::getStatus(RPackage *pkg)
-{
-   int flags = pkg->getFlags();
-   int ret = NotInstalled;
 
-   if (pkg->wouldBreak()) {
-      ret = IsBroken;
-   } else if (flags & RPackage::FNewInstall) {
-      ret = ToInstall;
-   } else if (flags & RPackage::FUpgrade) {
-      ret = ToUpgrade;
-   } else if (flags & RPackage::FReInstall) {
-      ret = ToReInstall;
-   } else if (flags & RPackage::FDowngrade) {
-      ret = ToDowngrade;
-   } else if (flags & RPackage::FPurge) {
-      ret = ToPurge;
-   } else if (flags & RPackage::FRemove) {
-      ret = ToRemove;
-   } else if (flags & RPackage::FInstalled) {
-      if (flags & RPackage::FPinned)
-         ret = InstalledLocked;
-      else if (flags & RPackage::FOutdated)
-         ret = InstalledOutdated;
-      else
-         ret = InstalledUpdated;
-   } else {
-      if (flags & RPackage::FPinned)
-         ret = NotInstalledLocked;
-      else if (flags & RPackage::FNew)
-         ret = IsNew;
-      else
-         ret = NotInstalled;
-   }
-
-   return ret;
-}
-
-GdkColor *RPackageStatus::getBgColor(RPackage *pkg)
+GdkColor *RGPackageStatus::getBgColor(RPackage *pkg)
 {
    return StatusColors[getStatus(pkg)];
 }
 
-GdkPixbuf *RPackageStatus::getPixbuf(RPackage *pkg)
+GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
 {
    return StatusPixbuf[getStatus(pkg)];
 }
 
-void RPackageStatus::setColor(int i, GdkColor * new_color)
+void RGPackageStatus::setColor(int i, GdkColor * new_color)
 {
    StatusColors[i] = new_color;
 }
 
-void RPackageStatus::saveColors()
+void RGPackageStatus::saveColors()
 {
    gchar *color_string, *config_string;
    for (int i = 0; i < N_STATUS_COUNT; i++) {

@@ -1012,6 +1012,8 @@ void RGMainWindow::buildInterface()
    gtk_window_move(GTK_WINDOW(_win),
                    _config->FindI("Synaptic::windowX", 100),
                    _config->FindI("Synaptic::windowY", 100));
+   if(_config->FindB("Synaptic::Maximized",false))
+      gtk_window_maximize(GTK_WINDOW(_win));
    RGFlushInterface();
 
 
@@ -1642,6 +1644,10 @@ void RGMainWindow::saveState()
    _config->Set("Synaptic::windowX", x);
    _config->Set("Synaptic::windowY", y);
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
+   if(gdk_window_get_state(_win->window) & GDK_WINDOW_STATE_MAXIMIZED)
+      _config->Set("Synaptic::Maximized", true);
+   else
+      _config->Set("Synaptic::Maximized", false);
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));

@@ -87,6 +87,13 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    string str;
    int flags = pkg->getFlags();
 
+   if(flags & RPackage::FInstalled) 
+      str = _("Installed");
+   else
+      str = _("Not installed");
+   _view[str].push_back(pkg);
+
+   str.clear();
    if (flags & RPackage::FNew)
       str = _("New in repository");
    else if (flags & RPackage::FPinned) 
@@ -98,16 +105,13 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    else if (flags & RPackage::FInstalled) {
       if (flags & RPackage::FOutdated)
 	 str = _("Installed (upgradable)");
-      else
-	 str = _("Installed");
    } else {
       if (flags & RPackage::FResidualConfig)
 	 str = _("Not installed (residual config)");
-      else
-	 str = _("Not installed");
    }
 
-   _view[str].push_back(pkg);
+   if(!str.empty())
+      _view[str].push_back(pkg);
 }
 
 //------------------------------------------------------------------

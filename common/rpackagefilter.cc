@@ -689,13 +689,13 @@ bool RReducedViewPackageFilter::read(Configuration &conf, string key)
 
 bool RFilter::apply(RPackage *package)
 {
-   if (!section.filter(package))
-      return false;
-
    if (!status.filter(package))
       return false;
 
    if (!pattern.filter(package))
+      return false;
+
+   if (!section.filter(package))
       return false;
 
    if (!priority.filter(package))

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:51+0100\n"
+"POT-Creation-Date: 2004-11-29 22:51+0100\n"
 "PO-Revision-Date: 2004-06-22 15:26+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -502,7 +502,7 @@ msgstr "Nenainstalováno (zamčeno)"
 msgid "Installed"
 msgstr "Instalované balíky"
 
-#: common/rpackage.cc:1374 common/rpackageview.cc:138
+#: common/rpackage.cc:1374 common/rpackageview.cc:138 gtk/gsynaptic.cc:284
 msgid "Installed (upgradable)"
 msgstr "Instalováno (lze aktualizovat)"
 
@@ -653,11 +653,11 @@ msgstr "Vnitřní chyba, úplná aktualizace selhala. Prosím nahlašte tuto chy
 msgid "dist upgrade Failed"
 msgstr "Upgrade distribuce selhal"
 
-#: common/rpackagelister.cc:1190
+#: common/rpackagelister.cc:1205
 msgid "Unable to lock the list directory"
 msgstr "Nelze zamknout adresář se seznamy"
 
-#: common/rpackagelister.cc:1212
+#: common/rpackagelister.cc:1227
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -665,7 +665,7 @@ msgstr ""
 "Soubory pro některý zdroj nešly stáhnout, proto s ním Synaptic nebude "
 "pracovat."
 
-#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
+#: common/rpackagelister.cc:1297 common/rpackagelister.cc:1303
 #: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignoruji chybné záznamy v souboru sources.list!"
@@ -674,7 +674,7 @@ msgstr "Ignoruji chybné záznamy v souboru sources.list!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1333
+#: common/rpackagelister.cc:1348
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -684,82 +684,82 @@ msgstr ""
 "Chyba při přenosu %s\n"
 "  %s"
 
-#: common/rpackagelister.cc:1357
+#: common/rpackagelister.cc:1372
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Některé z balíků se nepodařilo stáhnout.\n"
 
-#: common/rpackagelister.cc:1360
+#: common/rpackagelister.cc:1375
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Chcete pokračovat, s tím že se tyto balíky nebudou instalovat?"
 
-#: common/rpackagelister.cc:1367
+#: common/rpackagelister.cc:1382
 msgid "Unable to correct missing packages"
 msgstr "Nelze opravit chybějící balíčky"
 
-#: common/rpackagelister.cc:1464
+#: common/rpackagelister.cc:1487
 #, fuzzy
 msgid ""
 "\n"
 "The following ESSENTIAL packages are removed:\n"
 msgstr "Balíčky "
 
-#: common/rpackagelister.cc:1472
+#: common/rpackagelister.cc:1495
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are DOWNGRADED:\n"
 msgstr "Balíčky "
 
-#: common/rpackagelister.cc:1480
+#: common/rpackagelister.cc:1503
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are purged:\n"
 msgstr "Balíčky "
 
-#: common/rpackagelister.cc:1488
+#: common/rpackagelister.cc:1511
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are removed:\n"
 msgstr "Balíčky "
 
-#: common/rpackagelister.cc:1496
+#: common/rpackagelister.cc:1519
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are upgraded:\n"
 msgstr "Balíčky "
 
-#: common/rpackagelister.cc:1506
+#: common/rpackagelister.cc:1529
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are installed:\n"
 msgstr "balík není a nebude nainstalován"
 
-#: common/rpackagelister.cc:1515
+#: common/rpackagelister.cc:1538
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are re-installed:\n"
 msgstr "balík není a nebude nainstalován"
 
-#: common/rpackagelister.cc:1532
+#: common/rpackagelister.cc:1555
 msgid "Unable to lock the download directory"
 msgstr "Nelze uzamknout adresář pro stahované soubory"
 
-#: common/rpackagelister.cc:1610
+#: common/rpackagelister.cc:1633
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Řádek %u v souboru s výběry je příliš dlouhý."
 
-#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
+#: common/rpackagelister.cc:1647 common/rpackagelister.cc:1651
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Chyba na řádku %u v souboru s výběry"
 
-#: common/rpackagelister.cc:1640
+#: common/rpackagelister.cc:1663
 msgid "Setting markings..."
 msgstr "Nastavení výběrů..."
 
@@ -829,7 +829,7 @@ msgstr "Úlohy"
 msgid "Reduced View"
 msgstr "Filtrovaný seznam"
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:273 gtk/rgsummarywindow.cc:324
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:275 gtk/rgsummarywindow.cc:355
 msgid "Marked Changes"
 msgstr "Požadované změny"
 
@@ -929,11 +929,11 @@ msgstr "--non-interactive Bez uživatelského dialogu\n"
 msgid "--task-window Open with task window\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:201
+#: gtk/gsynaptic.cc:203
 msgid "You must run this program as the root user."
 msgstr "Tento program musíte spouštět jako superuživatel."
 
-#: gtk/gsynaptic.cc:239
+#: gtk/gsynaptic.cc:241
 msgid "Synaptic Package Manager "
 msgstr "Synaptic - manažer instalačních balíků"
 
@@ -961,7 +961,7 @@ msgstr "O programu Synaptic"
 msgid "Package changes"
 msgstr "Změny v instalaci"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:134
 msgid "To be removed"
 msgstr "K odstranění"
 
@@ -969,15 +969,15 @@ msgstr "K odstranění"
 msgid "To be downgraded"
 msgstr "Bude snížena verze"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:160
 msgid "To be upgraded"
 msgstr "K aktualizaci"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:172
 msgid "To be installed"
 msgstr "K instalaci"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:184
 msgid "To be re-installed"
 msgstr "K re-instalaci"
 
@@ -1561,130 +1561,134 @@ msgstr "Nelze přečíst seznam poskytovatelů"
 msgid "Unknown source type"
 msgstr "Neznámý typ zdroje"
 
-#: gtk/rgsummarywindow.cc:85
+#: gtk/rgsummarywindow.cc:92
+msgid "NOT AUTHENTICATED"
+msgstr ""
+
+#: gtk/rgsummarywindow.cc:108
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ESSENTIAL) bude odstraněn"
 
-#: gtk/rgsummarywindow.cc:98
+#: gtk/rgsummarywindow.cc:121
 msgid "To be DOWNGRADED"
 msgstr "Bude SNÍŽENA verze"
 
-#: gtk/rgsummarywindow.cc:124
+#: gtk/rgsummarywindow.cc:147
 #, fuzzy
 msgid "To be removed with configuration"
 msgstr "Zachovat konfiguráky"
 
-#: gtk/rgsummarywindow.cc:176
+#: gtk/rgsummarywindow.cc:199
 #, fuzzy
 msgid "To be not upgraded"
 msgstr "K aktualizaci"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:244
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>systémový</b>) bude odebrán\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:253
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> bude přeinstalován na <b>nižší</b> verzi\n"
 
-#: gtk/rgsummarywindow.cc:230
+#: gtk/rgsummarywindow.cc:261
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> bude odebrán\n"
 
-#: gtk/rgsummarywindow.cc:238
+#: gtk/rgsummarywindow.cc:269
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> bude odebrán\n"
 
-#: gtk/rgsummarywindow.cc:247
+#: gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (verze <i>%s</i>) bude aktualizován na verzi <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:289
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (verze <i>%s</i>) bude nainstalován\n"
 
-#: gtk/rgsummarywindow.cc:266
+#: gtk/rgsummarywindow.cc:297
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (verze <i>%s</i>) bude re-instalován\n"
 
-#: gtk/rgsummarywindow.cc:301
+#: gtk/rgsummarywindow.cc:332
 msgid "Summary"
 msgstr "Shrnutí:"
 
-#: gtk/rgsummarywindow.cc:371
+#: gtk/rgsummarywindow.cc:402
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "Není vybrán žádný balíček.\n"
 msgstr[1] "Není vybrán žádný balíček.\n"
 
-#: gtk/rgsummarywindow.cc:378
+#: gtk/rgsummarywindow.cc:409
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "Balíčky které mohou být instalovány či aktualizovány"
 msgstr[1] "Balíčky které mohou být instalovány či aktualizovány"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:416
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "balík není a nebude nainstalován"
 msgstr[1] "balík není a nebude nainstalován"
 
-#: gtk/rgsummarywindow.cc:392
+#: gtk/rgsummarywindow.cc:423
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "balík není a nebude nainstalován"
 msgstr[1] "balík není a nebude nainstalován"
 
-#: gtk/rgsummarywindow.cc:399
+#: gtk/rgsummarywindow.cc:430
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "Balíčky "
 msgstr[1] "Balíčky "
 
-#: gtk/rgsummarywindow.cc:406
+#: gtk/rgsummarywindow.cc:437
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "Balíčky, které budou odebrány"
 msgstr[1] "Balíčky, které budou odebrány"
 
-#: gtk/rgsummarywindow.cc:413
+#: gtk/rgsummarywindow.cc:444
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "<b>%s</b> bude přeinstalován na <b>nižší</b> verzi\n"
 msgstr[1] "<b>%s</b> bude přeinstalován na <b>nižší</b> verzi\n"
 
-#: gtk/rgsummarywindow.cc:421
+#: gtk/rgsummarywindow.cc:452
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>%s</b> (<b>systémový</b>) bude odebrán\n"
 msgstr[1] "<b>%s</b> (<b>systémový</b>) bude odebrán\n"
 
-#: gtk/rgsummarywindow.cc:433
+#: gtk/rgsummarywindow.cc:464
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "po aktualizaci bude zabráno na disku o %s více místa"
 
-#: gtk/rgsummarywindow.cc:436
+#: gtk/rgsummarywindow.cc:467
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "uvolní se %s"
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:473
 #, c-format
 msgid ""
 "\n"
@@ -1693,7 +1697,7 @@ msgstr ""
 "\n"
 "Bude se stahovat %s dat."
 
-#: gtk/rgsummarywindow.cc:467
+#: gtk/rgsummarywindow.cc:498
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"

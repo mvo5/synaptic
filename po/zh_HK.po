@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:51+0100\n"
+"POT-Creation-Date: 2004-11-29 22:51+0100\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -532,7 +532,7 @@ msgstr ""
 msgid "Installed"
 msgstr "已安裝"
 
-#: common/rpackage.cc:1374 common/rpackageview.cc:138
+#: common/rpackage.cc:1374 common/rpackageview.cc:138 gtk/gsynaptic.cc:284
 #, fuzzy
 msgid "Installed (upgradable)"
 msgstr "已安裝並可升級的套件"
@@ -685,17 +685,17 @@ msgstr ""
 msgid "dist upgrade Failed"
 msgstr "全面升級(_D)"
 
-#: common/rpackagelister.cc:1190
+#: common/rpackagelister.cc:1205
 msgid "Unable to lock the list directory"
 msgstr "無法鎖住清單目錄"
 
-#: common/rpackagelister.cc:1212
+#: common/rpackagelister.cc:1227
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "無法抓取或認證某些套件庫的 Release 檔，暫時略過那些套件庫。"
 
-#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
+#: common/rpackagelister.cc:1297 common/rpackagelister.cc:1303
 #: gtk/rgrepositorywin.cc:322
 #, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
@@ -705,7 +705,7 @@ msgstr "無法讀取 sources.list 套件庫來源清單檔"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1333
+#: common/rpackagelister.cc:1348
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -713,83 +713,83 @@ msgid ""
 "\n"
 msgstr "擷取 hash 檔案失敗: "
 
-#: common/rpackagelister.cc:1357
+#: common/rpackagelister.cc:1372
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些套件未能從伺服器抓取。\n"
 
-#: common/rpackagelister.cc:1360
+#: common/rpackagelister.cc:1375
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想略過這些套件，繼續進行嗎?"
 
-#: common/rpackagelister.cc:1367
+#: common/rpackagelister.cc:1382
 #, fuzzy
 msgid "Unable to correct missing packages"
 msgstr "無法更正缺少的套件"
 
-#: common/rpackagelister.cc:1464
+#: common/rpackagelister.cc:1487
 #, fuzzy
 msgid ""
 "\n"
 "The following ESSENTIAL packages are removed:\n"
 msgstr "此套件將會被升級。"
 
-#: common/rpackagelister.cc:1472
+#: common/rpackagelister.cc:1495
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are DOWNGRADED:\n"
 msgstr "此套件將會被升級。"
 
-#: common/rpackagelister.cc:1480
+#: common/rpackagelister.cc:1503
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are purged:\n"
 msgstr "此套件將會被升級。"
 
-#: common/rpackagelister.cc:1488
+#: common/rpackagelister.cc:1511
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are removed:\n"
 msgstr "此套件將會被升級。"
 
-#: common/rpackagelister.cc:1496
+#: common/rpackagelister.cc:1519
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are upgraded:\n"
 msgstr "此套件將會被升級。"
 
-#: common/rpackagelister.cc:1506
+#: common/rpackagelister.cc:1529
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are installed:\n"
 msgstr "此套件將會被安裝。"
 
-#: common/rpackagelister.cc:1515
+#: common/rpackagelister.cc:1538
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are re-installed:\n"
 msgstr "將會新安裝 %d 個%s；\n"
 
-#: common/rpackagelister.cc:1532
+#: common/rpackagelister.cc:1555
 msgid "Unable to lock the download directory"
 msgstr "無法鎖住下載區目錄"
 
-#: common/rpackagelister.cc:1610
+#: common/rpackagelister.cc:1633
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "自動選擇升級套件失敗。"
 
-#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
+#: common/rpackagelister.cc:1647 common/rpackagelister.cc:1651
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr ""
 
-#: common/rpackagelister.cc:1640
+#: common/rpackagelister.cc:1663
 msgid "Setting markings..."
 msgstr ""
 
@@ -866,7 +866,7 @@ msgstr "任務"
 msgid "Reduced View"
 msgstr ""
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:273 gtk/rgsummarywindow.cc:324
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:275 gtk/rgsummarywindow.cc:355
 #, fuzzy
 msgid "Marked Changes"
 msgstr "預期變動"
@@ -968,11 +968,11 @@ msgstr ""
 msgid "--task-window Open with task window\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:201
+#: gtk/gsynaptic.cc:203
 msgid "You must run this program as the root user."
 msgstr "您必須以 root 使用者身份執行此程式。"
 
-#: gtk/gsynaptic.cc:239
+#: gtk/gsynaptic.cc:241
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "套件變更"
@@ -1004,7 +1004,7 @@ msgstr "Synaptic「新立得」"
 msgid "Package changes"
 msgstr "套件變更"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:134
 msgid "To be removed"
 msgstr "將會移除的套件"
 
@@ -1013,15 +1013,15 @@ msgstr "將會移除的套件"
 msgid "To be downgraded"
 msgstr "將會升級的套件"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:160
 msgid "To be upgraded"
 msgstr "將會升級的套件"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:172
 msgid "To be installed"
 msgstr "將會新安裝的套件"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:184
 #, fuzzy
 msgid "To be re-installed"
 msgstr "將會新安裝的套件"
@@ -1609,130 +1609,134 @@ msgstr "無法讀取 vendors.list 套件包裝商清單檔"
 msgid "Unknown source type"
 msgstr "套件來源種類不明"
 
-#: gtk/rgsummarywindow.cc:85
+#: gtk/rgsummarywindow.cc:92
+msgid "NOT AUTHENTICATED"
+msgstr ""
+
+#: gtk/rgsummarywindow.cc:108
 msgid "(ESSENTIAL) to be removed"
 msgstr "(必需套件) 將會被移除"
 
-#: gtk/rgsummarywindow.cc:98
+#: gtk/rgsummarywindow.cc:121
 msgid "To be DOWNGRADED"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:124
+#: gtk/rgsummarywindow.cc:147
 #, fuzzy
 msgid "To be removed with configuration"
 msgstr "已標記要移除的套件"
 
-#: gtk/rgsummarywindow.cc:176
+#: gtk/rgsummarywindow.cc:199
 #, fuzzy
 msgid "To be not upgraded"
 msgstr "將會升級的套件"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:244
 #, fuzzy, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr ": (必需套件) 將會被移除\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:253
 #, fuzzy, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr ": 將會被移除\n"
 
-#: gtk/rgsummarywindow.cc:230
+#: gtk/rgsummarywindow.cc:261
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr ": 將會被移除\n"
 
-#: gtk/rgsummarywindow.cc:238
+#: gtk/rgsummarywindow.cc:269
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr ": 將會被移除\n"
 
-#: gtk/rgsummarywindow.cc:247
+#: gtk/rgsummarywindow.cc:278
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ": 將會被安裝\n"
 
-#: gtk/rgsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:289
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr ": 將會被安裝\n"
 
-#: gtk/rgsummarywindow.cc:266
+#: gtk/rgsummarywindow.cc:297
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr ": 將會被安裝\n"
 
-#: gtk/rgsummarywindow.cc:301
+#: gtk/rgsummarywindow.cc:332
 msgid "Summary"
 msgstr "摘要"
 
-#: gtk/rgsummarywindow.cc:371
+#: gtk/rgsummarywindow.cc:402
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "套件已安裝。"
 msgstr[1] "套件已安裝。"
 
-#: gtk/rgsummarywindow.cc:378
+#: gtk/rgsummarywindow.cc:409
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d 個%s維持原狀不升級；\n"
 msgstr[1] "%d 個%s維持原狀不升級；\n"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:416
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "將會新安裝 %d 個%s；\n"
 msgstr[1] "將會新安裝 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:392
+#: gtk/rgsummarywindow.cc:423
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "將會新安裝 %d 個%s；\n"
 msgstr[1] "將會新安裝 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:399
+#: gtk/rgsummarywindow.cc:430
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "此套件將會被升級。"
 msgstr[1] "此套件將會被升級。"
 
-#: gtk/rgsummarywindow.cc:406
+#: gtk/rgsummarywindow.cc:437
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "將會移除 %d 個%s；\n"
 msgstr[1] "將會移除 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:413
+#: gtk/rgsummarywindow.cc:444
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "此套件將會被升級。"
 msgstr[1] "此套件將會被升級。"
 
-#: gtk/rgsummarywindow.cc:421
+#: gtk/rgsummarywindow.cc:452
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "警告: %d 個必要的%s將會被移除!\n"
 msgstr[1] "警告: %d 個必要的%s將會被移除!\n"
 
-#: gtk/rgsummarywindow.cc:433
+#: gtk/rgsummarywindow.cc:464
 #, fuzzy, c-format
 msgid "%s of extra space will be used"
 msgstr "將會新安裝 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:436
+#: gtk/rgsummarywindow.cc:467
 #, fuzzy, c-format
 msgid "%s of extra space will be freed"
 msgstr "將會移除 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:473
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1741,7 +1745,7 @@ msgstr ""
 "\n"
 "需要下載 %sB。"
 
-#: gtk/rgsummarywindow.cc:467
+#: gtk/rgsummarywindow.cc:498
 #, fuzzy
 msgid ""
 "Essential packages will be removed.\n"

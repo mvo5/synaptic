@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-16 23:14+0100\n"
+"POT-Creation-Date: 2004-11-29 22:51+0100\n"
 "PO-Revision-Date: 2004-11-19 23:03+0200\n"
 "Last-Translator: Morten Brix Pedersen <morten@wtf.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -506,7 +506,7 @@ msgstr "Ikke installeret (låst)"
 msgid "Installed"
 msgstr "Installeret"
 
-#: common/rpackage.cc:1374 common/rpackageview.cc:138
+#: common/rpackage.cc:1374 common/rpackageview.cc:138 gtk/gsynaptic.cc:284
 msgid "Installed (upgradable)"
 msgstr "Installerede (kan opgraderes)"
 
@@ -654,11 +654,11 @@ msgstr "Intern fejl, AllUpgrade ødelagde ting. Rapportér dette."
 msgid "dist upgrade Failed"
 msgstr "dist upgrade fejlede"
 
-#: common/rpackagelister.cc:1190
+#: common/rpackagelister.cc:1205
 msgid "Unable to lock the list directory"
 msgstr "Kunne ikke låse liste-kataloget"
 
-#: common/rpackagelister.cc:1212
+#: common/rpackagelister.cc:1227
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -666,7 +666,7 @@ msgstr ""
 "Release-filer for nogle arkiver kunne ikke hentes eller godkendes. Disse "
 "arkiver bliver ignoreret."
 
-#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
+#: common/rpackagelister.cc:1297 common/rpackagelister.cc:1303
 #: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignorerer ugyldige post(er) i sources.list filen!"
@@ -675,7 +675,7 @@ msgstr "Ignorerer ugyldige post(er) i sources.list filen!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1333
+#: common/rpackagelister.cc:1348
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -686,89 +686,96 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: common/rpackagelister.cc:1357
+#: common/rpackagelister.cc:1372
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Nogen af pakkerne kunne ikke hentes fra serverne.\n"
 
-#: common/rpackagelister.cc:1360
+#: common/rpackagelister.cc:1375
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Ønsker du at fortsætte, idet disse pakker ignoreres?"
 
-#: common/rpackagelister.cc:1367
+#: common/rpackagelister.cc:1382
 msgid "Unable to correct missing packages"
 msgstr "Kune ikke rette manglende pakker"
 
-#: common/rpackagelister.cc:1464
+#: common/rpackagelister.cc:1487
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing ESSENTIAL packages are removed:\n"
+"The following ESSENTIAL packages are removed:\n"
 msgstr ""
 "\n"
 "De følgende ESSENTIELLE pakker er fjernet:\n"
 
-#: common/rpackagelister.cc:1472
+#: common/rpackagelister.cc:1495
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are DOWNGRADED:\n"
+"The following packages are DOWNGRADED:\n"
 msgstr ""
 "\n"
 "De følgende pakker er NEDGRADERET:\n"
 
-#: common/rpackagelister.cc:1480
+#: common/rpackagelister.cc:1503
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are purged:\n"
+"The following packages are purged:\n"
 msgstr ""
 "\n"
 "De følgende pakker er fjernet fuldstændigt:\n"
 
-#: common/rpackagelister.cc:1488
+#: common/rpackagelister.cc:1511
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are removed:\n"
+"The following packages are removed:\n"
 msgstr ""
 "\n"
 "De følgende pakker er fjernet:\n"
 
-#: common/rpackagelister.cc:1496
+#: common/rpackagelister.cc:1519
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are upgraded:\n"
+"The following packages are upgraded:\n"
 msgstr ""
 "\n"
 "De følgende pakker er opgraderet:\n"
 
-#: common/rpackagelister.cc:1506
+#: common/rpackagelister.cc:1529
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are installed:\n"
+"The following packages are installed:\n"
 msgstr ""
 "\n"
 "De følgende pakker er installeret:\n"
 
-#: common/rpackagelister.cc:1515
+#: common/rpackagelister.cc:1538
+#, fuzzy
 msgid ""
 "\n"
-"The follwoing packages are re-installed:\n"
+"The following packages are re-installed:\n"
 msgstr ""
 "\n"
 "De følgende pakker er re-installeret:\n"
 
-#: common/rpackagelister.cc:1532
+#: common/rpackagelister.cc:1555
 msgid "Unable to lock the download directory"
 msgstr "Kan ikke låse nedhentningskataloget"
 
-#: common/rpackagelister.cc:1610
+#: common/rpackagelister.cc:1633
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Linje %u for lang i markeringsfil."
 
-#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
+#: common/rpackagelister.cc:1647 common/rpackagelister.cc:1651
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Forkert formatteret linje %u i markeringsfil"
 
-#: common/rpackagelister.cc:1640
+#: common/rpackagelister.cc:1663
 msgid "Setting markings..."
 msgstr "Sætter markeringer..."
 
@@ -834,7 +841,7 @@ msgstr "Opgaver"
 msgid "Reduced View"
 msgstr "ReduceretVisning"
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:273 gtk/rgsummarywindow.cc:324
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:275 gtk/rgsummarywindow.cc:355
 msgid "Marked Changes"
 msgstr "Markerede ændringer"
 
@@ -943,11 +950,11 @@ msgstr "--non-interactive  Spørg ikke efter bruger inddata\n"
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Åbn med 'opgave'-vindue\n"
 
-#: gtk/gsynaptic.cc:201
+#: gtk/gsynaptic.cc:203
 msgid "You must run this program as the root user."
 msgstr "Du skal køre dette program som brugeren root."
 
-#: gtk/gsynaptic.cc:239
+#: gtk/gsynaptic.cc:241
 msgid "Synaptic Package Manager "
 msgstr "Synaptic pakkehåndtering "
 
@@ -975,7 +982,7 @@ msgstr "Om Synaptic"
 msgid "Package changes"
 msgstr "Pakke ændringer"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:134
 msgid "To be removed"
 msgstr "Vil blive fjernet"
 
@@ -983,15 +990,15 @@ msgstr "Vil blive fjernet"
 msgid "To be downgraded"
 msgstr "Vil blive nedgraderet"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:160
 msgid "To be upgraded"
 msgstr "Vil blive opgraderet"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:172
 msgid "To be installed"
 msgstr "Vil blive installeret"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:184
 msgid "To be re-installed"
 msgstr "Vil blive re-installeret"
 
@@ -1350,8 +1357,8 @@ msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
-"Ændringsfilen indeholder oplysninger om ændringer og lukkede fejlrapporter "
-"i hver version af pakken."
+"Ændringsfilen indeholder oplysninger om ændringer og lukkede fejlrapporter i "
+"hver version af pakken."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: gtk/rgmainwindow.cc:1841
@@ -1392,8 +1399,8 @@ msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
 msgstr ""
-"Arkiv-oplysningerne er blevet ændret. Du skal klikke på \"Genindlæs\" knappen "
-"for aktivere dine ændringer."
+"Arkiv-oplysningerne er blevet ændret. Du skal klikke på \"Genindlæs\" "
+"knappen for aktivere dine ændringer."
 
 #: gtk/rgmainwindow.cc:2110
 msgid "Never show this message again"
@@ -1484,8 +1491,8 @@ msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
-"Arkiverne vil blive tjekket for nye, fjernede eller opgraderede software"
-"pakker."
+"Arkiverne vil blive tjekket for nye, fjernede eller opgraderede "
+"softwarepakker."
 
 #: gtk/rgmainwindow.cc:2600
 msgid "Reloading package information..."
@@ -1575,129 +1582,133 @@ msgstr "Kan ikke læse vendors.list fil"
 msgid "Unknown source type"
 msgstr "Ukendt kilde type"
 
-#: gtk/rgsummarywindow.cc:85
+#: gtk/rgsummarywindow.cc:92
+msgid "NOT AUTHENTICATED"
+msgstr ""
+
+#: gtk/rgsummarywindow.cc:108
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ESSENTIEL) vil blive fjernet"
 
-#: gtk/rgsummarywindow.cc:98
+#: gtk/rgsummarywindow.cc:121
 msgid "To be DOWNGRADED"
 msgstr "Vil blive NEDGRADERET"
 
-#: gtk/rgsummarywindow.cc:124
+#: gtk/rgsummarywindow.cc:147
 msgid "To be removed with configuration"
 msgstr "Vil blive fjernet med opsætning"
 
-#: gtk/rgsummarywindow.cc:176
+#: gtk/rgsummarywindow.cc:199
 msgid "To be not upgraded"
 msgstr "Vil ikke blive opgraderet"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:244
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>essentiel</b>) vil blive fjernet\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:253
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> vil blive <b>nedgraderet</b>\n"
 
-#: gtk/rgsummarywindow.cc:230
+#: gtk/rgsummarywindow.cc:261
 #, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> vil blive fjernet med opsætning\n"
 
-#: gtk/rgsummarywindow.cc:238
+#: gtk/rgsummarywindow.cc:269
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> vil blive fjernet\n"
 
-#: gtk/rgsummarywindow.cc:247
+#: gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ""
 "<b>%s</b> (version <i>%s</i>) vil blive opgraderet til version <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:289
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (version <i>%s</i>) vil blive installeret\n"
 
-#: gtk/rgsummarywindow.cc:266
+#: gtk/rgsummarywindow.cc:297
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (version <i>%s</i>) vil blive re-installeret\n"
 
-#: gtk/rgsummarywindow.cc:301
+#: gtk/rgsummarywindow.cc:332
 msgid "Summary"
 msgstr "Oversigt"
 
-#: gtk/rgsummarywindow.cc:371
+#: gtk/rgsummarywindow.cc:402
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d pakke er låst\n"
 msgstr[1] "%d pakker er låst\n"
 
-#: gtk/rgsummarywindow.cc:378
+#: gtk/rgsummarywindow.cc:409
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d pakke vil blive holdt tilbage og ikke opgraderet\n"
 msgstr[1] "%d pakker vil blive holdt tilbage og ikke opgraderet\n"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:416
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d ny pakke vil blive installeret\n"
 msgstr[1] "%d nye pakker vil blive installeret\n"
 
-#: gtk/rgsummarywindow.cc:392
+#: gtk/rgsummarywindow.cc:423
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d ny pakke vil blive re-installeret\n"
 msgstr[1] "%d nye pakker vil blive re-installeret\n"
 
-#: gtk/rgsummarywindow.cc:399
+#: gtk/rgsummarywindow.cc:430
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d pakke vil blive opgraderet\n"
 msgstr[1] "%d pakker vil blive opgraderet\n"
 
-#: gtk/rgsummarywindow.cc:406
+#: gtk/rgsummarywindow.cc:437
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d pakke vil blive fjernet\n"
 msgstr[1] "%d pakker vil blive fjernet\n"
 
-#: gtk/rgsummarywindow.cc:413
+#: gtk/rgsummarywindow.cc:444
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d pakke vil blive <b>nedgraderet</b>\n"
 msgstr[1] "%d pakker vil blive <b>nedgraderet</b>\n"
 
-#: gtk/rgsummarywindow.cc:421
+#: gtk/rgsummarywindow.cc:452
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Advarsel:</b> %d essentiel pakke vil blive fjernet\n"
 msgstr[1] "<b>Advarsel:</b> %d essentielle pakker vil blive fjernet\n"
 
-#: gtk/rgsummarywindow.cc:433
+#: gtk/rgsummarywindow.cc:464
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s af ekstra plads vil blive brugt"
 
-#: gtk/rgsummarywindow.cc:436
+#: gtk/rgsummarywindow.cc:467
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s af ekstra plads vil blive frigjort"
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:473
 #, c-format
 msgid ""
 "\n"
@@ -1706,7 +1717,7 @@ msgstr ""
 "\n"
 "%s skal hentes"
 
-#: gtk/rgsummarywindow.cc:467
+#: gtk/rgsummarywindow.cc:498
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -3012,8 +3023,8 @@ msgid ""
 "security updates available. It is recommended to reload the package "
 "information regularly."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Dine pakke oplysninger er uddaterede"
-"</span>\n"
+"<span weight=\"bold\" size=\"larger\">Dine pakke oplysninger er uddaterede</"
+"span>\n"
 "\n"
 "Dine pakkeoplysninger er ældre end 48 timer. Der kan være vigtige "
 "sikkerhedsopdateringer tilgængelige. Det anbefales at du genindlæser "

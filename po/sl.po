@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.55\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:51+0100\n"
+"POT-Creation-Date: 2004-11-29 22:51+0100\n"
 "PO-Revision-Date: 2004-11-14 20:05+0100\n"
 "Last-Translator: Roman Maurer <roman@lugos.si>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
@@ -506,7 +506,7 @@ msgstr "Ni nameščen (zaklenjen)"
 msgid "Installed"
 msgstr "Nameščen"
 
-#: common/rpackage.cc:1374 common/rpackageview.cc:138
+#: common/rpackage.cc:1374 common/rpackageview.cc:138 gtk/gsynaptic.cc:284
 msgid "Installed (upgradable)"
 msgstr "Nameščen (nadgradljiv)"
 
@@ -656,11 +656,11 @@ msgstr ""
 msgid "dist upgrade Failed"
 msgstr "Neuspešna nadgradnja sistema"
 
-#: common/rpackagelister.cc:1190
+#: common/rpackagelister.cc:1205
 msgid "Unable to lock the list directory"
 msgstr "Imenika s seznamom ni moč zakleniti"
 
-#: common/rpackagelister.cc:1212
+#: common/rpackagelister.cc:1227
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -668,7 +668,7 @@ msgstr ""
 "Datotek z izdajami za nekatera skladišča ni bilo moč prevzeti ali overoviti. "
 "Takšna skladišča bodo prezrta."
 
-#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
+#: common/rpackagelister.cc:1297 common/rpackagelister.cc:1303
 #: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Prezrti neveljavni zapis(i) v datoteki sources.list!"
@@ -677,7 +677,7 @@ msgstr "Prezrti neveljavni zapis(i) v datoteki sources.list!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1333
+#: common/rpackagelister.cc:1348
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -688,82 +688,82 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: common/rpackagelister.cc:1357
+#: common/rpackagelister.cc:1372
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Nekaterih paketov ni bilo moč pobrati s strežnika/ov.\n"
 
-#: common/rpackagelister.cc:1360
+#: common/rpackagelister.cc:1375
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Ali želite nadaljevati in prezreti te pakete?"
 
-#: common/rpackagelister.cc:1367
+#: common/rpackagelister.cc:1382
 msgid "Unable to correct missing packages"
 msgstr "Manjkajočih paketov ni moč popraviti"
 
-#: common/rpackagelister.cc:1464
+#: common/rpackagelister.cc:1487
 #, fuzzy
 msgid ""
 "\n"
 "The following ESSENTIAL packages are removed:\n"
 msgstr "%d paketov bo nadgrajenih\n"
 
-#: common/rpackagelister.cc:1472
+#: common/rpackagelister.cc:1495
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are DOWNGRADED:\n"
 msgstr "%d paketov bo nadgrajenih\n"
 
-#: common/rpackagelister.cc:1480
+#: common/rpackagelister.cc:1503
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are purged:\n"
 msgstr "%d paketov bo nadgrajenih\n"
 
-#: common/rpackagelister.cc:1488
+#: common/rpackagelister.cc:1511
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are removed:\n"
 msgstr "%d paketov bo nadgrajenih\n"
 
-#: common/rpackagelister.cc:1496
+#: common/rpackagelister.cc:1519
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are upgraded:\n"
 msgstr "%d paketov bo nadgrajenih\n"
 
-#: common/rpackagelister.cc:1506
+#: common/rpackagelister.cc:1529
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are installed:\n"
 msgstr "%d novih paketov bo nameščenih\n"
 
-#: common/rpackagelister.cc:1515
+#: common/rpackagelister.cc:1538
 #, fuzzy
 msgid ""
 "\n"
 "The following packages are re-installed:\n"
 msgstr "%d novih paketov bo znova nameščenih\n"
 
-#: common/rpackagelister.cc:1532
+#: common/rpackagelister.cc:1555
 msgid "Unable to lock the download directory"
 msgstr "Ni moč zakleniti imenika za pobiranje"
 
-#: common/rpackagelister.cc:1610
+#: common/rpackagelister.cc:1633
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Vrstica %u v datoteki z izborom je predolga."
 
-#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
+#: common/rpackagelister.cc:1647 common/rpackagelister.cc:1651
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Zmaličena vrstica %u v datoteki z izborom"
 
-#: common/rpackagelister.cc:1640
+#: common/rpackagelister.cc:1663
 msgid "Setting markings..."
 msgstr "Nastavljanje izborov..."
 
@@ -827,7 +827,7 @@ msgstr "Opravila"
 msgid "Reduced View"
 msgstr "Okleščeni pogled"
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:273 gtk/rgsummarywindow.cc:324
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:275 gtk/rgsummarywindow.cc:355
 msgid "Marked Changes"
 msgstr "Označene spremembe"
 
@@ -937,11 +937,11 @@ msgstr "--non-interactive Nikoli ne čaka na uporabnikov vnos\n"
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Odpri okno nalog\n"
 
-#: gtk/gsynaptic.cc:201
+#: gtk/gsynaptic.cc:203
 msgid "You must run this program as the root user."
 msgstr "Ta program morate pognati kot skrbnik sistema."
 
-#: gtk/gsynaptic.cc:239
+#: gtk/gsynaptic.cc:241
 msgid "Synaptic Package Manager "
 msgstr "Upravitelj paketov Synaptic"
 
@@ -969,7 +969,7 @@ msgstr "O Synapticu"
 msgid "Package changes"
 msgstr "Spremembe paketov"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:134
 msgid "To be removed"
 msgstr "Za odstranitev"
 
@@ -977,15 +977,15 @@ msgstr "Za odstranitev"
 msgid "To be downgraded"
 msgstr "Za podgradnjo"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:160
 msgid "To be upgraded"
 msgstr "Za nadgradnjo"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:172
 msgid "To be installed"
 msgstr "Za namestitev"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:184
 msgid "To be re-installed"
 msgstr "Za vnovično namestitev"
 
@@ -1578,63 +1578,67 @@ msgstr "Datoteke vendors.list ni moč brati"
 msgid "Unknown source type"
 msgstr "Neznana vrsta izvora"
 
-#: gtk/rgsummarywindow.cc:85
+#: gtk/rgsummarywindow.cc:92
+msgid "NOT AUTHENTICATED"
+msgstr ""
+
+#: gtk/rgsummarywindow.cc:108
 msgid "(ESSENTIAL) to be removed"
 msgstr "(KLJUČNO) bodo odstranjeni"
 
-#: gtk/rgsummarywindow.cc:98
+#: gtk/rgsummarywindow.cc:121
 msgid "To be DOWNGRADED"
 msgstr "Paketi, ki bodo PODGRAJENI"
 
-#: gtk/rgsummarywindow.cc:124
+#: gtk/rgsummarywindow.cc:147
 #, fuzzy
 msgid "To be removed with configuration"
 msgstr "Ohrani prikrojitev"
 
-#: gtk/rgsummarywindow.cc:176
+#: gtk/rgsummarywindow.cc:199
 msgid "To be not upgraded"
 msgstr "Za nadgradnjo"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:244
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>ključen</b>) bo odstranjen\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:253
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> bo <b>podgrajen</b>\n"
 
-#: gtk/rgsummarywindow.cc:230
+#: gtk/rgsummarywindow.cc:261
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> bo odstranjen\n"
 
-#: gtk/rgsummarywindow.cc:238
+#: gtk/rgsummarywindow.cc:269
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> bo odstranjen\n"
 
-#: gtk/rgsummarywindow.cc:247
+#: gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo nadgrajen na različico <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:289
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo nameščen\n"
 
-#: gtk/rgsummarywindow.cc:266
+#: gtk/rgsummarywindow.cc:297
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo znova nameščen\n"
 
-#: gtk/rgsummarywindow.cc:301
+#: gtk/rgsummarywindow.cc:332
 msgid "Summary"
 msgstr "Povzetek"
 
-#: gtk/rgsummarywindow.cc:371
+#: gtk/rgsummarywindow.cc:402
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -1643,7 +1647,7 @@ msgstr[1] "%d paket je zaklenjen\n"
 msgstr[2] "%d paketa sta zaklenjena\n"
 msgstr[3] "%d paketi so zaklenjeni\n"
 
-#: gtk/rgsummarywindow.cc:378
+#: gtk/rgsummarywindow.cc:409
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -1652,7 +1656,7 @@ msgstr[1] "%d paket bo obdržan in ne bo nadgrajen\n"
 msgstr[2] "%d paketa bosta obdržana in ne bosta nadgrajena\n"
 msgstr[3] "%d paketi bodo obdržani in ne bodo nadgrajeni\n"
 
-#: gtk/rgsummarywindow.cc:385
+#: gtk/rgsummarywindow.cc:416
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -1661,7 +1665,7 @@ msgstr[1] "%d nov paket bo nameščen\n"
 msgstr[2] "%d nova paketa bosta nameščena\n"
 msgstr[3] "%d novi paketi bodo nameščeni\n"
 
-#: gtk/rgsummarywindow.cc:392
+#: gtk/rgsummarywindow.cc:423
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -1670,7 +1674,7 @@ msgstr[1] "%d nov paket bo znova nameščen\n"
 msgstr[2] "%d nova paketa bosta znova nameščena\n"
 msgstr[3] "%d novi paketi bodo znova nameščeni\n"
 
-#: gtk/rgsummarywindow.cc:399
+#: gtk/rgsummarywindow.cc:430
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -1679,7 +1683,7 @@ msgstr[1] "%d paket bo nadgrajen\n"
 msgstr[2] "%d paketa bosta nadgrajena\n"
 msgstr[3] "%d paketi bodo nadgrajeni\n"
 
-#: gtk/rgsummarywindow.cc:406
+#: gtk/rgsummarywindow.cc:437
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -1688,7 +1692,7 @@ msgstr[1] "%d paket bo odstranjen\n"
 msgstr[2] "%d paketa bosta odstranjena\n"
 msgstr[3] "%d paketi bodo odstranjeni\n"
 
-#: gtk/rgsummarywindow.cc:413
+#: gtk/rgsummarywindow.cc:444
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -1697,7 +1701,7 @@ msgstr[1] "%d paket bo <b>podgrajen</b>\n"
 msgstr[2] "%d paketov bosta <b>podgrajena</b>\n"
 msgstr[3] "%d paketi bodo <b>podgrajeni</b>\n"
 
-#: gtk/rgsummarywindow.cc:421
+#: gtk/rgsummarywindow.cc:452
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -1706,17 +1710,17 @@ msgstr[1] "<b>Pozor</b> %d bistven paket bo odstranjen\n"
 msgstr[2] "<b>Pozor</b> %d bistvena paketa bosta odstranjena\n"
 msgstr[3] "<b>Pozor</b> %d bistveni paketi bodo odstranjeni\n"
 
-#: gtk/rgsummarywindow.cc:433
+#: gtk/rgsummarywindow.cc:464
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "Uporabljeno bo %s dodatnega prostora"
 
-#: gtk/rgsummarywindow.cc:436
+#: gtk/rgsummarywindow.cc:467
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Sproščeno bo %s dodatnega prostora"
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:473
 #, c-format
 msgid ""
 "\n"
@@ -1725,7 +1729,7 @@ msgstr ""
 "\n"
 "%s morajo biti prenešeni"
 
-#: gtk/rgsummarywindow.cc:467
+#: gtk/rgsummarywindow.cc:498
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"

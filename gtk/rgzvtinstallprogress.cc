@@ -217,60 +217,50 @@ RGZvtInstallProgress::start(pkgPackageManager *pm,
 			    int numPackages,
 			    int numPackagesTotal)
 {
-  //cout << "RGZvtInstallProgress::start()" << endl;
+   //cout << "RGZvtInstallProgress::start()" << endl;
 
-  void *dummy;
-  int open_max, ret;
-  // this isn't really a id, more a flag
-  _child_id = 0;
-  _child_id = pthread_create(&_thread, NULL, loop, this);
+   void *dummy;
+   int open_max, ret = 250;
 
-  // now fork 
 #ifdef HAVE_ZVT
-  int pid = zvt_term_forkpty (ZVT_TERM(_term), FALSE);
+   _child_id = zvt_term_forkpty (ZVT_TERM(_term), FALSE);
 #endif
 #ifdef HAVE_VTE
-    int pid = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
+   _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
 #endif
-  switch(pid) {
-  case -1: // error
-    cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
-    cerr << "errorcode: " << errno << endl;
-    exit(1);
-    break;
-  case 0:  // child 
-      // we ignore sigpipe as it is thrown sporadic on 
-      // debian, kernel 2.6 systems
-      struct sigaction new_act; 
-      memset( &new_act, 0, sizeof( new_act ) );
-      new_act.sa_handler = SIG_IGN;
-      sigaction( SIGPIPE, &new_act, NULL);
+   if (_child_id == -1) {
+      cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
+      cerr << "errorcode: " << errno << endl;
+      exit(1);
+   }
 
+   if (_child_id == 0) {
       // Close all file descriptors but first 3
-      open_max = sysconf (_SC_OPEN_MAX);
+      open_max = sysconf(_SC_OPEN_MAX);
       for (int i = 3; i < open_max; i++)
-	  ::close (i);
+	 ::close(i);
       // make sure, that term is set correctly
       setenv("TERM","xterm",1);
       res = pm->DoInstall();
-    _exit(res);
-    break; 
-  default:
-    // parent
-    waitpid(pid, &ret, 0);
-    res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+      _exit(res);
+   }
+
+   startUpdate();
+   while (waitpid(_child_id, &ret, WNOHANG) == 0)
+      updateInterface();
+
+   res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+
+   finishUpdate();
+
 #ifdef HAVE_ZVT
-    zvt_term_closepty(ZVT_TERM(_term));
+   zvt_term_closepty(ZVT_TERM(_term));
 #endif
 #ifdef HAVE_VTE
     // nothing to do
 #endif
-    break;
-  }
-  _child_id = -1;
-  pthread_join(_thread, &dummy);
 
-  return res;
+   return res;
 }
 
 void RGZvtInstallProgress::updateInterface()

@@ -27,7 +27,6 @@
 #define _RINSTALLPROGRESS_H_
 
 #include "config.h"
-#include <pthread.h>
 #include <apt-pkg/packagemanager.h>
 
 
@@ -40,7 +39,6 @@ protected:
    int _childin;
    
    int _child_id;
-   pthread_t _thread;
 
    int _donePackages;
    int _numPackages;

@@ -60,6 +60,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 {
     void *dummy;
     pkgPackageManager::OrderResult res;
+    int ret;
 
     //cout << "RInstallProgress::start()" << endl;
 
@@ -105,14 +106,17 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
  
     if (_child_id == 0) {
 	res = pm->DoInstall();
-	exit(0);
+	_exit(res);
     }
 
 #endif
 
     startUpdate();
-    while (waitpid(_child_id, NULL, WNOHANG) == 0)
+    while (waitpid(_child_id, &ret, WNOHANG) == 0)
 	updateInterface();
+
+    res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+    
     finishUpdate();
 
 #ifdef HAVE_RPM

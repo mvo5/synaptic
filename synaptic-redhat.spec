@@ -1,6 +1,6 @@
 # $Id: synaptic.spec,v 1.19 2003/08/12 14:41:38 dude Exp $
 
-%define desktop_vendor freshrpms
+%define desktop_vendor synaptic-team
 
 Summary: Graphical package management program using apt.
 Name: synaptic
@@ -20,6 +20,12 @@ BuildRequires: libstdc++-devel, desktop-file-utils, sed
 Synaptic (previously known as raptor) is a graphical package management
 program for apt. It provides the same features as the apt-get command line 
 utility with a GUI front-end based on Gtk+
+
+%post
+scrollkeeper-update
+ 
+%postun
+scrollkeeper-update
 
 %prep
 %setup -q
@@ -59,20 +65,17 @@ EOF
 # Remove the default menu entry and install our own
 rm -f %{buildroot}%{_datadir}/gnome/apps/System/%{name}.desktop
 
-sed -e "s/(^Exec=.*$\n)|(^Icon=.*$\n)//" data/%{name}.desktop\
-	> %{name}.desktop
+mkdir -p %{buildroot}%{_datadir}/applications
 
-cat << EOF >> %{name}.desktop
+sed -e "s/(^Exec=.*$\n)|(^Icon=.*$\n)|(^Categories=.*$\n)//" \
+	data/%{name}.desktop \
+	> %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+cat << EOF >> %{buildroot}%{_datadir}/applications/%{name}.desktop
 Icon=%{_datadir}/%{name}/pixmaps/%{name}_48x48.png
 Exec=%{_bindir}/%{name}
+Categories=System;Application;SystemSetup;GTK;X-Red-Hat-Base;
 EOF
-
-mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install --vendor %{desktop_vendor} \
-  --dir %{buildroot}%{_datadir}/applications    \
-  --add-category X-Red-Hat-Base                 \
-  --add-category SystemSetup                 \
-  %{name}.desktop
 
 %clean
 rm -rf %{buildroot}
@@ -85,7 +88,7 @@ rm -rf %{buildroot}
 %exclude %{_sysconfdir}/X11/sysconfig/%{name}.desktop
 %{_bindir}/%{name}
 %{_sbindir}/%{name}
-%{_datadir}/applications/%{desktop_vendor}-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/control-center-*/capplets/%{name}.desktop
 %{_datadir}/%{name}
 %{_datadir}/gnome/help/synaptic

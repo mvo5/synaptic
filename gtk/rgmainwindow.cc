@@ -2153,7 +2153,7 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    if (pkg && pkg->installedVersion() == NULL) {
       me->_userDialog->error(_("Cannot start configuration tool!\n"
                                "You have to install the required package "
-			       "'libgnome2-perl'."));
+                               "'libgnome2-perl'."));
       return;
    }
 
@@ -2209,8 +2209,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    // check whether we can really do it
    if (!me->_lister->check()) {
       me->_userDialog->error(_("Could not apply changes!\n"
-			       "There are broken packages.\n"
-			       "Fix broken packages at first."));
+                               "Fix broken packages first."));
       return;
    }
 
@@ -2424,9 +2423,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 
    if (!me->_lister->check()) {
       me->_userDialog->error(
-			     _("Could not upgrade the system!\n"
-			       "There are broken packages. "
-			       "Fix broken packages at first."));
+                         _("Could not upgrade the system!\n"
+                           "Fix broken packages first."));
       return;
    }
    // check if we have saved upgrade type
@@ -2451,9 +2449,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 
    // do the work
    me->setInterfaceLocked(TRUE);
-   me->
-      setStatusText(_
-                    ("Marking all available upgrades..."));
+   me->setStatusText(_("Marking all available upgrades..."));
 
    me->_lister->saveUndoState();
 
@@ -2465,9 +2461,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    me->refreshTable(pkg);
 
    if (res)
-      me->
-         setStatusText(_
-                       ("Successfully marked all available upgrades"));
+      me->setStatusText(_("Successfully marked all available upgrades"));
    else
       me->setStatusText(_("Failed to mark all available upgrades!"));
 

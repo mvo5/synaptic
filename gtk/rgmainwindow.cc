@@ -919,7 +919,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 
   //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
 #endif
-  return;
 }
 
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
@@ -1379,7 +1378,8 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
       }
 
     me->setInterfaceLocked(TRUE);
-    me->_lister->openCache(TRUE);
+    me->setTreeLocked(TRUE);
+
 
     while(li != NULL) {
 	gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
@@ -1395,6 +1395,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 	_roptions->setPackageLock(pkg->name(), active);
 	li=g_list_next(li);
     }
+    me->_lister->openCache(TRUE);
     me->refreshTable();
 
     // free the list
@@ -1402,6 +1403,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
     g_list_free (list);
 
     me->setInterfaceLocked(FALSE);
+    me->setTreeLocked(FALSE);
 }
 
 
@@ -2607,49 +2609,68 @@ void RGMainWindow::onCollapseAll(GtkWidget *self, void *data)
 
 void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 {
-  setInterfaceLocked(TRUE);
-  _blockActions = TRUE;
+    static RCacheActorPkgTree *_pkgCacheObserver=NULL;
+    static RPackageListActorPkgTree *_pkgTreePackageListObserver=NULL;
+    static RCacheActorPkgList *_pkgListCacheObserver=NULL;
+    static RPackageListActorPkgList *_pkgListPackageListObserver=NULL;
 
-  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
+    
+    setInterfaceLocked(TRUE);
+    _blockActions = TRUE;
 
-  _lister->setTreeDisplayMode(mode);
-  _lister->reapplyFilter();
-  _treeDisplayMode = mode;
-  //refreshTable(NULL);
+    cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
-  if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
-      GtkPkgList *_pkgList;
-      RCacheActorPkgList *_pkgListCacheObserver;
-      RPackageListActorPkgList *_pkgListPackageListObserver;
+    _lister->setTreeDisplayMode(mode);
+    _lister->reapplyFilter();
+    _treeDisplayMode = mode;
 
-      _pkgList = gtk_pkg_list_new(_lister);
-      _activeTreeModel = GTK_TREE_MODEL(_pkgList);
-      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
-			      GTK_TREE_MODEL(_pkgList));
-      gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-      _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
+    // remove any unused observer
+    if(_pkgCacheObserver) {
+	delete _pkgCacheObserver; 
+	_pkgCacheObserver=NULL;
+    }
+    if(_pkgTreePackageListObserver) {
+	delete _pkgTreePackageListObserver;
+	_pkgTreePackageListObserver =NULL;
+    }
+    if(_pkgListCacheObserver) {
+	delete _pkgListCacheObserver;
+	 _pkgListCacheObserver = NULL;
+    }
+    if(_pkgListPackageListObserver) {
+	delete _pkgListPackageListObserver;
+	 _pkgListPackageListObserver = NULL;
+    }
+
+    // now do the real work
+    if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
+	GtkPkgList *_pkgList;
+	
+	_pkgList = gtk_pkg_list_new(_lister);
+	_activeTreeModel = GTK_TREE_MODEL(_pkgList);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+				GTK_TREE_MODEL(_pkgList));
+	gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+	_pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
 						     GTK_TREE_VIEW(_treeView));
-      _pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
-  } else {
-      GtkPkgTree *_pkgTree;
-      RCacheActorPkgTree *_pkgCacheObserver;
-      RPackageListActorPkgTree *_pkgTreePackageListObserver;
-
-      _pkgTree = gtk_pkg_tree_new (_lister);
-      _activeTreeModel = GTK_TREE_MODEL(_pkgTree);
-      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
-			      GTK_TREE_MODEL(_pkgTree));
-      gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-      _pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
+	_pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
+    } else {
+	GtkPkgTree *_pkgTree;
+	
+	_pkgTree = gtk_pkg_tree_new (_lister);
+	_activeTreeModel = GTK_TREE_MODEL(_pkgTree);
+	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+				GTK_TREE_MODEL(_pkgTree));
+	gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
 						 GTK_TREE_VIEW(_treeView));
-      _pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree, GTK_TREE_VIEW(_treeView));
-  }
+	_pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree, GTK_TREE_VIEW(_treeView));
+    }
   
+    _blockActions = FALSE;
+    setInterfaceLocked(FALSE);
 
-  _blockActions = FALSE;
-  setInterfaceLocked(FALSE);
-
-  setStatusText();
+    setStatusText();
 }
 
 void RGMainWindow::onSectionTree(GtkWidget *self, void *data) 

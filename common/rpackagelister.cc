@@ -128,6 +128,8 @@ void RPackageLister::notifyChange(RPackage *pkg)
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
+    cout << "RPackageLister::unregisterObserver(RPackageObserver *observer)" << endl;
+
     //remove(_packageObservers.begin(), _packageObservers.end(), observer);
     vector<RPackageObserver*>::iterator I;
     I = find(_packageObservers.begin(), _packageObservers.end(), observer);
@@ -172,7 +174,15 @@ void RPackageLister::notifyCachePostChange()
 
 void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
 {
-    remove(_cacheObservers.begin(), _cacheObservers.end(), observer);
+    cout << "RPackageLister::unregisterCacheObserver(RCacheObserver *observer)"<< endl;
+    //remove(_cacheObservers.begin(), _cacheObservers.end(), observer);
+    vector<RCacheObserver*>::iterator I;
+    I = find(_cacheObservers.begin(), _cacheObservers.end(), observer);
+    if(I != _cacheObservers.end())
+	_cacheObservers.erase(I);
+    else
+	cout << "unregisterCacheObserver() failed" << endl;
+
 }
 
 void RPackageLister::registerCacheObserver(RCacheObserver *observer)
@@ -342,6 +352,7 @@ bool RPackageLister::upgradable()
 bool RPackageLister::openCache(bool reset)
 {
     static bool firstRun=true;
+    cout << "RPackageLister::openCache(bool reset)" << endl;
 
     if (reset) {
 	if (!_cache->reset(*_progMeter)) {

@@ -745,6 +745,8 @@ void create_tmpfile(const char *pattern, char **filename, FILE **out)
 
 void RPackage::setPinned(bool flag)
 {
+    cout << "void RPackage::setPinned(bool flag)" << endl;
+
   FILE *out;
   char pattern[] = "syn-XXXXXX";
   char *filename = NULL;

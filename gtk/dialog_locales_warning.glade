@@ -3,7 +3,7 @@
 
 <glade-interface>
 
-<widget class="GtkDialog" id="dialog_quit">
+<widget class="GtkDialog" id="dialog_locales_warning">
   <property name="border_width">6</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes"></property>
@@ -27,23 +27,11 @@
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancelbutton1">
-	      <property name="visible">True</property>
-	      <property name="can_default">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label">gtk-cancel</property>
-	      <property name="use_stock">True</property>
-	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="response_id">-6</property>
-	    </widget>
-	  </child>
-
-	  <child>
 	    <widget class="GtkButton" id="okbutton1">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">gtk-quit</property>
+	      <property name="label">gtk-ok</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="response_id">-5</property>
@@ -91,7 +79,7 @@
 	      <child>
 		<widget class="GtkLabel" id="label1">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Quit and ignore outstanding changes?&lt;/span&gt;</property>
+		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Your locale settings are not supported by your Xlib&lt;/span&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -112,9 +100,17 @@
 	      <child>
 		<widget class="GtkLabel" id="label2">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">You have selected changes in the status of some or one package which have not been executed yet. They will get lost if you choose to quit 'Synaptic'.</property>
+		  <property name="label" translatable="yes">This error is caused by incorrect or incompatible locale settings.
+
+Please use locales settings like &quot;fr_FR&quot; or &quot;fr_FR@euro&quot; and do not use settings like &quot;fr_FR.iso8859-15@euro&quot;.
+
+We'll try to work around this, but there may be problems or even crashes. The best way to avoid this is to fix your locale settings.
+
+If you feel this is wrong or you need assistance, send a mail to:
+&lt;i&gt;synaptic-devel@nongnu.org&lt;/i&gt; 
+with the output of the &quot;locale&quot; command.</property>
 		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
+		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap">True</property>
 		  <property name="selectable">False</property>

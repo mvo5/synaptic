@@ -167,19 +167,9 @@ int main(int argc, char **argv)
     // of bugreports that where caused by incorrect locales, try to
     // work around this problem here
     if(!XSupportsLocale()) {
-	RGUserDialog userDialog;
-	userDialog.warning(_("Your locale settings are not supported by "
-			     "Xlib\n\n"
-			     "Please use locale settings like "
-			     "\"fr_FR\" or \"fr_FR@euro\" and do not use "
-			     "settings like \"fr_FR.iso8859-15@euro\". \n\n"
-			     "Because of this your locales are reseted.\n\n"
-			     "If you feel this is wrong, send a mail to:\n"
-			     "<synaptic-devel@nongnu.org> with the output of "
-			     "the \"locale\" command."));
-	unsetenv("LANG");
-	unsetenv("LC_ALL");
-	gtk_set_locale();
+	RGGladeUserDialog locales(NULL);
+	// run a dialog that warns about the incorrect locale settings
+	locales.run("locales_warning");
     } 
 
     if (getuid() != 0) {

@@ -35,6 +35,7 @@
 #include "rconfiguration.h"
 #include "gsynaptic.h"
 
+#include <X11/Xlib.h>
 #include <iostream>
 
 #include <unistd.h>
@@ -124,7 +125,20 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 
   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 
+  // libzvt will segfault if the locales are not supported, 
+  // we workaround this here
+  char *s = NULL;
+  if(!XSupportsLocale()) {
+      s = getenv("LC_ALL");
+      unsetenv("LC_ALL");
+      gtk_set_locale();
+  }
   _term = zvt_term_new_with_size(80,24);
+  if(s!=NULL) {
+      setenv("LC_ALL",s,1);
+      gtk_set_locale();
+  }
+
   zvt_term_set_size(ZVT_TERM(_term),80,24);
   gtk_widget_set_size_request(GTK_WIDGET(_term),
                               (ZVT_TERM(_term)->grid_width * 

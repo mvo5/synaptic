@@ -125,6 +125,8 @@ void RGMainWindow::proceed()
 
 void RGMainWindow::changeView(int view, bool sethistory, string subView)
 {
+   //cout << "RGMainWindow::changeView()" << endl;
+
    if (sethistory)
       gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), view);
 
@@ -166,6 +168,8 @@ void RGMainWindow::changeView(int view, bool sethistory, string subView)
 
 void RGMainWindow::refreshSubViewList(string selectedSubView)
 {
+   cout << "RGMainWindow::refreshSubViewList(): "<< selectedSubView << endl;
+
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
@@ -190,6 +194,19 @@ void RGMainWindow::refreshSubViewList(string selectedSubView)
 	 }
 	 ok = gtk_tree_model_iter_next(model, &iter);
       }
+   } else {
+#if GTK_CHECK_VERSION(2,4,0)
+      // we auto set to "All" when we have gtk2.4 (without the list is 
+      // too slow)
+      GtkTreeModel *model;
+      GtkTreeSelection *selection;
+      GtkTreeIter iter;
+
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
+      model = gtk_tree_view_get_model(GTK_TREE_VIEW(_subViewList));
+      gtk_tree_model_get_iter_first(model, &iter);
+      gtk_tree_selection_select_iter(selection, &iter);
+#endif
    }
 }
 
@@ -285,6 +302,8 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
+   //cout << "RGMainWindow::refreshTable(): " << selectedPkg << endl;
+
    _lister->setSubView(selectedSubView());
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
@@ -296,7 +315,29 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
    gtk_adjustment_value_changed(
          gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(_treeView)));
 
-   updatePackageInfo(selectedPkg);
+   // set selected pkg to be selected again
+   if(selectedPkg != NULL) {
+      GtkTreeIter iter;
+      RPackage *pkg;
+      
+      // make sure we have the keyboard focus after the refresh
+      gtk_widget_grab_focus(_treeView);
+
+      // find and select the pkg we are looking for
+      bool ok =  gtk_tree_model_get_iter_first(_pkgList, &iter); 
+      while(ok) {
+	 gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+	 if(pkg == selectedPkg) {
+	    GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
+	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path, 
+				     NULL, false);
+	    gtk_tree_path_free(path);
+	    break;
+	 }
+
+	 ok = gtk_tree_model_iter_next(_pkgList, &iter);
+      }
+   }
 
    setStatusText();
 }
@@ -305,6 +346,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
    if (_blockActions)
       return;
+
+   //cout << "RGMainWindow::updatePackageInfo(): " << pkg << endl;
 
    if (!pkg) {
       gtk_widget_set_sensitive(_pkginfo, false);
@@ -502,14 +545,12 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    if (ask)
       _lister->registerObserver(this);
 
-   refreshTable(pkg);
-
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);
 
    _blockActions = FALSE;
    setInterfaceLocked(FALSE);
-   updatePackageInfo(pkg);
+   refreshTable(pkg);
 }
 
 bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
@@ -758,7 +799,7 @@ void RGMainWindow::buildTreeView()
    if (name_column)
       gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_treeView), name_column);
 
-#if GTK_CHECK_VERSION(2,3,2)
+#if GTK_CHECK_VERSION(2,4,0)
 #warning build with new fixed_height_mode
    GValue value = { 0, };
    g_value_init(&value, G_TYPE_BOOLEAN);
@@ -1389,7 +1430,6 @@ bool RGMainWindow::restoreState()
    _lister->setView(viewNr);
    refreshSubViewList();
 
-
    setStatusText();
    return true;
 }
@@ -1432,9 +1472,8 @@ void RGMainWindow::setInterfaceLocked(bool flag)
       gdk_window_set_cursor(_win->window, NULL);
    }
 
-#if 0
-   // this sucks for the new gtktreeview -- it updates itself via 
-   // such events, while the gui is perfetly usable 
+#if GTK_CHECK_VERSION(2,4,0)
+   // fast enough with the new fixed-height mode
    while (gtk_events_pending())
       gtk_main_iteration();
 #else
@@ -1474,6 +1513,8 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
                                             GdkEventButton *event,
                                             gpointer data)
 {
+   //cout << "RGMainWindow::cbPackageListClicked()" << endl;
+
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = NULL;
    GtkTreePath *path;
@@ -1567,6 +1608,8 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
                                              GtkTreeViewColumn *arg2,
                                              gpointer data)
 {
+   //cout << "RGMainWindow::cbPackageListRowActivated()" << endl;
+   
    RGMainWindow *me = (RGMainWindow *) data;
    GtkTreeIter iter;
    RPackage *pkg = NULL;
@@ -1619,114 +1662,6 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
    me->setInterfaceLocked(FALSE);
 }
 
-
-#ifdef NOTINUSE                 // These will be moved to the new Details dialog
-void RGMainWindow::cbInstallWDeps(GtkWidget *self, void *data)
-{
-   const char *installDepType = (const char *)data;
-   assert(data);
-
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-   assert(me);
-
-   me->_lister->unregisterObserver(me);
-   me->setInterfaceLocked(TRUE);
-   me->_blockActions = TRUE;
-
-   RPackageLister::pkgState state;
-   me->_lister->saveState(state);
-   me->_lister->saveUndoState(state);
-
-   // Who sets this?? -- niemeyer
-   RPackage *pkg =
-      (RPackage *) g_object_get_data(G_OBJECT(me->_recList), "pkg");
-   assert(pkg);
-
-   const char *depType = NULL, *depName = NULL;
-   bool satisfied = false;
-   if (pkg->enumWDeps(depType, depName, satisfied)) {
-      do {
-         if (!satisfied && strcmp(depType, installDepType) == 0) {
-            RPackage *newpkg = me->_lister->getPackage(depName);
-            if (newpkg)
-               me->pkgInstallHelper(newpkg);
-            else
-               cerr << "Dependency " << depName << " not found." << endl;
-         }
-      } while (pkg->nextWDeps(depType, depName, satisfied));
-   }
-
-   me->_blockActions = FALSE;
-   me->_lister->registerObserver(me);
-   me->refreshTable(pkg);
-   me->setInterfaceLocked(FALSE);
-}
-
-void RGMainWindow::cbInstallSelected(GtkWidget *self, void *data)
-{
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-   assert(me);
-
-   me->_lister->unregisterObserver(me);
-   me->setInterfaceLocked(TRUE);
-   me->_blockActions = TRUE;
-
-   RPackageLister::pkgState state;
-   me->_lister->saveState(state);
-   me->_lister->saveUndoState(state);
-
-   // Who sets this?? -- niemeyer
-   RPackage *pkg =
-      (RPackage *) g_object_get_data(G_OBJECT(me->_recList), "pkg");
-   assert(pkg);
-
-   GtkTreeSelection *selection;
-   GtkTreeIter iter;
-   GList *list, *li;
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_recList));
-#if GTK_CHECK_VERSION(2,2,0)
-   list = li = gtk_tree_selection_get_selected_rows(selection, NULL);
-#else
-   li = list = NULL;
-   gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-   li = list;
-#endif
-
-   while (li != NULL) {
-      gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_recListStore), &iter,
-                              (GtkTreePath *) (li->data));
-      gtk_tree_model_get(GTK_TREE_MODEL(me->_recListStore), &iter,
-                         DEP_NAME_COLUMN, &recstr, -1);
-      if (!recstr) {
-         cerr << "Internal Error: gtk_tree_model_get returned no text" << endl;
-         li = g_list_next(li);
-         continue;
-      }
-
-      const char *depName = index(recstr, ':') + 2;
-      if (!depName) {
-         cerr << "\":\" not found" << endl;
-         li = g_list_next(li);
-         continue;
-      }
-
-      RPackage *newpkg = (RPackage *) me->_lister->getPackage(depName);
-      if (newpkg)
-         me->pkgInstallHelper(newpkg);
-      else
-         cerr << depName << " not found" << endl;
-      li = g_list_next(li);
-   }
-
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
-   g_list_free(list);
-
-   me->_blockActions = FALSE;
-   me->_lister->registerObserver(me);
-   me->refreshTable(pkg);
-   me->setInterfaceLocked(FALSE);
-}
-#endif
 
 void RGMainWindow::cbOpenSelections(GtkWidget *file_selector, gpointer data)
 {
@@ -2028,7 +1963,7 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    RPackage *pkg;
    GList *li, *list;
 
-   //cout << "selectedRow()" << endl;
+   //cout << "RGMainWindow::cbSelectedRow()" << endl;
 
    if (me->_pkgList == NULL) {
       cerr << "selectedRow(): me->_pkgTree == NULL " << endl;

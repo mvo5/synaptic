@@ -434,40 +434,56 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 
 // install a specific version
-void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
+void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 {
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-   RPackage *pkg = (RPackage *) g_object_get_data(G_OBJECT(self), "pkg");
-   gchar *verInfo = (gchar *) data;
+   //cout << "RGMainWindow::cbInstallFromVersion()" << endl;
 
-   // check if it's a interessting event
-   if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) {
+   RGMainWindow *me = (RGMainWindow *) data;
+   RPackage *pkg = me->selectedPackage();
+   if(pkg == NULL)
       return;
+
+   RGGladeUserDialog dia(me,"change_version");
+   GtkWidget *optionMenu = glade_xml_get_widget(dia.getGladeXML(), 
+					"optionmenu_available_versions");
+
+   GtkWidget *menu = gtk_menu_new(); 
+   GtkWidget *item; 
+
+   item = gtk_menu_item_new_with_label(_("do not override"));
+   gtk_widget_show(item);
+   gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+
+   vector<pair<string, string> > versions = pkg->getAvailableVersions();
+   for(unsigned int i=0;i<versions.size();i++) {
+      gchar *str = g_strdup_printf("%s (%s)", 
+				   versions[i].first.c_str(), 
+				   versions[i].second.c_str() );
+      item = gtk_menu_item_new_with_label(str);
+      gtk_widget_show(item);
+      gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+      //cout << "got: " << str << endl;
+      g_free(str);
    }
-   // set pkg to "not installed" 
-   if (verInfo == NULL) {
+   gtk_option_menu_set_menu(GTK_OPTION_MENU(optionMenu), menu);
+   if(!dia.run()) 
+      return;    // user clicked cancel
+
+   int nr = gtk_option_menu_get_history(GTK_OPTION_MENU(optionMenu));
+   // zero means "do not override" 
+   if(nr == 0) {
       pkg->unsetVersion();
-      me->pkgAction(PKG_DELETE);
       return;
    }
-
-   string instVer;
-   if (pkg->installedVersion() == NULL)
-      instVer = "";
-   else
-      instVer = pkg->installedVersion();
 
    pkg->setNotify(false);
-   if (instVer == string(verInfo)) {
-      pkg->unsetVersion();
-      me->pkgAction(PKG_KEEP);
-   } else {
-      pkg->setVersion(verInfo);
-      me->pkgAction(PKG_INSTALL);
-
-      if (!(pkg->getFlags() & RPackage::FInstall))
-         pkg->unsetVersion();
-   }
+   // nr-1 here as we add a "do not override" to the option menu
+   pkg->setVersion(versions[nr-1].first.c_str());
+   me->pkgAction(PKG_INSTALL_FROM_VERSION);
+   
+   if (!(pkg->getFlags() & RPackage::FInstall))
+      pkg->unsetVersion();   // something went wrong
+   
    pkg->setNotify(true);
 }
 
@@ -562,6 +578,9 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             break;
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
+            pkgInstallHelper(pkg, false);
+            break;
+         case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
             break;
          case PKG_REINSTALL:      // reinstall
@@ -1089,6 +1108,7 @@ void RGMainWindow::buildInterface()
    _remove_w_depsM = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(_remove_w_depsM);
 #endif
+
    _dl_changelogM = glade_xml_get_widget(_gladeXML, "menu_download_changelog");
    assert(_dl_changelogM);
 #ifdef HAVE_RPM
@@ -1172,12 +1192,19 @@ void RGMainWindow::buildInterface()
                                  "on_menu_pin",
                                  G_CALLBACK(cbMenuPinClicked), this);
 
+   _overrideVersionM = glade_xml_get_widget(_gladeXML, 
+					    "menu_override_version_");
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_menu_override_version_activate",
+                                 G_CALLBACK(cbInstallFromVersion), this);
+
+
    // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
    gtk_widget_hide(_pinM);
-   widget = glade_xml_get_widget(_gladeXML, "separator_hold");
-   if (widget != NULL)
-      gtk_widget_hide(widget);
+//    widget = glade_xml_get_widget(_gladeXML, "separator_hold");
+//    if (widget != NULL)
+//       gtk_widget_hide(widget);
 #endif
 
    _pkginfo = glade_xml_get_widget(_gladeXML, "box_pkginfo");

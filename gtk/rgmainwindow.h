@@ -56,6 +56,7 @@ class RGCacheProgress;
 typedef enum {
    PKG_KEEP,
    PKG_INSTALL,
+   PKG_INSTALL_FROM_VERSION,
    PKG_DELETE,
    PKG_PURGE,
    PKG_DELETE_WITH_DEPS,
@@ -110,6 +111,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinM;
+   GtkWidget *_overrideVersionM;
    GtkWidget *_pkgHelpM;
    GtkWidget *_pkgReconfigureM;
 
@@ -205,7 +207,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
 
    // install a non-standard version (data is a char* of the version)
-   static void installFromVersion(GtkWidget *self, void *data);
+   static void cbInstallFromVersion(GtkWidget *self, void *data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);

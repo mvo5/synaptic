@@ -28,6 +28,7 @@ glade_DATA =                            \
 	window_filters.glade \
 	window_iconlegend.glade \
 	dialog_changelog.glade \
+	dialog_change_version.glade \
 	dialog_locales_warning.glade \
         window_main.glade \
 	window_preferences.glade \

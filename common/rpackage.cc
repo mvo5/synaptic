@@ -1082,7 +1082,15 @@ bool RPackage::setVersion(string verTag)
 
    _depcache->SetCandidateVersion(Ver);
 
+   _boolFlags |= FOverrideVersion;
+
    return true;
+}
+ 
+void RPackage::unsetVersion() 
+{ 
+   setVersion(_defaultCandVer); 
+   _boolFlags &= ~FOverrideVersion;
 }
 
 vector<string> RPackage::provides()

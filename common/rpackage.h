@@ -116,6 +116,7 @@ class RPackage {
       FNotInstallable   = 1 << 16,
       FPurge            = 1 << 17,
       FImportant        = 1 << 18,
+      FOverrideVersion  = 1 << 19,
    };
 
    enum UpdateImportance {
@@ -226,8 +227,7 @@ class RPackage {
 
    // mainpulate the candiate version
    bool setVersion(string verTag);
-   void unsetVersion() { setVersion(_defaultCandVer); };
-
+   void unsetVersion(); 
    string showWhyInstBroken();
 
    RPackage(RPackageLister *lister, pkgDepCache *depcache,

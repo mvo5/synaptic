@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: synaptic\n"
+"Project-Id-Version: synaptic 0.50\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-04 07:06+0200\n"
-"PO-Revision-Date: 2004-05-11 09:57+0200\n"
+"PO-Revision-Date: 2004-06-02 14:06+0200\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,10 +185,9 @@ msgid "Unable to create a tmp file"
 msgstr "No es pot crear un fitxer temporal"
 
 #: common/indexcopy.cc:87
-#, fuzzy
 msgid "Internal Error: Couldn't fork gzip. Please report."
 msgstr ""
-"S'ha produït un error intern: no s'ha pogut bifurcar bzip2. Si us plau, "
+"S'ha produït un error intern: no s'ha pogut bifurcar gzip. Si us plau, "
 "informeu-ne."
 
 #: common/indexcopy.cc:108
@@ -345,18 +344,16 @@ msgstr "no s'ha pogut obrir %s per a escriptura"
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
-"La llista de fitxers instal·lats només és disponible per als paquets "
-"instal·lats"
+"La llista de fitxers instal·lats només és disponible\n"
+"per als paquets instal·lats."
 
 #: common/rpackage.cc:396
-#, fuzzy
 msgid "or dependency"
-msgstr "Dependències inverses"
+msgstr "dependència «or»"
 
 #: common/rpackage.cc:400
-#, fuzzy
 msgid "Depended on by"
-msgstr "Dependències"
+msgstr "Paquets que en depenen"
 
 #: common/rpackage.cc:508
 #, c-format
@@ -405,39 +402,28 @@ msgstr ""
 "capçalera Packages"
 
 #: common/rpackage.cc:1292
-#, fuzzy
 msgid "Marked for installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marcat per a instal·lar"
 
 #: common/rpackage.cc:1293
-#, fuzzy
 msgid "Marked for re-installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marcat per a reinstal·lar"
 
 #: common/rpackage.cc:1294
-#, fuzzy
 msgid "Marked for upgrade"
-msgstr "Marca totes les actualitzacions possibles"
+msgstr "Marcat per a actualitzar"
 
 #: common/rpackage.cc:1295
-#, fuzzy
 msgid "Marked for downgrade"
-msgstr "A desactualitzar"
+msgstr "Marcat per a desactualitzar"
 
 #: common/rpackage.cc:1296
 msgid "Marked for removal"
-msgstr ""
+msgstr "Marcat per a eliminar"
 
 #: common/rpackage.cc:1297
-#, fuzzy
 msgid "Marked for complete removal"
-msgstr "A desactualitzar"
+msgstr "Marcat per a eliminar completament"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
 #: gtk/window_filters.glade.h:25
@@ -456,7 +442,7 @@ msgstr "Instal·lat"
 #: common/rpackage.cc:1301 common/rpackageview.cc:97
 #, fuzzy
 msgid "Installed (upgradable)"
-msgstr "Instal·lat i actualitzable"
+msgstr "Instal·lats i actualitzables"
 
 #: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
@@ -470,7 +456,7 @@ msgstr "Trencat"
 #: common/rpackage.cc:1304
 #, fuzzy
 msgid "Not installed (new in repository)"
-msgstr "No instal·lat (blocat)"
+msgstr "No instal·lat (nou a l'arxiu)"
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -527,14 +513,12 @@ msgid "Replaces"
 msgstr "Reemplaça"
 
 #: common/rpackagefilter.cc:53
-#, fuzzy
 msgid "Recommends"
-msgstr "Recomanats"
+msgstr "Recomana"
 
 #: common/rpackagefilter.cc:54
-#, fuzzy
 msgid "Suggests"
-msgstr "Suggerits"
+msgstr "Suggereix"
 
 #: common/rpackagefilter.cc:55
 msgid "ReverseDepends"
@@ -544,7 +528,7 @@ msgstr "Dependències inverses"
 #: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
-msgstr ""
+msgstr "Origen"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
@@ -583,11 +567,11 @@ msgstr "L'expressió regular «%s» del fitxer de VistaReduïda és errònia."
 
 #: common/rpackagelister.cc:288 common/rpackagelister.cc:294
 #: common/rpackagelister.cc:308
-#, fuzzy, c-format
+#, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
-"S'ha produït un error en recalcular la memòria cau de dependències. Si us "
-"plau, informeu-ne."
+"S'ha produït un error intern en obrir la memòria cau (%d). Si us plau, "
+"informeu-ne."
 
 #: common/rpackagelister.cc:448
 msgid "Unable to correct dependencies"
@@ -598,6 +582,8 @@ msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
 msgstr ""
+"No s'ha pogut marcar les actualitzacions\n"
+"Comproveu el vostre sistema per si hi ha errors."
 
 #: common/rpackagelister.cc:462
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
@@ -627,16 +613,17 @@ msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "S'estan descartant registres invàlids al fitxer sources.list!"
 
 #: common/rpackagelister.cc:1206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s"
-msgstr "No s'ha pogut obtenir "
+msgstr ""
+"No s'ha pogut obtenir %s\n"
+"  %s"
 
 #: common/rpackagelister.cc:1227
-#, fuzzy
 msgid "Some of the packages could not be retrieved from the server(s).\n"
-msgstr "%i dels paquets no s'han pogut obtenir dels servidors.\n"
+msgstr "Alguns dels paquets no s'han pogut obtenir dels servidors.\n"
 
 #: common/rpackagelister.cc:1230
 msgid "Do you want to continue, ignoring these packages?"
@@ -651,19 +638,18 @@ msgid "Unable to lock the download directory"
 msgstr "No s'ha pogut blocar el directori de descàrrega"
 
 #: common/rpackagelister.cc:1378
-#, fuzzy, c-format
+#, c-format
 msgid "Line %u too long in markings file."
-msgstr "La línia %u és massa llarga en el fitxer de selecció."
+msgstr "La línia %u és massa llarga en el fitxer de marques."
 
 #: common/rpackagelister.cc:1392 common/rpackagelister.cc:1396
-#, fuzzy, c-format
+#, c-format
 msgid "Malformed line %u in markings file"
-msgstr "La línia %u és malformada en el fitxer de selecció"
+msgstr "La línia %u és malformada en el fitxer de marques"
 
 #: common/rpackagelister.cc:1408
-#, fuzzy
 msgid "Setting markings..."
-msgstr "S'estan establint les seleccions..."
+msgstr "S'estan establint les marques..."
 
 #: common/rpmindexcopy.cc:116
 msgid "Internal Error: couldn't fork bzip2. Please report."
@@ -676,24 +662,20 @@ msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 ha fallat, potser el disc és ple."
 
 #: common/rpackageview.h:89
-#, fuzzy
 msgid "Sections"
-msgstr "Secció"
+msgstr "Seccions"
 
 #: common/rpackageview.h:99
-#, fuzzy
 msgid "Alphabetic"
-msgstr "Arbre alfabètic"
+msgstr "Alfabètic"
 
 #: common/rpackageview.h:130
-#, fuzzy
 msgid "Find History"
-msgstr "Filtre de cerca"
+msgstr "Història de cerques"
 
 #: common/rpackageview.h:173
-#, fuzzy
 msgid "Filter"
-msgstr "Filtres"
+msgstr "Filtre"
 
 #: common/rpackageview.cc:90
 msgid "New in repository"
@@ -702,14 +684,13 @@ msgstr "Nou al repositori"
 #: common/rpackageview.cc:94
 #, fuzzy
 msgid "Installed (obsolete)"
-msgstr "Instal·lat i actualitzable"
+msgstr "Instal·lats i obsolets"
 
 #: common/rpackageview.cc:102
 msgid "Not installed (residual config)"
 msgstr "No instal·lat (configuració residual)"
 
 #: common/rpackageview.cc:326
-#, fuzzy
 msgid "Search Filter"
 msgstr "Filtre de cerca"
 
@@ -743,7 +724,6 @@ msgstr ""
 "marcats?</span>"
 
 #: gtk/dialog_quit.glade.h:2
-#, fuzzy
 msgid ""
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
@@ -764,15 +744,16 @@ msgid ""
 "<b>Note:</b> The upgrades will be marked only. You still have to apply them "
 "afterwards."
 msgstr ""
+"<b>Nota:</b>. Les actualitzacions només es marcaran. Encara teniu que "
+"aplicarles més tard."
 
 # dist-upgrade és una ordre d'apt, no es tradueix. jm
 #: gtk/dialog_upgrade.glade.h:3
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Voleu utilitzar el mètode "
-"d'actualització intel·ligent (dist-upgrade)?</span>"
+"<span weight=\"bold\" size=\"large\">Voleu marcar les actualitzacions de "
+"manera intel·ligent?</span>"
 
 #: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:35
 msgid "Default Upgrade"
@@ -795,14 +776,13 @@ msgstr ""
 "conflictes o requereixen la instal·lació de nous paquets."
 
 #: gtk/dialog_upgrade.glade.h:8
-#, fuzzy
 msgid ""
 "The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
 "fulfill all dependencies of upgrades in a smart way."
 msgstr ""
-"El mètode d'actualització intel·ligent intenta resoldre conflictes i "
-"satisfer totes les dependències de les actualitzacions d'una manera "
-"intel·ligent."
+"El mètode d'actualització intel·ligent (dist-upgrade) intenta resoldre "
+"conflictes i satisfer totes les dependències de les actualitzacions d'una "
+"manera intel·ligent."
 
 #: gtk/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
@@ -883,18 +863,16 @@ msgid "Synaptic Package Manager "
 msgstr "Gestor de paquets Synaptic "
 
 #: gtk/rgcdscanner.cc:61
-#, fuzzy
 msgid "Scanning CD-ROM"
-msgstr "S'està analitzant el CD-ROM..."
+msgstr "S'està analitzant el CD-ROM"
 
 #: gtk/rgcdscanner.cc:100
 msgid "Invalid disc name!"
 msgstr "El nom del disc és invàlid!"
 
 #: gtk/rgcdscanner.cc:111
-#, fuzzy
 msgid "Disc Label"
-msgstr "Nom del disc"
+msgstr "Etiqueta del disc"
 
 #: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
@@ -925,9 +903,8 @@ msgid "To be installed"
 msgstr "A instal·lar"
 
 #: gtk/rgchangeswindow.cc:153 gtk/rgsummarywindow.cc:145
-#, fuzzy
 msgid "To be re-installed"
-msgstr "A instal·lar"
+msgstr "A reinstal·lar"
 
 #: gtk/rgchangeswindow.cc:164
 msgid "To be kept"
@@ -955,9 +932,8 @@ msgid "Preferences"
 msgstr "Preferències"
 
 #: gtk/rgfetchprogress.cc:64
-#, fuzzy
 msgid "Downloading Files"
-msgstr "S'estan descarregant els fitxers..."
+msgstr "S'estan descarregant els fitxers"
 
 #: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:760
 msgid "Size"
@@ -979,18 +955,18 @@ msgstr ""
 "en la unitat %s"
 
 #: gtk/rgfetchprogress.cc:230
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
-msgstr "S'han obtingut %li de %li fitxers a %s/s - falten %s"
+msgstr "S'està descarregant el fitxer %li de %li a %s/s - falten %s"
 
 #: gtk/rgfetchprogress.cc:235
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li"
-msgstr "S'estan descarregant els fitxers..."
+msgstr "S'està descarregant el fitxer %li de %li"
 
 #: gtk/rgfetchprogress.cc:300
 msgid "Queued"
-msgstr "Encuat"
+msgstr "En cua"
 
 #: gtk/rgfetchprogress.cc:303
 msgid "Done"
@@ -1047,9 +1023,8 @@ msgstr ""
 "\n"
 
 #: gtk/rginstallprogress.cc:268 gtk/rgterminstallprogress.cc:182
-#, fuzzy
 msgid "Applying Changes"
-msgstr "S'estan aplicant els canvis..."
+msgstr "S'estan aplicant els canvis"
 
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
@@ -1065,7 +1040,7 @@ msgstr "Seguretat"
 
 #: gtk/rgmainwindow.cc:165
 msgid "All"
-msgstr ""
+msgstr "Totes"
 
 #: gtk/rgmainwindow.cc:346 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
@@ -1084,9 +1059,8 @@ msgid "Latest Version"
 msgstr "Última versió"
 
 #: gtk/rgmainwindow.cc:989
-#, fuzzy
 msgid "Refresh the list of known packages"
-msgstr "Filtra la llista de paquets mostrats"
+msgstr "Refresca la llista de paquets coneguts"
 
 #: gtk/rgmainwindow.cc:993
 msgid "Mark all possible upgrades"
@@ -1097,48 +1071,36 @@ msgid "Apply all marked changes"
 msgstr "Aplica tots els canvis marcats"
 
 #: gtk/rgmainwindow.cc:1157
-#, fuzzy
 msgid "Unmark"
-msgstr "_Marca"
+msgstr "Desmarca"
 
 #: gtk/rgmainwindow.cc:1165
-#, fuzzy
 msgid "Mark for Installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca per a instal·lar"
 
 #: gtk/rgmainwindow.cc:1173
-#, fuzzy
 msgid "Mark for Reinstallation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca per a reinstal·lar"
 
 #: gtk/rgmainwindow.cc:1182
-#, fuzzy
 msgid "Mark for Upgrade"
-msgstr "Marca totes les actualitzacions possibles"
+msgstr "Marca per a actualitzar"
 
 #: gtk/rgmainwindow.cc:1190
-#, fuzzy
 msgid "Mark for Removal"
-msgstr "A desactualitzar"
+msgstr "Marca per a eliminar"
 
 #: gtk/rgmainwindow.cc:1199
 msgid "Mark for Complete Removal"
-msgstr ""
+msgstr "Marca per a eliminació completa"
 
 #: gtk/rgmainwindow.cc:1211
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Elimina incloguent les dependències orfes"
 
 #: gtk/rgmainwindow.cc:1223
-#, fuzzy
 msgid "Hold Current Version"
-msgstr "Bloca la versió i estat actual"
+msgstr "Congela la versió actual"
 
 #: gtk/rgmainwindow.cc:1232 gtk/window_main.glade.h:15
 #: gtk/window_filters.glade.h:43
@@ -1146,20 +1108,12 @@ msgid "Properties"
 msgstr "Propietats"
 
 #: gtk/rgmainwindow.cc:1244
-#, fuzzy
 msgid "Mark Recommended for Installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca els recomanats per a instal·lar"
 
 #: gtk/rgmainwindow.cc:1248
-#, fuzzy
 msgid "Mark Suggested for Installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca els suggerits per a instal·lar"
 
 #: gtk/rgmainwindow.cc:1299
 msgid ""
@@ -1244,14 +1198,13 @@ msgid "Save full state, not only changes"
 msgstr "Desa l'estat sencer, no només els canvis"
 
 #: gtk/rgmainwindow.cc:1885
-#, fuzzy
 msgid "Searching..."
-msgstr "S'està preparant..."
+msgstr "S'està cercant..."
 
 #: gtk/rgmainwindow.cc:1897
-#, fuzzy, c-format
+#, c-format
 msgid "Found %i packages"
-msgstr "Paquets en conflicte"
+msgstr "S'han trobat %i paquets"
 
 #: gtk/rgmainwindow.cc:1926
 msgid "Starting help viewer..."
@@ -1277,7 +1230,6 @@ msgstr ""
 "html»."
 
 #: gtk/rgmainwindow.cc:2079
-#, fuzzy
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1301,31 +1253,28 @@ msgid ""
 msgstr ""
 
 #: gtk/rgmainwindow.cc:2148
-#, fuzzy
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 "No s'ha pogut aplicar els canvis!\n"
-"Hi ha paquets trencats. Corregiu els paquets trencats primer."
+"Corregiu els paquets trencats primer."
 
 #: gtk/rgmainwindow.cc:2167
 msgid "Applying marked changes. This may take a while..."
 msgstr "S'estan aplicant els canvis marcats. Això pot trigar una mica..."
 
 #: gtk/rgmainwindow.cc:2171
-#, fuzzy
 msgid "Downloading Package Files"
-msgstr "S'estan descarregant els fitxers..."
+msgstr "S'estan descarregant els fitxers «Packages»"
 
 #: gtk/rgmainwindow.cc:2231
 msgid "Do you want to quit Synaptic?"
 msgstr "Voleu sortir de Synaptic?"
 
 #: gtk/rgmainwindow.cc:2287
-#, fuzzy
 msgid "Downloading Index Files"
-msgstr "S'estan descarregant els fitxers..."
+msgstr "S'estan descarregant els fitxers d'índex"
 
 #: gtk/rgmainwindow.cc:2289
 msgid "Refreshing package list..."
@@ -1340,11 +1289,12 @@ msgid "Successfully fixed dependency problems"
 msgstr "S'han corregit amb èxit els problemes de dependències!"
 
 #: gtk/rgmainwindow.cc:2370
-#, fuzzy
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
-msgstr "Hi ha paquets trencats. Corregiu els paquets trencats primer."
+msgstr ""
+"No s'ha pogut actualitzar el sistema!\n"
+"Corregiu els paquets trencats primer."
 
 #: gtk/rgmainwindow.cc:2411
 msgid "Marking all available upgrades..."
@@ -1435,9 +1385,9 @@ msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (versió <i>%s</i>) serà instal·lat\n"
 
 #: gtk/rgsummarywindow.cc:256
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
-msgstr "<b>%s</b> (versió <i>%s</i>) serà instal·lat\n"
+msgstr "<b>%s</b> (versió <i>%s</i>) serà reinstal·lat\n"
 
 #: gtk/rgsummarywindow.cc:275
 msgid "Summary"
@@ -1465,11 +1415,11 @@ msgstr[0] "S'instal·larà %d paquet nou\n"
 msgstr[1] "S'instal·laran %d paquets nous\n"
 
 #: gtk/rgsummarywindow.cc:357
-#, fuzzy, c-format
+#, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
-msgstr[0] "S'instal·larà %d paquet nou\n"
-msgstr[1] "S'instal·laran %d paquets nous\n"
+msgstr[0] "Es reinstal·larà %d paquet nou\n"
+msgstr[1] "Es reinstal·laran %d paquets nous\n"
 
 #: gtk/rgsummarywindow.cc:364
 #, c-format
@@ -1502,7 +1452,7 @@ msgstr[1] "<b>Avís:</b>: s'eliminaran %d paquets essencials\n"
 #: gtk/rgsummarywindow.cc:398
 #, c-format
 msgid "%s of extra space will be used"
-msgstr "S'utilitzaran %s de espai addicional"
+msgstr "S'utilitzaran %s d'espai addicional"
 
 #: gtk/rgsummarywindow.cc:401
 #, c-format
@@ -1555,14 +1505,12 @@ msgid "Find"
 msgstr "Cerca"
 
 #: gtk/window_main.glade.h:1
-#, fuzzy
 msgid "A_pply Marked Changes"
-msgstr "_Aplica els canvis marcats"
+msgstr "A_plica els canvis marcats"
 
 #: gtk/window_main.glade.h:2
-#, fuzzy
 msgid "Alphabet"
-msgstr "Arbre alfabètic"
+msgstr "Alfabet"
 
 #: gtk/window_main.glade.h:3
 msgid "Apply"
@@ -1571,46 +1519,36 @@ msgstr ""
 #: gtk/window_main.glade.h:5
 #, fuzzy
 msgid "Mark All Up_grades..."
-msgstr "S'estan marcant totes les actualitzacions disponibles..."
+msgstr "Marca per a actualitzar"
 
 #: gtk/window_main.glade.h:6
 #, fuzzy
 msgid "Mark All Upgrades"
-msgstr "Marca totes les actualitzacions possibles"
+msgstr "Marca per a actualitzar"
 
 #: gtk/window_main.glade.h:7
 msgid "Mark for Co_mplete Removal"
-msgstr ""
+msgstr "Marca per a eliminació co_mpleta"
 
 #: gtk/window_main.glade.h:8
-#, fuzzy
 msgid "Mark for R_einstallation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca per a r_einstal·lar"
 
 #: gtk/window_main.glade.h:9
-#, fuzzy
 msgid "Mark for _Installation"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marca per a _instal·lar"
 
 #: gtk/window_main.glade.h:10
 msgid "Mark for _Removal"
-msgstr ""
+msgstr "Marca per a _eliminació"
 
 #: gtk/window_main.glade.h:11
-#, fuzzy
 msgid "Mark for _Upgrade"
-msgstr "Marca totes les actualitzacions possibles"
+msgstr "Marca per a act_ualitzar"
 
 #: gtk/window_main.glade.h:12
-#, fuzzy
 msgid "No package is selected."
-msgstr "No hi ha cap paquet seleccionat.\n"
+msgstr "No hi ha cap paquet seleccionat."
 
 #: gtk/window_main.glade.h:13
 msgid "Pac_kage"
@@ -1626,14 +1564,12 @@ msgid "Refresh"
 msgstr "_Refresca"
 
 #: gtk/window_main.glade.h:17
-#, fuzzy
 msgid "Release"
-msgstr "Reemplaça"
+msgstr "Llançament"
 
 #: gtk/window_main.glade.h:18
-#, fuzzy
 msgid "Save Markings _As..."
-msgstr "_Anomena i desa les seleccions..."
+msgstr "_Anomena i desa les marques..."
 
 #: gtk/window_main.glade.h:20
 msgid "Set _Internal Option..."
@@ -1652,28 +1588,24 @@ msgid "Text _Below Icons"
 msgstr "Text _sota les icones"
 
 #: gtk/window_main.glade.h:25
-#, fuzzy
 msgid "U_nmark"
-msgstr "_Marca"
+msgstr "Desma_rca"
 
 #: gtk/window_main.glade.h:26
-#, fuzzy
 msgid "U_nmark All"
-msgstr "_Marca"
+msgstr "Desma_rca-ho tot"
 
 #: gtk/window_main.glade.h:27
 msgid "_About"
 msgstr "_Quant a"
 
 #: gtk/window_main.glade.h:28
-#, fuzzy
 msgid "_Add CD-ROM..."
-msgstr "A_fegeix un CD-ROM..."
+msgstr "_Afegeix un CD-ROM..."
 
 #: gtk/window_main.glade.h:29
-#, fuzzy
 msgid "_Browse Documentation"
-msgstr "_Documentació"
+msgstr "_Navega per la documentació"
 
 #: gtk/window_main.glade.h:30
 #, fuzzy
@@ -1685,23 +1617,20 @@ msgid "_Contents"
 msgstr "_Continguts"
 
 #: gtk/window_main.glade.h:32
-#, fuzzy
 msgid "_Download Changelog"
-msgstr "Mida de la descàrrega:"
+msgstr "_Descarrega el registre de canvis"
 
 #: gtk/window_main.glade.h:33
-#, fuzzy
 msgid "_Edit"
-msgstr "Editors"
+msgstr "_Edita"
 
 #: gtk/window_main.glade.h:34
 msgid "_File"
 msgstr "_Fitxer"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "_Filters"
-msgstr "Filtres"
+msgstr "_Filtres"
 
 #: gtk/window_main.glade.h:36
 msgid "_Find..."
@@ -1740,9 +1669,8 @@ msgid "_Quit"
 msgstr "_Surt"
 
 #: gtk/window_main.glade.h:45
-#, fuzzy
 msgid "_Read Markings..."
-msgstr "_Llig les seleccions"
+msgstr "_Llig les marques..."
 
 #: gtk/window_main.glade.h:46
 msgid "_Redo"
@@ -1757,9 +1685,8 @@ msgid "_Repositories"
 msgstr "_Repositoris"
 
 #: gtk/window_main.glade.h:49
-#, fuzzy
 msgid "_Save Markings"
-msgstr "Desa els canvis"
+msgstr "_Desa les marques"
 
 #: gtk/window_main.glade.h:50
 msgid "_Text Only"
@@ -1774,12 +1701,11 @@ msgid "_Undo"
 msgstr "_Desfés"
 
 #: gtk/window_about.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2004 Michael Vogt</span>"
 msgstr ""
-"<span size=\"small\">Copyright © 2001-2004 Conectiva S/A\n"
+"<span size=\"small\">Copyright © 2001-2004 Connectiva S/A\n"
 "Copyright © 2002-2004 Michael Vogt</span>"
 
 #: gtk/window_about.glade.h:3
@@ -1795,7 +1721,6 @@ msgid "Documented by"
 msgstr "Documentat per"
 
 #: gtk/window_about.glade.h:8
-#, fuzzy
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
@@ -1808,8 +1733,9 @@ msgstr ""
 "Pàgina de manual:\n"
 "Wybo Dekker <wybo@servalys.nl\n"
 "Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
 "\n"
-"Manual\n"
+"Manual:\n"
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
 #: gtk/window_about.glade.h:15
@@ -1828,6 +1754,7 @@ msgid ""
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 msgstr ""
+"Autor original:\n"
 "Alfredo K. Kojima <kojima@windowmaker.org>\n"
 "\n"
 "Maintainers:\n"
@@ -1884,9 +1811,8 @@ msgid "Dependencies"
 msgstr "Dependències"
 
 #: gtk/window_find.glade.h:3
-#, fuzzy
 msgid "Description and Name"
-msgstr "Descripció"
+msgstr "Descripció i nom"
 
 #: gtk/window_find.glade.h:4
 msgid "Find:"
@@ -1894,7 +1820,7 @@ msgstr "Cerca:"
 
 #: gtk/window_find.glade.h:5
 msgid "Look in:"
-msgstr ""
+msgstr "Cerca en:"
 
 #: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
@@ -1908,23 +1834,20 @@ msgid "    "
 msgstr "    "
 
 #: gtk/window_fetch.glade.h:2
-#, fuzzy
 msgid "<b>Single Files:</b>"
 msgstr "<b>Fitxers individuals:</b>"
 
 #: gtk/window_fetch.glade.h:3
-#, fuzzy
 msgid "<b>Total Progress:</b>"
-msgstr "<b>Total:</b>"
+msgstr "<b>Progrés total:</b>"
 
 #: gtk/window_changes.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Voleu marcar els canvis requerits?</"
-"span>"
+"<span weight=\"bold\" size=\"larger\">Voleu marcar els canvis addicionals "
+"requerits?</span>"
 
 #: gtk/window_changes.glade.h:2
 msgid ""
@@ -1935,7 +1858,6 @@ msgstr ""
 "necessaris per a continuar."
 
 #: gtk/window_changes.glade.h:3
-#, fuzzy
 msgid "_Mark"
 msgstr "_Marca"
 
@@ -1956,9 +1878,8 @@ msgstr ""
 "2 = Detalls del paquet"
 
 #: gtk/window_preferences.glade.h:7
-#, fuzzy
 msgid "<b>Applying Changes</b>"
-msgstr "S'estan aplicant els canvis..."
+msgstr "<b>Aplicació dels canvis</b>"
 
 #: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
@@ -1981,21 +1902,18 @@ msgid "<b>Main Window</b>"
 msgstr "<b>Finestra principal</b>"
 
 #: gtk/window_preferences.glade.h:13
-#, fuzzy
 msgid "<b>Marking Changes</b>"
-msgstr "<b>Mantenidor:</b>"
+msgstr "<b>Marcat de canvis:</b>"
 
 #: gtk/window_preferences.glade.h:14
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package list must be reloaded and all marked changes will "
 "be lost. Make sure to apply your changes first."
 msgstr ""
-"<b>Nota:</b> La llista de paquets es tindrà que recarregar, i es perdran "
-"tots els canvis marcats. Assegureu-vos que apliqueu els canvis abans."
+"<b>Nota:</b> La llista de paquets es té que recarregar, i es perdran tots "
+"els canvis marcats. Assegureu-vos que apliqueu els canvis abans de fer-ho."
 
 #: gtk/window_preferences.glade.h:15
-#, fuzzy
 msgid ""
 "<b>Note:</b> You will have to restart synaptic for \n"
 "this setting to take effect."
@@ -2008,9 +1926,8 @@ msgid "<b>Proxy Server</b>"
 msgstr "<b>Servidor intermediari</b>"
 
 #: gtk/window_preferences.glade.h:18
-#, fuzzy
 msgid "<b>Search</b>"
-msgstr "<b>Resum</b>"
+msgstr "<b>Cerca</b>"
 
 #: gtk/window_preferences.glade.h:19
 msgid "<b>Temporary Files</b>"
@@ -2022,7 +1939,7 @@ msgid ""
 "system. Consider changes carefully.</span>"
 msgstr ""
 "<span size=\"large\" weight=\"bold\">Aquests paràmetres afecten el nucli del "
-"vostre sistema. Considereu aquests canvis amb molta cura.</spam>"
+"vostre sistema. Considereu aquests canvis amb molta cura.</span>"
 
 #: gtk/window_preferences.glade.h:21
 msgid "Allow regular expressions in searches and filters"
@@ -2062,13 +1979,12 @@ msgid "Color packages by their status"
 msgstr "Acoloreix els paquets segons el seu estat"
 
 #: gtk/window_preferences.glade.h:30
-#, fuzzy
 msgid "Colors"
-msgstr "Color"
+msgstr "Colors"
 
 #: gtk/window_preferences.glade.h:31
 msgid "Columns and Fonts"
-msgstr ""
+msgstr "Columnes i tipus de lletra"
 
 #: gtk/window_preferences.glade.h:32
 msgid ""
@@ -2080,7 +1996,7 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:33
 msgid "Completely"
-msgstr ""
+msgstr "Completament"
 
 #: gtk/window_preferences.glade.h:34
 msgid "Consider recommended packages as dependencies"
@@ -2099,9 +2015,8 @@ msgid "Delete packages which are no longer available only"
 msgstr "Només elimina els paquets que ja no són disponibles"
 
 #: gtk/window_preferences.glade.h:39
-#, fuzzy
 msgid "Description:"
-msgstr "Descripció"
+msgstr "Descripció:"
 
 #: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
@@ -2124,9 +2039,8 @@ msgid "HTTP proxy: "
 msgstr "Servidor intermediari d'HTTP: "
 
 #: gtk/window_preferences.glade.h:45
-#, fuzzy
 msgid "Hide"
-msgstr "_Amaga"
+msgstr "Amaga"
 
 #: gtk/window_preferences.glade.h:46
 msgid "IP address or host name of the ftp proxy server"
@@ -2141,28 +2055,25 @@ msgid "Installed (locked):"
 msgstr "Instal·lat (blocat):"
 
 #: gtk/window_preferences.glade.h:49
-#, fuzzy
 msgid "Installed size:"
-msgstr "Fitxers instal·lats"
+msgstr "Mida instal·lada:"
 
 #: gtk/window_preferences.glade.h:50
-#, fuzzy
 msgid "Installed version:"
-msgstr "Versió instal·lada"
+msgstr "Versió instal·lada:"
 
 #: gtk/window_preferences.glade.h:51
 msgid "Installed:"
 msgstr "Instal·lat:"
 
+# L'imperatiu de «mantenir» és «manté»? jm
 #: gtk/window_preferences.glade.h:52
-#, fuzzy
 msgid "Keep Configuration"
-msgstr "Inclou la configuració"
+msgstr "Manté la configuració"
 
 #: gtk/window_preferences.glade.h:53
-#, fuzzy
 msgid "Latest version:"
-msgstr "Última versió"
+msgstr "Última versió:"
 
 #: gtk/window_preferences.glade.h:54
 msgid "Leave all downloaded packages in the cache"
@@ -2173,52 +2084,40 @@ msgid "Manual proxy configuration"
 msgstr "Configuració manual del servidor intermediari"
 
 #: gtk/window_preferences.glade.h:56
-#, fuzzy
 msgid "Marked for complete removal:"
-msgstr "A desactualitzar"
+msgstr "Marcats per a eliminació completa:"
 
 #: gtk/window_preferences.glade.h:57
-#, fuzzy
 msgid "Marked for downgrade:"
-msgstr "A desactualitzar:"
+msgstr "Marcats per a desactualitzar:"
 
 #: gtk/window_preferences.glade.h:58
-#, fuzzy
 msgid "Marked for installation:"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marcats per a instal·lar:"
 
 #: gtk/window_preferences.glade.h:59
-#, fuzzy
 msgid "Marked for reinstallation:"
-msgstr ""
-"\n"
-"Mentre es preparava per instal·lar:\n"
-"\n"
+msgstr "Marcats per a reinstal·lar:"
 
 #: gtk/window_preferences.glade.h:60
 msgid "Marked for removal:"
-msgstr ""
+msgstr "Marcats per a eliminar:"
 
 #: gtk/window_preferences.glade.h:61
-#, fuzzy
 msgid "Marked for upgrade:"
-msgstr "Marca totes les actualitzacions possibles"
+msgstr "Marcats per a actualitzar:"
 
 #: gtk/window_preferences.glade.h:62
 msgid "Move D_own"
-msgstr ""
+msgstr "M_ou avall"
 
 #: gtk/window_preferences.glade.h:63
 msgid "Move _Up"
-msgstr ""
+msgstr "Mou am_unt"
 
 #: gtk/window_preferences.glade.h:64
-#, fuzzy
 msgid "Name:"
-msgstr "Nom"
+msgstr "Nom:"
 
 #: gtk/window_preferences.glade.h:65
 msgid "Network"
@@ -2238,9 +2137,8 @@ msgid "Not installed (locked):"
 msgstr "No instal·lat (blocat):"
 
 #: gtk/window_preferences.glade.h:69
-#, fuzzy
 msgid "Not installed:"
-msgstr "No instal·lat: "
+msgstr "No instal·lats:"
 
 #: gtk/window_preferences.glade.h:70
 msgid "Number of undo operations:"
@@ -2275,14 +2173,12 @@ msgstr ""
 "sources.list"
 
 #: gtk/window_preferences.glade.h:78
-#, fuzzy
 msgid "Show"
-msgstr "Mostra:"
+msgstr "Mostra"
 
 #: gtk/window_preferences.glade.h:80
-#, fuzzy
 msgid "Status:"
-msgstr "Estat"
+msgstr "Estat:"
 
 #: gtk/window_preferences.glade.h:81
 msgid "System upgrade:"
@@ -2316,32 +2212,30 @@ msgid "_Default Font"
 msgstr "Tipus de lletra per _defecte"
 
 #: gtk/window_preferences.glade.h:88
-#, fuzzy
 msgid "_Delete Cached Package Files"
-msgstr "Paquets reemplaçats"
+msgstr "_Elimina els fitxers de paquets de la memòria cau"
 
 #: gtk/window_preferences.glade.h:89
 msgid "_Terminal Font"
 msgstr "Tipus de lletra del _terminal"
 
 #: gtk/window_disc_name.glade.h:2
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Voleu aplicar els canvis següents?</"
-"span>"
+"<span weight=\"bold\" size=\"larger\">Introduïu l'etiqueta del CD-ROM</span>"
 
 #: gtk/window_disc_name.glade.h:3
-#, fuzzy
 msgid "Disc label:"
-msgstr "Nom del disc"
+msgstr "Etiqueta del disc:"
 
 #: gtk/window_disc_name.glade.h:4
 msgid ""
 "The label will be used to identify the CD-ROM if you want to install "
 "packages from it later."
 msgstr ""
+"L'etiqueta s'utilitzarà per a identificar el CD-ROM si voleu instal·lar "
+"paquets des d'ell més tard."
 
 #: gtk/window_setopt.glade.h:2
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
@@ -2376,16 +2270,12 @@ msgid "Download package files only"
 msgstr "Descarrega només els fitxers de paquets"
 
 #: gtk/window_summary.glade.h:7
-#, fuzzy
 msgid "Return to the main screen"
 msgstr "Torna a la finestra principal"
 
-# FIXME original. jm
 #: gtk/window_summary.glade.h:8
-#, fuzzy
 msgid "The package files will be downloaded only, but not installed"
-msgstr ""
-"Els fitxers de paquets només s'obtindran, no s'instal·laran o actualitzaran"
+msgstr "Els fitxers de paquets només es descarregaran, però no s'instal·laran"
 
 #: gtk/window_summary.glade.h:9
 msgid ""
@@ -2418,9 +2308,8 @@ msgstr "Paquets en conflicte"
 #. suggests
 #: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
-#, fuzzy
 msgid "Dependants"
-msgstr "Depèn"
+msgstr "Depenen"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"
@@ -2437,12 +2326,12 @@ msgstr "Exclusions"
 #: gtk/window_filters.glade.h:15
 #, fuzzy
 msgid "For installation or upgrade"
-msgstr "A instal·lar o actualitzar"
+msgstr "Per a instal·lar o actualitzar"
 
 #: gtk/window_filters.glade.h:16
 #, fuzzy
 msgid "For removal"
-msgstr "A desactualitzar"
+msgstr "Per a eliminar"
 
 #: gtk/window_filters.glade.h:17
 msgid "Include"
@@ -2471,9 +2360,8 @@ msgid "Not installable"
 msgstr "No instal·lat"
 
 #: gtk/window_filters.glade.h:26
-#, fuzzy
 msgid "Not marked"
-msgstr "No instal·lat"
+msgstr "No marcat"
 
 #: gtk/window_filters.glade.h:28
 msgid "Orphaned"
@@ -2484,9 +2372,8 @@ msgid "Package Name"
 msgstr "Nom del paquet"
 
 #: gtk/window_filters.glade.h:30
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
-msgstr "Paquets que són nous al repositori des de l'últim «Update» "
+msgstr "Paquets que són nous al repositori des de l'últim «Refresca»"
 
 #: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
@@ -2527,9 +2414,8 @@ msgid "Packages that will never be upgraded"
 msgstr "Paquets que no s'actualitzaran mai"
 
 #: gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that won't be changed"
-msgstr "Paquets que se mantindran"
+msgstr "Paquets que no canviaran"
 
 #: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
@@ -2541,9 +2427,8 @@ msgstr "Fixat"
 
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
-#, fuzzy
 msgid "Recommendations"
-msgstr "Recomanats"
+msgstr "Recomanacions"
 
 #: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
@@ -2555,42 +2440,36 @@ msgstr "Configuració residual"
 
 #. /recommends
 #: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
-#, fuzzy
 msgid "Suggestions"
-msgstr "Suggerits"
+msgstr "Suggeriments"
 
 #: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Etiquetes"
 
 #: gtk/window_filters.glade.h:52
-#, fuzzy
 msgid "Upgradable"
 msgstr "Actualitzable"
 
 #: gtk/window_filters.glade.h:53
-#, fuzzy
 msgid "Upgradable to a later upstream version"
-msgstr "_Instal·la l'última versió"
+msgstr ""
 
 #: gtk/window_filters.glade.h:54
 msgid "Version Number"
 msgstr "Número de versió"
 
 #: gtk/window_filters.glade.h:55
-#, fuzzy
 msgid "_Deselect All"
-msgstr "Deselecciona-ho tot"
+msgstr "_Deselecciona-ho tot"
 
 #: gtk/window_filters.glade.h:56
-#, fuzzy
 msgid "_Invert All"
-msgstr "Inverteix-ho tot"
+msgstr "_Inverteix-ho tot"
 
 #: gtk/window_filters.glade.h:57
-#, fuzzy
 msgid "_Select All"
-msgstr "Selecciona-ho tot"
+msgstr "_Selecciona-ho tot"
 
 #: gtk/window_repositories.glade.h:3
 msgid "Distribution:"
@@ -2657,7 +2536,7 @@ msgstr ""
 msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then to apply them."
-msgstr "<b>Nota:</b> Les modificacions no s'apliquen a l'instant."
+msgstr "<b>Nota:</b> Els canvis no s'apliquen a l'instant."
 
 #: gtk/dialog_welcome.glade.h:3
 #, fuzzy
@@ -2691,26 +2570,26 @@ msgid ""
 "package manager enables you to install, to upgrade or to remove software "
 "packages."
 msgstr ""
-"El programari del vostre sistema està organitzat en el que s'anomenen "
-"<i>paquets</i>. El gestor de paquets vos permet eliminar, instal·lar o "
-"actualitzar paquets de programari:"
+"El gestor de paquets vos permet instal·lar, actualitzar o eliminar paquets "
+"de programari:"
 
 #: gtk/dialog_welcome.glade.h:10
+#, fuzzy
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
-msgstr ""
+msgstr "1. Marqueu paquets per a instal·lar, actualitzar, o eliminar:"
 
 #: gtk/dialog_unmet.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Failed to mark all packages for "
 "installation or upgrade</span>\n"
 "\n"
 "The following packages have unmet dependencies:"
 msgstr ""
-"Alguns paquets no s'han pogut instal·lar.\n"
+"<span weight=\"bold\" size=\"larger\">No s'ha pogut marcar tots els paquets "
+"per a instal·lar o actualitzar</span>\n"
 "\n"
-"Els següents paquets tenen dependències no satisfetes:\n"
+"Els següents paquets tenen dependències no satisfetes:"
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"
@@ -2737,7 +2616,7 @@ msgstr "Paquets reemplaçats"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
-msgstr "Legenda de la icona"
+msgstr "Llegenda de la icona"
 
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
@@ -2761,9 +2640,8 @@ msgid "<b>Latest Available Version</b>"
 msgstr "<b>Última versió disponible</b>"
 
 #: gtk/window_details.glade.h:5
-#, fuzzy
 msgid "<b>Maintainer:</b>"
-msgstr "<b>Finestra principal</b>"
+msgstr "<b>Mantenidor:</b>"
 
 #: gtk/window_details.glade.h:6
 msgid "<b>Package:</b>"
@@ -2803,19 +2681,16 @@ msgid "Dependencies of the Latest Version"
 msgstr "Dependències de l'última versió"
 
 #: gtk/window_details.glade.h:18
-#, fuzzy
 msgid "Download:"
-msgstr "Mida de la descàrrega:"
+msgstr "Descàrrega:"
 
 #: gtk/window_details.glade.h:20
-#, fuzzy
 msgid "Installed Files"
 msgstr "Fitxers instal·lats"
 
 #: gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Size:"
-msgstr "Mida"
+msgstr "Mida:"
 
 #: gtk/window_details.glade.h:25
 msgid "Version:"
@@ -2860,37 +2735,16 @@ msgstr "<i>Acabat</i>"
 msgid "<i>Can't close while running</i>"
 msgstr "<i>No es pot tancar mentre s'està executant</i>"
 
-#~ msgid "Installed and upgradable"
-#~ msgstr "Instal·lat i actualitzable"
-
-#~ msgid "Not (no longer) installable"
-#~ msgstr "(Ja) No instal·lable"
-
-# FIXME original. jm
-#, fuzzy
-#~ msgid "unknown"
-#~ msgstr "desconegut"
-
 #~ msgid "Installed (update available)"
 #~ msgstr "Instal·lat (actualització disponible)"
+
+# FIXME original. jm
+#~ msgid "unknown"
+#~ msgstr "desconegut"
 
 #~ msgid "Queued Changes"
 #~ msgstr "Canvis en cua"
 
-#~ msgid "Up_grade System"
-#~ msgstr "Ac_tualitza el sistema"
-
-#~ msgid "New in archive:"
-#~ msgstr "Nou en l'arxiu:"
-
-#~ msgid "Update available:"
-#~ msgstr "Actualització disponible:"
-
-#, fuzzy
-#~ msgid "2. Apply the marked changes"
-#~ msgstr "Aplica tots els canvis marcats"
-
-#, fuzzy
 #~ msgid ""
 #~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
 #~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
@@ -2917,7 +2771,6 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
 #~ msgstr ""
 #~ "Vital Khilko <dojlid@mova.org> (bielorús)\n"
-#~ "Jordi Mallach <jordi@debian.org> (català)\n"
 #~ "Keld Simonsen <keld@dkuug.dk> (danès)\n"
 #~ "Michael Vogt <mvo@debian.org> (alemany)\n"
 #~ "Sebastain Heinlein <allerlei@renates-welt.de> (alemany)\n"
@@ -2939,7 +2792,45 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ "Jean-Michel Poure <jm@poure.com> (francès)\n"
 #~ "Ossama Khayat <okhayat@yahoo.com> (àrab)\n"
 #~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (serbi)\n"
-#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (hongarès)"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (hongarès)\n"
+#~ "Jordi Mallach <jordi@debian.org> (català)"
+
+# FIXME: I don't understand this at all. jm
+#~ msgid "Mark most likely change by clicking on the status icon"
+#~ msgstr "Marqueu el canvi més probable fent clic en la icona d'estat"
+
+#~ msgid "New in archive:"
+#~ msgstr "Nou en l'arxiu:"
+
+#~ msgid "Update available:"
+#~ msgstr "Actualització disponible:"
+
+#~ msgid "Not (no longer) installable"
+#~ msgstr "(Ja) No instal·lable"
+
+# FIXME: The left-handed Debian users declare that
+#        RIGHT CLICKING DOESN'T WORK FOR US!!!
+#        Please use some other wording, like "secondary button". jm
+# FIXME: also, "choose action" -> Does it mean "choose an action", or
+# "choose \"action\""? jm
+#~ msgid ""
+#~ "- Double click on the package name\n"
+#~ "- Right click and choose action from the context menu\n"
+#~ "- Click on the status icon to choose an action"
+#~ msgstr ""
+#~ "- Feu doble clic en un nom de paquet\n"
+#~ "- Feu clic amb el botó secundari i seleccioneu «acció» del menú "
+#~ "contextual\n"
+#~ "- Feu clic a la icona d'estat per a seleccionar una acció"
+
+#~ msgid "2. Apply the marked changes"
+#~ msgstr "2 Apliqueu els canvis marcats"
+
+#~ msgid ""
+#~ "The software on your system is organized in so called <i>packages</i>."
+#~ msgstr ""
+#~ "El programari del vostre sistema està organitzat en el que s'anomenen "
+#~ "<i>paquets</i>."
 
 #~ msgid ""
 #~ "Some index files failed to download, they have been ignored, or old ones "
@@ -2951,10 +2842,6 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ msgid "Reverse dependencies"
 #~ msgstr "Dependències inverses"
 
-#, fuzzy
-#~ msgid "Reverse Depends"
-#~ msgstr "Dependències inverses"
-
 #~ msgid "Reverse Dependencies"
 #~ msgstr "Dependències inverses"
 
@@ -2964,31 +2851,11 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ msgid "Search in:"
 #~ msgstr "Cerca en:"
 
-#, fuzzy
-#~ msgid "Search:"
-#~ msgstr "Cerca en:"
-
-#, fuzzy
-#~ msgid "_Show Matching Packages Only"
-#~ msgstr "S'estan descarregant els fitxers..."
-
-#, fuzzy
-#~ msgid "Marked for removal including config:"
-#~ msgstr "A eliminar incloguent la configuració:"
-
 #~ msgid "<b>Install</b>"
 #~ msgstr "<b>Instal·la</b>"
 
-#, fuzzy
-#~ msgid "Recommended"
-#~ msgstr "Recomanats"
-
 #~ msgid "Selected"
 #~ msgstr "Seleccionat"
-
-#, fuzzy
-#~ msgid "Suggested"
-#~ msgstr "Suggerits"
 
 #~ msgid "Suggestions and Recommendations"
 #~ msgstr "Suggeriments i recomanacions"
@@ -3005,24 +2872,8 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ msgid "_Save Selections"
 #~ msgstr "_Desa les seleccions"
 
-#, fuzzy
-#~ msgid "Marked for removal including configuration"
-#~ msgstr "A eliminar inclogüent la configuració"
-
 #~ msgid "Unable to minimize the upgrade set"
 #~ msgstr "No s'ha pogut minimitzar el conjunt d'actualització"
-
-#, fuzzy
-#~ msgid "Retrieving %li of %li files"
-#~ msgstr "S'han obtingut %li de %li fitxers a %s/s - falten %s"
-
-#, fuzzy
-#~ msgid "Retrieving Package Files"
-#~ msgstr "S'estan obtenint els fitxers Packages..."
-
-#, fuzzy
-#~ msgid "Retrieving Index Files"
-#~ msgstr "S'estan obtenint els fitxers d'índex..."
 
 #~ msgid "WeakDepends"
 #~ msgstr "Dependències febles"
@@ -3033,26 +2884,17 @@ msgstr "<i>No es pot tancar mentre s'està executant</i>"
 #~ msgid "Install"
 #~ msgstr "Instal·la"
 
-#, fuzzy
-#~ msgid "Reinstall"
-#~ msgstr "Instal·la"
-
 #~ msgid "Upgrade"
 #~ msgstr "Actualitza"
 
 #~ msgid "Remove Including Configuration"
 #~ msgstr "Elimina incloguent la configuració"
 
-#, fuzzy
-#~ msgid "R_einstall Current Version"
-#~ msgstr "_Instal·la l'última versió"
-
 #~ msgid "Remove Including _Configuration"
 #~ msgstr "Elimina incloguent la _configuració"
 
-#, fuzzy
-#~ msgid "U_nmark All Changes"
-#~ msgstr "_Neteja tots els canvis marcats"
+#~ msgid "_Install Latest Version"
+#~ msgstr "_Instal·la l'última versió"
 
 #~ msgid "_Remove"
 #~ msgstr "_Elimina"

@@ -478,7 +478,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
    g_string_free(msg, TRUE);
    g_string_free(msg_space, TRUE);
-   skipTaskbar(true);
+   if(!_config->FindB("Volatile::HideMainwindow", false))
+      skipTaskbar(true);
 }
 
 

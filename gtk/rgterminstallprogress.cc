@@ -198,9 +198,9 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
 		      (GtkSignalFunc)stopShell, this);
 
-   if(_config->FindB("Volatile::Non-Interactive", false)) {
+   if(_config->FindB("Volatile::Non-Interactive", false)) 
       gtk_widget_hide(_closeOnF);
-   }
+   
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
 }

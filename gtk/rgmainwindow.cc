@@ -242,7 +242,7 @@ string RGMainWindow::selectedSubView()
    GtkTreeModel *model;
    GtkTreeIter iter;
    gchar *subView = NULL;
-   string ret = "(no selection)";
+   static string ret = "(no selection)";
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
    if (selection != NULL) {
@@ -2176,10 +2176,15 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 {
    RGMainWindow *me = (RGMainWindow *) self;
 
+   // FIXME: only do all this if the user didn't click "cancel" in the dialog
+
+   me->setInterfaceLocked(TRUE);
+
    me->_lister->filterView()->refreshFilters();
-   string currentSubView = me->selectedSubView();
-   me->refreshSubViewList();
    me->refreshTable();
+   me->refreshSubViewList();
+
+   me->setInterfaceLocked(FALSE);
 }
 
 

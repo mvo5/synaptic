@@ -370,6 +370,26 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // set menu according to pkg status
    int flags = pkg->getFlags();
 
+   // changelog and properties are always visible
+   gtk_widget_set_sensitive(_dl_changelogM, TRUE);
+   gtk_widget_set_sensitive(_detailsM, TRUE);
+   gtk_widget_set_sensitive(_propertiesB, TRUE);
+
+   if(_pkgDetails != NULL)
+      _pkgDetails->fillInValues(pkg);
+
+   // Pin, if a pin is set, we skip all other checks and return
+   if( flags & RPackage::FPinned) {
+      _blockActions = TRUE;
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), true);
+      _blockActions = FALSE;
+      return;
+   } else {
+      _blockActions = TRUE;
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), false);
+      _blockActions = FALSE;
+   }
+
    // enable unmark if a action is performed with the pkg
    if((flags & RPackage::FInstall)   || (flags & RPackage::FNewInstall) || 
       (flags & RPackage::FReInstall) || (flags & RPackage::FUpgrade) || 
@@ -401,11 +421,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 					pkg->dependsOn("debconf-i18n")))
        gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
 
-   // changelog and properties are always visible
-   gtk_widget_set_sensitive(_dl_changelogM, TRUE);
-   gtk_widget_set_sensitive(_detailsM, TRUE);
-   gtk_widget_set_sensitive(_propertiesB, TRUE);
-
    // set the "keep" menu icon according to the current status
    GtkWidget *img;
    if (!(flags & RPackage::FInstalled))
@@ -413,9 +428,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    else
       img = get_gtk_image("package-installed-updated");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_keepM), img);
-
-   if(_pkgDetails != NULL)
-      _pkgDetails->fillInValues(pkg);
 
    setStatusText();
 }
@@ -1744,6 +1756,9 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
 
    int flags = pkg->getFlags();
 
+   if(flags & RPackage::FPinned)
+      return;
+
    if (!(flags & RPackage::FInstalled)) {
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
@@ -2653,6 +2668,9 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    RPackage *pkg = selected_pkgs[0];
 
    int flags = pkg->getFlags();
+
+   if( flags & RPackage::FPinned) 
+      return;
 
    // Gray out buttons that don't make sense, and update image
    // if necessary.

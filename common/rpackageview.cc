@@ -89,6 +89,8 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
 
    if (flags & RPackage::FNew)
       str = _("New in repository");
+   else if (flags & RPackage::FPinned) 
+      str = _("Pinned");
    else if ((flags & RPackage::FNotInstallable) &&
 	    !(flags & RPackage::FResidualConfig) &&
 	    (flags & RPackage::FInstalled))

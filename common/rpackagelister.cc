@@ -363,6 +363,8 @@ bool RPackageLister::openCache(bool reset)
 	 pkg->setNew(true);
       }
 
+      if (_roptions->getPackageLock(pkgName.c_str())) 
+	 pkg->setPinned(true);
 
       for (unsigned int i = 0; i != _views.size(); i++)
          _views[i]->addPackage(pkg);
@@ -403,9 +405,6 @@ void RPackageLister::applyInitialSelection()
    _roptions->rereadDebconf();
 
    for (unsigned i = 0; i < _packages.size(); i++) {
-
-      if (_roptions->getPackageLock(_packages[i]->name()))
-         _packages[i]->setPinned(true);
 
       if (_roptions->getPackageOrphaned(_packages[i]->name()))
          _packages[i]->setOrphaned(true);

@@ -700,6 +700,7 @@ bool RFilter::apply(RPackage *package)
 
    if (!priority.filter(package))
       return false;
+
    if (!reducedview.filter(package))
       return false;
 

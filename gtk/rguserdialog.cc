@@ -147,14 +147,18 @@ bool RGGladeUserDialog::init(const char *name)
    g_free(main_widget);
 }
 
-bool RGGladeUserDialog::run(const char *name)
+int RGGladeUserDialog::run(const char *name,bool return_gtk_response)
 {
    if(name != NULL)
       init(name);
 
    res = (GtkResponseType) gtk_dialog_run(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
+
+   if(return_gtk_response)
+      return res;
+   else
+      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
 }
 
 

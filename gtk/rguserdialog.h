@@ -80,7 +80,7 @@ class RGGladeUserDialog : public RGUserDialog
     RGGladeUserDialog(RGWindow* parent, const char *name);
     virtual ~RGGladeUserDialog()  { gtk_widget_destroy(_dialog); };
 
-    bool run(const char *name=NULL);
+    int run(const char *name=NULL, bool return_gtk_response=false);
     GladeXML *getGladeXML() { return gladeXML; };
 };
 #endif

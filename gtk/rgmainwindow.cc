@@ -2312,8 +2312,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = me->selectedPackage();
-   bool res;
-   int dist_upgrade;
+   bool dist_upgrade;
+   int res;
 
    if (!me->_lister->check()) {
       me->_userDialog->error(
@@ -2330,7 +2330,19 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       GtkWidget *button;
 
       RGGladeUserDialog dia(me);
-      dist_upgrade = dia.run("upgrade");
+      res = dia.run("upgrade", true);
+      switch(res) {
+      case GTK_RESPONSE_CANCEL:
+	 return;
+      case GTK_RESPONSE_YES:
+	 dist_upgrade = true;
+	 break;
+      case GTK_RESPONSE_NO:
+	 dist_upgrade = false;
+	 break;
+      default: 
+	 cerr << "unknown return from UpgradeDialog, please report" << endl;
+      }
       gladeXML = dia.getGladeXML();
       // see if the user wants the answer saved
       button = glade_xml_get_widget(gladeXML, "checkbutton_remember");

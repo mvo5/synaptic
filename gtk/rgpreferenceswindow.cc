@@ -338,7 +338,7 @@ void RGPreferencesWindow::show()
                                                UseTerminal));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionCheckRecom),
                                 _config->FindB("Synaptic::UseRecommends",
-                                               true));
+                                               false));
 
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionAskQuit),
                                 _config->FindB("Synaptic::AskQuitOnProceed",
@@ -664,6 +664,8 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    // purge not available 
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
+   gtk_widget_hide(_gladeXML, "optionmenu_delbutton_action");
+   gtk_widget_hide(_gladeXML, "label_removal");
 #endif
    // now set the optionmenu
    // ugly :( but we need this -2 because RGPkgAction starts with 

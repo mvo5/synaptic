@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-28 14:21+0100\n"
-"PO-Revision-Date: 2005-02-03 23:21MSK\n"
+"PO-Revision-Date: 2005-03-02 14:13MSK\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -310,14 +310,10 @@ msgid "Cleaning package lists..."
 msgstr "Очистка списков пакетов..."
 
 #: ../common/rcdscanner.cc:329
-msgid ""
-"Unable to locate any package files. Perhaps this is not an APT enabled disc."
-msgstr ""
-"Невозможно найти файлы пакетов. Возможно, этот диск не предназначен для "
-"использования с APT."
+msgid "Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgstr "Невозможно найти файлы пакетов. Возможно, этот диск не предназначен для использования с APT."
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
 msgstr "Неудачное сканирование диска."
 
@@ -371,9 +367,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "Ошибка: Невозможно создать каталог настроек %s"
 
 #: ../common/rconfiguration.cc:148
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "Ошибка: Невозможно создать каталог для файлов журнала %s"
+msgstr "ОШИБКА: невозможно создать временный каталог %s"
 
 #: ../common/rconfiguration.cc:166
 #, c-format
@@ -386,23 +382,21 @@ msgid "couldn't open %s for writing"
 msgstr "Невозможно открыть %s для записи"
 
 #: ../common/rinstallprogress.cc:41
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now."
 msgstr ""
 "\n"
-"Внесение изменений завершено. Вы можете закрыть это окно."
+"Все изменения полностью применены. Теперь вы можете закрыть окно."
 
 #: ../common/rinstallprogress.cc:42
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in the terminal buffer to see what went "
 "wrong."
 msgstr ""
 "\n"
-"Обновление не было выполнено - смотрите лог установки для определения причины"
+"Невозможно применить все изменения! Прокрутите окно, чтобы посмотреть что пошло не так."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -416,8 +410,7 @@ msgstr ""
 
 #: ../common/rpackage.cc:199
 msgid "The list of installed files is only available for installed packages"
-msgstr ""
-"В списке установленных файлов отображаются только установленные пакеты."
+msgstr "В списке установленных файлов отображаются только установленные пакеты."
 
 #: ../common/rpackage.cc:398
 msgid "or dependency"
@@ -733,7 +726,6 @@ msgstr "Невозможно исправить отсутствующие па�
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
 #: ../common/rpackagelister.cc:1562
-#, fuzzy
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -743,13 +735,12 @@ msgstr ""
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1571
-#, fuzzy
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
 msgstr ""
 "\n"
-"Следующие пакеты удалены:\n"
+"Следующие пакеты приведены к предыдущей версии:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1580
@@ -757,10 +748,11 @@ msgid ""
 "\n"
 "Completely removed the following packages:\n"
 msgstr ""
+"\n"
+"Полностью удалены следующие пакеты:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1589
-#, fuzzy
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -770,34 +762,30 @@ msgstr ""
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1598
-#, fuzzy
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
 msgstr ""
 "\n"
-"Следующие пакеты удалены:\n"
+"Следующие пакеты обновлены:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1609
-#, fuzzy
 msgid ""
 "\n"
 "Installed the following packages:\n"
 msgstr ""
 "\n"
-"Следующие пакеты удалены:\n"
+"Следующие пакеты установлены:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1619
-#, fuzzy
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
 msgstr ""
 "\n"
-"Во время установки пакета %s:\n"
-"\n"
+"Следующие пакеты установлены заново:\n"
 
 #: ../common/rpackagelister.cc:1636
 msgid "Unable to lock the download directory"
@@ -823,7 +811,7 @@ msgstr "Ошибка bzip2, возможно, диск переполнен."
 
 #: ../common/rpackageview.h:96
 msgid "Sections"
-msgstr "РазделыСекции"
+msgstr "Разделы"
 
 #: ../common/rpackageview.h:106
 msgid "Alphabetic"
@@ -883,9 +871,8 @@ msgstr "Отмеченные изменения"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "Пакеты с файлами настроек"
+msgstr "Пакеты, поддерживаемые debconf"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
@@ -906,7 +893,7 @@ msgstr ""
 
 #: ../gtk/dialog_conffile.glade.h:1
 msgid "Difference between the files"
-msgstr ""
+msgstr "Отличия между файлами"
 
 # This is filter name, it's better to not translate it
 #: ../gtk/dialog_change_version.glade.h:1
@@ -918,7 +905,6 @@ msgid "_Force Version"
 msgstr "_Назначить версию"
 
 #: ../gtk/dialog_upgrade.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
@@ -933,28 +919,26 @@ msgid ""
 msgstr ""
 "<b><big>Отметить пакеты для обновления интеллектуальным способом?</big></b>\n"
 "\n"
-"<b>Обычный<b> способ обновления (upgrade) пропускает пакеты, которые внесут "
-"конфликты или потребуют установки дополнительных пакетов.\n"
+"Способ обновления по умолчанию пропускает пакеты, которые внесут конфликты "
+"или потребуют установки дополнительных пакетов.\n"
+" \n"
+"Интеллектуальный способ обновления (dist-upgrade) пытается разрешить "
+"конфликты и удовлетворить все зависимости оптимальным способом\n"
 "\n"
-"<b>Интеллектуальный<b> способ обновления (dist-upgrade) пытается разрешить "
-"конфликты и удовлетворить все зависимости оптимальным способом "
-"(рекомендуется).\n"
-"\n"
-"<b>Примечание:</b> Пакеты будут только отмечены для обновления. Далее вам "
-"потребуется применить отмеченные изменения."
+"<b>Примечание:</b> Пакеты будут только отмечены для обновления. Вам "
+"потребуется затем применить отмеченные изменения."
 
 #: ../gtk/dialog_upgrade.glade.h:8 ../gtk/window_preferences.glade.h:31
 msgid "Default Upgrade"
-msgstr "Обычно"
+msgstr "Стандартное обновление системы"
 
 #: ../gtk/dialog_upgrade.glade.h:9
-#, fuzzy
 msgid "Remember my answer for future upgrades"
 msgstr "Запомнить ответ для дальнейших обновлений"
 
 #: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:68
 msgid "Smart Upgrade"
-msgstr "Интеллектуально"
+msgstr "Интеллектуальное обновление"
 
 #: ../gtk/dialog_upgrade.glade.h:11
 msgid "This behavior can be changed in the preferences later."
@@ -962,50 +946,43 @@ msgstr "Это поведение может быть позднее измен�
 
 #: ../gtk/gsynaptic.cc:68
 msgid "Usage: synaptic [options]\n"
-msgstr "Использование: synaptic [опции]\n"
+msgstr "Использование: synaptic [параметры]\n"
 
 #: ../gtk/gsynaptic.cc:69
 msgid "-h   This help text\n"
-msgstr "-h   Это текст помощи\n"
+msgstr "-h   Вывести этот текст справки\n"
 
 #: ../gtk/gsynaptic.cc:70
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Открыть в окне репозитория\n"
 
 #: ../gtk/gsynaptic.cc:71
-#, fuzzy
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Задать альтернативный файл фильтров\n"
 
 #: ../gtk/gsynaptic.cc:72
-msgid ""
-"-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
-msgstr ""
+msgid "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
+msgstr "-t   Указать альтернативное названия главного окна (например hostname с `uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:73
-#, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
-msgstr "-i=? Задать номер фильтра, используемого после запуска\n"
+msgstr "-i=? Начать с фильтра, имеющего указанный номер\n"
 
 #: ../gtk/gsynaptic.cc:74
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
-msgstr "-o=? Установить произвольную опцию, например, -o dir::cache=/tmp\n"
+msgstr "-o=? Установить произвольный параметр, например, -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr ""
-"--upgrade-mode  Запустить Обновление, Установку и отобразить изменения\n"
+msgstr "--upgrade-mode  Вызвать обновление и показать изменения\n"
 
 #: ../gtk/gsynaptic.cc:76
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
-msgstr ""
-"--upgrade-mode  Запустить Обновление, Установку и отобразить изменения\n"
+msgstr "--dist-upgrade-mode  Вызвать DistUpgrade и показать изменения\n"
 
 #: ../gtk/gsynaptic.cc:77
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
-msgstr ""
+msgstr "--update-at-startup  Вызвать \"Получить сведения\" при запуске\n"
 
 #: ../gtk/gsynaptic.cc:78
 msgid "--non-interactive Never prompt for user input\n"
@@ -1017,34 +994,33 @@ msgstr "--task-window Открыть с окном задач\n"
 
 #: ../gtk/gsynaptic.cc:80
 msgid "--add-cdrom Add a cdrom at startup\n"
-msgstr ""
+msgstr "--add-cdrom Добавить компакт-диск при запуске\n"
 
 #: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "Другой экземпляр synaptic уже запущен"
 
 #: ../gtk/gsynaptic.cc:304
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
-msgstr ""
+msgstr "Где-то уже запущен synaptic в диалоговом режиме. Пожалуйста, сначала закройте его."
 
 #: ../gtk/gsynaptic.cc:310
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
-msgstr ""
+msgstr "Где-то запущен другой synaptic в недиалоговом режиме. Пожалуйста, подождите пока он завершится."
 
 #: ../gtk/gsynaptic.cc:334
-#, fuzzy
 msgid "Unable to get exclusive lock"
-msgstr "Невозможно перейти в %s"
+msgstr "Невозможно получить исключительную блокировку"
 
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
-msgstr ""
+msgstr "Это обычно означает, что другая программа управления пакетами (как apt-get или aptitude) уже запущена. Пожалуйста, закройте перед запуском synaptic."
 
 #: ../gtk/gsynaptic.cc:377
 msgid "You must run this program as the root user."
@@ -1080,18 +1056,18 @@ msgstr "Изменения в пакетах"
 
 #: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
-msgstr ""
+msgstr "Внимание"
 
 #: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
 "You are about to install software that <b>can't be authenticated</b>! Doing "
 "this could allow a malicious individual to damage or take control of your "
 "system."
-msgstr ""
+msgstr "Вы собираетесь установить программу, подлинность которой <b>не может быть определена</b>! Это может позволить злонамеренному человеку повредить или получить управление над вашей системой."
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
-msgstr ""
+msgstr "ПОДЛИННОСТЬ НЕ ПОДТВЕРЖДЕНА"
 
 #: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
@@ -1118,59 +1094,59 @@ msgid "To be kept"
 msgstr "Для сохранения"
 
 #: ../gtk/rgdebinstallprogress.cc:57 ../gtk/rgdebinstallprogress.cc:68
-#, fuzzy, c-format
+#, c-format
 msgid "Preparing for removal %s"
-msgstr "Для удаления"
+msgstr "Подготовлено для удаления %s"
 
 #: ../gtk/rgdebinstallprogress.cc:58
 #, c-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Удаление %s"
 
 #: ../gtk/rgdebinstallprogress.cc:59 ../gtk/rgdebinstallprogress.cc:70
-#, fuzzy, c-format
+#, c-format
 msgid "Removed %s"
-msgstr "Удалить"
+msgstr "Удалены %s"
 
 #: ../gtk/rgdebinstallprogress.cc:69 ../gtk/rgdebinstallprogress.cc:78
 #, c-format
 msgid "Removing with config %s"
-msgstr ""
+msgstr "Удаление с конфигурационным файлом %s"
 
 #: ../gtk/rgdebinstallprogress.cc:71 ../gtk/rgdebinstallprogress.cc:79
-#, fuzzy, c-format
+#, c-format
 msgid "Removed with config %s"
-msgstr "Для удаления вместе с настройками"
+msgstr "Удалены с конфигурационным файлом %s"
 
 #: ../gtk/rgdebinstallprogress.cc:88 ../gtk/rgdebinstallprogress.cc:101
 #: ../gtk/rgdebinstallprogress.cc:116
-#, fuzzy, c-format
+#, c-format
 msgid "Preparing %s"
-msgstr "Подготовка..."
+msgstr "Подготавливается %s"
 
 #: ../gtk/rgdebinstallprogress.cc:89 ../gtk/rgdebinstallprogress.cc:103
 #: ../gtk/rgdebinstallprogress.cc:117 ../gtk/rgdebinstallprogress.cc:119
 #, c-format
 msgid "Unpacking %s"
-msgstr ""
+msgstr "Распаковывается %s"
 
 #: ../gtk/rgdebinstallprogress.cc:90 ../gtk/rgdebinstallprogress.cc:104
 #: ../gtk/rgdebinstallprogress.cc:120
-#, fuzzy, c-format
+#, c-format
 msgid "Configuring %s"
-msgstr "Сохранить настройки"
+msgstr "Настраивается %s"
 
 # This is filter name, it's better to not translate it
 #: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:105
 #: ../gtk/rgdebinstallprogress.cc:121
-#, fuzzy, c-format
+#, c-format
 msgid "Installed %s"
-msgstr "Установленные"
+msgstr "Установлено %s"
 
 #: ../gtk/rgdebinstallprogress.cc:102 ../gtk/rgdebinstallprogress.cc:118
-#, fuzzy, c-format
+#, c-format
 msgid "Installing %s"
-msgstr "Установленные файлы"
+msgstr "Устанавливается %s"
 
 #: ../gtk/rgdebinstallprogress.cc:288
 #, c-format
@@ -1178,6 +1154,8 @@ msgid ""
 "Install new configuration file\n"
 "'%s'?"
 msgstr ""
+"Установить новый конфигурационный файл\n"
+"'%s'?"
 
 #: ../gtk/rgdebinstallprogress.cc:289
 #, c-format
@@ -1185,7 +1163,7 @@ msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
 "say 'No'. Do you want to install the new package maintainers version? "
-msgstr ""
+msgstr "Конфигурационный файл %s был изменён (вами или по сценарию). Обновлённая версия поставляется с данным пакетом. Если вы хотите сохранить текущую версию, ответьте \"Нет\". Хотите ли вы установить конфигурационный файл из пакета?"
 
 #: ../gtk/rgdebinstallprogress.cc:421 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
@@ -1194,32 +1172,31 @@ msgstr "Внесение изменений..."
 
 #. error from dpkg
 #: ../gtk/rgdebinstallprogress.cc:494
-#, fuzzy, c-format
+#, c-format
 msgid "Error in package %s"
-msgstr "Предоставляемые пакеты"
+msgstr "Ошибка в пакете %s"
 
 #: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
 msgid "Changes applied"
-msgstr ""
+msgstr "Изменения применены"
 
 #: ../gtk/rgdebinstallprogress.cc:703
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
-msgstr ""
+msgstr "Отмеченные изменения применяются. Это может занять некоторое время. Пожалуйста, подождите."
 
 #: ../gtk/rgdebinstallprogress.cc:708
-#, fuzzy
 msgid "Installing and removing software"
-msgstr "Установить, удалить и обновить пакеты"
+msgstr "Установка и удаление программ"
 
 #: ../gtk/rgdebinstallprogress.cc:710
 msgid "Removing software"
-msgstr ""
+msgstr "Удаление программ"
 
 #: ../gtk/rgdebinstallprogress.cc:712
 msgid "Installing software"
-msgstr ""
+msgstr "Установка программ"
 
 #: ../gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
@@ -1269,18 +1246,18 @@ msgid ""
 "packages. If you manually force a version from a different distribution, the "
 "package version will follow that distribution until it enters the default "
 "distribution."
-msgstr ""
+msgstr "Предпочитать версии пакетов из указанного дистрибутива при обновлении пакетов. Если вы принудительно устанавливаете пакет из другого дистрибутива, версия пакета будет следовать за этим дистрибутивов, пока он не войдёт в дистрибутив по умолчанию."
 
 #: ../gtk/rgpreferenceswindow.cc:958
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
-msgstr ""
+msgstr "Никогда не обновлять до новой версии автоматически. Будьте <b>очень</b> внимательны с этим параметром, так как вы не сможете получать обновления по безопасности автоматически! Если вы принудительно укажете версию пакета, версия будет следовать выбранному дистрибутиву."
 
 #: ../gtk/rgpreferenceswindow.cc:966
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
-msgstr ""
+msgstr "Позволить synaptic отметить лучшую версию. Если не уверены, используйте этот пункт."
 
 #: ../gtk/rgpreferenceswindow.cc:1003
 msgid "Visible"
@@ -1314,18 +1291,18 @@ msgstr ""
 "в дисковод %s"
 
 #: ../gtk/rgfetchprogress.cc:309
-#, fuzzy, c-format
+#, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Загрузка файла %li из %li на %s/s - %s осталось"
+msgstr "Скорость загрузки: %s/с - %s осталось"
 
 #: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
-msgstr ""
+msgstr "Скорость загрузки: неизвестно"
 
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Downloading file %li of %li"
-msgstr "Загрузка файла %li из %li"
+msgstr "Загружается файл %li из %li"
 
 #: ../gtk/rgfetchprogress.cc:384
 msgid "Queued"
@@ -1397,12 +1374,11 @@ msgstr ""
 
 #: ../gtk/rglogview.cc:260
 msgid "Not found"
-msgstr ""
+msgstr "Не найден"
 
 #: ../gtk/rglogview.cc:262
-msgid ""
-"Expression was found, please see the list on the left for matching entries."
-msgstr ""
+msgid "Expression was found, please see the list on the left for matching entries."
+msgstr "Выражение было найдено, посмотрите в список слева."
 
 #: ../gtk/rgpkgdetails.cc:107
 #, c-format
@@ -1430,8 +1406,7 @@ msgstr "Пакеты не выбраны.\n"
 #: ../gtk/rgmainwindow.cc:436
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
-msgstr ""
-"Выберите версию %s, которая должна быть принудительно выбрана при установке"
+msgstr "Выберите версию %s, которая должна быть принудительно выбрана при установке"
 
 #: ../gtk/rgmainwindow.cc:438
 msgid ""
@@ -1440,7 +1415,7 @@ msgid ""
 "handling can occur."
 msgstr ""
 "Менеджер пакетов всегда выбирает наиболее подходящую версию из доступных.\n"
-"Если Вы принудительно установите версию, отлиную от версии по умолчанию, то\n"
+"Если Вы принудительно установите версию, отличную от версии по умолчанию, то\n"
 "возможно появление ошибок при обработке зависимостей."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
@@ -1458,13 +1433,10 @@ msgid "Download"
 msgstr "Получить"
 
 #: ../gtk/rgmainwindow.cc:1201
-#, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
-msgstr ""
-"Получить сведения о пакетах, чтобы узнать о новых, удалённых или обновлённых "
-"пакетах программ."
+msgstr "Получение сведений о пакетах информирует о новых, удалённых или обновлённых пакетах программ."
 
 #: ../gtk/rgmainwindow.cc:1207
 msgid "Mark all possible upgrades"
@@ -1625,6 +1597,9 @@ msgid ""
 "\n"
 "Please wait."
 msgstr ""
+"<big><b>Диалог построения репозитория</b></big>\n"
+"\n"
+"Пожалуйста, подождите."
 
 #: ../gtk/rgmainwindow.cc:2173
 msgid "Repositories changed"
@@ -1652,10 +1627,9 @@ msgstr "Найдено %i пакет(ов)"
 
 #: ../gtk/rgmainwindow.cc:2283
 msgid "Starting help viewer..."
-msgstr "Открытие системы помощи"
+msgstr "Открытие справочной системы"
 
 #: ../gtk/rgmainwindow.cc:2303
-#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1665,15 +1639,15 @@ msgid ""
 "Alternatively you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
-"Не установлена программа для просмотра помощи!\n"
+"Не установлена программа для просмотра справки!\n"
 "\n"
-"Вам необходимо установить программу просмотра помощи GNOME 'yelp', браузеры "
-"'konqueror' или 'mozilla' чтобы просмотреть справочное руководство.\n"
+"Вам необходимо установить программу просмотра справки GNOME 'yelp', браузеры "
+"'konqueror' или 'mozilla', чтобы просмотреть справочное руководство.\n"
 "\n"
 "Также вы можете получить информацию о Synaptic, набрав в командной строке "
-"'man synaptic' или просмотрев html-версию в папке 'synaptic/html'."
+"'man synaptic' или просмотрев html-версию в каталоге 'synaptic/html'."
 
-#: ../gtk/rgmainwindow.cc:2451
+#: gtk/rgmainwindow.cc:2373
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1683,19 +1657,18 @@ msgstr ""
 
 #: ../gtk/rgmainwindow.cc:2457
 msgid "Starting package configuration tool..."
-msgstr "Запуск программы настройки пакета"
+msgstr "Запуск программы настройки пакета..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: ../gtk/rgmainwindow.cc:2472
 msgid "Starting package documentation viewer..."
-msgstr "Открытие помощи по пакету..."
+msgstr "Открытие справки по пакету..."
 
 #: ../gtk/rgmainwindow.cc:2484
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
-msgstr ""
-"Вы должны установить пакет \"dwww\" для просмотра документации к пакету"
+msgstr "Вы должны установить пакет \"dwww\" для просмотра документации к пакету"
 
 #: ../gtk/rgmainwindow.cc:2549
 msgid ""
@@ -1830,14 +1803,12 @@ msgid "To be DOWNGRADED"
 msgstr "Будет установлена УСТАРЕВШАЯ ВЕРСИЯ"
 
 #: ../gtk/rgsummarywindow.cc:164
-#, fuzzy
 msgid "To be completely removed (including configuration files)"
-msgstr "Для удаления вместе с настройками"
+msgstr "Будут полностью удалены (включая конфигурационные файлы)"
 
 #: ../gtk/rgsummarywindow.cc:216
-#, fuzzy
 msgid "Unchanged"
-msgstr "Открыть отметки пакетов"
+msgstr "Без изменений"
 
 #: ../gtk/rgsummarywindow.cc:261
 #, c-format
@@ -1971,7 +1942,7 @@ msgstr ""
 
 #: ../gtk/rguserdialog.cc:72
 msgid "The following problems were found on your system:"
-msgstr ""
+msgstr "В вашей системе найдены следующие проблемы:"
 
 #: ../gtk/rgvendorswindow.cc:39
 msgid "Setup Vendors"
@@ -2203,7 +2174,7 @@ msgstr "_Просмотреть документацию"
 
 #: ../gtk/window_main.glade.h:49
 msgid "_Configure..."
-msgstr "Скон_фигурировать..."
+msgstr "_Настроить..."
 
 #: ../gtk/window_main.glade.h:50
 msgid "_Contents"
@@ -2246,9 +2217,8 @@ msgid "_Hide"
 msgstr "_Скрыть"
 
 #: ../gtk/window_main.glade.h:60
-#, fuzzy
 msgid "_History"
-msgstr "История поиска"
+msgstr "_История"
 
 #: ../gtk/window_main.glade.h:61
 msgid "_Icons Only"
@@ -2497,9 +2467,8 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Шрифты</b>"
 
 #: ../gtk/window_preferences.glade.h:8
-#, fuzzy
 msgid "<b>History files</b>"
-msgstr "<b>Временные файлы</b>"
+msgstr "<b>Файлы истории</b>"
 
 #: ../gtk/window_preferences.glade.h:9
 msgid "<b>Marking Changes</b>"
@@ -2507,7 +2476,7 @@ msgstr "<b>Отметка изменений</b>"
 
 #: ../gtk/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
-msgstr ""
+msgstr "<b>Поведение пакета при обновлении (дистрибутив по умолчанию)</b>"
 
 #: ../gtk/window_preferences.glade.h:11
 msgid "<b>Proxy Server</b>"
@@ -2518,7 +2487,6 @@ msgid "<b>Temporary Files</b>"
 msgstr "<b>Временные файлы</b>"
 
 #: ../gtk/window_preferences.glade.h:13
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider any changes carefully.</span>"
@@ -2536,20 +2504,19 @@ msgstr "Всегда задавать этот вопрос"
 
 #: ../gtk/window_preferences.glade.h:16
 msgid "Always prefer the highest version"
-msgstr ""
+msgstr "Всегда предпочитать новейшую версию"
 
 #: ../gtk/window_preferences.glade.h:17
 msgid "Always prefer the installed version"
-msgstr ""
+msgstr "Всегда предпочитать установленную версию"
 
 #: ../gtk/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
 msgstr "Выполнять изменения в окне терминала"
 
 #: ../gtk/window_preferences.glade.h:19
-#, fuzzy
 msgid "Ask to confirm changes that also affect other packages"
-msgstr "Подтверждать действия, влияющие на другие пакеты"
+msgstr "Запрос на подтверждение изменений, которые также могут подействовать на другие пакеты"
 
 #: ../gtk/window_preferences.glade.h:20
 msgid "Ask to quit after the changes have been applied successfully"
@@ -2566,8 +2533,7 @@ msgstr "С ошибками:"
 
 #: ../gtk/window_preferences.glade.h:23
 msgid "Clicking on the status icon marks the most likely action"
-msgstr ""
-"Нажатие на пиктограмму состояния вызывает наиболее предпочтительное действие"
+msgstr "Нажатие на пиктограмму состояния вызывает наиболее предпочтительное действие"
 
 #: ../gtk/window_preferences.glade.h:24
 msgid "Color"
@@ -2603,7 +2569,7 @@ msgstr "Рассматривать рекомендуемые пакеты ка�
 
 #: ../gtk/window_preferences.glade.h:32
 msgid "Delete _History files older than:"
-msgstr ""
+msgstr "Удалить файлы _Истории старее чем:"
 
 #: ../gtk/window_preferences.glade.h:33
 msgid "Direct connection to the internet"
@@ -2614,9 +2580,8 @@ msgid "FTP proxy: "
 msgstr "FTP-прокси: "
 
 #: ../gtk/window_preferences.glade.h:36
-#, fuzzy
 msgid "Files"
-msgstr "Фильтры"
+msgstr "Файлы"
 
 #: ../gtk/window_preferences.glade.h:37
 msgid "General"
@@ -2691,12 +2656,11 @@ msgstr "Переместить _вверх"
 msgid "Network"
 msgstr "Сеть"
 
-#: ../gtk/window_preferences.glade.h:55
-#, fuzzy
-msgid "New in repository:"
+#: gtk/window_preferences.glade.h:56
+msgid "New in respository:"
 msgstr "Новые в репозитории:"
 
-#: ../gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr "Не использовать прокси для: "
 
@@ -2728,9 +2692,8 @@ msgstr "Порт:"
 
 # This is filter name, it's better to not translate it
 #: ../gtk/window_preferences.glade.h:63
-#, fuzzy
 msgid "Prefer versions from: "
-msgstr "Назначить версию:"
+msgstr "Предпочитать версии из:"
 
 #: ../gtk/window_preferences.glade.h:65
 msgid "Reloading outdated package information:"
@@ -2766,23 +2729,20 @@ msgid "_Delete Cached Package Files"
 msgstr "_Очистить кэш файлов пакетов"
 
 #: ../gtk/window_preferences.glade.h:74
-#, fuzzy
 msgid "_Delete downloaded packages after installation"
-msgstr "Удалить загруженные пакеты после установки"
+msgstr "_Удалить загруженные файлы после установки"
 
 #: ../gtk/window_preferences.glade.h:75
 msgid "_Keep history"
-msgstr ""
+msgstr "_Сохранять историю"
 
 #: ../gtk/window_preferences.glade.h:76
-#, fuzzy
 msgid "_Leave all downloaded packages in the cache"
-msgstr "Оставить все загруженные пакеты в кэше"
+msgstr "_Оставить все загруженные файлы в кэше"
 
 #: ../gtk/window_preferences.glade.h:77
-#, fuzzy
 msgid "_Only delete packages which are no longer available"
-msgstr "Удалить пакеты, которые больше не доступны"
+msgstr "_Удалять только те пакеты. которые более недоступны в репозитории"
 
 #: ../gtk/window_preferences.glade.h:78
 msgid "_Terminal Font"
@@ -2790,13 +2750,11 @@ msgstr "_Шрифт терминала"
 
 #: ../gtk/window_preferences.glade.h:79
 msgid "days"
-msgstr ""
+msgstr "дней"
 
 #: ../gtk/window_disc_name.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Введите метку компакт-диска</span>"
+msgid "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Введите метку компакт-диска</span>"
 
 #: ../gtk/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2812,8 +2770,7 @@ msgstr ""
 
 #: ../gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Установить внутренний параметр</span>"
+msgstr "<span size=\"large\" weight=\"bold\">Установить внутренний параметр</span>"
 
 #: ../gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
@@ -2832,46 +2789,40 @@ msgid "<b>Summary</b>"
 msgstr "<b>Краткое описание</b>"
 
 #: ../gtk/window_summary.glade.h:4
-msgid ""
-"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Внести следующие изменения?</span>"
+msgid "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Внести следующие изменения?</span>"
 
 #: ../gtk/window_summary.glade.h:6
 msgid "Download package files only"
-msgstr "Загрузить только файлы пакетов"
+msgstr "Только загрузить файлы пакетов"
 
 #: ../gtk/window_summary.glade.h:7
 msgid "Return to the main screen"
 msgstr "Вернуться в главное окно"
 
 #: ../gtk/window_summary.glade.h:8
-#, fuzzy
 msgid "The package files will be downloaded, but not installed"
-msgstr "Пакеты будут только получены, а не установлены или обновлены"
+msgstr "Файлы пакетов будут загружены, но не установлены"
 
 #: ../gtk/window_summary.glade.h:9
 msgid ""
 "This is your last opportunity to look through the list of marked changes "
 "before they are applied."
-msgstr "Проверьте список изменений перед тем, как они будут внесены."
+msgstr "Проверьте список изменений перед тем, как они будут выполнены."
 
 #: ../gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
-msgstr ""
-"Поставщики подписывают свои пакеты, чтобы подтвердить корректность и "
-"целостность пакетов. Выключение проверки понижает безопасность"
+msgstr "Поставщики подписывают свои пакеты, чтобы была возможность проверки их оригинальности и целостности. Выключение этой проверки ослабляет безопасность вашей системы."
 
 #: ../gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
-msgstr "Проверить подписи пакетов"
+msgstr "Проверять подписи пакетов"
 
 #: ../gtk/window_summary.glade.h:12
 msgid "_Show Details"
-msgstr "_Показать детали"
+msgstr "_Подробнее"
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/window_filters.glade.h:4
@@ -2951,8 +2902,7 @@ msgstr "Обновляемые до последней версии апстри
 
 #: ../gtk/window_filters.glade.h:29
 msgid "Library packages that are no longer needed (deborphan is required)"
-msgstr ""
-"Пакеты библиотек, которые больше не нужны (для работы требуется deborphan)"
+msgstr "Пакеты библиотек, которые больше не нужны (для работы требуется deborphan)"
 
 # This is filter name, it's better to not translate it
 #: ../gtk/window_filters.glade.h:32
@@ -2977,12 +2927,11 @@ msgstr "ИЛИ"
 msgid "Orphaned"
 msgstr "\"Заброшенные\""
 
-#: ../gtk/window_filters.glade.h:40
-#, fuzzy
-msgid "Packages that are new in the repository since that last \"Reload\""
+#: gtk/window_filters.glade.h:38
+msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Пакеты, появившиеся в репозитории после последнего обновления списков"
 
-#: ../gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:39
 msgid "Packages that are not available in any repository"
 msgstr "Недоступные ни в одном репозитории пакеты"
 
@@ -3087,26 +3036,22 @@ msgid "rpm-src"
 msgstr "rpm-src"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:1
-#, fuzzy
 msgid "<i>Preparing packages...</i>"
-msgstr "Очистка списков пакетов..."
+msgstr "<i>Подготавливаются пакеты...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Automatically close after the changes have been successfully applied"
-msgstr "Закрыть диалог после того, как изменения будут полностью внесены"
+msgstr "Автоматически закрывать после того, как изменения будут полностью применены"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:3
-#, fuzzy
 msgid "Terminal"
-msgstr "_Шрифт терминала"
+msgstr "Терминал"
 
 #: ../gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr "При выполнении изменений были получены сообщения:"
 
 #: ../gtk/window_tasks.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -3117,11 +3062,11 @@ msgstr ""
 "<span size=\"large\" weight=\"bold\">Какие задачи будут выполняться вашим "
 "компьютером?</span>\n"
 "\n"
-"Существуют предопределённые группы пакетов для выполнения каждой задачи. "
+"Существуют предопределенные группы пакетов для выполнения каждой задачи. "
 "Если Вы выберете задачу, то соответствующие пакеты будут отмечены для "
 "установки."
 
-#: ../gtk/window_tasks.glade.h:4
+#: gtk/window_tasks.glade.h:4
 msgid "_Description"
 msgstr "_Описание"
 
@@ -3130,7 +3075,6 @@ msgid "<b>Terminal Output:</b>"
 msgstr "<b>Вывод терминала:</b>"
 
 #: ../gtk/window_zvtinstallprogress.glade.h:2
-#, fuzzy
 msgid "Close this dialog after the changes have been successfully applied"
 msgstr "Закрыть диалог после того, как изменения будут полностью внесены"
 
@@ -3164,12 +3108,11 @@ msgstr "Выберите действие из контекстного меню
 
 #: ../gtk/dialog_welcome.glade.h:4
 msgid "Click on the status icon to open a menu that contains all actions."
-msgstr ""
-"Нажмите на значок состояния пакета для вывода перечня доступных действий."
+msgstr "Нажмите на значок состояния пакета для вывода перечня доступных действий."
 
 #: ../gtk/dialog_welcome.glade.h:5
 msgid "Double click on the package name."
-msgstr "Нажмите дважды мышкой на название пакета;"
+msgstr "Нажмите мышкой дважды на название пакета;"
 
 #: ../gtk/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
@@ -3194,8 +3137,7 @@ msgstr ""
 "удалять пакеты с программами."
 
 #: ../gtk/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
+msgid "You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
 "Отметить выбранные пакеты для установки, обновления или удаления можно "
 "различными способами:"
@@ -3302,7 +3244,6 @@ msgstr "<i>Невозможно закрыть во время работы</i>"
 
 #. vim:sts=3:sw=3
 #: ../gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3311,7 +3252,7 @@ msgid ""
 "package. Reload the package list and check the source of the package (e.g. "
 "CD or network connection)."
 msgstr ""
-"<big><b>Невозможно получить все файлы пакетов</b></big>\n"
+"<big><b>Невозможно получить все необходимые файлы пакетов</b></big>\n"
 "\n"
 "Пакет той версии, которую вы хотите установить, возможно уже не доступен в "
 "репозитории или возникли проблемы с доступом к репозиторию. Обновите список "
@@ -3334,172 +3275,166 @@ msgstr ""
 
 #: ../gtk/dialog_update_outdated.glade.h:4
 msgid "Remember the answer"
-msgstr "Запомнить ответ"
+msgstr "Запомнить ответ для дальнейших обновлений"
 
 #: ../gtk/dialog_update_outdated.glade.h:5
 msgid "_Reload"
 msgstr "_Получить сведения"
 
 #: ../gtk/window_logview.glade.h:1
-#, fuzzy
 msgid "History"
-msgstr "История поиска"
+msgstr "История"
 
 #: ../gtk/window_logview.glade.h:2
-#, fuzzy
 msgid "History of installed, upgraded and removed software packages."
-msgstr "Установить, удалить и обновить пакеты"
+msgstr "История установленных, обновлённых и удалённых пакетов программ."
 
-#~ msgid "Internal Error: Couldn't fork gzip. Please report."
-#~ msgstr ""
-#~ "Внутренняя ошибка: Невозможно запустить gzip. Пожалуйста, сообщите об "
-#~ "этом разработчикам."
+msgid "Internal Error: Couldn't fork gzip. Please report."
+msgstr ""
+"Внутренняя ошибка: Невозможно запустить gzip. Пожалуйста, сообщите об этом "
+"разработчикам."
 
-#~ msgid "Dependency of"
-#~ msgstr "Зависимости"
+msgid "Dependency of"
+msgstr "Зависимости"
 
-#~ msgid "Internal Error: Could not open ReducedView file %s"
-#~ msgstr "Внутренняя ошибка: Невозможно открыть файл сокращёного вида%s"
+msgid "Internal Error: Could not open ReducedView file %s"
+msgstr "Внутренняя ошибка: Невозможно открыть файл сокращённого вида%s"
 
-#~ msgid "Internal Error: couldn't fork bzip2. Please report."
-#~ msgstr ""
-#~ "Внутренняя ошибка: Невозможно запустить bzip2. Пожалуйста, сообщите об "
-#~ "этом разработчикам."
+msgid "Internal Error: couldn't fork bzip2. Please report."
+msgstr ""
+"Внутренняя ошибка: Невозможно запустить bzip2. Пожалуйста, сообщите об этом "
+"разработчикам."
 
-#~ msgid ""
-#~ "<big><b>%s</b></big> \n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "<big><b>%s</b></big> \n"
-#~ "\n"
-#~ "%s"
+msgid ""
+"<big><b>%s</b></big> \n"
+"\n"
+"%s"
+msgstr ""
+"<big><b>%s</b></big> \n"
+"\n"
+"%s"
 
-#~ msgid "Normal"
-#~ msgstr "Нормальный"
+msgid "Normal"
+msgstr "Нормальный"
 
-#~ msgid "Critical"
-#~ msgstr "Критический"
+msgid "Critical"
+msgstr "Критический"
 
-#~ msgid "Security"
-#~ msgstr "Безопасность"
+msgid "Security"
+msgstr "Безопасность"
 
 # This is filter name, it's better to not translate it
-#, fuzzy
-#~ msgid "Installation finished"
-#~ msgstr "Установленные"
+msgid "Installation finished"
+msgstr "Установка завершена"
 
-#~ msgid "%s is/will be installed"
-#~ msgstr "%s уже/будет установлен"
+msgid "%s is/will be installed"
+msgstr "%s уже/будет установлен"
 
-#~ msgid "package is not installable"
-#~ msgstr "пакет не может быть установлен"
+msgid "package is not installable"
+msgstr "пакет не может быть установлен"
 
-#~ msgid "package is a virtual package"
-#~ msgstr "пакет является виртуальным"
+msgid "package is a virtual package"
+msgstr "пакет является виртуальным"
 
-#~ msgid "package is/will not be installed"
-#~ msgstr "пакет не установлен/не будет установлен"
+msgid "package is/will not be installed"
+msgstr "пакет не установлен/не будет установлен"
 
-#~ msgid "dependency is satisfied"
-#~ msgstr "зависимости разрешены"
+msgid "dependency is satisfied"
+msgstr "зависимости разрешены"
 
-#~ msgid ""
-#~ "\n"
-#~ "The follwoing packages are DOWNGRADED:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Следующие пакеты возвращены к прежним версиям:\n"
+msgid ""
+"\n"
+"The follwoing packages are DOWNGRADED:\n"
+msgstr ""
+"\n"
+"Следующие пакеты возвращены к прежним версиям:\n"
 
-#~ msgid ""
-#~ "\n"
-#~ "The follwoing packages are removed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Следующие пакеты удалены:\n"
+msgid ""
+"\n"
+"The follwoing packages are removed:\n"
+msgstr ""
+"\n"
+"Следующие пакеты удалены:\n"
 
-#~ msgid ""
-#~ "\n"
-#~ "The follwoing packages are upgraded:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Следующие пакеты обновлены:\n"
+msgid ""
+"\n"
+"The follwoing packages are upgraded:\n"
+msgstr ""
+"\n"
+"Следующие пакеты обновлены:\n"
 
-#~ msgid ""
-#~ "\n"
-#~ "The follwoing packages are installed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Следующие пакеты установлены:\n"
+msgid ""
+"\n"
+"The follwoing packages are installed:\n"
+msgstr ""
+"\n"
+"Следующие пакеты установлены:\n"
 
-#~ msgid ""
-#~ "\n"
-#~ "The follwoing packages are re-installed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Следующие пакеты переустановлены:\n"
+msgid ""
+"\n"
+"The follwoing packages are re-installed:\n"
+msgstr ""
+"\n"
+"Следующие пакеты переустановлены:\n"
 
-#~ msgid "ignore"
-#~ msgstr "игнорировать"
+msgid "ignore"
+msgstr "игнорировать"
 
-#~ msgid "To be not upgraded"
-#~ msgstr "Не будут обновлены"
+msgid "To be not upgraded"
+msgstr "Не будут обновлены"
 
-#~ msgid "View Commit Log"
-#~ msgstr "Просмотреть журнал изменений"
+msgid "View Commit Log"
+msgstr "Просмотреть журнал изменений"
 
-#~ msgid "<b>Distribution</b>"
-#~ msgstr "<b>Дистрибутив</b>"
+msgid "<b>Distribution</b>"
+msgstr "<b>Дистрибутив</b>"
 
-#~ msgid ""
-#~ "<b>Note:</b> The package information must be reloaded and all marked "
-#~ "changes will be lost. Make sure to apply your changes first."
-#~ msgstr ""
-#~ "<b>Внимание:</b> Необходимо будет получить заново список пакетов, в связи "
-#~ "с чем пропадут все предполагающиеся изменения. Убедитесь, что все "
-#~ "изменения внесены."
+msgid ""
+"<b>Note:</b> The package information must be reloaded and all marked changes "
+"will be lost. Make sure to apply your changes first."
+msgstr ""
+"<b>Внимание:</b> Необходимо будет получить заново список пакетов, в связи с "
+"чем пропадут все предполагающиеся изменения. Убедитесь, что все изменения "
+"внесены."
 
-#~ msgid "Default archive: "
-#~ msgstr "Архив по умолчанию: "
+msgid "Default archive: "
+msgstr "Архив по умолчанию: "
 
-#~ msgid "Expert"
-#~ msgstr "Эксперт"
+msgid "Expert"
+msgstr "Эксперт"
 
-#~ msgid ""
-#~ "Select the default release if more than one is specifed in the sources."
-#~ "list"
-#~ msgstr ""
-#~ "Выбирать релиз по умолчанию, если более одного указано в sources.list"
+msgid "Select the default release if more than one is specifed in the sources.list"
+msgstr "Выбирать релиз по умолчанию, если более одного указано в sources.list"
 
-#~ msgid "Temporary Files"
-#~ msgstr "Временные файлы"
+msgid "Temporary Files"
+msgstr "Временные файлы"
 
-#~ msgid ""
-#~ "<b><big>The grafical user interface (xlib) does not support your chosen "
-#~ "language environment</big></b>\n"
-#~ "\n"
-#~ "Synaptic can crash if you decide to continue with unchanged localisation "
-#~ "preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
-#~ "supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your "
-#~ "language.\n"
-#~ "\n"
-#~ "Contact the mailing list for comments or help:\n"
-#~ "<i>synaptic-devel@nongnu.org</i> \n"
-#~ "Include the output of the \"locale\" command in your email."
-#~ msgstr ""
-#~ "<b><big>Графический интерфейс пользователя (XLib) не поддерживает "
-#~ "выбранные языковые настройки</big></b>\n"
-#~ "\n"
-#~ "Может последовать аварийное завершение Synaptic!\n"
-#~ " Используйте локальные настройки \"fr_FR\" или \"fr_FR@euro\", но не "
-#~ "\"fr_FR.iso8859-15@euro\".\n"
-#~ "\n"
-#~ "Обратитесь за помощью или объяснениями в рассылку:\n"
-#~ "<i>synaptic-devel@nongnu.org</i> \n"
-#~ "В сообщение вложите выходные данные команды \"locale\""
+msgid ""
+"<b><big>The grafical user interface (xlib) does not support your chosen "
+"language environment</big></b>\n"
+"\n"
+"Synaptic can crash if you decide to continue with unchanged localisation "
+"preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
+"supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your language.\n"
+"\n"
+"Contact the mailing list for comments or help:\n"
+"<i>synaptic-devel@nongnu.org</i> \n"
+"Include the output of the \"locale\" command in your email."
+msgstr ""
+"<b><big>Графический интерфейс пользователя (XLib) не поддерживает выбранные "
+"языковые настройки</big></b>\n"
+"\n"
+"Может последовать аварийное завершение Synaptic!\n"
+" Используйте локальные настройки \"fr_FR\" или \"fr_FR@euro\", но не \"fr_FR."
+"iso8859-15@euro\".\n"
+"\n"
+"Обратитесь за помощью или объяснениями в рассылку:\n"
+"<i>synaptic-devel@nongnu.org</i> \n"
+"В сообщение вложите выходные данные команды \"locale\""
 
-#~ msgid "Save changes"
-#~ msgstr "Сохранить изменения"
+msgid "Save changes"
+msgstr "Сохранить изменения"
 
-#~ msgid "Downloading Files"
-#~ msgstr "Загружаются файлы"
+msgid "Downloading Files"
+msgstr "Загружаются файлы"
+

@@ -111,7 +111,10 @@ RPackageLister::~RPackageLister()
 void RPackageLister::setView(int index)
 {
    _config->Set("Synaptic::ViewMode", index);
-   _selectedView = _views[index];
+   if(index < _views.size())
+      _selectedView = _views[index];
+   else
+      _selectedView = _views[0];
 }
 
 vector<string> RPackageLister::getViews()

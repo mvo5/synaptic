@@ -52,7 +52,8 @@ public:
    ~RGZvtInstallProgress() {};
 
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0);
+		   				int numPackages = 0,
+						int totalPackages = 0);
 
 };
 

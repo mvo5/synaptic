@@ -7,9 +7,10 @@ INCLUDES= -I${top_srcdir}/common \
 	-DSYNAPTIC_GLADEDIR=\""$(datadir)/synaptic/glade/"\" \
 	@PACKAGE_CFLAGS@ @ZVT_CFLAGS@
 
-sbin_PROGRAMS=synaptic 
+sbin_PROGRAMS= synaptic 
 
 synaptic_LDFLAGS=-export-dynamic
+
 synaptic_LDADD = \
 	${top_builddir}/common/libraptor.a\
 	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \

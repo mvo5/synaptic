@@ -83,6 +83,25 @@ void RGFlushInterface()
     }
 }
 
+void gtk_get_color(const char *cpp, GdkColor **colp){
+   GdkColor *new_color;
+   int result;
+
+   // "" means no color
+   if(strlen(cpp) == 0) {
+     *colp = NULL;
+     return;
+   }
+   
+   GdkColormap *colormap = gdk_colormap_get_system ();
+
+   new_color = g_new (GdkColor, 1);
+   result = gdk_color_parse (cpp, new_color);
+   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
+   *colp = new_color;
+}
+
+
 const char *utf8(const char *str)
 {
     static char *_str = NULL;

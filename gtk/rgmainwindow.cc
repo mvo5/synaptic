@@ -88,10 +88,6 @@
 #include "synaptic_mini.xpm"
 
 
-GdkPixbuf *StatusPixbuf[12];
-GdkColor *StatusColors[12];
-
-
 static char *ImportanceNames[] = {
     _("Unknown"),
     _("Normal"),
@@ -106,6 +102,8 @@ enum {WHAT_IT_DEPENDS_ON,
       WHAT_IT_SUGGESTS};      
 
 
+GdkPixbuf *StatusPixbuf[12];
+GdkColor *StatusColors[12];
 
 
 #define SELECTED_MENU_INDEX(popup) \
@@ -442,8 +440,9 @@ void RGMainWindow::showConfigWindow(GtkWidget *self, void *data)
 {
     RGMainWindow *win = (RGMainWindow*)data;
     
-    if (win->_configWin == NULL)
+    if (win->_configWin == NULL) {
 	win->_configWin = new RGConfigWindow(win);
+    }
 
     win->_configWin->show();
 }
@@ -1433,25 +1432,6 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   me->setInterfaceLocked(FALSE);
 }
 
-void gtk_get_color(const char *cpp, GdkColor **colp){
-   GdkColor *new_color;
-   int result;
-
-   // "" means no color
-   if(strlen(cpp) == 0) {
-     *colp = NULL;
-     return;
-   }
-   
-   GdkColormap *colormap = gdk_colormap_get_system ();
-
-   new_color = g_new (GdkColor, 1);
-   result = gdk_color_parse (cpp, new_color);
-   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
-   *colp = new_color;
-}
-
-
 void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -1483,6 +1463,42 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
 			 me->_lister->getElementIndex(pkg), 0);
 #endif
     me->setInterfaceLocked(FALSE);
+}
+
+
+void RGMainWindow::setColors(bool useColors)
+{
+    if(useColors) {
+	/* we use colors */
+	gtk_get_color(_config->Find("Synaptic::MKeepColor", "").c_str(),
+		      &StatusColors[(int)RPackage::MKeep]);
+	gtk_get_color(_config->Find("Synaptic::MInstallColor", 
+				    "#ccffcc").c_str(),
+		      &StatusColors[(int)RPackage::MInstall]); 
+	gtk_get_color(_config->Find("Synaptic::MUpgradeColor", 
+				    "#ffff00").c_str(),
+		      &StatusColors[(int)RPackage::MUpgrade]);
+	gtk_get_color(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
+		      &StatusColors[(int)RPackage::MDowngrade]);
+	gtk_get_color(_config->Find("Synaptic::MRemoveColor", 
+				    "#f44e80").c_str(),
+		      &StatusColors[(int)RPackage::MRemove]);
+	gtk_get_color(_config->Find("Synaptic::MHeldColor", "").c_str(),
+		      &StatusColors[(int)RPackage::MHeld]);
+	gtk_get_color(_config->Find("Synaptic::MBrokenColor", 
+				    "#e00000").c_str(),
+		      &StatusColors[(int)RPackage::MBroken/*broken*/]);
+	gtk_get_color(_config->Find("Synaptic::MPinColor", 
+				    "#ccccff").c_str(),
+		      &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
+	gtk_get_color(_config->Find("Synaptic::MNewColor", 
+				    "#ffffaa").c_str(),
+		      &StatusColors[(int)RPackage::MNew/*new*/]);
+    } else {
+	/* no colors */
+	for(int i=0;i<(int)RPackage::MNew;i++)
+	    StatusColors[i] = NULL;
+    }
 }
 
 
@@ -1539,26 +1555,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
 
 
     // get some color values
-    if(_config->FindB("Synaptic::UseStatusColors", TRUE)) {
-      gtk_get_color(_config->Find("Synaptic::MKeepColor", "").c_str(),
-		    &StatusColors[(int)RPackage::MKeep]);
-      gtk_get_color(_config->Find("Synaptic::MInstallColor", "#ccffcc").c_str(),
-		    &StatusColors[(int)RPackage::MInstall]); 
-      gtk_get_color(_config->Find("Synaptic::MUpgradeColor", "#ffff00").c_str(),
-		    &StatusColors[(int)RPackage::MUpgrade]);
-      gtk_get_color(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
-		    &StatusColors[(int)RPackage::MDowngrade]);
-      gtk_get_color(_config->Find("Synaptic::MRemoveColor", "#f44e80").c_str(),
-		    &StatusColors[(int)RPackage::MRemove]);
-      gtk_get_color(_config->Find("Synaptic::MHeldColor", "").c_str(),
-		    &StatusColors[(int)RPackage::MHeld]);
-      gtk_get_color(_config->Find("Synaptic::MBrokenColor", "#e00000").c_str(),
-		    &StatusColors[(int)RPackage::MBroken/*broken*/]);
-      gtk_get_color(_config->Find("Synaptic::MPinColor", "#ccccff").c_str(),
-		    &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
-      gtk_get_color(_config->Find("Synaptic::MNewColor", "#ffffaa").c_str(),
-		    &StatusColors[(int)RPackage::MNew/*new*/]);
-    }
+    setColors(_config->FindB("Synaptic::UseStatusColors", TRUE));
 
     buildInterface();
     

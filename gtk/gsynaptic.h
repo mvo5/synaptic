@@ -26,5 +26,6 @@
 void RGFlushInterface();
 
 const char *utf8(const char *str);
+void gtk_get_color(const char *cpp, GdkColor **colp);
 
 #endif

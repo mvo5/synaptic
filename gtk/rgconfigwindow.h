@@ -20,14 +20,17 @@
  * USA
  */
 
-
 #include "rgwindow.h"
+#include "rgmainwindow.h"
 
 class RGConfigWindow : public RGWindow {
+  RGMainWindow *_mainWin;
   GtkWidget *_optionB[5];
   GtkWidget *_cacheB[3];
   GtkWidget *_pathT;
   GtkWidget *_sizeT;
+
+  void readColors();
   
   static void saveAction(GtkWidget *self, void *data);
   static void closeAction(GtkWidget *self, void *data);

@@ -32,14 +32,16 @@ void RGSlideShow::step()
 
 void RGSlideShow::refresh()
 {
-   int current = 0;
-   if (_totalSteps) {
-      float stepping = (_totalSteps / (float)_imageFileList.size());
-      current = (int)((_currentStep + (stepping - 1) / 2) / stepping);
-      if (current >= _imageFileList.size())
-         current = _imageFileList.size() - 1;
+   if (!_imageFileList.empty()) {
+      int current = 0;
+      if (_totalSteps) {
+	 float stepping = (_totalSteps / (float)_imageFileList.size());
+	 current = (int)((_currentStep + (stepping - 1) / 2) / stepping);
+	 if (current >= _imageFileList.size())
+	    current = _imageFileList.size() - 1;
+      }
+      gtk_image_set_from_file(_image, _imageFileList[current].c_str());
    }
-   gtk_image_set_from_file(_image, _imageFileList[current].c_str());
 }
 
 // vim:sts=3:sw=3

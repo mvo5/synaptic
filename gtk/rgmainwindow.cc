@@ -2300,9 +2300,14 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 
    // update cache and forget about the previous new packages 
    // (only if no error occured)
-   if (!me->_lister->updateCache(progress))
-      me->showErrors();
-   else
+   string error;
+   if (!me->_lister->updateCache(progress,error)) {
+      RGGladeUserDialog dia(me,"update_failed");
+      GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(), "textview");
+      GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+      gtk_text_buffer_set_text(tb, utf8(error.c_str()), -1);
+      dia.run();
+   } else
       me->forgetNewPackages();
 
    delete progress;

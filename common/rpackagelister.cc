@@ -1051,7 +1051,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
    sizeChange = deps->UsrSize();
 }
 
-bool RPackageLister::updateCache(pkgAcquireStatus *status)
+bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 {
    assert(_cache->list() != NULL);
    // Get the source list
@@ -1102,13 +1102,18 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
 
    //bool AuthFailed = false;
    Failed = false;
+   string failedURI;/* = _("Some index files failed to download, they "
+			"have been ignored, or old ones used instead:\n");
+		    */
    for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin();
         I != Fetcher.ItemsEnd(); I++) {
       if ((*I)->Status == pkgAcquire::Item::StatDone)
          continue;
       (*I)->Finished();
-//      cerr << _("Failed to fetch ") << (*I)->DescURI() << endl;
-//      cerr << "  " << (*I)->ErrorText << endl;
+      if((*I)->ErrorText.empty())
+	 failedURI += (*I)->DescURI() + "\n";
+      else
+	 failedURI += (*I)->DescURI() + ": " + (*I)->ErrorText + "\n";
       Failed = true;
    }
 
@@ -1119,10 +1124,12 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
           false)
          return false;
    }
-   if (Failed == true)
-      return _error->Error(_("Some index files failed to download, they "
-                             "have been ignored, or old ones used instead."));
-
+   if (Failed == true) {
+      cout << failedURI << endl;
+      error = failedURI;
+      /* _error->Error(failedURI.c_str());*/
+      return false; 
+   }
    return true;
 }
 

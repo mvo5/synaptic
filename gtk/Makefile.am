@@ -37,6 +37,7 @@ glade_DATA =                            \
 	window_setopt.glade  \
 	window_summary.glade \
 	dialog_unmet.glade \
+	dialog_update_failed.glade \
 	dialog_upgrade.glade \
 	dialog_welcome.glade \
 	window_zvtinstallprogress.glade 

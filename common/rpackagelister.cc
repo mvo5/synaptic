@@ -1500,7 +1500,8 @@ void RPackageLister::makeCommitLog()
 		      sizeChange);
 
    if(essential.size() > 0) {
-      _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>:\n");
+      //_logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
+      _logEntry += _("\nRemoved the following ESSENTIAL packages:\n");
       for (vector<RPackage *>::const_iterator p = essential.begin();
 	   p != essential.end(); p++) {
 	 _logEntry += (*p)->name() + string("\n");
@@ -1508,7 +1509,8 @@ void RPackageLister::makeCommitLog()
    }
    
    if(toDowngrade.size() > 0) {
-      _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
+      //_logEntry += _("\n<b>Downgraded the following packages:</b>\n");
+      _logEntry += _("\nDowngraded the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
 	   p != toDowngrade.end(); p++) {
 	 _logEntry += (*p)->name() + string("\n");
@@ -1516,7 +1518,8 @@ void RPackageLister::makeCommitLog()
    }
 
    if(toPurge.size() > 0) {
-      _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
+      //_logEntry += _("\n<b>Completely removed the following packages:</b>\n");
+      _logEntry += _("\nCompletely removed the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toPurge.begin();
 	   p != toPurge.end(); p++) {
 	 _logEntry += (*p)->name() + string("\n");
@@ -1524,7 +1527,8 @@ void RPackageLister::makeCommitLog()
    }
 
    if(toRemove.size() > 0) {
-      _logEntry += _("\n<b>Removed the following packages:</b>\n");
+      //_logEntry += _("\n<b>Removed the following packages:</b>\n");
+      _logEntry += _("\nRemoved the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toRemove.begin();
 	   p != toRemove.end(); p++) {
 	 _logEntry += (*p)->name() + string("\n");
@@ -1532,7 +1536,8 @@ void RPackageLister::makeCommitLog()
    }
 
    if(toUpgrade.size() > 0) {
-      _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
+      //_logEntry += _("\n<b>Upgraded the following packages:</b>\n");
+      _logEntry += _("\nUpgraded the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
 	   p != toUpgrade.end(); p++) {
 	 _logEntry += (*p)->name() + string(" (") + (*p)->installedVersion() 
@@ -1542,7 +1547,8 @@ void RPackageLister::makeCommitLog()
    }
 
    if(toInstall.size() > 0) {
-      _logEntry += _("\n<b>Installed the following packages:</b>\n");
+      //_logEntry += _("\n<b>Installed the following packages:</b>\n");
+      _logEntry += _("\nInstalled the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toInstall.begin();
 	   p != toInstall.end(); p++) {
 	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 
@@ -1551,7 +1557,8 @@ void RPackageLister::makeCommitLog()
    }
 
    if(toReInstall.size() > 0) {
-      _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
+      //_logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
+      _logEntry += _("\nReinstalled the following packages:\n");
       for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
 	   p != toReInstall.end(); p++) {
 	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 

@@ -1,0 +1,77 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH SYNAPTIC 8 "Mar 4, 2004"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH 名前
+synaptic \- グラフィカルなソフトウエアパッケージ管理ツール
+.SH 書式
+\fBsynaptic\fP [オプション]
+.br
+.SH 説明
+Synaptic は apt パッケージ管理システムのフロントエンドです。
+コマンドラインツールである apt-get で行うことのできる全ての操
+作をグラフィカルな環境で実行することができます。たとえば、個々の
+パッケージのインストール、アップグレード、ダウングレード、削除
+からシステム全体のアップグレードなどを行うことができます。
+.PP
+詳細な手順や操作方法が記載されたマニュアルは SYnaptic のヘルプ
+メニューから参照することができます。
+
+.SH オプション
+Synaptic には Gtk+ ツールキットが備える標準的なコマンドライン
+オプションに加えて以下のようなオプションを指定することができます。
+.TP
+\fB-f\fR, \fB\-\-filter-file\fR=\fIファイル名\fR
+別のフィルタ設定ファイルを指定します
+.TP
+\fB-i\fR, \fB\-\-initial-filter\fR=\fIint\fR
+起動時に番号 \fIint\fR のフィルタを適用します
+.TP
+\fB-o\fR, \fB\-\-option\fR=\fIオプション\fR
+内部オプションを設定します (エキスパートのみ)
+
+.SH 作者
+オリジナルの Synaptic は Alfredo K. Kojima <kojima@conectiva.com.br> によって
+開発されました。彼の最後の正式リリースは 0.16 でした。Michael Vogt
+<mvo@debian.org> は Alfredo の CVS バージョン (ほぼ Gtk+ への移植が完了
+していました) を引き継ぎました。Michael は移植を完了させ新しい機能の追加
+を行いました。引き継いた時点からのユーザに見える変更点は \fINEWS\fR を
+参照してください。Conectiva 社は引き続き synaptic の開発に参加しています。
+Gustavo Niemeyer <niemeyer@conectiva.com> は非常にすばらしい開発を行って
+います。
+.PP
+すべての開発は http://savannah.gnu.org/project/synaptic で行われています。
+.PP
+This manual page was originally written by Wybo Dekker <wybo@servalys.nl> and
+Michael Vogt <mvo@debian.org> and modified by Sebastian Heinlein
+<sebastian.heinlein@campus.lmu.de>.
+このマニュアルページは元々は Wybo Dekker <wybopservalys.nl> と Michael Vogt
+<mvo@debian.org> によって書かれ、Sebastian Heinlein
+<sebastian.heinlein@campus.lmu.de> により修正・更新されました。
+
+
+.SH 著作権
+Copyright  (C)  2001-2004 Conectiva S/A
+.PP
+Copyright  (C)  2002-2004 Michael Vogt
+.PP
+There is NO warranty.  
+You may redistribute this software under the terms of  the  GNU
+General  Public License.  For more information about these matters, see
+the files named COPYING.
+
+.SH 日本語訳
+Daisuke SUZUKI <daisuke@linux.or.jp>, 2004

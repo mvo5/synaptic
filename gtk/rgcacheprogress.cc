@@ -53,7 +53,7 @@ RGCacheProgress::~RGCacheProgress()
 void RGCacheProgress::Update()
 {
    if (!CheckChange()) {
-      RGFlushInterface();
+      //RGFlushInterface();
       return;
    }
 

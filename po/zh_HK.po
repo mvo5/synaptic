@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
-"POT-Creation-Date: 2003-04-11 12:58+0200\n"
+"POT-Creation-Date: 2003-04-11 18:35+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -518,8 +518,8 @@ msgstr ""
 msgid "You must run this program as the root user."
 msgstr "您必須以 root 使用者身份執行此程式。"
 
-#: gtk/rgconfigwindow.cc:115 gtk/rgmainwindow.cc:2737
-#: wings/rwconfigwindow.cc:58
+#: gtk/rgconfigwindow.cc:115 gtk/rgzvtinstallprogress.cc:73
+#: gtk/rgmainwindow.cc:2737 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "儲存設定時發生錯誤。"
 
@@ -614,9 +614,45 @@ msgid ""
 "\n"
 msgstr ""
 
-#: gtk/rginstallprogress.cc:258 wings/rwinstallprogress.cc:94
+#: gtk/rginstallprogress.cc:258 gtk/rgzvtinstallprogress.cc:113
+#: wings/rwinstallprogress.cc:94
 msgid "Performing Changes"
 msgstr "正在進行修改"
+
+#: gtk/rgzvtinstallprogress.cc:54
+#, fuzzy
+msgid "Package Manager running"
+msgstr "套件變更"
+
+#: gtk/rgzvtinstallprogress.cc:61
+msgid ""
+"\n"
+"Update finished - You can close the window now"
+msgstr ""
+
+#: gtk/rgzvtinstallprogress.cc:63
+msgid ""
+"\n"
+"Update failed - Scroll in this buffer to see what went wrong"
+msgstr ""
+
+#: gtk/rgzvtinstallprogress.cc:87
+#, fuzzy
+msgid "Package Manager finished"
+msgstr "套件變更"
+
+#: gtk/rgzvtinstallprogress.cc:96
+msgid "Can't close, Package Manager still runing"
+msgstr ""
+
+#: gtk/rgzvtinstallprogress.cc:146
+#, fuzzy
+msgid "Close dialog after Package Manager is finished"
+msgstr "dpkg 執行完畢後自由關閉此對話框"
+
+#: gtk/rgzvtinstallprogress.cc:189
+msgid "can't fork children, so I die"
+msgstr ""
 
 #: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1258 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1239
@@ -2216,9 +2252,6 @@ msgstr ""
 
 #~ msgid "Perform package download only"
 #~ msgstr "只下載套件，不安裝"
-
-#~ msgid "close dialog after dpkg is finished"
-#~ msgstr "dpkg 執行完畢後自由關閉此對話框"
 
 #~ msgid "dpkg is running"
 #~ msgstr "dpkg 執行中"

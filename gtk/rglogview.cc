@@ -93,7 +93,7 @@ void RGLogView::readLogs()
 
    gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (sort_model),
 					 COLUMN_LOG_FILENAME, 
-					 GTK_SORT_ASCENDING);
+					 GTK_SORT_DESCENDING);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			   GTK_TREE_MODEL(sort_model));
    _realModel = sort_model;
@@ -200,6 +200,25 @@ gboolean empty_row_filter_func(GtkTreeModel *model, GtkTreeIter *iter,
    return TRUE;
 }
 
+void RGLogView::clearLogBuf()
+{
+   GtkTextBuffer *buffer;
+   GtkTextIter start,end;
+
+   buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
+   gtk_text_buffer_get_start_iter (buffer, &start);
+   gtk_text_buffer_get_end_iter(buffer,&end);
+   gtk_text_buffer_delete(buffer,&start,&end);
+
+}
+
+void RGLogView::appendLogBuf(string text)
+{
+   GtkTextBuffer *buffer;
+   buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
+   gtk_text_buffer_insert_at_cursor(buffer, text.c_str(), -1);
+}
+
 void RGLogView::cbButtonFind(GtkWidget *self, void *data)
 {
    //cout << "RGLogView::cbButtonFind()" << endl;
@@ -214,6 +233,8 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
       return;
    }
 
+   me->clearLogBuf();
+
    me->findStr = gtk_entry_get_text(GTK_ENTRY(me->_entryFind));
    // reset to old model
    if(strlen(me->findStr) == 0) {
@@ -227,7 +248,6 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(filter_model), 
 					  me->filter_func, me, NULL);
 
-
    // filter out empty nodes
    empty_row_filter=(GtkTreeModel*)gtk_tree_model_filter_new(filter_model, NULL);
    gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(empty_row_filter), 
@@ -235,8 +255,23 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), empty_row_filter);
 
 
+   int toplevel_children = gtk_tree_model_iter_n_children(empty_row_filter, NULL);
+   if(toplevel_children == 0) {
+      me->appendLogBuf(_("Not found"));
+   } else {
+      me->appendLogBuf(_("Expression was found, please see the list\n"
+			 "on the left for matching entries."));
+   }
+
    // expand to show what we found
    gtk_tree_view_expand_all(GTK_TREE_VIEW(me->_treeView));
+}
+
+void RGLogView::show()
+{
+   clearLogBuf();
+   gtk_entry_set_text(GTK_ENTRY(_entryFind), "");
+   RGWindow::show();
 }
 
 RGLogView::RGLogView(RGWindow *parent)
@@ -278,6 +313,9 @@ RGLogView::RGLogView(RGWindow *parent)
 		    this);
    _textView = glade_xml_get_widget(_gladeXML, "textview_log");
    assert(_textView);
+
+   glade_xml_signal_connect_data(_gladeXML, "on_entry_find_activate",
+				 G_CALLBACK(cbButtonFind), this);
 
    GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
    _markTag = gtk_text_buffer_create_tag (buf, "mark",

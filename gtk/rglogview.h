@@ -46,9 +46,14 @@ class RGLogView : public RGGladeWindow {
    const gchar *findStr;
    GtkTreeModel *_realModel;
 
+   // set new logbuffer text
+   void clearLogBuf();
+   void appendLogBuf(string text);
+
  public:
    RGLogView(RGWindow *parent);
 
+   virtual void show();
    void readLogs();
 
    virtual ~RGLogView() {};

@@ -145,8 +145,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_pkginfo;
    GtkWidget *_vpaned;
 
-   GtkWidget *_nameL;
-   GtkWidget *_summL;
+   GtkWidget *_pkgCommonTextView;
+   GtkTextBuffer *_pkgCommonTextBuffer;
+
    GtkWidget *_stateL;
    GtkImage *_stateP;
 

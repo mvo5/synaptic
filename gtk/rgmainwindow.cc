@@ -1418,8 +1418,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	return;
 
     if (!pkg) {
-	gtk_label_set_markup(GTK_LABEL(_nameL), "<span size=\"large\"><b></b></span>");
-	gtk_label_set_text(GTK_LABEL(_summL), "");
+	gtk_text_buffer_set_text (_pkgCommonTextBuffer, 
+				  _("No package is selected.\n"), 
+				  -1);
+
 	gtk_label_set_text(GTK_LABEL(_infoL), "");
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
@@ -1453,10 +1455,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     importance = pkg->updateImportance();
     
     // name/summary
-    gchar *msg = g_strdup_printf("<span size=\"large\"><b>%s</b></span>",utf8(pkg->name()));
-    gtk_label_set_markup(GTK_LABEL(_nameL), msg);
-    gtk_label_set_text(GTK_LABEL(_summL), utf8(pkg->summary()));
+    gchar *msg = g_strdup_printf("%s\n%s",pkg->name(),pkg->summary());
+    gtk_text_buffer_set_text (_pkgCommonTextBuffer, utf8(msg), -1);
     g_free(msg);
+
     // package info
     
     // common information regardless of state
@@ -2595,12 +2597,11 @@ void RGMainWindow::buildInterface()
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
 			 _("Execute the queued changes"),"");
 
+    _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
+    assert(_pkgCommonTextView);
+    _pkgCommonTextBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_pkgCommonTextView));
     
-    _nameL = glade_xml_get_widget(_gladeXML, "label_pkgname"); 
-    assert(_nameL);
-    _summL = glade_xml_get_widget(_gladeXML, "label_summary"); 
-    assert(_summL);
-
+ 
     _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_action_clicked",

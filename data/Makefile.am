@@ -1,5 +1,5 @@
-#desktopdir       = $(datadir)/applications
-desktopdir       = $(datadir)/control-center-2.0/capplets
+desktopdir       = $(datadir)/applications
+#desktopdir       = $(datadir)/control-center-2.0/capplets
 desktop_in_files = synaptic.desktop
 desktop_DATA     = $(desktop_in_files)
 

@@ -2327,7 +2327,7 @@ void RGMainWindow::buildTreeView()
     if(pos != -1) {
 	renderer = gtk_cell_renderer_text_new ();
 	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
-	column = gtk_tree_view_column_new_with_attributes(_("Available Version"), renderer,
+	column = gtk_tree_view_column_new_with_attributes(_("Latest Version"), renderer,
 							  
 							  "text", AVAILABLE_VERSION_COLUMN,
 							  "background-gdk", COLOR_COLUMN,
@@ -2353,7 +2353,7 @@ void RGMainWindow::buildTreeView()
 	g_value_init(&value2, G_TYPE_INT);
 	g_value_set_int(&value2, 10);
 	g_object_set_property(G_OBJECT(renderer),"xpad", &value2);
-	column = gtk_tree_view_column_new_with_attributes(_("Inst. Size"), renderer,
+	column = gtk_tree_view_column_new_with_attributes(_("Size"), renderer,
 							  "text", PKG_SIZE_COLUMN,
 							  "background-gdk", COLOR_COLUMN,
 							  NULL);

@@ -457,7 +457,7 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 					   "label_text");
    gchar *str_name = g_strdup_printf(_("Select the version of %s that should be forced for installation"), pkg->name());
    gchar *str = g_strdup_printf("<big><b>%s</b></big>\n\n%s", str_name,
-				_("The package manager always selects the best version available. If you force a differnet version from the default one, errors in the dependency handling can occur."));
+				_("The package manager always selects the most applicable version available. If you force a different version from the default one, errors in the dependency handling can occur."));
    gtk_label_set_markup(GTK_LABEL(label), str);
    g_free(str_name);
    g_free(str);

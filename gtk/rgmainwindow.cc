@@ -2592,14 +2592,18 @@ void RGMainWindow::buildInterface()
 			(void*)WHAT_IT_PROVIDES);
     gtk_signal_connect(GTK_OBJECT(item), "activate", 
 		       (GtkSignalFunc)changedDepView, this);
-
-#ifndef HAVE_RPM
+    
+    // recommends and suggests are only available on debian,
+    // so we activate the signal there and hide it on rpm systems
     item = glade_xml_get_widget(_gladeXML, "menu_suggested");
     assert(item);
+#ifndef HAVE_RPM
     gtk_object_set_data(GTK_OBJECT(item), "index", 
 			(void*)WHAT_IT_SUGGESTS);
     gtk_signal_connect(GTK_OBJECT(item), "activate", 
 		       (GtkSignalFunc)changedDepView, this);
+#else
+    gtk_widget_hide(item);
 #endif
     gtk_option_menu_set_history(GTK_OPTION_MENU(_depP), 0);
 

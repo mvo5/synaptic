@@ -1125,7 +1125,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
          return false;
    }
    if (Failed == true) {
-      cout << failedURI << endl;
+      //cout << failedURI << endl;
       error = failedURI;
       /* _error->Error(failedURI.c_str());*/
       return false; 

@@ -53,13 +53,13 @@ EOF
 mkdir -p %{buildroot}%{_sysconfdir}/pam.d
 cat << EOF > %{buildroot}%{_sysconfdir}/pam.d/synaptic
 #%PAM-1.0
-auth       sufficient   /lib/security/pam_rootok.so
-auth       sufficient   /lib/security/pam_timestamp.so
-auth       required     /lib/security/pam_stack.so service=system-auth
-session    required     /lib/security/pam_permit.so
-session    optional     /lib/security/pam_xauth.so
-session    optional     /lib/security/pam_timestamp.so
-account    required     /lib/security/pam_permit.so
+auth       sufficient   pam_rootok.so
+auth       sufficient   pam_timestamp.so
+auth       required     pam_stack.so service=system-auth
+session    required     pam_permit.so
+session    optional     pam_xauth.so
+session    optional     pam_timestamp.so
+account    required     pam_permit.so
 EOF
 
 # Remove the default menu entry and install our own

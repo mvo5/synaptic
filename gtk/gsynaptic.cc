@@ -45,11 +45,6 @@
 #include "stdio.h"
 #include "gsynaptic.h"
 
-// pseudo strings to translate the .desktop file
-static const char *desktop_file_name = _("Software");
-static const char *desktop_file_descr = _("Install, remove and upgrade software packages");
-
-		
 bool ShowHelp(CommandLine &CmdL)
 {
   std::cout << 

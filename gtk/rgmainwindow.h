@@ -54,7 +54,8 @@ typedef enum {
   PKG_KEEP, 
   PKG_INSTALL, 
   PKG_DELETE, 
-  PKG_PURGE
+  PKG_PURGE,
+  PKG_DELETE_WITH_DEPS
 } RGPkgAction;
 
 
@@ -166,6 +167,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    GtkWidget *_recList; /* gtktreeview */
    GtkListStore *_recListStore;
+
+   GtkWidget *_providesList; /* gtktreeview */
+   GtkListStore *_providesListStore;
+
 
    GtkWidget *_availDepList; /* gtktreeview */
    GtkListStore *_availDepListStore;
@@ -295,7 +300,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    // this does the actual pkgAction work (install, remove, upgrade)
    static void doPkgAction(RGMainWindow *me, RGPkgAction action);
    void pkgInstallHelper(RPackage *pkg, bool fixBroken=true);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false);
+   void pkgRemoveHelper(RPackage *pkg, bool purge=false, bool withDeps=false);
    void pkgKeepHelper(RPackage *pkg);
 
    // RPackageObserver

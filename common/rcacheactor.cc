@@ -13,7 +13,7 @@
 void RCacheActorPkgTrack::run(vector<RPackage*> &List, int Action)
 {
     for(vector<RPackage*>::iterator it=List.begin();it!=List.end();it++) {
-	cout << "pkg: " << (*it)->name() << " action " << Action << endl;
+	//cout << "pkg: " << (*it)->name() << " action " << Action << endl;
     }
     
 }

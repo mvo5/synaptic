@@ -1,7 +1,7 @@
 /* rgmainwindow.cc - main window of the app
  * 
  * Copyright (c) 2001-2003 Conectiva S/A
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002,2003 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -96,6 +96,7 @@ static char *ImportanceNames[] = {
 enum {WHAT_IT_DEPENDS_ON, 
       WHAT_DEPENDS_ON_IT,
       WHAT_IT_WOULD_DEPEND_ON,
+      WHAT_IT_PROVIDES,
       WHAT_IT_SUGGESTS};      
 
 enum {DEP_NAME_COLUMN,             /* text */
@@ -1001,9 +1002,9 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
     if(_blockActions)
 	return;
-
+    
     updatePackageStatus(pkg);
-
+    
     // dependencies
     gtk_label_set_text(GTK_LABEL(_depInfoL), "");    
 
@@ -1025,7 +1026,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 #ifdef HAVE_RPM
 			 utf8(depType), depPkg ? depPkg : depName, depVer);
 #else
-		         utf8(depType), depName, depVer); 
+		utf8(depType), depName, depVer); 
 #endif
 	    } else {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
@@ -1033,7 +1034,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 			 depPkg ? depPkg : "-");
 	    }
 	    //cout << "buffer is: " << buffer << endl;
-
+	    
 	    // check if this item is duplicated
 	    bool dup = FALSE;
 	    bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_depListStore), &iter);
@@ -1095,6 +1096,18 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	} while (pkg->nextWDeps(depName, depPkg, ok));
     }    
 
+    //provides list
+    gtk_list_store_clear(_providesListStore);
+    vector<const char *> provides = pkg->provides();
+    for(int i=0; i<provides.size();i++) {
+	//cout << "got: " << provides[i] << endl;
+	GtkTreeIter iter;
+	gtk_list_store_append(_providesListStore, &iter);
+	gtk_list_store_set(_providesListStore, &iter, 
+			   DEP_NAME_COLUMN, utf8(provides[i]), 
+			   -1); 
+    }
+
     // dependencies of the available package
     gtk_list_store_clear(_availDepListStore);
     gtk_label_set_text(GTK_LABEL(_availDepInfoL), "");    
@@ -1138,14 +1151,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	    }
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
     }
-
-#if 0
-	// PORTME (maybe)
-	if (pkg->getStatus() != RPackage::SNotInstalled)
-	    gtk_widget_set_sensitive(_removeDepsB, TRUE);
-	else
-	    gtk_widget_set_sensitive(_removeDepsB, FALSE);
-#endif
 }
 
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
@@ -1462,6 +1467,9 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       case PKG_PURGE:  // purge
 	  me->pkgRemoveHelper(pkg, true);
 	  break;
+      case PKG_DELETE_WITH_DEPS:  
+	  me->pkgRemoveHelper(pkg, true, true);
+	  break;
       default:
 	  cout <<"uh oh!!!!!!!!!"<<endl;
 	  break;
@@ -1538,38 +1546,6 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   me->setInterfaceLocked(FALSE);
 }
 
-#if 0 // we don't use this ATM
-void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
-{
-    RGMainWindow *me = (RGMainWindow*)data;
-    RPackage *pkg;
-    
-    pkg = me->selectedPackage();
-    if (!pkg)
-	return;
-    
-    me->setInterfaceLocked(TRUE);
-    
-    if (pkg->isImportant()) {
-	bool res;
-	res = me->_userDialog->warning(
-		_("Removing this package may render the system unusable.\n"
-		  "Are you sure you want to do that?"), false);
-	if (res == false) {
-	  me->_blockActions = TRUE;
-	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_currentB), TRUE);
-	  me->_blockActions = FALSE;
-	} else {
-	  pkg->setRemoveWithDeps(TRUE);
-	}
-    } else {
-	pkg->setRemoveWithDeps(TRUE);
-    }
-    gtk_clist_select_row(GTK_CLIST(me->_table), 
-			 me->_lister->getElementIndex(pkg), 0);
-    me->setInterfaceLocked(FALSE);
-}
-#endif
 
 void RGMainWindow::setColors(bool useColors)
 {
@@ -2217,6 +2193,16 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(menuActionClicked),
 				  GINT_TO_POINTER(PKG_DELETE));
 
+    
+    widget = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
+    assert(widget);
+    g_object_set_data(G_OBJECT(widget), "me", this);
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_menu_action_delete_with_deps",
+				  G_CALLBACK(menuActionClicked),
+				  GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
+
+
     widget = glade_xml_get_widget(_gladeXML, "menu_purge");
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
@@ -2311,6 +2297,13 @@ void RGMainWindow::buildInterface()
     gtk_signal_connect(GTK_OBJECT(item), "activate", 
 		       (GtkSignalFunc)changedDepView, this);
 
+    item = glade_xml_get_widget(_gladeXML, "menu_provides");
+    assert(item);
+    gtk_object_set_data(GTK_OBJECT(item), "index",
+			(void*)WHAT_IT_PROVIDES);
+    gtk_signal_connect(GTK_OBJECT(item), "activate", 
+		       (GtkSignalFunc)changedDepView, this);
+
 #ifndef HAVE_RPM
     item = glade_xml_get_widget(_gladeXML, "menu_suggested");
     assert(item);
@@ -2382,6 +2375,32 @@ void RGMainWindow::buildInterface()
 
     _availDepInfoL = glade_xml_get_widget(_gladeXML, "label_availdep_info");
     assert(_availDepInfoL);
+
+    /* build rdep list */
+    _rdepList = glade_xml_get_widget(_gladeXML, "treeview_rdeps");
+    assert(_rdepList);
+    _rdepListStore = gtk_list_store_new(1,G_TYPE_STRING); /* text */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_rdepList), GTK_TREE_MODEL(_rdepListStore));
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
+						      "text", DEP_NAME_COLUMN,
+						      NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_rdepList), column);
+
+
+
+    /* build provides list */
+    _providesList = glade_xml_get_widget(_gladeXML, "treeview_provides_list");
+    assert(_availDepList);
+    _providesListStore = gtk_list_store_new(1,G_TYPE_STRING, /* text */
+					    -1); 
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_providesList), 
+			    GTK_TREE_MODEL(_providesListStore));
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
+						      "text", DEP_NAME_COLUMN,
+						      NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_providesList), column);
     
     /* create the recommended/suggested list */
     _recList = glade_xml_get_widget(_gladeXML, "treeview_rec_list");
@@ -2789,7 +2808,7 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
     //cout << "pkgInstallHelper()/end" << endl;
 }
 
-void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
+void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
   if (pkg->isImportant()) {
     if (!_userDialog->confirm(_("Removing this package may render the "
@@ -2802,8 +2821,10 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
       return;
     } 
   }
-
-  pkg->setRemove(purge);
+  if(!withDeps)
+      pkg->setRemove(purge);
+  else
+      pkg->setRemoveWithDeps(true, false);
 }
 
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)

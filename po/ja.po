@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.39\n"
-"POT-Creation-Date: 2003-07-04 16:40+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-11 18:42+0200\n"
 "PO-Revision-Date: 2003-07-05 02:02+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Project Vine <Vine@vinelinux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
@@ -260,8 +260,9 @@ msgstr "依存関係は満たされました"
 
 #: common/rpackage.cc:861
 msgid "Invalid record in the preferences file, no Package header"
-msgstr "preferences ファイルに不正なレコードがあります。"
-"パッケージヘッダがありません。"
+msgstr ""
+"preferences ファイルに不正なレコードがあります。パッケージヘッダがありませ"
+"ん。"
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -310,7 +311,7 @@ msgstr "パッケージ名"
 msgid "Version"
 msgstr "バージョン"
 
-#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2488
+#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2497
 #: gtk/window_find.glade.strings:13 gtk/window_main.glade.strings:65
 msgid "Description"
 msgstr "説明"
@@ -320,12 +321,13 @@ msgstr "説明"
 msgid "Maintainer"
 msgstr "メンテナ"
 
-#: common/rpackagefilter.cc:136
+#: common/rpackagefilter.cc:136 gtk/window_find.glade.strings:15
 msgid "Depends"
 msgstr "依存"
 
 #. depends, predepends etc
 #: common/rpackagefilter.cc:137 wings/rwfiltereditor.cc:420
+#: gtk/window_find.glade.strings:16
 msgid "Provides"
 msgstr "提供"
 
@@ -362,10 +364,11 @@ msgstr ""
 
 #: common/rpackagefilter.cc:673
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
-msgstr "フィルタ名が55文字を越えています! 溢れた分は削られます。"
-"レポートをしてください。"
+msgstr ""
+"フィルタ名が55文字を越えています! 溢れた分は削られます。レポートをしてくださ"
+"い。"
 
-#: common/rpackagelister.cc:213
+#: common/rpackagelister.cc:214
 msgid "Search Filter"
 msgstr "検索フィルタ"
 
@@ -376,126 +379,147 @@ msgstr "検索フィルタ"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:220 common/rpackagelister.cc:727
+#: common/rpackagelister.cc:221 common/rpackagelister.cc:802
 #: wings/rwfiltereditor.cc:323 wings/rwmainwindow.cc:1949
 #: gtk/window_filters.glade.strings:19
 msgid "Installed"
 msgstr "インストール済"
 
-#: common/rpackagelister.cc:227 wings/rwfiltereditor.cc:313
+#: common/rpackagelister.cc:228 wings/rwfiltereditor.cc:313
 msgid "Not Installed"
 msgstr "未インストール"
 
-#: common/rpackagelister.cc:235
+#: common/rpackagelister.cc:236
 msgid "Tasks"
 msgstr "タスク"
 
-#: common/rpackagelister.cc:241
+#: common/rpackagelister.cc:242
 msgid "Reduced View"
 msgstr "簡略表示"
 
-#: common/rpackagelister.cc:249
+#: common/rpackagelister.cc:250
 msgid "Upgradable"
 msgstr "アップグレード可能"
 
-#: common/rpackagelister.cc:256 wings/rwfiltereditor.cc:343
+#: common/rpackagelister.cc:257 wings/rwfiltereditor.cc:343
 #: gtk/window_options.glade.strings:31 gtk/window_filters.glade.strings:27
 msgid "Broken"
 msgstr "破損"
 
-#: common/rpackagelister.cc:265
+#: common/rpackagelister.cc:266
 msgid "Programmed Changes"
 msgstr "プログラムされた変更"
 
-#: common/rpackagelister.cc:385 common/rpackagelister.cc:388
-#: common/rpackagelister.cc:403
+#: common/rpackagelister.cc:273 gtk/window_filters.glade.strings:29
+msgid "New in archive"
+msgstr "アーカイブ内の新規パッケージ"
+
+#: common/rpackagelister.cc:280 gtk/window_filters.glade.strings:35
+msgid "Residual config"
+msgstr "未設定"
+
+#: common/rpackagelister.cc:288
+msgid "Pkg with Debconf"
+msgstr ""
+
+#: common/rpackagelister.cc:296
+#, fuzzy
+msgid "Obsolete or local installed"
+msgstr "未インストール"
+
+#: common/rpackagelister.cc:416 common/rpackagelister.cc:419
+#: common/rpackagelister.cc:434
 msgid "Internal error recalculating dependency cache."
 msgstr "内部エラー 依存キャッシュを再構成します."
 
-#: common/rpackagelister.cc:457
+#: common/rpackagelister.cc:488
 msgid "Package "
 msgstr "パッケージ "
 
-#: common/rpackagelister.cc:457
+#: common/rpackagelister.cc:488
 msgid " has no section?!"
 msgstr " はセクションが設定されていません!"
 
-#: common/rpackagelister.cc:576
+#: common/rpackagelister.cc:648
 msgid "Internal Error, AllUpgrade broke stuff"
 msgstr "内部エラー 「全てアップグレード」はなにかを破壊しました"
 
-#: common/rpackagelister.cc:590
+#: common/rpackagelister.cc:662
 msgid "dist upgrade Failed"
 msgstr "ディストリビューションのアップグレードに失敗しました"
 
-#: common/rpackagelister.cc:722
+#: common/rpackagelister.cc:795
 msgid "New in repository"
 msgstr "リポジトリ内の新規パッケージ"
 
-#: common/rpackagelister.cc:725 gtk/window_filters.glade.strings:17
+#: common/rpackagelister.cc:797
+msgid "Obsolete and locally installed"
+msgstr ""
+
+#: common/rpackagelister.cc:800 gtk/window_filters.glade.strings:17
 msgid "Installed and upgradeable"
 msgstr "インストール済かつアップグレード可能"
 
-#: common/rpackagelister.cc:730
+#: common/rpackagelister.cc:805
 msgid "Not installed (residual config)"
 msgstr "未インストール (未設定)"
 
-#: common/rpackagelister.cc:732 gtk/window_filters.glade.strings:15
+#: common/rpackagelister.cc:807 gtk/window_filters.glade.strings:15
 msgid "Not installed"
 msgstr "未インストール"
 
-#: common/rpackagelister.cc:1241
+#: common/rpackagelister.cc:1316
 msgid "Unable to lock the list directory"
 msgstr "list ディレクトリをロックすることが出来ません"
 
-#: common/rpackagelister.cc:1263
+#: common/rpackagelister.cc:1338
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
 
-#: common/rpackagelister.cc:1295
+#: common/rpackagelister.cc:1370
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr ""
 
-#: common/rpackagelister.cc:1320 common/rpackagelister.cc:1324
-#: gtk/rgrepositorywin.cc:267
+#: common/rpackagelister.cc:1395 common/rpackagelister.cc:1399
+#: gtk/rgrepositorywin.cc:291
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr ""
 
-#: common/rpackagelister.cc:1361
+#: common/rpackagelister.cc:1436
 msgid "Failed to fetch "
 msgstr "取得に失敗: "
 
-#: common/rpackagelister.cc:1381
+#: common/rpackagelister.cc:1456
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr ""
 
-#: common/rpackagelister.cc:1384
+#: common/rpackagelister.cc:1459
 msgid "Do you want to continue, ignoring these packages?"
 msgstr ""
 
-#: common/rpackagelister.cc:1391
+#: common/rpackagelister.cc:1466
 msgid "Unable to correct missing packages"
 msgstr ""
 
-#: common/rpackagelister.cc:1454
+#: common/rpackagelister.cc:1529
 msgid "Unable to lock the download directory"
 msgstr ""
 
-#: common/rpackagelister.cc:1557
+#: common/rpackagelister.cc:1632
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr ""
 
-#: common/rpackagelister.cc:1571 common/rpackagelister.cc:1575
+#: common/rpackagelister.cc:1646 common/rpackagelister.cc:1650
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr ""
 
-#: common/rpackagelister.cc:1587
+#: common/rpackagelister.cc:1662
 msgid "Setting selections..."
 msgstr "セクションの設定中..."
 
@@ -544,7 +568,7 @@ msgid "Invalid disc name!"
 msgstr "不正なディスク名です!"
 
 #: gtk/rgconfigwindow.cc:117 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3030 wings/rwconfigwindow.cc:58
+#: gtk/rgmainwindow.cc:3039 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "設定を保存中にエラーが発生しました。"
 
@@ -930,46 +954,46 @@ msgid ""
 "any repository."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1556 gtk/rgmainwindow.cc:2786
+#: gtk/rgmainwindow.cc:1556 gtk/rgmainwindow.cc:2795
 #: wings/rwmainwindow.cc:1343 wings/rwmainwindow.cc:1378
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1810
+#: gtk/rgmainwindow.cc:1819
 #, c-format
 msgid "Can't read %s"
 msgstr "%s を読むことができません"
 
-#: gtk/rgmainwindow.cc:1827
+#: gtk/rgmainwindow.cc:1836
 msgid "Open changes"
 msgstr "変更履歴を開く"
 
-#: gtk/rgmainwindow.cc:1858 gtk/rgmainwindow.cc:1907
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:1916
 #, c-format
 msgid "Can't write %s"
 msgstr "%s を書き込むことができません"
 
-#: gtk/rgmainwindow.cc:1924
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "変更履歴を保存する"
 
-#: gtk/rgmainwindow.cc:1940
+#: gtk/rgmainwindow.cc:1949
 msgid "Save full state, not only changes"
 msgstr "変更だけでなく、全ての状態を保存します"
 
-#: gtk/rgmainwindow.cc:2136 wings/rwmainwindow.cc:1560
+#: gtk/rgmainwindow.cc:2145 wings/rwmainwindow.cc:1560
 #: gtk/window_main.glade.strings:49
 msgid "Update package cache"
 msgstr "パッケージキャッシュの更新"
 
-#: gtk/rgmainwindow.cc:2140 wings/rwmainwindow.cc:1574
+#: gtk/rgmainwindow.cc:2149 wings/rwmainwindow.cc:1574
 #: gtk/window_main.glade.strings:51
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr "新しい依存関係が必要なもの以外のパッケージをアップグレードします。"
 
-#: gtk/rgmainwindow.cc:2144 wings/rwmainwindow.cc:1582
+#: gtk/rgmainwindow.cc:2153 wings/rwmainwindow.cc:1582
 #: gtk/window_main.glade.strings:53
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
@@ -977,29 +1001,29 @@ msgstr ""
 "インストールされているディストリビューションを新しい依存関係によるパッケージ"
 "も含めて、アップグレードします。"
 
-#: gtk/rgmainwindow.cc:2148 wings/rwmainwindow.cc:1590
+#: gtk/rgmainwindow.cc:2157 wings/rwmainwindow.cc:1590
 #: gtk/window_main.glade.strings:55
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "選択されたパッケージの変更を適用する(必要であればダウンロードも行う)"
 
-#: gtk/rgmainwindow.cc:2454 wings/rwmainwindow.cc:1936
+#: gtk/rgmainwindow.cc:2463 wings/rwmainwindow.cc:1936
 #: gtk/window_main.glade.strings:19
 msgid "Package"
 msgstr "パッケージ"
 
-#: gtk/rgmainwindow.cc:2465
+#: gtk/rgmainwindow.cc:2474
 msgid "Installed Version"
 msgstr "インストール済バージョン"
 
-#: gtk/rgmainwindow.cc:2476
+#: gtk/rgmainwindow.cc:2485
 msgid "Available Version"
 msgstr "インストール可能バージョン"
 
-#: gtk/rgmainwindow.cc:2760
+#: gtk/rgmainwindow.cc:2769
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2944 wings/rwmainwindow.cc:2020
+#: gtk/rgmainwindow.cc:2953 wings/rwmainwindow.cc:2020
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1008,20 +1032,20 @@ msgstr ""
 "全 %i パッケージ (インストール済: %i 個, 破損 %i 個, インストールまたはアップ"
 "グレード指定: %i 個, 削除指定: %i) ; %sB が%s"
 
-#: gtk/rgmainwindow.cc:2947 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2956 wings/rwmainwindow.cc:2023
 msgid "freed"
 msgstr "開放されます"
 
-#: gtk/rgmainwindow.cc:2947 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2956 wings/rwmainwindow.cc:2023
 msgid "used"
 msgstr "消費されます"
 
-#: gtk/rgmainwindow.cc:2973 wings/rwmainwindow.cc:1837
+#: gtk/rgmainwindow.cc:2982 wings/rwmainwindow.cc:1837
 #: gtk/window_main.glade.strings:60
 msgid "All Packages"
 msgstr "全てのパッケージ"
 
-#: gtk/rgmainwindow.cc:3059
+#: gtk/rgmainwindow.cc:3068
 msgid ""
 "There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
@@ -1029,46 +1053,46 @@ msgstr ""
 "保存されていない変更があります。\n"
 "このまま Synaptic を終了してもよろしいですか?"
 
-#: gtk/rgrepositorywin.cc:71
+#: gtk/rgrepositorywin.cc:95
 msgid "Setup Repositories"
 msgstr "リポジトリの設定"
 
-#: gtk/rgrepositorywin.cc:96
+#: gtk/rgrepositorywin.cc:120
 msgid "Enabled"
 msgstr "有効"
 
-#: gtk/rgrepositorywin.cc:106 wings/rwsourceswindow.cc:101
+#: gtk/rgrepositorywin.cc:130 wings/rwsourceswindow.cc:101
 msgid "Type"
 msgstr "タイプ"
 
-#: gtk/rgrepositorywin.cc:115 wings/rwsourceswindow.cc:107
+#: gtk/rgrepositorywin.cc:139 wings/rwsourceswindow.cc:107
 msgid "Vendor"
 msgstr "ベンダ"
 
-#: gtk/rgrepositorywin.cc:124 wings/rwsourceswindow.cc:113
+#: gtk/rgrepositorywin.cc:148 wings/rwsourceswindow.cc:113
 #: gtk/window_repositories.glade.strings:14
 msgid "URI"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:133 wings/rwsourceswindow.cc:119
+#: gtk/rgrepositorywin.cc:157 wings/rwsourceswindow.cc:119
 #: gtk/window_repositories.glade.strings:15
 msgid "Distribution"
 msgstr "ディストリビューション"
 
-#: gtk/rgrepositorywin.cc:142 gtk/window_repositories.glade.strings:16
+#: gtk/rgrepositorywin.cc:166 gtk/window_repositories.glade.strings:16
 msgid "Section(s)"
 msgstr "セクション"
 
-#: gtk/rgrepositorywin.cc:208 gtk/rgrepositorywin.cc:316
+#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:340
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr "(ベンダなし)"
 
-#: gtk/rgrepositorywin.cc:271
+#: gtk/rgrepositorywin.cc:295
 msgid "Cannot read vendors.list file"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:428
+#: gtk/rgrepositorywin.cc:452
 msgid "Unknown source type"
 msgstr ""
 
@@ -1214,11 +1238,7 @@ msgstr ""
 msgid "Tried to dequeue a fetching object"
 msgstr ""
 
-#: gtk/synapticinterface.cc:38
-msgid "RInitConfiguration() failed\n"
-msgstr ""
-
-#: gtk/rgfindwindow.cc:107 gtk/window_main.glade.strings:38
+#: gtk/rgfindwindow.cc:108 gtk/window_main.glade.strings:38
 msgid "Find tool"
 msgstr "検索ツール"
 
@@ -2104,10 +2124,6 @@ msgstr "壊れたパッケージ"
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr "最近の\"更新\"でリポジトリに新しく追加されたパッケージ"
 
-#: gtk/window_filters.glade.strings:29
-msgid "New in archive"
-msgstr "アーカイブ内の新規パッケージ"
-
 #: gtk/window_filters.glade.strings:30
 msgid "Packages that will never be upgraded"
 msgstr "二度とアップグレードされないパッケージ"
@@ -2127,10 +2143,6 @@ msgstr "メンテナ不在"
 #: gtk/window_filters.glade.strings:34
 msgid "Packages that are removed and still have config files on the system"
 msgstr "削除されているがシステムに設定ファイルが存在するパッケージ"
-
-#: gtk/window_filters.glade.strings:35
-msgid "Residual config"
-msgstr "未設定"
 
 #: gtk/window_filters.glade.strings:36
 msgid "Packages that use the debconf configuration system"

@@ -68,6 +68,7 @@ class RGRepositoryEditor:RGGladeWindow {
    // static event handlers
    static void DoClear(GtkWidget *, gpointer);
    static void DoAdd(GtkWidget *, gpointer);
+   static void DoUpDown(GtkWidget *, gpointer);
    static void DoRemove(GtkWidget *, gpointer);
    static void DoOK(GtkWidget *, gpointer);
    static void DoCancel(GtkWidget *, gpointer);

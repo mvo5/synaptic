@@ -277,6 +277,18 @@ void SourcesList::RemoveSource(SourceRecord *&rec)
    rec = 0;
 }
 
+void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
+{
+  list<SourceRecord *>::iterator rec_p;
+  list<SourceRecord *>::iterator rec_n;
+
+  rec_p = find( SourceRecords.begin(), SourceRecords.end(), rec_one );
+  rec_n = find( SourceRecords.begin(), SourceRecords.end(), rec_two );
+  
+  SourceRecords.insert( rec_p, rec_two );
+  SourceRecords.erase( rec_n );
+}
+
 bool SourcesList::UpdateSources()
 {
    list<string> filenames;

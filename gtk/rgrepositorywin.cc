@@ -298,6 +298,14 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                  "on_button_remove_clicked",
                                  G_CALLBACK(DoRemove), this);
 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_updown_clicked",
+                                 G_CALLBACK(DoUpDown), this);
+   GtkWidget *button = glade_xml_get_widget(_gladeXML, "button_up");
+   g_object_set_data(G_OBJECT(button), "up", GINT_TO_POINTER(1));
+   button = glade_xml_get_widget(_gladeXML, "button_down");
+   g_object_set_data(G_OBJECT(button), "up", GINT_TO_POINTER(0));
+
    _editTable = glade_xml_get_widget(_gladeXML, "table_edit");
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
@@ -429,14 +437,14 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
                       SECTIONS_COLUMN, "",
                       RECORD_COLUMN, (gpointer) (rec),
                       DISABLED_COLOR_COLUMN, NULL, -1);
+
    GtkTreeSelection *selection;
-   selection =
-      gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
    gtk_tree_selection_unselect_all(selection);
    gtk_tree_selection_select_iter(selection, &iter);
+
    GtkTreePath *path;
-   path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_sourcesListStore),
-                                  &iter);
+   path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_sourcesListStore), &iter);
    gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_sourcesListView),
                             path, NULL, false);
    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(me->_sourcesListView), path,
@@ -651,3 +659,47 @@ void RGRepositoryEditor::VendorsWindow(GtkWidget *, void *data)
    gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),
                                me->VendorMenuIndex(VendorID));
 }
+
+void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
+{
+   RGRepositoryEditor *me = (RGRepositoryEditor *) data;
+   //cout << "RGRepositoryEditor::DoUpDown(GtkWidget *, gpointer data)"<<endl;
+
+   GtkTreeIter iter;
+   GtkTreeIter iter2;
+
+   GtkTreeSelection *selection;
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
+   gtk_tree_selection_get_selected (selection, (GtkTreeModel **) (&me->_sourcesListStore), &iter);
+
+   GtkTreePath *path;
+   path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_sourcesListStore), &iter);
+
+   // check if it does up or down
+   gboolean up = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(self), "up"));
+   if(up)
+      gtk_tree_path_prev( path );
+   else
+      gtk_tree_path_next( path );
+
+   if( gtk_tree_model_get_iter( GTK_TREE_MODEL(me->_sourcesListStore), &iter2, path ) ){
+     gtk_list_store_swap( me->_sourcesListStore, &iter, &iter2 );
+     gtk_tree_path_free(path);
+   }
+   else
+     return;
+
+   SourcesList::SourceRecord *rec;
+   gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter,
+		      RECORD_COLUMN, &rec, -1);
+   assert(rec);
+   SourcesList::SourceRecord *rec_p;
+   gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter2,
+		      RECORD_COLUMN, &rec_p, -1); 
+   assert(rec_p);
+
+   // Insert rec before rec_p
+   me->_lst.SwapSources(rec_p, rec);
+}
+
+

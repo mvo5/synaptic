@@ -89,6 +89,7 @@ class SourcesList {
                            unsigned short count, string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
+   void SwapSources( SourceRecord *&, SourceRecord *& );
    bool ReadSourcePart(string listpath);
    bool ReadSourceDir(string Dir);
    bool ReadSources();

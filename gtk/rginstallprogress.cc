@@ -29,6 +29,8 @@
 
 #include "rginstallprogress.h"
 
+#include <apt-pkg/configuration.h>
+
 #include <unistd.h>
 #include <stdio.h>
 
@@ -94,7 +96,7 @@ void RGInstallProgress::updateInterface()
     if (gtk_events_pending()) {
 	while (gtk_events_pending()) gtk_main_iteration();
     } else {
-	usleep(5000); // Half a second
+	usleep(5000);
         if (_startCounting == false) {
 	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
 	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar_total));
@@ -102,6 +104,34 @@ void RGInstallProgress::updateInterface()
     }
 }
 
+class GeometryParser
+{
+    protected:
+    
+    int _width;
+    int _height;
+    int _xpos;
+    int _ypos;
+
+    bool ParseSize(char **size);
+    bool ParsePosition(char **pos);
+    
+    public:
+    
+    int Width() {return _width;};
+    int Height() {return _height;};
+    int XPos() {return _xpos;};
+    int YPos() {return _ypos;};
+
+    bool HasSize() {return _width != -1 && _height != -1;};
+    bool HasPosition() {return _xpos != -1 && _ypos != -1;};
+
+    bool Parse(string Geo);
+
+    GeometryParser(string Geo="")
+	: _width(-1), _height(-1), _xpos(-1), _ypos(-1)
+	{Parse(Geo);};
+};
 
 RGInstallProgress::RGInstallProgress(RGMainWindow *main)
     : RInstallProgress(), RGWindow(main, "install_progress", true, false)
@@ -111,7 +141,14 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main)
     _donePackages = 0;
     _startCounting = false;
 
-    gtk_widget_set_usize(_win, 320, 120);
+    string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");
+    GeometryParser Geo(GeoStr);
+    if (Geo.HasSize())
+	gtk_widget_set_usize(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
+    else
+	gtk_widget_set_usize(GTK_WIDGET(_win), 320, 120);
+    if (Geo.HasPosition())
+	gtk_widget_set_uposition(GTK_WIDGET(_win), Geo.XPos(), Geo.YPos());
 
     gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
     
@@ -134,4 +171,78 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main)
     gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar_total), 0.01);
 }
 
+bool GeometryParser::ParseSize(char **size)
+{
+    char *buf = *size;
+    char *p = buf;
+    while (*p >= '0' && *p <= '9') p++;
+    if (*p != 'x')
+	return false;
+    *p++ = 0;
+    _width = atoi(buf);
+    buf = p;
+    while (*p >= '0' && *p <= '9') p++;
+    if (*p != '+' && *p != '-' && *p != 0)
+	return false;
+    char tmp = *p;
+    *p = 0;
+    _height = atoi(buf);
+    *p = tmp;
+    *size = p;
+    return true;
+}
 
+bool GeometryParser::ParsePosition(char **pos)
+{
+    char *buf = *pos;
+    char *p = buf+1;
+    if (*p < '0' || *p > '9')
+	return false;
+    while (*p >= '0' && *p <= '9') p++;
+    if (*p != '+' && *p != '-')
+	return false;
+    char tmp = *p;
+    *p = 0;
+    _xpos = atoi(buf);
+    *p = tmp;
+    buf = p++;
+    if (*p < '0' || *p > '9')
+	return false;
+    while (*p >= '0' && *p <= '9') p++;
+    if (*p != 0)
+	return false;
+    _ypos = atoi(buf);
+    *pos = p;
+    return true;
+}
+
+bool GeometryParser::Parse(string Geo)
+{
+    if (Geo.empty() == true)
+	return false;
+    
+    char *buf = strdup(Geo.c_str());
+    char *p = buf;
+    bool ret = false;
+    if (*p == '+' || *p == '-') {
+	ret = ParsePosition(&p);
+    } else {
+	if (*p == '=')
+	    p++;
+	ret = ParseSize(&p);
+	if (ret == true && (*p == '+' || *p == '-'))
+	    ret = ParsePosition(&p);
+    }
+    free(buf);
+    
+    if (ret == false) {
+	_width = -1;
+	_height = -1;
+	_xpos = -1;
+	_ypos = -1;
+    }
+
+    return ret;
+}
+
+// vim:sts=4:sw=4

@@ -38,6 +38,8 @@
 #include "ruserdialog.h"
 #include "tree.hh"
 
+#include <apt-pkg/depcache.h>
+
 using namespace std;
 
 class OpProgress;
@@ -57,7 +59,6 @@ class RPackageObserver {
 public:
    virtual void notifyChange(RPackage *pkg) = 0;
 };
-
 
 
 class RPackageLister
@@ -94,7 +95,11 @@ public:
    } treeDisplayMode;
    treeDisplayMode _displayMode;
 
+#ifdef HAVE_RPM
+   typedef pkgDepCache::State pkgState;
+#else
    typedef vector<RPackage::MarkedStatus> pkgState;
+#endif
 
 private:
    tree<pkgPair> _treeOrganizer;

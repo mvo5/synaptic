@@ -160,12 +160,11 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 	_items.push_back(item);
 	Itm.Owner->ID = _items.size();
 	appendTable(Itm.Owner->ID-1);
-    } else {
+    } else if (_items[Itm.Owner->ID-1].status != status) {
         _items[Itm.Owner->ID-1].status = status;
 	refreshTable(Itm.Owner->ID-1);
     }
 }
-
 
 void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
 {
@@ -175,7 +174,6 @@ void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
     RGFlushInterface();
 }
 
-
 void RGFetchProgress::Fetch(pkgAcquire::ItemDesc &Itm)
 {
     gtk_clist_freeze(GTK_CLIST(_table));
@@ -184,7 +182,6 @@ void RGFetchProgress::Fetch(pkgAcquire::ItemDesc &Itm)
     RGFlushInterface();
 }
 
-
 void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 {
     gtk_clist_freeze(GTK_CLIST(_table));
@@ -192,7 +189,6 @@ void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
     gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
-
 
 void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
@@ -203,7 +199,6 @@ void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
     gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
-
 
 bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 {
@@ -257,7 +252,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
     return !_cancelled;
 }
 
-
 void RGFetchProgress::Start()
 {
     pkgAcquireStatus::Start();
@@ -265,7 +259,6 @@ void RGFetchProgress::Start()
     show();
     RGFlushInterface();
 }
-
 
 void RGFetchProgress::Stop()
 {

@@ -78,7 +78,18 @@ bool RGUserDialog::message(const char *msg,
 				 GTK_DIALOG_DESTROY_WITH_PARENT,
 				 gtkmessage, gtkbuttons, "%s", msg);
 
-    if (defres == false) {
+    if (defres == true) {
+	switch(buttons) {
+	    case RUserDialog::ButtonsOkCancel:
+		gtk_dialog_set_default_response(GTK_DIALOG(dia),
+						GTK_RESPONSE_OK);
+		break;
+	    case RUserDialog::ButtonsYesNo:
+		gtk_dialog_set_default_response(GTK_DIALOG(dia),
+						GTK_RESPONSE_YES);
+		break;
+	}
+    } else {
 	switch(buttons) {
 	    case RUserDialog::ButtonsOkCancel:
 		gtk_dialog_set_default_response(GTK_DIALOG(dia),

@@ -884,6 +884,63 @@ void RPackageLister::redo()
 }
 
 
+#ifdef HAVE_RPM
+void RPackageLister::saveState(RPackageLister::pkgState &state)
+{
+    state.Save(_cache->deps());
+}
+
+void RPackageLister::restoreState(RPackageLister::pkgState &state)
+{
+    state.Restore();
+}
+
+bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
+				     vector<RPackage*> &kept,
+				     vector<RPackage*> &toInstall, 
+				     vector<RPackage*> &toUpgrade, 
+				     vector<RPackage*> &toRemove,
+				     vector<RPackage*> &exclude)
+{
+    bool changed = false;
+
+    state.UnIgnoreAll();
+    for (vector<RPackage*>::iterator I = exclude.begin();
+	 I != exclude.end(); I++)
+	state.Ignore(*(*I)->package());
+
+    pkgDepCache &Cache = *_cache->deps();
+    for (unsigned i = 0; i < _count; i++) {
+	pkgCache::PkgIterator &Pkg = *_packages[i]->package();
+	pkgDepCache::StateCache &PkgState = Cache[Pkg];
+	if (PkgState.Mode != state[Pkg].Mode &&
+	    state.Ignored(Pkg) == false) {
+	    if (PkgState.Upgrade()) {
+		toUpgrade.push_back(_packages[i]);
+		changed = true;
+	    } else if (PkgState.NewInstall()) {
+		toInstall.push_back(_packages[i]);
+		changed = true;
+	    } else if (PkgState.Delete()) {
+		toRemove.push_back(_packages[i]);
+		changed = true;
+	    } else if (PkgState.Keep()) {
+		kept.push_back(_packages[i]);
+		changed = true;
+	    }
+	}
+    }
+
+    if (changed == true) {
+	sort(kept.begin(), kept.end(), bla());
+	sort(toInstall.begin(), toInstall.end(), bla());
+	sort(toUpgrade.begin(), toUpgrade.end(), bla());
+	sort(toRemove.begin(), toRemove.end(), bla());
+    }
+
+    return changed;
+}
+#else
 void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
     state.clear();
@@ -968,13 +1025,16 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	}
     }
 
-    sort(kept.begin(), kept.end(), bla());
-    sort(toInstall.begin(), toInstall.end(), bla());
-    sort(toUpgrade.begin(), toUpgrade.end(), bla());
-    sort(toRemove.begin(), toRemove.end(), bla());
+    if (changed == true) {
+	sort(kept.begin(), kept.end(), bla());
+	sort(toInstall.begin(), toInstall.end(), bla());
+	sort(toUpgrade.begin(), toUpgrade.end(), bla());
+	sort(toRemove.begin(), toRemove.end(), bla());
+    }
 
     return changed;
 }
+#endif
 
 void RPackageLister::getDetailedSummary(vector<RPackage*> &held, 
 					vector<RPackage*> &kept, 

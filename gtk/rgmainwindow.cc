@@ -2212,8 +2212,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(TRUE);
    me->updatePackageInfo(NULL);
 
-   me->
-      setStatusText(_("Performing selected changes... this may take a while"));
+   me->setStatusText(_("Performing selected changes... this may take a while"));
 
    // fetch packages
    RGFetchProgress *fprogress = new RGFetchProgress(me);
@@ -2286,7 +2285,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    if (_config->FindB("Synaptic::Download-Only", false) == false) {
       // reset the cache
-      if (!me->_lister->openCache(TRUE)) {
+      if (!me->_lister->openCache(true)) {
          me->showErrors();
          exit(1);
       }

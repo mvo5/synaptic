@@ -28,7 +28,8 @@
 #include "rggladewindow.h"
 
 
-class RGFetchProgress:public pkgAcquireStatus, public RGGladeWindow {
+class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
+
    struct Item {
       string uri;
       string size;
@@ -61,7 +62,7 @@ class RGFetchProgress:public pkgAcquireStatus, public RGGladeWindow {
    void refreshTable(int row, bool append = false);
    GdkPixmap *statusDraw(int width, int height, int status);
 
- public:
+   public:
 
    virtual bool MediaChange(string Media, string Drive);
    virtual void IMSHit(pkgAcquire::ItemDesc &Itm);

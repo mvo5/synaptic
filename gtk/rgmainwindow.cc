@@ -344,7 +344,7 @@ void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
     RGMainWindow *me = (RGMainWindow*)data;
     //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
-    if(me->_lister->findPackage("libgnome-perl") < 0) {
+    if(me->_lister->getElement("libgnome-perl") == NULL) {
 	me->_userDialog->error(_("No libgnome-perl installed\n\n"
 				 "You have to install libgnome-perl to "
 				 "use dpkg-reconfigure with synaptic"));
@@ -352,7 +352,7 @@ void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
     }
 
     me->setStatusText(_("Starting dpkg-reconfigure"));
-    cmd = g_strdup_printf("dpkg-reconfigure -f%s %s &", 
+    cmd = g_strdup_printf("/usr/sbin/dpkg-reconfigure -f%s %s &", 
 			  frontend, me->selectedPackage()->name());
     system(cmd);
 }
@@ -2072,6 +2072,7 @@ void RGMainWindow::buildInterface()
     _textBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_textView));
     gtk_text_view_set_editable(GTK_TEXT_VIEW(_textView), FALSE);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_textView), GTK_WRAP_WORD);
+    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(_textView), FALSE);
 
     _depP = glade_xml_get_widget(_gladeXML, "optionmenu_depends");
     assert(_depP);

@@ -114,12 +114,10 @@ protected:
        DepType where;
        string pattern;
        bool exclusive;
-       regex_t reg;
    };
    vector<Pattern> _patterns;
    
 public:
-   RPatternPackageFilter(const RPatternPackageFilter &filter) {};
    RPatternPackageFilter(RPackageLister *lister)
 	   : RPackageFilter(lister) {};
    virtual ~RPatternPackageFilter();

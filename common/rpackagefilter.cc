@@ -127,7 +127,6 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
     return true;
 }
 
-
 // don't translate this, they are only used in the filter file
 char *RPatternPackageFilter::TypeName[] = {
     N_("Name"),
@@ -153,138 +152,143 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
     const char *maint = pkg->maintainer();
     bool found = false;
     bool globalfound = false;
-    
+
     if (_patterns.size() == 0)
 	return true;
 
     for (vector<Pattern>::const_iterator iter = _patterns.begin();
 	 iter != _patterns.end(); iter++) 
-      {
-	if (iter->where == Name) {
-	  if (strncasecmp(name, iter->pattern.c_str(), 
-			  iter->pattern.length()) == 0)
-	    found = true;
-	  else if (regexec(&iter->reg, name, 0, NULL, 0) == 0)
-	    found = true;
-	  
-	} else if (iter->where == Version) {
-	  if (strncasecmp(version, iter->pattern.c_str(), 
-			  iter->pattern.length()) == 0)
-	    found = true;
-	  else if (regexec(&iter->reg, version, 0, NULL, 0) == 0)
-	    found = true;
+	{
+	    regex_t reg;
+	    regcomp(&reg, iter->pattern.c_str(), REG_EXTENDED|REG_ICASE);
 
-	} else if (iter->where == Description) {
-	  if (strstr(descr, iter->pattern.c_str()) != NULL)
-	    found = true;
-	  else if (regexec(&iter->reg, descr, 0, NULL, 0) == 0)
-	    found = true;
-	} else if (iter->where == Maintainer) {
-	  if (strstr(maint, iter->pattern.c_str()) != NULL)
-	    found = true;
-	  else if (regexec(&iter->reg, maint, 0, NULL, 0) == 0)
-	    found = true;
-	} else if (iter->where == Depends) {
-	  const char *depType, *depPkg, *depName, *depVer;
-	  char *summary;
-	  bool ok;
-	  if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
-	    {
-	      do 
-		{
-		  if(strstr(depType,"Depends") != NULL)
-		    if(strstr(depName,iter->pattern.c_str()) != NULL) {
-		      found = true;
-		      break;
-		    } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
-		      found = true;
-		      break;
+	    if (iter->where == Name) {
+		if (strncasecmp(name, iter->pattern.c_str(), 
+				iter->pattern.length()) == 0)
+		    found = true;
+		else if (regexec(&reg, name, 0, NULL, 0) == 0)
+		    found = true;
+	      
+	    } else if (iter->where == Version) {
+		if (strncasecmp(version, iter->pattern.c_str(), 
+				iter->pattern.length()) == 0)
+		    found = true;
+		else if (regexec(&reg, version, 0, NULL, 0) == 0)
+		    found = true;
+
+	    } else if (iter->where == Description) {
+		if (strstr(descr, iter->pattern.c_str()) != NULL)
+		    found = true;
+		else if (regexec(&reg, descr, 0, NULL, 0) == 0)
+		    found = true;
+	    } else if (iter->where == Maintainer) {
+		if (strstr(maint, iter->pattern.c_str()) != NULL)
+		    found = true;
+		else if (regexec(&reg, maint, 0, NULL, 0) == 0)
+		    found = true;
+	    } else if (iter->where == Depends) {
+		const char *depType, *depPkg, *depName, *depVer;
+		char *summary;
+		bool ok;
+		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
+		    {
+			do 
+			    {
+				if(strstr(depType,"Depends") != NULL)
+				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
+					found = true;
+					break;
+				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+					found = true;
+					break;
+				    }
+			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
 		    }
-		} while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-	    }
-	} else if (iter->where == Provides) {
-	    vector<const char*> provides = pkg->provides();
-	    for(unsigned int i=0;i<provides.size();i++) {
-		if(strstr(provides[i],iter->pattern.c_str()) != NULL) {
-		    found = true;
-		    break;
-		} else if (regexec(&iter->reg, provides[i], 0, NULL, 0) == 0) {
-		    found = true;
-		    break;
+	    } else if (iter->where == Provides) {
+		vector<const char*> provides = pkg->provides();
+		for(unsigned int i=0;i<provides.size();i++) {
+		    if(strstr(provides[i],iter->pattern.c_str()) != NULL) {
+			found = true;
+			break;
+		    } else if (regexec(&reg, provides[i], 0, NULL, 0) == 0) {
+			found = true;
+			break;
+		    }
+		}
+	    } else if (iter->where == Conflicts) {
+		const char *depType, *depPkg, *depName, *depVer;
+		char *summary;
+		bool ok;
+		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
+		    {
+			do 
+			    {
+				if(strstr(depType,"Conflicts") != NULL)
+				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
+					found = true;
+					break;
+				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+					found = true;
+					break;
+				    }
+			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
+		    }
+	    } else if (iter->where == Replaces) {
+		const char *depType, *depPkg, *depName, *depVer;
+		char *summary;
+		bool ok;
+		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
+		    {
+			do 
+			    {
+				if(strstr(depType,"Replaces") != NULL)
+				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
+					found = true;
+					break;
+				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+					found = true;
+					break;
+				    }
+			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
+		    }
+ 
+	    } else if (iter->where == WeakDepends) {
+		const char *depType, *depPkg, *depName;
+		bool ok;
+		if (pkg->enumWDeps(depType, depPkg, ok)) {
+		    do {
+			if(strstr(depPkg,iter->pattern.c_str()) != NULL) {
+			    found = true;
+			    break;
+			} else if (regexec(&reg, depPkg, 0, NULL, 0) == 0) {
+			    found = true;
+			    break;
+			}
+		    } while (pkg->nextWDeps(depName, depPkg, ok));
+		}
+	    } else if (iter->where == RDepends) {
+		const char *depPkg, *depName;
+		if (pkg->enumRDeps(depName, depPkg)) {
+		    do {
+			if(strstr(depName,iter->pattern.c_str()) != NULL) {
+			    found = true;
+			    break;
+			} else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+			    found = true;
+			    break;
+			}
+		    } while (pkg->nextRDeps(depName, depPkg));
 		}
 	    }
-	} else if (iter->where == Conflicts) {
-	  const char *depType, *depPkg, *depName, *depVer;
-	  char *summary;
-	  bool ok;
-	  if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
-	    {
-	      do 
-		{
-		  if(strstr(depType,"Conflicts") != NULL)
-		    if(strstr(depName,iter->pattern.c_str()) != NULL) {
-		      found = true;
-		      break;
-		    } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
-		      found = true;
-		      break;
-		    }
-		} while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-	    }
-	} else if (iter->where == Replaces) {
-	  const char *depType, *depPkg, *depName, *depVer;
-	  char *summary;
-	  bool ok;
-	  if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
-	    {
-	      do 
-		{
-		  if(strstr(depType,"Replaces") != NULL)
-		    if(strstr(depName,iter->pattern.c_str()) != NULL) {
-		      found = true;
-		      break;
-		    } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
-		      found = true;
-		      break;
-		    }
-		} while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-	    }
- 
-	} else if (iter->where == WeakDepends) {
-	  const char *depType, *depPkg, *depName;
-	  bool ok;
-	  if (pkg->enumWDeps(depType, depPkg, ok)) {
-	    do {
-	      if(strstr(depPkg,iter->pattern.c_str()) != NULL) {
-		found = true;
-		break;
-	      } else if (regexec(&iter->reg, depPkg, 0, NULL, 0) == 0) {
-		found = true;
-		break;
-	      }
-	    } while (pkg->nextWDeps(depName, depPkg, ok));
-	  }
-	} else if (iter->where == RDepends) {
-	    const char *depPkg, *depName;
-	    if (pkg->enumRDeps(depName, depPkg)) {
-		do {
-		    if(strstr(depName,iter->pattern.c_str()) != NULL) {
-			found = true;
-			break;
-		    } else if (regexec(&iter->reg, depName, 0, NULL, 0) == 0) {
-			found = true;
-			break;
-		    }
-		} while (pkg->nextRDeps(depName, depPkg));
-	    }
-	}
+	    regfree(&reg);
 	
-	// match the first "found", otherwise look if it was a exclusive rule
-	if(found) 
-	  return !iter->exclusive;
-	else
-	  globalfound |= iter->exclusive;
-      }
+	    // match the first "found", 
+	    // otherwise look if it was a exclusive rule
+	    if(found) 
+		return !iter->exclusive;
+	    else
+		globalfound |= iter->exclusive;
+	}
 
     return globalfound;
 }
@@ -298,7 +302,6 @@ void RPatternPackageFilter::addPattern(DepType type, string pattern,
     pat.where = type;
     pat.pattern = pattern; 
     pat.exclusive = exclusive;
-    regcomp(&pat.reg, pattern.c_str(), REG_EXTENDED|REG_ICASE);
     _patterns.push_back(pat);
 }
 
@@ -355,11 +358,12 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 
 void RPatternPackageFilter::clear()
 {
+#if 0
     for (vector<Pattern>::iterator iter = _patterns.begin();
 	 iter != _patterns.end(); iter++) {
 	regfree(&iter->reg);
     }
-    
+#endif    
     _patterns.erase(_patterns.begin(), _patterns.end());
 }
 

@@ -244,6 +244,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     gtk_box_pack_start(GTK_BOX(_topBox), _topF, FALSE, FALSE, 5);
 
     _summaryL = gtk_label_new(NULL);
+    gtk_label_set_selectable(GTK_LABEL(_summaryL), true);
     gtk_widget_show(_summaryL);
     gtk_container_add(GTK_CONTAINER(_topF), _summaryL);
 

@@ -336,6 +336,22 @@ void RGMainWindow::searchNextAction(GtkWidget *self, void *data)
     me->searchAction(me->_findText, me);
 }
 
+void RGMainWindow::searchLackAction(GtkWidget *self, void *data)
+{
+    //cout << "search lack called" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+    if(me->searchLackId)
+	gtk_timeout_remove(me->searchLackId);
+    me->searchLackId = gtk_timeout_add(1000, searchLackHelper, self);
+}
+
+gboolean RGMainWindow::searchLackHelper(void* self)
+{
+    //cout << "searchLackHelper()" << endl;
+    searchAction((GtkWidget*)self, NULL);
+    return FALSE;
+}
+
 void RGMainWindow::searchAction(GtkWidget *self, void *data)
 {
     // search interativly in the tree
@@ -345,16 +361,22 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
     char *name;
     gboolean ok;
 
-    RGMainWindow *me = (RGMainWindow*)data;
+    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
 
     // get search string
     const gchar *searchtext = gtk_entry_get_text (GTK_ENTRY (self));
     int len = strlen (searchtext);
-    if(len < 1)
+    // entry is empty, set search from the begining
+    if(len < 1) {
+	gtk_tree_model_get_iter_first(me->_activeTreeModel, &iter);
+	gtk_tree_selection_unselect_all(selection);
+	gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
+	gtk_tree_selection_select_iter(selection, &iter);
 	return;
-    
+    }
+
     // get last selected row
-    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
     list = li = gtk_tree_selection_get_selected_rows(selection,
  						     &me->_activeTreeModel);
@@ -2714,10 +2736,11 @@ void RGMainWindow::buildInterface()
 #endif
 
     _findText = glade_xml_get_widget(_gladeXML, "entry_find");
+    g_object_set_data(G_OBJECT(_findText), "me", this);
     assert(_findText);
     gtk_object_set_data(GTK_OBJECT(_findText), "me", this);
     gtk_signal_connect(GTK_OBJECT(_findText), "changed",
-		       (GtkSignalFunc)searchAction, this);
+		       (GtkSignalFunc)searchLackAction, this);
 
     _findSearchB = glade_xml_get_widget(_gladeXML, "button_search_next");
     assert(_findSearchB);

@@ -229,6 +229,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onFlatList(GtkWidget *self, void *data);   
    static void onTagTree(GtkWidget *self, void *data);   
 
+   // this is called when typing
+   guint searchLackId;
+   static void searchLackAction(GtkWidget *self, void *data);
+   static gboolean searchLackHelper(void *data);
    static void searchAction(GtkWidget *self, void *data);
    static void searchNextAction(GtkWidget *self, void *data);
    static void searchBeginAction(GtkWidget *self, void *data);

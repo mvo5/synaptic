@@ -133,14 +133,14 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    case RPatternPackageFilter::Depends: 
       {
       vector<RPackage::DepInformation> d = pkg->enumDeps(true);
-      for(int i=0;i<d.size();i++)
+      for(unsigned int i=0;i<d.size();i++)
 	 str += string(d[i].name);
       break; 
       }
    case RPatternPackageFilter::Provides: 
       {
       vector<string> d = pkg->provides();
-      for(int i=0;i<d.size();i++)
+      for(unsigned int i=0;i<d.size();i++)
 	 str += d[i];
       break;
       }
@@ -148,23 +148,29 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    if(tmp!=NULL)
       str = tmp;
 
-   if(!str.empty() && strstr(str.c_str(), searchString.c_str()))
+   if(!str.empty() && strstr(str.c_str(), searchString.c_str())) {
       _view[searchString].push_back(pkg);
+      found++;
+   }
 
+   // FIXME: we push a _lot_ of empty pkgs here :(
    // push a empty package in the view to make sure that the view is actually
    // displayed
    _view[searchString].push_back(NULL);
 }
 
-void RPackageViewSearch::setSearch(string str, int type)
+int RPackageViewSearch::setSearch(string str, int type)
 {
+   found = 0;
    searchString = str;
    searchType = type;
 
    // reapply search when a new search strng is giben
-   for(int i=0;i<_all.size();i++)
-      if(_all[i])
+   for(unsigned int i=0;i<_all.size();i++) 
+      if(_all[i]) 
 	 addPackage(_all[i]);
+         
+   return found;
 }
 
 //------------------------------------------------------------------

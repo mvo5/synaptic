@@ -117,6 +117,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_proceedM;
    GtkWidget *_upgradeB;
    GtkWidget *_upgradeM;
+   GtkWidget *_propertiesB;
    GtkWidget *_fixBrokenM;
 
    // filter/find panel   

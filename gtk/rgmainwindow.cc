@@ -872,6 +872,8 @@ void RGMainWindow::buildInterface()
                                  "on_button_details_clicked",
                                  G_CALLBACK(cbDetailsWindow), this);
 
+   _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
+   assert(_propertiesB);
    _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
    _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
    glade_xml_signal_connect_data(_gladeXML,
@@ -1354,6 +1356,7 @@ void RGMainWindow::setStatusText(char *text)
 
    gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
    gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
+   gtk_widget_set_sensitive(_propertiesB, (bool)selectedPackage());
 
    gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
    gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);
@@ -1878,6 +1881,7 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
       gdk_window_set_cursor(me->window()->window, me->_busyCursor);
+      me->setStatusText(_("Searching..."));
 #if GTK_CHECK_VERSION(2,4,0)
       // if we don't iterate here, the busy cursor is not shown
       while (gtk_events_pending())
@@ -1885,10 +1889,13 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 #endif
       string str = me->_findWin->getFindString();
       int type = me->_findWin->getSearchType();
-      me->_lister->searchView()->setSearch(str, type);
+      int found = me->_lister->searchView()->setSearch(str, type);
       me->changeView(4,true,str);
 
       gdk_window_set_cursor(me->window()->window, NULL);
+      gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
+      me->setStatusText(statusstr);
+      g_free(statusstr);
    }
 
 }

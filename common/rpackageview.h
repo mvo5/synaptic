@@ -121,9 +121,10 @@ class RPackageViewSearch : public RPackageView {
  protected:
    string searchString;
    int searchType;
+   int found; // nr of found pkgs for the last search
  public:
-   RPackageViewSearch(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
-   void setSearch(string str, int type);
+   RPackageViewSearch(vector<RPackage *> &allPkgs) : RPackageView(allPkgs),found(0) {};
+   int setSearch(string str, int type);
 
    string getName() {
       return _("Find History");

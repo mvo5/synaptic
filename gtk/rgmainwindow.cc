@@ -1923,8 +1923,10 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
          me->showErrors();
       else
          updateCache = true;
-      dontStop =
-         me->_userDialog->confirm(_("Do you want to add another CD-ROM?"));
+      if(_config->FindB("APT::CDROM::NoMount", false))
+	 dontStop=false;
+      else
+	 dontStop = me->_userDialog->confirm(_("Do you want to add another CD-ROM?"));
    }
    scan.hide();
    if (updateCache) {
@@ -2441,6 +2443,15 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) data;
    RGSummaryWindow *summ;
 
+   // nothing to do
+   int listed, installed, broken;
+   int toInstall, toReInstall, toRemove;
+   double size;
+   me->_lister->getStats(installed, broken, toInstall, toReInstall, 
+			 toRemove, size);
+   if((toInstall + toRemove) == 0)
+      return;
+
    // check whether we can really do it
    if (!me->_lister->check()) {
       me->_userDialog->error(_("Could not apply changes!\n"
@@ -2507,7 +2518,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
   #ifdef WITH_DPKG_STATUSFD
       iprogress = new RGDebInstallProgress(me,me->_lister);
   #else 
-      iprogress = new RGDummyInstallProgress();
+   iprogress = new RGDummyInstallProgress();
   #endif // WITH_DPKG_STATUSFD
 #endif // HAVE_RPM
 
@@ -2706,8 +2717,12 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       (UpgradeType) _config->FindI("Synaptic::UpgradeType", UPGRADE_ASK);
 
    // special case for non-interactive upgrades
-   if(upgrade == UPGRADE_ASK && _config->FindB("Volatile::Non-Interactive", false))
-      upgrade = UPGRADE_NORMAL;
+   if(_config->FindB("Volatile::Non-Interactive", false)) 
+      if(_config->FindB("Volatile::Upgrade-Mode", false))
+	 upgrade = UPGRADE_NORMAL;
+      else if(_config->FindB("Volatile::DistUpgrade-Mode", false))
+	 upgrade = UPGRADE_DIST;
+   
 
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants

@@ -69,8 +69,10 @@ bool ShowHelp(CommandLine & CmdL)
       _("-i=? Start with the initialFilter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
+      _("--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n") <<
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n");
+      _("--add-cdrom Add a cdrom at startup\n");
    exit(0);
 }
 
@@ -89,6 +91,10 @@ CommandLine::Args Args[] = {
    0, "non-interactive", "Volatile::Non-Interactive", 0}
    , {
    0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
+   , {
+   0, "dist-upgrade-mode", "Volatile::DistUpgrade-Mode", 0}
+   , {
+   0, "add-cdrom", "Volatile::AddCdrom-Mode", CommandLine::HasArg}
    , {
    0, "update-at-startup", "Volatile::Update-Mode", 0}
    , {
@@ -269,18 +275,22 @@ int main(int argc, char **argv)
    mainWindow->restoreState();
    mainWindow->showErrors();
 
-   if(_config->FindB("Volatile::Upgrade-Mode",false)) {
-      mainWindow->cbUpdateClicked(NULL, mainWindow);
+   
+   string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
+   if(!cd_mount_point.empty()) {
+      _config->Set("Acquire::cdrom::mount",cd_mount_point);
+      _config->Set("APT::CDROM::NoMount", true);
+      mainWindow->cbAddCDROM(NULL, mainWindow);
+   }
+
+   if(_config->FindB("Volatile::Upgrade-Mode",false) 
+      || _config->FindB("Volatile::DistUpgrade-Mode",false) ) {
       mainWindow->cbUpgradeClicked(NULL, mainWindow);
       mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
    }
 
    if(_config->FindB("Volatile::Update-Mode",false)) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
-      if (_config->FindB("Volatile::Non-Interactive", false)) {
-	 gtk_main_quit();
-	 return 0;
-      }
       mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
    }
 

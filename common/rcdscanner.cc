@@ -248,6 +248,7 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
    return true;
 }
 
+
 bool RCDScanner::start(RCDScanProgress *progress)
 {
    _cdName = "";

@@ -1266,6 +1266,8 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    if (Fetcher.Run() == pkgAcquire::Failed)
       return false;
 
+
+
    //bool AuthFailed = false;
    Failed = false;
    string failedURI;/* = _("Some index files failed to download, they "

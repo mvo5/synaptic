@@ -86,21 +86,29 @@ bool RGCDScanner::run()
 {
    bool res = false;
    RCDScanner scanner(_userDialog);
-   if (scanner.start(this)) {
-      RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
-      string name;
-      while (1) {
-         if (!discName->run(name)) {
-            delete discName;
-            scanner.unmount();
-            return false;
-         }
-         if (scanner.setDiscName(name))
-            break;
-         _userDialog->error(_("Invalid disc name!"));
+
+   if (_config->FindB("Volatile::Non-Interactive", false)) {
+      if(scanner.start(this)) {
+	 scanner.setDiscName(scanner.getDiscName());
+	 scanner.finish(this);
       }
-      delete discName;
-      res = scanner.finish(this);
+   } else {
+      if (scanner.start(this)) {
+	 string name;
+	 RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
+	 while (1) {
+	    if (!discName->run(name)) {
+	       delete discName;
+	       scanner.unmount();
+	       return false;
+	    }
+	    if (scanner.setDiscName(name))
+	       break;
+	    _userDialog->error(_("Invalid disc name!"));
+	 }
+	 delete discName;
+	 res = scanner.finish(this);
+      }
    }
    return res;
 }

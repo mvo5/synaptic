@@ -43,6 +43,7 @@ protected:
    virtual void updateInterface();
    virtual void finishUpdate();
    static void stopShell(GtkWidget *self, void* data);
+   virtual void close();
 
 public:
    RGZvtInstallProgress(RGMainWindow *main);

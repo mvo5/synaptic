@@ -51,10 +51,9 @@ using namespace std;
 void RGZvtInstallProgress::startUpdate()
 {
   show();
-  gtk_label_set_text(GTK_LABEL(_statusL), _("dpkg running"));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("Package Manager running"));
   RGFlushInterface();
 }
-
 
 void RGZvtInstallProgress::finishUpdate()
 {
@@ -85,7 +84,7 @@ void RGZvtInstallProgress::finishUpdate()
     zvt_term_feed(ZVT_TERM(_term), (char*)finishMsg.c_str(), (long)finishMsg.size());
   else
     zvt_term_feed(ZVT_TERM(_term), (char*)errorMsg.c_str(), (long)errorMsg.size());
-  gtk_label_set_text(GTK_LABEL(_statusL), _("dpkg finished"));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("Package Manager finished"));
 }
 
 void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
@@ -94,12 +93,17 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
 
   if(!me->updateFinished) {
     gtk_label_set_text(GTK_LABEL(me->_statusL), 
-		       _("Can't close, dpkg still runing"));
+		       _("Can't close, Package Manager still runing"));
     return;
   } 
 
   RGFlushInterface();
   me->hide();
+}
+
+void RGZvtInstallProgress::close()
+{
+  stopShell(NULL, this);
 }
 
 RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main) 
@@ -139,7 +143,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   gtk_widget_set_usize(hbox, -1, 35);
   gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
 
-  _closeOnF = gtk_check_button_new_with_label(_("Close dialog after dpkg is finished"));
+  _closeOnF = gtk_check_button_new_with_label(_("Close dialog after Package Manager is finished"));
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF), 
 			       _config->FindB("Synaptic::closeZvt", false));
 
@@ -220,3 +224,5 @@ void RGZvtInstallProgress::updateInterface()
 
 
 #endif
+
+// vim:sts=3:sw=3

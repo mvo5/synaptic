@@ -708,27 +708,37 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
 
 
+    RInstallProgress *iprogress;
 #ifdef HAVE_ZVT
-    RGZvtInstallProgress *iprogress = new RGZvtInstallProgress(me);
+#ifdef HAVE_RPM
+    bool UseTerminal = false;
 #else
- #ifdef HAVE_RPM
-    RGInstallProgress *iprogress = new RGInstallProgress(me);
- #else
-    RGDummyInstallProgress *iprogress = new RGDummyInstallProgress();
- #endif
+    bool UseTerminal = true;
+#endif
+    RGZvtInstallProgress *zvt = NULL;
+    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
+	iprogress = zvt = new RGZvtInstallProgress(me);
+    else
+#endif
+#ifdef HAVE_RPM
+	iprogress = new RGInstallProgress(me);
+#else
+	iprogress = new RGDummyInstallProgress();
 #endif
     
     //bool result = me->_lister->commitChanges(fprogress, iprogress);
     me->_lister->commitChanges(fprogress, iprogress);
 
-    delete fprogress;
 #ifdef HAVE_ZVT
     // wait until the zvt dialog is closed
-    while(GTK_WIDGET_VISIBLE(GTK_WIDGET(iprogress->window()))) {
-      RGFlushInterface();
-      usleep(1000);
+    if (zvt != NULL) {
+	while(GTK_WIDGET_VISIBLE(GTK_WIDGET(zvt->window()))) {
+	    RGFlushInterface();
+	    usleep(100000);
+	}
     }
 #endif
+    delete fprogress;
     delete iprogress;
 
     me->showErrors();

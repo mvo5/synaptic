@@ -38,7 +38,6 @@ using namespace std;
 #include "rggladewindow.h"
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
-#include "gtktagtree.h"
 
 
 #define TOOLBAR_HIDE -1

@@ -80,5 +80,6 @@ EXTRA_DIST=\
 	$(appicon_DATA) \
 	$(button_DATA) \
 	$(abouticon_DATA) \
+	$(fetchstatus_DATA)\
 	$(status_icon_DATA)
 

@@ -59,7 +59,11 @@ class RPackageView {
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };
    bool setSelected(string name);
-   void showAll() { _selectedView = _all; };
+   void showAll() { 
+      _selectedView = _all; 
+      _hasSelection = false;
+      _selectedName.clear();
+   };
 
    vector<string> getSubViews();
 

@@ -184,10 +184,9 @@ RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs)
 
 RPackageViewFilter::iterator RPackageViewFilter::begin() 
 { 
-   cout << "RPackageViewFilter::begin() " << endl;
+//    cout << "RPackageViewFilter::begin() " << _selectedName <<  endl;
 
    string name = _selectedName;
-   
    RFilter *filter = findFilter(name);
 
    if(filter != NULL) {

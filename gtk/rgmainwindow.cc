@@ -1072,18 +1072,25 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     bool ok;
     if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
+	    //cout << "got: " << depType << " " << depName << endl;
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
+#ifdef HAVE_RPM
 			 utf8(depType), depPkg ? depPkg : depName, depVer);
+#else
+		         utf8(depType), depName, depVer); 
+#endif
 	    } else {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
 			 utf8(depType), depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
+	    //cout << "buffer is: " << buffer << endl;
 
 	    // check if this item is duplicated
 	    bool dup = FALSE;
 	    bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_depListStore), &iter);
+
 	    while(valid) {
 		char *str;
 		
@@ -1098,7 +1105,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 		valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_depListStore),&iter);
 		g_free(str);
 	    }
-	    
+
 	    if (!dup) {
 		gtk_list_store_append(_depListStore, &iter);
 		gtk_list_store_set(_depListStore, &iter,
@@ -1818,12 +1825,12 @@ void RGMainWindow::undoClicked(GtkWidget *self, void *data)
 void RGMainWindow::doOpenSelections(GtkWidget *file_selector, 
 				    gpointer data) 
 {
-    cout << "void RGMainWindow::doOpenSelections()" << endl;
+    //cout << "void RGMainWindow::doOpenSelections()" << endl;
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(data), "me");
     const gchar *file;
 
     file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-    cout << "selected file: " << file << endl;
+    //cout << "selected file: " << file << endl;
     me->selectionsFilename = file;
 
     ifstream in(file);
@@ -1841,7 +1848,7 @@ void RGMainWindow::doOpenSelections(GtkWidget *file_selector,
 
 void RGMainWindow::openClicked(GtkWidget *self, void *data)
 {
-    std::cout << "RGMainWindow::openClicked()" << endl;
+    //std::cout << "RGMainWindow::openClicked()" << endl;
     //RGMainWindow *me = (RGMainWindow*)data;
     
     GtkWidget *filesel;
@@ -1866,7 +1873,7 @@ void RGMainWindow::openClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::saveClicked(GtkWidget *self, void *data)
 {
-    std::cout << "RGMainWindow::saveClicked()" << endl;
+    //std::cout << "RGMainWindow::saveClicked()" << endl;
     RGMainWindow *me = (RGMainWindow*)data;
 
     if(me->selectionsFilename == "") {
@@ -1894,17 +1901,17 @@ void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button,
     GtkWidget *checkButton;
     const gchar *file;
 
-    cout << "void RGMainWindow::doSaveSelections()" << endl;
+    //cout << "void RGMainWindow::doSaveSelections()" << endl;
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(data), "me");
 
     file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-    cout << "selected file: " << file << endl;
+    //cout << "selected file: " << file << endl;
     me->selectionsFilename = file;
     
     // do we want the full state?
     checkButton = (GtkWidget*)g_object_get_data(G_OBJECT(data), "checkButton");
     me->saveFullState = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
-    cout << "fullState: " << me->saveFullState << endl;
+    //cout << "fullState: " << me->saveFullState << endl;
 
     ofstream out(file);
     if (!out != 0) {
@@ -1921,7 +1928,7 @@ void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button,
 
 void RGMainWindow::saveAsClicked(GtkWidget *self, void *data)
 {
-    std::cout << "RGMainWindow::saveAsClicked()" << endl;
+    //std::cout << "RGMainWindow::saveAsClicked()" << endl;
     //RGMainWindow *me = (RGMainWindow*)data;
     
     GtkWidget *filesel;

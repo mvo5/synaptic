@@ -45,13 +45,15 @@ static const RStatusPackageFilter::Types StatusMasks[] =  {
     RStatusPackageFilter::PinnedPackage,
     RStatusPackageFilter::OrphanedPackage, // debian only (for now)
     RStatusPackageFilter::ResidualConfig,
-    RStatusPackageFilter::DebconfPackage   // debian only
+    RStatusPackageFilter::DebconfPackage,   // debian only
+    RStatusPackageFilter::NotInstallable
+
 };
 // FIXME: if you add a new status change this const! (calc automaticlly)
 #ifndef HAVE_RPM
-static const int NrOfStatusBits = 12;
+static const int NrOfStatusBits = 13;
 #else
-static const int NrOfStatusBits = 10;
+static const int NrOfStatusBits = 11;
 #endif
 
 static char  *ActOptions[] = {

@@ -97,11 +97,12 @@ public:
    };
 
    enum OtherStatus {
-     OOrphaned       = 1<<0,
-     OPinned         = 1<<1, /* apt-pined */
-     ONew            = 1<<2,
-     OResidualConfig = 1<<3,
-     ODebconf        = 1<<4
+     OOrphaned        = 1<<0,
+     OPinned          = 1<<1, /* apt-pined */
+     ONew             = 1<<2,
+     OResidualConfig  = 1<<3,
+     ODebconf         = 1<<4,
+     ONotInstallable  = 1<<5
    };
    
    enum UpdateImportance {

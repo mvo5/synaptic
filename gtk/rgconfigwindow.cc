@@ -51,7 +51,7 @@ char * RGConfigWindow::color_buttons[] = {
 void RGConfigWindow::saveAction(GtkWidget *self, void *data)
 {
     RGConfigWindow *me = (RGConfigWindow*)data;
-    bool newval, postClean, postAutoClean;
+    bool newval;
 
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
     _config->Set("Synaptic::CleanCache", newval ? "true" : "false");

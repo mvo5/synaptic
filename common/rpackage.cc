@@ -307,6 +307,12 @@ int RPackage::getOtherStatus()
       status |= OResidualConfig;
     }
 
+    pkgCache::VerIterator ver = _package->VersionList();
+    if (ver != 0 && !ver.Downloadable()) {
+	//cout << "Not in archive found for: "<<name()<<endl;
+	status |= ONotInstallable;
+    }
+
     return status;
 }
 
@@ -601,9 +607,9 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
 			const char *&pkg, const char *&which, char *&summary,
 			bool &satisfied)
 {
-    static char buffer[32];
-    static char buffer2[32];
-    static char buffer3[64];
+    static char buffer[32]; // type
+    static char buffer2[32]; // which
+    static char buffer3[64]; // summary
 
     while (1) {
 	if (_depStart == _depEnd) {
@@ -627,10 +633,12 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
 	    satisfied = true;
 
 	type = buffer;
+	//cout << "type: " << buffer << endl;
 
 	pkgCache::PkgIterator depPkg = _depStart.TargetPkg();
 	what = depPkg.Name();
-	
+
+	//cout << "what (before): " << what << endl;
 
 	if (depPkg->VersionList!=0)
 	    pkg = what;
@@ -638,8 +646,8 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
 	    pkg = depPkg.ProvidesList().OwnerPkg().Name();
 	else
 	    pkg = 0;
-	
-	
+	//cout << "what (after): " << what << endl;	
+
 	if (_depStart.TargetVer()) {
 	    snprintf(buffer2, sizeof(buffer2), "(%s %s)",
 		     _depStart.CompType(), _depStart.TargetVer());
@@ -647,6 +655,7 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
 	} else {
 	    which = "";
 	}
+	//cout << "which: " << buffer2 << endl;
 
 	buffer3[0] = 0;
 	if (!satisfied && depPkg->ProvidesList == 0) {
@@ -668,6 +677,7 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
 	    strcpy(buffer3, _("dependency is satisfied"));
 	}
 	summary = buffer3;	
+	//cout << "summary: " << summary << endl;
 
 	break;
     }
@@ -875,6 +885,15 @@ bool RPackage::isShallowDependency(RPackage *pkg)
 
 vector<const char*> RPackage::provides()
 {
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandidateVer == 0)
+        return _provides;
+
+    for (pkgCache::PrvIterator Prv = State.CandidateVerIter(*_depcache).ProvidesList(); Prv.end() != true; Prv++) {
+	    if(find(_provides.begin(),_provides.end(),Prv.Name()) == _provides.end()) 
+		    _provides.push_back(Prv.Name());
+	}
+
     return _provides;
 }
 

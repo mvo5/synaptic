@@ -64,7 +64,7 @@ class RCacheActorPkgTree : public RCacheActor
 
  public:
     virtual void notifyCacheOpen() {
-	    std::cout << "notifyCacheOpen()" << endl;
+	//std::cout << "notifyCacheOpen()" << endl;
 	_pkgTree = gtk_pkg_tree_new(_lister);;
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView), 
 				GTK_TREE_MODEL(_pkgTree));

@@ -216,46 +216,40 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		const char *depType, *depPkg, *depName, *depVer;
 		char *summary;
 		bool ok;
+		found = false;
 		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
 		    {
 			do 
 			    {
 				if(strstr(depType,"Depends") != NULL)
-				    for(unsigned int i=0;i<regexps.size();i++) {
-					if(regexec(&regexps[i], depName, 0, NULL, 0) == 0)
-					    found &= true;
-					else 
-					    found = false;
+				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+					    found = true;
+					    break;
 				    }
   			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-		    }
+		    } 
 	    } else if (iter->where == Provides) {
+		found = false;
 		vector<const char*> provides = pkg->provides();
 		for(unsigned int i=0;i<provides.size();i++) {
-		    for(unsigned int j=0;j<regexps.size();j++) {
-			if(regexec(&regexps[j], provides[i], 0, NULL, 0) == 0)
-			    found &= true;
-			else 
-			    found = false;
+		    if(regexec(&regexps[0], provides[i], 0, NULL, 0) == 0) {
+			    found = true;
+			    break;
 		    }
 		}
 	    } else if (iter->where == Conflicts) {
 		const char *depType, *depPkg, *depName, *depVer;
 		char *summary;
 		bool ok;
+		found = false;
 		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
 		    {
 			do 
 			    {
 				if(strstr(depType,"Conflicts") != NULL)
-				    for(unsigned int j=0;j<regexps.size();j++) {
-					if(regexec(&regexps[j], depName, 0, NULL, 0) == 0) {
-					    found &= true;
-					break;
-					} else {
-					    found = false;
+				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+					    found = true;
 					    break;
-					}
 				    }
 			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
 		    }
@@ -263,50 +257,38 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		const char *depType, *depPkg, *depName, *depVer;
 		char *summary;
 		bool ok;
+		found = false;
 		if(pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok))
 		    {
 			do 
 			    {
-				for(unsigned int j=0;j<regexps.size();j++) {
-				    if(regexec(&regexps[j], depName, 0, NULL, 0) == 0) {
-					found &= true;
+				if(strstr(depType,"Replaces") != NULL)
+				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+					found = true;
 					break;
-				    } else {
-					found = false;
-					break;
-				    }
-				}
+				    } 
 			    } while(pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
 		    }
  
 	    } else if (iter->where == WeakDepends) {
+		found = false;
 		const char *depType, *depPkg, *depName;
 		bool ok;
 		if (pkg->enumWDeps(depType, depPkg, ok)) {
 		    do {
-			for(unsigned int j=0;j<regexps.size();j++) {
-			    if(regexec(&regexps[j], depPkg, 0, NULL, 0) == 0) {
-				found &= true;
-				break;
-			    } else {
-				found = false;
-				break;
-			    }
-			}
+			if(regexec(&regexps[0], depPkg, 0, NULL, 0) == 0) {
+			    found = true;
+			    break;
+			} 
 		    } while (pkg->nextWDeps(depName, depPkg, ok));
 		}
 	    } else if (iter->where == RDepends) {
+		found = false;
 		const char *depPkg, *depName;
 		if (pkg->enumRDeps(depName, depPkg)) {
 		    do {
-			for(unsigned int j=0;j<regexps.size();j++) {
-			    if(regexec(&regexps[j], depName, 0, NULL, 0) == 0) {
-				found &= true;
-				break;
-			    } else {
-				found = false;
-				break;
-			    }
+			if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+				found = true;
 			}
 		    } while (pkg->nextRDeps(depName, depPkg));
 		}
@@ -496,6 +478,14 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
 	  return true;
       }
     }
+
+    if(_status & NotInstallable ) {
+      if(ostatus & RPackage::ONotInstallable) {
+	  //cout << "pkg(" << pkg->name() << ")->isNotInRepository()" << endl;
+	  return true;
+      }
+    }
+
 
     return false;
 }

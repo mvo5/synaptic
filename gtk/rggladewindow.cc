@@ -101,6 +101,9 @@ bool RGGladeWindow::setLabel(const char *widget_name, const long value)
    }
    // we can never have values of zero or less
    if (value <= 0)
+      // TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
+      // happens when e.g. a package has no installed version (or no
+      // downloadable version)
       strVal = _("N/A");
    else
       strVal = SizeToStr(value);

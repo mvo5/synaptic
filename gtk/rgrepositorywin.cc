@@ -699,7 +699,10 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
    assert(rec_p);
 
    // Insert rec before rec_p
-   me->_lst.SwapSources(rec_p, rec);
+   if(up)
+      me->_lst.SwapSources(rec_p, rec);
+   else
+      me->_lst.SwapSources(rec, rec_p);
 }
 
 

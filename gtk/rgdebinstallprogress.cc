@@ -437,14 +437,18 @@ void RGDebInstallProgress::updateInterface()
 	    // conffile-request
 	    //cout << split[2] << " " << split[3] << endl;
 	    conffile(pkg, split[3]);
+	 } else if(_actionsMap.count(pkg) == 0) {
+	    // no known dpkg state (happens e.g if apt reports:
+	    // /bin/sh: apt-listchanges: command-not-found
+	    continue;
 	 } else {
-
 	    // then go on with the package stuff
 	    char *next_stage_str = NULL;
 	    int next_stage = _stagesMap[pkg];
 	    // is a element is not found in the map, NULL is returned
 	    // (this happens when dpkg does some work left from a previous
 	    //  session (rare but happens))
+	    
 	    char **states = _actionsMap[pkg]; 
 	    char **translations = _translationsMap[pkg]; 
 	    if(states && translations) {

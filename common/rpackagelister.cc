@@ -84,7 +84,7 @@ RPackageLister::RPackageLister()
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);
    _views.push_back(_searchView);   
-   _views.push_back(new RPackageViewAlphabetic(_packages));
+   //_views.push_back(new RPackageViewAlphabetic(_packages));
 
    if (_viewMode >= _views.size())
       _viewMode = 0;

@@ -117,9 +117,9 @@ void cbGetSelectedRows(GtkTreeModel *model,
 void RGMainWindow::changeView(int view, string subView)
 {
    //cout << "RGMainWindow::changeView()" << endl;
-   if(view > N_PACKAGE_VIEWS) {
-      cerr << "changeView called with invalid view NR: " << view << endl;
-      return;
+   if(view >= N_PACKAGE_VIEWS) {
+      //cerr << "changeView called with invalid view NR: " << view << endl;
+      view=0;
    }
 
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);

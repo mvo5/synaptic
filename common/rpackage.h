@@ -48,6 +48,7 @@ class RPackage {
    pkgRecords *_records;
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
+
    bool _newPackage;
    bool _pinnedPackage;
    bool _orphanedPackage;

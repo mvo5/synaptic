@@ -2772,9 +2772,21 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
     //cout << "pkgInstallHelper()/start" << endl;
     // do the work
     pkg->setInstall();
+
     // check whether something broke
     if (fixBroken && !_lister->check())
 	_lister->fixBroken();
+
+    int mstatus = pkg->getMarkedStatus();
+    //cout << "mstatus: " << mstatus << endl;
+    if(!(mstatus == RPackage::MInstall ||
+        mstatus == RPackage::MUpgrade) ) 
+	{
+	    _userDialog->warning(
+		_("The selected package couldn't be installed/upgraded.\n\n"
+		  "This is most probably caused by unmet dependencies \
+that are not available in any repository."));
+	}
     //cout << "pkgInstallHelper()/end" << endl;
 }
 

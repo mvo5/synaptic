@@ -1,6 +1,6 @@
-/* raptor.cc - main()
+/* synaptic.cc - main()
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *

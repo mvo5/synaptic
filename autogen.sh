@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="raptor"
+PKG_NAME="synaptic"
 
 (test -f $srcdir/configure.in \
   && test -f $srcdir/ChangeLog \

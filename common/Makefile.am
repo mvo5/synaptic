@@ -1,10 +1,10 @@
 
 
-noinst_LIBRARIES = libraptor.a
+noinst_LIBRARIES = libsynaptic.a
 
 INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@
 
-libraptor_a_SOURCES =\
+libsynaptic_a_SOURCES =\
 	i18n.h\
 	rconfiguration.cc\
 	rconfiguration.h\

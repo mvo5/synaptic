@@ -12,7 +12,7 @@ sbin_PROGRAMS= synaptic
 synaptic_LDFLAGS=-export-dynamic
 
 synaptic_LDADD = \
-	${top_builddir}/common/libraptor.a\
+	${top_builddir}/common/libsynaptic.a\
 	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
 	@PACKAGE_LIBS@ @ZVT_LIBS@ \
 	-lpthread

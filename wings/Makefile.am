@@ -4,7 +4,7 @@ sbin_PROGRAMS=wsynaptic
 
 
 wsynaptic_LDADD =-lExtraWINGs @WINGS_LIBS@ \
-	${top_builddir}/common/libraptor.a\
+	${top_builddir}/common/libsynaptic.a\
 	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@\
 	-lpthread -L/usr/X11R6/lib
 

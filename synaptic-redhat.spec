@@ -4,7 +4,7 @@
 
 Summary: Graphical package management program using apt.
 Name: synaptic
-Version: 0.46
+Version: 0.47
 Release: 1
 License: GPL
 Group: Applications/System
@@ -13,7 +13,7 @@ URL: http://www.nongnu.org/synaptic/
 BuildRoot: %{_tmppath}/%{name}-root
 Requires: apt >= 0.5.4, usermode, gtk2, libglade2,scrollkeeper
 Requires: libstdc++
-BuildRequires: apt-devel >= 0.5.4, rpm-devel >= 4.0, gtk2-devel, libglade2-devel
+BuildRequires: apt-devel, rpm-devel, gtk2-devel, libglade2-devel
 BuildRequires: libstdc++-devel, desktop-file-utils, sed, docbook-utils
 BuildRequires: scrollkeeper, intltool
 
@@ -96,6 +96,9 @@ rm -rf %{buildroot}
 %{_mandir}/man8/%{name}.8*
 
 %changelog
+* Tue Dec 1 2003 Sebastian Heinlein <allerlei@renates-welt.de>
+- Update to 0.47
+
 * Tue Nov 17 2003 Sebastian Heinlein <allerlei@renates-welt.de>
 - Update to 0.46
 

@@ -296,8 +296,7 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
     else if(is_binary_in_path("mozilla"))
 	system("mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
     else
-	me->_userDialog->error(_("<span weight=\"bold\" size=\"large\">"
-				"No help viewer is installed</span>\n\n"
+	me->_userDialog->error(_("No help viewer is installed\n\n"
 				"You need either the gnome viewer 'yelp' "
 				"or the 'mozilla' browser to view the"
 				" synaptic manual.\n\n"

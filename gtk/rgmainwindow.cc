@@ -1755,7 +1755,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  }
 	  if(failed) {
 	      // TODO: make this a special dialog with TextView
-	      me->_userDialog->warning(failedReason.c_str());
+	      me->_userDialog->warning(utf8(failedReason.c_str()));
 	  }
       }
   }
@@ -3578,6 +3578,7 @@ void RGMainWindow::setTreeLocked(bool flag)
 {
     //cout << "setTreeLocked()" << endl;
     if (flag == true) {
+	updatePackageInfo(NULL);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
     } else {
 	changeTreeDisplayMode(_treeDisplayMode);

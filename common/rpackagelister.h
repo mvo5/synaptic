@@ -247,18 +247,19 @@ class RPackageLister {
    RPackage *getElement(pkgCache::PkgIterator &pkg);
    RPackage *getElement(string Name);
 
-   void getStats(int &installed, int &broken, int &toinstall, int &toremove,
-                 double &sizeChange);
+   void getStats(int &installed, int &broken, int &toInstall, int &toReInstall,
+		 int &toRemove, double &sizeChange);
 
    void getSummary(int &held, int &kept, int &essential,
-                   int &toInstall, int &toUpgrade, int &toRemove,
-                   int &toDowngrade, double &sizeChange);
+                   int &toInstall, int &toReInstall, int &toUpgrade, 
+		   int &toRemove,  int &toDowngrade, double &sizeChange);
 
 
    void getDetailedSummary(vector<RPackage *> &held,
                            vector<RPackage *> &kept,
                            vector<RPackage *> &essential,
                            vector<RPackage *> &toInstall,
+                           vector<RPackage *> &toReInstall,
                            vector<RPackage *> &toUpgrade,
                            vector<RPackage *> &toRemove,
                            vector<RPackage *> &toDowngrade,
@@ -275,6 +276,7 @@ class RPackageLister {
    bool getStateChanges(pkgState &state,
                         vector<RPackage *> &kept,
                         vector<RPackage *> &toInstall,
+			vector<RPackage *> &toReInstall,
                         vector<RPackage *> &toUpgrade,
                         vector<RPackage *> &toRemove,
                         vector<RPackage *> &toDowngrade,

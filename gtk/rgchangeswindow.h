@@ -50,6 +50,7 @@ class RGChangesWindow:public RGGladeWindow {
    bool showAndConfirm(RPackageLister *lister,
                        vector<RPackage *> &kept,
                        vector<RPackage *> &toInstall,
+                       vector<RPackage *> &toReInstall,
                        vector<RPackage *> &toUpgrade,
                        vector<RPackage *> &toRemove,
                        vector<RPackage *> &toDowngrade);

@@ -66,13 +66,14 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
    vector<RPackage *> kept;
    vector<RPackage *> essential;
    vector<RPackage *> toInstall;
+   vector<RPackage *> toReInstall;
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toRemove;
    vector<RPackage *> toDowngrade;
    double sizeChange;
 
-   lister->getDetailedSummary(held, kept, essential, toInstall, toUpgrade,
-                              toRemove, toDowngrade, sizeChange);
+   lister->getDetailedSummary(held, kept, essential, toInstall, toReInstall,
+			      toUpgrade,  toRemove, toDowngrade, sizeChange);
 
    if (essential.size() > 0) {
       /* (Essentail) removed */
@@ -137,6 +138,21 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       }
    }
 
+  if(toReInstall.size() > 0) {
+    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
+    gtk_tree_store_set (me->_treeStore, &iter,
+			PKG_COLUMN, _("To be re-installed"),-1);
+    for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
+	 p != toReInstall.end(); 
+	 p++) 
+      {
+	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
+	gtk_tree_store_set(me->_treeStore, &iter_child,
+			   PKG_COLUMN,(*p)->name(), -1);
+      }
+  }
+
+
    if (kept.size() > 0) {
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
@@ -178,16 +194,15 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
    vector<RPackage *> kept;
    vector<RPackage *> essential;
    vector<RPackage *> toInstall;
+   vector<RPackage *> toReInstall;
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toRemove;
    vector<RPackage *> toDowngrade;
    double sizeChange;
 
-   lister->getDetailedSummary(held,
-                              kept,
-                              essential,
-                              toInstall,
-                              toUpgrade, toRemove, toDowngrade, sizeChange);
+   lister->getDetailedSummary(held, kept, essential,
+                              toInstall,toReInstall,toUpgrade, 
+			      toRemove, toDowngrade, sizeChange);
 
    for (vector<RPackage *>::const_iterator p = essential.begin();
         p != essential.end(); p++) {
@@ -233,6 +248,13 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
                          (*p)->name(), (*p)->availableVersion());
       text += str;
       g_free(str);
+   }
+
+   for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
+	p != toReInstall.end(); p++) {
+       str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>) will be re-installed\n"),(*p)->name(), (*p)->installedVersion());
+       text += str;
+       g_free(str);
    }
 
    gtk_label_set_markup(GTK_LABEL(info), text.c_str());
@@ -296,7 +318,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_signal_connect(GTK_OBJECT(button), "clicked",
                       (GtkSignalFunc) clickedCancel, this);
 
-   int toInstall, toRemove, toUpgrade, toDowngrade;
+   int toInstall, toReInstall, toRemove, toUpgrade, toDowngrade;
    int held, kept, essential;
    double sizeChange, dlSize;
    int dlCount;
@@ -304,7 +326,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    GString *msg_space = g_string_new("");
 
    lister->getSummary(held, kept, essential,
-                      toInstall, toUpgrade, toRemove, toDowngrade, sizeChange);
+                      toInstall, toReInstall, toUpgrade, toRemove, 
+		      toDowngrade, sizeChange);
    lister->getDownloadSummary(dlCount, dlSize);
 
    if (held) {
@@ -325,6 +348,13 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
                            "%d new packages will be installed\n",
                            toInstall);
       g_string_append_printf(msg, str, toInstall);
+   }
+
+   if (toReInstall) {
+       char *str = ngettext("%d new package will be re-installed\n",
+			    "%d new packages will be re-installed\n",
+			    toReInstall);
+       g_string_append_printf(msg, str, toReInstall);
    }
 
    if (toUpgrade) {

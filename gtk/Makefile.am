@@ -27,8 +27,7 @@ glade_DATA =                            \
 	window_filters.glade \
 	window_iconlegend.glade \
 	dialog_locales_warning.glade \
-        window_main_vpaned.glade \
-        window_main_hpaned.glade \
+        window_main.glade \
 	window_preferences.glade \
 	dialog_quit.glade  \
 	window_rginstall_progress.glade \

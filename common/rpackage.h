@@ -95,6 +95,7 @@ class RPackage {
    enum MarkedStatus {
       MKeep,
       MInstall,
+      MReInstall,
       MUpgrade,
       MDowngrade,
       MRemove,
@@ -209,6 +210,7 @@ class RPackage {
    // change status
    void setKeep();
    void setInstall();
+   void setReInstall(bool flag);
    void setRemove(bool purge = false);  //XXX: purge for debian
 
    void setNotify(bool flag = true);

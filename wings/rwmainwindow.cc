@@ -2005,10 +2005,10 @@ void RWMainWindow::setStatusText(char *text)
 {
 
     int listed, installed, broken;
-    int toinstall, toremove;
+    int toinstall, toreinstall, toremove;
     double size;
 
-    _lister->getStats(installed, broken, toinstall, toremove, size);
+    _lister->getStats(installed, broken, toinstall, toreinstall, toremove, size);
 
     if (text) {
 	WMSetLabelText(_statusL, text);

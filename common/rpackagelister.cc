@@ -1099,20 +1099,21 @@ int RPackageLister::findNextPackage()
 }
 
 void RPackageLister::getStats(int &installed, int &broken,
-                              int &toinstall, int &toremove,
-                              double &sizeChange)
+                              int &toInstall, int &toReInstall,
+			      int &toRemove,  double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
 
    if (deps != NULL) {
       sizeChange = deps->UsrSize();
-
+      
+      //FIXME: toReInstall not reported?
       installed = _installedCount;
       broken = deps->BrokenCount();
-      toinstall = deps->InstCount();
-      toremove = deps->DelCount();
+      toInstall = deps->InstCount();
+      toRemove = deps->DelCount();
    } else
-      sizeChange = installed = broken = toinstall = toremove = 0;
+      sizeChange = installed = broken = toInstall = toRemove = 0;
 }
 
 
@@ -1124,7 +1125,8 @@ void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 
 
 void RPackageLister::getSummary(int &held, int &kept, int &essential,
-                                int &toInstall, int &toUpgrade, int &toRemove,
+                                int &toInstall, int &toReInstall,
+				int &toUpgrade, int &toRemove,
                                 int &toDowngrade, double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
@@ -1134,6 +1136,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
    kept = deps->KeepCount();
    essential = 0;
    toInstall = 0;
+   toReInstall = 0;
    toUpgrade = 0;
    toDowngrade = 0;
    toRemove = 0;
@@ -1146,6 +1149,9 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
             break;
          case RPackage::MInstall:
             toInstall++;
+            break;
+         case RPackage::MReInstall:
+            toReInstall++;
             break;
          case RPackage::MUpgrade:
             toUpgrade++;
@@ -1253,6 +1259,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toKeep,
                                      vector<RPackage *> &toInstall,
+                                     vector<RPackage *> &toReInstall,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
@@ -1280,7 +1287,10 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
          } else if (PkgState.NewInstall()) {
             toInstall.push_back(RPkg);
             changed = true;
-         } else if (PkgState.Delete()) {
+         } else if (PkgState.Install()) {
+	     toReInstall.push_back(RPkg);
+	     changed = true;
+	 } else if (PkgState.Delete()) {
             toRemove.push_back(RPkg);
             changed = true;
          } else if (PkgState.Keep()) {
@@ -1298,6 +1308,8 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
          sort(toKeep.begin(), toKeep.end(), bla());
       if (toInstall.empty() == false)
          sort(toInstall.begin(), toInstall.end(), bla());
+      if (toReInstall.empty() == false)
+         sort(toReInstall.begin(), toReInstall.end(), bla());
       if (toUpgrade.empty() == false)
          sort(toUpgrade.begin(), toUpgrade.end(), bla());
       if (toRemove.empty() == false)
@@ -1340,6 +1352,11 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
                deps->MarkDelete(*(pkg->package()), false);
                break;
 
+	    case RPackage::MReInstall:
+		deps->MarkInstall(*(pkg->package()), true);
+		deps->SetReInstall(*(pkg->package()), false);
+		break;
+  
             case RPackage::MHeld:
             case RPackage::MKeep:
                deps->MarkKeep(*(pkg->package()), false);
@@ -1356,6 +1373,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toKeep,
                                      vector<RPackage *> &toInstall,
+				     vector<RPackage *> &toReInstall,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
@@ -1374,6 +1392,11 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                toInstall.push_back(_packages[i]);
                changed = true;
                break;
+
+	    case RPackage::MReInstall:
+		toReInstall.push_back(_packages[i]);
+		changed = true;
+		break;
 
             case RPackage::MUpgrade:
                toUpgrade.push_back(_packages[i]);
@@ -1408,6 +1431,8 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
          sort(toKeep.begin(), toKeep.end(), bla());
       if (toInstall.empty() == false)
          sort(toInstall.begin(), toInstall.end(), bla());
+      if (toReInstall.empty() == false)
+         sort(toReInstall.begin(), toReInstall.end(), bla());
       if (toUpgrade.empty() == false)
          sort(toUpgrade.begin(), toUpgrade.end(), bla());
       if (toRemove.empty() == false)
@@ -1425,6 +1450,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         vector<RPackage *> &kept,
                                         vector<RPackage *> &essential,
                                         vector<RPackage *> &toInstall,
+                                        vector<RPackage *> &toReInstall,
                                         vector<RPackage *> &toUpgrade,
                                         vector<RPackage *> &toRemove,
                                         vector<RPackage *> &toDowngrade,
@@ -1445,6 +1471,9 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
          case RPackage::MInstall:
             toInstall.push_back(pkg);
             break;
+         case RPackage::MReInstall:
+	    toReInstall.push_back(pkg);
+	    break;
          case RPackage::MUpgrade:
             toUpgrade.push_back(pkg);
             break;
@@ -1468,6 +1497,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
 
    sort(kept.begin(), kept.end(), bla());
    sort(toInstall.begin(), toInstall.end(), bla());
+   sort(toReInstall.begin(), toReInstall.end(), bla());
    sort(toUpgrade.begin(), toUpgrade.end(), bla());
    sort(essential.begin(), essential.end(), bla());
    sort(toRemove.begin(), toRemove.end(), bla());
@@ -1766,6 +1796,7 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
       RPackage::PackageStatus status = _packages[i]->getStatus();
       switch (mstatus) {
          case RPackage::MInstall:
+         case RPackage::MReInstall:
          case RPackage::MUpgrade:
             out << _packages[i]->name() << "   \t   install" << endl;
             // marked state has priority so we skip the rest

@@ -399,6 +399,10 @@ RPackage::MarkedStatus RPackage::getMarkedStatus()
 {
    pkgDepCache::StateCache & state = (*_depcache)[*_package];
 
+   if ((state.iFlags & pkgDepCache::ReInstall) == pkgDepCache::ReInstall) {
+       return MReInstall;
+   }
+
    if (state.NewInstall())
       return MInstall;
 
@@ -882,6 +886,15 @@ void RPackage::setInstall()
 
    if (_notify)
       _lister->notifyChange(this);
+}
+
+void RPackage::setReInstall(bool flag)
+{
+    _depcache->SetReInstall(*_package, flag);
+    _config->Set("APT::Get::ReInstall", flag);
+    
+    if (_notify)
+	_lister->notifyChange(this);
 }
 
 

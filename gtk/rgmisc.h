@@ -54,7 +54,7 @@ string SizeToStr(double Bytes);
 class RPackageStatus {
  public:
    enum PkgStatus {
-      ToInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
+      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
       NotInstalled, NotInstalledLocked,
       InstalledUpdated, InstalledOutdated, InstalledLocked,
       IsBroken, IsNew,

@@ -89,6 +89,7 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
 bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
                                      vector<RPackage *> &kept,
                                      vector<RPackage *> &toInstall,
+                                     vector<RPackage *> &toReInstall,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade)
@@ -139,6 +140,18 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
       gtk_tree_store_set(_treeStore, &iter,
                          PKG_COLUMN, _("To be installed"), -1);
       for (vector<RPackage *>::const_iterator p = toInstall.begin();
+           p != toInstall.end(); p++) {
+         gtk_tree_store_append(_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
+      }
+   }
+
+   if (toReInstall.size() > 0) {
+      gtk_tree_store_append(_treeStore, &iter, NULL);
+      gtk_tree_store_set(_treeStore, &iter,
+                         PKG_COLUMN, _("To be re-installed"), -1);
+      for (vector<RPackage *>::const_iterator p = toReInstall.begin();
            p != toInstall.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,

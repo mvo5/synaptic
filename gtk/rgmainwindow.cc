@@ -975,6 +975,10 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             }
 #endif
             break;
+         case PKG_REINSTALL:      // reinstall
+	    instPkgs.push_back(pkg);
+	    pkgInstallHelper(pkg, false, true);
+	    break;
          case PKG_DELETE:      // delete
             pkgRemoveHelper(pkg);
             break;
@@ -1002,19 +1006,20 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
+   vector<RPackage *> toReInstall;
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toDowngrade;
    vector<RPackage *> toRemove;
 
    // ask if the user really want this changes
    bool changed = true;
-   if (ask && _lister->getStateChanges(state, toKeep, toInstall,
+   if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
                                            toUpgrade, toRemove, toDowngrade,
                                            exclude)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, toKeep, toInstall,
+      if (!chng->showAndConfirm(_lister, toKeep, toInstall, toReInstall,
                                 toUpgrade, toRemove, toDowngrade)) {
          // canceled operation
          _lister->restoreState(state);
@@ -1334,18 +1339,24 @@ void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview,
           && mstatus != RPackage::MInstall) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
+
+      // re-install button
+      if (i == 2 && pstatus == RPackage::SInstalledUpdated) {
+         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+      }
+
       // upgrade button
-      if (i == 2 && pstatus == RPackage::SInstalledOutdated
+      if (i == 3 && pstatus == RPackage::SInstalledOutdated
           && mstatus != RPackage::MUpgrade) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
       // remove buttons (remove, remove with dependencies)
-      if ((i == 3 || i == 5) && pstatus != RPackage::SNotInstalled
+      if ((i == 4 || i == 6) && pstatus != RPackage::SNotInstalled
           && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
       // purge
-      if (i == 4 && pstatus != RPackage::SNotInstalled
+      if (i == 5 && pstatus != RPackage::SNotInstalled
           && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       } else if (i == 4 && RPackage::OResidualConfig & pkg->getOtherStatus()
@@ -1354,7 +1365,7 @@ void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview,
       }
       // seperator is i==6 (ignored)
       // hold button 
-      if (i == 7) {
+      if (i == 8) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
          bool locked = (RPackage::OPinned & pkg->getOtherStatus());
          me->_blockActions = TRUE;
@@ -1795,6 +1806,8 @@ void RGMainWindow::buildInterface()
    assert(_keepM);
    _installM = glade_xml_get_widget(_gladeXML, "menu_install");
    assert(_installM);
+   _reinstallM = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+   assert(_reinstallM);
    _pkgupgradeM = glade_xml_get_widget(_gladeXML, "menu_upgrade");
    assert(_upgradeM);
    _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
@@ -1844,6 +1857,15 @@ void RGMainWindow::buildInterface()
    widget = glade_xml_get_widget(_gladeXML, "menu_upgrade");
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
+
+    widget = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+    assert(widget);
+    g_object_set_data(G_OBJECT(widget), "me", this);
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_menu_action_reinstall",
+				  G_CALLBACK(cbPkgAction),
+				  GINT_TO_POINTER(PKG_REINSTALL));
+
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_delete",
@@ -1994,6 +2016,15 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
+   menuitem = gtk_image_menu_item_new_with_label(_("Reinstall Current Version"));
+   img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+   g_object_set_data(G_OBJECT(menuitem),"me",this);
+   g_signal_connect(menuitem, "activate",
+		    (GCallback) cbPkgAction, (void*)PKG_REINSTALL);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+
    menuitem = gtk_menu_item_new_with_label(_("Upgrade"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
@@ -2087,12 +2118,17 @@ void RGMainWindow::subViewListSelectionChanged(GtkTreeSelection *selection,
    me->refreshTable(NULL);
 }
 
-void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
+void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, 
+				    bool reInstall)
 {
    //cout << "pkgInstallHelper()/start" << endl;
    // do the work
    if (pkg->availableVersion() != NULL)
       pkg->setInstall();
+
+   if(reInstall == true) {
+       pkg->setReInstall(true);
+   }
 
    // check whether something broke
    if (fixBroken && !_lister->check()) {
@@ -2124,6 +2160,7 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)
 {
    pkg->setKeep();
+   pkg->setReInstall(false);
 }
 
 
@@ -2175,10 +2212,10 @@ void RGMainWindow::setStatusText(char *text)
 {
 
    int listed, installed, broken;
-   int toinstall, toremove;
+   int toInstall, toReInstall, toRemove;
    double size;
 
-   _lister->getStats(installed, broken, toinstall, toremove, size);
+   _lister->getStats(installed, broken, toInstall, toReInstall, toRemove, size);
 
    if (text) {
       gtk_label_set_text(GTK_LABEL(_statusL), text);
@@ -2190,13 +2227,13 @@ void RGMainWindow::setStatusText(char *text)
          buffer =
             g_strdup_printf(_
                             ("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be freed"),
-                            listed, installed, broken, toinstall, toremove,
+                            listed, installed, broken, toInstall, toRemove,
                             SizeToStr(fabs(size)).c_str());
       } else {
          buffer =
             g_strdup_printf(_
                             ("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be used"),
-                            listed, installed, broken, toinstall, toremove,
+                            listed, installed, broken, toInstall, toRemove,
                             SizeToStr(fabs(size)).c_str());
       };
       gtk_label_set_text(GTK_LABEL(_statusL), buffer);
@@ -2206,9 +2243,9 @@ void RGMainWindow::setStatusText(char *text)
    gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
    gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
 
-   gtk_widget_set_sensitive(_proceedB, (toinstall + toremove) != 0);
-   gtk_widget_set_sensitive(_proceedM, (toinstall + toremove) != 0);
-   _unsavedChanges = ((toinstall + toremove) != 0);
+   gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
+   gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);
+   _unsavedChanges = ((toInstall + toRemove) != 0);
 
    gtk_widget_queue_draw(_statusL);
 }
@@ -2355,9 +2392,9 @@ bool RGMainWindow::restoreState()
 
    // see if we have broken packages (might be better in some
    // RGMainWindow::preGuiStart funktion)
-   int installed, broken, toinstall, toremove;
+   int installed, broken, toInstall, toReInstall, toRemove;
    double sizeChange;
-   _lister->getStats(installed, broken, toinstall, toremove, sizeChange);
+   _lister->getStats(installed, broken, toInstall, toReInstall, toRemove, sizeChange);
    if (broken > 0) {
       gchar *msg;
       if (broken == 1) {

@@ -100,6 +100,7 @@ void RWSummaryWindow::clickedDetails(WMWidget *self, void *data)
     vector<RPackage*> kept;
     vector<RPackage*> essential;
     vector<RPackage*> toInstall;
+    vector<RPackage*> toReInstall;
     vector<RPackage*> toUpgrade;
     vector<RPackage*> toRemove;
     vector<RPackage*> toDowngrade;
@@ -109,7 +110,8 @@ void RWSummaryWindow::clickedDetails(WMWidget *self, void *data)
     lister->getDetailedSummary(held, 
 			       kept, 
 			       essential,
-			       toInstall, 
+			       toInstall,
+			       toReInstall,
 			       toUpgrade, 
 			       toRemove,
 			       toDowngrade,
@@ -143,6 +145,12 @@ void RWSummaryWindow::clickedDetails(WMWidget *self, void *data)
     for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
 	 p != toInstall.end(); p++) {
 	text += string((*p)->name()) + " " + (*p)->availableVersion() + _(": will be Installed\n");
+	lines++;
+    }
+    
+    for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
+	 p != toReInstall.end(); p++) {
+	text += string((*p)->name()) + " " + (*p)->availableVersion() + _(": will be re-installed\n");
 	lines++;
     }
 
@@ -224,13 +232,13 @@ RWSummaryWindow::RWSummaryWindow(RWWindow *wwin, RPackageLister *lister)
 	char buffer[1024];
 	int left = sizeof(buffer);
 	int used = 0;
-	int toInstall, toRemove, toUpgrade;
+	int toInstall, toReInstall, toRemove, toUpgrade;
 	int held, kept, essential, toDowngrade;
 	double sizeChange, dlSize;
 	int dlCount;
 	
 	lister->getSummary(held, kept, essential,
-			   toInstall, toUpgrade, toRemove, toDowngrade,
+			   toInstall, toReInstall, toUpgrade, toRemove, toDowngrade,
 			   sizeChange);
 
 	lister->getDownloadSummary(dlCount, dlSize);

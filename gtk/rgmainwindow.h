@@ -68,7 +68,8 @@ typedef enum {
    PKG_INSTALL,
    PKG_DELETE,
    PKG_PURGE,
-   PKG_DELETE_WITH_DEPS
+   PKG_DELETE_WITH_DEPS,
+   PKG_REINSTALL
 } RGPkgAction;
 
 class RGMainWindow : public RGGladeWindow, public RPackageObserver {
@@ -115,7 +116,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_currentB;        // ptr to one of below
    GtkWidget *_actionB[3];      // keep, install, delete
    // menu items 
-   GtkWidget *_keepM, *_installM, *_pkgupgradeM, *_removeM;
+   GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;
 
    // popup-menu
@@ -211,7 +212,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    // helpers
    void pkgAction(RGPkgAction action);
-   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true);
+   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true, 
+			 bool reInstall = false);
    void pkgRemoveHelper(RPackage *pkg, bool purge = false,
 		   	bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);

@@ -179,8 +179,19 @@ const char *utf8(const char *str)
 void RPackageStatus::initColors()
 {
    char *default_status_colors[N_STATUS_COUNT] = {
-      "#83a67f", "#eed680", "#ada7c8", "#c1665a", "#df421e",
-      NULL, "#bab5ab", NULL, NULL, "#bab5ab", NULL, NULL
+       "#83a67f",  // install
+       "#83a67f",  // re-install
+       "#eed680",  // upgrade
+       "#ada7c8",  // downgrade
+       "#c1665a",  // remove
+       "#df421e",  // purge
+       NULL,       // available
+       "#bab5ab",  // available-locked
+       NULL,       // installed-updated
+       NULL,       // installed-outdated
+       "#bab5ab",  // installed-locked 
+       NULL,       // broken
+       NULL        // new
    };
 
    gchar *config_string;
@@ -220,7 +231,7 @@ RPackageStatus RPackageStatus::pkgStatus;
 void RPackageStatus::init()
 {
    char *status_short[N_STATUS_COUNT] = {
-      "install", "upgrade", "downgrade", "remove",
+      "install", "reinstall", "upgrade", "downgrade", "remove",
       "purge", "available", "available-locked",
       "installed-updated", "installed-outdated", "installed-locked",
       "broken", "new"
@@ -229,6 +240,7 @@ void RPackageStatus::init()
 
    char *status_long[N_STATUS_COUNT] = {
       _("Queued for installation"),
+      _("Queued for re-installation"),
       _("Queued for upgrade"),
       _("Queued for downgrade"),
       _("Queued for removal"),

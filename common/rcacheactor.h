@@ -34,6 +34,7 @@ class RCacheActor:public RCacheObserver {
    enum Action {
       ACTION_KEEP,
       ACTION_INSTALL,
+      ACTION_REINSTALL,
       ACTION_REMOVE
    };
 

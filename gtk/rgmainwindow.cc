@@ -913,6 +913,8 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
+    if(pkg==NULL) return;
+
     bool installed = FALSE;
     RPackage::PackageStatus status = pkg->getStatus();
     RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();

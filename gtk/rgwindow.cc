@@ -36,7 +36,7 @@ void RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
 
 RGWindow::RGWindow(string name, bool makeBox)
 {
-    std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
+    //std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
     _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
   
@@ -60,9 +60,9 @@ RGWindow::RGWindow(string name, bool makeBox)
 RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, 
 		   bool closable)
 {
-    std::cout 
-	<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool closable)"
-	<< endl;
+    //std::cout 
+    //<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool closable)"
+    //<< endl;
     _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
 

@@ -546,7 +546,7 @@ gtk_pkg_list_iter_nth_child (GtkTreeModel *tree_model,
   }
   
   if(n >= (gint)pkg_list->_lister->count()) {
-      cerr << "nth_child(): n>=_lister->count()" << endl;
+      //cerr << "nth_child(): n>=_lister->count()" << endl;
       return FALSE;
   }
 

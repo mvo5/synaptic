@@ -91,6 +91,8 @@ RPackageLister::RPackageLister()
 
    memset(&_searchData, 0, sizeof(_searchData));
 
+   _pkgStatus.init();
+
 #if 0
    string Recommends = _config->Find("Synaptic::RecommendsFile",
                                      "/etc/apt/metadata");
@@ -633,6 +635,26 @@ struct instVersionSortFuncDes {
 		      x->installedVersion());
 }};
 
+struct supportedSortFuncAsc {
+protected:
+   RPackageStatus m_status;
+public:
+   supportedSortFuncAsc(RPackageStatus &s) 
+      : m_status(s) {};
+   bool operator() (RPackage *x, RPackage *y) {
+      return m_status.isSupported(x) < m_status.isSupported(y);
+}};
+
+class supportedSortFuncDes {
+protected:
+   RPackageStatus m_status;
+public:
+   supportedSortFuncDes(RPackageStatus &s) 
+      : m_status(s) {};
+   bool operator() (RPackage *x, RPackage *y) {
+      return m_status.isSupported(y) < m_status.isSupported(x);
+}};
+
 
 void RPackageLister::sortPackages(vector<RPackage *> &packages, 
 				  listSortMode mode)
@@ -680,6 +702,14 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
    case LIST_SORT_STATUS_DES:
       qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), statusSortFuncDes());
+      break;
+   case LIST_SORT_SUPPORTED_ASC:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), supportedSortFuncAsc(_pkgStatus));
+      break;
+   case LIST_SORT_SUPPORTED_DES:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), supportedSortFuncDes(_pkgStatus));
       break;
    case LIST_SORT_VERSION_ASC:
       stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());

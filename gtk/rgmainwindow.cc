@@ -613,6 +613,9 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 	    if(_config->FindB("Synaptic::UseRecommends", false)) {
 	       installAllWeakDepends(pkg, pkgCache::Dep::Recommends);
 	    }
+	    if(_config->FindB("Synaptic::UseSuggests", false)) {
+	       installAllWeakDepends(pkg, pkgCache::Dep::Suggests);
+	    }
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
@@ -813,14 +816,15 @@ void RGMainWindow::buildTreeView()
    visible = _config->FindI("Synaptic::supportedColumnVisible", true);
    if(visible) {
       renderer = gtk_cell_renderer_pixbuf_new();
-      // TRANSLATORS: Column header for the column "Status" in the package list
+      // TRANSLATORS: Column header for the column "Supported" in the package list
       column = gtk_tree_view_column_new_with_attributes(_(" "), renderer,
                                                         "pixbuf",
-                                                        SUPPORTED_COLUMN, NULL);
+                                                        SUPPORTED_COLUMN, 
+							NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 20);
       //gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
-      gtk_tree_view_column_set_sort_column_id(column, COLOR_COLUMN);
+      gtk_tree_view_column_set_sort_column_id(column, SUPPORTED_COLUMN);
       all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
    }
 

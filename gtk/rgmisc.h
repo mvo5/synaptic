@@ -27,8 +27,8 @@
 #include "rpackage.h"
 
 enum {
-   SUPPORTED_COLUMN,
    PIXMAP_COLUMN,
+   SUPPORTED_COLUMN,
    NAME_COLUMN,
    COMPONENT_COLUMN,
    SECTION_COLUMN,

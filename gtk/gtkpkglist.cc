@@ -648,6 +648,12 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
       else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_STATUS_DES);
       break;
+   case SUPPORTED_COLUMN:
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SUPPORTED_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SUPPORTED_DES);
+      break;
    case NAME_COLUMN:
       pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME);
       break;

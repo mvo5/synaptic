@@ -112,6 +112,8 @@ class RPackageLister {
       LIST_SORT_NAME,
       LIST_SORT_SIZE_ASC,
       LIST_SORT_SIZE_DES,
+      LIST_SORT_SUPPORTED_ASC,
+      LIST_SORT_SUPPORTED_DES,
       LIST_SORT_SECTION_ASC,
       LIST_SORT_SECTION_DES,
       LIST_SORT_COMPONENT_ASC,
@@ -137,7 +139,8 @@ class RPackageLister {
 
    vector<RPackageView *> _views;
    RPackageView *_selectedView;
-
+   RPackageStatus _pkgStatus;
+   
    void applyInitialSelection();
 
    bool lockPackageCache(FileFd &lock);

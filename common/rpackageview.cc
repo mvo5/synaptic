@@ -97,7 +97,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    else if ((flags & RPackage::FNotInstallable) &&
 	    !(flags & RPackage::FResidualConfig) &&
 	    (flags & RPackage::FInstalled))
-      str = _("Installed (obsolete)");
+      str = _("Installed (local or obsolete)");
    else if (flags & RPackage::FInstalled) {
       if (flags & RPackage::FOutdated)
 	 str = _("Installed (upgradable)");

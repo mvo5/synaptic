@@ -269,9 +269,9 @@ _selectedFilter(NULL), _lister(lister)
 
 #if 0
 #ifdef HAVE_DEBTAGS
-void RGFilterManagerWindow::treeViewIncludeClicked(GtkTreeView * treeview,
+void RGFilterManagerWindow::treeViewIncludeClicked(GtkTreeView *treeview,
                                                    GtkTreePath *arg1,
-                                                   GtkTreeViewColumn * arg2,
+                                                   GtkTreeViewColumn *arg2,
                                                    gpointer data)
 {
    //cout << "treeViewIncludeClicked()" << endl;
@@ -284,9 +284,9 @@ void RGFilterManagerWindow::treeViewIncludeClicked(GtkTreeView * treeview,
    }
 }
 
-void RGFilterManagerWindow::treeViewExcludeClicked(GtkTreeView * treeview,
+void RGFilterManagerWindow::treeViewExcludeClicked(GtkTreeView *treeview,
                                                    GtkTreePath *arg1,
-                                                   GtkTreeViewColumn * arg2,
+                                                   GtkTreeViewColumn *arg2,
                                                    gpointer data)
 {
    //cout << "treeViewExcludeClicked(GObject *o, gpointer data) " << endl;
@@ -410,7 +410,7 @@ void RGFilterManagerWindow::filterAvailableTags()
 #endif
 #endif
 
-void RGFilterManagerWindow::filterNameChanged(GObject * o, gpointer data)
+void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "RGFilterManagerWindow::filterNameChanged()"<<endl;
@@ -431,7 +431,7 @@ void RGFilterManagerWindow::filterNameChanged(GObject * o, gpointer data)
    }
 }
 
-void RGFilterManagerWindow::statusInvertClicked(GObject * o, gpointer data)
+void RGFilterManagerWindow::statusInvertClicked(GObject *o, gpointer data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "RGFilterManagerWindow::statusInvertClicked()"<<endl;
@@ -444,7 +444,7 @@ void RGFilterManagerWindow::statusInvertClicked(GObject * o, gpointer data)
 }
 
 
-void RGFilterManagerWindow::statusAllClicked(GObject * o, gpointer data)
+void RGFilterManagerWindow::statusAllClicked(GObject *o, gpointer data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "RGFilterManagerWindow::statusAllClicked()"<<endl;
@@ -454,7 +454,7 @@ void RGFilterManagerWindow::statusAllClicked(GObject * o, gpointer data)
    }
 }
 
-void RGFilterManagerWindow::statusNoneClicked(GObject * o, gpointer data)
+void RGFilterManagerWindow::statusNoneClicked(GObject *o, gpointer data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "RGFilterManagerWindow::statusNoneClicked()"<<endl;
@@ -464,7 +464,7 @@ void RGFilterManagerWindow::statusNoneClicked(GObject * o, gpointer data)
 }
 
 
-void RGFilterManagerWindow::patternNew(GObject * o, gpointer data)
+void RGFilterManagerWindow::patternNew(GObject *o, gpointer data)
 {
    //cout << "void RGFilterManagerWindow::patternNew()" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
@@ -474,7 +474,7 @@ void RGFilterManagerWindow::patternNew(GObject * o, gpointer data)
 
 }
 
-void RGFilterManagerWindow::patternDelete(GObject * o, gpointer data)
+void RGFilterManagerWindow::patternDelete(GObject *o, gpointer data)
 {
    //cout << "void RGFilterManagerWindow::patternDelete()" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
@@ -490,7 +490,7 @@ void RGFilterManagerWindow::patternDelete(GObject * o, gpointer data)
 }
 
 
-void RGFilterManagerWindow::patternChanged(GObject * o, gpointer data)
+void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 {
    RPatternPackageFilter::DepType type;
    bool exclude;
@@ -642,7 +642,7 @@ void RGFilterManagerWindow::show()
 }
 
 
-void RGFilterManagerWindow::selectAction(GtkTreeSelection * selection,
+void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
                                          gpointer data)
 {
    //cout << "selectAction"<<endl;
@@ -799,7 +799,7 @@ bool RGFilterManagerWindow::setPatternRow(int row,
 }
 
 
-void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter & f)
+void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
 {
    //cout << "RGFilterEditor::setPatternFilter()"<<endl;
 
@@ -864,7 +864,7 @@ void RGFilterManagerWindow::getStatusFilter(RStatusPackageFilter & f)
 }
 
 
-void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter & f)
+void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 {
    GtkTreeIter iter;
    bool exclude;
@@ -910,7 +910,7 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter & f)
    }
 }
 
-void RGFilterManagerWindow::setFilterView(RFilter * filter)
+void RGFilterManagerWindow::setFilterView(RFilter *filter)
 {
    //cout << "RGFilterManagerWindow::setFilterView(RFilter *filter)"<<endl;
    RFilterView view = filter->getViewMode();
@@ -925,7 +925,7 @@ void RGFilterManagerWindow::setFilterView(RFilter * filter)
    gtk_option_menu_set_history(GTK_OPTION_MENU(option_menu), view.expandMode);
 }
 
-void RGFilterManagerWindow::getFilterView(RFilter * filter)
+void RGFilterManagerWindow::getFilterView(RFilter *filter)
 {
    //cout << "RGFilterManagerWindow::getFilterView(RFilter *filter)"<<endl;
    GtkWidget *option_menu;
@@ -949,7 +949,7 @@ void RGFilterManagerWindow::editFilter()
 }
 
 // set the filter setting
-void RGFilterManagerWindow::editFilter(RFilter * filter)
+void RGFilterManagerWindow::editFilter(RFilter *filter)
 {
    //cout << "void RGFilterManagerWindow::editFilter()" << endl;
 
@@ -965,7 +965,7 @@ void RGFilterManagerWindow::editFilter(RFilter * filter)
 }
 
 
-void RGFilterManagerWindow::applyChanges(RFilter * filter)
+void RGFilterManagerWindow::applyChanges(RFilter *filter)
 {
    getSectionFilter(filter->section);
    getStatusFilter(filter->status);

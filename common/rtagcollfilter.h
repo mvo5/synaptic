@@ -33,30 +33,29 @@
 #include "rpackage.h"
 #include "rpackagelister.h"
 
-class RTagcollFilter : public TagcollFilter<std::string>
-{
-protected:
-	RPackageLister *_lister;
-	
-public:
-	RTagcollFilter(RPackageLister *lister) throw ()
-		: _lister(lister) {}
+class RTagcollFilter:public TagcollFilter<std::string> {
+ protected:
+   RPackageLister *_lister;
 
-	virtual void consume(const std::string& item) throw ()
-	{
-	    // make sure that only elements we know about are displayed
-	    // this should really use getElementInDisplayList
- 	    if(_lister->getElement(item) != NULL) 
- 	       consumer->consume(item); 
-	}
+ public:
+   RTagcollFilter(RPackageLister *lister) throw()
+ :   _lister(lister) {
+   }
 
-	virtual void consume(const std::string& item, const OpSet<std::string>& tags) throw ()
-	{
-	    // make sure that only elements we know about are displayed
-	    // this should really use getElementInDisplayList
- 	    if(_lister->getElement(item) != NULL) 
- 		consumer->consume(item, tags); 
-	}
+   virtual void consume(const std::string &item) throw() {
+      // make sure that only elements we know about are displayed
+      // this should really use getElementInDisplayList
+      if (_lister->getElement(item) != NULL)
+         consumer->consume(item);
+   }
+
+   virtual void consume(const std::string &item,
+                        const OpSet<std::string> &tags) throw() {
+      // make sure that only elements we know about are displayed
+      // this should really use getElementInDisplayList
+      if (_lister->getElement(item) != NULL)
+         consumer->consume(item, tags);
+   }
 };
 
 // vim:set ts=4 sw=4:

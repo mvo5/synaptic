@@ -31,15 +31,14 @@ struct pkgCache::Dependency;
 
 
 class RDependency {
-private:
+ private:
    pkgCache::DepIterator *_dep;
-   
-public:
+
+ public:
    const char *type();
 
    bool isWeak();
 };
-
 
 
 #endif

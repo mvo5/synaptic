@@ -198,7 +198,7 @@ void RGVendorsEditor::DoAdd(GtkWidget *, gpointer data)
    Description = gtk_entry_get_text(GTK_ENTRY(me->entryDesc));
    FingerPrint = gtk_entry_get_text(GTK_ENTRY(me->entryFPrint));
 
-   SourcesList::VendorRecord * rec =
+   SourcesList::VendorRecord *rec =
       me->lst.AddVendor(VendorID, FingerPrint, Description);
 
    const gchar *rowtxt[] = {
@@ -221,7 +221,7 @@ void RGVendorsEditor::DoEdit(GtkWidget *, gpointer data)
    if (me->selectedrow < 0)
       return;                   /* no row selected */
 
-   SourcesList::VendorRecord & rec =
+   SourcesList::VendorRecord &rec =
       *((SourcesList::
          VendorRecord *) gtk_clist_get_row_data(GTK_CLIST(me->lstVendors),
                                                 me->selectedrow));
@@ -288,7 +288,7 @@ void RGVendorsEditor::UpdateDisplay(GtkCList * clist, gint row, gint col,
    RGVendorsEditor *me = (RGVendorsEditor *) data;
    me->selectedrow = row;
 
-   const SourcesList::VendorRecord & rec =
+   const SourcesList::VendorRecord &rec =
       *((SourcesList::VendorRecord *) gtk_clist_get_row_data(clist, row));
 
    gtk_entry_set_text(GTK_ENTRY(me->entryVendor), rec.VendorID.c_str());

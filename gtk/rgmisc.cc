@@ -248,7 +248,7 @@ void RPackageStatus::init()
    initPixbufs();
 }
 
-int RPackageStatus::getStatus(RPackage * pkg)
+int RPackageStatus::getStatus(RPackage *pkg)
 {
    RPackage::PackageStatus xs = pkg->getStatus();
    RPackage::MarkedStatus s = pkg->getMarkedStatus();
@@ -281,12 +281,12 @@ int RPackageStatus::getStatus(RPackage * pkg)
    return (int)s - 1;
 }
 
-GdkColor *RPackageStatus::getBgColor(RPackage * pkg)
+GdkColor *RPackageStatus::getBgColor(RPackage *pkg)
 {
    return StatusColors[getStatus(pkg)];
 }
 
-GdkPixbuf *RPackageStatus::getPixbuf(RPackage * pkg)
+GdkPixbuf *RPackageStatus::getPixbuf(RPackage *pkg)
 {
    return StatusPixbuf[getStatus(pkg)];
 }

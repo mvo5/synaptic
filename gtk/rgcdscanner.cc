@@ -42,7 +42,7 @@ class RGDiscName:public RGGladeWindow {
  public:
    RGDiscName(RGWindow *wwin, const string defaultName);
 
-   bool run(string & name);
+   bool run(string &name);
 };
 
 
@@ -125,7 +125,7 @@ void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
    gtk_main_quit();
 }
 
-bool RGDiscName::run(string & discName)
+bool RGDiscName::run(string &discName)
 {
    _userConfirmed = false;
    show();

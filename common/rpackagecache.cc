@@ -27,7 +27,7 @@
 
 #include "i18n.h"
 
-#include<assert.h>
+#include <assert.h>
 #include <algorithm>
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
@@ -39,121 +39,122 @@
 
 bool RPackageCache::open(OpProgress &progress)
 {
-    _system->Lock();
+   _system->Lock();
 
-    if (_error->PendingError())
-	return false;
-    
-    // Read the source list
-    //pkgSourceList list;
-    assert(_list!=NULL);
-    if (!_list->ReadMainList())
-       return _error->Error(_("The list of sources could not be read.\n\
+   if (_error->PendingError())
+      return false;
+
+   // Read the source list
+   //pkgSourceList list;
+   assert(_list != NULL);
+   if (!_list->ReadMainList())
+      return _error->Error(_("The list of sources could not be read.\n\
 Go to the repository dialog to correct the problem."));
 
-    pkgMakeStatusCache(*_list, progress);
+   pkgMakeStatusCache(*_list, progress);
 
-    if (_error->PendingError())
-	return _error->Error(_("The package lists or status file could not be parsed or opened."));
+   if (_error->PendingError())
+      return _error->
+         Error(_
+               ("The package lists or status file could not be parsed or opened."));
 
-    // Open the cache file
-    FileFd File(_config->FindFile("Dir::Cache::pkgcache"),FileFd::ReadOnly);
-    if (_error->PendingError())
-	return false;
+   // Open the cache file
+   FileFd File(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly);
+   if (_error->PendingError())
+      return false;
 
-    _map = new MMap(File,MMap::Public | MMap::ReadOnly);
-    if (_error->PendingError())
-	return false;
-    
-    // Create the dependency cache
-    _cache = new pkgCache(_map);
-    if (_error->PendingError())
-       return false;
-    
-    // The policy engine
-    if(_policy != NULL)
+   _map = new MMap(File, MMap::Public | MMap::ReadOnly);
+   if (_error->PendingError())
+      return false;
+
+   // Create the dependency cache
+   _cache = new pkgCache(_map);
+   if (_error->PendingError())
+      return false;
+
+   // The policy engine
+   if (_policy != NULL)
       delete _policy;
-    _policy = new pkgPolicy(_cache);
-    if (_error->PendingError() == true)
-       return false;
-    if (ReadPinFile(*_policy) == false)
-       return false;
-    
-    _dcache = new pkgDepCache(_cache, _policy);
-    
-    _dcache->Init(&progress);
+   _policy = new pkgPolicy(_cache);
+   if (_error->PendingError() == true)
+      return false;
+   if (ReadPinFile(*_policy) == false)
+      return false;
 
-    //progress.Done();
-    if (_error->PendingError())
-	return false;
+   _dcache = new pkgDepCache(_cache, _policy);
 
-    // Check that the system is OK
-    if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
-	return _error->Error(_("Internal Error, non-zero counts"));
+   _dcache->Init(&progress);
 
-    _locked = true;
+   //progress.Done();
+   if (_error->PendingError())
+      return false;
 
-    return true;
+   // Check that the system is OK
+   if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
+      return _error->Error(_("Internal Error, non-zero counts"));
+
+   _locked = true;
+
+   return true;
 }
 
 
 
 bool RPackageCache::reset(OpProgress &progress)
 {
-    delete _dcache;
-    delete _map;
+   delete _dcache;
+   delete _map;
 
-    releaseLock();
+   releaseLock();
 
-    return open(progress);
+   return open(progress);
 }
-    
 
-vector<string> RPackageCache::getPolicyArchives() 
+
+vector<string> RPackageCache::getPolicyArchives()
 {
-    //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
+   //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
 
-    vector<string> archives;
-    for (pkgCache::PkgFileIterator F = _cache->FileBegin(); F.end() == false;
-	 F++)
-	{
-	    pkgIndexFile *Indx;
-	    _list->FindIndex(F,Indx);
-	    _system->FindIndex(F,Indx);
-	    
-	    if ( !F.RelStr().empty() ) {
-// 		printf("Archive: %s, Origin: %s, Component: %s\n", 
-// 		       F.Archive(), F.Origin(), F.Component());
-		if(F.Archive() != NULL) {
-		    if(find(archives.begin(),archives.end(),F.Archive())
-		       == archives.end()) {
-			archives.push_back(F.Archive());
-		    }
-		}
-	    }
-	}
-    return archives;
+   vector<string> archives;
+   for (pkgCache::PkgFileIterator F = _cache->FileBegin(); F.end() == false;
+        F++) {
+      pkgIndexFile *Indx;
+      _list->FindIndex(F, Indx);
+      _system->FindIndex(F, Indx);
+
+      if (!F.RelStr().empty()) {
+//              printf("Archive: %s, Origin: %s, Component: %s\n", 
+//                     F.Archive(), F.Origin(), F.Component());
+         if (F.Archive() != NULL) {
+            if (find(archives.begin(), archives.end(), F.Archive())
+                == archives.end()) {
+               archives.push_back(F.Archive());
+            }
+         }
+      }
+   }
+   return archives;
 }
 
 
 bool RPackageCache::lock()
 {
-    if (_locked)
-       return true;
+   if (_locked)
+      return true;
 
-    _system->Lock();
-    _locked = true;
+   _system->Lock();
+   _locked = true;
 
-    //FIXME: should depend on the result of _system->lock()
-    return true;
+   //FIXME: should depend on the result of _system->lock()
+   return true;
 }
 
 
 void RPackageCache::releaseLock()
 {
-    if (!_locked)
-	return;
+   if (!_locked)
+      return;
 
-    _system->UnLock();
-    _locked = false;
+   _system->UnLock();
+   _locked = false;
 }

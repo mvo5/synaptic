@@ -21,4 +21,3 @@
 //#pragma implementation
 
 #include "rtagcollfilter.h"
-

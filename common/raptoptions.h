@@ -32,43 +32,46 @@ using namespace std;
 
 class RAPTOptions {
  public:
-  
-  class packageOptions  {
-  public:
-    packageOptions() 
-      : isLocked(false), isOrphaned(false), isNew(false),  isDebconf(false) {};
-     bool isLocked;
-     bool isOrphaned;
-     bool isNew;
-     bool isDebconf;
+
+   class packageOptions {
+    public:
+      packageOptions()
+    :   
+      isLocked(false), isOrphaned(false), isNew(false),
+      isDebconf(false) {
+      };
+      bool isLocked;
+      bool isOrphaned;
+      bool isNew;
+      bool isDebconf;
    };
 
-  bool store();
-  bool restore();
-  
-  bool getPackageLock(const char *package);
-  void setPackageLock(const char *package, bool lock);
+   bool store();
+   bool restore();
 
-  bool getPackageDebconf(const char *package);
-  void setPackageDebconf(const char *package, bool flag=true);
-  void rereadDebconf();  
+   bool getPackageLock(const char *package);
+   void setPackageLock(const char *package, bool lock);
 
-  bool getPackageOrphaned(const char *package);
-  void setPackageOrphaned(const char *package, bool flag=true);
-  void rereadOrphaned();  
+   bool getPackageDebconf(const char *package);
+   void setPackageDebconf(const char *package, bool flag = true);
+   void rereadDebconf();
 
-  bool getPackageNew(const char *package);
-  void setPackageNew(const char *package, bool flag=true);
-  void forgetNewPackages();
-  
-  bool getFlag(const char *key);
-  string getString(const char *key);
-  
-  void setFlag(const char *key, bool value);
-  void setString(const char *key, string value);
+   bool getPackageOrphaned(const char *package);
+   void setPackageOrphaned(const char *package, bool flag = true);
+   void rereadOrphaned();
 
-private:
-   map<string, packageOptions> _packageOptions;  
+   bool getPackageNew(const char *package);
+   void setPackageNew(const char *package, bool flag = true);
+   void forgetNewPackages();
+
+   bool getFlag(const char *key);
+   string getString(const char *key);
+
+   void setFlag(const char *key, bool value);
+   void setString(const char *key, string value);
+
+ private:
+   map<string, packageOptions> _packageOptions;
    map<string, string> _options;
 };
 

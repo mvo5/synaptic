@@ -25,40 +25,42 @@
 #define RUSERDIALOG_H
 
 class RUserDialog {
-public:
-    enum ButtonsType {
-	ButtonsDefault,
-	ButtonsOk,
-	ButtonsOkCancel,
-	ButtonsYesNo
-    };
+ public:
+   enum ButtonsType {
+      ButtonsDefault,
+      ButtonsOk,
+      ButtonsOkCancel,
+      ButtonsYesNo
+   };
 
-    enum DialogType {
-	DialogInfo,
-	DialogWarning,
-	DialogQuestion,
-	DialogError
-    };
+   enum DialogType {
+      DialogInfo,
+      DialogWarning,
+      DialogQuestion,
+      DialogError
+   };
 
-    virtual bool message(const char *msg,
-			 DialogType dialog=DialogInfo,
-			 ButtonsType buttons=ButtonsDefault,
-			 bool defres=true) = 0;
+   virtual bool message(const char *msg,
+                        DialogType dialog = DialogInfo,
+                        ButtonsType buttons = ButtonsDefault,
+                        bool defres = true) = 0;
 
-    virtual bool confirm(const char *msg, bool defres=true)
-	{ return message(msg, DialogQuestion, ButtonsYesNo, defres); };
+   virtual bool confirm(const char *msg, bool defres = true) {
+      return message(msg, DialogQuestion, ButtonsYesNo, defres);
+   };
 
-    virtual bool proceed(const char *msg, bool defres=true)
-	{ return message(msg, DialogInfo, ButtonsOkCancel, defres); };
+   virtual bool proceed(const char *msg, bool defres = true) {
+      return message(msg, DialogInfo, ButtonsOkCancel, defres);
+   };
 
-    virtual bool warning(const char *msg, bool nocancel=true)
-	{ return nocancel ?
-		  message(msg, DialogWarning)
-		: message(msg, DialogWarning, ButtonsOkCancel, false);
-	};
+   virtual bool warning(const char *msg, bool nocancel = true) {
+      return nocancel ? message(msg, DialogWarning)
+         : message(msg, DialogWarning, ButtonsOkCancel, false);
+   };
 
-    virtual void error(const char *msg)
-	{ message(msg, DialogError); };
+   virtual void error(const char *msg) {
+      message(msg, DialogError);
+   };
 
 };
 

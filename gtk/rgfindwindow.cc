@@ -68,7 +68,7 @@ int RGFindWindow::getSearchType()
 }
 
 
-void RGFindWindow::doFind(GtkWindow * widget, void *data)
+void RGFindWindow::doFind(GtkWindow *widget, void *data)
 {
    //cout << "RGFindWindow::doFind()"<<endl;
    RGFindWindow *me = (RGFindWindow *) data;
@@ -85,7 +85,7 @@ void RGFindWindow::doFind(GtkWindow * widget, void *data)
                        GTK_RESPONSE_OK);
 }
 
-void RGFindWindow::doClose(GtkWindow * widget, void *data)
+void RGFindWindow::doClose(GtkWindow *widget, void *data)
 {
    //cout << "void RGFindWindow::doClose()" << endl;  
    RGFindWindow *w = (RGFindWindow *) data;

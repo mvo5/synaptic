@@ -35,22 +35,27 @@
 
 using namespace std;
 
-class RPackageView
-{
-   protected:
+class RPackageView {
+ protected:
 
-   map<string, vector<RPackage*> > _view;
+   map<string, vector<RPackage *> > _view;
 
    bool _hasSelection;
    string _selectedName;
-   vector<RPackage*> _selectedView;
+   vector<RPackage *> _selectedView;
 
-   public:
-   RPackageView() {};
-   virtual ~RPackageView() {};
+ public:
+   RPackageView() {
+   };
+   virtual ~ RPackageView() {
+   };
 
-   bool hasSelection() { return _hasSelection; };
-   string getSelected() { return _selectedName; };
+   bool hasSelection() {
+      return _hasSelection;
+   };
+   string getSelected() {
+      return _selectedName;
+   };
    bool setSelected(string name);
 
    vector<string> getSubViews();
@@ -58,52 +63,63 @@ class RPackageView
    virtual string getName() = 0;
    virtual void addPackage(RPackage *package) = 0;
 
-   typedef vector<RPackage*>::iterator iterator;
+   typedef vector<RPackage *>::iterator iterator;
 
-   iterator begin() { return _selectedView.begin(); };
-   iterator end() { return _selectedView.end(); };
+   iterator begin() {
+      return _selectedView.begin();
+   };
+   iterator end() {
+      return _selectedView.end();
+   };
 
    virtual void clear();
    virtual void clearSelection();
 };
 
-class RPackageViewSections : public RPackageView
-{
-   public:
+class RPackageViewSections:public RPackageView {
+ public:
 
-   string getName() { return _("Sections"); };
+   string getName() {
+      return _("Sections");
+   };
 
    void addPackage(RPackage *package) {
       _view[package->section()].push_back(package);
    };
 };
 
-class RPackageViewAlphabetic : public RPackageView
-{
-   public:
+class RPackageViewAlphabetic : public RPackageView {
+ public:
 
-   string getName() { return _("Alphabetic"); };
+   string getName() {
+      return _("Alphabetic");
+   };
 
    void addPackage(RPackage *package) {
-      char letter[2] = {' ', '\0'};
+      char letter[2] = { ' ', '\0' };
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    };
 };
 
-class RPackageViewAll : public RPackageView
-{
-   public:
+class RPackageViewAll:public RPackageView {
+ public:
 
-   string getName() { return _("All Packages"); };
+   string getName() {
+      return _("All Packages");
+   };
 
    void addPackage(RPackage *package) {
       _selectedView.push_back(package);
    };
 
-   RPackageViewAll() { _hasSelection = true; };
+   RPackageViewAll() {
+      _hasSelection = true;
+   };
 
-   void clear() { _selectedView.clear(); };
+   void clear() {
+      _selectedView.clear();
+   };
    void clearSelection() {};
 };
 

@@ -414,7 +414,7 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
    RGRepositoryEditor *me = (RGRepositoryEditor *) data;
    //cout << "RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)"<<endl;
 
-   SourcesList::SourceRecord * rec = me->_lst.AddEmptySource();
+   SourcesList::SourceRecord *rec = me->_lst.AddEmptySource();
 
    GtkTreeIter iter;
    gtk_list_store_append(me->_sourcesListStore, &iter);
@@ -458,7 +458,7 @@ void RGRepositoryEditor::doEdit()
    //if (!gtk_tree_selection_get_selected (selection, &model, &iter)) 
    //return;
 
-   SourcesList::SourceRecord * rec;
+   SourcesList::SourceRecord *rec;
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
 
    rec->Type = 0;
@@ -545,7 +545,7 @@ void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
       gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
    if (gtk_tree_selection_get_selected
        (selection, (GtkTreeModel **) (&me->_sourcesListStore), &iter)) {
-      SourcesList::SourceRecord * rec;
+      SourcesList::SourceRecord *rec;
       gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter,
                          RECORD_COLUMN, &rec, -1);
       assert(rec);
@@ -586,7 +586,7 @@ void RGRepositoryEditor::DoCancel(GtkWidget *, gpointer data)
 
 
 
-void RGRepositoryEditor::SelectionChanged(GtkTreeSelection * selection,
+void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
                                           gpointer data)
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *) data;
@@ -602,7 +602,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection * selection,
          gtk_tree_iter_free(me->_lastIter);
       me->_lastIter = gtk_tree_iter_copy(&iter);
 
-      const SourcesList::SourceRecord * rec;
+      const SourcesList::SourceRecord *rec;
       gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
 
       int id = ITEM_TYPE_DEB;

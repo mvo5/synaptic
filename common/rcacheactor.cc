@@ -10,42 +10,43 @@
 #include <algorithm>
 #include <fnmatch.h>
 
-void RCacheActorPkgTrack::run(vector<RPackage*> &List, int Action)
+void RCacheActorPkgTrack::run(vector<RPackage *> &List, int Action)
 {
-    for(vector<RPackage*>::iterator it=List.begin();it!=List.end();it++) {
-	//cout << "pkg: " << (*it)->name() << " action " << Action << endl;
-    }
-    
+   for (vector<RPackage *>::iterator it = List.begin(); it != List.end();
+        it++) {
+      //cout << "pkg: " << (*it)->name() << " action " << Action << endl;
+   }
+
 }
 
 void RCacheActor::notifyCachePostChange()
 {
-    //cout << "RCacheActor::notifyCachePostChange()" << endl;
-    vector<RPackage*> toKeep;
-    vector<RPackage*> toInstall; 
-    vector<RPackage*> toUpgrade; 
-    vector<RPackage*> toRemove;
-    vector<RPackage*> toDowngrade;
-    vector<RPackage*> exclude; // empty
+   //cout << "RCacheActor::notifyCachePostChange()" << endl;
+   vector<RPackage *> toKeep;
+   vector<RPackage *> toInstall;
+   vector<RPackage *> toUpgrade;
+   vector<RPackage *> toRemove;
+   vector<RPackage *> toDowngrade;
+   vector<RPackage *> exclude;        // empty
 
-    //cout << "_laststate: " << _laststate << endl;
-    if(_laststate == NULL)
-	return;
+   //cout << "_laststate: " << _laststate << endl;
+   if (_laststate == NULL)
+      return;
 
-    if (_lister->getStateChanges(*_laststate, toKeep, toInstall,
-				 toUpgrade, toRemove, toDowngrade,
-				 exclude, false)) {
-	if (toKeep.empty() == false)
-	    run(toKeep, ACTION_KEEP);
-	if (toInstall.empty() == false)
-	    run(toInstall, ACTION_INSTALL);
-	if (toUpgrade.empty() == false)
-	    run(toUpgrade, ACTION_INSTALL);
-	if (toDowngrade.empty() == false)
-	    run(toDowngrade, ACTION_INSTALL);
-	if (toRemove.empty() == false)
-	    run(toRemove, ACTION_REMOVE);
-    }
+   if (_lister->getStateChanges(*_laststate, toKeep, toInstall,
+                                toUpgrade, toRemove, toDowngrade,
+                                exclude, false)) {
+      if (toKeep.empty() == false)
+         run(toKeep, ACTION_KEEP);
+      if (toInstall.empty() == false)
+         run(toInstall, ACTION_INSTALL);
+      if (toUpgrade.empty() == false)
+         run(toUpgrade, ACTION_INSTALL);
+      if (toDowngrade.empty() == false)
+         run(toDowngrade, ACTION_INSTALL);
+      if (toRemove.empty() == false)
+         run(toRemove, ACTION_REMOVE);
+   }
 }
 
 
@@ -53,14 +54,12 @@ void RCacheActor::notifyCachePostChange()
 
 
 RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
-					     string FileName)
-      : RCacheActor(lister)
+                                             string FileName)
+: RCacheActor(lister)
 {
    FileFd F(FileName, FileFd::ReadOnly);
-   if (_error->PendingError()) 
-   {
-      _error->Error(_("could not open recommends file %s"),
-		    FileName.c_str());
+   if (_error->PendingError()) {
+      _error->Error(_("could not open recommends file %s"), FileName.c_str());
       return;
    }
    pkgTagFile Tags(&F);
@@ -74,34 +73,32 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
       string Match = Section.FindS("Match");
       string Recommends = Section.FindS("Recommends");
       if (Name.empty() == true || Recommends.empty() == true)
-	 continue;
+         continue;
 
       ListType *List = NULL;
       if (Match.empty() == true || Match == "exact") {
-	 List = &_map[Name];
+         List = &_map[Name];
       } else if (Match == "wildcard") {
-	 List = &_map_wildcard[Name];
+         List = &_map_wildcard[Name];
       } else if (Match == "regex") {
-	 regex_t *ptrn = new regex_t;
-	 if (regcomp(ptrn,Name.c_str(),
-		     REG_EXTENDED|REG_ICASE|REG_NOSUB) != 0)
-	 {
-	    _error->Warning(_("Bad regular expression '%s' in Recommends file."),
-			    Name.c_str());
-	    delete ptrn;
-	 }
-	 else
-	    List = &_map_regex[ptrn];
+         regex_t *ptrn = new regex_t;
+         if (regcomp(ptrn, Name.c_str(),
+                     REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
+            _error->
+               Warning(_("Bad regular expression '%s' in Recommends file."),
+                       Name.c_str());
+            delete ptrn;
+         } else
+            List = &_map_regex[ptrn];
       }
 
       if (List != NULL) {
-	 const char *C = Recommends.c_str();
-	 string S;
-	 while (*C != 0)
-	 {
-	    if (ParseQuoteWord(C,S))
-	       List->push_back(S);
-	 }
+         const char *C = Recommends.c_str();
+         string S;
+         while (*C != 0) {
+            if (ParseQuoteWord(C, S))
+               List->push_back(S);
+         }
       }
    }
 }
@@ -109,7 +106,7 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
 RCacheActorRecommends::~RCacheActorRecommends()
 {
    for (RegexMapType::const_iterator RMapI = _map_regex.begin();
-	RMapI != _map_regex.end(); RMapI++) {
+        RMapI != _map_regex.end(); RMapI++) {
       delete RMapI->first;
    }
 }
@@ -130,17 +127,17 @@ void RCacheActorRecommends::setLanguageCache()
    const char *C = LangList.c_str();
    string S;
    while (*C != 0) {
-      if (ParseQuoteWord(C,S)) {
-	 string::size_type end;
-	 end = S.find('@');
-	 if (end != string::npos)
-	    S.erase(end, string::npos);
-	 _langCache.push_back(S);
-	 end = S.rfind('_');
-	 if (end != string::npos) {
-	    S.erase(end, string::npos);
-	    _langCache.push_back(S);
-	 }
+      if (ParseQuoteWord(C, S)) {
+         string::size_type end;
+         end = S.find('@');
+         if (end != string::npos)
+            S.erase(end, string::npos);
+         _langCache.push_back(S);
+         end = S.rfind('_');
+         if (end != string::npos) {
+            S.erase(end, string::npos);
+            _langCache.push_back(S);
+         }
       }
    }
 }
@@ -151,52 +148,52 @@ void RCacheActorRecommends::notifyCachePostChange()
       RCacheActor::notifyCachePostChange();
 }
 
-void RCacheActorRecommends::run(vector<RPackage*> &PkgList, int Action)
+void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
 {
    setLanguageCache();
    const char *name;
    const ListType *List;
    MapType::const_iterator MapI;
-   for (vector<RPackage*>::const_iterator PkgI = PkgList.begin();
-         PkgI != PkgList.end(); PkgI++) {
+   for (vector<RPackage *>::const_iterator PkgI = PkgList.begin();
+        PkgI != PkgList.end(); PkgI++) {
       name = (*PkgI)->name();
       List = NULL;
       MapI = _map.find(name);
       if (MapI != _map.end()) {
-	 List = &MapI->second;
+         List = &MapI->second;
       } else {
-	 if (_map_wildcard.empty() == false) {
-	    for (MapI = _map_wildcard.begin();
-		 MapI != _map_wildcard.end(); MapI++) {
-	       if (fnmatch(MapI->first.c_str(), name, 0) == 0) {
-		  List = &MapI->second;
-		  break;
-	       }
-	    }
-	 }
-	 if (List == NULL && _map_regex.empty() == false) {
-	    for (RegexMapType::const_iterator RMapI = _map_regex.begin();
-		 RMapI != _map_regex.end(); RMapI++) {
-	       if (regexec(RMapI->first, name, 0, 0, 0) == 0) {
-		  List = &RMapI->second;
-		  break;
-	       }
-	    }
-	 }
+         if (_map_wildcard.empty() == false) {
+            for (MapI = _map_wildcard.begin();
+                 MapI != _map_wildcard.end(); MapI++) {
+               if (fnmatch(MapI->first.c_str(), name, 0) == 0) {
+                  List = &MapI->second;
+                  break;
+               }
+            }
+         }
+         if (List == NULL && _map_regex.empty() == false) {
+            for (RegexMapType::const_iterator RMapI = _map_regex.begin();
+                 RMapI != _map_regex.end(); RMapI++) {
+               if (regexec(RMapI->first, name, 0, 0, 0) == 0) {
+                  List = &RMapI->second;
+                  break;
+               }
+            }
+         }
       }
       if (List != NULL) {
-	 for (ListType::const_iterator ListI = List->begin();
-	      ListI != List->end(); ListI++) {
-	    const string &Recommends = *ListI;
-	    if (actOnPkg(Recommends, Action) == false
-	        && Recommends.find("$(LANG)") != string::npos) {
-	       for (vector<string>::const_iterator LI = _langCache.begin();
-		    LI != _langCache.end(); LI++) {
-		  string Parsed = SubstVar(Recommends, "$(LANG)", *LI);
-		  actOnPkg(Parsed, Action);
-	       }
-	    }
-	 }
+         for (ListType::const_iterator ListI = List->begin();
+              ListI != List->end(); ListI++) {
+            const string &Recommends = *ListI;
+            if (actOnPkg(Recommends, Action) == false
+                && Recommends.find("$(LANG)") != string::npos) {
+               for (vector < string >::const_iterator LI = _langCache.begin();
+                    LI != _langCache.end(); LI++) {
+                  string Parsed = SubstVar(Recommends, "$(LANG)", *LI);
+                  actOnPkg(Parsed, Action);
+               }
+            }
+         }
       }
    }
 }

@@ -35,30 +35,38 @@ class pkgCache;
 class pkgPolicy;
 
 class RPackageCache {
-    MMap *_map;
+   MMap *_map;
 
-    pkgCache *_cache;
-    pkgPolicy *_policy;
+   pkgCache *_cache;
+   pkgPolicy *_policy;
 
-    pkgDepCache *_dcache;    
-    pkgSourceList *_list;
-    
-    bool _locked;
-   
+   pkgDepCache *_dcache;
+   pkgSourceList *_list;
+
+   bool _locked;
+
  public:
-    inline pkgDepCache *deps() { return _dcache; };
-    inline pkgSourceList *list() { return _list; };
-    
-    bool open(OpProgress &progress);
-    bool reset(OpProgress &progress);
+   inline pkgDepCache *deps() {
+      return _dcache;
+   };
+   inline pkgSourceList *list() {
+      return _list;
+   };
 
-    vector<string> getPolicyArchives();
+   bool open(OpProgress &progress);
+   bool reset(OpProgress &progress);
 
-    bool lock();
-    void releaseLock();
-    
-    RPackageCache() : _map(0), _cache(0), _policy(0), _dcache(0) { _list = new pkgSourceList(); };
-    ~RPackageCache() { delete _list; };
+   vector<string> getPolicyArchives();
+
+   bool lock();
+   void releaseLock();
+
+   RPackageCache() : _map(0), _cache(0), _policy(0), _dcache(0) {
+      _list = new pkgSourceList();
+   };
+   ~RPackageCache() {
+      delete _list;
+   };
 };
 
 

@@ -36,12 +36,14 @@ class Configuration;
 
 
 class RCDScanProgress {
-   
-protected:
+
+ protected:
    int _total;
-   
-public:
-   void setTotal(int total) { _total = total; };
+
+ public:
+   void setTotal(int total) {
+      _total = total;
+   };
 
    virtual void update(string text, int current) = 0;
 };
@@ -51,29 +53,29 @@ class RCDScanner {
    Configuration *_database;
 
    RUserDialog *_userDialog;
-   
-protected:
 
-    enum {
-	    STEP_PREPARE = 1,
-	    STEP_UNMOUNT,
-	    STEP_WAIT,
-	    STEP_MOUNT,
-	    STEP_IDENT,
-	    STEP_SCAN,
-	    STEP_CLEAN,
-	    STEP_UNMOUNT2,
-	    STEP_REGISTER,
-	    STEP_COPY,
-	    STEP_WRITE,
-	    STEP_UNMOUNT3,
-	    STEP_LAST
-    };
+ protected:
+
+   enum {
+      STEP_PREPARE = 1,
+      STEP_UNMOUNT,
+      STEP_WAIT,
+      STEP_MOUNT,
+      STEP_IDENT,
+      STEP_SCAN,
+      STEP_CLEAN,
+      STEP_UNMOUNT2,
+      STEP_REGISTER,
+      STEP_COPY,
+      STEP_WRITE,
+      STEP_UNMOUNT3,
+      STEP_LAST
+   };
 
    vector<string> _pkgList;
    vector<string> _srcList;
    string _infoDir;
-   
+
    string _cdId;
    string _cdName;
    string _cdOldName;
@@ -83,31 +85,28 @@ protected:
 
    string pkgSourceType() const;
    string srcSourceType() const;
-   bool scanDirectory(string path, RCDScanProgress *progress, int depth=0);
+   bool scanDirectory(string path, RCDScanProgress *progress, int depth = 0);
 
    void cleanPkgList(vector<string> &list);
    void cleanSrcList(vector<string> &list);
-   
+
    bool writeDatabase();
    bool writeSourceList(vector<string> &list, bool pkg);
 
-public:
+ public:
    bool start(RCDScanProgress *progress);
    bool finish(RCDScanProgress *progress);
    void unmount();
 
    string getDiscName();
    bool setDiscName(string name);
-   
+
    void countLists(int &pkgLists, int &srcLists);
 
    RCDScanner(RUserDialog *userDialog)
-      : _database(0), _userDialog(userDialog),
-   	_cdromMounted(0), _scannedOk(0)
-      {};
+ :   _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0) {
+   };
 };
 
 
 #endif
-
-

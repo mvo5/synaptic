@@ -32,37 +32,37 @@ using namespace std;
 
 bool RPackageView::setSelected(string name)
 {
-      map<string, vector<RPackage*> >::iterator I = _view.find(name);
-      if (I != _view.end()) {
-	 _hasSelection = true;
-	 _selectedName = name;
-	 _selectedView = (*I).second;
-      } else {
-	 clearSelection();
-      }
-      return _hasSelection;;
+   map<string, vector<RPackage *> >::iterator I = _view.find(name);
+   if (I != _view.end()) {
+      _hasSelection = true;
+      _selectedName = name;
+      _selectedView = (*I).second;
+   } else {
+      clearSelection();
+   }
+   return _hasSelection;;
 }
 
 vector<string> RPackageView::getSubViews()
 {
-    vector<string> subViews;
-    for (map<string, vector<RPackage*> >::iterator I = _view.begin();
-	 I != _view.end(); I++)
-	subViews.push_back((*I).first);
-    return subViews;
+   vector<string> subViews;
+   for (map<string, vector<RPackage *> >::iterator I = _view.begin();
+        I != _view.end(); I++)
+      subViews.push_back((*I).first);
+   return subViews;
 }
 
 void RPackageView::clear()
 {
-      clearSelection();
-      _view.clear();
+   clearSelection();
+   _view.clear();
 }
 
 void RPackageView::clearSelection()
 {
-      _hasSelection = false;
-      _selectedName.clear();
-      _selectedView.clear();
+   _hasSelection = false;
+   _selectedName.clear();
+   _selectedView.clear();
 }
 
 // vim:sts=3:sw=3

@@ -98,10 +98,10 @@ class RGFilterManagerWindow:public RGGladeWindow {
    static gint deleteEventAction(GtkWidget *widget, GdkEvent * event,
                                  gpointer data);
 
-   static void selectAction(GtkTreeSelection * selection, gpointer data);
+   static void selectAction(GtkTreeSelection *selection, gpointer data);
 
    // load a given filter
-   void editFilter(RFilter * filter);
+   void editFilter(RFilter *filter);
    // no argument -> load selected filter
    void editFilter();
 
@@ -112,8 +112,8 @@ class RGFilterManagerWindow:public RGGladeWindow {
    void setStatusFilter(RStatusPackageFilter & f);
    void getStatusFilter(RStatusPackageFilter & f);
 
-   void setPatternFilter(RPatternPackageFilter & f);
-   void getPatternFilter(RPatternPackageFilter & f);
+   void setPatternFilter(RPatternPackageFilter &f);
+   void getPatternFilter(RPatternPackageFilter &f);
 
 #if 0                           //PORTME
 #ifdef HAVE_DEBTAGS
@@ -121,8 +121,8 @@ class RGFilterManagerWindow:public RGGladeWindow {
    void getTagFilter(RTagPackageFilter & f);
 #endif
 #endif
-   void setFilterView(RFilter * f);
-   void getFilterView(RFilter * f);
+   void setFilterView(RFilter *f);
+   void getFilterView(RFilter *f);
 
    GtkTreePath *treeview_find_path_from_text(GtkTreeModel *model, char *text);
 
@@ -169,7 +169,7 @@ class RGFilterManagerWindow:public RGGladeWindow {
    GtkListStore *_patternListStore;
    bool setPatternRow(int row, bool exclude,
                       RPatternPackageFilter::DepType type, string pattern);
-   static void patternSelectionChanged(GtkTreeSelection * selection,
+   static void patternSelectionChanged(GtkTreeSelection *selection,
                                        gpointer data);
    static void patternChanged(GObject *o, gpointer data);
    static void patternNew(GObject *o, gpointer data);
@@ -177,7 +177,7 @@ class RGFilterManagerWindow:public RGGladeWindow {
    static void statusAllClicked(GObject *o, gpointer data);
    static void statusInvertClicked(GObject *o, gpointer data);
    static void statusNoneClicked(GObject *o, gpointer data);
-   void applyChanges(RFilter * filter);
+   void applyChanges(RFilter *filter);
    static void filterNameChanged(GObject *o, gpointer data);
    void filterAvailableTags();
 

@@ -26,49 +26,45 @@
 #include "rpackagelister.h"
 #include <iostream>
 
-class RPackageListActor : public RPackageObserver
-{
-   public:
+class RPackageListActor:public RPackageObserver {
+ public:
 
    enum listEvent {
-       PKG_ADDED,
-       PKG_REMOVED
+      PKG_ADDED,
+      PKG_REMOVED
    };
 
-   protected:
+ protected:
 
    RPackageLister *_lister;
-   vector<RPackage*> _lastDisplayList;
+   vector<RPackage *> _lastDisplayList;
 
-   public:
-   virtual void run(vector<RPackage*> &List, int listEvent) = 0;
+ public:
+   virtual void run(vector<RPackage *> &List, int listEvent) = 0;
 
-   virtual void notifyPreFilteredChange()
-   {
-       std::cout << "notifyPreFilteredChange()" << endl; 
-       updateState();
+   virtual void notifyPreFilteredChange() {
+      std::cout << "notifyPreFilteredChange()" << endl;
+      updateState();
    };
 
    virtual void notifyPostFilteredChange();
    virtual void notifyChange(RPackage *pkg) {};
-   
-   virtual void updateState()
-   {
-       std::cout << "RPackageListActor::updateState(): " <<_lister->count() << endl; 
-       _lastDisplayList.clear();
-       _lastDisplayList.reserve(_lister->count());
-       for(unsigned int i=0;i<_lister->count();i++)
-	   _lastDisplayList.push_back(_lister->getElement(i));
+
+   virtual void updateState() {
+      std::cout << "RPackageListActor::updateState(): " << _lister->
+         count() << endl;
+      _lastDisplayList.clear();
+      _lastDisplayList.reserve(_lister->count());
+      for (unsigned int i = 0; i < _lister->count(); i++)
+         _lastDisplayList.push_back(_lister->getElement(i));
    };
 
    RPackageListActor(RPackageLister *lister)
-       : _lister(lister)
-   {
-       _lister->registerObserver(this);
+         : _lister(lister) {
+      _lister->registerObserver(this);
    };
 
-   virtual ~RPackageListActor()
-   {
+   virtual ~RPackageListActor() {
       _lister->unregisterObserver(this);
    };
 };

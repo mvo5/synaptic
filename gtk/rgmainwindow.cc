@@ -697,7 +697,7 @@ bool RGMainWindow::showErrors()
    return _userDialog->showErrors();
 }
 
-static void setLabel(GladeXML * xml, const char *widget_name,
+static void setLabel(GladeXML *xml, const char *widget_name,
                      const char *value)
 {
    GtkWidget *widget = glade_xml_get_widget(xml, widget_name);
@@ -709,7 +709,7 @@ static void setLabel(GladeXML * xml, const char *widget_name,
    gtk_label_set_label(GTK_LABEL(widget), utf8(value));
 }
 
-static void setLabel(GladeXML * xml, const char *widget_name, const int value)
+static void setLabel(GladeXML *xml, const char *widget_name, const int value)
 {
    string strVal;
    GtkWidget *widget = glade_xml_get_widget(xml, widget_name);
@@ -725,7 +725,7 @@ static void setLabel(GladeXML * xml, const char *widget_name, const int value)
 }
 
 
-void RGMainWindow::notifyChange(RPackage * pkg)
+void RGMainWindow::notifyChange(RPackage *pkg)
 {
    //cout << "RGMainWindow::notifyChange("<<pkg->name()<<")" << endl;
    // we changed pkg's status
@@ -749,7 +749,7 @@ void RGMainWindow::forgetNewPackages()
 }
 
 
-void RGMainWindow::refreshTable(RPackage * selectedPkg)
+void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
    //cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
 
@@ -768,7 +768,7 @@ void RGMainWindow::refreshTable(RPackage * selectedPkg)
 }
 
 // mvo: this function needs a cleanup :)
-void RGMainWindow::updatePackageStatus(RPackage * pkg)
+void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
 #if 0                           // PORTME
    if (pkg == NULL) {
@@ -904,7 +904,7 @@ void RGMainWindow::updatePackageStatus(RPackage * pkg)
 }
 
 
-void RGMainWindow::updateDynPackageInfo(RPackage * pkg)
+void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 {
    //cout << "updateDynPackageInfo()" << endl;
 
@@ -1059,7 +1059,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage * pkg)
    }
 }
 
-void RGMainWindow::updateVersionButtons(RPackage * pkg)
+void RGMainWindow::updateVersionButtons(RPackage *pkg)
 {
 #if 0                           // PORTME
    // remove old radiobuttons
@@ -1136,7 +1136,7 @@ void RGMainWindow::updateVersionButtons(RPackage * pkg)
 #endif
 }
 
-void RGMainWindow::updatePackageInfo(RPackage * pkg)
+void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
    RPackage::UpdateImportance importance;
    RPackage::PackageStatus status;
@@ -2777,7 +2777,7 @@ void RGMainWindow::buildInterface()
                     G_CALLBACK(subViewListSelectionChanged), this);
 }
 
-void RGMainWindow::subViewListSelectionChanged(GtkTreeSelection * selection,
+void RGMainWindow::subViewListSelectionChanged(GtkTreeSelection *selection,
                                                gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2794,7 +2794,7 @@ void RGMainWindow::subViewListSelectionChanged(GtkTreeSelection * selection,
    me->refreshTable(NULL);
 }
 
-void RGMainWindow::pkgInstallHelper(RPackage * pkg, bool fixBroken)
+void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
    //cout << "pkgInstallHelper()/start" << endl;
    // do the work
@@ -2809,7 +2809,7 @@ void RGMainWindow::pkgInstallHelper(RPackage * pkg, bool fixBroken)
    //cout << "pkgInstallHelper()/end" << endl;
 }
 
-void RGMainWindow::pkgRemoveHelper(RPackage * pkg, bool purge, bool withDeps)
+void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
    if (pkg->isImportant()) {
       if (!_userDialog->confirm(_("Removing this package may render the "
@@ -2828,13 +2828,13 @@ void RGMainWindow::pkgRemoveHelper(RPackage * pkg, bool purge, bool withDeps)
       pkg->setRemoveWithDeps(true, false);
 }
 
-void RGMainWindow::pkgKeepHelper(RPackage * pkg)
+void RGMainWindow::pkgKeepHelper(RPackage *pkg)
 {
    pkg->setKeep();
 }
 
 
-void RGMainWindow::selectedRow(GtkTreeSelection * selection, gpointer data)
+void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    GtkTreeIter iter;

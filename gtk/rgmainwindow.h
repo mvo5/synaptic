@@ -205,12 +205,12 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
 
  private:
    // display/table releated
-   void refreshTable(RPackage * selectedPkg = NULL);
+   void refreshTable(RPackage *selectedPkg = NULL);
    void changeFilter(int filter, bool sethistory = true);
    static void changedFilter(GtkWidget *self);
 
    void changeView(int view, bool sethistory = true);
-   static void subViewListSelectionChanged(GtkTreeSelection * selection,
+   static void subViewListSelectionChanged(GtkTreeSelection *selection,
                                            gpointer data);
    static void changedView(GtkWidget *self);
    GtkWidget *createViewMenu();
@@ -237,7 +237,7 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
       return ((RGMainWindow *) me)->close();
    };
 
-   static void selectedRow(GtkTreeSelection * selection, gpointer data);
+   static void selectedRow(GtkTreeSelection *selection, gpointer data);
    static void cbPackageListRowActivated(GtkTreeView *treeview,
                                          GtkTreePath *arg1,
                                          GtkTreeViewColumn *arg2,
@@ -257,10 +257,10 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
    void forgetNewPackages();
 
    // package info
-   void updatePackageInfo(RPackage * pkg);
-   void updatePackageStatus(RPackage * pkg);
-   void updateDynPackageInfo(RPackage * pkg);
-   void updateVersionButtons(RPackage * pkg);
+   void updatePackageInfo(RPackage *pkg);
+   void updatePackageStatus(RPackage *pkg);
+   void updateDynPackageInfo(RPackage *pkg);
+   void updateVersionButtons(RPackage *pkg);
    RPackage *selectedPackage();
 
    // menu stuff
@@ -323,16 +323,16 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
 
    // this does the actual pkgAction work (install, remove, upgrade)
    static void doPkgAction(RGMainWindow *me, RGPkgAction action);
-   void pkgInstallHelper(RPackage * pkg, bool fixBroken = true);
-   void pkgRemoveHelper(RPackage * pkg, bool purge = false, bool withDeps =
+   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true);
+   void pkgRemoveHelper(RPackage *pkg, bool purge = false, bool withDeps =
                         false);
-   void pkgKeepHelper(RPackage * pkg);
+   void pkgKeepHelper(RPackage *pkg);
 
    // install a non-standard version (data is a char* of the version)
    static void installFromVersion(GtkWidget *self, void *data);
 
    // RPackageObserver
-   virtual void notifyChange(RPackage * pkg);
+   virtual void notifyChange(RPackage *pkg);
    virtual void notifyPreFilteredChange() {
    };
    virtual void notifyPostFilteredChange() {

@@ -31,13 +31,13 @@
 
 
 class RInstallProgress {
-protected:
+ protected:
    static void *loop(void *data);
-   
+
    int _stdout;
    int _stderr;
    int _childin;
-   
+
    int _child_id;
 
    int _donePackages;
@@ -45,17 +45,21 @@ protected:
    int _donePackagesTotal;
    int _numPackagesTotal;
 
-   virtual void startUpdate() {};
-   virtual void updateInterface() {};
-   virtual void finishUpdate() {};
+   virtual void startUpdate() {
+   };
+   virtual void updateInterface() {
+   };
+   virtual void finishUpdate() {
+   };
 
-public:
+ public:
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0,
-						int numPackagesTotal = 0);
+                                                int numPackages = 0,
+                                                int numPackagesTotal = 0);
 
 
-   RInstallProgress() : _donePackagesTotal(0), _numPackagesTotal(0) {};
+ RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0) {
+   };
 };
 
 

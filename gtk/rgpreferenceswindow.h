@@ -35,6 +35,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    GtkWidget *_optionUseTerminal;
    GtkWidget *_optionCheckRecom;
    GtkWidget *_optionAskQuit;
+   GtkWidget *_optionOneClick;
 
    // cache settings
    GtkWidget *_cacheLeave;

@@ -103,37 +103,32 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    // cache
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheClean));
    _config->Set("Synaptic::CleanCache", newval ? "true" : "false");
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheAutoClean));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheAutoClean));
    _config->Set("Synaptic::AutoCleanCache", newval ? "true" : "false");
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseRegexp));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseRegexp));
    _config->Set("Synaptic::UseRegexp", newval ? "true" : "false");
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionAskRelated));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionAskRelated));
    _config->Set("Synaptic::AskRelated", newval ? "true" : "false");
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseTerminal));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseTerminal));
    _config->Set("Synaptic::UseTerminal", newval ? "true" : "false");
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionCheckRecom));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionCheckRecom));
    _config->Set("Synaptic::UseRecommends", newval ? "true" : "false");
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionAskQuit));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionAskQuit));
    _config->Set("Synaptic::AskQuitOnProceed", newval ? "true" : "false");
 
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionOneClick));
+   _config->Set("Synaptic::OneClickOnStatusActions", newval ? "true" : "false");
 
-   int maxUndo =
-      gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
+
+   int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
    _config->Set("Synaptic::undoStackSize", maxUndo);
 
-   int delAction =
-      gtk_option_menu_get_history(GTK_OPTION_MENU(me->_optionmenuDel));
+   int delAction = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_optionmenuDel));
    // ugly :( but we need this +2 because RGPkgAction starts with 
    //         "keep","install"
    delAction += 2;
@@ -143,10 +138,9 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    RPackageStatus::pkgStatus.saveColors();
 
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
-   i = gtk_option_menu_get_history(GTK_OPTION_MENU
-                                   (glade_xml_get_widget
-                                    (me->_gladeXML,
-                                     "optionmenu_upgrade_method")));
+   i = gtk_option_menu_get_history(
+      GTK_OPTION_MENU(glade_xml_get_widget(me->_gladeXML,
+                                           "optionmenu_upgrade_method")));
    _config->Set("Synaptic::upgradeType", i - 1);
 
    // proxy stuff
@@ -157,42 +151,31 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    useProxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_useProxy));
    _config->Set("Synaptic::useProxy", useProxy);
    // http
-   http =
-      gtk_entry_get_text(GTK_ENTRY
-                         (glade_xml_get_widget
-                          (me->_gladeXML, "entry_http_proxy")));
+   http = gtk_entry_get_text(
+      GTK_ENTRY(glade_xml_get_widget(me->_gladeXML, "entry_http_proxy")));
    _config->Set("Synaptic::httpProxy", http);
-   httpPort =
-      (int)
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON
-                                (glade_xml_get_widget
-                                 (me->_gladeXML, "spinbutton_http_port")));
+   httpPort = (int) gtk_spin_button_get_value(
+      GTK_SPIN_BUTTON(glade_xml_get_widget(me->_gladeXML,
+                                           "spinbutton_http_port")));
    _config->Set("Synaptic::httpProxyPort", httpPort);
    // ftp
-   ftp =
-      gtk_entry_get_text(GTK_ENTRY
-                         (glade_xml_get_widget
-                          (me->_gladeXML, "entry_ftp_proxy")));
+   ftp = gtk_entry_get_text(
+      GTK_ENTRY(glade_xml_get_widget(me->_gladeXML, "entry_ftp_proxy")));
    _config->Set("Synaptic::ftpProxy", ftp);
-   ftpPort =
-      (int)
-      gtk_spin_button_get_value(GTK_SPIN_BUTTON
-                                (glade_xml_get_widget
-                                 (me->_gladeXML, "spinbutton_ftp_port")));
+   ftpPort = (int) gtk_spin_button_get_value(
+      GTK_SPIN_BUTTON(glade_xml_get_widget(me->_gladeXML,
+                                           "spinbutton_ftp_port")));
    _config->Set("Synaptic::ftpProxyPort", ftpPort);
-   noProxy =
-      gtk_entry_get_text(GTK_ENTRY
-                         (glade_xml_get_widget
-                          (me->_gladeXML, "entry_no_proxy")));
+   noProxy = gtk_entry_get_text(
+      GTK_ENTRY(glade_xml_get_widget(me->_gladeXML, "entry_no_proxy")));
    _config->Set("Synaptic::noProxy", noProxy);
 
    me->applyProxySettings();
 
    // font stuff
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                   (glade_xml_get_widget
-                                    (me->_gladeXML, "checkbutton_user_font")));
+   newval = gtk_toggle_button_get_active(
+      GTK_TOGGLE_BUTTON(glade_xml_get_widget(me->_gladeXML,
+                                             "checkbutton_user_font")));
    _config->Set("Synaptic::useUserFont", newval);
 
    GValue value = { 0, };
@@ -210,11 +193,9 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    }
    g_value_unset(&value);
 
-   newval =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                   (glade_xml_get_widget
-                                    (me->_gladeXML,
-                                     "checkbutton_user_terminal_font")));
+   newval = gtk_toggle_button_get_active(
+      GTK_TOGGLE_BUTTON(glade_xml_get_widget(me->_gladeXML,
+                                             "checkbutton_user_terminal_font")));
    _config->Set("Synaptic::useUserTerminalFont", newval);
 
 
@@ -361,6 +342,11 @@ void RGPreferencesWindow::show()
                                 _config->FindB("Synaptic::AskQuitOnProceed",
                                                false));
 
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionOneClick),
+                                _config->FindB("Synaptic::OneClickOnStatusActions",
+                                               false));
+
+
    postClean = _config->FindB("Synaptic::CleanCache", false);
    postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
 
@@ -373,17 +359,16 @@ void RGPreferencesWindow::show()
 
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    i = _config->FindI("Synaptic::upgradeType", -1);
-   gtk_option_menu_set_history(GTK_OPTION_MENU
-                               (glade_xml_get_widget
-                                (_gladeXML, "optionmenu_upgrade_method")),
-                               i + 1);
+   gtk_option_menu_set_history(
+      GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML,
+                                           "optionmenu_upgrade_method")), i + 1);
 
 
    // proxy stuff
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                (glade_xml_get_widget
-                                 (_gladeXML, "radio_use_proxy")), useProxy);
+   gtk_toggle_button_set_active(
+      GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radio_use_proxy")),
+      useProxy);
    gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "table_proxy"),
                             useProxy);
    str = _config->Find("Synaptic::httpProxy", "");
@@ -396,22 +381,20 @@ void RGPreferencesWindow::show()
                               (_gladeXML, "spinbutton_http_port")), i);
 
    str = _config->Find("Synaptic::ftpProxy", "");
-   gtk_entry_set_text(GTK_ENTRY
-                      (glade_xml_get_widget(_gladeXML, "entry_ftp_proxy")),
-                      str.c_str());
+   gtk_entry_set_text(
+      GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_ftp_proxy")), str.c_str());
    i = _config->FindI("Synaptic::ftpProxyPort", 3128);
-   gtk_spin_button_set_value(GTK_SPIN_BUTTON
-                             (glade_xml_get_widget
-                              (_gladeXML, "spinbutton_ftp_port")), i);
+   gtk_spin_button_set_value(
+      GTK_SPIN_BUTTON(glade_xml_get_widget(_gladeXML, "spinbutton_ftp_port")), i);
    str = _config->Find("Synaptic::noProxy", "");
-   gtk_entry_set_text(GTK_ENTRY
-                      (glade_xml_get_widget(_gladeXML, "entry_no_proxy")),
+   gtk_entry_set_text(GTK_ENTRY(glade_xml_get_widget(_gladeXML,
+                                                     "entry_no_proxy")),
                       str.c_str());
    // main layout
    string mainName = _config->Find("Synaptic::MainName", "main_hpaned");
    if (mainName == "main_vpaned") {
-      gtk_button_clicked(GTK_BUTTON
-                         (glade_xml_get_widget(_gladeXML, "button_vpaned")));
+      gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML,
+                                                         "button_vpaned")));
       _synapticLayout = LAYOUT_VPANED;
    } else {
       gtk_button_clicked(GTK_BUTTON
@@ -421,15 +404,13 @@ void RGPreferencesWindow::show()
 
    // font stuff
    b = _config->FindB("Synaptic::useUserFont", false);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                (glade_xml_get_widget
-                                 (_gladeXML, "checkbutton_user_font")), b);
+   gtk_toggle_button_set_active(
+      GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,
+                                             "checkbutton_user_font")), b);
    b = _config->FindB("Synaptic::useUserTerminalFont", false);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                (glade_xml_get_widget
-                                 (_gladeXML,
-                                  "checkbutton_user_terminal_font")), b);
-
+   gtk_toggle_button_set_active(
+      GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,
+                                             "checkbutton_user_terminal_font")), b);
 
    RGWindow::show();
 }
@@ -657,6 +638,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    _optionUseTerminal = glade_xml_get_widget(_gladeXML, "check_terminal");
    _optionCheckRecom = glade_xml_get_widget(_gladeXML, "check_recommends");
    _optionAskQuit = glade_xml_get_widget(_gladeXML, "check_ask_quit");
+   _optionOneClick = glade_xml_get_widget(_gladeXML, "check_oneclick");
 
    _cacheLeave = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
    _cacheClean = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");
@@ -801,3 +783,5 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    setTitle(_("Preferences"));
 }
+
+// vim:ts=3:sw=3:et

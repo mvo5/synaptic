@@ -465,9 +465,9 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 #endif
             break;
          case PKG_REINSTALL:      // reinstall
-	    instPkgs.push_back(pkg);
-	    pkgInstallHelper(pkg, false, true);
-	    break;
+	         instPkgs.push_back(pkg);
+	         pkgInstallHelper(pkg, false, true);
+	         break;
          case PKG_DELETE:      // delete
             pkgRemoveHelper(pkg);
             break;
@@ -2583,7 +2583,7 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
 }
 
 void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
-                                       GdkEventButton * event,
+                                       GdkEventButton *event,
                                        RGMainWindow *me,
                                        vector<RPackage *> selected_pkgs)
 {
@@ -2601,14 +2601,17 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    // Gray out buttons that don't make sense, and update image
    // if necessary.
    GList *item = gtk_container_get_children(GTK_CONTAINER(me->_popupMenu));
+   gpointer oneclickitem = NULL;
    for (int i = 0; item != NULL; item = g_list_next(item), i++) {
 
       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
 
       // Keep button
       if (i == 0) {
-         if (mstatus != RPackage::MKeep)
+         if (mstatus != RPackage::MKeep) {
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+            oneclickitem = item->data;
+         }
 
          GtkWidget *img;
          if (pstatus == RPackage::SNotInstalled)
@@ -2623,6 +2626,8 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       if (i == 1 && pstatus == RPackage::SNotInstalled
           && mstatus != RPackage::MInstall) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+         if (oneclickitem == NULL)
+            oneclickitem = item->data;
       }
 
       // Re-install button
@@ -2634,12 +2639,16 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       if (i == 3 && pstatus == RPackage::SInstalledOutdated
           && mstatus != RPackage::MUpgrade) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+         if (oneclickitem == NULL)
+            oneclickitem = item->data;
       }
 
       // Remove buttons (remove, remove with dependencies)
       if ((i == 4 || i == 6) && pstatus != RPackage::SNotInstalled
           && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+         if (i == 4 && oneclickitem == NULL)
+            oneclickitem = item->data;
       }
 
       // Purge
@@ -2664,9 +2673,14 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
    }
 
-   gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-                  (event != NULL) ? event->button : 0,
-                  gdk_event_get_time((GdkEvent *) event));
+   if (event->button == 1 && oneclickitem != NULL &&
+       _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
+      gtk_menu_item_activate(GTK_MENU_ITEM(oneclickitem));
+   } else {
+      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
+                     (event != NULL) ? event->button : 0,
+                     gdk_event_get_time((GdkEvent *) event));
+   }
 }
 
 

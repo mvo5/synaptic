@@ -69,7 +69,7 @@ bool ShowHelp(CommandLine & CmdL)
       _("-h   This help text\n") <<
       _("-r   Open in the repository screen\n") <<
       _("-f=? Give a alternative filter file\n") <<
-      _("-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n") <<
+      _("-t   Give a alternative main window title (e.g. hostname with `uname -n`)\n") <<
       _("-i=? Start with the initialFilter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Upgrade and display changes\n") <<

@@ -2595,6 +2595,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
       _activeTreeModel = GTK_TREE_MODEL(_pkgList);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			      GTK_TREE_MODEL(_pkgList));
+      gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
       _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
 						     GTK_TREE_VIEW(_treeView));
   } else {
@@ -2602,6 +2603,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
       _activeTreeModel = GTK_TREE_MODEL(_pkgTree);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			      GTK_TREE_MODEL(_pkgTree));
+      gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
       _pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
 						 GTK_TREE_VIEW(_treeView));
   }

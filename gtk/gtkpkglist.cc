@@ -25,7 +25,7 @@
 
 using namespace std;
 
-#define DEBUG_LIST
+//#define DEBUG_LIST
 
 
 static void         gtk_pkg_list_init            (GtkPkgList      *pkg_tree);
@@ -284,23 +284,24 @@ gtk_pkg_list_get_path (GtkTreeModel *tree_model,
 
   RPackage *pkg = (RPackage*)iter->user_data;
 
+  retval = gtk_tree_path_new ();
+  int i = GPOINTER_TO_INT(iter->user_data2);
+  gtk_tree_path_append_index(retval, i);
+
+
+
 #ifdef DEBUG_LIST
   cout << "get_path() ";
   if(pkg!=NULL)
       cout << ": " << pkg->name() << endl;
   else
-      cout << endl;
+      cout << "(pkg == NULL) " << endl;
+
+  cout << "complete path: " << gtk_tree_path_to_string(retval) << endl;
 #endif
 
-  retval = gtk_tree_path_new ();
-  int i = GPOINTER_TO_INT(iter->user_data2);
-  gtk_tree_path_append_index(retval, i);
-
- 
-  //cout << "complete path: " << gtk_tree_path_to_string(retval) << endl;
   return retval;
 }
-
 
 static void
 gtk_pkg_list_get_value (GtkTreeModel *tree_model,
@@ -414,7 +415,6 @@ gtk_pkg_list_iter_next (GtkTreeModel  *tree_model,
   GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
   int i,old;
 
-  //RPackage *oldpkg = (RPackage*)iter->user_data;
   old = GPOINTER_TO_INT(iter->user_data2);
 
   i = old + 1;
@@ -425,6 +425,7 @@ gtk_pkg_list_iter_next (GtkTreeModel  *tree_model,
   }
 
 #ifdef DEBUG_LIST_FULL
+  RPackage *oldpkg = (RPackage*)iter->user_data;
   cout << "iter_next()  " << endl;
   cout << "old: " << oldpkg->name() << " [" << old << "] " << endl;
   cout << "new: " << pkg->name() <<  " [" << i << "] " << endl;

@@ -273,6 +273,7 @@ void RPackageLister::makePresetFilters()
 	filter->setName("New in archive"); _("New in archive");
 	registerFilter(filter);
     }
+#ifndef HAVE_RPM
     {
 	filter = new RFilter(this);
 	filter->preset = true;
@@ -280,22 +281,21 @@ void RPackageLister::makePresetFilters()
 	filter->setName("Residual config"); _("Residual config");
 	registerFilter(filter);
     }
-#ifndef HAVE_RPM
     {
 	filter = new RFilter(this);
 	filter->preset = true;
 	filter->status.setStatus(RStatusPackageFilter::DebconfPackage);
-	filter->setName("Debconf"); _("Pkg with Debconf");
+	filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
 	registerFilter(filter);
     }
-#endif
     {
 	filter = new RFilter(this);
 	filter->preset = true;
 	filter->status.setStatus(RStatusPackageFilter::NotInstallable);
-	filter->setName("NotInstallable"); _("Obsolete or local installed");
+	filter->setName("Obsolete or locally installed"); _("Obsolete or locally installed");
 	registerFilter(filter);
     }
+#endif
 }
 
 
@@ -532,7 +532,7 @@ bool RPackageLister::openCache(bool reset)
 
     for (I = deps->PkgBegin(); I.end() == false; I++) {
 	// this is a virtual pkg
-	if (I.VersionList().end()) {
+	if (I->VersionList == 0) {
 	    // find the owner of this virtual package and attach it there
  	    if (I->ProvidesList == 0) 
  		continue;

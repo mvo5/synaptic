@@ -20,7 +20,8 @@
  * USA
  */
 
-
+#include "config.h"
+#include "i18n.h"
 #include "rwuserdialog.h"
 
 

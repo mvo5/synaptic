@@ -3,7 +3,7 @@
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
-#include <fstream.h>
+#include <fstream>
 #include "config.h"
 #include "i18n.h"
 

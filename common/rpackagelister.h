@@ -192,6 +192,16 @@ public:
 
    void getDownloadSummary(int &dlCount, double &dlSize);
 
+   typedef vector<RPackage::MarkedStatus> pkgState;
+   void saveState(pkgState &state);
+   void restoreState(pkgState &state);
+   bool getStateChanges(pkgState &state,
+			vector<RPackage*> &kept,
+			vector<RPackage*> &toInstall, 
+			vector<RPackage*> &toUpgrade, 
+			vector<RPackage*> &toRemove,
+			RPackage *exclude = NULL);
+
    bool openCache(bool reset);
 
    bool fixBroken();

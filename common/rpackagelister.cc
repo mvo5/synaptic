@@ -469,7 +469,6 @@ int RPackageLister::getElementIndex(RPackage *pkg)
     return -1;
 }
 
-
 bool RPackageLister::fixBroken()
 {
     if (_cache->deps() == NULL)
@@ -817,6 +816,84 @@ struct bla : public binary_function<RPackage*, RPackage*, bool> {
     }
 };
 
+void RPackageLister::saveState(RPackageLister::pkgState &state)
+{
+    state.clear();
+    state.reserve(_count);
+    for (unsigned i = 0; i < _count; i++) {
+	state.push_back(_packages[i]->getMarkedStatus());
+    }
+}
+
+void RPackageLister::restoreState(RPackageLister::pkgState &state)
+{
+    for (unsigned i = 0; i < _count; i++) {
+	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
+	if (state[i] != status) {
+	    switch (state[i]) {
+		case RPackage::MInstall:
+		case RPackage::MUpgrade:
+		    _packages[i]->setInstall();
+		    break;
+		    
+		case RPackage::MRemove:
+		    _packages[i]->setRemove();
+		    break;
+		
+		case RPackage::MHeld:
+		case RPackage::MKeep:
+		    _packages[i]->setKeep();
+		    break;
+	    }
+	}
+    }
+}
+
+bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
+				     vector<RPackage*> &kept,
+				     vector<RPackage*> &toInstall, 
+				     vector<RPackage*> &toUpgrade, 
+				     vector<RPackage*> &toRemove,
+				     RPackage *exclude)
+{
+    bool changed = false;
+
+    for (unsigned i = 0; i < _count; i++) {
+	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
+	if (state[i] != status && _packages[i] != exclude) {
+	    switch (status) {
+		case RPackage::MInstall:
+		    toInstall.push_back(_packages[i]);
+		    changed = true;
+		    break;
+
+		case RPackage::MUpgrade:
+		    toUpgrade.push_back(_packages[i]);
+		    changed = true;
+		    break;
+		    
+		case RPackage::MRemove:
+		    toRemove.push_back(_packages[i]);
+		    changed = true;
+		    break;
+		
+		case RPackage::MKeep:
+		case RPackage::MHeld:
+		    kept.push_back(_packages[i]);
+		    changed = true;
+		    break;
+	    }
+	}
+    }
+
+    sort(kept.begin(), kept.end(), bla());
+    sort(toInstall.begin(), toInstall.end(), bla());
+    sort(toUpgrade.begin(), toUpgrade.end(), bla());
+    sort(toRemove.begin(), toRemove.end(), bla());
+
+    return changed;
+}
+
 void RPackageLister::getDetailedSummary(vector<RPackage*> &held, 
 					vector<RPackage*> &kept, 
 					vector<RPackage*> &essential,
@@ -866,8 +943,6 @@ void RPackageLister::getDetailedSummary(vector<RPackage*> &held,
   
   sizeChange = deps->UsrSize();
 }
-
-
 
 bool RPackageLister::updateCache(pkgAcquireStatus *status)
 {
@@ -1173,3 +1248,5 @@ bool RPackageLister::readSelections(istream &in)
         fixBroken();
     }
 }
+
+// vim:sts=4:sw=4

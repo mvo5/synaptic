@@ -1255,7 +1255,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
     //              The first %s is the URL and the second 
     //              one is a detailed error message that
     //              is provided by apt
-	 ioprintf(tmp, _("Failed to fetch %s\n  %s"), 
+	 ioprintf(tmp, _("Failed to fetch %s\n  %s\n\n"), 
 		  (*I)->DescURI().c_str(), errm.c_str());
 
          serverError = getServerErrorMessage(errm);

@@ -2851,16 +2851,12 @@ void RGMainWindow::setInterfaceLocked(bool flag)
 
 void RGMainWindow::setTreeLocked(bool flag)
 {
-#if 0 // mvo: disabled for now
     if (flag == true) {
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
 	_pkgTree = NULL;
     } else {
-	_pkgTree = gtk_pkg_tree_new(_lister);;
-	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
-				GTK_TREE_MODEL(_pkgTree));
+	changeTreeDisplayMode(_treeDisplayMode);
     }
-#endif
 }
 
 // vim:sts=4:sw=4

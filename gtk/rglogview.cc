@@ -96,6 +96,7 @@ void RGLogView::readLogs()
 					 GTK_SORT_ASCENDING);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			   GTK_TREE_MODEL(sort_model));
+   _realModel = sort_model;
 }
 
 void RGLogView::cbCloseClicked(GtkWidget *self, void *data)
@@ -112,6 +113,7 @@ void RGLogView::cbTreeSelectionChanged(GtkTreeSelection *selection,
    
    GtkTreeIter iter;
    GtkTreeModel *model;
+   GtkTextIter start, end;
    gchar *file = NULL;
 
    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
@@ -133,22 +135,118 @@ void RGLogView::cbTreeSelectionChanged(GtkTreeSelection *selection,
 	 while(getline(in, s)) {
 	    // no need to free str later, it is allocated in a static buffer
 	    const char *str = utf8(s.c_str());
-	    if(str!=NULL)
+	    if(str!=NULL) {
+	       gtk_text_buffer_get_end_iter(buffer, &end);
+	       int line = gtk_text_iter_get_line(&end);
 	       gtk_text_buffer_insert_at_cursor(buffer, str, -1);
+	       if(me->findStr) {
+		  char *off = g_strstr_len(str, strlen(str), me->findStr);
+		  if(off) {
+		     gtk_text_buffer_get_iter_at_line_index(buffer, &start, 
+							    line, off-str);
+		     gtk_text_buffer_get_iter_at_line_index(buffer, &end, 
+							    line, off-str+strlen(me->findStr));
+		     gtk_text_buffer_apply_tag (buffer, me->_markTag, 
+						&start, &end);
+		  }
+	       } 
+
+	    }
 	    gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
 	 }
 	 g_free(file);
    }
 }
 
-RGLogView::RGLogView(RGWindow *parent)
-: RGGladeWindow(parent, "logview")
+gboolean RGLogView::filter_func(GtkTreeModel *model, GtkTreeIter *iter,
+				gpointer data)
 {
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_close_clicked",
-                                 G_CALLBACK(cbCloseClicked), this);
+   RGLogView *me = (RGLogView*)data;
+   gchar *file;
+   string s;
+
+   gtk_tree_model_get(model, iter, COLUMN_LOG_FILENAME, &file, -1);
+   // top-level expander
+   if(file == NULL) {
+      return TRUE;
+   }
+
+   string logfile = RLogDir() + string(file);
+   ifstream in(logfile.c_str());
+   if(!in) {
+      g_warning("can't open logfile: %s",logfile.c_str());
+      return FALSE;
+   }
+   while(getline(in, s)) {
+      if(s.find(me->findStr) != string::npos) {
+	 return TRUE;
+      }
+   }
+
+   return FALSE;
+}
+
+gboolean empty_row_filter_func(GtkTreeModel *model, GtkTreeIter *iter, 
+			       gpointer data)
+{
+   gchar *file;
+
+   gtk_tree_model_get(model, iter, COLUMN_LOG_FILENAME, &file, -1);
+   // top-level expander
+   if(file == NULL) {
+      return gtk_tree_model_iter_has_child(model, iter);
+   }
+
+   return TRUE;
+}
+
+void RGLogView::cbButtonFind(GtkWidget *self, void *data)
+{
+   //cout << "RGLogView::cbButtonFind()" << endl;
+   RGLogView *me = (RGLogView*)data;
+   GtkTreeModel *filter_model, *empty_row_filter;
+   GtkTreeIter iter; 
+   gchar *file;
+
+   GtkTreeModel *model = me->_realModel;
+   if(model == NULL) {
+      g_warning("model==NULL in cbButtonFind");
+      return;
+   }
+
+   me->findStr = gtk_entry_get_text(GTK_ENTRY(me->_entryFind));
+   // reset to old model
+   if(strlen(me->findStr) == 0) {
+      me->findStr = NULL;
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), me->_realModel);
+      return;
+   } 
+     
+   // filter for the search string
+   filter_model=(GtkTreeModel*)gtk_tree_model_filter_new(model, NULL);
+   gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(filter_model), 
+					  me->filter_func, me, NULL);
+
+
+   // filter out empty nodes
+   empty_row_filter=(GtkTreeModel*)gtk_tree_model_filter_new(filter_model, NULL);
+   gtk_tree_model_filter_set_visible_func(GTK_TREE_MODEL_FILTER(empty_row_filter), 
+					  empty_row_filter_func, me, NULL);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), empty_row_filter);
+
+
+   // expand to show what we found
+   gtk_tree_view_expand_all(GTK_TREE_VIEW(me->_treeView));
+}
+
+RGLogView::RGLogView(RGWindow *parent)
+   : RGGladeWindow(parent, "logview"), findStr(NULL)
+{
    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_main");
    assert(vbox);
+
+   _entryFind = glade_xml_get_widget(_gladeXML, "entry_find");
+   assert(_entryFind);
 
    _treeView = glade_xml_get_widget(_gladeXML, "treeview_dates");
    assert(_treeView);
@@ -163,6 +261,12 @@ RGLogView::RGLogView(RGWindow *parent)
 						      NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
+   // find button
+   glade_xml_signal_connect_data(_gladeXML, "on_button_find_clicked",
+				 G_CALLBACK(cbButtonFind), this);
+   // close
+   glade_xml_signal_connect_data(_gladeXML,"on_button_close_clicked",
+                                 G_CALLBACK(cbCloseClicked), this);
 
  
    /* Setup the selection handler */
@@ -174,5 +278,9 @@ RGLogView::RGLogView(RGWindow *parent)
 		    this);
    _textView = glade_xml_get_widget(_gladeXML, "textview_log");
    assert(_textView);
-   
+
+   GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
+   _markTag = gtk_text_buffer_create_tag (buf, "mark",
+					  "background", "yellow", NULL); 
+
 }

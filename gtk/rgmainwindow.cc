@@ -1477,13 +1477,14 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     appendTag(_gladeXML,"label_section", pkg->section());
     appendTag(_gladeXML,"label_priority", pkg->priority());
 #ifdef HAVE_DEBTAGS
-    //appendTag(_gladeXML,"label_tags", pkg->tags());
+    appendTag(_gladeXML,"label_tags", pkg->tags());
 #endif
     appendTag(_gladeXML,"label_maintainer", pkg->maintainer());
     appendTag(_gladeXML,"label_installed_version", pkg->installedVersion());
     appendTag(_gladeXML,"label_installed_size", pkg->installedSize());
     appendTag(_gladeXML,"label_latest_version",pkg->availableVersion());
-    appendTag(_gladeXML,"label_latest_size", pkg->availablePackageSize());
+    appendTag(_gladeXML,"label_latest_size", pkg->availableInstalledSize());
+    appendTag(_gladeXML,"label_latest_download_size", pkg->availablePackageSize());
 
 
     // description
@@ -2678,6 +2679,13 @@ void RGMainWindow::buildInterface()
     assert(_purgeM);
 #ifdef HAVE_RPM
     gtk_widget_hide(_purgeM);
+#endif
+
+#ifndef HAVE_DEBTAGS
+    widget = glade_xml_get_widget(_gladeXML,"label_tags");
+    gtk_widget_hide(widget);
+    widget = glade_xml_get_widget(_gladeXML,"label_tags_label");
+    gtk_widget_hide(widget);
 #endif
 
     // workaround for a bug in libglade

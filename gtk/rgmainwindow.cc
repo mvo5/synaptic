@@ -99,18 +99,6 @@ enum { DEP_NAME_COLUMN,         /* text */
 
 
 
-#if ! GTK_CHECK_VERSION(2,2,0)
-// This function is needed to be compatible with gtk 2.0
-// data takes a GList** and fills the list with GtkTreePathes 
-// (just like the return of gtk_tree_selection_get_selected_rows()).
-void cbGetSelectedRows(GtkTreeModel *model,
-                       GtkTreePath *path, GtkTreeIter *iter, gpointer data)
-{
-   GList **list;
-   list = (GList **) data;
-   *list = g_list_append(*list, gtk_tree_path_copy(path));
-}
-#endif
 
 
 
@@ -187,7 +175,6 @@ void RGMainWindow::refreshSubViewList()
 	 ok = gtk_tree_model_iter_next(model, &iter);
       }
    } else {
-#if GTK_CHECK_VERSION(2,4,0)
       // we auto set to "All" when we have gtk2.4 (without the list is 
       // too slow)
       GtkTreeModel *model;
@@ -198,7 +185,6 @@ void RGMainWindow::refreshSubViewList()
       model = gtk_tree_view_get_model(GTK_TREE_VIEW(_subViewList));
       gtk_tree_model_get_iter_first(model, &iter);
       gtk_tree_selection_select_iter(selection, &iter);
-#endif
    }
 }
 
@@ -215,12 +201,7 @@ RPackage *RGMainWindow::selectedPackage()
    GList *list = NULL;
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
-#if GTK_CHECK_VERSION(2,2,0)
    list = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
-#else
-   gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-#endif
-
    if (list == NULL) // Empty.
       return NULL;
 
@@ -568,13 +549,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    // get list of selected pkgs
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
-#if GTK_CHECK_VERSION(2,2,0)
    list = li = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
-#else
-   li = list = NULL;
-   gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-   li = list;
-#endif
 
    // save pkg state
    RPackageLister::pkgState state;
@@ -846,12 +821,8 @@ void RGMainWindow::buildTreeView()
                                                   //"text", NAME_COLUMN,
                                                   "background-gdk",
                                                   COLOR_COLUMN, NULL);
-#if GTK_CHECK_VERSION(2,3,2)
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 200);
-#else
-      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-#endif
 
       //gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
       all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
@@ -1015,12 +986,9 @@ void RGMainWindow::buildTreeView()
    if (name_column)
       gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_treeView), name_column);
 
-#if GTK_CHECK_VERSION(2,4,0)
-#warning build with new fixed_height_mode
    g_object_set(G_OBJECT(_treeView), 
 		"fixed_height_mode", TRUE,
 		NULL);
-#endif
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
@@ -1726,7 +1694,6 @@ bool RGMainWindow::restoreState()
       int viewNr = _config->FindI("Synaptic::ViewMode", 0);
       changeView(viewNr);
 
-#if GTK_CHECK_VERSION(2,4,0)
       // we auto set to "All" on startup when we have gtk2.4 (without
       // the list is too slow)
       GtkTreeModel *model;
@@ -1737,7 +1704,6 @@ bool RGMainWindow::restoreState()
       model = gtk_tree_view_get_model(GTK_TREE_VIEW(_subViewList));
       gtk_tree_model_get_iter_first(model, &iter);
       gtk_tree_selection_select_iter(selection, &iter);
-#endif
    }
    updatePackageInfo(NULL);
    return true;
@@ -1781,18 +1747,9 @@ void RGMainWindow::setInterfaceLocked(bool flag)
       gdk_window_set_cursor(_win->window, NULL);
    }
 
-#if GTK_CHECK_VERSION(2,4,0)
    // fast enough with the new fixed-height mode
    while (gtk_events_pending())
       gtk_main_iteration();
-#else
-   // because of the comment above, we only do 5 iterations now
-   //FIXME: this is more a hack than a real solution
-   for (int i = 0; i < 5; i++) {
-      if (gtk_events_pending())
-         gtk_main_iteration();
-   }
-#endif
 }
 
 void RGMainWindow::setTreeLocked(bool flag)
@@ -2343,13 +2300,7 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
       cerr << "selectedRow(): me->_pkgTree == NULL " << endl;
       return;
    }
-#if GTK_CHECK_VERSION(2,2,0)
    list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
-#else
-   li = list = NULL;
-   gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-   li = list;
-#endif
 
    // list is empty
    if (li == NULL) {
@@ -2552,9 +2503,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 #else
    bool UseTerminal = true;
 #endif
-   RGZvtInstallProgress *zvt = NULL;
+   RGTermInstallProgress *term = NULL;
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
-      iprogress = zvt = new RGZvtInstallProgress(me);
+      iprogress = term = new RGTermInstallProgress(me);
    else
 #endif
 #ifdef HAVE_RPM
@@ -2567,9 +2518,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    me->_lister->commitChanges(fprogress, iprogress);
 
 #ifdef HAVE_TERMINAL
-   // wait until the zvt dialog is closed
-   if (zvt != NULL) {
-      while (GTK_WIDGET_VISIBLE(GTK_WIDGET(zvt->window()))) {
+   // wait until the term dialog is closed
+   if (term != NULL) {
+      while (GTK_WIDGET_VISIBLE(GTK_WIDGET(term->window()))) {
          RGFlushInterface();
          usleep(100000);
       }
@@ -2824,13 +2775,8 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
    GList *li, *list;
-#if GTK_CHECK_VERSION(2,2,0)
+
    list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
-#else
-   li = list = NULL;
-   gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-   li = list;
-#endif
    if (li == NULL)
       return;
 

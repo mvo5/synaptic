@@ -21,23 +21,20 @@
  */
 
 
-#ifndef _RGZVTNSTALLPROGRESS_H_
-#define _RGZVTINSTALLPROGRESS_H_
+#ifndef _RGTERMNSTALLPROGRESS_H_
+#define _RGTERMINSTALLPROGRESS_H_
+
+#ifdef HAVE_TERMINAL
 
 #include "rpackagemanager.h"
 #include "rgmainwindow.h"
 #include "rinstallprogress.h"
 #include "rgwindow.h"
 
-#ifdef HAVE_VTE
 #include <vte/vte.h>
 #include <vte/reaper.h>
-#endif
 
-
-#ifdef HAVE_TERMINAL
-
-class RGZvtInstallProgress : public RInstallProgress, public RGGladeWindow {
+class RGTermInstallProgress : public RInstallProgress, public RGGladeWindow {
   GtkWidget *_term;
   GtkWidget *_statusL;
   GtkWidget *_closeB;
@@ -47,11 +44,9 @@ class RGZvtInstallProgress : public RInstallProgress, public RGGladeWindow {
   static gboolean zvtFocus (GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 
 protected:
-#ifdef HAVE_VTE
   bool child_has_exited;
   static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
 			   gpointer data);
-#endif
   virtual void startUpdate();
   virtual void updateInterface();
   virtual void finishUpdate();
@@ -61,8 +56,8 @@ protected:
   pid_t _child_id;
 
 public:
-   RGZvtInstallProgress(RGMainWindow *main);
-   ~RGZvtInstallProgress() {};
+   RGTermInstallProgress(RGMainWindow *main);
+   ~RGTermInstallProgress() {};
 
    virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
 		   				int numPackages = 0,
@@ -70,6 +65,6 @@ public:
 
 };
 
-#endif /* HAVT_ZVT */
+#endif /* HAVT_TERMINAL */
 
 #endif

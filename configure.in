@@ -172,25 +172,6 @@ AC_ARG_WITH(vte,
 	      ]
 	      )
 
-dnl check for libzvt
-AC_ARG_WITH(zvt, 
-	      [--with-zvt  compile with libzvt support (terminal output)], 
-	      [pkg_modules="libzvt-2.0 >= 2.0.0"
-	      PKG_CHECK_MODULES(ZVT, [$pkg_modules])
-	      AC_DEFINE(HAVE_ZVT, 1, [build with ZVT as output terminal]) 
-	      AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
-	      AC_SUBST(ZVT_CFLAGS)
-	      AC_SUBST(ZVT_LIBS)
-	      ]
-	      )
-
-# check and make sure that we only have vte _or_ zvt
-if test "${with_vte+set}" = set; then
-	if test "${with_zvt+set}" = set; then
-		AC_MSG_ERROR([You can only build with vte or zvt])
-	fi
-fi
-
 AC_OUTPUT([
 common/Makefile 
 gtk/Makefile

@@ -45,23 +45,16 @@
 #include <apt-pkg/pkgsystem.h>
 #include <cassert>
 
-#ifdef HAVE_ZVT
-#include <libzvt/libzvt.h>
-#endif
-#ifdef HAVE_VTE
 #include <vte/vte.h>
 #include <vte/reaper.h>
-#endif
-
 
 using namespace std;
 
-#ifdef HAVE_VTE
-void RGZvtInstallProgress::child_exited(VteReaper *vtereaper,
+void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
 					gint child_pid, gint ret, 
 					gpointer data)
 {
-   RGZvtInstallProgress *me = (RGZvtInstallProgress*)data;
+   RGTermInstallProgress *me = (RGTermInstallProgress*)data;
    if(child_pid == me->_child_id) {
 //       cout << "child exited" << endl;
 //       cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
@@ -69,26 +62,22 @@ void RGZvtInstallProgress::child_exited(VteReaper *vtereaper,
       me->child_has_exited=true;
    }
 }
-#endif
 
-void RGZvtInstallProgress::startUpdate()
+void RGTermInstallProgress::startUpdate()
 {
-#ifdef HAVE_VTE
    child_has_exited=false;
    VteReaper* reaper = vte_reaper_get();
    g_signal_connect(G_OBJECT(reaper), "child-exited",
 		    G_CALLBACK(child_exited),
 		    this);
  
-#endif
-
    show();
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
    gtk_widget_set_sensitive(_closeB, false);
    RGFlushInterface();
 }
 
-void RGZvtInstallProgress::finishUpdate()
+void RGTermInstallProgress::finishUpdate()
 {
    string finishMsg = _("\nSuccessfully applied all changes. You can close the window now ");
    string errorMsg = _("\nFailed to apply all changes! Scroll in this buffer to see what went wrong ");
@@ -135,19 +124,13 @@ void RGZvtInstallProgress::finishUpdate()
       size = incompleteMsg.size();
       break;
    }
-#ifdef HAVE_ZVT
-   zvt_term_feed(ZVT_TERM(_term), (char*)msg, size);
-#endif
-#ifdef HAVE_VTE
    vte_terminal_feed(VTE_TERMINAL(_term), utf8_to_locale(msg), size);
-#endif
-
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Finished</i>"));
 }
 
-void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
+void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)
 {
-   RGZvtInstallProgress *me = (RGZvtInstallProgress*)data;  
+   RGTermInstallProgress *me = (RGTermInstallProgress*)data;  
 
    if(!me->updateFinished) {
       gtk_label_set_markup(GTK_LABEL(me->_statusL), 
@@ -159,13 +142,13 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
    me->hide();
 }
 
-bool RGZvtInstallProgress::close()
+bool RGTermInstallProgress::close()
 {
    stopShell(NULL, this);
    return true;
 }
 
-gboolean RGZvtInstallProgress::zvtFocus (GtkWidget *widget,
+gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
 					 GdkEventButton *event,
 					 gpointer user_data)
 {
@@ -176,7 +159,7 @@ gboolean RGZvtInstallProgress::zvtFocus (GtkWidget *widget,
    return FALSE;
 }
 
-RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main) 
+RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
     : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"),
       updateFinished(false)
 {
@@ -185,47 +168,6 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
    GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
    assert(hbox);
 
-#ifdef HAVE_ZVT
-   // libzvt will segfault if the locales are not supported, 
-   // we workaround this here
-   char *s = NULL;
-   if (!XSupportsLocale()) {
-      s = getenv("LC_ALL");
-      unsetenv("LC_ALL");
-      gtk_set_locale();
-   }
-   _term = zvt_term_new_with_size(80, 24);
-   if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
-      zvt_term_set_font_name(ZVT_TERM(_term), s);
-   }
-   if(s != NULL) {
-      setenv("LC_ALL",s,1);
-      gtk_set_locale();
-   }
-
-   zvt_term_set_size(ZVT_TERM(_term),80,24);
-   gtk_widget_set_size_request(GTK_WIDGET(_term),
-			       (ZVT_TERM(_term)->grid_width * 
-				ZVT_TERM(_term)->charwidth) + 2 /*padding*/ +
-			       (GTK_WIDGET(_term)->style->xthickness * 2),
-			       (ZVT_TERM(_term)->grid_height * 
-				ZVT_TERM(_term)->charheight) + 2 /*padding*/ +
-			       (GTK_WIDGET(_term)->style->ythickness * 2));
-   zvt_term_set_size(ZVT_TERM(_term),80,24);
-
-   zvt_term_set_scroll_on_output(ZVT_TERM(_term), TRUE);
-   zvt_term_set_scroll_on_keystroke (ZVT_TERM(_term), TRUE);
-   zvt_term_set_auto_window_hint(ZVT_TERM(_term), FALSE);
-   zvt_term_set_scrollback(ZVT_TERM(_term), 10000);
-   GtkWidget *scrollbar = 
-      gtk_vscrollbar_new (GTK_ADJUSTMENT (ZVT_TERM(_term)->adjustment));
-   GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
-   g_signal_connect(G_OBJECT(_term), "button-press-event", 
-		    (void  (*)())zvtFocus, 
-		    this);
-#endif
-#ifdef HAVE_VTE
    _term = vte_terminal_new();
    GtkWidget *scrollbar = 
       gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
@@ -237,7 +179,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
    } else {
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
    }
-#endif
+
    gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
    gtk_widget_show(_term);
 
@@ -259,11 +201,11 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 
 
 pkgPackageManager::OrderResult 
-RGZvtInstallProgress::start(RPackageManager *pm,
+RGTermInstallProgress::start(RPackageManager *pm,
 			    int numPackages,
 			    int numPackagesTotal)
 {
-   //cout << "RGZvtInstallProgress::start()" << endl;
+   //cout << "RGTermInstallProgress::start()" << endl;
 
    void *dummy;
    int open_max, ret = 250;
@@ -272,13 +214,7 @@ RGZvtInstallProgress::start(RPackageManager *pm,
    if (res == pkgPackageManager::Failed)
       return res;
 
-#ifdef HAVE_ZVT
-   int dupfd=dup(0); // work around a stupid bug in zvt (again!)
-   _child_id = zvt_term_forkpty (ZVT_TERM(_term), FALSE);
-#endif
-#ifdef HAVE_VTE
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
-#endif
    if (_child_id == -1) {
       cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
       cerr << "errorcode: " << errno << endl;
@@ -293,39 +229,22 @@ RGZvtInstallProgress::start(RPackageManager *pm,
       memset( &new_act, 0, sizeof( new_act ) );
       new_act.sa_handler = SIG_IGN;
       sigaction( SIGPIPE, &new_act, NULL);
-#ifndef HAVE_VTE // vte handles all this internally
-      // Close all file descriptors but first 3
-      open_max = sysconf(_SC_OPEN_MAX);
-      for (int i = 3; i < open_max; i++)
-	 ::close(i);
-      // make sure, that term is set correctly
-      setenv("TERM","xterm",1);
-#endif
       res = pm->DoInstallPostFork();
       _exit(res);
    }
 
    startUpdate();
-#ifdef HAVE_ZVT
-   while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
-
-   res = (pkgPackageManager::OrderResult)zvt_term_closepty(ZVT_TERM(_term));
-   ::close(dupfd);
-#endif
-#ifdef HAVE_VTE
    // make sure that the child has really exited and we catched the
    // return code
    while(!child_has_exited)
       updateInterface();
-#endif
 
    finishUpdate();
 
    return res;
 }
 
-void RGZvtInstallProgress::updateInterface()
+void RGTermInstallProgress::updateInterface()
 {    
    if (gtk_events_pending()) {
       while (gtk_events_pending()) gtk_main_iteration();

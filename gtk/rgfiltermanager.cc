@@ -31,13 +31,6 @@
 
 #include "i18n.h"
 
-#if ! GTK_CHECK_VERSION(2,2,0)
-extern void multipleSelectionHelper(GtkTreeModel *model,
-                                    GtkTreePath *path,
-                                    GtkTreeIter *iter, gpointer data);
-#endif
-
-
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                                              RPackageViewFilter *filterview)
 : RGGladeWindow(win, "filters"), _selectedPath(NULL),
@@ -635,12 +628,7 @@ void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
    f.clear();
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_sectionList));
-#if GTK_CHECK_VERSION(2,2,0)
    list = gtk_tree_selection_get_selected_rows(selection, NULL);
-#else
-   gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
-                                       &list);
-#endif
 
    while (list) {
       if (gtk_tree_model_get_iter(GTK_TREE_MODEL(_sectionListStore),

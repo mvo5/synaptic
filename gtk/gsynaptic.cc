@@ -251,8 +251,13 @@ pid_t TestLock(string File)
 {
    int FD = open(File.c_str(),0);
    if(FD < 0) {
-      perror("open");
-      return(-1);
+      if(errno == ENOENT) {
+	 // File does not exist, no there can't be a lock
+	 return 0; 
+      } else {
+	 perror("open");
+	 return(-1);
+      }
    }
    struct flock fl;
    fl.l_type = F_WRLCK;
@@ -260,9 +265,13 @@ pid_t TestLock(string File)
    fl.l_start = 0;
    fl.l_len = 0;
    if (fcntl(FD, F_GETLK, &fl) < 0) {
+      int Tmp = errno;
+      close(FD);
       cerr << "fcntl error" << endl;
+      errno = Tmp;
       return(-1);
    }
+   close(FD);
    // lock is available
    if(fl.l_type == F_UNLCK)
       return(0);

@@ -23,7 +23,8 @@
  */
 
 
-#include<cstdio>
+#include <stdio.h>
+#include <assert.h>
 #include "config.h"
 #include "i18n.h"
 #include "rpackagelister.h"

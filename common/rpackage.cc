@@ -40,6 +40,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <assert.h>
 
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/depcache.h>

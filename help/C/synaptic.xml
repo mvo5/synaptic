@@ -48,7 +48,7 @@
 		This document is distributed under the terms of the GNU
 		Public license as published by the Free Software; either version 2 of the License, 
 		or (at your option) later version. A copy of this license can be found in
-		<xref linkend="synaptic-gpl"/>, or in the file included with 
+		, or in the file included with 
 		the source code of this program. 
 	</para>
 </legalnotice>
@@ -691,8 +691,8 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				Query the package repositories for the latest version of the package(s):
-			</para>
+				Refresh the list of known packages to be aware of the latest version available:
+
 			<itemizedlist>
 				<listitem>
 					<para>
@@ -713,6 +713,7 @@
 					</para>
 				</listitem>
 			</itemizedlist>
+			</para>
 		</listitem>
 		<listitem>
 			<para>
@@ -726,66 +727,68 @@
 		<listitem>
 			<para>
 				Mark the selected packages for installation:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Double click on the name of the package in the
+							<xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+		                        <listitem>
+			                        <para>
+				                        Click on the status icon of the package and choose <guimenuitem>
+					                Install Latest Version</guimenuitem> from the menu.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Right click on the package and choose <guimenuitem>
+							Install Latest Version</guimenuitem> from the
+							context menu.
+						</para>
+					</listitem>
+			                <listitem>
+				                <para>
+					                Choose <menuchoice><guimenu>Package</guimenu>
+						        <guimenuitem>Install Latest Version</guimenuitem>
+							</menuchoice> from the menu.
+	                                        </para>
+		                        </listitem>
+					<listitem>
+						<para>
+							Press the key combination <keycombo>
+							<keycap>Ctrl</keycap><keycap>I</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Double click on the name of the package in the
-						<xref linkend="synaptic-win-list"/>.
-					</para>
-				</listitem>
-                                <listitem>
-                                        <para>
-                                                Click on the status icon of the package and choose <guimenuitem>
-                                                Install Latest Version</guimenuitem> from the menu.
-                                        </para>
-                                </listitem>
-				<listitem>
-					<para>
-						Right click on the package and choose <guimenuitem>
-						Install Latest Version</guimenuitem> from the
-						context menu.
-					</para>
-				</listitem>
-                                <listitem>
-                                        <para>
-                                                Choose <menuchoice><guimenu>Package</guimenu>
-                                                <guimenuitem>Install Latest Version</guimenuitem>
-                                                </menuchoice> from the menu.
-                                        </para>
-                                </listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>I</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 		<listitem>
 			<para>
 				Apply the marked changes to actually install the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply Changes</guibutton> in the toolbar.	
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Apply Changes</guibutton> in the toolbar.	
-				</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Apply Marked Changes</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 	</orderedlist>
 </sect2>
@@ -796,14 +799,14 @@
 	<para>
 		<note>
 			<para>
-				Configuration files and user created data (e.g. a Website in /var/www) are not removed
+				Configuration files and user created data (e.g. a website in /var/www) are not removed
 				from the system by default.
 			</para>
 			<para>
-				Debian only. This behavior can changed in the preferences. FIX link
+				<emphasis>Debian only:</emphasis> This behavior can changed in the preferences. FIX link
 			</para>
 			<para>
-				Debian only. To remove all files related to the package
+				<emphasis>Debian only:</emphasis> To remove all files related to the package
 				choose <menuchoice><guimenuitem>Remove Including 
 				Configuration</guimenuitem></menuchoice> instead of 
 				<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
@@ -813,7 +816,7 @@
 	<para>
 		<note>
 			<para>
-				Debian only. To also remove packages that are only installed as dependency 
+				<emphasis>Debian only:</emphasis> To also remove packages that are only installed as dependency 
 				of the to be removed 
 				package(s) and that would be no longer needed (orphaned) afterwards, choose 
 				<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
@@ -835,65 +838,66 @@
 		<listitem>
 			<para>
 				Mark the selected package(s) for removal:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Double click on the name of the installed package in the
+							<xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+		                        <listitem>
+			                        <para>
+				                        Click on the status icon of the package and choose <guimenuitem>
+					                Install Latest Version</guimenuitem> from the menu.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Right click on the package and choose <guimenuitem>
+							Remove</guimenuitem> from the context menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Remove</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination <keycombo>
+							<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Double click on the name of the installed package in the
-						<xref linkend="synaptic-win-list"/>.
-					</para>
-				</listitem>
-                                <listitem>
-                                        <para>
-                                                Click on the status icon of the package and choose <guimenuitem>
-                                                Install Latest Version</guimenuitem> from the menu.
-                                        </para>
-                                </listitem>
-				<listitem>
-					<para>
-						Right click on the package and choose <guimenuitem>
-						Remove</guimenuitem> from the context menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Remove</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 		<listitem>
 			<para>
 				Apply the marked changes to actually remove the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Apply Marked Changes</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 	</orderedlist>
 </sect2>
@@ -905,28 +909,29 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				Query the package repositories for the latest version of the package(s):
+				Refresh the list of known packages to be aware of the latest version available:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Refresh Package List</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Click on <guibutton>Refresh List</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Refresh Package List</guimenuitem></menuchoice> 
-						from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Click on <guibutton>Refresh List</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 
 		<listitem>
@@ -939,41 +944,42 @@
 		<listitem>
 			<para>
 				Marked the selected packages for upgrade:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Double click on the name of the package with a later version available
+							in the <xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+				                        Click on the status icon of the package and choose <guimenuitem>
+			                                Upgrade</guimenuitem> from the menu.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Right click on the package and choose <guimenuitem>
+							Upgrade</guimenuitem> from the
+							context menu.
+						</para>
+		                        </listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Upgrade</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Double click on the name of the package with a later version available
-						in the <xref linkend="synaptic-win-list"/>.
-					</para>
-				</listitem>
-                                <listitem>
-                                        <para>
-                                                Click on the status icon of the package and choose <guimenuitem>
-                                                Upgrade</guimenuitem> from the menu.
-                                        </para>
-                                </listitem>
-				<listitem>
-					<para>
-						Right click on the package and choose <guimenuitem>
-						Upgrade</guimenuitem> from the
-						context menu.
-					</para>
-                                </listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Upgrade</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 		<listitem>
 			<para>
@@ -1010,53 +1016,56 @@
 
 
 <sect2 id="synaptic-pkg-upgradesystem"> 
-	<title>To Upgrade the Whole System</title>
+	<title>
+		To Upgrade the Whole System
+	</title>
+
 	<para>
 		The global upgrade enables you to upgrade your system
-		to the latest version without having to mark each package upgrade manually.
+		to the latest version without having to mark and validate each package upgrade manually.
 	</para>
 	
 	<para>
 		&app; provides two global upgrade methods:
-	<variablelist>
-		<varlistentry>
-			<term>
-				Upgrade
-			</term>
-			<listitem>
-				<para> 
-					The default upgrade method marks upgrades of installed packages only. 
-					If the later version of a package depends on not installed packages 
-					or conflicts with an already installed package, 
-					the upgrade will not be marked.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term>
-				Smart Upgrade (Dist-Upgrade)
-			</term>
-			<listitem>
-				<para>
-					The Smart Upgrade tries to resolve package conflicts intelligently. This includes
-					installing additional required packages and prefering packages with
-					higher priority.
-				</para>
-				<para>
-					Smart upgrade is also known as dist-upgrade in the console tool apt-get.
-				</para>
-			</listitem>
-		</varlistentry>
-	</variablelist>
-	</para>
+		<variablelist>
+			<varlistentry>
+				<term>
+					Upgrade
+				</term>
+				<listitem>
+					<para> 
+						The default upgrade method marks upgrades of installed packages only. 
+						If the later version of a package depends on not installed packages 
+						or conflicts with an already installed package, 
+						the upgrade will not be marked.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Smart Upgrade (Dist-Upgrade)
+				</term>
+				<listitem>
+					<para>
+						The smart upgrade method tries to resolve package conflicts intelligently. This includes
+						installing additional required packages and prefering packages with
+						higher priority.
+					</para>
+					<para>
+						Smart upgrade is also known as <emphasis>dist-upgrade</emphasis> in the console tool apt-get.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
 
-	<note>
-		<para>
-			Upgrades to a later operating system major releases have to be performed with the 
-			smart upgrade method, e.g. from Conectiva 9 to Conectiva 10 or from 
-			Debian Woody to Debian Sarge.
-		</para>
-	</note>
+		<note>
+			<para>
+				Upgrades to a later operating system major releases have to be performed with the 
+				smart upgrade method, e.g. from Conectiva 9 to Conectiva 10 or from 
+				Debian Woody to Debian Sarge.
+			</para>
+		</note>
+	</para>
 
 	<para>
 		To upgrade your system to the latest version follow these steps:
@@ -1064,54 +1073,56 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				Query the package repositories for the latest version of the packages:
+				 Refresh the list of known packages to be aware of the latest version available:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Click on <guibutton>Rerfesh List</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination <keycombo>
+							<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Click on <guibutton>Rerfesh List</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 
 		<listitem>
 			<para>
 				Mark the package(s) for upgrade: 
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Upgrade System
+							</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Upgrade System</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination <keycombo>
+							<keycap>Ctrl</keycap><keycap>G</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Upgrade System
-						</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Upgrade System</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>G</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 		
 		<listitem>
@@ -1122,33 +1133,35 @@
 		<listitem>
 			<para>
 				Apply the marked changes to actually upgrade the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
-						from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 	</orderedlist>
+
 	<tip>
 		<para>
 			You can change the default upgrade method in the
-			<xref linkend="synaptic-prefs-actions"/>.
+			<xref linkend="synaptic-prefs-actions"/> for further upgrades.
 		</para>
 	</tip>
 </sect2>
@@ -1164,13 +1177,15 @@
 		</para>
 		<para>
 			Downgrading packages is a broken feature, since apt and &app; can only handle
-			conflicts and dependency resolution in upgrades. 
-			You may need this feature in some circumstances, but it is not recommended to use. 
+			conflicts and dependency resolution of upgrades. 
+		</para>
+		<para>
+			You may need this feature in some rare circumstances, but it is not recommended to use. 
 		</para>
 	</caution>
 
 	<para>
-		To downgrade a package you have to select a specific version of the package:
+		To downgrade a package you have to mark a specific version of the package:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -1182,27 +1197,28 @@
 		<listitem>
 			<para>
 				Open the Properties dialog of the package:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Properties</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Properties</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Properties</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Properties</guimenuitem></menuchoice> 
-						from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 		<listitem>
 			<para>
@@ -1218,27 +1234,28 @@
 		<listitem>
 			<para>
 				Apply the marked changes to actually downgrade the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Actions</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
 			</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
-						from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
-					</para>
-				</listitem>
-			</itemizedlist>
 		</listitem>
 	</orderedlist>
 </sect2>
@@ -1247,40 +1264,45 @@
 	<title>
 		To Apply Marked Changes
 	</title>
+
 	<tip>
 		<para>
-			To show only packages that are marked for change apply 
-			the "Marked Changes" filter to the package list.
+			To show only packages that are marked for a status change apply 
+			the "Marked Changes" filter to the package list, see 
+			<xref linkend="synaptic-filter-apply"/>.
 		</para>
 	</tip>
+
 	<para>
 		To apply marked changes:
+
+		<itemizedlist>
+			<listitem>
+				<para>
+					Click on <guibutton>Apply</guibutton> in the toolbar.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Choose <menuchoice><guimenu>Actions</guimenu>
+					<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> from the menu.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Press the key combination 
+					<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+				</para>
+			</listitem>
+		</itemizedlist>
 	</para>
-	<itemizedlist>
-		<listitem>
-			<para>
-				Click on <guibutton>Apply</guibutton> in the toolbar.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Choose <menuchoice><guimenu>Actions</guimenu>
-				<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> from the menu.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Press the key combination 
-				<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
-			</para>
-		</listitem>
-	</itemizedlist>
 </sect2>
 
 <sect2 id="synaptic-pkg-undo">
 	<title>
 		To Unmark Changes
 	</title>
+
 	<para>
 		The following ways allow you to unmark changes:
 	</para>
@@ -2139,7 +2161,7 @@
 		This program is distributed under the terms of the GNU
 		Public license as published by the Free Software; either version 2 of the License, 
 		or (at your option) later version. A copy of this license can be found in
-		<xref linkend="synaptic-gpl"/>, or in the file included with 
+		, or in the file included with 
 		the source code of this program. 
 	</para>
 </sect1> 

@@ -258,6 +258,9 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
     _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
     assert(_summaryL);
+
+    _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
+    assert(_summaryL);
     
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
@@ -302,6 +305,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     double sizeChange, dlSize;
     int dlCount;
     GString *msg = g_string_new("");
+    GString *msg_space = g_string_new("");
 	
     lister->getSummary(held, kept, essential,
 		       toInstall, toUpgrade, toRemove, toDowngrade,
@@ -344,20 +348,21 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     }
 
     if (sizeChange > 0) {
-	g_string_append_printf(msg, _("\n%s of extra space will be used"),
+	g_string_append_printf(msg_space,_("\n%s of extra space will be used"),
 			       SizeToStr(sizeChange).c_str());
     } else if (sizeChange < 0) {
-	g_string_append_printf(msg, _("\n%s of extra space will be freed"),
+	g_string_append_printf(msg_space, _("\n%s of extra space will be freed"),
 			       SizeToStr(sizeChange).c_str());
 	sizeChange = -sizeChange;
     }
     
     if (dlSize > 0) {
-	g_string_append_printf(msg, _("\n%s have to be downloaded"),
+	g_string_append_printf(msg_space, _("\n%s have to be downloaded"),
 			       SizeToStr(dlSize).c_str());
     }
     
     gtk_label_set_text(GTK_LABEL(_summaryL), msg->str);
+    gtk_label_set_text(GTK_LABEL(_summarySpaceL), msg_space->str);
     g_string_free(msg,TRUE);
 }
 

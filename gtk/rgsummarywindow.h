@@ -36,6 +36,7 @@ class RGSummaryWindow : public RGGladeWindow {
    GtkWidget *_topF;
    GtkWidget *_middleF;
    GtkWidget *_summaryL;
+   GtkWidget *_summarySpaceL;
    bool _confirmed;
    bool _potentialBreak;
    RPackageLister *_lister;

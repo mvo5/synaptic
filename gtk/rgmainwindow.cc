@@ -73,7 +73,6 @@
 #include "rgdummyinstallprogress.h"
 #include "rgzvtinstallprogress.h"
 #include "gsynaptic.h"
-#include "conversion.h"
 
 // icons and pixmaps
 #include "alert.xpm"
@@ -1078,7 +1077,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     bool byProvider = TRUE;
 
     const char *depType, *depPkg, *depName, *depVer;
-    char *summary;
+    char *summary; // XXX Why not const?
     bool ok;
     if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
@@ -1115,6 +1114,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
  					ok ? _blackStyle : _redStyle);
 		gtk_clist_set_row_data(GTK_CLIST(_depList), row,
 				       strdup(summary));
+				       // XXX Is this being freed?
 	    }
 	    
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
@@ -1187,6 +1187,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 					ok ? _blackStyle : _redStyle);
 		gtk_clist_set_row_data(GTK_CLIST(_availDepList), row,
 				       summary);
+				       // No strdup() here? See above.
 	    }
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
     }
@@ -1205,7 +1206,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
     char buffer[512] = "";
-    char *bufPtr = (char*)buffer;
+    char *bufPtr = buffer;
     unsigned bufSize = sizeof(buffer);
     long size;
     RPackage::UpdateImportance importance;
@@ -1216,7 +1217,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_label_set_text(GTK_LABEL(_summL), "");
 	gtk_label_set_text(GTK_LABEL(_infoL), "");
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
-	gtk_label_set_text(GTK_LABEL(_stateL), "");
+	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
 	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
 	if (_showUpdateInfo)
 	    gtk_label_set_text(GTK_LABEL(_importL), "");
@@ -1230,28 +1231,27 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     status = pkg->getStatus();
 
     if (status == RPackage::SNotInstalled) {
-	gtk_label_set_markup_with_mnemonic(GTK_LABEL(GTK_BIN(_actionB[1])->child),
-			   _("_Install"));
+	gtk_label_set_markup_with_mnemonic(
+		GTK_LABEL(_actionBInstallLabel), _("_Install"));
     } else {
-	gtk_label_set_markup_with_mnemonic(GTK_LABEL(GTK_BIN(_actionB[1])->child),
-			   _("_Upgrade"));
+	gtk_label_set_markup_with_mnemonic(
+		GTK_LABEL(_actionBInstallLabel), _("_Upgrade"));
     }
     
     importance = pkg->updateImportance();
     
     // name/summary
-    gtk_label_set_text(GTK_LABEL(_nameL), (char*)pkg->name());
-    //gtk_label_set_text(GTK_LABEL(_summL), (char*)pkg->summary().c_str());
-    gtk_label_set_text(GTK_LABEL(_summL), _iconv.convert(pkg->summary().c_str(),pkg->summary().size()));
+    gtk_label_set_text(GTK_LABEL(_nameL), utf8(pkg->name()));
+    gtk_label_set_text(GTK_LABEL(_summL), utf8(pkg->summary()));
     
     // package info
     
-    // common information regardless of state    
-    appendTag(bufPtr, bufSize, _("Section"), pkg->section());
-    appendTag(bufPtr, bufSize, _("Priority"), pkg->priority());
-    /*XXX
-    appendTag(bufPtr, bufSize, "Maintainer", pkg->maintainer().c_str());
-    appendTag(bufPtr, bufSize, "Vendor", pkg->vendor());
+    // common information regardless of state
+    appendTag(bufPtr, bufSize, _("Section"), utf8(pkg->section()));
+    appendTag(bufPtr, bufSize, _("Priority"), utf8(pkg->priority()));
+    /* XXX Why this is commented out?
+    appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
+    appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
      */
     
     // installed version info
@@ -1282,7 +1282,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	// importance of update
 	char *text;
 	
-	bufPtr = (char*)buffer;
+	bufPtr = buffer;
 	bufSize = sizeof(buffer);
 	*bufPtr = 0;
 	
@@ -1313,17 +1313,15 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	} else {
 	    gtk_widget_hide(_importP);
 	}
-    }    
+    }
 
     // update information
     if (_showUpdateInfo) {
-//	const char *updateText = pkg->updateSummary();
-	
+//	const char *updateText = utf8(pkg->updateSummary());
     }
-        
+     
     // description
-    //gtk_text_buffer_set_text(_textBuffer, pkg->description(), -1);
-    gtk_text_buffer_set_text(_textBuffer, _iconv.convert(pkg->description(), strlen(pkg->description())), -1);
+    gtk_text_buffer_set_text(_textBuffer, utf8(pkg->description()), -1);
     GtkTextIter iter;
     gtk_text_buffer_get_iter_at_offset(_textBuffer, &iter, 0);
     gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_textView), &iter,0,FALSE,0,0);
@@ -1506,8 +1504,7 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
-  : RGWindow("main", false, true), _lister(packLister), _iconv("UTF8"), 
-    _pkgTree(0)
+  : RGWindow("main", false, true), _lister(packLister), _pkgTree(0)
 {
 #if !defined(DEBUGUI) || defined(HAVE_RPM)
     //_showUpdateInfo = true; // xxx conectiva only, for now
@@ -1839,6 +1836,8 @@ void RGMainWindow::buildInterface()
 				  "on_action_clicked",
 				  G_CALLBACK(actionClicked),
 				  this);
+    _actionBInstallLabel = glade_xml_get_widget(_gladeXML,
+						"radiobutton_install_label");
     widget = glade_xml_get_widget(_gladeXML, "menu_install");
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
@@ -1899,8 +1898,10 @@ void RGMainWindow::buildInterface()
     _pkgHelp = glade_xml_get_widget(_gladeXML, "button_pkghelp");
     assert(_pkgHelp);
 
-    if(!FileExists("/usr/bin/dwww"))
-      gtk_widget_hide(_pkgHelp);
+    if(!FileExists("/usr/bin/dwww")) {
+	gtk_widget_hide(_pkgHelp);
+	gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
+    }
     
     _tabview = glade_xml_get_widget(_gladeXML, "notebook_info");
     assert(_tabview);
@@ -1970,6 +1971,7 @@ void RGMainWindow::buildInterface()
 
     _depInfoL = glade_xml_get_widget(_gladeXML, "label_dep_info");
     assert(_depInfoL);
+    gtk_label_set_text(GTK_LABEL(_depInfoL), "");    
     _rdepList = glade_xml_get_widget(_gladeXML, "clist_rdeps");
     assert(_rdepList);
     _availDepList = glade_xml_get_widget(_gladeXML, "clist_availdep_list");
@@ -2255,7 +2257,8 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
     } else {
       updateCache = true;
     }
-    dontStop = me->_userDialog->confirm(_("Do you want to scan another CD?"));
+    dontStop = me->_userDialog->confirm(
+			_("Do you want to add another CD-ROM?"));
   }
   scan.hide();
   if (updateCache) {
@@ -2509,45 +2512,51 @@ void RGMainWindow::setStatusText(char *text)
     gtk_widget_queue_draw(_statusL);
 }
 
+GtkWidget *RGMainWindow::createFilterMenu()
+{
+    GtkWidget *menu, *item;
+    vector<string> filters;
+    _lister->getFilterNames(filters);
+
+    menu = gtk_menu_new();
+
+    item = gtk_menu_item_new_with_label(_("All Packages"));
+    gtk_widget_show(item);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+    gtk_object_set_data(GTK_OBJECT(item), "me", this);
+    gtk_object_set_data(GTK_OBJECT(item), "index", (void*)0);
+    gtk_signal_connect(GTK_OBJECT(item), "activate", 
+		       (GtkSignalFunc)changedFilter, this);
+  
+    int i = 1;
+    for (vector<string>::const_iterator iter = filters.begin();
+	 iter != filters.end(); iter++) {
+	
+	item = gtk_menu_item_new_with_label((char*)(*iter).c_str());
+	gtk_widget_show(item);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+	gtk_object_set_data(GTK_OBJECT(item), "me", this);
+	gtk_object_set_data(GTK_OBJECT(item), "index", (void*)i++);
+	gtk_signal_connect(GTK_OBJECT(item), "activate", 
+			   (GtkSignalFunc)changedFilter, this);
+    }
+
+    return menu;
+}
 
 void RGMainWindow::refreshFilterMenu()
 {
-  GtkWidget *menu, *item;
-  vector<string> filters;
-  _lister->getFilterNames(filters);
-  int i;
+    GtkWidget *menu;
 
-  gtk_option_menu_remove_menu(GTK_OPTION_MENU(_filterPopup));
-  gtk_menu_item_remove_submenu(GTK_MENU_ITEM(_filterMenu));
+    // Toolbar
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(_filterPopup));
+    menu = createFilterMenu();
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(_filterPopup), menu);
 
-  menu = gtk_menu_new();
-  gtk_widget_ref(menu); //importend! remove this -> random segfaults
-     
-  item = gtk_menu_item_new_with_label(_("All Packages"));
-  gtk_widget_show(item);
-  gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-  gtk_object_set_data(GTK_OBJECT(item), "me", this);
-  gtk_object_set_data(GTK_OBJECT(item), "index", (void*)0);
-  gtk_signal_connect(GTK_OBJECT(item), "activate", 
-		     (GtkSignalFunc)changedFilter, this);
-  
-  i = 1;
-  for (vector<string>::const_iterator iter = filters.begin();
-       iter != filters.end();
-       iter++) {
-    
-    item = gtk_menu_item_new_with_label((char*)(*iter).c_str());
-    gtk_widget_show(item);
-    
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-    gtk_object_set_data(GTK_OBJECT(item), "me", this);
-    gtk_object_set_data(GTK_OBJECT(item), "index", (void*)i++);
-    gtk_signal_connect(GTK_OBJECT(item), "activate", 
-		       (GtkSignalFunc)changedFilter, this);
-  }
-  
-  gtk_option_menu_set_menu(GTK_OPTION_MENU(_filterPopup), menu);
-  gtk_menu_item_set_submenu(GTK_MENU_ITEM(_filterMenu), menu);
+    // Menubar
+    gtk_menu_item_remove_submenu(GTK_MENU_ITEM(_filterMenu));
+    menu = createFilterMenu();
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(_filterMenu), menu);
 }
 
 

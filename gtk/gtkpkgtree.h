@@ -22,7 +22,6 @@
 
 #include <gtk/gtk.h>
 #include "rpackagelister.h"
-#include "conversion.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -313,13 +313,13 @@ bool RPackageLister::openCache(bool reset)
 
     _treeOrganizer.clear();
 
+#if HAVE_RPM
     if (_records) {
       // mvo: BUG: this will sometimes segfault. maybe bug in apt?
       //      segfault can be triggered by changing the repositories
-      // pkgRecords::~pkgRecords() { delete Files[I] at last Item? }
-      //cout << "delete RPackageLister::_records" << endl;
-      //delete _records;
+      delete _records;
     }
+#endif
 
     _records = new pkgRecords(*deps);
     if (_error->PendingError()) {

@@ -174,7 +174,7 @@ void *RWMainWindow::valueForCell(WMTableViewDelegate *self,
 	break;
 	
      case CSummary:
-	strncpy(buffer, elem->summary().c_str(), sizeof(buffer));	
+	strncpy(buffer, elem->summary(), sizeof(buffer));	
 	data[0] = (void*)buffer;
 	data[1] = NULL;
 	
@@ -1188,7 +1188,7 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
     
     // name/summary
     WMSetLabelText(_nameL, (char*)pkg->name());
-    WMSetLabelText(_summL, (char*)pkg->summary().c_str());
+    WMSetLabelText(_summL, (char*)pkg->summary());
     
     // package info
     

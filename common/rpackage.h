@@ -113,7 +113,7 @@ public:
    const char *section();
    const char *priority();
 
-   const string summary();
+   const char *summary();
    const char *description();
 
    bool isImportant();
@@ -122,7 +122,7 @@ public:
    
    const char *availableDownloadableVersion();
    
-   const string maintainer();
+   const char *maintainer();
    const char *vendor();
    
    const char *installedVersion();

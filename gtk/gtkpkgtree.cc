@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
 #include "gtkpkgtree.h"
+#include "gsynaptic.h"
 
 using namespace std;
 
@@ -332,36 +333,28 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
   RPackage *pkg = (RPackage*)(*it).second;
   switch(column) {
   case NAME_COLUMN: 
-    {
-      str = (*it).first.c_str();
+      str = utf8((*it).first.c_str());
       g_value_set_string(value, str);
       break;
-    }
   case INSTALLED_VERSION_COLUMN:
-    {
       if(pkg == NULL) return;
       str = pkg->installedVersion();
       g_value_set_string(value, str);
       break;
-    }
   case AVAILABLE_VERSION_COLUMN:
-    {
       if(pkg == NULL) return;      
       str = pkg->availableDownloadableVersion();
       g_value_set_string(value, str);
       break;
-    }
   case DESCR_COLUMN:
-    {
       if(pkg == NULL) return;
-      str = pkg->summary().c_str();
+      str = utf8(pkg->summary());
       g_value_set_string(value, str);
       break;
-    }
   case PKG_COLUMN:
-    if(pkg == NULL) return;
-    g_value_set_pointer(value, (*it).second);
-    break;
+      if(pkg == NULL) return;
+      g_value_set_pointer(value, (*it).second);
+      break;
   case COLOR_COLUMN:
     {
       if(pkg == NULL) return;

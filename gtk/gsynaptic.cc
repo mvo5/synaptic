@@ -83,14 +83,24 @@ void RGFlushInterface()
     }
 }
 
+const char *utf8(const char *str)
+{
+    static char *_str = NULL;
+    if (str == NULL)
+	return NULL;
+    g_free(_str);
+    _str = g_locale_to_utf8(str, -1, NULL, NULL, NULL);
+    return _str;
+}
+
 
 int main(int argc, char **argv)
 {    
 #ifdef ENABLE_NLS
     //setlocale(LC_ALL, "");
-    gtk_set_locale();
+    //gtk_set_locale();
     
-//    bindtextdomain(PACKAGE, "/usr/local/share/locale");
+    //bindtextdomain(PACKAGE, "/usr/local/share/locale");
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 #endif

@@ -25,4 +25,6 @@
 
 void RGFlushInterface();
 
+const char *utf8(const char *str);
+
 #endif

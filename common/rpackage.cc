@@ -86,20 +86,20 @@ const char *RPackage::section()
 }
 
 
-const string RPackage::summary()
+const char *RPackage::summary()
 {
     pkgCache::VerIterator ver = _package->VersionList();
     
     if (!ver.end()) {
 	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
 	
-	return parser.ShortDesc();
+	return parser.ShortDesc().c_str();
     }
     return "";
 }
 
 
-const string RPackage::maintainer()
+const char *RPackage::maintainer()
 {
     pkgCache::VerIterator ver = _package->VersionList();
     

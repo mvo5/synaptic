@@ -32,7 +32,7 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 {
     _prog = gtk_progress_bar_new();
 
-    gtk_label_set_text(GTK_LABEL(_label), (char*)Op.c_str());
+    gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
     gtk_box_pack_start(GTK_BOX(_parent), _prog, TRUE, TRUE, 0);
 
@@ -60,7 +60,7 @@ void RGCacheProgress::Update()
     }
 
     if (MajorChange)
-	gtk_label_set_text(GTK_LABEL(_label), (char*)Op.c_str());
+	gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
     gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), (float)Percent/100.0);
 

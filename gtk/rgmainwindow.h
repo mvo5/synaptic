@@ -37,7 +37,6 @@ using namespace std;
 
 #include "rgwindow.h"
 #include "gtkpkgtree.h"
-#include "conversion.h"
 
 class RGSourcesWindow;
 class RGConfigWindow;
@@ -98,6 +97,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    GtkWidget *_currentB; // ptr to one of below
    GtkWidget *_actionB[3];
+   GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinB;
    GtkWidget *_pinM;
    GtkWidget *_pkgHelp;
@@ -173,6 +173,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    void pkgKeepHelper(RPackage *pkg);
 
    void buildInterface();
+   GtkWidget *createFilterMenu();
    void refreshFilterMenu();
    void forgetNewPackages();
 
@@ -266,7 +267,6 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
 
-   IConv _iconv;
 public:
    RGMainWindow(RPackageLister *packLister);
    virtual ~RGMainWindow() {};

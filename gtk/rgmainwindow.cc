@@ -1824,6 +1824,13 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(distUpgradeClicked),
 				  this); 
 
+    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
+	gtk_widget_hide(_upgradeB);
+	gtk_widget_hide(_distUpgradeB);
+	widget = glade_xml_get_widget(_gladeXML, "alignment_upgrade");
+	gtk_widget_hide(widget);
+    }
+
     _proceedB = glade_xml_get_widget(_gladeXML, "button_procceed");
     _proceedM = glade_xml_get_widget(_gladeXML, "menu_proceed");
     glade_xml_signal_connect_data(_gladeXML,

@@ -62,7 +62,7 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    _userDialog = userDialog;
 
-   gtk_widget_set_usize(_win, 320, 80);
+   gtk_widget_set_usize(_win, 320, 90);
 
    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 
@@ -102,6 +102,7 @@ bool RGCDScanner::run()
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
 : RGGladeWindow(wwin, "disc_name")
 {
+   setTitle(_("Disc Label"));
    _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 

@@ -1202,17 +1202,17 @@ void RGMainWindow::buildInterface()
 
    // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Reload the package information to become "
-                          "informed about new, removed or upgraded "
-                          "software packages."), "");
+   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
+			     _("Reload the package information to become "
+			       "informed about new, removed or upgraded "
+			       "software packages."), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_upgrade");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
+   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips),
                         _("Mark all possible upgrades"), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_procceed");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
+   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
 
    _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");

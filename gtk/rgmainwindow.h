@@ -253,6 +253,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    void updatePackageInfo(RPackage *pkg);
    void updatePackageStatus(RPackage *pkg);
    void updateDynPackageInfo(RPackage *pkg);
+   void updateVersionButtons(RPackage *pkg);
    RPackage *selectedPackage();
 
    // menu stuff

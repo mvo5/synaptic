@@ -808,8 +808,7 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		     !(ostatus & RPackage::OResidualConfig) )
 		str=_("Obsolete and locally installed");
 	    else if(pkg->installedVersion() != NULL) {
-		if(pkg->getStatus() == RPackage::SInstalledOutdated ||
-		   pkg->getMarkedStatus() == RPackage::MDowngrade)
+		if(pkg->getStatus() == RPackage::SInstalledOutdated)
 		    str=_("Installed and upgradeable");
 		else
 		    str=_("Installed");
@@ -837,6 +836,8 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
 {    
   map<string,tree<pkgPair>::iterator> itermap;
+
+  //cout << "getFilteredPackages()" << endl;
 
   if (_updating)
     return;

@@ -28,8 +28,9 @@
 using namespace std;
 
 //#define DEBUG_SORT
-//#define DEBUG_TREE_FULL
 //#define DEBUG_TREE
+//#define DEBUG_TREE_FULL
+
 
 #ifdef DEBUG_TREE
   #define DEBUG(message) cout << message << endl;  

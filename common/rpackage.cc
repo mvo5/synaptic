@@ -57,6 +57,7 @@
 #include <apt-pkg/cacheiterators.h>
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/versionmatch.h>
+#include <apt-pkg/version.h>
 
 #include "raptoptions.h"
 
@@ -296,7 +297,6 @@ RPackage::PackageStatus RPackage::getStatus()
     pkgCache::VerIterator ver = _package->CurrentVer();
     pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
-
     if (ver.end())
 	return SNotInstalled;
     
@@ -307,6 +307,16 @@ RPackage::PackageStatus RPackage::getStatus()
 	pkgCache::VerIterator cand = state.CandidateVerIter(*_depcache);
 	
 	if (!cand.end())
+	    return SInstalledOutdated;
+    }
+
+    // special case for downgrades. we don't handle downgrade gracefully yet
+    // instead pretend we return the status as if there is no downgrade
+    if(state.Status < 0) {
+	if(_depcache->VS().CmpVersion(_package->CurrentVer().VerStr(),
+				      string(_candidateVer)) == 0)
+	    return SInstalledUpdated;
+	else 
 	    return SInstalledOutdated;
     }
     if (!ver.end())
@@ -816,7 +826,7 @@ void RPackage::setInstall()
 	Fix.Resolve(true);
     }
 
-    if (_notify)
+    if (_notify) 
 	_lister->notifyChange(this);
 }
 
@@ -1001,8 +1011,6 @@ bool RPackage::setVersion(const char* VerTag)
     //	   Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
    
     _depcache->SetCandidateVersion(Ver);
-    if (_notify)
-	_lister->notifyChange(this);
 
     return true;
 }

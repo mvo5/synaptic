@@ -1347,6 +1347,69 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     }
 }
 
+void RGMainWindow::updateVersionButtons(RPackage *pkg)
+{
+    // get available versions
+    static vector<pair<string,string> > versions;
+    versions.clear();
+    versions = pkg->getAvailableVersions();
+
+    int mstatus = pkg->getMarkedStatus();
+    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
+    // remove old widgets
+    gtk_container_foreach(GTK_CONTAINER(vbox),
+			  (void (*)(GtkWidget*, void*))(gtk_widget_destroy),
+			  NULL);
+
+    // build new checkboxes
+    GtkWidget *button;
+    bool found=false;
+    for(unsigned int i=0;i<versions.size();i++) {
+	// first radiobutton makes the radio-button group 
+	if(i==0)
+	    button = gtk_radio_button_new_with_label(NULL,g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
+	else
+	    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
+	g_object_set_data(G_OBJECT(button),"me",this);
+	g_object_set_data(G_OBJECT(button),"pkg",pkg);
+	// check what version is installed or will installed
+	if(mstatus == RPackage::MKeep) {
+	    if(pkg->installedVersion() &&
+	       (string(pkg->installedVersion()) == versions[i].first)) {
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
+		found=true;
+	    }
+	} else if(mstatus != RPackage::MRemove) {
+	    if(pkg->availableVersion() &&
+	       (string(pkg->availableVersion()) == versions[i].first)) {
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
+		found=true;
+	    }
+	} 
+	g_signal_connect(G_OBJECT(button),"toggled",
+			 G_CALLBACK(installFromVersion),
+			 (gchar*)versions[i].first.c_str());
+	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
+	gtk_widget_show(button);
+    }
+    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),_("not installed"));
+    g_object_set_data(G_OBJECT(button),"me",this);
+    g_object_set_data(G_OBJECT(button),"pkg",pkg);
+    if(!found)
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
+    g_signal_connect(G_OBJECT(button),"toggled",
+		     G_CALLBACK(installFromVersion),
+		     NULL);
+    gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
+    gtk_widget_show(button);
+
+    gtk_widget_show(vbox);
+
+    // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
+    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+    gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+}
+
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
     RPackage::UpdateImportance importance;
@@ -1373,33 +1436,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     status = pkg->getStatus();
     mstatus = pkg->getMarkedStatus();
 
-    // get available versions (FIXME: make this a function)
-    static vector<pair<string,string> > versions;
-    versions.clear();
-    versions = pkg->getAvailableVersions();
-    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
-    // remove old widgets
-    gtk_container_foreach(GTK_CONTAINER(vbox),
-			  (void (*)(GtkWidget*, void*))(gtk_widget_destroy),
-			  NULL);
-    GtkWidget *button;
-    for(unsigned int i=0;i<versions.size();i++) {
-	button = gtk_button_new_with_label(g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
-	g_object_set_data(G_OBJECT(button),"me",this);
-	g_object_set_data(G_OBJECT(button),"pkg",pkg);
-	g_signal_connect(G_OBJECT(button),"clicked",
-			 G_CALLBACK(installFromVersion),
-			 (gchar*)versions[i].first.c_str());
-	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
-	gtk_widget_show(button);
-    }
-    gtk_widget_show(vbox);
-
-    // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
-    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
-    gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
-    //-------------------------------
-
+    updateVersionButtons(pkg);
 
     if (mstatus == RPackage::MDowngrade) {
 	gtk_label_set_markup_with_mnemonic(
@@ -1581,16 +1618,26 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
     RPackage *pkg = (RPackage*)g_object_get_data(G_OBJECT(self),"pkg");
     gchar *verInfo = (gchar*)data;
+
+    // check if it's a interessting event
+    if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) {
+	return;
+    }
+
+    // set pkg to "not installed" 
     if(verInfo == NULL) {
-	cerr << "installFromVersion() failed" << endl;
+	pkg->unsetVersion();
+	me->doPkgAction(me,PKG_DELETE);
 	return;
     }
 
     string instVer;
     if(pkg->installedVersion() == NULL)
 	instVer = "";
-    else
+    else 
 	instVer = pkg->installedVersion();
+
+    pkg->setNotify(false);
     if(instVer == string(verInfo)) {
 	pkg->unsetVersion();
 	me->doPkgAction(me,PKG_KEEP);
@@ -1598,7 +1645,7 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 	pkg->setVersion(verInfo);
 	me->doPkgAction(me,PKG_INSTALL);
 	// check if this version was possible to install/upgrade/downgrade
-	// if not, unset the candiate version to prevent a corupted status view
+	// if not, unset the candiate version 
 	int mstatus = pkg->getMarkedStatus();
 	if(!(mstatus == RPackage::MInstall ||
 	     mstatus == RPackage::MUpgrade ||
@@ -1606,6 +1653,9 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 	    pkg->unsetVersion();
 	}
     }
+    pkg->setNotify(true);
+//     cout << "mstatus " << pkg->getMarkedStatus() << endl;
+//     cout << "status " << pkg->getStatus() << endl;
 }
 
 void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
@@ -1671,9 +1721,6 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  break;
       case PKG_INSTALL: // install
 	  instPkgs.push_back(pkg);
-	  // use a different fixing algorithm when dealing with more than 
-	  // 1 pkgs 
-	  // FIXME: yes, this constant sucks, who knows a better way?
 	  me->pkgInstallHelper(pkg, false);
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      //cout << "auto installing recommended" << endl;
@@ -3309,30 +3356,24 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   if( pstatus == RPackage::SNotInstalled) {
     if (mstatus == RPackage::MKeep) {
       // not installed -> installed
-	//me->pkgInstallHelper(pkg);
 	me->doPkgAction(me, PKG_INSTALL);
     }
     if (mstatus == RPackage::MInstall) 
 	// marked install -> marked don't install
-	//me->pkgRemoveHelper(pkg);
 	me->doPkgAction(me, PKG_DELETE);
   }
   
   if( pstatus == RPackage::SInstalledOutdated ) {
     if ( mstatus == RPackage::MKeep ) {
 	// keep -> upgrade
-	//me->pkgInstallHelper(pkg);
 	me->doPkgAction(me, PKG_INSTALL);
     }
     if( mstatus == RPackage::MUpgrade) {
 	// upgrade -> keep
-	//me->pkgKeepHelper(pkg);
 	me->doPkgAction(me, PKG_KEEP);
     }
   }
   // end double-click
-  //me->setInterfaceLocked(FALSE);
-
   gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_treeView), path,
 			   NULL, false);
 
@@ -3585,7 +3626,6 @@ void RGMainWindow::setTreeLocked(bool flag)
 {
     //cout << "setTreeLocked()" << endl;
     if (flag == true) {
-	updatePackageInfo(NULL);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
     } else {
 	changeTreeDisplayMode(_treeDisplayMode);

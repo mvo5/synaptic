@@ -21,13 +21,14 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 #include "rgmainwindow.h"
 #include "rgcdscanner.h"
 #include "gsynaptic.h"
 
 #include <unistd.h>
 #include <stdio.h>
+
+#include "i18n.h"
 
 class RGDiscName : public RGGladeWindow
 {

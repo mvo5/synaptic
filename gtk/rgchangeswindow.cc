@@ -23,7 +23,6 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 
 #include <X11/keysym.h>
 
@@ -37,6 +36,7 @@
 
 #include "rgchangeswindow.h"
 
+#include "i18n.h"
 
 void RGChangesWindow::clickedOk(GtkWidget *self, void *data)
 {

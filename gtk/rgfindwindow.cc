@@ -21,10 +21,11 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 
 #include "rgfindwindow.h"
 #include "rgmisc.h"
+
+#include "i18n.h"
 
 void RGFindWindow::show()
 {

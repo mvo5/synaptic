@@ -23,7 +23,6 @@
 
 
 #include "config.h"
-#include "i18n.h"
 #include <fstream>
 #include <sstream>
 #include <dirent.h>
@@ -35,9 +34,10 @@
 #include <apt-pkg/sptr.h>
 #include <apt-pkg/strutl.h>
 
-
 #include "rconfiguration.h"
 #include "raptoptions.h"
+
+#include "i18n.h"
 
 
 RAPTOptions *_roptions = new RAPTOptions;

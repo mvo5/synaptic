@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include "i18n.h"
-
 #include "rgmainwindow.h"
 #include "gsynaptic.h"
 
@@ -33,6 +31,8 @@
 
 #include <unistd.h>
 #include <stdio.h>
+
+#include "i18n.h"
 
 RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
     : RGGladeWindow(win, "rginstall_progress_msgs"),

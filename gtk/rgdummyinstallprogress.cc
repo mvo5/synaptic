@@ -22,14 +22,13 @@
 
 #include "config.h"
 
-#include "i18n.h"
-
-
 #include "rgdummyinstallprogress.h"
 #include "rgmisc.h"
 
 #include <unistd.h>
 #include <stdio.h>
+
+#include "i18n.h"
 
 void RGDummyInstallProgress::startUpdate()
 {

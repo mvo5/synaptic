@@ -26,10 +26,10 @@
 #include <stdio.h>
 #include <cassert>
 #include "config.h"
-#include "i18n.h"
 #include "rpackagelister.h"
 #include "rgfiltermanager.h"
 
+#include "i18n.h"
 
 #if ! GTK_CHECK_VERSION(2,2,0)
 extern void multipleSelectionHelper(GtkTreeModel *model,

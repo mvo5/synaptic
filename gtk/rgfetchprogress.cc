@@ -24,8 +24,6 @@
 
 #include "config.h"
 
-#include "i18n.h"
-
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/acquire-worker.h>
 #include <apt-pkg/strutl.h>
@@ -39,6 +37,8 @@
 #include <pango/pango.h>
 #include <gtk/gtk.h>
 #include <cassert>
+
+#include "i18n.h"
 
 enum {
     DLDone = -1,

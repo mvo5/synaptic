@@ -21,10 +21,11 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 
 #include "rgcacheprogress.h"
 #include "rgmisc.h"
+
+#include "i18n.h"
 
 
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label) 

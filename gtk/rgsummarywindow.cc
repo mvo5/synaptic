@@ -23,7 +23,6 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 
 #include <X11/keysym.h>
 
@@ -38,6 +37,7 @@
 #include "rgsummarywindow.h"
 #include "rguserdialog.h"
 
+#include "i18n.h"
 
 
 void RGSummaryWindow::clickedOk(GtkWidget *self, void *data)

@@ -38,12 +38,19 @@
 # endif
 #else
 /* Stubs that do something close enough.  */
+# undef  textdomain
 # define textdomain(String) (String)
+# undef  gettext
 # define gettext(String) (String)
+# undef  dgettext
 # define dgettext(Domain,Message) (Message)
+# undef  dcgettext
 # define dcgettext(Domain,Message,Type) (Message)
+# undef  bindtextdomain
 # define bindtextdomain(Domain,Directory) (Domain)
+# undef  _
 # define _(String) (String)
+# undef  N_
 # define N_(String) (String)
 #endif
 

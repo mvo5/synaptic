@@ -24,8 +24,6 @@
 
 #include "config.h"
 
-#include "i18n.h"
-
 #include <pwd.h>
 #include <sys/types.h>
 
@@ -37,6 +35,8 @@
 #include <apt-pkg/configuration.h>
 
 #include "rconfiguration.h"
+
+#include "i18n.h"
 
 static string ConfigFilePath;
 static string ConfigFileDir;

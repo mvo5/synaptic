@@ -1,5 +1,4 @@
 
-#include "i18n.h"
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>
 #include <apt-pkg/strutl.h>
@@ -13,8 +12,9 @@
 #include <sys/stat.h>
 #include <stdio.h>
 
-
 #include "rpmindexcopy.h"
+
+#include "i18n.h"
 
 using namespace std;
 

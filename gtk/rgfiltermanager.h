@@ -30,6 +30,8 @@
 #include "rpackagefilter.h"
 #include "rgmisc.h"
 
+#include "i18n.h"
+
 class RPackageLister;
 class RGFilterManagerWindow;
 

@@ -33,8 +33,6 @@
 #include <map>
 #include <sstream>
 
-#include "i18n.h"
-
 #include "rpackagelister.h"
 #include "rpackagecache.h"
 #include "rpackagefilter.h"
@@ -58,9 +56,9 @@
 #include <algorithm>
 #include <cstdio>
 
-#ifndef HAVE_RPM
 #include "sections_trans.h"
-#endif
+
+#include "i18n.h"
 
 using namespace std;
 

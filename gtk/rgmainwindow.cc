@@ -25,7 +25,6 @@
 
 
 #include "config.h"
-#include "i18n.h"
 
 
 #include <cassert>
@@ -70,6 +69,7 @@
 // icons and pixmaps
 #include "synaptic_mini.xpm"
 
+#include "i18n.h"
 
 static char *ImportanceNames[] = {
     _("Unknown"),

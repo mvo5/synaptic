@@ -23,7 +23,6 @@
  */
 
 #include "config.h"
-#include "i18n.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
@@ -32,6 +31,8 @@
 #include "rgpreferenceswindow.h"
 #include "rguserdialog.h"
 #include "gsynaptic.h"
+
+#include "i18n.h"
 
 enum {FONT_DEFAULT, FONT_TERMINAL};
 

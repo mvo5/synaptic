@@ -24,8 +24,6 @@
 
 #include "config.h"
 
-#include "i18n.h"
-
 #include <unistd.h>
 #include <sys/fcntl.h>
 #include <iostream>
@@ -35,6 +33,8 @@
 #endif
 
 #include "rinstallprogress.h"
+
+#include "i18n.h"
 
 void *RInstallProgress::loop(void *data)
 {

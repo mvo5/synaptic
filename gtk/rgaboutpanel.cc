@@ -24,8 +24,8 @@
 
 #include <cassert>
 #include "config.h"
-#include "i18n.h"
 #include "rgaboutpanel.h"
+#include "i18n.h"
 
 static void closeWindow(GtkWidget *self, void *data)
 {

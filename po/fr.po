@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.31\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-28 14:06+0200\n"
+"POT-Creation-Date: 2003-09-30 00:04+0200\n"
 "PO-Revision-Date: 2002-11-02 20:22+0100\n"
 "Last-Translator: Mathieu Roy <yeupou@gnu.org>\n"
 "Language-Team: French <LL@li.org>\n"
@@ -204,44 +204,72 @@ msgstr "Impossible de créer le dossier de configuration %s"
 msgid "couldn't open %s for writing"
 msgstr "Impossible d'écrire sur %s"
 
-#: common/rpackage.cc:110
+#: common/rpackage.cc:111
 #, fuzzy
 msgid "unknown"
 msgstr "Inconnu"
 
-#: common/rpackage.cc:200
+#: common/rpackage.cc:201
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
 
-#: common/rpackage.cc:392
+#: common/rpackage.cc:393
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
 msgstr "Et mer... Je ne sais pas ce qui se passe !"
 
-#: common/rpackage.cc:643
+#: common/rpackage.cc:605
+#, fuzzy, c-format
+msgid "but %s is to be installed"
+msgstr "%s est/va être installé"
+
+#: common/rpackage.cc:609
+#, fuzzy
+msgid "but it is not installable"
+msgstr "impossible d'installer ce paquet"
+
+#: common/rpackage.cc:611
+#, fuzzy
+msgid "but it is a virtual package"
+msgstr "ce paquet est un paquet virtuel"
+
+#: common/rpackage.cc:614
+msgid "but it is not going to be installed"
+msgstr ""
+
+#: common/rpackage.cc:618
+msgid " or"
+msgstr ""
+
+#: common/rpackage.cc:714
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s est/va être installé"
 
-#: common/rpackage.cc:648
+#: common/rpackage.cc:719
 msgid "package is not installable"
 msgstr "impossible d'installer ce paquet"
 
-#: common/rpackage.cc:650
+#: common/rpackage.cc:721
 msgid "package is a virtual package"
 msgstr "ce paquet est un paquet virtuel"
 
-#: common/rpackage.cc:652
+#: common/rpackage.cc:723
 msgid "package is/will not be installed"
 msgstr "ce paquet n'est/ne sera pas installé"
 
-#: common/rpackage.cc:655
+#: common/rpackage.cc:726
 msgid "dependency is satisfied"
 msgstr "la dépendance est satisfaite"
 
-#: common/rpackage.cc:809
+#: common/rpackage.cc:880
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Information invalide dans le fichier de préférence, pas d'entête de paquet"
+
+#: common/rpackage.cc:945
+#, c-format
+msgid "Release '%s' for '%s' was not found"
+msgstr ""
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -296,7 +324,7 @@ msgstr "Nom"
 msgid "Version"
 msgstr "    Version"
 
-#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2236
+#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2245
 #: gtk/window_find.glade.strings:14 gtk/window_main_hpaned.glade.strings:70
 #: gtk/window_main_vpaned.glade.strings:77
 #: gtk/window_preferences.glade.strings:66
@@ -335,21 +363,21 @@ msgstr ""
 msgid "ReverseDepends"
 msgstr ""
 
-#: common/rpackagefilter.cc:633
+#: common/rpackagefilter.cc:644
 #, fuzzy, c-format
 msgid "could not open ReducedView file %s"
 msgstr ": impossible d'ouvrir l'interface"
 
-#: common/rpackagefilter.cc:660
+#: common/rpackagefilter.cc:671
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr ""
 
-#: common/rpackagefilter.cc:729
+#: common/rpackagefilter.cc:740
 msgid "empty filter name!? should _never_ happen, please report"
 msgstr ""
 
-#: common/rpackagefilter.cc:734
+#: common/rpackagefilter.cc:745
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
 msgstr ""
 
@@ -600,16 +628,16 @@ msgstr "Marque les paquets sélectionnés pour l'installation/mise-à-jour"
 msgid "To be kept back"
 msgstr "A conserver"
 
-#: gtk/rgpreferenceswindow.cc:200 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3361
+#: gtk/rgpreferenceswindow.cc:236 gtk/rgzvtinstallprogress.cc:72
+#: gtk/rgmainwindow.cc:3370
 msgid "An error occurred while saving configurations."
 msgstr "Problème pendant la sauvegarde de la configuration."
 
-#: gtk/rgpreferenceswindow.cc:440
+#: gtk/rgpreferenceswindow.cc:494
 msgid "Color selection"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:567
+#: gtk/rgpreferenceswindow.cc:651
 #, fuzzy
 msgid "Set preferences"
 msgstr "Préférences"
@@ -694,7 +722,7 @@ msgstr "Inclure"
 msgid "Excluded Tags"
 msgstr "Exclure"
 
-#: gtk/rgfiltermanager.cc:990
+#: gtk/rgfiltermanager.cc:1012
 #, fuzzy, c-format
 msgid "A New Filter %i"
 msgstr "Un nouveau filtre"
@@ -817,13 +845,13 @@ msgid "Updating Package Lists from Servers..."
 msgstr "Met-à-jour la liste de paquets..."
 
 #: gtk/rgmainwindow.cc:699 gtk/rgmainwindow.cc:907 gtk/rgmainwindow.cc:1468
-#: gtk/rgmainwindow.cc:1991 gtk/rgmainwindow.cc:2040
+#: gtk/rgmainwindow.cc:2000 gtk/rgmainwindow.cc:2049
 #, c-format
 msgid "Can't write %s"
 msgstr ""
 
 #: gtk/rgmainwindow.cc:722 gtk/rgmainwindow.cc:975 gtk/rgmainwindow.cc:1493
-#: gtk/rgmainwindow.cc:1943
+#: gtk/rgmainwindow.cc:1952
 #, fuzzy, c-format
 msgid "Can't read %s"
 msgstr "Impossible de lire de dossier %s"
@@ -974,62 +1002,62 @@ msgstr ""
 msgid "\tPackage Size"
 msgstr "   Taille du paquet"
 
-#: gtk/rgmainwindow.cc:1679
+#. standard header in case the installing fails
+#: gtk/rgmainwindow.cc:1665
 msgid ""
-"The selected package couldn't be installed/upgraded.\n"
+"Some packages could not be installed.\n"
 "\n"
-"This is most probably caused by unmet dependencies that are not available in "
-"any repository."
+"The following packages have unmet dependencies:\n"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1960
+#: gtk/rgmainwindow.cc:1969
 #, fuzzy
 msgid "Open changes"
 msgstr "Orphelin"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2066
 #, fuzzy
 msgid "Save changes"
 msgstr ""
 "\n"
 "Résumé des changements\n"
 
-#: gtk/rgmainwindow.cc:2073
+#: gtk/rgmainwindow.cc:2082
 msgid "Save full state, not only changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2158 gtk/window_main_hpaned.glade.strings:19
+#: gtk/rgmainwindow.cc:2167 gtk/window_main_hpaned.glade.strings:19
 #: gtk/window_main_vpaned.glade.strings:19
 msgid "Package"
 msgstr "Paquet"
 
-#: gtk/rgmainwindow.cc:2177
+#: gtk/rgmainwindow.cc:2186
 #, fuzzy
 msgid "Installed Version"
 msgstr "Installé"
 
-#: gtk/rgmainwindow.cc:2193
+#: gtk/rgmainwindow.cc:2202
 #, fuzzy
 msgid "Available Version"
 msgstr "Disponible"
 
-#: gtk/rgmainwindow.cc:2219
+#: gtk/rgmainwindow.cc:2228
 msgid "Inst. Size"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2438 gtk/window_main_hpaned.glade.strings:51
+#: gtk/rgmainwindow.cc:2447 gtk/window_main_hpaned.glade.strings:51
 #: gtk/window_main_vpaned.glade.strings:51
 msgid "Update package cache"
 msgstr "Mise-à-jour du cache"
 
-#: gtk/rgmainwindow.cc:2442 gtk/window_main_hpaned.glade.strings:53
+#: gtk/rgmainwindow.cc:2451 gtk/window_main_hpaned.glade.strings:53
 #: gtk/window_main_vpaned.glade.strings:53
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr ""
 "Marque les paquets pour la mise-à-jour, sauf ceux avec de nouvelles "
 "dépendances"
 
-#: gtk/rgmainwindow.cc:2446 gtk/window_main_hpaned.glade.strings:55
+#: gtk/rgmainwindow.cc:2455 gtk/window_main_hpaned.glade.strings:55
 #: gtk/window_main_vpaned.glade.strings:55
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
@@ -1037,16 +1065,16 @@ msgstr ""
 "Mise-à-jour de la distribution, y compris paquets avec de nouvelles "
 "dépendances"
 
-#: gtk/rgmainwindow.cc:2450 gtk/window_main_hpaned.glade.strings:57
+#: gtk/rgmainwindow.cc:2459 gtk/window_main_hpaned.glade.strings:57
 #: gtk/window_main_vpaned.glade.strings:57
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Effectue (et télécharge au besoin) les changements sélectionnés"
 
-#: gtk/rgmainwindow.cc:3082
+#: gtk/rgmainwindow.cc:3091
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:3108
+#: gtk/rgmainwindow.cc:3117
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1054,7 +1082,7 @@ msgstr ""
 "Supprimer ce paquet pourrait rendre le système inutilisable.\n"
 "Êtes-vous sur de vouloir faire cela ?"
 
-#: gtk/rgmainwindow.cc:3271
+#: gtk/rgmainwindow.cc:3280
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1063,7 +1091,7 @@ msgstr ""
 "%i paquets listés, %i installés, %i cassés. %i à installer/mettre-à-jour, %i "
 "àsupprimer ; %sB seront %s"
 
-#: gtk/rgmainwindow.cc:3275
+#: gtk/rgmainwindow.cc:3284
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1072,12 +1100,12 @@ msgstr ""
 "%i paquets listés, %i installés, %i cassés. %i à installer/mettre-à-jour, %i "
 "àsupprimer ; %sB seront %s"
 
-#: gtk/rgmainwindow.cc:3304 gtk/window_main_hpaned.glade.strings:61
+#: gtk/rgmainwindow.cc:3313 gtk/window_main_hpaned.glade.strings:61
 #: gtk/window_main_vpaned.glade.strings:99
 msgid "All Packages"
 msgstr "Tout les paquets"
 
-#: gtk/rgmainwindow.cc:3386
+#: gtk/rgmainwindow.cc:3395
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1260,7 +1288,7 @@ msgstr ""
 "Cela peut rendre votre système inutilisable !\n"
 
 #. ignore some stupid error messages
-#: gtk/rguserdialog.cc:131
+#: gtk/rguserdialog.cc:133
 msgid "Tried to dequeue a fetching object"
 msgstr ""
 
@@ -2143,6 +2171,51 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
+#: gtk/window_preferences.glade.strings:97
+#, fuzzy
+msgid "<b>Distribution:</b>"
+msgstr "Distribution"
+
+#: gtk/window_preferences.glade.strings:98
+msgid "Default release: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:99
+msgid "ignore (always use latest package version)"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:100
+#, fuzzy
+msgid "stable"
+msgstr "Installé"
+
+#: gtk/window_preferences.glade.strings:101
+#, fuzzy
+msgid "testing"
+msgstr "Paramètre_s"
+
+#: gtk/window_preferences.glade.strings:102
+#, fuzzy
+msgid "unstable"
+msgstr "Installé"
+
+#: gtk/window_preferences.glade.strings:103
+msgid ""
+"If you have more than one Release in your sources.list files,\n"
+"you may choose here which to use by default"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:105
+msgid ""
+"<b>Note:</b> After changing the default release the cache needs \n"
+"to be reread and all selections will be lost (commit you changes first)"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:107
+#, fuzzy
+msgid "Expert"
+msgstr "Exclure"
+
 #.
 #. * Translatable strings file generated by Glade.
 #. * Add this file to your project's POTFILES.in.
@@ -2452,10 +2525,6 @@ msgstr "Vendeur"
 #, fuzzy
 #~ msgid "Update Package Cache"
 #~ msgstr "Mise-à-jour du cache"
-
-#, fuzzy
-#~ msgid "Execute"
-#~ msgstr "Exclure"
 
 #, fuzzy
 #~ msgid "Pa_ckage"

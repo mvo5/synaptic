@@ -80,56 +80,62 @@ extern GdkColor *StatusColors[12];
 void RCacheActorPkgList::run(vector<RPackage *> &List, int Action)
 {
    static GtkTreeIter iter;
+   int j;
 
    for (unsigned int i = 0; i < List.size(); i++) {
-      //cout << "RCacheActorPkgList::run()" << endl;
-      // fill in iter
-      iter.user_data = List[i];
-      iter.user_data2 = GINT_TO_POINTER(i);
+      RPackage *pkg = List[i];
+
+      j = _lister->getElementIndex(pkg);
+      if (j == -1)
+         continue;
+
+      iter.user_data = pkg;
+      iter.user_data2 = GINT_TO_POINTER(j);
+
       // fill in treepath
       GtkTreePath *path = gtk_tree_path_new();
-      gtk_tree_path_append_index(path, i);
-
+      gtk_tree_path_append_index(path, j);
       gtk_tree_model_row_changed(GTK_TREE_MODEL(_pkgList), path, &iter);
       gtk_tree_path_free(path);
    }
 
 }
 
-void RPackageListActorPkgList::run(vector<RPackage *> &List, int pkgEvent)
+void RPackageListActorPkgList::run(vector<RPackage *> &List, int listEvent)
 {
-   static GtkTreeIter iter;
-   int j;
    cout <<
       "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" <<
       endl;
 
-   cout << "action: " << pkgEvent << endl;
+   cout << "action: " << listEvent << endl;
    cout << "listsize: " << List.size() << endl;
 
+   //_pkgList = gtk_pkg_list_new(_lister);
+   //gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView),
+   //                        GTK_TREE_MODEL(_pkgList));
+   //return;
+
    //mvo: FIXME those nested loops suck as they are slow
-   //     BUT it shouldn't be too bad as list is usually very small (<=10)
-   if (pkgEvent == PKG_REMOVED) {
+   if (listEvent == PKG_REMOVED) {
       for (int i = (int)List.size() - 1; i >= 0; i--) {
+         int j;
          for (j = 0; j < (int)_lastDisplayList.size(); j++)
             if (_lastDisplayList[j] == List[i])
                break;
-         //cout << "removed at pos: " << j << endl;
+         cout << "Removed at pos: " << j << endl;
          GtkTreePath *path = gtk_tree_path_new();
          gtk_tree_path_append_index(path, j);
          gtk_tree_model_row_deleted(GTK_TREE_MODEL(_pkgList), path);
          gtk_tree_path_free(path);
       }
-   } else if (pkgEvent == PKG_ADDED) {
+   } else if (listEvent == PKG_ADDED) {
+      static GtkTreeIter iter;
       for (int i = 0; i < (int)List.size(); i++) {
-         for (j = 0; j < (int)_lister->count(); j++)
-            if (_lister->getElement(j) == List[i])
-               break;
-         //cout << "inserted " << List[i]->name() << " at pos: " 
-         //     << j << endl;
+      //for (int i = (int)List.size() - 1; i >= 0; i--) {
+         int j = _lister->getElementIndex(List[i]);
+         cout << "Inserted " << List[i]->name() << " at pos: " << j << endl;
          GtkTreePath *path = gtk_tree_path_new();
          gtk_tree_path_append_index(path, j);
-
          iter.user_data = List[i];
          iter.user_data2 = GINT_TO_POINTER(j);
          iter.stamp = 140677;
@@ -138,7 +144,6 @@ void RPackageListActorPkgList::run(vector<RPackage *> &List, int pkgEvent)
       }
    }
 }
-
 
 GType gtk_pkg_list_get_type(void)
 {
@@ -636,3 +641,5 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 //      } while(gtk_tree_model_iter_next(GTK_TREE_MODEL(pkg_list), &iter));
 
 }
+
+// vim:ts=3:sw=3:et

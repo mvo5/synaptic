@@ -10,21 +10,12 @@
 #include <algorithm>
 #include <fnmatch.h>
 
-void RCacheActorPkgTrack::run(vector<RPackage *> &List, int Action)
-{
-   for (vector<RPackage *>::iterator it = List.begin(); it != List.end();
-        it++) {
-      //cout << "pkg: " << (*it)->name() << " action " << Action << endl;
-   }
-
-}
-
 void RCacheActor::notifyCachePostChange()
 {
    //cout << "RCacheActor::notifyCachePostChange()" << endl;
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
-   vector<RPackage*>  toReInstall; 
+   vector<RPackage *> toReInstall; 
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toRemove;
    vector<RPackage *> toDowngrade;

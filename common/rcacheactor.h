@@ -72,14 +72,6 @@ class RCacheActor:public RCacheObserver {
    };
 };
 
-class RCacheActorPkgTrack:public RCacheActor {
- public:
-   virtual void run(vector<RPackage *> &List, int Action);
-   RCacheActorPkgTrack(RPackageLister *lister)
- :   RCacheActor(lister) {
-   }
-};
-
 class RCacheActorRecommends:public RCacheActor {
  protected:
 

@@ -187,20 +187,6 @@ class RPackageLister {
    vector<string> getSubViews();
    bool setSubView(string newView);
 
-#if 0
-   inline tree<pkgPair> *RPackageLister::getTreeOrganizer() {
-      return &_treeOrganizer;
-   };
-
-   inline void setTreeDisplayMode(treeDisplayMode mode) {
-      //cout << "setTreeDisplayMode() " << mode << endl;
-      _displayMode = mode;
-   };
-   inline treeDisplayMode getTreeDisplayMode() {
-      return _displayMode;
-   };
-#endif
-
    void storeFilters();
    void restoreFilters();
 

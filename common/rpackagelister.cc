@@ -88,13 +88,12 @@ RPackageLister::RPackageLister()
 
    memset(&_searchData, 0, sizeof(_searchData));
 
-#ifdef HAVE_RPM
+#if 0
    string Recommends = _config->Find("Synaptic::RecommendsFile",
                                      "/etc/apt/metadata");
    if (FileExists(Recommends))
       _actors.push_back(new RCacheActorRecommends(this, Recommends));
 #endif
-   _actors.push_back(new RCacheActorPkgTrack(this));
 }
 
 RPackageLister::~RPackageLister()

@@ -195,7 +195,7 @@ void RGMainWindow::refreshSubViewList()
 
 RPackage *RGMainWindow::selectedPackage()
 {
-   if (_activeTreeModel == NULL)
+   if (_pkgList == NULL)
       return NULL;
 
    GtkTreeSelection *selection;
@@ -206,9 +206,7 @@ RPackage *RGMainWindow::selectedPackage()
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
-   list = gtk_tree_selection_get_selected_rows(selection,
-                                               (GtkTreeModel **)
-                                               (&_activeTreeModel));
+   list = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
 #else
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
 #endif
@@ -218,11 +216,9 @@ RPackage *RGMainWindow::selectedPackage()
 
    // We are only interessted in the last element
    li = g_list_last(list);
-   gtk_tree_model_get_iter(GTK_TREE_MODEL(_activeTreeModel), &iter,
-                           (GtkTreePath *) (li->data));
+   gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
 
-   gtk_tree_model_get(GTK_TREE_MODEL(_activeTreeModel), &iter,
-                      PKG_COLUMN, &pkg, -1);
+   gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
 
 
    // free the list
@@ -312,11 +308,14 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
    _lister->setSubView(selectedSubView());
 
-   // FIXME: memory leak?!?
-   GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
-   _activeTreeModel = GTK_TREE_MODEL(_pkgList);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(_pkgList));
-   gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+   _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
+                           GTK_TREE_MODEL(_pkgList));
+
+   gtk_adjustment_value_changed(
+         gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView)));
+   gtk_adjustment_value_changed(
+         gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(_treeView)));
 
    updatePackageInfo(selectedPkg);
 
@@ -404,8 +403,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    // get list of selected pkgs
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
-   list = li = gtk_tree_selection_get_selected_rows(selection,
-                                                    &_activeTreeModel);
+   list = li = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
 #else
    li = list = NULL;
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
@@ -432,9 +430,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    RPackage *pkg = NULL;
 
    while (li != NULL) {
-      gtk_tree_model_get_iter(_activeTreeModel, &iter,
-                              (GtkTreePath *) (li->data));
-      gtk_tree_model_get(_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
+      gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
+      gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       li = g_list_next(li);
       if (pkg == NULL)
          continue;
@@ -568,7 +565,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
-: RGGladeWindow(NULL, name), _lister(packLister), _activeTreeModel(0),
+   : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0),
 _treeView(0)
 {
    assert(_win);
@@ -795,17 +792,17 @@ void RGMainWindow::buildTreeView()
    g_object_set_property(G_OBJECT(_treeView), "fixed_height_mode", &value);
 #endif
 
-   // create a list-view-model
-//     RCacheActorPkgList *_pkgListCacheObserver;
-//     RPackageListActorPkgList *_pkgListPackageListObserver;
-
-   GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
-   _activeTreeModel = GTK_TREE_MODEL(_pkgList);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(_pkgList));
+   _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-//     _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
-//                         GTK_TREE_VIEW(_treeView));
-//     _pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
+
+   // LEAK!!! FIX THIS!!
+   /*
+   new RCacheActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
+                          GTK_TREE_VIEW(_treeView));
+   new RPackageListActorPkgList(_lister, GTK_PKG_LIST(_pkgList),
+                                GTK_TREE_VIEW(_treeView));
+                                */
 
 }
 
@@ -1498,18 +1495,19 @@ void RGMainWindow::setInterfaceLocked(bool flag)
       gdk_window_set_cursor(_win->window, NULL);
    }
 
+#if 0
    // this sucks for the new gtktreeview -- it updates itself via 
    // such events, while the gui is perfetly usable 
-#if 0
    while (gtk_events_pending())
       gtk_main_iteration();
-#endif
+#else
    // because of the comment above, we only do 5 iterations now
    //FIXME: this is more a hack than a real solution
    for (int i = 0; i < 5; i++) {
       if (gtk_events_pending())
          gtk_main_iteration();
    }
+#endif
 }
 
 void RGMainWindow::setTreeLocked(bool flag)
@@ -1517,6 +1515,8 @@ void RGMainWindow::setTreeLocked(bool flag)
    if (flag == true) {
       updatePackageInfo(NULL);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
+   } else {
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    }
 }
 
@@ -1569,14 +1569,12 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
             gtk_tree_selection_unselect_all(selection);
          gtk_tree_selection_select_path(selection, path);
          
-         li = gtk_tree_selection_get_selected_rows(selection,
-                                                   &me->_activeTreeModel);
+         li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
          for (li = g_list_first(li); li != NULL; li = g_list_next(li)) {
-            gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
+            gtk_tree_model_get_iter(me->_pkgList, &iter,
                                     (GtkTreePath *) (li->data));
 
-            gtk_tree_model_get(me->_activeTreeModel, &iter,
-                               PKG_COLUMN, &pkg, -1);
+            gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
             if (pkg)
                selected_pkgs.push_back(pkg);
          }
@@ -1599,10 +1597,10 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
    RPackage *pkg = NULL;
 
    //  cout << "double click" << endl;
-   if (!gtk_tree_model_get_iter(me->_activeTreeModel, &iter, path))
+   if (!gtk_tree_model_get_iter(me->_pkgList, &iter, path))
       return;
 
-   gtk_tree_model_get(me->_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
+   gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
    assert(pkg);
 
    RPackage::PackageStatus pstatus = pkg->getStatus();
@@ -2090,13 +2088,12 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
 
    //cout << "selectedRow()" << endl;
 
-   if (me->_activeTreeModel == NULL) {
+   if (me->_pkgList == NULL) {
       cerr << "selectedRow(): me->_pkgTree == NULL " << endl;
       return;
    }
 #if GTK_CHECK_VERSION(2,2,0)
-   list = li = gtk_tree_selection_get_selected_rows(selection,
-                                                    &me->_activeTreeModel);
+   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
 #else
    li = list = NULL;
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
@@ -2110,10 +2107,9 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    }
    // we are only interessted in the last element
    li = g_list_last(li);
-   gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
-                           (GtkTreePath *) (li->data));
+   gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
 
-   gtk_tree_model_get(me->_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
+   gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
    if (pkg == NULL)
       return;
 
@@ -2521,8 +2517,7 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
    GList *li, *list;
 #if GTK_CHECK_VERSION(2,2,0)
-   list = li = gtk_tree_selection_get_selected_rows(selection,
-                                                    &me->_activeTreeModel);
+   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
 #else
    li = list = NULL;
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
@@ -2547,9 +2542,8 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
    me->_lister->writeSelections(out, false);
 
    while (li != NULL) {
-      gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
-                              (GtkTreePath *) (li->data));
-      gtk_tree_model_get(me->_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
+      gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
+      gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       if (pkg == NULL) {
          li = g_list_next(li);
          continue;

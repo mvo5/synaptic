@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GTK_PKG_LIST_H__
-#define __GTK_PKG_LIST_H__
+#ifndef GTKPKGLIST_H
+#define GTKPKGLIST_H
 
 #include <gtk/gtk.h>
 #include "rpackagelister.h"
@@ -58,45 +58,41 @@ struct _GtkPkgListClass {
 GType gtk_pkg_list_get_type();
 GtkPkgList *gtk_pkg_list_new(RPackageLister *lister);
 
+class RCacheActorPkgList : public RCacheActor {
 
+   protected:
 
-
-class RCacheActorPkgList:public RCacheActor {
- protected:
    GtkPkgList *_pkgList;
    GtkTreeView *_pkgView;
 
- public:
-   virtual void notifyCacheOpen() {
-      // cout << "notifyCacheOpen()" << endl; 
-      _pkgList = gtk_pkg_list_new(_lister);;
-      gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView),
-                              GTK_TREE_MODEL(_pkgList));
-   };
+   public:
+
    virtual void run(vector<RPackage *> &List, int Action);
 
-   RCacheActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
+   RCacheActorPkgList(RPackageLister *lister,
+                      GtkPkgList *pkgList,
                       GtkTreeView *pkgView)
- :   RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {
-   };
+      : RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
 
 
 class RPackageListActorPkgList:public RPackageListActor {
- protected:
+
+   protected:
+
    GtkPkgList *_pkgList;
    GtkTreeView *_pkgView;
 
- public:
-   virtual void run(vector<RPackage *> &List, int pkgEvent);
+   public:
 
-   RPackageListActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
+   virtual void run(vector<RPackage *> &List, int listEvent);
+
+   RPackageListActorPkgList(RPackageLister *lister,
+                            GtkPkgList *pkgList,
                             GtkTreeView *pkgView)
- :   RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {
-   };
+      : RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
 
+#endif /* GTKPKGLIST_H */
 
-
-
-#endif /* __GTK_PKG_LIST_H__ */
+// vim:ts=3:sw=3:et

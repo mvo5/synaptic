@@ -39,7 +39,7 @@
 
 #include "i18n.h"
 string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now ");
-string RInstallProgress::errorMsg = _("\nFailed to apply all changes! Scroll in this buffer to see what went wrong ");
+string RInstallProgress::errorMsg = _("\nFailed to apply all changes! Scroll in the terminal buffer to see what went wrong ");
 string RInstallProgress::incompleteMsg = 
       _("\nSuccessfully installed all packages of the current medium. "
 	"To continue the installation with the next medium close "

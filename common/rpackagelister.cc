@@ -675,7 +675,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
    unsigned i;
 
    held = 0;
-   kept = deps->KeepCount();
+   kept = 0;
    essential = 0;
    toInstall = 0;
    toReInstall = 0;
@@ -687,7 +687,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
       int flags = _packages[i]->getFlags();
 
       // These flags will never be set together.
-      int status = flags & (RPackage::FHeld |
+      int status = flags & (RPackage::FKeep |
                             RPackage::FNewInstall |
                             RPackage::FReInstall |
                             RPackage::FUpgrade |
@@ -695,8 +695,11 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
                             RPackage::FRemove);
 
       switch (status) {
-         case RPackage::FHeld:
-            held++;
+         case RPackage::FKeep:
+            if (flags & RPackage::FHeld)
+               held++;
+            else
+               kept++;
             break;
          case RPackage::FNewInstall:
             toInstall++;

@@ -254,8 +254,6 @@ int RPackage::getFlags()
 
    if (state.Install())
       flags |= FInstall;
-   else if (state.Held())
-      flags |= FHeld;
 
    if (state.iFlags & pkgDepCache::ReInstall) {
       flags |= FReInstall;
@@ -276,8 +274,11 @@ int RPackage::getFlags()
    if (!ver.end()) {
       flags |= FInstalled;
 
-      if (state.Upgradable() && state.CandidateVer != NULL)
+      if (state.Upgradable() && state.CandidateVer != NULL) {
          flags |= FOutdated;
+         if (state.Keep())
+            flags |= FHeld;
+      }
 
       if (state.Downgrade())
          flags |= FDowngrade;

@@ -518,8 +518,12 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             }
          }
          if (failed) {
-            // TODO: make this a special dialog with TextView
-            _userDialog->warning(utf8(failedReason.c_str()));
+            RGGladeUserDialog dia(this,"unmet");
+            GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
+                                                 "textview");
+            GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+            gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
+            dia.run();
          }
       }
    }

@@ -154,12 +154,12 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
   }
 
 
-   if (kept.size() > 0) {
+   if (held.size() > 0) {
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
                          PKG_COLUMN, _("To be kept back"), -1);
-      for (vector<RPackage *>::const_iterator p = kept.begin();
-           p != kept.end(); p++) {
+      for (vector<RPackage *>::const_iterator p = held.begin();
+           p != held.end(); p++) {
          gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
          gtk_tree_store_set(me->_treeStore, &iter_child,
                             PKG_COLUMN, (*p)->name(), -1);
@@ -331,17 +331,19 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 		      toDowngrade, sizeChange);
    lister->getDownloadSummary(dlCount, dlSize);
 
+#if 0
    if (held) {
       char *str = ngettext("%d package is locked\n",
                            "%d packages are locked\n", held);
       g_string_append_printf(msg, str, held);
    }
+#endif
 
-   if (kept) {
+   if (held) {
       char *str = ngettext("%d package will be held back and not upgraded\n",
                            "%d packages will be held back and not upgraded\n",
-                           kept);
-      g_string_append_printf(msg, str, kept);
+                           held);
+      g_string_append_printf(msg, str, held);
    }
 
    if (toInstall) {

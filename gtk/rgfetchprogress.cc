@@ -339,7 +339,7 @@ void RGFetchProgress::Stop()
    //cout << "RGFetchProgress::Stop()" << endl;
    RGFlushInterface();
    if(_sock != NULL) {
-      //gtk_widget_destroy(_sock);
+      gtk_widget_destroy(_sock); 
    } else {
       hide();
    }

@@ -188,7 +188,7 @@ void RGMainWindow::refreshSubViewList()
    for (vector<string>::iterator I = subViews.begin();
         I != subViews.end(); I++) {
       gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store, &iter, 0, (*I).c_str(), -1);
+      gtk_list_store_set(store, &iter, 0, utf8((*I).c_str()), -1);
    }
    gtk_tree_view_set_model(GTK_TREE_VIEW(_subViewList), GTK_TREE_MODEL(store));
 }
@@ -242,7 +242,7 @@ string RGMainWindow::selectedSubView()
    if (selection != NULL) {
       if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
          gtk_tree_model_get(model, &iter, 0, &subView, -1);
-         ret = subView;
+         ret = utf8_to_locale(subView);
          g_free(subView);
       }
    }
@@ -1882,13 +1882,15 @@ void RGMainWindow::cbShowSetOptWindow(GtkWidget *self, void *data)
 
 void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
 {
-   RGMainWindow *me = static_cast<RGMainWindow *>(data);
+   RGMainWindow *me = (RGMainWindow *) data;
    assert(data);
 
    RPackage *pkg = me->selectedPackage();
-   if(me!=NULL) {
-      RGPkgDetailsWindow *win = new RGPkgDetailsWindow(me,pkg);
-      win->show();
+   if (pkg != NULL) {
+      RGPkgDetailsWindow win(me, pkg);
+      gtk_window_set_modal(GTK_WINDOW(win.window()), true);
+      win.show();
+      gtk_main();
    }
 }
 

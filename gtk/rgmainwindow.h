@@ -43,6 +43,7 @@ class RGConfigWindow;
 class RGFilterManagerWindow;
 class RGFilterWindow;
 class RGFindWindow;
+class RGSetOptWindow;
 class RGAboutPanel;
 
 class RGUserDialog;
@@ -161,6 +162,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    RGConfigWindow *_configWin;
    RGFilterWindow *_filterWin;
    RGFindWindow *_findWin;
+   RGSetOptWindow *_setOptWin;
    RGAboutPanel *_aboutPanel;
    
    RGCacheProgress *_cacheProgress;
@@ -247,6 +249,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    // preferences menu
    static void showConfigWindow(GtkWidget *self, void *data);
+   static void showSetOptWindow(GtkWidget *self, void *data);
    static void showSourcesWindow(GtkWidget *self, void *data);
    static void menuToolbarClicked(GtkWidget *self, void *data);
 

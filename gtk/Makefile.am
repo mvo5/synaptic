@@ -53,6 +53,8 @@ synaptic_SOURCES=\
 	rgfilterwindow.h\
 	rgfindwindow.cc\
 	rgfindwindow.h\
+	rgsetoptwindow.cc\
+	rgsetoptwindow.h\
 	rgdummyinstallprogress.h\
 	rgdummyinstallprogress.cc\
 	rgzvtinstallprogress.h\

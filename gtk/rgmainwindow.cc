@@ -61,6 +61,7 @@
 #include "rgsummarywindow.h"
 #include "rgchangeswindow.h"
 #include "rgcdscanner.h"
+#include "rgsetoptwindow.h"
 
 #include "rgfetchprogress.h"
 #include "rgcacheprogress.h"
@@ -425,7 +426,15 @@ void RGMainWindow::showConfigWindow(GtkWidget *self, void *data)
     win->_configWin->show();
 }
 
+void RGMainWindow::showSetOptWindow(GtkWidget *self, void *data)
+{
+    RGMainWindow *win = (RGMainWindow*)data;
+    
+    if (win->_setOptWin == NULL)
+	win->_setOptWin = new RGSetOptWindow(win);
 
+    win->_setOptWin->show();
+}
 
 void RGMainWindow::changedFilter(GtkWidget *self)
 {
@@ -1646,6 +1655,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
 
     _filterWin = NULL;
     _findWin = NULL;
+    _setOptWin = NULL;
     _sourcesWin = NULL;
     _configWin = NULL;
     _aboutPanel = NULL;
@@ -1862,6 +1872,11 @@ void RGMainWindow::buildInterface()
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_preferences_activate",
 				  G_CALLBACK(showConfigWindow),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_set_option_activate",
+				  G_CALLBACK(showSetOptWindow),
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,

@@ -2007,6 +2007,9 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
  			    GTK_TREE_MODEL(_pkgTree));
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
+    gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE/*MULTIPLE*/);
 
     GtkCellRenderer *renderer; 
     GtkTreeViewColumn *column; 
@@ -2410,9 +2413,15 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   }
   gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
 		     PKG_COLUMN, &pkg, -1);
-  if(pkg == NULL)
-    return;
 
+  /* pkg is only NULL for secions */
+  if(pkg == NULL) {
+      if(!gtk_tree_view_row_expanded(GTK_TREE_VIEW(me->_treeView), path))
+	  gtk_tree_view_expand_row(GTK_TREE_VIEW(me->_treeView), path, false);
+      else
+	  gtk_tree_view_collapse_row(GTK_TREE_VIEW(me->_treeView), path);
+      return;
+  }
   // double click
   me->setInterfaceLocked(TRUE);
   

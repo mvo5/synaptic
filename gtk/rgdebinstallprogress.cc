@@ -75,7 +75,7 @@ void RGDebInstallProgress::updateInterface()
 
    int i=0;
    while (1) {
-      usleep(1000);
+      usleep(1000); // sleep a bit so that we don't have 100% cpu
 
       // This algorithm should be improved.
       int len = read(_childin, buf, 1);
@@ -83,13 +83,12 @@ void RGDebInstallProgress::updateInterface()
 	 break;
       }
 
-#if 0
+#if 0 // this is only used for the old pulse style listbox
       gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
 #endif
 
-      if (gtk_events_pending()) 
-	 while (gtk_events_pending())
-	    gtk_main_iteration();
+      while (gtk_events_pending())
+	 gtk_main_iteration();
 
       if (len < 1) { // no data
 	 continue;
@@ -97,8 +96,8 @@ void RGDebInstallProgress::updateInterface()
 
       // got complete line
       if( buf[0] == '\n') {
-	 cout << line << endl;
-
+	 //cout << line << endl;
+	 
 	 _startCounting = true;
 	 gchar **split = g_strsplit(line, ":",4);
 
@@ -109,7 +108,11 @@ void RGDebInstallProgress::updateInterface()
 	 if(!(pkg && status))
 	    continue;
 
-	 // this is the "normal" case, packages get installed
+	 // stages
+	 //install packages:
+	 // "unpack","half-configured","half-installed", "installed"
+	 //removed packages:
+	 // "half-configured","half-installed", "config-files", "not-installed"
 	 if(strstr(status,"unpacked") != NULL) {
 	    s = g_strdup_printf(_("Unpacking %s"), split[1]);
 	    if(_unpackSeen.find(string(pkg)) == _unpackSeen.end()) {
@@ -127,13 +130,9 @@ void RGDebInstallProgress::updateInterface()
 	    if(_installedSeen.find(string(pkg)) == _installedSeen.end()) {
 	       _installedSeen.insert(string(pkg));
 	       _donePackages += 1;
-	 } else if(strstr(split[2], "installed") != NULL) {
+	    } 
+	 }else if(strstr(split[2], "installed") != NULL) {
 	    //s = g_strdup_printf(_("Installed %s"), split[1]);
-	 }
-
-	 // FIXME: need a special case for removals and pkg (RemoveSet?)
-	 // the problem is that removed package go through the 
-	 // "half-configured", "half-installed" stages as well
 	 } else if(strstr(split[2], "config-files") != NULL) {
 	    if(_removeSeen.find(string(pkg)) == _removeSeen.end()) {
 	       _removeSeen.insert(string(pkg));
@@ -143,25 +142,21 @@ void RGDebInstallProgress::updateInterface()
 	 } else if(strstr(split[2], "not-installed") != NULL) { 
 	    s = g_strdup_printf(_("Removing with config %s"), split[1]);
 	    //_donePackages += 1;
-	 } 
-
-	 // error from dpkg
-	 else if(strstr(split[2], "error") != NULL) { 
+	 } else if(strstr(split[2], "error") != NULL) { 
+	    // error from dpkg
 	    s = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error(err.c_str());
-	 } 
-
-	 // conffile-request
-	 else if(strstr(split[2], "conffile-prompt") != NULL) {
+	 } else if(strstr(split[2], "conffile-prompt") != NULL) {
+	    // conffile-request
 	    //cout << split[2] << " " << split[3] << endl;
 	    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(window()),
-					     GTK_DIALOG_DESTROY_WITH_PARENT,
-					     GTK_MESSAGE_QUESTION,
-					     GTK_BUTTONS_YES_NO,
-					     "Conffile changed '%s'\n"
-					     "Install new?",
-					     split[1]);
+							GTK_DIALOG_DESTROY_WITH_PARENT,
+							GTK_MESSAGE_QUESTION,
+							GTK_BUTTONS_YES_NO,
+							"Conffile changed '%s'\n"
+							"Install new?",
+							split[1]);
 	    int res = gtk_dialog_run (GTK_DIALOG (dialog));
 	    gtk_widget_destroy (dialog);
 	    
@@ -173,11 +168,10 @@ void RGDebInstallProgress::updateInterface()
 	 }
 
 	 // each package goes through three stages
-	 float val = ((float)_donePackages) / ((float)(_numPackagesTotal+_numRemovals)*3.0);
+	 float val = ((float)_donePackages)/((float)(_numPackagesTotal+_numRemovals)*3.0);
 	 //cout << _donePackages << "/" << (_numPackagesTotal+_numRemovals)*3.0
 	 //<< " = " << val << endl;
-	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal),
-				       val);
+	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 	 if(s!=NULL)
 	    gtk_label_set(GTK_LABEL(_label_status),s);
 	 
@@ -185,25 +179,16 @@ void RGDebInstallProgress::updateInterface()
 	 g_strfreev(split);
 	 g_free(s);
 	 line[0] = 0;
-      }  else {
-         buf[1] = 0;
-         strcat(line, buf);
+      } else {
+	 buf[1] = 0;
+	 strcat(line, buf);
       }      
    }
 
-   line[i++] = 0;
-   //cout << line << endl;
-   i=0;
+   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal),1.0);
+   while (gtk_events_pending())
+      gtk_main_iteration();
    
-   
-   if (gtk_events_pending()) {
-      while (gtk_events_pending())
-	 gtk_main_iteration();
-   } else {
-      usleep(5000);
-      if (_startCounting == false) 
-	 gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
-   }
 }
 
 

@@ -35,20 +35,25 @@ class RGMainWindow;
 class RGInstallProgress : public RInstallProgress, public RGWindow {
 
    GtkWidget *_label;
+   GtkWidget *_labelSummary;
   
    GtkWidget *_pbar;
-   GtkWidget *_pbar_total;
+   GtkWidget *_pbarTotal;
 
    int _donePackages;
    bool _startCounting;
+
+   map<string,string> _summaryMap;
 
 protected:
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
 
+   virtual void prepare(RPackageLister *lister);
+
 public:
-   RGInstallProgress(RGMainWindow *main);
+   RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
 };
 
 #endif

@@ -667,7 +667,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     else
 #endif
 #ifdef HAVE_RPM
-	iprogress = new RGInstallProgress(me);
+	iprogress = new RGInstallProgress(me, me->_lister);
 #else
 	iprogress = new RGDummyInstallProgress();
 #endif

@@ -46,7 +46,7 @@ void RGInstallProgress::finishUpdate()
 {
     if (_startCounting) {
         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 1.0);
-        gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar_total), 1.0);
+        gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);
     }
     
     RGFlushInterface();
@@ -54,36 +54,74 @@ void RGInstallProgress::finishUpdate()
     hide();
 }
 
+void RGInstallProgress::prepare(RPackageLister *lister)
+{
+    for (int row=0; row < lister->count(); row++) {
+	RPackage *elem = lister->getElement(row);
+
+	// Is it going to be seen?
+	RPackage::MarkedStatus mark = elem->getMarkedStatus();
+	if (!(mark == RPackage::MInstall ||
+	      mark == RPackage::MUpgrade ||
+	      mark == RPackage::MDowngrade))
+	    continue;
+
+	const char *name = elem->name();
+	const char *ver = elem->availableVersion();
+	const char *pos = strchr(ver, ':');
+	if (pos)
+	    ver = pos+1;
+	string namever = string(name) + "-" + string(ver);
+	_summaryMap[namever] = elem->summary();
+    }
+}
 
 void RGInstallProgress::updateInterface()
 {
     char buf[2];
-    static char line[128] = "";
+    static char line[1024] = "";
 
     while (1) {
+	// This algorithm should be improved.
 	int len = read(_childin, buf, 1);
 	if (len < 1)
 	    break;
 	if (buf[0] == '\n') {
 	    float val;
 	    if (line[0] != '%') {
-		gtk_label_set_text(GTK_LABEL(_label), utf8(line));
-		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 0);
-		if (_startCounting) {
+		map<string,string>::const_iterator I =
+		    _summaryMap.find(line);
+		if (I == _summaryMap.end()) {
+		    if (_startCounting == false) {
+			gtk_label_set_label(GTK_LABEL(_label), utf8(line));
+			gtk_progress_bar_set_fraction(
+				GTK_PROGRESS_BAR(_pbar), 0);
+		    } else {
+			// This must be output from some rpm package, or
+			// from "Preparing...". Could be saved and shown
+			// after installation.
+		    }
+		} else {
+		    gtk_label_set_label(GTK_LABEL(_label), utf8(line));
+		    gtk_label_set_label(GTK_LABEL(_labelSummary),
+					utf8(I->second.c_str()));
+		    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 0);
 		    _donePackages += 1;
 		    val = ((float)_donePackages)/_numPackages;
 		    gtk_progress_bar_set_fraction(
-				    GTK_PROGRESS_BAR(_pbar_total), val);
+				    GTK_PROGRESS_BAR(_pbarTotal), val);
 		}
 	    } else {
 		sscanf(line + 3, "%f", &val);
 		val = val*0.01;
 		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), val);
 		if (_startCounting == false) {
+		    // This will happen when the "Preparing..." progress
+		    // is shown and its progress percentage starts.
 		    _startCounting = true;
 		    // Stop pulsing
 		    gtk_progress_bar_set_fraction(
-				    GTK_PROGRESS_BAR(_pbar_total), 0);
+				    GTK_PROGRESS_BAR(_pbarTotal), 0);
 		}
 	    }
 	    line[0] = 0;
@@ -99,7 +137,7 @@ void RGInstallProgress::updateInterface()
 	usleep(5000);
         if (_startCounting == false) {
 	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
-	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar_total));
+	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
         }
     }
 }
@@ -133,9 +171,14 @@ class GeometryParser
 	{Parse(Geo);};
 };
 
-RGInstallProgress::RGInstallProgress(RGMainWindow *main)
-    : RInstallProgress(), RGWindow(main, "install_progress", true, false)
+RGInstallProgress::RGInstallProgress(RGMainWindow *main,
+				     RPackageLister *lister)
+    : RInstallProgress(), RGWindow(main, "rginstall_progress", false, false, true)
 {
+    hide();
+
+    prepare(lister);
+    
     setTitle(_("Performing Changes"));
 
     _donePackages = 0;
@@ -145,30 +188,30 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main)
     GeometryParser Geo(GeoStr);
     if (Geo.HasSize())
 	gtk_widget_set_usize(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
-    else
-	gtk_widget_set_usize(GTK_WIDGET(_win), 320, 120);
     if (Geo.HasPosition())
 	gtk_widget_set_uposition(GTK_WIDGET(_win), Geo.XPos(), Geo.YPos());
 
     gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
     
-    _label = gtk_label_new("");
-    gtk_widget_show(_label);
-    gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+    _label = glade_xml_get_widget(_gladeXML, "label_name");
+    _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
+    _pbar = glade_xml_get_widget(_gladeXML, "progress_package");
+    _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
 
-    _pbar = gtk_progress_bar_new();
-    gtk_widget_show(_pbar);
-    gtk_widget_set_usize(_pbar, -1, 25);
-    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+    PangoFontDescription *bfont;
+    PangoFontDescription *font;
+    bfont = pango_font_description_from_string ("helvetica bold 10");    
+    font = pango_font_description_from_string ("helvetica 10");
+
+    gtk_widget_modify_font(_label, bfont);
+    gtk_widget_modify_font(_labelSummary, font);
+
+    gtk_label_set_text(GTK_LABEL(_label), "");
+    gtk_label_set_text(GTK_LABEL(_labelSummary), "");
     gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
     gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
-
-    _pbar_total = gtk_progress_bar_new();
-    gtk_widget_show(_pbar_total);
-    gtk_widget_set_usize(_pbar_total, -1, 25);
-    gtk_box_pack_start(GTK_BOX(_topBox), _pbar_total, FALSE, TRUE, 0);
-    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar_total));
-    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar_total), 0.01);
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
 }
 
 bool GeometryParser::ParseSize(char **size)

@@ -245,7 +245,7 @@ void RWFilterEditor::setPatternFilter(RPatternPackageFilter &f)
 	PatternFilterItem item;
 	RPatternPackageFilter::DepType type;
 	
-	f.pattern(i, type, item.pattern, item.exclude);
+	f.getPattern(i, type, item.pattern, item.exclude);
 	item.type = (int)type;
 	
 	_patternL.push_back(item);

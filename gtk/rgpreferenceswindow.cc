@@ -624,13 +624,5 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 			 G_CALLBACK(colorClicked), GINT_TO_POINTER(i));
     }
 
-    // we don't support "select distro" on rpm
-#ifdef HAVE_RPM 
-    GtkWidget *widget = glade_xml_get_widget(_gladeXML, "notebook_prefs");
-    assert(widget);
-    gtk_notebook_remove_page(GTK_NOTEBOOK(widget), -1);
-#endif    
-
-
-  setTitle(_("Set preferences"));
+    setTitle(_("Set preferences"));
 }

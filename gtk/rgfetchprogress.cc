@@ -62,11 +62,12 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    GtkTreeViewColumn *column;
 
    setTitle(_("Downloading Files"));
-   gtk_widget_set_usize(_win, 620, 350);
 
+#if 0
    gint dummy;
    gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,
                            &_depth);
+#endif
 
    _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
    assert(_mainProgressBar);
@@ -284,7 +285,7 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
    GdkPixmap *pix;
    int px, pw;
 
-   pix = gdk_pixmap_new(_win->window, width, height, _depth);
+   pix = gdk_pixmap_new(_win->window, width, height, -1);
 
    px = 0;
    pw = status * width / 100;

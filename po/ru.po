@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.35.1\n"
-"POT-Creation-Date: 2003-04-11 15:52+0400\n"
-"PO-Revision-Date: 2003-04-11 13:11+0400\n"
+"POT-Creation-Date: 2003-04-11 19:06+0400\n"
+"PO-Revision-Date: 2003-04-11 20:07+0400\n"
 "Last-Translator: Sviatoslav Sviridov <svd@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
 msgid "Stat failed for %s"
-msgstr ""
+msgstr "Ошибка stat() для %s"
 
 #: common/indexcopy.cc:82 common/rpmindexcopy.cc:112
 msgid "Unable to create a tmp file"
@@ -519,8 +519,8 @@ msgstr "-o=? Установить произвольную опцию, напр. -o dir::cache=/tmp\n"
 msgid "You must run this program as the root user."
 msgstr "Вы должны запускать эту программу как пользователь root."
 
-#: gtk/rgconfigwindow.cc:115 gtk/rgmainwindow.cc:2737
-#: wings/rwconfigwindow.cc:58
+#: gtk/rgconfigwindow.cc:115 gtk/rgzvtinstallprogress.cc:73
+#: gtk/rgmainwindow.cc:2737 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Произошла ошибка при сохранении конфигураций."
 
@@ -618,9 +618,47 @@ msgstr ""
 "Во время подготовки к установке:\n"
 "\n"
 
-#: gtk/rginstallprogress.cc:258 wings/rwinstallprogress.cc:94
+#: gtk/rginstallprogress.cc:258 gtk/rgzvtinstallprogress.cc:113
+#: wings/rwinstallprogress.cc:94
 msgid "Performing Changes"
 msgstr "Выполняются изменения"
+
+#: gtk/rgzvtinstallprogress.cc:54
+msgid "Package Manager running"
+msgstr "Менеджера пакетов запущен"
+
+#: gtk/rgzvtinstallprogress.cc:61
+msgid ""
+"\n"
+"Update finished - You can close the window now"
+msgstr ""
+"\n"
+"Обновление завершено - теперь Вы можете закрыть это окно"
+
+#: gtk/rgzvtinstallprogress.cc:63
+msgid ""
+"\n"
+"Update failed - Scroll in this buffer to see what went wrong"
+msgstr ""
+"\n"
+"Обновление завершилось неудачей - смотрите лог установки для определения "
+"причины"
+
+#: gtk/rgzvtinstallprogress.cc:87
+msgid "Package Manager finished"
+msgstr "Менеджер пакетов завершил работу"
+
+#: gtk/rgzvtinstallprogress.cc:96
+msgid "Can't close, Package Manager still runing"
+msgstr "Невозможно закрыть, менеджер пакетов всё ещё работает"
+
+#: gtk/rgzvtinstallprogress.cc:146
+msgid "Close dialog after Package Manager is finished"
+msgstr "Закрыть окно после завершения работы менеджера пакетов"
+
+#: gtk/rgzvtinstallprogress.cc:189
+msgid "can't fork children, so I die"
+msgstr ""
 
 #: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1258 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1239
@@ -1199,6 +1237,14 @@ msgstr "Окно поиска"
 msgid "Set generic option"
 msgstr "Установить произволный параметр"
 
+#: gtk/rgcdscanner.cc:61
+msgid "Scanning CD-ROM"
+msgstr "Сканируется CD-ROM..."
+
+#: gtk/rgcdscanner.cc:94
+msgid "Invalid disc name!"
+msgstr "Неверное имя диска!"
+
 #: wings/rwaboutpanel.cc:96
 msgid ""
 "Copyright (c) 2001 Conectiva S/A\n"
@@ -1591,7 +1637,7 @@ msgstr "Настроить репозитории пакетов (всё ещё не работает!)"
 
 #: wings/rwsummarywindow.cc:279
 msgid "BUFFER OVERFLOW DETECTED, ABORTING"
-msgstr ""
+msgstr "ОБНАРУЖЕНО ПЕРЕПОЛНЕНИЕ БУФЕРА, ПРЕРЫВАЕМ РАБОТУ"
 
 #: wings/rwsummarywindow.cc:305
 msgid "WARNING!!!"
@@ -2092,102 +2138,3 @@ msgstr "Свернуть всё"
 #: gtk/window_filters.glade.strings:54
 msgid "View Mode"
 msgstr "Вид"
-
-#~ msgid "Do"
-#~ msgstr "Выполнить"
-
-#, fuzzy
-#~ msgid "package "
-#~ msgstr "пакет"
-
-#~ msgid "Use text-only buttons in main window"
-#~ msgstr "Использовать только текстовые кнопки в главном окне"
-
-#, fuzzy
-#~ msgid "MKeepColor"
-#~ msgstr "Цвета"
-
-#, fuzzy
-#~ msgid "MInstallColor"
-#~ msgstr "Установить"
-
-#, fuzzy
-#~ msgid "MUpgradeColor"
-#~ msgstr "Обновить"
-
-#, fuzzy
-#~ msgid "MRemoveColor"
-#~ msgstr "Удалить"
-
-#, fuzzy
-#~ msgid "MHeldColor"
-#~ msgstr "Цвета"
-
-# This is filter name, it's better to not translate it
-#, fuzzy
-#~ msgid "MBrokenColor"
-#~ msgstr "Сломанные"
-
-#, fuzzy
-#~ msgid "MPinColor"
-#~ msgstr "Цвета"
-
-#, fuzzy
-#~ msgid "MNewColor"
-#~ msgstr "Цвета"
-
-#~ msgid "Repositories"
-#~ msgstr "Репозитории"
-
-#~ msgid "_Next"
-#~ msgstr "Следу_ющий"
-
-#~ msgid "To filter"
-#~ msgstr "К фильтру"
-
-#~ msgid "Could not mount CD-ROM"
-#~ msgstr "Невозможно примонтировать CD-ROM"
-
-#~ msgid "Error Scanning Disc"
-#~ msgstr "Ошибка сканирования диска"
-
-#~ msgid "Could not change directory to %s"
-#~ msgstr "Невозможно перейти в каталог %s"
-
-#~ msgid "_statusL"
-#~ msgstr "_СостояниеL"
-
-#~ msgid ""
-#~ "\n"
-#~ "Summary of the changes\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Краткое описание изменений\n"
-
-#~ msgid "Perform package download only"
-#~ msgstr "Выполнить только загрузку пакетов"
-
-#~ msgid "close dialog after dpkg is finished"
-#~ msgstr "закрыть окно после завершения dpkg"
-
-#~ msgid "dpkg is running"
-#~ msgstr "dpkg запущен"
-
-#~ msgid "_Update"
-#~ msgstr ""
-#~ "_Получить\n"
-#~ "сведения"
-
-#~ msgid "Up_grade"
-#~ msgstr "Об_новить"
-
-#~ msgid "_DistUpgrade"
-#~ msgstr ""
-#~ "_Обновить\n"
-#~ "дистрибутив"
-
-#~ msgid "_Proceed!"
-#~ msgstr "_Выполнить!"
-
-#~ msgid "Manage package repositories"
-#~ msgstr "Настроить репозитории пакетов"

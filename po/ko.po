@@ -6,10 +6,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: 0.50\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-05 19:16+0200\n"
-"PO-Revision-Date: 2004-05-09 15:23+0900\n"
+"PO-Revision-Date: 2004-06-12 11:13+0900\n"
 "Last-Translator: Son, Kyeong-uk <hey@gnome.or.kr>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -344,9 +344,8 @@ msgid "or dependency"
 msgstr "/의존성"
 
 #: common/rpackage.cc:400
-#, fuzzy
 msgid "Depended on by"
-msgstr "의존성"
+msgstr "의존적인 패키지"
 
 #: common/rpackage.cc:508
 #, c-format
@@ -359,8 +358,8 @@ msgid ""
 msgstr ""
 "\n"
 "%s 패키지는 데이터베이스에는 있지만 사용할 수 있는 버젼이 아닙니다.\n"
-"보통 패키지가 의존성으로만 언급되었지 이미 구식으로 올려진 적이 없거나 "
-"sources.list의 내용에서 사용할 수 없다는걸 의미합니다.\n"
+"보통 이것은 패키지가 의존성에서만 언급되었지 이미 오래된 버젼이라 "
+"올려지지 않았거나 sources.list의 내용에 들어있지 않다는 뜻입니다.\n"
 
 #: common/rpackage.cc:584
 msgid " or"
@@ -412,9 +411,8 @@ msgid "Marked for removal"
 msgstr "지움 표시됨"
 
 #: common/rpackage.cc:1297
-#, fuzzy
 msgid "Marked for complete removal"
-msgstr "지움 표시됨"
+msgstr "완전히 지움 표시됨"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
 #: gtk/window_filters.glade.h:25
@@ -431,9 +429,8 @@ msgid "Installed"
 msgstr "설치됨"
 
 #: common/rpackage.cc:1301 common/rpackageview.cc:97
-#, fuzzy
 msgid "Installed (upgradable)"
-msgstr "설치되어 있고 업그레이드 가능"
+msgstr "설치됨 (업그레이드 가능)"
 
 #: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
@@ -445,9 +442,8 @@ msgid "Broken"
 msgstr "깨짐"
 
 #: common/rpackage.cc:1304
-#, fuzzy
 msgid "Not installed (new in repository)"
-msgstr "설치되지 않음 (고정)"
+msgstr "설치되지 않음 (저장소에 새로 들어옴)"
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -502,12 +498,10 @@ msgid "Replaces"
 msgstr "대체"
 
 #: common/rpackagefilter.cc:53
-#, fuzzy
 msgid "Recommends"
 msgstr "추천"
 
 #: common/rpackagefilter.cc:54
-#, fuzzy
 msgid "Suggests"
 msgstr "제안"
 
@@ -519,7 +513,7 @@ msgstr "역의존"
 #: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
-msgstr ""
+msgstr "출처"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
@@ -557,10 +551,10 @@ msgstr "간단히보기 파일 안에 잘못된 정규식 '%s'이(가) 있습니
 
 #: common/rpackagelister.cc:288 common/rpackagelister.cc:294
 #: common/rpackagelister.cc:308
-#, fuzzy, c-format
+#, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
-"캐시(%d)를 열다가 내부 오류가 발생했습니다. 저희에게 오류를 알려주세요."
+"캐시 (%d)를 열다가 내부 오류가 발생했습니다. 저희에게 오류를 알려주세요."
 
 #: common/rpackagelister.cc:448
 msgid "Unable to correct dependencies"
@@ -571,6 +565,8 @@ msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
 msgstr ""
+"업그레이드 표시를 할 수 없습니다\n"
+"시스템의 오류를 확인하세요."
 
 #: common/rpackagelister.cc:462
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
@@ -598,14 +594,15 @@ msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "sources.list 파일의 유효하지 않은 내용을 무시하겠습니다!"
 
 #: common/rpackagelister.cc:1206
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s"
-msgstr "불러오기 실패"
+msgstr ""
+"%s 합치기 실패\n"
+"  %s"
 
 #: common/rpackagelister.cc:1227
-#, fuzzy
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "서버에서 몇몇 패키지를 받아올 수 없었습니다.\n"
 
@@ -622,19 +619,18 @@ msgid "Unable to lock the download directory"
 msgstr "내려받기 디렉토리를 짐글 수 없음"
 
 #: common/rpackagelister.cc:1378
-#, fuzzy, c-format
+#, c-format
 msgid "Line %u too long in markings file."
-msgstr "선택 모음 파일의 %u번째 줄이 너무 깁니다."
+msgstr "표시모음 파일의 %u번째 줄이 너무 깁니다."
 
 #: common/rpackagelister.cc:1392 common/rpackagelister.cc:1396
-#, fuzzy, c-format
+#, c-format
 msgid "Malformed line %u in markings file"
-msgstr "선택 모음 파일의 %u번째 줄이 잘못됨"
+msgstr "표시모음 파일의 %u번째 줄이 잘못됨"
 
 #: common/rpackagelister.cc:1408
-#, fuzzy
 msgid "Setting markings..."
-msgstr "선택 모음을 설정중입니다..."
+msgstr "표시모음을 설정중입니다..."
 
 #: common/rpmindexcopy.cc:116
 msgid "Internal Error: couldn't fork bzip2. Please report."
@@ -645,41 +641,34 @@ msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 실패. 디스크가 꽉 찬 것 같습니다."
 
 #: common/rpackageview.h:89
-#, fuzzy
 msgid "Sections"
 msgstr "분류"
 
 #: common/rpackageview.h:99
-#, fuzzy
 msgid "Alphabetic"
-msgstr "알파벳"
+msgstr "알파벳순"
 
 #: common/rpackageview.h:130
-#, fuzzy
 msgid "Find History"
-msgstr "찾아 거르기"
+msgstr "기록 찾기"
 
 #: common/rpackageview.h:173
-#, fuzzy
 msgid "Filter"
 msgstr "거르개"
 
 #: common/rpackageview.cc:90 gtk/window_filters.glade.h:23
 msgid "New in repository"
-msgstr ""
+msgstr "저장소에 새로 들어옴"
 
 #: common/rpackageview.cc:94
-#, fuzzy
 msgid "Installed (obsolete)"
-msgstr "설치되어 있고 업그레이드 가능"
+msgstr "설치되어있지만 저장소에는 없음"
 
 #: common/rpackageview.cc:102
-#, fuzzy
 msgid "Not installed (residual config)"
-msgstr "설치되지 않음 (새로 들어옴)"
+msgstr "설치되지 않음 (설정은 남음)"
 
 #: common/rpackageview.cc:326
-#, fuzzy
 msgid "Search Filter"
 msgstr "찾아 거르기"
 
@@ -700,9 +689,8 @@ msgid "Pkg with Debconf"
 msgstr "Debconf용 패키지"
 
 #: common/rpackageview.cc:373 gtk/window_filters.glade.h:53
-#, fuzzy
 msgid "Upgradable (upstream)"
-msgstr "시스템 업그레이드(_G)"
+msgstr "업그레이드 가능 (upstream)"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -712,12 +700,11 @@ msgstr ""
 "<span weight=\"bold\" size=\"large\">표시된 내용을 무시하고 나갈까요?</span>"
 
 #: gtk/dialog_quit.glade.h:2
-#, fuzzy
 msgid ""
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
 msgstr ""
-"아직 적용되지 않은 표시된 내용이 남아있습니다. '시냅틱'을 나가면 해당 내용을 "
+"아직 적용되지 않은 변경 사항이 남아있습니다. '시냅틱'을 나가면 해당 내용을 "
 "잃어버리게 됩니다."
 
 #: gtk/dialog_upgrade.glade.h:1
@@ -733,14 +720,13 @@ msgid ""
 "<b>Note:</b> The upgrades will be marked only. You still have to apply them "
 "afterwards."
 msgstr ""
+"<b>주의:</b> 업그레이드가 표시만 되어 있습니다. 적용을 하셔야 합니다."
 
 #: gtk/dialog_upgrade.glade.h:3
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">똑똑한 업그레이드(dist-upgrade)를 사용할"
-"까요?</span>"
+"<span weight=\"bold\" size=\"large\">좀 더 똑똑하게 업그레이드할까요?</span>"
 
 #: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:35
 msgid "Default Upgrade"
@@ -763,13 +749,12 @@ msgstr ""
 "니다."
 
 #: gtk/dialog_upgrade.glade.h:8
-#, fuzzy
 msgid ""
 "The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
 "fulfill all dependencies of upgrades in a smart way."
 msgstr ""
-"똑똑한 업그레이드는 좀 더 똑똑한 방법으로 충돌이나 업그레이드에 필요한 의존"
-"성 문제를 해결합니다."
+"똑똑한 업그레이드(dist-upgrade)는 좀 더 똑똑한 방법으로 충돌이나 "
+"업그레이드에 필요한 의존성 문제를 해결합니다."
 
 #: gtk/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
@@ -799,12 +784,12 @@ msgstr ""
 "시냅틱에 문제가 일어났습니다!\n"
 "Xlib이 여러분이 선택한 언어 환경을 지원하지 않습니다.\n"
 "\n"
-"언어 설정을 \"fr_FR\"이나 \"fr_FR@euro\"처럼 사용하십시오. \"fr_FR.iso8859-"
-"15@euro\"처럼 설정하지 마십시오.\n"
+"언어 설정을 \"fr_FR\"이나 \"fr_FR@euro\"처럼 사용하세요. \"fr_FR.iso8859-"
+"15@euro\"처럼 설정하지 마세요.\n"
 "\n"
-"의견이나 도움 요청은 메일링 리스트로 보내주십시오:\n"
+"의견이나 도움 요청은 메일링 리스트로 보내주세요:\n"
 "<i>synaptic-devel@nongnu.org</i> \n"
-"이메일에 \"locale\" 명령의 출력을 넣어주십시오."
+"이메일에 \"locale\" 명령의 출력을 넣어주세요."
 
 #: gtk/gsynaptic.cc:56
 msgid "Usage: synaptic [options]\n"
@@ -820,7 +805,7 @@ msgstr "-r   저장소 화면 열기\n"
 
 #: gtk/gsynaptic.cc:59
 msgid "-f=? Give a alternative filter file\n"
-msgstr "-f=? 대신할 거르개 파일을 넣으십시오\n"
+msgstr "-f=? 대신할 거르개 파일을 넣으세요\n"
 
 #: gtk/gsynaptic.cc:60
 msgid "-i=? Start with the initialFilter with the number given\n"
@@ -832,11 +817,11 @@ msgstr "-o=? 임의의 설정 옵션을 -o dir::cache=/tmp 형식으로 넣습�
 
 #: gtk/gsynaptic.cc:62
 msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
-msgstr ""
+msgstr "--upgrade-mode  새로고침, 설치, 바뀐내용 보기를 부름\n"
 
 #: gtk/gsynaptic.cc:63
 msgid "--non-interactive Never prompt for user input\n"
-msgstr ""
+msgstr "--non-interactive 사용자 입력을 프롬프트에 표시하지 않음\n"
 
 #: gtk/gsynaptic.cc:132
 msgid "You must run this program as the root user."
@@ -847,9 +832,8 @@ msgid "Synaptic Package Manager "
 msgstr "시냅틱 패키지 관리자 "
 
 #: gtk/rgcdscanner.cc:61
-#, fuzzy
 msgid "Scanning CD-ROM"
-msgstr "씨디롬을 읽고 있습니다..."
+msgstr "씨디롬을 읽고 있습니다"
 
 #: gtk/rgcdscanner.cc:100
 msgid "Invalid disc name!"
@@ -917,9 +901,8 @@ msgid "Preferences"
 msgstr "기본 설정"
 
 #: gtk/rgfetchprogress.cc:64
-#, fuzzy
 msgid "Downloading Files"
-msgstr "파일을 내려받고 있습니다..."
+msgstr "파일을 내려받고 있습니다"
 
 #: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:760
 msgid "Size"
@@ -936,19 +919,19 @@ msgid ""
 "%s\n"
 "in drive %s"
 msgstr ""
-"디스크를 넣어주십시오:\n"
+"디스크를 넣어주세요:\n"
 "%2$s 드라이브의\n"
 "%1$s"
 
 #: gtk/rgfetchprogress.cc:230
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
-msgstr "%2$li개 중 %1$li번째 파일을 %3$s/s로 받고있습니다 - %4$s 남음"
+msgstr "%2$li개 중 %1$li번째 파일을 %3$s/s로 내려받고있습니다 - %4$s 남음"
 
 #: gtk/rgfetchprogress.cc:235
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li"
-msgstr "파일을 내려받고 있습니다..."
+msgstr "%2$li개 중 %1$li번째 파일을 내려받고 있습니다"
 
 #: gtk/rgfetchprogress.cc:300
 msgid "Queued"
@@ -1009,14 +992,13 @@ msgstr ""
 "\n"
 
 #: gtk/rginstallprogress.cc:268 gtk/rgterminstallprogress.cc:182
-#, fuzzy
 msgid "Applying Changes"
-msgstr "바뀐 내용을 적용하고 있습니다..."
+msgstr "바뀐 내용을 적용하고 있습니다"
 
 #: gtk/rgpkgdetails.cc:35
-#, fuzzy, c-format
+#, c-format
 msgid "%s Properties"
-msgstr "등록 정보"
+msgstr "%s 등록 정보"
 
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
@@ -1063,43 +1045,36 @@ msgid "Apply all marked changes"
 msgstr "모든 표시된 내용 적용"
 
 #: gtk/rgmainwindow.cc:1157
-#, fuzzy
 msgid "Unmark"
 msgstr "표시지움"
 
 #: gtk/rgmainwindow.cc:1165
-#, fuzzy
 msgid "Mark for Installation"
-msgstr "설치 표시됨"
+msgstr "설치 표시"
 
 #: gtk/rgmainwindow.cc:1173
-#, fuzzy
 msgid "Mark for Reinstallation"
-msgstr "설치 표시됨"
+msgstr "재설치 표시"
 
 #: gtk/rgmainwindow.cc:1182
-#, fuzzy
 msgid "Mark for Upgrade"
-msgstr "업그레이드 표시됨"
+msgstr "업그레이드 표시"
 
 #: gtk/rgmainwindow.cc:1190
-#, fuzzy
 msgid "Mark for Removal"
-msgstr "지움 표시됨"
+msgstr "지움 표시"
 
 #: gtk/rgmainwindow.cc:1199
-#, fuzzy
 msgid "Mark for Complete Removal"
-msgstr "지움 표시됨"
+msgstr "완전히 지움 표시"
 
 #: gtk/rgmainwindow.cc:1211
 msgid "Remove Including Orphaned Dependencies"
 msgstr "의존성이 깨진 패키지까지 지우기"
 
 #: gtk/rgmainwindow.cc:1223
-#, fuzzy
 msgid "Hold Current Version"
-msgstr "현재 버젼 다시 설치(_E)"
+msgstr "현재 버젼 고정"
 
 #: gtk/rgmainwindow.cc:1232 gtk/window_main.glade.h:15
 #: gtk/window_filters.glade.h:43
@@ -1107,14 +1082,12 @@ msgid "Properties"
 msgstr "등록 정보"
 
 #: gtk/rgmainwindow.cc:1244
-#, fuzzy
 msgid "Mark Recommended for Installation"
-msgstr "설치 표시됨"
+msgstr "설치 권장 표시"
 
 #: gtk/rgmainwindow.cc:1248
-#, fuzzy
 msgid "Mark Suggested for Installation"
-msgstr "설치 표시됨"
+msgstr "설치 제안 표시"
 
 #: gtk/rgmainwindow.cc:1299
 msgid ""
@@ -1143,13 +1116,13 @@ msgstr ""
 "움; %s 필요"
 
 #: gtk/rgmainwindow.cc:1350
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove"
 msgstr ""
 "%i개 패키지 목록, %i개 설치됨, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지"
-"움; %s 필요"
+"움"
 
 #: gtk/rgmainwindow.cc:1426
 #, c-format
@@ -1164,7 +1137,7 @@ msgid_plural ""
 msgstr[0] ""
 "여러분의 시스템에 깨진 패키지가 %개 있습니다!\n"
 "\n"
-"\"깨짐\" 거르개로 확인하십시오."
+"\"깨짐\" 거르개로 확인하세요."
 
 #: gtk/rgmainwindow.cc:1663
 msgid "Do you want to add another CD-ROM?"
@@ -1195,14 +1168,13 @@ msgid "Save full state, not only changes"
 msgstr "바뀐 내용 외에 모든 상태 저장"
 
 #: gtk/rgmainwindow.cc:1885
-#, fuzzy
 msgid "Searching..."
-msgstr "준비하고 있습니다..."
+msgstr "찾고 있습니다..."
 
 #: gtk/rgmainwindow.cc:1897
-#, fuzzy, c-format
+#, c-format
 msgid "Found %i packages"
-msgstr "충돌한 패키지"
+msgstr "%i개 패키지 찾음"
 
 #: gtk/rgmainwindow.cc:1926
 msgid "Starting help viewer..."
@@ -1227,13 +1199,12 @@ msgstr ""
 "'synaptic/html' 폴더에 있는 HTML 버젼을 볼 수도 있습니다."
 
 #: gtk/rgmainwindow.cc:2082
-#, fuzzy
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
-"먼저 'libgnome2-perl' 패키지가 필요합니다."
+"먼저 'libgnome2-perl' 패키지를 설치해야 합니다."
 
 #: gtk/rgmainwindow.cc:2088
 msgid "Starting package configuration tool..."
@@ -1249,33 +1220,31 @@ msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
+"패키지 문서를 탐색하려면 \"dwww\" 패키지를 설치해야합니다"
 
 #: gtk/rgmainwindow.cc:2151
-#, fuzzy
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 "바뀐 내용을 적용할 수 없습니다!\n"
-"깨진 패키지를 먼저 고치십시오."
+"깨진 패키지를 먼저 고치세요."
 
 #: gtk/rgmainwindow.cc:2170
 msgid "Applying marked changes. This may take a while..."
 msgstr "표시된 내용을 적용중입니다. 이 작업은 시간이 걸릴 수 있습니다..."
 
 #: gtk/rgmainwindow.cc:2174
-#, fuzzy
 msgid "Downloading Package Files"
-msgstr "파일을 내려받고 있습니다..."
+msgstr "패키지 파일을 내려받고 있습니다"
 
 #: gtk/rgmainwindow.cc:2234
 msgid "Do you want to quit Synaptic?"
 msgstr "시냅틱을 나갈까요?"
 
 #: gtk/rgmainwindow.cc:2290
-#, fuzzy
 msgid "Downloading Index Files"
-msgstr "파일을 내려받고 있습니다..."
+msgstr "색인 파일을 내려받고 있습니다"
 
 #: gtk/rgmainwindow.cc:2292
 msgid "Refreshing package list..."
@@ -1290,20 +1259,18 @@ msgid "Successfully fixed dependency problems"
 msgstr "의존성 문제가 성공적으로 고쳐졌습니다"
 
 #: gtk/rgmainwindow.cc:2373
-#, fuzzy
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
-"먼저 깨진 패키지를 고치십시오."
+"먼저 깨진 패키지를 고치세요."
 
 #: gtk/rgmainwindow.cc:2414
 msgid "Marking all available upgrades..."
 msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
 
 #: gtk/rgmainwindow.cc:2426
-#, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "가능한 모든 업그레이드가 성공적으로 표시됐습니다"
 
@@ -1338,11 +1305,11 @@ msgstr "분류"
 
 #: gtk/rgrepositorywin.cc:218
 msgid "Binary (deb)"
-msgstr ""
+msgstr "바이너리 (deb)"
 
 #: gtk/rgrepositorywin.cc:223
 msgid "Source (deb-src))"
-msgstr ""
+msgstr "소스 (deb-src)"
 
 #: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
 #: gtk/window_repositories.glade.h:1
@@ -1468,7 +1435,7 @@ msgid ""
 "%s have to be downloaded"
 msgstr ""
 "\n"
-"%s를 내려받아야함"
+"%s을(를) 내려받아야함"
 
 #: gtk/rgsummarywindow.cc:432
 msgid ""
@@ -1507,7 +1474,6 @@ msgid "Find"
 msgstr "찾기"
 
 #: gtk/window_main.glade.h:1
-#, fuzzy
 msgid "A_pply Marked Changes"
 msgstr "표시된 내용 적용(_P)"
 
@@ -1517,42 +1483,35 @@ msgstr "알파벳"
 
 #: gtk/window_main.glade.h:3
 msgid "Apply"
-msgstr ""
+msgstr "적용"
 
 #: gtk/window_main.glade.h:5
-#, fuzzy
 msgid "Mark All Up_grades..."
-msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
+msgstr "모든 업그레이드 표시하기(_G)..."
 
 #: gtk/window_main.glade.h:6
-#, fuzzy
 msgid "Mark All Upgrades"
-msgstr "업그레이드 표시됨"
+msgstr "모든 업그레이드 표시"
 
 #: gtk/window_main.glade.h:7
-#, fuzzy
 msgid "Mark for Co_mplete Removal"
-msgstr "지움 표시됨"
+msgstr "완전히 지움 표시(_M)"
 
 #: gtk/window_main.glade.h:8
-#, fuzzy
 msgid "Mark for R_einstallation"
-msgstr "설치 표시됨"
+msgstr "재설치 표시(_E)"
 
 #: gtk/window_main.glade.h:9
-#, fuzzy
 msgid "Mark for _Installation"
-msgstr "설치 표시됨"
+msgstr "설치 표시(_I)"
 
 #: gtk/window_main.glade.h:10
-#, fuzzy
 msgid "Mark for _Removal"
-msgstr "지움 표시됨"
+msgstr "지움 표시(_R)"
 
 #: gtk/window_main.glade.h:11
-#, fuzzy
 msgid "Mark for _Upgrade"
-msgstr "업그레이드 표시됨"
+msgstr "업그레이드 표시(_U)"
 
 #: gtk/window_main.glade.h:12
 msgid "No package is selected."
@@ -1568,16 +1527,15 @@ msgstr "기본 설정(_N)"
 
 #: gtk/window_main.glade.h:16
 msgid "Refresh"
-msgstr ""
+msgstr "새로고침"
 
 #: gtk/window_main.glade.h:17
 msgid "Release"
 msgstr "릴리스"
 
 #: gtk/window_main.glade.h:18
-#, fuzzy
 msgid "Save Markings _As..."
-msgstr "선택모음 다른 이름으로 저장(_A)..."
+msgstr "표시모음 다른 이름으로 저장(_A)..."
 
 #: gtk/window_main.glade.h:20
 msgid "Set _Internal Option..."
@@ -1600,37 +1558,32 @@ msgid "U_nmark"
 msgstr "표시지움"
 
 #: gtk/window_main.glade.h:26
-#, fuzzy
 msgid "U_nmark All"
-msgstr "표시지움"
+msgstr "모두 표시지움(_N)"
 
 #: gtk/window_main.glade.h:27
 msgid "_About"
 msgstr "정보(_A)"
 
 #: gtk/window_main.glade.h:28
-#, fuzzy
 msgid "_Add CD-ROM..."
 msgstr "씨디롬 더하기(_A)..."
 
 #: gtk/window_main.glade.h:29
-#, fuzzy
 msgid "_Browse Documentation"
-msgstr "문서화(_D)"
+msgstr "문서 탐색하기(_B)"
 
 #: gtk/window_main.glade.h:30
-#, fuzzy
 msgid "_Configure..."
-msgstr "업그레이드(_U)"
+msgstr "설정(_C)..."
 
 #: gtk/window_main.glade.h:31
 msgid "_Contents"
 msgstr "내용(_C)"
 
 #: gtk/window_main.glade.h:32
-#, fuzzy
 msgid "_Download Changelog"
-msgstr "패키지 파일만 내려받기"
+msgstr "Changelog 내려받기(_D)"
 
 #: gtk/window_main.glade.h:33
 msgid "_Edit"
@@ -1641,9 +1594,8 @@ msgid "_File"
 msgstr "파일(_F)"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "_Filters"
-msgstr "거르개"
+msgstr "거르개(_F)"
 
 #: gtk/window_main.glade.h:36
 msgid "_Find..."
@@ -1682,9 +1634,8 @@ msgid "_Quit"
 msgstr "나가기(_Q)"
 
 #: gtk/window_main.glade.h:45
-#, fuzzy
 msgid "_Read Markings..."
-msgstr "선택모음 읽기(_R)..."
+msgstr "표시모음 읽기(_R)..."
 
 #: gtk/window_main.glade.h:46
 msgid "_Redo"
@@ -1699,9 +1650,8 @@ msgid "_Repositories"
 msgstr "저장소(_R)"
 
 #: gtk/window_main.glade.h:49
-#, fuzzy
 msgid "_Save Markings"
-msgstr "바뀐 내용 저장"
+msgstr "표시모음 저장"
 
 #: gtk/window_main.glade.h:50
 msgid "_Text Only"
@@ -1716,13 +1666,10 @@ msgid "_Undo"
 msgstr "되돌리기(_U)"
 
 #: gtk/window_about.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2004 Michael Vogt</span>"
 msgstr ""
-"<span size=\"small\">Copyright (c) 2001-2003 Connectiva S/A \n"
-"Copyright (c) 2002,2003 Michael Vogt</span>"
 
 #: gtk/window_about.glade.h:3
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
@@ -1737,7 +1684,6 @@ msgid "Documented by"
 msgstr "문서화"
 
 #: gtk/window_about.glade.h:8
-#, fuzzy
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
@@ -1747,15 +1693,15 @@ msgid ""
 "Manual:\n"
 "Sebastian Heinlein <sebastain.heinlein@web.de>"
 msgstr ""
-"맨 페이지:\n"
+"맨페이지:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
 "Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
 "\n"
 "설명서:\n"
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
 #: gtk/window_about.glade.h:15
-#, fuzzy
 msgid ""
 "Original author:\n"
 "Alfredo K. Kojima <kojima@windowmaker.org>\n"
@@ -1776,10 +1722,10 @@ msgstr ""
 "메인테이너:\n"
 "Michael Vogt <mvo@debian.org>\n"
 "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "\n"
 "기여자:\n"
 "Enrico Zini <enrico@debian.org>\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 
@@ -1811,7 +1757,7 @@ msgstr "작성"
 
 #: gtk/window_about.glade.h:33
 msgid "translators_credits"
-msgstr ""
+msgstr "translators_credits"
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1825,18 +1771,16 @@ msgid "Dependencies"
 msgstr "의존성"
 
 #: gtk/window_find.glade.h:3
-#, fuzzy
 msgid "Description and Name"
-msgstr "설명"
+msgstr "설명과 이름"
 
 #: gtk/window_find.glade.h:4
-#, fuzzy
 msgid "Find:"
-msgstr "찾기"
+msgstr "찾기:"
 
 #: gtk/window_find.glade.h:5
 msgid "Look in:"
-msgstr ""
+msgstr "범위:"
 
 #: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
@@ -1850,17 +1794,14 @@ msgid "    "
 msgstr "    "
 
 #: gtk/window_fetch.glade.h:2
-#, fuzzy
 msgid "<b>Single Files:</b>"
 msgstr "<b>낱개 파일:</b>"
 
 #: gtk/window_fetch.glade.h:3
-#, fuzzy
 msgid "<b>Total Progress:</b>"
 msgstr "<b>전체 진행:</b>"
 
 #: gtk/window_changes.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
@@ -1877,9 +1818,8 @@ msgstr ""
 "내용이 적용되어야 합니다."
 
 #: gtk/window_changes.glade.h:3
-#, fuzzy
 msgid "_Mark"
-msgstr "표시"
+msgstr "표시(_M)"
 
 #: gtk/window_preferences.glade.h:1 gtk/window_summary.glade.h:1
 msgid " "
@@ -1926,21 +1866,19 @@ msgid "<b>Marking Changes</b>"
 msgstr "<b>바뀐 내용 표시</b>"
 
 #: gtk/window_preferences.glade.h:14
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package list must be reloaded and all marked changes will "
 "be lost. Make sure to apply your changes first."
 msgstr ""
 "<b>주의:</b> 패키지 목록이 다시 로드되고 표시된 바뀐 내용도 모두 없어집니다. "
-"바꾼 내용을 먼저 적용한 후 사용하십시오."
+"바꾼 내용을 먼저 적용한 후 사용하세요."
 
 #: gtk/window_preferences.glade.h:15
-#, fuzzy
 msgid ""
 "<b>Note:</b> You will have to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
-"<b>주의:</b> 이 설정이 영향을 미치려면 시냅틱을 새로 \n"
+"<b>주의:</b> 이 설정을 적용하려면 시냅틱을 새로 \n"
 "시작해야 합니다."
 
 #: gtk/window_preferences.glade.h:17
@@ -1948,9 +1886,8 @@ msgid "<b>Proxy Server</b>"
 msgstr "<b>프록시 서버</b>"
 
 #: gtk/window_preferences.glade.h:18
-#, fuzzy
 msgid "<b>Search</b>"
-msgstr "<b>요약</b>"
+msgstr "<b>찾기</b>"
 
 #: gtk/window_preferences.glade.h:19
 msgid "<b>Temporary Files</b>"
@@ -1962,7 +1899,7 @@ msgid ""
 "system. Consider changes carefully.</span>"
 msgstr ""
 "<span size=\"large\" weight=\"bold\">이 설정은 여러분 시스템의 중요한 부분에 "
-"영향을 끼칩니다. 고칠 때는 주의하십시오.</span>"
+"영향을 끼칩니다. 고칠 때는 주의하세요.</span>"
 
 #: gtk/window_preferences.glade.h:21
 msgid "Allow regular expressions in searches and filters"
@@ -1990,7 +1927,7 @@ msgstr "깨짐:"
 
 #: gtk/window_preferences.glade.h:27
 msgid "Clicking on the status icon marks the most likely action"
-msgstr ""
+msgstr "상태 아이콘 표시를 클릭하면 가장 적합한 명령을 취하기"
 
 #: gtk/window_preferences.glade.h:28
 msgid "Color"
@@ -2005,9 +1942,8 @@ msgid "Colors"
 msgstr "색깔"
 
 #: gtk/window_preferences.glade.h:31
-#, fuzzy
 msgid "Columns and Fonts"
-msgstr "글꼴과 컬럼"
+msgstr "컬럼과 글꼴"
 
 #: gtk/window_preferences.glade.h:32
 msgid ""
@@ -2019,7 +1955,7 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:33
 msgid "Completely"
-msgstr ""
+msgstr "완료"
 
 #: gtk/window_preferences.glade.h:34
 msgid "Consider recommended packages as dependencies"
@@ -2038,9 +1974,8 @@ msgid "Delete packages which are no longer available only"
 msgstr "더이상 사용하지 않는 패키지만 지움"
 
 #: gtk/window_preferences.glade.h:39
-#, fuzzy
 msgid "Description:"
-msgstr "설명"
+msgstr "설명:"
 
 #: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
@@ -2079,28 +2014,24 @@ msgid "Installed (locked):"
 msgstr "설치됨 (고정):"
 
 #: gtk/window_preferences.glade.h:49
-#, fuzzy
 msgid "Installed size:"
-msgstr "설치된 크기"
+msgstr "설치된 크기:"
 
 #: gtk/window_preferences.glade.h:50
-#, fuzzy
 msgid "Installed version:"
-msgstr "설치된 버젼"
+msgstr "설치된 버젼:"
 
 #: gtk/window_preferences.glade.h:51
 msgid "Installed:"
 msgstr "설치됨:"
 
 #: gtk/window_preferences.glade.h:52
-#, fuzzy
 msgid "Keep Configuration"
-msgstr "설정까지"
+msgstr "설정 유지"
 
 #: gtk/window_preferences.glade.h:53
-#, fuzzy
 msgid "Latest version:"
-msgstr "최신 버젼"
+msgstr "최신 버젼:"
 
 #: gtk/window_preferences.glade.h:54
 msgid "Leave all downloaded packages in the cache"
@@ -2111,9 +2042,8 @@ msgid "Manual proxy configuration"
 msgstr "직접 프록시 설정"
 
 #: gtk/window_preferences.glade.h:56
-#, fuzzy
 msgid "Marked for complete removal:"
-msgstr "지움 표시됨"
+msgstr "완전히 지움 표시됨:"
 
 #: gtk/window_preferences.glade.h:57
 msgid "Marked for downgrade:"
@@ -2144,18 +2074,16 @@ msgid "Move _Up"
 msgstr "위로 올림(_U)"
 
 #: gtk/window_preferences.glade.h:64
-#, fuzzy
 msgid "Name:"
-msgstr "이름"
+msgstr "이름:"
 
 #: gtk/window_preferences.glade.h:65
 msgid "Network"
 msgstr "네트워크"
 
 #: gtk/window_preferences.glade.h:66
-#, fuzzy
 msgid "New in respository:"
-msgstr "새로 들어옴:"
+msgstr "저장소에 새로 들어옴:"
 
 #: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
@@ -2166,7 +2094,6 @@ msgid "Not installed (locked):"
 msgstr "설치되지 않음 (고정):"
 
 #: gtk/window_preferences.glade.h:69
-#, fuzzy
 msgid "Not installed:"
 msgstr "설치되지 않음:"
 
@@ -2198,16 +2125,15 @@ msgstr "패키지 지우기: "
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
-"sources.list에 하나 이상이 지정되어 있는 경우 기본이 될 버젼을 선택하십시오."
+"sources.list에 하나 이상이 지정되어 있는 경우 기본이 될 버젼을 선택하세요."
 
 #: gtk/window_preferences.glade.h:78
 msgid "Show"
 msgstr "보이기"
 
 #: gtk/window_preferences.glade.h:80
-#, fuzzy
 msgid "Status:"
-msgstr "상태"
+msgstr "상태:"
 
 #: gtk/window_preferences.glade.h:81
 msgid "System upgrade:"
@@ -2224,9 +2150,8 @@ msgstr ""
 "칸의 순서는 왼쪽에서 오른쪽입니다. 값을 -1으로 넣으면 칸을 안보이게 합니다."
 
 #: gtk/window_preferences.glade.h:84
-#, fuzzy
 msgid "Upgradable:"
-msgstr "업그레이드 가능"
+msgstr "업그레이드 가능:"
 
 #: gtk/window_preferences.glade.h:85
 msgid "Use custom application font"
@@ -2252,7 +2177,7 @@ msgstr "터미널 글꼴(_T)"
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">씨디롬의 이름을 넣으십시오</span>"
+"<span weight=\"bold\" size=\"larger\">씨디롬의 이름을 넣으세요</span>"
 
 #: gtk/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2270,7 +2195,7 @@ msgstr "<span size=\"large\" weight=\"bold\">내부 옵션을 넣으세요</span
 
 #: gtk/window_setopt.glade.h:3
 msgid "Only experts should use this."
-msgstr "전문가만 사용하십시오."
+msgstr "전문가만 사용하세요."
 
 #: gtk/window_setopt.glade.h:4
 msgid "Value:"
@@ -2278,7 +2203,7 @@ msgstr "값:"
 
 #: gtk/window_setopt.glade.h:5
 msgid "Variable:"
-msgstr "변수"
+msgstr "변수:"
 
 #: gtk/window_summary.glade.h:3
 msgid "<b>Summary</b>"
@@ -2295,12 +2220,10 @@ msgid "Download package files only"
 msgstr "패키지 파일만 내려받기"
 
 #: gtk/window_summary.glade.h:7
-#, fuzzy
 msgid "Return to the main screen"
 msgstr "메인 화면으로 돌아가기"
 
 #: gtk/window_summary.glade.h:8
-#, fuzzy
 msgid "The package files will be downloaded only, but not installed"
 msgstr "패키지 파일을 설치하거나 업그레이드하지 않고 받기만 합니다"
 
@@ -2310,7 +2233,7 @@ msgid ""
 "before they are applied."
 msgstr ""
 "이것은 표시된 내용이 적용되기 전에 다시 한 번 살펴볼 수 있는 마지막 기회입니"
-"다. "
+"다."
 
 #: gtk/window_summary.glade.h:10
 msgid "_Show Details"
@@ -2335,9 +2258,8 @@ msgstr "충돌한 패키지"
 #. suggests
 #: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
-#, fuzzy
 msgid "Dependants"
-msgstr "의존"
+msgstr "의존됨"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"
@@ -2352,14 +2274,12 @@ msgid "Excludes"
 msgstr "제외"
 
 #: gtk/window_filters.glade.h:15
-#, fuzzy
 msgid "For installation or upgrade"
-msgstr "설치되거나 업그레이드됨"
+msgstr "설치나 업그레이드"
 
 #: gtk/window_filters.glade.h:16
-#, fuzzy
 msgid "For removal"
-msgstr "지움 표시됨"
+msgstr "지움"
 
 #: gtk/window_filters.glade.h:17
 msgid "Include"
@@ -2378,9 +2298,8 @@ msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "사용되지 않는 라이브러리 패키지 (deborphan을 포함)"
 
 #: gtk/window_filters.glade.h:24
-#, fuzzy
 msgid "Not installable"
-msgstr "설치되지 않음"
+msgstr "설치될 수 없음"
 
 #: gtk/window_filters.glade.h:26
 msgid "Not marked"
@@ -2395,19 +2314,17 @@ msgid "Package Name"
 msgstr "패키지 이름"
 
 #: gtk/window_filters.glade.h:30
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
-msgstr "지난 \"업데이트\" 이후로 저장소에 새로 들어온 패키지"
+msgstr "지난 \"새로고침\" 이후로 저장소에 새로 들어온 패키지"
 
 #: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "어떤 저장소에서도 제공되지 않는 패키지"
 
 #: gtk/window_filters.glade.h:32
-#, fuzzy
 msgid ""
 "Packages that have been installed and a later upstream version ist available"
-msgstr "설치되어 있고 새로운 버젼이 사용 가능한 패키지"
+msgstr "설치되어 있고 새로운 다음 단계 버젼이 사용 가능한 패키지"
 
 #: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
@@ -2451,7 +2368,6 @@ msgstr "고정됨"
 
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
-#, fuzzy
 msgid "Recommendations"
 msgstr "추천"
 
@@ -2473,7 +2389,6 @@ msgid "Tags"
 msgstr "태그"
 
 #: gtk/window_filters.glade.h:52
-#, fuzzy
 msgid "Upgradable"
 msgstr "업그레이드 가능"
 
@@ -2482,17 +2397,14 @@ msgid "Version Number"
 msgstr "버젼 번호"
 
 #: gtk/window_filters.glade.h:55
-#, fuzzy
 msgid "_Deselect All"
-msgstr "모두 취소하기(_D)"
+msgstr "모든 선택 취소하기(_D)"
 
 #: gtk/window_filters.glade.h:56
-#, fuzzy
 msgid "_Invert All"
 msgstr "모두 반대로(_I)"
 
 #: gtk/window_filters.glade.h:57
-#, fuzzy
 msgid "_Select All"
 msgstr "모두 고르기(_S)"
 
@@ -2554,27 +2466,26 @@ msgstr "시냅틱 패키지 관리자"
 
 #: gtk/dialog_welcome.glade.h:1
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #: gtk/dialog_welcome.glade.h:2
-#, fuzzy
 msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then to apply them."
-msgstr "<b>주의:</b> 바뀐 내용이 바로 반영되지는 않습니다."
+msgstr "<b>주의:</b> 바뀐 내용이 바로 반영되지는 않습니다. 먼저 모든 "
+"내용을 표시한 다음 적용해야합니다."
 
 #: gtk/dialog_welcome.glade.h:3
-#, fuzzy
 msgid "Choose the action from the context menu of the package."
-msgstr "최신 버젼 설치(_I)"
+msgstr "패키지에서 마우스 오른쪽 버튼을 누르고 명령을 고르세요."
 
 #: gtk/dialog_welcome.glade.h:4
 msgid "Click on the status icon to open a menu that contains all actions."
-msgstr ""
+msgstr "가능한 명령을 보려면 상태 아이콘을 클릭하세요."
 
 #: gtk/dialog_welcome.glade.h:5
 msgid "Double click on the package name."
-msgstr ""
+msgstr "패키지 이름을 더블클릭하세요."
 
 #: gtk/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
@@ -2582,48 +2493,44 @@ msgstr "빠른 소개"
 
 #: gtk/dialog_welcome.glade.h:7
 msgid "Select the package and choose the action from the 'Package' menu."
-msgstr ""
+msgstr "패키지를 선택하고 '패키지' 메뉴에서 명령을 고르세요."
 
 #: gtk/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
 msgstr "시작할 때 이 창 보여줌"
 
 #: gtk/dialog_welcome.glade.h:9
-#, fuzzy
 msgid ""
 "The software on your system is organized in so called <i>packages</i>. The "
 "package manager enables you to install, to upgrade or to remove software "
 "packages."
 msgstr ""
-"패키지 관리자는 여러분이 소프트웨어 패키지를 설치하고, 업그레이드하고, 지울 "
-"수 있게 도와줍니다."
+"여러분의 시스템에 깔려있는 소프트웨어는 <i>패키지</i>라는 단위로 관리됩니다. "
+"패키지 관리자는 여러분이 소프트웨어 패키지를 설치하고, 업그레이드하고,"" 지울 수 있게 도와줍니다."
 
 #: gtk/dialog_welcome.glade.h:10
-#, fuzzy
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
-msgstr "1. 설치, 업그레이드, 제거를 위해 패키지에 표시하기"
+msgstr "설치, 업그레이드, 제거를 위해 다음처럼 패키지에 표시할 수 있습니다:"
 
 #: gtk/dialog_unmet.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Failed to mark all packages for "
 "installation or upgrade</span>\n"
 "\n"
 "The following packages have unmet dependencies:"
 msgstr ""
-"설치하지 한 패키지가 있습니다.\n"
+"<span weight=\"bold\" size=\"larger\">설치, 업그레이드 표시를 하지 못한 패키지가 있습니다</span>\n"
 "\n"
-"아래의 패키지는 의존성을 만족하지 못했습니다:\n"
+"아래의 패키지는 의존성을 만족하지 못했습니다:"
 
 #: gtk/dialog_changelog.glade.h:1
 msgid "<b>Full changelog of the latest version:</b>"
-msgstr ""
+msgstr "<b>최신 버젼의 전체 바뀐 내용:</b>"
 
 #: gtk/dialog_changelog.glade.h:2
-#, fuzzy
 msgid "Changelog"
-msgstr "취소"
+msgstr "바뀐내용"
 
 #: gtk/dialog_update_failed.glade.h:1
 msgid ""
@@ -2633,6 +2540,11 @@ msgid ""
 "If available an older version of the failed index will be used. Otherwise "
 "the repository will be ignored."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">일부 색인 파일을 내려받지 못함</"
+"span>\n"
+"\n"
+"색인을 사용할 수 없는 경우 가능하면 예전 버젼의 것을 사용합니다. "
+"그렇지않으면 해당 저장소는 무시됩니다."
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"
@@ -2669,101 +2581,92 @@ msgid ""
 msgstr "<b>아래의 아이콘은 패키지의 현재 상태를 표시합니다:</b>"
 
 #: gtk/window_details.glade.h:2
-#, fuzzy
 msgid "<b>Available Versions</b>"
-msgstr "최신 버젼"
+msgstr "<b>가능한 버젼</b>"
 
 #: gtk/window_details.glade.h:3
-#, fuzzy
 msgid "<b>Installed Version</b>"
-msgstr "설치된 버젼"
+msgstr "<b>설치된 버젼</b>"
 
 #: gtk/window_details.glade.h:4
-#, fuzzy
 msgid "<b>Latest Available Version</b>"
-msgstr "최신 버젼"
+msgstr "<b>가능한 최신 버젼</b>"
 
 #: gtk/window_details.glade.h:5
-#, fuzzy
 msgid "<b>Maintainer:</b>"
-msgstr "<b>기본 창</b>"
+msgstr "<b>관리자:</b>"
 
 #: gtk/window_details.glade.h:6
-#, fuzzy
 msgid "<b>Package:</b>"
-msgstr "<b>표시</b>"
+msgstr "<b>패키지:</b>"
 
 #: gtk/window_details.glade.h:7
-#, fuzzy
 msgid "<b>Priority:</b>"
-msgstr "<b>현재</b>"
+msgstr "<b>우선순위:</b>"
 
 #: gtk/window_details.glade.h:8
-#, fuzzy
 msgid "<b>Section:</b>"
-msgstr "<b>찾기</b>"
+msgstr "<b>분류:</b>"
 
 #: gtk/window_details.glade.h:9
-#, fuzzy
 msgid "<b>Status:</b>"
-msgstr "<b>글꼴</b>"
+msgstr "<b>상태:</b>"
 
 #: gtk/window_details.glade.h:10
-#, fuzzy
 msgid "<b>Tags:</b>"
-msgstr "<b>전체 진행:</b>"
+msgstr "<b>딱지:</b>"
 
 #: gtk/window_details.glade.h:11
 msgid ""
 "<b>Warning:</b> This can render your package manager unusable.\n"
 "Changes override the version selected by the package manager. "
 msgstr ""
+"<b>경고:</b> 패키지 관리자가 작동되지 않게 만들 수 있습니다.\n"
+"패키지 관리자가 선택한 버젼 대신 다른 것으로 바꾸세요. "
 
 #: gtk/window_details.glade.h:13
-#, fuzzy
 msgid "Common"
-msgstr "대화"
+msgstr "일반"
 
 #: gtk/window_details.glade.h:16
-#, fuzzy
 msgid "Dependencies of the Latest Version"
-msgstr "최신 버젼 설치(_I)"
+msgstr "최신 버젼의 의존성"
 
 #: gtk/window_details.glade.h:18
-#, fuzzy
 msgid "Download:"
-msgstr "파일을 내려받고 있습니다..."
+msgstr "내려받기:"
 
 #: gtk/window_details.glade.h:20
-#, fuzzy
 msgid "Installed Files"
-msgstr "설치된 크기"
+msgstr "설치된 파일"
 
 #: gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Size:"
-msgstr "크기"
+msgstr "크기:"
 
 #: gtk/window_details.glade.h:25
-#, fuzzy
 msgid "Version:"
-msgstr "버젼"
+msgstr "버젼:"
 
 #: gtk/rgterminstallprogress.cc:86
 msgid "<i>Running...</i>"
-msgstr ""
+msgstr "<i>작동하고 있습니다...</i>"
 
 #: gtk/rgterminstallprogress.cc:93
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now "
 msgstr ""
+"\n"
+"바뀐 내용이 잘 적용되었습니다. 이제 창을 닫으셔도 됩니다 "
 
 #: gtk/rgterminstallprogress.cc:94
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in this buffer to see what went wrong "
 msgstr ""
+"\n"
+"바뀐 내용 적용이 실패했습니다! 무엇이 잘못되었는지 보려면 이 버퍼를 내려보세요 "
 
 #: gtk/rgterminstallprogress.cc:96
 msgid ""
@@ -2771,427 +2674,14 @@ msgid ""
 "Successfully installed all packages of the current medium. To continue the "
 "installation with the next medium close this window."
 msgstr ""
+"\n"
+"현재 단계에서 모든 패키지의 설치가 성공했습니다. 다음 단계의 설치를 "
+"계속 하려면 이 창을 닫으세요."
 
 #: gtk/rgterminstallprogress.cc:144
 msgid "<i>Finished</i>"
-msgstr ""
+msgstr "<i>완료</i>"
 
 #: gtk/rgterminstallprogress.cc:153
 msgid "<i>Can't close while running</i>"
-msgstr ""
-
-#~ msgid "New in archive"
-#~ msgstr "새로 들어옴"
-
-#, fuzzy
-#~ msgid "Upgradable to a later upstream version"
-#~ msgstr "최신 버젼 설치(_I)"
-
-#~ msgid "Installed and upgradable"
-#~ msgstr "설치되어 있고 업그레이드 가능"
-
-#~ msgid "Not (no longer) installable"
-#~ msgstr "설치 불가능"
-
-#, fuzzy
-#~ msgid "unknown"
-#~ msgstr "알 수 없음"
-
-#~ msgid "Mark most likely change by clicking on the status icon"
-#~ msgstr "상태 아이콘을 클릭하면 가장 적당한 것으로 바꾸기"
-
-#~ msgid "Installed (update available)"
-#~ msgstr "설치됨 (업데이트 가능)"
-
-#~ msgid "Queued Changes"
-#~ msgstr "대기중인 바뀐 내용"
-
-#~ msgid "Up_grade System"
-#~ msgstr "시스템 업그레이드(_G)"
-
-#~ msgid "Update available:"
-#~ msgstr "업데이트 가능:"
-
-#~ msgid ""
-#~ "- Double click on the package name\n"
-#~ "- Right click and choose action from the context menu\n"
-#~ "- Click on the status icon to choose an action"
-#~ msgstr ""
-#~ "- 패키지 이름을 더블 클릭\n"
-#~ "- 오른쪽 버튼 클릭하고 메뉴에서 기능을 고름\n"
-#~ "- 상태 아이콘을 클릭해서 기능을 고름"
-
-#, fuzzy
-#~ msgid "2. Apply the marked changes"
-#~ msgstr "모든 표시된 내용 적용"
-
-#, fuzzy
-#~ msgid ""
-#~ "The software on your system is organized in so called <i>packages</i>."
-#~ msgstr "여러분 시스템의 소프트웨어는 <i>패키지</i>라는 단위로 관리됩니다."
-
-#, fuzzy
-#~ msgid ""
-#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-#~ "Michael Vogt <mvo@debian.org> (German)\n"
-#~ "Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
-#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
-#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
-#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-#~ "Emil <emil5@go2.pl> (Polish)\n"
-#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
-#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
-#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-#~ msgstr ""
-#~ "Vital Khilko <dojlid@mova.org> (백러시아어)\n"
-#~ "Keld Simonsen <keld@dkuug.dk> (덴마크어)\n"
-#~ "Michael Vogt <mvo@debian.org> (독일어)\n"
-#~ "Sebastain Heinlein <allerlei@renates-welt.de> (독일어)\n"
-#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (스페인어)\n"
-#~ "Mathieu Roy <yeupou@gnu.org> (프랑스어)\n"
-#~ "Mauro Colorio <linuxbox@interfree.it> (이탈리아어)\n"
-#~ "Luigi Maselli <metnik at tiscali it> (이탈리아어)\n"
-#~ "Daisuke Suzuki <daisuke@linux.or.jp> (일본어)\n"
-#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (네덜란드어)\n"
-#~ "Emil <emil5@go2.pl> (폴란드어)\n"
-#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (포르투갈어)\n"
-#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (포르투갈어)\n"
-#~ "Sviatoslav Sviridov <svd@altlinux.ru> (러시아어)\n"
-#~ "Vitaly Lipatov <lav@altlinux.ru> (러시아어)\n"
-#~ "Rail Aliev <rail@iqchoice.com> (터키어)\n"
-#~ "Anthony Fok <anthony@thizlinux.com> (중국어)\n"
-#~ "Alwin Meschede <ameschede@gmx.de> (독일어)\n"
-#~ "Liu Songhe <jackliu9999@hotmail.com> (중국어)\n"
-#~ "Jean-Michel Poure <jm@poure.com> (프랑스어)\n"
-#~ "Ossama Khayat <okhayat@yahoo.com> (아랍어)\n"
-#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (세르비아어)\n"
-#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (헝가리어)"
-
-#~ msgid ""
-#~ "Some index files failed to download, they have been ignored, or old ones "
-#~ "used instead."
-#~ msgstr ""
-#~ "색인 파일을 내려받을 수 없으므로 무시하거나 대신 예전의 것을 사용합니다."
-
-#~ msgid "Reverse dependencies"
-#~ msgstr "역 의존성"
-
-#~ msgid "Reverse Depends"
-#~ msgstr "역 의존"
-
-#~ msgid "Reverse Dependencies"
-#~ msgstr "역 의존성"
-
-#~ msgid "Search in:"
-#~ msgstr "다음에서 찾음:"
-
-#, fuzzy
-#~ msgid "Search:"
-#~ msgstr "다음에서 찾음:"
-
-#, fuzzy
-#~ msgid "_Show Matching Packages Only"
-#~ msgstr "파일을 내려받고 있습니다..."
-
-#~ msgid "Marked for removal including config:"
-#~ msgstr "설정을 포함해서 지움 표시:"
-
-#, fuzzy
-#~ msgid "<b>Install</b>"
-#~ msgstr "<b>글꼴</b>"
-
-#, fuzzy
-#~ msgid "Recommended"
-#~ msgstr "추천"
-
-#, fuzzy
-#~ msgid "Selected"
-#~ msgstr "모두 고르기(_S)"
-
-#, fuzzy
-#~ msgid "Suggested"
-#~ msgstr "제안"
-
-#, fuzzy
-#~ msgid "Suggestions and Recommendations"
-#~ msgstr "추천"
-
-#~ msgid "Remove Including Orphaned _Dependencies"
-#~ msgstr "의존성이 깨진 패키지까지 지우기(_D)"
-
-#~ msgid "Search for:"
-#~ msgstr "다음을 찾음:"
-
-#~ msgid "Show only packages matching the searched terms."
-#~ msgstr "찾은 단어에 일치하는 패키지만 보여줍니다."
-
-#~ msgid "_Save Selections"
-#~ msgstr "선택모음 저장(_S)"
-
-#~ msgid "Marked for removal including configuration"
-#~ msgstr "설정을 포함해 지움 표시됨"
-
-#~ msgid "Unable to minimize the upgrade set"
-#~ msgstr "업그레이드셋을 최소화할 수 없음"
-
-#~ msgid "Retrieving %li of %li files"
-#~ msgstr "%2$li개 중 %1$li번째 파일을 받고 있습니다"
-
-#, fuzzy
-#~ msgid "Retrieving Package Files"
-#~ msgstr "패키지 파일을 받고 있습니다..."
-
-#, fuzzy
-#~ msgid "Retrieving Index Files"
-#~ msgstr "색인 파일을 받고 있습니다..."
-
-#~ msgid "WeakDepends"
-#~ msgstr "낮은 의존"
-
-#~ msgid "No Changes"
-#~ msgstr "바꾸지 않음"
-
-#~ msgid "Install"
-#~ msgstr "설치"
-
-#~ msgid "Reinstall"
-#~ msgstr "재설치"
-
-#~ msgid "Upgrade"
-#~ msgstr "업그레이드"
-
-#~ msgid "Remove Including Configuration"
-#~ msgstr "설정까지 지우기"
-
-#~ msgid "R_einstall Current Version"
-#~ msgstr "현재 버젼 다시 설치(_E)"
-
-#~ msgid "Remove Including _Configuration"
-#~ msgstr "설정까지 지우기(_C)"
-
-#~ msgid "U_nmark All Changes"
-#~ msgstr "모든 표시 지움(_N)"
-
-#~ msgid "_Remove"
-#~ msgstr "지우기(_R)"
-
-#~ msgid "_Upgrade"
-#~ msgstr "업그레이드(_U)"
-
-#~ msgid "Default"
-#~ msgstr "기본"
-
-#~ msgid "Include Orphaned Dependencies"
-#~ msgstr "의존성이 깨진 패키지까지"
-
-#, fuzzy
-#~ msgid "Failed to access %s"
-#~ msgstr "%s%s 상태보기 실패"
-
-#, fuzzy
-#~ msgid "Unable to start helper process (gzip). Please report."
-#~ msgstr ""
-#~ "캐시(%d)를 열다가 내부 오류가 발생했습니다. 저희에게 오류를 알려주세요."
-
-#~ msgid "Not Installed"
-#~ msgstr "설치되지 않음"
-
-#~ msgid "Obsolete or locally installed"
-#~ msgstr "없어졌거나 직접 설치됨"
-
-#, fuzzy
-#~ msgid "Obsolete and locally installed"
-#~ msgstr "없어졌거나 직접 설치됨"
-
-#, fuzzy
-#~ msgid "Included Tags"
-#~ msgstr "포함"
-
-#, fuzzy
-#~ msgid "Excluded Tags"
-#~ msgstr "제외"
-
-#, fuzzy
-#~ msgid "_Install"
-#~ msgstr "설치"
-
-#, fuzzy
-#~ msgid "Update the list of available packages"
-#~ msgstr "보여지는 패키지 목록을 거릅니다"
-
-#, fuzzy
-#~ msgid "Lock Current Version and Status"
-#~ msgstr "현재 버젼 유지"
-
-#~ msgid "All Packages"
-#~ msgstr "모든 패키지"
-
-#, fuzzy
-#~ msgid "Ac_tions"
-#~ msgstr "분류"
-
-#, fuzzy
-#~ msgid "Deinstall the package"
-#~ msgstr ""
-#~ "\n"
-#~ "%s 패키지를 설치하고 있습니다:\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Edit the available filters"
-#~ msgstr "업데이트 가능:"
-
-#~ msgid "Filter the list of shown packages"
-#~ msgstr "보여지는 패키지 목록을 거릅니다"
-
-#, fuzzy
-#~ msgid "Filters..."
-#~ msgstr "거르개"
-
-#, fuzzy
-#~ msgid "Find a package name in the list of shown packages below"
-#~ msgstr "보여지는 패키지 목록을 거릅니다"
-
-#, fuzzy
-#~ msgid "Find next"
-#~ msgstr "찾기"
-
-#~ msgid "Show:"
-#~ msgstr "보이기:"
-
-#, fuzzy
-#~ msgid "Stat_us Tree"
-#~ msgstr "상태"
-
-#, fuzzy
-#~ msgid "_Alphabetic Tree"
-#~ msgstr "알파벳순"
-
-#, fuzzy
-#~ msgid "_Apply Filter"
-#~ msgstr "거르개(_F)"
-
-#, fuzzy
-#~ msgid "_Clear All Marked Changes"
-#~ msgstr "표시된 내용 적용(_P)"
-
-#, fuzzy
-#~ msgid "_Edit Filters..."
-#~ msgstr "거르개(_F)"
-
-#, fuzzy
-#~ msgid "_No Changes"
-#~ msgstr "바꾸지 않음"
-
-#, fuzzy
-#~ msgid "_Section Tree"
-#~ msgstr "분류"
-
-#, fuzzy
-#~ msgid "_View"
-#~ msgstr "감추기(_H)"
-
-#, fuzzy
-#~ msgid "<b>Details</b>"
-#~ msgstr "<b>글꼴</b>"
-
-#, fuzzy
-#~ msgid "<b>Package</b>"
-#~ msgstr "<b>표시</b>"
-
-#, fuzzy
-#~ msgid "<b>Actions</b>"
-#~ msgstr "<b>글꼴</b>"
-
-#, fuzzy
-#~ msgid "<b>General</b>"
-#~ msgstr "<b>그 밖에</b>"
-
-#, fuzzy
-#~ msgid "Clear"
-#~ msgstr "색깔"
-
-#, fuzzy
-#~ msgid "Package List"
-#~ msgstr "패키지"
-
-#, fuzzy
-#~ msgid "To be downgraded:"
-#~ msgstr "다운그레이드됨"
-
-#, fuzzy
-#~ msgid "To be installed:"
-#~ msgstr "설치됨"
-
-#, fuzzy
-#~ msgid "To be removed including configuration:"
-#~ msgstr "설정까지 지우기"
-
-#, fuzzy
-#~ msgid "To be removed:"
-#~ msgstr "지워짐"
-
-#, fuzzy
-#~ msgid "To be upgraded:"
-#~ msgstr "업그레이드됨"
-
-#, fuzzy
-#~ msgid "Enter the disc name"
-#~ msgstr "디스크 이름이 비어있습니다."
-
-#, fuzzy
-#~ msgid "Apply the changes"
-#~ msgstr "2. 표시된 내용을 적용"
-
-#, fuzzy
-#~ msgid "<b>Rules</b>"
-#~ msgstr "<b>색깔</b>"
-
-#, fuzzy
-#~ msgid "<b>View</b>"
-#~ msgstr "<b>그 밖에</b>"
-
-#, fuzzy
-#~ msgid "Alphabetic Tree"
-#~ msgstr "알파벳순"
-
-#, fuzzy
-#~ msgid "Leave Unchanged"
-#~ msgstr "바뀐 내용 저장"
-
-#, fuzzy
-#~ msgid "Packages that will be kept"
-#~ msgstr "지워질 패키지"
-
-#, fuzzy
-#~ msgid "Section Tree"
-#~ msgstr "분류"
-
-#, fuzzy
-#~ msgid "Status Tree"
-#~ msgstr "상태"
-
-#, fuzzy
-#~ msgid "Suggestions or Recommendations"
-#~ msgstr "추천"
-
-#, fuzzy
-#~ msgid "Suggestions or recommendations"
-#~ msgstr "추천"
-
-#, fuzzy
-#~ msgid "To be removed including configuration"
-#~ msgstr "설정까지 지우기"
+msgstr "<i>작동중에는 닫을 수 없음</i>"

@@ -263,11 +263,16 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    unsigned long ETA =
       (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
-   gchar *s =
-      g_strdup_printf(_("Retrieved %li of %li files at %s/s - %s remaining"),
-                      i, TotalItems,
-                      SizeToStr(CurrentCPS).c_str(),
-                      TimeToStr(ETA).c_str());
+   gchar *s;
+   if (CurrentCPS != 0 && ETA != 0) {
+      s = g_strdup_printf(_("Retrieved %li of %li files at %s/s - %s remaining"),
+			  i, TotalItems,
+			  SizeToStr(CurrentCPS).c_str(),
+			  TimeToStr(ETA).c_str());
+   } else {
+      s = g_strdup_printf(_("Retrieved %li of %li files"), i, TotalItems);
+   }
+
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);
    g_free(s);
 

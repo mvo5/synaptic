@@ -36,6 +36,7 @@
 enum  {ITEM_TYPE_RPM, 
        ITEM_TYPE_RPMSRC, 
        ITEM_TYPE_RPMDIR,
+       ITEM_TYPE_RPMSRCDIR,
        ITEM_TYPE_DEB , 
        ITEM_TYPE_DEBSRC};
 #else
@@ -43,7 +44,8 @@ enum  {ITEM_TYPE_DEB,
        ITEM_TYPE_DEBSRC, 
        ITEM_TYPE_RPM , 
        ITEM_TYPE_RPMSRC,
-       ITEM_TYPE_RPMDIR};
+       ITEM_TYPE_RPMDIR,
+       ITEM_TYPE_RPMSRCDIR};
 #endif
 
 enum {   
@@ -200,6 +202,11 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
+
+    item = gtk_menu_item_new_with_label("rpm-src-dir");
+    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+    gtk_widget_show(item);
+    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMSRCDIR);
 #if 0
     item = gtk_menu_item_new_with_label("deb");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
@@ -236,6 +243,11 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
+
+    item = gtk_menu_item_new_with_label("rpm-src-dir");
+    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+    gtk_widget_show(item);
+    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMSRCDIR);
 #endif
 #endif
     gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
@@ -467,6 +479,8 @@ void RGRepositoryEditor::doEdit()
 	rec->Type |= SourcesList::RpmSrc; break;
     case ITEM_TYPE_RPMDIR:
 	rec->Type |= SourcesList::RpmDir; break;
+    case ITEM_TYPE_RPMSRCDIR:
+	rec->Type |= SourcesList::RpmSrcDir; break;
     default:
 	_userDialog->error(_("Unknown source type"));
 	return;
@@ -588,6 +602,8 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 	    id = ITEM_TYPE_RPMSRC;
 	else if (rec->Type & SourcesList::RpmDir)
 	    id = ITEM_TYPE_RPMDIR;
+	else if (rec->Type & SourcesList::RpmSrcDir)
+	    id = ITEM_TYPE_RPMSRCDIR;
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), id);
 
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),

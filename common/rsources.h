@@ -40,7 +40,8 @@ public:
 		RpmSrc = 1 << 3,
 		Disabled = 1 << 4,
 		Comment = 1 << 5,
-		RpmDir = 1 << 6
+		RpmDir = 1 << 6,
+		RpmSrcDir = 1 << 7
 	};
 
 	struct SourceRecord {

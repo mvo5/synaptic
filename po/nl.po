@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic.0-48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-03 08:34+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2004-04-15 14:17+0200\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -428,7 +428,7 @@ msgid "Marked for complete removal"
 msgstr "Gemarkeerd als Verwijderen"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
 
@@ -488,7 +488,7 @@ msgid "Description"
 msgstr "Beschrijving"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Beheerder"
 
@@ -526,14 +526,14 @@ msgid "ReverseDepends"
 msgstr "Omgekeerd Afhankelijk"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
-#: gtk/window_filters.glade.h:50
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Status"
 
@@ -543,7 +543,7 @@ msgid "Pattern"
 msgstr "Patroon"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Onderdeel"
 
@@ -1111,7 +1111,7 @@ msgid "Hold Current Version"
 msgstr "Huidige versie en status behouden"
 
 #: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -1313,7 +1313,8 @@ msgid "Marking all available upgrades..."
 msgstr "Markeren van bij te werken pakketten..."
 
 #: gtk/rgmainwindow.cc:2414
-msgid "Successfully marked all available upgrades"
+#, fuzzy
+msgid "Successfully marked available upgrades"
 msgstr "Alle bij te werken pakketten succesvol gemarkeerd"
 
 #: gtk/rgmainwindow.cc:2416
@@ -1858,7 +1859,7 @@ msgstr "Zoeken:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Voorziet in pakketten"
@@ -2390,12 +2391,12 @@ msgstr "Uitsluiten"
 
 #: gtk/window_filters.glade.h:15
 #, fuzzy
-msgid "For Installation or Upgrade"
+msgid "For installation or upgrade"
 msgstr "Te installeren of bij te werken"
 
 #: gtk/window_filters.glade.h:16
 #, fuzzy
-msgid "For Removal"
+msgid "For removal"
 msgstr "Gemarkeerd als Verwijderen"
 
 #: gtk/window_filters.glade.h:17
@@ -2411,129 +2412,137 @@ msgid "Includes"
 msgstr "Meenemen"
 
 #: gtk/window_filters.glade.h:21
-#, fuzzy
-msgid "Installed and new upstream version"
-msgstr "Geïnstalleerd"
-
-#: gtk/window_filters.glade.h:22
-msgid "Installed and upgradable"
-msgstr "Geïnstalleerd en nieuwere versie beschikbaar"
-
-#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Bibliotheken die niet meer nodig zijn (deborphan vereist)"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Nieuw in archief"
 
-#: gtk/window_filters.glade.h:26
-msgid "Not (no longer) installable"
-msgstr "Niet (meer) installeerbaar"
+#: gtk/window_filters.glade.h:24
+#, fuzzy
+msgid "Not installable"
+msgstr "Niet geïnstalleerd"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "Niet geïnstalleerd"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "Wees"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "Pakketnaam"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:30
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Nieuwe pakketten"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "Pakketten die van geen enkele bron beschikbaar zijn"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:32
+#, fuzzy
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr "Geïnstalleerde pakketten waarvan een nieuwere versie beschikbaar is"
+
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr "Geïnstalleerde pakketten waarvan een nieuwere versie beschikbaar is"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr "Geïnstalleerde pakketten"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Pakketten die verwijderd zijn maar waarvan de configuratie achter is gebleven"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr "Niet geïnstalleerde pakketten"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "Pakketten die geïnstalleerd of bijgewerkt worden"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "Pakketten die verwijderd worden"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "Pakketten die nooit bijgewerkt zullen worden"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Pakketten die onveranderd blijven"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "Pakketten met gebroken afhankelijkheden"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "Pin"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Aangeraden"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "Vervangen pakketten"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "Resterende configuratie"
 
 #. /recommends
-#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Adviseert"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Etiketten (tags)"
 
+#: gtk/window_filters.glade.h:52
+#, fuzzy
+msgid "Upgradable"
+msgstr "Nieuwe versie beschikbaar"
+
 #: gtk/window_filters.glade.h:53
+#, fuzzy
+msgid "Upgradable to a later upstream version"
+msgstr "Geïnstalleerd"
+
+#: gtk/window_filters.glade.h:54
 msgid "Version Number"
 msgstr "Versie"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Niets selecteren"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Invert All"
 msgstr "Sleecties omkeren"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:57
 #, fuzzy
 msgid "_Select All"
 msgstr "Alles selecteren"
@@ -2765,6 +2774,12 @@ msgstr "Grootte"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Versie:"
+
+#~ msgid "Installed and upgradable"
+#~ msgstr "Geïnstalleerd en nieuwere versie beschikbaar"
+
+#~ msgid "Not (no longer) installable"
+#~ msgstr "Niet (meer) installeerbaar"
 
 #, fuzzy
 #~ msgid "unknown"

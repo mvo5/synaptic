@@ -2411,7 +2411,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    me->refreshTable(pkg);
 
    if (res)
-      me->setStatusText(_("Successfully marked all available upgrades"));
+      me->setStatusText(_("Successfully marked available upgrades"));
    else
       me->setStatusText(_("Failed to mark all available upgrades!"));
 

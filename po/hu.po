@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-03 08:34+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2004-01-07 21:56+0100\n"
 "Last-Translator: Gabor Kelemen <kg0021@stud.unideb.hu>\n"
 "Language-Team: Hungarian\n"
@@ -430,7 +430,7 @@ msgid "Marked for complete removal"
 msgstr "Minden lehetséges frissítés sorba állítása"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "Nincs telepítve"
 
@@ -492,7 +492,7 @@ msgid "Description"
 msgstr "Leírás"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Karbantartó"
 
@@ -531,14 +531,14 @@ msgid "ReverseDepends"
 msgstr "EllentétesFüggőségek"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
-#: gtk/window_filters.glade.h:50
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Állapot"
 
@@ -548,7 +548,7 @@ msgid "Pattern"
 msgstr "Minta"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Szekció"
 
@@ -1116,7 +1116,7 @@ msgid "Hold Current Version"
 msgstr "Aktuális verzió megtartása"
 
 #: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -1321,7 +1321,7 @@ msgstr "A csomag frissítve lesz."
 
 #: gtk/rgmainwindow.cc:2414
 #, fuzzy
-msgid "Successfully marked all available upgrades"
+msgid "Successfully marked available upgrades"
 msgstr "Minden lehetséges frissítés sorba állítása"
 
 #: gtk/rgmainwindow.cc:2416
@@ -1866,7 +1866,7 @@ msgstr "Keresés:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Rendelkezésre bocsátott csomagok"
@@ -2416,12 +2416,12 @@ msgstr "Nem tartalmazza"
 
 #: gtk/window_filters.glade.h:15
 #, fuzzy
-msgid "For Installation or Upgrade"
+msgid "For installation or upgrade"
 msgstr "Telepítendő vagy frissítendő"
 
 #: gtk/window_filters.glade.h:16
 #, fuzzy
-msgid "For Removal"
+msgid "For removal"
 msgstr "Minden lehetséges frissítés sorba állítása"
 
 #: gtk/window_filters.glade.h:17
@@ -2437,128 +2437,136 @@ msgid "Includes"
 msgstr "Tartalmazza"
 
 #: gtk/window_filters.glade.h:21
-#, fuzzy
-msgid "Installed and new upstream version"
-msgstr "Legutolsó verzió telepítése"
-
-#: gtk/window_filters.glade.h:22
-msgid "Installed and upgradable"
-msgstr "Telepített és frissíthető"
-
-#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Könyvtár csomagok amik már fölöslegesek (deborphan szükséges)"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Új az archívumban"
 
-#: gtk/window_filters.glade.h:26
-msgid "Not (no longer) installable"
-msgstr "(Már) nem telepíthető"
+#: gtk/window_filters.glade.h:24
+#, fuzzy
+msgid "Not installable"
+msgstr "Nincs telepítve"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "Nincs telepítve"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "Árva"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "Csomag Neve"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:30
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "A tárolóban lévő új csomagok az utolsó \"Update\" -hez képest"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "A semelyik tárolóban sem elérhető csomagok"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:32
+#, fuzzy
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr "Telepített csomagok amikből elérhető frissebb verzió"
+
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr "Telepített csomagok amikből elérhető frissebb verzió"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr "Telepített és naprakész csomagok"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr "Csomagok, melyek a konfigurációs fájljaik nélkül lettek törölve"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr "Nem telepített csomagok"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "Csomagok amik telepítve/frissítve lesznek"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "Csomagok amik el lesznek távolítva"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "Csomagok, amik soha nem lesznek frissítve"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Megtartandó csomagok"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "Törött függőségű csomagok"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "Tűzött"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Ajánlott"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "Helyettesített csomagok"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "Visszamaradt beállítás"
 
 #. /recommends
-#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Szekció"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Címkék"
 
+#: gtk/window_filters.glade.h:52
+#, fuzzy
+msgid "Upgradable"
+msgstr "Frissíthető"
+
 #: gtk/window_filters.glade.h:53
+#, fuzzy
+msgid "Upgradable to a later upstream version"
+msgstr "Legutolsó verzió telepítése"
+
+#: gtk/window_filters.glade.h:54
 msgid "Version Number"
 msgstr "Verziószám"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Kijelölés megszüntetése"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Invert All"
 msgstr "Kijelölés megfordítása"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:57
 #, fuzzy
 msgid "_Select All"
 msgstr "Mindent kijelöl"
@@ -2787,6 +2795,12 @@ msgstr "Méret:"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Verzió:"
+
+#~ msgid "Installed and upgradable"
+#~ msgstr "Telepített és frissíthető"
+
+#~ msgid "Not (no longer) installable"
+#~ msgstr "(Már) nem telepíthető"
 
 #, fuzzy
 #~ msgid "unknown"

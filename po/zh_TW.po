@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-03 08:34+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -437,7 +437,7 @@ msgid "Marked for complete removal"
 msgstr "已標記要移除的套件"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:25
 #, fuzzy
 msgid "Not installed"
 msgstr "未安裝"
@@ -502,7 +502,7 @@ msgid "Description"
 msgstr "套件描述"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr ""
 
@@ -541,14 +541,14 @@ msgid "ReverseDepends"
 msgstr ""
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
-#: gtk/window_filters.glade.h:50
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "狀態"
 
@@ -558,7 +558,7 @@ msgid "Pattern"
 msgstr "樣板"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "組別"
 
@@ -1107,7 +1107,7 @@ msgid "Hold Current Version"
 msgstr "    　　版本"
 
 #: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:43
 #, fuzzy
 msgid "Properties"
 msgstr "提供"
@@ -1294,8 +1294,9 @@ msgid "Marking all available upgrades..."
 msgstr "此套件將會被升級。"
 
 #: gtk/rgmainwindow.cc:2414
-msgid "Successfully marked all available upgrades"
-msgstr ""
+#, fuzzy
+msgid "Successfully marked available upgrades"
+msgstr "此套件將會被升級。"
 
 #: gtk/rgmainwindow.cc:2416
 msgid "Failed to mark all available upgrades!"
@@ -1825,7 +1826,7 @@ msgstr "尋找"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
 #, fuzzy
 msgid "Provided Packages"
@@ -2364,12 +2365,12 @@ msgstr "不包括"
 
 #: gtk/window_filters.glade.h:15
 #, fuzzy
-msgid "For Installation or Upgrade"
+msgid "For installation or upgrade"
 msgstr "將會升級的套件"
 
 #: gtk/window_filters.glade.h:16
 #, fuzzy
-msgid "For Removal"
+msgid "For removal"
 msgstr "已標記要移除的套件"
 
 #: gtk/window_filters.glade.h:17
@@ -2387,141 +2388,147 @@ msgid "Includes"
 msgstr "包括"
 
 #: gtk/window_filters.glade.h:21
-#, fuzzy
-msgid "Installed and new upstream version"
-msgstr "已安裝"
-
-#: gtk/window_filters.glade.h:22
-#, fuzzy
-msgid "Installed and upgradable"
-msgstr "已安裝並可升級的套件"
-
-#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr ""
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:24
 #, fuzzy
-msgid "Not (no longer) installable"
+msgid "Not installable"
 msgstr "未安裝"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "未安裝"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "再沒有人維護的「孤兒」套件"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:29
 #, fuzzy
 msgid "Package Name"
 msgstr "套件名稱"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:30
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr ""
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr ""
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:32
+#, fuzzy
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr "此套件將會被安裝。"
+
+#: gtk/window_filters.glade.h:33
 #, fuzzy
 msgid "Packages that have been installed and a later version is available"
 msgstr "此套件將會被安裝。"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Packages that have been installed and are up to date"
 msgstr "此套件將會被安裝。"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:36
 #, fuzzy
 msgid "Packages that have not been installed"
 msgstr "此套件沒有安裝。"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 #, fuzzy
 msgid "Packages that will be installed or upgraded"
 msgstr "此套件將會被安裝。"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 #, fuzzy
 msgid "Packages that will be removed"
 msgstr "此套件將會被升級。"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 #, fuzzy
 msgid "Packages that will never be upgraded"
 msgstr "此套件將會被升級。"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "此套件將會被升級。"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Packages with broken dependencies"
 msgstr "相依關係有問題。"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "標記為永不升級的套件"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "推薦"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:46
 #, fuzzy
 msgid "Replaced Packages"
 msgstr "全部套件"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:47
 #, fuzzy
 msgid "Residual config"
 msgstr "已移除但尚存舊設定檔的套件"
 
 #. /recommends
-#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "建議"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:51
 #, fuzzy
 msgid "Tags"
 msgstr "任務"
 
+#: gtk/window_filters.glade.h:52
+#, fuzzy
+msgid "Upgradable"
+msgstr "可升級"
+
 #: gtk/window_filters.glade.h:53
+#, fuzzy
+msgid "Upgradable to a later upstream version"
+msgstr "已安裝"
+
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "Version Number"
 msgstr "    　　版本"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Deselect All"
 msgstr "刪除"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Invert All"
 msgstr "安裝"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:57
 #, fuzzy
 msgid "_Select All"
 msgstr "刪除"
@@ -2765,6 +2772,14 @@ msgstr "檔案大小"
 #, fuzzy
 msgid "Version:"
 msgstr "    　　版本"
+
+#, fuzzy
+#~ msgid "Installed and upgradable"
+#~ msgstr "已安裝並可升級的套件"
+
+#, fuzzy
+#~ msgid "Not (no longer) installable"
+#~ msgstr "未安裝"
 
 #, fuzzy
 #~ msgid "unknown"

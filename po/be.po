@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-03 08:34+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -437,7 +437,7 @@ msgstr "Пазначаныя для выдаленьня"
 
 # This is filter name, it's better to not translate it
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "Не ўсталяваныя"
 
@@ -505,7 +505,7 @@ msgid "Description"
 msgstr "Апісаньне"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Мэйнтайнэр"
 
@@ -543,14 +543,14 @@ msgid "ReverseDepends"
 msgstr "ЗваротныяЗалежнасьці"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
-#: gtk/window_filters.glade.h:50
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Стан"
 
@@ -560,7 +560,7 @@ msgid "Pattern"
 msgstr "Шаблён"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Падзел"
 
@@ -1122,7 +1122,7 @@ msgid "Hold Current Version"
 msgstr "у вэрсыі"
 
 #: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:43
 #, fuzzy
 msgid "Properties"
 msgstr "Прадастаўляюць"
@@ -1310,8 +1310,9 @@ msgid "Marking all available upgrades..."
 msgstr "Пакет будзе абноўлены."
 
 #: gtk/rgmainwindow.cc:2414
-msgid "Successfully marked all available upgrades"
-msgstr ""
+#, fuzzy
+msgid "Successfully marked available upgrades"
+msgstr "Пакет будзе абноўлены."
 
 #: gtk/rgmainwindow.cc:2416
 msgid "Failed to mark all available upgrades!"
@@ -1852,7 +1853,7 @@ msgstr "Ад_шукаць"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
 #, fuzzy
 msgid "Provided Packages"
@@ -2414,12 +2415,12 @@ msgstr "Выключыць"
 
 #: gtk/window_filters.glade.h:15
 #, fuzzy
-msgid "For Installation or Upgrade"
+msgid "For installation or upgrade"
 msgstr "Былі пазначаныя для абнаўленьня"
 
 #: gtk/window_filters.glade.h:16
 #, fuzzy
-msgid "For Removal"
+msgid "For removal"
 msgstr "Пазначаныя для выдаленьня"
 
 #: gtk/window_filters.glade.h:17
@@ -2436,144 +2437,152 @@ msgstr "Уключаць толькі вылучаныя падзелы"
 msgid "Includes"
 msgstr "Уключыць"
 
-# This is filter name, it's better to not translate it
 #: gtk/window_filters.glade.h:21
-#, fuzzy
-msgid "Installed and new upstream version"
-msgstr "Усталяваная вэрсыя"
-
-#: gtk/window_filters.glade.h:22
-#, fuzzy
-msgid "Installed and upgradable"
-msgstr "Усталяваныя й здольныя абнаўляцца"
-
-#: gtk/window_filters.glade.h:23
 #, fuzzy
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Пакеты бібліятэк, якія больш непатрэбны (патрабуецца deborphan для працы)"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Новыя ў архіве"
 
 # This is filter name, it's better to not translate it
-#: gtk/window_filters.glade.h:26
-msgid "Not (no longer) installable"
-msgstr "Якія не ўсталёўваюцца"
+#: gtk/window_filters.glade.h:24
+#, fuzzy
+msgid "Not installable"
+msgstr "Не ўсталяваныя"
 
 # This is filter name, it's better to not translate it
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "Не ўсталяваныя"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "Асірацелыя"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:29
 #, fuzzy
 msgid "Package Name"
 msgstr "Назва пакета"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:30
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Пакеты, якія зьявіліся ў сховішчы пасьля апошняга абнаўленьня"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "Пакеты, якія не даступныя ні ў адным сховішчы"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:32
+#, fuzzy
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr "Усталяваныя пакеты, для якіх даступна новая вэрсыя"
+
+#: gtk/window_filters.glade.h:33
 #, fuzzy
 msgid "Packages that have been installed and a later version is available"
 msgstr "Усталяваныя пакеты, для якіх даступна новая вэрсыя"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Packages that have been installed and are up to date"
 msgstr "Усталяваныя пакеты, якія не патрабуюць абнаўленьня"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:35
 #, fuzzy
 msgid "Packages that have been removed except their configuration files"
 msgstr "Выдаленыя пакеты, для якіх у сыстэме засталіся канфігурацыйныя файлы"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:36
 #, fuzzy
 msgid "Packages that have not been installed"
 msgstr "Няўсталяваныя пакеты"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "Пакеты, якія будуць усталяваны ці абноўлены"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "Пакеты, якія будуць выдалены"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "Пакеты, якія ніколі ня будуць абноўленыя"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Пакеты, якія будуць захаваныя"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Packages with broken dependencies"
 msgstr "Памылковыя залежнасьці."
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "Прычэплены"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Рэкамэндаваны"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:46
 #, fuzzy
 msgid "Replaced Packages"
 msgstr "Усе пакеты"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "Рэшткавыя"
 
 #. /recommends
-#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Прапаноўвае"
 
 # This is filter name, it's better to not translate it
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Тэгі"
 
+# This is filter name, it's better to not translate it
+#: gtk/window_filters.glade.h:52
+#, fuzzy
+msgid "Upgradable"
+msgstr "Якія абнаўляюцца"
+
+# This is filter name, it's better to not translate it
 #: gtk/window_filters.glade.h:53
+#, fuzzy
+msgid "Upgradable to a later upstream version"
+msgstr "Усталяваная вэрсыя"
+
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "Version Number"
 msgstr "Вэрсыя"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Вылучыць усё"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Invert All"
 msgstr "Усталяваць"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:57
 #, fuzzy
 msgid "_Select All"
 msgstr "Вылучыць усё"
@@ -2816,6 +2825,14 @@ msgstr "Памер"
 #, fuzzy
 msgid "Version:"
 msgstr "Вэрсыя"
+
+#, fuzzy
+#~ msgid "Installed and upgradable"
+#~ msgstr "Усталяваныя й здольныя абнаўляцца"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Not (no longer) installable"
+#~ msgstr "Якія не ўсталёўваюцца"
 
 #~ msgid "unknown"
 #~ msgstr "невядомы"

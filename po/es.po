@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-03 08:34+0200\n"
+"POT-Creation-Date: 2004-06-03 11:08+0200\n"
 "PO-Revision-Date: 2004-06-02 23:19+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -420,7 +420,7 @@ msgid "Marked for complete removal"
 msgstr "Marcado para eliminación completa"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "No Instalado"
 
@@ -479,7 +479,7 @@ msgid "Description"
 msgstr "Descripción"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Mantenedor"
 
@@ -516,14 +516,14 @@ msgid "ReverseDepends"
 msgstr "Depende inversamente"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr "Origen"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:21
-#: gtk/window_filters.glade.h:50
+#: gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Estado"
 
@@ -533,7 +533,7 @@ msgid "Pattern"
 msgstr "Patrón"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:19
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Sección"
 
@@ -1085,7 +1085,7 @@ msgid "Hold Current Version"
 msgstr "Mantener la versión actual"
 
 #: gtk/rgmainwindow.cc:1231 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "Propiedades"
 
@@ -1283,7 +1283,8 @@ msgid "Marking all available upgrades..."
 msgstr "Marcando todas las posibles actualizaciones..."
 
 #: gtk/rgmainwindow.cc:2414
-msgid "Successfully marked all available upgrades"
+#, fuzzy
+msgid "Successfully marked available upgrades"
 msgstr "Se han seleccionado todas las actualizaciones posibles"
 
 #: gtk/rgmainwindow.cc:2416
@@ -1801,7 +1802,7 @@ msgstr "Buscar:"
 msgid "Look in:"
 msgstr "Buscar en:"
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Paquetes proporcionados"
@@ -2300,11 +2301,13 @@ msgid "Excludes"
 msgstr "Excluye"
 
 #: gtk/window_filters.glade.h:15
-msgid "For Installation or Upgrade"
+#, fuzzy
+msgid "For installation or upgrade"
 msgstr "Para instalarse o actualizarse"
 
 #: gtk/window_filters.glade.h:16
-msgid "For Removal"
+#, fuzzy
+msgid "For removal"
 msgstr "Para eliminación"
 
 #: gtk/window_filters.glade.h:17
@@ -2320,125 +2323,135 @@ msgid "Includes"
 msgstr "Incluye"
 
 #: gtk/window_filters.glade.h:21
-msgid "Installed and new upstream version"
-msgstr "Instalar y con versión nueva"
-
-#: gtk/window_filters.glade.h:22
-msgid "Installed and upgradable"
-msgstr "Instalados y actualizables"
-
-#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Paquetes de bibliotecas que no se necesitan más (necesita deborphan para "
 "funcionar)"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Nuevo en el archivo"
 
-#: gtk/window_filters.glade.h:26
-msgid "Not (no longer) installable"
-msgstr "No instalable (por más tiempo)"
+#: gtk/window_filters.glade.h:24
+#, fuzzy
+msgid "Not installable"
+msgstr "No Instalado"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:26
 msgid "Not marked"
 msgstr "No marcado"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "Huérfanos"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "Nombre del paquete"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:30
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Paquetes que son nuevos en el repositorio desde el último «Refresco»"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "Paquetes que no están disponibles en ningún repositorio"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:32
+#, fuzzy
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
+msgstr ""
+"Paquetes que han sido instalados y hay una versión más nueva disponible"
+
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr ""
 "Paquetes que han sido instalados y hay una versión más nueva disponible"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr "Paquetes que han sido instalados y están al día"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Paquetes que han sido eliminados y todavía tienen sus ficheros de "
 "configuración"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr "Paquetes que no han sido instalados"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "Paquetes que serán instalados o actualizados"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "Paquetes que serán eliminados"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "Paquetes que nunca serán actualizados"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 msgid "Packages that won't be changed"
 msgstr "Paquetes que no serán cambiados"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "Paquetes con dependencias rotas"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "Clavados"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr "Recomendaciones"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "Paquetes reemplazados"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "Conf. residual"
 
 #. /recommends
-#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "Sugerencias"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Etiquetas"
 
+#: gtk/window_filters.glade.h:52
+#, fuzzy
+msgid "Upgradable"
+msgstr "Actualizable:"
+
 #: gtk/window_filters.glade.h:53
+#, fuzzy
+msgid "Upgradable to a later upstream version"
+msgstr "Instalar y con versión nueva"
+
+#: gtk/window_filters.glade.h:54
 msgid "Version Number"
 msgstr "Número de versión"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 msgid "_Deselect All"
 msgstr "_Deseleccionar todo"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 msgid "_Invert All"
 msgstr "_Invertir todo"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:57
 msgid "_Select All"
 msgstr "_Seleccionar todo"
 
@@ -2669,6 +2682,12 @@ msgstr "Tamaño:"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Versión:"
+
+#~ msgid "Installed and upgradable"
+#~ msgstr "Instalados y actualizables"
+
+#~ msgid "Not (no longer) installable"
+#~ msgstr "No instalable (por más tiempo)"
 
 #~ msgid "Installed (update available)"
 #~ msgstr "Instalado (actualización disponible)"

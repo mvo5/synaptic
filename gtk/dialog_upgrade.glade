@@ -104,7 +104,7 @@
 	      <child>
 		<widget class="GtkLabel" id="label1">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Use smart upgrade (dist-upgrade)?&lt;/span&gt;</property>
+		  <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Mark upgrades in a smart way?&lt;/span&gt;</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">True</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -152,7 +152,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label3">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">The smart upgrade attempts to resolve conflicts and to fulfill all dependencies of upgrades in a smart way.</property>
+		      <property name="label" translatable="yes">The smart upgrade (dist-upgrade) attempts to resolve conflicts and to fulfill all dependencies of upgrades in a smart way.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -174,6 +174,27 @@
 		    <widget class="GtkLabel" id="label4">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; If you are upgrading to a new major operating system release you have to choose 'Smart Upgrade' here.</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">True</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">True</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label5">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; The upgrades will be marked only. You still have to apply them afterwards.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>

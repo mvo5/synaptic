@@ -71,6 +71,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
 
    GtkWidget *_pbarTotal;
    GtkWidget *_term;
+   GtkWidget *_autoClose; // checkbutton
 
    // if we run embedded
    GtkWidget *_sock;

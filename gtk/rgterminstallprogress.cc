@@ -126,6 +126,8 @@ void RGTermInstallProgress::finishUpdate()
    }
    vte_terminal_feed(VTE_TERMINAL(_term), utf8_to_locale(msg), size);
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Finished</i>"));
+   if(res == 0)
+      gtk_widget_grab_focus(GTK_WIDGET(_closeB));
 }
 
 void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)

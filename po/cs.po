@@ -1,13 +1,9 @@
-# German translation of Synaptic.
-# Copyright (C) 2003 Free Software Foundation, Inc.
-# Sebastian Heinlein <debian@pimpzkru.de>, 2003.
-# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.44\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-19 20:20+0100\n"
-"PO-Revision-Date: 2003-11-19 19:23+0100\n"
+"POT-Creation-Date: 2003-11-20 14:10+0100\n"
+"PO-Revision-Date: 2003-11-20 12:22+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
 "MIME-Version: 1.0\n"
@@ -44,9 +40,8 @@ msgid "Electronics"
 msgstr "Elektronika"
 
 #: common/sections_trans.h:12
-#, fuzzy
 msgid "Embedded Devices"
-msgstr "USB zaøízení"
+msgstr "Vlo¾ená zaøízení"
 
 #: common/sections_trans.h:13
 msgid "Games and Amusement"
@@ -158,9 +153,8 @@ msgid "Converted From RPM by Alien"
 msgstr "Pøevedeno do rpm pomocí aplikace Alien"
 
 #: common/sections_trans.h:41
-#, fuzzy
 msgid "Restricted On Export"
-msgstr "Export X509 certifikátu"
+msgstr "Omezení export"
 
 #: common/sections_trans.h:42 common/rpackagelister.cc:780
 msgid "non free"
@@ -214,7 +208,7 @@ msgstr "Nebyl nalezen ¾ádný odpovídající záznam"
 
 #: common/indexcopy.cc:288
 msgid "Alot of entries were discarded, something may be wrong."
-msgstr ""
+msgstr "Nìjak hodnì polo¾ek bylo vyøazeno, nìkde se mù¾e skrývat problém."
 
 #: common/indexcopy.cc:464
 msgid "Cannot find filename or size tag"
@@ -357,7 +351,7 @@ msgstr "Seznam instalovaných souborù existuje pouze pro instalované balíky"
 
 #: common/rpackage.cc:412
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
-msgstr ""
+msgstr "DO PRÈIC DUNNO WTF JE SPU©TÌNÝ!"
 
 #: common/rpackage.cc:593
 #, c-format
@@ -368,6 +362,10 @@ msgid ""
 "never uploaded, has been obsoleted or is not available with the contents of "
 "sources.list\n"
 msgstr ""
+"\n"
+"Balíèek %s nemá dostupnou ¾ádnou verzi, ale v databázi je uveden.\n"
+"To je typický pøíznak toho, ¾e balíèek byl uveden v závislostech, ale nebyl "
+"uploadován, buï proto ¾e byl zastaralý nebo není dostupný v ¾ádném  zdroji.\n"
 
 #: common/rpackage.cc:636
 #, c-format
@@ -384,7 +382,7 @@ msgstr "proto¾e to je virtuální balík"
 
 #: common/rpackage.cc:645
 msgid "but it is not going to be installed"
-msgstr ""
+msgstr "ale to nepùjde nainstalovat"
 
 #: common/rpackage.cc:649
 msgid " or"
@@ -413,7 +411,7 @@ msgstr "závislosti jsou splnìny"
 
 #: common/rpackage.cc:922
 msgid "Invalid record in the preferences file, no Package header"
-msgstr ""
+msgstr "Vadný záznam v souboru nastavení, chybí hlavièky balíèkù."
 
 #: common/rpackage.cc:1017
 #, c-format
@@ -431,6 +429,7 @@ msgstr ""
 #: common/rpackagecache.cc:57
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
+"Seznam balíèkù nebo soubor se stavem balíèkù ne¹lo zpracovat èi otevøít."
 
 #: common/rpackagecache.cc:92
 msgid "Internal Error, non-zero counts"
@@ -456,7 +455,7 @@ msgstr "Priorita"
 
 #: common/rpackagefilter.cc:46
 msgid "ReducedView"
-msgstr ""
+msgstr "Filtrovaný výpis"
 
 #: common/rpackagefilter.cc:50 gtk/window_filters.glade.strings:77
 msgid "Tags"
@@ -471,6 +470,7 @@ msgid "Version"
 msgstr "Verze"
 
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2461
+#: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.strings:13 gtk/window_main_hpaned.glade.strings:86
 #: gtk/window_main_vpaned.glade.strings:101
 #: gtk/window_preferences.glade.strings:55 gtk/window_filters.glade.strings:62
@@ -507,18 +507,18 @@ msgid "ReverseDepends"
 msgstr "Vzájemná závislost"
 
 #: common/rpackagefilter.cc:658
-#, fuzzy, c-format
+#, c-format
 msgid "could not open ReducedView file %s"
-msgstr "nemohu otevøít ReducedView soubor %s"
+msgstr "nemohu otevøít soubor %s s nastavením pro Filtrovaný seznam"
 
 #: common/rpackagefilter.cc:685
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
-msgstr ""
+msgstr "©patný regulární výraz '%s' pro Filtrovaný výpis"
 
 #: common/rpackagefilter.cc:754
 msgid "empty filter name!? should _never_ happen, please report"
-msgstr ""
+msgstr "chybí název filtru!? jaké¾e to máte ale ¹tìstí, oznamte nám to prosím"
 
 #: common/rpackagefilter.cc:759
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
@@ -542,9 +542,8 @@ msgid "Tasks"
 msgstr "Úlohy"
 
 #: common/rpackagelister.cc:250
-#, fuzzy
 msgid "Reduced View"
-msgstr "Pohled s miniaturami"
+msgstr "Filtrovaný seznam"
 
 #: common/rpackagelister.cc:258
 msgid "Upgradable"
@@ -589,7 +588,7 @@ msgstr " nepatøí do ¾ádné sekce?!"
 
 #: common/rpackagelister.cc:654
 msgid "Internal Error, AllUpgrade broke stuff"
-msgstr ""
+msgstr "Vnitøní chyba, úplná aktualizace selhala"
 
 #: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
@@ -650,9 +649,8 @@ msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignoruji chybné záznamy v souboru sources.list!"
 
 #: common/rpackagelister.cc:1563
-#, fuzzy
 msgid "Failed to fetch "
-msgstr "Selhala aktivace '%s'"
+msgstr "Chyba pøi pøenosu"
 
 #: common/rpackagelister.cc:1583
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -699,7 +697,6 @@ msgstr "bzip2 selhal, proto¾e je plný disk."
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/dialog_quit.glade.strings:7
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Quit and ignore queued changes?</span>"
 msgstr ""
@@ -707,7 +704,6 @@ msgstr ""
 "provedeny zmìny?</span>"
 
 #: gtk/dialog_quit.glade.strings:8
-#, fuzzy
 msgid ""
 "There are still changes in the queue that have not been executed. They will "
 "get lost if you choose to quit 'Synaptic'."
@@ -721,13 +717,12 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/dialog_upgrade.glade.strings:7
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Enable smart upgrade (dist-upgrade)?</"
 "span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Ukonèit bez toho ani¾ by byly "
-"provedeny zmìny?</span>"
+"<span weight=\"bold\" size=\"larger\">Spustit automatickou aktualizaci "
+"(systému)?</span>"
 
 #: gtk/dialog_upgrade.glade.strings:8
 msgid ""
@@ -742,6 +737,17 @@ msgid ""
 "\n"
 "This behavior can be changed in the preferences later."
 msgstr ""
+"Aktualizace je defaultnì nastavena tak, aby byly pøeskoèeny aktualizace "
+"balíèkù, které by mohly vyvolat konflikt nebo by vy¾adovaly instalaci nových "
+"balíèkù.\n"
+"\n"
+"Aktualizace systému se pokusí vyøe¹it konflikty a doplnit ve¹keré závislosti "
+"vzniklé pøi aktualizaci pokud mo¾no inteligentnì.\n"
+"\n"
+"<b>Poznámka:</b> Pokud chcete aktualizovat hlavní èást systému na novìj¹í "
+"vydání, pak tedy odkliknìte 'ano'.\n"
+"\n"
+"Výchozí nastavení pro aktualizaci systému lze pozdìji v nastavení zmìnit."
 
 #: gtk/dialog_upgrade.glade.strings:15
 #, fuzzy
@@ -807,7 +813,7 @@ msgstr "-i=? Spou¹tìt s pøednastaveným filtrem který je v uvedeném poøadí\n"
 
 #: gtk/gsynaptic.cc:62
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
-msgstr ""
+msgstr "-o=? Pøidejte pøi spou¹tìní volbu -o dir::cache=/tmp\n"
 
 #: gtk/gsynaptic.cc:206
 msgid "You must run this program as the root user."
@@ -914,11 +920,11 @@ msgstr ""
 "do mechaniky %s"
 
 #: gtk/rgfetchprogress.cc:211
-#, fuzzy, c-format
+#, c-format
 msgid "%-3li/%-3li files    %4s B/s  ETA %6s\n"
 msgstr ""
-"     %-3li    /    %-3li  Pøenosová rychlost   %4sB/s   Do konce sta¾ení "
-"souboru zbývá: %6s\n"
+"%-3li/%-3li souborù Pøenosová rychlost je %4sB/s Do konce sta¾ení souboru "
+"zbývá: %6s\n"
 
 #: gtk/rgfetchprogress.cc:218
 msgid "(stalled)\n"
@@ -941,9 +947,8 @@ msgid "Done"
 msgstr "Hotovo"
 
 #: gtk/rgfetchprogress.cc:310
-#, fuzzy
 msgid "Hit"
-msgstr "Tre&fa"
+msgstr "Záznam"
 
 #: gtk/rgfetchprogress.cc:313
 msgid "Failed"
@@ -983,7 +988,7 @@ msgstr "Vyèlenit znaèky"
 msgid "New Filter %i"
 msgstr "Nový filtr %i"
 
-#: gtk/rginstallprogress.cc:41
+#: gtk/rginstallprogress.cc:41 gtk/window_rginstall_progress_msgs.glade.h:2
 msgid "Package Manager output"
 msgstr "Výstup ze správce balíèkù"
 
@@ -1008,7 +1013,13 @@ msgstr ""
 "Zatím pøipravuji k instalaci:\n"
 "\n"
 
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
 #: gtk/rginstallprogress.cc:257 gtk/rgzvtinstallprogress.cc:124
+#: gtk/window_rginstall_progress.glade.strings:7
 msgid "Performing Changes"
 msgstr "Realizuji zmìny"
 
@@ -1086,6 +1097,14 @@ msgid ""
 "Alternativly you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
+"Není nainstalovaný ¾ádný prohlí¾eè nápovìdy\n"
+"\n"
+"Abyste si mohli èíst manuál k synapticu, musíte doinstalovat buï 'yelp' co¾ "
+"je prohlí¾eè nápovìdy pro gnome, nebo internetový prohlí¾eè 'mozilla'.\n"
+"\n"
+"Náhradním øe¹ením je pøeèíst si manuálové stránky zadáním pøíkazu 'man "
+"synaptic' na konzoli nebo si prohlídnout jejich html verzi umístìnou v "
+"adresáøi 'synaptic/html' pomocí libovolného internetového prohlí¾eèe."
 
 #: gtk/rgmainwindow.cc:544
 msgid ""
@@ -1273,28 +1292,25 @@ msgid "Installed Version"
 msgstr "Èíslo nainstalované verze"
 
 #: gtk/rgmainwindow.cc:2418
-#, fuzzy
 msgid "Latest Version"
-msgstr "Závislosti z poslední verze"
+msgstr "Poslední verze"
 
 #: gtk/rgmainwindow.cc:2684
 msgid "Update the list of available packages"
 msgstr "Aktualizovat seznam dostupných balíkù."
 
 #: gtk/rgmainwindow.cc:2688
-#, fuzzy
 msgid "Queue all possible upgrades"
-msgstr "Vypsat dostupné moduly"
+msgstr "Automatické nastavení v¹ech realizovatelných aktualizací"
 
 #: gtk/rgmainwindow.cc:2692
-#, fuzzy
 msgid "Execute the queued changes"
-msgstr "Provést vybrané zmìny"
+msgstr "Realizovat zmìny"
 
 #: gtk/rgmainwindow.cc:3137
 #, fuzzy
 msgid "No changes"
-msgstr "%s: ¾ádné zmìny nebyly provedeny\n"
+msgstr "_Ponechat beze zmìn"
 
 #: gtk/rgmainwindow.cc:3145
 #, fuzzy
@@ -1305,26 +1321,24 @@ msgstr "_Instalovat poslední verzi"
 msgid "Upgrade"
 msgstr "Aktualizace"
 
-#: gtk/rgmainwindow.cc:3159
+#: gtk/rgmainwindow.cc:3159 gtk/rgvendorswindow.cc:136
 msgid "Remove"
 msgstr "Odebrat"
 
 #: gtk/rgmainwindow.cc:3167
 #, fuzzy
 msgid "Remove Including Configuration"
-msgstr ""
-"soubor s nastavením je:\n"
-"    %s\n"
+msgstr "_Odebrat  vèetnì konfigurákù"
 
 #: gtk/rgmainwindow.cc:3173
 #, fuzzy
 msgid "Remove Including Orphaned Dependencies"
-msgstr "O_dstranit vèetnì závislých"
+msgstr "O_dstranit vèetnì køí¾ovì závislých balíkù"
 
 #: gtk/rgmainwindow.cc:3182
 #, fuzzy
 msgid "Hold Current Version"
-msgstr "Zobrazí èíslo verze"
+msgstr "_Zachovat souèasnou verzi"
 
 #: gtk/rgmainwindow.cc:3378
 msgid "Do you want to add another CD-ROM?"
@@ -1379,6 +1393,28 @@ msgstr ""
 "Omlouváme se za tuhle \"vymo¾enost\", do pøí¹tí verze bude urèitì odstranìna "
 "(pøípadné patche jsou vítány)!"
 
+#: gtk/rgmainwindow.cc:3710
+#, fuzzy
+msgid ""
+"You have one broken package on your system\n"
+"\n"
+"Please try to fix it by visiting the \"Broken\" filter"
+msgstr ""
+"Máte %i broken package on your system\n"
+"\n"
+"Please try to fix it by visiting the \"Broken\" filter"
+
+#: gtk/rgmainwindow.cc:3713
+#, fuzzy, c-format
+msgid ""
+"You have %i broken packages on your system\n"
+"\n"
+"Please try to fix them by visiting the \"Broken\" filter"
+msgstr ""
+"Máte %i broken package on your system\n"
+"\n"
+"Please try to fix it by visiting the \"Broken\" filter"
+
 #.
 #. * Translatable strings file generated by Glade.
 #. * Add this file to your project's POTFILES.in.
@@ -1396,7 +1432,8 @@ msgstr "Pou¾itý"
 msgid "Type"
 msgstr "Typ"
 
-#: gtk/rgrepositorywin.cc:143
+#: gtk/rgrepositorywin.cc:143 gtk/rgvendorswindow.cc:62
+#: gtk/rgvendorswindow.cc:80
 msgid "Vendor"
 msgstr "Prodávající"
 
@@ -1463,34 +1500,32 @@ msgid "Summary"
 msgstr "Shrnutí:"
 
 #: gtk/rgsummarywindow.cc:312
-#, fuzzy
 msgid "Download the packages files only"
-msgstr "&Obnovit smazané soubory (jen ext2fs)"
+msgstr "Stáhnout pouze balíèky"
 
 #: gtk/rgsummarywindow.cc:320
 msgid "Show Details"
 msgstr "Zobrazit detaily"
 
 #: gtk/rgsummarywindow.cc:325
-#, fuzzy
 msgid "Execute"
-msgstr "Provést"
+msgstr "Vykonat"
 
-#: gtk/rgsummarywindow.cc:331
+#: gtk/rgsummarywindow.cc:331 gtk/rgvendorswindow.cc:140
 msgid "Cancel"
 msgstr "Storno"
 
 #: gtk/rgsummarywindow.cc:354
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s are set on hold\n"
-msgstr "pøi spu¹tìní nastavit èíslo skupiny"
+msgstr "%d %s je oznaèen pro uchování\n"
 
 #: gtk/rgsummarywindow.cc:355 gtk/rgsummarywindow.cc:359
 #: gtk/rgsummarywindow.cc:365 gtk/rgsummarywindow.cc:369
 #: gtk/rgsummarywindow.cc:373 gtk/rgsummarywindow.cc:378
 #: gtk/rgsummarywindow.cc:384
 msgid "packages"
-msgstr "balíky"
+msgstr "balíkù"
 
 #: gtk/rgsummarywindow.cc:355 gtk/rgsummarywindow.cc:359
 #: gtk/rgsummarywindow.cc:365 gtk/rgsummarywindow.cc:369
@@ -1500,76 +1535,93 @@ msgid "package"
 msgstr "balík"
 
 #: gtk/rgsummarywindow.cc:358
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s are kept back and not upgraded\n"
-msgstr "%d %s bude zakonzervován a nebude aktualizován;\n"
+msgstr "%d %s bude zakonzervován/o a nebude aktualizován/o;\n"
 
 #: gtk/rgsummarywindow.cc:363
-#, fuzzy, c-format
+#, c-format
 msgid "%d new %s will be installed\n"
-msgstr "%d %s bude nainstalován\n"
+msgstr "%d je novìj¹í %s bude nainstalován\n"
 
 #: gtk/rgsummarywindow.cc:368
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s will be upgraded\n"
-msgstr "%d %s bude aktualizován;\n"
+msgstr "%d %s bude aktualizován/o;\n"
 
 #: gtk/rgsummarywindow.cc:372
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s will be removed\n"
-msgstr "%d %s bude odebrán;\n"
+msgstr "%d %s bude odebrán/o;\n"
 
 #: gtk/rgsummarywindow.cc:376
-#, fuzzy, c-format
+#, c-format
 msgid "%d %s will be DOWNGRADED\n"
-msgstr "Balík bude pøeinstalován na ni¾¹í verzi."
+msgstr "%d %s bude pøeinstalován na NI®©Í verzi\n"
 
 #: gtk/rgsummarywindow.cc:382
-#, fuzzy, c-format
+#, c-format
 msgid "WARNING: %d essential %s will be removed\n"
-msgstr "UPOZORNÌNÍ: %d essentielle %s bude odebrán!\n"
+msgstr "UPOZORNÌNÍ: %d nutný pro %s bude odebrán!\n"
 
 #: gtk/rgsummarywindow.cc:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%s B of extra space will be used\n"
-msgstr "Pou¾itý konfiguraèní soubor."
+msgstr ""
+"\n"
+"Po aktualizaci bude zabráno o %s B více místa na disku\n"
 
 #: gtk/rgsummarywindow.cc:392
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%s B of extra space will be freed\n"
 msgstr ""
 "\n"
-"Po skonèení bude uvolnìno %sB.\n"
+"Uvolní se %s B\n"
 
 #: gtk/rgsummarywindow.cc:398
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "%s B have to be downloaded"
 msgstr ""
 "\n"
-"Ke sta¾ení je zapotøebí %sB volného místa."
+"Bude se stahovat %s B."
 
 #: gtk/rgsummarywindow.cc:419
-#, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
 msgstr ""
-"Tímto bude odstranìn systémový balík.\n"
-"To mù¾e destabilizovat vá¹ systém!!!\n"
+"Tímto bude odstranìn systémový balík,\n"
+"co¾ mù¾e vést k destabilizaci systému!\n"
 
 #. ignore some stupid error messages
 #: gtk/rguserdialog.cc:133
 msgid "Tried to dequeue a fetching object"
+msgstr "Zkou¹ím vrátit záznam pro pøenesený objekt"
+
+#: gtk/rgvendorswindow.cc:39
+#, fuzzy
+msgid "Setup Vendors"
+msgstr "Prodávající"
+
+#: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:107
+msgid "FingerPrint"
+msgstr ""
+
+#: gtk/rgvendorswindow.cc:128
+msgid "OK"
+msgstr ""
+
+#: gtk/rgvendorswindow.cc:132
+msgid "Add"
 msgstr ""
 
 #: gtk/rgfindwindow.cc:113
-#, fuzzy
 msgid "Find"
 msgstr "Hledat"
 
@@ -1586,13 +1638,12 @@ msgid "Debtag support is enabled."
 msgstr "Podpora debianovských záznamù zapnuta."
 
 #: gtk/window_about.glade.strings:12
-#, fuzzy
 msgid ""
 "Visit the home page at \n"
 "http://www.nongnu.org/synaptic/"
 msgstr ""
 "Nav¹tivte na¹i domovskou stránku na \n"
-"http//www.nongnu.org/synaptic"
+"http://www.nongnu.org/synaptic/"
 
 #: gtk/window_about.glade.strings:14
 msgid ""
@@ -1603,12 +1654,11 @@ msgstr ""
 "verze 2"
 
 #: gtk/window_about.glade.strings:15
-#, fuzzy
 msgid ""
 "<span size=\"small\">Copyright (c) 2001-2003 Connectiva S/A \n"
 "Copyright (c) 2002,2003 Michael Vogt</span>"
 msgstr ""
-"<span size=\"small\">Copyrigt (c) 2001-2003 Connectiva S/A \n"
+"<span size=\"small\">Copyright (c) 2001-2003 Connectiva S/A \n"
 "Copyright (c) 2002,2003 Michael Vogt</span>"
 
 #: gtk/window_about.glade.strings:18
@@ -1706,7 +1756,6 @@ msgstr ""
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
 #: gtk/window_about.glade.strings:57
-#, fuzzy
 msgid "Documented by"
 msgstr "Zdokumentovali"
 
@@ -1720,7 +1769,6 @@ msgid "Show only packages matching the searched terms."
 msgstr "Zobrazit pouze balíky odpovídající hledanému výrazu"
 
 #: gtk/window_find.glade.strings:8
-#, fuzzy
 msgid "Search for:"
 msgstr "Hledat:"
 
@@ -1739,9 +1787,8 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.strings:10
-#, fuzzy
 msgid "Search in:"
-msgstr "Hledat v"
+msgstr "Hledat v:"
 
 #: gtk/window_find.glade.strings:11
 msgid "Package name"
@@ -1784,7 +1831,6 @@ msgstr "Název balíku"
 #: gtk/window_filters.glade.strings:10 gtk/window_filters.glade.strings:22
 #: gtk/window_filters.glade.strings:24 gtk/window_filters.glade.strings:34
 #: gtk/window_filters.glade.strings:42
-#, fuzzy
 msgid "    "
 msgstr "    "
 
@@ -1820,7 +1866,6 @@ msgstr "Ulo¾it výbìr _jako..."
 
 #: gtk/window_main_hpaned.glade.strings:12
 #: gtk/window_main_vpaned.glade.strings:12
-#, fuzzy
 msgid "_Quit"
 msgstr "_Konec"
 
@@ -1831,26 +1876,22 @@ msgstr "_Akce"
 
 #: gtk/window_main_hpaned.glade.strings:14
 #: gtk/window_main_vpaned.glade.strings:14
-#, fuzzy
 msgid "_Undo"
 msgstr "_Zpìt"
 
 #: gtk/window_main_hpaned.glade.strings:15
 #: gtk/window_main_vpaned.glade.strings:15
-#, fuzzy
 msgid "_Redo"
 msgstr "Zn_ovu"
 
 #: gtk/window_main_hpaned.glade.strings:16
 #: gtk/window_main_vpaned.glade.strings:16
-#, fuzzy
 msgid "Clear All _Queued Changes"
-msgstr "V¹echny zmìny se ztratí!"
+msgstr "_Stornovat v¹echny nastavené zmìny"
 
 #: gtk/window_main_hpaned.glade.strings:17
-#, fuzzy
 msgid "_Update Package List"
-msgstr "Provádím dotaz na seznam balíèkù: "
+msgstr "_Aktualizovat seznam balíèkù"
 
 #: gtk/window_main_hpaned.glade.strings:18
 #: gtk/window_main_vpaned.glade.strings:18
@@ -1860,21 +1901,19 @@ msgstr "_Pøidat CD-ROM"
 #: gtk/window_main_hpaned.glade.strings:19
 #: gtk/window_main_vpaned.glade.strings:19
 msgid "_Fix Broken Packages"
-msgstr "_Fixovat vadné balíky"
+msgstr "_Odstranit balíky které jsou v konfliktu"
 
 #: gtk/window_main_hpaned.glade.strings:20
 #: gtk/window_main_hpaned.glade.strings:57
 #: gtk/window_main_vpaned.glade.strings:20
 #: gtk/window_main_vpaned.glade.strings:57
-#, fuzzy
 msgid "Up_grade System"
-msgstr "Aktualiz_ovat v¹echny balíky"
+msgstr "Aktualiz_ovat systém"
 
 #: gtk/window_main_hpaned.glade.strings:21
 #: gtk/window_main_vpaned.glade.strings:21
-#, fuzzy
 msgid "_Execute Queued Changes"
-msgstr "Provést vybrané zmìny"
+msgstr "_Realizovat zvolené zmìny"
 
 #: gtk/window_main_hpaned.glade.strings:22
 #: gtk/window_main_vpaned.glade.strings:22
@@ -1885,9 +1924,8 @@ msgstr "_Balík"
 #: gtk/window_main_hpaned.glade.strings:117
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:77
-#, fuzzy
 msgid "_No Changes"
-msgstr "%s: ¾ádné zmìny nebyly provedeny\n"
+msgstr "_Ponechat beze zmìn"
 
 #: gtk/window_main_hpaned.glade.strings:24
 #: gtk/window_main_vpaned.glade.strings:24
@@ -1903,27 +1941,21 @@ msgstr "Odst_ranit"
 
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
-#, fuzzy
 msgid "_Remove Including Configuration"
-msgstr ""
-"soubor s nastavením je:\n"
-"    %s\n"
+msgstr "_Odebrat  vèetnì konfigurákù"
 
 #: gtk/window_main_hpaned.glade.strings:28
 #: gtk/window_main_vpaned.glade.strings:28
-#, fuzzy
 msgid "Remove Including Orphaned _Dependencies"
-msgstr "O_dstranit vèetnì závislých"
+msgstr "O_dstranit vèetnì køí¾ovì závislých balíkù"
 
 #: gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:29
-#, fuzzy
 msgid "_Hold Current Version"
-msgstr "Zobrazí èíslo verze"
+msgstr "_Zachovat souèasnou verzi"
 
 #: gtk/window_main_hpaned.glade.strings:30
 #: gtk/window_main_vpaned.glade.strings:30
-#, fuzzy
 msgid "_Find..."
 msgstr "_Najít..."
 
@@ -1935,7 +1967,7 @@ msgstr "_Seznam"
 #: gtk/window_main_hpaned.glade.strings:32
 #: gtk/window_main_vpaned.glade.strings:32
 msgid "_Apply Filter"
-msgstr "_Pou¾ít filtr"
+msgstr "Pou¾ít _filtr"
 
 #: gtk/window_main_hpaned.glade.strings:34
 #: gtk/window_main_vpaned.glade.strings:34
@@ -2011,9 +2043,8 @@ msgstr "_Text pod ikonami"
 
 #: gtk/window_main_hpaned.glade.strings:49
 #: gtk/window_main_vpaned.glade.strings:49
-#, fuzzy
 msgid "Text Be_side Icons"
-msgstr "Dùle¾itý text vedle ikon"
+msgstr "Te_xt vedle ikon"
 
 #: gtk/window_main_hpaned.glade.strings:50
 #: gtk/window_main_vpaned.glade.strings:50
@@ -2039,9 +2070,8 @@ msgstr "Aktualizování seznamu balíkù ve skladi¹ti"
 
 #: gtk/window_main_hpaned.glade.strings:55
 #: gtk/window_main_vpaned.glade.strings:55
-#, fuzzy
 msgid "_Update List"
-msgstr "&Aktualizovat seznam"
+msgstr "_Aktualizovat seznam"
 
 #: gtk/window_main_hpaned.glade.strings:56
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2059,7 +2089,6 @@ msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:59
 #: gtk/window_main_vpaned.glade.strings:59
-#, fuzzy
 msgid "_Execute"
 msgstr "_Spustit"
 
@@ -2235,13 +2264,12 @@ msgid "<b>Available Versions</b>"
 msgstr "<b>Dostupná verze</b>"
 
 #: gtk/window_main_hpaned.glade.strings:107
-#, fuzzy
 msgid ""
 "<b>Warning:</b> This can render your package manger unusable.\n"
 "Changes override the version selected by the package manager. "
 msgstr ""
-"<b>Poznámka:</b> Tato volba upøednostní jinou verzi balíku ne¾ zvolil "
-"mana¾er balíkù. Dobøe ji uva¾te."
+"<b>Upozornìní:</b> Tato volba mù¾e zmást vá¹ balíèkovací mana¾er.\n"
+"Verze kterou zvolíte nahradí verzi vybranou mana¾erem balíèkù."
 
 #: gtk/window_main_hpaned.glade.strings:109
 #: gtk/window_main_vpaned.glade.strings:125
@@ -2257,7 +2285,6 @@ msgstr "<b>Kontrola balíèkù</b>"
 #: gtk/window_main_hpaned.glade.strings:111
 #: gtk/window_main_vpaned.glade.strings:114
 #: gtk/window_preferences.glade.strings:30
-#, fuzzy
 msgid "     "
 msgstr "     "
 
@@ -2282,14 +2309,12 @@ msgid "Configure the package using the debconf configuration system"
 msgstr "Konfigurace balíku prostøednictvím konfiguraèního systému debconf"
 
 #: gtk/window_main_hpaned.glade.strings:119
-#, fuzzy
 msgid "Configure"
 msgstr "Nastavit"
 
 #: gtk/window_main_hpaned.glade.strings:120
-#, fuzzy
 msgid "View installed documentation of the package in a browser"
-msgstr "Èíst online dokumentací pøilo¾enou k balíku"
+msgstr "Prohlí¾et dokumentaci"
 
 #: gtk/window_main_hpaned.glade.strings:121
 msgid "_Documentation"
@@ -2301,9 +2326,8 @@ msgid "Synaptic - an apt frontend"
 msgstr "Synaptic - grafické rozhraní pro apt"
 
 #: gtk/window_main_vpaned.glade.strings:17
-#, fuzzy
 msgid "U_pdate Package List"
-msgstr "Provádím dotaz na seznam balíèkù: "
+msgstr "_Aktualizovat seznam balíèkù: "
 
 #: gtk/window_main_vpaned.glade.strings:36
 msgid "_Collapse All   "
@@ -2318,7 +2342,6 @@ msgid "_Flat list"
 msgstr "Seznam _balíkù"
 
 #: gtk/window_main_vpaned.glade.strings:70
-#, fuzzy
 msgid "<b>Common</b>"
 msgstr "<b>Obecné</b>"
 
@@ -2345,14 +2368,13 @@ msgid "<b>Priority</b>"
 msgstr "Priorita"
 
 #: gtk/window_main_vpaned.glade.strings:123
-#, fuzzy
 msgid ""
 "<b>Warning:</b> This can render your package\n"
 "manager unusable. Changes override the version selected by the package "
 "manager. "
 msgstr ""
-"<b>Poznámka:</b> Tato volba upøednostní jinou verzi balíku ne¾ zvolil "
-"mana¾er balíkù. Dobøe ji uva¾te."
+"<b>Upozornìní:</b> Tato volba mù¾e zmást vá¹ balíèkovací\n"
+"mana¾er. Verze kterou vyberete nahradí verzi zvolenou mana¾erem balíkù."
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2360,15 +2382,16 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/window_changes.glade.strings:7
-msgid "Apply"
-msgstr "_Vybrat"
+msgid "Queue"
+msgstr "Pøidat"
 
 #: gtk/window_changes.glade.strings:8
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Apply additional required changes?</"
+"<span weight=\"bold\" size=\"larger\">Queue additional required changes?</"
 "span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Realizovat dal¹í potøebné zmìny?</span>"
+"<span weight=\"bold\" size=\"larger\">Výbìr je podmínìn dal¹ími balíky, "
+"pokraèovat?</span>"
 
 #: gtk/window_changes.glade.strings:9
 msgid ""
@@ -2419,17 +2442,14 @@ msgid "Include Configuration"
 msgstr "Vèetnì konfiguraèních souborù"
 
 #: gtk/window_preferences.glade.strings:20
-#, fuzzy
 msgid "Include Orphaned Dependencies"
-msgstr "Nesplnìné závislosti pro %1-%2-%3:"
+msgstr "Vèetnì køí¾ových závislostí"
 
 #: gtk/window_preferences.glade.strings:21
-#, fuzzy
 msgid "Default remove: "
-msgstr "Odst&ranit hostitele"
+msgstr "Odstranit výchozí:"
 
 #: gtk/window_preferences.glade.strings:22
-#, fuzzy
 msgid " "
 msgstr " "
 
@@ -2438,9 +2458,8 @@ msgid "Number of undo operations:"
 msgstr "Poèet krokù pro návrat zpìt:"
 
 #: gtk/window_preferences.glade.strings:24
-#, fuzzy
 msgid "Default system upgrade:"
-msgstr "Implicitní sezení systému"
+msgstr "Výchozí aktualizace systému:"
 
 #: gtk/window_preferences.glade.strings:25
 msgid "Always Ask"
@@ -2479,24 +2498,20 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Písma</b>"
 
 #: gtk/window_preferences.glade.strings:37
-#, fuzzy
 msgid "Custom default font"
-msgstr "Výchozí typ písma"
+msgstr "Vlastní výchozí font"
 
 #: gtk/window_preferences.glade.strings:38
-#, fuzzy
 msgid "Custom terminal font"
-msgstr "Vyberte písmo terminálu"
+msgstr "Vlastní terminálový font"
 
 #: gtk/window_preferences.glade.strings:39
-#, fuzzy
 msgid "_Default Font"
-msgstr "Implicitní písmo"
+msgstr "_Výchozí font"
 
 #: gtk/window_preferences.glade.strings:40
-#, fuzzy
 msgid "_Terminal Font"
-msgstr "Písmo _terminálu:"
+msgstr "Font _terminálu"
 
 #: gtk/window_preferences.glade.strings:41
 msgid "Layout"
@@ -2525,9 +2540,8 @@ msgid "Installed size"
 msgstr "Velikost"
 
 #: gtk/window_preferences.glade.strings:53
-#, fuzzy
 msgid "Latest version"
-msgstr "Závislosti z poslední verze"
+msgstr "Poslední verze"
 
 #: gtk/window_preferences.glade.strings:56
 msgid "<b>Colors</b>"
@@ -2594,18 +2608,16 @@ msgid "<b>Temporary Files</b>"
 msgstr "<b>Doèasné soubory</b>"
 
 #: gtk/window_preferences.glade.strings:81
-#, fuzzy
 msgid "Leave all downloaded packages in the cache"
-msgstr "Ponechávat sta¾ené balíky ve skladi¹ti"
+msgstr "Ponechávat v¹echny sta¾ené balíky ve skladi¹ti"
 
 #: gtk/window_preferences.glade.strings:82
 msgid "Delete downloaded packages after installation"
 msgstr "Po nainstalování sta¾enené balíky smazat"
 
 #: gtk/window_preferences.glade.strings:83
-#, fuzzy
 msgid "Delete obsolete packages from cache only"
-msgstr "Mazat ze skladi¹tì balíky které u¾ nejsou ve zdroji"
+msgstr "Mazat ze skladi¹tì balíky které u¾ nejsou zahrnuty ve zdroji"
 
 #: gtk/window_preferences.glade.strings:84
 msgid "Clear"
@@ -2726,10 +2738,9 @@ msgstr "Zadejte jméno disku"
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/window_setopt.glade.strings:7
-#, fuzzy
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr ""
-"<span size=\"large\" weight=\"bold\">Nastaví interní nastavení 'Synapticu'</"
+"<span size=\"large\" weight=\"bold\">Nastavení interních voleb 'Synapticu'</"
 "span>"
 
 #: gtk/window_setopt.glade.strings:8
@@ -2801,7 +2812,6 @@ msgid "Packages that have been installed and a later version is available"
 msgstr "Balíky které jsou nainstalovené a je dostupná jejich novìj¹í verze"
 
 #: gtk/window_filters.glade.strings:28
-#, fuzzy
 msgid "Installed and upgradeble"
 msgstr "Aktualizovatelné"
 
@@ -2969,6 +2979,19 @@ msgstr "rpm-src"
 msgid "Vendors..."
 msgstr "Prodavaèi..."
 
+#: gtk/window_rginstall_progress.glade.strings:8
+msgid "label_name"
+msgstr ""
+
+#: gtk/window_rginstall_progress.glade.strings:9
+#, fuzzy
+msgid "label_summary"
+msgstr "Shrnutí:"
+
+#: gtk/window_rginstall_progress_msgs.glade.h:1
+msgid "Extra output was generated during Package Manager operation"
+msgstr "Bìhem instalace byl vygenerován tento výstup"
+
 #: data/synaptic.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
 msgstr "Instalovat, odebrat a aktualizovat balíèky"
@@ -2976,6 +2999,16 @@ msgstr "Instalovat, odebrat a aktualizovat balíèky"
 #: data/synaptic.desktop.in.h:2
 msgid "Software"
 msgstr "Software"
+
+#~ msgid "Apply"
+#~ msgstr "_Vybrat"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Apply additional required changes?</"
+#~ "span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Realizovat dal¹í potøebné zmìny?</"
+#~ "span>"
 
 #~ msgid "Text Editing"
 #~ msgstr "Textové editory"
@@ -3015,14 +3048,29 @@ msgstr "Software"
 #~ msgid "label43"
 #~ msgstr "Zaèíná stahování seznamù"
 
-#, fuzzy
 #~ msgid "Status:"
 #~ msgstr "Stav:"
 
-#, fuzzy
 #~ msgid "label_dep_info"
-#~ msgstr "Informaèní centrum KDE"
+#~ msgstr "label_dep_info"
 
-#, fuzzy
+#~ msgid "label53"
+#~ msgstr "úroveò53"
+
+#~ msgid "label54"
+#~ msgstr "úroveò54"
+
 #~ msgid "label_availdep_info"
-#~ msgstr "Informaèní centrum KDE"
+#~ msgstr "label_availdep_info"
+
+#~ msgid "label55"
+#~ msgstr "úroveò55"
+
+#~ msgid "label68"
+#~ msgstr "úroveò68"
+
+#~ msgid "label56"
+#~ msgstr "úroveò56"
+
+#~ msgid "Programmed Changes"
+#~ msgstr "Plánované zmìny"

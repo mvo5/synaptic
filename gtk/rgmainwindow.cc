@@ -3707,10 +3707,10 @@ bool RGMainWindow::restoreState()
     if(broken > 0) {
 	gchar *msg;
 	if(broken == 1)
-	    msg = g_strdup_printf(("You have %i broken package on your system\n\n"
-				      "Please try to fix it by visiting the \"Broken\" filter"), broken);
+	    msg = g_strdup_printf(_("You have one broken package on your system\n\n"
+				      "Please try to fix it by visiting the \"Broken\" filter"));
 	else
-	    msg = g_strdup_printf(("You have %i broken package on your system\n\n"
+	    msg = g_strdup_printf(_("You have %i broken packages on your system\n\n"
 				      "Please try to fix them by visiting the \"Broken\" filter"), broken);
 	_userDialog->warning(msg);
 	g_free(msg);

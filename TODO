@@ -1,25 +1,16 @@
 Renate's extraordinary wish list:
- - implement new glade version of dialog_summary
  - copy desktop file to the KDE menu - $KDEPREFIX/applnk/Settingsmenu
    "kde-config --prefix"
- - split up the label_info (main window) into several labels
  - enable glade support in download and execute window
- - remove paned code for vpaned, since it is no more resizeable:
-   rgmainwindow.cc: line 2818 - 2824
-   the widget is still there but hidden
-
-Next Release 0.46:
  - mark installed packages with an "i" in the status column of the package list
- - deactivate "do not modify" in the package menu if no modification was
-   queued or no package is selected
- - hide seperator_hold on rpm based systems, too
  - possibility to resume failed installation of half installed packages
-   Execute should be available if there are outstanding packages
+   Execute should be available if there are outstanding packages 
+   (difficult!)
 
 Unsorted:
  - Please add hyperlink support in package info for example
  - Please allow users to delete default filters and add an option to
-   restore in prefs.
+   restore in prefs (or make them not deletable at all)
  - "crash handler" that automatically save the selections on a synaptic
    segfault (and present a dialog to reread them on the next start)
  - if download failed, use a special dialog to show it
@@ -78,6 +69,11 @@ General:
 
 
 Done:
+   - hide seperator_hold on rpm based systems, too (?)
+   - deactivate "do not modify" in the package menu if no modification was
+     queued or no package is selected
+   - split up the label_info (main window) into several labels
+   - implement new glade version of dialog_summary
    - disable all package actions if "hold current version" is activated
    - "hold current version" in the package menu should represent the hold status
      (it is already an "Ankreuzfeld")

@@ -456,10 +456,8 @@ void RGPreferencesWindow::readTreeViewValues()
    // put into right place
    gchar *name;
    int pos;
-   bool visible;
    column_struct c;
    for(int i=0;column_names[i] != NULL; i++) {
-
       // pos
       name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
       pos = _config->FindI(name, i);
@@ -471,8 +469,7 @@ void RGPreferencesWindow::readTreeViewValues()
 
       c.name = column_names[i];
       c.visible_name = column_visible_names[i];
-
-      //FIXME: sanity check pos!
+      //FIXME: sanity check for the pos var!
       columns[pos] = c;
       g_free(name);
    }
@@ -505,7 +502,8 @@ void RGPreferencesWindow::cbMoveColumnUp(GtkWidget *self, void *data)
    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
 
    GtkTreeIter iter, next;
-      
+   GtkTreePath *first = gtk_tree_path_new_first();
+
    GtkTreeSelection* selection;
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
    if(!gtk_tree_selection_get_selected (selection, NULL,
@@ -516,7 +514,11 @@ void RGPreferencesWindow::cbMoveColumnUp(GtkWidget *self, void *data)
    GtkTreePath *path = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_listColumns), &iter);
    gtk_tree_path_prev(path);
    gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_listColumns), &next, path);
-   gtk_list_store_move_before(me->_listColumns, &iter, &next);
+   
+   if(gtk_tree_path_compare(path, first) == 0)
+      gtk_list_store_move_after(me->_listColumns, &iter, NULL);
+   else
+      gtk_list_store_move_before(me->_listColumns, &iter, &next);
    
 }
 
@@ -534,7 +536,8 @@ void RGPreferencesWindow::cbMoveColumnDown(GtkWidget *self, void *data)
       return;
    }
    next = iter;
-   gtk_tree_model_iter_next(GTK_TREE_MODEL(me->_listColumns), &next);
+   if(!gtk_tree_model_iter_next(GTK_TREE_MODEL(me->_listColumns), &next))
+      return;
    gtk_list_store_move_after(me->_listColumns, &iter, &next);
 }
 

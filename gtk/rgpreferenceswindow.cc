@@ -651,7 +651,7 @@ void RGPreferencesWindow::readDistribution()
 		    G_CALLBACK(cbArchiveSelection), this);
 
    for (unsigned int i = 0; i < archives.size(); i++) {
-      cout << "archive: " << archives[i] << endl;
+      //cout << "archive: " << archives[i] << endl;
       // ignore "now", it's a toggle button item now
       if(archives[i] == "now")
 	 continue;

@@ -128,7 +128,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_editFilterB;
    GtkWidget *_filtersB;
    GtkWidget *_filterPopup;
-   GtkWidget *_filterMenu;
 
    // package info tabs   
    GtkWidget *_pkginfo;

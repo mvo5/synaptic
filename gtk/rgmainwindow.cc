@@ -1049,8 +1049,6 @@ void RGMainWindow::buildInterface()
 
    _filterPopup = glade_xml_get_widget(_gladeXML, "optionmenu_filters");
    assert(_filterPopup);
-   _filterMenu = glade_xml_get_widget(_gladeXML, "menu_apply");
-   assert(_filterMenu);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_find_button_clicked",
@@ -1388,11 +1386,6 @@ void RGMainWindow::refreshFilterMenu()
    gtk_option_menu_remove_menu(GTK_OPTION_MENU(_filterPopup));
    menu = createFilterMenu();
    gtk_option_menu_set_menu(GTK_OPTION_MENU(_filterPopup), menu);
-
-   // Menubar
-   gtk_menu_item_remove_submenu(GTK_MENU_ITEM(_filterMenu));
-   menu = createFilterMenu();
-   gtk_menu_item_set_submenu(GTK_MENU_ITEM(_filterMenu), menu);
 }
 
 
@@ -2058,7 +2051,6 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 
    gtk_widget_set_sensitive(me->_filtersB, TRUE);
    gtk_widget_set_sensitive(me->_filterPopup, TRUE);
-   gtk_widget_set_sensitive(me->_filterMenu, TRUE);
 }
 
 
@@ -2076,7 +2068,6 @@ void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
 
    gtk_widget_set_sensitive(win->_filtersB, FALSE);
    gtk_widget_set_sensitive(win->_filterPopup, FALSE);
-   gtk_widget_set_sensitive(win->_filterMenu, FALSE);
 }
 
 void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)

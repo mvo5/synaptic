@@ -6,33 +6,24 @@
 #include <rqpackageitem.h>
 #include <rqpixmaps.h>
 
-#include <iostream>
-
-RQPackageItem::RQPackageItem(QListView *parent, RPackage *pkg)
-   : QListViewItem(parent), pkg(pkg)
-{
-}
+#include <i18n.h>
 
 QString RQPackageItem::text(int column) const
 {
    QString res;
 
-   switch (column) {
+   if (!_showicon)
+      column += 1;
 
+   switch (column) {
       case 1:
          res = pkg->name();
          break;
-
       case 2:
          res = pkg->installedVersion();
          break;
-
       case 3:
          res = pkg->availableVersion();
-         break;
-
-      default:
-         res = QString::null;
          break;
    }
 
@@ -42,7 +33,7 @@ QString RQPackageItem::text(int column) const
 void RQPackageItem::paintCell(QPainter *p, const QColorGroup &cg,
                              int column, int width, int align)
 {
-   if (column == 0) {
+   if (_showicon && column == 0) {
       int flags = pkg->getFlags();
 
       if (pkg->wouldBreak()) {
@@ -81,7 +72,27 @@ void RQPackageItem::paintCell(QPainter *p, const QColorGroup &cg,
 
 const QPixmap *RQPackageItem::pixmap(int column) const
 {
-   return (column == 0) ? &_pm : NULL;
+   return (_showicon && column == 0) ? &_pm : NULL;
+}
+
+void RQPackageTip::maybeTip(const QPoint &p)
+{
+   QListViewItem *lvitem = _packageListView->itemAt(p);
+   RQPackageItem *item = dynamic_cast<RQPackageItem *>(lvitem);
+   if (item) {
+      QRect rect = _packageListView->itemRect(item);
+      tip(rect, packageTip(item->pkg));
+   }
+}
+
+QString RQPackageTip::packageTip(RPackage *pkg)
+{
+   return (
+      QString("<b>%1</b><br>"
+              "%2")
+      .arg(pkg->name())
+      .arg(pkg->summary())
+   );
 }
 
 // vim:ts=3:sw=3:et

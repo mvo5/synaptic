@@ -22,12 +22,21 @@ synaptic_UI = \
 	window_changes.h \
 	window_changes.cc \
 	window_changes.moc.cc \
+	window_summary.h \
+	window_summary.cc \
+	window_summary.moc.cc \
 	window_fetch.h \
 	window_fetch.cc \
 	window_fetch.moc.cc \
 	window_install.h \
 	window_install.cc \
-	window_install.moc.cc
+	window_install.moc.cc \
+	window_pmoutput.h \
+	window_pmoutput.cc \
+	window_pmoutput.moc.cc \
+	window_filters.h \
+	window_filters.cc \
+	window_filters.moc.cc
 
 synaptic_SOURCES = \
 	$(synaptic_UI) \
@@ -51,6 +60,9 @@ synaptic_SOURCES = \
 	rqchangeswindow.h \
 	rqchangeswindow.cc \
 	rqchangeswindow.moc.cc \
+	rqsummarywindow.h \
+	rqsummarywindow.cc \
+	rqsummarywindow.moc.cc \
 	rqfetchwindow.h \
 	rqfetchwindow.cc \
 	rqfetchwindow.moc.cc \
@@ -58,7 +70,15 @@ synaptic_SOURCES = \
 	rqfetchitem.cc \
 	rqinstallwindow.h \
 	rqinstallwindow.cc \
-	rqinstallwindow.moc.cc
+	rqinstallwindow.moc.cc \
+	rqpmoutputwindow.h \
+	rqpmoutputwindow.cc \
+	rqpmoutputwindow.moc.cc \
+	rqfilterswindow.h \
+	rqfilterswindow.cc \
+	rqfilterswindow.moc.cc \
+	rqpatternitem.h \
+	rqpatternitem.cc
 
 EXTRA_DIST = 
 

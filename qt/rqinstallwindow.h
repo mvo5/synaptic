@@ -1,10 +1,13 @@
 #ifndef RQINSTALLWINDOW_H
 #define RQINSTALLWINDOW_H
 
-#include <rinstallprogress.h>
 #include <qapplication.h>
 
 #include <window_install.h>
+
+#include <rinstallprogress.h>
+
+#include <rqpmoutputwindow.h>
 
 #include <map>
 #include <string>
@@ -36,6 +39,8 @@ class RQInstallWindow : public WindowInstall, public RInstallProgress
    bool _startCounting;
 
    map<string, string> _summaryMap;
+
+   RQPMOutputWindow _pmoutWindow;
 
    virtual void startUpdate();
    virtual void updateInterface();

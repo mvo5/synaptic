@@ -42,10 +42,7 @@ void RQFetchWindow::Fetch(pkgAcquire::ItemDesc &itemDesc)
       show();
 
    itemDesc.Owner->ID = _items.size()+1;
-
-   itemDesc.Owner->ID = _items.size()+1;
-   RQFetchItem *item = new RQFetchItem(_progressListView, itemDesc);
-   _items.push_back(item);
+   _items.push_back(new RQFetchItem(_progressListView, itemDesc));
 
    // Redraw the new item now.
    _progressListView->triggerUpdate();

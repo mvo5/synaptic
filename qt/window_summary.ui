@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.2" stdsetdef="1">
-<class>WindowChanges</class>
+<class>WindowSummary</class>
 <widget class="QDialog">
     <property name="name">
-        <cstring>WindowChanges</cstring>
+        <cstring>WindowSummary</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -14,9 +14,6 @@
     </property>
     <property name="caption">
         <string>Confirm Changes</string>
-    </property>
-    <property name="modal">
-        <bool>true</bool>
     </property>
     <vbox>
         <property name="name">
@@ -35,21 +32,10 @@
                         <cstring>_summaryLabel</cstring>
                     </property>
                     <property name="text">
-                        <string>The following changes are needed to perform this operation</string>
+                        <string>The following changes are going to be performed</string>
                     </property>
                 </widget>
                 <widget class="QListView">
-                    <column>
-                        <property name="text">
-                            <string>S</string>
-                        </property>
-                        <property name="clickable">
-                            <bool>false</bool>
-                        </property>
-                        <property name="resizable">
-                            <bool>true</bool>
-                        </property>
-                    </column>
                     <column>
                         <property name="text">
                             <string>Name</string>
@@ -91,7 +77,7 @@
                             <hsizetype>7</hsizetype>
                             <vsizetype>7</vsizetype>
                             <horstretch>0</horstretch>
-                            <verstretch>2</verstretch>
+                            <verstretch>3</verstretch>
                         </sizepolicy>
                     </property>
                     <property name="focusPolicy">
@@ -100,6 +86,49 @@
                     <property name="selectionMode">
                         <enum>NoSelection</enum>
                     </property>
+                    <property name="rootIsDecorated">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+                <widget class="QGroupBox">
+                    <property name="name">
+                        <cstring>_infoGroupBox</cstring>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>5</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>1</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="title">
+                        <string></string>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>_infoLabel</cstring>
+                            </property>
+                            <property name="sizePolicy">
+                                <sizepolicy>
+                                    <hsizetype>7</hsizetype>
+                                    <vsizetype>7</vsizetype>
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                </sizepolicy>
+                            </property>
+                            <property name="text">
+                                <string>Label with information</string>
+                            </property>
+                            <property name="alignment">
+                                <set>WordBreak|AlignTop</set>
+                            </property>
+                        </widget>
+                    </vbox>
                 </widget>
                 <widget class="QLayoutWidget">
                     <property name="name">

@@ -3,6 +3,8 @@
 
 #include <window_changes.h>
 
+#include <rqpackageitem.h>
+
 #include <vector>
 
 using std::vector;
@@ -13,9 +15,11 @@ class RQChangesWindow : public WindowChanges
 {
    Q_OBJECT
 
-   public:
+   protected:
+   
+   RQPackageTip _packageTip;
 
-   void setLabel(QString label);
+   public:
 
    RQChangesWindow(QWidget *parent, vector<RPackage *> &packages);
 };

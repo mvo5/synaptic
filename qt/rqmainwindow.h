@@ -6,6 +6,7 @@
 
 #include <rqpackagepopup.h>
 #include <rquserdialog.h>
+#include <rqpackageitem.h>
 
 class RPackage;
 class RPackageLister;
@@ -34,6 +35,7 @@ class RQMainWindow : public WindowMain
    RQCacheProgress *_cacheProg;
    RQPackagePopup _packagePopup;
    RQUserDialog _userDialog;
+   RQPackageTip _packageTip;
 
    public slots:
 
@@ -52,8 +54,11 @@ class RQMainWindow : public WindowMain
    void markPackage(RPackage *pkg, int mark);
    void markSelectedPackages(int mark);
    void markPackagesFromPopup(int id);
+   void distUpgrade();
+   void fixBroken();
    void commitChanges();
    void refreshCache();
+   void editFilters();
 };
 
 #endif

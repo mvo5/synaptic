@@ -16,7 +16,7 @@
 
 RQInstallWindow::RQInstallWindow(QWidget *parent,
                                      RPackageLister *lister)
-   : WindowInstall(parent), _startCounting(false)
+   : WindowInstall(parent), _startCounting(false), _pmoutWindow(this)
 {
    prepare(lister);
 }
@@ -37,6 +37,9 @@ void RQInstallWindow::finishUpdate()
       _itemProgress->setProgress(100);
       _totalProgress->setProgress(100);
    }
+
+   if (!_pmoutWindow.empty())
+      _pmoutWindow.exec();
 
    qApp->processEvents();
 
@@ -81,12 +84,12 @@ void RQInstallWindow::updateInterface()
                   _itemLabel->setText(line);
                   _itemProgress->setProgress(0);
                } else {
-                  //_msgs.addLine(line);
+                  _pmoutWindow.addLine(line);
                }
             } else {
-               // Get from the map, so that _msgs doesn't have
+               // Get from the map, so that _pmoutWindow doesn't have
                // to keep an internal copy.
-               //_msgs.newPackage(I->first.c_str());
+               _pmoutWindow.newPackage(I->first.c_str());
                _itemLabel->setText(line);
                _summaryLabel->setText(I->second.c_str());
                _itemProgress->setProgress(0);

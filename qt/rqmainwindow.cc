@@ -2,36 +2,55 @@
 #include <qcombobox.h>
 #include <qlistbox.h>
 #include <qtoolbutton.h>
+#include <qaction.h>
+
+#include <rpackagelister.h>
+#include <rconfiguration.h>
 
 #include <rqmainwindow.h>
-#include <rpackagelister.h>
 #include <rqcacheprogress.h>
 #include <rqobservers.h>
 #include <rqchangeswindow.h>
+#include <rqsummarywindow.h>
 #include <rqfetchwindow.h>
 #include <rqinstallwindow.h>
 #include <rqpixmaps.h>
-
+#include <rqfilterswindow.h>
 #include <rqpackageitem.h>
+
+#include <apt-pkg/configuration.h>
 
 #include <config.h>
 #include <i18n.h>
 
 RQMainWindow::RQMainWindow(RPackageLister *lister)
-   : _lister(lister), _packagePopup(this), _userDialog(this)
+   : _lister(lister), _packagePopup(this), _userDialog(this),
+     _packageTip(_packageListView)
 {
    // Fix buttons in the toolbar. Right now qt-designer is
    // saving buttons in XPM format.
    _refreshButton->setPixmap(RQPixmaps::find("update.png"));
    _upgradeButton->setPixmap(RQPixmaps::find("distupgrade.png"));
    _commitButton->setPixmap(RQPixmaps::find("proceed.png"));
-   
+
    // Plug progress system into the lister.
    _cacheProg = new RQCacheProgress(this);
    _lister->setProgressMeter(_cacheProg);
 
+   // Connect menubar actions.
+   connect(fileCommit_ChangesAction, SIGNAL(activated()),
+           this, SLOT(commitChanges()));
+   connect(fileUpgrade_All_PackagesAction, SIGNAL(activated()),
+           this, SLOT(distUpgrade()));
+   connect(fileRefresh_Package_InformationAction, SIGNAL(activated()),
+           this, SLOT(refreshCache()));
+   connect(fileFix_Broken_PackagesAction, SIGNAL(activated()),
+           this, SLOT(fixBroken()));
+   connect(editFiltersAction, SIGNAL(activated()), this, SLOT(editFilters()));
+
    // Connect toolbar buttons.
    connect(_commitButton, SIGNAL(clicked()), this, SLOT(commitChanges()));
+   connect(_upgradeButton, SIGNAL(clicked()), this, SLOT(distUpgrade()));
    connect(_refreshButton, SIGNAL(clicked()), this, SLOT(refreshCache()));
 
    // Setup package list.
@@ -70,6 +89,8 @@ RQMainWindow::RQMainWindow(RPackageLister *lister)
 
 RQMainWindow::~RQMainWindow()
 {
+   saveState();
+   RWriteConfigFile(*_config);
    delete _cacheProg;
 }
 
@@ -96,6 +117,8 @@ void RQMainWindow::reloadViews()
       for (int i = 0; i != views.size(); i++)
          _viewsComboBox->insertItem(views[i].c_str());
    }
+   _viewsComboBox->setCurrentItem(_config->FindI("Synaptic::ViewMode", 0));
+
 
    // Reload list from selected view.
    _subViewsListBox->clear();
@@ -138,8 +161,7 @@ void RQMainWindow::reloadPackages()
    _packageListView->clear();
    for (int i = 0; i != _lister->viewPackagesSize(); i++) {
       RPackage *pkg = _lister->getViewPackage(i);
-      RQPackageItem *item = new RQPackageItem(_packageListView, pkg);
-      _packageListView->insertItem(item);
+      (void)new RQPackageItem(_packageListView, pkg);
    }
 }
 
@@ -206,10 +228,7 @@ void RQMainWindow::markSelectedPackages(int mark)
    
    if (!changed.empty()) {
       RQChangesWindow changes(this, changed);
-      changes.setLabel("The following additional changes are needed "
-                       "to perform this operation");
       changes.exec();
-
       if (changes.result() == QDialog::Rejected) {
          _lister->restoreState(state);
          selected.clear();
@@ -244,6 +263,74 @@ void RQMainWindow::markPackagesFromPopup(int id)
    }
 }
 
+void RQMainWindow::distUpgrade()
+{
+   if (!_lister->check()) {
+      _userDialog.error(_("Operation not possible with broken packages.\n"
+                          "Please fix them first."));
+      return;
+   }
+
+   RPackageLister::pkgState state;
+   _lister->saveState(state);
+
+   _lister->distUpgrade();
+
+   vector<RPackage *> selected;
+   vector<RPackage *> changed;
+   _lister->getStateChanges(state, changed, changed, changed,
+                            changed, changed, changed, selected);
+   
+   if (!changed.empty()) {
+      RQChangesWindow changes(this, changed);
+      changes.exec();
+      if (changes.result() == QDialog::Rejected) {
+         _lister->restoreState(state);
+         changed.clear();
+      } else {
+         _lister->saveUndoState(state);
+      }
+   } else {
+      _userDialog.proceed(_("Your system is up-to-date!"));
+   }
+
+   _packageListView->triggerUpdate();
+}
+
+void RQMainWindow::fixBroken()
+{
+   if (_lister->check()) {
+      _userDialog.proceed(_("There are no broken packages."));
+      return;
+   }
+   
+   RPackageLister::pkgState state;
+   _lister->saveState(state);
+
+   _lister->fixBroken();
+
+   vector<RPackage *> selected;
+   vector<RPackage *> changed;
+   _lister->getStateChanges(state, changed, changed, changed,
+                            changed, changed, changed, selected);
+   
+   if (!changed.empty()) {
+      RQChangesWindow changes(this, changed);
+      changes.exec();
+      if (changes.result() == QDialog::Rejected) {
+         _lister->restoreState(state);
+         selected.clear();
+         changed.clear();
+      } else {
+         _lister->saveUndoState(state);
+      }
+   } else {
+      _userDialog.error(_("Can't fix broken packages!"));
+   }
+
+   _packageListView->triggerUpdate();
+}
+
 void RQMainWindow::commitChanges()
 {
    if (!_lister->check()) {
@@ -252,12 +339,26 @@ void RQMainWindow::commitChanges()
       return;
    }
 
+   int installed;
+   int broken;
+   int toInstall;
+   int toReInstall;
+   int toRemove;
+   double sizeChange;
+   _lister->getStats(installed, broken, toInstall, toReInstall, toRemove,
+                     sizeChange);
+   if (!toInstall && !toRemove)
+      return;
+
+   RQSummaryWindow summary(this, _lister);
+   summary.exec();
+   if (summary.result() == QDialog::Rejected)
+      return;
+
    setEnabled(false);
 
    // Pointers to packages will become invalid.
    _packageListView->clear();
-
-   // XXX Confirm changes here.
 
    // XXX Save selections to a temporary file here.
 
@@ -304,6 +405,14 @@ void RQMainWindow::refreshCache()
 
    reloadViews();
    reloadPackages();
+}
+
+void RQMainWindow::editFilters()
+{
+   RQFiltersWindow filters(this, _lister);
+   filters.exec();
+   reloadFilters();
+   _lister->storeFilters();
 }
 
 // vim:ts=3:sw=3:et

@@ -2703,6 +2703,7 @@ void RGMainWindow::buildInterface()
     _pkgCommonBoldTag = gtk_text_buffer_create_tag (_pkgCommonTextBuffer, 
 						    "bold",
 						    "weight",PANGO_WEIGHT_BOLD,
+						    "scale", 1.1,
 						    NULL);
 
  

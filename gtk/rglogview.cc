@@ -39,38 +39,54 @@ void RGLogView::readLogs()
    GtkTreeIter date_iter;  /* Child iter  */
 
    unsigned int year, month, day, hour, min, sec;
-   int last_year, last_month;
-   gchar *str = NULL;
-   const gchar *logfile = NULL;
+   unsigned int last_year, last_month;
+   char str[512];
+   const gchar *logfile;
    const gchar *logdir = RLogDir().c_str();
    GDir *dir = g_dir_open(logdir, 0, NULL);
    while((logfile=g_dir_read_name(dir)) != NULL) {
       if(sscanf(logfile, "%4u-%2u-%2u.%2u%2u%2u.log", 
 		&year, &month, &day, &hour, &min, &sec) != 6)
 	 continue;
-      
+
+      struct tm t;
+      t.tm_year = year-1900;
+      t.tm_mon = month-1;
+      t.tm_mday = day;
+      t.tm_hour = hour;
+      t.tm_min = min;
+      t.tm_sec = sec;
+      t.tm_wday = 0;        /* day of the week */
+      t.tm_yday = 0;        /* day in the year */
+      t.tm_isdst = 0;       /* daylight saving time */
+
+      GDate *date = g_date_new_dmy(day, (GDateMonth)month, year);
+      t.tm_wday = g_date_get_weekday(date);
+
       if(year != last_year || month != last_month) {
 	 gtk_tree_store_append(store, &month_iter, NULL); 
-	 str = g_strdup_printf("%.2i-%.4i", month, year);
+	 //str = g_strdup_printf("%.2i-%.4i", month, year);
+	 strftime(str, 512, "%B %G", &t);
 	 gtk_tree_store_set (store, &month_iter,
 			     COLUMN_LOG_DAY, str, 
 			     COLUMN_LOG_FILENAME, NULL, 
 			     -1);
 	 last_year = year;
 	 last_month = month;
-	 g_free(str);
+	 //g_free(str);
       }
 
-      str = g_strdup_printf("%.2i %.2i %.2i %.2i",day,hour,min,sec);
+      //str = g_strdup_printf("%.2i %.2i %.2i %.2i",day,hour,min,sec);
+      strftime(str, 512, "%c", &t);
       gtk_tree_store_append (store, &date_iter, &month_iter);
       gtk_tree_store_set (store, &date_iter,
 			  COLUMN_LOG_DAY, str, 
 			  COLUMN_LOG_FILENAME, logfile, 
 			  -1);
-      g_free(str);
+      //g_free(str);
 
    }
-
+   g_dir_close(dir);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(store));
 }
 

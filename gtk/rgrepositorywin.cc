@@ -303,6 +303,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_widget_set_sensitive(_editTable, FALSE);
 
    gtk_window_resize(GTK_WINDOW(_win), 620, 400);
+
+   gtk_widget_show_all(_win);
 }
 
 

@@ -213,8 +213,8 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 
   me->_lister->setFilter(filter);
   me->_lister->registerObserver(me);
-  me->setInterfaceLocked(FALSE);
   me->refreshTable(pkg);
+  me->setInterfaceLocked(FALSE);
 }
 
 void RGMainWindow::clickedDepList(GtkWidget *self, int row, int col,
@@ -488,9 +488,9 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     me->setStatusText(_("Updating Package Lists from Servers..."));
 
     me->setInterfaceLocked(TRUE);
-
+    
     /* Do not let the treeview access the cache during the update. */
-    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+    me->setTreeLocked(TRUE);
 
     // update cache and forget about the previous new packages 
     // (only if no error occured)
@@ -513,6 +513,7 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     }
     
     
+    me->setTreeLocked(FALSE);
     me->refreshTable(pkg);
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
@@ -523,6 +524,9 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
 
 RPackage *RGMainWindow::selectedPackage()
 {
+    if (_pkgTree == NULL)
+	return NULL;
+
     //cout << "RGMainWindow::selectedPackage()" << endl;
     GtkTreeSelection *selection;
     GtkTreeIter iter;
@@ -679,8 +683,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     fprogress->setTitle(_("Retrieving Package Files"));
 
     // Do not let the treeview access the cache during the update.
-    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
-
+    me->setTreeLocked(TRUE);
 
     RInstallProgress *iprogress;
 #ifdef HAVE_ZVT
@@ -729,12 +732,10 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 	me->saveState();
 	me->showErrors();
 	exit(0);
-	return;
     }
 
     if (_config->FindB("Synaptic::Download-Only", false) == false) {
       // reset the cache
-      gtk_tree_view_set_model (GTK_TREE_VIEW(me->_treeView), NULL);
       if (!me->_lister->openCache(TRUE)) {
 	me->showErrors();
 	exit(1);
@@ -748,6 +749,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
       pkg = NULL;
     }
 
+    me->setTreeLocked(FALSE);
     me->refreshTable(pkg);
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
@@ -877,7 +879,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 
   saveTableState(expanded_sections);
 
-  g_object_unref(_pkgTree);
   _pkgTree = gtk_pkg_tree_new(_lister);
   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			  GTK_TREE_MODEL(_pkgTree));
@@ -2418,6 +2419,9 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
     RPackage *pkg;
     GList *li, *list;
 
+    if (me->_pkgTree == NULL)
+	return;
+
     list = li = gtk_tree_selection_get_selected_rows(selection,
 					    (GtkTreeModel**)(&me->_pkgTree));
     // list is empty
@@ -2679,6 +2683,16 @@ void RGMainWindow::setInterfaceLocked(bool flag)
     }
   while (gtk_events_pending())
     gtk_main_iteration();
+}
+
+void RGMainWindow::setTreeLocked(bool flag)
+{
+    if (flag == true) {
+	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
+	_pkgTree = NULL;
+    } else {
+	// Do nothing for now, since refreshTable() will rebuild it.
+    }
 }
 
 // vim:sts=4:sw=4

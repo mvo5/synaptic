@@ -283,6 +283,7 @@ public:
    virtual ~RGMainWindow() {};
 
    void setInterfaceLocked(bool flag);
+   void setTreeLocked(bool flag);
    void setColors(bool useColors);
    void setStatusText(char *text = NULL);
    

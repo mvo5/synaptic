@@ -203,6 +203,7 @@ int main(int argc, char **argv)
     RGFlushInterface();
     
     mainWindow->setInterfaceLocked(true);
+    mainWindow->setTreeLocked(true);
     
     if (!packageLister->openCache(false)) {
 	mainWindow->showErrors();
@@ -215,6 +216,7 @@ int main(int argc, char **argv)
 	packageLister->registerObserver(mainWindow);
     }
 
+    mainWindow->setTreeLocked(false);
     mainWindow->setInterfaceLocked(false);
     mainWindow->restoreState();
     mainWindow->showErrors();

@@ -63,7 +63,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   setTitle(_("Downloading Files"));
+   //setTitle(_("Downloading Files"));
 #if 0
    gint dummy;
    gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,

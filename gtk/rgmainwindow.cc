@@ -287,6 +287,56 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
     win->_aboutPanel->show();
 }
 
+void RGMainWindow::searchBeginAction(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)data;
+    GtkTreeIter iter;
+
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+    gtk_tree_model_get_iter_first(me->_activeTreeModel, &iter);
+    gtk_tree_selection_unselect_all(selection);
+    gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
+    gtk_tree_selection_select_iter(selection, &iter);
+    me->searchAction(me->_findText, me);
+
+}
+
+void RGMainWindow::searchNextAction(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)data;
+    GtkTreeIter iter;
+    GtkTreePath *path;
+    GList *li, *list=NULL;
+    gboolean ok;
+
+    //cout << "searchNextAction()"<<endl;
+
+    // get last selected row
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+#if GTK_CHECK_VERSION(2,2,0)
+    list = li = gtk_tree_selection_get_selected_rows(selection,
+ 						     &me->_activeTreeModel);
+#else
+    li = list = NULL;
+    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					&list);
+    li = list;
+#endif
+
+    // if not -> take the first row
+    if(list==NULL) {
+	return;
+    } else {
+	li = g_list_last(li);
+	ok =  gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
+			    (GtkTreePath*)(li->data));
+    }
+    gtk_tree_selection_unselect_all(selection);
+    gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
+    gtk_tree_selection_select_iter(selection, &iter);
+    me->searchAction(me->_findText, me);
+}
+
 void RGMainWindow::searchAction(GtkWidget *self, void *data)
 {
     // search interativly in the tree
@@ -343,6 +393,8 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
 					     path, false);
 		    // work around a bug in expand_row (it steals the focus)
 		    gtk_widget_grab_focus(self);
+		    gtk_editable_select_region(GTK_EDITABLE(self),0,0);
+		    gtk_editable_set_position (GTK_EDITABLE(self),-1);
 		}
 		path = gtk_tree_model_get_path(me->_activeTreeModel, &iter);
 		gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(me->_treeView), 
@@ -2708,10 +2760,16 @@ void RGMainWindow::buildInterface()
     gtk_signal_connect(GTK_OBJECT(_findText), "changed",
 		       (GtkSignalFunc)searchAction, this);
 
-    _findSearchB = glade_xml_get_widget(_gladeXML, "button_search");
+    _findSearchB = glade_xml_get_widget(_gladeXML, "button_search_next");
     assert(_findSearchB);
     gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
-		       G_CALLBACK(findToolClicked),
+		       G_CALLBACK(searchNextAction),
+		       this);
+
+    _findSearchB = glade_xml_get_widget(_gladeXML, "button_search_begin");
+    assert(_findSearchB);
+    gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
+		       G_CALLBACK(searchBeginAction),
 		       this);
 
     // build the treeview

@@ -231,6 +231,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onTagTree(GtkWidget *self, void *data);   
 
    static void searchAction(GtkWidget *self, void *data);
+   static void searchNextAction(GtkWidget *self, void *data);
+   static void searchBeginAction(GtkWidget *self, void *data);
    static void changedFilter(GtkWidget *self);
    
    static void changedDepView(GtkWidget *self, void *data);

@@ -1720,6 +1720,7 @@ void RGMainWindow::undoClicked(GtkWidget *self, void *data)
 {
     //cout << "undoClicked" << endl;
     RGMainWindow *me = (RGMainWindow*)data;
+    me->setInterfaceLocked(TRUE); 
 
     me->_lister->unregisterObserver(me);
 
@@ -1728,13 +1729,14 @@ void RGMainWindow::undoClicked(GtkWidget *self, void *data)
 
     me->_lister->registerObserver(me);
     me->refreshTable();
-
+    me->setInterfaceLocked(FALSE); 
 }
 
 void RGMainWindow::redoClicked(GtkWidget *self, void *data)
 {
     //cout << "redoClicked" << endl;
     RGMainWindow *me = (RGMainWindow*)data;
+    me->setInterfaceLocked(TRUE); 
 
     me->_lister->unregisterObserver(me);
 
@@ -1743,6 +1745,7 @@ void RGMainWindow::redoClicked(GtkWidget *self, void *data)
 
     me->_lister->registerObserver(me);
     me->refreshTable();
+    me->setInterfaceLocked(FALSE); 
 }
 
 

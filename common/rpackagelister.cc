@@ -818,26 +818,27 @@ struct bla : public binary_function<RPackage*, RPackage*, bool> {
 
 void RPackageLister::saveUndoState(pkgState &state)
 {
-    cout << "RPackageLister::saveUndoState(state)" << endl;
-    undoStack.push(state);
-    for(int i=0;i<redoStack.size();i++)
-	redoStack.pop();
+    //cout << "RPackageLister::saveUndoState(state)" << endl;
+    undoStack.push_front(state);
+    redoStack.clear();
+
+    int maxStackSize = _config->FindI("Synaptic::undoStackSize", 20);
+    while(undoStack.size() > maxStackSize) 
+	undoStack.pop_back();
 }
 
 void RPackageLister::saveUndoState()
 {
-    cout << "RPackageLister::saveUndoState()" << endl;
+    //cout << "RPackageLister::saveUndoState()" << endl;
     pkgState state;
     saveState(state);
-    undoStack.push(state);
-    for(int i=0;i<redoStack.size();i++)
-	redoStack.pop();
+    saveUndoState(state);
 }
 
 
 void RPackageLister::undo()
 {
-    cout << "RPackageLister::undo()" << endl;
+    //cout << "RPackageLister::undo()" << endl;
     pkgState state;
     if(undoStack.empty()) {
 	cout << "undoStack empty" << endl;
@@ -845,24 +846,28 @@ void RPackageLister::undo()
     }
     // save redo information
     saveState(state);
-    redoStack.push(state);
+    redoStack.push_front(state);
 
     // undo 
-    state = undoStack.top();
-    undoStack.pop();
+    state = undoStack.front();
+    undoStack.pop_front();
+
     restoreState(state);
 }
 
 void RPackageLister::redo()
 {
-    cout << "RPackageLister::redo()" << endl;
+    //cout << "RPackageLister::redo()" << endl;
     pkgState state;
     if(redoStack.empty()) {
 	cout << "redoStack empty" << endl;
 	return;
     }
-    state = redoStack.top();
-    redoStack.pop();
+    saveState(state);
+    undoStack.push_front(state);
+
+    state = redoStack.front();
+    redoStack.pop_front();
     restoreState(state);
 }
 

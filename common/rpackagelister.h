@@ -29,7 +29,7 @@
 
 
 #include <vector>
-#include <stack>
+#include <list>
 #include <map>
 #include <set>
 #include <regex.h>
@@ -128,8 +128,8 @@ private:
    RUserDialog *_userDialog;
 
    // undo/redo stuff
-   stack<pkgState> undoStack;
-   stack<pkgState> redoStack;
+   list<pkgState> undoStack;
+   list<pkgState> redoStack;
 
   
 public:

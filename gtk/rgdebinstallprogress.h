@@ -28,6 +28,7 @@
 #include "rinstallprogress.h"
 #include "rggladewindow.h"
 #include<map>
+#include <vte/reaper.h>
 
 class RGMainWindow;
 
@@ -37,30 +38,36 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    // the various stages of dpkg
    static const int NR_REMOVE_STAGES=3;
    static char* remove_stages[NR_REMOVE_STAGES];
+   static char* remove_stages_translations[NR_REMOVE_STAGES];
 
    static const int NR_PURGE_STAGES=4;
    static char *purge_stages[NR_PURGE_STAGES];
+   static char *purge_stages_translations[NR_PURGE_STAGES];
 
    // purge a already removed pkg
    static const int NR_PURGE_ONLY_STAGES=2;
    static char *purge_only_stages[NR_PURGE_ONLY_STAGES]; 
+   static char *purge_only_stages_translations[NR_PURGE_ONLY_STAGES]; 
 
    static const int NR_INSTALL_STAGES=4;
    static char *install_stages[NR_INSTALL_STAGES];
+   static char *install_stages_translations[NR_INSTALL_STAGES];
 
    static const int NR_UPDATE_STAGES=5;
    static char *update_stages[NR_UPDATE_STAGES];
+   static char *update_stages_translations[NR_UPDATE_STAGES];
 
    static const int NR_REINSTALL_STAGES=6;
    static char *reinstall_stages[NR_REINSTALL_STAGES];
+   static char *reinstall_stages_translations[NR_REINSTALL_STAGES];
 
 
    // widgets
    GtkWidget *_label_status;
    GtkWidget *_labelSummary;
 
-   GtkWidget *_pbar;
    GtkWidget *_pbarTotal;
+   GtkWidget *_term;
 
    bool _startCounting;
 
@@ -70,16 +77,27 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    // this map contains the name and a pointer to the stages arrays
    map<string, char**> _actionsMap;
 
+   // this map contains the name and a pointer to the translation arrays
+   map<string, char**> _translationsMap;
+
    // this map contains what stage is already completted
    map<string, int> _stagesMap;
 
-   // readable states 
-   map<string,string> _transDpkgStates;
+   pid_t _child_id;
+   int res;
+   bool child_has_exited;
+   static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
+			    gpointer data);
+
 
  protected:
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
+
+   virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
+		   				int numPackages = 0,
+						int totalPackages = 0);
 
    virtual void prepare(RPackageLister *lister);
    

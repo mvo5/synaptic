@@ -202,6 +202,7 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 
 
 
+
 pkgPackageManager::OrderResult 
 RGTermInstallProgress::start(RPackageManager *pm,
 			    int numPackages,

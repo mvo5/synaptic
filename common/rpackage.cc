@@ -118,7 +118,7 @@ const char *RPackage::section()
     if(s!=NULL)
 	return s;
     else
-	return _("unknown");
+	return _("Unknown");
 }
 
 

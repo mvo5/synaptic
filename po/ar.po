@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-27 08:41+0100\n"
+"POT-Creation-Date: 2003-11-27 13:19+0100\n"
 "PO-Revision-Date: 2003-11-27 04:50+0300\n"
 "Last-Translator: Ossama Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -150,7 +150,7 @@ msgstr "انترنت"
 msgid "Miscellaneous  - Graphical"
 msgstr "متنوّعات - رسوميّة"
 
-#: common/sections_trans.h:38 gtk/rgmainwindow.cc:84
+#: common/sections_trans.h:38 common/rpackage.cc:121 gtk/rgmainwindow.cc:84
 msgid "Unknown"
 msgstr "مجهول"
 
@@ -341,10 +341,6 @@ msgstr "خطأ: لم يمكن إنشاء دليل الإعداد %s"
 msgid "couldn't open %s for writing"
 msgstr "لم يمكن فتح %s للكتابة"
 
-#: common/rpackage.cc:121
-msgid "unknown"
-msgstr "مجهول"
-
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr "اللائحة بأسماء الملفات المثبتة متوفّر فقط للحزمات المثبّتة"
@@ -488,9 +484,9 @@ msgid "ReverseDepends"
 msgstr ""
 
 #: common/rpackagefilter.cc:658
-#, c-format
-msgid "could not open ReducedView file %s"
-msgstr ""
+#, fuzzy, c-format
+msgid "Internal Error: Could not open ReducedView file %s"
+msgstr "خطأ داخلي: لم يمكن تشغيل gzip. رجاء أعلمنا."
 
 #: common/rpackagefilter.cc:685
 #, c-format
@@ -589,7 +585,8 @@ msgstr "مُثبّت وقابل للتحديث"
 msgid "Not installed (residual config)"
 msgstr ""
 
-#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/rgmainwindow.cc:1413
+#: gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "غير مُثبّت"
 
@@ -869,11 +866,13 @@ msgid "(stalled)\n"
 msgstr ""
 
 #: gtk/rgfetchprogress.cc:230
-msgid "[Working] "
-msgstr "[جاري العمل]"
+#, fuzzy
+msgid "[Processing...] "
+msgstr "معالجة النصوص"
 
 #: gtk/rgfetchprogress.cc:235
-msgid "[Receiving] "
+#, fuzzy
+msgid "[Receiving...] "
 msgstr "[جاري الاستقبال]"
 
 #: gtk/rgfetchprogress.cc:304
@@ -962,8 +961,9 @@ msgid "Performing Changes"
 msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:60
-msgid "Package Manager running"
-msgstr "مدير الحزمات يعمل"
+#, fuzzy
+msgid "Executing changes..."
+msgstr "نفّذ التغييرات"
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -981,12 +981,13 @@ msgid ""
 msgstr "بوصة"
 
 #: gtk/rgzvtinstallprogress.cc:100
-msgid "Package Manager finished"
-msgstr "مدير الحزمات انتهى"
+#, fuzzy
+msgid "Completed all changes"
+msgstr "نفّذ التغييرات"
 
 #: gtk/rgzvtinstallprogress.cc:109
-msgid "Can't close, Package Manager still runing"
-msgstr "لا تغلق، لا زال مدير الحزمات يعمل"
+msgid "Can't close while executing"
+msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:200
 #, fuzzy
@@ -1029,17 +1030,19 @@ msgstr ""
 
 #: gtk/rgmainwindow.cc:550
 #, fuzzy
-msgid "Starting dpkg-reconfigure"
+msgid "Starting dpkg-reconfigure..."
 msgstr "بدء"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-msgid "Starting package help"
+#, fuzzy
+msgid "Starting package help..."
 msgstr "بدء مساعدة الحزمة"
 
 #: gtk/rgmainwindow.cc:663
-msgid "Retrieving Index Files"
-msgstr ""
+#, fuzzy
+msgid "Retrieving Index Files..."
+msgstr "تسجيل القرص..."
 
 #: gtk/rgmainwindow.cc:665
 msgid "Updating Package Lists from Servers..."
@@ -1095,8 +1098,9 @@ msgid "Performing selected changes... this may take a while"
 msgstr "جاري عمل التغييرات المختارة... قد يستغرق هذا بعض الوقت"
 
 #: gtk/rgmainwindow.cc:865
-msgid "Retrieving Package Files"
-msgstr ""
+#, fuzzy
+msgid "Retrieving Package Files..."
+msgstr "نسخ قوائم الحزمات..."
 
 #: gtk/rgmainwindow.cc:924
 msgid "Do you want to quit Synaptic?"
@@ -1145,10 +1149,6 @@ msgstr "الحزمة حديثة."
 #: gtk/rgmainwindow.cc:1174
 msgid "Broken dependencies."
 msgstr ""
-
-#: gtk/rgmainwindow.cc:1413
-msgid "not installed"
-msgstr "غير مثبّت"
 
 #: gtk/rgmainwindow.cc:1442 gtk/window_main_hpaned.glade.strings:75
 #: gtk/window_main_vpaned.glade.strings:72
@@ -2366,7 +2366,8 @@ msgid "<b>Colors</b>"
 msgstr "<b>ألوان</b>"
 
 #: gtk/window_preferences.glade.strings:58
-msgid "Colour packages by their status"
+#, fuzzy
+msgid "Color packages by their status"
 msgstr "لوّن الحزم بحسب وضعها"
 
 #: gtk/window_preferences.glade.strings:60
@@ -2382,7 +2383,8 @@ msgstr "حدّث:"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-msgid "color"
+#, fuzzy
+msgid "Color"
 msgstr "لون"
 
 #: gtk/window_preferences.glade.strings:62
@@ -2494,8 +2496,9 @@ msgid "HTTP proxy: "
 msgstr "بروكسي HTTP:"
 
 #: gtk/window_preferences.glade.strings:102
+#, fuzzy
 msgid ""
-"Comma seperated list of hosts and domains that will not be contacted through "
+"Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 "لائحة مقسّمة بفواصل بأسماء المضيفين والمجالات التي لن يتم الاتصال بها عبر "
@@ -2566,8 +2569,9 @@ msgid "Value:"
 msgstr "القيمة:"
 
 #: gtk/window_setopt.glade.strings:12
-msgid "Name:"
-msgstr "الاسم:"
+#, fuzzy
+msgid "Variable:"
+msgstr "القيمة:"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2843,3 +2847,24 @@ msgstr "مدير الحزمات"
 #: data/synaptic.desktop.in.h:3
 msgid "Synaptic Package Manager"
 msgstr "مدير الحزمات Synaptic"
+
+#~ msgid "[Working] "
+#~ msgstr "[جاري العمل]"
+
+#~ msgid "Package Manager running"
+#~ msgstr "مدير الحزمات يعمل"
+
+#~ msgid "Package Manager finished"
+#~ msgstr "مدير الحزمات انتهى"
+
+#~ msgid "Can't close, Package Manager still runing"
+#~ msgstr "لا تغلق، لا زال مدير الحزمات يعمل"
+
+#~ msgid "Name:"
+#~ msgstr "الاسم:"
+
+#~ msgid "unknown"
+#~ msgstr "مجهول"
+
+#~ msgid "not installed"
+#~ msgstr "غير مثبّت"

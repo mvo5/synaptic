@@ -547,7 +547,7 @@ void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
 	return;
     }
 
-    me->setStatusText(_("Starting dpkg-reconfigure"));
+    me->setStatusText(_("Starting dpkg-reconfigure..."));
     cmd = g_strdup_printf("/usr/sbin/dpkg-reconfigure -f%s %s &", 
 			  frontend, me->selectedPackage()->name());
     system(cmd);
@@ -559,7 +559,7 @@ void RGMainWindow::pkgHelpClicked(GtkWidget *self, void *data)
     RGMainWindow *me = (RGMainWindow*)data;
 
     //cout << "RGMainWindow::pkgHelpClicked()" << endl;
-    me->setStatusText(_("Starting package help"));
+    me->setStatusText(_("Starting package help..."));
     
     system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
 }
@@ -660,7 +660,7 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     me->_filterWin = NULL;
 
     RGFetchProgress *progress = new RGFetchProgress(me);
-    progress->setTitle(_("Retrieving Index Files"));
+    progress->setTitle(_("Retrieving Index Files..."));
 
     me->setStatusText(_("Updating Package Lists from Servers..."));
 
@@ -862,7 +862,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
     // fetch packages
     RGFetchProgress *fprogress = new RGFetchProgress(me);
-    fprogress->setTitle(_("Retrieving Package Files"));
+    fprogress->setTitle(_("Retrieving Package Files..."));
 
     // Do not let the treeview access the cache during the update.
     me->setTreeLocked(TRUE);
@@ -1410,7 +1410,7 @@ void RGMainWindow::updateVersionButtons(RPackage *pkg)
 	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
 	gtk_widget_show(button);
     }
-    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),_("not installed"));
+    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),_("Not installed"));
     g_object_set_data(G_OBJECT(button),"me",this);
     g_object_set_data(G_OBJECT(button),"pkg",pkg);
     if(!found)

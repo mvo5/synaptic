@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-27 08:41+0100\n"
+"POT-Creation-Date: 2003-11-27 13:19+0100\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -154,7 +154,7 @@ msgstr ""
 msgid "Miscellaneous  - Graphical"
 msgstr ""
 
-#: common/sections_trans.h:38 gtk/rgmainwindow.cc:84
+#: common/sections_trans.h:38 common/rpackage.cc:121 gtk/rgmainwindow.cc:84
 msgid "Unknown"
 msgstr "Sconosciuto"
 
@@ -340,10 +340,6 @@ msgstr "ERRORE: impossibile creare la cartella di configurazione %s"
 msgid "couldn't open %s for writing"
 msgstr "impossibile aprire %s in scrittura"
 
-#: common/rpackage.cc:121
-msgid "unknown"
-msgstr "sconosciuto"
-
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -489,8 +485,8 @@ msgid "ReverseDepends"
 msgstr "DipendenzeInverse"
 
 #: common/rpackagefilter.cc:658
-#, c-format
-msgid "could not open ReducedView file %s"
+#, fuzzy, c-format
+msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "impossibile aprire il file %s per la vista ridotta"
 
 #: common/rpackagefilter.cc:685
@@ -594,7 +590,8 @@ msgstr "Installati e aggiornabili"
 msgid "Not installed (residual config)"
 msgstr "Non installati (configurazione residua)"
 
-#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/rgmainwindow.cc:1413
+#: gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "Non installati"
 
@@ -888,11 +885,13 @@ msgid "(stalled)\n"
 msgstr "(in stallo)\n"
 
 #: gtk/rgfetchprogress.cc:230
-msgid "[Working] "
-msgstr "[In elaborazione] "
+#, fuzzy
+msgid "[Processing...] "
+msgstr "Preparazione..."
 
 #: gtk/rgfetchprogress.cc:235
-msgid "[Receiving] "
+#, fuzzy
+msgid "[Receiving...] "
 msgstr "[in ricezione] "
 
 #: gtk/rgfetchprogress.cc:304
@@ -983,8 +982,9 @@ msgid "Performing Changes"
 msgstr "Eseguendo modifiche"
 
 #: gtk/rgzvtinstallprogress.cc:60
-msgid "Package Manager running"
-msgstr "Gestore Pacchetti attivo"
+#, fuzzy
+msgid "Executing changes..."
+msgstr "Esegui le modifiche selezionate"
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -1003,12 +1003,13 @@ msgstr ""
 "Aggiorna fallito - scorrere questa finestra per vedere l'errore"
 
 #: gtk/rgzvtinstallprogress.cc:100
-msgid "Package Manager finished"
-msgstr "Gestore pacchetti terminato"
+#, fuzzy
+msgid "Completed all changes"
+msgstr "Modifiche aperte"
 
 #: gtk/rgzvtinstallprogress.cc:109
-msgid "Can't close, Package Manager still runing"
-msgstr "Impossibile chiudere, il Gestore Pacchetti è ancora in funzione"
+msgid "Can't close while executing"
+msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:200
 msgid "Close dialog after Package Manager is finished"
@@ -1052,16 +1053,19 @@ msgstr ""
 "E' necessario installarlo per utilizzare dpkg-reconfigure con synaptic"
 
 #: gtk/rgmainwindow.cc:550
-msgid "Starting dpkg-reconfigure"
+#, fuzzy
+msgid "Starting dpkg-reconfigure..."
 msgstr "Avvio dpkg-reconfigure"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-msgid "Starting package help"
+#, fuzzy
+msgid "Starting package help..."
 msgstr "Avvio aiuto pacchetto"
 
 #: gtk/rgmainwindow.cc:663
-msgid "Retrieving Index Files"
+#, fuzzy
+msgid "Retrieving Index Files..."
 msgstr "Scaricamento file di indice"
 
 #: gtk/rgmainwindow.cc:665
@@ -1121,7 +1125,8 @@ msgid "Performing selected changes... this may take a while"
 msgstr "Esecuzione modifiche richiese...potrebbe richiedere molto tempo"
 
 #: gtk/rgmainwindow.cc:865
-msgid "Retrieving Package Files"
+#, fuzzy
+msgid "Retrieving Package Files..."
 msgstr "Scaricamento file pacchetti"
 
 #: gtk/rgmainwindow.cc:924
@@ -1172,11 +1177,6 @@ msgstr "Pacchetto è nuovo."
 #: gtk/rgmainwindow.cc:1174
 msgid "Broken dependencies."
 msgstr "Dipendenze difettose."
-
-#: gtk/rgmainwindow.cc:1413
-#, fuzzy
-msgid "not installed"
-msgstr "Non installati"
 
 #: gtk/rgmainwindow.cc:1442 gtk/window_main_hpaned.glade.strings:75
 #: gtk/window_main_vpaned.glade.strings:72
@@ -2501,7 +2501,7 @@ msgid "<b>Colors</b>"
 msgstr "<b>Colori</b>"
 
 #: gtk/window_preferences.glade.strings:58
-msgid "Colour packages by their status"
+msgid "Color packages by their status"
 msgstr ""
 
 #: gtk/window_preferences.glade.strings:60
@@ -2517,7 +2517,8 @@ msgstr "Aggiorna:"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-msgid "color"
+#, fuzzy
+msgid "Color"
 msgstr "colore"
 
 #: gtk/window_preferences.glade.strings:62
@@ -2634,7 +2635,7 @@ msgstr "Http proxy: "
 
 #: gtk/window_preferences.glade.strings:102
 msgid ""
-"Comma seperated list of hosts and domains that will not be contacted through "
+"Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
@@ -2702,8 +2703,9 @@ msgid "Value:"
 msgstr "Valore"
 
 #: gtk/window_setopt.glade.strings:12
-msgid "Name:"
-msgstr "Nome:"
+#, fuzzy
+msgid "Variable:"
+msgstr "Valore"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -3025,6 +3027,28 @@ msgstr "Nome pacchetto"
 #, fuzzy
 msgid "Synaptic Package Manager"
 msgstr "Synaptic Gestore Pacchetti"
+
+#~ msgid "[Working] "
+#~ msgstr "[In elaborazione] "
+
+#~ msgid "Package Manager running"
+#~ msgstr "Gestore Pacchetti attivo"
+
+#~ msgid "Package Manager finished"
+#~ msgstr "Gestore pacchetti terminato"
+
+#~ msgid "Can't close, Package Manager still runing"
+#~ msgstr "Impossibile chiudere, il Gestore Pacchetti è ancora in funzione"
+
+#~ msgid "Name:"
+#~ msgstr "Nome:"
+
+#~ msgid "unknown"
+#~ msgstr "sconosciuto"
+
+#, fuzzy
+#~ msgid "not installed"
+#~ msgstr "Non installati"
 
 #, fuzzy
 #~ msgid "1 package will be <b>DOWNGRADED</b>\n"

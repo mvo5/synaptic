@@ -227,12 +227,12 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 	    if (!I->Status.empty()) {
 		str = str + '[' + I->Status.c_str() + "] ";
 	    } else {
-		str = str + _("[Working] ");
+		str = str + _("[Processing...] ");
 	    }
 	    continue;
 	}
 	
-	str = str + _("[Receiving] ");
+	str = str + _("[Receiving...] ");
 
 	if (I->TotalSize > 0)
 	    updateStatus(*I->CurrentItem, 

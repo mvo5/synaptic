@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-27 08:41+0100\n"
+"POT-Creation-Date: 2003-11-27 13:19+0100\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -163,7 +163,7 @@ msgstr ""
 msgid "Miscellaneous  - Graphical"
 msgstr ""
 
-#: common/sections_trans.h:38 gtk/rgmainwindow.cc:84
+#: common/sections_trans.h:38 common/rpackage.cc:121 gtk/rgmainwindow.cc:84
 msgid "Unknown"
 msgstr "Невядомы"
 
@@ -348,10 +348,6 @@ msgstr "немагчыма стварыць каталёг для канфігу
 msgid "couldn't open %s for writing"
 msgstr "немагчыма адкрыць %s для запісу"
 
-#: common/rpackage.cc:121
-msgid "unknown"
-msgstr "невядомы"
-
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr "Сьпіс усталяваных файлаў даступны толькі для усталяваных пакетаў"
@@ -493,8 +489,8 @@ msgid "ReverseDepends"
 msgstr "ЗваротныяЗалежнасьці"
 
 #: common/rpackagefilter.cc:658
-#, c-format
-msgid "could not open ReducedView file %s"
+#, fuzzy, c-format
+msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "немагчыма адкрыць файл ReducedView %s"
 
 #: common/rpackagefilter.cc:685
@@ -604,7 +600,8 @@ msgid "Not installed (residual config)"
 msgstr "Не ўсталяваныя (рэшткавая канфігурацыя)"
 
 # This is filter name, it's better to not translate it
-#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/rgmainwindow.cc:1413
+#: gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "Не ўсталяваныя"
 
@@ -895,11 +892,13 @@ msgid "(stalled)\n"
 msgstr "(спынены)\n"
 
 #: gtk/rgfetchprogress.cc:230
-msgid "[Working] "
-msgstr "[Праца] "
+#, fuzzy
+msgid "[Processing...] "
+msgstr "Падрыхтоўка..."
 
 #: gtk/rgfetchprogress.cc:235
-msgid "[Receiving] "
+#, fuzzy
+msgid "[Receiving...] "
 msgstr "[Атрыманьне даньняў] "
 
 #: gtk/rgfetchprogress.cc:304
@@ -990,8 +989,9 @@ msgid "Performing Changes"
 msgstr "Выконваюцца зьмены"
 
 #: gtk/rgzvtinstallprogress.cc:60
-msgid "Package Manager running"
-msgstr "Ктраўнік пакетаў запушчаны"
+#, fuzzy
+msgid "Executing changes..."
+msgstr "Выключаць вылучаныя падзелы"
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -1011,12 +1011,13 @@ msgstr ""
 "прычыны"
 
 #: gtk/rgzvtinstallprogress.cc:100
-msgid "Package Manager finished"
-msgstr "Кіраўнік пакетаў завершыў працу"
+#, fuzzy
+msgid "Completed all changes"
+msgstr "Адкрыць зьмены"
 
 #: gtk/rgzvtinstallprogress.cc:109
-msgid "Can't close, Package Manager still runing"
-msgstr "Немагчыма закрыць, кіраўнік пакетаў усё яшчэ працуе"
+msgid "Can't close while executing"
+msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:200
 msgid "Close dialog after Package Manager is finished"
@@ -1062,16 +1063,19 @@ msgstr ""
 "synaptic"
 
 #: gtk/rgmainwindow.cc:550
-msgid "Starting dpkg-reconfigure"
+#, fuzzy
+msgid "Starting dpkg-reconfigure..."
 msgstr "Запуск dpkg-reconfigure"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-msgid "Starting package help"
+#, fuzzy
+msgid "Starting package help..."
 msgstr "Адкрыцьцё дапамогі па пакеце"
 
 #: gtk/rgmainwindow.cc:663
-msgid "Retrieving Index Files"
+#, fuzzy
+msgid "Retrieving Index Files..."
 msgstr "Загружаюцца індэксныя файлы"
 
 #: gtk/rgmainwindow.cc:665
@@ -1131,7 +1135,8 @@ msgid "Performing selected changes... this may take a while"
 msgstr "Выконваюцца выбраныя зьмены... гэта можа заняць пэўны час"
 
 #: gtk/rgmainwindow.cc:865
-msgid "Retrieving Package Files"
+#, fuzzy
+msgid "Retrieving Package Files..."
 msgstr "Загружаюцца файлы пакетаў"
 
 #: gtk/rgmainwindow.cc:924
@@ -1182,12 +1187,6 @@ msgstr "Новы пакет."
 #: gtk/rgmainwindow.cc:1174
 msgid "Broken dependencies."
 msgstr "Памылковыя залежнасьці."
-
-# This is filter name, it's better to not translate it
-#: gtk/rgmainwindow.cc:1413
-#, fuzzy
-msgid "not installed"
-msgstr "Не ўсталяваныя"
 
 #: gtk/rgmainwindow.cc:1442 gtk/window_main_hpaned.glade.strings:75
 #: gtk/window_main_vpaned.glade.strings:72
@@ -2519,7 +2518,7 @@ msgid "<b>Colors</b>"
 msgstr "Колеры"
 
 #: gtk/window_preferences.glade.strings:58
-msgid "Colour packages by their status"
+msgid "Color packages by their status"
 msgstr ""
 
 #: gtk/window_preferences.glade.strings:60
@@ -2536,7 +2535,8 @@ msgstr "Абнавіць"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-msgid "color"
+#, fuzzy
+msgid "Color"
 msgstr "колер"
 
 #: gtk/window_preferences.glade.strings:62
@@ -2659,7 +2659,7 @@ msgstr ""
 
 #: gtk/window_preferences.glade.strings:102
 msgid ""
-"Comma seperated list of hosts and domains that will not be contacted through "
+"Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
@@ -2728,8 +2728,8 @@ msgstr "Значэньне"
 
 #: gtk/window_setopt.glade.strings:12
 #, fuzzy
-msgid "Name:"
-msgstr "Назва"
+msgid "Variable:"
+msgstr "Даступны"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -3054,6 +3054,30 @@ msgstr "Назва пакета"
 #, fuzzy
 msgid "Synaptic Package Manager"
 msgstr "Вывад кіраўніка пакетаў"
+
+#~ msgid "[Working] "
+#~ msgstr "[Праца] "
+
+#~ msgid "Package Manager running"
+#~ msgstr "Ктраўнік пакетаў запушчаны"
+
+#~ msgid "Package Manager finished"
+#~ msgstr "Кіраўнік пакетаў завершыў працу"
+
+#~ msgid "Can't close, Package Manager still runing"
+#~ msgstr "Немагчыма закрыць, кіраўнік пакетаў усё яшчэ працуе"
+
+#, fuzzy
+#~ msgid "Name:"
+#~ msgstr "Назва"
+
+#~ msgid "unknown"
+#~ msgstr "невядомы"
+
+# This is filter name, it's better to not translate it
+#, fuzzy
+#~ msgid "not installed"
+#~ msgstr "Не ўсталяваныя"
 
 #, fuzzy
 #~ msgid "1 package will be <b>DOWNGRADED</b>\n"
@@ -3966,9 +3990,6 @@ msgstr "Вывад кіраўніка пакетаў"
 #~ msgstr ""
 #~ "Стварыць фільтар 'Search Filter', які адлюстроўвае ўсе пакеты, якія "
 #~ "задавальняюць шаблён"
-
-#~ msgid "Available"
-#~ msgstr "Даступны"
 
 #~ msgid ""
 #~ "There are unsaved changes, are you sure\n"

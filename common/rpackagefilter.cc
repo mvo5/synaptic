@@ -655,7 +655,7 @@ void RReducedViewPackageFilter::addFile(string FileName)
    FileFd F(FileName, FileFd::ReadOnly);
    if (_error->PendingError()) 
    {
-      _error->Error(_("could not open ReducedView file %s"),
+      _error->Error(_("Internal Error: Could not open ReducedView file %s"),
 		    FileName.c_str());
       return;
    }

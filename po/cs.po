@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-27 08:41+0100\n"
+"POT-Creation-Date: 2003-11-27 13:19+0100\n"
 "PO-Revision-Date: 2003-11-24 18:06+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -142,7 +142,7 @@ msgstr "WWW"
 msgid "Miscellaneous  - Graphical"
 msgstr "Různé - Grafika"
 
-#: common/sections_trans.h:38 gtk/rgmainwindow.cc:84
+#: common/sections_trans.h:38 common/rpackage.cc:121 gtk/rgmainwindow.cc:84
 msgid "Unknown"
 msgstr "Neznámý"
 
@@ -323,10 +323,6 @@ msgstr "CHYBA: pro %s nelze vytvořit adresář s konfigurací"
 msgid "couldn't open %s for writing"
 msgstr "Nemohu otevřít %s pro zápis"
 
-#: common/rpackage.cc:121
-msgid "unknown"
-msgstr "neznámý"
-
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr "Seznam instalovaných souborů existuje pouze pro instalované balíky"
@@ -472,8 +468,8 @@ msgid "ReverseDepends"
 msgstr "Vzájemná závislost"
 
 #: common/rpackagefilter.cc:658
-#, c-format
-msgid "could not open ReducedView file %s"
+#, fuzzy, c-format
+msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "nemohu otevřít soubor %s s nastavením pro Filtrovaný seznam"
 
 #: common/rpackagefilter.cc:685
@@ -575,7 +571,8 @@ msgstr "Aktualizovatelné"
 msgid "Not installed (residual config)"
 msgstr "Není nainstalován (zůstaly pouze konfiguráky)"
 
-#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/rgmainwindow.cc:1413
+#: gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "Nenainstalované balíky"
 
@@ -887,11 +884,13 @@ msgid "(stalled)\n"
 msgstr "(zastaveno)\n"
 
 #: gtk/rgfetchprogress.cc:230
-msgid "[Working] "
-msgstr "[Zpracovávám]"
+#, fuzzy
+msgid "[Processing...] "
+msgstr "Zpracování textu"
 
 #: gtk/rgfetchprogress.cc:235
-msgid "[Receiving] "
+#, fuzzy
+msgid "[Receiving...] "
 msgstr "[Stahuji]"
 
 #: gtk/rgfetchprogress.cc:304
@@ -980,8 +979,9 @@ msgid "Performing Changes"
 msgstr "Realizuji změny"
 
 #: gtk/rgzvtinstallprogress.cc:60
-msgid "Package Manager running"
-msgstr "Správce balíků běží.. "
+#, fuzzy
+msgid "Executing changes..."
+msgstr "Realizovat změny"
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -1000,12 +1000,13 @@ msgstr ""
 "Update selhal - Prolistujte si buffer abyste zjistili kde se stala chyba"
 
 #: gtk/rgzvtinstallprogress.cc:100
-msgid "Package Manager finished"
-msgstr "Správce balíků skončil"
+#, fuzzy
+msgid "Completed all changes"
+msgstr "Otevřít změny"
 
 #: gtk/rgzvtinstallprogress.cc:109
-msgid "Can't close, Package Manager still runing"
-msgstr "Nemůžu skončit, Správce balíků stále pracuje"
+msgid "Can't close while executing"
+msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:200
 msgid "Close dialog after Package Manager is finished"
@@ -1059,16 +1060,19 @@ msgstr ""
 "doinstalovat."
 
 #: gtk/rgmainwindow.cc:550
-msgid "Starting dpkg-reconfigure"
+#, fuzzy
+msgid "Starting dpkg-reconfigure..."
 msgstr "Spouštím dpkg-reconfigure"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-msgid "Starting package help"
+#, fuzzy
+msgid "Starting package help..."
 msgstr "Spouštím nápovědu k balíku"
 
 #: gtk/rgmainwindow.cc:663
-msgid "Retrieving Index Files"
+#, fuzzy
+msgid "Retrieving Index Files..."
 msgstr "Stažení indexových souborů ze zdrojů"
 
 #: gtk/rgmainwindow.cc:665
@@ -1128,7 +1132,8 @@ msgid "Performing selected changes... this may take a while"
 msgstr "Ověřuji vybrané změny... to může chvíli trvat"
 
 #: gtk/rgmainwindow.cc:865
-msgid "Retrieving Package Files"
+#, fuzzy
+msgid "Retrieving Package Files..."
 msgstr "Stažení balíků ze zdrojů"
 
 #: gtk/rgmainwindow.cc:924
@@ -1178,10 +1183,6 @@ msgstr "Balík je novinka."
 #: gtk/rgmainwindow.cc:1174
 msgid "Broken dependencies."
 msgstr "Chyba závislostí."
-
-#: gtk/rgmainwindow.cc:1413
-msgid "not installed"
-msgstr "Neinstalovat"
 
 #: gtk/rgmainwindow.cc:1442 gtk/window_main_hpaned.glade.strings:75
 #: gtk/window_main_vpaned.glade.strings:72
@@ -2472,7 +2473,8 @@ msgid "<b>Colors</b>"
 msgstr "<b>Barvy</b>"
 
 #: gtk/window_preferences.glade.strings:58
-msgid "Colour packages by their status"
+#, fuzzy
+msgid "Color packages by their status"
 msgstr "Označovat balíky barevně podle jejich stavu"
 
 #: gtk/window_preferences.glade.strings:60
@@ -2488,7 +2490,8 @@ msgstr "K aktualizaci:"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-msgid "color"
+#, fuzzy
+msgid "Color"
 msgstr "Barva"
 
 #: gtk/window_preferences.glade.strings:62
@@ -2599,7 +2602,7 @@ msgstr "HTTP proxy:"
 #: gtk/window_preferences.glade.strings:102
 #, fuzzy
 msgid ""
-"Comma seperated list of hosts and domains that will not be contacted through "
+"Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 "Seznam IP adres, hostů a domén, oddělených čárkami, které nebudou "
@@ -2677,8 +2680,9 @@ msgid "Value:"
 msgstr "Hodnota:"
 
 #: gtk/window_setopt.glade.strings:12
-msgid "Name:"
-msgstr "Název:"
+#, fuzzy
+msgid "Variable:"
+msgstr "Hodnota:"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2960,6 +2964,27 @@ msgstr "Název balíku"
 #, fuzzy
 msgid "Synaptic Package Manager"
 msgstr "Synaptic - manažer instalačních balíků"
+
+#~ msgid "[Working] "
+#~ msgstr "[Zpracovávám]"
+
+#~ msgid "Package Manager running"
+#~ msgstr "Správce balíků běží.. "
+
+#~ msgid "Package Manager finished"
+#~ msgstr "Správce balíků skončil"
+
+#~ msgid "Can't close, Package Manager still runing"
+#~ msgstr "Nemůžu skončit, Správce balíků stále pracuje"
+
+#~ msgid "Name:"
+#~ msgstr "Název:"
+
+#~ msgid "unknown"
+#~ msgstr "neznámý"
+
+#~ msgid "not installed"
+#~ msgstr "Neinstalovat"
 
 #, fuzzy
 #~ msgid "1 package will be <b>DOWNGRADED</b>\n"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-27 08:41+0100\n"
+"POT-Creation-Date: 2003-11-27 13:19+0100\n"
 "PO-Revision-Date: 2003-11-16 19:09+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -147,7 +147,7 @@ msgstr "World Wide Web"
 msgid "Miscellaneous  - Graphical"
 msgstr "Varios - Gráfico"
 
-#: common/sections_trans.h:38 gtk/rgmainwindow.cc:84
+#: common/sections_trans.h:38 common/rpackage.cc:121 gtk/rgmainwindow.cc:84
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -331,10 +331,6 @@ msgstr "ERROR: no se ha podido crear el directorio de configuración %s"
 msgid "couldn't open %s for writing"
 msgstr "No se ha podido abrir %s para escribir"
 
-#: common/rpackage.cc:121
-msgid "unknown"
-msgstr "desconocido"
-
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -485,8 +481,8 @@ msgid "ReverseDepends"
 msgstr "Dependencia inversa"
 
 #: common/rpackagefilter.cc:658
-#, c-format
-msgid "could not open ReducedView file %s"
+#, fuzzy, c-format
+msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "no se puede abrir el fichero de vista reducida %s"
 
 #: common/rpackagefilter.cc:685
@@ -588,7 +584,8 @@ msgstr "Instalados y actualizables"
 msgid "Not installed (residual config)"
 msgstr "No instalados (conf. residual)"
 
-#: common/rpackagelister.cc:868 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:868 gtk/rgmainwindow.cc:1413
+#: gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "No Instalado"
 
@@ -901,11 +898,13 @@ msgid "(stalled)\n"
 msgstr "(bloqueado)\n"
 
 #: gtk/rgfetchprogress.cc:230
-msgid "[Working] "
-msgstr "[Trabajando] "
+#, fuzzy
+msgid "[Processing...] "
+msgstr "Procesamiento de textos"
 
 #: gtk/rgfetchprogress.cc:235
-msgid "[Receiving] "
+#, fuzzy
+msgid "[Receiving...] "
 msgstr "[Recibiendo] "
 
 #: gtk/rgfetchprogress.cc:304
@@ -993,8 +992,9 @@ msgid "Performing Changes"
 msgstr "Realizando los cambios"
 
 #: gtk/rgzvtinstallprogress.cc:60
-msgid "Package Manager running"
-msgstr "Gestor de Paquetes funcionando"
+#, fuzzy
+msgid "Executing changes..."
+msgstr "Ejecutar los cambios seleccionados"
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -1013,12 +1013,14 @@ msgstr ""
 "Falló la actualización - Desplace este búfer para ver lo que fue mal"
 
 #: gtk/rgzvtinstallprogress.cc:100
-msgid "Package Manager finished"
-msgstr "El Gestor de Paquetes ha terminado"
+#, fuzzy
+msgid "Completed all changes"
+msgstr "Abrir cambios"
 
 #: gtk/rgzvtinstallprogress.cc:109
-msgid "Can't close, Package Manager still runing"
-msgstr "No se puede cerrar, el Gestor de Paquetes aún está trabajando"
+#, fuzzy
+msgid "Can't close while executing"
+msgstr "Mostrar la ventana del terminal al ejecutar"
 
 #: gtk/rgzvtinstallprogress.cc:200
 msgid "Close dialog after Package Manager is finished"
@@ -1071,16 +1073,19 @@ msgstr ""
 "Debe de instalar libgnome-perl para usar dpkg-reconfigure con synaptic"
 
 #: gtk/rgmainwindow.cc:550
-msgid "Starting dpkg-reconfigure"
+#, fuzzy
+msgid "Starting dpkg-reconfigure..."
 msgstr "Comenzando dpkg-reconfigure"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-msgid "Starting package help"
+#, fuzzy
+msgid "Starting package help..."
 msgstr "Comenzando la ayuda de paquetes "
 
 #: gtk/rgmainwindow.cc:663
-msgid "Retrieving Index Files"
+#, fuzzy
+msgid "Retrieving Index Files..."
 msgstr "Obteniendo los ficheros índice"
 
 #: gtk/rgmainwindow.cc:665
@@ -1140,7 +1145,8 @@ msgid "Performing selected changes... this may take a while"
 msgstr "Efectuando cambios seleccionados... llevará un rato"
 
 #: gtk/rgmainwindow.cc:865
-msgid "Retrieving Package Files"
+#, fuzzy
+msgid "Retrieving Package Files..."
 msgstr "Obteniendo el ficheros de paquetes"
 
 #: gtk/rgmainwindow.cc:924
@@ -1191,10 +1197,6 @@ msgstr "El paquete es nuevo."
 #: gtk/rgmainwindow.cc:1174
 msgid "Broken dependencies."
 msgstr "Dependencias rotas."
-
-#: gtk/rgmainwindow.cc:1413
-msgid "not installed"
-msgstr "no instalado"
 
 #: gtk/rgmainwindow.cc:1442 gtk/window_main_hpaned.glade.strings:75
 #: gtk/window_main_vpaned.glade.strings:72
@@ -2504,7 +2506,8 @@ msgid "<b>Colors</b>"
 msgstr "<b>Colores</b>"
 
 #: gtk/window_preferences.glade.strings:58
-msgid "Colour packages by their status"
+#, fuzzy
+msgid "Color packages by their status"
 msgstr "Colorear paquetes según su estado"
 
 #: gtk/window_preferences.glade.strings:60
@@ -2520,7 +2523,8 @@ msgstr "Actualizar:"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-msgid "color"
+#, fuzzy
+msgid "Color"
 msgstr "color"
 
 #: gtk/window_preferences.glade.strings:62
@@ -2631,7 +2635,7 @@ msgstr "Proxy http: "
 #: gtk/window_preferences.glade.strings:102
 #, fuzzy
 msgid ""
-"Comma seperated list of hosts and domains that will not be contacted through "
+"Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 "Lista separada por comas de hosts y dominios que no serán contactados a "
@@ -2704,8 +2708,9 @@ msgid "Value:"
 msgstr "Valor:"
 
 #: gtk/window_setopt.glade.strings:12
-msgid "Name:"
-msgstr "Nombre:"
+#, fuzzy
+msgid "Variable:"
+msgstr "Disponible"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2995,6 +3000,27 @@ msgstr "Nombre del paquete"
 msgid "Synaptic Package Manager"
 msgstr "Gestor de Paquetes Synaptic"
 
+#~ msgid "[Working] "
+#~ msgstr "[Trabajando] "
+
+#~ msgid "Package Manager running"
+#~ msgstr "Gestor de Paquetes funcionando"
+
+#~ msgid "Package Manager finished"
+#~ msgstr "El Gestor de Paquetes ha terminado"
+
+#~ msgid "Can't close, Package Manager still runing"
+#~ msgstr "No se puede cerrar, el Gestor de Paquetes aún está trabajando"
+
+#~ msgid "Name:"
+#~ msgstr "Nombre:"
+
+#~ msgid "unknown"
+#~ msgstr "desconocido"
+
+#~ msgid "not installed"
+#~ msgstr "no instalado"
+
 #, fuzzy
 #~ msgid "1 package will be <b>DOWNGRADED</b>\n"
 #~ msgstr "%d %s será DESACTUALIZADO\n"
@@ -3205,9 +3231,6 @@ msgstr "Gestor de Paquetes Synaptic"
 
 #~ msgid "   "
 #~ msgstr "    "
-
-#~ msgid "Show terminal window while executing"
-#~ msgstr "Mostrar la ventana del terminal al ejecutar"
 
 #~ msgid "Remove package: "
 #~ msgstr "Eliminar paquete: "
@@ -3837,9 +3860,6 @@ msgstr "Gestor de Paquetes Synaptic"
 #~ msgstr ""
 #~ "Hacer un filtro en 'Filtro de búsquedas' mostrando todos los paquetes que "
 #~ "coincidan con el patrón"
-
-#~ msgid "Available"
-#~ msgstr "Disponible"
 
 #~ msgid ""
 #~ "There are unsaved changes, are you sure\n"

@@ -57,7 +57,7 @@ using namespace std;
 void RGZvtInstallProgress::startUpdate()
 {
   show();
-  gtk_label_set_text(GTK_LABEL(_statusL), _("Package Manager running"));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("Executing changes..."));
   RGFlushInterface();
 }
 
@@ -97,7 +97,7 @@ void RGZvtInstallProgress::finishUpdate()
   else
     vte_terminal_feed(VTE_TERMINAL(_term), utf8(errorMsg.c_str()), (long)errorMsg.size());
 #endif
-  gtk_label_set_text(GTK_LABEL(_statusL), _("Package Manager finished"));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("Completed all changes"));
 }
 
 void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
@@ -106,7 +106,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
 
   if(!me->updateFinished) {
     gtk_label_set_text(GTK_LABEL(me->_statusL), 
-		       _("Can't close, Package Manager still runing"));
+		       _("Can't close while executing"));
     return;
   } 
 

@@ -40,6 +40,14 @@ RGGladeWindow(parent, "about", "credits")
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_closebutton_clicked",
                                  G_CALLBACK(closeWindow), this);
+
+   // hide translators credits if it is not found in the po file
+   GtkWidget *credits;
+   credits = glade_xml_get_widget(_gladeXML,"label_translator_credits");
+   assert(credits);
+   const char* s = gtk_label_get_text(GTK_LABEL(credits));
+   if(strcmp(s, "translators_credits") == 0)
+     gtk_widget_hide(credits);
 };
 
 
@@ -51,8 +59,8 @@ void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
       me->credits = new RGCreditsPanel::RGCreditsPanel(me);
    }
    me->credits->setTitle(_("Credits"));
-   me->credits->show();
 
+   me->credits->show();
 }
 
 

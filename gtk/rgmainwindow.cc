@@ -1470,10 +1470,6 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
       if (!_userDialog->confirm(_("Removing this package may render the "
                                   "system unusable.\n"
                                   "Are you sure you want to do that?"))) {
-         _blockActions = TRUE;
-         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->_currentB),
-                                      TRUE);
-         _blockActions = FALSE;
          return;
       }
    }

@@ -99,8 +99,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_statusL;
    GtkWidget *_progressBar;
 
-   GtkWidget *_currentB;        // ptr to one of below
-   GtkWidget *_actionB[3];      // keep, install, delete
    // menu items 
    GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;

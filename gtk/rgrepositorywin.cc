@@ -214,48 +214,16 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRCDIR);
-#if 0
-   item = gtk_menu_item_new_with_label("deb");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEB);
-
-   item = gtk_menu_item_new_with_label("deb-src");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEBSRC);
-#endif
 #else
-   item = gtk_menu_item_new_with_label("deb");
+   item = gtk_menu_item_new_with_label("Binary (deb)");
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEB);
 
-   item = gtk_menu_item_new_with_label("deb-src");
+   item = gtk_menu_item_new_with_label("Source (deb-src)");
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEBSRC);
-#if 0
-   item = gtk_menu_item_new_with_label("rpm");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPM);
-
-   item = gtk_menu_item_new_with_label("rpm-src");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRC);
-
-   item = gtk_menu_item_new_with_label("rpm-dir");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMDIR);
-
-   item = gtk_menu_item_new_with_label("rpm-src-dir");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRCDIR);
-#endif
 #endif
    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
 

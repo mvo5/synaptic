@@ -30,10 +30,13 @@
 #include <map>
 
 #include "rpackage.h"
+#include "rpackagefilter.h"
 
 #include "i18n.h"
 
 using namespace std;
+
+struct RFilter;
 
 class RPackageView {
  protected:
@@ -65,8 +68,8 @@ class RPackageView {
 
    typedef vector<RPackage *>::iterator iterator;
 
-   iterator begin() { return _selectedView.begin(); };
-   iterator end() { return _selectedView.end(); };
+   virtual iterator begin() { return _selectedView.begin(); };
+   virtual iterator end() { return _selectedView.end(); };
 
    virtual void clear();
    virtual void clearSelection();
@@ -112,6 +115,61 @@ class RPackageViewStatus:public RPackageView {
    void addPackage(RPackage *package);
 };
 
+class RPackageViewSearch : public RPackageView {
+ protected:
+   string searchString;
+   int searchType;
+ public:
+   RPackageViewSearch(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   void setSearch(string str, int type);
+
+   string getName() {
+      return _("Search History");
+   };
+
+   void addPackage(RPackage *package);
+};
+
+
+class RPackageViewFilter : public RPackageView {
+ protected:
+   vector<RFilter *> _filterL;
+   set<string> _sectionList;   // list of all available package sections
+
+ public:
+   void storeFilters();
+   void restoreFilters();
+
+   bool registerFilter(RFilter *filter);
+   void unregisterFilter(RFilter *filter);
+
+   void makePresetFilters();
+
+   RFilter* findFilter(string name);
+   unsigned int nrOfFilters() { return _filterL.size(); };
+   RFilter *findFilter(unsigned int index) {
+      if (index > _filterL.size())
+         return NULL;
+      else
+         return _filterL[index];
+   };
+   vector<string> getFilterNames();
+   const set<string> &getSections() { return _sectionList; };
+
+   RPackageViewFilter(vector<RPackage *> &allPkgs);
+
+   // build packages list on "demand"
+   virtual iterator begin();
+
+   // we never need to clear because we build the view "on-demand"
+   virtual void clear() {};
+
+   string getName() {
+      return _("Filter");
+   };
+
+   void addPackage(RPackage *package);
+};
 
 
 

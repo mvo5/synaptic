@@ -628,7 +628,7 @@ vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 bool RPackage::dependsOn(const char *pkgname)
 {
    vector<DepInformation> deps = enumDeps();
-   for(int i=0;i<deps.size();i++)
+   for(unsigned int i=0;i<deps.size();i++)
       if(strcmp(pkgname, deps[i].name) == 0)
 	 return true;
    return false;

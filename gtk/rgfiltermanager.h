@@ -32,7 +32,7 @@
 
 #include "i18n.h"
 
-class RPackageLister;
+class RPackageViewFilter;
 class RGFilterManagerWindow;
 
 // must be in the same order as of the check buttons
@@ -46,8 +46,8 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::Broken,
    RStatusPackageFilter::NewPackage,
    RStatusPackageFilter::PinnedPackage,
-   RStatusPackageFilter::OrphanedPackage,       // debian only (for now)
-   RStatusPackageFilter::ResidualConfig,
+   RStatusPackageFilter::OrphanedPackage,       // debian only
+   RStatusPackageFilter::ResidualConfig,        // debian only
    RStatusPackageFilter::NotInstallable
 };
 
@@ -178,7 +178,7 @@ class RGFilterManagerWindow:public RGGladeWindow {
    GtkWidget *_optionmenu_expand_mode;
 
    // the lister is always needed
-   RPackageLister *_lister;
+   RPackageViewFilter *_filterview;
    vector<RFilter *> _saveFilters;
 
 #ifdef HAVE_DEBTAGS
@@ -203,7 +203,7 @@ class RGFilterManagerWindow:public RGGladeWindow {
 #endif
 
  public:
-   RGFilterManagerWindow(RGWindow *win, RPackageLister *lister);
+   RGFilterManagerWindow(RGWindow *win, RPackageViewFilter *filterview);
 
    void setCloseCallback(RGFilterEditorCloseAction *action, void *data);
    virtual bool close();

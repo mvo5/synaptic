@@ -47,9 +47,6 @@ class Configuration;
 
 class RPackageFilter {
 
-   protected:
-
-   RPackageLister *_lister;
 
    public:
 
@@ -62,7 +59,6 @@ class RPackageFilter {
    virtual bool write(ofstream &out, string pad) = 0;
 
    RPackageFilter() {};
-   RPackageFilter(RPackageLister *lister) : _lister(lister) {};
    virtual ~RPackageFilter() {};
 };
 
@@ -78,8 +74,7 @@ class RSectionPackageFilter : public RPackageFilter {
 
    public:
 
-   RSectionPackageFilter(RPackageLister *lister)
-      :   RPackageFilter(lister), _inclusive(false) {};
+   RSectionPackageFilter() : _inclusive(false) {};
    virtual ~RSectionPackageFilter() {};
 
    inline virtual void reset() {
@@ -144,9 +139,7 @@ class RPatternPackageFilter : public RPackageFilter {
 
    static char *TypeName[];
 
-   RPatternPackageFilter(RPackageLister *lister)
-      :   RPackageFilter(lister)
-   {};
+   RPatternPackageFilter() {};
    RPatternPackageFilter(RPatternPackageFilter &f);
    virtual ~RPatternPackageFilter();
 
@@ -195,8 +188,7 @@ class RStatusPackageFilter : public RPackageFilter {
       NotInstallable = 1 << 11  // the package is not aviailable in repository
    };
 
-   RStatusPackageFilter(RPackageLister *lister)
-      :   RPackageFilter(lister), _status(~0)
+   RStatusPackageFilter() : _status(~0)
    {};
    inline virtual void reset() { _status = ~0; };
 
@@ -217,9 +209,7 @@ class RPriorityPackageFilter:public RPackageFilter {
 
    public:
 
-   RPriorityPackageFilter(RPackageLister *lister)
-      :   RPackageFilter(lister)
-   {};
+   RPriorityPackageFilter()  {};
 
    inline virtual void reset() {};
 
@@ -247,9 +237,7 @@ class RReducedViewPackageFilter : public RPackageFilter {
 
    public:
 
-   RReducedViewPackageFilter(RPackageLister *lister)
-      :   RPackageFilter(lister), _enabled(false)
-   {};
+   RReducedViewPackageFilter() : _enabled(false) {};
    ~RReducedViewPackageFilter();
 
    inline virtual void reset() { _hide.clear(); };
@@ -268,9 +256,9 @@ struct RFilter {
 
    public:
 
-   RFilter(RPackageLister *lister)
-      :   section(lister), pattern(lister), status(lister),
-          priority(lister), reducedview(lister), preset(false)
+   RFilter()
+      :   section(), pattern(), status(),
+          priority(), reducedview(), preset()
    {};
 
    void setName(string name);

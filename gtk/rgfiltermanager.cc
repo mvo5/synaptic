@@ -26,7 +26,7 @@
 #include <stdio.h>
 #include <cassert>
 #include "config.h"
-#include "rpackagelister.h"
+#include "rpackageview.h"
 #include "rgfiltermanager.h"
 
 #include "i18n.h"
@@ -39,9 +39,9 @@ extern void multipleSelectionHelper(GtkTreeModel *model,
 
 
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
-                                             RPackageLister *lister)
+                                             RPackageViewFilter *filterview)
 : RGGladeWindow(win, "filters"), _selectedPath(NULL),
-_selectedFilter(NULL), _lister(lister)
+_selectedFilter(NULL), _filterview(filterview)
 {
    setTitle(_("Filters"));
 
@@ -125,7 +125,7 @@ _selectedFilter(NULL), _lister(lister)
                     G_CALLBACK(selectAction), this);
 
    // section list
-   const vector<string> &sections = _lister->getSections();
+   const set<string> &sections = _filterview->getSections();
    _sectionList = glade_xml_get_widget(_gladeXML, "treeview_sections");
    _sectionListStore = gtk_list_store_new(SECTION_N_COLUMNS, G_TYPE_STRING);
    renderer = gtk_cell_renderer_text_new();
@@ -142,10 +142,10 @@ _selectedFilter(NULL), _lister(lister)
 
    // fill selections dialog
    GtkTreeIter iter;
-   for (unsigned int i = 0; i < sections.size(); i++) {
+   for (set<string>::iterator I=sections.begin(); I != sections.end(); I++) {
       gtk_list_store_append(_sectionListStore, &iter);
       gtk_list_store_set(_sectionListStore, &iter,
-                         SECTION_COLUMN, sections[i].c_str(), -1);
+                         SECTION_COLUMN, (*I).c_str(), -1);
    }
 
    // build pkg status dialog
@@ -402,13 +402,13 @@ gint RGFilterManagerWindow::deleteEventAction(GtkWidget *widget,
 
 void RGFilterManagerWindow::show()
 {
-   vector<string> filters = _lister->getFilterNames();
+   vector<string> filters = _filterview->getFilterNames();
    GtkTreeIter iter;
 
    gtk_list_store_clear(_filterListStore);
 
    for (unsigned int i = 0; i < filters.size(); i++) {
-      RFilter *filter = _lister->findFilter(i);
+      RFilter *filter = _filterview->findFilter(i);
       gtk_list_store_append(_filterListStore, &iter);
       gtk_list_store_set(_filterListStore, &iter,
                          NAME_COLUMN, filter->getName().c_str(),
@@ -426,8 +426,8 @@ void RGFilterManagerWindow::show()
 
    // save filter list (do a real copy, needed for cancel)
    _saveFilters.clear();
-   for (guint i = 0; i < _lister->nrOfFilters(); i++) {
-      RFilter *filter = _lister->findFilter(i);
+   for (guint i = 0; i < _filterview->nrOfFilters(); i++) {
+      RFilter *filter = _filterview->findFilter(i);
       _saveFilters.push_back(new RFilter(*filter));
    }
 
@@ -737,15 +737,14 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
 
    //cout << "void RGFilterManagerWindow::addFilterAction()" << endl;
 
-
    do {
       // no memleak, register filter takes care of it
-      filter = new RFilter(me->_lister);
+      filter = new RFilter();
       s = g_strdup_printf(_("New Filter %i"), i);
       filter->setName(s);
       g_free(s);
       i++;
-   } while (!me->_lister->registerFilter(filter));
+   } while (!me->_filterview->registerFilter(filter));
 
    GtkTreeIter iter;
    gtk_list_store_append(me->_filterListStore, &iter);
@@ -805,7 +804,7 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
    gtk_tree_model_get(GTK_TREE_MODEL(me->_filterListStore), &iter,
                       FILTER_COLUMN, &filter, -1);
    if (filter) {
-      me->_lister->unregisterFilter(filter);
+      me->_filterview->unregisterFilter(filter);
       delete filter;
       gtk_list_store_remove(me->_filterListStore, &iter);
       me->_selectedPath = NULL;
@@ -821,7 +820,7 @@ bool RGFilterManagerWindow::close()
 
    gdk_window_set_cursor(_win->window, NULL);
 
-   _lister->storeFilters();
+   _filterview->storeFilters();
 
    return RGWindow::close();
 }
@@ -834,16 +833,16 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
    //cout << "void RGFilterManagerWindow::cancelAction()"<<endl;
 
    // unregister all old filters
-   guint size = me->_lister->nrOfFilters();
+   guint size = me->_filterview->nrOfFilters();
    for (i = 0; i < size; i++) {
-      RFilter *filter = me->_lister->findFilter(0);
-      me->_lister->unregisterFilter(filter);
+      RFilter *filter = me->_filterview->findFilter(0);
+      me->_filterview->unregisterFilter(filter);
       delete filter;
    }
 
    // restore the old filters
    for (i = 0; i < me->_saveFilters.size(); i++)
-      me->_lister->registerFilter(me->_saveFilters[i]);
+      me->_filterview->registerFilter(me->_saveFilters[i]);
 
    me->_okcancel = FALSE;
    me->close();

@@ -52,16 +52,16 @@ string RGFindWindow::getFindString()
 
 int RGFindWindow::getSearchType()
 {
-   const char *types[] = { "name", "version", "descr", "maint", "depends",
+   const char *types[] = { "name", "version", "description", "maintainer", "depends",
       "provides", NULL
    };
    int searchType = 0;
 
    for (int i = 0; types[i] != NULL; i++) {
-      string s = "checkbutton_" + string(types[i]);
+      string s = "radiobutton_" + string(types[i]);
       GtkWidget *check = glade_xml_get_widget(_gladeXML, s.c_str());
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)))
-         searchType |= 1 << i;
+         searchType = i;
    }
 
    return searchType;

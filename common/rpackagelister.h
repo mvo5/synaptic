@@ -42,29 +42,21 @@
 #include "tree.hh"
 #include "config.h"
 
-#ifdef HAVE_DEBTAGS
-#include <TagcollParser.h>
-#include <StdioParserInput.h>
-#include <SmartHierarchy.h>
-#include <TagcollBuilder.h>
-#include <HandleMaker.h>
-#include <TagCollection.h>
-#endif
-
-
 using namespace std;
 
 class OpProgress;
 class RPackageCache;
 class RPackageFilter;
 class RCacheActor;
+class RPackageViewFilter;
+class RPackageViewSearch;
 class pkgRecords;
 class pkgAcquireStatus;
 class pkgPackageManager;
 
 
 struct RFilter;
-
+class RPackageView;
 
 class RInstallProgress;
 
@@ -108,13 +100,11 @@ class RPackageLister {
 
    int _installedCount;         // # of installed packages
 
-   vector<RFilter *> _filterL;
-   RFilter *_filter;            // effective filter, NULL for none
-
-   vector<string> _sectionList;      // list of all available package sections
-
    vector<RCacheActor *> _actors;
 
+   RPackageViewFilter *_filterView; // the package view that does the filtering
+   RPackageViewSearch *_searchView; // the package view that does the (simple) search
+   
    public:
 
    unsigned int _viewMode;
@@ -138,10 +128,6 @@ class RPackageLister {
    RPackageView *_selectedView;
 
    void applyInitialSelection();
-
-   void makePresetFilters();
-
-   bool applyFilters(RPackage *package);
 
    bool lockPackageCache(FileFd &lock);
 
@@ -173,8 +159,6 @@ class RPackageLister {
       sortPackagesByInstSize(_viewPackages, order);
    };
 
-   const vector<string> &getSections() { return _sectionList; };
-
    void setView(int index);
    vector<string> getViews();
    vector<string> getSubViews();
@@ -182,26 +166,12 @@ class RPackageLister {
    // set subView (if newView is empty, set to all packages)
    bool setSubView(string newView="");
 
-   void storeFilters();
-   void restoreFilters();
-
-   void setFilter(int index = -1);
-   void setFilter(RFilter *filter);
-   inline RFilter *getFilter() { return _filter; };
-   int getFilterIndex(RFilter *filter = NULL);
-   unsigned int nrOfFilters() { return _filterL.size(); };
-
-   bool registerFilter(RFilter *filter);
-   void unregisterFilter(RFilter *filter);
-   vector<string> getFilterNames();
-   inline RFilter *findFilter(unsigned int index) {
-      if (index > _filterL.size())
-         return NULL;
-      else
-         return _filterL[index];
-   };
-
+   // this needs a different name, something like refresh
    void reapplyFilter();
+
+   // is is exposed for the stuff like filter manager window
+   RPackageViewFilter *filterView() { return _filterView; };
+   RPackageViewSearch *searchView() { return _searchView; };
 
    // find 
    int findPackage(const char *pattern);

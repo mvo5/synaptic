@@ -121,37 +121,8 @@ void RGMainWindow::proceed()
    cbProceedClicked(NULL, (void *)this);
 }
 
-void RGMainWindow::changeFilter(int filter, bool sethistory)
-{
-   //cout << "RGMainWindow::changeFilter()"<<endl;
 
-   if (sethistory)
-      gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
-
-   RPackage *pkg = selectedPackage();
-   setInterfaceLocked(TRUE);
-   _blockActions = TRUE;
-
-   // try to set filter
-   if (filter > 0) {
-      _lister->setFilter(filter - 1);
-
-      RFilter *pkgfilter = _lister->getFilter();
-      if (pkgfilter == NULL)
-         filter = 0;
-   }
-
-   // No filter given or not available from above
-   if (filter == 0)
-      _lister->setFilter();
-
-   refreshTable(pkg);
-   _blockActions = FALSE;
-   setInterfaceLocked(FALSE);
-   setStatusText();
-}
-
-void RGMainWindow::changeView(int view, bool sethistory)
+void RGMainWindow::changeView(int view, bool sethistory, string subView)
 {
    if (sethistory)
       gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), view);
@@ -164,6 +135,26 @@ void RGMainWindow::changeView(int view, bool sethistory)
 
    refreshSubViewList();
 
+   if(!subView.empty()) {
+      GtkTreeSelection* selection;
+      GtkTreeModel *model;
+      GtkTreeIter iter;
+      char *str;
+
+      GtkWidget *view = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+      model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+      if(gtk_tree_model_get_iter_first(model, &iter)) {
+	 do {
+	    gtk_tree_model_get(model, &iter, 0, &str, -1);
+	    if(strcmp(str,subView.c_str()) == 0) {
+	       gtk_tree_selection_select_iter(selection, &iter);
+	       break;
+	    }
+	 } while(gtk_tree_model_iter_next(model, &iter));
+      }
+      
+   }
    _lister->reapplyFilter();
 
    refreshTable(pkg);
@@ -180,22 +171,6 @@ void RGMainWindow::refreshSubViewList()
    subViews.insert(subViews.begin(), str);
    g_free(str);
    setTreeList("treeview_subviews", subViews, true);
-#if 0
-   GtkListStore *store = gtk_list_store_new(1, G_TYPE_STRING);
-   
-   // add "All" entry for all subviews 
-   gtk_list_store_append(store, &iter);
-   gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
-   gtk_list_store_set(store, &iter, 0, str, -1);
-   g_free(str);
-
-   for (vector<string>::iterator I = subViews.begin();
-        I != subViews.end(); I++) {
-      gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store, &iter, 0, utf8((*I).c_str()), -1);
-   }
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_subViewList), GTK_TREE_MODEL(store));
-#endif
 }
 
 
@@ -549,16 +524,11 @@ _treeView(0)
 
 
    buildInterface();
-
-   refreshFilterMenu();
-
    _userDialog = new RGUserDialog(this);
 
    packLister->setUserDialog(_userDialog);
 
    packLister->setProgressMeter(_cacheProgress);
-
-   _filterWin = NULL;
    _findWin = NULL;
    _setOptWin = NULL;
    _sourcesWin = NULL;
@@ -1012,14 +982,6 @@ void RGMainWindow::buildInterface()
    gtk_paned_set_position(GTK_PANED(_vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
 
-
-   _filterPopup = glade_xml_get_widget(_gladeXML, "optionmenu_filters");
-   assert(_filterPopup);
-
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_find_button_clicked",
-                                 G_CALLBACK(cbFindToolClicked), this);
-
    // build the treeview
    buildTreeView();
 
@@ -1185,15 +1147,6 @@ void RGMainWindow::buildInterface()
 
    _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
    assert(_subViewList);
-#if 0
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("SubView",
-                                                     renderer,
-                                                     "markup", 0, 
-						     NULL);
-   
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_subViewList), column);
-#endif
    // Setup the selection handler 
    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
@@ -1305,46 +1258,6 @@ GtkWidget *RGMainWindow::createViewMenu()
    return menu;
 }
 
-GtkWidget *RGMainWindow::createFilterMenu()
-{
-   GtkWidget *menu, *item;
-   vector<string> filters = _lister->getFilterNames();
-
-   menu = gtk_menu_new();
-
-   item = gtk_menu_item_new_with_label(_("All Packages"));
-   gtk_widget_show(item);
-   gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-   gtk_object_set_data(GTK_OBJECT(item), "me", this);
-   gtk_object_set_data(GTK_OBJECT(item), "index", (void *)0);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) cbChangedFilter, this);
-
-   int i = 1;
-   for (vector<string>::const_iterator iter = filters.begin();
-        iter != filters.end(); iter++) {
-
-      item = gtk_menu_item_new_with_label((char *)(*iter).c_str());
-      gtk_widget_show(item);
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-      gtk_object_set_data(GTK_OBJECT(item), "me", this);
-      gtk_object_set_data(GTK_OBJECT(item), "index", (void *)i++);
-      gtk_signal_connect(GTK_OBJECT(item), "activate",
-                         (GtkSignalFunc) cbChangedFilter, this);
-   }
-
-   return menu;
-}
-
-void RGMainWindow::refreshFilterMenu()
-{
-   GtkWidget *menu;
-
-   // Toolbar
-   gtk_option_menu_remove_menu(GTK_OPTION_MENU(_filterPopup));
-   menu = createFilterMenu();
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_filterPopup), menu);
-}
 
 
 void RGMainWindow::saveState()
@@ -1393,13 +1306,6 @@ bool RGMainWindow::restoreState()
    _lister->setView(viewNr);
    refreshSubViewList();
 
-   // this is real restore stuff
-   _lister->restoreFilters();
-   refreshFilterMenu();
-
-   int filterNr = _config->FindI("Volatile::initialFilter", 0);
-   changeFilter(filterNr);
-   refreshTable();
 
    setStatusText();
    return true;
@@ -1864,7 +1770,6 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    RPackage *pkg = me->selectedPackage();
    if (pkg != NULL) {
       RGPkgDetailsWindow win(me, pkg);
-      gtk_window_set_modal(GTK_WINDOW(win.window()), true);
       win.show();
       gtk_main();
    }
@@ -1915,39 +1820,11 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
       gdk_window_set_cursor(me->_findWin->window()->window, me->_busyCursor);
-      RFilter *filter = me->_lister->findFilter(0);
-      filter->reset();
-      int searchType = me->_findWin->getSearchType();
-      string S(me->_findWin->getFindString());
+      string str = me->_findWin->getFindString();
+      int type = me->_findWin->getSearchType();
+      me->_lister->searchView()->setSearch(str, type);
+      me->changeView(4,true,str);
 
-      if (searchType & 1 << RPatternPackageFilter::Name) {
-         RPatternPackageFilter::DepType type = RPatternPackageFilter::Name;
-         filter->pattern.addPattern(type, S, false);
-      }
-      if (searchType & 1 << RPatternPackageFilter::Version) {
-         RPatternPackageFilter::DepType type = RPatternPackageFilter::Version;
-         filter->pattern.addPattern(type, S, false);
-      }
-      if (searchType & 1 << RPatternPackageFilter::Description) {
-         RPatternPackageFilter::DepType type =
-            RPatternPackageFilter::Description;
-         filter->pattern.addPattern(type, S, false);
-      }
-      if (searchType & 1 << RPatternPackageFilter::Maintainer) {
-         RPatternPackageFilter::DepType type =
-            RPatternPackageFilter::Maintainer;
-         filter->pattern.addPattern(type, S, false);
-      }
-      if (searchType & 1 << RPatternPackageFilter::Depends) {
-         RPatternPackageFilter::DepType type = RPatternPackageFilter::Depends;
-         filter->pattern.addPattern(type, S, false);
-      }
-      if (searchType & 1 << RPatternPackageFilter::Provides) {
-         RPatternPackageFilter::DepType type = RPatternPackageFilter::Provides;
-         filter->pattern.addPattern(type, S, false);
-      }
-
-      me->changeFilter(1);
       gdk_window_set_cursor(me->_findWin->window()->window, NULL);
       me->_findWin->hide();
    }
@@ -1999,33 +1876,22 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 {
    RGMainWindow *me = (RGMainWindow *) self;
 
-   // user clicked ok
-   if (okcancel) {
-      int i = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_filterPopup));
-      me->refreshFilterMenu();
-      gtk_option_menu_set_history(GTK_OPTION_MENU(me->_filterPopup), i);
-      me->changeFilter(i);
-   }
-
-   gtk_widget_set_sensitive(me->_filtersB, TRUE);
-   gtk_widget_set_sensitive(me->_filterPopup, TRUE);
+   me->refreshTable();
 }
 
 
 void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
 {
-   RGMainWindow *win = (RGMainWindow *) data;
+   RGMainWindow *me = (RGMainWindow *) data;
 
-   if (win->_fmanagerWin == NULL) {
-      win->_fmanagerWin = new RGFilterManagerWindow(win, win->_lister);
+   if (me->_fmanagerWin == NULL) {
+      me->_fmanagerWin = new RGFilterManagerWindow(me, me->_lister->filterView());
 
-      win->_fmanagerWin->setCloseCallback(cbCloseFilterManagerAction, win);
+      me->_fmanagerWin->setCloseCallback(cbCloseFilterManagerAction, me);
    }
 
-   win->_fmanagerWin->show();
+   me->_fmanagerWin->show();
 
-   gtk_widget_set_sensitive(win->_filtersB, FALSE);
-   gtk_widget_set_sensitive(win->_filterPopup, FALSE);
 }
 
 void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
@@ -2152,17 +2018,6 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
    system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
 }
 
-
-void RGMainWindow::cbChangedFilter(GtkWidget *self)
-{
-   int filter;
-   RGMainWindow *mainw =
-      (RGMainWindow *) gtk_object_get_data(GTK_OBJECT(self), "me");
-
-   filter = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
-
-   mainw->changeFilter(filter, false);
-}
 
 void RGMainWindow::cbChangedView(GtkWidget *self)
 {
@@ -2319,10 +2174,8 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 
    // need to delete dialogs, as they might have data pointing
    // to old stuff
-//xxx    delete me->_filterWin;
 //xxx    delete me->_fmanagerWin;
    me->_fmanagerWin = NULL;
-   me->_filterWin = NULL;
 
    RGFetchProgress *progress = new RGFetchProgress(me);
    progress->setTitle(_("Retrieving Index Files..."));
@@ -2397,7 +2250,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = me->selectedPackage();
-   bool res, dist_upgrade;
+   bool res;
+   int dist_upgrade;
 
    if (!me->_lister->check()) {
       me->_userDialog->error(

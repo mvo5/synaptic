@@ -67,7 +67,7 @@
 using namespace std;
 
 RPackageLister::RPackageLister()
-   : _records(0), _filter(0)
+   : _records(0)
 {
    _cache = new RPackageCache();
 
@@ -80,7 +80,10 @@ RPackageLister::RPackageLister()
    _views.push_back(new RPackageViewSections(_packages));
    _views.push_back(new RPackageViewStatus(_packages));
    _views.push_back(new RPackageViewAlphabetic(_packages));
-
+   _filterView = new RPackageViewFilter(_packages);
+   _views.push_back(_filterView);
+   _searchView =  new RPackageViewSearch(_packages);
+   _views.push_back(_searchView);   
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -163,6 +166,7 @@ void RPackageLister::notifyPostChange(RPackage *pkg)
 {
    reapplyFilter();
 
+
    for (vector<RPackageObserver *>::const_iterator I =
         _packageObservers.begin(); I != _packageObservers.end(); I++) {
       (*I)->notifyPostFilteredChange();
@@ -236,179 +240,6 @@ void RPackageLister::registerCacheObserver(RCacheObserver *observer)
 {
    _cacheObservers.push_back(observer);
 }
-
-
-void RPackageLister::makePresetFilters()
-{
-   RFilter *filter;
-
-   // Notice that there's a little hack in filter names below. They're
-   // saved *without* i18n, but there's an i18n version for i18n. This
-   // allows i18n to be done in RFilter.getName().
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->setName("Search Filter");
-      _("Search Filter");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus((int)RStatusPackageFilter::Installed);
-      filter->setName("Installed");
-      _("Installed");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus((int)RStatusPackageFilter::NotInstalled);
-      filter->setName("Not Installed");
-      _("Not Installed");
-      registerFilter(filter);
-   }
-#ifdef HAVE_RPM
-   {
-      filter = new RFilter(this);
-      filter->pattern.addPattern(RPatternPackageFilter::Name,
-                                 "^task-.*", false);
-      filter->setName("Tasks"); _("Tasks");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->reducedview.enable();
-      filter->setName("Reduced View"); _("Reduced View");
-      registerFilter(filter);
-   }
-#endif
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus((int)RStatusPackageFilter::Upgradable);
-      filter->setName("Upgradable"); _("Upgradable");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus(RStatusPackageFilter::Broken);
-      filter->setName("Broken"); _("Broken");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus(RStatusPackageFilter::MarkInstall
-                               | RStatusPackageFilter::MarkRemove
-                               | RStatusPackageFilter::Broken);
-      filter->setName("Queued Changes"); _("Queued Changes");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus(RStatusPackageFilter::NewPackage);
-      filter->setName("New in archive"); _("New in archive");
-      registerFilter(filter);
-   }
-#ifndef HAVE_RPM
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus(RStatusPackageFilter::ResidualConfig);
-      filter->setName("Residual config"); _("Residual config");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->pattern.addPattern(RPatternPackageFilter::Depends,
-                                 "^debconf", false);
-      filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
-      registerFilter(filter);
-   }
-   {
-      filter = new RFilter(this);
-      filter->preset = true;
-      filter->status.setStatus(RStatusPackageFilter::NotInstallable);
-      filter->setName("Obsolete or locally installed"); _("Obsolete or locally installed");
-      registerFilter(filter);
-   }
-#endif
-}
-
-
-void RPackageLister::restoreFilters()
-{
-   Configuration config;
-   RReadFilterData(config);
-
-   RFilter *filter;
-   const Configuration::Item *top = config.Tree("filter");
-   for (top = (top == 0 ? 0 : top->Child); top != 0; top = top->Next) {
-      filter = new RFilter(this);
-      filter->setName(top->Tag);
-
-      string filterkey = "filter::" + top->Tag;
-      if (filter->read(config, filterkey)) {
-         registerFilter(filter);
-      } else {
-         delete filter;
-      }
-   }
-
-   // Introduce new preset filters in the current config file.
-   // Already existent filters will be ignored, since the name
-   // will clash.
-   makePresetFilters();
-}
-
-
-void RPackageLister::storeFilters()
-{
-   ofstream out;
-
-   if (!RFilterDataOutFile(out))
-      return;
-
-   for (vector<RFilter *>::const_iterator iter = _filterL.begin();
-        iter != _filterL.end(); iter++) {
-
-      (*iter)->write(out);
-   }
-
-   out.close();
-}
-
-
-bool RPackageLister::registerFilter(RFilter *filter)
-{
-   string Name = filter->getName();
-   for (vector<RFilter *>::const_iterator I = _filterL.begin();
-        I != _filterL.end(); I++) {
-      if ((*I)->getName() == Name) {
-         delete filter;
-         return false;
-      }
-   }
-   _filterL.push_back(filter);
-   return true;
-}
-
-
-void RPackageLister::unregisterFilter(RFilter *filter)
-{
-   for (vector<RFilter *>::iterator I = _filterL.begin();
-        I != _filterL.end(); I++) {
-      if (*I == filter) {
-         _filterL.erase(I);
-         return;
-      }
-   }
-}
-
 
 bool RPackageLister::check()
 {
@@ -488,8 +319,6 @@ bool RPackageLister::openCache(bool reset)
    _packagesIndex.clear();
    _packagesIndex.resize(packageCount, -1);
 
-   
-
    string pkgName;
    int count = 0;
 
@@ -527,7 +356,10 @@ bool RPackageLister::openCache(bool reset)
          pkg->setNew();
          _roptions->setPackageNew(pkgName.c_str());
          packageNames.insert(pkgName);
+      } else  if (_roptions->getPackageNew(pkgName.c_str())) {
+	 pkg->setNew(true);
       }
+
 
       for (unsigned int i = 0; i != _views.size(); i++)
          _views[i]->addPackage(pkg);
@@ -542,33 +374,12 @@ bool RPackageLister::openCache(bool reset)
    // Truncate due to virtual packages which were skipped above.
    _packages.resize(count);
 
-   _sectionList.resize(sectionSet.size());
-   copy(sectionSet.begin(), sectionSet.end(), _sectionList.begin());
-
-#if 0 // there is no need for this code, we can do all this with 
-      // _package->ProvidesList()
-   for (I = deps->PkgBegin(); I.end() == false; I++) {
-      // This is a virtual package.
-      if (I->VersionList == 0) {
-         // This is a virtual package. Find the owner and attach it there.
-         if (I->ProvidesList == 0)
-            continue;
-         string name = I.ProvidesList().OwnerPkg().Name();
-         map<string, RPackage *>::iterator I2 = pkgmap.find(name);
-         if (I2 != pkgmap.end())
-            (*I2).second->addVirtualPackage(I);
-      }
-   }
-#endif
-
    applyInitialSelection();
 
    _updating = false;
 
    if (reset)
       reapplyFilter();
-   else
-      setFilter(); // Set default filter (no filter)
 
    // mvo: put it here for now
    notifyCacheOpen();
@@ -681,60 +492,10 @@ bool RPackageLister::distUpgrade()
 
 
 
-void RPackageLister::setFilter(int index)
-{
-   if (index < 0 || (unsigned int)index >= _filterL.size()) {
-      _filter = NULL;
-   } else {
-      _filter = findFilter(index);
-   }
-
-   reapplyFilter();
-}
-
-void RPackageLister::setFilter(RFilter *filter)
-{
-   _filter = NULL;
-   for (unsigned int i = 0; i < _filterL.size(); i++) {
-      if (filter == _filterL[i]) {
-         _filter = _filterL[i];
-         break;
-      }
-   }
-
-   reapplyFilter();
-}
-
-int RPackageLister::getFilterIndex(RFilter *filter)
-{
-   if (filter == NULL)
-      filter = _filter;
-   for (unsigned int i = 0; i < _filterL.size(); i++) {
-      if (filter == _filterL[i])
-         return i;
-   }
-   return -1;
-}
-
-vector<string> RPackageLister::getFilterNames()
-{
-   vector<string> filters;
-   for (unsigned int i = 0; i != _filterL.size(); i++)
-      filters.push_back(_filterL[i]->getName());
-   return filters;
-}
-
-bool RPackageLister::applyFilters(RPackage *package)
-{
-   if (_filter == NULL)
-      return true;
-
-   return _filter->apply(package);
-}
-
 
 void RPackageLister::reapplyFilter()
 {
+   // PORTME
    if (_updating)
       return;
 
@@ -744,7 +505,7 @@ void RPackageLister::reapplyFilter()
 
    for (RPackageView::iterator I = _selectedView->begin();
         I != _selectedView->end(); I++) {
-      if (applyFilters(*I)) {
+      if (*I) {
          _viewPackagesIndex[(*(*I)->package())->ID] = _viewPackages.size();
          _viewPackages.push_back(*I);
       }
@@ -1133,6 +894,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
    }
    notifyChange(NULL);
 }
+
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toKeep,

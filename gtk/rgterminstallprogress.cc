@@ -191,6 +191,8 @@ updateFinished(false)
    if (_config->FindB("Synaptic::useUserTerminalFont")) {
       char *s = (char *)_config->Find("Synaptic::TerminalFontName").c_str();
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
+   } else {
+      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
    }
 #endif
    //GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
@@ -242,6 +244,12 @@ RGZvtInstallProgress::start(RPackageManager *pm,
    }
 
    if (_child_id == 0) {
+      // ignore sigpipe
+      struct sigaction new_act;
+      memset( &new_act, 0, sizeof( new_act ) );
+      new_act.sa_handler = SIG_IGN;
+      sigaction( SIGPIPE, &new_act, NULL);
+
       // Close all file descriptors but first 3
       open_max = sysconf(_SC_OPEN_MAX);
       for (int i = 3; i < open_max; i++)

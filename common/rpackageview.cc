@@ -23,8 +23,10 @@
  */
 
 #include <apt-pkg/pkgrecords.h>
+#include <apt-pkg/configuration.h>
 #include <rpackage.h>
 #include <rpackageview.h>
+#include <rconfiguration.h>
 
 #include <map>
 #include <vector>
@@ -91,8 +93,250 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    _view[str].push_back(pkg);
 }
 
+//------------------------------------------------------------------
+
+void RPackageViewSearch::addPackage(RPackage *pkg)
+{
+   string str;
+   const char *tmp=NULL;
+
+   if(!pkg || searchString.empty())
+      return;
+
+   switch(searchType) {
+   case RPatternPackageFilter::Name:
+      tmp = pkg->name();
+      break;
+   case RPatternPackageFilter::Version:
+      tmp = pkg->availableVersion();
+      break;
+   case RPatternPackageFilter::Description:
+      tmp = pkg->description();
+      break;
+   case RPatternPackageFilter::Maintainer:
+      tmp = pkg->maintainer();
+      break;
+   case RPatternPackageFilter::Depends: 
+      {
+      vector<RPackage::DepInformation> d = pkg->enumDeps(true);
+      for(int i=0;i<d.size();i++)
+	 str += string(d[i].name);
+      break; 
+      }
+   case RPatternPackageFilter::Provides: 
+      {
+      vector<string> d = pkg->provides();
+      for(int i=0;i<d.size();i++)
+	 str += d[i];
+      break;
+      }
+   }
+   if(tmp!=NULL)
+      str = tmp;
+
+   if(!str.empty() && strstr(str.c_str(), searchString.c_str()))
+      _view[searchString].push_back(pkg);
+}
+
+void RPackageViewSearch::setSearch(string str, int type)
+{
+   searchString = str;
+   searchType = type;
+
+   // reapply search when a new search strng is giben
+   for(int i=0;i<_all.size();i++)
+      if(_all[i])
+	 addPackage(_all[i]);
+}
+
+//------------------------------------------------------------------
+
+RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs) 
+   : RPackageView(allPkgs)
+{
+   // restore the filters
+   restoreFilters();
+
+   // create a empty sub-views for each filter
+   for (vector<RFilter *>::iterator I = _filterL.begin();
+	I != _filterL.end(); I++) {
+      _view[(*I)->getName()].push_back(NULL);
+   }
+   
+}
+
+RPackageViewFilter::iterator RPackageViewFilter::begin() 
+{ 
+   cout << "RPackageViewFilter::begin() " << endl;
+
+   string name = _selectedName;
+   
+   RFilter *filter = findFilter(name);
+
+   if(filter != NULL) {
+      _view[name].clear();
+
+      for(unsigned int i=0;i<_all.size();i++) {
+	 if(_all[i] && filter->apply(_all[i]))
+	    _view[name].push_back(_all[i]);
+      }
+      _selectedView = _view[name];
+   }
+
+   return _selectedView.begin(); 
+}
+
+vector<string> RPackageViewFilter::getFilterNames()
+{
+   vector<string> filters;
+   for (unsigned int i = 0; i != _filterL.size(); i++)
+      filters.push_back(_filterL[i]->getName());
+   return filters;
+}
 
 
+void RPackageViewFilter::addPackage(RPackage *pkg)
+{
+   // nothing to do for now, may add some sort of caching later
+   _sectionList.insert(pkg->section());
+}
+
+void RPackageViewFilter::storeFilters()
+{
+   ofstream out;
+
+   if (!RFilterDataOutFile(out))
+      return;
+
+   for (vector<RFilter *>::const_iterator iter = _filterL.begin();
+        iter != _filterL.end(); iter++) {
+
+      (*iter)->write(out);
+   }
+
+   out.close();
+}
+
+void RPackageViewFilter::restoreFilters()
+{
+   Configuration config;
+   RReadFilterData(config);
+
+   RFilter *filter;
+   const Configuration::Item *top = config.Tree("filter");
+   for (top = (top == 0 ? 0 : top->Child); top != 0; top = top->Next) {
+      filter = new RFilter();
+      filter->setName(top->Tag);
+
+      string filterkey = "filter::" + top->Tag;
+      if (filter->read(config, filterkey)) {
+         registerFilter(filter);
+      } else {
+         delete filter;
+      }
+   }
+
+   // Introduce new preset filters in the current config file.
+   // Already existent filters will be ignored, since the name
+   // will clash.
+   makePresetFilters();
+}
+
+bool RPackageViewFilter::registerFilter(RFilter *filter)
+{
+   string Name = filter->getName();
+   for (vector<RFilter *>::const_iterator I = _filterL.begin();
+        I != _filterL.end(); I++) {
+      if ((*I)->getName() == Name) {
+         delete filter;
+         return false;
+      }
+   }
+   _filterL.push_back(filter);
+   return true;
+}
+
+void RPackageViewFilter::unregisterFilter(RFilter *filter)
+{
+   for (vector<RFilter *>::iterator I = _filterL.begin();
+        I != _filterL.end(); I++) {
+      if (*I == filter) {
+         _filterL.erase(I);
+         return;
+      }
+   }
+}
+
+RFilter* RPackageViewFilter::findFilter(string name)
+{
+   RFilter *filter=NULL;
+   // find filter
+   for (vector<RFilter *>::iterator I = _filterL.begin();
+	I != _filterL.end(); I++) {
+      if((*I)->getName() == name) {
+	 filter = (*I);
+      }
+   }
+   return filter;
+}
+
+// we make only preset filters that are not covered by the status view
+void RPackageViewFilter::makePresetFilters()
+{
+   RFilter *filter;
+
+   // Notice that there's a little hack in filter names below. They're
+   // saved *without* i18n, but there's an i18n version for i18n. This
+   // allows i18n to be done in RFilter.getName().
+   {
+      filter = new RFilter();
+      filter->preset = true;
+      filter->setName("Search Filter");
+      _("Search Filter");
+      registerFilter(filter);
+   }
+#ifdef HAVE_RPM
+   {
+      filter = new RFilter();
+      filter->pattern.addPattern(RPatternPackageFilter::Name,
+                                 "^task-.*", false);
+      filter->setName("Tasks"); _("Tasks");
+      registerFilter(filter);
+   }
+   {
+      filter = new RFilter();
+      filter->reducedview.enable();
+      filter->setName("Reduced View"); _("Reduced View");
+      registerFilter(filter);
+   }
+#endif
+   {
+      filter = new RFilter();
+      filter->preset = true;
+      filter->status.setStatus(RStatusPackageFilter::Broken);
+      filter->setName("Broken"); _("Broken");
+      registerFilter(filter);
+   }
+   {
+      filter = new RFilter();
+      filter->preset = true;
+      filter->status.setStatus(RStatusPackageFilter::MarkInstall
+                               | RStatusPackageFilter::MarkRemove
+                               | RStatusPackageFilter::Broken);
+      filter->setName("Queued Changes"); _("Queued Changes");
+      registerFilter(filter);
+   }
+#ifndef HAVE_RPM
+   {
+      filter = new RFilter();
+      filter->preset = true;
+      filter->pattern.addPattern(RPatternPackageFilter::Depends,
+                                 "^debconf", false);
+      filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
+      registerFilter(filter);
+   }
+#endif
+}
 
 
 // vim:sts=3:sw=3

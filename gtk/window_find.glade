@@ -261,13 +261,13 @@
 			  <property name="column_spacing">12</property>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_name">
+			    <widget class="GtkRadioButton" id="radiobutton_name">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Package name</property>
+			      <property name="label" translatable="yes">Name</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
-			      <property name="active">True</property>
+			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
 			    </widget>
@@ -282,7 +282,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_version">
+			    <widget class="GtkRadioButton" id="radiobutton_version">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Version</property>
@@ -291,6 +291,7 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_name</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>
@@ -303,15 +304,16 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_descr">
+			    <widget class="GtkRadioButton" id="radiobutton_description">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Description</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
-			      <property name="active">True</property>
+			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_name</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -324,7 +326,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_maint">
+			    <widget class="GtkRadioButton" id="radiobutton_maintainer">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Maintainer</property>
@@ -333,6 +335,7 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_name</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>
@@ -345,7 +348,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_depends">
+			    <widget class="GtkRadioButton" id="radiobutton_depends">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Depends</property>
@@ -354,6 +357,7 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_name</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -366,7 +370,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckButton" id="checkbutton_provides">
+			    <widget class="GtkRadioButton" id="radiobutton_provides">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">Provides</property>
@@ -375,6 +379,7 @@
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_name</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">1</property>

@@ -625,14 +625,17 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
    g_return_if_fail(GTK_IS_PKG_LIST(pkg_list));
 
    switch (pkg_list->sort_column_id) {
-      case NAME_COLUMN:
-         pkg_list->_lister->sortPackagesByName();
-         break;
-      case PKG_SIZE_COLUMN:
-         pkg_list->_lister->sortPackagesByInstSize((int)pkg_list->order);
-         break;
-         //default:
-         //cerr << "unknown sort column" << endl;
+   case COLOR_COLUMN:
+      pkg_list->_lister->sortPackagesByStatus();
+      break;
+   case NAME_COLUMN:
+      pkg_list->_lister->sortPackagesByName();
+      break;
+   case PKG_SIZE_COLUMN:
+      pkg_list->_lister->sortPackagesByInstSize((int)pkg_list->order);
+      break;
+      //default:
+      //cerr << "unknown sort column" << endl;
    }
 
 //     GtkTreeIter iter;

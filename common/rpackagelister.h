@@ -111,7 +111,8 @@ class RPackageLister {
    typedef enum {
       LIST_SORT_NAME,
       LIST_SORT_SIZE_ASC,
-      LIST_SORT_SIZE_DES
+      LIST_SORT_SIZE_DES,
+      LIST_SORT_STATUS
    } listSortMode;
    listSortMode _sortMode;
 
@@ -130,6 +131,7 @@ class RPackageLister {
 
    bool lockPackageCache(FileFd &lock);
 
+   void sortPackagesByStatus(vector<RPackage *> &packages);
    void sortPackagesByName(vector<RPackage *> &packages);
    void sortPackagesByInstSize(vector<RPackage *> &packages, int order);
 
@@ -150,7 +152,9 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
-
+   void sortPackagesByStatus() {
+      sortPackagesByStatus(_viewPackages);
+   };
    void sortPackagesByName() {
       sortPackagesByName(_viewPackages);
    };

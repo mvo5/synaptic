@@ -733,6 +733,7 @@ void RGMainWindow::buildTreeView()
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 20);
       //gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
+      gtk_tree_view_column_set_sort_column_id(column, COLOR_COLUMN);
       all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
    }
 

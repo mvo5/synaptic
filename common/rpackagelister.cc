@@ -518,6 +518,9 @@ void RPackageLister::reapplyFilter()
 
    // sort now according to the latest used sort method
    switch (_sortMode) {
+      case LIST_SORT_STATUS:
+         sortPackagesByStatus();
+         break;
 
       case LIST_SORT_NAME:
          sortPackagesByName();
@@ -568,6 +571,23 @@ void RPackageLister::sortPackagesByName(vector<RPackage *> &packages)
       qsSortByName(packages, 0, packages.size() - 1);
 }
 
+
+
+struct statusSortFunc {
+   // hide all other flags but this magic ones
+   static const int magic = (RPackage::FInstalled | RPackage::FOutdated | RPackage::FNew);
+   bool operator() (RPackage *x, RPackage *y) {
+      return (x->getFlags() & (magic))  > (y->getFlags() & (magic));
+}};
+
+void RPackageLister::sortPackagesByStatus(vector<RPackage *> &packages)
+{
+   _sortMode = LIST_SORT_STATUS;
+   if (!packages.empty())
+      stable_sort(packages.begin(), packages.end(), statusSortFunc());
+}
+
+
 struct instSizeSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
       return x->installedSize() < y->installedSize();
@@ -589,9 +609,9 @@ void RPackageLister::sortPackagesByInstSize(vector<RPackage *> &packages,
 
    if (!packages.empty()) {
       if (order == 0)
-         sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
+         stable_sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
       else
-         sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+         stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
    }
 }
 

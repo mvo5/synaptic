@@ -2296,8 +2296,12 @@ void RGMainWindow::buildTreeView()
 						     //"text", NAME_COLUMN,
 						     "background-gdk", COLOR_COLUMN,
 						     NULL);
+#if GTK_CHECK_VERSION(2,3,2)
+	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width(column, 200);
+#else
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
-	//gtk_tree_view_column_set_fixed_width(column, 200);
+#endif
 
 	//gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
 	all_columns.push_back(pair<int,GtkTreeViewColumn *>(pos,column));
@@ -2390,8 +2394,8 @@ void RGMainWindow::buildTreeView()
     if(name_column)
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_treeView),  name_column);
 
-#if GTK_CHECK_VERSION(2,3,0)
-    //#warning build with new fixed_height_mode
+#if GTK_CHECK_VERSION(2,3,2)
+    #warning build with new fixed_height_mode
     GValue value = {0,};
     g_value_init (&value, G_TYPE_BOOLEAN);
     g_value_set_boolean(&value, TRUE);

@@ -40,6 +40,8 @@ public:
     RGUserDialog() : _parentWindow(0) {};
     RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
     RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
+    
+    virtual bool showErrors();
 
     virtual bool message(const char *msg,
 	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,

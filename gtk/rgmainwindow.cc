@@ -2631,9 +2631,11 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    }
    delete progress;
 
-   if (me->_lister->openCache(TRUE)) {
+   // show errors and warnings (like the gpg failures for the package list)
+   me->showErrors();
+
+   if(me->_lister->openCache(TRUE))
       me->showErrors();
-   }
 
    // reread saved selections
    ifstream in(file);

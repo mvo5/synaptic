@@ -36,6 +36,61 @@ static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
    *res = (GtkResponseType) id;
 }
 
+bool RGUserDialog::showErrors()
+{
+   GtkWidget *dia;
+   string err,warn;
+   
+   if (_error->empty())
+      return false;
+
+   while (!_error->empty()) {
+      string message;
+      bool iserror = _error->PopMessage(message);
+
+      // Ignore some stupid error messages.
+      if (message == "Tried to dequeue a fetching object")
+         continue;
+
+      if (!message.empty()) {
+         if (iserror)
+            err = err + "E: " + message+ "\n";
+         else
+            warn = warn + "W: " + message+ "\n";
+      }
+   }
+   string msg;
+   GtkMessageType msg_type = GTK_MESSAGE_ERROR;
+   if(err.empty()) {
+      msg_type = GTK_MESSAGE_WARNING;
+      msg = warn;
+   } else
+      msg = err + "\n"+ warn;
+   dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
+                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                msg_type, GTK_BUTTONS_OK,
+				_("The following problems where found "
+				  "on your system:"));
+   gtk_widget_set_size_request(dia,500,300);
+   gtk_container_set_border_width(GTK_CONTAINER(dia), 5);
+   GtkWidget *scroll = gtk_scrolled_window_new(NULL,NULL);
+   GtkWidget *textview = gtk_text_view_new();
+   GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
+   gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer),msg.c_str(), -1);
+   gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textview), GTK_WRAP_WORD);
+   gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
+   gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);
+   gtk_container_add(GTK_CONTAINER(scroll), textview);
+   gtk_widget_show_all(scroll);
+   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dia)->vbox), scroll);
+   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dia)->vbox), 12);
+   gtk_dialog_run(GTK_DIALOG(dia));
+   gtk_widget_destroy(dia);
+
+   return true;
+}
+
+
 bool RGUserDialog::message(const char *msg,
                            RUserDialog::DialogType dialog,
                            RUserDialog::ButtonsType buttons, bool defres)

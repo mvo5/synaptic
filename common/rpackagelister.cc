@@ -57,6 +57,10 @@
 #include <algorithm>
 #include <cstdio>
 
+#ifndef HAVE_RPM
+#include "sections_trans.h"
+#endif
+
 using namespace std;
 
 RPackageLister::RPackageLister()
@@ -766,8 +770,21 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	{
 	    string sec = pkg->section();
 	    if(itermap.find(sec) == itermap.end()) {
+#ifndef HAVE_RPM
+		string str = sec;
+		
+		for(int i=0;transtable[i][0] != NULL;i++) {
+		    if(sec == transtable[i][0]) {
+			str = transtable[i][1];
+			break;
+		    }
+		}
+		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+					   pkgPair(str,NULL));
+#else
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(sec,NULL));
+#endif		
 		itermap[sec] = it;
 	    } else {
 		it = itermap[sec];

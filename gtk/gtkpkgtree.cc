@@ -22,6 +22,7 @@
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/strutl.h>
+#include "i18n.h"
 #include "gtkpkgtree.h"
 #include "gsynaptic.h"
 
@@ -440,9 +441,11 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
 #endif
 
   const gchar *str;
+  if( it == 0)
+      return;
   RPackage *pkg = (RPackage*)(*it).second;
   switch(column) {
-  case NAME_COLUMN: 
+  case NAME_COLUMN:
       str = utf8((*it).first.c_str());
       g_value_set_string(value, str);
       break;

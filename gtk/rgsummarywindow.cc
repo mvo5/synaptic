@@ -213,14 +213,14 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
     
     for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
 	 p != toDowngrade.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b>: will be <b>DOWNGRADED</b>\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b> will be <b>DOWNGRADED</b>\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
 	 p != toRemove.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b>: will be Removed\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b> will be Removed\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }

@@ -646,7 +646,7 @@ void RGDebInstallProgress::finishUpdate()
    }
 
    string s = _config->Find("Volatile::InstallFinishedStr",
-			    _("Installation finished"));
+			    _("Changes applied"));
    gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", s.c_str(),
 				_(getResultStr(res)));
    GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");

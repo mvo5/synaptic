@@ -189,8 +189,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // helper for recommends/suggests 
    // (data is the name of the pkg, self needs to have a pointer to "me" )
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
+#if 0
    void installAllWeakDepends(RPackage *pkg, pkgCache::Dep::DepType type);
-
+#endif
    // install a non-standard version (data is a char* of the version)
    static void cbInstallFromVersion(GtkWidget *self, void *data);
 

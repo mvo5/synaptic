@@ -518,6 +518,7 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    return changed;
 }
 
+#if 0
 void RGMainWindow::installAllWeakDepends(RPackage *pkg, 
 					 pkgCache::Dep::DepType type)
 {
@@ -534,6 +535,7 @@ void RGMainWindow::installAllWeakDepends(RPackage *pkg,
       }
    } 
 }
+#endif
 
 void RGMainWindow::pkgAction(RGPkgAction action)
 {
@@ -586,12 +588,14 @@ void RGMainWindow::pkgAction(RGPkgAction action)
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
             pkgInstallHelper(pkg, false);
+#if 0 // handled in the pkgCache now (where it belongs)
 	    if(_config->FindB("Synaptic::UseRecommends", false)) {
 	       installAllWeakDepends(pkg, pkgCache::Dep::Recommends);
 	    }
 	    if(_config->FindB("Synaptic::UseSuggests", false)) {
 	       installAllWeakDepends(pkg, pkgCache::Dep::Suggests);
 	    }
+#endif
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);

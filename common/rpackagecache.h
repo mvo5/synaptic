@@ -29,17 +29,29 @@
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
+#include <apt-pkg/policy.h>
 
 class OpProgress;
 
 class pkgCache;
-class pkgPolicy;
+
+
+class RPkgPolicy : public pkgPolicy
+{
+ public:
+   bool IsImportantDep(pkgCache::DepIterator dep);
+      
+   RPkgPolicy(pkgCache *Owner):
+      pkgPolicy(Owner) {};
+
+
+};
 
 class RPackageCache {
    MMap *_map;
 
    pkgCache *_cache;
-   pkgPolicy *_policy;
+   RPkgPolicy *_policy;
 
    pkgDepCache *_dcache;
    pkgSourceList *_list;

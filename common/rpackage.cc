@@ -825,7 +825,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
       prefix=std::string("lib")+srcpkg[3];
 
    string verstr;
-   if(availableVersion() == NULL) 
+   if(availableVersion() != NULL) 
       verstr = availableVersion();
    
    if(verstr.find(':')!=verstr.npos)

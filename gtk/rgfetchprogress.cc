@@ -95,7 +95,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
     /* url */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes(_("URL"), renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("URI"), renderer,
 						      "text", URL_COLUMN,
 						       NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
@@ -208,7 +208,7 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 	long i;
 	unsigned long ETA = (unsigned long)((TotalBytes - CurrentBytes)/CurrentCPS);
 	i = CurrentItems < TotalItems ? CurrentItems+1 : CurrentItems;
-	snprintf(buf, sizeof(buf), _("%-3li/%-3li files    %4sB/s   ETA %6s\n"),
+	snprintf(buf, sizeof(buf), _("%-3li/%-3li files    %4s B/s  ETA %6s\n"),
 		 i, TotalItems,
 		 SizeToStr(CurrentCPS).c_str(),
 		 TimeToStr(ETA).c_str());

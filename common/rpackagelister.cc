@@ -545,6 +545,8 @@ bool RPackageLister::openCache(bool reset)
    _sectionList.resize(sectionSet.size());
    copy(sectionSet.begin(), sectionSet.end(), _sectionList.begin());
 
+#if 0 // there is no need for this code, we can do all this with 
+      // _package->ProvidesList()
    for (I = deps->PkgBegin(); I.end() == false; I++) {
       // This is a virtual package.
       if (I->VersionList == 0) {
@@ -557,6 +559,7 @@ bool RPackageLister::openCache(bool reset)
             (*I2).second->addVirtualPackage(I);
       }
    }
+#endif
 
    applyInitialSelection();
 

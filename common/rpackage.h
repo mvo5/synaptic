@@ -59,8 +59,8 @@ class RPackage {
    bool _notify;
 
    // Virtual pkgs provided by this one.
+#if 0
    vector<pkgCache::PkgIterator> _virtualPackages;
-
    vector<const char *> _provides;
 
    // Stuff for enumerators
@@ -75,10 +75,10 @@ class RPackage {
    pkgCache::DepIterator _depStart;
    pkgCache::DepIterator _depEnd;
 
-   bool isShallowDependency(RPackage *pkg);
-
    bool isWeakDep(pkgCache::DepIterator &dep);
-
+#endif
+   // FIXME: broken right now 
+   bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:
@@ -134,7 +134,7 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
-   vector<const char *> provides();
+   vector<string> provides();
 
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
@@ -145,16 +145,17 @@ class RPackage {
    const char *installedVersion();
    long installedSize();
 
+   // relative to version that would be installed
+   const char *availableVersion();
+   long availableInstalledSize();
+   long availablePackageSize();
+
+#if 0
    // if this is an update
    UpdateImportance updateImportance();
    const char *updateSummary();
    const char *updateDate();
    const char *updateURL();
-
-   // relative to version that would be installed
-   const char *availableVersion();
-   long availableInstalledSize();
-   long availablePackageSize();
 
    // special case: alway get the deps of the latest available version
    // (not necessary the installed one)
@@ -170,19 +171,24 @@ class RPackage {
    bool nextDeps(const char *&type, const char *&what, const char *&pkg,
                  const char *&which, char *&summary, bool &satisfied);
 
-   // getDeps of installed pkg
-   vector<DepInformation> enumDeps();
-
-   // does the pkg depends on this one?
-   bool dependsOn(const char *pkgname);
-
-   // reverse dependencies
    bool enumRDeps(const char *&dep, const char *&what);
    bool nextRDeps(const char *&dep, const char *&what);
 
    // weak dependencies
    bool enumWDeps(const char *&type, const char *&what, bool &satisfied);
    bool nextWDeps(const char *&type, const char *&what, bool &satisfied);
+
+   void addVirtualPackage(pkgCache::PkgIterator dep);
+#endif
+
+   // does the pkg depends on this one?
+   bool dependsOn(const char *pkgname);
+
+   // getDeps of installed pkg
+   vector<DepInformation> enumDeps(bool useCanidateVersion=false);
+
+   // reverse dependencies
+   vector<RPackage::DepInformation> enumRDeps();
 
    int getFlags();
 
@@ -207,8 +213,7 @@ class RPackage {
    // Shallow doesnt remove things other pkgs depend on.
    void setRemoveWithDeps(bool shallow, bool purge = false);
 
-   void addVirtualPackage(pkgCache::PkgIterator dep);
-
+   // mainpulate the candiate version
    bool setVersion(string verTag);
    void unsetVersion() { setVersion(_defaultCandVer); };
 

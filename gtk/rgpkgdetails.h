@@ -32,6 +32,9 @@ class RGPkgDetailsWindow : public RGGladeWindow {
 
  protected:
    void fillInValues(RPackage *pkg);
+   vector<string> formatDepInformation(vector<RPackage::DepInformation> deps);
+   
+   static void cbDependsMenuChanged(GtkWidget *self, void *data);
 
    static void cbCloseClicked(GtkWidget *self, void *data);
 

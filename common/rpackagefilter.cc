@@ -136,11 +136,137 @@ char *RPatternPackageFilter::TypeName[] = {
    N_("ReverseDepends")
 };
 
+bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
+{
+   bool found;
+
+   const char *name = pkg->name();
+// if we want "real" nouseregexp support, we need to split the string
+// here like we do with regexp
+//              if(!useregexp) {
+//                  if(strcasestr(name, iter->pattern.c_str()) == NULL) {
+//                      found = false;
+//                  } 
+   for (unsigned int i = 0; i < pat.regexps.size(); i++) {
+      if (regexec(pat.regexps[i], name, 0, NULL, 0) == 0)
+	 found &= true;
+      else
+	 found = false;
+   }
+   return found;
+}
+
+bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
+{
+   bool found;
+
+   const char *version = pkg->availableVersion();
+   if (version == NULL) {
+      found = false;
+   } else {
+      for (unsigned int i = 0; i < pat.regexps.size(); i++) {
+	 if (regexec(pat.regexps[i], version, 0, NULL, 0) == 0)
+	    found &= true;
+	 else
+	    found = false;
+      }
+   }
+   return found;
+}
+
+bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
+{
+   bool found;
+   const char *s1 = pkg->summary();
+   const char *s2 = pkg->description();
+   for (unsigned int i = 0; i < pat.regexps.size(); i++) {
+      if (regexec(pat.regexps[i], s1, 0, NULL, 0) == 0) {
+	 found &= true;
+      } else {
+	 if (regexec(pat.regexps[i], s2, 0, NULL, 0) == 0)
+	    found &= true;
+	 else
+	    found = false;
+      }
+   }
+   return found;
+}
+
+bool RPatternPackageFilter::filterMaintainer(Pattern pat, RPackage *pkg)
+{
+   bool found;
+   const char *maint = pkg->maintainer();
+   for (unsigned int i = 0; i < pat.regexps.size(); i++) {
+      if (regexec(pat.regexps[i], maint, 0, NULL, 0) == 0) {
+	 found &= true;
+      } else {
+	 found = false;
+      }
+   }
+   return found;
+}
+
+bool RPatternPackageFilter::filterDepends(Pattern pat, RPackage *pkg,
+					  pkgCache::Dep::DepType filterType)
+{
+   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   for(unsigned int i=0;i<deps.size();i++) {
+      if(deps[i].type == filterType) {
+	    if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
+	       return true;
+	    }
+      }
+   }
+   return false;
+}
+
+bool RPatternPackageFilter::filterProvides(Pattern pat, RPackage *pkg)
+{
+   bool found = false;
+   vector<string> provides = pkg->provides();
+   for (unsigned int i = 0; i < provides.size(); i++) {
+      if (regexec(pat.regexps[0], provides[i].c_str(), 0, NULL, 0) == 0) {
+	 found = true;
+	 break;
+      }
+   }
+   return found;
+}
+
+#if 0
+bool RPatternPackageFilter::filterWeakDepends(Pattern pat, RPackage *pkg)
+{
+
+   bool found = false;
+   const char *depType, *depPkg, *depName;
+   bool ok;
+   if (pkg->enumWDeps(depType, depPkg, ok)) {
+      do {
+	 if (regexec(pat.regexps[0], depPkg, 0, NULL, 0) == 0) {
+	    found = true;
+	    break;
+	 }
+      } while (pkg->nextWDeps(depName, depPkg, ok));
+   }
+   return found;
+}
+#endif
+
+bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
+{
+   vector<RPackage::DepInformation> deps = pkg->enumRDeps();
+   for(unsigned int i=0;i<deps.size();i++) {
+      if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
+	 return true;
+      }
+   }
+   return false;
+}
 
 bool RPatternPackageFilter::filter(RPackage *pkg)
 {
    bool found;
-   bool globalfound = false;
+   bool globalfound = true;
    bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
 
    if (_patterns.size() == 0)
@@ -148,157 +274,54 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 
    for (vector<Pattern>::const_iterator iter = _patterns.begin();
         iter != _patterns.end(); iter++) {
-      found = true;
-      if (iter->where == Name) {
-         const char *name = pkg->name();
-// if we want "real" nouseregexp support, we need to split the string
-// here like we do with regexp
-//              if(!useregexp) {
-//                  if(strcasestr(name, iter->pattern.c_str()) == NULL) {
-//                      found = false;
-//                  } 
-         for (unsigned int i = 0; i < iter->regexps.size(); i++) {
-            if (regexec(iter->regexps[i], name, 0, NULL, 0) == 0)
-               found &= true;
-            else
-               found = false;
-         }
-      } else if (iter->where == Version) {
-         const char *version = pkg->availableVersion();
-         if (version == NULL) {
-            found = false;
-         } else {
-            for (unsigned int i = 0; i < iter->regexps.size(); i++) {
-               if (regexec(iter->regexps[i], version, 0, NULL, 0) == 0)
-                  found &= true;
-               else
-                  found = false;
-            }
-         }
-      } else if (iter->where == Description) {
-         const char *s1 = pkg->summary();
-         const char *s2 = pkg->description();
-         for (unsigned int i = 0; i < iter->regexps.size(); i++) {
-            if (regexec(iter->regexps[i], s1, 0, NULL, 0) == 0) {
-               found &= true;
-            } else {
-               if (regexec(iter->regexps[i], s2, 0, NULL, 0) == 0)
-                  found &= true;
-               else
-                  found = false;
-            }
-         }
-      } else if (iter->where == Maintainer) {
-         const char *maint = pkg->maintainer();
-         for (unsigned int i = 0; i < iter->regexps.size(); i++) {
-            if (regexec(iter->regexps[i], maint, 0, NULL, 0) == 0) {
-               found &= true;
-            } else {
-               found = false;
-            }
-         }
-      } else if (iter->where == Depends) {
-         const char *depType, *depPkg, *depName, *depVer;
-         char *summary;
-         bool ok;
-         found = false;
-         if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
-            do {
-               if (strstr(depType, "Depends") != NULL)
-                  if (regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
-                     found = true;
-                     break;
-                  }
-            } while (pkg->
-                     nextDeps(depType, depName, depPkg, depVer, summary, ok));
-         }
-      } else if (iter->where == Provides) {
-         found = false;
-         vector<const char *> provides = pkg->provides();
-         for (unsigned int i = 0; i < provides.size(); i++) {
-            if (regexec(iter->regexps[0], provides[i], 0, NULL, 0) == 0) {
-               found = true;
-               break;
-            }
-         }
-      } else if (iter->where == Conflicts) {
-         const char *depType, *depPkg, *depName, *depVer;
-         char *summary;
-         bool ok;
-         found = false;
-         if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
-            do {
-               if (strstr(depType, "Conflicts") != NULL)
-                  if (regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
-                     found = true;
-                     break;
-                  }
-            } while (pkg->
-                     nextDeps(depType, depName, depPkg, depVer, summary, ok));
-         }
-      } else if (iter->where == Replaces) {
-         const char *depType, *depPkg, *depName, *depVer;
-         char *summary;
-         bool ok;
-         found = false;
-         if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
-            do {
-               if (strstr(depType, "Replaces") != NULL)
-                  if (regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
-                     found = true;
-                     break;
-                  }
-            } while (pkg->
-                     nextDeps(depType, depName, depPkg, depVer, summary, ok));
-         }
-
-      } else if (iter->where == WeakDepends) {
-         found = false;
-         const char *depType, *depPkg, *depName;
-         bool ok;
-         if (pkg->enumWDeps(depType, depPkg, ok)) {
-            do {
-               if (regexec(iter->regexps[0], depPkg, 0, NULL, 0) == 0) {
-                  found = true;
-                  break;
-               }
-            } while (pkg->nextWDeps(depName, depPkg, ok));
-         }
-      } else if (iter->where == RDepends) {
-         found = false;
-         const char *depPkg, *depName;
-         if (pkg->enumRDeps(depName, depPkg)) {
-            do {
-               if (regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
-                  found = true;
-               }
-            } while (pkg->nextRDeps(depName, depPkg));
-         }
-
+      
+      Pattern pat = (*iter);
+      switch(iter->where) {
+      case Name:
+	 found = filterName(pat, pkg);
+	 break;
+      case Version:
+	 found = filterVersion(pat,pkg);
+	 break;
+      case Description:
+	 found = filterDescription(pat, pkg);
+	 break;
+      case Maintainer:
+	 found = filterMaintainer(pat, pkg);
+	 break;
+      case Depends:
+	 found = filterDepends(pat, pkg, pkgCache::Dep::Depends);
+	 break;
+      case Conflicts:
+	 found = filterDepends(pat, pkg, pkgCache::Dep::Conflicts);
+	 break;
+      case Replaces:
+	 found = filterDepends(pat, pkg, pkgCache::Dep::Replaces);
+	 break;
+      case Recommends:
+	 found =  filterDepends(pat, pkg, pkgCache::Dep::Recommends);
+	 break;
+      case Suggests:
+	 found = filterDepends(pat, pkg, pkgCache::Dep::Suggests);
+	 break;
+      case Provides:
+	 found = filterProvides(pat, pkg);
+	 break;
+      case RDepends:
+	 found = filterRDepends(pat, pkg);
+	 break;
+      default:
+	 cerr << "unknown pattern package filter (shouldn't happen) " << endl;
       }
-//          // give back all the memory of the regexps
-//          for(unsigned int i=0;i<regexps.size();i++)
-//              regfree(regexps[i]);
-//          regexps.clear();
 
-//          if(found) {
-//              cout << "pkg: " << pkg->name() 
-//                   << " pattern: " << iter->pattern 
-//                   << " found: " << found << " " << globalfound 
-//                   << endl;
-//          }
-//          if(strstr(pkg->name(),"bsd-ftpd")) {
-//              cout << "bsd-ftpd ... pkg: " << pkg->name() 
-//                   << " maint: " << maint 
-//                   << endl;
-//          }
+      // each filter is applied in AND fasion
+      // that means a include depends "mono" and include name "sharp"
+      // results in all packages that depends on "mono" AND have sharp in name
+      if (iter->exclusive) {
+         found = !found;
+      }
 
-      // match the first "found", 
-      // otherwise look if it was a exclusive rule
-      if (found)
-         return !iter->exclusive;
-      else
-         globalfound |= iter->exclusive;
+      globalfound &= found;
    }
 
    return globalfound;

@@ -30,7 +30,7 @@
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent, RPackage *pkg)
    : RGGladeWindow(parent, "details")
 {
-   gchar *str = g_strdup_printf(_("Properties for package %s"),pkg->name());
+   gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
    setTitle(str);
    g_free(str);
 
@@ -52,34 +52,12 @@ void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
    // XXX destroy class itself
 }
 
-
-void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
+vector<string> 
+RGPkgDetailsWindow::formatDepInformation(vector<RPackage::DepInformation> deps)
 {
-   char *pkg_summary = g_strdup_printf("%s\n%s",
-					     pkg->name(), pkg->summary());
-   setTextView("textview_pkgcommon", pkg_summary, true);
-   g_free(pkg_summary);
-
-   setLabel("label_maintainer", pkg->maintainer());
-   setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
-   setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
-   setLabel("label_priority", pkg->priority());
-   setLabel("label_section", pkg->section());
-
-   setLabel("label_installed_version", pkg->installedVersion());
-   setLabel("label_installed_size", pkg->installedSize());
-
-   setLabel("label_latest_version", pkg->availableVersion());
-   setLabel("label_latest_size", pkg->availableInstalledSize());
-   setLabel("label_latest_download_size", pkg->availablePackageSize());
-
-   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
-   setTextView("text_descr", descr.c_str(), true);
-
-   // build dependency list
-   vector<RPackage::DepInformation> deps = pkg->enumDeps();
    vector<string> depStrings;
    string depStr;
+   
    for(unsigned int i=0;i<deps.size();i++) {
       depStr="";
 
@@ -115,11 +93,63 @@ void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
       }
       
       depStrings.push_back(depStr);
-    }
-   setTreeList("treeview_deplist", depStrings, true);
-
+   }
+   return depStrings;
 }
 
+void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
+{
+   char *pkg_summary = g_strdup_printf("%s\n%s",
+					     pkg->name(), pkg->summary());
+   setTextView("textview_pkgcommon", pkg_summary, true);
+   g_free(pkg_summary);
+
+   setLabel("label_maintainer", pkg->maintainer());
+   setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
+   setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
+   setLabel("label_priority", pkg->priority());
+   setLabel("label_section", pkg->section());
+
+   setLabel("label_installed_version", pkg->installedVersion());
+   setLabel("label_installed_size", pkg->installedSize());
+
+   setLabel("label_latest_version", pkg->availableVersion());
+   setLabel("label_latest_size", pkg->availableInstalledSize());
+   setLabel("label_latest_download_size", pkg->availablePackageSize());
+
+   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
+   setTextView("text_descr", descr.c_str(), true);
+
+   // build dependency lists
+   vector<RPackage::DepInformation> deps;
+   deps = pkg->enumDeps();
+   setTreeList("treeview_deplist", formatDepInformation(deps), true);
+   
+   // canidateVersion
+   deps = pkg->enumDeps(true);
+   setTreeList("treeview_availdep_list", formatDepInformation(deps), true);
+
+   // rdepends Version
+   deps = pkg->enumRDeps();
+   setTreeList("treeview_rdeps", formatDepInformation(deps), true);
+   
+   // provides
+   setTreeList("treeview_provides", pkg->provides());
+
+   glade_xml_signal_connect_data(_gladeXML, "on_optionmenu_depends_changed",
+				 G_CALLBACK(cbDependsMenuChanged), this);
+}
+
+void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
+{
+   RGPkgDetailsWindow *me = (RGPkgDetailsWindow*)data;
+
+   int nr =  gtk_option_menu_get_history(GTK_OPTION_MENU(self));
+   GtkWidget *notebook = glade_xml_get_widget(me->_gladeXML, 
+					      "notebook_dep_tab");
+   assert(notebook);
+   gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
+}
 
 RGPkgDetailsWindow::~RGPkgDetailsWindow()
 {

@@ -106,9 +106,7 @@ class RSectionPackageFilter : public RPackageFilter {
 extern const char *RPFPattern;
 
 class RPatternPackageFilter : public RPackageFilter {
-
-   public:
-
+ public:
    typedef enum {
       Name,
       Version,
@@ -118,14 +116,13 @@ class RPatternPackageFilter : public RPackageFilter {
       Provides,
       Conflicts,
       Replaces,                 // (or obsoletes)
-      WeakDepends,              // suggests et al
+      Recommends,
+      Suggests,
       RDepends                  // reverse depends
    } DepType;
 
-   static char *TypeName[];
-
-   protected:
-
+   
+ protected:
    struct Pattern {
       DepType where;
       string pattern;
@@ -134,7 +131,18 @@ class RPatternPackageFilter : public RPackageFilter {
    };
    vector<Pattern> _patterns;
 
-   public:
+   inline bool filterName(Pattern pat, RPackage *pkg);
+   inline bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg);
+   inline bool filterDescription(Pattern pat, RPackage *pkg);
+   inline bool filterMaintainer(Pattern pat, RPackage *pkg);
+   inline bool filterDepends(Pattern pat, RPackage *pkg, 
+			     pkgCache::Dep::DepType filterType);
+   inline bool filterProvides(Pattern pat, RPackage *pkg);
+   inline bool filterRDepends(Pattern pat, RPackage *pkg);
+
+ public:
+
+   static char *TypeName[];
 
    RPatternPackageFilter(RPackageLister *lister)
       :   RPackageFilter(lister)

@@ -89,12 +89,13 @@ RPackage::~RPackage()
    delete _package;
 }
 
-
+#if 0
 void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 {
    _virtualPackages.push_back(dep);
    _provides.push_back(dep.Name());
 }
+#endif
 
 const char *RPackage::section()
 {
@@ -291,6 +292,7 @@ int RPackage::getFlags()
    return flags | _boolFlags;
 }
 
+#if 0
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
 {
    if (dep->Type != pkgCache::Dep::Suggests
@@ -363,8 +365,38 @@ bool RPackage::nextWDeps(const char *&type, const char *&what,
    }
    return true;
 }
+#endif
 
+vector<RPackage::DepInformation> RPackage::enumRDeps()
+{
+   vector<DepInformation> deps;
+   DepInformation dep;
+   pkgCache::VerIterator Cur;
 
+   for(pkgCache::DepIterator D = _package->RevDependsList(); D.end() != true; D++) {
+      // clear old values
+      dep.isOr=dep.isVirtual=false;
+      dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
+
+      // check target and or-depends status
+      pkgCache::PkgIterator Trg = D.TargetPkg();
+      if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or) {
+	 dep.version = _("or dependency");
+	 dep.versionComp = "";
+      }
+
+      dep.typeStr=_("Reverse Depends");
+      dep.name = D.ParentPkg().Name();
+
+      if(Trg->VersionList == 0)
+	 dep.isVirtual=true;
+
+      deps.push_back(dep);
+   }
+   return deps;
+}
+
+#if 0
 bool RPackage::enumRDeps(const char *&dep, const char *&what)
 {
    _rdepI = _package->RevDependsList();
@@ -391,7 +423,9 @@ bool RPackage::nextRDeps(const char *&dep, const char *&what)
 
    return true;
 }
+#endif
 
+#if 0
 bool RPackage::enumAvailDeps(const char *&type, const char *&what,
                              const char *&pkg, const char *&which,
                              char *&summary, bool &satisfied)
@@ -440,20 +474,9 @@ vector<RPackage *> RPackage::getInstalledDeps()
    return deps;
 }
 
-bool RPackage::dependsOn(const char *pkgname)
-{
-   const char *depType, *depPkg, *depName, *depVer;
-   char *summary;
-   bool ok;
-   if (enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
-      do {
-         //cout << "got: " << depType << " " << depName << endl;
-         if (strcmp(pkgname, depName) == 0)
-            return true;
-      } while (nextDeps(depType, depName, depPkg, depVer, summary, ok));
-   }
-   return false;
-}
+#endif
+
+
 
 /* Mostly taken from apt-get.cc:ShowBroken() */
 string RPackage::showWhyInstBroken()
@@ -557,13 +580,16 @@ string RPackage::showWhyInstBroken()
    return out.str();
 }
 
-vector<RPackage::DepInformation> RPackage::enumDeps()
+
+vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 {
    vector<DepInformation> deps;
    DepInformation dep;
+   pkgCache::VerIterator Cur;
 
-   pkgCache::VerIterator Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
-   if(Cur.end())
+   if(!useCanidateVersion)
+      Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
+   if(useCanidateVersion || Cur.end())
       Cur = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    // no information found 
@@ -599,6 +625,18 @@ vector<RPackage::DepInformation> RPackage::enumDeps()
    return deps;
 }
 
+bool RPackage::dependsOn(const char *pkgname)
+{
+   vector<DepInformation> deps = enumDeps();
+   for(int i=0;i<deps.size();i++)
+      if(strcmp(pkgname, deps[i].name) == 0)
+	 return true;
+   return false;
+}
+
+
+
+#if 0
 bool RPackage::enumDeps(const char *&type, const char *&what,
                         const char *&pkg, const char *&which, char *&summary,
                         bool &satisfied)
@@ -709,8 +747,6 @@ bool RPackage::nextDeps(const char *&type, const char *&what,
    return true;
 }
 
-
-
 RPackage::UpdateImportance RPackage::updateImportance()
 {
    return IUnknown;             //(*name()) == 'a' ? ISecurity : INormal;
@@ -736,7 +772,7 @@ const char *RPackage::updateURL()
    return "http://sekure.org/~dumped/exploitz";
    return NULL;
 }
-
+#endif
 
 bool RPackage::wouldBreak()
 {
@@ -892,8 +928,10 @@ void RPackage::setPinned(bool flag)
 }
 
 
+// FIXME: this function is broken right now (and it never really wasn't :/
 bool RPackage::isShallowDependency(RPackage *pkg)
 {
+#if 0
    pkgCache::DepIterator rdepI;
 
    // check whether someone else depends on a virtual pkg of this
@@ -926,6 +964,7 @@ bool RPackage::isShallowDependency(RPackage *pkg)
    }
 
    return true;
+#endif
 }
 
 // format: first version, second archives
@@ -969,21 +1008,21 @@ bool RPackage::setVersion(string verTag)
    return true;
 }
 
-vector<const char *> RPackage::provides()
+vector<string> RPackage::provides()
 {
+   vector<string> provides;
+
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
    if (State.CandidateVer == 0)
-      return _provides;
+      return provides;
 
    for (pkgCache::PrvIterator Prv =
         State.CandidateVerIter(*_depcache).ProvidesList(); Prv.end() != true;
         Prv++) {
-      if (find(_provides.begin(), _provides.end(), Prv.Name()) ==
-          _provides.end())
-         _provides.push_back(Prv.Name());
+      provides.push_back(Prv.Name());
    }
 
-   return _provides;
+   return provides;
 }
 
 /* mvo: actually shallow = false does not make a lot of sense as it

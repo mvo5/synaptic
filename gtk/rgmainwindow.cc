@@ -1779,7 +1779,10 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
    ifstream in(filename.c_str());
    string s;
    while(getline(in, s)) {
-      gtk_text_buffer_insert_at_cursor(buffer, s.c_str(), -1);
+      // no need to free str later, it is allocated in a static buffer
+      const char *str = utf8(s.c_str());
+      if(str!=NULL)
+	 gtk_text_buffer_insert_at_cursor(buffer, str, -1);
       gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
    }
    

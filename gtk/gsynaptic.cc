@@ -69,11 +69,11 @@ bool ShowHelp(CommandLine & CmdL)
       _("-h   This help text\n") <<
       _("-r   Open in the repository screen\n") <<
       _("-f=? Give a alternative filter file\n") <<
-      _("-t   Give a alternative main window titel (e.g. hostname with `uname -n`\n") <<
+      _("-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n") <<
       _("-i=? Start with the initialFilter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
-      _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
-      _("--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n") <<
+      _("--upgrade-mode  Call Upgrade and display changes\n") <<
+      _("--dist-upgrade-mode  Call DistUpgrade and display changes\n") <<
       _("--update-at-startup  Call \"reload\" on startup\n")<<
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n") <<
@@ -335,7 +335,7 @@ void check_and_aquire_lock()
 			    _("This usually means that another "
 			      "package management application "
 			      "(like apt-get or aptitude) "
-			      "already runing. Please close that "
+			      "already running. Please close that "
 			      "application first."));
       dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
 					       GTK_MESSAGE_ERROR, 

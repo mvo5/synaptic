@@ -2563,11 +2563,11 @@ void RGMainWindow::buildInterface()
 			 
     button = glade_xml_get_widget(_gladeXML, "button_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-			 _("Upgrade every installed package to the latest version"),"");
+			 _("Queue all possible upgrades"),"");
 
     button = glade_xml_get_widget(_gladeXML, "button_procceed");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Execute the selected changes"),"");
+			 _("Execute the queued changes"),"");
 
     
     _nameL = glade_xml_get_widget(_gladeXML, "label_pkgname"); 

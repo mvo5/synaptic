@@ -21,6 +21,7 @@
  * USA
  */
 
+#include <cassert>
 #include "rgwindow.h"
 #include "rgmainwindow.h"
 #include "rgpkgdetails.h"

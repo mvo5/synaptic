@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/strutl.h>
+#include <cassert>
 #include "gtkpkglist.h"
 #include "rgmisc.h"
 

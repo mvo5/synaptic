@@ -33,6 +33,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <cassert>
 
 #include "rgsummarywindow.h"
 #include "rguserdialog.h"

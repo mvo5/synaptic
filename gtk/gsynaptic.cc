@@ -36,6 +36,7 @@
 #include <X11/Xlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <cassert>
 
 #include "rgmainwindow.h"
 #include "rguserdialog.h"

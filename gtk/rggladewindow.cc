@@ -58,7 +58,10 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_position(GTK_WINDOW(_win),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
- 
+   if(parent != NULL) 
+      gtk_window_set_transient_for(GTK_WINDOW(_win), 
+				   GTK_WINDOW(parent->window()));
+
    assert(_win);
    g_free(filename);
    g_free(main_widget);

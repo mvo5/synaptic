@@ -2086,7 +2086,10 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
+
+   gdk_window_set_cursor(me->window()->window, me->_busyCursor);
    me->refreshTable(NULL);
+   gdk_window_set_cursor(me->window()->window, NULL);
 }
 
 void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)

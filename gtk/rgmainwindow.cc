@@ -832,61 +832,6 @@ void RGMainWindow::forgetNewPackages()
     _roptions->forgetNewPackages();
 }
 
-// BUG: save,restoreTableState() is broken ATM
-void RGMainWindow::saveTableState(vector<string>& expanded_sections) 
-{
-  GtkTreeIter parentIter;  /* Parent iter */
-
-  if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
-      return;
-
-  if(gtk_tree_model_get_iter_first(_activeTreeModel, &parentIter)) {
-    //cout << "saving state" << endl;
-    do {
-      GtkTreePath *path;
-      gchar *str;
-      path =  gtk_tree_model_get_path(_activeTreeModel,
-				      &parentIter);
-      if(gtk_tree_view_row_expanded(GTK_TREE_VIEW(_treeView), path)) {
-	gtk_tree_model_get(_activeTreeModel, &parentIter, 
-			   NAME_COLUMN, &str, -1);
-	if (str != NULL)
-	    expanded_sections.push_back(str);
-      }
-      //g_free(str);
-      gtk_tree_path_free(path);
-    }
-    while(gtk_tree_model_iter_next(_activeTreeModel, &parentIter));
-  }
-}
-
-void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
-{
-  GtkTreeIter parentIter;  /* Parent iter */
-  
-  /* restore state */
-  if(gtk_tree_model_get_iter_first(_activeTreeModel, &parentIter)) {
-      //cout << "restoring state" << endl;
-      do {
-	  GtkTreePath *path;
-	  gchar *str;
-	  path =  gtk_tree_model_get_path(_activeTreeModel,
-					  &parentIter);
-	  gtk_tree_model_get(_activeTreeModel, &parentIter, 
-			     NAME_COLUMN, &str, -1);
-	  if(str != NULL &&
-	     find(expanded_sections.begin(), 
-		  expanded_sections.end(),
-		  string(str)) != expanded_sections.end())
-	      gtk_tree_view_expand_row(GTK_TREE_VIEW(_treeView), path, FALSE);
-	  
-	  g_free(str);
-	  gtk_tree_path_free(path);
-      }
-      while(gtk_tree_model_iter_next(_activeTreeModel, &parentIter));
-  }
-}
-
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
@@ -1558,7 +1503,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       me->_lister->saveUndoState(state);
       // check for failed installs
       if(action == PKG_INSTALL) {
-	  cout << "action install" << endl;
+	  //cout << "action install" << endl;
 	  bool failed = false;
 	  for(li=list;li!=NULL;li=g_list_next(li)) {
 	      gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
@@ -1920,6 +1865,23 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
     me->_lister->registerObserver(me);
     me->setStatusText();
 
+}
+
+void RGMainWindow::rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
+		 GtkTreePath *arg2, gpointer data)
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  me->setInterfaceLocked(TRUE); 
+  
+  me->setStatusText("Expanding row..");
+
+  while(gtk_events_pending())
+    gtk_main_iteration();
+
+  me->setStatusText();
+
+  me->setInterfaceLocked(FALSE); 
 }
 
 void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button, 
@@ -2531,6 +2493,10 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_column_set_fixed_width(column, 500);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
     gtk_tree_view_column_set_resizable(column, TRUE);
+
+    g_signal_connect(G_OBJECT(_treeView), "row-expanded",
+		     G_CALLBACK(rowExpanded), this);
+
     
     GtkTreeSelection *select;
     select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
@@ -2652,6 +2618,7 @@ void RGMainWindow::buildInterface()
     _cacheProgress = new RGCacheProgress(boxy, _statusL);
     assert(_cacheProgress);
 }
+
 
 void RGMainWindow::onExpandAll(GtkWidget *self, void *data) 
 {

@@ -188,10 +188,11 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL); 
-   void restoreTableState(vector<string>& expanded_sections);
-   void saveTableState(vector<string>& expanded_sections);
    void changeFilter(int filter, bool sethistory=true);
    void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
+   
+   static void rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
+		    GtkTreePath *arg2, gpointer data);
    
    virtual void close();
    static void closeWin(GtkWidget *self, void *me) { 

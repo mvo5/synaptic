@@ -107,7 +107,7 @@ string trans_section(string sec)
    }
    // if we have something like "contrib/web", make "contrib" the 
    // suffix and translate it independently
-   unsigned int n = str.find("/");
+   string::size_type n = str.find("/");
    if (n != string::npos) {
       suffix = str.substr(0, n);
       str.erase(0, n + 1);

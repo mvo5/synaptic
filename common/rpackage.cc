@@ -1175,7 +1175,8 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 // description parser stuff
 static char *debParser(string descr)
 {
-   unsigned int i,nlpos=0;
+   unsigned int i;
+   string::size_type nlpos=0;
 
    nlpos = descr.find('\n');
    // delete first line
@@ -1212,7 +1213,7 @@ static char *debParser(string descr)
 }
 static char *rpmParser(string descr)
 {
-   unsigned int pos = descr.find('\n');
+   string::size_type pos = descr.find('\n');
    // delete first line
    if (pos != string::npos)
       descr.erase(0, pos + 2);  // del "\n " too

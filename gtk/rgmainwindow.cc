@@ -1350,8 +1350,9 @@ void RGMainWindow::buildInterface()
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
+#ifndef HAVE_RPM
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#ifdef HAVE_RPM
+#else
    gtk_widget_hide(menuitem);
 #endif
 

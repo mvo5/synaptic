@@ -4,7 +4,7 @@
 
 Summary: Graphical package management program using apt.
 Name: synaptic
-Version: 0.50
+Version: 0.53
 Release: 1
 License: GPL
 Group: Applications/System
@@ -18,9 +18,18 @@ BuildRequires: libstdc++-devel, desktop-file-utils, sed, xmlto
 BuildRequires: scrollkeeper, intltool
 
 %description
-Synaptic (previously known as raptor) is a graphical package management
-program for apt. It provides the same features as the apt-get command line 
-utility with a GUI front-end based on Gtk+
+Synaptic is a graphical package management tool based on GTK+ and APT.
+Synaptic enables you to install, upgrade and remove software packages in
+a user friendly way.
+
+Besides these basic functions the following features are provided:
+ * Search and filter the list of available packages
+ * Perform smart system upgrades
+ * Fix broken package dependencies
+ * Edit the list of used repositories (sources.list)
+ * Download the latest changelog of a package
+ * Configure packages through the debconf system
+ * Browse all available documentation related to a package (dwww is required)
 
 %post
 scrollkeeper-update

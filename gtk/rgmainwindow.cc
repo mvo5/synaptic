@@ -1236,7 +1236,7 @@ void RGMainWindow::buildInterface()
    GtkWidget *box = glade_xml_get_widget(_gladeXML, "vbox_pkgdescr");
    if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
       gtk_notebook_set_show_tabs(GTK_NOTEBOOK(_pkginfo), TRUE);
-      gtk_container_set_border_width(GTK_CONTAINER(box), 6);
+      gtk_container_set_border_width(GTK_CONTAINER(box), 12);
    } else {
       gtk_container_set_border_width(GTK_CONTAINER(box), 0);
    }

@@ -34,22 +34,6 @@ AC_ARG_WITH(wings,
 	fi
 	]
 )
-
-dnl Checks for gtk
-pkg_modules="gtk+-2.0 >= 2.0.0, libglade-2.0 >= 2.0.0, pango >= 1.0.0, glib-2.0"
-PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-AC_SUBST(PACKAGE_CFLAGS)
-AC_SUBST(PACKAGE_LIBS)
-BUILD_gtk="gtk"	
-AC_SUBST(BUILD_gtk)
-
-
-if test x"$WINGS" = xno; then
-if test x"$GTK" = xno; then
-	AC_MSG_ERROR([Neither WINGs nor Gtk is installed, you need to install either one to get a GUI])
-fi
-fi
-
 if test x"$WINGS" = xyes; then
 	BUILD_wings="wings"
 	WINGS_LIBS=`get-wings-flags --ldflags`
@@ -59,6 +43,32 @@ if test x"$WINGS" = xyes; then
 	AC_SUBST(WINGS_HDRS)
 fi
 AC_SUBST(BUILD_wings)
+
+dnl ask for qt
+AC_ARG_WITH(qt,
+	[--with-qt      build with QT gui (non-functional)],
+	[gw_CHECK_QT
+	BUILD_qt="qt"]
+)
+AC_SUBST(BUILD_qt)
+
+dnl Checks for gtk
+if [ -n "$BUILD_qt" -a -n "$BUILD_wings" ]; then
+	pkg_modules="gtk+-2.0 >= 2.0.0, libglade-2.0 >= 2.0.0, pango >= 1.0.0, glib-2.0"
+	PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+	BUILD_gtk="gtk"	
+fi
+
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
+AC_SUBST(BUILD_gtk)
+
+if test x"$WINGS" = xno; then
+if test x"$GTK" = xno; then
+	AC_MSG_ERROR([Neither WINGs nor Gtk is installed, you need to install either one to get a GUI])
+fi
+fi
+
 
 
 
@@ -187,6 +197,7 @@ AC_OUTPUT([
 common/Makefile 
 wings/Makefile 
 gtk/Makefile
+qt/Makefile
 data/Makefile
 man/Makefile
 pixmaps/Makefile 

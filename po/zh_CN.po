@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.50.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-28 10:45+0200\n"
+"POT-Creation-Date: 2004-06-27 19:47+0200\n"
 "PO-Revision-Date: 2004-06-12 02:45+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -735,26 +735,25 @@ msgstr "可升级(向上)"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>Quit and discard marked changes?</big></b>\n"
 "\n"
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
-msgstr "仍有一些标记的变更尚未实施。如果您选择退出“新立得”它们将丢失。"
+msgstr ""
+"<b><big>退出并放弃标记的变更吗？</big></b>\n"
+"\n"
+"仍有一些标记的变更尚未实施。如果您选择退出“新立得”它们将丢失。"
 
 #: gtk/dialog_change_version.glade.h:1
-#, fuzzy
 msgid "Force version:"
-msgstr "最新版本："
+msgstr "强制版本："
 
 #: gtk/dialog_change_version.glade.h:2
-#, fuzzy
 msgid "_Force Version"
-msgstr "版本为"
+msgstr "强制版本(_F)"
 
 #: gtk/dialog_upgrade.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
@@ -767,14 +766,14 @@ msgid ""
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
 msgstr ""
+"<b><big>以智能方式标记升级吗？</big></b>\n"
+"\n"
 "默认的升级方法会跳过那些引起冲突或需要安装新软件包的升级。\n"
 "\n"
-"发行版升级试图通过一种智能途径解决冲突并满足升级的全部依赖关系\n"
+"智能升级(dist-upgrade，发行版升级)试图通过一种智能途径解决冲突并满足升级的全"
+"部依赖关系\n"
 "\n"
-"<b>注意：</b>如果您正在升级到一个新的主要的操作系统发行版，您不得不在此回"
-"答“yes”。\n"
-"\n"
-"这种行为可以今后在的首选项里变更。"
+"<b>注意：</b>升级仅会被标记。您仍然不得不随后应用这些变更。"
 
 #: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:36
 msgid "Default Upgrade"
@@ -793,7 +792,6 @@ msgid "This behavior can be changed in the preferences later."
 msgstr "此行为今后可以在首选项里更改。"
 
 #: gtk/dialog_locales_warning.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>The grafical user interface (xlib) does not support your chosen "
 "language environment</big></b>\n"
@@ -806,12 +804,11 @@ msgid ""
 "<i>synaptic-devel@nongnu.org</i> \n"
 "Include the output of the \"locale\" command in your email."
 msgstr ""
-"新立得会崩溃！\n"
+"<b><big>图形用户界面(xlib)不支持您选择的语言环境。</big></b>\n"
 "\n"
-"Xlib 不支持您选择的语言环境。\n"
-"\n"
-"请使用类似“fr_FR”或者“fr_FR@euro”的语系设置。不要使用类似“fr_FR.iso8859-"
-"15@euro”的设置。\n"
+"新立得会崩溃，如果您决定继续使用未改变的本地化首选项。不支持类似“fr_FR."
+"iso8859-15@euro”的语言值。\n"
+"请针对您的语言使用类似“fr_FR”或者“fr_FR@euro”的值。\n"
 "\n"
 "有意见或需要帮助请联络邮件列表：\n"
 "<i>synaptic-devel@nongnu.org</i>\n"
@@ -1051,7 +1048,7 @@ msgstr "没有选中任何软件包。\n"
 #: gtk/rgmainwindow.cc:454
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
-msgstr ""
+msgstr "选择要强制安装的 %s 版本"
 
 #: gtk/rgmainwindow.cc:456
 msgid ""
@@ -1059,6 +1056,8 @@ msgid ""
 "a differnet version from the default one, errors in the dependency handling "
 "can occur."
 msgstr ""
+"软件包管理器总是选择可用的最佳版本。如果您在默认版本之外强制安装另一个的版"
+"本，依赖关系处理就可能出错。"
 
 #: gtk/rgmainwindow.cc:794
 msgid "Package"
@@ -1181,52 +1180,52 @@ msgstr[0] ""
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: gtk/rgmainwindow.cc:1764
-#, fuzzy, c-format
+#, c-format
 msgid "%s Changelog"
-msgstr "更换光盘"
+msgstr "%s 变更日志"
 
-#: gtk/rgmainwindow.cc:1847
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "您想添加其他 CD-ROM 吗？"
 
-#: gtk/rgmainwindow.cc:1870 gtk/rgmainwindow.cc:2455 gtk/rgmainwindow.cc:2534
-#: gtk/rgmainwindow.cc:2694
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:1886
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "打开变更方案"
 
-#: gtk/rgmainwindow.cc:1917 gtk/rgmainwindow.cc:1980 gtk/rgmainwindow.cc:2373
-#: gtk/rgmainwindow.cc:2507 gtk/rgmainwindow.cc:2671
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
 
-#: gtk/rgmainwindow.cc:1936
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "保存变更方案"
 
-#: gtk/rgmainwindow.cc:1953
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "保存全部状态，不仅仅是变更"
 
-#: gtk/rgmainwindow.cc:2072
+#: gtk/rgmainwindow.cc:2069
 msgid "Searching..."
 msgstr "正在搜索..."
 
-#: gtk/rgmainwindow.cc:2084
+#: gtk/rgmainwindow.cc:2081
 #, c-format
 msgid "Found %i packages"
 msgstr "找到 %i 个软件包"
 
-#: gtk/rgmainwindow.cc:2114
+#: gtk/rgmainwindow.cc:2111
 msgid "Starting help viewer..."
 msgstr "正在启动帮助查看器..."
 
-#: gtk/rgmainwindow.cc:2131
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1244,7 +1243,7 @@ msgstr ""
 "另外您可以从命令行使用“man synaptic”打开手册页，或者查看位于“synaptic/html”文"
 "件夹下的 html 版。"
 
-#: gtk/rgmainwindow.cc:2270
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1252,22 +1251,22 @@ msgstr ""
 "无法启动配置工具！\n"
 "您不得不安装所需的软件包“libgnome2-perl”。"
 
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2273
 msgid "Starting package configuration tool..."
 msgstr "正在启动软件包配置工具..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2291
+#: gtk/rgmainwindow.cc:2288
 msgid "Starting package documentation viewer..."
 msgstr "正在启动软件包文档查看器..."
 
-#: gtk/rgmainwindow.cc:2303
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "您不得不安装软件包“dwww”以便浏览软件包文档"
 
-#: gtk/rgmainwindow.cc:2340
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1275,35 +1274,35 @@ msgstr ""
 "无法实施变更！\n"
 "首先要修复损毁的软件包。"
 
-#: gtk/rgmainwindow.cc:2359
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr "正在实施已标记的变更。这可能需要一会..."
 
-#: gtk/rgmainwindow.cc:2363
+#: gtk/rgmainwindow.cc:2360
 msgid "Downloading Package Files"
 msgstr "下载软件包文件"
 
-#: gtk/rgmainwindow.cc:2438
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得吗？"
 
-#: gtk/rgmainwindow.cc:2494
+#: gtk/rgmainwindow.cc:2491
 msgid "Downloading Index Files"
 msgstr "下载索引文件"
 
-#: gtk/rgmainwindow.cc:2496
+#: gtk/rgmainwindow.cc:2493
 msgid "Refreshing package list..."
 msgstr "正在刷新软件包列表..."
 
-#: gtk/rgmainwindow.cc:2559
+#: gtk/rgmainwindow.cc:2556
 msgid "Failed to resolve dependency problems!"
 msgstr "无法解决软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2561
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr "已成功修正软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2577
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1311,15 +1310,15 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复毁损的软件包。"
 
-#: gtk/rgmainwindow.cc:2618
+#: gtk/rgmainwindow.cc:2615
 msgid "Marking all available upgrades..."
 msgstr "正在标记全部可用的升级..."
 
-#: gtk/rgmainwindow.cc:2630
+#: gtk/rgmainwindow.cc:2627
 msgid "Successfully marked available upgrades"
 msgstr "已成功标记全部可用的升级"
 
-#: gtk/rgmainwindow.cc:2632
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr "无法标记全部可用的升级！"
 
@@ -1652,7 +1651,7 @@ msgstr "修正被毁损的软件包(_F) (apt-get -f install)"
 
 #: gtk/window_main.glade.h:38
 msgid "_Force Version..."
-msgstr ""
+msgstr "强制版本(_F)..."
 
 #: gtk/window_main.glade.h:39
 msgid "_Help"
@@ -1671,9 +1670,8 @@ msgid "_Icons Only"
 msgstr "只有图标(_I)"
 
 #: gtk/window_main.glade.h:43
-#, fuzzy
 msgid "_Lock Version"
-msgstr "版本"
+msgstr "锁定版本(_L)"
 
 #: gtk/window_main.glade.h:44
 msgid "_Quick Introduction"
@@ -1953,9 +1951,8 @@ msgstr ""
 "的变更。</span>"
 
 #: gtk/window_preferences.glade.h:21
-#, fuzzy
 msgid "A_pplication Font"
-msgstr "使用自定义应用程序字体"
+msgstr "应用程序字体(_P)"
 
 #: gtk/window_preferences.glade.h:22
 msgid "Allow regular expressions in searches and filters"
@@ -2340,19 +2337,16 @@ msgid "Includes"
 msgstr "包括"
 
 #: gtk/window_filters.glade.h:21
-#, fuzzy
 msgid "Installed packages that are up-to-date"
-msgstr "包括以下状态的软件包..."
+msgstr "已安装的软件包是最新版本"
 
 #: gtk/window_filters.glade.h:22
-#, fuzzy
 msgid "Installed packages that are upgradable"
-msgstr "已安装的和可升级的"
+msgstr "已安装的软件包可升级"
 
 #: gtk/window_filters.glade.h:23
-#, fuzzy
 msgid "Installed packages that are upgradable to a later upstream version"
-msgstr "可升级到较新版本"
+msgstr "较之上次升级的版本已安装的软件包还可升级到更新版本"
 
 #: gtk/window_filters.glade.h:24
 msgid "Library packages that are no longer needed (deborphan is required)"
@@ -2363,17 +2357,16 @@ msgid "Not installable"
 msgstr "不可安装"
 
 #: gtk/window_filters.glade.h:29
-#, fuzzy
 msgid "Not installed packages"
-msgstr "未安装(锁定的)"
+msgstr "未安装的软件包"
 
 #: gtk/window_filters.glade.h:30
 msgid "Not marked"
-msgstr "未标记"
+msgstr "未标记的"
 
 #: gtk/window_filters.glade.h:32
 msgid "Orphaned"
-msgstr "无人维护的“孤儿”软件包"
+msgstr "“孤儿”软件包"
 
 #: gtk/window_filters.glade.h:33
 msgid "Package Name"
@@ -2413,9 +2406,8 @@ msgid "Recommendations"
 msgstr "推荐的软件包"
 
 #: gtk/window_filters.glade.h:45
-#, fuzzy
 msgid "Removed packages that have left configuration files on the system"
-msgstr "配置软件包使用 debconf 配置系统"
+msgstr "删除已经在系统里残留配置文件的软件包"
 
 #: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
@@ -2561,7 +2553,6 @@ msgid ""
 msgstr "您可以以多种途径标记软件包，为安装、升级或删除作准备："
 
 #: gtk/dialog_unmet.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
 "installation or upgrade</span>\n"
@@ -2571,12 +2562,12 @@ msgid ""
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">无法为安装或升级标记全部软件包</span>\n"
 "\n"
-"下列软件包具有未满足的依赖关系："
+"下列软件包具有未满足的依赖关系。请确保在首选项里所有需要的软件仓库已经添加并"
+"启用。"
 
 #: gtk/dialog_changelog.glade.h:1
-#, fuzzy
 msgid "Complete changelog of the latest version:"
-msgstr "<b>最近版本的完整变更日志：</b>"
+msgstr "最近版本的完整变更日志："
 
 #: gtk/dialog_update_failed.glade.h:1
 #, fuzzy
@@ -2589,7 +2580,14 @@ msgid ""
 "network connection and the correct writing of the repository address in the "
 "preferences."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">无法下载全部索引文件</span>\n"
+"<big><b>无法下载全部索引全部库索引</b></big>\n"
+"\n"
+"The repository might be no longer available or could not be contacted "
+"because of network problems. If available an older version of the failed "
+"index will be used. Otherwise the repository will be ignored. Check your "
+"network connection and the correct writing of the repository address in the "
+"preferences.<span weight=\"bold\" size=\"larger\">无法下载全部索引文件</"
+"span>\n"
 "\n"
 "如果可用，一个旧版本的索引文件将被使用。否则该软件库将被忽略。"
 
@@ -2742,16 +2740,16 @@ msgid ""
 "the package. Refresh the package list and check the source of the package (e."
 "g. CD or network connection)."
 msgstr ""
+"<big><b>无法下载全部软件包文件</b></big>\n"
+"\n"
+"您想安装的软件包版本也许在仓库里已经不再可用了。或许软件包源有问题。刷新软件"
+"包列表并检查软件包源(即 CD 或者网络连接)。"
 
 #~ msgid ""
 #~ "<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale "
 #~ "settings</span>"
 #~ msgstr ""
 #~ "<span weight=\"bold\" size=\"large\">不正确或不兼容的语系设置</span>"
-
-#, fuzzy
-#~ msgid "Changelog for %s"
-#~ msgstr "变更日志"
 
 #~ msgid ""
 #~ "<b>Note:</b> If you are upgrading to a new major operating system release "

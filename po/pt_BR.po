@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-17 18:03+0100\n"
+"POT-Creation-Date: 2005-01-17 22:49+0100\n"
 "PO-Revision-Date: 2004-08-19 11:29-0300\n"
 "Last-Translator: André Luís Lopes <andrelop@debian.org>\n"
 "Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
@@ -411,102 +411,116 @@ msgstr ""
 "mas nunca foi enviado para o repositório, foi obsoletado, ou não está "
 "disponível com o conteúdo atual do arquivo sources.list.\n"
 
-#: common/rpackage.cc:544
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:546
 #, fuzzy, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "%s está/será instalado"
 
-#: common/rpackage.cc:548
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:552
 #, fuzzy, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr "%s está/será instalado"
 
-#: common/rpackage.cc:556
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but it is not installable"
+#: common/rpackage.cc:562
 #, fuzzy, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "o pacote não pode ser instalado"
 
-#: common/rpackage.cc:564
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is a virtual package"
+#: common/rpackage.cc:574
 #, fuzzy, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "o pacote é um pacote virtual"
 
-#: common/rpackage.cc:567
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is a virtual package"
+#: common/rpackage.cc:579
 #, fuzzy, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "o pacote é um pacote virtual"
 
-#: common/rpackage.cc:570
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is not going to be installed"
+#: common/rpackage.cc:584
 #, fuzzy, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "%s está/será instalado"
 
-#: common/rpackage.cc:573
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is not going to be installed"
+#: common/rpackage.cc:589
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr ""
 
-#: common/rpackage.cc:592
+#: common/rpackage.cc:608
 msgid " or"
 msgstr " ou"
 
-#: common/rpackage.cc:895
+#: common/rpackage.cc:911
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Registro inválido no arquivo de preferências, sem cabeçalho \"Package\""
 
-#: common/rpackage.cc:1276
+#: common/rpackage.cc:1292
 msgid "Marked for installation"
 msgstr "Marcado para instalação"
 
-#: common/rpackage.cc:1277
+#: common/rpackage.cc:1293
 msgid "Marked for re-installation"
 msgstr "Marcado para reinstalação"
 
-#: common/rpackage.cc:1278
+#: common/rpackage.cc:1294
 msgid "Marked for upgrade"
 msgstr "Marcado para atualização"
 
-#: common/rpackage.cc:1279
+#: common/rpackage.cc:1295
 msgid "Marked for downgrade"
 msgstr "Marcado para desatualização"
 
-#: common/rpackage.cc:1280
+#: common/rpackage.cc:1296
 msgid "Marked for removal"
 msgstr "Marcado para remoção"
 
-#: common/rpackage.cc:1281
+#: common/rpackage.cc:1297
 msgid "Marked for complete removal"
 msgstr "Marcado para remoção completa"
 
-#: common/rpackage.cc:1282 common/rpackageview.cc:123
+#: common/rpackage.cc:1298 common/rpackageview.cc:123
 #: gtk/window_filters.glade.h:31
 msgid "Not installed"
 msgstr "Não instalados"
 
-#: common/rpackage.cc:1283
+#: common/rpackage.cc:1299
 msgid "Not installed (locked)"
 msgstr "Não instalado (travado)"
 
-#: common/rpackage.cc:1284 common/rpackageview.cc:118
+#: common/rpackage.cc:1300 common/rpackageview.cc:118
 #: gtk/window_filters.glade.h:23
 msgid "Installed"
 msgstr "Instalados"
 
-#: common/rpackage.cc:1285 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
+#: common/rpackage.cc:1301 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
 msgid "Installed (upgradable)"
 msgstr "Instalado (atualizável)"
 
-#: common/rpackage.cc:1286
+#: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
 msgstr "Instalado (preso na versão atual)"
 
-#: common/rpackage.cc:1287 common/rpackageview.cc:422
+#: common/rpackage.cc:1303 common/rpackageview.cc:422
 #: gtk/window_filters.glade.h:9
 msgid "Broken"
 msgstr "Quebrados"
 
-#: common/rpackage.cc:1288
+#: common/rpackage.cc:1304
 msgid "Not installed (new in repository)"
 msgstr "Não instalado (novo no repositório)"
 
@@ -1145,7 +1159,7 @@ msgstr "Seleção de cor"
 #: gtk/rgpreferenceswindow.cc:925
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
-"packages. If you manually force a verison from a different distribution, the "
+"packages. If you manually force a version from a different distribution, the "
 "package version will follow that distribution until it enters the default "
 "distribution."
 msgstr ""
@@ -1347,7 +1361,7 @@ msgstr "Download : "
 #, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
-"upgraded  software packages."
+"upgraded software packages."
 msgstr "Instalar, remover e atualizar pacotes"
 
 #: gtk/rgmainwindow.cc:1204
@@ -1834,7 +1848,7 @@ msgstr ""
 "Isto poderá inutilizar o seu sistema!\n"
 
 #: gtk/rguserdialog.cc:72
-msgid "The following problems where found on your system:"
+msgid "The following problems were found on your system:"
 msgstr ""
 
 #: gtk/rgvendorswindow.cc:39

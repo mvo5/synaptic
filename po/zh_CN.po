@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-17 18:03+0100\n"
+"POT-Creation-Date: 2005-01-17 22:49+0100\n"
 "PO-Revision-Date: 2005-01-16 00:15+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -402,101 +402,115 @@ msgstr ""
 "这典型地意味着该软件包曾经在一个依赖关系中被提及并且从未上载过，现在已经陈旧"
 "或者从 sources.list 目录中无法获得\n"
 
-#: common/rpackage.cc:544
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:546
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s 但是 %s 将会被安装"
 
-#: common/rpackage.cc:548
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:552
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr "%s: %s %s 但是 %s 将会被安装"
 
-#: common/rpackage.cc:556
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but it is not installable"
+#: common/rpackage.cc:562
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s 但是此软件包不能安装"
 
-#: common/rpackage.cc:564
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is a virtual package"
+#: common/rpackage.cc:574
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s 但是此软件包是一个虚拟软件包"
 
-#: common/rpackage.cc:567
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is a virtual package"
+#: common/rpackage.cc:579
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s 但是此软件包是一个虚拟软件包"
 
-#: common/rpackage.cc:570
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is not going to be installed"
+#: common/rpackage.cc:584
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s 但是此软件包将不会被安装"
 
-#: common/rpackage.cc:573
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is not going to be installed"
+#: common/rpackage.cc:589
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s 但是此软件包将不会被安装"
 
-#: common/rpackage.cc:592
+#: common/rpackage.cc:608
 msgid " or"
 msgstr " 或者"
 
-#: common/rpackage.cc:895
+#: common/rpackage.cc:911
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "首选项文件里的无效记录，没有软件包头文件"
 
-#: common/rpackage.cc:1276
+#: common/rpackage.cc:1292
 msgid "Marked for installation"
 msgstr "已标记要安装的软件包"
 
-#: common/rpackage.cc:1277
+#: common/rpackage.cc:1293
 msgid "Marked for re-installation"
 msgstr "已标记要重新安装的软件包"
 
-#: common/rpackage.cc:1278
+#: common/rpackage.cc:1294
 msgid "Marked for upgrade"
 msgstr "已标记要升级的软件包"
 
-#: common/rpackage.cc:1279
+#: common/rpackage.cc:1295
 msgid "Marked for downgrade"
 msgstr "已标记要降级的软件包"
 
-#: common/rpackage.cc:1280
+#: common/rpackage.cc:1296
 msgid "Marked for removal"
 msgstr "已标记要删除的软件包"
 
-#: common/rpackage.cc:1281
+#: common/rpackage.cc:1297
 msgid "Marked for complete removal"
 msgstr "已标记要彻底删除的软件包"
 
-#: common/rpackage.cc:1282 common/rpackageview.cc:123
+#: common/rpackage.cc:1298 common/rpackageview.cc:123
 #: gtk/window_filters.glade.h:31
 msgid "Not installed"
 msgstr "未安装"
 
-#: common/rpackage.cc:1283
+#: common/rpackage.cc:1299
 msgid "Not installed (locked)"
 msgstr "未安装(锁定的)"
 
-#: common/rpackage.cc:1284 common/rpackageview.cc:118
+#: common/rpackage.cc:1300 common/rpackageview.cc:118
 #: gtk/window_filters.glade.h:23
 msgid "Installed"
 msgstr "已安装"
 
-#: common/rpackage.cc:1285 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
+#: common/rpackage.cc:1301 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
 msgid "Installed (upgradable)"
 msgstr "已安装(可升级)"
 
-#: common/rpackage.cc:1286
+#: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
 msgstr "已安装(锁定为当前版本)"
 
-#: common/rpackage.cc:1287 common/rpackageview.cc:422
+#: common/rpackage.cc:1303 common/rpackageview.cc:422
 #: gtk/window_filters.glade.h:9
 msgid "Broken"
 msgstr "已损坏"
 
-#: common/rpackage.cc:1288
+#: common/rpackage.cc:1304
 msgid "Not installed (new in repository)"
 msgstr "未安装(软件库里的新版本)"
 
@@ -1122,9 +1136,10 @@ msgid "Color selection"
 msgstr "颜色选择"
 
 #: gtk/rgpreferenceswindow.cc:925
+#, fuzzy
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
-"packages. If you manually force a verison from a different distribution, the "
+"packages. If you manually force a version from a different distribution, the "
 "package version will follow that distribution until it enters the default "
 "distribution."
 msgstr ""
@@ -1330,9 +1345,10 @@ msgid "Download"
 msgstr "下载"
 
 #: gtk/rgmainwindow.cc:1198
+#, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
-"upgraded  software packages."
+"upgraded software packages."
 msgstr "刷新软件包信息以便获得全新、已删除或已升级软件包的通知。"
 
 #: gtk/rgmainwindow.cc:1204
@@ -1794,7 +1810,8 @@ msgstr ""
 "这将导致您的系统不能使用！\n"
 
 #: gtk/rguserdialog.cc:72
-msgid "The following problems where found on your system:"
+#, fuzzy
+msgid "The following problems were found on your system:"
 msgstr "在您的系统里发现如下问题："
 
 #: gtk/rgvendorswindow.cc:39

@@ -541,10 +541,14 @@ string RPackage::showWhyInstBroken()
 	       requiredVersion = "("+string(Start.CompType())+string(Start.TargetVer())+")";
             if (Ver.end() == false) {
                if (FirstOr == false)
+		  // TRANSLATORS: dependency error message, example:
+		  // "apt 0.5.4 but 0.5.3 is to be installed"
                   ioprintf(out, _("\t%s %s but %s is to be installed"),
                            Start.TargetPkg().Name(), requiredVersion.c_str(),
 			   Ver.VerStr());
                else
+		  // TRANSLATORS: dependency error message, example:
+		  // "Depends: apt 0.5.4 but 0.5.3 is to be installed"
                   ioprintf(out, _(" %s: %s %s but %s is to be installed"),
                            End.DepType(), Start.TargetPkg().Name(),
 			   requiredVersion.c_str(), Ver.VerStr());
@@ -553,23 +557,35 @@ string RPackage::showWhyInstBroken()
                    true) {
                   if (Targ->ProvidesList == 0)
                      if (FirstOr == false)
+			// TRANSLATORS: dependency error message, example:
+			// "apt 0.5.4 but it is not installable"
                         ioprintf(out, _("\t%s %s but it is not installable"),
                                  Start.TargetPkg().Name(), 
 				 requiredVersion.c_str());
                      else
+			// TRANSLATORS: dependency error message, example:
+			// "Depends: apt 0.5.4  but it is not installable",
                         ioprintf(out, "%s: %s %s but it is not installable",
                                  End.DepType(), Start.TargetPkg().Name(),
 				 requiredVersion.c_str());
                   else if (FirstOr == false)
+		     // TRANSLATORS: dependency error message, example:
+		     // "apt but it is a virtual package"
                      ioprintf(out, _("\t%s but it is a virtual package"),
                               Start.TargetPkg().Name());
                   else
+		     // TRANSLATORS: dependency error message, example:
+		     // "Depends: apt but it is a virtual package"
                      ioprintf(out, _("%s: %s but it is a virtual package"),
                               End.DepType(), Start.TargetPkg().Name());
                } else if (FirstOr == false)
+		  // TRANSLATORS: dependency error message, example:
+		  // "apt but it is not going to be installed"
                   ioprintf(out, _("\t%s but it is not going to be installed"),
                            Start.TargetPkg().Name());
                else
+		  // TRANSLATORS: dependency error message, example:
+		  // "Depends: apt but it is not going to be installed"
                   ioprintf(out, _("%s: %s but it is not going to be installed"),
                            End.DepType(), Start.TargetPkg().Name());
             }

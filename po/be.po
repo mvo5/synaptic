@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-17 18:03+0100\n"
+"POT-Creation-Date: 2005-01-17 22:49+0100\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -419,86 +419,100 @@ msgid ""
 "sources.list\n"
 msgstr ""
 
-#: common/rpackage.cc:544
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:546
 #, fuzzy, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "%s ужо/будзе усталяваны"
 
-#: common/rpackage.cc:548
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
+#: common/rpackage.cc:552
 #, fuzzy, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr "%s ужо/будзе усталяваны"
 
-#: common/rpackage.cc:556
+#. TRANSLATORS: dependency error message, example:
+#. "apt 0.5.4 but it is not installable"
+#: common/rpackage.cc:562
 #, fuzzy, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "пакет не можа быць усталяваны"
 
-#: common/rpackage.cc:564
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is a virtual package"
+#: common/rpackage.cc:574
 #, fuzzy, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "пакет зьяўляецца віртуальным"
 
-#: common/rpackage.cc:567
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is a virtual package"
+#: common/rpackage.cc:579
 #, fuzzy, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "пакет зьяўляецца віртуальным"
 
-#: common/rpackage.cc:570
+#. TRANSLATORS: dependency error message, example:
+#. "apt but it is not going to be installed"
+#: common/rpackage.cc:584
 #, fuzzy, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "%s ужо/будзе усталяваны"
 
-#: common/rpackage.cc:573
+#. TRANSLATORS: dependency error message, example:
+#. "Depends: apt but it is not going to be installed"
+#: common/rpackage.cc:589
 #, fuzzy, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s ужо/будзе усталяваны"
 
-#: common/rpackage.cc:592
+#: common/rpackage.cc:608
 msgid " or"
 msgstr ""
 
-#: common/rpackage.cc:895
+#: common/rpackage.cc:911
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Памылковы запіс у файле перавагаў, няма загалоўка Package"
 
-#: common/rpackage.cc:1276
+#: common/rpackage.cc:1292
 #, fuzzy
 msgid "Marked for installation"
 msgstr "Былі пазначаныя для ўсталёўкі"
 
-#: common/rpackage.cc:1277
+#: common/rpackage.cc:1293
 #, fuzzy
 msgid "Marked for re-installation"
 msgstr "Былі пазначаныя для ўсталёўкі"
 
-#: common/rpackage.cc:1278
+#: common/rpackage.cc:1294
 #, fuzzy
 msgid "Marked for upgrade"
 msgstr "Былі пазначаныя для абнаўленьня"
 
-#: common/rpackage.cc:1279
+#: common/rpackage.cc:1295
 #, fuzzy
 msgid "Marked for downgrade"
 msgstr "Будуць абноўленыя"
 
-#: common/rpackage.cc:1280
+#: common/rpackage.cc:1296
 #, fuzzy
 msgid "Marked for removal"
 msgstr "Пазначаныя для выдаленьня"
 
-#: common/rpackage.cc:1281
+#: common/rpackage.cc:1297
 #, fuzzy
 msgid "Marked for complete removal"
 msgstr "Пазначаныя для выдаленьня"
 
 # This is filter name, it's better to not translate it
-#: common/rpackage.cc:1282 common/rpackageview.cc:123
+#: common/rpackage.cc:1298 common/rpackageview.cc:123
 #: gtk/window_filters.glade.h:31
 msgid "Not installed"
 msgstr "Не ўсталяваныя"
 
-#: common/rpackage.cc:1283
+#: common/rpackage.cc:1299
 #, fuzzy
 msgid "Not installed (locked)"
 msgstr ""
@@ -506,17 +520,17 @@ msgstr ""
 "Усталяваны пакет:\n"
 
 # This is filter name, it's better to not translate it
-#: common/rpackage.cc:1284 common/rpackageview.cc:118
+#: common/rpackage.cc:1300 common/rpackageview.cc:118
 #: gtk/window_filters.glade.h:23
 msgid "Installed"
 msgstr "Усталяваныя"
 
-#: common/rpackage.cc:1285 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
+#: common/rpackage.cc:1301 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
 #, fuzzy
 msgid "Installed (upgradable)"
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
-#: common/rpackage.cc:1286
+#: common/rpackage.cc:1302
 #, fuzzy
 msgid "Installed (locked to the current version)"
 msgstr ""
@@ -524,12 +538,12 @@ msgstr ""
 "Усталяваны пакет:\n"
 
 # This is filter name, it's better to not translate it
-#: common/rpackage.cc:1287 common/rpackageview.cc:422
+#: common/rpackage.cc:1303 common/rpackageview.cc:422
 #: gtk/window_filters.glade.h:9
 msgid "Broken"
 msgstr "Сапсаваныя"
 
-#: common/rpackage.cc:1288
+#: common/rpackage.cc:1304
 #, fuzzy
 msgid "Not installed (new in repository)"
 msgstr "Не ўсталяваныя (рэшткавая канфігурацыя)"
@@ -1175,7 +1189,7 @@ msgstr "Выбар колера"
 #: gtk/rgpreferenceswindow.cc:925
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
-"packages. If you manually force a verison from a different distribution, the "
+"packages. If you manually force a version from a different distribution, the "
 "package version will follow that distribution until it enters the default "
 "distribution."
 msgstr ""
@@ -1375,7 +1389,7 @@ msgstr "Панізіць"
 #, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
-"upgraded  software packages."
+"upgraded software packages."
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
 #: gtk/rgmainwindow.cc:1204
@@ -1869,7 +1883,7 @@ msgstr ""
 "Гэта можа прывесьці вашу сыстэму ў непрацоўны стан!!!\n"
 
 #: gtk/rguserdialog.cc:72
-msgid "The following problems where found on your system:"
+msgid "The following problems were found on your system:"
 msgstr ""
 
 #: gtk/rgvendorswindow.cc:39

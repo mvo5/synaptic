@@ -80,7 +80,7 @@ string SizeToStr(double Size)
 }
 
 
-bool is_binary_in_path(char *program)
+bool is_binary_in_path(const char *program)
 {
    gchar **path = g_strsplit(getenv("PATH"), ":", 0);
 

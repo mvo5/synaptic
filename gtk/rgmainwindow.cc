@@ -1147,6 +1147,9 @@ void RGMainWindow::buildInterface()
    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"menu_changelog_separator"));
    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"separator_debian"));
 #endif
+   
+   if(!FileExists(_config->Find("Synaptic::taskHelperProg","/usr/bin/tasksel")))
+      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "menu_tasks"));
 
    // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");

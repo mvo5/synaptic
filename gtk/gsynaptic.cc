@@ -199,21 +199,20 @@ int main(int argc, char **argv)
 
     mainWindow->setInterfaceLocked(false);
 
-    // show welcome dialog
-    if(_config->FindB("Synaptic::showWelcomeDialog",true)) {
-	RGGladeUserDialog dia(mainWindow);
-	dia.run("welcome");
-	GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-					     "checkbutton_show_again");
-	assert(cb);
-	_config->Set("Synaptic::showWelcomeDialog",
-		     gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
-    }
-    
-
     if (_config->FindB("Volatile::Non-Interactive", false)) {
 	mainWindow->proceed();
     } else {
+	// show welcome dialog
+	if(_config->FindB("Synaptic::showWelcomeDialog",true)) {
+	    RGGladeUserDialog dia(mainWindow);
+	    dia.run("welcome");
+	    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+						 "checkbutton_show_again");
+	    assert(cb);
+	    _config->Set("Synaptic::showWelcomeDialog",
+			 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+	}
+
 	gtk_main();
     }
     

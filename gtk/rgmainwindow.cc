@@ -1119,13 +1119,18 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     }
 
     gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
-    switch(other){
-    case RPackage::OPinned:
+    if(other & RPackage::OPinned) {
 	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is pinned."));
-	break;
-    case RPackage::ONew:
+	gtk_widget_set_sensitive(_actionB[2], FALSE);
+	gtk_widget_set_sensitive(_installM, FALSE);
+	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+	gtk_widget_set_sensitive(_removeM, FALSE);
+	gtk_widget_set_sensitive(_purgeM, FALSE);
+	gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
+	gtk_widget_set_sensitive(_pinM, FALSE);
+    }
+    if(other & RPackage::ONew) {
 	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is new."));
-	break;
     }
 
     if((pkg->dependsOn("debconf")||pkg->dependsOn("debconf-i18n")) && 
@@ -1144,12 +1149,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
     _blockActions = FALSE;
     gtk_widget_set_sensitive(_actionB[0], TRUE);
-
-    // gray out "remove" button
-    if(locked) {
-      gtk_label_set_text(GTK_LABEL(_stateL), _("Package is pinned."));
-      gtk_widget_set_sensitive(_actionB[2], FALSE);
-    }
 
     if (pkg->wouldBreak()) {
       gtk_label_set_text(GTK_LABEL(_stateL), _("Broken dependencies."));

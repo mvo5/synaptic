@@ -43,12 +43,18 @@ docdir = $(datadir)/gnome/help/$(docname)/$(lang)
 xml_files = $(entities) $(docname).xml
 
 EXTRA_DIST = $(xml_files) $(omffile)
-CLEANFILES = omf_timestamp
+CLEANFILES = omf_timestamp html_timestamp
 
 # If the following file is in a subdir (like help/) you need to add that to the path
 include $(top_srcdir)/omf.make
 
-all: omf
+all: omf html
+
+html: html_timestamp
+
+html_timestamp:  $(docname).xml
+	-db2html -o  $(top_srcdir)/doc/html $(docname).xml
+	touch html_timestamp
 
 $(docname).xml: $(entities)
 	-ourdir=`pwd`;  \

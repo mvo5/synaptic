@@ -2951,7 +2951,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label141">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;b&gt;Distribution&lt;/b&gt;</property>
+		      <property name="label" translatable="yes">&lt;b&gt;Upgrade behaviour (default distribution)&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3011,7 +3011,7 @@
 			      <child>
 				<widget class="GtkLabel" id="label139">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Default archive: </property>
+				  <property name="label" translatable="yes">Prefer versions from: </property>
 				  <property name="use_underline">False</property>
 				  <property name="use_markup">False</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3032,7 +3032,7 @@
 			      <child>
 				<widget class="GtkOptionMenu" id="optionmenu_default_distro">
 				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Select the default release if more than one is specifed in the sources.list</property>
+				  <property name="tooltip" translatable="yes">Prefer package versions from the selected distribution when upgrading packages. If you manually force a verison from a different distribution, the package version will follow that distribution until it enters the default distribution.</property>
 				  <property name="can_focus">True</property>
 				  <property name="history">-1</property>
 				  <signal name="changed" handler="on_optionmenu_default_distro_changed" last_modification_time="Wed, 01 Oct 2003 20:08:51 GMT"/>
@@ -3143,7 +3143,7 @@
 	  <child>
 	    <widget class="GtkLabel" id="label138">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Expert</property>
+	      <property name="label" translatable="yes">Distribution</property>
 	      <property name="use_underline">False</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>

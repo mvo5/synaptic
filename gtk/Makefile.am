@@ -33,33 +33,56 @@ glade_DATA =                            \
 	window_repositories.glade window_repositories.glade.strings
 
 
-EXTRA_DIST = $(glade_DATA) *.h
+EXTRA_DIST = $(glade_DATA) 
 
 
 synaptic_SOURCES= \
 	gsynaptic.cc\
+	gsynaptic.h\
 	gtkpkgtree.cc\
+	gtkpkgtree.h\
 	gtktagtree.cc\
+	gtktagtree.h\
 	gtkpkglist.cc\
+	gtkpkglist.h\
 	rgaboutpanel.cc\
+	rgaboutpanel.h\
 	rgcacheprogress.cc\
+	rgcacheprogress.h\
 	rgpreferenceswindow.cc\
+	rgpreferenceswindow.h\
 	rgfetchprogress.cc\
+	rgfetchprogress.h\
 	rgfiltermanager.cc\
+	rgfiltermanager.h\
 	rgfindwindow.cc\
+	rgfindwindow.h\
 	rgsetoptwindow.cc\
+	rgsetoptwindow.h\
 	rgdummyinstallprogress.cc\
+	rgdummyinstallprogress.h\
 	rgzvtinstallprogress.cc\
+	rgzvtinstallprogress.h\
 	rginstallprogress.cc\
+	rginstallprogress.h\
 	rgcdscanner.cc\
+	rgcdscanner.h\
 	rgmainwindow.cc\
+	rgmainwindow.h\
 	rgrepositorywin.cc\
+	rgrepositorywin.h\
 	rgvendorswindow.cc\
+	rgvendorswindow.h\
 	rgsummarywindow.cc\
+	rgsummarywindow.h\
 	rgchangeswindow.cc\
+	rgchangeswindow.h\
 	rguserdialog.cc\
+	rguserdialog.h\
 	rgwindow.cc\
-	rggladewindow.cc
+	rgwindow.h\
+	rggladewindow.cc\
+	rggladewindow.h
 
 CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 

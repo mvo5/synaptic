@@ -80,6 +80,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
    virtual void Fail(pkgAcquire::ItemDesc &Itm);
    virtual void Start();
    virtual void Stop();
+   virtual bool close();
 
    bool Pulse(pkgAcquire * Owner);
 

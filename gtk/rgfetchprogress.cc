@@ -57,6 +57,14 @@ enum {
 static const int COLUMN_PERCENT_WIDTH=100;
 static const int COLUMN_PERCENT_HEIGHT=18;
 
+
+bool RGFetchProgress::close()
+{
+   stopDownload(NULL, this);
+   
+   return TRUE;
+}
+
 RGFetchProgress::RGFetchProgress(RGWindow *win)
    : RGGladeWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
 {
@@ -136,9 +144,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    g_signal_connect (expander, "notify::expanded",
 		     G_CALLBACK (expanderActivate), this);
 
-   
-
-   
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
    else

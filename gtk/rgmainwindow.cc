@@ -1069,7 +1069,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_removeM, TRUE);
 	gtk_widget_set_sensitive(_purgeM, TRUE);
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-	gtk_widget_set_sensitive(_pinM, TRUE);
+	gtk_widget_set_sensitive(_pinM, FALSE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
 	installed = TRUE;
 	break;

@@ -722,6 +722,7 @@ void RPackage::setInstall()
    _depcache->MarkInstall(*_package, true);
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
 
+   // FIXME: can't we get rid of it here?
    // if there is something wrong, try to fix it
    if (!State.Install() || _depcache->BrokenCount() > 0) {
       pkgProblemResolver Fix(_depcache);
@@ -729,6 +730,7 @@ void RPackage::setInstall()
       Fix.Protect(*_package);
       Fix.Resolve(true);
    }
+
 
 #ifdef WITH_LUA
    _lua->SetDepCache(_depcache);
@@ -1200,6 +1202,19 @@ static char *parseDescription(string descr)
 string RPackage::component()
 {
    string res;
+#ifdef WITH_APT_AUTH
+   // the apt-secure patch breaks File.Component
+   const char *s = _package->Section();
+   if(s == NULL)
+      return "";
+
+   string src_section(s);
+   if(src_section.find('/')!=src_section.npos)
+      src_section=string(src_section, 0, src_section.find('/'));
+   else
+      src_section="main";
+   res = src_section;
+#else
    pkgCache::VerIterator Ver;
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
    if (State.CandidateVer == 0) {
@@ -1216,7 +1231,7 @@ string RPackage::component()
    }
 
    res = File.Component();
-
+#endif
    return res;
 }
 

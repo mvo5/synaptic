@@ -1,8 +1,9 @@
 /* rgmainwindow.cc - main window of the app
  * 
  * Copyright (c) 2001-2003 Conectiva S/A
- *               2002,2003 Michael Vogt <mvo@debian.org>
- * 
+ *               2002-2004 Michael Vogt <mvo@debian.org>
+ *               2004 Canonical  
+
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
@@ -94,14 +95,6 @@ enum { DEP_NAME_COLUMN,         /* text */
    DEP_PKG_INFO
 };                              /* additional info (install 
                                    not installed) as text */
-
-#define SELECTED_MENU_INDEX(popup) \
-    (int)gtk_object_get_data(GTK_OBJECT(gtk_menu_get_active(GTK_MENU(gtk_option_menu_get_menu(GTK_OPTION_MENU(popup))))), "index")
-
-
-
-
-
 
 void RGMainWindow::changeView(int view, string subView)
 {
@@ -483,9 +476,10 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    pkg->setVersion(versions[nr].first.c_str());
    me->pkgAction(PKG_INSTALL_FROM_VERSION);
    
+
    if (!(pkg->getFlags() & RPackage::FInstall))
       pkg->unsetVersion();   // something went wrong
-   
+
    pkg->setNotify(true);
 }
 

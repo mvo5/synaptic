@@ -53,8 +53,9 @@ RGWindow::RGWindow(string name, bool makeBox)
     } else {
 	_topBox = NULL;
     }
-  
-    gtk_widget_realize(_win);
+
+    //gtk_widget_realize(_win);
+    //gtk_widget_show_all(_win);
 }
 
 
@@ -81,10 +82,10 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,
 	_topBox = NULL;
     }
 
-    gtk_widget_realize(_win);
+    //gtk_widget_realize(_win);
     
     gtk_window_set_transient_for(GTK_WINDOW(_win), 
-				 GTK_WINDOW(parent->window()));
+    				 GTK_WINDOW(parent->window()));
 }
 
 

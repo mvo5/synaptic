@@ -177,6 +177,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   g_signal_connect(G_OBJECT(_term), "button-press-event", 
 		   (void  (*)())zvtFocus, 
 		   this);
+
 #endif
 #ifdef HAVE_VTE
   _term = vte_terminal_new();

@@ -568,7 +568,7 @@ void RGMainWindow::pkgHelpClicked(GtkWidget *self, void *data)
 void RGMainWindow::showConfigWindow(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
-    
+
     if (me->_configWin == NULL) {
 	me->_configWin = new RGPreferencesWindow(me, me->_lister);
     }
@@ -1381,10 +1381,13 @@ void RGMainWindow::updateVersionButtons(RPackage *pkg)
     bool found=false;
     for(unsigned int i=0;i<versions.size();i++) {
 	// first radiobutton makes the radio-button group 
-	if(i==0)
-	    button = gtk_radio_button_new_with_label(NULL,g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
-	else
-	    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
+	gchar *str = g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str());
+	if(i==0) 
+	    button = gtk_radio_button_new_with_label(NULL,str);
+	else 
+	    button = gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),str);
+	g_free(str);
+
 	g_object_set_data(G_OBJECT(button),"me",this);
 	g_object_set_data(G_OBJECT(button),"pkg",pkg);
 	// check what version is installed or will installed
@@ -1954,8 +1957,8 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 			   _config->Find("Synaptic::FontName").c_str());
 	g_object_set_property(G_OBJECT(gtk_settings_get_default()), 
 			      "gtk-font-name", &value); 
-	g_value_unset(&value);   
     }
+    g_value_unset(&value);   
 
     // apply the proxy settings
     RGPreferencesWindow::applyProxySettings();
@@ -3176,13 +3179,13 @@ void RGMainWindow::buildInterface()
     g_signal_connect(menuitem, "activate",
 		     (GCallback) menuActionClicked, (void*)PKG_DELETE);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
+#ifndef HAVE_RPM
     menuitem = gtk_menu_item_new_with_label(_("Remove Including Configuration"));
     g_object_set_data(G_OBJECT(menuitem),"me",this);
     g_signal_connect(menuitem, "activate",
 		     (GCallback) menuActionClicked, (void*)PKG_PURGE);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
+#endif
     menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
     g_object_set_data(G_OBJECT(menuitem),"me",this);
     g_signal_connect(menuitem, "activate",

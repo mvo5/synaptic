@@ -60,7 +60,8 @@ bool ShowHelp(CommandLine & CmdL)
       _("-i=? Start with the initialFilter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
-      _("--non-interactive Never prompt for user input\n");
+      _("--non-interactive Never prompt for user input\n") << 
+      _("--task-window Open with task window\n");
    exit(0);
 }
 
@@ -79,6 +80,8 @@ CommandLine::Args Args[] = {
    0, "non-interactive", "Volatile::Non-Interactive", 0}
    , {
    0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
+   , {
+   0, "task-window", "Volatile::TaskWindow", 0}
    , {
    'o', "option", 0, CommandLine::ArbItem}
    , {
@@ -203,6 +206,10 @@ int main(int argc, char **argv)
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       mainWindow->cbUpgradeClicked(NULL, mainWindow);
       mainWindow->changeView(3, true, _("Marked Changes"));
+   }
+
+   if(_config->FindB("Volatile::TaskWindow",false)) {
+      mainWindow->cbTasksClicked(NULL, mainWindow);
    }
 
    if (_config->FindB("Volatile::Non-Interactive", false)) {

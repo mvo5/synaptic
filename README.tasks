@@ -9,7 +9,8 @@ various task systems easy synaptic needs a helper application called
 commands:
 
 --list-tasks: returns a list of the format
-              "$taskname\t$task-short-description" 
+              "$installed $taskname\t$task-short-description" 
+	      where $installed can be 'i' (installed) or 'u' (uninstalled)
 
 --task-packages $task: list the packages included in the given task
                        this option can be used more than once for
@@ -22,12 +23,12 @@ Examples:
 
 $ tasksel --list-tasks
 database-server SQL database
-desktop Desktop environment
-dns-server      DNS server
-file-server     File server
-mail-server     Mail server
-print-server    Print server
-web-server      Web server
+i desktop Desktop environment
+u dns-server      DNS server
+u file-server     File server
+u mail-server     Mail server
+u print-server    Print server
+u web-server      Web server
 
 $ tasksel --task-packages dns-server --task-packages print-server
 bind9

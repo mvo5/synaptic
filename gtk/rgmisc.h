@@ -89,6 +89,13 @@ class RPackageStatus {
     GdkColor* getBgColor(RPackage *pkg);
     GdkPixbuf* getPixbuf(RPackage *pkg);
 
+    // here we get the description for the States
+    const char *getLongStatusString(int i) { 
+	return PackageStatusShortString[i]; 
+    };
+    const char *getLongStatusString(RPackage *pkg) { 
+	return PackageStatusLongString[getStatus(pkg)]; 
+    };
 
     // this is for the configuration of the colors
     void setColor(int i, GdkColor *new_color);

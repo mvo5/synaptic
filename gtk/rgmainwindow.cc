@@ -64,7 +64,8 @@
 #include "rginstallprogress.h"
 #include "rgdummyinstallprogress.h"
 #include "rgzvtinstallprogress.h"
-#include "gsynaptic.h"
+#include "rgmisc.h"
+#include "sections_trans.h"
 
 // icons and pixmaps
 #include "synaptic_mini.xpm"
@@ -1018,7 +1019,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	return;
     }
 
-    bool installed = FALSE;
     RPackage::PackageStatus status = pkg->getStatus();
     RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
     int other = pkg->getOtherStatus();
@@ -1034,7 +1034,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_purgeM, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
-	installed = TRUE;
 	break;
 	
      case RPackage::SInstalledOutdated:
@@ -1047,7 +1046,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
-	installed = TRUE;
 	break;
 	
      case RPackage::SInstalledBroken:
@@ -1060,7 +1058,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
 	gtk_widget_set_sensitive(_pinM, FALSE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
-	installed = TRUE;
 	break;
 	
      case RPackage::SNotInstalled:
@@ -1086,45 +1083,26 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     }
 
     _currentB = NULL;
+    setLabel(_gladeXML,"label_state", _(RPackageStatus::pkgStatus.getLongStatusString(pkg)));
     switch (mstatus) {
      case RPackage::MHeld:
      case RPackage::MKeep:
 	_currentB = _actionB[0];
-	if (installed) 
-	    setLabel(_gladeXML,"label_state", _("Package is installed."));
-	else
-	    setLabel(_gladeXML,"label_state", _("Package is not installed."));
 	break;
 
      case RPackage::MInstall:
-	setLabel(_gladeXML,"label_state", _("Package will be installed."));
-	_currentB = _actionB[1];
-	break;
-	
      case RPackage::MUpgrade:
 	_currentB = _actionB[1];
-	setLabel(_gladeXML,"label_state", _("Package will be upgraded."));
-	break;
-	
-     case RPackage::MDowngrade:
 	gtk_widget_set_sensitive(_actionB[1], TRUE);
-	_currentB = _actionB[1];
-	setLabel(_gladeXML,"label_state", _("Package will be downgraded."));
 	break;
 	
      case RPackage::MRemove:
 	_currentB = _actionB[2];
-	setLabel(_gladeXML,"label_state", _("Package will be uninstalled."));
-	break;
-    case RPackage::MBroken:
-      setLabel(_gladeXML,"label_state", _("Package is broken."));
-      break;
 	break;
     }
 
     gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
     if(other & RPackage::OPinned) {
-	setLabel(_gladeXML,"label_state", _("Package is pinned."));
 	gtk_widget_set_sensitive(_actionB[2], FALSE);
 	gtk_widget_set_sensitive(_installM, FALSE);
 	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
@@ -1132,9 +1110,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_purgeM, FALSE);
 	gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
-    }
-    if(other & RPackage::ONew) {
-	setLabel(_gladeXML,"label_state", _("Package is new."));
     }
 
     if((pkg->dependsOn("debconf")||pkg->dependsOn("debconf-i18n")) && 
@@ -1452,7 +1427,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     g_free(msg);
 
     // package info
-    setLabel(_gladeXML,"label_section", pkg->section());
+    setLabel(_gladeXML,"label_section", _(trans_section(pkg->section()).c_str()));
     setLabel(_gladeXML,"label_priority", pkg->priority());
 #ifdef HAVE_DEBTAGS
     setLabel(_gladeXML,"label_tags", pkg->tags());
@@ -1890,7 +1865,7 @@ void RGMainWindow::findToolClicked(GtkWidget *self, void *data)
   }
 
   int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
-  if(res == 0) {
+  if(res == GTK_RESPONSE_OK) {
       gdk_window_set_cursor(me->_findWin->window()->window, me->_busyCursor);
       RFilter *filter = me->_lister->findFilter(0);
       filter->reset();

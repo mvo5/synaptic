@@ -771,50 +771,9 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	{
 	    string sec = pkg->section();
 	    if(itermap.find(sec) == itermap.end()) {
-#ifndef HAVE_RPM
-		string str = sec;
-		string suffix;
-		// baaaa, special case for stupid debian package naming
-		if(str=="non-US/non-free") {
-		    str = _("Non US");
-		    suffix = _("non free");
-		}
-		if(str=="non-US/non-free") {
-		    str = _("Non US");
-		    suffix = _("contrib");
-		}
-		// if we have something like "contrib/web", make "contrib" the 
-		// suffix and translate it independently
-		unsigned int n = str.find("/");
-		if(n != string::npos) {
-		    suffix = str.substr(0,n);
-		    str.erase(0,n+1);
-		    for(int i=0;transtable[i][0] != NULL;i++) {
-			if(suffix == transtable[i][0]) {
-			    suffix = _(transtable[i][1]);
-			    break;
-			}
-		    }
-		}
-		for(int i=0;transtable[i][0] != NULL;i++) {
-		    if(str == transtable[i][0]) {
-			str = _(transtable[i][1]);
-			break;
-		    }
-		}
-		// if we have a suffix, add it
-		if(!suffix.empty()) {
-		    ostringstream out;
-		    ioprintf(out, _("%s <i>(%s)</i>"),
-			     str.c_str(), suffix.c_str());
-		    str = out.str();
-		}
+		string str = trans_section(sec);
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
-#else
-		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
-					   pkgPair(sec,NULL));
-#endif		
 		itermap[sec] = it;
 	    } else {
 		it = itermap[sec];

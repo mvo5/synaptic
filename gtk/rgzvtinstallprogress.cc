@@ -33,7 +33,6 @@
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
 #include "rconfiguration.h"
-#include "stop.xpm"
 #include "gsynaptic.h"
 
 #include <iostream>

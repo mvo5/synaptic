@@ -24,6 +24,7 @@ class RGSrcEditor : RGWindow {
 	GtkWidget *optTypeMenu;
 	GtkWidget *entryDist;
 	GtkWidget *cbDisabled;
+	GtkWidget *sourceFile;
 
 	int selectedrow;
 

@@ -1,8 +1,13 @@
+#include <sys/stat.h>
+#include <dirent.h>
+
 #include "rsources.h"
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
+#include <algorithm>
 #include <fstream>
 #include "config.h"
 #include "i18n.h"
@@ -26,15 +31,14 @@ SourcesList::SourceRecord* SourcesList::AddSourceNode(SourceRecord &rec)
 	return newrec;
 }
 
-bool SourcesList::ReadSources()
+bool SourcesList::ReadSourcePart(string listpath)
 {
+    cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
 	char buf[512];
 	const char *p;
-
-	ifstream ifs(_config->FindFile("Dir::Etc::sourcelist").c_str(), ios::in );
+	ifstream ifs(listpath.c_str(), ios::in );
 	// cannot open file
-	if (!ifs != 0) return _error->Error(_("Can't read %s"),
-						_config->FindFile("Dir::Etc::sourcelist").c_str());
+	if (!ifs != 0) return _error->Error(_("Can't read %s"), listpath.c_str());
 
 	while (ifs.eof() == false) {
 		p = buf;
@@ -45,6 +49,7 @@ bool SourcesList::ReadSources()
 
 		ifs.getline(buf, sizeof(buf));
 
+		rec.SourceFile = listpath;
 		while (isspace(*p)) p++;
 		if (*p == '#') {
 			rec.Type = Disabled;
@@ -113,7 +118,6 @@ bool SourcesList::ReadSources()
 			while (ParseQuoteWord(p, Section) == true)
 				rec.Sections[rec.NumSections++] = Section;
 		}
-
 		AddSourceNode(rec);
 	}
 
@@ -121,11 +125,75 @@ bool SourcesList::ReadSources()
 	return true;
 }
 
-SourcesList::SourceRecord *SourcesList::AddSource(RecType Type, string VendorID, string URI, string Dist, string *Sections, unsigned short count)
+bool SourcesList::ReadSourceDir(string Dir)
+{
+    cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
+
+	DIR *D = opendir(Dir.c_str());
+	if (D == 0)
+		return _error->Errno("opendir",_("Unable to read %s"),Dir.c_str());
+                                                                                
+	vector<string> List;
+                                                                                	for (struct dirent *Ent = readdir(D); Ent != 0; Ent = readdir(D))
+	{
+		if (Ent->d_name[0] == '.')
+			continue;
+                                                                                
+      	// Skip bad file names ala run-parts
+      	const char *C = Ent->d_name;
+      	for (; *C != 0; C++)
+     		if (isalpha(*C) == 0 && isdigit(*C) == 0
+             	&& *C != '_' && *C != '-' && *C != '.')
+        		break;
+      		if (*C != 0)
+     			continue;
+                                                                                
+     	// Only look at files ending in .list to skip .rpmnew etc files
+     	if (strcmp(Ent->d_name+strlen(Ent->d_name)-5, ".list") != 0)
+        	continue;
+                                                                                
+      	// Make sure it is a file and not something else
+      	string File = flCombine(Dir,Ent->d_name);
+      	struct stat St;
+      	if (stat(File.c_str(),&St) != 0 || S_ISREG(St.st_mode) == 0)
+			continue;
+                                                                                
+      	List.push_back(File);
+   	}
+   	closedir(D);
+                                                                                
+   	sort(List.begin(),List.end());
+                                                                                
+   	// Read the files
+   	for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
+      	if (ReadSourcePart(*I) == false)
+     		return false;
+   	return true;
+}
+
+
+bool SourcesList::ReadSources()
+{
+    cout << "SourcesList::ReadSources() " << endl;
+
+	bool Res = true;
+
+	string Parts = _config->FindDir("Dir::Etc::sourceparts");
+	if (FileExists(Parts) == true)
+		Res &= ReadSourceDir(Parts);
+	string Main = _config->FindFile("Dir::Etc::sourcelist");
+	if (FileExists(Main) == true)
+		Res &= ReadSourcePart(Main);
+
+	return Res;
+}
+
+SourcesList::SourceRecord *SourcesList::AddSource(RecType Type, string VendorID, string URI, string Dist, string *Sections, unsigned short count, string SourceFile)
 {
 	SourceRecord rec;
 	rec.Type = Type;
 	rec.VendorID = VendorID;
+	rec.SourceFile = SourceFile;
 
 	if (rec.SetURI(URI) == false) {
 	  return NULL;
@@ -148,36 +216,51 @@ void SourcesList::RemoveSource(SourceRecord *&rec)
 
 bool SourcesList::UpdateSources()
 {
-	ofstream ofs(_config->FindFile("Dir::Etc::sourcelist").c_str(), ios::out);
-	if (!ofs != 0) return false;
-
-	for(list<SourceRecord*>::iterator it = SourceRecords.begin();
-	    it != SourceRecords.end(); it++) 
-        {
-  	        string S;
-		if (((*it)->Type & Comment) != 0) {
-			S = (*it)->Comment;
-		} else {
-			if (((*it)->Type & Disabled) != 0)
-				S = "# ";
-
-			S += (*it)->GetType() + " ";
-			
-			if ((*it)->VendorID.empty() == false) {
-				S += "[" + (*it)->VendorID + "] ";
-			}
-			
-			S += (*it)->URI + " ";
-			S += (*it)->Dist + " ";
-
-			for (unsigned int J = 0; J < (*it)->NumSections; J++)
-				S += (*it)->Sections[J] + " ";
-		}
-		ofs << S << endl;
+	list<string> filenames;
+    for(list<SourceRecord*>::iterator it = SourceRecords.begin();
+        it != SourceRecords.end(); it++)
+	{
+    	if ((*it)->SourceFile == "") continue;
+		filenames.push_front((*it)->SourceFile);
 	}
+	filenames.sort();
+	filenames.unique();
 
-	ofs.close();
-	return true;
+    for(list<string>::iterator fi = filenames.begin(); fi != filenames.end(); fi++)
+	{
+    	ofstream ofs((*fi).c_str(), ios::out);
+    	if (!ofs != 0) return false;
+                                                                                
+    	for(list<SourceRecord*>::iterator it = SourceRecords.begin();
+        	it != SourceRecords.end(); it++)
+        {
+			if ((*fi) != (*it)->SourceFile) {
+				continue;
+			} 
+			string S;
+			if (((*it)->Type & Comment) != 0) {
+				S = (*it)->Comment;
+        	} else {
+            	if (((*it)->Type & Disabled) != 0)
+                	S = "# ";
+                                                                                
+            	S += (*it)->GetType() + " ";
+                                                                                
+            	if ((*it)->VendorID.empty() == false) {
+                	S += "[" + (*it)->VendorID + "] ";
+            	}
+                                                                                
+            	S += (*it)->URI + " ";
+            	S += (*it)->Dist + " ";
+                                                                                
+            	for (unsigned int J = 0; J < (*it)->NumSections; J++)
+                	S += (*it)->Sections[J] + " ";
+        	}
+        	ofs << S << endl;
+    	}
+    	ofs.close();
+	}
+    return true;
 }
 
 bool SourcesList::SourceRecord::SetType(string S)
@@ -234,6 +317,7 @@ SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(const SourceReco
 		Sections[I] = rhs.Sections[I];
 	NumSections = rhs.NumSections;
 	Comment = rhs.Comment;
+	SourceFile = rhs.SourceFile;
 
 	return *this;
 }
@@ -342,6 +426,7 @@ ostream &operator<< (ostream &os, const SourcesList::SourceRecord &rec)
 	if ((rec.Type & SourcesList::Rpm) != 0) os << "Rpm";
 	if ((rec.Type & SourcesList::RpmSrc) != 0) os << "RpmSrc";
 	os << endl;
+	os << "SourceFile: " << rec.SourceFile << endl;
 	os << "VendorID: " << rec.VendorID << endl;
 	os << "URI: " << rec.URI << endl;
 	os << "Dist: " << rec.Dist << endl;

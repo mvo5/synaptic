@@ -72,7 +72,7 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
     static GtkTreeIter iter;
     cout << "RCacheActorPkgList::run()" << endl;
 
-    for(int i=0;i<List.size();i++) {
+    for(unsigned int i=0;i<List.size();i++) {
 	// fill in iter
 	iter.user_data = List[i];
 	iter.user_data2 = GINT_TO_POINTER(i);
@@ -175,7 +175,7 @@ gtk_pkg_list_new (RPackageLister *lister)
 {
   GtkPkgList *retval=NULL;
 
-  //g_print("pkg_list_new()\n");
+  g_print("pkg_list_new()\n");
 
   retval = (GtkPkgList*) g_object_new (GTK_TYPE_PKG_LIST, NULL);
   assert(retval);
@@ -241,7 +241,7 @@ gtk_pkg_list_get_iter (GtkTreeModel *tree_model,
   GtkPkgList *pkg_list = (GtkPkgList *) tree_model;
   gint *indices;
   gint depth;
-  RPackage *pkg;
+  RPackage *pkg=NULL;
 
   assert(GTK_IS_PKG_LIST (pkg_list));
   assert(path!=NULL);
@@ -251,20 +251,23 @@ gtk_pkg_list_get_iter (GtkTreeModel *tree_model,
 
   // we do not support more 
   assert(depth <= 1);
+
+  int element = indices[0];
+
 #ifdef DEBUG_LIST
-  cout << "get_iter: index " << indices[0]  << "  path: " << path << endl;
+  cout << "get_iter: index " << element  << "  path: " << path << endl;
 #endif
 
-  if(indices[0] > pkg_list->_lister->count()) {
+  if(element >= pkg_list->_lister->count()) {
       cout << "indices[0] > pkg_list->_lister->count()" << endl;
       return FALSE;
   }
 
-  pkg = pkg_list->_lister->getElement(indices[0]);
+  pkg = pkg_list->_lister->getElement(element);
   assert(pkg);
   iter->stamp = 140677;
   iter->user_data = pkg;
-  iter->user_data2 = GINT_TO_POINTER(indices[0]);
+  iter->user_data2 = GINT_TO_POINTER(element);
   return TRUE;
 }
 
@@ -273,7 +276,7 @@ gtk_pkg_list_get_path (GtkTreeModel *tree_model,
 		       GtkTreeIter  *iter)
 {
   GtkTreePath *retval;
-  GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
+  //GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
   
   g_return_val_if_fail (GTK_IS_PKG_LIST (tree_model), NULL);
   g_return_val_if_fail (iter != NULL, NULL);
@@ -411,7 +414,7 @@ gtk_pkg_list_iter_next (GtkTreeModel  *tree_model,
   GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
   int i,old;
 
-  RPackage *oldpkg = (RPackage*)iter->user_data;
+  //RPackage *oldpkg = (RPackage*)iter->user_data;
   old = GPOINTER_TO_INT(iter->user_data2);
 
   i = old + 1;
@@ -497,6 +500,12 @@ gtk_pkg_list_iter_nth_child (GtkTreeModel *tree_model,
       cout << "parent != NULL" << endl;
       return FALSE;
   }
+  
+  if(n > pkg_list->_lister->count()) {
+      cerr << "nth_child(): n>_lister->count()" << endl;
+      return FALSE;
+  }
+
   RPackage *pkg = pkg_list->_lister->getElement(n);
   assert(pkg);
 

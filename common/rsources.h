@@ -28,6 +28,7 @@ public:
 		string *Sections;
 		unsigned short NumSections;
 		string Comment;
+		string SourceFile;
 
 		bool SetType(string);
 		string GetType();
@@ -58,8 +59,11 @@ public:
 				string URI,
 				string Dist,
 				string *Sections,
-				unsigned short count);
+				unsigned short count,
+				string SourceFile);
 	void RemoveSource(SourceRecord *&);
+	bool ReadSourcePart(string listpath);
+	bool ReadSourceDir(string Dir);
 	bool ReadSources();
 	bool UpdateSources();
 

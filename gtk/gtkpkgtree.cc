@@ -73,7 +73,7 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
     RPackageLister::pkgPair pair;
 
     cout << "RCacheActorPkgTree::run()" << endl;
-    for(int i=0;i<List.size();i++) {
+    for(unsigned int i=0;i<List.size();i++) {
 	pair.first = List[i]->name();
 	pair.second = List[i];
 	pkgTree = _lister->getTreeOrganizer();

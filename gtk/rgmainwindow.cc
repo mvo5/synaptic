@@ -406,7 +406,7 @@ void RGMainWindow::changedFilter(GtkWidget *self)
 
 void RGMainWindow::changeFilter(int filter, bool sethistory)
 {
-    //cout << "RGMainWindow::changeFilter()"<<endl;
+    cout << "RGMainWindow::changeFilter()"<<endl;
     
     if (sethistory) {
 	gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
@@ -414,6 +414,7 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
 
     RPackage *pkg = selectedPackage();
     setInterfaceLocked(TRUE); 
+    _blockActions = TRUE;
 
     // try to set filter
     if(filter > 0) {
@@ -446,6 +447,7 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
     }
 
     refreshTable(pkg);
+    _blockActions = FALSE;
     setInterfaceLocked(FALSE);
     setStatusText();
 }
@@ -512,7 +514,7 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
 
 RPackage *RGMainWindow::selectedPackage()
 {
-    if (_pkgTree == NULL)
+    if(_activeTreeModel == NULL)
 	return NULL;
 
     //cout << "RGMainWindow::selectedPackage()" << endl;
@@ -524,17 +526,17 @@ RPackage *RGMainWindow::selectedPackage()
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
     list = li = gtk_tree_selection_get_selected_rows(selection,
-					      (GtkTreeModel**)(&_pkgTree));
+					      (GtkTreeModel**)(&_activeTreeModel));
     // list is empty
     if(li == NULL) 
 	return NULL;
   
     // we are only interessted in the last element
     li = g_list_last(li);
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(_pkgTree), &iter, 
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(_activeTreeModel), &iter, 
 			    (GtkTreePath*)(li->data));
 
-    gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &iter, 
+    gtk_tree_model_get(GTK_TREE_MODEL(_activeTreeModel), &iter, 
 		       PKG_COLUMN, &pkg, -1);
   
 
@@ -812,15 +814,15 @@ void RGMainWindow::saveTableState(vector<string>& expanded_sections)
   if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
       return;
 
-  if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
+  if(gtk_tree_model_get_iter_first(_activeTreeModel, &parentIter)) {
     //cout << "saving state" << endl;
     do {
       GtkTreePath *path;
       gchar *str;
-      path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
+      path =  gtk_tree_model_get_path(_activeTreeModel,
 				      &parentIter);
       if(gtk_tree_view_row_expanded(GTK_TREE_VIEW(_treeView), path)) {
-	gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+	gtk_tree_model_get(_activeTreeModel, &parentIter, 
 			   NAME_COLUMN, &str, -1);
 	if (str != NULL)
 	    expanded_sections.push_back(str);
@@ -828,7 +830,7 @@ void RGMainWindow::saveTableState(vector<string>& expanded_sections)
       //g_free(str);
       gtk_tree_path_free(path);
     }
-    while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
+    while(gtk_tree_model_iter_next(_activeTreeModel, &parentIter));
   }
 }
 
@@ -837,14 +839,14 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
   GtkTreeIter parentIter;  /* Parent iter */
   
   /* restore state */
-  if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
+  if(gtk_tree_model_get_iter_first(_activeTreeModel, &parentIter)) {
       //cout << "restoring state" << endl;
       do {
 	  GtkTreePath *path;
 	  gchar *str;
-	  path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
+	  path =  gtk_tree_model_get_path(_activeTreeModel,
 					  &parentIter);
-	  gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+	  gtk_tree_model_get(_activeTreeModel, &parentIter, 
 			     NAME_COLUMN, &str, -1);
 	  if(str != NULL &&
 	     find(expanded_sections.begin(), 
@@ -855,7 +857,7 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
 	  g_free(str);
 	  gtk_tree_path_free(path);
       }
-      while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
+      while(gtk_tree_model_iter_next(_activeTreeModel, &parentIter));
   }
 }
 
@@ -1052,8 +1054,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     bool ok;
     if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
-	    char buffer[512];
-
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 utf8(depType), depPkg ? depPkg : depName, depVer);
@@ -1074,9 +1074,11 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 				   -1);
 		if (g_strcasecmp(str, buffer) == 0) {
 		    dup = TRUE;
+		    g_free(str);
 		    break;
 		}
 		valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_depListStore),&iter);
+		g_free(str);
 	    }
 	    
 	    if (!dup) {
@@ -1085,7 +1087,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 				   DEP_NAME_COLUMN, buffer,
 				   DEP_IS_NOT_AVAILABLE, !ok,  
 				   DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
-				   DEP_PKG_INFO, g_strdup(summary),
+				   DEP_PKG_INFO, summary,
 				   -1);
 	    }
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
@@ -1147,9 +1149,11 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 		if (g_strcasecmp(str, buffer) == 0) {
 		    dup = TRUE;
+		    g_free(str);
 		    break;
 		}
 		valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_availDepListStore),&iter);
+		g_free(str);
 	    }
 	    if (!dup) {
 		gtk_list_store_append(_availDepListStore, &iter);
@@ -1157,7 +1161,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 				   DEP_NAME_COLUMN, buffer,
 				   DEP_IS_NOT_AVAILABLE, !ok,  
 				   DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
-				   DEP_PKG_INFO, g_strdup(summary),
+				   DEP_PKG_INFO, summary,
 				   -1);
 	    }
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
@@ -1323,7 +1327,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
     GList *li, *list;
     list = li = gtk_tree_selection_get_selected_rows(selection,
-					     (GtkTreeModel**)(&me->_pkgTree));
+						     &me->_activeTreeModel);
     
     if(li == NULL)
 	return;
@@ -1344,9 +1348,9 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
     me->_lister->openCache(TRUE);
 
     while(li != NULL) {
-	gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+	gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
 				(GtkTreePath*)(li->data));
-	gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+	gtk_tree_model_get(me->_activeTreeModel, &iter, 
 			   PKG_COLUMN, &pkg, -1);
 	if (pkg == NULL) {
 	    li=g_list_next(li);
@@ -1401,13 +1405,15 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   GtkTreeIter iter;
   GList *li, *list;
 
+  cout << "RGMainWindow::doPkgAction()" << endl;
+
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
 
   // get list of selected pkgs
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
   list = li = gtk_tree_selection_get_selected_rows(selection,
-					    (GtkTreeModel**)(&me->_pkgTree));
+					    &me->_activeTreeModel);
 
   // save pkg state
   RPackageLister::pkgState state;
@@ -1424,9 +1430,9 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   vector<RPackage*> exclude;
   RPackage *pkg = NULL;
   while(li != NULL) {
-      gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+      gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
 			      (GtkTreePath*)(li->data));
-      gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+      gtk_tree_model_get(me->_activeTreeModel, &iter, 
 			 PKG_COLUMN, &pkg, -1);
       if (pkg == NULL) {
 	  li=g_list_next(li);
@@ -1574,7 +1580,7 @@ void RGMainWindow::setColors(bool useColors)
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
     : RGWindow("main", false, true), _lister(packLister), _pkgTree(0), 
-      _pkgCacheObserver(0), _pkgListCacheObserver(0)
+      _pkgCacheObserver(0), _pkgList(0), _pkgListCacheObserver(0),  _activeTreeModel(0)
 {
 #if !defined(DEBUGUI) || defined(HAVE_RPM)
     //_showUpdateInfo = true; // xxx conectiva only, for now
@@ -1964,6 +1970,9 @@ void RGMainWindow::buildInterface()
     _summL = glade_xml_get_widget(_gladeXML, "label_summary"); 
     assert(_summL);
     gtk_widget_modify_font(_summL, font);
+    // we are finished with the fonts now
+    pango_font_description_free(font);
+    pango_font_description_free(bfont);
 
     _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
     glade_xml_signal_connect_data(_gladeXML,
@@ -2230,6 +2239,7 @@ void RGMainWindow::buildInterface()
     _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
     _menuDisplayMode = _treeDisplayMode;
 
+#if 0
     if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
 	_pkgList = gtk_pkg_list_new(_lister);
 	if(_pkgListCacheObserver)
@@ -2243,6 +2253,7 @@ void RGMainWindow::buildInterface()
 	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
 						   GTK_TREE_VIEW(_treeView));
     }
+#endif
 
 #if 0
     gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
@@ -2442,7 +2453,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
   setInterfaceLocked(TRUE);
   _blockActions = TRUE;
 
-  //  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
+  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
   _lister->setTreeDisplayMode(mode);
   _lister->reapplyFilter();
@@ -2451,12 +2462,14 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 
   if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
       _pkgList = gtk_pkg_list_new(_lister);
+      _activeTreeModel = GTK_TREE_MODEL(_pkgList);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			      GTK_TREE_MODEL(_pkgList));
       _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
 						     GTK_TREE_VIEW(_treeView));
   } else {
       _pkgTree = gtk_pkg_tree_new (_lister);
+      _activeTreeModel = GTK_TREE_MODEL(_pkgTree);
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 			      GTK_TREE_MODEL(_pkgTree));
       _pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
@@ -2574,21 +2587,25 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
     RPackage *pkg;
     GList *li, *list;
 
-    if (me->_pkgTree == NULL)
+    cout << "selectedRow()" << endl;
+
+    if (me->_activeTreeModel == NULL) {
+	cerr << "selectedRow(): me->_pkgTree == NULL " << endl;
 	return;
+    }
 
     list = li = gtk_tree_selection_get_selected_rows(selection,
-					    (GtkTreeModel**)(&me->_pkgTree));
+						     &me->_activeTreeModel);
     // list is empty
     if(li == NULL) 
 	return;
   
     // we are only interessted in the last element
     li = g_list_last(li);
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+    gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
 			    (GtkTreePath*)(li->data));
 
-    gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+    gtk_tree_model_get(me->_activeTreeModel, &iter, 
 		       PKG_COLUMN, &pkg, -1);
     if (pkg == NULL)
 	return;    
@@ -2613,12 +2630,12 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   RPackage *pkg = NULL;
 
 
-  //cout << "double click" << endl;
-  if(!gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree),
+  cout << "double click" << endl;
+  if(!gtk_tree_model_get_iter(me->_activeTreeModel,
 			      &iter,path)) {
     return;
   }
-  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+  gtk_tree_model_get(me->_activeTreeModel, &iter, 
 		     PKG_COLUMN, &pkg, -1);
 
   /* pkg is only NULL for secions */
@@ -2630,7 +2647,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
       return;
   }
   // double click
-  me->setInterfaceLocked(TRUE);
+  //me->setInterfaceLocked(TRUE);
   
   RPackage::PackageStatus pstatus =  pkg->getStatus();
   //   SInstalledUpdated,
@@ -2671,7 +2688,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
     }
   }
   // end double-click
-  me->setInterfaceLocked(FALSE);
+  //me->setInterfaceLocked(FALSE);
   return;
 }
 
@@ -2820,7 +2837,7 @@ void RGMainWindow::close()
 	
     //cout << "no exit" << endl;
     //BUG/FIXME: don't know why this is needed, but if I ommit it, the 
-    //     window will be closed
+    //     window will be closed even if I click on "no" in the confirm dialog
     cout<<endl;
 }
 
@@ -2845,12 +2862,24 @@ void RGMainWindow::setInterfaceLocked(bool flag)
 	gtk_widget_set_sensitive(_win, TRUE);
 	gdk_window_set_cursor(_win->window, NULL);
     }
+
+  // this sucks for the new gtktreeview -- it updates itself via 
+  // such events, while the gui is perfetly usable 
+#if 0
   while (gtk_events_pending())
     gtk_main_iteration();
+#endif
+  // because of the comment above, we only do 5 iterations now
+  //FIXME: this is more a hack than a real solution
+  for(int i=0;i<5;i++) {
+      if(gtk_events_pending())
+	  gtk_main_iteration();
+  }
 }
 
 void RGMainWindow::setTreeLocked(bool flag)
 {
+    cout << "setTreeLocked()" << endl;
     if (flag == true) {
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
 	_pkgTree = NULL;

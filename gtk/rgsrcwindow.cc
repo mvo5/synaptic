@@ -219,6 +219,8 @@ GtkWidget *RGSrcEditor::CreateWidget()
 		    (GtkAttachOptions) (GTK_FILL|GTK_EXPAND),
 		    (GtkAttachOptions) (0), 0, 0);
 
+	sourceFile = gtk_entry_new();
+
 	dialog_action_area1 = GTK_DIALOG (dlgSrcList)->action_area;
 	gtk_widget_show (dialog_action_area1);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog_action_area1), 10);
@@ -370,6 +372,8 @@ void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
 	string Dist;
 	string Sections[5];
 	unsigned short count = 0;
+	// XXX user added entries go to sources.list for now..
+	string SourceFile = "/etc/apt/sources.list";
 
 	if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->cbDisabled)))
 		Type |= SourcesList::Disabled;
@@ -395,11 +399,12 @@ void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
 	URI = gtk_entry_get_text(GTK_ENTRY(me->entryURI));
 	Dist = gtk_entry_get_text(GTK_ENTRY(me->entryDist));
 	Section = gtk_entry_get_text(GTK_ENTRY(me->entrySect));
+    SourceFile = gtk_entry_get_text(GTK_ENTRY(me->sourceFile));
 
 	if (Section != 0 && Section[0] != 0)
 		Sections[count++] = Section;
 
-	SourcesList::SourceRecord *rec = me->lst.AddSource((SourcesList::RecType)Type, VendorID, URI, Dist, Sections, count);
+	SourcesList::SourceRecord *rec = me->lst.AddSource((SourcesList::RecType)Type, VendorID, URI, Dist, Sections, count, SourceFile);
 
 	if(rec == NULL) {
 	  me->_userDialog->error(_("Invalid URL"));
@@ -468,6 +473,7 @@ void RGSrcEditor::DoEdit(GtkWidget *, gpointer data)
 
 	rec.URI = gtk_entry_get_text(GTK_ENTRY(me->entryURI));
 	rec.Dist = gtk_entry_get_text(GTK_ENTRY(me->entryDist));
+	rec.SourceFile = gtk_entry_get_text(GTK_ENTRY(me->sourceFile));
 	
 	delete [] rec.Sections;
 	rec.NumSections = 0;
@@ -558,6 +564,7 @@ void RGSrcEditor::UnselectRow(GtkCList *clist, gint row, gint col,
 	gtk_entry_set_text(GTK_ENTRY(me->entryURI), "");
 	gtk_entry_set_text(GTK_ENTRY(me->entryDist), "");
 	gtk_entry_set_text(GTK_ENTRY(me->entrySect), "");
+	gtk_entry_set_text(GTK_ENTRY(me->sourceFile), "");
 }
 
 void RGSrcEditor::UpdateDisplay(GtkCList *clist, gint row, gint col,
@@ -584,6 +591,7 @@ void RGSrcEditor::UpdateDisplay(GtkCList *clist, gint row, gint col,
 
 	gtk_entry_set_text(GTK_ENTRY(me->entryURI), rec.URI.c_str());
 	gtk_entry_set_text(GTK_ENTRY(me->entryDist), rec.Dist.c_str());
+	gtk_entry_set_text(GTK_ENTRY(me->sourceFile), rec.SourceFile.c_str());
 	gtk_entry_set_text(GTK_ENTRY(me->entrySect), "");
 
 	for (unsigned int I = 0; I < rec.NumSections; I++) {

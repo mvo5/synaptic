@@ -44,24 +44,24 @@ RGWindow::RGWindow(string name, bool makeBox, bool useGlade)
   } else {
     // for development
     gchar *filename = NULL;
+    gchar *main_widget = NULL;
 
     filename = g_strdup_printf("window_%s.glade",name.c_str());
+    main_widget = g_strdup_printf("window_%s", name.c_str());
     if(FileExists(filename)) {
-       _gladeXML = glade_xml_new(filename,
-				 g_strdup_printf("window_%s", name.c_str()),
-				 NULL);
+	_gladeXML = glade_xml_new(filename, main_widget, NULL);
     } else {
       g_free(filename);
       filename = g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade",name.c_str());
-      _gladeXML = glade_xml_new(filename,
-				g_strdup_printf("window_%s",name.c_str()),
-				NULL);
+      _gladeXML = glade_xml_new(filename, main_widget,	NULL);
     }
     assert(_gladeXML);
-    _win = glade_xml_get_widget(_gladeXML, 
-				g_strdup_printf ("window_%s",name.c_str()));
+    _win = glade_xml_get_widget(_gladeXML, main_widget);
+
+    
     assert(_win);
     g_free(filename);
+    g_free(main_widget);
   };
    
   gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());

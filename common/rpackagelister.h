@@ -180,7 +180,7 @@ public:
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);
    void getFilterNames(vector<string> &filters);
-   inline RFilter *findFilter(int index) { 
+   inline RFilter *findFilter(unsigned int index) { 
        if(index > _filterL.size()) return NULL; else return _filterL[index]; 
    };
 

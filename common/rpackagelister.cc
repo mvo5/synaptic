@@ -1162,9 +1162,9 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
     assert(_cache->list() != NULL);
     // Get the source list
     //pkgSourceList List;
-    //if (_cache->list()->ReadMainList() == false)
-    //return false;
-    if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false)
+    if (_cache->list()->ReadMainList() == false)
+	return false;
+    //if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false)
 	return false;
     
     // Lock the list directory

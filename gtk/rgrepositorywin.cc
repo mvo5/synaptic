@@ -147,6 +147,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                                      DISABLED_COLOR_COLUMN,
                                                      NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_sourcesListView), column);
+#ifndef HAVE_RPM
+   gtk_tree_view_column_set_visible(column, FALSE);
+#endif
 
    // uri
    renderer = gtk_cell_renderer_text_new();

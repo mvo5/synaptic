@@ -134,6 +134,9 @@ bool RInitConfiguration(string confFileName)
     
     if (!pkgInitConfig(*_config))
        return false;
+
+    _config->Set("Program", "synaptic");
+    
     if (!pkgInitSystem(*_config, _system))
        return false;
 

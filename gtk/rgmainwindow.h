@@ -164,7 +164,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    void changeView(int view, bool sethistory = true, string subView="");
 
    GtkWidget *createViewMenu();
-   void refreshSubViewList();
+   void refreshSubViewList(string selectedSubView="");
 
    virtual bool close();
    static bool closeWin(GtkWidget *self, void *me) {

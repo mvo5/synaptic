@@ -164,7 +164,7 @@ void RGMainWindow::changeView(int view, bool sethistory, string subView)
    setStatusText();
 }
 
-void RGMainWindow::refreshSubViewList()
+void RGMainWindow::refreshSubViewList(string selectedSubView)
 {
    vector<string> subViews = _lister->getSubViews();
 
@@ -172,6 +172,25 @@ void RGMainWindow::refreshSubViewList()
    subViews.insert(subViews.begin(), str);
    g_free(str);
    setTreeList("treeview_subviews", subViews, true);
+
+   if(!selectedSubView.empty()) {
+      GtkTreeSelection *selection;
+      GtkTreeModel *model;
+      GtkTreeIter iter;
+      const char *str;
+
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
+      model = gtk_tree_view_get_model(GTK_TREE_VIEW(_subViewList));
+      bool ok =  gtk_tree_model_get_iter_first(model, &iter); 
+      while(ok) {
+	 gtk_tree_model_get(model, &iter, 0, &str, -1);
+	 if(strcoll(str, selectedSubView.c_str()) == 0) {
+	    gtk_tree_selection_select_iter(selection, &iter);
+	    return;
+	 }
+	 ok = gtk_tree_model_iter_next(model, &iter);
+      }
+   }
 }
 
 
@@ -2263,9 +2282,10 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    unlink(file);
    g_free((void *)file);
 
+
    me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
+   string currentSubView = me->selectedSubView();
+   me->refreshSubViewList(currentSubView);
    me->setInterfaceLocked(FALSE);
    me->setStatusText();
 }
@@ -2337,8 +2357,8 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    g_free((void *)file);
 
    me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
+   string currentSubView = me->selectedSubView();
+   me->refreshSubViewList(currentSubView);
    me->setInterfaceLocked(FALSE);
    me->setStatusText();
 }

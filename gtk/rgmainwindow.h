@@ -98,9 +98,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_viewPopup;
    GtkWidget *_subViewList;
 
-   int _viewMode;
-   //RPackageLister::treeDisplayMode _menuDisplayMode;
-
    GtkWidget *_statusL;
    GtkWidget *_progressBar;
 
@@ -186,6 +183,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // package info
    void updatePackageInfo(RPackage *pkg);
    RPackage *selectedPackage();
+   string selectedSubView();
 
 
    // helpers
@@ -249,10 +247,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
                                          GtkTreeViewColumn *arg2,
                                          gpointer user_data);
 
-   static void cbSubViewListSelectionChanged(GtkTreeSelection *selection,
-                                           gpointer data);
-   static void cbChangedView(GtkWidget *self);
    static void cbChangedFilter(GtkWidget *self);
+   static void cbChangedView(GtkWidget *self);
+   static void cbChangedSubView(GtkTreeSelection *selection, gpointer data);
 
    // file menu
    static void cbOpenClicked(GtkWidget *self, void *data);

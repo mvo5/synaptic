@@ -138,15 +138,6 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
       if (pkgfilter != NULL) {
          // -2 because "0" is "unchanged" and "1" is the spacer in the menu
          // FIXME: yes I know this sucks
-#if 0                           //PORTME
-         int mode = pkgfilter->getViewMode().viewMode - 2;
-         if (mode >= 0)
-            changeTreeDisplayMode((RPackageLister::treeDisplayMode) mode);
-         else
-            changeTreeDisplayMode(_menuDisplayMode);
-#endif
-
-         // FIXME: same problem as above, this magic numbers suck
          int expand = pkgfilter->getViewMode().expandMode;
          if (expand == 2)
             gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
@@ -156,13 +147,10 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
          filter = 0;
       }
    }
-   // no filter given or not available from above
-   if (filter == 0) {           // no filter
+
+   // No filter given or not available from above
+   if (filter == 0)
       _lister->setFilter();
-#if 0
-      changeTreeDisplayMode(_menuDisplayMode);
-#endif
-   }
 
    refreshTable(pkg);
    _blockActions = FALSE;
@@ -210,28 +198,26 @@ RPackage *RGMainWindow::selectedPackage()
    if (_activeTreeModel == NULL)
       return NULL;
 
-   //cout << "RGMainWindow::selectedPackage()" << endl;
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    RPackage *pkg = NULL;
-   GList *li, *list;
+   GList *li = NULL;
+   GList *list = NULL;
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
-   list = li = gtk_tree_selection_get_selected_rows(selection,
-                                                    (GtkTreeModel
-                                                     **) (&_activeTreeModel));
+   list = gtk_tree_selection_get_selected_rows(selection,
+                                               (GtkTreeModel **)
+                                               (&_activeTreeModel));
 #else
-   list = li = NULL;
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
-   li = list;
 #endif
-   // list is empty
-   if (li == NULL)
+
+   if (list == NULL) // Empty.
       return NULL;
 
-   // we are only interessted in the last element
-   li = g_list_last(li);
+   // We are only interessted in the last element
+   li = g_list_last(list);
    gtk_tree_model_get_iter(GTK_TREE_MODEL(_activeTreeModel), &iter,
                            (GtkTreePath *) (li->data));
 
@@ -245,6 +231,26 @@ RPackage *RGMainWindow::selectedPackage()
 
 
    return pkg;
+}
+
+string RGMainWindow::selectedSubView()
+{
+   GtkTreeSelection *selection;
+   GtkTreeModel *model;
+   GtkTreeIter iter;
+   gchar *subView = NULL;
+   string ret = "(no selection)";
+
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
+   if (selection != NULL) {
+      if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
+         gtk_tree_model_get(model, &iter, 0, &subView, -1);
+         ret = subView;
+         g_free(subView);
+      }
+   }
+
+   return ret;
 }
 
 
@@ -304,6 +310,8 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
+   _lister->setSubView(selectedSubView());
+
    // FIXME: memory leak?!?
    GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
    _activeTreeModel = GTK_TREE_MODEL(_pkgList);
@@ -550,7 +558,6 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    refreshTable(pkg);
 
-   // free the list
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);
 
@@ -630,7 +637,7 @@ void RGMainWindow::buildTreeView()
    vector<pair<int, GtkTreeViewColumn *> > all_columns;
    int pos = 0;
 
-// remove old tree columns
+   // remove old tree columns
    if (_treeView) {
       GList *columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(_treeView));
       for (GList * li = g_list_first(columns); li != NULL;
@@ -646,12 +653,6 @@ void RGMainWindow::buildTreeView()
 
    _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
    assert(_treeView);
-
-   int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
-#if 0
-   _treeDisplayMode = (RPackageLister::treeDisplayMode) mode;
-   _menuDisplayMode = _treeDisplayMode;
-#endif
 
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
@@ -1056,6 +1057,9 @@ void RGMainWindow::buildInterface()
    _filterMenu = glade_xml_get_widget(_gladeXML, "menu_apply");
    assert(_filterMenu);
 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_find_button_clicked",
+                                 G_CALLBACK(cbFindToolClicked), this);
 
    // build the treeview
    buildTreeView();
@@ -1229,7 +1233,7 @@ void RGMainWindow::buildInterface()
    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
    g_signal_connect(G_OBJECT(select), "changed",
-                    G_CALLBACK(cbSubViewListSelectionChanged), this);
+                    G_CALLBACK(cbChangedSubView), this);
 }
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, 
@@ -1406,7 +1410,6 @@ void RGMainWindow::saveState()
    _config->Set("Synaptic::windowX", x);
    _config->Set("Synaptic::windowY", y);
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-   //_config->Set("Synaptic::ViewMode", _viewMode);
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
@@ -2204,29 +2207,16 @@ void RGMainWindow::cbChangedFilter(GtkWidget *self)
 
 void RGMainWindow::cbChangedView(GtkWidget *self)
 {
-   int view;
    RGMainWindow *me =
       (RGMainWindow *) gtk_object_get_data(GTK_OBJECT(self), "me");
-
-   view = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
-
+   int view = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
    me->changeView(view, false);
 }
 
-void RGMainWindow::cbSubViewListSelectionChanged(GtkTreeSelection *selection,
-                                                 gpointer data)
+void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-
-   GtkTreeIter iter;
-   GtkTreeModel *model;
-   gchar *subView;
-
-   if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-      gtk_tree_model_get(model, &iter, 0, &subView, -1);
-      me->_lister->setSubView(string(subView));
-      g_free(subView);
-   }
    me->refreshTable(NULL);
 }
 

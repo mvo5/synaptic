@@ -2452,6 +2452,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_fixed_width(column, 200);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+    gtk_tree_view_column_set_resizable(column, TRUE);
 
     /* Installed Version */
     renderer = gtk_cell_renderer_text_new ();
@@ -2462,6 +2463,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_fixed_width(column, 130);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+    gtk_tree_view_column_set_resizable(column, TRUE);
 
     /* Available Version */
     renderer = gtk_cell_renderer_text_new ();
@@ -2473,6 +2475,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_fixed_width(column, 130);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
+    gtk_tree_view_column_set_resizable(column, TRUE);
 
     /* Description */
     renderer = gtk_cell_renderer_text_new ();
@@ -2481,8 +2484,9 @@ void RGMainWindow::buildInterface()
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-    gtk_tree_view_column_set_fixed_width(column, 400);
+    gtk_tree_view_column_set_fixed_width(column, 500);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
+    gtk_tree_view_column_set_resizable(column, TRUE);
     
     GtkTreeSelection *select;
     select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));

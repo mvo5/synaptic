@@ -45,6 +45,7 @@ class RGRepositoryEditor : RGGladeWindow {
     GtkListStore *_sourcesListStore;
     GtkTreeIter *_lastIter;
 
+    GtkWidget *_editTable;
     GtkWidget *_optVendor;
     GtkWidget *_optVendorMenu;
     GtkWidget *_entryURI;

@@ -287,6 +287,10 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 				  G_CALLBACK(DoRemove),
 				  this);
 
+    _editTable = glade_xml_get_widget(_gladeXML, "table_edit");
+    assert(_editTable);
+    gtk_widget_set_sensitive(_editTable, FALSE);
+
     gtk_window_resize(GTK_WINDOW(_win), 620, 400);
 }
 
@@ -562,6 +566,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 
     GtkTreeIter iter;
     GtkTreeModel *model;
+    gtk_widget_set_sensitive(me->_editTable, TRUE);
 
     if(gtk_tree_selection_get_selected(selection, &model, &iter)) {
 	me->doEdit(); // save the old row
@@ -597,6 +602,9 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 				      utf8(rec->Sections[I].c_str()));
 		gtk_entry_append_text(GTK_ENTRY(me->_entrySect), " ");
 	}
+    } else {
+	//cout << "no selection" << endl;
+	gtk_widget_set_sensitive(me->_editTable, FALSE);
     }
 }
 

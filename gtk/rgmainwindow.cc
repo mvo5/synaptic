@@ -24,8 +24,6 @@
  */
 
 
-#define DEBUGUI
-
 #include "config.h"
 #include "i18n.h"
 
@@ -1434,12 +1432,12 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
 	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
 
-	gtk_widget_set_sensitive(_tabview, FALSE);
-	
+	gtk_widget_set_sensitive(_pkginfo, FALSE);
+
 	updateVersionButtons(NULL);
 	return;
     }
-    gtk_widget_set_sensitive(_tabview, TRUE);
+    gtk_widget_set_sensitive(_pkginfo, TRUE);
 
     status = pkg->getStatus();
     mstatus = pkg->getMarkedStatus();
@@ -2698,8 +2696,8 @@ void RGMainWindow::buildInterface()
     gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
 #endif    
 
-    _tabview = glade_xml_get_widget(_gladeXML, "notebook_info");
-    assert(_tabview);
+    _pkginfo = glade_xml_get_widget(_gladeXML, "box_pkginfo");
+    assert(_pkginfo);
 
     _vpaned =  glade_xml_get_widget(_gladeXML, "vpaned_main");
     assert(_vpaned);
@@ -3297,9 +3295,11 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 #endif
 
     // list is empty
-    if(li == NULL) 
+    if(li == NULL) {
+	me->updatePackageInfo(NULL);
 	return;
-  
+    }
+
     // we are only interessted in the last element
     li = g_list_last(li);
     gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 

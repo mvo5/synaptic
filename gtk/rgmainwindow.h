@@ -137,7 +137,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_filterMenu;
 
    // package info tabs   
-   GtkWidget *_tabview;
+   GtkWidget *_pkginfo;
    GtkWidget *_vpaned;
 
    GtkWidget *_nameL;

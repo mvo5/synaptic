@@ -36,6 +36,7 @@ protected:
    static void *loop(void *data);
    
    int _stdout;
+   int _stderr;
    int _childin;
    
    int _thread_id;

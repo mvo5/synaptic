@@ -89,8 +89,9 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,
   if(!useGlade) {
     _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   } else {
-    // for development
+    // For development
     gchar *filename = NULL;
+    // This code is leaking and must be fixed.
     filename = g_strdup_printf("window_%s.glade",name.c_str());
     if(FileExists(filename)) {
        _gladeXML = glade_xml_new(filename,

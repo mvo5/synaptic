@@ -66,18 +66,21 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
     /*
      * This will make a pipe from where we can read child's output
      */
-    // our stdout will be _stdout from now on
+    // our stdout will be _stdout from now on, and our stderr will be _stderr
     _stdout = dup(1); 
+    _stderr = dup(2);
 
     // create our comm. channel with the child
     pipe(fd);
 
-    // close our official stdout
+    // close our official stdout and stderr
     close(1);
+    close(2);
     
     // make the write end of the pipe to the child become the new stdout 
-    // (for the child)
+    // and stderr (for the child)
     dup2(fd[1],1);
+    dup2(fd[1],2);
 
     // this is where we read stuff from the child
     _childin = fd[0];
@@ -100,9 +103,12 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
      * Clean-up stuff so that everything is like before
      */
     close(1);
+    close(2);
     close(_childin);
     dup2(_stdout, 1);
+    dup2(_stderr, 2);
     close(_stdout);
+    close(_stderr);
 #endif /* HAVE_RPM */
     return res;
 }

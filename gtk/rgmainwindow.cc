@@ -273,7 +273,7 @@ void RGMainWindow::saveFilterAction(void *self, RGFilterWindow *rwin)
     filterEditable = SELECTED_MENU_INDEX(me->_filterPopup) != 0;    
     
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
-    gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
+    //gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
     gtk_widget_set_sensitive(me->_filterPopup, TRUE);
     gtk_widget_set_sensitive(me->_filterMenu, TRUE);
 
@@ -294,7 +294,7 @@ void RGMainWindow::closeFilterAction(void *self, RGFilterWindow *rwin)
     
     filterEditable = SELECTED_MENU_INDEX(me->_filterPopup) != 0;
 
-    gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
+    //gtk_widget_set_sensitive(me->_editFilterB, filterEditable);
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
     gtk_widget_set_sensitive(me->_filterPopup, TRUE);
     gtk_widget_set_sensitive(me->_filterMenu, TRUE);
@@ -319,7 +319,7 @@ void RGMainWindow::showFilterWindow(GtkWidget *self, void *data)
     
     win->_filterWin->editFilter(win->_lister->getFilter());
     
-    gtk_widget_set_sensitive(win->_editFilterB, FALSE);
+    //gtk_widget_set_sensitive(win->_editFilterB, FALSE);
     gtk_widget_set_sensitive(win->_filtersB, FALSE);
     gtk_widget_set_sensitive(win->_filterPopup, FALSE);
     gtk_widget_set_sensitive(win->_filterMenu, FALSE);
@@ -337,7 +337,7 @@ void RGMainWindow::closeFilterManagerAction(void *self,
 
     me->refreshFilterMenu();
     
-    gtk_widget_set_sensitive(me->_editFilterB, FALSE);
+    //gtk_widget_set_sensitive(me->_editFilterB, FALSE);
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
     gtk_widget_set_sensitive(me->_filterPopup, TRUE);
     gtk_widget_set_sensitive(me->_filterMenu, TRUE);
@@ -357,7 +357,7 @@ void RGMainWindow::showFilterManagerWindow(GtkWidget *self, void *data)
     win->_fmanagerWin->show();
 
     gtk_widget_set_sensitive(win->_filtersB, FALSE);
-    gtk_widget_set_sensitive(win->_editFilterB, FALSE);
+    //gtk_widget_set_sensitive(win->_editFilterB, FALSE);
     gtk_widget_set_sensitive(win->_filterPopup, FALSE);
     gtk_widget_set_sensitive(win->_filterMenu, FALSE);
 }
@@ -417,10 +417,10 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
   setInterfaceLocked(TRUE);    
   if (filter == 0) { // no filter
     _lister->setFilter();
-    gtk_widget_set_sensitive(_editFilterB, FALSE);
+    //gtk_widget_set_sensitive(_editFilterB, FALSE);
   } else {
     _lister->setFilter(filter-1);
-    gtk_widget_set_sensitive(_editFilterB, TRUE);
+    //gtk_widget_set_sensitive(_editFilterB, TRUE);
   }
   
   refreshTable(pkg);
@@ -1923,10 +1923,12 @@ void RGMainWindow::buildInterface()
     _filterMenu = glade_xml_get_widget(_gladeXML, "menu_apply");
     assert(_filterMenu);
 
+#if 0
     _editFilterB = button = glade_xml_get_widget(_gladeXML, "button_edit_filter");
     assert(button);
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)showFilterWindow, this);
+#endif
 
     _findText = glade_xml_get_widget(_gladeXML, "entry_find");
     assert(_findText);

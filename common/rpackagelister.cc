@@ -1026,6 +1026,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 {
     FileFd lock;
     int numPackages = 0;
+    bool Ret = true;
     
     _updating = true;
     
@@ -1122,8 +1123,15 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	    _cache->releaseLock();
 
 	    pkgPackageManager::OrderResult Res = iprog->start(_packMan, numPackages);
-	    if (Res == pkgPackageManager::Failed || _error->PendingError())
-		goto gave_wood;
+	    if (Res == pkgPackageManager::Failed || _error->PendingError()) {
+		if (Transient == false)
+		    goto gave_wood;
+		Ret = false;
+		// TODO: We must not discard errors here. The right
+		//       solution is to use an "error stack", as
+		//       implemented in apt-rpm.
+		_error->Discard();
+	    }
 	    if (Res == pkgPackageManager::Completed)
 		break;
 
@@ -1146,7 +1154,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
     cleanPackageCache();
 
     delete _packMan;
-    return true;
+    return Ret;
     
 gave_wood:
     delete _packMan;

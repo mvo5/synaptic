@@ -34,6 +34,80 @@
 #include <unistd.h>
 #include <stdio.h>
 
+RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
+    : RGWindow(win, "rginstall_progress_msgs", false, false, true),
+      _currentPackage(0), _hasHeader(false)
+{
+    setTitle(_("Package Manager output"));
+    GtkWidget *textView = glade_xml_get_widget(_gladeXML, "textview");
+    _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
+    glade_xml_signal_connect_data(_gladeXML, "on_close_clicked",
+				  G_CALLBACK(onCloseClicked), this); 
+    PangoFontDescription *font;
+    font = pango_font_description_from_string ("helvetica 10");
+    gtk_widget_modify_font(textView, font);
+    font = pango_font_description_from_string ("helvetica bold 10");
+    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
+}
+
+void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
+{
+    RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
+    gtk_main_quit();
+}
+
+void RGInstallProgressMsgs::close()
+{
+    gtk_main_quit();
+}
+
+void RGInstallProgressMsgs::addText(const char *text, bool bold)
+{
+    GtkTextIter enditer;
+    GtkTextMark *mark;
+    gtk_text_buffer_get_end_iter(_textBuffer, &enditer);
+    if (bold == true)
+	gtk_text_buffer_insert_with_tags_by_name(_textBuffer, &enditer,
+						 text, -1, "bold", NULL);
+    else
+	gtk_text_buffer_insert(_textBuffer, &enditer, text, -1);
+}
+
+void RGInstallProgressMsgs::addLine(const char *text)
+{
+    if (!_hasHeader) {
+	char *header;
+	if (_currentPackage != NULL)
+	    header = g_strdup_printf(
+		_("\nWhile installing package %s:\n\n"),
+		_currentPackage);
+	else
+	    header = g_strdup_printf(
+		_("\nWhile preparing for installation:\n\n"));
+	addText(header, true);
+	_hasHeader = true;
+    }
+    addText(text);
+    addText("\n");
+}
+
+void RGInstallProgressMsgs::newPackage(const char *name)
+{
+    _currentPackage = name;
+    _hasHeader = false;
+}
+
+bool RGInstallProgressMsgs::empty()
+{
+    return gtk_text_buffer_get_char_count(_textBuffer) == 0;
+}
+
+void RGInstallProgressMsgs::run()
+{
+    show();
+    gtk_main();
+    hide();
+}
 
 void RGInstallProgress::startUpdate()
 {
@@ -41,13 +115,16 @@ void RGInstallProgress::startUpdate()
     RGFlushInterface();
 }
 
-
 void RGInstallProgress::finishUpdate()
 {
     if (_startCounting) {
         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 1.0);
         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);
     }
+
+    if (_msgs.empty() == false &&
+	_config->FindB("Synaptic::IgnorePMOutput", false) == false)
+	_msgs.run();
     
     RGFlushInterface();
     
@@ -97,11 +174,12 @@ void RGInstallProgress::updateInterface()
 			gtk_progress_bar_set_fraction(
 				GTK_PROGRESS_BAR(_pbar), 0);
 		    } else {
-			// This must be output from some rpm package, or
-			// from "Preparing...". Could be saved and shown
-			// after installation.
+			_msgs.addLine(utf8(line));
 		    }
 		} else {
+		    // Get from the map, so that _msgs doesn't have
+		    // to keep an internal copy.
+		    _msgs.newPackage(I->first.c_str());
 		    gtk_label_set_label(GTK_LABEL(_label), utf8(line));
 		    gtk_label_set_label(GTK_LABEL(_labelSummary),
 					utf8(I->second.c_str()));
@@ -173,12 +251,11 @@ class GeometryParser
 
 RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 				     RPackageLister *lister)
-    : RInstallProgress(), RGWindow(main, "rginstall_progress", false, false, true)
+    : RInstallProgress(),
+      RGWindow(main, "rginstall_progress", false, false, true),
+      _msgs(main)
 {
-    hide();
-
     prepare(lister);
-    
     setTitle(_("Performing Changes"));
 
     _donePackages = 0;
@@ -191,8 +268,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
     if (Geo.HasPosition())
 	gtk_widget_set_uposition(GTK_WIDGET(_win), Geo.XPos(), Geo.YPos());
 
-    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
-    
     _label = glade_xml_get_widget(_gladeXML, "label_name");
     _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
     _pbar = glade_xml_get_widget(_gladeXML, "progress_package");

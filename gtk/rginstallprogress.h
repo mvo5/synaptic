@@ -32,6 +32,28 @@
 
 class RGMainWindow;
 
+class RGInstallProgressMsgs : public RGWindow {
+
+   GtkTextBuffer *_textBuffer;
+   static void onCloseClicked(GtkWidget *self, void *data);
+
+   const char *_currentPackage;
+   bool _hasHeader;
+
+protected:
+   virtual void addText(const char *text, bool bold=false);
+
+public:
+   virtual void newPackage(const char *name);
+   virtual void addLine(const char *line);
+   
+   virtual bool empty();
+   virtual void run();
+   virtual void close();
+
+   RGInstallProgressMsgs(RGWindow *win);
+};
+
 class RGInstallProgress : public RInstallProgress, public RGWindow {
 
    GtkWidget *_label;
@@ -44,6 +66,8 @@ class RGInstallProgress : public RInstallProgress, public RGWindow {
    bool _startCounting;
 
    map<string,string> _summaryMap;
+
+   RGInstallProgressMsgs _msgs;
 
 protected:
    virtual void startUpdate();

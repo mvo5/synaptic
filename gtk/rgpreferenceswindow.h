@@ -28,12 +28,24 @@ class RGPreferencesWindow : public RGGladeWindow {
 
     RGMainWindow *_mainWin;
     RPackageLister *_lister;
-    GtkWidget *_optionB[6];
-    GtkWidget *_cacheB[3];
+    // option buttons
+    GtkWidget *_optionUseRegexp;
+    GtkWidget *_optionUseStatusColors;
+    GtkWidget *_optionAskRelated;
+    GtkWidget *_optionUseTerminal;
+    GtkWidget *_optionCheckRecom;
+    GtkWidget *_optionAskQuit;
+
+    // cache settings
+    GtkWidget *_cacheLeave;
+    GtkWidget *_cacheClean;
+    GtkWidget *_cacheAutoClean;
+
     GtkWidget *_pathT;
     GtkWidget *_sizeT;
     GtkWidget *_maxUndoE;
     GtkWidget *_optionmenuDel;
+    GtkWidget *_useProxy;
 
     /* the color buttons */
     static char * color_buttons[];
@@ -55,10 +67,14 @@ class RGPreferencesWindow : public RGGladeWindow {
 
     static void colorClicked(GtkWidget *self, void *data);
     static void saveColor(GtkWidget *self, void *data);
-  
+
+    static void useProxyToggled(GtkWidget *self, void *data);
 
  public:
     RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
     virtual ~RGPreferencesWindow() {};
     virtual void show();
+
+    // call this to set the proxy stuff for apt
+    static void applyProxySettings();
 };

@@ -1785,6 +1785,9 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     color.blue = 0x2000;
     gdk_colormap_alloc_color(gtk_widget_get_colormap(_win), &color, FALSE, TRUE);
     _redStyle->fg[0] = color;
+
+    // create preferences window and apply the proxy settings
+    RGPreferencesWindow::applyProxySettings();
 }
 
 
@@ -3386,6 +3389,9 @@ bool RGMainWindow::restoreState()
 	g_free(msg);
     }
     
+
+
+    // this is real restore stuff
     _lister->restoreFilters();
     refreshFilterMenu();
     

@@ -254,6 +254,7 @@ int ipc_recv_fd()
 
    // wait for connections
    socklen_t clilen = sizeof(cliaddr);
+   // FIXME: make this non-blocking and add a timeout
    connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
    
    // read_fd 

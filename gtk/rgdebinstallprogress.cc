@@ -704,8 +704,8 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    double sizeChange;
    gchar *p = "Should never be displayed, please report";
    string s = _config->Find("Volatile::InstallProgressStr",
-			    _("The marked changes are now applied. This can "
-			      "take some time. Please wait."));
+			    _("The marked changes are now being applied. "
+			      "This can take some time. Please wait."));
    lister->getStats(installed, broken, toInstall, toReInstall, 
 		    toRemove, sizeChange);
    if(toRemove > 0 && toInstall > 0) 

@@ -377,7 +377,7 @@ bool RCDScanner::setDiscName(string name)
 bool RCDScanner::finish(RCDScanProgress *progress)
 {
    if (_scannedOk == false) {
-      return _error->Error(_("Disc not successfuly scanned."));
+      return _error->Error(_("Disc not successfully scanned."));
    }
 
    if (_cdName.empty() == true) {

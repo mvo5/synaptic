@@ -44,24 +44,21 @@ string RGFindWindow::getFindString()
   return s;
 }
 
-RPatternPackageFilter::DepType RGFindWindow::getSearchType()
+int RGFindWindow::getSearchType()
 {
-  return _searchType;
+    const char *types[] = {"name", "version", "descr", "maint", NULL};
+    int searchType = 0;
+
+    for(int i=0;types[i] != NULL; i++) {
+	string s = "checkbutton_" + string(types[i]);
+	GtkWidget *check = glade_xml_get_widget(_gladeXML, s.c_str());
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)))
+	    searchType |= 1<<i;
+    }
+
+  return searchType;
 }
 
-void RGFindWindow::setSearchType(RPatternPackageFilter::DepType type) 
-{
-  _searchType = type;
-
-  switch(type) {
-  case RPatternPackageFilter::Name:
-    setTitle(_("Find Name"));
-    break;
-  case RPatternPackageFilter::Description:
-    setTitle(_("Find Description"));
-    break;
-  }
-}
 
 void RGFindWindow::doFind(GtkWindow *widget, void *data)
 {
@@ -74,18 +71,7 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
   
   me->_prevSearches = g_list_prepend(me->_prevSearches,g_strdup(str));
   gtk_combo_set_popdown_strings (GTK_COMBO(combo), me->_prevSearches);
-
-  gdk_window_set_cursor(me->_win->window,  me->_busyCursor);  
-  me->_findAction(me->_findObject, me);
 }
-
-void RGFindWindow::setFindCallback(RGFindWindowFindAction *action, 
-				   void *data)
-{
-    _findAction = action;
-    _findObject = data;
-}
-
 
 void RGFindWindow::doClose(GtkWindow *widget, void *data)
 {
@@ -96,13 +82,10 @@ void RGFindWindow::doClose(GtkWindow *widget, void *data)
 }
 
 RGFindWindow::RGFindWindow(RGWindow *win) 
-    : RGGladeWindow(win, "find")
+    : RGGladeWindow(win, "find"), _prevSearches(0)
 {
   //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
  
-  _prevSearches = NULL;
-  _busyCursor = gdk_cursor_new(GDK_WATCH);
-
   glade_xml_signal_connect_data(_gladeXML,
 				"on_button_find_clicked",
 				G_CALLBACK(doFind),

@@ -141,10 +141,12 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_importL;   
    GtkWidget *_infoL;
    
-   
-   GtkWidget *_textView;
-   GtkTextBuffer *_textBuffer;
-   
+   GtkWidget *_descrView;
+   GtkTextBuffer *_descrBuffer;
+
+   GtkWidget *_filesView;
+   GtkTextBuffer *_filesBuffer;
+  
    GtkWidget *_depP;
    
    GtkWidget *_depTab;
@@ -266,9 +268,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void closeFilterManagerAction(void *self, bool okcancel);
    
    // search menu
-   static void searchPkgDescriptionClicked(GtkWidget *self, void *data);
    static void searchPkgNameClicked(GtkWidget *self, void *data);
-   static void searchPkgAction(void *self, RGFindWindow *data);
 
    // preferences menu
    static void showConfigWindow(GtkWidget *self, void *data);

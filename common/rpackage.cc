@@ -244,6 +244,32 @@ static char *parseDescription(string descr)
     return descrBuffer;
 }
 
+#ifndef HAVE_RPM
+const char *RPackage::installedFiles()
+{
+    string filelist,s;
+
+    string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
+    if(FileExists(f)) {
+	ifstream in(f.c_str());
+	if (!in != 0) 
+	    return "";
+	while (in.eof() == false)	    {
+		getline(in, s);
+		filelist += s+"\n";
+	}
+
+	in >> filelist;
+	return filelist.c_str();
+    }
+    return "";
+}
+#else
+const char *RPackage::installedFiles()
+{
+    return "";
+}
+#endif
 
 const char *RPackage::description()
 {

@@ -123,6 +123,8 @@ public:
 
    const char *summary();
    const char *description();
+   const char *installedFiles();
+
    vector<const char*> provides(); 
 
    bool isImportant();

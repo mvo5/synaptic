@@ -30,27 +30,21 @@ typedef void RGFindWindowFindAction(void *self, RGFindWindow *win);
 
 class RGFindWindow : public RGGladeWindow {
   
-  RPatternPackageFilter::DepType _searchType;
-  GList *_prevSearches;
-  GdkCursor *_busyCursor;
-  RGFindWindowFindAction *_findAction;
-  void *_findObject;
+    //RPatternPackageFilter::DepType _searchType;
+    GList *_prevSearches;
 
-  static void doFind(GtkWindow *widget, void *data);
-  static void doClose(GtkWindow *widget, void *data);
+    static void doFind(GtkWindow *widget, void *data);
+    static void doClose(GtkWindow *widget, void *data);
 
  public:
-  RGFindWindow(RGWindow *owner);
-  virtual ~RGFindWindow() {};
+    RGFindWindow(RGWindow *owner);
+    virtual ~RGFindWindow() {};
 
-  void setSearchType(RPatternPackageFilter::DepType);
-  RPatternPackageFilter::DepType getSearchType();
+    int getSearchType();
+    
+    string getFindString();
 
-  void setFindCallback(RGFindWindowFindAction *action, void *data);
-
-  string getFindString();
-
-  virtual void show();
+    virtual void show();
 };
 
 

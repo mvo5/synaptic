@@ -168,6 +168,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	    // compile the regexps
 	    string S;
 	    const char *C = iter->pattern.c_str();
+
 	    vector<regex_t> regexps;
 	    while (*C != 0) {
 		if (ParseQuoteWord(C, S) == true) {
@@ -191,11 +192,14 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			found = false;
 		}
 	    } else if (iter->where == Version) {
-		for(unsigned int i=0;i<regexps.size();i++) {
-		    if(regexec(&regexps[i], version, 0, NULL, 0) == 0)
-			found &= true;
-		    else 
-			found = false;
+		if(version == NULL)
+		    found = false;
+		else
+		    for(unsigned int i=0;i<regexps.size();i++) {
+			if(regexec(&regexps[i], version, 0, NULL, 0) == 0)
+			    found &= true;
+			else 
+			    found = false;
 		}
 	    } else if (iter->where == Description) {
 		for(unsigned int i=0;i<regexps.size();i++) {

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-18 10:15+0200\n"
+"POT-Creation-Date: 2003-06-20 14:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -240,52 +240,53 @@ msgstr "Kann keinen Passwort Eintrag für den Superuser bekommen"
 msgid "could not create configuration directory %s"
 msgstr "Kann das Konfigrationsverzeichniss %s nicht anlegen"
 
-#: common/rpackage.cc:92
+#: common/rpackage.cc:93
 #, fuzzy
 msgid "unknown"
 msgstr "Unbekannt"
 
-#: common/rpackage.cc:429
+#: common/rpackage.cc:430
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
 msgstr "Etwas seltsammes ist passiert"
 
-#: common/rpackage.cc:666
+#: common/rpackage.cc:667
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s ist/wird installiert"
 
-#: common/rpackage.cc:671
+#: common/rpackage.cc:672
 msgid "package is not installable"
 msgstr "Paket ist nicht installierbar"
 
-#: common/rpackage.cc:673
+#: common/rpackage.cc:674
 msgid "package is a virtual package"
 msgstr "Paket ist ein virtuelles Paket"
 
-#: common/rpackage.cc:675
+#: common/rpackage.cc:676
 msgid "package is/will not be installed"
 msgstr "Paket ist/wird nicht installiert"
 
-#: common/rpackage.cc:678
+#: common/rpackage.cc:679
 msgid "dependency is satisfied"
 msgstr "Abhängigkeit ist erfüllt"
 
-#: common/rpackage.cc:829
+#: common/rpackage.cc:830
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 
-#: common/rpackagecache.cc:50 common/rpackagelister.cc:1313
-#: common/rpackagelister.cc:1317
-msgid "The list of sources could not be read."
-msgstr "Die Liste der Quellen (sources.list) konnte nicht gelesen werden"
+#: common/rpackagecache.cc:50
+msgid ""
+"The list of sources could not be read.\n"
+"Go to the repository dialog to correct the problem."
+msgstr ""
 
-#: common/rpackagecache.cc:55
+#: common/rpackagecache.cc:56
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
 "Die Paket Liste oder die Status Datei konnte nicht gelesen oder geöffnet "
 "werden"
 
-#: common/rpackagecache.cc:90
+#: common/rpackagecache.cc:91
 msgid "Internal Error, non-zero counts"
 msgstr ""
 
@@ -300,12 +301,12 @@ msgstr "Muster"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1251
+#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1253
 #: wings/rwmainwindow.cc:1195
 msgid "Section"
 msgstr "Sektion"
 
-#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1252
+#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1254
 #: wings/rwmainwindow.cc:1196
 msgid "Priority"
 msgstr "Priorität"
@@ -324,13 +325,13 @@ msgstr "sind benannt"
 msgid "Version"
 msgstr "    Version"
 
-#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2498
+#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2500
 #: gtk/window_main.glade.strings:39 gtk/window_main.glade.strings:66
 #, fuzzy
 msgid "Description"
 msgstr "in der Beschreibung"
 
-#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:1253
+#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:1255
 msgid "Maintainer"
 msgstr ""
 
@@ -393,8 +394,9 @@ msgstr "Such Filter"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:220 wings/rwfiltereditor.cc:323
-#: wings/rwmainwindow.cc:1949 gtk/window_filters.glade.strings:16
+#: common/rpackagelister.cc:220 common/rpackagelister.cc:727
+#: wings/rwfiltereditor.cc:323 wings/rwmainwindow.cc:1949
+#: gtk/window_filters.glade.strings:16
 msgid "Installed"
 msgstr "Installiert"
 
@@ -446,17 +448,36 @@ msgstr ""
 msgid "dist upgrade Failed"
 msgstr "DistAktualisieren"
 
-#: common/rpackagelister.cc:1234
+#: common/rpackagelister.cc:722
+#, fuzzy
+msgid "New in repository"
+msgstr "Füge Repository hinzu"
+
+#: common/rpackagelister.cc:725 gtk/window_filters.glade.strings:15
+#, fuzzy
+msgid "Installed and upgradeable"
+msgstr "Installiert oder Aktualisierbar"
+
+#: common/rpackagelister.cc:730
+msgid "Not installed (residual config)"
+msgstr ""
+
+#: common/rpackagelister.cc:732 gtk/window_filters.glade.strings:14
+#, fuzzy
+msgid "Not installed"
+msgstr "Nicht installiert"
+
+#: common/rpackagelister.cc:1241
 msgid "Unable to lock the list directory"
 msgstr "Kann das list Verzeichniss nicht sperren"
 
-#: common/rpackagelister.cc:1256
+#: common/rpackagelister.cc:1263
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
 
-#: common/rpackagelister.cc:1288
+#: common/rpackagelister.cc:1295
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -464,40 +485,45 @@ msgstr ""
 "Einige Index Dateien konnte nicht heruntergeladen werden. Dies wurde "
 "ignoriert oder stattdessen ältere benutzt."
 
-#: common/rpackagelister.cc:1354
+#: common/rpackagelister.cc:1320 common/rpackagelister.cc:1324
+#: gtk/rgrepositorywin.cc:267
+msgid "Ignoring invalid record(s) in sources.list file!"
+msgstr ""
+
+#: common/rpackagelister.cc:1361
 #, fuzzy
 msgid "Failed to fetch "
 msgstr "Kann das hash file nicht bekommen: "
 
-#: common/rpackagelister.cc:1374
+#: common/rpackagelister.cc:1381
 #, fuzzy
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Einige der Pakete konnten nicht vom Server geladen werden.\n"
 
-#: common/rpackagelister.cc:1377
+#: common/rpackagelister.cc:1384
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Möchte Sie forfahren und diese Pakete ignorieren?"
 
-#: common/rpackagelister.cc:1384
+#: common/rpackagelister.cc:1391
 #, fuzzy
 msgid "Unable to correct missing packages"
 msgstr "Konnte die fehlenden Pakete nicht korrigieren"
 
-#: common/rpackagelister.cc:1447
+#: common/rpackagelister.cc:1454
 msgid "Unable to lock the download directory"
 msgstr "Kann das download-Verzeichniss nicht sperren"
 
-#: common/rpackagelister.cc:1550
+#: common/rpackagelister.cc:1557
 #, fuzzy, c-format
 msgid "Line %u too long in selection file."
 msgstr "Automatische aktualisierungswahl fehlgeschlagen"
 
-#: common/rpackagelister.cc:1564 common/rpackagelister.cc:1568
+#: common/rpackagelister.cc:1571 common/rpackagelister.cc:1575
 #, fuzzy, c-format
 msgid "Malformed line %u in selection file"
 msgstr "Fehlerhafte Zeile %u in Source Liste %s (Typ)"
 
-#: common/rpackagelister.cc:1580
+#: common/rpackagelister.cc:1587
 msgid "Setting selections..."
 msgstr ""
 
@@ -548,13 +574,18 @@ msgid "Invalid disc name!"
 msgstr ""
 
 #: gtk/rgconfigwindow.cc:117 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3026 wings/rwconfigwindow.cc:58
+#: gtk/rgmainwindow.cc:3040 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Ein Fehler tratt beim speichern der Konfiguration auf."
 
 #: gtk/rgconfigwindow.cc:241
 msgid "Color selection"
 msgstr ""
+
+#: gtk/rgconfigwindow.cc:310
+#, fuzzy
+msgid "Set preferences"
+msgstr "Vorlieben"
 
 #: gtk/rgfetchprogress.cc:63 wings/rwfetchprogress.cc:71
 msgid "Fetching Files"
@@ -613,11 +644,11 @@ msgstr "Treffer"
 msgid "Failed"
 msgstr "Erfolglos"
 
-#: gtk/rgfiltermanager.cc:39 wings/rwfiltermanager.cc:46
+#: gtk/rgfiltermanager.cc:47 wings/rwfiltermanager.cc:46
 msgid "Package Filters"
 msgstr "Paket Filter"
 
-#: gtk/rgfiltermanager.cc:745 wings/rwfiltermanager.cc:175
+#: gtk/rgfiltermanager.cc:758 wings/rwfiltermanager.cc:175
 msgid "A New Filter"
 msgstr "Ein neuer Filter"
 
@@ -682,7 +713,7 @@ msgstr ""
 msgid "can't fork children, so I die"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:89 gtk/rgmainwindow.cc:1296 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:89 gtk/rgmainwindow.cc:1298 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1239
 msgid "Unknown"
 msgstr "Unbekannt"
@@ -699,52 +730,52 @@ msgstr "Kritisch"
 msgid "Security"
 msgstr "Sicherheit"
 
-#: gtk/rgmainwindow.cc:171 gtk/rgmainwindow.cc:184 gtk/rgmainwindow.cc:227
+#: gtk/rgmainwindow.cc:173 gtk/rgmainwindow.cc:186 gtk/rgmainwindow.cc:229
 msgid " not found"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:213
+#: gtk/rgmainwindow.cc:215
 msgid "gtk_tree_model_get returned no text"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:237
+#: gtk/rgmainwindow.cc:239
 msgid "clickedRecInstall called with invalid parm: "
 msgstr ""
 
-#: gtk/rgmainwindow.cc:371
+#: gtk/rgmainwindow.cc:373
 msgid ""
 "No libgnome-perl installed\n"
 "\n"
 "You have to install libgnome-perl to use dpkg-reconfigure with synaptic"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:377
+#: gtk/rgmainwindow.cc:379
 msgid "Starting dpkg-reconfigure"
 msgstr ""
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:389
+#: gtk/rgmainwindow.cc:391
 #, fuzzy
 msgid "Starting package help"
 msgstr "Aktualisieren des Paket Caches"
 
-#: gtk/rgmainwindow.cc:496 wings/rwmainwindow.cc:479
+#: gtk/rgmainwindow.cc:498 wings/rwmainwindow.cc:479
 msgid "Retrieving Index Files"
 msgstr "Bekomme Index Dateien"
 
-#: gtk/rgmainwindow.cc:498 wings/rwmainwindow.cc:482
+#: gtk/rgmainwindow.cc:500 wings/rwmainwindow.cc:482
 msgid "Updating Package Lists from Servers..."
 msgstr "Aktualisiere die Paket Liste der Server..."
 
-#: gtk/rgmainwindow.cc:588 wings/rwmainwindow.cc:535
+#: gtk/rgmainwindow.cc:590 wings/rwmainwindow.cc:535
 msgid "Dependency problem resolver failed."
 msgstr "Abhängigkeitproblem auflösung fehlgeschlagen."
 
-#: gtk/rgmainwindow.cc:590 wings/rwmainwindow.cc:537
+#: gtk/rgmainwindow.cc:592 wings/rwmainwindow.cc:537
 msgid "Dependency problems successfully fixed."
 msgstr "Abhängigkeitsprobleme erfolgreich aufgelöst."
 
-#: gtk/rgmainwindow.cc:605 gtk/rgmainwindow.cc:637 wings/rwmainwindow.cc:553
+#: gtk/rgmainwindow.cc:607 gtk/rgmainwindow.cc:639 wings/rwmainwindow.cc:553
 #: wings/rwmainwindow.cc:588
 msgid ""
 "Automatic upgrade selection not possible\n"
@@ -753,31 +784,31 @@ msgstr ""
 "Automatische aktualisierung nicht möglich\n"
 "mit kaputten Paketen. Bitte erst korrigieren."
 
-#: gtk/rgmainwindow.cc:611 wings/rwmainwindow.cc:561
+#: gtk/rgmainwindow.cc:613 wings/rwmainwindow.cc:561
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "Nehme automatische selektion der aktualisierbaren Pakete vor..."
 
-#: gtk/rgmainwindow.cc:619 wings/rwmainwindow.cc:568
+#: gtk/rgmainwindow.cc:621 wings/rwmainwindow.cc:568
 msgid "Automatic selection of upgradadable packages done."
 msgstr "Automatische selektion der aktualisierbaren Pakete abgeschlossen"
 
-#: gtk/rgmainwindow.cc:621 wings/rwmainwindow.cc:570
+#: gtk/rgmainwindow.cc:623 wings/rwmainwindow.cc:570
 msgid "Automatic upgrade selection failed."
 msgstr "Automatische aktualisierungswahl fehlgeschlagen"
 
-#: gtk/rgmainwindow.cc:643 wings/rwmainwindow.cc:596
+#: gtk/rgmainwindow.cc:645 wings/rwmainwindow.cc:596
 msgid "Performing selection for distribution upgrade..."
 msgstr "Nehme Selektion für das Aktualisieren der Distribution vor..."
 
-#: gtk/rgmainwindow.cc:652 wings/rwmainwindow.cc:603
+#: gtk/rgmainwindow.cc:654 wings/rwmainwindow.cc:603
 msgid "Selection for distribution upgrade done."
 msgstr "Selektion für die Distributionsaktualisierung fertig."
 
-#: gtk/rgmainwindow.cc:654 wings/rwmainwindow.cc:605
+#: gtk/rgmainwindow.cc:656 wings/rwmainwindow.cc:605
 msgid "Selection for distribution upgrade failed."
 msgstr "Selektion für das Aktualisieren der Distribution fehlgeschlagen."
 
-#: gtk/rgmainwindow.cc:678 wings/rwmainwindow.cc:623
+#: gtk/rgmainwindow.cc:680 wings/rwmainwindow.cc:623
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -785,75 +816,75 @@ msgstr ""
 "Operation nicht möglich mit kaputten Paketen\n"
 "Bitte korrigieren Sie sie erst."
 
-#: gtk/rgmainwindow.cc:697
+#: gtk/rgmainwindow.cc:699
 msgid "Performing selected changes... this may take a while"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:701 wings/rwmainwindow.cc:645
+#: gtk/rgmainwindow.cc:703 wings/rwmainwindow.cc:645
 msgid "Retrieving Package Files"
 msgstr "Bekomme Paket Dateien"
 
-#: gtk/rgmainwindow.cc:750
+#: gtk/rgmainwindow.cc:752
 msgid "Do you want to quit Synaptic?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:790 gtk/rgmainwindow.cc:1266 gtk/rgmainwindow.cc:1275
-#: gtk/rgmainwindow.cc:1279 wings/rwmainwindow.cc:810
+#: gtk/rgmainwindow.cc:792 gtk/rgmainwindow.cc:1268 gtk/rgmainwindow.cc:1277
+#: gtk/rgmainwindow.cc:1281 wings/rwmainwindow.cc:810
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1218
 #: wings/rwmainwindow.cc:1222
 msgid "N/A"
 msgstr "Keine Angaben"
 
-#: gtk/rgmainwindow.cc:965 wings/rwmainwindow.cc:923
+#: gtk/rgmainwindow.cc:967 wings/rwmainwindow.cc:923
 msgid "Package is installed."
 msgstr "Paket ist installiert."
 
-#: gtk/rgmainwindow.cc:967 wings/rwmainwindow.cc:925
+#: gtk/rgmainwindow.cc:969 wings/rwmainwindow.cc:925
 msgid "Package is not installed."
 msgstr "Paket ist nicht installiert."
 
-#: gtk/rgmainwindow.cc:971 wings/rwmainwindow.cc:929
+#: gtk/rgmainwindow.cc:973 wings/rwmainwindow.cc:929
 msgid "Package will be installed."
 msgstr "Paket wird installiert."
 
-#: gtk/rgmainwindow.cc:977 wings/rwmainwindow.cc:935
+#: gtk/rgmainwindow.cc:979 wings/rwmainwindow.cc:935
 msgid "Package will be upgraded."
 msgstr "Paket wird aktualisiert."
 
 #. not handled yet
-#: gtk/rgmainwindow.cc:982 wings/rwmainwindow.cc:940
+#: gtk/rgmainwindow.cc:984 wings/rwmainwindow.cc:940
 msgid "OH SHIT!!"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:987 wings/rwmainwindow.cc:945
+#: gtk/rgmainwindow.cc:989 wings/rwmainwindow.cc:945
 msgid "Package will be uninstalled."
 msgstr "Paket wird deinstalliert."
 
-#: gtk/rgmainwindow.cc:990
+#: gtk/rgmainwindow.cc:992
 #, fuzzy
 msgid "Package is broken."
 msgstr "Paket ist installiert."
 
-#: gtk/rgmainwindow.cc:1001 gtk/rgmainwindow.cc:1020
+#: gtk/rgmainwindow.cc:1003 gtk/rgmainwindow.cc:1022
 #, fuzzy
 msgid "Package is pinned."
 msgstr "Paket ist installiert."
 
-#: gtk/rgmainwindow.cc:1004
+#: gtk/rgmainwindow.cc:1006
 #, fuzzy
 msgid "Package is new."
 msgstr "Paket ist installiert."
 
-#: gtk/rgmainwindow.cc:1025 wings/rwmainwindow.cc:950
+#: gtk/rgmainwindow.cc:1027 wings/rwmainwindow.cc:950
 msgid "Broken dependencies."
 msgstr "Kaputte abhängigkeiten."
 
-#: gtk/rgmainwindow.cc:1236 gtk/window_main.glade.strings:85
+#: gtk/rgmainwindow.cc:1238 gtk/window_main.glade.strings:85
 #, fuzzy
 msgid "_Install"
 msgstr "Installieren"
 
-#: gtk/rgmainwindow.cc:1239
+#: gtk/rgmainwindow.cc:1241
 #, fuzzy
 msgid "_Upgrade"
 msgstr "Aktualisieren"
@@ -863,7 +894,7 @@ msgstr "Aktualisieren"
 #. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1261 wings/rwmainwindow.cc:1204
+#: gtk/rgmainwindow.cc:1263 wings/rwmainwindow.cc:1204
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -871,17 +902,17 @@ msgstr ""
 "\n"
 "Installierte Pakete:\n"
 
-#: gtk/rgmainwindow.cc:1263 gtk/rgmainwindow.cc:1271
+#: gtk/rgmainwindow.cc:1265 gtk/rgmainwindow.cc:1273
 #: wings/rwmainwindow.cc:1206 wings/rwmainwindow.cc:1215
 msgid "    Version"
 msgstr "    Version"
 
-#: gtk/rgmainwindow.cc:1265 gtk/rgmainwindow.cc:1274
+#: gtk/rgmainwindow.cc:1267 gtk/rgmainwindow.cc:1276
 #: wings/rwmainwindow.cc:1208 wings/rwmainwindow.cc:1217
 msgid "    Size"
 msgstr "    Größe"
 
-#: gtk/rgmainwindow.cc:1269 wings/rwmainwindow.cc:1212
+#: gtk/rgmainwindow.cc:1271 wings/rwmainwindow.cc:1212
 msgid ""
 "\n"
 "Available Package:\n"
@@ -889,43 +920,43 @@ msgstr ""
 "\n"
 "Verfügbare Pakete:\n"
 
-#: gtk/rgmainwindow.cc:1278 wings/rwmainwindow.cc:1221
+#: gtk/rgmainwindow.cc:1280 wings/rwmainwindow.cc:1221
 msgid "    Package Size"
 msgstr "    Paket Größe"
 
-#: gtk/rgmainwindow.cc:1293 wings/rwmainwindow.cc:1236
+#: gtk/rgmainwindow.cc:1295 wings/rwmainwindow.cc:1236
 msgid "Not Relevant"
 msgstr "Nicht relevant"
 
-#: gtk/rgmainwindow.cc:1301 wings/rwmainwindow.cc:1244
+#: gtk/rgmainwindow.cc:1303 wings/rwmainwindow.cc:1244
 #: gtk/window_main.glade.strings:77
 msgid "Recommended"
 msgstr "Empfohlen"
 
-#: gtk/rgmainwindow.cc:1303 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1305 wings/rwmainwindow.cc:1246
 msgid "Possible"
 msgstr "Möglich"
 
-#: gtk/rgmainwindow.cc:1306 wings/rwmainwindow.cc:1249
+#: gtk/rgmainwindow.cc:1308 wings/rwmainwindow.cc:1249
 msgid "Package Upgrade"
 msgstr "Paket aktualisieren"
 
-#: gtk/rgmainwindow.cc:1308 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1310 wings/rwmainwindow.cc:1251
 msgid "    Importance"
 msgstr "    Wichtigkeit"
 
-#: gtk/rgmainwindow.cc:1310 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1312 wings/rwmainwindow.cc:1253
 msgid "    Date"
 msgstr "    Datum"
 
-#: gtk/rgmainwindow.cc:1368
+#: gtk/rgmainwindow.cc:1370
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
 "Your changes will be lost. Are you sure?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1578 gtk/rgmainwindow.cc:2782
+#: gtk/rgmainwindow.cc:1580 gtk/rgmainwindow.cc:2796
 #: wings/rwmainwindow.cc:1343 wings/rwmainwindow.cc:1378
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -934,41 +965,41 @@ msgstr ""
 "Das Löschen dieses Paketes kann Ihr System unbenutzbar machen.\n"
 "Sind Sie sicher, daß Sie das möchten?"
 
-#: gtk/rgmainwindow.cc:1838
+#: gtk/rgmainwindow.cc:1840
 #, fuzzy, c-format
 msgid "Can't read %s"
 msgstr "Kann das download-Verzeichniss nicht sperren"
 
-#: gtk/rgmainwindow.cc:1855
+#: gtk/rgmainwindow.cc:1857
 #, fuzzy
 msgid "Open changes"
 msgstr "Pakete die"
 
-#: gtk/rgmainwindow.cc:1886 gtk/rgmainwindow.cc:1918
+#: gtk/rgmainwindow.cc:1888 gtk/rgmainwindow.cc:1920
 #, c-format
 msgid "Can't write %s"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1935
+#: gtk/rgmainwindow.cc:1937
 #, fuzzy
 msgid "Save changes"
 msgstr "Pakete die"
 
-#: gtk/rgmainwindow.cc:1951
+#: gtk/rgmainwindow.cc:1953
 msgid "Save full state, not only changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152 wings/rwmainwindow.cc:1560
+#: gtk/rgmainwindow.cc:2154 wings/rwmainwindow.cc:1560
 #: gtk/window_main.glade.strings:50
 msgid "Update package cache"
 msgstr "Aktualisieren des Paket Caches"
 
-#: gtk/rgmainwindow.cc:2156 wings/rwmainwindow.cc:1574
+#: gtk/rgmainwindow.cc:2158 wings/rwmainwindow.cc:1574
 #: gtk/window_main.glade.strings:52
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr "Markiere Pakete als aktualisert, außer denen mit neuen Abhängigkeiten"
 
-#: gtk/rgmainwindow.cc:2160 wings/rwmainwindow.cc:1582
+#: gtk/rgmainwindow.cc:2162 wings/rwmainwindow.cc:1582
 #: gtk/window_main.glade.strings:54
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
@@ -976,33 +1007,41 @@ msgstr ""
 "Aktualisieren der installierten Distribution, inklusiv Paketen mit neuen "
 "Abhängigkeiten"
 
-#: gtk/rgmainwindow.cc:2164 wings/rwmainwindow.cc:1590
+#: gtk/rgmainwindow.cc:2166 wings/rwmainwindow.cc:1590
 #: gtk/window_main.glade.strings:56
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr ""
 "Führe (und downloade wenn nötig) die gewählten Änderungen an den Paketen "
 "durch"
 
-#: gtk/rgmainwindow.cc:2464 wings/rwmainwindow.cc:1936
+#: gtk/rgmainwindow.cc:2466 wings/rwmainwindow.cc:1936
 #: gtk/window_main.glade.strings:19
 msgid "Package"
 msgstr "Paket"
 
-#: gtk/rgmainwindow.cc:2475
+#: gtk/rgmainwindow.cc:2477
 #, fuzzy
 msgid "Installed Version"
 msgstr "Installiert"
 
-#: gtk/rgmainwindow.cc:2486
+#: gtk/rgmainwindow.cc:2488
 #, fuzzy
 msgid "Available Version"
 msgstr "Verfügbar"
 
-#: gtk/rgmainwindow.cc:2758
+#: gtk/rgmainwindow.cc:2760
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2940 wings/rwmainwindow.cc:2020
+#: gtk/rgmainwindow.cc:2786
+msgid ""
+"The selected package couldn't be installed/upgraded.\n"
+"\n"
+"This is most probably caused by unmet dependencies that are not available in "
+"any repository."
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2954 wings/rwmainwindow.cc:2020
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1011,20 +1050,20 @@ msgstr ""
 "%i Pakete angezeigt, %i installieren, %i kaputt, %i werden installiert/"
 "aktuallisiert, %i gelöscht, %sB werden %s"
 
-#: gtk/rgmainwindow.cc:2943 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2957 wings/rwmainwindow.cc:2023
 msgid "freed"
 msgstr "freigegeben"
 
-#: gtk/rgmainwindow.cc:2943 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2957 wings/rwmainwindow.cc:2023
 msgid "used"
 msgstr "benutzt"
 
-#: gtk/rgmainwindow.cc:2969 wings/rwmainwindow.cc:1837
+#: gtk/rgmainwindow.cc:2983 wings/rwmainwindow.cc:1837
 #: gtk/window_main.glade.strings:61
 msgid "All Packages"
 msgstr "Alle Pakete"
 
-#: gtk/rgmainwindow.cc:3055
+#: gtk/rgmainwindow.cc:3069
 #, fuzzy
 msgid ""
 "There are unsaved changes. Are you sure\n"
@@ -1066,20 +1105,16 @@ msgstr ""
 msgid "Section(s)"
 msgstr "Sektion"
 
-#: gtk/rgrepositorywin.cc:208 gtk/rgrepositorywin.cc:317
+#: gtk/rgrepositorywin.cc:208 gtk/rgrepositorywin.cc:316
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:267
-msgid "Cannot read sources.list file"
-msgstr ""
-
-#: gtk/rgrepositorywin.cc:272
+#: gtk/rgrepositorywin.cc:271
 msgid "Cannot read vendors.list file"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:429
+#: gtk/rgrepositorywin.cc:428
 msgid "Unknown source type"
 msgstr ""
 
@@ -2123,16 +2158,6 @@ msgstr "Ausgewählte Sektion ausschließen"
 msgid "Include packages that are ..."
 msgstr "Nehme Pakete auf, die..."
 
-#: gtk/window_filters.glade.strings:14
-#, fuzzy
-msgid "Not installed"
-msgstr "Nicht installiert"
-
-#: gtk/window_filters.glade.strings:15
-#, fuzzy
-msgid "Installed and upgradeable"
-msgstr "Installiert oder Aktualisierbar"
-
 #: gtk/window_filters.glade.strings:17
 #, fuzzy
 msgid "Marked to keep"
@@ -2291,6 +2316,9 @@ msgstr ""
 #, fuzzy
 msgid "Vendors"
 msgstr "Anbieter"
+
+#~ msgid "The list of sources could not be read."
+#~ msgstr "Die Liste der Quellen (sources.list) konnte nicht gelesen werden"
 
 #, fuzzy
 #~ msgid "Exapnd all"

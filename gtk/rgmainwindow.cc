@@ -1325,10 +1325,16 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     }
      
     // description
-    gtk_text_buffer_set_text(_textBuffer, utf8(pkg->description()), -1);
+    gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
     GtkTextIter iter;
-    gtk_text_buffer_get_iter_at_offset(_textBuffer, &iter, 0);
-    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_textView), &iter,0,FALSE,0,0);
+    gtk_text_buffer_get_iter_at_offset(_descrBuffer, &iter, 0);
+    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_descrView), &iter,0,FALSE,0,0);
+
+   // files
+    gtk_text_buffer_set_text(_filesBuffer, utf8(pkg->installedFiles()), -1);
+    gtk_text_buffer_get_iter_at_offset(_filesBuffer, &iter, 0);
+    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_filesView), &iter,0,FALSE,0,0);
+
     updateDynPackageInfo(pkg);
     setStatusText();
 }
@@ -1717,22 +1723,6 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
 }
 
 
-void RGMainWindow::searchPkgAction(void *self, RGFindWindow *findWin)
-{
-  RGMainWindow *me = (RGMainWindow*)self;
-  RFilter *filter;
-    
-  filter = me->_lister->findFilter(0);
-  filter->reset();
-  RPatternPackageFilter::DepType type = me->_findWin->getSearchType();
-  const char *C = me->_findWin->getFindString().c_str();
-  string S(C);
-  filter->pattern.addPattern(type, S, false);
-  me->changeFilter(1);
-
-  findWin->hide();
-}
-
 // this code does heavy depend on the button layout that libglade uses
 void RGMainWindow::menuToolbarClicked(GtkWidget *self, void *data)
 {
@@ -1746,9 +1736,6 @@ void RGMainWindow::menuToolbarClicked(GtkWidget *self, void *data)
 		     "button_procceed"
   };
 
-//   if(me->_toolbarState == GPOINTER_TO_INT(data))
-//     return;
-  
   // save new toolbar state
   me->_toolbarState = (ToolbarState)GPOINTER_TO_INT(data);
 
@@ -1787,24 +1774,37 @@ void RGMainWindow::searchPkgNameClicked(GtkWidget *self, void *data)
   
   if(me->_findWin == NULL) {
     me->_findWin = new RGFindWindow(me);
-    me->_findWin->setFindCallback(searchPkgAction, me);
   }
 
-  me->_findWin->setSearchType(RPatternPackageFilter::Name);
-  me->_findWin->show();
-}
+  int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
+  if(res == 0) {
+      gdk_window_set_cursor(me->_findWin->window()->window, me->_busyCursor);
+      RFilter *filter = me->_lister->findFilter(0);
+      filter->reset();
+      int searchType = me->_findWin->getSearchType();
+      string S(me->_findWin->getFindString());
 
-void RGMainWindow::searchPkgDescriptionClicked(GtkWidget *self, void *data)
-{
-  RGMainWindow *me = (RGMainWindow*)data;
-  
-  if(me->_findWin == NULL) {
-    me->_findWin = new RGFindWindow(me);
-    me->_findWin->setFindCallback(searchPkgAction, me);
+      if(searchType & 1<<RPatternPackageFilter::Name) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Name;
+	  filter->pattern.addPattern(type, S, false);
+      }
+      if(searchType & 1<<RPatternPackageFilter::Version) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Version;
+	  filter->pattern.addPattern(type, S, false);
+      }
+      if(searchType & 1<<RPatternPackageFilter::Description) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Description;
+	  filter->pattern.addPattern(type, S, false);
+      }
+      if(searchType & 1<<RPatternPackageFilter::Maintainer) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Maintainer;
+	  filter->pattern.addPattern(type, S, false);
+      }
+      me->changeFilter(1);
+      gdk_window_set_cursor(me->_findWin->window()->window, NULL);
+      me->_findWin->hide();
   }
 
-  me->_findWin->setSearchType(RPatternPackageFilter::Description);
-  me->_findWin->show();
 }
 
 void RGMainWindow::undoClicked(GtkWidget *self, void *data)
@@ -2086,11 +2086,6 @@ void RGMainWindow::buildInterface()
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,
-				  "on_search_description",
-				  G_CALLBACK(searchPkgDescriptionClicked),
-				  this); 
-
-    glade_xml_signal_connect_data(_gladeXML,
 				  "on_search_name",
 				  G_CALLBACK(searchPkgNameClicked),
 				  this); 
@@ -2288,10 +2283,16 @@ void RGMainWindow::buildInterface()
     gtk_misc_set_alignment(GTK_MISC(_infoL), 0.0, 0.0);
     gtk_label_set_justify(GTK_LABEL(_infoL), GTK_JUSTIFY_LEFT);
 
-    _textView = glade_xml_get_widget(_gladeXML, "text_descr");
-    assert(_textView);
-    _textBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_textView));
-    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_textView), GTK_WRAP_WORD);
+    _descrView = glade_xml_get_widget(_gladeXML, "text_descr");
+    assert(_descrView);
+    _descrBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_descrView));
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_descrView), GTK_WRAP_WORD);
+
+    _filesView = glade_xml_get_widget(_gladeXML, "textview_files");
+    assert(_filesView);
+    _filesBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_filesView));
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_filesView), GTK_WRAP_WORD);
+
 
     _depP = glade_xml_get_widget(_gladeXML, "optionmenu_depends");
     assert(_depP);

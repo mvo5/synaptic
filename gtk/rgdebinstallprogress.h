@@ -31,9 +31,30 @@
 
 class RGMainWindow;
 
-
 class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow 
 {
+   // the various stages of dpkg
+   static const int NR_REMOVE_STAGES=3;
+   static char* remove_stages[NR_REMOVE_STAGES];
+
+   static const int NR_PURGE_STAGES=4;
+   static char *purge_stages[NR_PURGE_STAGES];
+
+   // purge a already removed pkg
+   static const int NR_PURGE_ONLY_STAGES=2;
+   static char *purge_only_stages[NR_PURGE_ONLY_STAGES]; 
+
+   static const int NR_INSTALL_STAGES=4;
+   static char *install_stages[NR_INSTALL_STAGES];
+
+   static const int NR_UPDATE_STAGES=5;
+   static char *update_stages[NR_UPDATE_STAGES];
+
+   static const int NR_REINSTALL_STAGES=6;
+   static char *reinstall_stages[NR_REINSTALL_STAGES];
+
+
+   // widgets
    GtkWidget *_label_status;
    GtkWidget *_labelSummary;
 
@@ -41,15 +62,18 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    GtkWidget *_pbarTotal;
 
    bool _startCounting;
-   int _numRemovals;
 
-   // this map contains the name and the action
-   map<string, int> _summaryMap;
-   // those maps record what packages have already been seen
-   set<string> _unpackSeen;
-   set<string> _configuredSeen;
-   set<string> _installedSeen;
-   set<string> _removeSeen;
+   int _progress;
+   int _totalActions;
+
+   // this map contains the name and a pointer to the stages arrays
+   map<string, char**> _actionsMap;
+
+   // this map contains what stage is already completted
+   map<string, int> _stagesMap;
+
+   // readable states 
+   map<string,string> _transDpkgStates;
 
  protected:
    virtual void startUpdate();

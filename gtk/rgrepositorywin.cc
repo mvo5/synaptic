@@ -220,7 +220,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEB);
 
-   item = gtk_menu_item_new_with_label(_("Source (deb-src))");
+   item = gtk_menu_item_new_with_label(_("Source (deb-src))"));
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEBSRC);

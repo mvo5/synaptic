@@ -48,6 +48,7 @@ void RGChangesWindow::clickedOk(GtkWidget *self, void *data)
 
 void RGChangesWindow::clickedCancel(GtkWidget *self, void *data)
 {
+    cout << "clickedCancel()" << endl;
     RGChangesWindow *me = (RGChangesWindow*)data;
     me->_confirmed = false;
     gtk_main_quit();
@@ -80,6 +81,10 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
 				  this); 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_cancel_clicked",
+				  G_CALLBACK(clickedCancel),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_window_changes_close",
 				  G_CALLBACK(clickedCancel),
 				  this); 
 }

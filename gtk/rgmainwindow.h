@@ -99,10 +99,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    
    GtkWidget *_sview; // scrolled window for table
 
-   // the view
-   GtkWidget *_treeView;
    // the active model
    GtkTreeModel *_activeTreeModel;
+   // the view
+   GtkWidget *_treeView;
 
    RPackageLister::treeDisplayMode _treeDisplayMode;
    RPackageLister::treeDisplayMode _menuDisplayMode;

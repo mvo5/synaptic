@@ -657,7 +657,6 @@ static void gtk_pkg_list_set_sort_column_id(GtkTreeSortable *sortable,
 static gboolean
 gtk_pkg_list_has_default_sort_func (GtkTreeSortable *sortable)
 {
-    GtkPkgList *list_store = (GtkPkgList *) sortable;
     g_return_val_if_fail (GTK_IS_PKG_LIST (sortable), FALSE);
     return TRUE;
 }

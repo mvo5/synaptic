@@ -150,7 +150,6 @@ void RCacheActorRecommends::notifyCachePostChange()
 void RCacheActorRecommends::run(vector<RPackage*> &PkgList, int Action)
 {
    setLanguageCache();
-   RPackage *Pkg;
    const char *name;
    const ListType *List;
    MapType::const_iterator MapI;

@@ -516,7 +516,6 @@ vector<RPackage*> RPackage::getInstalledDeps()
 {
     vector<RPackage*> deps;
     pkgCache::VerIterator ver;
-    pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
     ver = (*_depcache)[*_package].InstVerIter(*_depcache);
     
@@ -977,8 +976,6 @@ static char *debParser(string descr)
 }
 static char *rpmParser(string descr)
 {
-    int i;
-
     unsigned int pos = descr.find('\n');
     // delete first line
     if( pos != string::npos )
@@ -992,7 +989,6 @@ static char *stripWsParser(string descr)
 {
     const char *end;
     const char *p;
-    int i;
 
     p = descr.c_str();
     end = p+descr.size(); // mvo: hackish, but works

@@ -305,7 +305,6 @@ void RGMainWindow::searchNextAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
     GtkTreeIter iter;
-    GtkTreePath *path;
     GList *li, *list=NULL;
     gboolean ok;
 
@@ -340,7 +339,7 @@ void RGMainWindow::searchNextAction(GtkWidget *self, void *data)
 void RGMainWindow::searchAction(GtkWidget *self, void *data)
 {
     // search interativly in the tree
-    GtkTreeIter iter, selected, parent = {0,};
+    GtkTreeIter iter, parent = {0,};
     GtkTreePath *path;
     GList *li, *list=NULL;
     char *name;
@@ -820,7 +819,6 @@ void RGMainWindow::proceed()
 void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
-    RPackage *pkg = me->selectedPackage();
     RGSummaryWindow *summ;
 
     // check whether we can really do it
@@ -1249,7 +1247,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     //provides list
     gtk_list_store_clear(_providesListStore);
     vector<const char *> provides = pkg->provides();
-    for(int i=0; i<provides.size();i++) {
+    for(unsigned int i=0; i<provides.size();i++) {
 	//cout << "got: " << provides[i] << endl;
 	GtkTreeIter iter;
 	gtk_list_store_append(_providesListStore, &iter);
@@ -1639,13 +1637,13 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       if(action == PKG_INSTALL) {
 	  //cout << "action install" << endl;
 	  bool failed = false;
-	  for(int i=0;i < instPkgs.size();i++) {
+	  for(unsigned int i=0;i < instPkgs.size();i++) {
 	      //cout << "checking pkg nr " << i << endl;
 	      pkg = instPkgs[i];
 	      if (pkg == NULL)
 		  continue;
 	      int mstatus = pkg->getMarkedStatus();
-	      cout << "mstatus: " << mstatus << endl;
+	      //cout << "mstatus: " << mstatus << endl;
 	      if(!(mstatus == RPackage::MInstall ||
 		   mstatus == RPackage::MUpgrade) ) 
 		  failed = true;
@@ -2077,7 +2075,6 @@ struct mysort {
 
 void RGMainWindow::buildTreeView()
 {
-    GtkWidget *widget;
     GtkCellRenderer *renderer; 
     GtkTreeViewColumn *column, *name_column=NULL; 
     GtkTreeSelection *selection;
@@ -2219,7 +2216,7 @@ void RGMainWindow::buildTreeView()
 
     // now sort and insert in order
     sort(all_columns.begin(),all_columns.end(),mysort());
-    for(int i=0;i<all_columns.size();i++) {
+    for(unsigned int i=0;i<all_columns.size();i++) {
 	gtk_tree_view_append_column(GTK_TREE_VIEW (_treeView),
 				    GTK_TREE_VIEW_COLUMN(all_columns[i].second));
     }

@@ -800,7 +800,6 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
     else if(_displayMode == TREE_DISPLAY_STATUS)
 	{
 	    string str;
-	    int status = pkg->getStatus();
 	    int ostatus = pkg->getOtherStatus();
 	    if(ostatus & RPackage::ONew)
 		str=_("New in repository");

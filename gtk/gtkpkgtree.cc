@@ -754,7 +754,6 @@ gtk_pkg_tree_has_default_sort_func (GtkTreeSortable *sortable)
 #ifdef DEBUG_SORT
     cout << "gtk_pkg_tree_has_default_sort_func ()"<<endl;
 #endif
-    GtkPkgTree *list_store = (GtkPkgTree *) sortable;
     g_return_val_if_fail (GTK_IS_PKG_TREE (sortable), FALSE);
     return TRUE;
 }

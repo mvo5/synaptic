@@ -386,16 +386,16 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     }
 
     if (sizeChange > 0) {
-	g_string_append_printf(msg, _("\n%sB will be used after finished.\n"),
+	g_string_append_printf(msg, _("\n%s B will be used after finished.\n"),
 			       SizeToStr(sizeChange).c_str());
     } else if (sizeChange < 0) {
-	g_string_append_printf(msg, _("\n%sB will be freed after finished.\n"),
+	g_string_append_printf(msg, _("\n%s B will be freed after finished.\n"),
 			       SizeToStr(sizeChange).c_str());
 	sizeChange = -sizeChange;
     }
     
     if (dlSize > 0) {
-	g_string_append_printf(msg, _("\n%sB need to be downloaded."),
+	g_string_append_printf(msg, _("\n%s B need to be downloaded."),
 			       SizeToStr(dlSize).c_str());
     }
     

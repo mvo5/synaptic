@@ -263,9 +263,9 @@ RWSummaryWindow::RWSummaryWindow(RWWindow *wwin, RPackageLister *lister)
 
 	char *templ = NULL;
 	if (sizeChange > 0) {
-	    templ = _("\n%sB will be used after finished.\n");
+	    templ = _("\n%s B will be used after finished.\n");
 	} else if (sizeChange < 0) {
-	    templ = _("\n%sB will be freed after finished.\n");
+	    templ = _("\n%s B will be freed after finished.\n");
 	    sizeChange = -sizeChange;
 	}
 
@@ -278,7 +278,7 @@ RWSummaryWindow::RWSummaryWindow(RWWindow *wwin, RPackageLister *lister)
 
 	if (dlSize > 0) {
 	    used += snprintf(buffer+used, left, 
-			     _("\n%sB need to be downloaded."),
+			     _("\n%s B need to be downloaded."),
 			     SizeToStr(dlSize).c_str());
 	    left -= used;
 	    lines++;

@@ -334,7 +334,7 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
       break;
   case AVAILABLE_VERSION_COLUMN:
       if(pkg == NULL) return;      
-      str = pkg->availableDownloadableVersion();
+      str = pkg->availableVersion();
       g_value_set_string(value, str);
       break;
   case DESCR_COLUMN:

@@ -1236,12 +1236,12 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     appendText(bufPtr, bufSize, _("\nAvailable Package:\n"));
     
     appendTag(bufPtr, bufSize, _("    Version"),
-	      pkg->availableDownloadableVersion());
-    size = pkg->availableDownloadableSize();
+	      pkg->availableVersion());
+    size = pkg->availableInstalledSize();
     appendTag(bufPtr, bufSize, _("    Size"),
 	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
 
-    size = pkg->packageDownloadableSize();
+    size = pkg->availablePackageSize();
     appendTag(bufPtr, bufSize, _("    Package Size"), 
 	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
 

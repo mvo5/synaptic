@@ -125,40 +125,13 @@ const char *RPackage::installedVersion()
     return _package->CurrentVer().VerStr();
 }
 
-
 const char *RPackage::availableVersion()
 {
-    pkgCache::VerIterator ver = _package->VersionList();
-
-    if (!ver.end()) {
-	return ver.VerStr();
-    } else 
-	return NULL;
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandidateVer == 0)
+        return NULL;
+    return State.CandidateVerIter(*_depcache).VerStr();
 }
-
-const char *RPackage::availableDownloadableVersion()
-{
-  pkgCache::VerIterator ver = _package->VersionList();
-
-  while(!ver.end()) {
-    if(ver.Downloadable())
-      return ver.VerStr();
-    ver++;
-  }
-  return NULL;
-}
-
-bool RPackage::downloadable()
-{
-    pkgCache::VerIterator ver = _package->VersionList();
-    
-    if (ver != 0) {
-	return ver.Downloadable();
-    } else {
-	return false;
-    }
-}
-
 
 const char *RPackage::priority()
 {
@@ -279,8 +252,6 @@ const char *RPackage::description()
     }
 }
 
-
-
 long RPackage::installedSize()
 {
     pkgCache::VerIterator ver = _package->CurrentVer();
@@ -291,50 +262,20 @@ long RPackage::installedSize()
 	return -1;
 }
 
-
-long RPackage::availableSize()
+long RPackage::availableInstalledSize()
 {
-    pkgCache::VerIterator ver = _package->VersionList();
-    
-    if (!ver.end() && ver.Downloadable())
-	return ver->InstalledSize;
-    else
-	return -1;    
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandidateVer == 0)
+        return -1;
+    return State.CandidateVerIter(*_depcache)->InstalledSize;
 }
 
-long RPackage::availableDownloadableSize()
+long RPackage::availablePackageSize()
 {
-  pkgCache::VerIterator ver = _package->VersionList();
-  
-  while(!ver.end()) {
-    if(ver.Downloadable())
-      return ver->InstalledSize;
-    ver++;
-  }
-  return -1;    
-}
-
-long RPackage::packageDownloadableSize()
-{
-    pkgCache::VerIterator ver = _package->VersionList();
-    
-    while(!ver.end()) {
-      if(ver.Downloadable())
-	return ver->Size;
-      ver++;
-    }
-    return -1;
-}
-
-
-long RPackage::packageSize()
-{
-    pkgCache::VerIterator ver = _package->VersionList();
-    
-    if (!ver.end() && ver.Downloadable())
-	return ver->Size;
-    else
-	return -1;
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandidateVer == 0)
+        return -1;
+    return State.CandidateVerIter(*_depcache)->Size;
 }
 
 int RPackage::getOtherStatus()

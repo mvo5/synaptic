@@ -123,10 +123,6 @@ public:
 
    bool isImportant();
 
-   bool downloadable();
-   
-   const char *availableDownloadableVersion();
-   
    const char *maintainer();
    const char *vendor();
    
@@ -141,11 +137,8 @@ public:
 
    // relative to version that would be installed
    const char *availableVersion();
-   long availableSize();
-   long availableDownloadableSize();
-
-   long packageDownloadableSize();
-   long packageSize();
+   long availableInstalledSize();
+   long availablePackageSize();
 
    // special case: alway get the deps of the latest available version
    // (not necessary the installed one)

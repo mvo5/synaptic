@@ -176,7 +176,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
     : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"),
       updateFinished(false)
 {
-   setTitle(_("Applying Changes..."));
+   setTitle(_("Applying Changes"));
 
    GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
    assert(hbox);

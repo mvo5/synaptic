@@ -265,7 +265,7 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 : RInstallProgress(), RGGladeWindow(main, "rginstall_progress"), _msgs(main)
 {
    prepare(lister);
-   setTitle(_("Applying Changes..."));
+   setTitle(_("Applying Changes"));
 
    _startCounting = false;
 

@@ -61,7 +61,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   setTitle(_("Downloading Files..."));
+   setTitle(_("Downloading Files"));
    gtk_widget_set_usize(_win, 620, 350);
 
    gint dummy;

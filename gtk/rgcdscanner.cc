@@ -58,7 +58,7 @@ void RGCDScanner::update(string text, int current)
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 : RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
 {
-   setTitle(_("Scanning CD-ROM..."));
+   setTitle(_("Scanning CD-ROM"));
 
    _userDialog = userDialog;
 

@@ -933,7 +933,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 		       _("Never upgrade to a new version automatically. "
 			    "Be _very_ carefull with this option as you will "
 			    "not get security updates automatically! "
-		       "If you manually force a verison "
+		       "If you manually force a version "
 		       "the package version will follow "
 		       "the choosen distribution."),"");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),

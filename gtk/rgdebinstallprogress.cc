@@ -274,7 +274,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 
    p = g_strdup_printf(_("Install new configuration file\n'%s'?"),conffile);
    s = g_strdup_printf(_("The configuration file %s was modified (by "
-			 "you or by a script). A updated version is shipped "
+			 "you or by a script). An updated version is shipped "
 			 "in this package. If you want to keep your current "
 			 "version say 'No'. Do you want to install the "
 			 "new package maintainers version? "),conffile);

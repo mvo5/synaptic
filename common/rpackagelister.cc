@@ -1342,6 +1342,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          if (Transient)
             goto gave_wood;
 
+	 if (numPackages == 0)
+	     goto gave_wood;
+
          message =
             _("Some of the packages could not be retrieved from the server(s).\n");
          if (!serverError.empty())

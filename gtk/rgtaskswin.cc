@@ -136,12 +136,19 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
 
    // display the result in a nice dialog
    RGGladeUserDialog dia(me, "task_descr");
+   
+   gchar *title = g_strdup_printf(_("Description %s"), str);
+   dia.setTitle(title);
+   
    GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
 					"textview");
    GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
    gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
+   
    dia.run();
 
+   g_free(str);
+   g_free(title);
    me->setBusyCursor(false);
 }
 
@@ -179,11 +186,28 @@ void RGTasksWin::cell_toggled_callback (GtkCellRendererToggle *cell,
 			       false);
 }
 
+void RGTasksWin::selection_changed_callback(GtkTreeSelection *selection,
+					    gpointer data)
+{
+   RGTasksWin *me = (RGTasksWin*)data;
+   
+   GtkTreeIter iter;
+   GtkTreeModel *model;
+   bool sensitiv = false;
+
+   if (gtk_tree_selection_get_selected (selection, &model, &iter))  
+      sensitiv = true;
+
+   gtk_widget_set_sensitive(me->_detailsButton, sensitiv);
+}
+
 
 RGTasksWin::RGTasksWin(RGWindow *parent) 
    : RGGladeWindow(parent, "tasks")
 {
    _mainWin = (RGMainWindow *)parent;
+   _detailsButton = glade_xml_get_widget(_gladeXML, "button_details");
+   assert(_detailsButton);
 
    GtkListStore *store= _store = gtk_list_store_new (TASK_N_COLUMNS, 
 						     G_TYPE_BOOLEAN, 
@@ -222,8 +246,14 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    }
    pclose(f);
    GtkWidget *tree;
-   
+   GtkTreeSelection * select;
+
    tree = _taskView = glade_xml_get_widget(_gladeXML, "treeview_tasks");
+   select = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
+   gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
+   g_signal_connect (G_OBJECT (select), "changed",
+		     G_CALLBACK (selection_changed_callback),
+		     this);
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
    renderer = gtk_cell_renderer_toggle_new ();

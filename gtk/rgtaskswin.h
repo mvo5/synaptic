@@ -33,6 +33,7 @@ class RGTasksWin : public RGGladeWindow {
    RGMainWindow *_mainWin;
    GtkListStore *_store;
    GtkWidget *_taskView;
+   GtkWidget *_detailsButton;
 
    static void cbButtonOkClicked(GtkWidget *self, void *data);
    static void cbButtonCancelClicked(GtkWidget *self, void *data);
@@ -40,6 +41,10 @@ class RGTasksWin : public RGGladeWindow {
    static void cell_toggled_callback (GtkCellRendererToggle *cell,
 				      gchar *path_string,
 				      gpointer user_data);
+   static void selection_changed_callback(GtkTreeSelection *selection,
+				    gpointer user_data);
+
+
 
  public:
    RGTasksWin(RGWindow *parent);

@@ -1552,8 +1552,31 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       delete chng;
   }
 
-  if(changed)
+  if(changed) {
       me->_lister->saveUndoState(state);
+      // check for failed installs
+      if(action == PKG_INSTALL) {
+	  cout << "action install" << endl;
+	  bool failed = false;
+	  for(li=list;li!=NULL;li=g_list_next(li)) {
+	      gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
+				      (GtkTreePath*)(li->data));
+	      gtk_tree_model_get(me->_activeTreeModel, &iter, 
+				 PKG_COLUMN, &pkg, -1);
+	      if (pkg == NULL)
+		  continue;
+	      int mstatus = pkg->getMarkedStatus();
+	      if(!(mstatus == RPackage::MInstall ||
+		   mstatus == RPackage::MUpgrade) ) 
+		  failed = true;
+	  }
+	  if(failed)
+	      me->_userDialog->warning(_("The selected package couldn't be\
+ installed/upgraded.\n\n"
+				     "This is most probably caused by unmet\
+ dependencies that are not available in any repository."));
+      }
+  }
 
   if (ask) {
       me->_lister->registerObserver(me);
@@ -2778,16 +2801,6 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
     if (fixBroken && !_lister->check())
 	_lister->fixBroken();
 
-    int mstatus = pkg->getMarkedStatus();
-    //cout << "mstatus: " << mstatus << endl;
-    if(!(mstatus == RPackage::MInstall ||
-        mstatus == RPackage::MUpgrade) ) 
-	{
-	    _userDialog->warning(
-		_("The selected package couldn't be installed/upgraded.\n\n"
-		  "This is most probably caused by unmet dependencies \
-that are not available in any repository."));
-	}
     //cout << "pkgInstallHelper()/end" << endl;
 }
 

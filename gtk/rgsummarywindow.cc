@@ -86,6 +86,20 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 
 #ifdef WITH_APT_AUTH
    if(notAuthenticated.size() > 0) {
+      GtkWidget *label;
+      label = glade_xml_get_widget(me->_gladeXML, "label_auth_warning");
+      assert(label);
+      gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
+				   _("Warning"), 
+				   _("You are about to install software that "
+				     "<b>can't be authenticated</b>! Doing "
+				     "this could allow a malicious individual "
+				     "to damage or take control of your "
+				     "system."));
+      gtk_label_set_markup(GTK_LABEL(label), msg);
+      gtk_widget_show(label);
+      g_free(msg);
+
       /* not authenticated */
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,

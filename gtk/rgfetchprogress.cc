@@ -38,6 +38,7 @@
 #include <stdio.h>
 #include <pango/pango.h>
 #include <gtk/gtk.h>
+#include <cassert>
 
 enum {
     DLDone = -1,
@@ -66,6 +67,9 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
     gint dummy;
     gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,
                             &_depth);
+
+    _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
+    assert(_mainProgressBar);
 
     _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
     _tableListStore = gtk_list_store_new(3, 
@@ -203,6 +207,7 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
     string str;
     pkgAcquireStatus::Pulse(Owner);
 
+#if 0
     if (CurrentCPS != 0) {
 	char buf[128];
 	long i;
@@ -217,8 +222,8 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
     } else {
 	str = _("(stalled)\n");
     }
-    
-    
+#endif
+
     for (pkgAcquire::Worker *I = Owner->WorkersBegin(); I != 0;
 	 I = Owner->WorkerStep(I)) {
 
@@ -239,7 +244,21 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 			 long(double(I->CurrentSize*100.0)/double(I->TotalSize)));
 	else
 	    updateStatus(*I->CurrentItem, 100);
+
     }
+
+    float percent = long(double((CurrentBytes + CurrentItems)*100.0)/double(TotalBytes+TotalItems));
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
+				  percent/100.0);
+
+    unsigned long ETA= (unsigned long)((TotalBytes - CurrentBytes)/CurrentCPS);
+    long i = CurrentItems < TotalItems ? CurrentItems+1 : CurrentItems;
+    gchar *s = g_strdup_printf(_("%-3li/%-3li files    %4s B/s  ETA %6s"),
+			       i, TotalItems,
+			       SizeToStr(CurrentCPS).c_str(),
+			       TimeToStr(ETA).c_str());
+    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar),s);
+    g_free(s);
 
     gtk_label_set_text(GTK_LABEL(_statusL), (char*)str.c_str());
     RGFlushInterface();

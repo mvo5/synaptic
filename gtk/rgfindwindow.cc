@@ -65,8 +65,10 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
    RGFindWindow *me = (RGFindWindow *) data;
 
    GtkWidget *combo = glade_xml_get_widget(me->_gladeXML, "combo_find");
-   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_find");
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(entry));
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry));
+
+   if(strlen(str) == 0)
+      return;
 
    me->_prevSearches = g_list_prepend(me->_prevSearches, g_strdup(str));
    gtk_combo_set_popdown_strings(GTK_COMBO(combo), me->_prevSearches);
@@ -83,6 +85,17 @@ void RGFindWindow::doClose(GtkWindow *widget, void *data)
 
    w->hide();
 }
+
+void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
+{
+   RGFindWindow *me = (RGFindWindow *) data;
+
+   if( strlen(gtk_entry_get_text(GTK_ENTRY(me->_entry))) >0 )
+      gtk_widget_set_sensitive(me->_findB, TRUE);
+   else
+      gtk_widget_set_sensitive(me->_findB, FALSE);
+}
+
 
 RGFindWindow::RGFindWindow(RGWindow *win)
 : RGGladeWindow(win, "find"), _prevSearches(0)
@@ -103,6 +116,14 @@ RGFindWindow::RGFindWindow(RGWindow *win)
 
    GtkWidget *combo = glade_xml_get_widget(_gladeXML, "combo_find");
    gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
+
+   _entry = glade_xml_get_widget(_gladeXML, "entry_find");
+   assert(_entry);
+   g_signal_connect(G_OBJECT(_entry), "changed", 
+		   G_CALLBACK(cbEntryChanged), this);
+   _findB = glade_xml_get_widget(_gladeXML, "button_find");
+   assert(_findB);
+   gtk_widget_set_sensitive(_findB, FALSE);
 
    setTitle(_("Find"));
    skipTaskbar(true);

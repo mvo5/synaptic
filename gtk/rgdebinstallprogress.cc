@@ -21,6 +21,9 @@
  */
 
 #include "config.h"
+
+#ifdef WITH_DPKG_STATUSFD
+
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/fcntl.h>
@@ -613,6 +616,7 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    }
 }
 
+#endif
 
 
 // vim:ts=3:sw=3:et

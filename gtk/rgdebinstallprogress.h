@@ -24,6 +24,9 @@
 #ifndef _RGDEBINSTALLPROGRESS_H_
 #define _RGDEBINSTALLPROGRESS_H_
 
+#include "config.h"
+
+#ifdef WITH_DPKG_STATUSFD
 
 #include "rinstallprogress.h"
 #include "rggladewindow.h"
@@ -107,5 +110,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
 
 };
+
+#endif
 
 #endif

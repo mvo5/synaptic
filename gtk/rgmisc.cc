@@ -172,6 +172,22 @@ const char *utf8(const char *str)
    return _str;
 }
 
+GtkWidget *get_gtk_image(const char *name)
+{
+   gchar *filename;
+   GtkWidget *img;
+   filename = g_strdup_printf("../pixmaps/%s.png", name);
+   if (!FileExists(filename)) {
+      g_free(filename);
+      filename = g_strdup_printf(SYNAPTIC_PIXMAPDIR "%s.png", name);
+   }
+   img = gtk_image_new_from_file(filename);
+   if (img == NULL)
+      std::cerr << "Warning, failed to load: " << filename << std::endl;
+   g_free(filename);
+   return img;
+}
+
 
 // -------------------------------------------------------------------
 // RPackageStatus stuff
@@ -320,3 +336,5 @@ void RPackageStatus::saveColors()
       g_free(config_string);
    }
 }
+
+// vim:ts=3:sw=3:et

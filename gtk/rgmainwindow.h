@@ -232,11 +232,11 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbPkgAction(GtkWidget *self, void *data);
 
    static gboolean cbPackageListClicked(GtkWidget *treeview,
-                                        GdkEventButton * event,
-                                        gpointer userdata);
+                                        GdkEventButton *event,
+                                        gpointer data);
 
    static void cbTreeviewPopupMenu(GtkWidget *treeview,
-                                   GdkEventButton * event,
+                                   GdkEventButton *event,
                                    RGMainWindow *me,
                                    vector<RPackage *> selected_pkgs);
 

@@ -48,6 +48,8 @@ void gtk_get_color_from_string(const char *cpp, GdkColor ** colp);
 const char *utf8_to_locale(const char *str);
 const char *utf8(const char *str);
 
+GtkWidget *get_gtk_image(const char *name);
+
 string SizeToStr(double Bytes);
 
 // the information for the treeview

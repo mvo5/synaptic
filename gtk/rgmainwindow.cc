@@ -649,8 +649,6 @@ void RGMainWindow::buildTreeView()
       g_list_free(columns);
    }
 
-
-
    _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
    assert(_treeView);
 
@@ -1144,15 +1142,15 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Install"));
-   img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+   img = get_gtk_image("package-install");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Reinstall Current Version"));
-   img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+   menuitem = gtk_image_menu_item_new_with_label(_("Reinstall"));
+   img = get_gtk_image("package-reinstall");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
    g_object_set_data(G_OBJECT(menuitem),"me",this);
    g_signal_connect(menuitem, "activate",
@@ -1160,30 +1158,34 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 
-   menuitem = gtk_menu_item_new_with_label(_("Upgrade"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Upgrade"));
+   img = get_gtk_image("package-upgrade");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
-   img = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+   img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_DELETE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
 #ifndef HAVE_RPM
-   menuitem =
-      gtk_menu_item_new_with_label(_("Remove Including Configuration"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Configuration"));
+   img = get_gtk_image("package-remove");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#endif
-   menuitem =
-      gtk_menu_item_new_with_label(_
-                                   ("Remove Including Orphaned Dependencies"));
+   
+   menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
+   img = get_gtk_image("package-remove");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction,
@@ -1197,6 +1199,7 @@ void RGMainWindow::buildInterface()
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate", (GCallback) cbMenuPinClicked, this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+#endif
 
 
    gtk_widget_show_all(_popupMenu);
@@ -1530,17 +1533,17 @@ void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
    me->pkgAction((RGPkgAction)GPOINTER_TO_INT(data));
 }
 
-
 gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
-                                            GdkEventButton * event,
+                                            GdkEventButton *event,
                                             gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = NULL;
    GtkTreePath *path;
+   GtkTreeViewColumn *column;
 
-   /* single click with the right mouse button? */
-   if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
+   /* Single clicks only */
+   if (event->type == GDK_BUTTON_PRESS) {
       GtkTreeSelection *selection;
       GtkTreeIter iter;
 
@@ -1548,15 +1551,26 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
       // FIXME: this is gtk2.2
       if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
                                         (int)event->x, (int)event->y,
-                                        &path, NULL, NULL, NULL)) {
-         vector<RPackage *>selected_pkgs;
+                                        &path, &column, NULL, NULL)) {
+
+         /* Check if it's either a right-button click, or a left-button
+          * click on the status column. */
+         if (!(event->button == 3 ||
+               (event->button == 1 && strcmp(column->title, "S") == 0)))
+            return false;
+
+         vector<RPackage *> selected_pkgs;
          GList *li = NULL;
 
-         // treat right click as selection
+         // Treat right click as additional selection, and left click
+         // as single selection. 
+         if (event->button == 1 &&
+             ((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK))
+            gtk_tree_selection_unselect_all(selection);
          gtk_tree_selection_select_path(selection, path);
-         li =
-            gtk_tree_selection_get_selected_rows(selection,
-                                                 &me->_activeTreeModel);
+         
+         li = gtk_tree_selection_get_selected_rows(selection,
+                                                   &me->_activeTreeModel);
          for (li = g_list_first(li); li != NULL; li = g_list_next(li)) {
             gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
                                     (GtkTreePath *) (li->data));
@@ -2584,38 +2598,51 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    RPackage::PackageStatus pstatus = pkg->getStatus();
    RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
 
-   // gray out buttons that don't make sense
+   // Gray out buttons that don't make sense, and update image
+   // if necessary.
    GList *item = gtk_container_get_children(GTK_CONTAINER(me->_popupMenu));
    for (int i = 0; item != NULL; item = g_list_next(item), i++) {
-      // keep button
-      if (i == 0 && mstatus != RPackage::MKeep) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-      } else {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
+
+      gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
+
+      // Keep button
+      if (i == 0) {
+         if (mstatus != RPackage::MKeep)
+            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+
+         GtkWidget *img;
+         if (pstatus == RPackage::SNotInstalled)
+            img = get_gtk_image("package-available");
+         else
+            img = get_gtk_image("package-installed-updated");
+         gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item->data), img);
+         gtk_widget_show(img);
       }
 
-      // install button
+      // Install button
       if (i == 1 && pstatus == RPackage::SNotInstalled
           && mstatus != RPackage::MInstall) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
-      // re-install button
+      // Re-install button
       if (i == 2 && pstatus == RPackage::SInstalledUpdated) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
-      // upgrade button
+      // Upgrade button
       if (i == 3 && pstatus == RPackage::SInstalledOutdated
           && mstatus != RPackage::MUpgrade) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
-      // remove buttons (remove, remove with dependencies)
+
+      // Remove buttons (remove, remove with dependencies)
       if ((i == 4 || i == 6) && pstatus != RPackage::SNotInstalled
           && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
-      // purge
+
+      // Purge
       if (i == 5 && pstatus != RPackage::SNotInstalled
           && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
@@ -2623,8 +2650,9 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
                  && mstatus != RPackage::MRemove) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
-      // seperator is i==6 (ignored)
-      // hold button 
+
+      // Seperator is i==6 (ignored)
+      // Hold button 
       if (i == 8) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
          bool locked = (RPackage::OPinned & pkg->getOtherStatus());

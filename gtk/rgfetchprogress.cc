@@ -339,13 +339,13 @@ void RGFetchProgress::Stop()
    //cout << "RGFetchProgress::Stop()" << endl;
    RGFlushInterface();
    if(_sock != NULL) {
-      gtk_widget_destroy(_sock);
+      //gtk_widget_destroy(_sock);
    } else {
       hide();
    }
    pkgAcquireStatus::Stop();
 
-   //FIXME: this needs to be handled in a better way (gtk-2 maybe?)
+   //FIXME: this needs to be handled in a better way 
    sleep(1);                    // this sucks, but if ommited, the window will not always
    // closed (e.g. when a package is only deleted)
    RGFlushInterface();

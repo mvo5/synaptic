@@ -203,13 +203,15 @@ bool RGGladeWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
 void RGGladeWindow::setBusyCursor(bool flag) 
 {
    if(flag) {
-      gdk_window_set_cursor(window()->window, _busyCursor);
+      if(GTK_WIDGET_VISIBLE(_win))
+	 gdk_window_set_cursor(window()->window, _busyCursor);
 #if GTK_CHECK_VERSION(2,4,0)
       // if we don't iterate here, the busy cursor is not shown
       while (gtk_events_pending())
 	 gtk_main_iteration();
 #endif
    } else {
-      gdk_window_set_cursor(window()->window, NULL);
+      if(GTK_WIDGET_VISIBLE(_win))
+	 gdk_window_set_cursor(window()->window, NULL);
    }
 }

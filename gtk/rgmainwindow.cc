@@ -1721,7 +1721,8 @@ void RGMainWindow::setInterfaceLocked(bool flag)
          return;
 
       gtk_widget_set_sensitive(_win, FALSE);
-      gdk_window_set_cursor(_win->window, _busyCursor);
+      if(GTK_WIDGET_VISIBLE(_win))
+	 gdk_window_set_cursor(_win->window, _busyCursor);
    } else {
       assert(_interfaceLocked > 0);
 
@@ -1730,7 +1731,8 @@ void RGMainWindow::setInterfaceLocked(bool flag)
          return;
 
       gtk_widget_set_sensitive(_win, TRUE);
-      gdk_window_set_cursor(_win->window, NULL);
+      if(GTK_WIDGET_VISIBLE(_win))
+	 gdk_window_set_cursor(_win->window, NULL);
    }
 
    // fast enough with the new fixed-height mode
@@ -2496,7 +2498,7 @@ void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
    //   cout << "cbChangedView()"<<endl;
 
    RGMainWindow *me = (RGMainWindow *) data; 
-   int view = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
+   long view = (long)gtk_object_get_data(GTK_OBJECT(self), "index");
    me->changeView(view);
 }
 

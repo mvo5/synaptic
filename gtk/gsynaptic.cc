@@ -40,6 +40,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <cassert>
+#include <errno.h>
 
 #include "rgmainwindow.h"
 #include "rguserdialog.h"

@@ -1844,6 +1844,10 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 
     // apply the proxy settings
     RGPreferencesWindow::applyProxySettings();
+
+    RGGladeUserDialog dia(this);
+    dia.run("welcome");
+
 }
 
 

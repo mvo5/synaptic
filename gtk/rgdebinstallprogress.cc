@@ -224,8 +224,8 @@ int ipc_send_fd(int fd)
    servaddr.sun_family = AF_LOCAL;
    strcpy(servaddr.sun_path, UNIXSTR_PATH);
 
-   // wait max 10s (10000 * 1000/1000000) for the server
-   for(int i=0;i<10000;i++) {
+   // wait max 5s (5000 * 1000/1000000) for the server
+   for(int i=0;i<5000;i++) {
       if(connect(serverfd, (struct sockaddr *)&servaddr, sizeof(servaddr))==0) 
 	 break;
       usleep(1000);
@@ -258,8 +258,8 @@ int ipc_recv_fd()
    // wait for connections
    socklen_t clilen = sizeof(cliaddr);
 
-   // wait max 10s (10000 * 1000/1000000) for the client
-   for(int i=0;i<10000 || connfd > 0;i++) {
+   // wait max 5s (5000 * 1000/1000000) for the client
+   for(int i=0;i<5000 || connfd > 0;i++) {
       connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
       if(connfd > 0)
 	 break;
@@ -355,7 +355,6 @@ void RGDebInstallProgress::startUpdate()
    g_signal_connect(G_OBJECT(reaper), "child-exited",
 		    G_CALLBACK(child_exited),
 		    this);
-   putenv("DEBIAN_FRONTEND=gnome");
    show();
    RGFlushInterface();
 }
@@ -368,6 +367,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 {
    prepare(lister);
    setTitle(_("Applying Changes"));
+
+   // make sure we try to get a graphical debconf
+   putenv("DEBIAN_FRONTEND=gnome");
 
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");

@@ -363,12 +363,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    if (!pkg) 
       return;
    
-   // set global info
-   gtk_widget_set_sensitive(_pkginfo, true);
-   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
-   setTextView("textview_pkgcommon", descr.c_str(), true);
-
-
    // set menu according to pkg status
    int flags = pkg->getFlags();
 
@@ -378,8 +372,12 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_propertiesB, TRUE);
    gtk_widget_set_sensitive(_pinM, TRUE);
 
+   // set info
+   gtk_widget_set_sensitive(_pkginfo, true);
+   RGPkgDetailsWindow::fillInValues(this, pkg);
+
    if(_pkgDetails != NULL)
-      _pkgDetails->fillInValues(pkg);
+      RGPkgDetailsWindow::fillInValues(_pkgDetails,pkg, true);
 
    // Pin, if a pin is set, we skip all other checks and return
    if( flags & RPackage::FPinned) {
@@ -1168,10 +1166,6 @@ void RGMainWindow::buildInterface()
                                GTK_WRAP_WORD);
    _pkgCommonTextBuffer = gtk_text_view_get_buffer(
                                GTK_TEXT_VIEW(_pkgCommonTextView));
-   _pkgCommonBoldTag = gtk_text_buffer_create_tag(
-                               _pkgCommonTextBuffer,
-                               "bold", "weight", PANGO_WEIGHT_BOLD,
-                               "scale", 1.1, NULL);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_keep",
@@ -1237,8 +1231,14 @@ void RGMainWindow::buildInterface()
 //       gtk_widget_hide(widget);
 #endif
 
-   _pkginfo = glade_xml_get_widget(_gladeXML, "box_pkginfo");
+   _pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
    assert(_pkginfo);
+   if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
+      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(_pkginfo), TRUE);
+   }
+#ifndef HAVE_RPM
+   gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_filelist"));
+#endif
 
    _vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
    assert(_vpaned);
@@ -2060,7 +2060,7 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    if(me->_pkgDetails == NULL)
       me->_pkgDetails = new RGPkgDetailsWindow(me);
 
-   me->_pkgDetails->fillInValues(pkg);
+   RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg);
    me->_pkgDetails->show();
 }
 

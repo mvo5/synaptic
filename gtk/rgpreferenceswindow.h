@@ -41,7 +41,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    RGMainWindow *_mainWin;
    RPackageLister *_lister;
    // option buttons
-   GtkWidget *_optionUseRegexp;
+   GtkWidget *_optionShowAllPkgInfoInMain;
    GtkWidget *_optionUseStatusColors;
    GtkWidget *_optionAskRelated;
    GtkWidget *_optionUseTerminal;

@@ -60,6 +60,7 @@ class RGGladeWindow:public RGWindow {
    bool setTreeList(const char *widget_name, vector<string> values,
 		    bool useMarkup=false);
 
+   GladeXML* getGladeXML() {return _gladeXML;};
 };
 
 #endif

@@ -124,8 +124,9 @@ void RGPreferencesWindow::saveGeneral()
    int i;
 
    // Allow regular expressions in searches and filters
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionUseRegexp));
-   _config->Set("Synaptic::UseRegexp", newval ? "true" : "false");
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain));
+   _config->Set("Synaptic::ShowAllPkgInfoInMain", newval ? "true" : "false");
+   gtk_notebook_set_show_tabs(GTK_NOTEBOOK(glade_xml_get_widget(_mainWin->getGladeXML(),"notebook_pkginfo")), newval);
 
    // Ask to confirm changes also affecting other packages
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionAskRelated));
@@ -383,8 +384,8 @@ void RGPreferencesWindow::clearCacheAction(GtkWidget *self, void *data)
 void RGPreferencesWindow::readGeneral()
 {
    // Allow regular expressions in searches and filters
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionUseRegexp),
-                                _config->FindB("Synaptic::UseRegexp", false));
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain),
+                                _config->FindB("Synaptic::ShowAllPkgInfoInMain", false));
 
    // Ask to confirm changes also affecting other packages
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionAskRelated),
@@ -838,7 +839,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 {
    GtkWidget *button;
 
-   _optionUseRegexp = glade_xml_get_widget(_gladeXML, "check_regexp");
+   _optionShowAllPkgInfoInMain = glade_xml_get_widget(_gladeXML, "check_show_all_pkg_info");
    _optionUseStatusColors =
       glade_xml_get_widget(_gladeXML, "check_use_colors");
 

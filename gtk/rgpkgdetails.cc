@@ -92,59 +92,66 @@ RGPkgDetailsWindow::formatDepInformation(vector<RPackage::DepInformation> deps)
    return depStrings;
 }
 
-void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
+void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
+				      bool setTitle)
 {
+   assert(me!=NULL);
+
    // TRANSLATORS: Title of the package properties dialog 
    //              %s is the name of the package
-   gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
-   setTitle(str);
-   g_free(str);
+   if(setTitle) {
+      gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
+      me->setTitle(str);
+      g_free(str);
+   }
 
    char *pkg_summary = g_strdup_printf("%s\n%s",
 					     pkg->name(), pkg->summary());
-   setTextView("textview_pkgcommon", pkg_summary, true);
+   me->setTextView("textview_pkgcommon", pkg_summary, true);
    g_free(pkg_summary);
 
-   setLabel("label_maintainer", pkg->maintainer());
-   setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
-   setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
-   setLabel("label_priority", pkg->priority());
-   setLabel("label_section", trans_section(pkg->section()).c_str());
-   setLabel("label_installed_version", pkg->installedVersion());
-   setLabel("label_installed_size", pkg->installedSize());
+   me->setLabel("label_maintainer", pkg->maintainer());
+   me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
+   me->setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
+   me->setLabel("label_priority", pkg->priority());
+   me->setLabel("label_section", trans_section(pkg->section()).c_str());
+   me->setLabel("label_installed_version", pkg->installedVersion());
+   me->setLabel("label_installed_size", pkg->installedSize());
 
-   setLabel("label_latest_version", pkg->availableVersion());
-   setLabel("label_latest_size", pkg->availableInstalledSize());
-   setLabel("label_latest_download_size", pkg->availablePackageSize());
+   me->setLabel("label_latest_version", pkg->availableVersion());
+   me->setLabel("label_latest_size", pkg->availableInstalledSize());
+   me->setLabel("label_latest_download_size", pkg->availablePackageSize());
 
    string descr = string(pkg->summary()) + "\n" + string(pkg->description());
-   setTextView("text_descr", descr.c_str(), true);
+   me->setTextView("text_descr", descr.c_str(), true);
 
    // build dependency lists
    vector<RPackage::DepInformation> deps;
    deps = pkg->enumDeps();
-   setTreeList("treeview_deplist", formatDepInformation(deps), true);
+   me->setTreeList("treeview_deplist", formatDepInformation(deps), true);
    
    // canidateVersion
    deps = pkg->enumDeps(true);
-   setTreeList("treeview_availdep_list", formatDepInformation(deps), true);
+   me->setTreeList("treeview_availdep_list", formatDepInformation(deps), true);
 
    // rdepends Version
    deps = pkg->enumRDeps();
-   setTreeList("treeview_rdeps", formatDepInformation(deps), true);
+   me->setTreeList("treeview_rdeps", formatDepInformation(deps), true);
    
    // provides
-   setTreeList("treeview_provides", pkg->provides());
+   me->setTreeList("treeview_provides", pkg->provides());
 
 
    // file list
 #ifndef HAVE_RPM
-   gtk_widget_show(glade_xml_get_widget(_gladeXML, "scrolledwindow_filelist"));
-   setTextView("textview_files", pkg->installedFiles());
+   gtk_widget_show(glade_xml_get_widget(me->getGladeXML(),
+					"scrolledwindow_filelist"));
+   me->setTextView("textview_files", pkg->installedFiles());
 #endif
 
-   glade_xml_signal_connect_data(_gladeXML, "on_optionmenu_depends_changed",
-				 G_CALLBACK(cbDependsMenuChanged), this);
+   glade_xml_signal_connect_data(me->getGladeXML(), 
+				 "on_optionmenu_depends_changed",
+				 G_CALLBACK(cbDependsMenuChanged), me);
 }
 
 void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)

@@ -31,7 +31,7 @@
 class RGPkgDetailsWindow : public RGGladeWindow {
 
  protected:
-   vector<string> formatDepInformation(vector<RPackage::DepInformation> deps);
+   static vector<string> formatDepInformation(vector<RPackage::DepInformation> deps);
    
    static void cbDependsMenuChanged(GtkWidget *self, void *data);
 
@@ -39,7 +39,8 @@ class RGPkgDetailsWindow : public RGGladeWindow {
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);
-   void fillInValues(RPackage *pkg);
+   static void fillInValues(RGGladeWindow *me, RPackage *pkg, 
+			    bool setTitle=false);
    ~RGPkgDetailsWindow();
 };
 #endif

@@ -63,6 +63,7 @@
 #include "rgconfigwindow.h"
 #include "rgaboutpanel.h"
 #include "rgsummarywindow.h"
+#include "rgchangeswindow.h"
 
 #include "rgfetchprogress.h"
 #include "rgcacheprogress.h"
@@ -2231,12 +2232,38 @@ void RGMainWindow::onFlatList(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
+  RPackageLister::pkgState state;
+  vector<RPackage*> kept;
+  vector<RPackage*> toInstall; 
+  vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toRemove;
+
+  _lister->saveState(state);
+  _lister->unregisterObserver(this);
+
   pkg->setInstall();
+
   // check whether something broke
-  if (!this->_lister->check()) {
-    this->_lister->fixBroken();
-    this->refreshTable(pkg);
+  if (!_lister->check()) {
+    _lister->fixBroken();
   }
+
+  if (_lister->getStateChanges(state, kept, toInstall,
+      			 toUpgrade, toRemove, pkg)) {
+      RGChangesWindow *chng;
+      // show a summary of what's gonna happen
+      chng = new RGChangesWindow(this);
+      if (!chng->showAndConfirm(_lister, kept, toInstall,
+      			  toUpgrade, toRemove)) {
+          // canceled operation
+          _lister->restoreState(state);
+      }
+
+      delete chng;
+  }
+
+  _lister->registerObserver(this);
+  refreshTable(pkg);
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
@@ -2502,3 +2529,5 @@ void RGMainWindow::setInterfaceLocked(bool flag)
   while (gtk_events_pending())
     gtk_main_iteration();
 }
+
+// vim:sts=4:sw=4

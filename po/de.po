@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-21 13:20+0200\n"
+"POT-Creation-Date: 2003-10-28 13:22+0100\n"
 "PO-Revision-Date: 2003-10-24 12:07+0200\n"
 "Last-Translator: Alwin Meschede <ameschede@gmx.de>\n"
 "Language-Team:  <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
@@ -585,35 +585,45 @@ msgstr ""
 "Ihre Spracheinstellungen in Ordnung sind, senden Sie eine Mail an "
 "<i>synaptic-devel@nongnu.org</i>mit der Ausgabe des \"locale\" Kommandos."
 
-#: gtk/gsynaptic.cc:57
+#. pseudo strings to translate the .desktop file
+#: gtk/gsynaptic.cc:49
+msgid "Software"
+msgstr ""
+
+#: gtk/gsynaptic.cc:50
+#, fuzzy
+msgid "Install, remove and upgrade software packages"
+msgstr "Aktualisierbar"
+
+#: gtk/gsynaptic.cc:62
 msgid "Usage: synaptic [options]\n"
 msgstr "Benutzung: synaptic [Optionen]\n"
 
-#: gtk/gsynaptic.cc:58
+#: gtk/gsynaptic.cc:63
 msgid "-h   This help text\n"
 msgstr "-h   Dieser Hilfetext\n"
 
-#: gtk/gsynaptic.cc:59
+#: gtk/gsynaptic.cc:64
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Im Paketquellen-Dialog �ffnen\n"
 
-#: gtk/gsynaptic.cc:60
+#: gtk/gsynaptic.cc:65
 msgid "-f=? Give a alternative filter file\n"
 msgstr "-f=? Alternative Filter-Datei angeben\n"
 
-#: gtk/gsynaptic.cc:61
+#: gtk/gsynaptic.cc:66
 msgid "-i=? Start with the initialFilter with the number given\n"
 msgstr "-i=? Mit dem initialFilter der gegebenen Nummer starten\n"
 
-#: gtk/gsynaptic.cc:62
+#: gtk/gsynaptic.cc:67
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Eine Konfigurationsoption setzen, z.B. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:177
+#: gtk/gsynaptic.cc:182
 msgid "You must run this program as the root user."
 msgstr "Sie m�ssen dieses Programm als Superuser laufen lassen"
 
-#: gtk/gsynaptic.cc:213
+#: gtk/gsynaptic.cc:218
 msgid "Synaptic Package Manager "
 msgstr "Synaptic Paketverwaltung"
 
@@ -665,7 +675,7 @@ msgid "To be kept"
 msgstr "Zur�ckgehaltene Pakete"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:73
-#: gtk/rgmainwindow.cc:3548
+#: gtk/rgmainwindow.cc:3546
 msgid "An error occurred while saving configurations."
 msgstr "Ein Fehler trat beim Speichern der Konfiguration auf."
 
@@ -1128,11 +1138,11 @@ msgstr ""
 msgid "Execute the selected changes"
 msgstr "Gew�hlte Anderungen durchf�hren"
 
-#: gtk/rgmainwindow.cc:3271
+#: gtk/rgmainwindow.cc:3269
 msgid "Do you want to add another CD-ROM?"
 msgstr "Wollen Sie eine weitere Quelle von CD-ROM hinzuf�gen?"
 
-#: gtk/rgmainwindow.cc:3299
+#: gtk/rgmainwindow.cc:3297
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1140,7 +1150,7 @@ msgstr ""
 "Das L�schen dieses Paketes kann Ihr System unbenutzbar machen.\n"
 "Sind Sie sicher, da� Sie das m�chten?"
 
-#: gtk/rgmainwindow.cc:3458
+#: gtk/rgmainwindow.cc:3456
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1149,7 +1159,7 @@ msgstr ""
 "%i Pakete angezeigt, %i installiert, %i defekt, %i werden installiert/"
 "aktuallisiert, %i werden entfernt, %sB werden freigegeben"
 
-#: gtk/rgmainwindow.cc:3462
+#: gtk/rgmainwindow.cc:3460
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1158,14 +1168,14 @@ msgstr ""
 "%i Pakete angezeigt, %i installiert, %i defekt, %i werden installiert/"
 "aktuallisiert, %i werden entfernt, weitere %sB werden benutzt"
 
-#: gtk/rgmainwindow.cc:3491 gtk/window_main_hpaned.glade.strings:29
+#: gtk/rgmainwindow.cc:3489 gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:66
 msgid "All Packages"
 msgstr "Alle Pakete"
 
-#: gtk/rgmainwindow.cc:3573
+#: gtk/rgmainwindow.cc:3571
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1960,7 +1970,8 @@ msgid ""
 "<b>Note:</b> This allows you to override the version selected by the package "
 "manager. Use with care."
 msgstr ""
-"<b>Achtung:</b> Hiermit k�nnen Sie die von der Paketverwaltung ausgew�hlte Version �bergehen. Benutzen Sie diese Funktion mit Vorsicht."
+"<b>Achtung:</b> Hiermit k�nnen Sie die von der Paketverwaltung ausgew�hlte "
+"Version �bergehen. Benutzen Sie diese Funktion mit Vorsicht."
 
 #: gtk/window_main_hpaned.glade.strings:92
 #: gtk/window_main_vpaned.glade.strings:108
@@ -2644,7 +2655,8 @@ msgstr "Anbieter..."
 #~ msgstr "<b>Status</b>"
 
 #~ msgid "Never upgrade this package"
-#~ msgstr "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete nie aktualisieren"
+#~ msgstr ""
+#~ "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete nie aktualisieren"
 
 #~ msgid "Hold package"
 #~ msgstr "ZurÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ckhalten"
@@ -2760,7 +2772,9 @@ msgstr "Anbieter..."
 #~ msgstr "Entfernen"
 
 #~ msgid "Remove with dependencies"
-#~ msgstr "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
+#~ msgstr ""
+#~ "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich "
+#~ "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
 
 #~ msgid "All packages"
 #~ msgstr "Alle Pakete"
@@ -2806,11 +2820,12 @@ msgstr "Anbieter..."
 
 #~ msgid "Select package filter"
 #~ msgstr ""
-#~ "Aus vordefinierten Filtern auswÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, um die angezeigeten Pakete "
-#~ "einzugrenzen"
+#~ "Aus vordefinierten Filtern auswÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, um "
+#~ "die angezeigeten Pakete einzugrenzen"
 
 #~ msgid "Open package filter editor"
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂffnet Dialog zum Bearbeiten der Filter"
+#~ msgstr ""
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂffnet Dialog zum Bearbeiten der Filter"
 
 #~ msgid "What it depends on"
 #~ msgstr "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten des Pakets"
@@ -2827,13 +2842,18 @@ msgstr "Anbieter..."
 #~ msgid ""
 #~ "Keep selected package as is in the system, unmarking selections over it"
 #~ msgstr ""
-#~ "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete unverÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndert lassen und alle Markierungen aufheben"
+#~ "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete "
+#~ "unverÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndert lassen und alle Markierungen "
+#~ "aufheben"
 
 #~ msgid "Mark selected package for installation/upgrade"
-#~ msgstr "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete zur Installation/Aktualisierung markieren"
+#~ msgstr ""
+#~ "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete zur Installation/"
+#~ "Aktualisierung markieren"
 
 #~ msgid "Mark selected package for removal from system"
-#~ msgstr "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete zum Entfernen markieren"
+#~ msgstr ""
+#~ "AusgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Pakete zum Entfernen markieren"
 
 #~ msgid ""
 #~ "\n"
@@ -2884,7 +2904,10 @@ msgstr "Anbieter..."
 #~ "you may choose here which to use by default"
 #~ msgstr ""
 #~ "Wenn Sie mehr als einen Release in Ihrer sources.list haben,\n"
-#~ "kÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶nnen Sie hier wÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, welcher standardmÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂig genutzt werden soll"
+#~ "kÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶nnen Sie hier "
+#~ "wÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, welcher "
+#~ "standardmÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ�"
+#~ "�ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂig genutzt werden soll"
 
 #~ msgid ""
 #~ "The selected package couldn't be installed/upgraded.\n"
@@ -2892,16 +2915,20 @@ msgstr "Anbieter..."
 #~ "This is most probably caused by unmet dependencies that are not available "
 #~ "in any repository."
 #~ msgstr ""
-#~ "Das ausgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Paket konnte nicht installiert/aktualisiert werden.\n"
+#~ "Das ausgewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlte Paket konnte nicht "
+#~ "installiert/aktualisiert werden.\n"
 #~ "\n"
-#~ "Dies wird meist durch nicht erfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼llbare AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten verursacht."
+#~ "Dies wird meist durch nicht erfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼llbare "
+#~ "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten verursacht."
 
 #~ msgid ""
 #~ "There are unsaved changes. Are you sure\n"
 #~ "you want to quit Synaptic?"
 #~ msgstr ""
-#~ "Es wurden noch nicht alle markierten ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen durchgefÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hrt. Wollen Sie "
-#~ "synaptic wirklich beenden?"
+#~ "Es wurden noch nicht alle markierten "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen "
+#~ "durchgefÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hrt. Wollen Sie synaptic "
+#~ "wirklich beenden?"
 
 #~ msgid " Processed by using Prefix '"
 #~ msgstr " WeitergefÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hrt an Hand der Prefix '"
@@ -2941,7 +2968,8 @@ msgstr "Anbieter..."
 #~ msgstr "<b>EinschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂen</b>"
 
 #~ msgid "Purge"
-#~ msgstr "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich Konfiguration"
+#~ msgstr ""
+#~ "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich Konfiguration"
 
 #, fuzzy
 #~ msgid "_Open Selection"
@@ -2975,8 +3003,10 @@ msgstr "Anbieter..."
 #~ "Select latest version of already installed packages, even if new packages "
 #~ "as dependency have to be installed"
 #~ msgstr ""
-#~ "Neueste Version bereits installierter Pakete auswÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, auch wenn dazu "
-#~ "neue Pakete als AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten installiert werden mÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ssen"
+#~ "Neueste Version bereits installierter Pakete "
+#~ "auswÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlen, auch wenn dazu neue Pakete als "
+#~ "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten installiert werden "
+#~ "mÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ssen"
 
 #, fuzzy
 #~ msgid "Search: "
@@ -2987,7 +3017,8 @@ msgstr "Anbieter..."
 
 #, fuzzy
 #~ msgid "Open the filter editor"
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂffnet Dialog zum Bearbeiten der Filter"
+#~ msgstr ""
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂffnet Dialog zum Bearbeiten der Filter"
 
 #, fuzzy
 #~ msgid "<b>Common</b>"
@@ -3002,19 +3033,29 @@ msgstr "Anbieter..."
 #~ msgstr "VorschlÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ge und Empfehlungen"
 
 #~ msgid "Use terminal window when running the package manager"
-#~ msgstr "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen in einem Terminal ausfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hren"
+#~ msgstr ""
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen in einem Terminal "
+#~ "ausfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hren"
 
 #~ msgid "Ask to quit after proceeding"
-#~ msgstr "Dialog zum Beenden nach dem Vornehmen der ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen anzeigen"
+#~ msgstr ""
+#~ "Dialog zum Beenden nach dem Vornehmen der "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen anzeigen"
 
 #~ msgid "Delete with dependencies"
-#~ msgstr "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
+#~ msgstr ""
+#~ "Entfernen einschlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂlich "
+#~ "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
 
 #~ msgid "Ask when more packages are going to be affected by some action"
-#~ msgstr "Bei ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen, die auch andere Pakete betreffen, nachfragen"
+#~ msgstr ""
+#~ "Bei ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen, die auch andere Pakete "
+#~ "betreffen, nachfragen"
 
 #~ msgid "Automatically select recommended packages on actions"
-#~ msgstr "Empfohlene Pakete als AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten betrachten"
+#~ msgstr ""
+#~ "Empfohlene Pakete als AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten "
+#~ "betrachten"
 
 #~ msgid "Clean cache now"
 #~ msgstr "Cache jetzt sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ubern"
@@ -3041,7 +3082,9 @@ msgstr "Anbieter..."
 #~ msgstr "Markiert zum Entfernen"
 
 #~ msgid "Packages that are broken"
-#~ msgstr "Pakete mit defekten AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten einbeziehen"
+#~ msgstr ""
+#~ "Pakete mit defekten AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten "
+#~ "einbeziehen"
 
 #~ msgid "by Status"
 #~ msgstr "Status"
@@ -3080,7 +3123,9 @@ msgstr "Anbieter..."
 #~ msgstr "Status"
 
 #~ msgid "Change View for this filter:"
-#~ msgstr "Ansicht fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r diesen Filter ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndern:"
+#~ msgstr ""
+#~ "Ansicht fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r diesen Filter "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ndern:"
 
 #~ msgid "Change View: "
 #~ msgstr "Ansicht:"
@@ -3158,7 +3203,10 @@ msgstr "Anbieter..."
 #~ msgstr "Optionen"
 
 #~ msgid "Delete obsoleted packages from cache"
-#~ msgstr "Nur ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼berflÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ssige Pakete lÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶schen"
+#~ msgstr ""
+#~ "Nur "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼berflÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼ssige "
+#~ "Pakete lÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶schen"
 
 #~ msgid "Close"
 #~ msgstr "SchlieÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂen"
@@ -3230,8 +3278,9 @@ msgstr "Anbieter..."
 #~ "Performing selected changes... See the terminal from where you started "
 #~ "Synaptic for more information."
 #~ msgstr ""
-#~ "Nehme selektierte ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen vor...Schauen Sie im Terminal, in dem "
-#~ "Synaptic gestartet wurde fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r mehr Informationen."
+#~ "Nehme selektierte ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen vor...Schauen "
+#~ "Sie im Terminal, in dem Synaptic gestartet wurde "
+#~ "fÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r mehr Informationen."
 
 #~ msgid "Warning"
 #~ msgstr "Warnung"
@@ -3264,10 +3313,14 @@ msgstr "Anbieter..."
 #~ msgstr "HÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngt ab"
 
 #~ msgid "Remove With Dependencies"
-#~ msgstr "LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶schen mit AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
+#~ msgstr ""
+#~ "LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶schen mit "
+#~ "AbhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngigkeiten"
 
 #~ msgid "Remove all packages that this one depends on"
-#~ msgstr "LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶sche alle Pakete, die von diesem abhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngen"
+#~ msgstr ""
+#~ "LÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¶sche alle Pakete, die von diesem "
+#~ "abhÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ngen"
 
 #~ msgid "Install Recommended"
 #~ msgstr "Installiere Empfehlungen"
@@ -3282,13 +3335,16 @@ msgstr "Anbieter..."
 #~ msgstr "Wechsele zum Pakete Suchen Panel"
 
 #~ msgid "Switch to package filter panel"
-#~ msgstr "Wechsle zum Paket Filter SchaltflÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤che"
+#~ msgstr ""
+#~ "Wechsle zum Paket Filter SchaltflÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤che"
 
 #~ msgid "Next"
 #~ msgstr "Weiter"
 
 #~ msgid "Find next package matching pattern"
-#~ msgstr "Finde nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤chstes Paket mit dem gewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlten Muster"
+#~ msgstr ""
+#~ "Finde nÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤chstes Paket mit dem "
+#~ "gewÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤hlten Muster"
 
 #~ msgid "To Filter"
 #~ msgstr "zu Filter"
@@ -3305,8 +3361,10 @@ msgstr "Anbieter..."
 #~ "There are unsaved changes, are you sure\n"
 #~ "you want to quit Synaptic?"
 #~ msgstr ""
-#~ "Es wurden noch nicht alle markierten ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen durchgefÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hrt. Wollen Sie "
-#~ "wirklich die Paketverwaltung beenden?"
+#~ "Es wurden noch nicht alle markierten "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen "
+#~ "durchgefÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼hrt. Wollen Sie wirklich die "
+#~ "Paketverwaltung beenden?"
 
 #~ msgid "Quit"
 #~ msgstr "Beenden"
@@ -3334,7 +3392,8 @@ msgstr "Anbieter..."
 #~ "This operation requires the following changes.\n"
 #~ msgstr ""
 #~ "\n"
-#~ "HierfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r sind weitere ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen erforderlich\n"
+#~ "HierfÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¼r sind weitere "
+#~ "ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂnderungen erforderlich\n"
 
 #, fuzzy
 #~ msgid "Find Name"

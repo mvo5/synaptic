@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-21 13:20+0200\n"
+"POT-Creation-Date: 2003-10-28 13:22+0100\n"
 "PO-Revision-Date: 2003-10-19 07:19+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese <Vine@vinelinux.org>\n"
@@ -580,35 +580,45 @@ msgid ""
 "with the output of the \"locale\" command."
 msgstr ""
 
-#: gtk/gsynaptic.cc:57
+#. pseudo strings to translate the .desktop file
+#: gtk/gsynaptic.cc:49
+msgid "Software"
+msgstr ""
+
+#: gtk/gsynaptic.cc:50
+#, fuzzy
+msgid "Install, remove and upgrade software packages"
+msgstr "インストール済かつアップグレード可能"
+
+#: gtk/gsynaptic.cc:62
 msgid "Usage: synaptic [options]\n"
 msgstr "使用方法: synaptic [オプション]\n"
 
-#: gtk/gsynaptic.cc:58
+#: gtk/gsynaptic.cc:63
 msgid "-h   This help text\n"
 msgstr "-h   このヘルプを表示\n"
 
-#: gtk/gsynaptic.cc:59
+#: gtk/gsynaptic.cc:64
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   レポジトリスクリーンで開始する\n"
 
-#: gtk/gsynaptic.cc:60
+#: gtk/gsynaptic.cc:65
 msgid "-f=? Give a alternative filter file\n"
 msgstr "-f=? 別のフィルタファイルをあたえます\n"
 
-#: gtk/gsynaptic.cc:61
+#: gtk/gsynaptic.cc:66
 msgid "-i=? Start with the initialFilter with the number given\n"
 msgstr "-i=? スタート時に与えられた番号の初期フィルタを使用します\n"
 
-#: gtk/gsynaptic.cc:62
+#: gtk/gsynaptic.cc:67
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? 任意の設定オプションを指定します。(例: -o dir::cache=/tmp)\n"
 
-#: gtk/gsynaptic.cc:177
+#: gtk/gsynaptic.cc:182
 msgid "You must run this program as the root user."
 msgstr "root ユーザでこのプログラムを実行してください。"
 
-#: gtk/gsynaptic.cc:213
+#: gtk/gsynaptic.cc:218
 msgid "Synaptic Package Manager "
 msgstr "Synaptic パッケージマネージャ"
 
@@ -660,7 +670,7 @@ msgid "To be kept"
 msgstr "保留されるパッケージ"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:73
-#: gtk/rgmainwindow.cc:3548
+#: gtk/rgmainwindow.cc:3546
 msgid "An error occurred while saving configurations."
 msgstr "設定を保存中にエラーが発生しました。"
 
@@ -1118,11 +1128,11 @@ msgstr ""
 msgid "Execute the selected changes"
 msgstr "選択された変更を適用する"
 
-#: gtk/rgmainwindow.cc:3271
+#: gtk/rgmainwindow.cc:3269
 msgid "Do you want to add another CD-ROM?"
 msgstr "ほかのCD-ROMを追加しますか?"
 
-#: gtk/rgmainwindow.cc:3299
+#: gtk/rgmainwindow.cc:3297
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1130,7 +1140,7 @@ msgstr ""
 "このパッケージを削除するとシステムが動作不能になる可能性があります\n"
 "本当にこれを実行してもよろしいですか?"
 
-#: gtk/rgmainwindow.cc:3458
+#: gtk/rgmainwindow.cc:3456
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1139,7 +1149,7 @@ msgstr ""
 "全 %i パッケージ (インストール済: %i 個, 破損 %i 個, インストールまたはアップ"
 "グレード指定: %i 個, 削除指定: %i) ; %sB が開放されます"
 
-#: gtk/rgmainwindow.cc:3462
+#: gtk/rgmainwindow.cc:3460
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1148,14 +1158,14 @@ msgstr ""
 "全 %i パッケージ (インストール済: %i 個, 破損 %i 個, インストールまたはアップ"
 "グレード指定: %i 個, 削除指定: %i) ; %sB が消費されます"
 
-#: gtk/rgmainwindow.cc:3491 gtk/window_main_hpaned.glade.strings:29
+#: gtk/rgmainwindow.cc:3489 gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:66
 msgid "All Packages"
 msgstr "全てのパッケージ"
 
-#: gtk/rgmainwindow.cc:3573
+#: gtk/rgmainwindow.cc:3571
 msgid ""
 "The debtags database is not installed\n"
 "\n"

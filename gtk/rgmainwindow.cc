@@ -1877,14 +1877,18 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-      gdk_window_set_cursor(me->_findWin->window()->window, me->_busyCursor);
+      gdk_window_set_cursor(me->window()->window, me->_busyCursor);
+#if GTK_CHECK_VERSION(2,4,0)
+      // if we don't iterate here, the busy cursor is not shown
+      while (gtk_events_pending())
+	 gtk_main_iteration();
+#endif
       string str = me->_findWin->getFindString();
       int type = me->_findWin->getSearchType();
       me->_lister->searchView()->setSearch(str, type);
       me->changeView(4,true,str);
 
-      gdk_window_set_cursor(me->_findWin->window()->window, NULL);
-      me->_findWin->hide();
+      gdk_window_set_cursor(me->window()->window, NULL);
    }
 
 }
@@ -2106,6 +2110,11 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    RGMainWindow *me = (RGMainWindow *) data;
 
    gdk_window_set_cursor(me->window()->window, me->_busyCursor);
+#if GTK_CHECK_VERSION(2,4,0)
+   // if we don't iterate here, the busy cursor is not shown
+   while (gtk_events_pending())
+      gtk_main_iteration();
+#endif
    me->refreshTable(NULL);
    gdk_window_set_cursor(me->window()->window, NULL);
 }

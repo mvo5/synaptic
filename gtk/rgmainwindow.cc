@@ -1255,7 +1255,7 @@ void RGMainWindow::buildInterface()
    gtk_paned_set_position(GTK_PANED(_vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
    gtk_paned_set_position(GTK_PANED(_hpaned),
-                          _config->FindI("Synaptic::hpanedPos", 150));
+                          _config->FindI("Synaptic::hpanedPos", 200));
 
 
    // build the treeview

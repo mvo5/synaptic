@@ -21,6 +21,8 @@
  * USA
  */
 
+#include "config.h"
+
 #include <cassert>
 #include "rgwindow.h"
 #include "rgmainwindow.h"
@@ -28,6 +30,8 @@
 #include "rggladewindow.h"
 #include "rpackage.h"
 #include "sections_trans.h"
+
+
 
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGladeWindow(parent, "details")
@@ -57,7 +61,7 @@ RGPkgDetailsWindow::formatDepInformation(vector<DepInformation> deps)
       depStr="";
 
       // type in bold (Depends, PreDepends)
-      depStr += string("<b>") + deps[i].typeStr + string(":</b> ");
+      depStr += string("<b>") + _(DepTypeStr[deps[i].type]) + string(":</b> ");
 
       // virutal is italic
       if(deps[i].isVirtual) {

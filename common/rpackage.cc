@@ -45,6 +45,8 @@
 #include <assert.h>
 #include <sstream>
 
+
+
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/srcrecords.h>
@@ -388,7 +390,7 @@ vector<DepInformation> RPackage::enumRDeps()
    for(pkgCache::DepIterator D = _package->RevDependsList(); D.end() != true; D++) {
       // clear old values
       dep.isOr=dep.isVirtual=false;
-      dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
+      dep.name=dep.version=dep.versionComp=NULL;
 
       // check target and or-depends status
       pkgCache::PkgIterator Trg = D.TargetPkg();
@@ -397,7 +399,9 @@ vector<DepInformation> RPackage::enumRDeps()
 	 dep.versionComp = "";
       }
 
-      dep.typeStr=_("Dependency of");
+      //FIXME: HACK ALARM, we need a "RDepends" type, so we use the last
+      // one in pkg-dep
+      dep.type = (pkgCache::Dep::DepType)(pkgCache::Dep::Obsoletes+1);
       dep.name = D.ParentPkg().Name();
 
       if(Trg->VersionList == 0)
@@ -635,7 +639,7 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 
       // clear old values
       dep.isOr=dep.isVirtual=dep.isSatisfied=false;
-      dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
+      dep.name=dep.version=dep.versionComp=NULL;
 
       // check target and or-depends status
       pkgCache::PkgIterator Trg = D.TargetPkg();
@@ -644,21 +648,18 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 
       // common information
       dep.type = (pkgCache::Dep::DepType)D->Type;
-      dep.typeStr = D.DepType();
       dep.name = Trg.Name();
 
       // satisfied
       if (((*_depcache)[D] & pkgDepCache::DepGInstall) ==
           pkgDepCache::DepGInstall)
          dep.isSatisfied = true;
-
       if (Trg->VersionList == 0) {
 	 dep.isVirtual = true;
       } else {
 	 dep.version=D.TargetVer();
 	 dep.versionComp=D.CompType();
       }
-
       deps.push_back(dep);
    }
 

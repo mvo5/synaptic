@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de.po2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-25 00:07+0100\n"
-"PO-Revision-Date: 2003-11-25 00:11+0100\n"
+"POT-Creation-Date: 2003-11-25 00:52+0100\n"
+"PO-Revision-Date: 2003-11-25 00:53+0100\n"
 "Last-Translator: Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
 "MIME-Version: 1.0\n"
@@ -618,11 +618,11 @@ msgstr "%s <i>(%s)</i>"
 
 #: common/rpackagelister.cc:851
 msgid "New in repository"
-msgstr "Neu im Archiv"
+msgstr "Neue Pakete"
 
 #: common/rpackagelister.cc:854
 msgid "Obsolete and locally installed"
-msgstr "Hinfällig"
+msgstr "Hinfällige Pakete"
 
 #: common/rpackagelister.cc:857
 msgid "Installed and upgradable"
@@ -1289,7 +1289,7 @@ msgid ""
 msgstr ""
 "Einige Pakete konnten nicht installiert werden.\n"
 "\n"
-"Die folgenden Pakete haben nicht erfüllte Abhängigkeiten:\n"
+"Die folgenden Pakete haben unerfüllbare Abhängigkeiten:\n"
 
 #: gtk/rgmainwindow.cc:2097
 msgid "Open changes"
@@ -1566,12 +1566,12 @@ msgstr "WARNUNG: %d essentielle %s gelöscht!\n"
 #: gtk/rgsummarywindow.cc:352
 #, c-format
 msgid "%s of extra space will be used"
-msgstr "%s B zusätzlicher Speicher werden belegt"
+msgstr "%s zusätzlicher Speicher werden belegt"
 
 #: gtk/rgsummarywindow.cc:355
 #, c-format
 msgid "%s of extra space will be freed"
-msgstr "%s B zusätzlicher Speicher werden frei"
+msgstr "%s zusätzlicher Speicher werden frei"
 
 #: gtk/rgsummarywindow.cc:361
 #, c-format
@@ -1879,16 +1879,16 @@ msgstr "_Rückgängig"
 #: gtk/window_main_hpaned.glade.strings:15
 #: gtk/window_main_vpaned.glade.strings:15
 msgid "_Redo"
-msgstr "_Rückgängig"
+msgstr "_Wiederholen"
 
 #: gtk/window_main_hpaned.glade.strings:16
 #: gtk/window_main_vpaned.glade.strings:16
 msgid "Clear All _Queued Changes"
-msgstr "Alle Änderungen löschen"
+msgstr "Alle Änderungen _löschen"
 
 #: gtk/window_main_hpaned.glade.strings:17
 msgid "_Update Package List"
-msgstr "Paketliste erneuern"
+msgstr "_Paketliste erneuern"
 
 #: gtk/window_main_hpaned.glade.strings:18
 #: gtk/window_main_vpaned.glade.strings:18
@@ -2068,7 +2068,7 @@ msgstr "Abfragen der Paketquellen"
 #: gtk/window_main_hpaned.glade.strings:55
 #: gtk/window_main_vpaned.glade.strings:55
 msgid "_Update List"
-msgstr "Paketliste erneuern"
+msgstr "_Paketliste erneuern"
 
 #: gtk/window_main_hpaned.glade.strings:56
 #: gtk/window_main_vpaned.glade.strings:56
@@ -2134,7 +2134,7 @@ msgstr "<b>Paket:</b>"
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_vpaned.glade.strings:91
 msgid "<b>Section:</b>"
-msgstr "<b>Section:</b>"
+msgstr "<b>Sektion:</b>"
 
 #: gtk/window_main_hpaned.glade.strings:72
 msgid "<b>Priority:</b>"
@@ -2293,8 +2293,9 @@ msgid "Configure the package using the debconf configuration system"
 msgstr "Paket mit debconf konfigurieren"
 
 #: gtk/window_main_hpaned.glade.strings:119
-msgid "Configure"
-msgstr "Konfigurieren"
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Configure"
+msgstr "_Konfigurieren"
 
 #: gtk/window_main_hpaned.glade.strings:120
 msgid "View installed documentation of the package in a browser"
@@ -2328,10 +2329,6 @@ msgstr "Einfache _Liste"
 #: gtk/window_main_vpaned.glade.strings:70
 msgid "<b>Common</b>"
 msgstr "<b>Allgemein</b>"
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Configure"
-msgstr "_Konfigurieren"
 
 #: gtk/window_main_vpaned.glade.strings:84
 msgid "View installed online documentation related to the package"
@@ -2491,11 +2488,11 @@ msgstr "Benutzerdefinierte Terminal-Schrift"
 
 #: gtk/window_preferences.glade.strings:39
 msgid "_Default Font"
-msgstr "Schrift"
+msgstr "_Anwendungs-Schrift"
 
 #: gtk/window_preferences.glade.strings:40
 msgid "_Terminal Font"
-msgstr "Schrift"
+msgstr "_Terminal-Schrift"
 
 #: gtk/window_preferences.glade.strings:41
 msgid "Layout"
@@ -2752,8 +2749,7 @@ msgstr "Änderungen in der Wartschlange ausführen"
 msgid ""
 "<span weight=\"bold\" size=\"large\">Execute the following changes?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Zusätzliche Änderungen vormerken?</"
-"span>"
+"<span weight=\"bold\" size=\"larger\">Folgende Änderungen ausführen?</span>"
 
 #: gtk/window_summary.glade.strings:10
 msgid ""
@@ -2773,7 +2769,7 @@ msgstr "_Zeige Details"
 
 #: gtk/window_summary.glade.strings:17
 msgid "The package files will ony be retrieved, but not installed or upgraded"
-msgstr "Lediglich the Paket-Dateien herunterladen ohne sie zu installieren"
+msgstr "Lediglich die Paket-Dateien herunterladen ohne sie zu installieren"
 
 #: gtk/window_summary.glade.strings:18
 msgid "Download package files only"
@@ -2851,7 +2847,7 @@ msgstr "Nicht installierte Pakete einbeziehen"
 
 #: gtk/window_filters.glade.strings:33
 msgid "<b>Selected</b>"
-msgstr "<b>Ausgewählt</b>"
+msgstr "<b>Warteschlange</b>"
 
 #: gtk/window_filters.glade.strings:35
 msgid "Packages that will be kept"
@@ -2863,7 +2859,7 @@ msgstr "Zur Installation oder Aktualisierung vorgemerkte Pakete einbeziehen"
 
 #: gtk/window_filters.glade.strings:38
 msgid "To be installed or upgraded"
-msgstr "Zu aktualisierende Pakete einbeziehen"
+msgstr "Zu aktualisierende oder installierende Pakete"
 
 #: gtk/window_filters.glade.strings:39
 msgid "Packages that will be removed"
@@ -3024,6 +3020,13 @@ msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 #: data/synaptic.desktop.in.h:2
 msgid "Package Manager"
 msgstr "Paketverwaltung"
+
+#: data/synaptic.desktop.in.h:3
+msgid "Synaptic Package Manager"
+msgstr "Synaptic Paketverwaltung"
+
+#~ msgid "Configure"
+#~ msgstr "Konfigurieren"
 
 #~ msgid "Software"
 #~ msgstr "Software"

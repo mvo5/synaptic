@@ -3,7 +3,7 @@
 
 <glade-interface>
 
-<widget class="GtkDialog" id="dialog_summary">
+<widget class="GtkDialog" id="window_summary">
   <property name="border_width">6</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes"></property>
@@ -35,6 +35,7 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="response_id">-6</property>
+	      <signal name="clicked" handler="on_cancelbutton1_clicked" last_modification_time="Thu, 20 Nov 2003 13:50:29 GMT"/>
 	    </widget>
 	  </child>
 
@@ -48,6 +49,7 @@
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="response_id">-5</property>
+	      <signal name="clicked" handler="on_button_execute_clicked" last_modification_time="Thu, 20 Nov 2003 13:50:19 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -232,7 +234,7 @@
 				  </child>
 
 				  <child>
-				    <widget class="GtkLabel" id="label5">
+				    <widget class="GtkLabel" id="label_summary">
 				      <property name="visible">True</property>
 				      <property name="label" translatable="yes">1 Package will be installed
 12 Packages will be upgraded
@@ -284,8 +286,7 @@
 			  <property name="spacing">0</property>
 
 			  <child>
-			    <widget class="GtkToggleButton" id="togglebutton1">
-			      <property name="visible">True</property>
+			    <widget class="GtkToggleButton" id="togglebutton_details">
 			      <property name="tooltip" translatable="yes">Switch between a detailed view and a general overview</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_Show Details</property>
@@ -337,7 +338,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton1">
+		    <widget class="GtkCheckButton" id="checkbutton_download_only">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">The package files will ony be retrieved, but not installed or upgraded</property>
 		      <property name="can_focus">True</property>

@@ -360,6 +360,26 @@ void RGDebInstallProgress::startUpdate()
    RGFlushInterface();
 }
 
+
+void RGDebInstallProgress::expander_callback (GObject    *object,
+					      GParamSpec *param_spec,
+					      gpointer    user_data) 
+{
+   g_print("expander_callback\n");
+   RGDebInstallProgress *me = (RGDebInstallProgress*)user_data;
+
+   // this crap here is needed because VteTerminal does not like
+   // it when run hidden. this workaround will scroll to the end of
+   // the current buffer
+   gtk_widget_realize(GTK_WIDGET(me->_term));
+   GtkAdjustment *a = GTK_ADJUSTMENT (VTE_TERMINAL(me->_term)->adjustment);
+   gtk_adjustment_set_value(a, a->upper - a->page_size);
+   gtk_adjustment_value_changed(a);
+
+   gtk_widget_grab_focus(me->_term);
+}
+
+
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister)
    : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
@@ -403,6 +423,10 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
       skipTaskbar(true);
    else
       skipTaskbar(false);
+
+   GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+   g_signal_connect(w, "notify::expanded",
+		    G_CALLBACK(expander_callback), this);
 }
 
 

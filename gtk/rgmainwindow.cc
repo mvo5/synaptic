@@ -168,7 +168,7 @@ void RGMainWindow::changeView(int view, bool sethistory, string subView)
 
 void RGMainWindow::refreshSubViewList(string selectedSubView)
 {
-   cout << "RGMainWindow::refreshSubViewList(): "<< selectedSubView << endl;
+   //cout << "RGMainWindow::refreshSubViewList(): "<< selectedSubView << endl;
 
    vector<string> subViews = _lister->getSubViews();
 

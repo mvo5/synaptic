@@ -89,7 +89,8 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    if (flags & RPackage::FNew)
       str = _("New in repository");
    else if ((flags & RPackage::FNotInstallable) &&
-	    !(flags & RPackage::FResidualConfig))
+	    !(flags & RPackage::FResidualConfig) &&
+	    (flags & RPackage::FInstalled))
       str = _("Installed and obsolete");
    else if (flags & RPackage::FInstalled) {
       if (flags & RPackage::FOutdated)

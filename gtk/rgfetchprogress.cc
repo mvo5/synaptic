@@ -167,14 +167,19 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
                       Media.c_str(), Drive.c_str());
 
    RGUserDialog userDialog(this);
-   _cancelled = !userDialog.proceed(msg);
-
-   Update = true;
+   bool res = !userDialog.proceed(msg);
 
    RGFlushInterface();
-
    g_free(msg);
-   return !_cancelled;
+
+   //cout << "Media change " << res << endl;
+
+   if(res) {
+      return false;
+   } else {
+      Update = true;
+      return true;
+   }
 }
 
 

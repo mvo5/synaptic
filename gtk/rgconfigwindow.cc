@@ -43,6 +43,9 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[2]));
   _config->Set("Synaptic::UseStatusColors",  newval ? "true" : "false");
 
+  newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[3]));
+  _config->Set("Synaptic::AskRelated",  newval ? "true" : "false");
+
   bool postClean, postAutoClean;
     
   postClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
@@ -84,6 +87,9 @@ void RGConfigWindow::show()
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
 			       _config->FindB("Synaptic::UseStatusColors", 
 					      true));
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
+			       _config->FindB("Synaptic::AskRelated", 
+					      true));
 
   bool postClean = _config->FindB("Synaptic::CleanCache", false);
   bool postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
@@ -110,6 +116,7 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
     _optionB[0] = glade_xml_get_widget(_gladeXML, "check_regexp");
     _optionB[1] = glade_xml_get_widget(_gladeXML, "check_text_only");
     _optionB[2] = glade_xml_get_widget(_gladeXML, "check_use_colors");
+    _optionB[3] = glade_xml_get_widget(_gladeXML, "check_ask_related");
 
     _cacheB[0] = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
     _cacheB[1] = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");

@@ -2233,15 +2233,18 @@ void RGMainWindow::onFlatList(GtkWidget *self, void *data)
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
   RPackageLister::pkgState state;
+  bool ask = _config->FindB("Synaptic::AskRelated", true);
 
-  _lister->saveState(state);
-  _lister->unregisterObserver(this);
+  if (ask) {
+    _lister->saveState(state);
+    _lister->unregisterObserver(this);
+  }
 
   pkg->setInstall();
 
   // check whether something broke
   if (!_lister->check()) {
-    _lister->fixBroken();
+      _lister->fixBroken();
   }
 
   vector<RPackage*> kept;
@@ -2249,8 +2252,8 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
   vector<RPackage*> toUpgrade; 
   vector<RPackage*> toRemove;
 
-  if (_lister->getStateChanges(state, kept, toInstall,
-      			 toUpgrade, toRemove, pkg)) {
+  if (ask && _lister->getStateChanges(state, kept, toInstall,
+				      toUpgrade, toRemove, pkg)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(this);
@@ -2262,7 +2265,9 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
       delete chng;
   }
 
-  _lister->registerObserver(this);
+  if (ask) {
+      _lister->registerObserver(this);
+  }
   refreshTable(pkg);
 }
 
@@ -2286,9 +2291,12 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
   }
 
   RPackageLister::pkgState state;
+  bool ask = _config->FindB("Synaptic::AskRelated", true);
 
-  _lister->saveState(state);
-  _lister->unregisterObserver(this);
+  if (ask) {
+    _lister->saveState(state);
+    _lister->unregisterObserver(this);
+  }
 
   pkg->setRemove(purge);
 
@@ -2297,8 +2305,8 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
   vector<RPackage*> toUpgrade; 
   vector<RPackage*> toRemove;
 
-  if (_lister->getStateChanges(state, kept, toInstall,
-      			 toUpgrade, toRemove, pkg)) {
+  if (ask && _lister->getStateChanges(state, kept, toInstall,
+				      toUpgrade, toRemove, pkg)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(this);
@@ -2310,16 +2318,21 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
       delete chng;
   }
 
-  _lister->registerObserver(this);
+  if (ask) {
+      _lister->registerObserver(this);
+  }
   refreshTable(pkg);
 }
 
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)
 {
   RPackageLister::pkgState state;
+  bool ask = _config->FindB("Synaptic::AskRelated", true);
 
-  _lister->saveState(state);
-  _lister->unregisterObserver(this);
+  if (ask) {
+    _lister->saveState(state);
+    _lister->unregisterObserver(this);
+  }
 
   pkg->setKeep();
 
@@ -2328,8 +2341,8 @@ void RGMainWindow::pkgKeepHelper(RPackage *pkg)
   vector<RPackage*> toUpgrade; 
   vector<RPackage*> toRemove;
 
-  if (_lister->getStateChanges(state, kept, toInstall,
-      			 toUpgrade, toRemove, pkg)) {
+  if (ask && _lister->getStateChanges(state, kept, toInstall,
+				      toUpgrade, toRemove, pkg)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(this);
@@ -2341,7 +2354,9 @@ void RGMainWindow::pkgKeepHelper(RPackage *pkg)
       delete chng;
   }
 
-  _lister->registerObserver(this);
+  if (ask) {
+      _lister->registerObserver(this);
+  }
   refreshTable(pkg);
 }
 

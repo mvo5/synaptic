@@ -37,7 +37,8 @@ typedef list<SourcesList::SourceRecord*>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord*>::iterator VendorsListIter;
 
 class RGRepositoryEditor : RGGladeWindow {
-    SourcesList _lst;
+    SourcesList _lst,_savedList;
+
     int _selectedRow;
 
     // the gtktreeview

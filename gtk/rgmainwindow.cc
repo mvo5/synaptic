@@ -1314,7 +1314,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	return;
 
     if (!pkg) {
-	gtk_label_set_text(GTK_LABEL(_nameL), "");
+	gtk_label_set_markup(GTK_LABEL(_nameL), "<span size=\"large\"><b></b></span>");
 	gtk_label_set_text(GTK_LABEL(_summL), "");
 	gtk_label_set_text(GTK_LABEL(_infoL), "");
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
@@ -1340,9 +1340,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     importance = pkg->updateImportance();
     
     // name/summary
-    gtk_label_set_text(GTK_LABEL(_nameL), utf8(pkg->name()));
+    gchar *msg = g_strdup_printf("<span size=\"large\"><b>%s</b></span>",utf8(pkg->name()));
+    gtk_label_set_markup(GTK_LABEL(_nameL), msg);
     gtk_label_set_text(GTK_LABEL(_summL), utf8(pkg->summary()));
-    
+    g_free(msg);
     // package info
     
     // common information regardless of state
@@ -2240,21 +2241,16 @@ void RGMainWindow::buildInterface()
     GtkWidget *button;
     GtkWidget *widget;
     GtkWidget *item;
-    PangoFontDescription *font;
-    PangoFontDescription *bfont;
     GtkCellRenderer *renderer; 
     GtkTreeViewColumn *column;
     GtkTreeSelection *selection;
 
     // here is a pointer to rgmainwindow for every widget that needs it
     g_object_set_data(G_OBJECT(_win), "me", this);
-
+    
     
     GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data(synaptic_mini_xpm);
     gtk_window_set_icon(GTK_WINDOW(_win), icon);
-
-    font = pango_font_description_from_string ("helvetica 10");
-    bfont = pango_font_description_from_string ("helvetica bold 12");    
 
     gtk_window_resize(GTK_WINDOW(_win),
  				_config->FindI("Synaptic::windowWidth", 640),
@@ -2422,13 +2418,8 @@ void RGMainWindow::buildInterface()
     
     _nameL = glade_xml_get_widget(_gladeXML, "label_pkgname"); 
     assert(_nameL);
-    gtk_widget_modify_font(_nameL, bfont);
     _summL = glade_xml_get_widget(_gladeXML, "label_summary"); 
     assert(_summL);
-    gtk_widget_modify_font(_summL, font);
-    // we are finished with the fonts now
-    pango_font_description_free(font);
-    pango_font_description_free(bfont);
 
     _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
     glade_xml_signal_connect_data(_gladeXML,
@@ -2543,6 +2534,7 @@ void RGMainWindow::buildInterface()
     show(); RGFlushInterface();
     gtk_paned_set_position(GTK_PANED(_vpaned), 
  			   _config->FindI("Synaptic::vpanedPos", 140));
+    
 
     _stateP = GTK_IMAGE(glade_xml_get_widget(_gladeXML, "image_state"));
     assert(_stateP);

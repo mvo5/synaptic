@@ -24,7 +24,7 @@
 #include <apt-pkg/acquire.h>
 
 #include <vector>
-
+#include <set>
 #include "rgwindow.h"
 
 
@@ -38,10 +38,14 @@ class RGFetchProgress : public pkgAcquireStatus, public RGWindow
    
    vector<Item> _items;
 
-   GtkWidget *_table;
+   GtkWidget *_table; 
+   GtkListStore *_tableListStore;
+   set<int> _tableRows;
+
    GtkWidget *_statusL;
    PangoLayout *_layout;
-   
+   GtkTreeViewColumn *_statusColumn; 
+   GtkCellRenderer *_statusRenderer; 
    bool _cancelled;
 
    void updateStatus(pkgAcquire::ItemDesc &Itm, int status);

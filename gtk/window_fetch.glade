@@ -35,13 +35,15 @@
 	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 	      <child>
-		<widget class="GtkTreeView" id="treeview1">
+		<widget class="GtkTreeView" id="treeview_fetch">
+		  <property name="width_request">620</property>
+		  <property name="height_request">250</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="headers_visible">True</property>
 		  <property name="rules_hint">False</property>
 		  <property name="reorderable">False</property>
-		  <property name="enable_search">True</property>
+		  <property name="enable_search">False</property>
 		</widget>
 	      </child>
 	    </widget>
@@ -59,10 +61,9 @@
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label43">
+		<widget class="GtkLabel" id="label_status">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">label43
-</property>
+		  <property name="label" translatable="yes">label43</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -81,21 +82,14 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkButton" id="button32">
+		<widget class="GtkButton" id="button_cancel">
+		  <property name="border_width">5</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
+		  <property name="label">gtk-cancel</property>
+		  <property name="use_stock">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
-
-		  <child>
-		    <widget class="GtkImage" id="image2">
-		      <property name="visible">True</property>
-		      <property name="pixbuf">stop.xpm</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		  </child>
+		  <signal name="clicked" handler="on_button_cancel_clicked" last_modification_time="Wed, 16 Apr 2003 01:58:59 GMT"/>
 		</widget>
 		<packing>
 		  <property name="padding">2</property>

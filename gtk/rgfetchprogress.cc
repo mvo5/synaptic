@@ -1,7 +1,7 @@
 /* rgfetchprogress.cc
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002, 2003 Michael Vogt <mvo@debian.org>
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -48,90 +48,83 @@ enum {
     DLFailed = -3,
     DLHit = -4
 };
+
+enum {
+    PIXMAP_COLUMN,
+    SIZE_COLUMN,
+    URL_COLUMN,
+    N_COLUMNS
+  };
     
-
-
-#define TABLE_ROW_HEIGHT 16
-
 
 RGFetchProgress::RGFetchProgress(RGWindow *win) 
-    : RGWindow(win, "fetchProgress")
-{    
+    : RGWindow(win, "fetch", false, true, true)
+{   
+    GtkCellRenderer *renderer; 
+    GtkTreeViewColumn *column; 
+ 
     setTitle(_("Fetching Files"));
-    
+    gtk_widget_set_usize(_win, 620, 250);
+
     gint dummy;
     gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,
-			    &_depth);
-    
-    gtk_widget_set_usize(_win, 620, 250);
-    
-    char *headers[] = {
-	_("Status"),
-	_("Size"),
-	_("URL")
-    };
+                            &_depth);
 
-    GtkWidget *sview;
-    sview = gtk_scrolled_window_new(NULL, NULL);
-    gtk_box_pack_start(GTK_BOX(_topBox), sview, TRUE, TRUE, 5);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(sview),
-				   GTK_POLICY_AUTOMATIC,
-				   GTK_POLICY_AUTOMATIC);
+    _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
+    _tableListStore = gtk_list_store_new(3, 
+					 GDK_TYPE_PIXBUF,
+					 G_TYPE_STRING,
+					 G_TYPE_STRING);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_table), 
+			    GTK_TREE_MODEL(_tableListStore));
+
+    /* percent column */
+    renderer = gtk_cell_renderer_pixbuf_new();
+    column = gtk_tree_view_column_new_with_attributes(_("Status"), renderer,
+						      "pixbuf", PIXMAP_COLUMN,
+						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 100);
+    _statusColumn = column;
+    _statusRenderer = renderer;
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
+
+    /* size */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes(_("Size"), renderer,
+						      "text", SIZE_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
+
+    /* url */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes(_("URL"), renderer,
+						      "text", URL_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
 
-    _table = gtk_clist_new_with_titles(3, headers);
-    gtk_widget_show(_table);
-    gtk_container_add(GTK_CONTAINER(sview), _table);
-    
-    gtk_clist_set_column_justification(GTK_CLIST(_table), 1, 
-				       GTK_JUSTIFY_RIGHT);
-    gtk_clist_set_row_height(GTK_CLIST(_table), TABLE_ROW_HEIGHT);
-    
-    gtk_clist_set_column_width(GTK_CLIST(_table), 0, 100);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 1, 60);
-
-    GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
-    gtk_widget_set_usize(hbox, -1, 35);
-    gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
-    
-    _statusL = gtk_label_new("");
+    _statusL = glade_xml_get_widget(_gladeXML, "label_status");
     gtk_misc_set_alignment(GTK_MISC(_statusL), 0.0f, 0.0f);
     gtk_label_set_justify(GTK_LABEL(_statusL), GTK_JUSTIFY_LEFT);
-    gtk_box_pack_start(GTK_BOX(hbox), _statusL, TRUE, TRUE, 5);
 
-    GtkWidget *btn;
-    btn = gtk_button_new();
-
-    GtkWidget *pix;
-    {
-	GdkPixmap *xpm;
-	GdkBitmap *mask;
-	
-	xpm = gdk_pixmap_create_from_xpm_d(_win->window, &mask, NULL, stop_xpm);
-	pix = gtk_pixmap_new(xpm, mask);
-    }
-    gtk_container_add(GTK_CONTAINER(btn), pix);
-    gtk_signal_connect(GTK_OBJECT(btn), "clicked",
-		       (GtkSignalFunc)stopDownload, this);
-    gtk_box_pack_start(GTK_BOX(hbox), btn, FALSE, TRUE, 0);
-
-    gtk_widget_show_all(hbox);
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_cancel_clicked",
+				  G_CALLBACK(stopDownload),
+				  this); 
     
-    gtk_widget_show_all(_topBox);
-    gtk_widget_show(_topBox);
-
     PangoContext *context = gdk_pango_context_get();
     _layout = pango_layout_new(context);
 
     GtkStyle *style = gtk_widget_get_style(_win);
-
     _font = style->font_desc;
     _gc = style->white_gc;
     _barGC = style->bg_gc[0];
     _textGC = style->black_gc;
+
+
 }
 
-   
 bool RGFetchProgress::MediaChange(string Media,string Drive)
 {
     string msg;
@@ -152,6 +145,7 @@ bool RGFetchProgress::MediaChange(string Media,string Drive)
 void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 				   int status)
 {
+    //cout << "void RGFetchProgress::updateStatus()" << endl;
     bool reload = false;
 
     if (Itm.Owner->ID == 0) {
@@ -165,7 +159,12 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
     _items[Itm.Owner->ID-1].status = status;
     if (reload) {
 	reloadTable();
-	gtk_clist_moveto(GTK_CLIST(_table), _items.size()-1, 0, 0.0, 0.5);
+	int i = _items.size()-1;
+	if(i>=0) {
+	    GtkTreePath *path = gtk_tree_path_new_from_indices(i, -1);
+	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
+	    gtk_tree_path_free(path);
+	}
     } else {
 	refreshTable(Itm.Owner->ID-1);
     }
@@ -174,6 +173,7 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 
 void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
 {
+    //cout << "void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)" << endl;
     updateStatus(Itm, DLHit);
 
     RGFlushInterface();
@@ -206,10 +206,10 @@ void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 
 bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 {
+    //cout << "RGFetchProgress::Pulse(pkgAcquire *Owner)" << endl;
+
     string str;
     pkgAcquireStatus::Pulse(Owner);
-
-    gtk_clist_freeze(GTK_CLIST(_table));
 
     if (CurrentCPS != 0) {
 	char buf[128];
@@ -250,8 +250,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 
     gtk_label_set_text(GTK_LABEL(_statusL), (char*)str.c_str());
     reloadTable();
-    gtk_clist_thaw(GTK_CLIST(_table));    
-
     RGFlushInterface();
 
     return !_cancelled;
@@ -331,12 +329,6 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 	snprintf(buf, sizeof(buf), "%d%%", status);
 	str = buf;
     }
-#if 0
-    GdkFont *font = gdk_font_from_description(_font);
-    x = (width - gdk_string_width(font, str)) / 2;
-    y= gdk_string_height(font, str);
-    gdk_draw_string(pix, font, _textGC, x, y, str);
-#endif
 
     pango_layout_set_font_description(_layout, _font);
     pango_layout_set_text(_layout, str, -1);
@@ -350,38 +342,59 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 
 void RGFetchProgress::refreshTable(int row)
 {
-    int w;
-    char *s[] = {"","",""};
+    //cout << "RGFetchProgress::refreshTable() " << row << endl;
+    GtkTreeIter iter;
     static GdkPixmap *pix=NULL;
+    static GdkPixbuf *buf=NULL;
+    int w,h;
 
-    w = GTK_CLIST(_table)->column[0].button->allocation.width;
-
-    gtk_clist_freeze(GTK_CLIST(_table));
-    gtk_clist_insert( GTK_CLIST(_table), row, s);
-
-    // mvo: gtk_clist_set_pixmap() does in theory unref it, but we do
-    //      it also to be sure
+    // unref pix first (they start with a usage count of 1
     if(pix != NULL) 
-      gdk_pixmap_unref(pix);
+	gdk_pixmap_unref(pix);
+    if(buf != NULL) 
+	gdk_pixbuf_unref(buf);
 
-    pix = statusDraw(w, TABLE_ROW_HEIGHT, _items[row].status),
-    gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0, pix, NULL);
+    w = gtk_tree_view_column_get_width(_statusColumn);
+    h = 18; // FIXME: height -> get it from somewhere
 
-    gtk_clist_set_text(GTK_CLIST(_table), row, 1, _items[row].size.c_str());
-    gtk_clist_set_text(GTK_CLIST(_table), row, 2, _items[row].uri.c_str());
-    
-    gtk_clist_thaw(GTK_CLIST(_table));
+    pix = statusDraw(w, h, _items[row].status);
+    buf = gdk_pixbuf_get_from_drawable(NULL, pix, NULL,
+				 0, 0, 0, 0, w, h );
+
+    // check if row is already displayed
+    if(_tableRows.find(row) == _tableRows.end()) {
+	gtk_list_store_insert(_tableListStore, &iter, row);
+	_tableRows.insert(row);
+    } else {
+	gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(_tableListStore),
+				      &iter, NULL, row);
+    }
+    gtk_list_store_set(_tableListStore, &iter,
+		       PIXMAP_COLUMN, buf,
+		       SIZE_COLUMN, _items[row].size.c_str(),
+		       URL_COLUMN, _items[row].uri.c_str(),
+		       -1);
 }
 
 
 void RGFetchProgress::reloadTable()
 {
-    gtk_clist_freeze(GTK_CLIST(_table));
-    gtk_clist_clear(GTK_CLIST(_table));
-    
+    //cout << "RGFetchProgress::reloadTable()" << endl;
+
+    gtk_list_store_clear(_tableListStore);
+    _tableRows.clear();
+
     for (unsigned int i = 0; i < _items.size(); i++) {
 	refreshTable(i);
     }
-    gtk_clist_moveto(GTK_CLIST(_table), _items.size()-1, 0, 0.0, 0.0);
-    gtk_clist_thaw(GTK_CLIST(_table));
+
+    // moveto last item
+    int i = _items.size()-1;
+    if(i>=0) {
+	GtkTreePath *path = gtk_tree_path_new_from_indices(i, -1);
+	gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
+	gtk_tree_path_free(path);
+    }
 }
+
+

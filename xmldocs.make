@@ -53,8 +53,8 @@ all: omf html
 html: html_timestamp
 
 html_timestamp:  $(docname).xml
-	-db2html -o  $(top_srcdir)/doc/html $(docname).xml
-	-cp  $(top_srcdir)/help/C/figures/*  $(top_srcdir)/doc/html/figures
+	-db2html -o  $(top_builddir)/doc/html $(docname).xml
+	-cp  $(top_srcdir)/help/C/figures/*  $(top_builddir)/doc/html/figures
 	touch html_timestamp
 
 $(docname).xml: $(entities)

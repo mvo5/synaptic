@@ -1337,13 +1337,18 @@ void RGMainWindow::setStatusText(char *text)
             g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be freed"),
                             listed, installed, broken, toInstall, toRemove,
                             SizeToStr(fabs(size)).c_str());
-      } else {
+      } else if( size > 0) {
          buffer =
             g_strdup_printf(_
                             ("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %s will be used"),
                             listed, installed, broken, toInstall, toRemove,
                             SizeToStr(fabs(size)).c_str());
-      };
+      } else {
+         buffer =
+            g_strdup_printf(_
+                            ("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove"),
+                            listed, installed, broken, toInstall, toRemove);
+      }
       gtk_label_set_text(GTK_LABEL(_statusL), buffer);
       g_free(buffer);
    }

@@ -99,6 +99,7 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
   _provides.push_back(dep.Name());
 }
 
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
 const char *RPackage::tags() 
 {
@@ -114,7 +115,7 @@ const char *RPackage::tags()
     return s.c_str();
 }
 #endif
-
+#endif
 
 const char *RPackage::section()
 {

@@ -1,7 +1,7 @@
 /* rpackagelister.cc - package cache and list manipulation
  * 
  * Copyright (c) 2000-2003 Conectiva S/A 
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002-2004 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -73,10 +73,18 @@ RPackageLister::RPackageLister()
     
     _searchData.pattern = NULL;
     _searchData.isRegex = false;
-    _displayMode = (treeDisplayMode)_config->FindI("Synaptic::TreeDisplayMode",0);
+    _viewMode = _config->FindI("Synaptic::ViewMode", 0);
     _updating = true;
-    _sortMode = TREE_SORT_NAME;
-    
+    _sortMode = LIST_SORT_NAME;
+
+    _views.push_back(new RPackageViewSections());
+    _views.push_back(new RPackageViewAlphabetic());
+    _views.push_back(new RPackageViewAll());
+
+    if (_viewMode >= _views.size())
+	_viewMode = 0;
+    _selectedView = _views[_viewMode];
+
     memset(&_searchData, 0, sizeof(_searchData));
 
 #ifdef HAVE_RPM
@@ -95,6 +103,38 @@ RPackageLister::~RPackageLister()
 	delete (*I);
 
     delete _cache;
+}
+
+void RPackageLister::setView(int index)
+{
+   _config->Set("Synaptic::ViewMode", index);
+   _selectedView = _views[index];
+   _selectedView->clearSelection();
+}
+
+vector<string> RPackageLister::getViews()
+{
+    vector<string> views;
+    for (int i = 0; i != _views.size(); i++)
+	views.push_back(_views[i]->getName());
+    return views;
+}
+
+// get all subviews for a given view
+vector<string> RPackageLister::getSubViews()
+{
+    return _selectedView->getSubViews();
+}
+
+bool RPackageLister::setSubView(string newSubView)
+{
+    _selectedView->setSelected(newSubView);
+    
+    notifyPreChange(NULL);
+    
+    reapplyFilter();
+    
+    notifyPostChange(NULL);
 }
 
 static string getServerErrorMessage(string errm)
@@ -437,7 +477,9 @@ bool RPackageLister::openCache(bool reset)
     }
 
     //cout << "    _treeOrganizer.clear();" << endl;
+#if 0
     _treeOrganizer.clear();
+#endif
 
 #ifdef HAVE_RPM
     if (_records) {
@@ -475,6 +517,9 @@ bool RPackageLister::openCache(bool reset)
     map<string,RPackage*> pkgmap;
     set<string> sectionSet;
 
+    for (int i = 0; i != _views.size(); i++)
+	_views[i]->clear();
+
     for (; I.end() != true; I++) {
 
 	if (I->CurrentVer != 0)
@@ -490,6 +535,10 @@ bool RPackageLister::openCache(bool reset)
 	pkgName = pkg->name();
 	
 	pkgmap[pkgName] = pkg;
+
+	
+	for (int i = 0; i != _views.size(); i++)
+	    _views[i]->addPackage(pkg);
 
 	// find out about new packages
 	if(firstRun) {
@@ -762,18 +811,19 @@ void RPackageLister::reapplyFilter()
 
     // sort now according to the latest used sort method
     switch(_sortMode) {
-    case TREE_SORT_NAME:
+    case LIST_SORT_NAME:
 	sortPackagesByName();    
 	break;
-    case TREE_SORT_SIZE_ASC:
+    case LIST_SORT_SIZE_ASC:
 	sortPackagesByInstSize(0);
 	break;
-    case TREE_SORT_SIZE_DES:
+    case LIST_SORT_SIZE_DES:
 	sortPackagesByInstSize(1);
 	break;
     }
 }
 
+#if 0 // PORTME
 // helper function that actually add the pkg to the right location in 
 // the tree
 void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree, 
@@ -864,25 +914,30 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
     // _displayMode == TREE_DISPLAY_FLAT) {
     // is handled via the new gtkpkglist code
 }
+#endif
 
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
 {    
-  map<string,tree<pkgPair>::iterator> itermap;
-
-  //cout << "getFilteredPackages()" << endl;
-
   if (_updating)
     return;
 
-  packages.erase(packages.begin(), packages.end());
-  //cout << "_treeOrganizer.clear()" << endl;
-  _treeOrganizer.clear();
-  
-  for (unsigned i = 0; i < _count; i++) {
-    if (applyFilters(_packages[i])) {
-	packages.push_back(_packages[i]);
-	addFilteredPackageToTree(_treeOrganizer, itermap, _packages[i]);
+  // erase old display list
+  packages.clear();
+
+#if 0
+  vector<RPackage *> view_packages = _view[_selectedSubView];
+
+  for (unsigned i = 0; i < view_packages.size(); i++) {
+    if (applyFilters(view_packages[i])) {
+	packages.push_back(view_packages[i]);
     }
+  }
+#endif
+
+  for (RPackageView::iterator I = _selectedView->begin();
+       I != _selectedView->end(); I++) {
+    if (applyFilters(*I))
+	packages.push_back(*I);
   }
 }
 
@@ -914,13 +969,16 @@ static void qsSortByName(vector<RPackage*> &packages,
 
 void RPackageLister::sortPackagesByName(vector<RPackage*> &packages)
 {
-    _sortMode = TREE_SORT_NAME;
+    _sortMode = LIST_SORT_NAME;
     if (!packages.empty()) {
 	qsSortByName(packages, 0, packages.size()-1);
+#if 0
 	_treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),true);
+#endif
     }
 }
 
+#if 0 //DELME?
 // various compare functions
 struct instSizeTreeSortFuncAsc {
     bool operator()(const RPackageLister::pkgPair &x, const RPackageLister::pkgPair &y) {
@@ -941,6 +999,7 @@ struct instSizeTreeSortFuncDes {
 	    return x.first < y.first;
     }
 };
+#endif
 
 struct instSizeSortFuncAsc {
     bool operator()(RPackage *x, RPackage *y) {
@@ -958,19 +1017,23 @@ void RPackageLister::sortPackagesByInstSize(vector<RPackage*> &packages, int ord
 {
     //cout << "RPackageLister::sortPackagesByInstSize()"<<endl;
     if(order == 0)
-	_sortMode = TREE_SORT_SIZE_ASC;
+	_sortMode = LIST_SORT_SIZE_ASC;
     else
-	_sortMode = TREE_SORT_SIZE_DES;
+	_sortMode = LIST_SORT_SIZE_DES;
 
     if(!packages.empty()) {
 	if(order == 0) {
 	    sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
+#if 0 // DELME?
 	    _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
 				instSizeTreeSortFuncAsc(), true);
+#endif
 	}else{
 	    sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+#if 0 // DELME ?
 	    _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),
 				instSizeTreeSortFuncDes(), true);
+#endif
 	}
     }
 }

@@ -155,8 +155,9 @@ int main(int argc, char **argv)
     RPackageStatus::pkgStatus.init();
     
     RPackageLister *packageLister = new RPackageLister();
-    string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
-    RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);
+//     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
+//     RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);
+    RGMainWindow *mainWindow = new RGMainWindow(packageLister, "main");
 
     // read which default distro to use
     string s = _config->Find("Synaptic::DefaultDistro","");

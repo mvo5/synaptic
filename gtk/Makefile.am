@@ -47,10 +47,6 @@ EXTRA_DIST = $(glade_DATA)
 synaptic_SOURCES= \
 	gsynaptic.cc\
 	gsynaptic.h\
-	gtkpkgtree.cc\
-	gtkpkgtree.h\
-	gtktagtree.cc\
-	gtktagtree.h\
 	gtkpkglist.cc\
 	gtkpkglist.h\
 	rgaboutpanel.cc\

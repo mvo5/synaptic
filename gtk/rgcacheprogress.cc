@@ -31,11 +31,14 @@
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label) 
     : _parent(parent), _label(label)
 {
-    _prog = gtk_progress_bar_new();
+//     _prog = gtk_progress_bar_new();
 
+//     gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
+
+//     gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
+
+    _prog = parent;
     gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
-
-    gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
 
     _mapped = false;
 }
@@ -43,7 +46,7 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 
 RGCacheProgress::~RGCacheProgress()
 {
-    gtk_widget_destroy(_prog);
+    //gtk_widget_destroy(_prog);
 }
 
 

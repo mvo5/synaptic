@@ -37,6 +37,7 @@
 
 #include "rpackagecache.h"
 #include "rpackage.h"
+#include "rpackageview.h"
 #include "ruserdialog.h"
 #include "tree.hh"
 #include "config.h"
@@ -67,14 +68,16 @@ struct RFilter;
 
 class RInstallProgress;
 
-class RPackageObserver {
+class RPackageObserver
+{
 public:
    virtual void notifyChange(RPackage *pkg) = 0;
    virtual void notifyPreFilteredChange() = 0;
    virtual void notifyPostFilteredChange() = 0;
 };
 
-class RCacheObserver {
+class RCacheObserver
+{
 public:
    virtual void notifyCacheOpen() = 0;
    virtual void notifyCachePreChange() = 0;
@@ -88,7 +91,8 @@ private:
    pkgRecords *_records;
    OpProgress *_progMeter;
    
-   RPackage **_packages;
+   RPackage **_packages;  // all packages
+
    int *_packageindex;
    unsigned _count;
    set<string> allPackages; //all known packages (needed identifing "new" pkgs)
@@ -105,37 +109,17 @@ private:
    vector<string> _sectionList; // list of all available package sections
 
    vector<RCacheActor*> _actors;
-#if 0
-   tree<string> virtualPackages; // all virtual packages
-#endif
 
 public:
-   //FIXME: this shouldn't be public, but we'll do it for now this way
-#ifdef HAVE_DEBTAGS
-    HierarchyNode<int> *_tagroot;
-    HandleMaker<RPackage*> *_hmaker;
-    TagCollection<int> _coll;
-#endif
 
-   typedef pair<string,RPackage*> pkgPair;
-   typedef tree<pkgPair>::iterator treeIter;
-   typedef tree<pkgPair>::sibling_iterator sibTreeIter;
-   typedef tree<pkgPair>::tree_node treeNode;
-   typedef enum {
-     TREE_DISPLAY_SECTIONS,
-     TREE_DISPLAY_ALPHABETIC,
-     TREE_DISPLAY_STATUS,
-     TREE_DISPLAY_FLAT,
-     TREE_DISPLAY_TAGS
-   } treeDisplayMode;
-   treeDisplayMode _displayMode;
+   int _viewMode;
 
    typedef enum {
-       TREE_SORT_NAME,
-       TREE_SORT_SIZE_ASC,
-       TREE_SORT_SIZE_DES
-   } treeSortMode;
-   treeSortMode _sortMode;
+       LIST_SORT_NAME,
+       LIST_SORT_SIZE_ASC,
+       LIST_SORT_SIZE_DES
+   } listSortMode;
+   listSortMode _sortMode;
 
 #ifdef HAVE_RPM
    typedef pkgDepCache::State pkgState;
@@ -144,7 +128,12 @@ public:
 #endif
 
 private:
-   tree<pkgPair> _treeOrganizer;
+   //tree<pkgPair> _treeOrganizer;
+   //map<string, vector<RPackage*> > _view;
+   //string _selectedSubView;
+
+   vector<RPackageView*> _views;
+   RPackageView* _selectedView;
 
    pkgPackageManager *_packMan;
 
@@ -157,10 +146,11 @@ private:
    bool lockPackageCache(FileFd &lock);
 
    void getFilteredPackages(vector<RPackage*> &packages);
-   void addFilteredPackageToTree(tree<pkgPair>& tree,
-				 map<string,tree<pkgPair>::iterator>& itermap,
-				 RPackage *pkg);
-
+#if 0
+   void addFilteredPackageToTree(tree<pkgPair>& tree, */
+ 				 map<string,tree<pkgPair>::iterator>& itermap,
+ 				 RPackage *pkg); 
+#endif
    void sortPackagesByName(vector<RPackage*> &packages);
    void sortPackagesByInstSize(vector<RPackage*> &packages, int order);
    
@@ -189,9 +179,16 @@ public:
 
    inline int nrOfSections() { return _sectionList.size(); };
 
+   void setView(int index);
+   vector<string> getViews();
+   vector<string> getSubViews();
+   bool setSubView(string newView);
+
+#if 0
    inline tree<pkgPair>* RPackageLister::getTreeOrganizer() { 
      return &_treeOrganizer; 
    };
+
    inline void setTreeDisplayMode(treeDisplayMode mode) {
      //cout << "setTreeDisplayMode() " << mode << endl;
      _displayMode = mode;
@@ -199,6 +196,7 @@ public:
    inline treeDisplayMode getTreeDisplayMode() {
      return _displayMode;
    };
+#endif
    
    void storeFilters();
    void restoreFilters();
@@ -320,4 +318,4 @@ public:
 
 #endif
 
-// vim:sts=4:sw=4
+// vim:sts=3:sw=3

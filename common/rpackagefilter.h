@@ -240,6 +240,7 @@ public:
    void disable() { _enabled = false; };
 };
 
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
 extern const char *RPFTags;
 
@@ -321,7 +322,7 @@ class RTagPackageFilter : public RPackageFilter, public TagcollConsumer<int, str
     }
 };
 #endif
-
+#endif
 
 struct RFilterView {
     RFilterView() : viewMode(0),expandMode(0) {};
@@ -334,8 +335,10 @@ struct RFilter {
     RFilter(RPackageLister *lister)
        : section(lister), pattern(lister), status(lister),
 	 priority(lister), reducedview(lister),
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
 	 tags(lister),
+#endif
 #endif
 	 preset(false)
     {};
@@ -356,8 +359,10 @@ struct RFilter {
     RStatusPackageFilter status;
     RPriorityPackageFilter priority;
     RReducedViewPackageFilter reducedview;
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
     RTagPackageFilter tags;
+#endif
 #endif
     bool preset;
 

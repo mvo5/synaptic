@@ -104,10 +104,10 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 {
     static GtkTreeIter iter;
     int j;
-//     cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
+    cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
 
-//     cout << "action: " << pkgEvent << endl;
-//     cout << "listsize: " << List.size() << endl;
+     cout << "action: " << pkgEvent << endl;
+     cout << "listsize: " << List.size() << endl;
 
     //mvo: FIXME those nested loops suck as they are slow
     //     BUT it shouldn't be too bad as list is usually very small (<=10)

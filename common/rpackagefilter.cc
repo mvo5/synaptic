@@ -46,7 +46,7 @@ const char *RPFSection = _("Section");
 const char *RPFPriority = _("Priority");
 const char *RPFReducedView = _("ReducedView");
 
-
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
 const char *RPFTags = _("Tags");
 
@@ -107,6 +107,7 @@ bool RTagPackageFilter::write(ofstream &out, string pad)
     return true;
 
 }
+#endif
 #endif
 
 int RSectionPackageFilter::count() 
@@ -726,9 +727,11 @@ bool RFilter::apply(RPackage *package)
 
     if (!priority.filter(package))
 	return false;
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
     if(!tags.filter(package))
 	return false;
+#endif
 #endif
     if (!reducedview.filter(package))
 	return false;
@@ -743,8 +746,10 @@ void RFilter::reset()
     status.reset();
     pattern.reset();
     priority.reset();
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
     tags.reset();
+#endif
 #endif
     reducedview.reset();
 }
@@ -782,8 +787,10 @@ bool RFilter::read(Configuration &conf, string key)
     res &= status.read(conf, key+"::status");
     res &= pattern.read(conf, key+"::pattern");
     res &= priority.read(conf, key+"::priority");
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
     res &= tags.read(conf, key+"::tags");
+#endif
 #endif
     res &= reducedview.read(conf, key+"::reducedview");
 
@@ -825,10 +832,12 @@ bool RFilter::write(ofstream &out)
     out << pad+"priority {" << endl;
     res &= priority.write(out, pad+"  ");
     out << pad+"};" << endl;
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
     out << pad+"tags {" << endl;
     res &= tags.write(out, pad+"  ");
     out << pad+"};" << endl;
+#endif
 #endif
     out << pad+"reducedview {" << endl;
     res &= reducedview.write(out, pad+"  ");

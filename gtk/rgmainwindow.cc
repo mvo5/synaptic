@@ -115,10 +115,12 @@ void multipleSelectionHelper(GtkTreeModel *model,
 
 void RGMainWindow::changedDepView(GtkWidget *self, void *data)
 {
+#if 0 // PORTME
     RGMainWindow *me = (RGMainWindow*)data;
     int index = SELECTED_MENU_INDEX(me->_depP);
 
     gtk_notebook_set_page(GTK_NOTEBOOK(me->_depTab), index);
+#endif
 }
 
 void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
@@ -616,11 +618,13 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
 	if(pkgfilter != NULL) {
 	    // -2 because "0" is "unchanged" and "1" is the spacer in the menu
 	    // FIXME: yes I know this sucks
+#if 0 //PORTME
 	    int mode = pkgfilter->getViewMode().viewMode-2; 
 	    if(mode>=0)
 		changeTreeDisplayMode((RPackageLister::treeDisplayMode)mode);
 	    else
 		changeTreeDisplayMode(_menuDisplayMode);
+#endif
 
 	    // FIXME: same problem as above, this magic numbers suck
 	    int expand=pkgfilter->getViewMode().expandMode;
@@ -636,7 +640,9 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
     // no filter given or not available from above
     if (filter == 0) { // no filter
 	_lister->setFilter();
+#if 0
 	changeTreeDisplayMode(_menuDisplayMode);
+#endif
     }
 
     refreshTable(pkg);
@@ -645,10 +651,54 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
     setStatusText();
 }
 
+void RGMainWindow::changedView(GtkWidget *self)
+{
+    int view;
+    RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self), "me");
+    
+    view = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
+    
+    me->changeView(view, false);
+}
+
+void RGMainWindow::changeView(int view, bool sethistory)
+{
+    if (sethistory)
+	gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), view);
+
+    RPackage *pkg = selectedPackage();
+    setInterfaceLocked(TRUE); 
+    _blockActions = TRUE;
+
+    _lister->setView(view);
+
+    refreshSubViewList();
+
+    _lister->reapplyFilter();
+
+    refreshTable(pkg);
+    _blockActions = FALSE;
+    setInterfaceLocked(FALSE);
+    setStatusText();
+}
+
+void RGMainWindow::refreshSubViewList()
+{
+    GtkTreeIter iter;
+    vector<string> subViews = _lister->getSubViews();
+    GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+    for (vector<string>::iterator I = subViews.begin();
+	 I != subViews.end();  I++) {
+	gtk_list_store_append(store, &iter);  
+	gtk_list_store_set(store, &iter, 0, (*I).c_str(), -1);
+    }
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_subViewList), 
+			    GTK_TREE_MODEL(store));
+}
+
 void RGMainWindow::showWelcomeDialog(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
-
     RGGladeUserDialog dia(me);
     dia.run("welcome");
     GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
@@ -1025,6 +1075,16 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
     //cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
   
+
+
+    // FIXME: memory leak?!?
+    GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
+    _activeTreeModel = GTK_TREE_MODEL(_pkgList);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			    GTK_TREE_MODEL(_pkgList));
+    gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+
+
   updatePackageInfo(selectedPkg);
   
   setStatusText();
@@ -1033,6 +1093,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 // mvo: this function needs a cleanup :)
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
+#if 0 // PORTME
     if(pkg==NULL) {
 	gtk_widget_set_sensitive(_installM, FALSE);
 	gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
@@ -1125,6 +1186,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	break;
     }
 
+#if 0
     gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
     if(other & RPackage::OPinned) {
 	gtk_widget_set_sensitive(_actionB[2], FALSE);
@@ -1142,6 +1204,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     {
 	gtk_widget_set_sensitive(_pkgReconfigure, TRUE);
     }
+#endif
 
     if(RPackage::OResidualConfig & pkg->getOtherStatus())
 	gtk_widget_set_sensitive(_purgeM, TRUE);
@@ -1152,14 +1215,15 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
     _blockActions = FALSE;
 
-    gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-			      RPackageStatus::pkgStatus.getPixbuf(pkg));
+//     gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+// 			      RPackageStatus::pkgStatus.getPixbuf(pkg));
 
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_currentB)) == FALSE) {
 	_blockActions = TRUE;
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_currentB), TRUE);
 	_blockActions = FALSE;
     }
+#endif
 }
 
 
@@ -1326,6 +1390,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 void RGMainWindow::updateVersionButtons(RPackage *pkg)
 {
+#if 0 // PORTME
     // remove old radiobuttons
     GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
     gtk_container_foreach(GTK_CONTAINER(vbox),
@@ -1392,6 +1457,7 @@ void RGMainWindow::updateVersionButtons(RPackage *pkg)
     // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
     gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
     gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+#endif
 }
 
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
@@ -1410,7 +1476,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 	setLabel(_gladeXML,"label_state", "");
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
-	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), NULL);
+// 	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), NULL);
 
 	gtk_widget_set_sensitive(_pkginfo, FALSE);
 
@@ -1468,9 +1534,11 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     GtkTextIter iter;
     gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
     gtk_text_buffer_get_iter_at_offset(_descrBuffer, &iter, 0);
-    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_descrView), &iter,0,FALSE,0,0);
+    gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_pkgCommonView), 
+				 &iter,0,FALSE,0,0);
 
-#ifndef HAVE_RPM
+#if 0 //PORTME
+//#ifndef HAVE_RPM
    // files
     gtk_text_buffer_set_text(_filesBuffer, utf8(pkg->installedFiles()), -1);
     gtk_text_buffer_get_iter_at_offset(_filesBuffer, &iter, 0);
@@ -1700,6 +1768,9 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       case PKG_INSTALL: // install
 	  instPkgs.push_back(pkg);
 	  me->pkgInstallHelper(pkg, false);
+#if 0 // PORTME!
+          // This is segfaulting because clickedRecInstall can't find the
+          // "pkg" data in _recList.
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      //cout << "auto installing recommended" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
@@ -1708,6 +1779,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	      //cout << "auto installing suggested" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallSuggested));
 	  }
+#endif
 	  break;
       case PKG_DELETE: // delete
 	  me->pkgRemoveHelper(pkg);
@@ -2042,7 +2114,7 @@ void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview,
 				     RGMainWindow *me,
 				     vector<RPackage*> selected_pkgs)
 {
-    // nothing selected, should happen, but we play save
+    // Nothing selected, shouldn't happen, but we play safely.
     if(selected_pkgs.size() == 0)
 	return;
 
@@ -2275,8 +2347,10 @@ void RGMainWindow::buildTreeView()
     assert(_treeView);
 
     int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
+#if 0
     _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
     _menuDisplayMode = _treeDisplayMode;
+#endif
 
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
@@ -2413,7 +2487,19 @@ void RGMainWindow::buildTreeView()
     g_object_set_property(G_OBJECT(_treeView), "fixed_height_mode", &value);
 #endif
 
+    // create a list-view-model
+//     RCacheActorPkgList *_pkgListCacheObserver;
+//     RPackageListActorPkgList *_pkgListPackageListObserver;
 
+    GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
+    _activeTreeModel = GTK_TREE_MODEL(_pkgList);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			    GTK_TREE_MODEL(_pkgList));
+    gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+//     _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
+// 						   GTK_TREE_VIEW(_treeView));
+//     _pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
+    
 }
 
 void RGMainWindow::buildInterface()
@@ -2608,6 +2694,7 @@ void RGMainWindow::buildInterface()
     gtk_widget_hide(_purgeM);
 #endif
 
+#if 0 // PORTME
 #ifndef HAVE_DEBTAGS
     widget = glade_xml_get_widget(_gladeXML,"label_tags");
     assert(widget);
@@ -2615,6 +2702,7 @@ void RGMainWindow::buildInterface()
     widget = glade_xml_get_widget(_gladeXML,"label_tags_label");
     assert(widget);
     gtk_widget_hide(widget);
+#endif
 #endif
 
     // workaround for a bug in libglade
@@ -2639,7 +2727,7 @@ void RGMainWindow::buildInterface()
 						    "scale", 1.1,
 						    NULL);
 
- 
+#if 0 // DELME?
     _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_action_clicked",
@@ -2648,12 +2736,13 @@ void RGMainWindow::buildInterface()
     widget = glade_xml_get_widget(_gladeXML, "menu_keep");
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
+#endif
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_menu_action_keep",
 				  G_CALLBACK(menuActionClicked),
 				  GINT_TO_POINTER(PKG_KEEP));
 
-
+#if 0 // DELME?
     _actionB[1] = glade_xml_get_widget(_gladeXML, "radiobutton_install");
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_action_clicked",
@@ -2664,6 +2753,7 @@ void RGMainWindow::buildInterface()
     widget = glade_xml_get_widget(_gladeXML, "menu_install");
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
+#endif
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_menu_action_install",
 				  G_CALLBACK(menuActionClicked),
@@ -2673,7 +2763,7 @@ void RGMainWindow::buildInterface()
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
 
-    
+#if 0 // DELME?
     _actionB[2] = glade_xml_get_widget(_gladeXML, "radiobutton_delete");
     assert(widget);
     g_object_set_data(G_OBJECT(_actionB[2]), "me", this);
@@ -2685,6 +2775,7 @@ void RGMainWindow::buildInterface()
     widget = glade_xml_get_widget(_gladeXML, "menu_remove");
     assert(widget);
     g_object_set_data(G_OBJECT(widget), "me", this);
+#endif
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_menu_action_delete",
 				  G_CALLBACK(menuActionClicked),
@@ -2722,15 +2813,17 @@ void RGMainWindow::buildInterface()
 #endif
 
     // only for debian 
-    _pkgHelp = glade_xml_get_widget(_gladeXML, "button_pkghelp");
-    assert(_pkgHelp);
+//     _pkgHelp = glade_xml_get_widget(_gladeXML, "button_pkghelp");
+//     assert(_pkgHelp);
+#if 0 //PORTME
     _pkgReconfigure = glade_xml_get_widget(_gladeXML, "button_pkgreconfigure");
-    assert(_pkgHelp);
+    assert(_pkgReconfigure);
 
     if(!FileExists("/usr/bin/dwww")) 
 	gtk_widget_hide(_pkgHelp);
     if(!FileExists("/usr/sbin/dpkg-reconfigure"))
 	gtk_widget_hide(_pkgReconfigure);
+#endif
 #ifdef HAVE_RPM
     gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
 #endif    
@@ -2747,20 +2840,20 @@ void RGMainWindow::buildInterface()
  			   _config->FindI("Synaptic::vpanedPos", 140));
     
 
-    _stateP = GTK_IMAGE(glade_xml_get_widget(_gladeXML, "image_state"));
-    assert(_stateP);
 
-    _descrView = glade_xml_get_widget(_gladeXML, "text_descr");
-    assert(_descrView);
-    _descrBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_descrView));
-    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_descrView), GTK_WRAP_WORD);
+    _pkgCommonView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
+    assert(_pkgCommonView);
+    _descrBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_pkgCommonView));
+    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_pkgCommonView), GTK_WRAP_WORD);
 
-    _filesView = glade_xml_get_widget(_gladeXML, "textview_files");
-    assert(_filesView);
-    _filesBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_filesView));
-    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_filesView), GTK_WRAP_WORD);
+    // PORTME
+//     _filesView = glade_xml_get_widget(_gladeXML, "textview_files");
+//     assert(_filesView);
+//     _filesBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_filesView));
+//     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_filesView), GTK_WRAP_WORD);
 
 
+#if 0 //PORTME
     _depP = glade_xml_get_widget(_gladeXML, "optionmenu_depends");
     assert(_depP);
     item = glade_xml_get_widget(_gladeXML, "menu_what_it_depends");
@@ -2901,6 +2994,7 @@ void RGMainWindow::buildInterface()
     assert(button);
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)showFilterManagerWindow, this);
+#endif
 
     _filterPopup = glade_xml_get_widget(_gladeXML, "optionmenu_filters");
     assert(_filterPopup);
@@ -2915,6 +3009,7 @@ void RGMainWindow::buildInterface()
     gtk_signal_connect(GTK_OBJECT(_findText), "changed",
 		       (GtkSignalFunc)searchLackAction, this);
 
+#if 0 // PORTME
     _findSearchB = glade_xml_get_widget(_gladeXML, "button_search_next");
     assert(_findSearchB);
     gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
@@ -2926,6 +3021,7 @@ void RGMainWindow::buildInterface()
     gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
 		       G_CALLBACK(searchBeginAction),
 		       this);
+#endif
 
     // build the treeview
     buildTreeView();
@@ -2957,7 +3053,7 @@ void RGMainWindow::buildInterface()
 				  "on_collapse_all_activate",
 				  G_CALLBACK(onCollapseAll),
 				  this); 
-    
+#if 0 // PORTME
     int mode = _treeDisplayMode;
     widget = glade_xml_get_widget(_gladeXML, "section_tree");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
@@ -3003,7 +3099,8 @@ void RGMainWindow::buildInterface()
 				  "on_tag_tree_activate",
 				  G_CALLBACK(onTagTree),
 				  this); 
-    
+#endif
+
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_add_cdrom_activate",
 				  G_CALLBACK(onAddCDROM),
@@ -3012,7 +3109,8 @@ void RGMainWindow::buildInterface()
     /* --------------------------------------------------------------- */
 
     // we don't support "installed files" on rpm currently
-#ifdef HAVE_RPM 
+#if 0 // PORTME
+    //#ifdef HAVE_RPM 
     widget = glade_xml_get_widget(_gladeXML, "notebook_info");
     assert(widget);
     // page of the "installed files"
@@ -3127,18 +3225,59 @@ void RGMainWindow::buildInterface()
 
     gtk_widget_show_all(_popupMenu);
 
-
     // attach progress bar
-    GtkWidget *boxy = glade_xml_get_widget(_gladeXML, "hbox_status");    
-    assert(boxy);
+    _progressBar = glade_xml_get_widget(_gladeXML, "progressbar_main");  
+    assert(_progressBar);
     _statusL = glade_xml_get_widget(_gladeXML, "label_status");
     assert(_statusL);
+
     gtk_misc_set_alignment(GTK_MISC(_statusL), 0.0f, 0.0f); 
     gtk_widget_set_usize(GTK_WIDGET(_statusL), 100,-1);
-    _cacheProgress = new RGCacheProgress(boxy, _statusL);
+    _cacheProgress = new RGCacheProgress(_progressBar, _statusL);
     assert(_cacheProgress);
+
+    // view stuff
+    _viewPopup = glade_xml_get_widget(_gladeXML, "optionmenu_views");
+    assert(_viewPopup);
+
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(_viewPopup));
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(_viewPopup), createViewMenu());
+
+    GtkTreeIter iter;
+    _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+    assert(_subViewList);
+
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes ("SubView",
+						       renderer,
+						       "text", 0,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_subViewList), column);
+
+    // Setup the selection handler 
+    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
+    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
+    g_signal_connect (G_OBJECT(select), "changed",
+		      G_CALLBACK(subViewListSelectionChanged),
+		      this);
 }
 
+void RGMainWindow::subViewListSelectionChanged(GtkTreeSelection *selection, gpointer data)
+{
+    RGMainWindow *me = (RGMainWindow *)data;
+
+    GtkTreeIter iter; 
+    GtkTreeModel *model;
+    gchar *subView;
+
+    if(gtk_tree_selection_get_selected (selection, &model, &iter))   {
+	    gtk_tree_model_get (model, &iter, 0, &subView, -1);
+	    cout << "got: " << subView << endl;
+	    me->_lister->setSubView(string(subView));
+	    g_free (subView);
+    }
+    me->refreshTable(NULL);
+}
 
 void RGMainWindow::onExpandAll(GtkWidget *self, void *data) 
 {
@@ -3154,31 +3293,25 @@ void RGMainWindow::onCollapseAll(GtkWidget *self, void *data)
   gtk_tree_view_collapse_all(GTK_TREE_VIEW(me->_treeView));
 }
 
-void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
+#if 0 // PORTME
+void RGMainWindow::changeTreeDisplayMode(RPackageLister::viewMode mode)
 {
-    static RCacheActorPkgTree *_pkgCacheObserver=NULL;
-    static RPackageListActorPkgTree *_pkgTreePackageListObserver=NULL;
     static RCacheActorPkgList *_pkgListCacheObserver=NULL;
     static RPackageListActorPkgList *_pkgListPackageListObserver=NULL;
 
-    
     setInterfaceLocked(TRUE);
     _blockActions = TRUE;
 
     //cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
-    _lister->setTreeDisplayMode(mode);
-    _lister->reapplyFilter();
-    _treeDisplayMode = mode;
+    _lister->setViewMode(mode);
+    //_lister->reapplyFilter();
+    _viewMode = mode;
 
     // remove any unused observer
     if(_pkgCacheObserver) {
 	delete _pkgCacheObserver; 
 	_pkgCacheObserver=NULL;
-    }
-    if(_pkgTreePackageListObserver) {
-	delete _pkgTreePackageListObserver;
-	_pkgTreePackageListObserver =NULL;
     }
     if(_pkgListCacheObserver) {
 	delete _pkgListCacheObserver;
@@ -3191,18 +3324,14 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 
     // now do the real work
     GtkPkgList *_pkgList;
-    GtkPkgTree *_pkgTree;
-
-#ifdef HAVE_DEBTAGS
-    GtkTagTree *_tagTree;
-#endif
 
     //cout << "display mode: " << _treeDisplayMode << endl;
     gtk_widget_set_sensitive(GTK_WIDGET(_filterPopup), true);
     gtk_widget_set_sensitive(GTK_WIDGET(_filterMenu), true);
     gtk_widget_set_sensitive(GTK_WIDGET(glade_xml_get_widget(_gladeXML,"toolbar_find")), true);
-    switch(_treeDisplayMode) {
-	case RPackageLister::TREE_DISPLAY_FLAT: 
+
+    switch(_viewMode) {
+	case RPackageLister::VIEW_ALL: 
 	_pkgList = gtk_pkg_list_new(_lister);
 	_activeTreeModel = GTK_TREE_MODEL(_pkgList);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
@@ -3241,13 +3370,15 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 						   GTK_TREE_VIEW(_treeView));
 	_pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree,  GTK_TREE_VIEW(_treeView));
     } 
-  
+
     _blockActions = FALSE;
     setInterfaceLocked(FALSE);
 
     setStatusText();
 }
+#endif
 
+#if 0
 void RGMainWindow::onSectionTree(GtkWidget *self, void *data) 
 {
   RGMainWindow *me = (RGMainWindow *)data;
@@ -3300,7 +3431,7 @@ void RGMainWindow::onTagTree(GtkWidget *self, void *data)
     me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_TAGS;
   }
 }
-
+#endif
 
 void RGMainWindow::onAddCDROM(GtkWidget *self, void *data) 
 {
@@ -3434,6 +3565,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   gtk_tree_model_get(me->_activeTreeModel, &iter, 
 		     PKG_COLUMN, &pkg, -1);
 
+#if 0 // DYING
   /* pkg is only NULL for secions */
   if(pkg == NULL) {
       if(!gtk_tree_view_row_expanded(GTK_TREE_VIEW(me->_treeView), path))
@@ -3442,8 +3574,12 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
 	  gtk_tree_view_collapse_row(GTK_TREE_VIEW(me->_treeView), path);
       return;
   }
+#endif
+
   // double click
   //me->setInterfaceLocked(TRUE);
+
+  assert(pkg);
   
   RPackage::PackageStatus pstatus =  pkg->getStatus();
   //   SInstalledUpdated,
@@ -3529,6 +3665,29 @@ void RGMainWindow::setStatusText(char *text)
     gtk_widget_queue_draw(_statusL);
 }
 
+GtkWidget *RGMainWindow::createViewMenu()
+{
+    GtkWidget *menu, *item;
+    vector<string> views;
+    views = _lister->getViews();
+
+    menu = gtk_menu_new();
+
+    int i = 0;
+    for (vector<string>::const_iterator I = views.begin();
+	 I != views.end(); I++) {
+	
+	item = gtk_menu_item_new_with_label((char*)(*I).c_str());
+	gtk_widget_show(item);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+	gtk_object_set_data(GTK_OBJECT(item), "me", this);
+	gtk_object_set_data(GTK_OBJECT(item), "index", (void*)i++);
+	gtk_signal_connect(GTK_OBJECT(item), "activate", 
+			   (GtkSignalFunc)changedView, this);
+    }
+
+    return menu;
+}
 GtkWidget *RGMainWindow::createFilterMenu()
 {
     GtkWidget *menu, *item;
@@ -3591,7 +3750,7 @@ void RGMainWindow::saveState()
     _config->Set("Synaptic::windowX", x);
     _config->Set("Synaptic::windowY", y);
     _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-    _config->Set("Synaptic::TreeDisplayMode", _menuDisplayMode);
+    //_config->Set("Synaptic::ViewMode", _viewMode);
 
     if (!RWriteConfigFile(*_config)) {
 	_error->Error(_("An error occurred while saving configurations."));
@@ -3662,7 +3821,10 @@ bool RGMainWindow::restoreState()
 	g_free(msg);
     }
     
-
+    int viewNr = _config->FindI("Synaptic::ViewMode", 0);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), viewNr);
+    _lister->setView(viewNr);
+    refreshSubViewList();
 
     // this is real restore stuff
     _lister->restoreFilters();
@@ -3735,7 +3897,9 @@ void RGMainWindow::setTreeLocked(bool flag)
 	updatePackageInfo(NULL);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
     } else {
+#if 0 // PORTME
 	changeTreeDisplayMode(_treeDisplayMode);
+#endif
     }
 }
 

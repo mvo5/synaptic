@@ -104,10 +104,15 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    // the view
    GtkWidget *_treeView;
 
-   RPackageLister::treeDisplayMode _treeDisplayMode;
-   RPackageLister::treeDisplayMode _menuDisplayMode;
+   // the left-side view
+   GtkWidget *_viewPopup;
+   GtkWidget *_subViewList;
+
+   int _viewMode;
+   //RPackageLister::treeDisplayMode _menuDisplayMode;
 
    GtkWidget *_statusL;
+   GtkWidget *_progressBar;
 
    GtkWidget *_currentB; // ptr to one of below
    GtkWidget *_actionB[3]; // keep, install, delete
@@ -150,12 +155,12 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkTextBuffer *_pkgCommonTextBuffer;
    GtkTextTag *_pkgCommonBoldTag; 
 
-   GtkImage *_stateP;
-   GdkPixbuf *_alertPix;
+/*    GtkImage *_stateP; */
+/*    GdkPixbuf *_alertPix; */
    
    GtkWidget *_importP;
    
-   GtkWidget *_descrView;
+   GtkWidget *_pkgCommonView;
    GtkTextBuffer *_descrBuffer;
 
    GtkWidget *_filesView;
@@ -203,8 +208,17 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL); 
    void changeFilter(int filter, bool sethistory=true);
+
+   void changeView(int view, bool sethistory=true);
+   static void subViewListSelectionChanged(GtkTreeSelection *selection, gpointer data);
+   static void changedView(GtkWidget *self);
+   GtkWidget *createViewMenu();
+   void refreshSubViewList();
+
+#if 0 // PORTME
    void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
-   
+#endif
+
    static void rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
 		    GtkTreePath *arg2, gpointer data);
 
@@ -231,11 +245,13 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onExpandAll(GtkWidget *self, void *data);
    static void onCollapseAll(GtkWidget *self, void *data);   
 
+#if 0 // PORTME
    static void onSectionTree(GtkWidget *self, void *data);
    static void onAlphabeticTree(GtkWidget *self, void *data);   
    static void onStatusTree(GtkWidget *self, void *data);   
    static void onFlatList(GtkWidget *self, void *data);   
    static void onTagTree(GtkWidget *self, void *data);   
+#endif
 
    // this is called when typing
    guint searchLackId;

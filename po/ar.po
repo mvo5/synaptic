@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 22:25+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-01-29 00:55+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -855,16 +855,6 @@ msgstr ""
 "'Synaptic'."
 
 #: gtk/dialog_conffile.glade.h:1
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-"\n"
-"Secondary Text"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">هل أصفّ التغييرات الإضافيّة المطلوبة؟</"
-"span>"
-
-#: gtk/dialog_conffile.glade.h:4
 msgid "Difference between the files"
 msgstr ""
 
@@ -1027,6 +1017,87 @@ msgstr "للتثبيت"
 msgid "To be kept"
 msgstr "للإبقاء"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "مصطفّة للإزالة"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "أزل"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "أزل بما فيه الإعداد"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, fuzzy, c-format
+msgid "Preparing %s"
+msgstr "التحضير..."
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#, c-format
+msgid "Unpacking %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, fuzzy, c-format
+msgid "Configuring %s"
+msgstr "ضمّن الإعداد"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, fuzzy, c-format
+msgid "Installed %s"
+msgstr "مُثبّت"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#, fuzzy, c-format
+msgid "Installing %s"
+msgstr "ثبّت"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+#, fuzzy
+msgid "Applying Changes"
+msgstr "جاري تنفيذ التغييرات..."
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "الحزم المُزوّدة"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr ""
@@ -1071,6 +1142,25 @@ msgstr "إختر الخطّ"
 #: gtk/rgpreferenceswindow.cc:801
 msgid "Color selection"
 msgstr "اختيار اللّون"
+
+#: gtk/rgpreferenceswindow.cc:897
+msgid ""
+"Prefer package versions from the selected distribution when upgrading "
+"packages. If you manually force a verison from a different distribution, the "
+"package version will follow that distribution until it enters the default "
+"distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:905
+msgid ""
+"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"option as you will not get security updates automatically! If you manually "
+"force a verison the package version will follow the choosen distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:913
+msgid "Let synaptic pick the best version for you. If unsure use this option. "
+msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:950
 #, fuzzy
@@ -1182,11 +1272,6 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-#, fuzzy
-msgid "Applying Changes"
-msgstr "جاري تنفيذ التغييرات..."
 
 #: gtk/rgpkgdetails.cc:103
 #, fuzzy, c-format
@@ -2899,8 +2984,13 @@ msgstr ""
 
 #: gtk/window_rgdebinstall_progress.glade.h:4
 #, fuzzy
-msgid "<i>Preperaring packages...</i>"
+msgid "<i>Preparing packages...</i>"
 msgstr "تنظيف لوائح الحزم..."
+
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "خط ال_شاشة الطرفية"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3150,6 +3240,15 @@ msgstr "مصفّي البحث"
 msgid "History of installed, upgraded and removed software packages."
 msgstr "ثبّت، أزل وحدّث حزم البرامج"
 
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
+#~ "\n"
+#~ "Secondary Text"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">هل أصفّ التغييرات الإضافيّة "
+#~ "المطلوبة؟</span>"
+
 #~ msgid "ignore"
 #~ msgstr "تجاهل"
 
@@ -3219,10 +3318,6 @@ msgstr "ثبّت، أزل وحدّث حزم البرامج"
 #~ "\n"
 #~ "The following packages are re-installed:\n"
 #~ msgstr "%d حزمة جديدة سيتمّ تثبيتها\n"
-
-#, fuzzy
-#~ msgid "To be removed with configuration"
-#~ msgstr "أزل بما فيه الإعداد"
 
 #, fuzzy
 #~ msgid "To be not upgraded"
@@ -3617,9 +3712,6 @@ msgstr "ثبّت، أزل وحدّث حزم البرامج"
 
 #~ msgid "No Changes"
 #~ msgstr "لا تغييرات"
-
-#~ msgid "Install"
-#~ msgstr "ثبّت"
 
 #, fuzzy
 #~ msgid "Reinstall"

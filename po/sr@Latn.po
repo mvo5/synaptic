@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 22:25+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-02-04 20:53+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -875,16 +875,6 @@ msgstr ""
 "izgubljene ukoliko izaberete da napustite program."
 
 #: gtk/dialog_conffile.glade.h:1
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-"\n"
-"Secondary Text"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Da li želite da stavite u red dodatne "
-"zahtevane promene?</span>"
-
-#: gtk/dialog_conffile.glade.h:4
 msgid "Difference between the files"
 msgstr ""
 
@@ -1049,6 +1039,87 @@ msgstr "Paketi koji će biti instalirani"
 msgid "To be kept"
 msgstr "Paketi koji će biti pričuvani"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "Stavljeni u red čekanja za uklanjanje"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "Ukloni"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "Ukloni uključujuća podešavanja"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, fuzzy, c-format
+msgid "Preparing %s"
+msgstr "Pripremam..."
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#, c-format
+msgid "Unpacking %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, fuzzy, c-format
+msgid "Configuring %s"
+msgstr "Uključi podešavanje"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, fuzzy, c-format
+msgid "Installed %s"
+msgstr "Instalirani"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#, fuzzy, c-format
+msgid "Installing %s"
+msgstr "Instaliraj"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+#, fuzzy
+msgid "Applying Changes"
+msgstr "Izvršavanje promena..."
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "Paket obezbeđuje"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr ""
@@ -1093,6 +1164,25 @@ msgstr "Izaberite pismo"
 #: gtk/rgpreferenceswindow.cc:801
 msgid "Color selection"
 msgstr "Izbor boja"
+
+#: gtk/rgpreferenceswindow.cc:897
+msgid ""
+"Prefer package versions from the selected distribution when upgrading "
+"packages. If you manually force a verison from a different distribution, the "
+"package version will follow that distribution until it enters the default "
+"distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:905
+msgid ""
+"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"option as you will not get security updates automatically! If you manually "
+"force a verison the package version will follow the choosen distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:913
+msgid "Let synaptic pick the best version for you. If unsure use this option. "
+msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:950
 #, fuzzy
@@ -1204,11 +1294,6 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-#, fuzzy
-msgid "Applying Changes"
-msgstr "Izvršavanje promena..."
 
 #: gtk/rgpkgdetails.cc:103
 #, fuzzy, c-format
@@ -2952,8 +3037,13 @@ msgstr ""
 
 #: gtk/window_rgdebinstall_progress.glade.h:4
 #, fuzzy
-msgid "<i>Preperaring packages...</i>"
+msgid "<i>Preparing packages...</i>"
 msgstr "Čišćenje spiskova paketa..."
+
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "Pis_mo za terminal"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3205,6 +3295,15 @@ msgstr "Filter za pretragu"
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Instaliraj, ukloni i nadogradi softverske pakete"
 
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
+#~ "\n"
+#~ "Secondary Text"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Da li želite da stavite u red "
+#~ "dodatne zahtevane promene?</span>"
+
 #~ msgid "ignore"
 #~ msgstr "zanemari"
 
@@ -3278,10 +3377,6 @@ msgstr "Instaliraj, ukloni i nadogradi softverske pakete"
 #~ "\n"
 #~ "The following packages are re-installed:\n"
 #~ msgstr "Biće instaliran %d novi paket\n"
-
-#, fuzzy
-#~ msgid "To be removed with configuration"
-#~ msgstr "Ukloni uključujuća podešavanja"
 
 #, fuzzy
 #~ msgid "To be not upgraded"
@@ -3685,9 +3780,6 @@ msgstr "Instaliraj, ukloni i nadogradi softverske pakete"
 
 #~ msgid "No Changes"
 #~ msgstr "Nema izmena"
-
-#~ msgid "Install"
-#~ msgstr "Instaliraj"
 
 #, fuzzy
 #~ msgid "Reinstall"

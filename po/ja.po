@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.52\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 22:25+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-11-02 21:03+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Project Vine <Vine@vinelinux.org>\n"
@@ -852,16 +852,6 @@ msgstr ""
 "らの変更は破棄されます。"
 
 #: gtk/dialog_conffile.glade.h:1
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-"\n"
-"Secondary Text"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">依存により要求された変更を追加しますか?"
-"</span>"
-
-#: gtk/dialog_conffile.glade.h:4
 msgid "Difference between the files"
 msgstr ""
 
@@ -1021,6 +1011,86 @@ msgstr "再インストールされるパッケージ"
 msgid "To be kept"
 msgstr "保留されるパッケージ"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "削除指定"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "削除"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "読み込まれた設定を削除する"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, fuzzy, c-format
+msgid "Preparing %s"
+msgstr "準備中..."
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#, fuzzy, c-format
+msgid "Unpacking %s"
+msgstr "パッケージ"
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, fuzzy, c-format
+msgid "Configuring %s"
+msgstr "設定"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, fuzzy, c-format
+msgid "Installed %s"
+msgstr "インストール済"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#, fuzzy, c-format
+msgid "Installing %s"
+msgstr "インストール"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+msgid "Applying Changes"
+msgstr "変更を適用しています"
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "提供されているパッケージ"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr "サポート"
@@ -1061,6 +1131,25 @@ msgstr "フォントを選択してください"
 #: gtk/rgpreferenceswindow.cc:801
 msgid "Color selection"
 msgstr "色の選択"
+
+#: gtk/rgpreferenceswindow.cc:897
+msgid ""
+"Prefer package versions from the selected distribution when upgrading "
+"packages. If you manually force a verison from a different distribution, the "
+"package version will follow that distribution until it enters the default "
+"distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:905
+msgid ""
+"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"option as you will not get security updates automatically! If you manually "
+"force a verison the package version will follow the choosen distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:913
+msgid "Let synaptic pick the best version for you. If unsure use this option. "
+msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:950
 msgid "Visible"
@@ -1175,10 +1264,6 @@ msgid ""
 msgstr ""
 "APT システム報告:\n"
 "%s"
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-msgid "Applying Changes"
-msgstr "変更を適用しています"
 
 #: gtk/rgpkgdetails.cc:103
 #, c-format
@@ -2804,8 +2889,13 @@ msgstr ""
 
 #: gtk/window_rgdebinstall_progress.glade.h:4
 #, fuzzy
-msgid "<i>Preperaring packages...</i>"
+msgid "<i>Preparing packages...</i>"
 msgstr "パッケージリストを削除しています..."
+
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "端末フォント(_T)"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3079,6 +3169,15 @@ msgstr "履歴検索"
 msgid "History of installed, upgraded and removed software packages."
 msgstr "ソフトウエアパッケージのインストール、削除またはアップグレード"
 
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
+#~ "\n"
+#~ "Secondary Text"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">依存により要求された変更を追加します"
+#~ "か?</span>"
+
 #~ msgid "ignore"
 #~ msgstr "無視"
 
@@ -3150,10 +3249,6 @@ msgstr "ソフトウエアパッケージのインストール、削除または
 #~ "\n"
 #~ "The following packages are re-installed:\n"
 #~ msgstr "%d 個の新規パッケージが再インストールされます\n"
-
-#, fuzzy
-#~ msgid "To be removed with configuration"
-#~ msgstr "読み込まれた設定を削除する"
 
 #~ msgid "To be not upgraded"
 #~ msgstr "アップグレードされないパッケージ"
@@ -3524,9 +3619,6 @@ msgstr "ソフトウエアパッケージのインストール、削除または
 
 #~ msgid "No Changes"
 #~ msgstr "変更しない"
-
-#~ msgid "Install"
-#~ msgstr "インストール"
 
 #, fuzzy
 #~ msgid "Reinstall"
@@ -4066,9 +4158,6 @@ msgstr "ソフトウエアパッケージのインストール、削除または
 #~ msgid "%s %s: will be Installed\n"
 #~ msgstr "%s %s がインストールされます\n"
 
-#~ msgid "packages"
-#~ msgstr "パッケージ"
-
 #~ msgid "package"
 #~ msgstr "パッケージ"
 
@@ -4090,9 +4179,6 @@ msgstr "ソフトウエアパッケージのインストール、削除または
 #, fuzzy
 #~ msgid "No changes"
 #~ msgstr "変更しない(_N)"
-
-#~ msgid "Configure"
-#~ msgstr "設定"
 
 #~ msgid "Software"
 #~ msgstr "ソフトウエア"

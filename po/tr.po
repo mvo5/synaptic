@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 13:28+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-11-27 16:59+0200\n"
 "Last-Translator: Erçin EKER <ercin.eker@linux.org.tr>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -1003,6 +1003,86 @@ msgstr "Yeniden Kurulacak"
 msgid "To be kept"
 msgstr "Değişmeyecek"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "Kaldırma için seçilmiş"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "Kaldır"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "Yapılandırma dosyalarıyla birlikte kaldırılacak"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, fuzzy, c-format
+msgid "Preparing %s"
+msgstr "Hazırlanıyor..."
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#, c-format
+msgid "Unpacking %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, fuzzy, c-format
+msgid "Configuring %s"
+msgstr "Yapılandırmayı Sakla"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, fuzzy, c-format
+msgid "Installed %s"
+msgstr "Kurulu"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#, fuzzy, c-format
+msgid "Installing %s"
+msgstr "Kur"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+msgid "Applying Changes"
+msgstr "Değişiklikler Uygulanıyor"
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "Sağlanan paketler"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr "Destekleniyor"
@@ -1176,10 +1256,6 @@ msgid ""
 msgstr ""
 "APT sistem raporları:\n"
 "%s"
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-msgid "Applying Changes"
-msgstr "Değişiklikler Uygulanıyor"
 
 #: gtk/rgpkgdetails.cc:103
 #, c-format
@@ -2814,6 +2890,11 @@ msgstr ""
 msgid "<i>Preparing packages...</i>"
 msgstr "Paket listeleri boşaltılıyor..."
 
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "_Uçbirim Yazıtipi"
+
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr "Paket Yöneticisi işlemini bitirdikten sonra ek bir çıktı üretildi"
@@ -3164,9 +3245,6 @@ msgstr "Paketleri kur, kaldır ya da yükselt"
 #~ "\n"
 #~ "Bu paket yeniden kurulacak:\n"
 
-#~ msgid "To be removed with configuration"
-#~ msgstr "Yapılandırma dosyalarıyla birlikte kaldırılacak"
-
 #~ msgid "To be not upgraded"
 #~ msgstr "Yükseltilmeyecek"
 
@@ -3480,9 +3558,6 @@ msgstr "Paketleri kur, kaldır ya da yükselt"
 
 #~ msgid "No Changes"
 #~ msgstr "Değişiklik Yok"
-
-#~ msgid "Install"
-#~ msgstr "Kur"
 
 #~ msgid "Upgrade"
 #~ msgstr "Yükselt"

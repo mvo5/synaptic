@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 22:25+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-08-06 06:50+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -835,14 +835,6 @@ msgstr ""
 "仍有一些标记的变更尚未实施。如果您选择退出“新立得”它们将丢失。"
 
 #: gtk/dialog_conffile.glade.h:1
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-"\n"
-"Secondary Text"
-msgstr "<span weight=\"bold\" size=\"larger\">标记附加的必需的变更吗？</span>"
-
-#: gtk/dialog_conffile.glade.h:4
 msgid "Difference between the files"
 msgstr ""
 
@@ -999,6 +991,86 @@ msgstr "将会重新安装的软件包"
 msgid "To be kept"
 msgstr "将会维持原状的软件包"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "已标记要删除的软件包"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "删除"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "删除依赖此软件包的软件包"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, fuzzy, c-format
+msgid "Preparing %s"
+msgstr "准备中..."
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#, fuzzy, c-format
+msgid "Unpacking %s"
+msgstr "软件包"
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, fuzzy, c-format
+msgid "Configuring %s"
+msgstr "配置"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, fuzzy, c-format
+msgid "Installed %s"
+msgstr "已安装"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#, fuzzy, c-format
+msgid "Installing %s"
+msgstr "安装"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+msgid "Applying Changes"
+msgstr "正在实施变更..."
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "提供的软件包"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr ""
@@ -1041,6 +1113,25 @@ msgstr "选择字体"
 #: gtk/rgpreferenceswindow.cc:801
 msgid "Color selection"
 msgstr "颜色选择"
+
+#: gtk/rgpreferenceswindow.cc:897
+msgid ""
+"Prefer package versions from the selected distribution when upgrading "
+"packages. If you manually force a verison from a different distribution, the "
+"package version will follow that distribution until it enters the default "
+"distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:905
+msgid ""
+"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"option as you will not get security updates automatically! If you manually "
+"force a verison the package version will follow the choosen distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:913
+msgid "Let synaptic pick the best version for you. If unsure use this option. "
+msgstr ""
 
 # to choice if some items is visible or not
 #: gtk/rgpreferenceswindow.cc:950
@@ -1154,10 +1245,6 @@ msgid ""
 msgstr ""
 "APT 系统报告：\n"
 "%s"
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-msgid "Applying Changes"
-msgstr "正在实施变更..."
 
 #: gtk/rgpkgdetails.cc:103
 #, c-format
@@ -2772,8 +2859,13 @@ msgstr ""
 
 #: gtk/window_rgdebinstall_progress.glade.h:4
 #, fuzzy
-msgid "<i>Preperaring packages...</i>"
+msgid "<i>Preparing packages...</i>"
 msgstr "正在清除软件包列表..."
+
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "终端字体(_T)"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3032,6 +3124,14 @@ msgstr "查找历史"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "安装，删除和升级软件包"
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
+#~ "\n"
+#~ "Secondary Text"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">标记附加的必需的变更吗？</span>"
 
 #~ msgid "ignore"
 #~ msgstr "忽略"
@@ -3442,9 +3542,6 @@ msgstr "安装，删除和升级软件包"
 
 #~ msgid "No Changes"
 #~ msgstr "没有变更"
-
-#~ msgid "Install"
-#~ msgstr "安装"
 
 #~ msgid "Upgrade"
 #~ msgstr "升级"
@@ -3906,17 +4003,11 @@ msgstr "安装，删除和升级软件包"
 #~ msgid "%s %s: will be Installed\n"
 #~ msgstr "%s %s：将会被安装\n"
 
-#~ msgid "packages"
-#~ msgstr "软件包"
-
 #~ msgid "package"
 #~ msgstr "软件包"
 
 #~ msgid "%d %s will be DOWNGRADED\n"
 #~ msgstr "%d %s 将被降级；\n"
-
-#~ msgid "Configure"
-#~ msgstr "配置"
 
 #~ msgid "_Tag tree"
 #~ msgstr "依标记排列的树状视图(_T)"
@@ -4478,9 +4569,6 @@ msgstr "安装，删除和升级软件包"
 
 #~ msgid "Depends."
 #~ msgstr "依赖"
-
-#~ msgid "Remove With Dependencies"
-#~ msgstr "删除依赖此软件包的软件包"
 
 #~ msgid "Install Recommended"
 #~ msgstr "安装推荐软件包"

@@ -1,4 +1,4 @@
-# German translation of Synaptic.
+u# German translation of Synaptic.
 # Copyright (C) 2003-2004 Free Software Foundation, Inc.
 # Sebastian Heinlein <sebastian.heinlein@web.de>, 2003-2004
 # Hendrik Brandt <eru@gmx.li>, 2004
@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-06 22:25+0100\n"
+"POT-Creation-Date: 2005-01-10 15:31+0100\n"
 "PO-Revision-Date: 2004-11-14 18:20+0100\n"
 "Last-Translator: Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
@@ -863,15 +863,6 @@ msgstr ""
 "verloren, falls Sie »Synaptic« beenden."
 
 #: gtk/dialog_conffile.glade.h:1
-#, fuzzy
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-"\n"
-"Secondary Text"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Notwendige Änderungen vormerken?</span>"
-
-#: gtk/dialog_conffile.glade.h:4
 msgid "Difference between the files"
 msgstr ""
 
@@ -1037,6 +1028,85 @@ msgstr "Erneut zu installierende Pakete"
 msgid "To be kept"
 msgstr "Zurückgehaltene Pakete"
 
+#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#, fuzzy, c-format
+msgid "Prepearing for removal %s"
+msgstr "Zum Entfernen vorgemerkt"
+
+#: gtk/rgdebinstallprogress.cc:55
+#, c-format
+msgid "Removing %s"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#, fuzzy, c-format
+msgid "Removed %s"
+msgstr "Entferne %s"
+
+#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#, c-format
+msgid "Removing with config %s"
+msgstr "Enterferne mit Konfiguration %s"
+
+#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#, fuzzy, c-format
+msgid "Removed with config %s"
+msgstr "Entfernen einschließlich der Konfiguration"
+
+#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
+#: gtk/rgdebinstallprogress.cc:113
+#, c-format
+msgid "Preparing %s"
+msgstr "Bereite %s vor"
+
+#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
+#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+msgid "Unpacking %s"
+msgstr "Pake %s aus"
+
+#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:117
+#, c-format
+msgid "Configuring %s"
+msgstr "Konfiguriere %s"
+
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
+#: gtk/rgdebinstallprogress.cc:118
+#, c-format
+msgid "Installed %s"
+msgstr "Installiere %s fertig"
+
+#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#,  c-format
+msgid "Installing %s"
+msgstr "Installiere %s"
+
+#: gtk/rgdebinstallprogress.cc:272
+#, c-format
+msgid ""
+"Install new configuration file\n"
+"'%s'?"
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:273
+#, c-format
+msgid ""
+"The configuration file %s was modified (by you or by a script). A updated "
+"version is shipped in this package. If you want to keep your current version "
+"say 'No'. Do you want to install the new package maintainers version? "
+msgstr ""
+
+#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:168
+msgid "Applying Changes"
+msgstr "Änderungen anwenden"
+
+#. error from dpkg
+#: gtk/rgdebinstallprogress.cc:433
+#, fuzzy, c-format
+msgid "Error in package %s"
+msgstr "Bereitgestellte Pakete"
+
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
 msgstr "Unterstützt"
@@ -1077,6 +1147,25 @@ msgstr "Wählen Sie eine Schrift"
 #: gtk/rgpreferenceswindow.cc:801
 msgid "Color selection"
 msgstr "Farbauswahl"
+
+#: gtk/rgpreferenceswindow.cc:897
+msgid ""
+"Prefer package versions from the selected distribution when upgrading "
+"packages. If you manually force a verison from a different distribution, the "
+"package version will follow that distribution until it enters the default "
+"distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:905
+msgid ""
+"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"option as you will not get security updates automatically! If you manually "
+"force a verison the package version will follow the choosen distribution."
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:913
+msgid "Let synaptic pick the best version for you. If unsure use this option. "
+msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:950
 msgid "Visible"
@@ -1192,10 +1281,6 @@ msgid ""
 msgstr ""
 "APT-System meldet:\n"
 "%s"
-
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:168
-msgid "Applying Changes"
-msgstr "Änderungen anwenden"
 
 #: gtk/rgpkgdetails.cc:103
 #, c-format
@@ -2843,8 +2928,13 @@ msgstr ""
 
 #: gtk/window_rgdebinstall_progress.glade.h:4
 #, fuzzy
-msgid "<i>Preperaring packages...</i>"
+msgid "<i>Preparing packages...</i>"
 msgstr "Paketliste wird gesäubert..."
+
+#: gtk/window_rgdebinstall_progress.glade.h:5
+#, fuzzy
+msgid "Terminal"
+msgstr "_Terminal-Schrift"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3126,6 +3216,15 @@ msgstr "Suchchronik"
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
+#~ "\n"
+#~ "Secondary Text"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Notwendige Änderungen vormerken?</"
+#~ "span>"
+
 #~ msgid "ignore"
 #~ msgstr "ignorieren"
 
@@ -3198,10 +3297,6 @@ msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 #~ "\n"
 #~ "The following packages are re-installed:\n"
 #~ msgstr "%d Paket wird erneut installiert\n"
-
-#, fuzzy
-#~ msgid "To be removed with configuration"
-#~ msgstr "Entfernen einschließlich der Konfiguration"
 
 #~ msgid "To be not upgraded"
 #~ msgstr "Nicht zu aktualisierende Pakete"
@@ -3583,9 +3678,6 @@ msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 
 #~ msgid "No Changes"
 #~ msgstr "Unverändert"
-
-#~ msgid "Install"
-#~ msgstr "Installieren"
 
 #, fuzzy
 #~ msgid "Reinstall"
@@ -4120,9 +4212,6 @@ msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 #~ msgid "%s %s: will be Upgraded to %s\n"
 #~ msgstr "%s %s: wird aktualisiert zu %s\n"
 
-#~ msgid "packages"
-#~ msgstr "Pakete werden"
-
 #~ msgid "package"
 #~ msgstr "Paket wird"
 
@@ -4147,9 +4236,6 @@ msgstr "Software-Pakete installieren, entfernen und aktualisieren"
 #, fuzzy
 #~ msgid "No changes"
 #~ msgstr "U_nverändert"
-
-#~ msgid "Configure"
-#~ msgstr "Konfigurieren"
 
 #~ msgid "Software"
 #~ msgstr "Software"

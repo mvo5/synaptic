@@ -68,6 +68,10 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[4]));
     _config->Set("Synaptic::UseRecommends",  newval ? "true" : "false");
 
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[5]));
+    _config->Set("Synaptic::AskQuitOnProceed",  newval ? "true" : "false");
+
+
     int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
     _config->Set("Synaptic::undoStackSize",  maxUndo);
     
@@ -167,6 +171,9 @@ void RGConfigWindow::show()
 				 _config->FindB("Synaptic::UseRecommends",
 					 	UseRecommends));
 
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[5]),
+				 _config->FindB("Synaptic::AskQuitOnProceed", 
+						false));
 
     postClean = _config->FindB("Synaptic::CleanCache", false);
     postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
@@ -258,6 +265,7 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
     _optionB[2] = glade_xml_get_widget(_gladeXML, "check_ask_related");
     _optionB[3] = glade_xml_get_widget(_gladeXML, "check_terminal");
     _optionB[4] = glade_xml_get_widget(_gladeXML, "check_recommends");
+    _optionB[5] = glade_xml_get_widget(_gladeXML, "check_ask_quit");
 
     _cacheB[0] = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
     _cacheB[1] = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");

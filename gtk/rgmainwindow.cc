@@ -644,7 +644,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     gchar *pkgname = NULL;
     RGSummaryWindow *summ;
 
-    if(pkg != NULL) 
+    if (pkg != NULL) 
       pkgname = g_strdup(pkg->name());
 
     // check whether we can really do it
@@ -714,12 +714,22 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
     me->showErrors();
 
-    if (_config->FindB("Volatile::Non-Interactive", FALSE) == TRUE) {
+    if (_config->FindB("Volatile::Non-Interactive", false) == true) {
 	g_free(pkgname);
 	return;
     }
 
-    if (_config->FindB("Synaptic::Download-Only", FALSE) == FALSE) {
+    if (_config->FindB("Synaptic::AskQuitOnProceed", false) == true
+	&& me->_userDialog->confirm(_("Do you want to quit Synaptic?"))) {
+	g_free(pkgname);
+	_error->Discard();
+	me->saveState();
+	me->showErrors();
+	exit(0);
+	return;
+    }
+
+    if (_config->FindB("Synaptic::Download-Only", false) == false) {
       // reset the cache
       gtk_tree_view_set_model (GTK_TREE_VIEW(me->_treeView), NULL);
       if (!me->_lister->openCache(TRUE)) {
@@ -728,7 +738,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
       }
     }
 
-    if(pkgname != NULL) {
+    if (pkgname != NULL) {
       int row = me->_lister->findPackage(pkgname);
       pkg = me->_lister->getElement(row);
     } else {
@@ -1988,9 +1998,9 @@ void RGMainWindow::buildInterface()
 
     _vpaned =  glade_xml_get_widget(_gladeXML, "vpaned_main");
     assert(_vpaned);
+    RGFlushInterface();
     gtk_paned_set_position(GTK_PANED(_vpaned), 
  			   _config->FindI("Synaptic::vpanedPos", 140));
-    RGFlushInterface();
 
     _stateP = GTK_IMAGE(glade_xml_get_widget(_gladeXML, "image_state"));
     assert(_stateP);

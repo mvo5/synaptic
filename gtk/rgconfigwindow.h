@@ -25,7 +25,7 @@
 
 class RGConfigWindow : public RGWindow {
   RGMainWindow *_mainWin;
-  GtkWidget *_optionB[5];
+  GtkWidget *_optionB[6];
   GtkWidget *_cacheB[3];
   GtkWidget *_pathT;
   GtkWidget *_sizeT;

@@ -25,7 +25,7 @@
 #include "config.h"
 #include "i18n.h"
 #include <fstream>
-#include <strstream>
+#include <sstream>
 #include <dirent.h>
 
 #include <apt-pkg/error.h>
@@ -89,7 +89,7 @@ bool RAPTOptions::restore()
   // new stuff
   while(!in.eof()) {
     getline(in, line);
-    istrstream strstr(line.c_str());
+    istringstream strstr(line.c_str());
     strstr >> pkg >> o >> ws;
     _packageOptions[pkg] = o;
   }

@@ -77,7 +77,9 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
 	iter.user_data = List[i];
 	iter.user_data2 = GINT_TO_POINTER(i);
 	// fill in treepath
-	GtkTreePath *path = gtk_tree_path_new_from_indices(i,-1);
+	GtkTreePath *path = gtk_tree_path_new();
+	gtk_tree_path_append_index(path, i);
+
 	gtk_tree_model_row_changed(GTK_TREE_MODEL(_pkgList),
 				   path, &iter);
 	gtk_tree_path_free(path);
@@ -101,7 +103,8 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 		if(_lastDisplayList[j] == List[i])
 		    break;
 // 	    cout << "removed at pos: " << j << endl;
-	    GtkTreePath *path = gtk_tree_path_new_from_indices(j,-1);
+	    GtkTreePath *path = gtk_tree_path_new();
+	    gtk_tree_path_append_index(path,j);
 	    gtk_tree_model_row_deleted(GTK_TREE_MODEL(_pkgList), path);
 	    gtk_tree_path_free(path);
 	}
@@ -110,7 +113,9 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 		if(_lister->getElement(j) == List[i])
 		    break;
 // 	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
-	    GtkTreePath *path = gtk_tree_path_new_from_indices(j,-1);
+	    GtkTreePath *path = gtk_tree_path_new();
+	    gtk_tree_path_append_index(path,j);
+	    
 	    iter.user_data = List[i];
 	    iter.user_data2 = GINT_TO_POINTER(j);
 	    iter.stamp = 140677;

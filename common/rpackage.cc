@@ -35,6 +35,7 @@
 #include "i18n.h"
 
 #include <map>
+#include <algorithm>
 #include <fstream>
 #include <cstdio>
 #include <unistd.h>

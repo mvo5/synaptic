@@ -115,6 +115,8 @@ GdkColor *StatusColors[13];
 
 #if ! GTK_CHECK_VERSION(2,2,0)
 // this function is needed to be compatible with gtk2.0
+// data takes a GList** and fills the list with GtkTreePathes 
+// (just like the return of gtk_tree_selection_get_selected_rows())
 void multipleSelectionHelper(GtkTreeModel *model,
 			     GtkTreePath *path,
 			     GtkTreeIter *iter,

@@ -353,7 +353,8 @@ void RGFetchProgress::refreshTable(int row, bool append)
     GtkTreePath *path;
     if (append == true) {
 	gtk_list_store_insert(_tableListStore, &iter, row);
-        path = gtk_tree_path_new_from_indices(row, -1);
+        path = gtk_tree_path_new();
+	gtk_tree_path_append_index(path, row);
         gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
         gtk_tree_path_free(path);
         // can't we use the iterator here?

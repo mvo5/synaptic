@@ -254,9 +254,12 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
     RFilter *filter;
     filter = me->_lister->findFilter(0);
     filter->reset();
-    const char *pattern = gtk_entry_get_text(GTK_ENTRY(me->_findText));
-    filter->pattern.addPattern(RPatternPackageFilter::Name,
-			       pattern, FALSE);
+    const char *C = gtk_entry_get_text(GTK_ENTRY(me->_findText));
+    string S;
+    while (*C != 0) {
+	if (ParseQuoteWord(C, S) == true)
+	    filter->pattern.addPattern(RPatternPackageFilter::Name, S, false);
+    }
     me->changeFilter(1);
 }
 
@@ -1650,9 +1653,13 @@ void RGMainWindow::searchPkgAction(void *self, RGFindWindow *findWin)
     
   filter = me->_lister->findFilter(0);
   filter->reset();
-  filter->pattern.addPattern(me->_findWin->getSearchType(),
-			     me->_findWin->getFindString(),
-			     FALSE);
+  RPatternPackageFilter::DepType type = me->_findWin->getSearchType();
+  const char *C = me->_findWin->getFindString().c_str();
+  string S;
+  while (*C != 0) {
+    if (ParseQuoteWord(C, S) == true)
+      filter->pattern.addPattern(type, S, false);
+  }
   me->changeFilter(1);
 
   findWin->hide();

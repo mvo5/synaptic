@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-29 22:51+0100\n"
-"PO-Revision-Date: 2004-11-15 17:01+0100\n"
+"PO-Revision-Date: 2004-12-10 18:30+0100\n"
 "Last-Translator: Mauro Colorio <linuxbox at interfree it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -369,9 +369,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "ERRORE: impossibile creare la cartella di configurazione %s"
 
 #: common/rconfiguration.cc:143
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create log directory %s"
-msgstr "ERRORE: impossibile creare la cartella di configurazione %s"
+msgstr "ERRORE: impossibile creare la cartella di log %s"
 
 #: common/rconfiguration.cc:227
 #, c-format
@@ -706,53 +706,47 @@ msgid "Unable to correct missing packages"
 msgstr "Impossibile correggere i pacchetti mancanti"
 
 #: common/rpackagelister.cc:1487
-#, fuzzy
 msgid ""
 "\n"
 "The following ESSENTIAL packages are removed:\n"
-msgstr "verrà aggiornato %d pacchetto\n"
+msgstr "\nI seguenti pacchetti ESSENZIALI sono stati rimossi:\n"
 
 #: common/rpackagelister.cc:1495
-#, fuzzy
 msgid ""
 "\n"
 "The following packages are DOWNGRADED:\n"
-msgstr "verrà aggiornato %d pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati RETROCESSI:\n"
 
 #: common/rpackagelister.cc:1503
-#, fuzzy
 msgid ""
 "\n"
 "The following packages are purged:\n"
-msgstr "verrà aggiornato %d pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati purgati:\n"
 
 #: common/rpackagelister.cc:1511
-#, fuzzy
 msgid ""
 "\n"
 "The following packages are removed:\n"
-msgstr "verrà aggiornato %d pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati rimossi:\n"
 
 #: common/rpackagelister.cc:1519
-#, fuzzy
 msgid ""
 "\n"
 "The following packages are upgraded:\n"
-msgstr "verrà aggiornato %d pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati aggiornati:\n"
 
 #: common/rpackagelister.cc:1529
-#, fuzzy
+
 msgid ""
 "\n"
 "The following packages are installed:\n"
-msgstr "verrà installato %d nuovo pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati installati:\n"
 
 #: common/rpackagelister.cc:1538
-#, fuzzy
 msgid ""
 "\n"
 "The following packages are re-installed:\n"
-msgstr "verrà reinstallato %d nuovo pacchetto\n"
+msgstr "\nI seguenti pacchetti sono stati reinstallati:\n"
 
 #: common/rpackagelister.cc:1555
 msgid "Unable to lock the download directory"
@@ -1162,7 +1156,7 @@ msgstr ""
 
 #: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:166
 msgid "Applying Changes"
-msgstr "Applicando le modifiche"
+msgstr "Applicazione delle modifiche"
 
 #: gtk/rgpkgdetails.cc:103
 #, c-format
@@ -1392,19 +1386,18 @@ msgid "Save full state, not only changes"
 msgstr "Salva lo stato, non solo le modifiche"
 
 #: gtk/rgmainwindow.cc:2098
-#, fuzzy
 msgid "Repositories changed"
-msgstr "Archivi dei pacchetti"
+msgstr "Archivi cambiati"
 
 #: gtk/rgmainwindow.cc:2099
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
-msgstr ""
+msgstr "Le informazioni nell'archivio sono state cambiate. Bisogna aggiornare la lista perchè le modifiche abbiano effetto"
 
 #: gtk/rgmainwindow.cc:2110
 msgid "Never show this message again"
-msgstr ""
+msgstr "Non visualizzare di nuovo questo messaggio"
 
 #: gtk/rgmainwindow.cc:2164
 #, c-format
@@ -1588,7 +1581,7 @@ msgstr "Tipo sorgente sconosciuta"
 
 #: gtk/rgsummarywindow.cc:92
 msgid "NOT AUTHENTICATED"
-msgstr ""
+msgstr "NON AUTENTICATO"
 
 #: gtk/rgsummarywindow.cc:108
 msgid "(ESSENTIAL) to be removed"
@@ -1599,9 +1592,8 @@ msgid "To be DOWNGRADED"
 msgstr "Da retrocedere"
 
 #: gtk/rgsummarywindow.cc:147
-#, fuzzy
 msgid "To be removed with configuration"
-msgstr "Rimuovi anche la configurazione"
+msgstr "Da rimuovere compresa la configurazione"
 
 #: gtk/rgsummarywindow.cc:199
 msgid "To be not upgraded"
@@ -1618,9 +1610,9 @@ msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> verrà <b>retrocesso</b>\n"
 
 #: gtk/rgsummarywindow.cc:261
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
-msgstr "<b>%s</b> verrà rimosso\n"
+msgstr "<b>%s</b> verrà rimosso con la configurazione\n"
 
 #: gtk/rgsummarywindow.cc:269
 #, c-format
@@ -1939,7 +1931,7 @@ msgstr "Versioni"
 
 #: gtk/window_main.glade.h:46
 msgid "View Commit Log"
-msgstr ""
+msgstr "Visualizza il log dei Commit"
 
 #: gtk/window_main.glade.h:47
 msgid "_About"
@@ -1963,7 +1955,7 @@ msgstr "_Contenuti"
 
 #: gtk/window_main.glade.h:52
 msgid "_Custom"
-msgstr "_Custom"
+msgstr "_Personalizzato"
 
 #: gtk/window_main.glade.h:53
 msgid "_Download Changelog"
@@ -2172,7 +2164,7 @@ msgid "translators-credits"
 msgstr ""
 "Mauro Colorio <linuxbox at interfree.it> (Italian) \n"
 "Luigi Maselli <metnik at tiscali it> (Italian) \n"
-"Lele Gaifas"
+"Lele Gaifas <lele at seldati.it> (Italian)"
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:3
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -2204,9 +2196,7 @@ msgstr "Visualizza avanzamento dei singoli file"
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Segnare le ulteriori modifiche "
-"richieste?</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Confermare le ulteriori modifiche richieste?</span>"
 
 #: gtk/window_changes.glade.h:2
 msgid ""
@@ -2504,11 +2494,11 @@ msgstr "Aggiornabile:"
 
 #: gtk/window_preferences.glade.h:73
 msgid "Use custom application font"
-msgstr "Utilizza carattere custom"
+msgstr "Utilizza carattere personalizzato"
 
 #: gtk/window_preferences.glade.h:74
 msgid "Use custom terminal font"
-msgstr "Utilizza carattere terminale custom"
+msgstr "Utilizza carattere terminale personalizzato"
 
 #: gtk/window_preferences.glade.h:75
 msgid "_Delete Cached Package Files"
@@ -3049,7 +3039,6 @@ msgstr ""
 "pacchetto (es: CD o connessione di rete)."
 
 #: gtk/dialog_update_outdated.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Your package information is out of "
 "date</span>\n"
@@ -3058,12 +3047,9 @@ msgid ""
 "security updates available. It is recommended to reload the package "
 "information regularly."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Your package information is out of "
-"date</span>\n"
+"<span weight=\"bold\" size=\"larger\">Le informazioni sui pacchetti sono scadute</span>\n"
 "\n"
-"Le informazioni sui pacchetti sono più vecchie di 48 ore. Potrebbero esserci "
-"degli aggiornamenti riguardanti la sicurezza. E' raccomandabile aggionrare "
-"le informazioni sui pacchetti regolarmente."
+"Le informazioni sui pacchetti sono più vecchie di 48 ore. Potrebbero esserci degli aggiornamenti riguardanti la sicurezza. E' raccomandabile aggionrare le informazioni sui pacchetti regolarmente."
 
 #: gtk/dialog_update_outdated.glade.h:4
 msgid "Remember the answer"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.16\n"
-"POT-Creation-Date: 2003-03-03 19:57+0100\n"
+"POT-Creation-Date: 2003-03-05 22:52-0300\n"
 "PO-Revision-Date: 2003-01-09 13:46+0300\n"
 "Last-Translator: Rail Aliev <rail@iqchoice.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -13,6 +13,101 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-9\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.6\n"
+
+#: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
+#, c-format
+msgid "Stat failed for %s"
+msgstr ""
+
+#: common/indexcopy.cc:82 common/rpmindexcopy.cc:112
+#, fuzzy
+msgid "Unable to create a tmp file"
+msgstr "CD-ROM veritabaný okunamýyor %s"
+
+#: common/indexcopy.cc:89
+msgid "Couldn't fork gzip"
+msgstr ""
+
+#: common/indexcopy.cc:110
+msgid "gzip failed, perhaps the disk is full."
+msgstr ""
+
+#: common/indexcopy.cc:131
+#, fuzzy
+msgid "Failed to reopen fd"
+msgstr "%s.new açarken hata"
+
+#: common/indexcopy.cc:169
+msgid "Missed: "
+msgstr ""
+
+#: common/indexcopy.cc:196
+msgid "Missed(2): "
+msgstr ""
+
+#: common/indexcopy.cc:206
+msgid "Wrong Size: "
+msgstr ""
+
+#: common/indexcopy.cc:224
+msgid " Processed by using Prefix '"
+msgstr ""
+
+#: common/indexcopy.cc:225
+msgid "' and chop "
+msgstr ""
+
+#: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
+#: common/rpmindexcopy.cc:216
+#, fuzzy
+msgid "Failed to rename"
+msgstr "%s dosyasý %s olarak deðiþtirilemiyor"
+
+#. Some stats
+#: common/indexcopy.cc:275
+msgid "Wrote "
+msgstr ""
+
+#: common/indexcopy.cc:275
+msgid " records"
+msgstr ""
+
+#: common/indexcopy.cc:277 common/indexcopy.cc:281
+msgid " with "
+msgstr ""
+
+#: common/indexcopy.cc:277
+msgid " missing files"
+msgstr ""
+
+#: common/indexcopy.cc:279
+msgid " and"
+msgstr ""
+
+#: common/indexcopy.cc:281
+msgid " mismatched files"
+msgstr ""
+
+#: common/indexcopy.cc:285
+msgid "No valid records were found."
+msgstr ""
+
+#: common/indexcopy.cc:288
+msgid "Alot of entries were discarded, something may be wrong."
+msgstr ""
+
+#: common/indexcopy.cc:329
+#, fuzzy
+msgid "Failed, "
+msgstr "Baþarýsýz"
+
+#: common/indexcopy.cc:464
+msgid "Cannot find filename or size tag"
+msgstr ""
+
+#: common/indexcopy.cc:505
+msgid "Error parsing file record"
+msgstr "Dosya ayrýþtýrýrken hata"
 
 #: common/rcdscanner.cc:112 common/rcdscanner.cc:165
 #, c-format
@@ -37,7 +132,7 @@ msgstr ""
 msgid "Unable to read the cdrom database %s"
 msgstr "CD-ROM veritabaný okunamýyor %s"
 
-#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:435
+#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:436
 #, fuzzy
 msgid "Unmounting CD-ROM..."
 msgstr "CD-ROM baðlanýyor"
@@ -56,10 +151,19 @@ msgstr ""
 msgid "Mounting CD-ROM..."
 msgstr "CD-ROM baðlanýyor"
 
+#: common/rcdscanner.cc:303
+msgid "Failed to mount the cdrom."
+msgstr ""
+
 #: common/rcdscanner.cc:307
 #, fuzzy
 msgid "Identifying disc..."
 msgstr "Disk kimliði belirleniyor"
+
+#: common/rcdscanner.cc:310
+#, fuzzy
+msgid "Couldn't identify disc."
+msgstr "Disk kimliði belirlenemiyor"
 
 #: common/rcdscanner.cc:313
 #, fuzzy
@@ -71,32 +175,58 @@ msgstr "Disk taranýyor"
 msgid "Cleaning package lists..."
 msgstr "Ana pencerede renleri kullan"
 
-#: common/rcdscanner.cc:393
+#: common/rcdscanner.cc:341
+msgid ""
+"Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgstr ""
+
+#: common/rcdscanner.cc:394
 msgid "Disc not successfuly scanned."
 msgstr ""
 
-#: common/rcdscanner.cc:397
+#: common/rcdscanner.cc:398
 msgid "Empty disc name."
 msgstr ""
 
-#: common/rcdscanner.cc:400
+#: common/rcdscanner.cc:401
 #, fuzzy
 msgid "Registering disc..."
 msgstr "Disk kimliði belirleniyor"
 
-#: common/rcdscanner.cc:415
+#: common/rcdscanner.cc:416
 #, fuzzy
 msgid "Copying package lists..."
 msgstr "Paket listesi sunuculardan güncelleniyor..."
 
-#: common/rcdscanner.cc:424
+#: common/rcdscanner.cc:425
 msgid "Writing sources list..."
 msgstr ""
 
-#: common/rcdscanner.cc:439
+#: common/rcdscanner.cc:440
 #, fuzzy
 msgid "Done!"
 msgstr "Tamamlandý"
+
+#: common/rcdscanner.cc:540
+#, fuzzy, c-format
+msgid "Failed to stat %s%s"
+msgstr "%s dosyasý %s olarak deðiþtirilemiyor"
+
+#: common/rcdscanner.cc:646 common/rcdscanner.cc:750
+#, fuzzy, c-format
+msgid "Unable to change to %s"
+msgstr "Ýndirme dizininin kilitlenmesi olanaksýz %s"
+
+#: common/rcdscanner.cc:688
+#, fuzzy, c-format
+msgid "Unable to read %s"
+msgstr "Ýndirme dizininin kilitlenmesi olanaksýz %s"
+
+#: common/rconfiguration.cc:82 common/rconfiguration.cc:170
+#: common/rconfiguration.cc:195
+#, c-format
+msgid "couldn't open %s for writing"
+msgstr "%s yazýlamýyor"
 
 #: common/rconfiguration.cc:107
 msgid "Could not get password entry for superuser"
@@ -106,11 +236,6 @@ msgstr "Root için geçerli olan parola alýnamadý "
 #, c-format
 msgid "could not create configuration directory %s"
 msgstr "ayarlar dizini %s oluþturulamadý"
-
-#: common/rconfiguration.cc:170 common/rconfiguration.cc:195
-#, c-format
-msgid "couldn't open %s for writing"
-msgstr "%s yazýlamýyor"
 
 #: common/rpackage.cc:479
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
@@ -149,12 +274,16 @@ msgstr "Kaynaklar listesi okunamýyor."
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "Paket listesi veya durum dosyasý analiz edilemiyor veya açýlamýyor."
 
+#: common/rpackagecache.cc:89
+msgid "Internal Error, non-zero counts"
+msgstr ""
+
 #: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:80
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "Durum"
 
-#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:550
+#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:551
 #: wings/rwfiltereditor.cc:471
 msgid "Pattern"
 msgstr "Desen"
@@ -175,38 +304,51 @@ msgstr "Öncelik"
 msgid "Name"
 msgstr "Adý"
 
-#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
-#: gtk/window_main.glade.strings:62
+#: common/rpackagefilter.cc:128
+#, fuzzy
+msgid "Version"
+msgstr "    Sürüm"
+
+#: common/rpackagefilter.cc:129 gtk/rgmainwindow.cc:2145
+#: gtk/window_main.glade.strings:36 gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "Açýklama"
 
-#: common/rpackagefilter.cc:129
+#: common/rpackagefilter.cc:130
 msgid "Depends"
 msgstr "Baðýmlýlýklarý"
 
 #. depends, predepends etc
-#: common/rpackagefilter.cc:130 gtk/rgfiltereditor.cc:53
+#: common/rpackagefilter.cc:131 gtk/rgfiltereditor.cc:54
 #: wings/rwfiltereditor.cc:418
 msgid "Provides"
 msgstr "Saðlanan"
 
-#: common/rpackagefilter.cc:131
+#: common/rpackagefilter.cc:132
 msgid "Conflicts"
 msgstr "Çakýþtýðý"
 
 #. conflicts
-#: common/rpackagefilter.cc:132 gtk/rgfiltereditor.cc:55
+#: common/rpackagefilter.cc:133 gtk/rgfiltereditor.cc:56
 #: wings/rwfiltereditor.cc:420
 msgid "Replaces"
 msgstr "Deðiþiklikler"
 
-#: common/rpackagefilter.cc:133
+#: common/rpackagefilter.cc:134
 msgid "WeakDepends"
 msgstr "Zayýf Baðýmlýlýklarý"
 
-#: common/rpackagefilter.cc:134
+#: common/rpackagefilter.cc:135
 msgid "ReverseDepends"
 msgstr "TersBaðýmlýlýklarý"
+
+#: common/rpackagefilter.cc:506
+msgid "empty filter name!? should _never_ happen, please report"
+msgstr ""
+
+#: common/rpackagefilter.cc:511
+msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
+msgstr ""
 
 #: common/rpackagelister.cc:126
 msgid "Search Filter"
@@ -219,12 +361,12 @@ msgstr "Arama Süzgeci"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:353
+#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:354
 #: wings/rwfiltereditor.cc:321 wings/rwmainwindow.cc:1951
 msgid "Installed"
 msgstr "Kurulu"
 
-#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:345
+#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:346
 #: wings/rwfiltereditor.cc:311
 msgid "Not Installed"
 msgstr "Kurulu deðil"
@@ -237,7 +379,7 @@ msgstr "Görevler"
 msgid "Upgradable"
 msgstr "Güncellenebilir"
 
-#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
+#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:375
 #: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:29
 msgid "Broken"
 msgstr "Yarým kalan"
@@ -250,6 +392,24 @@ msgstr "Programlanan deðiþiklikler"
 #: common/rpackagelister.cc:327
 msgid "Internal error recalculating dependency cache."
 msgstr "  önbelleðin tekrar hesaplanmasýnda dahili hata."
+
+#: common/rpackagelister.cc:383
+#, fuzzy
+msgid "package "
+msgstr "paket"
+
+#: common/rpackagelister.cc:383
+msgid " has no section?!"
+msgstr ""
+
+#: common/rpackagelister.cc:502
+msgid "Internal Error, AllUpgrade broke stuff"
+msgstr ""
+
+#: common/rpackagelister.cc:515
+#, fuzzy
+msgid "dist upgrade Failed"
+msgstr "Sürum Güncl."
 
 #: common/rpackagelister.cc:1050
 msgid "Unable to lock the list directory"
@@ -270,6 +430,11 @@ msgid ""
 msgstr ""
 "Bazý index dosyalarýnýn indirilmesi iptal edildi, dosyalar görmemezlikten "
 "gelindi veya onu yerine eski bir sürümü kullanýldý."
+
+#: common/rpackagelister.cc:1168
+#, fuzzy
+msgid "Failed to fetch "
+msgstr "Saðlama dosyasý alýnamadý."
 
 #: common/rpackagelister.cc:1188
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -299,6 +464,35 @@ msgstr ""
 
 #: common/rpackagelister.cc:1351
 msgid "Setting selections..."
+msgstr ""
+
+#: common/rpmindexcopy.cc:119
+msgid "Couldn't fork bzip2"
+msgstr ""
+
+#: common/rpmindexcopy.cc:139
+msgid "bzip2 failed, perhaps the disk is full."
+msgstr ""
+
+#: gtk/gsynaptic.cc:57
+#, fuzzy
+msgid "Usage: synaptic [options] \n"
+msgstr "Synaptic seçeneklerini ayarla"
+
+#: gtk/gsynaptic.cc:58
+msgid "-h   This help text \n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:59
+msgid "-f=? Give a alternative filter file\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:60
+msgid "-i=? Start with the initialFilter with the number given\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:61
+msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
 #: gtk/gsynaptic.cc:149 wings/synaptic.cc:80
@@ -347,11 +541,11 @@ msgstr "%-3li/%-3li dosya    %4sB/s   ETA %6s\n"
 msgid "(stalled)\n"
 msgstr "(duraksadý)\n"
 
-#: gtk/rgfetchprogress.cc:238
+#: gtk/rgfetchprogress.cc:238 wings/rwfetchprogress.cc:241
 msgid "[Working] "
 msgstr "[Ýþleniyor] "
 
-#: gtk/rgfetchprogress.cc:243
+#: gtk/rgfetchprogress.cc:243 wings/rwfetchprogress.cc:246
 msgid "[Receiving] "
 msgstr "[Alýnyor] "
 
@@ -371,11 +565,11 @@ msgstr "Baþarýlý"
 msgid "Failed"
 msgstr "Baþarýsýz"
 
-#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:577
+#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:578
 msgid "Include"
 msgstr "Dahil et"
 
-#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:587
+#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:588
 msgid "Exclude"
 msgstr "Dahil etme"
 
@@ -383,97 +577,102 @@ msgstr "Dahil etme"
 msgid "are Named"
 msgstr "adlandýrýlmýþ"
 
-#: gtk/rgfiltereditor.cc:51 wings/rwfiltereditor.cc:416
+#: gtk/rgfiltereditor.cc:51
+#, fuzzy
+msgid "in Version"
+msgstr "    Sürüm"
+
+#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:416
 msgid "in Description"
 msgstr "Açýklama"
 
-#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:417
+#: gtk/rgfiltereditor.cc:53 wings/rwfiltereditor.cc:417
 msgid "Depends on"
 msgstr "Baðýmlýlýk"
 
 #. provides and name
-#: gtk/rgfiltereditor.cc:54 wings/rwfiltereditor.cc:419
+#: gtk/rgfiltereditor.cc:55 wings/rwfiltereditor.cc:419
 msgid "Conflicts with"
 msgstr "Çakýþtýðý"
 
 #. replaces/obsoletes
-#: gtk/rgfiltereditor.cc:56
+#: gtk/rgfiltereditor.cc:57
 msgid "Suggests or Recommends"
 msgstr "Teklif edilen veya önerilen"
 
 #. suggests/recommends
-#: gtk/rgfiltereditor.cc:57
+#: gtk/rgfiltereditor.cc:58
 msgid "Reverse Depends"
 msgstr "Ters Baðýmlýlýklarý"
 
-#: gtk/rgfiltereditor.cc:319 wings/rwfiltereditor.cc:283
+#: gtk/rgfiltereditor.cc:320 wings/rwfiltereditor.cc:283
 msgid "Include Only Selected Sections"
 msgstr "Sadece iþaretli olan seçenekler"
 
-#: gtk/rgfiltereditor.cc:323 wings/rwfiltereditor.cc:287
+#: gtk/rgfiltereditor.cc:324 wings/rwfiltereditor.cc:287
 msgid "Exclude Selected Sections"
 msgstr "Ýþaretli seçenekleri dýþla"
 
-#: gtk/rgfiltereditor.cc:328 wings/rwfiltereditor.cc:292
+#: gtk/rgfiltereditor.cc:329 wings/rwfiltereditor.cc:292
 msgid "by Section"
 msgstr "Seçeneklerden"
 
-#: gtk/rgfiltereditor.cc:342 wings/rwfiltereditor.cc:307
+#: gtk/rgfiltereditor.cc:343 wings/rwfiltereditor.cc:307
 msgid "Include packages that are..."
 msgstr "Seçilen paketler bunlardýr..."
 
-#: gtk/rgfiltereditor.cc:349 wings/rwfiltereditor.cc:316
+#: gtk/rgfiltereditor.cc:350 wings/rwfiltereditor.cc:316
 msgid "Installed and Upgradable"
 msgstr "Kurulu ve Güncellenebilir"
 
-#: gtk/rgfiltereditor.cc:362 wings/rwfiltereditor.cc:326
+#: gtk/rgfiltereditor.cc:363 wings/rwfiltereditor.cc:326
 msgid "Marked to Keep"
 msgstr "Ýþaretli olanlarý tut"
 
-#: gtk/rgfiltereditor.cc:366 wings/rwfiltereditor.cc:331
+#: gtk/rgfiltereditor.cc:367 wings/rwfiltereditor.cc:331
 msgid "Marked to Install/Upgrade"
 msgstr "Ýþaretlileri Kur/Güncelle"
 
-#: gtk/rgfiltereditor.cc:370 wings/rwfiltereditor.cc:336
+#: gtk/rgfiltereditor.cc:371 wings/rwfiltereditor.cc:336
 msgid "Marked to Remove"
 msgstr "Ýþaretlileri sil"
 
-#: gtk/rgfiltereditor.cc:382 gtk/rgfiltereditor.cc:628
+#: gtk/rgfiltereditor.cc:383 gtk/rgfiltereditor.cc:629
 #: gtk/rgfiltermanager.cc:82 wings/rwfiltereditor.cc:484
 #: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:31
 msgid "New"
 msgstr "Yeni"
 
-#: gtk/rgfiltereditor.cc:386
+#: gtk/rgfiltereditor.cc:387
 msgid "Pinned"
 msgstr "Askýda"
 
-#: gtk/rgfiltereditor.cc:391
+#: gtk/rgfiltereditor.cc:392
 msgid "Orphaned"
 msgstr "Yetim"
 
-#: gtk/rgfiltereditor.cc:396
+#: gtk/rgfiltereditor.cc:397
 msgid "Residual Config"
 msgstr "Geriye Kalan Ayar"
 
-#: gtk/rgfiltereditor.cc:401
+#: gtk/rgfiltereditor.cc:402
 msgid "Debconf"
 msgstr ""
 
-#: gtk/rgfiltereditor.cc:408 wings/rwfiltereditor.cc:347
+#: gtk/rgfiltereditor.cc:409 wings/rwfiltereditor.cc:347
 msgid "by Status"
 msgstr "Durum bazýnda"
 
-#: gtk/rgfiltereditor.cc:548
+#: gtk/rgfiltereditor.cc:549
 msgid "Do"
 msgstr "Yap"
 
 #. sizeof(options)/sizeof(char*));
-#: gtk/rgfiltereditor.cc:549 wings/rwfiltereditor.cc:463
+#: gtk/rgfiltereditor.cc:550 wings/rwfiltereditor.cc:463
 msgid "Packages that"
 msgstr "Paketler"
 
-#: gtk/rgfiltereditor.cc:634 gtk/rgsrcwindow.cc:240
+#: gtk/rgfiltereditor.cc:635 gtk/rgsrcwindow.cc:240
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
@@ -481,7 +680,7 @@ msgstr "Paketler"
 msgid "Remove"
 msgstr "Sil"
 
-#: gtk/rgfiltereditor.cc:646 wings/rwfiltereditor.cc:499
+#: gtk/rgfiltereditor.cc:647 wings/rwfiltereditor.cc:499
 msgid "by Package"
 msgstr "Paket bazýnda"
 
@@ -498,12 +697,12 @@ msgstr "Sil"
 msgid "Clear"
 msgstr "Temizle"
 
-#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:218
+#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:217
 #: wings/rwfiltermanager.cc:99
 msgid "Save"
 msgstr "Kaydet"
 
-#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:213
+#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:212
 #: wings/rwfiltermanager.cc:103 wings/rwsourceswindow.cc:158
 msgid "Close"
 msgstr "Kapat"
@@ -570,6 +769,18 @@ msgstr "Kritik"
 #: gtk/rgmainwindow.cc:94 wings/rwmainwindow.cc:101
 msgid "Security"
 msgstr "Güvenlik"
+
+#: gtk/rgmainwindow.cc:148 gtk/rgmainwindow.cc:167 gtk/rgmainwindow.cc:199
+msgid " not found"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:187
+msgid "gtk_clist_get_text() returned no text"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:214
+msgid "clickedRecInstall called with invalid parm: "
+msgstr ""
 
 #: gtk/rgmainwindow.cc:381
 msgid ""
@@ -681,6 +892,11 @@ msgstr "Paket kurulacak."
 msgid "Package will be upgraded."
 msgstr "Paket güncellenecek."
 
+#. not handled yet
+#: gtk/rgmainwindow.cc:955 wings/rwmainwindow.cc:941
+msgid "OH SHIT!!"
+msgstr ""
+
 #: gtk/rgmainwindow.cc:960 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "Paket kaldýrýlacak."
@@ -710,8 +926,8 @@ msgid "_Upgrade"
 msgstr "_Güncelle"
 
 #. XXX Why this is commented out?
-#. appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
-#. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
+#. appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
+#. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
 #: gtk/rgmainwindow.cc:1217 wings/rwmainwindow.cc:1205
@@ -812,6 +1028,21 @@ msgstr ""
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Paketlerdeki seçilen deðiþiklikleri tespit et (gerekirse indir)"
 
+#: gtk/rgmainwindow.cc:2120 wings/rwmainwindow.cc:1938
+#: gtk/window_main.glade.strings:16
+msgid "Package"
+msgstr "Paket"
+
+#: gtk/rgmainwindow.cc:2128
+#, fuzzy
+msgid "Installed Version"
+msgstr "Kurulu"
+
+#: gtk/rgmainwindow.cc:2136
+#, fuzzy
+msgid "Available Version"
+msgstr "Mevcut"
+
 #: gtk/rgmainwindow.cc:2344
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
@@ -883,7 +1114,8 @@ msgstr "(imzasýz)"
 msgid "Edit"
 msgstr "Düzenle"
 
-#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/synaptic.cc:81
+#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/rwmainwindow.cc:700
+#: wings/synaptic.cc:81
 msgid "OK"
 msgstr "Tamam"
 
@@ -1037,6 +1269,15 @@ msgstr ""
 "Temel paketler silinecek.\n"
 "Bu iþlem sisteminizi kullanýlamaz hale getirebilir!!!\n"
 
+#. ignore some stupid error messages
+#: gtk/rguserdialog.cc:117 wings/rwmainwindow.cc:725
+msgid "Tried to dequeue a fetching object"
+msgstr ""
+
+#: gtk/synapticinterface.cc:38
+msgid "RInitConfiguration() failed\n"
+msgstr ""
+
 #: wings/rwaboutpanel.cc:96
 msgid ""
 "Copyright (c) 2001 Conectiva S/A\n"
@@ -1089,23 +1330,23 @@ msgstr ""
 msgid "Options"
 msgstr "Seçenekler"
 
-#: wings/rwconfigwindow.cc:152 gtk/window_options.glade.strings:14
+#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:14
 msgid "Leave downloaded packages in the cache"
 msgstr "Ýndirilen paketi önbellekte býrak"
 
-#: wings/rwconfigwindow.cc:156 gtk/window_options.glade.strings:15
+#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:15
 msgid "Delete downloaded packages after installation"
 msgstr "Kurulumdan sonra indirilen paketi sil"
 
-#: wings/rwconfigwindow.cc:160
+#: wings/rwconfigwindow.cc:159
 msgid "Delete obsoleted packages from cache"
 msgstr "Eskimiþ paketleri önbellekten sil"
 
-#: wings/rwconfigwindow.cc:204 gtk/window_options.glade.strings:17
+#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:17
 msgid "Cache"
 msgstr "Önbellek"
 
-#: wings/rwconfigwindow.cc:226
+#: wings/rwconfigwindow.cc:225
 msgid "Preferences"
 msgstr "Ayarlar"
 
@@ -1309,10 +1550,6 @@ msgstr ""
 "'Arama süzgeci' bölümünde, bütün desen ile eþleþen paketleri gösteren yeni "
 "bir süzgeç oluþturun"
 
-#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:16
-msgid "Package"
-msgstr "Paket"
-
 #: wings/rwmainwindow.cc:1958
 msgid "Available"
 msgstr "Mevcut"
@@ -1344,6 +1581,14 @@ msgstr "Depo Ekle"
 #: wings/rwsourceswindow.cc:150 gtk/window_main.glade.strings:11
 msgid "Add CD-ROM"
 msgstr "CD-ROM ekle"
+
+#: wings/rwsourceswindow.cc:164
+msgid "Setup Package Repositories (still not working!)"
+msgstr ""
+
+#: wings/rwsummarywindow.cc:279
+msgid "BUFFER OVERFLOW DETECTED, ABORTING"
+msgstr ""
 
 #: wings/rwsummarywindow.cc:305
 msgid "WARNING!!!"
@@ -1764,17 +2009,11 @@ msgstr ""
 #~ msgid "Could not mount CD-ROM"
 #~ msgstr "CD-ROM baðlanamýyor"
 
-#~ msgid "Could not Identify Disc"
-#~ msgstr "Disk kimliði belirlenemiyor"
-
 #~ msgid "Error Scanning Disc"
 #~ msgstr "Disk tarama hatasý"
 
 #~ msgid "Could not change directory to %s"
 #~ msgstr "%s dizinine geçilemiyor"
-
-#~ msgid "Unable to read directory %s"
-#~ msgstr "Ýndirme dizininin kilitlenmesi olanaksýz %s"
 
 #~ msgid "_statusL"
 #~ msgstr "Duru_m"
@@ -1870,9 +2109,6 @@ msgstr ""
 #~ msgid " Indexes"
 #~ msgstr " Indeksler"
 
-#~ msgid "Error parsing file record"
-#~ msgstr "Dosya ayrýþtýrýrken hata"
-
 #~ msgid "Package is held."
 #~ msgstr "Paket tutuluyor."
 
@@ -1881,9 +2117,6 @@ msgstr ""
 
 #~ msgid "Could not retrieve digitally signed hash file"
 #~ msgstr "Sayýsal imzalý saðlama dosyasý geri getirilemiyor"
-
-#~ msgid "Failed to fetch hash file: "
-#~ msgstr "Saðlama dosyasý alýnamadý."
 
 #~ msgid ""
 #~ "Some of the signed hash files could not be retrieved. Aborting update."

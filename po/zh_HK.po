@@ -6,13 +6,108 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
-"POT-Creation-Date: 2003-03-03 19:57+0100\n"
+"POT-Creation-Date: 2003-03-05 22:52-0300\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
+#, c-format
+msgid "Stat failed for %s"
+msgstr ""
+
+#: common/indexcopy.cc:82 common/rpmindexcopy.cc:112
+#, fuzzy
+msgid "Unable to create a tmp file"
+msgstr "無法讀取 CD-ROM 資料庫 %s"
+
+#: common/indexcopy.cc:89
+msgid "Couldn't fork gzip"
+msgstr ""
+
+#: common/indexcopy.cc:110
+msgid "gzip failed, perhaps the disk is full."
+msgstr ""
+
+#: common/indexcopy.cc:131
+#, fuzzy
+msgid "Failed to reopen fd"
+msgstr "開啟 %s.new 失敗"
+
+#: common/indexcopy.cc:169
+msgid "Missed: "
+msgstr ""
+
+#: common/indexcopy.cc:196
+msgid "Missed(2): "
+msgstr ""
+
+#: common/indexcopy.cc:206
+msgid "Wrong Size: "
+msgstr ""
+
+#: common/indexcopy.cc:224
+msgid " Processed by using Prefix '"
+msgstr ""
+
+#: common/indexcopy.cc:225
+msgid "' and chop "
+msgstr ""
+
+#: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
+#: common/rpmindexcopy.cc:216
+#, fuzzy
+msgid "Failed to rename"
+msgstr "開啟 %s.new 失敗"
+
+#. Some stats
+#: common/indexcopy.cc:275
+msgid "Wrote "
+msgstr ""
+
+#: common/indexcopy.cc:275
+msgid " records"
+msgstr ""
+
+#: common/indexcopy.cc:277 common/indexcopy.cc:281
+msgid " with "
+msgstr ""
+
+#: common/indexcopy.cc:277
+msgid " missing files"
+msgstr ""
+
+#: common/indexcopy.cc:279
+msgid " and"
+msgstr ""
+
+#: common/indexcopy.cc:281
+msgid " mismatched files"
+msgstr ""
+
+#: common/indexcopy.cc:285
+msgid "No valid records were found."
+msgstr ""
+
+#: common/indexcopy.cc:288
+msgid "Alot of entries were discarded, something may be wrong."
+msgstr ""
+
+#: common/indexcopy.cc:329
+#, fuzzy
+msgid "Failed, "
+msgstr "失敗"
+
+#: common/indexcopy.cc:464
+msgid "Cannot find filename or size tag"
+msgstr ""
+
+#: common/indexcopy.cc:505
+msgid "Error parsing file record"
+msgstr ""
 
 #: common/rcdscanner.cc:112 common/rcdscanner.cc:165
 #, c-format
@@ -37,7 +132,7 @@ msgstr ""
 msgid "Unable to read the cdrom database %s"
 msgstr "無法讀取 CD-ROM 資料庫 %s"
 
-#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:435
+#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:436
 #, fuzzy
 msgid "Unmounting CD-ROM..."
 msgstr "正在裝載 CD-ROM..."
@@ -56,10 +151,19 @@ msgstr ""
 msgid "Mounting CD-ROM..."
 msgstr "正在裝載 CD-ROM..."
 
+#: common/rcdscanner.cc:303
+msgid "Failed to mount the cdrom."
+msgstr ""
+
 #: common/rcdscanner.cc:307
 #, fuzzy
 msgid "Identifying disc..."
 msgstr "正在識別光碟..."
+
+#: common/rcdscanner.cc:310
+#, fuzzy
+msgid "Couldn't identify disc."
+msgstr "無法識別光碟"
 
 #: common/rcdscanner.cc:313
 #, fuzzy
@@ -71,32 +175,58 @@ msgstr "正在掃描光碟..."
 msgid "Cleaning package lists..."
 msgstr "套件主清單使用色彩顯示"
 
-#: common/rcdscanner.cc:393
+#: common/rcdscanner.cc:341
+msgid ""
+"Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgstr ""
+
+#: common/rcdscanner.cc:394
 msgid "Disc not successfuly scanned."
 msgstr ""
 
-#: common/rcdscanner.cc:397
+#: common/rcdscanner.cc:398
 msgid "Empty disc name."
 msgstr ""
 
-#: common/rcdscanner.cc:400
+#: common/rcdscanner.cc:401
 #, fuzzy
 msgid "Registering disc..."
 msgstr "正在識別光碟..."
 
-#: common/rcdscanner.cc:415
+#: common/rcdscanner.cc:416
 #, fuzzy
 msgid "Copying package lists..."
 msgstr "從伺服器更新套件清單..."
 
-#: common/rcdscanner.cc:424
+#: common/rcdscanner.cc:425
 msgid "Writing sources list..."
 msgstr ""
 
-#: common/rcdscanner.cc:439
+#: common/rcdscanner.cc:440
 #, fuzzy
 msgid "Done!"
 msgstr "已下載"
+
+#: common/rcdscanner.cc:540
+#, fuzzy, c-format
+msgid "Failed to stat %s%s"
+msgstr "開啟 %s.new 失敗"
+
+#: common/rcdscanner.cc:646 common/rcdscanner.cc:750
+#, fuzzy, c-format
+msgid "Unable to change to %s"
+msgstr "無法讀取目錄 %s"
+
+#: common/rcdscanner.cc:688
+#, fuzzy, c-format
+msgid "Unable to read %s"
+msgstr "無法讀取目錄 %s"
+
+#: common/rconfiguration.cc:82 common/rconfiguration.cc:170
+#: common/rconfiguration.cc:195
+#, c-format
+msgid "couldn't open %s for writing"
+msgstr "不能開啟 %s 進行寫入"
 
 #: common/rconfiguration.cc:107
 msgid "Could not get password entry for superuser"
@@ -106,11 +236,6 @@ msgstr "無法取得超級使用者的密碼輸入"
 #, c-format
 msgid "could not create configuration directory %s"
 msgstr "無法建立設定檔目錄 %s"
-
-#: common/rconfiguration.cc:170 common/rconfiguration.cc:195
-#, c-format
-msgid "couldn't open %s for writing"
-msgstr "不能開啟 %s 進行寫入"
 
 #: common/rpackage.cc:479
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
@@ -149,12 +274,16 @@ msgstr "無法讀取套件來源清單"
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "無法分析或開啟套件清單或狀態檔案。"
 
+#: common/rpackagecache.cc:89
+msgid "Internal Error, non-zero counts"
+msgstr ""
+
 #: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:80
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "狀態"
 
-#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:550
+#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:551
 #: wings/rwfiltereditor.cc:471
 msgid "Pattern"
 msgstr "樣板"
@@ -175,37 +304,50 @@ msgstr "優先級"
 msgid "Name"
 msgstr "名稱"
 
-#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
-#: gtk/window_main.glade.strings:62
+#: common/rpackagefilter.cc:128
+#, fuzzy
+msgid "Version"
+msgstr "    　　版本"
+
+#: common/rpackagefilter.cc:129 gtk/rgmainwindow.cc:2145
+#: gtk/window_main.glade.strings:36 gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "套件描述"
 
-#: common/rpackagefilter.cc:129
+#: common/rpackagefilter.cc:130
 msgid "Depends"
 msgstr "依賴"
 
 #. depends, predepends etc
-#: common/rpackagefilter.cc:130 gtk/rgfiltereditor.cc:53
+#: common/rpackagefilter.cc:131 gtk/rgfiltereditor.cc:54
 #: wings/rwfiltereditor.cc:418
 msgid "Provides"
 msgstr "提供"
 
-#: common/rpackagefilter.cc:131
+#: common/rpackagefilter.cc:132
 msgid "Conflicts"
 msgstr "不相容"
 
 #. conflicts
-#: common/rpackagefilter.cc:132 gtk/rgfiltereditor.cc:55
+#: common/rpackagefilter.cc:133 gtk/rgfiltereditor.cc:56
 #: wings/rwfiltereditor.cc:420
 msgid "Replaces"
 msgstr "取代"
 
-#: common/rpackagefilter.cc:133
+#: common/rpackagefilter.cc:134
 msgid "WeakDepends"
 msgstr ""
 
-#: common/rpackagefilter.cc:134
+#: common/rpackagefilter.cc:135
 msgid "ReverseDepends"
+msgstr ""
+
+#: common/rpackagefilter.cc:506
+msgid "empty filter name!? should _never_ happen, please report"
+msgstr ""
+
+#: common/rpackagefilter.cc:511
+msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
 msgstr ""
 
 #: common/rpackagelister.cc:126
@@ -219,12 +361,12 @@ msgstr "搜尋篩選器"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:353
+#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:354
 #: wings/rwfiltereditor.cc:321 wings/rwmainwindow.cc:1951
 msgid "Installed"
 msgstr "已安裝"
 
-#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:345
+#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:346
 #: wings/rwfiltereditor.cc:311
 msgid "Not Installed"
 msgstr "未安裝"
@@ -237,7 +379,7 @@ msgstr "任務"
 msgid "Upgradable"
 msgstr "可升級"
 
-#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
+#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:375
 #: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:29
 msgid "Broken"
 msgstr "安裝不完整"
@@ -250,6 +392,24 @@ msgstr "將要進行的修改"
 #: common/rpackagelister.cc:327
 msgid "Internal error recalculating dependency cache."
 msgstr "重新計算相依關係時出現內部錯誤。"
+
+#: common/rpackagelister.cc:383
+#, fuzzy
+msgid "package "
+msgstr "套件"
+
+#: common/rpackagelister.cc:383
+msgid " has no section?!"
+msgstr ""
+
+#: common/rpackagelister.cc:502
+msgid "Internal Error, AllUpgrade broke stuff"
+msgstr ""
+
+#: common/rpackagelister.cc:515
+#, fuzzy
+msgid "dist upgrade Failed"
+msgstr "全面升級(_D)"
 
 #: common/rpackagelister.cc:1050
 msgid "Unable to lock the list directory"
@@ -266,6 +426,11 @@ msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr "一些索引檔案下載失敗。它們已被略過，或暫由較舊檔案代替。"
+
+#: common/rpackagelister.cc:1168
+#, fuzzy
+msgid "Failed to fetch "
+msgstr "擷取 hash 檔案失敗: "
 
 #: common/rpackagelister.cc:1188
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -295,6 +460,35 @@ msgstr ""
 
 #: common/rpackagelister.cc:1351
 msgid "Setting selections..."
+msgstr ""
+
+#: common/rpmindexcopy.cc:119
+msgid "Couldn't fork bzip2"
+msgstr ""
+
+#: common/rpmindexcopy.cc:139
+msgid "bzip2 failed, perhaps the disk is full."
+msgstr ""
+
+#: gtk/gsynaptic.cc:57
+#, fuzzy
+msgid "Usage: synaptic [options] \n"
+msgstr "設定 Synaptic 選項"
+
+#: gtk/gsynaptic.cc:58
+msgid "-h   This help text \n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:59
+msgid "-f=? Give a alternative filter file\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:60
+msgid "-i=? Start with the initialFilter with the number given\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:61
+msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
 #: gtk/gsynaptic.cc:149 wings/synaptic.cc:80
@@ -343,11 +537,11 @@ msgstr "%-3li/%-3li 檔案    %4sB/s   尚餘 %6s\n"
 msgid "(stalled)\n"
 msgstr "(停頓)\n"
 
-#: gtk/rgfetchprogress.cc:238
+#: gtk/rgfetchprogress.cc:238 wings/rwfetchprogress.cc:241
 msgid "[Working] "
 msgstr "[工作中]"
 
-#: gtk/rgfetchprogress.cc:243
+#: gtk/rgfetchprogress.cc:243 wings/rwfetchprogress.cc:246
 msgid "[Receiving] "
 msgstr "[接收中]"
 
@@ -367,11 +561,11 @@ msgstr "已有"
 msgid "Failed"
 msgstr "失敗"
 
-#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:577
+#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:578
 msgid "Include"
 msgstr "包括"
 
-#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:587
+#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:588
 msgid "Exclude"
 msgstr "不包括"
 
@@ -379,98 +573,103 @@ msgstr "不包括"
 msgid "are Named"
 msgstr "名稱為"
 
-#: gtk/rgfiltereditor.cc:51 wings/rwfiltereditor.cc:416
+#: gtk/rgfiltereditor.cc:51
+#, fuzzy
+msgid "in Version"
+msgstr "    　　版本"
+
+#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:416
 msgid "in Description"
 msgstr "描述為"
 
-#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:417
+#: gtk/rgfiltereditor.cc:53 wings/rwfiltereditor.cc:417
 msgid "Depends on"
 msgstr "依賴套件為"
 
 #. provides and name
-#: gtk/rgfiltereditor.cc:54 wings/rwfiltereditor.cc:419
+#: gtk/rgfiltereditor.cc:55 wings/rwfiltereditor.cc:419
 msgid "Conflicts with"
 msgstr "不相容套件為"
 
 #. replaces/obsoletes
-#: gtk/rgfiltereditor.cc:56
+#: gtk/rgfiltereditor.cc:57
 msgid "Suggests or Recommends"
 msgstr "建議或推薦的套件為"
 
 #. suggests/recommends
-#: gtk/rgfiltereditor.cc:57
+#: gtk/rgfiltereditor.cc:58
 msgid "Reverse Depends"
 msgstr "反向依賴的套件為"
 
-#: gtk/rgfiltereditor.cc:319 wings/rwfiltereditor.cc:283
+#: gtk/rgfiltereditor.cc:320 wings/rwfiltereditor.cc:283
 msgid "Include Only Selected Sections"
 msgstr "只包括已選的組別"
 
-#: gtk/rgfiltereditor.cc:323 wings/rwfiltereditor.cc:287
+#: gtk/rgfiltereditor.cc:324 wings/rwfiltereditor.cc:287
 msgid "Exclude Selected Sections"
 msgstr "不包括已選的組別"
 
-#: gtk/rgfiltereditor.cc:328 wings/rwfiltereditor.cc:292
+#: gtk/rgfiltereditor.cc:329 wings/rwfiltereditor.cc:292
 msgid "by Section"
 msgstr "按組別篩選"
 
-#: gtk/rgfiltereditor.cc:342 wings/rwfiltereditor.cc:307
+#: gtk/rgfiltereditor.cc:343 wings/rwfiltereditor.cc:307
 msgid "Include packages that are..."
 msgstr "包括以下狀態的套件..."
 
-#: gtk/rgfiltereditor.cc:349 wings/rwfiltereditor.cc:316
+#: gtk/rgfiltereditor.cc:350 wings/rwfiltereditor.cc:316
 msgid "Installed and Upgradable"
 msgstr "已安裝並可升級的套件"
 
-#: gtk/rgfiltereditor.cc:362 wings/rwfiltereditor.cc:326
+#: gtk/rgfiltereditor.cc:363 wings/rwfiltereditor.cc:326
 msgid "Marked to Keep"
 msgstr "已標記要保留的套件"
 
-#: gtk/rgfiltereditor.cc:366 wings/rwfiltereditor.cc:331
+#: gtk/rgfiltereditor.cc:367 wings/rwfiltereditor.cc:331
 msgid "Marked to Install/Upgrade"
 msgstr "已標記要安裝或升級的套件"
 
-#: gtk/rgfiltereditor.cc:370 wings/rwfiltereditor.cc:336
+#: gtk/rgfiltereditor.cc:371 wings/rwfiltereditor.cc:336
 msgid "Marked to Remove"
 msgstr "已標記要移除的套件"
 
-#: gtk/rgfiltereditor.cc:382 gtk/rgfiltereditor.cc:628
+#: gtk/rgfiltereditor.cc:383 gtk/rgfiltereditor.cc:629
 #: gtk/rgfiltermanager.cc:82 wings/rwfiltereditor.cc:484
 #: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:31
 msgid "New"
 msgstr "新增"
 
-#: gtk/rgfiltereditor.cc:386
+#: gtk/rgfiltereditor.cc:387
 msgid "Pinned"
 msgstr "標記為永不升級的套件"
 
-#: gtk/rgfiltereditor.cc:391
+#: gtk/rgfiltereditor.cc:392
 msgid "Orphaned"
 msgstr "再沒有人維護的「孤兒」套件"
 
-#: gtk/rgfiltereditor.cc:396
+#: gtk/rgfiltereditor.cc:397
 msgid "Residual Config"
 msgstr "已移除但尚存舊設定檔的套件"
 
-#: gtk/rgfiltereditor.cc:401
+#: gtk/rgfiltereditor.cc:402
 msgid "Debconf"
 msgstr ""
 
-#: gtk/rgfiltereditor.cc:408 wings/rwfiltereditor.cc:347
+#: gtk/rgfiltereditor.cc:409 wings/rwfiltereditor.cc:347
 msgid "by Status"
 msgstr "按狀態篩選"
 
 # 譯註: Do (Include|Exclude)
-#: gtk/rgfiltereditor.cc:548
+#: gtk/rgfiltereditor.cc:549
 msgid "Do"
 msgstr "選擇..."
 
 #. sizeof(options)/sizeof(char*));
-#: gtk/rgfiltereditor.cc:549 wings/rwfiltereditor.cc:463
+#: gtk/rgfiltereditor.cc:550 wings/rwfiltereditor.cc:463
 msgid "Packages that"
 msgstr "套件的..."
 
-#: gtk/rgfiltereditor.cc:634 gtk/rgsrcwindow.cc:240
+#: gtk/rgfiltereditor.cc:635 gtk/rgsrcwindow.cc:240
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
@@ -478,7 +677,7 @@ msgstr "套件的..."
 msgid "Remove"
 msgstr "移除"
 
-#: gtk/rgfiltereditor.cc:646 wings/rwfiltereditor.cc:499
+#: gtk/rgfiltereditor.cc:647 wings/rwfiltereditor.cc:499
 msgid "by Package"
 msgstr "按套件資訊篩選"
 
@@ -495,12 +694,12 @@ msgstr "刪除"
 msgid "Clear"
 msgstr "清除"
 
-#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:218
+#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:217
 #: wings/rwfiltermanager.cc:99
 msgid "Save"
 msgstr "儲存"
 
-#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:213
+#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:212
 #: wings/rwfiltermanager.cc:103 wings/rwsourceswindow.cc:158
 msgid "Close"
 msgstr "關閉"
@@ -567,6 +766,18 @@ msgstr "重大更新"
 #: gtk/rgmainwindow.cc:94 wings/rwmainwindow.cc:101
 msgid "Security"
 msgstr "安全更新"
+
+#: gtk/rgmainwindow.cc:148 gtk/rgmainwindow.cc:167 gtk/rgmainwindow.cc:199
+msgid " not found"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:187
+msgid "gtk_clist_get_text() returned no text"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:214
+msgid "clickedRecInstall called with invalid parm: "
+msgstr ""
 
 #: gtk/rgmainwindow.cc:381
 msgid ""
@@ -675,6 +886,11 @@ msgstr "此套件將會被安裝。"
 msgid "Package will be upgraded."
 msgstr "此套件將會被升級。"
 
+#. not handled yet
+#: gtk/rgmainwindow.cc:955 wings/rwmainwindow.cc:941
+msgid "OH SHIT!!"
+msgstr ""
+
 #: gtk/rgmainwindow.cc:960 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "此套件將會被解除安裝。"
@@ -704,8 +920,8 @@ msgid "_Upgrade"
 msgstr "升級(_U)"
 
 #. XXX Why this is commented out?
-#. appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
-#. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
+#. appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
+#. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
 #: gtk/rgmainwindow.cc:1217 wings/rwmainwindow.cc:1205
@@ -802,6 +1018,21 @@ msgstr "升級已安裝的發行版本，包括有新相依關係的套件 (apt-
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "實行已選擇對套件的變更，並有需要時下載套件"
 
+#: gtk/rgmainwindow.cc:2120 wings/rwmainwindow.cc:1938
+#: gtk/window_main.glade.strings:16
+msgid "Package"
+msgstr "套件"
+
+#: gtk/rgmainwindow.cc:2128
+#, fuzzy
+msgid "Installed Version"
+msgstr "已安裝"
+
+#: gtk/rgmainwindow.cc:2136
+#, fuzzy
+msgid "Available Version"
+msgstr "最新版本"
+
 #: gtk/rgmainwindow.cc:2344
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
@@ -871,7 +1102,8 @@ msgstr "(無特定包裝商)"
 msgid "Edit"
 msgstr "編輯"
 
-#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/synaptic.cc:81
+#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/rwmainwindow.cc:700
+#: wings/synaptic.cc:81
 msgid "OK"
 msgstr "確定"
 
@@ -1025,6 +1257,15 @@ msgstr ""
 "將要移除系統必需的套件。\n"
 "那樣會令您的系統不能使用!!!\n"
 
+#. ignore some stupid error messages
+#: gtk/rguserdialog.cc:117 wings/rwmainwindow.cc:725
+msgid "Tried to dequeue a fetching object"
+msgstr ""
+
+#: gtk/synapticinterface.cc:38
+msgid "RInitConfiguration() failed\n"
+msgstr ""
+
 #: wings/rwaboutpanel.cc:96
 msgid ""
 "Copyright (c) 2001 Conectiva S/A\n"
@@ -1077,23 +1318,23 @@ msgstr ""
 msgid "Options"
 msgstr "選項"
 
-#: wings/rwconfigwindow.cc:152 gtk/window_options.glade.strings:14
+#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:14
 msgid "Leave downloaded packages in the cache"
 msgstr "把已下載的套件留在緩衝區裏"
 
-#: wings/rwconfigwindow.cc:156 gtk/window_options.glade.strings:15
+#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:15
 msgid "Delete downloaded packages after installation"
 msgstr "安裝後刪除已下載的套件"
 
-#: wings/rwconfigwindow.cc:160
+#: wings/rwconfigwindow.cc:159
 msgid "Delete obsoleted packages from cache"
 msgstr "刪除在緩衝區裏太舊的套件"
 
-#: wings/rwconfigwindow.cc:204 gtk/window_options.glade.strings:17
+#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:17
 msgid "Cache"
 msgstr "緩衝區"
 
-#: wings/rwconfigwindow.cc:226
+#: wings/rwconfigwindow.cc:225
 msgid "Preferences"
 msgstr "偏好設定"
 
@@ -1295,10 +1536,6 @@ msgid ""
 "Make a filter in 'Search Filter' showing all packages matching the pattern"
 msgstr "在「搜尋篩選器」製作篩選器，顯示所有匹配樣板的套件"
 
-#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:16
-msgid "Package"
-msgstr "套件"
-
 #: wings/rwmainwindow.cc:1958
 msgid "Available"
 msgstr "最新版本"
@@ -1328,6 +1565,14 @@ msgstr "新增套件庫"
 #: wings/rwsourceswindow.cc:150 gtk/window_main.glade.strings:11
 msgid "Add CD-ROM"
 msgstr "加 CD-ROM"
+
+#: wings/rwsourceswindow.cc:164
+msgid "Setup Package Repositories (still not working!)"
+msgstr ""
+
+#: wings/rwsummarywindow.cc:279
+msgid "BUFFER OVERFLOW DETECTED, ABORTING"
+msgstr ""
 
 #: wings/rwsummarywindow.cc:305
 msgid "WARNING!!!"
@@ -1742,17 +1987,11 @@ msgstr ""
 #~ msgid "Could not mount CD-ROM"
 #~ msgstr "無法裝載 CD-ROM..."
 
-#~ msgid "Could not Identify Disc"
-#~ msgstr "無法識別光碟"
-
 #~ msgid "Error Scanning Disc"
 #~ msgstr "掃描光碟時出現錯誤"
 
 #~ msgid "Could not change directory to %s"
 #~ msgstr "無法把目錄變更為 %s"
-
-#~ msgid "Unable to read directory %s"
-#~ msgstr "無法讀取目錄 %s"
 
 #~ msgid "_Update"
 #~ msgstr "更新清單(_U)"
@@ -1791,9 +2030,6 @@ msgstr ""
 
 #~ msgid "Could not retrieve digitally signed hash file"
 #~ msgstr "無法取得數碼簽名的 hash 檔案"
-
-#~ msgid "Failed to fetch hash file: "
-#~ msgstr "擷取 hash 檔案失敗: "
 
 #~ msgid ""
 #~ "Some of the signed hash files could not be retrieved. Aborting update."

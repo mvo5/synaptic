@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
-"POT-Creation-Date: 2003-03-03 19:47-0300\n"
+"POT-Creation-Date: 2003-03-05 22:52-0300\n"
 "PO-Revision-Date: 2003-03-03 20:28-0300\n"
 "Last-Translator: Arnaldo Carvalho de Melo <acme@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -14,6 +14,101 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0\n"
+
+#: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
+#, c-format
+msgid "Stat failed for %s"
+msgstr ""
+
+#: common/indexcopy.cc:82 common/rpmindexcopy.cc:112
+#, fuzzy
+msgid "Unable to create a tmp file"
+msgstr "Não foi possível ler o banco de dados do cdrom %s"
+
+#: common/indexcopy.cc:89
+msgid "Couldn't fork gzip"
+msgstr ""
+
+#: common/indexcopy.cc:110
+msgid "gzip failed, perhaps the disk is full."
+msgstr ""
+
+#: common/indexcopy.cc:131
+#, fuzzy
+msgid "Failed to reopen fd"
+msgstr "Não foi possível abrir o arquivo %s.new"
+
+#: common/indexcopy.cc:169
+msgid "Missed: "
+msgstr ""
+
+#: common/indexcopy.cc:196
+msgid "Missed(2): "
+msgstr ""
+
+#: common/indexcopy.cc:206
+msgid "Wrong Size: "
+msgstr ""
+
+#: common/indexcopy.cc:224
+msgid " Processed by using Prefix '"
+msgstr ""
+
+#: common/indexcopy.cc:225
+msgid "' and chop "
+msgstr ""
+
+#: common/indexcopy.cc:234 common/indexcopy.cc:261 common/rpmindexcopy.cc:175
+#: common/rpmindexcopy.cc:216
+#, fuzzy
+msgid "Failed to rename"
+msgstr "Não foi possível renomear o arquivo %s.new para %s"
+
+#. Some stats
+#: common/indexcopy.cc:275
+msgid "Wrote "
+msgstr ""
+
+#: common/indexcopy.cc:275
+msgid " records"
+msgstr ""
+
+#: common/indexcopy.cc:277 common/indexcopy.cc:281
+msgid " with "
+msgstr ""
+
+#: common/indexcopy.cc:277
+msgid " missing files"
+msgstr ""
+
+#: common/indexcopy.cc:279
+msgid " and"
+msgstr ""
+
+#: common/indexcopy.cc:281
+msgid " mismatched files"
+msgstr ""
+
+#: common/indexcopy.cc:285
+msgid "No valid records were found."
+msgstr ""
+
+#: common/indexcopy.cc:288
+msgid "Alot of entries were discarded, something may be wrong."
+msgstr ""
+
+#: common/indexcopy.cc:329
+#, fuzzy
+msgid "Failed, "
+msgstr "Falhou"
+
+#: common/indexcopy.cc:464
+msgid "Cannot find filename or size tag"
+msgstr ""
+
+#: common/indexcopy.cc:505
+msgid "Error parsing file record"
+msgstr ""
 
 #: common/rcdscanner.cc:112 common/rcdscanner.cc:165
 #, c-format
@@ -38,7 +133,7 @@ msgstr "Preparando..."
 msgid "Unable to read the cdrom database %s"
 msgstr "Não foi possível ler o banco de dados do cdrom %s"
 
-#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:435
+#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:436
 msgid "Unmounting CD-ROM..."
 msgstr "Desmontando o CD-ROM..."
 
@@ -55,9 +150,18 @@ msgstr "Coloque um disco no acionador."
 msgid "Mounting CD-ROM..."
 msgstr "Montando CD-ROM..."
 
+#: common/rcdscanner.cc:303
+msgid "Failed to mount the cdrom."
+msgstr ""
+
 #: common/rcdscanner.cc:307
 msgid "Identifying disc..."
 msgstr "Identificando disco..."
+
+#: common/rcdscanner.cc:310
+#, fuzzy
+msgid "Couldn't identify disc."
+msgstr ":não foi possível abrir display"
 
 #: common/rcdscanner.cc:313
 msgid "Scanning disc..."
@@ -67,29 +171,55 @@ msgstr "Lendo disco..."
 msgid "Cleaning package lists..."
 msgstr "Limpando listas de pacotes..."
 
-#: common/rcdscanner.cc:393
+#: common/rcdscanner.cc:341
+msgid ""
+"Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgstr ""
+
+#: common/rcdscanner.cc:394
 msgid "Disc not successfuly scanned."
 msgstr "O disco não foi lido com sucesso."
 
-#: common/rcdscanner.cc:397
+#: common/rcdscanner.cc:398
 msgid "Empty disc name."
 msgstr "Nome do disco não existe."
 
-#: common/rcdscanner.cc:400
+#: common/rcdscanner.cc:401
 msgid "Registering disc..."
 msgstr "Registrando disco..."
 
-#: common/rcdscanner.cc:415
+#: common/rcdscanner.cc:416
 msgid "Copying package lists..."
 msgstr "Copiando listas de pacotes..."
 
-#: common/rcdscanner.cc:424
+#: common/rcdscanner.cc:425
 msgid "Writing sources list..."
 msgstr "Escrevendo lista de fontes..."
 
-#: common/rcdscanner.cc:439
+#: common/rcdscanner.cc:440
 msgid "Done!"
 msgstr "Feito!"
+
+#: common/rcdscanner.cc:540
+#, fuzzy, c-format
+msgid "Failed to stat %s%s"
+msgstr "Não foi possível renomear o arquivo %s.new para %s"
+
+#: common/rcdscanner.cc:646 common/rcdscanner.cc:750
+#, fuzzy, c-format
+msgid "Unable to change to %s"
+msgstr "Impossível bloquear o diretório de download"
+
+#: common/rcdscanner.cc:688
+#, fuzzy, c-format
+msgid "Unable to read %s"
+msgstr "Impossível bloquear o diretório de download"
+
+#: common/rconfiguration.cc:82 common/rconfiguration.cc:170
+#: common/rconfiguration.cc:195
+#, c-format
+msgid "couldn't open %s for writing"
+msgstr "não foi possível abrir %s para gravação"
 
 #: common/rconfiguration.cc:107
 msgid "Could not get password entry for superuser"
@@ -99,11 +229,6 @@ msgstr "Não foi possível obter uma senha para o super usuário"
 #, c-format
 msgid "could not create configuration directory %s"
 msgstr "não foi possível criar o diretório de configuração %s"
-
-#: common/rconfiguration.cc:170 common/rconfiguration.cc:195
-#, c-format
-msgid "couldn't open %s for writing"
-msgstr "não foi possível abrir %s para gravação"
 
 #: common/rpackage.cc:479
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
@@ -140,14 +265,19 @@ msgstr "A lista de fontes não pôde ser lida."
 
 #: common/rpackagecache.cc:54
 msgid "The package lists or status file could not be parsed or opened."
-msgstr "As listas de pacotes ou arquivo de status não pôde ser analisada ou aberta."
+msgstr ""
+"As listas de pacotes ou arquivo de status não pôde ser analisada ou aberta."
+
+#: common/rpackagecache.cc:89
+msgid "Internal Error, non-zero counts"
+msgstr ""
 
 #: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:80
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "Status"
 
-#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:550
+#: common/rpackagefilter.cc:38 gtk/rgfiltereditor.cc:551
 #: wings/rwfiltereditor.cc:471
 msgid "Pattern"
 msgstr "Padrão"
@@ -168,38 +298,51 @@ msgstr "Prioridade"
 msgid "Name"
 msgstr "Nome"
 
-#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
-#: gtk/window_main.glade.strings:62
+#: common/rpackagefilter.cc:128
+#, fuzzy
+msgid "Version"
+msgstr "    Versão"
+
+#: common/rpackagefilter.cc:129 gtk/rgmainwindow.cc:2145
+#: gtk/window_main.glade.strings:36 gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "Descrição"
 
-#: common/rpackagefilter.cc:129
+#: common/rpackagefilter.cc:130
 msgid "Depends"
 msgstr "Dependências"
 
 #. depends, predepends etc
-#: common/rpackagefilter.cc:130 gtk/rgfiltereditor.cc:53
+#: common/rpackagefilter.cc:131 gtk/rgfiltereditor.cc:54
 #: wings/rwfiltereditor.cc:418
 msgid "Provides"
 msgstr "Provimentos"
 
-#: common/rpackagefilter.cc:131
+#: common/rpackagefilter.cc:132
 msgid "Conflicts"
 msgstr "Conflitos"
 
 #. conflicts
-#: common/rpackagefilter.cc:132 gtk/rgfiltereditor.cc:55
+#: common/rpackagefilter.cc:133 gtk/rgfiltereditor.cc:56
 #: wings/rwfiltereditor.cc:420
 msgid "Replaces"
 msgstr "Substitui"
 
-#: common/rpackagefilter.cc:133
+#: common/rpackagefilter.cc:134
 msgid "WeakDepends"
 msgstr "Dependências Fracas"
 
-#: common/rpackagefilter.cc:134
+#: common/rpackagefilter.cc:135
 msgid "ReverseDepends"
 msgstr "Dependências Reversas"
+
+#: common/rpackagefilter.cc:506
+msgid "empty filter name!? should _never_ happen, please report"
+msgstr ""
+
+#: common/rpackagefilter.cc:511
+msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
+msgstr ""
 
 #
 #: common/rpackagelister.cc:126
@@ -213,12 +356,12 @@ msgstr "Filtro de Busca"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:353
+#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:354
 #: wings/rwfiltereditor.cc:321 wings/rwmainwindow.cc:1951
 msgid "Installed"
 msgstr "Instalado"
 
-#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:345
+#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:346
 #: wings/rwfiltereditor.cc:311
 msgid "Not Installed"
 msgstr "Não Instalado"
@@ -231,7 +374,7 @@ msgstr "Tasks"
 msgid "Upgradable"
 msgstr "Atualizável"
 
-#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
+#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:375
 #: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:29
 msgid "Broken"
 msgstr "Quebrado"
@@ -244,6 +387,24 @@ msgstr "Mudancas Programadas"
 #: common/rpackagelister.cc:327
 msgid "Internal error recalculating dependency cache."
 msgstr "Erro interno recalculando cache de dependências."
+
+#: common/rpackagelister.cc:383
+#, fuzzy
+msgid "package "
+msgstr "pacote"
+
+#: common/rpackagelister.cc:383
+msgid " has no section?!"
+msgstr ""
+
+#: common/rpackagelister.cc:502
+msgid "Internal Error, AllUpgrade broke stuff"
+msgstr ""
+
+#: common/rpackagelister.cc:515
+#, fuzzy
+msgid "dist upgrade Failed"
+msgstr "Atualizar _Distribuição"
 
 #: common/rpackagelister.cc:1050
 msgid "Unable to lock the list directory"
@@ -264,6 +425,11 @@ msgid ""
 msgstr ""
 "Houve falha ao baixar alguns dos arquivos de índice, eles foram ignorados ou "
 "os antigos foram usados."
+
+#: common/rpackagelister.cc:1168
+#, fuzzy
+msgid "Failed to fetch "
+msgstr "Falha ao obter arquivo de hash: "
 
 #: common/rpackagelister.cc:1188
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -296,6 +462,35 @@ msgstr "A linha %u malformada no arquivo de seleções"
 #: common/rpackagelister.cc:1351
 msgid "Setting selections..."
 msgstr "Configurando seleções..."
+
+#: common/rpmindexcopy.cc:119
+msgid "Couldn't fork bzip2"
+msgstr ""
+
+#: common/rpmindexcopy.cc:139
+msgid "bzip2 failed, perhaps the disk is full."
+msgstr ""
+
+#: gtk/gsynaptic.cc:57
+#, fuzzy
+msgid "Usage: synaptic [options] \n"
+msgstr "Configurar opções do Synaptic"
+
+#: gtk/gsynaptic.cc:58
+msgid "-h   This help text \n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:59
+msgid "-f=? Give a alternative filter file\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:60
+msgid "-i=? Start with the initialFilter with the number given\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:61
+msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
+msgstr ""
 
 #: gtk/gsynaptic.cc:149 wings/synaptic.cc:80
 msgid "You must run this program as the root user."
@@ -343,11 +538,11 @@ msgstr "%-3li/%-3li arquivos    %4sB/s   ETA %6s\n"
 msgid "(stalled)\n"
 msgstr "(parado)\n"
 
-#: gtk/rgfetchprogress.cc:238
+#: gtk/rgfetchprogress.cc:238 wings/rwfetchprogress.cc:241
 msgid "[Working] "
 msgstr "[Trabalhando] "
 
-#: gtk/rgfetchprogress.cc:243
+#: gtk/rgfetchprogress.cc:243 wings/rwfetchprogress.cc:246
 msgid "[Receiving] "
 msgstr "[Recebendo] "
 
@@ -367,11 +562,11 @@ msgstr "Atingido"
 msgid "Failed"
 msgstr "Falhou"
 
-#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:577
+#: gtk/rgfiltereditor.cc:43 gtk/rgfiltereditor.cc:578
 msgid "Include"
 msgstr "Inclui"
 
-#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:587
+#: gtk/rgfiltereditor.cc:44 gtk/rgfiltereditor.cc:588
 msgid "Exclude"
 msgstr "Exclui"
 
@@ -379,97 +574,102 @@ msgstr "Exclui"
 msgid "are Named"
 msgstr "são Nomeados"
 
-#: gtk/rgfiltereditor.cc:51 wings/rwfiltereditor.cc:416
+#: gtk/rgfiltereditor.cc:51
+#, fuzzy
+msgid "in Version"
+msgstr "    Versão"
+
+#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:416
 msgid "in Description"
 msgstr "na Descrição"
 
-#: gtk/rgfiltereditor.cc:52 wings/rwfiltereditor.cc:417
+#: gtk/rgfiltereditor.cc:53 wings/rwfiltereditor.cc:417
 msgid "Depends on"
 msgstr "Depende de"
 
 #. provides and name
-#: gtk/rgfiltereditor.cc:54 wings/rwfiltereditor.cc:419
+#: gtk/rgfiltereditor.cc:55 wings/rwfiltereditor.cc:419
 msgid "Conflicts with"
 msgstr "Conflita com"
 
 #. replaces/obsoletes
-#: gtk/rgfiltereditor.cc:56
+#: gtk/rgfiltereditor.cc:57
 msgid "Suggests or Recommends"
 msgstr "Sugerido e Recomendado"
 
 #. suggests/recommends
-#: gtk/rgfiltereditor.cc:57
+#: gtk/rgfiltereditor.cc:58
 msgid "Reverse Depends"
 msgstr "Dependência Reversa"
 
-#: gtk/rgfiltereditor.cc:319 wings/rwfiltereditor.cc:283
+#: gtk/rgfiltereditor.cc:320 wings/rwfiltereditor.cc:283
 msgid "Include Only Selected Sections"
 msgstr "Incluir Apenas as Seções Selecionadas"
 
-#: gtk/rgfiltereditor.cc:323 wings/rwfiltereditor.cc:287
+#: gtk/rgfiltereditor.cc:324 wings/rwfiltereditor.cc:287
 msgid "Exclude Selected Sections"
 msgstr "Excluir as Seções Selecionadas"
 
-#: gtk/rgfiltereditor.cc:328 wings/rwfiltereditor.cc:292
+#: gtk/rgfiltereditor.cc:329 wings/rwfiltereditor.cc:292
 msgid "by Section"
 msgstr "por Seção"
 
-#: gtk/rgfiltereditor.cc:342 wings/rwfiltereditor.cc:307
+#: gtk/rgfiltereditor.cc:343 wings/rwfiltereditor.cc:307
 msgid "Include packages that are..."
 msgstr "Incluir pacotes que são..."
 
-#: gtk/rgfiltereditor.cc:349 wings/rwfiltereditor.cc:316
+#: gtk/rgfiltereditor.cc:350 wings/rwfiltereditor.cc:316
 msgid "Installed and Upgradable"
 msgstr "Instalados e Atualizáveis"
 
-#: gtk/rgfiltereditor.cc:362 wings/rwfiltereditor.cc:326
+#: gtk/rgfiltereditor.cc:363 wings/rwfiltereditor.cc:326
 msgid "Marked to Keep"
 msgstr "Marcado para Manter"
 
-#: gtk/rgfiltereditor.cc:366 wings/rwfiltereditor.cc:331
+#: gtk/rgfiltereditor.cc:367 wings/rwfiltereditor.cc:331
 msgid "Marked to Install/Upgrade"
 msgstr "Marcado para Instalar/Atualizar"
 
-#: gtk/rgfiltereditor.cc:370 wings/rwfiltereditor.cc:336
+#: gtk/rgfiltereditor.cc:371 wings/rwfiltereditor.cc:336
 msgid "Marked to Remove"
 msgstr "Marcado para Remoção"
 
-#: gtk/rgfiltereditor.cc:382 gtk/rgfiltereditor.cc:628
+#: gtk/rgfiltereditor.cc:383 gtk/rgfiltereditor.cc:629
 #: gtk/rgfiltermanager.cc:82 wings/rwfiltereditor.cc:484
 #: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:31
 msgid "New"
 msgstr "Novo"
 
-#: gtk/rgfiltereditor.cc:386
+#: gtk/rgfiltereditor.cc:387
 msgid "Pinned"
 msgstr "Preso"
 
-#: gtk/rgfiltereditor.cc:391
+#: gtk/rgfiltereditor.cc:392
 msgid "Orphaned"
 msgstr "Órfão"
 
-#: gtk/rgfiltereditor.cc:396
+#: gtk/rgfiltereditor.cc:397
 msgid "Residual Config"
 msgstr "Configuração Residual"
 
-#: gtk/rgfiltereditor.cc:401
+#: gtk/rgfiltereditor.cc:402
 msgid "Debconf"
 msgstr "Debconf"
 
-#: gtk/rgfiltereditor.cc:408 wings/rwfiltereditor.cc:347
+#: gtk/rgfiltereditor.cc:409 wings/rwfiltereditor.cc:347
 msgid "by Status"
 msgstr "por Status"
 
-#: gtk/rgfiltereditor.cc:548
+#: gtk/rgfiltereditor.cc:549
 msgid "Do"
 msgstr "Faça"
 
 #. sizeof(options)/sizeof(char*));
-#: gtk/rgfiltereditor.cc:549 wings/rwfiltereditor.cc:463
+#: gtk/rgfiltereditor.cc:550 wings/rwfiltereditor.cc:463
 msgid "Packages that"
 msgstr "Pacotes que"
 
-#: gtk/rgfiltereditor.cc:634 gtk/rgsrcwindow.cc:240
+#: gtk/rgfiltereditor.cc:635 gtk/rgsrcwindow.cc:240
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
@@ -477,7 +677,7 @@ msgstr "Pacotes que"
 msgid "Remove"
 msgstr "Remover"
 
-#: gtk/rgfiltereditor.cc:646 wings/rwfiltereditor.cc:499
+#: gtk/rgfiltereditor.cc:647 wings/rwfiltereditor.cc:499
 msgid "by Package"
 msgstr "por Pacote"
 
@@ -494,12 +694,12 @@ msgstr "Apagar"
 msgid "Clear"
 msgstr "Limpar"
 
-#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:218
+#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:217
 #: wings/rwfiltermanager.cc:99
 msgid "Save"
 msgstr "Salvar"
 
-#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:213
+#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:212
 #: wings/rwfiltermanager.cc:103 wings/rwsourceswindow.cc:158
 msgid "Close"
 msgstr "Fechar"
@@ -569,6 +769,18 @@ msgstr "Crítico"
 #: gtk/rgmainwindow.cc:94 wings/rwmainwindow.cc:101
 msgid "Security"
 msgstr "Segurança"
+
+#: gtk/rgmainwindow.cc:148 gtk/rgmainwindow.cc:167 gtk/rgmainwindow.cc:199
+msgid " not found"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:187
+msgid "gtk_clist_get_text() returned no text"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:214
+msgid "clickedRecInstall called with invalid parm: "
+msgstr ""
 
 #: gtk/rgmainwindow.cc:381
 msgid ""
@@ -681,6 +893,11 @@ msgstr "O pacote será instalado."
 msgid "Package will be upgraded."
 msgstr "O pacote será atualizado."
 
+#. not handled yet
+#: gtk/rgmainwindow.cc:955 wings/rwmainwindow.cc:941
+msgid "OH SHIT!!"
+msgstr ""
+
 #: gtk/rgmainwindow.cc:960 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "O pacote será desinstalado."
@@ -710,8 +927,8 @@ msgid "_Upgrade"
 msgstr "At_ualizar"
 
 #. XXX Why this is commented out?
-#. appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
-#. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
+#. appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
+#. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
 #: gtk/rgmainwindow.cc:1217 wings/rwmainwindow.cc:1205
@@ -801,13 +1018,31 @@ msgstr ""
 
 #: gtk/rgmainwindow.cc:1873 wings/rwmainwindow.cc:1584
 #: gtk/window_main.glade.strings:50
-msgid "Upgrade installed distribution, including packages with new dependencies"
-msgstr "Atualizar distribuição instalada, inclusive pacotes com dependências novas"
+msgid ""
+"Upgrade installed distribution, including packages with new dependencies"
+msgstr ""
+"Atualizar distribuição instalada, inclusive pacotes com dependências novas"
 
 #: gtk/rgmainwindow.cc:1877 wings/rwmainwindow.cc:1592
 #: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
-msgstr "Realizar mudanças (fazendo download, se preciso) selecionadas nos pacotes"
+msgstr ""
+"Realizar mudanças (fazendo download, se preciso) selecionadas nos pacotes"
+
+#: gtk/rgmainwindow.cc:2120 wings/rwmainwindow.cc:1938
+#: gtk/window_main.glade.strings:16
+msgid "Package"
+msgstr "Pacote"
+
+#: gtk/rgmainwindow.cc:2128
+#, fuzzy
+msgid "Installed Version"
+msgstr "Instalado"
+
+#: gtk/rgmainwindow.cc:2136
+#, fuzzy
+msgid "Available Version"
+msgstr "Disponível"
 
 #: gtk/rgmainwindow.cc:2344
 msgid "Do you want to add another CD-ROM?"
@@ -879,7 +1114,8 @@ msgstr "(sem fornecedor)"
 msgid "Edit"
 msgstr "Editar"
 
-#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/synaptic.cc:81
+#: gtk/rgsrcwindow.cc:228 wings/rwconfigwindow.cc:59 wings/rwmainwindow.cc:700
+#: wings/synaptic.cc:81
 msgid "OK"
 msgstr "OK"
 
@@ -1033,6 +1269,15 @@ msgstr ""
 "Pacotes essenciais serão removidos.\n"
 "Isto poderá inutilizar seu sistema!\n"
 
+#. ignore some stupid error messages
+#: gtk/rguserdialog.cc:117 wings/rwmainwindow.cc:725
+msgid "Tried to dequeue a fetching object"
+msgstr ""
+
+#: gtk/synapticinterface.cc:38
+msgid "RInitConfiguration() failed\n"
+msgstr ""
+
 #: wings/rwaboutpanel.cc:96
 msgid ""
 "Copyright (c) 2001 Conectiva S/A\n"
@@ -1083,23 +1328,23 @@ msgstr ""
 msgid "Options"
 msgstr "Opções"
 
-#: wings/rwconfigwindow.cc:152 gtk/window_options.glade.strings:14
+#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:14
 msgid "Leave downloaded packages in the cache"
 msgstr "Deixa pacotes baixados no cache"
 
-#: wings/rwconfigwindow.cc:156 gtk/window_options.glade.strings:15
+#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:15
 msgid "Delete downloaded packages after installation"
 msgstr "Apaga os pacotes baixados após a instalação"
 
-#: wings/rwconfigwindow.cc:160
+#: wings/rwconfigwindow.cc:159
 msgid "Delete obsoleted packages from cache"
 msgstr "Remover pacotes obsoletados do cache"
 
-#: wings/rwconfigwindow.cc:204 gtk/window_options.glade.strings:17
+#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:17
 msgid "Cache"
 msgstr "Cache"
 
-#: wings/rwconfigwindow.cc:226
+#: wings/rwconfigwindow.cc:225
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -1189,7 +1434,8 @@ msgstr "Manter"
 
 #: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:78
 msgid "Keep selected package as is in the system, unmarking selections over it"
-msgstr "Manter o pacote como está no sistema, desfazendo qualquer seleção feita"
+msgstr ""
+"Manter o pacote como está no sistema, desfazendo qualquer seleção feita"
 
 #: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:80
 msgid "Mark selected package for installation/upgrade"
@@ -1297,14 +1543,11 @@ msgid "To Filter"
 msgstr "Para Filtro"
 
 #: wings/rwmainwindow.cc:1890
-msgid "Make a filter in 'Search Filter' showing all packages matching the pattern"
+msgid ""
+"Make a filter in 'Search Filter' showing all packages matching the pattern"
 msgstr ""
 "Fazer um filtro novo em 'Filtro de Busca' que mostra todos os pacotes na "
 "expressão de busca"
-
-#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:16
-msgid "Package"
-msgstr "Pacote"
 
 #: wings/rwmainwindow.cc:1958
 msgid "Available"
@@ -1337,6 +1580,14 @@ msgstr "Novo Repositório"
 #: wings/rwsourceswindow.cc:150 gtk/window_main.glade.strings:11
 msgid "Add CD-ROM"
 msgstr "Novo CD-ROM"
+
+#: wings/rwsourceswindow.cc:164
+msgid "Setup Package Repositories (still not working!)"
+msgstr ""
+
+#: wings/rwsummarywindow.cc:279
+msgid "BUFFER OVERFLOW DETECTED, ABORTING"
+msgstr ""
 
 #: wings/rwsummarywindow.cc:305
 msgid "WARNING!!!"
@@ -1630,7 +1881,8 @@ msgstr ""
 
 #: gtk/window_options.glade.strings:8
 msgid "Use regular expressions when searching or matching"
-msgstr "Usar expressões regulares quando procurando ou fazendo casamento de padrões"
+msgstr ""
+"Usar expressões regulares quando procurando ou fazendo casamento de padrões"
 
 #: gtk/window_options.glade.strings:9
 msgid "Use colors in main package list"
@@ -1740,16 +1992,8 @@ msgstr "Informe o nome do disco"
 #~ msgstr "Para Filtro"
 
 #, fuzzy
-#~ msgid "Could not Identify Disc"
-#~ msgstr ":não foi possível abrir display"
-
-#, fuzzy
 #~ msgid "Could not change directory to %s"
 #~ msgstr "não foi possível criar o diretório de configuração %s"
-
-#, fuzzy
-#~ msgid "Unable to read directory %s"
-#~ msgstr "Impossível bloquear o diretório de download"
 
 #, fuzzy
 #~ msgid "_statusL"
@@ -1828,9 +2072,6 @@ msgstr "Informe o nome do disco"
 #~ msgid "Could not retrieve digitally signed hash file"
 #~ msgstr "Não foi possível recuperar arquivo de hash assinado digitalmente"
 
-#~ msgid "Failed to fetch hash file: "
-#~ msgstr "Falha ao obter arquivo de hash: "
-
 #~ msgid ""
 #~ "Some of the signed hash files could not be retrieved. Aborting update."
 #~ msgstr ""
@@ -1888,4 +2129,3 @@ msgstr "Informe o nome do disco"
 #~ msgstr ""
 #~ "Seleção de atualização automática não é possível\n"
 #~ "com dependências quebradas. Conserte primeiro.\n"
-

@@ -85,9 +85,7 @@ class RPackageViewSections:public RPackageView {
       return _("Sections");
    };
 
-   void addPackage(RPackage *package) {
-      _view[package->section()].push_back(package);
-   };
+   void addPackage(RPackage *package);
 };
 
 class RPackageViewAlphabetic : public RPackageView {

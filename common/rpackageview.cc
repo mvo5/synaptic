@@ -31,6 +31,8 @@
 #include <map>
 #include <vector>
 
+#include "sections_trans.h"
+
 using namespace std;
 
 bool RPackageView::setSelected(string name)
@@ -67,6 +69,17 @@ void RPackageView::clearSelection()
    _selectedName.clear();
    _selectedView.clear();
 }
+
+void RPackageViewSections::addPackage(RPackage *package)
+{
+#ifndef HAVE_RPM
+		string str = trans_section(package->section());
+#else
+		string str = package->section();
+#endif
+   _view[str].push_back(package);
+};
+
 
 void RPackageViewStatus::addPackage(RPackage *pkg)
 {

@@ -41,7 +41,7 @@
 		      <signal name="activate" handler="on_open_activate" last_modification_time="Mon, 19 May 2003 22:30:12 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1143">
+			<widget class="GtkImage" id="image1219">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-open</property>
 			  <property name="icon_size">1</property>
@@ -62,7 +62,7 @@
 		      <signal name="activate" handler="on_save_activate" last_modification_time="Mon, 19 May 2003 22:30:12 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1144">
+			<widget class="GtkImage" id="image1220">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-save</property>
 			  <property name="icon_size">1</property>
@@ -83,7 +83,7 @@
 		      <signal name="activate" handler="on_save_as_activate" last_modification_time="Mon, 19 May 2003 22:31:38 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1145">
+			<widget class="GtkImage" id="image1221">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-save-as</property>
 			  <property name="icon_size">1</property>
@@ -105,9 +105,22 @@
 		  <child>
 		    <widget class="GtkImageMenuItem" id="menu_exit">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-quit</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_exit_activate" last_modification_time="Fri, 13 Dec 2002 12:14:05 GMT"/>
+		      <property name="label" translatable="yes">_Quit</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_exit_activate" last_modification_time="Fri, 07 Nov 2003 07:29:24 GMT"/>
+		      <accelerator key="Q" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image1222">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-quit</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
@@ -127,25 +140,51 @@
 		  <child>
 		    <widget class="GtkImageMenuItem" id="undo1">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-undo</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_undo1_activate" last_modification_time="Fri, 28 Feb 2003 19:41:06 GMT"/>
+		      <property name="label" translatable="yes">_Undo</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_undo1_activate" last_modification_time="Fri, 07 Nov 2003 07:29:24 GMT"/>
+		      <accelerator key="Z" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image1223">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-undo</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
 		  <child>
 		    <widget class="GtkImageMenuItem" id="redo1">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-redo</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_redo1_activate" last_modification_time="Fri, 28 Feb 2003 19:41:06 GMT"/>
+		      <property name="label" translatable="yes">_Redo</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_redo1_activate" last_modification_time="Fri, 07 Nov 2003 07:29:24 GMT"/>
+		      <accelerator key="Z" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image1224">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-redo</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
 		  <child>
 		    <widget class="GtkMenuItem" id="clear_all_changes">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Clear all _queued changes</property>
+		      <property name="label" translatable="yes">Clear All _Queued Changes</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_clear_all_changes_activate" last_modification_time="Thu, 06 Nov 2003 11:32:49 GMT"/>
 		    </widget>
@@ -166,7 +205,7 @@
 		      <accelerator key="U" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1146">
+			<widget class="GtkImage" id="image1225">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-refresh</property>
 			  <property name="icon_size">1</property>
@@ -187,7 +226,7 @@
 		      <signal name="activate" handler="on_add_cdrom_activate" last_modification_time="Fri, 07 Feb 2003 19:43:28 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1147">
+			<widget class="GtkImage" id="image1226">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-cdrom</property>
 			  <property name="icon_size">1</property>
@@ -224,7 +263,7 @@
 		      <accelerator key="G" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1148">
+			<widget class="GtkImage" id="image1227">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-go-up</property>
 			  <property name="icon_size">1</property>
@@ -246,13 +285,13 @@
 		  <child>
 		    <widget class="GtkImageMenuItem" id="menu_proceed">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">_Execute Changes</property>
+		      <property name="label" translatable="yes">_Execute Queued Changes</property>
 		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_proceed_clicked" last_modification_time="Fri, 13 Dec 2002 12:01:41 GMT"/>
 		      <accelerator key="E" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1149">
+			<widget class="GtkImage" id="image1228">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-execute</property>
 			  <property name="icon_size">1</property>
@@ -287,7 +326,7 @@
 		      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1150">
+			<widget class="GtkImage" id="image1229">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-apply</property>
 			  <property name="icon_size">1</property>
@@ -309,7 +348,7 @@
 		      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1151">
+			<widget class="GtkImage" id="image1230">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-add</property>
 			  <property name="icon_size">1</property>
@@ -340,7 +379,7 @@
 		      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1152">
+			<widget class="GtkImage" id="image1231">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-remove</property>
 			  <property name="icon_size">1</property>
@@ -402,7 +441,7 @@
 		      <accelerator key="F" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1153">
+			<widget class="GtkImage" id="image1232">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-find</property>
 			  <property name="icon_size">1</property>
@@ -436,7 +475,7 @@
 		      <signal name="activate" handler="on_apply1_activate" last_modification_time="Wed, 25 Dec 2002 17:58:51 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1154">
+			<widget class="GtkImage" id="image1233">
 			  <property name="visible">True</property>
 			  <property name="pixbuf">stock_filter-data-by-criteria.png</property>
 			  <property name="xalign">0.5</property>
@@ -470,7 +509,7 @@
 		      <signal name="activate" handler="on_edit_filter_activate" last_modification_time="Wed, 25 Dec 2002 18:01:15 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1155">
+			<widget class="GtkImage" id="image1234">
 			  <property name="visible">True</property>
 			  <property name="pixbuf">stock_filter-navigator.png</property>
 			  <property name="xalign">0.5</property>
@@ -517,7 +556,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Section Tree</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">False</property>
+		      <property name="active">True</property>
 		      <signal name="activate" handler="on_section_tree_activate" last_modification_time="Thu, 30 Jan 2003 15:53:34 GMT"/>
 		    </widget>
 		  </child>
@@ -527,7 +566,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Alphabetic Tree</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">False</property>
+		      <property name="active">True</property>
 		      <property name="group">section_tree</property>
 		      <signal name="activate" handler="on_alphabetic_tree_activate" last_modification_time="Thu, 30 Jan 2003 15:53:34 GMT"/>
 		    </widget>
@@ -538,7 +577,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">Stat_us Tree</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">False</property>
+		      <property name="active">True</property>
 		      <property name="group">section_tree</property>
 		      <signal name="activate" handler="on_status_tree_activate" last_modification_time="Thu, 30 Jan 2003 15:55:45 GMT"/>
 		    </widget>
@@ -549,7 +588,7 @@
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Tag Tree</property>
 		      <property name="use_underline">True</property>
-		      <property name="active">False</property>
+		      <property name="active">True</property>
 		      <property name="group">section_tree</property>
 		      <signal name="activate" handler="on_tag_tree_activate" last_modification_time="Wed, 16 Jul 2003 12:39:39 GMT"/>
 		    </widget>
@@ -596,7 +635,7 @@
 		      <signal name="activate" handler="on_repositories_activate" last_modification_time="Fri, 13 Dec 2002 12:13:02 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image1156">
+			<widget class="GtkImage" id="image1235">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-index</property>
 			  <property name="icon_size">1</property>
@@ -639,7 +678,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Icons Only</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">False</property>
+			      <property name="active">True</property>
 			      <signal name="activate" handler="on_menu_toolbarpixmaps" last_modification_time="Mon, 20 Jan 2003 23:24:34 GMT"/>
 			    </widget>
 			  </child>
@@ -649,7 +688,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Text Only</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">False</property>
+			      <property name="active">True</property>
 			      <property name="group">menu_toolbar_pixmaps</property>
 			      <signal name="activate" handler="on_menu_toolbar_text" last_modification_time="Mon, 20 Jan 2003 23:24:34 GMT"/>
 			    </widget>
@@ -660,7 +699,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Text _Below Icons</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">False</property>
+			      <property name="active">True</property>
 			      <property name="group">menu_toolbar_pixmaps</property>
 			      <signal name="activate" handler="on_menu_toolbar_both" last_modification_time="Mon, 20 Jan 2003 23:24:34 GMT"/>
 			    </widget>
@@ -671,7 +710,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">Text Be_side Icons</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">False</property>
+			      <property name="active">True</property>
 			      <property name="group">menu_toolbar_pixmaps</property>
 			      <signal name="activate" handler="on_menu_toolbar_beside_activate" last_modification_time="Mon, 03 Nov 2003 22:52:23 GMT"/>
 			    </widget>
@@ -1181,7 +1220,7 @@
 						      <property name="left_margin">3</property>
 						      <property name="right_margin">3</property>
 						      <property name="indent">0</property>
-						      <property name="text" translatable="yes">No package is selected.
+						      <property name="text" translatable="yes">Select a package from the list above.
 </property>
 						    </widget>
 						  </child>
@@ -2143,7 +2182,7 @@
 					      <child>
 						<widget class="GtkLabel" id="label74">
 						  <property name="visible">True</property>
-						  <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; This allows you to override the version selected by the package manager. Use with care.</property>
+						  <property name="label" translatable="yes">&lt;b&gt;Warning:&lt;/b&gt; Changes override the version selected by the package manager. Use with care.</property>
 						  <property name="use_underline">False</property>
 						  <property name="use_markup">True</property>
 						  <property name="justify">GTK_JUSTIFY_LEFT</property>

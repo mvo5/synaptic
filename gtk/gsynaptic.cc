@@ -37,6 +37,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include <signal.h>
 #include <cassert>
 
@@ -45,6 +46,8 @@
 #include "locale.h"
 #include "stdio.h"
 #include "rgmisc.h"
+
+
 
 typedef enum {
    UPDATE_ASK,
@@ -199,6 +202,161 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
    }
 }
 
+
+// lock stuff
+static int sigterm_unix_signal_pipe_fds[2];
+static GIOChannel *sigterm_iochn;
+
+static void 
+handle_sigusr1 (int value)
+{
+   static char marker[1] = {'S'};
+
+   /* write a 'S' character to the other end to tell about
+    * the signal. Note that 'the other end' is a GIOChannel thingy
+    * that is only called from the mainloop - thus this is how we
+    * defer this since UNIX signal handlers are evil
+    *
+    * Oh, and write(2) is indeed reentrant */
+   write (sigterm_unix_signal_pipe_fds[1], marker, 1);
+}
+
+static gboolean
+sigterm_iochn_data (GIOChannel *source, 
+		    GIOCondition condition, 
+		    gpointer user_data)
+{
+   GError *err = NULL;
+   gchar data[1];
+   gsize bytes_read;
+   
+   RGMainWindow *me = (RGMainWindow *)user_data;
+
+   /* Empty the pipe */
+   if (G_IO_STATUS_NORMAL != 
+       g_io_channel_read_chars (source, data, 1, &bytes_read, &err)) {
+      g_warning("Error emptying callout notify pipe: %s", err->message);
+      g_error_free (err);
+      return TRUE;
+   }
+   if(data[0] == 'S')
+      me->activeWindowToForeground();
+
+   return TRUE;
+}
+
+// test if a lock is aquired already, return 0 if no lock is found, 
+// the pid of the locking application or -1 on error
+pid_t TestLock(string File)
+{
+   int FD = open(File.c_str(),0);
+   if(FD < 0) {
+      perror("open");
+      return(-1);
+   }
+   struct flock fl;
+   fl.l_type = F_WRLCK;
+   fl.l_whence = SEEK_SET;
+   fl.l_start = 0;
+   fl.l_len = 0;
+   if (fcntl(FD, F_GETLK, &fl) < 0) {
+      cerr << "fcntl error" << endl;
+      return(-1);
+   }
+   // lock is available
+   if(fl.l_type == F_UNLCK)
+      return(0);
+   // file is locked by another process
+   return (fl.l_pid);
+}
+
+// check if we can get a lock, must be done after we read the configuration
+// if a lock is found and the app is synaptic send it a "come to foreground"
+// signal (USR1) or if not synaptic display a error and exit
+// 1. check if there is another synaptic running
+//    a) if so, check if it runs interactive and we are not running interactive
+//       *) if so, send signal and show message
+//       *) if not, send signal
+// 2. check if we can get a /var/lib/dpkg/lock 
+//    *) if not, show message and fail
+void check_and_aquire_lock()
+{
+   GtkWidget *dia;
+   gchar *msg = NULL;
+   pid_t LockedApp, runsNonInteractive;
+   bool weNonInteractive;
+
+   string SynapticLock = RConfDir()+"/lock";
+   string SynapticNonInteractiveLock = RConfDir()+"/lock.non-interactive";
+   weNonInteractive = _config->FindB("Volatile::Non-Interactive", false);
+
+   // 1. test for another synaptic
+   LockedApp = TestLock(SynapticLock);
+   if(LockedApp > 0) {
+      runsNonInteractive = TestLock(SynapticNonInteractiveLock);
+      //cout << "runsNonIteractive: " << runsNonInteractive << endl;
+      //cout << "weNonIteractive: " << weNonInteractive << endl;
+      if(weNonInteractive && runsNonInteractive <= 0) {
+	 // message that we can't turn a non-interactive into a interactive
+	 // one
+	 msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
+			       _("Another synaptic is running"),
+			       _("There is another synaptic running in "
+				 "interactive mode. Please close it first. "
+				 ));
+      } else if(!weNonInteractive && runsNonInteractive) {
+	 msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
+			       _("Another synaptic is running"),
+			       _("There is another synaptic running in "
+				 "non-interactive mode. Please wait for it "
+				 "to finish first."
+				 ));
+      }
+
+      if(msg != NULL) {
+	 dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
+						  GTK_MESSAGE_ERROR, 
+						  GTK_BUTTONS_CLOSE, msg);
+	 gtk_dialog_run(GTK_DIALOG(dia));
+	 gtk_widget_destroy(dia);
+	 g_free(msg);
+      }
+
+      kill(LockedApp, SIGUSR1);
+      exit(0);
+   }
+
+   // 2. test if we can get a lock
+   string AdminDir = flNotFile(_config->Find("Dir::State::status"));
+   LockedApp = TestLock(AdminDir + "lock");
+   if (LockedApp > 0) {
+      msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
+			    _("Unable to get exclusive lock"),
+			    _("This usually means that another "
+			      "package management application "
+			      "(like apt-get or aptitude) "
+			      "already runing. Please close that "
+			      "application first."));
+      dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
+					       GTK_MESSAGE_ERROR, 
+					       GTK_BUTTONS_CLOSE, msg);
+      gtk_dialog_run(GTK_DIALOG(dia));
+      g_free(msg);
+      exit(0);
+   }
+   
+   // we can't get a lock?!?
+   if(GetLock(SynapticLock, true) < 0) {
+      _error->DumpErrors();
+      exit(1);
+   }
+   // if we run nonInteracitvely, get a seond lock
+   if(weNonInteractive && GetLock(SynapticNonInteractiveLock, true) < 0) {
+      _error->DumpErrors();
+      exit(1);
+   }
+}
+
 int main(int argc, char **argv)
 {
 #ifdef ENABLE_NLS
@@ -225,8 +383,6 @@ int main(int argc, char **argv)
       userDialog.showErrors();
       exit(1);
    }
-   // read configuration early
-   _roptions->restore();
 
    // read the cmdline
    CommandLine CmdL(Args, _config);
@@ -235,6 +391,13 @@ int main(int argc, char **argv)
       userDialog.showErrors();
       exit(1);
    }
+
+   // check if there is another application runing and
+   // act accordingly
+   check_and_aquire_lock();
+
+   // read configuration early
+   _roptions->restore();
 
    if (_config->FindB("help") == true)
       ShowHelp(CmdL);
@@ -247,6 +410,22 @@ int main(int argc, char **argv)
 
    RPackageLister *packageLister = new RPackageLister();
    RGMainWindow *mainWindow = new RGMainWindow(packageLister, "main");
+
+   // install a sigusr1 signal handler and put window into 
+   // foreground when called. use the io_watch trick because gtk is not
+   // reentrant
+   // SIGUSR1 handling via pipes  
+   if (pipe (sigterm_unix_signal_pipe_fds) != 0) {
+      g_warning ("Could not setup pipe, errno=%d", errno);
+      return 1;
+   }
+   sigterm_iochn = g_io_channel_unix_new (sigterm_unix_signal_pipe_fds[0]);
+   if (sigterm_iochn == NULL) {
+      g_warning("Could not create GIOChannel");
+      return 1;
+   }
+   g_io_add_watch (sigterm_iochn, G_IO_IN, sigterm_iochn_data, mainWindow);
+   signal (SIGUSR1, handle_sigusr1);
 
    // read which default distro to use
    string s = _config->Find("Synaptic::DefaultDistro", "");

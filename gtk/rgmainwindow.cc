@@ -697,7 +697,7 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
-     _logView(0)
+     _logView(0), _installProgress(0), _fetchProgress(0)
 {
    assert(_win);
 
@@ -1828,7 +1828,7 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
       return;
     
    me->setInterfaceLocked(TRUE);
-   RGFetchProgress *status= new RGFetchProgress(me);;
+   RGFetchProgress *status = new RGFetchProgress(me);;
    status->setDescription(_("Downloading changelog"),
 			  _("The changelog contains information about the"
              " changes and closed bugs in each version of"
@@ -1869,6 +1869,9 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
    }
    
    dia.run();
+
+   // clean up
+   delete status;
    unlink(filename.c_str());
    me->setInterfaceLocked(FALSE);
 }
@@ -2506,6 +2509,25 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    me->updatePackageInfo(NULL);
 }
 
+void RGMainWindow::activeWindowToForeground()
+{
+   //cout << "activeWindowToForeground: " << getpid() << endl;
+
+   // easy, we have a main window
+   if(_config->FindB("Volatile::HideMainwindow", false) == false) {
+      gtk_window_present(GTK_WINDOW(window()));
+      return;
+   }
+
+   // harder, we run without mainWindow (in non-interactive mode most likly)
+   if( _fetchProgress && GTK_WIDGET_VISIBLE(_fetchProgress->window()))
+      gtk_window_present(GTK_WINDOW(_fetchProgress->window()));
+   else if(_installProgress && GTK_WIDGET_VISIBLE(_installProgress->window()))
+      gtk_window_present(GTK_WINDOW(_installProgress->window()));
+   else
+      g_critical("activeWindowToForeground(): no active window found\n");
+}
+
 void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2546,7 +2568,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    me->setStatusText(_("Applying marked changes. This may take a while..."));
 
    // fetch packages
-   RGFetchProgress *fprogress = new RGFetchProgress(me);
+   RGFetchProgress *fprogress=me->_fetchProgress = new RGFetchProgress(me);
    fprogress->setDescription(_("Downloading package files"), 
 			     _("The package files will be cached locally for installation."));
 
@@ -2584,7 +2606,6 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 #endif // HAVE_TERMINAL
 
 
-
 #ifdef HAVE_RPM
       iprogress = new RGInstallProgress(me, me->_lister);
 #else 
@@ -2594,10 +2615,12 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    iprogress = new RGDummyInstallProgress();
   #endif // WITH_DPKG_STATUSFD
 #endif // HAVE_RPM
+   me->_installProgress = dynamic_cast<RGWindow*>(iprogress);
 
    //bool result = me->_lister->commitChanges(fprogress, iprogress);
    me->_lister->commitChanges(fprogress, iprogress);
 
+   // FIXME: move this into the terminal class
 #ifdef HAVE_TERMINAL
    // wait until the term dialog is closed
    if (term != NULL) {
@@ -2608,27 +2631,12 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    }
 #endif
    delete fprogress;
+   me->_fetchProgress = NULL;
    delete iprogress;
+   me->_installProgress = NULL;
 
    if (_config->FindB("Synaptic::IgnorePMOutput", false) == false) {
       me->showErrors();
-#if 0
-      if (!_error->empty()) {
-	 string FullMessage,message;
-	 while (!_error->empty()) {
-	    _error->PopMessage(message);
-	    // Ignore some stupid error messages.
-	    if (message == "Tried to dequeue a fetching object")
-	       continue;
-	    FullMessage += message;
-	 }
-	 RGGladeUserDialog dia(me,"download_error");
-	 GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(), "textview");
-	 GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
-	 gtk_text_buffer_set_text(tb, utf8(FullMessage.c_str()), -1);
-	 dia.run();
-      }
-#endif
    } else {
       _error->Discard();
    }
@@ -2692,7 +2700,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 //xxx    delete me->_fmanagerWin;
    me->_fmanagerWin = NULL;
 
-   RGFetchProgress *progress = new RGFetchProgress(me);
+   RGFetchProgress *progress=me->_fetchProgress= new RGFetchProgress(me);
    progress->setDescription(_("Downloading package information"),
 			    _("The repositories will be checked for new, removed "
                "or upgraded software packages."));
@@ -2728,6 +2736,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
       _config->Set("Synaptic::update::last",time(NULL));
    }
    delete progress;
+   me->_fetchProgress=NULL;
 
    // show errors and warnings (like the gpg failures for the package list)
    me->showErrors();

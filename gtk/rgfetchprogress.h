@@ -21,11 +21,15 @@
  */
 
 
+#ifndef _RGFETCHPROGRESS_H_
+#define _RGFETCHPROGRESS_H_
+
 #include <apt-pkg/acquire.h>
 
 #include <vector>
 #include <set>
 #include "rggladewindow.h"
+
 
 
 class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
@@ -85,3 +89,5 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
 
    RGFetchProgress(RGWindow *win);
 };
+
+#endif

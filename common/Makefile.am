@@ -44,7 +44,6 @@ libsynaptic_a_SOURCES =\
 	rtagcollbuilder.h \
 	i18n.h \
 	sections_trans.h \
-	tree.hh \
 	rtagcollfilter.cc \
 	rtagcollfilter.h \
 	ruserdialog.h \

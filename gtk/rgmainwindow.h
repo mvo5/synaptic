@@ -36,6 +36,8 @@ using namespace std;
 #include <set>
 
 #include "rgtaskswin.h"
+#include "rgfetchprogress.h"
+#include "rinstallprogress.h"
 #include "rggladewindow.h"
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
@@ -149,6 +151,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGUserDialog *_userDialog;
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
+   RGFetchProgress *_fetchProgress;
+   RGWindow *_installProgress;
+
    // init stuff 
    void buildInterface();
    void buildTreeView();
@@ -221,6 +226,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    };
 
    void setStatusText(char *text = NULL);
+
+   // this helper will bring the current active window to the foreground
+   void activeWindowToForeground();
 
    void saveState();
    bool restoreState();

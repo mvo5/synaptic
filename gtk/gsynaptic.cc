@@ -203,20 +203,18 @@ int main(int argc, char **argv)
     RGFlushInterface();
     
     mainWindow->setInterfaceLocked(true);
-    mainWindow->setTreeLocked(true);
     
     if (!packageLister->openCache(false)) {
 	mainWindow->showErrors();
 	//exit(1);
     }
 
-    if (_config->FindB("Volatile::Set-Selections", False)) {
+    if (_config->FindB("Volatile::Set-Selections", false) == true) {
 	packageLister->unregisterObserver(mainWindow);
         packageLister->readSelections(cin);
 	packageLister->registerObserver(mainWindow);
     }
 
-    mainWindow->setTreeLocked(false);
     mainWindow->setInterfaceLocked(false);
     mainWindow->restoreState();
     mainWindow->showErrors();

@@ -1469,26 +1469,30 @@ bool RPackageLister::readSelections(istream &in)
 	    actionMap[PkgName] = ACTION_UNINSTALL;
 	}
     }
+
     if (actionMap.empty() == false) {
 	int Size = actionMap.size();
 	_progMeter->OverallProgress(0,Size,Size,_("Setting selections..."));
 	_progMeter->SubProgress(Size);
 	pkgDepCache &Cache = *_cache->deps();
+	pkgProblemResolver Fix(&Cache);
+	// XXX Should protect whatever is already selected in the cache.
 	pkgCache::PkgIterator Pkg;
-	RPackage *RPkg;
 	int Pos = 0;
 	for (map<string,int>::const_iterator I = actionMap.begin();
 	     I != actionMap.end(); I++) {
 	    Pkg = Cache.FindPkg((*I).first);
-	    RPkg = getElement(Pkg);
-	    if (RPkg != NULL) {
+	    if (Pkg.end() == false) {
+		Fix.Clear(Pkg);
+		Fix.Protect(Pkg);
 		switch ((*I).second) {
 		    case ACTION_INSTALL:
-			RPkg->setInstall();
+			Cache.MarkInstall(Pkg, true);
 			break;
 
 		    case ACTION_UNINSTALL:
-			RPkg->setRemove();
+			Fix.Remove(Pkg);
+			Cache.MarkDelete(Pkg, false);
 			break;
 		}
             }
@@ -1496,9 +1500,9 @@ bool RPackageLister::readSelections(istream &in)
 		_progMeter->Progress(Pos);
         }
 	_progMeter->Done();
+	Fix.InstallProtect();
+	Fix.Resolve(true);
     }
-    if (!check())
-        fixBroken();
     
     return true;
 }

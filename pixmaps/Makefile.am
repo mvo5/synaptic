@@ -4,15 +4,15 @@ appicondir = $(datadir)/synaptic/pixmaps
 appicon_DATA = synaptic_48x48.png 
 
 buttondir =  $(datadir)/synaptic/glade
-button_DATA = update_small.xpm \
-	      upgrade_small.xpm \
-	      distupgrade_small.xpm\
-              proceed_small.xpm
+button_DATA = update_small.png \
+	      upgrade_small.png \
+	      distupgrade_small.png\
+              proceed_small.png
 
 abouticondir = $(datadir)/synaptic/glade
-abouticon_DATA = deb.xpm \
-		 cnc.xpm \
-		 logo.xpm
+abouticon_DATA = deb.png \
+		 cnc.png \
+		 logo.png
 
 EXTRA_DIST=\
 	alert.xpm\

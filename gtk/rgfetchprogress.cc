@@ -121,6 +121,18 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    skipTaskbar(true);
 }
 
+void RGFetchProgress::setDescription(string mainText, string secondText)
+{
+   gtk_window_set_title(GTK_WINDOW(_win), mainText.c_str());
+   
+   gchar *str = g_strdup_printf(_("<big><b>%s</b></big>\n\n%s"),
+				  mainText.c_str(), secondText.c_str());
+   gtk_label_set_markup(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_description")), str);
+			
+
+   g_free(str);
+}
+
 bool RGFetchProgress::MediaChange(string Media, string Drive)
 {
    gchar *msg;
@@ -220,6 +232,10 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    float percent =
       long (double ((CurrentBytes + CurrentItems) * 100.0) /
             double (TotalBytes + TotalItems));
+   // work-around a stupid problem with libapt
+   if(CurrentItems == TotalItems)
+      percent=100.0;
+
    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
                                  percent / 100.0);
 

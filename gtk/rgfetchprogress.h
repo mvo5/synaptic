@@ -50,21 +50,16 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
    bool _cancelled;
 
    void updateStatus(pkgAcquire::ItemDesc & Itm, int status);
-
    static void stopDownload(GtkWidget *self, void *data);
 
+   void refreshTable(int row, bool append = false);
+   GdkPixmap *statusDraw(int width, int height, int status);
    GdkGC *_barGC;
    GdkGC *_gc;
    GdkGC *_textGC;
    PangoFontDescription *_font;
-#if 0
-   int _depth;
-#endif
-   void refreshTable(int row, bool append = false);
-   GdkPixmap *statusDraw(int width, int height, int status);
 
-   public:
-
+ public:
    virtual bool MediaChange(string Media, string Drive);
    virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
    virtual void Fetch(pkgAcquire::ItemDesc &Itm);
@@ -74,6 +69,10 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
    virtual void Stop();
 
    bool Pulse(pkgAcquire * Owner);
+
+   // set description of the current task (main and additonal explaination)
+   void setDescription(string mainText, string secondText="");
+
 
    RGFetchProgress(RGWindow *win);
 };

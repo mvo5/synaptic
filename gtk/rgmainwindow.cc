@@ -1877,7 +1877,10 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
       return;
     
    me->setInterfaceLocked(TRUE);
-   pkgAcquireStatus *status= new RGFetchProgress(me);;
+   RGFetchProgress *status= new RGFetchProgress(me);;
+   status->setDescription(_("Downloading changelog"),
+			  _("To view the changelog it is required to download "
+			    "it from the remote server"));
    pkgAcquire fetcher(status);
    string filename = pkg->getChangelogFile(&fetcher);
    
@@ -2505,7 +2508,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // fetch packages
    RGFetchProgress *fprogress = new RGFetchProgress(me);
-   fprogress->setTitle(_("Downloading Package Files"));
+   fprogress->setDescription(_("Downloading Package Files"), 
+			     _("To install the package files it is required "
+			       "to download them to your local cache."));
 
    // Do not let the treeview access the cache during the update.
    me->setTreeLocked(TRUE);
@@ -2636,7 +2641,9 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_fmanagerWin = NULL;
 
    RGFetchProgress *progress = new RGFetchProgress(me);
-   progress->setTitle(_("Downloading Index Files"));
+   progress->setDescription(_("Downloading Index Files"),
+			    _("The package index files from the server is now "
+			      "downloaded to your local cache."));
 
    me->setStatusText(_("Refreshing package list..."));
 

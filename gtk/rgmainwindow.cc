@@ -1840,7 +1840,11 @@ void RGMainWindow::doOpenSelections(GtkWidget *file_selector,
     me->selectionsFilename = file;
 
     ifstream in(file);
-    // fixme, we need errorhandlin here
+    if (!in != 0) {
+	_error->Error(_("Can't read %s"), file);
+	me->_userDialog->showErrors();
+	return;
+    }
     me->_lister->unregisterObserver(me);
     me->_lister->readSelections(in);
     me->_lister->registerObserver(me);
@@ -1884,7 +1888,12 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
     }
 
     ofstream out(me->selectionsFilename.c_str());
-    // fixme, we need errorhandlin here
+    if (!out != 0) {
+	 _error->Error(_("Can't write %s"), me->selectionsFilename.c_str());
+	 me->_userDialog->showErrors();
+	 return;
+    }
+	
     me->_lister->unregisterObserver(me);
     me->_lister->writeSelections(out, me->saveFullState);
     me->_lister->registerObserver(me);
@@ -1911,7 +1920,11 @@ void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button,
     cout << "fullState: " << me->saveFullState << endl;
 
     ofstream out(file);
-    // fixme, we need error handling here
+    if (!out != 0) {
+	_error->Error(_("Can't write %s"), file);
+	me->_userDialog->showErrors();
+	return;
+    }
     me->_lister->unregisterObserver(me);
     me->_lister->writeSelections(out, me->saveFullState);
     me->_lister->registerObserver(me);

@@ -37,6 +37,8 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 {
     setTitle(_("Package Filters"));
 
+    _busyCursor = gdk_cursor_new(GDK_WATCH);
+
     glade_xml_signal_connect_data(_gladeXML, 
 				  "on_button_filters_add_clicked",
 				  G_CALLBACK(addFilterAction),
@@ -765,16 +767,20 @@ void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
 
     GtkTreeIter iter;
     RFilter *filter;
-    //cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
-    if(me->_selectedPath == NULL) 
+    cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
+    if(me->_selectedPath == NULL) {
+	cout << "_selctedPath == NULL" << endl;
 	return;
+    }
     gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
 			    &iter, me->_selectedPath);
     gtk_tree_model_get(GTK_TREE_MODEL(me->_filterListStore), &iter,
 		       FILTER_COLUMN, &filter,
 		       -1);
-    if(filter == NULL)
-      return;
+    if(filter == NULL) {
+	cout << "filter == NULL" << endl;
+	return;
+    }
     me->applyChanges(filter);
 }
 
@@ -803,10 +809,13 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
 
 void RGFilterManagerWindow::close()
 {
-  if(_closeAction)
-    _closeAction(_closeData, _okcancel);
+    //cout << "RGFilterManagerWindow::close()" << endl;
+    gdk_window_set_cursor(_win->window, _busyCursor);
+    if(_closeAction)
+	_closeAction(_closeData, _okcancel);
 
-  RGWindow::close();
+    gdk_window_set_cursor(_win->window, NULL);
+    RGWindow::close();
 }
 
 void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
@@ -835,7 +844,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
 void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
 {
   RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-  //cout << "void RGFilterManagerWindow::okAction()"<<endl;
+  cout << "void RGFilterManagerWindow::okAction()"<<endl;
 
   me->_okcancel = TRUE;
   me->applyFilterAction(self,data);

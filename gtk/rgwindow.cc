@@ -148,5 +148,6 @@ void RGWindow::setTitle(string title)
 
 void RGWindow::close()
 {
+    cout << "RGWindow::close()" << endl;
     hide();
 }

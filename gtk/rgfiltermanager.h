@@ -121,6 +121,8 @@ class RGFilterManagerWindow : public RGWindow
 
    GtkWidget *_filterEntry;  /* GtkEntry */
 
+   GdkCursor *_busyCursor;
+
    // the filter list
    GtkWidget *_filterList;   /* GtkTreeView */
    GtkListStore *_filterListStore;

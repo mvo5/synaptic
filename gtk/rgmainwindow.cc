@@ -281,13 +281,16 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
 
 void RGMainWindow::closeFilterManagerAction(void *self, bool okcancel)
 {
+    cout << "RGMainWindow::closeFilterManagerAction()"<<endl;
     RGMainWindow *me = (RGMainWindow*)self;
 
     // user clicked ok
     if(okcancel) {
 	int i = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_filterPopup));
 	me->refreshFilterMenu();
-	me->changeFilter(i, true);
+	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_filterPopup), i);
+	me->_lister->setFilter(i-1);
+	me->refreshTable();
     }
 
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
@@ -400,14 +403,21 @@ void RGMainWindow::changedFilter(GtkWidget *self)
 
 void RGMainWindow::changeFilter(int filter, bool sethistory)
 {
-    if (sethistory)
-	gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
-  
-    RPackage *pkg = selectedPackage();
+    cout << "RGMainWindow::changeFilter()"<<endl;
     
-    setInterfaceLocked(TRUE);    
+    if (sethistory) {
+	gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
+	cout << "after sethistory" << endl;
+    }
+
+    RPackage *pkg = selectedPackage();
+    cout << "after selectedPackage()" << endl;
+
+    setInterfaceLocked(TRUE); 
+    cout << "after setInterfaceLocked" << endl;
     // try to set filter
     if(filter > 0) {
+	cout << "filter > 0" << endl;
 	_lister->setFilter(filter-1);
 	RFilter *pkgfilter = _lister->getFilter();
 	if(pkgfilter != NULL) {
@@ -427,16 +437,20 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
 		gtk_tree_view_collapse_all(GTK_TREE_VIEW(_treeView));
 	} else {
 	    filter = 0;
+	    cout << "setting filter to 0" << endl;
 	}
     }
 
     // no filter given or not available from above
     if (filter == 0) { // no filter
+	cout << "filter == 0" << endl;
 	_lister->setFilter();
 	changeTreeDisplayMode(_menuDisplayMode);
     }
 
+    cout << "before Refresh" << endl;
     refreshTable(pkg);
+    cout << "after Refresh" << endl;
 
     setInterfaceLocked(FALSE);
     setStatusText();

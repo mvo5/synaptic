@@ -33,15 +33,6 @@
 #include <iostream>
 #include <apt-pkg/tagfile.h>
 
-#ifdef HAVE_DEBTAGS
-#include <TagcollParser.h>
-#include <StdioParserInput.h>
-#include <SmartHierarchy.h>
-#include <TagcollBuilder.h>
-#include <HandleMaker.h>
-#include <TagCollection.h>
-#endif
-
 #include <regex.h>
 
 #include "rpackagelister.h"
@@ -55,10 +46,13 @@ class Configuration;
 
 
 class RPackageFilter {
- protected:
+
+   protected:
+
    RPackageLister *_lister;
 
- public:
+   public:
+
    virtual const char *type() = 0;
 
    virtual bool filter(RPackage *pkg) = 0;
@@ -67,45 +61,38 @@ class RPackageFilter {
    virtual bool read(Configuration &conf, string key) = 0;
    virtual bool write(ofstream &out, string pad) = 0;
 
-   RPackageFilter() {
-   };
- RPackageFilter(RPackageLister *lister):_lister(lister) {
-   };
-   virtual ~ RPackageFilter() {
-   };
+   RPackageFilter() {};
+   RPackageFilter(RPackageLister *lister) : _lister(lister) {};
+   virtual ~RPackageFilter() {};
 };
 
 
 extern const char *RPFSection;
 
-class RSectionPackageFilter:public RPackageFilter {
+class RSectionPackageFilter : public RPackageFilter {
+   
+   protected:
+
    vector<string> _groups;
    bool _inclusive;             // include or exclude the packages
 
- public:
+   public:
+
    RSectionPackageFilter(RPackageLister *lister)
- :   RPackageFilter(lister), _inclusive(false) {
-   };
-   virtual ~ RSectionPackageFilter() {
-   };
+      :   RPackageFilter(lister), _inclusive(false) {};
+   virtual ~RSectionPackageFilter() {};
 
    inline virtual void reset() {
       clear();
       _inclusive = false;
    };
 
-   inline virtual const char *type() {
-      return RPFSection;
-   };
+   inline virtual const char *type() { return RPFSection; };
 
-   void setInclusive(bool flag) {
-      _inclusive = flag;
-   };
+   void setInclusive(bool flag) { _inclusive = flag; };
    bool inclusive();
 
-   inline void addSection(string group) {
-      _groups.push_back(group);
-   };
+   inline void addSection(string group) { _groups.push_back(group); };
    int count();
    string section(int index);
    void clear();
@@ -119,7 +106,9 @@ class RSectionPackageFilter:public RPackageFilter {
 extern const char *RPFPattern;
 
 class RPatternPackageFilter : public RPackageFilter {
- public:
+
+   public:
+
    typedef enum {
       Name,
       Version,
@@ -132,9 +121,11 @@ class RPatternPackageFilter : public RPackageFilter {
       WeakDepends,              // suggests et al
       RDepends                  // reverse depends
    } DepType;
+
    static char *TypeName[];
 
- protected:
+   protected:
+
    struct Pattern {
       DepType where;
       string pattern;
@@ -143,29 +134,20 @@ class RPatternPackageFilter : public RPackageFilter {
    };
    vector<Pattern> _patterns;
 
- public:
+   public:
+
    RPatternPackageFilter(RPackageLister *lister)
- :   RPackageFilter(lister) {
-   };
-
-   // copy constructor
+      :   RPackageFilter(lister)
+   {};
    RPatternPackageFilter(RPatternPackageFilter &f);
+   virtual ~RPatternPackageFilter();
 
+   inline virtual void reset() { clear(); };
 
-   virtual ~ RPatternPackageFilter();
-
-   inline virtual void reset() {
-      clear();
-   };
-
-   inline virtual const char *type() {
-      return RPFPattern;
-   };
+   inline virtual const char *type() { return RPFPattern; };
 
    void addPattern(DepType type, string pattern, bool exclusive);
-   inline int count() {
-      return _patterns.size();
-   };
+   inline int count() { return _patterns.size(); };
    inline void getPattern(int index, DepType &type, string &pattern,
                           bool &exclusive) {
       type = _patterns[index].where;
@@ -182,11 +164,14 @@ class RPatternPackageFilter : public RPackageFilter {
 
 extern const char *RPFStatus;
 
-class RStatusPackageFilter:public RPackageFilter {
- protected:
+class RStatusPackageFilter : public RPackageFilter {
+
+   protected:
+      
    int _status;
 
- public:
+   public:
+
    enum Types {
       Installed = 1 << 0,
       Upgradable = 1 << 1,      // installed but upgradable
@@ -203,22 +188,14 @@ class RStatusPackageFilter:public RPackageFilter {
    };
 
    RStatusPackageFilter(RPackageLister *lister)
- :   RPackageFilter(lister), _status(~0) {
-   };
-   inline virtual void reset() {
-      _status = ~0;
-   };
+      :   RPackageFilter(lister), _status(~0)
+   {};
+   inline virtual void reset() { _status = ~0; };
 
-   inline virtual const char *type() {
-      return RPFStatus;
-   };
+   inline virtual const char *type() { return RPFStatus; };
 
-   inline void setStatus(int status) {
-      _status = status;
-   };
-   inline int status() {
-      return _status;
-   };
+   inline void setStatus(int status) { _status = status; };
+   inline int status() { return _status; };
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -229,16 +206,16 @@ class RStatusPackageFilter:public RPackageFilter {
 extern const char *RPFPriority;
 
 class RPriorityPackageFilter:public RPackageFilter {
- public:
-   RPriorityPackageFilter(RPackageLister *lister)
-   :RPackageFilter(lister) {
-   };
-   inline virtual void reset() {
-   };
 
-   inline virtual const char *type() {
-      return RPFPriority;
-   };
+   public:
+
+   RPriorityPackageFilter(RPackageLister *lister)
+      :   RPackageFilter(lister)
+   {};
+
+   inline virtual void reset() {};
+
+   inline virtual const char *type() { return RPFPriority; };
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -248,8 +225,10 @@ class RPriorityPackageFilter:public RPackageFilter {
 
 extern const char *RPFReducedView;
 
-class RReducedViewPackageFilter:public RPackageFilter {
- protected:
+class RReducedViewPackageFilter : public RPackageFilter {
+
+   protected:
+
    bool _enabled;
 
    set<string> _hide;
@@ -258,153 +237,45 @@ class RReducedViewPackageFilter:public RPackageFilter {
 
    void addFile(string FileName);
 
- public:
+   public:
+
    RReducedViewPackageFilter(RPackageLister *lister)
- :   RPackageFilter(lister), _enabled(false) {
-   };
+      :   RPackageFilter(lister), _enabled(false)
+   {};
    ~RReducedViewPackageFilter();
 
-   inline virtual void reset() {
-      _hide.clear();
-   };
+   inline virtual void reset() { _hide.clear(); };
 
-   inline virtual const char *type() {
-      return RPFReducedView;
-   };
+   inline virtual const char *type() { return RPFReducedView; };
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
    virtual bool write(ofstream &out, string pad);
 
-   void enable() {
-      _enabled = true;
-   };
-   void disable() {
-      _enabled = false;
-   };
+   void enable() { _enabled = true; };
+   void disable() { _enabled = false; };
 };
-
-#if 0                           //PORTME
-#ifdef HAVE_DEBTAGS
-extern const char *RPFTags;
-
-class RTagPackageFilter:public RPackageFilter, public TagcollConsumer < int,
-   string > {
- protected:
-   OpSet<string> included;
-   OpSet<string> excluded;
-   set<RPackage *> selected;
-   bool dirty;
-
-   void rebuildSelected() {
-      selected.clear();
-      _lister->_coll.output(*this);
-      dirty = false;
-   }
-
- public:
-   RTagPackageFilter(RPackageLister *lister)
- :   RPackageFilter(lister), dirty(true) {
-   };
-
-   inline virtual void reset() {
-      included.clear();
-      excluded.clear();
-      selected.clear();
-      dirty = false;
-   };
-   inline virtual const char *type() {
-      return RPFTags;
-   };
-
-   void include(string tag) {
-      included.insert(tag);
-      dirty = true;
-   }
-   void exclude(string tag) {
-      excluded.insert(tag);
-      dirty = true;
-   }
-
-   OpSet<string> &getIncluded() {
-      return included;
-   };
-   OpSet<string> &getExcluded() {
-      return excluded;
-   };
-
-   virtual bool filter(RPackage *pkg) {
-      // if we do not use tags, ignore them
-      if (included.empty() && excluded.empty())
-         return true;
-
-      if (dirty)
-         rebuildSelected();
-
-      return selected.find(pkg) != selected.end();
-   }
-
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
-
-   virtual void consume(const int &item) throw() {
-      if (included.empty())
-         selected.insert(_lister->_hmaker->getItem(item));
-   }
-   virtual void consume(const int &item, const OpSet<string> &tags) throw() {
-      OpSet<string> inters = tags ^ excluded;
-      if (inters.empty() && tags.contains(included))
-         selected.insert(_lister->_hmaker->getItem(item));
-   }
-
-   virtual void consume(const OpSet <int> &items) throw() {
-      if (included.empty())
-         for (OpSet<int>::const_iterator i = items.begin();
-              i != items.end(); i++)
-            selected.insert(_lister->_hmaker->getItem(*i));
-   }
-
-   virtual void consume(const OpSet <int> &items,
-                        const OpSet <string> &tags) throw() {
-      OpSet<string> inters = tags ^ excluded;
-      if (inters.empty() && tags.contains(included))
-         for (OpSet<int>::const_iterator i = items.begin();
-              i != items.end(); i++)
-            selected.insert(_lister->_hmaker->getItem(*i));
-   }
-};
-#endif
-#endif
 
 struct RFilterView {
-   RFilterView():viewMode(0), expandMode(0) {
-   };
+   RFilterView():viewMode(0), expandMode(0) {};
    int viewMode;
    int expandMode;
 };
 
 struct RFilter {
- public:
+
+   public:
+
    RFilter(RPackageLister *lister)
-   :section(lister), pattern(lister), status(lister),
-      priority(lister), reducedview(lister),
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   tags(lister),
-#endif
-#endif
-   preset(false) {
-   };
+      :   section(lister), pattern(lister), status(lister),
+          priority(lister), reducedview(lister), preset(false)
+   {};
 
    void setName(string name);
    string getName();
 
-   void setViewMode(RFilterView view) {
-      _view = view;
-   };
-   RFilterView getViewMode() {
-      return _view;
-   };
+   void setViewMode(RFilterView view) { _view = view; };
+   RFilterView getViewMode() { return _view; };
 
    bool read(Configuration &conf, string key);
    bool write(ofstream &out);
@@ -416,14 +287,11 @@ struct RFilter {
    RStatusPackageFilter status;
    RPriorityPackageFilter priority;
    RReducedViewPackageFilter reducedview;
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   RTagPackageFilter tags;
-#endif
-#endif
+
    bool preset;
 
- private:
+   protected:
+
    string name;
    RFilterView _view;
 };
@@ -431,4 +299,4 @@ struct RFilter {
 
 #endif
 
-// vim:sts=3:sw=3
+// vim:ts=3:sw=3:et

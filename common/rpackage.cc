@@ -232,105 +232,6 @@ long RPackage::availablePackageSize()
    return State.CandidateVerIter(*_depcache)->Size;
 }
 
-#if 0
-int RPackage::getOtherStatus()
-{
-   int status = 0;
-
-   if (_newPackage)
-      status |= ONew;
-
-   if (_pinnedPackage)
-      status |= OPinned;
-
-   if (_orphanedPackage)
-      status |= OOrphaned;
-
-   if (_purge)
-      status |= OPurge;
-
-   if ((*_package)->CurrentState == pkgCache::State::ConfigFiles) {
-      //cout << "ResidentalConfig found for: "<<name()<<endl;
-      status |= OResidualConfig;
-   }
-
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
-   if (State.CandidateVer == 0 ||
-       !State.CandidateVerIter(*_depcache).Downloadable()) {
-      //cout << "Not in archive found for: "<<name()<<endl;
-      status |= ONotInstallable;
-   }
-
-   return status;
-}
-
-
-RPackage::PackageStatus RPackage::getStatus()
-{
-   pkgCache::VerIterator ver = _package->CurrentVer();
-   pkgDepCache::StateCache &state = (*_depcache)[*_package];
-
-   if (ver.end())
-      return SNotInstalled;
-
-   if (state.NowBroken())
-      return SInstalledBroken;
-
-   if (state.Upgradable()) {
-      pkgCache::VerIterator cand = state.CandidateVerIter(*_depcache);
-
-      if (!cand.end())
-         return SInstalledOutdated;
-   }
-   // special case for downgrades. we don't handle downgrade gracefully yet
-   // instead pretend we return the status as if there is no downgrade
-   if (state.Status < 0) {
-      if (_depcache->VS().CmpVersion(_package->CurrentVer().VerStr(),
-                                     _defaultCandVer) == 0)
-         return SInstalledUpdated;
-      else
-         return SInstalledOutdated;
-   }
-   if (!ver.end())
-      return SInstalledUpdated;
-
-   return SNotInstalled;
-}
-
-RPackage::MarkedStatus RPackage::getMarkedStatus()
-{
-   pkgDepCache::StateCache &state = (*_depcache)[*_package];
-
-   if ((state.iFlags & pkgDepCache::ReInstall) == pkgDepCache::ReInstall) {
-       return MReInstall;
-   }
-
-   if (state.NewInstall())
-      return MInstall;
-
-   if (state.Upgrade())
-      return MUpgrade;
-
-   if (state.Downgrade())
-      return MDowngrade;
-
-   if (state.Delete())
-      return MRemove;
-
-   if (state.Install())
-      return MUpgrade;
-
-   if (state.Keep())
-      return MKeep;
-
-   if (state.Held())
-      return MHeld;
-
-   cout << _("OH SHIT DUNNO WTF IS GOIN ON!") << endl;
-   return MKeep;
-}
-#endif
-
 int RPackage::getFlags()
 {
    int flags = 0;
@@ -812,6 +713,7 @@ void RPackage::setKeep()
    _depcache->MarkKeep(*_package, false);
    if (_notify)
       _lister->notifyChange(this);
+   setReInstall(false);
 }
 
 

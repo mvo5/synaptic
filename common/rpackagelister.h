@@ -183,17 +183,11 @@ class RPackageLister {
    void storeFilters();
    void restoreFilters();
 
-   // filter management
    void setFilter(int index = -1);
-   // note that setFilter will only set it if the filter is already registered
    void setFilter(RFilter *filter);
-   inline RFilter *getFilter() {
-      return _filter;
-   };
+   inline RFilter *getFilter() { return _filter; };
    int getFilterIndex(RFilter *filter = NULL);
-   unsigned int nrOfFilters() {
-      return _filterL.size();
-   };
+   unsigned int nrOfFilters() { return _filterL.size(); };
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);
@@ -222,18 +216,6 @@ class RPackageLister {
 
    int packagesSize() { return _packages.size(); };
    int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); };
-
-#if 0
-   inline unsigned count() {
-      return _updating ? 0 : _viewPackages.size();
-   };
-   inline RPackage *getElement(int row) {
-      if (!_updating && row < (int)_viewPackages.size())
-         return _viewPackages[row];
-      else
-         return NULL;
-   };
-#endif
 
    void getStats(int &installed, int &broken, int &toInstall, int &toReInstall,
 		 int &toRemove, double &sizeChange);

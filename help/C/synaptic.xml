@@ -71,66 +71,66 @@
 <sect1 id="synaptic-introduction"> 
 	<title>Introduction</title> 
 	<para>
-		The &app; is a graphical frontend to the apt package management system.
+		The &app; is a graphical frontend to the <emphasis>apt</emphasis> package management system.
+		It allows you to perform all actions of the command line tool <command>apt-get</command> in a graphical 
+		environment.
 	</para>
 
 	<para>
-		The software is organizied in so called packages.
-		Modifications are not executed instantly. This allows you to queue several modifications and
-		execute them at once.
+		The software on your system is organizied in so called <emphasis>packages</emphasis>. The &app; enables you
+		to install, remove or upgrade software packages. 
+		A detailed list of the most important features can be found below.
 	</para>
+	
+	<note>
+		<para>
+			The modifications are not executed instantly. This allows you to queue several modifications and
+			execute them at once.
+		</para>
+	</note>
+
 
 	<para>
-		&app; provides the following features:
+                &app; provides the following features:
+
+        <itemizedlist>
+                <listitem>
+                        <para>
+                                Install, remove, configure, upgrade and downgrade single and multiple packages.
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Upgrade your whole system.
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Manage package repositories.
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Search list of known packages by name, description...
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Filter list of shown packages by status, section, property and tag.
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Arrange list of shown packages by initial letter, status or tag.
+                        </para>
+                </listitem>
+                <listitem>
+                        <para>
+                                Displays all available online documentation related to a package.
+                        </para>
+                </listitem>
+        </itemizedlist>
 	</para>
-
-	<itemizedlist>
-		<listitem>
-			<para>
-				Install, remove, configure, upgrade and downgrade single and multiple packages.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Upgrade your whole system.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Manage package repositories.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Search list of known packages by name, description...
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Filter list of shown packages by status, section, property and tag.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Arrange list of shown packages by initial letter, status or tag.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Displays all available online documentation related to a package.
-			</para>
-		</listitem>
-	</itemizedlist>
-
-	<warning>
-		<para>
-			Your system can be damaged or rendered unusable.
-		</para>
-		<para>
-			Always use &app; with care.
-		</para>
-	</warning>
-
 	<note>
 		<para>
 			Root rights are required to execute changes in the package system.
@@ -140,7 +140,7 @@
 	<para>
 		You can start <application>&app;</application> in the 
 		following ways:
-	</para> 
+
 	<variablelist>
 		<varlistentry>
 			<term><guimenu>GNOME Applications</guimenu> menu</term>
@@ -148,7 +148,6 @@
 				<para>
 					Choose 
 					<menuchoice>
-					<guisubmenu>Preferences</guisubmenu>
 					<guisubmenu>System Tools</guisubmenu>
 					<guimenuitem>Software</guimenuitem>
 					</menuchoice>. 
@@ -180,19 +179,18 @@
 				</para> 
 			</listitem>
 		</varlistentry>
-		<varlistentry>
-			<term>Red Hat and Fedora <guimenu>Applications</guimenu> menu</term>
-			<listitem>
-				<para>
-					Choose 
-					<menuchoice>
-					<guisubmenu>System Tools</guisubmenu>
-					<guimenuitem>Software</guimenuitem>
-					</menuchoice>. 
-				</para>
-			</listitem>
-		</varlistentry>
 	</variablelist>
+	</para> 
+
+	<caution>
+		<para>
+			Your system can be damaged or rendered unusable.
+		</para>
+		<para>
+			Always use &app; with care.
+		</para>
+	</caution>
+
 </sect1>
 
 <sect1 id="synatpic-win"> 
@@ -325,7 +323,7 @@
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Upgrade Packages
+							Upgrade System
 						</term>
 						<listitem>
 							<para>
@@ -354,14 +352,17 @@
 			</term>
 			<listitem>
 				<para>
-					Jump to the fist package whose name matches the entry.
+					Jump to the fist package in the list whose name matches the entry.
 				</para>
-				<tip>
-					<para>
-						For detailed instructions on the quick search, see <xref 
-						linkend="synaptic-pkg-find"></xref>.
-					</para>
-				</tip>
+				
+				<para>
+					<tip>
+						<para>
+							For detailed instructions on the quick search, see <xref 
+							linkend="synaptic-pkg-find"></xref>.
+						</para>
+					</tip>
+				</para>
 			</listitem>
 		</varlistentry>
 	</variablelist>
@@ -474,8 +475,53 @@
 	<title>
 		Package Details
 	</title>
+
 	<para>
+		The package details area gives you detailed information about the selected package and also provides controls
+		to modify the status of the package.
+ 	 </para>
+
+	<figure>
+		<title>Package Details</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagedetails.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the package details in the &app; main window.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		The information notebook contains the following tabs:
 	</para>
+
+	<variablelist>
+		<varlistentry>
+			<term>
+				Information notebook
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Package controls
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
 </sect2>
 
 </sect1>
@@ -489,16 +535,19 @@
 
 <sect2 id="synaptic-pkg-find"> 
 	<title>
-		Finding a Specific Package
+		Finding Packages
 	</title> 
 
-<sect3 id="synaptic-pkg-find-quicksearch">
-	<title>	
-		Quick Search
-	</title>
+<variablelist>
+<varlistentry id="synaptic-pkg-find-quicksearch">
+	<term>	
+		Finding a package in the list of shown packages
+	</term>
+	<listitem>
 	<para>
 		To find a package name in the list of shown packages perform the follwong steps:
 	</para>
+	<para>
 	<orderedlist>
 		<listitem>
 			<para>
@@ -521,57 +570,64 @@
 			</para>
 		</listitem>
 	</orderedlist>
-</sect3>
-
-<sect3 id="synaptic-pkg-find-advsearch">
-	<title>
-		Advanced Search
-	</title>
-	
-	<para>
-		The advanced search is a special filter for the package list. Only matching packages will be shown 
-		in the package list.
 	</para>
+	</listitem>
+</varlistentry>
 
-	<orderedlist>
+<varlistentry id="synaptic-pkg-find-advsearch">
+		<term>
+			Showing only searched packages
+		</term>
+	
 		<listitem>
 			<para>
-				Open the search dialog <menuchoice><guimenu>Package</guimenu>
-				<guimenuitem>Find...</guimenuitem>
-				</menuchoice> from the menu or press <keycombo><keycap>Ctrl</keycap>
-				<keycap>F</keycap></keycombo>.
+				To only show matching packages in the package list perform the following steps:
 			</para>
-		</listitem>
-		<listitem>
 			<para>
-				Type the search expression into the find field, e.g. "mp3 ogg player".
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Select the fields that you want to search in, e.g. "name" and "description"
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Click on <guibutton>Find</guibutton> to 
-				start the search. In our example only music players and related packages will be listed.
-			</para>
-		</listitem>
-	</orderedlist>
-	<tip>
-		<para>
-			You can create more complex filters with the 
-			<xref linkend="synaptic-filter-edit"></xref>.
+		<orderedlist>
+			<listitem>
+				<para>
+					Open the search dialog <menuchoice><guimenu>Package</guimenu>
+					<guimenuitem>Find...</guimenuitem>
+					</menuchoice> from the menu or press <keycombo><keycap>Ctrl</keycap>
+					<keycap>F</keycap></keycombo>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Type the search expression into the find field, e.g. "mp3 ogg player".
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Select the fields that you want to search in, e.g. "name" and "description"
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Click on <guibutton>Find</guibutton> to 
+					start the search. In our example only music players and related packages will be listed.
+				</para>
+			</listitem>
+		</orderedlist>
 		</para>
-	</tip>
-</sect3>
+		<para>
+		<tip>
+			<para>
+				You can create more complex filters with the 
+				<xref linkend="synaptic-filter-edit"></xref>.
+			</para>
+		</tip>
+		</para>
+		</listitem>
+	</varlistentry>
+</variablelist>
 </sect2>
 
 <sect2 id="synaptic-pkg-install"> 
 	<title>Installing Packages</title>
 	<para>
-		To install one or more packages follow these steps:
+		To install one or more packages perform the following steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -600,8 +656,9 @@
 		</listitem>
 		<listitem>
 			<para>
-				Select the package(s) that you wish to install in the 
-				<xref linkend="synaptic-win-list"/>.
+				Select the package that you wish to install in the 
+				<xref linkend="synaptic-win-list"/> with a left mouse click. To select further packages hold
+				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
 			</para>
 		</listitem>
 		<listitem>
@@ -671,8 +728,9 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				Select the package(s) that you wish to remove in the 
-				<xref linkend="synaptic-win-list"/>.
+				Select the package that you wish to remove in the 
+				<xref linkend="synaptic-win-list"/> with a left click. To select further packages hold
+				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
 			</para>
 		</listitem>
 		<listitem>
@@ -780,8 +838,9 @@
 
 		<listitem>
 			<para>
-				Select the package(s) that you wish to upgrade in the 
-				<xref linkend="synaptic-win-list"/>.
+				Select the package that you wish to upgrade in the 
+				<xref linkend="synaptic-win-list"/>. To select further packages hold
+				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
 			</para>
 		</listitem>
 		<listitem>
@@ -990,13 +1049,16 @@
 		Downgrading Packages
 	</title> 
 
-	<warning>
+	<caution>
+		<para>
+			This may render your package system unuseable!
+		</para>
 		<para>
 			Downgrading packages is a broken feature, since apt and &app; can only handle
 			conflicts and dependency resolution in upgrades. 
 			You may need this feature in some circumstances, but it is not recommended to use. 
 		</para>
-	</warning>
+	</caution>
 
 	<para>
 		To downgrade a package you have to select a specific version of the package:
@@ -1105,8 +1167,9 @@
 					</listitem>
 					<listitem>
 						<para>
-							Select package(s) and choose <guibutton>No Changes</guibutton> from the 
-							package control.
+							Select package with a left mouse click and choose <guibutton>No Changes</guibutton> from the 
+							package control. To select further packages hold down the <keycap>Ctrl</keycap> key while 
+							left clicking on the additional package.
 						</para>
 					</listitem>
 					<listitem>
@@ -1132,7 +1195,7 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Undo last changes
+				Undo last change
 			</term>
 			<listitem>
 				<para>
@@ -1220,7 +1283,7 @@
 	</para>
 	
 	<para>
-		&app; will not allow any further changes on a borken system.
+		&app; will not allow any further changes on a broken system.
 	</para>
 
 	<para>
@@ -1555,6 +1618,17 @@
 								</para>
 							</listitem>
 					</varlistentry>
+					<varlistentry>
+						<term>
+							Consider recommended packages as dependencies
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
 				</variablelist>
 			</listitem>
 		</varlistentry>
@@ -1620,29 +1694,9 @@
 								</para>
 							</listitem>
 					</varlistentry>
-				</variablelist>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term>
-				Dependencies
-			</term>
-			<listitem>
-				<variablelist>
 					<varlistentry>
 						<term>
 							Confirm actions also affecting other packages
-						</term>
-							<listitem>
-								<para>
-									Regular expression are an advanced method of text
-									matching.
-								</para>
-							</listitem>
-					</varlistentry>
-					<varlistentry>
-						<term>
-							Consider recommended packages as dependencies
 						</term>
 							<listitem>
 								<para>
@@ -1658,44 +1712,103 @@
 </sect2>
 
 <sect2 id="synaptic-prefs-layout"> 
-	<title>Layout</title> 
-	<para> </para>
+	<title>
+		Layout
+	</title> 
+	<para>
+		You can change the appereance of Synaptic.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Main Window
+			</term>
+			<listitem>
+				<para>
+					Choose between two different layouts of the main window.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Fonts
+			</term>
+			<listitem>
+				<para>
+					Specify custom fonts for the application and the terminal output.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
 </sect2>
 
 <sect2 id="synaptic-prefs-ordercolor"> 
-	<title>Column Order and Colors</title> 
-	<para> </para>
+	<title>
+		Column Order and Colors
+	</title> 
+	<para>
+		Modify the appereance of the package list in the main window.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Column Order
+			</term>
+			<listitem>
+				<para>
+					Order the columns of the package list. A value of -1 hides the column.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Colors
+			</term>
+			<listitem>
+				<para>
+					Assign colors to visualize the package status.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
 </sect2>    
 
-<sect2 id="synaptiac-prefs-layout"> 
-	<title>Layout</title> 
-	<para> </para>
-</sect2> 
-
 <sect2 id="synaptiac-prefs-temp"> 
-	<title>Temporary Files</title> 
-	<para> </para>
+	<title>
+		Temporary Files
+	</title> 
+	<para>
+		Configure the management of completely or partially downloaded package files.
+	</para>
 </sect2> 
 
 <sect2 id="synaptiac-prefs-network"> 
-	<title>Network</title> 
-	<para> </para>
+	<title>
+		Network
+	</title> 
+	<para> 
+		Configure the internet connection and proxy server.
+	</para>
 </sect2> 
 
 <sect2 id="synaptiac-prefs-expert"> 
-	<title>Expert</title> 
-	<para> </para>
+	<title>
+		Expert
+	</title>
+	<para>
+		Undocumented.	
+	</para>
 </sect2> 
 </sect1>
 
-<!-- sect1 id="synaptic-bugs">
+<sect1 id="synaptic-bugs">
 	<title>
 		Known Bugs and Limitations
 	</title>
 	<para>
-		&app; is at no point a finished software. The following misbehavior or insufficiencies 
-		are known to the developers:
-	</para>
+		
+
 	<table frame="topbot" id="synaptic-bugs-table">
 		<title>Known issues and workarounds</title>
 		<tgroup cols="2" colsep="0" rowsep="0">
@@ -1710,32 +1823,48 @@
 			<tbody>
 				<row>
 					<entry valign="top">
-						Locales
+						Unsupported locale
 					</entry>
 					<entry valign="top">
-						Use a locale supported by the x-server.
+						Use a locale supported by Xlib.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">
-						No global undo
+						A failed installation blocks further operations in synaptic
 					</entry>
 					<entry valign="top">
-						Quit the &app;, since not queued and not executed changes get lost
-						after quitting.
+						<para>
+							Under some rare circumstaces the actual installation or removal of a package can fail. 
+							As a consequence all other queued changes are canceled, too. 
+						</para>
+						<para>
+							&app; requires a 
+							clear environment with no half installed packages 
+							to perform additional changes. But at the moment there is no way to continue
+							canceled installations within &app;.
+						</para>
+						<para>
+							To fix this situation type the following command in a terminal, then press
+							<keycap>Return</keycap>:
+						</para>
+						<command>
+							apt-get install -f
+						</command>
 					</entry>
 				</row>
 			</tbody>
 		</tgroup>
 	</table>
-</sect1 -->
+	</para>
+</sect1>
 
 <sect1 id="synaptic-shortcuts">
 	<title>
 		Keyboard Shortcuts
 	</title>
 	<para>
-		The list of all global short cuts in &app;:
+		List of all global short cuts in &app;:
 	</para>
 	<informaltable frame="none" id="synaptic-shortcuts-table">
 	
@@ -1858,8 +1987,8 @@
 	</para>
 	<para>
 		To report a bug or make a suggestion regarding &app; 
-		or this manual, use the bug report system at <ulink 
-		url="http://www.nongnu.org/synaptic" type="http">Synaptic Web</ulink>, contact 
+		or this manual, use the bug report system on the <ulink 
+		url="http://www.nongnu.org/synaptic" type="http">Synaptic Web Site</ulink>, contact 
 		the mailing list <email>synaptic@nongnu.org</email> or join the IRC channel 
 		#synaptic on irc.freenode.org.
 	</para>

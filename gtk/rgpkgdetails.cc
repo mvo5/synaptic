@@ -94,6 +94,8 @@ RGPkgDetailsWindow::formatDepInformation(vector<RPackage::DepInformation> deps)
 
 void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
 {
+   // TRANSLATORS: Title of the package properties dialog 
+   //              %s is the name of the package
    gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
    setTitle(str);
    g_free(str);

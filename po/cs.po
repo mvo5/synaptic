@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2004-06-22 15:26+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -628,7 +628,11 @@ msgstr ""
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignoruji chybné záznamy v souboru sources.list!"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -637,33 +641,33 @@ msgstr ""
 "Chyba při přenosu %s\n"
 "  %s"
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Některé z balíků se nepodařilo stáhnout.\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Chcete pokračovat, s tím že se tyto balíky nebudou instalovat?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 msgid "Unable to correct missing packages"
 msgstr "Nelze opravit chybějící balíčky"
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "Nelze uzamknout adresář pro stahované soubory"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Řádek %u v souboru s výběry je příliš dlouhý."
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Chyba na řádku %u v souboru s výběry"
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 msgid "Setting markings..."
 msgstr "Nastavení výběrů..."
 
@@ -1020,7 +1024,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Realizuji změny"
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, c-format
 msgid "%s Properties"
 msgstr "%s Vlastnosti"
@@ -1176,48 +1182,54 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "_Stáhnout přehled změn"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "Opravdu chcete přidat další CD?"
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "Nemůžu otevřít %s"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "Otevřít změny"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "Nemůžu uložit %s"
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "Uložit změny"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "Uložit kompletní seznam, nejenom vybrané změny"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 msgid "Searching..."
 msgstr "Probíhá hledání..."
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, c-format
 msgid "Found %i packages"
 msgstr "Nalezeno %i balíčků"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 msgid "Starting help viewer..."
 msgstr "Spouštím prohlížeč nápovědy..."
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1237,7 +1249,7 @@ msgstr ""
 "synaptic' na konzoli nebo si prohlídnout jejich html verzi umístěnou v "
 "adresáři 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1245,24 +1257,24 @@ msgstr ""
 "Nemohu spustit konfigurační nástroje!\n"
 "Musíte mít nejdříve nainstalován balíček 'libgnome2-perl'."
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 msgid "Starting package configuration tool..."
 msgstr "Spouštím konfiguraci balíčků..."
 
 #  cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 msgid "Starting package documentation viewer..."
 msgstr "Spouštím prohlížeč nápovědy..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Pro prohlížení dokumentace k balíčkům, musíte nejdřív nainstalovat \"dwww\""
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1270,35 +1282,35 @@ msgstr ""
 "Nemohu realizovat změny!\n"
 "Vyřešte nejdřív problémové balíčky."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr "Ověřuji vybrané akce, což může chvíli trvat..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 msgid "Downloading Package Files"
 msgstr "Probíhá stahování balíčků"
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "Opravdu chcete ukončit práci se Synapticem?"
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 msgid "Downloading Index Files"
 msgstr "Probíhá stahování indexů"
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 msgid "Refreshing package list..."
 msgstr "Aktualizuji seznam balíků..."
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 msgid "Failed to resolve dependency problems!"
 msgstr "Nelze opravit chybu závislostí!"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr "Problém závislostí byl úspěšně vyřešen"
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1306,15 +1318,15 @@ msgstr ""
 "Nemohu aktualizovat váš systém!\n"
 "Nejprve vyřešte problémové balíčky."
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 msgid "Marking all available upgrades..."
 msgstr "Automaticky vybrat vše aktualizovatelné..."
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 msgid "Successfully marked available upgrades"
 msgstr "Všechny možné aktualizace byly úspěšně nastaveny."
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr "Výběru všech aktualizovatelných balíčků selhal!"
 
@@ -2755,7 +2767,8 @@ msgstr "<i>Hotovo</i>"
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Nemohu skončit během operace</i>"
 
-#~ msgid "Changelog"
+#, fuzzy
+#~ msgid "Changelog for %s"
 #~ msgstr "Přehled změn"
 
 #~ msgid ""

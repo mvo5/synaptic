@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2004-06-13 05:39+0300\n"
 "Last-Translator: Erçin EKER <erc.caldera@gmx.net>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -645,41 +645,45 @@ msgstr ""
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "\"sources.list\" dosyasındaki geçersiz kayıtlar gözardı ediliyor!"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s"
 msgstr "İndirme başarısız "
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 #, fuzzy
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "%i paket sunucu(lar)dan alınamadı.\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Devam etmek ve bu paketleri göz ardı etmek istiyor musunuz?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 msgid "Unable to correct missing packages"
 msgstr "Eksik paketler düzeltilemiyor."
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "İndirme dizini kilitlenemiyor"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "Seçim dosyasındaki %u satırı çok uzun."
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, fuzzy, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Seçim dosyasında %u satırı bozuk"
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 #, fuzzy
 msgid "Setting markings..."
 msgstr "Seçimler yapılıyor..."
@@ -1045,7 +1049,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Değişiklikler Uygulanıyor..."
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, fuzzy, c-format
 msgid "%s Properties"
 msgstr "Özellikler"
@@ -1214,49 +1220,55 @@ msgstr[1] ""
 "Sisteminizde %i bozuk paket bulunuyor!\n"
 "\"Bozuk\" süzgecini kullanarak bunları görebilirsiniz."
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "Paket dosyalarını sadece indir"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "Bir CD-ROM daha eklemek ister misiniz?"
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "%s okunamıyor"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "Değişiklikleri aç"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "%s yazılamıyor"
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "Değişiklikleri kaydet"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "Sadece değişikliği değil, tam durumu kaydet"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 #, fuzzy
 msgid "Searching..."
 msgstr "Hazırlanıyor..."
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "Çelişen paketler"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 msgid "Starting help viewer..."
 msgstr "Yardım görüntüleyicisi başlatılıyor..."
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1275,7 +1287,7 @@ msgstr ""
 "Başka bir seçenek ise komut satırından 'man synaptic' komutuyla veya "
 "'synaptic/html' dizininden kılavuza ulaşabilirsiniz."
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 #, fuzzy
 msgid ""
 "Cannot start configuration tool!\n"
@@ -1284,22 +1296,22 @@ msgstr ""
 "Yapılandırma aracı başlatılamıyor!\n"
 "Gerekli olan 'libgnome2-perl' paketini kurmanız gerekiyor."
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 msgid "Starting package configuration tool..."
 msgstr "Paket yapılandırma aracı başlatılıyor..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 msgid "Starting package documentation viewer..."
 msgstr "Paket yardım görüntüleyicisi başlatılıyor..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 #, fuzzy
 msgid ""
 "Could not apply changes!\n"
@@ -1308,37 +1320,37 @@ msgstr ""
 "Değişiklikler uygulanamıyor!\n"
 "Bazı paketlerde sorun var. Öncelikle bunları düzeltin."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr "İşaretlenen değişiklikler uygulanıyor. Bu işlem zaman alabilir..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Paket dosyalarını sadece indir"
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "Synaptic'ten çıkmak istiyor musunuz?"
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "Dosyalar İndiriliyor..."
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 msgid "Refreshing package list..."
 msgstr "Paket listesi tazeleniyor..."
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 msgid "Failed to resolve dependency problems!"
 msgstr "Bağımlılık problemi çözümlemesi başarısız!"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr "Bağımlılık problemi çözümlemesi başarılı"
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 #, fuzzy
 msgid ""
 "Could not upgrade the system!\n"
@@ -1347,16 +1359,16 @@ msgstr ""
 "Sistem yükseltilemiyor!\n"
 "Bazı paketlerde sorun var. Öncelikle bunları düzeltin."
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 msgid "Marking all available upgrades..."
 msgstr "Mümkün olan tüm yükseltmeler işaretleniyor..."
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Mevcut tüm yükseltmeler başarıyla işaretlendi"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr "Mümkün olan tüm yükseltmeler işaretlenirken hata oluştu!"
 
@@ -2863,7 +2875,7 @@ msgid "<i>Can't close while running</i>"
 msgstr "<i>Halen çalışırken kapatılamıyor</i>"
 
 #, fuzzy
-#~ msgid "Changelog"
+#~ msgid "Changelog for %s"
 #~ msgstr "İptal"
 
 #~ msgid ""

@@ -1760,7 +1760,8 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
    GtkWidget *win = glade_xml_get_widget(dia.getGladeXML(), 
 					   "dialog_changelog");
    assert(win);
-   gchar *str = g_strdup_printf(_("Changelog for %s"), pkg->name());
+   // TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+   gchar *str = g_strdup_printf(_("%s Changelog"), pkg->name());
    gtk_window_set_title(GTK_WINDOW(win), str);
    g_free(str);
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2004-06-19 11:35+0200\n"
 "Last-Translator: Gabor Kelemen <kg0021@stud.unideb.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -633,7 +633,11 @@ msgstr ""
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "A sources.list érvénytelen rekordjainak kihagyása!"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -642,33 +646,33 @@ msgstr ""
 "Nem sikerült letölteni ezt: %s\n"
 "  %s"
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Néhány csomagot nem tudtam letölteni a kiszolgáló(k)ról.\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Szeretné folytatni ezen csomagok kihagyásával?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 msgid "Unable to correct missing packages"
 msgstr "Nem lehet korrigálni a hiányzó csomagokat"
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "Nem tudom zárolni a letöltési könyvtárat"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "A(z) %u sor túl hosszú a kiválasztás-fájlban."
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Deformált sor %u a kiválasztás-fájlban"
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 msgid "Setting markings..."
 msgstr "Kijelölések beállítása..."
 
@@ -1027,7 +1031,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Változtatások alkalmazása"
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, c-format
 msgid "%s Properties"
 msgstr "%s tulajdonságai"
@@ -1187,48 +1193,54 @@ msgstr[1] ""
 "\n"
 "Ezeket a \"Törött\" szűrővel keresheti meg."
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "Változások listájának _letöltése"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "Akar még egy CD-ROM-ot hozzáadni?"
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "Nem tudom olvasni: %s"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "Változások megnyitása"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "Nem tudom írni: %s"
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "Változások mentése"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "Teljes állapot mentése, nem csak a változások"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 msgid "Searching..."
 msgstr "Keresés..."
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, c-format
 msgid "Found %i packages"
 msgstr "%i csomagot találtam"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 msgid "Starting help viewer..."
 msgstr "Súgóböngésző indítása..."
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1246,7 +1258,7 @@ msgstr ""
 "Alternatívaként megnézheti a html verziót a synaptic/html mappában vagy "
 "megnyithatja parancssorból a man oldalt a 'man synaptic'-kal."
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1254,16 +1266,16 @@ msgstr ""
 "Nem tudom elindítani a konfigurálóeszközt!\n"
 "Telepítenie kell az ehhez szükséges 'libgnome2-perl' csomagot."
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 msgid "Starting package configuration tool..."
 msgstr "Csomagkonfiguráló eszköz indítása..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 msgid "Starting package documentation viewer..."
 msgstr "Csomagdokumentáció-néző indítása..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1271,7 +1283,7 @@ msgstr ""
 "A csomagok dokumentációjának böngészéséhez telepítenie kell a \"dwww\" "
 "csomagot"
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1279,35 +1291,35 @@ msgstr ""
 "Nem lehet alkalmazni a változtatásokat!\n"
 "Először javítsa meg a törött csomagokat."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr "Kijelölt változtatások alkalmazása. Ez eltarthat egy ideig..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 msgid "Downloading Package Files"
 msgstr "Csomagfájlok letöltése"
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "Ki akar lépni a Synapticból?"
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 msgid "Downloading Index Files"
 msgstr "Index fájlok letöltése"
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 msgid "Refreshing package list..."
 msgstr "Csomaglista frissítése..."
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 msgid "Failed to resolve dependency problems!"
 msgstr "Függőségi problémák megoldása sikertelen!"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr "Függőségi problémák sikeresen megoldva"
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1315,15 +1327,15 @@ msgstr ""
 "Nem tudom frissíteni a rendszert!\n"
 "Először javítsa meg a törött csomagokat."
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 msgid "Marking all available upgrades..."
 msgstr "Minden rendelkezésre álló frissítés kijelölése..."
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 msgid "Successfully marked available upgrades"
 msgstr "Minden lehetséges frissítés sorba állítása"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr "Minden rendelkezésre álló frissítés kijelölése sikertelen!"
 
@@ -2759,7 +2771,8 @@ msgstr "<i>Befejezve</i>"
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Futás közben nem zárhatja be</i>"
 
-#~ msgid "Changelog"
+#, fuzzy
+#~ msgid "Changelog for %s"
 #~ msgstr "Változások listája"
 
 #~ msgid ""

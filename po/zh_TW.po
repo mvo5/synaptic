@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -660,41 +660,45 @@ msgstr "無法抓取或認證某些套件庫的 Release 檔，暫時略過那些
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "無法讀取 sources.list 套件庫來源清單檔"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s"
 msgstr "擷取 hash 檔案失敗: "
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些套件未能從伺服器抓取。\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想略過這些套件，繼續進行嗎?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 #, fuzzy
 msgid "Unable to correct missing packages"
 msgstr "無法更正缺少的套件"
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "無法鎖住下載區目錄"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "自動選擇升級套件失敗。"
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr ""
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 msgid "Setting markings..."
 msgstr ""
 
@@ -1052,7 +1056,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "不包括已選的組別"
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, fuzzy, c-format
 msgid "%s Properties"
 msgstr "提供"
@@ -1222,52 +1228,58 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "更換光碟"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, fuzzy, c-format
 msgid "Can't read %s"
 msgstr "無法讀取目錄 %s"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 #, fuzzy
 msgid "Open changes"
 msgstr "套件變更"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 #, fuzzy
 msgid "Save changes"
 msgstr "套件變更"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 #, fuzzy
 msgid "Searching..."
 msgstr "搜尋"
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "永不升級"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "更新套件清單緩衝區 (apt-get update)"
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1278,85 +1290,85 @@ msgid ""
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "更新套件清單緩衝區 (apt-get update)"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "更新套件清單緩衝區 (apt-get update)"
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "編輯篩選器..."
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "編輯篩選器..."
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "套件主清單使用色彩顯示"
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "修正套件相依關係的問題"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "修正套件相依關係的問題"
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "此套件將會被升級。"
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "此套件將會被升級。"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2877,7 +2889,7 @@ msgid "<i>Can't close while running</i>"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Changelog"
+#~ msgid "Changelog for %s"
 #~ msgstr "取消"
 
 #, fuzzy
@@ -4000,9 +4012,6 @@ msgstr ""
 
 #~ msgid "Save"
 #~ msgstr "儲存"
-
-#~ msgid "Disk Change"
-#~ msgstr "更換光碟"
 
 #~ msgid "Include Only Selected Sections"
 #~ msgstr "只包括已選的組別"

@@ -1251,6 +1251,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
          string errm = (*I)->ErrorText;
 	 ostringstream tmp;
+    // TRANSLATORS: Error message after a failed download.
+    //              The first %s is the URL and the second 
+    //              one is a detailed error message that
+    //              is provided by apt
 	 ioprintf(tmp, _("Failed to fetch %s\n  %s"), 
 		  (*I)->DescURI().c_str(), errm.c_str());
 

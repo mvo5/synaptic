@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.50\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2004-06-12 11:13+0900\n"
 "Last-Translator: Son, Kyeong-uk <hey@gnome.or.kr>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -631,7 +631,11 @@ msgstr ""
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "sources.list 파일의 유효하지 않은 내용을 무시하겠습니다!"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -640,33 +644,33 @@ msgstr ""
 "%s 합치기 실패\n"
 "  %s"
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "서버에서 몇몇 패키지를 받아올 수 없었습니다.\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "이 패키지들을 무시하고 계속 진행하겠습니까?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 msgid "Unable to correct missing packages"
 msgstr "잃어버린 패키지를 바로잡을 수 없음"
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "내려받기 디렉토리를 짐글 수 없음"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "표시모음 파일의 %u번째 줄이 너무 깁니다."
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "표시모음 파일의 %u번째 줄이 잘못됨"
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 msgid "Setting markings..."
 msgstr "표시모음을 설정중입니다..."
 
@@ -1021,7 +1025,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "바뀐 내용을 적용하고 있습니다"
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, c-format
 msgid "%s Properties"
 msgstr "%s 등록 정보"
@@ -1177,48 +1183,54 @@ msgstr[0] ""
 "\n"
 "\"깨짐\" 거르개로 확인하세요."
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "Changelog 내려받기(_D)"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "다른 씨디롬을 더할까요?"
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "%s을(를) 읽을 수 없음"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "바뀐 내용 열기"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "%s을(를) 쓸 수 없음"
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "바뀐 내용 저장"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "바뀐 내용 외에 모든 상태 저장"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 msgid "Searching..."
 msgstr "찾고 있습니다..."
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, c-format
 msgid "Found %i packages"
 msgstr "%i개 패키지 찾음"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 msgid "Starting help viewer..."
 msgstr "도움말 뷰어를 시작하고 있습니다...."
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1236,7 +1248,7 @@ msgstr ""
 "그 외에 커맨드 라인에서 'man synaptic'을 쳐서 맨 페이지를 사용하거나 "
 "'synaptic/html' 폴더에 있는 HTML 버젼을 볼 수도 있습니다."
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1244,22 +1256,22 @@ msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
 "먼저 'libgnome2-perl' 패키지를 설치해야 합니다."
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 msgid "Starting package configuration tool..."
 msgstr "패키지 설정 도구를 시작하고 있습니다..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 msgid "Starting package documentation viewer..."
 msgstr "패키지 문서 뷰어를 시작하고 있습니다..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "패키지 문서를 탐색하려면 \"dwww\" 패키지를 설치해야합니다"
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1267,35 +1279,35 @@ msgstr ""
 "바뀐 내용을 적용할 수 없습니다!\n"
 "깨진 패키지를 먼저 고치세요."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 msgid "Applying marked changes. This may take a while..."
 msgstr "표시된 내용을 적용중입니다. 이 작업은 시간이 걸릴 수 있습니다..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 msgid "Downloading Package Files"
 msgstr "패키지 파일을 내려받고 있습니다"
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "시냅틱을 나갈까요?"
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 msgid "Downloading Index Files"
 msgstr "색인 파일을 내려받고 있습니다"
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 msgid "Refreshing package list..."
 msgstr "패키지 목록을 새로 고치는 중입니다..."
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 msgid "Failed to resolve dependency problems!"
 msgstr "의존성 문제를 해결하지 못했습니다!"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr "의존성 문제가 성공적으로 고쳐졌습니다"
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1303,15 +1315,15 @@ msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
 "먼저 깨진 패키지를 고치세요."
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 msgid "Marking all available upgrades..."
 msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 msgid "Successfully marked available upgrades"
 msgstr "가능한 모든 업그레이드가 성공적으로 표시됐습니다"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr "가능한 모든 업그레이드를 표시하는데 실패했습니다!"
 
@@ -2727,7 +2739,8 @@ msgstr "<i>완료</i>"
 msgid "<i>Can't close while running</i>"
 msgstr "<i>작동중에는 닫을 수 없음</i>"
 
-#~ msgid "Changelog"
+#, fuzzy
+#~ msgid "Changelog for %s"
 #~ msgstr "바뀐내용"
 
 #~ msgid ""

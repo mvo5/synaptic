@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-26 10:54+0200\n"
+"POT-Creation-Date: 2004-06-26 18:29+0200\n"
 "PO-Revision-Date: 2004-02-04 20:53+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -659,40 +659,44 @@ msgstr ""
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Zanemarivanje neispravnih stavki u datoteci „sources.list“!"
 
-#: common/rpackagelister.cc:1254
+#. TRANSLATORS: Error message after a failed download.
+#. The first %s is the URL and the second
+#. one is a detailed error message that
+#. is provided by apt
+#: common/rpackagelister.cc:1258
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s"
 msgstr "Nisam uspeo da preuzmem "
 
-#: common/rpackagelister.cc:1275
+#: common/rpackagelister.cc:1279
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Neki od paketa nisu mogli biti preuzeti sa servera.\n"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1282
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Da li želite da nastavite, zanemarujući ove pakete?"
 
-#: common/rpackagelister.cc:1285
+#: common/rpackagelister.cc:1289
 msgid "Unable to correct missing packages"
 msgstr "Ne mogu da ispravim nedostajuće pakete"
 
-#: common/rpackagelister.cc:1348
+#: common/rpackagelister.cc:1352
 msgid "Unable to lock the download directory"
 msgstr "Ne mogu da zaključam direktorijum za preuzimanje"
 
-#: common/rpackagelister.cc:1426
+#: common/rpackagelister.cc:1430
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "Linija %u je predugačka u datoteci sa izborom."
 
-#: common/rpackagelister.cc:1440 common/rpackagelister.cc:1444
+#: common/rpackagelister.cc:1444 common/rpackagelister.cc:1448
 #, fuzzy, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Loše obrazovana linija %u u datoteci sa izborom"
 
-#: common/rpackagelister.cc:1456
+#: common/rpackagelister.cc:1460
 #, fuzzy
 msgid "Setting markings..."
 msgstr "Postavljanje odabranih promena..."
@@ -1078,7 +1082,9 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Izvršavanje promena..."
 
-#: gtk/rgpkgdetails.cc:97
+#. TRANSLATORS: Title of the package properties dialog
+#. %s is the name of the package
+#: gtk/rgpkgdetails.cc:99
 #, fuzzy, c-format
 msgid "%s Properties"
 msgstr "Osobine"
@@ -1256,50 +1262,56 @@ msgstr[2] ""
 "\n"
 "Molim pokušajte da ih popravite pozivom filtra „Oštećeni“"
 
-#: gtk/rgmainwindow.cc:1832
+#. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
+#: gtk/rgmainwindow.cc:1764
+#, fuzzy, c-format
+msgid "%s Changelog"
+msgstr "Samo preuzmi pakete"
+
+#: gtk/rgmainwindow.cc:1844
 msgid "Do you want to add another CD-ROM?"
 msgstr "Da li želite da dodate još jedan cd uređaj?"
 
-#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:1867 gtk/rgmainwindow.cc:2452 gtk/rgmainwindow.cc:2531
+#: gtk/rgmainwindow.cc:2691
 #, c-format
 msgid "Can't read %s"
 msgstr "Ne mogu da čitam sa %s"
 
-#: gtk/rgmainwindow.cc:1871
+#: gtk/rgmainwindow.cc:1883
 msgid "Open changes"
 msgstr "Učitaj odabrane promene"
 
-#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
-#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
+#: gtk/rgmainwindow.cc:1914 gtk/rgmainwindow.cc:1977 gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2504 gtk/rgmainwindow.cc:2668
 #, c-format
 msgid "Can't write %s"
 msgstr "Ne mogu da pišem na %s"
 
-#: gtk/rgmainwindow.cc:1921
+#: gtk/rgmainwindow.cc:1933
 msgid "Save changes"
 msgstr "Sačuvaj odabrane promene"
 
-#: gtk/rgmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:1950
 msgid "Save full state, not only changes"
 msgstr "Sačuvaj puno stanje, ne samo promene"
 
-#: gtk/rgmainwindow.cc:2057
+#: gtk/rgmainwindow.cc:2069
 #, fuzzy
 msgid "Searching..."
 msgstr "Pripremam..."
 
-#: gtk/rgmainwindow.cc:2069
+#: gtk/rgmainwindow.cc:2081
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "Problematični paketi"
 
-#: gtk/rgmainwindow.cc:2099
+#: gtk/rgmainwindow.cc:2111
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Pokrećem sistem pomoći..."
 
-#: gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:2128
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1319,85 +1331,85 @@ msgstr ""
 "synaptic“ iz linije naredbi ili gledati html verziju smeštenu u "
 "direktorijumu „synaptic/html."
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2267
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2273
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Izvršavam naredbu „dpkg-reconfigure“..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2276
+#: gtk/rgmainwindow.cc:2288
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Pokrećem pomoć paketa..."
 
-#: gtk/rgmainwindow.cc:2288
+#: gtk/rgmainwindow.cc:2300
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2325
+#: gtk/rgmainwindow.cc:2337
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2356
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Izvodim odabrane promene... ovo može potrajati"
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2360
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Preuzimanje datoteka..."
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2435
 msgid "Do you want to quit Synaptic?"
 msgstr "Da li želite da napustite Synaptic?"
 
-#: gtk/rgmainwindow.cc:2479
+#: gtk/rgmainwindow.cc:2491
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "Preuzimanje datoteka..."
 
-#: gtk/rgmainwindow.cc:2481
+#: gtk/rgmainwindow.cc:2493
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Čišćenje spiskova paketa..."
 
-#: gtk/rgmainwindow.cc:2544
+#: gtk/rgmainwindow.cc:2556
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Ne mogu da ispravim zavisnosti"
 
-#: gtk/rgmainwindow.cc:2546
+#: gtk/rgmainwindow.cc:2558
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:2574
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2603
+#: gtk/rgmainwindow.cc:2615
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Paket će biti nadograđen."
 
-#: gtk/rgmainwindow.cc:2615
+#: gtk/rgmainwindow.cc:2627
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Stavi u red sve moguće nadogradnje"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2629
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2918,7 +2930,7 @@ msgid "<i>Can't close while running</i>"
 msgstr "<i>Ne mogu zatvoriti u toku izvršavanja</i>"
 
 #, fuzzy
-#~ msgid "Changelog"
+#~ msgid "Changelog for %s"
 #~ msgstr "Poništi"
 
 #~ msgid ""

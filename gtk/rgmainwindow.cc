@@ -2257,9 +2257,12 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    if (is_binary_in_path("yelp"))
       system("yelp ghelp:synaptic &");
-   else if(is_binary_in_path("khelpcenter")) {
-      system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
-   } else if (is_binary_in_path("mozilla")) {
+#if 0 // FIXME: khelpcenter can't display this? check again!
+    else if(is_binary_in_path("khelpcenter")) {
+       system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
+    }
+#endif
+   else if (is_binary_in_path("mozilla")) {
       // mozilla eats bookmarks when run under sudo (because it does not
       // change $HOME)
       if(getenv("SUDO_USER") != NULL) {

@@ -2,6 +2,7 @@
 #ifndef _rgsrcwindow_H
 #define _rgsrcwindow_H
 
+#include<gtk/gtk.h>
 #include "rsources.h"
 #include "rggladewindow.h"
 #include "rgvendorswindow.h"
@@ -10,49 +11,50 @@
 typedef list<SourcesList::SourceRecord*>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord*>::iterator VendorsListIter;
 
-class RGRepositoryEditor : RGWindow {
-	SourcesList lst;
+class RGRepositoryEditor : RGGladeWindow {
+    SourcesList _lst;
+    int _selectedRow;
 
-	GtkWidget *dialog;
-	GtkWidget *lstSources;
-	//GtkWidget *entryVendor;
-	GtkWidget *optVendor;
-	GtkWidget *optVendorMenu;
-	GtkWidget *entryURI;
-	GtkWidget *entrySect;
-	GtkWidget *optType;
-	GtkWidget *optTypeMenu;
-	GtkWidget *entryDist;
-	GtkWidget *cbDisabled;
-	GtkWidget *sourceFile;
+    // the gtktreeview
+    GtkWidget *_sourcesListView;
+    GtkListStore *_sourcesListStore;
+    GtkTreeIter *_lastIter;
 
-	int selectedrow;
+    GtkWidget *_optVendor;
+    GtkWidget *_optVendorMenu;
+    GtkWidget *_entryURI;
+    GtkWidget *_entrySect;
+    GtkWidget *_optType;
+    GtkWidget *_optTypeMenu;
+    GtkWidget *_entryDist;
+    GtkWidget *_cbEnabled;
 
-	RGUserDialog *_userDialog;
+    RGUserDialog *_userDialog;
 
-	bool Applied;
+    bool _applied;
+    GdkColor _gray;
 
-	GtkWidget *CreateWidget();
+    void UpdateVendorMenu();
+    int VendorMenuIndex(string VendorID);
 
-	void UpdateVendorMenu();
-	int VendorMenuIndex(string VendorID);
+    // static event handlers
+    static void DoClear(GtkWidget *, gpointer);
+    static void DoAdd(GtkWidget *, gpointer);
+    static void DoRemove(GtkWidget *, gpointer);
+    static void DoOK(GtkWidget *, gpointer);
+    static void DoCancel(GtkWidget *, gpointer);
+    static void VendorsWindow(GtkWidget *, gpointer);
+    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
 
-	// static event handlers
-	static void DoClear(GtkWidget *, gpointer);
-	static void DoAdd(GtkWidget *, gpointer);
-	static void DoEdit(GtkWidget *, gpointer);
-	static void DoRemove(GtkWidget *, gpointer);
-	static void DoOK(GtkWidget *, gpointer);
-	static void DoCancel(GtkWidget *, gpointer);
-	static void UpdateDisplay(GtkCList *, gint, gint, GdkEventButton *, gpointer);
-	static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
-	static void VendorsWindow(GtkWidget *, gpointer);
+    // get values
+    void doEdit();
 
-public:
-	RGRepositoryEditor(RGWindow *parent);
-	~RGRepositoryEditor();
 
-	bool Run();
+ public:
+    RGRepositoryEditor(RGWindow *parent);
+    ~RGRepositoryEditor();
+    
+    bool Run();
 };
 
 #endif

@@ -434,8 +434,10 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
   gchar *filtername;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-      if(me->_selectedPath != NULL)
+      if(me->_selectedPath != NULL) {
+	  applyFilterAction(NULL, me);
 	  gtk_tree_path_free(me->_selectedPath);
+      }
 
       gtk_tree_model_get (model, &iter, 
 			  NAME_COLUMN, &filtername, 

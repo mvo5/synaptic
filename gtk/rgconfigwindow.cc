@@ -157,7 +157,7 @@ void RGConfigWindow::show()
 
     bool UseTerminal = false;
 #ifndef HAVE_ZVT
-    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
+    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[3]), false);
     _config->Set("Synaptic::UseTerminal", false);
 #else
 #ifndef HAVE_RPM

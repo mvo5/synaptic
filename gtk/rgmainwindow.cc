@@ -113,6 +113,21 @@ GdkColor *StatusColors[12];
 
 
 
+#ifndef EVERBODY_USES_GTK2_2_NOW
+// this function sucks, but it's needed to be compatible with gtk2.0
+void multipleSelectionHelper(GtkTreeModel *model,
+			     GtkTreePath *path,
+			     GtkTreeIter *iter,
+			     gpointer data)
+{
+    //cout << "multipleSelectionHelper()"<<endl;
+    GList **list;
+    list = (GList**)data;
+    *list = g_list_append(*list, gtk_tree_path_copy(path));
+}
+#endif
+
+
 void RGMainWindow::changedDepView(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -176,11 +191,18 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
       GtkTreeIter iter;
       GList *list, *li;
       selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_recList));
+#ifdef EVERBODY_USES_GTK2_2_NOW
       list = li  = gtk_tree_selection_get_selected_rows(selection, NULL);
+#else
+      li = list = NULL;
+      gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					  &list);
+      li = list;
+#endif
 
       while(li != NULL) {
-// 	  cout << "path is " 
-// 	       << gtk_tree_path_to_string((GtkTreePath*)(li->data)) << endl;
+	  // 	  cout << "path is " 
+ 	  //     << gtk_tree_path_to_string((GtkTreePath*)(li->data)) << endl;
 	  gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_recListStore), &iter, 
 				  (GtkTreePath*)(li->data));
 	  gtk_tree_model_get(GTK_TREE_MODEL(me->_recListStore), &iter, 
@@ -522,12 +544,18 @@ RPackage *RGMainWindow::selectedPackage()
     GtkTreeSelection *selection;
     GtkTreeIter iter;
     RPackage *pkg = NULL;
-    GList *li = NULL;
-    GList *list;
+    GList *li, *list;
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+#ifdef EVERBODY_USES_GTK2_2_NOW
     list = li = gtk_tree_selection_get_selected_rows(selection,
-					      (GtkTreeModel**)(&_activeTreeModel));
+						     (GtkTreeModel**)(&_activeTreeModel));
+#else
+    list = li = NULL;
+    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					&list);
+    li = list;
+#endif
     // list is empty
     if(li == NULL) 
 	return NULL;
@@ -1327,9 +1355,15 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
     GList *li, *list;
+#ifdef EVERBODY_USES_GTK2_2_NOW
     list = li = gtk_tree_selection_get_selected_rows(selection,
-						     &me->_activeTreeModel);
-    
+ 						     &me->_activeTreeModel);
+#else
+    li = list = NULL;
+    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					&list);
+    li = list;
+#endif
     if(li == NULL)
 	return;
     
@@ -1413,8 +1447,14 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 
   // get list of selected pkgs
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
-  list = li = gtk_tree_selection_get_selected_rows(selection,
-					    &me->_activeTreeModel);
+#ifdef EVERBODY_USES_GTK2_2_NOW
+   list = li = gtk_tree_selection_get_selected_rows(selection,
+						    &me->_activeTreeModel);
+#else
+   li = list = NULL;
+   gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,&list);
+   li = list;
+#endif
 
   // save pkg state
   RPackageLister::pkgState state;
@@ -2726,8 +2766,16 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 	return;
     }
 
+#ifdef EVERBODY_USES_GTK2_2_NOW
     list = li = gtk_tree_selection_get_selected_rows(selection,
-						     &me->_activeTreeModel);
+ 						     &me->_activeTreeModel);
+#else
+    li = list = NULL;
+    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					&list);
+    li = list;
+#endif
+
     // list is empty
     if(li == NULL) 
 	return;

@@ -59,6 +59,7 @@
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/versionmatch.h>
 #include <apt-pkg/version.h>
+#include <apt-pkg/policy.h>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -949,7 +950,7 @@ void RPackage::setPinned(bool flag)
    char *filename = NULL;
    struct stat stat_buf;
 
-   string File = _config->FindFile("Dir::Etc::Preferences");
+   string File =RConfDir() + "/preferences";
 
    _boolFlags = flag ? (_boolFlags | FPinned) : (_boolFlags & FPinned);
 

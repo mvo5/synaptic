@@ -93,7 +93,7 @@ bool RAPTOptions::restore()
    }
 
    // pining stuff
-   string File = _config->FindFile("Dir::Etc::Preferences");
+   string File = RConfDir() + "/preferences";
 
    if (!FileExists(File))
       return true;

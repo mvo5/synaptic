@@ -24,7 +24,7 @@
 #include "config.h"
 
 #include "rpackagecache.h"
-
+#include "rconfiguration.h"
 #include "i18n.h"
 
 #include <assert.h>
@@ -78,6 +78,8 @@ Go to the repository dialog to correct the problem."));
    if (_error->PendingError() == true)
       return false;
    if (ReadPinFile(*_policy) == false)
+      return false;
+   if (ReadPinFile(*_policy, RConfDir() + "/preferences") == false)
       return false;
 
    _dcache = new pkgDepCache(_cache, _policy);

@@ -2073,6 +2073,9 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) data;
    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
+   if(me->selectedPackage() == NULL)
+      return;
+
    RPackage *pkg = NULL;
    pkg = me->_lister->getPackage("libgnome2-perl");
    if (pkg && pkg->installedVersion() == NULL) {

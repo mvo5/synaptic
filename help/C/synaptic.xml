@@ -117,7 +117,7 @@
 	<screenshot> 
 	  <mediaobject> 
 	    <imageobject><imagedata
-		fileref="figures/fig1.png" format="PNG"/> 
+		fileref="figures/synaptic-start.png" format="PNG"/> 
 	    </imageobject>
 	    <textobject> 
 	      <phrase>Shows &app; main window. Contains titlebar, menubar, toolbar, display area, and
@@ -175,7 +175,7 @@
       <para> </para>
     </sect2>
 
-    <sect2 id="synaptic-win-list">
+    <sect2 id="synaptic-win-list" xreflabel="package list">
     <title>The Package List</title>
       <para> </para>
     </sect2>
@@ -192,6 +192,12 @@
   <sect1 id="synaptic-single"> 
     <title>Managing Packages</title> 
 
+    <tip><para>All actions can also be applied to more than one package. Just select the
+	packages in the package list and choose the modifcation in the package control.
+	</para>
+      </tip>
+
+
     <sect2 id="synaptic-find"> 
       <title>To Find a Specific Package</title> 
       <para> </para>
@@ -199,27 +205,79 @@
 
     <sect2 id="synaptic-install"> 
       <title>To Install a New Package</title> 
-      <para> </para>
+      <para><orderedlist>
+	<listitem><para>Select the package(s) to be installed in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
+	<listitem><para>Choose one of the following ways to select the package for installation:</para>
+	    <itemizedlist>
+	      <listitem><para>Click on <guibutton>Install Latest Package</guibutton> in the
+		package control of the inforamtion area.</para></listitem>
+	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Install Latest Version
+		</guimenuitem></menuchoice></para></listitem>
+	      <listitem><para>Right click on the package and choose <guimenuitem>Install Latest Version
+		  </guimenuitem></para></listitem>
+	      <listitem><para>Press the key combination <keycombo><keysym>CRTL-I</keysym>
+		</keycombo></para></listitem>
+	    
+	     </itemizedlist>
+	    </listitem>
+	  </orderedlist></para>
     </sect2>
 
     <sect2 id="synaptic-remove"> 
       <title>To Remove a Package</title> 
-      <para> </para>
+      <para><orderedlist>
+	<listitem><para>Select the package(s) to be removed in the <xref linkend="synaptic-win-list"></xref>.</para></listitem>
+	<listitem><para>Choose one of the following ways to select the package for removal:</para>
+	    <itemizedlist>
+	      <listitem><para>Click on <guibutton>Remove</guibutton> in the
+		package control of the inforamtion area.</para></listitem>
+	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Remove
+		</guimenuitem></menuchoice></para></listitem>
+	      <listitem><para>Right click on the package and choose <guimenuitem>Remove
+		  </guimenuitem></para></listitem>
+	      <listitem><para>Press the key combination <keycombo><keysym>Remove</keysym>
+		</keycombo></para></listitem>
+	    
+	     </itemizedlist>
+	    </listitem>
+	  </orderedlist></para>
+
     </sect2>
 
     <sect2 id="synaptic-upgrade"> 
       <title>To Upgrade a Package</title> 
-      <para> </para>
+      <para>If a later version of a package is available the <guibutton>Install Latest Version
+      </guibutton> is renamed to <guibutton>Upgrade</guibutton>.</para>
+      <para><orderedlist>
+	<listitem><para>Select the package(s) to be upgraded in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
+	<listitem><para>Choose one of the following ways to select the package for upgrade:</para>
+	    <itemizedlist>
+	      <listitem><para>Click on <guibutton>Upgrade</guibutton> in the
+		package control of the inforamtion area.</para></listitem>
+	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Upgrade
+		</guimenuitem></menuchoice></para></listitem>
+	      <listitem><para>Right click on the package and choose <guimenuitem>Upgrade
+		  </guimenuitem></para></listitem>
+	      <listitem><para>Press the key combination <keycombo><keysym>CRTL-U</keysym>
+		</keycombo></para></listitem>
+	    
+	     </itemizedlist>
+	    </listitem>
+	  </orderedlist></para>
+
     </sect2>
 
     <sect2 id="synaptic-upgradeall"> 
-      <title>To Upgrade all Packages</title> 
+      <title>To Upgrade All Packages</title> 
       <para> </para>
     </sect2>
 
     <sect2 id="synaptic-downgrade"> 
-      <title>Downgrading a Package</title> 
-      <para> </para>
+      <title>To Downgrade a Package</title> 
+      <warning><para>Downgrading a package is a broken feature, since it is not supported by
+      apt. It may work for you, but it is not recommended.</para></warning>
+      <para>The export tab in the information area of the package provides a list of all
+	available versions of the package. The tab is explained in detail in <xref linkend="synaptic-repo"></xref>. </para>
     </sect2>
 
   </sect1>

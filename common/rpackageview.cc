@@ -30,6 +30,7 @@
 
 #include <map>
 #include <vector>
+#include <sstream>
 
 #include "sections_trans.h"
 
@@ -113,10 +114,12 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
 {
    string str;
    const char *tmp=NULL;
+   bool global_found=true;
 
-   if(!pkg || searchString.empty())
+   if(!pkg || searchStrings.empty())
       return;
 
+   // build the string
    switch(searchType) {
    case RPatternPackageFilter::Name:
       tmp = pkg->name();
@@ -133,39 +136,60 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       break;
    case RPatternPackageFilter::Depends: 
       {
-      vector<RPackage::DepInformation> d = pkg->enumDeps(true);
-      for(unsigned int i=0;i<d.size();i++)
-	 str += string(d[i].name);
-      break; 
+	 vector<RPackage::DepInformation> d = pkg->enumDeps(true);
+	 for(unsigned int i=0;i<d.size();i++)
+	    str += string(d[i].name);
+	 break; 
       }
    case RPatternPackageFilter::Provides: 
       {
-      vector<string> d = pkg->provides();
-      for(unsigned int i=0;i<d.size();i++)
-	 str += d[i];
-      break;
+	 vector<string> d = pkg->provides();
+	 for(unsigned int i=0;i<d.size();i++)
+	    str += d[i];
+	 break;
       }
    }
+
    if(tmp!=NULL)
       str = tmp;
+      
+   // find the search pattern in the string "str"
+   for(int i=0;i<searchStrings.size();i++) {
+      string searchString = searchStrings[i];
 
-   if(!str.empty() && strstr(str.c_str(), searchString.c_str())) {
-      _view[searchString].push_back(pkg);
+      if(!str.empty() && strstr(str.c_str(), searchString.c_str())) {
+	 global_found &= true;
+      } else {
+	 global_found &= false;
+      }
+   }
+   if(global_found) {
+      _view[searchStringFull].push_back(pkg);
       found++;
    }
 
    // FIXME: we push a _lot_ of empty pkgs here :(
    // push a empty package in the view to make sure that the view is actually
    // displayed
-   _view[searchString].push_back(NULL);
+   //_view[searchString].push_back(NULL);
 }
 
 int RPackageViewSearch::setSearch(string str, int type)
 {
    found = 0;
-   searchString = str;
-   searchType = type;
    _view[str].clear();
+   searchStrings.clear();
+
+   searchType = type;
+   searchStringFull = str;
+
+   // tokenize the str and add to the searchString vector
+   stringstream sstream(str);
+   string s;
+   while(!sstream.eof()) {
+      sstream >> s;
+      searchStrings.push_back(s);
+   }
 
    // reapply search when a new search strng is giben
    for(unsigned int i=0;i<_all.size();i++) 

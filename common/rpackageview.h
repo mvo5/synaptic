@@ -119,7 +119,8 @@ class RPackageViewStatus:public RPackageView {
 
 class RPackageViewSearch : public RPackageView {
  protected:
-   string searchString;
+   vector<string> searchStrings;
+   string searchStringFull;
    int searchType;
    int found; // nr of found pkgs for the last search
  public:

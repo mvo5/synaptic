@@ -638,9 +638,10 @@ void RGDebInstallProgress::finishUpdate()
 	 _updateFinished = True;
    }
 
-   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", 
-				     _("Installion finished"),
-				     _(getResultStr(res)));
+   string s = _config->Find("Volatile::InstallFinishedStr",
+			    _("Installation finished"));
+   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", s.c_str(),
+				_(getResultStr(res)));
    GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);
@@ -694,8 +695,9 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    int installed, broken, toInstall, toReInstall, toRemove;
    double sizeChange;
    gchar *p = "Should never be displayed, please report";
-   gchar *s = _("The marked changes are now applied. This can "
-		"take some time. Please wait.");
+   string s = _config->Find("Volatile::InstallProgressStr",
+			    _("The marked changes are now applied. This can "
+			      "take some time. Please wait."));
    lister->getStats(installed, broken, toInstall, toReInstall, 
 		    toRemove, sizeChange);
    if(toRemove > 0 && toInstall > 0) 
@@ -705,7 +707,7 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    else if(toInstall > 0)
       p =  _("Installing software");
 
-   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s);
+   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s.c_str());
    GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);

@@ -66,6 +66,7 @@ bool ShowHelp(CommandLine & CmdL)
       _("-h   This help text\n") <<
       _("-r   Open in the repository screen\n") <<
       _("-f=? Give a alternative filter file\n") <<
+      _("-t   Give a alternative main window titel (e.g. hostname with `uname -n`\n") <<
       _("-i=? Start with the initialFilter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
@@ -98,6 +99,12 @@ CommandLine::Args Args[] = {
    0, "add-cdrom", "Volatile::AddCdrom-Mode", CommandLine::HasArg}
    , {
    0, "plug-progress-into", "Volatile::PlugProgressInto", CommandLine::HasArg}
+   , {
+   0, "progress-str", "Volatile::InstallProgressStr", CommandLine::HasArg} 
+   , {
+   0, "finish-str", "Volatile::InstallFinishedStr", CommandLine::HasArg} 
+   , {
+   't', "title", "Volatile::MyName", CommandLine::HasArg}
    , {
    0, "update-at-startup", "Volatile::Update-Mode", 0}
    , {
@@ -251,6 +258,10 @@ int main(int argc, char **argv)
 #else
    mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif
+   // this is for stuff like "synaptic -t `uname -n`"
+   s = _config->Find("Volatile::MyName","");
+   if(s.size() > 0)
+      mainWindow->setTitle(s);
    
    if(_config->FindB("Volatile::HideMainwindow", false))
       mainWindow->hide();

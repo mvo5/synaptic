@@ -1,4 +1,18 @@
- - readd "UseRecommends" to auto-install recommended packages (done)
+ - Shortcut for force-version (for Redhat people) 
+ - download window scrollbar shouldn't always scroll, make two areas, one with
+   active jobs and one with completted jobs? 
+   (see mail from Adam Lydick, 20.10.2004)
+ - > I've a question: I want to install a package and it suggestes some
+   >other ones. I'd like to be able to display info for the suggested
+   >packages in as simple way as possible. The best would'be if I could
+   >filter out all but the one pacakge being installed (the best would be a
+   >context-menu entry "Display Suggested/Recommanded/Required") and those
+   >it does suggest, so I could browse through the list, learn what is every
+   >suggested package good for and decide whether or not to install it. 
+ - Scroll-bug (Eric Freyens, 25.10.2004)
+ - after changes in the repositories editor, ask for a update of
+   the package list
+ - check download size against statvfs
  - add "pause download" feature
  - think about how to simplify the "reload" step for new users
    (see mail from Philippe Cloutier, 16.Sep.2004)
@@ -33,7 +47,7 @@ Unknown:
  - split into user and root mode. User mode does all the changes and for
    the final installation runs (with gksu or libgksu): 
    # synaptic --set-selection --non-interactive --hide-main-window --dont-write-any-config
-   (hide-main-window, --dont-write-any-config needs to be implemented)
+   ( --dont-write-any-config needs to be implemented)
    -> MOST infrastructure is there. 
       Problems: * set-version is not in selection file
                 * all settings are in in $USER/.synaptic (use
@@ -114,8 +128,6 @@ Unsorted:
      is selected for save/restore
    - fix "undo/redo"
  
- - download window scrollbar shouldn't always scroll, make two areas, one with
-   active jobs and one with completted jobs? 
 
 Configure:
    - allways give the correct path in the synaptic.desktop file
@@ -154,6 +166,7 @@ General:
    - implement raptoptions save/restore for getFlags/setFlags [not needed?]
 
 Done:
+   - readd "UseRecommends" to auto-install recommended packages (done)
    - sorting by versions
    - redesign the columns (drag 'n drop?)
    - "pin/hold" support (-)

@@ -237,6 +237,24 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
    } else {
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
    }
+   // terminal color 
+   string s;
+   s= _config->Find("Synaptic::customTerminalBackground", "");
+   if(s != "") {
+      GdkColor *c = new GdkColor;
+      gtk_get_color_from_string(s.c_str(), &c);
+      cout << "color: " << c->blue << endl;
+      vte_terminal_set_background_tint_color(VTE_TERMINAL(_term), c);
+      delete c;
+   }
+   s= _config->Find("Synaptic::customTerminalForeground", "");
+   if(s != "") {
+      GdkColor *c = new GdkColor;
+      gtk_get_color_from_string(s.c_str(), &c);
+      cout << "color: " << c->blue << endl;
+      vte_terminal_set_color_foreground(VTE_TERMINAL(_term), c);
+      delete c;
+   }
 #endif
    gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
    gtk_widget_show(_term);

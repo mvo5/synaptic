@@ -2787,7 +2787,7 @@ void RGMainWindow::buildInterface()
     // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
     gtk_widget_hide(_pinM);
-    widget = glade_xml_get_widget(_gladeXML, "hseparator_hold");
+    widget = glade_xml_get_widget(_gladeXML, "separator_hold");
     if(widget != NULL)
 	gtk_widget_hide(widget);
 #endif

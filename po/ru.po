@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-20 15:30+0100\n"
+"POT-Creation-Date: 2003-11-21 13:58+0100\n"
 "PO-Revision-Date: 2003-10-21 13:44+0300\n"
 "Last-Translator: Sviatoslav Sviridov <svd@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -758,8 +758,8 @@ msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed.\n"
 "\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of "
-"upgrades in a smart way.\n"
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to say 'yes' here.\n"
@@ -823,11 +823,11 @@ msgstr "-i=? Задать номер фильтра, используемого после запуска\n"
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Установить произвольную опцию, напр. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:206
+#: gtk/gsynaptic.cc:207
 msgid "You must run this program as the root user."
 msgstr "Вы должны запускать эту программу как пользователь root."
 
-#: gtk/gsynaptic.cc:242
+#: gtk/gsynaptic.cc:243
 msgid "Synaptic Package Manager "
 msgstr "Менеджер пакетов Synaptic"
 
@@ -1314,14 +1314,12 @@ msgstr "Выполнить запланированные изменения"
 
 #: gtk/rgmainwindow.cc:3146
 #, fuzzy
-msgid "No changes"
+msgid "_No changes"
 msgstr "_Выполнить изменения"
 
-# This is filter name, it's better to not translate it
 #: gtk/rgmainwindow.cc:3154
-#, fuzzy
-msgid "Install Latest Version"
-msgstr "_Установить последнюю версию"
+msgid "Install"
+msgstr "Установить"
 
 #: gtk/rgmainwindow.cc:3162 gtk/window_preferences.glade.strings:26
 #, fuzzy
@@ -1552,14 +1550,14 @@ msgstr "ВНИМАНИЕ: %d важный(ых) %s будет удален(о)!\n"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be used\n"
+"%s of extra space will be used"
 msgstr "%d новый(ых) %s будет установлено;\n"
 
 #: gtk/rgsummarywindow.cc:350
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be freed\n"
+"%s of extra space will be freed"
 msgstr "%d %s будет удален(о);\n"
 
 #: gtk/rgsummarywindow.cc:356
@@ -1777,7 +1775,8 @@ msgstr "Имя пакета"
 #: gtk/window_preferences.glade.strings:87
 #: gtk/window_preferences.glade.strings:90
 #: gtk/window_preferences.glade.strings:107
-#: gtk/window_summary.glade.strings:12 gtk/window_filters.glade.strings:10
+#: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
+#: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
 #: gtk/window_filters.glade.strings:34 gtk/window_filters.glade.strings:42
 msgid "    "
@@ -1899,7 +1898,7 @@ msgstr "Удали_ть"
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
 #, fuzzy
-msgid "_Remove Including Configuration"
+msgid "Remove Including _Configuration"
 msgstr "Включая конфигурацию"
 
 #: gtk/window_main_hpaned.glade.strings:28
@@ -2424,7 +2423,7 @@ msgstr "Удалить учитывая _зависимости"
 msgid "Default remove: "
 msgstr "Архив по умолчанию: "
 
-#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:20
+#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:17
 msgid " "
 msgstr " "
 
@@ -2765,8 +2764,8 @@ msgstr ""
 
 #: gtk/window_summary.glade.strings:10
 msgid ""
-"This is your opportunity to look through the list of queued changes before "
-"they are executed."
+"This is your last opportunity to look through the list of queued changes "
+"before they are executed."
 msgstr ""
 
 #: gtk/window_summary.glade.strings:11
@@ -2774,32 +2773,23 @@ msgstr ""
 msgid "<b>Summary</b>"
 msgstr "Д_ействия"
 
-#: gtk/window_summary.glade.strings:13
-msgid ""
-"1 Package will be installed\n"
-"12 Packages will be upgraded\n"
-"\n"
-"4,5 MByte of extra space will be needed\n"
-"5 MByte of data has to be downloaded"
-msgstr ""
-
-#: gtk/window_summary.glade.strings:18
+#: gtk/window_summary.glade.strings:15
 msgid "Switch between a detailed view and a general overview"
 msgstr ""
 
-#: gtk/window_summary.glade.strings:19
+#: gtk/window_summary.glade.strings:16
 #, fuzzy
 msgid "_Show Details"
 msgstr "Показать детали"
 
-#: gtk/window_summary.glade.strings:21
+#: gtk/window_summary.glade.strings:18
 #, fuzzy
 msgid "The package files will ony be retrieved, but not installed or upgraded"
 msgstr "Пакеты, которые будут установлены или обновлены"
 
-#: gtk/window_summary.glade.strings:22
+#: gtk/window_summary.glade.strings:19
 #, fuzzy
-msgid "Only download the package files"
+msgid "Download package files only"
 msgstr "Удалить загруженные пакеты после установки"
 
 #: gtk/window_filters.glade.strings:9
@@ -3048,6 +3038,15 @@ msgstr "Установленные и обновляемые"
 msgid "Software"
 msgstr ""
 
+# This is filter name, it's better to not translate it
+#, fuzzy
+#~ msgid "Install Latest Version"
+#~ msgstr "_Установить последнюю версию"
+
+#, fuzzy
+#~ msgid "_Remove Including Configuration"
+#~ msgstr "Включая конфигурацию"
+
 #, fuzzy
 #~ msgid "Execute"
 #~ msgstr "В_ыполнить"
@@ -3080,9 +3079,6 @@ msgstr ""
 
 #~ msgid "Keep"
 #~ msgstr "Сохранить"
-
-#~ msgid "Install"
-#~ msgstr "Установить"
 
 #, fuzzy
 #~ msgid "Status:"

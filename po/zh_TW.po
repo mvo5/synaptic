@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-20 15:30+0100\n"
+"POT-Creation-Date: 2003-11-21 13:58+0100\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -753,8 +753,8 @@ msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed.\n"
 "\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of "
-"upgrades in a smart way.\n"
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to say 'yes' here.\n"
@@ -816,11 +816,11 @@ msgstr ""
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:206
+#: gtk/gsynaptic.cc:207
 msgid "You must run this program as the root user."
 msgstr "您必須以 root 使用者身份執行此程式。"
 
-#: gtk/gsynaptic.cc:242
+#: gtk/gsynaptic.cc:243
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "套件變更"
@@ -1309,13 +1309,12 @@ msgstr "不包括已選的組別"
 
 #: gtk/rgmainwindow.cc:3146
 #, fuzzy
-msgid "No changes"
+msgid "_No changes"
 msgstr "預期變動"
 
 #: gtk/rgmainwindow.cc:3154
-#, fuzzy
-msgid "Install Latest Version"
-msgstr "已安裝"
+msgid "Install"
+msgstr "安裝"
 
 #: gtk/rgmainwindow.cc:3162 gtk/window_preferences.glade.strings:26
 #, fuzzy
@@ -1540,14 +1539,14 @@ msgstr "警告: %d 個必要的%s將會被移除!\n"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be used\n"
+"%s of extra space will be used"
 msgstr "將會新安裝 %d 個%s；\n"
 
 #: gtk/rgsummarywindow.cc:350
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be freed\n"
+"%s of extra space will be freed"
 msgstr "將會移除 %d 個%s；\n"
 
 #: gtk/rgsummarywindow.cc:356
@@ -1764,7 +1763,8 @@ msgstr "套件名稱"
 #: gtk/window_preferences.glade.strings:87
 #: gtk/window_preferences.glade.strings:90
 #: gtk/window_preferences.glade.strings:107
-#: gtk/window_summary.glade.strings:12 gtk/window_filters.glade.strings:10
+#: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
+#: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
 #: gtk/window_filters.glade.strings:34 gtk/window_filters.glade.strings:42
 #, fuzzy
@@ -1893,7 +1893,7 @@ msgstr "移除(_R)"
 
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
-msgid "_Remove Including Configuration"
+msgid "Remove Including _Configuration"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:28
@@ -2440,7 +2440,7 @@ msgstr "移除依賴此套件的套件"
 msgid "Default remove: "
 msgstr "升級"
 
-#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:20
+#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:17
 msgid " "
 msgstr " "
 
@@ -2778,8 +2778,8 @@ msgstr ""
 
 #: gtk/window_summary.glade.strings:10
 msgid ""
-"This is your opportunity to look through the list of queued changes before "
-"they are executed."
+"This is your last opportunity to look through the list of queued changes "
+"before they are executed."
 msgstr ""
 
 #: gtk/window_summary.glade.strings:11
@@ -2787,32 +2787,23 @@ msgstr ""
 msgid "<b>Summary</b>"
 msgstr "動作"
 
-#: gtk/window_summary.glade.strings:13
-msgid ""
-"1 Package will be installed\n"
-"12 Packages will be upgraded\n"
-"\n"
-"4,5 MByte of extra space will be needed\n"
-"5 MByte of data has to be downloaded"
-msgstr ""
-
-#: gtk/window_summary.glade.strings:18
+#: gtk/window_summary.glade.strings:15
 msgid "Switch between a detailed view and a general overview"
 msgstr ""
 
-#: gtk/window_summary.glade.strings:19
+#: gtk/window_summary.glade.strings:16
 #, fuzzy
 msgid "_Show Details"
 msgstr "顯示詳細資料"
 
-#: gtk/window_summary.glade.strings:21
+#: gtk/window_summary.glade.strings:18
 #, fuzzy
 msgid "The package files will ony be retrieved, but not installed or upgraded"
 msgstr "此套件將會被安裝。"
 
-#: gtk/window_summary.glade.strings:22
+#: gtk/window_summary.glade.strings:19
 #, fuzzy
-msgid "Only download the package files"
+msgid "Download package files only"
 msgstr "安裝後刪除已下載的套件"
 
 #: gtk/window_filters.glade.strings:9
@@ -3099,6 +3090,10 @@ msgid "Software"
 msgstr ""
 
 #, fuzzy
+#~ msgid "Install Latest Version"
+#~ msgstr "已安裝"
+
+#, fuzzy
 #~ msgid "Execute"
 #~ msgstr "不包括"
 
@@ -3134,9 +3129,6 @@ msgstr ""
 
 #~ msgid "Keep"
 #~ msgstr "維持原狀"
-
-#~ msgid "Install"
-#~ msgstr "安裝"
 
 #, fuzzy
 #~ msgid "Status:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-20 15:30+0100\n"
+"POT-Creation-Date: 2003-11-21 13:58+0100\n"
 "PO-Revision-Date: 2003-02-13 18:16--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -749,8 +749,8 @@ msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed.\n"
 "\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of "
-"upgrades in a smart way.\n"
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to say 'yes' here.\n"
@@ -812,11 +812,11 @@ msgstr ""
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:206
+#: gtk/gsynaptic.cc:207
 msgid "You must run this program as the root user."
 msgstr "U moet dit programma uitvoeren als de supergebruiker."
 
-#: gtk/gsynaptic.cc:242
+#: gtk/gsynaptic.cc:243
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "Pakketveranderingen"
@@ -1307,13 +1307,12 @@ msgstr "Geselecteerde onderdelen niet tonen"
 
 #: gtk/rgmainwindow.cc:3146
 #, fuzzy
-msgid "No changes"
+msgid "_No changes"
 msgstr "Geselecteerde onderdelen niet tonen"
 
 #: gtk/rgmainwindow.cc:3154
-#, fuzzy
-msgid "Install Latest Version"
-msgstr "Geïnstalleerd"
+msgid "Install"
+msgstr "Installeren"
 
 #: gtk/rgmainwindow.cc:3162 gtk/window_preferences.glade.strings:26
 #, fuzzy
@@ -1541,14 +1540,14 @@ msgstr "WAARSCHUWING: %d essentiële %s zullen verwijderd worden!\n"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be used\n"
+"%s of extra space will be used"
 msgstr "%d nieuwe %s zullen geïnstalleerd worden;\n"
 
 #: gtk/rgsummarywindow.cc:350
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be freed\n"
+"%s of extra space will be freed"
 msgstr "%d %s zullen verwijderd worden;\n"
 
 #: gtk/rgsummarywindow.cc:356
@@ -1765,7 +1764,8 @@ msgstr "Pakketnaam"
 #: gtk/window_preferences.glade.strings:87
 #: gtk/window_preferences.glade.strings:90
 #: gtk/window_preferences.glade.strings:107
-#: gtk/window_summary.glade.strings:12 gtk/window_filters.glade.strings:10
+#: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
+#: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
 #: gtk/window_filters.glade.strings:34 gtk/window_filters.glade.strings:42
 #, fuzzy
@@ -1894,7 +1894,7 @@ msgstr "Ver_wijderen"
 
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
-msgid "_Remove Including Configuration"
+msgid "Remove Including _Configuration"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:28
@@ -2448,7 +2448,7 @@ msgstr "Verwijderen met afhankelijkheden"
 msgid "Default remove: "
 msgstr "Vernieuwen"
 
-#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:20
+#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:17
 msgid " "
 msgstr " "
 
@@ -2784,8 +2784,8 @@ msgstr ""
 
 #: gtk/window_summary.glade.strings:10
 msgid ""
-"This is your opportunity to look through the list of queued changes before "
-"they are executed."
+"This is your last opportunity to look through the list of queued changes "
+"before they are executed."
 msgstr ""
 
 #: gtk/window_summary.glade.strings:11
@@ -2793,32 +2793,23 @@ msgstr ""
 msgid "<b>Summary</b>"
 msgstr "Acties"
 
-#: gtk/window_summary.glade.strings:13
-msgid ""
-"1 Package will be installed\n"
-"12 Packages will be upgraded\n"
-"\n"
-"4,5 MByte of extra space will be needed\n"
-"5 MByte of data has to be downloaded"
-msgstr ""
-
-#: gtk/window_summary.glade.strings:18
+#: gtk/window_summary.glade.strings:15
 msgid "Switch between a detailed view and a general overview"
 msgstr ""
 
-#: gtk/window_summary.glade.strings:19
+#: gtk/window_summary.glade.strings:16
 #, fuzzy
 msgid "_Show Details"
 msgstr "Details weergeven"
 
-#: gtk/window_summary.glade.strings:21
+#: gtk/window_summary.glade.strings:18
 #, fuzzy
 msgid "The package files will ony be retrieved, but not installed or upgraded"
 msgstr "Pakket zal geïnstalleerd worden."
 
-#: gtk/window_summary.glade.strings:22
+#: gtk/window_summary.glade.strings:19
 #, fuzzy
-msgid "Only download the package files"
+msgid "Download package files only"
 msgstr "Binnengehaalde pakketten verwijderen na installatie"
 
 #: gtk/window_filters.glade.strings:9
@@ -3107,6 +3098,10 @@ msgid "Software"
 msgstr ""
 
 #, fuzzy
+#~ msgid "Install Latest Version"
+#~ msgstr "Geïnstalleerd"
+
+#, fuzzy
 #~ msgid "Execute"
 #~ msgstr "Niet tonen"
 
@@ -3142,9 +3137,6 @@ msgstr ""
 
 #~ msgid "Keep"
 #~ msgstr "Behouden"
-
-#~ msgid "Install"
-#~ msgstr "Installeren"
 
 #, fuzzy
 #~ msgid "Status:"

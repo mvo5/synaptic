@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-20 15:30+0100\n"
+"POT-Creation-Date: 2003-11-21 13:58+0100\n"
 "PO-Revision-Date: 2003-11-03 23:33-0200\n"
 "Last-Translator: Leonardo F. S. Boiko <leoboiko@fastmail.fm>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -751,8 +751,8 @@ msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed.\n"
 "\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of "
-"upgrades in a smart way.\n"
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to say 'yes' here.\n"
@@ -832,11 +832,11 @@ msgstr ""
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Configurar uma opção arbitrária, e.g. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:206
+#: gtk/gsynaptic.cc:207
 msgid "You must run this program as the root user."
 msgstr "Você deve executar este programa como usuário root."
 
-#: gtk/gsynaptic.cc:242
+#: gtk/gsynaptic.cc:243
 msgid "Synaptic Package Manager "
 msgstr "Gerenciador de Pacotes Synaptic "
 
@@ -1321,13 +1321,13 @@ msgstr "Executa as mudanças selecionadas"
 
 #: gtk/rgmainwindow.cc:3146
 #, fuzzy
-msgid "No changes"
+msgid "_No changes"
 msgstr "E_xecutar alterações"
 
 #: gtk/rgmainwindow.cc:3154
 #, fuzzy
-msgid "Install Latest Version"
-msgstr "_Instalar Versão Mais Recente"
+msgid "Install"
+msgstr "Instalar:"
 
 #: gtk/rgmainwindow.cc:3162 gtk/window_preferences.glade.strings:26
 #, fuzzy
@@ -1572,7 +1572,7 @@ msgstr "AVISO: %d %s \"essencial\" para remover!\n"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be used\n"
+"%s of extra space will be used"
 msgstr "%d %s novo(s) para instalar;\n"
 
 # bad plural on source, should use ngettext(3)
@@ -1580,7 +1580,7 @@ msgstr "%d %s novo(s) para instalar;\n"
 #, fuzzy, c-format
 msgid ""
 "\n"
-"%s of extra space will be freed\n"
+"%s of extra space will be freed"
 msgstr "%d %s para remover;\n"
 
 #: gtk/rgsummarywindow.cc:356
@@ -1817,7 +1817,8 @@ msgstr "Nome do pacote"
 #: gtk/window_preferences.glade.strings:87
 #: gtk/window_preferences.glade.strings:90
 #: gtk/window_preferences.glade.strings:107
-#: gtk/window_summary.glade.strings:12 gtk/window_filters.glade.strings:10
+#: gtk/window_summary.glade.strings:12 gtk/window_summary.glade.strings:13
+#: gtk/window_summary.glade.strings:14 gtk/window_filters.glade.strings:10
 #: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
 #: gtk/window_filters.glade.strings:34 gtk/window_filters.glade.strings:42
 msgid "    "
@@ -1937,7 +1938,7 @@ msgstr "_Remover"
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
 #, fuzzy
-msgid "_Remove Including Configuration"
+msgid "Remove Including _Configuration"
 msgstr "Incluir Configuração"
 
 #: gtk/window_main_hpaned.glade.strings:28
@@ -2463,7 +2464,7 @@ msgstr "Remover com _Dependências"
 msgid "Default remove: "
 msgstr "Repositório default: "
 
-#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:20
+#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:17
 msgid " "
 msgstr " "
 
@@ -2800,8 +2801,8 @@ msgstr ""
 
 #: gtk/window_summary.glade.strings:10
 msgid ""
-"This is your opportunity to look through the list of queued changes before "
-"they are executed."
+"This is your last opportunity to look through the list of queued changes "
+"before they are executed."
 msgstr ""
 
 #: gtk/window_summary.glade.strings:11
@@ -2809,32 +2810,23 @@ msgstr ""
 msgid "<b>Summary</b>"
 msgstr "<b>Procurar em</b>"
 
-#: gtk/window_summary.glade.strings:13
-msgid ""
-"1 Package will be installed\n"
-"12 Packages will be upgraded\n"
-"\n"
-"4,5 MByte of extra space will be needed\n"
-"5 MByte of data has to be downloaded"
-msgstr ""
-
-#: gtk/window_summary.glade.strings:18
+#: gtk/window_summary.glade.strings:15
 msgid "Switch between a detailed view and a general overview"
 msgstr ""
 
-#: gtk/window_summary.glade.strings:19
+#: gtk/window_summary.glade.strings:16
 #, fuzzy
 msgid "_Show Details"
 msgstr "Mostrar Detalhes"
 
-#: gtk/window_summary.glade.strings:21
+#: gtk/window_summary.glade.strings:18
 #, fuzzy
 msgid "The package files will ony be retrieved, but not installed or upgraded"
 msgstr "Pacotes que serão instalados ou atualizados"
 
-#: gtk/window_summary.glade.strings:22
+#: gtk/window_summary.glade.strings:19
 #, fuzzy
-msgid "Only download the package files"
+msgid "Download package files only"
 msgstr "Apagar os pacotes baixados após a instalação"
 
 #: gtk/window_filters.glade.strings:9
@@ -3085,6 +3077,14 @@ msgid "Software"
 msgstr ""
 
 #, fuzzy
+#~ msgid "Install Latest Version"
+#~ msgstr "_Instalar Versão Mais Recente"
+
+#, fuzzy
+#~ msgid "_Remove Including Configuration"
+#~ msgstr "Incluir Configuração"
+
+#, fuzzy
 #~ msgid "Execute"
 #~ msgstr "E_xecutar"
 
@@ -3117,10 +3117,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Keep"
 #~ msgstr "_Preservar"
-
-#, fuzzy
-#~ msgid "Install"
-#~ msgstr "Instalar:"
 
 #, fuzzy
 #~ msgid "Status:"

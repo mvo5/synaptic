@@ -193,6 +193,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 		   	bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);
 
+   // helper for recommends/suggests
+   static void pkgInstallByNameHelper(GtkWidget *self, void *data);
+
    // install a non-standard version (data is a char* of the version)
    static void installFromVersion(GtkWidget *self, void *data);
 
@@ -222,6 +225,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    void proceed();
    void showRepositoriesWindow();
+
+   GtkWidget* buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
 
 
    // --------------------------------------------------------------------

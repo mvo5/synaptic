@@ -1143,7 +1143,6 @@ void RGMainWindow::buildInterface()
    menuitem = gtk_separator_menu_item_new ();
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-
    menuitem = gtk_image_menu_item_new_with_label(_("Properties"));
    img = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
@@ -1152,6 +1151,18 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbDetailsWindow, this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
+#ifndef HAVE_RPM // recommends stuff
+   menuitem = gtk_separator_menu_item_new ();
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+   menuitem = gtk_image_menu_item_new_with_label(_("Install Recommended"));
+   g_object_set_data(G_OBJECT(menuitem), "me", this);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+   menuitem = gtk_image_menu_item_new_with_label(_("Install Suggested"));
+   g_object_set_data(G_OBJECT(menuitem), "me", this);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+#endif
 
    gtk_widget_show_all(_popupMenu);
 
@@ -2346,6 +2357,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       res = dia.run("upgrade", true);
       switch(res) {
       case GTK_RESPONSE_CANCEL:
+      case GTK_RESPONSE_DELETE_EVENT:
 	 return;
       case GTK_RESPONSE_YES:
 	 dist_upgrade = true;
@@ -2354,7 +2366,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 	 dist_upgrade = false;
 	 break;
       default: 
-	 cerr << "unknown return from UpgradeDialog, please report" << endl;
+	 cerr << "unknown return " << res
+	      << " from UpgradeDialog, please report" << endl;
       }
       gladeXML = dia.getGladeXML();
       // see if the user wants the answer saved
@@ -2556,6 +2569,28 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
          me->_blockActions = FALSE;
 #endif
       }
+
+      // i==8 is sperator
+      // recommends
+      if(i == 9) {
+	 GtkWidget *menu;
+	 menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends);
+	 if(menu != NULL) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
+	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
+	 } else
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+      }
+      if(i == 10) {
+         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+	 GtkWidget *menu;
+	 menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests); 
+	 if( menu != NULL) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
+	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
+	 } else
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+      }
    }
 
    if (event->button == 1 && oneclickitem != NULL &&
@@ -2568,5 +2603,66 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    }
 }
 
+GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg, 
+					      pkgCache::Dep::DepType type)
+{
+   // safty first
+   if(pkg == NULL) return NULL;
+   bool found=false;
+
+   GtkWidget *menu = gtk_menu_new();
+   GtkWidget *item;
+   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   for(int i=0;i<deps.size();i++) {
+      if(deps[i].type == type) {
+	 if(!deps[i].isVirtual) {
+	    found = true;
+	    item = gtk_menu_item_new_with_label(deps[i].name);
+	    g_object_set_data(G_OBJECT(item), "me", this);
+	    gtk_widget_show(item);
+	    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+	    g_signal_connect(G_OBJECT(item), "activate",
+			     G_CALLBACK(pkgInstallByNameHelper), 
+			     (void*)deps[i].name);
+	 } else {
+	    // expand virutal packages (expensive!?!)
+	    const vector<RPackage *> pkgs = _lister->getPackages();
+	    for(int k=0;k<pkgs.size();k++) {
+	       vector<string> d = pkgs[k]->provides();
+	       for(int j=0;j<d.size();j++)
+		  if(strcoll(deps[i].name, d[j].c_str()) == 0) {
+		     found = true;
+		     item = gtk_menu_item_new_with_label(pkgs[k]->name());
+		     g_object_set_data(G_OBJECT(item), "me", this);
+		     gtk_widget_show(item);
+		     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+		     g_signal_connect(G_OBJECT(item), "activate",
+				      G_CALLBACK(pkgInstallByNameHelper), 
+				      (void*)pkgs[k]->name());
+
+		  }
+	    }
+	 }
+      }
+   }
+   gtk_widget_show(menu);
+   if(found)
+      return menu;
+   else
+      return NULL;
+}
+
+void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
+{
+   const char *name = (const char*)data;
+   cout << "pkgInstallByNameHelper: " << name << endl;
+   
+   RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
+
+   RPackage *newpkg = (RPackage *) me->_lister->getPackage(name);
+   if (newpkg)
+      me->pkgInstallHelper(newpkg);
+   
+}
 
 // vim:ts=3:sw=3:et

@@ -54,6 +54,8 @@ enum {
    N_FETCH_COLUMNS
 };
 
+static const int COLUMN_PERCENT_WIDTH=100;
+static const int COLUMN_PERCENT_HEIGHT=18;
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
 : RGGladeWindow(win, "fetch")
@@ -62,13 +64,11 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    GtkTreeViewColumn *column;
 
    setTitle(_("Downloading Files"));
-
 #if 0
    gint dummy;
    gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,
                            &_depth);
 #endif
-
    _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
    assert(_mainProgressBar);
 
@@ -86,7 +86,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
                                                      FETCH_PIXMAP_COLUMN,
                                                      NULL);
    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-   gtk_tree_view_column_set_fixed_width(column, 100);
+   gtk_tree_view_column_set_fixed_width(column, COLUMN_PERCENT_WIDTH);
    _statusColumn = column;
    _statusRenderer = renderer;
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
@@ -345,8 +345,8 @@ void RGFetchProgress::refreshTable(int row, bool append)
    if (buf != NULL)
       gdk_pixbuf_unref(buf);
 
-   w = gtk_tree_view_column_get_width(_statusColumn);
-   h = 18;                      // FIXME: height -> get it from somewhere
+   w = COLUMN_PERCENT_WIDTH;   //gtk_tree_view_column_get_width(_statusColumn);
+   h = COLUMN_PERCENT_HEIGHT; // FIXME: height -> get it from somewhere
 
    pix = statusDraw(w, h, _items[row].status);
    buf = gdk_pixbuf_get_from_drawable(NULL, pix, NULL, 0, 0, 0, 0, w, h);

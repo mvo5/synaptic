@@ -38,7 +38,7 @@ using namespace std;
 #include "rggladewindow.h"
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
-
+#include "rgpkgdetails.h"
 
 #define TOOLBAR_HIDE -1
 
@@ -149,6 +149,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGAboutPanel *_aboutPanel;
    RGIconLegendPanel *_iconLegendPanel;
 
+   RGPkgDetailsWindow *_pkgDetails;
+
    RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
 
@@ -183,6 +185,11 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RPackage *selectedPackage();
    string selectedSubView();
 
+#if INTERACTIVE_SEARCH_ON_KEYPRESS
+   // interactive search by pressing a key in treeview. 
+   // sebastian thinks it's too confusing (but it works)
+   static gboolean cbKeyPressedInTreeView(GtkWidget *widget, GdkEventKey *event, gpointer data);
+#endif
 
    // helpers
    void pkgAction(RGPkgAction action);

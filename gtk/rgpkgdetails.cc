@@ -29,30 +29,22 @@
 #include "rpackage.h"
 #include "sections_trans.h"
 
-RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent, RPackage *pkg)
+RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGladeWindow(parent, "details")
 {
-   gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
-   setTitle(str);
-   g_free(str);
-
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_button_close_clicked",
 				 G_CALLBACK(cbCloseClicked),
 				 this); 
    // fill in all the pkg-values
-   fillInValues(pkg);
    skipTaskbar(true);
-   show();
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
 {
    RGPkgDetailsWindow *me = static_cast<RGPkgDetailsWindow*>(data);
 
-   gtk_widget_destroy(me->_win); 
-
-   // XXX destroy class itself
+   me->hide();
 }
 
 vector<string> 
@@ -102,6 +94,10 @@ RGPkgDetailsWindow::formatDepInformation(vector<RPackage::DepInformation> deps)
 
 void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
 {
+   gchar *str = g_strdup_printf(_("%s Properties"),pkg->name());
+   setTitle(str);
+   g_free(str);
+
    char *pkg_summary = g_strdup_printf("%s\n%s",
 					     pkg->name(), pkg->summary());
    setTextView("textview_pkgcommon", pkg_summary, true);
@@ -166,5 +162,5 @@ void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
 
 RGPkgDetailsWindow::~RGPkgDetailsWindow()
 {
-
+   
 }

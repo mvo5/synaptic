@@ -31,6 +31,7 @@
 #include <glade/glade.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
+#include <gdk/gdkkeysyms.h>
 #include <cmath>
 #include <algorithm>
 #include <fstream>
@@ -413,6 +414,9 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       img = get_gtk_image("package-installed-updated");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_keepM), img);
 
+   if(_pkgDetails != NULL)
+      _pkgDetails->fillInValues(pkg);
+
    setStatusText();
 }
 
@@ -640,7 +644,7 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
-     _treeView(0), _iconLegendPanel(0)
+     _treeView(0), _iconLegendPanel(0), _pkgDetails(0)
 {
    assert(_win);
 
@@ -876,6 +880,26 @@ void RGMainWindow::buildTreeView()
                                 */
 
 }
+
+#if INTERACTIVE_SEARCH_ON_KEYPRESS
+gboolean RGMainWindow::cbKeyPressedInTreeView(GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *)data;
+   gboolean res;
+
+   // only react if key is in sane range
+   if(event->keyval < GDK_0 || event->keyval > GDK_z) {
+      return FALSE;
+   }
+
+   // start interactive search
+   g_signal_emit_by_name(G_OBJECT(me->_treeView),
+			 "start-interactive-search", res);
+   gdk_event_put((GdkEvent*)(event));
+
+   return TRUE;
+}
+#endif
 
 void RGMainWindow::buildInterface()
 {
@@ -1357,7 +1381,19 @@ void RGMainWindow::buildInterface()
    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
    g_signal_connect(G_OBJECT(select), "changed",
                     G_CALLBACK(cbChangedSubView), this);
+
+#if INTERACTIVE_SEARCH_ON_KEYPRESS // disabled
+   g_signal_connect(G_OBJECT(_treeView), "key-press-event",
+		    G_CALLBACK(cbKeyPressedInTreeView), this);
+#endif
+   GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
+   gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
+				"start_interactive_search", 0);
+
 }
+
+
+
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, 
 				    bool reInstall)
@@ -1908,11 +1944,14 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    assert(data);
 
    RPackage *pkg = me->selectedPackage();
-   if (pkg != NULL) {
-      RGPkgDetailsWindow win(me, pkg);
-      win.show();
-      gtk_main();
-   }
+   if (pkg == NULL) 
+      return;
+
+   if(me->_pkgDetails == NULL)
+      me->_pkgDetails = new RGPkgDetailsWindow(me);
+
+   me->_pkgDetails->fillInValues(pkg);
+   me->_pkgDetails->show();
 }
 
 void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
@@ -2749,7 +2788,7 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
    GtkWidget *menu = gtk_menu_new();
    GtkWidget *item;
    vector<RPackage::DepInformation> deps = pkg->enumDeps();
-   for(int i=0;i<deps.size();i++) {
+   for(unsigned int i=0;i<deps.size();i++) {
       if(deps[i].type == type) {
 	 // not virtual
 	 if(!deps[i].isVirtual) {
@@ -2767,9 +2806,9 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 	 } else {
 	    // TESTME: expand virutal packages (expensive!?!)
 	    const vector<RPackage *> pkgs = _lister->getPackages();
-	    for(int k=0;k<pkgs.size();k++) {
+	    for(unsigned int k=0;k<pkgs.size();k++) {
 	       vector<string> d = pkgs[k]->provides();
-	       for(int j=0;j<d.size();j++)
+	       for(unsigned int j=0;j<d.size();j++)
 		  if(strcoll(deps[i].name, d[j].c_str()) == 0) {
 		     found = true;
 		     item = gtk_menu_item_new_with_label(pkgs[k]->name());

@@ -495,50 +495,6 @@ bool RPackageLister::distUpgrade()
    return true;
 }
 
-
-
-
-void RPackageLister::reapplyFilter()
-{
-   // PORTME
-   if (_updating)
-      return;
-
-   _viewPackages.clear();
-   _viewPackagesIndex.clear();
-   _viewPackagesIndex.resize(_packagesIndex.size(), -1);
-
-   for (RPackageView::iterator I = _selectedView->begin();
-        I != _selectedView->end(); I++) {
-      if (*I) {
-         _viewPackagesIndex[(*(*I)->package())->ID] = _viewPackages.size();
-         _viewPackages.push_back(*I);
-      }
-   }
-
-   // sort now according to the latest used sort method
-   switch (_sortMode) {
-      case LIST_SORT_STATUS_ASC:
-         sortPackagesByStatus(0);
-         break;
-      case LIST_SORT_STATUS_DES:
-         sortPackagesByStatus(1);
-         break;
-
-      case LIST_SORT_NAME:
-         sortPackagesByName();
-         break;
-
-      case LIST_SORT_SIZE_ASC:
-         sortPackagesByInstSize(0);
-         break;
-
-      case LIST_SORT_SIZE_DES:
-         sortPackagesByInstSize(1);
-         break;
-   }
-}
-
 static void qsSortByName(vector<RPackage *> &packages, int start, int end)
 {
    int i, j;
@@ -569,9 +525,58 @@ static void qsSortByName(vector<RPackage *> &packages, int start, int end)
 
 void RPackageLister::sortPackagesByName(vector<RPackage *> &packages)
 {
+   //   cout << "RPackageLister::sortPackagesByName()" << endl;
    _sortMode = LIST_SORT_NAME;
    if (!packages.empty())
       qsSortByName(packages, 0, packages.size() - 1);
+}
+
+
+void RPackageLister::reapplyFilter()
+{
+   // PORTME
+   if (_updating)
+      return;
+
+   //   cout << "RPackageLister::reapplyFilter()" << endl;
+
+   _viewPackages.clear();
+   _viewPackagesIndex.clear();
+   _viewPackagesIndex.resize(_packagesIndex.size(), -1);
+
+   for (RPackageView::iterator I = _selectedView->begin();
+        I != _selectedView->end(); I++) {
+      if (*I) {
+         _viewPackagesIndex[(*(*I)->package())->ID] = _viewPackages.size();
+         _viewPackages.push_back(*I);
+      }
+   }
+
+   // sort now according to the latest used sort method
+   switch (_sortMode) {
+      case LIST_SORT_STATUS_ASC:
+	 // make sure that we sort for names first, otherwise we get a funny list
+         sortPackagesByName();
+         sortPackagesByStatus(0);
+         break;
+      case LIST_SORT_STATUS_DES:
+	 // make sure that we sort for names first, otherwise we get a funny list
+         sortPackagesByName();
+         sortPackagesByStatus(1);
+         break;
+
+      case LIST_SORT_NAME:
+         sortPackagesByName();
+         break;
+
+      case LIST_SORT_SIZE_ASC:
+         sortPackagesByInstSize(0);
+         break;
+
+      case LIST_SORT_SIZE_DES:
+         sortPackagesByInstSize(1);
+         break;
+   }
 }
 
 
@@ -592,6 +597,9 @@ struct statusSortFuncDes {
 void RPackageLister::sortPackagesByStatus(vector<RPackage *> &packages, 
 					  int order)
 {
+//    cout << "RPackageLister::sortPackagesByStatus() " 
+// 	<< "size: " << packages.size() << endl;
+
    if (order == 0)
       _sortMode = LIST_SORT_STATUS_ASC;
    else

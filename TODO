@@ -1,30 +1,24 @@
- - Shortcut for force-version (for Redhat people) 
- - download window scrollbar shouldn't always scroll, make two areas, one with
-   active jobs and one with completted jobs? 
-   (see mail from Adam Lydick, 20.10.2004)
+Misc:
+ - human readable repositories (ubuntu bug #1347)
+ - proxy username/password does not work with synaptic preferences 
+   (add apt PROXY_USER PROXY_PASSWORD style variables into a special
+    expoert dialog in preferences)
  - > I've a question: I want to install a package and it suggestes some
    >other ones. I'd like to be able to display info for the suggested
    >packages in as simple way as possible. The best would'be if I could
    >filter out all but the one pacakge being installed (the best would be a
    >context-menu entry "Display Suggested/Recommanded/Required") and those
    >it does suggest, so I could browse through the list, learn what is every
-   >suggested package good for and decide whether or not to install it. 
+   >suggested package good for and decide whether or not to install
+   >it. 
  - Scroll-bug (Eric Freyens, 25.10.2004)
- - after changes in the repositories editor, ask for a update of
-   the package list
- - check download size against statvfs
- - add "pause download" feature
- - think about how to simplify the "reload" step for new users
-   (see mail from Philippe Cloutier, 16.Sep.2004)
-   maybe a error string when a package can not be found on the server
-   is enough?
- - "held back" is a bad term (ubuntu bug #1309)
- - human readable repositories (ubuntu bug #1347)
- - proxy username/password does not work with synaptic preferences 
-   (add apt PROXY_USER PROXY_PASSWORD style variables into a special
-    expoert dialog in preferences)
- - integrate apt-get.org/fedoratracker.org into synaptic 
-   (savannah bug #10544)
+ - check download size against statvfs 
+ - add "pause download" feature (possible with the fetchers?)
+ - integrate apt-get.org/fedoratracker.org into synaptic (savannah bug
+   #10544), a "server list" similar to amule (or gnutella, etc).
+ - Mail von Vidar Haar (9.Aug.2004): neues summary layout/
+   check for diskspace before downloading/executing
+ - make log-file [done] with optinal dpkg-output logging
 
 HIG-2 (thanks to Sebastian for his analysis):
  - "Force Version" should be a radiobutton not a combobox 
@@ -41,8 +35,8 @@ HIG-2 (thanks to Sebastian for his analysis):
   
 
  
-
-Unknown:
+User-Mode:
+----------
  - split into user and root mode. User mode does all the changes and for
    the final installation runs (with gksu or libgksu): 
    # synaptic --set-selection --non-interactive --hide-main-window --dont-write-any-config
@@ -57,35 +51,33 @@ Unknown:
       - update: could be solved by making the /var/lib/apt/lists/ dir
                 group writeable for a desktop-group 
       - edit sources.list
+
+ - Need far better state saving:
+   - save selected distribution when doing a "save selection"
+   - when using "force version" save this as well
+   - when "open cache" is called, make sure that the correct distribution 
+     is selected for save/restore
+
       
-
- - Mail von Vidar Haar (9.Aug.2004): neues summary layout
-   - check for diskspace before downloading/executing
-
+Misc:
+-----
+ - network proxy detection if gnome/kde is installed/run (can be
+   solved with user-mode?!?)
  - re-enable "default remove action" in the preferences window
  - > > (synaptic:24143): Gtk-CRITICAL **: file gtkwidget.c: line 1827
    > > (gtk_widget_hide): assertion `GTK_IS_WIDGET (widget)' failed
    auf RPM
  - search in name+provides in search-dialog
- - network proxy detection if gnome/kde is installed/run
-
-0.50+:
- * a "server list" similar to amule (or gnutella, etc).
- - Separate sections from package list
  - In the change log view, link "bug" references to the actual bug report
 
 Usability issues:
- - Use new column editor in the preferences
- - Disable search button in the search dialog until an expresseion was entered
- - Disable "Undo" and "Redo" if there is no action to perform
  - Rework repository and vendor dialog
+ - Disable "Undo" and "Redo" if there is no action to perform
  - Think about implementing a summary of changes in the upgrade dialog
  - Use HIGified common dialogs (alignments and message text!)
  - Use a tree view for sections containing a separator "/" (e.g. SuSE, RedHat)
  - Merge the message about failed downloads and the "ignore failed downloads"
    dialog
- - Pressing a key should jump to the first package with the same inital letter, 
-   if the focus is on the package list
  - Do not show "0 broken" and other "0" messages in the status bar
  - Use a warning or error icon in the status bar to get the users attention
    (e.g. in the case of broken packages)
@@ -98,35 +90,22 @@ Usability issues:
    progress bar and use a busy cursor (?)
 
 Translation issues:
- - Add comments for translators
- - Reword unclear messages
  - Use plural gettext in the status message
 
 Unsorted:
  - possibility to resume failed installation of half installed packages
    Execute should be available if there are outstanding packages 
    (difficult!)
- - if(userid != 0) { exec "gksu -c /usr/sbin/synaptic"}
- - when switching filters/update pkgs clear filter field
  - Please add hyperlink support in package info for example BTS entry
  - Please allow users to delete default filters and add an option to
    restore in prefs (or make them not deletable at all)
  - "crash handler" that automatically save the selections on a synaptic
    segfault (and present a dialog to reread them on the next start)
- - if download failed, use a special dialog to show it
  - copy desktop file to the KDE menu - $KDEPREFIX/applnk/Settingsmenu
    "kde-config --prefix"
- 
  - ask on debian-deity if it is possible to get a "DeletePin" function.
    this way, we can do default release pining without rereading the cache
    (see policy.cc:pkgPolicy::pkgPolicy())
-
- "Install from multiple Distributions patch":
-   - save selected distribution when doing a "save selection"
-   - when "open cache" is called, make sure that the correct distribution 
-     is selected for save/restore
-   - fix "undo/redo"
- 
 
 Configure:
    - allways give the correct path in the synaptic.desktop file
@@ -136,11 +115,9 @@ GUI:
    - Icons should be themable: gtkiconfactory
    - allow clicking in the depedency list so that the click takes
      you to the package
-   - add TaskView view to show tasks (add just a new view). 
    - add native debconf reconfigure frontend using the cmdpipe interface
      to debconf (cool!)
    - try to get synaptic into base-config
-   - add non-root mode 
    - add something that lets the user see if a certain package is already
      in the cache
    - add reduced view? (always ignore this package)
@@ -160,86 +137,105 @@ General:
      (and have the option to remove them again automatically)
      [might be enough to use "remove with dependencies" ?]
    - make deporhan a native synaptic filter (should be easy)
-   - make log-file
-   - current task support is broken, try to fix it
    - implement raptoptions save/restore for getFlags/setFlags [not needed?]
 
-Done:
-   - "Refresh" must be "reload"
-   - readd "UseRecommends" to auto-install recommended packages (done)
-   - sorting by versions
-   - redesign the columns (drag 'n drop?)
-   - "pin/hold" support (-)
-   - "install-this-versioN" (-) 
-   - make a the used font in the treeview configurable 
-   - when searching and then switching view-mode, go to the last selected
-     pkg (maybe do that every time the view is switched?)
-   - think about using a package details dialog
-   - add reinstall
-   - Add konqueror and opera to the list of help browser
-   - do not use ithe same sentence for singular and plural in summary
-   - icons in status list
-   - enable glade support in download and execute window
-   - implement font size choser [half-done see FAQ]
-   - add a button to undo all programmed changes 
+Done: 
+ - current task support is broken, try to fix it
+ - add TaskView view to show tasks [done with tasksel window]
+ - if download failed, use a special dialog to show it [done I think]
+ - Add comments for translators [mostly done]
+ - Reword unclear messages [mostly done]
+ - Pressing a key should jump to the first package with the same
+   inital letter [fixed with gtk2.6]
+ - Use new column editor in the preferences
+ - Disable search button in the search dialog until an expresseion was entered
+ - Separate sections from package list [can be archived with sorting
+   for section]
+ - "held back" is a bad term (ubuntu bug #1309)
+ - think about how to simplify the "reload" step for new users
+   (see mail from Philippe Cloutier, 16.Sep.2004)
+   [package list outdated dialog takes care of this]
+ - after changes in the repositories editor, ask for a update of
+   the package list
+ - download window scrollbar shouldn't always scroll, make two areas,
+   one with active jobs and one with completted jobs?  (see mail from
+   Adam Lydick, 20.10.2004)
+ - Shortcut for force-version (for Redhat people) 
+ - "Refresh" must be "reload"
+ - readd "UseRecommends" to auto-install recommended packages (done)
+ - sorting by versions
+ - redesign the columns (drag 'n drop?)
+ - "pin/hold" support (-)
+ - "install-this-versioN" (-) 
+ - make a the used font in the treeview configurable 
+ - when searching and then switching view-mode, go to the last selected
+   pkg (maybe do that every time the view is switched?)
+ - think about using a package details dialog
+ - add reinstall
+ - Add konqueror and opera to the list of help browser
+ - do not use ithe same sentence for singular and plural in summary
+ - icons in status list
+ - enable glade support in download and execute window
+ - implement font size choser [half-done see FAQ]
+ - add a button to undo all programmed changes 
 	(do we need this now that we have a "real" undo?)
-   - hide seperator_hold on rpm based systems, too (?)
-   - deactivate "do not modify" in the package menu if no modification was
-     queued or no package is selected
-   - split up the label_info (main window) into several labels
-   - implement new glade version of dialog_summary
-   - disable all package actions if "hold current version" is activated
-   - "hold current version" in the package menu should represent the hold status
-     (it is already an "Ankreuzfeld")
-   - deactivate font selector in the prefs if user defined font is not activated
-   - add context-menu on right-click (del/inst/upgr/show descr in own window,
-   - context menus in the package list
-   - GtkTextView for package name and short desc (textview_pkgcommon)
-   - add a dialog that show what dependency is unmet if a pkg can not be
-     installed (like ShowBroken() in apt-get.cc)
-   - add a tab that shows all version of the package 
-     (like apt-cache showpkg)
-   - enable different sorting methods for the tree (e.g. size)
-   - implement proxy settings 
-   - implement a new (interactive) search function
-   - config option what the default action of ("delete") button is
-   - "removed but residual config" should win against 
-     "obsolete or locally installed" in by status view
-   - add remove with deps menu entry 
-   - add "Provides" tab (done)
-   - obsolete packages (installed, but no install version available)
-     (named "not installable")
-   - add missing functionality in rpackagefilter line 183 (Provides filter)
-   - display all files of a installed packages (like dpkg -L or apt-file) 
-     [can't do this in a portable way]
-   - add easy way to install suggested/recommended
-   - convert all GtkCList to GtkTreeView (done)
-   - make it possible to filter for maintainer
-   - make a options to install recommended package automatically or
-     semi-automatically with a dialog (done)
-   - add something that adds cdrom uris to the sources
-   - implement "undo" :) 
-   - configure whether we want text under icons or not (done)
-   - problem if a pkglist is not available on startup (rpm only)
-   - implement some kind of deborphan functionality (make it a filter)
-   - filter for "residual configuration" (removed, but still configuration)
-   - make a extra warning if packages are deleted (via Summary Window)
-   - label with short description resizes the gui (ugly)
-   - add filters to menu (done)
-   - make easy way to filter for description 
-   - make more than one package selectable and allow "install", "keep" etc
-     on this groups (done)
-   - remove the update button in rgsrcwindow.cc (done)
-   - add more key-shortcuts (done)
-   - add repository dialog (done)
-   - new packages in repository (done)
-   - add cmdline argument for selecting a initial filter (done)
-   - test for "swig" in configure.in (done)
-   - get rid of all gtk_widget_set_usize() [mostly gone]
-   - use colors to show different stuff about the package 
-     (e.g. blue if upgradeable, red if broken etc) [done]
-   - some online-help/mini-tutorial (partly done)
-   - handle "|" case in WDepends (partly)
-   - implement "Hold package" (partly)   
-   - add man-page and localised man-page (done)
+ - hide seperator_hold on rpm based systems, too (?)
+ - deactivate "do not modify" in the package menu if no modification was
+   queued or no package is selected
+ - split up the label_info (main window) into several labels
+ - implement new glade version of dialog_summary
+ - disable all package actions if "hold current version" is activated
+ - "hold current version" in the package menu should represent the hold status
+   (it is already an "Ankreuzfeld")
+ - deactivate font selector in the prefs if user defined font is not activated
+ - add context-menu on right-click (del/inst/upgr/show descr in own window,
+ - context menus in the package list
+ - GtkTextView for package name and short desc (textview_pkgcommon)
+ - add a dialog that show what dependency is unmet if a pkg can not be
+   installed (like ShowBroken() in apt-get.cc)
+ - add a tab that shows all version of the package 
+   (like apt-cache showpkg)
+ - enable different sorting methods for the tree (e.g. size)
+ - implement proxy settings 
+ - implement a new (interactive) search function
+ - config option what the default action of ("delete") button is
+ - "removed but residual config" should win against 
+   "obsolete or locally installed" in by status view
+ - add remove with deps menu entry 
+ - add "Provides" tab (done)
+ - obsolete packages (installed, but no install version available)
+   (named "not installable")
+ - add missing functionality in rpackagefilter line 183 (Provides filter)
+ - display all files of a installed packages (like dpkg -L or apt-file) 
+   [can't do this in a portable way]
+ - add easy way to install suggested/recommended
+ - convert all GtkCList to GtkTreeView (done)
+ - make it possible to filter for maintainer
+ - make a options to install recommended package automatically or
+   semi-automatically with a dialog (done)
+ - add something that adds cdrom uris to the sources
+ - implement "undo" :) 
+ - configure whether we want text under icons or not (done)
+ - problem if a pkglist is not available on startup (rpm only)
+ - implement some kind of deborphan functionality (make it a filter)
+ - filter for "residual configuration" (removed, but still configuration)
+ - make a extra warning if packages are deleted (via Summary Window)
+ - label with short description resizes the gui (ugly)
+ - add filters to menu (done)
+ - make easy way to filter for description 
+ - make more than one package selectable and allow "install", "keep" etc
+   on this groups (done)
+ - remove the update button in rgsrcwindow.cc (done)
+ - add more key-shortcuts (done)
+ - add repository dialog (done)
+ - new packages in repository (done)
+ - add cmdline argument for selecting a initial filter (done)
+ - test for "swig" in configure.in (done)
+ - get rid of all gtk_widget_set_usize() [mostly gone]
+ - use colors to show different stuff about the package 
+   (e.g. blue if upgradeable, red if broken etc) [done]
+ - some online-help/mini-tutorial (partly done)
+ - handle "|" case in WDepends (partly)
+ - implement "Hold package" (partly)   
+ - add man-page and localised man-page (done)
 

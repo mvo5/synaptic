@@ -199,14 +199,15 @@ int main(int argc, char **argv)
    if(_config->FindB("Volatile::Upgrade-Mode",false)) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       mainWindow->cbUpgradeClicked(NULL, mainWindow);
-      mainWindow->changeView(3,false, _("Queued Changes"));
+      mainWindow->changeView(3, true, _("Queued Changes"));
    }
 
    if (_config->FindB("Volatile::Non-Interactive", false)) {
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       // show welcome dialog
-      if (_config->FindB("Synaptic::showWelcomeDialog", true)) {
+      if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
+	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
          RGGladeUserDialog dia(mainWindow);
          dia.run("welcome");
          GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-28 14:21+0100\n"
-"PO-Revision-Date: 2005-02-17 11:36+0100\n"
+"PO-Revision-Date: 2005-03-01 23:06+0100\n"
 "Last-Translator: Jorge Bernal <koke@amedias.org>\n"
 "Language-Team: Spanish <traductores@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -309,14 +309,12 @@ msgid "Cleaning package lists..."
 msgstr "Limpiando las listas de paquetes..."
 
 #: ../common/rcdscanner.cc:329
-msgid ""
-"Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgid "Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr ""
 "No se ha podido encontrar ningún fichero de paquetes. Quizá este disco no "
 "esté preparado para APT."
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
 msgstr "El disco no se ha analizado de forma correcta."
 
@@ -370,9 +368,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "ERROR: no se ha podido crear el directorio de configuración %s"
 
 #: ../common/rconfiguration.cc:148
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "ERROR: no se ha podido crear el directorio informes de actividad %s"
+msgstr "ERROR: no se ha podido crear el directorio temporal %s"
 
 #: ../common/rconfiguration.cc:166
 #, c-format
@@ -385,16 +383,14 @@ msgid "couldn't open %s for writing"
 msgstr "No se ha podido abrir %s para escribir"
 
 #: ../common/rinstallprogress.cc:41
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now."
 msgstr ""
 "\n"
-"Se han aplicado todos los cambios con éxito. - Puede cerrar la ventana ahora"
+"Se han aplicado todos los cambios con éxito. Puede cerrar la ventana ahora."
 
 #: ../common/rinstallprogress.cc:42
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in the terminal buffer to see what went "
@@ -402,7 +398,7 @@ msgid ""
 msgstr ""
 "\n"
 "Se ha producido un fallo al aplicar todos los cambios. Desplace este búfer "
-"para ver lo que fue mal"
+"para ver lo que fue mal."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -495,8 +491,7 @@ msgstr " o"
 
 #: ../common/rpackage.cc:893
 msgid "Invalid record in the preferences file, no Package header"
-msgstr ""
-"Registro inválido en el fichero de preferencias, no hay cabecera de paquete"
+msgstr "Registro inválido en el fichero de preferencias, no hay cabecera de paquete"
 
 #: ../common/rpackage.cc:1274
 msgid "Marked for installation"
@@ -874,9 +869,8 @@ msgstr "Cambios marcados"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "Paq. con DebConf"
+msgstr "Paquete con Debconf"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
@@ -963,38 +957,30 @@ msgid "-r   Open in the repository screen\n"
 msgstr "-r  Abrir en la pantalla del repositorio\n"
 
 #: ../gtk/gsynaptic.cc:71
-#, fuzzy
 msgid "-f=? Give an alternative filter file\n"
-msgstr "-f=? Dé un fichero de filtros alternativo\n"
+msgstr "-f=? Usar un fichero de filtros alternativo\n"
 
 #: ../gtk/gsynaptic.cc:72
-msgid ""
-"-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
-msgstr ""
+msgid "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
+msgstr "-t   Usar un título de ventana alternativo (por ejemplo el nombre de anfitrión con `uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:73
-#, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
-msgstr "-i=? Comenzar con el filtro inicial con el número dado\n"
+msgstr "-i=? Comenzar usando el filtro inicial con el número dado\n"
 
 #: ../gtk/gsynaptic.cc:74
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
-msgstr ""
-"-o=? Poner una opción de configuración arbitraria, ej -o dir::cache=/tmp\n"
+msgstr "-o=? Poner una opción de configuración arbitraria, ej -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr "--upgrade-mode Llama a refrescar, actualizar y muestra los cambios\n"
+msgstr "--upgrade-mode  Llama a actualizar y muestra los cambios\n"
 
 #: ../gtk/gsynaptic.cc:76
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
-msgstr ""
-"--dist-upgrade-mode Llama a refrescar, modernizar y muestra los cambios\n"
+msgstr "--dist-upgrade-mode  Llama a modernizar y muestra los cambios\n"
 
 #: ../gtk/gsynaptic.cc:77
-#, fuzzy
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr "--update-at-startup  Recargar la lista de paquetes al inicio\n"
 
@@ -1012,30 +998,29 @@ msgstr "--add-cdrom Añade un cdrom al inicio\n"
 
 #: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "Ya hay otro synaptic en ejecución"
 
 #: ../gtk/gsynaptic.cc:304
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
-msgstr ""
+msgstr "Hay otro synaptic funcionando en modo interactivo, ciérrelo primero. "
 
 #: ../gtk/gsynaptic.cc:310
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
-msgstr ""
+msgstr "Hay otro synaptic funcionando en modo no interactivo, espere hasta que termine."
 
 #: ../gtk/gsynaptic.cc:334
-#, fuzzy
 msgid "Unable to get exclusive lock"
-msgstr "Incapaz de cambiar a %s"
+msgstr "Incapaz de obtener un bloqueo exclusivo"
 
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
-msgstr ""
+msgstr "Esto normalmente significa que otro gestor de paquetes (como apt-get o aptitude) ya se está ejecutando. Cierre esta aplicación antes de continuar."
 
 #: ../gtk/gsynaptic.cc:377
 msgid "You must run this program as the root user."
@@ -1071,14 +1056,14 @@ msgstr "Cambios del paquete"
 
 #: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
 "You are about to install software that <b>can't be authenticated</b>! Doing "
 "this could allow a malicious individual to damage or take control of your "
 "system."
-msgstr ""
+msgstr "Está a punto de instalar software que <b>no puede ser autenticado</b>. Esto puede permitir que un individuo malicioso dañe o tome el control de su sistema."
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
@@ -1195,15 +1180,14 @@ msgstr "Error en el paquete %s"
 
 #: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
 msgid "Changes applied"
-msgstr ""
+msgstr "Cambios aplicados"
 
 #: ../gtk/rgdebinstallprogress.cc:703
-#, fuzzy
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
-"Los cambios marcados se aplican ahora. Esto puede llevar algo de tiempo. Por "
+"Los cambios marcados se están aplicando ahora. Esto puede llevar algo de tiempo. Por "
 "favor, espere."
 
 #: ../gtk/rgdebinstallprogress.cc:708
@@ -1211,9 +1195,8 @@ msgid "Installing and removing software"
 msgstr "Instalar y quitar los paquetes de software"
 
 #: ../gtk/rgdebinstallprogress.cc:710
-#, fuzzy
 msgid "Removing software"
-msgstr "Quitar software"
+msgstr "Quitando software"
 
 #: ../gtk/rgdebinstallprogress.cc:712
 msgid "Installing software"
@@ -1261,7 +1244,6 @@ msgid "Color selection"
 msgstr "Selección de color"
 
 #: ../gtk/rgpreferenceswindow.cc:950
-#, fuzzy
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1270,11 +1252,10 @@ msgid ""
 msgstr ""
 "Preferir versiones de paquetes de la distribución seleccionada al "
 "actualizar. Si fuerza manualmente una versión de una distribución diferente, "
-"la versión del paquete seguirá a esa distribución hasta que entre el la "
+"la versión del paquete seguirá a esa distribución hasta que entre en la "
 "distribución predeterminada."
 
 #: ../gtk/rgpreferenceswindow.cc:958
-#, fuzzy
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
@@ -1323,13 +1304,13 @@ msgstr ""
 "en la unidad %s"
 
 #: ../gtk/rgfetchprogress.cc:309
-#, fuzzy, c-format
+#, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Descargando el fichero %li de %li a %s/s - %s para terminar"
+msgstr "Tasa de descarga: %s/s - quedan %s"
 
 #: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
-msgstr ""
+msgstr "Tasa de descarga: desconocida"
 
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
@@ -1406,12 +1387,11 @@ msgstr ""
 
 #: ../gtk/rglogview.cc:260
 msgid "Not found"
-msgstr ""
+msgstr "No encontrado"
 
 #: ../gtk/rglogview.cc:262
-msgid ""
-"Expression was found, please see the list on the left for matching entries."
-msgstr ""
+msgid "Expression was found, please see the list on the left for matching entries."
+msgstr "Se encontró una expresión, busque las entradas correspondientes en la lista de la izquierda."
 
 #: ../gtk/rgpkgdetails.cc:107
 #, c-format
@@ -1439,8 +1419,7 @@ msgstr "No hay ningún paquete seleccionado.\n"
 #: ../gtk/rgmainwindow.cc:436
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
-msgstr ""
-"Seleccione la versión de %s que debería ser forzada para la instalación"
+msgstr "Seleccione la versión de %s que debería ser forzada para la instalación"
 
 #: ../gtk/rgmainwindow.cc:438
 msgid ""
@@ -1466,7 +1445,6 @@ msgid "Download"
 msgstr "Descargar"
 
 #: ../gtk/rgmainwindow.cc:1201
-#, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
@@ -1662,7 +1640,6 @@ msgid "Starting help viewer..."
 msgstr "Iniciando el visor de ayuda..."
 
 #: ../gtk/rgmainwindow.cc:2303
-#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1674,10 +1651,10 @@ msgid ""
 msgstr ""
 "No hay instalado un visor de ayuda.\n"
 "\n"
-"Necesita o el visor «yelp», «konqueror» o el navegador «mozilla» para ver el "
+"Necesita o el visor de ayuda de GNOME 'yelp', 'konqueror' o el navegador 'mozilla' para ver el "
 "manual de synaptic.\n"
 "\n"
-"Alternativamente puede abrir la página de manual con «man synaptic» desde la "
+"Alternativamente puede abrir la página de manual con 'man synaptic' desde la "
 "línea de comandos o ver la versión html ubicada en la carpeta 'synaptic/"
 "html'."
 
@@ -2001,7 +1978,7 @@ msgstr "Cancelar"
 #. downloadable version)
 #: ../gtk/rggladewindow.cc:89 ../gtk/rggladewindow.cc:107
 msgid "N/A"
-msgstr ""
+msgstr "N/D"
 
 #: ../gtk/rgfindwindow.cc:128
 msgid "Find"
@@ -2593,9 +2570,8 @@ msgid "Consider recommended packages as dependencies"
 msgstr "Considerar los paquetes recomendados como si fuesen dependencias"
 
 #: ../gtk/window_preferences.glade.h:32
-#, fuzzy
 msgid "Delete _History files older than:"
-msgstr "_Borrar archivos del histórico mas anteriores a:"
+msgstr "_Borrar archivos del histórico anteriores a:"
 
 #: ../gtk/window_preferences.glade.h:33
 msgid "Direct connection to the internet"
@@ -2758,12 +2734,10 @@ msgid "_Keep history"
 msgstr "_Mantener histórico"
 
 #: ../gtk/window_preferences.glade.h:76
-#, fuzzy
 msgid "_Leave all downloaded packages in the cache"
 msgstr "_Dejar todos los paquetes descargados en la caché"
 
 #: ../gtk/window_preferences.glade.h:77
-#, fuzzy
 msgid "_Only delete packages which are no longer available"
 msgstr "_Borrar sólo los paquetes que ya no están disponibles"
 
@@ -2776,10 +2750,8 @@ msgid "days"
 msgstr "días"
 
 #: ../gtk/window_disc_name.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"large\">Introduzca la etiqueta del CD-ROM</span>"
+msgid "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+msgstr "<span weight=\"bold\" size=\"large\">Introduzca la etiqueta del CD-ROM</span>"
 
 #: ../gtk/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2795,8 +2767,7 @@ msgstr ""
 
 #: ../gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Establecer una opción interna</span>"
+msgstr "<span size=\"large\" weight=\"bold\">Establecer una opción interna</span>"
 
 #: ../gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
@@ -2815,8 +2786,7 @@ msgid "<b>Summary</b>"
 msgstr "<b>Resumen</b>"
 
 #: ../gtk/window_summary.glade.h:4
-msgid ""
-"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+msgid "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">¿Quiere aplicar los cambios siguientes?"
 "</span>"
@@ -2842,13 +2812,12 @@ msgstr ""
 "marcados antes de que se apliquen."
 
 #: ../gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
 "Los fabricantes firman sus paquetes para verificar el origen y la integridad "
-"de los paquetes. Desactivar la verificación es un riesgo de seguridad"
+"de los paquetes. Desactivar la verificación es un riesgo de seguridad."
 
 #: ../gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
@@ -2958,9 +2927,8 @@ msgid "Orphaned"
 msgstr "Huérfanos"
 
 #: ../gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "Paquetes que son nuevos en el repositorio desde el último «Refresco»"
+msgstr "Paquetes que son nuevos en el repositorio desde el último 'Refresco'"
 
 #: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
@@ -2993,8 +2961,7 @@ msgstr "Recomendaciones"
 
 #: ../gtk/window_filters.glade.h:51
 msgid "Removed packages that have left configuration files on the system"
-msgstr ""
-"Paquetes eliminados que han dejado ficheros de configuración en el sistema"
+msgstr "Paquetes eliminados que han dejado ficheros de configuración en el sistema"
 
 #: ../gtk/window_filters.glade.h:52
 msgid "Replaced Packages"
@@ -3070,9 +3037,8 @@ msgid "<i>Preparing packages...</i>"
 msgstr "<i>Preparando paquetes...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Automatically close after the changes have been successfully applied"
-msgstr "Cerrar este diálogo después de que se apliquen los cambios con éxito"
+msgstr "Cerrar este diálogo automáticamente después de que se apliquen los cambios con éxito"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:3
 msgid "Terminal"
@@ -3083,7 +3049,6 @@ msgid "Extra output was generated during Package Manager operation"
 msgstr "Se generó una salida extra durante la operación del gestor de paquetes"
 
 #: ../gtk/window_tasks.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -3171,8 +3136,7 @@ msgstr ""
 "software."
 
 #: ../gtk/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
+msgid "You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
 "Puede marcar paquetes para instalación, actualización o eliminación de "
 "diferentes formas:"
@@ -3281,7 +3245,6 @@ msgstr "<i>No se puede cerrar mientras se ejecuta</i>"
 
 #. vim:sts=3:sw=3
 #: ../gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3293,7 +3256,7 @@ msgstr ""
 "<big><b>No se pudieron descargar todos los paquetes necesarios</b></big>\n"
 "\n"
 "La versión del paquete que quiere instalar quizá no esté disponible ya en el "
-"repositorio. O quizá haya problemas con la fuente del paquete. Refresque la "
+"repositorio, o quizá haya problemas con la fuente del paquete. Refresque la "
 "lista de paquetes y compruebe la fuente del paquete (ej: CD o conexión de "
 "red)."
 
@@ -3327,39 +3290,5 @@ msgstr "Histórico"
 
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
-msgstr ""
-"Histñorico de paquetes de software instalados, actualizados y eliminados."
+msgstr "Histñorico de paquetes de software instalados, actualizados y eliminados."
 
-#~ msgid "Internal Error: Couldn't fork gzip. Please report."
-#~ msgstr "Error interno: No se pudo bifurcar gzip. Por favor informe."
-
-#~ msgid "Dependency of"
-#~ msgstr "Depende de"
-
-#~ msgid "Internal Error: Could not open ReducedView file %s"
-#~ msgstr "Error interno: no se puede abrir el fichero de vista reducida %s"
-
-#~ msgid "Internal Error: couldn't fork bzip2. Please report."
-#~ msgstr "Error interno: no se pudo bifurcar bzip2. Informe del error."
-
-#~ msgid ""
-#~ "<big><b>%s</b></big> \n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "<big><b>%s</b></big>\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Normal"
-#~ msgstr "Normal"
-
-#~ msgid "Critical"
-#~ msgstr "Crítico"
-
-#~ msgid "Security"
-#~ msgstr "Seguridad"
-
-#, fuzzy
-#~ msgid "Installation finished"
-#~ msgstr "Instalación terminada"

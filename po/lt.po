@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-28 14:21+0100\n"
-"PO-Revision-Date: 2005-02-05 02:59+0200\n"
+"POT-Creation-Date: 2005-03-01 23:20+0200\n"
+"PO-Revision-Date: 2005-03-02 10:30+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -314,7 +313,6 @@ msgstr ""
 "Nepavyko rasti jokių paketų bylų. Galbūt tai nėra diskas su APT palaikymu."
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
 msgstr "Nepavyko sėkmingai apžvelgti disko."
 
@@ -368,9 +366,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "KLAIDA: nepavyko sukurti konfigūracijos aplanko %s"
 
 #: ../common/rconfiguration.cc:148
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "KLAIDA: nepavyko sukurti žurnalų aplanko %s"
+msgstr "KLAIDA: nepavyko sukurti laikono aplanko %s"
 
 #: ../common/rconfiguration.cc:166
 #, c-format
@@ -383,16 +381,14 @@ msgid "couldn't open %s for writing"
 msgstr "nepavyko atidaryti %s rašymui"
 
 #: ../common/rinstallprogress.cc:41
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now."
 msgstr ""
 "\n"
-"Sėkmingai pritaikyti visi pakeitimai. Jūs dabar galite uždaryti šį langą "
+"Sėkmingai pritaikyti visi pakeitimai. Jūs dabar galite uždaryti šį langą."
 
 #: ../common/rinstallprogress.cc:42
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in the terminal buffer to see what went "
@@ -400,7 +396,7 @@ msgid ""
 msgstr ""
 "\n"
 "Nepavyko pritaikyti visų pakeitimu! Norėdami pažiūrėti kas nepavyko, "
-"paslinkite šiame buferyje "
+"paslinkite šiame buferyje."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -864,9 +860,8 @@ msgstr "Pažymėti pakeitimai"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "Pkg su Debconf"
+msgstr "Paketas su Debconf"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
@@ -950,7 +945,6 @@ msgid "-r   Open in the repository screen\n"
 msgstr "-r   Atidaryti saugyklos ekrane\n"
 
 #: ../gtk/gsynaptic.cc:71
-#, fuzzy
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Suteikti alternatyvią filtro bylą\n"
 
@@ -958,9 +952,10 @@ msgstr "-f=? Suteikti alternatyvią filtro bylą\n"
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
+"-t   Suteikti alternatyvų pagrindinio lango pavadinimą (pvz. kompiuterio "
+"vardas su `uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:73
-#, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? Paleisti su pradiniu filtru su nurodytu skaičiumi\n"
 
@@ -970,20 +965,17 @@ msgstr ""
 "-o=? Nurodyti savo konfigūracijos parametrus, pvz. -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr "--upgrade-mode  Iškviesti Refresh, Upgrade ir parodyti pakeitimus\n"
+msgstr "--upgrade-mode  Iškviesti Upgrade ir parodyti pakeitimus\n"
 
 #: ../gtk/gsynaptic.cc:76
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
-"--dist-upgrade-mode  Iškviesti Refresh, DistUpgrade ir parodyti pakeitimus\n"
+"--dist-upgrade-mode  Iškviesti DistUpgrade ir parodyti pakeitimus\n"
 
 #: ../gtk/gsynaptic.cc:77
-#, fuzzy
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
-msgstr "--update-at-startup  Paleidimo metu vykdyti „atnaujinti“\n"
+msgstr "--update-at-startup  Paleidimo metu vykdyti „Perkrauti“\n"
 
 #: ../gtk/gsynaptic.cc:78
 msgid "--non-interactive Never prompt for user input\n"
@@ -999,30 +991,35 @@ msgstr "--add-cdrom Paleidus programą pridėti cdrom'ą\n"
 
 #: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "Synaptic programa jau paleista"
 
 #: ../gtk/gsynaptic.cc:304
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
 msgstr ""
+"Yra kita Synaptic programa veikianti interaktyviu režimu. Prašom, pirma "
+"uždaryti ją."
 
 #: ../gtk/gsynaptic.cc:310
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
+"Yra kita Synaptic programa veikianti neinteraktyviu režimu. Prašom palaukti "
+"kol ji baigs darbą."
 
 #: ../gtk/gsynaptic.cc:334
-#, fuzzy
 msgid "Unable to get exclusive lock"
-msgstr "Nepavyko pakeisti į %s"
+msgstr "Nepavyko gauti iškirtinio užrakto"
 
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
+"Paprastai tai reiškia, kad jau veikia kita paketų valdymo programa (kaip pvz. "
+"apt-get arba aptitude). Prašom, pirmiau uždaryti tą programą."
 
 #: ../gtk/gsynaptic.cc:377
 msgid "You must run this program as the root user."
@@ -1058,7 +1055,7 @@ msgstr "Paketo pakeitimai"
 
 #: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
-msgstr ""
+msgstr "Įspėjimas"
 
 #: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
@@ -1066,6 +1063,9 @@ msgid ""
 "this could allow a malicious individual to damage or take control of your "
 "system."
 msgstr ""
+"Jūs ketinate įdiegti programinę įrangą, kurios <b>autentiškumas negali būti "
+"patvirtintas</b>! Tai gali leisti piktavaliams sugadinti sistemą arba perimti "
+"jos valdymą."
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
@@ -1182,10 +1182,9 @@ msgstr "Klaida pakete %s"
 
 #: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
 msgid "Changes applied"
-msgstr ""
+msgstr "Pakeitimai pritaikyti"
 
 #: ../gtk/rgdebinstallprogress.cc:703
-#, fuzzy
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1307,13 +1306,13 @@ msgstr ""
 "į įrenginį %s"
 
 #: ../gtk/rgfetchprogress.cc:309
-#, fuzzy, c-format
+#, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Parsiunčiama byla %li iš %li (%s/s greičiu - liko %s)"
+msgstr "Parsiuntimo sparta: %s/s - liko %s)"
 
 #: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
-msgstr ""
+msgstr "Parsiuntimo sparta: nežinoma"
 
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
@@ -1390,12 +1389,13 @@ msgstr ""
 
 #: ../gtk/rglogview.cc:260
 msgid "Not found"
-msgstr ""
+msgstr "Nerasta"
 
 #: ../gtk/rglogview.cc:262
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
+"Išraiška rasta, atitinkantys įrašai yra kairėje pusėje esančiame sąrašą."
 
 #: ../gtk/rgpkgdetails.cc:107
 #, c-format
@@ -1648,7 +1648,6 @@ msgid "Starting help viewer..."
 msgstr "Paleidžiama pagalbos žiūryklė..."
 
 #: ../gtk/rgmainwindow.cc:2303
-#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1663,7 +1662,7 @@ msgstr ""
 "Norint peržiūrėti Synaptic žinyną Jums reikalinga arba GNOME pagalbos "
 "žiūryklė „yelp“, naršyklė „konqueror“ arba naršyklė „mozilla“.\n"
 "\n"
-"Kaip alternatyva Jūs galite atsidaryti žinyno puslapį parašydami komandinėje "
+"Kaip alternatyvą Jūs galite atsidaryti žinyno puslapį parašydami komandinėje "
 "eilutėje komandą „man synaptic“ arba peržiūrėti html versiją esančią "
 "„synaptic/html“ aplanke."
 
@@ -1992,7 +1991,7 @@ msgstr "Atšaukti"
 #. downloadable version)
 #: ../gtk/rggladewindow.cc:89 ../gtk/rggladewindow.cc:107
 msgid "N/A"
-msgstr ""
+msgstr "neprieinama"
 
 #: ../gtk/rgfindwindow.cc:128
 msgid "Find"
@@ -2828,7 +2827,6 @@ msgstr ""
 "kai jie bus pritaikyti."
 
 #: ../gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
@@ -2946,9 +2944,8 @@ msgid "Orphaned"
 msgstr "Nebereikalingi"
 
 #: ../gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "Paketai, kurie yra nauji saugykloje nuo paskutiniojo „Atnaujinti“"
+msgstr "Paketai, kurie yra nauji saugykloje nuo paskutiniojo „Perkrauti“"
 
 #: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
@@ -3057,9 +3054,8 @@ msgid "<i>Preparing packages...</i>"
 msgstr "<i>Ruošiami paketai...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Automatically close after the changes have been successfully applied"
-msgstr "Atlikus visus pakeitimus uždaryti šį langą"
+msgstr "Atlikus visus pakeitimus automatiškai uždaryti šį langą"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:3
 msgid "Terminal"
@@ -3071,7 +3067,6 @@ msgstr ""
 "Vykdant Paketų tvarkyklės operacijas buvo sugeneruota papildoma išvestis"
 
 #: ../gtk/window_tasks.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -3079,11 +3074,11 @@ msgid ""
 "These are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
-"<span size=\"large\" weight=\"bold\">Kokias užduotis turi atlikti Jūsų "
-"kompiuteris?</span>\n"
+"<span size=\"large\" weight=\"bold\">Kokias užduotis Jūsų kompiuteris "
+"turėtų atlikti?</span>\n"
 "\n"
-"Yra iš anksto parinktos paketų grupės atlikti kiekvienai užduočiai. Jeigu "
-"Jūs pasirinksite užduotį, atitinkami paketai bus pažymėti įdiegimui."
+"Kiekvienai užduočiai atlikti yra iš anksto parinktos paketų grupės. Jeigu "
+"pasirinksite užduotį, įdiegimui bus pažymėti atitinkami paketai."
 
 #: ../gtk/window_tasks.glade.h:4
 msgid "_Description"
@@ -3266,7 +3261,6 @@ msgstr "<i>Negalima uždaryti kol dirbama</i>"
 
 #. vim:sts=3:sw=3
 #: ../gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3277,7 +3271,7 @@ msgid ""
 msgstr ""
 "<big><b>Nepavyko parsiųsti visų būtinų paketų bylų</b></big>\n"
 "\n"
-"Paketo versija, kurią Jūs norite įdiegti, gali būti saugykloje "
+"Paketo versija, kurią Jūs norite įdiegti, saugykloje gali būti"
 "nebeprieinama, arba gali būti problemų su paketų šaltiniu. Atnaujinkite "
 "paketų sąrašą ir patikrinkite paketo šaltinį (pvz. CD arba tinklo "
 "prisijungimą)."
@@ -3313,37 +3307,3 @@ msgstr "Istorija"
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Įdiegtų, atnaujintų ir pašalintų programų paketų istorija."
-
-#~ msgid "Internal Error: Couldn't fork gzip. Please report."
-#~ msgstr "Vidinė klaida: Nepavyko atšakoti gzip. Prašom pranešti."
-
-#~ msgid "Dependency of"
-#~ msgstr "Nuo jo priklauso "
-
-#~ msgid "Internal Error: Could not open ReducedView file %s"
-#~ msgstr "Vidinė klaida: Nepavyko atidaryti SumažintoVaizdo bylos %s"
-
-#~ msgid "Internal Error: couldn't fork bzip2. Please report."
-#~ msgstr "Vidinė klaida: nepavyko atšakoti bzip2. Prašom pranešti."
-
-#~ msgid ""
-#~ "<big><b>%s</b></big> \n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "<big><b>%s</b></big> \n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Normal"
-#~ msgstr "Normalus"
-
-#~ msgid "Critical"
-#~ msgstr "Kritinis"
-
-#~ msgid "Security"
-#~ msgstr "Saugumo"
-
-#, fuzzy
-#~ msgid "Installation finished"
-#~ msgstr "Įdiegimas baigtas"

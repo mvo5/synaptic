@@ -1616,6 +1616,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 		// TODO: We must not discard errors here. The right
 		//       solution is to use an "error stack", as
 		//       implemented in apt-rpm.
+		//_error->DumpErrors();
 		_error->Discard();
 	    }
 	    if (Res == pkgPackageManager::Completed)

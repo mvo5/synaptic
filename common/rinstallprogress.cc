@@ -28,6 +28,8 @@
 
 #include <unistd.h>
 #include <sys/fcntl.h>
+#include <iostream>
+#include <cstdio>
 #ifdef HAVE_RPM
 #include <apt-pkg/configuration.h>
 #endif
@@ -39,7 +41,7 @@ void *RInstallProgress::loop(void *data)
     RInstallProgress *me = (RInstallProgress*)data;
 
     me->startUpdate();
-    while (me->_thread_id >= 0)
+    while (me->_thread_id >= 0) 
 	me->updateInterface();
     me->finishUpdate();
 
@@ -92,11 +94,10 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
     // We must reset the _thread_id *before* calling pthread_create(),
     // otherwise the loop might test for its value before that function
-    // returned.
+    // returned. 
+    // this isn't a thread-id, it more a thread-flag
     _thread_id = 0;
-
     _thread_id = pthread_create(&_thread, NULL, loop, this);
-
     res = pm->DoInstall();
 
     _thread_id = -1;

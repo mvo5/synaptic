@@ -45,9 +45,10 @@ void RGDummyInstallProgress::finishUpdate()
 void RGDummyInstallProgress::updateInterface()
 {    
     if (gtk_events_pending()) {
-	while (gtk_events_pending()) gtk_main_iteration();
+	while (gtk_events_pending()) 
+	    gtk_main_iteration();
     } else {
-	usleep(1000);
+	usleep(1000000);
     }
 }
 

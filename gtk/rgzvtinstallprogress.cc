@@ -37,12 +37,13 @@
 
 #include <X11/Xlib.h>
 #include <iostream>
-
+#include <cerrno>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/pkgsystem.h>
 
 #ifdef HAVE_ZVT
 #include <libzvt/libzvt.h>
@@ -218,6 +219,8 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 
 }
 
+
+
 pkgPackageManager::OrderResult 
 RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
 {
@@ -225,7 +228,8 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
 
   void *dummy;
   int open_max, ret;
-
+  // this isn't really a id, more a flag
+  _thread_id = 0;
   _thread_id = pthread_create(&_thread, NULL, loop, this);
 
   // now fork 
@@ -236,19 +240,26 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
     int pid = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
 #endif
   switch(pid) {
-  case -1:
+  case -1: // error
     cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
+    cerr << "errorcode: " << errno << endl;
     exit(1);
     break;
-  case 0: 
-    // child
-    // Close all file descriptors but first 3
-    open_max = sysconf (_SC_OPEN_MAX);
-    for (int i = 3; i < open_max; i++)
-      ::close (i);
-    // make sure, that term is set correctly
-    setenv("TERM","xterm",1);
-    res = pm->DoInstall();
+  case 0:  // child 
+      // we ignore sigpipe as it is thrown sporadic on 
+      // debian, kernel 2.6 systems
+      struct sigaction new_act; 
+      memset( &new_act, 0, sizeof( new_act ) );
+      new_act.sa_handler = SIG_IGN;
+      sigaction( SIGPIPE, &new_act, NULL);
+
+      // Close all file descriptors but first 3
+      open_max = sysconf (_SC_OPEN_MAX);
+      for (int i = 3; i < open_max; i++)
+	  ::close (i);
+      // make sure, that term is set correctly
+      setenv("TERM","xterm",1);
+      res = pm->DoInstall();
     _exit(res);
     break; 
   default:

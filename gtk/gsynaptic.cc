@@ -38,6 +38,7 @@
 #include <gdk/gdkx.h>
 
 #include <unistd.h>
+#include <signal.h>
 
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
@@ -182,6 +183,7 @@ static void SetLanguages()
     _config->Set("Volatile::Languages", LangList);
 }
 
+
 int main(int argc, char **argv)
 {    
 #ifdef ENABLE_NLS
@@ -229,6 +231,13 @@ int main(int argc, char **argv)
       ShowHelp(CmdL);
 
     SetLanguages();
+
+    // we ignore sigpipe as it is thrown sporadic on 
+    // debian, kernel 2.6 systems
+    struct sigaction new_act;
+    memset( &new_act, 0, sizeof( new_act ) );
+    new_act.sa_handler = SIG_IGN;
+    sigaction( SIGPIPE, &new_act, NULL);
 
     RPackageLister *packageLister = new RPackageLister();
     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");

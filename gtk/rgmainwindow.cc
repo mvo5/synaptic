@@ -359,6 +359,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
+   setStatusText();
 
    // return if no pkg is selected
    if (!pkg) 
@@ -436,7 +437,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       img = get_gtk_image("package-installed-updated");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_keepM), img);
 
-   setStatusText();
+
 }
 
 
@@ -777,7 +778,8 @@ void RGMainWindow::buildTreeView()
    visible = _config->FindI("Synaptic::statusColumnVisible", true);
    if(visible) {
       renderer = gtk_cell_renderer_pixbuf_new();
-      column = gtk_tree_view_column_new_with_attributes("S", renderer,
+      // TRANSLATORS: Column header for the column "Status" in the package list
+      column = gtk_tree_view_column_new_with_attributes(_("S"), renderer,
                                                         "pixbuf",
                                                         PIXMAP_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);

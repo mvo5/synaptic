@@ -27,6 +27,7 @@
 
 #include "i18n.h"
 
+#include<assert.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgcachegen.h>

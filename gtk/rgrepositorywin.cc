@@ -1,5 +1,6 @@
 /* $Id: rgsrcwindow.cc,v 1.15 2003/01/23 13:29:49 mvogt Exp $ */
 #include <apt-pkg/error.h>
+#include <assert.h>
 #include "rgrepositorywin.h"
 #include "config.h"
 #include "i18n.h"

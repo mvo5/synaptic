@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 17:45+0200\n"
+"POT-Creation-Date: 2004-06-01 17:26+0200\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -431,7 +431,7 @@ msgid "Marked for complete removal"
 msgstr "Segnati da eliminare"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 msgid "Not installed"
 msgstr "Non installati"
 
@@ -493,13 +493,13 @@ msgstr "Nome"
 
 #: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Descrizione"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Manutentore"
 
@@ -538,24 +538,24 @@ msgid "ReverseDepends"
 msgstr "DipendenzeInverse"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
-#: gtk/rgfiltermanager.h:80
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:50
 msgid "Status"
 msgstr "Stato"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:182
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
 msgid "Pattern"
 msgstr "Modello"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:13
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:49
 msgid "Section"
 msgstr "Sezione"
 
@@ -567,17 +567,17 @@ msgstr "Priorità"
 msgid "ReducedView"
 msgstr "VistaRidotta"
 
-#: common/rpackagefilter.cc:612
+#: common/rpackagefilter.cc:633
 #, fuzzy, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "impossibile aprire il file %s per la vista ridotta"
 
-#: common/rpackagefilter.cc:640
+#: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Espressione regolare errata '%s' nel file per la vista ridotta."
 
-#: common/rpackagefilter.cc:704
+#: common/rpackagefilter.cc:725
 msgid "unknown"
 msgstr "sconosciuto"
 
@@ -699,7 +699,7 @@ msgstr "Nuovi nel repertorio"
 msgid "Installed and obsolete"
 msgstr "Installati e aggiornabili"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:22
 #, fuzzy
 msgid "Installed and upgradable"
 msgstr "Installati e aggiornabili"
@@ -729,6 +729,11 @@ msgstr "Esegui le modifiche selezionate"
 #: common/rpackageview.cc:366
 msgid "Pkg with Debconf"
 msgstr "Pkg con Debconf"
+
+#: common/rpackageview.cc:373
+#, fuzzy
+msgid "Upgradable (upstream)"
+msgstr "Aggiorna"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -865,11 +870,11 @@ msgstr "Nome del disco non valido"
 msgid "Disc Label"
 msgstr "Nome Disco"
 
-#: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
+#: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
 msgstr ""
 
-#: gtk/rgaboutpanel.cc:69 gtk/window_about.glade.h:4
+#: gtk/rgaboutpanel.cc:77 gtk/window_about.glade.h:4
 #, fuzzy
 msgid "About Synaptic"
 msgstr "Synaptic"
@@ -980,17 +985,17 @@ msgstr "Fallito"
 msgid "Filters"
 msgstr "Filtri"
 
-#: gtk/rgfiltermanager.cc:167
+#: gtk/rgfiltermanager.cc:171
 #, fuzzy
 msgid "Field"
 msgstr "Fallito"
 
-#: gtk/rgfiltermanager.cc:174
+#: gtk/rgfiltermanager.cc:178
 #, fuzzy
 msgid "Operator"
 msgstr "Sommario operazione"
 
-#: gtk/rgfiltermanager.cc:743
+#: gtk/rgfiltermanager.cc:747
 #, fuzzy, c-format
 msgid "New Filter %i"
 msgstr "Nuovo Filtro"
@@ -1112,7 +1117,7 @@ msgstr "Rimuovi con le dipendenze"
 msgid "Hold Current Version"
 msgstr "in versione"
 
-#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:43
+#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:44
 #, fuzzy
 msgid "Properties"
 msgstr "Fornisce"
@@ -1784,36 +1789,13 @@ msgid ""
 msgstr ""
 
 #: gtk/window_about.glade.h:32
-msgid ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-msgstr ""
-
-#: gtk/window_about.glade.h:55
 #, fuzzy
 msgid "Written by"
 msgstr "Scritti "
+
+#: gtk/window_about.glade.h:33
+msgid "translators_credits"
+msgstr ""
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1822,7 +1804,7 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
+#: gtk/rgfiltermanager.h:70 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "Dipendenze"
 
@@ -1840,7 +1822,7 @@ msgstr "Appunto:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Pacchetti forniti"
@@ -2376,7 +2358,7 @@ msgid "Conflicting Packages"
 msgstr "Conferma modifiche"
 
 #. suggests
-#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
 #, fuzzy
 msgid "Dependants"
@@ -2391,7 +2373,7 @@ msgstr "Esclude"
 msgid "Exclude selected sections"
 msgstr "Includi solo le sezioni selezionate"
 
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
 #, fuzzy
 msgid "Excludes"
 msgstr "Esclude"
@@ -2415,139 +2397,144 @@ msgstr "Include"
 msgid "Include selected sections only"
 msgstr "Includi solo le sezioni selezionate"
 
-#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
 #, fuzzy
 msgid "Includes"
 msgstr "Include"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:21
+#, fuzzy
+msgid "Installed and new upstream version"
+msgstr "Versione Installata"
+
+#: gtk/window_filters.glade.h:23
 #, fuzzy
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Pacchetti di librerie che non sono più necessari (è necessario deborphan per "
 "utilizzarlo)"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "New in archive"
 msgstr "Nuovi nell'archivio"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not (no longer) installable"
 msgstr "Non (più) installabile"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:28
 #, fuzzy
 msgid "Not marked"
 msgstr "Non installati"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Orphaned"
 msgstr "Orfani"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 #, fuzzy
 msgid "Package Name"
 msgstr "Nome pacchetto"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Pacchetti che sono nuovi nel repertorio dall'ultimo \"Aggiornamento\" "
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that are not available in any repository"
 msgstr "Pacchetti che non sono più disponibili in alcun repertorio"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Packages that have been installed and a later version is available"
 msgstr ""
 "Pacchetti che sono installati e che hanno una nuova versione disponibile"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 #, fuzzy
 msgid "Packages that have been installed and are up to date"
 msgstr "Pacchetti che sono installati ed aggiornati"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 #, fuzzy
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Pacchetti che verranno rimossi ma di cui verranno mantenuti i file di "
 "configurazione sul sistema"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 #, fuzzy
 msgid "Packages that have not been installed"
 msgstr "Pacchetti che non sono installati"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be installed or upgraded"
 msgstr "Pacchetti che verranno installati o aggiornati"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will be removed"
 msgstr "Pacchetti che verranno eliminati"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 msgid "Packages that will never be upgraded"
 msgstr "Pacchetti che non verranno mai aggiornati"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Pacchetti che verranno mantenuti"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 #, fuzzy
 msgid "Packages with broken dependencies"
 msgstr "Dipendenze difettose."
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:43
 msgid "Pinned"
 msgstr "Appuntato"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
+#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Raccomandato"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 #, fuzzy
 msgid "Replaced Packages"
 msgstr "Tutti i pacchetti"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:48
 msgid "Residual config"
 msgstr "Configurazione residua"
 
 #. /recommends
-#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
+#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Sezione"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:52
 msgid "Tags"
 msgstr "Cartellini"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:53
 #, fuzzy
 msgid "Version Number"
 msgstr "Versione"
 
-#: gtk/window_filters.glade.h:53
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Seleziona tutti"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Invert All"
 msgstr "_Installa"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Select All"
 msgstr "Seleziona tutti"
@@ -2662,29 +2649,29 @@ msgid ""
 "The following packages have unmet dependencies:"
 msgstr ""
 
-#: gtk/rgfiltermanager.h:69
+#: gtk/rgfiltermanager.h:66
 msgid "Package name"
 msgstr "Nome pacchetto"
 
-#: gtk/rgfiltermanager.h:70
+#: gtk/rgfiltermanager.h:67
 #, fuzzy
 msgid "Version number"
 msgstr "Versione"
 
 #. depends, predepends etc
-#: gtk/rgfiltermanager.h:74
+#: gtk/rgfiltermanager.h:71
 #, fuzzy
 msgid "Provided packages"
 msgstr "Pacchetti forniti"
 
 #. provides and name
-#: gtk/rgfiltermanager.h:75
+#: gtk/rgfiltermanager.h:72
 #, fuzzy
 msgid "Conflicting packages"
 msgstr "Conferma modifiche"
 
 #. conflicts
-#: gtk/rgfiltermanager.h:76
+#: gtk/rgfiltermanager.h:73
 #, fuzzy
 msgid "Replaced packages"
 msgstr "Tutti i pacchetti"
@@ -3517,10 +3504,6 @@ msgstr "Versione"
 #, fuzzy
 #~ msgid "Configure"
 #~ msgstr "Riconfigura"
-
-#, fuzzy
-#~ msgid "Install Latest Version"
-#~ msgstr "Versione Installata"
 
 #, fuzzy
 #~ msgid "_Remove Including Configuration"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 17:45+0200\n"
+"POT-Creation-Date: 2004-06-01 17:26+0200\n"
 "PO-Revision-Date: 2004-05-09 15:23+0900\n"
 "Last-Translator: Son, Kyeong-uk <hey@gnome.or.kr>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -417,7 +417,7 @@ msgid "Marked for complete removal"
 msgstr "지움 표시됨"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 msgid "Not installed"
 msgstr "설치되지 않음"
 
@@ -470,13 +470,13 @@ msgstr "이름"
 
 #: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "설명"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "관리자"
 
@@ -515,24 +515,24 @@ msgid "ReverseDepends"
 msgstr "역의존"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
-#: gtk/rgfiltermanager.h:80
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:50
 msgid "Status"
 msgstr "상태"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:182
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
 msgid "Pattern"
 msgstr "패턴"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:13
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:49
 msgid "Section"
 msgstr "분류"
 
@@ -544,17 +544,17 @@ msgstr "우선순위"
 msgid "ReducedView"
 msgstr "간단히보기"
 
-#: common/rpackagefilter.cc:612
+#: common/rpackagefilter.cc:633
 #, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "내부 오류: %s 간단히보기 파일을 열 수 없음"
 
-#: common/rpackagefilter.cc:640
+#: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "간단히보기 파일 안에 잘못된 정규식 '%s'이(가) 있습니다."
 
-#: common/rpackagefilter.cc:704
+#: common/rpackagefilter.cc:725
 #, fuzzy
 msgid "unknown"
 msgstr "알 수 없음"
@@ -677,7 +677,7 @@ msgstr ""
 msgid "Installed and obsolete"
 msgstr "설치되어 있고 업그레이드 가능"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:22
 msgid "Installed and upgradable"
 msgstr "설치되어 있고 업그레이드 가능"
 
@@ -706,6 +706,11 @@ msgstr "대기중인 바뀐 내용"
 #: common/rpackageview.cc:366
 msgid "Pkg with Debconf"
 msgstr "Debconf용 패키지"
+
+#: common/rpackageview.cc:373
+#, fuzzy
+msgid "Upgradable (upstream)"
+msgstr "시스템 업그레이드(_G)"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -854,11 +859,11 @@ msgstr "잘못된 디스크 이름!"
 msgid "Disc Label"
 msgstr "디스크 이름"
 
-#: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
+#: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
 msgstr "만든 사람"
 
-#: gtk/rgaboutpanel.cc:69 gtk/window_about.glade.h:4
+#: gtk/rgaboutpanel.cc:77 gtk/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr "시냅틱은"
 
@@ -964,15 +969,15 @@ msgstr "실패"
 msgid "Filters"
 msgstr "거르개"
 
-#: gtk/rgfiltermanager.cc:167
+#: gtk/rgfiltermanager.cc:171
 msgid "Field"
 msgstr "구분"
 
-#: gtk/rgfiltermanager.cc:174
+#: gtk/rgfiltermanager.cc:178
 msgid "Operator"
 msgstr "연산자"
 
-#: gtk/rgfiltermanager.cc:743
+#: gtk/rgfiltermanager.cc:747
 #, c-format
 msgid "New Filter %i"
 msgstr "새 거르개 %i"
@@ -1090,7 +1095,7 @@ msgstr "의존성이 깨진 패키지까지 지우기"
 msgid "Hold Current Version"
 msgstr "현재 버젼 다시 설치(_E)"
 
-#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:43
+#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:44
 msgid "Properties"
 msgstr "등록 정보"
 
@@ -1760,59 +1765,12 @@ msgstr ""
 "홈페이지에 들러주세요."
 
 #: gtk/window_about.glade.h:32
-#, fuzzy
-msgid ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-msgstr ""
-"Vital Khilko <dojlid@mova.org> (백러시아어)\n"
-"Keld Simonsen <keld@dkuug.dk> (덴마크어)\n"
-"Michael Vogt <mvo@debian.org> (독일어)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (독일어)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (스페인어)\n"
-"Mathieu Roy <yeupou@gnu.org> (프랑스어)\n"
-"Mauro Colorio <linuxbox@interfree.it> (이탈리아어)\n"
-"Luigi Maselli <metnik at tiscali it> (이탈리아어)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (일본어)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (네덜란드어)\n"
-"Emil <emil5@go2.pl> (폴란드어)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (포르투갈어)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (포르투갈어)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (러시아어)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (러시아어)\n"
-"Rail Aliev <rail@iqchoice.com> (터키어)\n"
-"Anthony Fok <anthony@thizlinux.com> (중국어)\n"
-"Alwin Meschede <ameschede@gmx.de> (독일어)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (중국어)\n"
-"Jean-Michel Poure <jm@poure.com> (프랑스어)\n"
-"Ossama Khayat <okhayat@yahoo.com> (아랍어)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (세르비아어)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (헝가리어)"
-
-#: gtk/window_about.glade.h:55
 msgid "Written by"
 msgstr "작성"
+
+#: gtk/window_about.glade.h:33
+msgid "translators_credits"
+msgstr ""
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1821,7 +1779,7 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
+#: gtk/rgfiltermanager.h:70 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "의존성"
 
@@ -1839,7 +1797,7 @@ msgstr "찾기"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "제공되는 패키지"
@@ -2332,7 +2290,7 @@ msgid "Conflicting Packages"
 msgstr "충돌한 패키지"
 
 #. suggests
-#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
 #, fuzzy
 msgid "Dependants"
@@ -2346,7 +2304,7 @@ msgstr "제외"
 msgid "Exclude selected sections"
 msgstr "선택된 분류 제외"
 
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "제외"
 
@@ -2368,121 +2326,126 @@ msgstr "포함"
 msgid "Include selected sections only"
 msgstr "선택된 분류만 포함"
 
-#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "포함"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:21
+#, fuzzy
+msgid "Installed and new upstream version"
+msgstr "최신 버젼 설치(_I)"
+
+#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "사용되지 않는 라이브러리 패키지 (deborphan을 포함)"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "New in archive"
 msgstr "새로 들어옴"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not (no longer) installable"
 msgstr "설치 불가능"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:28
 msgid "Not marked"
 msgstr "표시되지 않음"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Orphaned"
 msgstr "의존성 깨짐"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Package Name"
 msgstr "패키지 이름"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "지난 \"업데이트\" 이후로 저장소에 새로 들어온 패키지"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that are not available in any repository"
 msgstr "어떤 저장소에서도 제공되지 않는 패키지"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and a later version is available"
 msgstr "설치되어 있고 새로운 버젼이 사용 가능한 패키지"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been installed and are up to date"
 msgstr "최신 버젼이 설치되어 있는 패키지"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have been removed except their configuration files"
 msgstr "설정 파일을 빼놓고 지워진 패키지"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 msgid "Packages that have not been installed"
 msgstr "설치되지 않은 패키지"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be installed or upgraded"
 msgstr "설치되거나 업그레이드될 패키지"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will be removed"
 msgstr "지워질 패키지"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 msgid "Packages that will never be upgraded"
 msgstr "업그레이드되지 않을 패키지"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 msgid "Packages that won't be changed"
 msgstr "바뀌지 않은 패키지"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 msgid "Packages with broken dependencies"
 msgstr "의존성이 깨진 패키지"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:43
 msgid "Pinned"
 msgstr "고정됨"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
+#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "추천"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 msgid "Replaced Packages"
 msgstr "바뀐 패키지"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:48
 msgid "Residual config"
 msgstr "설정 남음"
 
 #. /recommends
-#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
+#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "제안"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:52
 msgid "Tags"
 msgstr "태그"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:53
 msgid "Version Number"
 msgstr "버젼 번호"
 
-#: gtk/window_filters.glade.h:53
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "_Deselect All"
 msgstr "모두 취소하기(_D)"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Invert All"
 msgstr "모두 반대로(_I)"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Select All"
 msgstr "모두 고르기(_S)"
@@ -2600,26 +2563,26 @@ msgstr ""
 "\n"
 "아래의 패키지는 의존성을 만족하지 못했습니다:\n"
 
-#: gtk/rgfiltermanager.h:69
+#: gtk/rgfiltermanager.h:66
 msgid "Package name"
 msgstr "패키지 이름"
 
-#: gtk/rgfiltermanager.h:70
+#: gtk/rgfiltermanager.h:67
 msgid "Version number"
 msgstr "버젼 번호"
 
 #. depends, predepends etc
-#: gtk/rgfiltermanager.h:74
+#: gtk/rgfiltermanager.h:71
 msgid "Provided packages"
 msgstr "제공된 패키지"
 
 #. provides and name
-#: gtk/rgfiltermanager.h:75
+#: gtk/rgfiltermanager.h:72
 msgid "Conflicting packages"
 msgstr "충돌한 패키지"
 
 #. conflicts
-#: gtk/rgfiltermanager.h:76
+#: gtk/rgfiltermanager.h:73
 msgid "Replaced packages"
 msgstr "바뀐 패키지"
 
@@ -2714,6 +2677,56 @@ msgstr "크기"
 #, fuzzy
 msgid "Version:"
 msgstr "버젼"
+
+#, fuzzy
+#~ msgid ""
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
+#~ msgstr ""
+#~ "Vital Khilko <dojlid@mova.org> (백러시아어)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (덴마크어)\n"
+#~ "Michael Vogt <mvo@debian.org> (독일어)\n"
+#~ "Sebastain Heinlein <allerlei@renates-welt.de> (독일어)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (스페인어)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (프랑스어)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (이탈리아어)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (이탈리아어)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (일본어)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (네덜란드어)\n"
+#~ "Emil <emil5@go2.pl> (폴란드어)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (포르투갈어)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (포르투갈어)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (러시아어)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (러시아어)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (터키어)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (중국어)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (독일어)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (중국어)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (프랑스어)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (아랍어)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (세르비아어)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (헝가리어)"
 
 #~ msgid ""
 #~ "Some index files failed to download, they have been ignored, or old ones "
@@ -2819,9 +2832,6 @@ msgstr "버젼"
 
 #~ msgid "U_nmark All Changes"
 #~ msgstr "모든 표시 지움(_N)"
-
-#~ msgid "_Install Latest Version"
-#~ msgstr "최신 버젼 설치(_I)"
 
 #~ msgid "_Remove"
 #~ msgstr "지우기(_R)"

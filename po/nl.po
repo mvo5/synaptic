@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic.0-48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 17:45+0200\n"
+"POT-Creation-Date: 2004-06-01 17:26+0200\n"
 "PO-Revision-Date: 2004-04-15 14:17+0200\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -428,7 +428,7 @@ msgid "Marked for complete removal"
 msgstr "Gemarkeerd als Verwijderen"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
 
@@ -481,13 +481,13 @@ msgstr "Naam"
 
 #: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Beschrijving"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Beheerder"
 
@@ -525,24 +525,24 @@ msgid "ReverseDepends"
 msgstr "Omgekeerd Afhankelijk"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
-#: gtk/rgfiltermanager.h:80
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:50
 msgid "Status"
 msgstr "Status"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:182
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
 msgid "Pattern"
 msgstr "Patroon"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:13
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:49
 msgid "Section"
 msgstr "Onderdeel"
 
@@ -554,17 +554,17 @@ msgstr "Prioriteit"
 msgid "ReducedView"
 msgstr "Basisweergave"
 
-#: common/rpackagefilter.cc:612
+#: common/rpackagefilter.cc:633
 #, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "Interne fout:Kan Basisweergavebestand %s niet openen"
 
-#: common/rpackagefilter.cc:640
+#: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Ongeldige reguliere expressie '%s' in Basisweergave-bestand."
 
-#: common/rpackagefilter.cc:704
+#: common/rpackagefilter.cc:725
 #, fuzzy
 msgid "unknown"
 msgstr "Onbekend"
@@ -688,7 +688,7 @@ msgstr "Nieuwe pakketten"
 msgid "Installed and obsolete"
 msgstr "Geïnstalleerd en nieuwere versie beschikbaar"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:22
 msgid "Installed and upgradable"
 msgstr "Geïnstalleerd en nieuwere versie beschikbaar"
 
@@ -716,6 +716,11 @@ msgstr "Geselecteerde veranderingen"
 #: common/rpackageview.cc:366
 msgid "Pkg with Debconf"
 msgstr "Pakket met debconf"
+
+#: common/rpackageview.cc:373
+#, fuzzy
+msgid "Upgradable (upstream)"
+msgstr "_Systeem bijwerken"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -867,11 +872,11 @@ msgstr "Ongeldige schijfnaam!"
 msgid "Disc Label"
 msgstr "Schijfnaam"
 
-#: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
+#: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
 msgstr "Met dank aan"
 
-#: gtk/rgaboutpanel.cc:69 gtk/window_about.glade.h:4
+#: gtk/rgaboutpanel.cc:77 gtk/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr "Info over Synaptic"
 
@@ -978,15 +983,15 @@ msgstr "Mislukt"
 msgid "Filters"
 msgstr "Filters"
 
-#: gtk/rgfiltermanager.cc:167
+#: gtk/rgfiltermanager.cc:171
 msgid "Field"
 msgstr "Veld"
 
-#: gtk/rgfiltermanager.cc:174
+#: gtk/rgfiltermanager.cc:178
 msgid "Operator"
 msgstr "Opdracht"
 
-#: gtk/rgfiltermanager.cc:743
+#: gtk/rgfiltermanager.cc:747
 #, c-format
 msgid "New Filter %i"
 msgstr "Nieuw filter %i"
@@ -1105,7 +1110,7 @@ msgstr "Verwijderen inclusief afhankelijkheden"
 msgid "Hold Current Version"
 msgstr "Huidige versie en status behouden"
 
-#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:43
+#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:44
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -1799,59 +1804,12 @@ msgstr ""
 "http://www.nongnu.org/synaptic/"
 
 #: gtk/window_about.glade.h:32
-#, fuzzy
-msgid ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-msgstr ""
-"Vincent·van·Adrighem·<adrighem@gnome.org>·(Dutch)\n"
-"Francisco·Javier·F.·Serrador·<serrador@arrakis.es>·(Spanish)\n"
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-
-#: gtk/window_about.glade.h:55
 msgid "Written by"
 msgstr "Geschreven door"
+
+#: gtk/window_about.glade.h:33
+msgid "translators_credits"
+msgstr ""
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1860,7 +1818,7 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
+#: gtk/rgfiltermanager.h:70 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "Afhankelijkheden"
 
@@ -1877,7 +1835,7 @@ msgstr "Zoeken:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Voorziet in pakketten"
@@ -2387,7 +2345,7 @@ msgid "Conflicting Packages"
 msgstr "Conflicterende pakketten"
 
 #. suggests
-#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
 #, fuzzy
 msgid "Dependants"
@@ -2401,7 +2359,7 @@ msgstr "Niet tonen"
 msgid "Exclude selected sections"
 msgstr "Geselecteerde onderdelen uitsluiten"
 
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Uitsluiten"
 
@@ -2423,125 +2381,130 @@ msgstr "Tonen"
 msgid "Include selected sections only"
 msgstr "Alleen geselecteerde onderdelen meenemen"
 
-#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Meenemen"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:21
+#, fuzzy
+msgid "Installed and new upstream version"
+msgstr "Geïnstalleerd"
+
+#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Bibliotheken die niet meer nodig zijn (deborphan vereist)"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "New in archive"
 msgstr "Nieuw in archief"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not (no longer) installable"
 msgstr "Niet (meer) installeerbaar"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:28
 #, fuzzy
 msgid "Not marked"
 msgstr "Niet geïnstalleerd"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Orphaned"
 msgstr "Wees"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Package Name"
 msgstr "Pakketnaam"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Nieuwe pakketten"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that are not available in any repository"
 msgstr "Pakketten die van geen enkele bron beschikbaar zijn"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and a later version is available"
 msgstr "Geïnstalleerde pakketten waarvan een nieuwere versie beschikbaar is"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been installed and are up to date"
 msgstr "Geïnstalleerde pakketten"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Pakketten die verwijderd zijn maar waarvan de configuratie achter is gebleven"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 msgid "Packages that have not been installed"
 msgstr "Niet geïnstalleerde pakketten"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be installed or upgraded"
 msgstr "Pakketten die geïnstalleerd of bijgewerkt worden"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will be removed"
 msgstr "Pakketten die verwijderd worden"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 msgid "Packages that will never be upgraded"
 msgstr "Pakketten die nooit bijgewerkt zullen worden"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Pakketten die onveranderd blijven"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 msgid "Packages with broken dependencies"
 msgstr "Pakketten met gebroken afhankelijkheden"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:43
 msgid "Pinned"
 msgstr "Pin"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
+#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Aangeraden"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 msgid "Replaced Packages"
 msgstr "Vervangen pakketten"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:48
 msgid "Residual config"
 msgstr "Resterende configuratie"
 
 #. /recommends
-#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
+#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Adviseert"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:52
 msgid "Tags"
 msgstr "Etiketten (tags)"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:53
 msgid "Version Number"
 msgstr "Versie"
 
-#: gtk/window_filters.glade.h:53
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Niets selecteren"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Invert All"
 msgstr "Sleecties omkeren"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Select All"
 msgstr "Alles selecteren"
@@ -2658,26 +2621,26 @@ msgstr ""
 "\n"
 "De volgende pakketten hebben gebroken afhankelijkheden:\n"
 
-#: gtk/rgfiltermanager.h:69
+#: gtk/rgfiltermanager.h:66
 msgid "Package name"
 msgstr "Pakketnaam"
 
-#: gtk/rgfiltermanager.h:70
+#: gtk/rgfiltermanager.h:67
 msgid "Version number"
 msgstr "Versie"
 
 #. depends, predepends etc
-#: gtk/rgfiltermanager.h:74
+#: gtk/rgfiltermanager.h:71
 msgid "Provided packages"
 msgstr "Voorziet in pakketten"
 
 #. provides and name
-#: gtk/rgfiltermanager.h:75
+#: gtk/rgfiltermanager.h:72
 msgid "Conflicting packages"
 msgstr "Conflicterende pakketten"
 
 #. conflicts
-#: gtk/rgfiltermanager.h:76
+#: gtk/rgfiltermanager.h:73
 msgid "Replaced packages"
 msgstr "vervangen pakketten"
 
@@ -2763,6 +2726,56 @@ msgstr "Grootte"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Versie:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
+#~ msgstr ""
+#~ "Vincent·van·Adrighem·<adrighem@gnome.org>·(Dutch)\n"
+#~ "Francisco·Javier·F.·Serrador·<serrador@arrakis.es>·(Spanish)\n"
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
 
 #~ msgid ""
 #~ "Some index files failed to download, they have been ignored, or old ones "
@@ -3546,10 +3559,6 @@ msgstr "Versie:"
 #, fuzzy
 #~ msgid "Configure"
 #~ msgstr "Doorgaan"
-
-#, fuzzy
-#~ msgid "Install Latest Version"
-#~ msgstr "Geïnstalleerd"
 
 #, fuzzy
 #~ msgid "Execute"

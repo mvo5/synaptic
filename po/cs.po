@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 17:45+0200\n"
+"POT-Creation-Date: 2004-06-01 17:26+0200\n"
 "PO-Revision-Date: 2003-11-24 18:06+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -421,7 +421,7 @@ msgid "Marked for complete removal"
 msgstr "Automatické nastavení všech realizovatelných aktualizací"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 msgid "Not installed"
 msgstr "Nenainstalované balíky"
 
@@ -478,13 +478,13 @@ msgstr "Název"
 
 #: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Popis"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:24 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "Podpora"
 
@@ -523,24 +523,24 @@ msgid "ReverseDepends"
 msgstr "Vzájemná závislost"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
-#: gtk/rgfiltermanager.h:80
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:29
+#: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:50
 msgid "Status"
 msgstr "Stav"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:182
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
 msgid "Pattern"
 msgstr "Vzor"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:13
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:49
 msgid "Section"
 msgstr "Sekce"
 
@@ -552,17 +552,17 @@ msgstr "Priorita"
 msgid "ReducedView"
 msgstr "Filtrovaný výpis"
 
-#: common/rpackagefilter.cc:612
+#: common/rpackagefilter.cc:633
 #, fuzzy, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "nemohu otevřít soubor %s s nastavením pro Filtrovaný seznam"
 
-#: common/rpackagefilter.cc:640
+#: common/rpackagefilter.cc:661
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Špatný regulární výraz '%s' pro Filtrovaný výpis"
 
-#: common/rpackagefilter.cc:704
+#: common/rpackagefilter.cc:725
 msgid "unknown"
 msgstr "neznámý"
 
@@ -684,7 +684,7 @@ msgstr "Novinka ve zdroji"
 msgid "Installed and obsolete"
 msgstr "Aktualizovatelné"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:22
 msgid "Installed and upgradable"
 msgstr "Aktualizovatelné"
 
@@ -712,6 +712,11 @@ msgstr "Požadované změny"
 #: common/rpackageview.cc:366
 msgid "Pkg with Debconf"
 msgstr "Baleno pomocí Debconf"
+
+#: common/rpackageview.cc:373
+#, fuzzy
+msgid "Upgradable (upstream)"
+msgstr "Aktualiz_ovat systém"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -863,11 +868,11 @@ msgstr "Nesouhlasí název CD!"
 msgid "Disc Label"
 msgstr "Jméno disku"
 
-#: gtk/rgaboutpanel.cc:53 gtk/window_about.glade.h:5
+#: gtk/rgaboutpanel.cc:61 gtk/window_about.glade.h:5
 msgid "Credits"
 msgstr "Realizace"
 
-#: gtk/rgaboutpanel.cc:69 gtk/window_about.glade.h:4
+#: gtk/rgaboutpanel.cc:77 gtk/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr "O programu Synaptic"
 
@@ -976,15 +981,15 @@ msgstr "Selhalo"
 msgid "Filters"
 msgstr "Nastavení filtrů"
 
-#: gtk/rgfiltermanager.cc:167
+#: gtk/rgfiltermanager.cc:171
 msgid "Field"
 msgstr "Pole"
 
-#: gtk/rgfiltermanager.cc:174
+#: gtk/rgfiltermanager.cc:178
 msgid "Operator"
 msgstr "Operátor"
 
-#: gtk/rgfiltermanager.cc:743
+#: gtk/rgfiltermanager.cc:747
 #, c-format
 msgid "New Filter %i"
 msgstr "Nový filtr %i"
@@ -1109,7 +1114,7 @@ msgstr "Odstranit včetně křížově závislých balíků"
 msgid "Hold Current Version"
 msgstr "Zachovat současnou verzi"
 
-#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:43
+#: gtk/rgmainwindow.cc:1241 gtk/window_filters.glade.h:44
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1818,55 +1823,12 @@ msgstr ""
 "http://www.nongnu.org/synaptic/"
 
 #: gtk/window_about.glade.h:32
-#, fuzzy
-msgid ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
-"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
-"Michael Vogt <mvo@debian.org> (German)\n"
-"Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
-"Mathieu Roy <yeupou@gnu.org> (French)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
-"Luigi Maselli <metnik at tiscali it> (Italian)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
-"Emil <emil5@go2.pl> (Polish)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
-"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
-"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
-"Alwin Meschede <ameschede@gmx.de> (German)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
-"Jean-Michel Poure <jm@poure.com> (French)\n"
-"Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
-"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
-"Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
-msgstr ""
-"Vital Khilko <dojlid@mova.org> (Bělorusko)\n"
-"Keld Simonsen <keld@dkuug.dk> (Dánsko)\n"
-"Michael Vogt <mvo@debian.org> (Německo)\n"
-"Sebastain Heinlein <allerlei@renates-welt.de> (Německo)\n"
-"Francisco Javier F. Serrador <serrador@arrakis.es> (Španělsko)\n"
-"Mathieu Roy <yeupou@gnu.org> (Francie)\n"
-"Mauro Colorio <linuxbox@interfree.it> (Itálie)\n"
-"Luigi Maselli <metnik at tiscali it> (Itálie)\n"
-"Daisuke Suzuki <daisuke@linux.or.jp> (Japonsko)\n"
-"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Holandsko)\n"
-"Emil <emil5@go2.pl> (Polsko)\n"
-"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugalso)\n"
-"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugalsko)\n"
-"Sviatoslav Sviridov <svd@altlinux.ru> (Rusko)\n"
-"Vitaly Lipatov <lav@altlinux.ru> (Rusko)\n"
-"Rail Aliev <rail@iqchoice.com> (Turecko)\n"
-"Anthony Fok <anthony@thizlinux.com> (Čína)\n"
-"Alwin Meschede <ameschede@gmx.de> (Německo)\n"
-"Liu Songhe <jackliu9999@hotmail.com> (Čína)"
-
-#: gtk/window_about.glade.h:55
 msgid "Written by"
 msgstr "Naprogramovali:"
+
+#: gtk/window_about.glade.h:33
+msgid "translators_credits"
+msgstr ""
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:4
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -1875,7 +1837,7 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
+#: gtk/rgfiltermanager.h:70 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "Závislosti"
 
@@ -1892,7 +1854,7 @@ msgstr "Najít:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:45
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Nabízí"
@@ -2427,7 +2389,7 @@ msgid "Conflicting Packages"
 msgstr "Problémové balíky"
 
 #. suggests
-#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
 #, fuzzy
 msgid "Dependants"
@@ -2441,7 +2403,7 @@ msgstr "Kromě"
 msgid "Exclude selected sections"
 msgstr "Vyjmout vybrané sekce"
 
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "neobsahuje"
 
@@ -2463,128 +2425,133 @@ msgstr "Včetně"
 msgid "Include selected sections only"
 msgstr "Začlenit pouze vybrané sekce"
 
-#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "obsahuje"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:21
+#, fuzzy
+msgid "Installed and new upstream version"
+msgstr "_Instalovat poslední verzi"
+
+#: gtk/window_filters.glade.h:23
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Balíky knihoven které už nejsou delší dobu používané (k tomu je zapotřebí "
 "mít funkční deborphan)"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "New in archive"
 msgstr "Novinky v archívu"
 
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not (no longer) installable"
 msgstr "Nelze instalovat (není ve zdroji)"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:28
 #, fuzzy
 msgid "Not marked"
 msgstr "Nenainstalované balíky"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Orphaned"
 msgstr "Osiřelé balíky"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Package Name"
 msgstr "Jméno balíku"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr ""
 "Balíky, které byly nově přidány do zdroje od stažení poslední aktualizace"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that are not available in any repository"
 msgstr "Balíky, které se nevyskytují v žádném ze zdrojů"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and a later version is available"
 msgstr "Balíky které jsou nainstalovené a je dostupná jejich novější verze"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been installed and are up to date"
 msgstr "Balíky které jsou nainstalovány a jsou aktuální"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Balíky, které byly odstraněny ale nadále mají v systému své konfiguráky"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 msgid "Packages that have not been installed"
 msgstr "Balíky které nešly nainstalovat"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be installed or upgraded"
 msgstr "Balíky, které budou instalovány, nebo aktualizovány"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will be removed"
 msgstr "Balíky, které budou odstraněny"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 msgid "Packages that will never be upgraded"
 msgstr "Balíky které nebudou nikdy aktualizovány"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Balíky, které budou zachovány"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 msgid "Packages with broken dependencies"
 msgstr "Balíky s chybou v závislostech"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:43
 msgid "Pinned"
 msgstr "Přišpendlené"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
+#: gtk/window_filters.glade.h:46 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Doporučené"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 msgid "Replaced Packages"
 msgstr "Balíky které budou nahrazeny"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:48
 msgid "Residual config"
 msgstr "Balíky co zanechaly konfiguráky"
 
 #. /recommends
-#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
+#: gtk/window_filters.glade.h:51 gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Sekce"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:52
 msgid "Tags"
 msgstr "Značky"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:53
 msgid "Version Number"
 msgstr "Číslo verze"
 
-#: gtk/window_filters.glade.h:53
+#: gtk/window_filters.glade.h:54
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Zrušit výběr"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:55
 #, fuzzy
 msgid "_Invert All"
 msgstr "Obrátit výběr"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:56
 #, fuzzy
 msgid "_Select All"
 msgstr "Vybrat vše"
@@ -2696,29 +2663,29 @@ msgstr ""
 "Některé balíky nemohly být nainstalovány.\n"
 "\n"
 
-#: gtk/rgfiltermanager.h:69
+#: gtk/rgfiltermanager.h:66
 msgid "Package name"
 msgstr "Název balíku"
 
-#: gtk/rgfiltermanager.h:70
+#: gtk/rgfiltermanager.h:67
 #, fuzzy
 msgid "Version number"
 msgstr "Číslo verze"
 
 #. depends, predepends etc
-#: gtk/rgfiltermanager.h:74
+#: gtk/rgfiltermanager.h:71
 #, fuzzy
 msgid "Provided packages"
 msgstr "Nabízí"
 
 #. provides and name
-#: gtk/rgfiltermanager.h:75
+#: gtk/rgfiltermanager.h:72
 #, fuzzy
 msgid "Conflicting packages"
 msgstr "Problémové balíky"
 
 #. conflicts
-#: gtk/rgfiltermanager.h:76
+#: gtk/rgfiltermanager.h:73
 #, fuzzy
 msgid "Replaced packages"
 msgstr "Balíky které budou nahrazeny"
@@ -2804,6 +2771,52 @@ msgstr "Velikost:"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Verze:"
+
+#, fuzzy
+#~ msgid ""
+#~ "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+#~ "Michael Vogt <mvo@debian.org> (German)\n"
+#~ "Sebastain Heinlein <sebastian.heinlein@web.de> (German)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (French)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Italian)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+#~ "Emil <emil5@go2.pl> (Polish)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (German)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Chinese)\n"
+#~ "Jean-Michel Poure <jm@poure.com> (French)\n"
+#~ "Ossama Khayat <okhayat@yahoo.com> (Arabic)\n"
+#~ "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
+#~ "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
+#~ msgstr ""
+#~ "Vital Khilko <dojlid@mova.org> (Bělorusko)\n"
+#~ "Keld Simonsen <keld@dkuug.dk> (Dánsko)\n"
+#~ "Michael Vogt <mvo@debian.org> (Německo)\n"
+#~ "Sebastain Heinlein <allerlei@renates-welt.de> (Německo)\n"
+#~ "Francisco Javier F. Serrador <serrador@arrakis.es> (Španělsko)\n"
+#~ "Mathieu Roy <yeupou@gnu.org> (Francie)\n"
+#~ "Mauro Colorio <linuxbox@interfree.it> (Itálie)\n"
+#~ "Luigi Maselli <metnik at tiscali it> (Itálie)\n"
+#~ "Daisuke Suzuki <daisuke@linux.or.jp> (Japonsko)\n"
+#~ "Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Holandsko)\n"
+#~ "Emil <emil5@go2.pl> (Polsko)\n"
+#~ "Marcia Norie Nakaza <norie@conectiva.com.br> (Portugalso)\n"
+#~ "Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugalsko)\n"
+#~ "Sviatoslav Sviridov <svd@altlinux.ru> (Rusko)\n"
+#~ "Vitaly Lipatov <lav@altlinux.ru> (Rusko)\n"
+#~ "Rail Aliev <rail@iqchoice.com> (Turecko)\n"
+#~ "Anthony Fok <anthony@thizlinux.com> (Čína)\n"
+#~ "Alwin Meschede <ameschede@gmx.de> (Německo)\n"
+#~ "Liu Songhe <jackliu9999@hotmail.com> (Čína)"
 
 #~ msgid ""
 #~ "Some index files failed to download, they have been ignored, or old ones "
@@ -2916,9 +2929,6 @@ msgstr "Verze:"
 
 #~ msgid "Remove Including _Configuration"
 #~ msgstr "_Odebrat  včetně konfiguráků"
-
-#~ msgid "_Install Latest Version"
-#~ msgstr "_Instalovat poslední verzi"
 
 #~ msgid "_Remove"
 #~ msgstr "Odst_ranit"

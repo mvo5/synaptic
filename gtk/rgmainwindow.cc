@@ -291,12 +291,25 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       gtk_widget_set_sensitive(_pkginfo, false);
       gtk_text_buffer_set_text(_pkgCommonTextBuffer,
                                _("No package is selected.\n"), -1);
+      
+      gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
+      gtk_widget_set_sensitive(_pkgHelpM, FALSE);
    } else {
       gtk_widget_set_sensitive(_pkginfo, true);
       string descr = string(pkg->summary()) + "\n" + string(pkg->description());
       setTextView("textview_pkgcommon", descr.c_str(), true);
-   }
 
+#ifndef HAVE_RPM
+      int flags = pkg->getFlags();
+      if( flags & RPackage::FInstalled) {
+ 	 gtk_widget_set_sensitive(_pkgHelpM, TRUE);
+	 if(pkg->dependsOn("debconf") || pkg->dependsOn("debconf-i18n"))
+	    gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
+	 else
+	    gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
+      }
+#endif      
+   }
    setStatusText();
 }
 
@@ -876,18 +889,25 @@ void RGMainWindow::buildInterface()
                                  G_CALLBACK(cbSaveAsClicked), this);
 
 
-   _keepM = glade_xml_get_widget(_gladeXML, "menu_keep");
+   widget = _keepM = glade_xml_get_widget(_gladeXML, "menu_keep");
    assert(_keepM);
-   _installM = glade_xml_get_widget(_gladeXML, "menu_install");
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   widget = _installM = glade_xml_get_widget(_gladeXML, "menu_install");
    assert(_installM);
-   _reinstallM = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   widget = _reinstallM = glade_xml_get_widget(_gladeXML, "menu_reinstall");
    assert(_reinstallM);
-   _pkgupgradeM = glade_xml_get_widget(_gladeXML, "menu_upgrade");
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   widget = _pkgupgradeM = glade_xml_get_widget(_gladeXML, "menu_upgrade");
    assert(_upgradeM);
-   _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   widget = _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
+   g_object_set_data(G_OBJECT(widget), "me", this);
    assert(_removeM);
+#if 0
    _remove_w_depsM = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(_remove_w_depsM);
+#endif
    _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
    assert(_purgeM);
    _dl_changelogM = glade_xml_get_widget(_gladeXML, "menu_download_changelog");
@@ -936,20 +956,19 @@ void RGMainWindow::buildInterface()
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-    widget = glade_xml_get_widget(_gladeXML, "menu_reinstall");
-    assert(widget);
-    g_object_set_data(G_OBJECT(widget), "me", this);
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_menu_action_reinstall",
-				  G_CALLBACK(cbPkgAction),
-				  GINT_TO_POINTER(PKG_REINSTALL));
-
-
+   widget = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+   assert(widget);
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_menu_action_reinstall",
+				 G_CALLBACK(cbPkgAction),
+				 GINT_TO_POINTER(PKG_REINSTALL));
+   
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_delete",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE));
-
+#if 0
    widget = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
@@ -957,11 +976,10 @@ void RGMainWindow::buildInterface()
                                  "on_menu_action_delete_with_deps",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
-
+#endif
 
    widget = glade_xml_get_widget(_gladeXML, "menu_purge");
    assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_purge",
                                  G_CALLBACK(cbPkgAction),

@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-09 09:57+0200\n"
-"PO-Revision-Date: 2005-03-09 09:59+0200\n"
+"POT-Creation-Date: 2005-03-14 11:34+0200\n"
+"PO-Revision-Date: 2005-03-14 11:36+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
@@ -532,7 +532,7 @@ msgid "Installed"
 msgstr "Εγκατεστημένα"
 
 #: ../common/rpackage.cc:1283 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:504
+#: ../gtk/gsynaptic.cc:511
 msgid "Installed (upgradable)"
 msgstr "Εγκατεστημένα (δυνατότητα αναβάθμισης)"
 
@@ -789,7 +789,7 @@ msgstr ""
 
 #: ../common/rpackagelister.cc:1636
 msgid "Unable to lock the download directory"
-msgstr "Αδυναμία κλειδώματος του καταλόγου μεταφόρτωσης"
+msgstr "Αδυναμία κλειδώματος του καταλόγου λήψης αρχείων"
 
 #: ../common/rpackagelister.cc:1714
 #, c-format
@@ -861,7 +861,7 @@ msgstr "Εργασίες"
 msgid "Reduced View"
 msgstr "Μειωμένη προβολή"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:510
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:517
 #: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "Σημειωμένες αλλαγές"
@@ -990,14 +990,20 @@ msgid "--task-window Open with task window\n"
 msgstr "--task-window Άνοιγμα με παράθυρο εργασίας\n"
 
 #: ../gtk/gsynaptic.cc:81
-msgid "--add-cdrom Add a cdrom at startup\n"
-msgstr "--add-cdrom Προσθήκη ενός cdrom κατά την εκκίνηση\n"
+msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
+msgstr ""
+"--add-cdrom Προσθήκη ενός cdrom κατά την εκκίνηση (απαιτείται η διαδρομή του "
+"cdrom)\n"
 
-#: ../gtk/gsynaptic.cc:318 ../gtk/gsynaptic.cc:324
+#: ../gtk/gsynaptic.cc:82
+msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
+msgstr "--add-cdrom Ερώτηση για ροσθήκη ενός cdrom και έξοδος\n"
+
+#: ../gtk/gsynaptic.cc:322 ../gtk/gsynaptic.cc:328
 msgid "Another synaptic is running"
 msgstr "Εκτελείται ένα άλλο synaptic"
 
-#: ../gtk/gsynaptic.cc:319
+#: ../gtk/gsynaptic.cc:323
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
@@ -1005,7 +1011,7 @@ msgstr ""
 "Υπάρχει μια άλλη διεργασία του synaptic που εκτελείται σε interactive mode. "
 "Θα πρέπει πρώτα να την κλείσετε."
 
-#: ../gtk/gsynaptic.cc:325
+#: ../gtk/gsynaptic.cc:329
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
@@ -1013,11 +1019,11 @@ msgstr ""
 "Υπάρχει μια άλλη διεργασία του synaptic που εκτελείται σε non-interactive "
 "mode. Παρακαλώπεριμένετε να ολοκληρωθεί. "
 
-#: ../gtk/gsynaptic.cc:349
+#: ../gtk/gsynaptic.cc:353
 msgid "Unable to get exclusive lock"
 msgstr "Αδυναμία λήψης αποκλειστικού κλειδώματος"
 
-#: ../gtk/gsynaptic.cc:350
+#: ../gtk/gsynaptic.cc:354
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
@@ -1026,11 +1032,11 @@ msgstr ""
 "πακέτων (όπως τοapt-get ή το aptitude). Παρακαλώ κλείστε πρώτα αυτή την "
 "εφαρμογή."
 
-#: ../gtk/gsynaptic.cc:392
+#: ../gtk/gsynaptic.cc:396
 msgid "You must run this program as the root user."
 msgstr "Πρέπει να εκτελείτε αυτό το πρόγραμμα ως root."
 
-#: ../gtk/gsynaptic.cc:455
+#: ../gtk/gsynaptic.cc:459
 msgid "Synaptic Package Manager "
 msgstr "Διαχείριση πακέτων Synaptic"
 
@@ -1075,27 +1081,28 @@ msgstr ""
 msgid "NOT AUTHENTICATED"
 msgstr "ΧΩΡΙΣ ΠΙΣΤΟΠΟΙΗΣΗ"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
+#. removed
+#: ../gtk/rgchangeswindow.cc:114 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Προς απομάκρυνση"
 
-#: ../gtk/rgchangeswindow.cc:129
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Προς υποβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
+#: ../gtk/rgchangeswindow.cc:144 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Προς αναβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
+#: ../gtk/rgchangeswindow.cc:156 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Προς εγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
+#: ../gtk/rgchangeswindow.cc:168 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Προς επανεγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:177
+#: ../gtk/rgchangeswindow.cc:179
 msgid "To be kept"
 msgstr "Προς διατήρηση"
 
@@ -1234,7 +1241,7 @@ msgstr "Εγκατεστημένο μέγεθος"
 
 #: ../gtk/rgpreferenceswindow.cc:48
 msgid "Download Size"
-msgstr "Μέγεθος μεταφόρτωσης"
+msgstr "Μέγεθος λήψης αρχείων"
 
 #: ../gtk/rgpreferenceswindow.cc:377 ../gtk/rgmainwindow.cc:1653
 #: ../gtk/rgterminstallprogress.cc:104
@@ -1312,16 +1319,16 @@ msgstr ""
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Ρυθμός μεταφόρτωσης: %s/s - %s απομένουν"
+msgstr "Ρυθμός λήψης αρχείων: %s/s - %s απομένουν"
 
 #: ../gtk/rgfetchprogress.cc:323
 msgid "Download rate: unknown"
-msgstr "Ρυθμός μεταφόρτωσης: άγνωστος"
+msgstr "Ρυθμός λήψης αρχείων: άγνωστος"
 
 #: ../gtk/rgfetchprogress.cc:325
 #, c-format
 msgid "Downloading file %li of %li"
-msgstr "Μεταφόρτωση αρχείου %li από %li"
+msgstr "Λήψη αρχείου %li από %li"
 
 #: ../gtk/rgfetchprogress.cc:392
 msgid "Queued"
@@ -1448,7 +1455,7 @@ msgstr "Τελευταία έκδοση"
 
 #: ../gtk/rgmainwindow.cc:946
 msgid "Download"
-msgstr "Μεταφόρτωση"
+msgstr "Λήψη αρχείων"
 
 #: ../gtk/rgmainwindow.cc:1201
 msgid ""
@@ -1559,7 +1566,7 @@ msgid_plural ""
 msgstr[0] ""
 "Έχετε %d κατεστραμμένο πακέτο στο σύστημα σας!\n"
 "\n"
-"Χρησιμοποιήστε το φίλτρο \"Κατεστραμμένα\" για να το εντοπίσετε"
+"Χρησιμοποιήστε το φίλτρο \"Κατεστραμμένα\" για να το εντοπίσετε."
 msgstr[1] ""
 "Έχετε %d κατεστραμμένα πακέτα στο σύστημα σας!\n"
 "\n"
@@ -1567,7 +1574,7 @@ msgstr[1] ""
 
 #: ../gtk/rgmainwindow.cc:1833
 msgid "Downloading changelog"
-msgstr "Μεταφόρτωση changelog"
+msgstr "Λήψη changelog"
 
 #: ../gtk/rgmainwindow.cc:1834
 msgid ""
@@ -1703,7 +1710,7 @@ msgstr "Εφαρμογή σημειωμένων αλλαγών. Αυτό μπο�
 
 #: ../gtk/rgmainwindow.cc:2576
 msgid "Downloading package files"
-msgstr "Μεταφόρτωση αρχείων πακέτου"
+msgstr "Λήψη αρχείων πακέτου"
 
 #: ../gtk/rgmainwindow.cc:2577
 msgid "The package files will be cached locally for installation."
@@ -1715,15 +1722,15 @@ msgstr "Θέλετε έξοδο από το Synaptic;"
 
 #: ../gtk/rgmainwindow.cc:2708
 msgid "Downloading package information"
-msgstr "Μεταφόρτωση πληροφοριών πακέτου"
+msgstr "Λήψη πληροφοριών πακέτου"
 
 #: ../gtk/rgmainwindow.cc:2709
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
-"Θα γίνει έλεγχος των repositories, για νέα, αναβαθμισμένα ή "
-"απομακρυνθένταπακέτα λογισμικού."
+"Θα γίνει έλεγχος των repositories, για νέα, αναβαθμισμένα ή απομακρυνθέντα "
+"πακέτα λογισμικού."
 
 #: ../gtk/rgmainwindow.cc:2712
 msgid "Reloading package information..."
@@ -1941,7 +1948,7 @@ msgid ""
 "%s have to be downloaded"
 msgstr ""
 "\n"
-"%s πρέπει να μεταφορτωθούν"
+"%s πρέπει να ληφθούν"
 
 #: ../gtk/rgsummarywindow.cc:518
 msgid ""
@@ -2075,7 +2082,7 @@ msgstr "Εξαρτήσεις από την τελευταία έκδοση"
 
 #: ../gtk/window_main.glade.h:19 ../gtk/window_details.glade.h:17
 msgid "Download:"
-msgstr "Μεταφόρτωση:"
+msgstr "Λήψη:"
 
 #: ../gtk/window_main.glade.h:20
 msgid "Icon _Legend"
@@ -2196,7 +2203,7 @@ msgstr "_Προσαρμοσμένα"
 
 #: ../gtk/window_main.glade.h:52
 msgid "_Download Changelog"
-msgstr "Μετα_φόρτωση Changelog"
+msgstr "Λή_ψη Changelog"
 
 #: ../gtk/window_main.glade.h:53
 msgid "_Edit"
@@ -2731,7 +2738,7 @@ msgstr "Δια_γραφή αρχείων από την cache"
 
 #: ../gtk/window_preferences.glade.h:74
 msgid "_Delete downloaded packages after installation"
-msgstr "_Διαγραφή μεταφορτωμένων πακέτων μετά την εγκατάσταση"
+msgstr "_Διαγραφή ληφθέντων πακέτων μετά την εγκατάσταση"
 
 #: ../gtk/window_preferences.glade.h:75
 msgid "_Keep history"
@@ -2739,7 +2746,7 @@ msgstr "Δι_ατήρηση ιστορικού"
 
 #: ../gtk/window_preferences.glade.h:76
 msgid "_Leave all downloaded packages in the cache"
-msgstr "Να πα_ραμένουν όλα τα μεταφορτωμένα αρχεία στην cache"
+msgstr "Να πα_ραμένουν όλα τα ληφθέντα αρχεία στην cache"
 
 #: ../gtk/window_preferences.glade.h:77
 msgid "_Only delete packages which are no longer available"
@@ -2797,7 +2804,7 @@ msgstr ""
 
 #: ../gtk/window_summary.glade.h:6
 msgid "Download package files only"
-msgstr "Μεταφόρτωση μόνο αρχείων πακέτων"
+msgstr "Λήψη μόνο αρχείων πακέτων"
 
 #: ../gtk/window_summary.glade.h:7
 msgid "Return to the main screen"
@@ -2805,7 +2812,7 @@ msgstr "Επιστροφή στη κύρια οθόνη"
 
 #: ../gtk/window_summary.glade.h:8
 msgid "The package files will be downloaded, but not installed"
-msgstr "Τα αρχεία πακέτων θα μεταφορτωθούν, αλλά δεν θα εγκατασταθούν"
+msgstr "Θα γίνει λήψη των αρχείων πακέτων, αλλά δεν θα εγκατασταθούν"
 
 #: ../gtk/window_summary.glade.h:9
 msgid ""
@@ -3183,14 +3190,13 @@ msgid ""
 "network connection and the correct writing of the repository address in the "
 "preferences."
 msgstr ""
-"<big><b>Αδυναμία μεταφόρτωσης όλων των περιεχομένων του repository</b></"
-"big>\n"
+"<big><b>Αδυναμία λήψης όλων των περιεχομένων του repository</b></big>\n"
 "\n"
-"Το repository μπορεί να μην είναι πλέον διαθέσιμο ή να μην είναι "
-"προσβάσιμολόγω προβλημάτων δικτύου. Αν υπάρχει διαθέσιμη μια παλαίότερη "
-"έκδοση του καταλόγου του,τότε θα χρησιμοποιηθεί αυτή. Αλλιώς το repository "
-"θα αγνοηθεί. Ελέξτε την σύνδεση δικτύου σαςκαι βεβαιωθείτε ότι είναι "
-"γραμμένο σωστά το repository στις προτιμήσεις."
+"Το repository μπορεί να μην είναι πλέον διαθέσιμο ή να μην είναι προσβάσιμο "
+"λόγω προβλημάτων δικτύου. Αν υπάρχει διαθέσιμη μια παλαιότερη έκδοση του "
+"καταλόγου του,τότε θα χρησιμοποιηθεί αυτή. Αλλιώς το repository θα αγνοηθεί. "
+"Ελέξτε την σύνδεση δικτύου σας και βεβαιωθείτε ότι είναι γραμμένο σωστά το "
+"repository στις προτιμήσεις."
 
 #: ../gtk/rgfiltermanager.h:66
 msgid "Package name"
@@ -3259,8 +3265,7 @@ msgid ""
 "package. Reload the package list and check the source of the package (e.g. "
 "CD or network connection)."
 msgstr ""
-"<big><b>Αδυναμία μεταφόρτωσης όλων των απαραίτητων αρχείων πακέτων</b></"
-"big>\n"
+"<big><b>Αδυναμία λήψης όλων των απαραίτητων αρχείων πακέτων</b></big>\n"
 "\n"
 "Η έκδοση του πακέτου που θέλετε να εγκαταστήσετε πιθανόν να μην είναι "
 "διαθέσιμη στο repository, ή να υπάρχουν προβλήματα με την πηγή του πακέτου. "

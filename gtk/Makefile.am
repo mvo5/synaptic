@@ -28,7 +28,8 @@ glade_DATA =                            \
 	window_disc_name.glade window_disc_name.glade.strings \
 	window_rginstall_progress.glade window_rginstall_progress.glade.strings \
 	window_rginstall_progress_msgs.glade window_rginstall_progress_msgs.glade.strings \
-	window_setopt.glade window_setopt.glade.strings
+	window_setopt.glade window_setopt.glade.strings \
+	window_repositories.glade window_repositories.glade.strings
 
 
 EXTRA_DIST = $(glade_DATA)

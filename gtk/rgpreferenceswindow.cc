@@ -296,7 +296,7 @@ void RGPreferencesWindow::saveColors()
    _config->Set("Synaptic::UseStatusColors", newval ? "true" : "false");
 }
 
-void RGPreferencesWindow::saveTempFiles()
+void RGPreferencesWindow::saveFiles()
 {
    bool newval;
 
@@ -305,7 +305,16 @@ void RGPreferencesWindow::saveTempFiles()
    _config->Set("Synaptic::CleanCache", newval ? "true" : "false");
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_cacheAutoClean));
    _config->Set("Synaptic::AutoCleanCache", newval ? "true" : "false");
-   
+
+   // history
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_delHistory));
+   if(!newval) {
+      _config->Set("Synaptic::delHistory", -1);
+      return;
+   }
+   int delHistory= gtk_spin_button_get_value(GTK_SPIN_BUTTON(_spinDelHistory));
+   _config->Set("Synaptic::delHistory", delHistory);
+   _lister->cleanCommitLog();
 }
 
 void RGPreferencesWindow::saveNetwork()
@@ -360,7 +369,7 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    me->saveGeneral();
    me->saveColumnsAndFonts();
    me->saveColors();
-   me->saveTempFiles();
+   me->saveFiles();
    me->saveNetwork();
    me->saveDistribution();
 
@@ -556,7 +565,7 @@ void RGPreferencesWindow::readColors()
 
 }
 
-void RGPreferencesWindow::readTempFiles()
+void RGPreferencesWindow::readFiles()
 {
    // <b>Temporary Files</b>
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean),
@@ -576,6 +585,15 @@ void RGPreferencesWindow::readTempFiles()
    else
       gtk_button_clicked(GTK_BUTTON(_cacheLeave));
 
+   // history
+   int delHistory = _config->FindI("Synaptic::delHistory", -1);
+   if(delHistory < 0) 
+      gtk_button_clicked(GTK_BUTTON(_keepHistory));
+   else {
+      gtk_button_clicked(GTK_BUTTON(_delHistory));      
+      gtk_spin_button_set_value(GTK_SPIN_BUTTON(_spinDelHistory), 
+				delHistory);      
+   }
 }
 
 void RGPreferencesWindow::readNetwork()
@@ -675,7 +693,7 @@ void RGPreferencesWindow::show()
    readGeneral();
    readColumnsAndFonts();
    readColors();
-   readTempFiles();
+   readFiles();
    readNetwork();
    readDistribution();
 
@@ -904,8 +922,13 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    _optionAskQuit = glade_xml_get_widget(_gladeXML, "check_ask_quit");
    _optionOneClick = glade_xml_get_widget(_gladeXML, "check_oneclick");
 
+   // cache
    _cacheLeave = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
    _cacheClean = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");
+   // history
+   _delHistory = glade_xml_get_widget(_gladeXML, "radio_delete_history");
+   _keepHistory = glade_xml_get_widget(_gladeXML, "radio_keep_history");
+   _spinDelHistory = glade_xml_get_widget(_gladeXML, "spin_del_history");
    _cacheAutoClean =
       glade_xml_get_widget(_gladeXML, "radio_cache_del_obsolete");
    _useProxy = glade_xml_get_widget(_gladeXML, "radio_use_proxy");

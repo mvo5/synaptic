@@ -55,6 +55,10 @@ class RGPreferencesWindow:public RGGladeWindow {
    GtkWidget *_cacheClean;
    GtkWidget *_cacheAutoClean;
 
+   GtkWidget *_delHistory;
+   GtkWidget *_keepHistory;
+   GtkWidget *_spinDelHistory;
+
    GtkWidget *_pathT;
    GtkWidget *_sizeT;
    GtkWidget *_maxUndoE;
@@ -92,14 +96,14 @@ class RGPreferencesWindow:public RGGladeWindow {
    void saveGeneral();
    void saveColumnsAndFonts();
    void saveColors();
-   void saveTempFiles();
+   void saveFiles();
    void saveNetwork();
    void saveDistribution();
 
    void readGeneral();
    void readColumnsAndFonts();
    void readColors();
-   void readTempFiles();
+   void readFiles();
    void readNetwork();
    void readDistribution();
 

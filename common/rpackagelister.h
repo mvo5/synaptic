@@ -187,6 +187,9 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
+   // clean files older than "Synaptic::delHistory"
+   void cleanCommitLog();
+
    void sortPackages(listSortMode mode) {
       sortPackages(_viewPackages, mode);
    };

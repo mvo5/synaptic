@@ -32,7 +32,10 @@
 #include <unistd.h>
 #include <map>
 #include <sstream>
-#include <ctime>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <time.h>
 
 #include "rpackagelister.h"
 #include "rpackagecache.h"
@@ -95,6 +98,7 @@ RPackageLister::RPackageLister()
 
    _pkgStatus.init();
 
+   cleanCommitLog();
 #if 0
    string Recommends = _config->Find("Synaptic::RecommendsFile",
                                      "/etc/apt/metadata");
@@ -1492,6 +1496,39 @@ void RPackageLister::writeCommitLog()
    fputs(_logEntry.c_str(), f);
    fclose(f);
 
+}
+
+void RPackageLister::cleanCommitLog()
+{
+   int maxKeep = _config->FindI("Synaptic::delHistory", -1);
+   //cout << "RPackageLister::cleanCommitLog(): " << maxKeep << endl;
+   if(maxKeep < 0)
+      return;
+   
+   string logfile, entry;
+   struct stat buf;
+   struct dirent *dent;
+   time_t now = time(NULL);
+   DIR *dir = opendir(RLogDir().c_str());
+   while((dent=readdir(dir)) != NULL) {
+      entry = string(dent->d_name);
+      if(logfile == "." || logfile == "..")
+	 continue;
+      logfile = RLogDir()+entry;
+      if(stat(logfile.c_str(), &buf) != 0) {
+	 cerr << "logfile: " << logfile << endl;
+	 perror("cleanCommitLog(), stat: ");
+	 continue;
+      }
+      if((buf.st_mtime+(60*60*24*maxKeep)) < now) {
+// 	 cout << "older than " << maxKeep << " days: " << logfile << endl;
+// 	 cout << "now: " << now 
+// 	      << " ctime: " << buf.st_mtime+(60*60*24*maxKeep) << endl;
+	 unlink(logfile.c_str());
+      }
+
+   }
+   closedir(dir);
 }
 
 void RPackageLister::makeCommitLog()

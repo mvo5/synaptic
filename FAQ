@@ -8,3 +8,16 @@ A: 1. You are not running gnome:
    2. You use gnome 2.x:
    Go to Applications/Desktop Preferences/Font and choose whatever you like.
 
+
+Q: Synaptic crashes with the following messages:
+   (synaptic:1316): Gdk-WARNING **: locale not supported by Xlib
+   (synaptic:1316): ZVT-WARNING **: Cannot get required fonts from "monospace 13"  
+   (synaptic:1316): ZVT-WARNING **: Failed to load any required font, so crash will  occur..check X11 font pathes and etc/pangox.alias file
+   [crash]
+A: This is most likley caused by incorrect locales. Try to set the locales
+   with "dpkg-reconfigure locales" or set it to something like:
+   $ export LC_ALL=it_IT
+   or
+   $ export LC_ALL=it_IT@euro
+   
+   

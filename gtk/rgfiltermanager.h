@@ -115,9 +115,6 @@ class RGFilterManagerWindow:public RGGladeWindow {
    void setPatternFilter(RPatternPackageFilter &f);
    void getPatternFilter(RPatternPackageFilter &f);
 
-   void setFilterView(RFilter *f);
-   void getFilterView(RFilter *f);
-
    GtkTreePath *treeview_find_path_from_text(GtkTreeModel *model, char *text);
 
    // close callbacks

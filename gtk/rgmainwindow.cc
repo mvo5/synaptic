@@ -136,17 +136,8 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
    if (filter > 0) {
       _lister->setFilter(filter - 1);
       RFilter *pkgfilter = _lister->getFilter();
-      if (pkgfilter != NULL) {
-         // -2 because "0" is "unchanged" and "1" is the spacer in the menu
-         // FIXME: yes I know this sucks
-         int expand = pkgfilter->getViewMode().expandMode;
-         if (expand == 2)
-            gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
-         if (expand == 3)
-            gtk_tree_view_collapse_all(GTK_TREE_VIEW(_treeView));
-      } else {
+      if (pkgfilter == NULL)
          filter = 0;
-      }
    }
 
    // No filter given or not available from above

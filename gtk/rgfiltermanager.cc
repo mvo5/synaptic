@@ -703,38 +703,6 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
    }
 }
 
-void RGFilterManagerWindow::setFilterView(RFilter *filter)
-{
-   //cout << "RGFilterManagerWindow::setFilterView(RFilter *filter)"<<endl;
-   RFilterView view = filter->getViewMode();
-
-   GtkWidget *option_menu;
-   option_menu = glade_xml_get_widget(_gladeXML, "optionmenu_view_mode");
-   assert(option_menu);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(option_menu), view.viewMode);
-
-   option_menu = glade_xml_get_widget(_gladeXML, "optionmenu_expand_mode");
-   assert(option_menu);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(option_menu), view.expandMode);
-}
-
-void RGFilterManagerWindow::getFilterView(RFilter *filter)
-{
-   //cout << "RGFilterManagerWindow::getFilterView(RFilter *filter)"<<endl;
-   GtkWidget *option_menu;
-   RFilterView view;
-
-   option_menu = glade_xml_get_widget(_gladeXML, "optionmenu_view_mode");
-   assert(option_menu);
-   view.viewMode = gtk_option_menu_get_history(GTK_OPTION_MENU(option_menu));
-
-   option_menu = glade_xml_get_widget(_gladeXML, "optionmenu_expand_mode");
-   assert(option_menu);
-   view.expandMode = gtk_option_menu_get_history(GTK_OPTION_MENU(option_menu));
-
-   filter->setViewMode(view);
-}
-
 void RGFilterManagerWindow::editFilter()
 {
    if (_selectedFilter != NULL)
@@ -749,7 +717,6 @@ void RGFilterManagerWindow::editFilter(RFilter *filter)
    setSectionFilter(filter->section);
    setStatusFilter(filter->status);
    setPatternFilter(filter->pattern);
-   setFilterView(filter);
 }
 
 
@@ -758,12 +725,6 @@ void RGFilterManagerWindow::applyChanges(RFilter *filter)
    getSectionFilter(filter->section);
    getStatusFilter(filter->status);
    getPatternFilter(filter->pattern);
-#if 0                           //PORTME
-#ifdef HAVE_DEBTAGS
-   getTagFilter(filter->tags);
-#endif
-#endif
-   getFilterView(filter);
 }
 
 

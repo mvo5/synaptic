@@ -256,12 +256,6 @@ class RReducedViewPackageFilter : public RPackageFilter {
    void disable() { _enabled = false; };
 };
 
-struct RFilterView {
-   RFilterView():viewMode(0), expandMode(0) {};
-   int viewMode;
-   int expandMode;
-};
-
 struct RFilter {
 
    public:
@@ -273,9 +267,6 @@ struct RFilter {
 
    void setName(string name);
    string getName();
-
-   void setViewMode(RFilterView view) { _view = view; };
-   RFilterView getViewMode() { return _view; };
 
    bool read(Configuration &conf, string key);
    bool write(ofstream &out);
@@ -293,7 +284,6 @@ struct RFilter {
    protected:
 
    string name;
-   RFilterView _view;
 };
 
 

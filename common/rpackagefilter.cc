@@ -46,70 +46,6 @@ const char *RPFSection = _("Section");
 const char *RPFPriority = _("Priority");
 const char *RPFReducedView = _("ReducedView");
 
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-const char *RPFTags = _("Tags");
-
-bool RTagPackageFilter::read(Configuration &conf, string key)
-{
-   const Configuration::Item *top;
-
-   reset();
-
-   top = conf.Tree(string(key + "::include").c_str());
-
-   if (top == NULL)
-      return true;
-
-   for (top = top->Child; top != NULL; top = top->Next) {
-      include(top->Value);
-   }
-
-   top = conf.Tree(string(key + "::exclude").c_str());
-
-   if (top == NULL)
-      return true;
-
-   for (top = top->Child; top != NULL; top = top->Next) {
-      exclude(top->Value);
-   }
-
-
-   return true;
-
-}
-
-bool RTagPackageFilter::write(ofstream &out, string pad)
-{
-
-   out << pad + "include {" << endl;
-   if (!included.empty()) {
-
-      for (OpSet<string>::const_iterator it = included.begin();
-           it != included.end(); it++) {
-         out << pad + "  \"" << *it << "\"; " << endl;
-      }
-   }
-   out << pad + "};" << endl;
-
-
-   out << pad + "exclude {" << endl;
-   if (!excluded.empty()) {
-
-      for (OpSet<string>::const_iterator it = excluded.begin();
-           it != excluded.end(); it++) {
-         out << pad + "  \"" << *it << "\"; " << endl;
-      }
-   }
-   out << pad + "};" << endl;
-
-
-   return true;
-
-}
-#endif
-#endif
-
 int RSectionPackageFilter::count()
 {
    return _groups.size();
@@ -178,14 +114,9 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
    _inclusive = conf.FindB(key + "::inclusive", _inclusive);
 
    top = conf.Tree(string(key + "::sections").c_str());
-
-   // mvo: FIXME this sucks
-   if (top == NULL) {
-      return true;
-   }
-
-   for (top = top->Child; top != NULL; top = top->Next) {
-      addSection(top->Value);
+   if (top != NULL) {
+      for (top = top->Child; top != NULL; top = top->Next)
+	 addSection(top->Value);
    }
 
    return true;
@@ -467,11 +398,6 @@ RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
 
 void RPatternPackageFilter::clear()
 {
-   //cout << "void RPatternPackageFilter::clear()" << endl;
-   //for(int i=0;i<count();i++) {
-   //  cout << "\t " << _patterns[i].pattern << endl;
-   //}
-
    // give back all the memory
    for (unsigned int i = 0; i < _patterns.size(); i++) {
       for (unsigned int j = 0; j < _patterns[i].regexps.size(); j++) {
@@ -705,12 +631,6 @@ bool RFilter::apply(RPackage *package)
 
    if (!priority.filter(package))
       return false;
-#if 0                           //PORTME
-#ifdef HAVE_DEBTAGS
-   if (!tags.filter(package))
-      return false;
-#endif
-#endif
    if (!reducedview.filter(package))
       return false;
 
@@ -724,11 +644,6 @@ void RFilter::reset()
    status.reset();
    pattern.reset();
    priority.reset();
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   tags.reset();
-#endif
-#endif
    reducedview.reset();
 }
 
@@ -767,15 +682,7 @@ bool RFilter::read(Configuration &conf, string key)
    res &= status.read(conf, key + "::status");
    res &= pattern.read(conf, key + "::pattern");
    res &= priority.read(conf, key + "::priority");
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   res &= tags.read(conf, key + "::tags");
-#endif
-#endif
    res &= reducedview.read(conf, key + "::reducedview");
-
-   _view.viewMode = conf.FindI(key + "::view::viewMode", 0);
-   _view.expandMode = conf.FindI(key + "::view::expandMode", 0);
 
    return res;
 }
@@ -812,20 +719,9 @@ bool RFilter::write(ofstream &out)
    out << pad + "priority {" << endl;
    res &= priority.write(out, pad + "  ");
    out << pad + "};" << endl;
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   out << pad + "tags {" << endl;
-   res &= tags.write(out, pad + "  ");
-   out << pad + "};" << endl;
-#endif
-#endif
+
    out << pad + "reducedview {" << endl;
    res &= reducedview.write(out, pad + "  ");
-   out << pad + "};" << endl;
-
-   out << pad + "view {" << endl;
-   out << pad + pad + "viewMode " << _view.viewMode << ";" << endl;
-   out << pad + pad + "expandMode " << _view.expandMode << ";" << endl;
    out << pad + "};" << endl;
 
    out << "};" << endl;

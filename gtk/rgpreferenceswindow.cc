@@ -298,6 +298,8 @@ void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
     
     fontName=gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG(fontsel)); 
     
+    //cout << "fontname: " << fontName << endl;
+
     _config->Set(propName, fontName);
 
     gtk_widget_destroy (fontsel);
@@ -345,7 +347,7 @@ void RGPreferencesWindow::show()
 				      	     UndoStackSize));
 
     bool UseTerminal = false;
-#ifndef HAVE_ZVT
+#ifndef HAVE_TERMINAL
     gtk_widget_set_sensitive(GTK_WIDGET(_optionUseTerminal), false);
     _config->Set("Synaptic::UseTerminal", false);
 #else

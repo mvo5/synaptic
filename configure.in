@@ -140,6 +140,17 @@ AC_ARG_WITH(debtags,
 	]
 )
 
+dnl check for libvte
+AC_ARG_WITH(vte, 
+	      [--with-vte  compile with libvte support (terminal output)], 
+	      [pkg_modules="vte >= 0.10.11"
+	      PKG_CHECK_MODULES(VTE, [$pkg_modules])
+	      AC_DEFINE(HAVE_VTE)	 
+	      AC_DEFINE(HAVE_TERMINAL)	 
+	      AC_SUBST(VTE_CFLAGS)
+	      AC_SUBST(VTE_LIBS)
+	      ]
+	      )
 
 dnl check for libzvt
 AC_ARG_WITH(zvt, 
@@ -147,10 +158,18 @@ AC_ARG_WITH(zvt,
 	      [pkg_modules="libzvt-2.0 >= 2.0.0"
 	      PKG_CHECK_MODULES(ZVT, [$pkg_modules])
 	      AC_DEFINE(HAVE_ZVT)	 
+	      AC_DEFINE(HAVE_TERMINAL)	 
 	      AC_SUBST(ZVT_CFLAGS)
 	      AC_SUBST(ZVT_LIBS)
 	      ]
 	      )
+
+# check and make sure that we only have vte _or_ zvt
+if test "${with_vte+set}" = set; then
+	if test "${with_zvt+set}" = set; then
+		AC_MSG_ERROR([You can only build with vte or zvt])
+	fi
+fi
 
 AC_OUTPUT([
 common/Makefile 

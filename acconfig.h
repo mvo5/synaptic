@@ -33,6 +33,13 @@
 /* build with ZVT as output terminal */
 #undef HAVE_ZVT
 
+/* build with VTE as output terminal */
+#undef HAVE_VTE
+
+/* build with a terminal widget */
+#undef HAVE_TERMINAL
+
+
 /* build with debtags support */
 #undef HAVE_DEBTAGS
 

@@ -29,7 +29,7 @@
 #include "rinstallprogress.h"
 #include "rgwindow.h"
 
-#ifdef HAVE_ZVT
+#ifdef HAVE_TERMINAL
 
 class RGZvtInstallProgress : public RInstallProgress, public RGWindow {
   GtkWidget *_term;

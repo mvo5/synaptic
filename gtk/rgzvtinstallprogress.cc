@@ -25,7 +25,7 @@
 #include "config.h"
 
 // we compile only if ZVT is selected
-#ifdef HAVE_ZVT
+#ifdef HAVE_TERMINAL
 
 #include "i18n.h"
 
@@ -41,10 +41,16 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <libzvt/libzvt.h>
-
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+
+#ifdef HAVE_ZVT
+#include <libzvt/libzvt.h>
+#endif
+#ifdef HAVE_VTE
+#include <vte/vte.h>
+#endif
+
 
 using namespace std;
 
@@ -81,9 +87,16 @@ void RGZvtInstallProgress::finishUpdate()
   }
   
   if( res==0 )
+#ifdef HAVE_ZVT
     zvt_term_feed(ZVT_TERM(_term), (char*)finishMsg.c_str(), (long)finishMsg.size());
   else
     zvt_term_feed(ZVT_TERM(_term), (char*)errorMsg.c_str(), (long)errorMsg.size());
+#endif
+#ifdef HAVE_VTE
+    vte_terminal_feed(VTE_TERMINAL(_term), utf8(finishMsg.c_str()), (long)finishMsg.size());
+  else
+    vte_terminal_feed(VTE_TERMINAL(_term), utf8(errorMsg.c_str()), (long)errorMsg.size());
+#endif
   gtk_label_set_text(GTK_LABEL(_statusL), _("Package Manager finished"));
 }
 
@@ -133,6 +146,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
       unsetenv("LC_ALL");
       gtk_set_locale();
   }
+#ifdef HAVE_ZVT
   _term = zvt_term_new_with_size(80,24);
   if(_config->FindB("Synaptic::useUserTerminalFont")) {
       char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
@@ -163,11 +177,19 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   g_signal_connect(G_OBJECT(_term), "button-press-event", 
 		   (void  (*)())zvtFocus, 
 		   this);
-
+#endif
+#ifdef HAVE_VTE
+  _term = vte_terminal_new();
+  if(_config->FindB("Synaptic::useUserTerminalFont")) {
+      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
+  }
+#endif
   GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
+#ifdef HAVE_ZVT
   gtk_box_pack_end(GTK_BOX(hbox), scrollbar, FALSE, FALSE, 0);
-  //  gtk_container_add(GTK_CONTAINER(_topBox), hbox);
+#endif
   gtk_box_pack_start(GTK_BOX(_topBox), hbox, TRUE, TRUE, 0);
 
   hbox = gtk_hbox_new(FALSE, 0);
@@ -206,7 +228,12 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
   _thread_id = pthread_create(&_thread, NULL, loop, this);
 
   // now fork 
+#ifdef HAVE_ZVT
   int pid = zvt_term_forkpty (ZVT_TERM(_term), FALSE);
+#endif
+#ifdef HAVE_VTE
+    int pid = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
+#endif
   switch(pid) {
   case -1:
     cerr << _("can't fork children, so I die") << endl;
@@ -227,7 +254,12 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
     // parent
     waitpid(pid, &ret, 0);
     res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+#ifdef HAVE_ZVT
     zvt_term_closepty(ZVT_TERM(_term));
+#endif
+#ifdef HAVE_VTE
+    // nothing to do
+#endif
     break;
   }
   _thread_id = -1;

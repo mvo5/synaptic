@@ -879,7 +879,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
 
     RInstallProgress *iprogress;
-#ifdef HAVE_ZVT
+#ifdef HAVE_TERMINAL
  #ifdef HAVE_RPM
     bool UseTerminal = false;
  #else
@@ -899,7 +899,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     //bool result = me->_lister->commitChanges(fprogress, iprogress);
     me->_lister->commitChanges(fprogress, iprogress);
 
-#ifdef HAVE_ZVT
+#ifdef HAVE_TERMINAL
     // wait until the zvt dialog is closed
     if (zvt != NULL) {
 	while(GTK_WIDGET_VISIBLE(GTK_WIDGET(zvt->window()))) {

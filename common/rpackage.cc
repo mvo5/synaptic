@@ -788,7 +788,10 @@ void RPackage::setPinned(bool flag)
 	// write to pin-file
 	ofstream out(File.c_str(), ios::app);
 	out << "Package: " << name() << endl;
-	out << "Pin: version " << installedVersion() << endl << endl;
+	out << "Pin: version " << installedVersion() << endl;
+	out << "Pin-Priority: " 
+	    <<  _config->FindI("Synaptic::DefaultPinPriority", 1001) 
+	    << endl << endl;
     } else {
 	// delete package from pinning file
 	stat(File.c_str(),&stat_buf);

@@ -3153,7 +3153,6 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   GtkTreeIter iter;
   RPackage *pkg = NULL;
 
-
   //  cout << "double click" << endl;
   if(!gtk_tree_model_get_iter(me->_activeTreeModel,
 			      &iter,path)) {
@@ -3213,6 +3212,10 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   }
   // end double-click
   //me->setInterfaceLocked(FALSE);
+
+  gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_treeView), path,
+			   NULL, false);
+
   me->setStatusText();
   return;
 }

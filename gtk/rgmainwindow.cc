@@ -530,10 +530,17 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    bool changed = askStateChange(state, exclude);
 
    if (changed) {
-      _lister->saveUndoState(state);
-      // check for failed installs
-      if (action == PKG_INSTALL) 
-	 checkForFailedInst(instPkgs);
+      bool failed=false;
+      // check for failed installs, if a installs fails, restore old state
+      // as the Fixer may do wired thinks when trying to resolve the problem
+      if (action == PKG_INSTALL) {
+	 failed = checkForFailedInst(instPkgs);
+	 if(failed)
+	    _lister->restoreState(state);
+      }
+      // if everything is fine, save it as new undo state 
+      if(!failed)
+	 _lister->saveUndoState(state);
    }
 
    if (ask)
@@ -2741,7 +2748,8 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
       // ask for additional changes
       if(me->askStateChange(state, exclude)) {
 	 me->_lister->saveUndoState(state);
-	 me->checkForFailedInst(instPkgs);
+	 if(me->checkForFailedInst(instPkgs))
+	    me->_lister->restoreState(state);
       }
       me->_lister->notifyPostChange(NULL);
       me->_lister->notifyCachePostChange();

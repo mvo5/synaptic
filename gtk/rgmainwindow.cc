@@ -979,28 +979,24 @@ bool RGMainWindow::showErrors()
 }
 
 
-static void appendTag(char *&buf, unsigned &size, const char *tag, 
-			const char *value)
+static void appendTag(GString *str, const char *tag, const char *value)
 {
     if (!value)
 	value = _("N/A");
-    if (strlen(tag) + strlen(value) + 8 > size)
-	return;
-    
-    buf = buf + sprintf(buf, "%s: %s\n", tag, value);
+
+    g_string_append_printf(str, "%s: %s\n",utf8(tag), value);
 }
 
-
-static void appendText(char *&buf, unsigned &size, const char *text)
+static void appendTag(GString *str, const char *tag, const int value)
 {
-    unsigned l = strlen(text);
-    if (l > size)
-	return;
-    
-    strcpy(buf, text);
-    buf = buf + l;
+    string strVal;
+    // we can never have values of zero or less
+    if (value <= 0)
+	strVal = _("N/A");
+    else
+	strVal = SizeToStr(value);
+    g_string_append_printf(str, "%s: %s\n",utf8(tag), strVal.c_str());
 }
-
 
 
 void RGMainWindow::notifyChange(RPackage *pkg)
@@ -1204,11 +1200,12 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	do {
 	    //cout << "got: " << depType << " " << depName << endl;
 	    if (byProvider) {
-		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 #ifdef HAVE_RPM
+		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 utf8(depType), depPkg ? depPkg : depName, depVer);
 #else
-		utf8(depType), depName, depVer); 
+		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
+			 utf8(depType), depName, depVer); 
 #endif
 	    } else {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
@@ -1337,10 +1334,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
-    char buffer[512] = "";
-    char *bufPtr = buffer;
-    unsigned bufSize = sizeof(buffer);
-    long size;
     RPackage::UpdateImportance importance;
     RPackage::PackageStatus status;
     
@@ -1381,40 +1374,25 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     // package info
     
     // common information regardless of state
-    appendTag(bufPtr, bufSize, _("Section"), utf8(pkg->section()));
-    appendTag(bufPtr, bufSize, _("Priority"), utf8(pkg->priority()));
+    GString *info = g_string_new("");
+    appendTag(info, _("Section"), pkg->section());
+    appendTag(info,_("Priority"), pkg->priority());
 #ifdef HAVE_DEBTAGS
-    appendTag(bufPtr, bufSize, _("Tags"), utf8(pkg->tags()));
+    appendTag(info,_("Tags"), pkg->tags());
 #endif
-    appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
-    /* XXX Why this is commented out? mvo: because we don't support vendor()
-                                           in rpackage yet
-    appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
-     */
-    
-    // installed version info
-     
-    appendText(bufPtr, bufSize, _("\nInstalled Package:\n"));
+    appendTag(info,_("Maintainer"), pkg->maintainer());
 
-    appendTag(bufPtr, bufSize, _("    Version"), pkg->installedVersion());
-    size = pkg->installedSize();
-    appendTag(bufPtr, bufSize, _("    Size"),
-	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
+    g_string_append(info, _("\nInstalled Package:\n"));
+    appendTag(info,_("\tVersion"), pkg->installedVersion());
+    appendTag(info, _("\tSize"), pkg->installedSize());
 
-    
-    appendText(bufPtr, bufSize, _("\nAvailable Package:\n"));
-    
-    appendTag(bufPtr, bufSize, _("    Version"),
-	      pkg->availableVersion());
-    size = pkg->availableInstalledSize();
-    appendTag(bufPtr, bufSize, _("    Size"),
-	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
+    g_string_append(info, _("\nAvailable Package:\n"));
+    appendTag(info,_("\tVersion"),pkg->availableVersion());
+    appendTag(info, _("\tSize"), pkg->availableInstalledSize());
+    appendTag(info, _("\tPackage Size"), pkg->availablePackageSize());
 
-    size = pkg->availablePackageSize();
-    appendTag(bufPtr, bufSize, _("    Package Size"), 
-	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
-
-    gtk_label_set_text(GTK_LABEL(_infoL), buffer);
+    gtk_label_set_text(GTK_LABEL(_infoL), info->str);
+    g_string_free(info, TRUE);
 
     // description
     GtkTextIter iter;

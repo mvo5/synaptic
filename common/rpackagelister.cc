@@ -1228,11 +1228,9 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
     // Get the source list
     //pkgSourceList List;
 #ifdef HAVE_RPM
-    if (_cache->list()->ReadMainList() == false)
-	return false;
+    _cache->list()->ReadMainList();
 #else
-    if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false)
-	return false;
+    _cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist"));
 #endif
     // Lock the list directory
     FileFd Lock;
@@ -1319,11 +1317,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
     // Read the source list
 #ifdef HAVE_RPM
     if (_cache->list()->ReadMainList() == false) {
-    return _error->Error(_("The list of sources could not be read."));
+	_userDialog->warning(_("Ignoring invalid record(s) in sources.list file!"));
     }
 #else
     if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false) {
-	return _error->Error(_("The list of sources could not be read."));
+      _userDialog->warning(_("Ignoring invalid record(s) in sources.list file!"));
     }
 #endif
     

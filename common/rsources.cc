@@ -37,6 +37,7 @@ bool SourcesList::ReadSourcePart(string listpath)
     char buf[512];
     const char *p;
     ifstream ifs(listpath.c_str(), ios::in );
+    bool record_ok = true;
 
     // cannot open file
     if (!ifs != 0) 
@@ -92,7 +93,11 @@ bool SourcesList::ReadSourcePart(string listpath)
 		rec.Comment = buf;
 	    } else {
 		// syntax error on line
-		return _error->Error(_("Syntax error in line %s"), buf);
+		rec.Type = Comment;
+		string s = "#" + string(buf);
+		rec.Comment = s;
+		record_ok = false;
+		//return _error->Error(_("Syntax error in line %s"), buf);
 	    }
 	}
 
@@ -119,14 +124,25 @@ bool SourcesList::ReadSourcePart(string listpath)
 	    p = tmp;
 	    rec.Sections = new string[rec.NumSections];
 	    rec.NumSections = 0;
-	    while (ParseQuoteWord(p, Section) == true)
+	    while (ParseQuoteWord(p, Section) == true) {
+		// comments inside the record are preserved
+		if(Section[0] == '#') {
+		    SourceRecord rec;
+		    string s = Section + string(p);
+		    rec.Type = Comment;
+		    rec.Comment = s;
+		    rec.SourceFile = listpath;
+		    AddSourceNode(rec);
+		    break;
+		}
 		rec.Sections[rec.NumSections++] = Section;
+	    }
 	}
 	AddSourceNode(rec);
     }
     
     ifs.close();
-    return true;
+    return record_ok;
 }
 
 bool SourcesList::ReadSourceDir(string Dir)

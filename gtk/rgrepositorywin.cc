@@ -264,9 +264,8 @@ RGRepositoryEditor::~RGRepositoryEditor()
 bool RGRepositoryEditor::Run()
 {
   if(_lst.ReadSources() == false) {
-      _error->Error(_("Cannot read sources.list file"));
-      _userDialog->showErrors();
-      return false;
+      _userDialog->warning(_("Ignoring invalid record(s) in sources.list file!"));
+      //return false;
   }
   if(_lst.ReadVendors() == false) {
       _error->Error(_("Cannot read vendors.list file"));

@@ -4,9 +4,12 @@
  - better man-page
  - if a pkg is not installable, the user gets a warning if the tries to 
    install it
- - much improved "by Status" tree-view, displays now by:
+ - improved "by Status" tree-view, displays now by:
    "installed, installed and upgradeable, new in archive, not installed,
     not installed but residual config"
+ - sources.list reading is more robust. invalid records are ignored and 
+   commented out, comments inside a line are allowed now
+   (e.g. "deb http://ftp.debian.org/debian unstable main # my main source")
 
 0.37
  - optimisation of the package view, should be faster now 

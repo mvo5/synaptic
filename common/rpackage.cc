@@ -586,6 +586,17 @@ string RPackage::showWhyInstBroken()
 
     pkgDepCache::StateCache &State = (*_depcache)[*_package];
     Ver = State.CandidateVerIter(*_depcache);
+
+    // check if there is actually something to install
+    if(Ver == 0) {
+	ioprintf(out,
+		 _("\nPackage %s has no available version, but exists in the database.\n"
+		   "This typically means that the package was mentioned in a dependency and "
+		   "never uploaded, has been obsoleted or is not available with the contents "
+		   "of sources.list\n"),_package->Name());
+	return out.str();
+    }
+
     for (pkgCache::DepIterator D = Ver.DependsList(); D.end() == false;) {
 	// Compute a single dependency element (glob or)
 	pkgCache::DepIterator Start;

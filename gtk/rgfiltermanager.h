@@ -53,11 +53,7 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
 };
 
 // FIXME: if you add a new status change this const! (calc automaticlly)
-#ifndef HAVE_RPM
 static const int NrOfStatusBits = 13;
-#else
-static const int NrOfStatusBits = 11;
-#endif
 
 static char *ActOptions[] = {
    _("Includes"),

@@ -155,6 +155,10 @@ _selectedFilter(NULL), _filterview(filterview)
       _statusB[i] = glade_xml_get_widget(_gladeXML, s);
       //cout << "loaded: " << s << endl;
       assert(_statusB[i]);
+#ifdef HAVE_RPM // hide debian only boxes
+      if(i == 9 || i == 10)
+	gtk_widget_hide(_statusB[i]);
+#endif
       g_free(s);
    }
 

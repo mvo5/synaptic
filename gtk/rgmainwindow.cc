@@ -1322,8 +1322,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
 	gtk_label_set_text(GTK_LABEL(_depInfoL), "");
 	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
-	if (_showUpdateInfo)
-	    gtk_label_set_text(GTK_LABEL(_importL), "");
 
 	gtk_widget_set_sensitive(_tabview, FALSE);
 	
@@ -1385,48 +1383,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
     gtk_label_set_text(GTK_LABEL(_infoL), buffer);
 
-    if (_showUpdateInfo) {
-	// importance of update
-	char *text;
-	
-	bufPtr = buffer;
-	bufSize = sizeof(buffer);
-	*bufPtr = 0;
-	
-	switch (status) {
-	 case RPackage::SNotInstalled:
-	    text = _("Not Relevant");
-	    break;
-	 case RPackage::SInstalledBroken:
-	    text = _("Unknown");
-	    break;
-	 default:
-	    if (importance == RPackage::ISecurity ||
-		importance == RPackage::ICritical)
-		text = _("Recommended");
-	    else
-		text = _("Possible");
-	    break;
-	}
-	appendTag(bufPtr, bufSize, _("Package Upgrade"), text);
-	
-	appendTag(bufPtr, bufSize, _("    Importance"),
-		  _(ImportanceNames[(int)importance]));
-	appendTag(bufPtr, bufSize, _("    Date"), pkg->updateDate());	
-	gtk_label_set_text(GTK_LABEL(_importL), buffer);
-
-	if (importance == RPackage::ISecurity) {
-	    gtk_widget_show(_importP);
-	} else {
-	    gtk_widget_hide(_importP);
-	}
-    }
-
-    // update information
-    if (_showUpdateInfo) {
-//	const char *updateText = utf8(pkg->updateSummary());
-    }
-     
     // description
     GtkTextIter iter;
     gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
@@ -1756,12 +1712,6 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 {
     assert(_win);
 
-#if !defined(DEBUGUI) || defined(HAVE_RPM)
-    //_showUpdateInfo = true; // xxx conectiva only, for now
-    _showUpdateInfo = false;
-#else
-    _showUpdateInfo = false;
-#endif
     _blockActions = false;
     _unsavedChanges = false;
     _interfaceLocked = 0;
@@ -3281,16 +3231,20 @@ void RGMainWindow::setStatusText(char *text)
     if (text) {
 	gtk_label_set_text(GTK_LABEL(_statusL), text);
     } else {
-	char buffer[256];
-
+	gchar *buffer;
+	// we need to make this two strings for i18n reasons
 	listed = _lister->count();
-	snprintf(buffer, sizeof(buffer), 
-		 _("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be %s"),
-		 listed, installed, broken, toinstall, toremove,
-		 SizeToStr(fabs(size)).c_str(),
-		 size < 0 ? _("freed") : _("used"));
-	
+	if(size < 0) {
+	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be freed"),
+				     listed, installed, broken, toinstall, toremove,
+				     SizeToStr(fabs(size)).c_str());
+	} else {
+	    buffer = g_strdup_printf(_("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be used"),
+				     listed, installed, broken, toinstall, toremove,
+				     SizeToStr(fabs(size)).c_str());
+	}; 		    
 	gtk_label_set_text(GTK_LABEL(_statusL), buffer);
+	g_free(buffer);
     }
     
     gtk_widget_set_sensitive(_upgradeB, _lister->upgradable() );

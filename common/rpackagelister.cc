@@ -500,7 +500,7 @@ bool RPackageLister::openCache(bool reset)
 
 	if(pkg->provides().size() > 1) {
 	    string name(pkg->name());
-	    cout << "pkg: " << name << " provides: " << endl;
+	    //cout << "pkg: " << name << " provides: " << endl;
 	    vector<const char *> p=pkg->provides();
 	    tree<string>::iterator it;
 	    for(int i=0;i<p.size();i++) {

@@ -180,6 +180,7 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
     gtk_container_add(GTK_CONTAINER(me->_topF), view);
 
     string text;
+    gchar *str;
     
     vector<RPackage*> held;
     vector<RPackage*> kept;
@@ -199,24 +200,30 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 
     for (vector<RPackage*>::const_iterator p = essential.begin();
 	 p != essential.end(); p++) {
-	
-	text += string((*p)->name()) + _(": (ESSENTIAL) will be Removed\n");
+	str = g_strdup_printf(_("%s: (ESSENTIAL) will be Removed\n"),(*p)->name());
+	text += str;
+	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
 	 p != toRemove.end(); p++) {
-	text += string((*p)->name()) + _(": will be Removed\n");
+	str = g_strdup_printf(_("%s: will be Removed\n"), (*p)->name());
+	text += str;
+	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
 	 p != toUpgrade.end(); p++) {
-	text += string((*p)->name()) + " " +(*p)->installedVersion()
-	    + _(": will be Upgraded to ")+(*p)->availableVersion()+"\n";
+	str = g_strdup_printf(_("%s %s: will be Upgraded to %s\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
+	text += str;
+	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
 	 p != toInstall.end(); p++) {
-	text += string((*p)->name()) + " " + (*p)->availableVersion() + _(": will be Installed\n");
+	str = g_strdup_printf(_("%s %s: will be Installed\n"),(*p)->name(), (*p)->availableVersion());
+	text += str;
+	g_free(str);
     }
     
     gtk_label_set_text(GTK_LABEL(info), text.c_str());
@@ -250,7 +257,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
     
     _middleF = gtk_frame_new(NULL);
-    scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+    scrolled_win = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				    GTK_POLICY_AUTOMATIC,
 				    GTK_POLICY_AUTOMATIC);

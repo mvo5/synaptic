@@ -88,7 +88,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    RPackageLister *_lister;
 
-   bool _showUpdateInfo;
    bool _unsavedChanges;
    
    bool _blockActions; // block signals from the action and hold buttons

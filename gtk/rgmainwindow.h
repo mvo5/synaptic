@@ -217,6 +217,16 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    
    static void rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
 		    GtkTreePath *arg2, gpointer data);
+
+   // pop-up menu
+   static gboolean onButtonPressed(GtkWidget *treeview, 
+				   GdkEventButton *event, 
+				   gpointer userdata);
+   static void treeviewPopupMenu(GtkWidget *treeview, 
+				 GdkEventButton *event, 
+				 RGMainWindow *me,
+				 RPackage *pkg);
+
    
    virtual bool close();
    static bool closeWin(GtkWidget *self, void *me) { 

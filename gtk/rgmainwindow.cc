@@ -2145,6 +2145,103 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
 
 }
 
+void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview, 
+				     GdkEventButton *event,
+				     RGMainWindow *me,
+				     RPackage *pkg)
+{
+    GtkWidget *menu, *menuitem;
+    GtkWidget *img;
+
+    menu = gtk_menu_new();
+    RPackage::PackageStatus pstatus =  pkg->getStatus();
+    RPackage::MarkedStatus  mstatus = pkg->getMarkedStatus();
+
+    // build menu
+    if(mstatus != RPackage::MKeep) {
+	menuitem = gtk_image_menu_item_new_with_label(_("Keep"));
+	img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+	g_object_set_data(G_OBJECT(menuitem),"me",me);
+	g_signal_connect(menuitem, "activate",
+			 (GCallback) menuActionClicked, (void*)PKG_KEEP);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+    }
+    
+    if(pstatus == RPackage::SInstalledOutdated) {
+	menuitem = gtk_image_menu_item_new_with_label(_("Upgrade"));
+	img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+	g_object_set_data(G_OBJECT(menuitem),"me",me);
+	g_signal_connect(menuitem, "activate",
+			 (GCallback) menuActionClicked, (void*)PKG_INSTALL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+    }
+
+    if(pstatus == RPackage::SNotInstalled) {
+	menuitem = gtk_image_menu_item_new_with_label(_("Install"));
+	img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+	g_object_set_data(G_OBJECT(menuitem),"me",me);
+	g_signal_connect(menuitem, "activate",
+			 (GCallback) menuActionClicked, (void*)PKG_INSTALL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+    }
+
+
+    if( pstatus != RPackage::SNotInstalled) {
+	menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
+	img = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+	g_object_set_data(G_OBJECT(menuitem),"me",me);
+	g_signal_connect(menuitem, "activate",
+			 (GCallback) menuActionClicked, (void*)PKG_DELETE);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+    }
+
+    gtk_widget_show_all(menu);
+    gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
+                   (event != NULL) ? event->button : 0,
+                   gdk_event_get_time((GdkEvent*)event));
+}
+
+gboolean RGMainWindow::onButtonPressed(GtkWidget *treeview, 
+				       GdkEventButton *event, 
+				       gpointer data)
+{
+    //cout << "onButtonPressed" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+    RPackage *pkg = NULL;
+    GtkTreePath *path;
+
+    /* single click with the right mouse button? */
+    if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
+	GtkTreeSelection *selection;
+	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	if(gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
+					 (int)event->x, (int)event->y,
+					 &path, NULL, NULL, NULL)) {
+	    GtkTreeIter iter;
+	    gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
+				    path);
+	    gtk_tree_selection_unselect_all(selection);
+	    gtk_tree_selection_select_path(selection, path);
+	    // check if leaf-node, if not -> return
+	    if(gtk_tree_model_iter_has_child(me->_activeTreeModel,
+					     &iter))
+		return FALSE;
+	    gtk_tree_model_get(me->_activeTreeModel, &iter,
+			       PKG_COLUMN, &pkg, 
+			       -1);
+	    gtk_tree_path_free(path);
+	    
+	    treeviewPopupMenu(treeview, event, me, pkg);
+	    return TRUE; 
+	}	
+    }
+    return FALSE;
+}
+
 void RGMainWindow::rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
 		 GtkTreePath *arg2, gpointer data)
 {
@@ -2920,6 +3017,9 @@ void RGMainWindow::buildInterface()
     // connect the treeview signals
     g_signal_connect(G_OBJECT(_treeView), "row-expanded",
 		     G_CALLBACK(rowExpanded), this);
+
+    g_signal_connect(G_OBJECT(_treeView), "button-press-event", 
+		     (GCallback)onButtonPressed, this);
 
     
     GtkTreeSelection *select;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.39\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-02 16:26+0200\n"
+"POT-Creation-Date: 2004-06-02 17:04+0200\n"
 "PO-Revision-Date: 2003-10-19 11:50+0100\n"
 "Last-Translator: Luigi Maselli <metnik at tiscali it>\n"
 "Language-Team: italian <tp@lists.linux.it>\n"
@@ -447,9 +447,9 @@ msgstr ""
 msgid "Installed"
 msgstr "Installati"
 
-#: common/rpackage.cc:1301
+#: common/rpackage.cc:1301 common/rpackageview.cc:97
 #, fuzzy
-msgid "Installed (update available)"
+msgid "Installed (upgradable)"
 msgstr "Installati e aggiornabili"
 
 #: common/rpackage.cc:1302
@@ -466,7 +466,7 @@ msgstr "Difettosi"
 
 #: common/rpackage.cc:1304
 #, fuzzy
-msgid "Not installed (new in archive)"
+msgid "Not installed (new in repository)"
 msgstr "Non installati (configurazione residua)"
 
 #: common/rpackagecache.cc:50
@@ -544,7 +544,7 @@ msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:114
-#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:15
+#: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:18
 #: gtk/window_filters.glade.h:50
 msgid "Status"
 msgstr "Stato"
@@ -554,7 +554,7 @@ msgstr "Stato"
 msgid "Pattern"
 msgstr "Modello"
 
-#: common/rpackagefilter.cc:63 gtk/window_main.glade.h:13
+#: common/rpackagefilter.cc:63 gtk/window_main.glade.h:16
 #: gtk/window_filters.glade.h:49
 msgid "Section"
 msgstr "Sezione"
@@ -696,12 +696,7 @@ msgstr "Nuovi nel repertorio"
 
 #: common/rpackageview.cc:94
 #, fuzzy
-msgid "Installed and obsolete"
-msgstr "Installati e aggiornabili"
-
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:22
-#, fuzzy
-msgid "Installed and upgradable"
+msgid "Installed (obsolete)"
 msgstr "Installati e aggiornabili"
 
 #: common/rpackageview.cc:102
@@ -721,9 +716,9 @@ msgstr "Attività"
 msgid "Reduced View"
 msgstr "Vista ridotta"
 
-#: common/rpackageview.cc:357 gtk/gsynaptic.cc:202
+#: common/rpackageview.cc:357 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:295
 #, fuzzy
-msgid "Queued Changes"
+msgid "Marked Changes"
 msgstr "Esegui le modifiche selezionate"
 
 #: common/rpackageview.cc:366
@@ -770,7 +765,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">Segnare ulteriori modifiche richieste?"
 "</span>"
 
-#: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:34
+#: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:35
 #, fuzzy
 msgid "Default Upgrade"
 msgstr "Aggiorna:"
@@ -847,11 +842,19 @@ msgstr "-i=? Avvio con il filtro iniziale impostato al numero specificato\n"
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Specifica un'opzione di configurazione, es. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:131
+#: gtk/gsynaptic.cc:62
+msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:63
+msgid "--non-interactive Never prompt for user input\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:132
 msgid "You must run this program as the root user."
 msgstr "Questo programma deve essere eseguito dall'utente root."
 
-#: gtk/gsynaptic.cc:171
+#: gtk/gsynaptic.cc:172
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "Synaptic Gestore Pacchetti"
@@ -1396,11 +1399,6 @@ msgstr "%s %s: verrà installato\n"
 msgid "Summary"
 msgstr ""
 
-#: gtk/rgsummarywindow.cc:295
-#, fuzzy
-msgid "Marked Changes"
-msgstr "Esegui le modifiche selezionate"
-
 #: gtk/rgsummarywindow.cc:336
 #, fuzzy, c-format
 msgid "%d package is locked\n"
@@ -1528,205 +1526,214 @@ msgstr "Albero alfabetico"
 
 #: gtk/window_main.glade.h:3
 #, fuzzy
+msgid "Mark all Up_grades..."
+msgstr "Il pacchetto verrà aggiornato."
+
+#: gtk/window_main.glade.h:4
+#, fuzzy
+msgid "Mark all Upgrades"
+msgstr "Segnati da aggiornare"
+
+#: gtk/window_main.glade.h:5
+#, fuzzy
 msgid "Mark for Co_mplete Removal"
 msgstr "Segnati da eliminare"
 
-#: gtk/window_main.glade.h:4
+#: gtk/window_main.glade.h:6
 #, fuzzy
 msgid "Mark for R_einstallation"
 msgstr "Segnati per l'installazione:"
 
-#: gtk/window_main.glade.h:5
+#: gtk/window_main.glade.h:7
 #, fuzzy
 msgid "Mark for _Installation"
 msgstr "Segnati per l'installazione:"
 
-#: gtk/window_main.glade.h:6
+#: gtk/window_main.glade.h:8
 #, fuzzy
 msgid "Mark for _Removal"
 msgstr "Segnati da eliminare"
 
-#: gtk/window_main.glade.h:7
+#: gtk/window_main.glade.h:9
 #, fuzzy
 msgid "Mark for _Upgrade"
 msgstr "Segnati da aggiornare"
 
-#: gtk/window_main.glade.h:8
+#: gtk/window_main.glade.h:10
 #, fuzzy
 msgid "No package is selected."
 msgstr "Pacchetto installato."
 
-#: gtk/window_main.glade.h:9
+#: gtk/window_main.glade.h:11
 #, fuzzy
 msgid "Pac_kage"
 msgstr "Pacchetto"
 
-#: gtk/window_main.glade.h:10
+#: gtk/window_main.glade.h:12
 msgid "Prefere_nces"
 msgstr "Prefere_nze"
 
-#: gtk/window_main.glade.h:11
+#: gtk/window_main.glade.h:13
+msgid "Refresh"
+msgstr ""
+
+#: gtk/window_main.glade.h:14
 #, fuzzy
 msgid "Release"
 msgstr "Rimpiazza"
 
-#: gtk/window_main.glade.h:12
+#: gtk/window_main.glade.h:15
 #, fuzzy
 msgid "Save Markings _As..."
 msgstr "Salva Selezioni _come"
 
-#: gtk/window_main.glade.h:14
+#: gtk/window_main.glade.h:17
 #, fuzzy
 msgid "Set _Internal Option..."
 msgstr "Imposta opzione _interna"
 
-#: gtk/window_main.glade.h:16
+#: gtk/window_main.glade.h:19
 msgid "Synaptic"
 msgstr "Synaptic"
 
-#: gtk/window_main.glade.h:17
+#: gtk/window_main.glade.h:20
 #, fuzzy
 msgid "Text Be_side Icons"
 msgstr "Testo sotto le icone"
 
-#: gtk/window_main.glade.h:18
+#: gtk/window_main.glade.h:21
 #, fuzzy
 msgid "Text _Below Icons"
 msgstr "Testo sotto le icone"
 
-#: gtk/window_main.glade.h:19
+#: gtk/window_main.glade.h:22
 msgid "U_nmark"
 msgstr ""
 
-#: gtk/window_main.glade.h:20
+#: gtk/window_main.glade.h:23
 #, fuzzy
 msgid "U_nmark All"
 msgstr "Esegui le modifiche selezionate"
 
-#: gtk/window_main.glade.h:21
-#, fuzzy
-msgid "Up_grade System"
-msgstr "Aggiorna"
-
-#: gtk/window_main.glade.h:22
+#: gtk/window_main.glade.h:24
 #, fuzzy
 msgid "_About"
 msgstr "Informazioni"
 
-#: gtk/window_main.glade.h:23
+#: gtk/window_main.glade.h:25
 #, fuzzy
 msgid "_Add CD-ROM..."
 msgstr "Aggiungi CD-ROM"
 
-#: gtk/window_main.glade.h:24
-msgid "_Browse Documentation"
-msgstr ""
-
-#: gtk/window_main.glade.h:25
-#, fuzzy
-msgid "_Configure"
-msgstr "Riconfigura"
-
 #: gtk/window_main.glade.h:26
-msgid "_Contents"
+msgid "_Browse Documentation"
 msgstr ""
 
 #: gtk/window_main.glade.h:27
 #, fuzzy
+msgid "_Configure..."
+msgstr "Riconfigura"
+
+#: gtk/window_main.glade.h:28
+msgid "_Contents"
+msgstr ""
+
+#: gtk/window_main.glade.h:29
+#, fuzzy
 msgid "_Download Changelog"
 msgstr "Eliminare i pacchetti scaricati dopo l'installazione"
 
-#: gtk/window_main.glade.h:28
+#: gtk/window_main.glade.h:30
 #, fuzzy
 msgid "_Edit"
 msgstr "Modifica"
 
-#: gtk/window_main.glade.h:29
+#: gtk/window_main.glade.h:31
 msgid "_File"
 msgstr "_File"
 
-#: gtk/window_main.glade.h:30
+#: gtk/window_main.glade.h:32
 #, fuzzy
 msgid "_Filters"
 msgstr "Filtri"
 
-#: gtk/window_main.glade.h:31
+#: gtk/window_main.glade.h:33
 #, fuzzy
 msgid "_Find..."
 msgstr "Appunto:"
 
-#: gtk/window_main.glade.h:32
+#: gtk/window_main.glade.h:34
 #, fuzzy
 msgid "_Fix Broken Packages"
 msgstr "Ripara pacchetti difettosi"
 
-#: gtk/window_main.glade.h:33
+#: gtk/window_main.glade.h:35
 msgid "_Help"
 msgstr "_Aiuto"
 
-#: gtk/window_main.glade.h:34
+#: gtk/window_main.glade.h:36
 #, fuzzy
 msgid "_Hide"
 msgstr "Nascondi"
 
-#: gtk/window_main.glade.h:35
+#: gtk/window_main.glade.h:37
 #, fuzzy
 msgid "_Icon Legend"
 msgstr "Solo icone"
 
-#: gtk/window_main.glade.h:36
+#: gtk/window_main.glade.h:38
 #, fuzzy
 msgid "_Icons Only"
 msgstr "Solo icone"
 
-#: gtk/window_main.glade.h:37
+#: gtk/window_main.glade.h:39
 #, fuzzy
 msgid "_Lock Current Status and Version"
 msgstr "in versione"
 
-#: gtk/window_main.glade.h:38
+#: gtk/window_main.glade.h:40
 msgid "_Quick Introduction"
 msgstr ""
 
-#: gtk/window_main.glade.h:39
+#: gtk/window_main.glade.h:41
 msgid "_Quit"
 msgstr ""
 
-#: gtk/window_main.glade.h:40
+#: gtk/window_main.glade.h:42
 #, fuzzy
 msgid "_Read Markings..."
 msgstr "_Carica Selezioni"
 
-#: gtk/window_main.glade.h:41
+#: gtk/window_main.glade.h:43
 #, fuzzy
 msgid "_Redo"
 msgstr "_Elimina"
 
-#: gtk/window_main.glade.h:42
+#: gtk/window_main.glade.h:44
 #, fuzzy
 msgid "_Refresh Package List"
 msgstr "Aggiorna voci pacchetti"
 
-#: gtk/window_main.glade.h:43
+#: gtk/window_main.glade.h:45
 msgid "_Repositories"
 msgstr "_Repertori"
 
-#: gtk/window_main.glade.h:44
+#: gtk/window_main.glade.h:46
 #, fuzzy
 msgid "_Save Markings"
 msgstr "Salva modifiche"
 
-#: gtk/window_main.glade.h:45
+#: gtk/window_main.glade.h:47
 #, fuzzy
 msgid "_Text Only"
 msgstr "Solo testo"
 
-#: gtk/window_main.glade.h:46
+#: gtk/window_main.glade.h:48
 #, fuzzy
 msgid "_Toolbar"
 msgstr "Barra degli strumenti"
 
-#: gtk/window_main.glade.h:47
+#: gtk/window_main.glade.h:49
 #, fuzzy
 msgid "_Undo"
 msgstr "_Elimina"
@@ -1839,7 +1846,7 @@ msgstr "Pacchetti forniti"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
-#: gtk/dialog_welcome.glade.h:1 gtk/window_details.glade.h:1
+#: gtk/window_details.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -1989,136 +1996,136 @@ msgid "Broken:"
 msgstr "Difettosi:"
 
 #: gtk/window_preferences.glade.h:27
+msgid "Clicking on the status icon marks the most likely action"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:28
 #, fuzzy
 msgid "Color"
 msgstr "colore"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color packages by their status"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 #, fuzzy
 msgid "Colors"
 msgstr "colore"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 #, fuzzy
 msgid "Columns and Fonts"
 msgstr "Colonne e colori"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:32
+#: gtk/window_preferences.glade.h:33
 msgid "Completely"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:33
+#: gtk/window_preferences.glade.h:34
 msgid "Consider recommended packages as dependencies"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:35
+#: gtk/window_preferences.glade.h:36
 #, fuzzy
 msgid "Default archive: "
 msgstr "Azione elimina predefinita: "
 
-#: gtk/window_preferences.glade.h:36
+#: gtk/window_preferences.glade.h:37
 msgid "Delete downloaded packages after installation"
 msgstr "Eliminare i pacchetti scaricati dopo l'installazione"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:38
 msgid "Delete packages which are no longer available only"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:38
+#: gtk/window_preferences.glade.h:39
 #, fuzzy
 msgid "Description:"
 msgstr "Descrizione"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:40
 msgid "Direct connection to the internet"
 msgstr "Connessione diretta a internet"
 
-#: gtk/window_preferences.glade.h:40 gtk/window_details.glade.h:19
+#: gtk/window_preferences.glade.h:41 gtk/window_details.glade.h:19
 #, fuzzy
 msgid "Expert"
 msgstr "Esegui"
 
-#: gtk/window_preferences.glade.h:41
+#: gtk/window_preferences.glade.h:42
 #, fuzzy
 msgid "FTP proxy: "
 msgstr "Ftp proxy: "
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:43
 msgid "General"
 msgstr "Generale"
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:44
 #, fuzzy
 msgid "HTTP proxy: "
 msgstr "Http proxy: "
 
-#: gtk/window_preferences.glade.h:44
+#: gtk/window_preferences.glade.h:45
 #, fuzzy
 msgid "Hide"
 msgstr "Nascondi"
 
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:46
 msgid "IP address or host name of the ftp proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the http proxy server"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:48
 #, fuzzy
 msgid "Installed (locked):"
 msgstr ""
 "\n"
 "Pacchetti installati:\n"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:49
 #, fuzzy
 msgid "Installed size:"
 msgstr "Dimensione installata"
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:50
 #, fuzzy
 msgid "Installed version:"
 msgstr "Versione Installata"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:51
 #, fuzzy
 msgid "Installed:"
 msgstr "Installati"
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:52
 #, fuzzy
 msgid "Keep Configuration"
 msgstr "Rimuovi anche la configurazione"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:53
 #, fuzzy
 msgid "Latest version:"
 msgstr "Versione Installata"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:54
 #, fuzzy
 msgid "Leave all downloaded packages in the cache"
 msgstr "Mantenere i pacchetti scaricati nella cache"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:55
 msgid "Manual proxy configuration"
 msgstr "Configurazione manuale del proxy"
-
-#: gtk/window_preferences.glade.h:55
-msgid "Mark most likely change by clicking on the status icon"
-msgstr ""
 
 #: gtk/window_preferences.glade.h:56
 #, fuzzy
@@ -2168,8 +2175,8 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:66
 #, fuzzy
-msgid "New in archive:"
-msgstr "Nuovi nell'archivio"
+msgid "New in repository:"
+msgstr "Nuovi nel repertorio"
 
 #: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
@@ -2245,8 +2252,9 @@ msgid ""
 msgstr ""
 
 #: gtk/window_preferences.glade.h:84
-msgid "Update available:"
-msgstr ""
+#, fuzzy
+msgid "Upgradable:"
+msgstr "Aggiornabili"
 
 #: gtk/window_preferences.glade.h:85
 #, fuzzy
@@ -2416,6 +2424,11 @@ msgstr "Include"
 #, fuzzy
 msgid "Installed and new upstream version"
 msgstr "Versione Installata"
+
+#: gtk/window_filters.glade.h:22
+#, fuzzy
+msgid "Installed and upgradable"
+msgstr "Installati e aggiornabili"
 
 #: gtk/window_filters.glade.h:23
 #, fuzzy
@@ -2613,43 +2626,55 @@ msgstr "Nome pacchetto"
 msgid "Synaptic Package Manager"
 msgstr "Synaptic Gestore Pacchetti"
 
+#: gtk/dialog_welcome.glade.h:1
+#, fuzzy
+msgid " - "
+msgstr "    "
+
 #: gtk/dialog_welcome.glade.h:2
 msgid ""
-"- Double click on the package name\n"
-"- Right click and choose action from the context menu\n"
-"- Click on the status icon to choose an action"
+"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
+"all changes and then to apply them."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:3
+#, fuzzy
+msgid "Choose the action from the context menu of the package."
+msgstr "Seleziona l'ultima versione dei pacchetti già installati"
+
+#: gtk/dialog_welcome.glade.h:4
+msgid "Click on the status icon to open a menu that contains all actions."
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:5
 #, fuzzy
-msgid "1. Mark package(s) for installation, upgrade or removal:"
-msgstr "Segna il pacchetto per l'installazione/aggiornamento"
+msgid "Double click on the package name."
+msgstr "Cerca un pacchetto per nome"
 
 #: gtk/dialog_welcome.glade.h:6
-msgid "2. Apply the marked changes"
-msgstr ""
-
-#: gtk/dialog_welcome.glade.h:7
-msgid "<b>Note:</b> Changes are not applied instantly."
-msgstr ""
-
-#: gtk/dialog_welcome.glade.h:8
 msgid "Quick Introduction"
 msgstr ""
 
-#: gtk/dialog_welcome.glade.h:9
+#: gtk/dialog_welcome.glade.h:7
+msgid "Select the package and choose the action from the 'Package' menu."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
 msgstr ""
 
-#: gtk/dialog_welcome.glade.h:10
+#: gtk/dialog_welcome.glade.h:9
 msgid ""
-"The package manager enables you to install, upgrade or remove software "
-"packages:"
+"The software on your system is organized in so called <i>packages</i>. The "
+"package manager enables you to install, to upgrade or to remove software "
+"packages."
 msgstr ""
 
-#: gtk/dialog_welcome.glade.h:11
-msgid "The software on your system is organized in so called <i>packages</i>."
-msgstr ""
+#: gtk/dialog_welcome.glade.h:10
+#, fuzzy
+msgid ""
+"You can mark packages for installation, upgrade or removal in several ways:"
+msgstr "Segna il pacchetto per l'installazione/aggiornamento"
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
@@ -2775,6 +2800,22 @@ msgstr "Dimensione"
 #, fuzzy
 msgid "Version:"
 msgstr "Versione"
+
+#, fuzzy
+#~ msgid "Installed (update available)"
+#~ msgstr "Installati e aggiornabili"
+
+#, fuzzy
+#~ msgid "Queued Changes"
+#~ msgstr "Esegui le modifiche selezionate"
+
+#, fuzzy
+#~ msgid "Up_grade System"
+#~ msgstr "Aggiorna"
+
+#, fuzzy
+#~ msgid "New in archive:"
+#~ msgstr "Nuovi nell'archivio"
 
 #~ msgid ""
 #~ "Some index files failed to download, they have been ignored, or old ones "
@@ -2914,9 +2955,6 @@ msgstr "Versione"
 
 #~ msgid "Not Installed"
 #~ msgstr "Non installati"
-
-#~ msgid "Upgradable"
-#~ msgstr "Aggiornabili"
 
 #~ msgid "Obsolete or locally installed"
 #~ msgstr "Obsoleti o localmente installati"
@@ -3160,10 +3198,6 @@ msgstr "Versione"
 #, fuzzy
 #~ msgid "Find next"
 #~ msgstr "Strumento di ricerca"
-
-#, fuzzy
-#~ msgid "Install the latest version of the package"
-#~ msgstr "Seleziona l'ultima versione dei pacchetti già installati"
 
 #~ msgid "Mark packages for upgrade, except those with new dependencies"
 #~ msgstr ""
@@ -3602,10 +3636,6 @@ msgstr "Versione"
 #~ msgstr "Escludi pacchetti selezionati"
 
 #, fuzzy
-#~ msgid "   "
-#~ msgstr "    "
-
-#, fuzzy
 #~ msgid "<b>Dependencies</b>"
 #~ msgstr "<b>Dipendenze</b>"
 
@@ -3877,9 +3907,6 @@ msgstr "Versione"
 #~ msgstr ""
 #~ "Seleziona l'ultima versione dei pacchetti già installati, anche se i "
 #~ "nuovi pacchetti devono essere installati come dipendenza"
-
-#~ msgid "Search for a package name"
-#~ msgstr "Cerca un pacchetto per nome"
 
 #~ msgid "Open the filter editor"
 #~ msgstr "Apri editor filtro"

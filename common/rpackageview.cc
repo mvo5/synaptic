@@ -91,10 +91,10 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    else if ((flags & RPackage::FNotInstallable) &&
 	    !(flags & RPackage::FResidualConfig) &&
 	    (flags & RPackage::FInstalled))
-      str = _("Installed and obsolete");
+      str = _("Installed (obsolete)");
    else if (flags & RPackage::FInstalled) {
       if (flags & RPackage::FOutdated)
-	 str = _("Installed and upgradable");
+	 str = _("Installed (upgradable)");
       else
 	 str = _("Installed");
    } else {
@@ -354,7 +354,7 @@ void RPackageViewFilter::makePresetFilters()
       filter->status.setStatus(RStatusPackageFilter::MarkInstall
                                | RStatusPackageFilter::MarkRemove
                                | RStatusPackageFilter::Broken);
-      filter->setName("Queued Changes"); _("Queued Changes");
+      filter->setName("Marked Changes"); _("Marked Changes");
       registerFilter(filter);
    }
 #ifndef HAVE_RPM

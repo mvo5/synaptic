@@ -1298,10 +1298,10 @@ void RPackageStatus::init()
       _("Not installed"),
       _("Not installed (locked)"),
       _("Installed"),
-      _("Installed (update available)"),
+      _("Installed (upgradable)"),
       _("Installed (locked to the current version)"),
       _("Broken"),
-      _("Not installed (new in archive)")
+      _("Not installed (new in repository)")
    };
    memcpy(PackageStatusLongString, status_long, sizeof(status_long));
 }

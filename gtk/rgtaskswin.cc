@@ -148,7 +148,11 @@ void RGTasksWin::cell_toggled_callback (GtkCellRendererToggle *cell,
    GtkTreeIter iter;
    gboolean res;
 
-   GtkTreeModel *model = (GtkTreeModel*)user_data;
+   RGTasksWin *me = (RGTasksWin *)user_data;
+
+   static int selected = 0;
+
+   GtkTreeModel *model = GTK_TREE_MODEL(me->_store);
    GtkTreePath* path = gtk_tree_path_new_from_string(path_string);
    gtk_tree_model_get_iter(model, &iter, path);
    gtk_tree_model_get(GTK_TREE_MODEL(model), &iter,
@@ -156,6 +160,18 @@ void RGTasksWin::cell_toggled_callback (GtkCellRendererToggle *cell,
    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
 		      TASK_CHECKBOX_COLUMN, !res,
 		      -1);
+
+   if(!res)
+      selected++;
+   else
+      selected--;
+
+   if(selected > 0)
+      gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"button_ok"),
+			       true);
+   else 
+      gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"button_ok"),
+			       false);
 }
 
 
@@ -197,7 +213,7 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    renderer = gtk_cell_renderer_toggle_new ();
    g_object_set(renderer, "activatable", TRUE, NULL);
    g_signal_connect(renderer, "toggled", 
-		    (GCallback) cell_toggled_callback, store);
+		    (GCallback) cell_toggled_callback, this);
    column = gtk_tree_view_column_new_with_attributes ("Install",
                                                       renderer,
                                                       "active", TASK_CHECKBOX_COLUMN,

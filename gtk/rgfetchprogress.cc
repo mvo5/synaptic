@@ -186,6 +186,9 @@ void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 
 void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
+    if (Itm.Owner->Status == pkgAcquire::Item::StatIdle)
+	return;
+
     updateStatus(Itm, DLFailed);
 
     RGFlushInterface();

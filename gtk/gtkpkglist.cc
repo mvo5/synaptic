@@ -636,6 +636,9 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
    case PKG_SIZE_COLUMN:
       pkg_list->_lister->sortPackagesByInstSize((int)pkg_list->order);
       break;
+   case AVAILABLE_VERSION_COLUMN:
+      pkg_list->_lister->sortPackagesByVersion((int)pkg_list->order);
+      break;
       //default:
       //cerr << "unknown sort column" << endl;
    }

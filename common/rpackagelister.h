@@ -113,7 +113,9 @@ class RPackageLister {
       LIST_SORT_SIZE_ASC,
       LIST_SORT_SIZE_DES,
       LIST_SORT_STATUS_ASC,
-      LIST_SORT_STATUS_DES
+      LIST_SORT_STATUS_DES,
+      LIST_SORT_VERSION_ASC,
+      LIST_SORT_VERSION_DES
    } listSortMode;
    listSortMode _sortMode;
 
@@ -135,6 +137,7 @@ class RPackageLister {
    void sortPackagesByStatus(vector<RPackage *> &packages, int order);
    void sortPackagesByName(vector<RPackage *> &packages);
    void sortPackagesByInstSize(vector<RPackage *> &packages, int order);
+   void sortPackagesByVersion(vector<RPackage *> &packages, int order);
 
    struct {
       char *pattern;
@@ -161,6 +164,9 @@ class RPackageLister {
    };
    void sortPackagesByInstSize(int order) {
       sortPackagesByInstSize(_viewPackages, order);
+   };
+   void sortPackagesByVersion(int order) {
+      sortPackagesByVersion(_viewPackages, order);
    };
 
    void setView(int index);

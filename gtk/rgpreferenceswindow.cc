@@ -211,17 +211,6 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
    me->saveTreeViewValues();
    me->_mainWin->rebuildTreeView();
 
-   switch (me->_synapticLayout) {
-      case LAYOUT_VPANED:
-         _config->Set("Synaptic::MainName", "main_vpaned");
-         break;
-      case LAYOUT_HPANED:
-         _config->Set("Synaptic::MainName", "main_hpaned");
-         break;
-      default:
-         cerr << "uuuoooohhhh" << endl;
-   }
-
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
       RGUserDialog userDialog(me);
@@ -399,17 +388,6 @@ void RGPreferencesWindow::show()
    gtk_entry_set_text(GTK_ENTRY(glade_xml_get_widget(_gladeXML,
                                                      "entry_no_proxy")),
                       str.c_str());
-   // main layout
-   string mainName = _config->Find("Synaptic::MainName", "main_hpaned");
-   if (mainName == "main_vpaned") {
-      gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML,
-                                                         "button_vpaned")));
-      _synapticLayout = LAYOUT_VPANED;
-   } else {
-      gtk_button_clicked(GTK_BUTTON
-                         (glade_xml_get_widget(_gladeXML, "button_hpaned")));
-      _synapticLayout = LAYOUT_HPANED;
-   }
 
    // font stuff
    b = _config->FindB("Synaptic::useUserFont", false);

@@ -569,12 +569,22 @@ void RPackageLister::reapplyFilter()
          break;
 
       case LIST_SORT_SIZE_ASC:
+
          sortPackagesByInstSize(0);
          break;
 
       case LIST_SORT_SIZE_DES:
          sortPackagesByInstSize(1);
          break;
+
+      case LIST_SORT_VERSION_ASC:
+         sortPackagesByVersion(0);
+         break;
+
+      case LIST_SORT_VERSION_DES:
+         sortPackagesByVersion(1);
+         break;
+
    }
 }
 
@@ -636,6 +646,41 @@ void RPackageLister::sortPackagesByInstSize(vector<RPackage *> &packages,
          stable_sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
       else
          stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+   }
+}
+
+struct versionSortFuncAsc {
+   bool operator() (RPackage *x, RPackage *y) {
+      const char *xstr = x->availableVersion();
+      const char *ystr = y->availableVersion();
+      if(xstr && ystr)
+	 if(strcmp(xstr,ystr) > 0) return true;
+      return false;
+}};
+struct versionSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      const char *xstr = x->availableVersion();
+      const char *ystr = y->availableVersion();
+      if(xstr && ystr)
+	 if(strcmp(ystr,xstr) > 0) return true;
+      return false;
+}};
+
+
+void RPackageLister::sortPackagesByVersion(vector<RPackage *> &packages,
+					   int order)
+{
+   //cout << "RPackageLister::sortPackagesByInstSize()"<<endl;
+   if (order == 0)
+      _sortMode = LIST_SORT_VERSION_ASC;
+   else
+      _sortMode = LIST_SORT_VERSION_DES;
+
+   if (!packages.empty()) {
+      if (order == 0)
+         stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());
+      else
+         stable_sort(packages.begin(), packages.end(), versionSortFuncDes());
    }
 }
 

@@ -924,7 +924,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 			glade_xml_get_widget(_gladeXML,"radiobutton_distro"),
 		       _("Prefer package versions from the selected "
 		       "distribution when upgrading packages. If you "
-		       "manually force a verison from a different "
+		       "manually force a version from a different "
 		       "distribution, the package version will follow "
 		       "that distribution until it enters the default "
 		       "distribution."),"");

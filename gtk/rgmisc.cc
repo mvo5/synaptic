@@ -26,6 +26,7 @@
 #include <string>
 #include "i18n.h"
 #include "rgmisc.h"
+#include <stdio.h>
 
 #if 0
 #include "alert.xpm"
@@ -78,12 +79,12 @@ string SizeToStr(double Size)
    int I = 0;
    while (I <= 8) {
       if (ASize < 100 && I != 0) {
-         sprintf(S, "%.1f %cB", ASize, Ext[I]);
+         snprintf(S, 300, "%.1f %cB", ASize, Ext[I]);
          break;
       }
 
       if (ASize < 10000) {
-         sprintf(S, "%.0f %cB", ASize, Ext[I]);
+         snprintf(S, 300, "%.0f %cB", ASize, Ext[I]);
          break;
       }
       ASize /= 1000.0;

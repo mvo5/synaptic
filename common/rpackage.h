@@ -145,6 +145,9 @@ public:
    bool enumAvailDeps(const char *&type, const char *&what, const char *&pkg,
 		 const char *&which, char *&summary, bool &satisfied);
 
+   // this gives the dependencies for the installed package
+   vector<RPackage*> getInstalledDeps();
+
    // installed package if installed, scheduled/candidate if not or if marked
    bool enumDeps(const char *&type, const char *&what, const char *&pkg,
 		 const char *&which, char *&summary, bool &satisfied);

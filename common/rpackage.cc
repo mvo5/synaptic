@@ -542,6 +542,35 @@ bool RPackage::enumAvailDeps(const char *&type, const char *&what,
 }
 
 
+vector<RPackage*> RPackage::getInstalledDeps()
+{
+    vector<RPackage*> deps;
+    pkgCache::VerIterator ver;
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+    
+    if (ver.end())
+	ver = _package->VersionList();
+
+    if (ver.end())
+	return deps;
+    
+    _depI = ver.DependsList();
+    // uninitialized but doesn't matter, they just have to be equal    
+
+    pkgCache::DepIterator  depIter = _depI;
+    while(!depIter.end()) {
+	pkgCache::PkgIterator depPkg = depIter.TargetPkg();
+	string name = depPkg.Name();
+	RPackage *pkg = _lister->getElement(name);
+	deps.push_back(pkg);
+	depIter++;
+    }
+
+    return deps;
+}
+
 bool RPackage::enumDeps(const char *&type, const char *&what, 
 			const char *&pkg, const char *&which, char *&summary,
 			bool &satisfied)

@@ -26,6 +26,8 @@
 
 using namespace std;
 
+//#define DEBUG_TREE
+
 static void         gtk_pkg_tree_init            (GtkPkgTree      *pkg_tree);
 static void         gtk_pkg_tree_class_init      (GtkPkgTreeClass *klass);
 static void         gtk_pkg_tree_tree_model_init (GtkTreeModelIface *iface);
@@ -296,9 +298,6 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
 
     RPackageLister::treeIter it(pkgTree->begin());
 
-    // we do not support more 
-    assert(depth <= 2);
-    
     // jump to right spot 
     for(int j=0;j<indices[0];j++) {
 	it.skip_children();
@@ -312,12 +311,22 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
 	}
     }
 
-//      cout << "get_iter: index " << indices[0] << ":"<<indices[1] << " is: " 
-//           << (*it).first << " depth: " << depth
-//           << endl;
+    // for the future dependencies
+    if(depth == 3) {
+	for(int j=0;j<indices[1];j++) {
+	    it.skip_children();
+	    ++it;
+	}
+	for(int j=-1;j<indices[2];j++) {
+	    ++it;
+	}
+    }
+//     cout << "get_iter: " << (*it).first 	 << "depth: " << depth
+// 	 << " indices: " <<indices[0]<<":"<< indices[1] << ":" << indices[2]
+//  	 << endl;
 
-  iter->user_data = it.node;
-  return TRUE;
+     iter->user_data = it.node;
+     return TRUE;
 }
 
 static GtkTreePath *
@@ -466,16 +475,21 @@ gtk_pkg_tree_iter_next (GtkTreeModel  *tree_model,
 
   RPackageLister::sibTreeIter it((RPackageLister::treeNode*)iter->user_data);
 
-  //cout << "iter_next(): " << (*it).first << endl;
   int depth = pkgTree->depth(it);
-  //cout << "before: " << depth << endl;
-  
-  if(depth == 0)
+
+#ifdef DEBUG_TREE_FULL
+  cout << "iter_next(): " << (*it).first << endl;
+  cout << "before: " << depth << endl;
+#endif
+
+  if(depth == 0 || depth == 1)
     it.skip_children();
 
   ++it;
 
+#ifdef DEBUG_TREE
   //  cout << "after: " << pkgTree->depth(*it) << endl;
+#endif
   if( it == pkgTree->end() ||  !pkgTree->is_valid(it) || depth != pkgTree->depth(it) ) 
     {
       //g_print("end of children \n");
@@ -491,15 +505,21 @@ gtk_pkg_tree_iter_children (GtkTreeModel *tree_model,
 			    GtkTreeIter  *iter,
 			    GtkTreeIter  *parent)
 {
+#ifdef DEBUG_TREE
+    cout << "gtk_pkg_tree_iter_children()"<<endl;
+#endif
+
   tree<RPackageLister::pkgPair> *pkgTree;
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
+  // FIXME: this is a  special case (see treemodel docs)
   if(parent == NULL) return FALSE;
   if(parent->user_data == NULL) return FALSE;
 
   RPackageLister::treeIter it((RPackageLister::treeNode*)parent->user_data);
-  //cout << "iter_children: parent: " << (*it).first << endl;  
-
+#ifdef DEBUG_TREE
+  cout << "iter_children: parent: " << (*it).first << endl;  
+#endif
   if(pkgTree->number_of_children(it) == 0)
     return FALSE;
 
@@ -508,8 +528,9 @@ gtk_pkg_tree_iter_children (GtkTreeModel *tree_model,
   /* go to first child */
   ++it_child;
   
-  //cout     << " child: " << (*it_child)->first << endl;
-
+#ifdef DEBUG_TREE
+  cout     << " child: " << (*it_child).first << endl;
+#endif
   iter->user_data = it_child.node;
 
   return TRUE;
@@ -526,10 +547,10 @@ gtk_pkg_tree_iter_has_child (GtkTreeModel *tree_model,
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
   RPackageLister::treeIter it((RPackageLister::treeNode*)iter->user_data);
-
-//      cout <<" iter_has_child(): " << (*it).first << " nr: " 
-//           << pkgTree->number_of_children(it) << endl;
-    
+#ifdef DEBUG_TREE
+  cout <<"iter_has_child(): " << (*it).first << " nr: " 
+       << pkgTree->number_of_children(it) << endl;
+#endif    
   if( pkgTree->number_of_children(it) > 0) {
     return TRUE;
   } else {
@@ -544,8 +565,9 @@ gtk_pkg_tree_iter_n_children (GtkTreeModel *tree_model,
   g_return_val_if_fail (GTK_IS_PKG_TREE (tree_model), 0);
   g_return_val_if_fail (iter == NULL || iter->user_data != NULL, FALSE);
 
-  //g_print("gtk_tree_iter_n_children()\n");
-  
+#ifdef DEBUG_TREE
+  cout << "gtk_tree_iter_n_children()" << endl;
+#endif
   tree<RPackageLister::pkgPair> *pkgTree;
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
   RPackageLister::treeIter it((RPackageLister::treeNode*)iter->user_data);  
@@ -559,6 +581,10 @@ gtk_pkg_tree_iter_nth_child (GtkTreeModel *tree_model,
 			     GtkTreeIter  *parent,
 			     gint          n)
 {
+#ifdef DEBUG_TREE
+    cout << "gtk_pkg_tree_iter_nth_child(): n="<< n <<endl;
+    cout << "parent = " << parent << endl;
+#endif
   g_return_val_if_fail (GTK_IS_PKG_TREE (tree_model), FALSE);
 
   tree<RPackageLister::pkgPair> *pkgTree;
@@ -587,8 +613,12 @@ gtk_pkg_tree_iter_nth_child (GtkTreeModel *tree_model,
 
   for(int i=0;i<n;i++)
     ++it_child;
-  
-  //   cout << "nth-child is " << (*it_child).first << endl;
+
+#ifdef DEBUG_TREE
+  cout << "parent name: " <<(*it).first << endl;
+  cout << "nth-child is " << (*it_child).first << endl;
+#endif
+
   iter->user_data = it_child.node;
 
   return TRUE;

@@ -53,8 +53,10 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     RGConfigWindow *me = (RGConfigWindow*)data;
     bool newval, postClean, postAutoClean;
 
-    postClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
-    postAutoClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[2]));
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
+    _config->Set("Synaptic::CleanCache", newval ? "true" : "false");
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[2]));
+    _config->Set("Synaptic::AutoCleanCache", newval ? "true" : "false");
 
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[0])) ;
     _config->Set("Synaptic::UseRegexp", newval ? "true" : "false");
@@ -136,6 +138,13 @@ void RGConfigWindow::show()
 {
     bool postClean, postAutoClean;    
     string str;
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheB[1]),
+				 _config->FindB("Synaptic::CleanCache", false));
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheB[2]),
+				 _config->FindB("Synaptic::AutoCleanCache", false));
+
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[0]),
 				 _config->FindB("Synaptic::UseRegexp", false));

@@ -663,7 +663,7 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 {
     if(pkg == NULL) {
 	cerr << "pkg == NULL in addFilteredPackageToTree" << endl;
-	    cerr << "this shouldn't happen, please report"<< endl;
+	cerr << "this shouldn't happen, please report"<< endl;
 	return;
     }
     tree<pkgPair>::iterator it;
@@ -678,13 +678,18 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	    } else {
 		it = itermap[sec];
 	    }
-	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-	} 
-    else if(_displayMode == TREE_DISPLAY_FLAT)  
-	{
-#if 0 // this is handled via the new gtkpkglist code, remove later
-	    it = _treeOrganizer.begin();
-	    _treeOrganizer.insert(it, pkgPair(pkg->name(), pkg));
+	    pkgPair pair(pkg->name(), pkg);
+	    it = _treeOrganizer.append_child(it, pair);
+#if 0 // this code was a experiment for a dependencie list under each pkg
+	    if((*it).second) {
+		vector<RPackage*> deps = ((*it).second)->getInstalledDeps();
+		for(int i=0;i<deps.size();i++) {
+		    if(deps[i] != NULL) {
+			pkgPair pair(deps[i]->name(), deps[i]);
+			_treeOrganizer.append_child(it, pair);
+		    }
+		}
+	    }
 #endif
 	} 
     else if(_displayMode == TREE_DISPLAY_ALPHABETIC) 
@@ -718,11 +723,12 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	    }
 	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
 	} 
-    else 
-	{
-	    cerr << "this should never happen, please report" << endl;
-	    exit(1);
-	}
+    else if(_displayMode == TREE_DISPLAY_FLAT) {
+	// this is handled via the new gtkpkglist code
+    } else {
+	cerr << "this should never happen, please report" << endl;
+	exit(1);
+    }
 }
 
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
@@ -1462,7 +1468,7 @@ bool RPackageLister::cleanPackageCache()
 	    return false;
 
     } else {
-	
+	// mvo: nothing?
     }
     
     return true;
@@ -1507,6 +1513,7 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 	    }
 	}
     }
+    return true;
 }
 
 bool RPackageLister::readSelections(istream &in)

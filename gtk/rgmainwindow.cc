@@ -998,7 +998,7 @@ static void appendTag(GString *str, const char *tag, const char *value)
     if (!value)
 	value = _("N/A");
 
-    g_string_append_printf(str, "%s: %s\n",utf8(tag), utf8(value));
+    g_string_append_printf(str, "%s: %s\n",tag, value);
 }
 
 static void appendTag(GString *str, const char *tag, const int value)
@@ -1009,7 +1009,7 @@ static void appendTag(GString *str, const char *tag, const int value)
 	strVal = _("N/A");
     else
 	strVal = SizeToStr(value);
-    g_string_append_printf(str, "%s: %s\n",utf8(tag), utf8(strVal.c_str()));
+    g_string_append_printf(str, "%s: %s\n", tag, strVal.c_str());
 }
 
 
@@ -1485,7 +1485,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     appendTag(info, _("\tSize"), pkg->availableInstalledSize());
     appendTag(info, _("\tPackage Size"), pkg->availablePackageSize());
 
-    gtk_label_set_text(GTK_LABEL(_infoL), info->str);
+    gtk_label_set_text(GTK_LABEL(_infoL), utf8(info->str));
     g_string_free(info, TRUE);
 
     // description

@@ -204,10 +204,10 @@ int main(int argc, char **argv)
 	RGGladeUserDialog dia(mainWindow);
 	dia.run("welcome");
 	GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-					     "checkbutton_never_show_again");
+					     "checkbutton_show_again");
 	assert(cb);
 	_config->Set("Synaptic::showWelcomeDialog",
-		     !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+		     gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
     }
     
 

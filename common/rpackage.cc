@@ -1029,8 +1029,9 @@ bool RPackage::setVersion(const char* VerTag)
     //cout << "Ver is: " << VerTag << endl;
  
     if (Ver.end() == true) {
-	return _error->Error(_("Version '%s' for '%s' was not found"),
-				 VerTag,_package->Name());
+	return false;
+// 	return _error->Error(_("Version '%s' for '%s' was not found"),
+// 				 VerTag,_package->Name());
     }
 
     //printf("Release: Selected version %s (%s) for %s\n",

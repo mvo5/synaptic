@@ -653,7 +653,7 @@ void RGPreferencesWindow::readTreeViewValues()
       for(int i=0;column_names[i] != NULL; i++) {
 	 name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
 	 _config->Set(name, i);
-	 c.visible = true;
+	 c.visible = column_visible_defaults[i];
 	 c.name = column_names[i];
 	 c.visible_name = column_visible_names[i];
 	 columns[i] = c;

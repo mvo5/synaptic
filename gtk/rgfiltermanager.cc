@@ -846,10 +846,10 @@ void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
     gtk_list_store_clear(_patternListStore);
     for (int i = 0; i < f.count(); i++) {
 	RPatternPackageFilter::DepType type;
-	string pattern;
+	string pattern,s;
 	bool exclude;
 	f.getPattern(i, type, pattern, exclude);
-	setPatternRow(-1, exclude, type, pattern);
+	setPatternRow(-1, exclude, type, utf8(pattern.c_str()));
     }
 }
 
@@ -940,8 +940,9 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 		break;
 	    }
 	}
-	// then do the pattern
-	f.addPattern(type, text, exclude);
+	// then do the pattern (we convert the text to locale to support 
+	// translated descriptions)
+	f.addPattern(type, utf8_to_locale(text), exclude);
 	
 	valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_patternListStore), 
 					 &iter);

@@ -24,6 +24,7 @@
 #include "i18n.h"
 
 #include "rgfindwindow.h"
+#include "gsynaptic.h"
 
 void RGFindWindow::show()
 {
@@ -37,10 +38,14 @@ string RGFindWindow::getFindString()
 {
   GtkWidget *entry;
   string s;
-  
+
   entry = glade_xml_get_widget(_gladeXML, "entry_find");
-  s = gtk_entry_get_text(GTK_ENTRY(entry));
+  const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
   
+  // we need to convert the string from utf8 to the current locale
+  // to support searching translated descriptions (debian ddtp)
+  s = utf8_to_locale(text);
+
   return s;
 }
 

@@ -124,6 +124,18 @@ void gtk_get_color_from_string(const char *cpp, GdkColor **colp){
    *colp = new_color;
 }
 
+const char *utf8_to_locale(const char *str)
+{
+    static char *_str = NULL;
+    if (str == NULL)
+	return NULL;
+    g_free(_str);
+    _str = NULL;
+    if (g_utf8_validate(str, -1, NULL) == false)
+	return NULL;
+    _str = g_locale_from_utf8(str, -1, NULL, NULL, NULL);
+    return _str;
+}
 
 const char *utf8(const char *str)
 {

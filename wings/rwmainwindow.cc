@@ -167,10 +167,9 @@ void *RWMainWindow::valueForCell(WMTableViewDelegate *self,
 	break;
 
      case CNewest:
-	if (elem->downloadable()) 
-	    text = elem->availableVersion();
-	if (!text)
-	    text = "";
+	 text = elem->availableVersion();
+	 if (!text)
+	     text = "";
 	break;
 	
      case CSummary:
@@ -1213,13 +1212,12 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
     appendText(bufPtr, bufSize, _("\nAvailable Package:\n"));
     
     
-    appendTag(bufPtr, bufSize, _("    Version"),
-	      pkg->downloadable() ? pkg->availableVersion() : _("N/A"));
-    size = pkg->availableSize();
+    appendTag(bufPtr, bufSize, _("    Version"), pkg->availableVersion());
+    size = pkg->availableInstalledSize();
     appendTag(bufPtr, bufSize, _("    Size"),
 	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
 
-    size = pkg->packageSize();
+    size = pkg->availablePackageSize();
     appendTag(bufPtr, bufSize, _("    Package Size"), 
 	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
 

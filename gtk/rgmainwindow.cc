@@ -98,6 +98,9 @@ enum {WHAT_IT_DEPENDS_ON,
       WHAT_IT_WOULD_DEPEND_ON,
       WHAT_IT_SUGGESTS};      
 
+enum {DEP_NAME_COLUMN,             /* text */
+      DEP_IS_NOT_AVAILABLE,        /* foreground-set */
+      DEP_IS_NOT_AVAILABLE_COLOR}; /* foreground */
 
 GdkPixbuf *StatusPixbuf[12];
 GdkColor *StatusColors[12];
@@ -123,25 +126,20 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 
   RPackage *pkg, *newpkg;
   RFilter *filter;
-  GList *selection;
-  const char *depType, *depPkg;
-  char *recstr;
+  const char *depType=NULL, *depPkg=NULL;
+  char *recstr=NULL;
   bool ok=false;
   int i;
 
   me->_lister->unregisterObserver(me);
   me->setInterfaceLocked(TRUE);
-
-  // we always save the state (for undo)
-  RPackageLister::pkgState state;
-  me->_lister->saveState(state);
-  me->_lister->saveUndoState(state);  
-
+  me->_blockActions = TRUE;
+    
   // we need to go into "all package" mode 
   filter = me->_lister->getFilter();
   me->_lister->setFilter();
 
-  pkg = (RPackage*)gtk_object_get_data(GTK_OBJECT(me->_recList),"pkg");
+  pkg = (RPackage*)g_object_get_data(G_OBJECT(me->_recList),"pkg");
   assert(pkg);
 
   switch((int)data) {
@@ -156,10 +154,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	  }
 	  newpkg=me->_lister->getElement(i);
 	  assert(newpkg);
-	  newpkg->setInstall();
-	  if (!me->_lister->check()) {
-	    me->_lister->fixBroken();
-	  }
+	  me->pkgInstallHelper(newpkg);
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }
@@ -175,51 +170,61 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	  }
 	  newpkg=me->_lister->getElement(i);
 	  assert(newpkg);
-	  newpkg->setInstall();
-	  if (!me->_lister->check()) {
-	    me->_lister->fixBroken();
-	  }
+	  me->pkgInstallHelper(newpkg);
 	}
       } while(pkg->nextWDeps(depType, depPkg, ok));
     }
     break;
   case InstallSelected:
-    selection = GTK_CLIST(me->_recList)->selection;
-    while(selection!=NULL) {
-      int row = GPOINTER_TO_INT(selection->data);
-      gtk_clist_get_text(GTK_CLIST(me->_recList), row, 0, &recstr);
-      //cout << "selected row: " << row  << " is " << recstr << endl;
-      if(!recstr) { 
-	cerr << _("gtk_clist_get_text() returned no text") << endl;
-	selection=g_list_next(selection);
-	continue;
-      }
-      // mvo: "parser" should be more robust :-/
-      depPkg = index(recstr, ':') + 2;
-      if(!depPkg) {
-	selection=g_list_next(selection);
-	continue;
-      }
-      i = me->_lister->findPackage((char*)depPkg);
-      if(i<0) {
-	cerr << depPkg << _(" not found") << endl;
-	selection=g_list_next(selection);
-	continue;
-      }
-      newpkg=(RPackage*)me->_lister->getElement(i);
-      assert(newpkg);
+      GtkTreeSelection *selection;
+      GtkTreeIter iter;
+      GList *list, *li;
+      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_recList));
+      list = li  = gtk_tree_selection_get_selected_rows(selection, NULL);
 
-      newpkg->setInstall();
-      if (!me->_lister->check()) {
-	me->_lister->fixBroken();
+      while(li != NULL) {
+// 	  cout << "path is " 
+// 	       << gtk_tree_path_to_string((GtkTreePath*)(li->data)) << endl;
+	  gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_recListStore), &iter, 
+				  (GtkTreePath*)(li->data));
+	  gtk_tree_model_get(GTK_TREE_MODEL(me->_recListStore), &iter, 
+			     DEP_NAME_COLUMN, &recstr, 
+			     -1);
+	  //cout << "selected row is " << recstr << endl;
+	  if(!recstr) { 
+	      cerr << _("gtk_tree_model_get returned no text") << endl;
+	      li=g_list_next(li);
+	      continue;
+	  }
+	  depPkg = index(recstr, ':') + 2;
+	  if(!depPkg) {
+	      cout << "\":\" not found"<<endl;
+	      li=g_list_next(li);
+	      continue;
+	  }
+	  i = me->_lister->findPackage((char*)depPkg);
+	  if(i<0) {
+	      cerr << depPkg << _(" not found") << endl;
+	      li=g_list_next(li);
+	      continue;
+	  }
+	  newpkg=(RPackage*)me->_lister->getElement(i);
+	  assert(newpkg);
+
+	  //cout << "installing " << newpkg->name() << endl;
+	  me->pkgInstallHelper(newpkg);
+	  li = g_list_next(li);
       }
-      selection = g_list_next(selection);
-    }
+
+      // free the list
+      g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+      g_list_free (list);
     break;
   default:
     cerr << _("clickedRecInstall called with invalid parm: ") << data << endl;
   }
 
+  me->_blockActions = FALSE;
   me->_lister->setFilter(filter);
   me->_lister->registerObserver(me);
   me->refreshTable(pkg);
@@ -917,12 +922,12 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
   gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
   restoreTableState(expanded_sections);
-  //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
 
+  updatePackageInfo(selectedPkg);
   setStatusText();
 
-  // not implemented yet
-//gtk_pkg_tree_refresh(_pkgTree);
+  //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
+
   return;
 }
 
@@ -1067,6 +1072,9 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 {
   //cout << "updateDynPackageInfo()" << endl;
 
+    if(_blockActions)
+	return;
+
     updatePackageStatus(pkg);
 
     // dependencies
@@ -1137,19 +1145,20 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     }
 
     // weak dependencies
-    gtk_clist_clear(GTK_CLIST(_recList));
-    gtk_object_set_data(GTK_OBJECT(_recList), "pkg", pkg);
+    //cout << "building weak dependencies list" << endl;
+    gtk_list_store_clear(_recListStore);
+    g_object_set_data(G_OBJECT(_recList), "pkg", pkg);
     if (pkg->enumWDeps(depType, depPkg, ok)) {
 	do {
-	  const char *array[1];
-	  int row;
-
-	  snprintf(buffer, sizeof(buffer), "%s: %s", 
-		   depType, depPkg);
-	  array[0] = utf8(buffer);
-	  row = gtk_clist_append(GTK_CLIST(_recList), (char**)array);
-	  gtk_clist_set_row_style(GTK_CLIST(_recList), row, 
-				  ok ? _blackStyle : _redStyle);
+	    GtkTreeIter iter;
+	    snprintf(buffer, sizeof(buffer), "%s: %s", 
+		     depType, depPkg);
+	    gtk_list_store_append(_recListStore, &iter);
+	    gtk_list_store_set(_recListStore, &iter, 
+			       DEP_NAME_COLUMN, utf8(buffer), 
+			       DEP_IS_NOT_AVAILABLE, !ok,  
+			       DEP_IS_NOT_AVAILABLE_COLOR,  "#E0E000000000",
+			       -1); 
 	} while (pkg->nextWDeps(depName, depPkg, ok));
     }    
 
@@ -1215,6 +1224,9 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     RPackage::UpdateImportance importance;
     RPackage::PackageStatus status;
     
+    if(_blockActions)
+	return;
+
     if (!pkg) {
 	gtk_label_set_text(GTK_LABEL(_nameL), "");
 	gtk_label_set_text(GTK_LABEL(_summL), "");
@@ -1816,6 +1828,10 @@ void RGMainWindow::buildInterface()
     GtkWidget *item;
     PangoFontDescription *font;
     PangoFontDescription *bfont;
+    GtkCellRenderer *renderer; 
+    GtkTreeViewColumn *column; 
+    GtkTreeSelection *selection;
+
 
     // here is a pointer to rgmainwindow for every widget that needs it
     g_object_set_data(G_OBJECT(_win), "me", this);
@@ -2160,8 +2176,23 @@ void RGMainWindow::buildInterface()
 		       (GtkSignalFunc)clickedAvailDepList, (void*)0);
     _availDepInfoL = glade_xml_get_widget(_gladeXML, "label_availdep_info");
     assert(_availDepInfoL);
-    _recList = glade_xml_get_widget(_gladeXML, "clist_rec_list");
+    
+    /* create the recommended/suggested list */
+    _recList = glade_xml_get_widget(_gladeXML, "treeview_rec_list");
     assert(_recList);
+    _recListStore = gtk_list_store_new(3,G_TYPE_STRING, /* text */
+				       G_TYPE_BOOLEAN,  /* foreground-set */
+				       G_TYPE_STRING);  /* foreground */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_recList), GTK_TREE_MODEL(_recListStore));
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
+						      "text", DEP_NAME_COLUMN,
+						      "foreground-set", DEP_IS_NOT_AVAILABLE,
+						      "foreground", DEP_IS_NOT_AVAILABLE_COLOR,
+						      NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_recList), column);
+    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_recList));
+    gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
 
     _filtersB = button = glade_xml_get_widget(_gladeXML, "button_filters");
     assert(button);
@@ -2201,12 +2232,8 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
  			    GTK_TREE_MODEL(_pkgTree));
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-    GtkTreeSelection *selection;
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
-
-    GtkCellRenderer *renderer; 
-    GtkTreeViewColumn *column; 
 
     /* dummy column */
     renderer = gtk_cell_renderer_text_new ();
@@ -2458,13 +2485,57 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
-  pkg->setInstall();
-  // check whether something broke
-  if (!_lister->check()) {
-      _lister->fixBroken();
+    RGMainWindow *me = this;
+
+    // save pkg state
+    RPackageLister::pkgState state;
+    bool ask = _config->FindB("Synaptic::AskRelated", true);
+    
+    // we always save the state (for undo)
+    me->_lister->saveState(state);
+    if (ask) {
+	me->_lister->unregisterObserver(me);
+    }
+    me->_lister->notifyCachePreChange();
+    
+    // do the work
+    pkg->setInstall();
+    // check whether something broke
+    if (!_lister->check()) {
+	_lister->fixBroken();
+    }
+    
+    me->_lister->notifyCachePostChange();
+
+    vector<RPackage*> toKeep;
+    vector<RPackage*> toInstall; 
+    vector<RPackage*> toUpgrade; 
+    vector<RPackage*> toRemove;
+    vector<RPackage*> exclude;    
+    exclude.push_back(pkg);
+
+    // ask if the user really want this changes
+    bool changed=true;
+    if (ask && me->_lister->getStateChanges(state, toKeep, toInstall,
+					    toUpgrade, toRemove, exclude)) {
+	RGChangesWindow *chng;
+	// show a summary of what's gonna happen
+	chng = new RGChangesWindow(me);
+	if (!chng->showAndConfirm(me->_lister, toKeep, toInstall,
+				  toUpgrade, toRemove)) {
+	    // canceled operation
+	    me->_lister->restoreState(state);
+	    changed=false;
+	}
+	delete chng;
   }
-
-
+    
+    if(changed)
+	me->_lister->saveUndoState(state);
+    
+    if (ask) {
+	me->_lister->registerObserver(me);
+    }
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)

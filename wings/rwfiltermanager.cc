@@ -170,7 +170,7 @@ void RWFilterManagerWindow::newFilterAction(WMWidget *self, void *data)
     RWFilterManagerWindow *me = (RWFilterManagerWindow*)data;
     RFilter *filter;
     
-    filter = new RFilter;
+    filter = new RFilter(me->_lister);
     
     filter->setName(_("A New Filter"));
     me->_lister->registerFilter(filter);

@@ -152,7 +152,10 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    
    GtkWidget *_rdepList;
    GtkWidget *_depList;
-   GtkWidget *_recList;
+
+   GtkWidget *_recList; /* gtktreeview */
+   GtkListStore *_recListStore;
+
    GtkWidget *_depInfoL;
    GtkWidget *_availDepList;
    GtkWidget *_availDepInfoL;

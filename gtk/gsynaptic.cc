@@ -68,13 +68,13 @@ bool ShowHelp(CommandLine & CmdL)
       _("Usage: synaptic [options]\n") <<
       _("-h   This help text\n") <<
       _("-r   Open in the repository screen\n") <<
-      _("-f=? Give a alternative filter file\n") <<
-      _("-t   Give a alternative main window title (e.g. hostname with `uname -n`)\n") <<
-      _("-i=? Start with the initialFilter with the number given\n") <<
+      _("-f=? Give an alternative filter file\n") <<
+      _("-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n") <<
+      _("-i=? Start with the initial Filter with the number given\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Upgrade and display changes\n") <<
       _("--dist-upgrade-mode  Call DistUpgrade and display changes\n") <<
-      _("--update-at-startup  Call \"reload\" on startup\n")<<
+      _("--update-at-startup  Call \"Reload\" on startup\n")<<
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n") <<
       _("--add-cdrom Add a cdrom at startup\n");

@@ -78,12 +78,6 @@
 
 #include "i18n.h"
 
-static char *ImportanceNames[] = {
-   _("Unknown"),
-   _("Normal"),
-   _("Critical"),
-   _("Security")
-};
 
 
 enum { WHAT_IT_DEPENDS_ON,
@@ -801,8 +795,7 @@ void RGMainWindow::buildTreeView()
    visible = _config->FindI("Synaptic::supportedColumnVisible", true);
    if(visible) {
       renderer = gtk_cell_renderer_pixbuf_new();
-      // TRANSLATORS: Column header for the column "Supported" in the package list
-      column = gtk_tree_view_column_new_with_attributes(_(" "), renderer,
+      column = gtk_tree_view_column_new_with_attributes(" ", renderer,
                                                         "pixbuf",
                                                         SUPPORTED_COLUMN, 
 							NULL);

@@ -79,6 +79,8 @@ synaptic_SOURCES= \
 	rgsetoptwindow.h\
 	rgdummyinstallprogress.cc\
 	rgdummyinstallprogress.h\
+	rgdebinstallprogress.cc\
+	rgdebinstallprogress.h\
 	rgterminstallprogress.cc\
 	rgterminstallprogress.h\
 	rginstallprogress.cc\

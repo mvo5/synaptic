@@ -71,7 +71,7 @@ RGAboutPanel::RGAboutPanel(RGWindow *parent)
    setTitle(PACKAGE" version "VERSION);
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "label_version");
    assert(w);
-   gchar *s = g_strdup_printf("<span size=\"large\" weight=\"bold\">%s</span>",
+   gchar *s = g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",
 			      PACKAGE" "VERSION);
    gtk_label_set_markup(GTK_LABEL(w),s);
    g_free(s);

@@ -645,7 +645,18 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
     setStatusText();
 }
 
+void RGMainWindow::showWelcomeDialog(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)data;
 
+    RGGladeUserDialog dia(me);
+    dia.run("welcome");
+    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+					 "checkbutton_show_again");
+    assert(cb);
+    _config->Set("Synaptic::showWelcomeDialog",
+		 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+}
 
 
 void RGMainWindow::updateClicked(GtkWidget *self, void *data)
@@ -2435,6 +2446,12 @@ void RGMainWindow::buildInterface()
 				  "on_about_activate",
 				  G_CALLBACK(showAboutPanel),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_introduction_activate",
+				  G_CALLBACK(showWelcomeDialog),
+				  this); 
+    
 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_icon_legend_activate",

@@ -409,11 +409,13 @@ bool RPackageLister::openCache(bool reset)
     if (reset) {
 	if (!_cache->reset(*_progMeter)) {
 	    _progMeter->Done();
+	    _cacheValid = false;
 	    return false;
 	}
     } else {
 	if (!_cache->open(*_progMeter)) {
 	    _progMeter->Done();
+	    _cacheValid = false;
 	    return false;
         }
     }
@@ -422,10 +424,13 @@ bool RPackageLister::openCache(bool reset)
     pkgDepCache *deps = _cache->deps();
 
     // Apply corrections for half-installed packages
-    if (pkgApplyStatus(*deps) == false)
+    if (pkgApplyStatus(*deps) == false) {
+	_cacheValid = false;
 	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
-    
+    }
+
     if (_error->PendingError()) {
+	_cacheValid = false;
 	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
     }
 
@@ -442,6 +447,7 @@ bool RPackageLister::openCache(bool reset)
 
     _records = new pkgRecords(*deps);
     if (_error->PendingError()) {
+	_cacheValid = false;
 	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
     }
     
@@ -572,6 +578,7 @@ bool RPackageLister::openCache(bool reset)
 
     firstRun=false;
 
+    _cacheValid = true;
     return true;
 }
 

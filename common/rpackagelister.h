@@ -93,8 +93,9 @@ private:
    unsigned _count;
    set<string> allPackages; //all known packages (needed identifing "new" pkgs)
    
-   bool _updating; // can't access anything while this is true
-   
+   bool _updating;   // can't access anything while this is true
+   bool _cacheValid; // is the cache valid?
+
    int _installedCount; // # of installed packages
    
    vector<RFilter*> _filterL;
@@ -288,7 +289,12 @@ public:
    inline void setUserDialog(RUserDialog *dialog) { _userDialog = dialog; };
 
    // policy stuff                             
-   vector<string> getPolicyArchives() { return _cache->getPolicyArchives(); };
+   vector<string> getPolicyArchives() { 
+       if(_cacheValid)
+	   return _cache->getPolicyArchives(); 
+       else
+	   return vector<string>();
+   };
 
    // notification stuff about changes in packages
    void notifyPreChange(RPackage *pkg);

@@ -351,6 +351,8 @@ public:
    void saveState();
    bool restoreState();
    
+   bool initDebtags();
+   
    bool showErrors();
    
 

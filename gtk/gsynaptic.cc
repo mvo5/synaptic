@@ -174,9 +174,10 @@ int main(int argc, char **argv)
     
     mainWindow->setInterfaceLocked(true);
     
+    bool openCacheError = false;
     if (!packageLister->openCache(false)) {
 	mainWindow->showErrors();
-	//exit(1);
+	openCacheError = true;
     }
 
     if (_config->FindB("Volatile::startInRepositories", false)) {
@@ -191,6 +192,10 @@ int main(int argc, char **argv)
 
     mainWindow->setInterfaceLocked(false);
     mainWindow->restoreState();
+#ifdef HAVE_DEBTAGS
+    if(!openCacheError)
+	mainWindow->initDebtags();
+#endif
     mainWindow->showErrors();
 
     if (_config->FindB("Volatile::Non-Interactive", false)) {

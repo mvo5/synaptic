@@ -3561,8 +3561,7 @@ void RGMainWindow::saveState()
       cerr << "Internal Error: error storing raptoptions" << endl;
 }
 
-
-bool RGMainWindow::restoreState()
+bool RGMainWindow::initDebtags()
 {
 #ifdef HAVE_DEBTAGS
     // FIXME: this is not a good place! find a better
@@ -3599,6 +3598,11 @@ bool RGMainWindow::restoreState()
     //coll.output(filter);
     //TagCollection<int> 
 #endif
+}
+
+
+bool RGMainWindow::restoreState()
+{
 
     // see if we have broken packages (might be better in some
     // RGMainWindow::preGuiStart funktion)

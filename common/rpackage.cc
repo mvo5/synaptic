@@ -71,7 +71,7 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 		   pkgRecords *records, pkgCache::PkgIterator &pkg)
   : _lister(lister), _records(records), _depcache(depcache), 
     _newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
-    _notify(true), _purge(false)
+    _purge(false),_notify(true)
 {
     _package = new pkgCache::PkgIterator(pkg);
     

@@ -463,7 +463,7 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
 {
     //cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
-    for(int i=0;i<f._patterns.size();i++) {
+    for(unsigned int i=0;i<f._patterns.size();i++) {
 	addPattern(f._patterns[i].where,
 		   f._patterns[i].pattern,
 		   f._patterns[i].exclusive);
@@ -478,8 +478,8 @@ void RPatternPackageFilter::clear()
     //}
     
     // give back all the memory
-    for(int i=0;i<_patterns.size();i++) {
-	for(int j=0;j<_patterns[i].regexps.size();j++) {
+    for(unsigned int i=0;i<_patterns.size();i++) {
+	for(unsigned int j=0;j<_patterns[i].regexps.size();j++) {
 	    regfree(_patterns[i].regexps[j]);
 	    delete (regex_t*)_patterns[i].regexps[j];
 	}

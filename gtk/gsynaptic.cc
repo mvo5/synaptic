@@ -216,7 +216,7 @@ int main(int argc, char **argv)
       ShowHelp(CmdL);
 
     SetLanguages();
-    
+
     RPackageLister *packageLister = new RPackageLister();
     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
     RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);

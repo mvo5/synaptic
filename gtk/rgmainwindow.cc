@@ -2399,8 +2399,8 @@ void RGMainWindow::buildTreeView()
 	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	name_column = column = 
 	    gtk_tree_view_column_new_with_attributes(_("Package"), renderer,
-						     //"markup", NAME_COLUMN,
-						     "text", NAME_COLUMN,
+						     "markup", NAME_COLUMN,
+						     //"text", NAME_COLUMN,
 						     "background-gdk", COLOR_COLUMN,
 						     NULL);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);

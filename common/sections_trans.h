@@ -39,9 +39,11 @@ char *transtable[][2] = {
    {"web",_("World Wide Web")},
    {"x11",_("Miscellaneous  - Graphical")},
    {"unknown", _("Unknown")},
+   {"alien", _("Converted from rpm/tgz by alien")},
+
    {"non-US",_("Non US")},
-   {"non-free",_("(non free)")},
-   {"contrib",_("(contrib)")},
+   {"non-free",_("<i>non free</i>")},
+   {"contrib",_("<i>contrib</i>")},
    //{"non-free",_("<i>(non free)</i>")},
    //{"contrib",_("<i>(contrib)</i>")},
    {NULL, NULL}

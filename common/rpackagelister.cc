@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <map>
+#include <sstream>
 
 #include "i18n.h"
 
@@ -784,20 +785,24 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		    str.erase(0,n+1);
 		    for(int i=0;transtable[i][0] != NULL;i++) {
 			if(suffix == transtable[i][0]) {
-			    suffix = transtable[i][1];
+			    suffix = _(transtable[i][1]);
 			    break;
 			}
 		    }
 		}
 		for(int i=0;transtable[i][0] != NULL;i++) {
 		    if(str == transtable[i][0]) {
-			str = transtable[i][1];
+			str = _(transtable[i][1]);
 			break;
 		    }
 		}
 		// if we have a suffix, add it
-		if(!suffix.empty())
-		    str += " " + suffix;
+		if(!suffix.empty()) {
+		    // complicated, but translators friendly
+		    ostringstream out;
+		    ioprintf(out, _("%s (%s)"),str.c_str(),suffix.c_str());
+		    str = out.str();
+		}
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
 #else

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de.po2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-24 11:29+0100\n"
+"POT-Creation-Date: 2003-11-24 23:35+0100\n"
 "PO-Revision-Date: 2003-11-18 08:12+0100\n"
 "Last-Translator: Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
@@ -566,7 +566,7 @@ msgstr "Aktualisierbar"
 msgid "Broken"
 msgstr "Defekt"
 
-#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:272
+#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:275
 msgid "Queued Changes"
 msgstr "Änderungen in der Warteschlange"
 
@@ -1513,56 +1513,56 @@ msgstr "%s %s: wird installiert\n"
 msgid "Summary"
 msgstr "Zusammenfassung"
 
-#: gtk/rgsummarywindow.cc:312
+#: gtk/rgsummarywindow.cc:316
 #, c-format
 msgid "%d %s are set on hold\n"
 msgstr "%d %s beibehalten\n"
 
-#: gtk/rgsummarywindow.cc:313 gtk/rgsummarywindow.cc:317
-#: gtk/rgsummarywindow.cc:323 gtk/rgsummarywindow.cc:327
-#: gtk/rgsummarywindow.cc:331 gtk/rgsummarywindow.cc:336
-#: gtk/rgsummarywindow.cc:342
+#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
+#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
+#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
+#: gtk/rgsummarywindow.cc:346
 msgid "packages"
 msgstr "Pakete werden"
 
-#: gtk/rgsummarywindow.cc:313 gtk/rgsummarywindow.cc:317
-#: gtk/rgsummarywindow.cc:323 gtk/rgsummarywindow.cc:327
-#: gtk/rgsummarywindow.cc:331 gtk/rgsummarywindow.cc:336
-#: gtk/rgsummarywindow.cc:342
+#: gtk/rgsummarywindow.cc:317 gtk/rgsummarywindow.cc:321
+#: gtk/rgsummarywindow.cc:327 gtk/rgsummarywindow.cc:331
+#: gtk/rgsummarywindow.cc:335 gtk/rgsummarywindow.cc:340
+#: gtk/rgsummarywindow.cc:346
 msgid "package"
 msgstr "Paket wird"
 
-#: gtk/rgsummarywindow.cc:316
+#: gtk/rgsummarywindow.cc:320
 #, c-format
 msgid "%d %s are kept back and not upgraded\n"
 msgstr "%d %s zurückgehalten und nicht aktualisiert\n"
 
-#: gtk/rgsummarywindow.cc:321
+#: gtk/rgsummarywindow.cc:325
 #, c-format
 msgid "%d new %s will be installed\n"
 msgstr "%d %s neu installiert\n"
 
-#: gtk/rgsummarywindow.cc:326
+#: gtk/rgsummarywindow.cc:330
 #, c-format
 msgid "%d %s will be upgraded\n"
 msgstr "%d %s aktualisiert\n"
 
-#: gtk/rgsummarywindow.cc:330
+#: gtk/rgsummarywindow.cc:334
 #, c-format
 msgid "%d %s will be removed\n"
 msgstr "%d %s gelöscht\n"
 
-#: gtk/rgsummarywindow.cc:334
+#: gtk/rgsummarywindow.cc:338
 #, c-format
 msgid "%d %s will be DOWNGRADED\n"
 msgstr "%d %s wird DEAKTUALISIERT;\n"
 
-#: gtk/rgsummarywindow.cc:340
+#: gtk/rgsummarywindow.cc:344
 #, c-format
 msgid "WARNING: %d essential %s will be removed\n"
 msgstr "WARNUNG: %d essentielle %s gelöscht!\n"
 
-#: gtk/rgsummarywindow.cc:347
+#: gtk/rgsummarywindow.cc:352
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1571,7 +1571,7 @@ msgstr ""
 "\n"
 "%s B zusätzlicher Speicher werden belegt\n"
 
-#: gtk/rgsummarywindow.cc:350
+#: gtk/rgsummarywindow.cc:355
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1580,7 +1580,7 @@ msgstr ""
 "\n"
 "%s B zusätzlicher Speicher werden frei\n"
 
-#: gtk/rgsummarywindow.cc:356
+#: gtk/rgsummarywindow.cc:361
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1589,7 +1589,7 @@ msgstr ""
 "\n"
 "%sB werden heruntergeladen"
 
-#: gtk/rgsummarywindow.cc:377
+#: gtk/rgsummarywindow.cc:385
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2457,7 +2457,7 @@ msgstr "Einschließlich verwaister Abhängigkeiten"
 msgid "Default remove: "
 msgstr "Entfernen von Paketen:"
 
-#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:17
+#: gtk/window_preferences.glade.strings:22 gtk/window_summary.glade.strings:16
 msgid " "
 msgstr " "
 
@@ -2793,20 +2793,16 @@ msgid "<b>Summary</b>"
 msgstr "<b>Allgemein</b>"
 
 #: gtk/window_summary.glade.strings:15
-msgid "Switch between a detailed view and a general overview"
-msgstr ""
-
-#: gtk/window_summary.glade.strings:16
 #, fuzzy
 msgid "_Show Details"
 msgstr "Zeige Details"
 
-#: gtk/window_summary.glade.strings:18
+#: gtk/window_summary.glade.strings:17
 #, fuzzy
 msgid "The package files will ony be retrieved, but not installed or upgraded"
 msgstr "Zur Installation oder Aktualisierung vorgemerkte Pakete einbeziehen"
 
-#: gtk/window_summary.glade.strings:19
+#: gtk/window_summary.glade.strings:18
 #, fuzzy
 msgid "Download package files only"
 msgstr "Pakete nur herunterladen"

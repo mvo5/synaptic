@@ -224,11 +224,12 @@ int ipc_send_fd(int fd)
    servaddr.sun_family = AF_LOCAL;
    strcpy(servaddr.sun_path, UNIXSTR_PATH);
 
-   // wait for the socket to come up
-   while(connect(serverfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0
-	 && errno == ECONNREFUSED) 
-    usleep(10000);
-
+   // wait max 10s (10000 * 1000/1000000) for the server
+   for(int i=0;i<10000;i++) {
+      if(connect(serverfd, (struct sockaddr *)&servaddr, sizeof(servaddr))==0) 
+	 break;
+      usleep(1000);
+   }
    // send fd to server
    write_fd(serverfd, (void*)"",1,fd);
    close(serverfd);
@@ -242,9 +243,11 @@ int ipc_recv_fd()
    // setup socket
    struct sockaddr_un servaddr,cliaddr;
    char c;
-   int connfd,fd;
-   
+   int connfd=-1,fd;
+
    int listenfd = socket(AF_LOCAL, SOCK_STREAM, 0);
+   fcntl(listenfd, F_SETFL, O_NONBLOCK);
+
    unlink(UNIXSTR_PATH);
    bzero(&servaddr, sizeof(servaddr));
    servaddr.sun_family = AF_LOCAL;
@@ -254,9 +257,15 @@ int ipc_recv_fd()
 
    // wait for connections
    socklen_t clilen = sizeof(cliaddr);
-   // FIXME: make this non-blocking and add a timeout
-   connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
-   
+
+   // wait max 10s (10000 * 1000/1000000) for the client
+   for(int i=0;i<10000 || connfd > 0;i++) {
+      connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &clilen);
+      if(connfd > 0)
+	 break;
+      usleep(1000);
+      RGFlushInterface();
+   }
    // read_fd 
    read_fd(connfd, &c,1,&fd);
 
@@ -299,20 +308,20 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    // FIXME: add some sanity checks here
 
    // go to first ' and read until the end
-   for(;status[i] != '\'';i++) 
+   for(;status[i] != '\'' || status[i] == 0;i++) 
       /*nothing*/
       ;
    i++;
-   for(;status[i] != '\'';i++) 
+   for(;status[i] != '\'' || status[i] == 0;i++) 
       orig_file.append(1,status[i]);
    i++;
 
    // same for second ' and read until the end
-   for(;status[i] != '\'';i++) 
+   for(;status[i] != '\'' || status[i] == 0;i++) 
       /*nothing*/
       ;
    i++;
-   for(;status[i] != '\'';i++) 
+   for(;status[i] != '\'' || status[i] == 0;i++) 
       new_file.append(1,status[i]);
    i++;
    //cout << "got:" << orig_file << new_file << endl;
@@ -516,6 +525,13 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
       _exit(res);
    }
    _childin = ipc_recv_fd();
+
+   if(_childin < 0) {
+      // something _bad_ happend. so the terminal window and hope for the best
+      GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+      gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
+      gtk_widget_hide(_pbarTotal);
+   }
 
    // make it nonblocking
    fcntl(_childin, F_SETFL, O_NONBLOCK);

@@ -153,7 +153,7 @@ bool RAPTOptions::getPackageDebconf(const char *package)
 }
 
 
-void RAPTOptions::setPackageDebconf(const char *package, bool flag=true)
+void RAPTOptions::setPackageDebconf(const char *package, bool flag)
 {
     //cout << "debconf called pkg: " << package << endl;
     _packageOptions[string(package)].isDebconf = flag;

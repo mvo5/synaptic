@@ -260,7 +260,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     assert(_summaryL);
 
     _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
-    assert(_summaryL);
+    assert(_summarySpaceL);
     
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
@@ -347,6 +347,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 	_potentialBreak = true;
     }
 
+    /* this stuff goes to the msg_space string */
     if (sizeChange > 0) {
 	g_string_append_printf(msg_space,_("\n%s of extra space will be used"),
 			       SizeToStr(sizeChange).c_str());
@@ -364,6 +365,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     gtk_label_set_text(GTK_LABEL(_summaryL), msg->str);
     gtk_label_set_text(GTK_LABEL(_summarySpaceL), msg_space->str);
     g_string_free(msg,TRUE);
+    g_string_free(msg_space,TRUE);
+    
 }
 
 

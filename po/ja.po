@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-04 07:06+0200\n"
+"POT-Creation-Date: 2004-06-05 16:35+0200\n"
 "PO-Revision-Date: 2004-01-27 14:51+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese\n"
@@ -1030,6 +1030,11 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "変更を適用しています..."
 
+#: gtk/rgpkgdetails.cc:35
+#, fuzzy, c-format
+msgid "%s Properties"
+msgstr "プロパティ"
+
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
 msgstr "ノーマル"
@@ -1187,8 +1192,8 @@ msgstr[1] ""
 msgid "Do you want to add another CD-ROM?"
 msgstr "ほかのCD-ROMを追加しますか?"
 
-#: gtk/rgmainwindow.cc:1686 gtk/rgmainwindow.cc:2248 gtk/rgmainwindow.cc:2327
-#: gtk/rgmainwindow.cc:2487
+#: gtk/rgmainwindow.cc:1686 gtk/rgmainwindow.cc:2251 gtk/rgmainwindow.cc:2330
+#: gtk/rgmainwindow.cc:2490
 #, c-format
 msgid "Can't read %s"
 msgstr "%s を読むことができません"
@@ -1197,8 +1202,8 @@ msgstr "%s を読むことができません"
 msgid "Open changes"
 msgstr "変更履歴を開く"
 
-#: gtk/rgmainwindow.cc:1733 gtk/rgmainwindow.cc:1796 gtk/rgmainwindow.cc:2181
-#: gtk/rgmainwindow.cc:2300 gtk/rgmainwindow.cc:2464
+#: gtk/rgmainwindow.cc:1733 gtk/rgmainwindow.cc:1796 gtk/rgmainwindow.cc:2184
+#: gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2467
 #, c-format
 msgid "Can't write %s"
 msgstr "%s を書き込むことができません"
@@ -1246,86 +1251,86 @@ msgstr ""
 "り、'synaptic/html' フォルダにある HTML バージョンのマニュアルを参照すること"
 "もできます。"
 
-#: gtk/rgmainwindow.cc:2079
+#: gtk/rgmainwindow.cc:2082
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2085
+#: gtk/rgmainwindow.cc:2088
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "dpkg-reconfigure を開始しています..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2100
+#: gtk/rgmainwindow.cc:2103
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "パッケージヘルプを開始しています..."
 
-#: gtk/rgmainwindow.cc:2112
+#: gtk/rgmainwindow.cc:2115
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2148
+#: gtk/rgmainwindow.cc:2151
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2167
+#: gtk/rgmainwindow.cc:2170
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "選択の変更を適用中... しばらく時間がかかる場合があります"
 
-#: gtk/rgmainwindow.cc:2171
+#: gtk/rgmainwindow.cc:2174
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "ファイルのダウンロード中..."
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2234
 msgid "Do you want to quit Synaptic?"
 msgstr "Synaptic を終了しますか?"
 
-#: gtk/rgmainwindow.cc:2287
+#: gtk/rgmainwindow.cc:2290
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "ファイルのダウンロード中..."
 
-#: gtk/rgmainwindow.cc:2289
+#: gtk/rgmainwindow.cc:2292
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "パッケージリストを削除しています..."
 
-#: gtk/rgmainwindow.cc:2352
+#: gtk/rgmainwindow.cc:2355
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "依存問題の修正"
 
-#: gtk/rgmainwindow.cc:2354
+#: gtk/rgmainwindow.cc:2357
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "依存問題の修正"
 
-#: gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2373
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2411
+#: gtk/rgmainwindow.cc:2414
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "このパッケージはアップグレードされます。"
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2426
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "全ての可能なアップグレードを選択します"
 
-#: gtk/rgmainwindow.cc:2425
+#: gtk/rgmainwindow.cc:2428
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1353,6 +1358,14 @@ msgstr "ディストリビューション"
 #: gtk/rgrepositorywin.cc:177
 msgid "Section(s)"
 msgstr "セクション"
+
+#: gtk/rgrepositorywin.cc:218
+msgid "Binary (deb)"
+msgstr ""
+
+#: gtk/rgrepositorywin.cc:223
+msgid "Source (deb-src))"
+msgstr ""
 
 #: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
 #: gtk/window_repositories.glade.h:1
@@ -2669,6 +2682,24 @@ msgstr ""
 "いくつかのパッケージをインストールすることができませんでした。\n"
 "\n"
 "以下のパッケージに未解決の依存関係が存在します:\n"
+
+#: gtk/dialog_changelog.glade.h:1
+msgid "<b>Full changelog of the latest version:</b>"
+msgstr ""
+
+#: gtk/dialog_changelog.glade.h:2
+#, fuzzy
+msgid "Changelog"
+msgstr "キャンセル"
+
+#: gtk/dialog_update_failed.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Failed to download all index files</"
+"span>\n"
+"\n"
+"If available an older version of the failed index will be used. Otherwise "
+"the repository will be ignored."
+msgstr ""
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"

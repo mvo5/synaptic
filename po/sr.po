@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-04 07:06+0200\n"
+"POT-Creation-Date: 2004-06-05 16:35+0200\n"
 "PO-Revision-Date: 2004-02-04 20:58+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -1045,6 +1045,11 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Извршавање промена..."
 
+#: gtk/rgpkgdetails.cc:35
+#, fuzzy, c-format
+msgid "%s Properties"
+msgstr "Особине"
+
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
 msgstr "Нормални"
@@ -1210,8 +1215,8 @@ msgstr[2] ""
 msgid "Do you want to add another CD-ROM?"
 msgstr "Да ли желите да додате још један цд уређај?"
 
-#: gtk/rgmainwindow.cc:1686 gtk/rgmainwindow.cc:2248 gtk/rgmainwindow.cc:2327
-#: gtk/rgmainwindow.cc:2487
+#: gtk/rgmainwindow.cc:1686 gtk/rgmainwindow.cc:2251 gtk/rgmainwindow.cc:2330
+#: gtk/rgmainwindow.cc:2490
 #, c-format
 msgid "Can't read %s"
 msgstr "Не могу да читам са %s"
@@ -1220,8 +1225,8 @@ msgstr "Не могу да читам са %s"
 msgid "Open changes"
 msgstr "Учитај одабране промене"
 
-#: gtk/rgmainwindow.cc:1733 gtk/rgmainwindow.cc:1796 gtk/rgmainwindow.cc:2181
-#: gtk/rgmainwindow.cc:2300 gtk/rgmainwindow.cc:2464
+#: gtk/rgmainwindow.cc:1733 gtk/rgmainwindow.cc:1796 gtk/rgmainwindow.cc:2184
+#: gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2467
 #, c-format
 msgid "Can't write %s"
 msgstr "Не могу да пишем на %s"
@@ -1269,85 +1274,85 @@ msgstr ""
 "synaptic“ из линије наредби или гледати html верзију смештену у "
 "директоријуму „synaptic/html."
 
-#: gtk/rgmainwindow.cc:2079
+#: gtk/rgmainwindow.cc:2082
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2085
+#: gtk/rgmainwindow.cc:2088
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Извршавам наредбу „dpkg-reconfigure“..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2100
+#: gtk/rgmainwindow.cc:2103
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Покрећем помоћ пакета..."
 
-#: gtk/rgmainwindow.cc:2112
+#: gtk/rgmainwindow.cc:2115
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2148
+#: gtk/rgmainwindow.cc:2151
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2167
+#: gtk/rgmainwindow.cc:2170
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Изводим одабране промене... ово може потрајати"
 
-#: gtk/rgmainwindow.cc:2171
+#: gtk/rgmainwindow.cc:2174
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Преузимање датотека..."
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2234
 msgid "Do you want to quit Synaptic?"
 msgstr "Да ли желите да напустите Synaptic?"
 
-#: gtk/rgmainwindow.cc:2287
+#: gtk/rgmainwindow.cc:2290
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "Преузимање датотека..."
 
-#: gtk/rgmainwindow.cc:2289
+#: gtk/rgmainwindow.cc:2292
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Чишћење спискова пакета..."
 
-#: gtk/rgmainwindow.cc:2352
+#: gtk/rgmainwindow.cc:2355
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Не могу да исправим зависности"
 
-#: gtk/rgmainwindow.cc:2354
+#: gtk/rgmainwindow.cc:2357
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2370
+#: gtk/rgmainwindow.cc:2373
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2411
+#: gtk/rgmainwindow.cc:2414
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Пакет ће бити надограђен."
 
-#: gtk/rgmainwindow.cc:2423
+#: gtk/rgmainwindow.cc:2426
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Стави у ред све могуће надоградње"
 
-#: gtk/rgmainwindow.cc:2425
+#: gtk/rgmainwindow.cc:2428
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1375,6 +1380,14 @@ msgstr "Дистрибуција"
 #: gtk/rgrepositorywin.cc:177
 msgid "Section(s)"
 msgstr "Одељак(ци)"
+
+#: gtk/rgrepositorywin.cc:218
+msgid "Binary (deb)"
+msgstr ""
+
+#: gtk/rgrepositorywin.cc:223
+msgid "Source (deb-src))"
+msgstr ""
 
 #: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
 #: gtk/window_repositories.glade.h:1
@@ -2704,6 +2717,24 @@ msgstr ""
 "Неки пакети нису могли бити инсталирани.\n"
 "\n"
 "Следећи пакети немају задовољене зависности:\n"
+
+#: gtk/dialog_changelog.glade.h:1
+msgid "<b>Full changelog of the latest version:</b>"
+msgstr ""
+
+#: gtk/dialog_changelog.glade.h:2
+#, fuzzy
+msgid "Changelog"
+msgstr "Поништи"
+
+#: gtk/dialog_update_failed.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Failed to download all index files</"
+"span>\n"
+"\n"
+"If available an older version of the failed index will be used. Otherwise "
+"the repository will be ignored."
+msgstr ""
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"

@@ -164,18 +164,22 @@ bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
 
 bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
 {
-   bool found;
+   bool found = true;
 
    const char *version = pkg->availableVersion();
    if (version == NULL) {
-      found = false;
-   } else {
+      version = pkg->installedVersion();
+   } 
+   
+   if(version != NULL) {
       for (unsigned int i = 0; i < pat.regexps.size(); i++) {
 	 if (regexec(pat.regexps[i], version, 0, NULL, 0) == 0)
 	    found &= true;
 	 else
 	    found = false;
       }
+   } else {
+      found = false;
    }
    return found;
 }

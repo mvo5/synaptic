@@ -190,13 +190,26 @@ int main(int argc, char **argv)
 	packageLister->registerObserver(mainWindow);
     }
 
-    mainWindow->setInterfaceLocked(false);
     mainWindow->restoreState();
 #ifdef HAVE_DEBTAGS
     if(!openCacheError)
 	mainWindow->initDebtags();
 #endif
     mainWindow->showErrors();
+
+    mainWindow->setInterfaceLocked(false);
+
+    // show welcome dialog
+    if(_config->FindB("Synaptic::showWelcomeDialog",true)) {
+	RGGladeUserDialog dia(mainWindow);
+	dia.run("welcome");
+	GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+					     "checkbutton_never_show_again");
+	_config->Set("Synaptic::showWelcomeDialog",
+		     !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+
+    }
+    
 
     if (_config->FindB("Volatile::Non-Interactive", false)) {
 	mainWindow->proceed();

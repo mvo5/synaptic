@@ -135,9 +135,9 @@ bool RGUserDialog::showErrors()
     }
 
     if (iserror)
-	error(message.c_str());
+	error(utf8(message.c_str()));
     else
-	warning(message.c_str());
+	warning(utf8(message.c_str()));
     
     return true;
 }

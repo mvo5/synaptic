@@ -322,6 +322,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    void pkgRemoveHelper(RPackage *pkg, bool purge=false, bool withDeps=false);
    void pkgKeepHelper(RPackage *pkg);
 
+   // install from a non-standard release (data is a char* of the release)
+   static void installFromRelease(GtkWidget *self, void *data);
+
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
    virtual void notifyPreFilteredChange() {};

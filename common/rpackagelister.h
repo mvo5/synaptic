@@ -239,7 +239,7 @@ public:
    
    void getSummary(int &held, int &kept, int &essential,
 		   int &toInstall, int &toUpgrade, int &toRemove,
-		   double &sizeChange);
+		   int &toDowngrade, double &sizeChange);
    
 
    void getDetailedSummary(vector<RPackage*> &held, 
@@ -248,6 +248,7 @@ public:
 			   vector<RPackage*> &toInstall, 
 			   vector<RPackage*> &toUpgrade, 
 			   vector<RPackage*> &toRemove,
+			   vector<RPackage*> &toDowngrade,
 			   double &sizeChange);   
 
    void getDownloadSummary(int &dlCount, double &dlSize);

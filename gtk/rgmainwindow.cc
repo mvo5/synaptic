@@ -1114,8 +1114,9 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	break;
 	
      case RPackage::MDowngrade:
-	// not handled yet
-	puts(_("OH SHIT!!"));
+	gtk_widget_set_sensitive(_actionB[1], TRUE);
+	_currentB = _actionB[1];
+	gtk_label_set_text(GTK_LABEL(_stateL), _("Package will be downgraded."));
 	break;
 	
      case RPackage::MRemove:
@@ -1350,6 +1351,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
     RPackage::UpdateImportance importance;
     RPackage::PackageStatus status;
+    RPackage::MarkedStatus mstatus;
     
     if(_blockActions)
 	return;
@@ -1369,8 +1371,35 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     gtk_widget_set_sensitive(_tabview, TRUE);
 
     status = pkg->getStatus();
+    mstatus = pkg->getMarkedStatus();
 
-    if (status == RPackage::SNotInstalled) {
+    // get available versions (FIXME: make this a function)
+    vector<pair<string,string> > versions = pkg->getAvailableVersions();
+    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
+    // remove old widgets
+    gtk_container_foreach(GTK_CONTAINER(vbox),
+			  (void (*)(GtkWidget*, void*))(gtk_widget_destroy),
+			  NULL);
+    GtkWidget *button;
+    for(unsigned int i=0;i<versions.size();i++) {
+	button = gtk_button_new_with_label(g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
+	g_object_set_data(G_OBJECT(button),"me",this);
+	g_object_set_data(G_OBJECT(button),"pkg",pkg);
+	g_signal_connect(G_OBJECT(button),"clicked",
+			 G_CALLBACK(installFromRelease),
+			 g_strdup_printf("%s/%s",
+					 versions[i].first.c_str(),
+					 versions[i].second.c_str()));
+	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
+    }
+    gtk_widget_show_all(vbox);
+    //-------------------------------
+
+
+    if (mstatus == RPackage::MDowngrade) {
+	gtk_label_set_markup_with_mnemonic(
+		GTK_LABEL(_actionBInstallLabel), _("_Downgrade"));
+    } else if (status == RPackage::SNotInstalled) {
 	gtk_label_set_markup_with_mnemonic(
 		GTK_LABEL(_actionBInstallLabel), _("_Install"));
     } else {
@@ -1378,6 +1407,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 		GTK_LABEL(_actionBInstallLabel), _("_Upgrade"));
     }
     
+    // not used right now
     importance = pkg->updateImportance();
     
     // name/summary
@@ -1540,6 +1570,28 @@ void RGMainWindow::actionClicked(GtkWidget *clickedB, void *data)
   me->_currentB = clickedB;
 }
 
+// string is format: version/release (e.g. "3.51/unstable")
+void RGMainWindow::installFromRelease(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
+    RPackage *pkg = (RPackage*)g_object_get_data(G_OBJECT(self),"pkg");
+    gchar** verInfo = g_strsplit((gchar*)data, "/",2);
+    if(verInfo == NULL) {
+	cerr << "installFromRelease() failed" << endl;
+	return;
+    }
+//     cout << "requestedVersion: " << verInfo[0] << endl;
+//     cout << "requestedRelease: " << verInfo[1] << endl;
+//     cout << "installedVersion: " << pkg->installedVersion() << endl;
+
+    if(pkg->installedVersion() == string(verInfo[0])) {
+	me->doPkgAction(me,PKG_KEEP);
+    } else {
+	pkg->setDistribution(verInfo[1]);
+	me->doPkgAction(me,PKG_INSTALL);
+    }
+    g_strfreev(verInfo);
+}
 
 void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 {
@@ -1678,7 +1730,8 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	      int mstatus = pkg->getMarkedStatus();
 	      //cout << "mstatus: " << mstatus << endl;
 	      if(!(mstatus == RPackage::MInstall ||
-		   mstatus == RPackage::MUpgrade) ) {
+		   mstatus == RPackage::MUpgrade ||
+		   mstatus == RPackage::MDowngrade) ) {
 		  failed = true;
 		  failedReason += string(pkg->name()) + ":\n";
 		  failedReason += pkg->showWhyInstBroken();
@@ -1703,6 +1756,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 
   me->_blockActions = FALSE;
   me->setInterfaceLocked(FALSE);
+  me->updatePackageInfo(pkg);
 }
 
 
@@ -2448,11 +2502,11 @@ void RGMainWindow::buildInterface()
 			 
     button = glade_xml_get_widget(_gladeXML, "button_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-			 _("Select latest version of all already installed packages"),"");
+			 _("Upgrade every installed package to the latest version"),"");
     
     button = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Select latest version of allready installed packages, even if new packages as dependency have to be installed"),"");
+			 _("Upgrade every installed package to the latest version. Also include upgrades depending on not yet installed packages"),"");
     
     button = glade_xml_get_widget(_gladeXML, "button_procceed");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
@@ -2822,6 +2876,8 @@ void RGMainWindow::buildInterface()
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
 				   mode == 4 ? TRUE : FALSE);
 #else
+    gtk_widget_hide(widget);
+    widget = glade_xml_get_widget(_gladeXML, "seperator_tag_tree");
     gtk_widget_hide(widget);
 #endif
 

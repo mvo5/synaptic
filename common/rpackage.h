@@ -132,6 +132,9 @@ public:
 #endif
    vector<const char*> provides(); 
 
+   // get all available versions (version, release)
+   vector<pair<string,string> > getAvailableVersions();
+
    bool isImportant();
 
    const char *maintainer();

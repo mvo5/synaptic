@@ -68,10 +68,11 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
   vector<RPackage*> toInstall;
   vector<RPackage*> toUpgrade;
   vector<RPackage*> toRemove;
+  vector<RPackage*> toDowngrade;
   double sizeChange;
    
   lister->getDetailedSummary(held, kept, essential, toInstall, toUpgrade, 
-			     toRemove, sizeChange);
+			     toRemove, toDowngrade, sizeChange);
 
   if(essential.size() > 0) {
     /* (Essentail) removed */
@@ -81,6 +82,20 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 
     for (vector<RPackage*>::const_iterator p = essential.begin(); 
 	 p != essential.end(); 
+	 p++) 
+      {
+	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
+	gtk_tree_store_set(me->_treeStore, &iter_child,
+			   PKG_COLUMN,(*p)->name(), -1);
+      }
+  }
+  if(toDowngrade.size() > 0) {
+    /* removed */
+    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
+    gtk_tree_store_set (me->_treeStore, &iter,
+			PKG_COLUMN, _("To be DOWNGRADED"), -1);
+    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
+	 p != toDowngrade.end(); 
 	 p++) 
       {
 	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
@@ -188,6 +203,7 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
     vector<RPackage*> toInstall;
     vector<RPackage*> toUpgrade;
     vector<RPackage*> toRemove;
+    vector<RPackage*> toDowngrade;
     double sizeChange;
    
     lister->getDetailedSummary(held, 
@@ -196,11 +212,19 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 			       toInstall, 
 			       toUpgrade, 
 			       toRemove,
+			       toDowngrade,
 			       sizeChange);
 
     for (vector<RPackage*>::const_iterator p = essential.begin();
 	 p != essential.end(); p++) {
 	str = g_strdup_printf(_("%s: (ESSENTIAL) will be Removed\n"),(*p)->name());
+	text += str;
+	g_free(str);
+    }
+    
+    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
+	 p != toDowngrade.end(); p++) {
+	str = g_strdup_printf(_("%s: will be DOWNGRADED\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
@@ -319,13 +343,13 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     {
 	char buffer[256];
 	string msg;
-	int toInstall, toRemove, toUpgrade;
+	int toInstall, toRemove, toUpgrade, toDowngrade;
 	int held, kept, essential;
 	double sizeChange, dlSize;
 	int dlCount;
 	
 	lister->getSummary(held, kept, essential,
-			   toInstall, toUpgrade, toRemove,
+			   toInstall, toUpgrade, toRemove, toDowngrade,
 			   sizeChange);
 
 	lister->getDownloadSummary(dlCount, dlSize);
@@ -349,6 +373,9 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 	
 	if (toRemove)
 	    APPEND_TXT(_("%d %s will be removed;\n"), toRemove);
+
+	if (toDowngrade)
+	    APPEND_TXT(_("%d %s will be DOWNGRADED;\n"), toDowngrade);
 			   
 	if (essential) {
 	    APPEND_TXT(_("WARNING: %d essential %s will be removed!\n"),

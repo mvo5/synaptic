@@ -807,7 +807,8 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		     !(ostatus & RPackage::OResidualConfig) )
 		str=_("Obsolete and locally installed");
 	    else if(pkg->installedVersion() != NULL) {
-		if(pkg->getStatus() == RPackage::SInstalledOutdated)
+		if(pkg->getStatus() == RPackage::SInstalledOutdated ||
+		   pkg->getMarkedStatus() == RPackage::MDowngrade)
 		    str=_("Installed and upgradeable");
 		else
 		    str=_("Installed");
@@ -1018,7 +1019,7 @@ void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 
 void RPackageLister::getSummary(int &held, int &kept, int &essential,
 				int &toInstall, int &toUpgrade,	int &toRemove,
-				double &sizeChange)
+				int &toDowngrade, double &sizeChange)
 {
     pkgDepCache *deps = _cache->deps();
     unsigned i;
@@ -1028,6 +1029,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
     essential = 0;
     toInstall = 0;
     toUpgrade = 0;
+    toDowngrade = 0;
     toRemove = 0;
 
     for (i = 0; i < _count; i++) {
@@ -1043,6 +1045,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
 	    toUpgrade++;
 	    break;
 	 case RPackage::MDowngrade:
+	     toDowngrade++;
 	    break;
 	 case RPackage::MRemove:
 	    if (pkg->isImportant())
@@ -1148,6 +1151,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
 				     vector<RPackage*> &toRemove,
+				     vector<RPackage*> &toDowngrade,
 				     vector<RPackage*> &exclude,
 				     bool sorted)
 {
@@ -1179,6 +1183,9 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	    } else if (PkgState.Keep()) {
 		toKeep.push_back(RPkg);
 		changed = true;
+	    } else if (PkgState.Downgrade()) {
+		toDowngrade.push_back(RPkg);
+		changed = true;
 	    }
 	}
     }
@@ -1192,6 +1199,8 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	    sort(toUpgrade.begin(), toUpgrade.end(), bla());
 	if (toRemove.empty() == false)
 	    sort(toRemove.begin(), toRemove.end(), bla());
+	if (toDowngrade.empty() == false)
+	    sort(toDowngrade.begin(), toDowngrade.end(), bla());
     }
 
     return changed;
@@ -1220,18 +1229,18 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 	    switch (state[i]) {
 	    case RPackage::MInstall:
 	    case RPackage::MUpgrade:
+	    case RPackage::MDowngrade:
 		deps->MarkInstall(*(pkg->package()), true);
 		break;
-		    
+		
 	    case RPackage::MRemove:
 		deps->MarkDelete(*(pkg->package()), false);
-		    break;
-		
-		case RPackage::MHeld:
-		case RPackage::MKeep:
-		    deps->MarkKeep(*(pkg->package()), false);
-		    break;
-	    case RPackage::MDowngrade:
+		break;
+		    
+	    case RPackage::MHeld:
+	    case RPackage::MKeep:
+		deps->MarkKeep(*(pkg->package()), false);
+		break;
 	    case RPackage::MBroken:
 	    case RPackage::MPinned:
 	    case RPackage::MNew:
@@ -1310,6 +1319,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage*> &held,
 					vector<RPackage*> &toInstall, 
 					vector<RPackage*> &toUpgrade, 
 					vector<RPackage*> &toRemove,
+					vector<RPackage*> &toDowngrade,
 					double &sizeChange)
 {
   pkgDepCache *deps = _cache->deps();
@@ -1331,7 +1341,8 @@ void RPackageLister::getDetailedSummary(vector<RPackage*> &held,
       toUpgrade.push_back(pkg);
       break;
     case RPackage::MDowngrade:
-      break;
+	toDowngrade.push_back(pkg);
+	break;
     case RPackage::MRemove:
       if (pkg->isImportant())
 	essential.push_back(pkg);

@@ -935,6 +935,43 @@ bool RPackage::isShallowDependency(RPackage *pkg)
   return true;
 }
 
+// format: first version, second archives
+vector<pair<string,string> > RPackage::getAvailableVersions()
+{
+    string VerTag;
+    vector<pair<string,string> > versions;
+
+    //cout << "vector<string> RPackage::getAvailableVersions()"<<endl;
+    
+    vector<string> archives = _lister->getPolicyArchives();
+    for(int i=0;i<archives.size();i++) {
+	VerTag = archives[i];
+	pkgVersionMatch Match(VerTag,pkgVersionMatch::Release);
+    
+	pkgCache::VerIterator Ver = Match.Find(*_package);
+#if 0	 
+	if (Ver.end() == true)
+	    printf("Release '%s' for '%s' was not found\n",
+		   VerTag.c_str(),_package->Name());
+#endif
+	if (Ver && strcmp(VerTag.c_str(),Ver.VerStr()) != 0) {
+	    //printf("Found version %s (%s:%s) for %s\n",
+	    //Ver.VerStr(),Ver.RelStr().c_str(),archives[i].c_str(),
+	    //_package->Name());
+	    versions.push_back(pair<string,string>(Ver.VerStr(),archives[i]));
+	}
+    }
+    return versions;
+
+#if 0
+    pkgCache::VerIterator ver = _package->VersionList();
+    while(!ver.end()) {
+	cout << ver.VerStr() << endl;
+	ver++;
+    }
+#endif
+}
+
 bool RPackage::setDistribution(const char* VerTag)
 {
     pkgVersionMatch Match(VerTag,pkgVersionMatch::Release);

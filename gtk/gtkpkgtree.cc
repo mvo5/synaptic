@@ -68,13 +68,14 @@ extern GdkColor *StatusColors[12];
 
 void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
 {
+    cout << "RCacheActorPkgTree::run()" << endl;
     static GtkTreeIter iter;
     tree<RPackageLister::pkgPair> *pkgTree;
     RPackageLister::treeIter it;
     RPackageLister::pkgPair pair;
 
     for(unsigned int i=0;i<List.size();i++) {
-	cout << "RCacheActorPkgTree::run()" << endl;
+	cout << "RCacheActorPkgTree::run()/loop" << endl;
 
 	pair.first = List[i]->name();
 	pair.second = List[i];
@@ -89,10 +90,10 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
 	    // fill in treepath
 	    GtkTreePath *path = gtk_tree_path_new();
 	    do {
-		i= pkgTree->index(it);
-		gtk_tree_path_prepend_index(path, i);
+		int j = pkgTree->index(it);
+		gtk_tree_path_prepend_index(path, j);
 		it = pkgTree->parent(it);
-	    } while(it.node != NULL);
+	    } while (it.node != NULL);
 	    gtk_tree_model_row_changed(GTK_TREE_MODEL(_pkgTree),
 				       path, &iter);
 	    gtk_tree_path_free(path);

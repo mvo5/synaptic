@@ -1488,7 +1488,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  me->pkgKeepHelper(pkg);
 	  break;
       case PKG_INSTALL: // install
-	  me->pkgInstallHelper(pkg);
+	  me->pkgInstallHelper(pkg, false);
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      cout << "auto installing recommended" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
@@ -1510,6 +1510,10 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       }
       li=g_list_next(li);
   }
+
+  // Do it just once, otherwise it'd kill a long installation list.
+  if (!me->_lister->check())
+      me->_lister->fixBroken();
 
   me->_lister->notifyCachePostChange();
 
@@ -2738,12 +2742,12 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
   me->setInterfaceLocked(FALSE);
 }
 
-void RGMainWindow::pkgInstallHelper(RPackage *pkg)
+void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
     // do the work
     pkg->setInstall();
     // check whether something broke
-    if (!_lister->check()) {
+    if (fixBroken && !_lister->check()) {
 	_lister->fixBroken();
     }
 }

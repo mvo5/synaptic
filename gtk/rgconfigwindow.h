@@ -30,6 +30,7 @@ class RGConfigWindow : public RGGladeWindow {
   GtkWidget *_pathT;
   GtkWidget *_sizeT;
   GtkWidget *_maxUndoE;
+  GtkWidget *_optionmenuDel;
 
   /* the color buttons */
   static char * color_buttons[];

@@ -930,6 +930,9 @@ vector<const char*> RPackage::provides()
     return _provides;
 }
 
+/* mvo: actually shallow = false does not make a lot of sense as it
+ *      will remove packages very brutally (like removing libc6)
+ */
 void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 {
     setRemove();
@@ -967,7 +970,7 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 	}
 
 	RPackage *depackage = _lister->getElement(depPkg);
-	cout << "testing(RPackage): " << depackage->name() << endl;
+	//cout << "testing(RPackage): " << depackage->name() << endl;
 	
 	if (!depackage)
 	    continue;

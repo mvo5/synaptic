@@ -1,5 +1,5 @@
-DebCamp:
-   - add remove with deps tab 
+- rework debconf filter (to look for depend "debconf"), remove all special
+  code!
 
 Configure:
    - allways give the correct path in the synaptic.desktop file
@@ -29,7 +29,7 @@ General:
    - add something like aptitude Last-change support, so that you can
      track what pkgs where installed to fullfill some dependencies
      (and have the option to remove them again automatically)
-     [might be enough to have "remove with dependencies" again]
+     [might be enough to use "remove with dependencies" ?]
    - make deporhan a native synaptic filter (should be easy)
    - make log-file
    - current task support is broken, try to fix it
@@ -37,6 +37,10 @@ General:
 
 
 Done:
+   - config option what the default action of ("delete") button is
+   - "removed but residual config" should win against 
+     "obsolete or locally installed" in by status view
+   - add remove with deps menu entry 
    - add "Provides" tab (done)
    - obsolete packages (installed, but no install version available)
      (named "not installable")

@@ -77,6 +77,11 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
     _config->Set("Synaptic::undoStackSize",  maxUndo);
     
+    int delAction = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_optionmenuDel));
+    // ugly :( but we need this +2 because RGPkgAction starts with 
+    //         "keep","install"
+    delAction += 2;
+    _config->Set("Synaptic::delAction", delAction);
 
     /* color stuff */
     char *colstr;
@@ -283,6 +288,14 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
 
     _maxUndoE = glade_xml_get_widget(_gladeXML, "spinbutton_max_undos");
     assert(_maxUndoE);
+
+    _optionmenuDel = glade_xml_get_widget(_gladeXML, "optionmenu_delbutton_action");
+    assert(_optionmenuDel);
+    int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
+    // ugly :( but we need this -2 because RGPkgAction starts with 
+    //         "keep","install"
+    gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel),delAction-2);
+
 
     readColors();
     

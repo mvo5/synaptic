@@ -44,9 +44,6 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
 
-// #include <X11/keysym.h>
-// #include <gdk/gdkkeysyms.h>
-
 #include "raptoptions.h"
 #include "rconfiguration.h"
 #include "rgmainwindow.h"
@@ -1383,6 +1380,11 @@ void RGMainWindow::actionClicked(GtkWidget *clickedB, void *data)
 
   // what button was pressed?
   for (i = 0; i < 3 && me->_actionB[i] != clickedB; i++);
+
+  // can bind any of the three delete actions (delete, purge, del_with_deps)
+  // to the button
+  if(i == PKG_DELETE) 
+      i = _config->FindI("Synaptic::delAction", PKG_DELETE);
 
   // do the work!
   doPkgAction(me, (RGPkgAction)i);

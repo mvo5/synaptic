@@ -140,7 +140,7 @@ void RGMainWindow::changeView(int view, bool sethistory, string subView)
       if(gtk_tree_model_get_iter_first(model, &iter)) {
 	 do {
 	    gtk_tree_model_get(model, &iter, 0, &str, -1);
-	    if(strcmp(str,subView.c_str()) == 0) {
+	    if(strcoll(str,subView.c_str()) == 0) {
 	       gtk_tree_selection_select_iter(selection, &iter);
 	       break;
 	    }
@@ -1960,12 +1960,13 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 #endif
       string str = me->_findWin->getFindString();
       int type = me->_findWin->getSearchType();
-      int found = me->_lister->searchView()->setSearch(str, type);
-      me->changeView(4,true,str);
+      int found = me->_lister->searchView()->setSearch(str,type,utf8_to_locale(str.c_str()));
+      me->changeView(4,true, str);
 
       gdk_window_set_cursor(me->window()->window, NULL);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
       me->setStatusText(statusstr);
+      me->updatePackageInfo(NULL);
       g_free(statusstr);
    }
 

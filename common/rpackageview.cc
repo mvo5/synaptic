@@ -164,7 +164,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       }
    }
    if(global_found) {
-      _view[searchStringFull].push_back(pkg);
+      _view[searchName].push_back(pkg);
       found++;
    }
 
@@ -174,17 +174,18 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    //_view[searchString].push_back(NULL);
 }
 
-int RPackageViewSearch::setSearch(string str, int type)
+int RPackageViewSearch::setSearch(string aSearchName, int type, 
+				  string searchString)
 {
    found = 0;
-   _view[str].clear();
+   searchType = type;
+   searchName = aSearchName;
+
+   _view[searchName].clear();
    searchStrings.clear();
 
-   searchType = type;
-   searchStringFull = str;
-
    // tokenize the str and add to the searchString vector
-   stringstream sstream(str);
+   stringstream sstream(searchString);
    string s;
    while(!sstream.eof()) {
       sstream >> s;

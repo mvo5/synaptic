@@ -45,11 +45,7 @@ string RGFindWindow::getFindString()
    entry = glade_xml_get_widget(_gladeXML, "entry_find");
    const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
-   // we need to convert the string from utf8 to the current locale
-   // to support searching translated descriptions (debian ddtp)
-   s = utf8_to_locale(text);
-
-   return s;
+   return text;
 }
 
 int RGFindWindow::getSearchType()

@@ -120,12 +120,18 @@ class RPackageViewStatus:public RPackageView {
 class RPackageViewSearch : public RPackageView {
  protected:
    vector<string> searchStrings;
-   string searchStringFull;
+   string searchName;
    int searchType;
    int found; // nr of found pkgs for the last search
  public:
-   RPackageViewSearch(vector<RPackage *> &allPkgs) : RPackageView(allPkgs),found(0) {};
-   int setSearch(string str, int type);
+   RPackageViewSearch(vector<RPackage *> &allPkgs) 
+      : RPackageView(allPkgs), found(0) {};
+
+   // 1. make sure that searchName is in a encoding that the GUI supports
+   //    (e.g. UTF-8)
+   // 2. make sure that searchString is in locale encoding for non-english
+   //    searches
+   int setSearch(string searchName, int type, string searchString);
 
    string getName() {
       return _("Find History");

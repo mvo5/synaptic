@@ -348,7 +348,7 @@ bool RPackageLister::openCache(bool reset)
 
     _treeOrganizer.clear();
 
-#if HAVE_RPM
+#ifdef HAVE_RPM
     if (_records) {
       // mvo: BUG: this will sometimes segfault. maybe bug in apt?
       //      segfault can be triggered by changing the repositories
@@ -869,7 +869,11 @@ void RPackageLister::saveUndoState(pkgState &state)
     undoStack.push_front(state);
     redoStack.clear();
 
+#ifdef HAVE_RPM
+    unsigned int maxStackSize = _config->FindI("Synaptic::undoStackSize", 3);
+#else
     unsigned int maxStackSize = _config->FindI("Synaptic::undoStackSize", 20);
+#endif
     while(undoStack.size() > maxStackSize) 
 	undoStack.pop_back();
 }

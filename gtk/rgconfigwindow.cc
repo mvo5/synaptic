@@ -146,8 +146,14 @@ void RGConfigWindow::show()
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
 				 _config->FindB("Synaptic::AskRelated", 
 						true));
+#ifdef HAVE_RPM
+    int UndoStackSize = 3;
+#else
+    int UndoStackSize = 20;
+#endif
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(_maxUndoE), 
-			      _config->FindI("Synaptic::undoStackSize", 20));
+			      _config->FindI("Synaptic::undoStackSize",
+				      	     UndoStackSize));
 
     bool UseTerminal = false;
 #ifndef HAVE_ZVT

@@ -314,14 +314,14 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     lister->getDownloadSummary(dlCount, dlSize);
 
     if (held) {
-	char *str = ngettext("%d package is set on hold\n", 
-			     "%d packages are set on hold\n", held);
+	char *str = ngettext("%d package is locked\n", 
+			     "%d packages are locked\n", held);
 	g_string_append_printf(msg, str, held);
     }
 
     if (kept) {
-	char *str = ngettext("%d package is kept back and not upgraded\n", 
-			     "%d packages are kept back and not upgraded\n",
+	char *str = ngettext("%d package will be held back and not upgraded\n", 
+			     "%d packages will be held back and not upgraded\n",
 			     kept);
 	g_string_append_printf(msg, str, kept);
     }

@@ -929,33 +929,36 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
    toRemove = 0;
 
    for (i = 0; i < _packages.size(); i++) {
-      RPackage *pkg = _packages[i];
+      int flags = _packages[i]->getFlags();
 
-      switch (pkg->getMarkedStatus()) {
-         case RPackage::MKeep:
-            break;
-         case RPackage::MInstall:
-            toInstall++;
-            break;
-         case RPackage::MReInstall:
-            toReInstall++;
-            break;
-         case RPackage::MUpgrade:
-            toUpgrade++;
-            break;
-         case RPackage::MDowngrade:
-            toDowngrade++;
-            break;
-         case RPackage::MRemove:
-            if (pkg->isImportant())
-               essential++;
-            toRemove++;
-            break;
-         case RPackage::MHeld:
+      // These flags will never be set together.
+      int status = flags & (RPackage::FHeld |
+                            RPackage::FNewInstall |
+                            RPackage::FReInstall |
+                            RPackage::FUpgrade |
+                            RPackage::FDowngrade |
+                            RPackage::FRemove);
+
+      switch (status) {
+         case RPackage::FHeld:
             held++;
             break;
-         case RPackage::MBroken:
-            /* nothing */
+         case RPackage::FNewInstall:
+            toInstall++;
+            break;
+         case RPackage::FReInstall:
+            toReInstall++;
+            break;
+         case RPackage::FUpgrade:
+            toUpgrade++;
+            break;
+         case RPackage::FDowngrade:
+            toDowngrade++;
+            break;
+         case RPackage::FRemove:
+            if (flags & RPackage::FImportant)
+               essential++;
+            toRemove++;
             break;
       }
    }
@@ -1108,43 +1111,29 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
    state.clear();
    state.reserve(_packages.size());
    for (unsigned i = 0; i < _packages.size(); i++) {
-      state.push_back(_packages[i]->getMarkedStatus());
+      state.push_back(_packages[i]->getFlags());
    }
 }
 
 void RPackageLister::restoreState(RPackageLister::pkgState &state)
 {
    pkgDepCache *deps = _cache->deps();
-   RPackage *pkg;
 
    for (unsigned i = 0; i < _packages.size(); i++) {
-      pkg = _packages[i];
-      RPackage::MarkedStatus status = pkg->getMarkedStatus();
+      RPackage *pkg = _packages[i];
+      int flags = pkg->getFlags();
+      int oldflags = state[i];
 
-      if (state[i] != status) {
-         switch (state[i]) {
-            case RPackage::MInstall:
-            case RPackage::MUpgrade:
-            case RPackage::MDowngrade:
-               deps->MarkInstall(*(pkg->package()), true);
-               break;
-
-            case RPackage::MRemove:
-               deps->MarkDelete(*(pkg->package()), false);
-               break;
-
-	    case RPackage::MReInstall:
-		deps->MarkInstall(*(pkg->package()), true);
-		deps->SetReInstall(*(pkg->package()), false);
-		break;
-  
-            case RPackage::MHeld:
-            case RPackage::MKeep:
-               deps->MarkKeep(*(pkg->package()), false);
-               break;
-            case RPackage::MBroken:
-               /* nothing */
-               break;
+      if (oldflags != flags) {
+         if (oldflags & RPackage::FReInstall) {
+            deps->MarkInstall(*(pkg->package()), true);
+            deps->SetReInstall(*(pkg->package()), false);
+         } else if (oldflags & RPackage::FInstall) {
+            deps->MarkInstall(*(pkg->package()), true);
+         } else if (oldflags & RPackage::FRemove) {
+            deps->MarkDelete(*(pkg->package()), oldflags & RPackage::FPurge);
+         } else if (oldflags & RPackage::FKeep) {
+            deps->MarkKeep(*(pkg->package()), false);
          }
       }
    }
@@ -1154,7 +1143,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toKeep,
                                      vector<RPackage *> &toInstall,
-				     vector<RPackage *> &toReInstall,
+                                     vector<RPackage *> &toReInstall,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
@@ -1164,44 +1153,49 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
    bool changed = false;
 
    for (unsigned i = 0; i < _packages.size(); i++) {
-      RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
-      if (state[i] != status &&
+      int flags = _packages[i]->getFlags();
+
+      if (state[i] != flags &&
           find(exclude.begin(), exclude.end(),
                _packages[i]) == exclude.end()) {
+
+         // These flags will never be set together.
+         int status = flags & (RPackage::FHeld |
+                               RPackage::FNewInstall |
+                               RPackage::FReInstall |
+                               RPackage::FUpgrade |
+                               RPackage::FDowngrade |
+                               RPackage::FRemove);
+
          switch (status) {
-            case RPackage::MInstall:
+            case RPackage::FNewInstall:
                toInstall.push_back(_packages[i]);
                changed = true;
                break;
 
-	    case RPackage::MReInstall:
-		toReInstall.push_back(_packages[i]);
-		changed = true;
-		break;
+            case RPackage::FReInstall:
+               toReInstall.push_back(_packages[i]);
+               changed = true;
+               break;
 
-            case RPackage::MUpgrade:
+            case RPackage::FUpgrade:
                toUpgrade.push_back(_packages[i]);
                changed = true;
                break;
 
-            case RPackage::MRemove:
+            case RPackage::FRemove:
                toRemove.push_back(_packages[i]);
                changed = true;
                break;
 
-            case RPackage::MKeep:
-            case RPackage::MHeld:
+            case RPackage::FKeep:
                toKeep.push_back(_packages[i]);
                changed = true;
                break;
 
-            case RPackage::MDowngrade:
+            case RPackage::FDowngrade:
                toDowngrade.push_back(_packages[i]);
                changed = true;
-               break;
-
-            case RPackage::MBroken:
-               /* nothing */
                break;
          }
       }
@@ -1241,46 +1235,47 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
 
    for (int i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
+      int flags = pkg->getFlags();
 
-      switch (pkg->getMarkedStatus()) {
+      // These flags will never be set together.
+      int status = flags & (RPackage::FKeep |
+                            RPackage::FNewInstall |
+                            RPackage::FReInstall |
+                            RPackage::FUpgrade |
+                            RPackage::FDowngrade |
+                            RPackage::FRemove);
 
-         case RPackage::MKeep: {
-             if (pkg->getStatus() == RPackage::SInstalledOutdated)
-                kept.push_back(pkg);
-             break;
-          }
+      switch (status) {
 
-         case RPackage::MInstall:
+         case RPackage::FKeep:
+            if (flags & RPackage::FHeld)
+               held.push_back(pkg);
+            else
+               kept.push_back(pkg);
+            break;
+
+         case RPackage::FNewInstall:
             toInstall.push_back(pkg);
             break;
 
-         case RPackage::MReInstall:
+         case RPackage::FReInstall:
             toReInstall.push_back(pkg);
             break;
 
-         case RPackage::MUpgrade:
+         case RPackage::FUpgrade:
             toUpgrade.push_back(pkg);
             break;
 
-         case RPackage::MDowngrade:
+         case RPackage::FDowngrade:
             toDowngrade.push_back(pkg);
             break;
 
-         case RPackage::MRemove:
-            if (pkg->isImportant())
+         case RPackage::FRemove:
+            if (flags & RPackage::FImportant)
                essential.push_back(pkg);
             else
                toRemove.push_back(pkg);
             break;
-
-         case RPackage::MHeld:
-            held.push_back(pkg);
-            break;
-
-         case RPackage::MBroken:
-            /* nothing */
-            break;
-
       }
    }
 
@@ -1579,45 +1574,18 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
-   //cout << "bool RPackageLister::writeSelections(out,fullState)"<<endl;
-
    for (unsigned i = 0; i < _packages.size(); i++) {
-      RPackage::MarkedStatus mstatus = _packages[i]->getMarkedStatus();
-      RPackage::PackageStatus status = _packages[i]->getStatus();
-      switch (mstatus) {
-         case RPackage::MInstall:
-         case RPackage::MReInstall:
-         case RPackage::MUpgrade:
-            out << _packages[i]->name() << "   \t   install" << endl;
-            // marked state has priority so we skip the rest
-            continue;
-            break;
-         case RPackage::MRemove:
-            out << _packages[i]->name() << "   \t   deinstall" << endl;
-            // marked state has priority so we skip the rest
-            continue;
-            break;
-         case RPackage::MHeld:
-         case RPackage::MKeep:
-         case RPackage::MDowngrade:
-         case RPackage::MBroken:
-            /* nothing */
-            break;
-      }
-      // full state saves all installed packages
-      if (fullState) {
-         switch (status) {
-            case RPackage::SInstalledUpdated:
-            case RPackage::SInstalledOutdated:
-               out << _packages[i]->name() << "   \t   install" << endl;
-               break;
-            case RPackage::SInstalledBroken:
-            case RPackage::SNotInstalled:
-               /* nothing */
-               break;
-         }
+      int flags = _packages[i]->getFlags();
+
+      // Full state saves all installed packages.
+      if (flags & RPackage::FInstall ||
+          fullState && (flags &RPackage::FInstalled)) {
+         out << _packages[i]->name() << "\t\tinstall" << endl;
+      } else if (flags & RPackage::FRemove) {
+         out << _packages[i]->name() << "\t\tdeinstall" << endl;
       }
    }
+
    return true;
 }
 

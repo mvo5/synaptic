@@ -74,21 +74,18 @@ static char *parseDescription(string descr);
 RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
                    pkgRecords *records, pkgCache::PkgIterator &pkg)
 : _lister(lister), _records(records), _depcache(depcache),
-_newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
-_purge(false), _notify(true)
+_notify(true), _boolFlags(0)
 {
    _package = new pkgCache::PkgIterator(pkg);
 
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
-   if (State.CandVersion != 0) {
-      _candidateVer = strdup(State.CandVersion);
-   }
+   if (State.CandVersion != NULL)
+      _defaultCandVer = State.CandVersion;
 }
 
 
 RPackage::~RPackage()
 {
-   free((void *)_candidateVer);
    delete _package;
 }
 
@@ -98,24 +95,6 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
    _virtualPackages.push_back(dep);
    _provides.push_back(dep.Name());
 }
-
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-const char *RPackage::tags()
-{
-   int handle = _lister->_hmaker->getHandle(this);
-   OpSet < string > tags = _lister->_coll.getTagsetForItem(handle);
-   static string s;
-   for (OpSet < string >::const_iterator it = tags.begin(); it != tags.end();
-        it++)
-      if (it == tags.begin())
-         s = *it;
-      else
-         s += ", " + *it;
-   return s.c_str();
-}
-#endif
-#endif
 
 const char *RPackage::section()
 {
@@ -182,17 +161,6 @@ const char *RPackage::priority()
       return NULL;
 }
 
-
-
-bool RPackage::isImportant()
-{
-   if ((*_package)->
-       Flags & (pkgCache::Flag::Important | pkgCache::Flag::Essential))
-      return true;
-
-   return false;
-}
-
 #ifndef HAVE_RPM
 const char *RPackage::installedFiles()
 {
@@ -214,9 +182,7 @@ const char *RPackage::installedFiles()
       in >> filelist;
       return filelist.c_str();
    }
-   filelist =
-      _
-      ("The list of installed files is only available for installed packages");
+   filelist = _("The list of installed files is only available for installed packages");
 
    return filelist.c_str();
 }
@@ -226,7 +192,6 @@ const char *RPackage::installedFiles()
    return "";
 }
 #endif
-
 
 const char *RPackage::description()
 {
@@ -240,7 +205,6 @@ const char *RPackage::description()
       return "";
    }
 }
-
 
 long RPackage::installedSize()
 {
@@ -268,11 +232,9 @@ long RPackage::availablePackageSize()
    return State.CandidateVerIter(*_depcache)->Size;
 }
 
+#if 0
 int RPackage::getOtherStatus()
 {
-   //pkgCache::VerIterator ver = _package->CurrentVer();
-   //pkgDepCache::StateCache &state = (*_depcache)[*_package];
-
    int status = 0;
 
    if (_newPackage)
@@ -306,7 +268,7 @@ int RPackage::getOtherStatus()
 RPackage::PackageStatus RPackage::getStatus()
 {
    pkgCache::VerIterator ver = _package->CurrentVer();
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
+   pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
    if (ver.end())
       return SNotInstalled;
@@ -324,7 +286,7 @@ RPackage::PackageStatus RPackage::getStatus()
    // instead pretend we return the status as if there is no downgrade
    if (state.Status < 0) {
       if (_depcache->VS().CmpVersion(_package->CurrentVer().VerStr(),
-                                     string(_candidateVer)) == 0)
+                                     _defaultCandVer) == 0)
          return SInstalledUpdated;
       else
          return SInstalledOutdated;
@@ -335,69 +297,9 @@ RPackage::PackageStatus RPackage::getStatus()
    return SNotInstalled;
 }
 
-
-
-#if 0
-RPackage::PackageStatus RPackage::getFutureStatus()
-{
-   PackageStatus status = getStatus();
-   MarkedStatus mark = getMarkedStatus();
-
-   switch (status) {
-      case SNotInstalled:
-         switch (mark) {
-            case MInstall:
-               if (_state.InstBroken())
-                  return SInstalledBroken;
-               else
-                  return SInstalledUpdated;
-            default:
-               return SNotInstalled;
-         }
-         break;
-
-      case SInstalledBroken:
-         if (_state.InstBroken())
-            return SInstalledBroken;
-
-         switch (mark) {
-            case MInstall:
-            case MUpgrade:
-               return SInstalledUpdated;
-            case MDowngrade:
-               return SInstalledOutdated;
-            case MRemove:
-               return SNotInstalled;
-            default:
-               if (_state.Upgradable()) {
-                  pkgCache::VerIterator cand =
-                     _state.CandidateVerIter(*_depcache);
-
-                  if (!cand.end())
-                     return SInstalledOutdated;
-               }
-               return SInstalledUpdated;
-         }
-         break;
-
-      case SInstalledOutdated:
-         switch (mark) {
-            case MInstall:
-               if (_state.InstBroken())
-                  return SInstalledBroken;
-
-         }
-         break;
-
-      case SInstalledUpdated:
-         break;
-   }
-}
-#endif
-
 RPackage::MarkedStatus RPackage::getMarkedStatus()
 {
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
+   pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
    if ((state.iFlags & pkgDepCache::ReInstall) == pkgDepCache::ReInstall) {
        return MReInstall;
@@ -427,7 +329,65 @@ RPackage::MarkedStatus RPackage::getMarkedStatus()
    cout << _("OH SHIT DUNNO WTF IS GOIN ON!") << endl;
    return MKeep;
 }
+#endif
 
+int RPackage::getFlags()
+{
+   int flags = 0;
+
+   pkgDepCache::StateCache &state = (*_depcache)[*_package];
+   pkgCache::VerIterator ver = _package->CurrentVer();
+
+   if (state.Install())
+      flags |= FInstall;
+   else if (state.Held())
+      flags |= FHeld;
+
+   if (state.iFlags & pkgDepCache::ReInstall) {
+      flags |= FReInstall;
+   } else if (state.NewInstall()) { // Order matters here.
+      flags |= FNewInstall;
+   } else if (state.Upgrade()) {
+      flags |= FUpgrade;
+   } else if (state.Downgrade()) {
+      flags |= FDowngrade;
+   } else if (state.Delete()) {
+      flags |= FRemove;
+      if (state.iFlags & pkgDepCache::Purge)
+         flags |= FPurge;
+   } else if (state.Keep()) {
+      flags |= FKeep;
+   }
+
+   if (!ver.end()) {
+      flags |= FInstalled;
+
+      if (state.Upgradable() && state.CandidateVer != NULL)
+         flags |= FOutdated;
+
+      if (state.Downgrade())
+         flags |= FDowngrade;
+   }
+
+   if (state.NowBroken())
+      flags |= FNowBroken;
+
+   if (state.InstBroken())
+      flags |= FInstBroken;
+
+   if ((*_package)->Flags & (pkgCache::Flag::Important |
+                             pkgCache::Flag::Essential))
+      flags |= FImportant;
+
+   if ((*_package)->CurrentState == pkgCache::State::ConfigFiles)
+      flags |= FResidualConfig;
+
+   if (state.CandidateVer == 0 ||
+       !state.CandidateVerIter(*_depcache).Downloadable())
+      flags |= FNotInstallable;
+
+   return flags | _boolFlags;
+}
 
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
 {
@@ -551,7 +511,7 @@ bool RPackage::enumAvailDeps(const char *&type, const char *&what,
 }
 
 
-vector < RPackage *>RPackage::getInstalledDeps()
+vector<RPackage *> RPackage::getInstalledDeps()
 {
    vector < RPackage *>deps;
    pkgCache::VerIterator ver;
@@ -593,7 +553,7 @@ bool RPackage::dependsOn(const char *pkgname)
    return false;
 }
 
-/* mostly taken from apt-get.cc:ShowBroken() */
+/* Mostly taken from apt-get.cc:ShowBroken() */
 string RPackage::showWhyInstBroken()
 {
    pkgCache::DepIterator depI;
@@ -836,20 +796,11 @@ const char *RPackage::updateURL()
 
 bool RPackage::wouldBreak()
 {
-   MarkedStatus mark = getMarkedStatus();
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
-
-
-   if (getStatus() == SNotInstalled) {
-      if (mark == MKeep || mark == MHeld)
-         return false;
-   } else {
-      if (mark == MRemove)
-         return false;
-   }
-   return state.InstBroken();
+   int flags = getFlags();
+   if ((flags & FRemove) || (!(flags & FInstalled) && (flags & FKeep)))
+      return false;
+   return flags & FInstBroken;
 }
-
 
 void RPackage::setNotify(bool flag)
 {
@@ -909,7 +860,6 @@ void RPackage::setRemove(bool purge)
    Fix.Resolve(true);
 
    _depcache->MarkDelete(*_package, purge);
-   _purge = purge;
 
    if (_notify)
       _lister->notifyChange(this);
@@ -939,15 +889,14 @@ void create_tmpfile(const char *pattern, char **filename, FILE **out)
 
 void RPackage::setPinned(bool flag)
 {
-   //cout << "void RPackage::setPinned(bool flag)" << endl;
-
    FILE *out;
    char pattern[] = "syn-XXXXXX";
    char *filename = NULL;
    struct stat stat_buf;
 
    string File = _config->FindFile("Dir::Etc::Preferences");
-   _pinnedPackage = flag;
+
+   _boolFlags = flag ? (_boolFlags | FPinned) : (_boolFlags & FPinned);
 
    if (flag) {
       // pkg already in pin-file
@@ -1034,23 +983,19 @@ bool RPackage::isShallowDependency(RPackage *pkg)
 }
 
 // format: first version, second archives
-vector<pair<string, string> >RPackage::getAvailableVersions()
+vector<pair<string, string> > RPackage::getAvailableVersions()
 {
    string VerTag;
-   vector<pair<string, string> >versions;
+   vector<pair<string, string> > versions;
 
-   //cout << "vector<string> RPackage::getAvailableVersions()"<<endl;
-
-   // get available Versions
+   // Get available Versions.
    for (pkgCache::VerIterator Ver = _package->VersionList();
         Ver.end() == false; Ver++) {
-      //cout << "Ver: " << Ver.VerStr() << endl;
-      // we always take the first available version 
+
+      // We always take the first available version.
       pkgCache::VerFileIterator VF = Ver.FileList();
       if (!VF.end()) {
          pkgCache::PkgFileIterator File = VF.File();
-         //cout << "  Archive: " << File.Archive() << endl;
-         //cout << "  Site (origin): " << File.Site() << endl;
 
          if (File->Archive != 0)
             versions.push_back(pair < string,
@@ -1060,31 +1005,23 @@ vector<pair<string, string> >RPackage::getAvailableVersions()
                                string > (Ver.VerStr(), File.Site()));
       }
    }
-   //cout << endl;
+
    return versions;
 }
 
 
-bool RPackage::setVersion(const char *VerTag)
+bool RPackage::setVersion(string verTag)
 {
-   pkgVersionMatch Match(VerTag, pkgVersionMatch::Version);
+   pkgVersionMatch Match(verTag, pkgVersionMatch::Version);
    pkgCache::VerIterator Ver = Match.Find(*_package);
 
-   //cout << "Ver is: " << VerTag << endl;
-
-   if (Ver.end() == true) {
+   if (Ver.end() == true)
       return false;
-//      return _error->Error(_("Version '%s' for '%s' was not found"),
-//                               VerTag,_package->Name());
-   }
-   //printf("Release: Selected version %s (%s) for %s\n",
-   //     Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
 
    _depcache->SetCandidateVersion(Ver);
 
    return true;
 }
-
 
 vector<const char *> RPackage::provides()
 {
@@ -1149,7 +1086,7 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
          continue;
 
       // skip important packages
-      if (depackage->isImportant())
+      if (depackage->getFlags() & FImportant)
          continue;
 
       // skip dependencies that are dependants of other packages
@@ -1283,4 +1220,4 @@ static char *parseDescription(string descr)
 }
 
 
-// vim:sts=4:sw=4
+// vim:ts=3:sw=3:et

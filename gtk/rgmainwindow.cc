@@ -297,7 +297,7 @@ void RGMainWindow::forgetNewPackages()
    unsigned int row = 0;
    while (row < _lister->viewPackagesSize()) {
       RPackage *elem = _lister->getViewPackage(row);
-      if (elem->getOtherStatus() && RPackage::ONew)
+      if (elem->getFlags() && RPackage::FNew)
          elem->setNew(false);
    }
    _roptions->forgetNewPackages();
@@ -377,18 +377,11 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
    } else {
       pkg->setVersion(verInfo);
       me->pkgAction(PKG_INSTALL);
-      // check if this version was possible to install/upgrade/downgrade
-      // if not, unset the candiate version 
-      int mstatus = pkg->getMarkedStatus();
-      if (!(mstatus == RPackage::MInstall ||
-            mstatus == RPackage::MUpgrade ||
-            mstatus == RPackage::MDowngrade)) {
+
+      if (!(pkg->getFlags() & RPackage::FInstall))
          pkg->unsetVersion();
-      }
    }
    pkg->setNotify(true);
-//     cout << "mstatus " << pkg->getMarkedStatus() << endl;
-//     cout << "status " << pkg->getStatus() << endl;
 }
 
 void RGMainWindow::pkgAction(RGPkgAction action)
@@ -522,18 +515,12 @@ void RGMainWindow::pkgAction(RGPkgAction action)
       _lister->saveUndoState(state);
       // check for failed installs
       if (action == PKG_INSTALL) {
-         //cout << "action install" << endl;
          bool failed = false;
          for (unsigned int i = 0; i < instPkgs.size(); i++) {
-            //cout << "checking pkg nr " << i << endl;
             pkg = instPkgs[i];
             if (pkg == NULL)
                continue;
-            int mstatus = pkg->getMarkedStatus();
-            //cout << "mstatus: " << mstatus << endl;
-            if (!(mstatus == RPackage::MInstall ||
-                  mstatus == RPackage::MUpgrade ||
-                  mstatus == RPackage::MDowngrade)) {
+            if (!(pkg->getFlags() & RPackage::FInstall)) {
                failed = true;
                failedReason += string(pkg->name()) + ":\n";
                failedReason += pkg->showWhyInstBroken();
@@ -1256,7 +1243,7 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken,
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
-   if (pkg->isImportant()) {
+   if (pkg->getFlags() & RPackage::FImportant) {
       if (!_userDialog->confirm(_("Removing this package may render the "
                                   "system unusable.\n"
                                   "Are you sure you want to do that?"))) {
@@ -1588,36 +1575,23 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
    GtkTreeIter iter;
    RPackage *pkg = NULL;
 
-   //  cout << "double click" << endl;
    if (!gtk_tree_model_get_iter(me->_pkgList, &iter, path))
       return;
 
    gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
    assert(pkg);
 
-   RPackage::PackageStatus pstatus = pkg->getStatus();
-   //   SInstalledUpdated,
-   //   SInstalledOutdated,
-   //   SInstalledBroken,
-   //   SNotInstalled
+   int flags = pkg->getFlags();
 
-   RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
-   //   MKeep,
-   //   MInstall,
-   //   MUpgrade,
-   //   MDowngrade,
-   //   MRemove,
-   //   MHeld
-
-   if (pstatus == RPackage::SNotInstalled) {
-      if (mstatus == RPackage::MKeep)
+   if (!(flags & RPackage::FInstalled)) {
+      if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
-      else if (mstatus == RPackage::MInstall)
+      else if (flags & RPackage::FInstall)
          me->pkgAction(PKG_DELETE);
-   } else if (pstatus == RPackage::SInstalledOutdated) {
-      if (mstatus == RPackage::MKeep)
+   } else if (flags & RPackage::FOutdated) {
+      if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
-      else if (mstatus == RPackage::MUpgrade)
+      else if (flags & RPackage::FUpgrade)
          me->pkgAction(PKG_KEEP);
    }
 
@@ -2579,8 +2553,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    //        we should calc available actions from all selected pkgs.
    RPackage *pkg = selected_pkgs[0];
 
-   RPackage::PackageStatus pstatus = pkg->getStatus();
-   RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
+   int flags = pkg->getFlags();
 
    // Gray out buttons that don't make sense, and update image
    // if necessary.
@@ -2590,15 +2563,17 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
 
+      // This must be optimized. -- niemeyer
+
       // Keep button
       if (i == 0) {
-         if (mstatus != RPackage::MKeep) {
+         if (!(flags & RPackage::FKeep)) {
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
             oneclickitem = item->data;
          }
 
          GtkWidget *img;
-         if (pstatus == RPackage::SNotInstalled)
+         if (!(flags & RPackage::FInstalled))
             img = get_gtk_image("package-available");
          else
             img = get_gtk_image("package-installed-updated");
@@ -2607,40 +2582,43 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       }
 
       // Install button
-      if (i == 1 && pstatus == RPackage::SNotInstalled
-          && mstatus != RPackage::MInstall) {
+      if (i == 1 && !(flags & RPackage::FInstalled)
+          && !(flags & RPackage::FInstall)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
          if (oneclickitem == NULL)
             oneclickitem = item->data;
       }
 
       // Re-install button
-      if (i == 2 && pstatus == RPackage::SInstalledUpdated) {
+      if (i == 2 && (flags & RPackage::FInstalled)
+          && !(flags & RPackage::FOutdated)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
       // Upgrade button
-      if (i == 3 && pstatus == RPackage::SInstalledOutdated
-          && mstatus != RPackage::MUpgrade) {
+      if (i == 3 && (flags & RPackage::FOutdated)
+          && !(flags & RPackage::FInstall)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
          if (oneclickitem == NULL)
             oneclickitem = item->data;
       }
 
-      // Remove buttons (remove, remove with dependencies)
-      if ((i == 4 || i == 6) && pstatus != RPackage::SNotInstalled
-          && mstatus != RPackage::MRemove) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-         if (i == 4 && oneclickitem == NULL)
-            oneclickitem = item->data;
-      }
+      if ((flags & RPackage::FInstalled) && !(flags && RPackage::FRemove)) {
 
-      // Purge
-      if (i == 5 && pstatus != RPackage::SNotInstalled
-          && mstatus != RPackage::MRemove) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-      } else if (i == 4 && RPackage::OResidualConfig & pkg->getOtherStatus()
-                 && mstatus != RPackage::MRemove) {
+         // Remove buttons (remove, remove with dependencies)
+         if (i == 4 || i == 6) {
+            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+            if (i == 4 && oneclickitem == NULL)
+               oneclickitem = item->data;
+         }
+
+         // Purge
+         if (i == 5)
+            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+      }
+      
+      if (i == 4 && (flags & RPackage::FResidualConfig)
+          && !(flags && RPackage::FRemove)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
@@ -2648,7 +2626,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       // Hold button 
       if (i == 8) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-         bool locked = (RPackage::OPinned & pkg->getOtherStatus());
+         bool locked = (flags & RPackage::FPinned);
          me->_blockActions = TRUE;
          gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data),
                                         locked);

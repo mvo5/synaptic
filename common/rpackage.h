@@ -51,71 +51,58 @@ class RPackage {
 
    pkgRecords *_records;
    pkgDepCache *_depcache;
-     pkgCache::PkgIterator *_package;
+   pkgCache::PkgIterator *_package;
+
    // save the default candidate version to undo version selection
-   const char *_candidateVer;
-
-   bool _newPackage;
-   bool _pinnedPackage;
-   bool _orphanedPackage;
-   bool _purge;
-
-   enum ChangeReason { unknown, manual, weak_depends, libapt };
-   ChangeReason last_change;
+   string _defaultCandVer;
 
    bool _notify;
 
-   // virtual pkgs provided by this one
-     vector<pkgCache::PkgIterator> _virtualPackages;
+   // Virtual pkgs provided by this one.
+   vector<pkgCache::PkgIterator> _virtualPackages;
 
-   // provides list as string
-     vector<const char *> _provides;
+   vector<const char *> _provides;
 
-   // stuff for enumerators
+   // Stuff for enumerators
    int _vpackI;
-     pkgCache::DepIterator _rdepI;
+   pkgCache::DepIterator _rdepI;
 
-     pkgCache::DepIterator _wdepI;
-     pkgCache::DepIterator _wdepStart;
-     pkgCache::DepIterator _wdepEnd;
+   pkgCache::DepIterator _wdepI;
+   pkgCache::DepIterator _wdepStart;
+   pkgCache::DepIterator _wdepEnd;
 
-     pkgCache::DepIterator _depI;
-     pkgCache::DepIterator _depStart;
-     pkgCache::DepIterator _depEnd;
+   pkgCache::DepIterator _depI;
+   pkgCache::DepIterator _depStart;
+   pkgCache::DepIterator _depEnd;
 
    bool isShallowDependency(RPackage *pkg);
 
    bool isWeakDep(pkgCache::DepIterator &dep);
 
+   int _boolFlags;
+
  public:
 
-   typedef vector<RPackage *> List;
-
-   enum PackageStatus {
-      SInstalledUpdated,
-      SInstalledOutdated,
-      SInstalledBroken,         // installed but broken           
-      SNotInstalled
-   };
-
-   enum MarkedStatus {
-      MKeep,
-      MInstall,
-      MReInstall,
-      MUpgrade,
-      MDowngrade,
-      MRemove,
-      MHeld,
-      MBroken
-   };
-
-   enum OtherStatus {
-      OOrphaned = 1 << 0,
-      OPinned = 1 << 1,         /* apt-pined */
-      ONew = 1 << 2,
-      OResidualConfig = 1 << 3,
-      ONotInstallable = 1 << 4,
-      OPurge = 1 << 5
+   enum Flags {
+      FKeep             = 1 << 0,
+      FInstall          = 1 << 1,
+      FNewInstall       = 1 << 2,
+      FReInstall        = 1 << 3,
+      FUpgrade          = 1 << 4,
+      FDowngrade        = 1 << 5,
+      FRemove           = 1 << 6,
+      FHeld             = 1 << 7,
+      FInstalled        = 1 << 8,
+      FOutdated         = 1 << 9,
+      FNowBroken        = 1 << 10,
+      FInstBroken       = 1 << 11,
+      FOrphaned         = 1 << 12,
+      FPinned           = 1 << 13,
+      FNew              = 1 << 14,
+      FResidualConfig   = 1 << 15,
+      FNotInstallable   = 1 << 16,
+      FPurge            = 1 << 17,
+      FImportant        = 1 << 18,
    };
 
    enum UpdateImportance {
@@ -140,8 +127,6 @@ class RPackage {
 
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
-
-   bool isImportant();
 
    const char *maintainer();
    const char *vendor();
@@ -185,44 +170,34 @@ class RPackage {
    bool enumWDeps(const char *&type, const char *&what, bool &satisfied);
    bool nextWDeps(const char *&type, const char *&what, bool &satisfied);
 
-   // current status query
-   PackageStatus getStatus();
-
-   // selected status query
-   MarkedStatus getMarkedStatus();
-
-   // other information about the package (bitwise encoded in the returned int)
-   int getOtherStatus();
+   int getFlags();
 
    bool wouldBreak();
 
-   void inline setNew(bool isNew = true) {
-      _newPackage = isNew;
-   };
-   void setPinned(bool flag);
-   void setOrphaned(bool flag = true) {
-      _orphanedPackage = flag;
-   };
-
-   // change status
    void setKeep();
    void setInstall();
    void setReInstall(bool flag);
    void setRemove(bool purge = false);
 
+   void setPinned(bool flag);
+
+   void setNew(bool flag = true) {
+      _boolFlags = flag ? (_boolFlags & FNew) : (_boolFlags | FNew);
+   };
+   void setOrphaned(bool flag = true) {
+      _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & FOrphaned);
+   };
+
    void setNotify(bool flag = true);
 
-   // shallow doesnt remove things other pkgs depend on
+   // Shallow doesnt remove things other pkgs depend on.
    void setRemoveWithDeps(bool shallow, bool purge = false);
 
    void addVirtualPackage(pkgCache::PkgIterator dep);
 
-   // install verTag version
-   bool setVersion(const char *verTag);
-   // cancel version selection
-   void unsetVersion() {
-      setVersion(_candidateVer);
-   };
+   bool setVersion(string verTag);
+   void unsetVersion() { setVersion(_defaultCandVer); };
+
    string showWhyInstBroken();
 
    RPackage(RPackageLister *lister, pkgDepCache *depcache,
@@ -231,3 +206,5 @@ class RPackage {
 };
 
 #endif
+
+// vim:ts=3:sw=3:et

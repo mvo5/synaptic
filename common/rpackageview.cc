@@ -68,19 +68,20 @@ void RPackageView::clearSelection()
 void RPackageViewStatus::addPackage(RPackage *pkg)
 {
    string str;
-   int ostatus = pkg->getOtherStatus();
-   if (ostatus & RPackage::ONew)
+   int flags = pkg->getFlags();
+
+   if (flags & RPackage::FNew)
       str = _("New in repository");
-   else if ((ostatus & RPackage::ONotInstallable) &&
-	    !(ostatus & RPackage::OResidualConfig))
+   else if ((flags & RPackage::FNotInstallable) &&
+	    !(flags & RPackage::FResidualConfig))
       str = _("Installed and obsolete");
-   else if (pkg->installedVersion() != NULL) {
-      if (pkg->getStatus() == RPackage::SInstalledOutdated)
+   else if (flags & RPackage::FInstalled) {
+      if (flags & RPackage::FOutdated)
 	 str = _("Installed and upgradable");
       else
 	 str = _("Installed");
    } else {
-      if (pkg->getOtherStatus() & RPackage::OResidualConfig)
+      if (flags & RPackage::FResidualConfig)
 	 str = _("Not installed (residual config)");
       else
 	 str = _("Not installed");

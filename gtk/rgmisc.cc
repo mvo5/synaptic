@@ -278,35 +278,40 @@ void RPackageStatus::init()
 
 int RPackageStatus::getStatus(RPackage *pkg)
 {
-   RPackage::PackageStatus xs = pkg->getStatus();
-   RPackage::MarkedStatus s = pkg->getMarkedStatus();
-   int other = pkg->getOtherStatus();
+   int flags = pkg->getFlags();
+   int ret = NotInstalled;
 
-   if (pkg->wouldBreak())
-      return IsBroken;
+   if (pkg->wouldBreak()) {
+      ret = IsBroken;
+   } else if (flags & RPackage::FNewInstall) {
+      ret = ToInstall;
+   } else if (flags & RPackage::FUpgrade) {
+      ret = ToUpgrade;
+   } else if (flags & RPackage::FReInstall) {
+      ret = ToReInstall;
+   } else if (flags & RPackage::FDowngrade) {
+      ret = ToDowngrade;
+   } else if (flags & RPackage::FPurge) {
+      ret = ToPurge;
+   } else if (flags & RPackage::FRemove) {
+      ret = ToRemove;
+   } else if (flags & RPackage::FInstalled) {
+      if (flags & RPackage::FPinned)
+         ret = InstalledLocked;
+      else if (flags & RPackage::FOutdated)
+         ret = InstalledOutdated;
+      else
+         ret = InstalledUpdated;
+   } else {
+      if (flags & RPackage::FPinned)
+         ret = NotInstalledLocked;
+      else if (flags & RPackage::FNew)
+         ret = IsNew;
+      else
+         ret = NotInstalled;
+   }
 
-   // FIXME: check is pkg is installed or not installed
-   if (other & RPackage::OPinned)
-      return InstalledLocked;
-
-   if (s == RPackage::MKeep && xs == RPackage::SInstalledOutdated)
-      return InstalledOutdated;
-
-   if ((other & RPackage::ONew) && !(s == RPackage::MInstall))
-      return IsNew;
-
-   if (xs == RPackage::SInstalledUpdated && s == RPackage::MKeep)
-      return InstalledUpdated;
-
-   if (xs == RPackage::SNotInstalled && s == RPackage::MKeep)
-      return NotInstalled;
-
-   if (s == RPackage::MRemove && (other & RPackage::OPurge))
-      return ToPurge;
-
-   // the first marked states map to our states, but we don't
-   // have Keep, so sub one
-   return (int)s - 1;
+   return ret;
 }
 
 GdkColor *RPackageStatus::getBgColor(RPackage *pkg)

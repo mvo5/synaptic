@@ -496,80 +496,68 @@ RPatternPackageFilter::~RPatternPackageFilter()
 
 bool RStatusPackageFilter::filter(RPackage *pkg)
 {
-   RPackage::PackageStatus status = pkg->getStatus();
-   RPackage::MarkedStatus marked = pkg->getMarkedStatus();
-   int ostatus = pkg->getOtherStatus();
+   int flags = pkg->getFlags();
 
    if (_status & MarkKeep) {
-      if (marked == RPackage::MKeep)
+      if (flags & RPackage::FKeep)
          return true;
    }
 
    if (_status & MarkInstall) {
-      if (marked == RPackage::MInstall ||
-          marked == RPackage::MUpgrade || marked == RPackage::MDowngrade)
+      if (flags & RPackage::FInstall)
          return true;
    }
 
    if (_status & MarkRemove) {
-      if (marked == RPackage::MRemove)
+      if (flags & RPackage::FRemove)
          return true;
    }
 
-
    if (_status & Installed) {
-      if (status != RPackage::SNotInstalled)
+      if (flags & RPackage::FInstalled)
          return true;
    }
 
    if (_status & NotInstalled) {
-      if (status == RPackage::SNotInstalled)
+      if (!(flags & RPackage::FInstalled))
          return true;
    }
 
    if (_status & Broken) {
-      if (status == RPackage::SInstalledBroken || pkg->wouldBreak())
+      if (flags & RPackage::FNowBroken || pkg->wouldBreak())
          return true;
    }
 
    if (_status & Upgradable) {
-      if (status == RPackage::SInstalledOutdated)
+      if (flags & RPackage::FOutdated)
          return true;
    }
 
    if (_status & NewPackage) {
-      if (ostatus & RPackage::ONew) {
-         //cout << "pkg(" << pkg->name() << ")->isNew()" << endl;
+      if (flags & RPackage::FNew)
          return true;
-      }
    }
 
    if (_status & OrphanedPackage) {
-      if (ostatus & RPackage::OOrphaned) {
-         //cout << "pkg(" << pkg->name() << ")->isOrphaned()" << endl;
+      if (flags & RPackage::FOrphaned)
          return true;
-      }
    }
 
    if (_status & PinnedPackage) {
-      if (ostatus & RPackage::OPinned) {
+      if (flags & RPackage::FPinned)
          return true;
-      }
    }
 
    if (_status & ResidualConfig) {
-      if (ostatus & RPackage::OResidualConfig) {
+      if (flags & RPackage::FResidualConfig) {
          return true;
       }
    }
 
    if (_status & NotInstallable) {
-      if (ostatus & RPackage::ONotInstallable) {
-         //cout << "pkg(" << pkg->name() << ")->isNotInRepository()" << endl;
+      if (flags & RPackage::FNotInstallable)
          return true;
-      }
    }
-
 
    return false;
 }

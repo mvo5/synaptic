@@ -136,9 +136,7 @@ void RGInstallProgress::prepare(RPackageLister *lister)
       RPackage *elem = lister->getViewPackage(row);
 
       // Is it going to be seen?
-      RPackage::MarkedStatus mark = elem->getMarkedStatus();
-      if (!(mark == RPackage::MInstall ||
-            mark == RPackage::MUpgrade || mark == RPackage::MDowngrade))
+      if (elem->getFlags() & RPackage::FInstall)
          continue;
 
       const char *name = elem->name();

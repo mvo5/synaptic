@@ -360,6 +360,17 @@ void RGDebInstallProgress::startUpdate()
    RGFlushInterface();
 }
 
+void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
+{
+   //FIXME: we can't activate this yet, it's way to heavy (sending KILL)
+   //cout << "cbCancel: sending SIGKILL to child" << endl;
+   RGDebInstallProgress *me = (RGDebInstallProgress*)data;
+   //kill(me->_child_id, SIGINT);
+   //kill(me->_child_id, SIGQUIT);
+   kill(me->_child_id, SIGTERM);
+   //kill(me->_child_id, SIGKILL);
+   
+}
 
 void RGDebInstallProgress::expander_callback (GObject    *object,
 					      GParamSpec *param_spec,
@@ -427,6 +438,10 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
    g_signal_connect(w, "notify::expanded",
 		    G_CALLBACK(expander_callback), this);
+
+   glade_xml_signal_connect_data(_gladeXML, "on_button_cancel_clicked",
+				 G_CALLBACK(cbCancel), this);
+
 }
 
 

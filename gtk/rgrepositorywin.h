@@ -55,6 +55,10 @@ class RGRepositoryEditor:RGGladeWindow {
    GtkWidget *_optTypeMenu;
    GtkWidget *_entryDist;
    //GtkWidget *_cbEnabled;
+   
+   GtkWidget *_upBut;
+   GtkWidget *_downBut;
+   GtkWidget *_deleteBut;
 
    RGUserDialog *_userDialog;
 
@@ -74,7 +78,7 @@ class RGRepositoryEditor:RGGladeWindow {
    static void DoCancel(GtkWidget *, gpointer);
    static void VendorsWindow(GtkWidget *, gpointer);
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
-   
+
    // treeview item toggled
    static void item_toggled(GtkCellRendererToggle *cell, 
 			    gchar *path_str, 

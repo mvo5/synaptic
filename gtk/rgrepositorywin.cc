@@ -301,10 +301,22 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_updown_clicked",
                                  G_CALLBACK(DoUpDown), this);
+   
    GtkWidget *button = glade_xml_get_widget(_gladeXML, "button_up");
    g_object_set_data(G_OBJECT(button), "up", GINT_TO_POINTER(1));
-   button = glade_xml_get_widget(_gladeXML, "button_down");
-   g_object_set_data(G_OBJECT(button), "up", GINT_TO_POINTER(0));
+   g_object_set_data(G_OBJECT(button), "down", GINT_TO_POINTER(0));
+
+   _upBut = glade_xml_get_widget(_gladeXML, "button_up");
+   assert(_upBut);
+   gtk_widget_set_sensitive(_upBut, FALSE);
+
+   _downBut = glade_xml_get_widget(_gladeXML, "button_down");
+   assert(_downBut);
+   gtk_widget_set_sensitive(_downBut, FALSE);
+   
+   _deleteBut = glade_xml_get_widget(_gladeXML, "button_add");
+   assert(_deleteBut);
+   gtk_widget_set_sensitive(_deleteBut, FALSE);
 
    _editTable = glade_xml_get_widget(_gladeXML, "table_edit");
    assert(_editTable);
@@ -553,19 +565,17 @@ void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
 
    GtkTreeSelection *selection;
    GtkTreeIter iter;
-   selection =
-      gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
-   if (gtk_tree_selection_get_selected
-       (selection, (GtkTreeModel **) (&me->_sourcesListStore), &iter)) {
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_sourcesListView));
+
+   if (gtk_tree_selection_get_selected(selection, (GtkTreeModel **) (&me->_sourcesListStore), &iter)) {
       SourcesList::SourceRecord *rec;
-      gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter,
-                         RECORD_COLUMN, &rec, -1);
+      gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter, RECORD_COLUMN, &rec, -1);
       assert(rec);
 
       me->_lst.RemoveSource(rec);
       gtk_list_store_remove(me->_sourcesListStore, &iter);
       if (me->_lastIter != NULL)
-         gtk_tree_iter_free(me->_lastIter);
+	gtk_tree_iter_free(me->_lastIter);
       me->_lastIter = NULL;
    }
    me->_dirty=true;
@@ -608,6 +618,10 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
    GtkTreeModel *model;
    gtk_widget_set_sensitive(me->_editTable, TRUE);
 
+   gtk_widget_set_sensitive(me->_upBut, TRUE);
+   gtk_widget_set_sensitive(me->_downBut, TRUE);
+   gtk_widget_set_sensitive(me->_deleteBut, TRUE);
+   
    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
       me->doEdit();             // save the old row
       if (me->_lastIter != NULL)
@@ -645,6 +659,10 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
    } else {
       //cout << "no selection" << endl;
       gtk_widget_set_sensitive(me->_editTable, FALSE);
+      
+      gtk_widget_set_sensitive(me->_upBut, FALSE);
+      gtk_widget_set_sensitive(me->_downBut, FALSE);
+      gtk_widget_set_sensitive(me->_deleteBut, FALSE);
    }
 }
 
@@ -682,13 +700,11 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
    else
       gtk_tree_path_next( path );
 
-   if( gtk_tree_model_get_iter( GTK_TREE_MODEL(me->_sourcesListStore), &iter2, path ) ){
+   if(gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_sourcesListStore), &iter2, path ) ){
      gtk_list_store_swap( me->_sourcesListStore, &iter, &iter2 );
      gtk_tree_path_free(path);
    }
-   else
-     return;
-
+   
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter,
 		      RECORD_COLUMN, &rec, -1);
@@ -700,9 +716,7 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
 
    // Insert rec before rec_p
    if(up)
-      me->_lst.SwapSources(rec_p, rec);
+     me->_lst.SwapSources(rec_p, rec);
    else
-      me->_lst.SwapSources(rec, rec_p);
+     me->_lst.SwapSources(rec, rec_p);
 }
-
-

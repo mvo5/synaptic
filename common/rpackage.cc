@@ -84,7 +84,11 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 
 const char *RPackage::section()
 {
-    return _package->Section();
+    const char *s = _package->Section();
+    if(s!=NULL)
+	return s;
+    else
+	return _("unknown");
 }
 
 

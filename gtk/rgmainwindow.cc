@@ -208,6 +208,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
       // free the list
       g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
       g_list_free (list);
+
     break;
   default:
     cerr << _("clickedRecInstall called with invalid parm: ") << data << endl;
@@ -344,7 +345,9 @@ void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
     RGMainWindow *me = (RGMainWindow*)data;
     //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
-    if(me->_lister->getElement("libgnome-perl") == NULL) {
+    RPackage *pkg=NULL;
+    pkg = me->_lister->getElement("libgnome-perl");
+    if(pkg && pkg->installedVersion() == NULL) {
 	me->_userDialog->error(_("No libgnome-perl installed\n\n"
 				 "You have to install libgnome-perl to "
 				 "use dpkg-reconfigure with synaptic"));
@@ -534,9 +537,11 @@ RPackage *RGMainWindow::selectedPackage()
     gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &iter, 
 		       PKG_COLUMN, &pkg, -1);
   
+
     // free the list
     g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
     g_list_free (list);
+
 
     return pkg;
 }
@@ -782,7 +787,7 @@ void RGMainWindow::notifyChange(RPackage *pkg)
     // we changed pkg's status
     updateDynPackageInfo(pkg);
 
-    refreshTable(pkg);
+    //refreshTable(pkg);
 
     setStatusText();
 }
@@ -856,14 +861,17 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
+#if 0
   vector<string> sections;
   vector<string> expanded_sections;
   
-//   cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
+  cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
+
 //   cout << "_lister is at: " <<_lister << endl;
 //   if(selectedPkg != NULL)
 //       cout << selectedPkg->name() << endl;
 
+#if 0
   saveTableState(expanded_sections);
 
   _pkgTree = gtk_pkg_tree_new(_lister);
@@ -873,12 +881,13 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
   gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
   restoreTableState(expanded_sections);
+#endif
 
   updatePackageInfo(selectedPkg);
   setStatusText();
 
   //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
-
+#endif
   return;
 }
 
@@ -1484,7 +1493,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   if (ask) {
       me->_lister->registerObserver(me);
   }
-  me->refreshTable(pkg);
+  //me->refreshTable(pkg);
 
   // free the list
   g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
@@ -1564,7 +1573,8 @@ void RGMainWindow::setColors(bool useColors)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
-  : RGWindow("main", false, true), _lister(packLister), _pkgTree(0)
+    : RGWindow("main", false, true), _lister(packLister), _pkgTree(0), 
+      _pkgCacheObserver(0), _pkgListCacheObserver(0)
 {
 #if !defined(DEBUGUI) || defined(HAVE_RPM)
     //_showUpdateInfo = true; // xxx conectiva only, for now
@@ -2070,9 +2080,7 @@ void RGMainWindow::buildInterface()
     _textView = glade_xml_get_widget(_gladeXML, "text_descr");
     assert(_textView);
     _textBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_textView));
-    gtk_text_view_set_editable(GTK_TEXT_VIEW(_textView), FALSE);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_textView), GTK_WRAP_WORD);
-    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(_textView), FALSE);
 
     _depP = glade_xml_get_widget(_gladeXML, "optionmenu_depends");
     assert(_depP);
@@ -2218,9 +2226,28 @@ void RGMainWindow::buildInterface()
     _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
     assert(_treeView);
 
-    _pkgTree = gtk_pkg_tree_new (_lister);
+    int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
+    _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
+    _menuDisplayMode = _treeDisplayMode;
+
+    if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
+	_pkgList = gtk_pkg_list_new(_lister);
+	if(_pkgListCacheObserver)
+	    delete _pkgListCacheObserver;
+	_pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
+						       GTK_TREE_VIEW(_treeView));
+    } else {
+	_pkgTree = gtk_pkg_tree_new (_lister);
+	if(_pkgCacheObserver)
+	    delete _pkgCacheObserver;
+	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
+						   GTK_TREE_VIEW(_treeView));
+    }
+
+#if 0
     gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
  			    GTK_TREE_MODEL(_pkgTree));
+#endif
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
@@ -2229,12 +2256,16 @@ void RGMainWindow::buildInterface()
     renderer = gtk_cell_renderer_text_new ();
     column = gtk_tree_view_column_new_with_attributes(" ", renderer,NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+    gtk_tree_view_column_set_fixed_width(column, 16);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
 
     /* Status(pixmap) column */
     renderer = gtk_cell_renderer_pixbuf_new ();
     column = gtk_tree_view_column_new_with_attributes("S", renderer,
 						      "pixbuf", PIXMAP_COLUMN,
 						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 20);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
     /* Package name */
@@ -2243,6 +2274,8 @@ void RGMainWindow::buildInterface()
 						      "text", NAME_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 200);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
     /* Installed Version */
@@ -2251,6 +2284,8 @@ void RGMainWindow::buildInterface()
 						      "text", INSTALLED_VERSION_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 130);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
     /* Available Version */
@@ -2260,6 +2295,8 @@ void RGMainWindow::buildInterface()
 						      "text", AVAILABLE_VERSION_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 130);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
 
     /* Description */
@@ -2268,6 +2305,8 @@ void RGMainWindow::buildInterface()
 						      "text", DESCR_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
+    gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
+    gtk_tree_view_column_set_fixed_width(column, 400);
     gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
     
     GtkTreeSelection *select;
@@ -2288,9 +2327,7 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(onCollapseAll),
 				  this); 
 
-    int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
-    _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
-    _menuDisplayMode = _treeDisplayMode;
+    mode = _treeDisplayMode;
     widget = glade_xml_get_widget(_gladeXML, "section_tree");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
 				   mode == 0 ? TRUE : FALSE);
@@ -2407,22 +2444,25 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 
   //  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
-#if 0
-  // mvo: this is a hack, flat list is slow currently for huge amounts of pkgs
-  if(_lister->count() > 2000 && 
-     mode == RPackageLister::TREE_DISPLAY_FLAT) {
-      if(!_userDialog->confirm(_("More than 2000 pkg will be displayed. \n The list is rather slow to display them. Are you sure?")))
-	  {
-	      mode = RPackageLister::TREE_DISPLAY_SECTIONS;
-	      me->_menuDisplayMode = RPackageLister::TREE_DISPLAY_SECTIONS;
-	  }
-  }
-#endif
-
   _lister->setTreeDisplayMode(mode);
   _lister->reapplyFilter();
   _treeDisplayMode = mode;
-  refreshTable(NULL);
+  //refreshTable(NULL);
+
+  if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
+      _pkgList = gtk_pkg_list_new(_lister);
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			      GTK_TREE_MODEL(_pkgList));
+      _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
+						     GTK_TREE_VIEW(_treeView));
+  } else {
+      _pkgTree = gtk_pkg_tree_new (_lister);
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			      GTK_TREE_MODEL(_pkgTree));
+      _pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
+						 GTK_TREE_VIEW(_treeView));
+  }
+  
 
   _blockActions = FALSE;
   setInterfaceLocked(FALSE);
@@ -2552,6 +2592,9 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 		       PKG_COLUMN, &pkg, -1);
     if (pkg == NULL)
 	return;    
+    cout << "selected: " << pkg->name() 
+	 << " path: " << (li->data)
+	 << endl;
 
     // free the list
     g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
@@ -2808,12 +2851,16 @@ void RGMainWindow::setInterfaceLocked(bool flag)
 
 void RGMainWindow::setTreeLocked(bool flag)
 {
+#if 0 // mvo: disabled for now
     if (flag == true) {
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
 	_pkgTree = NULL;
     } else {
-	// Do nothing for now, since refreshTable() will rebuild it.
+	_pkgTree = gtk_pkg_tree_new(_lister);;
+	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+				GTK_TREE_MODEL(_pkgTree));
     }
+#endif
 }
 
 // vim:sts=4:sw=4

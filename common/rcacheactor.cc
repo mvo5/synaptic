@@ -1,34 +1,44 @@
 
 #include "rcacheactor.h"
+#include "rpackagelister.h"
 #include "i18n.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/tagfile.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/configuration.h>
-
+#include <algorithm>
 #include <fnmatch.h>
 
 void RCacheActor::notifyCachePostChange()
 {
-   vector<RPackage*> toKeep;
-   vector<RPackage*> toInstall; 
-   vector<RPackage*> toUpgrade; 
-   vector<RPackage*> toRemove;
-   vector<RPackage*> exclude; // empty
+    cout << "RCacheActor::notifyCachePostChange()" << endl;
+    vector<RPackage*> toKeep;
+    vector<RPackage*> toInstall; 
+    vector<RPackage*> toUpgrade; 
+    vector<RPackage*> toRemove;
+    vector<RPackage*> exclude; // empty
 
-   if (_lister->getStateChanges(*_laststate, toKeep, toInstall,
-			        toUpgrade, toRemove, exclude, false)) {
-      if (toKeep.empty() == false)
-	 run(toKeep, ACTION_KEEP);
-      if (toInstall.empty() == false)
-	 run(toInstall, ACTION_INSTALL);
-      if (toUpgrade.empty() == false)
-	 run(toUpgrade, ACTION_INSTALL);
-      if (toRemove.empty() == false)
-	 run(toRemove, ACTION_REMOVE);
-   }
+    cout << "_laststate: " << _laststate << endl;
+    if(_laststate == NULL)
+	return;
+
+    if (_lister->getStateChanges(*_laststate, toKeep, toInstall,
+				 toUpgrade, toRemove, exclude, false)) {
+	if (toKeep.empty() == false)
+	    run(toKeep, ACTION_KEEP);
+	if (toInstall.empty() == false)
+	    run(toInstall, ACTION_INSTALL);
+	if (toUpgrade.empty() == false)
+	    run(toUpgrade, ACTION_INSTALL);
+	if (toRemove.empty() == false)
+	    run(toRemove, ACTION_REMOVE);
+    }
 }
+
+
+
+
 
 RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
 					     string FileName)
@@ -179,5 +189,7 @@ void RCacheActorRecommends::run(vector<RPackage*> &PkgList, int Action)
       }
    }
 }
+
+
 
 // vim:sts=3:sw=3

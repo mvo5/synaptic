@@ -26,7 +26,6 @@
 #define RCACHEACTOR_H
 
 #include "rpackagelister.h"
-
 #include <regex.h>
 
 class RCacheActor : public RCacheObserver
@@ -43,6 +42,56 @@ class RCacheActor : public RCacheObserver
 
    RPackageLister *_lister;
    RPackageLister::pkgState *_laststate;
+
+   public:
+
+   virtual void run(vector<RPackage*> &List, int Action) = 0;
+
+   virtual void notifyCachePreChange()
+   {
+      updateState();
+   };
+
+   virtual void notifyCachePostChange();
+
+   virtual void notifyCacheOpen() {};
+
+   virtual void updateState()
+   {
+       delete _laststate;
+       _laststate = new RPackageLister::pkgState;
+       _lister->saveState(*_laststate);
+   };
+
+   RCacheActor(RPackageLister *lister)
+	 : _lister(lister), _laststate(0)
+   {
+      _lister->registerCacheObserver(this);
+   };
+
+   virtual ~RCacheActor()
+   {
+      _lister->unregisterCacheObserver(this);
+   };
+};
+
+
+class RCacheActorRecommends : public RCacheActor
+{
+   protected:
+
+   typedef vector<string> ListType;
+   typedef map<string,ListType> MapType;
+   typedef map<regex_t*,ListType> RegexMapType;
+   
+   MapType _map;
+   MapType _map_wildcard;
+   RegexMapType _map_regex;
+
+   string _langLast;
+   ListType _langCache;
+
+   void setLanguageCache();
 
    inline bool actOnPkg(string Name, int Action)
    {
@@ -64,54 +113,6 @@ class RCacheActor : public RCacheObserver
       return false;
    };
 
-   public:
-
-   virtual void run(vector<RPackage*> &List, int Action) = 0;
-
-   virtual void notifyCachePreChange()
-   {
-      updateState();
-   };
-
-   virtual void notifyCachePostChange();
-
-   virtual void notifyCacheOpen() {};
-
-   virtual void updateState()
-   {
-     delete _laststate;
-     _laststate = new RPackageLister::pkgState;
-     _lister->saveState(*_laststate);
-   };
-
-   RCacheActor(RPackageLister *lister)
-	 : _lister(lister), _laststate(0)
-   {
-      _lister->registerCacheObserver(this);
-   };
-
-   virtual ~RCacheActor()
-   {
-      _lister->unregisterCacheObserver(this);
-   };
-};
-
-class RCacheActorRecommends : public RCacheActor
-{
-   protected:
-
-   typedef vector<string> ListType;
-   typedef map<string,ListType> MapType;
-   typedef map<regex_t*,ListType> RegexMapType;
-   
-   MapType _map;
-   MapType _map_wildcard;
-   RegexMapType _map_regex;
-
-   string _langLast;
-   ListType _langCache;
-
-   void setLanguageCache();
 
    public:
 

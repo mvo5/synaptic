@@ -25,6 +25,20 @@
 
 void RGFlushInterface();
 
+  enum {
+    DUMMY_COLUMN,
+    PIXMAP_COLUMN,
+    NAME_COLUMN,
+    INSTALLED_VERSION_COLUMN,
+    AVAILABLE_VERSION_COLUMN,
+    DESCR_COLUMN,
+    COLOR_COLUMN,
+    PKG_COLUMN,
+    N_COLUMNS
+  };
+
+
+
 const char *utf8(const char *str);
 void gtk_get_color_from_string(const char *cpp, GdkColor **colp);
 char* gtk_get_string_from_color(GdkColor *colp);

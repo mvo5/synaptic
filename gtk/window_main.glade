@@ -1080,8 +1080,8 @@
 	    <widget class="GtkScrolledWindow" id="scrolledwindow13">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="hscrollbar_policy">GTK_POLICY_ALWAYS</property>
-	      <property name="vscrollbar_policy">GTK_POLICY_ALWAYS</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 	      <property name="shadow_type">GTK_SHADOW_NONE</property>
 	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
@@ -1248,8 +1248,8 @@
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
-			      <property name="expand">True</property>
-			      <property name="fill">True</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
 			    </packing>
 			  </child>
 			</widget>
@@ -1281,19 +1281,20 @@
 		      <child>
 			<widget class="GtkScrolledWindow" id="scrolledwindow5">
 			  <property name="visible">True</property>
-			  <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
-			  <property name="vscrollbar_policy">GTK_POLICY_ALWAYS</property>
+			  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+			  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
 			  <property name="shadow_type">GTK_SHADOW_IN</property>
 			  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 			  <child>
 			    <widget class="GtkTextView" id="text_descr">
+			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="editable">False</property>
 			      <property name="justification">GTK_JUSTIFY_LEFT</property>
 			      <property name="wrap_mode">GTK_WRAP_WORD</property>
-			      <property name="cursor_visible">True</property>
+			      <property name="cursor_visible">False</property>
 			      <property name="pixels_above_lines">0</property>
 			      <property name="pixels_below_lines">0</property>
 			      <property name="pixels_inside_wrap">0</property>

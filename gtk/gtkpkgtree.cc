@@ -65,6 +65,39 @@ extern GdkPixbuf *StatusPixbuf[12];
 extern GdkColor *StatusColors[12];
 
 
+void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
+{
+    static GtkTreeIter iter;
+    tree<RPackageLister::pkgPair> *pkgTree;
+    RPackageLister::treeIter it;
+    RPackageLister::pkgPair pair;
+
+    cout << "RCacheActorPkgTree::run()" << endl;
+    for(int i=0;i<List.size();i++) {
+	pair.first = List[i]->name();
+	pair.second = List[i];
+	pkgTree = _lister->getTreeOrganizer();
+	//FIXME: we have room for optisation here
+	it = find(pkgTree->begin(),pkgTree->end(),pair);
+	// found
+	if(it != pkgTree->end()) {
+	    // fill in iter
+	    iter.user_data = it.node;
+	    // fill in treepath
+	    GtkTreePath *path = gtk_tree_path_new();
+	    do {
+		i= pkgTree->index(it);
+		gtk_tree_path_prepend_index(path, i);
+		it = pkgTree->parent(it);
+	    } while(it.node != NULL);
+	    gtk_tree_model_row_changed(GTK_TREE_MODEL(_pkgTree),
+				       path, &iter);
+	    gtk_tree_path_free(path);
+	}
+    }
+}
+
+
 GType
 gtk_pkg_tree_get_type (void)
 {
@@ -109,7 +142,7 @@ gtk_pkg_tree_class_init (GtkPkgTreeClass *klass)
   GObjectClass *object_class;
 
   parent_class = (GObjectClass*)g_type_class_peek_parent (klass);
-  object_class = (GObjectClass *) klass;
+  object_class = (GObjectClass *)klass;
 
   object_class->finalize = gtk_pkg_tree_finalize;
 }
@@ -145,6 +178,7 @@ gtk_pkg_tree_init (GtkPkgTree *pkg_tree)
   pkg_tree->column_headers[5] = G_TYPE_STRING;
   pkg_tree->column_headers[6] = GDK_TYPE_COLOR;
   pkg_tree->column_headers[7] = G_TYPE_POINTER;
+
 
 }
 
@@ -558,19 +592,3 @@ gtk_pkg_tree_iter_parent (GtkTreeModel *tree_model,
 
 }
 
-
-
-void gtk_pkg_tree_refresh(GtkPkgTree *pkg_tree)
-{
-
-//   tree<RPackageLister::pkgPair> *pkgTree;
-//   pkgTree = pkg_tree->_lister->getTreeOrganizer();
-  
-  cout << "void gtk_pkg_tree_refresh(GtkPkgTree *pkg_tree)"<<endl;
-
-//   gtk_tree_model_foreach(GTK_TREE_MODEL(pkg_tree), 
-// 			 gtk_pkg_tree_changed, 
-// 			 NULL);
-
-
-}

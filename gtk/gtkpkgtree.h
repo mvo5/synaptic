@@ -21,11 +21,9 @@
 #define __GTK_PKG_TREE_H__
 
 #include <gtk/gtk.h>
+#include "gsynaptic.h"
 #include "rpackagelister.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+#include "rcacheactor.h"
 
 #define GTK_TYPE_PKG_TREE			(gtk_pkg_tree_get_type ())
 #define GTK_PKG_TREE(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_PKG_TREE, GtkPkgTree))
@@ -36,19 +34,6 @@ extern "C" {
 
 typedef struct _GtkPkgTree       GtkPkgTree;
 typedef struct _GtkPkgTreeClass  GtkPkgTreeClass;
-
-  enum {
-    DUMMY_COLUMN,
-    PIXMAP_COLUMN,
-    NAME_COLUMN,
-    INSTALLED_VERSION_COLUMN,
-    AVAILABLE_VERSION_COLUMN,
-    DESCR_COLUMN,
-    COLOR_COLUMN,
-    PKG_COLUMN,
-    N_COLUMNS
-  };
-
 
 struct _GtkPkgTree
 {
@@ -65,16 +50,33 @@ struct _GtkPkgTreeClass
 
 };
 
-
 GType       gtk_pkg_tree_get_type         ();
 GtkPkgTree *gtk_pkg_tree_new              (RPackageLister *lister);
 
-/* is this really needed */
-void        gtk_pkg_tree_refresh          (GtkPkgTree *);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+class RCacheActorPkgTree : public RCacheActor
+{
+ protected:
+    GtkPkgTree *_pkgTree;
+    GtkTreeView *_pkgView;
+
+ public:
+    virtual void notifyCacheOpen() {
+	cout << "notifyCacheOpen()" << endl;
+	_pkgTree = gtk_pkg_tree_new(_lister);;
+	gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView), 
+				GTK_TREE_MODEL(_pkgTree));
+    };
+    virtual void run(vector<RPackage*> &List, int Action);
+
+    RCacheActorPkgTree(RPackageLister *lister, GtkPkgTree *pkgTree, 
+		       GtkTreeView *pkgView) 
+	:  RCacheActor(lister), _pkgTree(pkgTree), _pkgView(pkgView) {};    
+};
+
+
+
+
 
 
 #endif /* __GTK_TREE_STORE_H__ */

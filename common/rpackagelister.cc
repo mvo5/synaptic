@@ -334,7 +334,7 @@ bool RPackageLister::openCache(bool reset)
     }
     _progMeter->Done();
 
-    notifyCacheOpen();
+//    notifyCacheOpen();
 
     pkgDepCache *deps = _cache->deps();
 
@@ -441,6 +441,9 @@ bool RPackageLister::openCache(bool reset)
 	// set default filter (no filter)
 	setFilter();
     }
+
+    // mvo: put it here for now
+    notifyCacheOpen();
 
     firstRun=false;
 
@@ -697,8 +700,8 @@ void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
   
   for (unsigned i = 0; i < _count; i++) {
     if (applyFilters(_packages[i])) {
-      packages.push_back(_packages[i]);
-      addFilteredPackageToTree(_treeOrganizer, itermap, _packages[i]);
+	packages.push_back(_packages[i]);
+	addFilteredPackageToTree(_treeOrganizer, itermap, _packages[i]);
     }
   }
   _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),true);
@@ -998,6 +1001,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 #else
 void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
+    //cout << "RPackageLister::saveState()" << endl;
     state.clear();
     state.reserve(_count);
     for (unsigned i = 0; i < _count; i++) {

@@ -37,6 +37,7 @@ using namespace std;
 
 #include "rgwindow.h"
 #include "gtkpkgtree.h"
+#include "gtkpkglist.h"
 
 class RGSourcesWindow;
 class RGConfigWindow;
@@ -90,6 +91,10 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    GtkPkgTree *_pkgTree;
    GtkWidget *_treeView;
+   RCacheActorPkgTree *_pkgCacheObserver;
+   GtkPkgList *_pkgList;
+   RCacheActorPkgList *_pkgListCacheObserver;
+
    RPackageLister::treeDisplayMode _treeDisplayMode;
    RPackageLister::treeDisplayMode _menuDisplayMode;
 

@@ -39,9 +39,6 @@
 #include <pango/pango.h>
 #include <gtk/gtk.h>
 
-#include "stop.xpm"
-
-
 enum {
     DLDone = -1,
     DLQueued = -2,
@@ -50,10 +47,10 @@ enum {
 };
 
 enum {
-    PIXMAP_COLUMN,
+    FETCH_PIXMAP_COLUMN,
     SIZE_COLUMN,
     URL_COLUMN,
-    N_COLUMNS
+    N_FETCH_COLUMNS
   };
     
 
@@ -81,7 +78,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
     /* percent column */
     renderer = gtk_cell_renderer_pixbuf_new();
     column = gtk_tree_view_column_new_with_attributes(_("Status"), renderer,
-						      "pixbuf", PIXMAP_COLUMN,
+						      "pixbuf", FETCH_PIXMAP_COLUMN,
 						       NULL);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
     gtk_tree_view_column_set_fixed_width(column, 100);
@@ -370,7 +367,7 @@ void RGFetchProgress::refreshTable(int row)
 				      &iter, NULL, row);
     }
     gtk_list_store_set(_tableListStore, &iter,
-		       PIXMAP_COLUMN, buf,
+		       FETCH_PIXMAP_COLUMN, buf,
 		       SIZE_COLUMN, _items[row].size.c_str(),
 		       URL_COLUMN, _items[row].uri.c_str(),
 		       -1);

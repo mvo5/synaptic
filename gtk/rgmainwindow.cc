@@ -835,21 +835,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
     //cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
   
-#if 0 // no longer needed
-  vector<string> sections;
-  vector<string> expanded_sections;
-
-  saveTableState(expanded_sections);
-
-  _pkgTree = gtk_pkg_tree_new(_lister);
-  gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
-                         GTK_TREE_MODEL(_pkgTree));
-  // always set search column after set_model
-  gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
-
-  restoreTableState(expanded_sections);
-#endif
-
   updatePackageInfo(selectedPkg);
   
   setStatusText();
@@ -2473,7 +2458,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
     gtk_tree_view_column_set_fixed_width(column, 16);
     gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_FIXED);
-
+    
     /* Status(pixmap) column */
     renderer = gtk_cell_renderer_pixbuf_new ();
     column = gtk_tree_view_column_new_with_attributes("S", renderer,
@@ -2493,6 +2478,7 @@ void RGMainWindow::buildInterface()
     gtk_tree_view_column_set_fixed_width(column, 200);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
     gtk_tree_view_column_set_resizable(column, TRUE);
+    //gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_treeView),  column);
 
     /* Installed Version */
     renderer = gtk_cell_renderer_text_new ();

@@ -37,49 +37,27 @@ EXTRA_DIST = $(glade_DATA)
 
 synaptic_SOURCES=\
 	gsynaptic.cc\
-	gsynaptic.h\
 	gtkpkgtree.cc\
-	gtkpkgtree.h\
-	gtkpkglist.h\
 	gtkpkglist.cc\
 	rgaboutpanel.cc\
-	rgaboutpanel.h\
 	rgcacheprogress.cc\
-	rgcacheprogress.h\
-	rgconfigwindow.h\
 	rgconfigwindow.cc\
 	rgfetchprogress.cc\
-	rgfetchprogress.h\
 	rgfiltermanager.cc\
-	rgfiltermanager.h\
 	rgfindwindow.cc\
-	rgfindwindow.h\
 	rgsetoptwindow.cc\
-	rgsetoptwindow.h\
-	rgdummyinstallprogress.h\
 	rgdummyinstallprogress.cc\
-	rgzvtinstallprogress.h\
 	rgzvtinstallprogress.cc\
-	rginstallprogress.h\
 	rginstallprogress.cc\
-	rgcdscanner.h\
 	rgcdscanner.cc\
 	rgmainwindow.cc\
-	rgmainwindow.h\
 	rgrepositorywin.cc\
-	rgrepositorywin.h\
 	rgvendorswindow.cc\
-	rgvendorswindow.h\
 	rgsummarywindow.cc\
-	rgsummarywindow.h\
 	rgchangeswindow.cc\
-	rgchangeswindow.h\
-	rguserdialog.h\
 	rguserdialog.cc\
 	rgwindow.cc\
-	rgwindow.h \
-	rggladewindow.cc\
-	rggladewindow.h 
+	rggladewindow.cc
 
 CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 

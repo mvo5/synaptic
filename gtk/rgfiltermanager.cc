@@ -107,6 +107,9 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 		       GTK_SIGNAL_FUNC(deleteEventAction), this);
 
 
+    _filterDetailsBox = glade_xml_get_widget(_gladeXML, "vbox_filter_details");
+    assert(_filterDetailsBox);
+
     // filter list view
     _filterEntry = glade_xml_get_widget(_gladeXML, "entry_filters");
     _filterList = glade_xml_get_widget(_gladeXML, "treeview_filters");
@@ -273,6 +276,8 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
     gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), 3);
 #endif
 
+    // set the details filter to not sesitive
+    gtk_widget_set_sensitive(_filterDetailsBox, false);
 }
 
 #ifdef HAVE_DEBTAGS
@@ -654,6 +659,8 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
   gchar *filtername;
 
   if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+      gtk_widget_set_sensitive(me->_filterDetailsBox, true);
+
       if(me->_selectedPath != NULL) {
 	  applyFilterAction(NULL, me);
 	  gtk_tree_path_free(me->_selectedPath);
@@ -664,12 +671,16 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
 			  FILTER_COLUMN, &filter, 
 			  -1);
       me->_selectedPath = gtk_tree_model_get_path(model, &iter);
+      //cout << "path is " << gtk_tree_path_to_string(me->_selectedPath) << endl;
       me->_selectedFilter = filter;
       //cout << "You selected" << filter << endl;
       gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
       //g_free (filtername);
       
       me->editFilter();
+  } else {
+      gtk_widget_set_sensitive(me->_filterDetailsBox, false);
+
   }
 }
 

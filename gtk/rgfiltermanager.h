@@ -128,8 +128,9 @@ class RGFilterManagerWindow : public RGGladeWindow
    bool _okcancel;            // did the user click ok or cancel
 
    GtkWidget *_filterEntry;  /* GtkEntry */
-
    GdkCursor *_busyCursor;
+
+   GtkWidget *_filterDetailsBox; // detail box
 
    // the filter list
    GtkWidget *_filterList;   /* GtkTreeView */

@@ -437,7 +437,7 @@
 			      </child>
 
 			      <child>
-				<widget class="GtkOptionMenu" id="optionmenu1">
+				<widget class="GtkOptionMenu" id="optionmenu_upgrade_method">
 				  <property name="visible">True</property>
 				  <property name="tooltip" translatable="yes">The default upgrade method. The differences are explained in the manual</property>
 				  <property name="can_focus">True</property>
@@ -447,29 +447,29 @@
 				    <widget class="GtkMenu" id="menu4">
 
 				      <child>
-					<widget class="GtkMenuItem" id="always_ask1">
+					<widget class="GtkMenuItem" id="menu_always_ask">
 					  <property name="visible">True</property>
 					  <property name="label" translatable="yes">Always Ask</property>
 					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_always_ask1_activate" last_modification_time="Fri, 24 Oct 2003 10:29:49 GMT"/>
+					  <signal name="activate" handler="on_always_ask_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
 					</widget>
 				      </child>
 
 				      <child>
-					<widget class="GtkMenuItem" id="normal_upgrade1">
+					<widget class="GtkMenuItem" id="menu_normal_upgrade">
 					  <property name="visible">True</property>
 					  <property name="label" translatable="yes">Normal Upgrade</property>
 					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_normal_upgrade1_activate" last_modification_time="Fri, 24 Oct 2003 10:29:49 GMT"/>
+					  <signal name="activate" handler="on_normal_upgrade_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
 					</widget>
 				      </child>
 
 				      <child>
-					<widget class="GtkMenuItem" id="distribution_upgrade1">
+					<widget class="GtkMenuItem" id="distribution_upgrade">
 					  <property name="visible">True</property>
 					  <property name="label" translatable="yes">Distribution Upgrade</property>
 					  <property name="use_underline">True</property>
-					  <signal name="activate" handler="on_distribution_upgrade1_activate" last_modification_time="Fri, 24 Oct 2003 10:29:49 GMT"/>
+					  <signal name="activate" handler="on_distribution_upgrade_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
 					</widget>
 				      </child>
 				    </widget>

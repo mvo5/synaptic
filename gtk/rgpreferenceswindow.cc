@@ -111,6 +111,7 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
 {
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     bool newval;
+    int i;
 
     // cache
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheClean));
@@ -177,6 +178,9 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
     _config->Set("Synaptic::UseStatusColors",  newval ? "true" : "false");
     me->_mainWin->setColors(newval);
 
+    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
+    i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(me->_gladeXML, "optionmenu_upgrade_method")));
+    _config->Set("Synaptic::upgradeType",i-1);
 
     // proxy stuff
     bool useProxy;
@@ -370,6 +374,10 @@ void RGPreferencesWindow::show()
 	gtk_button_clicked(GTK_BUTTON(_cacheAutoClean));
     else
 	gtk_button_clicked(GTK_BUTTON(_cacheLeave));
+
+    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
+    i = _config->FindI("Synaptic::upgradeType",-1);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML,"optionmenu_upgrade_method")),i+1);
 
 
     // proxy stuff

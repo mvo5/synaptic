@@ -71,7 +71,6 @@ typedef enum {
 
 class RGMainWindow : public RGGladeWindow, public RPackageObserver
 {
-  friend class SynapticInterface;
   enum {
     DoNothing, 
     InstallRecommended, 
@@ -79,19 +78,22 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
     InstallSelected
   };
   
-  typedef enum {
-    TOOLBAR_PIXMAPS,
-    TOOLBAR_TEXT,
-    TOOLBAR_BOTH,
-    TOOLBAR_HIDE
-  } ToolbarState;
+  enum {
+      TOOLBAR_HIDE=-1
+  };
 
+  typedef enum {
+      UPGRADE_ASK=-1,
+      UPGRADE_NORMAL=0,
+      UPGRADE_DIST=1
+  } UpgradeType;
+  
    RPackageLister *_lister;
 
    bool _unsavedChanges;
    
    bool _blockActions; // block signals from the action and hold buttons
-   ToolbarState _toolbarState;
+   GtkToolbarStyle _toolbarStyle;
    int _interfaceLocked;
    GdkCursor *_busyCursor;
    GtkTooltips *_tooltips;
@@ -124,8 +126,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_proceedM;
    GtkWidget *_upgradeB;
    GtkWidget *_upgradeM;
-   GtkWidget *_distUpgradeB;
-   GtkWidget *_distUpgradeM;
+   //GtkWidget *_distUpgradeB;
+   //GtkWidget *_distUpgradeM;
    GtkWidget *_fixBrokenM;
 
    // filter/find panel   
@@ -279,7 +281,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onAddCDROM(GtkWidget *self, void *data);
    static void fixBrokenClicked(GtkWidget *self, void *data);
    static void upgradeClicked(GtkWidget *self, void *data);
-   static void distUpgradeClicked(GtkWidget *self, void *data);
+   //static void distUpgradeClicked(GtkWidget *self, void *data);
    static void proceedClicked(GtkWidget *self, void *data);
    
    // packages menu

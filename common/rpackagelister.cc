@@ -141,13 +141,14 @@ void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
 //     cout << "RPackageLister::unregisterObserver(RPackageObserver *observer)" << endl;
 
-    //remove(_packageObservers.begin(), _packageObservers.end(), observer);
     vector<RPackageObserver*>::iterator I;
     I = find(_packageObservers.begin(), _packageObservers.end(), observer);
     if(I != _packageObservers.end())
 	_packageObservers.erase(I);
+#if 0
     else 
 	cout << "unregisterObserver() failed" << endl;
+#endif
 }
 
 void RPackageLister::registerObserver(RPackageObserver *observer)
@@ -191,9 +192,10 @@ void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
     I = find(_cacheObservers.begin(), _cacheObservers.end(), observer);
     if(I != _cacheObservers.end())
 	_cacheObservers.erase(I);
+#if 0
     else
 	cout << "unregisterCacheObserver() failed" << endl;
-
+#endif
 }
 
 void RPackageLister::registerCacheObserver(RCacheObserver *observer)

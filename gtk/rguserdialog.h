@@ -53,7 +53,6 @@ public:
 /*
  * A alternative interface for the ruserdialog, here is how it works:
  * the glade file must called "dialog_$NAME.glade"
- * the "response" signal must be called "on_dialog_$NAME_response"
  * the buttons must have valid RESPONSE_IDs attached
  * see gtk/dialog_quit.glade as an example
  * Example:
@@ -65,16 +64,23 @@ public:
             do_not_ok_stuff();
         }
  *
+ * 
+ * if you need more complex interaction, use the getGladeXML() call to ask
+ * for specific widgets in the dialog (see gtk/dialog_upgrade.glade as example
 */
 class RGGladeUserDialog : public RGUserDialog
 {
  protected:
     GtkWidget *_dialog;
     GtkResponseType res;
+    GladeXML *gladeXML;
 
  public:
-    RGGladeUserDialog(RGWindow* parent) {};
+    RGGladeUserDialog(RGWindow* parent) : gladeXML(0) {};
+    virtual ~RGGladeUserDialog()  { gtk_widget_destroy(_dialog); };
+
     bool run(const char *name);
+    GladeXML *getGladeXML() { return gladeXML; };
 };
 #endif
 

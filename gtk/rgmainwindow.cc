@@ -798,7 +798,7 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
     RPackage *pkg = me->selectedPackage();
-    bool res;
+    bool res, dist_upgrade;
 
     if (!me->_lister->check()) {
 	me->_userDialog->error(
@@ -806,13 +806,37 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
 		  "with broken packages. Please fix them first."));
 	return;
     }
-    
+
+    // check if we have saved upgrade type
+    UpgradeType upgrade = (UpgradeType)_config->FindI("Synaptic::UpgradeType",UPGRADE_ASK);
+    if(upgrade == UPGRADE_ASK) {
+	// ask what type of upgrade the user wants
+	GladeXML *gladeXML;
+	GtkWidget *button;
+
+	RGGladeUserDialog dia(me);
+	dist_upgrade = dia.run("upgrade");
+	gladeXML = dia.getGladeXML();
+	// see if the user wants the answer saved
+	button = glade_xml_get_widget(gladeXML, "checkbutton_remember");
+	if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) 
+	    _config->Set("Synaptic::upgradeType",dist_upgrade);
+    } else {
+	// use the saved answer (don't ask)
+	dist_upgrade = upgrade;
+    }
+
+    // do the work
     me->setInterfaceLocked(TRUE);
     me->setStatusText(_("Performing automatic selection of upgradadable packages..."));
 
     me->_lister->saveUndoState();
 
-    res = me->_lister->upgrade();
+    if(dist_upgrade)
+	res = me->_lister->distUpgrade();
+    else
+	res = me->_lister->upgrade();
+
     me->refreshTable(pkg);
 
     if (res)
@@ -825,7 +849,7 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
 }
 
 
-
+#if 0
 void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -856,6 +880,7 @@ void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
     me->setInterfaceLocked(FALSE);
     me->showErrors();
 }
+#endif
 
 void RGMainWindow::proceed()
 {
@@ -1917,8 +1942,8 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     _busyCursor = gdk_cursor_new(GDK_WATCH);
     _tooltips = gtk_tooltips_new();
 
-    _toolbarState = (ToolbarState)_config->FindI("Synaptic::ToolbarState",
-						(int)TOOLBAR_BOTH);
+    _toolbarStyle = (GtkToolbarStyle)_config->FindI("Synaptic::ToolbarState",
+						    (int) GTK_TOOLBAR_BOTH);
 
     // get the pixbufs
     StatusPixbuf[(int)RPackage::MKeep] = 	
@@ -2000,10 +2025,25 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 }
 
 
-// this code does heavy depend on the button layout that libglade uses
 void RGMainWindow::menuToolbarClicked(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
+GtkWidget *widget;
+  // save new toolbar state
+  me->_toolbarStyle = (GtkToolbarStyle)GPOINTER_TO_INT(data);
+  GtkWidget *toolbar = glade_xml_get_widget(me->_gladeXML, "toolbar_main");
+  assert(toolbar);
+  if(me->_toolbarStyle == TOOLBAR_HIDE) {
+    widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
+    gtk_widget_hide(widget);
+    return;
+  } else {
+    widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
+    gtk_widget_show(widget);
+  } 
+  gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), me->_toolbarStyle);
+  
+#if 0
   GtkWidget *widget;
   GList *child;
   // the buttons we want to show or hide
@@ -2041,8 +2081,8 @@ void RGMainWindow::menuToolbarClicked(GtkWidget *self, void *data)
       gtk_widget_hide(GTK_WIDGET(child->data));
     else
       gtk_widget_show(GTK_WIDGET(child->data));
-    
   }
+#endif
 }
 
 void RGMainWindow::findToolClicked(GtkWidget *self, void *data)
@@ -2494,17 +2534,17 @@ void RGMainWindow::buildInterface()
 				  "on_upgrade_packages",
 				  G_CALLBACK(upgradeClicked),
 				  this); 
-
+#if 0
     _distUpgradeB = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
     _distUpgradeM = glade_xml_get_widget(_gladeXML, "distribution_upgrade1");
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_dist_upgrade_packages",
 				  G_CALLBACK(distUpgradeClicked),
 				  this); 
-
+#endif
     if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
 	gtk_widget_hide(_upgradeB);
-	gtk_widget_hide(_distUpgradeB);
+	//gtk_widget_hide(_distUpgradeB);
 	widget = glade_xml_get_widget(_gladeXML, "alignment_upgrade");
 	gtk_widget_hide(widget);
     }
@@ -2637,11 +2677,12 @@ void RGMainWindow::buildInterface()
     button = glade_xml_get_widget(_gladeXML, "button_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
 			 _("Upgrade every installed package to the latest version"),"");
-    
+
+#if 0
     button = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
 			 _("Upgrade every installed package to the latest version. Also include upgrades depending on not yet installed packages"),"");
-    
+#endif
     button = glade_xml_get_widget(_gladeXML, "button_procceed");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
 			 _("Execute the selected changes"),"");
@@ -3056,10 +3097,9 @@ void RGMainWindow::buildInterface()
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
 		       G_CALLBACK(menuToolbarClicked), 
-		       GINT_TO_POINTER(TOOLBAR_PIXMAPS)); 
-    if(_toolbarState == TOOLBAR_PIXMAPS)
+		       GINT_TO_POINTER(GTK_TOOLBAR_ICONS)); 
+    if(_toolbarStyle == GTK_TOOLBAR_ICONS)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_text");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
@@ -3067,10 +3107,9 @@ void RGMainWindow::buildInterface()
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
 		       G_CALLBACK(menuToolbarClicked), 
-		       GINT_TO_POINTER(TOOLBAR_TEXT)); 
-    if(_toolbarState == TOOLBAR_TEXT)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
+		       GINT_TO_POINTER(GTK_TOOLBAR_TEXT)); 
+    if(_toolbarStyle == GTK_TOOLBAR_TEXT)
+	gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_both");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
@@ -3078,10 +3117,19 @@ void RGMainWindow::buildInterface()
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
 		       G_CALLBACK(menuToolbarClicked), 
-		       GINT_TO_POINTER(TOOLBAR_BOTH)); 
-    if(_toolbarState == TOOLBAR_BOTH)
+		       GINT_TO_POINTER(GTK_TOOLBAR_BOTH)); 
+    if(_toolbarStyle == GTK_TOOLBAR_BOTH)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
+    button = glade_xml_get_widget(_gladeXML, "menu_toolbar_beside");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
+    g_object_set_data(G_OBJECT(button), "me", this);
+    g_signal_connect(G_OBJECT(button), 
+		       "activate",
+		       G_CALLBACK(menuToolbarClicked), 
+		       GINT_TO_POINTER(GTK_TOOLBAR_BOTH_HORIZ)); 
+    if(_toolbarStyle == GTK_TOOLBAR_BOTH_HORIZ)
+      gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_hide");
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
@@ -3090,7 +3138,7 @@ void RGMainWindow::buildInterface()
 		       "activate",
 		       G_CALLBACK(menuToolbarClicked), 
 		       GINT_TO_POINTER(TOOLBAR_HIDE)); 
-    if(_toolbarState == TOOLBAR_HIDE)
+    if(_toolbarStyle == TOOLBAR_HIDE)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
     // attach progress bar
@@ -3480,8 +3528,8 @@ void RGMainWindow::setStatusText(char *text)
     
     gtk_widget_set_sensitive(_upgradeB, _lister->upgradable() );
     gtk_widget_set_sensitive(_upgradeM, _lister->upgradable() );
-    gtk_widget_set_sensitive(_distUpgradeB, _lister->upgradable() );
-    gtk_widget_set_sensitive(_distUpgradeM, _lister->upgradable() );
+    //gtk_widget_set_sensitive(_distUpgradeB, _lister->upgradable() );
+    //gtk_widget_set_sensitive(_distUpgradeM, _lister->upgradable() );
 
     gtk_widget_set_sensitive(_proceedB, (toinstall + toremove) != 0);
     gtk_widget_set_sensitive(_proceedM, (toinstall + toremove) != 0);
@@ -3552,7 +3600,7 @@ void RGMainWindow::saveState()
     gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
     _config->Set("Synaptic::windowX", x);
     _config->Set("Synaptic::windowY", y);
-    _config->Set("Synaptic::ToolbarState", (int)_toolbarState);
+    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
     _config->Set("Synaptic::TreeDisplayMode", _menuDisplayMode);
 
     if (!RWriteConfigFile(*_config)) {

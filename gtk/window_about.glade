@@ -5,34 +5,48 @@
 
 <widget class="GtkDialog" id="window_about">
   <property name="visible">True</property>
-  <property name="title" translatable="yes">About</property>
+  <property name="title" translatable="yes">About Synaptic</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
-  <property name="resizable">True</property>
+  <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
-  <property name="has_separator">True</property>
+  <property name="has_separator">False</property>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
-      <property name="spacing">0</property>
+      <property name="spacing">12</property>
 
       <child internal-child="action_area">
 	<widget class="GtkHButtonBox" id="dialog-action_area1">
 	  <property name="visible">True</property>
-	  <property name="layout_style">GTK_BUTTONBOX_END</property>
+	  <property name="layout_style">GTK_BUTTONBOX_EDGE</property>
+
+	  <child>
+	    <widget class="GtkButton" id="button_credits">
+	      <property name="visible">True</property>
+	      <property name="can_default">True</property>
+	      <property name="has_default">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Credits</property>
+	      <property name="use_underline">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="response_id">0</property>
+	      <signal name="clicked" handler="on_button_credits_clicked" last_modification_time="Wed, 01 Oct 2003 21:27:23 GMT"/>
+	    </widget>
+	  </child>
 
 	  <child>
 	    <widget class="GtkButton" id="okbutton1">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">gtk-ok</property>
+	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="response_id">-5</property>
+	      <property name="response_id">-7</property>
 	      <signal name="clicked" handler="on_okbutton_clicked" last_modification_time="Tue, 17 Dec 2002 23:58:37 GMT"/>
 	    </widget>
 	  </child>
@@ -47,9 +61,10 @@
 
       <child>
 	<widget class="GtkVBox" id="vbox26">
+	  <property name="border_width">6</property>
 	  <property name="visible">True</property>
 	  <property name="homogeneous">False</property>
-	  <property name="spacing">0</property>
+	  <property name="spacing">6</property>
 
 	  <child>
 	    <widget class="GtkHBox" id="hbox14">
@@ -113,29 +128,80 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkLabel" id="label63">
+	    <widget class="GtkLabel" id="label64">
 	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="label" translatable="yes">
-Copyright (c) 2001-2003 Conectiva S/A
-Copyright (c) 2002,2003 Michael Vogt
-
-Authors:
-Alfredo K. Kojima &lt;kojima@windowmaker.org&gt;
-Gustavo Niemeyer &lt;niemeyer@conectiva.com&gt;
-Michael Vogt &lt;mvo@debian.org&gt;
-
-More information on http://www.nongnu.org/synaptic
-
-This software is licensed under the terms of the
-GNU General Public License, Version 2
-</property>
+	      <property name="label" translatable="yes">&lt;span size=&quot;large&quot; weight=&quot;bold&quot;&gt;Synaptic 0.45&lt;/span&gt;</property>
 	      <property name="use_underline">False</property>
-	      <property name="use_markup">False</property>
+	      <property name="use_markup">True</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
 	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label69">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Package management software using apt.</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">True</property>
+	      <property name="justify">GTK_JUSTIFY_CENTER</property>
+	      <property name="wrap">True</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label70">
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label" translatable="yes">Visit the home page at 
+http//www.nongnu.org/synaptic</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_CENTER</property>
+	      <property name="wrap">True</property>
 	      <property name="selectable">True</property>
-	      <property name="xalign">1</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label63">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">This software is licensed under the terms of the GNU General Public License, Version 2</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_CENTER</property>
+	      <property name="wrap">True</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
 	      <property name="yalign">0.5</property>
 	      <property name="xpad">5</property>
 	      <property name="ypad">0</property>
@@ -144,6 +210,248 @@ GNU General Public License, Version 2
 	      <property name="padding">0</property>
 	      <property name="expand">False</property>
 	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label65">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">&lt;span size=&quot;small&quot;&gt;Copyrigt (c) 2001-2003 Connectiva S/A 
+Copyright (c) 2002,2003 Michael Vogt&lt;/span&gt;</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">True</property>
+	      <property name="justify">GTK_JUSTIFY_CENTER</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="padding">0</property>
+	      <property name="expand">False</property>
+	      <property name="fill">False</property>
+	    </packing>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkDialog" id="window_credits">
+  <property name="visible">True</property>
+  <property name="title" translatable="yes">Credits</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="modal">False</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="has_separator">False</property>
+
+  <child internal-child="vbox">
+    <widget class="GtkVBox" id="dialog">
+      <property name="visible">True</property>
+      <property name="homogeneous">False</property>
+      <property name="spacing">6</property>
+
+      <child internal-child="action_area">
+	<widget class="GtkHButtonBox" id="dialog-action_area2">
+	  <property name="visible">True</property>
+	  <property name="layout_style">GTK_BUTTONBOX_END</property>
+
+	  <child>
+	    <widget class="GtkButton" id="closebutton1">
+	      <property name="visible">True</property>
+	      <property name="can_default">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label">gtk-close</property>
+	      <property name="use_stock">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="response_id">-7</property>
+	      <signal name="clicked" handler="on_closebutton_clicked" last_modification_time="Wed, 01 Oct 2003 21:35:23 GMT"/>
+	    </widget>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">True</property>
+	  <property name="pack_type">GTK_PACK_END</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkNotebook" id="notebook1">
+	  <property name="border_width">6</property>
+	  <property name="visible">True</property>
+	  <property name="can_focus">True</property>
+	  <property name="show_tabs">True</property>
+	  <property name="show_border">True</property>
+	  <property name="tab_pos">GTK_POS_TOP</property>
+	  <property name="scrollable">False</property>
+	  <property name="enable_popup">False</property>
+
+	  <child>
+	    <widget class="GtkScrolledWindow" id="scrolledwindow2">
+	      <property name="border_width">6</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	      <child>
+		<widget class="GtkViewport" id="viewport2">
+		  <property name="visible">True</property>
+		  <property name="shadow_type">GTK_SHADOW_NONE</property>
+
+		  <child>
+		    <widget class="GtkLabel" id="label68">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">Original author:
+Alfredo K. Kojima &lt;kojima@windowmaker.org&gt;
+
+Maintainers:
+Michael Vogt &lt;mvo@debian.org&gt;
+Gustavo Niemeyer &lt;niemeyer@conectiva.com&gt;
+
+Contributors:
+Enrico Zini &lt;enrico@debian.org&gt;
+Sebastian Heinlein &lt;allerlei@renates-welt.de&gt;
+Panu Matilainen &lt;pmatilai@welho.com&gt;</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">True</property>
+		      <property name="xalign">0</property>
+		      <property name="yalign">0</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="tab_expand">False</property>
+	      <property name="tab_fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label66">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Written by</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="type">tab</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkScrolledWindow" id="scrolledwindow1">
+	      <property name="border_width">6</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	      <child>
+		<widget class="GtkViewport" id="viewport1">
+		  <property name="visible">True</property>
+		  <property name="shadow_type">GTK_SHADOW_NONE</property>
+
+		  <child>
+		    <widget class="GtkScrolledWindow" id="scrolledwindow3">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		      <property name="shadow_type">GTK_SHADOW_NONE</property>
+		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+		      <child>
+			<widget class="GtkTextView" id="textview1">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="editable">True</property>
+			  <property name="justification">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap_mode">GTK_WRAP_NONE</property>
+			  <property name="cursor_visible">True</property>
+			  <property name="pixels_above_lines">5</property>
+			  <property name="pixels_below_lines">0</property>
+			  <property name="pixels_inside_wrap">0</property>
+			  <property name="left_margin">0</property>
+			  <property name="right_margin">0</property>
+			  <property name="indent">0</property>
+			  <property name="text" translatable="yes">Vital Khilko &lt;dojlid@mova.org&gt; (Belarusian)
+Keld Simonsen &lt;keld@dkuug.dk&gt; (Danish)
+Michael Vogt &lt;mvo@debian.org&gt; (German)
+Sebastain Heinlein &lt;allerlei@renates-welt.de&gt; (German)
+Francisco Javier F. Serrador &lt;serrador@arrakis.es&gt; (Spanish)
+Mathieu Roy &lt;yeupou@gnu.org&gt; (French)
+Mauro Colorio &lt;linuxbox@interfree.it&gt; (Italian)
+Luigi Maselli &lt;metnik at tiscali it&gt; (Italian)
+Daisuke Suzuki &lt;daisuke@linux.or.jp&gt; (Japanese)
+Vincent van Adrighem &lt;V.vanAdrighem@dirck.mine.nu&gt; (Dutch)
+Emil &lt;emil5@go2.pl&gt; (Polish)
+Marcia Norie Nakaza &lt;norie@conectiva.com.br&gt; (Portugese)
+Arnaldo Carvalho de Melo &lt;acme@conectiva.com.br&gt; (Portugese)
+Sviatoslav Sviridov &lt;svd@altlinux.ru&gt; (Russian)
+Vitaly Lipatov &lt;lav@altlinux.ru&gt; (Russian)
+Rail Aliev &lt;rail@iqchoice.com&gt; (Turkish)
+Anthony Fok &lt;anthony@thizlinux.com&gt; (Chinese)
+Alwin Meschede &lt;ameschede@gmx.de&gt; (German)</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="tab_expand">False</property>
+	      <property name="tab_fill">True</property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkLabel" id="label67">
+	      <property name="visible">True</property>
+	      <property name="label" translatable="yes">Translated by</property>
+	      <property name="use_underline">False</property>
+	      <property name="use_markup">False</property>
+	      <property name="justify">GTK_JUSTIFY_LEFT</property>
+	      <property name="wrap">False</property>
+	      <property name="selectable">False</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xpad">0</property>
+	      <property name="ypad">0</property>
+	    </widget>
+	    <packing>
+	      <property name="type">tab</property>
 	    </packing>
 	  </child>
 	</widget>

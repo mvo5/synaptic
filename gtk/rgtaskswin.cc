@@ -137,6 +137,7 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
    // display the result in a nice dialog
    RGGladeUserDialog dia(me, "task_descr");
    
+   //TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
    gchar *title = g_strdup_printf(_("Description %s"), str);
    dia.setTitle(title);
    

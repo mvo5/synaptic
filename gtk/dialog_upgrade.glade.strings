@@ -4,8 +4,12 @@
  * DO NOT compile it as part of your application.
  */
 
-gchar *s = N_("<span weight=\"bold\" size=\"large\">Enable intelligent dependency handling (dist-upgrade)?</span>");
-gchar *s = N_("Possible conflicts between packages will be attempted to be resolved with a priority to more important packages. This explicitly includes changes in the status of other packages e.g. additional packages will be installed to satisfy new dependencies of upgrades.\n"
+gchar *s = N_("<span weight=\"bold\" size=\"large\">Enable smart upgrade (dist-upgrade)?</span>");
+gchar *s = N_("The default upgrade method skips upgrades that introduce conflicts or require new packages to be installed.\n"
               "\n"
-              "This behavior can be changed in the preferences.");
+              "Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of upgrades in a smart way.\n"
+              "\n"
+              "<b>Note:</b> If you are upgrading to a new major operating system release you have to say 'yes' here.\n"
+              "\n"
+              "This behavior can be changed in the preferences later.");
 gchar *s = N_("Remeber the answer for further upgrades");

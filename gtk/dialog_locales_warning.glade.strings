@@ -4,13 +4,13 @@
  * DO NOT compile it as part of your application.
  */
 
-gchar *s = N_("<span weight=\"bold\" size=\"large\">Your locale settings are not supported by your Xlib</span>");
-gchar *s = N_("This error is caused by incorrect or incompatible locale settings.\n"
+gchar *s = N_("<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale settings</span>");
+gchar *s = N_("Synaptic may crash!\n"
               "\n"
-              "Please use locales settings like \"fr_FR\" or \"fr_FR@euro\" and do not use settings like \"fr_FR.iso8859-15@euro\".\n"
+              "Xlib does not support your chosen language environment.\n"
               "\n"
-              "We'll try to work around this, but there may be problems or even crashes. The best way to avoid this is to fix your locale settings.\n"
+              "Please use locales settings like \"fr_FR\" or \"fr_FR@euro\". Do not use settings like \"fr_FR.iso8859-15@euro\".\n"
               "\n"
-              "If you feel this is wrong or you need assistance, send a mail to:\n"
+              "Contact the mailing list for comments or help:\n"
               "<i>synaptic-devel@nongnu.org</i> \n"
-              "with the output of the \"locale\" command.");
+              "Include the output of the \"locale\" command in your email.");

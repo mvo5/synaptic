@@ -19,9 +19,10 @@ void RPackageListActor::notifyPostFilteredChange()
 
    for (unsigned int i = 0; i < _lister->count(); i++) {
       RPackage *pkg = _lister->getElement(i);
-      vector<RPackage *>::iterator I = removedList.find(pkg);
+      vector<RPackage *>::iterator I;
+      I = find(removedList.begin(), removedList.end(), pkg);
       if (I != removedList.end())
-	 removedList.erase(it);
+	 removedList.erase(I);
       else
          insertedList.push_back(pkg);
    }

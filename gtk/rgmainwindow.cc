@@ -1980,7 +1980,9 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
    }
    scan.hide();
    if (updateCache) {
+      me->setTreeLocked(TRUE);
       me->_lister->openCache(TRUE);
+      me->setTreeLocked(FALSE);
       me->refreshTable(me->selectedPackage());
    }
    me->setInterfaceLocked(FALSE);

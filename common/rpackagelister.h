@@ -264,6 +264,7 @@ public:
 			vector<RPackage*> &toInstall, 
 			vector<RPackage*> &toUpgrade, 
 			vector<RPackage*> &toRemove,
+			vector<RPackage*> &toDowngrade,
 			vector<RPackage*> &exclude,
 			bool sorted=true);
 

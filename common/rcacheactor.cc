@@ -25,6 +25,7 @@ void RCacheActor::notifyCachePostChange()
     vector<RPackage*> toInstall; 
     vector<RPackage*> toUpgrade; 
     vector<RPackage*> toRemove;
+    vector<RPackage*> toDowngrade;
     vector<RPackage*> exclude; // empty
 
     //cout << "_laststate: " << _laststate << endl;
@@ -32,13 +33,16 @@ void RCacheActor::notifyCachePostChange()
 	return;
 
     if (_lister->getStateChanges(*_laststate, toKeep, toInstall,
-				 toUpgrade, toRemove, exclude, false)) {
+				 toUpgrade, toRemove, toDowngrade,
+				 exclude, false)) {
 	if (toKeep.empty() == false)
 	    run(toKeep, ACTION_KEEP);
 	if (toInstall.empty() == false)
 	    run(toInstall, ACTION_INSTALL);
 	if (toUpgrade.empty() == false)
 	    run(toUpgrade, ACTION_INSTALL);
+	if (toDowngrade.empty() == false)
+	    run(toDowngrade, ACTION_INSTALL);
 	if (toRemove.empty() == false)
 	    run(toRemove, ACTION_REMOVE);
     }

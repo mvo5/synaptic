@@ -90,7 +90,8 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
 				     vector<RPackage*> &kept,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
-				     vector<RPackage*> &toRemove)
+				     vector<RPackage*> &toRemove,
+				     vector<RPackage*> &toDowngrade)
 {    
   GtkTreeIter iter, iter_child;
    
@@ -108,6 +109,22 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
 			   PKG_COLUMN,(*p)->name(), -1);
       }
   }
+
+  if(toDowngrade.size() > 0) {
+    /* downgrade */
+    gtk_tree_store_append (_treeStore, &iter, NULL);  
+    gtk_tree_store_set (_treeStore, &iter,
+			PKG_COLUMN, _("To be downgraded"), -1);
+    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
+	 p != toDowngrade.end(); 
+	 p++) 
+      {
+	gtk_tree_store_append (_treeStore, &iter_child, &iter);
+	gtk_tree_store_set(_treeStore, &iter_child,
+			   PKG_COLUMN,(*p)->name(), -1);
+      }
+  }
+
 
   if(toUpgrade.size() > 0) {
     gtk_tree_store_append (_treeStore, &iter, NULL);  

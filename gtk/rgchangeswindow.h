@@ -51,7 +51,8 @@ public:
 		      vector<RPackage*> &kept,
 		      vector<RPackage*> &toInstall, 
 		      vector<RPackage*> &toUpgrade, 
-		      vector<RPackage*> &toRemove);
+		      vector<RPackage*> &toRemove,
+		      vector<RPackage*> &toDowngrade);
 };
 
 #endif

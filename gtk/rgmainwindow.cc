@@ -1705,17 +1705,19 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   vector<RPackage*> toKeep;
   vector<RPackage*> toInstall; 
   vector<RPackage*> toUpgrade; 
+  vector<RPackage*> toDowngrade; 
   vector<RPackage*> toRemove;
 
   // ask if the user really want this changes
   bool changed=true;
   if (ask && me->_lister->getStateChanges(state, toKeep, toInstall,
-					  toUpgrade, toRemove, exclude)) {
+					  toUpgrade, toRemove, toDowngrade,
+					  exclude)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(me);
       if (!chng->showAndConfirm(me->_lister, toKeep, toInstall,
-      			  toUpgrade, toRemove)) {
+      			  toUpgrade, toRemove, toDowngrade)) {
           // canceled operation
           me->_lister->restoreState(state);
 	  changed=false;

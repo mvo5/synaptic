@@ -1256,6 +1256,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
 				     vector<RPackage*> &toRemove,
+				     vector<RPackage*> &toDowngrade,
 				     vector<RPackage*> &exclude,
 				     bool sorted)
 {
@@ -1288,6 +1289,10 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 		break;
 
 	    case RPackage::MDowngrade:
+		toDowngrade.push_back(_packages[i]);
+		changed = true;
+		break;
+
 	    case RPackage::MBroken:
 	    case RPackage::MPinned:
 	    case RPackage::MNew:
@@ -1306,6 +1311,9 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	    sort(toUpgrade.begin(), toUpgrade.end(), bla());
 	if (toRemove.empty() == false)
 	    sort(toRemove.begin(), toRemove.end(), bla());
+	if (toDowngrade.empty() == false)
+	    sort(toDowngrade.begin(), toDowngrade.end(), bla());
+
     }
 
     return changed;

@@ -289,8 +289,10 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
     pw = status * width / 100;    
     
     if (status < 0) {
-	gdk_draw_rectangle(pix, status == DLDone ? _barGC : _gc, 
-			   TRUE, px, 0, pw, height);
+	if (status == DLDone || status == DLHit)
+	    gdk_draw_rectangle(pix, _barGC, TRUE, px, 0, pw, height);
+	else
+	    gdk_draw_rectangle(pix, _gc, TRUE, px, 0, pw, height);
 
 	switch (status) {
 	 case DLQueued:

@@ -367,8 +367,10 @@ bool RPackageLister::openCache(bool reset)
       // Gather list of sections.
       if (I.Section())
          sectionSet.insert(I.Section());
+#if 0 // may confuse users
       else
          cerr << "Package " << I.Name() << " has no section?!" << endl;
+#endif
    }
 
    // Truncate due to virtual packages which were skipped above.

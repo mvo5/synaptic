@@ -28,6 +28,7 @@
 #include "rginstallprogress.h"
 
 #include <apt-pkg/configuration.h>
+#include <gtk/gtk.h>
 
 #include <unistd.h>
 #include <stdio.h>
@@ -117,6 +118,20 @@ void RGInstallProgress::startUpdate()
 
 void RGInstallProgress::finishUpdate()
 {
+   char buf[1024];
+   bzero(buf, 1024);
+   int len = read(_childin, buf, 1023);
+   if (len > 0) {
+      GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(this->window()),
+					      GTK_DIALOG_DESTROY_WITH_PARENT,
+					      GTK_MESSAGE_ERROR, 
+					      GTK_BUTTONS_OK, 
+					      _("APT system reports:\n%s"), 
+					      utf8(buf));
+      gtk_dialog_run(GTK_DIALOG(dia));
+      gtk_widget_destroy(dia);
+   }
+
    if (_startCounting) {
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 1.0);
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);

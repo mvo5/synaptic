@@ -41,6 +41,7 @@ class RGSummaryWindow:public RGGladeWindow {
    bool _potentialBreak;
    RPackageLister *_lister;
    GtkWidget *_dlonlyB;
+   GtkWidget *_checkSigsB;
 
    enum {
       PKG_COLUMN,

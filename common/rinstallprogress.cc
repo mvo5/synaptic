@@ -30,6 +30,7 @@
 #include <sys/wait.h>
 #include <iostream>
 #include <cstdio>
+#include <apt-pkg/error.h>
 #ifdef HAVE_RPM
 #include <apt-pkg/configuration.h>
 #endif
@@ -76,6 +77,8 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
       close(fd[1]);
 
       res = pm->DoInstallPostFork();
+      // dump errors into cerr (pass it to the parent process)	
+      _error->DumpErrors();
       _exit(res);
    }
    // this is where we read stuff from the child

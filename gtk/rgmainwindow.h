@@ -224,7 +224,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    // install the list of packagenames and display a changes window
    void selectToInstall(vector<string> packagenames);
-
+   
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);

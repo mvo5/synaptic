@@ -305,7 +305,13 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
    _dlonlyB = glade_xml_get_widget(_gladeXML, "checkbutton_download_only");
 
-
+   _checkSigsB = glade_xml_get_widget(_gladeXML, "checkbutton_check_signatures");
+   assert(_checkSigsB);
+#ifdef HAVE_RPM
+   bool check = _config->FindB("RPM::GPG-Check", true);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_checkSigsB), check);
+   gtk_widget_show(_checkSigsB);
+#endif
 
    button = glade_xml_get_widget(_gladeXML, "togglebutton_details");
    gtk_signal_connect(GTK_OBJECT(button), "clicked",
@@ -441,6 +447,11 @@ bool RGSummaryWindow::showAndConfirm()
    _config->Set("Synaptic::Download-Only",
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB)) ?
                 "true" : "false");
+#ifdef HAVE_RPM
+   _config->Set("RPM::GPG-Check",
+                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_checkSigsB)) ?
+                "true" : "false");
+#endif
 
    return _confirmed;
 }

@@ -1,14 +1,14 @@
 # Chinese (simplified) message translation for synaptic.
 # Copyright (C) 2001-2004 Free Software Foundation, Inc.
 # Anthony Fok <anthony@thizlinux.com>, 2002-2003.
-# Liu Songhe <jackliu9999@msn.com>, 2003-2004.
+# Liu Songhe <jackliu9999@msn.com>, 2003-2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-28 14:21+0100\n"
-"PO-Revision-Date: 2005-02-06 21:55+0800\n"
+"PO-Revision-Date: 2005-03-08 22:25+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -311,9 +311,8 @@ msgid ""
 msgstr "无法定位任何软件包文件。可能这不是一张启用了 APT 支持的光盘。"
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
-msgstr "没有成功扫描光盘。"
+msgstr "未能成功扫描光盘。"
 
 #: ../common/rcdscanner.cc:384
 msgid "Empty disc name."
@@ -365,9 +364,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "错误：无法创建配置文件目录 %s"
 
 #: ../common/rconfiguration.cc:148
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "错误：无法创建日志目录 %s"
+msgstr "错误：无法创建临时目录 %s"
 
 #: ../common/rconfiguration.cc:166
 #, c-format
@@ -380,23 +379,21 @@ msgid "couldn't open %s for writing"
 msgstr "无法打开 %s 以写入"
 
 #: ../common/rinstallprogress.cc:41
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now."
 msgstr ""
 "\n"
-"成功实施全部变更。您现在可以关闭窗口"
+"成功实施全部变更。您现在可以关闭窗口。"
 
 #: ../common/rinstallprogress.cc:42
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in the terminal buffer to see what went "
 "wrong."
 msgstr ""
 "\n"
-"无法实施全部变更！请回滚至此缓冲器以查看发生了什么错误"
+"无法实施全部变更！请回滚终端缓冲器查看发生了什么错误"
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -856,9 +853,8 @@ msgstr "已标记的变更"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "具有 Debconf 的 Pkg 包"
+msgstr "具有 Debconf 的包"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
@@ -939,17 +935,15 @@ msgid "-r   Open in the repository screen\n"
 msgstr "-r   在软件仓库窗口里打开\n"
 
 #: ../gtk/gsynaptic.cc:71
-#, fuzzy
 msgid "-f=? Give an alternative filter file\n"
-msgstr "-f=? 给出一个备选的过滤器文件\n"
+msgstr "-f=? 给出一个替代的过滤器文件\n"
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
-msgstr ""
+msgstr "-t   给出替代的主窗口标题(即主机名和 `uname -n` 的输出)\n"
 
 #: ../gtk/gsynaptic.cc:73
-#, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? 使用具有给出数字的初始过滤器开始\n"
 
@@ -958,17 +952,14 @@ msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? 设定一个强迫配置选项，例如 -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr "--upgrade-mode  调用刷新、升级并显示变更\n"
+msgstr "--upgrade-mode  调用升级并显示变更\n"
 
 #: ../gtk/gsynaptic.cc:76
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
-msgstr "--dist-upgrade-mode  调用刷新、智能升级并显示变更\n"
+msgstr "--dist-upgrade-mode  调用智能升级并显示变更\n"
 
 #: ../gtk/gsynaptic.cc:77
-#, fuzzy
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr "--update-at-startup  启动时调用“刷新”\n"
 
@@ -986,30 +977,29 @@ msgstr "--add-cdrom 启动时添加一个 CDROM\n"
 
 #: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "已有一个 synaptic 正在运行"
 
 #: ../gtk/gsynaptic.cc:304
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
-msgstr ""
+msgstr "已有另一个 synaptic 正运行于交互模式。请先关闭它。"
 
 #: ../gtk/gsynaptic.cc:310
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
-msgstr ""
+msgstr "已有另一个 synaptic 正运行于非交互模式。请先等待它结束。"
 
 #: ../gtk/gsynaptic.cc:334
-#, fuzzy
 msgid "Unable to get exclusive lock"
-msgstr "无法变更为 %s"
+msgstr "无法获得排它锁"
 
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
-msgstr ""
+msgstr "这通常意味着另一个包管理程序(象 apt-get 或 aptitude)正在运行。请首先关闭那个程序。"
 
 #: ../gtk/gsynaptic.cc:377
 msgid "You must run this program as the root user."
@@ -1052,7 +1042,7 @@ msgid ""
 "You are about to install software that <b>can't be authenticated</b>! Doing "
 "this could allow a malicious individual to damage or take control of your "
 "system."
-msgstr ""
+msgstr "您即将安装<b>无法验证</b>的软件！这样做有可能允许一个恶意个体(人或后门程序等[译注])损坏或支配您的系统。"
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
@@ -1167,12 +1157,10 @@ msgid "Error in package %s"
 msgstr "软件包有错误 %s"
 
 #: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
-#, fuzzy
 msgid "Changes applied"
-msgstr "改变视图："
+msgstr "变更已实施"
 
 #: ../gtk/rgdebinstallprogress.cc:703
-#, fuzzy
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1243,7 +1231,6 @@ msgstr ""
 "布版本，直到它(该操作系统发布版本)进入默认的(操作系统)发布版本行列。"
 
 #: ../gtk/rgpreferenceswindow.cc:958
-#, fuzzy
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
@@ -1289,13 +1276,13 @@ msgstr ""
 "的光盘插入驱动器 %s"
 
 #: ../gtk/rgfetchprogress.cc:309
-#, fuzzy, c-format
+#, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "正在下载文件 %li(属于 %li)  速度 %s/s - 尚余 %s"
+msgstr "下载比率：%s/s - 尚余 %s"
 
 #: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
-msgstr ""
+msgstr "下载比率：未知"
 
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
@@ -1371,14 +1358,13 @@ msgstr ""
 "%s"
 
 #: ../gtk/rglogview.cc:260
-#, fuzzy
 msgid "Not found"
 msgstr "未找到"
 
 #: ../gtk/rglogview.cc:262
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
-msgstr ""
+msgstr "表达式已找到，请看左侧列表里的匹配条目。"
 
 #: ../gtk/rgpkgdetails.cc:107
 #, c-format
@@ -1535,7 +1521,7 @@ msgid_plural ""
 "\n"
 "Use the \"Broken\" filter to locate them."
 msgstr[0] ""
-"您的系统里有 %d 个毁损的软件包！\n"
+"您的系统里有 %d 个(依赖关系)毁损的软件包！\n"
 "\n"
 "请使用“Broken”过滤器定位它们。"
 
@@ -1585,6 +1571,9 @@ msgid ""
 "\n"
 "Please wait."
 msgstr ""
+"<big><b>正在构建仓库对话</b></big>\n"
+"\n"
+"请稍候。"
 
 #: ../gtk/rgmainwindow.cc:2173
 msgid "Repositories changed"
@@ -1613,7 +1602,6 @@ msgid "Starting help viewer..."
 msgstr "正在启动帮助查看器..."
 
 #: ../gtk/rgmainwindow.cc:2303
-#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1706,7 +1694,7 @@ msgid ""
 "Fix broken packages first."
 msgstr ""
 "无法升级系统！\n"
-"请先修复毁损的软件包。"
+"请先修复(依赖关系)毁损的软件包。"
 
 #: ../gtk/rgmainwindow.cc:2844
 msgid "Marking all available upgrades..."
@@ -1938,7 +1926,7 @@ msgstr "取消"
 #. downloadable version)
 #: ../gtk/rggladewindow.cc:89 ../gtk/rggladewindow.cc:107
 msgid "N/A"
-msgstr "不适用"
+msgstr "不可用"
 
 #: ../gtk/rgfindwindow.cc:128
 msgid "Find"
@@ -2165,7 +2153,7 @@ msgstr "过滤器(_F)"
 
 #: ../gtk/window_main.glade.h:56
 msgid "_Fix Broken Packages"
-msgstr "修正被毁损的软件包(apt-get -f install)(_F)"
+msgstr "修正(依赖关系)毁损的软件包(apt-get -f install)(_F)"
 
 #: ../gtk/window_main.glade.h:57
 msgid "_Force Version..."
@@ -2764,13 +2752,12 @@ msgid ""
 msgstr "这是您在那些已标记的变更被实施前回顾这一列表的最后机会。"
 
 #: ../gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
-"发行商在他们的软件包上作标记以校验软件包的来源和完整性。禁用校验是一种危险行"
-"为"
+"发行商签署他们的软件包(给软件包作标记)以校验软件包的来源和完整性。"
+"禁用校验是一种危险行为。"
 
 #: ../gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
@@ -2880,9 +2867,8 @@ msgid "Orphaned"
 msgstr "孤立的"
 
 #: ../gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "仓库中自上次“刷新”后的新软件包"
+msgstr "仓库中自上次“刷新”后新出现的软件包"
 
 #: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
@@ -2991,9 +2977,8 @@ msgid "<i>Preparing packages...</i>"
 msgstr "<i>正在准备软件包...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Automatically close after the changes have been successfully applied"
-msgstr "当变更成功实施后关闭此对话框"
+msgstr "当变更成功实施后自动关闭(对话框)"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:3
 msgid "Terminal"
@@ -3004,7 +2989,6 @@ msgid "Extra output was generated during Package Manager operation"
 msgstr "在包管理器操作期间产生了额外输出"
 
 #: ../gtk/window_tasks.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -3014,7 +2998,7 @@ msgid ""
 msgstr ""
 "<span size=\"large\" weight=\"bold\">您的计算机要完成哪些任务？</span>\n"
 "\n"
-"这里有一些预先分好组的软件包以完成每一种(相应的)任务。如果您选择了一种任务，"
+"这里有一些预先分好组的软件包用以完成每一种(相应的)任务。如果您选择了一种任务，"
 "相应的软件包就会被标记以便安装。"
 
 #: ../gtk/window_tasks.glade.h:4
@@ -3187,7 +3171,6 @@ msgstr "<i>正在执行时无法关闭</i>"
 
 #. vim:sts=3:sw=3
 #: ../gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3198,7 +3181,7 @@ msgid ""
 msgstr ""
 "<big><b>无法下载全部必需的软件包文件</b></big>\n"
 "\n"
-"您想安装的软件包版本也许在仓库里已经不再可用了。或许软件包来源有问题。刷新软"
+"您想安装的软件包版本也许在仓库里已经不再可用了，或者软件包来源有问题。刷新软"
 "件包列表并检查软件包来源(即 CD 或者网络连接)。"
 
 #: ../gtk/dialog_update_outdated.glade.h:1
@@ -3260,10 +3243,6 @@ msgstr "安装、升级和删除软件包的历史。"
 
 #~ msgid "Security"
 #~ msgstr "安全更新"
-
-#, fuzzy
-#~ msgid "Installation finished"
-#~ msgstr "正在安装 %s"
 
 #~ msgid "Temporary Files"
 #~ msgstr "临时文件"

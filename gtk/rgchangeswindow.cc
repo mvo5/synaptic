@@ -65,9 +65,23 @@ void RGChangesWindow::confirm(RPackageLister *lister,
 			      vector<RPackage *> &toReInstall,
 			      vector<RPackage *> &toUpgrade,
 			      vector<RPackage *> &toRemove,
-			      vector<RPackage *> &toDowngrade)
+			      vector<RPackage *> &toDowngrade,
+			      vector<RPackage *> &notAuthenticated)
 {
    GtkTreeIter iter, iter_child;
+ 
+  if (notAuthenticated.size() > 0) {
+      /* removed */
+      gtk_tree_store_append(_treeStore, &iter, NULL);
+      gtk_tree_store_set(_treeStore, &iter,
+                         PKG_COLUMN, _("NOT AUTHENTICATED"), -1);
+      for (vector<RPackage *>::const_iterator p = notAuthenticated.begin();
+           p != notAuthenticated.end(); p++) {
+         gtk_tree_store_append(_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
+      }
+   }
 
    if (toRemove.size() > 0) {
       /* removed */

@@ -923,6 +923,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
+				     vector<RPackage *> &notAuthenticated,
                                      vector<RPackage *> &exclude,
                                      bool sorted)
 {
@@ -1024,6 +1025,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toUpgrade,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
+				     vector<RPackage *> &notAuthenticated,
                                      vector<RPackage *> &exclude,
                                      bool sorted)
 {
@@ -1032,9 +1034,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
    for (unsigned i = 0; i < _packages.size(); i++) {
       int flags = _packages[i]->getFlags();
 
-      if (state[i] != flags &&
-          find(exclude.begin(), exclude.end(),
-               _packages[i]) == exclude.end()) {
+      if (state[i] != flags) {
 
          // These flags will never be set together.
          int status = flags & (RPackage::FHeld |
@@ -1043,6 +1043,22 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                RPackage::FUpgrade |
                                RPackage::FDowngrade |
                                RPackage::FRemove);
+
+	 // add packages to the not-authenticated list if they are going to
+	 // be installed in some way
+	 switch(status) {
+	 case RPackage::FNewInstall:
+	 case RPackage::FReInstall:
+	 case RPackage::FUpgrade:
+	 case RPackage::FDowngrade:
+	    if(!_packages[i]->isTrusted()) {
+	       notAuthenticated.push_back(_packages[i]);
+	       changed = true;
+	    }
+	 }
+	 
+	 if(find(exclude.begin(), exclude.end(),_packages[i]) != exclude.end())
+	    continue;
 
          switch (status) {
             case RPackage::FNewInstall:

@@ -48,7 +48,8 @@ class RGChangesWindow:public RGGladeWindow {
 		vector<RPackage *> &toReInstall,
 		vector<RPackage *> &toUpgrade,
 		vector<RPackage *> &toRemove,
-		vector<RPackage *> &toDowngrade);
+		vector<RPackage *> &toDowngrade,
+		vector<RPackage *> &notAuthenticated);
 };
 
 #endif

@@ -258,6 +258,7 @@ class RPackageLister {
                         vector<RPackage *> &toUpgrade,
                         vector<RPackage *> &toRemove,
                         vector<RPackage *> &toDowngrade,
+			vector<RPackage *> &notAuthenticated,
                         vector<RPackage *> &exclude, bool sorted = true);
 
    bool openCache(bool reset);

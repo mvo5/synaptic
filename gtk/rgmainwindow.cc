@@ -497,6 +497,7 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toDowngrade;
    vector<RPackage *> toRemove;
+   vector<RPackage *> notAuthenticated;
 
    bool ask = _config->FindB("Synaptic::AskRelated", true);
 
@@ -504,10 +505,10 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    bool changed = true;
    if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
 				       toUpgrade, toRemove, toDowngrade,
-				       exclude)) {
+				       notAuthenticated, exclude)) {
       RGChangesWindow changes(this);
       changes.confirm(_lister, toKeep, toInstall, toReInstall,
-		      toUpgrade, toRemove, toDowngrade);
+		      toUpgrade, toRemove, toDowngrade, notAuthenticated);
       int res = gtk_dialog_run(GTK_DIALOG(changes.window()));
       if( res != GTK_RESPONSE_OK) {
          // canceled operation

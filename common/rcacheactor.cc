@@ -19,6 +19,7 @@ void RCacheActor::notifyCachePostChange()
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toRemove;
    vector<RPackage *> toDowngrade;
+   vector<RPackage *> notAuthenticated;
    vector<RPackage *> exclude;        // empty
 
    //cout << "_laststate: " << _laststate << endl;
@@ -27,6 +28,7 @@ void RCacheActor::notifyCachePostChange()
 
    if (_lister->getStateChanges(*_laststate, toKeep, toInstall, toReInstall,
                                 toUpgrade, toRemove, toDowngrade,
+				notAuthenticated,
                                 exclude, false)) {
       if (toKeep.empty() == false)
          run(toKeep, ACTION_KEEP);

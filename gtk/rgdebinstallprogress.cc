@@ -53,6 +53,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    prepare(lister);
    setTitle(_("Applying Changes"));
 
+   // make sure that debconf is not run in the terminal
+   setenv("DEBIAN_FRONTEND","gnome",1);
+
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
    _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: synaptic 0.52.0\n"
+"Project-Id-Version: synaptic 0.53.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-08-03 15:11+0200\n"
-"PO-Revision-Date: 2004-07-02 19:20+0800\n"
+"PO-Revision-Date: 2004-08-04 20:05+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "新闻组"
 #. TRANSLATORS: Alias for the Debian package section "oldlibs"
 #: common/sections_trans.cc:54
 msgid "Libraries - Old"
-msgstr "库 - 陈旧"
+msgstr "库 - 陈旧的"
 
 #. TRANSLATORS: Alias for the Debian package section "otherosfs"
 #: common/sections_trans.cc:56
@@ -373,14 +373,13 @@ msgstr "无法打开 %s 以写入"
 
 #: common/rpackage.cc:198
 msgid "The list of installed files is only available for installed packages"
-msgstr "已安装文件的列表仅对已安装的软件包才有"
+msgstr "已安装文件的列表仅可用于已安装的软件包"
 
 #: common/rpackage.cc:397
 msgid "or dependency"
 msgstr "或依赖关系"
 
 #: common/rpackage.cc:401
-#, fuzzy
 msgid "Dependency of"
 msgstr "依赖关系"
 
@@ -633,14 +632,15 @@ msgstr "正在忽略 sources.list 文件里无效的记录！"
 #. one is a detailed error message that
 #. is provided by apt
 #: common/rpackagelister.cc:1262
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s\n"
 "\n"
 msgstr ""
 "未能取回 %s\n"
-"  %s"
+"  %s\n"
+"\n"
 
 #: common/rpackagelister.cc:1283
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -689,14 +689,12 @@ msgid "Alphabetic"
 msgstr "依字母排列"
 
 #: common/rpackageview.h:137
-#, fuzzy
 msgid "Search History"
-msgstr "搜索过滤器"
+msgstr "搜索历史"
 
 #: common/rpackageview.h:180
-#, fuzzy
 msgid "Custom Filters"
-msgstr "到筛选器"
+msgstr "自定义筛选器"
 
 #: common/rpackageview.cc:94 gtk/window_filters.glade.h:26
 msgid "New in repository"
@@ -707,9 +705,8 @@ msgid "Pinned"
 msgstr "标记为永不升级的软件包"
 
 #: common/rpackageview.cc:100
-#, fuzzy
 msgid "Installed (local or obsolete)"
-msgstr "已安装的(陈旧的)"
+msgstr "已安装的(本地的或者陈旧的)"
 
 #: common/rpackageview.cc:106
 msgid "Not installed (residual config)"
@@ -854,7 +851,7 @@ msgstr "--non-interactive 对用户的输入不给提示\n"
 
 #: gtk/gsynaptic.cc:64
 msgid "--task-window Open with task window\n"
-msgstr ""
+msgstr "--task-window 使用任务窗口打开\n"
 
 #: gtk/gsynaptic.cc:139
 msgid "You must run this program as the root user."
@@ -925,9 +922,8 @@ msgid "Available Version"
 msgstr "最新版本"
 
 #: gtk/rgpreferenceswindow.cc:46
-#, fuzzy
 msgid "Installed Size"
-msgstr "已安装大小："
+msgstr "已安装大小"
 
 #: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
 #: gtk/rgterminstallprogress.cc:110
@@ -1052,6 +1048,8 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
+"APT 系统报告：\n"
+"%s"
 
 #: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:182
 msgid "Applying Changes"
@@ -1063,9 +1061,9 @@ msgid "%s Properties"
 msgstr "%s 属性"
 
 #: gtk/rgpkgdetails.cc:157
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%s)"
-msgstr "%s <i>(%s)</i>"
+msgstr "%s (%s)"
 
 #: gtk/rgmainwindow.cc:77
 msgid "Normal"
@@ -1094,19 +1092,18 @@ msgid "Select the version of %s that should be forced for installation"
 msgstr "选择要强制安装的 %s 版本"
 
 #: gtk/rgmainwindow.cc:456
-#, fuzzy
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
-"软件包管理器总是选择可用的最佳版本。如果您在默认版本之外强制安装另一个的版"
-"本，依赖关系处理就可能出错。"
+"软件包管理器总是选择可用的最佳版本。如果您在默认版本之外强制安装另一个版本，"
+"依赖关系处理就可能出错。"
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
 #: gtk/rgmainwindow.cc:778
 msgid "S"
-msgstr ""
+msgstr "状态"
 
 #: gtk/rgmainwindow.cc:797
 msgid "Package"
@@ -1393,7 +1390,6 @@ msgid "Binary (deb)"
 msgstr "二进制包(deb)"
 
 #: gtk/rgrepositorywin.cc:223
-#, fuzzy
 msgid "Source (deb-src)"
 msgstr "源码包(deb-src)"
 
@@ -1561,9 +1557,9 @@ msgstr "查找"
 
 #. TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
 #: gtk/rgtaskswin.cc:141
-#, fuzzy, c-format
+#, c-format
 msgid "Description %s"
-msgstr "软件包描述"
+msgstr "描述  %s"
 
 #: gtk/window_main.glade.h:1 gtk/window_fetch.glade.h:1
 #: gtk/window_preferences.glade.h:2 gtk/window_summary.glade.h:2
@@ -1588,6 +1584,8 @@ msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
+"<b>注意：</b> 要安装一个不同于默认版本的版本，请从菜单选择 <b>软件包 -> 强制"
+"版本...</b>。"
 
 #: gtk/window_main.glade.h:6 gtk/window_details.glade.h:6
 msgid "<b>Package:</b>"
@@ -1622,9 +1620,8 @@ msgid "Apply"
 msgstr "应用"
 
 #: gtk/window_main.glade.h:14 gtk/window_details.glade.h:11
-#, fuzzy
 msgid "Available versions:"
-msgstr "最新版本"
+msgstr "可用版本："
 
 #: gtk/window_main.glade.h:15 gtk/window_details.glade.h:12
 msgid "Common"
@@ -1649,9 +1646,8 @@ msgid "Download:"
 msgstr "下载："
 
 #: gtk/window_main.glade.h:21
-#, fuzzy
 msgid "Icon _Legend"
-msgstr "图标图例"
+msgstr "图标图例(_L)"
 
 #: gtk/window_main.glade.h:22 gtk/window_details.glade.h:18
 msgid "Installed Files"
@@ -1663,7 +1659,7 @@ msgstr "标记全部软件包以便升级"
 
 #: gtk/window_main.glade.h:24
 msgid "Mark Packages by _Task..."
-msgstr ""
+msgstr "使用任务分组标记软件包(_T)..."
 
 #: gtk/window_main.glade.h:25
 msgid "Mark for Co_mplete Removal"
@@ -1695,18 +1691,16 @@ msgid "Release"
 msgstr "发布"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "Reload"
-msgstr "发布"
+msgstr "重新载入"
 
 #: gtk/window_main.glade.h:36
 msgid "Save Markings _As..."
 msgstr "将标记的项目另存为(_A)..."
 
 #: gtk/window_main.glade.h:37
-#, fuzzy
 msgid "Search"
-msgstr "搜索："
+msgstr "搜索"
 
 #: gtk/window_main.glade.h:39 gtk/window_details.glade.h:22
 msgid "Size:"
@@ -1737,7 +1731,6 @@ msgid "Version:"
 msgstr "版本："
 
 #: gtk/window_main.glade.h:47 gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Versions"
 msgstr "版本"
 
@@ -1802,19 +1795,16 @@ msgid "_Lock Version"
 msgstr "锁定版本(_L)"
 
 #: gtk/window_main.glade.h:63
-#, fuzzy
 msgid "_Mark All Upgrades..."
-msgstr "标记全部软件包以便升级(_G)..."
+msgstr "标记全部软件包以便升级(_M)..."
 
 #: gtk/window_main.glade.h:64
-#, fuzzy
 msgid "_Package"
-msgstr "软件包"
+msgstr "软件包(_P)"
 
 #: gtk/window_main.glade.h:65
-#, fuzzy
 msgid "_Properties"
-msgstr "属性"
+msgstr "属性(_P)"
 
 #: gtk/window_main.glade.h:66
 msgid "_Quick Introduction"
@@ -1833,9 +1823,8 @@ msgid "_Redo"
 msgstr "重做(_R)"
 
 #: gtk/window_main.glade.h:70
-#, fuzzy
 msgid "_Reload Package List"
-msgstr "刷新软件包列表(_R)"
+msgstr "重新载入软件包列表(_R)"
 
 #: gtk/window_main.glade.h:71
 msgid "_Repositories"
@@ -1846,14 +1835,12 @@ msgid "_Save Markings"
 msgstr "保存标记的项目(_S)"
 
 #: gtk/window_main.glade.h:73
-#, fuzzy
 msgid "_Search..."
-msgstr "正在搜索..."
+msgstr "搜索(_S)..."
 
 #: gtk/window_main.glade.h:74
-#, fuzzy
 msgid "_Set Internal Option..."
-msgstr "设定内部选项(_I)..."
+msgstr "设定内部选项(_S)..."
 
 #: gtk/window_main.glade.h:75
 msgid "_Settings"
@@ -1988,9 +1975,8 @@ msgid "Search:"
 msgstr "搜索："
 
 #: gtk/window_find.glade.h:10
-#, fuzzy
 msgid "_Search"
-msgstr "搜索："
+msgstr "搜索(_S)"
 
 #: gtk/window_fetch.glade.h:2
 msgid "<b>Single Files:</b>"
@@ -2022,9 +2008,8 @@ msgid " "
 msgstr " "
 
 #: gtk/window_preferences.glade.h:4
-#, fuzzy
 msgid "<b>Appearence</b>"
-msgstr "<b>此软件包依赖的软件包</b>"
+msgstr "<b>外观</b>"
 
 #: gtk/window_preferences.glade.h:5
 msgid "<b>Applying Changes</b>"
@@ -2087,7 +2072,6 @@ msgid "Apply changes in a terminal window"
 msgstr "在终端窗口实施变更"
 
 #: gtk/window_preferences.glade.h:18
-#, fuzzy
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "要求确认变更的行为也将影响其他软件包"
 
@@ -2100,7 +2084,6 @@ msgid "Broken:"
 msgstr "已损坏："
 
 #: gtk/window_preferences.glade.h:21
-#, fuzzy
 msgid "Clicking on the status icon marks the most likely action"
 msgstr "点击状态图标会标记最合适的动作"
 
@@ -2133,7 +2116,6 @@ msgid "Completely"
 msgstr "完全"
 
 #: gtk/window_preferences.glade.h:28
-#, fuzzy
 msgid "Consider recommended packages as dependencies"
 msgstr "把推荐的软件包视作依赖的软件包"
 
@@ -2254,7 +2236,6 @@ msgid "Number of undo operations:"
 msgstr "可撤销操作的次数："
 
 #: gtk/window_preferences.glade.h:59
-#, fuzzy
 msgid "Port number of the ftp proxy server"
 msgstr "FTP 代理服务器的端口号"
 
@@ -2267,9 +2248,8 @@ msgid "Port: "
 msgstr "端口："
 
 #: gtk/window_preferences.glade.h:63
-#, fuzzy
 msgid "Removal of packages: "
-msgstr "删除软件包："
+msgstr "删除的软件包："
 
 #: gtk/window_preferences.glade.h:64
 msgid ""
@@ -2278,10 +2258,9 @@ msgstr "如果在 sources.list 文件里指定了一个以上的发行版，请�
 
 #: gtk/window_preferences.glade.h:65
 msgid "Show package properties in the main window"
-msgstr ""
+msgstr "在主窗口显示软件包属性"
 
 #: gtk/window_preferences.glade.h:67
-#, fuzzy
 msgid "System upgrade:"
 msgstr "系统升级："
 
@@ -2303,7 +2282,7 @@ msgstr "使用自定义终端字体"
 
 #: gtk/window_preferences.glade.h:72
 msgid "_Delete Cached Package Files"
-msgstr "删除高速缓存里的软件包(_D)"
+msgstr "删除缓存的软件包文件(_D)"
 
 #: gtk/window_preferences.glade.h:73
 msgid "_Terminal Font"
@@ -2372,11 +2351,12 @@ msgid ""
 "Vendors sign theirs packages to verify the correct origin and integraty of "
 "the packages. Disabling the verification is a security risk"
 msgstr ""
+"发行商在他们的软件包上作标记以校验数据源的正确性和软件包的完整性。禁用校验是"
+"一种危险行为"
 
 #: gtk/window_summary.glade.h:11
-#, fuzzy
 msgid "Verify package signatures"
-msgstr "管理软件包文件库"
+msgstr "校验软件包签名"
 
 #: gtk/window_summary.glade.h:12
 msgid "_Show Details"
@@ -2399,9 +2379,8 @@ msgid "Conflicting Packages"
 msgstr "有冲突的软件包"
 
 #: gtk/window_filters.glade.h:9 gtk/window_details.glade.h:15
-#, fuzzy
 msgid "Dependent Packages"
-msgstr "已替换的软件包"
+msgstr "依赖的软件包"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"
@@ -2585,11 +2564,14 @@ msgid ""
 "There are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
+"<span size=\"large\" weight=\"bold\">您的计算机要完成哪些任务？</span>\n"
+"\n"
+"这里有一些预先分好组的软件包以完成每一种(相应的)任务。如果您选择了一种任务，"
+"相应的软件包就会被标记以便安装。"
 
 #: gtk/window_tasks.glade.h:4
-#, fuzzy
 msgid "_Description"
-msgstr "软件包描述"
+msgstr "软件包描述(_D)"
 
 #: gtk/window_zvtinstallprogress.glade.h:1
 msgid "<b>Terminal Output:</b>"
@@ -2719,9 +2701,8 @@ msgstr "已替换的软件包"
 
 #. suggests
 #: gtk/rgfiltermanager.h:76
-#, fuzzy
 msgid "Dependent packages"
-msgstr "已替换的软件包"
+msgstr "依赖的软件包"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"

@@ -94,7 +94,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     _applied = false;
     _lastIter = NULL;
 
-    setTitle(_("Setup Repositories"));
+    setTitle(_("Repositories"));
     gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
     gtk_window_set_policy(GTK_WINDOW(_win), TRUE, TRUE, FALSE);
 

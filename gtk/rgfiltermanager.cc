@@ -44,7 +44,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
     : RGGladeWindow(win, "filters"),  _selectedPath(NULL), 
       _selectedFilter(NULL), _lister(lister)
 {
-    setTitle(_("Package Filters"));
+    setTitle(_("Filters"));
 
     _busyCursor = gdk_cursor_new(GDK_WATCH);
 
@@ -184,15 +184,15 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 					   G_TYPE_STRING,
 					   G_TYPE_STRING);
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes (_("Do"),
+    column = gtk_tree_view_column_new_with_attributes (_("Field"),
 						       renderer,
-						       "text", PATTERN_DO_COLUMN,
+						       "text", PATTERN_WHAT_COLUMN,
 						       NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_patternList), column);
 
-    column = gtk_tree_view_column_new_with_attributes (_("What"),
+    column = gtk_tree_view_column_new_with_attributes (_("Operator"),
 						       renderer,
-						       "text", PATTERN_WHAT_COLUMN,
+						       "text", PATTERN_DO_COLUMN,
 						       NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW(_patternList), column);
 

@@ -56,23 +56,23 @@ static const int NrOfStatusBits = 10;
 #endif
 
 static char  *ActOptions[] = {
-    _("Include"),
-    _("Exclude"),
+    _("Includes"),
+    _("Excludes"),
     NULL
 };
 
 
 static char *DepOptions[] = {
-    _("are Named"),
-    _("in Version"),
-    _("in Description"),
-    _("in Maintainer"),
-    _("Depends on"), // depends, predepends etc
-    _("Provides"), // provides and name
-    _("Conflicts with"), // conflicts
-    _("Replaces"), // replaces/obsoletes
-    _("Suggests or Recommends"), // suggests/recommends
-    _("Reverse Depends"), // Reverse Depends
+    _("Package name"),
+    _("Version number"),
+    _("Description"),
+    _("Maintainer"),
+    _("Dependencies"), // depends, predepends etc
+    _("Provided packages"), // provides and name
+    _("Conflicting packages"), // conflicts
+    _("Replaced packages"), // replaces/obsoletes
+    _("Suggestions or recommendations"), // suggests/recommends
+    _("Reverse dependencies"), // Reverse Depends
     NULL
 };
 

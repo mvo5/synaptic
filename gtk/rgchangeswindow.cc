@@ -57,6 +57,7 @@ void RGChangesWindow::clickedCancel(GtkWidget *self, void *data)
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
     : RGGladeWindow(wwin, "changes")
 {
+    setTitle("");
     // new tree store
     _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
     _tree = glade_xml_get_widget(_gladeXML, "tree");
@@ -97,7 +98,7 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
     /* removed */
     gtk_tree_store_append (_treeStore, &iter, NULL);  
     gtk_tree_store_set (_treeStore, &iter,
-			PKG_COLUMN, _("To be marked for removal"), -1);
+			PKG_COLUMN, _("To be removed"), -1);
     for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
 	 p != toRemove.end(); 
 	 p++) 
@@ -111,7 +112,7 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
   if(toUpgrade.size() > 0) {
     gtk_tree_store_append (_treeStore, &iter, NULL);  
     gtk_tree_store_set (_treeStore, &iter,
-			PKG_COLUMN, _("To be marked for upgrade"), -1);
+			PKG_COLUMN, _("To be upgraded"), -1);
     for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
 	 p != toUpgrade.end(); 
 	 p++) 
@@ -125,7 +126,7 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
   if(toInstall.size() > 0) {
     gtk_tree_store_append (_treeStore, &iter, NULL);  
     gtk_tree_store_set (_treeStore, &iter,
-			PKG_COLUMN, _("To be marked for installation"), -1);
+			PKG_COLUMN, _("To be installed"), -1);
     for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
 	 p != toInstall.end(); 
 	 p++) 
@@ -139,7 +140,7 @@ bool RGChangesWindow::showAndConfirm(RPackageLister *lister,
   if(kept.size() > 0) {
     gtk_tree_store_append (_treeStore, &iter, NULL);  
     gtk_tree_store_set (_treeStore, &iter,
-			PKG_COLUMN, _("To be kept back"),-1);
+			PKG_COLUMN, _("To be kept"),-1);
     for (vector<RPackage*>::const_iterator p = kept.begin(); 
 	 p != kept.end(); 
 	 p++) 

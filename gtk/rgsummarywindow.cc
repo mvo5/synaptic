@@ -243,7 +243,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     _potentialBreak = false;
     _lister = lister;
     
-    setTitle(_("Operation Summary"));
+    setTitle(_("Summary"));
     gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
         
     _topF = gtk_frame_new(NULL);

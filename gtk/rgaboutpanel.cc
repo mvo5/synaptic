@@ -51,6 +51,7 @@ void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
     if(me->credits==NULL) {
 	me->credits = new RGCreditsPanel::RGCreditsPanel(me);
     }
+    me->credits->setTitle(_("Credits"));
     me->credits->show();
   
 }
@@ -68,7 +69,7 @@ RGAboutPanel::RGAboutPanel(RGWindow *parent)
 				 G_CALLBACK(creditsClicked),
 				 this); 
     
-   setTitle(PACKAGE" version "VERSION);
+   setTitle(_("About Synaptic"));
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "label_version");
    assert(w);
    gchar *s = g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",

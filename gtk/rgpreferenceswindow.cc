@@ -595,7 +595,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
     mi = gtk_separator_menu_item_new ();
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-    for(int i=0;i<archives.size();i++) {
+    for(unsigned int i=0;i<archives.size();i++) {
 	//cout << "archive: " << archives[i] << endl;
 	mi = gtk_menu_item_new_with_label(archives[i].c_str());
 	g_object_set_data(G_OBJECT(mi),"me",this);
@@ -624,5 +624,5 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 			 G_CALLBACK(colorClicked), GINT_TO_POINTER(i));
     }
 
-    setTitle(_("Set preferences"));
+    setTitle(_("Preferences"));
 }

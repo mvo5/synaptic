@@ -60,6 +60,6 @@ RGSetOptWindow::RGSetOptWindow(RGWindow *win)
 				G_CALLBACK(DoClose),
 				this); 
 
-  setTitle(_("Set generic option"));
+  setTitle("Set generic option");
 }
 

@@ -580,7 +580,7 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
       dia.run();
       // we informaed the user about the problem, we can clear the
       // apt error stack
-      _error->discardErrors();
+      _error->Discard();
    }
       
    return failed;

@@ -77,10 +77,10 @@ RPackageLister::RPackageLister()
    _updating = true;
    _sortMode = LIST_SORT_NAME;
 
-   _views.push_back(new RPackageViewSections());
-   _views.push_back(new RPackageViewStatus());
-   _views.push_back(new RPackageViewAlphabetic());
-   _views.push_back(new RPackageViewAll());
+   _views.push_back(new RPackageViewSections(_packages));
+   _views.push_back(new RPackageViewStatus(_packages));
+   _views.push_back(new RPackageViewAlphabetic(_packages));
+
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -126,8 +126,10 @@ vector<string> RPackageLister::getSubViews()
 
 bool RPackageLister::setSubView(string newSubView)
 {
-   _selectedView->setSelected(newSubView);
-
+   if(newSubView.empty())
+      _selectedView->showAll();
+   else
+      _selectedView->setSelected(newSubView);
    notifyPreChange(NULL);
 
    reapplyFilter();
@@ -486,7 +488,7 @@ bool RPackageLister::openCache(bool reset)
    _packagesIndex.clear();
    _packagesIndex.resize(packageCount, -1);
 
-   pkgCache::PkgIterator I = deps->PkgBegin();
+   
 
    string pkgName;
    int count = 0;
@@ -499,7 +501,8 @@ bool RPackageLister::openCache(bool reset)
    for (unsigned int i = 0; i != _views.size(); i++)
       _views[i]->clear();
 
-   for (; I.end() != true; I++) {
+   pkgCache::PkgIterator I;
+   for (I = deps->PkgBegin(); I.end() != true; I++) {
 
       if (I->CurrentVer != 0)
          _installedCount++;
@@ -514,17 +517,20 @@ bool RPackageLister::openCache(bool reset)
 
       pkgmap[pkgName] = pkg;
 
-      for (unsigned int i = 0; i != _views.size(); i++)
-         _views[i]->addPackage(pkg);
-
       // Find out about new packages.
       if (firstRun) {
-         allPackages.insert(pkgName);
-      } else if (allPackages.find(pkgName) == allPackages.end()) {
+         packageNames.insert(pkgName);
+	 // check for saved-new status
+	 if (_roptions->getPackageNew(pkgName.c_str()))
+	    pkg->setNew(true);
+      } else if (packageNames.find(pkgName) == packageNames.end()) {
          pkg->setNew();
          _roptions->setPackageNew(pkgName.c_str());
-         allPackages.insert(pkgName);
+         packageNames.insert(pkgName);
       }
+
+      for (unsigned int i = 0; i != _views.size(); i++)
+         _views[i]->addPackage(pkg);
 
       // Gather list of sections.
       if (I.Section())
@@ -581,9 +587,6 @@ void RPackageLister::applyInitialSelection()
 
       if (_roptions->getPackageLock(_packages[i]->name()))
          _packages[i]->setPinned(true);
-
-      if (_roptions->getPackageNew(_packages[i]->name()))
-         _packages[i]->setNew(true);
 
       if (_roptions->getPackageOrphaned(_packages[i]->name()))
          _packages[i]->setOrphaned(true);

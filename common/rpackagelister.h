@@ -101,8 +101,8 @@ class RPackageLister {
    // It shouldn't be needed to control this inside this class. -- niemeyer
    bool _updating;
 
-   // Need a better name here. -- niemeyer
-   set<string> allPackages;  // all known packages (needed identifing "new" pkgs)
+   // all known packages (needed identifing "new" pkgs)
+   set<string> packageNames; 
 
    bool _cacheValid;            // is the cache valid?
 
@@ -178,7 +178,9 @@ class RPackageLister {
    void setView(int index);
    vector<string> getViews();
    vector<string> getSubViews();
-   bool setSubView(string newView);
+
+   // set subView (if newView is empty, set to all packages)
+   bool setSubView(string newView="");
 
    void storeFilters();
    void restoreFilters();

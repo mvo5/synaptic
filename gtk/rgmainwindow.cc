@@ -2612,6 +2612,9 @@ void RGMainWindow::buildInterface()
     assert(_remove_w_depsM);
     _purgeM = glade_xml_get_widget(_gladeXML,"menu_purge");
     assert(_purgeM);
+#ifdef HAVE_RPM
+    gtk_widget_hide(_purgeM);
+#endif
 
     // workaround for a bug in libglade
     button = glade_xml_get_widget(_gladeXML, "button_update");

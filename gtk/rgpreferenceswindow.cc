@@ -537,9 +537,20 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
     _optionmenuDel = glade_xml_get_widget(_gladeXML, "optionmenu_delbutton_action");
     assert(_optionmenuDel);
     int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
+
+    // hide the "remove with configuration" from rpm users
+#ifdef HAVE_RPM
+    GtkWidget *w = glade_xml_get_widget(_gladeXML, "menuitem_purge");
+    gtk_widget_hide(w);
+    // purge not available 
+    if(delAction == PKG_PURGE)
+	delAction = PKG_DELETE;
+#endif
+    // now set the optionmenu
     // ugly :( but we need this -2 because RGPkgAction starts with 
     //         "keep","install"
     gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel),delAction-2);
+
 
     // save the lister
     _lister = lister;

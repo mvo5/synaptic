@@ -1,15 +1,15 @@
 # Slovenian translation of Synaptic.
 # Copyright (C) 2004 Free Software Foundation, Inc.
 # Roman Maurer <roman@lugos.si>, 2004.
-# $Id: sl.po,v 1.1 2004/09/20 23:11:28 roman Exp $
-# $Source: /home/romanm/etc/l10n/synaptic/sl.po,v $
+# $Id: sl.po,v 1.2 2004/11/14 22:27:17 roman Exp $
+# $Source: /home/romanm/etc/l10n/synaptic/RCS/sl.po,v $
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: synaptic 0.52\n"
+"Project-Id-Version: synaptic 0.55\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 21:26+0100\n"
-"PO-Revision-Date: 2004-09-21 00:56+0200\n"
+"POT-Creation-Date: 2004-11-15 13:31+0100\n"
+"PO-Revision-Date: 2004-11-14 20:05+0100\n"
 "Last-Translator: Roman Maurer <roman@lugos.si>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -354,7 +354,7 @@ msgstr "V %s ni moč spremeniti"
 msgid "Unable to read %s"
 msgstr "%s ni moč brati"
 
-#: common/rconfiguration.cc:83 common/rconfiguration.cc:184
+#: common/rconfiguration.cc:83 common/rconfiguration.cc:202
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "NAPAKA: %s ni moč odpreti za pisanje"
@@ -368,7 +368,12 @@ msgstr "NAPAKA: Ni bilo moč dobiti geselnega vnosa za skrbnika"
 msgid "ERROR: could not create configuration directory %s"
 msgstr "NAPAKA: ni moč narediti prikrojitvenega imenika %s"
 
-#: common/rconfiguration.cc:209
+#: common/rconfiguration.cc:143
+#, fuzzy, c-format
+msgid "ERROR: could not create log directory %s"
+msgstr "NAPAKA: ni moč narediti prikrojitvenega imenika %s"
+
+#: common/rconfiguration.cc:227
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "%s ni moč odpreti za pisanje"
@@ -382,9 +387,8 @@ msgid "or dependency"
 msgstr "ali odvisnosti"
 
 #: common/rpackage.cc:401
-#, fuzzy
 msgid "Dependency of"
-msgstr "Odvisnosti"
+msgstr "Odvisnost od "
 
 #: common/rpackage.cc:509
 #, c-format
@@ -401,39 +405,39 @@ msgstr ""
 "da je zastarel ali da ni dostopen z vsebino sources.list\n"
 
 #: common/rpackage.cc:544
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s %s but %s is to be installed"
-msgstr "%s je/bo nameščen"
+msgstr "\t%s %s, vendar bo %s nameščen"
 
 #: common/rpackage.cc:548
-#, fuzzy, c-format
+#, c-format
 msgid " %s: %s %s but %s is to be installed"
-msgstr "%s je/bo nameščen"
+msgstr "%s: %s %s, vendar bo %s bo nameščen"
 
 #: common/rpackage.cc:556
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s %s but it is not installable"
-msgstr "paketa ni namestljiv"
+msgstr "\t%s %s, vendar paketa ni moč namestiti"
 
 #: common/rpackage.cc:564
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s but it is a virtual package"
-msgstr "paket je a virtualni paket"
+msgstr "\t%s, vendar je navidezni paket"
 
 #: common/rpackage.cc:567
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s but it is a virtual package"
-msgstr "paket je a virtualni paket"
+msgstr "%s: %s, vendar je navidezni paket"
 
 #: common/rpackage.cc:570
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "%s je/bo nameščen"
 
 #: common/rpackage.cc:573
 #, c-format
 msgid "%s: %s but it is not going to be installed"
-msgstr ""
+msgstr "%s: %s, vendar ne bo nameščen"
 
 #: common/rpackage.cc:592
 msgid " or"
@@ -541,7 +545,7 @@ msgid "Name"
 msgstr "Ime"
 
 #: common/rpackagefilter.cc:46 gtk/rgpreferenceswindow.cc:48
-#: gtk/rgmainwindow.cc:996 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
+#: gtk/rgmainwindow.cc:970 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_main.glade.h:18 gtk/window_filters.glade.h:13
 #: gtk/rgfiltermanager.h:67 gtk/window_details.glade.h:16
 msgid "Description"
@@ -588,7 +592,7 @@ msgstr "ObratnoOdvisen"
 #: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:35
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
-msgstr "IzvorVir"
+msgstr "Izvor"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
 #: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
@@ -597,12 +601,12 @@ msgid "Status"
 msgstr "Stanje"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:179
 msgid "Pattern"
 msgstr "Vzorec"
 
 #: common/rpackagefilter.cc:63 gtk/rgpreferenceswindow.cc:46
-#: gtk/rgmainwindow.cc:868 gtk/window_filters.glade.h:52
+#: gtk/rgmainwindow.cc:842 gtk/window_filters.glade.h:52
 msgid "Section"
 msgstr "Razdelek"
 
@@ -624,17 +628,17 @@ msgstr "Notranja napaka: ni moč odpreti datoteke %s za \"Okleščeni pogled\""
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Slab regularni izraz %s v datoteki za \"Okleščeni pogled\""
 
-#: common/rpackagelister.cc:297 common/rpackagelister.cc:303
-#: common/rpackagelister.cc:317
+#: common/rpackagelister.cc:298 common/rpackagelister.cc:304
+#: common/rpackagelister.cc:318
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "Notranja napaka pri odpiranju predpomnilnika (%d). Prosimo, poročajte."
 
-#: common/rpackagelister.cc:456
+#: common/rpackagelister.cc:457
 msgid "Unable to correct dependencies"
 msgstr "Odvisnosti ni moč popraviti"
 
-#: common/rpackagelister.cc:458
+#: common/rpackagelister.cc:459
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -642,21 +646,21 @@ msgstr ""
 "Nadgradenj ni bilo moč označiti\n"
 "Preverite svoj sistem za morebitne napake"
 
-#: common/rpackagelister.cc:470
+#: common/rpackagelister.cc:471
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Notranja napaka, \"Nadgradnja vsega\" je pokvarila zadeve. Prosimo, "
 "poročajte."
 
-#: common/rpackagelister.cc:488
+#: common/rpackagelister.cc:489
 msgid "dist upgrade Failed"
 msgstr "Neuspešna nadgradnja sistema"
 
-#: common/rpackagelister.cc:1185
+#: common/rpackagelister.cc:1190
 msgid "Unable to lock the list directory"
-msgstr "Imenika s spiskom ni moč zakleniti"
+msgstr "Imenika s seznamom ni moč zakleniti"
 
-#: common/rpackagelister.cc:1207
+#: common/rpackagelister.cc:1212
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -664,7 +668,7 @@ msgstr ""
 "Datotek z izdajami za nekatera skladišča ni bilo moč prevzeti ali overoviti. "
 "Takšna skladišča bodo prezrta."
 
-#: common/rpackagelister.cc:1274 common/rpackagelister.cc:1280
+#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Prezrti neveljavni zapis(i) v datoteki sources.list!"
@@ -673,43 +677,89 @@ msgstr "Prezrti neveljavni zapis(i) v datoteki sources.list!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1325
-#, fuzzy, c-format
+#: common/rpackagelister.cc:1333
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s\n"
 "\n"
 msgstr ""
 "Ni moč pobrati %s\n"
-"  %s"
+"  %s\n"
+"\n"
 
-#: common/rpackagelister.cc:1349
+#: common/rpackagelister.cc:1357
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Nekaterih paketov ni bilo moč pobrati s strežnika/ov.\n"
 
-#: common/rpackagelister.cc:1352
+#: common/rpackagelister.cc:1360
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Ali želite nadaljevati in prezreti te pakete?"
 
-#: common/rpackagelister.cc:1359
+#: common/rpackagelister.cc:1367
 msgid "Unable to correct missing packages"
 msgstr "Manjkajočih paketov ni moč popraviti"
 
-#: common/rpackagelister.cc:1422
+#: common/rpackagelister.cc:1464
+msgid ""
+"\n"
+"The follwoing ESSENTIAL packages are removed:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1472
+msgid ""
+"\n"
+"The follwoing packages are DOWNGRADED:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1480
+msgid ""
+"\n"
+"The follwoing packages are purged:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1488
+msgid ""
+"\n"
+"The follwoing packages are removed:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1496
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are upgraded:\n"
+msgstr "%d paketov bo nadgrajenih\n"
+
+#: common/rpackagelister.cc:1506
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are installed:\n"
+msgstr "%d novih paketov bo nameščenih\n"
+
+#: common/rpackagelister.cc:1515
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are re-installed:\n"
+msgstr "%d novih paketov bo znova nameščenih\n"
+
+#: common/rpackagelister.cc:1532
 msgid "Unable to lock the download directory"
 msgstr "Ni moč zakleniti imenika za pobiranje"
 
-#: common/rpackagelister.cc:1500
+#: common/rpackagelister.cc:1610
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Vrstica %u v datoteki z izborom je predolga."
 
-#: common/rpackagelister.cc:1514 common/rpackagelister.cc:1518
+#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Zmaličena vrstica %u v datoteki z izborom"
 
-#: common/rpackagelister.cc:1530
+#: common/rpackagelister.cc:1640
 msgid "Setting markings..."
 msgstr "Nastavljanje izborov..."
 
@@ -730,35 +780,30 @@ msgid "Alphabetic"
 msgstr "Abecedno"
 
 #: common/rpackageview.h:149
-#, fuzzy
 msgid "Search History"
-msgstr "Iskalni filter"
+msgstr "Pretekla iskanja"
 
 #: common/rpackageview.h:196
-#, fuzzy
 msgid "Custom"
-msgstr "Filtri"
+msgstr "Po meri"
 
 #: common/rpackageview.cc:116
-#, fuzzy
 msgid "Installed (unsupported)"
-msgstr "Nameščen (zaklenjen):"
+msgstr "Nameščen (nepodprt):"
 
 #: common/rpackageview.cc:121
-#, fuzzy
 msgid "Not installed (unsupported)"
-msgstr "Ni nameščen (zaklenjen)"
+msgstr "Ni nameščen (nepodprt)"
 
 #: common/rpackageview.cc:129 gtk/window_filters.glade.h:29
 msgid "New in repository"
-msgstr "Nov v skladišču"
+msgstr "Novost v skladišču"
 
 #: common/rpackageview.cc:131 gtk/window_filters.glade.h:45
 msgid "Pinned"
 msgstr "Pridržan"
 
 #: common/rpackageview.cc:135
-#, fuzzy
 msgid "Installed (local or obsolete)"
 msgstr "Nameščen (zastarel)"
 
@@ -778,7 +823,7 @@ msgstr "Opravila"
 msgid "Reduced View"
 msgstr "Okleščeni pogled"
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:282 gtk/rgsummarywindow.cc:299
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:282 gtk/rgsummarywindow.cc:324
 msgid "Marked Changes"
 msgstr "Označene spremembe"
 
@@ -788,7 +833,7 @@ msgstr "Zapakirano z Debconf"
 
 #: common/rpackageview.cc:447 gtk/window_filters.glade.h:57
 msgid "Upgradable (upstream)"
-msgstr "Nagradljivo (navzgor)"
+msgstr "Nagradljivo (proti izvoru)"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
@@ -883,7 +928,7 @@ msgstr "Raba: synaptic [izbire]\n"
 
 #: gtk/gsynaptic.cc:66
 msgid "-h   This help text\n"
-msgstr "-h   Ta besedilo s pomočjo\n"
+msgstr "-h   To besedilo s pomočjo\n"
 
 #: gtk/gsynaptic.cc:67
 msgid "-r   Open in the repository screen\n"
@@ -891,7 +936,7 @@ msgstr "-r   Odpri v skladiščnem zaslonu\n"
 
 #: gtk/gsynaptic.cc:68
 msgid "-f=? Give a alternative filter file\n"
-msgstr "-f=? Poda alternativno filtrno datoteko\n"
+msgstr "-f=? Poda alternativno datoteko s filtri\n"
 
 #: gtk/gsynaptic.cc:69
 msgid "-i=? Start with the initialFilter with the number given\n"
@@ -911,7 +956,7 @@ msgstr "--non-interactive Nikoli ne čaka na uporabnikov vnos\n"
 
 #: gtk/gsynaptic.cc:73
 msgid "--task-window Open with task window\n"
-msgstr ""
+msgstr "--task-window Odpri okno nalog\n"
 
 #: gtk/gsynaptic.cc:210
 msgid "You must run this program as the root user."
@@ -945,7 +990,7 @@ msgstr "O Synapticu"
 msgid "Package changes"
 msgstr "Spremembe paketov"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:109
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
 msgid "To be removed"
 msgstr "Za odstranitev"
 
@@ -953,15 +998,15 @@ msgstr "Za odstranitev"
 msgid "To be downgraded"
 msgstr "Za podgradnjo"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:121
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
 msgid "To be upgraded"
 msgstr "Za nadgradnjo"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:133
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
 msgid "To be installed"
 msgstr "Za namestitev"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:145
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
 msgid "To be re-installed"
 msgstr "Za vnovično namestitev"
 
@@ -971,38 +1016,34 @@ msgstr "Za ohranitev"
 
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
-msgstr ""
+msgstr "Podprt"
 
 #: gtk/rgpreferenceswindow.cc:46 gtk/window_filters.glade.h:37
 msgid "Package Name"
 msgstr "Ime paketa"
 
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:889
-#, fuzzy
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:863
 msgid "Component"
 msgstr "_Vsebina"
 
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:911
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:885
 msgid "Installed Version"
 msgstr "Nameščena različica"
 
 #: gtk/rgpreferenceswindow.cc:47
-#, fuzzy
 msgid "Available Version"
 msgstr "<b>Dostopne različice</b>"
 
 #: gtk/rgpreferenceswindow.cc:48
-#, fuzzy
 msgid "Installed Size"
 msgstr "Nameščena velikost:"
 
 #: gtk/rgpreferenceswindow.cc:48
-#, fuzzy
 msgid "Download Size"
-msgstr "Prenašanje datotek"
+msgstr "Količina za prenos"
 
-#: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1697
-#: gtk/rgterminstallprogress.cc:110
+#: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1649
+#: gtk/rgterminstallprogress.cc:99
 msgid "An error occurred while saving configurations."
 msgstr "Med shranjevanjem nastavitev je prišlo do napake."
 
@@ -1019,7 +1060,6 @@ msgid "Color selection"
 msgstr "Izbor barv"
 
 #: gtk/rgpreferenceswindow.cc:893
-#, fuzzy
 msgid "Visible"
 msgstr "Spremenljivka:"
 
@@ -1027,7 +1067,7 @@ msgstr "Spremenljivka:"
 msgid "Preferences"
 msgstr "Nastavitve"
 
-#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:927
 msgid "Size"
 msgstr "Velikost"
 
@@ -1035,15 +1075,18 @@ msgstr "Velikost"
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:132
+#: gtk/rgfetchprogress.cc:153
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
+"<big><b>%s</b></big> \n"
+"\n"
+"%s"
 
-#: gtk/rgfetchprogress.cc:145
+#: gtk/rgfetchprogress.cc:166
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1054,45 +1097,45 @@ msgstr ""
 "%s\n"
 "v pogon %s"
 
-#: gtk/rgfetchprogress.cc:251
+#: gtk/rgfetchprogress.cc:272
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Prenašanje datoteke %li od %li pri %s/s - %s preostalih"
 
-#: gtk/rgfetchprogress.cc:256
+#: gtk/rgfetchprogress.cc:277
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Prenašanje datoteke %li od %li"
 
-#: gtk/rgfetchprogress.cc:321
+#: gtk/rgfetchprogress.cc:342
 msgid "Queued"
 msgstr "V čakalni vrsti"
 
-#: gtk/rgfetchprogress.cc:324
+#: gtk/rgfetchprogress.cc:345
 msgid "Done"
 msgstr "Opravljeno"
 
-#: gtk/rgfetchprogress.cc:327
+#: gtk/rgfetchprogress.cc:348
 msgid "Hit"
 msgstr "Zadetek"
 
-#: gtk/rgfetchprogress.cc:330
+#: gtk/rgfetchprogress.cc:351
 msgid "Failed"
 msgstr "Neuspešno"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:17
+#: gtk/rgfiltermanager.cc:39 gtk/window_filters.glade.h:17
 msgid "Filters"
 msgstr "Filtri"
 
-#: gtk/rgfiltermanager.cc:171
+#: gtk/rgfiltermanager.cc:164
 msgid "Field"
 msgstr "Polje"
 
-#: gtk/rgfiltermanager.cc:178
+#: gtk/rgfiltermanager.cc:171
 msgid "Operator"
 msgstr "Operator"
 
-#: gtk/rgfiltermanager.cc:760
+#: gtk/rgfiltermanager.cc:748
 #, c-format
 msgid "New Filter %i"
 msgstr "Nov filter %i"
@@ -1128,8 +1171,10 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
+"Sistem APT poroča:\n"
+"%s"
 
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:183
+#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:166
 msgid "Applying Changes"
 msgstr "Uveljavi spremembe"
 
@@ -1141,7 +1186,7 @@ msgstr "Lastnosti %s"
 #: gtk/rgpkgdetails.cc:157
 #, c-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: gtk/rgmainwindow.cc:77
 msgid "Normal"
@@ -1155,115 +1200,114 @@ msgstr "Kritični"
 msgid "Security"
 msgstr "Varnost"
 
-#: gtk/rgmainwindow.cc:167
+#: gtk/rgmainwindow.cc:155
 msgid "All"
 msgstr "Vse"
 
-#: gtk/rgmainwindow.cc:361 gtk/window_main.glade.h:29
+#: gtk/rgmainwindow.cc:342 gtk/window_main.glade.h:29
 #: gtk/window_details.glade.h:19
 msgid "No package is selected.\n"
 msgstr "Ni izbranega paketa\n"
 
-#: gtk/rgmainwindow.cc:460
+#: gtk/rgmainwindow.cc:443
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr "Izberite različico %s, ki naj se vsili za namestitev"
 
-#: gtk/rgmainwindow.cc:462
-#, fuzzy
+#: gtk/rgmainwindow.cc:445
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
-"Upravitelj  paketov vedno izbere najboljšo dostopno različico. Če vsilite od "
-"privzete različno različico, lahko pride do napak pri ravnanju z odvisnostmi."
+"Upravitelj  paketov vedno izbere najbolj primerno in dostopno različico. Če "
+"vsilite drugačno različico, lahko pride do napak pri razreševanju odvisnosti."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: gtk/rgmainwindow.cc:806
+#: gtk/rgmainwindow.cc:784
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #. TRANSLATORS: Column header for the column "Supported" in the package list
-#: gtk/rgmainwindow.cc:822 gtk/window_preferences.glade.h:1
+#: gtk/rgmainwindow.cc:800 gtk/window_preferences.glade.h:1
 #: gtk/window_summary.glade.h:1 gtk/window_filters.glade.h:1
 msgid " "
 msgstr " "
 
-#: gtk/rgmainwindow.cc:842
+#: gtk/rgmainwindow.cc:820
 msgid "Package"
 msgstr "Paket"
 
-#: gtk/rgmainwindow.cc:932
+#: gtk/rgmainwindow.cc:906
 msgid "Latest Version"
 msgstr "Zadnja različica"
 
-#: gtk/rgmainwindow.cc:974
-#, fuzzy
+#: gtk/rgmainwindow.cc:948
 msgid "Download"
 msgstr "Pobiranje:"
 
-#: gtk/rgmainwindow.cc:1245
-#, fuzzy
+#: gtk/rgmainwindow.cc:1201
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded  software packages."
-msgstr "Namesti, odstrani in nadgradi programske pakete"
+msgstr ""
+"Osveži podatke o paketih, s čimer osvežiš sezname nameščenih,odstranjenih in "
+"nadgrajenih paketov."
 
-#: gtk/rgmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1207
 msgid "Mark all possible upgrades"
 msgstr "Označi vse možne nadgradnje"
 
-#: gtk/rgmainwindow.cc:1255 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1211 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "Uveljavi vse označene spremembe"
 
-#: gtk/rgmainwindow.cc:1434
+#: gtk/rgmainwindow.cc:1390
 msgid "Unmark"
 msgstr "Odznači"
 
-#: gtk/rgmainwindow.cc:1442
+#: gtk/rgmainwindow.cc:1398
 msgid "Mark for Installation"
 msgstr "Označi za namestitev"
 
-#: gtk/rgmainwindow.cc:1450
+#: gtk/rgmainwindow.cc:1406
 msgid "Mark for Reinstallation"
 msgstr "Označi za vnovično namestitev"
 
-#: gtk/rgmainwindow.cc:1459
+#: gtk/rgmainwindow.cc:1415
 msgid "Mark for Upgrade"
 msgstr "Označi za nadgradnjo"
 
-#: gtk/rgmainwindow.cc:1467
+#: gtk/rgmainwindow.cc:1423
 msgid "Mark for Removal"
 msgstr "Označi za odstranitev"
 
-#: gtk/rgmainwindow.cc:1476
+#: gtk/rgmainwindow.cc:1432
 msgid "Mark for Complete Removal"
 msgstr "Označi za popolno odstranitev"
 
-#: gtk/rgmainwindow.cc:1488
+#: gtk/rgmainwindow.cc:1444
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Odstrani vključno z osirotelimi odvisnostmi"
 
-#: gtk/rgmainwindow.cc:1500
+#: gtk/rgmainwindow.cc:1456
 msgid "Hold Current Version"
 msgstr "Zadrži trenutno različico"
 
-#: gtk/rgmainwindow.cc:1509 gtk/window_main.glade.h:31
+#: gtk/rgmainwindow.cc:1465 gtk/window_main.glade.h:31
 #: gtk/window_filters.glade.h:46
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: gtk/rgmainwindow.cc:1521
+#: gtk/rgmainwindow.cc:1477
 msgid "Mark Recommended for Installation"
 msgstr "Označi priporočeno za namestitev"
 
-#: gtk/rgmainwindow.cc:1525
+#: gtk/rgmainwindow.cc:1481
 msgid "Mark Suggested for Installation"
 msgstr "Označi predlagano za namestitev"
 
-#: gtk/rgmainwindow.cc:1614
+#: gtk/rgmainwindow.cc:1566
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1271,7 +1315,7 @@ msgstr ""
 "Odstranitev tega paketa lahko povzroči, da sistem postane neuporaben.\n"
 "Ali ste prepričani, da želite to vseeno storiti?"
 
-#: gtk/rgmainwindow.cc:1650
+#: gtk/rgmainwindow.cc:1602
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1280,7 +1324,7 @@ msgstr ""
 "%i naštetih paketov, %i nameščenih, %i pokvarjenih, %i za namestitev/"
 "nadgradnjo, %i za odstranitev; %s bo sproščeno"
 
-#: gtk/rgmainwindow.cc:1656
+#: gtk/rgmainwindow.cc:1608
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1289,7 +1333,7 @@ msgstr ""
 "%i naštetih paketov, %i nameščenih, %i pokvarjenih, %i za namestitev/"
 "nadgradnjo, %i za odstranitev; %s bo porabljeno"
 
-#: gtk/rgmainwindow.cc:1662
+#: gtk/rgmainwindow.cc:1614
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1298,7 +1342,7 @@ msgstr ""
 "%i naštetih paketov, %i nameščenih, %i pokvarjenih, %i za namestitev/"
 "nadgradnjo, %i za odstranitev"
 
-#: gtk/rgmainwindow.cc:1714
+#: gtk/rgmainwindow.cc:1666
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1325,61 +1369,58 @@ msgstr[3] ""
 "\n"
 "Uporabite filter \"Pokvarjeni\", da jih najdete."
 
-#: gtk/rgmainwindow.cc:1886
-#, fuzzy
+#: gtk/rgmainwindow.cc:1827
 msgid "Downloading changelog"
 msgstr "_Dnevnik pobiranja"
 
-#: gtk/rgmainwindow.cc:1887
+#: gtk/rgmainwindow.cc:1828
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
+"Dnevnih pobiranja vsebuje podatke o spremembah in popravkih vsake od verzij "
+"paketa."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1900
+#: gtk/rgmainwindow.cc:1841
 #, c-format
 msgid "%s Changelog"
 msgstr "Dnevnik sprememb %s"
 
-#: gtk/rgmainwindow.cc:1983
+#: gtk/rgmainwindow.cc:1924
 msgid "Do you want to add another CD-ROM?"
 msgstr "Ali želite dodati še drug CD-ROM?"
 
-#: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2867
+#: gtk/rgmainwindow.cc:1958 gtk/rgmainwindow.cc:2014
+msgid "Open changes"
+msgstr "Odpri spremembe"
+
+#: gtk/rgmainwindow.cc:1971 gtk/rgmainwindow.cc:2525 gtk/rgmainwindow.cc:2607
+#: gtk/rgmainwindow.cc:2766
 #, c-format
 msgid "Can't read %s"
 msgstr "%s ni moč brati"
 
-#: gtk/rgmainwindow.cc:2038
-msgid "Open changes"
-msgstr "Odpri spremebe"
-
-#: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
+#: gtk/rgmainwindow.cc:1995 gtk/rgmainwindow.cc:2443 gtk/rgmainwindow.cc:2579
+#: gtk/rgmainwindow.cc:2743
 #, c-format
 msgid "Can't write %s"
 msgstr "V %s ni moč pisati"
 
-#: gtk/rgmainwindow.cc:2088
-msgid "Save changes"
-msgstr "Shrani spremembe"
-
-#: gtk/rgmainwindow.cc:2105
+#: gtk/rgmainwindow.cc:2021
 msgid "Save full state, not only changes"
-msgstr "Shrani polno stanje, ne le spremembe"
+msgstr "Shrani celotno stanje, ne le spremembe"
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2132
 #, c-format
 msgid "Found %i packages"
 msgstr "Najdeno %i paketov"
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2173
 msgid "Starting help viewer..."
 msgstr "Zaganja se pregledovalnik s pomočjo..."
 
-#: gtk/rgmainwindow.cc:2281
+#: gtk/rgmainwindow.cc:2193
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1398,7 +1439,7 @@ msgstr ""
 "referenčnega priročnika ali pogledate različico HTML v imeniku 'synaptic/"
 "html'."
 
-#: gtk/rgmainwindow.cc:2435
+#: gtk/rgmainwindow.cc:2341
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1406,22 +1447,22 @@ msgstr ""
 "Prikrojitvenega orodja ni moč zagnati!\n"
 "Namestiti morate zahtevani paket 'libgnome2-perl'."
 
-#: gtk/rgmainwindow.cc:2441
+#: gtk/rgmainwindow.cc:2347
 msgid "Starting package configuration tool..."
 msgstr "Orodje za nastavitev paketov se zaganja..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2362
 msgid "Starting package documentation viewer..."
 msgstr "Pregledovalnik dokumentacije paketov se zaganja..."
 
-#: gtk/rgmainwindow.cc:2468
+#: gtk/rgmainwindow.cc:2374
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "Za brskanje po dokumentaciji paketa morate namestiti paket \"dwww\""
 
-#: gtk/rgmainwindow.cc:2505
+#: gtk/rgmainwindow.cc:2411
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1429,50 +1470,45 @@ msgstr ""
 "Sprememb ni bilo moč uveljaviti!\n"
 "Najprej popravite pokvarjene pakete."
 
-#: gtk/rgmainwindow.cc:2524
+#: gtk/rgmainwindow.cc:2428
 msgid "Applying marked changes. This may take a while..."
 msgstr "Označene spremembe se uveljavljajo. To lahko traja nekaj časa..."
 
-#: gtk/rgmainwindow.cc:2528
-#, fuzzy
+#: gtk/rgmainwindow.cc:2432
 msgid "Downloading package files"
 msgstr "Prenašanje paketnih datotek"
 
-#: gtk/rgmainwindow.cc:2529
-#, fuzzy
+#: gtk/rgmainwindow.cc:2433
 msgid "The package files will be cached locally for installation."
 msgstr "Paketne datoteke bodo le prenešene, ne pa tudi nameščene"
 
-#: gtk/rgmainwindow.cc:2604
+#: gtk/rgmainwindow.cc:2508
 msgid "Do you want to quit Synaptic?"
 msgstr "Ali želite zapustiti Synaptic?"
 
-#: gtk/rgmainwindow.cc:2660
-#, fuzzy
+#: gtk/rgmainwindow.cc:2564
 msgid "Downloading package information"
-msgstr "Poberi le paketne datoteke"
+msgstr "Prenašanje podatkov o paketu."
 
-#: gtk/rgmainwindow.cc:2661
-#, fuzzy
+#: gtk/rgmainwindow.cc:2565
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
-msgstr "Namesti, odstrani in nadgradi programske pakete"
+msgstr "V skladiščih bo preverjeno, ali so se spremenili paketi."
 
-#: gtk/rgmainwindow.cc:2664
-#, fuzzy
+#: gtk/rgmainwindow.cc:2568
 msgid "Reloading package information..."
-msgstr "Orodje za nastavitev paketov se zaganja..."
+msgstr "Osveževanje podatkov o paketih."
 
-#: gtk/rgmainwindow.cc:2728
+#: gtk/rgmainwindow.cc:2632
 msgid "Failed to resolve dependency problems!"
 msgstr "Problemov z odvisnostjo ni bilo moč razrešiti!"
 
-#: gtk/rgmainwindow.cc:2730
+#: gtk/rgmainwindow.cc:2634
 msgid "Successfully fixed dependency problems"
 msgstr "Uspešno popravljeni problemi z odvisnostjo"
 
-#: gtk/rgmainwindow.cc:2746
+#: gtk/rgmainwindow.cc:2650
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1480,15 +1516,15 @@ msgstr ""
 "Sistema ni moč nadgraditi!\n"
 "Najprej popravite pokvarjene pakete."
 
-#: gtk/rgmainwindow.cc:2791
+#: gtk/rgmainwindow.cc:2695
 msgid "Marking all available upgrades..."
 msgstr "Označevanje vseh dostopnih nadgradenj..."
 
-#: gtk/rgmainwindow.cc:2803
+#: gtk/rgmainwindow.cc:2707
 msgid "Successfully marked available upgrades"
 msgstr "Dostopne nadgradnje uspešno označene"
 
-#: gtk/rgmainwindow.cc:2805
+#: gtk/rgmainwindow.cc:2709
 msgid "Failed to mark all available upgrades!"
 msgstr "Vseh dostopnih nadgradenj ni bilo moč označiti!"
 
@@ -1498,6 +1534,9 @@ msgid ""
 "\n"
 " Packages in this component are not supported. Are you sure?"
 msgstr ""
+"Dodajate sestavino \"universe\".\n"
+"\n"
+" Paketi v tej sestavini niso podprti. Ali želite nadaljevati?"
 
 #: gtk/rgrepositorywin.cc:118 gtk/window_repositories.glade.h:4
 msgid "Repositories"
@@ -1529,7 +1568,6 @@ msgid "Binary (deb)"
 msgstr "Binaren (deb)"
 
 #: gtk/rgrepositorywin.cc:242
-#, fuzzy
 msgid "Source (deb-src)"
 msgstr "Izvorna koda (deb-src))"
 
@@ -1546,54 +1584,63 @@ msgstr "Datoteke vendors.list ni moč brati"
 msgid "Unknown source type"
 msgstr "Neznana vrsta izvora"
 
-#: gtk/rgsummarywindow.cc:83
+#: gtk/rgsummarywindow.cc:85
 msgid "(ESSENTIAL) to be removed"
 msgstr "(KLJUČNO) bodo odstranjeni"
 
-#: gtk/rgsummarywindow.cc:96
+#: gtk/rgsummarywindow.cc:98
 msgid "To be DOWNGRADED"
 msgstr "Paketi, ki bodo PODGRAJENI"
 
-#: gtk/rgsummarywindow.cc:160
+#: gtk/rgsummarywindow.cc:124
 #, fuzzy
+msgid "To be removed with configuration"
+msgstr "Ohrani prikrojitev"
+
+#: gtk/rgsummarywindow.cc:176
 msgid "To be not upgraded"
 msgstr "Za nadgradnjo"
 
-#: gtk/rgsummarywindow.cc:196
+#: gtk/rgsummarywindow.cc:213
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>ključen</b>) bo odstranjen\n"
 
-#: gtk/rgsummarywindow.cc:205
+#: gtk/rgsummarywindow.cc:222
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> bo <b>podgrajen</b>\n"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:230
+#, fuzzy, c-format
+msgid "<b>%s</b> will be removed with configuration\n"
+msgstr "<b>%s</b> bo odstranjen\n"
+
+#: gtk/rgsummarywindow.cc:238
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> bo odstranjen\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:247
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo nadgrajen na različico <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:233
+#: gtk/rgsummarywindow.cc:258
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo nameščen\n"
 
-#: gtk/rgsummarywindow.cc:241
+#: gtk/rgsummarywindow.cc:266
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (različica <i>%s</i>) bo znova nameščen\n"
 
-#: gtk/rgsummarywindow.cc:276
+#: gtk/rgsummarywindow.cc:301
 msgid "Summary"
 msgstr "Povzetek"
 
-#: gtk/rgsummarywindow.cc:346
+#: gtk/rgsummarywindow.cc:371
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -1602,7 +1649,7 @@ msgstr[1] "%d paket je zaklenjen\n"
 msgstr[2] "%d paketa sta zaklenjena\n"
 msgstr[3] "%d paketi so zaklenjeni\n"
 
-#: gtk/rgsummarywindow.cc:353
+#: gtk/rgsummarywindow.cc:378
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -1611,7 +1658,7 @@ msgstr[1] "%d paket bo obdržan in ne bo nadgrajen\n"
 msgstr[2] "%d paketa bosta obdržana in ne bosta nadgrajena\n"
 msgstr[3] "%d paketi bodo obdržani in ne bodo nadgrajeni\n"
 
-#: gtk/rgsummarywindow.cc:360
+#: gtk/rgsummarywindow.cc:385
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -1620,7 +1667,7 @@ msgstr[1] "%d nov paket bo nameščen\n"
 msgstr[2] "%d nova paketa bosta nameščena\n"
 msgstr[3] "%d novi paketi bodo nameščeni\n"
 
-#: gtk/rgsummarywindow.cc:367
+#: gtk/rgsummarywindow.cc:392
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -1629,7 +1676,7 @@ msgstr[1] "%d nov paket bo znova nameščen\n"
 msgstr[2] "%d nova paketa bosta znova nameščena\n"
 msgstr[3] "%d novi paketi bodo znova nameščeni\n"
 
-#: gtk/rgsummarywindow.cc:374
+#: gtk/rgsummarywindow.cc:399
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -1638,7 +1685,7 @@ msgstr[1] "%d paket bo nadgrajen\n"
 msgstr[2] "%d paketa bosta nadgrajena\n"
 msgstr[3] "%d paketi bodo nadgrajeni\n"
 
-#: gtk/rgsummarywindow.cc:381
+#: gtk/rgsummarywindow.cc:406
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -1647,7 +1694,7 @@ msgstr[1] "%d paket bo odstranjen\n"
 msgstr[2] "%d paketa bosta odstranjena\n"
 msgstr[3] "%d paketi bodo odstranjeni\n"
 
-#: gtk/rgsummarywindow.cc:388
+#: gtk/rgsummarywindow.cc:413
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -1656,7 +1703,7 @@ msgstr[1] "%d paket bo <b>podgrajen</b>\n"
 msgstr[2] "%d paketov bosta <b>podgrajena</b>\n"
 msgstr[3] "%d paketi bodo <b>podgrajeni</b>\n"
 
-#: gtk/rgsummarywindow.cc:396
+#: gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -1665,17 +1712,17 @@ msgstr[1] "<b>Pozor</b> %d bistven paket bo odstranjen\n"
 msgstr[2] "<b>Pozor</b> %d bistvena paketa bosta odstranjena\n"
 msgstr[3] "<b>Pozor</b> %d bistveni paketi bodo odstranjeni\n"
 
-#: gtk/rgsummarywindow.cc:408
+#: gtk/rgsummarywindow.cc:433
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "Uporabljeno bo %s dodatnega prostora"
 
-#: gtk/rgsummarywindow.cc:411
+#: gtk/rgsummarywindow.cc:436
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Sproščeno bo %s dodatnega prostora"
 
-#: gtk/rgsummarywindow.cc:417
+#: gtk/rgsummarywindow.cc:442
 #, c-format
 msgid ""
 "\n"
@@ -1684,7 +1731,7 @@ msgstr ""
 "\n"
 "%s morajo biti prenešeni"
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:467
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -1722,9 +1769,9 @@ msgstr "Najdi"
 
 #. TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
 #: gtk/rgtaskswin.cc:141
-#, fuzzy, c-format
+#, c-format
 msgid "Description %s"
-msgstr "Opis"
+msgstr "Opis %s"
 
 #: gtk/window_main.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:2
@@ -1749,6 +1796,9 @@ msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
+"<b>Opozorilo:</b> Da namestite različico, ki se razlikuje od privzete, v "
+"menuju \n"
+"izberite <b>Paket -> Vsilite različico ...</b>"
 
 #: gtk/window_main.glade.h:6 gtk/window_details.glade.h:6
 msgid "<b>Package:</b>"
@@ -1779,7 +1829,6 @@ msgid "Apply"
 msgstr "Uveljavi"
 
 #: gtk/window_main.glade.h:13 gtk/window_details.glade.h:11
-#, fuzzy
 msgid "Available versions:"
 msgstr "<b>Dostopne različice</b>"
 
@@ -1806,7 +1855,6 @@ msgid "Download:"
 msgstr "Pobiranje:"
 
 #: gtk/window_main.glade.h:20
-#, fuzzy
 msgid "Icon _Legend"
 msgstr "Legenda ikone"
 
@@ -1820,7 +1868,7 @@ msgstr "Označi vse nadgradnje"
 
 #: gtk/window_main.glade.h:23
 msgid "Mark Packages by _Task..."
-msgstr ""
+msgstr "Označi pakete po Opravilu"
 
 #: gtk/window_main.glade.h:24
 msgid "Mark for Co_mplete Removal"
@@ -1848,17 +1896,14 @@ msgid "Provided Packages"
 msgstr "Ponujeni paketi"
 
 #: gtk/window_main.glade.h:33
-#, fuzzy
 msgid "Reload"
 msgstr "Izdaja"
 
 #: gtk/window_main.glade.h:34
-#, fuzzy
 msgid "S_earch"
 msgstr "Iskanje..."
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "S_tatus"
 msgstr "Stanje"
 
@@ -1867,7 +1912,6 @@ msgid "Save Markings _As..."
 msgstr "Shrani označbe _kot..."
 
 #: gtk/window_main.glade.h:37
-#, fuzzy
 msgid "Search"
 msgstr "Iskanje..."
 
@@ -1900,147 +1944,142 @@ msgid "Version:"
 msgstr "Različica:"
 
 #: gtk/window_main.glade.h:45 gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Versions"
 msgstr "Različica"
 
 #: gtk/window_main.glade.h:46
+msgid "View Commit Log"
+msgstr ""
+
+#: gtk/window_main.glade.h:47
 msgid "_About"
 msgstr "_O programu"
 
-#: gtk/window_main.glade.h:47
+#: gtk/window_main.glade.h:48
 msgid "_Add CD-ROM..."
 msgstr "_Dodaj CD-ROM ..."
 
-#: gtk/window_main.glade.h:48
+#: gtk/window_main.glade.h:49
 msgid "_Browse Documentation"
 msgstr "_Brskaj po dokumentaciji"
 
-#: gtk/window_main.glade.h:49
+#: gtk/window_main.glade.h:50
 msgid "_Configure..."
 msgstr "_Prikroji..."
 
-#: gtk/window_main.glade.h:50
+#: gtk/window_main.glade.h:51
 msgid "_Contents"
 msgstr "_Vsebina"
 
-#: gtk/window_main.glade.h:51
-msgid "_Custom"
-msgstr ""
-
 #: gtk/window_main.glade.h:52
+msgid "_Custom"
+msgstr "Prilagojeno"
+
+#: gtk/window_main.glade.h:53
 msgid "_Download Changelog"
 msgstr "_Dnevnik pobiranja"
 
-#: gtk/window_main.glade.h:53
+#: gtk/window_main.glade.h:54
 msgid "_Edit"
 msgstr "_Uredi"
 
-#: gtk/window_main.glade.h:54
+#: gtk/window_main.glade.h:55
 msgid "_File"
 msgstr "_Datoteka"
 
-#: gtk/window_main.glade.h:55
+#: gtk/window_main.glade.h:56
 msgid "_Filters"
 msgstr "_Filtri"
 
-#: gtk/window_main.glade.h:56
+#: gtk/window_main.glade.h:57
 msgid "_Fix Broken Packages"
 msgstr "_Popravi pokvarjene pakete"
 
-#: gtk/window_main.glade.h:57
+#: gtk/window_main.glade.h:58
 msgid "_Force Version..."
 msgstr "_Vsili različico..."
 
-#: gtk/window_main.glade.h:58
+#: gtk/window_main.glade.h:59
 msgid "_Help"
 msgstr "_Pomoč"
 
-#: gtk/window_main.glade.h:59
+#: gtk/window_main.glade.h:60
 msgid "_Hide"
 msgstr "_Skrij"
 
-#: gtk/window_main.glade.h:60
+#: gtk/window_main.glade.h:61
 msgid "_Icons Only"
 msgstr "Le _ikone"
 
-#: gtk/window_main.glade.h:61
+#: gtk/window_main.glade.h:62
 msgid "_Lock Version"
 msgstr "_Zakleni različico"
 
-#: gtk/window_main.glade.h:62
-#, fuzzy
+#: gtk/window_main.glade.h:63
 msgid "_Mark All Upgrades..."
 msgstr "Označi vse nad_gradnje..."
 
-#: gtk/window_main.glade.h:63
-#, fuzzy
+#: gtk/window_main.glade.h:64
 msgid "_Package"
 msgstr "Paket"
 
-#: gtk/window_main.glade.h:64
-#, fuzzy
+#: gtk/window_main.glade.h:65
 msgid "_Properties"
 msgstr "Lastnosti"
 
-#: gtk/window_main.glade.h:65
+#: gtk/window_main.glade.h:66
 msgid "_Quick Introduction"
 msgstr "_Hitri uvod"
 
-#: gtk/window_main.glade.h:66
+#: gtk/window_main.glade.h:67
 msgid "_Quit"
 msgstr "_Končaj"
 
-#: gtk/window_main.glade.h:67
+#: gtk/window_main.glade.h:68
 msgid "_Read Markings..."
 msgstr "_Beri oznake..."
 
-#: gtk/window_main.glade.h:68
+#: gtk/window_main.glade.h:69
 msgid "_Redo"
 msgstr "_Znova"
 
-#: gtk/window_main.glade.h:69
-#, fuzzy
+#: gtk/window_main.glade.h:70
 msgid "_Reload Package Information"
 msgstr "_Osveži seznam paketov"
 
-#: gtk/window_main.glade.h:70
+#: gtk/window_main.glade.h:71
 msgid "_Repositories"
 msgstr "_Skladišča"
 
-#: gtk/window_main.glade.h:71
+#: gtk/window_main.glade.h:72
 msgid "_Save Markings"
 msgstr "_Shrani označbe"
 
-#: gtk/window_main.glade.h:72
-#, fuzzy
+#: gtk/window_main.glade.h:73
 msgid "_Search..."
 msgstr "Iskanje..."
 
-#: gtk/window_main.glade.h:73
-#, fuzzy
+#: gtk/window_main.glade.h:74
 msgid "_Sections"
 msgstr "Razdelki"
 
-#: gtk/window_main.glade.h:74
-#, fuzzy
+#: gtk/window_main.glade.h:75
 msgid "_Set Internal Option..."
 msgstr "Nastavi _notranjo izbiro..."
 
-#: gtk/window_main.glade.h:75
-#, fuzzy
+#: gtk/window_main.glade.h:76
 msgid "_Settings"
 msgstr "Razdelki"
 
-#: gtk/window_main.glade.h:76
+#: gtk/window_main.glade.h:77
 msgid "_Text Only"
 msgstr "_Le besedilo"
 
-#: gtk/window_main.glade.h:77
+#: gtk/window_main.glade.h:78
 msgid "_Toolbar"
 msgstr "_Orodjarna"
 
-#: gtk/window_main.glade.h:78
+#: gtk/window_main.glade.h:79
 msgid "_Undo"
 msgstr "_Razveljavi"
 
@@ -2139,7 +2178,6 @@ msgid "Written by"
 msgstr "Napisal"
 
 #: gtk/window_about.glade.h:33
-#, fuzzy
 msgid "translators-credits"
 msgstr "Roman Maurer <roman@lugos.si>"
 
@@ -2158,18 +2196,16 @@ msgid "Look in:"
 msgstr "Poglej v:"
 
 #: gtk/window_find.glade.h:8
-#, fuzzy
 msgid "Search:"
 msgstr "Iskanje..."
 
 #: gtk/window_find.glade.h:10
-#, fuzzy
 msgid "_Search"
 msgstr "Iskanje..."
 
 #: gtk/window_fetch.glade.h:1
 msgid "Show progress of single files"
-msgstr ""
+msgstr "Prikaži potek nameščanja za vsako datoteko posebej"
 
 #: gtk/window_changes.glade.h:1
 msgid ""
@@ -2192,9 +2228,8 @@ msgid "_Mark"
 msgstr "_Označi"
 
 #: gtk/window_preferences.glade.h:4
-#, fuzzy
 msgid "<b>Appearance</b>"
-msgstr "<b>Išči</b>"
+msgstr "<b>Videz</b>"
 
 #: gtk/window_preferences.glade.h:5
 msgid "<b>Applying Changes</b>"
@@ -2221,7 +2256,6 @@ msgid "<b>Marking Changes</b>"
 msgstr "<b>Označevanje sprememb</b>"
 
 #: gtk/window_preferences.glade.h:11
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package information must be reloaded and all marked changes "
 "will be lost. Make sure to apply your changes first."
@@ -2268,7 +2302,7 @@ msgstr "Vprašaj za konec po uspešni uveljavitvi sprememb"
 
 #: gtk/window_preferences.glade.h:20
 msgid "Automatically"
-msgstr ""
+msgstr "Samodejno"
 
 #: gtk/window_preferences.glade.h:21
 msgid "Broken:"
@@ -2351,9 +2385,8 @@ msgid "IP address or host name of the http proxy server"
 msgstr "IP naslov ali gostiteljsko ime http posrednika"
 
 #: gtk/window_preferences.glade.h:41
-#, fuzzy
 msgid "Ignore"
-msgstr "prezri"
+msgstr "Prezri"
 
 #: gtk/window_preferences.glade.h:42
 msgid "Installed (locked):"
@@ -2432,7 +2465,6 @@ msgid "Number of undo operations:"
 msgstr "Število razveljavitvenih dejanj:"
 
 #: gtk/window_preferences.glade.h:61
-#, fuzzy
 msgid "Port number of the ftp proxy server"
 msgstr "Številka vrat posrednika ftp"
 
@@ -2446,7 +2478,7 @@ msgstr "Vrata: "
 
 #: gtk/window_preferences.glade.h:65
 msgid "Reloading outdated package information:"
-msgstr ""
+msgstr "Osveževanje zastareih podatkov o paketih."
 
 #: gtk/window_preferences.glade.h:66
 msgid "Removal of packages: "
@@ -2459,7 +2491,7 @@ msgstr "Izberite privzeto izdajo, če je v sources.list naštet več kot en sam"
 
 #: gtk/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
-msgstr ""
+msgstr "Prikaži podatke o paketih v osrednjem oknu."
 
 #: gtk/window_preferences.glade.h:70
 msgid "System upgrade:"
@@ -2557,10 +2589,13 @@ msgid ""
 "Vendors sign theirs packages to verify the correct origin and integraty of "
 "the packages. Disabling the verification is a security risk"
 msgstr ""
+"Proizvajalci podpišejo pakete in s tem zagotovijo njihovo pristnost. Izklop "
+"preverjanja pristnosti \n"
+"je tvegan."
 
 #: gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
-msgstr ""
+msgstr "Preveri pristnost podpisov paketov."
 
 #: gtk/window_summary.glade.h:12
 msgid "_Show Details"
@@ -2580,20 +2615,19 @@ msgstr "<b>Drugo</b>"
 
 #: gtk/window_filters.glade.h:7
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gtk/window_filters.glade.h:8
 msgid "Boolean operator between property criterias:"
-msgstr ""
+msgstr "Boolov operator med kriteriji za lastnosti"
 
 #: gtk/window_filters.glade.h:10
 msgid "Conflicting Packages"
 msgstr "Konfliktni paketi"
 
 #: gtk/window_filters.glade.h:12 gtk/window_details.glade.h:15
-#, fuzzy
 msgid "Dependent Packages"
-msgstr "Nadomeščeni paketi"
+msgstr "Odvisni paketi"
 
 #: gtk/window_filters.glade.h:14
 msgid "Exclude"
@@ -2657,7 +2691,7 @@ msgstr "Neoznačeni"
 
 #: gtk/window_filters.glade.h:34
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gtk/window_filters.glade.h:36
 msgid "Orphaned"
@@ -2781,9 +2815,13 @@ msgid ""
 "There are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
+"<span size=\"large\" weight=\"bold\">Katera opravila naj izvede računalnik?</"
+"span>\n"
+"\n"
+"Za vsako od opravil so vnaprej izbrani paketi. Ko izberete \n"
+"opravilo, se ustrezne pakete označi za namestitev. "
 
 #: gtk/window_tasks.glade.h:4
-#, fuzzy
 msgid "_Description"
 msgstr "Opis"
 
@@ -2857,7 +2895,7 @@ msgstr ""
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
-"Pakete lahko označite za namestitev, nadgradnjo ali odstranitev, na več "
+"Pakete lahko označite za namestitev, nadgradnjo ali odstranitev na več "
 "načinov:"
 
 #: gtk/dialog_welcome.glade.h:11
@@ -2865,6 +2903,8 @@ msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
+"Redno morate osveževati podatke o paketih, sicer lahko zgrešite varnostno "
+"pomembni popravek."
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
@@ -2926,18 +2966,16 @@ msgstr "Nadomeščeni paketi"
 
 #. suggests
 #: gtk/rgfiltermanager.h:76
-#, fuzzy
 msgid "Dependent packages"
-msgstr "Nadomeščeni paketi"
+msgstr "Odvisni paketi"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
 msgstr "Legenda ikone"
 
 #: gtk/rgiconlegend.cc:72
-#, fuzzy
 msgid "Package is supported"
-msgstr "Izbran ni noben paket"
+msgstr "Podprt paket."
 
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
@@ -2947,11 +2985,11 @@ msgid ""
 msgstr ""
 "<b>Naslednje ikone se uporabljajo za prikaz trenutnega stanja paketa:</b>"
 
-#: gtk/rgterminstallprogress.cc:86
+#: gtk/rgterminstallprogress.cc:75
 msgid "<i>Running...</i>"
 msgstr "<i>Teče...</i>"
 
-#: gtk/rgterminstallprogress.cc:93
+#: gtk/rgterminstallprogress.cc:82
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now "
@@ -2959,7 +2997,7 @@ msgstr ""
 "\n"
 "Vse spremembe so se uspešno uveljavile. To okno lahko zdaj zaprete"
 
-#: gtk/rgterminstallprogress.cc:94
+#: gtk/rgterminstallprogress.cc:83
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in this buffer to see what went wrong "
@@ -2968,7 +3006,7 @@ msgstr ""
 "Uveljavljanje sprememb ni uspelo! Z drsnikom poglejte nazaj, da boste "
 "videli, kaj je šlo narobe."
 
-#: gtk/rgterminstallprogress.cc:96
+#: gtk/rgterminstallprogress.cc:85
 msgid ""
 "\n"
 "Successfully installed all packages of the current medium. To continue the "
@@ -2978,11 +3016,11 @@ msgstr ""
 "S trenutnega nosilca so bili uspešno nameščeni vsi paketi. Zaprite to okno, "
 "da nadaljujete namestitev z novim nosilcem."
 
-#: gtk/rgterminstallprogress.cc:145
+#: gtk/rgterminstallprogress.cc:128
 msgid "<i>Finished</i>"
 msgstr "<i>Končano</i>"
 
-#: gtk/rgterminstallprogress.cc:154
+#: gtk/rgterminstallprogress.cc:137
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Ni moč zapreti med tekom</i>"
 
@@ -3021,6 +3059,9 @@ msgstr "Zapomni si odgovor za nadaljnje nadgradnje"
 #, fuzzy
 msgid "_Reload"
 msgstr "Izdaja"
+
+#~ msgid "Save changes"
+#~ msgstr "Shrani spremembe"
 
 #~ msgid "Downloading Files"
 #~ msgstr "Prenašanje datotek"

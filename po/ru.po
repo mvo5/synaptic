@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.35.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-20 14:42+0200\n"
-"PO-Revision-Date: 2003-06-19 11:01+0300\n"
+"POT-Creation-Date: 2003-06-27 09:48+0300\n"
+"PO-Revision-Date: 2003-06-27 10:32+0300\n"
 "Last-Translator: Sviatoslav Sviridov <svd@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -268,6 +268,8 @@ msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
 msgstr ""
+"Невозможно прочитать список источников для обновления.\n"
+"Исправьте ошибку в окне конфигурирования репозиториев."
 
 #: common/rpackagecache.cc:56
 msgid "The package lists or status file could not be parsed or opened."
@@ -437,18 +439,16 @@ msgid "dist upgrade Failed"
 msgstr "ошибка pkgDistUpgrade"
 
 #: common/rpackagelister.cc:722
-#, fuzzy
 msgid "New in repository"
-msgstr "Добавить репозиторий"
+msgstr "Новые в репозитории"
 
 #: common/rpackagelister.cc:725 gtk/window_filters.glade.strings:15
 msgid "Installed and upgradeable"
 msgstr "Установленные и обновляемые"
 
 #: common/rpackagelister.cc:730
-#, fuzzy
 msgid "Not installed (residual config)"
-msgstr "Остаточные"
+msgstr "Не установленные (остаточная конфигурация)"
 
 # This is filter name, it's better to not translate it
 #: common/rpackagelister.cc:732 gtk/window_filters.glade.strings:14
@@ -478,9 +478,8 @@ msgstr ""
 
 #: common/rpackagelister.cc:1320 common/rpackagelister.cc:1324
 #: gtk/rgrepositorywin.cc:267
-#, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
-msgstr "Невозможно прочитать файл sources.list"
+msgstr "Игнорированы неверные записи в файле sources.list!"
 
 #: common/rpackagelister.cc:1361
 msgid "Failed to fetch "
@@ -570,9 +569,8 @@ msgid "Color selection"
 msgstr "Выбор цвета"
 
 #: gtk/rgconfigwindow.cc:310
-#, fuzzy
 msgid "Set preferences"
-msgstr "Предпочтения"
+msgstr "Установки"
 
 #: gtk/rgfetchprogress.cc:63 wings/rwfetchprogress.cc:71
 msgid "Fetching Files"
@@ -1029,6 +1027,10 @@ msgid ""
 "This is most probably caused by unmet dependencies that are not available in "
 "any repository."
 msgstr ""
+"Выбранный пакет не может быть установлен/обновлён.\n"
+"\n"
+"Это может происходить из-за неудовлетворённых зависимостей на пакеты,\n"
+"которые не доступны ни в одном репозитории."
 
 #: gtk/rgmainwindow.cc:2954 wings/rwmainwindow.cc:2020
 #, c-format

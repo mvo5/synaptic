@@ -1325,8 +1325,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     }
      
     // description
-    gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
     GtkTextIter iter;
+    gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
     gtk_text_buffer_get_iter_at_offset(_descrBuffer, &iter, 0);
     gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_descrView), &iter,0,FALSE,0,0);
 

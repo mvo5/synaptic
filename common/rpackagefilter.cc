@@ -156,6 +156,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 
     bool found;
     bool globalfound = false;
+    bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
 
     if (_patterns.size() == 0)
 	return true;
@@ -185,6 +186,11 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	    }
 
 	    if (iter->where == Name) {
+#if 0 // for real "noregexp" support, we need this
+		if(strcasestr(name, iter->pattern.c_str()) == NULL) {
+		    found = false;
+		} 
+#endif
 		for(unsigned int i=0;i<regexps.size();i++) {
 		    if(regexec(&regexps[i], name, 0, NULL, 0) == 0)
 			found &= true;

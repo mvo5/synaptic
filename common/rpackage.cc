@@ -247,7 +247,10 @@ static char *parseDescription(string descr)
 #ifndef HAVE_RPM
 const char *RPackage::installedFiles()
 {
-    string filelist,s;
+    static string filelist;
+    string s;
+
+    filelist.clear();
 
     string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
     if(FileExists(f)) {

@@ -1,6 +1,3 @@
-General:
-   - add a tab that shows all version of the package 
-     (like apt-cache showpkg)
 
 Configure:
    - enable different sorting methods for the tree (e.g. size)
@@ -9,13 +6,16 @@ Configure:
      (currently hardcoded)
 
 GUI:
+   - add a tab that shows all version of the package 
+     (like apt-cache showpkg)
    - add context-menu on right-click (del/inst/upgr/show descr in own window,
    - add context menu in the dependency list to install/remove/upgrade
    - make a the used font in the treeview configurable 
    - add a button to undo all programmed changes 
 	(do we need this now that we have a "real" undo?)
-   - display all files of a installed packages (like dpkg -L or apt-file) 
-     [can't do this in a portable way]
+   - add a dialog that show what dependency is unmet if a pkg can not be
+     installed (like ShowBroken() in apt-get.cc)
+   - changesWindow should also support installing recommends/suggested pkgs
 
 Filter:
    - add missing functionality in rpackagefilter line 183 (Provides filter)
@@ -31,6 +31,8 @@ General:
    - implement raptoptions save/restore for getFlags/setFlags 
 
 Done:
+   - display all files of a installed packages (like dpkg -L or apt-file) 
+     [can't do this in a portable way]
    - add easy way to install suggested/recommended
    - convert all GtkCList to GtkTreeView (done)
    - make it possible to filter for maintainer

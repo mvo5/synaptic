@@ -46,7 +46,6 @@ public:
 	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
 	    bool defres=true);
 
-    virtual bool showErrors();
 };
 
 

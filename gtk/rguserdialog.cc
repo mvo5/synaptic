@@ -111,7 +111,13 @@ bool RGUserDialog::message(const char *msg,
 }
 
 // RGGladeUserDialog
-bool RGGladeUserDialog::run(const char *name)
+RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
+{
+   init(name);
+   _parentWindow = parent->window();
+}
+
+bool RGGladeUserDialog::init(const char *name)
 {
    gchar *filename = NULL;
    gchar *main_widget = NULL;
@@ -130,8 +136,21 @@ bool RGGladeUserDialog::run(const char *name)
    assert(gladeXML);
    _dialog = glade_xml_get_widget(gladeXML, main_widget);
    assert(_dialog);
+
+   gtk_window_set_position(GTK_WINDOW(_dialog),
+			   GTK_WIN_POS_CENTER_ON_PARENT);
+   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(_dialog), 
+				GTK_WINDOW(_parentWindow));
+
    g_free(filename);
    g_free(main_widget);
+}
+
+bool RGGladeUserDialog::run(const char *name)
+{
+   if(name != NULL)
+      init(name);
 
    res = (GtkResponseType) gtk_dialog_run(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);

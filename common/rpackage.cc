@@ -59,6 +59,10 @@
 #include <apt-pkg/versionmatch.h>
 #include <apt-pkg/version.h>
 
+#ifdef WITH_LUA
+#include <apt-pkg/luaiface.h>
+#endif
+
 #include "raptoptions.h"
 
 
@@ -850,6 +854,13 @@ void RPackage::setInstall()
 	Fix.Protect(*_package);
 	Fix.Resolve(true);
     }
+
+#ifdef WITH_LUA
+    _lua->SetDepCache(_depcache);
+    _lua->SetGlobal("package", _package);
+    _lua->RunScripts("Scripts::Synaptic::SetInstall", true);
+    _lua->ResetCaches();
+#endif
 
     if (_notify) 
 	_lister->notifyChange(this);

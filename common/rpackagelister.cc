@@ -53,6 +53,10 @@
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/strutl.h>
 
+#ifdef WITH_LUA
+#include <apt-pkg/luaiface.h>
+#endif
+
 #include <algorithm>
 #include <cstdio>
 
@@ -657,6 +661,12 @@ bool RPackageLister::upgrade()
     if (pkgAllUpgrade(*_cache->deps()) == false) {
 	return _error->Error(_("Internal Error, AllUpgrade broke stuff. Please report."));
     }
+
+#ifdef WITH_LUA
+   _lua->SetDepCache(_cache->deps());
+   _lua->RunScripts("Scripts::Synaptic::Upgrade", false);
+   _lua->ResetCaches();
+#endif
     
     //reapplyFilter();
     notifyChange(NULL);
@@ -672,6 +682,12 @@ bool RPackageLister::distUpgrade()
 	cout << _("dist upgrade Failed") << endl;
 	return false;
     }
+
+#ifdef WITH_LUA
+   _lua->SetDepCache(_cache->deps());
+   _lua->RunScripts("Scripts::Synaptic::DistUpgrade", false);
+   _lua->ResetCaches();
+#endif
     
     //reapplyFilter();
     notifyChange(NULL);    

@@ -24,7 +24,7 @@
 #define RPACKAGELISTACTOR_H
 
 #include "rpackagelister.h"
-#include<iostream>
+#include <iostream>
 
 class RPackageListActor : public RPackageObserver
 {

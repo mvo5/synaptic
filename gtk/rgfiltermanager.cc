@@ -828,7 +828,7 @@ void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
 	RPatternPackageFilter::DepType type;
 	string pattern;
 	bool exclude;
-	f.pattern(i, type, pattern, exclude);
+	f.getPattern(i, type, pattern, exclude);
 	setPatternRow(-1, exclude, type, pattern);
     }
 }

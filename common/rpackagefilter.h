@@ -132,6 +132,11 @@ protected:
 public:
    RPatternPackageFilter(RPackageLister *lister)
 	   : RPackageFilter(lister) {};
+
+   // copy constructor
+   RPatternPackageFilter(RPatternPackageFilter &f);
+
+
    virtual ~RPatternPackageFilter();
 
    inline virtual void reset() { clear(); };
@@ -140,7 +145,7 @@ public:
    
    void addPattern(DepType type, string pattern, bool exclusive);
    inline int count() { return _patterns.size(); };
-   inline void pattern(int index, DepType &type, string &pattern, bool &exclusive) {
+   inline void getPattern(int index, DepType &type, string &pattern, bool &exclusive) {
        type = _patterns[index].where;
        pattern = _patterns[index].pattern;
        exclusive = _patterns[index].exclusive;

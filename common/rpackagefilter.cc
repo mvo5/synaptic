@@ -420,7 +420,7 @@ bool RPatternPackageFilter::write(ofstream &out, string pad)
     out << pad + "patterns {" << endl;
     
     for (int i = 0; i < count(); i++) {
-	pattern(i, type, pat, excl);
+	getPattern(i, type, pat, excl);
 	out << pad + "  " + TypeName[(int)type] + ";"
 	    << " \"" << pat << "\"; "  
 	    << (excl ? "true;" : "false;") << endl;
@@ -459,11 +459,25 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
     return true;
 }
 
-
+// copy constructor
+RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
+{
+    //cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
+    for(int i=0;i<f._patterns.size();i++) {
+	addPattern(f._patterns[i].where,
+		   f._patterns[i].pattern,
+		   f._patterns[i].exclusive);
+    }
+}
 
 void RPatternPackageFilter::clear()
 {
     //cout << "void RPatternPackageFilter::clear()" << endl;
+    //for(int i=0;i<count();i++) {
+    //	cout << "\t " << _patterns[i].pattern << endl;
+    //}
+    
+    // give back all the memory
     for(int i=0;i<_patterns.size();i++) {
 	for(int j=0;j<_patterns[i].regexps.size();j++) {
 	    regfree(_patterns[i].regexps[j]);

@@ -29,6 +29,7 @@ glade_DATA =                            \
 	window_iconlegend.glade \
 	window_logview.glade \
 	dialog_changelog.glade \
+	dialog_conffile.glade \
 	dialog_change_version.glade \
         window_main.glade \
 	window_preferences.glade \

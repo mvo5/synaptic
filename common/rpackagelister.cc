@@ -1307,7 +1307,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	}
 	// Try to deal with missing package files
 	if (Failed == true && _packMan->FixMissing() == false) {
-	    _error->Error(_("Unabled to correct missing packages"));
+	    _error->Error(_("Unable to correct missing packages"));
 	    goto gave_wood;
 	}
        

@@ -42,7 +42,6 @@
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
 : RGGladeWindow(wwin, "changes")
 {
-   setTitle("");
    // new tree store
    _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
    _tree = glade_xml_get_widget(_gladeXML, "tree");
@@ -61,12 +60,12 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
 
 
 void RGChangesWindow::confirm(RPackageLister *lister,
-                                     vector<RPackage *> &kept,
-                                     vector<RPackage *> &toInstall,
-                                     vector<RPackage *> &toReInstall,
-                                     vector<RPackage *> &toUpgrade,
-                                     vector<RPackage *> &toRemove,
-                                     vector<RPackage *> &toDowngrade)
+			      vector<RPackage *> &kept,
+			      vector<RPackage *> &toInstall,
+			      vector<RPackage *> &toReInstall,
+			      vector<RPackage *> &toUpgrade,
+			      vector<RPackage *> &toRemove,
+			      vector<RPackage *> &toDowngrade)
 {
    GtkTreeIter iter, iter_child;
 

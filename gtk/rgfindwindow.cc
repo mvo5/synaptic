@@ -43,7 +43,9 @@ string RGFindWindow::getFindString()
 
 void RGFindWindow::selectText()
 {
-   gtk_editable_select_region(GTK_EDITABLE(glade_xml_get_widget(_gladeXML, "entry_find")), 0, -1);
+   GtkWidget *entry = glade_xml_get_widget(_gladeXML, "entry_find");
+   gtk_widget_grab_focus(entry);
+   gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
 }
 
 int RGFindWindow::getSearchType()

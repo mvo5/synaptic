@@ -2215,6 +2215,7 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
       me->_findWin = new RGFindWindow(me);
    }
 
+   me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
       me->setBusyCursor(true);

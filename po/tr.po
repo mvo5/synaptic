@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 16:56+0100\n"
+"POT-Creation-Date: 2005-02-21 15:03+0100\n"
 "PO-Revision-Date: 2004-11-27 16:59+0200\n"
 "Last-Translator: Erçin EKER <ercin.eker@linux.org.tr>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -524,7 +524,7 @@ msgid "Marked for complete removal"
 msgstr "Tamamen kaldırılmak için seçilmiş"
 
 #: ../common/rpackage.cc:1279 ../common/rpackageview.cc:123
-#: ../gtk/window_filters.glade.h:31
+#: ../gtk/window_filters.glade.h:33
 msgid "Not installed"
 msgstr "Kurulu olmayan"
 
@@ -533,7 +533,7 @@ msgid "Not installed (locked)"
 msgstr "Kurulu değil (kilitli)"
 
 #: ../common/rpackage.cc:1281 ../common/rpackageview.cc:118
-#: ../gtk/window_filters.glade.h:23
+#: ../gtk/window_filters.glade.h:25
 msgid "Installed"
 msgstr "Kurulu"
 
@@ -547,7 +547,7 @@ msgid "Installed (locked to the current version)"
 msgstr "Kurulu (mevcut sürüme kilitlenmiş)"
 
 #: ../common/rpackage.cc:1284 ../common/rpackageview.cc:422
-#: ../gtk/window_filters.glade.h:9
+#: ../gtk/window_filters.glade.h:11
 msgid "Broken"
 msgstr "Bozuk"
 
@@ -579,13 +579,13 @@ msgstr "İsim"
 #: ../common/rpackagefilter.cc:46 ../gtk/rgpreferenceswindow.cc:48
 #: ../gtk/rgmainwindow.cc:975 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:18
-#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:67
+#: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
 #: ../gtk/window_details.glade.h:16
 msgid "Description"
 msgstr "Açıklama"
 
 #: ../common/rpackagefilter.cc:47 ../gtk/window_find.glade.h:5
-#: ../gtk/window_filters.glade.h:28 ../gtk/rgfiltermanager.h:68
+#: ../gtk/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr "Geliştirici"
 
@@ -622,14 +622,14 @@ msgid "ReverseDepends"
 msgstr "TersBağımlılıklar"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:35
+#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:37
 #: ../gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr "Menşei"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:126
 #: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/window_filters.glade.h:53
+#: ../gtk/window_filters.glade.h:55
 msgid "Status"
 msgstr "Durum"
 
@@ -639,7 +639,7 @@ msgid "Pattern"
 msgstr "Desen"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:52
+#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:54
 msgid "Section"
 msgstr "Bölüm"
 
@@ -846,11 +846,11 @@ msgstr "Kurulu (desteklenmeyen)"
 msgid "Not installed (unsupported)"
 msgstr "Kurulu değil (desteklenmeyen)"
 
-#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:29
+#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:31
 msgid "New in repository"
 msgstr "Depoda yeni olanlar"
 
-#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:45
+#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:47
 msgid "Pinned"
 msgstr "Sabitlenmiş (Pinned)"
 
@@ -875,15 +875,18 @@ msgid "Reduced View"
 msgstr "Basit Görünüm"
 
 #: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
-#: ../gtk/rgsummarywindow.cc:355
+#: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "İşaretlenmiş Değişiklikler"
 
-#: ../common/rpackageview.cc:440
-msgid "Pkg with Debconf"
+#. TRANSLATORS: This is a filter that will give you all packages
+#. with debconf support (that can be reconfigured with debconf)
+#: ../common/rpackageview.cc:442
+#, fuzzy
+msgid "Package with Debconf"
 msgstr "Debconf destekli paket"
 
-#: ../common/rpackageview.cc:447 ../gtk/window_filters.glade.h:57
+#: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
 msgstr "Yükseltilebilir (üst sürüm)"
 
@@ -971,7 +974,7 @@ msgstr "-f=? Alternatif süzgeç dosyası ver\n"
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
-"-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n"
+"-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:73
@@ -1063,35 +1066,46 @@ msgstr "Katkı Sağlayanlar"
 msgid "About Synaptic"
 msgstr "Synaptic Hakkında"
 
-#: ../gtk/rgchangeswindow.cc:52
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Paket değişiklikleri"
 
-#: ../gtk/rgchangeswindow.cc:77 ../gtk/rgsummarywindow.cc:92
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
+msgid "Warning"
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
+msgid ""
+"You are about to install software that <b>can't be authenticated</b>! Doing "
+"this could allow a malicious individual to damage or take control of your "
+"system."
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:90 ../gtk/rgsummarywindow.cc:134
+#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Kaldırılacak"
 
-#: ../gtk/rgchangeswindow.cc:103
+#: ../gtk/rgchangeswindow.cc:129
 msgid "To be downgraded"
 msgstr "Alçaltılacak"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:160
+#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Yükseltilecek"
 
-#: ../gtk/rgchangeswindow.cc:128 ../gtk/rgsummarywindow.cc:172
+#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Kurulacak"
 
-#: ../gtk/rgchangeswindow.cc:140 ../gtk/rgsummarywindow.cc:184
+#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Yeniden Kurulacak"
 
-#: ../gtk/rgchangeswindow.cc:151
+#: ../gtk/rgchangeswindow.cc:177
 msgid "To be kept"
 msgstr "Değişmeyecek"
 
@@ -1170,32 +1184,31 @@ msgid "Applying Changes"
 msgstr "Değişiklikler Uygulanıyor"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:499
+#: ../gtk/rgdebinstallprogress.cc:494
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Sağlanan paketler"
 
-#: ../gtk/rgdebinstallprogress.cc:649
-#, fuzzy
-msgid "Installation finished"
-msgstr "Kur"
+#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+msgid "Changes applied"
+msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:707
+#: ../gtk/rgdebinstallprogress.cc:703
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:708
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Paketleri kur, kaldır ya da yükselt"
 
-#: ../gtk/rgdebinstallprogress.cc:714
+#: ../gtk/rgdebinstallprogress.cc:710
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:716
+#: ../gtk/rgdebinstallprogress.cc:712
 #, fuzzy
 msgid "Installing software"
 msgstr "Kur"
@@ -1204,7 +1217,7 @@ msgstr "Kur"
 msgid "Supported"
 msgstr "Destekleniyor"
 
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:37
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:39
 msgid "Package Name"
 msgstr "Paket İsmi"
 
@@ -1280,7 +1293,7 @@ msgstr "Paket"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:188
+#: ../gtk/rgfetchprogress.cc:184
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1291,7 +1304,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:197
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1301,37 +1314,37 @@ msgstr ""
 "Lütfen şu etikete sahip diski %2$s sürücüsüne yerleştirin:\n"
 "%1$s"
 
-#: ../gtk/rgfetchprogress.cc:313
+#: ../gtk/rgfetchprogress.cc:309
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "%2$li dosyadan %1$li tanesi %3$s/s hızda aktarıldı - %4$s kaldı"
 
-#: ../gtk/rgfetchprogress.cc:319
+#: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:321
+#: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "%2$li dosyadan %1$li dosya indiriliyor"
 
-#: ../gtk/rgfetchprogress.cc:388
+#: ../gtk/rgfetchprogress.cc:384
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: ../gtk/rgfetchprogress.cc:391
+#: ../gtk/rgfetchprogress.cc:387
 msgid "Done"
 msgstr "Tamamlandı"
 
-#: ../gtk/rgfetchprogress.cc:394
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Hit"
 msgstr "Başarılı"
 
-#: ../gtk/rgfetchprogress.cc:397
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Failed"
 msgstr "Başarısız"
 
-#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:17
+#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:19
 msgid "Filters"
 msgstr "Süzgeçler"
 
@@ -1498,7 +1511,7 @@ msgid "Hold Current Version"
 msgstr "Mevcut Sürümü Tut"
 
 #: ../gtk/rgmainwindow.cc:1470 ../gtk/window_main.glade.h:31
-#: ../gtk/window_filters.glade.h:46
+#: ../gtk/window_filters.glade.h:48
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1637,13 +1650,14 @@ msgid "Starting help viewer..."
 msgstr "Yardım görüntüleyicisi başlatılıyor..."
 
 #: ../gtk/rgmainwindow.cc:2301
+#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
 "You need either the GNOME help viewer 'yelp', the 'konqueror' browser or the "
 "'mozilla' browser to view the synaptic manual.\n"
 "\n"
-"Alternativly you can open the man page with 'man synaptic' from the command "
+"Alternatively you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 "Herhangi bir yardım görüntüleyicisi kurulu değil\n"
@@ -1804,130 +1818,130 @@ msgstr "\"vendors.list\" dosyası okunamıyor"
 msgid "Unknown source type"
 msgstr "Bilinmeyen kaynak tipi"
 
-#: ../gtk/rgsummarywindow.cc:108
+#: ../gtk/rgsummarywindow.cc:125
 msgid "(ESSENTIAL) to be removed"
 msgstr "Kaldırılacak (TEMEL)"
 
-#: ../gtk/rgsummarywindow.cc:121
+#: ../gtk/rgsummarywindow.cc:138
 msgid "To be DOWNGRADED"
 msgstr "ESKİ sürümü kurulacak"
 
-#: ../gtk/rgsummarywindow.cc:147
+#: ../gtk/rgsummarywindow.cc:164
 #, fuzzy
 msgid "To be completely removed (including configuration files)"
 msgstr "Yapılandırma dosyalarıyla birlikte kaldırılacak:"
 
-#: ../gtk/rgsummarywindow.cc:199
+#: ../gtk/rgsummarywindow.cc:216
 #, fuzzy
 msgid "Unchanged"
 msgstr "Değişmemiş Olarak Bırak"
 
-#: ../gtk/rgsummarywindow.cc:244
+#: ../gtk/rgsummarywindow.cc:261
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>temel</b>) kaldırılacak\n"
 
-#: ../gtk/rgsummarywindow.cc:253
+#: ../gtk/rgsummarywindow.cc:270
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> sürümü <b>alçaltılacak</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:261
+#: ../gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> yapılandırmasıyla birlikte kaldırılacak\n"
 
-#: ../gtk/rgsummarywindow.cc:269
+#: ../gtk/rgsummarywindow.cc:286
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> kaldırılacak\n"
 
-#: ../gtk/rgsummarywindow.cc:278
+#: ../gtk/rgsummarywindow.cc:295
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (sürüm <i>%s</i>) paketi <i>%s</i> sürümüne yükseltilecek\n"
 
-#: ../gtk/rgsummarywindow.cc:289
+#: ../gtk/rgsummarywindow.cc:306
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (sürüm <i>%s</i>) kurulacak\n"
 
-#: ../gtk/rgsummarywindow.cc:297
+#: ../gtk/rgsummarywindow.cc:314
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (sürüm <i>%s</i>) yeniden kurulacak\n"
 
-#: ../gtk/rgsummarywindow.cc:332
+#: ../gtk/rgsummarywindow.cc:349
 msgid "Summary"
 msgstr "Özet"
 
-#: ../gtk/rgsummarywindow.cc:402
+#: ../gtk/rgsummarywindow.cc:419
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d paketi kilitlenmiş\n"
 msgstr[1] "%d paketleri kilitlenmiş\n"
 
-#: ../gtk/rgsummarywindow.cc:409
+#: ../gtk/rgsummarywindow.cc:426
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d paketi yükseltilmeyecek ve korunacak\n"
 msgstr[1] "%d paketleri yükseltilmeyecek ve korunacak\n"
 
-#: ../gtk/rgsummarywindow.cc:416
+#: ../gtk/rgsummarywindow.cc:433
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d yeni paket kurulacak\n"
 msgstr[1] "%d yeni paket kurulacak\n"
 
-#: ../gtk/rgsummarywindow.cc:423
+#: ../gtk/rgsummarywindow.cc:440
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d yeni paket yeniden kurulacak\n"
 msgstr[1] "%d yeni paket yeniden kurulacak\n"
 
-#: ../gtk/rgsummarywindow.cc:430
+#: ../gtk/rgsummarywindow.cc:447
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d paket yükseltilecek\n"
 msgstr[1] "%d paket yükseltilecek\n"
 
-#: ../gtk/rgsummarywindow.cc:437
+#: ../gtk/rgsummarywindow.cc:454
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d paket kaldırılacak\n"
 msgstr[1] "%d paket kaldırılacak\n"
 
-#: ../gtk/rgsummarywindow.cc:444
+#: ../gtk/rgsummarywindow.cc:461
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d paketin <b>eski sürümü kurulacak</b>\n"
 msgstr[1] "%d paketin <b>eski sürümleri kurulacak</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:452
+#: ../gtk/rgsummarywindow.cc:469
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Uyarı:</b> Temel paket %d silinecek!\n"
 msgstr[1] "<b>Uyarı:</b> Temel paket %d silinecek!\n"
 
-#: ../gtk/rgsummarywindow.cc:464
+#: ../gtk/rgsummarywindow.cc:481
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s boş disk alanı kullanılacak"
 
-#: ../gtk/rgsummarywindow.cc:467
+#: ../gtk/rgsummarywindow.cc:484
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s disk alanı boşalacak"
 
-#: ../gtk/rgsummarywindow.cc:473
+#: ../gtk/rgsummarywindow.cc:490
 #, c-format
 msgid ""
 "\n"
@@ -1936,7 +1950,7 @@ msgstr ""
 "\n"
 "%s indirilmesi gerekiyor"
 
-#: ../gtk/rgsummarywindow.cc:501
+#: ../gtk/rgsummarywindow.cc:518
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2049,7 +2063,7 @@ msgid "Dependants"
 msgstr "Bağımlılıklar"
 
 #: ../gtk/window_main.glade.h:16 ../gtk/window_find.glade.h:2
-#: ../gtk/window_filters.glade.h:11 ../gtk/rgfiltermanager.h:70
+#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:70
 #: ../gtk/window_details.glade.h:13
 msgid "Dependencies"
 msgstr "Bağımlılıklar"
@@ -2099,7 +2113,7 @@ msgid "Mark for _Upgrade"
 msgstr "Yükse_ltme için İşaretle"
 
 #: ../gtk/window_main.glade.h:32 ../gtk/window_find.glade.h:7
-#: ../gtk/window_filters.glade.h:47 ../gtk/window_details.glade.h:21
+#: ../gtk/window_filters.glade.h:49 ../gtk/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "Sağlanan Paketler"
 
@@ -2390,7 +2404,6 @@ msgid "translators-credits"
 msgstr "Erçin EKER <ercin.eker@linux.org.tr>"
 
 #: ../gtk/window_find.glade.h:1 ../gtk/window_disc_name.glade.h:1
-#: ../gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2826,173 +2839,176 @@ msgstr "Paket imzalarını doğrula"
 msgid "_Show Details"
 msgstr "_Ayrıntıları göster"
 
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/window_filters.glade.h:4
 msgid "<b>Current</b>"
 msgstr "<b>Geçerli</b>"
 
-#: ../gtk/window_filters.glade.h:5
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
+#: ../gtk/window_filters.glade.h:6
 msgid "<b>Marked</b>"
 msgstr "<b>İşaretlenmiş</b>"
 
-#: ../gtk/window_filters.glade.h:6
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
+#: ../gtk/window_filters.glade.h:8
 msgid "<b>Other</b>"
 msgstr "<b>Diğeri</b>"
 
-#: ../gtk/window_filters.glade.h:7
+#: ../gtk/window_filters.glade.h:9
 msgid "AND"
 msgstr "VE"
 
-#: ../gtk/window_filters.glade.h:8
+#: ../gtk/window_filters.glade.h:10
 msgid "Boolean operator between property criterias:"
 msgstr "İki ölçüt ile ilgili mantıksal değer:"
 
-#: ../gtk/window_filters.glade.h:10
+#: ../gtk/window_filters.glade.h:12
 msgid "Conflicting Packages"
 msgstr "Çelişen Paketler"
 
-#: ../gtk/window_filters.glade.h:12 ../gtk/window_details.glade.h:15
+#: ../gtk/window_filters.glade.h:14 ../gtk/window_details.glade.h:15
 msgid "Dependent Packages"
 msgstr "Bağımlı Paketler"
 
-#: ../gtk/window_filters.glade.h:14
+#: ../gtk/window_filters.glade.h:16
 msgid "Exclude"
 msgstr "Dahil etme"
 
-#: ../gtk/window_filters.glade.h:15
+#: ../gtk/window_filters.glade.h:17
 msgid "Exclude selected sections"
 msgstr "İşaretlenmiş bölümleri dahil etme"
 
-#: ../gtk/window_filters.glade.h:16 ../gtk/rgfiltermanager.h:60
+#: ../gtk/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Dahil değil"
 
-#: ../gtk/window_filters.glade.h:18
+#: ../gtk/window_filters.glade.h:20
 msgid "For installation or upgrade"
 msgstr "Kurulacak ya da yükseltilecek"
 
-#: ../gtk/window_filters.glade.h:19
+#: ../gtk/window_filters.glade.h:21
 msgid "For removal"
 msgstr "Kaldırılacak"
 
-#: ../gtk/window_filters.glade.h:20
+#: ../gtk/window_filters.glade.h:22
 msgid "Include"
 msgstr "Dahil et"
 
-#: ../gtk/window_filters.glade.h:21
+#: ../gtk/window_filters.glade.h:23
 msgid "Include selected sections only"
 msgstr "Sadece işaretli bölümleri dahil et"
 
-#: ../gtk/window_filters.glade.h:22 ../gtk/rgfiltermanager.h:59
+#: ../gtk/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Dahil"
 
-#: ../gtk/window_filters.glade.h:24
+#: ../gtk/window_filters.glade.h:26
 msgid "Installed packages that are up-to-date"
 msgstr "Güncel olan paketleri kur"
 
-#: ../gtk/window_filters.glade.h:25
+#: ../gtk/window_filters.glade.h:27
 msgid "Installed packages that are upgradable"
 msgstr "Yükseltilebilir durumda olan kurulu paketler"
 
-#: ../gtk/window_filters.glade.h:26
+#: ../gtk/window_filters.glade.h:28
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "Daha yeni sürümlerine yükseltilebilir durumda olan kurulu paketler"
 
-#: ../gtk/window_filters.glade.h:27
+#: ../gtk/window_filters.glade.h:29
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Artık ihtiyaç duyulmayan kitaplık paketleri (deborphan gerektirir)"
 
-#: ../gtk/window_filters.glade.h:30
+#: ../gtk/window_filters.glade.h:32
 msgid "Not installable"
 msgstr "Kurulabilir değil"
 
-#: ../gtk/window_filters.glade.h:32
+#: ../gtk/window_filters.glade.h:34
 msgid "Not installed packages"
 msgstr "Kurulu olmayan paketler"
 
-#: ../gtk/window_filters.glade.h:33
+#: ../gtk/window_filters.glade.h:35
 msgid "Not marked"
 msgstr "İşaretlenmemiş"
 
-#: ../gtk/window_filters.glade.h:34
+#: ../gtk/window_filters.glade.h:36
 msgid "OR"
 msgstr "VEYA"
 
-#: ../gtk/window_filters.glade.h:36
+#: ../gtk/window_filters.glade.h:38
 msgid "Orphaned"
 msgstr "Gereksiz (öksüz kalmış)"
 
-#: ../gtk/window_filters.glade.h:38
+#: ../gtk/window_filters.glade.h:40
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Son \"Tazele\"den bu yana depoya yeni girmiş olan paketler"
 
-#: ../gtk/window_filters.glade.h:39
+#: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
 msgstr "Hiçbir depoda bulunmayan paketler"
 
-#: ../gtk/window_filters.glade.h:40
+#: ../gtk/window_filters.glade.h:42
 msgid "Packages that will be installed or upgraded"
 msgstr "Kurulacak ya da yükseltilecek paketler"
 
-#: ../gtk/window_filters.glade.h:41
+#: ../gtk/window_filters.glade.h:43
 msgid "Packages that will be removed"
 msgstr "Kaldırılacak paketler"
 
-#: ../gtk/window_filters.glade.h:42
+#: ../gtk/window_filters.glade.h:44
 msgid "Packages that will never be upgraded"
 msgstr "Asla yükseltilmeyecek olan paketler"
 
-#: ../gtk/window_filters.glade.h:43
+#: ../gtk/window_filters.glade.h:45
 msgid "Packages that won't be changed"
 msgstr "Değişmeyecek olan paketler"
 
-#: ../gtk/window_filters.glade.h:44
+#: ../gtk/window_filters.glade.h:46
 msgid "Packages with broken dependencies"
 msgstr "Bozulmuş bağımlılıklar içeren paketler"
 
 #. replaces/obsoletes
-#: ../gtk/window_filters.glade.h:48 ../gtk/rgfiltermanager.h:74
+#: ../gtk/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr "Önerilenler"
 
-#: ../gtk/window_filters.glade.h:49
+#: ../gtk/window_filters.glade.h:51
 msgid "Removed packages that have left configuration files on the system"
 msgstr "Geride yapılandırma dosyaları kalan kaldırılmış paketler"
 
-#: ../gtk/window_filters.glade.h:50
+#: ../gtk/window_filters.glade.h:52
 msgid "Replaced Packages"
 msgstr "Değiştirilmiş Paketler"
 
-#: ../gtk/window_filters.glade.h:51
+#: ../gtk/window_filters.glade.h:53
 msgid "Residual config"
 msgstr "Yapılandırması yarım kalan"
 
 #. /recommends
-#: ../gtk/window_filters.glade.h:54 ../gtk/rgfiltermanager.h:75
+#: ../gtk/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "Teklif edilenler"
 
-#: ../gtk/window_filters.glade.h:55
+#: ../gtk/window_filters.glade.h:57
 msgid "Tags"
 msgstr "Etiketler"
 
-#: ../gtk/window_filters.glade.h:56
+#: ../gtk/window_filters.glade.h:58
 msgid "Upgradable"
 msgstr "Yükseltilebilir"
 
-#: ../gtk/window_filters.glade.h:58
+#: ../gtk/window_filters.glade.h:60
 msgid "Version Number"
 msgstr "Sürüm Numarası"
 
-#: ../gtk/window_filters.glade.h:59
+#: ../gtk/window_filters.glade.h:61
 msgid "_Deselect All"
 msgstr "Tüm Seçimleri _iptal et"
 
-#: ../gtk/window_filters.glade.h:60
+#: ../gtk/window_filters.glade.h:62
 msgid "_Invert All"
 msgstr "_Tümünü Tersine Çevir"
 
-#: ../gtk/window_filters.glade.h:61
+#: ../gtk/window_filters.glade.h:63
 msgid "_Select All"
 msgstr "Tümünü _Seç"
 
@@ -3287,6 +3303,10 @@ msgstr "Arama Geçmişi"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Paketleri kur, kaldır ya da yükselt"
+
+#, fuzzy
+#~ msgid "Installation finished"
+#~ msgstr "Kur"
 
 #~ msgid "Temporary Files"
 #~ msgstr "Geçici Dosyalar"

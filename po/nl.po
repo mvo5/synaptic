@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 16:56+0100\n"
+"POT-Creation-Date: 2005-02-21 15:03+0100\n"
 "PO-Revision-Date: 2004-11-21 13:15+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -530,7 +530,7 @@ msgid "Marked for complete removal"
 msgstr "Gemarkeerd voor volledige verwijdering"
 
 #: ../common/rpackage.cc:1279 ../common/rpackageview.cc:123
-#: ../gtk/window_filters.glade.h:31
+#: ../gtk/window_filters.glade.h:33
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
 
@@ -539,7 +539,7 @@ msgid "Not installed (locked)"
 msgstr "Niet geïnstalleerd (vastgezet)"
 
 #: ../common/rpackage.cc:1281 ../common/rpackageview.cc:118
-#: ../gtk/window_filters.glade.h:23
+#: ../gtk/window_filters.glade.h:25
 msgid "Installed"
 msgstr "Geïnstalleerd"
 
@@ -553,7 +553,7 @@ msgid "Installed (locked to the current version)"
 msgstr "Geïnstalleerd (vastgezet)"
 
 #: ../common/rpackage.cc:1284 ../common/rpackageview.cc:422
-#: ../gtk/window_filters.glade.h:9
+#: ../gtk/window_filters.glade.h:11
 msgid "Broken"
 msgstr "Gebroken"
 
@@ -585,13 +585,13 @@ msgstr "Naam"
 #: ../common/rpackagefilter.cc:46 ../gtk/rgpreferenceswindow.cc:48
 #: ../gtk/rgmainwindow.cc:975 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:18
-#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:67
+#: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
 #: ../gtk/window_details.glade.h:16
 msgid "Description"
 msgstr "Beschrijving"
 
 #: ../common/rpackagefilter.cc:47 ../gtk/window_find.glade.h:5
-#: ../gtk/window_filters.glade.h:28 ../gtk/rgfiltermanager.h:68
+#: ../gtk/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr "Beheerder"
 
@@ -628,14 +628,14 @@ msgid "ReverseDepends"
 msgstr "Omgekeerd Afhankelijk"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:35
+#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:37
 #: ../gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr "Oorsprong"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:126
 #: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/window_filters.glade.h:53
+#: ../gtk/window_filters.glade.h:55
 msgid "Status"
 msgstr "Status"
 
@@ -645,7 +645,7 @@ msgid "Pattern"
 msgstr "Patroon"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:52
+#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:54
 msgid "Section"
 msgstr "Onderdeel"
 
@@ -858,11 +858,11 @@ msgstr "Geïnstalleerd (niet ondersteund):"
 msgid "Not installed (unsupported)"
 msgstr "Niet geïnstalleerd (niet ondersteund)"
 
-#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:29
+#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:31
 msgid "New in repository"
 msgstr "Nieuwe pakketten"
 
-#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:45
+#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:47
 msgid "Pinned"
 msgstr "Pin"
 
@@ -887,15 +887,18 @@ msgid "Reduced View"
 msgstr "Basisweergave"
 
 #: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
-#: ../gtk/rgsummarywindow.cc:355
+#: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "Aangegeven veranderingen"
 
-#: ../common/rpackageview.cc:440
-msgid "Pkg with Debconf"
+#. TRANSLATORS: This is a filter that will give you all packages
+#. with debconf support (that can be reconfigured with debconf)
+#: ../common/rpackageview.cc:442
+#, fuzzy
+msgid "Package with Debconf"
 msgstr "Pakket met debconf"
 
-#: ../common/rpackageview.cc:447 ../gtk/window_filters.glade.h:57
+#: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
 msgstr "Nieuwe versie beschikbaar (upstream)"
 
@@ -984,7 +987,7 @@ msgstr "-f=? Een alternatief filterbestand gebruiken\n"
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
-"-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n"
+"-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:73
@@ -1080,35 +1083,46 @@ msgstr "Met dank aan"
 msgid "About Synaptic"
 msgstr "Info over Synaptic"
 
-#: ../gtk/rgchangeswindow.cc:52
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Pakketveranderingen"
 
-#: ../gtk/rgchangeswindow.cc:77 ../gtk/rgsummarywindow.cc:92
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
+msgid "Warning"
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
+msgid ""
+"You are about to install software that <b>can't be authenticated</b>! Doing "
+"this could allow a malicious individual to damage or take control of your "
+"system."
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:90 ../gtk/rgsummarywindow.cc:134
+#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Verwijderen"
 
-#: ../gtk/rgchangeswindow.cc:103
+#: ../gtk/rgchangeswindow.cc:129
 msgid "To be downgraded"
 msgstr "Bijwerken naar oudere versie"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:160
+#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Bijwerken"
 
-#: ../gtk/rgchangeswindow.cc:128 ../gtk/rgsummarywindow.cc:172
+#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Installeren"
 
-#: ../gtk/rgchangeswindow.cc:140 ../gtk/rgsummarywindow.cc:184
+#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Herinstalleren"
 
-#: ../gtk/rgchangeswindow.cc:151
+#: ../gtk/rgchangeswindow.cc:177
 msgid "To be kept"
 msgstr "Onveranderd"
 
@@ -1187,32 +1201,31 @@ msgid "Applying Changes"
 msgstr "Doorvoeren van veranderingen"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:499
+#: ../gtk/rgdebinstallprogress.cc:494
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Voorziet in pakketten"
 
-#: ../gtk/rgdebinstallprogress.cc:649
-#, fuzzy
-msgid "Installation finished"
-msgstr "Geïnstalleerde bestanden"
+#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+msgid "Changes applied"
+msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:707
+#: ../gtk/rgdebinstallprogress.cc:703
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:708
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Softwarepakketten installeren, verwijderen of bijwerken"
 
-#: ../gtk/rgdebinstallprogress.cc:714
+#: ../gtk/rgdebinstallprogress.cc:710
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:716
+#: ../gtk/rgdebinstallprogress.cc:712
 #, fuzzy
 msgid "Installing software"
 msgstr "Geïnstalleerde bestanden"
@@ -1221,7 +1234,7 @@ msgstr "Geïnstalleerde bestanden"
 msgid "Supported"
 msgstr "Ondersteund"
 
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:37
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:39
 msgid "Package Name"
 msgstr "Pakketnaam"
 
@@ -1297,7 +1310,7 @@ msgstr "Pakket"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:188
+#: ../gtk/rgfetchprogress.cc:184
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1308,7 +1321,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:197
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1319,37 +1332,37 @@ msgstr ""
 "%s\n"
 "in station %s"
 
-#: ../gtk/rgfetchprogress.cc:313
+#: ../gtk/rgfetchprogress.cc:309
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Ophalen van bestand %li van %li met %s/s - %s resterend"
 
-#: ../gtk/rgfetchprogress.cc:319
+#: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:321
+#: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Ophalen van bestand %li van %li"
 
-#: ../gtk/rgfetchprogress.cc:388
+#: ../gtk/rgfetchprogress.cc:384
 msgid "Queued"
 msgstr "In de rij"
 
-#: ../gtk/rgfetchprogress.cc:391
+#: ../gtk/rgfetchprogress.cc:387
 msgid "Done"
 msgstr "Klaar"
 
-#: ../gtk/rgfetchprogress.cc:394
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Hit"
 msgstr "Hetzelfde"
 
-#: ../gtk/rgfetchprogress.cc:397
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Failed"
 msgstr "Mislukt"
 
-#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:17
+#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:19
 msgid "Filters"
 msgstr "Filters"
 
@@ -1516,7 +1529,7 @@ msgid "Hold Current Version"
 msgstr "Huidige versie en status behouden"
 
 #: ../gtk/rgmainwindow.cc:1470 ../gtk/window_main.glade.h:31
-#: ../gtk/window_filters.glade.h:46
+#: ../gtk/window_filters.glade.h:48
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -1658,13 +1671,14 @@ msgid "Starting help viewer..."
 msgstr "Starten van hulpweergave..."
 
 #: ../gtk/rgmainwindow.cc:2301
+#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
 "You need either the GNOME help viewer 'yelp', the 'konqueror' browser or the "
 "'mozilla' browser to view the synaptic manual.\n"
 "\n"
-"Alternativly you can open the man page with 'man synaptic' from the command "
+"Alternatively you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 "Geen hulpweergave geïnstalleerd!\n"
@@ -1825,107 +1839,107 @@ msgstr "Kan vendors.list bestand niet inlezen"
 msgid "Unknown source type"
 msgstr "Onbekend brontype"
 
-#: ../gtk/rgsummarywindow.cc:108
+#: ../gtk/rgsummarywindow.cc:125
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ESSENTIEEL) te verwijderen"
 
-#: ../gtk/rgsummarywindow.cc:121
+#: ../gtk/rgsummarywindow.cc:138
 msgid "To be DOWNGRADED"
 msgstr "Bijwerken naar OUDERE VERSIE"
 
-#: ../gtk/rgsummarywindow.cc:147
+#: ../gtk/rgsummarywindow.cc:164
 #, fuzzy
 msgid "To be completely removed (including configuration files)"
 msgstr "Volledig verwijderen"
 
-#: ../gtk/rgsummarywindow.cc:199
+#: ../gtk/rgsummarywindow.cc:216
 #, fuzzy
 msgid "Unchanged"
 msgstr "Veranderingen openen"
 
-#: ../gtk/rgsummarywindow.cc:244
+#: ../gtk/rgsummarywindow.cc:261
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>essentieel</b>) zal verwijderd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:253
+#: ../gtk/rgsummarywindow.cc:270
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> zal vervangen worden <b>door een oudere versie</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:261
+#: ../gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> zal volledig verwijderd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:269
+#: ../gtk/rgsummarywindow.cc:286
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> zal verwijderd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:278
+#: ../gtk/rgsummarywindow.cc:295
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ""
 "<b>%s</b> (versie <i>%s</i>) zal bijgewerkt worden naar versie <i>%s</i>\n"
 
-#: ../gtk/rgsummarywindow.cc:289
+#: ../gtk/rgsummarywindow.cc:306
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (versie <i>%s</i>) zal geïnstalleerd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:297
+#: ../gtk/rgsummarywindow.cc:314
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (versie <i>%s</i>) zal ge-herïnstalleerd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:332
+#: ../gtk/rgsummarywindow.cc:349
 msgid "Summary"
 msgstr "Samenvatting"
 
-#: ../gtk/rgsummarywindow.cc:402
+#: ../gtk/rgsummarywindow.cc:419
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d pakket is vastgezet\n"
 msgstr[1] "%d pakketten zijn vastgezet\n"
 
-#: ../gtk/rgsummarywindow.cc:409
+#: ../gtk/rgsummarywindow.cc:426
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d pakket blijft onveranderd\n"
 msgstr[1] "%d pakketten blijven onveranderd\n"
 
-#: ../gtk/rgsummarywindow.cc:416
+#: ../gtk/rgsummarywindow.cc:433
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "Er zal %d nieuw pakket geïnstalleerd worden\n"
 msgstr[1] "Er zullen %d nieuwe pakketten geïnstalleerd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:423
+#: ../gtk/rgsummarywindow.cc:440
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "Er zal %d nieuw pakket ge-herinstalleerd worden\n"
 msgstr[1] "Er zullen %d nieuwe pakketten ge-herinstalleerd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:430
+#: ../gtk/rgsummarywindow.cc:447
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "Er zal %d pakket bijgewerkt worden\n"
 msgstr[1] "Er zullen %d pakketten bijgewerkt worden\n"
 
-#: ../gtk/rgsummarywindow.cc:437
+#: ../gtk/rgsummarywindow.cc:454
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "Er zal %d pakket verwijderd worden\n"
 msgstr[1] "Er zullen %d pakketten verwijderd worden\n"
 
-#: ../gtk/rgsummarywindow.cc:444
+#: ../gtk/rgsummarywindow.cc:461
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -1933,7 +1947,7 @@ msgstr[0] "Er zal %d pakket naar een <b>oudere versie</b> bijgewerkt worden\n"
 msgstr[1] ""
 "Er zullen %d pakketten naar een <b>oudere versie</b> bijgewerkt worden\n"
 
-#: ../gtk/rgsummarywindow.cc:452
+#: ../gtk/rgsummarywindow.cc:469
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -1941,17 +1955,17 @@ msgstr[0] "<b>Waarschuwing:</b> %d essentieel pakket zal verwijderd worden!\n"
 msgstr[1] ""
 "<b>Waarschuwing:</b> %d essentiële pakketten zullen verwijderd worden!\n"
 
-#: ../gtk/rgsummarywindow.cc:464
+#: ../gtk/rgsummarywindow.cc:481
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "Er zal %s aan extra ruimte gebruikt worden"
 
-#: ../gtk/rgsummarywindow.cc:467
+#: ../gtk/rgsummarywindow.cc:484
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Er zal %s aan ruimte vrijkomen"
 
-#: ../gtk/rgsummarywindow.cc:473
+#: ../gtk/rgsummarywindow.cc:490
 #, c-format
 msgid ""
 "\n"
@@ -1960,7 +1974,7 @@ msgstr ""
 "\n"
 "Er moet %s opgehaald worden"
 
-#: ../gtk/rgsummarywindow.cc:501
+#: ../gtk/rgsummarywindow.cc:518
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2073,7 +2087,7 @@ msgid "Dependants"
 msgstr "Nodig voor"
 
 #: ../gtk/window_main.glade.h:16 ../gtk/window_find.glade.h:2
-#: ../gtk/window_filters.glade.h:11 ../gtk/rgfiltermanager.h:70
+#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:70
 #: ../gtk/window_details.glade.h:13
 msgid "Dependencies"
 msgstr "Afhankelijkheden"
@@ -2123,7 +2137,7 @@ msgid "Mark for _Upgrade"
 msgstr "Markeren voor _bijwerken"
 
 #: ../gtk/window_main.glade.h:32 ../gtk/window_find.glade.h:7
-#: ../gtk/window_filters.glade.h:47 ../gtk/window_details.glade.h:21
+#: ../gtk/window_filters.glade.h:49 ../gtk/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "Voorziet in pakketten"
 
@@ -2417,7 +2431,6 @@ msgstr ""
 "Kijk voor meer info op http://nl.gnome.org/"
 
 #: ../gtk/window_find.glade.h:1 ../gtk/window_disc_name.glade.h:1
-#: ../gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2858,173 +2871,176 @@ msgstr "Pakketondertekening controleren"
 msgid "_Show Details"
 msgstr "Details _weergeven"
 
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/window_filters.glade.h:4
 msgid "<b>Current</b>"
 msgstr "<b>Status</b>"
 
-#: ../gtk/window_filters.glade.h:5
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
+#: ../gtk/window_filters.glade.h:6
 msgid "<b>Marked</b>"
 msgstr "<b>Gemarkeerd</b>"
 
-#: ../gtk/window_filters.glade.h:6
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
+#: ../gtk/window_filters.glade.h:8
 msgid "<b>Other</b>"
 msgstr "<b>Diversen</b>"
 
-#: ../gtk/window_filters.glade.h:7
+#: ../gtk/window_filters.glade.h:9
 msgid "AND"
 msgstr "AND"
 
-#: ../gtk/window_filters.glade.h:8
+#: ../gtk/window_filters.glade.h:10
 msgid "Boolean operator between property criterias:"
 msgstr "Booleaanse operator tussen eigenschappen:"
 
-#: ../gtk/window_filters.glade.h:10
+#: ../gtk/window_filters.glade.h:12
 msgid "Conflicting Packages"
 msgstr "Conflicterende pakketten"
 
-#: ../gtk/window_filters.glade.h:12 ../gtk/window_details.glade.h:15
+#: ../gtk/window_filters.glade.h:14 ../gtk/window_details.glade.h:15
 msgid "Dependent Packages"
 msgstr "Afhankelijke pakketten"
 
-#: ../gtk/window_filters.glade.h:14
+#: ../gtk/window_filters.glade.h:16
 msgid "Exclude"
 msgstr "Uitsluiten"
 
-#: ../gtk/window_filters.glade.h:15
+#: ../gtk/window_filters.glade.h:17
 msgid "Exclude selected sections"
 msgstr "Geselecteerde onderdelen uitsluiten"
 
-#: ../gtk/window_filters.glade.h:16 ../gtk/rgfiltermanager.h:60
+#: ../gtk/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Uitsluiten"
 
-#: ../gtk/window_filters.glade.h:18
+#: ../gtk/window_filters.glade.h:20
 msgid "For installation or upgrade"
 msgstr "Voor installatie of bijwerken"
 
-#: ../gtk/window_filters.glade.h:19
+#: ../gtk/window_filters.glade.h:21
 msgid "For removal"
 msgstr "Voor verwijdering"
 
-#: ../gtk/window_filters.glade.h:20
+#: ../gtk/window_filters.glade.h:22
 msgid "Include"
 msgstr "Meenemen"
 
-#: ../gtk/window_filters.glade.h:21
+#: ../gtk/window_filters.glade.h:23
 msgid "Include selected sections only"
 msgstr "Alleen geselecteerde onderdelen meenemen"
 
-#: ../gtk/window_filters.glade.h:22 ../gtk/rgfiltermanager.h:59
+#: ../gtk/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Meenemen"
 
-#: ../gtk/window_filters.glade.h:24
+#: ../gtk/window_filters.glade.h:26
 msgid "Installed packages that are up-to-date"
 msgstr "Geïnstalleerd en up-to-date"
 
-#: ../gtk/window_filters.glade.h:25
+#: ../gtk/window_filters.glade.h:27
 msgid "Installed packages that are upgradable"
 msgstr "Geïnstalleerd en nieuwere versie beschikbaar"
 
-#: ../gtk/window_filters.glade.h:26
+#: ../gtk/window_filters.glade.h:28
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "Geïnstalleerd en nieuwere (upstream) versie beschikbaar"
 
-#: ../gtk/window_filters.glade.h:27
+#: ../gtk/window_filters.glade.h:29
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Bibliotheken die niet meer nodig zijn (deborphan vereist)"
 
-#: ../gtk/window_filters.glade.h:30
+#: ../gtk/window_filters.glade.h:32
 msgid "Not installable"
 msgstr "Niet installeerbaar"
 
-#: ../gtk/window_filters.glade.h:32
+#: ../gtk/window_filters.glade.h:34
 msgid "Not installed packages"
 msgstr "Niet geïnstalleerd"
 
-#: ../gtk/window_filters.glade.h:33
+#: ../gtk/window_filters.glade.h:35
 msgid "Not marked"
 msgstr "Niet gemarkeerd"
 
-#: ../gtk/window_filters.glade.h:34
+#: ../gtk/window_filters.glade.h:36
 msgid "OR"
 msgstr "OR"
 
-#: ../gtk/window_filters.glade.h:36
+#: ../gtk/window_filters.glade.h:38
 msgid "Orphaned"
 msgstr "Wees"
 
-#: ../gtk/window_filters.glade.h:38
+#: ../gtk/window_filters.glade.h:40
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Nieuwe pakketten sinds laatste verversing"
 
-#: ../gtk/window_filters.glade.h:39
+#: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
 msgstr "Pakketten die van geen enkele bron beschikbaar zijn"
 
-#: ../gtk/window_filters.glade.h:40
+#: ../gtk/window_filters.glade.h:42
 msgid "Packages that will be installed or upgraded"
 msgstr "Pakketten die geïnstalleerd of bijgewerkt worden"
 
-#: ../gtk/window_filters.glade.h:41
+#: ../gtk/window_filters.glade.h:43
 msgid "Packages that will be removed"
 msgstr "Pakketten die verwijderd worden"
 
-#: ../gtk/window_filters.glade.h:42
+#: ../gtk/window_filters.glade.h:44
 msgid "Packages that will never be upgraded"
 msgstr "Pakketten die nooit bijgewerkt zullen worden"
 
-#: ../gtk/window_filters.glade.h:43
+#: ../gtk/window_filters.glade.h:45
 msgid "Packages that won't be changed"
 msgstr "Pakketten die onveranderd blijven"
 
-#: ../gtk/window_filters.glade.h:44
+#: ../gtk/window_filters.glade.h:46
 msgid "Packages with broken dependencies"
 msgstr "Pakketten met gebroken afhankelijkheden"
 
 #. replaces/obsoletes
-#: ../gtk/window_filters.glade.h:48 ../gtk/rgfiltermanager.h:74
+#: ../gtk/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr "Aanbevelingen"
 
-#: ../gtk/window_filters.glade.h:49
+#: ../gtk/window_filters.glade.h:51
 msgid "Removed packages that have left configuration files on the system"
 msgstr "Verwijderde pakketten waarvan nog configuratiebestanden aanwezig zijn"
 
-#: ../gtk/window_filters.glade.h:50
+#: ../gtk/window_filters.glade.h:52
 msgid "Replaced Packages"
 msgstr "Vervangen pakketten"
 
-#: ../gtk/window_filters.glade.h:51
+#: ../gtk/window_filters.glade.h:53
 msgid "Residual config"
 msgstr "Resterende configuratie"
 
 #. /recommends
-#: ../gtk/window_filters.glade.h:54 ../gtk/rgfiltermanager.h:75
+#: ../gtk/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "Suggesties"
 
-#: ../gtk/window_filters.glade.h:55
+#: ../gtk/window_filters.glade.h:57
 msgid "Tags"
 msgstr "Etiketten (tags)"
 
-#: ../gtk/window_filters.glade.h:56
+#: ../gtk/window_filters.glade.h:58
 msgid "Upgradable"
 msgstr "Nieuwe versie beschikbaar"
 
-#: ../gtk/window_filters.glade.h:58
+#: ../gtk/window_filters.glade.h:60
 msgid "Version Number"
 msgstr "Versie"
 
-#: ../gtk/window_filters.glade.h:59
+#: ../gtk/window_filters.glade.h:61
 msgid "_Deselect All"
 msgstr "_Niets selecteren"
 
-#: ../gtk/window_filters.glade.h:60
+#: ../gtk/window_filters.glade.h:62
 msgid "_Invert All"
 msgstr "Selectie _omkeren"
 
-#: ../gtk/window_filters.glade.h:61
+#: ../gtk/window_filters.glade.h:63
 msgid "_Select All"
 msgstr "_Alles selecteren"
 
@@ -3326,6 +3342,10 @@ msgstr "Zoekgeschiedenis"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Softwarepakketten installeren, verwijderen of bijwerken"
+
+#, fuzzy
+#~ msgid "Installation finished"
+#~ msgstr "Geïnstalleerde bestanden"
 
 #~ msgid "Temporary Files"
 #~ msgstr "Tijdelijke bestanden"

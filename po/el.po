@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 16:56+0100\n"
+"POT-Creation-Date: 2005-02-21 15:03+0100\n"
 "PO-Revision-Date: 2005-02-16 13:23+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -533,7 +533,7 @@ msgid "Marked for complete removal"
 msgstr "Σημειωμένα·προς·ολοκληρωτική απομάκρυνση"
 
 #: ../common/rpackage.cc:1279 ../common/rpackageview.cc:123
-#: ../gtk/window_filters.glade.h:31
+#: ../gtk/window_filters.glade.h:33
 msgid "Not installed"
 msgstr "Μη εγκατεστημένα"
 
@@ -542,7 +542,7 @@ msgid "Not installed (locked)"
 msgstr "Μη εγκατατεστημένα (κλειδωμένα)"
 
 #: ../common/rpackage.cc:1281 ../common/rpackageview.cc:118
-#: ../gtk/window_filters.glade.h:23
+#: ../gtk/window_filters.glade.h:25
 msgid "Installed"
 msgstr "Εγκατεστημένα"
 
@@ -556,7 +556,7 @@ msgid "Installed (locked to the current version)"
 msgstr "Εγκατεστημένα (κλειδωμένα στην τρέχουσα έκδοση)"
 
 #: ../common/rpackage.cc:1284 ../common/rpackageview.cc:422
-#: ../gtk/window_filters.glade.h:9
+#: ../gtk/window_filters.glade.h:11
 msgid "Broken"
 msgstr "Κατεστραμμένα"
 
@@ -588,13 +588,13 @@ msgstr "Όνομα"
 #: ../common/rpackagefilter.cc:46 ../gtk/rgpreferenceswindow.cc:48
 #: ../gtk/rgmainwindow.cc:975 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:18
-#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:67
+#: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
 #: ../gtk/window_details.glade.h:16
 msgid "Description"
 msgstr "Περιγραφή"
 
 #: ../common/rpackagefilter.cc:47 ../gtk/window_find.glade.h:5
-#: ../gtk/window_filters.glade.h:28 ../gtk/rgfiltermanager.h:68
+#: ../gtk/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr "Προγραμματιστής"
 
@@ -631,14 +631,14 @@ msgid "ReverseDepends"
 msgstr "ReverseDepends"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:35
+#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:37
 #: ../gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr "Προέλευση"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:126
 #: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/window_filters.glade.h:53
+#: ../gtk/window_filters.glade.h:55
 msgid "Status"
 msgstr "Κατάσταση"
 
@@ -648,7 +648,7 @@ msgid "Pattern"
 msgstr "Μοτίβο"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:52
+#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:54
 msgid "Section"
 msgstr "Ενότητα"
 
@@ -863,11 +863,11 @@ msgstr "Εγκατεστημένα (μη υποστηριζόμενα)"
 msgid "Not installed (unsupported)"
 msgstr "Μη εγκατεστημένα (δεν υποστηρίζονται)"
 
-#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:29
+#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:31
 msgid "New in repository"
 msgstr "Νέα στο repository"
 
-#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:45
+#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:47
 msgid "Pinned"
 msgstr "Pinned"
 
@@ -892,15 +892,18 @@ msgid "Reduced View"
 msgstr "Μειωμένη προβολή"
 
 #: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
-#: ../gtk/rgsummarywindow.cc:355
+#: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "Σημειωμένες αλλαγές"
 
-#: ../common/rpackageview.cc:440
-msgid "Pkg with Debconf"
+#. TRANSLATORS: This is a filter that will give you all packages
+#. with debconf support (that can be reconfigured with debconf)
+#: ../common/rpackageview.cc:442
+#, fuzzy
+msgid "Package with Debconf"
 msgstr "Pkg με Debconf"
 
-#: ../common/rpackageview.cc:447 ../gtk/window_filters.glade.h:57
+#: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
 msgstr "Με δυνατότητα αναβάθμισης ·(upstream)"
 
@@ -989,7 +992,7 @@ msgstr "-f=? Δίνει ένα εναλλακτικό αρχείο φίλτρο�
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
-"-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n"
+"-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:73
@@ -1081,35 +1084,46 @@ msgstr "Μνεία"
 msgid "About Synaptic"
 msgstr "Περί Synaptic"
 
-#: ../gtk/rgchangeswindow.cc:52
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Αλλαγές πακέτων"
 
-#: ../gtk/rgchangeswindow.cc:77 ../gtk/rgsummarywindow.cc:92
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
+msgid "Warning"
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
+msgid ""
+"You are about to install software that <b>can't be authenticated</b>! Doing "
+"this could allow a malicious individual to damage or take control of your "
+"system."
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:90 ../gtk/rgsummarywindow.cc:134
+#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Προς απομάκρυνση"
 
-#: ../gtk/rgchangeswindow.cc:103
+#: ../gtk/rgchangeswindow.cc:129
 msgid "To be downgraded"
 msgstr "Προς υποβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:160
+#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Προς αναβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:128 ../gtk/rgsummarywindow.cc:172
+#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Προς εγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:140 ../gtk/rgsummarywindow.cc:184
+#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Προς επανεγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:151
+#: ../gtk/rgchangeswindow.cc:177
 msgid "To be kept"
 msgstr "Προς διατήρηση"
 
@@ -1188,32 +1202,31 @@ msgid "Applying Changes"
 msgstr "Εφαρμογή αλλαγών"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:499
+#: ../gtk/rgdebinstallprogress.cc:494
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Παρεχόμενα πακέτα"
 
-#: ../gtk/rgdebinstallprogress.cc:649
-#, fuzzy
-msgid "Installation finished"
-msgstr "Εγκατεστημένα"
+#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+msgid "Changes applied"
+msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:707
+#: ../gtk/rgdebinstallprogress.cc:703
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:708
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Εγκατάσταση, απομάκρυνση και αναβάθμιση πακέτων λογισμικού"
 
-#: ../gtk/rgdebinstallprogress.cc:714
+#: ../gtk/rgdebinstallprogress.cc:710
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:716
+#: ../gtk/rgdebinstallprogress.cc:712
 msgid "Installing software"
 msgstr ""
 
@@ -1221,7 +1234,7 @@ msgstr ""
 msgid "Supported"
 msgstr "Υποστηριζόμενα"
 
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:37
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:39
 msgid "Package Name"
 msgstr "Όνομα πακέτου"
 
@@ -1297,7 +1310,7 @@ msgstr "Πακέτο"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:188
+#: ../gtk/rgfetchprogress.cc:184
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1308,7 +1321,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:197
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1319,37 +1332,37 @@ msgstr ""
 "%s\n"
 "στον οδηγό %s"
 
-#: ../gtk/rgfetchprogress.cc:313
+#: ../gtk/rgfetchprogress.cc:309
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Μεταφόρτωση αρχείου ·%li από·%li·σε %s/s·-·%s·απομένουν"
 
-#: ../gtk/rgfetchprogress.cc:319
+#: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:321
+#: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Μεταφόρτωση αρχείου %li·από·%li"
 
-#: ../gtk/rgfetchprogress.cc:388
+#: ../gtk/rgfetchprogress.cc:384
 msgid "Queued"
 msgstr "Σε ουρά"
 
-#: ../gtk/rgfetchprogress.cc:391
+#: ../gtk/rgfetchprogress.cc:387
 msgid "Done"
 msgstr "Ολοκληρώθηκε"
 
-#: ../gtk/rgfetchprogress.cc:394
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Hit"
 msgstr "Επίσκεψη"
 
-#: ../gtk/rgfetchprogress.cc:397
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Failed"
 msgstr "Απέτυχε"
 
-#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:17
+#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:19
 msgid "Filters"
 msgstr "Φίλτρα"
 
@@ -1516,7 +1529,7 @@ msgid "Hold Current Version"
 msgstr "Διατήρηση τρέχουσας έκδοσης"
 
 #: ../gtk/rgmainwindow.cc:1470 ../gtk/window_main.glade.h:31
-#: ../gtk/window_filters.glade.h:46
+#: ../gtk/window_filters.glade.h:48
 msgid "Properties"
 msgstr "Ιδιότητες"
 
@@ -1657,13 +1670,14 @@ msgid "Starting help viewer..."
 msgstr "Εκκινείται προβολής βοήθειας..."
 
 #: ../gtk/rgmainwindow.cc:2301
+#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
 "You need either the GNOME help viewer 'yelp', the 'konqueror' browser or the "
 "'mozilla' browser to view the synaptic manual.\n"
 "\n"
-"Alternativly you can open the man page with 'man synaptic' from the command "
+"Alternatively you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 "Δεν έχει εγκατασταθεί εφαρμογή προβολής βοήθειας!\n"
@@ -1824,130 +1838,130 @@ msgstr "Αδυναμία ανάγνωσης αρχείου vendors.list"
 msgid "Unknown source type"
 msgstr "Άγνωστο είδος πηγής"
 
-#: ../gtk/rgsummarywindow.cc:108
+#: ../gtk/rgsummarywindow.cc:125
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ΑΠΑΡΑΙΤΗΤΑ) προς απομάκρυνση"
 
-#: ../gtk/rgsummarywindow.cc:121
+#: ../gtk/rgsummarywindow.cc:138
 msgid "To be DOWNGRADED"
 msgstr "Προς ΥΠΟΒΑΘΜΙΣΗ"
 
-#: ../gtk/rgsummarywindow.cc:147
+#: ../gtk/rgsummarywindow.cc:164
 #, fuzzy
 msgid "To be completely removed (including configuration files)"
 msgstr "Προς απομάκρυνση μαζί με την ρύθμιση"
 
-#: ../gtk/rgsummarywindow.cc:199
+#: ../gtk/rgsummarywindow.cc:216
 #, fuzzy
 msgid "Unchanged"
 msgstr "Άνοιγμα αλλαγών"
 
-#: ../gtk/rgsummarywindow.cc:244
+#: ../gtk/rgsummarywindow.cc:261
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>απαραίτητα</b>) θα απομακρυνθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:253
+#: ../gtk/rgsummarywindow.cc:270
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> θα <b>υποβαθμιστεί</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:261
+#: ../gtk/rgsummarywindow.cc:278
 #, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr "<b>%s</b> θα απομακρυνθεί μαζί με την ρύθμιση\n"
 
-#: ../gtk/rgsummarywindow.cc:269
+#: ../gtk/rgsummarywindow.cc:286
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> θα απομακρυνθεί\n"
 
-#: ../gtk/rgsummarywindow.cc:278
+#: ../gtk/rgsummarywindow.cc:295
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (έκδοση <i>%s</i>) θα αναβαθμισθεί στην έκδοση <i>%s</i>\n"
 
-#: ../gtk/rgsummarywindow.cc:289
+#: ../gtk/rgsummarywindow.cc:306
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (έκδοση <i>%s</i>) θα εγκατασταθεί\n"
 
-#: ../gtk/rgsummarywindow.cc:297
+#: ../gtk/rgsummarywindow.cc:314
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (έκδοση <i>%s</i>) θα επανεγκατασταθεί\n"
 
-#: ../gtk/rgsummarywindow.cc:332
+#: ../gtk/rgsummarywindow.cc:349
 msgid "Summary"
 msgstr "Περίληψη"
 
-#: ../gtk/rgsummarywindow.cc:402
+#: ../gtk/rgsummarywindow.cc:419
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d πακέτο είναι κλειδωμένο\n"
 msgstr[1] "%d πακέτα είναι κλειδωμένα\n"
 
-#: ../gtk/rgsummarywindow.cc:409
+#: ../gtk/rgsummarywindow.cc:426
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d πακέτο θα διατηρηθεί και δεν θα αναβαθμισθεί\n"
 msgstr[1] "%d πακέτα θα διατηρηθούν και δεν θα αναβαθμισθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:416
+#: ../gtk/rgsummarywindow.cc:433
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d νέο πακέτο θα εγκατασταθεί\n"
 msgstr[1] "%d νέα πακέτα θα εγκατασταθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:423
+#: ../gtk/rgsummarywindow.cc:440
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d νέο πακέτο θα επανεγκατασταθεί\n"
 msgstr[1] "%d νέα πακέτα θα επανεγκατασταθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:430
+#: ../gtk/rgsummarywindow.cc:447
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d πακέτο θα αναβαθμισθεί\n"
 msgstr[1] "%d πακέτα θα αναβαθμισθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:437
+#: ../gtk/rgsummarywindow.cc:454
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d πακέτο θα αποκακρυνθεί\n"
 msgstr[1] "%d πακέτα θα απομακρυνθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:444
+#: ../gtk/rgsummarywindow.cc:461
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d πακέτο θα <b>υποβαθμισθεί</b>\n"
 msgstr[1] "%d πακέτα θα <b>υποβαθμισθούν</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:452
+#: ../gtk/rgsummarywindow.cc:469
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Προειδοποίηση:</b> %d απαραίτητα πακέτα θα απομακρυνθούν\n"
 msgstr[1] "<b>Προειδοποίηση:</b> %d απαραίτητα πακέτα θα απομακρυνθούν\n"
 
-#: ../gtk/rgsummarywindow.cc:464
+#: ../gtk/rgsummarywindow.cc:481
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s επιπρόσθετου χώρου θα χρησιμοποιηθεί"
 
-#: ../gtk/rgsummarywindow.cc:467
+#: ../gtk/rgsummarywindow.cc:484
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Θα ελευθερωθεί %s·χώρου"
 
-#: ../gtk/rgsummarywindow.cc:473
+#: ../gtk/rgsummarywindow.cc:490
 #, c-format
 msgid ""
 "\n"
@@ -1956,7 +1970,7 @@ msgstr ""
 "\n"
 "%s πρέπει να μεταφορτωθούν"
 
-#: ../gtk/rgsummarywindow.cc:501
+#: ../gtk/rgsummarywindow.cc:518
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2070,7 +2084,7 @@ msgid "Dependants"
 msgstr "Εξαρτημένα"
 
 #: ../gtk/window_main.glade.h:16 ../gtk/window_find.glade.h:2
-#: ../gtk/window_filters.glade.h:11 ../gtk/rgfiltermanager.h:70
+#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:70
 #: ../gtk/window_details.glade.h:13
 msgid "Dependencies"
 msgstr "Εξαρτήσεις"
@@ -2120,7 +2134,7 @@ msgid "Mark for _Upgrade"
 msgstr "Σημείωση για ανα_βάθμιση"
 
 #: ../gtk/window_main.glade.h:32 ../gtk/window_find.glade.h:7
-#: ../gtk/window_filters.glade.h:47 ../gtk/window_details.glade.h:21
+#: ../gtk/window_filters.glade.h:49 ../gtk/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "Παρεχόμενα πακέτα"
 
@@ -2412,7 +2426,6 @@ msgid "translators-credits"
 msgstr "Κώστας Παπαδήμας <pkst@gnome.org>"
 
 #: ../gtk/window_find.glade.h:1 ../gtk/window_disc_name.glade.h:1
-#: ../gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2851,176 +2864,179 @@ msgstr "Επιβεβαίωση υπογραφών πακέτου"
 msgid "_Show Details"
 msgstr "Εμ_φάνιση λεπτομερειών"
 
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/window_filters.glade.h:4
 msgid "<b>Current</b>"
 msgstr "<b>Τρέχοντα</b>"
 
-#: ../gtk/window_filters.glade.h:5
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
+#: ../gtk/window_filters.glade.h:6
 msgid "<b>Marked</b>"
 msgstr "<b>Σημειωμένα</b>"
 
-#: ../gtk/window_filters.glade.h:6
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
+#: ../gtk/window_filters.glade.h:8
 msgid "<b>Other</b>"
 msgstr "<b>Άλλο</b>"
 
-#: ../gtk/window_filters.glade.h:7
+#: ../gtk/window_filters.glade.h:9
 msgid "AND"
 msgstr "ΚΑΙ"
 
-#: ../gtk/window_filters.glade.h:8
+#: ../gtk/window_filters.glade.h:10
 msgid "Boolean operator between property criterias:"
 msgstr "Boolean operator between property criterias:"
 
-#: ../gtk/window_filters.glade.h:10
+#: ../gtk/window_filters.glade.h:12
 msgid "Conflicting Packages"
 msgstr "Συγκρουόμενα πακέτα"
 
-#: ../gtk/window_filters.glade.h:12 ../gtk/window_details.glade.h:15
+#: ../gtk/window_filters.glade.h:14 ../gtk/window_details.glade.h:15
 msgid "Dependent Packages"
 msgstr "Εξαρτημένα πακέτα"
 
-#: ../gtk/window_filters.glade.h:14
+#: ../gtk/window_filters.glade.h:16
 msgid "Exclude"
 msgstr "Εξαίρεση"
 
-#: ../gtk/window_filters.glade.h:15
+#: ../gtk/window_filters.glade.h:17
 msgid "Exclude selected sections"
 msgstr "Εξαίρεση επιλεγμένων ενοτήτων"
 
-#: ../gtk/window_filters.glade.h:16 ../gtk/rgfiltermanager.h:60
+#: ../gtk/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Εξαιρεί"
 
-#: ../gtk/window_filters.glade.h:18
+#: ../gtk/window_filters.glade.h:20
 msgid "For installation or upgrade"
 msgstr "Για εγκατάσταση ή αναβάθμιση"
 
-#: ../gtk/window_filters.glade.h:19
+#: ../gtk/window_filters.glade.h:21
 msgid "For removal"
 msgstr "Προς απομάκρυνση"
 
-#: ../gtk/window_filters.glade.h:20
+#: ../gtk/window_filters.glade.h:22
 msgid "Include"
 msgstr "Περιλαμβάνει"
 
-#: ../gtk/window_filters.glade.h:21
+#: ../gtk/window_filters.glade.h:23
 msgid "Include selected sections only"
 msgstr "Να περιλαμβάνονται μόνο οι επιλεγμένες ενότητες"
 
-#: ../gtk/window_filters.glade.h:22 ../gtk/rgfiltermanager.h:59
+#: ../gtk/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Περιλαμβάνει"
 
-#: ../gtk/window_filters.glade.h:24
+#: ../gtk/window_filters.glade.h:26
 msgid "Installed packages that are up-to-date"
 msgstr "Εγκατεστημένα πακέτα που είναι ενημερωμένα"
 
-#: ../gtk/window_filters.glade.h:25
+#: ../gtk/window_filters.glade.h:27
 msgid "Installed packages that are upgradable"
 msgstr "Εγκαταστημένα πακέτα με δυνατότητα αναβάθμισης"
 
-#: ../gtk/window_filters.glade.h:26
+#: ../gtk/window_filters.glade.h:28
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr ""
 "Εγκατεστημένα πακέτα που έχουν την δυνατότητα αναβάθμισης σε μια νεότερη "
 "upstream έκδοση"
 
-#: ../gtk/window_filters.glade.h:27
+#: ../gtk/window_filters.glade.h:29
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Πακέτα βιβλιοθηκών που δεν χρειάζονται πιά (απαιτείται το deborphan)"
 
-#: ../gtk/window_filters.glade.h:30
+#: ../gtk/window_filters.glade.h:32
 msgid "Not installable"
 msgstr "Δεν εγκαθίστανται"
 
-#: ../gtk/window_filters.glade.h:32
+#: ../gtk/window_filters.glade.h:34
 msgid "Not installed packages"
 msgstr "Μη εγκατεστημένα πακέτα"
 
-#: ../gtk/window_filters.glade.h:33
+#: ../gtk/window_filters.glade.h:35
 msgid "Not marked"
 msgstr "Μη σημειωμένα"
 
-#: ../gtk/window_filters.glade.h:34
+#: ../gtk/window_filters.glade.h:36
 msgid "OR"
 msgstr "OR"
 
-#: ../gtk/window_filters.glade.h:36
+#: ../gtk/window_filters.glade.h:38
 msgid "Orphaned"
 msgstr "Ορφανές"
 
-#: ../gtk/window_filters.glade.h:38
+#: ../gtk/window_filters.glade.h:40
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Πακέτα που είναι νέα στο repository μετά την τελευταία \"Ανανέωση\""
 
-#: ../gtk/window_filters.glade.h:39
+#: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
 msgstr "Πακέτα που δεν είναι διαθέσιμα σε κανένα repository"
 
-#: ../gtk/window_filters.glade.h:40
+#: ../gtk/window_filters.glade.h:42
 msgid "Packages that will be installed or upgraded"
 msgstr "Πακέτα που θα εγκαταστηθούν ή θα αναβαθμιστούν"
 
-#: ../gtk/window_filters.glade.h:41
+#: ../gtk/window_filters.glade.h:43
 msgid "Packages that will be removed"
 msgstr "Πακέτα που θα απομακρυνθούν"
 
-#: ../gtk/window_filters.glade.h:42
+#: ../gtk/window_filters.glade.h:44
 msgid "Packages that will never be upgraded"
 msgstr "Πακέτα που ποτέ δεν θα αναβαθμιστούν"
 
-#: ../gtk/window_filters.glade.h:43
+#: ../gtk/window_filters.glade.h:45
 msgid "Packages that won't be changed"
 msgstr "Πακέτα που δεν θα αλλαχθούν"
 
-#: ../gtk/window_filters.glade.h:44
+#: ../gtk/window_filters.glade.h:46
 msgid "Packages with broken dependencies"
 msgstr "Πακέτα με κατεστραμμένες εξαρτήσεις"
 
 #. replaces/obsoletes
-#: ../gtk/window_filters.glade.h:48 ../gtk/rgfiltermanager.h:74
+#: ../gtk/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr "Συστάσεις"
 
-#: ../gtk/window_filters.glade.h:49
+#: ../gtk/window_filters.glade.h:51
 msgid "Removed packages that have left configuration files on the system"
 msgstr ""
 "Απομακρυνθέντα πακέτα που έχουν αφήσει αρχεία ρυθμίσεων στο σύστημα σας"
 
-#: ../gtk/window_filters.glade.h:50
+#: ../gtk/window_filters.glade.h:52
 msgid "Replaced Packages"
 msgstr "Αντικατασταθέντα πακέτα"
 
-#: ../gtk/window_filters.glade.h:51
+#: ../gtk/window_filters.glade.h:53
 msgid "Residual config"
 msgstr "Παραμένουν ρυθμίσεις"
 
 #. /recommends
-#: ../gtk/window_filters.glade.h:54 ../gtk/rgfiltermanager.h:75
+#: ../gtk/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "Συμβουλές"
 
-#: ../gtk/window_filters.glade.h:55
+#: ../gtk/window_filters.glade.h:57
 msgid "Tags"
 msgstr "Tags"
 
-#: ../gtk/window_filters.glade.h:56
+#: ../gtk/window_filters.glade.h:58
 msgid "Upgradable"
 msgstr "Με δυνατότητα αναβάθμισης"
 
-#: ../gtk/window_filters.glade.h:58
+#: ../gtk/window_filters.glade.h:60
 msgid "Version Number"
 msgstr "Αριθμός έκδοσης"
 
-#: ../gtk/window_filters.glade.h:59
+#: ../gtk/window_filters.glade.h:61
 msgid "_Deselect All"
 msgstr "Αποε_πιλογή όλων"
 
-#: ../gtk/window_filters.glade.h:60
+#: ../gtk/window_filters.glade.h:62
 msgid "_Invert All"
 msgstr "Αντισ_τροφή όλων"
 
-#: ../gtk/window_filters.glade.h:61
+#: ../gtk/window_filters.glade.h:63
 msgid "_Select All"
 msgstr "Επι_λογή όλων"
 
@@ -3324,6 +3340,10 @@ msgstr "Αναζήτηση ιστορικού"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Εγκατάσταση, απομάκρυνση και αναβάθμιση πακέτων λογισμικού"
+
+#, fuzzy
+#~ msgid "Installation finished"
+#~ msgstr "Εγκατεστημένα"
 
 #~ msgid "%s is/will be installed"
 #~ msgstr "%s θα εγκατασταθεί"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-18 16:56+0100\n"
+"POT-Creation-Date: 2005-02-21 15:03+0100\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -543,7 +543,7 @@ msgstr "Пазначаныя для выдаленьня"
 
 # This is filter name, it's better to not translate it
 #: ../common/rpackage.cc:1279 ../common/rpackageview.cc:123
-#: ../gtk/window_filters.glade.h:31
+#: ../gtk/window_filters.glade.h:33
 msgid "Not installed"
 msgstr "Не ўсталяваныя"
 
@@ -556,7 +556,7 @@ msgstr ""
 
 # This is filter name, it's better to not translate it
 #: ../common/rpackage.cc:1281 ../common/rpackageview.cc:118
-#: ../gtk/window_filters.glade.h:23
+#: ../gtk/window_filters.glade.h:25
 msgid "Installed"
 msgstr "Усталяваныя"
 
@@ -575,7 +575,7 @@ msgstr ""
 
 # This is filter name, it's better to not translate it
 #: ../common/rpackage.cc:1284 ../common/rpackageview.cc:422
-#: ../gtk/window_filters.glade.h:9
+#: ../gtk/window_filters.glade.h:11
 msgid "Broken"
 msgstr "Сапсаваныя"
 
@@ -608,13 +608,13 @@ msgstr "Назва"
 #: ../common/rpackagefilter.cc:46 ../gtk/rgpreferenceswindow.cc:48
 #: ../gtk/rgmainwindow.cc:975 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:18
-#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:67
+#: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
 #: ../gtk/window_details.glade.h:16
 msgid "Description"
 msgstr "Апісаньне"
 
 #: ../common/rpackagefilter.cc:47 ../gtk/window_find.glade.h:5
-#: ../gtk/window_filters.glade.h:28 ../gtk/rgfiltermanager.h:68
+#: ../gtk/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr "Мэйнтайнэр"
 
@@ -652,14 +652,14 @@ msgid "ReverseDepends"
 msgstr "ЗваротныяЗалежнасьці"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:35
+#: ../common/rpackagefilter.cc:56 ../gtk/window_filters.glade.h:37
 #: ../gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:126
 #: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/window_filters.glade.h:53
+#: ../gtk/window_filters.glade.h:55
 msgid "Status"
 msgstr "Стан"
 
@@ -669,7 +669,7 @@ msgid "Pattern"
 msgstr "Шаблён"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:52
+#: ../gtk/rgmainwindow.cc:847 ../gtk/window_filters.glade.h:54
 msgid "Section"
 msgstr "Падзел"
 
@@ -879,11 +879,11 @@ msgstr ""
 "\n"
 "Усталяваны пакет:\n"
 
-#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:29
+#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:31
 msgid "New in repository"
 msgstr "Новыя ў сховішчы"
 
-#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:45
+#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:47
 msgid "Pinned"
 msgstr "Прычэплены"
 
@@ -911,16 +911,19 @@ msgid "Reduced View"
 msgstr "Паменшаны выгляд"
 
 #: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
-#: ../gtk/rgsummarywindow.cc:355
+#: ../gtk/rgsummarywindow.cc:372
 #, fuzzy
 msgid "Marked Changes"
 msgstr "Выключаць вылучаныя падзелы"
 
-#: ../common/rpackageview.cc:440
-msgid "Pkg with Debconf"
+#. TRANSLATORS: This is a filter that will give you all packages
+#. with debconf support (that can be reconfigured with debconf)
+#: ../common/rpackageview.cc:442
+#, fuzzy
+msgid "Package with Debconf"
 msgstr "Пакет з файлам канфігурацыі"
 
-#: ../common/rpackageview.cc:447 ../gtk/window_filters.glade.h:57
+#: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 #, fuzzy
 msgid "Upgradable (upstream)"
 msgstr "Абнавіць"
@@ -999,7 +1002,7 @@ msgstr "-f=? Задаць альтэрнатыўны файл фільтараў
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
-"-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n"
+"-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:73
@@ -1093,37 +1096,48 @@ msgstr ""
 msgid "About Synaptic"
 msgstr "Synaptic"
 
-#: ../gtk/rgchangeswindow.cc:52
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Зьмены ў пакетах"
 
-#: ../gtk/rgchangeswindow.cc:77 ../gtk/rgsummarywindow.cc:92
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
+msgid "Warning"
+msgstr "Папярэджаньне"
+
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
+msgid ""
+"You are about to install software that <b>can't be authenticated</b>! Doing "
+"this could allow a malicious individual to damage or take control of your "
+"system."
+msgstr ""
+
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:90 ../gtk/rgsummarywindow.cc:134
+#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Будуць выдаленыя"
 
-#: ../gtk/rgchangeswindow.cc:103
+#: ../gtk/rgchangeswindow.cc:129
 #, fuzzy
 msgid "To be downgraded"
 msgstr "Будуць абноўленыя"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:160
+#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Будуць абноўленыя"
 
-#: ../gtk/rgchangeswindow.cc:128 ../gtk/rgsummarywindow.cc:172
+#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Будуць усталяваныя"
 
-#: ../gtk/rgchangeswindow.cc:140 ../gtk/rgsummarywindow.cc:184
+#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
 #, fuzzy
 msgid "To be re-installed"
 msgstr "Будуць усталяваныя"
 
-#: ../gtk/rgchangeswindow.cc:151
+#: ../gtk/rgchangeswindow.cc:177
 #, fuzzy
 msgid "To be kept"
 msgstr "Будуць захаваныя"
@@ -1205,32 +1219,32 @@ msgid "Applying Changes"
 msgstr "Выключаць вылучаныя падзелы"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:499
+#: ../gtk/rgdebinstallprogress.cc:494
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Адшукаць пакет"
 
-#: ../gtk/rgdebinstallprogress.cc:649
+#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
 #, fuzzy
-msgid "Installation finished"
-msgstr "Усталяваць"
+msgid "Changes applied"
+msgstr "Зьмяніць выгляд: "
 
-#: ../gtk/rgdebinstallprogress.cc:707
+#: ../gtk/rgdebinstallprogress.cc:703
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:708
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
-#: ../gtk/rgdebinstallprogress.cc:714
+#: ../gtk/rgdebinstallprogress.cc:710
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:716
+#: ../gtk/rgdebinstallprogress.cc:712
 #, fuzzy
 msgid "Installing software"
 msgstr "Усталяваць"
@@ -1239,7 +1253,7 @@ msgstr "Усталяваць"
 msgid "Supported"
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:37
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:39
 #, fuzzy
 msgid "Package Name"
 msgstr "Назва пакета"
@@ -1321,7 +1335,7 @@ msgstr "Пакет"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:188
+#: ../gtk/rgfetchprogress.cc:184
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1329,7 +1343,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:197
 #, fuzzy, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1337,37 +1351,37 @@ msgid ""
 "in drive %s"
 msgstr "Устаўце, калі ласка, дыск з надпісам:\n"
 
-#: ../gtk/rgfetchprogress.cc:313
+#: ../gtk/rgfetchprogress.cc:309
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "%-3li/%-3li файлаў    %4sB/s   засталося %6s\n"
 
-#: ../gtk/rgfetchprogress.cc:319
+#: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:321
+#: ../gtk/rgfetchprogress.cc:317
 #, fuzzy, c-format
 msgid "Downloading file %li of %li"
 msgstr "Рэдагаваць фільтар..."
 
-#: ../gtk/rgfetchprogress.cc:388
+#: ../gtk/rgfetchprogress.cc:384
 msgid "Queued"
 msgstr "Пастаўлены ў чаргу"
 
-#: ../gtk/rgfetchprogress.cc:391
+#: ../gtk/rgfetchprogress.cc:387
 msgid "Done"
 msgstr "Зроблена"
 
-#: ../gtk/rgfetchprogress.cc:394
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Hit"
 msgstr "Хіт"
 
-#: ../gtk/rgfetchprogress.cc:397
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Failed"
 msgstr "Няўдала"
 
-#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:17
+#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:19
 msgid "Filters"
 msgstr "Фільтары"
 
@@ -1542,7 +1556,7 @@ msgid "Hold Current Version"
 msgstr "у вэрсыі"
 
 #: ../gtk/rgmainwindow.cc:1470 ../gtk/window_main.glade.h:31
-#: ../gtk/window_filters.glade.h:46
+#: ../gtk/window_filters.glade.h:48
 #, fuzzy
 msgid "Properties"
 msgstr "Прадастаўляюць"
@@ -1687,7 +1701,7 @@ msgid ""
 "You need either the GNOME help viewer 'yelp', the 'konqueror' browser or the "
 "'mozilla' browser to view the synaptic manual.\n"
 "\n"
-"Alternativly you can open the man page with 'man synaptic' from the command "
+"Alternatively you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
@@ -1840,64 +1854,64 @@ msgstr "Немагчыма прачытаць файл vendors.list"
 msgid "Unknown source type"
 msgstr "Невядомы тып крыніцы"
 
-#: ../gtk/rgsummarywindow.cc:108
+#: ../gtk/rgsummarywindow.cc:125
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ВАЖНА) будзе выдалены"
 
-#: ../gtk/rgsummarywindow.cc:121
+#: ../gtk/rgsummarywindow.cc:138
 msgid "To be DOWNGRADED"
 msgstr ""
 
-#: ../gtk/rgsummarywindow.cc:147
+#: ../gtk/rgsummarywindow.cc:164
 #, fuzzy
 msgid "To be completely removed (including configuration files)"
 msgstr "Ошибка RInitConfiguration()\n"
 
-#: ../gtk/rgsummarywindow.cc:199
+#: ../gtk/rgsummarywindow.cc:216
 #, fuzzy
 msgid "Unchanged"
 msgstr "Пакінуць бяз зьменаў"
 
-#: ../gtk/rgsummarywindow.cc:244
+#: ../gtk/rgsummarywindow.cc:261
 #, fuzzy, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr ": (ВАЖНА) будзе выдалены\n"
 
-#: ../gtk/rgsummarywindow.cc:253
+#: ../gtk/rgsummarywindow.cc:270
 #, fuzzy, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr ": будзе выдалены\n"
 
-#: ../gtk/rgsummarywindow.cc:261
+#: ../gtk/rgsummarywindow.cc:278
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
 msgstr ": будзе выдалены\n"
 
-#: ../gtk/rgsummarywindow.cc:269
+#: ../gtk/rgsummarywindow.cc:286
 #, fuzzy, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr ": будзе выдалены\n"
 
-#: ../gtk/rgsummarywindow.cc:278
+#: ../gtk/rgsummarywindow.cc:295
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ": будзе ўсталяваны\n"
 
-#: ../gtk/rgsummarywindow.cc:289
+#: ../gtk/rgsummarywindow.cc:306
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr ": будзе ўсталяваны\n"
 
-#: ../gtk/rgsummarywindow.cc:297
+#: ../gtk/rgsummarywindow.cc:314
 #, fuzzy, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr ": будзе ўсталяваны\n"
 
-#: ../gtk/rgsummarywindow.cc:332
+#: ../gtk/rgsummarywindow.cc:349
 msgid "Summary"
 msgstr "Кароткае апісаньне"
 
-#: ../gtk/rgsummarywindow.cc:402
+#: ../gtk/rgsummarywindow.cc:419
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -1905,7 +1919,7 @@ msgstr[0] "Пакет усталяваны"
 msgstr[1] "Пакет усталяваны"
 msgstr[2] "Пакет усталяваны"
 
-#: ../gtk/rgsummarywindow.cc:409
+#: ../gtk/rgsummarywindow.cc:426
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -1913,7 +1927,7 @@ msgstr[0] "%d %s было ўтрымана й не абноўлена;\n"
 msgstr[1] "%d %s было ўтрымана й не абноўлена;\n"
 msgstr[2] "%d %s было ўтрымана й не абноўлена;\n"
 
-#: ../gtk/rgsummarywindow.cc:416
+#: ../gtk/rgsummarywindow.cc:433
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -1921,7 +1935,7 @@ msgstr[0] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[1] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[2] "%d новы(х) %s будзе ўсталявана;\n"
 
-#: ../gtk/rgsummarywindow.cc:423
+#: ../gtk/rgsummarywindow.cc:440
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -1929,7 +1943,7 @@ msgstr[0] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[1] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[2] "%d новы(х) %s будзе ўсталявана;\n"
 
-#: ../gtk/rgsummarywindow.cc:430
+#: ../gtk/rgsummarywindow.cc:447
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -1937,7 +1951,7 @@ msgstr[0] "Пакет будзе абноўлены."
 msgstr[1] "Пакет будзе абноўлены."
 msgstr[2] "Пакет будзе абноўлены."
 
-#: ../gtk/rgsummarywindow.cc:437
+#: ../gtk/rgsummarywindow.cc:454
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -1945,7 +1959,7 @@ msgstr[0] "%d %s будзе выдалена;\n"
 msgstr[1] "%d %s будзе выдалена;\n"
 msgstr[2] "%d %s будзе выдалена;\n"
 
-#: ../gtk/rgsummarywindow.cc:444
+#: ../gtk/rgsummarywindow.cc:461
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -1953,7 +1967,7 @@ msgstr[0] "Пакет будзе абноўлены."
 msgstr[1] "Пакет будзе абноўлены."
 msgstr[2] "Пакет будзе абноўлены."
 
-#: ../gtk/rgsummarywindow.cc:452
+#: ../gtk/rgsummarywindow.cc:469
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -1961,17 +1975,17 @@ msgstr[0] "УВАГА: %d важных %s будзе выдалена!\n"
 msgstr[1] "УВАГА: %d важных %s будзе выдалена!\n"
 msgstr[2] "УВАГА: %d важных %s будзе выдалена!\n"
 
-#: ../gtk/rgsummarywindow.cc:464
+#: ../gtk/rgsummarywindow.cc:481
 #, fuzzy, c-format
 msgid "%s of extra space will be used"
 msgstr "%d новы(х) %s будзе ўсталявана;\n"
 
-#: ../gtk/rgsummarywindow.cc:467
+#: ../gtk/rgsummarywindow.cc:484
 #, fuzzy, c-format
 msgid "%s of extra space will be freed"
 msgstr "%d %s будзе выдалена;\n"
 
-#: ../gtk/rgsummarywindow.cc:473
+#: ../gtk/rgsummarywindow.cc:490
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1980,7 +1994,7 @@ msgstr ""
 "\n"
 "%sB неабходна загрузіць."
 
-#: ../gtk/rgsummarywindow.cc:501
+#: ../gtk/rgsummarywindow.cc:518
 #, fuzzy
 msgid ""
 "Essential packages will be removed.\n"
@@ -2110,7 +2124,7 @@ msgid "Dependants"
 msgstr "Залежыць"
 
 #: ../gtk/window_main.glade.h:16 ../gtk/window_find.glade.h:2
-#: ../gtk/window_filters.glade.h:11 ../gtk/rgfiltermanager.h:70
+#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:70
 #: ../gtk/window_details.glade.h:13
 msgid "Dependencies"
 msgstr "Залежнасьці"
@@ -2168,7 +2182,7 @@ msgid "Mark for _Upgrade"
 msgstr "Былі пазначаныя для абнаўленьня"
 
 #: ../gtk/window_main.glade.h:32 ../gtk/window_find.glade.h:7
-#: ../gtk/window_filters.glade.h:47 ../gtk/window_details.glade.h:21
+#: ../gtk/window_filters.glade.h:49 ../gtk/window_details.glade.h:21
 #, fuzzy
 msgid "Provided Packages"
 msgstr "Адшукаць пакет"
@@ -2471,7 +2485,6 @@ msgid "translators-credits"
 msgstr ""
 
 #: ../gtk/window_find.glade.h:1 ../gtk/window_disc_name.glade.h:1
-#: ../gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2952,106 +2965,109 @@ msgstr ""
 msgid "_Show Details"
 msgstr "Паказаць падрабязнасьці"
 
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/window_filters.glade.h:4
 #, fuzzy
 msgid "<b>Current</b>"
 msgstr "Колеры"
 
-#: ../gtk/window_filters.glade.h:5
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
+#: ../gtk/window_filters.glade.h:6
 #, fuzzy
 msgid "<b>Marked</b>"
 msgstr "Асноўнае"
 
-#: ../gtk/window_filters.glade.h:6
+#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
+#: ../gtk/window_filters.glade.h:8
 #, fuzzy
 msgid "<b>Other</b>"
 msgstr "Асноўнае"
 
-#: ../gtk/window_filters.glade.h:7
+#: ../gtk/window_filters.glade.h:9
 msgid "AND"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:8
+#: ../gtk/window_filters.glade.h:10
 msgid "Boolean operator between property criterias:"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:10
+#: ../gtk/window_filters.glade.h:12
 #, fuzzy
 msgid "Conflicting Packages"
 msgstr "Падцьвердзіць зьмены"
 
-#: ../gtk/window_filters.glade.h:12 ../gtk/window_details.glade.h:15
+#: ../gtk/window_filters.glade.h:14 ../gtk/window_details.glade.h:15
 #, fuzzy
 msgid "Dependent Packages"
 msgstr "Усе пакеты"
 
-#: ../gtk/window_filters.glade.h:14
+#: ../gtk/window_filters.glade.h:16
 msgid "Exclude"
 msgstr "Выключыць"
 
-#: ../gtk/window_filters.glade.h:15
+#: ../gtk/window_filters.glade.h:17
 #, fuzzy
 msgid "Exclude selected sections"
 msgstr "Выключаць выбраныя падзелы"
 
-#: ../gtk/window_filters.glade.h:16 ../gtk/rgfiltermanager.h:60
+#: ../gtk/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
 #, fuzzy
 msgid "Excludes"
 msgstr "Выключыць"
 
-#: ../gtk/window_filters.glade.h:18
+#: ../gtk/window_filters.glade.h:20
 #, fuzzy
 msgid "For installation or upgrade"
 msgstr "Былі пазначаныя для абнаўленьня"
 
-#: ../gtk/window_filters.glade.h:19
+#: ../gtk/window_filters.glade.h:21
 #, fuzzy
 msgid "For removal"
 msgstr "Пазначаныя для выдаленьня"
 
-#: ../gtk/window_filters.glade.h:20
+#: ../gtk/window_filters.glade.h:22
 msgid "Include"
 msgstr "Уключыць"
 
-#: ../gtk/window_filters.glade.h:21
+#: ../gtk/window_filters.glade.h:23
 #, fuzzy
 msgid "Include selected sections only"
 msgstr "Уключаць толькі вылучаныя падзелы"
 
-#: ../gtk/window_filters.glade.h:22 ../gtk/rgfiltermanager.h:59
+#: ../gtk/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
 #, fuzzy
 msgid "Includes"
 msgstr "Уключыць"
 
-#: ../gtk/window_filters.glade.h:24
+#: ../gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Installed packages that are up-to-date"
 msgstr "Уключаць пакеты, якія..."
 
-#: ../gtk/window_filters.glade.h:25
+#: ../gtk/window_filters.glade.h:27
 #, fuzzy
 msgid "Installed packages that are upgradable"
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_filters.glade.h:26
+#: ../gtk/window_filters.glade.h:28
 #, fuzzy
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "Усталяваная вэрсыя"
 
-#: ../gtk/window_filters.glade.h:27
+#: ../gtk/window_filters.glade.h:29
 #, fuzzy
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Пакеты бібліятэк, якія больш непатрэбны (патрабуецца deborphan для працы)"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_filters.glade.h:30
+#: ../gtk/window_filters.glade.h:32
 #, fuzzy
 msgid "Not installable"
 msgstr "Не ўсталяваныя"
 
-#: ../gtk/window_filters.glade.h:32
+#: ../gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Not installed packages"
 msgstr ""
@@ -3059,103 +3075,103 @@ msgstr ""
 "Усталяваны пакет:\n"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_filters.glade.h:33
+#: ../gtk/window_filters.glade.h:35
 #, fuzzy
 msgid "Not marked"
 msgstr "Не ўсталяваныя"
 
-#: ../gtk/window_filters.glade.h:34
+#: ../gtk/window_filters.glade.h:36
 msgid "OR"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:36
+#: ../gtk/window_filters.glade.h:38
 msgid "Orphaned"
 msgstr "Асірацелыя"
 
-#: ../gtk/window_filters.glade.h:38
+#: ../gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Пакеты, якія зьявіліся ў сховішчы пасьля апошняга абнаўленьня"
 
-#: ../gtk/window_filters.glade.h:39
+#: ../gtk/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
 msgstr "Пакеты, якія не даступныя ні ў адным сховішчы"
 
-#: ../gtk/window_filters.glade.h:40
+#: ../gtk/window_filters.glade.h:42
 msgid "Packages that will be installed or upgraded"
 msgstr "Пакеты, якія будуць усталяваны ці абноўлены"
 
-#: ../gtk/window_filters.glade.h:41
+#: ../gtk/window_filters.glade.h:43
 msgid "Packages that will be removed"
 msgstr "Пакеты, якія будуць выдалены"
 
-#: ../gtk/window_filters.glade.h:42
+#: ../gtk/window_filters.glade.h:44
 msgid "Packages that will never be upgraded"
 msgstr "Пакеты, якія ніколі ня будуць абноўленыя"
 
-#: ../gtk/window_filters.glade.h:43
+#: ../gtk/window_filters.glade.h:45
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Пакеты, якія будуць захаваныя"
 
-#: ../gtk/window_filters.glade.h:44
+#: ../gtk/window_filters.glade.h:46
 #, fuzzy
 msgid "Packages with broken dependencies"
 msgstr "Памылковыя залежнасьці."
 
 #. replaces/obsoletes
-#: ../gtk/window_filters.glade.h:48 ../gtk/rgfiltermanager.h:74
+#: ../gtk/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "Рэкамэндаваны"
 
-#: ../gtk/window_filters.glade.h:49
+#: ../gtk/window_filters.glade.h:51
 #, fuzzy
 msgid "Removed packages that have left configuration files on the system"
 msgstr "Выдаленыя пакеты, для якіх у сыстэме засталіся канфігурацыйныя файлы"
 
-#: ../gtk/window_filters.glade.h:50
+#: ../gtk/window_filters.glade.h:52
 #, fuzzy
 msgid "Replaced Packages"
 msgstr "Усе пакеты"
 
-#: ../gtk/window_filters.glade.h:51
+#: ../gtk/window_filters.glade.h:53
 msgid "Residual config"
 msgstr "Рэшткавыя"
 
 #. /recommends
-#: ../gtk/window_filters.glade.h:54 ../gtk/rgfiltermanager.h:75
+#: ../gtk/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
 #, fuzzy
 msgid "Suggestions"
 msgstr "Прапаноўвае"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_filters.glade.h:55
+#: ../gtk/window_filters.glade.h:57
 msgid "Tags"
 msgstr "Тэгі"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_filters.glade.h:56
+#: ../gtk/window_filters.glade.h:58
 #, fuzzy
 msgid "Upgradable"
 msgstr "Якія абнаўляюцца"
 
-#: ../gtk/window_filters.glade.h:58
+#: ../gtk/window_filters.glade.h:60
 #, fuzzy
 msgid "Version Number"
 msgstr "Вэрсыя"
 
-#: ../gtk/window_filters.glade.h:59
+#: ../gtk/window_filters.glade.h:61
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Вылучыць усё"
 
-#: ../gtk/window_filters.glade.h:60
+#: ../gtk/window_filters.glade.h:62
 #, fuzzy
 msgid "_Invert All"
 msgstr "Усталяваць"
 
-#: ../gtk/window_filters.glade.h:61
+#: ../gtk/window_filters.glade.h:63
 #, fuzzy
 msgid "_Select All"
 msgstr "Вылучыць усё"
@@ -3431,6 +3447,10 @@ msgstr "Інструмэнт пошуку"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Усталяваныя й здольныя абнаўляцца"
+
+#, fuzzy
+#~ msgid "Installation finished"
+#~ msgstr "Усталяваць"
 
 #, fuzzy
 #~ msgid "Temporary Files"
@@ -4857,9 +4877,6 @@ msgstr "Усталяваныя й здольныя абнаўляцца"
 #~ msgid "Change View for this filter:"
 #~ msgstr "Зьмяніць выгляд для гэтага фільтра:"
 
-#~ msgid "Change View: "
-#~ msgstr "Зьмяніць выгляд: "
-
 #~ msgid "Manipulate Tree: "
 #~ msgstr "Зьмяніць дрэва: "
 
@@ -4983,9 +5000,6 @@ msgstr "Усталяваныя й здольныя абнаўляцца"
 #~ msgstr ""
 #~ "Выконваюцца выбраныя зьмены... Дадатковыя зьвесткі вы можаце ўбачыць у "
 #~ "тэрмінале, з якога запушчаны Synaptic."
-
-#~ msgid "Warning"
-#~ msgstr "Папярэджаньне"
 
 #~ msgid "Fix Broken"
 #~ msgstr "Выправіць сапсаванае"

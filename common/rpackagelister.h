@@ -39,7 +39,6 @@
 #include "rpackage.h"
 #include "rpackageview.h"
 #include "ruserdialog.h"
-#include "tree.hh"
 #include "config.h"
 
 using namespace std;

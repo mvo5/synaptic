@@ -43,6 +43,7 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/pkgsystem.h>
+#include <cassert>
 
 #ifdef HAVE_ZVT
 #include <libzvt/libzvt.h>

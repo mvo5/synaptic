@@ -27,6 +27,8 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
 #include <gtk/gtk.h>
+#include <cassert>
+
 #include "rconfiguration.h"
 #include "rgpreferenceswindow.h"
 #include "rguserdialog.h"

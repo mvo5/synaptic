@@ -34,6 +34,7 @@
 class RGZvtInstallProgress : public RInstallProgress, public RGGladeWindow {
   GtkWidget *_term;
   GtkWidget *_statusL;
+  GtkWidget *_closeB;
   GtkWidget *_closeOnF;
   bool updateFinished;
   pkgPackageManager::OrderResult res;

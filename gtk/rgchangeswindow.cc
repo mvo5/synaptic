@@ -48,7 +48,7 @@ void RGChangesWindow::clickedOk(GtkWidget *self, void *data)
 
 void RGChangesWindow::clickedCancel(GtkWidget *self, void *data)
 {
-    cout << "clickedCancel()" << endl;
+    //cout << "clickedCancel()" << endl;
     RGChangesWindow *me = (RGChangesWindow*)data;
     me->_confirmed = false;
     gtk_main_quit();

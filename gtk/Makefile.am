@@ -19,23 +19,26 @@ synaptic_LDADD = \
 	-lpthread $(LIBTAGCOLL_LIBS) 
 
 glade_DATA =                            \
-        window_main_vpaned.glade window_main_vpaned.glade.strings \
-        window_main_hpaned.glade window_main_hpaned.glade.strings \
-	window_find.glade window_find.glade.strings \
-	window_filters.glade window_filters.glade.strings \
-	window_fetch.glade window_fetch.glade.strings \
-	window_about.glade window_about.glade.strings \
-	window_changes.glade window_changes.glade.strings \
-	window_preferences.glade window_preferences.glade.strings \
-	window_disc_name.glade window_disc_name.glade.strings \
-	window_rginstall_progress.glade window_rginstall_progress.glade.strings \
-	window_rginstall_progress_msgs.glade window_rginstall_progress_msgs.glade.strings \
-	window_setopt.glade window_setopt.glade.strings \
-	window_summary.glade window_summary.glade.strings \
-	window_repositories.glade window_repositories.glade.strings \
-	dialog_quit.glade dialog_quit.glade.strings \
-	dialog_upgrade.glade dialog_upgrade.glade.strings \
-	dialog_locales_warning.glade dialog_locales_warning.glade.strings
+	window_about.glade  \
+	window_changes.glade  \
+	window_disc_name.glade  \
+	window_fetch.glade  \
+	window_find.glade  \
+	window_filters.glade \
+	window_iconlegend.glade \
+	dialog_locales_warning.glade \
+        window_main_vpaned.glade \
+        window_main_hpaned.glade \
+	window_preferences.glade \
+	dialog_quit.glade  \
+	window_rginstall_progress.glade \
+	window_rginstall_progress_msgs.glade \
+	window_repositories.glade \
+	window_setopt.glade  \
+	window_summary.glade \
+	dialog_upgrade.glade \
+	dialog_welcome.glade \
+	window_zvtinstallprogress.glade 
 
 
 EXTRA_DIST = $(glade_DATA) 

@@ -58,7 +58,8 @@ using namespace std;
 void RGZvtInstallProgress::startUpdate()
 {
   show();
-  gtk_label_set_text(GTK_LABEL(_statusL), _("<i>Running...</i>"));
+  gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
+  gtk_widget_set_sensitive(_closeB, false);
   RGFlushInterface();
 }
 
@@ -68,6 +69,8 @@ void RGZvtInstallProgress::finishUpdate()
     _("\nUpdate finished - You can close the window now");
   string errorMsg = 
     _("\nUpdate failed - Scroll in this buffer to see what went wrong");
+
+  gtk_widget_set_sensitive(_closeB, true);
 
   RGFlushInterface();
   updateFinished=true;
@@ -98,7 +101,7 @@ void RGZvtInstallProgress::finishUpdate()
   else
     vte_terminal_feed(VTE_TERMINAL(_term), utf8(errorMsg.c_str()), (long)errorMsg.size());
 #endif
-  gtk_label_set_text(GTK_LABEL(_statusL), _("<i>Finished</i>"));
+  gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Finished</i>"));
 }
 
 void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
@@ -106,7 +109,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
   RGZvtInstallProgress *me = (RGZvtInstallProgress*)data;  
 
   if(!me->updateFinished) {
-    gtk_label_set_text(GTK_LABEL(me->_statusL), 
+    gtk_label_set_markup(GTK_LABEL(me->_statusL), 
 		       _("<i>Can't close while executing</i>"));
     return;
   } 
@@ -138,7 +141,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 {
     setTitle(_("Executing Changes..."));
 
-    GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "vbox_terminal");
+    GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
     assert(hbox);
 
 #ifdef HAVE_ZVT
@@ -193,6 +196,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   gtk_widget_show(_term);
 #ifdef HAVE_ZVT
   gtk_box_pack_end(GTK_BOX(hbox), scrollbar, FALSE, FALSE, 0);
+  gtk_widget_show(scrollbar);
 #endif
 
   _closeOnF = glade_xml_get_widget(_gladeXML, "checkbutton_close_after_pm");
@@ -201,8 +205,8 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 			       _config->FindB("Synaptic::closeZvt", false));
 
   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-  GtkWidget *btn = glade_xml_get_widget(_gladeXML, "button_close");
-  gtk_signal_connect(GTK_OBJECT(btn), "clicked",
+  _closeB = glade_xml_get_widget(_gladeXML, "button_close");
+  gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
 		     (GtkSignalFunc)stopShell, this);
 }
 

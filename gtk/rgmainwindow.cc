@@ -1120,7 +1120,8 @@ void RGMainWindow::buildInterface()
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-   
+
+#if 0  // disabled for now
    menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
@@ -1138,6 +1139,18 @@ void RGMainWindow::buildInterface()
    g_signal_connect(menuitem, "activate", (GCallback) cbMenuPinClicked, this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif
+#endif
+   menuitem = gtk_separator_menu_item_new ();
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+
+   menuitem = gtk_image_menu_item_new_with_label(_("Properties"));
+   img = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   g_object_set_data(G_OBJECT(menuitem), "me", this);
+   g_signal_connect(menuitem, "activate",
+                    (GCallback) cbDetailsWindow, this);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 
    gtk_widget_show_all(_popupMenu);
@@ -2514,8 +2527,8 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
       if ((flags & RPackage::FInstalled) && !(flags & RPackage::FRemove)) {
 
-         // Remove buttons (remove, remove with dependencies)
-         if (i == 4 || i == 6) {
+         // Remove buttons (remove)
+         if (i == 4) {
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
             if (i == 4 && oneclickitem == NULL)
                oneclickitem = item->data;
@@ -2532,16 +2545,17 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       }
 
       // Seperator is i==6 (ignored)
-      // Hold button 
-      if (i == 8) {
+      // Properties is i==7 (always available)
+      if (i == 7) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+#if 0 // i==7 used to be HOLD, no longer used (may come back later)
          bool locked = (flags & RPackage::FPinned);
          me->_blockActions = TRUE;
          gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data),
                                         locked);
          me->_blockActions = FALSE;
+#endif
       }
-
    }
 
    if (event->button == 1 && oneclickitem != NULL &&

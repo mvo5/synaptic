@@ -2137,6 +2137,8 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
 
 }
 
+// FIXME: instead of RPackage* take a GList* argument to enable
+//        a popup-menu operation on more than one selected pkg
 void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview, 
 				     GdkEventButton *event,
 				     RGMainWindow *me,
@@ -2210,12 +2212,14 @@ gboolean RGMainWindow::onButtonPressed(GtkWidget *treeview,
     if (event->type == GDK_BUTTON_PRESS  &&  event->button == 3) {
 	GtkTreeSelection *selection;
 	selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
+	// FIXME: this is gtk2.2
 	if(gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
 					 (int)event->x, (int)event->y,
 					 &path, NULL, NULL, NULL)) {
 	    GtkTreeIter iter;
 	    gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
 				    path);
+	    // FIXME: don't unselected, check for selections
 	    gtk_tree_selection_unselect_all(selection);
 	    gtk_tree_selection_select_path(selection, path);
 	    // check if leaf-node, if not -> return
@@ -2226,7 +2230,7 @@ gboolean RGMainWindow::onButtonPressed(GtkWidget *treeview,
 			       PKG_COLUMN, &pkg, 
 			       -1);
 	    gtk_tree_path_free(path);
-	    
+	    //FIXME: make it possible to do a popup operation on a list of pkgs
 	    treeviewPopupMenu(treeview, event, me, pkg);
 	    return TRUE; 
 	}	

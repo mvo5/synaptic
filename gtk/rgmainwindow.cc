@@ -401,6 +401,14 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // changelog is always visible
    gtk_widget_set_sensitive(_dl_changelogM, TRUE);
 
+   // set the "keep" menu icon according to the current status
+   GtkWidget *img;
+   if (!(flags & RPackage::FInstalled))
+      img = get_gtk_image("package-available");
+   else
+      img = get_gtk_image("package-installed-updated");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_keepM), img);
+
    setStatusText();
 }
 

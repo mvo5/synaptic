@@ -48,6 +48,7 @@ static char *ActOptions[] = {
 
 static char *DepOptions[] = {
     _("are Named"),
+    _("in Version"),
     _("in Description"),
     _("Depends on"), // depends, predepends etc
     _("Provides"), // provides and name

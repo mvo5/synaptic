@@ -125,6 +125,7 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
 // don't translate this, they are only used in the filter file
 char *RPatternPackageFilter::TypeName[] = {
     N_("Name"),
+    N_("Version"),
     N_("Description"),
     N_("Depends"),
     N_("Provides"),
@@ -140,6 +141,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
     //bool regexp = _config->FindB("Synaptic::UseRegexp", false);
     const char *name = pkg->name();
     //int nameLen = strlen(name);
+    const char *version = pkg->availableVersion();
     const char *descr = pkg->description();
     bool found = false;
     bool globalfound = false;
@@ -157,6 +159,13 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	  else if (regexec(&iter->reg, name, 0, NULL, 0) == 0)
 	    found = true;
 	  
+	} else if (iter->where == Version) {
+	  if (strncasecmp(version, iter->pattern.c_str(), 
+			  iter->pattern.length()) == 0)
+	    found = true;
+	  else if (regexec(&iter->reg, version, 0, NULL, 0) == 0)
+	    found = true;
+
 	} else if (iter->where == Description) {
 	  if (strstr(descr, iter->pattern.c_str()) != NULL)
 	    found = true;

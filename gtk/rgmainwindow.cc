@@ -340,29 +340,62 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
    //cout << "RGMainWindow::updatePackageInfo(): " << pkg << endl;
 
-   if (!pkg) {
-      gtk_widget_set_sensitive(_pkginfo, false);
-      gtk_text_buffer_set_text(_pkgCommonTextBuffer,
-                               _("No package is selected.\n"), -1);
-      
-      gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
-      gtk_widget_set_sensitive(_pkgHelpM, FALSE);
-   } else {
-      gtk_widget_set_sensitive(_pkginfo, true);
-      string descr = string(pkg->summary()) + "\n" + string(pkg->description());
-      setTextView("textview_pkgcommon", descr.c_str(), true);
+   // set everything to non-sensitive (for both pkg != NULL && pkg == NULL)
+   gtk_widget_set_sensitive(_keepM, FALSE);
+   gtk_widget_set_sensitive(_installM, FALSE);
+   gtk_widget_set_sensitive(_reinstallM, FALSE);
+   gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
+   gtk_widget_set_sensitive(_removeM, FALSE);
+   gtk_widget_set_sensitive(_purgeM, FALSE);
+   gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
+   gtk_widget_set_sensitive(_pkgHelpM, FALSE);
+   gtk_widget_set_sensitive(_pkginfo, false);
+   gtk_text_buffer_set_text(_pkgCommonTextBuffer,
+			    _("No package is selected.\n"), -1);
 
-#ifndef HAVE_RPM
-      int flags = pkg->getFlags();
-      if( flags & RPackage::FInstalled) {
- 	 gtk_widget_set_sensitive(_pkgHelpM, TRUE);
-	 if(pkg->dependsOn("debconf") || pkg->dependsOn("debconf-i18n"))
-	    gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
-	 else
-	    gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
-      }
-#endif      
-   }
+   // return if no pkg is selected
+   if (!pkg) 
+      return;
+   
+   // set global info
+   gtk_widget_set_sensitive(_pkginfo, true);
+   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
+   setTextView("textview_pkgcommon", descr.c_str(), true);
+
+   // set menu according to pkg status
+   int flags = pkg->getFlags();
+
+   // enable unmark if a action is performed with the pkg
+   if((flags & RPackage::FInstall)   || (flags & RPackage::FNewInstall) || 
+      (flags & RPackage::FReInstall) || (flags & RPackage::FUpgrade) || 
+      (flags & RPackage::FDowngrade) || (flags & RPackage::FRemove) || 
+      (flags & RPackage::FPurge))
+      gtk_widget_set_sensitive(_keepM, TRUE);
+   // enable install if outdated or not insalled
+   if(!(flags & RPackage::FInstalled))
+      gtk_widget_set_sensitive(_installM, TRUE);
+   // enable reinstall if installed and installable and not outdated
+   if(flags & RPackage::FInstalled 
+      && !(flags & RPackage::FNotInstallable)
+      && !(flags & RPackage::FOutdated))
+      gtk_widget_set_sensitive(_reinstallM, TRUE);
+   // enable upgrade is outdated
+   if(flags & RPackage::FOutdated)
+      gtk_widget_set_sensitive(_pkgupgradeM, TRUE);
+   // enable remove if package is installed
+   if(flags & RPackage::FInstalled)
+      gtk_widget_set_sensitive(_removeM, TRUE);
+   // enable purge if package is installed or has residual config
+   if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+      gtk_widget_set_sensitive(_purgeM, TRUE);
+   // enable help if package is installed
+   if( flags & RPackage::FInstalled)
+      gtk_widget_set_sensitive(_pkgHelpM, TRUE);
+   // enable debconf if package is installed and depends on debconf
+   if( flags & RPackage::FInstalled && (pkg->dependsOn("debconf") || 
+					pkg->dependsOn("debconf-i18n")))
+       gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
+
    setStatusText();
 }
 
@@ -2577,8 +2610,9 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       }
 
       // Re-install button
-      if (i == 2 && (flags & RPackage::FInstalled)
-          && !(flags & RPackage::FOutdated)) {
+      if (i == 2 && (flags & RPackage::FInstalled) 
+	  && !(flags & RPackage::FOutdated) 
+	  && !(flags & RPackage::FNotInstallable)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 

@@ -22,6 +22,7 @@
  */
 
 #include <iostream>
+#include "i18n.h"
 #include "config.h"
 #include "rgmainwindow.h"
 #include "synapticinterface.h"
@@ -34,7 +35,7 @@ using namespace std;
 SynapticInterface::SynapticInterface()
 {
     if (!RInitConfiguration("synaptic.conf")) {
-      cerr << "RInitConfiguration() failed\n";
+      cerr << _("RInitConfiguration() failed\n");
       exit(1);
     }
     _roptions->restore();

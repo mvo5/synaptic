@@ -1,6 +1,6 @@
 /* rwuserdialog.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -37,21 +37,21 @@ bool RWUserDialog::message(const char *msg,
 
     switch(dialog) {
 	case DialogInfo:
-	    title = "Info";
-	    button1 = "Ok";
+	    title = _("Info");
+	    button1 = _("Ok");
 	    break;
 	case DialogWarning:
-	    title = "Warning";
-	    button1 = "Ok";
+	    title = _("Warning");
+	    button1 = _("Ok");
 	    break;
 	case DialogError:
-	    title = "Error";
-	    button1 = "Ok";
+	    title = _("Error");
+	    button1 = _("Ok");
 	    break;
 	case DialogQuestion:
-	    title = "Question";
-	    button1 = "Yes";
-	    button2 = "No";
+	    title = _("Question");
+	    button1 = _("Yes");
+	    button2 = _("No");
 	    break;
     }
 
@@ -59,16 +59,16 @@ bool RWUserDialog::message(const char *msg,
 	case ButtonsDefault:
 	    break;
 	case ButtonsOk:
-	    button1 = "Ok";
+	    button1 = _("Ok");
 	    button2 = NULL;
 	    break;
 	case ButtonsOkCancel:
-	    button1 = "Ok";
-	    button2 = "Cancel";
+	    button1 = _("Ok");
+	    button2 = _("Cancel");
 	    break;
 	case ButtonsYesNo:
-	    button1 = "Yes";
-	    button2 = "No";
+	    button1 = _("Yes");
+	    button2 = _("No");
 	    break;
     }
 

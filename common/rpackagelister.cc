@@ -1,6 +1,6 @@
 /* rpackagelister.cc - package cache and list manipulation
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  *               2002 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -380,7 +380,7 @@ bool RPackageLister::openCache(bool reset)
 		}
 	    }
 	} else {
-	  cerr << "package " << I.Name() << " has no section?!" << endl;
+	  cerr << _("package ") << I.Name() << _(" has no section?!") << endl;
 	}
 
 	if (!sec.empty()) {
@@ -499,7 +499,7 @@ bool RPackageLister::fixBroken()
 bool RPackageLister::upgrade()
 {
     if (pkgAllUpgrade(*_cache->deps()) == false) {
-	return _error->Error("Internal Error, AllUpgrade broke stuff");
+	return _error->Error(_("Internal Error, AllUpgrade broke stuff"));
     }
     
     reapplyFilter();
@@ -512,7 +512,7 @@ bool RPackageLister::distUpgrade()
 {
     if (pkgDistUpgrade(*_cache->deps()) == false)
     {
-	cout << "dist upgrade Failed" << endl;
+	cout << _("dist upgrade Failed") << endl;
 	return false;
     }
     
@@ -1165,7 +1165,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	    }
 	    
 	    string errm = (*I)->ErrorText;
-	    string tmp = "Failed to fetch " + (*I)->DescURI() + "\n"
+	    string tmp = _("Failed to fetch ") + (*I)->DescURI() + "\n"
 		"  " + errm;
 	   
 	    serverError = getServerErrorMessage(errm);

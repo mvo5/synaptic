@@ -1,6 +1,6 @@
 /* rwsourceswindow.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -161,7 +161,7 @@ RWSourcesWindow::RWSourcesWindow(RWWindow *parent)
     WMMapSubwidgets(_topBox);
     WMMapSubwidgets(_win);
     
-    setTitle("Setup Package Repositories (nao ta funcionando ainda!)");
+    setTitle(_("Setup Package Repositories (still not working!)"));
     
     WMRealizeWidget(_win);
 }

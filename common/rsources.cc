@@ -85,7 +85,7 @@ bool SourcesList::ReadSources()
 				rec.Comment = buf;
 			} else {
 			  // syntax error on line
-			  return _error->Error(_("Synatax error in line %s"), buf);
+			  return _error->Error(_("Syntax error in line %s"), buf);
 			}
 		}
 
@@ -93,7 +93,7 @@ bool SourcesList::ReadSources()
 		if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size()-1] == '/') {
 			// make sure there's no section
 			if (ParseQuoteWord(p, Section) == true)
-			  return _error->Error(_("Synatax error in line %s"), buf);
+			  return _error->Error(_("Syntax error in line %s"), buf);
 
 			rec.Dist = SubstVar(rec.Dist, "$(ARCH)",
 				_config->Find("APT::Architecture"));

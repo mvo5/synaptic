@@ -1,6 +1,6 @@
 /* rwfetchprogress.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -116,7 +116,7 @@ RWFetchProgress::RWFetchProgress(RWWindow *wwin)
 
     WMButton *btn;
     btn = WMCreateCommandButton(hbox);
-//    WMSetButtonText(btn, "Stop");
+//    WMSetButtonText(btn, _("Stop"));
     WMSetButtonImagePosition(btn, WIPImageOnly);
     WMSetButtonImage(btn, WMCreatePixmapFromXPMData(WMWidgetScreen(_win),
 						    stop_xpm));
@@ -238,12 +238,12 @@ bool RWFetchProgress::Pulse(pkgAcquire *Owner)
 	    if (!I->Status.empty()) {
 		str = str + '[' + I->Status.c_str() + "] ";
 	    } else {
-		str = str + "[Working] ";
+		str = str + _("[Working] ");
 	    }
 	    continue;
 	}
 	
-	str = str + "[Receiving] ";
+	str = str + _("[Receiving] ");
 
 	if (I->TotalSize > 0)
 	    updateStatus(*I->CurrentItem, I->CurrentSize*100 / I->TotalSize);

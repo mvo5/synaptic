@@ -1,6 +1,6 @@
 /* rwconfigwindow.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -143,8 +143,7 @@ RWConfigWindow::RWConfigWindow(RWWindow *win)
         WMLabel *label;
 	label = WMCreateLabel(vbox);
 	WMSetLabelText(label, 
-		       "Packages are stored in the cache when downloaded."
-		       "");
+		       _("Packages are stored in the cache when downloaded."));
  * 
 	WMAddBoxSubview(vbox, WMWidgetView(label), False, True, 40, 0, 5);
  */
@@ -168,18 +167,18 @@ RWConfigWindow::RWConfigWindow(RWWindow *win)
 	WMAddBoxSubviewAtEnd(vbox, WMWidgetView(box), False, True, 20, 0, 0);
 
 	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Max. Cache Size:");
+	WMSetLabelText(label, _("Max. Cache Size:"));
 	WMAddBoxSubview(box, WMWidgetView(label), False, True, 120, 0, 0);
 	
 	_sizeT = WMCreateTextField(box);
 	WMAddBoxSubview(box, WMWidgetView(_sizeT), True, True, 80, 0, 2);
 	
 	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Mbytes");
+	WMSetLabelText(label, _("Mbytes"));
 	WMAddBoxSubview(box, WMWidgetView(label), False, True, 50, 0, 5);
 
 	button = WMCreateCommandButton(box);
-	WMSetButtonText(button, "Clear Cache");
+	WMSetButtonText(button, _("Clear Cache"));
 	WMAddBoxSubview(box, WMWidgetView(button), False, True, 100, 0, 0);
 	WMMapSubwidgets(box);
 
@@ -189,14 +188,14 @@ RWConfigWindow::RWConfigWindow(RWWindow *win)
 	WMAddBoxSubviewAtEnd(vbox, WMWidgetView(box), False, True, 20, 0, 5);
 
 	label = WMCreateLabel(box);
-	WMSetLabelText(label, "Cache Directory:");
+	WMSetLabelText(label, _("Cache Directory:"));
 	WMAddBoxSubview(box, WMWidgetView(label), False, True, 120, 0, 0);
 	
 	_pathT = WMCreateTextField(box);
 	WMAddBoxSubview(box, WMWidgetView(_pathT), True, True, 80, 0, 5);
 	
 	button = WMCreateCommandButton(box);
-	WMSetButtonText(button, "Browse...");
+	WMSetButtonText(button, _("Browse..."));
 	WMAddBoxSubview(box, WMWidgetView(button), False, True, 70, 0, 0);
 
   */  

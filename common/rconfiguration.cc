@@ -1,6 +1,6 @@
 /* rconfiguration.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -75,20 +75,20 @@ static void dumpToFile(const Configuration::Item *Top, ostream &out,
 
 bool RWriteConfigFile(Configuration &Conf)
 {
-    const Configuration::Item *Raptor;
+    const Configuration::Item *Synaptic;
 
     ofstream cfile(ConfigFilePath.c_str(), ios::out);
     if (!cfile != 0)
-	return _error->Errno("ofstream", "couldn't open %s for writing",
+	return _error->Errno("ofstream", _("couldn't open %s for writing"),
 			     ConfigFilePath.c_str());
     
-    Raptor = Conf.Tree(0);
-    while (Raptor) {
-	if (Raptor->Tag == "Synaptic")
+    Synaptic = Conf.Tree(0);
+    while (Synaptic) {
+	if (Synaptic->Tag == "Synaptic")
 	    break;
-	Raptor = Raptor->Next;
+	Synaptic = Synaptic->Next;
     }
-    dumpToFile(Raptor, cfile, "");
+    dumpToFile(Synaptic, cfile, "");
 
     cfile.close();
 

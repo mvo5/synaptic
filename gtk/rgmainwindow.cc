@@ -1,6 +1,6 @@
 /* rgmainwindow.cc - main window of the app
  * 
- * Copyright (c) 2001 Alfredo K. Kojima
+ * Copyright (c) 2001-2003 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -145,7 +145,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	if (!ok && !strcmp(depType,"Recommends")) {
 	  i = me->_lister->findPackage((char*)depPkg);
 	  if(i<0) {
-	    cerr << depPkg << " not found" << endl;
+	    cerr << depPkg << _(" not found") << endl;
 	    continue;
 	  }
 	  newpkg=me->_lister->getElement(i);
@@ -164,7 +164,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	if (!ok && !strcmp(depType,"Suggests")) {
 	  i = me->_lister->findPackage((char*)depPkg);
 	  if(i<0) {
-	    cerr << depPkg << " not found" << endl;
+	    cerr << depPkg << _(" not found") << endl;
 	    continue;
 	  }
 	  newpkg=me->_lister->getElement(i);
@@ -184,7 +184,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
       gtk_clist_get_text(GTK_CLIST(me->_recList), row, 0, &recstr);
       //cout << "selected row: " << row  << " is " << recstr << endl;
       if(!recstr) { 
-	cerr <<"gtk_clist_get_text() returned no text" << endl;
+	cerr << _("gtk_clist_get_text() returned no text") << endl;
 	selection=g_list_next(selection);
 	continue;
       }
@@ -196,7 +196,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
       }
       i = me->_lister->findPackage((char*)depPkg);
       if(i<0) {
-	cerr << depPkg << " not found" << endl;
+	cerr << depPkg << _(" not found") << endl;
 	selection=g_list_next(selection);
 	continue;
       }
@@ -211,7 +211,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
     }
     break;
   default:
-    cerr << "clickedRecInstall called with invalid parm: " << data << endl;
+    cerr << _("clickedRecInstall called with invalid parm: ") << data << endl;
   }
 
   me->_lister->setFilter(filter);
@@ -227,7 +227,7 @@ void RGMainWindow::clickedDepList(GtkWidget *self, int row, int col,
     assert(me);
     gchar *text=NULL;
     text = (gchar*)gtk_clist_get_row_data(GTK_CLIST(me->_depList), row);
-    //cout << "clickedDepList: " << "row: " << row << " " << text << endl;
+    //cout << _("clickedDepList: ") << "row: " << row << " " << text << endl;
     assert(text);
     gtk_label_set_text(GTK_LABEL(me->_depInfoL), text);
 }
@@ -952,7 +952,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	
      case RPackage::MDowngrade:
 	// not handled yet
-	puts("OH SHIT!!");
+	puts(_("OH SHIT!!"));
 	break;
 	
      case RPackage::MRemove:
@@ -1208,8 +1208,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     appendTag(bufPtr, bufSize, _("Section"), utf8(pkg->section()));
     appendTag(bufPtr, bufSize, _("Priority"), utf8(pkg->priority()));
     /* XXX Why this is commented out?
-    appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
-    appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
+    appendTag(bufPtr, bufSize, _("Maintainer"), utf8(pkg->maintainer()));
+    appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
      */
     
     // installed version info

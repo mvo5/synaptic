@@ -1,6 +1,6 @@
 /* rpackagefilter.cc - filters for package listing
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  *               2002 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -503,12 +503,13 @@ void RFilter::reset()
 void RFilter::setName(string s)
 {
   if(s.empty()) {
-    cerr << "empty filter name!? should _never_ happen, please report" << endl;
+    cerr << _("empty filter name!? should _never_ happen, please report") <<
+	    endl;
     name ="?";
   } else {
     if(s.length() > 55) {
-      cerr << "filter name is longer than 55 chars!? Will be truncated." 
-	   << "Please report" << endl;
+      cerr << _("filter name is longer than 55 chars!? Will be truncated." 
+	        "Please report") << endl;
       s.resize(55);
       name = s;
     } else {

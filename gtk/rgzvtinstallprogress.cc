@@ -186,7 +186,7 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
   int pid = zvt_term_forkpty (ZVT_TERM(_term), FALSE);
   switch(pid) {
   case -1:
-    cerr << "can't fork children, so I die" << endl;
+    cerr << _("can't fork children, so I die") << endl;
     exit(1);
     break;
   case 0: 

@@ -1,6 +1,6 @@
 /* rwsummarywindow.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -276,7 +276,7 @@ RWSummaryWindow::RWSummaryWindow(RWWindow *wwin, RPackageLister *lister)
 	    lines++;
 	}
 	if (left <= 0) {
-	    cout << "BUFFER OVERFLOW DETECTED, ABORTING" << endl;
+	    cout << _("BUFFER OVERFLOW DETECTED, ABORTING") << endl;
 	    abort();
 	}
 	

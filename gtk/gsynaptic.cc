@@ -1,6 +1,6 @@
 /* gsynaptic.cc - main() 
  * 
- * Copyright (c) 2001 Alfredo K. Kojima
+ * Copyright (c) 2001-2003 Alfredo K. Kojima
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -53,12 +53,12 @@ bool ShowHelp(CommandLine &CmdL)
 #else
     _config->Find("Synaptic::MyName", PACKAGE)+" "VERSION
 #endif
-    "\n\n"
-    "Usage: synaptic [options] \n"
-    "-h   This help text \n"
-    "-f=? Give a alternative filter file\n" 
-    "-i=? Start with the initialFilter with the number given\n" 
-    "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n";
+    "\n\n" <<
+    _("Usage: synaptic [options] \n") <<
+    _("-h   This help text \n") <<
+    _("-f=? Give a alternative filter file\n") <<
+    _("-i=? Start with the initialFilter with the number given\n") <<
+    _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n");
     
     exit(0);
 }

@@ -1,6 +1,6 @@
 /* rwmainwindow.cc - main window of the app
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  *               2002 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -697,7 +697,7 @@ bool RWMainWindow::showErrors()
     else
 	type = _("Warning");
     
-    panel = WMCreateGenericPanel(scr, _win, type, "OK", NULL);
+    panel = WMCreateGenericPanel(scr, _win, type, _("OK"), NULL);
 
     sbox = WMCreateScrollView(panel->content);
     WMMapWidget(sbox);
@@ -722,7 +722,7 @@ bool RWMainWindow::showErrors()
 	_error->PopMessage(tmp);
        
         // ignore some stupid error messages
-	if (tmp == "Tried to dequeue a fetching object")
+	if (tmp == _("Tried to dequeue a fetching object"))
 	   continue;
 
 	if (message.empty())
@@ -938,7 +938,7 @@ void RWMainWindow::updatePackageStatus(RPackage *pkg)
 	
      case RPackage::MDowngrade:
 	// not handled yet
-	puts("OH SHIT!!");
+	puts(_("OH SHIT!!"));
 	break;
 	
      case RPackage::MRemove:
@@ -1196,8 +1196,8 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
     appendTag(bufPtr, bufSize, _("Section"), pkg->section());
     appendTag(bufPtr, bufSize, _("Priority"), pkg->priority());
     /*XXX
-    appendTag(bufPtr, bufSize, "Maintainer", pkg->maintainer().c_str());
-    appendTag(bufPtr, bufSize, "Vendor", pkg->vendor());
+    appendTag(bufPtr, bufSize, _("Maintainer"), pkg->maintainer().c_str());
+    appendTag(bufPtr, bufSize, _("Vendor"), pkg->vendor());
      */
     
     // installed version info
@@ -1911,12 +1911,12 @@ void RWMainWindow::buildInterface(WMScreen *scr)
 	WMAddBoxSubview(vbox, WMWidgetView(hbox), False, False, 22, 0, 0);
 
 	button = WMCreateCommandButton(hbox);
-	WMSetButtonText(button, "Unselect All");
+	WMSetButtonText(button, _("Unselect All"));
 	WMAddBoxSubview(hbox, WMWidgetView(button), False, True, 100, 0, 10);
 
 	WMPopUpButton *advCmd = WMCreatePopUpButton(hbox);
 	WMSetPopUpButtonPullsDown(advCmd, True);
-	WMSetPopUpButtonText(advCmd, "Advanced Dynamic Turbo Filters");
+	WMSetPopUpButtonText(advCmd, _("Advanced Dynamic Turbo Filters"));
 	WMAddBoxSubview(hbox, WMWidgetView(advCmd), True, True, 40, 0, 0);
 
 	WMMapSubwidgets(hbox);

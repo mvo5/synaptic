@@ -1,6 +1,6 @@
 /* rcdscanner.cc
  *
- * Copyright (c) 2000, 2001 Conectiva S/A
+ * Copyright (c) 2000-2003 Conectiva S/A
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -300,14 +300,14 @@ bool RCDScanner::start(RCDScanProgress *progress)
         progress->update(_("Mounting CD-ROM..."), STEP_MOUNT);
 
         if (MountCdrom(CDROM) == false)
-	    return _error->Error("Failed to mount the cdrom.");
+	    return _error->Error(_("Failed to mount the cdrom."));
         _cdromMounted = true;
     }
     
     progress->update(_("Identifying disc..."), STEP_IDENT);
 
     if (!IdentCdrom(CDROM, _cdId)) {
-	return _error->Error("Couldn't identify disc.");
+	return _error->Error(_("Couldn't identify disc."));
     }
     
     progress->update(_("Scanning disc..."), STEP_SCAN);
@@ -338,7 +338,8 @@ bool RCDScanner::start(RCDScanProgress *progress)
 	    UnmountCdrom(CDROM);
 	    _cdromMounted = false;
 	}
-	return _error->Error("Unable to locate any package files. Perhaps this is not an APT enabled disc.");
+	return _error->Error(_("Unable to locate any package files. "
+			       "Perhaps this is not an APT enabled disc."));
     }
     
     _scannedOk = true;
@@ -536,7 +537,7 @@ bool DropRepeats(vector<string> &List,const char *Name)
       if (stat((List[I]).c_str(),&Buf) != 0 &&
 	  stat((List[I] + Name).c_str(),&Buf) != 0 &&
 	  stat((List[I] + Name + ".gz").c_str(),&Buf) != 0)
-	 _error->Errno("stat","Failed to stat %s%s",List[I].c_str(),
+	 _error->Errno("stat", _("Failed to stat %s%s"), List[I].c_str(),
 		       Name);
       Inodes[I] = Buf.st_ino;
    }
@@ -642,7 +643,7 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
         CD += '/';   
 
     if (chdir(CD.c_str()) != 0)
-        return _error->Errno("chdir","Unable to change to %s",CD.c_str());
+        return _error->Errno("chdir", _("Unable to change to %s"), CD.c_str());
 
     // Look for a .disk subdirectory
     struct stat Buf;
@@ -684,7 +685,7 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
    
     DIR *D = opendir(".");
     if (D == 0)
-        return _error->Errno("opendir","Unable to read %s",CD.c_str());
+        return _error->Errno("opendir", _("Unable to read %s"), CD.c_str());
    
     // Run over the directory
     for (struct dirent *Dir = readdir(D); Dir != 0; Dir = readdir(D))
@@ -746,7 +747,8 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
 	    break;
 
         if (chdir(CD.c_str()) != 0)
-	    return _error->Errno("chdir","Unable to change to %s",CD.c_str());
+	    return _error->Errno("chdir", _("Unable to change to %s"),
+				 CD.c_str());
     }
 
     closedir(D);

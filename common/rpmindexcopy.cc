@@ -1,4 +1,5 @@
 
+#include "i18n.h"
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>
 #include <apt-pkg/strutl.h>
@@ -71,7 +72,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
    {
       struct stat Buf;
       if (stat((*I).c_str(),&Buf) != 0)
-	 return _error->Errno("stat","Stat failed for %s",
+	 return _error->Errno("stat", _("Stat failed for %s"),
 			      (*I).c_str());
       TotalSize += Buf.st_size;
    }
@@ -108,14 +109,14 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 // Get a temp file
 	 FILE *tmp = tmpfile();
 	 if (tmp == 0)
-	    return _error->Errno("tmpfile","Unable to create a tmp file");
+	    return _error->Errno("tmpfile", _("Unable to create a tmp file"));
 	 Pkg.Fd(dup(fileno(tmp)));
 	 fclose(tmp);
 	 
 	 // Fork bzip2
 	 int Process = fork();
 	 if (Process < 0)
-	    return _error->Errno("fork","Couldn't fork bzip2");
+	    return _error->Errno("fork", _("Couldn't fork bzip2"));
 	 
 	 // The child
 	 if (Process == 0)
@@ -135,7 +136,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 
 	 // Wait for gzip to finish
 	 if (ExecWait(Process,_config->Find("Dir::Bin::bzip2","bzip2").c_str(),false) == false)
-	    return _error->Error("bzip2 failed, perhaps the disk is full.");
+	    return _error->Error(_("bzip2 failed, perhaps the disk is full."));
 	 
 	 Pkg.Seek(0);
       }
@@ -171,7 +172,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 string FinalF = _config->FindDir("Dir::State::lists");
 	 FinalF += URItoFileName(S);
 	 if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
-	    return _error->Errno("rename","Failed to rename");
+	    return _error->Errno("rename", _("Failed to rename"));
 
 	 // Two release steps, one for global, one for component
 	 string release = "release";
@@ -212,7 +213,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	    FinalF = _config->FindDir("Dir::State::lists");
 	    FinalF += URItoFileName(S);
 	    if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
-	       return _error->Errno("rename","Failed to rename");
+	       return _error->Errno("rename", _("Failed to rename"));
 	 }
       }
       

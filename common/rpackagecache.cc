@@ -1,6 +1,6 @@
 /* rpackagecache.cc - package cache wrapper
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
@@ -86,7 +86,7 @@ bool RPackageCache::open(OpProgress &progress)
 
     // Check that the system is OK
     if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
-	return _error->Error("Internal Error, non-zero counts");
+	return _error->Error(_("Internal Error, non-zero counts"));
 
     _locked = true;
 

@@ -11,6 +11,7 @@
 									/*}}}*/
 // Include Files							/*{{{*/
 #include "indexcopy.h"
+#include "i18n.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>
@@ -47,7 +48,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       struct stat Buf;
       if (stat(string(*I + GetFileName()).c_str(),&Buf) != 0 &&
 	  stat(string(*I + GetFileName() + ".gz").c_str(),&Buf) != 0)
-	 return _error->Errno("stat","Stat failed for %s",
+	 return _error->Errno("stat", _("Stat failed for %s"),
 			      string(*I + GetFileName()).c_str());
       TotalSize += Buf.st_size;
    }	
@@ -78,14 +79,14 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 // Get a temp file
 	 FILE *tmp = tmpfile();
 	 if (tmp == 0)
-	    return _error->Errno("tmpfile","Unable to create a tmp file");
+	    return _error->Errno("tmpfile", _("Unable to create a tmp file"));
 	 Pkg.Fd(dup(fileno(tmp)));
 	 fclose(tmp);
 	 
 	 // Fork gzip
 	 int Process = fork();
 	 if (Process < 0)
-	    return _error->Errno("fork","Couldn't fork gzip");
+	    return _error->Errno("fork", _("Couldn't fork gzip"));
 	 
 	 // The child
 	 if (Process == 0)
@@ -106,7 +107,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 
 	 // Wait for gzip to finish
 	 if (ExecWait(Process,_config->Find("Dir::bin::gzip","gzip").c_str(),false) == false)
-	    return _error->Error("gzip failed, perhaps the disk is full.");
+	    return _error->Error(_("gzip failed, perhaps the disk is full."));
 	 
 	 Pkg.Seek(0);
       }
@@ -127,7 +128,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       if (_error->PendingError() == true)
 	 return false;
       if (TargetFl == 0)
-	 return _error->Errno("fdopen","Failed to reopen fd");
+	 return _error->Errno("fdopen", _("Failed to reopen fd"));
       
       // Setup the progress meter
       Progress.OverallProgress(CurrentSize,TotalSize,FileSize,
@@ -165,7 +166,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 		   ReconstructChop(Chop,*I,File) == false)
 	       {
 		  if (Debug == true)
-		     clog << "Missed: " << File << endl;
+		     clog << _("Missed: ") << File << endl;
 		  NotFound++;
 		  continue;
 	       }
@@ -192,7 +193,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 		   stat(string(CDROM + Prefix + File).c_str(),&Buf) != 0)
 	       {
 		  if (Debug == true)
-		     clog << "Missed(2): " << OrigFile << endl;
+		     clog << _("Missed(2): ") << OrigFile << endl;
 		  NotFound++;
 		  continue;
 	       }	       
@@ -202,7 +203,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	    if ((unsigned)Buf.st_size != Size)
 	    {
 	       if (Debug == true)
-		  clog << "Wrong Size: " << File << endl;
+		  clog << _("Wrong Size: ") << File << endl;
 	       WrongSize++;
 	       continue;
 	    }
@@ -220,7 +221,8 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       fclose(TargetFl);
 
       if (Debug == true)
-	 cout << " Processed by using Prefix '" << Prefix << "' and chop " << Chop << endl;
+	 cout << _(" Processed by using Prefix '") << Prefix <<
+		 _("' and chop ") << Chop << endl;
 	 
       if (_config->FindB("APT::CDROM::NoAct",false) == false)
       {
@@ -229,7 +231,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 string FinalF = _config->FindDir("Dir::State::lists");
 	 FinalF += URItoFileName(S);
 	 if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
-	    return _error->Errno("rename","Failed to rename");
+	    return _error->Errno("rename", _("Failed to rename"));
 
 	 // Copy the release file
 	 snprintf(S,sizeof(S),"cdrom:[%s]/%sRelease",Name.c_str(),
@@ -256,7 +258,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 FinalF = _config->FindDir("Dir::State::lists");
 	 FinalF += URItoFileName(S);
 	 if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
-	    return _error->Errno("rename","Failed to rename");
+	    return _error->Errno("rename", _("Failed to rename"));
       }
       
       /* Mangle the source to be in the proper notation with
@@ -270,20 +272,21 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
    Progress.Done();
    
    // Some stats
-   cout << "Wrote " << Packages << " records" ;
+   cout << _("Wrote ") << Packages << _(" records") ;
    if (NotFound != 0)
-      cout << " with " << NotFound << " missing files";
+      cout << _(" with ") << NotFound << _(" missing files");
    if (NotFound != 0 && WrongSize != 0)
-      cout << " and"; 
+      cout << _(" and"); 
    if (WrongSize != 0)
-      cout << " with " << WrongSize << " mismatched files";
+      cout << _(" with ") << WrongSize << _(" mismatched files");
    cout << '.' << endl;
    
    if (Packages == 0)
-      _error->Warning("No valid records were found.");
+      _error->Warning(_("No valid records were found."));
 
    if (NotFound + WrongSize > 10)
-      cout << "Alot of entries were discarded, something may be wrong." << endl;
+      cout << _("Alot of entries were discarded, something may be wrong.") <<
+	      endl;
 
    return true;
 }
@@ -323,7 +326,7 @@ bool IndexCopy::ReconstructPrefix(string &Prefix,string OrigPath,string CD,
       if (stat(string(CD + MyPrefix + File).c_str(),&Buf) != 0)
       {
 	 if (Debug == true)
-	    cout << "Failed, " << CD + MyPrefix + File << endl;
+	    cout << _("Failed, ") << CD + MyPrefix + File << endl;
 	 if (GrabFirst(OrigPath,MyPrefix,Depth++) == true)
 	    continue;
 	 
@@ -458,7 +461,7 @@ bool PackageCopy::GetFile(string &File,unsigned long &Size)
    File = Section->FindS("Filename");
    Size = Section->FindI("Size");
    if (File.empty() || Size == 0)
-      return _error->Error("Cannot find filename or size tag");
+      return _error->Error(_("Cannot find filename or size tag"));
    return true;
 }
 									/*}}}*/
@@ -499,7 +502,7 @@ bool SourceCopy::GetFile(string &File,unsigned long &Size)
    if (ParseQuoteWord(C,MD5Hash) == false ||
        ParseQuoteWord(C,sSize) == false ||
        ParseQuoteWord(C,File) == false)
-      return _error->Error("Error parsing file record");
+      return _error->Error(_("Error parsing file record"));
    
    // Parse the size and append the directory
    Size = atoi(sSize.c_str());

@@ -1,6 +1,6 @@
 /* rpackage.cc - wrapper for accessing package information
  * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ * Copyright (c) 2000-2003 Conectiva S/A 
  *               2002 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
@@ -712,7 +712,7 @@ RPackage::UpdateImportance RPackage::updateImportance()
 
 const char *RPackage::updateSummary()
 {
-    return "Test\nAdvisory\nYour computer will blow if you dont update.";
+    return "Test\nAdvisory\nYour computer will blow if you don't update.";
     return NULL;
 }
 

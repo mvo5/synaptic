@@ -22,6 +22,7 @@
 
 #include <apt-pkg/error.h>
 
+#include "i18n.h"
 #include "rguserdialog.h"
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
@@ -113,7 +114,7 @@ bool RGUserDialog::showErrors()
 	_error->PopMessage(tmp);
        
         // ignore some stupid error messages
-	if (tmp == "Tried to dequeue a fetching object")
+	if (tmp == _("Tried to dequeue a fetching object"))
 	   continue;
 
 	if (message.empty())

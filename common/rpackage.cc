@@ -506,9 +506,10 @@ bool RPackage::enumAvailDeps(const char *&type, const char *&what,
 			bool &satisfied)
 {
     pkgCache::VerIterator ver;
-    //pkgDepCache::StateCache &state = (*_depcache)[*_package];
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
 
-    ver = _package->VersionList();
+    //ver = _package->VersionList();
+    ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
     if (ver.end())
 	return false;
@@ -645,9 +646,10 @@ bool RPackage::enumDeps(const char *&type, const char *&what,
 	ver = (*_depcache)[*_package].InstVerIter(*_depcache);
 
 	if (ver.end())
-	    ver = _package->VersionList();
+	    ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
     } else {
-	ver = _package->VersionList();
+	//ver = _package->VersionList();
+	ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
     }
     if (ver.end())
 	return false;
@@ -800,9 +802,20 @@ void RPackage::setKeep()
 }
 
 
-void RPackage::setInstall()
+// if it's only a single pkg, use a different problem resolver
+// we don't do this for large number of pkgs, because it's a performance
+// killer and will not work reliable (because of Protect()
+void RPackage::setInstall(bool singlePkg)
 {
     _depcache->MarkInstall(*_package, true);
+
+    if(singlePkg) {
+	pkgProblemResolver Fix(_depcache);
+	Fix.Clear(*_package);
+	Fix.Protect(*_package);
+	Fix.Resolve(true);
+    }
+
     if (_notify)
 	_lister->notifyChange(this);
 }
@@ -988,6 +1001,9 @@ bool RPackage::setVersion(const char* VerTag)
     //	   Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
    
     _depcache->SetCandidateVersion(Ver);
+    if (_notify)
+	_lister->notifyChange(this);
+
     return true;
 }
 

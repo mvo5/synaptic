@@ -318,7 +318,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // this does the actual pkgAction work (install, remove, upgrade)
    static void doPkgAction(RGMainWindow *me, RGPkgAction action);
-   void pkgInstallHelper(RPackage *pkg, bool fixBroken=true);
+   void pkgInstallHelper(RPackage *pkg, bool fixBroken=true, bool singlePkg=false);
    void pkgRemoveHelper(RPackage *pkg, bool purge=false, bool withDeps=false);
    void pkgKeepHelper(RPackage *pkg);
 

@@ -85,7 +85,7 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
     static GtkTreeIter iter;
 
     for(unsigned int i=0;i<List.size();i++) {
-// 	cout << "RCacheActorPkgList::run()" << endl;
+ 	//cout << "RCacheActorPkgList::run()" << endl;
 	// fill in iter
 	iter.user_data = List[i];
 	iter.user_data2 = GINT_TO_POINTER(i);
@@ -97,25 +97,26 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
 				   path, &iter);
 	gtk_tree_path_free(path);
     }
+    
 }
 
 void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 {
     static GtkTreeIter iter;
     unsigned int j;
-//     cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
+    cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
 
-//     cout << "action: " << pkgEvent << endl;
-//     cout << "listsize: " << List.size() << endl;
+    cout << "action: " << pkgEvent << endl;
+    cout << "listsize: " << List.size() << endl;
 
     //mvo: FIXME those nested loops suck as they are slow
     //     BUT it shouldn't be too bad as list is usually very small (<=10)
-    for(unsigned int i=0;i<List.size();i++) {
+    for(int i=(int)List.size()-1;i>=0;i--) {
 	if(pkgEvent == PKG_REMOVED) {
 	    for(j=0;j<_lastDisplayList.size();j++)
 		if(_lastDisplayList[j] == List[i])
 		    break;
-// 	    cout << "removed at pos: " << j << endl;
+	    //cout << "removed at pos: " << j << endl;
 	    GtkTreePath *path = gtk_tree_path_new();
 	    gtk_tree_path_append_index(path,j);
 	    gtk_tree_model_row_deleted(GTK_TREE_MODEL(_pkgList), path);
@@ -125,7 +126,7 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 	    for(j=0;j<_lister->count();j++)
 		if(_lister->getElement(j) == List[i])
 		    break;
-// 	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
+ 	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
 	    GtkTreePath *path = gtk_tree_path_new();
 	    gtk_tree_path_append_index(path,j);
 	    

@@ -5,25 +5,39 @@ noinst_LIBRARIES = libsynaptic.a
 INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@ \
 	$(LIBTAGCOLL_CFLAGS)
 
-EXTRA_DIST = *.h
-
 libsynaptic_a_SOURCES =\
 	rconfiguration.cc\
+	rconfiguration.h\
 	rinstallprogress.cc\
+	rinstallprogress.h\
 	rpackage.cc\
+	rpackage.h\
 	rpackagecache.cc\
+	rpackagecache.h\
 	rpackagefilter.cc\
+	rpackagefilter.h\
 	rpackagelister.cc\
+	rpackagelister.h\
 	rcdscanner.cc\
+	rcdscanner.h\
 	indexcopy.cc\
+	indexcopy.h\
 	rpmindexcopy.cc \
+	rpmindexcopy.h \
 	raptoptions.cc \
+	raptoptions.h\
 	rsources.cc \
+	rsources.h \
 	rcacheactor.cc \
+	rcacheactor.h \
 	rpackagelistactor.cc \
+	rpackagelistactor.h \
 	rtagcollbuilder.cc \
+	rtagcollbuilder.h \
 	i18n.h \
 	tree.hh \
-	rtagcollfilter.cc 
+	rtagcollfilter.cc \
+	rtagcollfilter.h \
+	ruserdialog.h
 
 

@@ -194,7 +194,7 @@ gtk_tag_tree_new (RPackageLister *lister,
 static void
 gtk_tag_tree_finalize (GObject *object)
 {
-    GtkTagTree *pkg_tree = GTK_TAG_TREE (object);
+    //GtkTagTree *pkg_tree = GTK_TAG_TREE (object);
 
 
     /* must chain up */
@@ -327,7 +327,6 @@ gtk_tag_tree_get_path (GtkTreeModel *tree_model,
 #endif
 
   GtkTreePath *retval;
-  gint i = 0;
 
   retval = gtk_tree_path_new ();
 
@@ -532,7 +531,8 @@ gtk_tag_tree_iter_next (GtkTreeModel  *tree_model,
   }
   else
   {
-      if (item < cur->getItems().size() - 1)
+      int size = cur->getItems().size() - 1;
+      if (item < size)
 	  iter->user_data3 = GINT_TO_POINTER(item + 1);
       else
 	  return FALSE;
@@ -611,7 +611,6 @@ gtk_tag_tree_iter_has_child (GtkTreeModel *tree_model,
 #endif    
 
   HierarchyNode<int>* cur = (HierarchyNode<int>*)iter->user_data;
-  int child = GPOINTER_TO_INT(iter->user_data2);
   int item = GPOINTER_TO_INT(iter->user_data3);
 
   g_assert(cur != 0);
@@ -635,7 +634,6 @@ gtk_tag_tree_iter_n_children (GtkTreeModel *tree_model,
 #endif
 
   HierarchyNode<int>* cur = (HierarchyNode<int>*)iter->user_data;
-  int child = GPOINTER_TO_INT(iter->user_data2);
   int item = GPOINTER_TO_INT(iter->user_data3);
 
   if(item != -1)

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-25 15:12+0200\n"
+"POT-Creation-Date: 2004-06-26 10:54+0200\n"
 "PO-Revision-Date: 2004-01-29 00:55+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -461,8 +461,8 @@ msgstr "مصطفّة للإزالة"
 msgid "Marked for complete removal"
 msgstr "مصطفّة للإزالة"
 
-#: common/rpackage.cc:1315 common/rpackageview.cc:107
-#: gtk/window_filters.glade.h:25
+#: common/rpackage.cc:1315 common/rpackageview.cc:93
+#: gtk/window_filters.glade.h:28
 msgid "Not installed"
 msgstr "غير مُثبّت"
 
@@ -470,12 +470,12 @@ msgstr "غير مُثبّت"
 msgid "Not installed (locked)"
 msgstr "غير مثبّتة (مقفلة)"
 
-#: common/rpackage.cc:1317 common/rpackageview.cc:102
+#: common/rpackage.cc:1317 common/rpackageview.cc:91
 #: gtk/window_filters.glade.h:20
 msgid "Installed"
 msgstr "مُثبّت"
 
-#: common/rpackage.cc:1318 common/rpackageview.cc:100
+#: common/rpackage.cc:1318 common/rpackageview.cc:107
 #, fuzzy
 msgid "Installed (upgradable)"
 msgstr "مُثبّت وقابل للتحديث"
@@ -484,7 +484,7 @@ msgstr "مُثبّت وقابل للتحديث"
 msgid "Installed (locked to the current version)"
 msgstr "مثبّتة (مقفلة على النسخة الحالية)"
 
-#: common/rpackage.cc:1320 common/rpackageview.cc:375
+#: common/rpackage.cc:1320 common/rpackageview.cc:379
 #: gtk/window_filters.glade.h:6
 msgid "Broken"
 msgstr "معطوب"
@@ -514,7 +514,7 @@ msgstr "خطأ داخلي، non-zero counts"
 msgid "Name"
 msgstr "الإسم"
 
-#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:876
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:884
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
@@ -522,7 +522,7 @@ msgid "Description"
 msgstr "الوصف"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:69
+#: gtk/window_filters.glade.h:25 gtk/rgfiltermanager.h:69
 msgid "Maintainer"
 msgstr "المشرف"
 
@@ -561,7 +561,7 @@ msgid "ReverseDepends"
 msgstr "يعتمد رجوعاً"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:31
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
@@ -707,46 +707,46 @@ msgstr "مصفّي البحث"
 msgid "Filter"
 msgstr "مصفّيات"
 
-#: common/rpackageview.cc:91 gtk/window_filters.glade.h:23
+#: common/rpackageview.cc:98 gtk/window_filters.glade.h:26
 msgid "New in repository"
 msgstr "جديد في المستودع"
 
-#: common/rpackageview.cc:93 gtk/window_filters.glade.h:42
+#: common/rpackageview.cc:100 gtk/window_filters.glade.h:41
 msgid "Pinned"
 msgstr ""
 
-#: common/rpackageview.cc:97
+#: common/rpackageview.cc:104
 #, fuzzy
 msgid "Installed (obsolete)"
 msgstr "مُثبّت وقابل للتحديث"
 
-#: common/rpackageview.cc:105
+#: common/rpackageview.cc:110
 msgid "Not installed (residual config)"
 msgstr "غير مثبّت (إعداد متبقي)"
 
-#: common/rpackageview.cc:353
+#: common/rpackageview.cc:357
 #, fuzzy
 msgid "Search Filter"
 msgstr "مصفّي البحث"
 
-#: common/rpackageview.cc:361
+#: common/rpackageview.cc:365
 msgid "Tasks"
 msgstr "مهامّ"
 
-#: common/rpackageview.cc:367
+#: common/rpackageview.cc:371
 msgid "Reduced View"
 msgstr "العرض الملخّص"
 
-#: common/rpackageview.cc:384 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:299
+#: common/rpackageview.cc:388 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:299
 #, fuzzy
 msgid "Marked Changes"
 msgstr "التغييرات المصطفّة"
 
-#: common/rpackageview.cc:393
+#: common/rpackageview.cc:397
 msgid "Pkg with Debconf"
 msgstr "استخدم Pkg مع Debconf"
 
-#: common/rpackageview.cc:400 gtk/window_filters.glade.h:53
+#: common/rpackageview.cc:404 gtk/window_filters.glade.h:53
 #, fuzzy
 msgid "Upgradable (upstream)"
 msgstr "حدّث النظام"
@@ -755,13 +755,8 @@ msgstr "حدّث النظام"
 #: gtk/dialog_quit.glade.h:1
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"large\">أخرج وأتجاهل التغييرات المصطفّة؟</span>"
-
-#: gtk/dialog_quit.glade.h:2
-#, fuzzy
-msgid ""
+"<b><big>Quit and discard marked changes?</big></b>\n"
+"\n"
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
 msgstr ""
@@ -779,56 +774,43 @@ msgid "_Force Version"
 msgstr "الإصدارة"
 
 #: gtk/dialog_upgrade.glade.h:1
-msgid ""
-"<b>Note:</b> If you are upgrading to a new major operating system release "
-"you have to choose 'Smart Upgrade' here."
-msgstr ""
-"<b>ملاحظة:</b> إن كنت تحدث نظامك إلى إصدار نظام تشغيل عام حديث علي أن تختار "
-"`التحديث الذكي` هنا."
-
-#: gtk/dialog_upgrade.glade.h:2
-msgid ""
-"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
-"afterwards."
-msgstr ""
-
-#: gtk/dialog_upgrade.glade.h:3
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
+"<b><big>Mark upgrades in a smart way?</big></b>\n"
+"\n"
+"The default upgrade method skips upgrades that would introduce conflicts or "
+"would require to install additional packages.\n"
+"\n"
+"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
+"all dependencies of upgrades in a smart way.\n"
+"\n"
+"<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
+"afterwards."
 msgstr ""
-"<span weight=\"bold\" size=\"large\">هل تريد تمكين التحديث الذكي (dist-"
-"upgrade)؟</span>"
+"طريقة التحديث الافتراضية تتخطّى التحديثات التي تسببّ تضارباً أو تتطلّب تثبيت حزم "
+"جديدة.\n"
+"\n"
+"تحديث التوزيعة يحاول حلّ التضاربات واستيفاء كل الاعتماديّات للتحديثات بطريقة "
+"ذكيّة.\n"
+"\n"
+"<b>ملاحظة:</b>إن كنت تقوم بالتحديث إلى إصدار نظام تشغيل عام جديد عليك "
+"بالإجابة بنعم هنا.\n"
+"\n"
+"يمكن تغيير هذا التّصرّف من خلال التفضيلات لاحقاً."
 
-#: gtk/dialog_upgrade.glade.h:4 gtk/window_preferences.glade.h:35
+#: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:36
 msgid "Default Upgrade"
 msgstr "التحديث الافتراضي"
 
-#: gtk/dialog_upgrade.glade.h:5
+#: gtk/dialog_upgrade.glade.h:9
 msgid "Remember the answer for further upgrades"
 msgstr "تذكّر الرّد للتحديثات الإضافية."
 
-#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:79
+#: gtk/dialog_upgrade.glade.h:10 gtk/window_preferences.glade.h:80
 msgid "Smart Upgrade"
 msgstr "التحديث الذكي"
 
-#: gtk/dialog_upgrade.glade.h:7
-msgid ""
-"The default upgrade method skips upgrades that introduce conflicts or "
-"require new packages to be installed."
-msgstr ""
-"طريقة التحديث الافتراضية تتخطى التحديثات التي تسبب تضاربات أو تتطلب تثبيت "
-"حزم جديدة."
-
-#: gtk/dialog_upgrade.glade.h:8
-#, fuzzy
-msgid ""
-"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
-"fulfill all dependencies of upgrades in a smart way."
-msgstr ""
-"يحاول dist-upgrade حلّ التضاربات وتحقيق كل المعتمَدات للتحديث بطريقة ذكية."
-
-#: gtk/dialog_upgrade.glade.h:9
+#: gtk/dialog_upgrade.glade.h:11
 msgid "This behavior can be changed in the preferences later."
 msgstr "يمكن تغيير هذا التصرّف في التفضيلات لاحقاً."
 
@@ -955,7 +937,7 @@ msgstr "للتثبيت"
 msgid "To be kept"
 msgstr "للإبقاء"
 
-#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1567
+#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1576
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "حدث خطأ خلال حفظ الإعدادات."
@@ -972,7 +954,7 @@ msgstr "اختيار اللّون"
 msgid "ignore"
 msgstr "تجاهل"
 
-#: gtk/rgpreferenceswindow.cc:794 gtk/window_preferences.glade.h:74
+#: gtk/rgpreferenceswindow.cc:794 gtk/window_preferences.glade.h:75
 msgid "Preferences"
 msgstr "تفضيلات"
 
@@ -981,7 +963,7 @@ msgstr "تفضيلات"
 msgid "Downloading Files"
 msgstr "جاري تنزيل الملفات..."
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:856
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:864
 msgid "Size"
 msgstr "الحجم"
 
@@ -1094,102 +1076,102 @@ msgstr "أمن"
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:358 gtk/window_details.glade.h:21
+#: gtk/rgmainwindow.cc:359 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "لا حزمة محدّدة.\n"
 
-#: gtk/rgmainwindow.cc:450
+#: gtk/rgmainwindow.cc:454
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:452
+#: gtk/rgmainwindow.cc:456
 msgid ""
 "The package manager always selects the best version available. If you force "
 "a differnet version from the default one, errors in the dependency handling "
 "can occur."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:786
+#: gtk/rgmainwindow.cc:794
 msgid "Package"
 msgstr "حزمة"
 
-#: gtk/rgmainwindow.cc:811
+#: gtk/rgmainwindow.cc:819
 msgid "Installed Version"
 msgstr "الإصدار المُثبّت"
 
-#: gtk/rgmainwindow.cc:830
+#: gtk/rgmainwindow.cc:838
 msgid "Latest Version"
 msgstr "الإصدار الأحدث"
 
-#: gtk/rgmainwindow.cc:1129
+#: gtk/rgmainwindow.cc:1137
 #, fuzzy
 msgid "Refresh the list of known packages"
 msgstr "صفِّ لائحة الحزم المعروضة"
 
-#: gtk/rgmainwindow.cc:1133
+#: gtk/rgmainwindow.cc:1141
 #, fuzzy
 msgid "Mark all possible upgrades"
 msgstr "صفّ كل التحديثات الممكنة"
 
-#: gtk/rgmainwindow.cc:1137 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1145 gtk/window_summary.glade.h:5
 #, fuzzy
 msgid "Apply all marked changes"
 msgstr "افتح التغييرات"
 
-#: gtk/rgmainwindow.cc:1303
+#: gtk/rgmainwindow.cc:1312
 msgid "Unmark"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1311
+#: gtk/rgmainwindow.cc:1320
 #, fuzzy
 msgid "Mark for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1319
+#: gtk/rgmainwindow.cc:1328
 #, fuzzy
 msgid "Mark for Reinstallation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1328
+#: gtk/rgmainwindow.cc:1337
 #, fuzzy
 msgid "Mark for Upgrade"
 msgstr "مصطفّة للتحديث"
 
-#: gtk/rgmainwindow.cc:1336
+#: gtk/rgmainwindow.cc:1345
 #, fuzzy
 msgid "Mark for Removal"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/rgmainwindow.cc:1345
+#: gtk/rgmainwindow.cc:1354
 #, fuzzy
 msgid "Mark for Complete Removal"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/rgmainwindow.cc:1358
+#: gtk/rgmainwindow.cc:1367
 msgid "Remove Including Orphaned Dependencies"
 msgstr "أزل بما فيه المعتمَدات اليتيمة"
 
-#: gtk/rgmainwindow.cc:1370
+#: gtk/rgmainwindow.cc:1379
 msgid "Hold Current Version"
 msgstr "أبق الإصدار الحالي"
 
-#: gtk/rgmainwindow.cc:1379 gtk/window_main.glade.h:15
-#: gtk/window_filters.glade.h:43
+#: gtk/rgmainwindow.cc:1388 gtk/window_main.glade.h:15
+#: gtk/window_filters.glade.h:42
 msgid "Properties"
 msgstr "خصائص"
 
-#: gtk/rgmainwindow.cc:1391
+#: gtk/rgmainwindow.cc:1400
 #, fuzzy
 msgid "Mark Recommended for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1395
+#: gtk/rgmainwindow.cc:1404
 #, fuzzy
 msgid "Mark Suggested for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1458
+#: gtk/rgmainwindow.cc:1467
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1197,7 +1179,7 @@ msgstr ""
 "إزالة هذه الحزمة يجعل النظام غير قابل للاستخدام.\n"
 "هل أنت متأكد من عمل ذلك؟"
 
-#: gtk/rgmainwindow.cc:1497
+#: gtk/rgmainwindow.cc:1506
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1206,7 +1188,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبتة, %i معطوبة. %i للتثبيت/للتحديث, %i للإزالة; %s سوف "
 "يفرّغ"
 
-#: gtk/rgmainwindow.cc:1503
+#: gtk/rgmainwindow.cc:1512
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1215,7 +1197,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبّتة, %i معطوبة. %i للتثبيت/التحديث, %iللإزالة; %s سوف "
 "تستخدم"
 
-#: gtk/rgmainwindow.cc:1509
+#: gtk/rgmainwindow.cc:1518
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1224,7 +1206,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبّتة, %i معطوبة. %i للتثبيت/التحديث, %iللإزالة; %s سوف "
 "تستخدم"
 
-#: gtk/rgmainwindow.cc:1584
+#: gtk/rgmainwindow.cc:1593
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1243,50 +1225,50 @@ msgstr[1] ""
 "\n"
 "رجاءً حاول إصلاحها بزيارة مصفّي \"معطوب\""
 
-#: gtk/rgmainwindow.cc:1823
+#: gtk/rgmainwindow.cc:1832
 msgid "Do you want to add another CD-ROM?"
 msgstr "هل تريد إضافة قرص مدمج آخر؟"
 
-#: gtk/rgmainwindow.cc:1846 gtk/rgmainwindow.cc:2431 gtk/rgmainwindow.cc:2510
-#: gtk/rgmainwindow.cc:2670
+#: gtk/rgmainwindow.cc:1855 gtk/rgmainwindow.cc:2440 gtk/rgmainwindow.cc:2519
+#: gtk/rgmainwindow.cc:2679
 #, c-format
 msgid "Can't read %s"
 msgstr "لا يمكن قراءة %s"
 
-#: gtk/rgmainwindow.cc:1862
+#: gtk/rgmainwindow.cc:1871
 msgid "Open changes"
 msgstr "افتح التغييرات"
 
-#: gtk/rgmainwindow.cc:1893 gtk/rgmainwindow.cc:1956 gtk/rgmainwindow.cc:2349
-#: gtk/rgmainwindow.cc:2483 gtk/rgmainwindow.cc:2647
+#: gtk/rgmainwindow.cc:1902 gtk/rgmainwindow.cc:1965 gtk/rgmainwindow.cc:2358
+#: gtk/rgmainwindow.cc:2492 gtk/rgmainwindow.cc:2656
 #, c-format
 msgid "Can't write %s"
 msgstr "لا يمكن كتابة %s"
 
-#: gtk/rgmainwindow.cc:1912
+#: gtk/rgmainwindow.cc:1921
 msgid "Save changes"
 msgstr "احفظ التغييرات"
 
-#: gtk/rgmainwindow.cc:1929
+#: gtk/rgmainwindow.cc:1938
 msgid "Save full state, not only changes"
 msgstr "احفظ الحالة بالكامل، ليس التغييرات فقط"
 
-#: gtk/rgmainwindow.cc:2048
+#: gtk/rgmainwindow.cc:2057
 #, fuzzy
 msgid "Searching..."
 msgstr "التحضير..."
 
-#: gtk/rgmainwindow.cc:2060
+#: gtk/rgmainwindow.cc:2069
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "الحزم المتضاربة"
 
-#: gtk/rgmainwindow.cc:2090
+#: gtk/rgmainwindow.cc:2099
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "بدء نظام المساعدة..."
 
-#: gtk/rgmainwindow.cc:2107
+#: gtk/rgmainwindow.cc:2116
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1305,85 +1287,85 @@ msgstr ""
 "بشكل بديل يمكنك فتح صفحة man باستخدام 'man synaptic' من سطر الأوامر أو عرض "
 "نسخة html في مجلّد 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2246
+#: gtk/rgmainwindow.cc:2255
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2252
+#: gtk/rgmainwindow.cc:2261
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "جاري بدء تشغيل dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2267
+#: gtk/rgmainwindow.cc:2276
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "جاري بدء مساعدة الحزمة..."
 
-#: gtk/rgmainwindow.cc:2279
+#: gtk/rgmainwindow.cc:2288
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2316
+#: gtk/rgmainwindow.cc:2325
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2335
+#: gtk/rgmainwindow.cc:2344
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "جاري عمل التغييرات المختارة... قد يستغرق هذا بعض الوقت"
 
-#: gtk/rgmainwindow.cc:2339
+#: gtk/rgmainwindow.cc:2348
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "جاري تنزيل الملفات..."
 
-#: gtk/rgmainwindow.cc:2414
+#: gtk/rgmainwindow.cc:2423
 msgid "Do you want to quit Synaptic?"
 msgstr "هل تريد الخروج من Synaptic؟"
 
-#: gtk/rgmainwindow.cc:2470
+#: gtk/rgmainwindow.cc:2479
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "جاري تنزيل الملفات..."
 
-#: gtk/rgmainwindow.cc:2472
+#: gtk/rgmainwindow.cc:2481
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "تنظيف لوائح الحزم..."
 
-#: gtk/rgmainwindow.cc:2535
+#: gtk/rgmainwindow.cc:2544
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "لم يمكن تصحيح الاعتماديّات"
 
-#: gtk/rgmainwindow.cc:2537
+#: gtk/rgmainwindow.cc:2546
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2553
+#: gtk/rgmainwindow.cc:2562
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2594
+#: gtk/rgmainwindow.cc:2603
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "سيتم تحديث الحزمة."
 
-#: gtk/rgmainwindow.cc:2606
+#: gtk/rgmainwindow.cc:2615
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "صفّ كل التحديثات الممكنة"
 
-#: gtk/rgmainwindow.cc:2608
+#: gtk/rgmainwindow.cc:2617
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1586,7 +1568,7 @@ msgstr "أزل"
 msgid "Cancel"
 msgstr "ألغ"
 
-#: gtk/rgfindwindow.cc:107 gtk/window_main.glade.h:4
+#: gtk/rgfindwindow.cc:128 gtk/window_main.glade.h:4
 msgid "Find"
 msgstr "إبجث"
 
@@ -1930,7 +1912,7 @@ msgstr "إبحث عن:"
 msgid "Look in:"
 msgstr ""
 
-#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:43
 #: gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "الحزم المُزوّدة"
@@ -2058,54 +2040,59 @@ msgstr ""
 "بالتغييرات بعناية.</span>"
 
 #: gtk/window_preferences.glade.h:21
+#, fuzzy
+msgid "A_pplication Font"
+msgstr "استخدم خطاً مخصصاً للتطبيق"
+
+#: gtk/window_preferences.glade.h:22
 msgid "Allow regular expressions in searches and filters"
 msgstr "اسمح بالصيغ النظامية في البحث والمصفّيات"
 
-#: gtk/window_preferences.glade.h:22
+#: gtk/window_preferences.glade.h:23
 msgid "Always Ask"
 msgstr "اسأل دائماً"
 
-#: gtk/window_preferences.glade.h:23
+#: gtk/window_preferences.glade.h:24
 #, fuzzy
 msgid "Apply changes in a terminal window"
 msgstr "نفّذ التغييرات في نافذة طرفيّة"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "أكّد على الأعمال التي تؤثر على الحزم الأخرى أيضاً"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 #, fuzzy
 msgid "Ask to quit after the changes have been applied successfully"
 msgstr "اسأل الخروج بعد تنفيذ التغييرات بنجاح"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid "Broken:"
 msgstr "معطوب:"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Clicking on the status icon marks the most likely action"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Color"
 msgstr "لوّن"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:30
 msgid "Color packages by their status"
 msgstr "لوّن الحزم بحسب وضعها"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 #, fuzzy
 msgid "Colors"
 msgstr "لوّن"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 #, fuzzy
 msgid "Columns and Fonts"
 msgstr "الأعمدة و الألوان"
 
-#: gtk/window_preferences.glade.h:32
+#: gtk/window_preferences.glade.h:33
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2113,235 +2100,231 @@ msgstr ""
 "لائحة مقسّمة بفواصل بأسماء المضيفين والمجالات التي لن يتم الاتصال بها عبر "
 "البروكسي (مثلاً localhost، 192.168.1.231، .net)"
 
-#: gtk/window_preferences.glade.h:33
+#: gtk/window_preferences.glade.h:34
 msgid "Completely"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:34
+#: gtk/window_preferences.glade.h:35
 msgid "Consider recommended packages as dependencies"
 msgstr "اعتبر الحزم الموصاة كمعتمَدات"
 
-#: gtk/window_preferences.glade.h:36
+#: gtk/window_preferences.glade.h:37
 msgid "Default archive: "
 msgstr "الأرشيف الافتراضي:"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:38
 msgid "Delete downloaded packages after installation"
 msgstr "احذف الحزم المنزّلة بعد تثبيتها"
 
-#: gtk/window_preferences.glade.h:38
+#: gtk/window_preferences.glade.h:39
 msgid "Delete packages which are no longer available only"
 msgstr "احذف الحزمات التي لم تعد متوفّرة فقط"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:40
 #, fuzzy
 msgid "Description:"
 msgstr "الوصف"
 
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:41
 msgid "Direct connection to the internet"
 msgstr "اتصال مباشر بالانترنت"
 
-#: gtk/window_preferences.glade.h:41 gtk/window_details.glade.h:19
+#: gtk/window_preferences.glade.h:42 gtk/window_details.glade.h:19
 msgid "Expert"
 msgstr "خبير"
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:43
 msgid "FTP proxy: "
 msgstr "بروكسي FTP:"
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:44
 msgid "General"
 msgstr "عام"
 
-#: gtk/window_preferences.glade.h:44
+#: gtk/window_preferences.glade.h:45
 msgid "HTTP proxy: "
 msgstr "بروكسي HTTP:"
 
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:46
 #, fuzzy
 msgid "Hide"
 msgstr "_أخفِ"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:47
 msgid "IP address or host name of the ftp proxy server"
 msgstr "عنوان IP أو اسم المضيف لخادم بروكسي ftp"
 
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:48
 msgid "IP address or host name of the http proxy server"
 msgstr "عنوان IP أو اسم المضيف لخادم بروكسي http"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:49
 msgid "Installed (locked):"
 msgstr "مثبّتة (مقفلة):"
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:50
 #, fuzzy
 msgid "Installed size:"
 msgstr "حجم التثبيت"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:51
 #, fuzzy
 msgid "Installed version:"
 msgstr "الإصدار المثبّت"
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:52
 msgid "Installed:"
 msgstr "مثبّتة:"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:53
 #, fuzzy
 msgid "Keep Configuration"
 msgstr "ضمّن الإعداد"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:54
 #, fuzzy
 msgid "Latest version:"
 msgstr "الإصدار الأحدث"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:55
 msgid "Leave all downloaded packages in the cache"
 msgstr "اترك كل الحزم المنزّلة في الذاكرة"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:56
 msgid "Manual proxy configuration"
 msgstr "إعداد بروكسي يدوياً"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:57
 #, fuzzy
 msgid "Marked for complete removal:"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:58
 #, fuzzy
 msgid "Marked for downgrade:"
 msgstr "مصطفّة للاستبدال بأقدم"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:59
 #, fuzzy
 msgid "Marked for installation:"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:60
 #, fuzzy
 msgid "Marked for reinstallation:"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:61
 #, fuzzy
 msgid "Marked for removal:"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:62
 #, fuzzy
 msgid "Marked for upgrade:"
 msgstr "مصطفّة للتحديث"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:63
 #, fuzzy
 msgid "Move D_own"
 msgstr "تحرّك للأ_سفل"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:64
 msgid "Move _Up"
 msgstr "تحرّك للأ_على"
 
-#: gtk/window_preferences.glade.h:64
+#: gtk/window_preferences.glade.h:65
 msgid "Name:"
 msgstr "الاسم:"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:66
 msgid "Network"
 msgstr "الشبكة"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:67
 #, fuzzy
 msgid "New in respository:"
 msgstr "جديد في المستودع"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:68
 msgid "No proxy for: "
 msgstr "لا بروكسي لـ:"
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:69
 #, fuzzy
 msgid "Not installed (locked):"
 msgstr "غير مثبّتة (مقفلة)"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:70
 #, fuzzy
 msgid "Not installed:"
 msgstr "غير مُثبّت"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:71
 msgid "Number of undo operations:"
 msgstr "عدَد عمليّات التراجع:"
 
-#: gtk/window_preferences.glade.h:71
+#: gtk/window_preferences.glade.h:72
 msgid "Port number of the http proxy server"
 msgstr "رقم المنفذ لخادم بروكسي http"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:73
 msgid "Port numer of the ftp proxy server"
 msgstr "رقم المنفذ لخادم بروكسي ftp"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:74
 msgid "Port: "
 msgstr "المَنْفذ: "
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:76
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "الصّيغ النظاميّة هي طريقة متقدّمة لمطابقة النص"
 
-#: gtk/window_preferences.glade.h:76
+#: gtk/window_preferences.glade.h:77
 msgid "Removal of packages: "
 msgstr "إزالة الحزم: "
 
-#: gtk/window_preferences.glade.h:77
+#: gtk/window_preferences.glade.h:78
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr "حدّد الإصدار الافتراضي إن كان أكثر من واحد محدداً في ملف sources.list"
 
-#: gtk/window_preferences.glade.h:78
+#: gtk/window_preferences.glade.h:79
 #, fuzzy
 msgid "Show"
 msgstr "أظهر:"
 
-#: gtk/window_preferences.glade.h:80
+#: gtk/window_preferences.glade.h:81
 #, fuzzy
 msgid "Status:"
 msgstr "الحالة"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:82
 #, fuzzy
 msgid "System upgrade:"
 msgstr "تحديث النظام الافتراضي:"
 
-#: gtk/window_preferences.glade.h:82
+#: gtk/window_preferences.glade.h:83
 msgid "Temporary Files"
 msgstr "الملفات المؤقتة"
 
-#: gtk/window_preferences.glade.h:83
+#: gtk/window_preferences.glade.h:84
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr "موقع العمود من اليسار إلى اليمين. القيمة -1 تخفي العمود"
 
-#: gtk/window_preferences.glade.h:84
+#: gtk/window_preferences.glade.h:85
 #, fuzzy
 msgid "Upgradable:"
 msgstr "قابل للتحديث"
 
-#: gtk/window_preferences.glade.h:85
+#: gtk/window_preferences.glade.h:86
 msgid "Use custom application font"
 msgstr "استخدم خطاً مخصصاً للتطبيق"
 
-#: gtk/window_preferences.glade.h:86
+#: gtk/window_preferences.glade.h:87
 msgid "Use custom terminal font"
 msgstr "استخدم خط شاشة طرفية مخصّص"
-
-#: gtk/window_preferences.glade.h:87
-msgid "_Default Font"
-msgstr "الخط الا_فتراضي"
 
 #: gtk/window_preferences.glade.h:88
 #, fuzzy
@@ -2480,84 +2463,86 @@ msgid "Includes"
 msgstr "تشمل"
 
 #: gtk/window_filters.glade.h:21
+msgid "Installed packages that are up-to-date"
+msgstr ""
+
+#: gtk/window_filters.glade.h:22
+#, fuzzy
+msgid "Installed packages that are upgradable"
+msgstr "مُثبّت وقابل للتحديث"
+
+#: gtk/window_filters.glade.h:23
+#, fuzzy
+msgid "Installed packages that are upgradable to a later upstream version"
+msgstr "_ثبّت الإصدار الأحدث"
+
+#: gtk/window_filters.glade.h:24
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "الحزم المكتبية التي لا تلزم بعد الآن (تتطلّب deborphan)."
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:27
 #, fuzzy
 msgid "Not installable"
 msgstr "غير مُثبّت"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:29
+#, fuzzy
+msgid "Not installed packages"
+msgstr "غير مثبّتة (مقفلة)"
+
+#: gtk/window_filters.glade.h:30
 #, fuzzy
 msgid "Not marked"
 msgstr "غير مُثبّت"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:32
 msgid "Orphaned"
 msgstr "مُيتّمة"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:33
 msgid "Package Name"
 msgstr "اسم الحزمة"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:34
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "الحُزم الجديدة في المستودع منذ آخر \"تحديث\"."
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:35
 msgid "Packages that are not available in any repository"
 msgstr "الحزم التي ليست متوفّرة في أي مستودع"
 
-#: gtk/window_filters.glade.h:32
-#, fuzzy
-msgid ""
-"Packages that have been installed and a later upstream version ist available"
-msgstr "الحزم التي ثُبّتت ولها إصدار أحدث متوفّر"
-
-#: gtk/window_filters.glade.h:33
-msgid "Packages that have been installed and a later version is available"
-msgstr "الحزم التي ثُبّتت ولها إصدار أحدث متوفّر"
-
-#: gtk/window_filters.glade.h:34
-msgid "Packages that have been installed and are up to date"
-msgstr "الحزم التي ثُبّتت وهي مُحدّثة"
-
-#: gtk/window_filters.glade.h:35
-msgid "Packages that have been removed except their configuration files"
-msgstr "الحزم التي أُزيلت عدا ملفات إعدادها"
-
 #: gtk/window_filters.glade.h:36
-msgid "Packages that have not been installed"
-msgstr "الحزم التي لم تثبّت"
-
-#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "الحزم التي ستثبّت أو تحدّث"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be removed"
 msgstr "الحزم التي ستزال"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will never be upgraded"
 msgstr "الحُزم التي لن تحدّث أبداً"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:39
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "الحزم التي ستُستبقى"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:40
 msgid "Packages with broken dependencies"
 msgstr "حزم ذات معتمَدات غير مستوفاة"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:44 gtk/rgfiltermanager.h:74
 #, fuzzy
 msgid "Recommendations"
 msgstr "مُفضّل"
+
+#: gtk/window_filters.glade.h:45
+#, fuzzy
+msgid "Removed packages that have left configuration files on the system"
+msgstr "أعدّ الحزمة باستخدام نظام إعداد debconf"
 
 #: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
@@ -2721,13 +2706,9 @@ msgstr ""
 "تحتوي بعض الحزم التالية معتمَدات غير مستوفاة:\n"
 
 #: gtk/dialog_changelog.glade.h:1
-msgid "<b>Full changelog of the latest version:</b>"
-msgstr ""
-
-#: gtk/dialog_changelog.glade.h:2
 #, fuzzy
-msgid "Changelog"
-msgstr "ألغ"
+msgid "Complete changelog of the latest version:"
+msgstr "المُعتمَدات للنسخة الأحدث"
 
 #: gtk/dialog_update_failed.glade.h:1
 msgid ""
@@ -2879,6 +2860,67 @@ msgid "<i>Can't close while running</i>"
 msgstr "<i>لا يمكن الإغلاق خلال التنفيذ</i>"
 
 #, fuzzy
+#~ msgid "Changelog"
+#~ msgstr "ألغ"
+
+#~ msgid ""
+#~ "<b>Note:</b> If you are upgrading to a new major operating system release "
+#~ "you have to choose 'Smart Upgrade' here."
+#~ msgstr ""
+#~ "<b>ملاحظة:</b> إن كنت تحدث نظامك إلى إصدار نظام تشغيل عام حديث علي أن "
+#~ "تختار `التحديث الذكي` هنا."
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"large\">هل تريد تمكين التحديث الذكي (dist-"
+#~ "upgrade)؟</span>"
+
+#~ msgid ""
+#~ "The default upgrade method skips upgrades that introduce conflicts or "
+#~ "require new packages to be installed."
+#~ msgstr ""
+#~ "طريقة التحديث الافتراضية تتخطى التحديثات التي تسبب تضاربات أو تتطلب تثبيت "
+#~ "حزم جديدة."
+
+#, fuzzy
+#~ msgid ""
+#~ "The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+#~ "fulfill all dependencies of upgrades in a smart way."
+#~ msgstr ""
+#~ "يحاول dist-upgrade حلّ التضاربات وتحقيق كل المعتمَدات للتحديث بطريقة ذكية."
+
+#, fuzzy
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</"
+#~ "span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"large\">أخرج وأتجاهل التغييرات المصطفّة؟</"
+#~ "span>"
+
+#~ msgid "_Default Font"
+#~ msgstr "الخط الا_فتراضي"
+
+#, fuzzy
+#~ msgid ""
+#~ "Packages that have been installed and a later upstream version ist "
+#~ "available"
+#~ msgstr "الحزم التي ثُبّتت ولها إصدار أحدث متوفّر"
+
+#~ msgid "Packages that have been installed and a later version is available"
+#~ msgstr "الحزم التي ثُبّتت ولها إصدار أحدث متوفّر"
+
+#~ msgid "Packages that have been installed and are up to date"
+#~ msgstr "الحزم التي ثُبّتت وهي مُحدّثة"
+
+#~ msgid "Packages that have been removed except their configuration files"
+#~ msgstr "الحزم التي أُزيلت عدا ملفات إعدادها"
+
+#~ msgid "Packages that have not been installed"
+#~ msgstr "الحزم التي لم تثبّت"
+
+#, fuzzy
 #~ msgid "_Lock Current Status and Version"
 #~ msgstr "أبق الإصدار الحالي"
 
@@ -2887,13 +2929,6 @@ msgstr "<i>لا يمكن الإغلاق خلال التنفيذ</i>"
 
 #~ msgid "New in archive"
 #~ msgstr "جديد في الأرشيف"
-
-#, fuzzy
-#~ msgid "Upgradable to a later upstream version"
-#~ msgstr "_ثبّت الإصدار الأحدث"
-
-#~ msgid "Installed and upgradable"
-#~ msgstr "مُثبّت وقابل للتحديث"
 
 #~ msgid "Not (no longer) installable"
 #~ msgstr "ليس (لم يعد) قابلاً للتثبيت"
@@ -3291,9 +3326,6 @@ msgstr "<i>لا يمكن الإغلاق خلال التنفيذ</i>"
 #~ msgid "Commit (and download if necessary) selected changes on packages"
 #~ msgstr "قُمْ (و نزّل عند الحاجة) بالتغييرات المحدّدة على الحزم"
 
-#~ msgid "Configure the package using the debconf configuration system"
-#~ msgstr "أعدّ الحزمة باستخدام نظام إعداد debconf"
-
 #~ msgid "Deinstall the package"
 #~ msgstr "أزل تثبيت الحزمة"
 
@@ -3436,29 +3468,6 @@ msgstr "<i>لا يمكن الإغلاق خلال التنفيذ</i>"
 
 #~ msgid "Distribution Upgrade"
 #~ msgstr "تحديث التوزيعة"
-
-#~ msgid ""
-#~ "The default upgrade method skips upgrades that introduce conflicts or "
-#~ "require new packages to be installed.\n"
-#~ "\n"
-#~ "Dist-upgrade attempts to resolve conflicts and to fulfill all "
-#~ "dependencies of upgrades in a smart way.\n"
-#~ "\n"
-#~ "<b>Note:</b> If you are upgrading to a new major operating system release "
-#~ "you have to say 'yes' here.\n"
-#~ "\n"
-#~ "This behavior can be changed in the preferences later."
-#~ msgstr ""
-#~ "طريقة التحديث الافتراضية تتخطّى التحديثات التي تسببّ تضارباً أو تتطلّب تثبيت "
-#~ "حزم جديدة.\n"
-#~ "\n"
-#~ "تحديث التوزيعة يحاول حلّ التضاربات واستيفاء كل الاعتماديّات للتحديثات "
-#~ "بطريقة ذكيّة.\n"
-#~ "\n"
-#~ "<b>ملاحظة:</b>إن كنت تقوم بالتحديث إلى إصدار نظام تشغيل عام جديد عليك "
-#~ "بالإجابة بنعم هنا.\n"
-#~ "\n"
-#~ "يمكن تغيير هذا التّصرّف من خلال التفضيلات لاحقاً."
 
 #, fuzzy
 #~ msgid "%d package is set on hold\n"

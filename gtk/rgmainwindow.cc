@@ -293,7 +293,7 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
  
     // TODO: check for more help systems and fall back to mozilla
     if(FileExists("/usr/bin/yelp"))
-	system("yelp man:synaptic.8 &");
+	system("yelp ghelp:synaptic &");
     else
 	me->_userDialog->warning(_("Unable to start yelp"));
 }

@@ -495,8 +495,10 @@ void RGPreferencesWindow::readGeneral()
    gtk_widget_set_sensitive(GTK_WIDGET(_optionUseTerminal), false);
    _config->Set("Synaptic::UseTerminal", false);
 #else
-#ifndef HAVE_RPM
+#ifndef HAVE_RPM 
+#ifndef WITH_DPKG_STATUSFD
    UseTerminal = true;
+#endif
 #endif
 #endif
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionUseTerminal),

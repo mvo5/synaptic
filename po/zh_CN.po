@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-11 10:27+0100\n"
+"POT-Creation-Date: 2005-01-13 23:44+0100\n"
 "PO-Revision-Date: 2004-08-06 06:50+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -483,7 +483,7 @@ msgstr "未安装(锁定的)"
 msgid "Installed"
 msgstr "已安装"
 
-#: common/rpackage.cc:1286 common/rpackageview.cc:138 gtk/gsynaptic.cc:299
+#: common/rpackage.cc:1286 common/rpackageview.cc:138 gtk/gsynaptic.cc:295
 msgid "Installed (upgradable)"
 msgstr "已安装(可升级)"
 
@@ -516,7 +516,7 @@ msgstr "无法解析或打开软件包列表或状态文件。"
 msgid "Internal Error, non-zero counts"
 msgstr "内部错误，非零计数"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:956
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:984
 #: gtk/window_find.glade.h:8
 msgid "Name"
 msgstr "名称"
@@ -810,7 +810,7 @@ msgstr "任务"
 msgid "Reduced View"
 msgstr "简化视图"
 
-#: common/rpackageview.cc:453 gtk/gsynaptic.cc:294 gtk/rgsummarywindow.cc:355
+#: common/rpackageview.cc:453 gtk/gsynaptic.cc:290 gtk/rgsummarywindow.cc:355
 msgid "Marked Changes"
 msgstr "已标记的变更"
 
@@ -920,31 +920,26 @@ msgid "--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n"
 msgstr "--upgrade-mode  调用刷新、升级并显示变更\n"
 
 #: gtk/gsynaptic.cc:73
+msgid "--update-at-startup  Call \"reload\" on startup\n"
+msgstr ""
+
+#: gtk/gsynaptic.cc:74
 msgid "--non-interactive Never prompt for user input\n"
 msgstr "--non-interactive 对用户的输入不给提示\n"
 
-#: gtk/gsynaptic.cc:74
+#: gtk/gsynaptic.cc:75
 msgid "--task-window Open with task window\n"
 msgstr "--task-window 使用任务窗口打开\n"
 
 #: gtk/gsynaptic.cc:76
-#, fuzzy
-msgid "--non-interactive Try to run in complete automatic mode\n"
-msgstr "--non-interactive 对用户的输入不给提示\n"
-
-#: gtk/gsynaptic.cc:77
-msgid "--update-at-startup  Call \"reload\" on startup\n"
-msgstr ""
-
-#: gtk/gsynaptic.cc:79
 msgid "--add-cdrom Add a cdrom at startup\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:214
+#: gtk/gsynaptic.cc:210
 msgid "You must run this program as the root user."
 msgstr "您必须以 root 用户身份运行此程序。"
 
-#: gtk/gsynaptic.cc:252
+#: gtk/gsynaptic.cc:248
 msgid "Synaptic Package Manager "
 msgstr "新立得包管理器(翻译：开源软件国际化·简体中文组)"
 
@@ -1000,82 +995,82 @@ msgstr "将会重新安装的软件包"
 msgid "To be kept"
 msgstr "将会维持原状的软件包"
 
-#: gtk/rgdebinstallprogress.cc:54 gtk/rgdebinstallprogress.cc:65
+#: gtk/rgdebinstallprogress.cc:57 gtk/rgdebinstallprogress.cc:68
 #, fuzzy, c-format
 msgid "Preparing for removal %s"
 msgstr "已标记要删除的软件包"
 
-#: gtk/rgdebinstallprogress.cc:55
+#: gtk/rgdebinstallprogress.cc:58
 #, c-format
 msgid "Removing %s"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:56 gtk/rgdebinstallprogress.cc:67
+#: gtk/rgdebinstallprogress.cc:59 gtk/rgdebinstallprogress.cc:70
 #, fuzzy, c-format
 msgid "Removed %s"
 msgstr "删除"
 
-#: gtk/rgdebinstallprogress.cc:66 gtk/rgdebinstallprogress.cc:75
+#: gtk/rgdebinstallprogress.cc:69 gtk/rgdebinstallprogress.cc:78
 #, c-format
 msgid "Removing with config %s"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:68 gtk/rgdebinstallprogress.cc:76
+#: gtk/rgdebinstallprogress.cc:71 gtk/rgdebinstallprogress.cc:79
 #, fuzzy, c-format
 msgid "Removed with config %s"
 msgstr "删除依赖此软件包的软件包"
 
-#: gtk/rgdebinstallprogress.cc:85 gtk/rgdebinstallprogress.cc:98
-#: gtk/rgdebinstallprogress.cc:113
+#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:101
+#: gtk/rgdebinstallprogress.cc:116
 #, fuzzy, c-format
 msgid "Preparing %s"
 msgstr "准备中..."
 
-#: gtk/rgdebinstallprogress.cc:86 gtk/rgdebinstallprogress.cc:100
-#: gtk/rgdebinstallprogress.cc:114 gtk/rgdebinstallprogress.cc:116
+#: gtk/rgdebinstallprogress.cc:89 gtk/rgdebinstallprogress.cc:103
+#: gtk/rgdebinstallprogress.cc:117 gtk/rgdebinstallprogress.cc:119
 #, fuzzy, c-format
 msgid "Unpacking %s"
 msgstr "软件包"
 
-#: gtk/rgdebinstallprogress.cc:87 gtk/rgdebinstallprogress.cc:101
-#: gtk/rgdebinstallprogress.cc:117
+#: gtk/rgdebinstallprogress.cc:90 gtk/rgdebinstallprogress.cc:104
+#: gtk/rgdebinstallprogress.cc:120
 #, fuzzy, c-format
 msgid "Configuring %s"
 msgstr "配置"
 
-#: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:102
-#: gtk/rgdebinstallprogress.cc:118
+#: gtk/rgdebinstallprogress.cc:91 gtk/rgdebinstallprogress.cc:105
+#: gtk/rgdebinstallprogress.cc:121
 #, fuzzy, c-format
 msgid "Installed %s"
 msgstr "已安装"
 
-#: gtk/rgdebinstallprogress.cc:99 gtk/rgdebinstallprogress.cc:115
+#: gtk/rgdebinstallprogress.cc:102 gtk/rgdebinstallprogress.cc:118
 #, fuzzy, c-format
 msgid "Installing %s"
 msgstr "安装"
 
-#: gtk/rgdebinstallprogress.cc:272
+#: gtk/rgdebinstallprogress.cc:275
 #, c-format
 msgid ""
 "Install new configuration file\n"
 "'%s'?"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:273
+#: gtk/rgdebinstallprogress.cc:276
 #, c-format
 msgid ""
-"The configuration file %s was modified (by you or by a script). A updated "
+"The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:354 gtk/rginstallprogress.cc:284
+#: gtk/rgdebinstallprogress.cc:357 gtk/rginstallprogress.cc:284
 #: gtk/rgterminstallprogress.cc:168
 msgid "Applying Changes"
 msgstr "正在实施变更..."
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:444
+#: gtk/rgdebinstallprogress.cc:447
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "提供的软件包"
@@ -1110,20 +1105,20 @@ msgstr "已安装大小"
 msgid "Download Size"
 msgstr "下载文件"
 
-#: gtk/rgpreferenceswindow.cc:347 gtk/rgmainwindow.cc:1646
+#: gtk/rgpreferenceswindow.cc:368 gtk/rgmainwindow.cc:1646
 #: gtk/rgterminstallprogress.cc:99
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
 
-#: gtk/rgpreferenceswindow.cc:392
+#: gtk/rgpreferenceswindow.cc:413
 msgid "Choose font"
 msgstr "选择字体"
 
-#: gtk/rgpreferenceswindow.cc:801
+#: gtk/rgpreferenceswindow.cc:829
 msgid "Color selection"
 msgstr "颜色选择"
 
-#: gtk/rgpreferenceswindow.cc:897
+#: gtk/rgpreferenceswindow.cc:925
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a verison from a different distribution, the "
@@ -1131,23 +1126,23 @@ msgid ""
 "distribution."
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:905
+#: gtk/rgpreferenceswindow.cc:933
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ carefull with this "
 "option as you will not get security updates automatically! If you manually "
-"force a verison the package version will follow the choosen distribution."
+"force a version the package version will follow the choosen distribution."
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:913
+#: gtk/rgpreferenceswindow.cc:941
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 
 # to choice if some items is visible or not
-#: gtk/rgpreferenceswindow.cc:950
+#: gtk/rgpreferenceswindow.cc:978
 msgid "Visible"
 msgstr "显示项目"
 
-#: gtk/rgpreferenceswindow.cc:1024 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:1052 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "首选项"
 
@@ -1459,14 +1454,14 @@ msgstr "您想添加其他 CD-ROM 吗？"
 msgid "Open changes"
 msgstr "打开变更方案"
 
-#: gtk/rgmainwindow.cc:1970 gtk/rgmainwindow.cc:2588 gtk/rgmainwindow.cc:2672
-#: gtk/rgmainwindow.cc:2835
+#: gtk/rgmainwindow.cc:1970 gtk/rgmainwindow.cc:2578 gtk/rgmainwindow.cc:2662
+#: gtk/rgmainwindow.cc:2825
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:1994 gtk/rgmainwindow.cc:2497 gtk/rgmainwindow.cc:2642
-#: gtk/rgmainwindow.cc:2812
+#: gtk/rgmainwindow.cc:1994 gtk/rgmainwindow.cc:2487 gtk/rgmainwindow.cc:2632
+#: gtk/rgmainwindow.cc:2802
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
@@ -1548,50 +1543,50 @@ msgstr ""
 "无法实施变更！\n"
 "首先要修复损毁的软件包。"
 
-#: gtk/rgmainwindow.cc:2482
+#: gtk/rgmainwindow.cc:2472
 msgid "Applying marked changes. This may take a while..."
 msgstr "正在实施已标记的变更。这可能需要一会..."
 
-#: gtk/rgmainwindow.cc:2486
+#: gtk/rgmainwindow.cc:2476
 #, fuzzy
 msgid "Downloading package files"
 msgstr "下载软件包文件"
 
-#: gtk/rgmainwindow.cc:2487
+#: gtk/rgmainwindow.cc:2477
 #, fuzzy
 msgid "The package files will be cached locally for installation."
 msgstr "这些软件包文件只会被下载，而不会被安装"
 
-#: gtk/rgmainwindow.cc:2571
+#: gtk/rgmainwindow.cc:2561
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得吗？"
 
-#: gtk/rgmainwindow.cc:2627
+#: gtk/rgmainwindow.cc:2617
 #, fuzzy
 msgid "Downloading package information"
 msgstr "仅仅下载软件包文件"
 
-#: gtk/rgmainwindow.cc:2628
+#: gtk/rgmainwindow.cc:2618
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "安装，删除和升级软件包"
 
-#: gtk/rgmainwindow.cc:2631
+#: gtk/rgmainwindow.cc:2621
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "正在启动软件包配置工具..."
 
-#: gtk/rgmainwindow.cc:2697
+#: gtk/rgmainwindow.cc:2687
 msgid "Failed to resolve dependency problems!"
 msgstr "无法解决软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2689
 msgid "Successfully fixed dependency problems"
 msgstr "已成功修正软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2715
+#: gtk/rgmainwindow.cc:2705
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1599,15 +1594,15 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复毁损的软件包。"
 
-#: gtk/rgmainwindow.cc:2764
+#: gtk/rgmainwindow.cc:2754
 msgid "Marking all available upgrades..."
 msgstr "正在标记全部可用的升级..."
 
-#: gtk/rgmainwindow.cc:2776
+#: gtk/rgmainwindow.cc:2766
 msgid "Successfully marked available upgrades"
 msgstr "已成功标记全部可用的升级"
 
-#: gtk/rgmainwindow.cc:2778
+#: gtk/rgmainwindow.cc:2768
 msgid "Failed to mark all available upgrades!"
 msgstr "无法标记全部可用的升级！"
 
@@ -3142,6 +3137,10 @@ msgstr "查找历史"
 #, fuzzy
 msgid "History of installed, upgraded and removed software packages."
 msgstr "安装，删除和升级软件包"
+
+#, fuzzy
+#~ msgid "--non-interactive Try to run in complete automatic mode\n"
+#~ msgstr "--non-interactive 对用户的输入不给提示\n"
 
 #, fuzzy
 #~ msgid ""

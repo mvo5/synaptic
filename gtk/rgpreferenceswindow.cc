@@ -68,6 +68,17 @@ void RGPreferencesWindow::applyProxySettings()
    gchar *s;
    int httpPort, ftpPort;
 
+   // save apts settings here
+   static bool firstRun = true;
+   static string aptHttpProxy, aptFtpProxy;
+
+   if(firstRun) {
+      aptHttpProxy = _config->Find("Acquire::http::Proxy");
+      aptFtpProxy = _config->Find("Acquire::ftp::Proxy");
+      
+      firstRun = false;
+   }
+
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
    // now set the stuff for apt
    if (useProxy) {
@@ -102,8 +113,8 @@ void RGPreferencesWindow::applyProxySettings()
    } else {
       //FIXME: we can't just clean here as apt may have it's own proxy 
       // settings!
-      _config->Clear("Acquire::http::Proxy");
-      _config->Clear("Acquire::ftp::Proxy");
+      _config->Set("Acquire::http::Proxy",aptHttpProxy);
+      _config->Set("Acquire::ftp::Proxy", aptFtpProxy);
    }
 }
 

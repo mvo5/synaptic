@@ -139,7 +139,7 @@ bool RGGladeWindow::setTreeList(const char *widget_name, vector<string> values,
    GtkTreeIter iter;
    for(unsigned int i=0;i<values.size();i++) {
       gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store, &iter, 0, values[i].c_str(), -1);
+      gtk_list_store_set(store, &iter, 0, utf8(values[i].c_str()), -1);
    }
    gtk_tree_view_set_model(GTK_TREE_VIEW(widget), GTK_TREE_MODEL(store));
    return true;

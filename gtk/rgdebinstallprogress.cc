@@ -423,14 +423,12 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
-   _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
    _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
    _autoClose = glade_xml_get_widget(_gladeXML, "checkbutton_auto_close");
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_autoClose), 
 				_config->FindB("Synaptic::closeZvt", false));
    //_image = glade_xml_get_widget(_gladeXML, "image");
 
-   gtk_label_set_text(GTK_LABEL(_labelSummary), "");
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
@@ -647,15 +645,37 @@ void RGDebInstallProgress::finishUpdate()
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);
 
+   // hide progress and label
+   gtk_widget_hide(_pbarTotal);
+   gtk_widget_hide(_label_status);
+
+   GtkWidget *img = glade_xml_get_widget(_gladeXML,"image_finished");
+   switch(res) {
+   case 0: // success
+      gtk_image_set_from_file(GTK_IMAGE(img),
+			      PACKAGE_DATA_DIR"/pixmaps/synaptic.png");
+      break;
+   case 1: // error
+      gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_ERROR,
+			       GTK_ICON_SIZE_DIALOG);
+      break;
+   case 2: // incomplete
+      gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_INFO,
+			       GTK_ICON_SIZE_DIALOG);
+      break;
+   }
+   gtk_widget_show(img);
+   
+
    // wait for the user to click on "close"
-   while(!_updateFinished) {
+   while(!_updateFinished && !autoClose) {
+      autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
       while (gtk_events_pending())
 	 gtk_main_iteration();
       usleep(5000);
    }
 
    // get the value again, it may have changed
-   autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
    _config->Set("Synaptic::closeZvt", autoClose	? "true" : "false");
 
    // hide and finish

@@ -3143,7 +3143,7 @@ void RGMainWindow::buildInterface()
     // build popup-menu
     GtkWidget *menuitem, *img;
     _popupMenu = gtk_menu_new();
-    menuitem = gtk_image_menu_item_new_with_label(_("No changes"));
+    menuitem = gtk_image_menu_item_new_with_label(_("_No changes"));
     img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
     g_object_set_data(G_OBJECT(menuitem),"me",this);
@@ -3151,7 +3151,7 @@ void RGMainWindow::buildInterface()
 		     (GCallback) menuActionClicked, (void*)PKG_KEEP);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-    menuitem = gtk_image_menu_item_new_with_label(_("Install Latest Version"));
+    menuitem = gtk_image_menu_item_new_with_label(_("_Install Latest Version"));
     img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
     g_object_set_data(G_OBJECT(menuitem),"me",this);
@@ -3159,13 +3159,13 @@ void RGMainWindow::buildInterface()
 		     (GCallback) menuActionClicked, (void*)PKG_INSTALL);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-    menuitem = gtk_menu_item_new_with_label(_("Upgrade"));
+    menuitem = gtk_menu_item_new_with_label(_("_Upgrade"));
     g_object_set_data(G_OBJECT(menuitem),"me",this);
     g_signal_connect(menuitem, "activate",
 		     (GCallback) menuActionClicked, (void*)PKG_INSTALL);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-    menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
+    menuitem = gtk_image_menu_item_new_with_label(_("_Remove"));
     img = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
     g_object_set_data(G_OBJECT(menuitem),"me",this);
@@ -3173,13 +3173,13 @@ void RGMainWindow::buildInterface()
 		     (GCallback) menuActionClicked, (void*)PKG_DELETE);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-    menuitem = gtk_menu_item_new_with_label(_("Remove Including Configuration"));
+    menuitem = gtk_menu_item_new_with_label(_("Remove Including _Configuration"));
     g_object_set_data(G_OBJECT(menuitem),"me",this);
     g_signal_connect(menuitem, "activate",
 		     (GCallback) menuActionClicked, (void*)PKG_PURGE);
     gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-    menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
+    menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned _Dependencies"));
     g_object_set_data(G_OBJECT(menuitem),"me",this);
     g_signal_connect(menuitem, "activate",
 		     (GCallback)menuActionClicked,(void*)PKG_DELETE_WITH_DEPS);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-13 12:25+0100\n"
+"POT-Creation-Date: 2003-11-13 16:11+0100\n"
 "PO-Revision-Date: 2003-10-22 23:15+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -451,12 +451,12 @@ msgstr "状态"
 msgid "Pattern"
 msgstr "模板"
 
-#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1479
+#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1474
 #: gtk/window_filters.glade.strings:59
 msgid "Section"
 msgstr "组别"
 
-#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1480
+#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1475
 msgid "Priority"
 msgstr "优先级"
 
@@ -464,7 +464,7 @@ msgstr "优先级"
 msgid "ReducedView"
 msgstr "简化视图"
 
-#: common/rpackagefilter.cc:50 gtk/rgmainwindow.cc:1482
+#: common/rpackagefilter.cc:50 gtk/rgmainwindow.cc:1477
 #: gtk/window_filters.glade.strings:77
 msgid "Tags"
 msgstr "标签"
@@ -477,14 +477,14 @@ msgstr "名称"
 msgid "Version"
 msgstr "版本"
 
-#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2479
+#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2474
 #: gtk/window_find.glade.strings:13 gtk/window_main_hpaned.glade.strings:74
 #: gtk/window_main_vpaned.glade.strings:90
 #: gtk/window_preferences.glade.strings:55 gtk/window_filters.glade.strings:62
 msgid "Description"
 msgstr "软件包描述"
 
-#: common/rpackagefilter.cc:197 gtk/rgmainwindow.cc:1484
+#: common/rpackagefilter.cc:197 gtk/rgmainwindow.cc:1479
 #: gtk/window_find.glade.strings:14 gtk/window_filters.glade.strings:63
 msgid "Maintainer"
 msgstr "维护者"
@@ -702,15 +702,16 @@ msgstr "bzip2 失败，可能磁盘已满。"
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/dialog_quit.glade.strings:7
+#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Quit and ignore outstanding changes?</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Quit and ignore queued changes?</span>"
 msgstr "<span weight=\"bold\" size=\"large\">退出并忽略显著的更改吗？</span>"
 
 #: gtk/dialog_quit.glade.strings:8
+#, fuzzy
 msgid ""
-"You have selected changes in the status of some or one package which have "
-"not been executed yet. They will get lost if you choose to quit 'Synaptic'."
+"There are still changes in the queue that have not been executed. They will "
+"get lost if you choose to quit 'Synaptic'."
 msgstr ""
 "您选中的某些或某个软件包的状态的更改尚未执行。如果您选择退出“新立得”它们将丢"
 "失。"
@@ -723,21 +724,25 @@ msgstr ""
 #: gtk/dialog_upgrade.glade.strings:7
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Enable intelligent dependency handling "
-"(dist-upgrade)?</span>"
+"<span weight=\"bold\" size=\"large\">Enable smart upgrade (dist-upgrade)?</"
+"span>"
 msgstr "<span weight=\"bold\" size=\"larger\">应用附加的必需的修改吗？</span>"
 
 #: gtk/dialog_upgrade.glade.strings:8
 msgid ""
-"Possible conflicts between packages will be attempted to be resolved with a "
-"priority to more important packages. This explicitly includes changes in the "
-"status of other packages e.g. additional packages will be installed to "
-"satisfy new dependencies of upgrades.\n"
+"The default upgrade method skips upgrades that introduce conflicts or "
+"require new packages to be installed.\n"
 "\n"
-"This behavior can be changed in the preferences."
+"Dist-upgrade attempts to resolve conflicts and to fulfil all dependencies of "
+"upgrades in a smart way.\n"
+"\n"
+"<b>Note:</b> If you are upgrading to a new major operating system release "
+"you have to say 'yes' here.\n"
+"\n"
+"This behavior can be changed in the preferences later."
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.strings:11
+#: gtk/dialog_upgrade.glade.strings:15
 msgid "Remeber the answer for further upgrades"
 msgstr ""
 
@@ -747,26 +752,25 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/dialog_locales_warning.glade.strings:7
+#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Your locale settings are not supported "
-"by your Xlib</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"large\">您的 Xlib 不支持您的语系(区域)设置</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Incorrect or incompatible locale "
+"settings</span>"
+msgstr "<span weight=\"bold\" size=\"large\">退出并忽略显著的更改吗？</span>"
 
 #: gtk/dialog_locales_warning.glade.strings:8
+#, fuzzy
 msgid ""
-"This error is caused by incorrect or incompatible locale settings.\n"
+"Synaptic may crash!\n"
 "\n"
-"Please use locales settings like \"fr_FR\" or \"fr_FR@euro\" and do not use "
+"Xlib does not support your chosen language environment.\n"
+"\n"
+"Please use locales settings like \"fr_FR\" or \"fr_FR@euro\". Do not use "
 "settings like \"fr_FR.iso8859-15@euro\".\n"
 "\n"
-"We'll try to work around this, but there may be problems or even crashes. "
-"The best way to avoid this is to fix your locale settings.\n"
-"\n"
-"If you feel this is wrong or you need assistance, send a mail to:\n"
+"Contact the mailing list for comments or help:\n"
 "<i>synaptic-devel@nongnu.org</i> \n"
-"with the output of the \"locale\" command."
+"Include the output of the \"locale\" command in your email."
 msgstr ""
 "这个错误是由于不正确的或不完整的语系设置造成的。\n"
 "\n"
@@ -814,11 +818,11 @@ msgstr "-i=? 使用具有给出数字的初始筛选器开始\n"
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? 设定一个强迫配置选项，例如 -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:194
+#: gtk/gsynaptic.cc:211
 msgid "You must run this program as the root user."
 msgstr "您必须以 root 用户身份运行此程序。"
 
-#: gtk/gsynaptic.cc:230
+#: gtk/gsynaptic.cc:247
 msgid "Synaptic Package Manager "
 msgstr "新立得软件包管理器"
 
@@ -870,7 +874,7 @@ msgid "To be kept"
 msgstr "将会维持原状的软件包"
 
 #: gtk/rgpreferenceswindow.cc:245 gtk/rgzvtinstallprogress.cc:73
-#: gtk/rgmainwindow.cc:3615
+#: gtk/rgmainwindow.cc:3610
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
 
@@ -899,7 +903,7 @@ msgstr "首选项"
 msgid "Fetching Files"
 msgstr "正在获取文件"
 
-#: gtk/rgfetchprogress.cc:91 gtk/rgmainwindow.cc:2462
+#: gtk/rgfetchprogress.cc:91 gtk/rgmainwindow.cc:2457
 msgid "Size"
 msgstr "文件大小"
 
@@ -1078,14 +1082,18 @@ msgstr "clickedRecInstall 调用使用了无效参数："
 msgid "Starting help system"
 msgstr "正在启动帮助系统"
 
-#: gtk/rgmainwindow.cc:308
+#: gtk/rgmainwindow.cc:299
 msgid ""
-"You need the gnome \"yelp\" program to display the synaptic help\n"
+"No help viewer is installed\n"
 "\n"
-"This program is not found."
+"You need either the gnome viewer 'yelp' or the 'mozilla' browser to view the "
+"synaptic manual.\n"
+"\n"
+"Alternativly you can open the man page with 'man synaptic' from the command "
+"line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:548
+#: gtk/rgmainwindow.cc:544
 msgid ""
 "No libgnome-perl installed\n"
 "\n"
@@ -1095,44 +1103,44 @@ msgstr ""
 "\n"
 "你不得不安装 libgnome-perl 以便通过 synaptic 使用 dpkg-reconfigure"
 
-#: gtk/rgmainwindow.cc:554
+#: gtk/rgmainwindow.cc:550
 msgid "Starting dpkg-reconfigure"
 msgstr "正在启动 dpkg-reconfigure"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:566
+#: gtk/rgmainwindow.cc:562
 msgid "Starting package help"
 msgstr "正在启动软件包帮助"
 
-#: gtk/rgmainwindow.cc:667
+#: gtk/rgmainwindow.cc:663
 msgid "Retrieving Index Files"
 msgstr "正在检索索引文件"
 
-#: gtk/rgmainwindow.cc:669
+#: gtk/rgmainwindow.cc:665
 msgid "Updating Package Lists from Servers..."
 msgstr "从服务器更新软件包列表..."
 
-#: gtk/rgmainwindow.cc:679 gtk/rgmainwindow.cc:878 gtk/rgmainwindow.cc:1549
-#: gtk/rgmainwindow.cc:2137 gtk/rgmainwindow.cc:2283
+#: gtk/rgmainwindow.cc:675 gtk/rgmainwindow.cc:874 gtk/rgmainwindow.cc:1544
+#: gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2278
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
 
-#: gtk/rgmainwindow.cc:702 gtk/rgmainwindow.cc:946 gtk/rgmainwindow.cc:1574
-#: gtk/rgmainwindow.cc:2089
+#: gtk/rgmainwindow.cc:698 gtk/rgmainwindow.cc:942 gtk/rgmainwindow.cc:1569
+#: gtk/rgmainwindow.cc:2084
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:770
+#: gtk/rgmainwindow.cc:766
 msgid "Dependency problem resolver failed."
 msgstr "未能解决依赖性问题。"
 
-#: gtk/rgmainwindow.cc:772
+#: gtk/rgmainwindow.cc:768
 msgid "Dependency problems successfully fixed."
 msgstr "依赖性问题成功修正了。"
 
-#: gtk/rgmainwindow.cc:787
+#: gtk/rgmainwindow.cc:783
 msgid ""
 "Automatic upgrade selection not possible\n"
 "with broken packages. Please fix them first."
@@ -1140,19 +1148,19 @@ msgstr ""
 "系统上仍有软件包安装不完整或依赖关系有问题，\n"
 "所以未能自动选择升级软件包。请先修正问题。"
 
-#: gtk/rgmainwindow.cc:813
+#: gtk/rgmainwindow.cc:809
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "正在自动选择可升级软件包..."
 
-#: gtk/rgmainwindow.cc:825
+#: gtk/rgmainwindow.cc:821
 msgid "Automatic selection of upgradadable packages done."
 msgstr "自动选择可升级软件包完成。"
 
-#: gtk/rgmainwindow.cc:827
+#: gtk/rgmainwindow.cc:823
 msgid "Automatic upgrade selection failed."
 msgstr "自动选择升级软件包失败。"
 
-#: gtk/rgmainwindow.cc:846
+#: gtk/rgmainwindow.cc:842
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -1160,87 +1168,87 @@ msgstr ""
 "系统上仍有软件包安装不完整或依赖关系有问题，\n"
 "未能进行这项操作。请先修正问题。"
 
-#: gtk/rgmainwindow.cc:865
+#: gtk/rgmainwindow.cc:861
 msgid "Performing selected changes... this may take a while"
 msgstr "正在对选中的项目执行更新... 这可能需要一会"
 
-#: gtk/rgmainwindow.cc:869
+#: gtk/rgmainwindow.cc:865
 msgid "Retrieving Package Files"
 msgstr "正在检索软件包文件"
 
-#: gtk/rgmainwindow.cc:928
+#: gtk/rgmainwindow.cc:924
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出 Synaptic？"
 
-#: gtk/rgmainwindow.cc:970 gtk/rgmainwindow.cc:980
+#: gtk/rgmainwindow.cc:966 gtk/rgmainwindow.cc:976
 msgid "N/A"
 msgstr "不适用"
 
-#: gtk/rgmainwindow.cc:1096
+#: gtk/rgmainwindow.cc:1092
 msgid "Package is installed."
 msgstr "软件包已安装。"
 
-#: gtk/rgmainwindow.cc:1098
+#: gtk/rgmainwindow.cc:1094
 msgid "Package is not installed."
 msgstr "此软件包没有安装。"
 
-#: gtk/rgmainwindow.cc:1102
+#: gtk/rgmainwindow.cc:1098
 msgid "Package will be installed."
 msgstr "此软件包将会被安装。"
 
-#: gtk/rgmainwindow.cc:1108
+#: gtk/rgmainwindow.cc:1104
 msgid "Package will be upgraded."
 msgstr "此软件包将会被升级。"
 
-#: gtk/rgmainwindow.cc:1114
+#: gtk/rgmainwindow.cc:1110
 msgid "Package will be downgraded."
 msgstr "此软件包将会被降级。"
 
-#: gtk/rgmainwindow.cc:1119
+#: gtk/rgmainwindow.cc:1115
 msgid "Package will be uninstalled."
 msgstr "此软件包将会被卸载。"
 
-#: gtk/rgmainwindow.cc:1122
+#: gtk/rgmainwindow.cc:1118
 msgid "Package is broken."
 msgstr "此软件包未完整安装。"
 
-#: gtk/rgmainwindow.cc:1133 gtk/rgmainwindow.cc:1159
+#: gtk/rgmainwindow.cc:1128
 msgid "Package is pinned."
 msgstr "此软件包目前被设为永不更新。"
 
-#: gtk/rgmainwindow.cc:1136
+#: gtk/rgmainwindow.cc:1138
 msgid "Package is new."
 msgstr "新的软件包。"
 
-#: gtk/rgmainwindow.cc:1164
+#: gtk/rgmainwindow.cc:1159
 msgid "Broken dependencies."
 msgstr "依赖关系有问题。"
 
-#: gtk/rgmainwindow.cc:1400
+#: gtk/rgmainwindow.cc:1395
 msgid "not installed"
 msgstr "未安装的软件包"
 
-#: gtk/rgmainwindow.cc:1429 gtk/window_main_hpaned.glade.strings:70
+#: gtk/rgmainwindow.cc:1424 gtk/window_main_hpaned.glade.strings:70
 #: gtk/window_main_vpaned.glade.strings:72
 #, fuzzy
 msgid "No package is selected.\n"
 msgstr "软件包已安装。"
 
-#: gtk/rgmainwindow.cc:1452
+#: gtk/rgmainwindow.cc:1447
 msgid "_Downgrade"
 msgstr "降级(_D)"
 
-#: gtk/rgmainwindow.cc:1455 gtk/window_main_hpaned.glade.strings:100
-#: gtk/window_main_vpaned.glade.strings:77
+#: gtk/rgmainwindow.cc:1450 gtk/window_main_hpaned.glade.strings:101
+#: gtk/window_main_vpaned.glade.strings:81
 msgid "_Install"
 msgstr "安装(_I)"
 
-#: gtk/rgmainwindow.cc:1458 gtk/window_main_hpaned.glade.strings:25
+#: gtk/rgmainwindow.cc:1453 gtk/window_main_hpaned.glade.strings:25
 #: gtk/window_main_vpaned.glade.strings:25
 msgid "_Upgrade"
 msgstr "升级(_U)"
 
-#: gtk/rgmainwindow.cc:1486
+#: gtk/rgmainwindow.cc:1481
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -1248,15 +1256,15 @@ msgstr ""
 "\n"
 "已安装软件包：\n"
 
-#: gtk/rgmainwindow.cc:1487 gtk/rgmainwindow.cc:1491
+#: gtk/rgmainwindow.cc:1482 gtk/rgmainwindow.cc:1486
 msgid "\tVersion"
 msgstr "\t版本"
 
-#: gtk/rgmainwindow.cc:1488 gtk/rgmainwindow.cc:1492
+#: gtk/rgmainwindow.cc:1483 gtk/rgmainwindow.cc:1487
 msgid "\tSize"
 msgstr "\t文件大小"
 
-#: gtk/rgmainwindow.cc:1490
+#: gtk/rgmainwindow.cc:1485
 msgid ""
 "\n"
 "Available Package:\n"
@@ -1264,12 +1272,12 @@ msgstr ""
 "\n"
 "最新版软件包：\n"
 
-#: gtk/rgmainwindow.cc:1493
+#: gtk/rgmainwindow.cc:1488
 msgid "\tPackage Size"
 msgstr "\t软件包大小"
 
 #. standard header in case the installing fails
-#: gtk/rgmainwindow.cc:1793
+#: gtk/rgmainwindow.cc:1788
 msgid ""
 "Some packages could not be installed.\n"
 "\n"
@@ -1279,66 +1287,66 @@ msgstr ""
 "\n"
 "下列软件包具有未满足的依赖关系：\n"
 
-#: gtk/rgmainwindow.cc:2106
+#: gtk/rgmainwindow.cc:2101
 msgid "Open changes"
 msgstr "打开更改"
 
-#: gtk/rgmainwindow.cc:2163
+#: gtk/rgmainwindow.cc:2158
 msgid "Keep"
 msgstr "维持原状"
 
-#: gtk/rgmainwindow.cc:2173 gtk/window_preferences.glade.strings:26
+#: gtk/rgmainwindow.cc:2168 gtk/window_preferences.glade.strings:26
 #, fuzzy
 msgid "Upgrade"
 msgstr "升级(_U)"
 
-#: gtk/rgmainwindow.cc:2183
+#: gtk/rgmainwindow.cc:2178
 msgid "Install"
 msgstr "安装"
 
-#: gtk/rgmainwindow.cc:2194
+#: gtk/rgmainwindow.cc:2189
 msgid "Remove"
 msgstr "删除"
 
-#: gtk/rgmainwindow.cc:2300
+#: gtk/rgmainwindow.cc:2295
 msgid "Save changes"
 msgstr "保存更改"
 
-#: gtk/rgmainwindow.cc:2316
+#: gtk/rgmainwindow.cc:2311
 msgid "Save full state, not only changes"
 msgstr "保存全部状态，不仅仅是更改"
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2396
 msgid "Package"
 msgstr "软件包"
 
-#: gtk/rgmainwindow.cc:2420
+#: gtk/rgmainwindow.cc:2415
 msgid "Installed Version"
 msgstr "已安装的版本"
 
-#: gtk/rgmainwindow.cc:2436
+#: gtk/rgmainwindow.cc:2431
 #, fuzzy
 msgid "Latest Version"
 msgstr "安装最新版本(_I)"
 
-#: gtk/rgmainwindow.cc:2695
+#: gtk/rgmainwindow.cc:2690
 msgid "Update the list of available packages"
 msgstr "更新最新软件包的列表"
 
-#: gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2694
 msgid "Queue all possible upgrades"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2703
+#: gtk/rgmainwindow.cc:2698
 #, fuzzy
 msgid "Execute the queued changes"
 msgstr "执行选中的变更"
 
-#: gtk/rgmainwindow.cc:3337
+#: gtk/rgmainwindow.cc:3332
 msgid "Do you want to add another CD-ROM?"
 msgstr "您想添加其他 CD-ROM 吗？"
 
-#: gtk/rgmainwindow.cc:3366
+#: gtk/rgmainwindow.cc:3361
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1346,7 +1354,7 @@ msgstr ""
 "删除这个软件包可能导致您的系统不稳定。\n"
 "您确定要那样做吗?"
 
-#: gtk/rgmainwindow.cc:3525
+#: gtk/rgmainwindow.cc:3520
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1355,7 +1363,7 @@ msgstr ""
 "共列出 %i 个软件包，已安装 %i 个，已坏损 %i 个。将安装/升级 %i 个软件包，删"
 "除 %i 个软件包；将释放 %sB 磁盘空间。"
 
-#: gtk/rgmainwindow.cc:3529
+#: gtk/rgmainwindow.cc:3524
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1364,14 +1372,14 @@ msgstr ""
 "共列出 %i 个软件包，已安装 %i 个，已坏损 %i 个。将安装/升级 %i 个软件包，删"
 "除 %i 个软件包；将占据 %sB 磁盘空间。"
 
-#: gtk/rgmainwindow.cc:3558 gtk/window_main_hpaned.glade.strings:33
+#: gtk/rgmainwindow.cc:3553 gtk/window_main_hpaned.glade.strings:33
 #: gtk/window_main_hpaned.glade.strings:67
 #: gtk/window_main_vpaned.glade.strings:33
 #: gtk/window_main_vpaned.glade.strings:67
 msgid "All Packages"
 msgstr "全部软件包"
 
-#: gtk/rgmainwindow.cc:3640
+#: gtk/rgmainwindow.cc:3635
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1712,7 +1720,7 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/window_find.glade.strings:7
-msgid "Show only packages including the searched terms."
+msgid "Show only packages matching the searched terms."
 msgstr ""
 
 #: gtk/window_find.glade.strings:8
@@ -1849,9 +1857,9 @@ msgid "Pac_kage"
 msgstr "软件包(_K)"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:104
+#: gtk/window_main_hpaned.glade.strings:105
 #: gtk/window_main_vpaned.glade.strings:23
-#: gtk/window_main_vpaned.glade.strings:81
+#: gtk/window_main_vpaned.glade.strings:77
 #, fuzzy
 msgid "_No Changes"
 msgstr "执行更改(_X)"
@@ -1862,7 +1870,7 @@ msgid "_Install Latest Version"
 msgstr "安装最新版本(_I)"
 
 #: gtk/window_main_hpaned.glade.strings:26
-#: gtk/window_main_hpaned.glade.strings:102
+#: gtk/window_main_hpaned.glade.strings:103
 #: gtk/window_main_vpaned.glade.strings:26
 #: gtk/window_main_vpaned.glade.strings:79
 msgid "_Remove"
@@ -1870,12 +1878,14 @@ msgstr "删除(_R)"
 
 #: gtk/window_main_hpaned.glade.strings:27
 #: gtk/window_main_vpaned.glade.strings:27
-msgid "_Purge with Configuration"
-msgstr "连同配置文件一并删除(_P)"
+#, fuzzy
+msgid "_Remove Including Configuration"
+msgstr "包含配置"
 
 #: gtk/window_main_hpaned.glade.strings:28
 #: gtk/window_main_vpaned.glade.strings:28
-msgid "Remove with _Dependencies"
+#, fuzzy
+msgid "Remove Including Orphaned _Dependencies"
 msgstr "连同依赖此软件包的软件包一并删除(_D)"
 
 #: gtk/window_main_hpaned.glade.strings:29
@@ -2190,64 +2200,64 @@ msgstr "    "
 #: gtk/window_main_hpaned.glade.strings:95
 #, fuzzy
 msgid ""
-"<b>Warning:</b> Changes override the version selected by the package "
-"manager. Use with care."
+"<b>Warning:</b> This can render your package manger unusable.\n"
+"Changes override the version selected by the package manager. "
 msgstr "<b>注释：</b>这允许您覆盖被软件包管理器选中的版本。请谨慎使用。"
 
-#: gtk/window_main_hpaned.glade.strings:96
-#: gtk/window_main_vpaned.glade.strings:113
+#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:114
 #: gtk/window_preferences.glade.strings:111
 msgid "Expert"
 msgstr "专家"
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 msgid "<b>Package Control</b>"
 msgstr "<b>软件包控制</b>"
 
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:103
 #: gtk/window_preferences.glade.strings:30
 msgid "     "
 msgstr "     "
 
-#: gtk/window_main_hpaned.glade.strings:99
-#: gtk/window_main_vpaned.glade.strings:76
+#: gtk/window_main_hpaned.glade.strings:100
+#: gtk/window_main_vpaned.glade.strings:80
 msgid "Install the latest version of the package"
 msgstr "安装软件包的最新版本"
 
-#: gtk/window_main_hpaned.glade.strings:101
+#: gtk/window_main_hpaned.glade.strings:102
 #: gtk/window_main_vpaned.glade.strings:78
 msgid "Deinstall the package"
 msgstr "放弃安装软件包"
 
-#: gtk/window_main_hpaned.glade.strings:103
-#: gtk/window_main_vpaned.glade.strings:80
+#: gtk/window_main_hpaned.glade.strings:104
+#: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr "软件包保持原来提供的样子并且放弃选中的更改"
 
-#: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_hpaned.glade.strings:106
 #: gtk/window_main_vpaned.glade.strings:82
 msgid "Configure the package using the debconf configuration system"
 msgstr "配置软件包使用 debconf 配置系统"
 
-#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_hpaned.glade.strings:107
 #, fuzzy
 msgid "Configure"
 msgstr "配置(_C)"
 
-#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_hpaned.glade.strings:108
 #, fuzzy
 msgid "View installed documentation of the package in a browser"
 msgstr "查看已安装的和软件包相关的在线文档"
 
-#: gtk/window_main_hpaned.glade.strings:108
+#: gtk/window_main_hpaned.glade.strings:109
 #, fuzzy
 msgid "_Documentation"
 msgstr "文档(_D)"
 
-#: gtk/window_main_hpaned.glade.strings:109
-#: gtk/window_main_vpaned.glade.strings:114
+#: gtk/window_main_hpaned.glade.strings:110
+#: gtk/window_main_vpaned.glade.strings:115
 msgid "Synaptic - an apt frontend"
 msgstr "新立得(Synaptic) -- 一个 apt 前端"
 
@@ -2287,9 +2297,11 @@ msgid "<b>Details</b>"
 msgstr "<b>安装</b>"
 
 #: gtk/window_main_vpaned.glade.strings:112
+#, fuzzy
 msgid ""
-"<b>Note:</b> This allows you to override the version selected by the package "
-"manager. Use with care."
+"<b>Warning:</b> This can render your package\n"
+"manager unusable. Changes override the version selected by the package "
+"manager. "
 msgstr "<b>注释：</b>这允许您覆盖被软件包管理器选中的版本。请谨慎使用。"
 
 #.
@@ -2355,12 +2367,13 @@ msgid "Include Configuration"
 msgstr "包含配置"
 
 #: gtk/window_preferences.glade.strings:20
-msgid "Include Dependencies"
-msgstr "包含依赖"
+#, fuzzy
+msgid "Include Orphaned Dependencies"
+msgstr "连同依赖此软件包的软件包一并删除(_D)"
 
 #: gtk/window_preferences.glade.strings:21
 #, fuzzy
-msgid "Default remove method: "
+msgid "Default remove: "
 msgstr "默认归档："
 
 #: gtk/window_preferences.glade.strings:22
@@ -2373,7 +2386,7 @@ msgstr "可撤销操作的次数："
 
 #: gtk/window_preferences.glade.strings:24
 #, fuzzy
-msgid "Default upgrade method:"
+msgid "Default system upgrade:"
 msgstr "升级："
 
 #: gtk/window_preferences.glade.strings:25
@@ -2529,7 +2542,8 @@ msgid "<b>Temporary Files</b>"
 msgstr "<b>临时文件</b>"
 
 #: gtk/window_preferences.glade.strings:81
-msgid "Leave downloaded packages in the cache"
+#, fuzzy
+msgid "Leave all downloaded packages in the cache"
 msgstr "把已下载的软件包留在缓存里"
 
 #: gtk/window_preferences.glade.strings:82
@@ -2537,7 +2551,8 @@ msgid "Delete downloaded packages after installation"
 msgstr "安装后删除已下载的软件包"
 
 #: gtk/window_preferences.glade.strings:83
-msgid "Delete obsolete packages from cache"
+#, fuzzy
+msgid "Delete obsolete packages from cache only"
 msgstr "删除缓存里陈旧的软件包"
 
 #: gtk/window_preferences.glade.strings:84
@@ -2892,6 +2907,24 @@ msgstr "rpm-src"
 #: gtk/window_repositories.glade.strings:16
 msgid "Vendors..."
 msgstr "发行商..."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Your locale settings are not "
+#~ "supported by your Xlib</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"large\">您的 Xlib 不支持您的语系(区域)设置</"
+#~ "span>"
+
+#~ msgid "Include Dependencies"
+#~ msgstr "包含依赖"
+
+#~ msgid "_Purge with Configuration"
+#~ msgstr "连同配置文件一并删除(_P)"
+
+#~ msgid ""
+#~ "<b>Note:</b> This allows you to override the version selected by the "
+#~ "package manager. Use with care."
+#~ msgstr "<b>注释：</b>这允许您覆盖被软件包管理器选中的版本。请谨慎使用。"
 
 #~ msgid "Do _Not Modify"
 #~ msgstr "不修改(_N)"

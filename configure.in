@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(configure.in)
 
-AM_INIT_AUTOMAKE(synaptic, 0.47)
+AM_INIT_AUTOMAKE(synaptic, 0.48)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
@@ -19,7 +19,7 @@ ALL_LINGUAS="ar pt_BR es fr de tr zh_CN zh_HK zh_TW ru nl ja be it_IT pl cs"
 AM_GLIB_GNU_GETTEXT
 GETTEXT_PACKAGE=synaptic
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE")
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",[description])
 AC_PROG_INTLTOOL([0.23])
 synapticlocaledir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(synapticlocaledir)
@@ -74,7 +74,7 @@ LIBS="$SAVE_LIBS -lrpmio -lrpmdb -lpopt"
 CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
 AC_CHECK_HEADER(rpm/rpmlib.h,
       [AC_CHECK_LIB(rpm,rpmdbInitIterator,
-        [AC_DEFINE(HAVE_RPM) 
+        [AC_DEFINE(HAVE_RPM, 1, [whether RPM is present]) 
          RPM_LIBS="-lrpm -lrpmio -lrpmdb -lpopt"
          SAVE_CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
 	 RPM_HDRS="-I/usr/include/rpm"
@@ -85,7 +85,7 @@ LIBS="$SAVE_LIBS -lpopt"
 CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
 AC_CHECK_HEADER(rpm/rpmlib.h,
       [AC_CHECK_LIB(rpm,rpmdbOpen,
-        [AC_DEFINE(HAVE_RPM) 
+        [AC_DEFINE(HAVE_RPM, 1, [wheter RPM is present]) 
          RPM_LIBS="-lrpm -lpopt"
          SAVE_CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
 	 RPM_HDRS="-I/usr/include/rpm"
@@ -129,13 +129,13 @@ AC_CHECK_FUNCS(regcomp strdup iconv)
 
 AC_ARG_WITH(pkg-hold, 
 	[--with-pkg-hold   build with experimental package "hold" feature],
-        AC_DEFINE(SYNAPTIC_PKG_HOLD)
+        AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
 )
 
 
 AC_ARG_WITH(debtags, 
 	[--with-debtags-support   build with experimental debtags support],
-        [AC_DEFINE(HAVE_DEBTAGS)
+        [AC_DEFINE(HAVE_DEBTAGS, 1, [build with debtags support])
 	LIBTAGCOLL_DEFS
 	]
 )
@@ -145,8 +145,8 @@ AC_ARG_WITH(vte,
 	      [--with-vte  compile with libvte support (terminal output)], 
 	      [pkg_modules="vte >= 0.10.11"
 	      PKG_CHECK_MODULES(VTE, [$pkg_modules])
-	      AC_DEFINE(HAVE_VTE)	 
-	      AC_DEFINE(HAVE_TERMINAL)	 
+	      AC_DEFINE(HAVE_VTE, 1, [build with VTE as output terminal])
+	      AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
 	      AC_SUBST(VTE_CFLAGS)
 	      AC_SUBST(VTE_LIBS)
 	      ]
@@ -157,8 +157,8 @@ AC_ARG_WITH(zvt,
 	      [--with-zvt  compile with libzvt support (terminal output)], 
 	      [pkg_modules="libzvt-2.0 >= 2.0.0"
 	      PKG_CHECK_MODULES(ZVT, [$pkg_modules])
-	      AC_DEFINE(HAVE_ZVT)	 
-	      AC_DEFINE(HAVE_TERMINAL)	 
+	      AC_DEFINE(HAVE_ZVT, 1, [build with ZVT as output terminal]) 
+	      AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
 	      AC_SUBST(ZVT_CFLAGS)
 	      AC_SUBST(ZVT_LIBS)
 	      ]

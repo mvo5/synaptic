@@ -75,7 +75,6 @@ CommandLine::Args Args[] = {
   {0,0,0,0}
 };
 
-
 void RGFlushInterface()
 {
     XSync(gdk_display, False);
@@ -190,6 +189,7 @@ int main(int argc, char **argv)
 	userDialog.showErrors();
 	exit(1);
     }  
+    
     if(_config->FindB("help") == true)
       ShowHelp(CmdL);
 

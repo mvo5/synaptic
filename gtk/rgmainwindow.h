@@ -287,7 +287,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void closeFilterManagerAction(void *self, bool okcancel);
    
    // search menu
-   static void searchPkgNameClicked(GtkWidget *self, void *data);
+   static void findToolClicked(GtkWidget *self, void *data);
 
    // preferences menu
    static void showConfigWindow(GtkWidget *self, void *data);

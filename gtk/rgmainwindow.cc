@@ -289,15 +289,113 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
 
 void RGMainWindow::searchAction(GtkWidget *self, void *data)
 {
+    // search interativly in the tree
+    GtkTreeIter iter, selected, parent = {0,};
+    GtkTreePath *path;
+    GList *li, *list=NULL;
+    char *name;
+    gboolean ok;
+
     RGMainWindow *me = (RGMainWindow*)data;
-    RFilter *filter;
-    filter = me->_lister->findFilter(0);
-    filter->reset();
-    const char *C = gtk_entry_get_text(GTK_ENTRY(me->_findText));
-    string S(C);
-    filter->pattern.addPattern(RPatternPackageFilter::Name, S, false);
+
+    // get search string
+    const gchar *searchtext = gtk_entry_get_text (GTK_ENTRY (self));
+    int len = strlen (searchtext);
+    if(len < 1)
+	return;
     
-    me->changeFilter(1);
+    // get last selected row
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+#if GTK_CHECK_VERSION(2,2,0)
+    list = li = gtk_tree_selection_get_selected_rows(selection,
+ 						     &me->_activeTreeModel);
+#else
+    li = list = NULL;
+    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+					&list);
+    li = list;
+#endif
+
+    // if not -> take the first row
+    if(list==NULL) {
+	ok = gtk_tree_model_get_iter_first(me->_activeTreeModel, &iter);
+    } else {
+	li = g_list_last(li);
+	ok =  gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
+			    (GtkTreePath*)(li->data));
+	// set parent to a valid location
+	gtk_tree_model_iter_parent(me->_activeTreeModel, &parent, &iter);
+    }
+    gtk_tree_selection_unselect_all(selection);
+
+    // do the real search
+    while(1) {
+	// 1. search in the current iter-range
+	while(ok) {  
+	    gtk_tree_model_get(me->_activeTreeModel, &iter,
+			       NAME_COLUMN, &name,
+			       -1);
+	    if(strncasecmp(name, searchtext, len) == 0) {
+		if(parent.user_data != NULL) {
+		    path = gtk_tree_model_get_path(me->_activeTreeModel, 
+						   &parent);
+		    gtk_tree_view_expand_row(GTK_TREE_VIEW(me->_treeView), 
+					     path, false);
+		    // work around a bug in expand_row (it steals the focus)
+		    gtk_widget_grab_focus(self);
+		}
+		path = gtk_tree_model_get_path(me->_activeTreeModel, &iter);
+		gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(me->_treeView), 
+					     path, NULL, TRUE, 0.5, 0.0);
+		gtk_tree_selection_select_iter(selection, &iter);
+		return;
+	    }
+	    ok = gtk_tree_model_iter_next(me->_activeTreeModel, &iter);
+	} 
+	
+	// 2. if it is not found there, look into the next toplevel subtree
+
+	// special case for the first tree
+	if(parent.user_data == NULL) {
+	    if(!gtk_tree_model_get_iter_first(me->_activeTreeModel, &parent))
+		return;
+	} else if(!gtk_tree_model_iter_next(me->_activeTreeModel, &parent))
+	    return;
+	if(!gtk_tree_model_iter_children(me->_activeTreeModel,&iter,&parent)) 
+	    return;
+	ok=true;
+    }
+#if 0
+	gtk_tree_model_get(me->_activeTreeModel, &iter,
+			   NAME_COLUMN, &name,
+			   -1);
+	cout << "iter is: " << name << endl;
+	// if iter is toplevel -> next toplevel item and search its children
+	if(current_subtree.user_data == NULL) {
+	    cout << "hello" << endl;
+	    ok = gtk_tree_model_get_iter_first(me->_activeTreeModel, &current_subtree);
+	} else
+	    if(!gtk_tree_model_iter_parent(me->_activeTreeModel, &current_subtree, &selected)) {
+		cout << "no parent" << endl;
+		current_subtree=selected;
+	    }
+	// go to next toplevel item
+	if(!gtk_tree_model_iter_next(me->_activeTreeModel, &current_subtree)) {
+	    cout << "!gtk_tree_model_iter_next()"<<endl;
+	    gtk_tree_model_get(me->_activeTreeModel, &current_subtree,
+			       NAME_COLUMN, &name,
+			       -1);
+	    if(name!=NULL)
+		cout << "name: " << name << endl;
+	    return;
+	}
+	if(!gtk_tree_model_iter_children(me->_activeTreeModel, &iter, &current_subtree)) {
+	    cout << "!gtk_tree_model_iter_children()"<<endl;
+	    return;
+	}
+	ok=true;
+    }
+#endif
 }
 
 
@@ -1732,7 +1830,7 @@ void RGMainWindow::menuToolbarClicked(GtkWidget *self, void *data)
   }
 }
 
-void RGMainWindow::searchPkgNameClicked(GtkWidget *self, void *data)
+void RGMainWindow::findToolClicked(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow*)data;
   
@@ -2238,7 +2336,7 @@ void RGMainWindow::buildInterface()
 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_search_name",
-				  G_CALLBACK(searchPkgNameClicked),
+				  G_CALLBACK(findToolClicked),
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,
@@ -2607,13 +2705,14 @@ void RGMainWindow::buildInterface()
     _findText = glade_xml_get_widget(_gladeXML, "entry_find");
     assert(_findText);
     gtk_object_set_data(GTK_OBJECT(_findText), "me", this);
-    gtk_signal_connect(GTK_OBJECT(_findText), "activate",
+    gtk_signal_connect(GTK_OBJECT(_findText), "changed",
 		       (GtkSignalFunc)searchAction, this);
 
     _findSearchB = glade_xml_get_widget(_gladeXML, "button_search");
     assert(_findSearchB);
     gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
-		       (GtkSignalFunc)searchAction, this);
+		       G_CALLBACK(findToolClicked),
+		       this);
 
     // build the treeview
     buildTreeView();

@@ -393,6 +393,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), scrollbar, FALSE, FALSE, 0);
    gtk_widget_show(scrollbar);
 
+   gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
+
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
 }
@@ -566,6 +568,26 @@ void RGDebInstallProgress::finishUpdate()
 void RGDebInstallProgress::prepare(RPackageLister *lister)
 {
    //cout << "prepeare called" << endl;
+
+   // build a meaningfull dialog
+   int installed, broken, toInstall, toReInstall, toRemove;
+   double sizeChange;
+   gchar *p = "Should never be displayed, please report";
+   gchar *s = _("The marked changes are now applied. This can "
+		"take some time. Please wait.");
+   lister->getStats(installed, broken, toInstall, toReInstall, 
+		    toRemove, sizeChange);
+   if(toRemove > 0 && toInstall > 0) 
+      p = _("Installing and removing software");
+   else if(toRemove > 0)
+      p = _("Removing software");
+   else if(toInstall > 0)
+      p =  _("Installing software");
+
+   gchar *message = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s);
+   GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
+   gtk_label_set_markup(GTK_LABEL(l), message);
+   g_free(message);
 
    for (unsigned int row = 0; row < lister->packagesSize(); row++) {
       RPackage *pkg = lister->getPackage(row);

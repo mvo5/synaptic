@@ -197,7 +197,12 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    _closeB = glade_xml_get_widget(_gladeXML, "button_close");
    gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
 		      (GtkSignalFunc)stopShell, this);
-   skipTaskbar(true);
+
+   if(_config->FindB("Volatile::Non-Interactive", false)) {
+      gtk_widget_hide(_closeOnF);
+   }
+   if(!_config->FindB("Volatile::HideMainwindow", false))
+      skipTaskbar(true);
 }
 
 

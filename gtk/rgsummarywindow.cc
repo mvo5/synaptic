@@ -317,18 +317,18 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     hbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
 
-    button = gtk_button_new_with_label(_("_Show Details"));
+    button = gtk_button_new_with_label(_("Show Details"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedDetails, this);
     gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 20);
 
-    _defBtn = button = gtk_button_new_with_label(_("_Execute"));
+    _defBtn = button = gtk_button_new_with_label(_("Execute"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedOk, this);
 
     gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 0);
 
-    button = gtk_button_new_with_label(_("_Cancel"));
+    button = gtk_button_new_with_label(_("Cancel"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)clickedCancel, this);
     gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 5);

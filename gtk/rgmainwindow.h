@@ -92,7 +92,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    
    bool _blockActions; // block signals from the action and hold buttons
    ToolbarState _toolbarState;
-
    int _interfaceLocked;
    GdkCursor *_busyCursor;
    GtkTooltips *_tooltips;

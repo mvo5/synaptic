@@ -134,6 +134,10 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
       gtk_set_locale();
   }
   _term = zvt_term_new_with_size(80,24);
+  if(_config->FindB("Synaptic::useUserTerminalFont")) {
+      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      zvt_term_set_font_name(ZVT_TERM(_term), s);
+  }
   if(s!=NULL) {
       setenv("LC_ALL",s,1);
       gtk_set_locale();

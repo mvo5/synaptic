@@ -295,7 +295,7 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
     if(FileExists("/usr/bin/yelp"))
 	system("yelp man:synaptic.8 &");
     else
-	me->_userDialog->warning("Unable to start yelp");
+	me->_userDialog->warning(_("Unable to start yelp"));
 }
 
 
@@ -1982,7 +1982,20 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
     gdk_colormap_alloc_color(gtk_widget_get_colormap(_win), &color, FALSE, TRUE);
     _redStyle->fg[0] = color;
 
-    // create preferences window and apply the proxy settings
+    GValue value = {0,};
+    g_value_init(&value, G_TYPE_STRING);    
+    g_object_get_property(G_OBJECT(gtk_settings_get_default()), 
+			  "gtk-font-name", &value); 
+    _config->Set("Volatile::orginalFontName",g_value_get_string(&value));
+    if(_config->FindB("Synaptic::useUserFont")) {
+	g_value_set_string(&value, 
+			   _config->Find("Synaptic::FontName").c_str());
+	g_object_set_property(G_OBJECT(gtk_settings_get_default()), 
+			      "gtk-font-name", &value); 
+	g_value_unset(&value);   
+    }
+
+    // apply the proxy settings
     RGPreferencesWindow::applyProxySettings();
 }
 

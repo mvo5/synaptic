@@ -48,6 +48,7 @@ char * RGPreferencesWindow::color_buttons[] = {
       NULL
   };
 
+enum {FONT_DEFAULT, FONT_TERMINAL};
 
 void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
 {
@@ -198,6 +199,28 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
     _config->Set("Synaptic::noProxy", noProxy);
 
     me->applyProxySettings();
+    
+    // font stuff
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(me->_gladeXML,"checkbutton_user_font")));
+    _config->Set("Synaptic::useUserFont",newval);
+
+    GValue value = {0,};
+    g_value_init(&value, G_TYPE_STRING);    
+    if(newval) {
+	g_value_set_string(&value, 
+			   _config->Find("Synaptic::FontName").c_str());
+	g_object_set_property(G_OBJECT(gtk_settings_get_default()), 
+			      "gtk-font-name", &value); 
+    } else {
+	g_value_set_string(&value, _config->Find("Volatile::orginalFontName","Sans 10").c_str());
+	g_object_set_property(G_OBJECT(gtk_settings_get_default()), 
+			      "gtk-font-name", &value); 
+    }
+    g_value_unset(&value);   
+    
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(me->_gladeXML,"checkbutton_user_terminal_font")));
+    _config->Set("Synaptic::useUserTerminalFont",newval);
+
 
     // rebuild the treeview
     me->saveTreeViewValues();
@@ -242,6 +265,41 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
     me->closeAction(self, data);
 }
 
+void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
+{
+    RGMainWindow *me= (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
+    const char *fontName, *propName;
+
+    switch(GPOINTER_TO_INT(data)) {
+    case FONT_DEFAULT:
+	propName = "Synaptic::FontName";
+	break;
+    case FONT_TERMINAL:
+	propName = "Synaptic::TerminalFontName";
+	break;
+    default: 
+	cerr << "changeFontAction called with unknown argument" << endl;
+	return;
+    }
+
+    GtkWidget *fontsel = gtk_font_selection_dialog_new(_("Choose font"));
+
+    gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(fontsel),
+					    _config->Find(propName, fontName).c_str());
+	
+    gint result = gtk_dialog_run(GTK_DIALOG(fontsel));
+    if(result != GTK_RESPONSE_OK) {
+	gtk_widget_destroy (fontsel);
+    	return;
+    }
+    
+    fontName=gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG(fontsel)); 
+    
+    _config->Set(propName, fontName);
+
+    gtk_widget_destroy (fontsel);
+}
+
 void RGPreferencesWindow::clearCacheAction(GtkWidget *self, void *data)
 {
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
@@ -255,6 +313,7 @@ void RGPreferencesWindow::show()
     bool postClean, postAutoClean;    
     string str;
     int i;
+    bool b;
     distroChanged = false;
     
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean),
@@ -342,6 +401,14 @@ void RGPreferencesWindow::show()
 	gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML, "button_hpaned")));
 	_synapticLayout = LAYOUT_HPANED;
     }
+
+    // font stuff
+    b = _config->FindB("Synaptic::useUserFont",false);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,"checkbutton_user_font")),b);
+    b = _config->FindB("Synaptic::useUserTerminalFont",false);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,"checkbutton_user_terminal_font")),b);
+
+
     RGWindow::show();
 }
 
@@ -551,6 +618,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
     //         "keep","install"
     gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel),delAction-2);
 
+    // set data for the checkbutton
+    g_object_set_data(G_OBJECT(glade_xml_get_widget(_gladeXML,"checkbutton_user_font")), "me", this);
+    g_object_set_data(G_OBJECT(glade_xml_get_widget(_gladeXML,"checkbutton_user_terminal_font")), "me", this);
 
     // save the lister
     _lister = lister;
@@ -589,6 +659,17 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 				  "on_radio_use_proxy_toggled",
 				  G_CALLBACK(useProxyToggled),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_default_font_clicked",
+				  G_CALLBACK(changeFontAction),
+				  GINT_TO_POINTER(FONT_DEFAULT)); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_terminal_font_clicked",
+				  G_CALLBACK(changeFontAction),
+				  GINT_TO_POINTER(FONT_TERMINAL)); 
+
 
     // distro selection
     string defaultDistro = _config->Find("Synaptic::DefaultDistro","");

@@ -81,7 +81,7 @@ bool RGUserDialog::message(const char *msg,
 
     dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
 				 GTK_DIALOG_DESTROY_WITH_PARENT,
-				 gtkmessage, gtkbuttons, "%s", msg);
+				 gtkmessage, gtkbuttons, "%s", utf8(msg));
 
     if (defres) {
 	switch(buttons) {
@@ -140,9 +140,9 @@ bool RGUserDialog::showErrors()
     }
 
     if (iserror)
-	error(message.c_str());
+	error(utf8(message.c_str()));
     else
-	warning(message.c_str());
+	warning(utf8(message.c_str()));
     
     return true;
 }

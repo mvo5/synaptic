@@ -64,6 +64,9 @@ class RGPreferencesWindow : public RGGladeWindow {
     void readTreeViewValues();
     void saveTreeViewValues();
     
+    // callbacks
+    static void changeFontAction(GtkWidget *self, void *data);
+
     static void saveAction(GtkWidget *self, void *data);
     static void closeAction(GtkWidget *self, void *data);
     static void doneAction(GtkWidget *self, void *data);

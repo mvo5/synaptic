@@ -27,6 +27,7 @@
 using namespace std;
 
 //#define DEBUG_TREE
+//#define DEBUG_TREE_FULL
 
 static void         gtk_pkg_tree_init            (GtkPkgTree      *pkg_tree);
 static void         gtk_pkg_tree_class_init      (GtkPkgTreeClass *klass);
@@ -70,15 +71,18 @@ extern GdkColor *StatusColors[12];
 
 void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
 {
+#ifdef DEBUG_TREE
     cout << "RCacheActorPkgTree::run()" << endl;
+#endif
     static GtkTreeIter iter;
     tree<RPackageLister::pkgPair> *pkgTree;
     RPackageLister::treeIter it;
     RPackageLister::pkgPair pair;
 
     for(unsigned int i=0;i<List.size();i++) {
+#ifdef DEBUG_TREE
 	cout << "RCacheActorPkgTree::run()/loop" << endl;
-
+#endif
 	pair.first = List[i]->name();
 	pair.second = List[i];
 	pkgTree = _lister->getTreeOrganizer();
@@ -100,15 +104,18 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
 				       path, &iter);
 	    gtk_tree_path_free(path);
 	} else {
+#ifdef DEBUG_TREE
 	    cout << "not found pkg: " << pair.first << endl;
+#endif
 	}
     }
 }
 
 void RPackageListActorPkgTree::run(vector<RPackage*> &List, int pkgEvent)
 {
+#ifdef DEBUG_TREE
     cout << "RPackageListActorPkgTree::run()" << endl;
-
+#endif
     //FIXME: workaround for now, this should be more intelligent
     //       (see gtkpkglist.cc for a example)
     _pkgTree = gtk_pkg_tree_new(_lister);;
@@ -209,9 +216,9 @@ GtkPkgTree *
 gtk_pkg_tree_new (RPackageLister *lister)
 {
   GtkPkgTree *retval;
-
-  //g_print("pkg_tree_new()\n");
-
+#ifdef DEBUG_TREE
+  g_print("pkg_tree_new()\n");
+#endif
   retval = (GtkPkgTree*) g_object_new (GTK_TYPE_PKG_TREE, NULL);
   retval->_lister = lister;
 
@@ -283,8 +290,9 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
     GtkPkgTree *pkg_tree = (GtkPkgTree *) tree_model;
     gint *indices;
     gint depth;
-
-    //  g_print( "gtk_pkg_tree_get_iter()\n");
+#ifdef DEBUG_TREE
+    g_print( "gtk_pkg_tree_get_iter()\n");
+#endif
     g_return_val_if_fail (GTK_IS_PKG_TREE (pkg_tree), FALSE);
 
     indices = gtk_tree_path_get_indices (path);
@@ -293,8 +301,9 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
     pkgTree = pkg_tree->_lister->getTreeOrganizer();
 
     //   // tree is empty
-    if(pkgTree->size() == 0)
-	return FALSE;
+    // don't use size() here as it _very_ expensive   
+//     if(pkgTree->size() == 0)
+// 	return FALSE;
 
     RPackageLister::treeIter it(pkgTree->begin());
 
@@ -310,7 +319,7 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
 	    ++it;
 	}
     }
-
+#if 0
     // for the future dependencies
     if(depth == 3) {
 	for(int j=0;j<indices[1];j++) {
@@ -321,10 +330,12 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
 	    ++it;
 	}
     }
-//     cout << "get_iter: " << (*it).first 	 << "depth: " << depth
-// 	 << " indices: " <<indices[0]<<":"<< indices[1] << ":" << indices[2]
-//  	 << endl;
+#endif
 
+#ifdef DEBUG_TREE
+    cout << "get_iter: " << (*it).first 	 << " depth: " << depth
+ 	 << " indices: " <<indices[0]<<":"<< indices[1]	 << endl;
+#endif
      iter->user_data = it.node;
      return TRUE;
 }
@@ -345,17 +356,20 @@ gtk_pkg_tree_get_path (GtkTreeModel *tree_model,
 
   retval = gtk_tree_path_new ();
   RPackageLister::sibTreeIter it((RPackageLister::treeNode*)iter->user_data);
-
-  //   cout << "get_path(): " << (*it).first;
-
+#ifdef DEBUG_TREE
+  cout << "get_path(): " << (*it).first;
+#endif
   do {
     i = pkgTree->index(it);
-    //cout << " index: " << i << endl;
+#ifdef DEBUG_TREE
+    cout << " index: " << i << endl;
+#endif
     gtk_tree_path_prepend_index(retval, i);
     it = pkgTree->parent(it);
   } while(pkgTree->is_valid(it) );
-  
+#ifdef DEBUG_TREE
   //cout << "complete path: " << gtk_tree_path_to_string(retval) << endl;
+#endif
   return retval;
 }
 
@@ -376,14 +390,16 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
   RPackageLister::treeIter it((RPackageLister::treeNode*)iter->user_data);
-
-  //cout << "get_value() " << endl;
-
-  if(it == pkgTree->end() || pkgTree->size() == 0)
+#ifdef DEBUG_TREE_FULL
+  cout << "get_value() ";
+#endif
+  // don't use size() here as it _very_ expensive
+  if(it == pkgTree->end() ) //|| pkgTree->size() == 0)
     return;
 
-  //cout << "size: " << pkgTree->size() << endl;
-  //cout << "column: " << column << " name: " << (*it).first << endl;
+#ifdef DEBUG_TREE_FULL
+  cout << "column: " << column << " name: " << (*it).first << endl;
+#endif
 
   const gchar *str;
   RPackage *pkg = (RPackage*)(*it).second;
@@ -477,19 +493,15 @@ gtk_pkg_tree_iter_next (GtkTreeModel  *tree_model,
 
   int depth = pkgTree->depth(it);
 
-#ifdef DEBUG_TREE_FULL
+#ifdef DEBUG_TREE
   cout << "iter_next(): " << (*it).first << endl;
-  cout << "before: " << depth << endl;
 #endif
 
-  if(depth == 0 || depth == 1)
+  if(depth == 0)
     it.skip_children();
 
   ++it;
 
-#ifdef DEBUG_TREE
-  //  cout << "after: " << pkgTree->depth(*it) << endl;
-#endif
   if( it == pkgTree->end() ||  !pkgTree->is_valid(it) || depth != pkgTree->depth(it) ) 
     {
       //g_print("end of children \n");

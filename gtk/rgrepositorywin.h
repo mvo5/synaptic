@@ -27,7 +27,7 @@ class RGRepositoryEditor : RGGladeWindow {
     GtkWidget *_optType;
     GtkWidget *_optTypeMenu;
     GtkWidget *_entryDist;
-    GtkWidget *_cbEnabled;
+    //GtkWidget *_cbEnabled;
 
     RGUserDialog *_userDialog;
 

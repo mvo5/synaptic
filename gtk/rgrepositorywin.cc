@@ -32,10 +32,37 @@ enum {
     N_SOURCES_COLUMNS
 };
 
+static void
+item_toggled (GtkCellRendererToggle *cell,
+	      gchar                 *path_str,
+	      gpointer               data)
+{
+  GtkTreeModel *model = (GtkTreeModel *)data;
+  GtkTreePath *path = gtk_tree_path_new_from_string (path_str);
+  GtkTreeIter iter;
+  gboolean toggle_item;
+
+  /* get toggled iter */
+  gtk_tree_model_get_iter (model, &iter, path);
+  gtk_tree_model_get (model, &iter, STATUS_COLUMN, &toggle_item, -1);
+
+  /* do something with the value */
+  toggle_item ^= 1;
+
+  /* set new value */
+  gtk_list_store_set (GTK_LIST_STORE (model), &iter, 
+		      STATUS_COLUMN, toggle_item, 
+		      -1);
+
+  /* clean up */
+  gtk_tree_path_free (path);
+}
+
+
 RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     : RGGladeWindow(parent, "repositories")
 {
-    cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
+    //cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
     assert(_win);
     _userDialog = new RGUserDialog(_win);
     _applied = false;
@@ -70,9 +97,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 						       renderer,
 						       "active", STATUS_COLUMN,
 						       NULL);
-    // For now, let it hidden. When it is visible, it looks like the
-    // user could click in the toggle button.
-    gtk_tree_view_column_set_visible(column, FALSE);
+    g_signal_connect (renderer, "toggled", G_CALLBACK (item_toggled), 
+		      GTK_TREE_MODEL(_sourcesListStore));
     gtk_tree_view_append_column (GTK_TREE_VIEW (_sourcesListView), column);
     
     // type
@@ -127,7 +153,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 		      G_CALLBACK(SelectionChanged),
 		      this);
 
-    _cbEnabled = glade_xml_get_widget(_gladeXML, "checkbutton_enabled");
+    //_cbEnabled = glade_xml_get_widget(_gladeXML, "checkbutton_enabled");
 
     _optType = glade_xml_get_widget(_gladeXML, "optionmenu_type");
     _optTypeMenu = gtk_menu_new();
@@ -316,9 +342,8 @@ int RGRepositoryEditor::VendorMenuIndex(string VendorID)
 void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 {
     RGRepositoryEditor *me = (RGRepositoryEditor*)data;
-    cout << "RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)"<<endl;
+    //cout << "RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)"<<endl;
 
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_cbEnabled), FALSE);
     gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), 0);
     gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor), 0);
     gtk_entry_set_text(GTK_ENTRY(me->_entryURI), "");
@@ -329,7 +354,7 @@ void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 {
     RGRepositoryEditor *me = (RGRepositoryEditor*)data;
-    cout << "RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)"<<endl;
+    //cout << "RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)"<<endl;
 
     SourcesList::SourceRecord *rec = me->_lst.AddEmptySource();
 
@@ -361,13 +386,13 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 
 void RGRepositoryEditor::doEdit()
 {
-    cout << "RGRepositoryEditor::doEdit()"<<endl;
+    //cout << "RGRepositoryEditor::doEdit()"<<endl;
 
 
     //GtkTreeSelection *selection;
     //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_sourcesListView));
     if(_lastIter == NULL) {
-	cout << "deadbeef"<<endl;
+	//cout << "deadbeef"<<endl;
 	return;
     }
 
@@ -381,7 +406,11 @@ void RGRepositoryEditor::doEdit()
 		       -1);
     
     rec->Type = 0;
-    if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_cbEnabled)))
+    gboolean status;
+    gtk_tree_model_get(GTK_TREE_MODEL(_sourcesListStore), _lastIter, 
+		       STATUS_COLUMN, &status, 
+		       -1);
+    if(!status)
 	rec->Type |= SourcesList::Disabled;
     
     GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(_optTypeMenu));
@@ -443,7 +472,7 @@ void RGRepositoryEditor::doEdit()
 void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
 {
     RGRepositoryEditor *me = (RGRepositoryEditor*)data;	
-    cout << "RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)"<<endl;
+    //cout << "RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)"<<endl;
     
     GtkTreeSelection *selection;
     GtkTreeIter iter;
@@ -489,7 +518,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 					  gpointer data)
 {
     RGRepositoryEditor *me = (RGRepositoryEditor*)data;	
-    cout << "RGRepositoryEditor::SelectionChanged()"<<endl;
+    //cout << "RGRepositoryEditor::SelectionChanged()"<<endl;
 
     GtkTreeIter iter;
     GtkTreeModel *model;
@@ -504,9 +533,6 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 	gtk_tree_model_get(model, &iter, 
 			   RECORD_COLUMN, &rec, 
 			   -1);
-
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_cbEnabled),
-				     !(rec->Type & SourcesList::Disabled));
 
 	int id = ITEM_TYPE_DEB;
 	if (rec->Type & SourcesList::DebSrc)

@@ -4,9 +4,10 @@ Configure:
      (currently hardcoded)
 
 GUI:
-   -  configure whether we want text under icons or not
    - add a button to undo all programmed changes
    - add context-menu on right-click (del/inst/upgr/show descr in own window)
+   - display all files of a installed packages (like dpkg -L) 
+   - convert all GtkCList to GtkTreeView
 
 Filter:
    - add missing functionality in rpackagefilter line 183 (Provides filter)
@@ -16,13 +17,14 @@ Filter:
    - obsolete packages (installed, but no install version available)
 
 General:
-   - problem if a pkglist is not available on startup (maybe rpm only?)
    - make log-file
    - current task support is broken, try to fix it
    - implement raptoptions save/restore for getFlags/setFlags 
    - add something that adds cdrom uris to the sources
 
 Done:
+   - configure whether we want text under icons or not (done)
+   - problem if a pkglist is not available on startup (rpm only)
    - implement some kind of deborphan functionality (make it a filter)
    - filter for "residual configuration" (removed, but still configuration)
    - make a extra warning if packages are deleted (via Summary Window)

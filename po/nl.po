@@ -9,12 +9,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: nl\n"
+"Project-Id-Version: Synaptic cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 18:15+0100\n"
+"POT-Creation-Date: 2004-11-04 12:14+0100\n"
 "PO-Revision-Date: 2004-08-09 17:35+0200\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
-"Language-Team: Dutch <vertaling@nl.linux.org>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -406,39 +406,39 @@ msgstr ""
 "huidige bronnenlijst\n"
 
 #: common/rpackage.cc:544
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s %s but %s is to be installed"
-msgstr "%s is / wordt geïnstalleerd"
+msgstr "\t%s %s maar %s wordt geïnstalleerd"
 
 #: common/rpackage.cc:548
-#, fuzzy, c-format
+#, c-format
 msgid " %s: %s %s but %s is to be installed"
-msgstr "%s is / wordt geïnstalleerd"
+msgstr "%s:%s %s maar %s wordt geïnstalleerd"
 
 #: common/rpackage.cc:556
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s %s but it is not installable"
-msgstr "pakket kan niet geïnstalleerd worden"
+msgstr "\t%s %s maar het kan niet geïnstalleerd worden"
 
 #: common/rpackage.cc:564
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s but it is a virtual package"
-msgstr "pakket is een virtueel pakket"
+msgstr "\t%s maar het is een virtueel pakket"
 
 #: common/rpackage.cc:567
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s but it is a virtual package"
-msgstr "pakket is een virtueel pakket"
+msgstr "%s: %s maar het is een virtueel pakket"
 
 #: common/rpackage.cc:570
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s but it is not going to be installed"
-msgstr "%s is / wordt geïnstalleerd"
+msgstr "\t%s maar het wordt niet geïnstalleerd"
 
 #: common/rpackage.cc:573
 #, c-format
 msgid "%s: %s but it is not going to be installed"
-msgstr ""
+msgstr "%s: %s maar het wordt niet genstalleerd"
 
 #: common/rpackage.cc:592
 msgid " or"
@@ -738,19 +738,16 @@ msgid "Search History"
 msgstr "Zoekgeschiedenis"
 
 #: common/rpackageview.h:196
-#, fuzzy
 msgid "Custom"
-msgstr "Aangepaste filters"
+msgstr "Filters"
 
 #: common/rpackageview.cc:116
-#, fuzzy
 msgid "Installed (unsupported)"
-msgstr "Geïnstalleerd (vastgehouden):"
+msgstr "Geïnstalleerd (niet ondersteund):"
 
 #: common/rpackageview.cc:121
-#, fuzzy
 msgid "Not installed (unsupported)"
-msgstr "Niet geïnstalleerd (vastgezet)"
+msgstr "Niet geïnstalleerd (niet ondersteund)"
 
 #: common/rpackageview.cc:129 gtk/window_filters.glade.h:29
 msgid "New in repository"
@@ -974,16 +971,15 @@ msgstr "Onveranderd"
 
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
-msgstr ""
+msgstr "Ondersteund"
 
 #: gtk/rgpreferenceswindow.cc:46 gtk/window_filters.glade.h:37
 msgid "Package Name"
 msgstr "Pakketnaam"
 
 #: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:889
-#, fuzzy
 msgid "Component"
-msgstr "_Inhoud"
+msgstr "Component"
 
 #: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:911
 msgid "Installed Version"
@@ -998,9 +994,8 @@ msgid "Installed Size"
 msgstr "Grootte op schijf"
 
 #: gtk/rgpreferenceswindow.cc:48
-#, fuzzy
 msgid "Download Size"
-msgstr "Ophalen van bestanden"
+msgstr "Downloadgrootte"
 
 #: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1697
 #: gtk/rgterminstallprogress.cc:110
@@ -1027,10 +1022,6 @@ msgstr "Zichtbaar"
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: gtk/rgfetchprogress.cc:66
-msgid "Downloading Files"
-msgstr "Ophalen van bestanden"
-
 #: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Grootte"
@@ -1046,6 +1037,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"<big><b>%s</b></big>\n"
+"\n"
+"%s"
 
 #: gtk/rgfetchprogress.cc:141
 #, c-format
@@ -1205,16 +1199,15 @@ msgid "Latest Version"
 msgstr "Nieuwste versie"
 
 #: gtk/rgmainwindow.cc:974
-#, fuzzy
 msgid "Download"
-msgstr "Ophalen:"
+msgstr "Ophalen"
 
 #: gtk/rgmainwindow.cc:1245
-#, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded  software packages."
-msgstr "Softwarepakketten installeren, verwijderen of bijwerken"
+msgstr "De pakketlijsten verversen om geïnformeerd te worden over nieuwe pakketten "
+"of nieuwe versies van bestaande pakketten."
 
 #: gtk/rgmainwindow.cc:1251
 msgid "Mark all possible upgrades"
@@ -1325,15 +1318,15 @@ msgstr[1] ""
 "Gebruik het filter \"Gebroken\" om deze te vinden."
 
 #: gtk/rgmainwindow.cc:1886
-#, fuzzy
 msgid "Downloading changelog"
-msgstr "Veranderingen _ophalen"
+msgstr "Ophalen van pakketlogboek"
 
 #: gtk/rgmainwindow.cc:1887
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
-msgstr ""
+msgstr "Het pakketlogboek bevat informatie over de veranderingen in iedere "
+"nieuwe versie van het pakket."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: gtk/rgmainwindow.cc:1900
@@ -1434,35 +1427,30 @@ msgid "Applying marked changes. This may take a while..."
 msgstr "Gegeven veranderingen worden doorgevoerd. Dit kan even duren..."
 
 #: gtk/rgmainwindow.cc:2528
-#, fuzzy
 msgid "Downloading package files"
-msgstr "Ophalen van bestanden"
+msgstr "Ophalen van pakketten"
 
 #: gtk/rgmainwindow.cc:2529
-#, fuzzy
 msgid "The package files will be cached locally for installation."
-msgstr "De pakketten zullen alleen opgehaald en niet geïnstalleerd worden"
+msgstr "De pakketten worden lokaal opgeslagen voor de installatie."
 
 #: gtk/rgmainwindow.cc:2604
 msgid "Do you want to quit Synaptic?"
 msgstr "Wilt u Synaptic afsluiten?"
 
 #: gtk/rgmainwindow.cc:2660
-#, fuzzy
 msgid "Downloading package information"
-msgstr "Alleen pakketten ophalen"
+msgstr "Ophalen van pakketinformatie"
 
 #: gtk/rgmainwindow.cc:2661
-#, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
-msgstr "Softwarepakketten installeren, verwijderen of bijwerken"
+msgstr "Er wordt gecontroleerd op nieuwe, verwijderde of bijgewerkte softwarepakketten."
 
 #: gtk/rgmainwindow.cc:2664
-#, fuzzy
 msgid "Reloading package information..."
-msgstr "Starten van pakketconfiguratie..."
+msgstr "Herladen van pakketinformatie..."
 
 #: gtk/rgmainwindow.cc:2728
 msgid "Failed to resolve dependency problems!"
@@ -1498,6 +1486,10 @@ msgid ""
 "\n"
 " Packages in this component are not supported. Are you sure?"
 msgstr ""
+"U voegt het onderdeel \"universe\" toe.\n"
+"\n"
+" Pakketten die onder dit onderdeel vallen worden niet ondersteund.\n"
+" Weet u het zeker?"
 
 #: gtk/rgrepositorywin.cc:118 gtk/window_repositories.glade.h:4
 msgid "Repositories"
@@ -1554,9 +1546,8 @@ msgid "To be DOWNGRADED"
 msgstr "Bijwerken met oudere versie"
 
 #: gtk/rgsummarywindow.cc:160
-#, fuzzy
 msgid "To be not upgraded"
-msgstr "Bijwerken"
+msgstr "Niet bijwerken"
 
 #: gtk/rgsummarywindow.cc:196
 #, c-format
@@ -1710,7 +1701,7 @@ msgstr "Zoeken"
 #: gtk/rgtaskswin.cc:141
 #, c-format
 msgid "Description %s"
-msgstr "Beschrijving %s"
+msgstr "Beschrijving van %s"
 
 #: gtk/window_main.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:2
@@ -1802,7 +1793,7 @@ msgstr "Geïnstalleerde bestanden"
 
 #: gtk/window_main.glade.h:22
 msgid "Mark All Upgrades"
-msgstr "Pakketten met nieuwe versie markeren"
+msgstr "Systeem bijwerken"
 
 #: gtk/window_main.glade.h:23
 msgid "Mark Packages by _Task..."
@@ -1838,14 +1829,12 @@ msgid "Reload"
 msgstr "Herladen"
 
 #: gtk/window_main.glade.h:34
-#, fuzzy
 msgid "S_earch"
-msgstr "Zoeken"
+msgstr "_Zoeken"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "S_tatus"
-msgstr "Status"
+msgstr "_Status"
 
 #: gtk/window_main.glade.h:36
 msgid "Save Markings _As..."
@@ -1909,11 +1898,11 @@ msgstr "_Inhoud"
 
 #: gtk/window_main.glade.h:51
 msgid "_Custom"
-msgstr ""
+msgstr "_Filters"
 
 #: gtk/window_main.glade.h:52
 msgid "_Download Changelog"
-msgstr "Veranderingen _ophalen"
+msgstr "Pakketlogboek _ophalen"
 
 #: gtk/window_main.glade.h:53
 msgid "_Edit"
@@ -1980,7 +1969,6 @@ msgid "_Redo"
 msgstr "Opnieu_w"
 
 #: gtk/window_main.glade.h:69
-#, fuzzy
 msgid "_Reload Package Information"
 msgstr "Pakkettenlijst _verversen"
 
@@ -1997,9 +1985,8 @@ msgid "_Search..."
 msgstr "_Zoeken..."
 
 #: gtk/window_main.glade.h:73
-#, fuzzy
 msgid "_Sections"
-msgstr "Onderdelen"
+msgstr "_Onderdelen"
 
 #: gtk/window_main.glade.h:74
 msgid "_Set Internal Option..."
@@ -2011,7 +1998,7 @@ msgstr "_Instellingen"
 
 #: gtk/window_main.glade.h:76
 msgid "_Text Only"
-msgstr "Tekst"
+msgstr "Alleen _tekst"
 
 #: gtk/window_main.glade.h:77
 msgid "_Toolbar"
@@ -2026,8 +2013,8 @@ msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2004 Michael Vogt</span>"
 msgstr ""
-"<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
-"Copyright (c) 2002-2004 Michael Vogt</span>"
+"<span size=\"small\">Copyright © 2001-2004 Connectiva S/A \n"
+"Copyright © 2002-2004 Michael Vogt</span>"
 
 #: gtk/window_about.glade.h:3
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
@@ -2096,8 +2083,7 @@ msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
 msgstr ""
-"Deze software wordt verspreid onder de GNU General Public License, Versie 2, "
-"verspreid."
+"Deze software wordt verspreid onder de GNU General Public License, Versie 2."
 
 #: gtk/window_about.glade.h:29
 msgid "Translated by"
@@ -2116,9 +2102,10 @@ msgid "Written by"
 msgstr "Geschreven door"
 
 #: gtk/window_about.glade.h:33
-#, fuzzy
 msgid "translators-credits"
-msgstr "Vincent van Adrighem <adrighem@gnome.org>"
+msgstr "Vincent van Adrighem\n"
+"\n"
+"Kijk voor meer info op http://nl.gnome.org/"
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:3
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
@@ -2144,7 +2131,7 @@ msgstr "_Zoeken"
 
 #: gtk/window_fetch.glade.h:1
 msgid "Show progress of single files"
-msgstr ""
+msgstr "Voortgang van individuele pakketten"
 
 #: gtk/window_changes.glade.h:1
 msgid ""
@@ -2194,12 +2181,11 @@ msgid "<b>Marking Changes</b>"
 msgstr "<b>Markeringen</b>"
 
 #: gtk/window_preferences.glade.h:11
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package information must be reloaded and all marked changes "
 "will be lost. Make sure to apply your changes first."
 msgstr ""
-"<b>Opmerking:</b> De pakkettenlijst moet herladen worden. Alle gemarkeerde "
+"<b>Opmerking:</b> De pakkettenlijst moet ververst worden. Alle gemarkeerde "
 "veranderingen zullen verloren gaan. Vergeet niet eerst uw veranderingen toe "
 "te passen."
 
@@ -2244,7 +2230,7 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:20
 msgid "Automatically"
-msgstr ""
+msgstr "Automatisch"
 
 #: gtk/window_preferences.glade.h:21
 msgid "Broken:"
@@ -2328,9 +2314,8 @@ msgid "IP address or host name of the http proxy server"
 msgstr "IP-adres of computernaam van de HTTP-proxy"
 
 #: gtk/window_preferences.glade.h:41
-#, fuzzy
 msgid "Ignore"
-msgstr "negeren"
+msgstr "Negeren"
 
 #: gtk/window_preferences.glade.h:42
 msgid "Installed (locked):"
@@ -2390,7 +2375,7 @@ msgstr "Netwerk"
 
 #: gtk/window_preferences.glade.h:56
 msgid "New in respository:"
-msgstr "Nieuw in archief"
+msgstr "Nieuw in archief:"
 
 #: gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
@@ -2422,7 +2407,7 @@ msgstr "Poort: "
 
 #: gtk/window_preferences.glade.h:65
 msgid "Reloading outdated package information:"
-msgstr ""
+msgstr "Verversen van verouderde pakketinformatie:"
 
 #: gtk/window_preferences.glade.h:66
 msgid "Removal of packages: "
@@ -2561,11 +2546,11 @@ msgstr "<b>Diversen</b>"
 
 #: gtk/window_filters.glade.h:7
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gtk/window_filters.glade.h:8
 msgid "Boolean operator between property criterias:"
-msgstr ""
+msgstr "Booleaanse operator tussen eigenschappen:"
 
 #: gtk/window_filters.glade.h:10
 msgid "Conflicting Packages"
@@ -2577,7 +2562,7 @@ msgstr "Afhankelijke pakketten"
 
 #: gtk/window_filters.glade.h:14
 msgid "Exclude"
-msgstr "Niet tonen"
+msgstr "Uitsluiten"
 
 #: gtk/window_filters.glade.h:15
 msgid "Exclude selected sections"
@@ -2597,7 +2582,7 @@ msgstr "Voor verwijdering"
 
 #: gtk/window_filters.glade.h:20
 msgid "Include"
-msgstr "Tonen"
+msgstr "Meenemen"
 
 #: gtk/window_filters.glade.h:21
 msgid "Include selected sections only"
@@ -2637,7 +2622,7 @@ msgstr "Niet gemarkeerd"
 
 #: gtk/window_filters.glade.h:34
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gtk/window_filters.glade.h:36
 msgid "Orphaned"
@@ -2838,7 +2823,7 @@ msgid ""
 msgstr ""
 "De software op uw systeem is verdeeld over zogenaamde <i>pakketten</i>. Het "
 "pakketbeheer geeft u de mogelijkheid om programma's te verwijderen, te "
-"installeren of bij te werken:"
+"installeren en bij te werken."
 
 #: gtk/dialog_welcome.glade.h:10
 msgid ""
@@ -2851,7 +2836,8 @@ msgstr ""
 msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
-msgstr ""
+msgstr "U moet de pakkettenlijst regelmatig verversen. Anders loopt u belangrijke "
+"beveiligings-updates mis."
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
@@ -2921,10 +2907,9 @@ msgstr "Afhankelijke pakketten"
 msgid "Icon Legend"
 msgstr "Legenda"
 
-#: gtk/rgiconlegend.cc:73
-#, fuzzy
+#: gtk/rgiconlegend.cc:72
 msgid "Package is supported"
-msgstr "Geen pakket geselecteerd.\n"
+msgstr "Pakket wordt ondersteund"
 
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
@@ -2990,6 +2975,9 @@ msgstr ""
 "aanwezig in het archief, of er zijn misschien problemen met de "
 "pakkettenbron. Ververs de pakkettenlijst en controleer de bron van het "
 "pakket ( bijvoorbeeld CD of netwerkverbinding)."
+
+#~ msgid "Downloading Files"
+#~ msgstr "Ophalen van bestanden"
 
 #, fuzzy
 #~ msgid "Refresh the list of known packages from remote server"

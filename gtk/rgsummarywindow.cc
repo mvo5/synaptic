@@ -297,7 +297,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
     //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
     GtkTreeViewColumn *column;
-    column = gtk_tree_view_column_new_with_attributes (_("Package changes"), 
+    column = gtk_tree_view_column_new_with_attributes (_("Queued Changes"), 
 		    					renderer,
 						       "text", PKG_COLUMN,
 						       NULL);
@@ -309,7 +309,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     gtk_widget_show(_middleF);
     gtk_box_pack_start(GTK_BOX(_topBox), _middleF, TRUE, TRUE, 5);
 
-    _dlonlyB = gtk_check_button_new_with_label(_("Perform package download only."));
+    _dlonlyB = gtk_check_button_new_with_label(_("Download the packages files only"));
     gtk_widget_show(_dlonlyB);
     gtk_box_pack_start(GTK_BOX(_topBox), _dlonlyB, FALSE, TRUE, 10);
 
@@ -317,18 +317,18 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     hbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
 
-    button = gtk_button_new_with_label(_("Show Details"));
+    button = gtk_button_new_with_label(_("_Show Details"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedDetails, this);
     gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 20);
 
-    _defBtn = button = gtk_button_new_with_label(_("Proceed"));
+    _defBtn = button = gtk_button_new_with_label(_("_Execute"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)clickedOk, this);
 
     gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 0);
 
-    button = gtk_button_new_with_label(_("Cancel"));
+    button = gtk_button_new_with_label(_("_Cancel"));
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)clickedCancel, this);
     gtk_box_pack_end(GTK_BOX(hbox), button, TRUE, TRUE, 5);
@@ -351,51 +351,51 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     lister->getDownloadSummary(dlCount, dlSize);
 
     if (held)
-	g_string_append_printf(msg,_("%d %s were held;\n"), 
+	g_string_append_printf(msg,_("%d %s are set on hold\n"), 
 			       held, held > 1 ? _("packages") : _("package"));
     if (kept)
 	g_string_append_printf(msg,
-			       _("%d %s were kept back and not upgraded;\n"), 
+			       _("%d %s are kept back and not upgraded\n"), 
 			       kept, kept > 1 ? _("packages") : _("package"));
 
     if (toInstall)
 	g_string_append_printf(msg,
-			       _("%d new %s will be installed;\n"), 
+			       _("%d new %s will be installed\n"), 
 			       toInstall, 
 			       toInstall > 1 ? _("packages") : _("package"));
     
     if (toUpgrade)
-	g_string_append_printf(msg,_("%d %s will be upgraded;\n"), toUpgrade,
+	g_string_append_printf(msg,_("%d %s will be upgraded\n"), toUpgrade,
 			       toUpgrade > 1 ? _("packages") : _("package"));
     
     if (toRemove)
-	g_string_append_printf(msg,_("%d %s will be removed;\n"), toRemove,
+	g_string_append_printf(msg,_("%d %s will be removed\n"), toRemove,
 			       toRemove > 1 ? _("packages") : _("package"));
     
     if (toDowngrade)
-	g_string_append_printf(msg,_("%d %s will be DOWNGRADED;\n"), 
+	g_string_append_printf(msg,_("%d %s will be DOWNGRADED\n"), 
 			       toDowngrade, 
 			       toDowngrade > 1 ? _("packages") : _("package"));
 			   
     if (essential) {
 	g_string_append_printf(msg,
-			      _("WARNING: %d essential %s will be removed!\n"),
+			      _("WARNING: %d essential %s will be removed\n"),
 			       essential, 
 			       essential > 1 ? _("packages") : _("package"));
 	_potentialBreak = true;
     }
 
     if (sizeChange > 0) {
-	g_string_append_printf(msg, _("\n%s B will be used after finished.\n"),
+	g_string_append_printf(msg, _("\n%s B of extra space will be used\n"),
 			       SizeToStr(sizeChange).c_str());
     } else if (sizeChange < 0) {
-	g_string_append_printf(msg, _("\n%s B will be freed after finished.\n"),
+	g_string_append_printf(msg, _("\n%s B of extra space will be freed\n"),
 			       SizeToStr(sizeChange).c_str());
 	sizeChange = -sizeChange;
     }
     
     if (dlSize > 0) {
-	g_string_append_printf(msg, _("\n%s B need to be downloaded."),
+	g_string_append_printf(msg, _("\n%s B have to be downloaded"),
 			       SizeToStr(dlSize).c_str());
     }
     
@@ -417,7 +417,7 @@ bool RGSummaryWindow::showAndConfirm()
     RGUserDialog userDialog(this);
     if (_confirmed && _potentialBreak
 	&& userDialog.warning(_("Essential packages will be removed.\n"
-			  	"That can render your system unusable!!!\n")
+			  	"This may render your system unusable!\n")
 			      , false) == false)
 	return false;
     

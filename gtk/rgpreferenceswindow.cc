@@ -568,15 +568,12 @@ void RGPreferencesWindow::readColors()
 void RGPreferencesWindow::readFiles()
 {
    // <b>Temporary Files</b>
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean),
-                                _config->FindB("Synaptic::CleanCache", false));
-
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheAutoClean),
-                                _config->FindB("Synaptic::AutoCleanCache",
-                                               false));
-
    bool postClean = _config->FindB("Synaptic::CleanCache", false);
-   bool postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
+   bool postAutoClean = _config->FindB("Synaptic::AutoCleanCache", true);
+
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean), postClean);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheAutoClean), 
+				postAutoClean);
 
    if (postClean)
       gtk_button_clicked(GTK_BUTTON(_cacheClean));

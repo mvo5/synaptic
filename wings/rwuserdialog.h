@@ -34,8 +34,24 @@ public:
 
    RWUserDialog(WMScreen *scr) : _scr(scr), _confirmDialogOwner(0) {};
 
-   virtual bool confirm(char *title, char *message) {
-       return WMRunAlertPanel(_scr, _confirmDialogOwner, title, message,
+   virtual bool confirm(const char *message) {
+       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Confirm", message,
 			      "Yes", "No", NULL) == WAPRDefault;
    }
+
+   virtual bool warning(const char *message) {
+       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Warning", message,
+			      "Ok", NULL) == WAPRDefault;
+   }
+
+   virtual bool info(const char *message) {
+       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Info", message,
+			      "Ok", NULL) == WAPRDefault;
+   }
+
+   virtual bool error(const char *message) {
+       return WMRunAlertPanel(_scr, _confirmDialogOwner, "Error", message,
+			      "Ok", NULL) == WAPRDefault;
+   }
+
 };

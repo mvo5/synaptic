@@ -49,7 +49,7 @@ using namespace std;
 // ---------------------------------------------------------------------
 /* This takes the list of source list expressed entires and collects
    similar ones to form a single entry for each dist */
-bool ReduceSourcelist(string CD,vector<string> &List)
+void ReduceSourcelist(string CD,vector<string> &List)
 {
    sort(List.begin(),List.end());
    
@@ -63,8 +63,9 @@ bool ReduceSourcelist(string CD,vector<string> &List)
       string::size_type SSpace = (*I).find(' ',Space + 1);
       if (SSpace == string::npos)
 	 continue;
-      
+
       string Word1 = string(*I,Space,SSpace-Space);
+      string Prefix = string(*I,0,Space);
       for (vector<string>::iterator J = List.begin(); J != I; J++)
       {
 	 // Find a space..
@@ -75,6 +76,8 @@ bool ReduceSourcelist(string CD,vector<string> &List)
 	 if (SSpace2 == string::npos)
 	    continue;
 	 
+	 if (string(*J,0,Space2) != Prefix)
+	    continue;
 	 if (string(*J,Space2,SSpace2-Space2) != Word1)
 	    continue;
 	 
@@ -91,21 +94,11 @@ bool ReduceSourcelist(string CD,vector<string> &List)
       else
 	 List.erase(List.begin()+I);
    }
-   return true;
 }
 									/*}}}*/
-
-
-bool RCDScanner::writeDatabase(string id, string name)
+bool RCDScanner::writeDatabase()
 {
-   // Escape special characters
-   string::iterator J = name.begin();
-   for (; J != name.end(); J++)
-      if (*J == '"' || *J == ']' || *J == '[')
-         *J = '_';    
-    
-    _database->Set("CD::" + id, name);
-    
+    _database->Set("CD::" + _cdId, _cdName);
     
     string DFile = _config->FindFile("Dir::State::cdroms");
     string NewFile = DFile + ".new";
@@ -138,7 +131,7 @@ bool RCDScanner::writeDatabase(string id, string name)
     }   
     
     Out.close();
-    
+   
     rename(DFile.c_str(),string(DFile + '~').c_str());
     if (rename(NewFile.c_str(),DFile.c_str()) != 0)
 	return _error->Errno("rename",_("Failed to rename %s.new to %s"),
@@ -147,8 +140,7 @@ bool RCDScanner::writeDatabase(string id, string name)
     return true;
 }
 
-
-bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
+bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
 {
     // copy&paste from apt-cdrom
 
@@ -158,7 +150,8 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
     string File = _config->FindFile("Dir::Etc::sourcelist");
 
     // Open the stream for reading 
-    ifstream F(File.c_str(), ios::in);
+    ifstream F((FileExists(File)?File.c_str():"/dev/null"),
+	       ios::in );
     if (!F != 0)
 	return _error->Errno("ifstream::ifstream","Opening %s",File.c_str());
     
@@ -170,8 +163,15 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
 			     _("Failed to open %s.new"),File.c_str());
     
     // Create a short uri without the path
-    string ShortURI = "cdrom:[" + name + "]/";   
-    string ShortURI2 = "cdrom:" + name + "/";     // For Compatibility
+    string ShortURI = "cdrom:[" + _cdName + "]/";   
+    string ShortURI2 = "cdrom:" + _cdName + "/";     // For Compatibility
+
+    string ShortOldURI;
+    string ShortOldURI2;
+    if (_cdOldName.empty() == false) {
+	ShortOldURI = "cdrom:[" + _cdOldName + "]/";   
+	ShortOldURI2 = "cdrom:" + _cdOldName + "/";
+    }
     
     const char *Type;
     
@@ -204,7 +204,7 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
 		string::size_type Space = (*I).find(' ');
 		if (Space == string::npos)
 		    return _error->Error(_("Internal error"));
-		Out << Type << " cdrom:[" << name << "]/" << string(*I,0,Space) <<
+		Out << Type << " cdrom:[" << _cdName << "]/" << string(*I,0,Space) <<
 		    " " << string(*I,Space+1) << endl;
 	    }
 	}
@@ -221,9 +221,13 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
 	    continue;
 	}
 	
-	// Emit lines like this one
-	if (cType != Type || (string(URI,0,ShortURI.length()) != ShortURI &&
-			      string(URI,0,ShortURI.length()) != ShortURI2))
+	// Omit lines like this one
+	if (cType != Type
+	    || (string(URI,0,ShortURI.length()) != ShortURI &&
+		string(URI,0,ShortURI.length()) != ShortURI2 &&
+		(_cdOldName.empty()
+		 || (string(URI,0,ShortOldURI.length()) != ShortOldURI &&
+		     string(URI,0,ShortOldURI.length()) != ShortOldURI2))))
 	{
 	    Out << Buffer << endl;
 	    continue;
@@ -239,12 +243,12 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
 	    if (Space == string::npos)
 		return _error->Error(_("Internal error"));
 	    
-	    Out << Type << " cdrom:[" << name << "]/" << string(*I,0,Space) <<
+	    Out << Type << " cdrom:[" << _cdName << "]/" << string(*I,0,Space) <<
 		    " " << string(*I,Space+1) << endl;
 	}
     }
     
-   Out.close();
+    Out.close();
     
     rename(File.c_str(),string(File + '~').c_str());
     if (rename(NewFile.c_str(),File.c_str()) != 0)
@@ -254,64 +258,90 @@ bool RCDScanner::writeSourceList(string name, vector<string> &list, bool pkg)
     return true;
 }
 
-
-void RCDScanner::unmountCD()
+bool RCDScanner::start(RCDScanProgress *progress)
 {
-    string mpoint = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
-    
-    UnmountCdrom(mpoint);
-}
+    _cdName = "";
+    _scannedOk = false;
 
+    progress->setTotal(STEP_LAST);
+    progress->update(_("Preparing..."), STEP_PREPARE);
 
-
-bool RCDScanner::scanCD(RCDScanProgress *progress)
-{
-    string mpoint = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
+    // Startup
+    string CDROM = _config->FindDir("Acquire::cdrom::mount","/cdrom/");
+    if (CDROM[0] == '.')
+        CDROM= SafeGetCWD() + '/' + CDROM;
 
     if (!_database)
-	_database = new Configuration;
+	_database = new Configuration();
     
     string DFile = _config->FindFile("Dir::State::cdroms");
     if (FileExists(DFile) == true)
     {
-	if (ReadConfigFile(*_database,DFile) == false)
+	if (ReadConfigFile(*_database,DFile) == false) {
 	    return _error->Error(_("Unable to read the cdrom database %s"),
 				 DFile.c_str());
+	}
     }
    
-   
-    progress->update(_("Mounting CD-ROM..."));
+    // Unmount the CD and get the user to put in the one they want
+    _cdromMounted = false;
+    if (_config->FindB("APT::CDROM::NoMount",false) == false)
+    {
+        progress->update(_("Unmounting CD-ROM..."), STEP_UNMOUNT);
+        UnmountCdrom(CDROM);
 
-    if (!MountCdrom(mpoint)) {
-	progress->update(_("Could not mount CD-ROM"));
-	return false;
+        progress->update(_("Waiting for disc..."), STEP_WAIT);
+        _userDialog->info(_("Insert a disc in the drive."));
+
+        // Mount the new CDROM
+        progress->update(_("Mounting CD-ROM..."), STEP_MOUNT);
+
+        if (MountCdrom(CDROM) == false) {
+	    return _error->Error("Failed to mount the cdrom.");
+	}
+        _cdromMounted = true;
     }
     
-    progress->update(_("Identifying Disc..."));
-    if (!IdentCdrom(mpoint, _cdId)) {
-	progress->update(_("Could not Identify Disc"));
-	return false;
+    progress->update(_("Identifying disc..."), STEP_IDENT);
+
+    if (!IdentCdrom(CDROM, _cdId)) {
+	return _error->Error("Couldn't identify disc.");
     }
     
-    progress->update(_("Scanning Disc..."), 0);
+    progress->update(_("Scanning disc..."), STEP_SCAN);
     
     string cwd = SafeGetCWD();
 
-    _pkgList.erase(_pkgList.begin(), _pkgList.end());
-    _srcList.erase(_srcList.begin(), _srcList.end());
+    _pkgList.clear();
+    _srcList.clear();
     _infoDir = "";
     
-    if (!scanDirectory(mpoint, progress)) {
-	progress->update(_("Error Scanning Disc"));
+    if (!scanDirectory(CDROM, progress)) {
+	chdir(cwd.c_str());
 	return false;
     }
+
+    chdir(cwd.c_str());
+    
+    progress->update(_("Cleaning package lists..."), STEP_CLEAN);
     
     cleanPkgList(_pkgList);
     cleanSrcList(_srcList);
+
+    if (_pkgList.size() == 0 && _srcList.size() == 0) {
+        progress->update(_("Unmounting CD-ROM..."), STEP_UNMOUNT2);
+
+	if (_cdromMounted
+	    && _config->FindB("APT::CDROM::NoMount",false) == false) {
+	    UnmountCdrom(CDROM);
+	    _cdromMounted = false;
+	}
+	return _error->Error("Unable to locate any package files. Perhaps this is not an APT enabled disc.");
+    }
     
+    _scannedOk = true;
     return true;
 }
-
 
 void RCDScanner::countLists(int &pkgLists, int &srcLists)
 {
@@ -319,96 +349,178 @@ void RCDScanner::countLists(int &pkgLists, int &srcLists)
     srcLists = _srcList.size();
 }
 
-
 string RCDScanner::getDiscName()
 {
     string name = "";
     
-    if (!_infoDir.empty() && FileExists(_infoDir + "/info") == true)
-    {
+    if (_database->Exists("CD::" + _cdId)) {
+	name = _database->Find("CD::" + _cdId, "");
+	_cdOldName = name;
+    }
+    else if (!_infoDir.empty() && FileExists(_infoDir + "/info")) {
 	ifstream F(string(_infoDir + "/info").c_str());
 	if (!F == 0)
             getline(F,name);
 	
-	if (name.empty() == false)
-            _database->Set("CD::" + _cdId + "::Label", name);
+	if (name.empty() == false) {
+	    // Escape special characters
+	    string::iterator J = name.begin();
+	    for (; J != name.end(); J++)
+	        if (*J == '"' || *J == ']' || *J == '[')
+		    *J = '_';
+        }
     }
 
     return name;
 }
 
-
-bool RCDScanner::needsRegistration(string &defaultName)
-{
-    defaultName = getDiscName();
-    
-    return !_database->Exists("CD::"+_cdId);
-}
-
-
-bool RCDScanner::registerDisc(string name)
-{
-    if (!writeDatabase(_cdId, name))
-	return false;
-    
-    _cdName = name;
-
-    return true;
-}
-
-
-bool RCDScanner::finish()
-{
-    string mpoint = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
-
-    UnmountCdrom(mpoint);
-
-    ReduceSourcelist(mpoint, _pkgList);
-    ReduceSourcelist(mpoint, _srcList);
-    
-    if (!writeSourceList(_cdName, _pkgList, true)
-	|| !writeSourceList(_cdName, _srcList, false)) {
+bool RCDScanner::setDiscName(string name)
+{ 
+    if (name.empty() == true ||
+	name.find('"') != string::npos ||
+	name.find('[') != string::npos ||
+	name.find(']') != string::npos)
 	    return false;
-    }
-    
+    _cdName = name;
     return true;
 }
 
-
-
-
-
-
-
-
-bool RCDScanner::copyLists(RCDScanProgress *progress)
+bool RCDScanner::finish(RCDScanProgress *progress)
 {
-    string mpoint = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
-    
+    if (_scannedOk == false) {
+	return _error->Error(_("Disc not successfuly scanned."));
+    }
+
+    if (_cdName.empty() == true) {
+	return _error->Error(_("Empty disc name."));
+    }
+
+    progress->update(_("Registering disc..."), STEP_REGISTER);
+
+    if (writeDatabase() == false) {
+        return false;
+    }
+
     // Copy the package files to the state directory
 #ifdef HAVE_RPM
     RPMPackageCopy Copy;
     RPMSourceCopy SrcCopy;
-   
-    if (Copy.CopyPackages(mpoint,_cdName,_pkgList) == false ||
-	SrcCopy.CopyPackages(mpoint,_cdName,_srcList) == false)
-	return false;
+#else
+    PackageCopy Copy;
+    SourceCopy SrcCopy;
 #endif
+
+    progress->update(_("Copying package lists..."), STEP_COPY);
+   
+    string CDROM = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
+
+    if (Copy.CopyPackages(CDROM,_cdName,_pkgList) == false ||
+	SrcCopy.CopyPackages(CDROM,_cdName,_srcList) == false) {
+	return false;
+    }
+
+    progress->update(_("Writing sources list..."), STEP_WRITE);
+
+    ReduceSourcelist(CDROM, _pkgList);
+    ReduceSourcelist(CDROM, _srcList);
+    
+    if (!writeSourceList(_pkgList, true)
+	|| !writeSourceList(_srcList, false)) {
+	    return false;
+    }
+
+    if (_cdromMounted) {
+        progress->update(_("Unmounting CD-ROM..."), STEP_UNMOUNT3);
+        UnmountCdrom(CDROM);
+    }
+
+    progress->update(_("Done!"), STEP_LAST);
+    
     return true;
 }
 
-
-
-int Score(string Path)
+void RCDScanner::unmount()
 {
-    if (Path.find("base/") != string::npos) {
-	return 1;
-    } else {
-	return 0;
-    }
+    string CDROM = _config->FindDir("Acquire::cdrom::mount", "/cdrom/");
+    if (_cdromMounted)
+        UnmountCdrom(CDROM);
 }
 
+// DropBinaryArch - Dump dirs with a string like /binary-<foo>/		/*{{{*/
+// ---------------------------------------------------------------------
+/* Here we drop everything that is not this machines arch */
+bool DropBinaryArch(vector<string> &List)
+{
+   char S[300];
+   snprintf(S,sizeof(S),"/binary-%s/",
+	    _config->Find("Apt::Architecture").c_str());
+   
+   for (unsigned int I = 0; I < List.size(); I++)
+   {
+      const char *Str = List[I].c_str();
+      
+      const char *Res;
+      if ((Res = strstr(Str,"/binary-")) == 0)
+	 continue;
 
+      // Weird, remove it.
+      if (strlen(Res) < strlen(S))
+      {
+	 List.erase(List.begin() + I);
+	 I--;
+	 continue;
+      }
+	  
+      // See if it is our arch
+      if (stringcmp(Res,Res + strlen(S),S) == 0)
+	 continue;
+      
+      // Erase it
+      List.erase(List.begin() + I);
+      I--;
+   }
+   
+   return true;
+}
+									/*}}}*/
+// Score - We compute a 'score' for a path				/*{{{*/
+// ---------------------------------------------------------------------
+/* Paths are scored based on how close they come to what I consider
+   normal. That is ones that have 'dist' 'stable' 'frozen' will score
+   higher than ones without. */
+int Score(string Path)
+{
+   int Res = 0;
+#ifdef HAVE_RPM
+   if (Path.find("base/") != string::npos)
+      Res = 1;
+#else
+   if (Path.find("stable/") != string::npos)
+      Res += 29;
+   if (Path.find("/binary-") != string::npos)
+      Res += 20;
+   if (Path.find("frozen/") != string::npos)
+      Res += 28;
+   if (Path.find("unstable/") != string::npos)
+      Res += 27;
+   if (Path.find("/dists/") != string::npos)
+      Res += 40;
+   if (Path.find("/main/") != string::npos)
+      Res += 20;
+   if (Path.find("/contrib/") != string::npos)
+      Res += 20;
+   if (Path.find("/non-free/") != string::npos)
+      Res += 20;
+   if (Path.find("/non-US/") != string::npos)
+      Res += 20;
+   if (Path.find("/source/") != string::npos)
+      Res += 10;
+   if (Path.find("/debian/") != string::npos)
+      Res -= 10;
+#endif
+   return Res;
+}
+									/*}}}*/
 // DropRepeats - Drop repeated files resulting from symlinks		/*{{{*/
 // ---------------------------------------------------------------------
 /* Here we go and stat every file that we found and strip dup inodes. */
@@ -419,12 +531,11 @@ bool DropRepeats(vector<string> &List,const char *Name)
    for (unsigned int I = 0; I != List.size(); I++)
    {
       struct stat Buf;
-      string path = List[I] + string(Name);
-       
-      if (stat(path.c_str(),&Buf) != 0 &&
-	  stat((path + ".gz").c_str(),&Buf) != 0 &&
-	  stat((path + ".bz2").c_str(),&Buf) != 0)
-	  _error->Errno("stat","Failed to stat %s",path.c_str());
+      if (stat((List[I]).c_str(),&Buf) != 0 &&
+	  stat((List[I] + Name).c_str(),&Buf) != 0 &&
+	  stat((List[I] + Name + ".gz").c_str(),&Buf) != 0)
+	 _error->Errno("stat","Failed to stat %s%s",List[I].c_str(),
+		       Name);
       Inodes[I] = Buf.st_ino;
    }
    
@@ -465,42 +576,42 @@ bool DropRepeats(vector<string> &List,const char *Name)
    return true;
 }
 
-
 void RCDScanner::cleanPkgList(vector<string> &list)
 {
+#ifdef HAVE_RPM
     DropRepeats(list, "pkglist");
+#else
+    DropBinaryArch(list);
+    DropRepeats(list,"Packages");
+#endif
 }
-
-
 
 void RCDScanner::cleanSrcList(vector<string> &list)
 {
+#ifdef HAVE_RPM
     DropRepeats(list, "srclist");
+#else
+    DropRepeats(sList,"Sources");
+#endif
 }
-
-
 
 string RCDScanner::pkgSourceType() const
 {
+#ifdef HAVE_RPM
     return "rpm";
+#else
+    return "deb";
+#endif
 }
-
 
 string RCDScanner::srcSourceType() const
 {
+#ifdef HAVE_RPM
     return "rpm-src";
+#else
+    return "deb-src";
+#endif
 }
-
-
-bool RCDScanner::isOurArch(string arch) const
-{
-    if (arch == "noarch" || arch == _config->Find("APT::Architecture")) {
-	return true;
-    } else {
-	return false;
-    }
-}
-
 
 static int strrcmp_(const char *a, const char *b)
 {
@@ -517,86 +628,127 @@ static int strrcmp_(const char *a, const char *b)
 }
 
 
-bool RCDScanner::scanDirectory(string path, RCDScanProgress *progress,
-			       int depth)
+bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
+			       int Depth)
 {
-    static ino_t inodes[9];
+    static ino_t Inodes[9];
+    if (Depth >= 7)
+        return true;
 
-    if (depth > 8)
-	return true;
-    
-    if (path[path.size()-1] != '/')
-	path = path + "/";
-    
-    if (chdir(path.c_str()) != 0) {
-	return _error->Errno("chdir", _("Could not change directory to %s"),
-			     path.c_str());
-    }
-    
+    if (CD[CD.length()-1] != '/')
+        CD += '/';   
+
+    if (chdir(CD.c_str()) != 0)
+        return _error->Errno("chdir","Unable to change to %s",CD.c_str());
+
     // Look for a .disk subdirectory
     struct stat Buf;
-    if (_infoDir.empty() && stat(".disk",&Buf) == 0)
+    if (stat(".disk",&Buf) == 0)
     {
-	_infoDir = path + ".disk/";
+        if (_infoDir.empty() == true)
+	_infoDir = CD + ".disk/";
     }
 
-    DIR *D = opendir(".");
-    if (!D) {
-	return _error->Errno("opendir", _("Unable to read directory %s"),
-			     path.c_str());
+    // Don't look into directories that have been marked to ingore.
+    if (stat(".aptignr",&Buf) == 0)
+        return true;
+   
+#ifdef HAVE_RPM
+    bool Found = false;
+    if (stat("release",&Buf) == 0)
+        Found = true;
+#else
+    /* Aha! We found some package files. We assume that everything under 
+       this dir is controlled by those package files so we don't look down
+       anymore */
+    if (stat("Packages",&Buf) == 0 || stat("Packages.gz",&Buf) == 0)
+    {
+        _pkgList.push_back(CD);
+      
+        // Continue down if thorough is given
+        if (_config->FindB("APT::CDROM::Thorough",false) == false)
+	    return true;
     }
-    
-    // Run over the directory and look for "base" subdirectories
+    if (stat("Sources.gz",&Buf) == 0 || stat("Sources",&Buf) == 0)
+    {
+        _srcList.push_back(CD);
+      
+        // Continue down if thorough is given
+        if (_config->FindB("APT::CDROM::Thorough",false) == false)
+	    return true;
+    }
+#endif
+   
+    DIR *D = opendir(".");
+    if (D == 0)
+        return _error->Errno("opendir","Unable to read %s",CD.c_str());
+   
+    // Run over the directory
     for (struct dirent *Dir = readdir(D); Dir != 0; Dir = readdir(D))
     {
-	// Skip some files..
-	if (strcmp(Dir->d_name,".") == 0 ||
+        // Skip some files..
+        if (strcmp(Dir->d_name,".") == 0 ||
 	    strcmp(Dir->d_name,"..") == 0 ||
 	    //strcmp(Dir->d_name,"source") == 0 ||
 	    strcmp(Dir->d_name,".disk") == 0 ||
-	    strncmp(Dir->d_name,"RPMS", 4) == 0 ||
-	    strstr(Dir->d_name,"image") != NULL)
-	    continue;
+#ifdef HAVE_RPM
+	    strncmp(Dir->d_name,"RPMS",4) == 0 ||
+	    strncmp(Dir->d_name,"doc",3) == 0)
+#else
+	    strcmp(Dir->d_name,"experimental") == 0 ||
+	    strcmp(Dir->d_name,"binary-all") == 0)
+#endif
+	        continue;
 
-	if (stat(Dir->d_name, &Buf) != 0)
+#ifdef HAVE_RPM
+        if (strncmp(Dir->d_name, "pkglist.", 8) == 0 &&
+	    strcmp(Dir->d_name+strlen(Dir->d_name)-4, ".bz2") == 0)
+        {
+	    _pkgList.push_back(CD + string(Dir->d_name));
+	    Found = true;
 	    continue;
-
-	
-	if (strncmp(Dir->d_name, "srclist", sizeof("srclist")-1) == 0
-	    && (strrcmp_(Dir->d_name, ".gz") == 0 
-		|| strrcmp_(Dir->d_name, ".bz2") == 0))
-	    _srcList.push_back(path);
-	
-	if (strncmp(Dir->d_name, "pkglist", sizeof("pkglist")-1) == 0
-	    && (strrcmp_(Dir->d_name, ".gz") == 0
-		|| strrcmp_(Dir->d_name, ".bz2") == 0))
-	    _pkgList.push_back(path);
-
-	if (!S_ISDIR(Buf.st_mode)) {
+        }
+        if (strncmp(Dir->d_name, "srclist.", 8) == 0 &&
+	    strcmp(Dir->d_name+strlen(Dir->d_name)-4, ".bz2") == 0)
+        {
+	    _srcList.push_back(CD + string(Dir->d_name));
+	    Found = true;
 	    continue;
-	}
-	
-	int I;
-	for (I = 0; I != depth; I++)
-	    if (inodes[I] == Buf.st_ino)
-		break;
-	if (I != depth) // we've been in this dir before
+        }
+        if (_config->FindB("APT::CDROM::Thorough",false) == false &&
+	    Found == true)
+	    continue;
+#endif
+
+        // See if the name is a sub directory
+        struct stat Buf;
+        if (stat(Dir->d_name,&Buf) != 0)
+	    continue;      
+      
+        if (S_ISDIR(Buf.st_mode) == 0)
 	    continue;
       
-	// Store the inodes weve seen
-	inodes[depth] = Buf.st_ino;
+        unsigned int I;
+        for (I = 0; I != Depth; I++)
+	    if (Inodes[I] == Buf.st_ino)
+	        break;
+        if (I != Depth)
+	    continue;
+      
+        // Store the inodes weve seen
+        Inodes[Depth] = Buf.st_ino;
 
-	if (scanDirectory(path + string(Dir->d_name), progress,
-			  depth + 1))
-	    return false;
-	
-	if (chdir(path.c_str()) != 0)
-	    return _error->Errno("chdir", _("Could not change directory to %s"),
-				 path.c_str());
+        // Descend
+        if (scanDirectory(CD + Dir->d_name, progress, Depth+1) == false)
+	    break;
+
+        if (chdir(CD.c_str()) != 0)
+	    return _error->Errno("chdir","Unable to change to %s",CD.c_str());
     }
-    
+
     closedir(D);
-    
+   
     return !_error->PendingError();
 }
 
+// vim:sts=4:sw=4

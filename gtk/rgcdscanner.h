@@ -1,4 +1,4 @@
-/* rguserdialog.h
+/* rgcdscanner.h
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
  *
@@ -20,34 +20,29 @@
  * USA
  */
 
-#ifndef RGUSERDIALOG_H
-#define RGUSERDIALOG_H
-#include "rpackagelister.h"
+#ifndef RGCDSCANNER_H
+#define RGCDSCANNER_H
 
-#include "galertpanel.h"
+#include "rcdscanner.h"
+#include "rgwindow.h"
 
+class RGMainWindow;
 
-class RGUserDialog : public RUserDialog
+class RGCDScanner : public RCDScanProgress, public RGWindow
 {
-
 protected:
 
-   GtkWidget *_parentWindow;
+   GtkWidget *_label;
+   GtkWidget *_pbar;
 
-   static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
-   {
-      GtkResponseType *res = (GtkResponseType*) user_data;
-      *res = (GtkResponseType) id;
-   }
+   RUserDialog *_userDialog;
 
 public:
 
-   RGUserDialog(GtkWidget *parent = NULL) : _parentWindow(parent) {};
+   RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
+   void update(string text, int current);
+   bool run();
 
-   virtual bool confirm(const char *message);
-   virtual void warning(const char *message);
-   virtual void info(const char *message);
-   virtual void error(const char *message);
 };
 
 #endif

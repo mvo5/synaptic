@@ -21,7 +21,8 @@ glade_DATA =                            \
 	window_find.glade window_find.glade.strings \
 	window_about.glade window_about.glade.strings \
 	window_changes.glade window_changes.glade.strings \
-	window_options.glade window_options.glade.strings
+	window_options.glade window_options.glade.strings \
+	window_disc_name.glade window_disc_name.glade.strings
 
 EXTRA_DIST = $(glade_DATA)
 
@@ -55,6 +56,8 @@ synaptic_SOURCES=\
 	rgzvtinstallprogress.cc\
 	rginstallprogress.h\
 	rginstallprogress.cc\
+	rgcdscanner.h\
+	rgcdscanner.cc\
 	rgmainwindow.cc\
 	rgmainwindow.h\
 	rgsrcwindow.cc\
@@ -66,6 +69,7 @@ synaptic_SOURCES=\
 	rgchangeswindow.cc\
 	rgchangeswindow.h\
 	rguserdialog.h\
+	rguserdialog.cc\
 	rgwindow.cc\
 	rgwindow.h \
 	synapticinterface.cc\

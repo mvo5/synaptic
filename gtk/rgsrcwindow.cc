@@ -3,7 +3,6 @@
 #include "rgsrcwindow.h"
 #include "config.h"
 #include "i18n.h"
-#include "galertpanel.h"
 
 #if HAVE_RPM
 enum  {ITEM_TYPE_RPM, 
@@ -22,11 +21,13 @@ RGSrcEditor::RGSrcEditor(RGWindow *parent)
 {
 	selectedrow = -1;
 	dialog = CreateWidget();
+	_userDialog = new RGUserDialog(dialog);
 }
 
 RGSrcEditor::~RGSrcEditor()
 {
 	gtk_widget_destroy(dialog);
+	delete _userDialog;
 }
 
 GtkWidget *RGSrcEditor::CreateWidget()
@@ -270,16 +271,12 @@ void RGSrcEditor::Run()
 {
   if (lst.ReadSources() == false) {
     _error->DumpErrors();
-    gtk_run_alert_panel(this->window(), _("Error"), 
-			_("Cannot read sources.list file"),
-			_("Ok"), NULL, NULL);
+    _userDialog->error(_("Cannot read sources.list file"));
     return;
   }
   if (lst.ReadVendors() == false) {
     _error->DumpErrors();
-    gtk_run_alert_panel(this->window(), _("Error"), 
-			_("Cannot read vendors.list file"),
-			_("Ok"), NULL, NULL);
+    _userDialog->error(_("Cannot read vendors.list file"));
     return;
   }
 
@@ -376,9 +373,7 @@ void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
 		case ITEM_TYPE_RPMSRC:
 			Type |= SourcesList::RpmSrc; break;
 		default:
-		  gtk_run_alert_panel(me->window(), _("Error"), 
-				      _("Unknown source type"),
-				      _("Ok"), NULL, NULL);
+		  me->_userDialog->error(_("Unknown source type"));
 		  return;
 	}
 
@@ -395,8 +390,7 @@ void RGSrcEditor::DoAdd(GtkWidget *, gpointer data)
 	SourcesList::SourceRecord *rec = me->lst.AddSource((SourcesList::RecType)Type, VendorID, URI, Dist, Sections, count);
 
 	if(rec == NULL) {
-	  gtk_run_alert_panel(me->window(), _("Error"), _("Invalid URL"),
-			      _("Ok"), NULL, NULL);
+	  me->_userDialog->error(_("Invalid URL"));
 	  return;
 	}
 
@@ -453,9 +447,7 @@ void RGSrcEditor::DoEdit(GtkWidget *, gpointer data)
 		case ITEM_TYPE_RPMSRC:
 			rec.Type |= SourcesList::RpmSrc; break;
 		default:
-		  gtk_run_alert_panel(me->window(), _("Error"), 
-				      _("Unknown source type"),
-				      _("Ok"), NULL, NULL);
+		  me->_userDialog->error(_("Unknown source type"));
 		  return;
 	}
 

@@ -1102,7 +1102,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	       message += "("+serverError+")\n";
 	    message += _("Do you want to continue, ignoring these packages?");
 
-	    if (!_userDialog->confirm(_("Warning"), (char*)message.c_str()))
+	    if (!_userDialog->confirm(message.c_str()))
 		goto gave_wood;
 	}
 	// Try to deal with missing package files

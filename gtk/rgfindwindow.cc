@@ -109,6 +109,11 @@ RGFindWindow::RGFindWindow(RGWindow *win)
 				this); 
 
   glade_xml_signal_connect_data(_gladeXML,
+				"on_entry_find_activate",
+				G_CALLBACK(doFind),
+				this); 
+
+  glade_xml_signal_connect_data(_gladeXML,
 				"on_button_close_clicked",
 				G_CALLBACK(doClose),
 				this); 

@@ -28,6 +28,8 @@
 #include <vector>
 #include <string>
 
+#include "rpackagelister.h"
+
 using namespace std;
 
 class Configuration;
@@ -35,21 +37,38 @@ class Configuration;
 
 class RCDScanProgress {
    
+protected:
    int _total;
    
 public:
    void setTotal(int total) { _total = total; };
 
-   virtual void update(string phase, int current=-1) = 0;
+   virtual void update(string text, int current) = 0;
 };
-
-
 
 class RCDScanner {
 
    Configuration *_database;
+
+   RUserDialog *_userDialog;
    
 protected:
+
+    enum {
+	    STEP_PREPARE = 1,
+	    STEP_UNMOUNT,
+	    STEP_WAIT,
+	    STEP_MOUNT,
+	    STEP_IDENT,
+	    STEP_SCAN,
+	    STEP_CLEAN,
+	    STEP_UNMOUNT2,
+	    STEP_REGISTER,
+	    STEP_COPY,
+	    STEP_WRITE,
+	    STEP_UNMOUNT3,
+	    STEP_LAST
+    };
 
    vector<string> _pkgList;
    vector<string> _srcList;
@@ -57,33 +76,35 @@ protected:
    
    string _cdId;
    string _cdName;
+   string _cdOldName;
+
+   bool _cdromMounted;
+   bool _scannedOk;
 
    string pkgSourceType() const;
    string srcSourceType() const;
-   bool isOurArch(string arch) const;
    bool scanDirectory(string path, RCDScanProgress *progress, int depth=0);
 
    void cleanPkgList(vector<string> &list);
    void cleanSrcList(vector<string> &list);
    
-   bool writeDatabase(string id, string name);
-   bool writeSourceList(string id, vector<string> &list, bool pkg);
+   bool writeDatabase();
+   bool writeSourceList(vector<string> &list, bool pkg);
+
+public:
+   bool start(RCDScanProgress *progress);
+   bool finish(RCDScanProgress *progress);
+   void unmount();
 
    string getDiscName();
+   bool setDiscName(string name);
    
-public:
-   void unmountCD();
-
-   bool scanCD(RCDScanProgress *progress);
    void countLists(int &pkgLists, int &srcLists);
 
-   bool copyLists(RCDScanProgress *progress);   
-   
-   bool needsRegistration(string &defaultName);
-   bool registerDisc(string name);
-   
-   bool finish();
-   
+   RCDScanner(RUserDialog *userDialog)
+      : _database(0), _userDialog(userDialog),
+   	_cdromMounted(0), _scannedOk(0)
+      {};
 };
 
 

@@ -207,6 +207,8 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void onStatusTree(GtkWidget *self, void *data);   
    static void onFlatList(GtkWidget *self, void *data);   
 
+   static void onAddCDROM(GtkWidget *self, void *data);
+
    static void showSearchPanel(GtkWidget *self, void *data);
    static void showAboutPanel(GtkWidget *self, void *data);
    static void showFilterWindow(GtkWidget *self, void *data);

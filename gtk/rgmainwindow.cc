@@ -64,6 +64,7 @@
 #include "rgaboutpanel.h"
 #include "rgsummarywindow.h"
 #include "rgchangeswindow.h"
+#include "rgcdscanner.h"
 
 #include "rgfetchprogress.h"
 #include "rgcacheprogress.h"
@@ -610,10 +611,9 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
     bool res;
 
     if (!me->_lister->check()) {
-	gtk_run_alert_panel(me->window(), _("Error"), 
-			    _("Automatic upgrade selection not possible\n"
-			      "with broken packages. Please fix them first."),
-			    _("Ok"), NULL, NULL);
+	me->_userDialog->error(
+		_("Automatic upgrade selection not possible\n"
+		  "with broken packages. Please fix them first."));
 	return;
     }
     
@@ -640,10 +640,9 @@ void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
     bool res;
 
     if (!me->_lister->check()) {
-	gtk_run_alert_panel(me->window(),
-			_("Error"), _("Automatic upgrade selection not possible\n"
-			"with broken packages. Please fix them first."),
-			_("Ok"), NULL, NULL);
+	me->_userDialog->error(
+			_("Automatic upgrade selection not possible\n"
+			  "with broken packages. Please fix them first."));
 	return;
     }
 
@@ -679,10 +678,9 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
     // check whether we can really do it
     if (!me->_lister->check()) {
-	gtk_run_alert_panel(me->window(), _("Error"), 
+	me->_userDialog->error(
 			    _("Operation not possible with broken packages.\n"
-			      "Please fix them first."),
-			    _("Ok"), NULL, NULL);
+			      "Please fix them first."));
 	return;
     }
     
@@ -764,16 +762,13 @@ bool RGMainWindow::showErrors()
 {
     string message;
     int lines;
-    char *type;
     
     if (_error->empty())
 	return FALSE;
     
+    bool error = false;
     if (_error->PendingError())
-	type = _("Error");
-    else
-	type = _("Warning");
-
+	error = true;
         
     lines = 0;
     message = "";
@@ -792,8 +787,10 @@ bool RGMainWindow::showErrors()
 	    message = message + "\n\n" + tmp;
     }
 
-    gtk_run_errors_panel(_win, type, message.c_str(),
-			_("OK"), NULL, NULL);
+    if (error)
+	_userDialog->error(message.c_str());
+    else
+	_userDialog->warning(message.c_str());
     
     return TRUE;
 }
@@ -1358,12 +1355,10 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
     }
 
     if (me->_unsavedChanges == true && 
-	gtk_run_alert_panel(me->_win, _("Warning"),
+	me->_userDialog->confirm(
 			    _("There are unsaved changes.\n"
 			      "Synaptic must reopen its cache.\n"
-			      "Your changes will be lost. Are you sure?"),
-			    _("Apply"), _("Cancel"), 
-			    NULL) != GTK_ALERT_DEFAULT) 
+			      "Your changes will be lost. Are you sure?")))
       {
 	me->_blockActions = TRUE;
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(self), !active);
@@ -1486,10 +1481,9 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
     
     if (pkg->isImportant()) {
 	int res;
-	res = gtk_run_alert_panel(me->window(), _("Warning"),
-			      _("Removing this package may render the system unusable.\n"
-				"Are you sure you want to do that?"),
-			      _("Cancel"), _("Remove"), NULL);
+	res = me->_userDialog->confirm(
+		_("Removing this package may render the system unusable.\n"
+		  "Are you sure you want to do that?"));
 	if (res == GTK_ALERT_DEFAULT) {
 	  me->_blockActions = TRUE;
 	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_currentB), TRUE);
@@ -1588,7 +1582,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
     
     refreshFilterMenu();
 
-    _userDialog = new RGUserDialog();
+    _userDialog = new RGUserDialog(_win);
 
     packLister->setUserDialog(_userDialog);
     
@@ -2126,6 +2120,11 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(onFlatList),
 				  this); 
     
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_add_cdrom_activate",
+				  G_CALLBACK(onAddCDROM),
+				  this); 
+    
     /* --------------------------------------------------------------- */
     
     // toolbar menu code
@@ -2241,6 +2240,29 @@ void RGMainWindow::onFlatList(GtkWidget *self, void *data)
     me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_FLAT);
 }
 
+void RGMainWindow::onAddCDROM(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+  RGCDScanner scan(me, me->_userDialog);
+  me->setInterfaceLocked(TRUE);
+  bool updateCache = false;
+  bool dontStop = true;
+  while (dontStop) {
+    if (scan.run() == false) {
+      me->showErrors();
+    } else {
+      updateCache = true;
+    }
+    dontStop = me->_userDialog->confirm(_("Do you want to scan another CD?"));
+  }
+  scan.hide();
+  if (updateCache) {
+    me->_lister->openCache(TRUE);
+    me->refreshTable(me->selectedPackage());
+  }
+  me->setInterfaceLocked(FALSE);
+}
+
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
   RPackageLister::pkgState state;
@@ -2285,14 +2307,9 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
 {
   if (pkg->isImportant()) {
-    int res = gtk_run_alert_panel(this->window(), 
-				  _("Warning"),
-				  _("Removing this package may render the "
-				    "system unusable.\n"
-				    "Are you sure you want to do that?"),
-				  _("Cancel"), _("Remove"), NULL);
-    // default is "Cancel"
-    if (res == GTK_ALERT_DEFAULT) {
+    if (!_userDialog->confirm(_("Removing this package may render the "
+			        "system unusable.\n"
+			        "Are you sure you want to do that?"))) {
       _blockActions = TRUE;
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(this->_currentB),
 				   TRUE);
@@ -2544,10 +2561,7 @@ void RGMainWindow::saveState()
 
     if (!RWriteConfigFile(*_config)) {
       _error->DumpErrors();
-      gtk_run_alert_panel(_win,
-			  _("Error"), 
-			  _("An error occurred while saving configurations."),
-			  _("OK"), NULL, NULL);
+      _userDialog->error(_("An error occurred while saving configurations."));
     }
     if(!_roptions->store())
       cerr << "error storing raptoptions" << endl;
@@ -2575,10 +2589,8 @@ void RGMainWindow::close()
 	return;
     
     if (_unsavedChanges == false || 
-	gtk_run_alert_panel(_win, _("Warning"),
-			    _("There are unsaved changes, are you sure\n"
-			      "you want to quit Synaptic?"),
-			    _("Quit"), _("Cancel"), NULL) == GTK_ALERT_DEFAULT) {
+	_userDialog->confirm(_("There are unsaved changes. Are you sure\n"
+			       "you want to quit Synaptic?"))) {
 	
 	_error->Discard();
 	

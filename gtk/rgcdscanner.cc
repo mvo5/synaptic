@@ -1,0 +1,140 @@
+/* rgcdscanner.cc
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
+ *
+ * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * USA
+ */
+
+#include "config.h"
+#include "i18n.h"
+#include "rgmainwindow.h"
+#include "rgcdscanner.h"
+
+#include <unistd.h>
+#include <stdio.h>
+
+class RGDiscName : public RGWindow
+{
+protected:
+
+    GtkWidget *_textEntry;
+    bool _userConfirmed;
+    
+    static void onOkClicked(GtkWidget *self, void *data);
+    static void onCancelClicked(GtkWidget *self, void *data);
+
+public:
+    RGDiscName(RGWindow *wwin, const string defaultName);
+
+    bool run(string &name);
+};
+
+
+extern void RGFlushInterface();
+
+void RGCDScanner::update(string text, int current)
+{
+    gtk_label_set_text(GTK_LABEL(_label), text.c_str());
+    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
+		    		  ((float)current)/_total);
+    show();
+    RGFlushInterface();
+}
+
+RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
+    : RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
+{
+    setTitle(_("Scanning CD-ROM"));
+
+    _userDialog = userDialog;
+
+    gtk_widget_set_usize(_win, 320, 80);
+
+    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
+    
+    _label = gtk_label_new("");
+    gtk_widget_show(_label);
+    gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+
+    _pbar = gtk_progress_bar_new();
+    gtk_widget_show(_pbar);
+    gtk_widget_set_usize(_pbar, -1, 25);
+    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+}
+
+bool RGCDScanner::run()
+{
+    bool res = false;
+    RCDScanner scanner(_userDialog);
+    if (scanner.start(this)) {
+	RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
+	string name;
+	while (1) {
+	    if (!discName->run(name)) {
+		delete discName;
+		scanner.unmount();
+		return false;
+	    }
+	    if (scanner.setDiscName(name))
+		break;
+	    _userDialog->error(_("Invalid disc name!"));
+	}
+	delete discName;
+        res = scanner.finish(this);
+    }
+    return res;
+}
+
+RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
+    : RGWindow(wwin, "disc_name", false, false, true)
+{
+    _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
+    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_ok_clicked",
+				  G_CALLBACK(onOkClicked),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_cancel_clicked",
+				  G_CALLBACK(onCancelClicked),
+				  this); 
+}
+
+void RGDiscName::onOkClicked(GtkWidget *self, void *data)
+{
+    RGDiscName *me = (RGDiscName*)data;
+    me->_userConfirmed = true;
+    gtk_main_quit();
+}
+
+void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
+{
+    gtk_main_quit();
+}
+
+bool RGDiscName::run(string &discName)
+{
+    _userConfirmed = false;
+    show();
+    gtk_main();
+    discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
+    return _userConfirmed;
+}
+
+// vim:sts=4:sw=4

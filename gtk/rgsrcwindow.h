@@ -5,6 +5,7 @@
 #include "rsources.h"
 #include "rgwindow.h"
 #include "rgvendorswindow.h"
+#include "rguserdialog.h"
 
 typedef list<SourcesList::SourceRecord*>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord*>::iterator VendorsListIter;
@@ -26,6 +27,8 @@ class RGSrcEditor : RGWindow {
 
 	int selectedrow;
 
+	RGUserDialog *_userDialog;
+
 	GtkWidget *CreateWidget();
 
 	void UpdateVendorMenu();
@@ -40,6 +43,7 @@ class RGSrcEditor : RGWindow {
 	static void UpdateDisplay(GtkCList *, gint, gint, GdkEventButton *, gpointer);
 	static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
 	static void VendorsWindow(GtkWidget *, gpointer);
+
 
 public:
 	RGSrcEditor(RGWindow *parent);

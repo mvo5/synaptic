@@ -48,7 +48,7 @@ RGWindow::RGWindow(string name, bool makeBox, bool useGlade)
     filename = g_strdup_printf("window_%s.glade",name.c_str());
     if(FileExists(filename)) {
        _gladeXML = glade_xml_new(filename,
-				 g_strdup_printf("window_%s",name.c_str()),
+				 g_strdup_printf("window_%s", name.c_str()),
 				 NULL);
     } else {
       g_free(filename);

@@ -163,12 +163,28 @@ int main(int argc, char **argv)
     gtk_init(&argc, &argv);    
     //XSynchronize(dpy, 1);
 
+    // check if the locales are actually supported, I got a number
+    // of bugreports that where caused by incorrect locales, try to
+    // work around this problem here
+    if(!XSupportsLocale()) {
+	RGUserDialog userDialog;
+	userDialog.warning(_("Your locale settings are not supported by "
+			     "Xlib\n\n"
+			     "Please use locale settings like "
+			     "\"fr_FR\" or \"fr_FR@euro\" and do not use "
+			     "settings like \"fr_FR.iso8859-15@euro\". \n\n"
+			     "Because of this your locales are reseted."));
+	unsetenv("LANG");
+	unsetenv("LC_ALL");
+	gtk_set_locale();
+    } 
+
     if (getuid() != 0) {
 	RGUserDialog userDialog;
 	userDialog.error(_("You must run this program as the root user."));
 	exit(1);
-    }   
-  
+    }  
+
     if (!RInitConfiguration("synaptic.conf")) {
 	RGUserDialog userDialog;
 	userDialog.showErrors();

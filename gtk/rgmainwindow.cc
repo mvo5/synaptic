@@ -1087,7 +1087,7 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Reinstall"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Reinstallation"));
    img = get_gtk_image("package-reinstall");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
    g_object_set_data(G_OBJECT(menuitem),"me",this);
@@ -1158,11 +1158,11 @@ void RGMainWindow::buildInterface()
    menuitem = gtk_separator_menu_item_new ();
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Install Recommended"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark Recommended for Installation"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Install Suggested"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark Suggested for Installation"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif

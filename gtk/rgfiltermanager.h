@@ -64,9 +64,9 @@ static char *ActOptions[] = {
 
 static char *DepOptions[] = {
    _("Package name"),
-   _("Version number"),
    _("Description"),
    _("Maintainer"),
+   _("Version number"),
    _("Dependencies"),           // depends, predepends etc
    _("Provided packages"),      // provides and name
    _("Conflicting packages"),   // conflicts

@@ -1318,9 +1318,9 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
       Failed = true;
    }
    if (Failed == true)
-      _error->
-         Warning(_
-                 ("Release files for some repositories could not be retrieved or authenticated. Such repositories are being ignored."));
+      _error->Warning(_("Release files for some repositories could not be "
+                        "retrieved or authenticated. Such repositories are "
+                        "being ignored."));
 #endif /* HAVE_RPM */
 
    if (!_cache->list()->GetIndexes(&Fetcher))
@@ -1350,9 +1350,8 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
          return false;
    }
    if (Failed == true)
-      return _error->
-         Error(_
-               ("Some index files failed to download, they have been ignored, or old ones used instead."));
+      return _error->Error(_("Some index files failed to download, they "
+                             "have been ignored, or old ones used instead."));
 
    return true;
 }

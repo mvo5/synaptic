@@ -437,7 +437,9 @@ void RPackageViewFilter::makePresetFilters()
       filter->preset = true;
       filter->pattern.addPattern(RPatternPackageFilter::Depends,
                                  "^debconf", false);
-      filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
+      // TRANSLATORS: This is a filter that will give you all packages
+      // with debconf support (that can be reconfigured with debconf)
+      filter->setName("Package with Debconf"); _("Package with Debconf");
       registerFilter(filter);
    }
 #endif

@@ -2302,7 +2302,7 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
                                "You need either the GNOME help viewer 'yelp', "
                                "the 'konqueror' browser or the 'mozilla' "
                                "browser to view the synaptic manual.\n\n"
-                               "Alternativly you can open the man page "
+                               "Alternatively you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));

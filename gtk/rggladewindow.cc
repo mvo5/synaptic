@@ -55,7 +55,10 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    assert(_gladeXML);
    _win = glade_xml_get_widget(_gladeXML, main_widget);
 
-
+   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_window_set_position(GTK_WINDOW(_win),
+			   GTK_WIN_POS_CENTER_ON_PARENT);
+ 
    assert(_win);
    g_free(filename);
    g_free(main_widget);

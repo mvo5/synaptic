@@ -151,10 +151,10 @@ const char *utf8_to_locale(const char *str)
    static char *_str = NULL;
    if (str == NULL)
       return NULL;
-   g_free(_str);
-   _str = NULL;
    if (g_utf8_validate(str, -1, NULL) == false)
       return NULL;
+   g_free(_str);
+   _str = NULL;
    _str = g_locale_from_utf8(str, -1, NULL, NULL, NULL);
    return _str;
 }
@@ -164,10 +164,10 @@ const char *utf8(const char *str)
    static char *_str = NULL;
    if (str == NULL)
       return NULL;
-   g_free(_str);
-   _str = NULL;
    if (g_utf8_validate(str, -1, NULL) == true)
       return str;
+   g_free(_str);
+   _str = NULL;
    _str = g_locale_to_utf8(str, -1, NULL, NULL, NULL);
    return _str;
 }

@@ -7,6 +7,8 @@ INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@ \
 	-DSYNAPTICLOCALEDIR=\""$(synapticlocaledir)"\"
 
 libsynaptic_a_SOURCES =\
+	pkg_acqfile.cc\
+	pkg_acqfile.h\
 	rconfiguration.cc\
 	rconfiguration.h\
 	rinstallprogress.cc\

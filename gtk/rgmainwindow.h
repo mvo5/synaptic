@@ -104,6 +104,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // menu items 
    GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;
+   GtkWidget *_dl_changelogM;
 
    // popup-menu
    GtkWidget *_popupMenu;
@@ -238,6 +239,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
                                    RGMainWindow *me,
                                    vector<RPackage *> selected_pkgs);
 
+   static void cbChangelogDialog(GtkWidget *self, void *data);
 
    static void cbSelectedRow(GtkTreeSelection *selection, gpointer data);
    static void cbPackageListRowActivated(GtkTreeView *treeview,

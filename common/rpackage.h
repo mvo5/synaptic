@@ -34,6 +34,8 @@
 #include <vector>
 
 #include <apt-pkg/pkgcache.h>
+#include <apt-pkg/acquire.h>
+#include "rconfiguration.h"
 
 using namespace std;
 
@@ -134,16 +136,25 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
+   // get changelog file from the debian server (debian only of course)
+   string getChangelogFile(pkgAcquire *fetcher);
+
    vector<string> provides();
 
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
+
+   // get origin of the package
+   string getCanidateOrigin();
 
    const char *maintainer();
    const char *vendor();
 
    const char *installedVersion();
    long installedSize();
+
+   // sourcepkg
+   const char *srcPackage();
 
    // relative to version that would be installed
    const char *availableVersion();

@@ -29,25 +29,24 @@
 #include "ruserdialog.h"
 #include "rgwindow.h"
 
-class RGUserDialog:public RUserDialog {
- protected:
+class RGUserDialog : public RUserDialog
+{
+protected:
 
-   GtkWidget *_parentWindow;
+    GtkWidget *_parentWindow;
 
- public:
+public:
 
- RGUserDialog():_parentWindow(0) {
-   };
- RGUserDialog(RGWindow *parent):_parentWindow(parent->window()) {
-   };
- RGUserDialog(GtkWidget *parent):_parentWindow(parent) {
-   };
+    RGUserDialog() : _parentWindow(0) {};
+    RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
+    RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
 
-   virtual bool message(const char *msg,
-                        RUserDialog::DialogType dialog =
-                        RUserDialog::DialogInfo,
-                        RUserDialog::ButtonsType buttons =
-                        RUserDialog::ButtonsOk, bool defres = true);
+    virtual bool message(const char *msg,
+	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
+	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
+	    bool defres=true);
+
+    virtual bool showErrors();
 };
 
 
@@ -69,22 +68,21 @@ class RGUserDialog:public RUserDialog {
  * if you need more complex interaction, use the getGladeXML() call to ask
  * for specific widgets in the dialog (see gtk/dialog_upgrade.glade as example
 */
-class RGGladeUserDialog:public RGUserDialog {
+class RGGladeUserDialog : public RGUserDialog
+{
  protected:
-   GtkWidget *_dialog;
-   GtkResponseType res;
-   GladeXML *gladeXML;
+    GtkWidget *_dialog;
+    GtkResponseType res;
+    GladeXML *gladeXML;
+    bool init(const char *name);
 
  public:
-   RGGladeUserDialog(RGWindow *parent) : gladeXML(0) {};
-   virtual ~RGGladeUserDialog() {
-      gtk_widget_destroy(_dialog);
-   };
+    RGGladeUserDialog(RGWindow* parent) : gladeXML(0) {};
+    RGGladeUserDialog(RGWindow* parent, const char *name);
+    virtual ~RGGladeUserDialog()  { gtk_widget_destroy(_dialog); };
 
-   bool run(const char *name);
-   GladeXML *getGladeXML() {
-      return gladeXML;
-   };
+    bool run(const char *name=NULL);
+    GladeXML *getGladeXML() { return gladeXML; };
 };
 #endif
 

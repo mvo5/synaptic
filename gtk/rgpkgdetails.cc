@@ -137,6 +137,13 @@ void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
    // provides
    setTreeList("treeview_provides", pkg->provides());
 
+
+   // file list
+#ifndef HAVE_RPM
+   gtk_widget_show(glade_xml_get_widget(_gladeXML, "scrolledwindow_filelist"));
+   setTextView("textview_files", pkg->installedFiles());
+#endif
+
    glade_xml_signal_connect_data(_gladeXML, "on_optionmenu_depends_changed",
 				 G_CALLBACK(cbDependsMenuChanged), this);
 }

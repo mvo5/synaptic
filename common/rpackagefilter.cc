@@ -40,6 +40,24 @@
 
 using namespace std;
 
+// don't translate this, they are only used in the filter file
+char *RPatternPackageFilter::TypeName[] = {
+   N_("Name"),
+   N_("Version"),
+   N_("Description"),
+   N_("Maintainer"),
+   N_("Depends"),
+   N_("Provides"),
+   N_("Conflicts"),
+   N_("Replaces"),
+   N_("Recommends"),
+   N_("Suggests"),
+   N_("ReverseDepends"),
+   N_("Origin"),
+   NULL
+};
+
+
 const char *RPFStatus = _("Status");
 const char *RPFPattern = _("Pattern");
 const char *RPFSection = _("Section");
@@ -122,19 +140,6 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
    return true;
 }
 
-// don't translate this, they are only used in the filter file
-char *RPatternPackageFilter::TypeName[] = {
-   N_("Name"),
-   N_("Version"),
-   N_("Description"),
-   N_("Maintainer"),
-   N_("Depends"),
-   N_("Provides"),
-   N_("Conflicts"),
-   N_("Replaces"),
-   N_("WeakDepends"),
-   N_("ReverseDepends")
-};
 
 bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
 {
@@ -155,6 +160,7 @@ bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
    }
    return found;
 }
+
 
 bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
 {
@@ -262,6 +268,17 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
    }
    return false;
 }
+bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
+{
+   bool found = false;
+   string origin;
+   origin = pkg->getCanidateOrigin();
+   if(regexec(pat.regexps[0],origin.c_str(), 0, NULL, 0) == 0) {
+      found = true;
+   } 
+
+   return found;
+}
 
 bool RPatternPackageFilter::filter(RPackage *pkg)
 {
@@ -309,6 +326,9 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	 break;
       case RDepends:
 	 found = filterRDepends(pat, pkg);
+	 break;
+      case Origin:
+	 found = filterOrigin(pat, pkg);
 	 break;
       default:
 	 cerr << "unknown pattern package filter (shouldn't happen) " << endl;
@@ -395,7 +415,10 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
    top = top->Child;
    while (top) {
       int i;
-      for (i = 0; top->Value != TypeName[i]; i++);
+      for (i = 0; TypeName[i] && top->Value != TypeName[i]; i++) 
+	 /* nothing */
+	 ;
+
       type = (DepType) i;
       top = top->Next;
       pat = top->Value;
@@ -403,7 +426,9 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
       excl = top->Value == "true";
       top = top->Next;
 
-      addPattern(type, pat, excl);
+      if(TypeName[i] != NULL)
+	 addPattern(type, pat, excl);
+      
    }
 
    return true;

@@ -44,8 +44,7 @@ bool RPackageOptionsFile(ofstream &out);
 bool RPackageOptionsFile(ifstream &in);
 
 
-
-// get the default conf dir
+// get the default conf dir, very small temp files might be placed here too
 string RConfDir();
 
 #endif

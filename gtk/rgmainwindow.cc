@@ -38,6 +38,7 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <pwd.h>
 
 #include "raptoptions.h"
 #include "rconfiguration.h"
@@ -506,8 +507,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
-   : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0),
-_treeView(0)
+   : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
+     _treeView(0), _iconLegendPanel(0)
 {
    assert(_win);
 
@@ -584,6 +585,7 @@ void RGMainWindow::buildTreeView()
 
    _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
    assert(_treeView);
+   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(_treeView),TRUE);
 
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
@@ -884,8 +886,12 @@ void RGMainWindow::buildInterface()
    assert(_remove_w_depsM);
    _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
    assert(_purgeM);
+   _dl_changelogM = glade_xml_get_widget(_gladeXML, "menu_download_changelog");
+   assert(_dl_changelogM);
 #ifdef HAVE_RPM
    gtk_widget_hide(_purgeM);
+   gtk_widget_hide(_dl_changelogM);
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML,"menu_changelog_separator"));
 #endif
 
    // Workaround for a bug in libglade.
@@ -999,6 +1005,11 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_add_cdrom_activate",
                                  G_CALLBACK(cbAddCDROM), this);
+
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_download_changelog_activate",
+                                 G_CALLBACK(cbChangelogDialog),
+                                 this); 
 
    /* --------------------------------------------------------------- */
 
@@ -1443,6 +1454,42 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
    return false;
 }
 
+void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow*)data;
+
+   RPackage *pkg = me->selectedPackage();
+   if(pkg == NULL)
+      return;
+    
+   me->setInterfaceLocked(TRUE);
+   pkgAcquireStatus *status= new RGFetchProgress(me);;
+   pkgAcquire fetcher(status);
+   string filename = pkg->getChangelogFile(&fetcher);
+   
+   RGGladeUserDialog dia(me,"changelog");
+   GtkWidget *textview = glade_xml_get_widget(dia.getGladeXML(),
+					      "textview_changelog");
+   assert(textview);
+   GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
+   GtkTextIter start,end;
+   gtk_text_buffer_get_start_iter (buffer, &start);
+   gtk_text_buffer_get_end_iter(buffer,&end);
+   gtk_text_buffer_delete(buffer,&start,&end);
+   
+   ifstream in(filename.c_str());
+   string s;
+   while(getline(in, s)) {
+      gtk_text_buffer_insert_at_cursor(buffer, s.c_str(), -1);
+      gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
+   }
+   
+   dia.run();
+   unlink(filename.c_str());
+   me->setInterfaceLocked(FALSE);
+}
+
+
 void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
                                              GtkTreePath *path,
                                              GtkTreeViewColumn *arg2,
@@ -1857,9 +1904,17 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    if (is_binary_in_path("yelp"))
       system("yelp ghelp:synaptic &");
-   else if (is_binary_in_path("mozilla"))
+   else if(is_binary_in_path("khelpcenter")) {
+      system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
+   } else if (is_binary_in_path("mozilla")) {
+      // mozilla eats bookmarks when run under sudo (because it does not
+      // change $HOME)
+      if(getenv("SUDO_USER") != NULL) {
+         struct passwd *pw = getpwuid(0);
+         setenv("HOME", pw->pw_dir, 1);
+      }
       system("mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
-   else if (is_binary_in_path("konqueror"))
+   } else if (is_binary_in_path("konqueror"))
       system("konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
    else
       me->_userDialog->error(_("No help viewer is installed!\n\n"

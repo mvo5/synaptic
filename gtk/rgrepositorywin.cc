@@ -264,6 +264,14 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optVendor), _optVendorMenu);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) "");
 
+#ifndef HAVE_RPM
+   // debian can't use the vendors menu, so we hide it
+   gtk_widget_hide(GTK_WIDGET(_optVendor));
+   GtkWidget *vendors = glade_xml_get_widget(_gladeXML,"button_edit_vendors");
+   assert(vendors);
+   gtk_widget_hide(GTK_WIDGET(vendors));
+#endif
+
    _entryURI = glade_xml_get_widget(_gladeXML, "entry_uri");
    assert(_entryURI);
    _entryDist = glade_xml_get_widget(_gladeXML, "entry_distribution");

@@ -32,13 +32,14 @@
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {
-   GtkResponseType *res = (GtkResponseType *) user_data;
+   GtkResponseType *res = (GtkResponseType*) user_data;
    *res = (GtkResponseType) id;
 }
 
 bool RGUserDialog::message(const char *msg,
-                           RUserDialog::DialogType dialog,
-                           RUserDialog::ButtonsType buttons, bool defres)
+			   RUserDialog::DialogType dialog,
+			   RUserDialog::ButtonsType buttons,
+			   bool defres)
 {
    GtkWidget *dia;
    GtkResponseType res;
@@ -47,93 +48,149 @@ bool RGUserDialog::message(const char *msg,
 
    switch (dialog) {
       case RUserDialog::DialogInfo:
-         gtkmessage = GTK_MESSAGE_INFO;
-         gtkbuttons = GTK_BUTTONS_OK;
-         break;
+	 gtkmessage = GTK_MESSAGE_INFO;
+	 gtkbuttons = GTK_BUTTONS_OK;
+	 break;
       case RUserDialog::DialogWarning:
-         gtkmessage = GTK_MESSAGE_WARNING;
-         gtkbuttons = GTK_BUTTONS_OK;
-         break;
+	 gtkmessage = GTK_MESSAGE_WARNING;
+	 gtkbuttons = GTK_BUTTONS_OK;
+	 break;
       case RUserDialog::DialogError:
-         gtkmessage = GTK_MESSAGE_ERROR;
-         gtkbuttons = GTK_BUTTONS_OK;
-         break;
+	 gtkmessage = GTK_MESSAGE_ERROR;
+	 gtkbuttons = GTK_BUTTONS_OK;
+	 break;
       case RUserDialog::DialogQuestion:
-         gtkmessage = GTK_MESSAGE_QUESTION;
-         gtkbuttons = GTK_BUTTONS_YES_NO;
-         break;
+	 gtkmessage = GTK_MESSAGE_QUESTION;
+	 gtkbuttons = GTK_BUTTONS_YES_NO;
+	 break;
    }
 
-   switch (buttons) {
+   switch(buttons) {
       case RUserDialog::ButtonsDefault:
-         break;
+	 break;
       case RUserDialog::ButtonsOk:
-         gtkbuttons = GTK_BUTTONS_OK;
-         break;
+	 gtkbuttons = GTK_BUTTONS_OK;
+	 break;
       case RUserDialog::ButtonsOkCancel:
-         gtkbuttons = GTK_BUTTONS_OK_CANCEL;
-         break;
+	 gtkbuttons = GTK_BUTTONS_OK_CANCEL;
+	 break;
       case RUserDialog::ButtonsYesNo:
-         gtkbuttons = GTK_BUTTONS_YES_NO;
-         break;
+	 gtkbuttons = GTK_BUTTONS_YES_NO;
+	 break;
    }
 
    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-                                GTK_DIALOG_DESTROY_WITH_PARENT,
-                                gtkmessage, gtkbuttons, "%s", utf8(msg));
+				GTK_DIALOG_DESTROY_WITH_PARENT,
+				gtkmessage, gtkbuttons, "%s", utf8(msg));
 
    if (defres) {
-      switch (buttons) {
+      switch(buttons) {
          case RUserDialog::ButtonsOkCancel:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_OK);
-            break;
+	    gtk_dialog_set_default_response(GTK_DIALOG(dia),
+					    GTK_RESPONSE_OK);
+	    break;
          case RUserDialog::ButtonsYesNo:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_YES);
-            break;
+	    gtk_dialog_set_default_response(GTK_DIALOG(dia),
+					    GTK_RESPONSE_YES);
+	    break;
       }
    } else {
-      switch (buttons) {
+      switch(buttons) {
          case RUserDialog::ButtonsOkCancel:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia),
-                                            GTK_RESPONSE_CANCEL);
-            break;
+	    gtk_dialog_set_default_response(GTK_DIALOG(dia),
+					    GTK_RESPONSE_CANCEL);
+	    break;
          case RUserDialog::ButtonsYesNo:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_NO);
-            break;
+	    gtk_dialog_set_default_response(GTK_DIALOG(dia),
+					    GTK_RESPONSE_NO);
+	    break;
       }
    }
 
    g_signal_connect(GTK_OBJECT(dia), "response",
-                    G_CALLBACK(actionResponse), (gpointer) & res);
+		    G_CALLBACK(actionResponse), (gpointer) &res);
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
 }
 
+bool RGUserDialog::showErrors()
+{
+   if (_error->empty())
+      return false;
+   
+   bool iserror = false;
+   if (_error->PendingError())
+      iserror = true;
+   
+   string message = "";
+   while (!_error->empty()) {
+      string tmp;
+      
+      _error->PopMessage(tmp);
+      
+      // ignore some stupid error messages
+      if (tmp == "Tried to dequeue a fetching object")
+	 continue;
+      
+      if (message.empty())
+	 message = tmp;
+      else
+	 message = message + "\n\n" + tmp;
+   }
+
+   if (iserror)
+      error(utf8(message.c_str()));
+   else
+      warning(utf8(message.c_str()));
+    
+   return true;
+}
+
 // RGGladeUserDialog
-bool RGGladeUserDialog::run(const char *name)
+RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
+{
+   init(name);
+   _parentWindow = parent->window();
+}
+
+bool RGGladeUserDialog::init(const char *name)
 {
    gchar *filename = NULL;
    gchar *main_widget = NULL;
 
-   //cout << "RGGladeUserDialog::RGGladeUserDialog()" << endl;
+   //cout << "RGGladeUserDialog::init()" << endl;
 
-   filename = g_strdup_printf("dialog_%s.glade", name);
+   filename = g_strdup_printf("dialog_%s.glade",name);
    main_widget = g_strdup_printf("dialog_%s", name);
-   if (FileExists(filename)) {
+   if(FileExists(filename)) {
       gladeXML = glade_xml_new(filename, main_widget, NULL);
    } else {
       g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_GLADEDIR "dialog_%s.glade", name);
+      filename = g_strdup_printf(SYNAPTIC_GLADEDIR "dialog_%s.glade",name);
       gladeXML = glade_xml_new(filename, main_widget, NULL);
    }
    assert(gladeXML);
    _dialog = glade_xml_get_widget(gladeXML, main_widget);
    assert(_dialog);
+
+   gtk_window_set_position(GTK_WINDOW(_dialog),
+			   GTK_WIN_POS_CENTER_ON_PARENT);
+   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(_dialog), 
+				GTK_WINDOW(_parentWindow));
+
    g_free(filename);
    g_free(main_widget);
 
-   res = (GtkResponseType) gtk_dialog_run(GTK_DIALOG(_dialog));
+}
+
+bool RGGladeUserDialog::run(const char *name)
+{
+   if(name != NULL)
+      init(name);
+
+   res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
 }

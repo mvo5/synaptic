@@ -55,7 +55,7 @@ QString RQFetchItem::text(int column) const
    QString res;
    switch (column) {
       case 2:
-         res = SizeToStr(_itemDesc.Owner->FileSize);
+         res = SizeToStr(_itemDesc.Owner->FileSize).c_str();
          break;
 
       case 3:

@@ -121,7 +121,7 @@ int RWMainWindow::numberOfRows(WMTableViewDelegate *self, WMTableView *table)
 {
     RWMainWindow *me = (RWMainWindow*)WMGetTableViewDataSource(table);
 
-    return me->_lister->count();
+    return me->_lister->packagesSize();
 }
 
 
@@ -131,7 +131,7 @@ void *RWMainWindow::valueForCell(WMTableViewDelegate *self,
 {
     WMTableView *table = (WMTableView*)WMGetTableColumnTableView(column);
     RWMainWindow *me = (RWMainWindow*)WMGetTableViewDataSource(table);
-    RPackage *elem = me->_lister->getElement(row);
+    RPackage *elem = me->_lister->getPackage(row);
     const char *text = NULL;
     static char buffer[256];
     static void *data[2];
@@ -141,16 +141,16 @@ void *RWMainWindow::valueForCell(WMTableViewDelegate *self,
     switch ((int)WMGetTableColumnId(column)) {
      case CStatus:
 	{
-	    RPackage::MarkedStatus s = elem->getMarkedStatus();
+	    int s = elem->getFlags();
 	    if (elem->wouldBreak())
 		return StatusPixmaps[7];
 
-	    if (s == RPackage::MKeep 
-		&& elem->getStatus() == RPackage::SInstalledOutdated) {
-		return StatusPixmaps[RPackage::MHeld];
+	    if ((s & RPackage::FKeep) 
+		&& (s & RPackage::FOutdated)) {
+	         return StatusPixmaps[/*RPackage::FHeld*/0];
 	    }
 
-	    return StatusPixmaps[(int)s];
+	    return StatusPixmaps[/*s*/0];
 	}
      case CSection:
 	text = elem->section();
@@ -433,7 +433,7 @@ void RWMainWindow::changedFilter(WMWidget *self, void *data)
     int index = -1;
 
     if (pkg) {	
-	index = mainw->_lister->getElementIndex(pkg);
+         index = mainw->_lister->getPackageIndex(pkg);
     }    
     
     if (index >= 0)
@@ -514,7 +514,7 @@ RPackage *RWMainWindow::selectedPackage()
     index = (int)WMGetFromArray(array, 0);
     
     if (index >= 0)
-	return _lister->getElement(index);
+	return _lister->getPackage(index);
     else
 	return NULL;
 }
@@ -838,7 +838,7 @@ void RWMainWindow::clickedRow(WMWidget *self, void *data)
 	me->updatePackageInfo(NULL);
 	return;
     }
-    RPackage *pkg = me->_lister->getElement(row);
+    RPackage *pkg = me->_lister->getPackage(row);
     if (pkg == NULL)
 	return;    
     
@@ -867,7 +867,7 @@ void RWMainWindow::refreshTable(RPackage *selectedPkg)
     _tempKluge = false;
 
     if (selectedPkg != NULL) {
-	int index = _lister->getElementIndex(selectedPkg);
+	int index = _lister->getPackageIndex(selectedPkg);
     
 	if (index >= 0)
 	    WMSelectTableViewRow(_table, index);
@@ -881,69 +881,49 @@ void RWMainWindow::refreshTable(RPackage *selectedPkg)
 void RWMainWindow::updatePackageStatus(RPackage *pkg)
 {
     bool installed = false;
-    RPackage::PackageStatus status = pkg->getStatus();
-    RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
+    int flags = pkg->getFlags();
 //    bool locked = _config->getPackageLock(pkg->name());
 
 //    WMSetButtonSelected(_holdB, locked ? True : False);
     
     WMSetButtonEnabled(_actionB[0], True);
     
-    switch (status) {
-     case RPackage::SInstalledUpdated:
+    if(RPackage::FInstalled & flags) {
 	WMSetButtonEnabled(_actionB[1], False);
 	WMSetButtonEnabled(_actionB[2], True);
 	installed = true;
-	break;
-	
-     case RPackage::SInstalledOutdated:
+    } else if(RPackage::FOutdated & flags) {
 	WMSetButtonEnabled(_actionB[1], True);
 	WMSetButtonEnabled(_actionB[2], True);
 	installed = true;
-	break;
-	
-     case RPackage::SInstalledBroken:
+    } else if(RPackage::FInstBroken & flags) {
 	WMSetButtonEnabled(_actionB[1], False);
 	WMSetButtonEnabled(_actionB[2], True);
 	installed = true;
-	break;
-	
-     case RPackage::SNotInstalled:
+    } else  {
 	WMSetButtonEnabled(_actionB[1], True);
 	WMSetButtonEnabled(_actionB[2], False);
-	break;
     }
     
     _currentB = NULL;
-    switch (mstatus) {
-     case RPackage::MKeep:
-     case RPackage::MHeld:
+    if((RPackage::FKeep & flags) || (RPackage::FHeld & flags)) {
 	_currentB = _actionB[0];
 	if (installed) 
 	    WMSetLabelText(_stateL, _("Package is installed."));
 	else
 	    WMSetLabelText(_stateL, _("Package is not installed."));
-	break;
-
-     case RPackage::MInstall:
+    } else if(RPackage::FInstall & flags) {
 	WMSetLabelText(_stateL, _("Package will be installed."));
 	_currentB = _actionB[1];
-	break;
-	
-     case RPackage::MUpgrade:
+    } else if(RPackage::FUpgrade & flags) {
 	_currentB = _actionB[1];
 	WMSetLabelText(_stateL, _("Package will be upgraded."));
-	break;
-	
-     case RPackage::MDowngrade:
+    } else if(RPackage::FDowngrade & flags) {
 	// not handled yet
 	puts(_("OH SHIT!!"));
-	break;
-	
-     case RPackage::MRemove:
+    } else if(RPackage::FRemove & flags) {
 	_currentB = _actionB[2];
 	WMSetLabelText(_stateL, _("Package will be uninstalled."));
-	break;
     }
     
     if (pkg->wouldBreak()) {
@@ -951,11 +931,10 @@ void RWMainWindow::updatePackageStatus(RPackage *pkg)
 	
 	WMSetLabelImage(_stateL, StatusPixmaps[7]);
     } else {
-	if (mstatus == RPackage::MKeep
-	    && status == RPackage::SInstalledOutdated) {
-	    WMSetLabelImage(_stateL, StatusPixmaps[RPackage::MHeld]);
+       if ((flags & RPackage::FKeep) && (flags & RPackage::FOutdated)) {
+	  WMSetLabelImage(_stateL, StatusPixmaps[0/*RPackage::FHeld*/]);
 	} else
-	    WMSetLabelImage(_stateL, StatusPixmaps[(int)mstatus]);
+	   WMSetLabelImage(_stateL, StatusPixmaps[0/*flags*/]);
     }
     
     WMSetButtonSelected(_currentB, True);
@@ -980,13 +959,13 @@ void RWMainWindow::navigateTable(char direction)
 	break;
      case 'd':
 	index = index+1;
-	if (index >= _lister->count())
-	    index = _lister->count()-1;
+	if (index >= _lister->packagesSize())
+	    index = _lister->packagesSize()-1;
 	break;
      case 'n':
 	index += 10;
-	if (index >= _lister->count())
-	    index = _lister->count()-1;
+	if (index >= _lister->packagesSize())
+	    index = _lister->packagesSize()-1;
 	break;
      case 'p':
 	index -= 10;
@@ -997,7 +976,7 @@ void RWMainWindow::navigateTable(char direction)
 	index = 0;
 	break;
      case 'e':
-	index = _lister->count()-1;
+	index = _lister->packagesSize()-1;
 	break;
      default:
 	assert(0);
@@ -1141,7 +1120,8 @@ void RWMainWindow::updateDynPackageInfo(RPackage *pkg)
 	} while (pkg->nextWDeps(depName, depPkg, ok));
     }    
     
-    if (pkg->getStatus() != RPackage::SNotInstalled)
+    int flags = pkg->getFlags();
+    if (!((flags & RPackage::FInstalled) || (flags & RPackage::FOutdated))) 
 	WMSetButtonEnabled(_removeDepsB, True);
     else
 	WMSetButtonEnabled(_removeDepsB, False);
@@ -1155,7 +1135,7 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
     unsigned bufSize = sizeof(buffer);
     long size;
     RPackage::UpdateImportance importance;
-    RPackage::PackageStatus status;
+    int flags;
     
     if (!pkg) {
 	WMSetLabelText(_nameL, NULL);
@@ -1174,10 +1154,10 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
 
     WMSetTabViewEnabled(_tabview, True);
 
-    status = pkg->getStatus();
+    flags = pkg->getFlags();
 
 
-    if (status == RPackage::SNotInstalled) {
+    if (!((flags&RPackage::FInstalled)||(flags&RPackage::FOutdated))) {
 	WMSetButtonText(_actionB[1], _("Install"));
     } else {
 	WMSetButtonText(_actionB[1], _("Upgrade"));
@@ -1222,7 +1202,7 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
 	      size < 0 ?  _("N/A") : SizeToStr(size).c_str());
 
     WMSetLabelText(_infoL, buffer);
-
+#if 0
     if (_showUpdateInfo) {
 	// importance of update
 	char *text;
@@ -1265,6 +1245,7 @@ void RWMainWindow::updatePackageInfo(RPackage *pkg)
 //	const char *updateText = pkg->updateSummary();
 	
     }
+#endif
         
     // description
     void *tmp;
@@ -1289,7 +1270,7 @@ void RWMainWindow::holdClicked(WMWidget *self, void *data)
     
     if (row < 0)
 	return;
-    RPackage *pkg = me->_lister->getElement(row);
+    RPackage *pkg = me->_lister->getPackage(row);
     if (pkg == NULL)
 	return;
 /*XXX    
@@ -1316,7 +1297,7 @@ void RWMainWindow::actionClicked(WMWidget *self, void *data)
     
     if (row < 0)
 	return;
-    RPackage *pkg = me->_lister->getElement(row);
+    RPackage *pkg = me->_lister->getPackage(row);
     if (pkg == NULL)
 	return;
 
@@ -1337,7 +1318,7 @@ void RWMainWindow::actionClicked(WMWidget *self, void *data)
 	}
 	break;
      case 2: // remove
-	if (pkg->isImportant()) {
+	if (pkg->getFlags()&RPackage::FImportant) {
 	    int res;
 	    res = WMRunAlertPanel(WMWidgetScreen(self), me->window(), _("Warning"),
 				  _("Removing this package may render the system unusable.\n"
@@ -1372,7 +1353,7 @@ void RWMainWindow::removeDepsClicked(WMWidget *self, void *data)
     
     me->setInterfaceLocked(true);
     
-    if (pkg->isImportant()) {
+    if (pkg->getFlags() & RPackage::FImportant) {
 	int res;
 	res = WMRunAlertPanel(WMWidgetScreen(self), me->window(), _("Warning"),
 			      _("Removing this package may render the system unusable.\n"
@@ -1387,7 +1368,7 @@ void RWMainWindow::removeDepsClicked(WMWidget *self, void *data)
 	pkg->setRemoveWithDeps(true);
     }
     
-    WMSelectTableViewRow(me->_table, me->_lister->getElementIndex(pkg));
+    WMSelectTableViewRow(me->_table, me->_lister->getPackageIndex(pkg));
     
     me->setInterfaceLocked(false);
 }
@@ -1475,7 +1456,7 @@ RWMainWindow::RWMainWindow(WMScreen *scr, RPackageLister *packLister)
     _aboutPanel = NULL;
     _fmanagerWin = NULL;    
     
-    
+#if 0  // PORTME
     StatusPixmaps[(int)RPackage::MKeep] = NULL;
     StatusPixmaps[(int)RPackage::MInstall] = 
 	WMCreatePixmapFromXPMData(scr, (char**)installM_xpm);
@@ -1490,6 +1471,18 @@ RWMainWindow::RWMainWindow(WMScreen *scr, RPackageLister *packLister)
     StatusPixmaps[7] = 
 	WMCreatePixmapFromXPMData(scr,  (char**)brokenM_xpm);
     StatusPixmaps[8] = _alertPix;
+#else
+    StatusPixmaps[0] = NULL;
+    StatusPixmaps[1] = NULL;
+    StatusPixmaps[2] = NULL;
+    StatusPixmaps[3] = NULL;
+    StatusPixmaps[4] = NULL;
+    StatusPixmaps[5] = NULL;
+    StatusPixmaps[6] = NULL;
+    StatusPixmaps[7] = NULL;
+    StatusPixmaps[8] = NULL;
+#endif
+
 }
 
 
@@ -2015,7 +2008,7 @@ void RWMainWindow::setStatusText(char *text)
     } else {
 	char buffer[256];
 
-	listed = _lister->count();
+	listed = _lister->packagesSize();
 	snprintf(buffer, sizeof(buffer), 
 		 _("%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to remove; %sB will be %s"),
 		 listed, installed, broken, toinstall, toremove,
@@ -2035,7 +2028,7 @@ void RWMainWindow::setStatusText(char *text)
 void RWMainWindow::refreshFilterMenu()
 {
     vector<string> filters;
-    _lister->getFilterNames(filters);
+    filters = _lister->getFilterNames();
 
     int count = WMGetPopUpButtonNumberOfItems(_popup);
     for (int i = 1; i < count; i++)

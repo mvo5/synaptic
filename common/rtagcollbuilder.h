@@ -21,6 +21,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  */
 
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
 //#pragma interface
 
@@ -88,4 +89,5 @@ class RTagcollBuilder:public TagcollConsumer<std::string> {
 #endif //HAVE_DEBTAGS
 
 // vim:set ts=4 sw=4:
+#endif
 #endif

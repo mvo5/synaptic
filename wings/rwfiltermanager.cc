@@ -117,8 +117,8 @@ RWFilterManagerWindow::RWFilterManagerWindow(RWWindow *win,
 		    100, 0, 0);
     
     {
-	vector<string> tmp;
-	_lister->getSections(tmp);
+        vector<string> tmp;
+	tmp = _lister->getSections();
 	_editor->setPackageSections(tmp);
     }
     
@@ -140,7 +140,7 @@ void RWFilterManagerWindow::show()
     
     vector<string> filters;
     
-    _lister->getFilterNames(filters);
+    filters = _lister->getFilterNames();
     
     int i = 1;
     for (vector<string>::const_iterator iter = filters.begin()+1;

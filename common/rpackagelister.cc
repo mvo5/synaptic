@@ -114,7 +114,7 @@ void RPackageLister::setView(int index)
 vector<string> RPackageLister::getViews()
 {
    vector<string> views;
-   for (int i = 0; i != _views.size(); i++)
+   for (unsigned int i = 0; i != _views.size(); i++)
       views.push_back(_views[i]->getName());
    return views;
 }
@@ -133,6 +133,8 @@ bool RPackageLister::setSubView(string newSubView)
    reapplyFilter();
 
    notifyPostChange(NULL);
+
+   return true;
 }
 
 static string getServerErrorMessage(string errm)
@@ -503,7 +505,7 @@ bool RPackageLister::openCache(bool reset)
    map<string, RPackage *> pkgmap;
    set<string> sectionSet;
 
-   for (int i = 0; i != _views.size(); i++)
+   for (unsigned int i = 0; i != _views.size(); i++)
       _views[i]->clear();
 
    for (; I.end() != true; I++) {
@@ -521,7 +523,7 @@ bool RPackageLister::openCache(bool reset)
 
       pkgmap[pkgName] = pkg;
 
-      for (int i = 0; i != _views.size(); i++)
+      for (unsigned int i = 0; i != _views.size(); i++)
          _views[i]->addPackage(pkg);
 
       // Find out about new packages.
@@ -720,7 +722,7 @@ int RPackageLister::getFilterIndex(RFilter *filter)
 vector<string> RPackageLister::getFilterNames()
 {
    vector<string> filters;
-   for (int i = 0; i != _filterL.size(); i++)
+   for (unsigned int i = 0; i != _filterL.size(); i++)
       filters.push_back(_filterL[i]->getName());
    return filters;
 }
@@ -1228,7 +1230,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
 {
    pkgDepCache *deps = _cache->deps();
 
-   for (int i = 0; i < _packages.size(); i++) {
+   for (unsigned int i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
       int flags = pkg->getFlags();
 

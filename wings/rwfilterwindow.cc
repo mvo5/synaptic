@@ -88,7 +88,7 @@ RWFilterWindow::RWFilterWindow(RWWindow *win, RPackageLister *lister)
 
     {
 	vector<string> tmp;
-	_lister->getSections(tmp);
+	tmp = _lister->getSections();
 	_editor->setPackageSections(tmp);
     }
     WMMapWidget(_editor->widget());

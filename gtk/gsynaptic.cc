@@ -150,13 +150,6 @@ int main(int argc, char **argv)
 
    SetLanguages();
 
-   // we ignore sigpipe as it is thrown sporadic on 
-   // my debian, kernel 2.6 systems
-   struct sigaction new_act;
-   memset(&new_act, 0, sizeof(new_act));
-   new_act.sa_handler = SIG_IGN;
-   sigaction(SIGPIPE, &new_act, NULL);
-
    // init the static pkgStatus class. this loads the status pixmaps 
    // and colors
    RPackageStatus::pkgStatus.init();

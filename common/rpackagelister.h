@@ -117,7 +117,7 @@ class RPackageLister {
 
    public:
 
-   int _viewMode;
+   unsigned int _viewMode;
 
    typedef enum {
       LIST_SORT_NAME,
@@ -129,7 +129,7 @@ class RPackageLister {
 #ifdef HAVE_RPM
    typedef pkgDepCache::State pkgState;
 #else
-   typedef vector<RPackage::MarkedStatus> pkgState;
+   typedef vector<int> pkgState;
 #endif
 
    private:

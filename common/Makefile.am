@@ -3,7 +3,8 @@
 noinst_LIBRARIES = libsynaptic.a
 
 INCLUDES = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ @PACKAGE_CFLAGS@ \
-	$(LIBTAGCOLL_CFLAGS)
+	$(LIBTAGCOLL_CFLAGS) \
+	-DSYNAPTICLOCALEDIR=\""$(synapticlocaledir)"\"
 
 libsynaptic_a_SOURCES =\
 	rconfiguration.cc\

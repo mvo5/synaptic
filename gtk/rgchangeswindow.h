@@ -31,8 +31,6 @@
 class RPackageLister;
 
 class RGChangesWindow:public RGGladeWindow {
-   bool _confirmed;
-
    enum {
       PKG_COLUMN,
       N_COLUMNS
@@ -41,19 +39,16 @@ class RGChangesWindow:public RGGladeWindow {
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
 
-   static void clickedOk(GtkWidget *w, void *data);
-   static void clickedCancel(GtkWidget *w, void *data);
-
  public:
    RGChangesWindow(RGWindow *win);
 
-   bool showAndConfirm(RPackageLister *lister,
-                       vector<RPackage *> &kept,
-                       vector<RPackage *> &toInstall,
-                       vector<RPackage *> &toReInstall,
-                       vector<RPackage *> &toUpgrade,
-                       vector<RPackage *> &toRemove,
-                       vector<RPackage *> &toDowngrade);
+   void confirm(RPackageLister *lister,
+		vector<RPackage *> &kept,
+		vector<RPackage *> &toInstall,
+		vector<RPackage *> &toReInstall,
+		vector<RPackage *> &toUpgrade,
+		vector<RPackage *> &toRemove,
+		vector<RPackage *> &toDowngrade);
 };
 
 #endif

@@ -521,11 +521,11 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
                                            toUpgrade, toRemove, toDowngrade,
                                            exclude)) {
-      RGChangesWindow *chng;
-      // show a summary of what's gonna happen
-      chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, toKeep, toInstall, toReInstall,
-                                toUpgrade, toRemove, toDowngrade)) {
+      RGChangesWindow changes(this);
+      changes.confirm(_lister, toKeep, toInstall, toReInstall,
+		      toUpgrade, toRemove, toDowngrade);
+      int res = gtk_dialog_run(GTK_DIALOG(changes.window()));
+      if( res != GTK_RESPONSE_OK) {
          // canceled operation
          _lister->restoreState(state);
 	 // if a operation was canceled, we discard all errors from this
@@ -533,7 +533,6 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
 	 _error->Discard();
          changed = false;
       }
-      delete chng;
    }
 
    return changed;

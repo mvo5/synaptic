@@ -1,7 +1,10 @@
+0.51:
+ - "pin/hold" support
+ - "install-this-versioN" 
+ - suche in name+provides im such-dialog
+
 0.50+:
  - Separate sections from package list
- - think about using a package details dialog
- - add reinstall
  - In the change log view, link "bug" references to the actual bug report
 
 Usability issues:
@@ -37,8 +40,6 @@ Unsorted:
    Execute should be available if there are outstanding packages 
    (difficult!)
  - if(userid != 0) { exec "gksu -c /usr/sbin/synaptic"}
- - when searching and then switching view-mode, go to the last selected
-   pkg (maybe do that every time the view is switched?)
  - when switching filters/update pkgs clear filter field
  - Please add hyperlink support in package info for example BTS entry
  - Please allow users to delete default filters and add an option to
@@ -82,7 +83,6 @@ GUI:
    - add context menu in the dependency list to install/remove/upgrade
    - changesWindow should also support installing recommends/suggested pkgs
    - add a sources.list wizard for debian (like base-config)?
-   - make a the used font in the treeview configurable 
 
 Filter:
    - add "immutable" filters that can be configured via /etc/synaptic/filters
@@ -100,6 +100,11 @@ General:
    - implement raptoptions save/restore for getFlags/setFlags [not needed?]
 
 Done:
+   - make a the used font in the treeview configurable 
+   - when searching and then switching view-mode, go to the last selected
+     pkg (maybe do that every time the view is switched?)
+   - think about using a package details dialog
+   - add reinstall
    - Add konqueror and opera to the list of help browser
    - do not use ithe same sentence for singular and plural in summary
    - icons in status list

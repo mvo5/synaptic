@@ -2554,11 +2554,16 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
 
    RInstallProgress *iprogress;
-#ifdef HAVE_TERMINAL
+#ifdef HAVE_TERMINAL 
 #ifdef HAVE_RPM
    bool UseTerminal = false;
 #else
+   // no RPM
+   #ifdef WITH_DPKG_STATUSFD
+   bool UseTerminal = false;
+   #else
    bool UseTerminal = true;
+   #endif // DPKG
 #endif // HAVE_RPM
    RGTermInstallProgress *term = NULL;
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)

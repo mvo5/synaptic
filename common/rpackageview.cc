@@ -73,11 +73,7 @@ void RPackageView::clearSelection()
 
 void RPackageViewSections::addPackage(RPackage *package)
 {
-#ifndef HAVE_RPM
-		string str = trans_section(package->section());
-#else
-		string str = package->section();
-#endif
+   string str = trans_section(package->section());
    _view[str].push_back(package);
 };
 

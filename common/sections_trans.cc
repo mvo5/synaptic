@@ -3,6 +3,8 @@
  *  
  */
 
+#include <libintl.h>
+
 #include "sections_trans.h"
 
 char *transtable[][2] = {
@@ -135,6 +137,6 @@ string trans_section(string sec)
 #else
 string trans_section(string sec)
 {
-   return sec;
+   return dgettext("rpm", sec.c_str());
 }
 #endif

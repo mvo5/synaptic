@@ -250,14 +250,22 @@ void RGMainWindow::clickedDepList(GtkTreeSelection *selection, gpointer data)
     }
 }
 
-void RGMainWindow::clickedAvailDepList(GtkWidget *self, int row, int col,
-				       GdkEvent *event, void* data)
+void RGMainWindow::clickedAvailDepList(GtkTreeSelection *selection, 
+				       gpointer data)
 {
-  RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self),"me");
+  RGMainWindow *me = (RGMainWindow*)data;
+  assert(me);
+
+  GtkTreeIter iter;
+  GtkTreeModel *model;
   char *text;
-  text = (char*)gtk_clist_get_row_data(GTK_CLIST(me->_availDepList), row);
-  if(text != NULL)
-    gtk_label_set_text(GTK_LABEL(me->_availDepInfoL), text);
+
+  if(gtk_tree_selection_get_selected(selection, &model, &iter)) {
+      gtk_tree_model_get(model, &iter, DEP_PKG_INFO, &text, -1);
+      cout << "clickedAvailDepList: " << text << endl;
+      if(text != NULL)
+	  gtk_label_set_text(GTK_LABEL(me->_availDepInfoL), text);
+  }
 }
 
 void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
@@ -1093,6 +1101,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
     char buffer[512];
     const char *ubuffer;
+    GtkTreeIter iter;
 
     const char *depType, *depPkg, *depName, *depVer;
     char *summary; // XXX Why not const?
@@ -1112,7 +1121,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 	    // check if this item is duplicated
 	    bool dup = FALSE;
-	    GtkTreeIter iter;
 	    bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_depListStore), &iter);
 	    while(valid) {
 		char *str;
@@ -1141,15 +1149,14 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     }
 
     // reverse dependencies
-    gtk_clist_clear(GTK_CLIST(_rdepList));
+    gtk_list_store_clear(_rdepListStore);
     if (pkg->enumRDeps(depName, depPkg)) {
 	do {
-	    const char *array[1];
-
 	    snprintf(buffer, sizeof(buffer), "%s (%s)", depName, depPkg);
-	    array[0] = utf8(buffer);
-	    gtk_clist_append(GTK_CLIST(_rdepList), (char**)array);
-
+	    gtk_list_store_append(_rdepListStore, &iter);
+	    gtk_list_store_set(_rdepListStore, &iter,
+			       DEP_NAME_COLUMN, utf8(buffer),
+			       -1);
 	} while (pkg->nextRDeps(depName, depPkg));
     }
 
@@ -1172,7 +1179,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     }    
 
     // dependencies of the available package
-    gtk_clist_clear(GTK_CLIST(_availDepList));
+    gtk_list_store_clear(_availDepListStore);
     gtk_label_set_text(GTK_LABEL(_availDepInfoL), "");    
     byProvider = TRUE;
     if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
@@ -1190,25 +1197,27 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	    
 	    // check if this item is duplicated
 	    bool dup = FALSE;
-	    for (int i = 0; i < GTK_CLIST(_availDepList)->rows; i++) {
+	    bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_availDepListStore), &iter);
+	    while(valid) {
 		char *str;
-		gtk_clist_get_text(GTK_CLIST(_availDepList), i, 0, &str);
+		gtk_tree_model_get(GTK_TREE_MODEL(_availDepListStore), &iter,
+				   DEP_NAME_COLUMN, &str, 
+				   -1);
+
 		if (strcmp(str, ubuffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
+		valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_availDepListStore),&iter);
 	    }
 	    if (!dup) {
-		const char *array[1];
-		int row;
-		array[0] = ubuffer;
-		row = gtk_clist_append(GTK_CLIST(_availDepList), (char**)array);
-		//mvo: maybe use gtk_clist_set_background() instead?
-		gtk_clist_set_row_style(GTK_CLIST(_availDepList), row,
-					ok ? _blackStyle : _redStyle);
-		gtk_clist_set_row_data(GTK_CLIST(_availDepList), row,
-				       summary);
-				       // No strdup() here? See above.
+		gtk_list_store_append(_availDepListStore, &iter);
+		gtk_list_store_set(_availDepListStore, &iter,
+				   DEP_NAME_COLUMN, ubuffer,
+				   DEP_IS_NOT_AVAILABLE, !ok,  
+				   DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
+				   DEP_PKG_INFO, g_strdup(summary),
+				   -1);
 	    }
 	} while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
     }
@@ -2184,19 +2193,42 @@ void RGMainWindow::buildInterface()
     g_signal_connect (G_OBJECT (selection), "changed",
 		      G_CALLBACK(clickedDepList),
 		      this);
-
     _depInfoL = glade_xml_get_widget(_gladeXML, "label_dep_info");
     assert(_depInfoL);
     gtk_label_set_text(GTK_LABEL(_depInfoL), "");    
-    _rdepList = glade_xml_get_widget(_gladeXML, "clist_rdeps");
+
+    /* build rdep list */
+    _rdepList = glade_xml_get_widget(_gladeXML, "treeview_rdeps");
     assert(_rdepList);
-    _availDepList = glade_xml_get_widget(_gladeXML, "clist_availdep_list");
+    _rdepListStore = gtk_list_store_new(1,G_TYPE_STRING); /* text */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_rdepList), GTK_TREE_MODEL(_rdepListStore));
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
+						      "text", DEP_NAME_COLUMN,
+						      NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_rdepList), column);
+
+
+
+    _availDepList = glade_xml_get_widget(_gladeXML, "treeview_availdep_list");
     assert(_availDepList);
-    gtk_object_set_data(GTK_OBJECT(_availDepList), "me", this);
-    gtk_signal_connect(GTK_OBJECT(_availDepList), "select_row",
-		       (GtkSignalFunc)clickedAvailDepList, (void*)1);
-    gtk_signal_connect(GTK_OBJECT(_availDepList), "unselect_row",
-		       (GtkSignalFunc)clickedAvailDepList, (void*)0);
+    _availDepListStore = gtk_list_store_new(4,G_TYPE_STRING, /* text */
+					    G_TYPE_BOOLEAN,  /*foreground-set*/
+					    G_TYPE_STRING,   /* foreground */
+					    G_TYPE_STRING);  /* extra info */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_availDepList), GTK_TREE_MODEL(_availDepListStore));
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
+						      "text", DEP_NAME_COLUMN,
+						      "foreground-set", DEP_IS_NOT_AVAILABLE,
+						      "foreground", DEP_IS_NOT_AVAILABLE_COLOR,
+						      NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(_availDepList), column);
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_availDepList));
+    g_signal_connect (G_OBJECT (selection), "changed",
+		      G_CALLBACK(clickedAvailDepList),
+		      this);
+
     _availDepInfoL = glade_xml_get_widget(_gladeXML, "label_availdep_info");
     assert(_availDepInfoL);
     

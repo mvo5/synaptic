@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 18:15+0100\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
 "PO-Revision-Date: 2004-08-08 12:33+0300\n"
 "Last-Translator: Erçin EKER <erc.caldera@gmx.net>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -534,7 +534,7 @@ msgstr "Paket listeleri veya \"status\" dosyası işlenemiyor veya açılamıyor
 msgid "Internal Error, non-zero counts"
 msgstr "Dahili Hata, sıfır olmayan sonuç"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "İsim"
@@ -590,7 +590,7 @@ msgid "Origin"
 msgstr "Menşei"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "Durum"
@@ -807,14 +807,15 @@ msgid "_Force Version"
 msgstr "Sürüme _Zorla"
 
 #: gtk/dialog_upgrade.glade.h:1
+#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -1004,39 +1005,35 @@ msgstr "Yazıtipi seç"
 msgid "ignore"
 msgstr "göz ardı et"
 
-#: gtk/rgpreferenceswindow.cc:791
+#: gtk/rgpreferenceswindow.cc:766
 msgid "Color selection"
 msgstr "Renk seçimi"
 
-#: gtk/rgpreferenceswindow.cc:928
+#: gtk/rgpreferenceswindow.cc:893
 msgid "Visible"
 msgstr "Görünür"
 
-#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: gtk/rgfetchprogress.cc:66
-msgid "Downloading Files"
-msgstr "Dosyalar İndiriliyor"
-
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Boyut"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:128
+#: gtk/rgfetchprogress.cc:132
 #, c-format
 msgid ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:141
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1046,29 +1043,29 @@ msgstr ""
 "Lütfen şu etikete sahip diski %2$s sürücüsüne yerleştirin:\n"
 "%1$s"
 
-#: gtk/rgfetchprogress.cc:247
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "%2$li dosyadan %1$li tanesi %3$s/s hızda aktarıldı - %4$s kaldı"
 
-#: gtk/rgfetchprogress.cc:252
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "%2$li dosyadan %1$li dosya indiriliyor"
 
-#: gtk/rgfetchprogress.cc:317
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: gtk/rgfetchprogress.cc:320
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "Tamamlandı"
 
-#: gtk/rgfetchprogress.cc:323
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "Başarılı"
 
-#: gtk/rgfetchprogress.cc:326
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "Başarısız"
 
@@ -1331,7 +1328,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "Bir CD-ROM daha eklemek ister misiniz?"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "%s okunamıyor"
@@ -1341,7 +1338,7 @@ msgid "Open changes"
 msgstr "Değişiklikleri aç"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "%s yazılamıyor"
@@ -1466,15 +1463,15 @@ msgstr ""
 "Sistem yükseltilemiyor!\n"
 "Öncelikle yarım kalan paketleri düzeltin."
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "Mümkün olan tüm yükseltmeler işaretleniyor..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "Mevcut yükseltmeler başarıyla işaretlendi"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "Mümkün olan tüm yükseltmeler işaretlenirken hata oluştu!"
 
@@ -2895,7 +2892,7 @@ msgstr "Bağımlı paketler"
 msgid "Icon Legend"
 msgstr "Simge Açıklamaları"
 
-#: gtk/rgiconlegend.cc:73
+#: gtk/rgiconlegend.cc:72
 #, fuzzy
 msgid "Package is supported"
 msgstr "Paket Listesi"
@@ -2962,6 +2959,29 @@ msgstr ""
 "Kurmak istediğiniz paketin bu sürümü artık depoda bulunmuyor olabilir ya da "
 "paket kaynağı ile ilgili bir sorun olabilir. Paket listesini yenileyin ve "
 "paket kaynağını denetleyin (ör. CD ya da ağ bağlantısı)."
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: gtk/dialog_update_outdated.glade.h:4
+#, fuzzy
+msgid "Remember the answer"
+msgstr "Cevabı sonraki yükseltmelerde hatırla"
+
+#: gtk/dialog_update_outdated.glade.h:5
+#, fuzzy
+msgid "_Reload"
+msgstr "Tazele"
+
+#~ msgid "Downloading Files"
+#~ msgstr "Dosyalar İndiriliyor"
 
 #, fuzzy
 #~ msgid "Refresh the list of known packages from remote server"

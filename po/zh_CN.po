@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 18:15+0100\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
 "PO-Revision-Date: 2004-08-06 06:50+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -532,7 +532,7 @@ msgstr "无法解析或打开软件包列表或状态文件。"
 msgid "Internal Error, non-zero counts"
 msgstr "内部错误，非零计数"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "名称"
@@ -588,7 +588,7 @@ msgid "Origin"
 msgstr "源自"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "状态"
@@ -803,14 +803,15 @@ msgid "_Force Version"
 msgstr "强制版本(_F)"
 
 #: gtk/dialog_upgrade.glade.h:1
+#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -998,40 +999,36 @@ msgstr "选择字体"
 msgid "ignore"
 msgstr "忽略"
 
-#: gtk/rgpreferenceswindow.cc:791
+#: gtk/rgpreferenceswindow.cc:766
 msgid "Color selection"
 msgstr "颜色选择"
 
 # to choice if some items is visible or not
-#: gtk/rgpreferenceswindow.cc:928
+#: gtk/rgpreferenceswindow.cc:893
 msgid "Visible"
 msgstr "显示项目"
 
-#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "首选项"
 
-#: gtk/rgfetchprogress.cc:66
-msgid "Downloading Files"
-msgstr "下载文件"
-
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "文件大小"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "网址"
 
-#: gtk/rgfetchprogress.cc:128
+#: gtk/rgfetchprogress.cc:132
 #, c-format
 msgid ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:141
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1042,29 +1039,29 @@ msgstr ""
 "%s\n"
 "的光盘插入驱动器 %s"
 
-#: gtk/rgfetchprogress.cc:247
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "正在下载文件 %li(属于 %li)  速度 %s/s - 尚余 %s"
 
-#: gtk/rgfetchprogress.cc:252
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "正在下载文件 %li(属于 %li)"
 
-#: gtk/rgfetchprogress.cc:317
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "已列队"
 
-#: gtk/rgfetchprogress.cc:320
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "已下载"
 
-#: gtk/rgfetchprogress.cc:323
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "成功"
 
-#: gtk/rgfetchprogress.cc:326
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "失败"
 
@@ -1324,7 +1321,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "您想添加其他 CD-ROM 吗？"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
@@ -1334,7 +1331,7 @@ msgid "Open changes"
 msgstr "打开变更方案"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
@@ -1456,15 +1453,15 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复毁损的软件包。"
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "正在标记全部可用的升级..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "已成功标记全部可用的升级"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "无法标记全部可用的升级！"
 
@@ -2861,7 +2858,7 @@ msgstr "依赖的软件包"
 msgid "Icon Legend"
 msgstr "图标图例"
 
-#: gtk/rgiconlegend.cc:73
+#: gtk/rgiconlegend.cc:72
 #, fuzzy
 msgid "Package is supported"
 msgstr "此软件包目前被设为永不更新。"
@@ -2924,6 +2921,29 @@ msgstr ""
 "\n"
 "您想安装的软件包版本也许在仓库里已经不再可用了。或许软件包源有问题。刷新软件"
 "包列表并检查软件包源(即 CD 或者网络连接)。"
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: gtk/dialog_update_outdated.glade.h:4
+#, fuzzy
+msgid "Remember the answer"
+msgstr "为将来的升级记住您的回答"
+
+#: gtk/dialog_update_outdated.glade.h:5
+#, fuzzy
+msgid "_Reload"
+msgstr "重新载入"
+
+#~ msgid "Downloading Files"
+#~ msgstr "下载文件"
 
 #, fuzzy
 #~ msgid "Refresh the list of known packages from remote server"

@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.52\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 20:35+0900\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
 "PO-Revision-Date: 2004-11-02 21:03+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Project Vine <Vine@vinelinux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: common/sections_trans.cc:12
@@ -543,7 +543,7 @@ msgstr ""
 msgid "Internal Error, non-zero counts"
 msgstr "ナイブエラー、ゼロ以外のカウント"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "パッケージ名"
@@ -599,7 +599,7 @@ msgid "Origin"
 msgstr "Origin"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "状態"
@@ -817,14 +817,15 @@ msgid "_Force Version"
 msgstr "バージョンの強制(_F)"
 
 #: gtk/dialog_upgrade.glade.h:1
+#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -1014,30 +1015,30 @@ msgstr "フォントを選択してください"
 msgid "ignore"
 msgstr "無視"
 
-#: gtk/rgpreferenceswindow.cc:791
+#: gtk/rgpreferenceswindow.cc:766
 msgid "Color selection"
 msgstr "色の選択"
 
-#: gtk/rgpreferenceswindow.cc:928
+#: gtk/rgpreferenceswindow.cc:893
 msgid "Visible"
 msgstr "可視"
 
-#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "設定"
 
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "サイズ"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:128
-#, c-format
+#: gtk/rgfetchprogress.cc:132
+#, fuzzy, c-format
 msgid ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
@@ -1045,7 +1046,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gtk/rgfetchprogress.cc:141
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1055,29 +1056,29 @@ msgstr ""
 "%s というラベルのついたディスクを\n"
 "%s ドライブに挿入してください"
 
-#: gtk/rgfetchprogress.cc:247
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "ファイルをダウンロード中 (%li/%li) %s/秒- 残り時間 %s"
 
-#: gtk/rgfetchprogress.cc:252
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "ファイルのダウンロード中 (%li/%li)"
 
-#: gtk/rgfetchprogress.cc:317
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "キュー"
 
-#: gtk/rgfetchprogress.cc:320
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "完了"
 
-#: gtk/rgfetchprogress.cc:323
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "ヒット"
 
-#: gtk/rgfetchprogress.cc:326
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "失敗"
 
@@ -1210,8 +1211,8 @@ msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded  software packages."
 msgstr ""
-"新規、削除あるいはアップグレードされたパッケージが通知されるように"
-"パッケージ情報を更新してください。"
+"新規、削除あるいはアップグレードされたパッケージが通知されるようにパッケージ"
+"情報を更新してください。"
 
 #: gtk/rgmainwindow.cc:1251
 msgid "Mark all possible upgrades"
@@ -1302,15 +1303,16 @@ msgstr ""
 "グレード: %i 個, 削除: %i 個"
 
 #: gtk/rgmainwindow.cc:1714
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
 "\n"
 "Use the \"Broken\" filter to locate it."
+msgid_plural ""
 "You have %i broken packages on your system!\n"
 "\n"
 "Use the \"Broken\" filter to locate them."
-msgstr ""
+msgstr[0] ""
 "このシステムには %d 個の破損パッケージがあります。\n"
 "\n"
 "\"破損パッケージ\"フィルタを参照して確認してください。"
@@ -1324,7 +1326,8 @@ msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
-"変更履歴には、パッケージの各バージョンにおける変更やバグの修正などの情報が含まれています。"
+"変更履歴には、パッケージの各バージョンにおける変更やバグの修正などの情報が含"
+"まれています。"
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: gtk/rgmainwindow.cc:1900
@@ -1337,7 +1340,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "ほかのCD-ROMを追加しますか?"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "%s を読むことができません"
@@ -1347,7 +1350,7 @@ msgid "Open changes"
 msgstr "変更履歴を開く"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "%s を書き込むことができません"
@@ -1431,7 +1434,9 @@ msgstr "パッケージファイルのダウンロード中"
 
 #: gtk/rgmainwindow.cc:2529
 msgid "The package files will be cached locally for installation."
-msgstr "パッケージファイルはローカルにキャッシュされますが、インストールは行われません"
+msgstr ""
+"パッケージファイルはローカルにキャッシュされますが、インストールは行われませ"
+"ん"
 
 #: gtk/rgmainwindow.cc:2604
 msgid "Do you want to quit Synaptic?"
@@ -1446,7 +1451,8 @@ msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
-"リポジトリの新規、削除あるいはアップグレードされたパッケージをチェックします。"
+"リポジトリの新規、削除あるいはアップグレードされたパッケージをチェックしま"
+"す。"
 
 #: gtk/rgmainwindow.cc:2664
 msgid "Reloading package information..."
@@ -1468,15 +1474,15 @@ msgstr ""
 "システムをアップグレードすることができませんでした!\n"
 "まず破損パッケージを修復してください。"
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "アップグレード可能な全てのパッケージをアップグレード指定する..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "アップグレード可能な全てのパッケージを指定しました"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "アップグレード可能な全てのパッケージを指定することができませんでした"
 
@@ -2176,8 +2182,8 @@ msgid ""
 "<b>Note:</b> The package information must be reloaded and all marked changes "
 "will be lost. Make sure to apply your changes first."
 msgstr ""
-"<b>注意</b> パッケージ情報を再読込する必要があります。このため、全ての未適"
-"用の変更は破棄されます。あらかじめ変更を適用してください。"
+"<b>注意</b> パッケージ情報を再読込する必要があります。このため、全ての未適用"
+"の変更は破棄されます。あらかじめ変更を適用してください。"
 
 #: gtk/window_preferences.glade.h:12
 msgid "<b>Proxy Server</b>"
@@ -2818,8 +2824,8 @@ msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
-"常にパッケージ情報を更新し最新を保ってください。更新を怠ると、"
-"重要なセキュリティアップグレードを見逃す可能性があります。"
+"常にパッケージ情報を更新し最新を保ってください。更新を怠ると、重要なセキュリ"
+"ティアップグレードを見逃す可能性があります。"
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
@@ -2889,7 +2895,7 @@ msgstr "依存パッケージ"
 msgid "Icon Legend"
 msgstr "アイコン凡例"
 
-#: gtk/rgiconlegend.cc:73
+#: gtk/rgiconlegend.cc:72
 msgid "Package is supported"
 msgstr "このパッケージはサポートされています。"
 
@@ -2957,6 +2963,26 @@ msgstr ""
 "在しない可能性があります。もしくは、パッケージの取得元に問題がある可能性があ"
 "ります。パッケージリストを更新し、パッケージの取得元を確認してください。(例え"
 "ば CD やネットワーク接続など)"
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: gtk/dialog_update_outdated.glade.h:4
+#, fuzzy
+msgid "Remember the answer"
+msgstr "今後のアップグレードでもこの選択をする"
+
+#: gtk/dialog_update_outdated.glade.h:5
+#, fuzzy
+msgid "_Reload"
+msgstr "再読込"
 
 #~ msgid "Refresh the list of known packages"
 #~ msgstr "パッケージリストを更新します"

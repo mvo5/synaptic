@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.52\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 18:15+0100\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
 "PO-Revision-Date: 2004-09-21 00:56+0200\n"
 "Last-Translator: Roman Maurer <roman@lugos.si>\n"
 "Language-Team: Slovenian <translation-team-sl@lists.sourceforge.net>\n"
@@ -535,7 +535,7 @@ msgstr "Seznam paketov ali datoteke stanja ni moč razčleniti ali odpreti"
 msgid "Internal Error, non-zero counts"
 msgstr "Notranja napaka, neničelni števci"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Ime"
@@ -591,7 +591,7 @@ msgid "Origin"
 msgstr "IzvorVir"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "Stanje"
@@ -812,14 +812,15 @@ msgid "_Force Version"
 msgstr "_Vsili različico"
 
 #: gtk/dialog_upgrade.glade.h:1
+#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -1013,40 +1014,36 @@ msgstr "Izberite pisavo"
 msgid "ignore"
 msgstr "prezri"
 
-#: gtk/rgpreferenceswindow.cc:791
+#: gtk/rgpreferenceswindow.cc:766
 msgid "Color selection"
 msgstr "Izbor barv"
 
-#: gtk/rgpreferenceswindow.cc:928
+#: gtk/rgpreferenceswindow.cc:893
 #, fuzzy
 msgid "Visible"
 msgstr "Spremenljivka:"
 
-#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Nastavitve"
 
-#: gtk/rgfetchprogress.cc:66
-msgid "Downloading Files"
-msgstr "Prenašanje datotek"
-
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Velikost"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:128
+#: gtk/rgfetchprogress.cc:132
 #, c-format
 msgid ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:141
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1057,29 +1054,29 @@ msgstr ""
 "%s\n"
 "v pogon %s"
 
-#: gtk/rgfetchprogress.cc:247
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Prenašanje datoteke %li od %li pri %s/s - %s preostalih"
 
-#: gtk/rgfetchprogress.cc:252
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Prenašanje datoteke %li od %li"
 
-#: gtk/rgfetchprogress.cc:317
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "V čakalni vrsti"
 
-#: gtk/rgfetchprogress.cc:320
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "Opravljeno"
 
-#: gtk/rgfetchprogress.cc:323
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "Zadetek"
 
-#: gtk/rgfetchprogress.cc:326
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "Neuspešno"
 
@@ -1350,7 +1347,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "Ali želite dodati še drug CD-ROM?"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "%s ni moč brati"
@@ -1360,7 +1357,7 @@ msgid "Open changes"
 msgstr "Odpri spremebe"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "V %s ni moč pisati"
@@ -1483,15 +1480,15 @@ msgstr ""
 "Sistema ni moč nadgraditi!\n"
 "Najprej popravite pokvarjene pakete."
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "Označevanje vseh dostopnih nadgradenj..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "Dostopne nadgradnje uspešno označene"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "Vseh dostopnih nadgradenj ni bilo moč označiti!"
 
@@ -2937,7 +2934,7 @@ msgstr "Nadomeščeni paketi"
 msgid "Icon Legend"
 msgstr "Legenda ikone"
 
-#: gtk/rgiconlegend.cc:73
+#: gtk/rgiconlegend.cc:72
 #, fuzzy
 msgid "Package is supported"
 msgstr "Izbran ni noben paket"
@@ -3004,6 +3001,29 @@ msgstr ""
 "Različice paketa, ki bi jo radi namestili, morda ni več v skladišču. Lahko "
 "gre tudi za težave z izvorom paketa. Osvežite seznam paketov in preverite "
 "izvor paketa (tj. CD ali omrežna povezava)."
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: gtk/dialog_update_outdated.glade.h:4
+#, fuzzy
+msgid "Remember the answer"
+msgstr "Zapomni si odgovor za nadaljnje nadgradnje"
+
+#: gtk/dialog_update_outdated.glade.h:5
+#, fuzzy
+msgid "_Reload"
+msgstr "Izdaja"
+
+#~ msgid "Downloading Files"
+#~ msgstr "Prenašanje datotek"
 
 #, fuzzy
 #~ msgid "Refresh the list of known packages from remote server"

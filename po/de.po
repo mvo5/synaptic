@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-01 18:15+0100\n"
-"PO-Revision-Date: 2004-11-01 18:27+0100\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
+"PO-Revision-Date: 2004-11-09 21:31+0100\n"
 "Last-Translator: Sebastian Heinlein <sebastian.heinlein@web.de>\n"
 "Language-Team: GERMAN <synaptic-devel@nongu.org>\n"
 "MIME-Version: 1.0\n"
@@ -548,7 +548,7 @@ msgstr ""
 msgid "Internal Error, non-zero counts"
 msgstr "Interner Fehler: Zähler ungleich Null"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Name"
@@ -604,7 +604,7 @@ msgid "Origin"
 msgstr "Ursprung"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "Status"
@@ -837,8 +837,8 @@ msgid ""
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -1034,39 +1034,38 @@ msgstr "Wählen Sie eine Schrift"
 msgid "ignore"
 msgstr "ignorieren"
 
-#: gtk/rgpreferenceswindow.cc:791
+#: gtk/rgpreferenceswindow.cc:766
 msgid "Color selection"
 msgstr "Farbauswahl"
 
-#: gtk/rgpreferenceswindow.cc:928
+#: gtk/rgpreferenceswindow.cc:893
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: gtk/rgfetchprogress.cc:66
-msgid "Downloading Files"
-msgstr "Dateien herunterladen"
-
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Größe"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "Adresse"
 
-#: gtk/rgfetchprogress.cc:128
+#: gtk/rgfetchprogress.cc:132
 #, c-format
 msgid ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
-msgstr "<big><b>%s</b></big>%s"
+msgstr ""
+"<big><b>%s</b></big> \n"
+"\n"
+"%s"
 
-#: gtk/rgfetchprogress.cc:141
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1077,29 +1076,29 @@ msgstr ""
 "»%s«\n"
 "in das Laufwerk »%s« ein."
 
-#: gtk/rgfetchprogress.cc:247
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Datei %li von %li wird mit %s/s heruntergeladen - %s verbleibend"
 
-#: gtk/rgfetchprogress.cc:252
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Datei %li von %li wird heruntergeladen"
 
-#: gtk/rgfetchprogress.cc:317
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "Vorgemerkt"
 
-#: gtk/rgfetchprogress.cc:320
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "Fertig"
 
-#: gtk/rgfetchprogress.cc:323
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "Treffer"
 
-#: gtk/rgfetchprogress.cc:326
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
@@ -1366,7 +1365,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "Wollen Sie eine weitere CD als Quelle hinzufügen?"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "»%s« konnte nicht gelesen werden."
@@ -1376,7 +1375,7 @@ msgid "Open changes"
 msgstr "Änderungen öffnen"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "»%s« konnte nicht gespeichert werden."
@@ -1500,15 +1499,15 @@ msgstr ""
 "Aktualisierung konnte nicht durchgeführt werden!\n"
 "Beheben Sie zunächst defekte Pakete."
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "Alle verfügbaren Aktualisierungen werden vorgemerkt..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "Verfügbare Aktualisierungen wurden erfolgreich vorgemerkt"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "Vormerken der Aktualisierungen ist fehlgeschlagen!"
 
@@ -2944,7 +2943,7 @@ msgstr "Abhängige Pakete"
 msgid "Icon Legend"
 msgstr "Legende der Symbole"
 
-#: gtk/rgiconlegend.cc:73
+#: gtk/rgiconlegend.cc:72
 msgid "Package is supported"
 msgstr "Paket wird unterstützt"
 
@@ -3012,6 +3011,30 @@ msgstr ""
 "nicht mehr über die Paketquelle verfügbar. Eine andere Ursache können "
 "Probleme mit der Quelle sein. Frischen Sie die Paketliste auf and überprüfen "
 "Sie die Paketquelle (z.B. CD oder Netzwerkverbindung)."
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+"<b><big>Ihre Paketinformationen sind veraltet</big></b>\n"
+"\n"
+"Ihre Paketinformationen sind älter als 48 Stunden. Es könnte neue wichtige Sicherheitaktualisierungen vorliegen. Laden Sie daher Ihre Paketinformationen regelmäßg neu."
+
+#: gtk/dialog_update_outdated.glade.h:4
+msgid "Remember the answer"
+msgstr "Antwort merken"
+
+#: gtk/dialog_update_outdated.glade.h:5
+msgid "_Reload"
+msgstr "_Neu laden"
+
+#~ msgid "Downloading Files"
+#~ msgstr "Dateien herunterladen"
 
 #, fuzzy
 #~ msgid "Refresh the list of known packages from remote server"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.55\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-04 22:37+0100\n"
+"POT-Creation-Date: 2004-11-09 21:26+0100\n"
 "PO-Revision-Date: 2004-11-09 16:54+0200\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -602,7 +602,7 @@ msgid "Origin"
 msgstr "Происхождение"
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:126
-#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:78
 #: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "Состояние"
@@ -827,14 +827,15 @@ msgid "_Force Version"
 msgstr "_Назначить версию"
 
 #: gtk/dialog_upgrade.glade.h:1
+#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
 "The default upgrade method skips upgrades that would introduce conflicts or "
 "would require to install additional packages.\n"
 "\n"
-"The smart upgrade (dist-upgrade) attemps to resolve conflicts and to fullfil "
-"all dependencies of upgrades in a smart way.\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+"fullfil all dependencies of upgrades in a smart way.\n"
 "\n"
 "<b>Note:</b> The upgrades will be marked, only. You still have to apply them "
 "afterwards."
@@ -1037,15 +1038,15 @@ msgstr "Видимый"
 msgid "Preferences"
 msgstr "Параметры"
 
-#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Размер"
 
-#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:127
+#: gtk/rgfetchprogress.cc:132
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1056,7 +1057,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gtk/rgfetchprogress.cc:140
+#: gtk/rgfetchprogress.cc:145
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1067,29 +1068,29 @@ msgstr ""
 "%s\n"
 "в дисковод %s"
 
-#: gtk/rgfetchprogress.cc:246
+#: gtk/rgfetchprogress.cc:251
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Загрузка файла %li из %li на %s/s - %s осталось"
 
-#: gtk/rgfetchprogress.cc:251
+#: gtk/rgfetchprogress.cc:256
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Загрузка файла %li из %li"
 
-#: gtk/rgfetchprogress.cc:316
+#: gtk/rgfetchprogress.cc:321
 msgid "Queued"
 msgstr "Добавлен в очередь"
 
-#: gtk/rgfetchprogress.cc:319
+#: gtk/rgfetchprogress.cc:324
 msgid "Done"
 msgstr "Готово"
 
-#: gtk/rgfetchprogress.cc:322
+#: gtk/rgfetchprogress.cc:327
 msgid "Hit"
 msgstr "Совпадение"
 
-#: gtk/rgfetchprogress.cc:325
+#: gtk/rgfetchprogress.cc:330
 msgid "Failed"
 msgstr "Неудачно"
 
@@ -1361,7 +1362,7 @@ msgid "Do you want to add another CD-ROM?"
 msgstr "Добавить другой компакт-диск?"
 
 #: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2863
+#: gtk/rgmainwindow.cc:2867
 #, c-format
 msgid "Can't read %s"
 msgstr "Невозможно прочитать %s"
@@ -1371,7 +1372,7 @@ msgid "Open changes"
 msgstr "Открыть изменения"
 
 #: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
 #, c-format
 msgid "Can't write %s"
 msgstr "Невозможно записать %s"
@@ -1491,15 +1492,15 @@ msgstr ""
 "Невозможно обновить систему!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: gtk/rgmainwindow.cc:2787
+#: gtk/rgmainwindow.cc:2791
 msgid "Marking all available upgrades..."
 msgstr "Отметить всё доступное для обновления..."
 
-#: gtk/rgmainwindow.cc:2799
+#: gtk/rgmainwindow.cc:2803
 msgid "Successfully marked available upgrades"
 msgstr "Отмечены все доступные для обновления пакеты"
 
-#: gtk/rgmainwindow.cc:2801
+#: gtk/rgmainwindow.cc:2805
 msgid "Failed to mark all available upgrades!"
 msgstr "Невозможно отметить всё доступное для обновления!"
 
@@ -2780,9 +2781,12 @@ msgid ""
 "There are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
-"<span size=\"large\" weight=\"bold\">Какие задачи будут выполняться вашим компьютером?</span>\n"
+"<span size=\"large\" weight=\"bold\">Какие задачи будут выполняться вашим "
+"компьютером?</span>\n"
 "\n"
-"Существуют предопределенные группы пакетов для выполнения каждой задачи. Если Вы выберете задачу, то соответствующие пакеты будут отмечены для установки."
+"Существуют предопределенные группы пакетов для выполнения каждой задачи. "
+"Если Вы выберете задачу, то соответствующие пакеты будут отмечены для "
+"установки."
 
 #: gtk/window_tasks.glade.h:4
 msgid "_Description"
@@ -3001,6 +3005,26 @@ msgstr ""
 "Пакет той версии, которую вы хотите установить, возможно уже не доступен в "
 "репозитории или возникли проблемы с доступом к репозиторию. Обновите список "
 "пакетов и проверьте источник пакетов (компакт-диск или сетевое соединение)."
+
+#: gtk/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information ist older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: gtk/dialog_update_outdated.glade.h:4
+#, fuzzy
+msgid "Remember the answer"
+msgstr "Запомнить ответ для дальнейших обновлений"
+
+#: gtk/dialog_update_outdated.glade.h:5
+#, fuzzy
+msgid "_Reload"
+msgstr "Обновить"
 
 #~ msgid "Downloading Files"
 #~ msgstr "Загружаются файлы"

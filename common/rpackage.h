@@ -203,6 +203,10 @@ public:
 
    void addVirtualPackage(pkgCache::PkgIterator dep);
 
+   // set distribution selection (like stable/testing/unstable)
+   bool setDistribution(const char* verTag);
+   string showWhyInstBroken();
+
    RPackage(RPackageLister *lister, pkgDepCache *depcache, pkgRecords *records,
 	    pkgCache::PkgIterator &pkg);
    ~RPackage();

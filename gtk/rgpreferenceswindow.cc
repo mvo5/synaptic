@@ -49,6 +49,42 @@ char * RGPreferencesWindow::color_buttons[] = {
   };
 
 
+void RGPreferencesWindow::onDistroStable(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    _config->Set("APT::Default-Release","stable");
+    _config->Set("Synaptic::DefaultDistro","stable");
+    me->distroChanged = true;
+}
+
+void RGPreferencesWindow::onDistroTesting(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    _config->Set("APT::Default-Release","testing");
+    _config->Set("Synaptic::DefaultDistro","testing");
+    me->distroChanged = true;
+}
+
+void RGPreferencesWindow::onDistroUnstable(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    _config->Set("APT::Default-Release","unstable");
+    _config->Set("Synaptic::DefaultDistro","unstable");
+    me->distroChanged = true;
+}
+
+void RGPreferencesWindow::onDistroIgnore(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    _config->Clear("APT::Default-Release");
+    _config->Clear("Synaptic::DefaultDistro");
+    me->distroChanged = true;
+}
+
 void RGPreferencesWindow::applyProxySettings()
 {
     string http, ftp, noProxy;
@@ -207,6 +243,11 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
 void RGPreferencesWindow::closeAction(GtkWidget *self, void *data)
 {
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+    if(me->distroChanged) {
+	me->_mainWin->setTreeLocked(TRUE);
+	me->_lister->openCache(TRUE);
+	me->_mainWin->setTreeLocked(FALSE);
+    }
     me->close();
 }
 
@@ -230,7 +271,8 @@ void RGPreferencesWindow::show()
     bool postClean, postAutoClean;    
     string str;
     int i;
-
+    distroChanged = false;
+    
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean),
 				 _config->FindB("Synaptic::CleanCache", false));
 
@@ -307,8 +349,6 @@ void RGPreferencesWindow::show()
     str = _config->Find("Synaptic::noProxy","");
     gtk_entry_set_text(GTK_ENTRY(glade_xml_get_widget(_gladeXML,"entry_no_proxy")),
 		       str.c_str());
-
-
     // main layout
     string mainName =_config->Find("Synaptic::MainName", "main_hpaned");
     if(mainName == "main_vpaned") {
@@ -317,6 +357,20 @@ void RGPreferencesWindow::show()
     } else {
 	gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML, "button_hpaned")));
 	_synapticLayout = LAYOUT_HPANED;
+    }
+
+    // default distro
+    string s = _config->Find("Synaptic::DefaultDistro","");
+    if(s != "") {
+	// set optionmenu according to the default disto
+	int i=0;
+	GtkWidget *w = glade_xml_get_widget(_gladeXML, 
+					    "optionmenu_default_distro");
+	if(s=="stable") i=2;
+	else if(s=="testing") i=3;
+	else if(s=="unstable") i=4;
+
+	gtk_option_menu_set_history(GTK_OPTION_MENU(w),i);
     }
 
     RGWindow::show();
@@ -489,7 +543,7 @@ void RGPreferencesWindow::vpanedClickedAction(GtkWidget *self, void *data)
     me->_synapticLayout = LAYOUT_VPANED;
 }
 
-RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister) 
+RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister) 
     : RGGladeWindow(win, "preferences")
 {
     GtkWidget *button;
@@ -518,6 +572,8 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister)
     //         "keep","install"
     gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel),delAction-2);
 
+    // save the lister
+    _lister = lister;
 
     readColors();
     readTreeViewValues();
@@ -554,6 +610,26 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister)
 				  G_CALLBACK(useProxyToggled),
 				  this); 
 
+    // distro selection
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_stable_activate",
+				  G_CALLBACK(onDistroStable),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_testing_activate",
+				  G_CALLBACK(onDistroTesting),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_unstable_activate",
+				  G_CALLBACK(onDistroUnstable),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_ignore_activate",
+				  G_CALLBACK(onDistroIgnore),
+				  this); 
 
 
     for(int i=0; color_buttons[i] != NULL; i++) {
@@ -563,6 +639,14 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister)
 	g_signal_connect(G_OBJECT(button), "clicked", 
 			 G_CALLBACK(colorClicked), GINT_TO_POINTER(i));
     }
+
+    // we don't support "select distro" on rpm
+#ifdef HAVE_RPM 
+    GtkWidget *widget = glade_xml_get_widget(_gladeXML, "notebook_prefs");
+    assert(widget);
+    gtk_notebook_remove_page(GTK_NOTEBOOK(widget), -1);
+#endif    
+
 
   setTitle(_("Set preferences"));
 }

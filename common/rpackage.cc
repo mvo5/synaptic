@@ -42,6 +42,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <assert.h>
+#include <sstream>
 
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/depcache.h>
@@ -555,6 +556,76 @@ bool RPackage::dependsOn(const char *pkgname)
     return false;
 }
 
+/* mostly taken from apt-get.cc:ShowBroken() */
+string RPackage::showWhyInstBroken()
+{
+    pkgCache::DepIterator depI;
+    pkgCache::VerIterator Ver;
+    bool First = true;
+    ostringstream out;
+
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    Ver = State.CandidateVerIter(*_depcache);
+    for (pkgCache::DepIterator D = Ver.DependsList(); D.end() == false;) {
+	// Compute a single dependency element (glob or)
+	pkgCache::DepIterator Start;
+	pkgCache::DepIterator End;
+	D.GlobOr(Start,End);
+	
+	if (_depcache->IsImportantDep(End) == false)
+            continue;
+	
+	if (((*_depcache)[End] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall)
+	    continue;
+	
+	bool FirstOr = true;
+	while (1)
+         {
+            First = false;
+
+            if (FirstOr == false)
+		ioprintf(out,"\t");
+            else
+               ioprintf(out," %s: ",End.DepType());
+
+            FirstOr = false;
+            ioprintf(out, "%s", Start.TargetPkg().Name());
+
+            // Show a quick summary of the version requirements
+            if (Start.TargetVer() != 0)
+		ioprintf(out," (%s %s)",Start.CompType(),Start.TargetVer());
+
+            /* Show a summary of the target package if possible. In the case
+               of virtual packages we show nothing */
+            pkgCache::PkgIterator Targ = Start.TargetPkg();
+            if (Targ->ProvidesList == 0) {
+		ioprintf(out," ");
+		pkgCache::VerIterator Ver = (*_depcache)[Targ].InstVerIter(*_depcache);
+		if (Ver.end() == false)  {
+		    ioprintf(out,_("but %s is to be installed"),Ver.VerStr());
+		} else {
+		    if ((*_depcache)[Targ].CandidateVerIter(*_depcache).end() == true) {
+			if (Targ->ProvidesList == 0)
+			    ioprintf(out, _("but it is not installable"));
+			else
+			    ioprintf(out,_("but it is a virtual package"));
+		    }
+		    else
+			ioprintf(out,_("but it is not going to be installed"));
+		}
+            }
+            if (Start != End)
+		ioprintf(out, _(" or"));
+            ioprintf(out,"\n");
+
+            if (Start == End)
+               break;
+            Start++;
+         }
+    }
+    return out.str();
+}
+
 bool RPackage::enumDeps(const char *&type, const char *&what, 
 			const char *&pkg, const char *&which, char *&summary,
 			bool &satisfied)
@@ -864,6 +935,27 @@ bool RPackage::isShallowDependency(RPackage *pkg)
   return true;
 }
 
+bool RPackage::setDistribution(const char* VerTag)
+{
+    pkgVersionMatch Match(VerTag,pkgVersionMatch::Release);
+    
+    pkgCache::VerIterator Ver = Match.Find(*_package);
+			 
+    if (Ver.end() == true)
+	 return _error->Error(_("Release '%s' for '%s' was not found"),
+			      VerTag,_package->Name());
+
+    
+    if (strcmp(VerTag,Ver.VerStr()) != 0) {
+	printf("Selected version %s (%s) for %s\n",
+		Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
+    }
+   
+    _depcache->SetCandidateVersion(Ver);
+    return true;
+}
+
+
 vector<const char*> RPackage::provides()
 {
     pkgDepCache::StateCache &State = (*_depcache)[*_package];
@@ -1032,6 +1124,7 @@ static char *stripWsParser(string descr)
 
     return descrBuffer;
 }
+
 
 static char *parseDescription(string descr)
 {

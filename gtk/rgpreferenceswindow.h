@@ -52,7 +52,14 @@ class RGPreferencesWindow : public RGGladeWindow {
     int columnPos[6];
     
     void readColors();
-    
+
+    // distro selection
+    static void onDistroStable(GtkWidget *self, void *data);
+    static void onDistroTesting(GtkWidget *self, void *data);
+    static void onDistroUnstable(GtkWidget *self, void *data);
+    static void onDistroIgnore(GtkWidget *self, void *data);
+    bool distroChanged;
+
     // treeview stuff
     void readTreeViewValues();
     void saveTreeViewValues();

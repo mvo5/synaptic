@@ -1509,6 +1509,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 }
 
 
+
 void RGMainWindow::menuActionClicked(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
@@ -1602,6 +1603,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  break;
       case PKG_INSTALL: // install
 	  instPkgs.push_back(pkg);
+	  //pkg->setDistribution("stable");
 	  me->pkgInstallHelper(pkg, false);
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
 	      //cout << "auto installing recommended" << endl;
@@ -1659,6 +1661,10 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   }
 
   if(changed) {
+      // standard header in case the installing fails
+      string failedReason(_("Some packages could not be installed.\n\n"
+			    "The following packages have unmet "
+			    "dependencies:\n"));
       me->_lister->saveUndoState(state);
       // check for failed installs
       if(action == PKG_INSTALL) {
@@ -1672,14 +1678,17 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	      int mstatus = pkg->getMarkedStatus();
 	      //cout << "mstatus: " << mstatus << endl;
 	      if(!(mstatus == RPackage::MInstall ||
-		   mstatus == RPackage::MUpgrade) ) 
+		   mstatus == RPackage::MUpgrade) ) {
 		  failed = true;
+		  failedReason += string(pkg->name()) + ":\n";
+		  failedReason += pkg->showWhyInstBroken();
+		  failedReason += "\n";
+	      }
 	  }
-	  if(failed)
-	      me->_userDialog->warning(_("The selected package couldn't be\
- installed/upgraded.\n\n"
-				     "This is most probably caused by unmet\
- dependencies that are not available in any repository."));
+	  if(failed) {
+	      // TODO: make this a special dialog with TextView
+	      me->_userDialog->warning(failedReason.c_str());
+	  }
       }
   }
 

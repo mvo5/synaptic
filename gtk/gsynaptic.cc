@@ -194,11 +194,16 @@ int main(int argc, char **argv)
       ShowHelp(CmdL);
 
     SetLanguages();
-
+    
     RPackageLister *packageLister = new RPackageLister();
     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
     RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);
 
+    // read which default distro to use
+    string s = _config->Find("Synaptic::DefaultDistro","");
+    if(s != "")
+	_config->Set("APT::Default-Release",s);
+    
 #ifndef HAVE_RPM
     #ifndef HAVE_DEBTAGS
       mainWindow->setTitle(PACKAGE" Package Manager ");

@@ -15,13 +15,13 @@
   <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
-  <property name="has_separator">True</property>
+  <property name="has_separator">False</property>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
-      <property name="spacing">6</property>
+      <property name="spacing">0</property>
 
       <child internal-child="action_area">
 	<widget class="GtkHButtonBox" id="dialog-action_area1">
@@ -186,27 +186,6 @@
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label19">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">    </property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">False</property>
-		  <property name="fill">False</property>
-		</packing>
-	      </child>
-
-	      <child>
 		<widget class="GtkNotebook" id="notebook_details">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
@@ -218,10 +197,10 @@
 
 		  <child>
 		    <widget class="GtkVBox" id="vbox6">
-		      <property name="border_width">6</property>
+		      <property name="border_width">12</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
-		      <property name="spacing">6</property>
+		      <property name="spacing">18</property>
 
 		      <child>
 			<widget class="GtkHBox" id="hbox12">
@@ -407,7 +386,7 @@
 				      <child>
 					<widget class="GtkLabel" id="label22">
 					  <property name="visible">True</property>
-					  <property name="label" translatable="yes">&lt;b&gt;Selected&lt;/b&gt;</property>
+					  <property name="label" translatable="yes">&lt;b&gt;Marked&lt;/b&gt;</property>
 					  <property name="use_underline">False</property>
 					  <property name="use_markup">True</property>
 					  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -461,9 +440,9 @@
 					      <child>
 						<widget class="GtkCheckButton" id="checkbutton_status4">
 						  <property name="visible">True</property>
-						  <property name="tooltip" translatable="yes">Packages that will be kept</property>
+						  <property name="tooltip" translatable="yes">Packages that won't be changed</property>
 						  <property name="can_focus">True</property>
-						  <property name="label" translatable="yes">To be kept</property>
+						  <property name="label" translatable="yes">Not marked</property>
 						  <property name="use_underline">True</property>
 						  <property name="relief">GTK_RELIEF_NORMAL</property>
 						  <property name="active">False</property>
@@ -737,15 +716,14 @@
 			<widget class="GtkHButtonBox" id="hbuttonbox4">
 			  <property name="visible">True</property>
 			  <property name="layout_style">GTK_BUTTONBOX_END</property>
-			  <property name="spacing">0</property>
+			  <property name="spacing">6</property>
 
 			  <child>
 			    <widget class="GtkButton" id="button_status_select_all">
-			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_default">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Select All</property>
+			      <property name="label" translatable="yes">_Select All</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <signal name="clicked" handler="on_button_status_select_all_clicked" last_modification_time="Sat, 15 Mar 2003 14:54:55 GMT"/>
@@ -754,11 +732,10 @@
 
 			  <child>
 			    <widget class="GtkButton" id="button_status_select_none">
-			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_default">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Deselect All</property>
+			      <property name="label" translatable="yes">_Deselect All</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <signal name="clicked" handler="on_button_status_select_none_clicked" last_modification_time="Sat, 15 Mar 2003 14:55:05 GMT"/>
@@ -767,11 +744,10 @@
 
 			  <child>
 			    <widget class="GtkButton" id="button_status_invert">
-			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_default">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">Invert All</property>
+			      <property name="label" translatable="yes">_Invert All</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <signal name="clicked" handler="on_button_status_invert_clicked" last_modification_time="Wed, 01 Oct 2003 23:06:42 GMT"/>
@@ -812,7 +788,7 @@
 
 		  <child>
 		    <widget class="GtkVBox" id="vbox5">
-		      <property name="border_width">6</property>
+		      <property name="border_width">12</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
@@ -922,7 +898,7 @@
 
 		  <child>
 		    <widget class="GtkVBox" id="vbox7">
-		      <property name="border_width">6</property>
+		      <property name="border_width">12</property>
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
 		      <property name="spacing">6</property>
@@ -1136,7 +1112,7 @@
 			      <signal name="changed" handler="on_entry_pattern_text_changed" last_modification_time="Fri, 14 Mar 2003 01:55:57 GMT"/>
 			    </widget>
 			    <packing>
-			      <property name="padding">4</property>
+			      <property name="padding">0</property>
 			      <property name="expand">True</property>
 			      <property name="fill">True</property>
 			    </packing>
@@ -1153,11 +1129,10 @@
 			<widget class="GtkHButtonBox" id="hbuttonbox5">
 			  <property name="visible">True</property>
 			  <property name="layout_style">GTK_BUTTONBOX_END</property>
-			  <property name="spacing">0</property>
+			  <property name="spacing">6</property>
 
 			  <child>
 			    <widget class="GtkButton" id="button_pattern_new">
-			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_default">True</property>
 			      <property name="can_focus">True</property>
@@ -1170,7 +1145,6 @@
 
 			  <child>
 			    <widget class="GtkButton" id="button_pattern_delete">
-			      <property name="border_width">5</property>
 			      <property name="visible">True</property>
 			      <property name="can_default">True</property>
 			      <property name="can_focus">True</property>
@@ -1221,7 +1195,7 @@
 
 		      <child>
 			<widget class="GtkHPaned" id="hpaned2">
-			  <property name="border_width">6</property>
+			  <property name="border_width">12</property>
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
 

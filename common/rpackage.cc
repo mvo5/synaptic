@@ -953,35 +953,37 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 	if (!_depcache->IsImportantDep(start))
 	    continue;
 
-	if (((*_depcache)[start] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall) {
-	    pkgCache::PkgIterator depPkg = start.TargetPkg();
-	    // get the real package, in case this is a virtual pkg
-	    if (depPkg->VersionList == 0) {
-		if (depPkg->ProvidesList != 0) {
-		    depPkg = depPkg.ProvidesList().OwnerPkg();
-		} else {
-		    continue;
-		}
-	    }
 
-	    RPackage *depackage = _lister->getElement(depPkg);
-	    
-	    if (!depackage)
-		continue;
+	pkgCache::PkgIterator depPkg = start.TargetPkg();
 
-	    // skip important packages
-	    if (depackage->isImportant())
-		continue;
-
-	    // skip dependencies that are dependants of other packages
-	    // if shallow=true
-	    if (shallow && !isShallowDependency(depackage)) {
+	// get the real package, in case this is a virtual pkg
+	// mvo: does this actually work :) ?
+	if (depPkg->VersionList == 0) {
+	    if (depPkg->ProvidesList != 0) {
+		depPkg = depPkg.ProvidesList().OwnerPkg();
+	    } else {
 		continue;
 	    }
-
-	    // set this package for removal
-	    depackage->setRemove(purge);
 	}
+
+	RPackage *depackage = _lister->getElement(depPkg);
+	cout << "testing(RPackage): " << depackage->name() << endl;
+	
+	if (!depackage)
+	    continue;
+	
+	// skip important packages
+	if (depackage->isImportant())
+	    continue;
+	
+	// skip dependencies that are dependants of other packages
+	// if shallow=true
+	if (shallow && !isShallowDependency(depackage)) {
+	    continue;
+	}
+	
+	// set this package for removal
+	depackage->setRemove(purge);
     }
 }
 

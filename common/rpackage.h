@@ -129,8 +129,10 @@ public:
    const char *summary();
    const char *description();
    const char *installedFiles();
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
    const char *tags();
+#endif
 #endif
    vector<const char*> provides(); 
 

@@ -1519,8 +1519,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     // package info
     setLabel(_gladeXML,"label_section", _(trans_section(pkg->section()).c_str()));
     setLabel(_gladeXML,"label_priority", pkg->priority());
+#if 0 // PORTME
 #ifdef HAVE_DEBTAGS
     setLabel(_gladeXML,"label_tags", pkg->tags());
+#endif
 #endif
     setLabel(_gladeXML,"label_maintainer", pkg->maintainer());
     setLabel(_gladeXML,"label_installed_version", pkg->installedVersion());
@@ -3762,6 +3764,7 @@ void RGMainWindow::saveState()
 
 bool RGMainWindow::initDebtags()
 {
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
     // FIXME: this is not a good place! find a better
     _lister->_hmaker = new HandleMaker<RPackage*>();
@@ -3796,6 +3799,7 @@ bool RGMainWindow::initDebtags()
     // Set the builder as the filter output
     //coll.output(filter);
     //TagCollection<int> 
+#endif
 #endif
 }
 

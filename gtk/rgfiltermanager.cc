@@ -212,6 +212,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 		      G_CALLBACK (patternSelectionChanged),
 		      this);
 
+#if 0
 #ifdef HAVE_DEBTAGS
     // build the debtags stuff
     _availableTagsView = (GtkTreeView*)glade_xml_get_widget(_gladeXML, "treeview_available_tags");
@@ -271,6 +272,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 				  this);
 
 #endif
+#endif
 
     // remove the debtags tab
 #ifndef HAVE_DEBTAGS
@@ -284,6 +286,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
     gtk_widget_set_sensitive(_filterDetailsBox, false);
 }
 
+#if 0
 #ifdef HAVE_DEBTAGS
 void RGFilterManagerWindow::treeViewIncludeClicked(GtkTreeView *treeview,
 						   GtkTreePath *arg1,
@@ -314,7 +317,6 @@ void RGFilterManagerWindow::treeViewExcludeClicked(GtkTreeView *treeview,
 	me->filterAvailableTags();
     }
 }
-
 
 void RGFilterManagerWindow::getTagFilter(RTagPackageFilter &f)
 {
@@ -380,6 +382,7 @@ void RGFilterManagerWindow::setTagFilter(RTagPackageFilter &f)
 
 }
 
+
 void RGFilterManagerWindow::filterAvailableTags()
 {
     GtkTreeIter iter;
@@ -430,7 +433,7 @@ void RGFilterManagerWindow::filterAvailableTags()
 			    0, (*it).c_str(), -1);
     }
 }
-
+#endif
 #endif
 
 void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
@@ -998,8 +1001,10 @@ void RGFilterManagerWindow::editFilter(RFilter *filter)
     setSectionFilter(filter->section);
     setStatusFilter(filter->status);
     setPatternFilter(filter->pattern);
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
     setTagFilter(filter->tags);
+#endif
 #endif
     setFilterView(filter);
 }
@@ -1010,8 +1015,10 @@ void RGFilterManagerWindow::applyChanges(RFilter *filter)
     getSectionFilter(filter->section);
     getStatusFilter(filter->status);
     getPatternFilter(filter->pattern);
+#if 0 //PORTME
 #ifdef HAVE_DEBTAGS
    getTagFilter(filter->tags);
+#endif
 #endif
     getFilterView(filter);
 }
@@ -1137,6 +1144,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
     me->close();
 }
 
+#if 0
 #ifdef HAVE_DEBTAGS
 void RGFilterManagerWindow::includeTagAction(GtkWidget *self, void *data)
 {
@@ -1192,6 +1200,7 @@ void RGFilterManagerWindow::excludeTagAction(GtkWidget *self, void *data)
 
 }
 #endif // HAVE_DEBTAGS
+#endif
 
 void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
 {

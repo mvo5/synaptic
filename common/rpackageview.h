@@ -46,6 +46,8 @@ class RPackageView
    vector<RPackage*> _selectedView;
 
    public:
+   RPackageView() {};
+   virtual ~RPackageView() {};
 
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };

@@ -58,8 +58,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow
    PangoFontDescription *_font;
    int _depth;
    
-   void reloadTable();
-   void refreshTable(int row);
+   void refreshTable(int row, bool append=false);
    GdkPixmap *statusDraw(int width, int height, int status);
    
 public:

@@ -143,27 +143,18 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 				   int status)
 {
     //cout << "void RGFetchProgress::updateStatus()" << endl;
-    bool reload = false;
 
     if (Itm.Owner->ID == 0) {
 	Item item;
 	item.uri = Itm.Description;
 	item.size = string(SizeToStr(Itm.Owner->FileSize));
+        item.status = status;
 	_items.push_back(item);
 	Itm.Owner->ID = _items.size();
-	reload = true;
-    }
-    _items[Itm.Owner->ID-1].status = status;
-    if (reload) {
-	reloadTable();
-	int i = _items.size()-1;
-	if(i>=0) {
-	    GtkTreePath *path = gtk_tree_path_new_from_indices(i, -1);
-	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
-	    gtk_tree_path_free(path);
-	}
-    } else {
-	refreshTable(Itm.Owner->ID-1);
+        refreshTable(Itm.Owner->ID-1, true);
+    } else if (_items[Itm.Owner->ID-1].status != status) {
+        _items[Itm.Owner->ID-1].status = status;
+        refreshTable(Itm.Owner->ID-1, false);
     }
 }
 
@@ -246,7 +237,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
     }
 
     gtk_label_set_text(GTK_LABEL(_statusL), (char*)str.c_str());
-    reloadTable();
     RGFlushInterface();
 
     return !_cancelled;
@@ -337,7 +327,7 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 }
 
 
-void RGFetchProgress::refreshTable(int row)
+void RGFetchProgress::refreshTable(int row, bool append)
 {
     //cout << "RGFetchProgress::refreshTable() " << row << endl;
     GtkTreeIter iter;
@@ -346,6 +336,7 @@ void RGFetchProgress::refreshTable(int row)
     int w,h;
 
     // unref pix first (they start with a usage count of 1
+    // why not unref'ing it after adding in the table? -- niemeyer
     if(pix != NULL) 
 	gdk_pixmap_unref(pix);
     if(buf != NULL) 
@@ -358,10 +349,12 @@ void RGFetchProgress::refreshTable(int row)
     buf = gdk_pixbuf_get_from_drawable(NULL, pix, NULL,
 				 0, 0, 0, 0, w, h );
 
-    // check if row is already displayed
-    if(_tableRows.find(row) == _tableRows.end()) {
+    if (append == true) {
 	gtk_list_store_insert(_tableListStore, &iter, row);
-	_tableRows.insert(row);
+        GtkTreePath *path = gtk_tree_path_new_from_indices(row, -1);
+        gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
+        gtk_tree_path_free(path);
+        // can't we use the iterator here?
     } else {
 	gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(_tableListStore),
 				      &iter, NULL, row);
@@ -373,25 +366,4 @@ void RGFetchProgress::refreshTable(int row)
 		       -1);
 }
 
-
-void RGFetchProgress::reloadTable()
-{
-    //cout << "RGFetchProgress::reloadTable()" << endl;
-
-    gtk_list_store_clear(_tableListStore);
-    _tableRows.clear();
-
-    for (unsigned int i = 0; i < _items.size(); i++) {
-	refreshTable(i);
-    }
-
-    // moveto last item
-    int i = _items.size()-1;
-    if(i>=0) {
-	GtkTreePath *path = gtk_tree_path_new_from_indices(i, -1);
-	gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
-	gtk_tree_path_free(path);
-    }
-}
-
-
+// vim:sts=4:sw=4

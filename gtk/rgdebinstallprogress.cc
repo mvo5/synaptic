@@ -124,8 +124,8 @@ void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
 {
    RGDebInstallProgress *me = (RGDebInstallProgress*)data;
    if(child_pid == me->_child_id) {
-      cout << "child exited" << endl;
-      cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
+//       cout << "child exited" << endl;
+//       cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
       me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
       me->child_has_exited=true;
    }
@@ -415,7 +415,7 @@ void RGDebInstallProgress::updateInterface()
 
       // got complete line
       if( buf[0] == '\n') {
-	 //cout << line << endl;
+// 	 cout << line << endl;
 	 
 	 _startCounting = true;
 	 gchar **split = g_strsplit(line, ":",4);
@@ -447,9 +447,9 @@ void RGDebInstallProgress::updateInterface()
 	    //  session (rare but happens))
 	    char **states = _actionsMap[pkg]; 
 	    char **translations = _translationsMap[pkg]; 
-	    if(states) {
+	    if(states && translations) {
 	       next_stage_str = states[next_stage];
-	       //cout << "waiting for: " << next_stage_str << endl;
+// 	       cout << "waiting for: " << next_stage_str << endl;
 	       if(next_stage_str && (strstr(status, next_stage_str) != NULL)) {
 		  s = g_strdup_printf(_(translations[next_stage]), split[1]);
 		  next_stage++;
@@ -461,7 +461,7 @@ void RGDebInstallProgress::updateInterface()
 
 	 // each package goes through three stages
 	 float val = ((float)_progress)/((float)_totalActions);
-	 //cout << _progress << "/" << _totalActions << " = " << val << endl;
+// 	 cout << _progress << "/" << _totalActions << " = " << val << endl;
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 	 if(s!=NULL)
 	    gtk_label_set(GTK_LABEL(_label_status),s);
@@ -491,7 +491,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    int ret;
    pid_t _child_id;
 
-   //cout << "RInstallProgress::start()" << endl;
+//    cout << "RInstallProgress::start()" << endl;
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
@@ -501,7 +501,6 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
     * This will make a pipe from where we can read child's output
     */
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
-
    if (_child_id == 0) {
       int fd[2];
       pipe(fd);
@@ -515,7 +514,6 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
 
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
-
 
       ::close(fd[0]);
       ::close(fd[1]);
@@ -578,7 +576,7 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
 	 _totalActions += NR_PURGE_ONLY_STAGES;
       } else if(flags & RPackage::FRemove) {
 	 _actionsMap.insert(pair<string,char**>(name, remove_stages));
-	 _actionsMap.insert(pair<string,char**>(name, remove_stages_translations));
+	 _translationsMap.insert(pair<string,char**>(name, remove_stages_translations));
 	 _stagesMap.insert(pair<string,int>(name, 0));
 	 _totalActions += NR_REMOVE_STAGES;
       } else if(flags & RPackage::FNewInstall) {

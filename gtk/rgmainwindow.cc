@@ -438,6 +438,9 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
                                 toUpgrade, toRemove, toDowngrade)) {
          // canceled operation
          _lister->restoreState(state);
+	 // if a operation was canceled, we discard all errors from this
+	 // operation too
+	 _error->Discard();
          changed = false;
       }
       delete chng;

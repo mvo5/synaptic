@@ -111,8 +111,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinM;
-   GtkWidget *_pkgHelp;
-   GtkWidget *_pkgReconfigure;
+   GtkWidget *_pkgHelpM;
+   GtkWidget *_pkgReconfigureM;
 
    GtkWidget *_proceedB;
    GtkWidget *_proceedM;

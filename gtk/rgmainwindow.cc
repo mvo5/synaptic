@@ -837,10 +837,14 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_pkghelp_clicked",
                                  G_CALLBACK(cbPkgHelpClicked), this);
+   _pkgHelpM = glade_xml_get_widget(_gladeXML, "menu_documentation");
+   assert(_pkgHelpM);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_pkgreconfigure_clicked",
                                  G_CALLBACK(cbPkgReconfigureClicked), this);
+   _pkgReconfigureM = glade_xml_get_widget(_gladeXML, "menu_configure");
+   assert(_pkgReconfigureM);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_search_name",

@@ -1107,6 +1107,9 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         vector<RPackage *> &toRemove,
                                         vector<RPackage *> &toPurge,
                                         vector<RPackage *> &toDowngrade,
+#ifdef WITH_APT_AUTH
+					vector<string> &notAuthenticated,
+#endif
                                         double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
@@ -1167,8 +1170,20 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
    sort(toRemove.begin(), toRemove.end(), bla());
    sort(toPurge.begin(), toPurge.end(), bla());
    sort(held.begin(), held.end(), bla());
-
+#ifdef WITH_APT_AUTH
+   pkgAcquire Fetcher(NULL);
+   pkgPackageManager *PM = _system->CreatePM(_cache->deps());
+   if (!PM->GetArchives(&Fetcher, _cache->list(), _records))
+      return;
+   for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin(); 
+	I < Fetcher.ItemsEnd(); ++I) {
+      if (!(*I)->IsTrusted()) {
+         notAuthenticated.push_back(string((*I)->ShortDesc()));
+      }
+   }
+#else
    sizeChange = deps->UsrSize();
+#endif
 }
 
 bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
@@ -1454,11 +1469,19 @@ void RPackageLister::makeCommitLog()
    vector<RPackage *> toRemove;
    vector<RPackage *> toPurge;
    vector<RPackage *> toDowngrade;
+#ifdef WITH_APT_AUTH
+   vector<string> notAuthenticated;
+#endif
+
    double sizeChange;
 
    getDetailedSummary(held, kept, essential,
 		      toInstall,toReInstall,toUpgrade, 
-		      toRemove, toPurge, toDowngrade, sizeChange);
+		      toRemove, toPurge, toDowngrade, 
+#ifdef WITH_APT_AUTH
+		      notAuthenticated,
+#endif
+		      sizeChange);
 
    if(essential.size() > 0) {
       _logEntry += _("\nThe following ESSENTIAL packages are removed:\n");

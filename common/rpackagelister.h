@@ -238,6 +238,9 @@ class RPackageLister {
                            vector<RPackage *> &toRemove,
                            vector<RPackage *> &toPurge,
                            vector<RPackage *> &toDowngrade,
+#ifdef WITH_APT_AUTH
+			   vector<string> &notAuthenticated,
+#endif
                            double &sizeChange);
 
    void getDownloadSummary(int &dlCount, double &dlSize);

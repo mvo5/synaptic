@@ -72,11 +72,34 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
    vector<RPackage *> toRemove;
    vector<RPackage *> toPurge;
    vector<RPackage *> toDowngrade;
+#ifdef WITH_APT_AUTH
+   vector<string> notAuthenticated;
+#endif
    double sizeChange;
 
    lister->getDetailedSummary(held, kept, essential, toInstall, toReInstall,
 			      toUpgrade,  toRemove, toPurge, toDowngrade, 
+#ifdef WITH_APT_AUTH
+			      notAuthenticated,
+#endif
 			      sizeChange);
+
+#ifdef WITH_APT_AUTH
+   if(notAuthenticated.size() > 0) {
+      /* not authenticated */
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("NOT AUTHENTICATED"), -1);
+
+      for (vector<string>::const_iterator p = notAuthenticated.begin();
+           p != notAuthenticated.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p).c_str(), -1);
+      }
+   }
+#endif
+
 
    if (essential.size() > 0) {
       /* (Essentail) removed */
@@ -181,6 +204,9 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
                             PKG_COLUMN, (*p)->name(), -1);
       }
    }
+
+   
+
 }
 
 
@@ -201,11 +227,16 @@ void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
    vector<RPackage *> toRemove;
    vector<RPackage *> toPurge;
    vector<RPackage *> toDowngrade;
+   vector<string> notAuthenticated;
    double sizeChange;
 
    me->_lister->getDetailedSummary(held, kept, essential,
 				   toInstall,toReInstall,toUpgrade, 
-				   toRemove, toPurge, toDowngrade, sizeChange);
+				   toRemove, toPurge, toDowngrade, 
+#ifdef WITH_APT_AUTH
+				   notAuthenticated,
+#endif
+				   sizeChange);
 
    for (vector<RPackage *>::const_iterator p = essential.begin();
         p != essential.end(); p++) {

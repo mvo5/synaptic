@@ -152,6 +152,11 @@ AC_ARG_WITH(pkg-hold,
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
 )
 
+AC_ARG_WITH(apt-authentication, 
+	[--with-apt-authentication  build with support for apt authentication],
+        AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support] )
+)
+
 
 AC_ARG_WITH(debtags, 
 	[--with-debtags-support   build with experimental debtags support],

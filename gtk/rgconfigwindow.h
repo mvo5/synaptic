@@ -34,7 +34,8 @@ class RGConfigWindow : public RGGladeWindow {
 
   /* the color buttons */
   static char * color_buttons[];
-
+  int columnPos[6];
+  
   void readColors();
 
   // treeview stuff

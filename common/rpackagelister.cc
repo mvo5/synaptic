@@ -647,8 +647,10 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	} 
     else if(_displayMode == TREE_DISPLAY_FLAT)  
 	{
+#if 0 // this is handled via the new gtkpkglist code, remove later
 	    it = _treeOrganizer.begin();
 	    _treeOrganizer.insert(it, pkgPair(pkg->name(), pkg));
+#endif
 	} 
     else if(_displayMode == TREE_DISPLAY_ALPHABETIC) 
 	{

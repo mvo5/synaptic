@@ -1401,8 +1401,9 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   RPackageLister::pkgState state;
   bool ask = _config->FindB("Synaptic::AskRelated", true);
 
+  // we always save the state (for undo)
+  me->_lister->saveState(state);
   if (ask) {
-    me->_lister->saveState(state);
     me->_lister->unregisterObserver(me);
   }
 

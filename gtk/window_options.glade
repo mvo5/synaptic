@@ -63,22 +63,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="check_text_only">
-		      <property name="border_width">2</property>
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">Use text-only buttons in main window</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
+		    <placeholder/>
 		  </child>
 
 		  <child>
@@ -130,6 +115,59 @@
 		      <property name="active">False</property>
 		      <property name="inconsistent">False</property>
 		      <property name="draw_indicator">True</property>
+		    </widget>
+		    <packing>
+		      <property name="padding">0</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkHBox" id="hbox1">
+		      <property name="visible">True</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
+
+		      <child>
+			<widget class="GtkSpinButton" id="spinbutton_max_undos">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="climb_rate">1</property>
+			  <property name="digits">0</property>
+			  <property name="numeric">False</property>
+			  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+			  <property name="snap_to_ticks">False</property>
+			  <property name="wrap">False</property>
+			  <property name="adjustment">20 0 1000 1 10 10</property>
+			</widget>
+			<packing>
+			  <property name="padding">4</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="label37">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Number of possible undo operations</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+			<packing>
+			  <property name="padding">2</property>
+			  <property name="expand">False</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
@@ -375,7 +413,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label28">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MKeepColor</property>
+		      <property name="label" translatable="yes">Keep</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -399,7 +437,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label29">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MInstallColor</property>
+		      <property name="label" translatable="yes">Install</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -423,7 +461,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label30">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MUpgradeColor</property>
+		      <property name="label" translatable="yes">Upgrade</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -447,7 +485,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label31">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MDowngradeColor</property>
+		      <property name="label" translatable="yes">Downgrade</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -471,7 +509,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label32">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MRemoveColor</property>
+		      <property name="label" translatable="yes">Remove</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -495,7 +533,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label33">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MHeldColor</property>
+		      <property name="label" translatable="yes">Held</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -519,7 +557,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label34">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MBrokenColor</property>
+		      <property name="label" translatable="yes">Broken</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -543,7 +581,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label35">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MPinColor</property>
+		      <property name="label" translatable="yes">Pin</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -567,7 +605,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label36">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">MNewColor</property>
+		      <property name="label" translatable="yes">New</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_CENTER</property>

@@ -51,25 +51,24 @@ char * RGConfigWindow::color_buttons[] = {
 void RGConfigWindow::saveAction(GtkWidget *self, void *data)
 {
     RGConfigWindow *me = (RGConfigWindow*)data;
-    bool newval;
+    bool newval, postClean, postAutoClean;
+
+    postClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
+    postAutoClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[2]));
 
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[0])) ;
     _config->Set("Synaptic::UseRegexp", newval ? "true" : "false");
  
-    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[3]));
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[2]));
     _config->Set("Synaptic::AskRelated",  newval ? "true" : "false");
     
-    bool postClean, postAutoClean;
-    
-    postClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
-    postAutoClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[2]));
 
-    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[4]));
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[3]));
     _config->Set("Synaptic::UseTerminal",  newval ? "true" : "false");
-    
-    postClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
-    postAutoClean = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[2]));
 
+    int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
+    _config->Set("Synaptic::undoStackSize",  maxUndo);
+    
 
     /* color stuff */
     char *colstr;
@@ -101,7 +100,7 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     _config->Set("Synaptic::MNewColor", colstr);
 
     /* now reread the colors */
-    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[2]));
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[1]));
     _config->Set("Synaptic::UseStatusColors",  newval ? "true" : "false");
     me->_mainWin->setColors(newval);
 
@@ -129,52 +128,48 @@ void RGConfigWindow::doneAction(GtkWidget *self, void *data)
 
 void RGConfigWindow::show()
 {
+    bool postClean, postAutoClean;    
     string str;
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[0]),
 				 _config->FindB("Synaptic::UseRegexp", false));
     
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[1]),
 				 _config->FindB("Synaptic::UseStatusColors", 
+						true));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
+				 _config->FindB("Synaptic::AskRelated", 
 						true));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
 				 _config->FindB("Synaptic::AskRelated", 
 						true));
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(_maxUndoE), 
+			      _config->FindI("Synaptic::undoStackSize", 20));
 
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[2]),
-			       _config->FindB("Synaptic::UseStatusColors", 
-					      true));
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
-			       _config->FindB("Synaptic::AskRelated", 
-					      true));
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[4]),
-			       _config->FindB("Synaptic::AskRelated", 
-					      true));
-
-  bool UseTerminal = false;
+    bool UseTerminal = false;
 #ifndef HAVE_ZVT
-  gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
-  _config->Set("Synaptic::UseTerminal", false);
+    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
+    _config->Set("Synaptic::UseTerminal", false);
 #else
 #ifndef HAVE_RPM
-  UseTerminal = true;
+    UseTerminal = true;
 #endif
 #endif
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[4]),
-			       _config->FindB("Synaptic::UseTerminal", 
-					      UseTerminal));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
+				 _config->FindB("Synaptic::UseTerminal", 
+						UseTerminal));
 
-  bool postClean = _config->FindB("Synaptic::CleanCache", false);
-  bool postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
+    postClean = _config->FindB("Synaptic::CleanCache", false);
+    postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
     
-  if (postClean)
-    gtk_button_clicked(GTK_BUTTON(_cacheB[1]));
-  else if (postAutoClean)
-    gtk_button_clicked(GTK_BUTTON(_cacheB[2]));
-  else
-    gtk_button_clicked(GTK_BUTTON(_cacheB[0]));
-
-  RGWindow::show();
+    if (postClean)
+	gtk_button_clicked(GTK_BUTTON(_cacheB[1]));
+    else if (postAutoClean)
+	gtk_button_clicked(GTK_BUTTON(_cacheB[2]));
+    else
+	gtk_button_clicked(GTK_BUTTON(_cacheB[0]));
+    
+    RGWindow::show();
 }
 
 
@@ -251,15 +246,17 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
     GtkWidget *box;
     
     _optionB[0] = glade_xml_get_widget(_gladeXML, "check_regexp");
-    _optionB[1] = glade_xml_get_widget(_gladeXML, "check_text_only");
-    _optionB[2] = glade_xml_get_widget(_gladeXML, "check_use_colors");
-    _optionB[3] = glade_xml_get_widget(_gladeXML, "check_ask_related");
-    _optionB[4] = glade_xml_get_widget(_gladeXML, "check_terminal");
+    _optionB[1] = glade_xml_get_widget(_gladeXML, "check_use_colors");
+    _optionB[2] = glade_xml_get_widget(_gladeXML, "check_ask_related");
+    _optionB[3] = glade_xml_get_widget(_gladeXML, "check_terminal");
 
     _cacheB[0] = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
     _cacheB[1] = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");
     _cacheB[2] = glade_xml_get_widget(_gladeXML, "radio_cache_del_obsolete");
     _mainWin = (RGMainWindow*)win;
+
+    _maxUndoE = glade_xml_get_widget(_gladeXML, "spinbutton_max_undos");
+    assert(_maxUndoE);
 
     readColors();
     

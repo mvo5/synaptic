@@ -818,7 +818,7 @@ struct bla : public binary_function<RPackage*, RPackage*, bool> {
 
 void RPackageLister::saveUndoState(pkgState &state)
 {
-    //cout << "RPackageLister::saveUndoState(state)" << endl;
+    cout << "RPackageLister::saveUndoState(state)" << endl;
     undoStack.push_front(state);
     redoStack.clear();
 
@@ -829,7 +829,7 @@ void RPackageLister::saveUndoState(pkgState &state)
 
 void RPackageLister::saveUndoState()
 {
-    //cout << "RPackageLister::saveUndoState()" << endl;
+    cout << "RPackageLister::saveUndoState()" << endl;
     pkgState state;
     saveState(state);
     saveUndoState(state);

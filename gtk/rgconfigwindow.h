@@ -29,6 +29,7 @@ class RGConfigWindow : public RGWindow {
   GtkWidget *_cacheB[3];
   GtkWidget *_pathT;
   GtkWidget *_sizeT;
+  GtkWidget *_maxUndoE;
 
   /* the color buttons */
   static char * color_buttons[];

@@ -2086,7 +2086,9 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
+   // FIXME: make this all go into the repository window
    bool Changed = false;
+   bool ForceReload = _config->FindB("Synaptic::UpdateAfterSrcChange",false);
    {
       if(!g_file_test("/usr/bin/gnome-software-properties", 
 		      G_FILE_TEST_IS_EXECUTABLE) 
@@ -2095,8 +2097,9 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 RGRepositoryEditor w(me);
 	 Changed = w.Run();
       } else {
+	 // use gnome-software-properties window
 	 me->setInterfaceLocked(TRUE);
-	 _config->Set("Synaptic::UpdateAfterSrcChange",true);
+	 ForceReload = true;
 	 GPid pid;
 	 int status;
 	 char *argv[5];
@@ -2143,8 +2146,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
    RGFlushInterface();
 
    // auto update after repostitory change
-   if (Changed == true && 
-       _config->FindB("Synaptic::UpdateAfterSrcChange",false)) {
+   if (Changed == true && ForceReload) {
       me->cbUpdateClicked(NULL, data);
    } else if(Changed == true && 
 	     _config->FindB("Synaptic::AskForUpdateAfterSrcChange",true)) {

@@ -34,6 +34,7 @@
 #include <regex.h>
 
 #include "rpackage.h"
+#include "tree.hh"
 
 using namespace std;
 
@@ -83,6 +84,22 @@ private:
 
    vector<string> _sectionList; // list of all available package sections
 
+public:
+   typedef pair<string,RPackage*> pkgPair;
+   typedef tree<pkgPair>::iterator treeIter;
+   typedef tree<pkgPair>::sibling_iterator sibTreeIter;
+   typedef tree<pkgPair>::tree_node treeNode;
+   typedef enum {
+     TREE_DISPLAY_SECTIONS,
+     TREE_DISPLAY_FLAT,
+     TREE_DISPLAY_ALPHABETIC,
+     TREE_DISPLAY_STATUS
+   } treeDisplayMode;
+   treeDisplayMode _displayMode;
+
+private:
+   tree<pkgPair> _treeOrganizer;
+
    pkgPackageManager *_packMan;
 
    void applyInitialSelection();
@@ -94,7 +111,10 @@ private:
    bool lockPackageCache(FileFd &lock);
 
    void getFilteredPackages(vector<RPackage*> &packages);
-   
+   void addFilteredPackageToTree(tree<pkgPair>& tree,
+				 map<string,tree<pkgPair>::iterator>& itermap,
+				 RPackage *pkg);
+
    void sortPackagesByName(vector<RPackage*> &packages);
    
    struct {
@@ -109,7 +129,16 @@ private:
    RUserDialog *_userDialog;
    
 public:
-   inline void getSections(vector<string> &sections) { sections=_sectionList; };
+   inline void getSections(vector<string> &sections) {sections=_sectionList; };
+
+   inline int nrOfSections() { return _sectionList.size(); };
+
+   inline tree<pkgPair>* RPackageLister::getTreeOrganizer() { 
+     return &_treeOrganizer; 
+   };
+   inline void setTreeDisplayMode(treeDisplayMode mode) {
+     _displayMode = mode;
+   };
    
    void storeFilters();
    void restoreFilters();
@@ -139,8 +168,11 @@ public:
 	   return NULL;
    };
    int getElementIndex(RPackage *pkg);
-
+   
    RPackage *getElement(pkgCache::PkgIterator &pkg);
+
+/*    RPackage *getElementOfSection(int section, int row); */
+/*    int getNrElementsOfSection(int section); */
 
    void getStats(int &installed, int &broken, int &toinstall, int &toremove,
 		 double &sizeChange);

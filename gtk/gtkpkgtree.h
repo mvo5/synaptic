@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>
 #include "rpackagelister.h"
-
+#include "conversion.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,7 +40,7 @@ typedef struct _GtkPkgTreeClass  GtkPkgTreeClass;
 
   enum {
     DUMMY_COLUMN,
-    STATUS_COLUMN,
+    PIXMAP_COLUMN,
     NAME_COLUMN,
     INSTALLED_VERSION_COLUMN,
     AVAILABLE_VERSION_COLUMN,
@@ -56,14 +56,8 @@ struct _GtkPkgTree
   GObject parent;
 
   RPackageLister *_lister;
-  bool _list_mode;
-  
-  gint stamp;
-  gpointer last;
   gint n_columns;
-  GtkSortType order;
   GType column_headers[N_COLUMNS];
-  guint columns_dirty : 1;
 };
 
 struct _GtkPkgTreeClass
@@ -74,7 +68,7 @@ struct _GtkPkgTreeClass
 
 
 GType       gtk_pkg_tree_get_type         ();
-GtkPkgTree *gtk_pkg_tree_new              (RPackageLister *lister, bool list_mode=false);
+GtkPkgTree *gtk_pkg_tree_new              (RPackageLister *lister);
 
 /* is this really needed */
 void        gtk_pkg_tree_refresh          (GtkPkgTree *);

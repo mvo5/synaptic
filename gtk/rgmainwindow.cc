@@ -33,19 +33,21 @@
 #include <assert.h>
 #include <stdio.h>
 #include <ctype.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <gdk/gdkx.h>
+//#include <X11/Xlib.h>
+//#include <X11/Xatom.h>
+//#include <gdk/gdkx.h>
 #include <glade/glade.h>
+#include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <cmath>
+#include <algorithm>
 
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
 
-#include <X11/keysym.h>
-#include <gdk/gdkkeysyms.h>
+// #include <X11/keysym.h>
+// #include <gdk/gdkkeysyms.h>
 
 #include "raptoptions.h"
 #include "rconfiguration.h"
@@ -71,10 +73,6 @@
 #include "conversion.h"
 
 // icons and pixmaps
-
-#include "logo.xpm"
-#include "synaptic_mini.xpm"
-
 #include "alert.xpm"
 #include "keepM.xpm"
 #include "brokenM.xpm"
@@ -85,10 +83,14 @@
 #include "upgradeM.xpm"
 #include "newM.xpm"
 #include "holdM.xpm"
-
+#include "logo.xpm"
+#include "synaptic_mini.xpm"
 
 
 extern void RGFlushInterface();
+
+GdkPixbuf *StatusPixbuf[12];
+GdkColor *StatusColors[12];
 
 
 static char *ImportanceNames[] = {
@@ -105,9 +107,6 @@ enum {WHAT_IT_DEPENDS_ON,
       WHAT_IT_SUGGESTS};      
 
 
-static GdkPixmap *StatusPixmaps[12];
-static GdkBitmap *StatusMasks[12];
-static GdkColor *StatusColors[12];
 
 
 #define SELECTED_MENU_INDEX(popup) \
@@ -256,13 +255,16 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
     win->_aboutPanel->show();
 }
 
-
+/* search through whole tree_model 
+  <danielk> mvo: Use gtk_tree_model_foreach() with a GtkTreePath** as user_data, and return TRUE from the callback on match (plus the the user_data output arg).
+*/
 void RGMainWindow::findPackageObserver(GtkWidget *self)
 {
     RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self), "me");
     const char *text = gtk_entry_get_text(GTK_ENTRY(me->_findText));
     int row;
 
+#if 0
     row = me->_lister->findPackage(text);
     if (row >= 0) {
       gtk_clist_unselect_all(GTK_CLIST(me->_table));
@@ -278,6 +280,7 @@ void RGMainWindow::findPackageObserver(GtkWidget *self)
     } else {
       me->setStatusText(_("No match."));
     }
+#endif
 }
 
 
@@ -285,6 +288,7 @@ void RGMainWindow::findNextAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
     
+#if 0
     int row = me->_lister->findNextPackage();
     if (row >= 0) {
       gtk_clist_unselect_all(GTK_CLIST(me->_table));
@@ -294,6 +298,7 @@ void RGMainWindow::findNextAction(GtkWidget *self, void *data)
     } else {
       me->setStatusText(_("No more matches."));
     }
+#endif
 }
 
 
@@ -480,12 +485,14 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
   if (pkg) {	
     index = _lister->getElementIndex(pkg);
   }    
-    
+
+#if 0    
   if (index >= 0) 
     gtk_clist_moveto(GTK_CLIST(_table), index, 0, 0.5, 0.0);
   else
     updatePackageInfo(NULL);
-  
+#endif  
+
   setInterfaceLocked(FALSE);
   
   setStatusText();
@@ -561,13 +568,18 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
 
 RPackage *RGMainWindow::selectedPackage()
 {
-  if(g_list_length(GTK_CLIST(_table)->selection) > 0) { 
-    int row;
-    row = GPOINTER_TO_INT(g_list_last(GTK_CLIST(_table)->selection)->data);
-    return _lister->getElement(row);
-  } else {
+  //cout << "RGMainWindow::selectedPackage()" << endl;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  RPackage *pkg = NULL;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+  if(!gtk_tree_selection_get_selected(selection,
+				      (GtkTreeModel**)(&_pkgTree), &iter))
     return NULL;
-  }
+  gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &iter, 
+		     PKG_COLUMN, &pkg, -1);
+  return pkg;
 }
 
 
@@ -714,11 +726,12 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     me->showErrors();
 
     if (_config->FindB("Synaptic::Download-Only", FALSE) == FALSE) {    
-	// reset the cache
-	if (!me->_lister->openCache(TRUE)) {
-	    me->showErrors();
-	    exit(1);
-	}
+      // reset the cache
+      gtk_tree_view_set_model (GTK_TREE_VIEW(me->_treeView), NULL);
+      if (!me->_lister->openCache(TRUE)) {
+	me->showErrors();
+	exit(1);
+      }
     }
 
     if(pkgname != NULL) {
@@ -822,101 +835,94 @@ void RGMainWindow::forgetNewPackages()
   _roptions->forgetNewPackages();
 }
 
+// BUG: returning a GtkTreeIter will not work remotly reliable
+GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections) 
+{
+  GtkTreeIter parentIter;  /* Parent iter */
+  GtkTreeIter childIter;   /* Child iter  */
+
+  if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
+    //cout << "saving state" << endl;
+    do {
+      GtkTreePath *path;
+      gchar *str;
+      path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
+				      &parentIter);
+      if(gtk_tree_view_row_expanded(GTK_TREE_VIEW(_treeView), path)) {
+	gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+			   NAME_COLUMN, &str, 
+			   -1);
+	expanded_sections.push_back(str);
+      }
+      //g_free(str);
+      gtk_tree_path_free(path);
+    }
+    while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
+  }
+
+  GtkTreeSelection *select;
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+  gtk_tree_selection_get_selected (select,
+				   (GtkTreeModel**) &_pkgTree,
+				   &parentIter);
+  return parentIter;
+}
+
+void RGMainWindow::restoreTableState(vector<string>& expanded_sections,
+				     GtkTreeIter iter)
+{
+  GtkTreeIter parentIter;  /* Parent iter */
+  GtkTreeIter childIter;   /* Child iter  */
+
+  /* restore state */
+  if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
+    //cout << "restoring state" << endl;
+    do {
+      GtkTreePath *path;
+      gchar *str;
+      path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
+				      &parentIter);
+      gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
+			 NAME_COLUMN, &str, 
+			 -1);
+      if(find(expanded_sections.begin(), 
+	      expanded_sections.end(),
+	      string(str)) != expanded_sections.end())
+	gtk_tree_view_expand_row(GTK_TREE_VIEW(_treeView), path, FALSE);
+      
+      g_free(str);
+      gtk_tree_path_free(path);
+    }
+    while(gtk_tree_model_iter_next(GTK_TREE_MODEL(_pkgTree), &parentIter));
+  }
+
+  GtkTreeSelection *select;
+  select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+  gtk_tree_selection_select_iter (select, &iter);
+}
+
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
-  static bool first_run = true;
-
-  gtk_clist_freeze(GTK_CLIST(_table));
-  gtk_clist_clear(GTK_CLIST(_table));
+  vector<string> sections;
+  vector<string> expanded_sections;
+  GtkTreeIter selectedRow;
   
-  unsigned int row = 0;
+//   cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
+//   cout << "_lister is at: " <<_lister << endl;
 
-  while (row < _lister->count()) {
-    const char *array[8];
-    RPackage *elem = _lister->getElement(row);
-    assert(elem);
-    string pkgName = elem->name();
-
-    array[0] = NULL;
-    //	array[1] = elem->section();
-    array[1] = pkgName.c_str();
-    array[2] = elem->installedVersion();
-    array[3] = elem->availableDownloadableVersion();
-    array[4] = NULL;
-    
-    gtk_clist_insert(GTK_CLIST(_table), row, (char**)array);
-
-    /* status */
-    RPackage::MarkedStatus s = elem->getMarkedStatus();
-    int other = elem->getOtherStatus();
-
-    if (elem->wouldBreak()) {
-      gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0,
-			   StatusPixmaps[(int)RPackage::MBroken], 
-			   StatusMasks[(int)RPackage::MBroken]);
-      gtk_clist_set_background(GTK_CLIST(_table), row, 
-			       StatusColors[(int)RPackage::MBroken]);
-    } else if (other & RPackage::OPinned) {
-      gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0,
-			   StatusPixmaps[(int)RPackage::MPinned],
-			   StatusMasks[(int)RPackage::MPinned]);
-      gtk_clist_set_background(GTK_CLIST(_table), row, 
-			       StatusColors[(int)RPackage::MPinned]);
-    } else if (s == RPackage::MKeep 
-	       && elem->getStatus() == RPackage::SInstalledOutdated) {
-      gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0,
-			   StatusPixmaps[RPackage::MHeld],
-			   StatusMasks[RPackage::MHeld]);
-      gtk_clist_set_background(GTK_CLIST(_table), row, 
-			       StatusColors[RPackage::MHeld]);
-    } else if ((other & RPackage::ONew) && 
-	       !elem->getMarkedStatus() == RPackage::MInstall) {
-      gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0,
-			   StatusPixmaps[(int)RPackage::MNew],
-			   StatusMasks[(int)RPackage::MNew]);
-      gtk_clist_set_background(GTK_CLIST(_table), row, 
-			       StatusColors[(int)RPackage::MNew]);
-    } else {
-       gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0,
- 			   StatusPixmaps[(int)s],
- 			   StatusMasks[(int)s]);
-       gtk_clist_set_background(GTK_CLIST(_table), row, StatusColors[(int)s]);
-    }
-
-    const char *str = elem->summary().c_str();
-	
-    if (_showUpdateInfo && 
-	elem->updateImportance() == RPackage::ISecurity)
-      gtk_clist_set_pixtext(GTK_CLIST(_table), row, 4, _iconv.convert(str,strlen(str)), 4,
-			    StatusPixmaps[8],
-			    StatusMasks[8]);
-    else
-      gtk_clist_set_text(GTK_CLIST(_table), row, 4, _iconv.convert(str,strlen(str)));
-
-    row++;	
-  }
-
-  while (row < GTK_CLIST(_table)->rows)
-    gtk_clist_remove(GTK_CLIST(_table), row);
+  selectedRow = saveTableState(expanded_sections);
   
-  gtk_clist_thaw(GTK_CLIST(_table));
-  if (selectedPkg != NULL) {
-    int index = _lister->getElementIndex(selectedPkg);
-    //cout << "selectedPkg != NULL " << index << endl;
-    if (index >= 0) {
-      gtk_clist_select_row(GTK_CLIST(_table), index, 0);
-      updatePackageInfo(selectedPkg);
-      if (!gtk_clist_row_is_visible(GTK_CLIST(_table), index))
-	gtk_clist_moveto(GTK_CLIST(_table), index, 0, 0.5, 0.0);
-    } else {
-      // package no longer in listing
-      updatePackageInfo(NULL);
-    }
-  }
+  g_object_unref(_pkgTree);
+  _pkgTree = gtk_pkg_tree_new (_lister);
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+			  GTK_TREE_MODEL(_pkgTree));
+  // always set search column after set_model
+  gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+  restoreTableState(expanded_sections, selectedRow);
 
-  if(first_run) {
-    first_run=false;
-  }
+  // not implemented yet
+//gtk_pkg_tree_refresh(_pkgTree);
+  return;
 }
 
 
@@ -1023,25 +1029,21 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 
     if (pkg->wouldBreak()) {
       gtk_label_set_text(GTK_LABEL(_stateL), _("Broken dependencies."));
-      gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-		     StatusPixmaps[RPackage::MBroken],
-		     StatusMasks[RPackage::MBroken]);
+      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+				StatusPixbuf[RPackage::MBroken]);
+
     } else if (mstatus==RPackage::MKeep && status==RPackage::SInstalledOutdated) {
-      gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-				StatusPixmaps[RPackage::MHeld],
-				StatusMasks[RPackage::MHeld]);
+      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+				StatusPixbuf[RPackage::MHeld]);
     }  else if(other & RPackage::ONew) {
-      gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-				StatusPixmaps[RPackage::MNew], 
-				StatusMasks[RPackage::MNew]);
+      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+				StatusPixbuf[RPackage::MNew]);
     } else if (locked) {
-      gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-				StatusPixmaps[RPackage::MPinned], 
-				StatusMasks[RPackage::MPinned]);
+      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+				StatusPixbuf[RPackage::MPinned]);
     } else {
-      gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-				StatusPixmaps[(int)mstatus],
-				StatusMasks[(int)mstatus]);
+      gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
+				StatusPixbuf[(int)mstatus]);
     }
     
     if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_currentB)) == FALSE) {
@@ -1205,9 +1207,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 	gtk_label_set_text(GTK_LABEL(_infoL), "");
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
 	gtk_label_set_text(GTK_LABEL(_stateL), "");
-	gtk_image_set_from_pixmap(GTK_IMAGE(_stateP), 
-				  StatusPixmaps[0],
-				  StatusMasks[0]);
+	gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), StatusPixbuf[0]);
 	if (_showUpdateInfo)
 	    gtk_label_set_text(GTK_LABEL(_importL), "");
 
@@ -1332,13 +1332,19 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
     bool active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_pinB));
+    GtkTreeSelection *selection;
+    GtkTreeIter iter;
     RPackage *pkg;
 
     if(me->_blockActions)
       return;
-
-    if (g_list_length(GTK_CLIST(me->_table)->selection) == 0)
-	return;
+    
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
+    if (!gtk_tree_selection_get_selected(selection,
+					 (GtkTreeModel**)(&me->_pkgTree), 
+					 &iter)) {
+      return;
+    }
 
     if (me->_unsavedChanges == true && 
 	gtk_run_alert_panel(me->_win, _("Warning"),
@@ -1354,20 +1360,14 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 	return;
       }
 
-    GList *selection = g_list_copy(GTK_CLIST(me->_table)->selection);
-    GList *it = g_list_first(selection);
-    while(it!=NULL) {
-      int row = GPOINTER_TO_INT(it->data);
-      pkg = me->_lister->getElement(row);
-      if (pkg == NULL)
-	continue;
+    gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+		       PKG_COLUMN, &pkg, -1);
+    if (pkg == NULL)
+      return;    
 
-      // set pkg according to status
-      pkg->setPinned(active);
-      _roptions->setPackageLock(pkg->name(), active);
-      it=g_list_next(it);
-    }
-    g_list_free(selection);
+    pkg->setPinned(active);
+    _roptions->setPackageLock(pkg->name(), active);
+
     me->setInterfaceLocked(TRUE);
     me->_lister->openCache(TRUE);
     me->refreshTable(pkg);
@@ -1403,24 +1403,23 @@ void RGMainWindow::actionClicked(GtkWidget *clickedB, void *data)
 
 void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 {
-  RPackage *pkg;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  RPackage *pkg = NULL;
 
-  if (g_list_length(GTK_CLIST(me->_table)->selection) == 0) 
-    return;
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
+  gtk_tree_selection_get_selected (selection, 
+				   (GtkTreeModel**)(&me->_pkgTree), 
+				   &iter);
+  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+		     PKG_COLUMN, &pkg, -1);
+  if (pkg == NULL)
+    return;    
 
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
 
-  GList *selection = g_list_copy(GTK_CLIST(me->_table)->selection);
-  GList *it = g_list_first(selection);
-  while(it != NULL) {
-    int row = GPOINTER_TO_INT(it->data);
-    //cout << "row is " << row << endl;
-    pkg = me->_lister->getElement(row);
-    //cout << "working on: " << pkg->name() << endl;
-    if (pkg == NULL)
-      continue;
-
+  /* do the dirty deed */
     switch (action) {
     case PKG_KEEP: // keep
       pkg->setKeep();
@@ -1438,16 +1437,29 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       cout <<"uh oh!!!!!!!!!"<<endl;
       break;
     }
-  it=it->next;
-  }
-  g_list_free(selection);
 
 
   me->_blockActions = FALSE;
   me->setInterfaceLocked(FALSE);
 }
 
+void gtk_get_color(const char *cpp, GdkColor **colp){
+   GdkColor *new_color;
+   int result;
 
+   // "" means no color
+   if(strlen(cpp) == 0) {
+     *colp = NULL;
+     return;
+   }
+   
+   GdkColormap *colormap = gdk_colormap_get_system ();
+
+   new_color = g_new (GdkColor, 1);
+   result = gdk_color_parse (cpp, new_color);
+   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
+   *colp = new_color;
+}
 
 
 void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
@@ -1478,35 +1490,17 @@ void RGMainWindow::removeDepsClicked(GtkWidget *self, void *data)
     } else {
 	pkg->setRemoveWithDeps(TRUE);
     }
-    
+#if 0
     gtk_clist_select_row(GTK_CLIST(me->_table), 
 			 me->_lister->getElementIndex(pkg), 0);
-    
+#endif
     me->setInterfaceLocked(FALSE);
 }
 
 
-void RGMainWindow::getColor(const char *cpp, GdkColor **colp){
-   GdkColor *new_color;
-   int result;
-
-   // "" means no color
-   if(strlen(cpp) == 0) {
-     *colp = NULL;
-     return;
-   }
-   
-   GdkColormap *colormap = gdk_colormap_get_system ();
-
-   new_color = g_new (GdkColor, 1);
-   result = gdk_color_parse (cpp, new_color);
-   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
-   *colp = new_color;
-}
-
-
 RGMainWindow::RGMainWindow(RPackageLister *packLister)
-    : RGWindow("main", false, true), _lister(packLister), _iconv("UTF8")
+  : RGWindow("main", false, true), _lister(packLister), _iconv("UTF8"), 
+    _pkgTree(0)
 {
 #if !defined(DEBUGUI) || defined(HAVE_RPM)
     //_showUpdateInfo = true; // xxx conectiva only, for now
@@ -1521,78 +1515,61 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
     _busyCursor = gdk_cursor_new(GDK_WATCH);
     _tooltips = gtk_tooltips_new();
 
-    StatusPixmaps[(int)RPackage::MKeep] = 	
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MKeep],
-				  NULL, keepM_xpm);
-    
-    StatusPixmaps[(int)RPackage::MInstall] = 
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MInstall],
-				  NULL, installM_xpm);
-    
-    StatusPixmaps[(int)RPackage::MUpgrade] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MUpgrade],
-				  NULL, upgradeM_xpm);
-
-    StatusPixmaps[(int)RPackage::MDowngrade] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MDowngrade],
-				  NULL, downgradeM_xpm);
-
-    StatusPixmaps[(int)RPackage::MRemove] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MRemove],
-				  NULL, removeM_xpm);
-
-    // don't upgrade package 
-    StatusPixmaps[(int)RPackage::MHeld] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MHeld],
-				  NULL, heldM_xpm);
-    // broken
-    StatusPixmaps[(int)RPackage::MBroken] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				  &StatusMasks[(int)RPackage::MBroken],
-				  NULL, brokenM_xpm);
-    // pin = use pining to prevent upgrade
-    StatusPixmaps[(int)RPackage::MPinned] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				     &StatusMasks[(int)RPackage::MPinned],
-				     NULL, pinM_xpm);
-    // new
-    StatusPixmaps[(int)RPackage::MNew] =
-	gdk_pixmap_create_from_xpm_d(_win->window, 
-				     &StatusMasks[(int)RPackage::MNew],
-				     NULL, newM_xpm);
-
-
-    StatusPixmaps[10] = _alertPix;
-
     _toolbarState = (ToolbarState)_config->FindI("Synaptic::ToolbarState",
 						(int)TOOLBAR_BOTH);
-    
+
+    // get the pixbufs
+    StatusPixbuf[(int)RPackage::MKeep] = 	
+      gdk_pixbuf_new_from_xpm_data(keepM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MInstall] = 
+      gdk_pixbuf_new_from_xpm_data(installM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MUpgrade] =
+      gdk_pixbuf_new_from_xpm_data(upgradeM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MDowngrade] =
+      gdk_pixbuf_new_from_xpm_data(downgradeM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MRemove] =
+      gdk_pixbuf_new_from_xpm_data(removeM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MHeld] =
+      gdk_pixbuf_new_from_xpm_data(heldM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MBroken] =
+      gdk_pixbuf_new_from_xpm_data(brokenM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MPinned] =
+      gdk_pixbuf_new_from_xpm_data(pinM_xpm);
+  
+    StatusPixbuf[(int)RPackage::MNew] =
+      gdk_pixbuf_new_from_xpm_data(newM_xpm);
+  
+    StatusPixbuf[10] =
+      gdk_pixbuf_new_from_xpm_data(alert_xpm);
+
+
     // get some color values
     if(_config->FindB("Synaptic::UseStatusColors", TRUE)) {
-      getColor(_config->Find("Synaptic::MKeepColor", "").c_str(),
-	       &StatusColors[(int)RPackage::MKeep]);
-      getColor(_config->Find("Synaptic::MInstallColor", "#ccffcc").c_str(),
-	       &StatusColors[(int)RPackage::MInstall]); 
-      getColor(_config->Find("Synaptic::MUpgradeColor", "#ffff00").c_str(),
-	       &StatusColors[(int)RPackage::MUpgrade]);
-      getColor(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
-	       &StatusColors[(int)RPackage::MDowngrade]);
-      getColor(_config->Find("Synaptic::MRemoveColor", "#f44e80").c_str(),
-	       &StatusColors[(int)RPackage::MRemove]);
-      getColor(_config->Find("Synaptic::MHeldColor", "").c_str(),
-	       &StatusColors[(int)RPackage::MHeld]);
-      getColor(_config->Find("Synaptic::MBrokenColor", "#e00000").c_str(),
-	       &StatusColors[(int)RPackage::MBroken/*broken*/]);
-      getColor(_config->Find("Synaptic::MPinColor", "#ccccff").c_str(),
-	       &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
-      getColor(_config->Find("Synaptic::MNewColor", "#ffffaa").c_str(),
-	       &StatusColors[(int)RPackage::MNew/*new*/]);
+      gtk_get_color(_config->Find("Synaptic::MKeepColor", "").c_str(),
+		    &StatusColors[(int)RPackage::MKeep]);
+      gtk_get_color(_config->Find("Synaptic::MInstallColor", "#ccffcc").c_str(),
+		    &StatusColors[(int)RPackage::MInstall]); 
+      gtk_get_color(_config->Find("Synaptic::MUpgradeColor", "#ffff00").c_str(),
+		    &StatusColors[(int)RPackage::MUpgrade]);
+      gtk_get_color(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
+		    &StatusColors[(int)RPackage::MDowngrade]);
+      gtk_get_color(_config->Find("Synaptic::MRemoveColor", "#f44e80").c_str(),
+		    &StatusColors[(int)RPackage::MRemove]);
+      gtk_get_color(_config->Find("Synaptic::MHeldColor", "").c_str(),
+		    &StatusColors[(int)RPackage::MHeld]);
+      gtk_get_color(_config->Find("Synaptic::MBrokenColor", "#e00000").c_str(),
+		    &StatusColors[(int)RPackage::MBroken/*broken*/]);
+      gtk_get_color(_config->Find("Synaptic::MPinColor", "#ccccff").c_str(),
+		    &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
+      gtk_get_color(_config->Find("Synaptic::MNewColor", "#ffffaa").c_str(),
+		    &StatusColors[(int)RPackage::MNew/*new*/]);
     }
 
     buildInterface();
@@ -1723,9 +1700,7 @@ void RGMainWindow::buildInterface()
     // here is a pointer to rgmainwindow for every widget that needs it
     g_object_set_data(G_OBJECT(_win), "me", this);
 
-    _alertPix = gdk_pixmap_create_from_xpm_d(_win->window, &_alertMask,
-					     NULL, alert_xpm);
-
+    
     GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data(synaptic_mini_xpm);
     gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
@@ -2032,21 +2007,115 @@ void RGMainWindow::buildInterface()
     gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		       (GtkSignalFunc)makeFinderFilterAction, this);
 
-    _table = glade_xml_get_widget(_gladeXML, "_table");
-    assert(_table);
-    gtk_clist_set_selection_mode(GTK_CLIST(_table),
-				 GTK_SELECTION_MULTIPLE);
-    gtk_signal_connect(GTK_OBJECT(_table), "select_row", 
-		       (GtkSignalFunc)selectedClistRow, this);
-    gtk_signal_connect(GTK_OBJECT(_table), "unselect_row",
-		       (GtkSignalFunc)unselectedClistRow, this);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 0, 15);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 1, 140);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 2, 80);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 3, 80);
-    gtk_clist_set_column_width(GTK_CLIST(_table), 4, 600);
-    gtk_object_set_data(GTK_OBJECT(_table), "me", this);
+    // the treeview stuff - long !-
+    widget = glade_xml_get_widget(_gladeXML, "handlebox_find");
+    gtk_widget_hide(widget);
+    _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
+    assert(_treeView);
 
+    _pkgTree = gtk_pkg_tree_new (_lister);
+    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
+ 			    GTK_TREE_MODEL(_pkgTree));
+    gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+
+    GtkCellRenderer *renderer; 
+    GtkTreeViewColumn *column; 
+
+    /* dummy column */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes(" ", renderer,NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+
+    /* Status(pixmap) column */
+    renderer = gtk_cell_renderer_pixbuf_new ();
+    column = gtk_tree_view_column_new_with_attributes("S", renderer,
+						      "pixbuf", PIXMAP_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+
+    /* Package name */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Package", renderer,
+						      "text", NAME_COLUMN,
+ 						      "background-gdk", COLOR_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+
+    /* Installed Version */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Installed Version", renderer,
+						      "text", INSTALLED_VERSION_COLUMN,
+ 						      "background-gdk", COLOR_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
+
+    /* Available Version */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Available Version", renderer,
+
+						      "text", AVAILABLE_VERSION_COLUMN,
+ 						      "background-gdk", COLOR_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
+
+    /* Description */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Description", renderer,
+						      "text", DESCR_COLUMN,
+ 						      "background-gdk", COLOR_COLUMN,
+						       NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (_treeView), column);
+    
+    GtkTreeSelection *select;
+    select = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
+    //gtk_tree_selection_set_mode (select, GTK_SELECTION_MULTIPLE);
+    g_signal_connect (G_OBJECT (select), "changed",
+		      G_CALLBACK(selectedRow),
+		      this);
+    g_signal_connect (G_OBJECT (_treeView), "row-activated",
+		      G_CALLBACK(doubleClickRow),
+		      this);
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_expand_all_activate",
+				  G_CALLBACK(onExpandAll),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_collapse_all_activate",
+				  G_CALLBACK(onCollapseAll),
+				  this); 
+    
+    int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
+    const char *widget_name = "section_tree";
+
+    if (mode == RPackageLister::TREE_DISPLAY_ALPHABETIC)
+          widget_name = "alphabetic_tree";
+    else if (mode == RPackageLister::TREE_DISPLAY_STATUS)
+          widget_name = "status_tree";
+    else if (mode == RPackageLister::TREE_DISPLAY_FLAT)
+          widget_name = "flat_list";
+
+    widget = glade_xml_get_widget(_gladeXML, widget_name);
+    gtk_menu_item_activate(GTK_MENU_ITEM(widget));
+    
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_section_tree_activate",
+				  G_CALLBACK(onSectionTree),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_alphabetic_tree_activate",
+				  G_CALLBACK(onAlphabeticTree),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_status_tree_activate",
+				  G_CALLBACK(onStatusTree),
+				  this); 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_flat_list_activate",
+				  G_CALLBACK(onFlatList),
+				  this); 
+    
+    /* --------------------------------------------------------------- */
+    
     // toolbar menu code
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_pixmaps");
     g_object_set_data(G_OBJECT(button), "me", this);
@@ -2098,6 +2167,60 @@ void RGMainWindow::buildInterface()
     assert(_cacheProgress);
 }
 
+void RGMainWindow::onExpandAll(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  gtk_tree_view_expand_all(GTK_TREE_VIEW(me->_treeView));
+}
+
+void RGMainWindow::onCollapseAll(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  gtk_tree_view_collapse_all(GTK_TREE_VIEW(me->_treeView));
+}
+
+void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
+{
+  setInterfaceLocked(TRUE);
+  _lister->setTreeDisplayMode(mode);
+  _lister->reapplyFilter();
+  refreshTable(NULL);
+  setInterfaceLocked(FALSE);
+  setStatusText();
+
+  _config->Set("Synaptic::TreeDisplayMode", mode);
+}
+
+void RGMainWindow::onSectionTree(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_SECTIONS);
+}
+
+void RGMainWindow::onAlphabeticTree(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_ALPHABETIC);
+}
+
+void RGMainWindow::onStatusTree(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_STATUS);
+}
+
+void RGMainWindow::onFlatList(GtkWidget *self, void *data) 
+{
+  RGMainWindow *me = (RGMainWindow *)data;
+
+  me->changeTreeDisplayMode(RPackageLister::TREE_DISPLAY_FLAT);
+}
+
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
   pkg->setInstall();
@@ -2129,76 +2252,86 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
   pkg->setRemove(purge);
 }
 
-void RGMainWindow::selectedClistRow(GtkWidget *self, int row, int column,
-				    GdkEvent *event)
+void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 { 
-  //cout << "selectedClistRow(): " << row << endl;
+  RGMainWindow *me = (RGMainWindow*)data;
+  GtkTreeIter iter;
+  RPackage *pkg;
   
-  RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self),
-							  "me");
-  RPackage *pkg = me->_lister->getElement(row);
+  if (!gtk_tree_selection_get_selected(selection,
+				       (GtkTreeModel**)(&me->_pkgTree), 
+				       &iter)) {
+    return;
+  }
+  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+		     PKG_COLUMN, &pkg, -1);
   if (pkg == NULL)
     return;    
 
-  if ( event != NULL && event->type == 5 ) {
-    // double click
-    me->setInterfaceLocked(TRUE);
-
-    RPackage::PackageStatus pstatus =  pkg->getStatus();
-    //   SInstalledUpdated,
-    //   SInstalledOutdated,
-    //   SInstalledBroken,
-    //   SNotInstalled
-
-    RPackage::MarkedStatus  mstatus = pkg->getMarkedStatus();
-    //   MKeep,
-    //   MInstall,
-    //   MUpgrade,
-    //   MDowngrade,
-    //   MRemove,
-    //   MHeld
-
-    if( pstatus == RPackage::SNotInstalled) {
-      if (mstatus == RPackage::MKeep) {
-	// not installed -> installed
-	me->pkgInstallHelper(pkg);
-      }
-      if (mstatus == RPackage::MInstall) 
-	// marked install -> marked don't install
-	me->pkgRemoveHelper(pkg);
-    }
-    
-    if( pstatus == RPackage::SInstalledOutdated ) {
-      if ( mstatus == RPackage::MKeep ) {
-	// keep -> upgrade
-	me->pkgInstallHelper(pkg);
-      }
-      if( mstatus == RPackage::MUpgrade) {
-	// upgrade -> keep
-	pkg->setKeep();
-      }
-    }
-    // end double-click
-    me->setInterfaceLocked(FALSE);
-    return;
-  }
-  
-  // not double-click
   me->updatePackageInfo(pkg);
 }
 
-void RGMainWindow::unselectedClistRow(GtkWidget *self, int row, int column,
-				      GdkEvent *event)
+void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
+				  GtkTreePath *path,
+				  GtkTreeViewColumn *arg2,
+				  gpointer data)
 {
-    RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self),
-							  "me");
-    
-    if(g_list_length(GTK_CLIST(me->_table)->selection) != 0) {
-      int row = GPOINTER_TO_INT(g_list_last(GTK_CLIST(me->_table)->selection)->data);
-      RPackage *pkg = me->_lister->getElement(row);
-      me->updatePackageInfo(pkg);
-    } else 
-      me->updatePackageInfo(NULL);
+  RGMainWindow *me = (RGMainWindow*)data;
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  RPackage *pkg = NULL;
+
+
+  //cout << "double click" << endl;
+  if(!gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree),
+			      &iter,path)) {
+    return;
+  }
+  gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
+		     PKG_COLUMN, &pkg, -1);
+  if(pkg == NULL)
+    return;
+
+  // double click
+  me->setInterfaceLocked(TRUE);
+  
+  RPackage::PackageStatus pstatus =  pkg->getStatus();
+  //   SInstalledUpdated,
+  //   SInstalledOutdated,
+  //   SInstalledBroken,
+  //   SNotInstalled
+
+  RPackage::MarkedStatus  mstatus = pkg->getMarkedStatus();
+  //   MKeep,
+  //   MInstall,
+  //   MUpgrade,
+  //   MDowngrade,
+  //   MRemove,
+  //   MHeld
+  
+  if( pstatus == RPackage::SNotInstalled) {
+    if (mstatus == RPackage::MKeep) {
+      // not installed -> installed
+      me->pkgInstallHelper(pkg);
+    }
+    if (mstatus == RPackage::MInstall) 
+      // marked install -> marked don't install
+      me->pkgRemoveHelper(pkg);
+  }
+  
+  if( pstatus == RPackage::SInstalledOutdated ) {
+    if ( mstatus == RPackage::MKeep ) {
+      // keep -> upgrade
+      me->pkgInstallHelper(pkg);
+    }
+    if( mstatus == RPackage::MUpgrade) {
+      // upgrade -> keep
+      pkg->setKeep();
+    }
+  }
+  // end double-click
+  me->setInterfaceLocked(FALSE);
+  return;
 }
 
 
@@ -2288,6 +2421,7 @@ void RGMainWindow::saveState()
     _config->Set("Synaptic::windowWidth", _win->allocation.width);
     _config->Set("Synaptic::windowHeight", _win->allocation.height);
     _config->Set("Synaptic::ToolbarState", (int)_toolbarState);
+
     if (!RWriteConfigFile(*_config)) {
       _error->DumpErrors();
       gtk_run_alert_panel(_win,

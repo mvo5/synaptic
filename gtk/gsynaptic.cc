@@ -45,7 +45,7 @@
 
 bool ShowHelp(CommandLine &CmdL)
 {
-  cout << 
+  std::cout << 
 #ifndef HAVE_RPM
     PACKAGE" for Debian "VERSION
 #else

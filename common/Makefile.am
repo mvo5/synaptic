@@ -29,7 +29,8 @@ libraptor_a_SOURCES =\
 	rsources.h \
 	raptoptions.h \
 	conversion.h \
-	conversion.cc
+	conversion.cc\
+	tree.hh
 
 #	rrepositoryfile.h\
 #	rrepositoryfile.cc

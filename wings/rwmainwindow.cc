@@ -1480,17 +1480,17 @@ RWMainWindow::RWMainWindow(WMScreen *scr, RPackageLister *packLister)
     
     StatusPixmaps[(int)RPackage::MKeep] = NULL;
     StatusPixmaps[(int)RPackage::MInstall] = 
-	WMCreatePixmapFromXPMData(scr, installM_xpm);
+	WMCreatePixmapFromXPMData(scr, (char**)installM_xpm);
     StatusPixmaps[(int)RPackage::MUpgrade] =
-	WMCreatePixmapFromXPMData(scr, upgradeM_xpm);
+	WMCreatePixmapFromXPMData(scr, (char**)upgradeM_xpm);
     StatusPixmaps[(int)RPackage::MDowngrade] =
-	WMCreatePixmapFromXPMData(scr, downgradeM_xpm);
+	WMCreatePixmapFromXPMData(scr,  (char**)downgradeM_xpm);
     StatusPixmaps[(int)RPackage::MRemove] =
-	WMCreatePixmapFromXPMData(scr, removeM_xpm);
+	WMCreatePixmapFromXPMData(scr,  (char**)removeM_xpm);
     StatusPixmaps[(int)RPackage::MHeld] =
-	WMCreatePixmapFromXPMData(scr, heldM_xpm);
+	WMCreatePixmapFromXPMData(scr,  (char**)heldM_xpm);
     StatusPixmaps[7] = 
-	WMCreatePixmapFromXPMData(scr, brokenM_xpm);
+	WMCreatePixmapFromXPMData(scr,  (char**)brokenM_xpm);
     StatusPixmaps[8] = _alertPix;
 }
 
@@ -1516,7 +1516,7 @@ void RWMainWindow::buildInterface(WMScreen *scr)
 			 keyPressHandler, this);
     
     
-    _alertPix = WMCreatePixmapFromXPMData(scr, alert_xpm);
+    _alertPix = WMCreatePixmapFromXPMData(scr,  (char**)alert_xpm);
 
     font = WMSystemFontOfSize(scr, 10);
     bfont = WMBoldSystemFontOfSize(scr, 12);

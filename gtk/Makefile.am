@@ -29,6 +29,8 @@ synaptic_SOURCES=\
 	gsynaptic.cc\
 	galertpanel.h\
 	galertpanel.c\
+	gtkpkgtree.cc\
+	gtkpkgtree.h\
 	rgaboutpanel.cc\
 	rgaboutpanel.h\
 	rgcacheprogress.cc\

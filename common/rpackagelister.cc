@@ -64,7 +64,7 @@ RPackageLister::RPackageLister() :  _records(0), _packages(0), _filter(0)
     
     _searchData.pattern = NULL;
     _searchData.isRegex = false;
-    
+    _displayMode = (treeDisplayMode)_config->FindI("Synaptic::TreeDisplayMode",0);
     _updating = true;
     
     memset(&_searchData, 0, sizeof(_searchData));
@@ -279,9 +279,43 @@ bool RPackageLister::upgradable()
     return _cache!=NULL && _cache->deps()!=NULL;
 }
 
-// we have to reread the cache if we using "pin". 
+// int RPackageLister::getNrElementsOfSection(int section)
+// {
+//   RPackage *pkg;
+//   int j=0;
+
+//   if(_updating)
+//     return 0;
+  
+//   vector<RPackage*> sec_pkgs = _treeOrganizer[_sectionList[section]];
+  
+//   return sec_pkgs.size();
+// }
+
+// RPackage* RPackageLister::getElementOfSection(int section, int row) 
+// {
+//   RPackage *pkg = NULL;
+
+//   if(_updating)
+//     return NULL;
+
+//   vector<RPackage*> sec_pkgs = _treeOrganizer[_sectionList[section]];
+
+//   if(row == sec_pkgs.size()) {
+//     cout <<"row == sec_pkgs.size(): " << sec_pkgs.size() << endl;
+//     return NULL;
+//   }
+// //   cout << "section: " << section << " ; " << "row: " << row 
+// //        << " ; size: " << sec_pkgs.size() << endl;
+//   return sec_pkgs[row]; 
+// }
+
+
+// We have to reread the cache if we're using "pin". 
 bool RPackageLister::openCache(bool reset)
 {
+//     map<string,tree<pkgPair>::pre_order_iterator> itermap;
+//     tree<pkgPair>::pre_order_iterator it;
     map<string,RPackage*> *pkgmap;
     static bool firstRun=true;
     string pkgName;
@@ -308,6 +342,8 @@ bool RPackageLister::openCache(bool reset)
     if (_error->PendingError()) {
 	return 	_error->Error(_("Internal error recalculating dependency cache."));
     }
+
+    _treeOrganizer.clear();
 
     if (_records) {
       // mvo: BUG: this will sometimes segfault. maybe bug in apt?
@@ -374,12 +410,24 @@ bool RPackageLister::openCache(bool reset)
 		    break;
 		}
 	    }
+	} else {
+	  cerr << "package " << I.Name() << " has no section?!" << endl;
 	}
 
-	if (!sec.empty()) 
-	    _sectionList.push_back(sec);
+	if (!sec.empty()) {
+	  _sectionList.push_back(sec);
+// 	  it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+// 				     pkgPair(sec,NULL));
+// 	  _treeOrganizer.append_child(it, pkgPair(pkg->name(),pkg));
+// 	  itermap[sec] = it;
+// 	} else {
+// 	  it = itermap[I.Section()];
+// 	  _treeOrganizer.append_child(it, pkgPair(pkg->name(),pkg));
+	}
+	
     }
-    
+    sort(_sectionList.begin(),_sectionList.end());
+
     for (I = deps->PkgBegin(); I.end() != true; I++) {
 	if (I->VersionList==0) {
 	    // find the owner of this virtual package and attach it there
@@ -409,6 +457,7 @@ bool RPackageLister::openCache(bool reset)
 
     return true;
 }
+
 
 
 void RPackageLister::applyInitialSelection()
@@ -546,6 +595,7 @@ void RPackageLister::getFilterNames(vector<string> &filters)
 	 iter++) {
 	filters.push_back((*iter)->getName());
     }
+
 }
 
 
@@ -565,19 +615,84 @@ void RPackageLister::reapplyFilter()
     sortPackagesByName(_displayList);    
 }
 
+// helper function that actually add the pkg to the right location in 
+// the tree
+void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree, 
+					      map<string,tree<pkgPair>::iterator>& itermap,
+					      RPackage *pkg)
+{
+  tree<pkgPair>::iterator it;
+
+  if(_displayMode == TREE_DISPLAY_SECTIONS) 
+    {
+      string sec = pkg->section();
+      if(itermap.find(sec) == itermap.end()) {
+	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+				   pkgPair(sec,NULL));
+	itermap[sec] = it;
+      } else {
+	it = itermap[sec];
+      }
+      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+      
+    } 
+  else if(_displayMode == TREE_DISPLAY_FLAT)  
+    {
+      it = _treeOrganizer.begin();
+      _treeOrganizer.insert(it, pkgPair(pkg->name(), pkg));
+      
+    } 
+  else if(_displayMode == TREE_DISPLAY_ALPHABETIC) 
+    {
+      char s[2] = {0,0};                // get initial letter
+      s[0] = (pkg->name())[0]; 
+      string initial(s);
+      if(itermap.find(initial) == itermap.end()) {
+	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+				   pkgPair(initial,NULL));
+	itermap[initial] = it;
+      } else {
+	it = itermap[initial];
+      }
+      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+    }
+  else if(_displayMode == TREE_DISPLAY_STATUS)
+    {
+      string str;
+      if(pkg->installedVersion() != NULL) {
+	str="Installed";
+      } else {
+	str="Uninstalled";
+      }
+      if(itermap.find(str) == itermap.end()) {
+	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+				     pkgPair(str,NULL));
+	itermap[str] = it;
+      } else {
+	it = itermap[str];
+      }
+      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+    }
+}
 
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)
 {    
-    if (_updating)
-	return;
+  map<string,tree<pkgPair>::iterator> itermap;
 
-    packages.erase(packages.begin(), packages.end());
-    
-    for (unsigned i = 0; i < _count; i++) {
-	if (applyFilters(_packages[i])) {
-	    packages.push_back(_packages[i]);
-	}
+  if (_updating)
+    return;
+
+  packages.erase(packages.begin(), packages.end());
+  _treeOrganizer.clear();
+  
+  for (unsigned i = 0; i < _count; i++) {
+    if (applyFilters(_packages[i])) {
+      packages.push_back(_packages[i]);
+      addFilteredPackageToTree(_treeOrganizer, itermap, _packages[i]);
     }
+  }
+  _treeOrganizer.sort(_treeOrganizer.begin(), _treeOrganizer.end(),true);
+    
 }
 
 

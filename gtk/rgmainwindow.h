@@ -31,10 +31,12 @@ using namespace std;
 
 #include "rpackagelister.h"
 
+#include <gtk/gtk.h>
 #include <vector>
 #include <set>
 
 #include "rgwindow.h"
+#include "gtkpkgtree.h"
 #include "conversion.h"
 
 class RGSourcesWindow;
@@ -58,7 +60,13 @@ typedef enum {
 class RGMainWindow : public RGWindow, public RPackageObserver
 {
   friend class SynapticInterface;
-  enum {DoNothing, InstallRecommended, InstallSuggested, InstallSelected};
+  enum {
+    DoNothing, 
+    InstallRecommended, 
+    InstallSuggested, 
+    InstallSelected
+  };
+  
 
   typedef enum {
     TOOLBAR_PIXMAPS,
@@ -81,7 +89,9 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkTooltips *_tooltips;
    
    GtkWidget *_sview; // scrolled window for table
-   GtkWidget *_table;
+
+   GtkPkgTree *_pkgTree;
+   GtkWidget *_treeView;
 
    GtkWidget *_statusL;
 
@@ -120,8 +130,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkWidget *_stateL;
    GtkImage *_stateP;
 
-   GdkPixmap *_alertPix;
-   GdkBitmap *_alertMask;
+   GdkPixbuf *_alertPix;
    
    GtkWidget *_importP;
    GtkWidget *_importL;   
@@ -172,21 +181,30 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    
    RPackage *selectedPackage();
    void refreshTable(RPackage *selectedPkg);
-
-   static void getColor(const char *cpp, GdkColor **colp);
+   void restoreTableState(vector<string>& expanded_sections, GtkTreeIter it);
+   GtkTreeIter saveTableState(vector<string>& expanded_sections);
 
    void changeFilter(int filter, bool sethistory=true);
+   void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
    
    virtual void close();
    static void closeWin(GtkWidget *self, void *me) { 
        ((RGMainWindow*)me)->close(); 
      };
 
-   static void selectedClistRow(GtkWidget *self, int row, int column,
-				GdkEvent *event);
-   static void unselectedClistRow(GtkWidget *self, int row, int column,
-				GdkEvent *event);
-   
+   static void selectedRow(GtkTreeSelection *selection, gpointer data);
+   static void doubleClickRow(GtkTreeView *treeview,
+			      GtkTreePath *arg1,
+			      GtkTreeViewColumn *arg2,
+			      gpointer user_data);
+   static void onExpandAll(GtkWidget *self, void *data);
+   static void onCollapseAll(GtkWidget *self, void *data);   
+
+   static void onSectionTree(GtkWidget *self, void *data);
+   static void onAlphabeticTree(GtkWidget *self, void *data);   
+   static void onStatusTree(GtkWidget *self, void *data);   
+   static void onFlatList(GtkWidget *self, void *data);   
+
    static void showSearchPanel(GtkWidget *self, void *data);
    static void showAboutPanel(GtkWidget *self, void *data);
    static void showFilterWindow(GtkWidget *self, void *data);

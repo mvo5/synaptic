@@ -75,9 +75,8 @@ struct tree_node_ {
 
 template <class T, class tree_node_allocator = std::allocator<tree_node_<T> > >
 class tree {
-   protected:
-      typedef tree_node_<T> tree_node;
    public:
+      typedef tree_node_<T> tree_node;
       typedef T value_type;
 
       class iterator_base;
@@ -925,6 +924,7 @@ void tree<T, tree_node_allocator>::sort(sibling_iterator from, sibling_iterator 
    if(prev)
       prev->next_sibling=(*eit);
    (*eit)->next_sibling=next;
+   (*eit)->prev_sibling=prev;
    if(next==0) {
       (*eit)->parent->last_child=next;
       }

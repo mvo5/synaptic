@@ -410,9 +410,11 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
 
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
-					   RPackageLister *lister)
+					   RPackageLister *lister,
+					   RGUserDialog *userDialog)
+
    : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
-     _totalActions(0), _progress(0), _sock(0)
+     _totalActions(0), _progress(0), _sock(0), _userDialog(userDialog)
 
 {
    prepare(lister);
@@ -659,6 +661,7 @@ void RGDebInstallProgress::finishUpdate()
    case 1: // error
       gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_ERROR,
 			       GTK_ICON_SIZE_DIALOG);
+      _userDialog->showErrors();
       break;
    case 2: // incomplete
       gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_INFO,

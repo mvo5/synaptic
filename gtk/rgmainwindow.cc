@@ -2079,10 +2079,17 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
 }
 
 // helper to hide the "please wait" message
-void plug_added(GtkWidget *sock, void *data)
+static void plug_added(GtkWidget *sock, void *data)
 {
    gtk_widget_show(sock);
    gtk_widget_hide(GTK_WIDGET(data));
+}
+
+static gboolean kill_repos(GtkWidget *self, GdkEvent *event, void *data)
+{
+   GPid pid = *(GPid*)data;
+   kill(pid, SIGQUIT);
+   return TRUE;
 }
 
 void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
@@ -2123,8 +2130,8 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 gtk_widget_show(label);
 	 
 	 GtkWidget *sock = gtk_socket_new();
-	 g_signal_connect(G_OBJECT(sock), "plug-added", G_CALLBACK(plug_added), 
-			  label);
+	 g_signal_connect(G_OBJECT(sock), "plug-added", 
+			  G_CALLBACK(plug_added),  label);
 	 gtk_box_pack_start_defaults(GTK_BOX(vbox), sock);
 	 
 	 argv[0] = "/usr/bin/gnome-software-properties";
@@ -2133,9 +2140,11 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 argv[3] = g_strdup_printf("%i", gtk_socket_get_id(GTK_SOCKET(sock)));
 	 argv[4] = NULL;
 	 
-	 g_spawn_async(NULL, argv, NULL, (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
+	 g_spawn_async(NULL, argv, NULL,(GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
 		       NULL, NULL, &pid, NULL);
-
+	 // kill the child if the window is deleted
+ 	 g_signal_connect(G_OBJECT(win), "delete-event", 
+ 			  G_CALLBACK(kill_repos), &pid);
 	 gtk_widget_show_all(win);
 	 while(waitpid(pid, &status, WNOHANG) == 0) {
 	    usleep(50000);
@@ -2580,7 +2589,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
       iprogress = new RGInstallProgress(me, me->_lister);
 #else 
   #ifdef WITH_DPKG_STATUSFD
-      iprogress = new RGDebInstallProgress(me,me->_lister);
+      iprogress = new RGDebInstallProgress(me,me->_lister, me->_userDialog);
   #else 
    iprogress = new RGDummyInstallProgress();
   #endif // WITH_DPKG_STATUSFD

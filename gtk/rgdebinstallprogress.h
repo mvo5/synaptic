@@ -30,8 +30,10 @@
 
 #include "rinstallprogress.h"
 #include "rggladewindow.h"
+#include "rguserdialog.h"
 #include<map>
 #include <vte/reaper.h>
+
 
 class RGMainWindow;
 
@@ -78,6 +80,8 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
 
    bool _startCounting;
 
+   RGUserDialog *_userDialog;
+
    int _progress;
    int _totalActions;
 
@@ -117,7 +121,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
 				  gpointer    user_data);
 
  public:
-   RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
+   RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister,
+			RGUserDialog *userDialog);
+
 
 };
 

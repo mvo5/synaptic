@@ -252,6 +252,8 @@ int main(int argc, char **argv)
    
    if(_config->FindB("Volatile::HideMainwindow", false))
       mainWindow->hide();
+   else
+      mainWindow->show();
 
    RGFlushInterface();
 

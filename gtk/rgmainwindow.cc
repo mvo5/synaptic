@@ -1342,7 +1342,8 @@ void RGMainWindow::buildInterface()
    assert(_hpaned);
    // If the pane position is restored before the window is shown, it's
    // not restored in the same place as it was.
-   show();
+   if(!_config->FindB("Volatile::HideMainwindow", false))
+      show();
    RGFlushInterface();
    gtk_paned_set_position(GTK_PANED(_vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));

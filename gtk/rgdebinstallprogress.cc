@@ -550,6 +550,11 @@ void RGDebInstallProgress::updateInterface()
       }      
    }
 
+   if(!_startCounting) {
+      usleep(100000);
+      gtk_progress_bar_pulse (GTK_PROGRESS_BAR(_pbarTotal));
+   }
+
    if (gtk_events_pending()) {
       while (gtk_events_pending())
          gtk_main_iteration();

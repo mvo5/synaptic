@@ -27,8 +27,8 @@
 
 using namespace std;
 
-//#define DEBUG_LIST
-//#define DEBUG_LIST_FULL
+// #define DEBUG_LIST
+// #define DEBUG_LIST_FULL
 
 static void gtk_pkg_list_init(GtkPkgList *pkg_tree);
 static void gtk_pkg_list_class_init(GtkPkgListClass *klass);
@@ -299,7 +299,9 @@ gtk_pkg_list_get_column_type(GtkTreeModel *tree_model, gint index)
 static gboolean
 gtk_pkg_list_get_iter(GtkTreeModel *tree_model,
                       GtkTreeIter *iter, GtkTreePath *path)
-{
+{   
+   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+
    GtkPkgList *pkg_list = (GtkPkgList *) tree_model;
    gint *indices;
    gint depth;
@@ -456,6 +458,8 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 static gboolean
 gtk_pkg_list_iter_next(GtkTreeModel *tree_model, GtkTreeIter *iter)
 {
+   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+
    if (iter == NULL)
       return FALSE;
    if (iter->user_data == NULL)
@@ -490,6 +494,7 @@ gtk_pkg_list_iter_children(GtkTreeModel *tree_model,
                            GtkTreeIter *iter, GtkTreeIter *parent)
 {
    g_return_val_if_fail(parent == NULL || parent->user_data != NULL, FALSE);
+   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
 
 #ifdef DEBUG_LIST
    cout << "iter_children: " << endl;
@@ -617,6 +622,7 @@ static gboolean gtk_pkg_list_has_default_sort_func(GtkTreeSortable *sortable)
 static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 {
    //cout << "gtk_pkg_list_sort(GtkPkgList *pkg_list)" << endl;
+   g_return_if_fail(GTK_IS_PKG_LIST(pkg_list));
 
    switch (pkg_list->sort_column_id) {
       case NAME_COLUMN:

@@ -159,9 +159,9 @@ void welcome_dialog(RGMainWindow *mainWindow)
 
 void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
 {
-   //cout << "update_check" << endl;
+   struct stat st;
 
-   // check updates
+   // check when the last update happend updates
    UpdateType update =
       (UpdateType) _config->FindI("Synaptic::update::type", UPDATE_ASK);
    if(update != UPDATE_CLOSE) {
@@ -172,12 +172,17 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
       // check for the mtime of the various package lists
       vector<string> filenames = lister->getPolicyArchives(true);
       for (int i=0;i<filenames.size();i++) {
-	 struct stat st;
 	 stat(filenames[i].c_str(), &st);
-// 	 cout << "file: " << filenames[i] << " " 
-// 	      << ctime(&st.st_mtime) << endl;
 	 if(filenames[i] != "/var/lib/dpkg/status")
 	    lastUpdate = max(lastUpdate, (int)st.st_mtime);
+      }
+      
+      // new apt uses this
+      string update_stamp = _config->FindDir("Dir::State","var/lib/apt");
+      update_stamp += "update-stamp";
+      if(FileExists(update_stamp)) {
+	 stat(update_stamp.c_str(), &st);
+	 lastUpdate = max(lastUpdate, (int)st.st_mtime);
       }
 
       // 3600s=1h 

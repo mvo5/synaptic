@@ -1639,11 +1639,13 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       if(action == PKG_INSTALL) {
 	  //cout << "action install" << endl;
 	  bool failed = false;
-	  for(int i=0;instPkgs.size() < i;i++) {
+	  for(int i=0;i < instPkgs.size();i++) {
+	      //cout << "checking pkg nr " << i << endl;
 	      pkg = instPkgs[i];
 	      if (pkg == NULL)
 		  continue;
 	      int mstatus = pkg->getMarkedStatus();
+	      cout << "mstatus: " << mstatus << endl;
 	      if(!(mstatus == RPackage::MInstall ||
 		   mstatus == RPackage::MUpgrade) ) 
 		  failed = true;

@@ -46,5 +46,6 @@ bool RPackageOptionsFile(ifstream &in);
 
 // get the default conf dir, very small temp files might be placed here too
 string RConfDir();
+string RLogDir();
 
 #endif

@@ -132,6 +132,24 @@ string RConfDir()
    return confDir;
 }
 
+string RLogDir()
+{
+   struct stat stbuf;
+   static string logDir = RConfDir() + string("/log/");
+
+   if (stat(logDir.c_str(), &stbuf) < 0) {
+      if (mkdir(logDir.c_str(), 0700) < 0) {
+	 _error->Errno("mkdir",
+		       _("ERROR: could not create log directory %s"),
+		       logDir.c_str());
+	 return "";
+      }
+   }
+
+   return logDir;
+}
+
+
 bool RInitConfiguration(string confFileName)
 {
    string configDir;

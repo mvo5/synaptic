@@ -32,6 +32,7 @@
 #include <unistd.h>
 #include <map>
 #include <sstream>
+#include <ctime>
 
 #include "rpackagelister.h"
 #include "rpackagecache.h"
@@ -1268,6 +1269,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (!lockPackageCache(lock))
       return false;
 
+   if(_config->FindB("Synaptic::Log::Changes",true))
+      makeCommitLog();
+
    pkgAcquire fetcher(status);
 
    assert(_cache->list() != NULL);
@@ -1406,6 +1410,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    // erase downloaded packages
    cleanPackageCache();
 
+   if(_config->FindB("Synaptic::Log::Changes",true))
+      writeCommitLog();
+
    delete PM;
    return Ret;
 
@@ -1414,6 +1421,105 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    return false;
 }
 
+void RPackageLister::writeCommitLog()
+{
+   struct tm *t = localtime(&_logTime);
+   ostringstream tmp;
+   ioprintf(tmp, "%i-%i-%i.%i%i%i.log", 1900+t->tm_year, t->tm_mon+1, 
+	    t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+
+   string logfile = RLogDir() + tmp.str();
+   FILE *f = fopen(logfile.c_str(),"w+");
+   if(f == NULL) {
+      _error->Error("Failed to write commit log");
+      return;
+   }
+   fputs(_logEntry.c_str(), f);
+   fclose(f);
+
+}
+
+void RPackageLister::makeCommitLog()
+{
+   time(&_logTime);
+   _logEntry = string("Commit Log for ") + string(ctime(&_logTime));
+   _logEntry.reserve(2*8192); // make it big by default 
+
+   vector<RPackage *> held;
+   vector<RPackage *> kept;
+   vector<RPackage *> essential;
+   vector<RPackage *> toInstall;
+   vector<RPackage *> toReInstall;
+   vector<RPackage *> toUpgrade;
+   vector<RPackage *> toRemove;
+   vector<RPackage *> toPurge;
+   vector<RPackage *> toDowngrade;
+   double sizeChange;
+
+   getDetailedSummary(held, kept, essential,
+		      toInstall,toReInstall,toUpgrade, 
+		      toRemove, toPurge, toDowngrade, sizeChange);
+
+   if(essential.size() > 0) {
+      _logEntry += _("The follwoing ESSENTIAL packages are removed:\n");
+      for (vector<RPackage *>::const_iterator p = essential.begin();
+	   p != essential.end(); p++) {
+	 _logEntry += (*p)->name() + string("\n");
+      }
+   }
+   
+   if(toDowngrade.size() > 0) {
+      _logEntry += _("The follwoing packages are DOWNGRADED:\n");
+      for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
+	   p != toDowngrade.end(); p++) {
+	 _logEntry += (*p)->name() + string("\n");
+      }
+   }
+
+   if(toPurge.size() > 0) {
+      _logEntry += _("The follwoing packages are purged:\n");
+      for (vector<RPackage *>::const_iterator p = toPurge.begin();
+	   p != toPurge.end(); p++) {
+	 _logEntry += (*p)->name() + string("\n");
+      }
+   }
+
+   if(toRemove.size() > 0) {
+      _logEntry += _("The follwoing packages are removed:\n");
+      for (vector<RPackage *>::const_iterator p = toRemove.begin();
+	   p != toRemove.end(); p++) {
+	 _logEntry += (*p)->name() + string("\n");
+      }
+   }
+
+   if(toUpgrade.size() > 0) {
+      _logEntry += _("The follwoing packages are upgraded:\n");
+      for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
+	   p != toUpgrade.end(); p++) {
+	 _logEntry += (*p)->name() + string(" (") + (*p)->installedVersion() 
+	    + string(")") + string(" to ") + (*p)->availableVersion() 
+	    + string("\n");
+      }
+   }
+
+   if(toInstall.size() > 0) {
+      _logEntry += _("The follwoing packages are installed:\n");
+      for (vector<RPackage *>::const_iterator p = toInstall.begin();
+	   p != toInstall.end(); p++) {
+	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 
+	    + string(")") + string("\n");
+      }
+   }
+
+   if(toReInstall.size() > 0) {
+      _logEntry += _("The follwoing packages are re-installed:\n");
+      for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
+	   p != toReInstall.end(); p++) {
+	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 
+	    + string(")") + string("\n");
+      }
+   }
+}
 
 bool RPackageLister::lockPackageCache(FileFd &lock)
 {

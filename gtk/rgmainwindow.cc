@@ -2416,13 +2416,11 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    if (_config->FindB("Volatile::Non-Interactive", false) == false) {
       // show a summary of what's gonna happen
-      summ = new RGSummaryWindow(me, me->_lister);
-      if (!summ->showAndConfirm()) {
+      RGSummaryWindow summ(me, me->_lister);
+      if (!summ.showAndConfirm()) {
          // canceled operation
-         delete summ;
          return;
       }
-      delete summ;
    }
 
    me->setInterfaceLocked(TRUE);

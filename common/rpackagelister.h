@@ -177,6 +177,11 @@ class RPackageLister {
 
    RUserDialog *_userDialog;
 
+   void makeCommitLog();
+   void writeCommitLog();
+   string _logEntry;
+   time_t _logTime;
+
    // undo/redo stuff
    list<pkgState> undoStack;
    list<pkgState> redoStack;

@@ -641,12 +641,11 @@ bool RPackageLister::fixBroken()
     if (_cache->deps()->BrokenCount() == 0)
 	return true;
     
-    pkgProblemResolver Fix(_cache->deps());
-    
-    Fix.InstallProtect();
-    if (Fix.Resolve(true) == false)
-	return false;
-    
+    if (pkgFixBroken(*_cache->deps()) == false || _cache->deps()->BrokenCount() != 0)
+        return _error->Error(_("Unable to correct dependencies"));
+    if (pkgMinimizeUpgrade(*_cache->deps()) == false)
+        return _error->Error(_("Unable to minimize the upgrade set"));
+
     reapplyFilter();
 
     return true;

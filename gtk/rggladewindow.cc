@@ -62,7 +62,7 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name)
     gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
 		       (GtkSignalFunc)windowCloseCallback, this);
     _topBox = NULL;
-    gtk_widget_realize(_win);
+    //gtk_widget_realize(_win);
 
     if(parent!=NULL)
 	gtk_window_set_transient_for(GTK_WINDOW(_win), 

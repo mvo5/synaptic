@@ -125,6 +125,7 @@ protected:
        DepType where;
        string pattern;
        bool exclusive;
+       vector<regex_t*> regexps;
    };
    vector<Pattern> _patterns;
    

@@ -206,16 +206,6 @@ char *RPatternPackageFilter::TypeName[] = {
 
 bool RPatternPackageFilter::filter(RPackage *pkg)
 {
-    // description includes summary (never change the order of this calls
-    // or the internal state of apt will become confused
-    string S = string(pkg->summary()) + string(pkg->description());
-    const char *descr = S.c_str();
-
-    const char *name = pkg->name();
-    const char *version = pkg->availableVersion();
-    const char *maint = pkg->maintainer();
-    // --------------------------------------------------------------------
-
     bool found;
     bool globalfound = false;
     bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
@@ -227,58 +217,49 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	 iter != _patterns.end(); iter++) 
 	{
 	    found = true;
-
-	    // compile the regexps
-	    string S;
-	    const char *C = iter->pattern.c_str();
-
-	    vector<regex_t> regexps;
-	    while (*C != 0) {
-		if (ParseQuoteWord(C, S) == true) {
-		    regex_t reg;
-		    if(regcomp(&reg, S.c_str(), REG_EXTENDED|REG_ICASE|REG_NOSUB) != 0)
-			{
-			    cerr << "regexp compilation error" << endl;
-			    for(unsigned int i=0;i<regexps.size();i++)
-				regfree(&regexps[i]);
-			    return false;
-			}
-		    regexps.push_back(reg);
-		}
-	    }
-
 	    if (iter->where == Name) {
-#if 0 // for real "noregexp" support, we need this
-		if(strcasestr(name, iter->pattern.c_str()) == NULL) {
-		    found = false;
-		} 
-#endif
-		for(unsigned int i=0;i<regexps.size();i++) {
-		    if(regexec(&regexps[i], name, 0, NULL, 0) == 0)
+		const char *name = pkg->name();
+// if we want "real" nouseregexp support, we need to split the string
+// here like we do with regexp
+//		if(!useregexp) {
+//		    if(strcasestr(name, iter->pattern.c_str()) == NULL) {
+//			found = false;
+//		    } 
+		for(unsigned int i=0;i<iter->regexps.size();i++) {
+		    if(regexec(iter->regexps[i], name, 0, NULL, 0) == 0)
 			found &= true;
 		    else 
 			found = false;
 		}
 	    } else if (iter->where == Version) {
-		if(version == NULL)
+		const char *version = pkg->availableVersion();
+		if(version == NULL) {
 		    found = false;
-		else
-		    for(unsigned int i=0;i<regexps.size();i++) {
-			if(regexec(&regexps[i], version, 0, NULL, 0) == 0)
+		} else {
+		    for(unsigned int i=0;i<iter->regexps.size();i++) {
+			if(regexec(iter->regexps[i], version, 0, NULL, 0) == 0)
 			    found &= true;
 			else 
 			    found = false;
+		    }
 		}
 	    } else if (iter->where == Description) {
-		for(unsigned int i=0;i<regexps.size();i++) {
-		    if(regexec(&regexps[i], descr, 0, NULL, 0) == 0)
+		const char *s1 = pkg->summary();
+		const char *s2 = pkg->description();
+		for(unsigned int i=0;i<iter->regexps.size();i++) {
+		    if(regexec(iter->regexps[i], s1, 0, NULL, 0) == 0) {
 			found &= true;
-		    else 
-			found = false;
+		    } else {
+			if(regexec(iter->regexps[i], s2, 0, NULL, 0) == 0)
+			    found &= true;
+			else 
+			    found = false;
+		    }
 		}
 	    } else if (iter->where == Maintainer) {
-		for(unsigned int i=0;i<regexps.size();i++) {
-		    if(regexec(&regexps[i], maint, 0, NULL, 0) == 0) {
+		const char *maint = pkg->maintainer();
+		for(unsigned int i=0;i<iter->regexps.size();i++) {
+		    if(regexec(iter->regexps[i], maint, 0, NULL, 0) == 0) {
 			found &= true;
 		    } else {
 			found = false;
@@ -294,7 +275,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			do 
 			    {
 				if(strstr(depType,"Depends") != NULL)
-				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+				    if(regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
 					    found = true;
 					    break;
 				    }
@@ -304,7 +285,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		found = false;
 		vector<const char*> provides = pkg->provides();
 		for(unsigned int i=0;i<provides.size();i++) {
-		    if(regexec(&regexps[0], provides[i], 0, NULL, 0) == 0) {
+		    if(regexec(iter->regexps[0], provides[i], 0, NULL, 0) == 0) {
 			    found = true;
 			    break;
 		    }
@@ -319,7 +300,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			do 
 			    {
 				if(strstr(depType,"Conflicts") != NULL)
-				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+				    if(regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
 					    found = true;
 					    break;
 				    }
@@ -335,7 +316,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			do 
 			    {
 				if(strstr(depType,"Replaces") != NULL)
-				    if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+				    if(regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
 					found = true;
 					break;
 				    } 
@@ -348,7 +329,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		bool ok;
 		if (pkg->enumWDeps(depType, depPkg, ok)) {
 		    do {
-			if(regexec(&regexps[0], depPkg, 0, NULL, 0) == 0) {
+			if(regexec(iter->regexps[0], depPkg, 0, NULL, 0) == 0) {
 			    found = true;
 			    break;
 			} 
@@ -359,17 +340,18 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		const char *depPkg, *depName;
 		if (pkg->enumRDeps(depName, depPkg)) {
 		    do {
-			if(regexec(&regexps[0], depName, 0, NULL, 0) == 0) {
+			if(regexec(iter->regexps[0], depName, 0, NULL, 0) == 0) {
 				found = true;
 			}
 		    } while (pkg->nextRDeps(depName, depPkg));
 		}
+		
 	    }
 
-	    // give back all the memory of the regexps
-	    for(unsigned int i=0;i<regexps.size();i++)
-		regfree(&regexps[i]);
-	    regexps.clear();
+// 	    // give back all the memory of the regexps
+// 	    for(unsigned int i=0;i<regexps.size();i++)
+// 		regfree(regexps[i]);
+// 	    regexps.clear();
 
 // 	    if(found) {
 // 		cout << "pkg: " << pkg->name() 
@@ -403,6 +385,27 @@ void RPatternPackageFilter::addPattern(DepType type, string pattern,
     pat.where = type;
     pat.pattern = pattern; 
     pat.exclusive = exclusive;
+
+    // compile the regexps
+    string S;
+    const char *C = pattern.c_str();
+
+    vector<regex_t*> regexps;
+    while (*C != 0) {
+	if (ParseQuoteWord(C, S) == true) {
+	    regex_t *reg = new regex_t;
+	    if(regcomp(reg, S.c_str(), REG_EXTENDED|REG_ICASE|REG_NOSUB) != 0)
+		{
+		    cerr << "regexp compilation error" << endl;
+		    for(unsigned int i=0;i<regexps.size();i++) {
+			regfree(regexps[i]);
+		    }
+		    return;
+		}
+	    regexps.push_back(reg);
+	}
+    }
+    pat.regexps = regexps;
 
     _patterns.push_back(pat);
 }
@@ -461,6 +464,12 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 void RPatternPackageFilter::clear()
 {
     //cout << "void RPatternPackageFilter::clear()" << endl;
+    for(int i=0;i<_patterns.size();i++) {
+	for(int j=0;j<_patterns[i].regexps.size();j++) {
+	    regfree(_patterns[i].regexps[j]);
+	    delete (regex_t*)_patterns[i].regexps[j];
+	}
+    }
 
     _patterns.erase(_patterns.begin(), _patterns.end());
 }
@@ -468,7 +477,9 @@ void RPatternPackageFilter::clear()
 
 RPatternPackageFilter::~RPatternPackageFilter()
 {
-    clear();
+    //cout << "RPatternPackageFilter::~RPatternPackageFilter()" << endl;
+    
+    this->clear();
 }
 
 

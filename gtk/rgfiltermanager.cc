@@ -480,6 +480,7 @@ void RGFilterManagerWindow::patternNew(GObject *o, gpointer data)
     RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
 
     me->setPatternRow(-1, false, (RPatternPackageFilter::DepType)0, "");
+    
 
 }
 
@@ -549,6 +550,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 	indices = gtk_tree_path_get_indices(path);
 	// set pattern
 	me->setPatternRow(indices[0], exclude, type, str);
+	gtk_tree_path_free(path);
     }
     gtk_signal_handler_unblock_by_func (GTK_OBJECT(w),
 					 GTK_SIGNAL_FUNC(patternChanged),
@@ -569,7 +571,7 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *selection,
     gchar *dopatt, *what, *text;
 
     if(gtk_tree_selection_get_selected(selection, &model, &iter)) {
-        
+	gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"hbox_pattern"), TRUE);
 	gtk_tree_model_get(model, &iter, 
 			   PATTERN_DO_COLUMN, &dopatt, 
 			   PATTERN_WHAT_COLUMN, &what,
@@ -599,6 +601,11 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *selection,
 	GtkWidget *patternText = glade_xml_get_widget(me->_gladeXML, 
 						      "entry_pattern_text");
 	gtk_entry_set_text(GTK_ENTRY(patternText), text);
+ 	g_free(dopatt);
+ 	g_free(what);
+ 	g_free(text);
+    } else {
+	gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"hbox_pattern"), FALSE);
     }
 }
 
@@ -617,7 +624,7 @@ void RGFilterManagerWindow::show()
 {
     vector<string> filters;
     GtkTreeIter   iter;
-    //    cout << "RGFilterManagerWindow::show()" << endl;
+    //cout << "RGFilterManagerWindow::show()" << endl;
 
     gtk_list_store_clear(_filterListStore);
     _lister->getFilterNames(filters);
@@ -652,36 +659,43 @@ void RGFilterManagerWindow::show()
 void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection, 
 					 gpointer data)
 {
-  RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-  GtkTreeIter iter;
-  GtkTreeModel *model;
-  RFilter *filter;
-  gchar *filtername;
+    //cout << "selectAction"<<endl;
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+    RFilter *filter;
+    gchar *filtername;
+    
+    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+	gtk_widget_set_sensitive(me->_filterDetailsBox, true);
+	
+	if(me->_selectedPath != NULL) {
+	    applyFilterAction(NULL, me);
+	    gtk_tree_path_free(me->_selectedPath);
+	}
+	
+	gtk_tree_model_get (model, &iter, 
+			    NAME_COLUMN, &filtername, 
+			    FILTER_COLUMN, &filter, 
+			    -1);
+	me->_selectedPath = gtk_tree_model_get_path(model, &iter);
+	//cout << "path is " << gtk_tree_path_to_string(me->_selectedPath) << endl;
+	me->_selectedFilter = filter;
+	//cout << "You selected" << filter << endl;
+	gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
+	g_free (filtername);
 
-  if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-      gtk_widget_set_sensitive(me->_filterDetailsBox, true);
+	me->editFilter();
 
-      if(me->_selectedPath != NULL) {
-	  applyFilterAction(NULL, me);
-	  gtk_tree_path_free(me->_selectedPath);
-      }
-
-      gtk_tree_model_get (model, &iter, 
-			  NAME_COLUMN, &filtername, 
-			  FILTER_COLUMN, &filter, 
-			  -1);
-      me->_selectedPath = gtk_tree_model_get_path(model, &iter);
-      //cout << "path is " << gtk_tree_path_to_string(me->_selectedPath) << endl;
-      me->_selectedFilter = filter;
-      //cout << "You selected" << filter << endl;
-      gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
-      g_free (filtername);
-      
-      me->editFilter();
-  } else {
-      gtk_widget_set_sensitive(me->_filterDetailsBox, false);
-
-  }
+	// make sure that the pattern stuff is only available if something
+	// is selected in the patternList
+	GtkTreeSelection *select;
+	select=gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_patternList));
+	gtk_tree_selection_unselect_all(select);
+	gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"hbox_pattern"), false);
+    } else {
+	gtk_widget_set_sensitive(me->_filterDetailsBox, false);
+    }
 }
 
 
@@ -704,6 +718,7 @@ GtkTreePath* RGFilterManagerWindow::treeview_find_path_from_text(GtkTreeModel *m
 		gtk_tree_path_append_index(path, i);
 		return path;
 	    }
+	g_free(s);
 	i++;
     } while(gtk_tree_model_iter_next(model, &iter));
 
@@ -782,6 +797,8 @@ bool RGFilterManagerWindow::setPatternRow(int row,
 			   1, array[1],
 			   2, array[2], 
 			   -1);
+	GtkTreeSelection *select=gtk_tree_view_get_selection(GTK_TREE_VIEW(_patternList));
+	gtk_tree_selection_select_iter(select, &iter);
     } else {
 	GtkTreePath *path = gtk_tree_path_new();
 	gtk_tree_path_prepend_index(path, row);
@@ -795,6 +812,7 @@ bool RGFilterManagerWindow::setPatternRow(int row,
 				   2, array[2], 
 				   -1);
 	    } 
+	gtk_tree_path_free(path);
     }
     
     return true;
@@ -845,6 +863,7 @@ void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter &f)
 				   SECTION_COLUMN, &text,
 				   -1);
 		f.addSection(string(text));
+		g_free(text);
 	    }
 	list = g_list_next(list);
     }
@@ -906,6 +925,9 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 	
 	valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_patternListStore), 
 					 &iter);
+ 	g_free(dopatt);
+ 	g_free(what);
+ 	g_free(text);
     }
 }
 

@@ -77,27 +77,49 @@ void RPackageViewSections::addPackage(RPackage *package)
    _view[str].push_back(package);
 };
 
+RPackageViewStatus::RPackageViewStatus(vector<RPackage *> &allPkgs) 
+   : RPackageView(allPkgs), markUnsupported(false)
+{
+   if(_config->FindB("Synaptic::mark-unsupported",false)) {
+      markUnsupported = true;
+      string components = _config->Find("Synaptic::supported-components", "main updates/main");
+
+      stringstream sstream(components);
+      string s;
+      while(!sstream.eof()) {
+	 sstream >> s;
+	 supportedComponents.push_back(s);
+      }
+   }
+};
 
 void RPackageViewStatus::addPackage(RPackage *pkg)
 {
    string str;
    int flags = pkg->getFlags();
    string component = pkg->component();
+   bool unsupported = false;
+   
+   // we mark packages as unsupported if requested
+   if(markUnsupported) {
+      unsupported = true;
+      for(unsigned int i=0;i<supportedComponents.size();i++) {
+	 if(supportedComponents[i] == component) {
+	    unsupported = false;
+	    break;
+	 }
+      }
+   }
 
    if(flags & RPackage::FInstalled) {
-#ifndef HAVE_RPM
-      if(component != "main" && component != "updates/main" &&
-	 !(flags & RPackage::FNotInstallable))
+      if( !(flags & RPackage::FNotInstallable) && unsupported)
 	 str = _("Installed (unsupported)");
       else 
-#endif
 	 str = _("Installed");
    } else {
-#ifndef HAVE_RPM
-      if(component != "main" && component != "updates/main")
+      if( unsupported )
 	 str = _("Not installed (unsupported)");
       else
-#endif
 	 str = _("Not installed");
    }
    _view[str].push_back(pkg);
@@ -169,7 +191,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       str = tmp;
       
    // find the search pattern in the string "str"
-   for(int i=0;i<searchStrings.size();i++) {
+   for(unsigned int i=0;i<searchStrings.size();i++) {
       string searchString = searchStrings[i];
 
       if(!str.empty() && strcasestr(str.c_str(), searchString.c_str())) {

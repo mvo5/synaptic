@@ -107,8 +107,13 @@ class RPackageViewAlphabetic : public RPackageView {
 };
 
 class RPackageViewStatus:public RPackageView {
+ protected:
+   // mark the software as unsupported in status view
+   bool markUnsupported;
+   vector<string> supportedComponents;
+
  public:
-   RPackageViewStatus(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   RPackageViewStatus(vector<RPackage *> &allPkgs);
 
    string getName() {
       return _("Status");

@@ -464,18 +464,22 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    GtkWidget *menu = gtk_menu_new(); 
    GtkWidget *item; 
 
+   int canidateNr = 0;
    vector<pair<string, string> > versions = pkg->getAvailableVersions();
    for(unsigned int i=0;i<versions.size();i++) {
       gchar *str = g_strdup_printf("%s (%s)", 
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
       item = gtk_menu_item_new_with_label(str);
+      if(versions[i].first == pkg->availableVersion())
+	 canidateNr = i;
       gtk_widget_show(item);
       gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
       //cout << "got: " << str << endl;
       g_free(str);
    }
    gtk_option_menu_set_menu(GTK_OPTION_MENU(optionMenu), menu);
+   gtk_option_menu_set_history(GTK_OPTION_MENU(optionMenu), canidateNr);
    if(!dia.run()) {
       //cout << "cancel" << endl;
       return;    // user clicked cancel

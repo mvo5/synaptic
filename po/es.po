@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-09 14:00-0200\n"
+"POT-Creation-Date: 2004-03-23 16:20-0300\n"
 "PO-Revision-Date: 2004-01-27 23:31+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -148,7 +148,7 @@ msgstr "World Wide Web"
 msgid "Miscellaneous  - Graphical"
 msgstr "Varios - Gráfico"
 
-#: common/sections_trans.cc:42 common/rpackage.cc:126 gtk/rgmainwindow.cc:73
+#: common/sections_trans.cc:42 common/rpackage.cc:105 gtk/rgmainwindow.cc:74
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -171,11 +171,6 @@ msgstr "contribuciones"
 #: common/sections_trans.cc:60 common/sections_trans.cc:64
 msgid "Non US"
 msgstr "Non US"
-
-#: common/sections_trans.cc:89
-#, c-format
-msgid "%s <i>(%s)</i>"
-msgstr "%s <i>(%s)</i>"
 
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
@@ -340,17 +335,13 @@ msgstr "ERROR: no se ha podido crear el directorio de configuración %s"
 msgid "couldn't open %s for writing"
 msgstr "No se ha podido abrir %s para escribir"
 
-#: common/rpackage.cc:219
+#: common/rpackage.cc:185
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
 "La lista de archivos instalados está disponible únicamente para paquetes "
 "instalados"
 
-#: common/rpackage.cc:427
-msgid "OH SHIT DUNNO WTF IS GOIN ON!"
-msgstr "OH NO SABEMOS QUÉ ESTÁ PASANDO"
-
-#: common/rpackage.cc:612
+#: common/rpackage.cc:472
 #, c-format
 msgid ""
 "\n"
@@ -366,35 +357,95 @@ msgstr ""
 "y nunca fue subido, ha sido declarado obsoleto o no está disponible en el "
 "contenido de sources.list\n"
 
-#: common/rpackage.cc:688
+#: common/rpackage.cc:548
 msgid " or"
 msgstr " o"
 
-#: common/rpackage.cc:787
+#: common/rpackage.cc:647
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s es/será instalado"
 
-#: common/rpackage.cc:792
+#: common/rpackage.cc:652
 msgid "package is not installable"
 msgstr "el paquete no es instalable"
 
-#: common/rpackage.cc:794
+#: common/rpackage.cc:654
 msgid "package is a virtual package"
 msgstr "el paquete es virtual"
 
-#: common/rpackage.cc:796
+#: common/rpackage.cc:656
 msgid "package is/will not be installed"
 msgstr "el paquete no será instalado"
 
-#: common/rpackage.cc:799
+#: common/rpackage.cc:659
 msgid "dependency is satisfied"
 msgstr "la dependencia es satisfecha"
 
-#: common/rpackage.cc:981
+#: common/rpackage.cc:832
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Registro inválido en el fichero de preferencias, no hay cabecera de paquete"
+
+#: common/rpackage.cc:1137
+#, fuzzy
+msgid "Marked for installation"
+msgstr "En espera para instalación"
+
+#: common/rpackage.cc:1138
+#, fuzzy
+msgid "Marked for re-installation"
+msgstr "En espera para instalación"
+
+#: common/rpackage.cc:1139
+#, fuzzy
+msgid "Marked for upgrade"
+msgstr "En espera para actualización"
+
+#: common/rpackage.cc:1140
+#, fuzzy
+msgid "Marked for downgrade"
+msgstr "En espera para ser desactualizado"
+
+#: common/rpackage.cc:1141
+#, fuzzy
+msgid "Marked for removal"
+msgstr "En espera para eliminación"
+
+#: common/rpackage.cc:1142
+#, fuzzy
+msgid "Marked for removal including configuration"
+msgstr "En espera para eliminación incluyendo la configuración"
+
+#: common/rpackage.cc:1143 gtk/window_filters.glade.h:25
+msgid "Not installed"
+msgstr "No Instalado"
+
+#: common/rpackage.cc:1144
+msgid "Not installed (locked)"
+msgstr "No instalado (bloqueado)"
+
+#: common/rpackage.cc:1145 common/rpackagelister.cc:258
+#: gtk/window_filters.glade.h:18
+msgid "Installed"
+msgstr "Instalado"
+
+#: common/rpackage.cc:1146
+msgid "Installed (update available)"
+msgstr "Instalado (actualización disponible)"
+
+#: common/rpackage.cc:1147
+msgid "Installed (locked to the current version)"
+msgstr "Instalado (bloqueado a la versión actual)"
+
+#: common/rpackage.cc:1148 common/rpackagelister.cc:295
+#: gtk/window_filters.glade.h:6
+msgid "Broken"
+msgstr "Roto"
+
+#: common/rpackage.cc:1149
+msgid "Not installed (new in archive)"
+msgstr "No instalados (nuevo en el archivo)"
 
 #: common/rpackagecache.cc:51
 msgid ""
@@ -414,16 +465,16 @@ msgid "Internal Error, non-zero counts"
 msgstr "Error Interno, contando no-cero"
 
 #: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:83
-#: gtk/window_preferences.glade.h:79 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:47
 msgid "Status"
 msgstr "Estado"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:44 gtk/rgfiltermanager.cc:183
+#: common/rpackagefilter.cc:44 gtk/rgfiltermanager.cc:182
 msgid "Pattern"
 msgstr "Patrón"
 
-#: common/rpackagefilter.cc:45 gtk/window_filters.glade.h:52
+#: common/rpackagefilter.cc:45 gtk/window_filters.glade.h:45
 msgid "Section"
 msgstr "Sección"
 
@@ -435,167 +486,136 @@ msgstr "Prioridad"
 msgid "ReducedView"
 msgstr "Vista reducida"
 
-#: common/rpackagefilter.cc:51 gtk/window_filters.glade.h:59
-msgid "Tags"
-msgstr "Etiquetas"
-
-#: common/rpackagefilter.cc:196 gtk/window_preferences.glade.h:57
+#: common/rpackagefilter.cc:127 gtk/window_preferences.glade.h:64
 msgid "Name"
 msgstr "Nombre"
 
-#: common/rpackagefilter.cc:197 gtk/window_find.glade.h:10
+#: common/rpackagefilter.cc:128 gtk/window_find.glade.h:10
 msgid "Version"
 msgstr "Versión"
 
-#: common/rpackagefilter.cc:198 gtk/rgmainwindow.cc:767
+#: common/rpackagefilter.cc:129 gtk/rgmainwindow.cc:747
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_preferences.glade.h:36
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:71
+#: gtk/window_find.glade.h:3 gtk/window_preferences.glade.h:38
+#: gtk/window_filters.glade.h:9 gtk/rgfiltermanager.h:71
 msgid "Description"
 msgstr "Descripción"
 
-#: common/rpackagefilter.cc:199 gtk/window_find.glade.h:4
-#: gtk/window_filters.glade.h:29 gtk/rgfiltermanager.h:72
+#: common/rpackagefilter.cc:130 gtk/window_find.glade.h:4
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Mantenedor"
 
-#: common/rpackagefilter.cc:200 gtk/window_find.glade.h:2
+#: common/rpackagefilter.cc:131 gtk/window_find.glade.h:2
 msgid "Depends"
 msgstr "Depende"
 
-#: common/rpackagefilter.cc:201 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:132 gtk/window_find.glade.h:6
 msgid "Provides"
 msgstr "Proporciona"
 
-#: common/rpackagefilter.cc:202
+#: common/rpackagefilter.cc:133
 msgid "Conflicts"
 msgstr "Incompatibilidad"
 
-#: common/rpackagefilter.cc:203
+#: common/rpackagefilter.cc:134
 msgid "Replaces"
 msgstr "Reemplaza"
 
-#: common/rpackagefilter.cc:204
+#: common/rpackagefilter.cc:135
 msgid "WeakDepends"
 msgstr "Dependencia débil"
 
-#: common/rpackagefilter.cc:205
+#: common/rpackagefilter.cc:136
 msgid "ReverseDepends"
 msgstr "Dependencia inversa"
 
-#: common/rpackagefilter.cc:650
+#: common/rpackagefilter.cc:564
 #, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "Error Interno: no se puede abrir el fichero de vista reducida %s"
 
-#: common/rpackagefilter.cc:678
+#: common/rpackagefilter.cc:592
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Expresión regular errónea «%s» en el fichero de vista reducida."
 
-#: common/rpackagefilter.cc:753
-msgid "unkown"
+#: common/rpackagefilter.cc:656
+#, fuzzy
+msgid "unknown"
 msgstr "desconocido"
 
-#: common/rpackagelister.cc:265
+#: common/rpackagelister.cc:250
 msgid "Search Filter"
 msgstr "Filtro de búsqueda"
 
-#: common/rpackagelister.cc:273 common/rpackagelister.cc:904
-#: gtk/window_filters.glade.h:24 gtk/rgmisc.cc:266
-msgid "Installed"
-msgstr "Instalado"
-
-#: common/rpackagelister.cc:281
+#: common/rpackagelister.cc:266
 msgid "Not Installed"
 msgstr "No instalado"
 
-#: common/rpackagelister.cc:290
+#: common/rpackagelister.cc:274
 msgid "Tasks"
 msgstr "Tareas"
 
-#: common/rpackagelister.cc:297
+#: common/rpackagelister.cc:280
 msgid "Reduced View"
 msgstr "Vista reducida"
 
-#: common/rpackagelister.cc:306
+#: common/rpackagelister.cc:288
 msgid "Upgradable"
 msgstr "Actualizable"
 
-#: common/rpackagelister.cc:314 gtk/window_filters.glade.h:9 gtk/rgmisc.cc:269
-msgid "Broken"
-msgstr "Roto"
-
-#: common/rpackagelister.cc:324 gtk/rgsummarywindow.cc:294
+#: common/rpackagelister.cc:304
 msgid "Queued Changes"
 msgstr "Cambios en espera"
 
-#: common/rpackagelister.cc:332 gtk/window_filters.glade.h:30
+#: common/rpackagelister.cc:311 gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Nuevo en el archivo"
 
-#: common/rpackagelister.cc:341 gtk/window_filters.glade.h:50
+#: common/rpackagelister.cc:319 gtk/window_filters.glade.h:43
 msgid "Residual config"
 msgstr "Configuración residual"
 
-#: common/rpackagelister.cc:350
+#: common/rpackagelister.cc:327
 msgid "Pkg with Debconf"
 msgstr "Paq. con DebConf"
 
-#: common/rpackagelister.cc:358
+#: common/rpackagelister.cc:334
 msgid "Obsolete or locally installed"
 msgstr "Obsoleto o instalado localmente"
 
-#: common/rpackagelister.cc:485 common/rpackagelister.cc:492
-#: common/rpackagelister.cc:512
-msgid "Internal error recalculating dependency cache. Please report."
+#: common/rpackagelister.cc:455 common/rpackagelister.cc:461
+#: common/rpackagelister.cc:475
+#, fuzzy, c-format
+msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Error interno, recalculando la caché de dependencias. Por favor informe de "
 "este error."
 
-#: common/rpackagelister.cc:714
+#: common/rpackagelister.cc:629
 msgid "Unable to correct dependencies"
 msgstr "Incapaz de corregir las dependencias"
 
-#: common/rpackagelister.cc:716
+#: common/rpackagelister.cc:631
 msgid "Unable to minimize the upgrade set"
 msgstr "Incapaz de minimizar el conjunto de actualización"
 
-#: common/rpackagelister.cc:728
+#: common/rpackagelister.cc:643
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Error Interno, La Actualización completa ha roto algo. Por favor, informe "
 "del error."
 
-#: common/rpackagelister.cc:746
+#: common/rpackagelister.cc:661
 msgid "dist upgrade Failed"
 msgstr "falló la act. de distribución"
 
-#: common/rpackagelister.cc:896
-msgid "New in repository"
-msgstr "Nuevo en el repositorio"
-
-#: common/rpackagelister.cc:899
-msgid "Obsolete and locally installed"
-msgstr "Obsoleto e instalado localmente"
-
-#: common/rpackagelister.cc:902 gtk/window_filters.glade.h:25
-msgid "Installed and upgradable"
-msgstr "Instalados y actualizables"
-
-#: common/rpackagelister.cc:907
-msgid "Not installed (residual config)"
-msgstr "No instalados (conf. residual)"
-
-#: common/rpackagelister.cc:909 gtk/window_filters.glade.h:32
-msgid "Not installed"
-msgstr "No Instalado"
-
-#: common/rpackagelister.cc:1524
+#: common/rpackagelister.cc:1296
 msgid "Unable to lock the list directory"
 msgstr "No se ha podido bloquear el directorio de listas"
 
-#: common/rpackagelister.cc:1548
+#: common/rpackagelister.cc:1320
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -603,7 +623,7 @@ msgstr ""
 "Los ficheros de publicación (release) de algunos repositorios no se han "
 "podido obtener o autenticar. Estos repositorios serán ignorados."
 
-#: common/rpackagelister.cc:1580
+#: common/rpackagelister.cc:1352
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -611,42 +631,42 @@ msgstr ""
 "Se produjo un fallo al obtener algunos ficheros de índice. Éstos serán "
 "ignorados, o se usarán los ficheros antiguos en su lugar"
 
-#: common/rpackagelister.cc:1607 common/rpackagelister.cc:1613
+#: common/rpackagelister.cc:1379 common/rpackagelister.cc:1385
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignorando registros inválidos en el fichero sources.list"
 
-#: common/rpackagelister.cc:1651
+#: common/rpackagelister.cc:1425
 msgid "Failed to fetch "
 msgstr "Error al obtener "
 
-#: common/rpackagelister.cc:1673
+#: common/rpackagelister.cc:1446
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Algunos de los paquetes no se han podido obtener del servidor/es.\n"
 
-#: common/rpackagelister.cc:1676
+#: common/rpackagelister.cc:1449
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "¿Seguro que quiere continuar, ignorando esos paquetes?"
 
-#: common/rpackagelister.cc:1683
+#: common/rpackagelister.cc:1456
 msgid "Unable to correct missing packages"
 msgstr "Incapaz de corregir los paquetes que faltan"
 
-#: common/rpackagelister.cc:1745
+#: common/rpackagelister.cc:1518
 msgid "Unable to lock the download directory"
 msgstr "No se ha podido bloquear el directorio de descargas"
 
-#: common/rpackagelister.cc:1850
+#: common/rpackagelister.cc:1596
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr "Línea %u demasiado larga en el fichero de selección."
 
-#: common/rpackagelister.cc:1864 common/rpackagelister.cc:1868
+#: common/rpackagelister.cc:1610 common/rpackagelister.cc:1614
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr "Error en la línea %u del fichero de selección"
 
-#: common/rpackagelister.cc:1880
+#: common/rpackagelister.cc:1626
 msgid "Setting selections..."
 msgstr "Estableciendo las selecciones..."
 
@@ -660,16 +680,18 @@ msgstr "ha fallado bzip2, quizá el disco esté lleno."
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
+#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Quit and ignore queued changes?</span>"
+"<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">¿Salir e ignorar los cambios en espera?"
 "</span>"
 
 #: gtk/dialog_quit.glade.h:2
+#, fuzzy
 msgid ""
-"There are still changes in the queue that have not been executed. They will "
-"get lost if you choose to quit 'Synaptic'."
+"There are still marked changes that have not yet been applied. They will get "
+"lost if you choose to quit 'Synaptic'."
 msgstr ""
 "Hay todavía cambios en espera que no han sido ejecutados. Éstos cambios se "
 "perderán si sale de «Synaptic»"
@@ -689,33 +711,34 @@ msgstr ""
 "<span weight=\"bold\" size=\"large\">¿Usar la actualización inteligente "
 "(dist-upgrade)?</span>"
 
-#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:32
+#: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:34
 msgid "Default Upgrade"
 msgstr "Modernización predeterminada"
 
 #: gtk/dialog_upgrade.glade.h:4
-msgid ""
-"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
-"of upgrades in a smart way."
-msgstr ""
-"La modernización intenta resolver conflictos y completar todas las "
-"dependencias de las actualizaciones de una manera inteligente."
-
-#: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr "Recordar la respuesta para actualizaciones futuras"
 
-#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:78
+#: gtk/dialog_upgrade.glade.h:5 gtk/window_preferences.glade.h:79
 msgid "Smart Upgrade"
 msgstr "Actualización inteligente"
 
-#: gtk/dialog_upgrade.glade.h:7
+#: gtk/dialog_upgrade.glade.h:6
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed."
 msgstr ""
 "El método de actualización predeterminado se salta las actualizaciones que "
 "introducen conflictos o requieren que se instalen paquetes nuevos."
+
+#: gtk/dialog_upgrade.glade.h:7
+#, fuzzy
+msgid ""
+"The smart upgrade attempts to resolve conflicts and to fulfill all "
+"dependencies of upgrades in a smart way."
+msgstr ""
+"La modernización intenta resolver conflictos y completar todas las "
+"dependencias de las actualizaciones de una manera inteligente."
 
 #: gtk/dialog_upgrade.glade.h:8
 msgid "This behavior can be changed in the preferences later."
@@ -782,7 +805,7 @@ msgstr "-o=? Poner una opción de configuración, ej -o dir::cache=/tmp\n"
 msgid "You must run this program as the root user."
 msgstr "Debe ejecutar este programa como el usuario root."
 
-#: gtk/gsynaptic.cc:175
+#: gtk/gsynaptic.cc:168
 msgid "Synaptic Package Manager "
 msgstr "Gestor de Paquetes Synaptic"
 
@@ -807,7 +830,7 @@ msgid "Package changes"
 msgstr "Cambios del paquete"
 
 #: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:108
-#: gtk/window_filters.glade.h:62
+#: gtk/window_filters.glade.h:52
 msgid "To be removed"
 msgstr "Para ser eliminado"
 
@@ -828,12 +851,12 @@ msgstr "Para ser instalado"
 msgid "To be re-installed"
 msgstr "Para ser instalado"
 
-#: gtk/rgchangeswindow.cc:164 gtk/window_filters.glade.h:61
+#: gtk/rgchangeswindow.cc:164 gtk/window_filters.glade.h:51
 msgid "To be kept"
 msgstr "Para ser conservado"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:82
-#: gtk/rgmainwindow.cc:1408
+#: gtk/rgmainwindow.cc:1381
 msgid "An error occurred while saving configurations."
 msgstr "Se ha producido un error mientras se guardaban las configuraciones."
 
@@ -849,7 +872,7 @@ msgstr "Selección de color"
 msgid "ignore"
 msgstr "ignorar"
 
-#: gtk/rgpreferenceswindow.cc:784 gtk/window_preferences.glade.h:68
+#: gtk/rgpreferenceswindow.cc:784 gtk/window_preferences.glade.h:74
 msgid "Preferences"
 msgstr "Preferencias"
 
@@ -857,7 +880,7 @@ msgstr "Preferencias"
 msgid "Downloading Files..."
 msgstr "Descargando ficheros..."
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:747
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:727
 msgid "Size"
 msgstr "Tamaño"
 
@@ -914,31 +937,19 @@ msgstr "Encontrado"
 msgid "Failed"
 msgstr "Falló"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:19
+#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:14
 msgid "Filters"
 msgstr "Filtros"
 
-#: gtk/rgfiltermanager.cc:168
+#: gtk/rgfiltermanager.cc:167
 msgid "Field"
 msgstr "Campo"
 
-#: gtk/rgfiltermanager.cc:175
+#: gtk/rgfiltermanager.cc:174
 msgid "Operator"
 msgstr "Operador"
 
-#: gtk/rgfiltermanager.cc:205
-msgid "Available Tags"
-msgstr "Etiquetas disponibles"
-
-#: gtk/rgfiltermanager.cc:219
-msgid "Included Tags"
-msgstr "Etiquetas incluidas"
-
-#: gtk/rgfiltermanager.cc:232
-msgid "Excluded Tags"
-msgstr "Etiquetas excluidas"
-
-#: gtk/rgfiltermanager.cc:995
+#: gtk/rgfiltermanager.cc:744
 #, c-format
 msgid "New Filter %i"
 msgstr "Filtro nuevo %i"
@@ -967,18 +978,21 @@ msgstr ""
 "Mientras se preparaba la instalación:\n"
 "\n"
 
-#: gtk/rginstallprogress.cc:270
-msgid "Performing Changes"
-msgstr "Realizando los cambios"
+#: gtk/rginstallprogress.cc:268 gtk/rgzvtinstallprogress.cc:145
+#: gtk/window_zvtinstallprogress.glade.h:2
+#, fuzzy
+msgid "Applying Changes..."
+msgstr "Ejecutando los cambios..."
 
 #: gtk/rgzvtinstallprogress.cc:61
 msgid "<i>Running...</i>"
 msgstr "<i>Ejecutando...</i>"
 
 #: gtk/rgzvtinstallprogress.cc:68
+#, fuzzy
 msgid ""
 "\n"
-"Update finished - You can close the window now"
+"Successfully applied all changes. You can close the window now"
 msgstr ""
 "\n"
 "Actualización terminada - Puede cerrar la ventana ahora"
@@ -986,45 +1000,40 @@ msgstr ""
 #: gtk/rgzvtinstallprogress.cc:70
 msgid ""
 "\n"
-"Update failed - Scroll in this buffer to see what went wrong"
+"Failed to apply all changes! Scroll up the output to locate the error"
 msgstr ""
-"\n"
-"Falló la actualización - Desplace este búfer para ver lo que fue mal"
 
 #: gtk/rgzvtinstallprogress.cc:107
 msgid "<i>Finished</i>"
 msgstr "<i>Terminado</i>"
 
 #: gtk/rgzvtinstallprogress.cc:116
-msgid "<i>Can't close while executing</i>"
+#, fuzzy
+msgid "<i>Can't close while running</i>"
 msgstr "<i>No se puede cerrar mientras se ejecuta</i>"
 
-#: gtk/rgzvtinstallprogress.cc:145 gtk/window_zvtinstallprogress.glade.h:3
-msgid "Executing Changes..."
-msgstr "Ejecutando los cambios..."
-
-#: gtk/rgmainwindow.cc:74
+#: gtk/rgmainwindow.cc:75
 msgid "Normal"
 msgstr "Normal"
 
-#: gtk/rgmainwindow.cc:75
+#: gtk/rgmainwindow.cc:76
 msgid "Critical"
 msgstr "Crítico"
 
-#: gtk/rgmainwindow.cc:76
+#: gtk/rgmainwindow.cc:77
 msgid "Security"
 msgstr "Seguridad"
 
-#: gtk/rgmainwindow.cc:266 gtk/rgmainwindow.cc:279
+#: gtk/rgmainwindow.cc:259 gtk/rgmainwindow.cc:272
 msgid "N/A"
 msgstr "N/D"
 
-#: gtk/rgmainwindow.cc:333
+#: gtk/rgmainwindow.cc:326
 msgid "No package is selected.\n"
 msgstr "No hay ningún paquete seleccionado.\n"
 
 #. standard header in case the installing fails
-#: gtk/rgmainwindow.cc:519
+#: gtk/rgmainwindow.cc:505
 msgid ""
 "Some packages could not be installed.\n"
 "\n"
@@ -1033,64 +1042,66 @@ msgstr ""
 "Los siguientes paquetes tienen dependencias no satisfechas:\n"
 "\n"
 
-#: gtk/rgmainwindow.cc:677
+#: gtk/rgmainwindow.cc:657
 msgid "Package"
 msgstr "Paquete"
 
-#: gtk/rgmainwindow.cc:702
+#: gtk/rgmainwindow.cc:682
 msgid "Installed Version"
 msgstr "Versión instalada"
 
-#: gtk/rgmainwindow.cc:721
+#: gtk/rgmainwindow.cc:701
 msgid "Latest Version"
 msgstr "Última versión"
 
-#: gtk/rgmainwindow.cc:958
-msgid "Update the list of available packages"
-msgstr "Actualiza la lista de paquetes disponibles"
+#: gtk/rgmainwindow.cc:942
+#, fuzzy
+msgid "Refresh the list of known packages"
+msgstr "Filtra la lista de paquetes mostrados"
 
-#: gtk/rgmainwindow.cc:962
-msgid "Queue all possible upgrades"
+#: gtk/rgmainwindow.cc:946
+#, fuzzy
+msgid "Mark all possible upgrades"
 msgstr "Encolar todas las posibles actualizaciones"
 
-#: gtk/rgmainwindow.cc:966
-msgid "Execute the queued changes"
-msgstr "Ejecutar los cambios seleccionados"
+#: gtk/rgmainwindow.cc:950 gtk/window_summary.glade.h:5
+msgid "Apply all marked changes"
+msgstr ""
 
-#: gtk/rgmainwindow.cc:1131
+#: gtk/rgmainwindow.cc:1115
 msgid "No Changes"
 msgstr "Sin cambios"
 
-#: gtk/rgmainwindow.cc:1139
+#: gtk/rgmainwindow.cc:1123
 msgid "Install"
 msgstr "Instalar"
 
-#: gtk/rgmainwindow.cc:1147
+#: gtk/rgmainwindow.cc:1131
 #, fuzzy
 msgid "Reinstall"
 msgstr "Instalar"
 
-#: gtk/rgmainwindow.cc:1156
+#: gtk/rgmainwindow.cc:1140
 msgid "Upgrade"
 msgstr "Actualizar"
 
-#: gtk/rgmainwindow.cc:1164 gtk/rgvendorswindow.cc:136
+#: gtk/rgmainwindow.cc:1148 gtk/rgvendorswindow.cc:136
 msgid "Remove"
 msgstr "Eliminar"
 
-#: gtk/rgmainwindow.cc:1173
+#: gtk/rgmainwindow.cc:1157
 msgid "Remove Including Configuration"
 msgstr "Eliminar incluyendo la configuración"
 
-#: gtk/rgmainwindow.cc:1181
+#: gtk/rgmainwindow.cc:1165
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Eliminar incluyendo dependencias huérfanas"
 
-#: gtk/rgmainwindow.cc:1193
+#: gtk/rgmainwindow.cc:1177
 msgid "Hold Current Version"
 msgstr "Mantener la versión actual"
 
-#: gtk/rgmainwindow.cc:1260
+#: gtk/rgmainwindow.cc:1237
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1098,7 +1109,7 @@ msgstr ""
 "Eliminar este paquete puede hacer que el sistema sea inutilizable.\n"
 "¿Seguro que quiere hacer eso?"
 
-#: gtk/rgmainwindow.cc:1301
+#: gtk/rgmainwindow.cc:1276
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1107,7 +1118,7 @@ msgstr ""
 "%i paquetes listados, %i instalados, %i rotos. %i para instalar/actualizar, %"
 "i para eliminar; %s serán liberados"
 
-#: gtk/rgmainwindow.cc:1307
+#: gtk/rgmainwindow.cc:1282
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1116,11 +1127,11 @@ msgstr ""
 "%i paquetes listados, %i instalados, %i rotos. %i para instalar/actualizar, %"
 "i para eliminar; %s serán usados"
 
-#: gtk/rgmainwindow.cc:1357
+#: gtk/rgmainwindow.cc:1331
 msgid "All Packages"
 msgstr "Todos los paquetes"
 
-#: gtk/rgmainwindow.cc:1426
+#: gtk/rgmainwindow.cc:1399
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1139,44 +1150,46 @@ msgstr[1] ""
 "\n"
 "Use el filtro «Rotos» para localizarlo"
 
-#: gtk/rgmainwindow.cc:1643
+#: gtk/rgmainwindow.cc:1603
 msgid "Do you want to add another CD-ROM?"
 msgstr "¿Quiere añadir otro CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1774 gtk/rgmainwindow.cc:2332 gtk/rgmainwindow.cc:2406
-#: gtk/rgmainwindow.cc:2552
+#: gtk/rgmainwindow.cc:1734 gtk/rgmainwindow.cc:2305 gtk/rgmainwindow.cc:2379
+#: gtk/rgmainwindow.cc:2522
 #, c-format
 msgid "Can't read %s"
 msgstr "No se puede leer %s"
 
-#: gtk/rgmainwindow.cc:1790
+#: gtk/rgmainwindow.cc:1750
 msgid "Open changes"
 msgstr "Abrir cambios"
 
-#: gtk/rgmainwindow.cc:1821 gtk/rgmainwindow.cc:1884 gtk/rgmainwindow.cc:2265
-#: gtk/rgmainwindow.cc:2384 gtk/rgmainwindow.cc:2529
+#: gtk/rgmainwindow.cc:1781 gtk/rgmainwindow.cc:1844 gtk/rgmainwindow.cc:2238
+#: gtk/rgmainwindow.cc:2357 gtk/rgmainwindow.cc:2499
 #, c-format
 msgid "Can't write %s"
 msgstr "No se puede escribir %s"
 
-#: gtk/rgmainwindow.cc:1840
+#: gtk/rgmainwindow.cc:1800
 msgid "Save changes"
 msgstr "Guardar cambios"
 
-#: gtk/rgmainwindow.cc:1857
+#: gtk/rgmainwindow.cc:1817
 msgid "Save full state, not only changes"
 msgstr "Guardar el estado completo, no sólo los cambios"
 
-#: gtk/rgmainwindow.cc:2021
-msgid "Starting help system..."
+#: gtk/rgmainwindow.cc:1995
+#, fuzzy
+msgid "Starting help viewer..."
 msgstr "Iniciando sistema de ayuda..."
 
-#: gtk/rgmainwindow.cc:2030
+#: gtk/rgmainwindow.cc:2004
+#, fuzzy
 msgid ""
-"No help viewer is installed\n"
+"No help viewer is installed!\n"
 "\n"
-"You need either the gnome viewer 'yelp', 'konquoror' or the 'mozilla' "
-"browser to view the synaptic manual.\n"
+"You need either the GNOME help viewer 'yelp', the 'konqueror' browser or the "
+"'mozilla' browser to view the synaptic manual.\n"
 "\n"
 "Alternativly you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
@@ -1190,80 +1203,79 @@ msgstr ""
 "línea de comandos o ver la versión html ubicada en la carpeta 'synaptic/"
 "html'."
 
-#: gtk/rgmainwindow.cc:2174
+#: gtk/rgmainwindow.cc:2148
 msgid ""
-"No libgnome2-perl installed\n"
-"\n"
-"You have to install libgnome2-perl to use dpkg-reconfigure with synaptic"
+"Cannot start configuration tool!\n"
+"You have to install the required package 'libgnome2-perl'."
 msgstr ""
-"No está instalado libgnome2-perl\n"
-"\n"
-"Debe de instalar libgnome2-perl para usar dpkg-reconfigure con synaptic"
 
-#: gtk/rgmainwindow.cc:2180
-msgid "Starting dpkg-reconfigure..."
+#: gtk/rgmainwindow.cc:2154
+#, fuzzy
+msgid "Starting package configuration tool..."
 msgstr "Iniciando dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2192
-msgid "Starting package help..."
+#: gtk/rgmainwindow.cc:2166
+#, fuzzy
+msgid "Starting package documentation viewer..."
 msgstr "Iniciando la ayuda de paquetes... "
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2205
 msgid ""
-"Operation not possible with broken packages.\n"
-"Please fix them first."
+"Could not apply changes!\n"
+"Fix broken packages first."
 msgstr ""
-"Operación no posible con paquetes rotos.\n"
-"Arréglelos antes."
 
-#: gtk/rgmainwindow.cc:2251
-msgid "Performing selected changes... this may take a while"
+#: gtk/rgmainwindow.cc:2224
+#, fuzzy
+msgid "Applying marked changes. This may take a while..."
 msgstr "Efectuando cambios seleccionados... llevará un rato"
 
-#: gtk/rgmainwindow.cc:2255
+#: gtk/rgmainwindow.cc:2228
 msgid "Retrieving Package Files..."
 msgstr "Obteniendo el ficheros de paquetes..."
 
-#: gtk/rgmainwindow.cc:2315
+#: gtk/rgmainwindow.cc:2288
 msgid "Do you want to quit Synaptic?"
 msgstr "¿Quiere salir de Synaptic?"
 
-#: gtk/rgmainwindow.cc:2371
+#: gtk/rgmainwindow.cc:2344
 msgid "Retrieving Index Files..."
 msgstr "Obteniendo los ficheros índice..."
 
-#: gtk/rgmainwindow.cc:2373
-msgid "Updating Package Lists from Servers..."
-msgstr "Refrescando las listas de paquetes desde los servidores..."
+#: gtk/rgmainwindow.cc:2346
+#, fuzzy
+msgid "Refreshing package list..."
+msgstr "Limpiando el listado de paquetes"
 
-#: gtk/rgmainwindow.cc:2430
-msgid "Dependency problem resolver failed."
-msgstr "Ha fallado el resolvedor de problemas de dependencias."
+#: gtk/rgmainwindow.cc:2403
+#, fuzzy
+msgid "Failed to resolve dependency problems!"
+msgstr "Incapaz de corregir las dependencias"
 
-#: gtk/rgmainwindow.cc:2432
-msgid "Dependency problems successfully fixed."
-msgstr "Los problemas de dependencias se corrigieron correctamente."
+#: gtk/rgmainwindow.cc:2405
+msgid "Successfully fixed dependency problems"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2420
+msgid ""
+"Could not upgrade the system!\n"
+"Fix broken packages first."
+msgstr ""
 
 #: gtk/rgmainwindow.cc:2446
-msgid ""
-"Automatic upgrade selection not possible\n"
-"with broken packages. Please fix them first."
+#, fuzzy
+msgid "Marking all available upgrades..."
+msgstr "Encolar todas las posibles actualizaciones"
+
+#: gtk/rgmainwindow.cc:2458
+#, fuzzy
+msgid "Successfully marked all available upgrades"
+msgstr "Encolar todas las posibles actualizaciones"
+
+#: gtk/rgmainwindow.cc:2460
+msgid "Failed to mark all available upgrades!"
 msgstr ""
-"No es posible la actualización automática de la selección\n"
-"con paquetes rotos. Debe solucionarlos primero."
-
-#: gtk/rgmainwindow.cc:2474
-msgid "Performing automatic selection of upgradadable packages..."
-msgstr "Realizando la selección automática de paquetes actualizables..."
-
-#: gtk/rgmainwindow.cc:2488
-msgid "Automatic selection of upgradadable packages done."
-msgstr "Selección automática de paquetes actualizables hecha."
-
-#: gtk/rgmainwindow.cc:2490
-msgid "Automatic upgrade selection failed."
-msgstr "Ha fallado la selección automática de actualización."
 
 #: gtk/rgrepositorywin.cc:100 gtk/window_repositories.glade.h:4
 msgid "Repositories"
@@ -1348,6 +1360,11 @@ msgstr "<b>%s</b> (versión <i>%s</i>) será instalado\n"
 #: gtk/rgsummarywindow.cc:274
 msgid "Summary"
 msgstr "Resumen"
+
+#: gtk/rgsummarywindow.cc:294
+#, fuzzy
+msgid "Marked Changes"
+msgstr "Cambios en espera"
 
 #: gtk/rgsummarywindow.cc:334
 #, c-format
@@ -1623,6 +1640,7 @@ msgstr ""
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
+#: gtk/dialog_welcome.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -1637,16 +1655,17 @@ msgid "<b>Total Progress:</b>"
 msgstr "<b>Total:</b>"
 
 #: gtk/window_changes.glade.h:1
+#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Queue additional required changes?</"
+"<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">¿Poner en la cola de espera el resto "
 "de los cambios requeridos?</span>"
 
 #: gtk/window_changes.glade.h:2
-msgid "Queue"
-msgstr "En espera"
+msgid "Mark"
+msgstr ""
 
 #: gtk/window_changes.glade.h:3
 msgid ""
@@ -1673,8 +1692,9 @@ msgstr ""
 "2 = Detalles del paquete"
 
 #: gtk/window_preferences.glade.h:7
-msgid "<b>Actions</b>"
-msgstr "<b>Acciones</b>"
+#, fuzzy
+msgid "<b>Applying Changes</b>"
+msgstr "<b>Ficheros sencillos:</b>"
 
 #: gtk/window_preferences.glade.h:8
 msgid "<b>Colors</b>"
@@ -1693,17 +1713,19 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Tipografía</b>"
 
 #: gtk/window_preferences.glade.h:12
-msgid "<b>General</b>"
-msgstr "<b>General</b>"
-
-#: gtk/window_preferences.glade.h:13
 msgid "<b>Main Window</b>"
 msgstr "<b>Ventana principal</b>"
 
+#: gtk/window_preferences.glade.h:13
+#, fuzzy
+msgid "<b>Marking Changes</b>"
+msgstr "<b>Mantenedor:</b>"
+
 #: gtk/window_preferences.glade.h:14
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list will need to be reloaded and so all queued "
-"changes will get lost. Make sure to execute your changes first."
+"<b>Note:</b> The package list will need to be reloaded and so all marked "
+"changes will get lost. Make sure to apply your changes first."
 msgstr ""
 "<b>Nota:</b> La lista de paquetes necesitará ser recargada, así que todas "
 "los cambios en espera se perderán. Asegúrese de efectuar los cambios primero."
@@ -1721,10 +1743,15 @@ msgid "<b>Proxy Server</b>"
 msgstr "<b>Servidor proxy</b>"
 
 #: gtk/window_preferences.glade.h:18
+#, fuzzy
+msgid "<b>Search</b>"
+msgstr "<b>Resumen</b>"
+
+#: gtk/window_preferences.glade.h:19
 msgid "<b>Temporary Files</b>"
 msgstr "<b>Ficheros temporales</b>"
 
-#: gtk/window_preferences.glade.h:19
+#: gtk/window_preferences.glade.h:20
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider changes carefully.</span>"
@@ -1732,45 +1759,51 @@ msgstr ""
 "<span size=\"large\" weight=\"bold\">Estas opciones tendrán afectan al "
 "corazón del sistema. Considere los cambios cuidadosamente.</span>"
 
-#: gtk/window_preferences.glade.h:20
+#: gtk/window_preferences.glade.h:21
 msgid "Allow regular expressions in searches and filters"
 msgstr "Utilizar expresiones regulares en búsquedas y filtros"
 
-#: gtk/window_preferences.glade.h:21
+#: gtk/window_preferences.glade.h:22
 msgid "Always Ask"
 msgstr "Siempre preguntar"
 
-#: gtk/window_preferences.glade.h:22
+#: gtk/window_preferences.glade.h:23
+#, fuzzy
+msgid "Apply changes in a terminal window"
+msgstr "Ejecutar los cambios en una ventana de terminal"
+
+#: gtk/window_preferences.glade.h:24
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "Preguntar para confirmar las acciones que afecten a otros paquetes"
 
-#: gtk/window_preferences.glade.h:23
-msgid "Ask to quit after the changes have been executed successfully"
+#: gtk/window_preferences.glade.h:25
+#, fuzzy
+msgid "Ask to quit after the changes have been applied successfully"
 msgstr "Preguntar para salir después de ejecutar los cambios con éxito"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:26
 msgid "Broken:"
 msgstr "Roto:"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:27
 #, fuzzy
-msgid "Clear package cache now"
+msgid "Clear Package Cache Now"
 msgstr "Actualizar caché de paquetes"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:28
 msgid "Color"
 msgstr "Color"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:29
 msgid "Color packages by their status"
 msgstr "Colorear paquetes según su estado"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:30
 #, fuzzy
 msgid "Colors"
 msgstr "Color"
 
-#: gtk/window_preferences.glade.h:29
+#: gtk/window_preferences.glade.h:31
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -1778,178 +1811,171 @@ msgstr ""
 "Lista separada por comas de hosts y dominios que no serán contactados a "
 "través del proxy (ej localhost, 192.168.1.321, .net)"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:32
 msgid "Consider recommended packages as dependencies"
 msgstr "Considerar los paquetes recomendados como si fuesen dependencias"
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:33
 msgid "Default"
 msgstr "Predeterminado"
 
-#: gtk/window_preferences.glade.h:33
+#: gtk/window_preferences.glade.h:35
 msgid "Default archive: "
 msgstr "Archivo predeterminado: "
 
-#: gtk/window_preferences.glade.h:34
+#: gtk/window_preferences.glade.h:36
 msgid "Delete downloaded packages after installation"
 msgstr "Borrar los paquetes después de la instalación"
 
-#: gtk/window_preferences.glade.h:35
+#: gtk/window_preferences.glade.h:37
 msgid "Delete packages which are no longer available only"
 msgstr "Borrar sólo los paquetes que ya no están disponibles"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:39
 msgid "Direct connection to the internet"
 msgstr "Conexión directa a internet"
 
-#: gtk/window_preferences.glade.h:38
-msgid "Execute changes in a terminal window"
-msgstr "Ejecutar los cambios en una ventana de terminal"
-
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:40
 msgid "Expert"
 msgstr "Experto"
 
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:41
 msgid "FTP proxy: "
 msgstr "Proxy FTP: "
 
-#: gtk/window_preferences.glade.h:41
+#: gtk/window_preferences.glade.h:42
 msgid "Fonts and Columns"
 msgstr ""
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:43
 msgid "General"
 msgstr "General"
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:44
 msgid "HTTP proxy: "
 msgstr "Proxy http: "
 
-#: gtk/window_preferences.glade.h:44
+#: gtk/window_preferences.glade.h:45
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Dirección IP del servidor proxy ftp"
 
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:46
 msgid "IP address or host name of the http proxy server"
 msgstr "Dirección IP o nombre de host del servidor proxy http"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:47
 msgid "Include Configuration"
 msgstr "Incluir configuración"
 
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:48
 msgid "Include Orphaned Dependencies"
 msgstr "Incluir dependencias huérfanas"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:49
 msgid "Installed (locked):"
 msgstr "Instalado (bloqueado):"
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:50
 msgid "Installed size"
 msgstr "Tamaño instalado"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:51
 msgid "Installed version"
 msgstr "Versión instalada "
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:52
 msgid "Installed:"
 msgstr "Instalado:"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:53
 msgid "Latest version"
 msgstr "Última versión"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:54
 msgid "Leave all downloaded packages in the cache"
 msgstr "Dejar todos los paquetes descargados en la caché"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:55
 msgid "Manual proxy configuration"
 msgstr "Confiuguración manual del proxy"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:56
+#, fuzzy
+msgid "Marked for downgrade:"
+msgstr "En espera para ser desactualizado"
+
+#: gtk/window_preferences.glade.h:57
+#, fuzzy
+msgid "Marked for installation:"
+msgstr "En espera para instalación"
+
+#: gtk/window_preferences.glade.h:58
+#, fuzzy
+msgid "Marked for reinstallation:"
+msgstr "En espera para instalación"
+
+#: gtk/window_preferences.glade.h:59
+#, fuzzy
+msgid "Marked for removal including config:"
+msgstr "En espera para eliminación incluyendo la configuración"
+
+#: gtk/window_preferences.glade.h:60
+#, fuzzy
+msgid "Marked for removal:"
+msgstr "En espera para eliminación"
+
+#: gtk/window_preferences.glade.h:61
+#, fuzzy
+msgid "Marked for upgrade:"
+msgstr "En espera para actualización"
+
+#: gtk/window_preferences.glade.h:62
 #, fuzzy
 msgid "Move D_own"
 msgstr "_Bajar"
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:63
 msgid "Move _Up"
 msgstr "S_ubir"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:65
 msgid "Network"
 msgstr "Red"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:66
 #, fuzzy
 msgid "New in archive:"
 msgstr "Nuevo en el archivo"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:67
 msgid "No proxy for: "
 msgstr "Sin proxy para: "
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:68
 #, fuzzy
 msgid "Not installed (locked):"
 msgstr "No instalado (bloqueado)"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:69
 #, fuzzy
 msgid "Not installed:"
 msgstr "No Instalado"
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:70
 msgid "Number of undo operations:"
 msgstr "Número de operaciones de deshacer:"
 
-#: gtk/window_preferences.glade.h:64
-msgid "One-click actions on status column icons"
-msgstr ""
-
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:71
 msgid "Port number of the http proxy server"
 msgstr "Número de puerto del servidor proxy http"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:72
 msgid "Port numer of the ftp proxy server"
 msgstr "Número de puerto del servidor proxy ftp"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:73
 msgid "Port: "
 msgstr "Puerto:"
-
-#: gtk/window_preferences.glade.h:69 gtk/rgmisc.cc:261
-msgid "Queued for downgrade"
-msgstr "En espera para ser desactualizado"
-
-#: gtk/window_preferences.glade.h:70
-#, fuzzy
-msgid "Queued for installation:"
-msgstr "En espera para instalación"
-
-#: gtk/window_preferences.glade.h:71
-#, fuzzy
-msgid "Queued for reinstallation:"
-msgstr "En espera para instalación"
-
-#: gtk/window_preferences.glade.h:72
-#, fuzzy
-msgid "Queued for removal including config:"
-msgstr "En espera para eliminación incluyendo la configuración"
-
-#: gtk/window_preferences.glade.h:73
-#, fuzzy
-msgid "Queued for removal:"
-msgstr "En espera para eliminación"
-
-#: gtk/window_preferences.glade.h:74
-#, fuzzy
-msgid "Queued for upgrade:"
-msgstr "En espera para actualización"
 
 #: gtk/window_preferences.glade.h:75
 msgid "Regular expressions are an advanced method of text matching"
@@ -1960,45 +1986,49 @@ msgid "Removal of packages: "
 msgstr "Eliminación de paquetes: "
 
 #: gtk/window_preferences.glade.h:77
+msgid "Right click on status icon marks most suggest change"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:78
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 "Seleccione la publicación predeterminada si más de una está especificada en "
 "sources.list"
 
-#: gtk/window_preferences.glade.h:80
+#: gtk/window_preferences.glade.h:81
 #, fuzzy
 msgid "System upgrade:"
 msgstr "Actualización inteligente"
 
-#: gtk/window_preferences.glade.h:81
+#: gtk/window_preferences.glade.h:82
 msgid "Temporary Files"
 msgstr "Ficheros temporales"
 
-#: gtk/window_preferences.glade.h:82
+#: gtk/window_preferences.glade.h:83
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 "La posición de la columna de izquierda a derecha. Un valor de -1 oculta la "
 "columna"
 
-#: gtk/window_preferences.glade.h:83
+#: gtk/window_preferences.glade.h:84
 msgid "Update available:"
 msgstr "Actualización disponible:"
 
-#: gtk/window_preferences.glade.h:84
+#: gtk/window_preferences.glade.h:85
 msgid "Use custom application font"
 msgstr "Usar tipografía personalizada"
 
-#: gtk/window_preferences.glade.h:85
+#: gtk/window_preferences.glade.h:86
 msgid "Use custom terminal font"
 msgstr "Usar tipografía del terminal personalizada"
 
-#: gtk/window_preferences.glade.h:86
+#: gtk/window_preferences.glade.h:87
 msgid "_Default Font"
 msgstr "Tipografía _predeterminada"
 
-#: gtk/window_preferences.glade.h:87
+#: gtk/window_preferences.glade.h:88
 msgid "_Terminal Font"
 msgstr "Tipografía de _terminal"
 
@@ -2032,34 +2062,33 @@ msgid "<b>Summary</b>"
 msgstr "<b>Resumen</b>"
 
 #: gtk/window_summary.glade.h:4
+#, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Execute the following changes?</span>"
+"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">¿Efectuar el resto de los cambios "
 "requeridos?</span>"
 
-#: gtk/window_summary.glade.h:5
+#: gtk/window_summary.glade.h:6
 msgid "Download package files only"
 msgstr "Sólo descargar los paquetes"
-
-#: gtk/window_summary.glade.h:6
-msgid "Execute the changes"
-msgstr "Ejecutar los cambios"
 
 #: gtk/window_summary.glade.h:7
 msgid "Return to the main screen"
 msgstr "Volver a la pantalla principal"
 
 #: gtk/window_summary.glade.h:8
-msgid "The package files will ony be retrieved, but not installed or upgraded"
+#, fuzzy
+msgid "The package files will only be retrieved, but not installed or upgraded"
 msgstr ""
 "Los ficheros de paquetes serán descargados, pero no serán instalados o "
 "actualizados"
 
 #: gtk/window_summary.glade.h:9
+#, fuzzy
 msgid ""
-"This is your last opportunity to look through the list of queued changes "
-"before they are executed."
+"This is your last opportunity to look through the list of marked changes "
+"before they are applied."
 msgstr ""
 "Esta es su última oportunidad para mirar a través de la lista de cambios en "
 "espera antes de que sean efectuados"
@@ -2077,192 +2106,156 @@ msgid "<b>Other</b>"
 msgstr "<b>Otros</b>"
 
 #: gtk/window_filters.glade.h:5
-msgid "<b>Rules</b>"
-msgstr "<b>Reglas</b>"
-
-#: gtk/window_filters.glade.h:6
 msgid "<b>Selected</b>"
 msgstr "<b>Seleccionados</b>"
 
 #: gtk/window_filters.glade.h:7
-msgid "<b>View</b>"
-msgstr "<b>Vista</b>"
-
-#: gtk/window_filters.glade.h:8
-msgid "Alphabetic Tree"
-msgstr "Árbol alfabético"
-
-#: gtk/window_filters.glade.h:10
-msgid "Collapse All"
-msgstr "Contraer todo"
-
-#: gtk/window_filters.glade.h:11
 msgid "Conflicting Packages"
 msgstr "Paquetes en conflicto"
 
-#: gtk/window_filters.glade.h:12 gtk/rgfiltermanager.h:73
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:73
 msgid "Dependencies"
 msgstr "Dependencias"
 
-#: gtk/window_filters.glade.h:14
+#: gtk/window_filters.glade.h:10
 msgid "Deselect All"
 msgstr "Deseleccionar todo"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:11
 msgid "Exclude"
 msgstr "Excluir"
 
-#: gtk/window_filters.glade.h:16
+#: gtk/window_filters.glade.h:12
 msgid "Exclude selected sections"
 msgstr "Excluir las secciones seleccionadas"
 
-#: gtk/window_filters.glade.h:17 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "Excluye"
 
-#: gtk/window_filters.glade.h:18
-msgid "Expand All"
-msgstr "Expandir todo"
-
-#: gtk/window_filters.glade.h:20
-msgid "Flat List"
-msgstr "Lista plana"
-
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:15
 msgid "Include"
 msgstr "Incluir"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:16
 msgid "Include selected sections only"
 msgstr "Incluir sólo las secciones seleccionadas"
 
-#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:17 gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "Incluye"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:19
+msgid "Installed and upgradable"
+msgstr "Instalados y actualizables"
+
+#: gtk/window_filters.glade.h:20
 msgid "Invert All"
 msgstr "Invertir todo"
 
-#: gtk/window_filters.glade.h:27
-msgid "Leave Unchanged"
-msgstr "Dejar sin cambiar"
-
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:21
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Paquetes de bibliotecas que no se necesitan más (necesita deborphan para "
 "funcionar)"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:24
 msgid "Not (no longer) installable"
 msgstr "No instalable (por más tiempo)"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:26
 msgid "Orphaned"
 msgstr "Huérfanos"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:27
 msgid "Package Name"
 msgstr "Nombre del paquete"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:28
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr ""
 "Paquetes que son nuevos en el repositorio desde la última «Actualización»"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:29
 msgid "Packages that are not available in any repository"
 msgstr "Paquetes que no están disponibles en ningún repositorio"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:30
 msgid "Packages that have been installed and a later version is available"
 msgstr ""
 "Paquetes que han sido instalados y hay una versión más nueva disponible"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:31
 msgid "Packages that have been installed and are up to date"
 msgstr "Paquetes que han sido instalados y están al día"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:32
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Paquetes que han sido eliminados y todavía tienen sus ficheros de "
 "configuración"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have not been installed"
 msgstr "Paquetes que no han sido instalados"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:34
 msgid "Packages that will be installed or upgraded"
 msgstr "Paquetes que serán instalados o actualizados"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:35
 msgid "Packages that will be kept"
 msgstr "Paquetes que serán conservados"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:36
 msgid "Packages that will be removed"
 msgstr "Paquetes que serán eliminados"
 
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will never be upgraded"
 msgstr "Paquetes que nunca serán actualizados"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:38
 msgid "Packages with broken dependencies"
 msgstr "Paquetes con dependencias rotas"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:39
 msgid "Pinned"
 msgstr "Clavados"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:40
 msgid "Properties"
 msgstr "Propiedades"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:41
 msgid "Provided Packages"
 msgstr "Paquetes proporcionados"
 
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:42
 msgid "Replaced Packages"
 msgstr "Paquetes reemplazados"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:44
 msgid "Reverse Dependencies"
 msgstr "Dependencias inversas"
 
-#: gtk/window_filters.glade.h:53
-msgid "Section Tree"
-msgstr "Árbol de secciones"
-
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:46
 msgid "Select All"
 msgstr "Seleccionar todo"
 
-#: gtk/window_filters.glade.h:55
-msgid "Sorting:"
-msgstr "Orden:"
-
-#: gtk/window_filters.glade.h:57
-msgid "Status Tree"
-msgstr "Árbol de estado"
-
-#: gtk/window_filters.glade.h:58
+#: gtk/window_filters.glade.h:48
 msgid "Suggestions or Recommendations"
 msgstr "Sugerencias o recomendaciones"
 
-#: gtk/window_filters.glade.h:60
+#: gtk/window_filters.glade.h:49
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: gtk/window_filters.glade.h:50
 msgid "To be installed or upgraded"
 msgstr "Para ser instalados o actualizados"
 
-#: gtk/window_filters.glade.h:63
-msgid "Tree: "
-msgstr "Árbol: "
-
-#: gtk/window_filters.glade.h:64
+#: gtk/window_filters.glade.h:53
 msgid "Version Number"
 msgstr "Número de versión"
 
@@ -2306,8 +2299,9 @@ msgstr "Se generó una salida extra durante la operación del gestor de paquetes
 msgid "<b>Terminal Output:</b>"
 msgstr "<b>Salida del terminal:</b>"
 
-#: gtk/window_zvtinstallprogress.glade.h:2
-msgid "Close this dialog after the changes have been executed successfully"
+#: gtk/window_zvtinstallprogress.glade.h:3
+#, fuzzy
+msgid "Close this dialog after the changes have been applied successfully"
 msgstr "Cerrar este diálogo después de que se ejecuten los cambios con éxito"
 
 #: data/synaptic.desktop.in.h:1
@@ -2322,39 +2316,42 @@ msgstr "Gestor de paquetes"
 msgid "Synaptic Package Manager"
 msgstr "Gestor de Paquetes Synaptic"
 
-#: gtk/dialog_welcome.glade.h:1
-#, fuzzy
+#: gtk/dialog_welcome.glade.h:2
 msgid ""
-"1. Select the package that you wish to install or remove\n"
-"2. Queue installation, removal or upgrade by just double clicking on the "
-"package or by choosing the action from the context menu\n"
-"3. Execute the queued change(s)"
+"- Double click on the package name\n"
+"- Right click and choose action from the context menu\n"
+"- Click on the status icon to choose an action"
 msgstr ""
-"1. Seleccione el paquete que quiera instalar o eliminar\n"
-"2. Encole la acción desde el control de paquetes, menú de paquetes o menú "
-"contextual del paquete.\n"
-"3. Ejecute los cambios encolados"
-
-#: gtk/dialog_welcome.glade.h:4
-msgid ""
-"<b>Note:</b> Modifications are not executed instantly. They will be queued "
-"and have to be executed afterwards:"
-msgstr ""
-"<b>Nota:</b> Modificaciones no se ejecutan instantáneamente. Serán encoladas "
-"y tendrás que ser ejecutadas después:"
 
 #: gtk/dialog_welcome.glade.h:5
+msgid "1. Mark package(s) for installation, upgrade or removal:"
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:6
+msgid "2. Apply the marked changes"
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:7
+msgid "<b>Note:</b> Changes are not applied instantly."
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:8
 msgid "Quick Introduction"
 msgstr "Introducción rápida"
 
-#: gtk/dialog_welcome.glade.h:6
+#: gtk/dialog_welcome.glade.h:9
 msgid "Show this dialog at startup"
 msgstr "Mostrar este diálogo al inicio"
 
-#: gtk/dialog_welcome.glade.h:7
+#: gtk/dialog_welcome.glade.h:10
 msgid ""
-"The software on your system is organized in so called <i>packages</i>. The "
-"package manager enables you to remove, install or upgrade software packages."
+"The package manager enables you to install, upgrade or remove software "
+"packages:"
+msgstr ""
+
+#: gtk/dialog_welcome.glade.h:11
+#, fuzzy
+msgid "The software on your system is organized in so called <i>packages</i>."
 msgstr ""
 "Elsoftware de su sistema está organizado en lo que se llaman <i>paquetes</"
 "i>. El gestor de paquetes permite eliminar, instalar o actualizar los "
@@ -2393,47 +2390,6 @@ msgstr "Dependencias inversas"
 msgid "Icon Legend"
 msgstr "Leyenda de iconos"
 
-#: gtk/rgmisc.cc:258
-msgid "Queued for installation"
-msgstr "En espera para instalación"
-
-#: gtk/rgmisc.cc:259
-#, fuzzy
-msgid "Queued for re-installation"
-msgstr "En espera para instalación"
-
-#: gtk/rgmisc.cc:260
-msgid "Queued for upgrade"
-msgstr "En espera para actualización"
-
-#: gtk/rgmisc.cc:262
-msgid "Queued for removal"
-msgstr "En espera para eliminación"
-
-#: gtk/rgmisc.cc:263
-msgid "Queued for removal including configuration"
-msgstr "En espera para eliminación incluyendo la configuración"
-
-#: gtk/rgmisc.cc:264
-msgid "Not installed (available)"
-msgstr "No instalado (disponible)"
-
-#: gtk/rgmisc.cc:265
-msgid "Not installed (locked)"
-msgstr "No instalado (bloqueado)"
-
-#: gtk/rgmisc.cc:267
-msgid "Installed (update available)"
-msgstr "Instalado (actualización disponible)"
-
-#: gtk/rgmisc.cc:268
-msgid "Installed (locked to the current version)"
-msgstr "Instalado (bloqueado a la versión actual)"
-
-#: gtk/rgmisc.cc:270
-msgid "Not installed (new in archive)"
-msgstr "No instalados (nuevo en el archivo)"
-
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
 msgid ""
@@ -2442,6 +2398,154 @@ msgid ""
 msgstr ""
 "<b>Los siguientes iconos se usan para indicar el estado actual de un paquete:"
 "</b>"
+
+#~ msgid "%s <i>(%s)</i>"
+#~ msgstr "%s <i>(%s)</i>"
+
+#~ msgid "OH SHIT DUNNO WTF IS GOIN ON!"
+#~ msgstr "OH NO SABEMOS QUÉ ESTÁ PASANDO"
+
+#~ msgid "New in repository"
+#~ msgstr "Nuevo en el repositorio"
+
+#~ msgid "Obsolete and locally installed"
+#~ msgstr "Obsoleto e instalado localmente"
+
+#~ msgid "Not installed (residual config)"
+#~ msgstr "No instalados (conf. residual)"
+
+#~ msgid "Available Tags"
+#~ msgstr "Etiquetas disponibles"
+
+#~ msgid "Included Tags"
+#~ msgstr "Etiquetas incluidas"
+
+#~ msgid "Excluded Tags"
+#~ msgstr "Etiquetas excluidas"
+
+#~ msgid "Performing Changes"
+#~ msgstr "Realizando los cambios"
+
+#~ msgid ""
+#~ "\n"
+#~ "Update failed - Scroll in this buffer to see what went wrong"
+#~ msgstr ""
+#~ "\n"
+#~ "Falló la actualización - Desplace este búfer para ver lo que fue mal"
+
+#~ msgid "Update the list of available packages"
+#~ msgstr "Actualiza la lista de paquetes disponibles"
+
+#~ msgid "Execute the queued changes"
+#~ msgstr "Ejecutar los cambios seleccionados"
+
+#~ msgid ""
+#~ "No libgnome2-perl installed\n"
+#~ "\n"
+#~ "You have to install libgnome2-perl to use dpkg-reconfigure with synaptic"
+#~ msgstr ""
+#~ "No está instalado libgnome2-perl\n"
+#~ "\n"
+#~ "Debe de instalar libgnome2-perl para usar dpkg-reconfigure con synaptic"
+
+#~ msgid ""
+#~ "Operation not possible with broken packages.\n"
+#~ "Please fix them first."
+#~ msgstr ""
+#~ "Operación no posible con paquetes rotos.\n"
+#~ "Arréglelos antes."
+
+#~ msgid "Updating Package Lists from Servers..."
+#~ msgstr "Refrescando las listas de paquetes desde los servidores..."
+
+#~ msgid "Dependency problem resolver failed."
+#~ msgstr "Ha fallado el resolvedor de problemas de dependencias."
+
+#~ msgid "Dependency problems successfully fixed."
+#~ msgstr "Los problemas de dependencias se corrigieron correctamente."
+
+#~ msgid ""
+#~ "Automatic upgrade selection not possible\n"
+#~ "with broken packages. Please fix them first."
+#~ msgstr ""
+#~ "No es posible la actualización automática de la selección\n"
+#~ "con paquetes rotos. Debe solucionarlos primero."
+
+#~ msgid "Performing automatic selection of upgradadable packages..."
+#~ msgstr "Realizando la selección automática de paquetes actualizables..."
+
+#~ msgid "Automatic selection of upgradadable packages done."
+#~ msgstr "Selección automática de paquetes actualizables hecha."
+
+#~ msgid "Automatic upgrade selection failed."
+#~ msgstr "Ha fallado la selección automática de actualización."
+
+#~ msgid "Queue"
+#~ msgstr "En espera"
+
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>Acciones</b>"
+
+#~ msgid "<b>General</b>"
+#~ msgstr "<b>General</b>"
+
+#~ msgid "Execute the changes"
+#~ msgstr "Ejecutar los cambios"
+
+#~ msgid "<b>Rules</b>"
+#~ msgstr "<b>Reglas</b>"
+
+#~ msgid "<b>View</b>"
+#~ msgstr "<b>Vista</b>"
+
+#~ msgid "Alphabetic Tree"
+#~ msgstr "Árbol alfabético"
+
+#~ msgid "Collapse All"
+#~ msgstr "Contraer todo"
+
+#~ msgid "Expand All"
+#~ msgstr "Expandir todo"
+
+#~ msgid "Flat List"
+#~ msgstr "Lista plana"
+
+#~ msgid "Leave Unchanged"
+#~ msgstr "Dejar sin cambiar"
+
+#~ msgid "Section Tree"
+#~ msgstr "Árbol de secciones"
+
+#~ msgid "Sorting:"
+#~ msgstr "Orden:"
+
+#~ msgid "Status Tree"
+#~ msgstr "Árbol de estado"
+
+#~ msgid "Tree: "
+#~ msgstr "Árbol: "
+
+#, fuzzy
+#~ msgid ""
+#~ "1. Select the package that you wish to install or remove\n"
+#~ "2. Queue installation, removal or upgrade by just double clicking on the "
+#~ "package or by choosing the action from the context menu\n"
+#~ "3. Execute the queued change(s)"
+#~ msgstr ""
+#~ "1. Seleccione el paquete que quiera instalar o eliminar\n"
+#~ "2. Encole la acción desde el control de paquetes, menú de paquetes o menú "
+#~ "contextual del paquete.\n"
+#~ "3. Ejecute los cambios encolados"
+
+#~ msgid ""
+#~ "<b>Note:</b> Modifications are not executed instantly. They will be "
+#~ "queued and have to be executed afterwards:"
+#~ msgstr ""
+#~ "<b>Nota:</b> Modificaciones no se ejecutan instantáneamente. Serán "
+#~ "encoladas y tendrás que ser ejecutadas después:"
+
+#~ msgid "Not installed (available)"
+#~ msgstr "No instalado (disponible)"
 
 #~ msgid "_Downgrade"
 #~ msgstr "_Desactualizar"
@@ -2479,9 +2583,6 @@ msgstr ""
 
 #~ msgid "<b>Latest Available Version</b>"
 #~ msgstr "<b>Última versión disponible</b>"
-
-#~ msgid "<b>Maintainer:</b>"
-#~ msgstr "<b>Mantenedor:</b>"
 
 #~ msgid "<b>Package Control</b>"
 #~ msgstr "<b>Control de paquetes</b>"
@@ -2537,9 +2638,6 @@ msgstr ""
 
 #~ msgid "Edit the available filters"
 #~ msgstr "Edita los filtros seleccionados"
-
-#~ msgid "Filter the list of shown packages"
-#~ msgstr "Filtra la lista de paquetes mostrados"
 
 #~ msgid "Filters..."
 #~ msgstr "Filtros..."

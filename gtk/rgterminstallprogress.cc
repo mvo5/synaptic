@@ -24,12 +24,11 @@
 
 #include "config.h"
 
-// we compile only if ZVT is selected
 #ifdef HAVE_TERMINAL
 
 #include "i18n.h"
 
-#include "rgzvtinstallprogress.h"
+#include "rgterminstallprogress.h"
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
 #include "rconfiguration.h"
@@ -219,7 +218,6 @@ pkgPackageManager::OrderResult
 RGZvtInstallProgress::start(RPackageManager *pm,
                             int numPackages, int numPackagesTotal)
 {
-   void *dummy;
    int open_max, ret = 250;
    pid_t _child_id;
 

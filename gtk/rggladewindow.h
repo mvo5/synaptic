@@ -50,7 +50,7 @@ class RGGladeWindow:public RGWindow {
 		    bool useHeadline=false);
    bool setPixmap(const char *widget_name, GdkPixbuf *value);
    bool setTreeList(const char *widget_name, vector<string> values,
-		    bool useHeadline=false);
+		    bool useMarkup=false);
 
 };
 

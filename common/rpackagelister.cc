@@ -623,58 +623,66 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 					      map<string,tree<pkgPair>::iterator>& itermap,
 					      RPackage *pkg)
 {
-  tree<pkgPair>::iterator it;
-
-  if(_displayMode == TREE_DISPLAY_SECTIONS) 
-    {
-      string sec = pkg->section();
-      if(itermap.find(sec) == itermap.end()) {
-	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
-				   pkgPair(sec,NULL));
-	itermap[sec] = it;
-      } else {
-	it = itermap[sec];
-      }
-      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-      
-    } 
-  else if(_displayMode == TREE_DISPLAY_FLAT)  
-    {
-      it = _treeOrganizer.begin();
-      _treeOrganizer.insert(it, pkgPair(pkg->name(), pkg));
-      
-    } 
-  else if(_displayMode == TREE_DISPLAY_ALPHABETIC) 
-    {
-      char s[2] = {0,0};                // get initial letter
-      s[0] = (pkg->name())[0]; 
-      string initial(s);
-      if(itermap.find(initial) == itermap.end()) {
-	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
-				   pkgPair(initial,NULL));
-	itermap[initial] = it;
-      } else {
-	it = itermap[initial];
-      }
-      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+    if(pkg == NULL) {
+	cerr << "pkg == NULL in addFilteredPackageToTree" << endl;
+	    cerr << "this shouldn't happen, please report"<< endl;
+	return;
     }
-  else if(_displayMode == TREE_DISPLAY_STATUS)
-    {
-      string str;
-      if(pkg->installedVersion() != NULL) {
-	str="Installed";
-      } else {
-	str="Uninstalled";
-      }
-      if(itermap.find(str) == itermap.end()) {
-	it = _treeOrganizer.insert(_treeOrganizer.begin(), 
-				     pkgPair(str,NULL));
-	itermap[str] = it;
-      } else {
-	it = itermap[str];
-      }
-      _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
-    }
+    tree<pkgPair>::iterator it;
+    
+    if(_displayMode == TREE_DISPLAY_SECTIONS) 
+	{
+	    string sec = pkg->section();
+	    if(itermap.find(sec) == itermap.end()) {
+		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+					   pkgPair(sec,NULL));
+		itermap[sec] = it;
+	    } else {
+		it = itermap[sec];
+	    }
+	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+	} 
+    else if(_displayMode == TREE_DISPLAY_FLAT)  
+	{
+	    it = _treeOrganizer.begin();
+	    _treeOrganizer.insert(it, pkgPair(pkg->name(), pkg));
+	} 
+    else if(_displayMode == TREE_DISPLAY_ALPHABETIC) 
+	{
+	    char s[2] = {0,0};                // get initial letter
+	    s[0] = (pkg->name())[0]; 
+	    string initial(s);
+	    if(itermap.find(initial) == itermap.end()) {
+		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+					   pkgPair(initial,NULL));
+		itermap[initial] = it;
+	    } else {
+		it = itermap[initial];
+	    }
+	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+	}
+    else if(_displayMode == TREE_DISPLAY_STATUS)
+	{
+	    string str;
+	    if(pkg->installedVersion() != NULL) {
+		str="Installed";
+	    } else {
+		str="Uninstalled";
+	    }
+	    if(itermap.find(str) == itermap.end()) {
+		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
+					   pkgPair(str,NULL));
+		itermap[str] = it;
+	    } else {
+		it = itermap[str];
+	    }
+	    _treeOrganizer.append_child(it, pkgPair(pkg->name(), pkg));
+	} 
+    else 
+	{
+	    cerr << "this should never happen, please report" << endl;
+	    exit(1);
+	}
 }
 
 void RPackageLister::getFilteredPackages(vector<RPackage*> &packages)

@@ -83,6 +83,17 @@ class RPackage {
 
  public:
 
+   typedef struct  {
+      pkgCache::Dep::DepType type; // type as enum
+      const char* typeStr;         // type (depends, preDepends, etc) as str
+      const char* name;            // target pkg name
+      const char* version;         // target version  
+      const char* versionComp;     // target version compare type ( << , > etc)
+      //      bool isSatisfied;            // dependecy is satified 
+      bool isVirtual;              // package is virtual
+      bool isOr;                   // or dependency (with next pkg)
+   } DepInformation;
+
    enum Flags {
       FKeep             = 1 << 0,
       FInstall          = 1 << 1,
@@ -160,7 +171,7 @@ class RPackage {
                  const char *&which, char *&summary, bool &satisfied);
 
    // getDeps of installed pkg
-   vector<string> enumDeps();
+   vector<DepInformation> enumDeps();
 
    // does the pkg depends on this one?
    bool dependsOn(const char *pkgname);

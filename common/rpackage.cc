@@ -397,7 +397,7 @@ bool RPackage::enumAvailDeps(const char *&type, const char *&what,
                              char *&summary, bool &satisfied)
 {
    pkgCache::VerIterator ver;
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
+   //   pkgDepCache::StateCache & state = (*_depcache)[*_package];
 
    //ver = _package->VersionList();
    ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
@@ -557,41 +557,43 @@ string RPackage::showWhyInstBroken()
    return out.str();
 }
 
-vector<string> RPackage::enumDeps()
+vector<RPackage::DepInformation> RPackage::enumDeps()
 {
-   vector<string> deps;
-   ostringstream out;
-   bool or_dep;
-   const char* or_str;
+   vector<DepInformation> deps;
+   DepInformation dep;
 
    pkgCache::VerIterator Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
    if(Cur.end())
       Cur = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
+   // no information found 
+   if(Cur.end())
+      return deps;
+
    for(pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
+
       // clear old values
-      or_dep=false;
-      out.str("");
+      //dep.isOr=dep.isVirtual=dep.isSatisfied=false;
+      dep.isOr=dep.isVirtual=false;
+      dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
 
       // check target and or-depends status
       pkgCache::PkgIterator Trg = D.TargetPkg();
       if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or)
-	 or_dep=true;
+	 dep.isOr=true;
 
-      if(or_dep)
-	 or_str="| ";
-      else
-	 or_str="";
+      // common information
+      dep.type = (pkgCache::Dep::DepType)D->Type;
+      dep.typeStr = D.DepType();
+      dep.name = Trg.Name();
 
-      if (Trg->VersionList == 0)
-	 ioprintf(out, "%s%s: <%s>",or_str, D.DepType(), Trg.Name());
-      else if (D.TargetVer() == 0)
-	 ioprintf(out, "%s%s: %s",or_str, D.DepType(), Trg.Name());
-      else
-	 ioprintf(out, "%s%s: %s (%s %s)",or_str, D.DepType(), Trg.Name(), 
-		  D.CompType(),D.TargetVer());
-
-      deps.push_back(out.str());
+      if (Trg->VersionList == 0) {
+	 dep.isVirtual = true;
+      } else {
+	 dep.version=D.TargetVer();
+	 dep.versionComp=D.CompType();
+      }
+      deps.push_back(dep);
    }
 
    return deps;
@@ -1047,7 +1049,7 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 // description parser stuff
 static char *debParser(string descr)
 {
-   int i,nlpos=0;
+   unsigned int i,nlpos=0;
 
    nlpos = descr.find('\n');
    // delete first line

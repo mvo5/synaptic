@@ -30,12 +30,15 @@
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent, RPackage *pkg)
    : RGGladeWindow(parent, "details")
 {
+   gchar *str = g_strdup_printf(_("Properties for package %s"),pkg->name());
+   setTitle(str);
+   g_free(str);
 
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_button_close_clicked",
 				 G_CALLBACK(cbCloseClicked),
 				 this); 
-
+   // fill in all the pkg-values
    fillInValues(pkg);
 
 }
@@ -73,7 +76,47 @@ void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
    string descr = string(pkg->summary()) + "\n" + string(pkg->description());
    setTextView("text_descr", descr.c_str(), true);
 
-   setTreeList("treeview_deplist", pkg->enumDeps());
+   // build dependency list
+   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   vector<string> depStrings;
+   string depStr;
+   for(unsigned int i=0;i<deps.size();i++) {
+      depStr="";
+
+      // type in bold (Depends, PreDepends)
+      depStr += string("<b>") + deps[i].typeStr + string(":</b> ");
+
+      // virutal is italic
+      if(deps[i].isVirtual) {
+	 depStr += string("<i>") + deps[i].name + string("</i>");
+      } else {
+	 // is real pkg
+	 depStr += deps[i].name;
+	 // additional version information
+	 if(deps[i].version != NULL) {
+	    gchar *s = g_markup_escape_text(deps[i].versionComp,-1);
+	    depStr += string(" (") + s + deps[i].version + string(")");
+	    g_free(s);
+	 }
+      }
+
+      // this is for or-ed dependencies (make them one-line)
+      while(deps[i].isOr) {
+	 depStr += " | ";
+	 // next dep
+	 i++;
+	 depStr += deps[i].name;
+	 // additional version information
+	 if(deps[i].version != NULL) {
+	    gchar *s = g_markup_escape_text(deps[i].versionComp,-1);
+	    depStr += string(" (") + s + deps[i].version + string(")");
+	    g_free(s);
+	 }
+      }
+      
+      depStrings.push_back(depStr);
+    }
+   setTreeList("treeview_deplist", depStrings, true);
 
 }
 

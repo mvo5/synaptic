@@ -324,7 +324,6 @@ msgstr ""
 "kein Datenträger mit APT-Unterstützung."
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
 msgstr "Der Datenträger konnte nicht ausgelesen werden"
 
@@ -379,9 +378,11 @@ msgstr ""
 "FEHLER: Das Konfigurationsverzeichnis »%s« konnte nicht angelegt werden"
 
 #: ../common/rconfiguration.cc:148
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "FEHLER: Das Protokollverzeichnis »%s« konnte nicht angelegt werden"
+msgstr ""
+"FEHLER: Das Verzeichnis »%s« für temporäre Dateien konnte nicht angelegt "
+"werden"
 
 #: ../common/rconfiguration.cc:166
 #, c-format
@@ -394,7 +395,6 @@ msgid "couldn't open %s for writing"
 msgstr "%s konnte nicht zum Schreiben geöffnet werden"
 
 #: ../common/rinstallprogress.cc:41
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now."
@@ -404,15 +404,14 @@ msgstr ""
 "schließen."
 
 #: ../common/rinstallprogress.cc:42
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in the terminal buffer to see what went "
 "wrong."
 msgstr ""
 "\n"
-"Das Anwenden aller Änderungen ist fehlgeschlagen! Blättern Sie in der "
-"Ausgabe zurück, um den Fehler zu finden."
+"Das Anwenden der Änderungen ist fehlgeschlagen! Blättern Sie in der Ausgabe "
+"zurück, um den Fehler zu finden."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -907,9 +906,8 @@ msgstr "Vorgemerkte Änderungen"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "Konfigurierbares Paket"
+msgstr "Konfigurierbare Pakete"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
@@ -1003,6 +1001,8 @@ msgstr "-f=? Alternative Filterkonfigurationsdatei verwenden\n"
 msgid ""
 "-t   Give a alternative main window title (e.g. hostname with `uname -n)`\n"
 msgstr ""
+"-t   Einen alternativen Fentertitel angeben (z.B. den aktuellen Hostnamen "
+"mit `uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:73
 msgid "-i=? Start with the initialFilter with the number given\n"
@@ -1013,18 +1013,14 @@ msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Eine Konfigurationsoption setzen, z.B. -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr ""
-"--upgrade-mode Paketinformationen neu laden, Aktualisierungen vormerken und "
-"Änderungen anzeigen\n"
+msgstr "--upgrade-mode Aktualisierungen vormerken und Änderungen anzeigen\n"
 
 #: ../gtk/gsynaptic.cc:76
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
-"--dist-upgrade-mode Paketinformationen neu laden, Aktualisierungen vormerken "
-"und Änderungen anzeigen\n"
+"--dist-upgrade-mode Distributionsaktualisierung vornehmen und Änderungen "
+"anzeigen\n"
 
 #: ../gtk/gsynaptic.cc:77
 msgid "--update-at-startup  Call \"reload\" on startup\n"
@@ -1045,30 +1041,35 @@ msgstr "--add-cdrom Eine CD-ROM beim Programmstart hinzufügen\n"
 
 #: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "Ein anderes Synaptic läuft bereits"
 
 #: ../gtk/gsynaptic.cc:304
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
 msgstr ""
+"Ein anderes Synaptic läuft bereits im interaktiven Modus. Bitte beenden Sie "
+"es zuerst."
 
 #: ../gtk/gsynaptic.cc:310
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
+"Ein anderes Synaptic läuft bereits im nicht-interaktiven Modus. Bitte warten "
+"Sie bis es fertig ist."
 
 #: ../gtk/gsynaptic.cc:334
-#, fuzzy
 msgid "Unable to get exclusive lock"
-msgstr "Wechsel zu %s war nicht möglich"
+msgstr "Es ist unmöglick einen exklusiven Zugriff zu erhalten)"
 
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
+"Das bedeutet üblicherweise, dass ein anderer Paketmanager (wie apt-get oder "
+"aptitude) bereits läuft. Bitte beenden Sie diese Applikation zunächst."
 
 #: ../gtk/gsynaptic.cc:377
 msgid "You must run this program as the root user."
@@ -1104,7 +1105,7 @@ msgstr "Geplante Änderungen"
 
 #: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
@@ -1112,6 +1113,9 @@ msgid ""
 "this could allow a malicious individual to damage or take control of your "
 "system."
 msgstr ""
+"Sie haben Software vorgemerkt die <b>nicht authentifiziert</b> werden kann! "
+"Das könnte es böswilligen Individuen erlauben Ihr System zu beschädigen oder "
+"unter fremde Kontrolle zu bringen."
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
@@ -1229,33 +1233,27 @@ msgstr "Fehler im Paket »%s«"
 
 #: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
 msgid "Changes applied"
-msgstr ""
+msgstr "Änderungen angewendet"
 
 #: ../gtk/rgdebinstallprogress.cc:703
-#, fuzzy
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
-"<big><b>Software installieren und entfernen</b></big>\n"
-"\n"
 "Die ausgewählten Änderungen werden nun angewendet. Dies kann einige Zeit "
 "dauern. Bitte haben Sie etwas Geduld."
 
 #: ../gtk/rgdebinstallprogress.cc:708
-#, fuzzy
 msgid "Installing and removing software"
-msgstr "Software-Pakete installieren, entfernen und aktualisieren"
+msgstr "Software-Pakete werden installiert und entfernt"
 
 #: ../gtk/rgdebinstallprogress.cc:710
-#, fuzzy
 msgid "Removing software"
-msgstr "%s wird entfernt"
+msgstr "Software-Pakete werden entfernt"
 
 #: ../gtk/rgdebinstallprogress.cc:712
-#, fuzzy
 msgid "Installing software"
-msgstr "%s wird installiert"
+msgstr "Software-Pakete werden installiert"
 
 #: ../gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
@@ -1311,7 +1309,6 @@ msgstr ""
 "Teil der Vorgabe-Distribution wird."
 
 #: ../gtk/rgpreferenceswindow.cc:958
-#, fuzzy
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
@@ -1371,13 +1368,13 @@ msgstr ""
 "in das Laufwerk »%s« ein."
 
 #: ../gtk/rgfetchprogress.cc:309
-#, fuzzy, c-format
+#, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Datei %li von %li wird mit %s/s heruntergeladen - %s verbleiben"
+msgstr "Downloadrate: %s/s - %s verbleiben"
 
 #: ../gtk/rgfetchprogress.cc:315
 msgid "Download rate: unknown"
-msgstr ""
+msgstr "Downloadrate: unbekannt"
 
 #: ../gtk/rgfetchprogress.cc:317
 #, c-format
@@ -1615,7 +1612,7 @@ msgstr ""
 "oderaktuallisiert, %i werden entfernt"
 
 #: ../gtk/rgmainwindow.cc:1671
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You have %d broken package on your system!\n"
 "\n"
@@ -1625,17 +1622,11 @@ msgid_plural ""
 "\n"
 "Use the \"Broken\" filter to locate them."
 msgstr[0] ""
-"Die Abhängigkeiten von %i Paket auf Ihrem System sind defekt.\n"
+"Die Abhängigkeiten von %d Paket auf Ihrem System sind defekt.\n"
 "\n"
-"Wählen sie den Filter »Defekte Pakete«, um dieses anzuzeigen.Die "
-"Abhängigkeiten von %i Paketen auf Ihrem System sind defekt.\n"
-"\n"
-"Wählen sie den Filter »Defekte Pakete«, um diese anzuzeigen."
+"Wählen sie den Filter »Defekte Pakete«, um dieses anzuzeigen."
 msgstr[1] ""
-"Die Abhängigkeiten von %i Paket auf Ihrem System sind defekt.\n"
-"\n"
-"Wählen sie den Filter »Defekte Pakete«, um dieses anzuzeigen.Die "
-"Abhängigkeiten von %i Paketen auf Ihrem System sind defekt.\n"
+"Die Abhängigkeiten von %i Paketen auf Ihrem System sind defekt.\n"
 "\n"
 "Wählen sie den Filter »Defekte Pakete«, um diese anzuzeigen."
 
@@ -1687,6 +1678,8 @@ msgid ""
 "\n"
 "Please wait."
 msgstr ""
+"<big><b>Erzeuge den Paketquellen Dialog</b></big>\n"
+"Bitten warten."
 
 #: ../gtk/rgmainwindow.cc:2174
 msgid "Repositories changed"
@@ -1714,7 +1707,6 @@ msgid "Starting help viewer..."
 msgstr "Hilfe wird gestartet..."
 
 #: ../gtk/rgmainwindow.cc:2301
-#, fuzzy
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -2538,9 +2530,8 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Schriften</b>"
 
 #: ../gtk/window_preferences.glade.h:8
-#, fuzzy
 msgid "<b>History files</b>"
-msgstr "<b>Temporäre Dateien</b>"
+msgstr "<b>Protokoldateien</b>"
 
 #: ../gtk/window_preferences.glade.h:9
 msgid "<b>Marking Changes</b>"
@@ -2642,7 +2633,7 @@ msgstr "Empfohlene Pakete als Abhängigkeiten ansehen"
 
 #: ../gtk/window_preferences.glade.h:32
 msgid "Delete _History files older than:"
-msgstr ""
+msgstr "Lösche Protokoldateien die älter sind als:"
 
 #: ../gtk/window_preferences.glade.h:33
 msgid "Direct connection to the internet"
@@ -2653,9 +2644,8 @@ msgid "FTP proxy: "
 msgstr "FTP-Proxy: "
 
 #: ../gtk/window_preferences.glade.h:36
-#, fuzzy
 msgid "Files"
-msgstr "Filter"
+msgstr "Dateien"
 
 #: ../gtk/window_preferences.glade.h:37
 msgid "General"
@@ -2798,24 +2788,20 @@ msgid "_Delete Cached Package Files"
 msgstr "Alle Paketdateien im Zwischenspeicher _löschen"
 
 #: ../gtk/window_preferences.glade.h:74
-#, fuzzy
 msgid "_Delete downloaded packages after installation"
-msgstr "Heruntergeladene Paketquelldateien nach der Installation löschen"
+msgstr "_Heruntergeladene Paketquelldateien nach der Installation löschen"
 
 #: ../gtk/window_preferences.glade.h:75
-#, fuzzy
 msgid "_Keep history"
 msgstr "_Chronik"
 
 #: ../gtk/window_preferences.glade.h:76
-#, fuzzy
 msgid "_Leave all downloaded packages in the cache"
-msgstr "Alle heruntergeladenen Pakete aufbewahren"
+msgstr "_Alle heruntergeladenen Pakete aufbewahren"
 
 #: ../gtk/window_preferences.glade.h:77
-#, fuzzy
 msgid "_Only delete packages which are no longer available"
-msgstr "Nur Pakete löschen, die nicht länger verfügbar sind"
+msgstr "_Nur Pakete löschen, die nicht länger verfügbar sind"
 
 #: ../gtk/window_preferences.glade.h:78
 msgid "_Terminal Font"
@@ -2823,7 +2809,7 @@ msgstr "_Terminal-Schrift"
 
 #: ../gtk/window_preferences.glade.h:79
 msgid "days"
-msgstr ""
+msgstr "Tage"
 
 #: ../gtk/window_disc_name.glade.h:2
 msgid ""
@@ -3122,7 +3108,6 @@ msgid "<i>Preparing packages...</i>"
 msgstr "<i>Pakete werden vorbereitet...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Automatically close after the changes have been successfully applied"
 msgstr "Diesen Dialog nach erfolgreichem Anwenden der Änderungen schließen"
 

@@ -40,6 +40,7 @@ using namespace std;
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
 #include "rgpkgdetails.h"
+#include "rglogview.h"
 
 #define TOOLBAR_HIDE -1
 
@@ -142,6 +143,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGTasksWin *_tasksWin;
    RGIconLegendPanel *_iconLegendPanel;
    RGPkgDetailsWindow *_pkgDetails;
+   RGLogView *_logView;
 
    RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
@@ -261,6 +263,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbSaveAsClicked(GtkWidget *self, void *data);
    string selectionsFilename;
    bool saveFullState;
+   static void cbViewLogClicked(GtkWidget *self, void *data);
 
    // actions menu
    static void cbUndoClicked(GtkWidget *self, void *data);

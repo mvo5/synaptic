@@ -27,6 +27,7 @@ glade_DATA =                            \
 	window_find.glade  \
 	window_filters.glade \
 	window_iconlegend.glade \
+	window_logview.glade \
 	dialog_changelog.glade \
 	dialog_change_version.glade \
 	dialog_locales_warning.glade \
@@ -71,6 +72,8 @@ synaptic_SOURCES= \
 	rgfindwindow.h\
 	rgiconlegend.h\
 	rgiconlegend.cc\
+	rglogview.cc\
+	rglogview.h\
 	rgmisc.cc\
 	rgmisc.h\
 	rgsetoptwindow.cc\

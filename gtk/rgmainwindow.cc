@@ -691,7 +691,8 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
-     _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0)
+     _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
+     _logView(0)
 {
    assert(_win);
 
@@ -1145,6 +1146,11 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_save_activate",
                                  G_CALLBACK(cbSaveClicked), this);
+
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_view_commit_log_activate",
+                                 G_CALLBACK(cbViewLogClicked), this);
+
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_save_as_activate",
@@ -2166,6 +2172,17 @@ void RGMainWindow::cbShowIconLegendPanel(GtkWidget *self, void *data)
       me->_iconLegendPanel = new RGIconLegendPanel(me);
    me->_iconLegendPanel->show();
 }
+
+void RGMainWindow::cbViewLogClicked(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+
+   if (me->_logView == NULL)
+      me->_logView = new RGLogView(me);
+   me->_logView->readLogs();
+   me->_logView->show();
+}
+
 
 void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 {

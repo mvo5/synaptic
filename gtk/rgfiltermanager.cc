@@ -767,7 +767,7 @@ void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
 
     GtkTreeIter iter;
     RFilter *filter;
-    cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
+    //cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
     if(me->_selectedPath == NULL) {
 	cout << "_selctedPath == NULL" << endl;
 	return;
@@ -844,7 +844,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
 void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
 {
   RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
-  cout << "void RGFilterManagerWindow::okAction()"<<endl;
+  //cout << "void RGFilterManagerWindow::okAction()"<<endl;
 
   me->_okcancel = TRUE;
   me->applyFilterAction(self,data);

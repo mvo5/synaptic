@@ -50,6 +50,8 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
 
    me->setBusyCursor(true);
 
+   // get selected tasks
+   bool act=false;
    gboolean res = FALSE;
    gchar *taskname = NULL;
    string cmd = "/usr/bin/tasksel";
@@ -61,23 +63,28 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
       if(res) {
 	 //cout << "selected: " << taskname << endl;
 	 cmd += " --task-packages " + string(taskname);
+	 act=true;
       }
    } while(gtk_tree_model_iter_next(model, &iter));
 
-   char buf[255];
-   vector<string> packages;
-   FILE *f = popen(cmd.c_str(), "r");
-   while(fgets(buf, 254, f) != NULL) {
-      packages.push_back(string(g_strstrip(buf)));
-   }
-   pclose(f);
 
-#if 0
-   cout << "got: " << endl;
-   for(int i=0;i<packages.size();i++) {
-      cout << packages[i] << endl;
-   }
+   vector<string> packages;
+   // only act if at least one task was selected
+   if(act) {
+      char buf[255];
+      FILE *f = popen(cmd.c_str(), "r");
+      while(fgets(buf, 254, f) != NULL) {
+	 packages.push_back(string(g_strstrip(buf)));
+      }
+      pclose(f);
+
+#if 0 // some debug code
+      cout << "got: " << endl;
+      for(int i=0;i<packages.size();i++) {
+	 cout << packages[i] << endl;
+      }
 #endif
+   }
 
    me->setBusyCursor(false);
    me->hide();

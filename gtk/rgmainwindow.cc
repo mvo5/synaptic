@@ -2024,12 +2024,14 @@ void RGMainWindow::buildTreeView()
     pos = _config->FindI("Synaptic::nameColumnPos",1);
     if(pos != -1) {
 	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	name_column = column = 
 	    gtk_tree_view_column_new_with_attributes(_("Package"), renderer,
 						     "text", NAME_COLUMN,
 						     "background-gdk", COLOR_COLUMN,
 						     NULL);
 	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+
 	//gtk_tree_view_column_set_fixed_width(column, 200);
 
 	//gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
@@ -2042,6 +2044,7 @@ void RGMainWindow::buildTreeView()
     pos = _config->FindI("Synaptic::instVerColumnPos",2);
     if(pos != -1) {
 	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	column = gtk_tree_view_column_new_with_attributes(_("Installed Version"), renderer,
 							  "text", INSTALLED_VERSION_COLUMN,
 							  "background-gdk", COLOR_COLUMN,
@@ -2057,6 +2060,7 @@ void RGMainWindow::buildTreeView()
     pos = _config->FindI("Synaptic::availVerColumnPos",3);
     if(pos != -1) {
 	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	column = gtk_tree_view_column_new_with_attributes(_("Available Version"), renderer,
 							  
 							  "text", AVAILABLE_VERSION_COLUMN,
@@ -2074,6 +2078,7 @@ void RGMainWindow::buildTreeView()
     if(pos != -1) {
 	/* Installed size */
 	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	GValue value = {0,};
 	GValue value2 = {0,};
 	g_value_init (&value, G_TYPE_FLOAT);
@@ -2098,6 +2103,7 @@ void RGMainWindow::buildTreeView()
     pos = _config->FindI("Synaptic::descrColumnPos",5);
     if(pos != -1) {
 	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT(renderer), 1);
 	column = gtk_tree_view_column_new_with_attributes(_("Description"), renderer,
 							  "text", DESCR_COLUMN,
 							  "background-gdk", COLOR_COLUMN,

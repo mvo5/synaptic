@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-16 21:20+0200\n"
+"POT-Creation-Date: 2003-08-23 07:37+0200\n"
 "PO-Revision-Date: 2003-01-09 13:46+0300\n"
 "Last-Translator: Rail Aliev <rail@iqchoice.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -291,7 +291,7 @@ msgid "Internal Error, non-zero counts"
 msgstr ""
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:80
-#: wings/rwfetchprogress.cc:101 gtk/window_options.glade.strings:50
+#: wings/rwfetchprogress.cc:101 gtk/window_preferences.glade.strings:34
 msgid "Status"
 msgstr "Durum"
 
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Tags"
 msgstr "Görevler"
 
-#: common/rpackagefilter.cc:194 gtk/window_options.glade.strings:44
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.strings:37
 #: gtk/window_setopt.glade.strings:11
 msgid "Name"
 msgstr "Adý"
@@ -332,8 +332,9 @@ msgstr "Adý"
 msgid "Version"
 msgstr "    Sürüm"
 
-#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2101
+#: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2107
 #: gtk/window_find.glade.strings:13 gtk/window_main.glade.strings:67
+#: gtk/window_preferences.glade.strings:39
 msgid "Description"
 msgstr "Açýklama"
 
@@ -421,7 +422,7 @@ msgid "Upgradable"
 msgstr "Güncellenebilir"
 
 #: common/rpackagelister.cc:258 wings/rwfiltereditor.cc:343
-#: gtk/window_options.glade.strings:35 gtk/window_filters.glade.strings:26
+#: gtk/window_filters.glade.strings:26
 msgid "Broken"
 msgstr "Yarým kalan"
 
@@ -602,16 +603,39 @@ msgstr "CD-ROM baðlanýyor"
 msgid "Invalid disc name!"
 msgstr ""
 
-#: gtk/rgconfigwindow.cc:127 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3200 wings/rwconfigwindow.cc:58
+#: gtk/rgchangeswindow.cc:68 gtk/rgsummarywindow.cc:270
+msgid "Package changes"
+msgstr "Paket deðiþiklikleri"
+
+#: gtk/rgchangeswindow.cc:100
+#, fuzzy
+msgid "To be marked for removal"
+msgstr "Ýþaretlileri sil"
+
+#: gtk/rgchangeswindow.cc:114
+#, fuzzy
+msgid "To be marked for upgrade"
+msgstr "Güncellenecek"
+
+#: gtk/rgchangeswindow.cc:128
+#, fuzzy
+msgid "To be marked for installation"
+msgstr "Kurulum/Güncelle için paketleri seçin"
+
+#: gtk/rgchangeswindow.cc:142 gtk/rgsummarywindow.cc:138
+msgid "To be kept back"
+msgstr "Deðiþmeyecek"
+
+#: gtk/rgpreferenceswindow.cc:128 gtk/rgzvtinstallprogress.cc:72
+#: gtk/rgmainwindow.cc:3206 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Ayarlar kaydolurken bilinmeyen bir hata oluþtu."
 
-#: gtk/rgconfigwindow.cc:327
+#: gtk/rgpreferenceswindow.cc:328
 msgid "Color selection"
 msgstr ""
 
-#: gtk/rgconfigwindow.cc:405
+#: gtk/rgpreferenceswindow.cc:406
 #, fuzzy
 msgid "Set preferences"
 msgstr "Ayarlar"
@@ -700,7 +724,7 @@ msgstr "Dahil et"
 msgid "Excluded Tags"
 msgstr "Dahil etme"
 
-#: gtk/rgfiltermanager.cc:975 wings/rwfiltermanager.cc:175
+#: gtk/rgfiltermanager.cc:974 wings/rwfiltermanager.cc:175
 msgid "A New Filter"
 msgstr "Yeni süzgeç"
 
@@ -1032,54 +1056,54 @@ msgstr "Paket deðiþiklikleri"
 msgid "Save full state, not only changes"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2028 wings/rwmainwindow.cc:1936
+#: gtk/rgmainwindow.cc:2029 wings/rwmainwindow.cc:1936
 #: gtk/window_main.glade.strings:19
 msgid "Package"
 msgstr "Paket"
 
-#: gtk/rgmainwindow.cc:2045
+#: gtk/rgmainwindow.cc:2048
 #, fuzzy
 msgid "Installed Version"
 msgstr "Kurulu"
 
-#: gtk/rgmainwindow.cc:2060
+#: gtk/rgmainwindow.cc:2064
 #, fuzzy
 msgid "Available Version"
 msgstr "Mevcut"
 
-#: gtk/rgmainwindow.cc:2085
+#: gtk/rgmainwindow.cc:2090
 msgid "Inst. Size"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2294 wings/rwmainwindow.cc:1560
+#: gtk/rgmainwindow.cc:2300 wings/rwmainwindow.cc:1560
 #: gtk/window_main.glade.strings:51
 msgid "Update package cache"
 msgstr "Paket önbellegini güncelle"
 
-#: gtk/rgmainwindow.cc:2298 wings/rwmainwindow.cc:1574
+#: gtk/rgmainwindow.cc:2304 wings/rwmainwindow.cc:1574
 #: gtk/window_main.glade.strings:53
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr ""
 "Güncelleme için paketleri , yeni baðýmlýlýklarý ile bunlarýn haricinde "
 "iþaretle "
 
-#: gtk/rgmainwindow.cc:2302 wings/rwmainwindow.cc:1582
+#: gtk/rgmainwindow.cc:2308 wings/rwmainwindow.cc:1582
 #: gtk/window_main.glade.strings:55
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr ""
 "Kurulu daðýtýmý güncelle, ayný zamanda yeni baðýmlýklarýnýda göz önünde tut."
 
-#: gtk/rgmainwindow.cc:2306 wings/rwmainwindow.cc:1590
+#: gtk/rgmainwindow.cc:2312 wings/rwmainwindow.cc:1590
 #: gtk/window_main.glade.strings:57
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Paketlerdeki seçilen deðiþiklikleri tespit et (gerekirse indir)"
 
-#: gtk/rgmainwindow.cc:2928
+#: gtk/rgmainwindow.cc:2934
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2954 wings/rwmainwindow.cc:1343
+#: gtk/rgmainwindow.cc:2960 wings/rwmainwindow.cc:1343
 #: wings/rwmainwindow.cc:1378
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -1088,7 +1112,7 @@ msgstr ""
 "Bu paketin silinmesi sisteminizi kullanýlamaz hale sokabilir.\n"
 "Bunu yapmak istediðinizden eminmisiniz?"
 
-#: gtk/rgmainwindow.cc:3114 wings/rwmainwindow.cc:2020
+#: gtk/rgmainwindow.cc:3120 wings/rwmainwindow.cc:2020
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1097,20 +1121,20 @@ msgstr ""
 "%i paket listelendi, %i kuruldu, %i yarým kaldý. %i kurulacak/güncellenecek, "
 "%i silindi; %sB   %s"
 
-#: gtk/rgmainwindow.cc:3117 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:3123 wings/rwmainwindow.cc:2023
 msgid "freed"
 msgstr "boþaltýldý"
 
-#: gtk/rgmainwindow.cc:3117 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:3123 wings/rwmainwindow.cc:2023
 msgid "used"
 msgstr "kullanýyor"
 
-#: gtk/rgmainwindow.cc:3143 wings/rwmainwindow.cc:1837
+#: gtk/rgmainwindow.cc:3149 wings/rwmainwindow.cc:1837
 #: gtk/window_main.glade.strings:62
 msgid "All Packages"
 msgstr "Tüm paketler"
 
-#: gtk/rgmainwindow.cc:3225
+#: gtk/rgmainwindow.cc:3231
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1120,7 +1144,7 @@ msgid ""
 "(patches are welcome)!"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:3265
+#: gtk/rgmainwindow.cc:3271
 #, fuzzy
 msgid ""
 "There are unsaved changes. Are you sure\n"
@@ -1189,10 +1213,6 @@ msgstr "Güncellenecek"
 msgid "To be installed"
 msgstr "Kurulacak"
 
-#: gtk/rgsummarywindow.cc:138
-msgid "To be kept back"
-msgstr "Deðiþmeyecek"
-
 #: gtk/rgsummarywindow.cc:203 wings/rwsummarywindow.cc:118
 msgid ": (ESSENTIAL) will be Removed\n"
 msgstr ": (ESAS) silinecek\n"
@@ -1212,10 +1232,6 @@ msgstr ": kurulacak\n"
 #: gtk/rgsummarywindow.cc:239 wings/rwsummarywindow.cc:160
 msgid "Operation Summary"
 msgstr "Ýþlem özeti"
-
-#: gtk/rgsummarywindow.cc:270
-msgid "Package changes"
-msgstr "Paket deðiþiklikleri"
 
 #: gtk/rgsummarywindow.cc:282 wings/rwsummarywindow.cc:179
 msgid "Perform package download only."
@@ -1375,21 +1391,15 @@ msgstr ""
 "Ana pencerede sadece metin düðmesini kullan\n"
 "(tekrar baþlattýktan sonra etkinleþir)"
 
-#.
-#. * Translatable strings file generated by Glade.
-#. * Add this file to your project's POTFILES.in.
-#. * DO NOT compile it as part of your application.
-#.
 #: wings/rwconfigwindow.cc:136 wings/rwmainwindow.cc:1598
-#: gtk/window_options.glade.strings:7 gtk/window_options.glade.strings:19
 msgid "Options"
 msgstr "Seçenekler"
 
-#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:20
+#: wings/rwconfigwindow.cc:151 gtk/window_preferences.glade.strings:27
 msgid "Leave downloaded packages in the cache"
 msgstr "Ýndirilen paketi önbellekte býrak"
 
-#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:21
+#: wings/rwconfigwindow.cc:155 gtk/window_preferences.glade.strings:28
 msgid "Delete downloaded packages after installation"
 msgstr "Kurulumdan sonra indirilen paketi sil"
 
@@ -1397,7 +1407,7 @@ msgstr "Kurulumdan sonra indirilen paketi sil"
 msgid "Delete obsoleted packages from cache"
 msgstr "Eskimiþ paketleri önbellekten sil"
 
-#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:23
+#: wings/rwconfigwindow.cc:203
 msgid "Cache"
 msgstr "Önbellek"
 
@@ -1410,7 +1420,12 @@ msgstr "Kapat"
 msgid "Save"
 msgstr "Kaydet"
 
-#: wings/rwconfigwindow.cc:225
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: wings/rwconfigwindow.cc:225 gtk/window_preferences.glade.strings:7
 msgid "Preferences"
 msgstr "Ayarlar"
 
@@ -1490,14 +1505,12 @@ msgid "Packages that"
 msgstr "Paketler"
 
 #: wings/rwfiltereditor.cc:486 wings/rwfiltermanager.cc:87
-#: gtk/window_options.glade.strings:37
 msgid "New"
 msgstr "Yeni"
 
 #: wings/rwfiltereditor.cc:492 wings/rwmainwindow.cc:1345
 #: wings/rwmainwindow.cc:1380 wings/rwmainwindow.cc:1665
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:23
-#: gtk/window_options.glade.strings:33
 msgid "Remove"
 msgstr "Sil"
 
@@ -1505,7 +1518,7 @@ msgstr "Sil"
 msgid "by Package"
 msgstr "Paket bazýnda"
 
-#: wings/rwfiltermanager.cc:91 gtk/window_options.glade.strings:16
+#: wings/rwfiltermanager.cc:91 gtk/window_preferences.glade.strings:17
 msgid "Delete"
 msgstr "Sil"
 
@@ -1548,13 +1561,12 @@ msgid "Warning"
 msgstr "Uyarý"
 
 #: wings/rwmainwindow.cc:1181 wings/rwmainwindow.cc:1657
-#: gtk/window_main.glade.strings:21 gtk/window_options.glade.strings:30
+#: gtk/window_main.glade.strings:21
 msgid "Install"
 msgstr "Kur"
 
 #: wings/rwmainwindow.cc:1183 wings/rwmainwindow.cc:1572
 #: gtk/window_main.glade.strings:16 gtk/window_main.glade.strings:22
-#: gtk/window_options.glade.strings:31
 msgid "Upgrade"
 msgstr "Güncelle"
 
@@ -1592,7 +1604,6 @@ msgid "Configure Synaptic options"
 msgstr "Synaptic seçeneklerini ayarla"
 
 #: wings/rwmainwindow.cc:1649 gtk/window_main.glade.strings:20
-#: gtk/window_options.glade.strings:29
 msgid "Keep"
 msgstr "Tut"
 
@@ -1608,7 +1619,7 @@ msgstr "Kurulum/Güncelle için paketleri seçin"
 msgid "Mark selected package for removal from system"
 msgstr "Sistemden silinebilecek olan paketleri seçin"
 
-#: wings/rwmainwindow.cc:1682
+#: wings/rwmainwindow.cc:1682 gtk/window_preferences.glade.strings:24
 msgid "General"
 msgstr "Genel"
 
@@ -1884,7 +1895,7 @@ msgstr "Baðýmlýlýklarý düzelt"
 msgid "Distribution Upgrade"
 msgstr "Sürüm Güncellenmesi"
 
-#: gtk/window_main.glade.strings:24 gtk/window_options.glade.strings:17
+#: gtk/window_main.glade.strings:24 gtk/window_preferences.glade.strings:18
 msgid "Purge"
 msgstr ""
 
@@ -2058,7 +2069,7 @@ msgstr ""
 msgid "label68"
 msgstr ""
 
-#: gtk/window_main.glade.strings:79
+#: gtk/window_main.glade.strings:79 gtk/window_preferences.glade.strings:59
 #, fuzzy
 msgid "Install:"
 msgstr "Kur"
@@ -2131,108 +2142,167 @@ msgid ""
 "required to proceed."
 msgstr ""
 
-#: gtk/window_options.glade.strings:8
+#: gtk/window_preferences.glade.strings:8
+#, fuzzy
+msgid "<b>General</b>"
+msgstr "Genel"
+
+#: gtk/window_preferences.glade.strings:9
+#: gtk/window_preferences.glade.strings:12
+#: gtk/window_preferences.glade.strings:21
+#: gtk/window_preferences.glade.strings:26
+#: gtk/window_preferences.glade.strings:33
+#: gtk/window_preferences.glade.strings:41
+#, fuzzy
+msgid "    "
+msgstr "    Tarih"
+
+#: gtk/window_preferences.glade.strings:10
 #, fuzzy
 msgid "Use regular expressions when searching or matching"
 msgstr "Arama veya eþleme esnasýnda düzenli ifadeler kullan"
 
-#: gtk/window_options.glade.strings:9
+#: gtk/window_preferences.glade.strings:11
+#, fuzzy
+msgid "<b>Actions</b>"
+msgstr "Eylemler"
+
+#: gtk/window_preferences.glade.strings:13
+msgid "Use terminal window when running the package manager"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:14
+msgid "Ask to quit after proceeding"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:15
+msgid "Number of possible undo operations:"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:16
+msgid "Default delete action: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:19
+#, fuzzy
+msgid "Delete with dependencies"
+msgstr "Baðýmlýlýklarý ile birlikte sil"
+
+#: gtk/window_preferences.glade.strings:20
+#, fuzzy
+msgid "<b>Dependecies</b>"
+msgstr "Baðýmlýsý olan"
+
+#: gtk/window_preferences.glade.strings:22
+msgid "Ask when more packages are going to be affected by some action"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:23
+#, fuzzy
+msgid "Automatically select recommended packages on actions"
+msgstr "Otomatik seçilen güncellenebilecek paketler tamamlandý..."
+
+#: gtk/window_preferences.glade.strings:25
+msgid "<b>Temporay files</b>"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:29
+msgid "Delete obsolete packages from cache"
+msgstr "Eskimiþ paketleri önbellekten sil"
+
+#: gtk/window_preferences.glade.strings:30
+msgid "Clean cache now"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:31
+msgid "Temporary Files"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:32
+msgid "<b>Column order</b>"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:35
+#, fuzzy
+msgid "Installed version"
+msgstr "Kurulu"
+
+#: gtk/window_preferences.glade.strings:36
+#, fuzzy
+msgid "Installed size"
+msgstr "Kurulu"
+
+#: gtk/window_preferences.glade.strings:38
+#, fuzzy
+msgid "Available version"
+msgstr "Mevcut"
+
+#: gtk/window_preferences.glade.strings:40
+#, fuzzy
+msgid "<b>Colors</b>"
+msgstr "Renkler"
+
+#: gtk/window_preferences.glade.strings:42
 #, fuzzy
 msgid "Use colors in main package list"
 msgstr ""
 "Ana pencerede renleri kullan\n"
 "(tekrar baþlattýktan sonra etkinleþir)"
 
-#: gtk/window_options.glade.strings:10
-msgid "Ask to quit after proceeding"
-msgstr ""
-
-#: gtk/window_options.glade.strings:11
-msgid "Ask when more packages are going to be affected by some action."
-msgstr ""
-
-#: gtk/window_options.glade.strings:12
-msgid "Use terminal window when running the package manager."
-msgstr ""
-
-#: gtk/window_options.glade.strings:13
-#, fuzzy
-msgid "Automatically select recommended packages on actions"
-msgstr "Otomatik seçilen güncellenebilecek paketler tamamlandý..."
-
-#: gtk/window_options.glade.strings:14
-msgid "Number of possible undo operations"
-msgstr ""
-
-#: gtk/window_options.glade.strings:15
-msgid "Default delete action: "
-msgstr ""
-
-#: gtk/window_options.glade.strings:18
-#, fuzzy
-msgid "Delete with dependencies"
-msgstr "Baðýmlýlýklarý ile birlikte sil"
-
-#: gtk/window_options.glade.strings:22
-msgid "Delete obsolete packages from cache"
-msgstr "Eskimiþ paketleri önbellekten sil"
-
-#: gtk/window_options.glade.strings:24 gtk/window_options.glade.strings:25
-#: gtk/window_options.glade.strings:26 gtk/window_options.glade.strings:27
-#: gtk/window_options.glade.strings:28 gtk/window_options.glade.strings:38
-#: gtk/window_options.glade.strings:39 gtk/window_options.glade.strings:40
-#: gtk/window_options.glade.strings:41
+#: gtk/window_preferences.glade.strings:43
+#: gtk/window_preferences.glade.strings:44
+#: gtk/window_preferences.glade.strings:45
+#: gtk/window_preferences.glade.strings:49
+#: gtk/window_preferences.glade.strings:50
+#: gtk/window_preferences.glade.strings:51
+#: gtk/window_preferences.glade.strings:55
+#: gtk/window_preferences.glade.strings:56
+#: gtk/window_preferences.glade.strings:57
 msgid "color"
 msgstr "renk"
 
-#: gtk/window_options.glade.strings:32
+#: gtk/window_preferences.glade.strings:46
 #, fuzzy
-msgid "Downgrade"
-msgstr "Güncelle"
+msgid "Broken:"
+msgstr "Yarým kalan"
 
-#: gtk/window_options.glade.strings:34
-msgid "Held"
-msgstr "Tutulan"
-
-#: gtk/window_options.glade.strings:36
+#: gtk/window_preferences.glade.strings:47
 #, fuzzy
-msgid "Pin"
+msgid "New:"
+msgstr "Yeni"
+
+#: gtk/window_preferences.glade.strings:48
+#, fuzzy
+msgid "Pin:"
 msgstr "Askýda"
 
-#: gtk/window_options.glade.strings:42
-msgid "Colors"
-msgstr "Renkler"
-
-#: gtk/window_options.glade.strings:43
-msgid "<b><u>Column</u></b>"
-msgstr ""
-
-#: gtk/window_options.glade.strings:45
+#: gtk/window_preferences.glade.strings:52
 #, fuzzy
-msgid "Installed version "
-msgstr "Kurulu"
+msgid "Downgrade:"
+msgstr "Güncelle"
 
-#: gtk/window_options.glade.strings:46
+#: gtk/window_preferences.glade.strings:53
 #, fuzzy
-msgid "Available version "
-msgstr "Mevcut"
+msgid "Upgrade:"
+msgstr "Güncelle"
 
-#: gtk/window_options.glade.strings:47
+#: gtk/window_preferences.glade.strings:54
 #, fuzzy
-msgid "Installed size"
-msgstr "Kurulu"
+msgid "Held:"
+msgstr "Tutulan"
 
-#: gtk/window_options.glade.strings:48
+#: gtk/window_preferences.glade.strings:58
 #, fuzzy
-msgid "Description "
-msgstr "Açýklama"
+msgid "Keep:"
+msgstr "Tut"
 
-#: gtk/window_options.glade.strings:49
-msgid "<b><u>Position (use -1 to disable)</u></b>"
-msgstr ""
+#: gtk/window_preferences.glade.strings:60
+#, fuzzy
+msgid "Remove:"
+msgstr "Sil"
 
-#: gtk/window_options.glade.strings:51
-msgid "Tree view"
+#: gtk/window_preferences.glade.strings:61
+msgid "Columns and Colors"
 msgstr ""
 
 #.
@@ -2480,6 +2550,10 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors"
 msgstr "Saðlayýcý"
+
+#, fuzzy
+#~ msgid "Description "
+#~ msgstr "Açýklama"
 
 #, fuzzy
 #~ msgid ""

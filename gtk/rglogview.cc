@@ -259,7 +259,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    if(toplevel_children == 0) {
       me->appendLogBuf(_("Not found"));
    } else {
-      me->appendLogBuf(_("Expression was found, please see the list\n"
+      me->appendLogBuf(_("Expression was found, please see the list "
 			 "on the left for matching entries."));
    }
 

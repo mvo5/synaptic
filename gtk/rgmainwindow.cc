@@ -2503,7 +2503,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
   #ifdef WITH_DPKG_STATUSFD
       iprogress = new RGDebInstallProgress(me,me->_lister);
   #else 
-      iprogress = new RInstallProgress();
+      iprogress = new RGDummyInstallProgress();
   #endif // WITH_DPKG_STATUSFD
 #endif // HAVE_RPM
 

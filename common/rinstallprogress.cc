@@ -81,14 +81,21 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
 #endif
       // make the read end of the control pipe to the child become the new
       // stdin
+#ifdef WITH_DPKG_STATUSFD
       dup2(fd_control[0],0);
       close(fd_control[0]);
       close(fd_control[1]);
+#endif
+
 #ifdef HAVE_RPM
       res = pm->DoInstallPostFork();
 #else
-      //res = pm->DoInstallPostFork(fd[1]);
+      //FIXME: we'll use this as soon as the needed support is in dpkg
+  #ifdef WITH_DPKG_STATUSFD
+      res = pm->DoInstallPostFork(fd[1]);
+  #else
       res = pm->DoInstallPostFork();
+  #endif
 #endif
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
@@ -108,7 +115,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    _numPackages = numPackages;
    _numPackagesTotal = numPackagesTotal;
 
-
    startUpdate();
    while (waitpid(_child_id, &ret, WNOHANG) == 0)
       updateInterface();
@@ -116,7 +122,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    res = (pkgPackageManager::OrderResult) WEXITSTATUS(ret);
 
    finishUpdate();
-
 
    close(_childin);
    close(_child_control);

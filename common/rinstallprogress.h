@@ -29,6 +29,10 @@
 #include "config.h"
 #include "rpackagemanager.h"
 
+#ifdef WITH_DPKG_STATUSFD
+#define RPackageManager pkgPackageManager
+#endif
+
 class RInstallProgress {
  protected:
    int _childin;

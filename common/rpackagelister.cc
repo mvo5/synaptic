@@ -1322,7 +1322,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
    pkgPackageManager *PM;
    PM = _system->CreatePM(_cache->deps());
-   RPackageManager rPM(PM);
+#ifdef WITH_DPKG_STATUSFD
+   pkgPackageManager *rPM = PM;
+#else
+   RPackageManager *rPM = new RPackageManager(PM);
+#endif
    if (!PM->GetArchives(&fetcher, _cache->list(), _records) ||
        _error->PendingError())
       goto gave_wood;
@@ -1410,9 +1414,8 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          }
 
          _cache->releaseLock();
-
          pkgPackageManager::OrderResult Res =
-                   iprog->start(&rPM, numPackages, numPackagesTotal);
+                   iprog->start(rPM, numPackages, numPackagesTotal);
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
                goto gave_wood;
@@ -1447,10 +1450,16 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       writeCommitLog();
 
    delete PM;
+#ifndef WITH_DPKG_STATUSFD
+   delete rPM;
+#endif
    return Ret;
 
  gave_wood:
    delete PM;
+#ifndef WITH_DPKG_STATUSFD
+   delete rPM;
+#endif
    return false;
 }
 

@@ -2036,6 +2036,91 @@
 		To Add Repositories From CD-ROM
 	</title> 
 	<para> 
+		Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Add CD...</guimenuitem></menuchoice>
+		from the menu.
+	</para>
+</sect2>
+
+<sect2 id="synaptic-repo-aptline"> 
+	<title>
+		The Syntax of the APT line
+	</title> 
+	<para> 
+		The package manager stores all available repositories in a text based configuration file. 
+		Each line describes the type, location and content of one repositroy.
+	</para>
+
+	<table frame="topbot" id="table-synaptic-aptline-syntax">
+		<title>
+			Synatax of an APT line e.g. <emphasis>deb http://ftp.debian.org sarge main</emphasis>
+		</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Element
+					</entry>
+					<entry valign="top" align="left">
+						Description
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						deb
+					</entry>
+					<entry valign="top">
+						The first elements describes the type of the repositroy.
+						Possible values are <emphasis>deb</emphasis> (Debian binary packages), <emphasis>deb-src
+						</emphasis>(Debian source packages), <emphasis>rpm</emphasis> (RPM binary packages), 
+						<emphasis>rpm-src</emphasis> (Redhat source packages), <emphasis>rpmdir</emphasis>
+						(folder that contains RPM binary packages) and <emphasis>rpmdir-src</emphasis> 
+						(folder that contains RPM source packages).
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						http://ftp.debian.org
+					</entry>
+					<entry valign="top">
+						The second element is the location of the repository.
+						The repositroy can be accessed by the protocols HTTP and 
+						FTP, or locally on a CD, DVD or hard disk.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">
+						sarge
+					</entry>
+					<entry valign="top">
+						The third element describes the distribution for which the 
+						packages are made for, see the <ulink 
+						url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.4">
+						Debian Developer's Reference</ulink> for more details on distributions of Debian.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">
+						main
+					</entry>
+					<entry valign="top">
+						The forth element describes sections of the 
+						repositroy that should be included. By default official Debian repositories are
+						separated into the sections <emphasis>main</emphasis>, <emphasis>
+						contrib</emphasis> and <emphasis>non-free</emphasis>, see the 
+						<ulink
+						 url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.1">
+						 Debian Developer's Reference</ulink> for more details on sections of Debian.
+					</entry>
+			        </row>
+			</tbody>
+		</tgroup>
+	</table>
+	<para>
+		<note><para>The distribution and section element are not required for each type.</para></note>
 	</para>
 </sect2>
 

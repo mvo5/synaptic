@@ -289,7 +289,7 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
 
-    me->setStatusText(_("Starting help system"));
+    me->setStatusText(_("Starting help system..."));
  
     if(is_binary_in_path("yelp")) 
 	system("yelp ghelp:synaptic &");

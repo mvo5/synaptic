@@ -78,9 +78,9 @@ void RGPreferencesWindow::applyProxySettings()
     // now set the stuff for apt
     if(useProxy) {
 	http = _config->Find("Synaptic::httpProxy", "");
-	httpPort = _config->FindI("Synaptic::httpProxy", 3128);
+	httpPort = _config->FindI("Synaptic::httpProxyPort", 3128);
 	ftp = _config->Find("Synaptic::ftpProxy", "");
-	ftpPort = _config->FindI("Synaptic::ftpProxy", 3128);
+	ftpPort = _config->FindI("Synaptic::ftpProxyPort", 3128);
 	noProxy = _config->Find("Synaptic::noProxy", "");
 
 	s = g_strdup_printf("http://%s:%i",http.c_str(), httpPort);

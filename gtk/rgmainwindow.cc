@@ -2565,7 +2565,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
       exit(0);
    }
 
-   if (_config->FindB("Synaptic::Download-Only", false) == false) {
+   if (_config->FindB("Volatile::Download-Only", false) == false) {
       // reset the cache
       if (!me->_lister->openCache(true)) {
          me->showErrors();

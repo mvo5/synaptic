@@ -486,7 +486,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 bool RGSummaryWindow::showAndConfirm()
 {
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_dlonlyB),
-                                _config->FindB("Synaptic::Download-Only",
+                                _config->FindB("Volatile::Download-Only",
                                                false));
 
    show();
@@ -500,7 +500,7 @@ bool RGSummaryWindow::showAndConfirm()
                              , false) == false)
       return false;
 
-   _config->Set("Synaptic::Download-Only",
+   _config->Set("Volatile::Download-Only",
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB)) ?
                 "true" : "false");
 #ifdef HAVE_RPM

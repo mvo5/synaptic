@@ -1392,7 +1392,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          Failed = true;
       }
 
-      if (_config->FindB("Synaptic::Download-Only", false)) {
+      if (_config->FindB("Volatile::Download-Only", false)) {
          _updating = false;
          return !Failed;
       }

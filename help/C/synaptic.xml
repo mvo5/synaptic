@@ -79,25 +79,79 @@
 <sect1 id="synaptic-introduction"> 
 	<title>Introduction</title> 
 	<para>
-		The &app; enables you to manage your software.
-		 software is organizied in so called packages and 
-		&app; features upgrading, installing, removing or even
-		 of such software packages.
+		The &app; is a graphical frontend to the apt package management system.
 	</para>
 
 	<para>
-		Modifcations on the status of packages are not immediatly 
-		. &app; collects the planned modifications in a queue 
-		 commits them to apt. Apt is an unified package manager 
-		 backend RPM and DEB systems.
+		The software is organizied in so called packages.
+		Modifications are not executed instantly. This allows you to queue several modifications and
+		execute them at once.
 	</para>
+
+	<para>
+		&app; provides the following features:
+	</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				Install, remove, configure, upgrade and downgrade single and multiple packages.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Upgrade your whole system.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Manage package repositories.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Search list of known packages by name, description...
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Filter list of shown packages by status, section, property and tag.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Arrange list of shown packages by initial letter, status or tag.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Displays all available online documentation related to a package.
+			</para>
+		</listitem>
+	</itemizedlist>
+
+	<warning>
+		<para>
+			Your system can be damaged or rendered unusable.
+		</para>
+		<para>
+			Always use &app; with care.
+		</para>
+	</warning>
+
+	<note>
+		<para>
+			Root rights are required to execute changes in the package system.
+		</para>
+	</note>
+
 	<para>
 		You can start <application>&app;</application> in the 
 		following ways:
 	</para> 
 	<variablelist>
 		<varlistentry>
-			<term><guimenu>Applications</guimenu> menu</term>
+			<term><guimenu>GNOME Applications</guimenu> menu</term>
 			<listitem>
 				<para>
 					Choose 
@@ -110,14 +164,24 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<term>KDE menu</term>
+			<listitem>
+				<para>
+					Choose 
+					<menuchoice>
+					<guisubmenu>Settings</guisubmenu>
+					<guimenuitem>Software</guimenuitem>
+					</menuchoice>. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
 			<term>Command line</term>
 			<listitem>
 				<para>
 					To start <application>&app;
-					</application>from a command you are 
-					in need of root rigths. Type the 
-					following , then press <keycap>Return
-					</keycap>:
+					</application>from a command line type the 
+					following , then press <keycap>Return</keycap>:
 				</para>
 				<para> 
 					<command>synaptic</command> 
@@ -282,12 +346,12 @@
 		<varlistentry>
 			<term>
 				Find Field
-				<anchor id="anchor-findfield" xreflabel="find field"></anchor>
+				<anchor id="synaptic-win-findfield" xreflabel="find field"></anchor>
 			</term>
 			<listitem>
 				<para>
-					For detailed instructons on the quick search, see <xref 
-					linkend="synaptic-find"></xref>.
+					For detailed instructions on the quick search, see <xref 
+					linkend="synaptic-pkg-find"></xref>.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -322,7 +386,7 @@
 	</figure>
 
 	<para>
-		To arrange the packages you can choose the follwing modes from <guimenu>View</guimenu> menu:
+		To arrange the packages you can choose the following modes from <guimenu>View</guimenu> menu:
 	</para>
 	<table frame="topbot" id="table-synaptic-viewmodes">
 		<title>
@@ -414,12 +478,12 @@
 	</title> 
 
 
-<sect2 id="synaptic-find"> 
+<sect2 id="synaptic-pkg-find"> 
 	<title>
 		Finding a Specific Package
 	</title> 
 
-<sect3 id="synaptic-quicksearch">
+<sect3 id="synaptic-pkg-find-quicksearch">
 	<title>	
 		Quick Search
 	</title>
@@ -430,7 +494,7 @@
 		<listitem>
 			<para>
 				Type the name or a part of it into the
-				<xref linkend="anchor-findfield"/>
+				<xref linkend="synaptic-win-findfield"/>
 				located in the toolbar. &app; will automatically
 				jump to the first matching package in the list.
 			</para>
@@ -450,7 +514,7 @@
 	</orderedlist>
 </sect3>
 
-<sect3 id="synaptic-advsearch">
+<sect3 id="synaptic-pkg-find-advsearch">
 	<title>
 		Advanced Search
 	</title>
@@ -464,8 +528,9 @@
 		<listitem>
 			<para>
 				Open the search dialog <menuchoice><guimenu>Package</guimenu>
-				<guimenuitem>Search...</guimenuitem>
-				</menuchoice> from the menu.
+				<guimenuitem>Find...</guimenuitem>
+				</menuchoice> from the menu or press <keycombo><keycap>Ctrl</keycap>
+				<keycap>F</keycap></keycombo>.
 			</para>
 		</listitem>
 		<listitem>
@@ -494,7 +559,7 @@
 </sect3>
 </sect2>
 
-<sect2 id="synaptic-install"> 
+<sect2 id="synaptic-pkg-install"> 
 	<title>Installing Packages</title>
 	<para>
 		To install one or more packages follow these steps:
@@ -514,6 +579,12 @@
 				<listitem>
 					<para>
 						Click on <guibutton>Update</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -585,7 +656,7 @@
 	</orderedlist>
 </sect2>
 
-<sect2 id="synaptic-remove"> 
+<sect2 id="synaptic-pkg-remove"> 
 	<title>Removing Packages</title>
 	<para>
 		To remove one or more packages follow these steps:
@@ -658,9 +729,9 @@
 	</orderedlist>
 	<note>
 		<para>
-			Configuration files and user created data (e.g. a Webiste in /var/www) are not removed
+			Configuration files and user created data (e.g. a Website in /var/www) are not removed
 			from the system by default. You can change this behavior in the
-			<xref linkend="anchor-purge"></xref>.
+			<xref linkend="synaptic-prefs-actions"></xref>.
 		</para>
 		<para>
 			Alternativly, choose <menuchoice><guimenu>Packages</guimenu><guimenuitem>Purge with 
@@ -669,7 +740,7 @@
 		</para>
 	</note>
 </sect2>
-<sect2 id="synaptic-upgrade"> 
+<sect2 id="synaptic-pkg-upgrade"> 
 	<title>Upgrading Single Packages</title>
 	<para>
 		To upgrade one or more packages follow these steps:
@@ -683,12 +754,19 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Update Package List</guimenuitem></menuchoice> 
+						from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Update</guibutton> in the toolbar.
+						Click on <guibutton>Update List</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -726,12 +804,6 @@
 						context menu.
 					</para>
 				</listitem>
-				<listitem>
-					<para>
-						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
-					</para>
-				</listitem>
 			</itemizedlist>
 		</listitem>
 		<listitem>
@@ -762,13 +834,13 @@
 	<tip>
 		<para>
 			To upgrade all installed packages to the latest version,
-			see <xref linkend="synaptic-upgradeall"/>.
+			see <xref linkend="synaptic-pkg-upgradesystem"/>.
 		</para>
 	</tip>
 </sect2>
 
 
-<sect2 id="synaptic-upgradeall"> 
+<sect2 id="synaptic-pkg-upgradesystem"> 
 	<title>Upgrading System</title>
 	<para>
 		The global upgrade enables you to upgrade your system
@@ -786,7 +858,7 @@
 				<para> 
 					The default upgrade method queues upgrades of installed packages only. 
 					If the later version of a package depends on not installed packages 
-					or conflicts with an allready installed package, 
+					or conflicts with an already installed package, 
 					the upgrade will not be queued.
 				</para>
 			</listitem>
@@ -809,7 +881,8 @@
 	<note>
 		<para>
 			Upgrades to later operating system major releases have to be done with the 
-			dist-upgrade method, e.g. from Red Hat 9 to Red Hat 9.1 or from Debian Woody to Debian Sarge.
+			dist-upgrade method, e.g. from Conectiva 9 to Conectiva 10 or from 
+			Debian Woody to Debian Sarge.
 		</para>
 	</note>
 
@@ -833,6 +906,12 @@
 						Click on <guibutton>Update List</guibutton> in the toolbar.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo>
+						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
 			</itemizedlist>
 		</listitem>
 
@@ -843,21 +922,21 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Upgrade All Packages
+						Click on <guibutton>Upgrade System
 						</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Upgrade All Packages</guimenuitem>
+						<guimenuitem>Upgrade System</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Press the key combination <keycombo>
-						<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						<keycap>Ctrl</keycap><keycap>G</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -901,7 +980,7 @@
 	</tip>
 </sect2>
 
-<sect2 id="synaptic-downgrade"> 
+<sect2 id="synaptic-pkg-downgrade"> 
 	<title>
 		Downgrading Packages
 	</title> 
@@ -915,7 +994,7 @@
 	</warning>
 
 	<para>
-		To downgrade a package you have to select a speficic version of the package:
+		To downgrade a package you have to select a specific version of the package:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -961,41 +1040,170 @@
 	</orderedlist>
 </sect2>
 
+<sect2 id="synaptic-pkg-executing">
+	<title>
+		Executing Queued Changes
+	</title>
+	<para>
+		To execute queued changes:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Click on <guibutton>Execute</guibutton> in the toolbar.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Actions</guimenu>
+				<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Press the key combination 
+				<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+			</para>
+		</listitem>
+	</itemizedlist>
+	<tip>
+		<para>
+			To show only packages with queued changes in the package list apply 
+			the "Queued Changes" filter.
+		</para>
+	</tip>
+</sect2>
+
+<sect2 id="synaptic-pkg-config">
+	<title>
+		Configuring Package
+	</title>
+
+
+	<para>
+		Debian provides a unified configuration interface for packages, so called debconf.
+	</para>
+	<para>
+		To configure a supported package:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package that you wish to configure in the 
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guibutton>Configure</guibutton> in the package control.
+			</para>
+		</listitem>
+	</orderedlist>
+
+	<note>
+		<para>
+			This feature requires the installation of "libgnome-perl".
+		</para>
+	</note>
+</sect2>
+
+<sect2 id="synaptic-pkg-docu">
+	<title>
+		Getting Additional Package Documentation
+ 	</title>
+
+
+	<para>
+		asdasd
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package from that you wish to read additional documentation 
+				in the <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guibutton>Documentation</guibutton> in the package control.
+			</para>
+		</listitem>
+	</orderedlist>
+
+	<note>
+		<para>
+			This feature requires the installation of "dwww".
+		</para>
+	</note>
+</sect2>
+
+
+
 </sect1>
 
 <sect1 id="synaptic-repo">
 <title>Managing Package Sources</title>
 
 <sect2 id="synaptic-repo-update"> 
-<title>To Update List of Available Packages</title> 
-<para> </para>
+	<title>
+		Updating List of Available Packages
+	</title> 
+	<para>
+		
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Actions</guimenu>
+				<guimenuitem>Update Package List</guimenuitem></menuchoice> from the menu.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guibutton>Update List</guibutton> in the toolbar.
+			</para>
+		</listitem>
+	</itemizedlist>
 </sect2>
 
 <sect2 id="synaptic-repo-manage"> 
-<title>Using Repositories</title> 
-<para> </para>
+	<title>
+		Managing Repositories
+	</title> 
+	<para>
+		You can edit, add and delete repositories in the repository preferences.
+	</para>
+	<para>
+		Open the repository editor with <menuchoice><guimenu>Preferences</guimenu>
+		<guimenuitem>Repositories</guimenuitem></menuchoice> from the menu.
+	</para>
 </sect2>
 
 <sect2 id="synaptic-repo-cdrom"> 
-<title>To Add Packages on CD-ROM</title> 
-<para> </para>
+	<title>
+		Using Package Archives on CD-ROM
+	</title> 
+	<para> 
+	</para>
 </sect2>
+
 </sect1>
 
 <sect1 id="synaptic-filter">
 	<title>
 		Using Filters
 	</title>
-	<para>
-		Filters enable you to narrow down the list of shown packages in the main package list.
-	</para>
 
 <sect2 id="synaptic-filter-apply"> 
 	<title>
-		Applying Predefined Filters
+		Applying Filters
 	</title> 
 	<para>
-		&app; comes with a list of predifend filters.
+		Filters enable you to narrow down the list of shown packages.
+	</para>
+	<para>
+		&app; comes with a set of predefined filters.
 	</para>
 
 	<table frame="topbot" id="table-synaptic-filters">
@@ -1076,6 +1284,13 @@
 						included in one of the specified repositories.
 					</entry>
 				</row>
+				<row>
+					<entry valign="top">Search Filter</entry>
+					<entry valign="top">
+						Displays the last results of the advanced package
+						package search, see <xref linkend="synaptic-pkg-find-advsearch"/>.
+					</entry>
+				</row>
 			</tbody>
 		</tgroup>
 	</table>
@@ -1086,12 +1301,12 @@
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>View</guimenu><guisubmenu>Apply Filter</guisubmenu>
-				<guimenuitem>FILTERNAME</guimenuitem></menuchoice>.
+				<guimenuitem>Filter</guimenuitem></menuchoice>.
 			</para>	
 		</listitem>
 		<listitem>
 			<para>
-				Choose the filter from the Show combobox in the main window.
+				Choose the filter from the <guibutton>Show</guibutton> combobox in the main window.
 			</para>	
 		</listitem>
 	</itemizedlist>
@@ -1103,54 +1318,120 @@
 	</title> 
 
 	<para>
-		Filters can be created, deleted and modified in the filter editor. There are two
-		to start the editor:
+		Filters can be created, deleted and modified in the filter editor:
 	</para>
 
 	<itemizedlist>
 		<listitem>
 			<para>
-				Choose from the menu <menuchoice><guimenu>Search</guimenu><guimenuitem>
-				Edit Filters...</guimenuitem></menuchoice>
+				Choose from the menu <menuchoice><guimenu>View</guimenu><guimenuitem>
+				Edit Filters...</guimenuitem></menuchoice>.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Click on <guibutton>Filters...</guibutton> in the main window
+				Click on <guibutton>Filters...</guibutton> in the main window.
 			</para>
 		</listitem>
 	</itemizedlist>
- 
-	<sect3 id="synaptic-filter-edit-view"> 
-		<title>To Change the View of the Results</title> 
-		<para>
-			You can choose between several sorting modes for matching packages. See HAHAH 
-			a detailed description of all available view modes.
-		</para>
-	</sect3>
 
-	<sect3 id="synaptic-filter-edit-status"> 
-		<title>To Select Packages by Status</title> 
-		<para> 
-		</para>
-	</sect3>
+	<figure>
+		<title>Edit Filters</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-filter.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the filter editor.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
 
-	<sect3 id="synaptic-filter-edit-section"> 
-		<title>
-			To Select Packages by Sections
-		</title> 
-		<para> </para>
-	</sect3>
+	<para>
+		The filter editor contains the following components:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				List of Filter
+			</term>
+			<listitem>
+				<para>
+					Shows a list of available filters.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				View
+			</term>
+			<listitem>
+				<para>
+					Specify the arrangement of the results.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Rules
+			</term>
+			<listitem>
+				<para>
+					Rules allow you to define which packages should be shown in the list.
+					A package has to fulfil all selected criterions.
+				</para>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Status
+						</term>
+						<listentry>
+							<para>
+								Allows you to select packages by their status.
+							</para>
+						</listentry>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Section
+						</term>
+						<listentry>
+							<para>
+								Allows you to select packages by their section.
+							</para>
+						</listentry>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Properties
+						</term>
+						<listentry>
+							<para>
+							</para>
+						</listentry>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Keywords
+						</term>
+						<listentry>
+							<para>
+								Keywords are based on debtags. Only Debian GNU/Linux 
+								with installed "debtags" supports this feature.
+							</para>
+						</listentry>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
 
-	<sect3 id="synaptic-filter-edit-properties"> 
-		<title>To Select Packages by Properites</title> 
-		<para> </para>
-	</sect3>
-
-	<sect3 id="synaptic-filter-edit-tag"> 
-		<title>To Select Packages by Tags</title> 
-		<para> </para>
-	</sect3>
 </sect2>
 </sect1>
 
@@ -1188,6 +1469,7 @@
 			</listitem>
 		</varlistentry>
 		<varlistentry>
+			<anchor id="synaptic-prefs-actions" xreflabel="action settings"/>
 			<term>
 				Actions
 			</term>
@@ -1206,7 +1488,7 @@
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Ask to quit after the changes habe been executed
+							Ask to quit after the changes have been executed
 						</term>
 							<listitem>
 								<para>
@@ -1270,7 +1552,7 @@
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Consider recommended packages as depencies
+							Consider recommended packages as dependencies
 						</term>
 							<listitem>
 								<para>
@@ -1283,9 +1565,6 @@
 			</listitem>
 		</varlistentry>
 	</variablelist>
-
-		<anchor id="anchor-purge" xreflabel="action preferences"/>
-
 </sect2>
 
 <sect2 id="synaptic-prefs-layout"> 
@@ -1319,65 +1598,162 @@
 </sect2> 
 </sect1>
 
-<sect1 id="synaptic-glossar">
+<sect1 id="synaptic-bugs">
 	<title>
-		Glossar
+		Known Bugs and Limitations
 	</title>
-
 	<para>
-		Tag auch lalalalalal
+		&app; is at no point a finished software. The following misbehavior or insufficiencies 
+		are known to the developers:
 	</para>
-	<glosslist>
-			<glossentry>
-			<glossterm>
-				Dist-Upgrade
-			</glossterm>
-			<glossdef>
-				<para>
-					Lalal alalalasdad ascal cdsl cdslcl blalallalala
-				</para>
-				<glossseealso otherterm="gl-upgrade"/>
-			</glossdef>
-		</glossentry>
-
-		<glossentry>
-			<glossterm id="gl-upgrade">
-				Upgrade
-			</glossterm>
-			<glossdef>
-				<para>
-					asdadasdasdasd asd bl bla alalalalalalala
-				</para>
-			</glossdef>
-		</glossentry>
-			<glossentry>
-			<glossterm>
-				Packages
-			</glossterm>
-			<glossdef>
-				<para>
-					adasdasdsadasdasdasd
-				</para>
-			</glossdef>
-		</glossentry>
-			<glossentry>
-			<glossterm>
-				Repository
-			</glossterm>
-			<glossdef>
-				<para>
-					asdasdasdasdasdasd
-				</para>
-			</glossdef>
-		</glossentry>
-	</glosslist>
+	<table frame="topbot" id="synaptic-bugs-table">
+		<title>Known issues and workarounds</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top">Problem</entry>
+					<entry valign="top">Workaround</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						Locales
+					</entry>
+					<entry valign="top">
+						Use a locale supported by the x-server.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						No global undo
+					</entry>
+					<entry valign="top">
+						Quit the &app;, since not queued and not executed changes get lost
+						after quitting.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
 </sect1>
 
+<sect1 id="synaptic-shortcuts">
+	<title>
+		Keyboard Shortcuts
+	</title>
+	<para>
+		The list of all global short cuts in &app;:
+	</para>
+	<informaltable frame="none" id="synaptic-shortcuts-table">
+	
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<tbody>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Executes all queued changes.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Opens the package find dialog.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Queues the whole system for upgrade.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Queues the selected package(s) for installation.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Ignore any queued changes and set package as before.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Opens the package find dialog.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Queues the whole system for upgrade.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Queues the selected package(s) for installation.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Ignore any queued changes and set package as before.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Quits &app;.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Queues the selected package(s) for removal.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Updates the list of known package.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</informaltable>
+</sect1>
 
-<!-- sect1 id="mayapp-bugs">
-	<title>Known Bugs and Limitations</title>
-	<para> </para>
-</sect1 -->
 
 <sect1 id="myapp-about"> 
 	<title>About &app;</title> 

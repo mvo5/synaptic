@@ -61,7 +61,7 @@ string SizeToStr(double Size)
    /* Bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, exabytes,
     * zettabytes, yottabytes.
     */
-   char Ext[] = { '\0', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
+   char Ext[] = { ' ', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
    int I = 0;
    while (I <= 8) {
       if (ASize < 100 && I != 0) {

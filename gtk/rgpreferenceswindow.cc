@@ -50,6 +50,22 @@ const char *RGPreferencesWindow::column_visible_names[] =
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
+#if !GTK_CHECK_VERSION(2,6,0)
+gchar *
+gtk_combo_box_get_active_text (GtkComboBox *combo_box)
+{
+  GtkTreeIter iter;
+  gchar *text = NULL;
+
+  GtkTreeModel* model = gtk_combo_box_get_model(combo_box);
+
+  if (gtk_combo_box_get_active_iter (combo_box, &iter))
+    gtk_tree_model_get (model, &iter, 0, &text, -1);
+
+  return text;
+}
+#endif
+
 void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;

@@ -104,8 +104,8 @@ enum {DEP_NAME_COLUMN,             /* text */
       DEP_PKG_INFO};               /* additional info (install 
 				      not installed) as text */
 
-GdkPixbuf *StatusPixbuf[12];
-GdkColor *StatusColors[12];
+GdkPixbuf *StatusPixbuf[13];
+GdkColor *StatusColors[13];
 
 
 #define SELECTED_MENU_INDEX(popup) \

@@ -41,6 +41,7 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent, RPackage *pkg)
    // fill in all the pkg-values
    fillInValues(pkg);
 
+   show();
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)

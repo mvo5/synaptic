@@ -372,7 +372,7 @@ void RGMainWindow::searchLackAction(GtkWidget *self, void *data)
     if(me->searchLackId)
 	gtk_timeout_remove(me->searchLackId);
 
-    me->searchLackId = gtk_timeout_add(1000, searchLackHelper, self);
+    me->searchLackId = gtk_timeout_add(_config->FindI("Synaptic::searchLack",1000), searchLackHelper, self);
 }
 
 gboolean RGMainWindow::searchLackHelper(void* self)

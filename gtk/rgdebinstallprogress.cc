@@ -99,6 +99,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
 
    // translate the dpkg status into human a readable status
+   _transDpkgStates.insert(make_pair("error",N_("Error in %s")));
+   _transDpkgStates.insert(make_pair("conffile-prompt",N_("Config-File %s")));
    _transDpkgStates.insert(make_pair("unpacked",N_("Unpacking %s")));
    _transDpkgStates.insert(make_pair("half-configured",N_("Configuring %s")));
    _transDpkgStates.insert(make_pair("half-installed",N_("Installing %s")));
@@ -141,18 +143,18 @@ void RGDebInstallProgress::updateInterface()
 
 	 gchar *s=NULL;
 	 gchar *pkg = g_strstrip(split[1]);
-	 gchar *status = split[2];
+	 gchar *status = g_strstrip(split[2]);
 	 // major problem here, we got unexpected input. should _never_ happen
 	 if(!(pkg && status))
 	    continue;
 
 	 // first check for errors and conf-file prompts
-	 if(strstr(split[2], "error") != NULL) { 
+	 if(strstr(status, "error") != NULL) { 
 	    // error from dpkg
 	    s = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error(err.c_str());
-	 } else if(strstr(split[2], "conffile-prompt") != NULL) {
+	 } else if(strstr(status, "conffile-prompt") != NULL) {
 	    // conffile-request
 	    //cout << split[2] << " " << split[3] << endl;
 	    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(window()),
@@ -178,14 +180,14 @@ void RGDebInstallProgress::updateInterface()
 	    char *next_stage_str = (_actionsMap[string(pkg)])[next_stage];
 	    cout << "waiting for: " << next_stage_str << endl;
 	    if(strstr(status, next_stage_str) != NULL) {
-	       // FIXME: map dpkg-states -> human readable stages
-	       s = g_strdup_printf(_(_transDpkgStates[next_stage_str].c_str()), 
-				   split[1]);
 	       next_stage++;
 	       _stagesMap[pkg] = next_stage;
 	       _progress++;
 	    }
 	 }
+	 
+	 if(_transDpkgStates.find(status) != _transDpkgStates.end())
+	    s = g_strdup_printf(_(_transDpkgStates[status].c_str()), split[1]);
 
 	 // each package goes through three stages
 	 float val = ((float)_progress)/((float)_totalActions);

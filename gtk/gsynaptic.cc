@@ -66,6 +66,7 @@ CommandLine::Args Args[] = {
   {'f',"filter-file","Volatile::filterFile", CommandLine::HasArg}, 
   {'i',"initial-filter","Volatile::initialFilter", CommandLine::HasArg},
   {0,"set-selections", "Volatile::Set-Selections", 0},
+  {0,"non-interactive", "Volatile::Non-Interactive", 0},
   {'o',"option",0,CommandLine::ArbItem},
   {0,0,0,0}
 };
@@ -146,8 +147,13 @@ int main(int argc, char **argv)
     mainWindow->restoreState();
     mainWindow->showErrors();
 
-    gtk_main();
+    if (_config->FindB("Volatile::Non-Interactive", false)) {
+	mainWindow->proceed();
+    } else {
+	gtk_main();
+    }
     
     return 0;
 }
 
+// vim:sts=4:sw=4

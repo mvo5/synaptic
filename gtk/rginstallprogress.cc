@@ -43,7 +43,10 @@ void RGInstallProgress::startUpdate()
 
 void RGInstallProgress::finishUpdate()
 {
-    gtk_progress_bar_update(GTK_PROGRESS_BAR(_pbar), 1.0);
+    if (_startCounting) {
+        gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 1.0);
+        gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar_total), 1.0);
+    }
     
     RGFlushInterface();
     
@@ -61,14 +64,26 @@ void RGInstallProgress::updateInterface()
 	if (len < 1)
 	    break;
 	if (buf[0] == '\n') {
+	    float val;
 	    if (line[0] != '%') {
 		gtk_label_set_text(GTK_LABEL(_label), line);
-		gtk_progress_bar_update(GTK_PROGRESS_BAR(_pbar), 0);
+		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 0);
+		if (_startCounting) {
+		    _donePackages += 1;
+		    val = ((float)_donePackages)/_numPackages;
+		    gtk_progress_bar_set_fraction(
+				    GTK_PROGRESS_BAR(_pbar_total), val);
+		}
 	    } else {
-		float val;
-
 		sscanf(line + 3, "%f", &val);
-		gtk_progress_bar_update(GTK_PROGRESS_BAR(_pbar), val);
+		val = val*0.01;
+		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), val);
+		if (_startCounting == false) {
+		    _startCounting = true;
+		    // Stop pulsing
+		    gtk_progress_bar_set_fraction(
+				    GTK_PROGRESS_BAR(_pbar_total), 0);
+		}
 	    }
 	    line[0] = 0;
 	} else {
@@ -78,21 +93,26 @@ void RGInstallProgress::updateInterface()
     }
 
     if (gtk_events_pending()) {
-	
 	while (gtk_events_pending()) gtk_main_iteration();
     } else {
-	usleep(1000);
+	usleep(5000); // Half a second
+        if (_startCounting == false) {
+	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
+	    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar_total));
+        }
     }
 }
 
 
 RGInstallProgress::RGInstallProgress(RGMainWindow *main)
-    : RInstallProgress(), RGWindow(main, "installProgress", true, false)
+    : RInstallProgress(), RGWindow(main, "install_progress", true, false)
 {
     setTitle(_("Performing Changes"));
 
+    _donePackages = 0;
+    _startCounting = false;
 
-    gtk_widget_set_usize(_win, 320, 80);
+    gtk_widget_set_usize(_win, 320, 120);
 
     gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
     
@@ -104,6 +124,15 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main)
     gtk_widget_show(_pbar);
     gtk_widget_set_usize(_pbar, -1, 25);
     gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
+
+    _pbar_total = gtk_progress_bar_new();
+    gtk_widget_show(_pbar_total);
+    gtk_widget_set_usize(_pbar_total, -1, 25);
+    gtk_box_pack_start(GTK_BOX(_topBox), _pbar_total, FALSE, TRUE, 0);
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar_total));
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar_total), 0.01);
 }
 
 

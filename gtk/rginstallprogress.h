@@ -37,6 +37,10 @@ class RGInstallProgress : public RInstallProgress, public RGWindow {
    GtkWidget *_label;
   
    GtkWidget *_pbar;
+   GtkWidget *_pbar_total;
+
+   int _donePackages;
+   bool _startCounting;
 
 protected:
    virtual void startUpdate();

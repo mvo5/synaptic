@@ -662,7 +662,10 @@ void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
     me->showErrors();
 }
 
-
+void RGMainWindow::proceed()
+{
+    proceedClicked(NULL, (void*)this);
+}
 
 void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 {
@@ -683,14 +686,16 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 	return;
     }
     
-    // show a summary of what's gonna happen
-    summ = new RGSummaryWindow(me, me->_lister);
-    if (!summ->showAndConfirm()) {
-	// canceled operation
+    if (_config->FindB("Volatile::Non-Interactive", false) == false) {
+	// show a summary of what's gonna happen
+	summ = new RGSummaryWindow(me, me->_lister);
+	if (!summ->showAndConfirm()) {
+	    // canceled operation
+	    delete summ;
+	    return;
+	}
 	delete summ;
-	return;
     }
-    delete summ;
 
     me->setInterfaceLocked(TRUE);
     me->updatePackageInfo(NULL);
@@ -726,7 +731,12 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
     me->showErrors();
 
-    if (_config->FindB("Synaptic::Download-Only", FALSE) == FALSE) {    
+    if (_config->FindB("Volatile::Non-Interactive", FALSE) == TRUE) {
+	g_free(pkgname);
+	return;
+    }
+
+    if (_config->FindB("Synaptic::Download-Only", FALSE) == FALSE) {
       // reset the cache
       gtk_tree_view_set_model (GTK_TREE_VIEW(me->_treeView), NULL);
       if (!me->_lister->openCache(TRUE)) {
@@ -1512,6 +1522,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister)
     _blockActions = false;
     _unsavedChanges = false;
     _interfaceLocked = 0;
+
     _lister->registerObserver(this);
     _busyCursor = gdk_cursor_new(GDK_WATCH);
     _tooltips = gtk_tooltips_new();

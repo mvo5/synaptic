@@ -51,7 +51,8 @@ void *RInstallProgress::loop(void *data)
 
 
 
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm)
+pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
+						       int numPackages)
 {
     void *dummy;
     pkgPackageManager::OrderResult res;
@@ -84,6 +85,8 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm)
     // make it nonblocking
     fcntl(_childin, F_SETFL, O_NONBLOCK);
 #endif /* HAVE_RPM */
+
+    _numPackages = numPackages;
 
     _thread_id = pthread_create(&_thread, NULL, loop, this);
 

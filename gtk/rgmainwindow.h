@@ -277,6 +277,8 @@ public:
    bool restoreState();
    
    bool showErrors();
+
+   void proceed();
 };
 
 

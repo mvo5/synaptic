@@ -1025,6 +1025,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 				   RInstallProgress *iprog)
 {
     FileFd lock;
+    int numPackages = 0;
     
     _updating = true;
     
@@ -1064,7 +1065,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	     I++) {
 	    if ((*I)->Status == pkgAcquire::Item::StatDone &&
 		(*I)->Complete)
+	    {
+		numPackages += 1;
 		continue;
+	    }
 	    
 	    if ((*I)->Status == pkgAcquire::Item::StatIdle)
 	    {
@@ -1117,11 +1121,13 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	    
 	    _cache->releaseLock();
 
-	    pkgPackageManager::OrderResult Res = iprog->start(_packMan);
+	    pkgPackageManager::OrderResult Res = iprog->start(_packMan, numPackages);
 	    if (Res == pkgPackageManager::Failed || _error->PendingError())
 		goto gave_wood;
 	    if (Res == pkgPackageManager::Completed)
 		break;
+
+	    numPackages = 0;
 
 	    _cache->lock();
 	}

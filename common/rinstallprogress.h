@@ -41,12 +41,15 @@ protected:
    int _thread_id;
    pthread_t _thread;
 
+   int _numPackages;
+
    virtual void startUpdate() {};
    virtual void updateInterface() {};
    virtual void finishUpdate() {};
 
 public:
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm);
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+		   				int numPackages = 0);
 
 };
 

@@ -90,6 +90,8 @@ CommandLine::Args Args[] = {
    , {
    0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
    , {
+   0, "update-at-startup", "Volatile::Update-Mode", 0}
+   , {
    0, "hide-main-window", "Volatile::HideMainwindow", 0}
    , {
    0, "task-window", "Volatile::TaskWindow", 0}
@@ -271,6 +273,11 @@ int main(int argc, char **argv)
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       mainWindow->cbUpgradeClicked(NULL, mainWindow);
       mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
+   }
+
+   if(_config->FindB("Volatile::Update-Mode",false)) {
+      mainWindow->cbUpdateClicked(NULL, mainWindow);
+      mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
    }
 
    if(_config->FindB("Volatile::TaskWindow",false)) {

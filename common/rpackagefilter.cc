@@ -143,7 +143,7 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
 
 bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
 {
-   bool found;
+   bool found=true;
 
    const char *name = pkg->name();
 // if we want "real" nouseregexp support, we need to split the string
@@ -186,7 +186,7 @@ bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
 
 bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 {
-   bool found;
+   bool found=true;
    const char *s1 = pkg->summary();
    const char *s2 = pkg->description();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
@@ -204,7 +204,7 @@ bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 
 bool RPatternPackageFilter::filterMaintainer(Pattern pat, RPackage *pkg)
 {
-   bool found;
+   bool found=true;
    const char *maint = pkg->maintainer();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
       if (regexec(pat.regexps[i], maint, 0, NULL, 0) == 0) {

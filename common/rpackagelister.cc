@@ -148,7 +148,7 @@ bool RPackageLister::setSubView(string newSubView)
 static string getServerErrorMessage(string errm)
 {
    string msg;
-   unsigned int pos = errm.find("server said");
+   string::size_type pos = errm.find("server said");
    if (pos != string::npos) {
       msg = string(errm.c_str() + pos + sizeof("server said"));
       if (msg[0] == ' ')

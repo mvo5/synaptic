@@ -2689,8 +2689,10 @@ void RGMainWindow::buildInterface()
 
 #ifndef HAVE_DEBTAGS
     widget = glade_xml_get_widget(_gladeXML,"label_tags");
+    assert(widget);
     gtk_widget_hide(widget);
     widget = glade_xml_get_widget(_gladeXML,"label_tags_label");
+    assert(widget);
     gtk_widget_hide(widget);
 #endif
 

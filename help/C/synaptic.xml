@@ -688,6 +688,9 @@
 		To Find and Browse Packages (FIXME)
 	</title> 
 
+	<anchor id="anchor-find" xreflabel="found"/>
+
+
 <variablelist>
 <varlistentry id="synaptic-pkg-find-quicksearch">
 	<term>	
@@ -811,21 +814,25 @@
 	</title> 
 
 	<para>
-		This chapter covers the basic actions <xref linkend="synaptic-pkg-install" endterm="lalal"/>,
-		<xref linkend="synaptic-pkg-remove" endterm="removing"/> and <xref linkend="synaptic-pkg-upgrade" endterm="upgrading"/>
+		This chapter covers the basic actions <xref linkend="anchor-installing"/>,
+		<xref linkend="anchor-removing"/> and <xref linkend="anchor-upgrading"/>
 		of packages.
 	</para>
 	<para>
-		Furthermore performing a <xref linkend="synaptic-pkg-upgradeall" endterm="system"/> upgrade,
-		<xref linkend="synaptic-pkg-dwww" endterm="browsing"/> the online documentation, 
-		<xref linkend="synaptic-pkg-changelog" endterm="reading"/> the changelog	and the advanced actions
-		<xref linkend="synaptic-pkg-force" endterm="forcing"/> the installation of a specifc package version,
-		<xref linkend="synaptic-pkg-lock" endterm="locking"/> a package to the current version are descripted.
+		Furthermore performing a <xref linkend="anchor-dist-upgrade"/>,
+		<xref linkend="anchor-dwww"/> the online documentation, 
+		<xref linkend="anchor-changelog"/> the changelog	and the advanced actions
+		<xref linkend="anchor-force"/> the installation of a specifc package version,
+		<xref linkend="anchor-lock"/> a package to the current version are descripted.
 	</para>  
 
 <sect2 id="synaptic-pkg-install"> 
-	<title>To Install Packages</title>
-	
+	<title>
+		To Install Packages
+	</title>
+
+	<anchor id="anchor-installing" xreflabel="installing"/>
+
 	<note>
 		<para>
 			If different version of the same package are available &app;  will select the most 
@@ -835,7 +842,7 @@
 	</note>
 
 	<para>
-		If you have <xref linkend="synaptic-find" endterm="found"/> a package that you want to install 
+		If you have <xref linkend="anchor-find"/> a package that you want to install 
 		perform the following steps:
 	</para>
 	<orderedlist>
@@ -962,6 +969,7 @@
 
 <sect2 id="synaptic-pkg-remove"> 
 	<title>To Remove Packages</title>
+	<anchor id="anchor-removing" xreflabel="removing"/>
 
 	<para>
 		<note>
@@ -1089,7 +1097,12 @@
 	</orderedlist>
 </sect2>
 <sect2 id="synaptic-pkg-upgrade"> 
-	<title>To Upgrade Packages</title>
+	<title>
+		To Upgrade Packages
+	</title>
+
+	<anchor id="anchor-upgrading" xreflabel="upgrading"/>
+
 	<para>
 		To upgrade a package follow these steps:
 	</para>
@@ -1225,6 +1238,9 @@
 	<title>
 		To Upgrade the Whole System
 	</title>
+
+	<anchor id="anchor-dist-upgrade" xreflabel="system upgrade"/>
+
 
 	<para>
 		The global upgrade enables you to upgrade your system
@@ -1657,6 +1673,9 @@
 		To View Documentation for Packages (Debian only)
  	</title>
 
+	<anchor id="anchor-dwww" xreflabel="browsing"/>
+
+
 	<note>
 		<para>
 			To use this feature you have to install the package <emphasis>dwww</emphasis>.
@@ -1685,10 +1704,12 @@
 	</orderedlist>
 
 </sect2>
-<sect2 id="synaptic-pkg-docu">
+<sect2 id="synaptic-pkg-changelog">
 	<title>
 		To View the Changelog of a Package (Debian only)
  	</title>
+
+	<anchor id="anchor-changelog" xreflabel="reading"/>
 
 	<note>
 		<para>
@@ -1719,6 +1740,9 @@
 	<title>
 		To Lock a Package to the Current Version (Debian only)
 	</title>
+
+	<anchor id="anchor-lock" xreflabel="locking"/>
+
 	<para>
 		To lock a package to the current version follow these steps:
 	</para>
@@ -1752,6 +1776,9 @@
 	<title>
 		To Force the Installation of a Specific Version
 	</title>
+
+	<anchor id="anchor-force" xreflabel="forcing"/>
+
 	<warning>
 		<para>
 			The &app; always selects the most applicable version available. If you force a 
@@ -1855,7 +1882,7 @@
 		</listitem>
 	</orderedlist>
 </sect2>
-<sect2 id="synaptic-pkg-force">
+<sect2 id="synaptic-pkg-fix">
 	<title>
 		To Fix Broken Packages
 	</title>

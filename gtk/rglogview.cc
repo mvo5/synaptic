@@ -21,6 +21,7 @@
  */
 
 #include <cassert>
+#include <map>
 #include "config.h"
 #include "rglogview.h"
 #include "rgmisc.h"
@@ -33,6 +34,9 @@ enum { COLUMN_LOG_DAY,
 
 void RGLogView::readLogs()
 {
+   map<int, GtkTreeIter> history_map;
+   int history_key;
+
    GtkTreeStore *store = gtk_tree_store_new(N_LOG_COLUMNS, 
 					    G_TYPE_STRING,
 					    G_TYPE_STRING);
@@ -41,7 +45,6 @@ void RGLogView::readLogs()
    GtkTreeIter date_iter;  /* Child iter  */
 
    unsigned int year, month, day, hour, min, sec;
-   unsigned int last_year, last_month;
    char str[512];
    const gchar *logfile;
    const gchar *logdir = RLogDir().c_str();
@@ -61,15 +64,17 @@ void RGLogView::readLogs()
       GDate *date = g_date_new_dmy(day, (GDateMonth)month, year);
       t.tm_wday = g_date_get_weekday(date);
 
-      if(year != last_year || month != last_month) {
+      history_key = year*100+month;
+      if(history_map.count(history_key) == 0) {
 	 gtk_tree_store_append(store, &month_iter, NULL); 
 	 strftime(str, 512, "%B %Y", &t);
 	 gtk_tree_store_set (store, &month_iter,
 			     COLUMN_LOG_DAY, str, 
 			     COLUMN_LOG_FILENAME, NULL, 
 			     -1);
-	 last_year = year;
-	 last_month = month;
+	 history_map.insert(make_pair<int,GtkTreeIter>(history_key,month_iter));
+      } else {
+	 month_iter = history_map[history_key];
       }
 
       strftime(str, 512, "%x %R", &t);

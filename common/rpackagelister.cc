@@ -567,7 +567,8 @@ bool RPackageLister::upgrade()
 	return _error->Error(_("Internal Error, AllUpgrade broke stuff"));
     }
     
-    reapplyFilter();
+    //reapplyFilter();
+    notifyChange(NULL);
     
     return true;
 }
@@ -581,8 +582,9 @@ bool RPackageLister::distUpgrade()
 	return false;
     }
     
-    reapplyFilter();
-    
+    //reapplyFilter();
+    notifyChange(NULL);    
+
     return true;
 }
 
@@ -1195,7 +1197,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status)
     assert(_cache->list() != NULL);
     // Get the source list
     //pkgSourceList List;
-#ifdef HAVW_RPM
+#ifdef HAVE_RPM
     if (_cache->list()->ReadMainList() == false)
 	return false;
 #else
@@ -1285,13 +1287,15 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
     assert(_cache->list() != NULL);
     // Read the source list
-    //pkgSourceList list;
-    //if (_cache->list()->ReadMainList() == false) {
-    //return _error->Error(_("The list of sources could not be read."));
-    //}
+#ifdef HAVE_RPM
+    if (_cache->list()->ReadMainList() == false) {
+    return _error->Error(_("The list of sources could not be read."));
+    }
+#else
     if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) == false) {
 	return _error->Error(_("The list of sources could not be read."));
     }
+#endif
     
     _packMan = _system->CreatePM(_cache->deps());
     if (!_packMan->GetArchives(&fetcher, _cache->list(), _records) ||

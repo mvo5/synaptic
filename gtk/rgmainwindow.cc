@@ -816,9 +816,10 @@ void RGMainWindow::notifyChange(RPackage *pkg)
 {
   //cout << "RGMainWindow::notifyChange("<<pkg->name()<<")" << endl;
     // we changed pkg's status
-    updateDynPackageInfo(pkg);
-    refreshTable(pkg);
-
+    if(pkg!=NULL) {
+	updateDynPackageInfo(pkg);
+	refreshTable(pkg);
+    }
     setStatusText();
 }
 

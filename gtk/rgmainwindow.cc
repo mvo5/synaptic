@@ -974,12 +974,13 @@ void RGMainWindow::buildInterface()
    widget = _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
    g_object_set_data(G_OBJECT(widget), "me", this);
    assert(_removeM);
+   widget = _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
+   g_object_set_data(G_OBJECT(widget), "me", this);
+   assert(_purgeM);
 #if 0
    _remove_w_depsM = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(_remove_w_depsM);
 #endif
-   _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
-   assert(_purgeM);
    _dl_changelogM = glade_xml_get_widget(_gladeXML, "menu_download_changelog");
    assert(_dl_changelogM);
 #ifdef HAVE_RPM
@@ -2561,12 +2562,13 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
          }
 
          // Purge
-         if (i == 5)
+         if (i == 5) {
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+	 }
       }
-      
-      if (i == 4 && (flags & RPackage::FResidualConfig)
-          && !(flags && RPackage::FRemove)) {
+
+      if (i == 5 && (flags & RPackage::FResidualConfig)
+          && !(flags & RPackage::FRemove)) {
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 

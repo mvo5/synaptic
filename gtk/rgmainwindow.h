@@ -71,8 +71,7 @@ typedef enum {
    PKG_DELETE_WITH_DEPS
 } RGPkgAction;
 
-
-class RGMainWindow:public RGGladeWindow, public RPackageObserver {
+class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    enum {
       DoNothing,
       InstallRecommended,
@@ -131,8 +130,6 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
    GtkWidget *_proceedM;
    GtkWidget *_upgradeB;
    GtkWidget *_upgradeM;
-   //GtkWidget *_distUpgradeB;
-   //GtkWidget *_distUpgradeM;
    GtkWidget *_fixBrokenM;
 
    // filter/find panel   
@@ -154,38 +151,10 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
    GtkTextBuffer *_pkgCommonTextBuffer;
    GtkTextTag *_pkgCommonBoldTag;
 
-/*    GtkImage *_stateP; */
-/*    GdkPixbuf *_alertPix; */
-
    GtkWidget *_importP;
-
-   GtkWidget *_pkgCommonView;
-   GtkTextBuffer *_descrBuffer;
 
    GtkWidget *_filesView;
    GtkTextBuffer *_filesBuffer;
-
-   GtkWidget *_depP;
-   GtkWidget *_depTab;
-
-   GtkWidget *_rdepList;        /* gtktreeview */
-   GtkListStore *_rdepListStore;
-
-   GtkWidget *_depList;         /* gtktreeview */
-   GtkListStore *_depListStore;
-   GtkWidget *_depInfoL;
-
-   GtkWidget *_recList;         /* gtktreeview */
-   GtkListStore *_recListStore;
-
-   GtkWidget *_providesList;    /* gtktreeview */
-   GtkListStore *_providesListStore;
-
-
-   GtkWidget *_availDepList;    /* gtktreeview */
-   GtkListStore *_availDepListStore;
-   GtkWidget *_availDepInfoL;
-
 
    RGFilterManagerWindow *_fmanagerWin;
    RGSourcesWindow *_sourcesWin;
@@ -216,16 +185,9 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
    GtkWidget *createViewMenu();
    void refreshSubViewList();
 
-#if 0                           // PORTME
-   void changeTreeDisplayMode(RPackageLister::treeDisplayMode mode);
-#endif
-
    static void rowExpanded(GtkTreeView *treeview, GtkTreeIter *arg1,
                            GtkTreePath *arg2, gpointer data);
 
-   static gboolean cbPackageListClicked(GtkWidget *treeview,
-                                        GdkEventButton * event,
-                                        gpointer userdata);
    static void treeviewPopupMenu(GtkWidget *treeview,
                                  GdkEventButton * event,
                                  RGMainWindow *me,
@@ -237,20 +199,6 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
       return ((RGMainWindow *) me)->close();
    };
 
-   static void selectedRow(GtkTreeSelection *selection, gpointer data);
-   static void cbPackageListRowActivated(GtkTreeView *treeview,
-                                         GtkTreePath *arg1,
-                                         GtkTreeViewColumn *arg2,
-                                         gpointer user_data);
-
-#if 0                           // PORTME
-   static void onSectionTree(GtkWidget *self, void *data);
-   static void onAlphabeticTree(GtkWidget *self, void *data);
-   static void onStatusTree(GtkWidget *self, void *data);
-   static void onFlatList(GtkWidget *self, void *data);
-   static void onTagTree(GtkWidget *self, void *data);
-#endif
-
    // misc
    GtkWidget *createFilterMenu();
    void refreshFilterMenu();
@@ -258,10 +206,65 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
 
    // package info
    void updatePackageInfo(RPackage *pkg);
-   void updatePackageStatus(RPackage *pkg);
-   void updateDynPackageInfo(RPackage *pkg);
-   void updateVersionButtons(RPackage *pkg);
    RPackage *selectedPackage();
+
+
+   // helpers
+   void pkgAction(RGPkgAction action);
+   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true);
+   void pkgRemoveHelper(RPackage *pkg, bool purge = false,
+		   	bool withDeps = false);
+   void pkgKeepHelper(RPackage *pkg);
+
+   // install a non-standard version (data is a char* of the version)
+   static void installFromVersion(GtkWidget *self, void *data);
+
+   // RPackageObserver
+   virtual void notifyChange(RPackage *pkg);
+   virtual void notifyPreFilteredChange() {
+   };
+   virtual void notifyPostFilteredChange() {
+   };
+
+ public:
+   RGMainWindow(RPackageLister *packLister, string name);
+   virtual ~RGMainWindow() {};
+
+   void setInterfaceLocked(bool flag);
+   void setTreeLocked(bool flag);
+   void rebuildTreeView() {
+      buildTreeView();
+   };
+
+   void setStatusText(char *text = NULL);
+
+   void saveState();
+   bool restoreState();
+
+   bool initDebtags();
+
+   bool showErrors();
+
+
+   void proceed();
+   void showRepositoriesWindow();
+
+
+   // --------------------------------------------------------------------
+   // Callbacks
+   //
+
+   static void cbPkgAction(GtkWidget *self, void *data);
+
+   static gboolean cbPackageListClicked(GtkWidget *treeview,
+                                        GdkEventButton * event,
+                                        gpointer userdata);
+
+   static void selectedRow(GtkTreeSelection *selection, gpointer data);
+   static void cbPackageListRowActivated(GtkTreeView *treeview,
+                                         GtkTreePath *arg1,
+                                         GtkTreeViewColumn *arg2,
+                                         gpointer user_data);
 
    // menu stuff
 
@@ -286,7 +289,6 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
    static void proceedClicked(GtkWidget *self, void *data);
 
    // packages menu
-   static void menuActionClicked(GtkWidget *self, void *data);
    static void menuPinClicked(GtkWidget *self, void *data);
 
    // filter menu
@@ -314,56 +316,9 @@ class RGMainWindow:public RGGladeWindow, public RPackageObserver {
 
 
    // the buttons 
-   static void actionClicked(GtkWidget *clickedB, void *data);
    static void pkgHelpClicked(GtkWidget *self, void *data);
    static void pkgReconfigureClicked(GtkWidget *self, void *data);
 
-
-   // helpers
-
-   // this does the actual pkgAction work (install, remove, upgrade)
-   static void doPkgAction(RGMainWindow *me, RGPkgAction action);
-   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false, bool withDeps =
-                        false);
-   void pkgKeepHelper(RPackage *pkg);
-
-   // install a non-standard version (data is a char* of the version)
-   static void installFromVersion(GtkWidget *self, void *data);
-
-   // RPackageObserver
-   virtual void notifyChange(RPackage *pkg);
-   virtual void notifyPreFilteredChange() {
-   };
-   virtual void notifyPostFilteredChange() {
-   };
-
-   // obsolete
-   //static void removeDepsClicked(GtkWidget *self, void *data);
-   //static void actionVisibleClicked(GtkWidget *self, void *data);
-
- public:
-   RGMainWindow(RPackageLister *packLister, string name);
-   virtual ~RGMainWindow() {};
-
-   void setInterfaceLocked(bool flag);
-   void setTreeLocked(bool flag);
-   void rebuildTreeView() {
-      buildTreeView();
-   };
-
-   void setStatusText(char *text = NULL);
-
-   void saveState();
-   bool restoreState();
-
-   bool initDebtags();
-
-   bool showErrors();
-
-
-   void proceed();
-   void showRepositoriesWindow();
 };
 
 

@@ -727,12 +727,9 @@ static void setLabel(GladeXML *xml, const char *widget_name, const int value)
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
-   //cout << "RGMainWindow::notifyChange("<<pkg->name()<<")" << endl;
-   // we changed pkg's status
-   if (pkg != NULL) {
-      updateDynPackageInfo(pkg);
+   if (pkg != NULL)
       refreshTable(pkg);
-   }
+
    setStatusText();
 }
 
@@ -751,481 +748,37 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
-   //cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
-
-
-
    // FIXME: memory leak?!?
    GtkPkgList *_pkgList = gtk_pkg_list_new(_lister);
    _activeTreeModel = GTK_TREE_MODEL(_pkgList);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(_pkgList));
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
-
    updatePackageInfo(selectedPkg);
 
    setStatusText();
 }
 
-// mvo: this function needs a cleanup :)
-void RGMainWindow::updatePackageStatus(RPackage *pkg)
-{
-#if 0                           // PORTME
-   if (pkg == NULL) {
-      gtk_widget_set_sensitive(_installM, FALSE);
-      gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-      gtk_widget_set_sensitive(_removeM, FALSE);
-      gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
-      gtk_widget_set_sensitive(_purgeM, FALSE);
-      gtk_widget_set_sensitive(_pinM, FALSE);
-      return;
-   }
-
-   RPackage::PackageStatus status = pkg->getStatus();
-   RPackage::MarkedStatus mstatus = pkg->getMarkedStatus();
-   int other = pkg->getOtherStatus();
-
-   switch (status) {
-      case RPackage::SInstalledUpdated:
-         gtk_widget_set_sensitive(_actionB[1], FALSE);
-         gtk_widget_set_sensitive(_actionB[2], TRUE);
-         gtk_widget_set_sensitive(_installM, FALSE);
-         gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-         gtk_widget_set_sensitive(_removeM, TRUE);
-         gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-         gtk_widget_set_sensitive(_purgeM, TRUE);
-         gtk_widget_set_sensitive(_pinM, TRUE);
-         gtk_widget_set_sensitive(_pkgHelp, TRUE);
-         break;
-
-      case RPackage::SInstalledOutdated:
-         gtk_widget_set_sensitive(_actionB[1], TRUE);
-         gtk_widget_set_sensitive(_actionB[2], TRUE);
-         gtk_widget_set_sensitive(_installM, FALSE);
-         gtk_widget_set_sensitive(_pkgupgradeM, TRUE);
-         gtk_widget_set_sensitive(_removeM, TRUE);
-         gtk_widget_set_sensitive(_purgeM, TRUE);
-         gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-         gtk_widget_set_sensitive(_pinM, TRUE);
-         gtk_widget_set_sensitive(_pkgHelp, TRUE);
-         break;
-
-      case RPackage::SInstalledBroken:
-         gtk_widget_set_sensitive(_actionB[1], FALSE);
-         gtk_widget_set_sensitive(_actionB[2], TRUE);
-         gtk_widget_set_sensitive(_installM, FALSE);
-         gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-         gtk_widget_set_sensitive(_removeM, TRUE);
-         gtk_widget_set_sensitive(_purgeM, TRUE);
-         gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-         gtk_widget_set_sensitive(_pinM, FALSE);
-         gtk_widget_set_sensitive(_pkgHelp, TRUE);
-         break;
-
-      case RPackage::SNotInstalled:
-         gtk_widget_set_sensitive(_actionB[1], TRUE);
-         gtk_widget_set_sensitive(_actionB[2], FALSE);
-         gtk_widget_set_sensitive(_installM, TRUE);
-         gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-         gtk_widget_set_sensitive(_removeM, FALSE);
-         gtk_widget_set_sensitive(_purgeM, FALSE);
-         gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
-         gtk_widget_set_sensitive(_pinM, TRUE);
-         gtk_widget_set_sensitive(_pkgHelp, FALSE);
-         break;
-   }
-
-   // only activate "keep" if it's actually applyable
-   if (mstatus == RPackage::MKeep) {
-      gtk_widget_set_sensitive(_actionB[0], FALSE);
-      gtk_widget_set_sensitive(_keepM, FALSE);
-   } else {
-      gtk_widget_set_sensitive(_actionB[0], TRUE);
-      gtk_widget_set_sensitive(_keepM, TRUE);
-   }
-
-   _currentB = NULL;
-   setLabel(_gladeXML, "label_state",
-            _(RPackageStatus::pkgStatus.getLongStatusString(pkg)));
-   switch (mstatus) {
-      case RPackage::MHeld:
-      case RPackage::MKeep:
-         _currentB = _actionB[0];
-         break;
-
-      case RPackage::MInstall:
-      case RPackage::MUpgrade:
-         _currentB = _actionB[1];
-         gtk_widget_set_sensitive(_actionB[1], TRUE);
-         break;
-
-      case RPackage::MRemove:
-         _currentB = _actionB[2];
-         break;
-   }
-
-#if 0
-   gtk_widget_set_sensitive(_pkgReconfigure, FALSE);
-   if (other & RPackage::OPinned) {
-      gtk_widget_set_sensitive(_actionB[2], FALSE);
-      gtk_widget_set_sensitive(_installM, FALSE);
-      gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-      gtk_widget_set_sensitive(_removeM, FALSE);
-      gtk_widget_set_sensitive(_purgeM, FALSE);
-      gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
-      gtk_widget_set_sensitive(_pinM, TRUE);
-   }
-
-   if ((pkg->dependsOn("debconf") || pkg->dependsOn("debconf-i18n")) &&
-       (status == RPackage::SInstalledUpdated ||
-        status == RPackage::SInstalledOutdated)) {
-      gtk_widget_set_sensitive(_pkgReconfigure, TRUE);
-   }
-#endif
-
-   if (RPackage::OResidualConfig & pkg->getOtherStatus())
-      gtk_widget_set_sensitive(_purgeM, TRUE);
-
-   // set button, but disable toggle signal
-   bool locked = (RPackage::OPinned & pkg->getOtherStatus());
-   _blockActions = TRUE;
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
-   _blockActions = FALSE;
-
-//     gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), 
-//                RPackageStatus::pkgStatus.getPixbuf(pkg));
-
-   if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_currentB)) == FALSE) {
-      _blockActions = TRUE;
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_currentB), TRUE);
-      _blockActions = FALSE;
-   }
-#endif
-}
-
-
-void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
-{
-   //cout << "updateDynPackageInfo()" << endl;
-
-   if (_blockActions)
-      return;
-
-   updatePackageStatus(pkg);
-
-   if (pkg == NULL)
-      return;
-
-   // dependencies
-   gtk_label_set_text(GTK_LABEL(_depInfoL), "");
-
-   gtk_list_store_clear(_depListStore);
-
-   bool byProvider = TRUE;
-
-   char buffer[512];
-   GtkTreeIter iter;
-
-   const char *depType, *depPkg, *depName, *depVer;
-   char *summary;               // XXX Why not const?
-   bool ok;
-   if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
-      do {
-         //cout << "got: " << depType << " " << depName << endl;
-         if (byProvider) {
-#ifdef HAVE_RPM
-            snprintf(buffer, sizeof(buffer), "%s: %s %s",
-                     utf8(depType), depPkg ? depPkg : depName, depVer);
-#else
-            snprintf(buffer, sizeof(buffer), "%s: %s %s",
-                     utf8(depType), depName, depVer);
-#endif
-         } else {
-            snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
-                     utf8(depType), depName, depVer, depPkg ? depPkg : "-");
-         }
-         //cout << "buffer is: " << buffer << endl;
-
-         // check if this item is duplicated
-         bool dup = FALSE;
-         bool valid =
-            gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_depListStore),
-                                          &iter);
-
-         while (valid) {
-            char *str;
-
-            gtk_tree_model_get(GTK_TREE_MODEL(_depListStore), &iter,
-                               DEP_NAME_COLUMN, &str, -1);
-            if (g_strcasecmp(str, buffer) == 0) {
-               dup = TRUE;
-               g_free(str);
-               break;
-            }
-            valid =
-               gtk_tree_model_iter_next(GTK_TREE_MODEL(_depListStore), &iter);
-            g_free(str);
-         }
-
-         if (!dup) {
-            gtk_list_store_append(_depListStore, &iter);
-            gtk_list_store_set(_depListStore, &iter,
-                               DEP_NAME_COLUMN, buffer,
-                               DEP_IS_NOT_AVAILABLE, !ok,
-                               DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
-                               DEP_PKG_INFO, summary, -1);
-         }
-      } while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-   }
-   // reverse dependencies
-   gtk_list_store_clear(_rdepListStore);
-   if (pkg->enumRDeps(depName, depPkg)) {
-      do {
-         snprintf(buffer, sizeof(buffer), "%s (%s)", depName, depPkg);
-         gtk_list_store_append(_rdepListStore, &iter);
-         gtk_list_store_set(_rdepListStore, &iter,
-                            DEP_NAME_COLUMN, buffer, -1);
-      } while (pkg->nextRDeps(depName, depPkg));
-   }
-   // weak dependencies
-   //cout << "building weak dependencies list" << endl;
-   gtk_list_store_clear(_recListStore);
-   g_object_set_data(G_OBJECT(_recList), "pkg", pkg);
-   if (pkg->enumWDeps(depType, depPkg, ok)) {
-      do {
-         GtkTreeIter iter;
-         snprintf(buffer, sizeof(buffer), "%s: %s", utf8(depType), depPkg);
-         gtk_list_store_append(_recListStore, &iter);
-         gtk_list_store_set(_recListStore, &iter,
-                            DEP_NAME_COLUMN, buffer,
-                            DEP_IS_NOT_AVAILABLE, !ok,
-                            DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000", -1);
-      } while (pkg->nextWDeps(depName, depPkg, ok));
-   }
-   //provides list
-   gtk_list_store_clear(_providesListStore);
-   vector<const char *> provides = pkg->provides();
-   for (unsigned int i = 0; i < provides.size(); i++) {
-      //cout << "got: " << provides[i] << endl;
-      GtkTreeIter iter;
-      gtk_list_store_append(_providesListStore, &iter);
-      gtk_list_store_set(_providesListStore, &iter,
-                         DEP_NAME_COLUMN, utf8(provides[i]), -1);
-   }
-
-   // dependencies of the available package
-   gtk_list_store_clear(_availDepListStore);
-   gtk_label_set_text(GTK_LABEL(_availDepInfoL), "");
-   byProvider = TRUE;
-   if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
-      do {
-         char buffer[512];
-         if (byProvider) {
-            snprintf(buffer, sizeof(buffer), "%s: %s %s",
-                     utf8(depType), depPkg ? depPkg : depName, depVer);
-         } else {
-            snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
-                     utf8(depType), depName, depVer, depPkg ? depPkg : "-");
-         }
-         // check if this item is duplicated
-         bool dup = FALSE;
-         bool valid =
-            gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_availDepListStore),
-                                          &iter);
-         while (valid) {
-            char *str;
-            gtk_tree_model_get(GTK_TREE_MODEL(_availDepListStore), &iter,
-                               DEP_NAME_COLUMN, &str, -1);
-
-            if (g_strcasecmp(str, buffer) == 0) {
-               dup = TRUE;
-               g_free(str);
-               break;
-            }
-            valid =
-               gtk_tree_model_iter_next(GTK_TREE_MODEL(_availDepListStore),
-                                        &iter);
-            g_free(str);
-         }
-         if (!dup) {
-            gtk_list_store_append(_availDepListStore, &iter);
-            gtk_list_store_set(_availDepListStore, &iter,
-                               DEP_NAME_COLUMN, buffer,
-                               DEP_IS_NOT_AVAILABLE, !ok,
-                               DEP_IS_NOT_AVAILABLE_COLOR, "#E0E000000000",
-                               DEP_PKG_INFO, summary, -1);
-         }
-      } while (pkg->nextDeps(depType, depName, depPkg, depVer, summary, ok));
-   }
-}
-
-void RGMainWindow::updateVersionButtons(RPackage *pkg)
-{
-#if 0                           // PORTME
-   // remove old radiobuttons
-   GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
-   gtk_container_foreach(GTK_CONTAINER(vbox),
-                         (void (*)(GtkWidget *, void *))(gtk_widget_destroy),
-                         NULL);
-
-   if (pkg == NULL)
-      return;
-
-   // get available versions
-   static vector<pair<string, string> >versions;
-   versions.clear();
-   versions = pkg->getAvailableVersions();
-
-   int mstatus = pkg->getMarkedStatus();
-
-   // build new checkboxes
-   GtkWidget *button;
-   bool found = false;
-   for (unsigned int i = 0; i < versions.size(); i++) {
-      // first radiobutton makes the radio-button group 
-      gchar *str =
-         g_strdup_printf("%s (%s)", versions[i].first.c_str(),
-                         versions[i].second.c_str());
-      if (i == 0)
-         button = gtk_radio_button_new_with_label(NULL, str);
-      else
-         button =
-            gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON
-                                                        (button), str);
-      g_free(str);
-
-      g_object_set_data(G_OBJECT(button), "me", this);
-      g_object_set_data(G_OBJECT(button), "pkg", pkg);
-      // check what version is installed or will installed
-      if (mstatus == RPackage::MKeep) {
-         if (pkg->installedVersion() &&
-             (string(pkg->installedVersion()) == versions[i].first)) {
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
-            found = true;
-         }
-      } else if (mstatus != RPackage::MRemove) {
-         if (pkg->availableVersion() &&
-             (string(pkg->availableVersion()) == versions[i].first)) {
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
-            found = true;
-         }
-      }
-      g_signal_connect(G_OBJECT(button), "toggled",
-                       G_CALLBACK(installFromVersion),
-                       (gchar *) versions[i].first.c_str());
-      gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
-      gtk_widget_show(button);
-   }
-   button =
-      gtk_radio_button_new_with_label_from_widget(GTK_RADIO_BUTTON(button),
-                                                  _("Not installed"));
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_object_set_data(G_OBJECT(button), "pkg", pkg);
-   if (!found)
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), true);
-   g_signal_connect(G_OBJECT(button), "toggled",
-                    G_CALLBACK(installFromVersion), NULL);
-   gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
-   gtk_widget_show(button);
-
-   gtk_widget_show(vbox);
-
-   // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "scrolledwindow_versions"));
-   gtk_widget_show(glade_xml_get_widget(_gladeXML, "scrolledwindow_versions"));
-#endif
-}
-
 void RGMainWindow::updatePackageInfo(RPackage *pkg)
 {
-   RPackage::UpdateImportance importance;
-   RPackage::PackageStatus status;
-   RPackage::MarkedStatus mstatus;
-
    if (_blockActions)
       return;
 
    if (!pkg) {
+      gtk_widget_set_sensitive(_pkginfo, false);
       gtk_text_buffer_set_text(_pkgCommonTextBuffer,
                                _("No package is selected.\n"), -1);
-
-      //setLabel(_gladeXML,"label_state", "");
-      //gtk_label_set_text(GTK_LABEL(_depInfoL), "");
-//  gtk_image_set_from_pixbuf(GTK_IMAGE(_stateP), NULL);
-
-      gtk_widget_set_sensitive(_pkginfo, FALSE);
-
-      updateVersionButtons(NULL);
-      updatePackageStatus(NULL);
-      return;
-   }
-   gtk_widget_set_sensitive(_pkginfo, TRUE);
-
-   status = pkg->getStatus();
-   mstatus = pkg->getMarkedStatus();
-
-   updateVersionButtons(pkg);
-
-   if (mstatus == RPackage::MDowngrade) {
-      gtk_label_set_markup_with_mnemonic(GTK_LABEL(_actionBInstallLabel),
-                                         _("_Downgrade"));
-   } else if (status == RPackage::SNotInstalled) {
-      gtk_label_set_markup_with_mnemonic(GTK_LABEL(_actionBInstallLabel),
-                                         _("_Install"));
    } else {
-      gtk_label_set_markup_with_mnemonic(GTK_LABEL(_actionBInstallLabel),
-                                         _("_Upgrade"));
+      gtk_widget_set_sensitive(_pkginfo, true);
+      gtk_text_buffer_set_text(_pkgCommonTextBuffer,
+                               utf8(pkg->description()), -1);
+
+      GtkTextIter start;
+      gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &start, 0);
+      gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_pkgCommonTextView),
+                                   &start, 0, false, 0, 0);
    }
 
-   // not used right now
-   importance = pkg->updateImportance();
-
-   // name/summary
-   GtkTextIter start, end;
-   const gchar *s = pkg->name();
-   gchar *msg = g_strdup_printf("%s\n%s", s, pkg->summary());
-   gtk_text_buffer_set_text(_pkgCommonTextBuffer, utf8(msg), -1);
-   gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &start, 0);
-   gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &end, strlen(s));
-   gtk_text_buffer_apply_tag(_pkgCommonTextBuffer, _pkgCommonBoldTag,
-                             &start, &end);
-   g_free(msg);
-
-   // package info
-   setLabel(_gladeXML, "label_section",
-            _(trans_section(pkg->section()).c_str()));
-   setLabel(_gladeXML, "label_priority", pkg->priority());
-#if 0                           // PORTME
-#ifdef HAVE_DEBTAGS
-   setLabel(_gladeXML, "label_tags", pkg->tags());
-#endif
-#endif
-   setLabel(_gladeXML, "label_maintainer", pkg->maintainer());
-   setLabel(_gladeXML, "label_installed_version", pkg->installedVersion());
-   setLabel(_gladeXML, "label_installed_size", pkg->installedSize());
-   setLabel(_gladeXML, "label_latest_version", pkg->availableVersion());
-   setLabel(_gladeXML, "label_latest_size", pkg->availableInstalledSize());
-   setLabel(_gladeXML, "label_latest_download_size",
-            pkg->availablePackageSize());
-
-
-   // description
-   GtkTextIter iter;
-   gtk_text_buffer_set_text(_descrBuffer, utf8(pkg->description()), -1);
-   gtk_text_buffer_get_iter_at_offset(_descrBuffer, &iter, 0);
-   gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_pkgCommonView),
-                                &iter, 0, FALSE, 0, 0);
-
-#if 0                           //PORTME
-//#ifndef HAVE_RPM
-   // files
-   gtk_text_buffer_set_text(_filesBuffer, utf8(pkg->installedFiles()), -1);
-   gtk_text_buffer_get_iter_at_offset(_filesBuffer, &iter, 0);
-   gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(_filesView), &iter, 0, FALSE, 0,
-                                0);
-#endif
-
-   updateDynPackageInfo(pkg);
    setStatusText();
 }
 
@@ -1305,38 +858,6 @@ void RGMainWindow::menuPinClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(FALSE);
 }
 
-
-
-void RGMainWindow::menuActionClicked(GtkWidget *self, void *data)
-{
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-
-   // do the work!
-   doPkgAction(me, (RGPkgAction) GPOINTER_TO_INT(data));
-}
-
-void RGMainWindow::actionClicked(GtkWidget *clickedB, void *data)
-{
-   RGMainWindow *me = (RGMainWindow *) data;
-   int i;
-
-   if (me->_currentB == clickedB || me->_blockActions)
-      return;
-
-   // what button was pressed?
-   for (i = 0; i < 3 && me->_actionB[i] != clickedB; i++);
-
-   // can bind any of the three delete actions (delete, purge, del_with_deps)
-   // to the button
-   if (i == PKG_DELETE)
-      i = _config->FindI("Synaptic::delAction", PKG_DELETE);
-
-   // do the work!
-   doPkgAction(me, (RGPkgAction) i);
-
-   me->_currentB = clickedB;
-}
-
 // install a specific version
 void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 {
@@ -1351,7 +872,7 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
    // set pkg to "not installed" 
    if (verInfo == NULL) {
       pkg->unsetVersion();
-      me->doPkgAction(me, PKG_DELETE);
+      me->pkgAction(PKG_DELETE);
       return;
    }
 
@@ -1364,10 +885,10 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
    pkg->setNotify(false);
    if (instVer == string(verInfo)) {
       pkg->unsetVersion();
-      me->doPkgAction(me, PKG_KEEP);
+      me->pkgAction(PKG_KEEP);
    } else {
       pkg->setVersion(verInfo);
-      me->doPkgAction(me, PKG_INSTALL);
+      me->pkgAction(PKG_INSTALL);
       // check if this version was possible to install/upgrade/downgrade
       // if not, unset the candiate version 
       int mstatus = pkg->getMarkedStatus();
@@ -1382,22 +903,20 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 //     cout << "status " << pkg->getStatus() << endl;
 }
 
-void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
+void RGMainWindow::pkgAction(RGPkgAction action)
 {
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    GList *li, *list;
 
-   //cout << "RGMainWindow::doPkgAction()" << endl;
-
-   me->setInterfaceLocked(TRUE);
-   me->_blockActions = TRUE;
+   setInterfaceLocked(TRUE);
+   _blockActions = TRUE;
 
    // get list of selected pkgs
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
 #if GTK_CHECK_VERSION(2,2,0)
    list = li = gtk_tree_selection_get_selected_rows(selection,
-                                                    &me->_activeTreeModel);
+                                                    &_activeTreeModel);
 #else
    li = list = NULL;
    gtk_tree_selection_selected_foreach(selection, cbGetSelectedRows, &list);
@@ -1409,15 +928,14 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
    bool ask = _config->FindB("Synaptic::AskRelated", true);
 
    // we always save the state (for undo)
-   me->_lister->saveState(state);
-   if (ask) {
-      me->_lister->unregisterObserver(me);
-   }
-   me->_lister->notifyCachePreChange();
+   _lister->saveState(state);
+   if (ask)
+      _lister->unregisterObserver(this);
+   _lister->notifyCachePreChange();
 
    // We block notifications in setInstall() and friends, since it'd
    // kill the algorithm in a long loop with many selected packages.
-   me->_lister->notifyPreChange(NULL);
+   _lister->notifyPreChange(NULL);
 
    // do the work
    vector<RPackage *> exclude;
@@ -1425,10 +943,9 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
    RPackage *pkg = NULL;
 
    while (li != NULL) {
-      //cout << "doPkgAction()/loop" << endl;
-      gtk_tree_model_get_iter(me->_activeTreeModel, &iter,
+      gtk_tree_model_get_iter(_activeTreeModel, &iter,
                               (GtkTreePath *) (li->data));
-      gtk_tree_model_get(me->_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
+      gtk_tree_model_get(_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
       li = g_list_next(li);
       if (pkg == NULL)
          continue;
@@ -1440,11 +957,11 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       /* do the dirty deed */
       switch (action) {
          case PKG_KEEP:        // keep
-            me->pkgKeepHelper(pkg);
+            pkgKeepHelper(pkg);
             break;
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
-            me->pkgInstallHelper(pkg, false);
+            pkgInstallHelper(pkg, false);
 #if 0                           // PORTME!
             // This is segfaulting because clickedRecInstall can't find the
             // "pkg" data in _recList.
@@ -1459,13 +976,13 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 #endif
             break;
          case PKG_DELETE:      // delete
-            me->pkgRemoveHelper(pkg);
+            pkgRemoveHelper(pkg);
             break;
          case PKG_PURGE:       // purge
-            me->pkgRemoveHelper(pkg, true);
+            pkgRemoveHelper(pkg, true);
             break;
          case PKG_DELETE_WITH_DEPS:
-            me->pkgRemoveHelper(pkg, true, true);
+            pkgRemoveHelper(pkg, true, true);
             break;
          default:
             cout << "uh oh!!!!!!!!!" << endl;
@@ -1476,12 +993,12 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
    }
 
    // Do it just once, otherwise it'd kill a long installation list.
-   if (!me->_lister->check())
-      me->_lister->fixBroken();
+   if (!_lister->check())
+      _lister->fixBroken();
 
-   me->_lister->notifyPostChange(NULL);
+   _lister->notifyPostChange(NULL);
 
-   me->_lister->notifyCachePostChange();
+   _lister->notifyCachePostChange();
 
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
@@ -1491,16 +1008,16 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 
    // ask if the user really want this changes
    bool changed = true;
-   if (ask && me->_lister->getStateChanges(state, toKeep, toInstall,
+   if (ask && _lister->getStateChanges(state, toKeep, toInstall,
                                            toUpgrade, toRemove, toDowngrade,
                                            exclude)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
-      chng = new RGChangesWindow(me);
-      if (!chng->showAndConfirm(me->_lister, toKeep, toInstall,
+      chng = new RGChangesWindow(this);
+      if (!chng->showAndConfirm(_lister, toKeep, toInstall,
                                 toUpgrade, toRemove, toDowngrade)) {
          // canceled operation
-         me->_lister->restoreState(state);
+         _lister->restoreState(state);
          changed = false;
       }
       delete chng;
@@ -1511,7 +1028,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       string failedReason(_("Some packages could not be installed.\n\n"
                             "The following packages have unmet "
                             "dependencies:\n"));
-      me->_lister->saveUndoState(state);
+      _lister->saveUndoState(state);
       // check for failed installs
       if (action == PKG_INSTALL) {
          //cout << "action install" << endl;
@@ -1532,28 +1049,28 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
                failedReason += "\n";
                pkg->setKeep();
                pkg->unsetVersion();
-               me->_lister->notifyChange(pkg);
+               _lister->notifyChange(pkg);
             }
          }
          if (failed) {
             // TODO: make this a special dialog with TextView
-            me->_userDialog->warning(utf8(failedReason.c_str()));
+            _userDialog->warning(utf8(failedReason.c_str()));
          }
       }
    }
 
-   if (ask) {
-      me->_lister->registerObserver(me);
-   }
-   me->refreshTable(pkg);
+   if (ask)
+      _lister->registerObserver(this);
+
+   refreshTable(pkg);
 
    // free the list
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);
 
-   me->_blockActions = FALSE;
-   me->setInterfaceLocked(FALSE);
-   me->updatePackageInfo(pkg);
+   _blockActions = FALSE;
+   setInterfaceLocked(FALSE);
+   updatePackageInfo(pkg);
 }
 
 
@@ -2290,18 +1807,7 @@ void RGMainWindow::buildInterface()
    gtk_widget_hide(_purgeM);
 #endif
 
-#if 0                           // PORTME
-#ifndef HAVE_DEBTAGS
-   widget = glade_xml_get_widget(_gladeXML, "label_tags");
-   assert(widget);
-   gtk_widget_hide(widget);
-   widget = glade_xml_get_widget(_gladeXML, "label_tags_label");
-   assert(widget);
-   gtk_widget_hide(widget);
-#endif
-#endif
-
-   // workaround for a bug in libglade
+   // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
                         _("Update the list of available packages"), "");
@@ -2316,70 +1822,40 @@ void RGMainWindow::buildInterface()
 
    _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
    assert(_pkgCommonTextView);
-   _pkgCommonTextBuffer =
-      gtk_text_view_get_buffer(GTK_TEXT_VIEW(_pkgCommonTextView));
-   _pkgCommonBoldTag =
-      gtk_text_buffer_create_tag(_pkgCommonTextBuffer, "bold", "weight",
-                                 PANGO_WEIGHT_BOLD, "scale", 1.1, NULL);
+   gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_pkgCommonTextView),
+                               GTK_WRAP_WORD);
+   _pkgCommonTextBuffer = gtk_text_view_get_buffer(
+                               GTK_TEXT_VIEW(_pkgCommonTextView));
+   _pkgCommonBoldTag = gtk_text_buffer_create_tag(
+                               _pkgCommonTextBuffer,
+                               "bold", "weight", PANGO_WEIGHT_BOLD,
+                               "scale", 1.1, NULL);
 
-#if 0                           // DELME?
-   _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_action_clicked",
-                                 G_CALLBACK(actionClicked), this);
-   widget = glade_xml_get_widget(_gladeXML, "menu_keep");
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-#endif
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_keep",
-                                 G_CALLBACK(menuActionClicked),
+                                 G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_KEEP));
 
-#if 0                           // DELME?
-   _actionB[1] = glade_xml_get_widget(_gladeXML, "radiobutton_install");
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_action_clicked",
-                                 G_CALLBACK(actionClicked), this);
-   _actionBInstallLabel = glade_xml_get_widget(_gladeXML,
-                                               "radiobutton_install_label");
-   widget = glade_xml_get_widget(_gladeXML, "menu_install");
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-#endif
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_install",
-                                 G_CALLBACK(menuActionClicked),
+                                 G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_INSTALL));
    // callback same as for install
    widget = glade_xml_get_widget(_gladeXML, "menu_upgrade");
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-#if 0                           // DELME?
-   _actionB[2] = glade_xml_get_widget(_gladeXML, "radiobutton_delete");
-   assert(widget);
-   g_object_set_data(G_OBJECT(_actionB[2]), "me", this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_action_clicked_delete",
-                                 G_CALLBACK(actionClicked), this);
-
-   widget = glade_xml_get_widget(_gladeXML, "menu_remove");
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-#endif
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_delete",
-                                 G_CALLBACK(menuActionClicked),
+                                 G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE));
-
 
    widget = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_delete_with_deps",
-                                 G_CALLBACK(menuActionClicked),
+                                 G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
 
 
@@ -2388,32 +1864,20 @@ void RGMainWindow::buildInterface()
    g_object_set_data(G_OBJECT(widget), "me", this);
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_purge",
-                                 G_CALLBACK(menuActionClicked),
+                                 G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_PURGE));
 
    _pinM = glade_xml_get_widget(_gladeXML, "menu_hold");
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_pin",
                                  G_CALLBACK(menuPinClicked), this);
+
    // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
    gtk_widget_hide(_pinM);
    widget = glade_xml_get_widget(_gladeXML, "separator_hold");
    if (widget != NULL)
       gtk_widget_hide(widget);
-#endif
-
-   // only for debian 
-//     _pkgHelp = glade_xml_get_widget(_gladeXML, "button_pkghelp");
-//     assert(_pkgHelp);
-#if 0                           //PORTME
-   _pkgReconfigure = glade_xml_get_widget(_gladeXML, "button_pkgreconfigure");
-   assert(_pkgReconfigure);
-
-   if (!FileExists("/usr/bin/dwww"))
-      gtk_widget_hide(_pkgHelp);
-   if (!FileExists("/usr/sbin/dpkg-reconfigure"))
-      gtk_widget_hide(_pkgReconfigure);
 #endif
 
    _pkginfo = glade_xml_get_widget(_gladeXML, "box_pkginfo");
@@ -2428,168 +1892,6 @@ void RGMainWindow::buildInterface()
    gtk_paned_set_position(GTK_PANED(_vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
 
-
-
-   _pkgCommonView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
-   assert(_pkgCommonView);
-   _descrBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_pkgCommonView));
-   gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_pkgCommonView), GTK_WRAP_WORD);
-
-   // PORTME
-//     _filesView = glade_xml_get_widget(_gladeXML, "textview_files");
-//     assert(_filesView);
-//     _filesBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (_filesView));
-//     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_filesView), GTK_WRAP_WORD);
-
-
-#if 0                           //PORTME
-   _depP = glade_xml_get_widget(_gladeXML, "optionmenu_depends");
-   assert(_depP);
-   item = glade_xml_get_widget(_gladeXML, "menu_what_it_depends");
-   assert(item);
-   gtk_object_set_data(GTK_OBJECT(item), "index", (void *)WHAT_IT_DEPENDS_ON);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) changedDepView, this);
-
-   item = glade_xml_get_widget(_gladeXML, "menu_what_depends_on_it");
-   assert(item);
-   gtk_object_set_data(GTK_OBJECT(item), "index", (void *)WHAT_DEPENDS_ON_IT);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) changedDepView, this);
-
-   item = glade_xml_get_widget(_gladeXML, "menu_what_it_would_depend_on");
-   assert(item);
-   gtk_object_set_data(GTK_OBJECT(item), "index",
-                       (void *)WHAT_IT_WOULD_DEPEND_ON);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) changedDepView, this);
-
-   item = glade_xml_get_widget(_gladeXML, "menu_provides");
-   assert(item);
-   gtk_object_set_data(GTK_OBJECT(item), "index", (void *)WHAT_IT_PROVIDES);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) changedDepView, this);
-
-   // recommends and suggests are only available on debian,
-   // so we activate the signal there and hide it on rpm systems
-   item = glade_xml_get_widget(_gladeXML, "menu_suggested");
-   assert(item);
-#ifndef HAVE_RPM
-   gtk_object_set_data(GTK_OBJECT(item), "index", (void *)WHAT_IT_SUGGESTS);
-   gtk_signal_connect(GTK_OBJECT(item), "activate",
-                      (GtkSignalFunc) changedDepView, this);
-#else
-   gtk_widget_hide(item);
-#endif
-   gtk_option_menu_set_history(GTK_OPTION_MENU(_depP), 0);
-
-   _depTab = glade_xml_get_widget(_gladeXML, "notebook_dep_tab");
-   gtk_notebook_set_show_tabs(GTK_NOTEBOOK(_depTab), FALSE);
-   assert(_depTab);
-
-   /* create the dependency list */
-   _depList = glade_xml_get_widget(_gladeXML, "treeview_deplist");
-   assert(_depList);
-   _depListStore = gtk_list_store_new(4, G_TYPE_STRING, /* text */
-                                      G_TYPE_BOOLEAN,   /* foreground-set */
-                                      G_TYPE_STRING,    /* foreground */
-                                      G_TYPE_STRING);   /* extra info */
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_depList),
-                           GTK_TREE_MODEL(_depListStore));
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
-                                                     "text", DEP_NAME_COLUMN,
-                                                     "foreground-set",
-                                                     DEP_IS_NOT_AVAILABLE,
-                                                     "foreground",
-                                                     DEP_IS_NOT_AVAILABLE_COLOR,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_depList), column);
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_depList));
-   g_signal_connect(G_OBJECT(selection), "changed",
-                    G_CALLBACK(clickedDepList), this);
-   _depInfoL = glade_xml_get_widget(_gladeXML, "label_dep_info");
-   assert(_depInfoL);
-   gtk_label_set_text(GTK_LABEL(_depInfoL), "");
-
-   /* build rdep list */
-   _rdepList = glade_xml_get_widget(_gladeXML, "treeview_rdeps");
-   assert(_rdepList);
-   _rdepListStore = gtk_list_store_new(1, G_TYPE_STRING);       /* text */
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_rdepList),
-                           GTK_TREE_MODEL(_rdepListStore));
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
-                                                     "text", DEP_NAME_COLUMN,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_rdepList), column);
-
-
-
-   _availDepList = glade_xml_get_widget(_gladeXML, "treeview_availdep_list");
-   assert(_availDepList);
-   _availDepListStore = gtk_list_store_new(4, G_TYPE_STRING,    /* text */
-                                           G_TYPE_BOOLEAN,      /*foreground-set */
-                                           G_TYPE_STRING,       /* foreground */
-                                           G_TYPE_STRING);      /* extra info */
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_availDepList),
-                           GTK_TREE_MODEL(_availDepListStore));
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
-                                                     "text", DEP_NAME_COLUMN,
-                                                     "foreground-set",
-                                                     DEP_IS_NOT_AVAILABLE,
-                                                     "foreground",
-                                                     DEP_IS_NOT_AVAILABLE_COLOR,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_availDepList), column);
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_availDepList));
-   g_signal_connect(G_OBJECT(selection), "changed",
-                    G_CALLBACK(clickedAvailDepList), this);
-
-   _availDepInfoL = glade_xml_get_widget(_gladeXML, "label_availdep_info");
-   assert(_availDepInfoL);
-
-
-
-   /* build provides list */
-   _providesList = glade_xml_get_widget(_gladeXML, "treeview_provides_list");
-   assert(_availDepList);
-   _providesListStore = gtk_list_store_new(1, G_TYPE_STRING,    /* text */
-                                           -1);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_providesList),
-                           GTK_TREE_MODEL(_providesListStore));
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
-                                                     "text", DEP_NAME_COLUMN,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_providesList), column);
-
-   /* create the recommended/suggested list */
-   _recList = glade_xml_get_widget(_gladeXML, "treeview_rec_list");
-   assert(_recList);
-   _recListStore = gtk_list_store_new(3, G_TYPE_STRING, /* text */
-                                      G_TYPE_BOOLEAN,   /* foreground-set */
-                                      G_TYPE_STRING);   /* foreground */
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_recList),
-                           GTK_TREE_MODEL(_recListStore));
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes("Packages", renderer,
-                                                     "text", DEP_NAME_COLUMN,
-                                                     "foreground-set",
-                                                     DEP_IS_NOT_AVAILABLE,
-                                                     "foreground",
-                                                     DEP_IS_NOT_AVAILABLE_COLOR,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_recList), column);
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_recList));
-   gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
-
-   _filtersB = button = glade_xml_get_widget(_gladeXML, "button_filters");
-   assert(button);
-   gtk_signal_connect(GTK_OBJECT(button), "clicked",
-                      (GtkSignalFunc) showFilterManagerWindow, this);
-#endif
 
    _filterPopup = glade_xml_get_widget(_gladeXML, "optionmenu_filters");
    assert(_filterPopup);
@@ -2621,15 +1923,6 @@ void RGMainWindow::buildInterface()
                                  G_CALLBACK(cbAddCDROM), this);
 
    /* --------------------------------------------------------------- */
-
-   // we don't support "installed files" on rpm currently
-#if 0                           // PORTME
-   //#ifdef HAVE_RPM 
-   widget = glade_xml_get_widget(_gladeXML, "notebook_info");
-   assert(widget);
-   // page of the "installed files"
-   gtk_notebook_remove_page(GTK_NOTEBOOK(widget), 3);
-#endif
 
    // toolbar menu code
    button = glade_xml_get_widget(_gladeXML, "menu_toolbar_pixmaps");
@@ -2690,7 +1983,7 @@ void RGMainWindow::buildInterface()
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked, (void *)PKG_KEEP);
+                    (GCallback) cbPkgAction, (void *)PKG_KEEP);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Install"));
@@ -2698,13 +1991,13 @@ void RGMainWindow::buildInterface()
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked, (void *)PKG_INSTALL);
+                    (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_menu_item_new_with_label(_("Upgrade"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked, (void *)PKG_INSTALL);
+                    (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
@@ -2712,14 +2005,14 @@ void RGMainWindow::buildInterface()
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked, (void *)PKG_DELETE);
+                    (GCallback) cbPkgAction, (void *)PKG_DELETE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #ifndef HAVE_RPM
    menuitem =
       gtk_menu_item_new_with_label(_("Remove Including Configuration"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked, (void *)PKG_PURGE);
+                    (GCallback) cbPkgAction, (void *)PKG_PURGE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif
    menuitem =
@@ -2727,7 +2020,7 @@ void RGMainWindow::buildInterface()
                                    ("Remove Including Orphaned Dependencies"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
-                    (GCallback) menuActionClicked,
+                    (GCallback) cbPkgAction,
                     (void *)PKG_DELETE_WITH_DEPS);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
@@ -2869,9 +2162,6 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
    gtk_tree_model_get(me->_activeTreeModel, &iter, PKG_COLUMN, &pkg, -1);
    if (pkg == NULL)
       return;
-//     cout << "selected: " << pkg->name() 
-//   << " path: " << (li->data)
-//   << endl;
 
    // free the list
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
@@ -2915,12 +2205,9 @@ void RGMainWindow::setStatusText(char *text)
 
    gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
    gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
-   //gtk_widget_set_sensitive(_distUpgradeB, _lister->upgradable() );
-   //gtk_widget_set_sensitive(_distUpgradeM, _lister->upgradable() );
 
    gtk_widget_set_sensitive(_proceedB, (toinstall + toremove) != 0);
    gtk_widget_set_sensitive(_proceedM, (toinstall + toremove) != 0);
-   //cout << "toinstall: " << toinstall << " toremove: " << toremove << endl;
    _unsavedChanges = ((toinstall + toremove) != 0);
 
    gtk_widget_queue_draw(_statusL);
@@ -3170,6 +2457,15 @@ void RGMainWindow::setTreeLocked(bool flag)
 
 // --------------------------------------------------------------------------
 // Callbacks
+//
+
+void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
+   assert(me);
+   me->pkgAction((RGPkgAction)GPOINTER_TO_INT(data));
+}
+
 
 gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
                                             GdkEventButton * event,
@@ -3247,14 +2543,14 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
 
    if (pstatus == RPackage::SNotInstalled) {
       if (mstatus == RPackage::MKeep)
-         me->doPkgAction(me, PKG_INSTALL);
+         me->pkgAction(PKG_INSTALL);
       else if (mstatus == RPackage::MInstall)
-         me->doPkgAction(me, PKG_DELETE);
+         me->pkgAction(PKG_DELETE);
    } else if (pstatus == RPackage::SInstalledOutdated) {
       if (mstatus == RPackage::MKeep)
-         me->doPkgAction(me, PKG_INSTALL);
+         me->pkgAction(PKG_INSTALL);
       else if (mstatus == RPackage::MUpgrade)
-         me->doPkgAction(me, PKG_KEEP);
+         me->pkgAction(PKG_KEEP);
    }
 
    gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_treeView), path, NULL, false);

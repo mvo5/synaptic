@@ -69,6 +69,7 @@ private:
    OpProgress *_progMeter;
    
    RPackage **_packages;
+   int *_packageindex;
    unsigned _count;
    set<string> allPackages; //all known packages (needed identifing "new" pkgs)
    

@@ -58,7 +58,8 @@
 
 using namespace std;
 
-RPackageLister::RPackageLister() :  _records(0), _packages(0), _filter(0)
+RPackageLister::RPackageLister()
+    :  _records(0), _packages(0), _packageindex(0), _filter(0)
 {
     _cache = new RPackageCache();
     
@@ -145,7 +146,7 @@ void RPackageLister::makePresetFilters()
 
 	registerFilter(filter);
     }
-#if 0 //TODO: how to find out about tasks?
+#ifdef HAVE_RPM
     {
 	filter = new RFilter();
 	filter->preset = true;
@@ -284,9 +285,7 @@ bool RPackageLister::upgradable()
 // We have to reread the cache if we're using "pin". 
 bool RPackageLister::openCache(bool reset)
 {
-    map<string,RPackage*> *pkgmap;
     static bool firstRun=true;
-    string pkgName;
 
     if (reset) {
 	if (!_cache->reset(*_progMeter)) {
@@ -327,82 +326,75 @@ bool RPackageLister::openCache(bool reset)
 	return 	_error->Error(_("Internal error recalculating dependency cache."));
     }
     
-    _count = 0;
-    _installedCount = 0;
-    pkgmap = new map<string,RPackage*>();    
-
     if (_packages) {
-      for(int i=0;_packages[i] != NULL;i++) {
+      for(int i=0;_packages[i] != NULL;i++)
 	delete _packages[i];
-      }
       delete [] _packages;
+      delete [] _packageindex;
     }
 
-    _packages = new RPackage *[deps->Head().PackageCount];
-    memset(_packages, 0, sizeof(*_packages)*deps->Head().PackageCount);
+    int PackageCount = deps->Head().PackageCount;
+    _packages = new RPackage *[PackageCount];
+    memset(_packages, 0, sizeof(*_packages)*PackageCount);
+
+    _packageindex = new int[PackageCount];
+    fill_n(_packageindex, PackageCount, -1);
 
     pkgCache::PkgIterator I = deps->PkgBegin();
+
+    string pkgName;
+    _count = 0;
+    _installedCount = 0;
+    map<string,RPackage*> pkgmap;
+    set<string> sectionSet;
+
     for (; I.end() != true; I++) {
 	
-	if (I->VersionList==0) {// exclude virtual packages
-	    continue;
-	}
-	// check whether package is installed
-	if (!I.CurrentVer().end())
+	if (I->CurrentVer != 0)
 	    _installedCount++;
+	else if (I->VersionList==0)
+	    // exclude virtual packages
+	    continue;
 	
 	RPackage *pkg = new RPackage(this, deps, _records, I);
+	_packageindex[I->ID] = _count;
 	_packages[_count++] = pkg;
-	(*pkgmap)[string(pkg->name())] = pkg;
+	
+	pkgName = pkg->name();
+	
+	pkgmap[pkgName] = pkg;
 
 	// find out about new packages
-	pkgName = pkg->name();
-	if(firstRun) 
-	  allPackages.insert(pkgName);
-	else
-	  if(allPackages.find(pkgName) == allPackages.end()) {
+	if(firstRun) {
+	    allPackages.insert(pkgName);
+	} else if(allPackages.find(pkgName) == allPackages.end()) {
 	    pkg->setNew();
 	    _roptions->setPackageNew(pkgName.c_str());
 	    allPackages.insert(pkgName);
-	  }
-
-	// gather list of sections
-	string sec = "";
-	if (I.Section()) {
-	    sec = I.Section();
-
-	    for (vector<string>::const_iterator iter = _sectionList.begin();
-		 iter != _sectionList.end();
-		 iter++) {
-		if (*iter == sec) {
-		    sec = "";
-		    break;
-		}
-	    }
-	} else {
-	  cerr << _("package ") << I.Name() << _(" has no section?!") << endl;
 	}
 
-	if (!sec.empty()) {
-	  _sectionList.push_back(sec);
+	// gather list of sections
+	if (I.Section()) {
+	    sectionSet.insert(I.Section());
+	} else {
+	    cerr << _("Package ") << I.Name() << _(" has no section?!") << endl;
 	}
 	
     }
-    sort(_sectionList.begin(),_sectionList.end());
+    _sectionList.resize(sectionSet.size());
+    copy(sectionSet.begin(), sectionSet.end(), _sectionList.begin());
 
-    for (I = deps->PkgBegin(); I.end() != true; I++) {
+    for (I = deps->PkgBegin(); I.end() == false; I++) {
 	if (I->VersionList==0) {
 	    // find the owner of this virtual package and attach it there
 	    if (I->ProvidesList == 0)
 		continue;
-	    string name = string(I.ProvidesList().OwnerPkg().Name());
-	    if (pkgmap->find(name) != pkgmap->end()) {
-		(*pkgmap)[name]->addVirtualPackage(I);
-	    }
+	    string name = I.ProvidesList().OwnerPkg().Name();
+	    map<string,RPackage*>::iterator I2 = pkgmap.find(name);
+	    if (I2 != pkgmap.end())
+		(*I2).second->addVirtualPackage(I);
 	}
     }
-
-    delete pkgmap;
 
     applyInitialSelection();
 
@@ -454,22 +446,16 @@ void RPackageLister::applyInitialSelection()
 
 RPackage *RPackageLister::getElement(pkgCache::PkgIterator &iter)
 {
-    unsigned i;
-    
-    for (i = 0; i < _count; i++) {
-	if (*_packages[i]->package() == iter)
-	    return _packages[i];
-    }
-    
+    int index = _packageindex[iter->ID];
+    if (index != -1)
+	return _packages[index];
     return NULL;
 }
 
 
 int RPackageLister::getElementIndex(RPackage *pkg)
 {
-    unsigned i;
-    
-    for (i = 0; i < _displayList.size(); i++) {
+    for (unsigned int i = 0; i < _displayList.size(); i++) {
 	if (_displayList[i] == pkg)
 	    return i;
     }
@@ -1407,25 +1393,30 @@ bool RPackageLister::readSelections(istream &in)
 	}
     }
     if (actionMap.empty() == false) {
-	int Size = _displayList.size();
+	int Size = actionMap.size();
 	_progMeter->OverallProgress(0,Size,Size,_("Setting selections..."));
 	_progMeter->SubProgress(Size);
-        for (int i = 0; i < Size; i++) {
-	    RPackage *Pkg = _displayList[i];
-	    map<string,int>::const_iterator I = actionMap.find(Pkg->name());
-	    if (I != actionMap.end()) {
+	pkgDepCache &Cache = *_cache->deps();
+	pkgCache::PkgIterator Pkg;
+	RPackage *RPkg;
+	int Pos = 0;
+	for (map<string,int>::const_iterator I = actionMap.begin();
+	     I != actionMap.end(); I++) {
+	    Pkg = Cache.FindPkg((*I).first);
+	    RPkg = getElement(Pkg);
+	    if (RPkg != NULL) {
 		switch ((*I).second) {
 		    case ACTION_INSTALL:
-			Pkg->setInstall();
+			RPkg->setInstall();
 			break;
 
 		    case ACTION_UNINSTALL:
-			Pkg->setRemove();
+			RPkg->setRemove();
 			break;
 		}
             }
-	    if (i%5 == 0)
-		_progMeter->Progress(i);
+	    if ((Pos++)%5 == 0)
+		_progMeter->Progress(Pos);
         }
 	_progMeter->Done();
     }

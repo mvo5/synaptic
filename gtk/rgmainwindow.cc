@@ -1031,13 +1031,14 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     
     bool byProvider = TRUE;
 
+    char buffer[512];
+    const char *ubuffer;
+
     const char *depType, *depPkg, *depName, *depVer;
     char *summary; // XXX Why not const?
     bool ok;
     if (pkg->enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
-	    char buffer[512];
-
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 depType, depPkg ? depPkg : depName, depVer);
@@ -1047,23 +1048,25 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 			 depPkg ? depPkg : "-");
 	    }
 
+	    ubuffer = utf8(buffer);
+
 	    // check if this item is duplicated
 	    bool dup = FALSE;
 	    for (int i = 0; i < GTK_CLIST(_depList)->rows; i++) {
 		char *str;
 		
 		gtk_clist_get_text(GTK_CLIST(_depList), i, 0, &str);
-		if (strcmp(str, buffer) == 0) {
+		if (strcmp(str, ubuffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
 	    }
 	    
 	    if (!dup) {
-		char *array[1];
+		const char *array[1];
 		int row;
-		array[0] = buffer;
-		row = gtk_clist_append(GTK_CLIST(_depList), array);
+		array[0] = ubuffer;
+		row = gtk_clist_append(GTK_CLIST(_depList), (char**)array);
 		//mvo: maybe use gtk_clist_set_background() instead?
  		gtk_clist_set_row_style(GTK_CLIST(_depList), row,
  					ok ? _blackStyle : _redStyle);
@@ -1079,12 +1082,11 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     gtk_clist_clear(GTK_CLIST(_rdepList));
     if (pkg->enumRDeps(depName, depPkg)) {
 	do {
-	    char buffer[512];
-	    char *array[1];
+	    const char *array[1];
 
 	    snprintf(buffer, sizeof(buffer), "%s (%s)", depName, depPkg);
-	    array[0] = buffer;
-	    gtk_clist_append(GTK_CLIST(_rdepList), array);
+	    array[0] = utf8(buffer);
+	    gtk_clist_append(GTK_CLIST(_rdepList), (char**)array);
 
 	} while (pkg->nextRDeps(depName, depPkg));
     }
@@ -1094,14 +1096,13 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     gtk_object_set_data(GTK_OBJECT(_recList), "pkg", pkg);
     if (pkg->enumWDeps(depType, depPkg, ok)) {
 	do {
-	  char buffer[512];
-	  char *array[1];
+	  const char *array[1];
 	  int row;
 
 	  snprintf(buffer, sizeof(buffer), "%s: %s", 
 		   depType, depPkg);
-	  array[0] = buffer;
-	  row = gtk_clist_append(GTK_CLIST(_recList), array);
+	  array[0] = utf8(buffer);
+	  row = gtk_clist_append(GTK_CLIST(_recList), (char**)array);
 	  gtk_clist_set_row_style(GTK_CLIST(_recList), row, 
 				  ok ? _blackStyle : _redStyle);
 	} while (pkg->nextWDeps(depName, depPkg, ok));
@@ -1113,7 +1114,6 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     byProvider = TRUE;
     if (pkg->enumAvailDeps(depType, depName, depPkg, depVer, summary, ok)) {
 	do {
-	    char buffer[512];
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
 			 depType, depPkg ? depPkg : depName, depVer);
@@ -1122,21 +1122,24 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 			 depType, depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
+
+	    ubuffer = utf8(buffer);
+	    
 	    // check if this item is duplicated
 	    bool dup = FALSE;
 	    for (int i = 0; i < GTK_CLIST(_availDepList)->rows; i++) {
 		char *str;
 		gtk_clist_get_text(GTK_CLIST(_availDepList), i, 0, &str);
-		if (strcmp(str, buffer) == 0) {
+		if (strcmp(str, ubuffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
 	    }
 	    if (!dup) {
-		char *array[1];
+		const char *array[1];
 		int row;
-		array[0] = buffer;
-		row = gtk_clist_append(GTK_CLIST(_availDepList), array);
+		array[0] = ubuffer;
+		row = gtk_clist_append(GTK_CLIST(_availDepList), (char**)array);
 		//mvo: maybe use gtk_clist_set_background() instead?
 		gtk_clist_set_row_style(GTK_CLIST(_availDepList), row,
 					ok ? _blackStyle : _redStyle);

@@ -134,8 +134,9 @@ bool SourcesList::ReadSourcePart(string listpath)
 		    rec.SourceFile = listpath;
 		    AddSourceNode(rec);
 		    break;
+		} else {
+		    rec.Sections[rec.NumSections++] = Section;
 		}
-		rec.Sections[rec.NumSections++] = Section;
 	    }
 	}
 	AddSourceNode(rec);

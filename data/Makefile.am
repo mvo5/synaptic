@@ -1,4 +1,4 @@
-desktopdir       = $(datadir)/Applications
+desktopdir       = $(datadir)/applications
 desktop_in_files = synaptic.desktop
 desktop_DATA     = $(desktop_in_files)
 

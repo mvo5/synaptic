@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.35.1\n"
-"POT-Creation-Date: 2003-06-27 09:48+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-28 21:31+0200\n"
 "PO-Revision-Date: 2003-06-27 10:32+0300\n"
 "Last-Translator: Sviatoslav Sviridov <svd@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=KOI8-R\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -234,32 +234,36 @@ msgstr "невозможно создать каталог для конфигурации %s"
 msgid "unknown"
 msgstr "неизвестный"
 
-#: common/rpackage.cc:430
+#: common/rpackage.cc:268
+msgid "The list of installed files is only available for installed packages"
+msgstr ""
+
+#: common/rpackage.cc:461
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
 msgstr ""
 
-#: common/rpackage.cc:667
+#: common/rpackage.cc:698
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s уже/будет установлен"
 
-#: common/rpackage.cc:672
+#: common/rpackage.cc:703
 msgid "package is not installable"
 msgstr "пакет не может быть установлен"
 
-#: common/rpackage.cc:674
+#: common/rpackage.cc:705
 msgid "package is a virtual package"
 msgstr "пакет является виртуальным"
 
-#: common/rpackage.cc:676
+#: common/rpackage.cc:707
 msgid "package is/will not be installed"
 msgstr "пакет не будет установлен"
 
-#: common/rpackage.cc:679
+#: common/rpackage.cc:710
 msgid "dependency is satisfied"
 msgstr "зависимости удовлетворены"
 
-#: common/rpackage.cc:830
+#: common/rpackage.cc:861
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Неверная запись в файле предпочтений, нет заголовка Package"
 
@@ -308,16 +312,17 @@ msgstr "СокращённыйВид"
 msgid "Name"
 msgstr "Имя"
 
-#: common/rpackagefilter.cc:133
+#: common/rpackagefilter.cc:133 gtk/window_find.glade.strings:12
 msgid "Version"
 msgstr "Версия"
 
-#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2500
-#: gtk/window_main.glade.strings:39 gtk/window_main.glade.strings:66
+#: common/rpackagefilter.cc:134 gtk/rgmainwindow.cc:2524
+#: gtk/window_find.glade.strings:13 gtk/window_main.glade.strings:65
 msgid "Description"
 msgstr "Описание"
 
 #: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:1255
+#: gtk/window_find.glade.strings:14
 msgid "Maintainer"
 msgstr "Мэйнтейнер"
 
@@ -347,23 +352,23 @@ msgstr "НеобязательныеЗависимости"
 msgid "ReverseDepends"
 msgstr "ОбратныеЗависимости"
 
-#: common/rpackagefilter.cc:568
+#: common/rpackagefilter.cc:578
 #, c-format
 msgid "could not open ReducedView file %s"
 msgstr "невозможно открыть файл ReducedView %s"
 
-#: common/rpackagefilter.cc:595
+#: common/rpackagefilter.cc:605
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Плохое регулярное выражение '%s' в файле ReducedView."
 
-#: common/rpackagefilter.cc:658
+#: common/rpackagefilter.cc:668
 msgid "empty filter name!? should _never_ happen, please report"
 msgstr ""
 "пустое имя фильтра!? этого не должно быть _никогда_, пожалуйста отправьте "
 "информацию об ошибке"
 
-#: common/rpackagefilter.cc:663
+#: common/rpackagefilter.cc:673
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
 msgstr ""
 "имя фильтра содержит более чем 55 символов!? Будет обрезано.  Пожалуйста, "
@@ -383,7 +388,7 @@ msgstr "Фильтр поиска"
 #.
 #: common/rpackagelister.cc:220 common/rpackagelister.cc:727
 #: wings/rwfiltereditor.cc:323 wings/rwmainwindow.cc:1949
-#: gtk/window_filters.glade.strings:16
+#: gtk/window_filters.glade.strings:19
 msgid "Installed"
 msgstr "Установленные"
 
@@ -408,7 +413,7 @@ msgstr "Обновляемые"
 
 # This is filter name, it's better to not translate it
 #: common/rpackagelister.cc:256 wings/rwfiltereditor.cc:343
-#: gtk/window_options.glade.strings:31 gtk/window_filters.glade.strings:20
+#: gtk/window_options.glade.strings:31 gtk/window_filters.glade.strings:27
 msgid "Broken"
 msgstr "Сломанные"
 
@@ -442,7 +447,7 @@ msgstr "ошибка pkgDistUpgrade"
 msgid "New in repository"
 msgstr "Новые в репозитории"
 
-#: common/rpackagelister.cc:725 gtk/window_filters.glade.strings:15
+#: common/rpackagelister.cc:725 gtk/window_filters.glade.strings:17
 msgid "Installed and upgradeable"
 msgstr "Установленные и обновляемые"
 
@@ -451,7 +456,7 @@ msgid "Not installed (residual config)"
 msgstr "Не установленные (остаточная конфигурация)"
 
 # This is filter name, it's better to not translate it
-#: common/rpackagelister.cc:732 gtk/window_filters.glade.strings:14
+#: common/rpackagelister.cc:732 gtk/window_filters.glade.strings:15
 msgid "Not installed"
 msgstr "Не установленные"
 
@@ -560,7 +565,7 @@ msgid "Invalid disc name!"
 msgstr "Неверное имя диска!"
 
 #: gtk/rgconfigwindow.cc:117 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3040 wings/rwconfigwindow.cc:58
+#: gtk/rgmainwindow.cc:3054 wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Произошла ошибка при сохранении конфигураций."
 
@@ -918,7 +923,7 @@ msgid "Not Relevant"
 msgstr "Не уместный"
 
 #: gtk/rgmainwindow.cc:1303 wings/rwmainwindow.cc:1244
-#: gtk/window_main.glade.strings:77
+#: gtk/window_main.glade.strings:76
 msgid "Recommended"
 msgstr "Рекомендован"
 
@@ -938,7 +943,7 @@ msgstr "    Важность"
 msgid "    Date"
 msgstr "    Дата"
 
-#: gtk/rgmainwindow.cc:1370
+#: gtk/rgmainwindow.cc:1376
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
@@ -948,79 +953,7 @@ msgstr ""
 "Synaptic должен переоткрыть кэш.\n"
 "Ваши изменения будут потеряны. Вы уверены?"
 
-#: gtk/rgmainwindow.cc:1580 gtk/rgmainwindow.cc:2796
-#: wings/rwmainwindow.cc:1343 wings/rwmainwindow.cc:1378
-msgid ""
-"Removing this package may render the system unusable.\n"
-"Are you sure you want to do that?"
-msgstr ""
-"Удаление этого пакета может привести систему в нерабочее состояние.\n"
-"Вы действительно хотите это сделать?"
-
-#: gtk/rgmainwindow.cc:1840
-#, c-format
-msgid "Can't read %s"
-msgstr "Невозможно прочитать %s"
-
-#: gtk/rgmainwindow.cc:1857
-msgid "Open changes"
-msgstr "Открыть изменения"
-
-#: gtk/rgmainwindow.cc:1888 gtk/rgmainwindow.cc:1920
-#, c-format
-msgid "Can't write %s"
-msgstr "Невозможно записать %s"
-
-#: gtk/rgmainwindow.cc:1937
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-#: gtk/rgmainwindow.cc:1953
-msgid "Save full state, not only changes"
-msgstr "Сохранить полное состояние (не только изменения)"
-
-#: gtk/rgmainwindow.cc:2154 wings/rwmainwindow.cc:1560
-#: gtk/window_main.glade.strings:50
-msgid "Update package cache"
-msgstr "Получить сведения о пакетах"
-
-#: gtk/rgmainwindow.cc:2158 wings/rwmainwindow.cc:1574
-#: gtk/window_main.glade.strings:52
-msgid "Mark packages for upgrade, except those with new dependencies"
-msgstr "Отметить пакеты для обновления, кроме пакетов с новыми зависимостями"
-
-#: gtk/rgmainwindow.cc:2162 wings/rwmainwindow.cc:1582
-#: gtk/window_main.glade.strings:54
-msgid ""
-"Upgrade installed distribution, including packages with new dependencies"
-msgstr ""
-"Обновить установленный дистрибутив, включая пакеты с новыми зависимостями"
-
-#: gtk/rgmainwindow.cc:2166 wings/rwmainwindow.cc:1590
-#: gtk/window_main.glade.strings:56
-msgid "Commit (and download if necessary) selected changes on packages"
-msgstr ""
-"Выполнить (и загрузить при необходимости) выбранные действия с пакетами"
-
-#: gtk/rgmainwindow.cc:2466 wings/rwmainwindow.cc:1936
-#: gtk/window_main.glade.strings:19
-msgid "Package"
-msgstr "Пакет"
-
-# This is filter name, it's better to not translate it
-#: gtk/rgmainwindow.cc:2477
-msgid "Installed Version"
-msgstr "Установлен"
-
-#: gtk/rgmainwindow.cc:2488
-msgid "Available Version"
-msgstr "Доступен"
-
-#: gtk/rgmainwindow.cc:2760
-msgid "Do you want to add another CD-ROM?"
-msgstr "Хотите ли Вы добавить другой CD-ROM?"
-
-#: gtk/rgmainwindow.cc:2786
+#: gtk/rgmainwindow.cc:1574
 msgid ""
 "The selected package couldn't be installed/upgraded.\n"
 "\n"
@@ -1032,7 +965,79 @@ msgstr ""
 "Это может происходить из-за неудовлетворённых зависимостей на пакеты,\n"
 "которые не доступны ни в одном репозитории."
 
-#: gtk/rgmainwindow.cc:2954 wings/rwmainwindow.cc:2020
+#: gtk/rgmainwindow.cc:1609 gtk/rgmainwindow.cc:2810
+#: wings/rwmainwindow.cc:1343 wings/rwmainwindow.cc:1378
+msgid ""
+"Removing this package may render the system unusable.\n"
+"Are you sure you want to do that?"
+msgstr ""
+"Удаление этого пакета может привести систему в нерабочее состояние.\n"
+"Вы действительно хотите это сделать?"
+
+#: gtk/rgmainwindow.cc:1863
+#, c-format
+msgid "Can't read %s"
+msgstr "Невозможно прочитать %s"
+
+#: gtk/rgmainwindow.cc:1880
+msgid "Open changes"
+msgstr "Открыть изменения"
+
+#: gtk/rgmainwindow.cc:1911 gtk/rgmainwindow.cc:1943
+#, c-format
+msgid "Can't write %s"
+msgstr "Невозможно записать %s"
+
+#: gtk/rgmainwindow.cc:1960
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: gtk/rgmainwindow.cc:1976
+msgid "Save full state, not only changes"
+msgstr "Сохранить полное состояние (не только изменения)"
+
+#: gtk/rgmainwindow.cc:2172 wings/rwmainwindow.cc:1560
+#: gtk/window_main.glade.strings:49
+msgid "Update package cache"
+msgstr "Получить сведения о пакетах"
+
+#: gtk/rgmainwindow.cc:2176 wings/rwmainwindow.cc:1574
+#: gtk/window_main.glade.strings:51
+msgid "Mark packages for upgrade, except those with new dependencies"
+msgstr "Отметить пакеты для обновления, кроме пакетов с новыми зависимостями"
+
+#: gtk/rgmainwindow.cc:2180 wings/rwmainwindow.cc:1582
+#: gtk/window_main.glade.strings:53
+msgid ""
+"Upgrade installed distribution, including packages with new dependencies"
+msgstr ""
+"Обновить установленный дистрибутив, включая пакеты с новыми зависимостями"
+
+#: gtk/rgmainwindow.cc:2184 wings/rwmainwindow.cc:1590
+#: gtk/window_main.glade.strings:55
+msgid "Commit (and download if necessary) selected changes on packages"
+msgstr ""
+"Выполнить (и загрузить при необходимости) выбранные действия с пакетами"
+
+#: gtk/rgmainwindow.cc:2490 wings/rwmainwindow.cc:1936
+#: gtk/window_main.glade.strings:19
+msgid "Package"
+msgstr "Пакет"
+
+# This is filter name, it's better to not translate it
+#: gtk/rgmainwindow.cc:2501
+msgid "Installed Version"
+msgstr "Установлен"
+
+#: gtk/rgmainwindow.cc:2512
+msgid "Available Version"
+msgstr "Доступен"
+
+#: gtk/rgmainwindow.cc:2784
+msgid "Do you want to add another CD-ROM?"
+msgstr "Хотите ли Вы добавить другой CD-ROM?"
+
+#: gtk/rgmainwindow.cc:2968 wings/rwmainwindow.cc:2020
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1041,20 +1046,20 @@ msgstr ""
 "%i пакетов в списке, %i установлено, %i сломано. %i для установки/"
 "обновления, %i для удаления; %sB будет %s"
 
-#: gtk/rgmainwindow.cc:2957 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2971 wings/rwmainwindow.cc:2023
 msgid "freed"
 msgstr "освобождено"
 
-#: gtk/rgmainwindow.cc:2957 wings/rwmainwindow.cc:2023
+#: gtk/rgmainwindow.cc:2971 wings/rwmainwindow.cc:2023
 msgid "used"
 msgstr "использовано"
 
-#: gtk/rgmainwindow.cc:2983 wings/rwmainwindow.cc:1837
-#: gtk/window_main.glade.strings:61
+#: gtk/rgmainwindow.cc:2997 wings/rwmainwindow.cc:1837
+#: gtk/window_main.glade.strings:60
 msgid "All Packages"
 msgstr "Все пакеты"
 
-#: gtk/rgmainwindow.cc:3069
+#: gtk/rgmainwindow.cc:3083
 msgid ""
 "There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
@@ -1251,15 +1256,7 @@ msgstr "Попытка убрать из очереди загружаемый объект"
 msgid "RInitConfiguration() failed\n"
 msgstr "Ошибка RInitConfiguration()\n"
 
-#: gtk/rgfindwindow.cc:58
-msgid "Find Name"
-msgstr "Найти имя"
-
-#: gtk/rgfindwindow.cc:61
-msgid "Find Description"
-msgstr "Найти описание"
-
-#: gtk/rgfindwindow.cc:124
+#: gtk/rgfindwindow.cc:107 gtk/window_main.glade.strings:38
 msgid "Find tool"
 msgstr "Окно поиска"
 
@@ -1381,7 +1378,7 @@ msgstr "Установленные и обновляемые"
 msgid "Marked to Keep"
 msgstr "Отмеченные для сохранения"
 
-#: wings/rwfiltereditor.cc:333 gtk/window_filters.glade.strings:18
+#: wings/rwfiltereditor.cc:333 gtk/window_filters.glade.strings:23
 msgid "Marked to Install/Upgrade"
 msgstr "Отмеченные для установки/обновления"
 
@@ -1389,7 +1386,7 @@ msgstr "Отмеченные для установки/обновления"
 msgid "Marked to Remove"
 msgstr "Отмеченные для удаления"
 
-#: wings/rwfiltereditor.cc:349 gtk/window_filters.glade.strings:29
+#: wings/rwfiltereditor.cc:349 gtk/window_filters.glade.strings:42
 msgid "by Status"
 msgstr "по состоянию"
 
@@ -1436,7 +1433,7 @@ msgstr "Создать"
 msgid "Remove"
 msgstr "Удалить"
 
-#: wings/rwfiltereditor.cc:501 gtk/window_filters.glade.strings:43
+#: wings/rwfiltereditor.cc:501 gtk/window_filters.glade.strings:56
 msgid "by Package"
 msgstr "по пакетам"
 
@@ -1562,15 +1559,15 @@ msgstr "Описание"
 msgid "Depends."
 msgstr "Зависимости"
 
-#: wings/rwmainwindow.cc:1731 gtk/window_main.glade.strings:67
+#: wings/rwmainwindow.cc:1731 gtk/window_main.glade.strings:66
 msgid "What it depends on"
 msgstr "От чего зависит"
 
-#: wings/rwmainwindow.cc:1732 gtk/window_main.glade.strings:68
+#: wings/rwmainwindow.cc:1732 gtk/window_main.glade.strings:67
 msgid "What depends on it"
 msgstr "Что от него зависит"
 
-#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:70
+#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:69
 msgid "Suggested and Recommended"
 msgstr "предлагается и рекомендуется"
 
@@ -1602,15 +1599,15 @@ msgstr "Установить выбранное"
 msgid "Switch to package search panel"
 msgstr "Переключиться на панель поиска пакетов"
 
-#: wings/rwmainwindow.cc:1828 gtk/window_main.glade.strings:59
+#: wings/rwmainwindow.cc:1828 gtk/window_main.glade.strings:58
 msgid "Filters..."
 msgstr "Фильтры..."
 
-#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:58
+#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:57
 msgid "Open package filter editor"
 msgstr "Открыть редактор фильтра пакетов"
 
-#: wings/rwmainwindow.cc:1835 gtk/window_main.glade.strings:60
+#: wings/rwmainwindow.cc:1835 gtk/window_main.glade.strings:59
 msgid "Select package filter"
 msgstr "Выбрать фильтр пакетов"
 
@@ -1626,7 +1623,7 @@ msgstr "Редактировать выбранный фильтр"
 msgid "Switch to package filter panel"
 msgstr "Переключиться на панель фильтра пакетов"
 
-#: wings/rwmainwindow.cc:1867 gtk/window_main.glade.strings:62
+#: wings/rwmainwindow.cc:1867 gtk/window_main.glade.strings:61
 msgid "Find Package"
 msgstr "Найти пакет"
 
@@ -1729,15 +1726,25 @@ msgstr "_Найти"
 msgid "Find text:"
 msgstr "Найти текст:"
 
-#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:63
+#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:62
 #: gtk/window_disc_name.glade.strings:9 gtk/window_setopt.glade.strings:8
 #: gtk/window_setopt.glade.strings:9 gtk/window_filters.glade.strings:8
-#: gtk/window_filters.glade.strings:42
+#: gtk/window_filters.glade.strings:55
 #: gtk/window_repositories.glade.strings:17
 #: gtk/window_repositories.glade.strings:18
 #: gtk/window_repositories.glade.strings:19
 msgid "*"
 msgstr "*"
+
+#: gtk/window_find.glade.strings:10
+#, fuzzy
+msgid "Search fields:"
+msgstr "Фильтр поиска"
+
+#: gtk/window_find.glade.strings:11
+#, fuzzy
+msgid "Package name"
+msgstr "Имя пакета"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -1821,7 +1828,7 @@ msgstr "Изменить"
 msgid "View"
 msgstr "_Вид"
 
-#: gtk/window_main.glade.strings:31 gtk/window_filters.glade.strings:53
+#: gtk/window_main.glade.strings:31 gtk/window_filters.glade.strings:66
 msgid "Expand all"
 msgstr "Развернуть всё"
 
@@ -1829,19 +1836,19 @@ msgstr "Развернуть всё"
 msgid "Collapse all   "
 msgstr "Свернуть всё"
 
-#: gtk/window_main.glade.strings:33 gtk/window_filters.glade.strings:47
+#: gtk/window_main.glade.strings:33 gtk/window_filters.glade.strings:60
 msgid "Section tree"
 msgstr "Дерево разделов"
 
-#: gtk/window_main.glade.strings:34 gtk/window_filters.glade.strings:48
+#: gtk/window_main.glade.strings:34 gtk/window_filters.glade.strings:61
 msgid "Alphabetic tree"
 msgstr "Алфавитное дерево"
 
-#: gtk/window_main.glade.strings:35 gtk/window_filters.glade.strings:49
+#: gtk/window_main.glade.strings:35 gtk/window_filters.glade.strings:62
 msgid "Status tree"
 msgstr "Дерево состояний"
 
-#: gtk/window_main.glade.strings:36 gtk/window_filters.glade.strings:50
+#: gtk/window_main.glade.strings:36 gtk/window_filters.glade.strings:63
 msgid "Flat list"
 msgstr "Обычный список"
 
@@ -1849,117 +1856,119 @@ msgstr "Обычный список"
 msgid "Search"
 msgstr "Поис_к"
 
-#: gtk/window_main.glade.strings:38
-msgid "Package Name"
-msgstr "Имя пакета"
-
-#: gtk/window_main.glade.strings:40
+#: gtk/window_main.glade.strings:39
 msgid "_Settings"
 msgstr "_Установки"
 
-#: gtk/window_main.glade.strings:41
+#: gtk/window_main.glade.strings:40
 msgid "_Repositories"
 msgstr "_Репозитории"
 
-#: gtk/window_main.glade.strings:42
+#: gtk/window_main.glade.strings:41
 msgid "Set _generic option"
 msgstr "Установить _произвольный параметр"
 
-#: gtk/window_main.glade.strings:43
+#: gtk/window_main.glade.strings:42
 msgid "Toolbar"
 msgstr "Панель _инструментов"
 
-#: gtk/window_main.glade.strings:44
+#: gtk/window_main.glade.strings:43
 msgid "Pixmaps"
 msgstr "Иконки"
 
-#: gtk/window_main.glade.strings:45
+#: gtk/window_main.glade.strings:44
 msgid "Text"
 msgstr "Текст"
 
-#: gtk/window_main.glade.strings:46
+#: gtk/window_main.glade.strings:45
 msgid "Both"
 msgstr "Иконки и текст"
 
-#: gtk/window_main.glade.strings:47
+#: gtk/window_main.glade.strings:46
 msgid "Hide"
 msgstr "Скрыть"
 
-#: gtk/window_main.glade.strings:48
+#: gtk/window_main.glade.strings:47
 msgid "_Help"
 msgstr "_Помощь"
 
-#: gtk/window_main.glade.strings:49
+#: gtk/window_main.glade.strings:48
 msgid "About..."
 msgstr "О программе..."
 
-#: gtk/window_main.glade.strings:51
+#: gtk/window_main.glade.strings:50
 msgid "Update _List"
 msgstr "Обновить сп_исок"
 
-#: gtk/window_main.glade.strings:53
+#: gtk/window_main.glade.strings:52
 msgid "Up_grade all"
 msgstr "Об_новить"
 
-#: gtk/window_main.glade.strings:55
+#: gtk/window_main.glade.strings:54
 msgid "_Dist Upgrade"
 msgstr "_Обновить всё"
 
-#: gtk/window_main.glade.strings:57
+#: gtk/window_main.glade.strings:56
 msgid "_Proceed"
 msgstr "_Выполнить"
 
-#: gtk/window_main.glade.strings:64
+#: gtk/window_main.glade.strings:63
 msgid " "
 msgstr " "
 
-#: gtk/window_main.glade.strings:65
+#: gtk/window_main.glade.strings:64
 msgid "Information"
 msgstr "Информация"
 
-#: gtk/window_main.glade.strings:69
+#: gtk/window_main.glade.strings:68
 msgid "What it would depend on"
 msgstr "От чего будет зависеть"
 
-#: gtk/window_main.glade.strings:71
+#: gtk/window_main.glade.strings:70
 msgid "label_dep_info"
 msgstr "label_dep_info"
 
-#: gtk/window_main.glade.strings:72
+#: gtk/window_main.glade.strings:71
 msgid "label53"
 msgstr "label53"
 
-#: gtk/window_main.glade.strings:73
+#: gtk/window_main.glade.strings:72
 msgid "label54"
 msgstr "label54"
 
-#: gtk/window_main.glade.strings:74
+#: gtk/window_main.glade.strings:73
 msgid "label_availdep_info"
 msgstr "label_availdep_info"
 
-#: gtk/window_main.glade.strings:75
+#: gtk/window_main.glade.strings:74
 msgid "label55"
 msgstr "label55"
 
-#: gtk/window_main.glade.strings:76
+#: gtk/window_main.glade.strings:75
 msgid "Install:"
 msgstr "Установить:"
 
-#: gtk/window_main.glade.strings:78
+#: gtk/window_main.glade.strings:77
 msgid "Suggested"
 msgstr "Предлагается"
 
-#: gtk/window_main.glade.strings:79
+#: gtk/window_main.glade.strings:78
 msgid "Selected"
 msgstr "Выбран"
 
-#: gtk/window_main.glade.strings:80
+#: gtk/window_main.glade.strings:79
 msgid "label56"
 msgstr "label56"
 
-#: gtk/window_main.glade.strings:81
+#: gtk/window_main.glade.strings:80
 msgid "Dependencies"
 msgstr "Зависимости"
+
+# This is filter name, it's better to not translate it
+#: gtk/window_main.glade.strings:81
+#, fuzzy
+msgid "Installed Files"
+msgstr "Установленные"
 
 #: gtk/window_main.glade.strings:83
 msgid "_Keep"
@@ -2100,116 +2109,174 @@ msgstr "Исключать выбранные разделы"
 msgid "Include packages that are ..."
 msgstr "Включать пакеты, которые..."
 
-#: gtk/window_filters.glade.strings:17
+#: gtk/window_filters.glade.strings:14
+#, fuzzy
+msgid "Packages that are not installed"
+msgstr "Пакет не установлен."
+
+#: gtk/window_filters.glade.strings:16
+msgid "Packages that are installed and there is a newer version available"
+msgstr ""
+
+#: gtk/window_filters.glade.strings:18
+msgid "Packages that are install and up to date"
+msgstr ""
+
+#: gtk/window_filters.glade.strings:20
+#, fuzzy
+msgid "Packages that will be keept"
+msgstr "Пакет будет обновлён."
+
+#: gtk/window_filters.glade.strings:21
 msgid "Marked to keep"
 msgstr "Отмеченные для сохранения"
 
-#: gtk/window_filters.glade.strings:19
+#: gtk/window_filters.glade.strings:22
+#, fuzzy
+msgid "Packages that will be installed or upgraded"
+msgstr "Пакет будет установлен."
+
+#: gtk/window_filters.glade.strings:24
+#, fuzzy
+msgid "Packages that will be removed"
+msgstr "Пакет будет обновлён."
+
+#: gtk/window_filters.glade.strings:25
 msgid "Marked to remove"
 msgstr "Отмеченные для удаления"
 
-#: gtk/window_filters.glade.strings:21
+#: gtk/window_filters.glade.strings:26
+#, fuzzy
+msgid "Packages that are broken"
+msgstr "Пакет сломан."
+
+#: gtk/window_filters.glade.strings:28
+msgid "Packages that are new in the repository since that last \"Update\" "
+msgstr ""
+
+#: gtk/window_filters.glade.strings:29
 msgid "New in archive"
 msgstr "Новые в архиве"
 
-#: gtk/window_filters.glade.strings:22
+#: gtk/window_filters.glade.strings:30
+#, fuzzy
+msgid "Packages that will never be upgraded"
+msgstr "Пакет будет обновлён."
+
+#: gtk/window_filters.glade.strings:31
 msgid "Pinned"
 msgstr "Закреплён"
 
-#: gtk/window_filters.glade.strings:23
+#: gtk/window_filters.glade.strings:32
+msgid "Library packages that are no longer needed (needs deborphan to work)"
+msgstr ""
+
+#: gtk/window_filters.glade.strings:33
 msgid "Orphaned"
 msgstr "\"Осиротелые\""
 
-#: gtk/window_filters.glade.strings:24
+#: gtk/window_filters.glade.strings:34
+msgid "Packages that are removed and still have config files on the system"
+msgstr ""
+
+#: gtk/window_filters.glade.strings:35
 msgid "Residual config"
 msgstr "Остаточные"
 
-#: gtk/window_filters.glade.strings:25
+#: gtk/window_filters.glade.strings:36
+msgid "Packages that use the debconf configuration system"
+msgstr ""
+
+#: gtk/window_filters.glade.strings:37
 msgid "Debconf "
 msgstr "Debconf "
 
+#: gtk/window_filters.glade.strings:38
+msgid "Packages that are not available in any repository"
+msgstr ""
+
 # This is filter name, it's better to not translate it
-#: gtk/window_filters.glade.strings:26
+#: gtk/window_filters.glade.strings:39
 msgid "Not (no longer) installable"
 msgstr "Не устанавливаемые"
 
-#: gtk/window_filters.glade.strings:27
+#: gtk/window_filters.glade.strings:40
 msgid "Select all"
 msgstr "Выделить всё"
 
-#: gtk/window_filters.glade.strings:28
+#: gtk/window_filters.glade.strings:41
 msgid "Select none"
 msgstr "Ничего не выделять"
 
-#: gtk/window_filters.glade.strings:30
+#: gtk/window_filters.glade.strings:43
 msgid "Include"
 msgstr "Включить"
 
-#: gtk/window_filters.glade.strings:31
+#: gtk/window_filters.glade.strings:44
 msgid "Exclude"
 msgstr "Исключить"
 
-#: gtk/window_filters.glade.strings:32
+#: gtk/window_filters.glade.strings:45
 msgid "are named"
 msgstr "Называются"
 
-#: gtk/window_filters.glade.strings:33
+#: gtk/window_filters.glade.strings:46
 msgid "in Version"
 msgstr "в версии"
 
-#: gtk/window_filters.glade.strings:34
+#: gtk/window_filters.glade.strings:47
 msgid "in decription"
 msgstr "в описании"
 
-#: gtk/window_filters.glade.strings:35
+#: gtk/window_filters.glade.strings:48
 msgid "in Maintainer"
 msgstr "в поле \"Мэйнтейнер\""
 
-#: gtk/window_filters.glade.strings:36
+#: gtk/window_filters.glade.strings:49
 msgid "depends on"
 msgstr "Зависят от"
 
-#: gtk/window_filters.glade.strings:37
+#: gtk/window_filters.glade.strings:50
 msgid "provides"
 msgstr "Предоставляют"
 
-#: gtk/window_filters.glade.strings:38
+#: gtk/window_filters.glade.strings:51
 msgid "conflicts with"
 msgstr "Конфликтуют с"
 
-#: gtk/window_filters.glade.strings:39
+#: gtk/window_filters.glade.strings:52
 msgid "relaces"
 msgstr "Заменяют"
 
-#: gtk/window_filters.glade.strings:40
+#: gtk/window_filters.glade.strings:53
 msgid "suggests or recommends"
 msgstr "Предлагают или рекомендуют"
 
-#: gtk/window_filters.glade.strings:41
+#: gtk/window_filters.glade.strings:54
 msgid "reverse depends"
 msgstr "Обратные зависимости"
 
-#: gtk/window_filters.glade.strings:44
+#: gtk/window_filters.glade.strings:57
 msgid "Change View for this filter:"
 msgstr "Изменить вид для этого фильтра:"
 
-#: gtk/window_filters.glade.strings:45
+#: gtk/window_filters.glade.strings:58
 msgid "Change View: "
 msgstr "Изменить вид: "
 
-#: gtk/window_filters.glade.strings:46 gtk/window_filters.glade.strings:52
+#: gtk/window_filters.glade.strings:59 gtk/window_filters.glade.strings:65
 msgid "Leave unchanged"
 msgstr "Оставить без изменений"
 
-#: gtk/window_filters.glade.strings:51
+#: gtk/window_filters.glade.strings:64
 msgid "Manipulate Tree: "
 msgstr "Изменить дерево: "
 
-#: gtk/window_filters.glade.strings:54
+#: gtk/window_filters.glade.strings:67
 msgid "Collapse all"
 msgstr "Свернуть всё"
 
-#: gtk/window_filters.glade.strings:55
+#: gtk/window_filters.glade.strings:68
 msgid "View Mode"
 msgstr "Вид"
 
@@ -2241,6 +2308,12 @@ msgstr "rpm-src"
 #: gtk/window_repositories.glade.strings:13
 msgid "Vendors"
 msgstr "Поставщики"
+
+#~ msgid "Find Name"
+#~ msgstr "Найти имя"
+
+#~ msgid "Find Description"
+#~ msgstr "Найти описание"
 
 #~ msgid "The list of sources could not be read."
 #~ msgstr "Невозможно прочитать список исходных пакетов."

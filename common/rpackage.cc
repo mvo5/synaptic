@@ -265,7 +265,9 @@ const char *RPackage::installedFiles()
 	in >> filelist;
 	return filelist.c_str();
     }
-    return "";
+    filelist = _("The list of installed files is only available for installed packages");
+
+    return filelist.c_str();
 }
 #else
 const char *RPackage::installedFiles()

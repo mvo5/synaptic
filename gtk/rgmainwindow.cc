@@ -63,6 +63,7 @@
 #include "rguserdialog.h"
 #include "rginstallprogress.h"
 #include "rgdummyinstallprogress.h"
+#include "rgdebinstallprogress.h"
 #include "rgterminstallprogress.h"
 #include "rgmisc.h"
 #include "sections_trans.h"
@@ -2487,17 +2488,24 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    bool UseTerminal = false;
 #else
    bool UseTerminal = true;
-#endif
+#endif // HAVE_RPM
    RGTermInstallProgress *term = NULL;
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
       iprogress = term = new RGTermInstallProgress(me);
    else
-#endif
+#endif // HAVE_TERMINAL
+
+
+
 #ifdef HAVE_RPM
       iprogress = new RGInstallProgress(me, me->_lister);
-#else
-      iprogress = new RGDummyInstallProgress();
-#endif
+#else 
+  #ifdef WITH_DPKG_STATUSFD
+      iprogress = new RGDebInstallProgress(me,me->_lister);
+  #else 
+      iprogress = new RInstallProgress();
+  #endif // WITH_DPKG_STATUSFD
+#endif // HAVE_RPM
 
    //bool result = me->_lister->commitChanges(fprogress, iprogress);
    me->_lister->commitChanges(fprogress, iprogress);
@@ -2515,7 +2523,8 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    delete iprogress;
 
    if (_config->FindB("Synaptic::IgnorePMOutput", false) == false) {
-      //me->showErrors();
+      me->showErrors();
+#if 0
       if (!_error->empty()) {
 	 string FullMessage,message;
 	 while (!_error->empty()) {
@@ -2531,6 +2540,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 	 gtk_text_buffer_set_text(tb, utf8(FullMessage.c_str()), -1);
 	 dia.run();
       }
+#endif
    } else {
       _error->Discard();
    }

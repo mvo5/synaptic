@@ -256,7 +256,7 @@ string RGMainWindow::selectedSubView()
 	 if(str[0] == '0')
 	    ret = "";
 	 else
-	    ret = utf8_to_locale(subView);
+	    ret = subView;
 	 g_free(str);
          g_free(subView);
       }

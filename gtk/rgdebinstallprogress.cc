@@ -47,21 +47,19 @@ void RGDebInstallProgress::startUpdate()
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister)
-   : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress")
+   : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
+     _numRemovals(0)
 {
    prepare(lister);
    setTitle(_("Applying Changes"));
 
    _startCounting = false;
-
-   _label = glade_xml_get_widget(_gladeXML, "label_name");
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
    _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
    _pbar = glade_xml_get_widget(_gladeXML, "progress_package");
    _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
    //_image = glade_xml_get_widget(_gladeXML, "image");
 
-   gtk_label_set_text(GTK_LABEL(_label), "");
    gtk_label_set_text(GTK_LABEL(_labelSummary), "");
    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
@@ -81,29 +79,37 @@ void RGDebInstallProgress::updateInterface()
 
       // This algorithm should be improved.
       int len = read(_childin, buf, 1);
-      if(len == 0) {
-	 cout << "len == 0" << endl;
+      if(len == 0) { // happens when the stream is closed
 	 break;
       }
-      if (len < 1) {
-	 continue;
-      }
 
+#if 0
       gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
+#endif
+
       if (gtk_events_pending()) 
 	 while (gtk_events_pending())
 	    gtk_main_iteration();
 
+      if (len < 1) { // no data
+	 continue;
+      }
+
       // got complete line
       if( buf[0] == '\n') {
-	 //cout << line << endl;
+	 cout << line << endl;
+
 	 _startCounting = true;
-	 //gtk_widget_show(vbox_total);
 	 gchar **split = g_strsplit(line, ":",4);
 
 	 gchar *s=NULL;
 	 gchar *pkg = split[1];
 	 gchar *status = split[2];
+	 // major problem here, we got unexpected input. should _never_ happen
+	 if(!(pkg && status))
+	    continue;
+
+	 // this is the "normal" case, packages get installed
 	 if(strstr(status,"unpacked") != NULL) {
 	    s = g_strdup_printf(_("Unpacking %s"), split[1]);
 	    if(_unpackSeen.find(string(pkg)) == _unpackSeen.end()) {
@@ -118,27 +124,37 @@ void RGDebInstallProgress::updateInterface()
 	    }
 	 } else if(strstr(split[2], "half-installed") != NULL) {
 	    s = g_strdup_printf(_("Installing %s"), split[1]);
-	 } else if(strstr(split[2], "installed") != NULL) {
-	    s = g_strdup_printf(_("Installed %s"), split[1]);
 	    if(_installedSeen.find(string(pkg)) == _installedSeen.end()) {
 	       _installedSeen.insert(string(pkg));
 	       _donePackages += 1;
-	    }
+	 } else if(strstr(split[2], "installed") != NULL) {
+	    //s = g_strdup_printf(_("Installed %s"), split[1]);
+	 }
+
 	 // FIXME: need a special case for removals and pkg (RemoveSet?)
 	 // the problem is that removed package go through the 
 	 // "half-configured", "half-installed" stages as well
 	 } else if(strstr(split[2], "config-files") != NULL) {
-	       s = g_strdup_printf(_("Removed %s"), split[1]);
+	    if(_removeSeen.find(string(pkg)) == _removeSeen.end()) {
+	       _removeSeen.insert(string(pkg));
+	       _donePackages++;
+	    }
+	    s = g_strdup_printf(_("Removing %s"), split[1]);
 	 } else if(strstr(split[2], "not-installed") != NULL) { 
-	       s = g_strdup_printf(_("Removed with config %s"), split[1]);
-	 } else if(strstr(split[2], "error") != NULL) { 
-	       s = g_strdup_printf(_("Error in package %s"), split[1]);
-	       cout << endl << split[1] <<"print: " 
-		    << split[3] << endl << endl;
-	       string err = split[1] + string(": ") + split[3];
-	       _error->Error(err.c_str());
-	 } else if(strstr(split[2], "conffile-prompt") != NULL) {
-	    cout << split[2] << " " << split[3] << endl;
+	    s = g_strdup_printf(_("Removing with config %s"), split[1]);
+	    //_donePackages += 1;
+	 } 
+
+	 // error from dpkg
+	 else if(strstr(split[2], "error") != NULL) { 
+	    s = g_strdup_printf(_("Error in package %s"), split[1]);
+	    string err = split[1] + string(": ") + split[3];
+	    _error->Error(err.c_str());
+	 } 
+
+	 // conffile-request
+	 else if(strstr(split[2], "conffile-prompt") != NULL) {
+	    //cout << split[2] << " " << split[3] << endl;
 	    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(window()),
 					     GTK_DIALOG_DESTROY_WITH_PARENT,
 					     GTK_MESSAGE_QUESTION,
@@ -156,9 +172,10 @@ void RGDebInstallProgress::updateInterface()
 	       write(_child_control,"n\n",2);
 	 }
 
-	 float val = ((float)_donePackages) / ((float)(_numPackages*3.0));
-	 cout << _donePackages << "/" << _numPackages*3.0
-	      << " = " << val << endl;
+	 // each package goes through three stages
+	 float val = ((float)_donePackages) / ((float)(_numPackagesTotal+_numRemovals)*3.0);
+	 //cout << _donePackages << "/" << (_numPackagesTotal+_numRemovals)*3.0
+	 //<< " = " << val << endl;
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal),
 				       val);
 	 if(s!=NULL)
@@ -175,7 +192,7 @@ void RGDebInstallProgress::updateInterface()
    }
 
    line[i++] = 0;
-   cout << line << endl;
+   //cout << line << endl;
    i=0;
    
    
@@ -204,24 +221,16 @@ void RGDebInstallProgress::finishUpdate()
 
 void RGDebInstallProgress::prepare(RPackageLister *lister)
 {
-   cout << "prepeare called" << endl;
-#if 0
+   //cout << "prepeare called" << endl;
+
    for (unsigned int row = 0; row < lister->packagesSize(); row++) {
-      RPackage *elem = lister->getPackage(row);
+      RPackage *pkg = lister->getPackage(row);
 
-      // Is it going to be seen?
-      if (!(elem->getFlags() & RPackage::FInstall))
-         continue;
-
-      const char *name = elem->name();
-      const char *ver = elem->availableVersion();
-      const char *pos = strchr(ver, ':');
-      if (pos)
-         ver = pos + 1;
-      string namever = string(name) + "-" + string(ver);
-      _summaryMap[namever] = elem->summary();
+      int flags = pkg->getFlags();
+      if((flags & RPackage::FRemove) || (flags & RPackage::FPurge)) {
+	 _numRemovals++;
+      }
    }
-#endif
 }
 
 

@@ -32,9 +32,8 @@
 class RGMainWindow;
 
 
-class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow {
-
-   GtkWidget *_label;
+class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow 
+{
    GtkWidget *_label_status;
    GtkWidget *_labelSummary;
 
@@ -42,17 +41,17 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow {
    GtkWidget *_pbarTotal;
 
    bool _startCounting;
+   int _numRemovals;
+
+   // this map contains the name and the action
+   map<string, int> _summaryMap;
+   // those maps record what packages have already been seen
    set<string> _unpackSeen;
    set<string> _configuredSeen;
    set<string> _installedSeen;
    set<string> _removeSeen;
 
  protected:
-#if 0
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-						int numPackages,
-						int numPackagesTotal);
-#endif
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();

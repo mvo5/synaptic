@@ -354,6 +354,8 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 		    		   &iter);
     gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_sourcesListView),
 		    	     path, NULL, false);
+    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(me->_sourcesListView), path,
+				 NULL, TRUE, 0.0, 0.0);
     gtk_tree_path_free(path);
 }
 

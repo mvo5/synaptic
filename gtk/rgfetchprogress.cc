@@ -348,10 +348,10 @@ void RGFetchProgress::refreshTable(int row, bool append)
     pix = statusDraw(w, h, _items[row].status);
     buf = gdk_pixbuf_get_from_drawable(NULL, pix, NULL,
 				 0, 0, 0, 0, w, h );
-
+    GtkTreePath *path;
     if (append == true) {
 	gtk_list_store_insert(_tableListStore, &iter, row);
-        GtkTreePath *path = gtk_tree_path_new_from_indices(row, -1);
+        path = gtk_tree_path_new_from_indices(row, -1);
         gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
         gtk_tree_path_free(path);
         // can't we use the iterator here?
@@ -364,6 +364,11 @@ void RGFetchProgress::refreshTable(int row, bool append)
 		       SIZE_COLUMN, _items[row].size.c_str(),
 		       URL_COLUMN, _items[row].uri.c_str(),
 		       -1);
+    path = gtk_tree_model_get_path(GTK_TREE_MODEL(_tableListStore),
+		    		   &iter);
+    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),
+				 path, NULL, TRUE, 0.0, 0.0);
+    gtk_tree_path_free(path);
 }
 
 // vim:sts=4:sw=4

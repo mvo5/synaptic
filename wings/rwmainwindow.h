@@ -181,6 +181,8 @@ class RWMainWindow : public RWWindow, public RPackageObserver
    
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
+   virtual void notifyPreFilteredChange() {};
+   virtual void notifyPostFilteredChange() {};
    
 public:
    RWMainWindow(WMScreen *scr, RPackageLister *packLister);

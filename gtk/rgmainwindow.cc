@@ -2892,6 +2892,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   }
   // end double-click
   //me->setInterfaceLocked(FALSE);
+  me->setStatusText();
   return;
 }
 

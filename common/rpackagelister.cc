@@ -772,13 +772,29 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	    if(itermap.find(sec) == itermap.end()) {
 #ifndef HAVE_RPM
 		string str = sec;
-		
+		string suffix;
+		// if we have something like "contrib/web", make "contrib" the 
+		// suffix and translate it independently
+		unsigned int n = str.find("/");
+		if(n != string::npos) {
+		    suffix = str.substr(0,n);
+		    str.erase(0,n+1);
+		    for(int i=0;transtable[i][0] != NULL;i++) {
+			if(suffix == transtable[i][0]) {
+			    suffix = transtable[i][1];
+			    break;
+			}
+		    }
+		}
 		for(int i=0;transtable[i][0] != NULL;i++) {
-		    if(sec == transtable[i][0]) {
+		    if(str == transtable[i][0]) {
 			str = transtable[i][1];
 			break;
 		    }
 		}
+		// if we have a suffix, add it
+		if(!suffix.empty())
+		    str += " " + suffix;
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
 #else

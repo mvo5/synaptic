@@ -100,6 +100,8 @@ enum {
    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                       STATUS_COLUMN, toggle_item, -1);
 
+   me->_dirty = true;
+
    /* clean up */
    g_free(section);
    gtk_tree_path_free(path);
@@ -107,7 +109,7 @@ enum {
 
 
 RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
-: RGGladeWindow(parent, "repositories")
+   : RGGladeWindow(parent, "repositories"), _dirty(false)
 {
    //cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
    assert(_win);
@@ -440,6 +442,8 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(me->_sourcesListView), path,
                                 NULL, TRUE, 0.0, 0.0);
    gtk_tree_path_free(path);
+
+   me->_dirty=true;
 }
 
 void RGRepositoryEditor::doEdit()
@@ -556,7 +560,7 @@ void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
          gtk_tree_iter_free(me->_lastIter);
       me->_lastIter = NULL;
    }
-
+   me->_dirty=true;
 }
 
 void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
@@ -575,12 +579,12 @@ void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
    }
 
    gtk_main_quit();
-   me->_applied = true;
+   me->_applied = me->_dirty;
 }
 
 void RGRepositoryEditor::DoCancel(GtkWidget *, gpointer data)
 {
-   //GtkUI::SrcEditor *This = (GtkUI::SrcEditor *)data;
+   //RGRepositoryEditor *me = (RGRepositoryEditor *)data;
    gtk_main_quit();
 }
 

@@ -65,6 +65,8 @@ class RGPreferencesWindow:public RGGladeWindow {
    GtkWidget *_optionmenuDefaultDistro;
    string _defaultDistro;
 
+   bool _dirty;
+
    int columnPos[6];
 
    // distro selection

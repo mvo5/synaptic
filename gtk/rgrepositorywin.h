@@ -59,6 +59,7 @@ class RGRepositoryEditor:RGGladeWindow {
    RGUserDialog *_userDialog;
 
    bool _applied;
+   bool _dirty;
    GdkColor _gray;
 
    void UpdateVendorMenu();

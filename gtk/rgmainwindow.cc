@@ -2075,14 +2075,41 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 {
    RGMainWindow *win = (RGMainWindow *) data;
 
-   bool Ok = false;
+   bool Changed = false;
    {
       RGRepositoryEditor w(win);
-      Ok = w.Run();
+      Changed = w.Run();
+      
    }
    RGFlushInterface();
-   if (Ok == true && _config->FindB("Synaptic::UpdateAfterSrcChange")) {
+
+   // auto update after repostitory change
+   if (Changed == true && 
+       _config->FindB("Synaptic::UpdateAfterSrcChange",false)) {
       win->cbUpdateClicked(NULL, data);
+   } else if(Changed == true && 
+	     _config->FindB("Synaptic::AskForUpdateAfterSrcChange",true)) {
+      // ask for update after repo change
+      GtkWidget *cb, *dialog;
+      dialog = gtk_message_dialog_new (GTK_WINDOW(win->window()),
+				       GTK_DIALOG_DESTROY_WITH_PARENT,
+				       GTK_MESSAGE_INFO,
+				       GTK_BUTTONS_CLOSE,
+				       _("Repositories changed"));
+      gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
+					       _("The repository information"
+						 " has changed.  "
+						 "You have to click on the "
+						 " \"Reload\" button so that "
+						 "you changes take effect"));
+      cb = gtk_check_button_new_with_label(_("Never show this message again"));
+      gtk_box_pack_start_defaults(GTK_BOX(GTK_DIALOG(dialog)->vbox),cb);
+      gtk_widget_show(cb);
+      gtk_dialog_run (GTK_DIALOG (dialog));
+      if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
+	    _config->Set("Synaptic::AskForUpdateAfterSrcChange", false);
+      }
+      gtk_widget_destroy (dialog);
    }
 }
 

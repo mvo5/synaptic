@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-02 00:24+0200\n"
+"POT-Creation-Date: 2004-08-03 15:11+0200\n"
 "PO-Revision-Date: 2004-01-29 00:55+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -510,7 +510,8 @@ msgstr "لوائح الحزم أو ملف الحالة لم يمكن إعراب�
 msgid "Internal Error, non-zero counts"
 msgstr "خطأ داخلي، non-zero counts"
 
-#: common/rpackagefilter.cc:45 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:920
+#: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "الإسم"
 
@@ -957,7 +958,7 @@ msgstr "<b>النّسخ المتوفّرة</b>"
 msgid "Installed Size"
 msgstr "حجم التثبيت"
 
-#: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1595
+#: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "حدث خطأ خلال حفظ الإعدادات."
@@ -973,6 +974,11 @@ msgstr "تجاهل"
 #: gtk/rgpreferenceswindow.cc:777
 msgid "Color selection"
 msgstr "اختيار اللّون"
+
+#: gtk/rgpreferenceswindow.cc:914
+#, fuzzy
+msgid "Visible"
+msgstr "متغيّر:"
 
 #: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
 msgid "Preferences"
@@ -1153,59 +1159,59 @@ msgstr "صفّ كل التحديثات الممكنة"
 msgid "Apply all marked changes"
 msgstr "افتح التغييرات"
 
-#: gtk/rgmainwindow.cc:1334
+#: gtk/rgmainwindow.cc:1339
 msgid "Unmark"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1342
+#: gtk/rgmainwindow.cc:1347
 #, fuzzy
 msgid "Mark for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1350
+#: gtk/rgmainwindow.cc:1355
 #, fuzzy
 msgid "Mark for Reinstallation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1359
+#: gtk/rgmainwindow.cc:1364
 #, fuzzy
 msgid "Mark for Upgrade"
 msgstr "مصطفّة للتحديث"
 
-#: gtk/rgmainwindow.cc:1367
+#: gtk/rgmainwindow.cc:1372
 #, fuzzy
 msgid "Mark for Removal"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/rgmainwindow.cc:1376
+#: gtk/rgmainwindow.cc:1381
 #, fuzzy
 msgid "Mark for Complete Removal"
 msgstr "مصطفّة للإزالة"
 
-#: gtk/rgmainwindow.cc:1388
+#: gtk/rgmainwindow.cc:1393
 msgid "Remove Including Orphaned Dependencies"
 msgstr "أزل بما فيه المعتمَدات اليتيمة"
 
-#: gtk/rgmainwindow.cc:1400
+#: gtk/rgmainwindow.cc:1405
 msgid "Hold Current Version"
 msgstr "أبق الإصدار الحالي"
 
-#: gtk/rgmainwindow.cc:1409 gtk/window_main.glade.h:32
+#: gtk/rgmainwindow.cc:1414 gtk/window_main.glade.h:32
 #: gtk/window_filters.glade.h:42
 msgid "Properties"
 msgstr "خصائص"
 
-#: gtk/rgmainwindow.cc:1421
+#: gtk/rgmainwindow.cc:1426
 #, fuzzy
 msgid "Mark Recommended for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1425
+#: gtk/rgmainwindow.cc:1430
 #, fuzzy
 msgid "Mark Suggested for Installation"
 msgstr "مصطفّة للتثبيت"
 
-#: gtk/rgmainwindow.cc:1489
+#: gtk/rgmainwindow.cc:1494
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1213,7 +1219,7 @@ msgstr ""
 "إزالة هذه الحزمة يجعل النظام غير قابل للاستخدام.\n"
 "هل أنت متأكد من عمل ذلك؟"
 
-#: gtk/rgmainwindow.cc:1525
+#: gtk/rgmainwindow.cc:1530
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1222,7 +1228,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبتة, %i معطوبة. %i للتثبيت/للتحديث, %i للإزالة; %s سوف "
 "يفرّغ"
 
-#: gtk/rgmainwindow.cc:1531
+#: gtk/rgmainwindow.cc:1536
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1231,7 +1237,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبّتة, %i معطوبة. %i للتثبيت/التحديث, %iللإزالة; %s سوف "
 "تستخدم"
 
-#: gtk/rgmainwindow.cc:1537
+#: gtk/rgmainwindow.cc:1542
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1240,7 +1246,7 @@ msgstr ""
 "%i حزمة مسرودة, %i مثبّتة, %i معطوبة. %i للتثبيت/التحديث, %iللإزالة; %s سوف "
 "تستخدم"
 
-#: gtk/rgmainwindow.cc:1612
+#: gtk/rgmainwindow.cc:1619
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1260,50 +1266,50 @@ msgstr[1] ""
 "رجاءً حاول إصلاحها بزيارة مصفّي \"معطوب\""
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1794
+#: gtk/rgmainwindow.cc:1801
 #, fuzzy, c-format
 msgid "%s Changelog"
 msgstr "نزّل ملفات الحزم فقط"
 
-#: gtk/rgmainwindow.cc:1877
+#: gtk/rgmainwindow.cc:1884
 msgid "Do you want to add another CD-ROM?"
 msgstr "هل تريد إضافة قرص مدمج آخر؟"
 
-#: gtk/rgmainwindow.cc:1900 gtk/rgmainwindow.cc:2495 gtk/rgmainwindow.cc:2574
-#: gtk/rgmainwindow.cc:2734
+#: gtk/rgmainwindow.cc:1907 gtk/rgmainwindow.cc:2502 gtk/rgmainwindow.cc:2581
+#: gtk/rgmainwindow.cc:2741
 #, c-format
 msgid "Can't read %s"
 msgstr "لا يمكن قراءة %s"
 
-#: gtk/rgmainwindow.cc:1930
+#: gtk/rgmainwindow.cc:1937
 msgid "Open changes"
 msgstr "افتح التغييرات"
 
-#: gtk/rgmainwindow.cc:1961 gtk/rgmainwindow.cc:2024 gtk/rgmainwindow.cc:2413
-#: gtk/rgmainwindow.cc:2547 gtk/rgmainwindow.cc:2711
+#: gtk/rgmainwindow.cc:1968 gtk/rgmainwindow.cc:2031 gtk/rgmainwindow.cc:2420
+#: gtk/rgmainwindow.cc:2554 gtk/rgmainwindow.cc:2718
 #, c-format
 msgid "Can't write %s"
 msgstr "لا يمكن كتابة %s"
 
-#: gtk/rgmainwindow.cc:1980
+#: gtk/rgmainwindow.cc:1987
 msgid "Save changes"
 msgstr "احفظ التغييرات"
 
-#: gtk/rgmainwindow.cc:1997
+#: gtk/rgmainwindow.cc:2004
 msgid "Save full state, not only changes"
 msgstr "احفظ الحالة بالكامل، ليس التغييرات فقط"
 
-#: gtk/rgmainwindow.cc:2122
+#: gtk/rgmainwindow.cc:2129
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "الحزم المتضاربة"
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2159
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "بدء نظام المساعدة..."
 
-#: gtk/rgmainwindow.cc:2169
+#: gtk/rgmainwindow.cc:2176
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1322,85 +1328,85 @@ msgstr ""
 "بشكل بديل يمكنك فتح صفحة man باستخدام 'man synaptic' من سطر الأوامر أو عرض "
 "نسخة html في مجلّد 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2315
+#: gtk/rgmainwindow.cc:2322
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2321
+#: gtk/rgmainwindow.cc:2328
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "جاري بدء تشغيل dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2336
+#: gtk/rgmainwindow.cc:2343
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "جاري بدء مساعدة الحزمة..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2355
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2380
+#: gtk/rgmainwindow.cc:2387
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2399
+#: gtk/rgmainwindow.cc:2406
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "جاري عمل التغييرات المختارة... قد يستغرق هذا بعض الوقت"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2410
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "جاري تنزيل الملفات..."
 
-#: gtk/rgmainwindow.cc:2478
+#: gtk/rgmainwindow.cc:2485
 msgid "Do you want to quit Synaptic?"
 msgstr "هل تريد الخروج من Synaptic؟"
 
-#: gtk/rgmainwindow.cc:2534
+#: gtk/rgmainwindow.cc:2541
 #, fuzzy
 msgid "Downloading Index Files"
 msgstr "جاري تنزيل الملفات..."
 
-#: gtk/rgmainwindow.cc:2536
+#: gtk/rgmainwindow.cc:2543
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "تنظيف لوائح الحزم..."
 
-#: gtk/rgmainwindow.cc:2599
+#: gtk/rgmainwindow.cc:2606
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "لم يمكن تصحيح الاعتماديّات"
 
-#: gtk/rgmainwindow.cc:2601
+#: gtk/rgmainwindow.cc:2608
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2624
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2658
+#: gtk/rgmainwindow.cc:2665
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "سيتم تحديث الحزمة."
 
-#: gtk/rgmainwindow.cc:2670
+#: gtk/rgmainwindow.cc:2677
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "صفّ كل التحديثات الممكنة"
 
-#: gtk/rgmainwindow.cc:2672
+#: gtk/rgmainwindow.cc:2679
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 

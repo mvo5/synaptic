@@ -911,13 +911,13 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    g_object_set(renderer, "activatable", TRUE, NULL);
    g_signal_connect(renderer, "toggled", 
  		    (GCallback) cbToggleColumn, this);
-   column = gtk_tree_view_column_new_with_attributes("Visible",
+   column = gtk_tree_view_column_new_with_attributes(_("Visible"),
                                                       renderer,
                                                       "active", TREE_CHECKBOX_COLUMN,
                                                       NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
    renderer = gtk_cell_renderer_text_new ();
-   column = gtk_tree_view_column_new_with_attributes ("Name",
+   column = gtk_tree_view_column_new_with_attributes (_("Name"),
 						      renderer,
 						      "text", TREE_VISIBLE_NAME_COLUMN,
 						      NULL);

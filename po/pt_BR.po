@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-02 00:24+0200\n"
+"POT-Creation-Date: 2004-08-03 15:11+0200\n"
 "PO-Revision-Date: 2004-06-27 23:45-0300\n"
 "Last-Translator: André Luís Lopes <andrelop@debian.org>\n"
 "Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
@@ -510,7 +510,8 @@ msgstr ""
 msgid "Internal Error, non-zero counts"
 msgstr "Erro Interno, contagens não-zero"
 
-#: common/rpackagefilter.cc:45 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:920
+#: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Nome"
 
@@ -952,7 +953,7 @@ msgstr "<b>Versões Disponíveis</b>"
 msgid "Installed Size"
 msgstr "Tamanho instalado : "
 
-#: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1595
+#: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "Ocorreu um erro ao salvar as configurações."
@@ -968,6 +969,11 @@ msgstr "ignore"
 #: gtk/rgpreferenceswindow.cc:777
 msgid "Color selection"
 msgstr "Seleção de cor"
+
+#: gtk/rgpreferenceswindow.cc:914
+#, fuzzy
+msgid "Visible"
+msgstr "Variável : "
 
 #: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
 msgid "Preferences"
@@ -1147,52 +1153,52 @@ msgstr "Marcar todos os upgrades possíveis"
 msgid "Apply all marked changes"
 msgstr "Aplicar todas as mudanças marcadas"
 
-#: gtk/rgmainwindow.cc:1334
+#: gtk/rgmainwindow.cc:1339
 msgid "Unmark"
 msgstr "_Desmarcar"
 
-#: gtk/rgmainwindow.cc:1342
+#: gtk/rgmainwindow.cc:1347
 msgid "Mark for Installation"
 msgstr "Marcar para instalação"
 
-#: gtk/rgmainwindow.cc:1350
+#: gtk/rgmainwindow.cc:1355
 msgid "Mark for Reinstallation"
 msgstr "Marcar para Reinstalação"
 
-#: gtk/rgmainwindow.cc:1359
+#: gtk/rgmainwindow.cc:1364
 msgid "Mark for Upgrade"
 msgstr "Marcar para Atualização"
 
-#: gtk/rgmainwindow.cc:1367
+#: gtk/rgmainwindow.cc:1372
 msgid "Mark for Removal"
 msgstr "Marcar para Remoção"
 
-#: gtk/rgmainwindow.cc:1376
+#: gtk/rgmainwindow.cc:1381
 msgid "Mark for Complete Removal"
 msgstr "Marcar para Remoção Completa"
 
-#: gtk/rgmainwindow.cc:1388
+#: gtk/rgmainwindow.cc:1393
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Remover Incluindo Dependências Orfãs"
 
-#: gtk/rgmainwindow.cc:1400
+#: gtk/rgmainwindow.cc:1405
 msgid "Hold Current Version"
 msgstr "Segurar Versão Atual"
 
-#: gtk/rgmainwindow.cc:1409 gtk/window_main.glade.h:32
+#: gtk/rgmainwindow.cc:1414 gtk/window_main.glade.h:32
 #: gtk/window_filters.glade.h:42
 msgid "Properties"
 msgstr "Propriedades"
 
-#: gtk/rgmainwindow.cc:1421
+#: gtk/rgmainwindow.cc:1426
 msgid "Mark Recommended for Installation"
 msgstr "Marcar Recomendados para Instalação"
 
-#: gtk/rgmainwindow.cc:1425
+#: gtk/rgmainwindow.cc:1430
 msgid "Mark Suggested for Installation"
 msgstr "Marcar Sugeridos para Instalação"
 
-#: gtk/rgmainwindow.cc:1489
+#: gtk/rgmainwindow.cc:1494
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1200,7 +1206,7 @@ msgstr ""
 "A remoção deste pacote pode tornar o sistema inutilizável.\n"
 "Está certo de que deseja fazer isto?"
 
-#: gtk/rgmainwindow.cc:1525
+#: gtk/rgmainwindow.cc:1530
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1209,7 +1215,7 @@ msgstr ""
 "%i pacotes listados, %i instalados, %i quebrados. %i para instalar/"
 "atualizar, %i para remover; %s serão liberados"
 
-#: gtk/rgmainwindow.cc:1531
+#: gtk/rgmainwindow.cc:1536
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1218,7 +1224,7 @@ msgstr ""
 "%i pacotes listados, %i instalados, %i quebrados. %i para instalar/"
 "atualizar, %i para remover; %s serão usados"
 
-#: gtk/rgmainwindow.cc:1537
+#: gtk/rgmainwindow.cc:1542
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1227,7 +1233,7 @@ msgstr ""
 "%i pacotes listados, %i instalados, %i quebrados. %i para instalar/"
 "atualizar, %i para remover"
 
-#: gtk/rgmainwindow.cc:1612
+#: gtk/rgmainwindow.cc:1619
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1247,49 +1253,49 @@ msgstr[1] ""
 "Utilize o filtro \"Quebrados\" para localizá-los."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1794
+#: gtk/rgmainwindow.cc:1801
 #, c-format
 msgid "%s Changelog"
 msgstr "Log de Mudanças de %s"
 
-#: gtk/rgmainwindow.cc:1877
+#: gtk/rgmainwindow.cc:1884
 msgid "Do you want to add another CD-ROM?"
 msgstr "Deseja adicionar outro CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1900 gtk/rgmainwindow.cc:2495 gtk/rgmainwindow.cc:2574
-#: gtk/rgmainwindow.cc:2734
+#: gtk/rgmainwindow.cc:1907 gtk/rgmainwindow.cc:2502 gtk/rgmainwindow.cc:2581
+#: gtk/rgmainwindow.cc:2741
 #, c-format
 msgid "Can't read %s"
 msgstr "Não foi possível ler %s"
 
-#: gtk/rgmainwindow.cc:1930
+#: gtk/rgmainwindow.cc:1937
 msgid "Open changes"
 msgstr "Abrir mudanças"
 
-#: gtk/rgmainwindow.cc:1961 gtk/rgmainwindow.cc:2024 gtk/rgmainwindow.cc:2413
-#: gtk/rgmainwindow.cc:2547 gtk/rgmainwindow.cc:2711
+#: gtk/rgmainwindow.cc:1968 gtk/rgmainwindow.cc:2031 gtk/rgmainwindow.cc:2420
+#: gtk/rgmainwindow.cc:2554 gtk/rgmainwindow.cc:2718
 #, c-format
 msgid "Can't write %s"
 msgstr "Não foi possível escrever %s"
 
-#: gtk/rgmainwindow.cc:1980
+#: gtk/rgmainwindow.cc:1987
 msgid "Save changes"
 msgstr "Salvar mudanças"
 
-#: gtk/rgmainwindow.cc:1997
+#: gtk/rgmainwindow.cc:2004
 msgid "Save full state, not only changes"
 msgstr "Salvar todo o estado, não apenas as mudanças"
 
-#: gtk/rgmainwindow.cc:2122
+#: gtk/rgmainwindow.cc:2129
 #, c-format
 msgid "Found %i packages"
 msgstr "%i pacotes encontrados"
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2159
 msgid "Starting help viewer..."
 msgstr "Iniciando o visualizador de ajuda..."
 
-#: gtk/rgmainwindow.cc:2169
+#: gtk/rgmainwindow.cc:2176
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1305,7 +1311,7 @@ msgstr ""
 "navegador 'konqueror' ou o navegador 'mozilla' para visualizar o manual do "
 "synaptic."
 
-#: gtk/rgmainwindow.cc:2315
+#: gtk/rgmainwindow.cc:2322
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1313,16 +1319,16 @@ msgstr ""
 "Não foi possível iniciar a ferramenta de configuração !\n"
 "Você precisa instalar o pacote necessário 'lbgnome2-perl'."
 
-#: gtk/rgmainwindow.cc:2321
+#: gtk/rgmainwindow.cc:2328
 msgid "Starting package configuration tool..."
 msgstr "Iniciando a ferramenta de configuração de pacotes..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2336
+#: gtk/rgmainwindow.cc:2343
 msgid "Starting package documentation viewer..."
 msgstr "Iniciando visualizador de documentação do pacote..."
 
-#: gtk/rgmainwindow.cc:2348
+#: gtk/rgmainwindow.cc:2355
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1330,7 +1336,7 @@ msgstr ""
 "Você precisa instalar o pacote \"dwww\" para navegar pela documentação de um "
 "pacote"
 
-#: gtk/rgmainwindow.cc:2380
+#: gtk/rgmainwindow.cc:2387
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1338,35 +1344,35 @@ msgstr ""
 "Não foi possível aplicar mudanças!\n"
 "Solucione os pacotes quebrados antes."
 
-#: gtk/rgmainwindow.cc:2399
+#: gtk/rgmainwindow.cc:2406
 msgid "Applying marked changes. This may take a while..."
 msgstr "Aplicando as mudanças marcadas. Isto pode levar algum tempo..."
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2410
 msgid "Downloading Package Files"
 msgstr "Fazendo o download de Arquivos 'Package'"
 
-#: gtk/rgmainwindow.cc:2478
+#: gtk/rgmainwindow.cc:2485
 msgid "Do you want to quit Synaptic?"
 msgstr "Deseja sair do Synaptic?"
 
-#: gtk/rgmainwindow.cc:2534
+#: gtk/rgmainwindow.cc:2541
 msgid "Downloading Index Files"
 msgstr "Fazendo o download de Arquivos de Índice"
 
-#: gtk/rgmainwindow.cc:2536
+#: gtk/rgmainwindow.cc:2543
 msgid "Refreshing package list..."
 msgstr "Atualizando a lista de pacotes ..."
 
-#: gtk/rgmainwindow.cc:2599
+#: gtk/rgmainwindow.cc:2606
 msgid "Failed to resolve dependency problems!"
 msgstr "Falha ao resolver problemas de dependência !"
 
-#: gtk/rgmainwindow.cc:2601
+#: gtk/rgmainwindow.cc:2608
 msgid "Successfully fixed dependency problems"
 msgstr "Problemas de dependência solucionados com sucesso"
 
-#: gtk/rgmainwindow.cc:2617
+#: gtk/rgmainwindow.cc:2624
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1374,15 +1380,15 @@ msgstr ""
 "Não foi possível atualizar o sistema !\n"
 "Solucione os pacotes quebrados antes."
 
-#: gtk/rgmainwindow.cc:2658
+#: gtk/rgmainwindow.cc:2665
 msgid "Marking all available upgrades..."
 msgstr "Marcando todas as atualizações disponíveis..."
 
-#: gtk/rgmainwindow.cc:2670
+#: gtk/rgmainwindow.cc:2677
 msgid "Successfully marked available upgrades"
 msgstr "Atualizações disponíveis marcadas com sucesso"
 
-#: gtk/rgmainwindow.cc:2672
+#: gtk/rgmainwindow.cc:2679
 msgid "Failed to mark all available upgrades!"
 msgstr "Falha ao marcar todas as atualizações disponíveis !"
 

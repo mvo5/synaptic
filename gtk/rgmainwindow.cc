@@ -2097,11 +2097,11 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 				       GTK_BUTTONS_CLOSE,
 				       _("Repositories changed"));
       gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
-					       _("The repository information"
-						 " has changed.  "
+					       _("The repository information "
+						 "has changed. "
 						 "You have to click on the "
-						 " \"Reload\" button so that "
-						 "you changes take effect"));
+						 "\"Reload\" button for your changes to "
+						 "take effect"));
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
       gtk_box_pack_start_defaults(GTK_BOX(GTK_DIALOG(dialog)->vbox),cb);
       gtk_widget_show(cb);

@@ -167,29 +167,14 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
    }
 }
 
-void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
+
+void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
 {
-   RGSummaryWindow *me = (RGSummaryWindow *) data;
-   RPackageLister *lister = me->_lister;
-   GtkWidget *view;
    GtkWidget *info;
-
-   gtk_widget_set_sensitive(self, FALSE);
-   gtk_widget_destroy(me->_tree);
-   gtk_widget_hide(self);
-
-   info = gtk_label_new("");
-   gtk_label_set_justify(GTK_LABEL(info), GTK_JUSTIFY_LEFT);
-   gtk_misc_set_alignment(GTK_MISC(info), 0.0f, 0.0f);
-   gtk_label_set_line_wrap(GTK_LABEL(info), true);
-   gtk_widget_show(info);
-
-   view = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_summary");
-   assert(view);
-   gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(view), info);
-
    string text;
    gchar *str;
+
+   info = glade_xml_get_widget(me->_gladeXML, "label_details");
 
    vector<RPackage *> held;
    vector<RPackage *> kept;
@@ -201,9 +186,9 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
    vector<RPackage *> toDowngrade;
    double sizeChange;
 
-   lister->getDetailedSummary(held, kept, essential,
-                              toInstall,toReInstall,toUpgrade, 
-			      toRemove, toDowngrade, sizeChange);
+   me->_lister->getDetailedSummary(held, kept, essential,
+				   toInstall,toReInstall,toUpgrade, 
+				   toRemove, toDowngrade, sizeChange);
 
    for (vector<RPackage *>::const_iterator p = essential.begin();
         p != essential.end(); p++) {
@@ -259,8 +244,24 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
    }
 
    gtk_label_set_markup(GTK_LABEL(info), text.c_str());
+}
 
-   me->_summaryL = info;
+void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
+{
+   RGSummaryWindow *me = (RGSummaryWindow *) data;
+   GtkWidget *s,*d;
+   GtkWidget *info;
+
+   s = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_summary");
+   d = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_details");
+
+   if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) {
+      gtk_widget_hide(s);
+      gtk_widget_show(d);
+   } else {
+      gtk_widget_show(s);
+      gtk_widget_hide(d);
+   }
 }
 
 
@@ -281,6 +282,9 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
    _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
    assert(_summarySpaceL);
+
+   // details label
+   buildLabel(this);
 
    // new tree store
    _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);

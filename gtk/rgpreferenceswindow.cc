@@ -142,6 +142,8 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
 
    // save the colors
    RGPackageStatus::pkgStatus.saveColors();
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionUseStatusColors));
+   _config->Set("Synaptic::UseStatusColors", newval ? "true" : "false");
 
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
    i = gtk_option_menu_get_history(

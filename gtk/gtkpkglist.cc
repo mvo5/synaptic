@@ -438,6 +438,8 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
        {
           if (pkg == NULL)
              return;
+	  if(_config->FindB("Synaptic::UseStatusColors", TRUE) == FALSE) 
+	     return;
           GdkColor *bg;
           bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
           g_value_set_boxed(value, bg);

@@ -1360,9 +1360,8 @@ void RGMainWindow::buildInterface()
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
-#ifndef HAVE_RPM
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#else
+#ifdef HAVE_RPM
    gtk_widget_hide(menuitem);
 #endif
 
@@ -1409,7 +1408,7 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif
 
-   gtk_widget_show_all(_popupMenu);
+   gtk_widget_show(_popupMenu);
 
    // attach progress bar
    _progressBar = glade_xml_get_widget(_gladeXML, "progressbar_main");
@@ -2168,6 +2167,8 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    GtkTreeIter iter;
    RPackage *pkg;
    GList *li, *list;
+
+
 
    //cout << "RGMainWindow::cbSelectedRow()" << endl;
 

@@ -3,9 +3,9 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appversion "0.46">
+  <!ENTITY app "<application>Synaptic Package Manager</application>">
   <!ENTITY manrevision "0.1">
   <!ENTITY date "October 2003">
-  <!ENTITY app "<application>Synaptic Package Manager</application>">
 ]>
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
@@ -28,8 +28,7 @@
 
    -->
 
-   &legal;
-   <!-- This file  contains link to license for the documentation (GNU FDL), and 
+     <!-- This file  contains link to license for the documentation (GNU FDL), and 
         other legal stuff such as "NO WARRANTY" statement. Please do not change 
 	any of this. -->
 
@@ -40,7 +39,7 @@
       </author>
     </authorgroup>
 
-    <releaseinfo>This manual describes version &appversion; of Synaptic.
+    <releaseinfo>This manual describes version &appversion; of Synaptic Package Manager.
     </releaseinfo> 
     <legalnotice> 
       <title>Feedback</title>
@@ -67,38 +66,16 @@
      the application is and what it does. -->
   <sect1 id="synaptic-introduction"> 
     <title>Introduction</title> 
-    <para>The &app; application enables you to manage your installed
-    software or install new one. 
-    &app; provides the following features</para> 
-    <itemizedlist>
-      <listitem> 
-	  <para>A variety of zoom levels and full screen viewing, with low usage
-	  of memory regardless of the zoom level. </para> 
-      </listitem> 
-      <listitem> 
-	  <para>Bonobo embedding technology that enables you to embed image views
-	  in other GNOME applications. </para> 
-      </listitem> 
-    </itemizedlist> 
-    <note>
-      <para>This is a note.</para>
-    </note>
-  </sect1>
-
-<!-- =========== Getting Started ============================== -->
-<!-- Use the Getting Started section to describe the steps required
-     to start the application and to describe the user interface components
-     of the application. If there is other information that it is important
-     for readers to know before they start using the application, you should
-     also include this information here. 
-     If the information about how to get started is very short, you can 
-     include it in the Introduction and omit this section. -->
-
-  <sect1 id="synatpic-getting-started"> 
-    <title>Getting Started</title> 
-
-    <sect2 id="myapp-start">
-    <title>To Start &app;</title>
+    <para>The &app; enables you to manage your software.
+    The software is organizied in so called packages and 
+    &app; features upgrading, installing, removing or even
+    downgrading of such software packages.</para>
+    
+    <para>Modifcations on the status of packages are not immediatly 
+    executed. &app; collects the planned modifications in a queue 
+    and commits them to apt. Apt is an unified package manager backend 
+    for RPM and DEB systems.
+    </para>
     <para>You can start <application>&app;</application> in the following ways:
     </para> 
     <variablelist>
@@ -124,11 +101,15 @@
     		</listitem>
     	</varlistentry>
     </variablelist>
-    </sect2>
+  </sect1>
 
-    <sect2 id="synaptic-when-start">
-    <title>When You Start &app;</title>
-    <para>When you start <application>&app;</application>, the following window is displayed.</para>
+  <sect1 id="synatpic-win"> 
+    <title>The Main Window</title> 
+
+    <sect2 id="synaptic-win-overview">
+    <title>Overview</title>
+      <para>When you start <application>&app;</application>, the following 
+	window is displayed.</para>
 
     <!-- ==== Figure ==== -->
       <figure id="mainwindow-fig"> 
@@ -147,68 +128,281 @@
       </figure>
     <!-- ==== End of Figure ==== -->
 
-    <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
-    <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+      <table frame="topbot" id="table-synaptic-main">
+	<title>&app; Window Components</title>
+        <tgroup cols="2" colsep="0" rowsep="0"><colspec colname="COLSPEC0" colwidth="30*"/>
+        <colspec colname="COLSPEC1" colwidth="70*"/>
+        <thead>
+                <row rowsep="1">
+                        <entry valign="top">Component</entry>
+                        <entry valign="top">Description</entry>
+                </row>
+        </thead>
+        <tbody>
+                <row>
+                        <entry valign="top">Menubar</entry>
+                        <entry valign="top">Contains menus that you use to perform
+                        tasks in &app;.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Toolbar</entry>
+                        <entry valign="top">Provides global actions (update, upgrade
+		        and execute) and a package search field.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Package list</entry>
+                        <entry valign="top">Lists available packages. The list can be narrowed
+	                down using filters.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Information area</entry>
+                        <entry valign="top">Provides information about a selected package
+		        package specific actions.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Statusbar</entry>
+                        <entry valign="top">Displays global informations about the status of
+	                &app; </entry>
+                </row>
 
-    <para>The &app; window contains the following elements:
-    </para>
-      <variablelist>
-	<varlistentry>
-	<term>Menubar. </term>
-	<listitem>
-	<para>The menus on the menubar contain all of the commands you need to work with files in 
-	<application>&app;</application>.</para>
-	</listitem>
-	</varlistentry>
-	<varlistentry>
-	<term>Toolbar. </term>
-	<listitem>
-	<para> The toolbar contains a subset of the commands that you can access from the menubar.</para>
-	</listitem>
-	</varlistentry>
-	<varlistentry>
-	<term>Statusbar. </term>
-	<listitem>
-	<para>The statusbar displays information about current <application>&app;</application> 
-	activity and contextual information about the menu items. </para>
-	</listitem>
-	</varlistentry>
-	</variablelist>
+	    </tbody>
+	</tgroup>
+      </table>
     </sect2>
+
+    <sect2 id="synaptic-win-toolbar">
+    <title>The Toolbar</title>
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-win-list">
+    <title>The Package List</title>
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-win-info">
+    <title>The Information Area</title>
+      <para> </para>
+    </sect2>
+
   </sect1>
 <!-- ================ Usage ================================ -->
 <!-- Use this section to describe how to use the application to perform the tasks for 
   which the application is designed. -->
-  <sect1 id="synaptic-usage"> 
-    <title>Usage</title> 
-    <para>You can use the &app; application to
-      perform the following tasks: 
-      <itemizedlist> 
-	<listitem> 
-	  <para> 
-	    <xref linkend="myapp-open-image"/></para> 
-	</listitem> 
-      </itemizedlist> </para>
-    <!-- ================ Usage Subsection ================================ -->
-    <sect2 id="myapp-open-image"> 
-      <title>To Open an Image</title> 
-      <para>lalala</para>
+  <sect1 id="synaptic-single"> 
+    <title>Managing Packages</title> 
+
+    <sect2 id="synaptic-find"> 
+      <title>To Find a Specific Package</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-install"> 
+      <title>To Install a New Package</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-remove"> 
+      <title>To Remove a Package</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-upgrade"> 
+      <title>To Upgrade a Package</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-upgradeall"> 
+      <title>To Upgrade all Packages</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-downgrade"> 
+      <title>Downgrading a Package</title> 
+      <para> </para>
+    </sect2>
+
+  </sect1>
+
+  <sect1 id="synaptic-repo">
+    <title>Managing Package Sources</title>
+
+    <sect2 id="synaptic-repo-update"> 
+      <title>To Update List of Available Packages</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-repo-manage"> 
+      <title>Using Repositories</title> 
+      <para> </para>
+    </sect2>
+
+    <sect2 id="synaptic-repo-cdrom"> 
+      <title>To Add Packages on CD-ROM</title> 
+      <para> </para>
+    </sect2>
+  </sect1>
+
+  <sect1 id="snyaptic-filter">
+      <title>Using Filters</title>
+      <para>Filters enable you to narrow down the list of shown packages in the main package list.
+      </para>
+
+    <sect2 id="synaptic-filter-apply"> 
+      <title>To Apply a Predefined Filter</title> 
+      <para>&app; comes with a list of predifend filters.</para>
+
+      <table frame="topbot" id="table-synaptic-filters">
+	<title>Predefined Filters</title>
+        <tgroup cols="2" colsep="0" rowsep="0"><colspec colname="COLSPEC0" colwidth="30*"/>
+        <colspec colname="COLSPEC1" colwidth="70*"/>
+        <thead>
+                <row rowsep="1">
+                        <entry valign="top">Filter</entry>
+                        <entry valign="top">Description</entry>
+                </row>
+        </thead>
+        <tbody>
+                <row>
+                        <entry valign="top">All packages</entry>
+                        <entry valign="top">Displays all known packages.
+                        </entry>
+                </row>
+                <row>
+                        <entry valign="top">Install</entry>
+                        <entry valign="top">Displays only currently installed packages.</entry>
+	        </row>
+                <row>
+                        <entry valign="top">Not installed</entry>
+                        <entry valign="top">Displays only currently not installed packages.
+	                </entry>
+                </row>
+                <row>
+                        <entry valign="top">Upgradable</entry>
+                        <entry valign="top">Displays only packages with a later version available.
+	                </entry>
+                </row>
+                <row>
+                        <entry valign="top">Broken</entry>
+                        <entry valign="top">Displays only packages with broken dependencies.
+	                </entry>
+                </row>
+                <row>
+                        <entry valign="top">Programmed Changes</entry>
+                        <entry valign="top">Displays only packages queued to be modified.
+	                </entry>
+                </row>
+                <row>
+                        <entry valign="top">New in archive</entry>
+                        <entry valign="top">Displays only new packages since the last repository
+	                update.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Residual</entry>
+                        <entry valign="top">Displays only former installed packages that left
+	                data or configuration files on the system.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Pkg with Debconf</entry>
+                        <entry valign="top">Displays only packages that can be configured through
+	                the debian package configuration system, so called debconf.</entry>
+                </row>
+                <row>
+                        <entry valign="top">Oboslete or locally installed</entry>
+                        <entry valign="top">Displays only packages that are not (for longer)
+		        included in one of the specified repositories.
+	                </entry>
+                </row>
+	</tbody>
+       </tgroup>
+     </table>
+
 
     </sect2>
 
+    <sect2 id="synaptic-filter-edit"> 
+      <title>To Edit and Create Filters</title> 
+
+      <para>Filters can be created, deleted and modified in the filter editor. There are two
+      ways to start the editor:</para>
+
+      <itemizedlist>
+         <listitem>
+	    <para>Choose from the menu <menuchoice><guimenu>Search</guimenu><guimenuitem>Edit Filters...</guimenuitem></menuchoice> </para></listitem>
+	 <listitem>
+	    <para>Click on <guibutton>Filters...</guibutton> in the main window</para>
+	 </listitem>
+	</itemizedlist>
+	 
+    <sect3 id="synaptic-filter-edit-view"> 
+      <title>To Change the View of the Results</title> 
+      <para>You can choose between several sorting modes for matching packages. See HAHAH 
+      for a detailed description of all available view modes.</para>
+    </sect3>
+
+    <sect3 id="synaptic-filter-edit-status"> 
+      <title>To Select Packages by Status</title> 
+      <para> </para>
+    </sect3>
+
+    <sect3 id="synaptic-filter-edit-section"> 
+      <title>To Select Packages by Sections</title> 
+      <para> </para>
+    </sect3>
+
+    <sect3 id="synaptic-filter-edit-properties"> 
+      <title>To Select Packages by Properites</title> 
+      <para> </para>
+    </sect3>
+
+    <sect3 id="synaptic-filter-edit-tag"> 
+      <title>To Select Packages by Tags</title> 
+      <para> </para>
+    </sect3>
+
+    </sect2>
+   </sect1>
+
+
+
+
+  <sect1 id="snyaptic-prefs">
+    <title>Preferences</title>
 <!-- =============== Customization Subsection ================ -->
-<!-- Use a new section to describe different tabbed sections on the Settings or Preferences
-	     dialog. -->
-    <sect2 id="myapp-prefs-display"> 
-      <title>Display</title> 
-      <para>lalala</para>
-
+<!-- Use a new section to describe different tabbed sections on the Settings or Preferences dialog. -->
+    <sect2 id="synaptic-prefs-general"> 
+      <title>General</title> 
+      <para> </para>
     </sect2>
-    <!-- ============= Customization Subsection ===================== -->
-    <!-- Another tabbed section on the Preferences dialog. -->
-    <sect2 id="myapp-prefs-viewers"> 
-      <title>Viewers</title> 
-      <para>lalala</para>
+
+    <sect2 id="synaptic-prefs-layout"> 
+      <title>Layout</title> 
+      <para> </para>
+    </sect2>
+ 
+   <sect2 id="synaptiac-prefs-ordercolor"> 
+      <title>Column Order and Colors</title> 
+      <para> </para>
+   </sect2>    
+
+   <sect2 id="synaptiac-prefs-layout"> 
+      <title>Layout</title> 
+      <para> </para>
+   </sect2> 
+
+   <sect2 id="synaptiac-prefs-temp"> 
+      <title>Temporary Files</title> 
+      <para> </para>
+   </sect2> 
+
+   <sect2 id="synaptiac-prefs-network"> 
+      <title>Network</title> 
+      <para> </para>
+    </sect2> 
+
+   <sect2 id="synaptiac-prefs-expert"> 
+      <title>Expert</title> 
+      <para> </para>
     </sect2> 
   </sect1>
 <!-- ============= Bugs ================================== -->

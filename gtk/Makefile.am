@@ -32,6 +32,7 @@ glade_DATA =                            \
 	window_setopt.glade window_setopt.glade.strings \
 	window_repositories.glade window_repositories.glade.strings \
 	dialog_quit.glade dialog_quit.glade.strings \
+	dialog_upgrade.glade dialog_upgrade.glade.strings \
 	dialog_locales_warning.glade dialog_locales_warning.glade.strings
 
 

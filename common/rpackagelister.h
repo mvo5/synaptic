@@ -265,6 +265,7 @@ public:
    void unregisterCacheObserver(RCacheObserver *observer);
 
    bool readSelections(istream &in);
+   bool writeSelections(ostream &out);
    
    RPackageLister();   
    ~RPackageLister();

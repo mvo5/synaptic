@@ -1431,6 +1431,35 @@ bool RPackageLister::cleanPackageCache()
     return true;
 }
 
+
+bool RPackageLister::writeSelections(ostream &out)
+{
+    cout << "bool RPackageLister::writeSelections(ostream &out)"<<endl;
+
+    for (unsigned i = 0; i < _count; i++) {
+	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
+	switch (status) {
+	    case RPackage::MInstall:
+	    case RPackage::MUpgrade:
+		out << _packages[i]->name() << "   \t   install" << endl;
+		break;
+		
+	    case RPackage::MRemove:
+		out << _packages[i]->name() << "   \t   deinstall" << endl;
+		break;
+		
+	    case RPackage::MHeld:
+	    case RPackage::MKeep:
+	    case RPackage::MDowngrade:
+	    case RPackage::MBroken:
+	    case RPackage::MPinned:
+	    case RPackage::MNew:
+		/* nothing */
+		break;
+	}
+    }
+}
+
 bool RPackageLister::readSelections(istream &in)
 {
     char Buffer[300];
@@ -1470,7 +1499,7 @@ bool RPackageLister::readSelections(istream &in)
 
 	if (Action[0] == 'i') {
 	    actionMap[PkgName] = ACTION_INSTALL;
-	} else if (Action[0] == 'u') {
+	} else if (Action[0] == 'u' || Action[0] == 'd') {
 	    actionMap[PkgName] = ACTION_UNINSTALL;
 	}
     }

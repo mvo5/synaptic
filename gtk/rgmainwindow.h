@@ -238,6 +238,16 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    
 
    // menu stuff
+   
+   // file menu
+   static void openClicked(GtkWidget *self, void *data);
+   static void doOpenSelections(GtkWidget *file_selector, 
+				gpointer data);
+   static void saveClicked(GtkWidget *self, void *data);
+   static void saveAsClicked(GtkWidget *self, void *data);
+   static void doSaveSelections(GtkWidget *file_selector, 
+				gpointer data);
+   string selectionsFilename;
 
    // actions menu
    static void undoClicked(GtkWidget *self, void *data);

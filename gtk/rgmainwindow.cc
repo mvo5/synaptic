@@ -38,6 +38,7 @@
 #include <gdk/gdk.h>
 #include <cmath>
 #include <algorithm>
+#include <fstream>
 
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
@@ -1775,6 +1776,116 @@ void RGMainWindow::undoClicked(GtkWidget *self, void *data)
     me->setInterfaceLocked(FALSE); 
 }
 
+
+void RGMainWindow::doOpenSelections(GtkWidget *file_selector, 
+				    gpointer data) 
+{
+    cout << "void RGMainWindow::doOpenSelections()" << endl;
+    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(data), "me");
+    const gchar *file;
+
+    file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
+    cout << "selected file: " << file << endl;
+    me->selectionsFilename = file;
+
+    ifstream in(file);
+    // fixme, we need errorhandlin here
+    me->_lister->unregisterObserver(me);
+    me->_lister->readSelections(in);
+    me->_lister->registerObserver(me);
+    me->setStatusText();
+}
+
+
+void RGMainWindow::openClicked(GtkWidget *self, void *data)
+{
+    std::cout << "RGMainWindow::openClicked()" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+    
+    GtkWidget *filesel;
+    filesel = gtk_file_selection_new (_("Open changes"));
+    g_object_set_data(G_OBJECT(filesel), "me", data);
+
+    g_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
+                     "clicked", G_CALLBACK (doOpenSelections), filesel);
+   			   
+    g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
+                             "clicked",
+			     G_CALLBACK (gtk_widget_destroy), 
+                             (gpointer)filesel); 
+
+    g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->cancel_button),
+                             "clicked",
+                             G_CALLBACK (gtk_widget_destroy),
+                             (gpointer)filesel); 
+   
+   gtk_widget_show (filesel);
+}
+
+void RGMainWindow::saveClicked(GtkWidget *self, void *data)
+{
+    std::cout << "RGMainWindow::saveClicked()" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+
+    if(me->selectionsFilename == "") {
+	me->saveAsClicked(self,data);
+	return;
+    }
+
+    ofstream out(me->selectionsFilename.c_str());
+    // fixme, we need errorhandlin here
+    me->_lister->unregisterObserver(me);
+    me->_lister->writeSelections(out);
+    me->_lister->registerObserver(me);
+    me->setStatusText();
+
+}
+
+void RGMainWindow::doSaveSelections(GtkWidget *file_selector, 
+				    gpointer data) 
+{
+    cout << "void RGMainWindow::doSaveSelections()" << endl;
+    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(data), "me");
+    const gchar *file;
+
+    file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
+    cout << "selected file: " << file << endl;
+    me->selectionsFilename = file;
+
+    ofstream out(file);
+    // fixme, we need errorhandlin here
+    me->_lister->unregisterObserver(me);
+    me->_lister->writeSelections(out);
+    me->_lister->registerObserver(me);
+    me->setStatusText();
+}
+
+
+void RGMainWindow::saveAsClicked(GtkWidget *self, void *data)
+{
+    std::cout << "RGMainWindow::saveAsClicked()" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+    
+    GtkWidget *filesel;
+    filesel = gtk_file_selection_new (_("Save changes"));
+    g_object_set_data(G_OBJECT(filesel), "me", data);
+
+    g_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
+                     "clicked", G_CALLBACK (doSaveSelections), filesel);
+   			   
+    g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
+                             "clicked",
+			     G_CALLBACK (gtk_widget_destroy), 
+                             (gpointer)filesel); 
+
+    g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->cancel_button),
+                             "clicked",
+                             G_CALLBACK (gtk_widget_destroy),
+                             (gpointer)filesel); 
+   
+   gtk_widget_show (filesel);
+}
+
 void RGMainWindow::redoClicked(GtkWidget *self, void *data)
 {
     //cout << "redoClicked" << endl;
@@ -1921,6 +2032,22 @@ void RGMainWindow::buildInterface()
 				  "on_redo1_activate",
 				  G_CALLBACK(redoClicked),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_open_activate",
+				  G_CALLBACK(openClicked),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_save_activate",
+				  G_CALLBACK(saveClicked),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_save_as_activate",
+				  G_CALLBACK(saveAsClicked),
+				  this); 
+
 
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_button_rec_install_clicked",

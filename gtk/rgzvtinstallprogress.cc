@@ -237,7 +237,7 @@ RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
 #endif
   switch(pid) {
   case -1:
-    cerr << _("can't fork children, so I die") << endl;
+    cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
     exit(1);
     break;
   case 0: 

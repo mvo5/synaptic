@@ -208,7 +208,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 			     -1);
 	  //cout << "selected row is " << recstr << endl;
 	  if(!recstr) { 
-	      cerr << _("gtk_tree_model_get returned no text") << endl;
+	      cerr << "Internal Error: gtk_tree_model_get returned no text" << endl;
 	      li=g_list_next(li);
 	      continue;
 	  }
@@ -222,7 +222,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 	  if(newpkg)
 	      me->pkgInstallHelper(newpkg);
 	  else
-	      cerr << depPkg << _(" not found") << endl;
+	      cerr << depPkg << " not found" << endl;
 	  li = g_list_next(li);
       }
 
@@ -232,7 +232,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 
     break;
   default:
-    cerr << _("clickedRecInstall called with invalid parm: ") << data << endl;
+    cerr << "Internal Error: clickedRecInstall called with invalid parm: " << data << endl;
   }
 
   me->_blockActions = FALSE;
@@ -3675,7 +3675,7 @@ void RGMainWindow::saveState()
 	_userDialog->showErrors();
     }
     if(!_roptions->store())
-      cerr << "error storing raptoptions" << endl;
+      cerr << "Internal Error: error storing raptoptions" << endl;
 }
 
 

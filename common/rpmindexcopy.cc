@@ -116,7 +116,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 // Fork bzip2
 	 int Process = fork();
 	 if (Process < 0)
-	    return _error->Errno("fork", _("Couldn't fork bzip2"));
+	    return _error->Errno("fork", _("Internal Error: couldn't fork bzip2. Please report."));
 	 
 	 // The child
 	 if (Process == 0)

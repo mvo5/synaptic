@@ -423,10 +423,10 @@ bool RPackageLister::openCache(bool reset)
 
     // Apply corrections for half-installed packages
     if (pkgApplyStatus(*deps) == false)
-	return 	_error->Error(_("Internal error recalculating dependency cache."));
+	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
     
     if (_error->PendingError()) {
-	return 	_error->Error(_("Internal error recalculating dependency cache."));
+	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
     }
 
     //cout << "    _treeOrganizer.clear();" << endl;
@@ -442,7 +442,7 @@ bool RPackageLister::openCache(bool reset)
 
     _records = new pkgRecords(*deps);
     if (_error->PendingError()) {
-	return 	_error->Error(_("Internal error recalculating dependency cache."));
+	return 	_error->Error(_("Internal error recalculating dependency cache. Please report."));
     }
     
     if (_packages) {
@@ -651,7 +651,7 @@ bool RPackageLister::fixBroken()
 bool RPackageLister::upgrade()
 {
     if (pkgAllUpgrade(*_cache->deps()) == false) {
-	return _error->Error(_("Internal Error, AllUpgrade broke stuff"));
+	return _error->Error(_("Internal Error, AllUpgrade broke stuff. Please report."));
     }
     
     //reapplyFilter();

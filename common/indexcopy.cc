@@ -86,7 +86,7 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 // Fork gzip
 	 int Process = fork();
 	 if (Process < 0)
-	    return _error->Errno("fork", _("Couldn't fork gzip"));
+	    return _error->Errno("fork", _("Internal Error: Couldn't fork gzip. Please report."));
 	 
 	 // The child
 	 if (Process == 0)

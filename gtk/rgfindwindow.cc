@@ -29,13 +29,6 @@
 
 #include "i18n.h"
 
-void RGFindWindow::show()
-{
-   //cout << "void RGFindWindow::show()" << endl;
-
-   gdk_window_set_cursor(_win->window, NULL);
-   RGWindow::show();
-}
 
 string RGFindWindow::getFindString()
 {
@@ -46,6 +39,11 @@ string RGFindWindow::getFindString()
    const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
    return text;
+}
+
+void RGFindWindow::selectText()
+{
+   gtk_editable_select_region(GTK_EDITABLE(glade_xml_get_widget(_gladeXML, "entry_find")), 0, -1);
 }
 
 int RGFindWindow::getSearchType()

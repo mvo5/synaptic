@@ -46,6 +46,5 @@ class RGFindWindow:public RGGladeWindow {
    int getSearchType();
 
    string getFindString();
-
-   virtual void show();
+   void selectText();
 };

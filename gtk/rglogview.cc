@@ -154,7 +154,7 @@ RGLogView::RGLogView(RGWindow *parent)
    renderer = gtk_cell_renderer_text_new ();
    column = gtk_tree_view_column_new_with_attributes ("Date",
 						      renderer,
-						      "text", COLUMN_LOG_DAY,
+						      "markup", COLUMN_LOG_DAY,
 						      NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 

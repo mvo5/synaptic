@@ -5,10 +5,13 @@
 
 <widget class="GtkDialog" id="dialog_unmet">
   <property name="border_width">5</property>
+  <property name="visible">True</property>
   <property name="title" translatable="yes"></property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="window_position">GTK_WIN_POS_CENTER</property>
   <property name="modal">True</property>
+  <property name="default_width">500</property>
+  <property name="default_height">350</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
@@ -127,7 +130,7 @@ The following packages have unmet dependencies:</property>
 	      <property name="can_focus">True</property>
 	      <property name="editable">False</property>
 	      <property name="justification">GTK_JUSTIFY_LEFT</property>
-	      <property name="wrap_mode">GTK_WRAP_NONE</property>
+	      <property name="wrap_mode">GTK_WRAP_WORD</property>
 	      <property name="cursor_visible">False</property>
 	      <property name="pixels_above_lines">3</property>
 	      <property name="pixels_below_lines">3</property>

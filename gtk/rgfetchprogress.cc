@@ -104,12 +104,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
 
-#if 0                           // dead code rom old interface
-   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-   gtk_misc_set_alignment(GTK_MISC(_statusL), 0.0f, 0.0f);
-   gtk_label_set_justify(GTK_LABEL(_statusL), GTK_JUSTIFY_LEFT);
-#endif
-
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_cancel_clicked",
                                  G_CALLBACK(stopDownload), this);
@@ -243,10 +237,6 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
 
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);
    g_free(s);
-
-#if 0                           // dead code from old dialog design
-   gtk_label_set_text(GTK_LABEL(_statusL), (char *)str.c_str());
-#endif
 
    RGFlushInterface();
 

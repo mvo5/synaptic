@@ -262,7 +262,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     GtkWidget *hbox;
     GtkWidget *button;
     GtkWidget *scrolled_win;
-    int lines = 0;
     
     _potentialBreak = false;
     _lister = lister;
@@ -340,78 +339,68 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     gtk_widget_show(_topBox);
 
 
-    {
-	char buffer[256];
-	string msg;
-	int toInstall, toRemove, toUpgrade, toDowngrade;
-	int held, kept, essential;
-	double sizeChange, dlSize;
-	int dlCount;
+    int toInstall, toRemove, toUpgrade, toDowngrade;
+    int held, kept, essential;
+    double sizeChange, dlSize;
+    int dlCount;
+    GString *msg = g_string_new("");
 	
-	lister->getSummary(held, kept, essential,
-			   toInstall, toUpgrade, toRemove, toDowngrade,
-			   sizeChange);
+    lister->getSummary(held, kept, essential,
+		       toInstall, toUpgrade, toRemove, toDowngrade,
+		       sizeChange);
+    lister->getDownloadSummary(dlCount, dlSize);
 
-	lister->getDownloadSummary(dlCount, dlSize);
-	
-#define APPEND_TXT(descr, number)\
-    snprintf(buffer, sizeof(buffer), descr, number, \
-			 number > 1 ? _("packages") : _("package")),\
-    lines++, msg.append(buffer);
-	
-	if (held)
-	    APPEND_TXT(_("%d %s were held;\n"), held);
-	
-	if (kept)
-	    APPEND_TXT(_("%d %s were kept back and not upgraded;\n"), kept);
-	
-	if (toInstall)
-	    APPEND_TXT(_("%d new %s will be installed;\n"), toInstall);
-	
-	if (toUpgrade)
-	    APPEND_TXT(_("%d %s will be upgraded;\n"), toUpgrade);
-	
-	if (toRemove)
-	    APPEND_TXT(_("%d %s will be removed;\n"), toRemove);
+    if (held)
+	g_string_append_printf(msg,_("%d %s were held;\n"), 
+			       held, held > 1 ? _("packages") : _("package"));
+    if (kept)
+	g_string_append_printf(msg,
+			       _("%d %s were kept back and not upgraded;\n"), 
+			       kept, kept > 1 ? _("packages") : _("package"));
 
-	if (toDowngrade)
-	    APPEND_TXT(_("%d %s will be DOWNGRADED;\n"), toDowngrade);
+    if (toInstall)
+	g_string_append_printf(msg,
+			       _("%d new %s will be installed;\n"), 
+			       toInstall, 
+			       toInstall > 1 ? _("packages") : _("package"));
+    
+    if (toUpgrade)
+	g_string_append_printf(msg,_("%d %s will be upgraded;\n"), toUpgrade,
+			       toUpgrade > 1 ? _("packages") : _("package"));
+    
+    if (toRemove)
+	g_string_append_printf(msg,_("%d %s will be removed;\n"), toRemove,
+			       toRemove > 1 ? _("packages") : _("package"));
+    
+    if (toDowngrade)
+	g_string_append_printf(msg,_("%d %s will be DOWNGRADED;\n"), 
+			       toDowngrade, 
+			       toDowngrade > 1 ? _("packages") : _("package"));
 			   
-	if (essential) {
-	    APPEND_TXT(_("WARNING: %d essential %s will be removed!\n"),
-		       essential);
-	    _potentialBreak = true;
-	}
+    if (essential) {
+	g_string_append_printf(msg,
+			      _("WARNING: %d essential %s will be removed!\n"),
+			       essential, 
+			       essential > 1 ? _("packages") : _("package"));
+	_potentialBreak = true;
+    }
 
-	char *templ = NULL;
-	if (sizeChange > 0) {
-	    templ = _("\n%sB will be used after finished.\n");
-	} else if (sizeChange < 0) {
-	    templ = _("\n%sB will be freed after finished.\n");
-	    sizeChange = -sizeChange;
-	}
-
-	if (templ) {
-	    snprintf(buffer, sizeof(buffer), templ,
-			     SizeToStr(sizeChange).c_str());
-	    lines++;
-	    msg.append(buffer);
-	}
-
-	if (dlSize > 0) {
-	    snprintf(buffer, sizeof(buffer), 
-			     _("\n%sB need to be downloaded."),
-			     SizeToStr(dlSize).c_str());
-	    lines++;
-	    msg.append(buffer);
-	}
-	
-#undef APPEND_TXT
-
-	gtk_label_set_text(GTK_LABEL(_summaryL), msg.c_str());
+    if (sizeChange > 0) {
+	g_string_append_printf(msg, _("\n%sB will be used after finished.\n"),
+			       SizeToStr(sizeChange).c_str());
+    } else if (sizeChange < 0) {
+	g_string_append_printf(msg, _("\n%sB will be freed after finished.\n"),
+			       SizeToStr(sizeChange).c_str());
+	sizeChange = -sizeChange;
     }
     
-    //gtk_widget_set_usize(_win, 360, lines * 12 + 10 + 100 + 20);
+    if (dlSize > 0) {
+	g_string_append_printf(msg, _("\n%sB need to be downloaded."),
+			       SizeToStr(dlSize).c_str());
+    }
+    
+    gtk_label_set_text(GTK_LABEL(_summaryL), msg->str);
+    g_string_free(msg,TRUE);
 }
 
 

@@ -991,7 +991,6 @@ int RPackageLister::findNextPackage()
     return -1;
 }
 
-
 void RPackageLister::getStats(int &installed, int &broken, 
 			      int &toinstall, int &toremove, 
 			      double &sizeChange)

@@ -102,6 +102,7 @@ void RWSummaryWindow::clickedDetails(WMWidget *self, void *data)
     vector<RPackage*> toInstall;
     vector<RPackage*> toUpgrade;
     vector<RPackage*> toRemove;
+    vector<RPackage*> toDowngrade;
     double sizeChange;
 
     
@@ -111,11 +112,18 @@ void RWSummaryWindow::clickedDetails(WMWidget *self, void *data)
 			       toInstall, 
 			       toUpgrade, 
 			       toRemove,
+			       toDowngrade,
 			       sizeChange);
 
     for (vector<RPackage*>::const_iterator p = essential.begin();
 	 p != essential.end(); p++) {
 	text += string((*p)->name()) + _(": (ESSENTIAL) will be Removed\n");
+	lines++;
+    }
+
+    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
+	 p != toDowngrade.end(); p++) {
+	text += string((*p)->name()) + _(": will be Downgraded\n");
 	lines++;
     }
     
@@ -217,12 +225,12 @@ RWSummaryWindow::RWSummaryWindow(RWWindow *wwin, RPackageLister *lister)
 	int left = sizeof(buffer);
 	int used = 0;
 	int toInstall, toRemove, toUpgrade;
-	int held, kept, essential;
+	int held, kept, essential, toDowngrade;
 	double sizeChange, dlSize;
 	int dlCount;
 	
 	lister->getSummary(held, kept, essential,
-			   toInstall, toUpgrade, toRemove,
+			   toInstall, toUpgrade, toRemove, toDowngrade,
 			   sizeChange);
 
 	lister->getDownloadSummary(dlCount, dlSize);

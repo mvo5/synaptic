@@ -1,8 +1,10 @@
 /* rguserdialog.cc
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
+ *               2003 Michael Vogt
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *         Michael Vogt <mvo@debian.org>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -146,11 +148,13 @@ bool RGUserDialog::showErrors()
 }
 
 // RGGladeUserDialog
-RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
+bool RGGladeUserDialog::run(const char *name)
 {
     GladeXML *gladeXML;
     gchar *filename = NULL;
     gchar *main_widget = NULL;
+
+    //cout << "RGGladeUserDialog::RGGladeUserDialog()" << endl;
 
     filename = g_strdup_printf("dialog_%s.glade",name);
     main_widget = g_strdup_printf("dialog_%s", name);
@@ -172,10 +176,7 @@ RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
 				  G_CALLBACK(actionResponse),
 				  (gpointer) &res);
 
-}
-
-bool RGGladeUserDialog::run()
-{
+    //cout << "RGGladeUserDialog::run()" << endl;
     gtk_dialog_run(GTK_DIALOG(_dialog));
     gtk_widget_destroy(_dialog);
     return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);

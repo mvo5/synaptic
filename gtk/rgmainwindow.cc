@@ -3441,17 +3441,14 @@ void RGMainWindow::close()
     if (_interfaceLocked > 0)
 	return;
 
-    if (_unsavedChanges == true) {
-	RGGladeUserDialog *dia = new RGGladeUserDialog(this, "quit");
-	// return true is user clicked on "quit"
-	if(dia->run()) {
-	    _error->Discard();
-	    saveState();
-	    showErrors();
-	    exit(0);
-	}
-	delete dia;
+    RGGladeUserDialog dia(this);
+    if (_unsavedChanges == false || dia.run("quit")) {
+	_error->Discard();
+	saveState();
+	showErrors();
+	exit(0);
     }
+
 	
     //cout << "no exit" << endl;
     //BUG/FIXME: don't know why this is needed, but if I ommit it, the 

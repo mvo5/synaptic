@@ -57,14 +57,13 @@ public:
  * the buttons must have valid RESPONSE_IDs attached
  * see gtk/dialog_quit.glade as an example
  * Example:
-  	RGGladeUserDialog *dia = new RGGladeUserDialog(this, "quit");
+  	RGGladeUserDialog dia(this);
 	// return true is user clicked on a button with GTK_RESPONSE_OK
-	if(dia->run()) {
+	if(dia->run("quit")) {
 	    do_response_ok_stuff();
 	} else {
             do_not_ok_stuff();
         }
-	delete dia;
  *
 */
 class RGGladeUserDialog : public RGUserDialog
@@ -74,8 +73,8 @@ class RGGladeUserDialog : public RGUserDialog
     GtkResponseType res;
 
  public:
-    RGGladeUserDialog(RGWindow *parent, const char *name);
-    bool run();
+    RGGladeUserDialog(RGWindow* parent) {};
+    bool run(const char *name);
 };
 #endif
 

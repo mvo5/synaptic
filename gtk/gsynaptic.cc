@@ -153,7 +153,9 @@ int main(int argc, char **argv)
     }
 
     if (_config->FindB("Volatile::Set-Selections", False)) {
+	packageLister->unregisterObserver(mainWindow);
         packageLister->readSelections(cin);
+	packageLister->registerObserver(mainWindow);
     }
 
     mainWindow->setInterfaceLocked(false);

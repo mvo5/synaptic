@@ -1212,6 +1212,11 @@ bool RPackageLister::readSelections(istream &in)
 {
     char Buffer[300];
     int CurLine = 0;
+    enum Action {
+	ACTION_INSTALL,
+	ACTION_UNINSTALL
+    };
+    map<string,int> actionMap;
 
     while (in.eof() == false)
     {
@@ -1240,19 +1245,37 @@ bool RPackageLister::readSelections(istream &in)
 	        return _error->Error(_("Malformed line %u in selection file"),
 			                     CurLine);
 
-        for (unsigned i = 0; i < _displayList.size(); i++) {
-            if (strcasecmp(PkgName.c_str(), _displayList[i]->name()) == 0) {
-                if (Action == "install") {
-                    _displayList[i]->setInstall();
-                } else if (Action == "uninstall") {
-                    _displayList[i]->setRemove();
+	if (Action[0] == 'i') {
+	    actionMap[PkgName] = ACTION_INSTALL;
+	} else if (Action[0] == 'u') {
+	    actionMap[PkgName] = ACTION_UNINSTALL;
+	}
+    }
+    if (actionMap.empty() == false) {
+	int Size = _displayList.size();
+	_progMeter->OverallProgress(0,Size,Size,_("Setting selections..."));
+	_progMeter->SubProgress(Size);
+        for (unsigned i = 0; i < Size; i++) {
+	    RPackage *Pkg = _displayList[i];
+	    map<string,int>::const_iterator I = actionMap.find(Pkg->name());
+	    if (I != actionMap.end()) {
+		switch ((*I).second) {
+		    case ACTION_INSTALL:
+			Pkg->setInstall();
+			break;
+
+		    case ACTION_UNINSTALL:
+			Pkg->setRemove();
+			break;
 		}
             }
+	    if (i%5 == 0)
+		_progMeter->Progress(i);
         }
+	_progMeter->Done();
     }
-    if (!check()) {
+    if (!check())
         fixBroken();
-    }
 }
 
 // vim:sts=4:sw=4

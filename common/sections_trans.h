@@ -7,7 +7,7 @@ char *transtable[][2] = {
    {"comm",_("Communication")},
    {"devel",_("Development")},
    {"doc",_("Documentation")},
-   {"editors",_("Text Editing")},
+   {"editors",_("Editors")},
    {"electronics",_("Electronics")},
    {"embedded",_("Embedded Devices")},
    {"games",_("Games and Amusement")},
@@ -36,7 +36,7 @@ char *transtable[][2] = {
    {"web",_("World Wide Web")},
    {"x11",_("Miscellaneous  - Graphical")},
    {"unknown", _("Unknown")},
-   {"alien", _("Converted from rpm by alien")},
+   {"alien", _("Converted From RPM by Alien")},
 
    {"non-US",_("Restricted On Export")},
    {"non-free",_("non free")},

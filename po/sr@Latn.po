@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-26 15:54+0200\n"
+"POT-Creation-Date: 2004-05-26 16:41+0200\n"
 "PO-Revision-Date: 2004-02-04 20:53+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -356,8 +356,8 @@ msgstr "Oštećene zavisnosti."
 
 #: common/rpackage.cc:400
 #, fuzzy
-msgid "Reverse Depends"
-msgstr "Zavisnost unazad"
+msgid "Depended on by"
+msgstr "Zavisnosti"
 
 #: common/rpackage.cc:508
 #, c-format
@@ -435,7 +435,7 @@ msgid "Marked for complete removal"
 msgstr "Stavljeni u red čekanja za uklanjanje"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not installed"
 msgstr "Nisu instalirani"
 
@@ -444,7 +444,7 @@ msgid "Not installed (locked)"
 msgstr "Nisu instalirani (zaključani)"
 
 #: common/rpackage.cc:1300 common/rpackageview.cc:99
-#: gtk/window_filters.glade.h:19
+#: gtk/window_filters.glade.h:20
 msgid "Installed"
 msgstr "Instalirani"
 
@@ -493,13 +493,13 @@ msgstr "Verzija"
 
 #: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:786
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:16
+#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
+#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Opis"
 
 #: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Održavalac"
 
@@ -519,14 +519,12 @@ msgstr "Sudaranja"
 msgid "Replaces"
 msgstr "Zamenjuje"
 
-#. replaces/obsoletes
-#: common/rpackagefilter.cc:53 gtk/rgfiltermanager.h:77
+#: common/rpackagefilter.cc:53
 #, fuzzy
 msgid "Recommends"
 msgstr "Preporučen"
 
-#. /recommends
-#: common/rpackagefilter.cc:54 gtk/rgfiltermanager.h:78
+#: common/rpackagefilter.cc:54
 #, fuzzy
 msgid "Suggests"
 msgstr "Predložen"
@@ -536,7 +534,7 @@ msgid "ReverseDepends"
 msgstr "Zavisnost unazad"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
 #: gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr ""
@@ -707,7 +705,7 @@ msgstr "Novi u skladištu"
 msgid "Installed and obsolete"
 msgstr "Instalirani i nadogradivi"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:20
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
 msgid "Installed and upgradable"
 msgstr "Instalirani i nadogradivi"
 
@@ -998,7 +996,7 @@ msgstr "Posećen"
 msgid "Failed"
 msgstr "Neuspeh"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:13
+#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:14
 msgid "Filters"
 msgstr "Filtri"
 
@@ -1061,7 +1059,7 @@ msgstr "Bezbednosni"
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:355 gtk/window_details.glade.h:20
+#: gtk/rgmainwindow.cc:355 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "Nijedan paket nije izabran.\n"
 
@@ -1130,7 +1128,7 @@ msgstr "Ukloni uključujuće napuštene zavisnosti"
 msgid "Hold Current Version"
 msgstr "Zaključaj tekuću verziju i stanje"
 
-#: gtk/rgmainwindow.cc:1237 gtk/window_filters.glade.h:42
+#: gtk/rgmainwindow.cc:1237 gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "Osobine"
 
@@ -1892,8 +1890,8 @@ msgstr "Napisao"
 msgid "*"
 msgstr "*"
 
-#: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:8
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:14
+#: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
+#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "Zavisnosti"
 
@@ -2114,7 +2112,7 @@ msgstr "Opis"
 msgid "Direct connection to the internet"
 msgstr "Direktna internet veza"
 
-#: gtk/window_preferences.glade.h:40 gtk/window_details.glade.h:18
+#: gtk/window_preferences.glade.h:40 gtk/window_details.glade.h:19
 msgid "Expert"
 msgstr "Stručnjak"
 
@@ -2421,138 +2419,143 @@ msgstr "<b>Ostali</b>"
 msgid "Conflicting Packages"
 msgstr "Problematični paketi"
 
-#: gtk/window_filters.glade.h:10
+#. suggests
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_details.glade.h:14
+#, fuzzy
+msgid "Dependants"
+msgstr "Zavisi od"
+
+#: gtk/window_filters.glade.h:11
 msgid "Exclude"
 msgstr "Isključi"
 
-#: gtk/window_filters.glade.h:11
+#: gtk/window_filters.glade.h:12
 msgid "Exclude selected sections"
 msgstr "Isključi odabrane promene"
 
-#: gtk/window_filters.glade.h:12 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "Isključuje"
 
-#: gtk/window_filters.glade.h:14
+#: gtk/window_filters.glade.h:15
 #, fuzzy
 msgid "For Installation or Upgrade"
 msgstr "Biće instalirani ili nadograđeni"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:16
 #, fuzzy
 msgid "For Removal"
 msgstr "Stavljeni u red čekanja za uklanjanje"
 
-#: gtk/window_filters.glade.h:16
+#: gtk/window_filters.glade.h:17
 msgid "Include"
 msgstr "Uključi"
 
-#: gtk/window_filters.glade.h:17
+#: gtk/window_filters.glade.h:18
 msgid "Include selected sections only"
 msgstr "Uključi samo odabrane promene"
 
-#: gtk/window_filters.glade.h:18 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "Uključuje"
 
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:22
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Biblioteke koje više nisu potrebne (deborphan je zahtevan)"
 
-#: gtk/window_filters.glade.h:23
+#: gtk/window_filters.glade.h:24
 msgid "New in archive"
 msgstr "Novi u arhivi"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "Not (no longer) installable"
 msgstr "Više nije moguća instalacija"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 #, fuzzy
 msgid "Not marked"
 msgstr "Nisu instalirani"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:29
 msgid "Orphaned"
 msgstr "Napušteni"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Package Name"
 msgstr "Ime paketa"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr "Paketi koji su novi u skladištu od poslednjeg osvežavanja "
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 msgid "Packages that are not available in any repository"
 msgstr "Paketi koji nisu dostupni ni na jednom skladištu"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr "Paketi koji su bili instalirani i gde je dostupna novija verzija"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr "Paketi koji su bili instalirani i koji su najnoviji"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Paketi koji su bili uklonjeni ne uključujući tu njihove datoteke sa "
 "podešavanjima"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr "Paketi koji nisu bili instalirani"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "Paketi koji će biti instalirani ili nadograđeni"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "Paketi koji će biti uklonjeni"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "Paketi koji nikada neće biti nadograđeni"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Paketi koji će se sačuvati"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "Paketi sa razbijenim zavisnostima"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "Izdvojeni"
 
-#: gtk/window_filters.glade.h:43 gtk/window_details.glade.h:23
+#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "Paket obezbeđuje"
 
-#: gtk/window_filters.glade.h:44
+#. replaces/obsoletes
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
 msgid "Recommendations"
 msgstr "Preporučen"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "Zamenjeni paketi"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "Ostavljena podešavanja"
 
-#: gtk/window_filters.glade.h:47
-msgid "Reverse Dependencies"
-msgstr "Obrnute zavisnosti"
-
-#: gtk/window_filters.glade.h:50
+#. /recommends
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
 #, fuzzy
 msgid "Suggestions"
 msgstr "Odeljak"
@@ -2708,11 +2711,6 @@ msgstr "Problematični paketi"
 msgid "Replaced packages"
 msgstr "Zamenjeni paketi"
 
-#. suggests
-#: gtk/rgfiltermanager.h:79
-msgid "Reverse dependencies"
-msgstr "Obrnute zavisnosti"
-
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
 msgstr "Opis sličica"
@@ -2775,22 +2773,18 @@ msgstr ""
 msgid "Common"
 msgstr "Osnovno"
 
-#: gtk/window_details.glade.h:15
+#: gtk/window_details.glade.h:16
 msgid "Dependencies of the Latest Version"
 msgstr "Zavisnosti najnovije verzije"
 
-#: gtk/window_details.glade.h:17
+#: gtk/window_details.glade.h:18
 #, fuzzy
 msgid "Download:"
 msgstr "Prenos:"
 
-#: gtk/window_details.glade.h:19
+#: gtk/window_details.glade.h:20
 msgid "Installed Files"
 msgstr "Instalirane datoteke"
-
-#: gtk/window_details.glade.h:22
-msgid "Packages Depending on this One"
-msgstr "Paketi koji zavise od ovog paketa"
 
 #: gtk/window_details.glade.h:24
 msgid "Size:"
@@ -2799,6 +2793,19 @@ msgstr "Veličina:"
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "Verzija:"
+
+#~ msgid "Reverse dependencies"
+#~ msgstr "Obrnute zavisnosti"
+
+#, fuzzy
+#~ msgid "Reverse Depends"
+#~ msgstr "Zavisnost unazad"
+
+#~ msgid "Reverse Dependencies"
+#~ msgstr "Obrnute zavisnosti"
+
+#~ msgid "Packages Depending on this One"
+#~ msgstr "Paketi koji zavise od ovog paketa"
 
 #~ msgid "Search in:"
 #~ msgstr "Traži u:"

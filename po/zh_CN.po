@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-26 15:54+0200\n"
+"POT-Creation-Date: 2004-05-26 16:41+0200\n"
 "PO-Revision-Date: 2003-11-30 0:46+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -343,8 +343,8 @@ msgstr "依赖关系被毁损。"
 
 #: common/rpackage.cc:400
 #, fuzzy
-msgid "Reverse Depends"
-msgstr "反向依赖"
+msgid "Depended on by"
+msgstr "依赖软件包为"
 
 #: common/rpackage.cc:508
 #, c-format
@@ -420,7 +420,7 @@ msgid "Marked for complete removal"
 msgstr "已标记要删除的软件包"
 
 #: common/rpackage.cc:1298 common/rpackageview.cc:104
-#: gtk/window_filters.glade.h:25
+#: gtk/window_filters.glade.h:26
 msgid "Not installed"
 msgstr "未安装的"
 
@@ -432,7 +432,7 @@ msgstr ""
 "已安装软件包：\n"
 
 #: common/rpackage.cc:1300 common/rpackageview.cc:99
-#: gtk/window_filters.glade.h:19
+#: gtk/window_filters.glade.h:20
 msgid "Installed"
 msgstr "已安装"
 
@@ -482,13 +482,13 @@ msgstr "版本"
 
 #: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:786
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:9
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:16
+#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
+#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "软件包描述"
 
 #: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
-#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "维护者"
 
@@ -508,14 +508,12 @@ msgstr "冲突"
 msgid "Replaces"
 msgstr "取代"
 
-#. replaces/obsoletes
-#: common/rpackagefilter.cc:53 gtk/rgfiltermanager.h:77
+#: common/rpackagefilter.cc:53
 #, fuzzy
 msgid "Recommends"
 msgstr "推荐的"
 
-#. /recommends
-#: common/rpackagefilter.cc:54 gtk/rgfiltermanager.h:78
+#: common/rpackagefilter.cc:54
 msgid "Suggests"
 msgstr "建议"
 
@@ -524,7 +522,7 @@ msgid "ReverseDepends"
 msgstr "反向依赖"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:28
 #: gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr ""
@@ -686,7 +684,7 @@ msgstr "软件库里的新内容"
 msgid "Installed and obsolete"
 msgstr "已安装并可升级的软件包"
 
-#: common/rpackageview.cc:97 gtk/window_filters.glade.h:20
+#: common/rpackageview.cc:97 gtk/window_filters.glade.h:21
 msgid "Installed and upgradable"
 msgstr "已安装的和可升级的"
 
@@ -962,7 +960,7 @@ msgstr "成功"
 msgid "Failed"
 msgstr "失败"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:13
+#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:14
 msgid "Filters"
 msgstr "过滤器"
 
@@ -1025,7 +1023,7 @@ msgstr "安全更新"
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:355 gtk/window_details.glade.h:20
+#: gtk/rgmainwindow.cc:355 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "没有选中任何软件包。\n"
 
@@ -1093,7 +1091,7 @@ msgstr "删除包括孤儿依赖关系"
 msgid "Hold Current Version"
 msgstr "保留当前的版本"
 
-#: gtk/rgmainwindow.cc:1237 gtk/window_filters.glade.h:42
+#: gtk/rgmainwindow.cc:1237 gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "属性"
 
@@ -1838,8 +1836,8 @@ msgstr "作者"
 msgid "*"
 msgstr "*"
 
-#: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:8
-#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:14
+#: gtk/window_find.glade.h:2 gtk/window_filters.glade.h:9
+#: gtk/rgfiltermanager.h:73 gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "依赖关系"
 
@@ -2060,7 +2058,7 @@ msgstr "软件包描述"
 msgid "Direct connection to the internet"
 msgstr "直接连接到国际互联网"
 
-#: gtk/window_preferences.glade.h:40 gtk/window_details.glade.h:18
+#: gtk/window_preferences.glade.h:40 gtk/window_details.glade.h:19
 msgid "Expert"
 msgstr "专家"
 
@@ -2366,136 +2364,141 @@ msgstr "<b>其他</b>"
 msgid "Conflicting Packages"
 msgstr "有冲突的软件包"
 
-#: gtk/window_filters.glade.h:10
+#. suggests
+#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:79
+#: gtk/window_details.glade.h:14
+#, fuzzy
+msgid "Dependants"
+msgstr "依赖此软件包的软件包"
+
+#: gtk/window_filters.glade.h:11
 msgid "Exclude"
 msgstr "不包括"
 
-#: gtk/window_filters.glade.h:11
+#: gtk/window_filters.glade.h:12
 msgid "Exclude selected sections"
 msgstr "不包括已选的组别"
 
-#: gtk/window_filters.glade.h:12 gtk/rgfiltermanager.h:63
+#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "不包括"
 
-#: gtk/window_filters.glade.h:14
+#: gtk/window_filters.glade.h:15
 #, fuzzy
 msgid "For Installation or Upgrade"
 msgstr "将会被安装或升级的"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:16
 #, fuzzy
 msgid "For Removal"
 msgstr "已标记要删除的软件包"
 
-#: gtk/window_filters.glade.h:16
+#: gtk/window_filters.glade.h:17
 msgid "Include"
 msgstr "包括"
 
-#: gtk/window_filters.glade.h:17
+#: gtk/window_filters.glade.h:18
 msgid "Include selected sections only"
 msgstr "只包括已选的组别"
 
-#: gtk/window_filters.glade.h:18 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "包括"
 
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:22
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "不再需要的库软件包(需要 deborphan)"
 
-#: gtk/window_filters.glade.h:23
+#: gtk/window_filters.glade.h:24
 msgid "New in archive"
 msgstr "归档中的新内容"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:25
 msgid "Not (no longer) installable"
 msgstr "不可(不再)安装"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:27
 #, fuzzy
 msgid "Not marked"
 msgstr "未安装的"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:29
 msgid "Orphaned"
 msgstr "再没有人维护的“孤儿”软件包"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:30
 msgid "Package Name"
 msgstr "软件包名称"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr "仓库中自上次“更新”后的新软件包"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:32
 msgid "Packages that are not available in any repository"
 msgstr "在任何仓库里都无法获得的软件包"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and a later version is available"
 msgstr "已安装并且具有可用的新版本的软件包"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been installed and are up to date"
 msgstr "已安装并且已更新的软件包"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have been removed except their configuration files"
 msgstr "已经删除但在系统里仍残留有配置文件的软件包"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:36
 msgid "Packages that have not been installed"
 msgstr "没有安装的软件包"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be installed or upgraded"
 msgstr "将会被安装或升级的软件包"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will be removed"
 msgstr "将会被删除的软件包"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:39
 msgid "Packages that will never be upgraded"
 msgstr "永远不再升级的软件包。"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:40
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "将会维持原状不升级的软件包"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
 msgstr "依赖关系有问题的软件包"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:42
 msgid "Pinned"
 msgstr "标记为永不升级的软件包"
 
-#: gtk/window_filters.glade.h:43 gtk/window_details.glade.h:23
+#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
 msgid "Provided Packages"
 msgstr "提供的软件包"
 
-#: gtk/window_filters.glade.h:44
+#. replaces/obsoletes
+#: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
 msgid "Recommendations"
 msgstr "推荐的"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
 msgstr "已替换的软件包"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:47
 msgid "Residual config"
 msgstr "残存配置"
 
-#: gtk/window_filters.glade.h:47
-msgid "Reverse Dependencies"
-msgstr "反向依赖"
-
-#: gtk/window_filters.glade.h:50
+#. /recommends
+#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:78
 #, fuzzy
 msgid "Suggestions"
 msgstr "建议"
@@ -2651,12 +2654,6 @@ msgstr "有冲突的软件包"
 msgid "Replaced packages"
 msgstr "已替换的软件包"
 
-#. suggests
-#: gtk/rgfiltermanager.h:79
-#, fuzzy
-msgid "Reverse dependencies"
-msgstr "反向依赖"
-
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
 msgstr ""
@@ -2718,21 +2715,17 @@ msgstr ""
 msgid "Common"
 msgstr "普通"
 
-#: gtk/window_details.glade.h:15
+#: gtk/window_details.glade.h:16
 msgid "Dependencies of the Latest Version"
 msgstr "最新版本的依赖关系"
 
-#: gtk/window_details.glade.h:17
+#: gtk/window_details.glade.h:18
 msgid "Download:"
 msgstr "下载："
 
-#: gtk/window_details.glade.h:19
+#: gtk/window_details.glade.h:20
 msgid "Installed Files"
 msgstr "已安装的文件"
-
-#: gtk/window_details.glade.h:22
-msgid "Packages Depending on this One"
-msgstr "依赖此软件包的软件包"
 
 #: gtk/window_details.glade.h:24
 msgid "Size:"
@@ -2741,6 +2734,20 @@ msgstr "大小："
 #: gtk/window_details.glade.h:25
 msgid "Version:"
 msgstr "版本："
+
+#, fuzzy
+#~ msgid "Reverse dependencies"
+#~ msgstr "反向依赖"
+
+#, fuzzy
+#~ msgid "Reverse Depends"
+#~ msgstr "反向依赖"
+
+#~ msgid "Reverse Dependencies"
+#~ msgstr "反向依赖"
+
+#~ msgid "Packages Depending on this One"
+#~ msgstr "依赖此软件包的软件包"
 
 #~ msgid "Search in:"
 #~ msgstr "搜索："
@@ -3982,9 +3989,6 @@ msgstr "版本："
 #~ msgid "in Description"
 #~ msgstr "描述为"
 
-#~ msgid "Depends on"
-#~ msgstr "依赖软件包为"
-
 #~ msgid "Conflicts with"
 #~ msgstr "冲突的软件包为"
 
@@ -4166,6 +4170,3 @@ msgstr "版本："
 
 #~ msgid " will not be authenticated."
 #~ msgstr " 不会被验证。"
-
-#~ msgid "Dependents"
-#~ msgstr "依赖此软件包的软件包"

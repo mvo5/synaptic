@@ -397,7 +397,7 @@ vector<RPackage::DepInformation> RPackage::enumRDeps()
 	 dep.versionComp = "";
       }
 
-      dep.typeStr=_("Reverse Depends");
+      dep.typeStr=_("Depended on by");
       dep.name = D.ParentPkg().Name();
 
       if(Trg->VersionList == 0)

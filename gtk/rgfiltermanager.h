@@ -74,9 +74,9 @@ static char *DepOptions[] = {
    _("Provided packages"),      // provides and name
    _("Conflicting packages"),   // conflicts
    _("Replaced packages"),      // replaces/obsoletes
-   _("Recommends"), ///recommends
-   _("Suggests"),   // suggests
-   _("Reverse dependencies"),   // Reverse Depends
+   _("Recommendations"), ///recommends
+   _("Suggestions"),   // suggests
+   _("Dependants"),   // Reverse Depends
    _("Origin"),                 // Origin (e.g. security.debian.org)
    NULL
 };

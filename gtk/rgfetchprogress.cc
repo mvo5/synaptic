@@ -294,14 +294,15 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
    gchar *s;
    if (CurrentCPS != 0 && ETA != 0) {
-      s = g_strdup_printf(_("Downloading file %li of %li at %s/s - %s remaining"),
-			  i, TotalItems,
+      s = g_strdup_printf(_("Download rate: %s/s - %s remaining"),
 			  SizeToStr(CurrentCPS).c_str(),
 			  TimeToStr(ETA).c_str());
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),s);
+      g_free(s);
    } else {
-      s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),_("Download rate: unknown"));
    }
-
+   s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);
    g_free(s);
 

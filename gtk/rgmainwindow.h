@@ -49,6 +49,8 @@ using namespace std;
 #include "gtkpkglist.h"
 #include "gtktagtree.h"
 
+#define TOOLBAR_HIDE -1
+
 class RGSourcesWindow;
 class RGPreferencesWindow;
 class RGFilterManagerWindow;
@@ -78,10 +80,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
     InstallSelected
   };
   
-  enum {
-      TOOLBAR_HIDE=-1
-  };
-
   typedef enum {
       UPGRADE_ASK=-1,
       UPGRADE_NORMAL=0,

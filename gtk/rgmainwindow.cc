@@ -2510,7 +2510,8 @@ void RGMainWindow::buildInterface()
     g_object_set_data(G_OBJECT(_win), "me", this);
     
     
-    GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data(synaptic_mini_xpm);
+    GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data(
+				(const char**)synaptic_mini_xpm);
     gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
     gtk_window_resize(GTK_WINDOW(_win),

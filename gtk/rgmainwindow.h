@@ -186,6 +186,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    // helpers
    void pkgAction(RGPkgAction action);
+   bool askStateChange(RPackageLister::pkgState, vector<RPackage *> exclude);
+   bool checkForFailedInst(vector<RPackage *> instPkgs);
    void pkgInstallHelper(RPackage *pkg, bool fixBroken = true, 
 			 bool reInstall = false);
    void pkgRemoveHelper(RPackage *pkg, bool purge = false,

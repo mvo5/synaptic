@@ -611,7 +611,6 @@ vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
    for(pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
 
       // clear old values
-      //dep.isOr=dep.isVirtual=dep.isSatisfied=false;
       dep.isOr=dep.isVirtual=dep.isSatisfied=false;
       dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
 
@@ -636,6 +635,7 @@ vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 	 dep.version=D.TargetVer();
 	 dep.versionComp=D.CompType();
       }
+
       deps.push_back(dep);
    }
 

@@ -371,6 +371,38 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
    pkg->setNotify(true);
 }
 
+bool RGMainWindow::askStateChange(RPackageLister::pkgState state, 
+				  vector<RPackage *> exclude)
+{
+   vector<RPackage *> toKeep;
+   vector<RPackage *> toInstall;
+   vector<RPackage *> toReInstall;
+   vector<RPackage *> toUpgrade;
+   vector<RPackage *> toDowngrade;
+   vector<RPackage *> toRemove;
+
+   bool ask = _config->FindB("Synaptic::AskRelated", true);
+
+   // ask if the user really want this changes
+   bool changed = true;
+   if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
+                                           toUpgrade, toRemove, toDowngrade,
+                                           exclude)) {
+      RGChangesWindow *chng;
+      // show a summary of what's gonna happen
+      chng = new RGChangesWindow(this);
+      if (!chng->showAndConfirm(_lister, toKeep, toInstall, toReInstall,
+                                toUpgrade, toRemove, toDowngrade)) {
+         // canceled operation
+         _lister->restoreState(state);
+         changed = false;
+      }
+      delete chng;
+   }
+
+   return changed;
+}
+
 void RGMainWindow::pkgAction(RGPkgAction action)
 {
    GtkTreeSelection *selection;
@@ -428,23 +460,11 @@ void RGMainWindow::pkgAction(RGPkgAction action)
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
             pkgInstallHelper(pkg, false);
-#if 0                           // PORTME!
-            // This is segfaulting because clickedRecInstall can't find the
-            // "pkg" data in _recList.
-            if (_config->FindB("Synaptic::UseRecommends", 0)) {
-               //cout << "auto installing recommended" << endl;
-               me->cbInstallWDeps(me->_win, "Recommends");
-            }
-            if (_config->FindB("Synaptic::UseSuggests", 0)) {
-               //cout << "auto installing suggested" << endl;
-               me->cbInstallWDeps(me->_win, "Suggested");
-            }
-#endif
             break;
          case PKG_REINSTALL:      // reinstall
-	         instPkgs.push_back(pkg);
-	         pkgInstallHelper(pkg, false, true);
-	         break;
+	    instPkgs.push_back(pkg);
+	    pkgInstallHelper(pkg, false, true);
+	    break;
          case PKG_DELETE:      // delete
             pkgRemoveHelper(pkg);
             break;
@@ -470,62 +490,13 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    _lister->notifyCachePostChange();
 
-   vector<RPackage *> toKeep;
-   vector<RPackage *> toInstall;
-   vector<RPackage *> toReInstall;
-   vector<RPackage *> toUpgrade;
-   vector<RPackage *> toDowngrade;
-   vector<RPackage *> toRemove;
-
-   // ask if the user really want this changes
-   bool changed = true;
-   if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
-                                           toUpgrade, toRemove, toDowngrade,
-                                           exclude)) {
-      RGChangesWindow *chng;
-      // show a summary of what's gonna happen
-      chng = new RGChangesWindow(this);
-      if (!chng->showAndConfirm(_lister, toKeep, toInstall, toReInstall,
-                                toUpgrade, toRemove, toDowngrade)) {
-         // canceled operation
-         _lister->restoreState(state);
-         changed = false;
-      }
-      delete chng;
-   }
+   bool changed = askStateChange(state, exclude);
 
    if (changed) {
-      // standard header in case the installing fails
-      string failedReason(_("Some packages could not be installed.\n\n"
-                            "The following packages have unmet "
-                            "dependencies:\n"));
       _lister->saveUndoState(state);
       // check for failed installs
-      if (action == PKG_INSTALL) {
-         bool failed = false;
-         for (unsigned int i = 0; i < instPkgs.size(); i++) {
-            pkg = instPkgs[i];
-            if (pkg == NULL)
-               continue;
-            if (!(pkg->getFlags() & RPackage::FInstall)) {
-               failed = true;
-               failedReason += string(pkg->name()) + ":\n";
-               failedReason += pkg->showWhyInstBroken();
-               failedReason += "\n";
-               pkg->setKeep();
-               pkg->unsetVersion();
-               _lister->notifyChange(pkg);
-            }
-         }
-         if (failed) {
-            RGGladeUserDialog dia(this,"unmet");
-            GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
-                                                 "textview");
-            GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
-            gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
-            dia.run();
-         }
-      }
+      if (action == PKG_INSTALL) 
+	 checkForFailedInst(instPkgs);
    }
 
    if (ask)
@@ -541,6 +512,35 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    updatePackageInfo(pkg);
 }
 
+bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
+{
+   string failedReason;
+   bool failed = false;
+   for (unsigned int i = 0; i < instPkgs.size(); i++) {
+      RPackage *pkg = instPkgs[i];
+      if (pkg == NULL)
+	 continue;
+      if (!(pkg->getFlags() & RPackage::FInstall)) {
+	 failed = true;
+	 failedReason += string(pkg->name()) + ":\n";
+	 failedReason += pkg->showWhyInstBroken();
+	 failedReason += "\n";
+	 pkg->setKeep();
+	 pkg->unsetVersion();
+	 _lister->notifyChange(pkg);
+      }
+   }
+   if (failed) {
+      RGGladeUserDialog dia(this,"unmet");
+      GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
+					   "textview");
+      GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+      gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
+      dia.run();
+   }
+      
+   return failed;
+}
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
@@ -2730,9 +2730,35 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
 
    RPackage *newpkg = (RPackage *) me->_lister->getPackage(name);
-   if (newpkg)
+   if (newpkg) {
+      RPackageLister::pkgState state;
+      vector<RPackage *> exclude;
+      vector<RPackage *> instPkgs;
+
+      // we always save the state (for undo)
+      me->_lister->saveState(state);
+      me->_lister->notifyCachePreChange();
+
+      // actual action
+      newpkg->setNotify(false);
       me->pkgInstallHelper(newpkg);
-   
+      newpkg->setNotify(true);
+
+      exclude.push_back(newpkg);
+      instPkgs.push_back(newpkg);
+
+      // ask for additional changes
+      if(me->askStateChange(state, exclude)) {
+	 me->_lister->saveUndoState(state);
+	 me->checkForFailedInst(instPkgs);
+      }
+      me->_lister->notifyPostChange(NULL);
+      me->_lister->notifyCachePostChange();
+      
+      RPackage *pkg = me->selectedPackage();
+      me->refreshTable(pkg);
+      me->updatePackageInfo(pkg);
+   }
 }
 
 // vim:ts=3:sw=3:et

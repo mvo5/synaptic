@@ -1112,7 +1112,7 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_DELETE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-#ifndef HAVE_RPM
+
    menuitem = gtk_image_menu_item_new_with_label(_("Mark for Complete Removal"));
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
@@ -1120,6 +1120,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+#ifdef HAVE_RPM
+   gtk_widget_hide(menuitem);
+#endif
 
 #if 0  // disabled for now
    menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
@@ -1139,7 +1142,7 @@ void RGMainWindow::buildInterface()
    g_signal_connect(menuitem, "activate", (GCallback) cbMenuPinClicked, this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif
-#endif
+
    menuitem = gtk_separator_menu_item_new ();
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 

@@ -2,6 +2,7 @@
 <!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
 
 <glade-interface>
+<requires lib="gnome"/>
 
 <widget class="GtkDialog" id="window_summary">
   <property name="border_width">6</property>
@@ -12,11 +13,6 @@
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -39,7 +35,6 @@
 	      <property name="label">gtk-cancel</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
 	      <signal name="clicked" handler="on_cancelbutton1_clicked" last_modification_time="Thu, 20 Nov 2003 13:50:29 GMT"/>
 	    </widget>
@@ -54,7 +49,6 @@
 	      <property name="label">gtk-apply</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-10</property>
 	      <signal name="clicked" handler="on_button_execute_clicked" last_modification_time="Thu, 20 Nov 2003 13:50:19 GMT"/>
 	    </widget>
@@ -368,7 +362,6 @@
 			      <property name="label" translatable="yes">_Show Details</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
-			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			    </widget>
@@ -416,40 +409,52 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton_download_only">
+		    <widget class="GtkVBox" id="vbox7">
 		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">The package files will be downloaded only, but not installed</property>
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">Download package files only</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">6</property>
 
-		  <child>
-		    <widget class="GtkCheckButton" id="checkbutton_check_signatures">
-		      <property name="can_focus">True</property>
-		      <property name="label" translatable="yes">Check GPG package signatures</property>
-		      <property name="use_underline">True</property>
-		      <property name="relief">GTK_RELIEF_NORMAL</property>
-		      <property name="focus_on_click">True</property>
-		      <property name="active">False</property>
-		      <property name="inconsistent">False</property>
-		      <property name="draw_indicator">True</property>
+		      <child>
+			<widget class="GtkCheckButton" id="checkbutton_download_only">
+			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">The package files will be downloaded only, but not installed</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">Download package files only</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <property name="draw_indicator">True</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkCheckButton" id="checkbutton_check_signatures">
+			  <property name="tooltip" translatable="yes">Vendors sign theirs packages to verify the correct origin of the package. The verification might cause problems on some installations</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">Verify package signatures</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <property name="draw_indicator">True</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>
 		      <property name="expand">False</property>
-		      <property name="fill">False</property>
+		      <property name="fill">True</property>
 		    </packing>
 		  </child>
 		</widget>

@@ -228,15 +228,13 @@ void RGPackageStatus::initPixbufs()
       g_free(filename);
    }
 
-   filename = g_strdup_printf("../pixmaps/package-supported.png");
-   if (!FileExists(filename)) {
-      g_free(filename);
+   filename = "../pixmaps/package-supported.png";
+   if (!FileExists(filename)) 
       filename = SYNAPTIC_PIXMAPDIR "package-supported.png";
-   }
+   
    supportedPix = gdk_pixbuf_new_from_file(filename, NULL);
    if (supportedPix == NULL)
       std::cerr << "Warning, failed to load: " << filename << std::endl;
-   g_free(filename);
 }
 
 // class that finds out what do display to get user

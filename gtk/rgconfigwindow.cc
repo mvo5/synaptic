@@ -307,5 +307,5 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
 			 G_CALLBACK(colorClicked), GINT_TO_POINTER(i));
     }
 
-
+  setTitle(_("Set preferences"));
 }

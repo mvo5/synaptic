@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2003-01-24 23:42+0100\n"
+"POT-Creation-Date: 2003-02-25 00:24+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,59 +14,91 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: common/rcdscanner.cc:117 common/rcdscanner.cc:170
+#: common/rcdscanner.cc:112 common/rcdscanner.cc:165
 #, c-format
 msgid "Failed to open %s.new"
 msgstr "Konnte %s.new nicht öffnen"
 
-#: common/rcdscanner.cc:144 common/rcdscanner.cc:251
+#: common/rcdscanner.cc:139 common/rcdscanner.cc:257
 #, c-format
 msgid "Failed to rename %s.new to %s"
 msgstr "Konnte %s.new nicht in %s umbenennen"
 
-#: common/rcdscanner.cc:206 common/rcdscanner.cc:240
+#: common/rcdscanner.cc:208 common/rcdscanner.cc:246
 msgid "Internal error"
 msgstr "Interner Fehler"
 
-#: common/rcdscanner.cc:278
+#: common/rcdscanner.cc:269
+msgid "Preparing..."
+msgstr ""
+
+#: common/rcdscanner.cc:283
 #, c-format
 msgid "Unable to read the cdrom database %s"
 msgstr "Kann die CDROM Datenbank %s nicht lesen"
 
-#: common/rcdscanner.cc:283
+#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:435
+#, fuzzy
+msgid "Unmounting CD-ROM..."
+msgstr "Mounte CD-ROM..."
+
+#: common/rcdscanner.cc:295
+#, fuzzy
+msgid "Waiting for disc..."
+msgstr "Scanne die CD"
+
+#: common/rcdscanner.cc:296
+msgid "Insert a disc in the drive."
+msgstr ""
+
+#. Mount the new CDROM
+#: common/rcdscanner.cc:300
 msgid "Mounting CD-ROM..."
 msgstr "Mounte CD-ROM..."
 
-#: common/rcdscanner.cc:286
-msgid "Could not mount CD-ROM"
-msgstr "Kann das CDROM nicht mounten"
-
-#: common/rcdscanner.cc:290
-msgid "Identifying Disc..."
+#: common/rcdscanner.cc:307
+#, fuzzy
+msgid "Identifying disc..."
 msgstr "Identifiziere die CD"
 
-#: common/rcdscanner.cc:292
+#: common/rcdscanner.cc:313
 #, fuzzy
-msgid "Could not Identify Disc"
-msgstr "Konnte CD nicht identifizieren"
-
-#: common/rcdscanner.cc:296
-msgid "Scanning Disc..."
+msgid "Scanning disc..."
 msgstr "Scanne die CD"
 
-#: common/rcdscanner.cc:305
-msgid "Error Scanning Disc"
-msgstr "Fehler beim scannen der CD"
+#: common/rcdscanner.cc:328
+#, fuzzy
+msgid "Cleaning package lists..."
+msgstr ""
+"Benutze nur-Text Knöpfe im Hauptfenster\n"
+"(erfordert einen neustart des Programms um sichtbar zu werden)"
 
-#: common/rcdscanner.cc:532 common/rcdscanner.cc:594
-#, fuzzy, c-format
-msgid "Could not change directory to %s"
-msgstr "Kann das Konfigrationsverzeichniss %s nicht anlegen"
+#: common/rcdscanner.cc:393
+msgid "Disc not successfuly scanned."
+msgstr ""
 
-#: common/rcdscanner.cc:545
-#, fuzzy, c-format
-msgid "Unable to read directory %s"
-msgstr "Kann das download-Verzeichniss nicht sperren"
+#: common/rcdscanner.cc:397
+msgid "Empty disc name."
+msgstr ""
+
+#: common/rcdscanner.cc:400
+#, fuzzy
+msgid "Registering disc..."
+msgstr "Identifiziere die CD"
+
+#: common/rcdscanner.cc:415
+#, fuzzy
+msgid "Copying package lists..."
+msgstr "Aktualisiere die Packet Liste der Server..."
+
+#: common/rcdscanner.cc:424
+msgid "Writing sources list..."
+msgstr ""
+
+#: common/rcdscanner.cc:439
+#, fuzzy
+msgid "Done!"
+msgstr "Fertig"
 
 #: common/rconfiguration.cc:107
 msgid "Could not get password entry for superuser"
@@ -111,7 +143,7 @@ msgstr "Abhängigkeit ist erfüllt"
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 
-#: common/rpackagecache.cc:49 common/rpackagelister.cc:891
+#: common/rpackagecache.cc:49 common/rpackagelister.cc:1044
 msgid "The list of sources could not be read."
 msgstr "Die Liste der Quellen (sources.list) konnte nicht gelesen werden"
 
@@ -121,7 +153,7 @@ msgstr ""
 "Die Packet Liste oder die Status Datei konnte nicht gelesen oder geöffnet "
 "werden"
 
-#: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:72 gtk/rgsrcwindow.cc:83
+#: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:84
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "Status"
@@ -133,12 +165,12 @@ msgstr "Muster"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1240
+#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1234
 #: wings/rwmainwindow.cc:1196
 msgid "Section"
 msgstr "Sektion"
 
-#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1241
+#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1235
 #: wings/rwmainwindow.cc:1197
 msgid "Priority"
 msgstr "Priorität"
@@ -148,8 +180,8 @@ msgstr "Priorität"
 msgid "Name"
 msgstr "sind benannt"
 
-#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:28
-#: gtk/window_main.glade.strings:65
+#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
+#: gtk/window_main.glade.strings:68
 #, fuzzy
 msgid "Description"
 msgstr "in der Beschreibung"
@@ -186,7 +218,7 @@ msgstr "Hängt ab"
 msgid "ReverseDepends"
 msgstr "Hängt ab"
 
-#: common/rpackagelister.cc:125
+#: common/rpackagelister.cc:126
 msgid "Search Filter"
 msgstr "Such Filter"
 
@@ -197,50 +229,49 @@ msgstr "Such Filter"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:134 gtk/rgfiltereditor.cc:353
+#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:353
 #: wings/rwfiltereditor.cc:321 wings/rwmainwindow.cc:1951
-#: gtk/window_main.glade.strings:60
 msgid "Installed"
 msgstr "Installiert"
 
-#: common/rpackagelister.cc:143 gtk/rgfiltereditor.cc:345
+#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:345
 #: wings/rwfiltereditor.cc:311
 msgid "Not Installed"
 msgstr "Nicht installiert"
 
-#: common/rpackagelister.cc:154
+#: common/rpackagelister.cc:155
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: common/rpackagelister.cc:164
+#: common/rpackagelister.cc:165
 msgid "Upgradable"
 msgstr "Aktualisierbar"
 
-#: common/rpackagelister.cc:173 gtk/rgfiltereditor.cc:374
+#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
 #: wings/rwfiltereditor.cc:341
 msgid "Broken"
 msgstr "Kaputt"
 
-#: common/rpackagelister.cc:184
+#: common/rpackagelister.cc:185
 msgid "Programmed Changes"
 msgstr "Programm Änderungen"
 
-#: common/rpackagelister.cc:305 common/rpackagelister.cc:308
-#: common/rpackagelister.cc:321
+#: common/rpackagelister.cc:308 common/rpackagelister.cc:311
+#: common/rpackagelister.cc:326
 msgid "Internal error recalculating dependency cache."
 msgstr "Interner Fehler beim Neuberechnen des Abhängigkeiten-Caches"
 
-#: common/rpackagelister.cc:811
+#: common/rpackagelister.cc:963
 msgid "Unable to lock the list directory"
 msgstr "Kann das list Verzeichniss nicht sperren"
 
-#: common/rpackagelister.cc:833
+#: common/rpackagelister.cc:985
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
 
-#: common/rpackagelister.cc:865
+#: common/rpackagelister.cc:1017
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -248,122 +279,63 @@ msgstr ""
 "Einige Index Dateien konnte nicht heruntergeladen werden. Dies wurde "
 "ignoriert oder stattdessen ältere benutzt."
 
-#: common/rpackagelister.cc:944
+#: common/rpackagelister.cc:1100
 #, fuzzy
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Einige der Packete konnten nicht vom Server geladen werden.\n"
 
-#: common/rpackagelister.cc:947
+#: common/rpackagelister.cc:1103
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Möchte Sie forfahren und diese Packete ignorieren?"
 
-#: common/rpackagelister.cc:949 gtk/rgmainwindow.cc:751
-#: gtk/rgmainwindow.cc:1344 gtk/rgmainwindow.cc:1466 gtk/rgmainwindow.cc:2115
-#: gtk/rgmainwindow.cc:2324 wings/rwmainwindow.cc:698
-#: wings/rwmainwindow.cc:1344 wings/rwmainwindow.cc:1379
-#: wings/rwmainwindow.cc:2080
-msgid "Warning"
-msgstr "Warnung"
-
-#: common/rpackagelister.cc:954
+#: common/rpackagelister.cc:1110
 msgid "Unabled to correct missing packages"
 msgstr "Konnte die fehlenden Packete nicht korrigieren"
 
-#: common/rpackagelister.cc:1004
+#: common/rpackagelister.cc:1166
 msgid "Unable to lock the download directory"
 msgstr "Kann das download-Verzeichniss nicht sperren"
 
-#: gtk/gsynaptic.cc:98 gtk/rgconfigwindow.cc:58 gtk/rgmainwindow.cc:600
-#: gtk/rgmainwindow.cc:631 gtk/rgmainwindow.cc:666 gtk/rgmainwindow.cc:749
-#: gtk/rgmainwindow.cc:2294 gtk/rgsrcwindow.cc:273 gtk/rgsrcwindow.cc:280
-#: gtk/rgsrcwindow.cc:379 gtk/rgsrcwindow.cc:398 gtk/rgsrcwindow.cc:456
-#: wings/rwconfigwindow.cc:58 wings/rwmainwindow.cc:554
-#: wings/rwmainwindow.cc:589 wings/rwmainwindow.cc:623
-#: wings/rwmainwindow.cc:696 wings/synaptic.cc:79
-msgid "Error"
-msgstr "Fehler"
+#: common/rpackagelister.cc:1227
+#, fuzzy, c-format
+msgid "Line %u too long in selection file."
+msgstr "Automatische aktualisierungswahl fehlgeschlagen"
 
-#: gtk/gsynaptic.cc:99 wings/synaptic.cc:80
+#: common/rpackagelister.cc:1241 common/rpackagelister.cc:1245
+#, fuzzy, c-format
+msgid "Malformed line %u in selection file"
+msgstr "Fehlerhafte Zeile %u in Source Liste %s (Typ)"
+
+#: common/rpackagelister.cc:1256
+msgid "Setting selections..."
+msgstr ""
+
+#: gtk/gsynaptic.cc:113 wings/synaptic.cc:80
 msgid "You must run this program as the root user."
 msgstr "Sie müßen dieses Programm als Superuser laufen lassen"
 
-#: gtk/gsynaptic.cc:100 gtk/rgconfigwindow.cc:59 gtk/rgmainwindow.cc:772
-#: gtk/rgmainwindow.cc:2296 gtk/rgsrcwindow.cc:231 wings/rwconfigwindow.cc:59
-#: wings/synaptic.cc:81
-msgid "OK"
-msgstr "OK"
-
-#: gtk/rgconfigwindow.cc:58 gtk/rgmainwindow.cc:2295
+#: gtk/rgconfigwindow.cc:61 gtk/rgmainwindow.cc:2557
 #: wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Ein Fehler tratt beim speichern der Konfiguration auf."
 
-#: gtk/rgconfigwindow.cc:120 wings/rwconfigwindow.cc:125
-msgid "Use regular expressions during searches or matching"
-msgstr "Benutze reguläre Ausdrücke beim Suchen"
-
-#: gtk/rgconfigwindow.cc:124
-#, fuzzy
-msgid ""
-"Use colors in main package list\n"
-"(requires a restart to take effect)"
-msgstr ""
-"Benutze nur-Text Knöpfe im Hauptfenster\n"
-"(erfordert einen neustart des Programms um sichtbar zu werden)"
-
-#: gtk/rgconfigwindow.cc:130 wings/rwconfigwindow.cc:136
-#: wings/rwmainwindow.cc:1600
-msgid "Options"
-msgstr "Optionen"
-
-#: gtk/rgconfigwindow.cc:146 wings/rwconfigwindow.cc:152
-msgid "Leave downloaded packages in the cache"
-msgstr "Behalte heruntergeladene Packete im Cache"
-
-#: gtk/rgconfigwindow.cc:150 wings/rwconfigwindow.cc:156
-msgid "Delete downloaded packages after installation"
-msgstr "Lösche heruntergeladene Packete nach der Installation"
-
-#: gtk/rgconfigwindow.cc:154 wings/rwconfigwindow.cc:160
-msgid "Delete obsoleted packages from cache"
-msgstr "Lösche überflüssige Packete aus dem Cache"
-
-#: gtk/rgconfigwindow.cc:196 wings/rwconfigwindow.cc:204
-msgid "Cache"
-msgstr "Cache"
-
-#: gtk/rgconfigwindow.cc:204 gtk/rgfiltermanager.cc:115
-#: wings/rwconfigwindow.cc:213 wings/rwfiltermanager.cc:103
-#: wings/rwsourceswindow.cc:158
-msgid "Close"
-msgstr "Schließen"
-
-#: gtk/rgconfigwindow.cc:210 gtk/rgfiltermanager.cc:107
-#: wings/rwconfigwindow.cc:218 wings/rwfiltermanager.cc:99
-msgid "Save"
-msgstr "Speichern"
-
-#: gtk/rgconfigwindow.cc:220 wings/rwconfigwindow.cc:226
-msgid "Preferences"
-msgstr "Vorlieben"
-
-#: gtk/rgfetchprogress.cc:63 wings/rwfetchprogress.cc:71
+#: gtk/rgfetchprogress.cc:60 wings/rwfetchprogress.cc:71
 msgid "Fetching Files"
 msgstr "Bekomme Dateien"
 
-#: gtk/rgfetchprogress.cc:73 wings/rwfetchprogress.cc:92
+#: gtk/rgfetchprogress.cc:70 wings/rwfetchprogress.cc:92
 msgid "Size"
 msgstr "Größe"
 
-#: gtk/rgfetchprogress.cc:74 wings/rwfetchprogress.cc:86
+#: gtk/rgfetchprogress.cc:71 wings/rwfetchprogress.cc:86
 msgid "URL"
 msgstr "URL"
 
-#: gtk/rgfetchprogress.cc:143 wings/rwfetchprogress.cc:139
+#: gtk/rgfetchprogress.cc:139 wings/rwfetchprogress.cc:139
 msgid "Please insert the disk labeled:\n"
 msgstr "Bitte CD mit folgender Beschriftung einlegen:\n"
 
-#: gtk/rgfetchprogress.cc:143 wings/rwfetchprogress.cc:139
+#: gtk/rgfetchprogress.cc:139 wings/rwfetchprogress.cc:139
 msgid ""
 "\n"
 "in drive "
@@ -371,54 +343,36 @@ msgstr ""
 "\n"
 "im Laufwerk"
 
-#: gtk/rgfetchprogress.cc:146 wings/rwfetchprogress.cc:142
-msgid "Disk Change"
-msgstr "CD Wechsel"
-
-#: gtk/rgfetchprogress.cc:147 wings/rwfetchprogress.cc:143
-msgid "Continue"
-msgstr "Fortsetzen"
-
-#: gtk/rgfetchprogress.cc:147 gtk/rgfilterwindow.cc:112
-#: gtk/rgmainwindow.cc:1348 gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2119
-#: gtk/rgmainwindow.cc:2327 gtk/rgsrcwindow.cc:235 gtk/rgsummarywindow.cc:300
-#: gtk/rgsummarywindow.cc:402 wings/rwfetchprogress.cc:143
-#: wings/rwfilterwindow.cc:104 wings/rwmainwindow.cc:1347
-#: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:2083
-#: wings/rwsummarywindow.cc:205 wings/rwsummarywindow.cc:308
-msgid "Cancel"
-msgstr "Abbrechen"
-
-#: gtk/rgfetchprogress.cc:227 wings/rwfetchprogress.cc:222
+#: gtk/rgfetchprogress.cc:219 wings/rwfetchprogress.cc:222
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li Dateien %4sB/s Restzeit: %6s\n"
 
-#: gtk/rgfetchprogress.cc:234 wings/rwfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:226 wings/rwfetchprogress.cc:229
 msgid "(stalled)\n"
 msgstr "(stehengeblieben)\n"
 
-#: gtk/rgfetchprogress.cc:246
+#: gtk/rgfetchprogress.cc:238
 msgid "[Working] "
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:251
+#: gtk/rgfetchprogress.cc:243
 msgid "[Receiving] "
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:320 wings/rwfetchprogress.cc:378
+#: gtk/rgfetchprogress.cc:312 wings/rwfetchprogress.cc:378
 msgid "Queued"
 msgstr "Vorgemerkt"
 
-#: gtk/rgfetchprogress.cc:323 wings/rwfetchprogress.cc:381
+#: gtk/rgfetchprogress.cc:315 wings/rwfetchprogress.cc:381
 msgid "Done"
 msgstr "Fertig"
 
-#: gtk/rgfetchprogress.cc:326 wings/rwfetchprogress.cc:384
+#: gtk/rgfetchprogress.cc:318 wings/rwfetchprogress.cc:384
 msgid "Hit"
 msgstr "Treffer"
 
-#: gtk/rgfetchprogress.cc:329 wings/rwfetchprogress.cc:387
+#: gtk/rgfetchprogress.cc:321 wings/rwfetchprogress.cc:387
 msgid "Failed"
 msgstr "Erfolglos"
 
@@ -523,11 +477,10 @@ msgstr "Fertig"
 msgid "Packages that"
 msgstr "Packete die"
 
-#: gtk/rgfiltereditor.cc:628 gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2119
-#: gtk/rgsrcwindow.cc:243 wings/rwfiltereditor.cc:490
-#: wings/rwmainwindow.cc:1347 wings/rwmainwindow.cc:1382
-#: wings/rwmainwindow.cc:1667 wings/rwsourceswindow.cc:154
-#: gtk/window_main.glade.strings:19
+#: gtk/rgfiltereditor.cc:628 gtk/rgsrcwindow.cc:244
+#: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
+#: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
+#: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
 msgid "Remove"
 msgstr "Löschen"
 
@@ -548,6 +501,16 @@ msgstr "Löschen"
 msgid "Clear"
 msgstr "Leeren"
 
+#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:218
+#: wings/rwfiltermanager.cc:99
+msgid "Save"
+msgstr "Speichern"
+
+#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:213
+#: wings/rwfiltermanager.cc:103 wings/rwsourceswindow.cc:158
+msgid "Close"
+msgstr "Schließen"
+
 #: gtk/rgfiltermanager.cc:222 wings/rwfiltermanager.cc:175
 msgid "A New Filter"
 msgstr "Ein neuer Filter"
@@ -556,56 +519,64 @@ msgstr "Ein neuer Filter"
 msgid "Set"
 msgstr "Setzen"
 
+#: gtk/rgfilterwindow.cc:112 gtk/rgsrcwindow.cc:236 gtk/rgsummarywindow.cc:300
+#: wings/rwfetchprogress.cc:143 wings/rwfilterwindow.cc:104
+#: wings/rwmainwindow.cc:1347 wings/rwmainwindow.cc:1382
+#: wings/rwmainwindow.cc:2083 wings/rwsummarywindow.cc:205
+#: wings/rwsummarywindow.cc:308
+msgid "Cancel"
+msgstr "Abbrechen"
+
 #: gtk/rgfilterwindow.cc:144 wings/rwfilterwindow.cc:141
 msgid "Package Listing Filter  -  "
 msgstr "Packet Listen Filter  -  "
 
-#: gtk/rginstallprogress.cc:92 wings/rwinstallprogress.cc:94
+#: gtk/rginstallprogress.cc:109 wings/rwinstallprogress.cc:94
 msgid "Performing Changes"
 msgstr "Nehme Änderungen vor"
 
-#: gtk/rgmainwindow.cc:95 gtk/rgmainwindow.cc:1284 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:96 gtk/rgmainwindow.cc:1278 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1241
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: gtk/rgmainwindow.cc:96 wings/rwmainwindow.cc:99
+#: gtk/rgmainwindow.cc:97 wings/rwmainwindow.cc:99
 msgid "Normal"
 msgstr "Normal"
 
-#: gtk/rgmainwindow.cc:97 wings/rwmainwindow.cc:100
+#: gtk/rgmainwindow.cc:98 wings/rwmainwindow.cc:100
 msgid "Critical"
 msgstr "Kritisch"
 
-#: gtk/rgmainwindow.cc:98 wings/rwmainwindow.cc:101
+#: gtk/rgmainwindow.cc:99 wings/rwmainwindow.cc:101
 msgid "Security"
 msgstr "Sicherheit"
 
-#: gtk/rgmainwindow.cc:279 wings/rwmainwindow.cc:253
+#: gtk/rgmainwindow.cc:280 wings/rwmainwindow.cc:253
 msgid "No match."
 msgstr "Kein Treffer."
 
-#: gtk/rgmainwindow.cc:295 wings/rwmainwindow.cc:268
+#: gtk/rgmainwindow.cc:298 wings/rwmainwindow.cc:268
 msgid "No more matches."
 msgstr "Keine weiteren Treffer."
 
-#: gtk/rgmainwindow.cc:527 wings/rwmainwindow.cc:480
+#: gtk/rgmainwindow.cc:533 wings/rwmainwindow.cc:480
 msgid "Retrieving Index Files"
 msgstr "Bekomme Index Dateien"
 
-#: gtk/rgmainwindow.cc:529 wings/rwmainwindow.cc:483
+#: gtk/rgmainwindow.cc:535 wings/rwmainwindow.cc:483
 msgid "Updating Package Lists from Servers..."
 msgstr "Aktualisiere die Packet Liste der Server..."
 
-#: gtk/rgmainwindow.cc:584 wings/rwmainwindow.cc:536
+#: gtk/rgmainwindow.cc:598 wings/rwmainwindow.cc:536
 msgid "Dependency problem resolver failed."
 msgstr "Abhängigkeitproblem auflösung fehlgeschlagen."
 
-#: gtk/rgmainwindow.cc:586 wings/rwmainwindow.cc:538
+#: gtk/rgmainwindow.cc:600 wings/rwmainwindow.cc:538
 msgid "Dependency problems successfully fixed."
 msgstr "Abhängigkeitsprobleme erfolgreich aufgelöst."
 
-#: gtk/rgmainwindow.cc:601 gtk/rgmainwindow.cc:631 wings/rwmainwindow.cc:554
+#: gtk/rgmainwindow.cc:615 gtk/rgmainwindow.cc:644 wings/rwmainwindow.cc:554
 #: wings/rwmainwindow.cc:589
 msgid ""
 "Automatic upgrade selection not possible\n"
@@ -614,38 +585,31 @@ msgstr ""
 "Automatische aktualisierung nicht möglich\n"
 "mit kaputten Packeten. Bitte erst korrigieren."
 
-#: gtk/rgmainwindow.cc:603 gtk/rgmainwindow.cc:633 gtk/rgmainwindow.cc:669
-#: gtk/rgsrcwindow.cc:275 gtk/rgsrcwindow.cc:282 gtk/rgsrcwindow.cc:381
-#: gtk/rgsrcwindow.cc:399 gtk/rgsrcwindow.cc:458 wings/rwmainwindow.cc:556
-#: wings/rwmainwindow.cc:591 wings/rwmainwindow.cc:626
-msgid "Ok"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:608 wings/rwmainwindow.cc:562
+#: gtk/rgmainwindow.cc:621 wings/rwmainwindow.cc:562
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "Nehme automatische selektion der aktualisierbaren Packete vor..."
 
-#: gtk/rgmainwindow.cc:613 wings/rwmainwindow.cc:569
+#: gtk/rgmainwindow.cc:626 wings/rwmainwindow.cc:569
 msgid "Automatic selection of upgradadable packages done."
 msgstr "Automatische selektion der aktualisierbaren Packete abgeschlossen"
 
-#: gtk/rgmainwindow.cc:615 wings/rwmainwindow.cc:571
+#: gtk/rgmainwindow.cc:628 wings/rwmainwindow.cc:571
 msgid "Automatic upgrade selection failed."
 msgstr "Automatische aktualisierungswahl fehlgeschlagen"
 
-#: gtk/rgmainwindow.cc:638 wings/rwmainwindow.cc:597
+#: gtk/rgmainwindow.cc:650 wings/rwmainwindow.cc:597
 msgid "Performing selection for distribution upgrade..."
 msgstr "Nehme Selektion für das Aktualisieren der Distribution vor..."
 
-#: gtk/rgmainwindow.cc:644 wings/rwmainwindow.cc:604
+#: gtk/rgmainwindow.cc:656 wings/rwmainwindow.cc:604
 msgid "Selection for distribution upgrade done."
 msgstr "Selektion für die Distributionsaktualisierung fertig."
 
-#: gtk/rgmainwindow.cc:646 wings/rwmainwindow.cc:606
+#: gtk/rgmainwindow.cc:658 wings/rwmainwindow.cc:606
 msgid "Selection for distribution upgrade failed."
 msgstr "Selektion für das Aktualisieren der Distribution fehlgeschlagen."
 
-#: gtk/rgmainwindow.cc:667 wings/rwmainwindow.cc:624
+#: gtk/rgmainwindow.cc:682 wings/rwmainwindow.cc:624
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -653,7 +617,7 @@ msgstr ""
 "Operation nicht möglich mit kaputten Packeten\n"
 "Bitte korrigieren Sie sie erst."
 
-#: gtk/rgmainwindow.cc:685 wings/rwmainwindow.cc:642
+#: gtk/rgmainwindow.cc:701 wings/rwmainwindow.cc:642
 msgid ""
 "Performing selected changes... See the terminal from where you started "
 "Synaptic for more information."
@@ -661,72 +625,72 @@ msgstr ""
 "Nehme selektierte Änderungen vor...Schauen Sie im Terminal, in dem Synaptic "
 "gestartet wurde für mehr Informationen."
 
-#: gtk/rgmainwindow.cc:689 wings/rwmainwindow.cc:646
+#: gtk/rgmainwindow.cc:705 wings/rwmainwindow.cc:646
 msgid "Retrieving Package Files"
 msgstr "Bekomme Packet Dateien"
 
-#: gtk/rgmainwindow.cc:782 gtk/rgmainwindow.cc:1254 gtk/rgmainwindow.cc:1263
-#: gtk/rgmainwindow.cc:1267 wings/rwmainwindow.cc:811
+#: gtk/rgmainwindow.cc:785 gtk/rgmainwindow.cc:1248 gtk/rgmainwindow.cc:1257
+#: gtk/rgmainwindow.cc:1261 wings/rwmainwindow.cc:811
 #: wings/rwmainwindow.cc:1210 wings/rwmainwindow.cc:1217
 #: wings/rwmainwindow.cc:1220 wings/rwmainwindow.cc:1224
 msgid "N/A"
 msgstr "Keine Angaben"
 
-#: gtk/rgmainwindow.cc:973 wings/rwmainwindow.cc:924
+#: gtk/rgmainwindow.cc:972 wings/rwmainwindow.cc:924
 msgid "Package is installed."
 msgstr "Packet ist installiert."
 
-#: gtk/rgmainwindow.cc:975 wings/rwmainwindow.cc:926
+#: gtk/rgmainwindow.cc:974 wings/rwmainwindow.cc:926
 msgid "Package is not installed."
 msgstr "Packet ist nicht installiert."
 
-#: gtk/rgmainwindow.cc:979 wings/rwmainwindow.cc:930
+#: gtk/rgmainwindow.cc:978 wings/rwmainwindow.cc:930
 msgid "Package will be installed."
 msgstr "Packet wird installiert."
 
-#: gtk/rgmainwindow.cc:985 wings/rwmainwindow.cc:936
+#: gtk/rgmainwindow.cc:984 wings/rwmainwindow.cc:936
 msgid "Package will be upgraded."
 msgstr "Packet wird aktualisiert."
 
-#: gtk/rgmainwindow.cc:995 wings/rwmainwindow.cc:946
+#: gtk/rgmainwindow.cc:994 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "Packet wird deinstalliert."
 
-#: gtk/rgmainwindow.cc:998
+#: gtk/rgmainwindow.cc:997
 #, fuzzy
 msgid "Package is broken."
 msgstr "Packet ist installiert."
 
-#: gtk/rgmainwindow.cc:1004 gtk/rgmainwindow.cc:1020
+#: gtk/rgmainwindow.cc:1003 gtk/rgmainwindow.cc:1019
 #, fuzzy
 msgid "Package is pinned."
 msgstr "Packet ist installiert."
 
-#: gtk/rgmainwindow.cc:1007
+#: gtk/rgmainwindow.cc:1006
 #, fuzzy
 msgid "Package is new."
 msgstr "Packet ist installiert."
 
-#: gtk/rgmainwindow.cc:1025 wings/rwmainwindow.cc:951
+#: gtk/rgmainwindow.cc:1024 wings/rwmainwindow.cc:951
 msgid "Broken dependencies."
 msgstr "Kaputte abhängigkeiten."
 
-#: gtk/rgmainwindow.cc:1224 gtk/window_main.glade.strings:84
+#: gtk/rgmainwindow.cc:1219 gtk/window_main.glade.strings:87
 #, fuzzy
 msgid "_Install"
 msgstr "Installieren"
 
-#: gtk/rgmainwindow.cc:1227
+#: gtk/rgmainwindow.cc:1222
 #, fuzzy
 msgid "_Upgrade"
 msgstr "Aktualisieren"
 
-#. XXX
-#. appendTag(bufPtr, bufSize, "Maintainer", pkg->maintainer().c_str());
-#. appendTag(bufPtr, bufSize, "Vendor", pkg->vendor());
+#. XXX Why this is commented out?
+#. appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
+#. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1249 wings/rwmainwindow.cc:1205
+#: gtk/rgmainwindow.cc:1243 wings/rwmainwindow.cc:1205
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -734,17 +698,17 @@ msgstr ""
 "\n"
 "Installierte Packete:\n"
 
-#: gtk/rgmainwindow.cc:1251 gtk/rgmainwindow.cc:1259
+#: gtk/rgmainwindow.cc:1245 gtk/rgmainwindow.cc:1253
 #: wings/rwmainwindow.cc:1207 wings/rwmainwindow.cc:1216
 msgid "    Version"
 msgstr "    Version"
 
-#: gtk/rgmainwindow.cc:1253 gtk/rgmainwindow.cc:1262
+#: gtk/rgmainwindow.cc:1247 gtk/rgmainwindow.cc:1256
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1219
 msgid "    Size"
 msgstr "    Größe"
 
-#: gtk/rgmainwindow.cc:1257 wings/rwmainwindow.cc:1213
+#: gtk/rgmainwindow.cc:1251 wings/rwmainwindow.cc:1213
 msgid ""
 "\n"
 "Available Package:\n"
@@ -752,46 +716,42 @@ msgstr ""
 "\n"
 "Verfügbare Packete:\n"
 
-#: gtk/rgmainwindow.cc:1266 wings/rwmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1260 wings/rwmainwindow.cc:1223
 msgid "    Package Size"
 msgstr "    Packet Größe"
 
-#: gtk/rgmainwindow.cc:1281 wings/rwmainwindow.cc:1238
+#: gtk/rgmainwindow.cc:1275 wings/rwmainwindow.cc:1238
 msgid "Not Relevant"
 msgstr "Nicht relevant"
 
-#: gtk/rgmainwindow.cc:1289 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1283 wings/rwmainwindow.cc:1246
 msgid "Recommended"
 msgstr "Empfohlen"
 
-#: gtk/rgmainwindow.cc:1291 wings/rwmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1285 wings/rwmainwindow.cc:1248
 msgid "Possible"
 msgstr "Möglich"
 
-#: gtk/rgmainwindow.cc:1294 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1288 wings/rwmainwindow.cc:1251
 msgid "Package Upgrade"
 msgstr "Packet aktualisieren"
 
-#: gtk/rgmainwindow.cc:1296 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1290 wings/rwmainwindow.cc:1253
 msgid "    Importance"
 msgstr "    Wichtigkeit"
 
-#: gtk/rgmainwindow.cc:1298 wings/rwmainwindow.cc:1255
+#: gtk/rgmainwindow.cc:1292 wings/rwmainwindow.cc:1255
 msgid "    Date"
 msgstr "    Datum"
 
-#: gtk/rgmainwindow.cc:1345
+#: gtk/rgmainwindow.cc:1343
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
 "Your changes will be lost. Are you sure?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1348 gtk/window_main.glade.strings:23
-msgid "Apply"
-msgstr ""
-
-#: gtk/rgmainwindow.cc:1467 gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2298
 #: wings/rwmainwindow.cc:1345 wings/rwmainwindow.cc:1380
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -800,32 +760,36 @@ msgstr ""
 "Das Löschen dieses Packetes kann Ihr System unbenutzbar machen.\n"
 "Sind Sie sicher, daß Sie das möchten?"
 
-#: gtk/rgmainwindow.cc:1818 wings/rwmainwindow.cc:1562
-#: gtk/window_main.glade.strings:38
+#: gtk/rgmainwindow.cc:1781 wings/rwmainwindow.cc:1562
+#: gtk/window_main.glade.strings:46
 msgid "Update package cache"
 msgstr "Aktualisieren des Packet Caches"
 
-#: gtk/rgmainwindow.cc:1822 wings/rwmainwindow.cc:1576
-#: gtk/window_main.glade.strings:40
+#: gtk/rgmainwindow.cc:1785 wings/rwmainwindow.cc:1576
+#: gtk/window_main.glade.strings:48
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr "Markiere Packete als aktualisert, außer denen mit neuen Abhängigkeiten"
 
-#: gtk/rgmainwindow.cc:1826 wings/rwmainwindow.cc:1584
-#: gtk/window_main.glade.strings:42
+#: gtk/rgmainwindow.cc:1789 wings/rwmainwindow.cc:1584
+#: gtk/window_main.glade.strings:50
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr ""
 "Aktualisieren der installierten Distribution, inklusiv Packeten mit neuen "
 "Abhängigkeiten"
 
-#: gtk/rgmainwindow.cc:1830 wings/rwmainwindow.cc:1592
-#: gtk/window_main.glade.strings:44
+#: gtk/rgmainwindow.cc:1793 wings/rwmainwindow.cc:1592
+#: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr ""
 "Führe (und downloade wenn nötig) die gewählten Änderungen an den Packeten "
 "durch"
 
-#: gtk/rgmainwindow.cc:2221 wings/rwmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2244
+msgid "Do you want to add another CD-ROM?"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2478 wings/rwmainwindow.cc:2022
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -834,87 +798,87 @@ msgstr ""
 "%i Packete angezeigt, %i installieren, %i kaputt, %i werden installiert/"
 "aktuallisiert, %i gelöscht, %sB werden %s"
 
-#: gtk/rgmainwindow.cc:2224 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2481 wings/rwmainwindow.cc:2025
 msgid "freed"
 msgstr "freigegeben"
 
-#: gtk/rgmainwindow.cc:2224 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2481 wings/rwmainwindow.cc:2025
 msgid "used"
 msgstr "benutzt"
 
-#. importend! remove this -> random segfaults
-#: gtk/rgmainwindow.cc:2255 wings/rwmainwindow.cc:1839
-#: gtk/window_main.glade.strings:49
+#: gtk/rgmainwindow.cc:2506 wings/rwmainwindow.cc:1839
+#: gtk/window_main.glade.strings:57
 msgid "All Packages"
 msgstr "Alle Packete"
 
-#: gtk/rgmainwindow.cc:2325 wings/rwmainwindow.cc:2081
+#: gtk/rgmainwindow.cc:2586
+#, fuzzy
 msgid ""
-"There are unsaved changes, are you sure\n"
+"There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
 msgstr ""
 "Es gibt nicht gespeicherte Änderungen, sind Sie sicher, \n"
 "daß Sie Synaptic beenden möchten?"
 
-#: gtk/rgmainwindow.cc:2327 wings/rwmainwindow.cc:2083
-msgid "Quit"
-msgstr "Beenden"
-
-#: gtk/rgsrcwindow.cc:60
+#: gtk/rgsrcwindow.cc:61
 #, fuzzy
 msgid "Setup Repositories"
 msgstr "Füge Repository hinzu"
 
-#: gtk/rgsrcwindow.cc:84 wings/rwsourceswindow.cc:101
+#: gtk/rgsrcwindow.cc:85 wings/rwsourceswindow.cc:101
 msgid "Type"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:85 wings/rwsourceswindow.cc:107
+#: gtk/rgsrcwindow.cc:86 wings/rwsourceswindow.cc:107
 msgid "Vendor"
 msgstr "Anbieter"
 
-#: gtk/rgsrcwindow.cc:86 gtk/rgsrcwindow.cc:183 wings/rwsourceswindow.cc:113
+#: gtk/rgsrcwindow.cc:87 gtk/rgsrcwindow.cc:184 wings/rwsourceswindow.cc:113
 msgid "URI"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:87 gtk/rgsrcwindow.cc:197 wings/rwsourceswindow.cc:119
+#: gtk/rgsrcwindow.cc:88 gtk/rgsrcwindow.cc:198 wings/rwsourceswindow.cc:119
 msgid "Distribution"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:88 gtk/rgsrcwindow.cc:210
+#: gtk/rgsrcwindow.cc:89 gtk/rgsrcwindow.cc:211
 #, fuzzy
 msgid "Section(s)"
 msgstr "Sektion"
 
-#: gtk/rgsrcwindow.cc:116
+#: gtk/rgsrcwindow.cc:117
 msgid "Disabled"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:171 gtk/rgsrcwindow.cc:327
+#: gtk/rgsrcwindow.cc:172 gtk/rgsrcwindow.cc:324
 msgid "(no vendor)"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:178 gtk/window_main.glade.strings:25
+#: gtk/rgsrcwindow.cc:179 gtk/window_main.glade.strings:26
 msgid "Edit"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:239
+#: gtk/rgsrcwindow.cc:232 wings/rwconfigwindow.cc:59 wings/synaptic.cc:81
+msgid "OK"
+msgstr "OK"
+
+#: gtk/rgsrcwindow.cc:240
 msgid "Add"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:274
+#: gtk/rgsrcwindow.cc:273
 msgid "Cannot read sources.list file"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:281
+#: gtk/rgsrcwindow.cc:278
 msgid "Cannot read vendors.list file"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:380 gtk/rgsrcwindow.cc:457
+#: gtk/rgsrcwindow.cc:376 gtk/rgsrcwindow.cc:450
 msgid "Unknown source type"
 msgstr ""
 
-#: gtk/rgsrcwindow.cc:398
+#: gtk/rgsrcwindow.cc:393
 msgid "Invalid URL"
 msgstr ""
 
@@ -976,49 +940,49 @@ msgid "Show Details"
 msgstr "Zeige Details"
 
 #: gtk/rgsummarywindow.cc:294 wings/rwsummarywindow.cc:194
-#: gtk/window_main.glade.strings:14
+#: gtk/window_main.glade.strings:15
 msgid "Proceed"
 msgstr "Weiter"
 
-#: gtk/rgsummarywindow.cc:328 wings/rwsummarywindow.cc:232
+#: gtk/rgsummarywindow.cc:327 wings/rwsummarywindow.cc:232
 msgid "packages"
 msgstr "Packete"
 
-#: gtk/rgsummarywindow.cc:328 wings/rwsummarywindow.cc:232
+#: gtk/rgsummarywindow.cc:327 wings/rwsummarywindow.cc:232
 msgid "package"
 msgstr "Packet"
 
-#: gtk/rgsummarywindow.cc:332 wings/rwsummarywindow.cc:236
+#: gtk/rgsummarywindow.cc:331 wings/rwsummarywindow.cc:236
 #, c-format
 msgid "%d %s were held;\n"
 msgstr "%d %s wird beibehalten;\n"
 
-#: gtk/rgsummarywindow.cc:335 wings/rwsummarywindow.cc:239
+#: gtk/rgsummarywindow.cc:334 wings/rwsummarywindow.cc:239
 #, c-format
 msgid "%d %s were kept back and not upgraded;\n"
 msgstr "%d %s werden zurückgehalten und nicht aktualisiert;\n"
 
-#: gtk/rgsummarywindow.cc:338 wings/rwsummarywindow.cc:242
+#: gtk/rgsummarywindow.cc:337 wings/rwsummarywindow.cc:242
 #, c-format
 msgid "%d new %s will be installed;\n"
 msgstr "%d neue %s werden installiert; \n"
 
-#: gtk/rgsummarywindow.cc:341 wings/rwsummarywindow.cc:245
+#: gtk/rgsummarywindow.cc:340 wings/rwsummarywindow.cc:245
 #, c-format
 msgid "%d %s will be upgraded;\n"
 msgstr "%d %s werden aktuallisiert;\n"
 
-#: gtk/rgsummarywindow.cc:344 wings/rwsummarywindow.cc:248
+#: gtk/rgsummarywindow.cc:343 wings/rwsummarywindow.cc:248
 #, c-format
 msgid "%d %s will be removed;\n"
 msgstr "%d %s werden gelöscht;\n"
 
-#: gtk/rgsummarywindow.cc:347 wings/rwsummarywindow.cc:251
+#: gtk/rgsummarywindow.cc:346 wings/rwsummarywindow.cc:251
 #, c-format
 msgid "WARNING: %d essential %s will be removed!\n"
 msgstr "WARNUNG: %d essentielle %s werden gelöscht!\n"
 
-#: gtk/rgsummarywindow.cc:354 wings/rwsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:353 wings/rwsummarywindow.cc:258
 #, c-format
 msgid ""
 "\n"
@@ -1027,7 +991,7 @@ msgstr ""
 "\n"
 "%sB werden benutzt nach Beendigung.\n"
 
-#: gtk/rgsummarywindow.cc:356 wings/rwsummarywindow.cc:260
+#: gtk/rgsummarywindow.cc:355 wings/rwsummarywindow.cc:260
 #, c-format
 msgid ""
 "\n"
@@ -1036,7 +1000,7 @@ msgstr ""
 "\n"
 "%sB werden freigegeben nach Beendigung.\n"
 
-#: gtk/rgsummarywindow.cc:369 wings/rwsummarywindow.cc:273
+#: gtk/rgsummarywindow.cc:368 wings/rwsummarywindow.cc:273
 #, c-format
 msgid ""
 "\n"
@@ -1045,21 +1009,13 @@ msgstr ""
 "\n"
 "%sB müßen heruntergeladen werden."
 
-#: gtk/rgsummarywindow.cc:399 wings/rwsummarywindow.cc:305
-msgid "WARNING!!!"
-msgstr "WARNUNG!!!"
-
-#: gtk/rgsummarywindow.cc:400 wings/rwsummarywindow.cc:306
+#: gtk/rgsummarywindow.cc:395 wings/rwsummarywindow.cc:306
 msgid ""
 "Essential packages will be removed.\n"
 "That can render your system unusable!!!\n"
 msgstr ""
 "Essentielle Packete werden gelöscht.\n"
 "Das kann Ihr System unbenutzbar machen!!!\n"
-
-#: gtk/rgsummarywindow.cc:402 wings/rwsummarywindow.cc:308
-msgid "Proceed System Breakage"
-msgstr ""
 
 #: wings/rwaboutpanel.cc:96
 msgid ""
@@ -1077,6 +1033,16 @@ msgstr ""
 msgid "Dismiss"
 msgstr "Fertig"
 
+#: wings/rwconfigwindow.cc:58 wings/rwmainwindow.cc:554
+#: wings/rwmainwindow.cc:589 wings/rwmainwindow.cc:623
+#: wings/rwmainwindow.cc:696 wings/synaptic.cc:79
+msgid "Error"
+msgstr "Fehler"
+
+#: wings/rwconfigwindow.cc:125
+msgid "Use regular expressions during searches or matching"
+msgstr "Benutze reguläre Ausdrücke beim Suchen"
+
 #: wings/rwconfigwindow.cc:131
 msgid ""
 "Use text-only buttons in main window\n"
@@ -1084,6 +1050,44 @@ msgid ""
 msgstr ""
 "Benutze nur-Text Knöpfe im Hauptfenster\n"
 "(erfordert einen neustart des Programms um sichtbar zu werden)"
+
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: wings/rwconfigwindow.cc:136 wings/rwmainwindow.cc:1600
+#: gtk/window_options.glade.strings:7 gtk/window_options.glade.strings:13
+msgid "Options"
+msgstr "Optionen"
+
+#: wings/rwconfigwindow.cc:152 gtk/window_options.glade.strings:14
+msgid "Leave downloaded packages in the cache"
+msgstr "Behalte heruntergeladene Packete im Cache"
+
+#: wings/rwconfigwindow.cc:156 gtk/window_options.glade.strings:15
+msgid "Delete downloaded packages after installation"
+msgstr "Lösche heruntergeladene Packete nach der Installation"
+
+#: wings/rwconfigwindow.cc:160
+msgid "Delete obsoleted packages from cache"
+msgstr "Lösche überflüssige Packete aus dem Cache"
+
+#: wings/rwconfigwindow.cc:204 gtk/window_options.glade.strings:17
+msgid "Cache"
+msgstr "Cache"
+
+#: wings/rwconfigwindow.cc:226
+msgid "Preferences"
+msgstr "Vorlieben"
+
+#: wings/rwfetchprogress.cc:142
+msgid "Disk Change"
+msgstr "CD Wechsel"
+
+#: wings/rwfetchprogress.cc:143
+msgid "Continue"
+msgstr "Fortsetzen"
 
 #. replaces/obsoletes
 #: wings/rwfiltereditor.cc:421
@@ -1094,13 +1098,23 @@ msgstr "Schlägt vor"
 msgid "Excl."
 msgstr "Ausschliessen"
 
+#: wings/rwmainwindow.cc:556 wings/rwmainwindow.cc:591
+#: wings/rwmainwindow.cc:626
+msgid "Ok"
+msgstr ""
+
+#: wings/rwmainwindow.cc:698 wings/rwmainwindow.cc:1344
+#: wings/rwmainwindow.cc:1379 wings/rwmainwindow.cc:2080
+msgid "Warning"
+msgstr "Warnung"
+
 #: wings/rwmainwindow.cc:1182 wings/rwmainwindow.cc:1659
-#: gtk/window_main.glade.strings:17
+#: gtk/window_main.glade.strings:18
 msgid "Install"
 msgstr "Installieren"
 
 #: wings/rwmainwindow.cc:1184 wings/rwmainwindow.cc:1574
-#: gtk/window_main.glade.strings:12 gtk/window_main.glade.strings:18
+#: gtk/window_main.glade.strings:13 gtk/window_main.glade.strings:19
 msgid "Upgrade"
 msgstr "Aktualisieren"
 
@@ -1137,19 +1151,19 @@ msgstr "Weiter!"
 msgid "Configure Synaptic options"
 msgstr "Konfigurieren der Synaptic Optionen"
 
-#: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:16
+#: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:17
 msgid "Keep"
 msgstr "Bebehalten"
 
-#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:81
+#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:84
 msgid "Keep selected package as is in the system, unmarking selections over it"
 msgstr "Ausgewähltes Packet wie im System belassen"
 
-#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:83
+#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:86
 msgid "Mark selected package for installation/upgrade"
 msgstr "Markiere Packete für Installation/Aktualisierung"
 
-#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:85
+#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:88
 msgid "Mark selected package for removal from system"
 msgstr "Markiere Packete fürs Löschem aus dem System"
 
@@ -1170,15 +1184,15 @@ msgstr "Beschr."
 msgid "Depends."
 msgstr "Hängt ab"
 
-#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:66
+#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:69
 msgid "What it depends on"
 msgstr "Wovon es abhängt"
 
-#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:67
+#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:70
 msgid "What depends on it"
 msgstr "Was von ihm abhängt"
 
-#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:69
+#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:72
 msgid "Suggested and Recommended"
 msgstr "Schlägt vor, empfiehlt"
 
@@ -1210,23 +1224,23 @@ msgstr "Installiere Selektiertes"
 msgid "Switch to package search panel"
 msgstr "Wechsele zum Packete Suchen Panel"
 
-#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:47
+#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:55
 msgid "Filters..."
 msgstr "Filter..."
 
-#: wings/rwmainwindow.cc:1832 gtk/window_main.glade.strings:46
+#: wings/rwmainwindow.cc:1832 gtk/window_main.glade.strings:54
 msgid "Open package filter editor"
 msgstr "Öffne Packet Filter Editor"
 
-#: wings/rwmainwindow.cc:1837 gtk/window_main.glade.strings:48
+#: wings/rwmainwindow.cc:1837 gtk/window_main.glade.strings:56
 msgid "Select package filter"
 msgstr "Wähle Packet Filter"
 
-#: wings/rwmainwindow.cc:1846 gtk/window_main.glade.strings:51
+#: wings/rwmainwindow.cc:1846 gtk/window_main.glade.strings:59
 msgid "Edit Filter..."
 msgstr "Editiere Filter"
 
-#: wings/rwmainwindow.cc:1848 gtk/window_main.glade.strings:50
+#: wings/rwmainwindow.cc:1848 gtk/window_main.glade.strings:58
 msgid "Edit selected filter"
 msgstr "Editiere gewählten Filter"
 
@@ -1234,7 +1248,7 @@ msgstr "Editiere gewählten Filter"
 msgid "Switch to package filter panel"
 msgstr "Wechsle zum Packet Filter Schaltfläche"
 
-#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:52
+#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:60
 msgid "Find Package"
 msgstr "Finde Packet"
 
@@ -1242,7 +1256,7 @@ msgstr "Finde Packet"
 msgid "Next"
 msgstr ""
 
-#: wings/rwmainwindow.cc:1883 gtk/window_main.glade.strings:54
+#: wings/rwmainwindow.cc:1883 gtk/window_main.glade.strings:62
 msgid "Find next package matching pattern"
 msgstr "Finde nächstes Packet mit dem gewählten Muster"
 
@@ -1250,24 +1264,35 @@ msgstr "Finde nächstes Packet mit dem gewählten Muster"
 msgid "To Filter"
 msgstr "zu Filter"
 
-#: wings/rwmainwindow.cc:1890 gtk/window_main.glade.strings:56
+#: wings/rwmainwindow.cc:1890 gtk/window_main.glade.strings:64
 msgid ""
 "Make a filter in 'Search Filter' showing all packages matching the pattern"
 msgstr ""
 "Mache einen Filter in 'Such Filter' der alle Packete mit dem Muster findet"
 
-#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:15
-#: gtk/window_main.glade.strings:59
+#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:16
 msgid "Package"
 msgstr "Packet"
 
-#: wings/rwmainwindow.cc:1958 gtk/window_main.glade.strings:61
+#: wings/rwmainwindow.cc:1958
 msgid "Available"
 msgstr "Verfügbar"
 
-#: wings/rwmainwindow.cc:1967 gtk/window_main.glade.strings:62
+#: wings/rwmainwindow.cc:1967
 msgid "Summary"
 msgstr "Zusammenfassung"
+
+#: wings/rwmainwindow.cc:2081
+msgid ""
+"There are unsaved changes, are you sure\n"
+"you want to quit Synaptic?"
+msgstr ""
+"Es gibt nicht gespeicherte Änderungen, sind Sie sicher, \n"
+"daß Sie Synaptic beenden möchten?"
+
+#: wings/rwmainwindow.cc:2083
+msgid "Quit"
+msgstr "Beenden"
 
 #: wings/rwsourceswindow.cc:125
 msgid "Components"
@@ -1277,9 +1302,17 @@ msgstr "Komponenten"
 msgid "Add Repository"
 msgstr "Füge Repository hinzu"
 
-#: wings/rwsourceswindow.cc:150
+#: wings/rwsourceswindow.cc:150 gtk/window_main.glade.strings:11
 msgid "Add CD-ROM"
 msgstr "Füge CD-ROM hinzu"
+
+#: wings/rwsummarywindow.cc:305
+msgid "WARNING!!!"
+msgstr "WARNUNG!!!"
+
+#: wings/rwsummarywindow.cc:308
+msgid "Proceed System Breakage"
+msgstr ""
 
 #: wings/synaptic.cc:71
 msgid ":could not open display"
@@ -1316,7 +1349,8 @@ msgstr "Fertig."
 msgid "Find text:"
 msgstr ""
 
-#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:53
+#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:61
+#: gtk/window_disc_name.glade.strings:9
 msgid "*"
 msgstr ""
 
@@ -1344,238 +1378,371 @@ msgstr "Sektion"
 msgid "Update Package Entries"
 msgstr "Aktualisieren des Packet Caches"
 
-#: gtk/window_main.glade.strings:11
+#: gtk/window_main.glade.strings:12
 #, fuzzy
 msgid "Fix Broken Packages"
 msgstr "Finde Packet"
 
-#: gtk/window_main.glade.strings:13
+#: gtk/window_main.glade.strings:14
 #, fuzzy
 msgid "Distribution Upgrade"
 msgstr "DistAktualisieren"
 
-#: gtk/window_main.glade.strings:20
+#: gtk/window_main.glade.strings:21
 msgid "Purge"
 msgstr ""
 
-#: gtk/window_main.glade.strings:21
+#: gtk/window_main.glade.strings:22
 msgid "Hold"
 msgstr ""
 
-#: gtk/window_main.glade.strings:22
+#: gtk/window_main.glade.strings:23
 #, fuzzy
 msgid "Filters"
 msgstr "Filter..."
 
 #: gtk/window_main.glade.strings:24
+msgid "Apply"
+msgstr ""
+
+#: gtk/window_main.glade.strings:25
 #, fuzzy
 msgid "All packages"
 msgstr "Alle Packete"
 
-#: gtk/window_main.glade.strings:26
+#: gtk/window_main.glade.strings:27
+msgid "View"
+msgstr ""
+
+#: gtk/window_main.glade.strings:28
+#, fuzzy
+msgid "Expand all"
+msgstr "Aktualisieren"
+
+#: gtk/window_main.glade.strings:29
+msgid "Collapse all   "
+msgstr ""
+
+#: gtk/window_main.glade.strings:30
+#, fuzzy
+msgid "Section tree"
+msgstr "Sektion"
+
+#: gtk/window_main.glade.strings:31
+msgid "Alphabetic tree"
+msgstr ""
+
+#: gtk/window_main.glade.strings:32
+#, fuzzy
+msgid "Status tree"
+msgstr "Status"
+
+#: gtk/window_main.glade.strings:33
+msgid "Flat list"
+msgstr ""
+
+#: gtk/window_main.glade.strings:34
 #, fuzzy
 msgid "Search"
 msgstr "Such Filter"
 
-#: gtk/window_main.glade.strings:27
+#: gtk/window_main.glade.strings:35
 #, fuzzy
 msgid "Package Name"
 msgstr "Packete die"
 
-#: gtk/window_main.glade.strings:29
+#: gtk/window_main.glade.strings:37
 #, fuzzy
 msgid "_Settings"
 msgstr "Sektion"
 
-#: gtk/window_main.glade.strings:30
+#: gtk/window_main.glade.strings:38
 #, fuzzy
 msgid "Repositories"
 msgstr "Füge Repository hinzu"
 
-#: gtk/window_main.glade.strings:31
+#: gtk/window_main.glade.strings:39
 msgid "Toolbar"
 msgstr ""
 
-#: gtk/window_main.glade.strings:32
+#: gtk/window_main.glade.strings:40
 msgid "Pixmaps"
 msgstr ""
 
-#: gtk/window_main.glade.strings:33
+#: gtk/window_main.glade.strings:41
 msgid "Text"
 msgstr ""
 
-#: gtk/window_main.glade.strings:34
+#: gtk/window_main.glade.strings:42
 msgid "Both"
 msgstr ""
 
-#: gtk/window_main.glade.strings:35
+#: gtk/window_main.glade.strings:43
 msgid "Hide"
 msgstr ""
 
-#: gtk/window_main.glade.strings:36
+#: gtk/window_main.glade.strings:44
 #, fuzzy
 msgid "_Help"
 msgstr "Bebehalten"
 
-#: gtk/window_main.glade.strings:37
+#: gtk/window_main.glade.strings:45
 #, fuzzy
 msgid "About..."
 msgstr "Über"
 
-#: gtk/window_main.glade.strings:39
+#: gtk/window_main.glade.strings:47
 #, fuzzy
 msgid "Update _List"
 msgstr "Aktualisieren"
 
-#: gtk/window_main.glade.strings:41
+#: gtk/window_main.glade.strings:49
 #, fuzzy
 msgid "Up_grade all"
 msgstr "Aktualisieren"
 
-#: gtk/window_main.glade.strings:43
+#: gtk/window_main.glade.strings:51
 #, fuzzy
 msgid "_Dist Upgrade"
 msgstr "DistAktualisieren"
 
-#: gtk/window_main.glade.strings:45
+#: gtk/window_main.glade.strings:53
 #, fuzzy
 msgid "_Proceed"
 msgstr "Weiter!"
 
-#: gtk/window_main.glade.strings:55
+#: gtk/window_main.glade.strings:63
 msgid "_Next"
 msgstr ""
 
-#: gtk/window_main.glade.strings:57
+#: gtk/window_main.glade.strings:65
 #, fuzzy
 msgid "To filter"
 msgstr "zu Filter"
 
-#: gtk/window_main.glade.strings:58 gtk/window_main.glade.strings:63
+#: gtk/window_main.glade.strings:66
 msgid " "
 msgstr ""
 
-#: gtk/window_main.glade.strings:64
+#: gtk/window_main.glade.strings:67
 msgid "Information"
 msgstr ""
 
-#: gtk/window_main.glade.strings:68
+#: gtk/window_main.glade.strings:71
 #, fuzzy
 msgid "What it would depend on"
 msgstr "Wovon es abhängt"
 
-#: gtk/window_main.glade.strings:70
+#: gtk/window_main.glade.strings:73
 msgid "label62"
 msgstr ""
 
-#: gtk/window_main.glade.strings:71
+#: gtk/window_main.glade.strings:74
 msgid "label_dep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:72
+#: gtk/window_main.glade.strings:75
 msgid "label53"
 msgstr ""
 
-#: gtk/window_main.glade.strings:73
+#: gtk/window_main.glade.strings:76
 msgid "label57"
 msgstr ""
 
-#: gtk/window_main.glade.strings:74
+#: gtk/window_main.glade.strings:77
 msgid "label54"
 msgstr ""
 
-#: gtk/window_main.glade.strings:75
+#: gtk/window_main.glade.strings:78
 msgid "label58"
 msgstr ""
 
-#: gtk/window_main.glade.strings:76
+#: gtk/window_main.glade.strings:79
 msgid "label_availdep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:77
+#: gtk/window_main.glade.strings:80
 msgid "label55"
 msgstr ""
 
-#: gtk/window_main.glade.strings:78
+#: gtk/window_main.glade.strings:81
 msgid "label59"
 msgstr ""
 
-#: gtk/window_main.glade.strings:79
+#: gtk/window_main.glade.strings:82
 msgid "label56"
 msgstr ""
 
-#: gtk/window_main.glade.strings:80
+#: gtk/window_main.glade.strings:83
 #, fuzzy
 msgid "Dependencies"
 msgstr "Hängt ab"
 
-#: gtk/window_main.glade.strings:82
+#: gtk/window_main.glade.strings:85
 #, fuzzy
 msgid "_Keep"
 msgstr "Bebehalten"
 
-#: gtk/window_main.glade.strings:86
+#: gtk/window_main.glade.strings:89
 #, fuzzy
 msgid "_Remove"
 msgstr "Löschen"
 
-#: gtk/window_main.glade.strings:87
+#: gtk/window_main.glade.strings:90
 msgid "Never upgrade this package"
 msgstr ""
 
-#: gtk/window_main.glade.strings:88
+#: gtk/window_main.glade.strings:91
 #, fuzzy
 msgid "Hold package"
 msgstr "Packet"
 
-#: gtk/window_main.glade.strings:89
+#: gtk/window_main.glade.strings:92
 msgid "Show Pkg Help"
 msgstr ""
 
-#: gtk/window_main.glade.strings:90
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: gtk/window_changes.glade.strings:7
 #, fuzzy
-msgid "_statusL"
-msgstr "Status"
+msgid "Confirm Changes"
+msgstr "Nehme Änderungen vor"
+
+#: gtk/window_changes.glade.strings:8
+msgid ""
+"\n"
+"This operation requires the following changes.\n"
+msgstr ""
+
+#: gtk/window_options.glade.strings:8
+#, fuzzy
+msgid "Use regular expressions when searching or matching"
+msgstr "Benutze reguläre Ausdrücke beim Suchen"
+
+#: gtk/window_options.glade.strings:9
+#, fuzzy
+msgid "Use text-only buttons in main window"
+msgstr ""
+"Benutze nur-Text Knöpfe im Hauptfenster\n"
+"(erfordert einen neustart des Programms um sichtbar zu werden)"
+
+#: gtk/window_options.glade.strings:10
+#, fuzzy
+msgid "Use colors in main package list  (requires a restart to take effect)"
+msgstr ""
+"Benutze nur-Text Knöpfe im Hauptfenster\n"
+"(erfordert einen neustart des Programms um sichtbar zu werden)"
+
+#: gtk/window_options.glade.strings:11
+msgid "Ask when more packages are going to be affected by some action."
+msgstr ""
+
+#: gtk/window_options.glade.strings:12
+msgid "Use terminal window when running the package manager."
+msgstr ""
+
+#: gtk/window_options.glade.strings:16
+#, fuzzy
+msgid "Delete obsolete packages from cache"
+msgstr "Lösche überflüssige Packete aus dem Cache"
+
+#: gtk/window_options.glade.strings:18 gtk/window_options.glade.strings:19
+#: gtk/window_options.glade.strings:20 gtk/window_options.glade.strings:21
+#: gtk/window_options.glade.strings:22 gtk/window_options.glade.strings:32
+#: gtk/window_options.glade.strings:33 gtk/window_options.glade.strings:34
+#: gtk/window_options.glade.strings:35
+#, fuzzy
+msgid "color"
+msgstr "Schließen"
+
+#: gtk/window_options.glade.strings:23
+#, fuzzy
+msgid "MKeepColor"
+msgstr "Löschen"
+
+#: gtk/window_options.glade.strings:24
+#, fuzzy
+msgid "MInstallColor"
+msgstr "Installieren"
+
+#: gtk/window_options.glade.strings:25
+#, fuzzy
+msgid "MUpgradeColor"
+msgstr "Aktualisieren"
+
+#: gtk/window_options.glade.strings:26
+#, fuzzy
+msgid "MDowngradeColor"
+msgstr "Aktualisieren"
+
+#: gtk/window_options.glade.strings:27
+#, fuzzy
+msgid "MRemoveColor"
+msgstr "Löschen"
+
+#: gtk/window_options.glade.strings:28
+#, fuzzy
+msgid "MHeldColor"
+msgstr "Kaputt"
+
+#: gtk/window_options.glade.strings:29
+#, fuzzy
+msgid "MBrokenColor"
+msgstr "Kaputt"
+
+#: gtk/window_options.glade.strings:30
+#, fuzzy
+msgid "MPinColor"
+msgstr "Schließen"
+
+#: gtk/window_options.glade.strings:31
+#, fuzzy
+msgid "MNewColor"
+msgstr "Schließen"
+
+#: gtk/window_options.glade.strings:36
+#, fuzzy
+msgid "Colors"
+msgstr "Schließen"
+
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: gtk/window_disc_name.glade.strings:7
+#, fuzzy
+msgid "Disc name"
+msgstr "CD Wechsel"
+
+#: gtk/window_disc_name.glade.strings:8
+msgid "Enter the disc name"
+msgstr ""
+
+#~ msgid "Could not mount CD-ROM"
+#~ msgstr "Kann das CDROM nicht mounten"
 
 #, fuzzy
-#~ msgid "Use regular expresions when searching or matching"
-#~ msgstr "Benutze reguläre Ausdrücke beim Suchen"
+#~ msgid "Could not Identify Disc"
+#~ msgstr "Konnte CD nicht identifizieren"
+
+#~ msgid "Error Scanning Disc"
+#~ msgstr "Fehler beim scannen der CD"
 
 #, fuzzy
-#~ msgid "Use text-only buttons in main window"
-#~ msgstr ""
-#~ "Benutze nur-Text Knöpfe im Hauptfenster\n"
-#~ "(erfordert einen neustart des Programms um sichtbar zu werden)"
+#~ msgid "Could not change directory to %s"
+#~ msgstr "Kann das Konfigrationsverzeichniss %s nicht anlegen"
 
 #, fuzzy
-#~ msgid "Use colors in main package list"
-#~ msgstr ""
-#~ "Benutze nur-Text Knöpfe im Hauptfenster\n"
-#~ "(erfordert einen neustart des Programms um sichtbar zu werden)"
+#~ msgid "Unable to read directory %s"
+#~ msgstr "Kann das download-Verzeichniss nicht sperren"
 
 #, fuzzy
-#~ msgid "Delete obsolete packages from cache"
-#~ msgstr "Lösche überflüssige Packete aus dem Cache"
-
-#, fuzzy
-#~ msgid "MInstallColor"
-#~ msgstr "Installieren"
-
-#, fuzzy
-#~ msgid "MUpgradeColor"
-#~ msgstr "Aktualisieren"
-
-#, fuzzy
-#~ msgid "MRemoveColor"
-#~ msgstr "Löschen"
-
-#, fuzzy
-#~ msgid "MBrokenColor"
-#~ msgstr "Kaputt"
-
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "Schließen"
+#~ msgid "_statusL"
+#~ msgstr "Status"
 
 #, fuzzy
 #~ msgid "Perform package download only"
@@ -1649,9 +1816,6 @@ msgstr "Status"
 
 #~ msgid "Block %s is invalid"
 #~ msgstr "Block %s ist ungültig"
-
-#~ msgid "Malformed line %u in source list %s (type)"
-#~ msgstr "Fehlerhafte Zeile %u in Source Liste %s (Typ)"
 
 #~ msgid "Malformed line %u in source list %s (URI)"
 #~ msgstr "Fehlerhafte Zeile %u in Source Liste %s (URI)"

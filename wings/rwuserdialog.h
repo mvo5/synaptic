@@ -25,9 +25,10 @@
 
 #include <WINGs/WINGs.h>
 
-#include "rpackagelister.h"
+#include "ruserdialog.h"
+#include "rwwindow.h"
 
-class RWUserDialog : public RWserDialog
+class RWUserDialog : public RUserDialog
 {
 
 protected:

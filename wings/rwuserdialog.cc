@@ -24,10 +24,10 @@
 #include "rwuserdialog.h"
 
 
-virtual bool message(const char *msg,
+bool RWUserDialog::message(const char *msg,
 		     RUserDialog::DialogType dialog,
 		     RUserDialog::ButtonsType buttons,
-		     bool defres);
+		     bool defres)
 {
     char *button1 = NULL;
     char *button2 = NULL;
@@ -78,8 +78,8 @@ virtual bool message(const char *msg,
 	button2 = button1;
     }
 
-    res = WMRunAlertPanel(_scr, _confirmDialogOwner,
-			  title, msg, button1, button2, NULL);
+    res = WMRunAlertPanel(_scr, _parentWindow,
+			  title, (char*) msg, button1, button2, NULL);
     return (defres  && res == WAPRDefault) ||
 	   (!defres && res != WAPRDefault);
 }

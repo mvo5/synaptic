@@ -28,6 +28,7 @@ libraptor_a_SOURCES =\
 	rsources.cc \
 	rsources.h \
 	raptoptions.h \
+	ruserdialog.h \
 	tree.hh
 
 #	rrepositoryfile.h\

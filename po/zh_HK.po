@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
-"POT-Creation-Date: 2003-01-24 23:42+0100\n"
+"POT-Creation-Date: 2003-02-25 00:24+0100\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -14,58 +14,89 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: common/rcdscanner.cc:117 common/rcdscanner.cc:170
+#: common/rcdscanner.cc:112 common/rcdscanner.cc:165
 #, c-format
 msgid "Failed to open %s.new"
 msgstr "開啟 %s.new 失敗"
 
-#: common/rcdscanner.cc:144 common/rcdscanner.cc:251
+#: common/rcdscanner.cc:139 common/rcdscanner.cc:257
 #, c-format
 msgid "Failed to rename %s.new to %s"
 msgstr ""
 
-#: common/rcdscanner.cc:206 common/rcdscanner.cc:240
+#: common/rcdscanner.cc:208 common/rcdscanner.cc:246
 msgid "Internal error"
 msgstr "內部錯誤"
 
-#: common/rcdscanner.cc:278
+#: common/rcdscanner.cc:269
+msgid "Preparing..."
+msgstr ""
+
+#: common/rcdscanner.cc:283
 #, c-format
 msgid "Unable to read the cdrom database %s"
 msgstr "無法讀取 CD-ROM 資料庫 %s"
 
-#: common/rcdscanner.cc:283
+#: common/rcdscanner.cc:292 common/rcdscanner.cc:334 common/rcdscanner.cc:435
+#, fuzzy
+msgid "Unmounting CD-ROM..."
+msgstr "正在裝載 CD-ROM..."
+
+#: common/rcdscanner.cc:295
+#, fuzzy
+msgid "Waiting for disc..."
+msgstr "正在掃描光碟..."
+
+#: common/rcdscanner.cc:296
+msgid "Insert a disc in the drive."
+msgstr ""
+
+#. Mount the new CDROM
+#: common/rcdscanner.cc:300
 msgid "Mounting CD-ROM..."
 msgstr "正在裝載 CD-ROM..."
 
-#: common/rcdscanner.cc:286
-msgid "Could not mount CD-ROM"
-msgstr "無法裝載 CD-ROM..."
-
-#: common/rcdscanner.cc:290
-msgid "Identifying Disc..."
+#: common/rcdscanner.cc:307
+#, fuzzy
+msgid "Identifying disc..."
 msgstr "正在識別光碟..."
 
-#: common/rcdscanner.cc:292
-msgid "Could not Identify Disc"
-msgstr "無法識別光碟"
-
-#: common/rcdscanner.cc:296
-msgid "Scanning Disc..."
+#: common/rcdscanner.cc:313
+#, fuzzy
+msgid "Scanning disc..."
 msgstr "正在掃描光碟..."
 
-#: common/rcdscanner.cc:305
-msgid "Error Scanning Disc"
-msgstr "掃描光碟時出現錯誤"
+#: common/rcdscanner.cc:328
+#, fuzzy
+msgid "Cleaning package lists..."
+msgstr "套件主清單使用色彩顯示"
 
-#: common/rcdscanner.cc:532 common/rcdscanner.cc:594
-#, c-format
-msgid "Could not change directory to %s"
-msgstr "無法把目錄變更為 %s"
+#: common/rcdscanner.cc:393
+msgid "Disc not successfuly scanned."
+msgstr ""
 
-#: common/rcdscanner.cc:545
-#, c-format
-msgid "Unable to read directory %s"
-msgstr "無法讀取目錄 %s"
+#: common/rcdscanner.cc:397
+msgid "Empty disc name."
+msgstr ""
+
+#: common/rcdscanner.cc:400
+#, fuzzy
+msgid "Registering disc..."
+msgstr "正在識別光碟..."
+
+#: common/rcdscanner.cc:415
+#, fuzzy
+msgid "Copying package lists..."
+msgstr "從伺服器更新套件清單..."
+
+#: common/rcdscanner.cc:424
+msgid "Writing sources list..."
+msgstr ""
+
+#: common/rcdscanner.cc:439
+#, fuzzy
+msgid "Done!"
+msgstr "已下載"
 
 #: common/rconfiguration.cc:107
 msgid "Could not get password entry for superuser"
@@ -110,7 +141,7 @@ msgstr "已符合相依性要求"
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 
-#: common/rpackagecache.cc:49 common/rpackagelister.cc:891
+#: common/rpackagecache.cc:49 common/rpackagelister.cc:1044
 msgid "The list of sources could not be read."
 msgstr "無法讀取套件來源清單"
 
@@ -118,7 +149,7 @@ msgstr "無法讀取套件來源清單"
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "無法分析或開啟套件清單或狀態檔案。"
 
-#: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:72 gtk/rgsrcwindow.cc:83
+#: common/rpackagefilter.cc:37 gtk/rgfetchprogress.cc:69 gtk/rgsrcwindow.cc:84
 #: wings/rwfetchprogress.cc:101
 msgid "Status"
 msgstr "狀態"
@@ -130,12 +161,12 @@ msgstr "樣板"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1240
+#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1234
 #: wings/rwmainwindow.cc:1196
 msgid "Section"
 msgstr "組別"
 
-#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1241
+#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1235
 #: wings/rwmainwindow.cc:1197
 msgid "Priority"
 msgstr "優先級"
@@ -144,8 +175,8 @@ msgstr "優先級"
 msgid "Name"
 msgstr "名稱"
 
-#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:28
-#: gtk/window_main.glade.strings:65
+#: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
+#: gtk/window_main.glade.strings:68
 msgid "Description"
 msgstr "套件描述"
 
@@ -177,7 +208,7 @@ msgstr ""
 msgid "ReverseDepends"
 msgstr ""
 
-#: common/rpackagelister.cc:125
+#: common/rpackagelister.cc:126
 msgid "Search Filter"
 msgstr "搜尋篩選器"
 
@@ -188,169 +219,110 @@ msgstr "搜尋篩選器"
 #. WMSetTableColumnDelegate(col, colDeleg);
 #. WMSetTableColumnId(col, (void*)CSection);
 #.
-#: common/rpackagelister.cc:134 gtk/rgfiltereditor.cc:353
+#: common/rpackagelister.cc:135 gtk/rgfiltereditor.cc:353
 #: wings/rwfiltereditor.cc:321 wings/rwmainwindow.cc:1951
-#: gtk/window_main.glade.strings:60
 msgid "Installed"
 msgstr "已安裝"
 
-#: common/rpackagelister.cc:143 gtk/rgfiltereditor.cc:345
+#: common/rpackagelister.cc:144 gtk/rgfiltereditor.cc:345
 #: wings/rwfiltereditor.cc:311
 msgid "Not Installed"
 msgstr "未安裝"
 
-#: common/rpackagelister.cc:154
+#: common/rpackagelister.cc:155
 msgid "Tasks"
 msgstr "任務"
 
-#: common/rpackagelister.cc:164
+#: common/rpackagelister.cc:165
 msgid "Upgradable"
 msgstr "可升級"
 
-#: common/rpackagelister.cc:173 gtk/rgfiltereditor.cc:374
+#: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
 #: wings/rwfiltereditor.cc:341
 msgid "Broken"
 msgstr "安裝不完整"
 
-#: common/rpackagelister.cc:184
+#: common/rpackagelister.cc:185
 msgid "Programmed Changes"
 msgstr "將要進行的修改"
 
-#: common/rpackagelister.cc:305 common/rpackagelister.cc:308
-#: common/rpackagelister.cc:321
+#: common/rpackagelister.cc:308 common/rpackagelister.cc:311
+#: common/rpackagelister.cc:326
 msgid "Internal error recalculating dependency cache."
 msgstr "重新計算相依關係時出現內部錯誤。"
 
-#: common/rpackagelister.cc:811
+#: common/rpackagelister.cc:963
 msgid "Unable to lock the list directory"
 msgstr "無法鎖住清單目錄"
 
-#: common/rpackagelister.cc:833
+#: common/rpackagelister.cc:985
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "無法抓取或認證某些套件庫的 Release 檔，暫時略過那些套件庫。"
 
-#: common/rpackagelister.cc:865
+#: common/rpackagelister.cc:1017
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr "一些索引檔案下載失敗。它們已被略過，或暫由較舊檔案代替。"
 
-#: common/rpackagelister.cc:944
+#: common/rpackagelister.cc:1100
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些套件未能從伺服器抓取。\n"
 
-#: common/rpackagelister.cc:947
+#: common/rpackagelister.cc:1103
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想略過這些套件，繼續進行嗎?"
 
-#: common/rpackagelister.cc:949 gtk/rgmainwindow.cc:751
-#: gtk/rgmainwindow.cc:1344 gtk/rgmainwindow.cc:1466 gtk/rgmainwindow.cc:2115
-#: gtk/rgmainwindow.cc:2324 wings/rwmainwindow.cc:698
-#: wings/rwmainwindow.cc:1344 wings/rwmainwindow.cc:1379
-#: wings/rwmainwindow.cc:2080
-msgid "Warning"
-msgstr "警告"
-
-#: common/rpackagelister.cc:954
+#: common/rpackagelister.cc:1110
 msgid "Unabled to correct missing packages"
 msgstr "無法更正缺少的套件"
 
-#: common/rpackagelister.cc:1004
+#: common/rpackagelister.cc:1166
 msgid "Unable to lock the download directory"
 msgstr "無法鎖住下載區目錄"
 
-#: gtk/gsynaptic.cc:98 gtk/rgconfigwindow.cc:58 gtk/rgmainwindow.cc:600
-#: gtk/rgmainwindow.cc:631 gtk/rgmainwindow.cc:666 gtk/rgmainwindow.cc:749
-#: gtk/rgmainwindow.cc:2294 gtk/rgsrcwindow.cc:273 gtk/rgsrcwindow.cc:280
-#: gtk/rgsrcwindow.cc:379 gtk/rgsrcwindow.cc:398 gtk/rgsrcwindow.cc:456
-#: wings/rwconfigwindow.cc:58 wings/rwmainwindow.cc:554
-#: wings/rwmainwindow.cc:589 wings/rwmainwindow.cc:623
-#: wings/rwmainwindow.cc:696 wings/synaptic.cc:79
-msgid "Error"
-msgstr "錯誤"
+#: common/rpackagelister.cc:1227
+#, fuzzy, c-format
+msgid "Line %u too long in selection file."
+msgstr "自動選擇升級套件失敗。"
 
-#: gtk/gsynaptic.cc:99 wings/synaptic.cc:80
+#: common/rpackagelister.cc:1241 common/rpackagelister.cc:1245
+#, c-format
+msgid "Malformed line %u in selection file"
+msgstr ""
+
+#: common/rpackagelister.cc:1256
+msgid "Setting selections..."
+msgstr ""
+
+#: gtk/gsynaptic.cc:113 wings/synaptic.cc:80
 msgid "You must run this program as the root user."
 msgstr "您必須以 root 使用者身份執行此程式。"
 
-#: gtk/gsynaptic.cc:100 gtk/rgconfigwindow.cc:59 gtk/rgmainwindow.cc:772
-#: gtk/rgmainwindow.cc:2296 gtk/rgsrcwindow.cc:231 wings/rwconfigwindow.cc:59
-#: wings/synaptic.cc:81
-msgid "OK"
-msgstr "確定"
-
-#: gtk/rgconfigwindow.cc:58 gtk/rgmainwindow.cc:2295
+#: gtk/rgconfigwindow.cc:61 gtk/rgmainwindow.cc:2557
 #: wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "儲存設定時發生錯誤。"
 
-#: gtk/rgconfigwindow.cc:120 wings/rwconfigwindow.cc:125
-msgid "Use regular expressions during searches or matching"
-msgstr "搜尋或匹配時使用正規表達式"
-
-#: gtk/rgconfigwindow.cc:124
-msgid ""
-"Use colors in main package list\n"
-"(requires a restart to take effect)"
-msgstr ""
-"套件主清單使用色彩表示\n"
-"(要重新啟動程式後才生效)"
-
-#: gtk/rgconfigwindow.cc:130 wings/rwconfigwindow.cc:136
-#: wings/rwmainwindow.cc:1600
-msgid "Options"
-msgstr "選項"
-
-#: gtk/rgconfigwindow.cc:146 wings/rwconfigwindow.cc:152
-msgid "Leave downloaded packages in the cache"
-msgstr "把已下載的套件留在緩衝區裏"
-
-#: gtk/rgconfigwindow.cc:150 wings/rwconfigwindow.cc:156
-msgid "Delete downloaded packages after installation"
-msgstr "安裝後刪除已下載的套件"
-
-#: gtk/rgconfigwindow.cc:154 wings/rwconfigwindow.cc:160
-msgid "Delete obsoleted packages from cache"
-msgstr "刪除在緩衝區裏太舊的套件"
-
-#: gtk/rgconfigwindow.cc:196 wings/rwconfigwindow.cc:204
-msgid "Cache"
-msgstr "緩衝區"
-
-#: gtk/rgconfigwindow.cc:204 gtk/rgfiltermanager.cc:115
-#: wings/rwconfigwindow.cc:213 wings/rwfiltermanager.cc:103
-#: wings/rwsourceswindow.cc:158
-msgid "Close"
-msgstr "關閉"
-
-#: gtk/rgconfigwindow.cc:210 gtk/rgfiltermanager.cc:107
-#: wings/rwconfigwindow.cc:218 wings/rwfiltermanager.cc:99
-msgid "Save"
-msgstr "儲存"
-
-#: gtk/rgconfigwindow.cc:220 wings/rwconfigwindow.cc:226
-msgid "Preferences"
-msgstr "偏好設定"
-
-#: gtk/rgfetchprogress.cc:63 wings/rwfetchprogress.cc:71
+#: gtk/rgfetchprogress.cc:60 wings/rwfetchprogress.cc:71
 msgid "Fetching Files"
 msgstr "取得檔案中"
 
-#: gtk/rgfetchprogress.cc:73 wings/rwfetchprogress.cc:92
+#: gtk/rgfetchprogress.cc:70 wings/rwfetchprogress.cc:92
 msgid "Size"
 msgstr "檔案大小"
 
-#: gtk/rgfetchprogress.cc:74 wings/rwfetchprogress.cc:86
+#: gtk/rgfetchprogress.cc:71 wings/rwfetchprogress.cc:86
 msgid "URL"
 msgstr "下載網址"
 
-#: gtk/rgfetchprogress.cc:143 wings/rwfetchprogress.cc:139
+#: gtk/rgfetchprogress.cc:139 wings/rwfetchprogress.cc:139
 msgid "Please insert the disk labeled:\n"
 msgstr "請把標籤為：\n"
 
-#: gtk/rgfetchprogress.cc:143 wings/rwfetchprogress.cc:139
+#: gtk/rgfetchprogress.cc:139 wings/rwfetchprogress.cc:139
 msgid ""
 "\n"
 "in drive "
@@ -358,54 +330,36 @@ msgstr ""
 "\n"
 "的光碟插入光碟機 "
 
-#: gtk/rgfetchprogress.cc:146 wings/rwfetchprogress.cc:142
-msgid "Disk Change"
-msgstr "更換光碟"
-
-#: gtk/rgfetchprogress.cc:147 wings/rwfetchprogress.cc:143
-msgid "Continue"
-msgstr "繼續"
-
-#: gtk/rgfetchprogress.cc:147 gtk/rgfilterwindow.cc:112
-#: gtk/rgmainwindow.cc:1348 gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2119
-#: gtk/rgmainwindow.cc:2327 gtk/rgsrcwindow.cc:235 gtk/rgsummarywindow.cc:300
-#: gtk/rgsummarywindow.cc:402 wings/rwfetchprogress.cc:143
-#: wings/rwfilterwindow.cc:104 wings/rwmainwindow.cc:1347
-#: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:2083
-#: wings/rwsummarywindow.cc:205 wings/rwsummarywindow.cc:308
-msgid "Cancel"
-msgstr "取消"
-
-#: gtk/rgfetchprogress.cc:227 wings/rwfetchprogress.cc:222
+#: gtk/rgfetchprogress.cc:219 wings/rwfetchprogress.cc:222
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li 檔案    %4sB/s   尚餘 %6s\n"
 
-#: gtk/rgfetchprogress.cc:234 wings/rwfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:226 wings/rwfetchprogress.cc:229
 msgid "(stalled)\n"
 msgstr "(停頓)\n"
 
-#: gtk/rgfetchprogress.cc:246
+#: gtk/rgfetchprogress.cc:238
 msgid "[Working] "
 msgstr "[工作中]"
 
-#: gtk/rgfetchprogress.cc:251
+#: gtk/rgfetchprogress.cc:243
 msgid "[Receiving] "
 msgstr "[接收中]"
 
-#: gtk/rgfetchprogress.cc:320 wings/rwfetchprogress.cc:378
+#: gtk/rgfetchprogress.cc:312 wings/rwfetchprogress.cc:378
 msgid "Queued"
 msgstr "已佇列"
 
-#: gtk/rgfetchprogress.cc:323 wings/rwfetchprogress.cc:381
+#: gtk/rgfetchprogress.cc:315 wings/rwfetchprogress.cc:381
 msgid "Done"
 msgstr "已下載"
 
-#: gtk/rgfetchprogress.cc:326 wings/rwfetchprogress.cc:384
+#: gtk/rgfetchprogress.cc:318 wings/rwfetchprogress.cc:384
 msgid "Hit"
 msgstr "已有"
 
-#: gtk/rgfetchprogress.cc:329 wings/rwfetchprogress.cc:387
+#: gtk/rgfetchprogress.cc:321 wings/rwfetchprogress.cc:387
 msgid "Failed"
 msgstr "失敗"
 
@@ -508,11 +462,10 @@ msgstr "選擇..."
 msgid "Packages that"
 msgstr "套件的..."
 
-#: gtk/rgfiltereditor.cc:628 gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2119
-#: gtk/rgsrcwindow.cc:243 wings/rwfiltereditor.cc:490
-#: wings/rwmainwindow.cc:1347 wings/rwmainwindow.cc:1382
-#: wings/rwmainwindow.cc:1667 wings/rwsourceswindow.cc:154
-#: gtk/window_main.glade.strings:19
+#: gtk/rgfiltereditor.cc:628 gtk/rgsrcwindow.cc:244
+#: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
+#: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
+#: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
 msgid "Remove"
 msgstr "移除"
 
@@ -533,6 +486,16 @@ msgstr "刪除"
 msgid "Clear"
 msgstr "清除"
 
+#: gtk/rgfiltermanager.cc:107 wings/rwconfigwindow.cc:218
+#: wings/rwfiltermanager.cc:99
+msgid "Save"
+msgstr "儲存"
+
+#: gtk/rgfiltermanager.cc:115 wings/rwconfigwindow.cc:213
+#: wings/rwfiltermanager.cc:103 wings/rwsourceswindow.cc:158
+msgid "Close"
+msgstr "關閉"
+
 #: gtk/rgfiltermanager.cc:222 wings/rwfiltermanager.cc:175
 msgid "A New Filter"
 msgstr "新篩選器"
@@ -541,56 +504,64 @@ msgstr "新篩選器"
 msgid "Set"
 msgstr "設定"
 
+#: gtk/rgfilterwindow.cc:112 gtk/rgsrcwindow.cc:236 gtk/rgsummarywindow.cc:300
+#: wings/rwfetchprogress.cc:143 wings/rwfilterwindow.cc:104
+#: wings/rwmainwindow.cc:1347 wings/rwmainwindow.cc:1382
+#: wings/rwmainwindow.cc:2083 wings/rwsummarywindow.cc:205
+#: wings/rwsummarywindow.cc:308
+msgid "Cancel"
+msgstr "取消"
+
 #: gtk/rgfilterwindow.cc:144 wings/rwfilterwindow.cc:141
 msgid "Package Listing Filter  -  "
 msgstr "套件清單篩選器  -  "
 
-#: gtk/rginstallprogress.cc:92 wings/rwinstallprogress.cc:94
+#: gtk/rginstallprogress.cc:109 wings/rwinstallprogress.cc:94
 msgid "Performing Changes"
 msgstr "正在進行修改"
 
-#: gtk/rgmainwindow.cc:95 gtk/rgmainwindow.cc:1284 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:96 gtk/rgmainwindow.cc:1278 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1241
 msgid "Unknown"
 msgstr "不明"
 
-#: gtk/rgmainwindow.cc:96 wings/rwmainwindow.cc:99
+#: gtk/rgmainwindow.cc:97 wings/rwmainwindow.cc:99
 msgid "Normal"
 msgstr "一般"
 
-#: gtk/rgmainwindow.cc:97 wings/rwmainwindow.cc:100
+#: gtk/rgmainwindow.cc:98 wings/rwmainwindow.cc:100
 msgid "Critical"
 msgstr "重大更新"
 
-#: gtk/rgmainwindow.cc:98 wings/rwmainwindow.cc:101
+#: gtk/rgmainwindow.cc:99 wings/rwmainwindow.cc:101
 msgid "Security"
 msgstr "安全更新"
 
-#: gtk/rgmainwindow.cc:279 wings/rwmainwindow.cc:253
+#: gtk/rgmainwindow.cc:280 wings/rwmainwindow.cc:253
 msgid "No match."
 msgstr "沒有匹配的套件。"
 
-#: gtk/rgmainwindow.cc:295 wings/rwmainwindow.cc:268
+#: gtk/rgmainwindow.cc:298 wings/rwmainwindow.cc:268
 msgid "No more matches."
 msgstr "沒有其他匹配的套件。"
 
-#: gtk/rgmainwindow.cc:527 wings/rwmainwindow.cc:480
+#: gtk/rgmainwindow.cc:533 wings/rwmainwindow.cc:480
 msgid "Retrieving Index Files"
 msgstr "正在抓取索引檔案"
 
-#: gtk/rgmainwindow.cc:529 wings/rwmainwindow.cc:483
+#: gtk/rgmainwindow.cc:535 wings/rwmainwindow.cc:483
 msgid "Updating Package Lists from Servers..."
 msgstr "從伺服器更新套件清單..."
 
-#: gtk/rgmainwindow.cc:584 wings/rwmainwindow.cc:536
+#: gtk/rgmainwindow.cc:598 wings/rwmainwindow.cc:536
 msgid "Dependency problem resolver failed."
 msgstr "未能解決相依性問題。"
 
-#: gtk/rgmainwindow.cc:586 wings/rwmainwindow.cc:538
+#: gtk/rgmainwindow.cc:600 wings/rwmainwindow.cc:538
 msgid "Dependency problems successfully fixed."
 msgstr "相依性問題成功修正了。"
 
-#: gtk/rgmainwindow.cc:601 gtk/rgmainwindow.cc:631 wings/rwmainwindow.cc:554
+#: gtk/rgmainwindow.cc:615 gtk/rgmainwindow.cc:644 wings/rwmainwindow.cc:554
 #: wings/rwmainwindow.cc:589
 msgid ""
 "Automatic upgrade selection not possible\n"
@@ -599,38 +570,31 @@ msgstr ""
 "系統上仍有套件安裝不完整或相依關係有問題，\n"
 "所以未能自動選擇升級套件。請先修正問題。"
 
-#: gtk/rgmainwindow.cc:603 gtk/rgmainwindow.cc:633 gtk/rgmainwindow.cc:669
-#: gtk/rgsrcwindow.cc:275 gtk/rgsrcwindow.cc:282 gtk/rgsrcwindow.cc:381
-#: gtk/rgsrcwindow.cc:399 gtk/rgsrcwindow.cc:458 wings/rwmainwindow.cc:556
-#: wings/rwmainwindow.cc:591 wings/rwmainwindow.cc:626
-msgid "Ok"
-msgstr "確定"
-
-#: gtk/rgmainwindow.cc:608 wings/rwmainwindow.cc:562
+#: gtk/rgmainwindow.cc:621 wings/rwmainwindow.cc:562
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "正在自動選擇可升級套件..."
 
-#: gtk/rgmainwindow.cc:613 wings/rwmainwindow.cc:569
+#: gtk/rgmainwindow.cc:626 wings/rwmainwindow.cc:569
 msgid "Automatic selection of upgradadable packages done."
 msgstr "自動選擇可升級套件完成。"
 
-#: gtk/rgmainwindow.cc:615 wings/rwmainwindow.cc:571
+#: gtk/rgmainwindow.cc:628 wings/rwmainwindow.cc:571
 msgid "Automatic upgrade selection failed."
 msgstr "自動選擇升級套件失敗。"
 
-#: gtk/rgmainwindow.cc:638 wings/rwmainwindow.cc:597
+#: gtk/rgmainwindow.cc:650 wings/rwmainwindow.cc:597
 msgid "Performing selection for distribution upgrade..."
 msgstr "正在為全面升級自動選擇套件..."
 
-#: gtk/rgmainwindow.cc:644 wings/rwmainwindow.cc:604
+#: gtk/rgmainwindow.cc:656 wings/rwmainwindow.cc:604
 msgid "Selection for distribution upgrade done."
 msgstr "為全面升級自動選擇套件完成。"
 
-#: gtk/rgmainwindow.cc:646 wings/rwmainwindow.cc:606
+#: gtk/rgmainwindow.cc:658 wings/rwmainwindow.cc:606
 msgid "Selection for distribution upgrade failed."
 msgstr "為全面升級自動選擇套件失敗。"
 
-#: gtk/rgmainwindow.cc:667 wings/rwmainwindow.cc:624
+#: gtk/rgmainwindow.cc:682 wings/rwmainwindow.cc:624
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -638,73 +602,73 @@ msgstr ""
 "系統上仍有套件安裝不完整或相依關係有問題，\n"
 "未能進行這項操作。請先修正問題。"
 
-#: gtk/rgmainwindow.cc:685 wings/rwmainwindow.cc:642
+#: gtk/rgmainwindow.cc:701 wings/rwmainwindow.cc:642
 msgid ""
 "Performing selected changes... See the terminal from where you started "
 "Synaptic for more information."
 msgstr "正在進行已選的更改... 請見您開啟 Synaptic 的終端機，以取得更多資訊。"
 
-#: gtk/rgmainwindow.cc:689 wings/rwmainwindow.cc:646
+#: gtk/rgmainwindow.cc:705 wings/rwmainwindow.cc:646
 msgid "Retrieving Package Files"
 msgstr "正在抓取套件檔案"
 
-#: gtk/rgmainwindow.cc:782 gtk/rgmainwindow.cc:1254 gtk/rgmainwindow.cc:1263
-#: gtk/rgmainwindow.cc:1267 wings/rwmainwindow.cc:811
+#: gtk/rgmainwindow.cc:785 gtk/rgmainwindow.cc:1248 gtk/rgmainwindow.cc:1257
+#: gtk/rgmainwindow.cc:1261 wings/rwmainwindow.cc:811
 #: wings/rwmainwindow.cc:1210 wings/rwmainwindow.cc:1217
 #: wings/rwmainwindow.cc:1220 wings/rwmainwindow.cc:1224
 msgid "N/A"
 msgstr "不適用"
 
-#: gtk/rgmainwindow.cc:973 wings/rwmainwindow.cc:924
+#: gtk/rgmainwindow.cc:972 wings/rwmainwindow.cc:924
 msgid "Package is installed."
 msgstr "套件已安裝。"
 
-#: gtk/rgmainwindow.cc:975 wings/rwmainwindow.cc:926
+#: gtk/rgmainwindow.cc:974 wings/rwmainwindow.cc:926
 msgid "Package is not installed."
 msgstr "此套件沒有安裝。"
 
-#: gtk/rgmainwindow.cc:979 wings/rwmainwindow.cc:930
+#: gtk/rgmainwindow.cc:978 wings/rwmainwindow.cc:930
 msgid "Package will be installed."
 msgstr "此套件將會被安裝。"
 
-#: gtk/rgmainwindow.cc:985 wings/rwmainwindow.cc:936
+#: gtk/rgmainwindow.cc:984 wings/rwmainwindow.cc:936
 msgid "Package will be upgraded."
 msgstr "此套件將會被升級。"
 
-#: gtk/rgmainwindow.cc:995 wings/rwmainwindow.cc:946
+#: gtk/rgmainwindow.cc:994 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "此套件將會被解除安裝。"
 
-#: gtk/rgmainwindow.cc:998
+#: gtk/rgmainwindow.cc:997
 msgid "Package is broken."
 msgstr "此套件未完整安裝。"
 
-#: gtk/rgmainwindow.cc:1004 gtk/rgmainwindow.cc:1020
+#: gtk/rgmainwindow.cc:1003 gtk/rgmainwindow.cc:1019
 msgid "Package is pinned."
 msgstr "此套件目前被設為永不更新。"
 
-#: gtk/rgmainwindow.cc:1007
+#: gtk/rgmainwindow.cc:1006
 msgid "Package is new."
 msgstr "這是新的套件。"
 
-#: gtk/rgmainwindow.cc:1025 wings/rwmainwindow.cc:951
+#: gtk/rgmainwindow.cc:1024 wings/rwmainwindow.cc:951
 msgid "Broken dependencies."
 msgstr "相依關係有問題。"
 
-#: gtk/rgmainwindow.cc:1224 gtk/window_main.glade.strings:84
+#: gtk/rgmainwindow.cc:1219 gtk/window_main.glade.strings:87
 msgid "_Install"
 msgstr "安裝(_I)"
 
-#: gtk/rgmainwindow.cc:1227
+#: gtk/rgmainwindow.cc:1222
 msgid "_Upgrade"
 msgstr "升級(_U)"
 
-#. XXX
-#. appendTag(bufPtr, bufSize, "Maintainer", pkg->maintainer().c_str());
-#. appendTag(bufPtr, bufSize, "Vendor", pkg->vendor());
+#. XXX Why this is commented out?
+#. appendTag(bufPtr, bufSize, "Maintainer", utf8(pkg->maintainer()));
+#. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1249 wings/rwmainwindow.cc:1205
+#: gtk/rgmainwindow.cc:1243 wings/rwmainwindow.cc:1205
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -712,17 +676,17 @@ msgstr ""
 "\n"
 "已安裝套件:\n"
 
-#: gtk/rgmainwindow.cc:1251 gtk/rgmainwindow.cc:1259
+#: gtk/rgmainwindow.cc:1245 gtk/rgmainwindow.cc:1253
 #: wings/rwmainwindow.cc:1207 wings/rwmainwindow.cc:1216
 msgid "    Version"
 msgstr "    　　版本"
 
-#: gtk/rgmainwindow.cc:1253 gtk/rgmainwindow.cc:1262
+#: gtk/rgmainwindow.cc:1247 gtk/rgmainwindow.cc:1256
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1219
 msgid "    Size"
 msgstr "    安裝大小"
 
-#: gtk/rgmainwindow.cc:1257 wings/rwmainwindow.cc:1213
+#: gtk/rgmainwindow.cc:1251 wings/rwmainwindow.cc:1213
 msgid ""
 "\n"
 "Available Package:\n"
@@ -730,35 +694,35 @@ msgstr ""
 "\n"
 "最新版套件:\n"
 
-#: gtk/rgmainwindow.cc:1266 wings/rwmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1260 wings/rwmainwindow.cc:1223
 msgid "    Package Size"
 msgstr "    套件大小"
 
-#: gtk/rgmainwindow.cc:1281 wings/rwmainwindow.cc:1238
+#: gtk/rgmainwindow.cc:1275 wings/rwmainwindow.cc:1238
 msgid "Not Relevant"
 msgstr "無關係"
 
-#: gtk/rgmainwindow.cc:1289 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1283 wings/rwmainwindow.cc:1246
 msgid "Recommended"
 msgstr "推薦"
 
-#: gtk/rgmainwindow.cc:1291 wings/rwmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1285 wings/rwmainwindow.cc:1248
 msgid "Possible"
 msgstr "可以"
 
-#: gtk/rgmainwindow.cc:1294 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1288 wings/rwmainwindow.cc:1251
 msgid "Package Upgrade"
 msgstr "升級套件"
 
-#: gtk/rgmainwindow.cc:1296 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1290 wings/rwmainwindow.cc:1253
 msgid "    Importance"
 msgstr "    重要性"
 
-#: gtk/rgmainwindow.cc:1298 wings/rwmainwindow.cc:1255
+#: gtk/rgmainwindow.cc:1292 wings/rwmainwindow.cc:1255
 msgid "    Date"
 msgstr "    　日期"
 
-#: gtk/rgmainwindow.cc:1345
+#: gtk/rgmainwindow.cc:1343
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
@@ -768,11 +732,7 @@ msgstr ""
 "Synaptic 必須重新開啟它的緩衝區。\n"
 "您所做的變更將會遺失。您確定要這樣做嗎？"
 
-#: gtk/rgmainwindow.cc:1348 gtk/window_main.glade.strings:23
-msgid "Apply"
-msgstr "套用"
-
-#: gtk/rgmainwindow.cc:1467 gtk/rgmainwindow.cc:2116
+#: gtk/rgmainwindow.cc:1469 gtk/rgmainwindow.cc:2298
 #: wings/rwmainwindow.cc:1345 wings/rwmainwindow.cc:1380
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -781,28 +741,32 @@ msgstr ""
 "移除這個套件或會導致您的系統完全失效。\n"
 "您確定要那樣做嗎?"
 
-#: gtk/rgmainwindow.cc:1818 wings/rwmainwindow.cc:1562
-#: gtk/window_main.glade.strings:38
+#: gtk/rgmainwindow.cc:1781 wings/rwmainwindow.cc:1562
+#: gtk/window_main.glade.strings:46
 msgid "Update package cache"
 msgstr "更新套件清單緩衝區 (apt-get update)"
 
-#: gtk/rgmainwindow.cc:1822 wings/rwmainwindow.cc:1576
-#: gtk/window_main.glade.strings:40
+#: gtk/rgmainwindow.cc:1785 wings/rwmainwindow.cc:1576
+#: gtk/window_main.glade.strings:48
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr "標記可升級的套件，但不包括有新相依關係的套件 (apt-get upgrade)"
 
-#: gtk/rgmainwindow.cc:1826 wings/rwmainwindow.cc:1584
-#: gtk/window_main.glade.strings:42
+#: gtk/rgmainwindow.cc:1789 wings/rwmainwindow.cc:1584
+#: gtk/window_main.glade.strings:50
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr "升級已安裝的發行版本，包括有新相依關係的套件 (apt-get dist-upgrade)"
 
-#: gtk/rgmainwindow.cc:1830 wings/rwmainwindow.cc:1592
-#: gtk/window_main.glade.strings:44
+#: gtk/rgmainwindow.cc:1793 wings/rwmainwindow.cc:1592
+#: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "實行已選擇對套件的變更，並有需要時下載套件"
 
-#: gtk/rgmainwindow.cc:2221 wings/rwmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2244
+msgid "Do you want to add another CD-ROM?"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2478 wings/rwmainwindow.cc:2022
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -811,83 +775,83 @@ msgstr ""
 "清單共有 %1$i 個套件，已安裝 %2$i 個，壞的有 %3$i 個。將安裝/升級 %4$i 個套"
 "件，移除 %5$i 個套件；將%7$s %6$sB 磁碟空間。"
 
-#: gtk/rgmainwindow.cc:2224 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2481 wings/rwmainwindow.cc:2025
 msgid "freed"
 msgstr "釋放"
 
-#: gtk/rgmainwindow.cc:2224 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2481 wings/rwmainwindow.cc:2025
 msgid "used"
 msgstr "使用"
 
-#. importend! remove this -> random segfaults
-#: gtk/rgmainwindow.cc:2255 wings/rwmainwindow.cc:1839
-#: gtk/window_main.glade.strings:49
+#: gtk/rgmainwindow.cc:2506 wings/rwmainwindow.cc:1839
+#: gtk/window_main.glade.strings:57
 msgid "All Packages"
 msgstr "全部套件"
 
-#: gtk/rgmainwindow.cc:2325 wings/rwmainwindow.cc:2081
+#: gtk/rgmainwindow.cc:2586
+#, fuzzy
 msgid ""
-"There are unsaved changes, are you sure\n"
+"There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
 msgstr "變更尚未儲存，您確定要離開 Synaptic 嗎?"
 
-#: gtk/rgmainwindow.cc:2327 wings/rwmainwindow.cc:2083
-msgid "Quit"
-msgstr "離開"
-
-#: gtk/rgsrcwindow.cc:60
+#: gtk/rgsrcwindow.cc:61
 msgid "Setup Repositories"
 msgstr "設定套件庫"
 
-#: gtk/rgsrcwindow.cc:84 wings/rwsourceswindow.cc:101
+#: gtk/rgsrcwindow.cc:85 wings/rwsourceswindow.cc:101
 msgid "Type"
 msgstr "種類"
 
-#: gtk/rgsrcwindow.cc:85 wings/rwsourceswindow.cc:107
+#: gtk/rgsrcwindow.cc:86 wings/rwsourceswindow.cc:107
 msgid "Vendor"
 msgstr "發行商"
 
-#: gtk/rgsrcwindow.cc:86 gtk/rgsrcwindow.cc:183 wings/rwsourceswindow.cc:113
+#: gtk/rgsrcwindow.cc:87 gtk/rgsrcwindow.cc:184 wings/rwsourceswindow.cc:113
 msgid "URI"
 msgstr "網址"
 
-#: gtk/rgsrcwindow.cc:87 gtk/rgsrcwindow.cc:197 wings/rwsourceswindow.cc:119
+#: gtk/rgsrcwindow.cc:88 gtk/rgsrcwindow.cc:198 wings/rwsourceswindow.cc:119
 msgid "Distribution"
 msgstr "發行版本"
 
-#: gtk/rgsrcwindow.cc:88 gtk/rgsrcwindow.cc:210
+#: gtk/rgsrcwindow.cc:89 gtk/rgsrcwindow.cc:211
 msgid "Section(s)"
 msgstr "組別"
 
-#: gtk/rgsrcwindow.cc:116
+#: gtk/rgsrcwindow.cc:117
 msgid "Disabled"
 msgstr "停用"
 
-#: gtk/rgsrcwindow.cc:171 gtk/rgsrcwindow.cc:327
+#: gtk/rgsrcwindow.cc:172 gtk/rgsrcwindow.cc:324
 msgid "(no vendor)"
 msgstr "(無特定包裝商)"
 
-#: gtk/rgsrcwindow.cc:178 gtk/window_main.glade.strings:25
+#: gtk/rgsrcwindow.cc:179 gtk/window_main.glade.strings:26
 msgid "Edit"
 msgstr "編輯"
 
-#: gtk/rgsrcwindow.cc:239
+#: gtk/rgsrcwindow.cc:232 wings/rwconfigwindow.cc:59 wings/synaptic.cc:81
+msgid "OK"
+msgstr "確定"
+
+#: gtk/rgsrcwindow.cc:240
 msgid "Add"
 msgstr "新增"
 
-#: gtk/rgsrcwindow.cc:274
+#: gtk/rgsrcwindow.cc:273
 msgid "Cannot read sources.list file"
 msgstr "無法讀取 sources.list 套件庫來源清單檔"
 
-#: gtk/rgsrcwindow.cc:281
+#: gtk/rgsrcwindow.cc:278
 msgid "Cannot read vendors.list file"
 msgstr "無法讀取 vendors.list 套件包裝商清單檔"
 
-#: gtk/rgsrcwindow.cc:380 gtk/rgsrcwindow.cc:457
+#: gtk/rgsrcwindow.cc:376 gtk/rgsrcwindow.cc:450
 msgid "Unknown source type"
 msgstr "套件來源種類不明"
 
-#: gtk/rgsrcwindow.cc:398
+#: gtk/rgsrcwindow.cc:393
 msgid "Invalid URL"
 msgstr "無效的 URL"
 
@@ -944,49 +908,49 @@ msgid "Show Details"
 msgstr "顯示詳細資料"
 
 #: gtk/rgsummarywindow.cc:294 wings/rwsummarywindow.cc:194
-#: gtk/window_main.glade.strings:14
+#: gtk/window_main.glade.strings:15
 msgid "Proceed"
 msgstr "進行"
 
-#: gtk/rgsummarywindow.cc:328 wings/rwsummarywindow.cc:232
+#: gtk/rgsummarywindow.cc:327 wings/rwsummarywindow.cc:232
 msgid "packages"
 msgstr "套件"
 
-#: gtk/rgsummarywindow.cc:328 wings/rwsummarywindow.cc:232
+#: gtk/rgsummarywindow.cc:327 wings/rwsummarywindow.cc:232
 msgid "package"
 msgstr "套件"
 
-#: gtk/rgsummarywindow.cc:332 wings/rwsummarywindow.cc:236
+#: gtk/rgsummarywindow.cc:331 wings/rwsummarywindow.cc:236
 #, c-format
 msgid "%d %s were held;\n"
 msgstr "%d 個%s維持原狀；\n"
 
-#: gtk/rgsummarywindow.cc:335 wings/rwsummarywindow.cc:239
+#: gtk/rgsummarywindow.cc:334 wings/rwsummarywindow.cc:239
 #, c-format
 msgid "%d %s were kept back and not upgraded;\n"
 msgstr "%d 個%s維持原狀不升級；\n"
 
-#: gtk/rgsummarywindow.cc:338 wings/rwsummarywindow.cc:242
+#: gtk/rgsummarywindow.cc:337 wings/rwsummarywindow.cc:242
 #, c-format
 msgid "%d new %s will be installed;\n"
 msgstr "將會新安裝 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:341 wings/rwsummarywindow.cc:245
+#: gtk/rgsummarywindow.cc:340 wings/rwsummarywindow.cc:245
 #, c-format
 msgid "%d %s will be upgraded;\n"
 msgstr "將會升級 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:344 wings/rwsummarywindow.cc:248
+#: gtk/rgsummarywindow.cc:343 wings/rwsummarywindow.cc:248
 #, c-format
 msgid "%d %s will be removed;\n"
 msgstr "將會移除 %d 個%s；\n"
 
-#: gtk/rgsummarywindow.cc:347 wings/rwsummarywindow.cc:251
+#: gtk/rgsummarywindow.cc:346 wings/rwsummarywindow.cc:251
 #, c-format
 msgid "WARNING: %d essential %s will be removed!\n"
 msgstr "警告: %d 個必要的%s將會被移除!\n"
 
-#: gtk/rgsummarywindow.cc:354 wings/rwsummarywindow.cc:258
+#: gtk/rgsummarywindow.cc:353 wings/rwsummarywindow.cc:258
 #, c-format
 msgid ""
 "\n"
@@ -995,7 +959,7 @@ msgstr ""
 "\n"
 "完成後將使用 %sB 磁碟空間。\n"
 
-#: gtk/rgsummarywindow.cc:356 wings/rwsummarywindow.cc:260
+#: gtk/rgsummarywindow.cc:355 wings/rwsummarywindow.cc:260
 #, c-format
 msgid ""
 "\n"
@@ -1004,7 +968,7 @@ msgstr ""
 "\n"
 "完成後將釋放 %sB 磁碟空間。\n"
 
-#: gtk/rgsummarywindow.cc:369 wings/rwsummarywindow.cc:273
+#: gtk/rgsummarywindow.cc:368 wings/rwsummarywindow.cc:273
 #, c-format
 msgid ""
 "\n"
@@ -1013,21 +977,13 @@ msgstr ""
 "\n"
 "需要下載 %sB。"
 
-#: gtk/rgsummarywindow.cc:399 wings/rwsummarywindow.cc:305
-msgid "WARNING!!!"
-msgstr "警告!!!"
-
-#: gtk/rgsummarywindow.cc:400 wings/rwsummarywindow.cc:306
+#: gtk/rgsummarywindow.cc:395 wings/rwsummarywindow.cc:306
 msgid ""
 "Essential packages will be removed.\n"
 "That can render your system unusable!!!\n"
 msgstr ""
 "將要移除系統必需的套件。\n"
 "那樣會令您的系統不能使用!!!\n"
-
-#: gtk/rgsummarywindow.cc:402 wings/rwsummarywindow.cc:308
-msgid "Proceed System Breakage"
-msgstr "確定搗壞系統"
 
 #: wings/rwaboutpanel.cc:96
 msgid ""
@@ -1053,6 +1009,16 @@ msgstr ""
 msgid "Dismiss"
 msgstr "關閉"
 
+#: wings/rwconfigwindow.cc:58 wings/rwmainwindow.cc:554
+#: wings/rwmainwindow.cc:589 wings/rwmainwindow.cc:623
+#: wings/rwmainwindow.cc:696 wings/synaptic.cc:79
+msgid "Error"
+msgstr "錯誤"
+
+#: wings/rwconfigwindow.cc:125
+msgid "Use regular expressions during searches or matching"
+msgstr "搜尋或匹配時使用正規表達式"
+
 #: wings/rwconfigwindow.cc:131
 msgid ""
 "Use text-only buttons in main window\n"
@@ -1060,6 +1026,44 @@ msgid ""
 msgstr ""
 "主視窗使用純文字按鈕\n"
 "(要重新啟動程式後才生效)"
+
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: wings/rwconfigwindow.cc:136 wings/rwmainwindow.cc:1600
+#: gtk/window_options.glade.strings:7 gtk/window_options.glade.strings:13
+msgid "Options"
+msgstr "選項"
+
+#: wings/rwconfigwindow.cc:152 gtk/window_options.glade.strings:14
+msgid "Leave downloaded packages in the cache"
+msgstr "把已下載的套件留在緩衝區裏"
+
+#: wings/rwconfigwindow.cc:156 gtk/window_options.glade.strings:15
+msgid "Delete downloaded packages after installation"
+msgstr "安裝後刪除已下載的套件"
+
+#: wings/rwconfigwindow.cc:160
+msgid "Delete obsoleted packages from cache"
+msgstr "刪除在緩衝區裏太舊的套件"
+
+#: wings/rwconfigwindow.cc:204 gtk/window_options.glade.strings:17
+msgid "Cache"
+msgstr "緩衝區"
+
+#: wings/rwconfigwindow.cc:226
+msgid "Preferences"
+msgstr "偏好設定"
+
+#: wings/rwfetchprogress.cc:142
+msgid "Disk Change"
+msgstr "更換光碟"
+
+#: wings/rwfetchprogress.cc:143
+msgid "Continue"
+msgstr "繼續"
 
 #. replaces/obsoletes
 #: wings/rwfiltereditor.cc:421
@@ -1070,13 +1074,23 @@ msgstr "建議"
 msgid "Excl."
 msgstr "不包括"
 
+#: wings/rwmainwindow.cc:556 wings/rwmainwindow.cc:591
+#: wings/rwmainwindow.cc:626
+msgid "Ok"
+msgstr "確定"
+
+#: wings/rwmainwindow.cc:698 wings/rwmainwindow.cc:1344
+#: wings/rwmainwindow.cc:1379 wings/rwmainwindow.cc:2080
+msgid "Warning"
+msgstr "警告"
+
 #: wings/rwmainwindow.cc:1182 wings/rwmainwindow.cc:1659
-#: gtk/window_main.glade.strings:17
+#: gtk/window_main.glade.strings:18
 msgid "Install"
 msgstr "安裝"
 
 #: wings/rwmainwindow.cc:1184 wings/rwmainwindow.cc:1574
-#: gtk/window_main.glade.strings:12 gtk/window_main.glade.strings:18
+#: gtk/window_main.glade.strings:13 gtk/window_main.glade.strings:19
 msgid "Upgrade"
 msgstr "升級"
 
@@ -1113,19 +1127,19 @@ msgstr "進行！"
 msgid "Configure Synaptic options"
 msgstr "設定 Synaptic 選項"
 
-#: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:16
+#: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:17
 msgid "Keep"
 msgstr "維持原狀"
 
-#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:81
+#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:84
 msgid "Keep selected package as is in the system, unmarking selections over it"
 msgstr "把已選的套件維持原狀，取消已有的選擇標記"
 
-#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:83
+#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:86
 msgid "Mark selected package for installation/upgrade"
 msgstr "標記套件，預備安裝或升級"
 
-#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:85
+#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:88
 msgid "Mark selected package for removal from system"
 msgstr "標記套件，預備從系統移除"
 
@@ -1146,15 +1160,15 @@ msgstr "描述"
 msgid "Depends."
 msgstr "依賴"
 
-#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:66
+#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:69
 msgid "What it depends on"
 msgstr "所依賴的套件"
 
-#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:67
+#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:70
 msgid "What depends on it"
 msgstr "依賴此套件的其他套件"
 
-#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:69
+#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:72
 msgid "Suggested and Recommended"
 msgstr "建議和推薦"
 
@@ -1186,23 +1200,23 @@ msgstr "安裝已選套件"
 msgid "Switch to package search panel"
 msgstr "切換至套件搜尋面板"
 
-#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:47
+#: wings/rwmainwindow.cc:1830 gtk/window_main.glade.strings:55
 msgid "Filters..."
 msgstr "篩選器..."
 
-#: wings/rwmainwindow.cc:1832 gtk/window_main.glade.strings:46
+#: wings/rwmainwindow.cc:1832 gtk/window_main.glade.strings:54
 msgid "Open package filter editor"
 msgstr "開啟套件篩選編輯器"
 
-#: wings/rwmainwindow.cc:1837 gtk/window_main.glade.strings:48
+#: wings/rwmainwindow.cc:1837 gtk/window_main.glade.strings:56
 msgid "Select package filter"
 msgstr "選擇套件篩選器"
 
-#: wings/rwmainwindow.cc:1846 gtk/window_main.glade.strings:51
+#: wings/rwmainwindow.cc:1846 gtk/window_main.glade.strings:59
 msgid "Edit Filter..."
 msgstr "編輯篩選器..."
 
-#: wings/rwmainwindow.cc:1848 gtk/window_main.glade.strings:50
+#: wings/rwmainwindow.cc:1848 gtk/window_main.glade.strings:58
 msgid "Edit selected filter"
 msgstr "編輯已選的篩選器"
 
@@ -1210,7 +1224,7 @@ msgstr "編輯已選的篩選器"
 msgid "Switch to package filter panel"
 msgstr "切換至套件篩選面板"
 
-#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:52
+#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:60
 msgid "Find Package"
 msgstr "尋找套件"
 
@@ -1218,7 +1232,7 @@ msgstr "尋找套件"
 msgid "Next"
 msgstr "找下一個"
 
-#: wings/rwmainwindow.cc:1883 gtk/window_main.glade.strings:54
+#: wings/rwmainwindow.cc:1883 gtk/window_main.glade.strings:62
 msgid "Find next package matching pattern"
 msgstr "找下一個符合樣式的套件"
 
@@ -1226,23 +1240,32 @@ msgstr "找下一個符合樣式的套件"
 msgid "To Filter"
 msgstr "到篩選器"
 
-#: wings/rwmainwindow.cc:1890 gtk/window_main.glade.strings:56
+#: wings/rwmainwindow.cc:1890 gtk/window_main.glade.strings:64
 msgid ""
 "Make a filter in 'Search Filter' showing all packages matching the pattern"
 msgstr "在「搜尋篩選器」製作篩選器，顯示所有匹配樣板的套件"
 
-#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:15
-#: gtk/window_main.glade.strings:59
+#: wings/rwmainwindow.cc:1938 gtk/window_main.glade.strings:16
 msgid "Package"
 msgstr "套件"
 
-#: wings/rwmainwindow.cc:1958 gtk/window_main.glade.strings:61
+#: wings/rwmainwindow.cc:1958
 msgid "Available"
 msgstr "最新版本"
 
-#: wings/rwmainwindow.cc:1967 gtk/window_main.glade.strings:62
+#: wings/rwmainwindow.cc:1967
 msgid "Summary"
 msgstr "摘要"
+
+#: wings/rwmainwindow.cc:2081
+msgid ""
+"There are unsaved changes, are you sure\n"
+"you want to quit Synaptic?"
+msgstr "變更尚未儲存，您確定要離開 Synaptic 嗎?"
+
+#: wings/rwmainwindow.cc:2083
+msgid "Quit"
+msgstr "離開"
 
 #: wings/rwsourceswindow.cc:125
 msgid "Components"
@@ -1252,9 +1275,17 @@ msgstr "元件"
 msgid "Add Repository"
 msgstr "新增套件庫"
 
-#: wings/rwsourceswindow.cc:150
+#: wings/rwsourceswindow.cc:150 gtk/window_main.glade.strings:11
 msgid "Add CD-ROM"
 msgstr "加 CD-ROM"
+
+#: wings/rwsummarywindow.cc:305
+msgid "WARNING!!!"
+msgstr "警告!!!"
+
+#: wings/rwsummarywindow.cc:308
+msgid "Proceed System Breakage"
+msgstr "確定搗壞系統"
 
 #: wings/synaptic.cc:71
 msgid ":could not open display"
@@ -1303,7 +1334,8 @@ msgstr "尋找"
 msgid "Find text:"
 msgstr "尋找文字:"
 
-#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:53
+#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:61
+#: gtk/window_disc_name.glade.strings:9
 msgid "*"
 msgstr "*"
 
@@ -1328,178 +1360,339 @@ msgstr "動作"
 msgid "Update Package Entries"
 msgstr "更新套件清單 (apt-get update)"
 
-#: gtk/window_main.glade.strings:11
+#: gtk/window_main.glade.strings:12
 msgid "Fix Broken Packages"
 msgstr "修正未完整安裝的套件 (apt-get -f install)"
 
-#: gtk/window_main.glade.strings:13
+#: gtk/window_main.glade.strings:14
 msgid "Distribution Upgrade"
 msgstr "全面升級 (apt-get dist-upgrade)"
 
-#: gtk/window_main.glade.strings:20
+#: gtk/window_main.glade.strings:21
 msgid "Purge"
 msgstr "徹底鏟除 (Purge)"
 
-#: gtk/window_main.glade.strings:21
+#: gtk/window_main.glade.strings:22
 msgid "Hold"
 msgstr "保留永不更新 (Hold)"
 
-#: gtk/window_main.glade.strings:22
+#: gtk/window_main.glade.strings:23
 msgid "Filters"
 msgstr "篩選器"
 
 #: gtk/window_main.glade.strings:24
+msgid "Apply"
+msgstr "套用"
+
+#: gtk/window_main.glade.strings:25
 msgid "All packages"
 msgstr "全部套件"
 
-#: gtk/window_main.glade.strings:26
-msgid "Search"
-msgstr "搜尋"
-
 #: gtk/window_main.glade.strings:27
-msgid "Package Name"
-msgstr "套件名稱"
+msgid "View"
+msgstr ""
+
+#: gtk/window_main.glade.strings:28
+#, fuzzy
+msgid "Expand all"
+msgstr "升級(_G)"
 
 #: gtk/window_main.glade.strings:29
-msgid "_Settings"
-msgstr "設定(_S)"
+msgid "Collapse all   "
+msgstr ""
 
 #: gtk/window_main.glade.strings:30
-msgid "Repositories"
-msgstr "套件庫"
+#, fuzzy
+msgid "Section tree"
+msgstr "組別"
 
 #: gtk/window_main.glade.strings:31
-msgid "Toolbar"
+msgid "Alphabetic tree"
 msgstr ""
 
 #: gtk/window_main.glade.strings:32
+#, fuzzy
+msgid "Status tree"
+msgstr "狀態"
+
+#: gtk/window_main.glade.strings:33
+msgid "Flat list"
+msgstr ""
+
+#: gtk/window_main.glade.strings:34
+msgid "Search"
+msgstr "搜尋"
+
+#: gtk/window_main.glade.strings:35
+msgid "Package Name"
+msgstr "套件名稱"
+
+#: gtk/window_main.glade.strings:37
+msgid "_Settings"
+msgstr "設定(_S)"
+
+#: gtk/window_main.glade.strings:38
+msgid "Repositories"
+msgstr "套件庫"
+
+#: gtk/window_main.glade.strings:39
+msgid "Toolbar"
+msgstr ""
+
+#: gtk/window_main.glade.strings:40
 msgid "Pixmaps"
 msgstr ""
 
-#: gtk/window_main.glade.strings:33
+#: gtk/window_main.glade.strings:41
 #, fuzzy
 msgid "Text"
 msgstr "找下一個"
 
-#: gtk/window_main.glade.strings:34
+#: gtk/window_main.glade.strings:42
 msgid "Both"
 msgstr ""
 
-#: gtk/window_main.glade.strings:35
+#: gtk/window_main.glade.strings:43
 msgid "Hide"
 msgstr ""
 
-#: gtk/window_main.glade.strings:36
+#: gtk/window_main.glade.strings:44
 msgid "_Help"
 msgstr "說明(_H)"
 
-#: gtk/window_main.glade.strings:37
+#: gtk/window_main.glade.strings:45
 msgid "About..."
 msgstr "關於..."
 
-#: gtk/window_main.glade.strings:39
+#: gtk/window_main.glade.strings:47
 msgid "Update _List"
 msgstr "更新清單(_L)"
 
-#: gtk/window_main.glade.strings:41
+#: gtk/window_main.glade.strings:49
 msgid "Up_grade all"
 msgstr "升級(_G)"
 
-#: gtk/window_main.glade.strings:43
+#: gtk/window_main.glade.strings:51
 msgid "_Dist Upgrade"
 msgstr "全面升級(_D)"
 
-#: gtk/window_main.glade.strings:45
+#: gtk/window_main.glade.strings:53
 msgid "_Proceed"
 msgstr "進行(_P)"
 
-#: gtk/window_main.glade.strings:55
+#: gtk/window_main.glade.strings:63
 msgid "_Next"
 msgstr "找下一個(_N)"
 
-#: gtk/window_main.glade.strings:57
+#: gtk/window_main.glade.strings:65
 msgid "To filter"
 msgstr "以作篩選"
 
-#: gtk/window_main.glade.strings:58 gtk/window_main.glade.strings:63
+#: gtk/window_main.glade.strings:66
 msgid " "
 msgstr " "
 
-#: gtk/window_main.glade.strings:64
+#: gtk/window_main.glade.strings:67
 msgid "Information"
 msgstr "套件資訊"
 
-#: gtk/window_main.glade.strings:68
+#: gtk/window_main.glade.strings:71
 msgid "What it would depend on"
 msgstr "它會依賴的套件"
 
-#: gtk/window_main.glade.strings:70
+#: gtk/window_main.glade.strings:73
 msgid "label62"
 msgstr ""
 
-#: gtk/window_main.glade.strings:71
+#: gtk/window_main.glade.strings:74
 msgid "label_dep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:72
+#: gtk/window_main.glade.strings:75
 msgid "label53"
 msgstr ""
 
-#: gtk/window_main.glade.strings:73
+#: gtk/window_main.glade.strings:76
 msgid "label57"
 msgstr ""
 
-#: gtk/window_main.glade.strings:74
+#: gtk/window_main.glade.strings:77
 msgid "label54"
 msgstr ""
 
-#: gtk/window_main.glade.strings:75
+#: gtk/window_main.glade.strings:78
 msgid "label58"
 msgstr ""
 
-#: gtk/window_main.glade.strings:76
+#: gtk/window_main.glade.strings:79
 msgid "label_availdep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:77
+#: gtk/window_main.glade.strings:80
 msgid "label55"
 msgstr ""
 
-#: gtk/window_main.glade.strings:78
+#: gtk/window_main.glade.strings:81
 msgid "label59"
 msgstr ""
 
-#: gtk/window_main.glade.strings:79
+#: gtk/window_main.glade.strings:82
 msgid "label56"
 msgstr ""
 
-#: gtk/window_main.glade.strings:80
+#: gtk/window_main.glade.strings:83
 msgid "Dependencies"
 msgstr "此套件依賴的套件"
 
-#: gtk/window_main.glade.strings:82
+#: gtk/window_main.glade.strings:85
 msgid "_Keep"
 msgstr "維持原狀(_K)"
 
-#: gtk/window_main.glade.strings:86
+#: gtk/window_main.glade.strings:89
 msgid "_Remove"
 msgstr "移除(_R)"
 
-#: gtk/window_main.glade.strings:87
+#: gtk/window_main.glade.strings:90
 msgid "Never upgrade this package"
 msgstr "永不升級此套件"
 
-#: gtk/window_main.glade.strings:88
+#: gtk/window_main.glade.strings:91
 msgid "Hold package"
 msgstr "永不升級"
 
-#: gtk/window_main.glade.strings:89
+#: gtk/window_main.glade.strings:92
 msgid "Show Pkg Help"
 msgstr "顯示套件說明"
 
-#: gtk/window_main.glade.strings:90
-msgid "_statusL"
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: gtk/window_changes.glade.strings:7
+#, fuzzy
+msgid "Confirm Changes"
+msgstr "正在進行修改"
+
+#: gtk/window_changes.glade.strings:8
+msgid ""
+"\n"
+"This operation requires the following changes.\n"
 msgstr ""
+
+#: gtk/window_options.glade.strings:8
+#, fuzzy
+msgid "Use regular expressions when searching or matching"
+msgstr "搜尋或匹配時使用正規表達式"
+
+#: gtk/window_options.glade.strings:9
+msgid "Use text-only buttons in main window"
+msgstr "主視窗裏使用的按鈕僅顯示文字"
+
+#: gtk/window_options.glade.strings:10
+#, fuzzy
+msgid "Use colors in main package list  (requires a restart to take effect)"
+msgstr ""
+"套件主清單使用色彩表示\n"
+"(要重新啟動程式後才生效)"
+
+#: gtk/window_options.glade.strings:11
+msgid "Ask when more packages are going to be affected by some action."
+msgstr ""
+
+#: gtk/window_options.glade.strings:12
+msgid "Use terminal window when running the package manager."
+msgstr ""
+
+#: gtk/window_options.glade.strings:16
+msgid "Delete obsolete packages from cache"
+msgstr "刪除緩衝區裏過舊的套件"
+
+#: gtk/window_options.glade.strings:18 gtk/window_options.glade.strings:19
+#: gtk/window_options.glade.strings:20 gtk/window_options.glade.strings:21
+#: gtk/window_options.glade.strings:22 gtk/window_options.glade.strings:32
+#: gtk/window_options.glade.strings:33 gtk/window_options.glade.strings:34
+#: gtk/window_options.glade.strings:35
+#, fuzzy
+msgid "color"
+msgstr "色彩"
+
+#: gtk/window_options.glade.strings:23
+#, fuzzy
+msgid "MKeepColor"
+msgstr "色彩"
+
+#: gtk/window_options.glade.strings:24
+#, fuzzy
+msgid "MInstallColor"
+msgstr "安裝"
+
+#: gtk/window_options.glade.strings:25
+#, fuzzy
+msgid "MUpgradeColor"
+msgstr "升級"
+
+#: gtk/window_options.glade.strings:26
+msgid "MDowngradeColor"
+msgstr ""
+
+#: gtk/window_options.glade.strings:27
+#, fuzzy
+msgid "MRemoveColor"
+msgstr "移除"
+
+#: gtk/window_options.glade.strings:28
+#, fuzzy
+msgid "MHeldColor"
+msgstr "色彩"
+
+#: gtk/window_options.glade.strings:29
+#, fuzzy
+msgid "MBrokenColor"
+msgstr "安裝不完整"
+
+#: gtk/window_options.glade.strings:30
+#, fuzzy
+msgid "MPinColor"
+msgstr "色彩"
+
+#: gtk/window_options.glade.strings:31
+#, fuzzy
+msgid "MNewColor"
+msgstr "色彩"
+
+#: gtk/window_options.glade.strings:36
+msgid "Colors"
+msgstr "色彩"
+
+#.
+#. * Translatable strings file generated by Glade.
+#. * Add this file to your project's POTFILES.in.
+#. * DO NOT compile it as part of your application.
+#.
+#: gtk/window_disc_name.glade.strings:7
+#, fuzzy
+msgid "Disc name"
+msgstr "更換光碟"
+
+#: gtk/window_disc_name.glade.strings:8
+msgid "Enter the disc name"
+msgstr ""
+
+#~ msgid "Could not mount CD-ROM"
+#~ msgstr "無法裝載 CD-ROM..."
+
+#~ msgid "Could not Identify Disc"
+#~ msgstr "無法識別光碟"
+
+#~ msgid "Error Scanning Disc"
+#~ msgstr "掃描光碟時出現錯誤"
+
+#~ msgid "Could not change directory to %s"
+#~ msgstr "無法把目錄變更為 %s"
+
+#~ msgid "Unable to read directory %s"
+#~ msgstr "無法讀取目錄 %s"
 
 #~ msgid "_Update"
 #~ msgstr "更新清單(_U)"
@@ -1518,21 +1711,6 @@ msgstr ""
 
 #~ msgid "Manage package repositories"
 #~ msgstr "管理套件檔案庫"
-
-#~ msgid "Use regular expresions when searching or matching"
-#~ msgstr "搜尋或匹配時使用正規表達式"
-
-#~ msgid "Use text-only buttons in main window"
-#~ msgstr "主視窗裏使用的按鈕僅顯示文字"
-
-#~ msgid "Use colors in main package list"
-#~ msgstr "套件主清單使用色彩顯示"
-
-#~ msgid "Delete obsolete packages from cache"
-#~ msgstr "刪除緩衝區裏過舊的套件"
-
-#~ msgid "Colors"
-#~ msgstr "色彩"
 
 #~ msgid ""
 #~ "\n"

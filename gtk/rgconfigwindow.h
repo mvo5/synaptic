@@ -30,12 +30,19 @@ class RGConfigWindow : public RGWindow {
   GtkWidget *_pathT;
   GtkWidget *_sizeT;
 
+  /* the color buttons */
+  static char * color_buttons[];
+
   void readColors();
   
   static void saveAction(GtkWidget *self, void *data);
   static void closeAction(GtkWidget *self, void *data);
   static void doneAction(GtkWidget *self, void *data);
-   
+
+  static void colorClicked(GtkWidget *self, void *data);
+  static void saveColor(GtkWidget *self, void *data);
+  
+
  public:
   RGConfigWindow(RGWindow *owner);
   virtual ~RGConfigWindow() {};

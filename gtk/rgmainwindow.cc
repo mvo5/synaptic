@@ -1417,28 +1417,28 @@ void RGMainWindow::setColors(bool useColors)
 {
     if(useColors) {
 	/* we use colors */
-	gtk_get_color(_config->Find("Synaptic::MKeepColor", "").c_str(),
+	gtk_get_color_from_string(_config->Find("Synaptic::MKeepColor", "").c_str(),
 		      &StatusColors[(int)RPackage::MKeep]);
-	gtk_get_color(_config->Find("Synaptic::MInstallColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MInstallColor", 
 				    "#ccffcc").c_str(),
 		      &StatusColors[(int)RPackage::MInstall]); 
-	gtk_get_color(_config->Find("Synaptic::MUpgradeColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MUpgradeColor", 
 				    "#ffff00").c_str(),
 		      &StatusColors[(int)RPackage::MUpgrade]);
-	gtk_get_color(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
+	gtk_get_color_from_string(_config->Find("Synaptic::MDowngradeColor", "").c_str(),
 		      &StatusColors[(int)RPackage::MDowngrade]);
-	gtk_get_color(_config->Find("Synaptic::MRemoveColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MRemoveColor", 
 				    "#f44e80").c_str(),
 		      &StatusColors[(int)RPackage::MRemove]);
-	gtk_get_color(_config->Find("Synaptic::MHeldColor", "").c_str(),
+	gtk_get_color_from_string(_config->Find("Synaptic::MHeldColor", "").c_str(),
 		      &StatusColors[(int)RPackage::MHeld]);
-	gtk_get_color(_config->Find("Synaptic::MBrokenColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MBrokenColor", 
 				    "#e00000").c_str(),
 		      &StatusColors[(int)RPackage::MBroken/*broken*/]);
-	gtk_get_color(_config->Find("Synaptic::MPinColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MPinColor", 
 				    "#ccccff").c_str(),
 		      &StatusColors[(int)RPackage::MPinned/*hold=pinned*/]);
-	gtk_get_color(_config->Find("Synaptic::MNewColor", 
+	gtk_get_color_from_string(_config->Find("Synaptic::MNewColor", 
 				    "#ffffaa").c_str(),
 		      &StatusColors[(int)RPackage::MNew/*new*/]);
     } else {

@@ -29,7 +29,7 @@
 #include "rconfiguration.h"
 #include "raptoptions.h"
 #include "rpackagelister.h"
-
+#include <cmath>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/cmndline.h>
 #include <apt-pkg/error.h>
@@ -42,7 +42,7 @@
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
 #include "locale.h"
-
+#include "stdio.h"
 #include "gsynaptic.h"
 
 bool ShowHelp(CommandLine &CmdL)
@@ -83,7 +83,34 @@ void RGFlushInterface()
     }
 }
 
-void gtk_get_color(const char *cpp, GdkColor **colp){
+static double
+scale_round (double val, double factor)
+{
+  val = floor (val * factor + 0.5);
+  val = MAX (val, 0);
+  val = MIN (val, factor);
+  return val;
+}
+
+
+char * gtk_get_string_from_color(GdkColor *colp)
+{
+    static char *_str = NULL;
+
+    g_free(_str);
+    if(colp == NULL) {
+	_str = g_strdup("");
+ 	return _str;
+    }
+    _str = g_strdup_printf("#%4X%4X%4X", colp->red, colp->green, colp->blue);
+    for (char *ptr = _str; *ptr; ptr++)
+	if (*ptr == ' ')
+	    *ptr = '0';
+
+    return _str;
+}
+
+void gtk_get_color_from_string(const char *cpp, GdkColor **colp){
    GdkColor *new_color;
    int result;
 

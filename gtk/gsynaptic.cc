@@ -145,7 +145,7 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
    if(update != UPDATE_CLOSE) {
       // check when last update happend
       int lastUpdate = _config->FindI("Synaptic::update::last",0);
-      int minimal= _config->FindI("Synaptic::update::minimalIntervall", 24);
+      int minimal= _config->FindI("Synaptic::update::minimalIntervall", 48);
 
       // check for the mtime of the various package lists
       vector<string> filenames = lister->getPolicyArchives(true);

@@ -1201,12 +1201,13 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          }
 
          string errm = (*I)->ErrorText;
-         string tmp = _("Failed to fetch ") + (*I)->DescURI() + "\n"
-            "  " + errm;
+	 ostringstream tmp;
+	 ioprintf(tmp, _("Failed to fetch %s\n  %s"), 
+		  (*I)->DescURI().c_str(), errm.c_str());
 
          serverError = getServerErrorMessage(errm);
 
-         _error->Warning(tmp.c_str());
+         _error->Warning(tmp.str().c_str());
          Failed = true;
       }
 

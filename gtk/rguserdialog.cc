@@ -24,6 +24,7 @@
 
 #include "i18n.h"
 #include "rguserdialog.h"
+#include "gsynaptic.h"
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {

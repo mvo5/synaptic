@@ -62,9 +62,11 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[2]));
     _config->Set("Synaptic::AskRelated",  newval ? "true" : "false");
     
-
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[3]));
     _config->Set("Synaptic::UseTerminal",  newval ? "true" : "false");
+
+    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_optionB[4]));
+    _config->Set("Synaptic::UseRecommends",  newval ? "true" : "false");
 
     int maxUndo = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(me->_maxUndoE));
     _config->Set("Synaptic::undoStackSize",  maxUndo);
@@ -155,6 +157,16 @@ void RGConfigWindow::show()
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[3]),
 				 _config->FindB("Synaptic::UseTerminal", 
 						UseTerminal));
+    bool UseRecommends = false;
+#ifdef HAVE_RPM
+    UseRecommends = true;
+#else
+    gtk_widget_set_sensitive(GTK_WIDGET(_optionB[4]), false);
+#endif
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionB[4]),
+				 _config->FindB("Synaptic::UseRecommends",
+					 	UseRecommends));
+
 
     postClean = _config->FindB("Synaptic::CleanCache", false);
     postAutoClean = _config->FindB("Synaptic::AutoCleanCache", false);
@@ -245,6 +257,7 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
     _optionB[1] = glade_xml_get_widget(_gladeXML, "check_use_colors");
     _optionB[2] = glade_xml_get_widget(_gladeXML, "check_ask_related");
     _optionB[3] = glade_xml_get_widget(_gladeXML, "check_terminal");
+    _optionB[4] = glade_xml_get_widget(_gladeXML, "check_recommends");
 
     _cacheB[0] = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
     _cacheB[1] = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");

@@ -217,7 +217,7 @@ void RGFilterManagerWindow::newFilterAction(GtkWidget *self, void *data)
     RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
     RFilter *filter;
     
-    filter = new RFilter;
+    filter = new RFilter(me->_lister);
     
     filter->setName(_("A New Filter"));
     me->_lister->registerFilter(filter);

@@ -40,6 +40,7 @@
 #include "rconfiguration.h"
 #include "raptoptions.h"
 #include "rinstallprogress.h"
+#include "rcacheactor.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/algorithms.h>
@@ -69,8 +70,23 @@ RPackageLister::RPackageLister()
     _updating = true;
     
     memset(&_searchData, 0, sizeof(_searchData));
+
+#ifdef HAVE_RPM
+    string Recommends = _config->Find("Synaptic::RecommendsFile",
+				      "/etc/apt/metadata");
+    if (FileExists(Recommends))
+	_actors.push_back(new RCacheActorRecommends(this, Recommends));
+#endif
 }
 
+RPackageLister::~RPackageLister()
+{
+    for (vector<RCacheActor*>::iterator I = _actors.begin();
+	 I != _actors.end(); I++)
+	delete (*I);
+
+    delete _cache;
+}
 
 static string getServerErrorMessage(string errm)
 {
@@ -89,29 +105,57 @@ void RPackageLister::notifyChange(RPackage *pkg)
 {
     reapplyFilter();
 
-    for (vector<RPackageObserver*>::const_iterator i = _observers.begin();
-	 i != _observers.end();
-	 i++) {
-	(*i)->notifyChange(pkg);
+    for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
+	 I != _packageObservers.end(); I++) {
+	(*I)->notifyChange(pkg);
     }
 }
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
-    for (vector<RPackageObserver*>::iterator iter = _observers.begin();
-	 iter != _observers.end();
-	 iter++) {
-	if (*iter == observer) {
-	    _observers.erase(iter);
-	    break;
-	}
-    }
+    remove(_packageObservers.begin(), _packageObservers.end(), observer);
 }
-
 
 void RPackageLister::registerObserver(RPackageObserver *observer)
 {
-    _observers.push_back(observer);
+    _packageObservers.push_back(observer);
+}
+
+
+void RPackageLister::notifyCacheOpen()
+{
+    undoStack.clear();
+    redoStack.clear();
+    for (vector<RCacheObserver*>::const_iterator I = _cacheObservers.begin();
+	 I != _cacheObservers.end(); I++) {
+	(*I)->notifyCacheOpen();
+    }
+}
+
+void RPackageLister::notifyCachePreChange()
+{
+    for (vector<RCacheObserver*>::const_iterator I = _cacheObservers.begin();
+	 I != _cacheObservers.end(); I++) {
+	(*I)->notifyCachePreChange();
+    }
+}
+
+void RPackageLister::notifyCachePostChange()
+{
+    for (vector<RCacheObserver*>::const_iterator I = _cacheObservers.begin();
+	 I != _cacheObservers.end(); I++) {
+	(*I)->notifyCachePostChange();
+    }
+}
+
+void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
+{
+    remove(_cacheObservers.begin(), _cacheObservers.end(), observer);
+}
+
+void RPackageLister::registerCacheObserver(RCacheObserver *observer)
+{
+    _cacheObservers.push_back(observer);
 }
 
 
@@ -121,7 +165,7 @@ void RPackageLister::makePresetFilters()
     // create preset filters
 
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
     
 	filter->setName(_("Search Filter"));
@@ -129,7 +173,7 @@ void RPackageLister::makePresetFilters()
 	registerFilter(filter);
     }
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
     
 	filter->status.setStatus((int)RStatusPackageFilter::Installed);
@@ -138,7 +182,7 @@ void RPackageLister::makePresetFilters()
 	registerFilter(filter);
     }
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
     
 	filter->status.setStatus((int)RStatusPackageFilter::NotInstalled);
@@ -148,8 +192,7 @@ void RPackageLister::makePresetFilters()
     }
 #ifdef HAVE_RPM
     {
-	filter = new RFilter();
-	filter->preset = true;
+	filter = new RFilter(this);
     
 	filter->pattern.addPattern(RPatternPackageFilter::Name,
 				  "^task-.*", false);
@@ -157,9 +200,18 @@ void RPackageLister::makePresetFilters()
 
 	registerFilter(filter);
     }
+    {
+	filter = new RFilter(this);
+	
+	filter->reducedview.enable();
+	
+	filter->setName(_("Reduced view"));
+	
+	registerFilter(filter);
+    }
 #endif
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
     
 	filter->status.setStatus((int)RStatusPackageFilter::Upgradable);
@@ -168,7 +220,7 @@ void RPackageLister::makePresetFilters()
 	registerFilter(filter);
     }
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
 
 	filter->status.setStatus(RStatusPackageFilter::Broken);
@@ -177,7 +229,7 @@ void RPackageLister::makePresetFilters()
 	registerFilter(filter);
     }
     {
-	filter = new RFilter();
+	filter = new RFilter(this);
 	filter->preset = true;
 
 	filter->status.setStatus(RStatusPackageFilter::MarkInstall
@@ -192,36 +244,27 @@ void RPackageLister::makePresetFilters()
 
 void RPackageLister::restoreFilters()
 {
-  RFilter *filter = NULL;
   Configuration config;
+  RReadFilterData(config);
 
-  if (!RReadFilterData(config)) {
-    makePresetFilters();
-    return;
-  }
-
+  RFilter *filter;
   const Configuration::Item *top = config.Tree("filter");
-  // we have a config file but no usable entries
-  if(top == NULL) {
-    makePresetFilters();
-    return;
-  }
-
   for (top = (top == 0?0:top->Child); top != 0; top = top->Next) {
-    filter = new RFilter;
+    filter = new RFilter(this);
     filter->setName(top->Tag);
     
     string filterkey = "filter::"+filter->getName();
     if (filter->read(config, filterkey)) {
-      if (!registerFilter(filter)) {
-	// filter name is probably duplicated or something
+	registerFilter(filter);
+    } else {
 	delete filter;
-      }
-      filter = NULL;
     }
   }
-  if (filter)
-    delete filter;
+
+  // Introduce new preset filters in the current config file.
+  // Already existent filters will be ignored, since the name
+  // will clash.
+  makePresetFilters();
 }
 
 
@@ -244,7 +287,14 @@ void RPackageLister::storeFilters()
 
 bool RPackageLister::registerFilter(RFilter *filter)
 {
-  // FIXME: search for duplicated filters
+    string Name = filter->getName();
+    for (vector<RFilter*>::const_iterator I = _filterL.begin();
+	 I != _filterL.end(); I++) {
+	if ((*I)->getName() == Name) {
+	    delete filter;
+	    return false;
+	}
+    }
     _filterL.push_back(filter);
     return true;
 }
@@ -252,11 +302,10 @@ bool RPackageLister::registerFilter(RFilter *filter)
 
 void RPackageLister::unregisterFilter(RFilter *filter)
 {
-    for (vector<RFilter*>::iterator iter = _filterL.begin();
-	 iter != _filterL.end();
-	 iter++) {
-	if (*iter == filter) {
-	    _filterL.erase(iter);
+    for (vector<RFilter*>::iterator I = _filterL.begin();
+	 I != _filterL.end(); I++) {
+	if (*I == filter) {
+	    _filterL.erase(I);
 	    break;
 	}
     }
@@ -299,7 +348,8 @@ bool RPackageLister::openCache(bool reset)
         }
     }
     _progMeter->Done();
-    undoStack.clear();
+
+    notifyCacheOpen();
 
     pkgDepCache *deps = _cache->deps();
 
@@ -449,6 +499,14 @@ RPackage *RPackageLister::getElement(pkgCache::PkgIterator &iter)
     int index = _packageindex[iter->ID];
     if (index != -1)
 	return _packages[index];
+    return NULL;
+}
+
+RPackage *RPackageLister::getElement(string Name)
+{
+    pkgCache::PkgIterator Pkg = _cache->deps()->FindPkg(Name);
+    if (Pkg.end() == false)
+	return getElement(Pkg);
     return NULL;
 }
 
@@ -882,46 +940,54 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 }
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
-				     vector<RPackage*> &kept,
+				     vector<RPackage*> &toKeep,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
 				     vector<RPackage*> &toRemove,
-				     vector<RPackage*> &exclude)
+				     vector<RPackage*> &exclude,
+				     bool sorted)
 {
     bool changed = false;
 
     state.UnIgnoreAll();
-    for (vector<RPackage*>::iterator I = exclude.begin();
-	 I != exclude.end(); I++)
-	state.Ignore(*(*I)->package());
+    if (exclude.empty() == false) {
+	for (vector<RPackage*>::iterator I = exclude.begin();
+	     I != exclude.end(); I++)
+	    state.Ignore(*(*I)->package());
+    }
 
     pkgDepCache &Cache = *_cache->deps();
-    for (unsigned i = 0; i < _count; i++) {
-	pkgCache::PkgIterator &Pkg = *_packages[i]->package();
+    for (unsigned int i = 0; i != _count; i++) {
+	RPackage *RPkg = _packages[i];
+	pkgCache::PkgIterator &Pkg = *RPkg->package();
 	pkgDepCache::StateCache &PkgState = Cache[Pkg];
 	if (PkgState.Mode != state[Pkg].Mode &&
 	    state.Ignored(Pkg) == false) {
 	    if (PkgState.Upgrade()) {
-		toUpgrade.push_back(_packages[i]);
+		toUpgrade.push_back(RPkg);
 		changed = true;
 	    } else if (PkgState.NewInstall()) {
-		toInstall.push_back(_packages[i]);
+		toInstall.push_back(RPkg);
 		changed = true;
 	    } else if (PkgState.Delete()) {
-		toRemove.push_back(_packages[i]);
+		toRemove.push_back(RPkg);
 		changed = true;
 	    } else if (PkgState.Keep()) {
-		kept.push_back(_packages[i]);
+		toKeep.push_back(RPkg);
 		changed = true;
 	    }
 	}
     }
 
-    if (changed == true) {
-	sort(kept.begin(), kept.end(), bla());
-	sort(toInstall.begin(), toInstall.end(), bla());
-	sort(toUpgrade.begin(), toUpgrade.end(), bla());
-	sort(toRemove.begin(), toRemove.end(), bla());
+    if (sorted == true && changed == true) {
+	if (toKeep.empty() == false)
+	    sort(toKeep.begin(), toKeep.end(), bla());
+	if (toInstall.empty() == false)
+	    sort(toInstall.begin(), toInstall.end(), bla());
+	if (toUpgrade.empty() == false)
+	    sort(toUpgrade.begin(), toUpgrade.end(), bla());
+	if (toRemove.empty() == false)
+	    sort(toRemove.begin(), toRemove.end(), bla());
     }
 
     return changed;
@@ -967,11 +1033,12 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 }
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
-				     vector<RPackage*> &kept,
+				     vector<RPackage*> &toKeep,
 				     vector<RPackage*> &toInstall, 
 				     vector<RPackage*> &toUpgrade, 
 				     vector<RPackage*> &toRemove,
-				     vector<RPackage*> &exclude)
+				     vector<RPackage*> &exclude,
+				     bool sorted)
 {
     bool changed = false;
 
@@ -997,7 +1064,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 		
 	    case RPackage::MKeep:
 	    case RPackage::MHeld:
-		kept.push_back(_packages[i]);
+		toKeep.push_back(_packages[i]);
 		changed = true;
 		break;
 
@@ -1011,11 +1078,15 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 	}
     }
 
-    if (changed == true) {
-	sort(kept.begin(), kept.end(), bla());
-	sort(toInstall.begin(), toInstall.end(), bla());
-	sort(toUpgrade.begin(), toUpgrade.end(), bla());
-	sort(toRemove.begin(), toRemove.end(), bla());
+    if (sorted == true && changed == true) {
+	if (toKeep.empty() == false)
+	    sort(toKeep.begin(), toKeep.end(), bla());
+	if (toInstall.empty() == false)
+	    sort(toInstall.begin(), toInstall.end(), bla());
+	if (toUpgrade.empty() == false)
+	    sort(toUpgrade.begin(), toUpgrade.end(), bla());
+	if (toRemove.empty() == false)
+	    sort(toRemove.begin(), toRemove.end(), bla());
     }
 
     return changed;

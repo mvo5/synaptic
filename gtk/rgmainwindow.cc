@@ -1386,9 +1386,6 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   GtkTreeSelection *selection;
   GtkTreeIter iter;
   GList *li, *list;
-  RPackage *pkg = NULL;
-  bool changed=true;
-  vector<RPackage*> exclude;
 
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
@@ -1407,8 +1404,11 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   if (ask) {
     me->_lister->unregisterObserver(me);
   }
+  me->_lister->notifyCachePreChange();
 
   // do the work
+  vector<RPackage*> exclude;
+  RPackage *pkg = NULL;
   while(li != NULL) {
       gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_pkgTree), &iter, 
 			      (GtkTreePath*)(li->data));
@@ -1442,18 +1442,21 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       li=g_list_next(li);
   }
 
-  vector<RPackage*> kept;
+  me->_lister->notifyCachePostChange();
+
+  vector<RPackage*> toKeep;
   vector<RPackage*> toInstall; 
   vector<RPackage*> toUpgrade; 
   vector<RPackage*> toRemove;
 
   // ask if the user really want this changes
-  if (ask && me->_lister->getStateChanges(state, kept, toInstall,
+  bool changed=true;
+  if (ask && me->_lister->getStateChanges(state, toKeep, toInstall,
 					  toUpgrade, toRemove, exclude)) {
       RGChangesWindow *chng;
       // show a summary of what's gonna happen
       chng = new RGChangesWindow(me);
-      if (!chng->showAndConfirm(me->_lister, kept, toInstall,
+      if (!chng->showAndConfirm(me->_lister, toKeep, toInstall,
       			  toUpgrade, toRemove)) {
           // canceled operation
           me->_lister->restoreState(state);

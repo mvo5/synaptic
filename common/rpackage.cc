@@ -120,12 +120,9 @@ const char *RPackage::vendor()
 
 const char *RPackage::installedVersion()
 {
-    pkgCache::VerIterator ver = _package->CurrentVer();
-
-    if (ver != 0)
-	return ver.VerStr();
-    else
+    if ((*_package)->CurrentVer == 0)
 	return NULL;
+    return _package->CurrentVer().VerStr();
 }
 
 

@@ -24,23 +24,29 @@
 
 
 #ifndef _RPACKAGEFILTER_H_
-# define _RPACKAGEFILTER_H_
+#define _RPACKAGEFILTER_H_
 
-# include <vector>
-# include <string>
-# include <fstream>
-# include <iostream>
+#include <set>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <apt-pkg/tagfile.h>
 
-# include <regex.h>
+#include <regex.h>
 
 using namespace std;
 
 class RPackage;
+class RPackageLister;
 
 class Configuration;
 
 
 class RPackageFilter {
+protected:
+   RPackageLister *_lister;
+
 public:
    virtual const char* type() = 0;
 
@@ -49,7 +55,8 @@ public:
 
    virtual bool read(Configuration &conf, string key) = 0;
    virtual bool write(ofstream &out, string pad) = 0;
-   //   ~RPackageFilter() = 0;
+   RPackageFilter(RPackageLister *lister) : _lister(lister) {};
+   virtual ~RPackageFilter() {};
 };
 
 
@@ -60,7 +67,8 @@ class RSectionPackageFilter : public RPackageFilter {
    bool _inclusive; // include or exclude the packages
    
 public:
-   RSectionPackageFilter() : _inclusive(false) {};
+   RSectionPackageFilter(RPackageLister *lister)
+	   : RPackageFilter(lister), _inclusive(false) {};
    virtual ~RSectionPackageFilter() {};
 
    inline virtual void reset() { clear(); _inclusive = false; };
@@ -99,7 +107,7 @@ public:
   } DepType;
    static char *TypeName[];
 
-private:
+protected:
    struct Pattern {
        DepType where;
        string pattern;
@@ -109,6 +117,8 @@ private:
    vector<Pattern> _patterns;
    
 public:
+   RPatternPackageFilter(RPackageLister *lister)
+	   : RPackageFilter(lister) {};
    virtual ~RPatternPackageFilter();
 
    inline virtual void reset() { clear(); };
@@ -133,6 +143,9 @@ public:
 extern const char *RPFStatus;
 
 class RStatusPackageFilter : public RPackageFilter {   
+protected:
+   int _status;
+
 public:
    enum Types {
        Installed = 1<<0,
@@ -148,11 +161,10 @@ public:
        ResidualConfig = 1<<10,  // not installed but has config left
        DebconfPackage = 1<<11  // Package has debconf information
    };
-private:
-   int _status;
-public:
-   RStatusPackageFilter() : _status(0xffffffff) {};
-   inline virtual void reset() { _status = 0xffffffff; };
+
+   RStatusPackageFilter(RPackageLister *lister)
+	   : RPackageFilter(lister), _status(~0) {};
+   inline virtual void reset() { _status = ~0; };
 
    inline virtual const char *type() { return RPFStatus; };
    
@@ -169,11 +181,9 @@ extern const char *RPFPriority;
 
 class RPriorityPackageFilter : public RPackageFilter {   
 public:
-   
-private:
-   
-public:
-   inline virtual void reset() {  };
+   RPriorityPackageFilter(RPackageLister *lister)
+	   : RPackageFilter(lister) {};
+   inline virtual void reset() {};
    
    inline virtual const char *type() { return RPFPriority; };
    
@@ -183,10 +193,42 @@ public:
 };
 
 
+extern const char *RPFReducedView;
+
+class RReducedViewPackageFilter : public RPackageFilter {   
+protected:
+   bool _enabled;
+
+   set<string> _hide;
+   vector<string> _hide_wildcard;
+   vector<regex_t*> _hide_regex;
+
+   void addFile(string FileName);
+
+public:
+   RReducedViewPackageFilter(RPackageLister *lister)
+	   : RPackageFilter(lister), _enabled(false) {};
+   ~RReducedViewPackageFilter();
+
+   inline virtual void reset() { _hide.clear(); };
+   
+   inline virtual const char *type() { return RPFReducedView; };
+
+   virtual bool filter(RPackage *pkg);
+   virtual bool read(Configuration &conf, string key);
+   virtual bool write(ofstream &out, string pad);
+
+   void enable() { _enabled = true; };
+   void disable() { _enabled = false; };
+};
+
 
 struct RFilter {
   public:
-    RFilter() : preset(false) {};
+    RFilter(RPackageLister *lister)
+       : section(lister), pattern(lister), status(lister),
+	 priority(lister), reducedview(lister), preset(false)
+    {};
     void setName(string name);
     string getName();
     bool read(Configuration &conf, string key);
@@ -197,6 +239,7 @@ struct RFilter {
     RPatternPackageFilter pattern;
     RStatusPackageFilter status;
     RPriorityPackageFilter priority;
+    RReducedViewPackageFilter reducedview;
     bool preset;
 
   private:
@@ -206,3 +249,4 @@ struct RFilter {
 
 #endif
 
+// vim:sts=3:sw=3

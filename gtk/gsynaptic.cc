@@ -129,6 +129,25 @@ const char *utf8(const char *str)
     return _str;
 }
 
+static void SetLanguages()
+{
+    string LangList;
+    if (_config->FindB("Synaptic::DynamicLanguages", true) == false) {
+        LangList = _config->Find("Synaptic::Languages", "");
+    } else {
+	char *lang = getenv("LANG");
+	if (lang == NULL) {
+	    lang = getenv("LC_MESSAGES");
+	    if (lang == NULL) {
+		lang = getenv("LC_ALL");
+	    }
+	}
+	if (lang != NULL && strcmp(lang, "C") != 0)
+	    LangList = lang;
+    }
+
+    _config->Set("Volatile::Languages", LangList);
+}
 
 int main(int argc, char **argv)
 {    
@@ -168,6 +187,8 @@ int main(int argc, char **argv)
     }  
     if(_config->FindB("help") == true)
       ShowHelp(CmdL);
+
+    SetLanguages();
 
     RPackageLister *packageLister = new RPackageLister();
     RGMainWindow *mainWindow = new RGMainWindow(packageLister);

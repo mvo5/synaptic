@@ -38,6 +38,8 @@
 #include "ruserdialog.h"
 #include "tree.hh"
 
+#include "config.h"
+
 #include <apt-pkg/depcache.h>
 
 using namespace std;
@@ -45,6 +47,7 @@ using namespace std;
 class OpProgress;
 class RPackageCache;
 class RPackageFilter;
+class RCacheActor;
 class pkgRecords;
 class pkgAcquireStatus;
 class pkgPackageManager;
@@ -60,6 +63,12 @@ public:
    virtual void notifyChange(RPackage *pkg) = 0;
 };
 
+class RCacheObserver {
+public:
+   virtual void notifyCacheOpen() = 0;
+   virtual void notifyCachePreChange() = 0;
+   virtual void notifyCachePostChange() = 0;
+};
 
 class RPackageLister
 {
@@ -82,6 +91,8 @@ private:
    vector<RPackage*> _displayList; // list of packages after filter
 
    vector<string> _sectionList; // list of all available package sections
+
+   vector<RCacheActor*> _actors;
 
 public:
    typedef pair<string,RPackage*> pkgPair;
@@ -129,7 +140,8 @@ private:
        int last;
    } _searchData;
 
-   vector<RPackageObserver*> _observers;
+   vector<RPackageObserver*> _packageObservers;
+   vector<RCacheObserver*> _cacheObservers;
    
    RUserDialog *_userDialog;
 
@@ -183,6 +195,7 @@ public:
    };
    int getElementIndex(RPackage *pkg);
    RPackage *getElement(pkgCache::PkgIterator &pkg);
+   RPackage *getElement(string Name);
 
    void getStats(int &installed, int &broken, int &toinstall, int &toremove,
 		 double &sizeChange);
@@ -213,7 +226,8 @@ public:
 			vector<RPackage*> &toInstall, 
 			vector<RPackage*> &toUpgrade, 
 			vector<RPackage*> &toRemove,
-			vector<RPackage*> &exclude);
+			vector<RPackage*> &exclude,
+			bool sorted=true);
 
    bool openCache(bool reset);
 
@@ -239,9 +253,17 @@ public:
    void registerObserver(RPackageObserver *observer);
    void unregisterObserver(RPackageObserver *observer);
 
+   // notification stuff about changes in cache
+   void notifyCacheOpen();
+   void notifyCachePreChange();
+   void notifyCachePostChange();
+   void registerCacheObserver(RCacheObserver *observer);
+   void unregisterCacheObserver(RCacheObserver *observer);
+
    bool readSelections(istream &in);
    
    RPackageLister();   
+   ~RPackageLister();
 };
 
 

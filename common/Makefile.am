@@ -27,6 +27,8 @@ libsynaptic_a_SOURCES =\
 	raptoptions.cc \
 	rsources.cc \
 	rsources.h \
+	rcacheactor.h \
+	rcacheactor.cc \
 	raptoptions.h \
 	ruserdialog.h \
 	tree.hh

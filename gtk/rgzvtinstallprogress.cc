@@ -105,6 +105,17 @@ void RGZvtInstallProgress::close()
   stopShell(NULL, this);
 }
 
+gboolean RGZvtInstallProgress::zvtFocus (GtkWidget *widget,
+					 GdkEventButton *event,
+					 gpointer user_data)
+{
+    //cout << "zvtFocus" << endl;
+    
+    gtk_widget_grab_focus(widget);
+    
+    return FALSE;
+}
+
 RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main) 
   : RInstallProgress(), RGWindow(main, "installProgress", true, false), 
     updateFinished(false)
@@ -130,7 +141,9 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   GtkWidget *scrollbar = 
     gtk_vscrollbar_new (GTK_ADJUSTMENT (ZVT_TERM(_term)->adjustment));
   GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
-
+  g_signal_connect(G_OBJECT(_term), "button-press-event", 
+		   (void  (*)())zvtFocus, 
+		   this);
 
   GtkWidget *hbox = gtk_hbox_new(FALSE, 0);
   gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);

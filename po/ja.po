@@ -6,15 +6,15 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: synaptic 0.47\n"
+"Project-Id-Version: synaptic 0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-28 10:01+0100\n"
-"PO-Revision-Date: 2003-11-29 03:13+0900\n"
+"POT-Creation-Date: 2004-01-27 12:33+0900\n"
+"PO-Revision-Date: 2004-01-27 14:51+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: common/sections_trans.cc:9
 msgid "System Administration"
@@ -416,7 +416,7 @@ msgid "Internal Error, non-zero counts"
 msgstr "ナイブエラー、ゼロ以外のカウント"
 
 #: common/rpackagefilter.cc:43 gtk/rgfetchprogress.cc:84
-#: gtk/window_preferences.glade.h:74 gtk/window_filters.glade.h:56
+#: gtk/window_preferences.glade.h:76 gtk/window_filters.glade.h:56
 msgid "Status"
 msgstr "状態"
 
@@ -441,7 +441,7 @@ msgstr "簡略表示"
 msgid "Tags"
 msgstr "タグ"
 
-#: common/rpackagefilter.cc:195 gtk/window_preferences.glade.h:59
+#: common/rpackagefilter.cc:195 gtk/window_preferences.glade.h:61
 msgid "Name"
 msgstr "パッケージ名"
 
@@ -556,14 +556,12 @@ msgstr ""
 "内部エラー 依存キャッシュを再構成中にエラーが発生しました。報告してください。"
 
 #: common/rpackagelister.cc:649
-#, fuzzy
 msgid "Unable to correct dependencies"
-msgstr "見付からないパッケージがあります"
+msgstr "依存関係を解消することができません"
 
 #: common/rpackagelister.cc:651
-#, fuzzy
 msgid "Unable to minimize the upgrade set"
-msgstr "CD-ROM データベース %s を読み込むことができません"
+msgstr "アップグレードセットを最小化することができません"
 
 #: common/rpackagelister.cc:662
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
@@ -671,57 +669,62 @@ msgstr ""
 "span>"
 
 #: gtk/dialog_quit.glade.h:2
-#, fuzzy
 msgid ""
 "There are still changes in the queue that have not been executed. They will "
 "get lost if you choose to quit 'Synaptic'."
 msgstr ""
-"いくつかのパッケージの変更を選択していますが、それらはまだ実行されていませ"
-"ん。Synaptic を終了するとこれらの変更は破棄されます。"
+"いくつかのパッケージの変更が適用待ちになっています。Synaptic を終了すると"
+"これらの変更は破棄されます。"
 
 #: gtk/dialog_upgrade.glade.h:1
 msgid ""
 "<b>Note:</b> If you are upgrading to a new major operating system release "
 "you have to choose 'Smart Upgrade' here."
 msgstr ""
+"<b>注意:</b> 新しいメジャーバージョンのOSへアップグレードする場合は、"
+"ここで 'スマートアップグレード' を選択する必要があります。"
+""
 
 #: gtk/dialog_upgrade.glade.h:2
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">スマートアップグレード(dist-upgrade)を"
-"有効にしますか?</span>"
+"使用しますか?</span>"
 
 #: gtk/dialog_upgrade.glade.h:3 gtk/window_preferences.glade.h:34
-#, fuzzy
 msgid "Default Upgrade"
-msgstr "システムアップグレード時のデフォルト:"
+msgstr "標準のアップグレード"
 
 #: gtk/dialog_upgrade.glade.h:4
 msgid ""
 "Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
 "of upgrades in a smart way."
 msgstr ""
+"Dist-upgrade は、衝突を解決しよりスマートな方法でアップグレードの依存"
+"関係をすべて解決しようと試みます。"
 
 #: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr "今後のアップグレードでもこの選択をする"
 
-#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:73
-#, fuzzy
+#: gtk/dialog_upgrade.glade.h:6 gtk/window_preferences.glade.h:75
 msgid "Smart Upgrade"
-msgstr "アップグレード:"
+msgstr "スマートアップグレード"
 
 #: gtk/dialog_upgrade.glade.h:7
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
 "require new packages to be installed."
 msgstr ""
+"標準のアップグレードでは、衝突が発生するパッケージや、"
+"新たにパッケージをインストールする必要があるパッケージの"
+"アップグレードは保留されます。"
+""
 
 #: gtk/dialog_upgrade.glade.h:8
 msgid "This behavior can be changed in the preferences later."
-msgstr ""
+msgstr "この振舞は後で設定で変更することが可能です。"
 
 #: gtk/dialog_locales_warning.glade.h:1
 msgid ""
@@ -845,14 +848,13 @@ msgstr "色の選択"
 msgid "ignore"
 msgstr "無視"
 
-#: gtk/rgpreferenceswindow.cc:724 gtk/window_preferences.glade.h:67
+#: gtk/rgpreferenceswindow.cc:724 gtk/window_preferences.glade.h:69
 msgid "Preferences"
 msgstr "設定"
 
 #: gtk/rgfetchprogress.cc:64
-#, fuzzy
 msgid "Downloading Files..."
-msgstr "フィルタの編集(_E)"
+msgstr "ファイルのダウンロード中..."
 
 #: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:2359
 msgid "Size"
@@ -873,9 +875,9 @@ msgstr ""
 "%s ドライブに挿入してください"
 
 #: gtk/rgfetchprogress.cc:218
-#, fuzzy, c-format
+#, c-format
 msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
-msgstr "%-3li/%-3li 個のファイル    %4s B/秒   残り時間 %6s\n"
+msgstr "%-3li/%-3li 個のファイルを取得 (%4s B/秒) - 残り時間 %6s\n"
 
 #: gtk/rgfetchprogress.cc:225
 msgid "(stalled)\n"
@@ -892,7 +894,7 @@ msgstr "[受信中...] "
 #: gtk/rgfetchprogress.cc:261
 #, c-format
 msgid "Retrieved %li of %li files at %s/s - %s remaining"
-msgstr ""
+msgstr "%li/%li ファイルを取得しました(%s/s) - 残り時間 %s"
 
 #: gtk/rgfetchprogress.cc:331
 msgid "Queued"
@@ -970,7 +972,7 @@ msgstr "変更を適用中"
 
 #: gtk/rgzvtinstallprogress.cc:61
 msgid "<i>Running...</i>"
-msgstr ""
+msgstr "<i>実行中...</i>"
 
 #: gtk/rgzvtinstallprogress.cc:69
 msgid ""
@@ -991,15 +993,13 @@ msgstr ""
 
 #: gtk/rgzvtinstallprogress.cc:104
 msgid "<i>Finished</i>"
-msgstr ""
+msgstr "<i>完了</i>"
 
 #: gtk/rgzvtinstallprogress.cc:113
-#, fuzzy
 msgid "<i>Can't close while executing</i>"
-msgstr "処理中に閉じることはできません"
+msgstr "<i>処理中に閉じることはできません</i>"
 
 #: gtk/rgzvtinstallprogress.cc:142 gtk/window_zvtinstallprogress.glade.h:3
-#, fuzzy
 msgid "Executing Changes..."
 msgstr "変更を適用しています..."
 
@@ -1020,7 +1020,6 @@ msgid "Starting help system..."
 msgstr "ヘルプシステムを開始しています..."
 
 #: gtk/rgmainwindow.cc:298
-#, fuzzy
 msgid ""
 "No help viewer is installed\n"
 "\n"
@@ -1040,16 +1039,15 @@ msgstr ""
 "もできます。"
 
 #: gtk/rgmainwindow.cc:544
-#, fuzzy
 msgid ""
 "No libgnome2-perl installed\n"
 "\n"
 "You have to install libgnome2-perl to use dpkg-reconfigure with synaptic"
 msgstr ""
-"libgnome-perl がインストールされていません\n"
+"libgnome2-perl がインストールされていません\n"
 "\n"
-"synaptic で dpkg-reconfigure を利用するには libgnome-perl をインストールする"
-"必要があります"
+"synaptic で dpkg-reconfigure を利用するには libgnome2-perl を"
+"インストールする必要があります"
 
 #: gtk/rgmainwindow.cc:550
 msgid "Starting dpkg-reconfigure..."
@@ -1141,8 +1139,8 @@ msgstr "パッケージは選択されていません。\n"
 msgid "_Downgrade"
 msgstr "ダウングレード(_D)"
 
-#: gtk/rgmainwindow.cc:1422 gtk/window_main_hpaned.glade.h:86
-#: gtk/window_main_vpaned.glade.h:86
+#: gtk/rgmainwindow.cc:1422 gtk/window_main_hpaned.glade.h:85
+#: gtk/window_main_vpaned.glade.h:85
 msgid "_Install"
 msgstr "インストール(_I)"
 
@@ -1277,21 +1275,19 @@ msgstr ""
 "なる予定です。(パッチをお待ちしています)"
 
 #: gtk/rgmainwindow.cc:3638
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You have %d broken package on your system!\n"
 "\n"
 "Use the \"Broken\" filter to locate it."
-msgid_plural ""
 "You have %i broken packages on your system!\n"
 "\n"
 "Use the \"Broken\" filter to locate them."
-msgstr[0] ""
-"このシステムには1つの破損パッケージがあります。\n"
+msgstr ""
+"このシステムには %d 個の破損パッケージがあります。\n"
 "\n"
 "\"破損パッケージ\"フィルタを参照して修復を試みてください。"
-msgstr[1] ""
-"このシステムには1つの破損パッケージがあります。\n"
+"このシステムには %i 個の破損パッケージがあります。\n"
 "\n"
 "\"破損パッケージ\"フィルタを参照して修復を試みてください。"
 
@@ -1377,53 +1373,39 @@ msgid "Summary"
 msgstr "サマリ"
 
 #: gtk/rgsummarywindow.cc:317
-#, fuzzy, c-format
+#, c-format
 msgid "%d package is locked\n"
-msgid_plural "%d packages are locked\n"
-msgstr[0] "パッケージは選択されていません。\n"
-msgstr[1] "パッケージは選択されていません。\n"
+msgstr "%d 個のパッケージがロックされています\n"
 
 #: gtk/rgsummarywindow.cc:323
-#, fuzzy, c-format
+#, c-format
 msgid "%d package will be held back and not upgraded\n"
-msgid_plural "%d packages will be held back and not upgraded\n"
-msgstr[0] "%d 個のパッケージが保留されアップグレードされません\n"
-msgstr[1] "%d 個のパッケージが保留されアップグレードされません\n"
+msgstr "%d 個のパッケージが保留されアップグレードされません\n"
 
 #: gtk/rgsummarywindow.cc:330
-#, fuzzy, c-format
+#, c-format
 msgid "%d new package will be installed\n"
-msgid_plural "%d new packages will be installed\n"
-msgstr[0] "%d 個の新規パッケージがインストールされます\n"
-msgstr[1] "%d 個の新規パッケージがインストールされます\n"
+msgstr "%d 個の新規パッケージがインストールされます\n"
 
 #: gtk/rgsummarywindow.cc:337
-#, fuzzy, c-format
+#, c-format
 msgid "%d package will be upgraded\n"
-msgid_plural "%d packages will be upgraded\n"
-msgstr[0] "%d 個のパッケージがアップグレードされます\n"
-msgstr[1] "%d 個のパッケージがアップグレードされます\n"
+msgstr "%d 個のパッケージがアップグレードされます\n"
 
 #: gtk/rgsummarywindow.cc:344
-#, fuzzy, c-format
+#, c-format
 msgid "%d package will be removed\n"
-msgid_plural "%d packages will be removed\n"
-msgstr[0] "%d 個のパッケージが削除されます\n"
-msgstr[1] "%d 個のパッケージが削除されます\n"
+msgstr "%d 個のパッケージが削除されます\n"
 
 #: gtk/rgsummarywindow.cc:351
-#, fuzzy, c-format
+#, c-format
 msgid "%d package will be <b>downgraded</b>\n"
-msgid_plural "%d packages will be <b>downgraded</b>\n"
-msgstr[0] "%d個のパッケージが<b>ダウングレード</b>されます\n"
-msgstr[1] "%d個のパッケージが<b>ダウングレード</b>されます\n"
+msgstr "%d個のパッケージが<b>ダウングレード</b>されます\n"
 
 #: gtk/rgsummarywindow.cc:358
-#, fuzzy, c-format
+#, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
-msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
-msgstr[0] "<b>警告</b>: %d 個の重要な基本パッケージが削除されます\n"
-msgstr[1] "<b>警告</b>: %d 個の重要な基本パッケージが削除されます\n"
+msgstr "<b>警告</b>: %d 個の重要な基本パッケージが削除されます\n"
 
 #: gtk/rgsummarywindow.cc:371
 #, c-format
@@ -1565,7 +1547,6 @@ msgstr ""
 "http://www.nongnu.org/synaptic/"
 
 #: gtk/window_about.glade.h:31
-#, fuzzy
 msgid ""
 "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
 "Keld Simonsen <keld@dkuug.dk> (Danish)\n"
@@ -1591,7 +1572,7 @@ msgid ""
 "Slobodan Sredojevic <ssl@uns.ns.ac.yu> (Serbian)\n"
 "Kelemen Gábor <kg0021@stud.unideb.hu> (Hungarian)"
 msgstr ""
-"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+"Vital Khilko <dojlid@mova.org> (ベラルシア語)\n"
 "Keld Simonsen <keld@dkuug.dk> (デンマーク語)\n"
 "Michael Vogt <mvo@debian.org> (ドイツ語)\n"
 "Sebastain Heinlein <allerlei@renates-welt.de> (ドイツ語)\n"
@@ -1611,7 +1592,9 @@ msgstr ""
 "Alwin Meschede <ameschede@gmx.de> (ドイツ語)\n"
 "Liu Songhe <jackliu9999@hotmail.com> (中国語)\n"
 "Jean-Michel Poure <jm@poure.com> (フランス語)\n"
-"Ossama Khayat <okhayat@yahoo.com> (アラビア語)"
+"Ossama Khayat <okhayat@yahoo.com> (アラビア語)\n"
+"Slobodan Sredojevic <ssl@uns.ns.ac.yu> (セルビア語)\n"
+"Kelemen Gábor <kg0021@stud.unideb.hu> (ハンガリー語)"
 
 #: gtk/window_about.glade.h:54
 msgid "Written by"
@@ -1647,14 +1630,12 @@ msgid "    "
 msgstr "    "
 
 #: gtk/window_fetch.glade.h:2
-#, fuzzy
 msgid "<b>Single files:</b>"
-msgstr "<b>含めるフィールド</b>"
+msgstr "<b>単一のファイル:</b>"
 
 #: gtk/window_fetch.glade.h:3
-#, fuzzy
 msgid "<b>Total:</b>"
-msgstr "<b>タグ:</b>"
+msgstr "<b>合計:</b>"
 
 #: gtk/window_main_hpaned.glade.h:2 gtk/window_main_vpaned.glade.h:2
 #: gtk/window_preferences.glade.h:3
@@ -1670,14 +1651,12 @@ msgid "<b>Install</b>"
 msgstr "<b>インストール</b>"
 
 #: gtk/window_main_hpaned.glade.h:6 gtk/window_main_vpaned.glade.h:7
-#, fuzzy
 msgid "<b>Installed Version</b>"
-msgstr "インストール済バージョン"
+msgstr "<b>インストール済バージョン</b>"
 
 #: gtk/window_main_hpaned.glade.h:7 gtk/window_main_vpaned.glade.h:8
-#, fuzzy
 msgid "<b>Latest Available Version</b>"
-msgstr "<b>インストール可能バージョン</b>"
+msgstr "<b>最新のインストール可能バージョン</b>"
 
 #: gtk/window_main_hpaned.glade.h:8 gtk/window_main_vpaned.glade.h:9
 msgid "<b>Maintainer:</b>"
@@ -1924,77 +1903,73 @@ msgstr "すべて畳む(_C)"
 msgid "_Configure"
 msgstr "設定(_C)"
 
-#: gtk/window_main_hpaned.glade.h:72 gtk/window_main_vpaned.glade.h:73
-#, fuzzy
-msgid "_Contents"
-msgstr "コンポーネント"
-
-#: gtk/window_main_hpaned.glade.h:73
+#: gtk/window_main_hpaned.glade.h:72
 msgid "_Documentation"
 msgstr "ドキュメント(_D)"
 
-#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:74
-#, fuzzy
+#: gtk/window_main_hpaned.glade.h:73 gtk/window_main_vpaned.glade.h:73
 msgid "_Edit Filters..."
-msgstr "フィルタの編集(_E)"
+msgstr "フィルタの編集...(_E)"
 
-#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:75
+#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:74
 msgid "_Execute"
 msgstr "実行(_E)"
 
-#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:76
+#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:75
 msgid "_Execute Queued Changes"
 msgstr "選択された変更を適用する(_E)"
 
-#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:77
+#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:76
 msgid "_Expand All"
 msgstr "すべて展開(_E)"
 
-#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:78
+#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:77
 msgid "_File"
 msgstr "ファイル(_F)"
 
-#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:79
+#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:78
 msgid "_Find..."
 msgstr "検索(_F)..."
 
-#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:80
+#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:79
 msgid "_Fix Broken Packages"
 msgstr "破損パッケージの修復(_F)"
 
-#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:81
+#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:80
 msgid "_Flat List"
 msgstr "フラット表示(_F)"
 
-#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:82
+#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:81
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:83
+#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:82
 msgid "_Hide"
 msgstr "隠す(_H)"
 
-#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:84
-#, fuzzy
+#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:83
 msgid "_Icon Legend"
-msgstr "アイコンのみ(_I)"
+msgstr "アイコン凡例(_I)"
 
-#: gtk/window_main_hpaned.glade.h:85 gtk/window_main_vpaned.glade.h:85
+#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:84
 msgid "_Icons Only"
 msgstr "アイコンのみ(_I)"
 
-#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:87
+#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:86
 msgid "_Install Latest Version"
 msgstr "最新バージョンをインストール(_I)"
 
-#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:88
-#, fuzzy
+#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:87
 msgid "_Lock Current Status and Version"
-msgstr "現在のバージョンを保持する"
+msgstr "現在の状態とバージョンに固定する(_L)"
 
-#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:89
+#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:88
 msgid "_No Changes"
 msgstr "変更しない(_N)"
+
+#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:89
+msgid "_Quick Introduction"
+msgstr "簡単な紹介(_Q)"
 
 #: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:90
 msgid "_Quit"
@@ -2010,12 +1985,11 @@ msgstr "やり直す(_R)"
 
 #: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:93
 msgid "_Refresh"
-msgstr ""
+msgstr "更新(_R)"
 
 #: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:94
-#, fuzzy
 msgid "_Refresh Package List"
-msgstr "パッケージリストの更新(_P)"
+msgstr "パッケージリストの更新(_R)"
 
 #: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:95
 msgid "_Remove"
@@ -2119,9 +2093,8 @@ msgid "<b>Colors</b>"
 msgstr "<b>色</b>"
 
 #: gtk/window_preferences.glade.h:9
-#, fuzzy
 msgid "<b>Columns</b>"
-msgstr "<b>共通</b>"
+msgstr "<b>カラム</b>"
 
 #: gtk/window_preferences.glade.h:10
 msgid "<b>Distribution</b>"
@@ -2140,13 +2113,12 @@ msgid "<b>Main Window</b>"
 msgstr "<b>メインウインドウ</b>"
 
 #: gtk/window_preferences.glade.h:14
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package list will need to be reloaded and so all queued "
 "changes will get lost. Make sure to execute your changes first."
 msgstr ""
-"<b>注意</b> パッケージリストを再読込する必要があります。このため、全ての選択"
-"は解除されます。あらかじめ変更を適用してください。"
+"<b>注意</b> パッケージリストを再読込する必要があります。このため、全ての未適用"
+"の変更は破棄されます。あらかじめ変更を適用してください。"
 
 #: gtk/window_preferences.glade.h:15
 msgid ""
@@ -2181,31 +2153,24 @@ msgid "Always Ask"
 msgstr "いつも尋ねる"
 
 #: gtk/window_preferences.glade.h:22
-#, fuzzy
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "他のパッケージに影響する処理を確認する"
 
 #: gtk/window_preferences.glade.h:23
-#, fuzzy
 msgid "Ask to quit after the changes have been executed successfully"
-msgstr "変更が適用後、終了の確認をする"
+msgstr "変更の適用が正常終了した場合に終了の確認をする"
 
 #: gtk/window_preferences.glade.h:24
-#, fuzzy
 msgid "Available (New):"
-msgstr "インストール可能"
+msgstr "新規インストール可能:"
 
 #: gtk/window_preferences.glade.h:25
-#, fuzzy
 msgid "Available (locked):"
-msgstr ""
-"\n"
-"利用可能なパッケージ:\n"
+msgstr "インストール可能(ロックされています):"
 
 #: gtk/window_preferences.glade.h:26
-#, fuzzy
 msgid "Available: "
-msgstr "インストール可能"
+msgstr "インストール可能:"
 
 #: gtk/window_preferences.glade.h:27
 msgid "Broken:"
@@ -2249,7 +2214,7 @@ msgstr "ダウンロードしたパッケージをインストール後にキャ
 
 #: gtk/window_preferences.glade.h:37
 msgid "Delete packages which are no longer available only"
-msgstr ""
+msgstr "もはや存在していないパッケージを削除する"
 
 #: gtk/window_preferences.glade.h:39
 msgid "Direct connection to the internet"
@@ -2296,11 +2261,8 @@ msgid "Install:"
 msgstr "インストール:"
 
 #: gtk/window_preferences.glade.h:51
-#, fuzzy
 msgid "Installed (locked):"
-msgstr ""
-"\n"
-"インストール済パッケージ:\n"
+msgstr "インストール済(ロックされています):"
 
 #: gtk/window_preferences.glade.h:52
 msgid "Installed size"
@@ -2311,9 +2273,8 @@ msgid "Installed version"
 msgstr "インストール済バージョン"
 
 #: gtk/window_preferences.glade.h:54
-#, fuzzy
 msgid "Installed:"
-msgstr "インストール済"
+msgstr "インストール済:"
 
 #: gtk/window_preferences.glade.h:55
 msgid "Latest version"
@@ -2331,99 +2292,99 @@ msgstr "全てのダウンロードしたパッケージをキャッシュに残
 msgid "Manual proxy configuration"
 msgstr "手動プロキシ設定"
 
+#: gtk/window_preferences.glade.h:59
+msgid "Move _Down"
+msgstr "下へ移動(_D)"
+
 #: gtk/window_preferences.glade.h:60
+msgid "Move _Up"
+msgstr "上へ移動(_U)"
+
+#: gtk/window_preferences.glade.h:62
 msgid "Network"
 msgstr "ネットワーク"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:63
 msgid "No proxy for: "
 msgstr "以下にはプロキシを使用しない:"
 
-#: gtk/window_preferences.glade.h:62
+#: gtk/window_preferences.glade.h:64
 msgid "Number of undo operations:"
 msgstr "アンドゥ可能回数:"
 
-#: gtk/window_preferences.glade.h:63
-#, fuzzy
+#: gtk/window_preferences.glade.h:65
 msgid "Package List"
-msgstr "パッケージ "
+msgstr "パッケージリスト"
 
-#: gtk/window_preferences.glade.h:64
+#: gtk/window_preferences.glade.h:66
 msgid "Port number of the http proxy server"
 msgstr "HTTPプロキシサーバのポート番号"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:67
 msgid "Port numer of the ftp proxy server"
 msgstr "FTPプロキシサーバのポート番号"
 
-#: gtk/window_preferences.glade.h:66
+#: gtk/window_preferences.glade.h:68
 msgid "Port: "
 msgstr "ポート:"
 
-#: gtk/window_preferences.glade.h:68
-#, fuzzy
+#: gtk/window_preferences.glade.h:70
 msgid "Purge: "
-msgstr "完全削除"
+msgstr "完全削除:"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:71
 msgid "Regular expressions are an advanced method of text matching"
 msgstr "正規表現はテキスト一致の高度な手法です"
 
-#: gtk/window_preferences.glade.h:70
-#, fuzzy
+#: gtk/window_preferences.glade.h:72
 msgid "Removal of packages: "
 msgstr "パッケージの削除: "
 
-#: gtk/window_preferences.glade.h:71
+#: gtk/window_preferences.glade.h:73
 msgid "Remove:"
 msgstr "削除:"
 
-#: gtk/window_preferences.glade.h:72
-#, fuzzy
+#: gtk/window_preferences.glade.h:74
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
-"sources.list に一つ以上指定されている場合は、標準のリリースを選択してくださ"
-"い。"
+"sources.list に2つ以上のリリースを指定している場合は、"
+"標準のリリースを選択してください。"
 
-#: gtk/window_preferences.glade.h:75
+#: gtk/window_preferences.glade.h:77
 msgid "Temporary Files"
 msgstr "テンポラリファイル"
 
-#: gtk/window_preferences.glade.h:76
+#: gtk/window_preferences.glade.h:78
 msgid ""
 "The position of the column from left to right. A value of -1 hides the column"
 msgstr "（左から右の）カラム位置を指定。-1を指定することでカラムは隠されます。"
 
-#: gtk/window_preferences.glade.h:77
-#, fuzzy
-msgid "Update available:"
-msgstr "インストール可能"
-
-#: gtk/window_preferences.glade.h:78
-#, fuzzy
-msgid "Upgrade of all packages:"
-msgstr "パッケージリストの更新"
-
 #: gtk/window_preferences.glade.h:79
+msgid "Update available:"
+msgstr "アップグレード可能:"
+
+#: gtk/window_preferences.glade.h:80
+msgid "Upgrade of all packages:"
+msgstr "全パッケージのアップグレード:"
+
+#: gtk/window_preferences.glade.h:81
 msgid "Upgrade:"
 msgstr "アップグレード:"
 
-#: gtk/window_preferences.glade.h:80
-#, fuzzy
+#: gtk/window_preferences.glade.h:82
 msgid "Use custom application font"
 msgstr "アプリケーションフォントを指定"
 
-#: gtk/window_preferences.glade.h:81
-#, fuzzy
+#: gtk/window_preferences.glade.h:83
 msgid "Use custom terminal font"
 msgstr "端末フォントを指定"
 
-#: gtk/window_preferences.glade.h:82
+#: gtk/window_preferences.glade.h:84
 msgid "_Default Font"
 msgstr "標準フォント(_D)"
 
-#: gtk/window_preferences.glade.h:83
+#: gtk/window_preferences.glade.h:85
 msgid "_Terminal Font"
 msgstr "端末フォント(_T)"
 
@@ -2710,12 +2671,11 @@ msgstr "以下はパッケージマネージャの処理中に出力されまし
 
 #: gtk/window_zvtinstallprogress.glade.h:1
 msgid "<b>Terminal Output:</b>"
-msgstr ""
+msgstr "<b>ターミナル出力</b>"
 
 #: gtk/window_zvtinstallprogress.glade.h:2
-#, fuzzy
 msgid "Close this dialog after the changes have been executed successfully"
-msgstr "変更が適用後、終了の確認をする"
+msgstr "変更の適用が正常終了した場合、このダイアログを閉じる"
 
 #: data/synaptic.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
@@ -2736,26 +2696,36 @@ msgid ""
 "of the package\n"
 "3. Execute the queued change(s)"
 msgstr ""
+"1. インストールや削除をしたいパッケージを選ぶ\n"
+"2. パッケージ制御、パッケージメニューあるいはパッケージの"
+"コンテキストメニューから実行したい処理をキューに入れる。\n"
+"3. キューに入れた変更を適用する"
+""
 
 #: gtk/dialog_welcome.glade.h:4
 msgid ""
 "<b>Note:</b> Modifications are not executed instantly. They will be queued "
 "and have to be executed afterwards:"
 msgstr ""
+"<b>注意:</b> 変更は即時には適用されません。一旦キューへ入れられ、"
+"後で適用する必要があります。"
 
 #: gtk/dialog_welcome.glade.h:5
 msgid "Quick Introduction"
-msgstr ""
+msgstr "簡単な紹介"
 
 #: gtk/dialog_welcome.glade.h:6
 msgid "Show this dialog at startup"
-msgstr ""
+msgstr "起動時にこのダイアログを表示する"
 
 #: gtk/dialog_welcome.glade.h:7
 msgid ""
 "The software on your system is organized in so called <i>packages</i>. The "
 "package manager enables you to remove, install or upgrade software packages."
 msgstr ""
+"このシステム内のソフトウエアは <i>パッケージ</i> というもので管理されて"
+"います。パッケージマネージャはそれらのソフトウエアパッケージを削除、インス"
+"トールまたはアップグレードできるようにしてくれます。"
 
 #: gtk/rgfiltermanager.h:70
 msgid "Version number"
@@ -2763,27 +2733,23 @@ msgstr "バージョン番号"
 
 #. depends, predepends etc
 #: gtk/rgfiltermanager.h:74
-#, fuzzy
 msgid "Provided packages"
 msgstr "提供されているパッケージ"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
-#, fuzzy
 msgid "Conflicting packages"
-msgstr "衝突パッケージ"
+msgstr "衝突しているパッケージ"
 
 #. conflicts
 #: gtk/rgfiltermanager.h:76
-#, fuzzy
 msgid "Replaced packages"
-msgstr "置換パッケージ"
+msgstr "置換されたパッケージ"
 
 #. replaces/obsoletes
 #: gtk/rgfiltermanager.h:77
-#, fuzzy
 msgid "Suggestions or recommendations"
-msgstr "推奨または提案パッケージ"
+msgstr "推奨または提案"
 
 #. suggests/recommends
 #: gtk/rgfiltermanager.h:78
@@ -2792,66 +2758,54 @@ msgstr "逆依存"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
-msgstr ""
+msgstr "アイコン凡例"
 
 #: gtk/rgmisc.cc:231
-#, fuzzy
 msgid "Queued for installation"
-msgstr "インストールされるパッケージ"
+msgstr "インストール指定済"
 
 #: gtk/rgmisc.cc:232
-#, fuzzy
 msgid "Queued for upgrade"
-msgstr "アップグレードされるパッケージ"
+msgstr "アップグレード指定済"
 
 #: gtk/rgmisc.cc:233
-#, fuzzy
 msgid "Queued for downgrade"
-msgstr "ダウングレードされるパッケージ"
+msgstr "ダウングレード指定済"
 
 #: gtk/rgmisc.cc:234
-#, fuzzy
 msgid "Queued for removal"
-msgstr "削除指定"
+msgstr "削除指定済"
 
 #: gtk/rgmisc.cc:235
-#, fuzzy
 msgid "Queued for removal including configuration"
-msgstr "設定を含めて削除(_P)"
+msgstr "設定を含めて削除指定済"
 
 #: gtk/rgmisc.cc:236
-#, fuzzy
 msgid "Not installed (available)"
-msgstr "未インストール"
+msgstr "未インストール(インストール可能)"
 
 #: gtk/rgmisc.cc:237
-#, fuzzy
 msgid "Not installed (locked)"
-msgstr ""
-"\n"
-"インストール済パッケージ:\n"
+msgstr "未インストール(ロックされています)"
 
 #: gtk/rgmisc.cc:239
-#, fuzzy
 msgid "Installed (update available)"
-msgstr "インストール可能"
+msgstr "インストール済(アップグレード可能)"
 
 #: gtk/rgmisc.cc:240
-#, fuzzy
 msgid "Installed (locked to the current version)"
-msgstr ""
-"全てのインストールされているパッケージを最新バージョンにアップグレードする"
+msgstr "インストール済(現バージョンにロックされています)"
 
 #: gtk/rgmisc.cc:242
-#, fuzzy
 msgid "Not installed (new in archive)"
-msgstr "未インストール (未設定)"
+msgstr "未インストール (新規パッケージ)"
 
 #: gtk/window_iconlegend.glade.h:1
 msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+"<b>以下のアイコンがパッケージの現在状態を表すために使用されています</b>"
 
 #~ msgid "_Update List"
 #~ msgstr "リストの更新(_U)"
@@ -3796,6 +3750,9 @@ msgstr ""
 #~ msgstr ""
 #~ "未保存の変更がありますが、本当に Synaptic\n"
 #~ "を終了してもよろしいですか?"
+
+#~ msgid "Components"
+#~ msgstr "コンポーネント"
 
 #~ msgid "Add Repository"
 #~ msgstr "リポジトリを追加"

@@ -85,7 +85,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    bool _blockActions;          // block signals from the action and hold buttons
    GtkToolbarStyle _toolbarStyle;
    int _interfaceLocked;
-   GdkCursor *_busyCursor;
+
    GtkTooltips *_tooltips;
 
    GtkWidget *_sview;           // scrolled window for table
@@ -225,8 +225,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // install the list of packagenames and display a changes window
    void selectToInstall(vector<string> packagenames);
 
-   // show busy cursor over main window
-   void setBusyCursor(bool flag=true);
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);

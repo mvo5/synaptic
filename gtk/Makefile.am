@@ -38,7 +38,9 @@ glade_DATA =                            \
 	window_repositories.glade \
 	window_setopt.glade  \
 	window_summary.glade \
+	window_tasks.glade \
 	dialog_download_error.glade \
+	dialog_task_descr.glade \
 	dialog_unmet.glade \
 	dialog_update_failed.glade \
 	dialog_upgrade.glade \

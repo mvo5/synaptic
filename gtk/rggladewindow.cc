@@ -35,6 +35,8 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
 {
    //std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
 
+   _busyCursor = gdk_cursor_new(GDK_WATCH);
+
    // for development
    gchar *filename = NULL;
    gchar *main_widget = NULL;
@@ -193,4 +195,18 @@ bool RGGladeWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
    gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
    
    return true;
+}
+
+void RGGladeWindow::setBusyCursor(bool flag) 
+{
+   if(flag) {
+      gdk_window_set_cursor(window()->window, _busyCursor);
+#if GTK_CHECK_VERSION(2,4,0)
+      // if we don't iterate here, the busy cursor is not shown
+      while (gtk_events_pending())
+	 gtk_main_iteration();
+#endif
+   } else {
+      gdk_window_set_cursor(window()->window, NULL);
+   }
 }

@@ -32,6 +32,7 @@ class RGTasksWin : public RGGladeWindow {
  protected:
    RGMainWindow *_mainWin;
    GtkListStore *_store;
+   GtkWidget *_taskView;
 
    static void cbButtonOkClicked(GtkWidget *self, void *data);
    static void cbButtonCancelClicked(GtkWidget *self, void *data);

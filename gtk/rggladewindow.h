@@ -39,6 +39,7 @@ using namespace std;
 class RGGladeWindow:public RGWindow {
  protected:
    GladeXML *_gladeXML;
+   GdkCursor *_busyCursor;
 
  public:
    RGGladeWindow(RGWindow *parent, string name, string main_widget = "");
@@ -46,6 +47,9 @@ class RGGladeWindow:public RGWindow {
    void skipTaskbar(bool value) {
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
    }
+
+   // show busy cursor over main window
+   void setBusyCursor(bool flag=true);
 
    // functions to set various widgets
    bool setLabel(const char *name, const char *value);

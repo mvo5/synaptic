@@ -698,7 +698,6 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    _interfaceLocked = 0;
 
    _lister->registerObserver(this);
-   _busyCursor = gdk_cursor_new(GDK_WATCH);
    _tooltips = gtk_tooltips_new();
 
    _toolbarStyle = (GtkToolbarStyle) _config->FindI("Synaptic::ToolbarState",
@@ -2933,23 +2932,28 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
    for(int i=0;i<packagenames.size();i++) {
       RPackage *newpkg = (RPackage *) me->_lister->getPackage(packagenames[i]);
       if (newpkg) {
-
-	 // actual action
-	 newpkg->setNotify(false);
-	 me->pkgInstallHelper(newpkg);
-	 newpkg->setNotify(true);
-
-	 //	 exclude.push_back(newpkg);
-	 instPkgs.push_back(newpkg);
+	 // only install the package if it is not already installed or if
+	 // it is outdated
+	 if(!(newpkg->getFlags()&RPackage::FInstalled) ||
+	     (newpkg->getFlags()&RPackage::FOutdated)) {
+	    // actual action
+	    newpkg->setNotify(false);
+	    me->pkgInstallHelper(newpkg);
+	    newpkg->setNotify(true);
+	    //exclude.push_back(newpkg);
+	    instPkgs.push_back(newpkg);
+	 }
       }
    }
 
    // ask for additional changes
+   me->setBusyCursor(true);
    if(me->askStateChange(state, exclude)) {
       me->_lister->saveUndoState(state);
       if(me->checkForFailedInst(instPkgs))
 	 me->_lister->restoreState(state);
    }
+   me->setBusyCursor(false);
    me->_lister->notifyPostChange(NULL);
    me->_lister->notifyCachePostChange();
    
@@ -2998,19 +3002,6 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
    }
 }
 
-void RGMainWindow::setBusyCursor(bool flag) 
-{
-   if(flag) {
-      gdk_window_set_cursor(window()->window, _busyCursor);
-#if GTK_CHECK_VERSION(2,4,0)
-      // if we don't iterate here, the busy cursor is not shown
-      while (gtk_events_pending())
-	 gtk_main_iteration();
-#endif
-   } else {
-      gdk_window_set_cursor(window()->window, NULL);
-   }
-}
 
 
 // vim:ts=3:sw=3:et

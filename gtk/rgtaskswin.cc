@@ -26,6 +26,7 @@
 #include "config.h"
 #include "rgtaskswin.h"
 #include "rgmainwindow.h"
+#include "rguserdialog.h"
 #include "i18n.h"
 
 enum {
@@ -46,6 +47,8 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
       me->hide();
       return;
    }
+
+   me->setBusyCursor(true);
 
    gboolean res = FALSE;
    gchar *taskname = NULL;
@@ -76,6 +79,7 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
    }
 #endif
 
+   me->setBusyCursor(false);
    me->hide();
 
    me->_mainWin->selectToInstall(packages);
@@ -93,7 +97,40 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
 {
    //cout << "cbButtonDetailsClicked(GtkWidget *self, void *data)"<<endl;
    RGTasksWin *me = (RGTasksWin*)data;
-   
+
+   me->setBusyCursor(true);
+
+   // get selected task-name
+   GtkTreeIter iter;
+   GtkTreeSelection* selection;
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_taskView));
+   if(!gtk_tree_selection_get_selected (selection,
+					(GtkTreeModel**)(&me->_store), 
+					&iter)) {
+      return;
+   }
+   gchar *str;
+   gtk_tree_model_get(GTK_TREE_MODEL(me->_store), &iter,
+		      TASK_NAME_COLUMN, &str, -1);
+
+   // ask tasksel about the selected task
+   string cmd = "/usr/bin/tasksel --task-packages " + string(str);
+   string taskDescr;
+   char buf[255];
+   FILE *f=popen(cmd.c_str(), "r");
+   while(fgets(buf, 254, f) != NULL) {
+      taskDescr += string(buf);
+   }
+
+   // display the result in a nice dialog
+   RGGladeUserDialog dia(me, "task_descr");
+   GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
+					"textview");
+   GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+   gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
+   dia.run();
+
+   me->setBusyCursor(false);
 }
 
 
@@ -145,7 +182,7 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    pclose(f);
    GtkWidget *tree;
    
-   tree = glade_xml_get_widget(_gladeXML, "treeview_tasks");
+   tree = _taskView = glade_xml_get_widget(_gladeXML, "treeview_tasks");
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
    renderer = gtk_cell_renderer_toggle_new ();
@@ -158,11 +195,13 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
                                                       NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
    renderer = gtk_cell_renderer_text_new ();
+#if 0
    column = gtk_tree_view_column_new_with_attributes ("Taskname",
 						      renderer,
 						      "text", TASK_NAME_COLUMN,
 						      NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
+#endif
    column = gtk_tree_view_column_new_with_attributes ("Description",
 						      renderer,
 						      "text", TASK_DESCR_COLUMN,

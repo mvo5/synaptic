@@ -50,7 +50,7 @@ using namespace std;
 #include "gtktagtree.h"
 
 class RGSourcesWindow;
-class RGConfigWindow;
+class RGPreferencesWindow;
 class RGFilterManagerWindow;
 class RGFilterWindow;
 class RGFindWindow;
@@ -189,7 +189,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    
    RGFilterManagerWindow *_fmanagerWin;
    RGSourcesWindow *_sourcesWin;
-   RGConfigWindow *_configWin;
+   RGPreferencesWindow *_configWin;
    RGFilterWindow *_filterWin;
    RGFindWindow *_findWin;
    RGSetOptWindow *_setOptWin;

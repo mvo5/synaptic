@@ -53,7 +53,7 @@
 #include "raptoptions.h"
 
 #include "rgrepositorywin.h"
-#include "rgconfigwindow.h"
+#include "rgpreferenceswindow.h"
 #include "rgaboutpanel.h"
 #include "rgsummarywindow.h"
 #include "rgchangeswindow.h"
@@ -397,7 +397,7 @@ void RGMainWindow::showConfigWindow(GtkWidget *self, void *data)
     RGMainWindow *win = (RGMainWindow*)data;
     
     if (win->_configWin == NULL) {
-	win->_configWin = new RGConfigWindow(win);
+	win->_configWin = new RGPreferencesWindow(win);
     }
 
     win->_configWin->show();

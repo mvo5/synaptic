@@ -24,7 +24,7 @@ glade_DATA =                            \
 	window_fetch.glade window_fetch.glade.strings \
 	window_about.glade window_about.glade.strings \
 	window_changes.glade window_changes.glade.strings \
-	window_options.glade window_options.glade.strings \
+	window_preferences.glade window_preferences.glade.strings \
 	window_disc_name.glade window_disc_name.glade.strings \
 	window_rginstall_progress.glade window_rginstall_progress.glade.strings \
 	window_rginstall_progress_msgs.glade window_rginstall_progress_msgs.glade.strings \
@@ -42,7 +42,7 @@ synaptic_SOURCES= \
 	gtkpkglist.cc\
 	rgaboutpanel.cc\
 	rgcacheprogress.cc\
-	rgconfigwindow.cc\
+	rgpreferenceswindow.cc\
 	rgfetchprogress.cc\
 	rgfiltermanager.cc\
 	rgfindwindow.cc\

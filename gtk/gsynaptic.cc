@@ -70,6 +70,7 @@ bool ShowHelp(CommandLine & CmdL)
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Refresh, Upgrade and display changes\n") <<
       _("--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n") <<
+      _("--update-at-startup  Call \"reload\" on startup\n");
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n");
       _("--add-cdrom Add a cdrom at startup\n");

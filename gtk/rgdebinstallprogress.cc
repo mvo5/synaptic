@@ -51,7 +51,7 @@ char* RGDebInstallProgress::remove_stages[NR_REMOVE_STAGES] = {
    "half-installed", 
    "config-files"};
 char* RGDebInstallProgress::remove_stages_translations[NR_REMOVE_STAGES] = {
-   N_("Prepearing for removal %s"),
+   N_("Preparing for removal %s"),
    N_("Removing %s"),
    N_("Removed %s")};
 
@@ -62,7 +62,7 @@ char *RGDebInstallProgress::purge_stages[NR_PURGE_STAGES] = {
    "config-files", 
    "not-installed"};
 char *RGDebInstallProgress::purge_stages_translations[NR_PURGE_STAGES] = { 
-   N_("Prepearing for removal %s"),
+   N_("Preparing for removal %s"),
    N_("Removing with config %s"), 
    N_("Removed %s"), 
    N_("Removed with config %s")};
@@ -353,9 +353,6 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    prepare(lister);
    setTitle(_("Applying Changes"));
 
-   // make sure that debconf is not run in the terminal
-   setenv("DEBIAN_FRONTEND","gnome",1);
-
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
    _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
@@ -393,6 +390,20 @@ void RGDebInstallProgress::updateInterface()
    int i=0;
    while (1) {
       usleep(1000); // sleep a bit so that we don't have 100% cpu
+
+#if 0
+      fd_set wfds;
+      struct timeval tv;
+      int retval;
+      FD_ZERO(&wfds);
+      FD_SET(_child_control, &wfds);
+      tv.tv_sec = 0;
+      tv.tv_usec = 1000;
+      retval = select(_child_control+1, NULL, &wfds, NULL, &tv);
+      if (retval) {
+	 printf("Data is available now.\n");
+      }
+#endif
 
       // This algorithm should be improved.
       int len = read(_childin, buf, 1);

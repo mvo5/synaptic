@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-19 12:05+0200\n"
+"POT-Creation-Date: 2004-05-19 13:31+0200\n"
 "PO-Revision-Date: 2003-11-30 0:46+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -420,7 +420,7 @@ msgid "Marked for complete removal"
 msgstr "已标记要删除的软件包"
 
 #: common/rpackage.cc:1292 common/rpackageview.cc:103
-#: gtk/window_filters.glade.h:23
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "未安装的"
 
@@ -432,7 +432,7 @@ msgstr ""
 "已安装软件包：\n"
 
 #: common/rpackage.cc:1294 common/rpackageview.cc:98
-#: gtk/window_filters.glade.h:17
+#: gtk/window_filters.glade.h:19
 msgid "Installed"
 msgstr "已安装"
 
@@ -477,7 +477,7 @@ msgstr "内部错误，非零计数"
 msgid "Name"
 msgstr "名称"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:10
+#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
 msgid "Version"
 msgstr "版本"
 
@@ -485,11 +485,12 @@ msgstr "版本"
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_preferences.glade.h:37
 #: gtk/window_filters.glade.h:9 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "软件包描述"
 
 #: common/rpackagefilter.cc:48 gtk/window_find.glade.h:4
-#: gtk/window_filters.glade.h:20 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "维护者"
 
@@ -525,14 +526,14 @@ msgid "ReverseDepends"
 msgstr "反向依赖"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:25
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:110
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
-#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:47
+#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "状态"
 
@@ -542,7 +543,7 @@ msgid "Pattern"
 msgstr "模板"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:14
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "组别"
 
@@ -687,7 +688,7 @@ msgstr "软件库里的新内容"
 msgid "Installed and obsolete"
 msgstr "已安装并可升级的软件包"
 
-#: common/rpackageview.cc:96 gtk/window_filters.glade.h:18
+#: common/rpackageview.cc:96 gtk/window_filters.glade.h:20
 msgid "Installed and upgradable"
 msgstr "已安装的和可升级的"
 
@@ -869,7 +870,6 @@ msgid "Package changes"
 msgstr "软件包变更"
 
 #: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:109
-#: gtk/window_filters.glade.h:51
 msgid "To be removed"
 msgstr "将会删除的软件包"
 
@@ -1027,7 +1027,7 @@ msgstr "安全更新"
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:293
+#: gtk/rgmainwindow.cc:293 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "没有选中任何软件包。\n"
 
@@ -1106,7 +1106,7 @@ msgstr "删除包括孤儿依赖关系"
 msgid "Hold Current Version"
 msgstr "保留当前的版本"
 
-#: gtk/rgmainwindow.cc:1149 gtk/window_filters.glade.h:40
+#: gtk/rgmainwindow.cc:1149 gtk/window_filters.glade.h:42
 msgid "Properties"
 msgstr "属性"
 
@@ -1719,13 +1719,15 @@ msgid "Documented by"
 msgstr "文档撰写"
 
 #: gtk/window_about.glade.h:8
+#, fuzzy
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
 "Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
 "\n"
 "Manual:\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>"
+"Sebastian Heinlein <sebastain.heinlein@web.de>"
 msgstr ""
 "手册页：\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
@@ -1734,7 +1736,7 @@ msgstr ""
 "指南：\n"
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
-#: gtk/window_about.glade.h:14
+#: gtk/window_about.glade.h:15
 #, fuzzy
 msgid ""
 "Original author:\n"
@@ -1762,21 +1764,21 @@ msgstr ""
 "Sebastian Heinlein <allerlei@renates-welt.de>\n"
 "Panu Matilainen <pmatilai@welho.com>Sviatoslav Sviridov <svd@lintec.minsk.by>"
 
-#: gtk/window_about.glade.h:26
+#: gtk/window_about.glade.h:27
 msgid "Package management software using apt."
 msgstr "包管理器使用 apt 技术。"
 
-#: gtk/window_about.glade.h:27
+#: gtk/window_about.glade.h:28
 msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
 msgstr "本软件是在 GNU 通用公共许可证第二版的条款下发布的。"
 
-#: gtk/window_about.glade.h:28
+#: gtk/window_about.glade.h:29
 msgid "Translated by"
 msgstr "翻译者"
 
-#: gtk/window_about.glade.h:29
+#: gtk/window_about.glade.h:30
 msgid ""
 "Visit the home page at \n"
 "http://www.nongnu.org/synaptic/"
@@ -1784,7 +1786,7 @@ msgstr ""
 "请访问主页：\n"
 "http://www.nongnu.org/synaptic/"
 
-#: gtk/window_about.glade.h:31
+#: gtk/window_about.glade.h:32
 #, fuzzy
 msgid ""
 "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
@@ -1833,7 +1835,7 @@ msgstr ""
 "Vital Khilko <dojlid@mova.org> (白俄罗斯语)\n"
 "Vitaly Lipatov <lav@altlinux.ru> (俄语)"
 
-#: gtk/window_about.glade.h:54
+#: gtk/window_about.glade.h:55
 msgid "Written by"
 msgstr "作者"
 
@@ -1844,20 +1846,22 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:7
-msgid "Search for:"
-msgstr "查找："
-
-#: gtk/window_find.glade.h:8
 msgid "Search in:"
 msgstr "搜索："
 
-#: gtk/window_find.glade.h:9
-msgid "Show only packages matching the searched terms."
-msgstr "仅显示匹配搜索条件的软件包。"
+#: gtk/window_find.glade.h:8
+#, fuzzy
+msgid "Search:"
+msgstr "搜索："
+
+#: gtk/window_find.glade.h:10
+#, fuzzy
+msgid "_Show Matching Packages Only"
+msgstr "编辑过滤器(_E)"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
-#: gtk/dialog_welcome.glade.h:1
+#: gtk/dialog_welcome.glade.h:1 gtk/window_details.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -2048,7 +2052,7 @@ msgstr ""
 msgid "Direct connection to the internet"
 msgstr "直接连接到国际互联网"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:39 gtk/window_details.glade.h:19
 msgid "Expert"
 msgstr "专家"
 
@@ -2349,6 +2353,7 @@ msgid "Conflicting Packages"
 msgstr "有冲突的软件包"
 
 #: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:73
+#: gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "依赖关系"
 
@@ -2365,124 +2370,130 @@ msgid "Excludes"
 msgstr "不包括"
 
 #: gtk/window_filters.glade.h:14
+#, fuzzy
+msgid "For Installation or Upgrade"
+msgstr "将会被安装或升级的"
+
+#: gtk/window_filters.glade.h:15
+#, fuzzy
+msgid "For Removal"
+msgstr "已标记要删除的软件包"
+
+#: gtk/window_filters.glade.h:16
 msgid "Include"
 msgstr "包括"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:17
 msgid "Include selected sections only"
 msgstr "只包括已选的组别"
 
-#: gtk/window_filters.glade.h:16 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:18 gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "包括"
 
-#: gtk/window_filters.glade.h:19
+#: gtk/window_filters.glade.h:21
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "不再需要的库软件包(需要 deborphan)"
 
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "归档中的新内容"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:24
 msgid "Not (no longer) installable"
 msgstr "不可(不再)安装"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "未安装的"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "再没有人维护的“孤儿”软件包"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "软件包名称"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:30
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr "仓库中自上次“更新”后的新软件包"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "在任何仓库里都无法获得的软件包"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:32
 msgid "Packages that have been installed and a later version is available"
 msgstr "已安装并且具有可用的新版本的软件包"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and are up to date"
 msgstr "已安装并且已更新的软件包"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been removed except their configuration files"
 msgstr "已经删除但在系统里仍残留有配置文件的软件包"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have not been installed"
 msgstr "没有安装的软件包"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:36
 msgid "Packages that will be installed or upgraded"
 msgstr "将会被安装或升级的软件包"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be removed"
 msgstr "将会被删除的软件包"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will never be upgraded"
 msgstr "永远不再升级的软件包。"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:39
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "将会维持原状不升级的软件包"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:40
 msgid "Packages with broken dependencies"
 msgstr "依赖关系有问题的软件包"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:41
 msgid "Pinned"
 msgstr "标记为永不升级的软件包"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:43 gtk/window_details.glade.h:24
 msgid "Provided Packages"
 msgstr "提供的软件包"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:44
 #, fuzzy
 msgid "Recommendations"
 msgstr "推荐的"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:45
 msgid "Replaced Packages"
 msgstr "已替换的软件包"
 
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:46
 msgid "Residual config"
 msgstr "残存配置"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:47
 msgid "Reverse Dependencies"
 msgstr "反向依赖"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:50
 #, fuzzy
 msgid "Suggestions"
 msgstr "建议"
 
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "标签"
-
-#: gtk/window_filters.glade.h:50
-msgid "To be installed or upgraded"
-msgstr "将会被安装或升级的"
 
 #: gtk/window_filters.glade.h:52
 msgid "Version Number"
@@ -2641,6 +2652,107 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#: gtk/window_details.glade.h:2
+msgid "<b>Available Versions</b>"
+msgstr "<b>最新版本</b>"
+
+#: gtk/window_details.glade.h:3
+msgid "<b>Install</b>"
+msgstr "<b>安装</b>"
+
+#: gtk/window_details.glade.h:4
+#, fuzzy
+msgid "<b>Installed Version</b>"
+msgstr "已安装的版本"
+
+#: gtk/window_details.glade.h:5
+#, fuzzy
+msgid "<b>Latest Available Version</b>"
+msgstr "<b>最新版本</b>"
+
+#: gtk/window_details.glade.h:6
+msgid "<b>Maintainer:</b>"
+msgstr "<b>维护者：</b>"
+
+#: gtk/window_details.glade.h:7
+msgid "<b>Package:</b>"
+msgstr "<b>软件包：</b>"
+
+#: gtk/window_details.glade.h:8
+msgid "<b>Priority:</b>"
+msgstr "<b>优先级：</b>"
+
+#: gtk/window_details.glade.h:9
+msgid "<b>Section:</b>"
+msgstr "<b>组别：</b>"
+
+#: gtk/window_details.glade.h:10
+msgid "<b>Status:</b>"
+msgstr "<b>状态：</b>"
+
+#: gtk/window_details.glade.h:11
+msgid "<b>Tags:</b>"
+msgstr "<b>标记：</b>"
+
+#: gtk/window_details.glade.h:12
+msgid ""
+"<b>Warning:</b> This can render your package manager unusable.\n"
+"Changes override the version selected by the package manager. "
+msgstr ""
+"<b>警告：</b>这会导致您的包管理器无法使用。\n"
+"变更覆盖了由包管理器选中的版本。"
+
+#: gtk/window_details.glade.h:14
+msgid "Common"
+msgstr "普通"
+
+#: gtk/window_details.glade.h:16
+msgid "Dependencies of the Latest Version"
+msgstr "最新版本的依赖关系"
+
+#: gtk/window_details.glade.h:18
+msgid "Download:"
+msgstr "下载："
+
+#: gtk/window_details.glade.h:20
+msgid "Installed Files"
+msgstr "已安装的文件"
+
+#: gtk/window_details.glade.h:23
+msgid "Packages Depending on this One"
+msgstr "依赖此软件包的软件包"
+
+#: gtk/window_details.glade.h:25
+#, fuzzy
+msgid "Recommended"
+msgstr "推荐的"
+
+#: gtk/window_details.glade.h:26
+msgid "Selected"
+msgstr "选中的"
+
+#: gtk/window_details.glade.h:27
+msgid "Size:"
+msgstr "大小："
+
+#: gtk/window_details.glade.h:28
+msgid "Suggested"
+msgstr "建议的"
+
+#: gtk/window_details.glade.h:29
+msgid "Suggestions and Recommendations"
+msgstr "建议和推荐"
+
+#: gtk/window_details.glade.h:30
+msgid "Version:"
+msgstr "版本："
+
+#~ msgid "Search for:"
+#~ msgstr "查找："
+
+#~ msgid "Show only packages matching the searched terms."
+#~ msgstr "仅显示匹配搜索条件的软件包。"
 
 #~ msgid "_Save Selections"
 #~ msgstr "保存选中的项目(_S)"
@@ -2925,47 +3037,8 @@ msgstr ""
 #~ "请打开一个命令行解释器(控制台)并执行“debtags update”以获取该数据库\n"
 #~ "抱歉给您带来不便，在后续版本中它将消失(欢迎提供补丁)！"
 
-#~ msgid "<b>Available Versions</b>"
-#~ msgstr "<b>最新版本</b>"
-
-#~ msgid "<b>Install</b>"
-#~ msgstr "<b>安装</b>"
-
-#, fuzzy
-#~ msgid "<b>Installed Version</b>"
-#~ msgstr "已安装的版本"
-
-#, fuzzy
-#~ msgid "<b>Latest Available Version</b>"
-#~ msgstr "<b>最新版本</b>"
-
-#~ msgid "<b>Maintainer:</b>"
-#~ msgstr "<b>维护者：</b>"
-
 #~ msgid "<b>Package Control</b>"
 #~ msgstr "<b>软件包控制</b>"
-
-#~ msgid "<b>Package:</b>"
-#~ msgstr "<b>软件包：</b>"
-
-#~ msgid "<b>Priority:</b>"
-#~ msgstr "<b>优先级：</b>"
-
-#~ msgid "<b>Section:</b>"
-#~ msgstr "<b>组别：</b>"
-
-#~ msgid "<b>Status:</b>"
-#~ msgstr "<b>状态：</b>"
-
-#~ msgid "<b>Tags:</b>"
-#~ msgstr "<b>标记：</b>"
-
-#~ msgid ""
-#~ "<b>Warning:</b> This can render your package manager unusable.\n"
-#~ "Changes override the version selected by the package manager. "
-#~ msgstr ""
-#~ "<b>警告：</b>这会导致您的包管理器无法使用。\n"
-#~ "变更覆盖了由包管理器选中的版本。"
 
 #~ msgid "Clear All _Queued Changes"
 #~ msgstr "清除全部纳入队列的变更(_Q)"
@@ -2973,20 +3046,11 @@ msgstr ""
 #~ msgid "Commit (and download if necessary) selected changes on packages"
 #~ msgstr "交付(commit)对已选中的软件包的变更，并在需要时下载软件包"
 
-#~ msgid "Common"
-#~ msgstr "普通"
-
 #~ msgid "Configure the package using the debconf configuration system"
 #~ msgstr "配置软件包使用 debconf 配置系统"
 
 #~ msgid "Deinstall the package"
 #~ msgstr "放弃安装软件包"
-
-#~ msgid "Dependencies of the Latest Version"
-#~ msgstr "最新版本的依赖关系"
-
-#~ msgid "Download:"
-#~ msgstr "下载："
 
 #~ msgid "Edit the available filters"
 #~ msgstr "编辑可用的过滤器"
@@ -3006,35 +3070,17 @@ msgstr ""
 #~ msgid "Install the latest version of the package"
 #~ msgstr "安装软件包的最新版本"
 
-#~ msgid "Installed Files"
-#~ msgstr "已安装的文件"
-
 #~ msgid "Keep the package as supplied before and forget selected changes"
 #~ msgstr "软件包保持原来提供的样子并且放弃选中的变更"
 
 #~ msgid "Mark packages for upgrade, except those with new dependencies"
 #~ msgstr "标记可升级的软件包，但不包括有新依赖关系的软件包 (apt-get upgrade)"
 
-#~ msgid "Packages Depending on this One"
-#~ msgstr "依赖此软件包的软件包"
-
 #~ msgid "Search again from the beginning"
 #~ msgstr "从头再搜索一遍"
 
-#~ msgid "Selected"
-#~ msgstr "选中的"
-
-#~ msgid "Size:"
-#~ msgstr "大小："
-
 #~ msgid "Stat_us Tree"
 #~ msgstr "依状态排列的树状视图(_U)"
-
-#~ msgid "Suggested"
-#~ msgstr "建议的"
-
-#~ msgid "Suggestions and Recommendations"
-#~ msgstr "建议和推荐"
 
 #~ msgid "Synaptic - an apt frontend"
 #~ msgstr "新立得(Synaptic) - 一个 apt 前端"
@@ -3045,9 +3091,6 @@ msgstr ""
 
 #~ msgid "Update package cache"
 #~ msgstr "更新软件包列表缓存 (apt-get update)"
-
-#~ msgid "Version:"
-#~ msgstr "版本："
 
 #~ msgid "View installed documentation of the package in a browser"
 #~ msgstr "以浏览器查看已安装软件包的文档"

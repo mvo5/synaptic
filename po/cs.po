@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-19 12:05+0200\n"
+"POT-Creation-Date: 2004-05-19 13:31+0200\n"
 "PO-Revision-Date: 2003-11-24 18:06+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -421,7 +421,7 @@ msgid "Marked for complete removal"
 msgstr "Automatické nastavení všech realizovatelných aktualizací"
 
 #: common/rpackage.cc:1292 common/rpackageview.cc:103
-#: gtk/window_filters.glade.h:23
+#: gtk/window_filters.glade.h:25
 msgid "Not installed"
 msgstr "Nenainstalované balíky"
 
@@ -431,7 +431,7 @@ msgid "Not installed (locked)"
 msgstr "Nainstalované balíky"
 
 #: common/rpackage.cc:1294 common/rpackageview.cc:98
-#: gtk/window_filters.glade.h:17
+#: gtk/window_filters.glade.h:19
 msgid "Installed"
 msgstr "Instalované balíky"
 
@@ -477,7 +477,7 @@ msgstr "Vnitřní chyba, kontrolní součet nesouhlasí"
 msgid "Name"
 msgstr "Název"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:10
+#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
 msgid "Version"
 msgstr "Verze"
 
@@ -485,11 +485,12 @@ msgstr "Verze"
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_find.glade.h:3 gtk/window_preferences.glade.h:37
 #: gtk/window_filters.glade.h:9 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Popis"
 
 #: common/rpackagefilter.cc:48 gtk/window_find.glade.h:4
-#: gtk/window_filters.glade.h:20 gtk/rgfiltermanager.h:72
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Podpora"
 
@@ -526,14 +527,14 @@ msgid "ReverseDepends"
 msgstr "Vzájemná závislost"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:25
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:27
 #: gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr ""
 
 #: common/rpackagefilter.cc:61 common/rpackageview.h:110
 #: gtk/rgfetchprogress.cc:83 gtk/window_main.glade.h:16
-#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:47
+#: gtk/window_preferences.glade.h:80 gtk/window_filters.glade.h:49
 msgid "Status"
 msgstr "Stav"
 
@@ -543,7 +544,7 @@ msgid "Pattern"
 msgstr "Vzor"
 
 #: common/rpackagefilter.cc:63 gtk/window_main.glade.h:14
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:48
 msgid "Section"
 msgstr "Sekce"
 
@@ -692,7 +693,7 @@ msgstr "Novinka ve zdroji"
 msgid "Installed and obsolete"
 msgstr "Aktualizovatelné"
 
-#: common/rpackageview.cc:96 gtk/window_filters.glade.h:18
+#: common/rpackageview.cc:96 gtk/window_filters.glade.h:20
 msgid "Installed and upgradable"
 msgstr "Aktualizovatelné"
 
@@ -884,7 +885,6 @@ msgid "Package changes"
 msgstr "Změny v instalaci"
 
 #: gtk/rgchangeswindow.cc:103 gtk/rgsummarywindow.cc:109
-#: gtk/window_filters.glade.h:51
 msgid "To be removed"
 msgstr "K odstranění"
 
@@ -1044,7 +1044,7 @@ msgstr "Zabezpečení"
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:293
+#: gtk/rgmainwindow.cc:293 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "Není vybrán žádný balíček.\n"
 
@@ -1128,7 +1128,7 @@ msgstr "Odstranit včetně křížově závislých balíků"
 msgid "Hold Current Version"
 msgstr "Zachovat současnou verzi"
 
-#: gtk/rgmainwindow.cc:1149 gtk/window_filters.glade.h:40
+#: gtk/rgmainwindow.cc:1149 gtk/window_filters.glade.h:42
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1759,13 +1759,15 @@ msgid "Documented by"
 msgstr "Zdokumentovali"
 
 #: gtk/window_about.glade.h:8
+#, fuzzy
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
 "Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
 "\n"
 "Manual:\n"
-"Sebastian Heinlein <allerlei@renates-welt.de>"
+"Sebastian Heinlein <sebastain.heinlein@web.de>"
 msgstr ""
 "Manuálové stránky:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
@@ -1774,7 +1776,7 @@ msgstr ""
 "Manuál:\n"
 "Sebastian Heinlein <allerlei@renates-welt.de>"
 
-#: gtk/window_about.glade.h:14
+#: gtk/window_about.glade.h:15
 #, fuzzy
 msgid ""
 "Original author:\n"
@@ -1803,11 +1805,11 @@ msgstr ""
 "Panu Matilainen <pmatilai@welho.com>\n"
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 
-#: gtk/window_about.glade.h:26
+#: gtk/window_about.glade.h:27
 msgid "Package management software using apt."
 msgstr "Správce balíků používá apt. "
 
-#: gtk/window_about.glade.h:27
+#: gtk/window_about.glade.h:28
 msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
@@ -1815,11 +1817,11 @@ msgstr ""
 "Tento software je licencován podle ustanovení GNU Veřejně obecné licence, "
 "verze 2"
 
-#: gtk/window_about.glade.h:28
+#: gtk/window_about.glade.h:29
 msgid "Translated by"
 msgstr "Překlady:"
 
-#: gtk/window_about.glade.h:29
+#: gtk/window_about.glade.h:30
 msgid ""
 "Visit the home page at \n"
 "http://www.nongnu.org/synaptic/"
@@ -1827,7 +1829,7 @@ msgstr ""
 "Navštivte naši domovskou stránku na \n"
 "http://www.nongnu.org/synaptic/"
 
-#: gtk/window_about.glade.h:31
+#: gtk/window_about.glade.h:32
 #, fuzzy
 msgid ""
 "Vital Khilko <dojlid@mova.org> (Belarusian)\n"
@@ -1874,7 +1876,7 @@ msgstr ""
 "Alwin Meschede <ameschede@gmx.de> (Německo)\n"
 "Liu Songhe <jackliu9999@hotmail.com> (Čína)"
 
-#: gtk/window_about.glade.h:54
+#: gtk/window_about.glade.h:55
 msgid "Written by"
 msgstr "Naprogramovali:"
 
@@ -1885,20 +1887,22 @@ msgid "*"
 msgstr "*"
 
 #: gtk/window_find.glade.h:7
-msgid "Search for:"
-msgstr "Hledat:"
-
-#: gtk/window_find.glade.h:8
 msgid "Search in:"
 msgstr "Hledat v:"
 
-#: gtk/window_find.glade.h:9
-msgid "Show only packages matching the searched terms."
-msgstr "Zobrazit pouze balíky odpovídající hledanému výrazu"
+#: gtk/window_find.glade.h:8
+#, fuzzy
+msgid "Search:"
+msgstr "Hledat v:"
+
+#: gtk/window_find.glade.h:10
+#, fuzzy
+msgid "_Show Matching Packages Only"
+msgstr "_Upravit filtry"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
-#: gtk/dialog_welcome.glade.h:1
+#: gtk/dialog_welcome.glade.h:1 gtk/window_details.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -2094,7 +2098,7 @@ msgstr ""
 msgid "Direct connection to the internet"
 msgstr "Přímé připojení k internetu"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:39 gtk/window_details.glade.h:19
 msgid "Expert"
 msgstr "Expertní režim"
 
@@ -2409,6 +2413,7 @@ msgid "Conflicting Packages"
 msgstr "Problémové balíky"
 
 #: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:73
+#: gtk/window_details.glade.h:15
 msgid "Dependencies"
 msgstr "Závislosti"
 
@@ -2425,128 +2430,134 @@ msgid "Excludes"
 msgstr "neobsahuje"
 
 #: gtk/window_filters.glade.h:14
+#, fuzzy
+msgid "For Installation or Upgrade"
+msgstr "Balíky, které budou nově nainstalovány, nebo aktualizovány"
+
+#: gtk/window_filters.glade.h:15
+#, fuzzy
+msgid "For Removal"
+msgstr "Automatické nastavení všech realizovatelných aktualizací"
+
+#: gtk/window_filters.glade.h:16
 msgid "Include"
 msgstr "Včetně"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:17
 msgid "Include selected sections only"
 msgstr "Začlenit pouze vybrané sekce"
 
-#: gtk/window_filters.glade.h:16 gtk/rgfiltermanager.h:62
+#: gtk/window_filters.glade.h:18 gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "obsahuje"
 
-#: gtk/window_filters.glade.h:19
+#: gtk/window_filters.glade.h:21
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 "Balíky knihoven které už nejsou delší dobu používané (k tomu je zapotřebí "
 "mít funkční deborphan)"
 
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:23
 msgid "New in archive"
 msgstr "Novinky v archívu"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:24
 msgid "Not (no longer) installable"
 msgstr "Nelze instalovat (není ve zdroji)"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:26
 #, fuzzy
 msgid "Not marked"
 msgstr "Nenainstalované balíky"
 
-#: gtk/window_filters.glade.h:26
+#: gtk/window_filters.glade.h:28
 msgid "Orphaned"
 msgstr "Osiřelé balíky"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "Jméno balíku"
 
-#: gtk/window_filters.glade.h:28
+#: gtk/window_filters.glade.h:30
 msgid "Packages that are new in the repository since that last \"Update\" "
 msgstr ""
 "Balíky, které byly nově přidány do zdroje od stažení poslední aktualizace"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "Balíky, které se nevyskytují v žádném ze zdrojů"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:32
 msgid "Packages that have been installed and a later version is available"
 msgstr "Balíky které jsou nainstalovené a je dostupná jejich novější verze"
 
-#: gtk/window_filters.glade.h:31
+#: gtk/window_filters.glade.h:33
 msgid "Packages that have been installed and are up to date"
 msgstr "Balíky které jsou nainstalovány a jsou aktuální"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:34
 msgid "Packages that have been removed except their configuration files"
 msgstr ""
 "Balíky, které byly odstraněny ale nadále mají v systému své konfiguráky"
 
-#: gtk/window_filters.glade.h:33
+#: gtk/window_filters.glade.h:35
 msgid "Packages that have not been installed"
 msgstr "Balíky které nešly nainstalovat"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:36
 msgid "Packages that will be installed or upgraded"
 msgstr "Balíky, které budou instalovány, nebo aktualizovány"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:37
 msgid "Packages that will be removed"
 msgstr "Balíky, které budou odstraněny"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:38
 msgid "Packages that will never be upgraded"
 msgstr "Balíky které nebudou nikdy aktualizovány"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:39
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Balíky, které budou zachovány"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:40
 msgid "Packages with broken dependencies"
 msgstr "Balíky s chybou v závislostech"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:41
 msgid "Pinned"
 msgstr "Přišpendlené"
 
-#: gtk/window_filters.glade.h:41
+#: gtk/window_filters.glade.h:43 gtk/window_details.glade.h:24
 msgid "Provided Packages"
 msgstr "Nabízí"
 
-#: gtk/window_filters.glade.h:42
+#: gtk/window_filters.glade.h:44
 #, fuzzy
 msgid "Recommendations"
 msgstr "Doporučené"
 
-#: gtk/window_filters.glade.h:43
+#: gtk/window_filters.glade.h:45
 msgid "Replaced Packages"
 msgstr "Balíky které budou nahrazeny"
 
-#: gtk/window_filters.glade.h:44
+#: gtk/window_filters.glade.h:46
 msgid "Residual config"
 msgstr "Balíky co zanechaly konfiguráky"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:47
 msgid "Reverse Dependencies"
 msgstr "Vzájemně závislé balíky"
 
-#: gtk/window_filters.glade.h:48
+#: gtk/window_filters.glade.h:50
 #, fuzzy
 msgid "Suggestions"
 msgstr "Sekce"
 
-#: gtk/window_filters.glade.h:49
+#: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "Značky"
-
-#: gtk/window_filters.glade.h:50
-msgid "To be installed or upgraded"
-msgstr "Balíky, které budou nově nainstalovány, nebo aktualizovány"
 
 #: gtk/window_filters.glade.h:52
 msgid "Version Number"
@@ -2706,6 +2717,109 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#: gtk/window_details.glade.h:2
+msgid "<b>Available Versions</b>"
+msgstr "<b>Dostupná verze</b>"
+
+#: gtk/window_details.glade.h:3
+msgid "<b>Install</b>"
+msgstr "<b>Instalovat</b>"
+
+#: gtk/window_details.glade.h:4
+#, fuzzy
+msgid "<b>Installed Version</b>"
+msgstr "Číslo nainstalované verze"
+
+#: gtk/window_details.glade.h:5
+#, fuzzy
+msgid "<b>Latest Available Version</b>"
+msgstr "<b>Dostupná verze</b>"
+
+#: gtk/window_details.glade.h:6
+msgid "<b>Maintainer:</b>"
+msgstr "<b>Vydavatel:</b>"
+
+#: gtk/window_details.glade.h:7
+msgid "<b>Package:</b>"
+msgstr "<b>Balíček:</b>"
+
+#: gtk/window_details.glade.h:8
+msgid "<b>Priority:</b>"
+msgstr "<b>Priorita:</b>"
+
+#: gtk/window_details.glade.h:9
+msgid "<b>Section:</b>"
+msgstr "<b>Sekce:</b>"
+
+#: gtk/window_details.glade.h:10
+msgid "<b>Status:</b>"
+msgstr "<b>Stav:</b>"
+
+#: gtk/window_details.glade.h:11
+msgid "<b>Tags:</b>"
+msgstr "<b>Záznamy:</b>"
+
+#: gtk/window_details.glade.h:12
+#, fuzzy
+msgid ""
+"<b>Warning:</b> This can render your package manager unusable.\n"
+"Changes override the version selected by the package manager. "
+msgstr ""
+"<b>Upozornění:</b> Tato volba může zmást váš balíčkovací manažer.\n"
+"Verze kterou zvolíte nahradí verzi vybranou manažerem balíčků."
+
+#: gtk/window_details.glade.h:14
+msgid "Common"
+msgstr "Obecné"
+
+#: gtk/window_details.glade.h:16
+msgid "Dependencies of the Latest Version"
+msgstr "Závislosti nutné pro poslední verzi"
+
+#: gtk/window_details.glade.h:18
+msgid "Download:"
+msgstr "Staženo:"
+
+#: gtk/window_details.glade.h:20
+msgid "Installed Files"
+msgstr "Nainstalované balíky"
+
+#: gtk/window_details.glade.h:23
+msgid "Packages Depending on this One"
+msgstr "Balíky závisející na tomto balíku"
+
+#: gtk/window_details.glade.h:25
+#, fuzzy
+msgid "Recommended"
+msgstr "Doporučené"
+
+#: gtk/window_details.glade.h:26
+msgid "Selected"
+msgstr "Vybrané"
+
+#: gtk/window_details.glade.h:27
+msgid "Size:"
+msgstr "Velikost:"
+
+#: gtk/window_details.glade.h:28
+#, fuzzy
+msgid "Suggested"
+msgstr "Navržené"
+
+#: gtk/window_details.glade.h:29
+msgid "Suggestions and Recommendations"
+msgstr "Navržené a doporučené:"
+
+#: gtk/window_details.glade.h:30
+msgid "Version:"
+msgstr "Verze:"
+
+#~ msgid "Search for:"
+#~ msgstr "Hledat:"
+
+#~ msgid "Show only packages matching the searched terms."
+#~ msgstr "Zobrazit pouze balíky odpovídající hledanému výrazu"
 
 #~ msgid "_Save Selections"
 #~ msgstr "_Uložit výběr"
@@ -2981,48 +3095,8 @@ msgstr ""
 #~ "Omlouváme se za tuhle \"vymoženost\", do příští verze bude určitě "
 #~ "odstraněna (případné patche jsou vítány)!"
 
-#~ msgid "<b>Available Versions</b>"
-#~ msgstr "<b>Dostupná verze</b>"
-
-#~ msgid "<b>Install</b>"
-#~ msgstr "<b>Instalovat</b>"
-
-#, fuzzy
-#~ msgid "<b>Installed Version</b>"
-#~ msgstr "Číslo nainstalované verze"
-
-#, fuzzy
-#~ msgid "<b>Latest Available Version</b>"
-#~ msgstr "<b>Dostupná verze</b>"
-
-#~ msgid "<b>Maintainer:</b>"
-#~ msgstr "<b>Vydavatel:</b>"
-
 #~ msgid "<b>Package Control</b>"
 #~ msgstr "<b>Nastavení akce pro balíček</b>"
-
-#~ msgid "<b>Package:</b>"
-#~ msgstr "<b>Balíček:</b>"
-
-#~ msgid "<b>Priority:</b>"
-#~ msgstr "<b>Priorita:</b>"
-
-#~ msgid "<b>Section:</b>"
-#~ msgstr "<b>Sekce:</b>"
-
-#~ msgid "<b>Status:</b>"
-#~ msgstr "<b>Stav:</b>"
-
-#~ msgid "<b>Tags:</b>"
-#~ msgstr "<b>Záznamy:</b>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>Warning:</b> This can render your package manager unusable.\n"
-#~ "Changes override the version selected by the package manager. "
-#~ msgstr ""
-#~ "<b>Upozornění:</b> Tato volba může zmást váš balíčkovací manažer.\n"
-#~ "Verze kterou zvolíte nahradí verzi vybranou manažerem balíčků."
 
 #~ msgid "Clear All _Queued Changes"
 #~ msgstr "_Stornovat všechny nastavené změny"
@@ -3032,20 +3106,11 @@ msgstr ""
 #~ "Spustí proces instalace (a stahování, je-li potřeba) balíků, které jsou "
 #~ "zapotřebí pro realizaci nastavených změn."
 
-#~ msgid "Common"
-#~ msgstr "Obecné"
-
 #~ msgid "Configure the package using the debconf configuration system"
 #~ msgstr "Konfigurace balíku prostřednictvím konfiguračního systému debconf"
 
 #~ msgid "Deinstall the package"
 #~ msgstr "Odebrat balík"
-
-#~ msgid "Dependencies of the Latest Version"
-#~ msgstr "Závislosti nutné pro poslední verzi"
-
-#~ msgid "Download:"
-#~ msgstr "Staženo:"
 
 #~ msgid "Edit the available filters"
 #~ msgstr "Upravit dostupné filtry"
@@ -3065,9 +3130,6 @@ msgstr ""
 #~ msgid "Install the latest version of the package"
 #~ msgstr "Instalovat poslední verzi balíku"
 
-#~ msgid "Installed Files"
-#~ msgstr "Nainstalované balíky"
-
 #~ msgid "Keep the package as supplied before and forget selected changes"
 #~ msgstr "Uchovat balík jako"
 
@@ -3076,23 +3138,11 @@ msgstr ""
 #~ "Označí všechny balíky, které lze aktualizovat, kromě těch co by mohly "
 #~ "vytvořit nové závislosti"
 
-#~ msgid "Packages Depending on this One"
-#~ msgstr "Balíky závisející na tomto balíku"
-
 #~ msgid "Search again from the beginning"
 #~ msgstr "Vyhledat znovu od začátku"
 
-#~ msgid "Selected"
-#~ msgstr "Vybrané"
-
-#~ msgid "Size:"
-#~ msgstr "Velikost:"
-
 #~ msgid "Stat_us Tree"
 #~ msgstr "Storm podle s_tavu"
-
-#~ msgid "Suggestions and Recommendations"
-#~ msgstr "Navržené a doporučené:"
 
 #~ msgid "Synaptic - an apt frontend"
 #~ msgstr "Synaptic - grafické rozhraní pro apt"
@@ -3100,9 +3150,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Up_grade All"
 #~ msgstr "Aktualizace"
-
-#~ msgid "Version:"
-#~ msgstr "Verze:"
 
 #~ msgid "View installed documentation of the package in a browser"
 #~ msgstr "Prohlížet dokumentaci"

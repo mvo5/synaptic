@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: synaptic 0.50\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-06-18 08:09+0200\n"
-"PO-Revision-Date: 2004-06-04 12:45+0200\n"
+"PO-Revision-Date: 2004-06-07 09:53+0200\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -478,7 +478,7 @@ msgstr "Instal·lat"
 
 #: common/rpackage.cc:1301 common/rpackageview.cc:98
 msgid "Installed (upgradable)"
-msgstr "Instal·lats (actualitzables)"
+msgstr "Instal·lat (actualitzable)"
 
 #: common/rpackage.cc:1302
 msgid "Installed (locked to the current version)"
@@ -1060,9 +1060,9 @@ msgid "Applying Changes"
 msgstr "S'estan aplicant els canvis"
 
 #: gtk/rgpkgdetails.cc:35
-#, fuzzy, c-format
+#, c-format
 msgid "%s Properties"
-msgstr "Propietats"
+msgstr "Propietats de «%s»"
 
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
@@ -1078,7 +1078,7 @@ msgstr "Seguretat"
 
 #: gtk/rgmainwindow.cc:165
 msgid "All"
-msgstr "Totes"
+msgstr "Tot"
 
 #: gtk/rgmainwindow.cc:357 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
@@ -1130,7 +1130,7 @@ msgstr "Marca per a eliminar"
 
 #: gtk/rgmainwindow.cc:1279
 msgid "Mark for Complete Removal"
-msgstr "Marca per a eliminació completa"
+msgstr "Marca per a eliminar completament"
 
 #: gtk/rgmainwindow.cc:1291
 msgid "Remove Including Orphaned Dependencies"
@@ -1375,11 +1375,11 @@ msgstr "Seccions"
 
 #: gtk/rgrepositorywin.cc:218
 msgid "Binary (deb)"
-msgstr ""
+msgstr "Binari (deb)"
 
 #: gtk/rgrepositorywin.cc:223
 msgid "Source (deb-src))"
-msgstr ""
+msgstr "Font (deb-src)"
 
 #: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
 #: gtk/window_repositories.glade.h:1
@@ -1573,7 +1573,7 @@ msgstr "Marca totes les actualitzacions"
 
 #: gtk/window_main.glade.h:7
 msgid "Mark for Co_mplete Removal"
-msgstr "Marca per a eliminació co_mpleta"
+msgstr "Marca per a eliminar co_mpletament"
 
 #: gtk/window_main.glade.h:8
 msgid "Mark for R_einstallation"
@@ -1585,7 +1585,7 @@ msgstr "Marca per a _instal·lar"
 
 #: gtk/window_main.glade.h:10
 msgid "Mark for _Removal"
-msgstr "Marca per a _eliminació"
+msgstr "Marca per a _eliminar"
 
 #: gtk/window_main.glade.h:11
 msgid "Mark for _Upgrade"
@@ -2127,7 +2127,7 @@ msgstr "Configuració manual del servidor intermediari"
 
 #: gtk/window_preferences.glade.h:56
 msgid "Marked for complete removal:"
-msgstr "Marcats per a eliminació completa:"
+msgstr "Marcats per a eliminar completament:"
 
 #: gtk/window_preferences.glade.h:57
 msgid "Marked for downgrade:"
@@ -2626,12 +2626,11 @@ msgstr ""
 
 #: gtk/dialog_changelog.glade.h:1
 msgid "<b>Full changelog of the latest version:</b>"
-msgstr ""
+msgstr "<b>Registre de canvis sencer de l'última versió:</b>"
 
 #: gtk/dialog_changelog.glade.h:2
-#, fuzzy
 msgid "Changelog"
-msgstr "Cancel·la"
+msgstr "Registre de canvis"
 
 #: gtk/dialog_update_failed.glade.h:1
 msgid ""
@@ -2641,6 +2640,11 @@ msgid ""
 "If available an older version of the failed index will be used. Otherwise "
 "the repository will be ignored."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">No s'ha pogut descarregar tots els "
+"fitxers d'índex</span>\n"
+"\n"
+"Si és disponible, s'utilitzarà una versió més vella de l'índex que no s'ha "
+"pogut descarregar. Si no, es descartarà el repositori."
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"

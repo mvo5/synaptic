@@ -507,6 +507,27 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
          return true;
    }
 
+   if (_status & UpstreamUpgradable) {
+      if (flags & RPackage::FOutdated) {
+	 char *s;
+	 char instVer[301];
+	 char availVer[301];
+	 strncpy(instVer, pkg->installedVersion(), 300);
+	 strncpy(availVer, pkg->availableVersion(), 300);
+	 
+	 // strip from last "-" on
+	 s = rindex(instVer,'-');
+	 if(s != NULL)
+	    *s = '\0';
+	 s = rindex(availVer,'-');
+	 if(s != NULL)
+	    *s = '\0';
+
+	 if(strcmp(instVer,availVer) != 0)
+	    return true;
+      }
+   }
+
    if (_status & NewPackage) {
       if (flags & RPackage::FNew)
          return true;

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic 0.47\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2003-11-24 18:06+0100\n"
 "Last-Translator: Keny Otter <keny@email.cz>\n"
 "Language-Team: Czech <keny@email.cz>\n"
@@ -476,21 +476,21 @@ msgstr "Vnitřní chyba, kontrolní součet nesouhlasí"
 msgid "Name"
 msgstr "Název"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Verze"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Popis"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Podpora"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Verze"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1515,7 +1515,7 @@ msgstr "Odebrat"
 msgid "Cancel"
 msgstr "Storno"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "Hledat"
 
@@ -1879,6 +1879,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Závislosti"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Popis"
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "Najít:"
@@ -1887,10 +1892,9 @@ msgstr "Najít:"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-#, fuzzy
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "Nabízí"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2542,10 +2546,6 @@ msgstr "Balíky s chybou v závislostech"
 msgid "Pinned"
 msgstr "Přišpendlené"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "Nabízí"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2704,6 +2704,12 @@ msgstr "Název balíku"
 #, fuzzy
 msgid "Version number"
 msgstr "Číslo verze"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "Nabízí"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

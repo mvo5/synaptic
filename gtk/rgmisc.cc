@@ -28,20 +28,6 @@
 #include "rgmisc.h"
 #include <stdio.h>
 
-#if 0
-#include "alert.xpm"
-#include "keepM.xpm"
-#include "brokenM.xpm"
-#include "downgradeM.xpm"
-#include "heldM.xpm"
-#include "installM.xpm"
-#include "removeM.xpm"
-#include "upgradeM.xpm"
-#include "newM.xpm"
-#include "holdM.xpm"
-#endif
-
-
 
 void RGFlushInterface()
 {

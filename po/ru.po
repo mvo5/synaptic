@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2003-12-14 11:58+0200\n"
 "Last-Translator: Kate <kate@lrn.ru>\n"
 "Language-Team:  <ru@li.org>\n"
@@ -490,21 +490,21 @@ msgstr "Внутренняя ошибка: Ненулевые счётчики"
 msgid "Name"
 msgstr "Имя"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Версия"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Описание"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Разработчик"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Версия"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1524,7 +1524,7 @@ msgstr "Удалить"
 msgid "Cancel"
 msgstr "Отменить"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "Найти"
 
@@ -1883,6 +1883,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Зависимости"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Описание "
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "Найти:"
@@ -1891,10 +1896,9 @@ msgstr "Найти:"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-#, fuzzy
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "Предоставляемые пакеты"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2537,10 +2541,6 @@ msgstr "Пакеты с нарушенными зависимостями"
 msgid "Pinned"
 msgstr "Закреплённые"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "Предоставляемые пакеты"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2701,6 +2701,12 @@ msgstr "Имя пакета"
 #, fuzzy
 msgid "Version number"
 msgstr "Номер версии"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "Предоставляемые пакеты"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
@@ -4306,9 +4312,6 @@ msgstr "Версия:"
 
 #~ msgid ":could not open display"
 #~ msgstr ":невозможно открыть дисплей"
-
-#~ msgid "Description "
-#~ msgstr "Описание "
 
 #~ msgid "<b><u>Position (use -1 to disable)</u></b>"
 #~ msgstr "<b><u>Позиция (используйте -1 чтобы не отображать)</u></b>"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -494,22 +494,22 @@ msgstr ""
 msgid "Name"
 msgstr "名稱"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-#, fuzzy
-msgid "Version"
-msgstr "    　　版本"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "套件描述"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr ""
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+#, fuzzy
+msgid "Version"
+msgstr "    　　版本"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1488,7 +1488,7 @@ msgstr "移除"
 msgid "Cancel"
 msgstr "取消"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 #, fuzzy
 msgid "Find"
 msgstr "尋找"
@@ -1812,6 +1812,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "此套件依賴的套件"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "套件描述"
+
 #: gtk/window_find.glade.h:4
 #, fuzzy
 msgid "Find:"
@@ -1821,10 +1826,10 @@ msgstr "尋找"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
 #, fuzzy
-msgid "Provided packages"
+msgid "Provided Packages"
 msgstr "尋找套件"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2465,11 +2470,6 @@ msgstr "相依關係有問題。"
 msgid "Pinned"
 msgstr "標記為永不升級的套件"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-#, fuzzy
-msgid "Provided Packages"
-msgstr "尋找套件"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2636,6 +2636,12 @@ msgstr "套件名稱"
 #, fuzzy
 msgid "Version number"
 msgstr "    　　版本"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "尋找套件"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
@@ -3955,10 +3961,6 @@ msgstr "    　　版本"
 
 #~ msgid ":could not open display"
 #~ msgstr ":無法開啟顯示"
-
-#, fuzzy
-#~ msgid "Description "
-#~ msgstr "套件描述"
 
 #~ msgid ""
 #~ "There are unsaved changes.\n"

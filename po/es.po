@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2004-05-29 16:21+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -470,21 +470,21 @@ msgstr "Error Interno, contando no-cero"
 msgid "Name"
 msgstr "Nombre"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Versión"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Descripción"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Mantenedor"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Versión"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1468,7 +1468,7 @@ msgstr "Eliminar"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "Buscar"
 
@@ -1809,6 +1809,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Dependencias"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Descripción"
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "Buscar:"
@@ -1817,9 +1822,9 @@ msgstr "Buscar:"
 msgid "Look in:"
 msgstr "Buscar en:"
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "Paquetes proporcionados"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2412,10 +2417,6 @@ msgstr "Paquetes con dependencias rotas"
 msgid "Pinned"
 msgstr "Clavados"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "Paquetes proporcionados"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 msgid "Recommendations"
@@ -2573,6 +2574,11 @@ msgstr "Nombre del paquete"
 #: gtk/rgfiltermanager.h:70
 msgid "Version number"
 msgstr "Número de versión"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+msgid "Provided packages"
+msgstr "Paquetes proporcionados"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

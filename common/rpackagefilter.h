@@ -187,7 +187,8 @@ class RStatusPackageFilter : public RPackageFilter {
       PinnedPackage = 1 << 8,   // pinned Package (never upgrade)
       OrphanedPackage = 1 << 9, // orphaned (identfied with deborphan)
       ResidualConfig = 1 << 10, // not installed but has config left
-      NotInstallable = 1 << 11  // the package is not aviailable in repository
+      NotInstallable = 1 << 11,  // the package is not aviailable in repository
+      UpstreamUpgradable = 1 << 12 // new upstream version
    };
 
    RStatusPackageFilter() : _status(~0)

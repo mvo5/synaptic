@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2003-04-11 12:50+0200\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -474,21 +474,21 @@ msgstr "Intern fejl, tællere er forskellig fra nul"
 msgid "Name"
 msgstr "Navn"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Version"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Vedligeholder"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Version"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1469,7 +1469,7 @@ msgstr "Fjern"
 msgid "Cancel"
 msgstr "Annullér"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 #, fuzzy
 msgid "Find"
 msgstr "Færdig."
@@ -1793,6 +1793,11 @@ msgstr ""
 msgid "Dependencies"
 msgstr "Afhængigheder"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Beskrivelse"
+
 #: gtk/window_find.glade.h:4
 #, fuzzy
 msgid "Find:"
@@ -1802,11 +1807,11 @@ msgstr "Færdig."
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
 #, fuzzy
-msgid "Provided packages"
-msgstr "pakke"
+msgid "Provided Packages"
+msgstr "Find pakke"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
@@ -2427,11 +2432,6 @@ msgstr "Beskadigede afhængigheder."
 msgid "Pinned"
 msgstr ""
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-#, fuzzy
-msgid "Provided Packages"
-msgstr "Find pakke"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2596,6 +2596,12 @@ msgstr "Pakkeopgradering"
 #, fuzzy
 msgid "Version number"
 msgstr "Version"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "pakke"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

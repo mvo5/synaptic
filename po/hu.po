@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2004-01-07 21:56+0100\n"
 "Last-Translator: Gabor Kelemen <kg0021@stud.unideb.hu>\n"
 "Language-Team: Hungarian\n"
@@ -484,21 +484,21 @@ msgstr "Belső hiba, nem-nulla számolások"
 msgid "Name"
 msgstr "Név"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Verzió"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Leírás"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Karbantartó"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Verzió"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1509,7 +1509,7 @@ msgstr "Törlés"
 msgid "Cancel"
 msgstr "Mégsem"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "Keresés"
 
@@ -1874,6 +1874,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Függőségek"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Leírás"
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "Keresés:"
@@ -1882,10 +1887,9 @@ msgstr "Keresés:"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-#, fuzzy
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "Rendelkezésre bocsátott csomagok"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2528,10 +2532,6 @@ msgstr "Törött függőségű csomagok"
 msgid "Pinned"
 msgstr "Tűzött"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "Rendelkezésre bocsátott csomagok"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2689,6 +2689,12 @@ msgstr "Csomag Neve"
 #, fuzzy
 msgid "Version number"
 msgstr "Verziószám"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "Rendelkezésre bocsátott csomagok"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

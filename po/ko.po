@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2004-05-09 15:23+0900\n"
 "Last-Translator: Son, Kyeong-uk <hey@gnome.or.kr>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -468,21 +468,21 @@ msgstr "내부 오류: 0이 아닌 갯수"
 msgid "Name"
 msgstr "이름"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "버젼"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "설명"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "관리자"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "버젼"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1470,7 +1470,7 @@ msgstr "지우기"
 msgid "Cancel"
 msgstr "취소"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "찾기"
 
@@ -1825,6 +1825,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "의존성"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "설명"
+
 #: gtk/window_find.glade.h:4
 #, fuzzy
 msgid "Find:"
@@ -1834,10 +1839,10 @@ msgstr "찾기"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-msgid "Provided packages"
-msgstr "제공된 패키지"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
+msgstr "제공되는 패키지"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
 #: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:1
@@ -2440,10 +2445,6 @@ msgstr "의존성이 깨진 패키지"
 msgid "Pinned"
 msgstr "고정됨"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "제공되는 패키지"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2606,6 +2607,11 @@ msgstr "패키지 이름"
 #: gtk/rgfiltermanager.h:70
 msgid "Version number"
 msgstr "버젼 번호"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+msgid "Provided packages"
+msgstr "제공된 패키지"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

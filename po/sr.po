@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2004-02-04 20:58+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -487,21 +487,21 @@ msgstr "Унутрашња грешка, ненулта повратна вре�
 msgid "Name"
 msgstr "Име"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Верзија"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Опис"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Одржавалац"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Верзија"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1531,7 +1531,7 @@ msgstr "Уклони"
 msgid "Cancel"
 msgstr "Поништи"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "Претрaживање"
 
@@ -1890,6 +1890,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Зависности"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Опис"
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "Тражи:"
@@ -1898,9 +1903,9 @@ msgstr "Тражи:"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "Пакет обезбеђује"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2529,10 +2534,6 @@ msgstr "Пакети са разбијеним зависностима"
 msgid "Pinned"
 msgstr "Издвојени"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "Пакет обезбеђује"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2693,6 +2694,11 @@ msgstr "Име пакета"
 #: gtk/rgfiltermanager.h:70
 msgid "Version number"
 msgstr "Верзија"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+msgid "Provided packages"
+msgstr "Пакет обезбеђује"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75

@@ -367,6 +367,11 @@ void RPackageViewFilter::makePresetFilters()
       registerFilter(filter);
    }
 #endif
+   filter = new RFilter();
+   filter->preset = true;
+   filter->status.setStatus(RStatusPackageFilter::UpstreamUpgradable);
+   filter->setName("Upgradable (upstream)"); _("Upgradable (upstream)");
+   registerFilter(filter);
 }
 
 

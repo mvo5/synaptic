@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2003-11-30 0:46+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -476,21 +476,21 @@ msgstr "内部错误，非零计数"
 msgid "Name"
 msgstr "名称"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "版本"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "软件包描述"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "维护者"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "版本"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1481,7 +1481,7 @@ msgstr "删除"
 msgid "Cancel"
 msgstr "取消"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "查找"
 
@@ -1839,6 +1839,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "依赖关系"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "软件包描述"
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "查找："
@@ -1847,10 +1852,9 @@ msgstr "查找："
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-#, fuzzy
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "提供的软件包"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2478,10 +2482,6 @@ msgstr "依赖关系有问题的软件包"
 msgid "Pinned"
 msgstr "标记为永不升级的软件包"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "提供的软件包"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2640,6 +2640,12 @@ msgstr "软件包名称"
 #, fuzzy
 msgid "Version number"
 msgstr "版本号"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "提供的软件包"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
@@ -4100,9 +4106,6 @@ msgstr "版本："
 
 #~ msgid ":could not open display"
 #~ msgstr "：无法开启显示"
-
-#~ msgid "Description "
-#~ msgstr "软件包描述"
 
 #~ msgid "<b><u>Position (use -1 to disable)</u></b>"
 #~ msgstr "<b><u>位置 (使用 -1 以禁用)</u></b>"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2004-01-27 14:51+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese\n"
@@ -481,21 +481,21 @@ msgstr "ナイブエラー、ゼロ以外のカウント"
 msgid "Name"
 msgstr "パッケージ名"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "バージョン"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "説明"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "メンテナ"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "バージョン"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1503,7 +1503,7 @@ msgstr "削除"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 msgid "Find"
 msgstr "検索"
 
@@ -1863,6 +1863,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "依存情報"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "説明 "
+
 #: gtk/window_find.glade.h:4
 msgid "Find:"
 msgstr "検索:"
@@ -1871,9 +1876,9 @@ msgstr "検索:"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
-msgid "Provided packages"
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
+msgid "Provided Packages"
 msgstr "提供されているパッケージ"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2494,10 +2499,6 @@ msgstr "壊れた依存関係を持つパッケージ"
 msgid "Pinned"
 msgstr "PIN指定"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-msgid "Provided Packages"
-msgstr "提供されているパッケージ"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2658,6 +2659,11 @@ msgstr "パッケージ名"
 #: gtk/rgfiltermanager.h:70
 msgid "Version number"
 msgstr "バージョン番号"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+msgid "Provided packages"
+msgstr "提供されているパッケージ"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
@@ -4167,9 +4173,6 @@ msgstr "バージョン:"
 
 #~ msgid ":could not open display"
 #~ msgstr ":display をオープンできません"
-
-#~ msgid "Description "
-#~ msgstr "説明 "
 
 #~ msgid "<b><u>Position (use -1 to disable)</u></b>"
 #~ msgstr "<b><u>位置 (-1で未使用)</u></b>"

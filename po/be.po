@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-30 15:48+0200\n"
+"POT-Creation-Date: 2004-05-30 17:45+0200\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -497,21 +497,21 @@ msgstr "Нутраная памылка, ненулявыя лічыльнікі
 msgid "Name"
 msgstr "Назва"
 
-#: common/rpackagefilter.cc:46 gtk/window_find.glade.h:9
-msgid "Version"
-msgstr "Вэрсыя"
-
-#: common/rpackagefilter.cc:47 gtk/rgmainwindow.cc:789
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:789
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_find.glade.h:3 gtk/window_filters.glade.h:10
-#: gtk/rgfiltermanager.h:71 gtk/window_details.glade.h:17
+#: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:71
+#: gtk/window_details.glade.h:17
 msgid "Description"
 msgstr "Апісаньне"
 
-#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:6
+#: common/rpackagefilter.cc:47 gtk/window_find.glade.h:6
 #: gtk/window_filters.glade.h:23 gtk/rgfiltermanager.h:72
 msgid "Maintainer"
 msgstr "Мэйнтайнэр"
+
+#: common/rpackagefilter.cc:48 gtk/window_find.glade.h:9
+msgid "Version"
+msgstr "Вэрсыя"
 
 #: common/rpackagefilter.cc:49
 msgid "Depends"
@@ -1510,7 +1510,7 @@ msgstr "Выдаліць"
 msgid "Cancel"
 msgstr "Адмяніць"
 
-#: gtk/rgfindwindow.cc:116
+#: gtk/rgfindwindow.cc:111
 #, fuzzy
 msgid "Find"
 msgstr "Ад_шукаць"
@@ -1838,6 +1838,11 @@ msgstr "*"
 msgid "Dependencies"
 msgstr "Залежнасьці"
 
+#: gtk/window_find.glade.h:3
+#, fuzzy
+msgid "Description and Name"
+msgstr "Апісаньне "
+
 #: gtk/window_find.glade.h:4
 #, fuzzy
 msgid "Find:"
@@ -1847,10 +1852,10 @@ msgstr "Ад_шукаць"
 msgid "Look in:"
 msgstr ""
 
-#. depends, predepends etc
-#: gtk/window_find.glade.h:8 gtk/rgfiltermanager.h:74
+#: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
+#: gtk/window_details.glade.h:23
 #, fuzzy
-msgid "Provided packages"
+msgid "Provided Packages"
 msgstr "Адшукаць пакет"
 
 #: gtk/window_fetch.glade.h:1 gtk/window_preferences.glade.h:2
@@ -2515,11 +2520,6 @@ msgstr "Памылковыя залежнасьці."
 msgid "Pinned"
 msgstr "Прычэплены"
 
-#: gtk/window_filters.glade.h:44 gtk/window_details.glade.h:23
-#, fuzzy
-msgid "Provided Packages"
-msgstr "Адшукаць пакет"
-
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:77
 #, fuzzy
@@ -2684,6 +2684,12 @@ msgstr "Назва пакета"
 #, fuzzy
 msgid "Version number"
 msgstr "Вэрсыя"
+
+#. depends, predepends etc
+#: gtk/rgfiltermanager.h:74
+#, fuzzy
+msgid "Provided packages"
+msgstr "Адшукаць пакет"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:75
@@ -4274,9 +4280,6 @@ msgstr "Вэрсыя"
 
 #~ msgid ":could not open display"
 #~ msgstr ":немагчыма адкрыць дысплэй"
-
-#~ msgid "Description "
-#~ msgstr "Апісаньне "
 
 #~ msgid "<b><u>Position (use -1 to disable)</u></b>"
 #~ msgstr "<b><u>Пазыцыя (выкарыстоўвайце -1 каб выключыць)</u></b>"

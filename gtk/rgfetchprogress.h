@@ -54,6 +54,9 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
 
    static void cursorChanged(GtkTreeView *treeview,
 			     gpointer user_data);
+   static void expanderActivate(GObject    *object,
+				GParamSpec *param_spec,
+				gpointer    user_data);
    bool _cursorDirty;
 
    void refreshTable(int row, bool append = false);

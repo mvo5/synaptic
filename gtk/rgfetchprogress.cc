@@ -116,8 +116,29 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    g_signal_connect(G_OBJECT(_table), "cursor-changed", 
 		    G_CALLBACK(cursorChanged), this);
 
+   // emit a signal if the user changed the cursor
+   GtkWidget *expander = glade_xml_get_widget(_gladeXML, "expander");
+   assert(expander);
+   g_signal_connect (expander, "notify::expanded",
+		     G_CALLBACK (expanderActivate), this);
+   
    skipTaskbar(true);
 }
+
+void RGFetchProgress::expanderActivate(GObject    *object,
+				       GParamSpec *param_spec,
+				       gpointer    data)
+{
+   GtkExpander *expander = GTK_EXPANDER (object);
+   RGFetchProgress *me = (RGFetchProgress*)data;
+
+   GtkWidget *win = glade_xml_get_widget(me->_gladeXML, "window_fetch");
+   if (gtk_expander_get_expanded (expander)) 
+      gtk_window_set_resizable(GTK_WINDOW(win),TRUE);
+   else 
+      gtk_window_set_resizable(GTK_WINDOW(win), FALSE);
+}
+
 
 void RGFetchProgress::cursorChanged(GtkTreeView *self, void *data)
 {

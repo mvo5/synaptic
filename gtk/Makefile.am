@@ -34,6 +34,7 @@ glade_DATA =                            \
 	window_preferences.glade \
 	dialog_quit.glade  \
 	window_rginstall_progress.glade \
+	window_rgdebinstall_progress.glade \
 	window_rginstall_progress_msgs.glade \
 	window_repositories.glade \
 	window_setopt.glade  \

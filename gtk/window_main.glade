@@ -972,60 +972,6 @@
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkOptionMenu" id="optionmenu_views">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="history">0</property>
-
-		  <child>
-		    <widget class="GtkMenu" id="menu1">
-
-		      <child>
-			<widget class="GtkMenuItem" id="view_sections">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Section</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_view_sections_activate" last_modification_time="Mon, 26 Jan 2004 23:38:27 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="view_status">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Status</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_view_status_activate" last_modification_time="Mon, 26 Jan 2004 23:38:27 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="view_alphabet">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Alphabet</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_view_alphabet_activate" last_modification_time="Mon, 26 Jan 2004 23:38:27 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkMenuItem" id="release">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Release</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_view_release_activate" last_modification_time="Mon, 26 Jan 2004 23:38:27 GMT"/>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">False</property>
-		  <property name="fill">False</property>
-		</packing>
-	      </child>
-
-	      <child>
 		<widget class="GtkScrolledWindow" id="scrolledwindow19">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
@@ -1049,6 +995,113 @@
 		<packing>
 		  <property name="padding">0</property>
 		  <property name="expand">True</property>
+		  <property name="fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkTable" id="table2">
+		  <property name="visible">True</property>
+		  <property name="n_rows">2</property>
+		  <property name="n_columns">2</property>
+		  <property name="homogeneous">True</property>
+		  <property name="row_spacing">6</property>
+		  <property name="column_spacing">6</property>
+
+		  <child>
+		    <widget class="GtkRadioButton" id="radiobutton_sections">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">_Sections</property>
+		      <property name="use_underline">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+		      <property name="draw_indicator">False</property>
+		      <signal name="toggled" handler="on_radiobutton_section_toggled" last_modification_time="Fri, 08 Oct 2004 13:16:14 GMT"/>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">0</property>
+		      <property name="right_attach">1</property>
+		      <property name="top_attach">0</property>
+		      <property name="bottom_attach">1</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkRadioButton" id="radiobutton_status">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">S_tatus</property>
+		      <property name="use_underline">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+		      <property name="draw_indicator">False</property>
+		      <property name="group">radiobutton_sections</property>
+		      <signal name="toggled" handler="on_radiobutton_status_toggled" last_modification_time="Fri, 08 Oct 2004 13:16:42 GMT"/>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">0</property>
+		      <property name="bottom_attach">1</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkRadioButton" id="radiobutton_find">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">_Search</property>
+		      <property name="use_underline">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+		      <property name="draw_indicator">False</property>
+		      <property name="group">radiobutton_sections</property>
+		      <signal name="toggled" handler="on_radiobutton_find_toggled" last_modification_time="Fri, 08 Oct 2004 13:06:49 GMT"/>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">0</property>
+		      <property name="right_attach">1</property>
+		      <property name="top_attach">1</property>
+		      <property name="bottom_attach">2</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkRadioButton" id="radiobutton_custom">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="label" translatable="yes">_Custom</property>
+		      <property name="use_underline">True</property>
+		      <property name="relief">GTK_RELIEF_NORMAL</property>
+		      <property name="focus_on_click">True</property>
+		      <property name="active">False</property>
+		      <property name="inconsistent">False</property>
+		      <property name="draw_indicator">False</property>
+		      <property name="group">radiobutton_sections</property>
+		      <signal name="toggled" handler="on_radiobutton_custom_toggled" last_modification_time="Fri, 08 Oct 2004 14:15:44 GMT"/>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">1</property>
+		      <property name="bottom_attach">2</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">False</property>
 		  <property name="fill">True</property>
 		</packing>
 	      </child>

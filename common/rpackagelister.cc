@@ -77,13 +77,14 @@ RPackageLister::RPackageLister()
    _updating = true;
    _sortMode = LIST_SORT_NAME;
 
+   // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
    _views.push_back(new RPackageViewStatus(_packages));
-   _views.push_back(new RPackageViewAlphabetic(_packages));
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);
    _views.push_back(_searchView);   
+   _views.push_back(new RPackageViewAlphabetic(_packages));
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -112,7 +113,10 @@ RPackageLister::~RPackageLister()
 
 void RPackageLister::setView(unsigned int index)
 {
-   _config->Set("Synaptic::ViewMode", index);
+   // only save this config if it is not a search
+   if(index != PACKAGE_VIEW_SEARCH)
+      _config->Set("Synaptic::ViewMode", index);
+
    if(index < _views.size())
       _selectedView = _views[index];
    else

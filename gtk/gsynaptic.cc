@@ -204,7 +204,7 @@ int main(int argc, char **argv)
    if(_config->FindB("Volatile::Upgrade-Mode",false)) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       mainWindow->cbUpgradeClicked(NULL, mainWindow);
-      mainWindow->changeView(3, true, _("Marked Changes"));
+      mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
    }
 
    if(_config->FindB("Volatile::TaskWindow",false)) {

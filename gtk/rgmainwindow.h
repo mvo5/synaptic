@@ -87,7 +87,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_treeView;
 
    // the left-side view
-   GtkWidget *_viewPopup;
    GtkWidget *_subViewList;
 
    GtkWidget *_statusL;
@@ -119,9 +118,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    GtkWidget *_findText;
    GtkWidget *_findSearchB;
-#if 0
-   GtkWidget *_editFilterB;
-#endif
+
    // package info tabs   
    GtkWidget *_pkginfo;
    GtkWidget *_vpaned;
@@ -148,6 +145,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
+   GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
    // init stuff 
    void buildInterface();
@@ -156,11 +154,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
  private:
    // display/table releated
    void refreshTable(RPackage *selectedPkg = NULL);
-#if 0
-   void changeFilter(int filter, bool sethistory = true);
-#endif
-
-   GtkWidget *createViewMenu();
    void refreshSubViewList();
 
    virtual bool close();
@@ -169,10 +162,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    };
 
    // misc
-#if 0
-   GtkWidget *createFilterMenu();
-   void refreshFilterMenu();
-#endif
    void forgetNewPackages();
 
    // package info
@@ -215,7 +204,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGMainWindow(RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
 
-   void changeView(int view, bool sethistory = true, string subView="");
+   void changeView(int view, string subView="");
 
    // install the list of packagenames and display a changes window
    void selectToInstall(vector<string> packagenames);
@@ -260,7 +249,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
                                          GtkTreeViewColumn *arg2,
                                          gpointer user_data);
 
-   static void cbChangedView(GtkWidget *self);
+   static void cbChangedView(GtkWidget *self, void *);
    static void cbChangedSubView(GtkTreeSelection *selection, gpointer data);
 
    static void cbDetailsWindow(GtkWidget *self, void *data);

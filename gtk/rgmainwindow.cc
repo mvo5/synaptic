@@ -114,13 +114,16 @@ void cbGetSelectedRows(GtkTreeModel *model,
 
 
 
-void RGMainWindow::changeView(int view, bool sethistory, string subView)
+void RGMainWindow::changeView(int view, string subView)
 {
    //cout << "RGMainWindow::changeView()" << endl;
+   if(view > N_PACKAGE_VIEWS) {
+      cerr << "changeView called with invalid view NR: " << view << endl;
+      return;
+   }
 
-   if (sethistory)
-      gtk_option_menu_set_history(GTK_OPTION_MENU(_viewPopup), view);
-
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);
+      
    RPackage *pkg = selectedPackage();
    _blockActions = TRUE;
 
@@ -1535,12 +1538,37 @@ void RGMainWindow::buildInterface()
    _cacheProgress = new RGCacheProgress(_progressBar, _statusL);
    assert(_cacheProgress);
 
-   // view stuff
-   _viewPopup = glade_xml_get_widget(_gladeXML, "optionmenu_views");
-   assert(_viewPopup);
 
-   gtk_option_menu_remove_menu(GTK_OPTION_MENU(_viewPopup));
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_viewPopup), createViewMenu());
+   //FIXME/MAYBE: create this dynmaic?!?
+   //    for (vector<string>::const_iterator I = views.begin();
+   // I != views.end(); I++) {
+   // item = gtk_radiobutton_new((char *)(*I).c_str());
+   GtkWidget *w;
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_section_toggled",
+				 (GCallback) cbChangedView, this);
+   w=_viewButtons[PACKAGE_VIEW_SECTION] = glade_xml_get_widget(_gladeXML, "radiobutton_sections");
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_SECTION));
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_status_toggled",
+				 (GCallback) cbChangedView, this);
+   w=_viewButtons[PACKAGE_VIEW_STATUS] = glade_xml_get_widget(_gladeXML, "radiobutton_status");
+
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_STATUS));
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_custom_toggled",
+				 (GCallback) cbChangedView, this);
+   w=_viewButtons[PACKAGE_VIEW_CUSTOM] = glade_xml_get_widget(_gladeXML, "radiobutton_custom");
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_CUSTOM));
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_find_toggled",
+				 (GCallback) cbChangedView, this);
+   w=_viewButtons[PACKAGE_VIEW_SEARCH] = glade_xml_get_widget(_gladeXML, "radiobutton_find");
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_SEARCH));
 
    _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
    assert(_subViewList);
@@ -1646,31 +1674,6 @@ void RGMainWindow::setStatusText(char *text)
    gtk_widget_queue_draw(_statusL);
 }
 
-GtkWidget *RGMainWindow::createViewMenu()
-{
-   GtkWidget *menu, *item;
-   vector<string> views;
-   views = _lister->getViews();
-
-   menu = gtk_menu_new();
-
-   int i = 0;
-   for (vector<string>::const_iterator I = views.begin();
-        I != views.end(); I++) {
-
-      item = gtk_menu_item_new_with_label((char *)(*I).c_str());
-      gtk_widget_show(item);
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-      gtk_object_set_data(GTK_OBJECT(item), "me", this);
-      gtk_object_set_data(GTK_OBJECT(item), "index", (void *)i++);
-      gtk_signal_connect(GTK_OBJECT(item), "activate",
-                         (GtkSignalFunc) cbChangedView, this);
-   }
-
-   return menu;
-}
-
-
 
 void RGMainWindow::saveState()
 {
@@ -1717,7 +1720,7 @@ bool RGMainWindow::restoreState()
 
    if(!_config->FindB("Volatile::Upgrade-Mode",false)) {
       int viewNr = _config->FindI("Synaptic::ViewMode", 0);
-      changeView(viewNr, true);
+      changeView(viewNr);
 
 #if GTK_CHECK_VERSION(2,4,0)
       // we auto set to "All" on startup when we have gtk2.4 (without
@@ -2216,7 +2219,7 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
       string str = me->_findWin->getFindString();
       int type = me->_findWin->getSearchType();
       int found = me->_lister->searchView()->setSearch(str,type,utf8_to_locale(str.c_str()));
-      me->changeView(4,true, str);
+      me->changeView(PACKAGE_VIEW_SEARCH, str);
 
       me->setBusyCursor(false);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
@@ -2459,12 +2462,17 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbChangedView(GtkWidget *self)
+void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
 {
-   RGMainWindow *me =
-      (RGMainWindow *) gtk_object_get_data(GTK_OBJECT(self), "me");
+   // only act on the active buttons
+   if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)))
+      return;
+
+   //   cout << "cbChangedView()"<<endl;
+
+   RGMainWindow *me = (RGMainWindow *) data; 
    int view = (int)gtk_object_get_data(GTK_OBJECT(self), "index");
-   me->changeView(view, false);
+   me->changeView(view);
 }
 
 void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,

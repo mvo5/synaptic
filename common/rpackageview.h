@@ -38,6 +38,14 @@ using namespace std;
 
 struct RFilter;
 
+enum {PACKAGE_VIEW_SECTION,
+      PACKAGE_VIEW_STATUS,
+      PACKAGE_VIEW_CUSTOM,
+      PACKAGE_VIEW_SEARCH,
+      PACKAGE_VIEW_ALPHABETIC,
+      N_PACKAGE_VIEWS
+};
+
 class RPackageView {
  protected:
 
@@ -81,7 +89,7 @@ class RPackageView {
 
 
 
-class RPackageViewSections:public RPackageView {
+class RPackageViewSections : public RPackageView {
  public:
    RPackageViewSections(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
 
@@ -186,7 +194,7 @@ class RPackageViewFilter : public RPackageView {
    virtual void clear() {clearSelection();};
 
    string getName() {
-      return _("Custom Filters");
+      return _("Custom");
    };
 
    void addPackage(RPackage *package);

@@ -48,7 +48,9 @@ public:
    RGZvtInstallProgress(RGMainWindow *main);
    ~RGZvtInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm);
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+		   				int numPackages = 0);
+
 };
 
 #endif /* HAVT_ZVT */

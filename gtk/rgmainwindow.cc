@@ -704,6 +704,10 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     RGFetchProgress *fprogress = new RGFetchProgress(me);
     fprogress->setTitle(_("Retrieving Package Files"));
 
+    // Do not let the treeview access the cache during the update.
+    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+
+
 #ifdef HAVE_ZVT
     RGZvtInstallProgress *iprogress = new RGZvtInstallProgress(me);
 #else
@@ -817,6 +821,9 @@ GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections)
   GtkTreeIter parentIter;  /* Parent iter */
   GtkTreeIter childIter;   /* Child iter  */
 
+  if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
+      parentIter;
+
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
     //cout << "saving state" << endl;
     do {
@@ -826,9 +833,9 @@ GtkTreeIter RGMainWindow::saveTableState(vector<string>& expanded_sections)
 				      &parentIter);
       if(gtk_tree_view_row_expanded(GTK_TREE_VIEW(_treeView), path)) {
 	gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
-			   NAME_COLUMN, &str, 
-			   -1);
-	expanded_sections.push_back(str);
+			   NAME_COLUMN, &str, -1);
+	if (str != NULL)
+	    expanded_sections.push_back(str);
       }
       //g_free(str);
       gtk_tree_path_free(path);
@@ -849,7 +856,7 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections,
 {
   GtkTreeIter parentIter;  /* Parent iter */
   GtkTreeIter childIter;   /* Child iter  */
-
+  
   /* restore state */
   if(gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_pkgTree), &parentIter)) {
     //cout << "restoring state" << endl;
@@ -859,9 +866,9 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections,
       path =  gtk_tree_model_get_path(GTK_TREE_MODEL(_pkgTree),
 				      &parentIter);
       gtk_tree_model_get(GTK_TREE_MODEL(_pkgTree), &parentIter, 
-			 NAME_COLUMN, &str, 
-			 -1);
-      if(find(expanded_sections.begin(), 
+			 NAME_COLUMN, &str, -1);
+      if(str != NULL &&
+	 find(expanded_sections.begin(), 
 	      expanded_sections.end(),
 	      string(str)) != expanded_sections.end())
 	gtk_tree_view_expand_row(GTK_TREE_VIEW(_treeView), path, FALSE);
@@ -1387,7 +1394,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   gtk_tree_model_get(GTK_TREE_MODEL(me->_pkgTree), &iter, 
 		     PKG_COLUMN, &pkg, -1);
   if (pkg == NULL)
-    return;    
+    return;
 
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;

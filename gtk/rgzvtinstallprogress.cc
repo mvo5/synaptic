@@ -31,6 +31,7 @@
 
 #include "rgzvtinstallprogress.h"
 #include "rgmainwindow.h"
+#include "rguserdialog.h"
 #include "rconfiguration.h"
 #include "stop.xpm"
 #include "gsynaptic.h"
@@ -168,7 +169,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 }
 
 pkgPackageManager::OrderResult 
-RGZvtInstallProgress::start(pkgPackageManager *pm)
+RGZvtInstallProgress::start(pkgPackageManager *pm, int numPackages)
 {
   //cout << "RGZvtInstallProgress::start()" << endl;
 

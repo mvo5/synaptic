@@ -54,7 +54,7 @@ void RQFiltersWindow::changeFilter(int i)
    if (!_filter)
       return;
 
-   _nameLineEdit->setText(_filter->getName());
+   _nameLineEdit->setText(_filter->getName().c_str());
 
    // Setup status tab.
    int status = _filter->status.status();
@@ -178,7 +178,7 @@ void RQFiltersWindow::insertNewFilter()
    } while (!_lister->registerFilter(filter));
    
    int index = _lister->getFilterIndex(filter);
-   _namesListBox->insertItem(filter->getName(), index);
+   _namesListBox->insertItem(filter->getName().c_str(), index);
    _namesListBox->setCurrentItem(index);
    changeFilter(index);
 }

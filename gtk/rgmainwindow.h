@@ -257,10 +257,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // file menu
    static void cbTasksClicked(GtkWidget *self, void *data);
    static void cbOpenClicked(GtkWidget *self, void *data);
-   static void cbOpenSelections(GtkWidget *file_selector, gpointer data);
    static void cbSaveClicked(GtkWidget *self, void *data);
    static void cbSaveAsClicked(GtkWidget *self, void *data);
-   static void cbSaveSelections(GtkWidget *file_selector, gpointer data);
    string selectionsFilename;
    bool saveFullState;
 

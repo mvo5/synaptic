@@ -1952,27 +1952,6 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbOpenSelections(GtkWidget *file_selector, gpointer data)
-{
-   //cout << "void RGMainWindow::doOpenSelections()" << endl;
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(data), "me");
-   const gchar *file;
-
-   file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   //cout << "selected file: " << file << endl;
-   me->selectionsFilename = file;
-
-   ifstream in(file);
-   if (!in != 0) {
-      _error->Error(_("Can't read %s"), file);
-      me->_userDialog->showErrors();
-      return;
-   }
-   me->_lister->unregisterObserver(me);
-   me->_lister->readSelections(in);
-   me->_lister->registerObserver(me);
-   me->setStatusText();
-}
 
 void RGMainWindow::cbTasksClicked(GtkWidget *self, void *data)
 {
@@ -1991,26 +1970,32 @@ void RGMainWindow::cbTasksClicked(GtkWidget *self, void *data)
 void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
 {
    //std::cout << "RGMainWindow::openClicked()" << endl;
-   //RGMainWindow *me = (RGMainWindow*)data;
+   RGMainWindow *me = (RGMainWindow*)data;
 
    GtkWidget *filesel;
-   filesel = gtk_file_selection_new(_("Open changes"));
-   g_object_set_data(G_OBJECT(filesel), "me", data);
+   filesel = gtk_file_chooser_dialog_new(_("Open changes"), 
+					 GTK_WINDOW(me->window()),
+					 GTK_FILE_CHOOSER_ACTION_OPEN,
+					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					 NULL);
+   if(gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      const char *file;
+      file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
+      me->selectionsFilename = file;
 
-   g_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
-                    "clicked", G_CALLBACK(cbOpenSelections), filesel);
-
-   g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
-                            "clicked",
-                            G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) filesel);
-
-   g_signal_connect_swapped(GTK_OBJECT
-                            (GTK_FILE_SELECTION(filesel)->cancel_button),
-                            "clicked", G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) filesel);
-
-   gtk_widget_show(filesel);
+      ifstream in(file);
+      if (!in != 0) {
+	 _error->Error(_("Can't read %s"), file);
+	 me->_userDialog->showErrors();
+	 return;
+      }
+      me->_lister->unregisterObserver(me);
+      me->_lister->readSelections(in);
+      me->_lister->registerObserver(me);
+      me->setStatusText();
+   }
+   gtk_widget_destroy(filesel);
 }
 
 void RGMainWindow::cbSaveClicked(GtkWidget *self, void *data)
@@ -2041,62 +2026,31 @@ void RGMainWindow::cbSaveClicked(GtkWidget *self, void *data)
 void RGMainWindow::cbSaveAsClicked(GtkWidget *self, void *data)
 {
    //std::cout << "RGMainWindow::saveAsClicked()" << endl;
-   //RGMainWindow *me = (RGMainWindow*)data;
+   RGMainWindow *me = (RGMainWindow*)data;
 
    GtkWidget *filesel;
-   filesel = gtk_file_selection_new(_("Save changes"));
-   g_object_set_data(G_OBJECT(filesel), "me", data);
-
-   g_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
-                    "clicked", G_CALLBACK(cbSaveSelections), filesel);
-
-   g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
-                            "clicked",
-                            G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) filesel);
-
-   g_signal_connect_swapped(GTK_OBJECT
-                            (GTK_FILE_SELECTION(filesel)->cancel_button),
-                            "clicked", G_CALLBACK(gtk_widget_destroy),
-                            (gpointer) filesel);
-
+   filesel = gtk_file_chooser_dialog_new(_("Open changes"), 
+					 GTK_WINDOW(me->window()),
+					 GTK_FILE_CHOOSER_ACTION_SAVE,
+					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					 NULL);
    GtkWidget *checkButton =
       gtk_check_button_new_with_label(_("Save full state, not only changes"));
-   gtk_box_pack_start_defaults(GTK_BOX(GTK_FILE_SELECTION(filesel)->main_vbox),
-                               checkButton);
-   g_object_set_data(G_OBJECT(filesel), "checkButton", checkButton);
-   gtk_widget_show(checkButton);
-   gtk_widget_show(filesel);
-}
+   gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(filesel), checkButton);
 
-void RGMainWindow::cbSaveSelections(GtkWidget *file_selector_button,
-                                    gpointer data)
-{
-   GtkWidget *checkButton;
-   const gchar *file;
-
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(data), "me");
-
-   file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
-   me->selectionsFilename = file;
-
-   // do we want the full state?
-   checkButton =
-      (GtkWidget *) g_object_get_data(G_OBJECT(data), "checkButton");
-   me->saveFullState =
-      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
-
-   ofstream out(file);
-   if (!out != 0) {
-      _error->Error(_("Can't write %s"), file);
-      me->_userDialog->showErrors();
-      return;
+   if(gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      const char *file;
+      file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
+      me->selectionsFilename = file;
+      me->saveFullState =
+	 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
+      // now call save for the actual saving
+      me->cbSaveClicked(self, me);
    }
-   me->_lister->unregisterObserver(me);
-   me->_lister->writeSelections(out, me->saveFullState);
-   me->_lister->registerObserver(me);
-   me->setStatusText();
+   gtk_widget_destroy(filesel);
 }
+
 
 void RGMainWindow::cbShowConfigWindow(GtkWidget *self, void *data)
 {

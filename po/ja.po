@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.52\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2004-11-02 21:03+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Project Vine <Vine@vinelinux.org>\n"
@@ -381,6 +381,35 @@ msgstr ""
 msgid "couldn't open %s for writing"
 msgstr "%s を書き込み用に開くことが出来ません"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"全ての変更が正常に適用されました。 このウインドウを閉じて下さい"
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"すべての変更を適用することができませんでした。 このバッファをスクロールしてな"
+"にが問題だったかを確認してください"
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"現在のメディア内の全てのパッケージのインストールが完了しました。次のメディア"
+"からのインストールを続行するには、このウインドウを閉じてください。"
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -705,7 +734,7 @@ msgid "Unable to correct missing packages"
 msgstr "見付からないパッケージがあります"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 #, fuzzy
 msgid ""
 "\n"
@@ -713,7 +742,7 @@ msgid ""
 msgstr "1個のパッケージが削除されます\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 #, fuzzy
 msgid ""
 "\n"
@@ -721,7 +750,7 @@ msgid ""
 msgstr "1個のパッケージがアップグレードされます\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 #, fuzzy
 msgid ""
 "\n"
@@ -731,7 +760,7 @@ msgstr ""
 "この処理は以下の変更を要求しています\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 #, fuzzy
 msgid ""
 "\n"
@@ -739,7 +768,7 @@ msgid ""
 msgstr "1個のパッケージがアップグレードされます\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 #, fuzzy
 msgid ""
 "\n"
@@ -747,7 +776,7 @@ msgid ""
 msgstr "全パッケージのアップグレード:"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 #, fuzzy
 msgid ""
 "\n"
@@ -755,28 +784,28 @@ msgid ""
 msgstr "1個のパッケージがアップグレードされます\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 #, fuzzy
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
 msgstr "パッケージインストールの撤回"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "ダウンロードディレクトリをロックできません"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "選択指定ファイル内の %u 行目が長すぎます"
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "選択指定ファイル内の %u 行目が途中で終わっています"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "マーキングの設定中..."
 
@@ -1098,32 +1127,37 @@ msgid ""
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "変更を適用しています"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "提供されているパッケージ"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "インストール"
+
+#: gtk/rgdebinstallprogress.cc:651
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "ソフトウエアパッケージのインストール、削除またはアップグレード"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 #, fuzzy
 msgid "Installing software"
 msgstr "インストール"
@@ -1157,7 +1191,7 @@ msgid "Download Size"
 msgstr "ダウンロードサイズ"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "設定を保存中にエラーが発生しました。"
 
@@ -1179,7 +1213,7 @@ msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:958
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1509,14 +1543,14 @@ msgstr "ほかのCD-ROMを追加しますか?"
 msgid "Open changes"
 msgstr "変更履歴を開く"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "%s を読むことができません"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "%s を書き込むことができません"
@@ -1527,7 +1561,7 @@ msgstr "変更だけでなく、全ての状態を保存します"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1622,15 +1656,15 @@ msgstr ""
 "パッケージファイルはローカルにキャッシュされますが、インストールは行われませ"
 "ん"
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Synaptic を終了しますか?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 msgid "Downloading package information"
 msgstr "パッケージ情報をダウンロードしています"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1638,19 +1672,19 @@ msgstr ""
 "リポジトリの新規、削除あるいはアップグレードされたパッケージをチェックしま"
 "す。"
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 msgid "Reloading package information..."
 msgstr "パッケージ情報を再読込しています..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "依存問題の修正に失敗しました"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "依存問題の修正に成功しました"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1658,15 +1692,15 @@ msgstr ""
 "システムをアップグレードすることができませんでした!\n"
 "まず破損パッケージを修復してください。"
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "アップグレード可能な全てのパッケージをアップグレード指定する..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "アップグレード可能な全てのパッケージを指定しました"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "アップグレード可能な全てのパッケージを指定することができませんでした"
 
@@ -2308,7 +2342,7 @@ msgid "translators-credits"
 msgstr "Daisuke SUZUKI <daisuke@linux.or.jp>"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2681,19 +2715,19 @@ msgstr ""
 "'ラベル'はあとで CD-ROM からインストールを行う時に、そのCD-ROMを特定するため"
 "に使用されます。"
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr "<span size=\"large\" weight=\"bold\">内部オプションの設定</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "エキスパートのみ使用してください"
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "値:"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "値:"
 
@@ -3143,38 +3177,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr "<i>実行中...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"全ての変更が正常に適用されました。 このウインドウを閉じて下さい"
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"すべての変更を適用することができませんでした。 このバッファをスクロールしてな"
-"にが問題だったかを確認してください"
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"現在のメディア内の全てのパッケージのインストールが完了しました。次のメディア"
-"からのインストールを続行するには、このウインドウを閉じてください。"
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>完了</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>処理中に閉じることはできません</i>"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2005-02-06 21:55+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -376,6 +376,33 @@ msgstr "错误：无法创建日志目录 %s"
 msgid "couldn't open %s for writing"
 msgstr "无法打开 %s 以写入"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"成功实施全部变更。您现在可以关闭窗口"
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"无法实施全部变更！请回滚至此缓冲器以查看发生了什么错误"
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"成功安装当前媒介的全部软件包。要继续使用下一个媒介安装请关闭此窗口。"
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr "已安装文件的列表仅可用于已安装的软件包"
@@ -688,7 +715,7 @@ msgid "Unable to correct missing packages"
 msgstr "无法更正缺少的软件包"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -697,7 +724,7 @@ msgstr ""
 "已删除下列重要软件包：\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -706,7 +733,7 @@ msgstr ""
 "已降级下列软件包：\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -715,7 +742,7 @@ msgstr ""
 "已完全删除下列软件包：\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -724,7 +751,7 @@ msgstr ""
 "已删除下列软件包：\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -733,7 +760,7 @@ msgstr ""
 "已升级下列软件包：\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -742,7 +769,7 @@ msgstr ""
 "已安装下列软件包：\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -750,21 +777,21 @@ msgstr ""
 "\n"
 "已重新安装下列软件包：\n"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "无法锁定下载目录"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "正在标记的文件里的行 %u 太长。"
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "正在标记的文件里的行 %u 畸形"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "正在设定标记..."
 
@@ -1083,32 +1110,36 @@ msgstr ""
 "配置文件 %s 已修改(由您或一个脚本)。一个升级版本被该软件包引入。如果您希望保"
 "留当前版本请回答“No”。您想安装此新软件包维护者版本吗？"
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "正在实施变更..."
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, c-format
 msgid "Error in package %s"
 msgstr "软件包有错误 %s"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "正在安装 %s"
+
+#: gtk/rgdebinstallprogress.cc:651
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
-msgstr ""
-"已标记的变更现在正在实施。这会花费一些时间。请稍候。"
+msgstr "已标记的变更现在正在实施。这会花费一些时间。请稍候。"
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 msgid "Installing and removing software"
 msgstr "安装和删除软件包"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr "删除软件"
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 msgid "Installing software"
 msgstr "安装软件"
 
@@ -1141,7 +1172,7 @@ msgid "Download Size"
 msgstr "下载大小"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
 
@@ -1165,8 +1196,9 @@ msgstr ""
 "布版本，直到它(该操作系统发布版本)进入默认的(操作系统)发布版本行列。"
 
 #: gtk/rgpreferenceswindow.cc:958
+#, fuzzy
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1494,14 +1526,14 @@ msgstr "您想添加其他 CD-ROM 吗？"
 msgid "Open changes"
 msgstr "打开变更方案"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
@@ -1512,7 +1544,7 @@ msgstr "保存全部状态，不仅仅是变更"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1601,33 +1633,33 @@ msgstr "正在下载软件包文件"
 msgid "The package files will be cached locally for installation."
 msgstr "这些软件包文件将在本地缓存以便安装。"
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得吗？"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 msgid "Downloading package information"
 msgstr "正在下载软件包信息"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "将校验软件库里全新、已删除或已升级的软件包"
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 msgid "Reloading package information..."
 msgstr "正在重新载入软件包信息..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "无法解决软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "已成功修正软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1635,15 +1667,15 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复毁损的软件包。"
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "正在标记全部可用的升级..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "已成功标记全部可用的升级"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "无法标记全部可用的升级！"
 
@@ -2278,7 +2310,7 @@ msgstr ""
 "Liu Songhe <jackliu9999@msn.com>"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2636,19 +2668,19 @@ msgid ""
 "packages from it later."
 msgstr "如果您想今后从该 CD-ROM 光盘安装软件包，该标签将用于标识这张光盘。"
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr "<span size=\"large\" weight=\"bold\">设置内部选项</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "仅专家才能使用此设置。"
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "值："
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "变量："
 
@@ -3082,36 +3114,11 @@ msgstr "<b>下列图标用来指代软件包的当前状态：</b>"
 msgid "<i>Running...</i>"
 msgstr "<i>正在执行...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"成功实施全部变更。您现在可以关闭窗口"
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"无法实施全部变更！请回滚至此缓冲器以查看发生了什么错误"
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"成功安装当前媒介的全部软件包。要继续使用下一个媒介安装请关闭此窗口。"
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>已完成</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>正在执行时无法关闭</i>"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2005-01-07 13:28+0100\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -379,6 +379,35 @@ msgstr "HIBA: Nem tudom létrehozni a(z) %s naplókönyvtárat"
 msgid "couldn't open %s for writing"
 msgstr "Nem tudom megnyitni %s-t írásra"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"Minden változtatás sikeresen alkalmazva. Most már bezárhatja az ablakot "
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"Nem sikerült minden változtatást alkalmazni. Az alábbiakban láthatja, mi "
+"volt a hiba "
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"Minden csomag sikeresen telepítve a jelenlegi médiumról. A telepítésnek a "
+"következő médiummal való folytatásához zárja be ezt az ablakot."
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -697,7 +726,7 @@ msgid "Unable to correct missing packages"
 msgstr "Nem lehet korrigálni a hiányzó csomagokat"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -706,7 +735,7 @@ msgstr ""
 "A következő ALAPVETŐ csomagok el lettek távolítva:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -715,7 +744,7 @@ msgstr ""
 "A következő csomagok vissza lettek fejlesztve:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -724,7 +753,7 @@ msgstr ""
 "A következő csomagok teljesen el lettek távolítva:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -733,7 +762,7 @@ msgstr ""
 "A következő csomagok el lettek távolítva:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -742,7 +771,7 @@ msgstr ""
 "A következő csomagok frissítve lettek:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -751,7 +780,7 @@ msgstr ""
 "A következő csomagok telepítve lettek:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -759,21 +788,21 @@ msgstr ""
 "\n"
 "A következő csomagok újra lettek telepítve:\n"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "Nem tudom zárolni a letöltési könyvtárat"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "A(z) %u sor túl hosszú a kiválasztás-fájlban."
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Deformált sor %u a kiválasztás-fájlban"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "Kijelölések beállítása..."
 
@@ -1096,18 +1125,23 @@ msgid ""
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "Változtatások alkalmazása"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Előkészített csomagok"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "Telepített fájlok"
+
+#: gtk/rgdebinstallprogress.cc:651
 #, fuzzy
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
@@ -1117,16 +1151,16 @@ msgstr ""
 "A kijelölt változtatások most lesznek alkalmazva. El elmake tarthat egy "
 "ideig. Kérem várjon."
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Csomagokat telepít, töröl és frissít"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 #, fuzzy
 msgid "Installing software"
 msgstr "Telepített fájlok"
@@ -1160,7 +1194,7 @@ msgid "Download Size"
 msgstr "Letöltendő méret"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "Hiba a beállítások mentése közben."
 
@@ -1182,7 +1216,7 @@ msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:958
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1518,14 +1552,14 @@ msgstr "Akar még egy CD-ROM-ot hozzáadni?"
 msgid "Open changes"
 msgstr "Változások megnyitása"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "Nem tudom olvasni: %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "Nem tudom írni: %s"
@@ -1536,7 +1570,7 @@ msgstr "Teljes állapot mentése, nem csak a változások"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1629,15 +1663,15 @@ msgstr "Csomagfájlok letöltése"
 msgid "The package files will be cached locally for installation."
 msgstr "A csomagfájlok egy helyi gyorsítótárba kerülnek a telepítéshez."
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Ki akar lépni a Synapticból?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 msgid "Downloading package information"
 msgstr "Csomagok információinak letöltése"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1645,19 +1679,19 @@ msgstr ""
 "Ellenőrizve lesz, hogy a tárolókban vannak-e új, eltávolított vagy "
 "frissített programcsomagok."
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 msgid "Reloading package information..."
 msgstr "Csomaginformációk újratöltése..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "Függőségi problémák megoldása sikertelen!"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "Függőségi problémák sikeresen megoldva"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1665,15 +1699,15 @@ msgstr ""
 "Nem tudom frissíteni a rendszert!\n"
 "Először javítsa meg a törött csomagokat."
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "Minden rendelkezésre álló frissítés kijelölése..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "Minden lehetséges frissítés sorba állítása"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "Minden rendelkezésre álló frissítés kijelölése sikertelen!"
 
@@ -2316,7 +2350,7 @@ msgid "translators-credits"
 msgstr "Kelemen Gábor <kelemeng@gnome.hu>"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2683,19 +2717,19 @@ msgstr ""
 "A lemez neve a CD-ROM azonosítására fog szolgálni, ha a későbbiekben "
 "telepíteni szeretne róla."
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr "<span size=\"large\" weight=\"bold\">Belső opció beállítása</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "Ezt csak hozzáértők használják!"
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "Érték:"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "Változó:"
 
@@ -3148,38 +3182,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr "<i>Futtatás...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"Minden változtatás sikeresen alkalmazva. Most már bezárhatja az ablakot "
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"Nem sikerült minden változtatást alkalmazni. Az alábbiakban láthatja, mi "
-"volt a hiba "
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"Minden csomag sikeresen telepítve a jelenlegi médiumról. A telepítésnek a "
-"következő médiummal való folytatásához zárja be ezt az ablakot."
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>Befejezve</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Futás közben nem zárhatja be</i>"
 

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2003-08-21 13:28+0300\n"
 "Last-Translator: Vital Khilko <dojlid@mova.org>\n"
 "Language-Team: belarusian <i18n@mova.org>\n"
@@ -395,6 +395,33 @@ msgstr "немагчыма стварыць каталёг для канфігу
 msgid "couldn't open %s for writing"
 msgstr "немагчыма адкрыць %s для запісу"
 
+#: common/rinstallprogress.cc:41
+#, fuzzy
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"Абнаўленьне завершана - зараз вы можаце закрыць гэтае вакно"
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"Абнаўленьне завершана няўдала - глядзіце часопіс усталёўкі для вызначэньня "
+"прычыны"
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr "Сьпіс усталяваных файлаў даступны толькі для усталяваных пакетаў"
@@ -722,7 +749,7 @@ msgid "Unable to correct missing packages"
 msgstr "Немагчыма выправіць адсутныя пакеты"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 #, fuzzy
 msgid ""
 "\n"
@@ -730,7 +757,7 @@ msgid ""
 msgstr "Пакеты, якія будуць выдалены"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 #, fuzzy
 msgid ""
 "\n"
@@ -738,7 +765,7 @@ msgid ""
 msgstr "Пакет будзе абноўлены."
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 #, fuzzy
 msgid ""
 "\n"
@@ -748,7 +775,7 @@ msgstr ""
 "Гэтая апэрацыя патрабуе наступныя зьмены.\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 #, fuzzy
 msgid ""
 "\n"
@@ -756,7 +783,7 @@ msgid ""
 msgstr "Пакет будзе абноўлены."
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 #, fuzzy
 msgid ""
 "\n"
@@ -764,7 +791,7 @@ msgid ""
 msgstr "пакет зьяўляецца віртуальным"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 #, fuzzy
 msgid ""
 "\n"
@@ -772,7 +799,7 @@ msgid ""
 msgstr "Пакет будзе абноўлены."
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 #, fuzzy
 msgid ""
 "\n"
@@ -781,21 +808,21 @@ msgstr ""
 "\n"
 "Усталяваны пакет:\n"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "Немагчыма заблякаваць каталёг для пампаваньня"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "Радок %u задаўгі ў файле выбару."
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, fuzzy, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Памылковы радок %u у файле выбару"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 #, fuzzy
 msgid "Setting markings..."
 msgstr "Усталёўваецца вылучэньне..."
@@ -1128,33 +1155,38 @@ msgid ""
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 #, fuzzy
 msgid "Applying Changes"
 msgstr "Выключаць вылучаныя падзелы"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Адшукаць пакет"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "Усталяваць"
+
+#: gtk/rgdebinstallprogress.cc:651
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 #, fuzzy
 msgid "Installing software"
 msgstr "Усталяваць"
@@ -1193,7 +1225,7 @@ msgid "Download Size"
 msgstr "Рэдагаваць фільтар..."
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "Адбылася памылка у часе захаваньня канфігурацыяў."
 
@@ -1215,7 +1247,7 @@ msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:958
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1549,14 +1581,14 @@ msgstr "Ці жадаеце дадаць іншы CD-ROM?"
 msgid "Open changes"
 msgstr "Адкрыць зьмены"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "Немагчыма прачытаць %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "Немагчыма запісаць %s"
@@ -1567,7 +1599,7 @@ msgstr "Захаваць поўны стан (не толькі зьмены)"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1654,54 +1686,54 @@ msgstr "Рэдагаваць фільтар..."
 msgid "The package files will be cached locally for installation."
 msgstr "Пакеты, якія будуць усталяваны ці абноўлены"
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Вы жадаеце выйсьці з Synaptic?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 #, fuzzy
 msgid "Downloading package information"
 msgstr "Выдаліць загружаныя пакеты пасьля ўсталёўкі"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "Усталяваныя й здольныя абнаўляцца"
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "Запуск dpkg-reconfigure"
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Выправіць праблемы ў залежнасьцях"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "Выправіць праблемы ў залежнасьцях"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Пакет будзе абноўлены."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Пакет будзе абноўлены."
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2390,7 +2422,7 @@ msgid "translators-credits"
 msgstr ""
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2805,20 +2837,20 @@ msgid ""
 "packages from it later."
 msgstr ""
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr ""
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr ""
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 #, fuzzy
 msgid "Value:"
 msgstr "Значэньне"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 #, fuzzy
 msgid "Variable:"
 msgstr "Даступны"
@@ -3298,37 +3330,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr ""
 
-#: gtk/rgterminstallprogress.cc:82
-#, fuzzy
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"Абнаўленьне завершана - зараз вы можаце закрыць гэтае вакно"
-
-#: gtk/rgterminstallprogress.cc:83
-#, fuzzy
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"Абнаўленьне завершана няўдала - глядзіце часопіс усталёўкі для вызначэньня "
-"прычыны"
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr ""
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr ""
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2005-02-02 22:40+0200\n"
 "Last-Translator: Morten Brix Pedersen <morten@wtf.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -376,6 +376,35 @@ msgstr "FEJL: kunne ikke oprette logmappe %s"
 msgid "couldn't open %s for writing"
 msgstr "kunne ikke åbne %s for skrivning"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"Alle ændringer blev anvendt med succes. Du kan lukke vinduet nu "
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"Alle ændringer blev ikke anvendt! Kør op og ned i dette vinduer, for at se "
+"hvad der gik galt "
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"Installerede alle pakker på det nuværende medie korrekt. For at fortsætte "
+"installationen med det næste medie, luk dette vinduet."
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -692,7 +721,7 @@ msgid "Unable to correct missing packages"
 msgstr "Kune ikke rette manglende pakker"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -701,7 +730,7 @@ msgstr ""
 "De følgende ESSENTIELLE pakker er blevet fjernet:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -710,7 +739,7 @@ msgstr ""
 "De følgende pakker er blevet nedgraderet:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -719,7 +748,7 @@ msgstr ""
 "De følgende pakker er fjernet fuldstændigt:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -728,7 +757,7 @@ msgstr ""
 "De følgende pakker er blevet fjernet:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -737,7 +766,7 @@ msgstr ""
 "De følgende pakker er blevet opgraderet:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -746,7 +775,7 @@ msgstr ""
 "Installerede de følgende pakker:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -755,21 +784,21 @@ msgstr ""
 "Geninstallerede de følgende pakker:\n"
 "\n"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "Kan ikke låse nedhentningskataloget"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Linje %u for lang i markeringsfil."
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Forkert formatteret linje %u i markeringsfil"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "Sætter markeringer..."
 
@@ -1094,32 +1123,36 @@ msgstr ""
 "version følger med denne pakker. Hvis du vil beholde din nuværende version, "
 "svar da 'Nej'. Vil du installere den nye version? "
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "Anvender ændringer"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, c-format
 msgid "Error in package %s"
 msgstr "Fejl i pakke %s"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "Installerer %s"
+
+#: gtk/rgdebinstallprogress.cc:651
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
-msgstr ""
-"De markerede ændringer anvendes nu. Dette kan tage noget tid. Vent."
+msgstr "De markerede ændringer anvendes nu. Dette kan tage noget tid. Vent."
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 msgid "Installing and removing software"
 msgstr "Installerer og fjerner software"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr "Fjerner software"
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 msgid "Installing software"
 msgstr "Installerer software"
 
@@ -1152,7 +1185,7 @@ msgid "Download Size"
 msgstr "Download størrelse"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "En fejl skete ved gemning af konfigurationer."
 
@@ -1172,24 +1205,26 @@ msgid ""
 "distribution."
 msgstr ""
 "Foretræk pakke versioner fra den valgte distribution når der opgraderes "
-"pakker. Hvis du manuelt påtvinger en version fra en anden distribution, "
-"vil pakke versionen følge den distribution indtil den træder ind i "
-"standard distributionen."
+"pakker. Hvis du manuelt påtvinger en version fra en anden distribution, vil "
+"pakke versionen følge den distribution indtil den træder ind i standard "
+"distributionen."
 
 #: gtk/rgpreferenceswindow.cc:958
+#, fuzzy
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
-"Opgradér aldrig til en ny version automatisk. Vær _meget_ forsigtig med denne "
-"indstilling, eftersom du ikke vil få sikkerhedsopdateringer automatisk! Hvis "
-"du manuelt påtvinger en version, vil pakke versionen følge den valgte "
-"distribution."
+"Opgradér aldrig til en ny version automatisk. Vær _meget_ forsigtig med "
+"denne indstilling, eftersom du ikke vil få sikkerhedsopdateringer "
+"automatisk! Hvis du manuelt påtvinger en version, vil pakke versionen følge "
+"den valgte distribution."
 
 #: gtk/rgpreferenceswindow.cc:966
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
-msgstr "Lad synaptic vælge den bedste version til dig. Brug denne hvis usikker."
+msgstr ""
+"Lad synaptic vælge den bedste version til dig. Brug denne hvis usikker."
 
 #: gtk/rgpreferenceswindow.cc:1003
 msgid "Visible"
@@ -1510,14 +1545,14 @@ msgstr "Vil du tilføje en anden CD-ROM?"
 msgid "Open changes"
 msgstr "Åbn ændringer"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "Kunne ikke læse %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "Kunne ikke skrive %s"
@@ -1527,8 +1562,9 @@ msgid "Save full state, not only changes"
 msgstr "Gem fuld tilstand, ikke kun ændringer"
 
 #: gtk/rgmainwindow.cc:2117
+#, fuzzy
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1624,15 +1660,15 @@ msgstr "Henter pakkefiler"
 msgid "The package files will be cached locally for installation."
 msgstr "Pakkefilerne vil kun blive hentet lokalt til installation."
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Vil du afslutte Synaptic?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 msgid "Downloading package information"
 msgstr "Henter pakkeoplysninger"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1640,19 +1676,19 @@ msgstr ""
 "Arkiverne vil blive tjekket for nye, fjernede eller opgraderede "
 "softwarepakker."
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 msgid "Reloading package information..."
 msgstr "Genindlæser pakkeoplysninger..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "Kunne ikke løse afhængighedsproblemer!"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "Afhængighedsproblemer løst korrekt"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1660,15 +1696,15 @@ msgstr ""
 "Kunne ikke opgradere systemet!\n"
 "Ret fejl på ødelagte pakker først."
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "Markerer alle tilgængelige opgraderinger..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "Markerede alle tilgængelige opgraderinger med succes"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "Kunne ikke markere alle tilgængelige opgraderinger!"
 
@@ -2313,7 +2349,7 @@ msgid "translators-credits"
 msgstr "Morten Brix Pedersen <morten@wtf.dk>"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2676,19 +2712,19 @@ msgstr ""
 "Mærket vil blive brugt til at identificere CD-ROM'en, hvis du vil installere "
 "pakker fra den senere."
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr "<span size=\"large\" weight=\"bold\">Sæt en intern indstilling</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "Kun eksperter bør bruge dette."
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "Værdi:"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "Variabel:"
 
@@ -3084,10 +3120,11 @@ msgid ""
 msgstr ""
 "<big><b>Kunne ikke hente alle arkiv indeksfiler</b></big>\n"
 "\n"
-"Det kan være at arkivet ikke længere er tilgængeligt, eller det ikke "
-"kunne kontaktes pga. netværksproblemer. Hvis muligt vil en ældre version "
-"af indeksfilen blive brugt. Ellers vil arkivet blive ignoreret. Tjek din "
-"netværksforbindelse og om den korrekte adresse bliver brugt i indstillingerne."
+"Det kan være at arkivet ikke længere er tilgængeligt, eller det ikke kunne "
+"kontaktes pga. netværksproblemer. Hvis muligt vil en ældre version af "
+"indeksfilen blive brugt. Ellers vil arkivet blive ignoreret. Tjek din "
+"netværksforbindelse og om den korrekte adresse bliver brugt i "
+"indstillingerne."
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"
@@ -3137,38 +3174,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr "<i>Kører...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"Alle ændringer blev anvendt med succes. Du kan lukke vinduet nu "
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"Alle ændringer blev ikke anvendt! Kør op og ned i dette vinduer, for at se "
-"hvad der gik galt "
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"Installerede alle pakker på det nuværende medie korrekt. For at fortsætte "
-"installationen med det næste medie, luk dette vinduet."
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>Færdig</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Kan ikke lukke mens kørende</li>"
 
@@ -3186,8 +3196,8 @@ msgstr ""
 "\n"
 "Denne version af pakken som du vil installere, er muligvis ikke længere "
 "tilgængelig i arkivet. Eller der kan være et problem med kilden af pakken. "
-"Genindlæs pakkelisten og tjek kilden for pakker (f.eks. CD eller netværks"
-"forbindelse)."
+"Genindlæs pakkelisten og tjek kilden for pakker (f.eks. CD eller "
+"netværksforbindelse)."
 
 #: gtk/dialog_update_outdated.glade.h:1
 msgid ""

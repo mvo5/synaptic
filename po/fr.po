@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.53\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2004-08-11 16:24+0200\n"
 "Last-Translator: Julien Louis <leonptitlouis@wanadoo.fr>\n"
 "Language-Team: Frend <debian-l10n-french@lists.debian.org>\n"
@@ -380,6 +380,36 @@ msgstr "Erreur : impossible de créer le dossier de configuration %s"
 msgid "couldn't open %s for writing"
 msgstr "Impossible d'ouvrir %s en écriture"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"Changements appliqués avec succès - Vous pouvez maintenant fermer cette "
+"fenêtre"
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"Échec lors de l'application des changements - Faites défiler la fenêtre pour "
+"trouver l'erreur."
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"Les paquets du média actuel ont été correctement installés. Pour continuer "
+"l'installation avec le média suivant, fermez cette fenêtre."
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -711,7 +741,7 @@ msgid "Unable to correct missing packages"
 msgstr "Impossible d'ignorer les paquets manquants"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 #, fuzzy
 msgid ""
 "\n"
@@ -719,7 +749,7 @@ msgid ""
 msgstr "%d paquet mis à jour\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 #, fuzzy
 msgid ""
 "\n"
@@ -727,7 +757,7 @@ msgid ""
 msgstr "%d paquet mis à jour\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 #, fuzzy
 msgid ""
 "\n"
@@ -735,7 +765,7 @@ msgid ""
 msgstr "%d paquet mis à jour\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 #, fuzzy
 msgid ""
 "\n"
@@ -743,7 +773,7 @@ msgid ""
 msgstr "%d paquet mis à jour\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 #, fuzzy
 msgid ""
 "\n"
@@ -751,7 +781,7 @@ msgid ""
 msgstr "Metttre à jour les paquets :"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 #, fuzzy
 msgid ""
 "\n"
@@ -759,28 +789,28 @@ msgid ""
 msgstr "%d paquet mis à jour\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 #, fuzzy
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
 msgstr "Désintaller le paquet"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "Impossible de verrouiller le dossier de téléchargement"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Ligne %u trop longue dans le fichier de sélection."
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Ligne %u incorrecte dans le fichier de sélection"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "Définition des sélections..."
 
@@ -1114,32 +1144,37 @@ msgid ""
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "Application des changements en cours"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Paquets fournis"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "Installer"
+
+#: gtk/rgdebinstallprogress.cc:651
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Installer, désinstaller et mettre à jour les paquets de logiciels"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 msgid "Removing software"
 msgstr ""
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 #, fuzzy
 msgid "Installing software"
 msgstr "Installer"
@@ -1175,7 +1210,7 @@ msgid "Download Size"
 msgstr "Téléchargement des fichiers"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "Problème durant la sauvegarde de la configuration."
 
@@ -1197,7 +1232,7 @@ msgstr ""
 
 #: gtk/rgpreferenceswindow.cc:958
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1527,14 +1562,14 @@ msgstr "Souhaitez-vous ajouter un autre cédérom ?"
 msgid "Open changes"
 msgstr "Ouvrir le journal des modifications"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "Impossible de lire %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "Impossible d'écrire %s"
@@ -1545,7 +1580,7 @@ msgstr "Enregistrer l'état complet, pas seulement les changements"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1642,36 +1677,36 @@ msgstr "Téléchargement des fichiers en cours..."
 msgid "The package files will be cached locally for installation."
 msgstr "Les paquets seront seulement téléchargés mais ne seront pas installés"
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Souhaitez-vous quitter Synaptic ?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 #, fuzzy
 msgid "Downloading package information"
 msgstr "Télécharger uniquement les paquets"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "Installer, désinstaller et mettre à jour les paquets de logiciels"
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "Démarrage de l'outil de configuration des paquets..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "Impossible de corriger les problèmes de dépendance"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "Les problèmes de dépendance ont été corrigés avec succès"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1679,15 +1714,15 @@ msgstr ""
 "Impossible de mettre à jour le système.\n"
 "Corrigez d'abord les paquets cassés."
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "Sélectionner l'ensemble des mises à jour disponibles..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "Les mises à jour disponibles ont été correctement sélectionnées"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "Échec de la sélection des mises à jour disponibles"
 
@@ -2336,7 +2371,7 @@ msgid "translators-credits"
 msgstr "Remerciements aux traducteurs"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2710,19 +2745,19 @@ msgstr ""
 "Le nom sera utilisé pour identifier le cédérom si vous voudrez installer des "
 "paquets à partir de celui-ci."
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr "<span size=\"large\" weight=\"bold\">Définir une option interne</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "Réservé uniquement aux experts."
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "Valeur :"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "Variable :"
 
@@ -3181,39 +3216,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr "<i>Fonctionnement en cours...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"Changements appliqués avec succès - Vous pouvez maintenant fermer cette "
-"fenêtre"
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"Échec lors de l'application des changements - Faites défiler la fenêtre pour "
-"trouver l'erreur."
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"Les paquets du média actuel ont été correctement installés. Pour continuer "
-"l'installation avec le média suivant, fermez cette fenêtre."
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>Terminé</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Cette fenêtre ne peut pas être fermée pendant l'installation</i>"
 

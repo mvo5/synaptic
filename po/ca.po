@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-01 15:27+0100\n"
+"POT-Creation-Date: 2005-02-06 21:14+0100\n"
 "PO-Revision-Date: 2005-01-27 00:29+0100\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
@@ -383,6 +383,35 @@ msgstr "ERROR: no s'ha pogut crear el directori de registres %s"
 msgid "couldn't open %s for writing"
 msgstr "no s'ha pogut obrir %s per a escriptura"
 
+#: common/rinstallprogress.cc:41
+msgid ""
+"\n"
+"Successfully applied all changes. You can close the window now "
+msgstr ""
+"\n"
+"S'han aplicat tots els canvis amb èxit. Ara podeu tancar la finestra."
+
+#: common/rinstallprogress.cc:42
+#, fuzzy
+msgid ""
+"\n"
+"Failed to apply all changes! Scroll in the terminal buffer to see what went "
+"wrong "
+msgstr ""
+"\n"
+"No s'han pogut aplicar tots els canvis! Desplaceu-vos per aquest búfer per a "
+"veure què ha anat malament."
+
+#: common/rinstallprogress.cc:44
+msgid ""
+"\n"
+"Successfully installed all packages of the current medium. To continue the "
+"installation with the next medium close this window."
+msgstr ""
+"\n"
+"S'han instal·lat tots els paquets del medi actual amb èxit. Per a continuar "
+"la instal·lació amb el següent medi tanqueu aquesta finestra."
+
 #: common/rpackage.cc:197
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
@@ -709,7 +738,7 @@ msgid "Unable to correct missing packages"
 msgstr "No s'han pogut corregir els paquets que falten"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: common/rpackagelister.cc:1565
+#: common/rpackagelister.cc:1561
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -718,7 +747,7 @@ msgstr ""
 "S'han eliminat els paquets ESSENCIALS següents:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1574
+#: common/rpackagelister.cc:1570
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -727,7 +756,7 @@ msgstr ""
 "S'han desactualitzat els paquets següents:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1583
+#: common/rpackagelister.cc:1579
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -736,7 +765,7 @@ msgstr ""
 "S'han eliminat completament els paquets següents:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: common/rpackagelister.cc:1592
+#: common/rpackagelister.cc:1588
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -745,7 +774,7 @@ msgstr ""
 "S'han eliminat els paquets següents:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: common/rpackagelister.cc:1601
+#: common/rpackagelister.cc:1597
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -754,7 +783,7 @@ msgstr ""
 "S'han actualitzat els paquets següents:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: common/rpackagelister.cc:1612
+#: common/rpackagelister.cc:1608
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -763,7 +792,7 @@ msgstr ""
 "S'han instal·lat els paquets següents:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: common/rpackagelister.cc:1622
+#: common/rpackagelister.cc:1618
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -771,21 +800,21 @@ msgstr ""
 "\n"
 "S'han reinstal·lat els paquets següents:\n"
 
-#: common/rpackagelister.cc:1639
+#: common/rpackagelister.cc:1635
 msgid "Unable to lock the download directory"
 msgstr "No s'ha pogut blocar el directori de descàrrega"
 
-#: common/rpackagelister.cc:1717
+#: common/rpackagelister.cc:1713
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "La línia %u és massa llarga en el fitxer de marques."
 
-#: common/rpackagelister.cc:1731 common/rpackagelister.cc:1735
+#: common/rpackagelister.cc:1727 common/rpackagelister.cc:1731
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "La línia %u és malformada en el fitxer de marques"
 
-#: common/rpackagelister.cc:1747
+#: common/rpackagelister.cc:1743
 msgid "Setting markings..."
 msgstr "S'estan establint les marques..."
 
@@ -1117,18 +1146,23 @@ msgstr ""
 "vostra versió actual, dieu «No». Voleu instal·lar la versió del mantenidor "
 "del paquet nou? "
 
-#: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
-#: gtk/rgterminstallprogress.cc:168
+#: gtk/rgdebinstallprogress.cc:408 gtk/rginstallprogress.cc:284
+#: gtk/rgterminstallprogress.cc:144
 msgid "Applying Changes"
 msgstr "S'estan aplicant els canvis"
 
 #. error from dpkg
-#: gtk/rgdebinstallprogress.cc:437
+#: gtk/rgdebinstallprogress.cc:485
 #, c-format
 msgid "Error in package %s"
 msgstr "S'ha trobat un error al paquet %s"
 
-#: gtk/rgdebinstallprogress.cc:582
+#: gtk/rgdebinstallprogress.cc:626
+#, fuzzy
+msgid "Installion finished"
+msgstr "S'està instal·lant %s"
+
+#: gtk/rgdebinstallprogress.cc:651
 #, fuzzy
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
@@ -1138,17 +1172,17 @@ msgstr ""
 "Ja s'han aplicat els canvis marcats. Això pot trigar un temps. Si us plau, "
 "espereu."
 
-#: gtk/rgdebinstallprogress.cc:587
+#: gtk/rgdebinstallprogress.cc:656
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Instal·la, elimina i actualitza paquets de programari"
 
-#: gtk/rgdebinstallprogress.cc:589
+#: gtk/rgdebinstallprogress.cc:658
 #, fuzzy
 msgid "Removing software"
 msgstr "S'està eliminant %s"
 
-#: gtk/rgdebinstallprogress.cc:591
+#: gtk/rgdebinstallprogress.cc:660
 #, fuzzy
 msgid "Installing software"
 msgstr "S'està instal·lant %s"
@@ -1182,7 +1216,7 @@ msgid "Download Size"
 msgstr "Mida de la descàrrega"
 
 #: gtk/rgpreferenceswindow.cc:377 gtk/rgmainwindow.cc:1651
-#: gtk/rgterminstallprogress.cc:99
+#: gtk/rgterminstallprogress.cc:92
 msgid "An error occurred while saving configurations."
 msgstr "S'ha produït un error mentre es desaven les configuracions."
 
@@ -1207,8 +1241,9 @@ msgstr ""
 "distribució principal."
 
 #: gtk/rgpreferenceswindow.cc:958
+#, fuzzy
 msgid ""
-"Never upgrade to a new version automatically. Be _very_ carefull with this "
+"Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
@@ -1548,14 +1583,14 @@ msgstr "Voleu afegir un altre CD-ROM"
 msgid "Open changes"
 msgstr "Obre els canvis"
 
-#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2640 gtk/rgmainwindow.cc:2724
-#: gtk/rgmainwindow.cc:2887
+#: gtk/rgmainwindow.cc:1975 gtk/rgmainwindow.cc:2645 gtk/rgmainwindow.cc:2729
+#: gtk/rgmainwindow.cc:2892
 #, c-format
 msgid "Can't read %s"
 msgstr "No es pot llegir %s"
 
-#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2694
-#: gtk/rgmainwindow.cc:2864
+#: gtk/rgmainwindow.cc:1999 gtk/rgmainwindow.cc:2549 gtk/rgmainwindow.cc:2699
+#: gtk/rgmainwindow.cc:2869
 #, c-format
 msgid "Can't write %s"
 msgstr "No es pot escriure %s"
@@ -1566,7 +1601,7 @@ msgstr "Desa l'estat sencer, no només els canvis"
 
 #: gtk/rgmainwindow.cc:2117
 msgid ""
-"<big><b>Building repoitory dialog</b></big>\n"
+"<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
@@ -1661,15 +1696,15 @@ msgid "The package files will be cached locally for installation."
 msgstr ""
 "Els fitxers de paquets s'emmagatzemaran localment per a la instal·lació."
 
-#: gtk/rgmainwindow.cc:2623
+#: gtk/rgmainwindow.cc:2628
 msgid "Do you want to quit Synaptic?"
 msgstr "Voleu sortir de Synaptic?"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2684
 msgid "Downloading package information"
 msgstr "S'esta descarregant la informació dels paquets"
 
-#: gtk/rgmainwindow.cc:2680
+#: gtk/rgmainwindow.cc:2685
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1677,19 +1712,19 @@ msgstr ""
 "Es comprovaran els repositoris per a paquets de programari nous, eliminats o "
 "actualitzats."
 
-#: gtk/rgmainwindow.cc:2683
+#: gtk/rgmainwindow.cc:2688
 msgid "Reloading package information..."
 msgstr "S'està refrescant la informació dels paquets..."
 
-#: gtk/rgmainwindow.cc:2749
+#: gtk/rgmainwindow.cc:2754
 msgid "Failed to resolve dependency problems!"
 msgstr "No s'han pogut resoldre els problemes de dependències!"
 
-#: gtk/rgmainwindow.cc:2751
+#: gtk/rgmainwindow.cc:2756
 msgid "Successfully fixed dependency problems"
 msgstr "S'han corregit amb èxit els problemes de dependències!"
 
-#: gtk/rgmainwindow.cc:2767
+#: gtk/rgmainwindow.cc:2772
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1697,15 +1732,15 @@ msgstr ""
 "No s'ha pogut actualitzar el sistema!\n"
 "Corregiu els paquets trencats primer."
 
-#: gtk/rgmainwindow.cc:2816
+#: gtk/rgmainwindow.cc:2821
 msgid "Marking all available upgrades..."
 msgstr "S'estan marcant totes les actualitzacions disponibles..."
 
-#: gtk/rgmainwindow.cc:2828
+#: gtk/rgmainwindow.cc:2833
 msgid "Successfully marked available upgrades"
 msgstr "S'han marcat amb èxit les actualitzacions disponibles"
 
-#: gtk/rgmainwindow.cc:2830
+#: gtk/rgmainwindow.cc:2835
 msgid "Failed to mark all available upgrades!"
 msgstr "No s'han pogut marcar totes les actualitzacions disponibles!"
 
@@ -2349,7 +2384,7 @@ msgid "translators-credits"
 msgstr "Jordi Mallach <jordi@debian.org>"
 
 #: gtk/window_find.glade.h:1 gtk/window_disc_name.glade.h:1
-#: gtk/window_setopt.glade.h:1 gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:3
 msgid "*"
 msgstr "*"
 
@@ -2717,20 +2752,20 @@ msgstr ""
 "L'etiqueta s'utilitzarà per a identificar el CD-ROM si voleu instal·lar "
 "paquets des d'ell més tard."
 
-#: gtk/window_setopt.glade.h:2
+#: gtk/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr ""
 "<span size=\"large\" weight=\"bold\">Estableix una opció interna</span>"
 
-#: gtk/window_setopt.glade.h:3
+#: gtk/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr "Només els experts haurien d'utilitzar açò."
 
-#: gtk/window_setopt.glade.h:4
+#: gtk/window_setopt.glade.h:3
 msgid "Value:"
 msgstr "Valor:"
 
-#: gtk/window_setopt.glade.h:5
+#: gtk/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr "Variable:"
 
@@ -3188,38 +3223,11 @@ msgstr ""
 msgid "<i>Running...</i>"
 msgstr "<i>S'està executant...</i>"
 
-#: gtk/rgterminstallprogress.cc:82
-msgid ""
-"\n"
-"Successfully applied all changes. You can close the window now "
-msgstr ""
-"\n"
-"S'han aplicat tots els canvis amb èxit. Ara podeu tancar la finestra."
-
-#: gtk/rgterminstallprogress.cc:83
-msgid ""
-"\n"
-"Failed to apply all changes! Scroll in this buffer to see what went wrong "
-msgstr ""
-"\n"
-"No s'han pogut aplicar tots els canvis! Desplaceu-vos per aquest búfer per a "
-"veure què ha anat malament."
-
-#: gtk/rgterminstallprogress.cc:85
-msgid ""
-"\n"
-"Successfully installed all packages of the current medium. To continue the "
-"installation with the next medium close this window."
-msgstr ""
-"\n"
-"S'han instal·lat tots els paquets del medi actual amb èxit. Per a continuar "
-"la instal·lació amb el següent medi tanqueu aquesta finestra."
-
-#: gtk/rgterminstallprogress.cc:128
+#: gtk/rgterminstallprogress.cc:105
 msgid "<i>Finished</i>"
 msgstr "<i>Acabat</i>"
 
-#: gtk/rgterminstallprogress.cc:139
+#: gtk/rgterminstallprogress.cc:116
 msgid "<i>Can't close while running</i>"
 msgstr "<i>No es pot tancar mentre s'està executant</i>"
 

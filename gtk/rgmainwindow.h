@@ -208,6 +208,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    // display/table releated
    void refreshTable(RPackage *selectedPkg=NULL); 
    void changeFilter(int filter, bool sethistory=true);
+   static void changedFilter(GtkWidget *self);
 
    void changeView(int view, bool sethistory=true);
    static void subViewListSelectionChanged(GtkTreeSelection *selection, gpointer data);
@@ -222,10 +223,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void rowExpanded(GtkTreeView *treeview,  GtkTreeIter *arg1,
 		    GtkTreePath *arg2, gpointer data);
 
-   // pop-up menu
-   static gboolean onButtonPressed(GtkWidget *treeview, 
-				   GdkEventButton *event, 
-				   gpointer userdata);
+   static gboolean cbPackageListClicked(GtkWidget *treeview, 
+				   	GdkEventButton *event, 
+				   	gpointer userdata);
    static void treeviewPopupMenu(GtkWidget *treeview, 
 				 GdkEventButton *event, 
 				 RGMainWindow *me,
@@ -238,12 +238,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
      };
 
    static void selectedRow(GtkTreeSelection *selection, gpointer data);
-   static void doubleClickRow(GtkTreeView *treeview,
-			      GtkTreePath *arg1,
-			      GtkTreeViewColumn *arg2,
-			      gpointer user_data);
-   static void onExpandAll(GtkWidget *self, void *data);
-   static void onCollapseAll(GtkWidget *self, void *data);   
+   static void cbPackageListRowActivated(GtkTreeView *treeview,
+			      		 GtkTreePath *arg1,
+			      		 GtkTreeViewColumn *arg2,
+					 gpointer user_data);
 
 #if 0 // PORTME
    static void onSectionTree(GtkWidget *self, void *data);
@@ -252,21 +250,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void onFlatList(GtkWidget *self, void *data);   
    static void onTagTree(GtkWidget *self, void *data);   
 #endif
-
-   // this is called when typing
-   guint searchLackId;
-   static void searchLackAction(GtkWidget *self, void *data);
-   static gboolean searchLackHelper(void *data);
-   static void searchAction(GtkWidget *self, void *data);
-   static void searchNextAction(GtkWidget *self, void *data);
-   static void searchBeginAction(GtkWidget *self, void *data);
-   static void changedFilter(GtkWidget *self);
-   
-   static void changedDepView(GtkWidget *self, void *data);
-   static void clickedRecInstall(GtkWidget *self, void *data);
-
-   static void clickedDepList(GtkTreeSelection *sel, gpointer data);
-   static void clickedAvailDepList(GtkTreeSelection *sel, gpointer data);
 
    // misc
    GtkWidget *createFilterMenu();
@@ -298,7 +281,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void redoClicked(GtkWidget *self, void *data);
    static void clearAllChangesClicked(GtkWidget *self, void *data);
    static void updateClicked(GtkWidget *self, void *data);
-   static void onAddCDROM(GtkWidget *self, void *data);
+   static void cbAddCDROM(GtkWidget *self, void *data);
    static void fixBrokenClicked(GtkWidget *self, void *data);
    static void upgradeClicked(GtkWidget *self, void *data);
    //static void distUpgradeClicked(GtkWidget *self, void *data);

@@ -160,8 +160,7 @@ public:
        PinnedPackage = 1<<8, // pinned Package (never upgrade)
        OrphanedPackage = 1<<9, // orphaned (identfied with deborphan)
        ResidualConfig = 1<<10,  // not installed but has config left
-       DebconfPackage = 1<<11,  // Package has debconf information
-       NotInstallable = 1<<12  // the package is not aviailable in repository
+       NotInstallable = 1<<11  // the package is not aviailable in repository
    };
 
    RStatusPackageFilter(RPackageLister *lister)

@@ -779,6 +779,10 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		    str = _("Non US");
 		    suffix = _("non free");
 		}
+		if(str=="non-US/non-free") {
+		    str = _("Non US");
+		    suffix = _("contrib");
+		}
 		// if we have something like "contrib/web", make "contrib" the 
 		// suffix and translate it independently
 		unsigned int n = str.find("/");

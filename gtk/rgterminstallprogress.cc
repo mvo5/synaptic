@@ -79,17 +79,10 @@ void RGTermInstallProgress::startUpdate()
 
 void RGTermInstallProgress::finishUpdate()
 {
-   string finishMsg = _("\nSuccessfully applied all changes. You can close the window now ");
-   string errorMsg = _("\nFailed to apply all changes! Scroll in this buffer to see what went wrong ");
-   string incompleteMsg = 
-      _("\nSuccessfully installed all packages of the current medium. "
-	"To continue the installation with the next medium close "
-	"this window.");
-
    gtk_widget_set_sensitive(_closeB, true);
    
    RGFlushInterface();
-   updateFinished = true;
+   _updateFinished = true;
 
    _config->Set("Synaptic::closeZvt", 
 		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF))
@@ -107,24 +100,8 @@ void RGTermInstallProgress::finishUpdate()
       return;
    }
 
-   const char *msg = "Please contact the author of this software if this "
-      " message is diplayed";
-   int size;
-   switch( res ) {
-   case 0: // completed
-      msg = finishMsg.c_str();
-      size = finishMsg.size();
-      break;
-   case 1: // failed 
-      msg = errorMsg.c_str();
-      size = errorMsg.size();
-      break;
-   case 2: // incomplete
-      msg = incompleteMsg.c_str();
-      size = incompleteMsg.size();
-      break;
-   }
-   vte_terminal_feed(VTE_TERMINAL(_term), utf8_to_locale(msg), size);
+   const char *msg = _(getResultStr(res));
+   vte_terminal_feed(VTE_TERMINAL(_term), utf8_to_locale(msg), strlen(msg));
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Finished</i>"));
    if(res == 0)
       gtk_widget_grab_focus(GTK_WIDGET(_closeB));
@@ -134,7 +111,7 @@ void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)
 {
    RGTermInstallProgress *me = (RGTermInstallProgress*)data;  
 
-   if(!me->updateFinished) {
+   if(!me->_updateFinished) {
       gtk_label_set_markup(GTK_LABEL(me->_statusL), 
 			   _("<i>Can't close while running</i>"));
       return;
@@ -162,8 +139,7 @@ gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
 }
 
 RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
-    : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"),
-      updateFinished(false)
+    : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress")
 {
    setTitle(_("Applying Changes"));
 

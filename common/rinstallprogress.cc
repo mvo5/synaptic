@@ -38,7 +38,30 @@
 #include "rinstallprogress.h"
 
 #include "i18n.h"
+string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now ");
+string RInstallProgress::errorMsg = _("\nFailed to apply all changes! Scroll in this buffer to see what went wrong ");
+string RInstallProgress::incompleteMsg = 
+      _("\nSuccessfully installed all packages of the current medium. "
+	"To continue the installation with the next medium close "
+	"this window.");
 
+const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
+{
+   int size;
+   switch( res ) {
+   case 0: // completed
+      return finishMsg.c_str();
+      break;
+   case 1: // failed 
+      return errorMsg.c_str();
+      break;
+   case 2: // incomplete
+      return incompleteMsg.c_str();
+      break;
+   }
+
+   return "Unknown install result.";
+}
 
 
 pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,

@@ -39,7 +39,7 @@ class RGTermInstallProgress : public RInstallProgress, public RGGladeWindow {
   GtkWidget *_statusL;
   GtkWidget *_closeB;
   GtkWidget *_closeOnF;
-  bool updateFinished;
+
   pkgPackageManager::OrderResult res;
   static gboolean zvtFocus (GtkWidget *widget, GdkEventButton *event, gpointer user_data);
 

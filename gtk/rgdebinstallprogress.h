@@ -87,7 +87,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    map<string, int> _stagesMap;
 
    pid_t _child_id;
-   int res;
+   pkgPackageManager::OrderResult res;
    bool child_has_exited;
    static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
 			    gpointer data);
@@ -108,6 +108,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
 
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);
+   static void cbClose(GtkWidget *self, void *data);
    static void expander_callback(GObject *object,GParamSpec *param_spec,
 				  gpointer    user_data);
 

@@ -40,6 +40,13 @@ class RInstallProgress {
    int _donePackagesTotal;
    int _numPackagesTotal;
 
+   // update is finished, we can close the window
+   bool _updateFinished;
+
+   static string finishMsg;
+   static string errorMsg;
+   static string incompleteMsg; 
+
    virtual void startUpdate() {
    };
    virtual void updateInterface() {
@@ -48,12 +55,14 @@ class RInstallProgress {
    };
 
  public:
+   // get a str feed to the user with the result of the install run
+   virtual const char* getResultStr(pkgPackageManager::OrderResult);
    virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
                                                 int numPackages = 0,
                                                 int numPackagesTotal = 0);
 
 
-   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0) {};
+   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {};
 };
 
 

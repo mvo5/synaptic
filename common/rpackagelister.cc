@@ -1467,16 +1467,12 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       writeCommitLog();
 
    delete PM;
-#ifndef WITH_DPKG_STATUSFD
    delete rPM;
-#endif
    return Ret;
 
  gave_wood:
    delete PM;
-#ifndef WITH_DPKG_STATUSFD
    delete rPM;
-#endif
    return false;
 }
 

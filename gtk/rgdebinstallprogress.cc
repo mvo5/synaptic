@@ -372,11 +372,18 @@ void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
    
 }
 
+void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
+{
+   //cout << "cbCancel: sending SIGKILL to child" << endl;
+   RGDebInstallProgress *me = (RGDebInstallProgress*)data;
+   me->_updateFinished = true;
+}
+
+
 void RGDebInstallProgress::expander_callback (GObject    *object,
 					      GParamSpec *param_spec,
 					      gpointer    user_data) 
 {
-   g_print("expander_callback\n");
    RGDebInstallProgress *me = (RGDebInstallProgress*)user_data;
 
    // this crap here is needed because VteTerminal does not like
@@ -441,6 +448,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    glade_xml_signal_connect_data(_gladeXML, "on_button_cancel_clicked",
 				 G_CALLBACK(cbCancel), this);
+   glade_xml_signal_connect_data(_gladeXML, "on_button_close_clicked",
+				 G_CALLBACK(cbClose), this);
 
 }
 
@@ -449,8 +458,8 @@ void RGDebInstallProgress::updateInterface()
 {
    char buf[2];
    static char line[1024] = "";
-
    int i=0;
+
    while (1) {
 
       // This algorithm should be improved (it's the same as the rpm one ;)
@@ -607,6 +616,27 @@ void RGDebInstallProgress::finishUpdate()
    }
    RGFlushInterface();
 
+   GtkWidget *_closeB = glade_xml_get_widget(_gladeXML, "button_close");
+   gtk_widget_set_sensitive(_closeB, TRUE);
+
+   if(res == 0)
+      gtk_widget_grab_focus(_closeB);
+
+   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", 
+				     _("Installion finished"),
+				     _(getResultStr(res)));
+   GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
+   gtk_label_set_markup(GTK_LABEL(l), msg);
+   g_free(msg);
+
+   // wait for the user to click on "close"
+   while(!_updateFinished) {
+      while (gtk_events_pending())
+	 gtk_main_iteration();
+      usleep(5000);
+   }
+
+   // hide and finish
    hide();
 }
 
@@ -629,10 +659,10 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    else if(toInstall > 0)
       p =  _("Installing software");
 
-   gchar *message = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s);
+   gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s);
    GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
-   gtk_label_set_markup(GTK_LABEL(l), message);
-   g_free(message);
+   gtk_label_set_markup(GTK_LABEL(l), msg);
+   g_free(msg);
 
    for (unsigned int row = 0; row < lister->packagesSize(); row++) {
       RPackage *pkg = lister->getPackage(row);

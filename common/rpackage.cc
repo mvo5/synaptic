@@ -1288,7 +1288,7 @@ void RPackageStatus::init()
       _("Marked for upgrade"),
       _("Marked for downgrade"),
       _("Marked for removal"),
-      _("Marked for removal including configuration"),
+      _("Marked for complete removal"),
       _("Not installed"),
       _("Not installed (locked)"),
       _("Installed"),

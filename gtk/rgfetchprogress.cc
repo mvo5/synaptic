@@ -227,12 +227,12 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
    gchar *s;
    if (CurrentCPS != 0 && ETA != 0) {
-      s = g_strdup_printf(_("Retrieving %li of %li files at %s/s - %s remaining"),
+      s = g_strdup_printf(_("Downloading file %li of %li at %s/s - %s remaining"),
 			  i, TotalItems,
 			  SizeToStr(CurrentCPS).c_str(),
 			  TimeToStr(ETA).c_str());
    } else {
-      s = g_strdup_printf(_("Retrieving %li of %li files"), i, TotalItems);
+      s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
    }
 
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);

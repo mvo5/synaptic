@@ -2153,7 +2153,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // fetch packages
    RGFetchProgress *fprogress = new RGFetchProgress(me);
-   fprogress->setTitle(_("Retrieving Package Files"));
+   fprogress->setTitle(_("Downloading Package Files"));
 
    // Do not let the treeview access the cache during the update.
    me->setTreeLocked(TRUE);
@@ -2267,7 +2267,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_fmanagerWin = NULL;
 
    RGFetchProgress *progress = new RGFetchProgress(me);
-   progress->setTitle(_("Retrieving Index Files"));
+   progress->setTitle(_("Downloading Index Files"));
 
    me->setStatusText(_("Refreshing package list..."));
 

@@ -445,7 +445,7 @@ bool RPackageLister::fixBroken()
        || _cache->deps()->BrokenCount() != 0)
       return _error->Error(_("Unable to correct dependencies"));
    if (pkgMinimizeUpgrade(*_cache->deps()) == false)
-      return _error->Error(_("Unable to minimize the upgrade set"));
+      return _error->Error(_("Unable to mark upgrades\nCheck your system for errors."));
 
    reapplyFilter();
 
@@ -1360,7 +1360,7 @@ bool RPackageLister::readSelections(istream &in)
       CurLine++;
 
       if (in.fail() && !in.eof())
-         return _error->Error(_("Line %u too long in selection file."),
+         return _error->Error(_("Line %u too long in markings file."),
                               CurLine);
 
       _strtabexpand(Buffer, sizeof(Buffer));
@@ -1374,11 +1374,11 @@ bool RPackageLister::readSelections(istream &in)
 
       string PkgName;
       if (ParseQuoteWord(C, PkgName) == false)
-         return _error->Error(_("Malformed line %u in selection file"),
+         return _error->Error(_("Malformed line %u in markings file"),
                               CurLine);
       string Action;
       if (ParseQuoteWord(C, Action) == false)
-         return _error->Error(_("Malformed line %u in selection file"),
+         return _error->Error(_("Malformed line %u in markings file"),
                               CurLine);
 
       if (Action[0] == 'i') {
@@ -1390,7 +1390,7 @@ bool RPackageLister::readSelections(istream &in)
 
    if (actionMap.empty() == false) {
       int Size = actionMap.size();
-      _progMeter->OverallProgress(0, Size, Size, _("Setting selections..."));
+      _progMeter->OverallProgress(0, Size, Size, _("Setting markings..."));
       _progMeter->SubProgress(Size);
       pkgDepCache &Cache = *_cache->deps();
       pkgProblemResolver Fix(&Cache);

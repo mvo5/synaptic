@@ -265,7 +265,7 @@ class RPackageLister {
 			vector<RPackage *> &notAuthenticated,
                         vector<RPackage *> &exclude, bool sorted = true);
 
-   bool openCache(bool reset);
+   bool openCache(bool reset, bool lock=true);
 
    bool fixBroken();
 
@@ -280,11 +280,13 @@ class RPackageLister {
    bool updateCache(pkgAcquireStatus *status, string &error);
    bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
 
-   inline void setProgressMeter(OpProgress *progMeter) {
+   void setProgressMeter(OpProgress *progMeter) {
+      if(_progMeter != NULL)
+	 delete _progMeter;
       _progMeter = progMeter;
    };
 
-   inline void setUserDialog(RUserDialog *dialog) {
+   void setUserDialog(RUserDialog *dialog) {
       _userDialog = dialog;
    };
 

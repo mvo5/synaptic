@@ -48,7 +48,7 @@ void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
 }
 
 vector<string> 
-RGPkgDetailsWindow::formatDepInformation(vector<RPackage::DepInformation> deps)
+RGPkgDetailsWindow::formatDepInformation(vector<DepInformation> deps)
 {
    vector<string> depStrings;
    string depStr;
@@ -126,7 +126,7 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
    me->setTextView("text_descr", descr.c_str(), true);
 
    // build dependency lists
-   vector<RPackage::DepInformation> deps;
+   vector<DepInformation> deps;
    deps = pkg->enumDeps();
    me->setTreeList("treeview_deplist", formatDepInformation(deps), true);
    

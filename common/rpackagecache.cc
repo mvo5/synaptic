@@ -50,9 +50,10 @@ bool RPkgPolicy::IsImportantDep(pkgCache::DepIterator dep)
   }
 }
 
-bool RPackageCache::open(OpProgress &progress)
+bool RPackageCache::open(OpProgress &progress, bool lock)
 {
-   _system->Lock();
+   if(lock)
+      _system->Lock();
 
    if (_error->PendingError())
       return false;
@@ -64,7 +65,10 @@ bool RPackageCache::open(OpProgress &progress)
       return _error->Error(_("The list of sources could not be read.\n\
 Go to the repository dialog to correct the problem."));
 
-   pkgMakeStatusCache(*_list, progress);
+   if(lock)
+      pkgMakeStatusCache(*_list, progress);
+   else
+      pkgMakeStatusCache(*_list, progress, 0, true);
 
    if (_error->PendingError())
       return _error->
@@ -108,21 +112,23 @@ Go to the repository dialog to correct the problem."));
    if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
       return _error->Error(_("Internal Error, non-zero counts"));
 
-   _locked = true;
+   _locked = lock;
 
    return true;
 }
 
 
 
-bool RPackageCache::reset(OpProgress &progress)
+bool RPackageCache::reset(OpProgress &progress, bool lock)
 {
    delete _dcache;
    delete _map;
 
-   releaseLock();
 
-   return open(progress);
+   if(_locked)
+      releaseLock();
+
+   return open(progress, lock);
 }
 
 

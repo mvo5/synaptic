@@ -45,6 +45,18 @@ class pkgRecords;
 
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
+typedef struct  {
+   pkgCache::Dep::DepType type; // type as enum
+   const char* typeStr;         // type (depends, preDepends, etc) as str
+   const char* name;            // target pkg name
+   const char* version;         // target version  
+   const char* versionComp;     // target version compare type ( << , > etc)
+   bool isSatisfied;            // dependecy is satified 
+   bool isVirtual;              // package is virtual
+   bool isOr;                   // or dependency (with next pkg)
+} DepInformation;
+
+
 class RPackage {
 
    protected:
@@ -66,17 +78,6 @@ class RPackage {
    int _boolFlags;
 
  public:
-
-   typedef struct  {
-      pkgCache::Dep::DepType type; // type as enum
-      const char* typeStr;         // type (depends, preDepends, etc) as str
-      const char* name;            // target pkg name
-      const char* version;         // target version  
-      const char* versionComp;     // target version compare type ( << , > etc)
-      bool isSatisfied;            // dependecy is satified 
-      bool isVirtual;              // package is virtual
-      bool isOr;                   // or dependency (with next pkg)
-   } DepInformation;
 
    enum Flags {
       FKeep             = 1 << 0,
@@ -157,7 +158,7 @@ class RPackage {
    vector<DepInformation> enumDeps(bool useCanidateVersion=false);
 
    // reverse dependencies
-   vector<RPackage::DepInformation> enumRDeps();
+   vector<DepInformation> enumRDeps();
 
    int getFlags();
 

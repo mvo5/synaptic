@@ -379,7 +379,7 @@ bool RPackage::nextWDeps(const char *&type, const char *&what,
 }
 #endif
 
-vector<RPackage::DepInformation> RPackage::enumRDeps()
+vector<DepInformation> RPackage::enumRDeps()
 {
    vector<DepInformation> deps;
    DepInformation dep;
@@ -616,7 +616,7 @@ string RPackage::showWhyInstBroken()
 }
 
 
-vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
+vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 {
    vector<DepInformation> deps;
    DepInformation dep;

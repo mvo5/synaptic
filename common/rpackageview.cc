@@ -173,7 +173,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       break;
    case RPatternPackageFilter::Depends: 
       {
-	 vector<RPackage::DepInformation> d = pkg->enumDeps(true);
+	 vector<DepInformation> d = pkg->enumDeps(true);
 	 for(unsigned int i=0;i<d.size();i++)
 	    str += string(d[i].name);
 	 break; 

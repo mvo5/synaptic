@@ -529,7 +529,7 @@ void RGMainWindow::installAllWeakDepends(RPackage *pkg,
    //cout << "RGMainWindow::installWeakDepends()" << endl;
    if(pkg == NULL) return;
    
-   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   vector<DepInformation> deps = pkg->enumDeps();
    for(unsigned int i=0;i<deps.size();i++) {
       if(deps[i].type == type) {
 	 if(!deps[i].isVirtual) {
@@ -3072,7 +3072,7 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 
    GtkWidget *menu = gtk_menu_new();
    GtkWidget *item;
-   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   vector<DepInformation> deps = pkg->enumDeps();
    for(unsigned int i=0;i<deps.size();i++) {
       if(deps[i].type == type) {
 	 // not virtual

@@ -80,7 +80,7 @@ bool RWriteConfigFile(Configuration &Conf)
    // when running non-interactivly don't save any config (there should be no 
    // need)
    if(_config->FindB("Volatile::Non-Interactive", false) == false) 
-      return;
+      return true;
 
    ofstream cfile(ConfigFilePath.c_str(), ios::out);
    if (!cfile != 0)

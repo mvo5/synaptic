@@ -46,6 +46,7 @@
 #include "rcacheactor.h"
 
 #include <apt-pkg/error.h>
+#include <apt-pkg/progress.h>
 #include <apt-pkg/algorithms.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>
@@ -71,7 +72,7 @@
 using namespace std;
 
 RPackageLister::RPackageLister()
-   : _records(0)
+   : _records(0), _progMeter(new OpProgress)
 {
    _cache = new RPackageCache();
 
@@ -272,7 +273,7 @@ bool RPackageLister::upgradable()
    return _cache != NULL && _cache->deps() != NULL;
 }
 
-bool RPackageLister::openCache(bool reset)
+bool RPackageLister::openCache(bool reset, bool lock)
 {
    static bool firstRun = true;
 
@@ -280,13 +281,13 @@ bool RPackageLister::openCache(bool reset)
    _error->Discard();
 
    if (reset) {
-      if (!_cache->reset(*_progMeter)) {
+      if (!_cache->reset(*_progMeter,lock)) {
          _progMeter->Done();
          _cacheValid = false;
          return false;
       }
    } else {
-      if (!_cache->open(*_progMeter)) {
+      if (!_cache->open(*_progMeter,lock)) {
          _progMeter->Done();
          _cacheValid = false;
          return false;

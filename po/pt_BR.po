@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
-"POT-Creation-Date: 2003-03-15 14:59-0300\n"
+"POT-Creation-Date: 2003-03-15 16:39-0300\n"
 "PO-Revision-Date: 2003-03-03 20:28-0300\n"
 "Last-Translator: Arnaldo Carvalho de Melo <acme@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -281,12 +281,12 @@ msgstr "Padrão"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1208
+#: common/rpackagefilter.cc:44 gtk/rgmainwindow.cc:1218
 #: wings/rwmainwindow.cc:1196
 msgid "Section"
 msgstr "Seção"
 
-#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1209
+#: common/rpackagefilter.cc:45 gtk/rgmainwindow.cc:1219
 #: wings/rwmainwindow.cc:1197
 msgid "Priority"
 msgstr "Prioridade"
@@ -303,12 +303,12 @@ msgstr "Nome"
 msgid "Version"
 msgstr "Versão"
 
-#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:2153
+#: common/rpackagefilter.cc:135 gtk/rgmainwindow.cc:2163
 #: gtk/window_main.glade.strings:36 gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "Descrição"
 
-#: common/rpackagefilter.cc:136 gtk/rgmainwindow.cc:1210
+#: common/rpackagefilter.cc:136 gtk/rgmainwindow.cc:1220
 msgid "Maintainer"
 msgstr "Mantenedor"
 
@@ -341,9 +341,9 @@ msgid "ReverseDepends"
 msgstr "Dependências Reversas"
 
 #: common/rpackagefilter.cc:530
-#, fuzzy, c-format
+#, c-format
 msgid "could not open ReducedView file %s"
-msgstr ":não foi possível abrir display"
+msgstr "não foi possível abrir arquivo %s (ReducedView)"
 
 #: common/rpackagefilter.cc:557
 #, c-format
@@ -394,7 +394,7 @@ msgid "Upgradable"
 msgstr "Atualizável"
 
 #: common/rpackagelister.cc:227 gtk/rgfiltereditor.cc:376
-#: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:30
+#: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:31
 msgid "Broken"
 msgstr "Quebrado"
 
@@ -408,9 +408,8 @@ msgid "Internal error recalculating dependency cache."
 msgstr "Erro interno recalculando cache de dependências."
 
 #: common/rpackagelister.cc:430
-#, fuzzy
 msgid "Package "
-msgstr "Pacote"
+msgstr "Pacote "
 
 #: common/rpackagelister.cc:430
 msgid " has no section?!"
@@ -512,12 +511,12 @@ msgstr "-o=? Configurar uma opção arbitrária, e.g. -o dir::cache=/tmp\n"
 msgid "You must run this program as the root user."
 msgstr "Você deve executar este programa como usuário root."
 
-#: gtk/rgconfigwindow.cc:111 gtk/rgmainwindow.cc:2596
+#: gtk/rgconfigwindow.cc:115 gtk/rgmainwindow.cc:2606
 #: wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Ocorreu um erro ao salvar as configurações."
 
-#: gtk/rgconfigwindow.cc:225
+#: gtk/rgconfigwindow.cc:232
 msgid "Color selection"
 msgstr "Seleção de cor"
 
@@ -655,7 +654,7 @@ msgstr "Marcado para Remoção"
 
 #: gtk/rgfiltereditor.cc:384 gtk/rgfiltereditor.cc:630
 #: gtk/rgfiltermanager.cc:82 wings/rwfiltereditor.cc:484
-#: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:32
+#: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:33
 msgid "New"
 msgstr "Novo"
 
@@ -692,7 +691,7 @@ msgstr "Pacotes que"
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
-#: gtk/window_options.glade.strings:28
+#: gtk/window_options.glade.strings:29
 msgid "Remove"
 msgstr "Remover"
 
@@ -772,7 +771,7 @@ msgstr ""
 msgid "Performing Changes"
 msgstr "Realizando Alterações"
 
-#: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1253 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:88 gtk/rgmainwindow.cc:1263 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1241
 msgid "Unknown"
 msgstr "Desconhecido"
@@ -889,59 +888,63 @@ msgstr ""
 msgid "Retrieving Package Files"
 msgstr "Buscando Arquivos de Pacote"
 
-#: gtk/rgmainwindow.cc:756 gtk/rgmainwindow.cc:1223 gtk/rgmainwindow.cc:1232
-#: gtk/rgmainwindow.cc:1236 wings/rwmainwindow.cc:811
+#: gtk/rgmainwindow.cc:723
+msgid "Do you want to quit Synaptic?"
+msgstr "Deseja sair do Synaptic?"
+
+#: gtk/rgmainwindow.cc:766 gtk/rgmainwindow.cc:1233 gtk/rgmainwindow.cc:1242
+#: gtk/rgmainwindow.cc:1246 wings/rwmainwindow.cc:811
 #: wings/rwmainwindow.cc:1210 wings/rwmainwindow.cc:1217
 #: wings/rwmainwindow.cc:1220 wings/rwmainwindow.cc:1224
 msgid "N/A"
 msgstr "N/A"
 
-#: gtk/rgmainwindow.cc:935 wings/rwmainwindow.cc:924
+#: gtk/rgmainwindow.cc:945 wings/rwmainwindow.cc:924
 msgid "Package is installed."
 msgstr "Pacote está instalado."
 
-#: gtk/rgmainwindow.cc:937 wings/rwmainwindow.cc:926
+#: gtk/rgmainwindow.cc:947 wings/rwmainwindow.cc:926
 msgid "Package is not installed."
 msgstr "Pacote não está instalado."
 
-#: gtk/rgmainwindow.cc:941 wings/rwmainwindow.cc:930
+#: gtk/rgmainwindow.cc:951 wings/rwmainwindow.cc:930
 msgid "Package will be installed."
 msgstr "O pacote será instalado."
 
-#: gtk/rgmainwindow.cc:947 wings/rwmainwindow.cc:936
+#: gtk/rgmainwindow.cc:957 wings/rwmainwindow.cc:936
 msgid "Package will be upgraded."
 msgstr "O pacote será atualizado."
 
 #. not handled yet
-#: gtk/rgmainwindow.cc:952 wings/rwmainwindow.cc:941
+#: gtk/rgmainwindow.cc:962 wings/rwmainwindow.cc:941
 msgid "OH SHIT!!"
 msgstr "DROGA!!"
 
-#: gtk/rgmainwindow.cc:957 wings/rwmainwindow.cc:946
+#: gtk/rgmainwindow.cc:967 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "O pacote será desinstalado."
 
-#: gtk/rgmainwindow.cc:960
+#: gtk/rgmainwindow.cc:970
 msgid "Package is broken."
 msgstr "O pacote está quebrado."
 
-#: gtk/rgmainwindow.cc:971 gtk/rgmainwindow.cc:990
+#: gtk/rgmainwindow.cc:981 gtk/rgmainwindow.cc:1000
 msgid "Package is pinned."
 msgstr "O pacote está preso."
 
-#: gtk/rgmainwindow.cc:974
+#: gtk/rgmainwindow.cc:984
 msgid "Package is new."
 msgstr "O pacote é novo."
 
-#: gtk/rgmainwindow.cc:995 wings/rwmainwindow.cc:951
+#: gtk/rgmainwindow.cc:1005 wings/rwmainwindow.cc:951
 msgid "Broken dependencies."
 msgstr "Dependências quebradas."
 
-#: gtk/rgmainwindow.cc:1193 gtk/window_main.glade.strings:81
+#: gtk/rgmainwindow.cc:1203 gtk/window_main.glade.strings:81
 msgid "_Install"
 msgstr "_Instalar"
 
-#: gtk/rgmainwindow.cc:1196
+#: gtk/rgmainwindow.cc:1206
 msgid "_Upgrade"
 msgstr "At_ualizar"
 
@@ -950,7 +953,7 @@ msgstr "At_ualizar"
 #. appendTag(bufPtr, bufSize, _("Vendor"), utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1218 wings/rwmainwindow.cc:1205
+#: gtk/rgmainwindow.cc:1228 wings/rwmainwindow.cc:1205
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -958,17 +961,17 @@ msgstr ""
 "\n"
 "Pacote instalado:\n"
 
-#: gtk/rgmainwindow.cc:1220 gtk/rgmainwindow.cc:1228
+#: gtk/rgmainwindow.cc:1230 gtk/rgmainwindow.cc:1238
 #: wings/rwmainwindow.cc:1207 wings/rwmainwindow.cc:1216
 msgid "    Version"
 msgstr "    Versão"
 
-#: gtk/rgmainwindow.cc:1222 gtk/rgmainwindow.cc:1231
+#: gtk/rgmainwindow.cc:1232 gtk/rgmainwindow.cc:1241
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1219
 msgid "    Size"
 msgstr "    Tamanho"
 
-#: gtk/rgmainwindow.cc:1226 wings/rwmainwindow.cc:1213
+#: gtk/rgmainwindow.cc:1236 wings/rwmainwindow.cc:1213
 msgid ""
 "\n"
 "Available Package:\n"
@@ -976,35 +979,35 @@ msgstr ""
 "\n"
 "Pacotes Disponíveis:\n"
 
-#: gtk/rgmainwindow.cc:1235 wings/rwmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1245 wings/rwmainwindow.cc:1223
 msgid "    Package Size"
 msgstr "    Tamanho do Pacote"
 
-#: gtk/rgmainwindow.cc:1250 wings/rwmainwindow.cc:1238
+#: gtk/rgmainwindow.cc:1260 wings/rwmainwindow.cc:1238
 msgid "Not Relevant"
 msgstr "Irrelevante"
 
-#: gtk/rgmainwindow.cc:1258 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1268 wings/rwmainwindow.cc:1246
 msgid "Recommended"
 msgstr "Recomendado"
 
-#: gtk/rgmainwindow.cc:1260 wings/rwmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1270 wings/rwmainwindow.cc:1248
 msgid "Possible"
 msgstr "Possível"
 
-#: gtk/rgmainwindow.cc:1263 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1273 wings/rwmainwindow.cc:1251
 msgid "Package Upgrade"
 msgstr "Atualização de Pacote"
 
-#: gtk/rgmainwindow.cc:1265 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1275 wings/rwmainwindow.cc:1253
 msgid "    Importance"
 msgstr "    Importância"
 
-#: gtk/rgmainwindow.cc:1267 wings/rwmainwindow.cc:1255
+#: gtk/rgmainwindow.cc:1277 wings/rwmainwindow.cc:1255
 msgid "    Date"
 msgstr "    Data"
 
-#: gtk/rgmainwindow.cc:1319
+#: gtk/rgmainwindow.cc:1329
 msgid ""
 "There are unsaved changes.\n"
 "Synaptic must reopen its cache.\n"
@@ -1014,7 +1017,7 @@ msgstr ""
 "O Synaptic precisa reabrir seu cache.\n"
 "Suas mudanças serão perdidas. Tem certeza?"
 
-#: gtk/rgmainwindow.cc:1499 gtk/rgmainwindow.cc:2377
+#: gtk/rgmainwindow.cc:1509 gtk/rgmainwindow.cc:2387
 #: wings/rwmainwindow.cc:1345 wings/rwmainwindow.cc:1380
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -1023,49 +1026,49 @@ msgstr ""
 "A remoção deste pacote pode tornar o sistema inutilizável.\n"
 "Está certo que quer fazer isto?"
 
-#: gtk/rgmainwindow.cc:1873 wings/rwmainwindow.cc:1562
+#: gtk/rgmainwindow.cc:1883 wings/rwmainwindow.cc:1562
 #: gtk/window_main.glade.strings:46
 msgid "Update package cache"
 msgstr "Atualizar cache de pacotes"
 
-#: gtk/rgmainwindow.cc:1877 wings/rwmainwindow.cc:1576
+#: gtk/rgmainwindow.cc:1887 wings/rwmainwindow.cc:1576
 #: gtk/window_main.glade.strings:48
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr ""
 "Marcar pacotes para atualização, exceto aqueles cujo pacote novo possui "
 "dependências novas"
 
-#: gtk/rgmainwindow.cc:1881 wings/rwmainwindow.cc:1584
+#: gtk/rgmainwindow.cc:1891 wings/rwmainwindow.cc:1584
 #: gtk/window_main.glade.strings:50
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr ""
 "Atualizar distribuição instalada, inclusive pacotes com dependências novas"
 
-#: gtk/rgmainwindow.cc:1885 wings/rwmainwindow.cc:1592
+#: gtk/rgmainwindow.cc:1895 wings/rwmainwindow.cc:1592
 #: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr ""
 "Realizar mudanças (fazendo download, se preciso) selecionadas nos pacotes"
 
-#: gtk/rgmainwindow.cc:2128 wings/rwmainwindow.cc:1938
+#: gtk/rgmainwindow.cc:2138 wings/rwmainwindow.cc:1938
 #: gtk/window_main.glade.strings:16
 msgid "Package"
 msgstr "Pacote"
 
-#: gtk/rgmainwindow.cc:2136
+#: gtk/rgmainwindow.cc:2146
 msgid "Installed Version"
 msgstr "Versão Instalada"
 
-#: gtk/rgmainwindow.cc:2144
+#: gtk/rgmainwindow.cc:2154
 msgid "Available Version"
 msgstr "Versão Disponível"
 
-#: gtk/rgmainwindow.cc:2352
+#: gtk/rgmainwindow.cc:2362
 msgid "Do you want to add another CD-ROM?"
 msgstr "Deseja adicionar outro CD-ROM?"
 
-#: gtk/rgmainwindow.cc:2516 wings/rwmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2526 wings/rwmainwindow.cc:2022
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1074,20 +1077,20 @@ msgstr ""
 "%i pacotes listados, %i instalados, %i corrompidos. %i para instalar/"
 "atualizar, %i para remover; %sB serão %s"
 
-#: gtk/rgmainwindow.cc:2519 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2529 wings/rwmainwindow.cc:2025
 msgid "freed"
 msgstr "liberados"
 
-#: gtk/rgmainwindow.cc:2519 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2529 wings/rwmainwindow.cc:2025
 msgid "used"
 msgstr "usados"
 
-#: gtk/rgmainwindow.cc:2545 wings/rwmainwindow.cc:1839
+#: gtk/rgmainwindow.cc:2555 wings/rwmainwindow.cc:1839
 #: gtk/window_main.glade.strings:57
 msgid "All Packages"
 msgstr "Todos os Pacotes"
 
-#: gtk/rgmainwindow.cc:2625
+#: gtk/rgmainwindow.cc:2635
 msgid ""
 "There are unsaved changes. Are you sure\n"
 "you want to quit Synaptic?"
@@ -1341,15 +1344,15 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: wings/rwconfigwindow.cc:136 wings/rwmainwindow.cc:1600
-#: gtk/window_options.glade.strings:7 gtk/window_options.glade.strings:14
+#: gtk/window_options.glade.strings:7 gtk/window_options.glade.strings:15
 msgid "Options"
 msgstr "Opções"
 
-#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:15
+#: wings/rwconfigwindow.cc:151 gtk/window_options.glade.strings:16
 msgid "Leave downloaded packages in the cache"
 msgstr "Deixa pacotes baixados no cache"
 
-#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:16
+#: wings/rwconfigwindow.cc:155 gtk/window_options.glade.strings:17
 msgid "Delete downloaded packages after installation"
 msgstr "Apaga os pacotes baixados após a instalação"
 
@@ -1357,7 +1360,7 @@ msgstr "Apaga os pacotes baixados após a instalação"
 msgid "Delete obsoleted packages from cache"
 msgstr "Remover pacotes obsoletados do cache"
 
-#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:18
+#: wings/rwconfigwindow.cc:203 gtk/window_options.glade.strings:19
 msgid "Cache"
 msgstr "Cache"
 
@@ -1401,13 +1404,13 @@ msgid "Warning"
 msgstr "Aviso"
 
 #: wings/rwmainwindow.cc:1182 wings/rwmainwindow.cc:1659
-#: gtk/window_main.glade.strings:18 gtk/window_options.glade.strings:25
+#: gtk/window_main.glade.strings:18 gtk/window_options.glade.strings:26
 msgid "Install"
 msgstr "Instalar"
 
 #: wings/rwmainwindow.cc:1184 wings/rwmainwindow.cc:1574
 #: gtk/window_main.glade.strings:13 gtk/window_main.glade.strings:19
-#: gtk/window_options.glade.strings:26
+#: gtk/window_options.glade.strings:27
 msgid "Upgrade"
 msgstr "Atualização"
 
@@ -1445,7 +1448,7 @@ msgid "Configure Synaptic options"
 msgstr "Configurar opções do Synaptic"
 
 #: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:17
-#: gtk/window_options.glade.strings:24
+#: gtk/window_options.glade.strings:25
 msgid "Keep"
 msgstr "Manter"
 
@@ -1918,34 +1921,38 @@ msgid "Automatically select recommended packages on actions"
 msgstr "Selecionar automaticamente pacotes recomendados"
 
 #: gtk/window_options.glade.strings:13
+msgid "Ask to quit after proceeding"
+msgstr ""
+
+#: gtk/window_options.glade.strings:14
 msgid "Number of possible undo operations"
 msgstr "Numero possível de operações de desfazimento"
 
-#: gtk/window_options.glade.strings:17
+#: gtk/window_options.glade.strings:18
 msgid "Delete obsolete packages from cache"
 msgstr "Remover pacotes obsoletos do cache"
 
-#: gtk/window_options.glade.strings:19 gtk/window_options.glade.strings:20
-#: gtk/window_options.glade.strings:21 gtk/window_options.glade.strings:22
-#: gtk/window_options.glade.strings:23 gtk/window_options.glade.strings:33
-#: gtk/window_options.glade.strings:34 gtk/window_options.glade.strings:35
-#: gtk/window_options.glade.strings:36
+#: gtk/window_options.glade.strings:20 gtk/window_options.glade.strings:21
+#: gtk/window_options.glade.strings:22 gtk/window_options.glade.strings:23
+#: gtk/window_options.glade.strings:24 gtk/window_options.glade.strings:34
+#: gtk/window_options.glade.strings:35 gtk/window_options.glade.strings:36
+#: gtk/window_options.glade.strings:37
 msgid "color"
 msgstr "cor"
 
-#: gtk/window_options.glade.strings:27
+#: gtk/window_options.glade.strings:28
 msgid "Downgrade"
 msgstr "Downgrade"
 
-#: gtk/window_options.glade.strings:29
+#: gtk/window_options.glade.strings:30
 msgid "Held"
 msgstr "Mantido"
 
-#: gtk/window_options.glade.strings:31
+#: gtk/window_options.glade.strings:32
 msgid "Pin"
 msgstr "Prender"
 
-#: gtk/window_options.glade.strings:37
+#: gtk/window_options.glade.strings:38
 msgid "Colors"
 msgstr "Cores"
 

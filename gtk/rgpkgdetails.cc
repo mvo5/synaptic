@@ -149,6 +149,19 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
    me->setTextView("textview_files", pkg->installedFiles());
 #endif
 
+   // versions
+   gchar *str;
+   vector<string> list;
+   vector<pair<string,string> > versions = pkg->getAvailableVersions();
+   for(int i=0;i<versions.size();i++) {
+      str = g_strdup_printf(_("%s (%s)"), 
+			    versions[i].first.c_str(), 
+			    versions[i].second.c_str());
+      list.push_back(str);
+      g_free(str);
+   }
+   me->setTreeList("treeview_versions", list);
+
    glade_xml_signal_connect_data(me->getGladeXML(), 
 				 "on_optionmenu_depends_changed",
 				 G_CALLBACK(cbDependsMenuChanged), me);

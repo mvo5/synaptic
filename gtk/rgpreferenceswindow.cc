@@ -123,10 +123,21 @@ void RGPreferencesWindow::saveGeneral()
    bool newval;
    int i;
 
-   // Allow regular expressions in searches and filters
+   // show package properties in main window
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain));
    _config->Set("Synaptic::ShowAllPkgInfoInMain", newval ? "true" : "false");
-   gtk_notebook_set_show_tabs(GTK_NOTEBOOK(glade_xml_get_widget(_mainWin->getGladeXML(),"notebook_pkginfo")), newval);
+   // apply the changes
+   GtkWidget *notebook = glade_xml_get_widget(_mainWin->getGladeXML(),
+					      "notebook_pkginfo");
+   gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), newval);
+   GtkWidget *box = glade_xml_get_widget(_mainWin->getGladeXML(),
+					 "vbox_pkgdescr");
+   if(newval) {
+      gtk_container_set_border_width(GTK_CONTAINER(box), 6);
+   } else {
+      gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
+      gtk_container_set_border_width(GTK_CONTAINER(box), 0);
+   }
 
    // Ask to confirm changes also affecting other packages
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionAskRelated));

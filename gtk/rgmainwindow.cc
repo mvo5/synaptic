@@ -544,13 +544,13 @@ void RGMainWindow::pkgHelpClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::showConfigWindow(GtkWidget *self, void *data)
 {
-    RGMainWindow *win = (RGMainWindow*)data;
+    RGMainWindow *me = (RGMainWindow*)data;
     
-    if (win->_configWin == NULL) {
-	win->_configWin = new RGPreferencesWindow(win);
+    if (me->_configWin == NULL) {
+	me->_configWin = new RGPreferencesWindow(me, me->_lister);
     }
 
-    win->_configWin->show();
+    me->_configWin->show();
 }
 
 void RGMainWindow::showSetOptWindow(GtkWidget *self, void *data)
@@ -1750,8 +1750,8 @@ void RGMainWindow::setColors(bool useColors)
 }
 
 
-RGMainWindow::RGMainWindow(RPackageLister *packLister)
-    : RGGladeWindow(NULL, "main"), _lister(packLister),  _activeTreeModel(0),
+RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
+    : RGGladeWindow(NULL, name), _lister(packLister),  _activeTreeModel(0),
       _treeView(0)
 {
     assert(_win);
@@ -2180,9 +2180,9 @@ void RGMainWindow::buildTreeView()
 						     "text", NAME_COLUMN,
 						     "background-gdk", COLOR_COLUMN,
 						     NULL);
-	gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
+	//gtk_tree_view_column_set_sizing (column, GTK_TREE_VIEW_COLUMN_AUTOSIZE);
 
-	//gtk_tree_view_column_set_fixed_width(column, 200);
+	gtk_tree_view_column_set_fixed_width(column, 200);
 
 	//gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
 	all_columns.push_back(pair<int,GtkTreeViewColumn *>(pos,column));
@@ -2274,6 +2274,15 @@ void RGMainWindow::buildTreeView()
     // now set name column to expander column
     if(name_column)
 	gtk_tree_view_set_expander_column(GTK_TREE_VIEW(_treeView),  name_column);
+
+#if GTK_CHECK_VERSION(2,3,0)
+#warning build with new fixed_height_mode
+    GValue value = {0,};
+    g_value_init (&value, G_TYPE_BOOLEAN);
+    g_value_set_boolean(&value, TRUE);
+    g_object_set_property(G_OBJECT(_treeView), "fixed_height_mode", &value);
+#endif
+
 
 }
 
@@ -2556,7 +2565,9 @@ void RGMainWindow::buildInterface()
 #ifndef SYNAPTIC_PKG_HOLD
     gtk_widget_hide(_pinB);
     gtk_widget_hide(_pinM);
-    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "hseparator_hold"));
+    widget = glade_xml_get_widget(_gladeXML, "hseparator_hold");
+    if(widget != NULL)
+	gtk_widget_hide(widget);
 #endif
 
     // only for debian 

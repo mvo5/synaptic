@@ -1,6 +1,7 @@
-/* rgconfigwindow.cc
+/* rgpreferenceswindow.cc
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
+ *               2003 Michael Vogt
  *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -28,13 +29,13 @@
 #include <apt-pkg/configuration.h>
 #include <gtk/gtk.h>
 #include "rconfiguration.h"
-#include "rgconfigwindow.h"
+#include "rgpreferenceswindow.h"
 #include "rguserdialog.h"
 #include "gsynaptic.h"
 
 extern GdkColor *StatusColors[];
 
-char * RGConfigWindow::color_buttons[] = {
+char * RGPreferencesWindow::color_buttons[] = {
       "button_keep_color",
       "button_install_color",
       "button_upgrade_color",
@@ -48,9 +49,9 @@ char * RGConfigWindow::color_buttons[] = {
   };
 
 
-void RGConfigWindow::saveAction(GtkWidget *self, void *data)
+void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
 {
-    RGConfigWindow *me = (RGConfigWindow*)data;
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     bool newval;
 
     newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_cacheB[1]));
@@ -131,20 +132,28 @@ void RGConfigWindow::saveAction(GtkWidget *self, void *data)
 }
 
 
-void RGConfigWindow::closeAction(GtkWidget *self, void *data)
+void RGPreferencesWindow::closeAction(GtkWidget *self, void *data)
 {
-    RGConfigWindow *me = (RGConfigWindow*)data;
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     me->close();
 }
 
-void RGConfigWindow::doneAction(GtkWidget *self, void *data)
+void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
 {
-    RGConfigWindow *me = (RGConfigWindow*)data;
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     me->saveAction(self, data);
     me->closeAction(self, data);
 }
 
-void RGConfigWindow::show()
+void RGPreferencesWindow::clearCacheAction(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    me->_lister->cleanPackageCache(true);
+}
+
+
+void RGPreferencesWindow::show()
 {
     bool postClean, postAutoClean;    
     string str;
@@ -207,7 +216,7 @@ void RGConfigWindow::show()
     RGWindow::show();
 }
 
-void RGConfigWindow::readTreeViewValues()
+void RGPreferencesWindow::readTreeViewValues()
 {
     GtkWidget *b;
     int pos;
@@ -244,7 +253,7 @@ void RGConfigWindow::readTreeViewValues()
 
 }
 
-void RGConfigWindow::saveTreeViewValues() 
+void RGPreferencesWindow::saveTreeViewValues() 
 {
     GtkWidget *b;
     int pos;
@@ -284,7 +293,7 @@ void RGConfigWindow::saveTreeViewValues()
 
 
 
-void RGConfigWindow::readColors()
+void RGPreferencesWindow::readColors()
 {
     GdkColor color;
     GtkWidget *button=NULL;
@@ -300,12 +309,12 @@ void RGConfigWindow::readColors()
     }
 }
 
-void RGConfigWindow::saveColor(GtkWidget *self, void *data) 
+void RGPreferencesWindow::saveColor(GtkWidget *self, void *data) 
 {
     GdkColor color;
     GtkColorSelectionDialog *color_selector;
 
-    RGConfigWindow *me = (RGConfigWindow*)g_object_get_data(G_OBJECT(self), "me");
+    RGPreferencesWindow *me = (RGPreferencesWindow*)g_object_get_data(G_OBJECT(self), "me");
     color_selector = (GtkColorSelectionDialog*)g_object_get_data(G_OBJECT(self), "color_selector");
     
 
@@ -315,14 +324,14 @@ void RGConfigWindow::saveColor(GtkWidget *self, void *data)
     me->readColors();
 }
 
-void RGConfigWindow::colorClicked(GtkWidget *self, void *data) 
+void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data) 
 {
     GtkWidget *color_dialog;
     GtkWidget *color_selection;
     GtkWidget *ok_button, *cancel_button;
-    RGConfigWindow *me;
+    RGPreferencesWindow *me;
 
-    me = (RGConfigWindow*)g_object_get_data(G_OBJECT(self), "me");
+    me = (RGPreferencesWindow*)g_object_get_data(G_OBJECT(self), "me");
 
     color_dialog = gtk_color_selection_dialog_new(_("Color selection"));
     ok_button = GTK_COLOR_SELECTION_DIALOG(color_dialog)->ok_button;
@@ -350,8 +359,8 @@ void RGConfigWindow::colorClicked(GtkWidget *self, void *data)
     gtk_widget_show(color_dialog);
 }
 
-RGConfigWindow::RGConfigWindow(RGWindow *win) 
-    : RGGladeWindow(win, "options")
+RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *_lister) 
+    : RGGladeWindow(win, "preferences")
 {
     GtkWidget *button;
     
@@ -393,6 +402,12 @@ RGConfigWindow::RGConfigWindow(RGWindow *win)
 				  "on_ok_clicked",
 				  G_CALLBACK(doneAction),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_clean_cache_clicked",
+				  G_CALLBACK(clearCacheAction),
+				  this); 
+
 
     for(int i=0; color_buttons[i] != NULL; i++) {
 	button = glade_xml_get_widget(_gladeXML, color_buttons[i]);

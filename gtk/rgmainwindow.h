@@ -328,7 +328,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    //static void actionVisibleClicked(GtkWidget *self, void *data);
 
 public:
-   RGMainWindow(RPackageLister *packLister);
+   RGMainWindow(RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
 
    void setInterfaceLocked(bool flag);

@@ -275,7 +275,7 @@ public:
    bool upgrade();
    bool distUpgrade();
    
-   bool cleanPackageCache();
+   bool cleanPackageCache(bool forceClean=false);
 
    bool updateCache(pkgAcquireStatus *status);
    bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);

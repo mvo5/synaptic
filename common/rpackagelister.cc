@@ -1596,11 +1596,11 @@ bool RPackageLister::lockPackageCache(FileFd &lock)
 }
 
 
-bool RPackageLister::cleanPackageCache()
+bool RPackageLister::cleanPackageCache(bool forceClean)
 {
     FileFd lock;
     
-    if (_config->FindB("Synaptic::CleanCache", false)) {
+    if (_config->FindB("Synaptic::CleanCache", false) || forceClean) {
 
 	lockPackageCache(lock);
 	

@@ -18,7 +18,8 @@ synaptic_LDADD = \
 	-lpthread $(LIBTAGCOLL_LIBS) 
 
 glade_DATA =                            \
-        window_main.glade window_main.glade.strings \
+        window_main_vpaned.glade window_main_vpaned.glade.strings \
+        window_main_hpaned.glade window_main_hpaned.glade.strings \
 	window_find.glade window_find.glade.strings \
 	window_filters.glade window_filters.glade.strings \
 	window_fetch.glade window_fetch.glade.strings \

@@ -23,8 +23,9 @@
 #include "rggladewindow.h"
 #include "rgmainwindow.h"
 
-class RGConfigWindow : public RGGladeWindow {
+class RGPreferencesWindow : public RGGladeWindow {
   RGMainWindow *_mainWin;
+  RPackageLister *_lister;
   GtkWidget *_optionB[6];
   GtkWidget *_cacheB[3];
   GtkWidget *_pathT;
@@ -45,13 +46,14 @@ class RGConfigWindow : public RGGladeWindow {
   static void saveAction(GtkWidget *self, void *data);
   static void closeAction(GtkWidget *self, void *data);
   static void doneAction(GtkWidget *self, void *data);
+  static void clearCacheAction(GtkWidget *self, void *data);
 
   static void colorClicked(GtkWidget *self, void *data);
   static void saveColor(GtkWidget *self, void *data);
   
 
  public:
-  RGConfigWindow(RGWindow *owner);
-  virtual ~RGConfigWindow() {};
+  RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
+  virtual ~RGPreferencesWindow() {};
   virtual void show();
 };

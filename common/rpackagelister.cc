@@ -271,15 +271,13 @@ void RPackageLister::makePresetFilters()
       filter = new RFilter(this);
       filter->pattern.addPattern(RPatternPackageFilter::Name,
                                  "^task-.*", false);
-      filter->setName("Tasks");
-      _("Tasks");
+      filter->setName("Tasks"); _("Tasks");
       registerFilter(filter);
    }
    {
       filter = new RFilter(this);
       filter->reducedview.enable();
-      filter->setName("Reduced View");
-      _("Reduced View");
+      filter->setName("Reduced View"); _("Reduced View");
       registerFilter(filter);
    }
 #endif
@@ -287,16 +285,14 @@ void RPackageLister::makePresetFilters()
       filter = new RFilter(this);
       filter->preset = true;
       filter->status.setStatus((int)RStatusPackageFilter::Upgradable);
-      filter->setName("Upgradable");
-      _("Upgradable");
+      filter->setName("Upgradable"); _("Upgradable");
       registerFilter(filter);
    }
    {
       filter = new RFilter(this);
       filter->preset = true;
       filter->status.setStatus(RStatusPackageFilter::Broken);
-      filter->setName("Broken");
-      _("Broken");
+      filter->setName("Broken"); _("Broken");
       registerFilter(filter);
    }
    {
@@ -305,16 +301,14 @@ void RPackageLister::makePresetFilters()
       filter->status.setStatus(RStatusPackageFilter::MarkInstall
                                | RStatusPackageFilter::MarkRemove
                                | RStatusPackageFilter::Broken);
-      filter->setName("Queued Changes");
-      _("Queued Changes");
+      filter->setName("Queued Changes"); _("Queued Changes");
       registerFilter(filter);
    }
    {
       filter = new RFilter(this);
       filter->preset = true;
       filter->status.setStatus(RStatusPackageFilter::NewPackage);
-      filter->setName("New in archive");
-      _("New in archive");
+      filter->setName("New in archive"); _("New in archive");
       registerFilter(filter);
    }
 #ifndef HAVE_RPM
@@ -322,8 +316,7 @@ void RPackageLister::makePresetFilters()
       filter = new RFilter(this);
       filter->preset = true;
       filter->status.setStatus(RStatusPackageFilter::ResidualConfig);
-      filter->setName("Residual config");
-      _("Residual config");
+      filter->setName("Residual config"); _("Residual config");
       registerFilter(filter);
    }
    {
@@ -331,16 +324,14 @@ void RPackageLister::makePresetFilters()
       filter->preset = true;
       filter->pattern.addPattern(RPatternPackageFilter::Depends,
                                  "^debconf", false);
-      filter->setName("Pkg with Debconf");
-      _("Pkg with Debconf");
+      filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
       registerFilter(filter);
    }
    {
       filter = new RFilter(this);
       filter->preset = true;
       filter->status.setStatus(RStatusPackageFilter::NotInstallable);
-      filter->setName("Obsolete or locally installed");
-      _("Obsolete or locally installed");
+      filter->setName("Obsolete or locally installed"); _("Obsolete or locally installed");
       registerFilter(filter);
    }
 #endif

@@ -2594,7 +2594,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
             oneclickitem = item->data;
       }
 
-      if ((flags & RPackage::FInstalled) && !(flags && RPackage::FRemove)) {
+      if ((flags & RPackage::FInstalled) && !(flags & RPackage::FRemove)) {
 
          // Remove buttons (remove, remove with dependencies)
          if (i == 4 || i == 6) {

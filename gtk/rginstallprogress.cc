@@ -132,11 +132,11 @@ void RGInstallProgress::finishUpdate()
 
 void RGInstallProgress::prepare(RPackageLister *lister)
 {
-   for (unsigned int row = 0; row < lister->viewPackagesSize(); row++) {
-      RPackage *elem = lister->getViewPackage(row);
+   for (unsigned int row = 0; row < lister->packagesSize(); row++) {
+      RPackage *elem = lister->getPackage(row);
 
       // Is it going to be seen?
-      if (elem->getFlags() & RPackage::FInstall)
+      if (!(elem->getFlags() & RPackage::FInstall))
          continue;
 
       const char *name = elem->name();
@@ -390,4 +390,4 @@ bool GeometryParser::Parse(string Geo)
    return ret;
 }
 
-// vim:sts=4:sw=4
+// vim:ts=3:sw=3:et

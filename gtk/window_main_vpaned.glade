@@ -1399,7 +1399,7 @@
 			      <child>
 				<widget class="GtkLabel" id="label75">
 				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Status&lt;/b&gt;</property>
+				  <property name="label" translatable="yes">&lt;b&gt;Package Control&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
 				  <property name="use_markup">True</property>
 				  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -1451,226 +1451,258 @@
 				      <property name="spacing">12</property>
 
 				      <child>
-					<widget class="GtkHBox" id="hbox25">
+					<widget class="GtkVBox" id="vbox34">
 					  <property name="visible">True</property>
-					  <property name="homogeneous">True</property>
-					  <property name="spacing">0</property>
+					  <property name="homogeneous">False</property>
+					  <property name="spacing">6</property>
 
 					  <child>
-					    <widget class="GtkRadioButton" id="radiobutton_install">
+					    <widget class="GtkLabel" id="label80">
 					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">Install the latest version of the package</property>
-					      <property name="can_focus">True</property>
-					      <property name="relief">GTK_RELIEF_NORMAL</property>
-					      <property name="active">False</property>
-					      <property name="inconsistent">False</property>
-					      <property name="draw_indicator">False</property>
-					      <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:18:41 GMT"/>
-
-					      <child>
-						<widget class="GtkAlignment" id="alignment1">
-						  <property name="visible">True</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xscale">0</property>
-						  <property name="yscale">0</property>
-
-						  <child>
-						    <widget class="GtkHBox" id="hbox14">
-						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">2</property>
-
-						      <child>
-							<widget class="GtkImage" id="image1">
-							  <property name="visible">True</property>
-							  <property name="stock">gtk-add</property>
-							  <property name="icon_size">4</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
-						      </child>
-
-						      <child>
-							<widget class="GtkLabel" id="radiobutton_install_label">
-							  <property name="visible">True</property>
-							  <property name="label" translatable="yes">_Install</property>
-							  <property name="use_underline">True</property>
-							  <property name="use_markup">False</property>
-							  <property name="justify">GTK_JUSTIFY_LEFT</property>
-							  <property name="wrap">False</property>
-							  <property name="selectable">False</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
-						      </child>
-						    </widget>
-						  </child>
-						</widget>
-					      </child>
+					      <property name="label" translatable="yes">Status modification:</property>
+					      <property name="use_underline">False</property>
+					      <property name="use_markup">False</property>
+					      <property name="justify">GTK_JUSTIFY_LEFT</property>
+					      <property name="wrap">False</property>
+					      <property name="selectable">False</property>
+					      <property name="xalign">0</property>
+					      <property name="yalign">0.5</property>
+					      <property name="xpad">0</property>
+					      <property name="ypad">0</property>
 					    </widget>
 					    <packing>
 					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
+					      <property name="expand">False</property>
+					      <property name="fill">False</property>
 					    </packing>
 					  </child>
 
 					  <child>
-					    <widget class="GtkRadioButton" id="radiobutton_delete">
+					    <widget class="GtkVBox" id="vbox35">
 					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">Deinstall the package</property>
-					      <property name="can_focus">True</property>
-					      <property name="relief">GTK_RELIEF_NORMAL</property>
-					      <property name="active">False</property>
-					      <property name="inconsistent">False</property>
-					      <property name="draw_indicator">False</property>
-					      <property name="group">radiobutton_install</property>
-					      <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:18:57 GMT"/>
+					      <property name="homogeneous">False</property>
+					      <property name="spacing">0</property>
 
 					      <child>
-						<widget class="GtkAlignment" id="alignment2">
+						<widget class="GtkRadioButton" id="radiobutton_install">
 						  <property name="visible">True</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xscale">0</property>
-						  <property name="yscale">0</property>
+						  <property name="tooltip" translatable="yes">Install the latest version of the package</property>
+						  <property name="can_focus">True</property>
+						  <property name="relief">GTK_RELIEF_NORMAL</property>
+						  <property name="active">False</property>
+						  <property name="inconsistent">False</property>
+						  <property name="draw_indicator">False</property>
+						  <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:18:41 GMT"/>
 
 						  <child>
-						    <widget class="GtkHBox" id="hbox15">
+						    <widget class="GtkAlignment" id="alignment1">
 						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">2</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xscale">0</property>
+						      <property name="yscale">0</property>
 
 						      <child>
-							<widget class="GtkImage" id="image2">
+							<widget class="GtkHBox" id="hbox14">
 							  <property name="visible">True</property>
-							  <property name="stock">gtk-remove</property>
-							  <property name="icon_size">4</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
-						      </child>
+							  <property name="homogeneous">False</property>
+							  <property name="spacing">2</property>
 
-						      <child>
-							<widget class="GtkLabel" id="label64">
-							  <property name="visible">True</property>
-							  <property name="label" translatable="yes">_Remove</property>
-							  <property name="use_underline">True</property>
-							  <property name="use_markup">False</property>
-							  <property name="justify">GTK_JUSTIFY_LEFT</property>
-							  <property name="wrap">False</property>
-							  <property name="selectable">False</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
+							  <child>
+							    <widget class="GtkImage" id="image1">
+							      <property name="visible">True</property>
+							      <property name="stock">gtk-add</property>
+							      <property name="icon_size">4</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="radiobutton_install_label">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">_Install Latest Version</property>
+							      <property name="use_underline">True</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
 							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
 						      </child>
 						    </widget>
 						  </child>
 						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
 					      </child>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">True</property>
-					      <property name="fill">True</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkRadioButton" id="radiobutton_keep">
-					      <property name="visible">True</property>
-					      <property name="tooltip" translatable="yes">Keep the package as supplied before and forget selected changes</property>
-					      <property name="can_focus">True</property>
-					      <property name="relief">GTK_RELIEF_NORMAL</property>
-					      <property name="active">False</property>
-					      <property name="inconsistent">False</property>
-					      <property name="draw_indicator">False</property>
-					      <property name="group">radiobutton_install</property>
-					      <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:17:40 GMT"/>
 
 					      <child>
-						<widget class="GtkAlignment" id="alignment3">
+						<widget class="GtkRadioButton" id="radiobutton_delete">
 						  <property name="visible">True</property>
-						  <property name="xalign">0.5</property>
-						  <property name="yalign">0.5</property>
-						  <property name="xscale">0</property>
-						  <property name="yscale">0</property>
+						  <property name="tooltip" translatable="yes">Deinstall the package</property>
+						  <property name="can_focus">True</property>
+						  <property name="relief">GTK_RELIEF_NORMAL</property>
+						  <property name="active">False</property>
+						  <property name="inconsistent">False</property>
+						  <property name="draw_indicator">False</property>
+						  <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:18:57 GMT"/>
 
 						  <child>
-						    <widget class="GtkHBox" id="hbox16">
+						    <widget class="GtkAlignment" id="alignment2">
 						      <property name="visible">True</property>
-						      <property name="homogeneous">False</property>
-						      <property name="spacing">2</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xscale">0</property>
+						      <property name="yscale">0</property>
 
 						      <child>
-							<widget class="GtkImage" id="image3">
+							<widget class="GtkHBox" id="hbox15">
 							  <property name="visible">True</property>
-							  <property name="stock">gtk-apply</property>
-							  <property name="icon_size">4</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
-							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
-						      </child>
+							  <property name="homogeneous">False</property>
+							  <property name="spacing">2</property>
 
-						      <child>
-							<widget class="GtkLabel" id="label65">
-							  <property name="visible">True</property>
-							  <property name="label" translatable="yes">_Keep</property>
-							  <property name="use_underline">True</property>
-							  <property name="use_markup">False</property>
-							  <property name="justify">GTK_JUSTIFY_LEFT</property>
-							  <property name="wrap">False</property>
-							  <property name="selectable">False</property>
-							  <property name="xalign">0.5</property>
-							  <property name="yalign">0.5</property>
-							  <property name="xpad">0</property>
-							  <property name="ypad">0</property>
+							  <child>
+							    <widget class="GtkImage" id="image2">
+							      <property name="visible">True</property>
+							      <property name="stock">gtk-remove</property>
+							      <property name="icon_size">4</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label64">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">_Remove</property>
+							      <property name="use_underline">True</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
 							</widget>
-							<packing>
-							  <property name="padding">0</property>
-							  <property name="expand">False</property>
-							  <property name="fill">False</property>
-							</packing>
 						      </child>
 						    </widget>
 						  </child>
 						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
+					      </child>
+
+					      <child>
+						<widget class="GtkRadioButton" id="radiobutton_keep">
+						  <property name="visible">True</property>
+						  <property name="tooltip" translatable="yes">Keep the package as supplied before and forget selected changes</property>
+						  <property name="can_focus">True</property>
+						  <property name="relief">GTK_RELIEF_NORMAL</property>
+						  <property name="active">False</property>
+						  <property name="inconsistent">False</property>
+						  <property name="draw_indicator">False</property>
+						  <signal name="clicked" handler="on_action_clicked" last_modification_time="Fri, 13 Dec 2002 12:17:40 GMT"/>
+
+						  <child>
+						    <widget class="GtkAlignment" id="alignment3">
+						      <property name="visible">True</property>
+						      <property name="xalign">0.5</property>
+						      <property name="yalign">0.5</property>
+						      <property name="xscale">0</property>
+						      <property name="yscale">0</property>
+
+						      <child>
+							<widget class="GtkHBox" id="hbox16">
+							  <property name="visible">True</property>
+							  <property name="homogeneous">False</property>
+							  <property name="spacing">2</property>
+
+							  <child>
+							    <widget class="GtkImage" id="image3">
+							      <property name="visible">True</property>
+							      <property name="stock">gtk-apply</property>
+							      <property name="icon_size">4</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
+
+							  <child>
+							    <widget class="GtkLabel" id="label65">
+							      <property name="visible">True</property>
+							      <property name="label" translatable="yes">Do _Not Modify</property>
+							      <property name="use_underline">True</property>
+							      <property name="use_markup">False</property>
+							      <property name="justify">GTK_JUSTIFY_LEFT</property>
+							      <property name="wrap">False</property>
+							      <property name="selectable">False</property>
+							      <property name="xalign">0.5</property>
+							      <property name="yalign">0.5</property>
+							      <property name="xpad">0</property>
+							      <property name="ypad">0</property>
+							    </widget>
+							    <packing>
+							      <property name="padding">0</property>
+							      <property name="expand">False</property>
+							      <property name="fill">False</property>
+							    </packing>
+							  </child>
+							</widget>
+						      </child>
+						    </widget>
+						  </child>
+						</widget>
+						<packing>
+						  <property name="padding">0</property>
+						  <property name="expand">False</property>
+						  <property name="fill">False</property>
+						</packing>
 					      </child>
 					    </widget>
 					    <packing>
@@ -1688,42 +1720,17 @@
 				      </child>
 
 				      <child>
-					<widget class="GtkHBox" id="hbox26">
+					<widget class="GtkCheckButton" id="checkbutton_pin">
 					  <property name="visible">True</property>
-					  <property name="homogeneous">False</property>
-					  <property name="spacing">12</property>
-
-					  <child>
-					    <widget class="GtkButton" id="button_pkgreconfigure">
-					      <property name="visible">True</property>
-					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">Reconfigure</property>
-					      <property name="use_underline">True</property>
-					      <property name="relief">GTK_RELIEF_NORMAL</property>
-					      <signal name="clicked" handler="on_button_pkgreconfigure_clicked" last_modification_time="Mon, 03 Mar 2003 09:30:32 GMT"/>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
-
-					  <child>
-					    <widget class="GtkButton" id="button_pkghelp">
-					      <property name="visible">True</property>
-					      <property name="can_focus">True</property>
-					      <property name="label" translatable="yes">Pkg Help</property>
-					      <property name="use_underline">True</property>
-					      <property name="relief">GTK_RELIEF_NORMAL</property>
-					      <signal name="clicked" handler="on_button_pkghelp_clicked" last_modification_time="Sun, 29 Dec 2002 19:48:55 GMT"/>
-					    </widget>
-					    <packing>
-					      <property name="padding">0</property>
-					      <property name="expand">False</property>
-					      <property name="fill">False</property>
-					    </packing>
-					  </child>
+					  <property name="tooltip" translatable="yes">Exclude the package from upgrades</property>
+					  <property name="can_focus">True</property>
+					  <property name="label" translatable="yes">Hold current version</property>
+					  <property name="use_underline">True</property>
+					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="active">False</property>
+					  <property name="inconsistent">False</property>
+					  <property name="draw_indicator">True</property>
+					  <signal name="clicked" handler="on_pin_clicked" last_modification_time="Fri, 13 Dec 2002 12:16:36 GMT"/>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1733,17 +1740,44 @@
 				      </child>
 
 				      <child>
-					<widget class="GtkCheckButton" id="checkbutton_pin">
+					<widget class="GtkHBox" id="hbox26">
 					  <property name="visible">True</property>
-					  <property name="tooltip" translatable="yes">Never upgrade this package</property>
-					  <property name="can_focus">True</property>
-					  <property name="label" translatable="yes">Hold pkg</property>
-					  <property name="use_underline">True</property>
-					  <property name="relief">GTK_RELIEF_NORMAL</property>
-					  <property name="active">False</property>
-					  <property name="inconsistent">False</property>
-					  <property name="draw_indicator">True</property>
-					  <signal name="clicked" handler="on_pin_clicked" last_modification_time="Fri, 13 Dec 2002 12:16:36 GMT"/>
+					  <property name="homogeneous">True</property>
+					  <property name="spacing">12</property>
+
+					  <child>
+					    <widget class="GtkButton" id="button_pkgreconfigure">
+					      <property name="visible">True</property>
+					      <property name="tooltip" translatable="yes">Configure the package using the debconf configuration system</property>
+					      <property name="can_focus">True</property>
+					      <property name="label" translatable="yes">_Configure</property>
+					      <property name="use_underline">True</property>
+					      <property name="relief">GTK_RELIEF_NORMAL</property>
+					      <signal name="clicked" handler="on_button_pkgreconfigure_clicked" last_modification_time="Mon, 03 Mar 2003 09:30:32 GMT"/>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">False</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
+
+					  <child>
+					    <widget class="GtkButton" id="button_pkghelp">
+					      <property name="visible">True</property>
+					      <property name="tooltip" translatable="yes">View installed online documentation related to the package</property>
+					      <property name="can_focus">True</property>
+					      <property name="label" translatable="yes">_Documentation</property>
+					      <property name="use_underline">True</property>
+					      <property name="relief">GTK_RELIEF_NORMAL</property>
+					      <signal name="clicked" handler="on_button_pkghelp_clicked" last_modification_time="Sun, 29 Dec 2002 19:48:55 GMT"/>
+					    </widget>
+					    <packing>
+					      <property name="padding">0</property>
+					      <property name="expand">False</property>
+					      <property name="fill">True</property>
+					    </packing>
+					  </child>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1782,7 +1816,7 @@
 		      <child>
 			<widget class="GtkLabel" id="label23">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">Information</property>
+			  <property name="label" translatable="yes">Common</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_CENTER</property>
@@ -2519,7 +2553,7 @@
 					<widget class="GtkVBox" id="vbox32">
 					  <property name="visible">True</property>
 					  <property name="homogeneous">False</property>
-					  <property name="spacing">0</property>
+					  <property name="spacing">6</property>
 
 					  <child>
 					    <widget class="GtkHBox" id="hbox24">

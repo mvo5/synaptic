@@ -1441,7 +1441,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 		GTK_LABEL(_actionBInstallLabel), _("_Downgrade"));
     } else if (status == RPackage::SNotInstalled) {
 	gtk_label_set_markup_with_mnemonic(
-		GTK_LABEL(_actionBInstallLabel), _("_Install Latest Version"));
+		GTK_LABEL(_actionBInstallLabel), _("_Install"));
     } else {
 	gtk_label_set_markup_with_mnemonic(
 		GTK_LABEL(_actionBInstallLabel), _("_Upgrade"));

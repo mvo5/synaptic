@@ -73,7 +73,7 @@ static char *DepOptions[] = {
    _("Replaced packages"),      // replaces/obsoletes
    _("Recommendations"), ///recommends
    _("Suggestions"),   // suggests
-   _("Dependants"),   // Reverse Depends
+   _("Dependent packages"),   // Reverse Depends
    _("Origin"),                 // Origin (e.g. security.debian.org)
    NULL
 };

@@ -398,7 +398,7 @@ vector<RPackage::DepInformation> RPackage::enumRDeps()
 	 dep.versionComp = "";
       }
 
-      dep.typeStr=_("Depended on by");
+      dep.typeStr=_("Dependency of");
       dep.name = D.ParentPkg().Name();
 
       if(Trg->VersionList == 0)

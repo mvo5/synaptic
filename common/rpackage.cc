@@ -112,7 +112,6 @@ const char *RPackage::srcPackage()
 {
    pkgCache::VerIterator ver = _package->VersionList();
    pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
-   
    const char *s=rec.SourcePkg().empty()?name():rec.SourcePkg().c_str();
  
    return s;
@@ -825,7 +824,10 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    if(srcpkg.size()>3 && srcpkg[0]=='l' && srcpkg[1]=='i' && srcpkg[2]=='b')
       prefix=std::string("lib")+srcpkg[3];
 
-   string verstr = availableVersion();
+   string verstr;
+   if(availableVersion() == NULL) 
+      verstr = availableVersion();
+   
    if(verstr.find(':')!=verstr.npos)
       verstr=string(verstr, verstr.find(':')+1);
    char uri[512];

@@ -384,7 +384,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), scrollbar, FALSE, FALSE, 0);
    gtk_widget_show(scrollbar);
 
-   skipTaskbar(true);
+   if(!_config->FindB("Volatile::HideMainwindow", false))
+      skipTaskbar(true);
 }
 
 

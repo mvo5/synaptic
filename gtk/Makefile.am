@@ -43,6 +43,7 @@ glade_DATA =                            \
 	dialog_task_descr.glade \
 	dialog_unmet.glade \
 	dialog_update_failed.glade \
+	dialog_update_outdated.glade \
 	dialog_upgrade.glade \
 	dialog_welcome.glade \
 	window_zvtinstallprogress.glade 

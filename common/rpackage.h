@@ -151,6 +151,9 @@ class RPackage {
    // get installed component (like main, contrib, non-free)
    string component();
    
+   // get label of download site
+   string label();
+   
    const char *maintainer();
    const char *vendor();
 
@@ -250,6 +253,11 @@ class RPackageStatus {
    };
 
  protected:
+   // the supported archive-labels and components
+   vector<string> supportedLabels;
+   vector<string> supportedComponents;
+   bool markUnsupported;
+
    // this is the short string to load the icons
    const char *PackageStatusShortString[N_STATUS_COUNT];
    // this is the long string for the gui description of the state
@@ -261,8 +269,8 @@ class RPackageStatus {
 
 
  public:
-   RPackageStatus() {
-   };
+   RPackageStatus() : markUnsupported(false) {};
+   virtual ~RPackageStatus() {};
 
    // this reads the pixmaps and the colors
    virtual void init();
@@ -278,7 +286,12 @@ class RPackageStatus {
    const char *getShortStatusString(int i) {
       return PackageStatusShortString[i];
    };
+
+   bool isSupported(RPackage *pkg);
+   
 };
+
+
 
 #endif
 

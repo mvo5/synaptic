@@ -165,7 +165,7 @@ class RPackageLister {
       sortPackages(_viewPackages, mode);
    };
 
-   void setView(int index);
+   void setView(unsigned int index);
    vector<string> getViews();
    vector<string> getSubViews();
 

@@ -1318,6 +1318,31 @@ string RPackage::component()
 }
 
 
+
+string RPackage::label()
+{
+   string res;
+   pkgCache::VerIterator Ver;
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   if (State.CandidateVer == 0) {
+      //cout << "CanidateVer == 0" << endl;
+      return "";
+   }
+   Ver = State.CandidateVerIter(*_depcache);
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   pkgCache::PkgFileIterator File = VF.File();
+
+   if(File.Label() == NULL) {
+      //cout << "File.Component() == NULL" << endl;
+      return "";
+   }
+
+   res = File.Label();
+
+   return res;
+}
+
+
 // class that finds out what do display to get user
 void RPackageStatus::init()
 {
@@ -1345,6 +1370,60 @@ void RPackageStatus::init()
       _("Not installed (new in repository)")
    };
    memcpy(PackageStatusLongString, status_long, sizeof(status_long));
+
+
+   // check for unsupported stuff
+   if(_config->FindB("Synaptic::mark-unsupported",true)) {
+      string s, labels, components;
+      markUnsupported = true;
+
+      // read supported labels
+      labels = _config->Find("Synaptic::supported-label", "Debian Debian-Security");
+      stringstream sst1(labels);
+      while(!sst1.eof()) {
+	 sst1 >> s;
+	 supportedLabels.push_back(s);
+      }
+      
+      // read supported components
+      components = _config->Find("Synaptic::supported-components", "main updates/main");
+      stringstream sst2(components);
+      while(!sst2.eof()) {
+	 sst2 >> s;
+	 supportedComponents.push_back(s);
+      }
+   } 
+
+}
+
+bool RPackageStatus::isSupported(RPackage *pkg) 
+{
+   bool res = true;
+
+   if(markUnsupported) {
+      bool sc, sl;
+
+      sc=sl=false;
+
+      string component = pkg->component();
+      string label = pkg->label();
+
+      for(unsigned int i=0;i<supportedComponents.size();i++) {
+	 if(supportedComponents[i] == component) {
+	    sc = true;
+	    break;
+	 }
+      }
+      for(unsigned int i=0;i<supportedLabels.size();i++) {
+	 if(supportedLabels[i] == label) {
+	    sl = true;
+	    break;
+	 }
+      }
+      res = (sc & sl);
+   }
+
+   return res;
 }
 
 int RPackageStatus::getStatus(RPackage *pkg)

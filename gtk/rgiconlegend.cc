@@ -59,6 +59,23 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
       gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
    }
 
+
+   // package support status 
+   hbox = gtk_hbox_new(FALSE, 12);
+   gchar *filename = g_strdup_printf("../pixmaps/package-supported.png");
+   if (!FileExists(filename)) {
+      g_free(filename);
+      filename = SYNAPTIC_PIXMAPDIR "package-supported.png";
+   }
+   pix = gtk_image_new_from_pixbuf(gdk_pixbuf_new_from_file(filename, NULL));
+   gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
+   label = gtk_label_new(_config->Find("Synaptic::supported-text",
+				       _("Package is supported")).c_str());
+   gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+   gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+   g_free(filename);
+
+
    gtk_widget_show_all(vbox);
    skipTaskbar(true);
    show();

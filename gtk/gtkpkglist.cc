@@ -227,7 +227,7 @@ static void gtk_pkg_list_init(GtkPkgList *pkg_list)
    //cout << "list_init()" << endl;
    pkg_list->n_columns = N_COLUMNS;
    pkg_list->column_headers[0] = GDK_TYPE_PIXBUF;
-   pkg_list->column_headers[1] = G_TYPE_STRING;
+   pkg_list->column_headers[1] = GDK_TYPE_PIXBUF;
    pkg_list->column_headers[2] = G_TYPE_STRING;
    pkg_list->column_headers[3] = G_TYPE_STRING;
    pkg_list->column_headers[4] = G_TYPE_STRING;
@@ -235,8 +235,9 @@ static void gtk_pkg_list_init(GtkPkgList *pkg_list)
    pkg_list->column_headers[6] = G_TYPE_STRING;
    pkg_list->column_headers[7] = G_TYPE_STRING;
    pkg_list->column_headers[8] = G_TYPE_STRING;
-   pkg_list->column_headers[9] = GDK_TYPE_COLOR;
-   pkg_list->column_headers[10] = G_TYPE_POINTER;
+   pkg_list->column_headers[9] = G_TYPE_STRING;
+   pkg_list->column_headers[10] = GDK_TYPE_COLOR;
+   pkg_list->column_headers[11] = G_TYPE_POINTER;
 }
 
 /**
@@ -450,6 +451,15 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
           GdkColor *bg;
           bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
           g_value_set_boxed(value, bg);
+          break;
+       }
+      case SUPPORTED_COLUMN:
+       {
+          if (pkg == NULL)
+             return;
+          GdkPixbuf *pix;
+          pix = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
+          g_value_set_object(value, pix);
           break;
        }
       case PIXMAP_COLUMN:

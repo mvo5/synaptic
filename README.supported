@@ -1,0 +1,55 @@
+Task support for synaptic
+-------------------------
+
+
+Synaptic works on quite a few distributions. To make support for the
+various task systems easy synaptic needs a helper application called
+"tasksel" (or any other helper that can be speficified with 
+"-o Synaptic::taskHelperProg=prog"). It has to support the following
+commands:
+
+--list-tasks: returns a list of the format
+              "$installed $taskname\t$task-short-description" 
+	      where $installed can be 'i' (installed) or 'u' (uninstalled)
+
+--task-packages $task: list the packages included in the given task
+                       this option can be used more than once for
+                       different tasks
+
+--task-desc $task: print a long description about the given task
+
+
+Examples:
+
+$ tasksel --list-tasks
+database-server SQL database
+i desktop Desktop environment
+u dns-server      DNS server
+u file-server     File server
+u mail-server     Mail server
+u print-server    Print server
+u web-server      Web server
+
+$ tasksel --task-packages dns-server --task-packages print-server
+bind9
+bind9-doc
+dlint
+dnsutils
+lwresd
+cupsys
+cupsys-bsd
+cupsys-client
+cupsys-driver-gimpprint
+foomatic-db-engine
+foomatic-db-hpijs
+foomatic-filters-ppds
+foomatic-gui
+samba
+samba-doc
+smbclient
+smbfs
+swat
+
+$ tasksel --task-desc desktop           
+This task provides basic "desktop" software, including a variety of session managers, file managers and web browsers. It incorporates both the GNOME and KDE desktops, and provides a display manager which lets the user choose between the two.
+

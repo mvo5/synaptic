@@ -65,13 +65,6 @@ typedef enum {
 } RGPkgAction;
 
 class RGMainWindow : public RGGladeWindow, public RPackageObserver {
-   enum {
-      DoNothing,
-      InstallRecommended,
-      InstallSuggested,
-      InstallSelected
-   };
-
    typedef enum {
       UPGRADE_ASK = -1,
       UPGRADE_NORMAL = 0,
@@ -206,6 +199,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // helper for recommends/suggests 
    // (data is the name of the pkg, self needs to have a pointer to "me" )
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
+   void installAllWeakDepends(RPackage *pkg, pkgCache::Dep::DepType type);
 
    // install a non-standard version (data is a char* of the version)
    static void cbInstallFromVersion(GtkWidget *self, void *data);

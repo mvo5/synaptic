@@ -72,7 +72,11 @@ class RGRepositoryEditor:RGGladeWindow {
    static void DoCancel(GtkWidget *, gpointer);
    static void VendorsWindow(GtkWidget *, gpointer);
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
-
+   
+   // treeview item toggled
+   static void item_toggled(GtkCellRendererToggle *cell, 
+			    gchar *path_str, 
+			    gpointer data);
    // get values
    void doEdit();
 

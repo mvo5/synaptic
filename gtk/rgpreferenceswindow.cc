@@ -39,12 +39,12 @@
 enum { FONT_DEFAULT, FONT_TERMINAL };
 
 const char * RGPreferencesWindow::column_names[] = 
-   {"status", "name", "section", "component", "instVer", 
+   {"status", "supported", "name", "section", "component", "instVer", 
     "availVer", "instSize", "downloadSize", "descr", NULL };
 
 const char *RGPreferencesWindow::column_visible_names[] = 
-   {_("Status"), _("Package Name"), _("Section"), _("Component"),
-    _("Installed Version"), _("Available Version"), 
+   {_("Status"), _("Supported"), _("Package Name"), _("Section"),
+      _("Component"), _("Installed Version"), _("Available Version"), 
     _("Installed Size"), _("Download Size"),_("Description"), NULL };
 
 

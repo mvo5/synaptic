@@ -157,7 +157,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
    if (held.size() > 0) {
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
-                         PKG_COLUMN, _("To be kept back"), -1);
+                         PKG_COLUMN, _("To be not upgraded"), -1);
       for (vector<RPackage *>::const_iterator p = held.begin();
            p != held.end(); p++) {
          gtk_tree_store_append(me->_treeStore, &iter_child, &iter);

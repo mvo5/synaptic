@@ -27,6 +27,7 @@
 #include "rpackage.h"
 
 enum {
+   SUPPORTED_COLUMN,
    PIXMAP_COLUMN,
    NAME_COLUMN,
    COMPONENT_COLUMN,
@@ -60,6 +61,8 @@ class RGPackageStatus : public RPackageStatus {
    GdkPixbuf *StatusPixbuf[N_STATUS_COUNT];
    GdkColor *StatusColors[N_STATUS_COUNT];
 
+   GdkPixbuf *supportedPix;
+
    void initColors();
    void initPixbufs();
 
@@ -71,6 +74,7 @@ class RGPackageStatus : public RPackageStatus {
    
    // this is what the package listers use
    GdkColor *getBgColor(RPackage *pkg);
+   GdkPixbuf *getSupportedPix(RPackage *pkg);
    GdkPixbuf *getPixbuf(RPackage *pkg);
    GdkPixbuf *getPixbuf(int i) {
       return StatusPixbuf[i];

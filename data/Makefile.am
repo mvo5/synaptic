@@ -1,6 +1,6 @@
 @INTLTOOL_DESKTOP_RULE@
 
-desktopdir       = $(datadir)/applications
+desktopdir       = $(datadir)/control-center-2.0/capplets/
 desktop_in_files = synaptic.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 

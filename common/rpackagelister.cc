@@ -108,7 +108,7 @@ RPackageLister::~RPackageLister()
    delete _cache;
 }
 
-void RPackageLister::setView(int index)
+void RPackageLister::setView(unsigned int index)
 {
    _config->Set("Synaptic::ViewMode", index);
    if(index < _views.size())

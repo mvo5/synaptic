@@ -32,6 +32,7 @@ status_icon_DATA = package-available-locked.png \
 		   package-new.png \
 		   package-purge.png \
 		   package-remove.png \
+		   package-supported.png \
 		   package-upgrade.png
 
 fetchstatusdir = $(datadir)/synaptic/pixmaps

@@ -362,7 +362,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // return if no pkg is selected
    if (!pkg) 
       return;
-   
+
+//    cout <<   pkg->label() << endl;
+//    cout <<   pkg->component() << endl;
+  
    // set menu according to pkg status
    int flags = pkg->getFlags();
 
@@ -533,6 +536,23 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    return changed;
 }
 
+void RGMainWindow::installAllWeakDepends(RPackage *pkg, 
+					 pkgCache::Dep::DepType type)
+{
+   //cout << "RGMainWindow::installWeakDepends()" << endl;
+   if(pkg == NULL) return;
+   
+   vector<RPackage::DepInformation> deps = pkg->enumDeps();
+   for(unsigned int i=0;i<deps.size();i++) {
+      if(deps[i].type == type) {
+	 if(!deps[i].isVirtual) {
+	    RPackage *newpkg = (RPackage *) _lister->getPackage(deps[i].name);
+	    pkgInstallHelper(newpkg);
+	 }
+      }
+   } 
+}
+
 void RGMainWindow::pkgAction(RGPkgAction action)
 {
    GtkTreeSelection *selection;
@@ -590,6 +610,9 @@ void RGMainWindow::pkgAction(RGPkgAction action)
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
             pkgInstallHelper(pkg, false);
+	    if(_config->FindB("Synaptic::UseRecommends", false)) {
+	       installAllWeakDepends(pkg, pkgCache::Dep::Recommends);
+	    }
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
@@ -785,9 +808,25 @@ void RGMainWindow::buildTreeView()
       all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
    }
 
+   /* supported(pixmap) column */
+   pos = _config->FindI("Synaptic::supportedColumnPos", 1);
+   visible = _config->FindI("Synaptic::supportedColumnVisible", true);
+   if(visible) {
+      renderer = gtk_cell_renderer_pixbuf_new();
+      // TRANSLATORS: Column header for the column "Status" in the package list
+      column = gtk_tree_view_column_new_with_attributes(_(" "), renderer,
+                                                        "pixbuf",
+                                                        SUPPORTED_COLUMN, NULL);
+      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+      gtk_tree_view_column_set_fixed_width(column, 20);
+      //gtk_tree_view_insert_column(GTK_TREE_VIEW(_treeView), column, pos);
+      gtk_tree_view_column_set_sort_column_id(column, COLOR_COLUMN);
+      all_columns.push_back(pair<int, GtkTreeViewColumn *>(pos, column));
+   }
+
 
    /* Package name */
-   pos = _config->FindI("Synaptic::nameColumnPos", 1);
+   pos = _config->FindI("Synaptic::nameColumnPos", 2);
    visible = _config->FindI("Synaptic::nameColumnVisible", true);
    if (visible) {
       renderer = gtk_cell_renderer_text_new();

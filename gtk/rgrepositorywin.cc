@@ -64,26 +64,44 @@ enum {
    N_SOURCES_COLUMNS
 };
 
-static void
-item_toggled(GtkCellRendererToggle *cell, gchar *path_str, gpointer data)
+ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell, 
+				       gchar *path_str, gpointer data)
 {
+   RGRepositoryEditor *me = (RGRepositoryEditor *)g_object_get_data(G_OBJECT(cell), "me");
    GtkTreeModel *model = (GtkTreeModel *) data;
    GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
    GtkTreeIter iter;
    gboolean toggle_item;
+   gchar *section = NULL;
 
    /* get toggled iter */
    gtk_tree_model_get_iter(model, &iter, path);
-   gtk_tree_model_get(model, &iter, STATUS_COLUMN, &toggle_item, -1);
+   gtk_tree_model_get(model, &iter, 
+		      STATUS_COLUMN, &toggle_item, 
+		      SECTIONS_COLUMN, &section, -1);
 
    /* do something with the value */
    toggle_item ^= 1;
+
+   // special warty check
+   if(toggle_item && section && g_strrstr(section, "universe")) {
+      gchar *msg = _("You are adding the \"universe\" component.\n\n "
+		     "Packages in this component are not supported. "
+		     "Are you sure?");
+      if(!me->_userDialog->message(msg, RUserDialog::DialogWarning,
+				   RUserDialog::ButtonsOkCancel)) {
+	 gtk_tree_path_free(path);
+	 g_free(section);
+	 return;
+      }
+   }
 
    /* set new value */
    gtk_list_store_set(GTK_LIST_STORE(model), &iter,
                       STATUS_COLUMN, toggle_item, -1);
 
    /* clean up */
+   g_free(section);
    gtk_tree_path_free(path);
 }
 
@@ -120,6 +138,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 
    // status
    renderer = gtk_cell_renderer_toggle_new();
+   g_object_set_data(G_OBJECT(renderer), "me", this);
    column = gtk_tree_view_column_new_with_attributes(_("Enabled"),
                                                      renderer,
                                                      "active", STATUS_COLUMN,

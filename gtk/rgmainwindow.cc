@@ -1246,12 +1246,17 @@ void RGMainWindow::buildInterface()
 
    _vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
    assert(_vpaned);
+   _hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
+   assert(_hpaned);
    // If the pane position is restored before the window is shown, it's
    // not restored in the same place as it was.
    show();
    RGFlushInterface();
    gtk_paned_set_position(GTK_PANED(_vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
+   gtk_paned_set_position(GTK_PANED(_hpaned),
+                          _config->FindI("Synaptic::hpanedPos", 150));
+
 
    // build the treeview
    buildTreeView();
@@ -1583,6 +1588,8 @@ void RGMainWindow::saveState()
       return;
    _config->Set("Synaptic::vpanedPos",
                 gtk_paned_get_position(GTK_PANED(_vpaned)));
+   _config->Set("Synaptic::hpanedPos",
+                gtk_paned_get_position(GTK_PANED(_hpaned)));
    _config->Set("Synaptic::windowWidth", _win->allocation.width);
    _config->Set("Synaptic::windowHeight", _win->allocation.height);
    gint x, y;

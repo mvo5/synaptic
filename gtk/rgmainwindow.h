@@ -132,6 +132,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // package info tabs   
    GtkWidget *_pkginfo;
    GtkWidget *_vpaned;
+   GtkWidget *_hpaned;
 
    GtkWidget *_pkgCommonTextView;
    GtkTextBuffer *_pkgCommonTextBuffer;

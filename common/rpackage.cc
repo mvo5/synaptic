@@ -250,7 +250,7 @@ const char *RPackage::installedFiles()
     static string filelist;
     string s;
 
-    filelist.clear();
+    filelist.erase(filelist.begin(), filelist.end());
 
     string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
     if(FileExists(f)) {

@@ -245,7 +245,7 @@
 				<variablelist>
 					<varlistentry>
 						<term>
-							Update
+							Update List
 						</term>
 						<listitem>
 							<para>
@@ -257,7 +257,7 @@
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Upgrade
+							Upgrade Packages
 						</term>
 						<listitem>
 							<para>
@@ -322,7 +322,7 @@
 	</figure>
 
 	<para>
-		You can arrange the packages in the follwing modes from <guimenu>View</guimenu> menu:
+		To arrange the packages you can choose the follwing modes from <guimenu>View</guimenu> menu:
 	</para>
 	<table frame="topbot" id="table-synaptic-viewmodes">
 		<title>
@@ -424,7 +424,7 @@
 		Quick Search
 	</title>
 	<para>
-		Search for a package name in the list of shown:
+		To find a package name in the list of shown packages follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -432,19 +432,19 @@
 				Type the name or a part of it into the
 				<xref linkend="anchor-findfield"/>
 				located in the toolbar. &app; will automatically
-				jump to the first matching package in the list
+				jump to the first matching package in the list.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
 				To find the next matching package press the 
-				the forward button next to the search field
+				the forward button next to the find field.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				To begin the search from the beginning of the
-				package list click on the upward button
+				To begin the search again from the beginning of the
+				package list click on the upward button.
 			</para>
 		</listitem>
 	</orderedlist>
@@ -456,33 +456,32 @@
 	</title>
 	
 	<para>
-		Filter the list of shown packages for a pattern e.g.
-		show only packages from the maintainer Joe User or only packages
-		with "german" in the name or description
+		The advanced search is a special filter for the package list. Only matching packages will be shown 
+		in the package list.
 	</para>
+
 	<orderedlist>
 		<listitem>
 			<para>
-				Open the advanced search dialog via
-				<menuchoice><guimenu>Search</guimenu>
-				<guimenuitem>Advanced Search</guimenuitem>
-				</menuchoice>
+				Open the search dialog <menuchoice><guimenu>Package</guimenu>
+				<guimenuitem>Search...</guimenuitem>
+				</menuchoice> from the menu.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Type the search expression into the find field
+				Type the search expression into the find field, e.g. "mp3 ogg player".
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Select the fields that you want to search in
+				Select the fields that you want to search in, e.g. "name" and "description"
 			</para>
 		</listitem>
 		<listitem>
 			<para>
 				Click on <guibutton>Find</guibutton> to 
-				start the search
+				start the search. In our example only music players and related packages will be listed.
 			</para>
 		</listitem>
 	</orderedlist>
@@ -498,7 +497,7 @@
 <sect2 id="synaptic-install"> 
 	<title>Installing Packages</title>
 	<para>
-		Follow these steps to install one or more packages.
+		To install one or more packages follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -566,8 +565,8 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.
-					</para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.	
+				</para>
 				</listitem>
 				<listitem>
 					<para>
@@ -589,7 +588,7 @@
 <sect2 id="synaptic-remove"> 
 	<title>Removing Packages</title>
 	<para>
-		Follow these steps to remove one or more packages.
+		To remove one or more packages follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -671,9 +670,9 @@
 	</note>
 </sect2>
 <sect2 id="synaptic-upgrade"> 
-	<title>Upgrading Packages</title>
+	<title>Upgrading Single Packages</title>
 	<para>
-		Follow these steps to upgrade one or more packages.
+		To upgrade one or more packages follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -770,14 +769,52 @@
 
 
 <sect2 id="synaptic-upgradeall"> 
-	<title>Upgrading All Packages</title>
+	<title>Upgrading System</title>
 	<para>
-		&app; can handle upgrades in two ways: BLABLABLA
+		The global upgrade enables you to upgrade your system
+		to the latest version without having to queue each package upgrade manually.
+	</para>
+	
+	<para>
+		&app; provides two global upgrade methods:
+	<variablelist>
+		<varlistentry>
+			<term>
+				Upgrade
+			</term>
+			<listitem>
+				<para> 
+					The default upgrade method queues upgrades of installed packages only. 
+					If the later version of a package depends on not installed packages 
+					or conflicts with an allready installed package, 
+					the upgrade will not be queued.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Dist-Upgrade
+			</term>
+			<listitem>
+				<para>
+					Dist-Upgrade tries to resolve package conflicts intelligently. This includes
+					installing additional required packages and prefering packages with
+					higher priority.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
 	</para>
 
+	<note>
+		<para>
+			Upgrades to later operating system major releases have to be done with the 
+			dist-upgrade method, e.g. from Red Hat 9 to Red Hat 9.1 or from Debian Woody to Debian Sarge.
+		</para>
+	</note>
 
 	<para>
-		Follow these steps to upgrade all installed packages to the latest version.
+		To upgrade your system to the latest version follow these steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -788,12 +825,12 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Update Package List</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Update</guibutton> in the toolbar.
+						Click on <guibutton>Update List</guibutton> in the toolbar.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -806,7 +843,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Upgrade
+						Click on <guibutton>Upgrade All Packages
 						</guibutton> in the toolbar.
 					</para>
 				</listitem>
@@ -824,6 +861,12 @@
 					</para>
 				</listitem>
 			</itemizedlist>
+		</listitem>
+		
+		<listitem>
+			<para>
+				Choose the upgrade method. Dist-upgrade is recommended.
+			</para>
 		</listitem>
 		<listitem>
 			<para>
@@ -852,18 +895,70 @@
 	</orderedlist>
 	<tip>
 		<para>
-			To upgrade all installed packages to the latest version 
-			see <xref linkend="synaptic-upgradeall"/>.
+			You can change the default upgrade method in the
+			<xref linkend="synaptic-prefs-actions"/>.
 		</para>
 	</tip>
 </sect2>
 
 <sect2 id="synaptic-downgrade"> 
-<title>Downgrading Packages</title> 
-<warning><para>Downgrading a package is a broken feature, since it is not supported by
-. It may work for you, but it is not recommended.</para></warning>
-<para>The export tab in the information area of the package provides a list of all
- versions of the package. The tab is explained in detail in <xref linkend="synaptic-repo"></xref>. </para>
+	<title>
+		Downgrading Packages
+	</title> 
+
+	<warning>
+		<para>
+			Downgrading packages is a broken feature, since apt and &app; can only handle
+			conflicts and dependency resolution in upgrades. 
+			You may need this feature in some circumstances, but it is not recommended to use. 
+		</para>
+	</warning>
+
+	<para>
+		To downgrade a package you have to select a speficic version of the package:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package that you wish to downgrade in the 
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Open the <guibutton>Expert</guibutton> tab in the detail area.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose the version to be installed from the list.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Execute the queued changes to actually downgrade the package(s):
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</orderedlist>
 </sect2>
 
 </sect1>
@@ -984,6 +1079,22 @@
 			</tbody>
 		</tgroup>
 	</table>
+	<para>
+		To apply a filter:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>View</guimenu><guisubmenu>Apply Filter</guisubmenu>
+				<guimenuitem>FILTERNAME</guimenuitem></menuchoice>.
+			</para>	
+		</listitem>
+		<listitem>
+			<para>
+				Choose the filter from the Show combobox in the main window.
+			</para>	
+		</listitem>
+	</itemizedlist>
 </sect2>
 
 <sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
@@ -1049,11 +1160,132 @@
 <sect1 id="snyaptic-prefs">
 	<title>Preferences</title>
 
-<sect2 id="synaptic-prefs-general"> 
+<sect2 id="synaptic-prefs-general" xreflabel="action preferences"> 
 	<title>General</title> 
 	<para>
+		The general preferences include the following settings:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				General
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Allow regular expressions in searches and filters
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Actions
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Show terminal window while executing
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Ask to quit after the changes habe been executed
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Remove package
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Upgrade method
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Number of undo operations
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Dependencies
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Confirm actions also affecting other packages
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Consider recommended packages as depencies
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
 		<anchor id="anchor-purge" xreflabel="action preferences"/>
-	 </para>
+
 </sect2>
 
 <sect2 id="synaptic-prefs-layout"> 
@@ -1061,7 +1293,7 @@
 	<para> </para>
 </sect2>
 
-<sect2 id="synaptiac-prefs-ordercolor"> 
+<sect2 id="synaptic-prefs-ordercolor"> 
 	<title>Column Order and Colors</title> 
 	<para> </para>
 </sect2>    
@@ -1087,10 +1319,65 @@
 </sect2> 
 </sect1>
 
-<sect1 id="mayapp-bugs">
+<sect1 id="synaptic-glossar">
+	<title>
+		Glossar
+	</title>
+
+	<para>
+		Tag auch lalalalalal
+	</para>
+	<glosslist>
+			<glossentry>
+			<glossterm>
+				Dist-Upgrade
+			</glossterm>
+			<glossdef>
+				<para>
+					Lalal alalalasdad ascal cdsl cdslcl blalallalala
+				</para>
+				<glossseealso otherterm="gl-upgrade"/>
+			</glossdef>
+		</glossentry>
+
+		<glossentry>
+			<glossterm id="gl-upgrade">
+				Upgrade
+			</glossterm>
+			<glossdef>
+				<para>
+					asdadasdasdasd asd bl bla alalalalalalala
+				</para>
+			</glossdef>
+		</glossentry>
+			<glossentry>
+			<glossterm>
+				Packages
+			</glossterm>
+			<glossdef>
+				<para>
+					adasdasdsadasdasdasd
+				</para>
+			</glossdef>
+		</glossentry>
+			<glossentry>
+			<glossterm>
+				Repository
+			</glossterm>
+			<glossdef>
+				<para>
+					asdasdasdasdasdasd
+				</para>
+			</glossdef>
+		</glossentry>
+	</glosslist>
+</sect1>
+
+
+<!-- sect1 id="mayapp-bugs">
 	<title>Known Bugs and Limitations</title>
 	<para> </para>
-</sect1>
+</sect1 -->
 
 <sect1 id="myapp-about"> 
 	<title>About &app;</title> 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-17 13:42+0200\n"
 "PO-Revision-Date: 2003-09-30 00:58+0200\n"
 "Last-Translator: Emil <emil5@go2.pl>\n"
 "Language-Team: Polski <pl@li.org>\n"
@@ -1007,7 +1007,8 @@ msgstr "Nie zainstalowane"
 msgid "_Downgrade"
 msgstr "_Aktualizacja"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 #, fuzzy
 msgid "_Install Latest Version"
 msgstr "Zainstalowana wersja"
@@ -1583,19 +1584,17 @@ msgid "Pac_kage"
 msgstr "Pakiety"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "_Zatrzymaj"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "_Instalacja"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1835,8 +1834,10 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "Informacje"
+#: gtk/window_main_vpaned.glade.strings:84
+#, fuzzy
+msgid "Common"
+msgstr "Komponenty"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1949,8 +1950,10 @@ msgid "Expert"
 msgstr "Wykonaj"
 
 #: gtk/window_main_hpaned.glade.strings:93
-msgid "<b>Status</b>"
-msgstr "<b>Stan</b>"
+#: gtk/window_main_vpaned.glade.strings:69
+#, fuzzy
+msgid "<b>Package Control</b>"
+msgstr "<b>Ogólne</b>"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1959,12 +1962,17 @@ msgid "     "
 msgstr "     "
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 #, fuzzy
 msgid "Install the latest version of the package"
 msgstr "Wybierz najnowsze wersje dla wszystkich zainstalowanych pakietów"
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 #, fuzzy
 msgid "Deinstall the package"
@@ -1972,32 +1980,51 @@ msgstr ""
 "\n"
 "Zainstalowany Pakiet:\n"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "Wybranie tej opcji powoduje, że pakiet nigdy nie będzie aktualizowany"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:102
-msgid "Hold package"
-msgstr ""
-"Wstrzymaj\n"
-"pakiet"
+#: gtk/window_main_vpaned.glade.strings:78
+#, fuzzy
+msgid "Exclude the package from upgrades"
+msgstr "Usuń przestarzałe pakiety z magazynu podręcznego pakietów"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:104
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+#, fuzzy
+msgid "_Configure"
 msgstr ""
 "Ponowna\n"
 "konfiguracja"
 
-#: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
-msgstr "Pokaż pomoc dla pakietów"
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr ""
 
-#: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr "Synaptic - interfejs dla apt"
@@ -2022,55 +2049,9 @@ msgstr "Zwykła lista"
 msgid "_Tag tree"
 msgstr "Drzewo Znaczników"
 
-#: gtk/window_main_vpaned.glade.strings:69
-#, fuzzy
-msgid "<b>Package Control</b>"
-msgstr "<b>Ogólne</b>"
-
 #: gtk/window_main_vpaned.glade.strings:70
 msgid "   "
 msgstr "   "
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:78
-#, fuzzy
-msgid "Exclude the package from upgrades"
-msgstr "Usuń przestarzałe pakiety z magazynu podręcznego pakietów"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:81
-#, fuzzy
-msgid "_Configure"
-msgstr ""
-"Ponowna\n"
-"konfiguracja"
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:84
-#, fuzzy
-msgid "Common"
-msgstr "Komponenty"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2671,6 +2652,29 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors..."
 msgstr "Dostarczający"
+
+#~ msgid "Information"
+#~ msgstr "Informacje"
+
+#~ msgid "<b>Status</b>"
+#~ msgstr "<b>Stan</b>"
+
+#~ msgid "Never upgrade this package"
+#~ msgstr ""
+#~ "Wybranie tej opcji powoduje, że pakiet nigdy nie będzie aktualizowany"
+
+#~ msgid "Hold package"
+#~ msgstr ""
+#~ "Wstrzymaj\n"
+#~ "pakiet"
+
+#~ msgid "Reconfigure"
+#~ msgstr ""
+#~ "Ponowna\n"
+#~ "konfiguracja"
+
+#~ msgid "Show Pkg Help"
+#~ msgstr "Pokaż pomoc dla pakietów"
 
 #, fuzzy
 #~ msgid "Hold pkg"

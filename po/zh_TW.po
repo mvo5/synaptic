@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-17 13:42+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -1005,7 +1005,8 @@ msgstr "未安裝"
 msgid "_Downgrade"
 msgstr "升級"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 #, fuzzy
 msgid "_Install Latest Version"
 msgstr "已安裝"
@@ -1581,19 +1582,17 @@ msgid "Pac_kage"
 msgstr "套件"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "維持原狀(_K)"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "安裝(_I)"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1823,8 +1822,10 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "套件資訊"
+#: gtk/window_main_vpaned.glade.strings:84
+#, fuzzy
+msgid "Common"
+msgstr "指令"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1942,9 +1943,10 @@ msgid "Expert"
 msgstr "不包括"
 
 #: gtk/window_main_hpaned.glade.strings:93
+#: gtk/window_main_vpaned.glade.strings:69
 #, fuzzy
-msgid "<b>Status</b>"
-msgstr "動作"
+msgid "<b>Package Control</b>"
+msgstr "一般資訊"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1954,11 +1956,16 @@ msgid "     "
 msgstr "    　日期"
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 msgid "Install the latest version of the package"
 msgstr ""
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 #, fuzzy
 msgid "Deinstall the package"
@@ -1966,29 +1973,49 @@ msgstr ""
 "\n"
 "已安裝套件:\n"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "永不升級此套件"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:102
+#: gtk/window_main_vpaned.glade.strings:78
 #, fuzzy
-msgid "Hold package"
-msgstr "永不升級"
+msgid "Exclude the package from upgrades"
+msgstr "不包括已選的組別"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
-msgstr "顯示套件說明"
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+#, fuzzy
+msgid "_Configure"
+msgstr "繼續"
+
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr ""
@@ -2011,54 +2038,10 @@ msgstr "更新清單(_L)"
 msgid "_Tag tree"
 msgstr "狀態"
 
-#: gtk/window_main_vpaned.glade.strings:69
-#, fuzzy
-msgid "<b>Package Control</b>"
-msgstr "一般資訊"
-
 #: gtk/window_main_vpaned.glade.strings:70
 #, fuzzy
 msgid "   "
 msgstr "    　日期"
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:78
-#, fuzzy
-msgid "Exclude the package from upgrades"
-msgstr "不包括已選的組別"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:81
-#, fuzzy
-msgid "_Configure"
-msgstr "繼續"
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:84
-#, fuzzy
-msgid "Common"
-msgstr "指令"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2661,6 +2644,23 @@ msgstr ""
 #, fuzzy
 msgid "Vendors..."
 msgstr "發行商"
+
+#~ msgid "Information"
+#~ msgstr "套件資訊"
+
+#, fuzzy
+#~ msgid "<b>Status</b>"
+#~ msgstr "動作"
+
+#~ msgid "Never upgrade this package"
+#~ msgstr "永不升級此套件"
+
+#, fuzzy
+#~ msgid "Hold package"
+#~ msgstr "永不升級"
+
+#~ msgid "Show Pkg Help"
+#~ msgstr "顯示套件說明"
 
 #, fuzzy
 #~ msgid "Pkg Help"

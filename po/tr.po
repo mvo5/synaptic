@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-17 13:42+0200\n"
 "PO-Revision-Date: 2003-01-09 13:46+0300\n"
 "Last-Translator: Rail Aliev <rail@iqchoice.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -1011,7 +1011,8 @@ msgstr "Kurulu deðil"
 msgid "_Downgrade"
 msgstr "Güncelle"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 #, fuzzy
 msgid "_Install Latest Version"
 msgstr "Kurulu"
@@ -1587,19 +1588,17 @@ msgid "Pac_kage"
 msgstr "Paket"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "_Tut"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "_Kur"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1835,8 +1834,10 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "Bilgi"
+#: gtk/window_main_vpaned.glade.strings:84
+#, fuzzy
+msgid "Common"
+msgstr "Komutlar"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1954,9 +1955,10 @@ msgid "Expert"
 msgstr "Dahil etme"
 
 #: gtk/window_main_hpaned.glade.strings:93
+#: gtk/window_main_vpaned.glade.strings:69
 #, fuzzy
-msgid "<b>Status</b>"
-msgstr "Eylemler"
+msgid "<b>Package Control</b>"
+msgstr "Genel"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1966,11 +1968,16 @@ msgid "     "
 msgstr "    Tarih"
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 msgid "Install the latest version of the package"
 msgstr ""
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 #, fuzzy
 msgid "Deinstall the package"
@@ -1978,29 +1985,49 @@ msgstr ""
 "\n"
 "Kurulu paket:\n"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "Bu paketi asla güncelleme"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:102
+#: gtk/window_main_vpaned.glade.strings:78
 #, fuzzy
-msgid "Hold package"
-msgstr "Paketi tut"
+msgid "Exclude the package from upgrades"
+msgstr "Ýþaretli seçenekleri dýþla"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+#, fuzzy
+msgid "_Configure"
+msgstr "Devam "
+
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr ""
@@ -2023,54 +2050,10 @@ msgstr "Tazele"
 msgid "_Tag tree"
 msgstr "Durum"
 
-#: gtk/window_main_vpaned.glade.strings:69
-#, fuzzy
-msgid "<b>Package Control</b>"
-msgstr "Genel"
-
 #: gtk/window_main_vpaned.glade.strings:70
 #, fuzzy
 msgid "   "
 msgstr "    Tarih"
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:78
-#, fuzzy
-msgid "Exclude the package from upgrades"
-msgstr "Ýþaretli seçenekleri dýþla"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:81
-#, fuzzy
-msgid "_Configure"
-msgstr "Devam "
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:84
-#, fuzzy
-msgid "Common"
-msgstr "Komutlar"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2672,6 +2655,20 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors..."
 msgstr "Saðlayýcý"
+
+#~ msgid "Information"
+#~ msgstr "Bilgi"
+
+#, fuzzy
+#~ msgid "<b>Status</b>"
+#~ msgstr "Eylemler"
+
+#~ msgid "Never upgrade this package"
+#~ msgstr "Bu paketi asla güncelleme"
+
+#, fuzzy
+#~ msgid "Hold package"
+#~ msgstr "Paketi tut"
 
 #, fuzzy
 #~ msgid "Pkg Help"

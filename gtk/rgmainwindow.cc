@@ -3153,6 +3153,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 
     //cout << "display mode: " << _treeDisplayMode << endl;
     gtk_widget_set_sensitive(GTK_WIDGET(_filterPopup), true);
+    gtk_widget_set_sensitive(GTK_WIDGET(glade_xml_get_widget(_gladeXML,"toolbar_find")), true);
     switch(_treeDisplayMode) {
 	case RPackageLister::TREE_DISPLAY_FLAT: 
 	_pkgList = gtk_pkg_list_new(_lister);
@@ -3171,6 +3172,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 
 	//test_tag_tree(_tagTree);
 	gtk_widget_set_sensitive(GTK_WIDGET(_filterPopup), false);
+	gtk_widget_set_sensitive(GTK_WIDGET(glade_xml_get_widget(_gladeXML,"toolbar_find")), false);
 
 	_activeTreeModel = GTK_TREE_MODEL(_tagTree);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 

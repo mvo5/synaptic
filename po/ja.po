@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45pre7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-17 13:42+0200\n"
 "PO-Revision-Date: 2003-10-12 04:36+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -992,7 +992,8 @@ msgstr "未インストール"
 msgid "_Downgrade"
 msgstr "ダウングレード(_D)"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 #, fuzzy
 msgid "_Install Latest Version"
 msgstr "インストール済バージョン"
@@ -1573,19 +1574,17 @@ msgid "Pac_kage"
 msgstr "パッケージ(_K)"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "保持(_K)"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "インストール(_I)"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1802,8 +1801,10 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "情報"
+#: gtk/window_main_vpaned.glade.strings:84
+#, fuzzy
+msgid "Common"
+msgstr "コマンド"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1913,8 +1914,10 @@ msgid "Expert"
 msgstr "実行"
 
 #: gtk/window_main_hpaned.glade.strings:93
-msgid "<b>Status</b>"
-msgstr "<b>状態</b>"
+#: gtk/window_main_vpaned.glade.strings:69
+#, fuzzy
+msgid "<b>Package Control</b>"
+msgstr "<b>全般</b>"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1923,37 +1926,63 @@ msgid "     "
 msgstr "     "
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 msgid "Install the latest version of the package"
 msgstr "最新バージョンのパッケージをインストールする"
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 msgid "Deinstall the package"
 msgstr "パッケージインストールの撤回"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr "設定されたとおりパッケージを保持し、選択された変更を無視する"
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "このパッケージはアップグレードしない"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:102
-msgid "Hold package"
-msgstr "保留パッケージ"
+#: gtk/window_main_vpaned.glade.strings:78
+#, fuzzy
+msgid "Exclude the package from upgrades"
+msgstr "選択されたパッケージを除外する"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
-msgstr "再設定"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
-msgstr "パッケージヘルプを表示"
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+#, fuzzy
+msgid "_Configure"
+msgstr "再設定"
+
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr "Synaptic - apt フロントエンド"
@@ -1975,53 +2004,9 @@ msgstr "フラット表示(_F)"
 msgid "_Tag tree"
 msgstr "タグツリー(_T)"
 
-#: gtk/window_main_vpaned.glade.strings:69
-#, fuzzy
-msgid "<b>Package Control</b>"
-msgstr "<b>全般</b>"
-
 #: gtk/window_main_vpaned.glade.strings:70
 msgid "   "
 msgstr "   "
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:78
-#, fuzzy
-msgid "Exclude the package from upgrades"
-msgstr "選択されたパッケージを除外する"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:81
-#, fuzzy
-msgid "_Configure"
-msgstr "再設定"
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:84
-#, fuzzy
-msgid "Common"
-msgstr "コマンド"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2573,6 +2558,24 @@ msgstr ""
 #: gtk/window_repositories.glade.strings:16
 msgid "Vendors..."
 msgstr "ベンダ..."
+
+#~ msgid "Information"
+#~ msgstr "情報"
+
+#~ msgid "<b>Status</b>"
+#~ msgstr "<b>状態</b>"
+
+#~ msgid "Never upgrade this package"
+#~ msgstr "このパッケージはアップグレードしない"
+
+#~ msgid "Hold package"
+#~ msgstr "保留パッケージ"
+
+#~ msgid "Reconfigure"
+#~ msgstr "再設定"
+
+#~ msgid "Show Pkg Help"
+#~ msgstr "パッケージヘルプを表示"
 
 #~ msgid "Pkg Help"
 #~ msgstr "パッケージヘルプ"

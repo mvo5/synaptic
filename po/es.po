@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-17 13:42+0200\n"
 "PO-Revision-Date: 2003-10-12 19:07+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -990,7 +990,8 @@ msgstr "no instalado"
 msgid "_Downgrade"
 msgstr "_Desactualizar"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 #, fuzzy
 msgid "_Install Latest Version"
 msgstr "Versión instalada"
@@ -1594,19 +1595,17 @@ msgid "Pac_kage"
 msgstr "Pa_quete"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "_Conservar"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "_Instalar"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1826,8 +1825,10 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "Información"
+#: gtk/window_main_vpaned.glade.strings:84
+#, fuzzy
+msgid "Common"
+msgstr "Comandos"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1937,8 +1938,10 @@ msgid "Expert"
 msgstr "Experto"
 
 #: gtk/window_main_hpaned.glade.strings:93
-msgid "<b>Status</b>"
-msgstr "<b>Cadena</b>"
+#: gtk/window_main_vpaned.glade.strings:69
+#, fuzzy
+msgid "<b>Package Control</b>"
+msgstr "<b>General</b>"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1947,16 +1950,21 @@ msgid "     "
 msgstr "     "
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 msgid "Install the latest version of the package"
 msgstr "Instalar la última versión del paquete"
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 msgid "Deinstall the package"
 msgstr "Desinstalar el paquete"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr ""
@@ -1964,24 +1972,43 @@ msgstr ""
 "seleccionados"
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "Nunca actualizar este paquete"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:102
-msgid "Hold package"
-msgstr ""
-"Mantener\n"
-"paquete"
+#: gtk/window_main_vpaned.glade.strings:78
+#, fuzzy
+msgid "Exclude the package from upgrades"
+msgstr "Excluir los paquetes seleccionados"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
-msgstr "Reconfigurar"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
-msgstr "Mostrar ayuda del paquete"
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
+msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+#, fuzzy
+msgid "_Configure"
+msgstr "Reconfigurar"
+
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr ""
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr "Synaptic - un interfaz para apt"
@@ -2003,53 +2030,9 @@ msgstr "Lista _plana"
 msgid "_Tag tree"
 msgstr "Árbol de e_tiquetas"
 
-#: gtk/window_main_vpaned.glade.strings:69
-#, fuzzy
-msgid "<b>Package Control</b>"
-msgstr "<b>General</b>"
-
 #: gtk/window_main_vpaned.glade.strings:70
 msgid "   "
 msgstr "    "
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:78
-#, fuzzy
-msgid "Exclude the package from upgrades"
-msgstr "Excluir los paquetes seleccionados"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:81
-#, fuzzy
-msgid "_Configure"
-msgstr "Reconfigurar"
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr ""
-
-#: gtk/window_main_vpaned.glade.strings:84
-#, fuzzy
-msgid "Common"
-msgstr "Comandos"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2627,6 +2610,26 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors..."
 msgstr "Fabricantes"
+
+#~ msgid "Information"
+#~ msgstr "Información"
+
+#~ msgid "<b>Status</b>"
+#~ msgstr "<b>Cadena</b>"
+
+#~ msgid "Never upgrade this package"
+#~ msgstr "Nunca actualizar este paquete"
+
+#~ msgid "Hold package"
+#~ msgstr ""
+#~ "Mantener\n"
+#~ "paquete"
+
+#~ msgid "Reconfigure"
+#~ msgstr "Reconfigurar"
+
+#~ msgid "Show Pkg Help"
+#~ msgstr "Mostrar ayuda del paquete"
 
 #~ msgid "Pkg Help"
 #~ msgstr "Mostrar ayuda del paquete"

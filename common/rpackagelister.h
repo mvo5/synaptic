@@ -226,7 +226,8 @@ class RPackageLister {
 
    void getSummary(int &held, int &kept, int &essential,
                    int &toInstall, int &toReInstall, int &toUpgrade, 
-		   int &toRemove,  int &toDowngrade, double &sizeChange);
+		   int &toRemove,  int &toDowngrade, 
+		   int &unAuthenticated,  double &sizeChange);
 
 
    void getDetailedSummary(vector<RPackage *> &held,

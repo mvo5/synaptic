@@ -386,7 +386,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
                       (GtkSignalFunc) clickedCancel, this);
 
    int toInstall, toReInstall, toRemove, toUpgrade, toDowngrade;
-   int held, kept, essential;
+   int held, kept, essential, unAuthenticated;
    double sizeChange, dlSize;
    int dlCount;
    GString *msg = g_string_new("");
@@ -394,7 +394,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
    lister->getSummary(held, kept, essential,
                       toInstall, toReInstall, toUpgrade, toRemove, 
-		      toDowngrade, sizeChange);
+		      toDowngrade, unAuthenticated,sizeChange);
    lister->getDownloadSummary(dlCount, dlSize);
 
 #if 0

@@ -2448,7 +2448,11 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
       return;
    }
 
-   if (_config->FindB("Volatile::Non-Interactive", false) == false) {
+   int a,b,c,d,e,f,g,h,unAuthenticated;
+   double s;
+   me->_lister->getSummary(a,b,c,d,e,f,g,h,unAuthenticated,s);
+   if(unAuthenticated ||
+      _config->FindB("Volatile::Non-Interactive", false) == false) {
       // show a summary of what's gonna happen
       RGSummaryWindow summ(me, me->_lister);
       if (!summ.showAndConfirm()) {

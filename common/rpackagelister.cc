@@ -788,7 +788,8 @@ void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 void RPackageLister::getSummary(int &held, int &kept, int &essential,
                                 int &toInstall, int &toReInstall,
 				int &toUpgrade, int &toRemove,
-                                int &toDowngrade, double &sizeChange)
+                                int &toDowngrade, int &unauthenticated,
+				double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
    unsigned i;
@@ -801,6 +802,7 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
    toUpgrade = 0;
    toDowngrade = 0;
    toRemove = 0;
+   unauthenticated =0;
 
    for (i = 0; i < _packages.size(); i++) {
       int flags = _packages[i]->getFlags();
@@ -812,6 +814,18 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
                             RPackage::FUpgrade |
                             RPackage::FDowngrade |
                             RPackage::FRemove);
+
+#ifdef WITH_APT_AUTH
+      switch(status) {
+      case RPackage::FNewInstall:
+      case RPackage::FInstall:
+      case RPackage::FReInstall:
+      case RPackage::FUpgrade:
+	 if(!_packages[i]->isTrusted()) 
+	    unauthenticated++;
+	 break;
+      }
+#endif
 
       switch (status) {
          case RPackage::FKeep:

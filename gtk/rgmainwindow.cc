@@ -294,7 +294,8 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
    //cout << "RGMainWindow::refreshTable(): " << selectedPkg << endl;
 
-   _lister->setSubView(selectedSubView());
+   string selected = selectedSubView();
+   _lister->setSubView(utf8(selected.c_str()));
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),

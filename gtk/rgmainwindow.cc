@@ -1755,6 +1755,17 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
    string filename = pkg->getChangelogFile(&fetcher);
    
    RGGladeUserDialog dia(me,"changelog");
+
+   // set title
+   GtkWidget *win = glade_xml_get_widget(dia.getGladeXML(), 
+					   "dialog_changelog");
+   assert(win);
+   gchar *str = g_strdup_printf(_("Changelog for %s"), pkg->name());
+   gtk_window_set_title(GTK_WINDOW(win), str);
+   g_free(str);
+
+
+   // set changelog data
    GtkWidget *textview = glade_xml_get_widget(dia.getGladeXML(),
 					      "textview_changelog");
    assert(textview);

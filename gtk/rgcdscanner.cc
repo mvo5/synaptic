@@ -24,6 +24,7 @@
 #include "i18n.h"
 #include "rgmainwindow.h"
 #include "rgcdscanner.h"
+#include "gsynaptic.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -44,8 +45,6 @@ public:
     bool run(string &name);
 };
 
-
-extern void RGFlushInterface();
 
 void RGCDScanner::update(string text, int current)
 {

@@ -72,6 +72,7 @@
 #include "rginstallprogress.h"
 #include "rgdummyinstallprogress.h"
 #include "rgzvtinstallprogress.h"
+#include "gsynaptic.h"
 #include "conversion.h"
 
 // icons and pixmaps
@@ -88,8 +89,6 @@
 #include "logo.xpm"
 #include "synaptic_mini.xpm"
 
-
-extern void RGFlushInterface();
 
 GdkPixbuf *StatusPixbuf[12];
 GdkColor *StatusColors[12];
@@ -538,6 +537,9 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     me->setStatusText(_("Updating Package Lists from Servers..."));
 
     me->setInterfaceLocked(TRUE);
+
+    /* Do not let the treeview access the cache during the update. */
+    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
 
     // update cache and forget about the previous new packages 
     // (only if no error occured)

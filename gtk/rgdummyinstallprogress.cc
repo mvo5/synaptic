@@ -26,11 +26,10 @@
 
 
 #include "rgdummyinstallprogress.h"
+#include "gsynaptic.h"
 
 #include <unistd.h>
 #include <stdio.h>
-
-extern void RGFlushInterface();
 
 void RGDummyInstallProgress::startUpdate()
 {

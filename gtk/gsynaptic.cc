@@ -43,6 +43,8 @@
 #include "locale.h"
 #include "galertpanel.h"
 
+#include "gsynaptic.h"
+
 bool ShowHelp(CommandLine &CmdL)
 {
   std::cout << 

@@ -27,10 +27,9 @@
 #include "synapticinterface.h"
 #include "rconfiguration.h"
 #include "raptoptions.h"
+#include "gsynaptic.h"
 
 using namespace std;
-
-extern void RGFlushInterface();
 
 SynapticInterface::SynapticInterface()
 {

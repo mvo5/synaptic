@@ -25,13 +25,12 @@
 #include "i18n.h"
 
 #include "rgmainwindow.h"
+#include "gsynaptic.h"
 
 #include "rginstallprogress.h"
 
 #include <unistd.h>
 #include <stdio.h>
-
-extern void RGFlushInterface();
 
 
 void RGInstallProgress::startUpdate()

@@ -33,16 +33,13 @@
 
 #include "rgfetchprogress.h"
 #include "galertpanel.h"
+#include "gsynaptic.h"
 
 #include <stdio.h>
 #include <pango/pango.h>
 #include <gtk/gtk.h>
 
 #include "stop.xpm"
-
-
-extern void RGFlushInterface();
-
 
 
 enum {

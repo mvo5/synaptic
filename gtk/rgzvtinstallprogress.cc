@@ -34,6 +34,7 @@
 #include "rconfiguration.h"
 #include "stop.xpm"
 #include "galertpanel.h"
+#include "gsynaptic.h"
 
 #include <iostream>
 
@@ -46,8 +47,6 @@
 #include <apt-pkg/configuration.h>
 
 using namespace std;
-
-extern void RGFlushInterface();
 
 void RGZvtInstallProgress::startUpdate()
 {

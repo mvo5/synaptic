@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Form interface generated from reading ui file 'window_changes.ui'
 **
-** Created: Sat Feb 14 21:45:24 2004
-**      by: The User Interface Compiler ()
+** Created: Tue Feb 17 15:06:06 2004
+**      by: The User Interface Compiler ($Id: qt/main.cpp   3.2.3   edited May 19 14:22 $)
 **
 ** WARNING! All changes made in this file will be lost!
 ****************************************************************************/

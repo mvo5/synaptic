@@ -53,7 +53,7 @@ QString RQFetchItem::text(int column) const
    switch (column) {
 
       case 2:
-         res = _itemDesc.Description;
+         res = _itemDesc.Description.c_str();
          break;
 
    }

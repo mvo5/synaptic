@@ -85,14 +85,14 @@ void RQMainWindow::reloadViews()
    if (_viewsComboBox->count() == 0) {
       vector<string> views = _lister->getViews();
       for (int i = 0; i != views.size(); i++)
-         _viewsComboBox->insertItem(views[i]);
+         _viewsComboBox->insertItem(views[i].c_str());
    }
 
    // Reload list from selected view.
    _subViewsListBox->clear();
    vector<string> subViews = _lister->getSubViews();
    for (int i = 0; i != subViews.size(); i++)
-      _subViewsListBox->insertItem(subViews[i]);
+      _subViewsListBox->insertItem(subViews[i].c_str());
 }
 
 void RQMainWindow::changedView(int index)
@@ -105,7 +105,7 @@ void RQMainWindow::changedView(int index)
 
 void RQMainWindow::changedSubView(int index)
 {
-   _lister->setSubView(_subViewsListBox->text(index));
+   _lister->setSubView(_subViewsListBox->text(index).ascii());
    reloadPackages();
 }
 
@@ -115,7 +115,7 @@ void RQMainWindow::reloadFilters()
    _filtersComboBox->insertItem(_("All Packages"));
    vector<string> filters = _lister->getFilterNames();
    for (int i = 0; i != filters.size(); i++)
-      _filtersComboBox->insertItem(filters[i]);
+      _filtersComboBox->insertItem(filters[i].c_str());
 }
 
 void RQMainWindow::changedFilter(int index)

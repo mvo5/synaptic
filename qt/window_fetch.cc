@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Form implementation generated from reading ui file 'window_fetch.ui'
 **
-** Created: Mon Feb 16 19:48:33 2004
-**      by: The User Interface Compiler ()
+** Created: Tue Feb 17 15:39:52 2004
+**      by: The User Interface Compiler ($Id: qt/main.cpp   3.2.3   edited May 19 14:22 $)
 **
 ** WARNING! All changes made in this file will be lost!
 ****************************************************************************/

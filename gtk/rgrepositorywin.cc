@@ -200,7 +200,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
-    
+#if 0
     item = gtk_menu_item_new_with_label("deb");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
@@ -210,6 +210,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_DEBSRC);
+#endif
 #else
     item = gtk_menu_item_new_with_label("deb");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
@@ -220,7 +221,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_DEBSRC);
-
+#if 0
     item = gtk_menu_item_new_with_label("rpm");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
@@ -230,13 +231,14 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMSRC);
-#endif
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
 
     item = gtk_menu_item_new_with_label("rpm-dir");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
+#endif
+#endif
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
     
     _optVendor = glade_xml_get_widget(_gladeXML, "optionmenu_vendor");
     _optVendorMenu = gtk_menu_new();

@@ -97,6 +97,10 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 				  "on_button_status_select_none_clicked",
 				  G_CALLBACK(statusNoneClicked),
 				  this);
+    glade_xml_signal_connect_data(_gladeXML, 
+				  "on_button_status_invert_clicked",
+				  G_CALLBACK(statusInvertClicked),
+				  this);
 
     glade_xml_signal_connect_data(_gladeXML, 
 				  "on_entry_filters_changed",
@@ -452,6 +456,20 @@ void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
     }
 }
 
+void RGFilterManagerWindow::statusInvertClicked(GObject *o, gpointer data)
+{
+    RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
+    //cout << "RGFilterManagerWindow::statusInvertClicked()"<<endl;
+    
+    gboolean x;
+    for (int i = 0; i < NrOfStatusBits; i++) {
+	x = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_statusB[i]));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_statusB[i]),
+				     !x);
+    }
+}
+
+
 void RGFilterManagerWindow::statusAllClicked(GObject *o, gpointer data)
 {
     RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
@@ -644,6 +662,8 @@ void RGFilterManagerWindow::show()
 	gtk_tree_selection_select_path(selection, _selectedPath);
 	editFilter();
     }
+
+    gtk_entry_set_text(GTK_ENTRY(_filterEntry),"");
 
     // save filter list (do a real copy, needed for cancel)
     _saveFilters.clear();
@@ -1009,7 +1029,7 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
     do {
 	// no memleak, register filter takes care of it
 	filter = new RFilter(me->_lister);
-	s = g_strdup_printf(_("A New Filter %i"),i);
+	s = g_strdup_printf(_("New Filter %i"),i);
 	filter->setName(s);
 	g_free(s);
 	i++;

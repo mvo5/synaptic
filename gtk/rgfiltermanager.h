@@ -171,6 +171,7 @@ class RGFilterManagerWindow : public RGGladeWindow
    static void patternNew(GObject *o, gpointer data);
    static void patternDelete(GObject *o, gpointer data);
    static void statusAllClicked(GObject *o, gpointer data);
+   static void statusInvertClicked(GObject *o, gpointer data);
    static void statusNoneClicked(GObject *o, gpointer data);
    void applyChanges(RFilter *filter);
    static void filterNameChanged(GObject *o, gpointer data);

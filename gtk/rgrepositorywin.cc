@@ -35,13 +35,15 @@
 #if HAVE_RPM
 enum  {ITEM_TYPE_RPM, 
        ITEM_TYPE_RPMSRC, 
+       ITEM_TYPE_RPMDIR,
        ITEM_TYPE_DEB , 
        ITEM_TYPE_DEBSRC};
 #else
 enum  {ITEM_TYPE_DEB, 
        ITEM_TYPE_DEBSRC, 
        ITEM_TYPE_RPM , 
-       ITEM_TYPE_RPMSRC};
+       ITEM_TYPE_RPMSRC,
+       ITEM_TYPE_RPMDIR};
 #endif
 
 enum {   
@@ -193,6 +195,11 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
     gtk_widget_show(item);
     gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMSRC);
+
+    item = gtk_menu_item_new_with_label("rpm-dir");
+    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+    gtk_widget_show(item);
+    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
     
     item = gtk_menu_item_new_with_label("deb");
     gtk_menu_append(GTK_MENU(_optTypeMenu), item);
@@ -226,6 +233,10 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 #endif
     gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
 
+    item = gtk_menu_item_new_with_label("rpm-dir");
+    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+    gtk_widget_show(item);
+    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer)ITEM_TYPE_RPMDIR);
     
     _optVendor = glade_xml_get_widget(_gladeXML, "optionmenu_vendor");
     _optVendorMenu = gtk_menu_new();
@@ -448,6 +459,8 @@ void RGRepositoryEditor::doEdit()
 	rec->Type |= SourcesList::Rpm; break;
     case ITEM_TYPE_RPMSRC:
 	rec->Type |= SourcesList::RpmSrc; break;
+    case ITEM_TYPE_RPMDIR:
+	rec->Type |= SourcesList::RpmDir; break;
     default:
 	_userDialog->error(_("Unknown source type"));
 	return;
@@ -566,6 +579,8 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 	    id = ITEM_TYPE_RPM;
 	else if (rec->Type & SourcesList::RpmSrc)
 	    id = ITEM_TYPE_RPMSRC;
+	else if (rec->Type & SourcesList::RpmDir)
+	    id = ITEM_TYPE_RPMDIR;
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), id);
 
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),

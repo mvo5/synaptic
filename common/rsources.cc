@@ -335,6 +335,8 @@ bool SourcesList::SourceRecord::SetType(string S)
 		Type |= Rpm;
 	else if (S == "rpm-src")
 		Type |= RpmSrc;
+	else if (S == "rpm-dir")
+		Type |= RpmDir;
 	else
 		return false;
 	return true;
@@ -350,6 +352,8 @@ string SourcesList::SourceRecord::GetType()
 		return "rpm";
 	else if ((Type & RpmSrc) != 0)
 		return "rpm-src";
+	else if ((Type & RpmDir) != 0)
+		return "rpm-dir";
 	return "unknown";
 }
 
@@ -487,6 +491,7 @@ ostream &operator<< (ostream &os, const SourcesList::SourceRecord &rec)
 	if ((rec.Type & SourcesList::DebSrc) != 0) os << "DebSrc";
 	if ((rec.Type & SourcesList::Rpm) != 0) os << "Rpm";
 	if ((rec.Type & SourcesList::RpmSrc) != 0) os << "RpmSrc";
+	if ((rec.Type & SourcesList::RpmDir) != 0) os << "RpmDir";
 	os << endl;
 	os << "SourceFile: " << rec.SourceFile << endl;
 	os << "VendorID: " << rec.VendorID << endl;

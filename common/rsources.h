@@ -39,7 +39,8 @@ public:
 		Rpm = 1 << 2,
 		RpmSrc = 1 << 3,
 		Disabled = 1 << 4,
-		Comment = 1 << 5
+		Comment = 1 << 5,
+		RpmDir = 1 << 6
 	};
 
 	struct SourceRecord {

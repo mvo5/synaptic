@@ -544,6 +544,7 @@ gtk_pkg_tree_iter_next (GtkTreeModel  *tree_model,
     it = pkgTree->next_sibling(it);
     
     if(it == end ) {
+	DEBUG(" it == end");
 	return FALSE;
     } else {
 	iter->user_data = it.node;
@@ -637,7 +638,7 @@ gtk_pkg_tree_iter_nth_child (GtkTreeModel *tree_model,
     tree<RPackageLister::pkgPair> *pkgTree;
     pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
-    //DEBUG(" tree-size: " << pkgTree->size());
+    DEBUG(" tree-size: " << pkgTree->size());
     
     if(pkgTree->empty())
 	return FALSE;
@@ -654,6 +655,7 @@ gtk_pkg_tree_iter_nth_child (GtkTreeModel *tree_model,
 		return FALSE;
 	    }
 	}
+	DEBUG(" toplevel iter" << n << " is " << it.node);
 	iter->user_data = it.node;
 	return TRUE;
     }
@@ -664,14 +666,16 @@ gtk_pkg_tree_iter_nth_child (GtkTreeModel *tree_model,
 
     // normal case
     RPackageLister::treeIter it((RPackageLister::treeNode*)parent->user_data);
-    DEBUG(" parent name: " <<(*it).first);
-    DEBUG(" number of children: " << it.number_of_children());
 
     // check if n is not out of reach
-    if(n > it.number_of_children()-1) {
+    int children =  it.number_of_children()-1;
+    if(n >  children) {
 	DEBUG(" nth_child() out of bounds");
 	return FALSE;
     }
+
+    DEBUG(" parent name: " <<(*it).first);
+    DEBUG(" number of children: " << it.number_of_children());
 
     it = pkgTree->child(it,n);
 

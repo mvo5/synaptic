@@ -80,6 +80,8 @@ synaptic_SOURCES= \
 	rginstallprogress.h\
 	rgslideshow.cc\
 	rgslideshow.h\
+	rgtaskswin.cc\
+	rgtaskswin.h\
 	rgcdscanner.cc\
 	rgcdscanner.h\
 	rgmainwindow.cc\

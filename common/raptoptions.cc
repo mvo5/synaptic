@@ -214,7 +214,7 @@ void RAPTOptions::rereadOrphaned()
       //cerr << "deborphan failed" << endl;
       return;
    }
-   while (fgets(buf, 255, fp) != NULL) {
+   while (fgets(buf, 254, fp) != NULL) {
       //mvo: FIXME this sucks (remove newline at end)
       buf[strlen(buf) - 1] = 0;
       //cout << "buf: " << buf << endl;

@@ -65,7 +65,7 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    g_free(filename);
    g_free(main_widget);
 
-   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
+   //gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
    gtk_object_set_data(GTK_OBJECT(_win), "me", this);
    gtk_signal_connect(GTK_OBJECT(_win), "delete-event",

@@ -68,7 +68,7 @@
 #include "raptoptions.h"
 
 
-static char descrBuffer[4096];
+static char descrBuffer[8192];
 
 static char *parseDescription(string descr);
 

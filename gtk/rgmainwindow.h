@@ -35,6 +35,7 @@ using namespace std;
 #include <vector>
 #include <set>
 
+#include "rgtaskswin.h"
 #include "rggladewindow.h"
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
@@ -147,8 +148,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGFindWindow *_findWin;
    RGSetOptWindow *_setOptWin;
    RGAboutPanel *_aboutPanel;
+   RGTasksWin *_tasksWin;
    RGIconLegendPanel *_iconLegendPanel;
-
    RGPkgDetailsWindow *_pkgDetails;
 
    RGCacheProgress *_cacheProgress;
@@ -201,7 +202,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 		   	bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);
 
-   // helper for recommends/suggests
+   // helper for recommends/suggests 
+   // (data is the name of the pkg, self needs to have a pointer to "me" )
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
 
    // install a non-standard version (data is a char* of the version)
@@ -219,6 +221,12 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    virtual ~RGMainWindow() {};
 
    void changeView(int view, bool sethistory = true, string subView="");
+
+   // install the list of packagenames and display a changes window
+   void selectToInstall(vector<string> packagenames);
+
+   // show busy cursor over main window
+   void setBusyCursor(bool flag=true);
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
@@ -265,6 +273,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbDetailsWindow(GtkWidget *self, void *data);
 
    // file menu
+   static void cbTasksClicked(GtkWidget *self, void *data);
    static void cbOpenClicked(GtkWidget *self, void *data);
    static void cbOpenSelections(GtkWidget *file_selector, gpointer data);
    static void cbSaveClicked(GtkWidget *self, void *data);

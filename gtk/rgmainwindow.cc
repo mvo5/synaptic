@@ -689,7 +689,7 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
-     _treeView(0), _iconLegendPanel(0), _pkgDetails(0)
+     _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0)
 {
    assert(_win);
 
@@ -1067,6 +1067,9 @@ void RGMainWindow::buildInterface()
                                  "on_clear_all_changes_activate",
                                  G_CALLBACK(cbClearAllChangesClicked), this);
 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_tasks_activate",
+                                 G_CALLBACK(cbTasksClicked), this);
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_open_activate",
@@ -1878,6 +1881,20 @@ void RGMainWindow::cbOpenSelections(GtkWidget *file_selector, gpointer data)
    me->setStatusText();
 }
 
+void RGMainWindow::cbTasksClicked(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow*)data;
+
+   me->setBusyCursor(true);
+
+   if (me->_tasksWin == NULL) {   
+      me->_tasksWin = new RGTasksWin(me);
+   }
+   me->_tasksWin->show();
+
+   me->setBusyCursor(false);
+}
+
 void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
 {
    //std::cout << "RGMainWindow::openClicked()" << endl;
@@ -2069,19 +2086,13 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-      gdk_window_set_cursor(me->window()->window, me->_busyCursor);
-      me->setStatusText(_("Searching..."));
-#if GTK_CHECK_VERSION(2,4,0)
-      // if we don't iterate here, the busy cursor is not shown
-      while (gtk_events_pending())
-	 gtk_main_iteration();
-#endif
+      me->setBusyCursor(true);
       string str = me->_findWin->getFindString();
       int type = me->_findWin->getSearchType();
       int found = me->_lister->searchView()->setSearch(str,type,utf8_to_locale(str.c_str()));
       me->changeView(4,true, str);
 
-      gdk_window_set_cursor(me->window()->window, NULL);
+      me->setBusyCursor(false);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
       me->setStatusText(statusstr);
       me->updatePackageInfo(NULL);
@@ -2322,14 +2333,9 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
-   gdk_window_set_cursor(me->window()->window, me->_busyCursor);
-#if GTK_CHECK_VERSION(2,4,0)
-   // if we don't iterate here, the busy cursor is not shown
-   while (gtk_events_pending())
-      gtk_main_iteration();
-#endif
+   me->setBusyCursor(true);
    me->refreshTable(NULL);
-   gdk_window_set_cursor(me->window()->window, NULL);
+   me->setBusyCursor(false);
    me->updatePackageInfo(NULL);
 }
 
@@ -2912,6 +2918,46 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
       return NULL;
 }
 
+void RGMainWindow::selectToInstall(vector<string> packagenames)
+{
+   RGMainWindow *me = this;
+
+   RPackageLister::pkgState state;
+   vector<RPackage *> exclude;
+   vector<RPackage *> instPkgs;
+
+   // we always save the state (for undo)
+   me->_lister->saveState(state);
+   me->_lister->notifyCachePreChange();
+
+   for(int i=0;i<packagenames.size();i++) {
+      RPackage *newpkg = (RPackage *) me->_lister->getPackage(packagenames[i]);
+      if (newpkg) {
+
+	 // actual action
+	 newpkg->setNotify(false);
+	 me->pkgInstallHelper(newpkg);
+	 newpkg->setNotify(true);
+
+	 //	 exclude.push_back(newpkg);
+	 instPkgs.push_back(newpkg);
+      }
+   }
+
+   // ask for additional changes
+   if(me->askStateChange(state, exclude)) {
+      me->_lister->saveUndoState(state);
+      if(me->checkForFailedInst(instPkgs))
+	 me->_lister->restoreState(state);
+   }
+   me->_lister->notifyPostChange(NULL);
+   me->_lister->notifyCachePostChange();
+   
+   RPackage *pkg = me->selectedPackage();
+   me->refreshTable(pkg);
+   me->updatePackageInfo(pkg);
+}
+
 void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
 {
    const char *name = (const char*)data;
@@ -2951,5 +2997,20 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
       me->updatePackageInfo(pkg);
    }
 }
+
+void RGMainWindow::setBusyCursor(bool flag) 
+{
+   if(flag) {
+      gdk_window_set_cursor(window()->window, _busyCursor);
+#if GTK_CHECK_VERSION(2,4,0)
+      // if we don't iterate here, the busy cursor is not shown
+      while (gtk_events_pending())
+	 gtk_main_iteration();
+#endif
+   } else {
+      gdk_window_set_cursor(window()->window, NULL);
+   }
+}
+
 
 // vim:ts=3:sw=3:et

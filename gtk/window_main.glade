@@ -33,6 +33,28 @@
 		<widget class="GtkMenu" id="file1_menu">
 
 		  <child>
+		    <widget class="GtkImageMenuItem" id="menu_tasks">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Tasks...</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_tasks_activate" last_modification_time="Mon, 19 May 2003 22:30:12 GMT"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image3172">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-open</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+
+		  <child>
 		    <widget class="GtkImageMenuItem" id="menu_open">
 		      <property name="visible">True</property>
 		      <property name="label" translatable="yes">_Read Markings...</property>

@@ -733,6 +733,7 @@ void RPackage::setInstall()
    _lua->SetDepCache(_depcache);
    _lua->SetGlobal("package", ((pkgCache::Package *) * _package));
    _lua->RunScripts("Scripts::Synaptic::SetInstall", true);
+   _lua->ResetGlobals();
    _lua->ResetCaches();
 #endif
 

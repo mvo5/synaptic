@@ -207,6 +207,8 @@ _selectedFilter(NULL), _filterview(filterview)
 
    // set the details filter to not sesitive
    gtk_widget_set_sensitive(_filterDetailsBox, false);
+
+   skipTaskbar(true);
 }
 
 void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)

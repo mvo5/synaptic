@@ -252,6 +252,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
    _closeB = glade_xml_get_widget(_gladeXML, "button_close");
    gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
 		      (GtkSignalFunc)stopShell, this);
+   skipTaskbar(true);
 }
 
 

@@ -117,7 +117,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    _barGC = style->bg_gc[0];
    _textGC = style->black_gc;
 
-
+   skipTaskbar(true);
 }
 
 bool RGFetchProgress::MediaChange(string Media, string Drive)

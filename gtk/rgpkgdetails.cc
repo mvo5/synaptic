@@ -42,7 +42,7 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent, RPackage *pkg)
 				 this); 
    // fill in all the pkg-values
    fillInValues(pkg);
-
+   skipTaskbar(true);
    show();
 }
 

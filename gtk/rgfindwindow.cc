@@ -109,4 +109,5 @@ RGFindWindow::RGFindWindow(RGWindow *win)
    gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
 
    setTitle(_("Find"));
+   skipTaskbar(true);
 }

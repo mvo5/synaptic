@@ -48,6 +48,7 @@ _currentPackage(0), _hasHeader(false)
    gtk_widget_modify_font(textView, font);
    font = pango_font_description_from_string("helvetica bold 10");
    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
+   skipTaskbar(true);
 }
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
@@ -305,6 +306,8 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
+
+   skipTaskbar(true);
 }
 
 RGInstallProgress::~RGInstallProgress()

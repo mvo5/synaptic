@@ -60,6 +60,6 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    }
 
    gtk_widget_show_all(vbox);
-
+   skipTaskbar(true);
    show();
 }

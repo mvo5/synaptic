@@ -55,7 +55,6 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    assert(_gladeXML);
    _win = glade_xml_get_widget(_gladeXML, main_widget);
 
-   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_position(GTK_WINDOW(_win),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
    if(parent != NULL) 
@@ -73,10 +72,6 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
                       (GtkSignalFunc) windowCloseCallback, this);
    _topBox = NULL;
    //gtk_widget_realize(_win);
-
-   if (parent != NULL)
-      gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                   GTK_WINDOW(parent->window()));
 
 }
 

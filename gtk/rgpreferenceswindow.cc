@@ -790,6 +790,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
       g_free(color_button);
    }
 
+   skipTaskbar(true);
    setTitle(_("Preferences"));
 }
 

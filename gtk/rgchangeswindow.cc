@@ -82,6 +82,8 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_window_changes_close",
                                  G_CALLBACK(clickedCancel), this);
+
+   skipTaskbar(true);
 }
 
 

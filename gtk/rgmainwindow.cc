@@ -350,6 +350,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
    gtk_widget_set_sensitive(_pkgHelpM, FALSE);
    gtk_widget_set_sensitive(_pkginfo, false);
+   gtk_widget_set_sensitive(_dl_changelogM, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -361,6 +362,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_pkginfo, true);
    string descr = string(pkg->summary()) + "\n" + string(pkg->description());
    setTextView("textview_pkgcommon", descr.c_str(), true);
+
 
    // set menu according to pkg status
    int flags = pkg->getFlags();
@@ -395,6 +397,9 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    if( flags & RPackage::FInstalled && (pkg->dependsOn("debconf") || 
 					pkg->dependsOn("debconf-i18n")))
        gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
+
+   // changelog is always visible
+   gtk_widget_set_sensitive(_dl_changelogM, TRUE);
 
    setStatusText();
 }
@@ -1019,6 +1024,8 @@ void RGMainWindow::buildInterface()
    assert(_dl_changelogM);
 #ifdef HAVE_RPM
    gtk_widget_hide(_purgeM);
+   gtk_widget_hide(_pkgReconfigureM);
+   gtk_widget_hide(_pkgHelpM);
    gtk_widget_hide(_dl_changelogM);
    gtk_widget_hide(glade_xml_get_widget(_gladeXML,"menu_changelog_separator"));
 #endif
@@ -1478,7 +1485,7 @@ bool RGMainWindow::restoreState()
       _lister->setView(viewNr);
       refreshSubViewList();
    }
-   setStatusText();
+   updatePackageInfo(NULL);
    return true;
 }
 
@@ -2315,7 +2322,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    string currentSubView = me->selectedSubView();
    me->refreshSubViewList(currentSubView);
    me->setInterfaceLocked(FALSE);
-   me->setStatusText();
+   me->updatePackageInfo(NULL);
 }
 
 void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)

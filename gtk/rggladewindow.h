@@ -43,6 +43,10 @@ class RGGladeWindow:public RGWindow {
  public:
    RGGladeWindow(RGWindow *parent, string name, string main_widget = "");
 
+   void skipTaskbar(bool value) {
+      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
+   }
+
    // functions to set various widgets
    bool setLabel(const char *name, const char *value);
    bool setLabel(const char *name, const long value);

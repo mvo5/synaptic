@@ -4,17 +4,23 @@
  - add reinstall
  - In the change log view, link "bug" references to the actual bug report
 
-Sebastian's wish list:
- - copy desktop file to the KDE menu - $KDEPREFIX/applnk/Settingsmenu
-   "kde-config --prefix"
+Usability issues:
+ - Use new column editor in the preferences
+ - Disable search button in the search dialog until an expresseion was entered
+ - Disable "Undo" and "Redo" if there is no action to perform
+ - Rework repository and vendor dialog
+ - Think about implementing a summary of changes in the upgrade dialog
+ - Use HIGified common dialogs (alignments and message text!)
+ - Use a tree view for sections containing a "/" (SuSE, RedHat)
+ - Merge the message about failed downloads and the "igonre failed downloads"
+   dialog
+ - Pressing a key should jump to the first package with the same inital letter, 
+   if the focus is on the package list
+
+Unsorted:
  - possibility to resume failed installation of half installed packages
    Execute should be available if there are outstanding packages 
    (difficult!)
- - exchange gtk popups with glade files to fulfil HIG and have nicer alert boxes
- - Icons should be themable: gtkiconfactory
- - Use new column dialog
-
-Unsorted:
  - if(userid != 0) { exec "gksu -c /usr/sbin/synaptic"}
  - when searching and then switching view-mode, go to the last selected
    pkg (maybe do that every time the view is switched?)
@@ -25,6 +31,8 @@ Unsorted:
  - "crash handler" that automatically save the selections on a synaptic
    segfault (and present a dialog to reread them on the next start)
  - if download failed, use a special dialog to show it
+ - copy desktop file to the KDE menu - $KDEPREFIX/applnk/Settingsmenu
+   "kde-config --prefix"
  
  - ask on debian-deity if it is possible to get a "DeletePin" function.
    this way, we can do default release pining without rereading the cache
@@ -44,6 +52,7 @@ Configure:
      (currently hardcoded)
 
 GUI:
+   - Icons should be themable: gtkiconfactory
    - allow clicking in the depedency list so that the click takes
      you to the package
    - add TaskView view to show tasks (add just a new view). 

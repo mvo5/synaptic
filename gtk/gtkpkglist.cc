@@ -103,7 +103,7 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
 void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 {
     static GtkTreeIter iter;
-    unsigned int j;
+    int j;
     cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
 
     cout << "action: " << pkgEvent << endl;
@@ -111,9 +111,9 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 
     //mvo: FIXME those nested loops suck as they are slow
     //     BUT it shouldn't be too bad as list is usually very small (<=10)
-    for(int i=(int)List.size()-1;i>=0;i--) {
-	if(pkgEvent == PKG_REMOVED) {
-	    for(j=0;j<_lastDisplayList.size();j++)
+    if(pkgEvent == PKG_REMOVED) {
+	for(int i=(int)List.size()-1;i>=0;i--) {
+	    for(j=0;j<(int)_lastDisplayList.size();j++)
 		if(_lastDisplayList[j] == List[i])
 		    break;
 	    //cout << "removed at pos: " << j << endl;
@@ -122,11 +122,13 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 	    gtk_tree_model_row_deleted(GTK_TREE_MODEL(_pkgList), path);
 	    gtk_tree_path_free(path);
 	}
-	if(pkgEvent == PKG_ADDED) {
-	    for(j=0;j<_lister->count();j++)
+    } else if(pkgEvent == PKG_ADDED) {
+	for(int i=0;i<(int)List.size();i++) {
+	    for(j=0;j<(int)_lister->count();j++)
 		if(_lister->getElement(j) == List[i])
 		    break;
- 	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
+	    //cout << "inserted " << List[i]->name() << " at pos: " 
+	    //     << j << endl;
 	    GtkTreePath *path = gtk_tree_path_new();
 	    gtk_tree_path_append_index(path,j);
 	    

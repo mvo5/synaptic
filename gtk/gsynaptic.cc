@@ -277,6 +277,10 @@ int main(int argc, char **argv)
 
    if(_config->FindB("Volatile::Update-Mode",false)) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
+      if (_config->FindB("Volatile::Non-Interactive", false)) {
+	 gtk_main_quit();
+	 return 0;
+      }
       mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
    }
 

@@ -877,6 +877,8 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
   restoreTableState(expanded_sections);
   //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
 
+  setStatusText();
+
   // not implemented yet
 //gtk_pkg_tree_refresh(_pkgTree);
   return;
@@ -2482,7 +2484,6 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
     }
   }
   // end double-click
-  me->setStatusText();
   me->setInterfaceLocked(FALSE);
   return;
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** WindowFetch meta object code from reading C++ file 'window_fetch.h'
 **
-** Created: Tue Feb 17 17:43:48 2004
+** Created: Wed Feb 18 18:54:31 2004
 **      by: The Qt MOC ()
 **
 ** WARNING! All changes made in this file will be lost!

@@ -33,6 +33,10 @@ status_icon_DATA = package-available-locked.png \
 		   package-remove.png \
 		   package-upgrade.png
 
+fetchstatusdir = $(datadir)/synaptic/pixmaps
+fetchstatus_DATA = green.png \
+		   yellow.png \
+		   red.png
 		      
 		     
 

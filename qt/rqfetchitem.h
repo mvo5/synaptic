@@ -19,7 +19,8 @@ class RQFetchItem : public QListViewItem
 
    pkgAcquire::ItemDesc _itemDesc;
    QProgressBar _progressBar;
-   QPixmap _pm;
+   QPixmap _progressBarPixmap;
+   QPixmap _statusPixmap;
 
    bool _progressBarUpdated;
 

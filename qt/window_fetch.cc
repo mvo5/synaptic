@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Form implementation generated from reading ui file 'window_fetch.ui'
 **
-** Created: Tue Feb 17 17:43:48 2004
+** Created: Wed Feb 18 18:54:31 2004
 **      by: The User Interface Compiler ()
 **
 ** WARNING! All changes made in this file will be lost!
@@ -36,7 +36,8 @@ WindowFetch::WindowFetch( QWidget* parent, const char* name, bool modal, WFlags 
     layout2 = new QVBoxLayout( 0, 0, 6, "layout2"); 
 
     _progressListView = new QListView( this, "_progressListView" );
-    _progressListView->addColumn( tr( "Status" ) );
+    _progressListView->addColumn( tr( "Progress" ) );
+    _progressListView->addColumn( QString::null );
     _progressListView->header()->setClickEnabled( FALSE, _progressListView->header()->count() - 1 );
     _progressListView->header()->setResizeEnabled( FALSE, _progressListView->header()->count() - 1 );
     _progressListView->addColumn( tr( "Size" ) );
@@ -62,7 +63,7 @@ WindowFetch::WindowFetch( QWidget* parent, const char* name, bool modal, WFlags 
     layout2->addLayout( layout1 );
     WindowFetchLayout->addLayout( layout2 );
     languageChange();
-    resize( QSize(570, 340).expandedTo(minimumSizeHint()) );
+    resize( QSize(570, 346).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 }
 
@@ -81,9 +82,10 @@ WindowFetch::~WindowFetch()
 void WindowFetch::languageChange()
 {
     setCaption( tr( "Fetch Progress" ) );
-    _progressListView->header()->setLabel( 0, tr( "Status" ) );
-    _progressListView->header()->setLabel( 1, tr( "Size" ) );
-    _progressListView->header()->setLabel( 2, tr( "Description" ) );
+    _progressListView->header()->setLabel( 0, tr( "Progress" ) );
+    _progressListView->header()->setLabel( 1, QString::null );
+    _progressListView->header()->setLabel( 2, tr( "Size" ) );
+    _progressListView->header()->setLabel( 3, tr( "Description" ) );
     _cancelButton->setText( tr( "&Cancel" ) );
     _cancelButton->setAccel( QKeySequence( tr( "Alt+C" ) ) );
 }

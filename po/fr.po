@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: synaptic 0.31\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-27 13:19+0100\n"
-"PO-Revision-Date: 2003-11-27 10:59+0100\n"
+"PO-Revision-Date: 2003-11-28 00:11+0100\n"
 "Last-Translator: Jean-Michel Pouré <jm@poure.com>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -333,8 +333,8 @@ msgstr "Impossible d'ouvrir %s en écriture"
 #: common/rpackage.cc:211
 msgid "The list of installed files is only available for installed packages"
 msgstr ""
-"La liste des fichiers installés est uniquement disponible pour les paquets "
-"installés"
+"La liste des fichiers installés n'est pas disponible. Elle s'affichera après "
+"l'installation du paquet."
 
 #: common/rpackage.cc:412
 msgid "OH SHIT DUNNO WTF IS GOIN ON!"
@@ -437,7 +437,7 @@ msgstr "Marqueurs"
 
 #: common/rpackagefilter.cc:194 gtk/window_preferences.glade.strings:51
 msgid "Name"
-msgstr "Nom"
+msgstr "Variable"
 
 #: common/rpackagefilter.cc:195 gtk/window_find.glade.strings:12
 msgid "Version"
@@ -483,9 +483,11 @@ msgid "ReverseDepends"
 msgstr "Dépendance inversée"
 
 #: common/rpackagefilter.cc:658
-#, fuzzy, c-format
+#, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
-msgstr "impossible d'ouvrir le fichier d'affichage réduit %s"
+msgstr ""
+"Erreur interne : Could not open ReducedView file %s. Merci de faire un "
+"rapport."
 
 #: common/rpackagefilter.cc:685
 #, c-format
@@ -895,14 +897,12 @@ msgid "(stalled)\n"
 msgstr "(figé)\n"
 
 #: gtk/rgfetchprogress.cc:230
-#, fuzzy
 msgid "[Processing...] "
-msgstr "Traitement de texte"
+msgstr "[Traitement ...] "
 
 #: gtk/rgfetchprogress.cc:235
-#, fuzzy
 msgid "[Receiving...] "
-msgstr "[Réception en cours ...] "
+msgstr "[Réception ...] "
 
 #: gtk/rgfetchprogress.cc:304
 msgid "Queued"
@@ -990,9 +990,8 @@ msgid "Performing Changes"
 msgstr "Application des changements ..."
 
 #: gtk/rgzvtinstallprogress.cc:60
-#, fuzzy
 msgid "Executing changes..."
-msgstr "Lancer l'exécution des changements"
+msgstr "Application des changements ..."
 
 #: gtk/rgzvtinstallprogress.cc:67
 msgid ""
@@ -1012,13 +1011,12 @@ msgstr ""
 "explication."
 
 #: gtk/rgzvtinstallprogress.cc:100
-#, fuzzy
 msgid "Completed all changes"
-msgstr "Ouvrir les changements"
+msgstr "Tous les changements ont été effectués"
 
 #: gtk/rgzvtinstallprogress.cc:109
 msgid "Can't close while executing"
-msgstr ""
+msgstr "Impossible de fermer durant l'exécution"
 
 #: gtk/rgzvtinstallprogress.cc:200
 msgid "Close dialog after Package Manager is finished"
@@ -1070,20 +1068,17 @@ msgstr ""
 "Synaptic"
 
 #: gtk/rgmainwindow.cc:550
-#, fuzzy
 msgid "Starting dpkg-reconfigure..."
 msgstr "Lancement de dpkg-reconfigure ..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: gtk/rgmainwindow.cc:562
-#, fuzzy
 msgid "Starting package help..."
 msgstr "Lancement de l'aide sur les paquets ..."
 
 #: gtk/rgmainwindow.cc:663
-#, fuzzy
 msgid "Retrieving Index Files..."
-msgstr "Récupèration des fichiers « Index » ..."
+msgstr "Récupération des fichiers d'index ..."
 
 #: gtk/rgmainwindow.cc:665
 msgid "Updating Package Lists from Servers..."
@@ -1107,7 +1102,7 @@ msgstr "Échec de la résolution des problèmes de dépendances."
 
 #: gtk/rgmainwindow.cc:768
 msgid "Dependency problems successfully fixed."
-msgstr "Réussite de la résolution des problèmes de dépendances."
+msgstr "Les problèmes de dépendances sont résolus."
 
 #: gtk/rgmainwindow.cc:783
 msgid ""
@@ -1142,9 +1137,8 @@ msgid "Performing selected changes... this may take a while"
 msgstr "Changements programmés en cours d'application ... Veuillez patienter."
 
 #: gtk/rgmainwindow.cc:865
-#, fuzzy
 msgid "Retrieving Package Files..."
-msgstr "Récupération des paquets ..."
+msgstr "Récupération des fichiers des paquets ..."
 
 #: gtk/rgmainwindow.cc:924
 msgid "Do you want to quit Synaptic?"
@@ -2162,7 +2156,7 @@ msgstr "Dépendances"
 #: gtk/window_main_hpaned.glade.strings:88
 #: gtk/window_main_vpaned.glade.strings:103
 msgid "Packages Depending on this One"
-msgstr "Paquets dépendants de celui-ci"
+msgstr "Dépendances inverses (paquets ayant besoin de ce paquet)"
 
 #: gtk/window_main_hpaned.glade.strings:89
 #: gtk/window_main_vpaned.glade.strings:104
@@ -2198,7 +2192,7 @@ msgstr "Suggéré(s)"
 #: gtk/window_main_hpaned.glade.strings:101
 #: gtk/window_main_vpaned.glade.strings:117
 msgid "Selected"
-msgstr "Sélectionné"
+msgstr "Sélectionné(s)"
 
 #: gtk/window_main_hpaned.glade.strings:104
 #: gtk/window_main_vpaned.glade.strings:120
@@ -2227,7 +2221,7 @@ msgstr "Expert"
 #: gtk/window_main_hpaned.glade.strings:110
 #: gtk/window_main_vpaned.glade.strings:74
 msgid "<b>Package Control</b>"
-msgstr "<b>Contrôle du paquet</b>"
+msgstr "<b>Action sur la paquet</b>"
 
 #: gtk/window_main_hpaned.glade.strings:111
 #: gtk/window_main_vpaned.glade.strings:114
@@ -2359,7 +2353,8 @@ msgstr "<b>Actions</b>"
 
 #: gtk/window_preferences.glade.strings:15
 msgid "Execute changes in a terminal window"
-msgstr "Lancer l'exécution des modifications dans une fenêtre de terminal"
+msgstr ""
+"Lancer l'exécution des changements programmés dans une fenêtre de terminal"
 
 #: gtk/window_preferences.glade.strings:16
 msgid "Ask to quit after the changes have been executed"
@@ -2486,7 +2481,6 @@ msgid "<b>Colors</b>"
 msgstr "<b>Couleurs</b>"
 
 #: gtk/window_preferences.glade.strings:58
-#, fuzzy
 msgid "Color packages by their status"
 msgstr "Colorer les paquets en fonction de leur état"
 
@@ -2503,9 +2497,8 @@ msgstr "Mettre à jour :"
 #: gtk/window_preferences.glade.strings:73
 #: gtk/window_preferences.glade.strings:75
 #: gtk/window_preferences.glade.strings:77
-#, fuzzy
 msgid "Color"
-msgstr "couleur"
+msgstr "Couleur"
 
 #: gtk/window_preferences.glade.strings:62
 msgid "Downgrade:"
@@ -2614,13 +2607,12 @@ msgid "HTTP proxy: "
 msgstr "Mandataire HTTP : "
 
 #: gtk/window_preferences.glade.strings:102
-#, fuzzy
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 "Liste d'hôtes ou de domaines, délimitée par des virgules, à ne pas contacter "
-"à travers le serveur mandataire (e.g. localhost, 192.168.1.231, .net)"
+"à travers le serveur mandataire (e.g., localhost, 192.168.1.231, .net)"
 
 #: gtk/window_preferences.glade.strings:104
 msgid "Network"
@@ -2683,16 +2675,15 @@ msgstr "<span size=\"large\" weight=\"bold\">Définir une option interne</span>"
 
 #: gtk/window_setopt.glade.strings:8
 msgid "Only experts should use this."
-msgstr "Réservé uniquement aux experts"
+msgstr "Réservé uniquement aux experts."
 
 #: gtk/window_setopt.glade.strings:11
 msgid "Value:"
 msgstr "Valeur :"
 
 #: gtk/window_setopt.glade.strings:12
-#, fuzzy
 msgid "Variable:"
-msgstr "Valeur :"
+msgstr "Variable :"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2975,25 +2966,3 @@ msgstr "Gestionnaire de paquets"
 #: data/synaptic.desktop.in.h:3
 msgid "Synaptic Package Manager"
 msgstr "Gestionnaire de paquets Synaptic "
-
-#~ msgid "[Working] "
-#~ msgstr "[Exécution en cours ...] "
-
-#~ msgid "Package Manager running"
-#~ msgstr "Exécution du gestionnaire de paquets ..."
-
-#~ msgid "Package Manager finished"
-#~ msgstr "Le gestionnaire de paquets a terminé"
-
-#~ msgid "Can't close, Package Manager still runing"
-#~ msgstr ""
-#~ "Fermeture impossible, le gestionnaire de paquets est en cours d'exécution"
-
-#~ msgid "Name:"
-#~ msgstr "Nom :"
-
-#~ msgid "unknown"
-#~ msgstr "inconnu"
-
-#~ msgid "not installed"
-#~ msgstr "non installé"

@@ -38,7 +38,7 @@ char *transtable[][2] = {
    {"unknown", _("Unknown")},
    {"alien", _("Converted from rpm by alien")},
 
-   {"non-US",_("Non US")},
+   {"non-US",_("Restricted On Export")},
    {"non-free",_("non free")},
    {"contrib",_("contrib")},
    //{"non-free",_("<i>(non free)</i>")},

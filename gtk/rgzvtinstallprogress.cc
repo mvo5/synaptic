@@ -133,10 +133,11 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
                               (ZVT_TERM(_term)->grid_height * 
 			       ZVT_TERM(_term)->charheight) + 2 /*padding*/ +
 			      (GTK_WIDGET(_term)->style->ythickness * 2));
-
+  zvt_term_set_size(ZVT_TERM(_term),80,24);
 
   zvt_term_set_scroll_on_output(ZVT_TERM(_term), TRUE);
   zvt_term_set_scroll_on_keystroke (ZVT_TERM(_term), TRUE);
+  zvt_term_set_auto_window_hint(ZVT_TERM(_term), FALSE);
   zvt_term_set_scrollback(ZVT_TERM(_term), 10000);
   GtkWidget *scrollbar = 
     gtk_vscrollbar_new (GTK_ADJUSTMENT (ZVT_TERM(_term)->adjustment));
@@ -167,19 +168,11 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 
   GtkWidget *btn;
   btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
-//   GtkWidget *pix;
-//   {
-//     GdkPixmap *xpm;
-//     GdkBitmap *mask;
-    
-//     xpm = gdk_pixmap_create_from_xpm_d(_win->window, &mask, NULL, stop_xpm);
-//     pix = gtk_pixmap_new(xpm, mask);
-//   }
-//  gtk_container_add(GTK_CONTAINER(btn), pix);
   gtk_signal_connect(GTK_OBJECT(btn), "clicked",
 		     (GtkSignalFunc)stopShell, this);
   gtk_box_pack_start(GTK_BOX(hbox), btn, FALSE, TRUE, 5);
 
+  gtk_window_set_resizable(GTK_WINDOW(_win), false);
   gtk_widget_show_all(GTK_WIDGET(_topBox));
 
 }

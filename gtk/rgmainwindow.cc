@@ -1741,6 +1741,8 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 		  failedReason += string(pkg->name()) + ":\n";
 		  failedReason += pkg->showWhyInstBroken();
 		  failedReason += "\n";
+		  pkg->unsetVersion();
+		  me->_lister->notifyChange(pkg);
 	      }
 	  }
 	  if(failed) {

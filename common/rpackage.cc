@@ -977,15 +977,15 @@ bool RPackage::setVersion(const char* VerTag)
     pkgVersionMatch Match(VerTag,pkgVersionMatch::Version);
     pkgCache::VerIterator Ver = Match.Find(*_package);
 			
-    cout << "Ver is: " << VerTag << endl;
+    //cout << "Ver is: " << VerTag << endl;
  
     if (Ver.end() == true) {
 	return _error->Error(_("Version '%s' for '%s' was not found"),
 				 VerTag,_package->Name());
     }
 
-    printf("Release: Selected version %s (%s) for %s\n",
-	   Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
+    //printf("Release: Selected version %s (%s) for %s\n",
+    //	   Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
    
     _depcache->SetCandidateVersion(Ver);
     return true;

@@ -177,7 +177,7 @@ class RPackageViewFilter : public RPackageView {
    virtual void clear() {clearSelection();};
 
    string getName() {
-      return _("Filter");
+      return _("Custom Filters");
    };
 
    void addPackage(RPackage *package);

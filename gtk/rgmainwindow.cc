@@ -2681,6 +2681,8 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
 
    me->_lister->registerObserver(me);
    me->setTreeLocked(FALSE);
+   string currentSubView = me->selectedSubView();
+   me->refreshSubViewList(currentSubView);
    me->refreshTable();
    me->setInterfaceLocked(FALSE);
 }

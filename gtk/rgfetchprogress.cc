@@ -213,7 +213,7 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 	long i;
 	unsigned long ETA = (unsigned long)((TotalBytes - CurrentBytes)/CurrentCPS);
 	i = CurrentItems < TotalItems ? CurrentItems+1 : CurrentItems;
-	snprintf(buf, sizeof(buf), _("%-3li/%-3li files    %4s B/s  ETA %6s\n"),
+	snprintf(buf, sizeof(buf), _("Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"),
 		 i, TotalItems,
 		 SizeToStr(CurrentCPS).c_str(),
 		 TimeToStr(ETA).c_str());

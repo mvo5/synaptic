@@ -77,8 +77,8 @@ RPackageLister::RPackageLister()
    _updating = true;
    _sortMode = LIST_SORT_NAME;
 
-   _views.push_back(new RPackageViewStatus());
    _views.push_back(new RPackageViewSections());
+   _views.push_back(new RPackageViewStatus());
    _views.push_back(new RPackageViewAlphabetic());
    _views.push_back(new RPackageViewAll());
 

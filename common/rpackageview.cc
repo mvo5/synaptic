@@ -69,21 +69,21 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
 {
    string str;
    int ostatus = pkg->getOtherStatus();
-   if(ostatus & RPackage::ONew)
-      str=_("New in repository");
-   else if( (ostatus & RPackage::ONotInstallable) &&
-	    !(ostatus & RPackage::OResidualConfig) )
-      str=_("Obsolete and locally installed");
-   else if(pkg->installedVersion() != NULL) {
-      if(pkg->getStatus() == RPackage::SInstalledOutdated)
-	 str=_("Installed and upgradable");
+   if (ostatus & RPackage::ONew)
+      str = _("New in repository");
+   else if ((ostatus & RPackage::ONotInstallable) &&
+	    !(ostatus & RPackage::OResidualConfig))
+      str = _("Installed and obsolete");
+   else if (pkg->installedVersion() != NULL) {
+      if (pkg->getStatus() == RPackage::SInstalledOutdated)
+	 str = _("Installed and upgradable");
       else
-	 str=_("Installed");
+	 str = _("Installed");
    } else {
-      if(pkg->getOtherStatus() & RPackage::OResidualConfig)
-	 str=_("Not installed (residual config)");
+      if (pkg->getOtherStatus() & RPackage::OResidualConfig)
+	 str = _("Not installed (residual config)");
       else
-	 str=_("Not installed");
+	 str = _("Not installed");
    }
 
    _view[str].push_back(pkg);

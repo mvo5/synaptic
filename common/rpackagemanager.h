@@ -60,10 +60,15 @@ class RPackageManager {
       Res = pm->OrderInstall();
       return Res;
    };
-
+#ifdef WITH_DPKG_STATUSFD
+   pkgPackageManager::OrderResult DoInstallPostFork(int statusFd=-1) {
+      return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
+   };
+#else
    pkgPackageManager::OrderResult DoInstallPostFork() {
       return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
    };
+#endif
 
    RPackageManager(pkgPackageManager *pm) : pm(pm) {};
    

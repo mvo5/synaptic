@@ -27,16 +27,13 @@
 #define _RINSTALLPROGRESS_H_
 
 #include "config.h"
-#include "rpackagemanager.h"
-
-#ifdef WITH_DPKG_STATUSFD
-#define RPackageManager pkgPackageManager
-#endif
+#include <rpackagemanager.h>
 
 class RInstallProgress {
  protected:
+   int _stdout;
+   int _stderr;
    int _childin;
-   int _child_control;
 
    int _donePackages;
    int _numPackages;

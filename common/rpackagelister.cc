@@ -1338,11 +1338,8 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
    pkgPackageManager *PM;
    PM = _system->CreatePM(_cache->deps());
-#ifdef WITH_DPKG_STATUSFD
-   pkgPackageManager *rPM = PM;
-#else
    RPackageManager *rPM = new RPackageManager(PM);
-#endif
+
    if (!PM->GetArchives(&fetcher, _cache->list(), _records) ||
        _error->PendingError())
       goto gave_wood;

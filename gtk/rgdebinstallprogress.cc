@@ -126,9 +126,10 @@ void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
 					gpointer data)
 {
    RGDebInstallProgress *me = (RGDebInstallProgress*)data;
+
    if(child_pid == me->_child_id) {
-//       cout << "child exited" << endl;
-//       cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
+//        cout << "correct child exited" << endl;
+//        cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
       me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
       me->child_has_exited=true;
    }
@@ -230,6 +231,7 @@ int ipc_send_fd(int fd)
 
    // send fd to server
    write_fd(serverfd, (void*)"",1,fd);
+   close(serverfd);
    return 0;
 }
 
@@ -392,48 +394,17 @@ void RGDebInstallProgress::updateInterface()
 
    int i=0;
    while (1) {
-      usleep(1000); // sleep a bit so that we don't have 100% cpu
 
-#if 0
-      fd_set wfds;
-      struct timeval tv;
-      int retval;
-      FD_ZERO(&wfds);
-      FD_SET(_child_control, &wfds);
-      tv.tv_sec = 0;
-      tv.tv_usec = 1000;
-      retval = select(_child_control+1, NULL, &wfds, NULL, &tv);
-      if (retval) {
-	 printf("Data is available now.\n");
-      }
-#endif
-
-      // This algorithm should be improved.
+      // This algorithm should be improved (it's the same as the rpm one ;)
       int len = read(_childin, buf, 1);
-      if(len == 0) { // happens when the stream is closed
-	 child_has_exited=true;
+
+      if(len < 1)
 	 break;
-      }
-
-      while (gtk_events_pending())
-	 gtk_main_iteration();
-
-      if (len < 1 ) { // no data
-	 if(errno == 0 || errno == EAGAIN) { // harmless, try again
-	    continue;
-	 } else {
-	    child_has_exited=true;
-	    break;
-	 }
-      }
-
-      // got complete line
       if( buf[0] == '\n') {
 // 	 cout << line << endl;
 	 
-	 _startCounting = true;
 	 gchar **split = g_strsplit(line, ":",4);
-
+	 
 	 gchar *s=NULL;
 	 gchar *pkg = g_strstrip(split[1]);
 	 gchar *status = g_strstrip(split[2]);
@@ -454,8 +425,12 @@ void RGDebInstallProgress::updateInterface()
 	 } else if(_actionsMap.count(pkg) == 0) {
 	    // no known dpkg state (happens e.g if apt reports:
 	    // /bin/sh: apt-listchanges: command-not-found
+	    g_strfreev(split);
+	    line[0] = 0;
 	    continue;
 	 } else {
+	    _startCounting = true;
+
 	    // then go on with the package stuff
 	    char *next_stage_str = NULL;
 	    int next_stage = _stagesMap[pkg];
@@ -477,7 +452,7 @@ void RGDebInstallProgress::updateInterface()
 	    }
 	 }
 
-	 // each package goes through three stages
+	 // each package goes through various stages
 	 float val = ((float)_progress)/((float)_totalActions);
 // 	 cout << _progress << "/" << _totalActions << " = " << val << endl;
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
@@ -494,10 +469,12 @@ void RGDebInstallProgress::updateInterface()
       }      
    }
 
-   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal),1.0);
-   while (gtk_events_pending())
-      gtk_main_iteration();
-   
+   if (gtk_events_pending()) {
+      while (gtk_events_pending())
+         gtk_main_iteration();
+   } else {
+      usleep(5000);
+   }
 }
 
 pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
@@ -507,9 +484,6 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    void *dummy;
    pkgPackageManager::OrderResult res;
    int ret;
-   pid_t _child_id;
-
-//    cout << "RInstallProgress::start()" << endl;
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
@@ -518,7 +492,8 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    /*
     * This will make a pipe from where we can read child's output
     */
-   _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
+   _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
+				    false,false,false);
    if (_child_id == 0) {
       int fd[2];
       pipe(fd);
@@ -554,7 +529,6 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    finishUpdate();
 
    ::close(_childin);
-   ::close(_child_control);
 
    return res;
 }

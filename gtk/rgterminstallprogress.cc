@@ -56,8 +56,8 @@ void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
 {
    RGTermInstallProgress *me = (RGTermInstallProgress*)data;
    if(child_pid == me->_child_id) {
-//       cout << "child exited" << endl;
-//       cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
+       cout << "child exited" << endl;
+       cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
       me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
       me->child_has_exited=true;
    }

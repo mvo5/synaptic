@@ -80,26 +80,7 @@ synaptic_SOURCES=\
 	rgwindow.cc\
 	rgwindow.h \
 	rggladewindow.cc\
-	rggladewindow.h \
-	synapticinterface.cc\
-	synapticinterface.h
+	rggladewindow.h 
 
-CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) synaptic.py synaptic.pyc _synaptic.so
+CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 
-# SWIG stuff  -- broken ATM
-if COMPILE_SWIG
-
-#noinst_PROGRAMS=synapticModule
-#synapticModule_SOURCES=$(synaptic_SOURCES) synapticinterface.i
-
-#synapticinterface_wrap.cxx: synapticinterface.i 
-#	$(SWIG) -c++ -python synapticinterface.i
-
-#synapticinterface_wrap.o: synapticinterface_wrap.cxx
-#	$(CXX) -c synapticinterface_wrap.cxx $(PYTHON_INCLUDES) `pkg-config libglade-2.0 --cflags` -I../common
-
-#synapticModule$(EXEEXT): synaptic synapticinterface_wrap.o
-#	$(CXX) -shared -O2  -o _synaptic.so  synapticinterface_wrap.o $(synaptic_OBJECTS) $(synaptic_LDFLAGS)  $(synaptic_LDADD)
-#	-ln -s _synaptic.so synapticModule
-
-endif #SWIG

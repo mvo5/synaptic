@@ -135,28 +135,6 @@ AC_ARG_WITH(debian-description-parser,
         AC_DEFINE(SYNAPTIC_DEB_PARSER)
 )
 
-dnl if compiled with SWIG, do all the checking
-AC_ARG_WITH(swig,
-	      [--with-swig  compile with swig python interface],
-	      [AC_PATH_PROG(SWIG, swig swig1.3)
-	      if test x"$SWIG" != x; then
-	        AC_SUBST(PYTHON_INCLUDES)
-  		AC_PATH_PROG(PYTHON, python python2.2 python2.1 python2.0)
-		changequote(<<<, >>>)dnl
-		PYTHON_VERSION=`$PYTHON -c "import sys; print sys.version[:3]"`
-		changequote([, ])dnl
-		py_prefix=`$PYTHON -c "import sys; print sys.prefix"`
-		PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
-		SAVE_CPPFLAGS="$CPPFLAGS"
-		CPPFLAGS="$SAVE_CPPFLAGS $PYTHON_INCLUDES"
-		AC_CHECK_HEADER(Python.h, ,
-			        AC_ERROR([Can't find Python.h]))
-		CPPFLAGS="$SAVE_CPPFLAGS"
-	      else
-	         AC_ERROR([Can't find swig >= 1.3])
-	      fi])
-AM_CONDITIONAL(COMPILE_SWIG, test x"$SWIG" != x)
-
 dnl check for libzvt
 AC_ARG_WITH(zvt, 
 	      [--with-zvt  compile with libzvt support (terminal output)], 

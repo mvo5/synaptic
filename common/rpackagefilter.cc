@@ -482,13 +482,6 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
       }
     }
 
-    if(_status & DebconfPackage ) {
-      if(ostatus & RPackage::ODebconf) {
-	  //cout << "pkg(" << pkg->name() << ")->isDebconf()" << endl;
-	  return true;
-      }
-    }
-
     if(_status & NotInstallable ) {
       if(ostatus & RPackage::ONotInstallable) {
 	  //cout << "pkg(" << pkg->name() << ")->isNotInRepository()" << endl;

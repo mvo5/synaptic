@@ -948,9 +948,13 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     case RPackage::ONew:
 	gtk_label_set_text(GTK_LABEL(_stateL), _("Package is new."));
 	break;
-    case RPackage::ODebconf:
+    }
+
+    if(pkg->dependsOn("debconf") && 
+       (status == RPackage::SInstalledUpdated || 
+	status == RPackage::SInstalledOutdated)) 
+    {
 	gtk_widget_set_sensitive(_pkgReconfigure, TRUE);
-	break;
     }
 
     // set button, but disable toggle signal

@@ -65,7 +65,7 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 		   pkgRecords *records, pkgCache::PkgIterator &pkg)
   : _lister(lister), _records(records), _depcache(depcache), 
     _newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
-    _debconfPackage(false), _notify(true)
+     _notify(true)
 {
     _package = new pkgCache::PkgIterator(pkg);
 }
@@ -289,6 +289,7 @@ const char *RPackage::description()
     }
 }
 
+
 long RPackage::installedSize()
 {
     pkgCache::VerIterator ver = _package->CurrentVer();
@@ -330,9 +331,6 @@ int RPackage::getOtherStatus()
     
     if(_orphanedPackage)
 	status |= OOrphaned;
-
-    if(_debconfPackage)
-	status |= ODebconf;
 
     if((*_package)->CurrentState == pkgCache::State::ConfigFiles) {
       //cout << "ResidentalConfig found for: "<<name()<<endl;
@@ -608,6 +606,21 @@ vector<RPackage*> RPackage::getInstalledDeps()
     }
 
     return deps;
+}
+
+bool RPackage::dependsOn(const char *pkgname)
+{
+    const char *depType, *depPkg, *depName, *depVer;
+    char *summary; 
+    bool ok;
+    if(enumDeps(depType, depName, depPkg, depVer, summary, ok)) {
+	do {
+	    //cout << "got: " << depType << " " << depName << endl;
+	    if(strcmp(pkgname, depName) == 0)
+		return true;
+	} while (nextDeps(depType, depName, depPkg, depVer, summary, ok));
+    }
+    return false;
 }
 
 bool RPackage::enumDeps(const char *&type, const char *&what, 

@@ -52,7 +52,6 @@ class RPackage {
    bool _newPackage;
    bool _pinnedPackage;
    bool _orphanedPackage;
-   bool _debconfPackage;
 
    enum ChangeReason {unknown, manual, weak_depends, libapt};
    ChangeReason last_change;
@@ -106,8 +105,7 @@ public:
      OPinned          = 1<<1, /* apt-pined */
      ONew             = 1<<2,
      OResidualConfig  = 1<<3,
-     ODebconf         = 1<<4,
-     ONotInstallable  = 1<<5
+     ONotInstallable  = 1<<4
    };
    
    enum UpdateImportance {
@@ -164,6 +162,9 @@ public:
    bool nextDeps(const char *&type, const char *&what, const char *&pkg,
 		 const char *&which, char *&summary, bool &satisfied);
 
+   // does the pkg depends on this one?
+   bool dependsOn(const char *pkgname);
+
    // reverse dependencies
    bool enumRDeps(const char *&dep, const char *&what);
    bool nextRDeps(const char *&dep, const char *&what);
@@ -186,7 +187,6 @@ public:
    void inline setNew(bool isNew=true) { _newPackage=isNew; };
    void setPinned(bool flag);
    void setOrphaned(bool flag=true) { _orphanedPackage=flag; };
-   void setDebconf(bool flag=true) { _debconfPackage=flag; };
 
    // change status
    void setKeep();

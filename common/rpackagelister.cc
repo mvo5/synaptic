@@ -284,7 +284,8 @@ void RPackageLister::makePresetFilters()
     {
 	filter = new RFilter(this);
 	filter->preset = true;
-	filter->status.setStatus(RStatusPackageFilter::DebconfPackage);
+	filter->pattern.addPattern(RPatternPackageFilter::Depends,
+				  "^debconf", false);
 	filter->setName("Pkg with Debconf"); _("Pkg with Debconf");
 	registerFilter(filter);
     }
@@ -585,11 +586,6 @@ void RPackageLister::applyInitialSelection()
     if (_roptions->getPackageOrphaned(_packages[i]->name())) {
       //cout << "orphaned: " << _packages[i]->name() << endl;
       _packages[i]->setOrphaned(true);
-    }
-
-    if (_roptions->getPackageDebconf(_packages[i]->name())) {
-      //cout << "orphaned: " << _packages[i]->name() << endl;
-      _packages[i]->setDebconf(true);
     }
   }
 }

@@ -161,7 +161,7 @@
 					Choose 
 					<menuchoice>
 					<guisubmenu>System Tools</guisubmenu>
-					<guimenuitem>Software</guimenuitem>
+					<guimenuitem>Synaptic Package Manager</guimenuitem>
 					</menuchoice>. 
 				</para>
 			</listitem>
@@ -173,7 +173,8 @@
 					Choose 
 					<menuchoice>
 					<guisubmenu>Settings</guisubmenu>
-					<guimenuitem>Software</guimenuitem>
+					<guisubmenu>Extra</guisubmenu>
+					<guimenuitem>Synaptic Package Manager</guimenuitem>
 					</menuchoice>. 
 				</para>
 			</listitem>
@@ -196,7 +197,10 @@
 
 	<caution>
 		<para>
-			Your system can be damaged or rendered unusable.
+			You can render your system unusable.
+		</para>
+		<para>
+			Synaptic allows you to perform changes on the core of your system.
 		</para>
 		<para>
 			Always use &app; with care.
@@ -323,7 +327,7 @@
 				<variablelist>
 					<varlistentry>
 						<term>
-							Update List
+							Refresh Package  List
 						</term>
 						<listitem>
 							<para>
@@ -547,7 +551,7 @@
 
 <sect2 id="synaptic-pkg-find"> 
 	<title>
-		Finding Packages
+		To Find Packages
 	</title> 
 
 <variablelist>
@@ -637,7 +641,7 @@
 </sect2>
 
 <sect2 id="synaptic-pkg-install"> 
-	<title>Installing Packages</title>
+	<title>To Install Packages</title>
 	<para>
 		To install one or more packages perform the following steps:
 	</para>
@@ -650,12 +654,13 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Update</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Refresh Package List</guimenuitem>
+						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Update</guibutton> in the toolbar.
+						Click on <guibutton>Refresh List</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
@@ -669,8 +674,10 @@
 		<listitem>
 			<para>
 				Select the package that you wish to install in the 
-				<xref linkend="synaptic-win-list"/> with a left mouse click. To select further packages hold
-				down the <keycap>Ctrl</keycap> key while left clicking on the additional package.
+				<xref linkend="synaptic-win-list"/> with a left mouse click. 
+
+				To select further packages hold down the <keycap>Ctrl</keycap> 
+				key while left clicking on the additional package.
 			</para>
 		</listitem>
 		<listitem>
@@ -680,23 +687,30 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Install</guibutton> in the package control area.
+						Double click on the name of the package in the
+						<xref linkend="synaptic-win-list"/>.
 					</para>
 				</listitem>
-				<listitem>
-					<para>
-						Choose <menuchoice><guimenu>Package</guimenu>
-						<guimenuitem>Install</guimenuitem>
-						</menuchoice> from the menu.
-					</para>
-				</listitem>
+                                <listitem>
+                                        <para>
+                                                Click on the status icon of the package and choose <guimenuitem>
+                                                Install Latest Version</guimenuitem> from the menu.
+                                        </para>
+                                </listitem>
 				<listitem>
 					<para>
 						Right click on the package and choose <guimenuitem>
-						Install</guimenuitem> from the
+						Install Latest Version</guimenuitem> from the
 						context menu.
 					</para>
 				</listitem>
+                                <listitem>
+                                        <para>
+                                                Choose <menuchoice><guimenu>Package</guimenu>
+                                                <guimenuitem>Install Latest Version</guimenuitem>
+                                                </menuchoice> from the menu.
+                                        </para>
+                                </listitem>
 				<listitem>
 					<para>
 						Press the key combination <keycombo>
@@ -718,7 +732,8 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Execute Queued Changes</guimenuitem>
+						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -733,7 +748,28 @@
 </sect2>
 
 <sect2 id="synaptic-pkg-remove"> 
-	<title>Removing Packages</title>
+	<title>To Remove Packages</title>
+	<note>
+		<para>
+			Configuration files and user created data (e.g. a Website in /var/www) are not removed
+			from the system by default. You can change this behavior in the
+			<xref linkend="synaptic-prefs-actions"></xref>.
+		</para>
+		<para>
+			Alternativly, choose <menuchoice><guimenuitem>Remove Including 
+			Configuration</guimenuitem></menuchoice> instead of 
+			<guimenuchoice><guimenuitem>Remove</guimenuitem></guimenuchoice> 
+			to remove all files related to the package.
+		</para>
+	</note>
+	<note>
+		<para>
+			To also remove packages that are only installed as dependency of the to be removed 
+			package(s) and that would be no longer needed (orphaned) afterwards, choose 
+			<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
+			</menuchoice> instead of <guimenuchoice><guimenuitem>Remove</guimenuitem></guimenuchoice>.
+		</para>
+	</note>
 	<para>
 		To remove one or more packages follow these steps:
 	</para>
@@ -752,8 +788,20 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Remove
-						</guibutton> in the package control area.
+						Double click on the name of the installed package in the
+						<xref linkend="synaptic-win-list"/>.
+					</para>
+				</listitem>
+                                <listitem>
+                                        <para>
+                                                Click on the status icon of the package and choose <guimenuitem>
+                                                Install Latest Version</guimenuitem> from the menu.
+                                        </para>
+                                </listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Remove</guimenuitem> from the context menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -761,13 +809,6 @@
 						Choose <menuchoice><guimenu>Package</guimenu>
 						<guimenuitem>Remove</guimenuitem>
 						</menuchoice> from the menu.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Right click on the package and choose <guimenuitem>
-						Remove</guimenuitem> from the
-						context menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -791,7 +832,8 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Execute Queued Changes</guimenuitem>
+						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -803,21 +845,9 @@
 			</itemizedlist>
 		</listitem>
 	</orderedlist>
-	<note>
-		<para>
-			Configuration files and user created data (e.g. a Website in /var/www) are not removed
-			from the system by default. You can change this behavior in the
-			<xref linkend="synaptic-prefs-actions"></xref>.
-		</para>
-		<para>
-			Alternativly, choose <menuchoice><guimenu>Packages</guimenu><guimenuitem>Purge with 
-			Configuration</guimenuitem></menuchoice> from the menu to remove all files related to the
-			package.
-		</para>
-	</note>
 </sect2>
 <sect2 id="synaptic-pkg-upgrade"> 
-	<title>Upgrading Single Packages</title>
+	<title>To Upgrade Packages</title>
 	<para>
 		To upgrade one or more packages follow these steps:
 	</para>
@@ -830,13 +860,13 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Update Package List</guimenuitem></menuchoice> 
+						<guimenuitem>Refresh Package List</guimenuitem></menuchoice> 
 						from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Update List</guibutton> in the toolbar.
+						Click on <guibutton>Refresh List</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
@@ -862,10 +892,23 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Upgrade
-						</guibutton> in the package control area.
+						Double click on the name of the package with a later version available
+						in the <xref linkend="synaptic-win-list"/>.
 					</para>
 				</listitem>
+                                <listitem>
+                                        <para>
+                                                Click on the status icon of the package and choose <guimenuitem>
+                                                Upgrade</guimenuitem> from the menu.
+                                        </para>
+                                </listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Upgrade</guimenuitem> from the
+						context menu.
+					</para>
+                                </listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Package</guimenu>
@@ -875,9 +918,8 @@
 				</listitem>
 				<listitem>
 					<para>
-						Right click on the package and choose <guimenuitem>
-						Upgrade</guimenuitem> from the
-						context menu.
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -895,7 +937,7 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>

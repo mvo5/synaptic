@@ -429,10 +429,10 @@ bool RPackageLister::openCache(bool reset)
 	
 	if (I->CurrentVer != 0)
 	    _installedCount++;
-	else if (I->VersionList==0)
+	else if (I->VersionList==0) 
 	    // exclude virtual packages
 	    continue;
-	
+
 	RPackage *pkg = new RPackage(this, deps, _records, I);
 	_packageindex[I->ID] = _count;
 	_packages[_count++] = pkg;
@@ -456,27 +456,68 @@ bool RPackageLister::openCache(bool reset)
 	} else {
 	    cerr << _("Package ") << I.Name() << _(" has no section?!") << endl;
 	}
-	
+#if 0
+	// gather tree of virtual packages (using the provides field)
+	// format:
+	//  c-compiler
+	//     - gcc-2.95
+	//     - gcc-3.2 
+	static map<string,tree<string>::iterator> itermap;
+
+	if(pkg->provides().size() > 1) {
+	    string name(pkg->name());
+	    cout << "pkg: " << name << " provides: " << endl;
+	    vector<const char *> p=pkg->provides();
+	    tree<string>::iterator it;
+	    for(int i=0;i<p.size();i++) {
+		string provides(p[i]);
+
+		if(itermap.find(provides) == itermap.end()) {
+		    it = virtualPackages.insert(virtualPackages.begin(), provides);
+		    itermap[provides] = it;
+		}
+		else
+		    it = itermap[provides];
+		virtualPackages.append_child(it, name);
+	    }
+	}
+#endif
     }
+
+#if 0
+    // output the virtualPackages Tree
+    tree<string>::iterator it = virtualPackages.begin();
+    while(it != virtualPackages.end()) {
+	if(virtualPackages.depth(it) > 0)
+	    cout << "\t";
+	cout << (*it) << endl;
+	++it;
+    }
+#endif
+
     _sectionList.resize(sectionSet.size());
     copy(sectionSet.begin(), sectionSet.end(), _sectionList.begin());
 
+
     for (I = deps->PkgBegin(); I.end() == false; I++) {
-	if (I->VersionList==0) {
+	// this is a virtual pkg
+	if (I.VersionList().end()) {
 	    // find the owner of this virtual package and attach it there
-	    if (I->ProvidesList == 0)
-		continue;
+ 	    if (I->ProvidesList == 0) 
+ 		continue;
 	    string name = I.ProvidesList().OwnerPkg().Name();
+	    cout << I.Name() << " provides: " << name << endl;
 	    map<string,RPackage*>::iterator I2 = pkgmap.find(name);
-	    if (I2 != pkgmap.end())
+	    if (I2 != pkgmap.end()) {
 		(*I2).second->addVirtualPackage(I);
+		//cout << (*I2).first << " provides: " << name << endl;
+	    }
 	}
     }
 
     applyInitialSelection();
 
     _updating = false;
-
     if (reset) {
 	reapplyFilter();
     } else {   
@@ -718,8 +759,11 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
     else if(_displayMode == TREE_DISPLAY_STATUS)
 	{
 	    string str;
-	    if(pkg->getOtherStatus() & RPackage::ONew)
+	    int ostatus = pkg->getOtherStatus();
+	    if(ostatus & RPackage::ONew)
 		str=_("New in repository");
+	    else if(ostatus & RPackage::ONotInstallable)
+		str=_("Obsolete and locally installed");
 	    else if(pkg->installedVersion() != NULL) {
 		if(pkg->getStatus() == RPackage::SInstalledOutdated)
 		    str=_("Installed and upgradeable");

@@ -95,6 +95,9 @@ private:
    vector<string> _sectionList; // list of all available package sections
 
    vector<RCacheActor*> _actors;
+#if 0
+   tree<string> virtualPackages; // all virtual packages
+#endif
 
 public:
    typedef pair<string,RPackage*> pkgPair;

@@ -58,6 +58,7 @@ class RPackage {
 
    // virtual pkgs provided by this one
    vector<pkgCache::PkgIterator> _virtualPackages; 
+
    // provides list as string
    vector<const char*> _provides;
    
@@ -193,7 +194,7 @@ public:
 
    // shallow doesnt remove things other pkgs depend on
    void setRemoveWithDeps(bool shallow, bool purge=false);
-   
+
    void addVirtualPackage(pkgCache::PkgIterator dep);
 
    RPackage(RPackageLister *lister, pkgDepCache *depcache, pkgRecords *records,

@@ -1,24 +1,3 @@
-/* rpmindexcopy.cc
- *
- * Copyright (c) 2000, 2001 Conectiva S/A
- *
- * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License as
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- * USA
- */
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>
@@ -27,8 +6,8 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/tagfile.h>
 
-
-#include <iostream.h>
+#include <iostream>
+#include <map>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -36,7 +15,7 @@
 
 #include "rpmindexcopy.h"
 
-
+using namespace std;
 
 string RPMIndexCopy::RipComponent(string Path)
 {
@@ -99,6 +78,9 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
    
    unsigned long CurrentSize = 0;
 
+   // Keep track of global release processing
+   map<string,bool> GlobalReleases;
+
    for (vector<string>::iterator I = List.begin(); I != List.end(); I++)
    {      
       string OrigPath = string(*I,CDROM.length());
@@ -108,14 +90,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       FileFd Pkg;
       string File = *I;
       
-      
-      if (strrcmp_(File.c_str(), 
-		   _config->Find("Acquire::ComprExtension").c_str()) == 0)
-      {
-	 File = string(File, 0, 
-		       File.length() - _config->Find("Acquire::ComprExtension").length());
-      }
-      
+      if (strcmp(File.c_str()+File.length()-4, ".bz2") == 0)
+	 File = string(File, 0, File.length()-4);
       
       if (FileExists(File) == true)
       {
@@ -136,10 +112,10 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 Pkg.Fd(dup(fileno(tmp)));
 	 fclose(tmp);
 	 
-	 // Fork gzip
+	 // Fork bzip2
 	 int Process = fork();
 	 if (Process < 0)
-	    return _error->Errno("fork","Couldn't fork gzip");
+	    return _error->Errno("fork","Couldn't fork bzip2");
 	 
 	 // The child
 	 if (Process == 0)
@@ -150,7 +126,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	    SetCloseExec(STDOUT_FILENO,false);
 	    
 	    const char *Args[3];
-	    Args[0] = _config->Find("Dir::bin::gzip","gzip").c_str();
+	    Args[0] = _config->Find("Dir::Bin::bzip2","bzip2").c_str();
 	    Args[1] = "-d";
 	    Args[2] = 0;
 	    execvp(Args[0],(char **)Args);
@@ -158,8 +134,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 }
 	 
 	 // Wait for gzip to finish
-	 if (ExecWait(Process,_config->Find("Dir::bin::gzip","gzip").c_str(),false) == false)
-	    return _error->Error("gzip failed, perhaps the disk is full.");
+	 if (ExecWait(Process,_config->Find("Dir::Bin::bzip2","bzip2").c_str(),false) == false)
+	    return _error->Error("bzip2 failed, perhaps the disk is full.");
 	 
 	 Pkg.Seek(0);
       }
@@ -197,35 +173,47 @@ bool RPMIndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
 	 if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
 	    return _error->Errno("rename","Failed to rename");
 
-	 string release = "release." + RipComponent(*I);
-	 
-	 // Copy the release file
-	 sprintf(S,"cdrom:[%s]/%s%s",Name.c_str(),
-		 RipDirectory(*I).c_str() + CDROM.length(),
-		  release.c_str());
-	 string TargetF = _config->FindDir("Dir::State::lists") + "partial/";
-	 TargetF += URItoFileName(S);
-	 if (FileExists(RipDirectory(*I) + release.c_str()) == true)
+	 // Two release steps, one for global, one for component
+	 string release = "release";
+	 for (int Step = 0; Step != 2; Step++)
 	 {
-	    FileFd Target(TargetF,FileFd::WriteEmpty);
-	    FileFd Rel(RipDirectory(*I) + release.c_str(),FileFd::ReadOnly);
-	    if (_error->PendingError() == true)
-	       return false;
+	    if (Step == 0)
+	    {
+	       if (GlobalReleases.find(*I) != GlobalReleases.end())
+		  continue;
+	       GlobalReleases[*I] = true;
+	    }
+	    else
+	       release += "." + RipComponent(*I);
 	    
-	    if (CopyFile(Rel,Target) == false)
-	       return false;
-	 }
-	 else
-	 {
-	    // Empty release file
-	    FileFd Target(TargetF,FileFd::WriteEmpty);	    
-	 }	 
+	    // Copy the component release file
+	    sprintf(S,"cdrom:[%s]/%s/%s",Name.c_str(),
+		    RipDirectory(*I).c_str() + CDROM.length(),
+		     release.c_str());
+	    string TargetF = _config->FindDir("Dir::State::lists") + "partial/";
+	    TargetF += URItoFileName(S);
+	    if (FileExists(RipDirectory(*I) + release) == true)
+	    {
+	       FileFd Target(TargetF,FileFd::WriteEmpty);
+	       FileFd Rel(RipDirectory(*I) + release,FileFd::ReadOnly);
+	       if (_error->PendingError() == true)
+		  return false;
+	       
+	       if (CopyFile(Rel,Target) == false)
+		  return false;
+	    }
+	    else
+	    {
+	       // Empty release file
+	       FileFd Target(TargetF,FileFd::WriteEmpty);	    
+	    }
 
-	 // Rename the release file
-	 FinalF = _config->FindDir("Dir::State::lists");
-	 FinalF += URItoFileName(S);
-	 if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
-	    return _error->Errno("rename","Failed to rename");
+	    // Rename the release file
+	    FinalF = _config->FindDir("Dir::State::lists");
+	    FinalF += URItoFileName(S);
+	    if (rename(TargetF.c_str(),FinalF.c_str()) != 0)
+	       return _error->Errno("rename","Failed to rename");
+	 }
       }
       
       string Prefix = "";
@@ -252,3 +240,4 @@ void RPMIndexCopy::ConvertToSourceList(string CD, string &Path)
    Path = RipDistro(Path) + " " + RipComponent(Path);
 }
 
+// vim:sts=3:sw=3

@@ -17,7 +17,7 @@ class FileFd;
 
 class RPMIndexCopy
 {
- protected:
+   protected:
    
    string RipComponent(string Path);
    string RipDirectory(string Path);
@@ -25,26 +25,14 @@ class RPMIndexCopy
    
    void ConvertToSourceList(string CD, string &Path);
  
- public:
+   public:
+
    bool CopyPackages(string CDROM,string Name,vector<string> &List);
 };
 
 
-class RPMPackageCopy : public RPMIndexCopy
-{
- protected:
-   
+class RPMPackageCopy : public RPMIndexCopy {};
 
- public:
-};
-
-
-class RPMSourceCopy : public RPMIndexCopy
-{
- protected:
-   
- 
- public:
-};
+class RPMSourceCopy : public RPMIndexCopy {};
 
 #endif

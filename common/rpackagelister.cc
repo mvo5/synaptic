@@ -799,13 +799,12 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		    }
 		}
 		// if we have a suffix, add it
-		//if(!suffix.empty()) {
-		    // complicated, but translators friendly
+		if(!suffix.empty()) {
 		    ostringstream out;
-		    ioprintf(out, _("%s (%s) <i>%s</i>"),
-			     str.c_str(), sec.c_str(),suffix.c_str());
+		    ioprintf(out, _("%s <i>(%s)</i>"),
+			     str.c_str(), suffix.c_str());
 		    str = out.str();
-		    //}
+		}
 		it = _treeOrganizer.insert(_treeOrganizer.begin(), 
 					   pkgPair(str,NULL));
 #else

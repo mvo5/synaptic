@@ -159,6 +159,9 @@ class RPackage {
    bool nextDeps(const char *&type, const char *&what, const char *&pkg,
                  const char *&which, char *&summary, bool &satisfied);
 
+   // getDeps of installed pkg
+   vector<string> enumDeps();
+
    // does the pkg depends on this one?
    bool dependsOn(const char *pkgname);
 
@@ -182,10 +185,10 @@ class RPackage {
    void setPinned(bool flag);
 
    void setNew(bool flag = true) {
-      _boolFlags = flag ? (_boolFlags & FNew) : (_boolFlags | FNew);
+      _boolFlags = flag ? (_boolFlags | FNew) : (_boolFlags & ~FNew);
    };
    void setOrphaned(bool flag = true) {
-      _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & FOrphaned);
+      _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & ~FOrphaned);
    };
 
    void setNotify(bool flag = true);

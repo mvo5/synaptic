@@ -193,6 +193,7 @@ const char *RPackage::installedFiles()
 }
 #endif
 
+
 const char *RPackage::description()
 {
    pkgCache::VerIterator ver = _package->VersionList();
@@ -554,6 +555,44 @@ string RPackage::showWhyInstBroken()
       }
    }
    return out.str();
+}
+
+vector<string> RPackage::enumDeps()
+{
+   vector<string> deps;
+   ostringstream out;
+   bool or_dep;
+   const char* or_str;
+
+   pkgCache::VerIterator Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
+
+   for(pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
+      // clear old values
+      or_dep=false;
+      out.str("");
+
+      // check target and or-depends status
+      pkgCache::PkgIterator Trg = D.TargetPkg();
+      if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or)
+	 or_dep=true;
+
+      if(or_dep)
+	 or_str="| ";
+      else
+	 or_str="";
+
+      if (Trg->VersionList == 0)
+	 ioprintf(out, "%s%s: <%s>",or_str, D.DepType(), Trg.Name());
+      else if (D.TargetVer() == 0)
+	 ioprintf(out, "%s%s: %s",or_str, D.DepType(), Trg.Name());
+      else
+	 ioprintf(out, "%s%s: %s (%s %s)",or_str, D.DepType(), Trg.Name(), 
+		  D.CompType(),D.TargetVer());
+
+      deps.push_back(out.str());
+   }
+
+   return deps;
 }
 
 bool RPackage::enumDeps(const char *&type, const char *&what,
@@ -1006,8 +1045,9 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 // description parser stuff
 static char *debParser(string descr)
 {
-   int i;
-   unsigned int nlpos = descr.find('\n');
+   int i,nlpos=0;
+
+   nlpos = descr.find('\n');
    // delete first line
    if (nlpos != string::npos)
       descr.erase(0, nlpos + 2);        // del "\n " too

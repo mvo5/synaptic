@@ -49,71 +49,6 @@ void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
    // XXX destroy class itself
 }
 
-bool RGPkgDetailsWindow::setLabel(const char *widget_name, const char *value)
-{
-   GtkWidget *widget = glade_xml_get_widget(_gladeXML, widget_name);
-   if (widget == NULL)
-      cout << "widget == NULL with: " << widget_name << endl;
-
-   if (!value)
-      value = _("N/A");
-   gtk_label_set_label(GTK_LABEL(widget), utf8(value));
-}
-
-bool RGPkgDetailsWindow::setLabel(const char *widget_name, const long value)
-{
-   string strVal;
-   GtkWidget *widget = glade_xml_get_widget(_gladeXML, widget_name);
-   if (widget == NULL)
-      cout << "widget == NULL with: " << widget_name << endl;
-
-   // we can never have values of zero or less
-   if (value <= 0)
-      strVal = _("N/A");
-   else
-      strVal = SizeToStr(value);
-   gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
-}
-
-bool RGPkgDetailsWindow::setTextView(const char *widget_name, 
-				     const char* value, 
-				     bool use_headline)
-{
-   GtkTextIter start,end;
-
-   GtkWidget *view = glade_xml_get_widget(_gladeXML, widget_name);
-   if (view == NULL)
-      cout << "textview == NULL with: " << widget_name << endl;
-
-   GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
-   gtk_text_buffer_set_text (buffer, utf8(value), -1);
-
-   if(use_headline) {
-      GtkTextTag *bold_tag = gtk_text_buffer_create_tag(buffer, "bold", 
-					       "weight", PANGO_WEIGHT_BOLD,
-					       "scale", 1.1, 
-					       NULL);
-      gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-      
-      gtk_text_buffer_get_iter_at_offset(buffer, &end, 0);
-      gtk_text_iter_forward_line(&end);
-
-      gtk_text_buffer_apply_tag(buffer, bold_tag, &start, &end);
-   }
-
-   gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-   gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(view), &start,0,FALSE,0,0);
-}
-
-bool RGPkgDetailsWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
-{
-   GtkWidget *pix = glade_xml_get_widget(_gladeXML, widget_name);
-   if (pix == NULL)
-      cout << "textview == NULL with: " << widget_name << endl;
-   
-   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
-
-}
 
 void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
 {
@@ -134,8 +69,11 @@ void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
    setLabel("label_latest_version", pkg->availableVersion());
    setLabel("label_latest_size", pkg->availableInstalledSize());
    setLabel("label_latest_download_size", pkg->availablePackageSize());
-	       
-   setTextView("text_descr", pkg->description());
+
+   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
+   setTextView("text_descr", descr.c_str(), true);
+
+   setTreeList("treeview_deplist", pkg->enumDeps());
 
 }
 

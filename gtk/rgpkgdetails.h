@@ -32,11 +32,6 @@ class RGPkgDetailsWindow : public RGGladeWindow {
 
  protected:
    void fillInValues(RPackage *pkg);
-   bool setLabel(const char *name, const char *value);
-   bool setLabel(const char *name, const long value);
-   bool setTextView(const char *widget_name, const char *value,
-		    bool useHeadline=false);
-   bool setPixmap(const char *widget_name, GdkPixbuf *value);
 
    static void cbCloseClicked(GtkWidget *self, void *data);
 

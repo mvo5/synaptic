@@ -42,373 +42,368 @@
 
 void RGSummaryWindow::clickedOk(GtkWidget *self, void *data)
 {
-    RGSummaryWindow *me = (RGSummaryWindow*)data;
-    
-    me->_confirmed = true;
-    gtk_main_quit();
+   RGSummaryWindow *me = (RGSummaryWindow *) data;
+
+   me->_confirmed = true;
+   gtk_main_quit();
 }
 
 
 void RGSummaryWindow::clickedCancel(GtkWidget *self, void *data)
 {
-    RGSummaryWindow *me = (RGSummaryWindow*)data;
+   RGSummaryWindow *me = (RGSummaryWindow *) data;
 
-    me->_confirmed = false;
-    gtk_main_quit();
+   me->_confirmed = false;
+   gtk_main_quit();
 }
 
-void RGSummaryWindow::buildTree(RGSummaryWindow *me) 
+void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 {
-  RPackageLister *lister = me->_lister;
-  GtkTreeIter   iter, iter_child;
-  
-  vector<RPackage*> held;
-  vector<RPackage*> kept;
-  vector<RPackage*> essential;
-  vector<RPackage*> toInstall;
-  vector<RPackage*> toUpgrade;
-  vector<RPackage*> toRemove;
-  vector<RPackage*> toDowngrade;
-  double sizeChange;
-   
-  lister->getDetailedSummary(held, kept, essential, toInstall, toUpgrade, 
-			     toRemove, toDowngrade, sizeChange);
+   RPackageLister *lister = me->_lister;
+   GtkTreeIter iter, iter_child;
 
-  if(essential.size() > 0) {
-    /* (Essentail) removed */
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("(ESSENTIAL) to be removed"), -1);
+   vector<RPackage *> held;
+   vector<RPackage *> kept;
+   vector<RPackage *> essential;
+   vector<RPackage *> toInstall;
+   vector<RPackage *> toUpgrade;
+   vector<RPackage *> toRemove;
+   vector<RPackage *> toDowngrade;
+   double sizeChange;
 
-    for (vector<RPackage*>::const_iterator p = essential.begin(); 
-	 p != essential.end(); 
-	 p++) 
-      {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
+   lister->getDetailedSummary(held, kept, essential, toInstall, toUpgrade,
+                              toRemove, toDowngrade, sizeChange);
+
+   if (essential.size() > 0) {
+      /* (Essentail) removed */
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("(ESSENTIAL) to be removed"), -1);
+
+      for (vector<RPackage *>::const_iterator p = essential.begin();
+           p != essential.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
       }
-  }
-  if(toDowngrade.size() > 0) {
-    /* removed */
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("To be DOWNGRADED"), -1);
-    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
-	 p != toDowngrade.end(); 
-	 p++) 
-      {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
+   }
+   if (toDowngrade.size() > 0) {
+      /* removed */
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("To be DOWNGRADED"), -1);
+      for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
+           p != toDowngrade.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
       }
-  }
+   }
 
-  if(toRemove.size() > 0) {
-    /* removed */
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("To be removed"),	-1);
-    for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
-	 p != toRemove.end(); 
-	 p++) 
-      {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
+   if (toRemove.size() > 0) {
+      /* removed */
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("To be removed"), -1);
+      for (vector<RPackage *>::const_iterator p = toRemove.begin();
+           p != toRemove.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
       }
-  }
+   }
 
-  if(toUpgrade.size() > 0) {
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("To be upgraded"),-1);
-    for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
-	 p != toUpgrade.end(); 
-	 p++) 
-      {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
+   if (toUpgrade.size() > 0) {
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("To be upgraded"), -1);
+      for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
+           p != toUpgrade.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
       }
-  }
+   }
 
-  if(toInstall.size() > 0) {
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("To be installed"),-1);
-    for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
-	 p != toInstall.end(); 
-	 p++) 
-      {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
+   if (toInstall.size() > 0) {
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("To be installed"), -1);
+      for (vector<RPackage *>::const_iterator p = toInstall.begin();
+           p != toInstall.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
       }
-  }
+   }
 
-  if(kept.size() > 0) {
-    gtk_tree_store_append (me->_treeStore, &iter, NULL);  
-    gtk_tree_store_set (me->_treeStore, &iter,
-			PKG_COLUMN, _("To be kept back"),-1);
-    for (vector<RPackage*>::const_iterator p = kept.begin(); 
-	 p != kept.end(); 
-	 p++) 
-        {
-	gtk_tree_store_append (me->_treeStore, &iter_child, &iter);
-	gtk_tree_store_set(me->_treeStore, &iter_child,
-			   PKG_COLUMN,(*p)->name(), -1);
-        }
-  }
+   if (kept.size() > 0) {
+      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_set(me->_treeStore, &iter,
+                         PKG_COLUMN, _("To be kept back"), -1);
+      for (vector<RPackage *>::const_iterator p = kept.begin();
+           p != kept.end(); p++) {
+         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_set(me->_treeStore, &iter_child,
+                            PKG_COLUMN, (*p)->name(), -1);
+      }
+   }
 }
 
 void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 {
-    RGSummaryWindow *me = (RGSummaryWindow*)data;
-    RPackageLister *lister = me->_lister;
-    GtkWidget *view;
-    GtkWidget *info;
+   RGSummaryWindow *me = (RGSummaryWindow *) data;
+   RPackageLister *lister = me->_lister;
+   GtkWidget *view;
+   GtkWidget *info;
 
-    gtk_widget_set_sensitive(self, FALSE);
-    gtk_widget_destroy(me->_tree);
-    gtk_widget_hide(self);
+   gtk_widget_set_sensitive(self, FALSE);
+   gtk_widget_destroy(me->_tree);
+   gtk_widget_hide(self);
 
-    info = gtk_label_new("");
-    gtk_label_set_justify(GTK_LABEL(info), GTK_JUSTIFY_LEFT);
-    gtk_misc_set_alignment(GTK_MISC(info), 0.0f, 0.0f);
-    gtk_label_set_line_wrap(GTK_LABEL(info), true);
-    gtk_widget_show(info);
-    
-    view = glade_xml_get_widget(me->_gladeXML,"scrolledwindow_summary");
-    assert(view);
-    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(view), info);
+   info = gtk_label_new("");
+   gtk_label_set_justify(GTK_LABEL(info), GTK_JUSTIFY_LEFT);
+   gtk_misc_set_alignment(GTK_MISC(info), 0.0f, 0.0f);
+   gtk_label_set_line_wrap(GTK_LABEL(info), true);
+   gtk_widget_show(info);
 
-    string text;
-    gchar *str;
-    
-    vector<RPackage*> held;
-    vector<RPackage*> kept;
-    vector<RPackage*> essential;
-    vector<RPackage*> toInstall;
-    vector<RPackage*> toUpgrade;
-    vector<RPackage*> toRemove;
-    vector<RPackage*> toDowngrade;
-    double sizeChange;
-   
-    lister->getDetailedSummary(held, 
-			       kept, 
-			       essential,
-			       toInstall, 
-			       toUpgrade, 
-			       toRemove,
-			       toDowngrade,
-			       sizeChange);
+   view = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_summary");
+   assert(view);
+   gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(view), info);
 
-    for (vector<RPackage*>::const_iterator p = essential.begin();
-	 p != essential.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> (<b>essential</b>) will be removed\n"),(*p)->name());
-	text += str;
-	g_free(str);
-    }
-    
-    for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
-	 p != toDowngrade.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> will be <b>downgraded</b>\n"), (*p)->name());
-	text += str;
-	g_free(str);
-    }
-    
-    for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
-	 p != toRemove.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> will be removed\n"), (*p)->name());
-	text += str;
-	g_free(str);
-    }
+   string text;
+   gchar *str;
 
-    for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
-	 p != toUpgrade.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
-	text += str;
-	g_free(str);
-    }
+   vector<RPackage *> held;
+   vector<RPackage *> kept;
+   vector<RPackage *> essential;
+   vector<RPackage *> toInstall;
+   vector<RPackage *> toUpgrade;
+   vector<RPackage *> toRemove;
+   vector<RPackage *> toDowngrade;
+   double sizeChange;
 
-    for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
-	 p != toInstall.end(); p++) {
-	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>) will be installed\n"),(*p)->name(), (*p)->availableVersion());
-	text += str;
-	g_free(str);
-    }
-    
-    gtk_label_set_markup(GTK_LABEL(info), text.c_str());
-    
-    me->_summaryL = info;
+   lister->getDetailedSummary(held,
+                              kept,
+                              essential,
+                              toInstall,
+                              toUpgrade, toRemove, toDowngrade, sizeChange);
+
+   for (vector<RPackage *>::const_iterator p = essential.begin();
+        p != essential.end(); p++) {
+      str =
+         g_strdup_printf(_("<b>%s</b> (<b>essential</b>) will be removed\n"),
+                         (*p)->name());
+      text += str;
+      g_free(str);
+   }
+
+   for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
+        p != toDowngrade.end(); p++) {
+      str =
+         g_strdup_printf(_("<b>%s</b> will be <b>downgraded</b>\n"),
+                         (*p)->name());
+      text += str;
+      g_free(str);
+   }
+
+   for (vector<RPackage *>::const_iterator p = toRemove.begin();
+        p != toRemove.end(); p++) {
+      str = g_strdup_printf(_("<b>%s</b> will be removed\n"), (*p)->name());
+      text += str;
+      g_free(str);
+   }
+
+   for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
+        p != toUpgrade.end(); p++) {
+      str =
+         g_strdup_printf(_
+                         ("<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"),
+                         (*p)->name(), (*p)->installedVersion(),
+                         (*p)->availableVersion());
+      text += str;
+      g_free(str);
+   }
+
+   for (vector<RPackage *>::const_iterator p = toInstall.begin();
+        p != toInstall.end(); p++) {
+      str =
+         g_strdup_printf(_
+                         ("<b>%s</b> (version <i>%s</i>) will be installed\n"),
+                         (*p)->name(), (*p)->availableVersion());
+      text += str;
+      g_free(str);
+   }
+
+   gtk_label_set_markup(GTK_LABEL(info), text.c_str());
+
+   me->_summaryL = info;
 }
 
 
 RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
-    : RGGladeWindow(wwin, "summary")
+: RGGladeWindow(wwin, "summary")
 {
-    GtkWidget *button;
+   GtkWidget *button;
 
-    _potentialBreak = false;
-    _lister = lister;
-    
-    setTitle(_("Summary"));
-    //gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
-        
+   _potentialBreak = false;
+   _lister = lister;
 
-    _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
-    assert(_summaryL);
+   setTitle(_("Summary"));
+   //gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
 
-    _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
-    assert(_summarySpaceL);
-    
-    // new tree store
-    _treeStore = gtk_tree_store_new (N_COLUMNS, G_TYPE_STRING);
-    buildTree(this);
-    _tree = glade_xml_get_widget(_gladeXML, "treeview_summary");
-    assert(_tree);
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
-    GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
-    //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
-    GtkTreeViewColumn *column;
-    column = gtk_tree_view_column_new_with_attributes (_("Queued Changes"), 
-		    					renderer,
-						       "text", PKG_COLUMN,
-						       NULL);
+   _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
+   assert(_summaryL);
+
+   _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
+   assert(_summarySpaceL);
+
+   // new tree store
+   _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
+   buildTree(this);
+   _tree = glade_xml_get_widget(_gladeXML, "treeview_summary");
+   assert(_tree);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
+
+   GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+   //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
+   GtkTreeViewColumn *column;
+   column = gtk_tree_view_column_new_with_attributes(_("Queued Changes"),
+                                                     renderer,
+                                                     "text", PKG_COLUMN, NULL);
    /* Add the column to the view. */
-   gtk_tree_view_append_column (GTK_TREE_VIEW (_tree), column);
-   gtk_widget_show (_tree);
+   gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
+   gtk_widget_show(_tree);
 
    _dlonlyB = glade_xml_get_widget(_gladeXML, "checkbutton_download_only");
 
 
 
-    button = glade_xml_get_widget(_gladeXML, "togglebutton_details");
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       (GtkSignalFunc)clickedDetails, this);
+   button = glade_xml_get_widget(_gladeXML, "togglebutton_details");
+   gtk_signal_connect(GTK_OBJECT(button), "clicked",
+                      (GtkSignalFunc) clickedDetails, this);
 
 
 
-    button = _defBtn = glade_xml_get_widget(_gladeXML, "button_execute");
-    assert(button);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       (GtkSignalFunc)clickedOk, this);
+   button = _defBtn = glade_xml_get_widget(_gladeXML, "button_execute");
+   assert(button);
+   gtk_signal_connect(GTK_OBJECT(button), "clicked",
+                      (GtkSignalFunc) clickedOk, this);
 
-    button =  glade_xml_get_widget(_gladeXML, "button_cancel");
-    assert(button);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked", 
-		       (GtkSignalFunc)clickedCancel, this);
+   button = glade_xml_get_widget(_gladeXML, "button_cancel");
+   assert(button);
+   gtk_signal_connect(GTK_OBJECT(button), "clicked",
+                      (GtkSignalFunc) clickedCancel, this);
 
-    int toInstall, toRemove, toUpgrade, toDowngrade;
-    int held, kept, essential;
-    double sizeChange, dlSize;
-    int dlCount;
-    GString *msg = g_string_new("");
-    GString *msg_space = g_string_new("");
-	
-    lister->getSummary(held, kept, essential,
-		       toInstall, toUpgrade, toRemove, toDowngrade,
-		       sizeChange);
-    lister->getDownloadSummary(dlCount, dlSize);
+   int toInstall, toRemove, toUpgrade, toDowngrade;
+   int held, kept, essential;
+   double sizeChange, dlSize;
+   int dlCount;
+   GString *msg = g_string_new("");
+   GString *msg_space = g_string_new("");
 
-    if (held) {
-	char *str = ngettext("%d package is locked\n", 
-			     "%d packages are locked\n", held);
-	g_string_append_printf(msg, str, held);
-    }
+   lister->getSummary(held, kept, essential,
+                      toInstall, toUpgrade, toRemove, toDowngrade, sizeChange);
+   lister->getDownloadSummary(dlCount, dlSize);
 
-    if (kept) {
-	char *str = ngettext("%d package will be held back and not upgraded\n", 
-			     "%d packages will be held back and not upgraded\n",
-			     kept);
-	g_string_append_printf(msg, str, kept);
-    }
+   if (held) {
+      char *str = ngettext("%d package is locked\n",
+                           "%d packages are locked\n", held);
+      g_string_append_printf(msg, str, held);
+   }
 
-    if (toInstall) {
-	char *str = ngettext("%d new package will be installed\n",
-			     "%d new packages will be installed\n",
-			     toInstall);
-	g_string_append_printf(msg, str, toInstall);
-    }
-	    
-    if (toUpgrade) {
-	char *str = ngettext("%d package will be upgraded\n",
-			     "%d packages will be upgraded\n",
-			     toUpgrade);
-	g_string_append_printf(msg, str, toUpgrade);
-    }
+   if (kept) {
+      char *str = ngettext("%d package will be held back and not upgraded\n",
+                           "%d packages will be held back and not upgraded\n",
+                           kept);
+      g_string_append_printf(msg, str, kept);
+   }
 
-    if (toRemove) {
-	char *str = ngettext("%d package will be removed\n",
-			     "%d packages will be removed\n",
-			     toRemove);
-	g_string_append_printf(msg, str, toRemove);
-    }
-    
-    if (toDowngrade) {
-	char *str = ngettext("%d package will be <b>downgraded</b>\n",
-			     "%d packages will be <b>downgraded</b>\n",
-			     toDowngrade);
-	g_string_append_printf(msg, str, toDowngrade);
-    }
+   if (toInstall) {
+      char *str = ngettext("%d new package will be installed\n",
+                           "%d new packages will be installed\n",
+                           toInstall);
+      g_string_append_printf(msg, str, toInstall);
+   }
 
-    if (essential) {
-	char *str = ngettext("<b>Warning:</b> %d essential package will be removed\n",
-			     "<b>Warning:</b> %d essential packages will be removed\n",
-			     essential);
-	g_string_append_printf(msg, str, essential);
-	_potentialBreak = true;
-    }
+   if (toUpgrade) {
+      char *str = ngettext("%d package will be upgraded\n",
+                           "%d packages will be upgraded\n",
+                           toUpgrade);
+      g_string_append_printf(msg, str, toUpgrade);
+   }
 
-    // remove the trailing newline of msg
-    if(msg->str[msg->len-1] == '\n')
-	msg = g_string_truncate(msg, msg->len-1);
+   if (toRemove) {
+      char *str = ngettext("%d package will be removed\n",
+                           "%d packages will be removed\n",
+                           toRemove);
+      g_string_append_printf(msg, str, toRemove);
+   }
 
-    /* this stuff goes to the msg_space string */
-    if (sizeChange > 0) {
-	g_string_append_printf(msg_space,_("%s of extra space will be used"),
-			       SizeToStr(sizeChange).c_str());
-    } else if (sizeChange < 0) {
-	g_string_append_printf(msg_space, _("%s of extra space will be freed"),
-			       SizeToStr(sizeChange).c_str());
-	sizeChange = -sizeChange;
-    }
-    
-    if (dlSize > 0) {
-	g_string_append_printf(msg_space, _("\n%s have to be downloaded"),
-			       SizeToStr(dlSize).c_str());
-    }
-    
-    gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
-    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
-    g_string_free(msg,TRUE);
-    g_string_free(msg_space,TRUE);
-    
+   if (toDowngrade) {
+      char *str = ngettext("%d package will be <b>downgraded</b>\n",
+                           "%d packages will be <b>downgraded</b>\n",
+                           toDowngrade);
+      g_string_append_printf(msg, str, toDowngrade);
+   }
+
+   if (essential) {
+      char *str =
+         ngettext("<b>Warning:</b> %d essential package will be removed\n",
+                  "<b>Warning:</b> %d essential packages will be removed\n",
+                  essential);
+      g_string_append_printf(msg, str, essential);
+      _potentialBreak = true;
+   }
+   // remove the trailing newline of msg
+   if (msg->str[msg->len - 1] == '\n')
+      msg = g_string_truncate(msg, msg->len - 1);
+
+   /* this stuff goes to the msg_space string */
+   if (sizeChange > 0) {
+      g_string_append_printf(msg_space, _("%s of extra space will be used"),
+                             SizeToStr(sizeChange).c_str());
+   } else if (sizeChange < 0) {
+      g_string_append_printf(msg_space, _("%s of extra space will be freed"),
+                             SizeToStr(sizeChange).c_str());
+      sizeChange = -sizeChange;
+   }
+
+   if (dlSize > 0) {
+      g_string_append_printf(msg_space, _("\n%s have to be downloaded"),
+                             SizeToStr(dlSize).c_str());
+   }
+
+   gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
+   gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
+   g_string_free(msg, TRUE);
+   g_string_free(msg_space, TRUE);
+
 }
 
 
 
 bool RGSummaryWindow::showAndConfirm()
-{    
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_dlonlyB),
-			_config->FindB("Synaptic::Download-Only", false));
-    
-    show();
-    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
-    gtk_main();
+{
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_dlonlyB),
+                                _config->FindB("Synaptic::Download-Only",
+                                               false));
 
-    RGUserDialog userDialog(this);
-    if (_confirmed && _potentialBreak
-	&& userDialog.warning(_("Essential packages will be removed.\n"
-			  	"This may render your system unusable!\n")
-			      , false) == false)
-	return false;
-    
-    _config->Set("Synaptic::Download-Only",
-		 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB)) ? "true" : "false");
-    
-    return _confirmed;
+   show();
+   gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
+   gtk_main();
+
+   RGUserDialog userDialog(this);
+   if (_confirmed && _potentialBreak
+       && userDialog.warning(_("Essential packages will be removed.\n"
+                               "This may render your system unusable!\n")
+                             , false) == false)
+      return false;
+
+   _config->Set("Synaptic::Download-Only",
+                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB)) ?
+                "true" : "false");
+
+   return _confirmed;
 }
-

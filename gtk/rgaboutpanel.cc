@@ -29,52 +29,50 @@
 
 static void closeWindow(GtkWidget *self, void *data)
 {
-    RGAboutPanel *me = (RGAboutPanel*)data;
-    
-    me->hide();
+   RGAboutPanel *me = (RGAboutPanel *) data;
+
+   me->hide();
 }
 
-RGCreditsPanel::RGCreditsPanel(RGWindow *parent) :
-    RGGladeWindow(parent, "about", "credits") 
+RGCreditsPanel::RGCreditsPanel(RGWindow *parent):
+RGGladeWindow(parent, "about", "credits")
 {
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_closebutton_clicked",
-				  G_CALLBACK(closeWindow),
-				  this); 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_closebutton_clicked",
+                                 G_CALLBACK(closeWindow), this);
 };
 
 
 void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
 {
-    RGAboutPanel *me = (RGAboutPanel*)data;
-    
-    if(me->credits==NULL) {
-	me->credits = new RGCreditsPanel::RGCreditsPanel(me);
-    }
-    me->credits->setTitle(_("Credits"));
-    me->credits->show();
-  
+   RGAboutPanel *me = (RGAboutPanel *) data;
+
+   if (me->credits == NULL) {
+      me->credits = new RGCreditsPanel::RGCreditsPanel(me);
+   }
+   me->credits->setTitle(_("Credits"));
+   me->credits->show();
+
 }
 
 
-RGAboutPanel::RGAboutPanel(RGWindow *parent) 
-    : RGGladeWindow(parent, "about"), credits(NULL)
+RGAboutPanel::RGAboutPanel(RGWindow *parent)
+: RGGladeWindow(parent, "about"), credits(NULL)
 {
    glade_xml_signal_connect_data(_gladeXML,
-				 "on_okbutton_clicked",
-				 G_CALLBACK(closeWindow),
-				 this); 
+                                 "on_okbutton_clicked",
+                                 G_CALLBACK(closeWindow), this);
    glade_xml_signal_connect_data(_gladeXML,
-				 "on_button_credits_clicked",
-				 G_CALLBACK(creditsClicked),
-				 this); 
-    
+                                 "on_button_credits_clicked",
+                                 G_CALLBACK(creditsClicked), this);
+
    setTitle(_("About Synaptic"));
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "label_version");
    assert(w);
-   gchar *s = g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",
-			      PACKAGE" "VERSION);
-   gtk_label_set_markup(GTK_LABEL(w),s);
+   gchar *s =
+      g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",
+                      PACKAGE " " VERSION);
+   gtk_label_set_markup(GTK_LABEL(w), s);
 #ifndef HAVE_DEBTAGS
    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "label_debtags"));
 #endif

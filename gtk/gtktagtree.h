@@ -50,31 +50,29 @@ using namespace std;
 #define GTK_IS_TAG_TREE_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_TAG_TREE))
 #define GTK_TAG_TREE_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_TAG_TREE, GtkTagTreeClass))
 
-typedef struct _GtkTagTree       GtkTagTree;
-typedef struct _GtkTagTreeClass  GtkTagTreeClass;
+typedef struct _GtkTagTree GtkTagTree;
+typedef struct _GtkTagTreeClass GtkTagTreeClass;
 
-struct _GtkTagTree
-{
-    GObject parent;
+struct _GtkTagTree {
+   GObject parent;
 
-    RPackageLister *_lister;
-    gint n_columns;
-    GType column_headers[N_COLUMNS];
+   RPackageLister *_lister;
+   gint n_columns;
+   GType column_headers[N_COLUMNS];
 
-    HierarchyNode<int> *root;
-    HandleMaker<RPackage*> *hmaker;
+     HierarchyNode<int> *root;
+     HandleMaker<RPackage *> *hmaker;
 };
 
-struct _GtkTagTreeClass
-{
-  GObjectClass parent_class;
+struct _GtkTagTreeClass {
+   GObjectClass parent_class;
 
 };
 
-GType       gtk_tag_tree_get_type();
+GType gtk_tag_tree_get_type();
 GtkTagTree *gtk_tag_tree_new(RPackageLister *_lister,
-			     HierarchyNode<int> *root,
-			     HandleMaker<RPackage*> *hmaker);
+                             HierarchyNode<int> *root,
+                             HandleMaker<RPackage *> *hmaker);
 
 void test_tag_tree(GtkTagTree *);
 

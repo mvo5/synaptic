@@ -29,37 +29,34 @@
 
 void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 {
-  RGSetOptWindow *me = (RGSetOptWindow*)data;
+   RGSetOptWindow *me = (RGSetOptWindow *) data;
 
-  GtkWidget *entry_name = glade_xml_get_widget(me->_gladeXML, "entry_name");
-  GtkWidget *entry_value = glade_xml_get_widget(me->_gladeXML, "entry_value");
+   GtkWidget *entry_name = glade_xml_get_widget(me->_gladeXML, "entry_name");
+   GtkWidget *entry_value = glade_xml_get_widget(me->_gladeXML, "entry_value");
 
-  const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
-  const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
+   const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
+   const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
 
-  _config->Set(name, value);
+   _config->Set(name, value);
 }
 
 void RGSetOptWindow::DoClose(GtkWindow *widget, void *data)
 {
-  RGSetOptWindow *me = (RGSetOptWindow*)data;
+   RGSetOptWindow *me = (RGSetOptWindow *) data;
 
-  me->hide();
+   me->hide();
 }
 
-RGSetOptWindow::RGSetOptWindow(RGWindow *win) 
-    : RGGladeWindow(win, "setopt")
+RGSetOptWindow::RGSetOptWindow(RGWindow *win)
+: RGGladeWindow(win, "setopt")
 {
-  glade_xml_signal_connect_data(_gladeXML,
-				"on_button_apply_clicked",
-				G_CALLBACK(DoApply),
-				this); 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_apply_clicked",
+                                 G_CALLBACK(DoApply), this);
 
-  glade_xml_signal_connect_data(_gladeXML,
-				"on_button_close_clicked",
-				G_CALLBACK(DoClose),
-				this); 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_close_clicked",
+                                 G_CALLBACK(DoClose), this);
 
-  setTitle("");
+   setTitle("");
 }
-

@@ -26,20 +26,21 @@
 
 #include "rggladewindow.h"
 
-class RGCreditsPanel : public RGGladeWindow {
-public:
-    RGCreditsPanel(RGWindow *parent);
-    virtual ~RGCreditsPanel() {};
+class RGCreditsPanel:public RGGladeWindow {
+ public:
+   RGCreditsPanel(RGWindow *parent);
+   virtual ~ RGCreditsPanel() {
+   };
 };
 
-class RGAboutPanel : public RGGladeWindow {
-    static void creditsClicked(GtkWidget *self, void *data);
-    RGCreditsPanel *credits;
-public:
+class RGAboutPanel:public RGGladeWindow {
+   static void creditsClicked(GtkWidget *self, void *data);
+   RGCreditsPanel *credits;
+ public:
    RGAboutPanel(RGWindow *parent);
-   virtual ~RGAboutPanel() {};
+   virtual ~ RGAboutPanel() {
+   };
 };
 
 
 #endif
-

@@ -32,24 +32,21 @@
 
 void RGDummyInstallProgress::startUpdate()
 {
-    RGFlushInterface();
+   RGFlushInterface();
 }
 
 
 void RGDummyInstallProgress::finishUpdate()
 {
-    RGFlushInterface();
+   RGFlushInterface();
 }
 
 void RGDummyInstallProgress::updateInterface()
-{    
-    if (gtk_events_pending()) {
-	while (gtk_events_pending()) 
-	    gtk_main_iteration();
-    } else {
-	usleep(1000000);
-    }
+{
+   if (gtk_events_pending()) {
+      while (gtk_events_pending())
+         gtk_main_iteration();
+   } else {
+      usleep(1000000);
+   }
 }
-
-
-

@@ -29,36 +29,35 @@
 
 static void closeWindow(GtkWidget *self, void *data)
 {
-    RGIconLegendPanel *me = (RGIconLegendPanel*)data;
-    
-    me->hide();
+   RGIconLegendPanel *me = (RGIconLegendPanel *) data;
+
+   me->hide();
 }
 
 
-RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent) 
-    : RGGladeWindow(parent, "iconlegend")
+RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
+: RGGladeWindow(parent, "iconlegend")
 {
-    setTitle(_("Icon Legend"));
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_button_close_clicked",
-				  G_CALLBACK(closeWindow),
-				  this); 
-    GtkWidget *vbox = glade_xml_get_widget(_gladeXML,"vbox_main");
-    assert(vbox);
+   setTitle(_("Icon Legend"));
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_close_clicked",
+                                 G_CALLBACK(closeWindow), this);
+   GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_main");
+   assert(vbox);
 
-    GtkWidget *hbox, *label, *pix;
+   GtkWidget *hbox, *label, *pix;
 
-    int n_status = RPackageStatus::N_STATUS_COUNT;
-    for(int i=0;i<RPackageStatus::N_STATUS_COUNT;i++) {
-	hbox = gtk_hbox_new(FALSE, 12);
+   int n_status = RPackageStatus::N_STATUS_COUNT;
+   for (int i = 0; i < RPackageStatus::N_STATUS_COUNT; i++) {
+      hbox = gtk_hbox_new(FALSE, 12);
 
-	pix= gtk_image_new_from_pixbuf(RPackageStatus::pkgStatus.getPixbuf(i));
-	gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
+      pix = gtk_image_new_from_pixbuf(RPackageStatus::pkgStatus.getPixbuf(i));
+      gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
 
-	label= gtk_label_new(RPackageStatus::pkgStatus.getLongStatusString(i));
-	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+      label = gtk_label_new(RPackageStatus::pkgStatus.getLongStatusString(i));
+      gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
 
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    }
-    gtk_widget_show_all(vbox);
+      gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+   }
+   gtk_widget_show_all(vbox);
 }

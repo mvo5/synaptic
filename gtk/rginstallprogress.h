@@ -31,7 +31,7 @@
 
 class RGMainWindow;
 
-class RGInstallProgressMsgs : public RGGladeWindow {
+class RGInstallProgressMsgs:public RGGladeWindow {
 
    GtkTextBuffer *_textBuffer;
    static void onCloseClicked(GtkWidget *self, void *data);
@@ -39,13 +39,13 @@ class RGInstallProgressMsgs : public RGGladeWindow {
    const char *_currentPackage;
    bool _hasHeader;
 
-protected:
-   virtual void addText(const char *text, bool bold=false);
+ protected:
+   virtual void addText(const char *text, bool bold = false);
 
-public:
+ public:
    virtual void newPackage(const char *name);
    virtual void addLine(const char *line);
-   
+
    virtual bool empty();
    virtual void run();
    virtual bool close();
@@ -53,11 +53,11 @@ public:
    RGInstallProgressMsgs(RGWindow *win);
 };
 
-class RGInstallProgress : public RInstallProgress, public RGGladeWindow {
+class RGInstallProgress:public RInstallProgress, public RGGladeWindow {
 
    GtkWidget *_label;
    GtkWidget *_labelSummary;
-  
+
    GtkWidget *_pbar;
    GtkWidget *_pbarTotal;
 
@@ -65,20 +65,20 @@ class RGInstallProgress : public RInstallProgress, public RGGladeWindow {
 
    bool _startCounting;
 
-   map<string,string> _summaryMap;
+   map<string, string> _summaryMap;
 
    RGInstallProgressMsgs _msgs;
 
    RGSlideShow *_ss;
 
-protected:
+ protected:
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
 
    virtual void prepare(RPackageLister *lister);
 
-public:
+ public:
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
    ~RGInstallProgress();
 };

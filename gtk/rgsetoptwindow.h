@@ -22,15 +22,15 @@
 
 #include "rggladewindow.h"
 
-class RGSetOptWindow : public RGGladeWindow {
-  
-  static void DoApply(GtkWindow *widget, void *data);
-  static void DoClose(GtkWindow *widget, void *data);
+class RGSetOptWindow:public RGGladeWindow {
+
+   static void DoApply(GtkWindow *widget, void *data);
+   static void DoClose(GtkWindow *widget, void *data);
 
  public:
 
-  RGSetOptWindow(RGWindow *owner);
-  virtual ~RGSetOptWindow() {};
+   RGSetOptWindow(RGWindow *owner);
+   virtual ~ RGSetOptWindow() {
+   };
 
 };
-

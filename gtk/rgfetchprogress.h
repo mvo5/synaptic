@@ -28,29 +28,28 @@
 #include "rggladewindow.h"
 
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow
-{
+class RGFetchProgress:public pkgAcquireStatus, public RGGladeWindow {
    struct Item {
-       string uri;
-       string size;
-       int status;
+      string uri;
+      string size;
+      int status;
    };
-   
+
    vector<Item> _items;
 
-   GtkWidget *_table; 
+   GtkWidget *_table;
    GtkListStore *_tableListStore;
    set<int> _tableRows;
 
    GtkWidget *_mainProgressBar; // GtkProgressBar
 
    PangoLayout *_layout;
-   GtkTreeViewColumn *_statusColumn; 
-   GtkCellRenderer *_statusRenderer; 
+   GtkTreeViewColumn *_statusColumn;
+   GtkCellRenderer *_statusRenderer;
    bool _cancelled;
 
-   void updateStatus(pkgAcquire::ItemDesc &Itm, int status);
-   
+   void updateStatus(pkgAcquire::ItemDesc & Itm, int status);
+
    static void stopDownload(GtkWidget *self, void *data);
 
    GdkGC *_barGC;
@@ -58,13 +57,13 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow
    GdkGC *_textGC;
    PangoFontDescription *_font;
    int _depth;
-   
-   void refreshTable(int row, bool append=false);
+
+   void refreshTable(int row, bool append = false);
    GdkPixmap *statusDraw(int width, int height, int status);
-   
-public:
-   
-   virtual bool MediaChange(string Media,string Drive);
+
+ public:
+
+   virtual bool MediaChange(string Media, string Drive);
    virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
    virtual void Fetch(pkgAcquire::ItemDesc &Itm);
    virtual void Done(pkgAcquire::ItemDesc &Itm);
@@ -72,7 +71,7 @@ public:
    virtual void Start();
    virtual void Stop();
 
-   bool Pulse(pkgAcquire *Owner);
+   bool Pulse(pkgAcquire * Owner);
 
    RGFetchProgress(RGWindow *win);
 };

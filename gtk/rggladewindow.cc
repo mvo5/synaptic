@@ -33,44 +33,43 @@
 */
 RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
 {
-    //std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
+   //std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
 
-    // for development
-    gchar *filename = NULL;
-    gchar *main_widget = NULL;
-    
-    filename = g_strdup_printf("window_%s.glade",name.c_str());
-    if(mainName.empty())
-	main_widget = g_strdup_printf("window_%s", name.c_str());
-    else
-	main_widget = g_strdup_printf("window_%s", mainName.c_str());
-    if(FileExists(filename)) {
-	_gladeXML = glade_xml_new(filename, main_widget, NULL);
-    } else {
-	g_free(filename);
-	filename = g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade",name.c_str());
-	_gladeXML = glade_xml_new(filename, main_widget,	NULL);
-    }
-    assert(_gladeXML);
-    _win = glade_xml_get_widget(_gladeXML, main_widget);
+   // for development
+   gchar *filename = NULL;
+   gchar *main_widget = NULL;
 
-    
-    assert(_win);
-    g_free(filename);
-    g_free(main_widget);
-   
-    gtk_window_set_title(GTK_WINDOW(_win), (char*)name.c_str());
+   filename = g_strdup_printf("window_%s.glade", name.c_str());
+   if (mainName.empty())
+      main_widget = g_strdup_printf("window_%s", name.c_str());
+   else
+      main_widget = g_strdup_printf("window_%s", mainName.c_str());
+   if (FileExists(filename)) {
+      _gladeXML = glade_xml_new(filename, main_widget, NULL);
+   } else {
+      g_free(filename);
+      filename =
+         g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade", name.c_str());
+      _gladeXML = glade_xml_new(filename, main_widget, NULL);
+   }
+   assert(_gladeXML);
+   _win = glade_xml_get_widget(_gladeXML, main_widget);
 
-    gtk_object_set_data(GTK_OBJECT(_win), "me", this);
-    gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-		       (GtkSignalFunc)windowCloseCallback, this);
-    _topBox = NULL;
-    //gtk_widget_realize(_win);
 
-    if(parent!=NULL)
-	gtk_window_set_transient_for(GTK_WINDOW(_win), 
-				     GTK_WINDOW(parent->window()));
+   assert(_win);
+   g_free(filename);
+   g_free(main_widget);
+
+   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
+
+   gtk_object_set_data(GTK_OBJECT(_win), "me", this);
+   gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
+                      (GtkSignalFunc) windowCloseCallback, this);
+   _topBox = NULL;
+   //gtk_widget_realize(_win);
+
+   if (parent != NULL)
+      gtk_window_set_transient_for(GTK_WINDOW(_win),
+                                   GTK_WINDOW(parent->window()));
 
 }
-
-

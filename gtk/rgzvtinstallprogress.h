@@ -31,29 +31,31 @@
 
 #ifdef HAVE_TERMINAL
 
-class RGZvtInstallProgress : public RInstallProgress, public RGGladeWindow {
-  GtkWidget *_term;
-  GtkWidget *_statusL;
-  GtkWidget *_closeB;
-  GtkWidget *_closeOnF;
-  bool updateFinished;
-  pkgPackageManager::OrderResult res;
-  static gboolean zvtFocus (GtkWidget *widget, GdkEventButton *event, gpointer user_data);
+class RGZvtInstallProgress:public RInstallProgress, public RGGladeWindow {
+   GtkWidget *_term;
+   GtkWidget *_statusL;
+   GtkWidget *_closeB;
+   GtkWidget *_closeOnF;
+   bool updateFinished;
+   pkgPackageManager::OrderResult res;
+   static gboolean zvtFocus(GtkWidget *widget, GdkEventButton * event,
+                            gpointer user_data);
 
-protected:
+ protected:
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
-   static void stopShell(GtkWidget *self, void* data);
+   static void stopShell(GtkWidget *self, void *data);
    virtual bool close();
 
-public:
+ public:
    RGZvtInstallProgress(RGMainWindow *main);
-   ~RGZvtInstallProgress() {};
+   ~RGZvtInstallProgress() {
+   };
 
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0,
-						int totalPackages = 0);
+                                                int numPackages = 0,
+                                                int totalPackages = 0);
 
 };
 

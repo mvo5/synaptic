@@ -27,21 +27,22 @@
 
 #include <gtk/gtk.h>
 
-class RGCacheProgress : public OpProgress
-{
+class RGCacheProgress:public OpProgress {
    GtkWidget *_parent;
    GtkWidget *_label;
    GtkWidget *_prog;
 
-   
+
    bool _mapped;
-   
-public:
+
+ public:
    RGCacheProgress(GtkWidget *parent, GtkWidget *label);
    ~RGCacheProgress();
-   
-   inline GtkWidget *widget() { return _prog; };
-   
+
+   inline GtkWidget *widget() {
+      return _prog;
+   };
+
    virtual void Update();
    virtual void Done();
 };

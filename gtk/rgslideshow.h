@@ -28,20 +28,22 @@ using namespace std;
 
 class RGSlideShow {
 
-   protected:
+ protected:
 
-   GtkImage *_image;
+   GtkImage * _image;
    int _totalSteps;
    int _currentStep;
    vector<string> _imageFileList;
 
-   public:
+ public:
 
    void step();
    void refresh();
-   void setTotalSteps(int totalSteps) { _totalSteps = totalSteps; };
+   void setTotalSteps(int totalSteps) {
+      _totalSteps = totalSteps;
+   };
 
-   RGSlideShow(GtkImage *image, string imgPath);
+   RGSlideShow(GtkImage * image, string imgPath);
 };
 
 #endif

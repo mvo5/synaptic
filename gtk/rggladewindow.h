@@ -32,13 +32,12 @@
 
 using namespace std;
 
-class RGGladeWindow : public RGWindow {   
-protected:
+class RGGladeWindow:public RGWindow {
+ protected:
    GladeXML *_gladeXML;
-   
-public:
-   RGGladeWindow(RGWindow *parent, string name, string main_widget="");
+
+ public:
+   RGGladeWindow(RGWindow *parent, string name, string main_widget = "");
 };
 
 #endif
-    

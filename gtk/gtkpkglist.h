@@ -34,69 +34,66 @@
 #define GTK_IS_PKG_LIST_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PKG_LIST))
 #define GTK_PKG_LIST_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_PKG_LIST, GtkPkgListClass))
 
-typedef struct _GtkPkgList       GtkPkgList;
-typedef struct _GtkPkgListClass  GtkPkgListClass;
+typedef struct _GtkPkgList GtkPkgList;
+typedef struct _GtkPkgListClass GtkPkgListClass;
 
 
-struct _GtkPkgList
-{
-    GObject parent;
+struct _GtkPkgList {
+   GObject parent;
 
-    RPackageLister *_lister;
+   RPackageLister *_lister;
 
-    gint n_columns;
-    GType column_headers[N_COLUMNS];
-    // sortable
-    gint sort_column_id;
-    GtkSortType order;
+   gint n_columns;
+   GType column_headers[N_COLUMNS];
+   // sortable
+   gint sort_column_id;
+   GtkSortType order;
 };
 
-struct _GtkPkgListClass
-{
-  GObjectClass parent_class;
+struct _GtkPkgListClass {
+   GObjectClass parent_class;
 };
 
 
-GType       gtk_pkg_list_get_type         ();
-GtkPkgList *gtk_pkg_list_new              (RPackageLister *lister);
+GType gtk_pkg_list_get_type();
+GtkPkgList *gtk_pkg_list_new(RPackageLister *lister);
 
 
 
 
-class RCacheActorPkgList : public RCacheActor
-{
+class RCacheActorPkgList:public RCacheActor {
  protected:
-    GtkPkgList *_pkgList;
-    GtkTreeView *_pkgView;
+   GtkPkgList *_pkgList;
+   GtkTreeView *_pkgView;
 
  public:
-    virtual void notifyCacheOpen() {
-	// cout << "notifyCacheOpen()" << endl; 
-	_pkgList = gtk_pkg_list_new(_lister);;
-	gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView), 
-				GTK_TREE_MODEL(_pkgList));
-    };
-    virtual void run(vector<RPackage*> &List, int Action);
+   virtual void notifyCacheOpen() {
+      // cout << "notifyCacheOpen()" << endl; 
+      _pkgList = gtk_pkg_list_new(_lister);;
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_pkgView),
+                              GTK_TREE_MODEL(_pkgList));
+   };
+   virtual void run(vector<RPackage *> &List, int Action);
 
-    RCacheActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
-		       GtkTreeView *pkgView)
-	:  RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};    
+   RCacheActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
+                      GtkTreeView *pkgView)
+ :   RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {
+   };
 };
 
 
-class RPackageListActorPkgList : public RPackageListActor
-{
+class RPackageListActorPkgList:public RPackageListActor {
  protected:
-    GtkPkgList *_pkgList;
-    GtkTreeView *_pkgView;
+   GtkPkgList *_pkgList;
+   GtkTreeView *_pkgView;
 
  public:
-    virtual void run(vector<RPackage*> &List, int pkgEvent);
+   virtual void run(vector<RPackage *> &List, int pkgEvent);
 
-    RPackageListActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
-			      GtkTreeView *pkgView)
-	:  RPackageListActor(lister), _pkgList(pkgList),
-	   _pkgView(pkgView) {};
+   RPackageListActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
+                            GtkTreeView *pkgView)
+ :   RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {
+   };
 };
 
 

@@ -28,8 +28,8 @@
 #include "i18n.h"
 
 
-RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label) 
-    : _parent(parent), _label(label)
+RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
+: _parent(parent), _label(label)
 {
 //     _prog = gtk_progress_bar_new();
 
@@ -37,48 +37,48 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 
 //     gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
 
-    _prog = parent;
-    gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
+   _prog = parent;
+   gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-    _mapped = false;
+   _mapped = false;
 }
 
 
 RGCacheProgress::~RGCacheProgress()
 {
-    //gtk_widget_destroy(_prog);
+   //gtk_widget_destroy(_prog);
 }
 
 
 void RGCacheProgress::Update()
 {
-    if (!CheckChange()) {
-	RGFlushInterface();
-	return;
-    }
-    
-    if (!_mapped) {
-	gtk_widget_show(_prog);
-	RGFlushInterface();
-	_mapped = true;
-    }
+   if (!CheckChange()) {
+      RGFlushInterface();
+      return;
+   }
 
-    if (MajorChange)
-	gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
+   if (!_mapped) {
+      gtk_widget_show(_prog);
+      RGFlushInterface();
+      _mapped = true;
+   }
 
-    gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), (float)Percent/100.0);
+   if (MajorChange)
+      gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-    RGFlushInterface();
-    
+   gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), (float)Percent / 100.0);
+
+   RGFlushInterface();
+
 }
 
 
 void RGCacheProgress::Done()
 {
-    gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), 1.0);
-    RGFlushInterface();
+   gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), 1.0);
+   RGFlushInterface();
 
-    gtk_widget_hide(_prog);
+   gtk_widget_hide(_prog);
 
-    _mapped = false;
+   _mapped = false;
 }

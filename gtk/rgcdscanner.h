@@ -28,16 +28,15 @@
 
 class RGMainWindow;
 
-class RGCDScanner : public RCDScanProgress, public RGWindow
-{
-protected:
+class RGCDScanner:public RCDScanProgress, public RGWindow {
+ protected:
 
    GtkWidget *_label;
    GtkWidget *_pbar;
 
    RUserDialog *_userDialog;
 
-public:
+ public:
 
    RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
    void update(string text, int current);

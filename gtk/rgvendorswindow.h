@@ -5,33 +5,34 @@
 #include "rsources.h"
 #include "rgwindow.h"
 
-class RGVendorsEditor : RGWindow {
-	SourcesList &lst;
+class RGVendorsEditor:RGWindow {
+   SourcesList & lst;
 
-	GtkWidget *dialog;
-	GtkWidget *lstVendors;
-	GtkWidget *entryVendor;
-	GtkWidget *entryDesc;
-	GtkWidget *entryFPrint;
+   GtkWidget *dialog;
+   GtkWidget *lstVendors;
+   GtkWidget *entryVendor;
+   GtkWidget *entryDesc;
+   GtkWidget *entryFPrint;
 
-	int selectedrow;
+   int selectedrow;
 
-	GtkWidget *CreateWidget();
+   GtkWidget *CreateWidget();
 
-	// static event handlers
-	static void DoAdd(GtkWidget *, gpointer);
-	static void DoEdit(GtkWidget *, gpointer);
-	static void DoRemove(GtkWidget *, gpointer);
-	static void DoOK(GtkWidget *, gpointer);
-	static void DoCancel(GtkWidget *, gpointer);
-	static void UpdateDisplay(GtkCList *, gint, gint, GdkEventButton *, gpointer);
-	static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
+   // static event handlers
+   static void DoAdd(GtkWidget *, gpointer);
+   static void DoEdit(GtkWidget *, gpointer);
+   static void DoRemove(GtkWidget *, gpointer);
+   static void DoOK(GtkWidget *, gpointer);
+   static void DoCancel(GtkWidget *, gpointer);
+   static void UpdateDisplay(GtkCList *, gint, gint, GdkEventButton *,
+                             gpointer);
+   static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
 
-public:
-	RGVendorsEditor(RGWindow *parent, SourcesList &lst);
-	~RGVendorsEditor();
+ public:
+   RGVendorsEditor(RGWindow *parent, SourcesList &lst);
+   ~RGVendorsEditor();
 
-	void Run();
+   void Run();
 };
 
 #endif

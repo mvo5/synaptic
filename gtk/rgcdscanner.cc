@@ -30,111 +30,108 @@
 
 #include "i18n.h"
 
-class RGDiscName : public RGGladeWindow
-{
-protected:
+class RGDiscName:public RGGladeWindow {
+ protected:
 
-    GtkWidget *_textEntry;
-    bool _userConfirmed;
-    
-    static void onOkClicked(GtkWidget *self, void *data);
-    static void onCancelClicked(GtkWidget *self, void *data);
+   GtkWidget *_textEntry;
+   bool _userConfirmed;
 
-public:
-    RGDiscName(RGWindow *wwin, const string defaultName);
+   static void onOkClicked(GtkWidget *self, void *data);
+   static void onCancelClicked(GtkWidget *self, void *data);
 
-    bool run(string &name);
+ public:
+   RGDiscName(RGWindow *wwin, const string defaultName);
+
+   bool run(string & name);
 };
 
 
 void RGCDScanner::update(string text, int current)
 {
-    gtk_label_set_text(GTK_LABEL(_label), text.c_str());
-    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
-		    		  ((float)current)/_total);
-    show();
-    RGFlushInterface();
+   gtk_label_set_text(GTK_LABEL(_label), text.c_str());
+   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
+                                 ((float)current) / _total);
+   show();
+   RGFlushInterface();
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-    : RCDScanProgress(), RGWindow(main,  "cdscanner", true, false)
+: RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
 {
-    setTitle(_("Scanning CD-ROM..."));
+   setTitle(_("Scanning CD-ROM..."));
 
-    _userDialog = userDialog;
+   _userDialog = userDialog;
 
-    gtk_widget_set_usize(_win, 320, 80);
+   gtk_widget_set_usize(_win, 320, 80);
 
-    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
-    
-    _label = gtk_label_new("");
-    gtk_widget_show(_label);
-    gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 
-    _pbar = gtk_progress_bar_new();
-    gtk_widget_show(_pbar);
-    gtk_widget_set_usize(_pbar, -1, 25);
-    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+   _label = gtk_label_new("");
+   gtk_widget_show(_label);
+   gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+
+   _pbar = gtk_progress_bar_new();
+   gtk_widget_show(_pbar);
+   gtk_widget_set_usize(_pbar, -1, 25);
+   gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
 }
 
 bool RGCDScanner::run()
 {
-    bool res = false;
-    RCDScanner scanner(_userDialog);
-    if (scanner.start(this)) {
-	RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
-	string name;
-	while (1) {
-	    if (!discName->run(name)) {
-		delete discName;
-		scanner.unmount();
-		return false;
-	    }
-	    if (scanner.setDiscName(name))
-		break;
-	    _userDialog->error(_("Invalid disc name!"));
-	}
-	delete discName;
-        res = scanner.finish(this);
-    }
-    return res;
+   bool res = false;
+   RCDScanner scanner(_userDialog);
+   if (scanner.start(this)) {
+      RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
+      string name;
+      while (1) {
+         if (!discName->run(name)) {
+            delete discName;
+            scanner.unmount();
+            return false;
+         }
+         if (scanner.setDiscName(name))
+            break;
+         _userDialog->error(_("Invalid disc name!"));
+      }
+      delete discName;
+      res = scanner.finish(this);
+   }
+   return res;
 }
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
-    : RGGladeWindow(wwin, "disc_name")
+: RGGladeWindow(wwin, "disc_name")
 {
-    _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
-    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
+   _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
+   gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_ok_clicked",
-				  G_CALLBACK(onOkClicked),
-				  this); 
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_cancel_clicked",
-				  G_CALLBACK(onCancelClicked),
-				  this); 
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_ok_clicked",
+                                 G_CALLBACK(onOkClicked), this);
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_cancel_clicked",
+                                 G_CALLBACK(onCancelClicked), this);
 }
 
 void RGDiscName::onOkClicked(GtkWidget *self, void *data)
 {
-    RGDiscName *me = (RGDiscName*)data;
-    me->_userConfirmed = true;
-    gtk_main_quit();
+   RGDiscName *me = (RGDiscName *) data;
+   me->_userConfirmed = true;
+   gtk_main_quit();
 }
 
 void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
 {
-    gtk_main_quit();
+   gtk_main_quit();
 }
 
-bool RGDiscName::run(string &discName)
+bool RGDiscName::run(string & discName)
 {
-    _userConfirmed = false;
-    show();
-    gtk_main();
-    discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
-    return _userConfirmed;
+   _userConfirmed = false;
+   show();
+   gtk_main();
+   discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
+   return _userConfirmed;
 }
 
 // vim:sts=4:sw=4

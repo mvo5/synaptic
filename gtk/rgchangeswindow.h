@@ -30,12 +30,12 @@
 
 class RPackageLister;
 
-class RGChangesWindow : public RGGladeWindow {
+class RGChangesWindow:public RGGladeWindow {
    bool _confirmed;
 
    enum {
-     PKG_COLUMN,
-     N_COLUMNS
+      PKG_COLUMN,
+      N_COLUMNS
    };
 
    GtkWidget *_tree;
@@ -44,15 +44,15 @@ class RGChangesWindow : public RGGladeWindow {
    static void clickedOk(GtkWidget *w, void *data);
    static void clickedCancel(GtkWidget *w, void *data);
 
-public:
+ public:
    RGChangesWindow(RGWindow *win);
-   
+
    bool showAndConfirm(RPackageLister *lister,
-		      vector<RPackage*> &kept,
-		      vector<RPackage*> &toInstall, 
-		      vector<RPackage*> &toUpgrade, 
-		      vector<RPackage*> &toRemove,
-		      vector<RPackage*> &toDowngrade);
+                       vector<RPackage *> &kept,
+                       vector<RPackage *> &toInstall,
+                       vector<RPackage *> &toUpgrade,
+                       vector<RPackage *> &toRemove,
+                       vector<RPackage *> &toDowngrade);
 };
 
 #endif

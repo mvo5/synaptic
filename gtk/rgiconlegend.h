@@ -27,12 +27,11 @@
 #include "rggladewindow.h"
 
 
-class RGIconLegendPanel : public RGGladeWindow {
-public:
+class RGIconLegendPanel:public RGGladeWindow {
+ public:
    RGIconLegendPanel(RGWindow *parent);
    virtual ~RGIconLegendPanel() {};
 };
 
 
 #endif
-

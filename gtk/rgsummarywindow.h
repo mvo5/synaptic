@@ -32,7 +32,7 @@
 class RPackageLister;
 
 
-class RGSummaryWindow : public RGGladeWindow {
+class RGSummaryWindow:public RGGladeWindow {
    GtkWidget *_topF;
    GtkWidget *_middleF;
    GtkWidget *_summaryL;
@@ -43,8 +43,8 @@ class RGSummaryWindow : public RGGladeWindow {
    GtkWidget *_dlonlyB;
 
    enum {
-     PKG_COLUMN,
-     N_COLUMNS
+      PKG_COLUMN,
+      N_COLUMNS
    };
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
@@ -56,9 +56,9 @@ class RGSummaryWindow : public RGGladeWindow {
    static void buildTree(RGSummaryWindow *me);
    static void clickedDetails(GtkWidget *w, void *data);
 
-public:
+ public:
    RGSummaryWindow(RGWindow *win, RPackageLister *lister);
-   
+
    bool showAndConfirm();
 };
 

@@ -43,181 +43,188 @@
 #include "stdio.h"
 #include "rgmisc.h"
 
-bool ShowHelp(CommandLine &CmdL)
+bool ShowHelp(CommandLine & CmdL)
 {
-  std::cout << 
+   std::cout <<
 #ifndef HAVE_RPM
-    PACKAGE" for Debian "VERSION
+      PACKAGE " for Debian " VERSION
 #else
-    _config->Find("Synaptic::MyName", PACKAGE)+" "VERSION
+      _config->Find("Synaptic::MyName", PACKAGE) + " " VERSION
 #endif
-    "\n\n" <<
-    _("Usage: synaptic [options]\n") <<
-    _("-h   This help text\n") <<
-    _("-r   Open in the repository screen\n") <<
-    _("-f=? Give a alternative filter file\n") <<
-    _("-i=? Start with the initialFilter with the number given\n") <<
-    _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n");
-    
-    exit(0);
+      "\n\n" <<
+      _("Usage: synaptic [options]\n") <<
+      _("-h   This help text\n") <<
+      _("-r   Open in the repository screen\n") <<
+      _("-f=? Give a alternative filter file\n") <<
+      _("-i=? Start with the initialFilter with the number given\n") <<
+      _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n");
+
+   exit(0);
 }
 
 CommandLine::Args Args[] = {
-  {'h',"help","help",0},
-  {'f',"filter-file","Volatile::filterFile", CommandLine::HasArg}, 
-  {'r',"repositories", "Volatile::startInRepositories", 0},
-  {'i',"initial-filter","Volatile::initialFilter", CommandLine::HasArg},
-  {0,"set-selections", "Volatile::Set-Selections", 0},
-  {0,"non-interactive", "Volatile::Non-Interactive", 0},
-  {'o',"option",0,CommandLine::ArbItem},
-  {0,0,0,0}
+   {
+   'h', "help", "help", 0}
+   , {
+   'f', "filter-file", "Volatile::filterFile", CommandLine::HasArg}
+   , {
+   'r', "repositories", "Volatile::startInRepositories", 0}
+   , {
+   'i', "initial-filter", "Volatile::initialFilter", CommandLine::HasArg}
+   , {
+   0, "set-selections", "Volatile::Set-Selections", 0}
+   , {
+   0, "non-interactive", "Volatile::Non-Interactive", 0}
+   , {
+   'o', "option", 0, CommandLine::ArbItem}
+   , {
+   0, 0, 0, 0}
 };
 
 
 static void SetLanguages()
 {
-    string LangList;
-    if (_config->FindB("Synaptic::DynamicLanguages", true) == false) {
-        LangList = _config->Find("Synaptic::Languages", "");
-    } else {
-	char *lang = getenv("LANG");
-	if (lang == NULL) {
-	    lang = getenv("LC_MESSAGES");
-	    if (lang == NULL) {
-		lang = getenv("LC_ALL");
-	    }
-	}
-	if (lang != NULL && strcmp(lang, "C") != 0)
-	    LangList = lang;
-    }
+   string LangList;
+   if (_config->FindB("Synaptic::DynamicLanguages", true) == false) {
+      LangList = _config->Find("Synaptic::Languages", "");
+   } else {
+      char *lang = getenv("LANG");
+      if (lang == NULL) {
+         lang = getenv("LC_MESSAGES");
+         if (lang == NULL) {
+            lang = getenv("LC_ALL");
+         }
+      }
+      if (lang != NULL && strcmp(lang, "C") != 0)
+         LangList = lang;
+   }
 
-    _config->Set("Volatile::Languages", LangList);
+   _config->Set("Volatile::Languages", LangList);
 }
 
 
 int main(int argc, char **argv)
-{    
+{
 #ifdef ENABLE_NLS
-    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
-    bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
-    textdomain(GETTEXT_PACKAGE);
+   bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+   bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+   textdomain(GETTEXT_PACKAGE);
 #endif
 
-    gtk_init(&argc, &argv);    
-    //XSynchronize(dpy, 1);
+   gtk_init(&argc, &argv);
+   //XSynchronize(dpy, 1);
 
-    // check if the locales are actually supported, I got a number
-    // of bugreports that where caused by incorrect locales, try to
-    // work around this problem here
-    if(!XSupportsLocale()) {
-	RGGladeUserDialog locales(NULL);
-	// run a dialog that warns about the incorrect locale settings
-	locales.run("locales_warning");
-    } 
+   // check if the locales are actually supported, I got a number
+   // of bugreports that where caused by incorrect locales, try to
+   // work around this problem here
+   if (!XSupportsLocale()) {
+      RGGladeUserDialog locales(NULL);
+      // run a dialog that warns about the incorrect locale settings
+      locales.run("locales_warning");
+   }
 
-    if (getuid() != 0) {
-	RGUserDialog userDialog;
-	userDialog.error(_("You must run this program as the root user."));
-	exit(1);
-    }  
+   if (getuid() != 0) {
+      RGUserDialog userDialog;
+      userDialog.error(_("You must run this program as the root user."));
+      exit(1);
+   }
 
-    if (!RInitConfiguration("synaptic.conf")) {
-	RGUserDialog userDialog;
-	userDialog.showErrors();
-	exit(1);
-    }
+   if (!RInitConfiguration("synaptic.conf")) {
+      RGUserDialog userDialog;
+      userDialog.showErrors();
+      exit(1);
+   }
+   // read configuration early
+   _roptions->restore();
 
-    // read configuration early
-    _roptions->restore();
- 
-    // read the cmdline
-    CommandLine CmdL(Args, _config);
-    if(CmdL.Parse(argc,(const char**)argv) == false) {
-	RGUserDialog userDialog;
-	userDialog.showErrors();
-	exit(1);
-    }  
-    
-    if(_config->FindB("help") == true)
+   // read the cmdline
+   CommandLine CmdL(Args, _config);
+   if (CmdL.Parse(argc, (const char **)argv) == false) {
+      RGUserDialog userDialog;
+      userDialog.showErrors();
+      exit(1);
+   }
+
+   if (_config->FindB("help") == true)
       ShowHelp(CmdL);
 
-    SetLanguages();
+   SetLanguages();
 
-    // we ignore sigpipe as it is thrown sporadic on 
-    // my debian, kernel 2.6 systems
-    struct sigaction new_act;
-    memset( &new_act, 0, sizeof( new_act ) );
-    new_act.sa_handler = SIG_IGN;
-    sigaction( SIGPIPE, &new_act, NULL);
+   // we ignore sigpipe as it is thrown sporadic on 
+   // my debian, kernel 2.6 systems
+   struct sigaction new_act;
+   memset(&new_act, 0, sizeof(new_act));
+   new_act.sa_handler = SIG_IGN;
+   sigaction(SIGPIPE, &new_act, NULL);
 
-    // init the static pkgStatus class. this loads the status pixmaps 
-    // and colors
-    RPackageStatus::pkgStatus.init();
-    
-    RPackageLister *packageLister = new RPackageLister();
+   // init the static pkgStatus class. this loads the status pixmaps 
+   // and colors
+   RPackageStatus::pkgStatus.init();
+
+   RPackageLister *packageLister = new RPackageLister();
 //     string main_name = _config->Find("Synaptic::MainName", "main_hpaned");
 //     RGMainWindow *mainWindow = new RGMainWindow(packageLister, main_name);
-    RGMainWindow *mainWindow = new RGMainWindow(packageLister, "main");
+   RGMainWindow *mainWindow = new RGMainWindow(packageLister, "main");
 
-    // read which default distro to use
-    string s = _config->Find("Synaptic::DefaultDistro","");
-    if(s != "")
-	_config->Set("APT::Default-Release",s);
-    
+   // read which default distro to use
+   string s = _config->Find("Synaptic::DefaultDistro", "");
+   if (s != "")
+      _config->Set("APT::Default-Release", s);
+
 #ifndef HAVE_RPM
-      mainWindow->setTitle(_("Synaptic Package Manager "));
+   mainWindow->setTitle(_("Synaptic Package Manager "));
 #else
-    mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
+   mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
 #endif
-    mainWindow->show();
+   mainWindow->show();
 
-    RGFlushInterface();
-    
-    mainWindow->setInterfaceLocked(true);
-    
-    bool openCacheError = false;
-    if (!packageLister->openCache(false)) {
-	mainWindow->showErrors();
-	openCacheError = true;
-    }
+   RGFlushInterface();
 
-    if (_config->FindB("Volatile::startInRepositories", false)) {
-	mainWindow->showRepositoriesWindow();
-    }
+   mainWindow->setInterfaceLocked(true);
 
-    if (_config->FindB("Volatile::Set-Selections", false) == true) {
-	packageLister->unregisterObserver(mainWindow);
-        packageLister->readSelections(cin);
-	packageLister->registerObserver(mainWindow);
-    }
+   bool openCacheError = false;
+   if (!packageLister->openCache(false)) {
+      mainWindow->showErrors();
+      openCacheError = true;
+   }
 
-    mainWindow->restoreState();
+   if (_config->FindB("Volatile::startInRepositories", false)) {
+      mainWindow->showRepositoriesWindow();
+   }
+
+   if (_config->FindB("Volatile::Set-Selections", false) == true) {
+      packageLister->unregisterObserver(mainWindow);
+      packageLister->readSelections(cin);
+      packageLister->registerObserver(mainWindow);
+   }
+
+   mainWindow->restoreState();
 #ifdef HAVE_DEBTAGS
-    if(!openCacheError)
-	mainWindow->initDebtags();
+   if (!openCacheError)
+      mainWindow->initDebtags();
 #endif
-    mainWindow->showErrors();
+   mainWindow->showErrors();
 
-    mainWindow->setInterfaceLocked(false);
+   mainWindow->setInterfaceLocked(false);
 
-    if (_config->FindB("Volatile::Non-Interactive", false)) {
-	mainWindow->proceed();
-    } else {
-	// show welcome dialog
-	if(_config->FindB("Synaptic::showWelcomeDialog",true)) {
-	    RGGladeUserDialog dia(mainWindow);
-	    dia.run("welcome");
-	    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-						 "checkbutton_show_again");
-	    assert(cb);
-	    _config->Set("Synaptic::showWelcomeDialog",
-			 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
-	}
+   if (_config->FindB("Volatile::Non-Interactive", false)) {
+      mainWindow->proceed();
+   } else {
+      // show welcome dialog
+      if (_config->FindB("Synaptic::showWelcomeDialog", true)) {
+         RGGladeUserDialog dia(mainWindow);
+         dia.run("welcome");
+         GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
+                                              "checkbutton_show_again");
+         assert(cb);
+         _config->Set("Synaptic::showWelcomeDialog",
+                      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+      }
 
-	gtk_main();
-    }
-    
-    return 0;
+      gtk_main();
+   }
+
+   return 0;
 }
 
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 17:38-0300\n"
+"POT-Creation-Date: 2004-04-27 16:18-0300\n"
 "PO-Revision-Date: 2004-01-29 00:55+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -887,41 +887,29 @@ msgstr ""
 "%s\n"
 "في القارئ %s"
 
-#: gtk/rgfetchprogress.cc:220
-#, c-format
-msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
-msgstr "تمّ جلب %-3lii من %-3li ملفات بسرعة %4s بايت/ث - %6s متبقية\n"
-
-#: gtk/rgfetchprogress.cc:226
-msgid "(stalled)\n"
-msgstr "(جمد)\n"
-
-#: gtk/rgfetchprogress.cc:241
-msgid "[Processing...] "
-msgstr "[جاري التقدّم...]"
-
-#: gtk/rgfetchprogress.cc:246
-msgid "[Receiving...] "
-msgstr "[جاري الاستقبال...]"
-
-#: gtk/rgfetchprogress.cc:267
-#, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
+#: gtk/rgfetchprogress.cc:236
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files at %s/s - %s remaining"
 msgstr "تم جلب %li من %li ملفات بسرعة %s/ث - %s متبقية"
 
-#: gtk/rgfetchprogress.cc:337
+#: gtk/rgfetchprogress.cc:241
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files"
+msgstr "تم جلب %li من %li ملفات بسرعة %s/ث - %s متبقية"
+
+#: gtk/rgfetchprogress.cc:310
 msgid "Queued"
 msgstr "مصطفّ"
 
-#: gtk/rgfetchprogress.cc:340
+#: gtk/rgfetchprogress.cc:313
 msgid "Done"
 msgstr "تمّ"
 
-#: gtk/rgfetchprogress.cc:343
+#: gtk/rgfetchprogress.cc:316
 msgid "Hit"
 msgstr ""
 
-#: gtk/rgfetchprogress.cc:346
+#: gtk/rgfetchprogress.cc:319
 msgid "Failed"
 msgstr "أخفق"
 
@@ -1122,7 +1110,7 @@ msgstr ""
 msgid "All Packages"
 msgstr "كل الحزم"
 
-#: gtk/rgmainwindow.cc:1397
+#: gtk/rgmainwindow.cc:1396
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1141,40 +1129,40 @@ msgstr[1] ""
 "\n"
 "رجاءً حاول إصلاحها بزيارة مصفّي \"معطوب\""
 
-#: gtk/rgmainwindow.cc:1601
+#: gtk/rgmainwindow.cc:1599
 msgid "Do you want to add another CD-ROM?"
 msgstr "هل تريد إضافة قرص مدمج آخر؟"
 
-#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
-#: gtk/rgmainwindow.cc:2520
+#: gtk/rgmainwindow.cc:1730 gtk/rgmainwindow.cc:2301 gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2518
 #, c-format
 msgid "Can't read %s"
 msgstr "لا يمكن قراءة %s"
 
-#: gtk/rgmainwindow.cc:1748
+#: gtk/rgmainwindow.cc:1746
 msgid "Open changes"
 msgstr "افتح التغييرات"
 
-#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
-#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
+#: gtk/rgmainwindow.cc:1777 gtk/rgmainwindow.cc:1840 gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2353 gtk/rgmainwindow.cc:2495
 #, c-format
 msgid "Can't write %s"
 msgstr "لا يمكن كتابة %s"
 
-#: gtk/rgmainwindow.cc:1798
+#: gtk/rgmainwindow.cc:1796
 msgid "Save changes"
 msgstr "احفظ التغييرات"
 
-#: gtk/rgmainwindow.cc:1815
+#: gtk/rgmainwindow.cc:1813
 msgid "Save full state, not only changes"
 msgstr "احفظ الحالة بالكامل، ليس التغييرات فقط"
 
-#: gtk/rgmainwindow.cc:1993
+#: gtk/rgmainwindow.cc:1991
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "بدء نظام المساعدة..."
 
-#: gtk/rgmainwindow.cc:2002
+#: gtk/rgmainwindow.cc:2000
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1193,77 +1181,77 @@ msgstr ""
 "بشكل بديل يمكنك فتح صفحة man باستخدام 'man synaptic' من سطر الأوامر أو عرض "
 "نسخة html في مجلّد 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2146
+#: gtk/rgmainwindow.cc:2144
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2150
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "جاري بدء تشغيل dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2164
+#: gtk/rgmainwindow.cc:2162
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "جاري بدء مساعدة الحزمة..."
 
-#: gtk/rgmainwindow.cc:2203
+#: gtk/rgmainwindow.cc:2201
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2222
+#: gtk/rgmainwindow.cc:2220
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "جاري عمل التغييرات المختارة... قد يستغرق هذا بعض الوقت"
 
-#: gtk/rgmainwindow.cc:2226
+#: gtk/rgmainwindow.cc:2224
 msgid "Retrieving Package Files..."
 msgstr "جاري جلب ملفات الحزم..."
 
-#: gtk/rgmainwindow.cc:2286
+#: gtk/rgmainwindow.cc:2284
 msgid "Do you want to quit Synaptic?"
 msgstr "هل تريد الخروج من Synaptic؟"
 
-#: gtk/rgmainwindow.cc:2342
+#: gtk/rgmainwindow.cc:2340
 msgid "Retrieving Index Files..."
 msgstr "جاري جلب ملفات الفهرس..."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "تنظيف لوائح الحزم..."
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2399
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "لم يمكن تصحيح الاعتماديّات"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2418
+#: gtk/rgmainwindow.cc:2416
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2444
+#: gtk/rgmainwindow.cc:2442
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "سيتم تحديث الحزمة."
 
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2454
 #, fuzzy
 msgid "Successfully marked all available upgrades"
 msgstr "صفّ كل التحديثات الممكنة"
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2558,6 +2546,18 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr "<b>تستخدم الأيقونات التالية للإشارة للوضع الحالي للحزمة:</b>"
+
+#~ msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
+#~ msgstr "تمّ جلب %-3lii من %-3li ملفات بسرعة %4s بايت/ث - %6s متبقية\n"
+
+#~ msgid "(stalled)\n"
+#~ msgstr "(جمد)\n"
+
+#~ msgid "[Processing...] "
+#~ msgstr "[جاري التقدّم...]"
+
+#~ msgid "[Receiving...] "
+#~ msgstr "[جاري الاستقبال...]"
 
 #~ msgid "%s <i>(%s)</i>"
 #~ msgstr "%s <i>(%s)</i>"

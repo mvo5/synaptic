@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 17:38-0300\n"
+"POT-Creation-Date: 2004-04-27 16:18-0300\n"
 "PO-Revision-Date: 2004-02-04 20:53+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -913,43 +913,29 @@ msgstr ""
 "%s\n"
 "u uređaj %s"
 
-# bug: ova poruka će biti uklonjena u sledećem pregledu koda
-#: gtk/rgfetchprogress.cc:220
-#, c-format
-msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
-msgstr ""
-"Preuzeto: %-3li od %-3li datoteka pri brzini: %4s B/s — preostalo: %6s\n"
-
-#: gtk/rgfetchprogress.cc:226
-msgid "(stalled)\n"
-msgstr "(zaustavljen)\n"
-
-#: gtk/rgfetchprogress.cc:241
-msgid "[Processing...] "
-msgstr "[Obrada...] "
-
-#: gtk/rgfetchprogress.cc:246
-msgid "[Receiving...] "
-msgstr "[Prijem...] "
-
-#: gtk/rgfetchprogress.cc:267
-#, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
+#: gtk/rgfetchprogress.cc:236
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files at %s/s - %s remaining"
 msgstr "Preuzeto: %li od %li datoteka pri brzini: %s/s - preostalo: %s "
 
-#: gtk/rgfetchprogress.cc:337
+#: gtk/rgfetchprogress.cc:241
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files"
+msgstr "Preuzeto: %li od %li datoteka pri brzini: %s/s - preostalo: %s "
+
+#: gtk/rgfetchprogress.cc:310
 msgid "Queued"
 msgstr "Stavljeni u red"
 
-#: gtk/rgfetchprogress.cc:340
+#: gtk/rgfetchprogress.cc:313
 msgid "Done"
 msgstr "Urađeno"
 
-#: gtk/rgfetchprogress.cc:343
+#: gtk/rgfetchprogress.cc:316
 msgid "Hit"
 msgstr "Posećen"
 
-#: gtk/rgfetchprogress.cc:346
+#: gtk/rgfetchprogress.cc:319
 msgid "Failed"
 msgstr "Neuspeh"
 
@@ -1153,7 +1139,7 @@ msgstr ""
 msgid "All Packages"
 msgstr "Svi paketi"
 
-#: gtk/rgmainwindow.cc:1397
+#: gtk/rgmainwindow.cc:1396
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1176,40 +1162,40 @@ msgstr[2] ""
 "\n"
 "Molim pokušajte da ih popravite pozivom filtra „Oštećeni“"
 
-#: gtk/rgmainwindow.cc:1601
+#: gtk/rgmainwindow.cc:1599
 msgid "Do you want to add another CD-ROM?"
 msgstr "Da li želite da dodate još jedan cd uređaj?"
 
-#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
-#: gtk/rgmainwindow.cc:2520
+#: gtk/rgmainwindow.cc:1730 gtk/rgmainwindow.cc:2301 gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2518
 #, c-format
 msgid "Can't read %s"
 msgstr "Ne mogu da čitam sa %s"
 
-#: gtk/rgmainwindow.cc:1748
+#: gtk/rgmainwindow.cc:1746
 msgid "Open changes"
 msgstr "Učitaj odabrane promene"
 
-#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
-#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
+#: gtk/rgmainwindow.cc:1777 gtk/rgmainwindow.cc:1840 gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2353 gtk/rgmainwindow.cc:2495
 #, c-format
 msgid "Can't write %s"
 msgstr "Ne mogu da pišem na %s"
 
-#: gtk/rgmainwindow.cc:1798
+#: gtk/rgmainwindow.cc:1796
 msgid "Save changes"
 msgstr "Sačuvaj odabrane promene"
 
-#: gtk/rgmainwindow.cc:1815
+#: gtk/rgmainwindow.cc:1813
 msgid "Save full state, not only changes"
 msgstr "Sačuvaj puno stanje, ne samo promene"
 
-#: gtk/rgmainwindow.cc:1993
+#: gtk/rgmainwindow.cc:1991
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Pokrećem sistem pomoći..."
 
-#: gtk/rgmainwindow.cc:2002
+#: gtk/rgmainwindow.cc:2000
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1229,77 +1215,77 @@ msgstr ""
 "synaptic“ iz linije naredbi ili gledati html verziju smeštenu u "
 "direktorijumu „synaptic/html."
 
-#: gtk/rgmainwindow.cc:2146
+#: gtk/rgmainwindow.cc:2144
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2150
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Izvršavam naredbu „dpkg-reconfigure“..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2164
+#: gtk/rgmainwindow.cc:2162
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Pokrećem pomoć paketa..."
 
-#: gtk/rgmainwindow.cc:2203
+#: gtk/rgmainwindow.cc:2201
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2222
+#: gtk/rgmainwindow.cc:2220
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Izvodim odabrane promene... ovo može potrajati"
 
-#: gtk/rgmainwindow.cc:2226
+#: gtk/rgmainwindow.cc:2224
 msgid "Retrieving Package Files..."
 msgstr "Preuzimam pakete..."
 
-#: gtk/rgmainwindow.cc:2286
+#: gtk/rgmainwindow.cc:2284
 msgid "Do you want to quit Synaptic?"
 msgstr "Da li želite da napustite Synaptic?"
 
-#: gtk/rgmainwindow.cc:2342
+#: gtk/rgmainwindow.cc:2340
 msgid "Retrieving Index Files..."
 msgstr "Preuzimanje indeks datoteka..."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Čišćenje spiskova paketa..."
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2399
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Ne mogu da ispravim zavisnosti"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2418
+#: gtk/rgmainwindow.cc:2416
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2444
+#: gtk/rgmainwindow.cc:2442
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Paket će biti nadograđen."
 
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2454
 #, fuzzy
 msgid "Successfully marked all available upgrades"
 msgstr "Stavi u red sve moguće nadogradnje"
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2614,6 +2600,20 @@ msgid ""
 "</b>"
 msgstr ""
 "<b>Sledeće sličice se koriste za označavanje tekućeg stanja paketa:</b>"
+
+# bug: ova poruka će biti uklonjena u sledećem pregledu koda
+#~ msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
+#~ msgstr ""
+#~ "Preuzeto: %-3li od %-3li datoteka pri brzini: %4s B/s — preostalo: %6s\n"
+
+#~ msgid "(stalled)\n"
+#~ msgstr "(zaustavljen)\n"
+
+#~ msgid "[Processing...] "
+#~ msgstr "[Obrada...] "
+
+#~ msgid "[Receiving...] "
+#~ msgstr "[Prijem...] "
 
 #~ msgid "%s <i>(%s)</i>"
 #~ msgstr "%s <i>(%s)</i>"

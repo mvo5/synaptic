@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 17:38-0300\n"
+"POT-Creation-Date: 2004-04-27 16:18-0300\n"
 "PO-Revision-Date: 2003-11-03 23:33-0200\n"
 "Last-Translator: Leonardo F. S. Boiko <leoboiko@fastmail.fm>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -582,9 +582,10 @@ msgstr "Pacote com Debconf"
 msgid "Obsolete or locally installed"
 msgstr "Obsoletos ou instalados localmente"
 
+# c-format
 #: common/rpackagelister.cc:455 common/rpackagelister.cc:461
 #: common/rpackagelister.cc:475
-# c-format
+#, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "Erro interno abrindo o cache (%d). Por favor reporte."
 
@@ -755,19 +756,6 @@ msgid ""
 "<i>synaptic-devel@nongnu.org</i> \n"
 "Include the output of the \"locale\" command in your email."
 msgstr ""
-"Este erro é causado por configurações de locale incorretas ou "
-"incompatíveis.\n"
-"\n"
-"Por favor, use configurações de locale como \"fr_FR\" ou \"fr_FR@euro\" e "
-"não use configurações como \"fr_FR.iso8859-15@euro\".\n"
-"\n"
-"Tentaremos dar um jeito, mas poderão ocorrer problemas ou mesmo travamentos. "
-"A melhor maneira de evitá-los é arrumar suas configurações de locale.\n"
-"\n"
-"Se você acredita que isto está errado ou precisa de ajuda, mande email "
-"para:\n"
-"<i>synaptic-devel@nongnu.org</i> \n"
-"com a saída do comando \"locale\"."
 
 #: gtk/gsynaptic.cc:55
 msgid "Usage: synaptic [options]\n"
@@ -892,46 +880,29 @@ msgstr ""
 "%s\n"
 "no leitor %s"
 
-#: gtk/rgfetchprogress.cc:220
+#: gtk/rgfetchprogress.cc:236
 #, c-format
-msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
-msgstr "Obtidos %-3lii de %-3li arquivos a %4s B/s - %6s faltando\n"
-
-#: gtk/rgfetchprogress.cc:226
-msgid "(stalled)\n"
-msgstr "(parado)\n"
+msgid "Retrieving %li of %li files at %s/s - %s remaining"
+msgstr "Obtendo %li de %li arquivos a %s/s - %s faltando"
 
 #: gtk/rgfetchprogress.cc:241
-msgid "[Processing...] "
-msgstr "[Processando...] "
-
-#: gtk/rgfetchprogress.cc:246
-msgid "[Receiving...] "
-msgstr "[Recebendo...] "
-
-#: gtk/rgfetchprogress.cc:267
 #, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
-msgstr "Obtidos %li de %li arquivos a %s/s - %s faltando"
+msgid "Retrieving %li of %li files"
+msgstr "Obtendo %li de %li arquivos"
 
-#: gtk/rgfetchprogress.cc:267
-#, c-format
-msgid "Retrieved %li of %li files"
-msgstr "Obtidos %li de %li arquivos"
-
-#: gtk/rgfetchprogress.cc:337
+#: gtk/rgfetchprogress.cc:310
 msgid "Queued"
 msgstr "Agendado"
 
-#: gtk/rgfetchprogress.cc:340
+#: gtk/rgfetchprogress.cc:313
 msgid "Done"
 msgstr "Pronto"
 
-#: gtk/rgfetchprogress.cc:343
+#: gtk/rgfetchprogress.cc:316
 msgid "Hit"
 msgstr "Em cache"
 
-#: gtk/rgfetchprogress.cc:346
+#: gtk/rgfetchprogress.cc:319
 msgid "Failed"
 msgstr "Falhou"
 
@@ -1127,7 +1098,7 @@ msgstr ""
 msgid "All Packages"
 msgstr "Todos os Pacotes"
 
-#: gtk/rgmainwindow.cc:1397
+#: gtk/rgmainwindow.cc:1396
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1140,39 +1111,39 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gtk/rgmainwindow.cc:1601
+#: gtk/rgmainwindow.cc:1599
 msgid "Do you want to add another CD-ROM?"
 msgstr "Deseja adicionar outro CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
-#: gtk/rgmainwindow.cc:2520
+#: gtk/rgmainwindow.cc:1730 gtk/rgmainwindow.cc:2301 gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2518
 #, c-format
 msgid "Can't read %s"
 msgstr "Não foi possível ler %s"
 
-#: gtk/rgmainwindow.cc:1748
+#: gtk/rgmainwindow.cc:1746
 msgid "Open changes"
 msgstr "Abrir mudanças"
 
-#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
-#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
+#: gtk/rgmainwindow.cc:1777 gtk/rgmainwindow.cc:1840 gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2353 gtk/rgmainwindow.cc:2495
 #, c-format
 msgid "Can't write %s"
 msgstr "Não foi possível escrever %s"
 
-#: gtk/rgmainwindow.cc:1798
+#: gtk/rgmainwindow.cc:1796
 msgid "Save changes"
 msgstr "Salvar mudanças"
 
-#: gtk/rgmainwindow.cc:1815
+#: gtk/rgmainwindow.cc:1813
 msgid "Save full state, not only changes"
 msgstr "Salvar todo o estado, não apenas as mudanças"
 
-#: gtk/rgmainwindow.cc:1993
+#: gtk/rgmainwindow.cc:1991
 msgid "Starting help viewer..."
 msgstr "Iniciando o visualizador de ajuda..."
 
-#: gtk/rgmainwindow.cc:2002
+#: gtk/rgmainwindow.cc:2000
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1183,22 +1154,22 @@ msgid ""
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2146
+#: gtk/rgmainwindow.cc:2144
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2150
 msgid "Starting package configuration tool..."
 msgstr "Iniciando a ferramenta de configuração de pacotes..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2164
+#: gtk/rgmainwindow.cc:2162
 msgid "Starting package documentation viewer..."
 msgstr "Iniciando visualizador de documentação do pacote..."
 
-#: gtk/rgmainwindow.cc:2203
+#: gtk/rgmainwindow.cc:2201
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1206,35 +1177,35 @@ msgstr ""
 "Não foi possível aplicar mudanças!\n"
 "Solucione os pacotes quebrados antes."
 
-#: gtk/rgmainwindow.cc:2222
+#: gtk/rgmainwindow.cc:2220
 msgid "Applying marked changes. This may take a while..."
 msgstr "Aplicando as mudanças marcadas. Isto pode levar algum tempo..."
 
-#: gtk/rgmainwindow.cc:2226
+#: gtk/rgmainwindow.cc:2224
 msgid "Retrieving Package Files..."
 msgstr "Obtendo Pacotes..."
 
-#: gtk/rgmainwindow.cc:2286
+#: gtk/rgmainwindow.cc:2284
 msgid "Do you want to quit Synaptic?"
 msgstr "Deseja sair do Synaptic?"
 
-#: gtk/rgmainwindow.cc:2342
+#: gtk/rgmainwindow.cc:2340
 msgid "Retrieving Index Files..."
 msgstr "Obtendo Índices"
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 msgid "Refreshing package list..."
 msgstr "Atualizando a lista de pacotes..."
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2399
 msgid "Failed to resolve dependency problems!"
 msgstr "Falha ao resolver problemas de dependência!"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 msgid "Successfully fixed dependency problems"
 msgstr "Problemas de dependência solucionados com sucesso"
 
-#: gtk/rgmainwindow.cc:2418
+#: gtk/rgmainwindow.cc:2416
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1242,15 +1213,15 @@ msgstr ""
 "Não foi possível atualizar o sistema!\n"
 "Solucione os pacotes quebrados antes."
 
-#: gtk/rgmainwindow.cc:2444
+#: gtk/rgmainwindow.cc:2442
 msgid "Marking all available upgrades..."
 msgstr "Marcando todas as atualizações disponíveis..."
 
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2454
 msgid "Successfully marked all available upgrades"
 msgstr "Todas as atualizações disponíveis marcadas com sucesso"
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 msgid "Failed to mark all available upgrades!"
 msgstr "Falha ao marcar todas as atualizações disponíveis!"
 
@@ -1625,7 +1596,7 @@ msgstr "_Somente Texto"
 
 #: gtk/window_main.glade.h:46
 msgid "_Toolbar"
-msgstr "_Toolbar"
+msgstr "_Barra de Ferramentas"
 
 #: gtk/window_main.glade.h:47
 msgid "_Undo"
@@ -2175,11 +2146,10 @@ msgid "<b>Summary</b>"
 msgstr "<b>Resumo</b>"
 
 #: gtk/window_summary.glade.h:4
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Aplicar as seguintes mudanças?</span>"
+"<span weight=\"bold\" size=\"large\">Aplicar as seguintes mudanças?</span>"
 
 #: gtk/window_summary.glade.h:6
 msgid "Download package files only"
@@ -2194,13 +2164,12 @@ msgid "The package files will only be retrieved, but not installed or upgraded"
 msgstr "Os pacotes serão apenas obtidos, mas não instalados ou atualizados"
 
 #: gtk/window_summary.glade.h:9
-#, fuzzy
 msgid ""
 "This is your last opportunity to look through the list of marked changes "
 "before they are applied."
 msgstr ""
 "Essa é sua última oportuniadade de verificar a lista de mudanças agendadas "
-"antes que elas sejam executadas."
+"antes que elas sejam aplicadas."
 
 #: gtk/window_summary.glade.h:10
 msgid "_Show Details"
@@ -2506,6 +2475,18 @@ msgstr ""
 "<b>Os seguintes ícones são utilizados para indicar o estado atual de um "
 "pacote</b>"
 
+#~ msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
+#~ msgstr "Obtidos %-3lii de %-3li arquivos a %4s B/s - %6s faltando\n"
+
+#~ msgid "(stalled)\n"
+#~ msgstr "(parado)\n"
+
+#~ msgid "[Processing...] "
+#~ msgstr "[Processando...] "
+
+#~ msgid "[Receiving...] "
+#~ msgstr "[Recebendo...] "
+
 # Sem traduções politicamente corretas, por favor :)
 #~ msgid "OH SHIT DUNNO WTF IS GOIN ON!"
 #~ msgstr "OH MERDA SEI LÁ QUE PAU ESTÁ DANDO!"
@@ -2652,3 +2633,5 @@ msgstr ""
 
 #~ msgid "Not installed (available)"
 #~ msgstr "Não instalado (disponível)"
+
+# vim:termencoding=iso-8859-1:encoding=utf-8

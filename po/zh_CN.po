@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.47.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 17:38-0300\n"
+"POT-Creation-Date: 2004-04-27 16:18-0300\n"
 "PO-Revision-Date: 2003-11-30 0:46+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -882,41 +882,29 @@ msgstr ""
 "%s\n"
 "的光盘插入驱动器 %s"
 
-#: gtk/rgfetchprogress.cc:220
+#: gtk/rgfetchprogress.cc:236
 #, fuzzy, c-format
-msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
+msgid "Retrieving %li of %li files at %s/s - %s remaining"
 msgstr "%-3li/%-3li 文件     %4s B/s   尚余 %6s\n"
 
-#: gtk/rgfetchprogress.cc:226
-msgid "(stalled)\n"
-msgstr "(停顿)\n"
-
 #: gtk/rgfetchprogress.cc:241
-msgid "[Processing...] "
-msgstr "[正在处理...]"
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files"
+msgstr "正在检索索引文件..."
 
-#: gtk/rgfetchprogress.cc:246
-msgid "[Receiving...] "
-msgstr "[正在接收...]"
-
-#: gtk/rgfetchprogress.cc:267
-#, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
-msgstr ""
-
-#: gtk/rgfetchprogress.cc:337
+#: gtk/rgfetchprogress.cc:310
 msgid "Queued"
 msgstr "已列队"
 
-#: gtk/rgfetchprogress.cc:340
+#: gtk/rgfetchprogress.cc:313
 msgid "Done"
 msgstr "已下载"
 
-#: gtk/rgfetchprogress.cc:343
+#: gtk/rgfetchprogress.cc:316
 msgid "Hit"
 msgstr "成功"
 
-#: gtk/rgfetchprogress.cc:346
+#: gtk/rgfetchprogress.cc:319
 msgid "Failed"
 msgstr "失败"
 
@@ -1117,7 +1105,7 @@ msgstr ""
 msgid "All Packages"
 msgstr "全部软件包"
 
-#: gtk/rgmainwindow.cc:1397
+#: gtk/rgmainwindow.cc:1396
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1136,40 +1124,40 @@ msgstr[1] ""
 "\n"
 "请尝试通过访问“Broken”过滤器来修复它们。"
 
-#: gtk/rgmainwindow.cc:1601
+#: gtk/rgmainwindow.cc:1599
 msgid "Do you want to add another CD-ROM?"
 msgstr "您想添加其他 CD-ROM 吗？"
 
-#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
-#: gtk/rgmainwindow.cc:2520
+#: gtk/rgmainwindow.cc:1730 gtk/rgmainwindow.cc:2301 gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2518
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:1748
+#: gtk/rgmainwindow.cc:1746
 msgid "Open changes"
 msgstr "打开变更"
 
-#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
-#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
+#: gtk/rgmainwindow.cc:1777 gtk/rgmainwindow.cc:1840 gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2353 gtk/rgmainwindow.cc:2495
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
 
-#: gtk/rgmainwindow.cc:1798
+#: gtk/rgmainwindow.cc:1796
 msgid "Save changes"
 msgstr "保存变更"
 
-#: gtk/rgmainwindow.cc:1815
+#: gtk/rgmainwindow.cc:1813
 msgid "Save full state, not only changes"
 msgstr "保存全部状态，不仅仅是变更"
 
-#: gtk/rgmainwindow.cc:1993
+#: gtk/rgmainwindow.cc:1991
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "正在启动帮助系统..."
 
-#: gtk/rgmainwindow.cc:2002
+#: gtk/rgmainwindow.cc:2000
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1187,78 +1175,78 @@ msgstr ""
 "另外您可以从命令行使用“man synaptic”打开手册页，或者查看位于“synaptic/html”文"
 "件夹下的 html 版。"
 
-#: gtk/rgmainwindow.cc:2146
+#: gtk/rgmainwindow.cc:2144
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2150
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "正在启动 dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2164
+#: gtk/rgmainwindow.cc:2162
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "正在启动软件包帮助..."
 
-#: gtk/rgmainwindow.cc:2203
+#: gtk/rgmainwindow.cc:2201
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2222
+#: gtk/rgmainwindow.cc:2220
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "正在对选中的项目执行更新... 这可能需要一会"
 
-#: gtk/rgmainwindow.cc:2226
+#: gtk/rgmainwindow.cc:2224
 msgid "Retrieving Package Files..."
 msgstr "正在检索软件包文件..."
 
-#: gtk/rgmainwindow.cc:2286
+#: gtk/rgmainwindow.cc:2284
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得？"
 
-#: gtk/rgmainwindow.cc:2342
+#: gtk/rgmainwindow.cc:2340
 msgid "Retrieving Index Files..."
 msgstr "正在检索索引文件..."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "正在清除软件包列表..."
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2399
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "修正软件包依赖关系的问题"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "修正软件包依赖关系的问题"
 
-#: gtk/rgmainwindow.cc:2418
+#: gtk/rgmainwindow.cc:2416
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2444
+#: gtk/rgmainwindow.cc:2442
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "此软件包将会被升级。"
 
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2454
 #, fuzzy
 msgid "Successfully marked all available upgrades"
 msgstr "列队全部可能的升级"
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2567,6 +2555,15 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#~ msgid "(stalled)\n"
+#~ msgstr "(停顿)\n"
+
+#~ msgid "[Processing...] "
+#~ msgstr "[正在处理...]"
+
+#~ msgid "[Receiving...] "
+#~ msgstr "[正在接收...]"
 
 #~ msgid "%s <i>(%s)</i>"
 #~ msgstr "%s <i>(%s)</i>"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-23 17:38-0300\n"
+"POT-Creation-Date: 2004-04-27 16:18-0300\n"
 "PO-Revision-Date: 2003-12-14 11:58+0200\n"
 "Last-Translator: Kate <kate@lrn.ru>\n"
 "Language-Team:  <ru@li.org>\n"
@@ -912,41 +912,29 @@ msgstr ""
 "%s\n"
 "в дисковод %s"
 
-#: gtk/rgfetchprogress.cc:220
+#: gtk/rgfetchprogress.cc:236
 #, fuzzy, c-format
-msgid "Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"
+msgid "Retrieving %li of %li files at %s/s - %s remaining"
 msgstr "%-3li/%-3li файлов    %4sB/s  осталось %6s\n"
 
-#: gtk/rgfetchprogress.cc:226
-msgid "(stalled)\n"
-msgstr "(остановлен)\n"
-
 #: gtk/rgfetchprogress.cc:241
-msgid "[Processing...] "
-msgstr "[Обработка...]"
+#, fuzzy, c-format
+msgid "Retrieving %li of %li files"
+msgstr "Получение индексных файлов..."
 
-#: gtk/rgfetchprogress.cc:246
-msgid "[Receiving...] "
-msgstr "[Получение данных] "
-
-#: gtk/rgfetchprogress.cc:267
-#, c-format
-msgid "Retrieved %li of %li files at %s/s - %s remaining"
-msgstr ""
-
-#: gtk/rgfetchprogress.cc:337
+#: gtk/rgfetchprogress.cc:310
 msgid "Queued"
 msgstr "Добавлен в очередь"
 
-#: gtk/rgfetchprogress.cc:340
+#: gtk/rgfetchprogress.cc:313
 msgid "Done"
 msgstr "Готово"
 
-#: gtk/rgfetchprogress.cc:343
+#: gtk/rgfetchprogress.cc:316
 msgid "Hit"
 msgstr "Совпадение"
 
-#: gtk/rgfetchprogress.cc:346
+#: gtk/rgfetchprogress.cc:319
 msgid "Failed"
 msgstr "Неудачно"
 
@@ -1149,7 +1137,7 @@ msgstr ""
 msgid "All Packages"
 msgstr "Все пакеты"
 
-#: gtk/rgmainwindow.cc:1397
+#: gtk/rgmainwindow.cc:1396
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1172,40 +1160,40 @@ msgstr[2] ""
 "\n"
 "Попробуйте их исправить, зайдя в фильтр \"С ошибками\""
 
-#: gtk/rgmainwindow.cc:1601
+#: gtk/rgmainwindow.cc:1599
 msgid "Do you want to add another CD-ROM?"
 msgstr "Добавить другой CD-ROM?"
 
-#: gtk/rgmainwindow.cc:1732 gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2377
-#: gtk/rgmainwindow.cc:2520
+#: gtk/rgmainwindow.cc:1730 gtk/rgmainwindow.cc:2301 gtk/rgmainwindow.cc:2375
+#: gtk/rgmainwindow.cc:2518
 #, c-format
 msgid "Can't read %s"
 msgstr "Невозможно прочитать %s"
 
-#: gtk/rgmainwindow.cc:1748
+#: gtk/rgmainwindow.cc:1746
 msgid "Open changes"
 msgstr "Открыть изменения"
 
-#: gtk/rgmainwindow.cc:1779 gtk/rgmainwindow.cc:1842 gtk/rgmainwindow.cc:2236
-#: gtk/rgmainwindow.cc:2355 gtk/rgmainwindow.cc:2497
+#: gtk/rgmainwindow.cc:1777 gtk/rgmainwindow.cc:1840 gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2353 gtk/rgmainwindow.cc:2495
 #, c-format
 msgid "Can't write %s"
 msgstr "Невозможно записать %s"
 
-#: gtk/rgmainwindow.cc:1798
+#: gtk/rgmainwindow.cc:1796
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
-#: gtk/rgmainwindow.cc:1815
+#: gtk/rgmainwindow.cc:1813
 msgid "Save full state, not only changes"
 msgstr "Сохранить всё состояние (не только изменения)"
 
-#: gtk/rgmainwindow.cc:1993
+#: gtk/rgmainwindow.cc:1991
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Открытие системы помощи"
 
-#: gtk/rgmainwindow.cc:2002
+#: gtk/rgmainwindow.cc:2000
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1223,78 +1211,78 @@ msgstr ""
 "Также вы можете получить информацию о Synaptic, набрав в командной строке "
 "'man synaptic' или просмотрев html-версию в папке 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2146
+#: gtk/rgmainwindow.cc:2144
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2152
+#: gtk/rgmainwindow.cc:2150
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Запуск dpkg-reconfigure..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2164
+#: gtk/rgmainwindow.cc:2162
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Открытие помощи по пакету..."
 
-#: gtk/rgmainwindow.cc:2203
+#: gtk/rgmainwindow.cc:2201
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2222
+#: gtk/rgmainwindow.cc:2220
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Внесение изменений... Это может занять некоторое время"
 
-#: gtk/rgmainwindow.cc:2226
+#: gtk/rgmainwindow.cc:2224
 msgid "Retrieving Package Files..."
 msgstr "Получение файлов пакетов..."
 
-#: gtk/rgmainwindow.cc:2286
+#: gtk/rgmainwindow.cc:2284
 msgid "Do you want to quit Synaptic?"
 msgstr "Вы хотите выйти из Synaptic?"
 
-#: gtk/rgmainwindow.cc:2342
+#: gtk/rgmainwindow.cc:2340
 msgid "Retrieving Index Files..."
 msgstr "Получение индексных файлов..."
 
-#: gtk/rgmainwindow.cc:2344
+#: gtk/rgmainwindow.cc:2342
 #, fuzzy
 msgid "Refreshing package list..."
 msgstr "Очистка списков пакетов..."
 
-#: gtk/rgmainwindow.cc:2401
+#: gtk/rgmainwindow.cc:2399
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Исправить проблемы в зависимостях"
 
-#: gtk/rgmainwindow.cc:2403
+#: gtk/rgmainwindow.cc:2401
 #, fuzzy
 msgid "Successfully fixed dependency problems"
 msgstr "Исправить проблемы в зависимостях"
 
-#: gtk/rgmainwindow.cc:2418
+#: gtk/rgmainwindow.cc:2416
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2444
+#: gtk/rgmainwindow.cc:2442
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Пакет будет обновлён."
 
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2454
 #, fuzzy
 msgid "Successfully marked all available upgrades"
 msgstr "Добавить в очередь все возможные обновления"
 
-#: gtk/rgmainwindow.cc:2458
+#: gtk/rgmainwindow.cc:2456
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -2626,6 +2614,15 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#~ msgid "(stalled)\n"
+#~ msgstr "(остановлен)\n"
+
+#~ msgid "[Processing...] "
+#~ msgstr "[Обработка...]"
+
+#~ msgid "[Receiving...] "
+#~ msgstr "[Получение данных] "
 
 #~ msgid "%s <i>(%s)</i>"
 #~ msgstr "%s <i>(%s)</i>"

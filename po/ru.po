@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.40\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 10:29+0100\n"
+"POT-Creation-Date: 2004-01-13 11:10+0100\n"
 "PO-Revision-Date: 2003-10-21 13:44+0300\n"
 "Last-Translator: Sviatoslav Sviridov <svd@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -686,30 +686,47 @@ msgstr ""
 "выполнили их. Эта информация будет потеряна при выходе из Synaptic'а."
 
 #: gtk/dialog_upgrade.glade.h:1
+msgid ""
+"<b>Note:</b> If you are upgrading to a new major operating system release "
+"you have to choose 'Smart Upgrade' here."
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:2
 #, fuzzy
 msgid ""
-"<span weight=\"bold\" size=\"large\">Enable smart upgrade (dist-upgrade)?</"
-"span>"
+"<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Выполнить дополнительные необходимые "
 "действия?</span>"
 
-#: gtk/dialog_upgrade.glade.h:2
+#: gtk/dialog_upgrade.glade.h:3
+#, fuzzy
+msgid "Default Upgrade"
+msgstr "Обновить:"
+
+#: gtk/dialog_upgrade.glade.h:4
+msgid ""
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way."
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr ""
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:6
+#, fuzzy
+msgid "Smart Upgrade"
+msgstr "Обновить:"
+
+#: gtk/dialog_upgrade.glade.h:7
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
-"require new packages to be installed.\n"
-"\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
-"of upgrades in a smart way.\n"
-"\n"
-"<b>Note:</b> If you are upgrading to a new major operating system release "
-"you have to say 'yes' here.\n"
-"\n"
-"This behavior can be changed in the preferences later."
+"require new packages to be installed."
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:8
+msgid "This behavior can be changed in the preferences later."
 msgstr ""
 
 #: gtk/dialog_locales_warning.glade.h:1
@@ -1123,12 +1140,12 @@ msgid "_Downgrade"
 msgstr "Пони_зить версию"
 
 #: gtk/rgmainwindow.cc:1419 gtk/window_main_hpaned.glade.h:85
-#: gtk/window_main_vpaned.glade.h:87
+#: gtk/window_main_vpaned.glade.h:86
 msgid "_Install"
 msgstr "У_становить"
 
 #: gtk/rgmainwindow.cc:1422 gtk/window_main_hpaned.glade.h:102
-#: gtk/window_main_vpaned.glade.h:103
+#: gtk/window_main_vpaned.glade.h:102
 msgid "_Upgrade"
 msgstr "_Обновить"
 
@@ -1852,16 +1869,16 @@ msgstr "Текст _под иконками"
 msgid "Up_grade All"
 msgstr "Об_новить"
 
-#: gtk/window_main_hpaned.glade.h:62 gtk/window_main_vpaned.glade.h:65
+#: gtk/window_main_hpaned.glade.h:62
 #, fuzzy
 msgid "Up_grade System"
 msgstr "О_бновить"
 
-#: gtk/window_main_hpaned.glade.h:63 gtk/window_main_vpaned.glade.h:66
+#: gtk/window_main_hpaned.glade.h:63 gtk/window_main_vpaned.glade.h:65
 msgid "Update package cache"
 msgstr "Получить сведения о пакетах"
 
-#: gtk/window_main_hpaned.glade.h:64 gtk/window_main_vpaned.glade.h:67
+#: gtk/window_main_hpaned.glade.h:64 gtk/window_main_vpaned.glade.h:66
 #, fuzzy
 msgid "Version:"
 msgstr "Версия"
@@ -1871,19 +1888,19 @@ msgstr "Версия"
 msgid "View installed documentation of the package in a browser"
 msgstr "Посмотреть установленную справку по пакету"
 
-#: gtk/window_main_hpaned.glade.h:66 gtk/window_main_vpaned.glade.h:69
+#: gtk/window_main_hpaned.glade.h:66 gtk/window_main_vpaned.glade.h:68
 msgid "_About"
 msgstr "_О программе"
 
-#: gtk/window_main_hpaned.glade.h:67 gtk/window_main_vpaned.glade.h:70
+#: gtk/window_main_hpaned.glade.h:67 gtk/window_main_vpaned.glade.h:69
 msgid "_Add CD-ROM..."
 msgstr "Добавить _CD-ROM"
 
-#: gtk/window_main_hpaned.glade.h:68 gtk/window_main_vpaned.glade.h:71
+#: gtk/window_main_hpaned.glade.h:68 gtk/window_main_vpaned.glade.h:70
 msgid "_Alphabetic Tree"
 msgstr "_Алфавитное дерево"
 
-#: gtk/window_main_hpaned.glade.h:69 gtk/window_main_vpaned.glade.h:72
+#: gtk/window_main_hpaned.glade.h:69 gtk/window_main_vpaned.glade.h:71
 msgid "_Apply Filter"
 msgstr "_Применить фильтр"
 
@@ -1891,7 +1908,7 @@ msgstr "_Применить фильтр"
 msgid "_Collapse All"
 msgstr "_Свернуть всё"
 
-#: gtk/window_main_hpaned.glade.h:71 gtk/window_main_vpaned.glade.h:74
+#: gtk/window_main_hpaned.glade.h:71 gtk/window_main_vpaned.glade.h:73
 msgid "_Configure"
 msgstr "Скон_фигурировать"
 
@@ -1900,121 +1917,121 @@ msgstr "Скон_фигурировать"
 msgid "_Documentation"
 msgstr "_Документация"
 
-#: gtk/window_main_hpaned.glade.h:73 gtk/window_main_vpaned.glade.h:75
+#: gtk/window_main_hpaned.glade.h:73 gtk/window_main_vpaned.glade.h:74
 #, fuzzy
 msgid "_Edit Filters..."
 msgstr "_Редактировать фильтр"
 
-#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:76
+#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:75
 #, fuzzy
 msgid "_Execute"
 msgstr "В_ыполнить"
 
-#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:77
+#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:76
 #, fuzzy
 msgid "_Execute Queued Changes"
 msgstr "_Выполнить изменения"
 
-#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:78
+#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:77
 msgid "_Expand All"
 msgstr "_Развернуть всё"
 
-#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:79
+#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:78
 msgid "_File"
 msgstr "_Файл"
 
-#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:80
+#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:79
 #, fuzzy
 msgid "_Find..."
 msgstr "Окно поиска"
 
-#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:81
+#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:80
 msgid "_Fix Broken Packages"
 msgstr "_Исправить \"сломанные\" пакеты"
 
-#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:82
+#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:81
 msgid "_Flat List"
 msgstr "Обычный с_писок"
 
-#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:83
+#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:82
 msgid "_Help"
 msgstr "_Помощь"
 
-#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:84
+#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:83
 msgid "_Hide"
 msgstr "_Скрыть"
 
-#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:85
+#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:84
 #, fuzzy
 msgid "_Icon Legend"
 msgstr "Только _иконки"
 
-#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:86
+#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:85
 msgid "_Icons Only"
 msgstr "Только _иконки"
 
 # This is filter name, it's better to not translate it
-#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:88
+#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:87
 msgid "_Install Latest Version"
 msgstr "_Установить последнюю версию"
 
-#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:89
+#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:88
 #, fuzzy
 msgid "_Lock Current Status and Version"
 msgstr "Удержать текущую версию"
 
-#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:90
+#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:89
 #, fuzzy
 msgid "_No Changes"
 msgstr "_Выполнить изменения"
 
-#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:91
+#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:90
 #, fuzzy
 msgid "_Quit"
 msgstr "Выйти"
 
-#: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:92
+#: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:91
 msgid "_Read Selections..."
 msgstr "_Прочитать состояние выделений..."
 
-#: gtk/window_main_hpaned.glade.h:91 gtk/window_main_vpaned.glade.h:93
+#: gtk/window_main_hpaned.glade.h:91 gtk/window_main_vpaned.glade.h:92
 #, fuzzy
 msgid "_Redo"
 msgstr "Удали_ть"
 
-#: gtk/window_main_hpaned.glade.h:92 gtk/window_main_vpaned.glade.h:94
+#: gtk/window_main_hpaned.glade.h:92 gtk/window_main_vpaned.glade.h:93
 msgid "_Remove"
 msgstr "Удали_ть"
 
-#: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:95
+#: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:94
 msgid "_Repositories"
 msgstr "Репозитории"
 
-#: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:96
+#: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:95
 msgid "_Save Selections"
 msgstr "_Сохранить состояние выделений"
 
-#: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:97
+#: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:96
 msgid "_Section Tree"
 msgstr "_Дерево разделов"
 
-#: gtk/window_main_hpaned.glade.h:96 gtk/window_main_vpaned.glade.h:98
+#: gtk/window_main_hpaned.glade.h:96 gtk/window_main_vpaned.glade.h:97
 msgid "_Tag Tree"
 msgstr "Дерево _тегов"
 
-#: gtk/window_main_hpaned.glade.h:97 gtk/window_main_vpaned.glade.h:99
+#: gtk/window_main_hpaned.glade.h:97 gtk/window_main_vpaned.glade.h:98
 msgid "_Text Only"
 msgstr "Только _текст"
 
-#: gtk/window_main_hpaned.glade.h:98 gtk/window_main_vpaned.glade.h:100
+#: gtk/window_main_hpaned.glade.h:98 gtk/window_main_vpaned.glade.h:99
 msgid "_Toolbar"
 msgstr "_Панель инструментов"
 
-#: gtk/window_main_hpaned.glade.h:99 gtk/window_main_vpaned.glade.h:101
+#: gtk/window_main_hpaned.glade.h:99 gtk/window_main_vpaned.glade.h:100
 msgid "_Undo"
 msgstr ""
 
-#: gtk/window_main_hpaned.glade.h:100 gtk/window_main_vpaned.glade.h:102
+#: gtk/window_main_hpaned.glade.h:100 gtk/window_main_vpaned.glade.h:101
 #, fuzzy
 msgid "_Update List"
 msgstr "Обновить сп_исок"
@@ -2024,7 +2041,7 @@ msgstr "Обновить сп_исок"
 msgid "_Update Package List"
 msgstr "Получить с_ведения о пакетах"
 
-#: gtk/window_main_hpaned.glade.h:103 gtk/window_main_vpaned.glade.h:104
+#: gtk/window_main_hpaned.glade.h:103 gtk/window_main_vpaned.glade.h:103
 msgid "_View"
 msgstr "_Вид"
 
@@ -2053,11 +2070,11 @@ msgstr ""
 msgid "U_pdate Package List"
 msgstr "Получить с_ведения о пакетах"
 
-#: gtk/window_main_vpaned.glade.h:68
+#: gtk/window_main_vpaned.glade.h:67
 msgid "View installed online documentation related to the package"
 msgstr "Посмотреть установленную справку по пакету"
 
-#: gtk/window_main_vpaned.glade.h:73
+#: gtk/window_main_vpaned.glade.h:72
 msgid "_Collapse All   "
 msgstr "С_вернуть всё"
 
@@ -2722,22 +2739,23 @@ msgstr ""
 #: gtk/dialog_welcome.glade.h:1
 msgid ""
 "1. Select the package that you wish to install or remove\n"
-"2. Queue the action from the package control, package menu or context menu\n"
-"3. Execute the queued action"
+"2. Queue the action from the package control, package menu or context menu "
+"of the package\n"
+"3. Execute the queued change(s)"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:4
-msgid "<b>Caution:</b> You can render your system unusable."
+msgid ""
+"<b>Note:</b> Modifications are not executed instantly. They will be queued "
+"and have to be executed afterwards:"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:5
-msgid ""
-"<b>Note:</b> Modifications are not executed instantly. You have to execute "
-"the queued changes afterwards."
+msgid "Quick Introduction"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:6
-msgid "Never show this dialog again"
+msgid "Show this dialog at startup"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:7
@@ -3229,10 +3247,6 @@ msgstr ""
 
 #~ msgid "Remove package: "
 #~ msgstr "Удалить пакет: "
-
-#, fuzzy
-#~ msgid "Normal Upgrade"
-#~ msgstr "Обновить:"
 
 #~ msgid "<b>Dependencies</b>"
 #~ msgstr "<b>Зависимости</b>"

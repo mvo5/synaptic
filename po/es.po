@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-13 10:29+0100\n"
+"POT-Creation-Date: 2004-01-13 11:10+0100\n"
 "PO-Revision-Date: 2003-11-29 02:42+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -674,40 +674,47 @@ msgstr ""
 
 #: gtk/dialog_upgrade.glade.h:1
 msgid ""
-"<span weight=\"bold\" size=\"large\">Enable smart upgrade (dist-upgrade)?</"
-"span>"
+"<b>Note:</b> If you are upgrading to a new major operating system release "
+"you have to choose 'Smart Upgrade' here."
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:2
+#, fuzzy
+msgid ""
+"<span weight=\"bold\" size=\"large\">Use smart upgrade (dist-upgrade)?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">¿Activar la actualización inteligente "
 "(dist-upgrade)?</span>"
 
-#: gtk/dialog_upgrade.glade.h:2
+#: gtk/dialog_upgrade.glade.h:3
+#, fuzzy
+msgid "Default Upgrade"
+msgstr "Actualización sel sistema predeterminada:"
+
+#: gtk/dialog_upgrade.glade.h:4
+msgid ""
+"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
+"of upgrades in a smart way."
+msgstr ""
+
+#: gtk/dialog_upgrade.glade.h:5
 msgid "Remember the answer for further upgrades"
 msgstr "Recordar la respuesta para actualizaciones futuras"
 
-#: gtk/dialog_upgrade.glade.h:3
+#: gtk/dialog_upgrade.glade.h:6
+#, fuzzy
+msgid "Smart Upgrade"
+msgstr "Actualizar"
+
+#: gtk/dialog_upgrade.glade.h:7
 msgid ""
 "The default upgrade method skips upgrades that introduce conflicts or "
-"require new packages to be installed.\n"
-"\n"
-"Dist-upgrade attempts to resolve conflicts and to fulfill all dependencies "
-"of upgrades in a smart way.\n"
-"\n"
-"<b>Note:</b> If you are upgrading to a new major operating system release "
-"you have to say 'yes' here.\n"
-"\n"
-"This behavior can be changed in the preferences later."
+"require new packages to be installed."
 msgstr ""
-"El método de actualización predeterminado omite las actualizaciones que "
-"introducen conflictos o\n"
-"requieren que se instalen paquetes nuevos.\n"
-"\n"
-"Actualizar-dist. intenta resolver los conflictos y completar todas las "
-"dependencias de las actualizaciones de una manera inteligente.\n"
-"\n"
-"<b>Nota:</b> Si está actualizando a una versión superior del sistema "
-"operativo, debe decir 'Sí' aquí.\n"
-"\n"
-"Este comportamiento puede cambiarse en las preferencias más tarde."
+
+#: gtk/dialog_upgrade.glade.h:8
+msgid "This behavior can be changed in the preferences later."
+msgstr ""
 
 #: gtk/dialog_locales_warning.glade.h:1
 msgid ""
@@ -1126,12 +1133,12 @@ msgid "_Downgrade"
 msgstr "_Desactualizar"
 
 #: gtk/rgmainwindow.cc:1419 gtk/window_main_hpaned.glade.h:85
-#: gtk/window_main_vpaned.glade.h:87
+#: gtk/window_main_vpaned.glade.h:86
 msgid "_Install"
 msgstr "_Instalar"
 
 #: gtk/rgmainwindow.cc:1422 gtk/window_main_hpaned.glade.h:102
-#: gtk/window_main_vpaned.glade.h:103
+#: gtk/window_main_vpaned.glade.h:102
 msgid "_Upgrade"
 msgstr "_Actualizar"
 
@@ -1871,15 +1878,15 @@ msgstr "Texto _bajo los iconos"
 msgid "Up_grade All"
 msgstr "Ac_tualizar todo"
 
-#: gtk/window_main_hpaned.glade.h:62 gtk/window_main_vpaned.glade.h:65
+#: gtk/window_main_hpaned.glade.h:62
 msgid "Up_grade System"
 msgstr "Act_ualizar sistema"
 
-#: gtk/window_main_hpaned.glade.h:63 gtk/window_main_vpaned.glade.h:66
+#: gtk/window_main_hpaned.glade.h:63 gtk/window_main_vpaned.glade.h:65
 msgid "Update package cache"
 msgstr "Actualizar caché de paquetes"
 
-#: gtk/window_main_hpaned.glade.h:64 gtk/window_main_vpaned.glade.h:67
+#: gtk/window_main_hpaned.glade.h:64 gtk/window_main_vpaned.glade.h:66
 msgid "Version:"
 msgstr "Versión:"
 
@@ -1887,19 +1894,19 @@ msgstr "Versión:"
 msgid "View installed documentation of the package in a browser"
 msgstr "Ver la documentación instalada del paquete en un navegador"
 
-#: gtk/window_main_hpaned.glade.h:66 gtk/window_main_vpaned.glade.h:69
+#: gtk/window_main_hpaned.glade.h:66 gtk/window_main_vpaned.glade.h:68
 msgid "_About"
 msgstr "A_cerca de"
 
-#: gtk/window_main_hpaned.glade.h:67 gtk/window_main_vpaned.glade.h:70
+#: gtk/window_main_hpaned.glade.h:67 gtk/window_main_vpaned.glade.h:69
 msgid "_Add CD-ROM..."
 msgstr "_Añadir CD-ROM..."
 
-#: gtk/window_main_hpaned.glade.h:68 gtk/window_main_vpaned.glade.h:71
+#: gtk/window_main_hpaned.glade.h:68 gtk/window_main_vpaned.glade.h:70
 msgid "_Alphabetic Tree"
 msgstr "Árbol _alfabético"
 
-#: gtk/window_main_hpaned.glade.h:69 gtk/window_main_vpaned.glade.h:72
+#: gtk/window_main_hpaned.glade.h:69 gtk/window_main_vpaned.glade.h:71
 msgid "_Apply Filter"
 msgstr "Filtr_ar"
 
@@ -1907,7 +1914,7 @@ msgstr "Filtr_ar"
 msgid "_Collapse All"
 msgstr "_Contraer todo"
 
-#: gtk/window_main_hpaned.glade.h:71 gtk/window_main_vpaned.glade.h:74
+#: gtk/window_main_hpaned.glade.h:71 gtk/window_main_vpaned.glade.h:73
 msgid "_Configure"
 msgstr "_Configurar"
 
@@ -1915,115 +1922,115 @@ msgstr "_Configurar"
 msgid "_Documentation"
 msgstr "_Documentación"
 
-#: gtk/window_main_hpaned.glade.h:73 gtk/window_main_vpaned.glade.h:75
+#: gtk/window_main_hpaned.glade.h:73 gtk/window_main_vpaned.glade.h:74
 #, fuzzy
 msgid "_Edit Filters..."
 msgstr "_Editar filtros"
 
-#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:76
+#: gtk/window_main_hpaned.glade.h:74 gtk/window_main_vpaned.glade.h:75
 msgid "_Execute"
 msgstr "E_jecutar"
 
-#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:77
+#: gtk/window_main_hpaned.glade.h:75 gtk/window_main_vpaned.glade.h:76
 msgid "_Execute Queued Changes"
 msgstr "_Ejecutar los cambios en espera"
 
-#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:78
+#: gtk/window_main_hpaned.glade.h:76 gtk/window_main_vpaned.glade.h:77
 msgid "_Expand All"
 msgstr "_Expandir todo"
 
 # Excepción de traducción para complir la directiva del TLDP
-#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:79
+#: gtk/window_main_hpaned.glade.h:77 gtk/window_main_vpaned.glade.h:78
 msgid "_File"
 msgstr "_Archivo"
 
-#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:80
+#: gtk/window_main_hpaned.glade.h:78 gtk/window_main_vpaned.glade.h:79
 msgid "_Find..."
 msgstr "_Búsqueda..."
 
-#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:81
+#: gtk/window_main_hpaned.glade.h:79 gtk/window_main_vpaned.glade.h:80
 msgid "_Fix Broken Packages"
 msgstr "_Arreglar paquetes rotos"
 
-#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:82
+#: gtk/window_main_hpaned.glade.h:80 gtk/window_main_vpaned.glade.h:81
 msgid "_Flat List"
 msgstr "Lista _plana"
 
-#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:83
+#: gtk/window_main_hpaned.glade.h:81 gtk/window_main_vpaned.glade.h:82
 msgid "_Help"
 msgstr "A_yuda"
 
-#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:84
+#: gtk/window_main_hpaned.glade.h:82 gtk/window_main_vpaned.glade.h:83
 msgid "_Hide"
 msgstr "_Ocultar"
 
-#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:85
+#: gtk/window_main_hpaned.glade.h:83 gtk/window_main_vpaned.glade.h:84
 #, fuzzy
 msgid "_Icon Legend"
 msgstr "Sólo _iconos"
 
-#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:86
+#: gtk/window_main_hpaned.glade.h:84 gtk/window_main_vpaned.glade.h:85
 msgid "_Icons Only"
 msgstr "Sólo _iconos"
 
-#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:88
+#: gtk/window_main_hpaned.glade.h:86 gtk/window_main_vpaned.glade.h:87
 msgid "_Install Latest Version"
 msgstr "_Instalar la última versión"
 
-#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:89
+#: gtk/window_main_hpaned.glade.h:87 gtk/window_main_vpaned.glade.h:88
 #, fuzzy
 msgid "_Lock Current Status and Version"
 msgstr "_Mantener la versión actual"
 
-#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:90
+#: gtk/window_main_hpaned.glade.h:88 gtk/window_main_vpaned.glade.h:89
 msgid "_No Changes"
 msgstr "_Sin cambios"
 
-#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:91
+#: gtk/window_main_hpaned.glade.h:89 gtk/window_main_vpaned.glade.h:90
 msgid "_Quit"
 msgstr "_Salir"
 
-#: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:92
+#: gtk/window_main_hpaned.glade.h:90 gtk/window_main_vpaned.glade.h:91
 msgid "_Read Selections..."
 msgstr "_Leer selecciones..."
 
-#: gtk/window_main_hpaned.glade.h:91 gtk/window_main_vpaned.glade.h:93
+#: gtk/window_main_hpaned.glade.h:91 gtk/window_main_vpaned.glade.h:92
 msgid "_Redo"
 msgstr "_Rehacer"
 
-#: gtk/window_main_hpaned.glade.h:92 gtk/window_main_vpaned.glade.h:94
+#: gtk/window_main_hpaned.glade.h:92 gtk/window_main_vpaned.glade.h:93
 msgid "_Remove"
 msgstr "Elimina_r"
 
-#: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:95
+#: gtk/window_main_hpaned.glade.h:93 gtk/window_main_vpaned.glade.h:94
 msgid "_Repositories"
 msgstr "_Repositorios"
 
-#: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:96
+#: gtk/window_main_hpaned.glade.h:94 gtk/window_main_vpaned.glade.h:95
 msgid "_Save Selections"
 msgstr "_Guardar selecciones"
 
-#: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:97
+#: gtk/window_main_hpaned.glade.h:95 gtk/window_main_vpaned.glade.h:96
 msgid "_Section Tree"
 msgstr "Árbol de _secciones"
 
-#: gtk/window_main_hpaned.glade.h:96 gtk/window_main_vpaned.glade.h:98
+#: gtk/window_main_hpaned.glade.h:96 gtk/window_main_vpaned.glade.h:97
 msgid "_Tag Tree"
 msgstr "Árbol de etique_tas"
 
-#: gtk/window_main_hpaned.glade.h:97 gtk/window_main_vpaned.glade.h:99
+#: gtk/window_main_hpaned.glade.h:97 gtk/window_main_vpaned.glade.h:98
 msgid "_Text Only"
 msgstr "Sólo _texto"
 
-#: gtk/window_main_hpaned.glade.h:98 gtk/window_main_vpaned.glade.h:100
+#: gtk/window_main_hpaned.glade.h:98 gtk/window_main_vpaned.glade.h:99
 msgid "_Toolbar"
 msgstr "Barra de _herramientas"
 
-#: gtk/window_main_hpaned.glade.h:99 gtk/window_main_vpaned.glade.h:101
+#: gtk/window_main_hpaned.glade.h:99 gtk/window_main_vpaned.glade.h:100
 msgid "_Undo"
 msgstr "_Deshacer"
 
-#: gtk/window_main_hpaned.glade.h:100 gtk/window_main_vpaned.glade.h:102
+#: gtk/window_main_hpaned.glade.h:100 gtk/window_main_vpaned.glade.h:101
 msgid "_Update List"
 msgstr "Actualizar _lista"
 
@@ -2031,7 +2038,7 @@ msgstr "Actualizar _lista"
 msgid "_Update Package List"
 msgstr "_Actualizar lista de paquetes"
 
-#: gtk/window_main_hpaned.glade.h:103 gtk/window_main_vpaned.glade.h:104
+#: gtk/window_main_hpaned.glade.h:103 gtk/window_main_vpaned.glade.h:103
 msgid "_View"
 msgstr "_Vista"
 
@@ -2057,11 +2064,11 @@ msgstr ""
 msgid "U_pdate Package List"
 msgstr "_Actualizar lista de paquetes"
 
-#: gtk/window_main_vpaned.glade.h:68
+#: gtk/window_main_vpaned.glade.h:67
 msgid "View installed online documentation related to the package"
 msgstr "Ver la documentación en línea instalada relacionada con el paquete"
 
-#: gtk/window_main_vpaned.glade.h:73
+#: gtk/window_main_vpaned.glade.h:72
 msgid "_Collapse All   "
 msgstr "_Contraer todo   "
 
@@ -2706,22 +2713,23 @@ msgstr ""
 #: gtk/dialog_welcome.glade.h:1
 msgid ""
 "1. Select the package that you wish to install or remove\n"
-"2. Queue the action from the package control, package menu or context menu\n"
-"3. Execute the queued action"
+"2. Queue the action from the package control, package menu or context menu "
+"of the package\n"
+"3. Execute the queued change(s)"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:4
-msgid "<b>Caution:</b> You can render your system unusable."
+msgid ""
+"<b>Note:</b> Modifications are not executed instantly. They will be queued "
+"and have to be executed afterwards:"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:5
-msgid ""
-"<b>Note:</b> Modifications are not executed instantly. You have to execute "
-"the queued changes afterwards."
+msgid "Quick Introduction"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:6
-msgid "Never show this dialog again"
+msgid "Show this dialog at startup"
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:7
@@ -2847,6 +2855,30 @@ msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
 msgstr ""
+
+#~ msgid ""
+#~ "The default upgrade method skips upgrades that introduce conflicts or "
+#~ "require new packages to be installed.\n"
+#~ "\n"
+#~ "Dist-upgrade attempts to resolve conflicts and to fulfill all "
+#~ "dependencies of upgrades in a smart way.\n"
+#~ "\n"
+#~ "<b>Note:</b> If you are upgrading to a new major operating system release "
+#~ "you have to say 'yes' here.\n"
+#~ "\n"
+#~ "This behavior can be changed in the preferences later."
+#~ msgstr ""
+#~ "El método de actualización predeterminado omite las actualizaciones que "
+#~ "introducen conflictos o\n"
+#~ "requieren que se instalen paquetes nuevos.\n"
+#~ "\n"
+#~ "Actualizar-dist. intenta resolver los conflictos y completar todas las "
+#~ "dependencias de las actualizaciones de una manera inteligente.\n"
+#~ "\n"
+#~ "<b>Nota:</b> Si está actualizando a una versión superior del sistema "
+#~ "operativo, debe decir 'Sí' aquí.\n"
+#~ "\n"
+#~ "Este comportamiento puede cambiarse en las preferencias más tarde."
 
 #, fuzzy
 #~ msgid "%d package is set on hold\n"

@@ -2219,11 +2219,26 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    delete fprogress;
    delete iprogress;
 
-   if (_config->FindB("Synaptic::IgnorePMOutput", false) == false)
-      me->showErrors();
-   else
+   if (_config->FindB("Synaptic::IgnorePMOutput", false) == false) {
+      //me->showErrors();
+      if (!_error->empty()) {
+	 string FullMessage,message;
+	 while (!_error->empty()) {
+	    _error->PopMessage(message);
+	    FullMessage += message;
+	    // Ignore some stupid error messages.
+	    if (message == "Tried to dequeue a fetching object")
+	       continue;
+	 }
+	 RGGladeUserDialog dia(me,"download_error");
+	 GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(), "textview");
+	 GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+	 gtk_text_buffer_set_text(tb, utf8(FullMessage.c_str()), -1);
+	 dia.run();
+      }
+   } else {
       _error->Discard();
-
+   }
    if (_config->FindB("Volatile::Non-Interactive", false) == true) {
       return;
    }

@@ -27,6 +27,18 @@
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
+	    <widget class="GtkButton" id="button1">
+	      <property name="visible">True</property>
+	      <property name="can_default">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label">gtk-cancel</property>
+	      <property name="use_stock">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="response_id">-6</property>
+	    </widget>
+	  </child>
+
+	  <child>
 	    <widget class="GtkButton" id="cancelbutton1">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
@@ -178,27 +190,6 @@
 		      <property name="fill">False</property>
 		    </packing>
 		  </child>
-
-		  <child>
-		    <widget class="GtkLabel" id="label5">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">This behavior can be changed in the preferences later.</property>
-		      <property name="use_underline">False</property>
-		      <property name="use_markup">True</property>
-		      <property name="justify">GTK_JUSTIFY_LEFT</property>
-		      <property name="wrap">True</property>
-		      <property name="selectable">False</property>
-		      <property name="xalign">0</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -210,6 +201,7 @@
 	      <child>
 		<widget class="GtkCheckButton" id="checkbutton_remember">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">This behavior can be changed in the preferences later.</property>
 		  <property name="can_focus">True</property>
 		  <property name="label" translatable="yes">Remember the answer for further upgrades</property>
 		  <property name="use_underline">True</property>

@@ -53,6 +53,7 @@ class RQMainWindow : public WindowMain
    void markSelectedPackages(int mark);
    void markPackagesFromPopup(int id);
    void commitChanges();
+   void refreshCache();
 };
 
 #endif

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** RQMainWindow meta object code from reading C++ file 'rqmainwindow.h'
 **
-** Created: Sun Feb 15 13:51:49 2004
+** Created: Tue Feb 17 13:12:37 2004
 **      by: The Qt MOC ()
 **
 ** WARNING! All changes made in this file will be lost!
@@ -95,6 +95,7 @@ QMetaObject* RQMainWindow::staticMetaObject()
     };
     static const QUMethod slot_12 = {"markPackagesFromPopup", 1, param_slot_12 };
     static const QUMethod slot_13 = {"commitChanges", 0, 0 };
+    static const QUMethod slot_14 = {"refreshCache", 0, 0 };
     static const QMetaData slot_tbl[] = {
 	{ "restoreState()", &slot_0, QMetaData::Public },
 	{ "saveState()", &slot_1, QMetaData::Public },
@@ -109,11 +110,12 @@ QMetaObject* RQMainWindow::staticMetaObject()
 	{ "markPackage(RPackage*,int)", &slot_10, QMetaData::Public },
 	{ "markSelectedPackages(int)", &slot_11, QMetaData::Public },
 	{ "markPackagesFromPopup(int)", &slot_12, QMetaData::Public },
-	{ "commitChanges()", &slot_13, QMetaData::Public }
+	{ "commitChanges()", &slot_13, QMetaData::Public },
+	{ "refreshCache()", &slot_14, QMetaData::Public }
     };
     metaObj = QMetaObject::new_metaobject(
 	"RQMainWindow", parentObject,
-	slot_tbl, 14,
+	slot_tbl, 15,
 	0, 0,
 #ifndef QT_NO_PROPERTIES
 	0, 0,
@@ -148,6 +150,7 @@ bool RQMainWindow::qt_invoke( int _id, QUObject* _o )
     case 11: markSelectedPackages((int)static_QUType_int.get(_o+1)); break;
     case 12: markPackagesFromPopup((int)static_QUType_int.get(_o+1)); break;
     case 13: commitChanges(); break;
+    case 14: refreshCache(); break;
     default:
 	return WindowMain::qt_invoke( _id, _o );
     }

@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Form implementation generated from reading ui file 'window_fetch.ui'
 **
-** Created: Tue Feb 17 15:39:52 2004
-**      by: The User Interface Compiler ($Id: qt/main.cpp   3.2.3   edited May 19 14:22 $)
+** Created: Tue Feb 17 17:43:48 2004
+**      by: The User Interface Compiler ()
 **
 ** WARNING! All changes made in this file will be lost!
 ****************************************************************************/
@@ -30,6 +30,7 @@ WindowFetch::WindowFetch( QWidget* parent, const char* name, bool modal, WFlags 
 {
     if ( !name )
 	setName( "WindowFetch" );
+    setModal( TRUE );
     WindowFetchLayout = new QVBoxLayout( this, 11, 6, "WindowFetchLayout"); 
 
     layout2 = new QVBoxLayout( 0, 0, 6, "layout2"); 
@@ -61,7 +62,7 @@ WindowFetch::WindowFetch( QWidget* parent, const char* name, bool modal, WFlags 
     layout2->addLayout( layout1 );
     WindowFetchLayout->addLayout( layout2 );
     languageChange();
-    resize( QSize(570, 338).expandedTo(minimumSizeHint()) );
+    resize( QSize(570, 340).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 }
 

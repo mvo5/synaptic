@@ -11,13 +11,14 @@
 RQFetchWindow::RQFetchWindow(QWidget *parent)
    :  WindowFetch(parent)
 {
-   setModal(true);
-
    connect(_cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 void RQFetchWindow::Start()
 {
+   _items.clear();
+   _progressListView->clear();
+   _progressBar->setProgress(0);
    pkgAcquireStatus::Start();
    setResult(Accepted);
 }
@@ -26,19 +27,23 @@ void RQFetchWindow::Stop()
 {
    pkgAcquireStatus::Stop();
    accept();
+   _progressBar->setProgress(100);
    qApp->processEvents();
 }
 
 void RQFetchWindow::Fetch(pkgAcquire::ItemDesc &itemDesc)
 {
+#if 0
    if (itemDesc.Owner->Complete)
       return;
+#endif
 
    if (!isVisible() && result() != Rejected)
       show();
 
    itemDesc.Owner->ID = _items.size()+1;
 
+   itemDesc.Owner->ID = _items.size()+1;
    RQFetchItem *item = new RQFetchItem(_progressListView, itemDesc);
    _items.push_back(item);
 
@@ -93,13 +98,15 @@ bool RQFetchWindow::Pulse(pkgAcquire *Owner)
          continue;
       RQFetchItem *item = _items[I->CurrentItem->Owner->ID-1];
 
-      // Based on 100 to reduce the number of repaints.
-      if (item->setProgress((int)((float)I->CurrentSize*100)/I->TotalSize))
+      int progress = 100;
+      if (I->TotalSize != 0)
+         progress = (int)((double)I->CurrentSize*100)/I->TotalSize;
+      if (item->setProgress(progress))
          item->repaint();
    }
 
-   _progressBar->setProgress((int)CurrentBytes + CurrentItems,
-                             (int)TotalBytes + TotalItems);
+   _progressBar->setProgress((int)((double)(CurrentBytes + CurrentItems)*100/
+                                  ((double)(TotalBytes + TotalItems))));
 
    qApp->processEvents();
 

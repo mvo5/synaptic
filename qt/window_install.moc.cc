@@ -1,14 +1,14 @@
 /****************************************************************************
-** WindowFetch meta object code from reading C++ file 'window_fetch.h'
+** WindowInstall meta object code from reading C++ file 'window_install.h'
 **
-** Created: Tue Feb 17 17:43:48 2004
+** Created: Tue Feb 17 18:06:28 2004
 **      by: The Qt MOC ()
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #undef QT_NO_COMPAT
-#include "window_fetch.h"
+#include "window_install.h"
 #include <qmetaobject.h>
 #include <qapplication.h>
 
@@ -19,27 +19,27 @@
 #error "(The moc has changed too much.)"
 #endif
 
-const char *WindowFetch::className() const
+const char *WindowInstall::className() const
 {
-    return "WindowFetch";
+    return "WindowInstall";
 }
 
-QMetaObject *WindowFetch::metaObj = 0;
-static QMetaObjectCleanUp cleanUp_WindowFetch( "WindowFetch", &WindowFetch::staticMetaObject );
+QMetaObject *WindowInstall::metaObj = 0;
+static QMetaObjectCleanUp cleanUp_WindowInstall( "WindowInstall", &WindowInstall::staticMetaObject );
 
 #ifndef QT_NO_TRANSLATION
-QString WindowFetch::tr( const char *s, const char *c )
+QString WindowInstall::tr( const char *s, const char *c )
 {
     if ( qApp )
-	return qApp->translate( "WindowFetch", s, c, QApplication::DefaultCodec );
+	return qApp->translate( "WindowInstall", s, c, QApplication::DefaultCodec );
     else
 	return QString::fromLatin1( s );
 }
 #ifndef QT_NO_TRANSLATION_UTF8
-QString WindowFetch::trUtf8( const char *s, const char *c )
+QString WindowInstall::trUtf8( const char *s, const char *c )
 {
     if ( qApp )
-	return qApp->translate( "WindowFetch", s, c, QApplication::UnicodeUTF8 );
+	return qApp->translate( "WindowInstall", s, c, QApplication::UnicodeUTF8 );
     else
 	return QString::fromUtf8( s );
 }
@@ -47,7 +47,7 @@ QString WindowFetch::trUtf8( const char *s, const char *c )
 
 #endif // QT_NO_TRANSLATION
 
-QMetaObject* WindowFetch::staticMetaObject()
+QMetaObject* WindowInstall::staticMetaObject()
 {
     if ( metaObj )
 	return metaObj;
@@ -57,7 +57,7 @@ QMetaObject* WindowFetch::staticMetaObject()
 	{ "languageChange()", &slot_0, QMetaData::Protected }
     };
     metaObj = QMetaObject::new_metaobject(
-	"WindowFetch", parentObject,
+	"WindowInstall", parentObject,
 	slot_tbl, 1,
 	0, 0,
 #ifndef QT_NO_PROPERTIES
@@ -65,18 +65,18 @@ QMetaObject* WindowFetch::staticMetaObject()
 	0, 0,
 #endif // QT_NO_PROPERTIES
 	0, 0 );
-    cleanUp_WindowFetch.setMetaObject( metaObj );
+    cleanUp_WindowInstall.setMetaObject( metaObj );
     return metaObj;
 }
 
-void* WindowFetch::qt_cast( const char* clname )
+void* WindowInstall::qt_cast( const char* clname )
 {
-    if ( !qstrcmp( clname, "WindowFetch" ) )
+    if ( !qstrcmp( clname, "WindowInstall" ) )
 	return this;
     return QDialog::qt_cast( clname );
 }
 
-bool WindowFetch::qt_invoke( int _id, QUObject* _o )
+bool WindowInstall::qt_invoke( int _id, QUObject* _o )
 {
     switch ( _id - staticMetaObject()->slotOffset() ) {
     case 0: languageChange(); break;
@@ -86,16 +86,16 @@ bool WindowFetch::qt_invoke( int _id, QUObject* _o )
     return TRUE;
 }
 
-bool WindowFetch::qt_emit( int _id, QUObject* _o )
+bool WindowInstall::qt_emit( int _id, QUObject* _o )
 {
     return QDialog::qt_emit(_id,_o);
 }
 #ifndef QT_NO_PROPERTIES
 
-bool WindowFetch::qt_property( int id, int f, QVariant* v)
+bool WindowInstall::qt_property( int id, int f, QVariant* v)
 {
     return QDialog::qt_property( id, f, v);
 }
 
-bool WindowFetch::qt_static_property( QObject* , int , int , QVariant* ){ return FALSE; }
+bool WindowInstall::qt_static_property( QObject* , int , int , QVariant* ){ return FALSE; }
 #endif // QT_NO_PROPERTIES

@@ -10,20 +10,29 @@
 #include <rqchangeswindow.h>
 #include <rqfetchwindow.h>
 #include <rqinstallwindow.h>
+#include <rqpixmaps.h>
 
 #include <rqpackageitem.h>
 
+#include <config.h>
 #include <i18n.h>
 
 RQMainWindow::RQMainWindow(RPackageLister *lister)
    : _lister(lister), _packagePopup(this), _userDialog(this)
 {
+   // Fix buttons in the toolbar. Right now qt-designer is
+   // saving buttons in XPM format.
+   _refreshButton->setPixmap(RQPixmaps::find("update.png"));
+   _upgradeButton->setPixmap(RQPixmaps::find("distupgrade.png"));
+   _commitButton->setPixmap(RQPixmaps::find("proceed.png"));
+   
    // Plug progress system into the lister.
    _cacheProg = new RQCacheProgress(this);
    _lister->setProgressMeter(_cacheProg);
 
    // Connect toolbar buttons.
    connect(_commitButton, SIGNAL(clicked()), this, SLOT(commitChanges()));
+   connect(_refreshButton, SIGNAL(clicked()), this, SLOT(refreshCache()));
 
    // Setup package list.
    _packageListView->setAllColumnsShowFocus(true);
@@ -253,7 +262,11 @@ void RQMainWindow::commitChanges()
    // XXX Save selections to a temporary file here.
 
    RQFetchWindow fetch(this);
+#ifdef HAVE_RPM
+   RQInstallWindow install(this, _lister);
+#else
    RQDummyInstallWindow install;
+#endif
 
    _lister->commitChanges(&fetch, &install);
 
@@ -263,6 +276,29 @@ void RQMainWindow::commitChanges()
       _userDialog.showErrors();
       exit(1);
    }
+
+   // XXX Restore selections from temporary file here.
+
+   reloadViews();
+   reloadPackages();
+}
+
+void RQMainWindow::refreshCache()
+{
+   // Pointers to packages will become invalid.
+   _packageListView->clear();
+
+   RQFetchWindow fetch(this);
+
+   // XXX Save selections to a temporary file here.
+
+   if (!_lister->updateCache(&fetch))
+      _userDialog.showErrors();
+   
+   // Forget new packages here.
+
+   if (!_lister->openCache(true))
+      _userDialog.showErrors();
 
    // XXX Restore selections from temporary file here.
 

@@ -24,7 +24,10 @@ synaptic_UI = \
 	window_changes.moc.cc \
 	window_fetch.h \
 	window_fetch.cc \
-	window_fetch.moc.cc
+	window_fetch.moc.cc \
+	window_install.h \
+	window_install.cc \
+	window_install.moc.cc
 
 synaptic_SOURCES = \
 	$(synaptic_UI) \
@@ -52,7 +55,10 @@ synaptic_SOURCES = \
 	rqfetchwindow.cc \
 	rqfetchwindow.moc.cc \
 	rqfetchitem.h \
-	rqfetchitem.cc
+	rqfetchitem.cc \
+	rqinstallwindow.h \
+	rqinstallwindow.cc \
+	rqinstallwindow.moc.cc
 
 EXTRA_DIST = 
 

@@ -216,10 +216,12 @@ updateFinished(false)
 
 
 pkgPackageManager::OrderResult
-   RGZvtInstallProgress::start(pkgPackageManager *pm,
-                               int numPackages, int numPackagesTotal)
+RGZvtInstallProgress::start(RPackageManager *pm,
+                            int numPackages, int numPackagesTotal)
 {
-   //cout << "RGZvtInstallProgress::start()" << endl;
+   res = pm->DoInstallPreFork();
+   if (res == pkgPackageManager::Failed)
+       return res;
 
    void *dummy;
    int open_max, ret = 250;
@@ -247,7 +249,7 @@ pkgPackageManager::OrderResult
          ::close(i);
       // make sure, that term is set correctly
       setenv("TERM", "xterm", 1);
-      res = pm->DoInstall();
+      res = pm->DoInstallPostFork();
       _exit(res);
    }
 
@@ -282,4 +284,4 @@ void RGZvtInstallProgress::updateInterface()
 
 #endif
 
-// vim:sts=3:sw=3
+// vim:ts=3:sw=3:et

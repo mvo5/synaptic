@@ -132,8 +132,6 @@ class RPackageLister {
    vector<RPackageView *> _views;
    RPackageView *_selectedView;
 
-   pkgPackageManager *_packMan;
-
    void applyInitialSelection();
 
    void makePresetFilters();

@@ -1615,8 +1615,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    }
 #endif
 
-   _packMan = _system->CreatePM(_cache->deps());
-   if (!_packMan->GetArchives(&fetcher, _cache->list(), _records) ||
+   pkgPackageManager *PM;
+   PM = _system->CreatePM(_cache->deps());
+   RPackageManager rPM(PM);
+   if (!PM->GetArchives(&fetcher, _cache->list(), _records) ||
        _error->PendingError())
       goto gave_wood;
 
@@ -1678,7 +1680,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             goto gave_wood;
       }
       // Try to deal with missing package files
-      if (Failed == true && _packMan->FixMissing() == false) {
+      if (Failed == true && PM->FixMissing() == false) {
          _error->Error(_("Unable to correct missing packages"));
          goto gave_wood;
       }
@@ -1694,7 +1696,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          _cache->releaseLock();
 
          pkgPackageManager::OrderResult Res =
-            iprog->start(_packMan, numPackages, numPackagesTotal);
+		    iprog->start(&rPM, numPackages, numPackagesTotal);
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
                goto gave_wood;
@@ -1715,7 +1717,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       // Reload the fetcher object and loop again for media swapping
       fetcher.Shutdown();
 
-      if (!_packMan->GetArchives(&fetcher, _cache->list(), _records))
+      if (!PM->GetArchives(&fetcher, _cache->list(), _records))
          goto gave_wood;
    }
 
@@ -1725,12 +1727,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    // erase downloaded packages
    cleanPackageCache();
 
-   delete _packMan;
+   delete PM;
    return Ret;
 
  gave_wood:
-   delete _packMan;
-
+   delete PM;
    return false;
 }
 

@@ -54,7 +54,7 @@ void *RInstallProgress::loop(void *data)
 
 
 
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
+pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
                                                        int numPackages,
                                                        int numPackagesTotal)
 {
@@ -67,6 +67,10 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 #ifdef HAVE_RPM
 
    _config->Set("RPM::Interactive", "false");
+
+   res = pm->DoInstallPreFork();
+   if (res == pkgPackageManager::Failed)
+       return res;
 
    /*
     * This will make a pipe from where we can read child's output
@@ -84,7 +88,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
       close(fd[0]);
       close(fd[1]);
 
-      res = pm->DoInstall();
+      res = pm->DoInstallPostFork();
 
       exit(0);
    }
@@ -104,7 +108,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    _child_id = fork();
 
    if (_child_id == 0) {
-      res = pm->DoInstall();
+      res = pm->DoInstallPostFork();
       _exit(res);
    }
 #endif

@@ -53,7 +53,7 @@ class RGZvtInstallProgress:public RInstallProgress, public RGGladeWindow {
    ~RGZvtInstallProgress() {
    };
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+   virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
                                                 int numPackages = 0,
                                                 int totalPackages = 0);
 

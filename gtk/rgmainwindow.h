@@ -150,15 +150,20 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkStyle *_yellowStyle;
    GtkStyle *_blackStyle;
    
-   GtkWidget *_rdepList;
-   GtkWidget *_depList;
+   GtkWidget *_rdepList; /* gtktreeview */
+   GtkListStore *_rdepListStore;
+
+   GtkWidget *_depList; /* gtktreeview */
+   GtkListStore *_depListStore;
+   GtkWidget *_depInfoL;
 
    GtkWidget *_recList; /* gtktreeview */
    GtkListStore *_recListStore;
 
-   GtkWidget *_depInfoL;
-   GtkWidget *_availDepList;
+   GtkWidget *_availDepList; /* gtktreeview */
+   GtkListStore *_availDepListStore;
    GtkWidget *_availDepInfoL;
+
    
    RGFilterManagerWindow *_fmanagerWin;
    RGSourcesWindow *_sourcesWin;
@@ -205,9 +210,8 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void changedDepView(GtkWidget *self, void *data);
    static void clickedRecInstall(GtkWidget *self, void *data);
 
-   static void clickedDepList(GtkWidget *self, int row, int col, GdkEvent *ev);
-   static void clickedAvailDepList(GtkWidget *self, int row, int col, 
-				   GdkEvent *ev, void* data);
+   static void clickedDepList(GtkTreeSelection *sel, gpointer data);
+   static void clickedAvailDepList(GtkTreeSelection *sel, gpointer data);
 
    // misc
    GtkWidget *createFilterMenu();

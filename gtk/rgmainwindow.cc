@@ -244,7 +244,7 @@ void RGMainWindow::clickedDepList(GtkTreeSelection *selection, gpointer data)
 
     if(gtk_tree_selection_get_selected(selection, &model, &iter)) {
 	gtk_tree_model_get(model, &iter, DEP_PKG_INFO, &text, -1);
-	cout << "clickedDepList: " << text << endl;
+	//cout << "clickedDepList: " << text << endl;
 	assert(text);
 	gtk_label_set_text(GTK_LABEL(me->_depInfoL), utf8(text));
     }
@@ -262,7 +262,7 @@ void RGMainWindow::clickedAvailDepList(GtkTreeSelection *selection,
 
   if(gtk_tree_selection_get_selected(selection, &model, &iter)) {
       gtk_tree_model_get(model, &iter, DEP_PKG_INFO, &text, -1);
-      cout << "clickedAvailDepList: " << text << endl;
+      //cout << "clickedAvailDepList: " << text << endl;
       if(text != NULL)
 	  gtk_label_set_text(GTK_LABEL(me->_availDepInfoL), text);
   }

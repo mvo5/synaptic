@@ -201,9 +201,9 @@ int main(int argc, char **argv)
 
 #ifndef HAVE_RPM
     #ifndef HAVE_DEBTAGS
-      mainWindow->setTitle(PACKAGE" for Debian "VERSION);
+      mainWindow->setTitle(PACKAGE" Package Manager ");
     #else
-      mainWindow->setTitle("synaptic-debtags for Debian "VERSION);
+      mainWindow->setTitle(PACKAGE" Package Manager with debtags support");
     #endif
 #else
     mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));

@@ -124,17 +124,18 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
 bool RGFetchProgress::MediaChange(string Media,string Drive)
 {
-    string msg;
+    gchar *msg;
     
-    msg = _("Please insert the disk labeled:\n")+Media+_("\nin drive ")+Drive;
+    msg = g_strdup_printf(_("Please insert the disk labeled:\n%s\nin drive %s"),Media.c_str(),Drive.c_str());
 
     RGUserDialog userDialog(this);
-    _cancelled = !userDialog.proceed(msg.c_str());
+    _cancelled = !userDialog.proceed(msg);
 
     Update = true;
 
     RGFlushInterface();
 
+    g_free(msg);
     return !_cancelled;
 }
 

@@ -3377,16 +3377,32 @@ bool RGMainWindow::restoreState()
     //TagCollection<int> 
 #endif
 
-  _lister->restoreFilters();
-
-  refreshFilterMenu();
-  
-  int filterNr = _config->FindI("Volatile::initialFilter", 0);
-  changeFilter(filterNr);
-  refreshTable();
-
-  setStatusText();
-  return true;
+    // see if we have broken packages (might be better in some
+    // RGMainWindow::preGuiStart funktion)
+    int installed, broken, toinstall,  toremove;
+    double sizeChange;
+    _lister->getStats(installed, broken, toinstall, toremove,sizeChange);
+    if(broken > 0) {
+	gchar *msg;
+	if(broken == 1)
+	    msg = g_strdup_printf(("You have %i broken package on your system\n\n"
+				      "Please try to fix it by visiting the \"Broken\" filter"), broken);
+	else
+	    msg = g_strdup_printf(("You have %i broken package on your system\n\n"
+				      "Please try to fix them by visiting the \"Broken\" filter"), broken);
+	_userDialog->warning(msg);
+	g_free(msg);
+    }
+    
+    _lister->restoreFilters();
+    refreshFilterMenu();
+    
+    int filterNr = _config->FindI("Volatile::initialFilter", 0);
+    changeFilter(filterNr);
+    refreshTable();
+    
+    setStatusText();
+    return true;
 }
 
 

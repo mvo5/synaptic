@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-18 23:23+0200\n"
+"POT-Creation-Date: 2003-09-22 16:20+0200\n"
 "PO-Revision-Date: 2003-09-15 21:16+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -214,19 +214,24 @@ msgid "Unable to read %s"
 msgstr "Incapaz de leer %s"
 
 #: common/rconfiguration.cc:82 common/rconfiguration.cc:176
+#, fuzzy, c-format
+msgid "ERROR: couldn't open %s for writing"
+msgstr "No se ha podido abrir %s para escribir"
+
+#: common/rconfiguration.cc:107
+#, fuzzy
+msgid "ERROR: Could not get password entry for superuser"
+msgstr "No se ha podido obtener la clave de superusuario"
+
+#: common/rconfiguration.cc:115
+#, fuzzy, c-format
+msgid "ERROR: could not create configuration directory %s"
+msgstr "no se ha podido crear el directorio de configuración %s"
+
 #: common/rconfiguration.cc:201
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "No se ha podido abrir %s para escribir"
-
-#: common/rconfiguration.cc:107
-msgid "Could not get password entry for superuser"
-msgstr "No se ha podido obtener la clave de superusuario"
-
-#: common/rconfiguration.cc:115
-#, c-format
-msgid "could not create configuration directory %s"
-msgstr "no se ha podido crear el directorio de configuración %s"
 
 #: common/rpackage.cc:110
 msgid "unknown"
@@ -490,7 +495,7 @@ msgstr ""
 "los ficheros antiguos en su lugar"
 
 #: common/rpackagelister.cc:1457 common/rpackagelister.cc:1461
-#: gtk/rgrepositorywin.cc:291
+#: gtk/rgrepositorywin.cc:302
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ignorando registros inválidos en el fichero sources.list"
 
@@ -618,47 +623,43 @@ msgid "URL"
 msgstr "URL"
 
 #: gtk/rgfetchprogress.cc:129
-msgid "Please insert the disk labeled:\n"
+#, fuzzy, c-format
+msgid ""
+"Please insert the disk labeled:\n"
+"%s\n"
+"in drive %s"
 msgstr "Por favor, introduzca el disco con la etiqueta:\n"
 
-#: gtk/rgfetchprogress.cc:129
-msgid ""
-"\n"
-"in drive "
-msgstr ""
-"\n"
-"en la unidad "
-
-#: gtk/rgfetchprogress.cc:210
+#: gtk/rgfetchprogress.cc:211
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li ficheros    %4sB/s   TED %6s\n"
 
-#: gtk/rgfetchprogress.cc:217
+#: gtk/rgfetchprogress.cc:218
 msgid "(stalled)\n"
 msgstr "(bloqueado)\n"
 
-#: gtk/rgfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:230
 msgid "[Working] "
 msgstr "[Trabajando] "
 
-#: gtk/rgfetchprogress.cc:234
+#: gtk/rgfetchprogress.cc:235
 msgid "[Receiving] "
 msgstr "[Recibiendo] "
 
-#: gtk/rgfetchprogress.cc:303
+#: gtk/rgfetchprogress.cc:304
 msgid "Queued"
 msgstr "Encolado"
 
-#: gtk/rgfetchprogress.cc:306
+#: gtk/rgfetchprogress.cc:307
 msgid "Done"
 msgstr "Hecho"
 
-#: gtk/rgfetchprogress.cc:309
+#: gtk/rgfetchprogress.cc:310
 msgid "Hit"
 msgstr "Encontrado"
 
-#: gtk/rgfetchprogress.cc:312
+#: gtk/rgfetchprogress.cc:313
 msgid "Failed"
 msgstr "Falló"
 
@@ -1097,44 +1098,44 @@ msgstr ""
 "Hay cambios sin guardar. ¿Está seguro\n"
 "de que quiere salir de Synaptic?"
 
-#: gtk/rgrepositorywin.cc:95
+#: gtk/rgrepositorywin.cc:97
 msgid "Setup Repositories"
 msgstr "Configuración de repositorios"
 
-#: gtk/rgrepositorywin.cc:120
+#: gtk/rgrepositorywin.cc:122
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: gtk/rgrepositorywin.cc:130
+#: gtk/rgrepositorywin.cc:132
 msgid "Type"
 msgstr "Tipo"
 
-#: gtk/rgrepositorywin.cc:139
+#: gtk/rgrepositorywin.cc:141
 msgid "Vendor"
 msgstr "Fabricante"
 
-#: gtk/rgrepositorywin.cc:148 gtk/window_repositories.glade.strings:14
+#: gtk/rgrepositorywin.cc:150 gtk/window_repositories.glade.strings:14
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgrepositorywin.cc:157 gtk/window_repositories.glade.strings:15
+#: gtk/rgrepositorywin.cc:159 gtk/window_repositories.glade.strings:15
 msgid "Distribution"
 msgstr "Distribución"
 
-#: gtk/rgrepositorywin.cc:166 gtk/window_repositories.glade.strings:16
+#: gtk/rgrepositorywin.cc:168 gtk/window_repositories.glade.strings:16
 msgid "Section(s)"
 msgstr "Sección(es)"
 
-#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:340
+#: gtk/rgrepositorywin.cc:243 gtk/rgrepositorywin.cc:351
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr "(sin fabricante)"
 
-#: gtk/rgrepositorywin.cc:295
+#: gtk/rgrepositorywin.cc:306
 msgid "Cannot read vendors.list file"
 msgstr "No se puede leer el fichero vendors.list"
 
-#: gtk/rgrepositorywin.cc:452
+#: gtk/rgrepositorywin.cc:465
 msgid "Unknown source type"
 msgstr "Tipo de fuente desconocida"
 
@@ -2323,6 +2324,13 @@ msgstr "rpm-src"
 #: gtk/window_repositories.glade.strings:13
 msgid "Vendors"
 msgstr "Fabricantes"
+
+#~ msgid ""
+#~ "\n"
+#~ "in drive "
+#~ msgstr ""
+#~ "\n"
+#~ "en la unidad "
 
 #~ msgid "Temporary Files"
 #~ msgstr "Ficheros temporales"

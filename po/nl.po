@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-18 23:23+0200\n"
+"POT-Creation-Date: 2003-09-22 16:20+0200\n"
 "PO-Revision-Date: 2003-02-13 18:16--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -216,19 +216,24 @@ msgid "Unable to read %s"
 msgstr "Kan de cd-rom database %s niet lezen"
 
 #: common/rconfiguration.cc:82 common/rconfiguration.cc:176
+#, fuzzy, c-format
+msgid "ERROR: couldn't open %s for writing"
+msgstr "kan %s niet openen om naar te schrijven"
+
+#: common/rconfiguration.cc:107
+#, fuzzy
+msgid "ERROR: Could not get password entry for superuser"
+msgstr "Kan geen wachtwoordingang krijgen voor supergebruiker"
+
+#: common/rconfiguration.cc:115
+#, fuzzy, c-format
+msgid "ERROR: could not create configuration directory %s"
+msgstr "kan configuratiemap %s niet aanmaken"
+
 #: common/rconfiguration.cc:201
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "kan %s niet openen om naar te schrijven"
-
-#: common/rconfiguration.cc:107
-msgid "Could not get password entry for superuser"
-msgstr "Kan geen wachtwoordingang krijgen voor supergebruiker"
-
-#: common/rconfiguration.cc:115
-#, c-format
-msgid "could not create configuration directory %s"
-msgstr "kan configuratiemap %s niet aanmaken"
 
 #: common/rpackage.cc:110
 #, fuzzy
@@ -494,7 +499,7 @@ msgstr ""
 "zullen worden gebruikt."
 
 #: common/rpackagelister.cc:1457 common/rpackagelister.cc:1461
-#: gtk/rgrepositorywin.cc:291
+#: gtk/rgrepositorywin.cc:302
 #, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Kan sources.list bestand niet inlezen"
@@ -631,47 +636,43 @@ msgid "URL"
 msgstr "URL"
 
 #: gtk/rgfetchprogress.cc:129
-msgid "Please insert the disk labeled:\n"
+#, fuzzy, c-format
+msgid ""
+"Please insert the disk labeled:\n"
+"%s\n"
+"in drive %s"
 msgstr "Voer alstublieft de schijf in met de naam:\n"
 
-#: gtk/rgfetchprogress.cc:129
-msgid ""
-"\n"
-"in drive "
-msgstr ""
-"\n"
-"in het station "
-
-#: gtk/rgfetchprogress.cc:210
+#: gtk/rgfetchprogress.cc:211
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li bestanden    %4sB/s   ETA %6s\n"
 
-#: gtk/rgfetchprogress.cc:217
+#: gtk/rgfetchprogress.cc:218
 msgid "(stalled)\n"
 msgstr "(stilgevallen)\n"
 
-#: gtk/rgfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:230
 msgid "[Working] "
 msgstr "[Bezig] "
 
-#: gtk/rgfetchprogress.cc:234
+#: gtk/rgfetchprogress.cc:235
 msgid "[Receiving] "
 msgstr "[Ontvangen] "
 
-#: gtk/rgfetchprogress.cc:303
+#: gtk/rgfetchprogress.cc:304
 msgid "Queued"
 msgstr "In de rij"
 
-#: gtk/rgfetchprogress.cc:306
+#: gtk/rgfetchprogress.cc:307
 msgid "Done"
 msgstr "Klaar"
 
-#: gtk/rgfetchprogress.cc:309
+#: gtk/rgfetchprogress.cc:310
 msgid "Hit"
 msgstr "Hetzelfde"
 
-#: gtk/rgfetchprogress.cc:312
+#: gtk/rgfetchprogress.cc:313
 msgid "Failed"
 msgstr "Mislukt"
 
@@ -1105,45 +1106,45 @@ msgstr ""
 "Niet alle veranderingen zijn doorgevoerd.\n"
 "Weet u zeker dat u synaptic wilt afsluiten?"
 
-#: gtk/rgrepositorywin.cc:95
+#: gtk/rgrepositorywin.cc:97
 msgid "Setup Repositories"
 msgstr "Pakkettenbronnen instellen"
 
-#: gtk/rgrepositorywin.cc:120
+#: gtk/rgrepositorywin.cc:122
 #, fuzzy
 msgid "Enabled"
 msgstr "Uitgeschakeld"
 
-#: gtk/rgrepositorywin.cc:130
+#: gtk/rgrepositorywin.cc:132
 msgid "Type"
 msgstr "Type"
 
-#: gtk/rgrepositorywin.cc:139
+#: gtk/rgrepositorywin.cc:141
 msgid "Vendor"
 msgstr "Verkoper"
 
-#: gtk/rgrepositorywin.cc:148 gtk/window_repositories.glade.strings:14
+#: gtk/rgrepositorywin.cc:150 gtk/window_repositories.glade.strings:14
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgrepositorywin.cc:157 gtk/window_repositories.glade.strings:15
+#: gtk/rgrepositorywin.cc:159 gtk/window_repositories.glade.strings:15
 msgid "Distribution"
 msgstr "Distributie"
 
-#: gtk/rgrepositorywin.cc:166 gtk/window_repositories.glade.strings:16
+#: gtk/rgrepositorywin.cc:168 gtk/window_repositories.glade.strings:16
 msgid "Section(s)"
 msgstr "Onderdelen"
 
-#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:340
+#: gtk/rgrepositorywin.cc:243 gtk/rgrepositorywin.cc:351
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr "(geen verkoper)"
 
-#: gtk/rgrepositorywin.cc:295
+#: gtk/rgrepositorywin.cc:306
 msgid "Cannot read vendors.list file"
 msgstr "Kan vendors.list bestand niet inlezen"
 
-#: gtk/rgrepositorywin.cc:452
+#: gtk/rgrepositorywin.cc:465
 msgid "Unknown source type"
 msgstr "Obekend brontype"
 
@@ -2391,6 +2392,13 @@ msgstr ""
 #, fuzzy
 msgid "Vendors"
 msgstr "Verkoper"
+
+#~ msgid ""
+#~ "\n"
+#~ "in drive "
+#~ msgstr ""
+#~ "\n"
+#~ "in het station "
 
 #~ msgid "Find Package"
 #~ msgstr "Pakket zoeken"

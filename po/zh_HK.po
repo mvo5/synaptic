@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-18 23:23+0200\n"
+"POT-Creation-Date: 2003-09-22 16:20+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -224,19 +224,24 @@ msgid "Unable to read %s"
 msgstr "無法讀取目錄 %s"
 
 #: common/rconfiguration.cc:82 common/rconfiguration.cc:176
+#, fuzzy, c-format
+msgid "ERROR: couldn't open %s for writing"
+msgstr "不能開啟 %s 進行寫入"
+
+#: common/rconfiguration.cc:107
+#, fuzzy
+msgid "ERROR: Could not get password entry for superuser"
+msgstr "無法取得超級使用者的密碼輸入"
+
+#: common/rconfiguration.cc:115
+#, fuzzy, c-format
+msgid "ERROR: could not create configuration directory %s"
+msgstr "無法建立設定檔目錄 %s"
+
 #: common/rconfiguration.cc:201
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "不能開啟 %s 進行寫入"
-
-#: common/rconfiguration.cc:107
-msgid "Could not get password entry for superuser"
-msgstr "無法取得超級使用者的密碼輸入"
-
-#: common/rconfiguration.cc:115
-#, c-format
-msgid "could not create configuration directory %s"
-msgstr "無法建立設定檔目錄 %s"
 
 #: common/rpackage.cc:110
 #, fuzzy
@@ -498,7 +503,7 @@ msgid ""
 msgstr "一些索引檔案下載失敗。它們已被略過，或暫由較舊檔案代替。"
 
 #: common/rpackagelister.cc:1457 common/rpackagelister.cc:1461
-#: gtk/rgrepositorywin.cc:291
+#: gtk/rgrepositorywin.cc:302
 #, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "無法讀取 sources.list 套件庫來源清單檔"
@@ -635,47 +640,43 @@ msgid "URL"
 msgstr "下載網址"
 
 #: gtk/rgfetchprogress.cc:129
-msgid "Please insert the disk labeled:\n"
+#, fuzzy, c-format
+msgid ""
+"Please insert the disk labeled:\n"
+"%s\n"
+"in drive %s"
 msgstr "請把標籤為：\n"
 
-#: gtk/rgfetchprogress.cc:129
-msgid ""
-"\n"
-"in drive "
-msgstr ""
-"\n"
-"的光碟插入光碟機 "
-
-#: gtk/rgfetchprogress.cc:210
+#: gtk/rgfetchprogress.cc:211
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li 檔案    %4sB/s   尚餘 %6s\n"
 
-#: gtk/rgfetchprogress.cc:217
+#: gtk/rgfetchprogress.cc:218
 msgid "(stalled)\n"
 msgstr "(停頓)\n"
 
-#: gtk/rgfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:230
 msgid "[Working] "
 msgstr "[工作中]"
 
-#: gtk/rgfetchprogress.cc:234
+#: gtk/rgfetchprogress.cc:235
 msgid "[Receiving] "
 msgstr "[接收中]"
 
-#: gtk/rgfetchprogress.cc:303
+#: gtk/rgfetchprogress.cc:304
 msgid "Queued"
 msgstr "已佇列"
 
-#: gtk/rgfetchprogress.cc:306
+#: gtk/rgfetchprogress.cc:307
 msgid "Done"
 msgstr "已下載"
 
-#: gtk/rgfetchprogress.cc:309
+#: gtk/rgfetchprogress.cc:310
 msgid "Hit"
 msgstr "已有"
 
-#: gtk/rgfetchprogress.cc:312
+#: gtk/rgfetchprogress.cc:313
 msgid "Failed"
 msgstr "失敗"
 
@@ -1099,45 +1100,45 @@ msgid ""
 "you want to quit Synaptic?"
 msgstr "變更尚未儲存，您確定要離開 Synaptic 嗎?"
 
-#: gtk/rgrepositorywin.cc:95
+#: gtk/rgrepositorywin.cc:97
 msgid "Setup Repositories"
 msgstr "設定套件庫"
 
-#: gtk/rgrepositorywin.cc:120
+#: gtk/rgrepositorywin.cc:122
 #, fuzzy
 msgid "Enabled"
 msgstr "停用"
 
-#: gtk/rgrepositorywin.cc:130
+#: gtk/rgrepositorywin.cc:132
 msgid "Type"
 msgstr "種類"
 
-#: gtk/rgrepositorywin.cc:139
+#: gtk/rgrepositorywin.cc:141
 msgid "Vendor"
 msgstr "發行商"
 
-#: gtk/rgrepositorywin.cc:148 gtk/window_repositories.glade.strings:14
+#: gtk/rgrepositorywin.cc:150 gtk/window_repositories.glade.strings:14
 msgid "URI"
 msgstr "網址"
 
-#: gtk/rgrepositorywin.cc:157 gtk/window_repositories.glade.strings:15
+#: gtk/rgrepositorywin.cc:159 gtk/window_repositories.glade.strings:15
 msgid "Distribution"
 msgstr "發行版本"
 
-#: gtk/rgrepositorywin.cc:166 gtk/window_repositories.glade.strings:16
+#: gtk/rgrepositorywin.cc:168 gtk/window_repositories.glade.strings:16
 msgid "Section(s)"
 msgstr "組別"
 
-#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:340
+#: gtk/rgrepositorywin.cc:243 gtk/rgrepositorywin.cc:351
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr "(無特定包裝商)"
 
-#: gtk/rgrepositorywin.cc:295
+#: gtk/rgrepositorywin.cc:306
 msgid "Cannot read vendors.list file"
 msgstr "無法讀取 vendors.list 套件包裝商清單檔"
 
-#: gtk/rgrepositorywin.cc:452
+#: gtk/rgrepositorywin.cc:465
 msgid "Unknown source type"
 msgstr "套件來源種類不明"
 
@@ -2381,6 +2382,13 @@ msgstr ""
 #, fuzzy
 msgid "Vendors"
 msgstr "發行商"
+
+#~ msgid ""
+#~ "\n"
+#~ "in drive "
+#~ msgstr ""
+#~ "\n"
+#~ "的光碟插入光碟機 "
 
 #~ msgid "Find Package"
 #~ msgstr "尋找套件"

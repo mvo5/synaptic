@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.16\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-18 23:23+0200\n"
+"POT-Creation-Date: 2003-09-22 16:20+0200\n"
 "PO-Revision-Date: 2003-01-09 13:46+0300\n"
 "Last-Translator: Rail Aliev <rail@iqchoice.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -224,19 +224,24 @@ msgid "Unable to read %s"
 msgstr "Ýndirme dizininin kilitlenmesi olanaksýz %s"
 
 #: common/rconfiguration.cc:82 common/rconfiguration.cc:176
+#, fuzzy, c-format
+msgid "ERROR: couldn't open %s for writing"
+msgstr "%s yazýlamýyor"
+
+#: common/rconfiguration.cc:107
+#, fuzzy
+msgid "ERROR: Could not get password entry for superuser"
+msgstr "Root için geçerli olan parola alýnamadý "
+
+#: common/rconfiguration.cc:115
+#, fuzzy, c-format
+msgid "ERROR: could not create configuration directory %s"
+msgstr "ayarlar dizini %s oluþturulamadý"
+
 #: common/rconfiguration.cc:201
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "%s yazýlamýyor"
-
-#: common/rconfiguration.cc:107
-msgid "Could not get password entry for superuser"
-msgstr "Root için geçerli olan parola alýnamadý "
-
-#: common/rconfiguration.cc:115
-#, c-format
-msgid "could not create configuration directory %s"
-msgstr "ayarlar dizini %s oluþturulamadý"
 
 #: common/rpackage.cc:110
 #, fuzzy
@@ -502,7 +507,7 @@ msgstr ""
 "gelindi veya onu yerine eski bir sürümü kullanýldý."
 
 #: common/rpackagelister.cc:1457 common/rpackagelister.cc:1461
-#: gtk/rgrepositorywin.cc:291
+#: gtk/rgrepositorywin.cc:302
 #, fuzzy
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "sources.list dosyasý okunamýyor"
@@ -639,47 +644,43 @@ msgid "URL"
 msgstr "URL"
 
 #: gtk/rgfetchprogress.cc:129
-msgid "Please insert the disk labeled:\n"
+#, fuzzy, c-format
+msgid ""
+"Please insert the disk labeled:\n"
+"%s\n"
+"in drive %s"
 msgstr "Etiketlenen diski takýn:\n"
 
-#: gtk/rgfetchprogress.cc:129
-msgid ""
-"\n"
-"in drive "
-msgstr ""
-"\n"
-"sürücüde:"
-
-#: gtk/rgfetchprogress.cc:210
+#: gtk/rgfetchprogress.cc:211
 #, c-format
 msgid "%-3li/%-3li files    %4sB/s   ETA %6s\n"
 msgstr "%-3li/%-3li dosya    %4sB/s   ETA %6s\n"
 
-#: gtk/rgfetchprogress.cc:217
+#: gtk/rgfetchprogress.cc:218
 msgid "(stalled)\n"
 msgstr "(duraksadý)\n"
 
-#: gtk/rgfetchprogress.cc:229
+#: gtk/rgfetchprogress.cc:230
 msgid "[Working] "
 msgstr "[Ýþleniyor] "
 
-#: gtk/rgfetchprogress.cc:234
+#: gtk/rgfetchprogress.cc:235
 msgid "[Receiving] "
 msgstr "[Alýnyor] "
 
-#: gtk/rgfetchprogress.cc:303
+#: gtk/rgfetchprogress.cc:304
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: gtk/rgfetchprogress.cc:306
+#: gtk/rgfetchprogress.cc:307
 msgid "Done"
 msgstr "Tamamlandý"
 
-#: gtk/rgfetchprogress.cc:309
+#: gtk/rgfetchprogress.cc:310
 msgid "Hit"
 msgstr "Baþarýlý"
 
-#: gtk/rgfetchprogress.cc:312
+#: gtk/rgfetchprogress.cc:313
 msgid "Failed"
 msgstr "Baþarýsýz"
 
@@ -1108,45 +1109,45 @@ msgstr ""
 "Kaydilmemiþ iþlemler mevcut\n"
 "Sinaptic'i terketmek ister misiniz?"
 
-#: gtk/rgrepositorywin.cc:95
+#: gtk/rgrepositorywin.cc:97
 msgid "Setup Repositories"
 msgstr "Depolarý ayarla"
 
-#: gtk/rgrepositorywin.cc:120
+#: gtk/rgrepositorywin.cc:122
 #, fuzzy
 msgid "Enabled"
 msgstr "Etkisiz"
 
-#: gtk/rgrepositorywin.cc:130
+#: gtk/rgrepositorywin.cc:132
 msgid "Type"
 msgstr "Tip"
 
-#: gtk/rgrepositorywin.cc:139
+#: gtk/rgrepositorywin.cc:141
 msgid "Vendor"
 msgstr "Saðlayýcý"
 
-#: gtk/rgrepositorywin.cc:148 gtk/window_repositories.glade.strings:14
+#: gtk/rgrepositorywin.cc:150 gtk/window_repositories.glade.strings:14
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgrepositorywin.cc:157 gtk/window_repositories.glade.strings:15
+#: gtk/rgrepositorywin.cc:159 gtk/window_repositories.glade.strings:15
 msgid "Distribution"
 msgstr "Daðýtým"
 
-#: gtk/rgrepositorywin.cc:166 gtk/window_repositories.glade.strings:16
+#: gtk/rgrepositorywin.cc:168 gtk/window_repositories.glade.strings:16
 msgid "Section(s)"
 msgstr "Bölüm(ler)"
 
-#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:340
+#: gtk/rgrepositorywin.cc:243 gtk/rgrepositorywin.cc:351
 #: gtk/window_repositories.glade.strings:12
 msgid "(no vendor)"
 msgstr "(imzasýz)"
 
-#: gtk/rgrepositorywin.cc:295
+#: gtk/rgrepositorywin.cc:306
 msgid "Cannot read vendors.list file"
 msgstr "vendors.list dosyasý okunamýyor"
 
-#: gtk/rgrepositorywin.cc:452
+#: gtk/rgrepositorywin.cc:465
 msgid "Unknown source type"
 msgstr "Geçersiz kaynak tipi"
 
@@ -2395,6 +2396,13 @@ msgstr "rpm-src"
 #, fuzzy
 msgid "Vendors"
 msgstr "Saðlayýcý"
+
+#~ msgid ""
+#~ "\n"
+#~ "in drive "
+#~ msgstr ""
+#~ "\n"
+#~ "sürücüde:"
 
 #~ msgid "Find Package"
 #~ msgstr "Paket bul"

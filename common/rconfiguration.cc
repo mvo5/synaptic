@@ -79,7 +79,7 @@ bool RWriteConfigFile(Configuration &Conf)
 
     ofstream cfile(ConfigFilePath.c_str(), ios::out);
     if (!cfile != 0)
-	return _error->Errno("ofstream", _("couldn't open %s for writing"),
+	return _error->Errno("ofstream", _("ERROR: couldn't open %s for writing"),
 			     ConfigFilePath.c_str());
     
     Synaptic = Conf.Tree(0);
@@ -104,7 +104,7 @@ static bool checkConfigDir(string &path)
      pwd = getpwuid(0);
      if (!pwd) {
        return _error->Errno("getpwuid", 
-			    _("Could not get password entry for superuser"));
+			    _("ERROR: Could not get password entry for superuser"));
      }
      path = string(pwd->pw_dir)+"/.synaptic";
      //path = "/etc/synaptic";
@@ -112,7 +112,7 @@ static bool checkConfigDir(string &path)
      if (stat(path.c_str(), &stbuf) < 0) {
        if (mkdir(path.c_str(), 0700) < 0) {
 	 return _error->Errno("mkdir", 
-			      _("could not create configuration directory %s"),
+			      _("ERROR: could not create configuration directory %s"),
 			      path.c_str());
        }
      }
@@ -173,7 +173,7 @@ bool RPackageOptionsFile(ofstream &out)
     string path = ConfigFileDir+"/options";
     out.open(path.c_str());
     if (!out != 0)
-	return _error->Errno("ofstream", _("couldn't open %s for writing"),
+	return _error->Errno("ofstream", _("ERROR: couldn't open %s for writing"),
 			     path.c_str());
     return true;
 }
@@ -184,7 +184,7 @@ bool RPackageOptionsFile(ifstream &in)
     in.open(path.c_str());
     if (!in != 0)
       return false;
-// 	return _error->Errno("ifstream", _("couldn't open %s for reading"),
+// 	return _error->Errno("ifstream", _("ERROR: couldn't open %s for reading"),
 // 			     path.c_str());
     return true;
 }

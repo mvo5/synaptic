@@ -45,6 +45,7 @@ using namespace std;
 #endif
 
 #include "rggladewindow.h"
+#include "rgiconlegend.h"
 #include "gtkpkgtree.h"
 #include "gtkpkglist.h"
 #include "gtktagtree.h"
@@ -189,6 +190,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    RGFindWindow *_findWin;
    RGSetOptWindow *_setOptWin;
    RGAboutPanel *_aboutPanel;
+   RGIconLegendPanel *_iconLegendPanel;
    
    RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
@@ -307,6 +309,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // help menu
    static void helpAction(GtkWidget *self, void *data); 
+   static void showIconLegendPanel(GtkWidget *self, void *data); 
    static void showAboutPanel(GtkWidget *self, void *data); 
 
    // end menu

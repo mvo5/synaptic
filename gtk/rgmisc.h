@@ -88,10 +88,13 @@ class RPackageStatus {
     // this is what the package listers use
     GdkColor* getBgColor(RPackage *pkg);
     GdkPixbuf* getPixbuf(RPackage *pkg);
+    GdkPixbuf* getPixbuf(int i) {
+	return StatusPixbuf[i];
+    }
 
     // here we get the description for the States
     const char *getLongStatusString(int i) { 
-	return PackageStatusShortString[i]; 
+	return PackageStatusLongString[i]; 
     };
     const char *getLongStatusString(RPackage *pkg) { 
 	return PackageStatusLongString[getStatus(pkg)]; 

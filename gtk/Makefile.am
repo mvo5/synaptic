@@ -62,6 +62,8 @@ synaptic_SOURCES= \
 	rgfiltermanager.h\
 	rgfindwindow.cc\
 	rgfindwindow.h\
+	rgiconlegend.h\
+	rgiconlegend.cc\
 	rgmisc.cc\
 	rgmisc.h\
 	rgsetoptwindow.cc\

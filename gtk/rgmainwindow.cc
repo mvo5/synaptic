@@ -272,6 +272,16 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
     win->_aboutPanel->show();
 }
 
+void RGMainWindow::showIconLegendPanel(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)data;
+    
+    if (me->_iconLegendPanel == NULL)
+	me->_iconLegendPanel = new RGIconLegendPanel(me);
+    me->_iconLegendPanel->show();
+}
+
+
 void RGMainWindow::helpAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -2416,6 +2426,11 @@ void RGMainWindow::buildInterface()
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_about_activate",
 				  G_CALLBACK(showAboutPanel),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_icon_legend_activate",
+				  G_CALLBACK(showIconLegendPanel),
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,

@@ -28,6 +28,7 @@
 #include "gsynaptic.h"
 
 #include "rgdebinstallprogress.h"
+#include "rguserdialog.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
@@ -68,6 +69,75 @@ char *RGDebInstallProgress::reinstall_stages[NR_REINSTALL_STAGES] = {
    "unpacked",
    "half-configured",
    "installed" };
+
+void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
+{
+   string primary, secondary;
+   gchar *m,*s,*p;
+   GtkWidget *w;
+   RGGladeUserDialog dia(this, "conffile");
+   GladeXML *xml = dia.getGladeXML();
+
+   p = g_strdup_printf(_("Install new configuration file '%s'?"),conffile);
+   s = g_strdup_printf(_("The configuration file %s was modified (by "
+			 "you or by a script). A updated version is shipped "
+			 "in this package. If you want to keep your current "
+			 "version say 'No'. Do you want to install the "
+			 "package maintainers version? "),conffile);
+
+   // setup dialog
+   w = glade_xml_get_widget(xml, "label_message");
+   m = g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s </span> "
+		       "\n\n%s", p, s);
+   gtk_label_set_markup(GTK_LABEL(w), m);
+   g_free(p);
+   g_free(s);
+   g_free(m);
+
+   // diff stuff
+   bool quot=false;
+   int i=0;
+   string orig_file, new_file;
+
+   // FIXME: add some sanity checks here
+
+   // go to first ' and read until the end
+   for(;status[i] != '\'';i++) /*nothing*/;
+   i++;
+   for(;status[i] != '\'';i++) 
+      orig_file.append(1,status[i]);
+   i++;
+
+   // same for second ' and read until the end
+   for(;status[i] != '\'';i++) /*nothing*/;
+   i++;
+   for(;status[i] != '\'';i++) 
+      new_file.append(1,status[i]);
+   i++;
+   //cout << "got:" << orig_file << new_file << endl;
+
+   // read diff
+   string diff;
+   char buf[512];
+   char *cmd = g_strdup_printf("diff -u %s %s", orig_file.c_str(), new_file.c_str());
+   FILE *f = popen(cmd,"r");
+   while(fgets(buf,512,f) != NULL) {
+      diff += utf8(buf);
+   }
+   pclose(f);
+   g_free(cmd);
+
+   // set into buffer
+   GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(glade_xml_get_widget(xml,"textview_diff")));
+   gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
+
+   int res = dia.run(NULL,true);
+   if(res ==  GTK_RESPONSE_YES)
+      write(_child_control,"y\n",2);
+   else
+      write(_child_control,"n\n",2);
+
+}
 
 void RGDebInstallProgress::startUpdate()
 {
@@ -157,22 +227,7 @@ void RGDebInstallProgress::updateInterface()
 	 } else if(strstr(status, "conffile-prompt") != NULL) {
 	    // conffile-request
 	    //cout << split[2] << " " << split[3] << endl;
-	    GtkWidget *dialog = gtk_message_dialog_new (GTK_WINDOW(window()),
-							GTK_DIALOG_DESTROY_WITH_PARENT,
-							GTK_MESSAGE_QUESTION,
-							GTK_BUTTONS_YES_NO,
-							"Conffile changed '%s'\n"
-							"Install new?",
-							split[1]);
-	    int res = gtk_dialog_run (GTK_DIALOG (dialog));
-	    gtk_widget_destroy (dialog);
-	    
-	    // get a lot of broken pipes here?!?
-	    if(res ==  GTK_RESPONSE_YES)
-	       write(_child_control,"y\n",2);
-	    else
-	       write(_child_control,"n\n",2);
-	    
+	    conffile(pkg, split[3]);
 	 } else {
 
 	    // then go on with the package stuff

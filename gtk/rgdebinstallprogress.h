@@ -31,6 +31,7 @@
 
 class RGMainWindow;
 
+
 class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow 
 {
    // the various stages of dpkg
@@ -81,6 +82,8 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    virtual void finishUpdate();
 
    virtual void prepare(RPackageLister *lister);
+   
+   void conffile(gchar *conffile, gchar *status);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);

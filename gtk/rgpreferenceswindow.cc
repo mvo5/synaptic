@@ -894,24 +894,24 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    GtkTooltips *tips = gtk_tooltips_new();
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
 			glade_xml_get_widget(_gladeXML,"radiobutton_distro"),
-		       "Prefer package versions from the selected "
+		       _("Prefer package versions from the selected "
 		       "distribution when upgrading packages. If you "
 		       "manually force a verison from a different "
 		       "distribution, the package version will follow "
 		       "that distribution until it enters the default "
-		       "distribution.","");
+		       "distribution."),"");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
 			glade_xml_get_widget(_gladeXML,"radiobutton_now"),
-		       "Never upgrade to a new version automatically. "
-			"Be _very_ carefull with this option as you will "
-			"not get security updates automatically! "
+		       _("Never upgrade to a new version automatically. "
+			    "Be _very_ carefull with this option as you will "
+			    "not get security updates automatically! "
 		       "If you manually force a verison "
 		       "the package version will follow "
-		       "the choosen distribution.","");
+		       "the choosen distribution."),"");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
 			glade_xml_get_widget(_gladeXML,"radiobutton_ignore"),
-			"Let synaptic pick the best version for you. "
-			"If unsure use this option. ","");
+			_("Let synaptic pick the best version for you. "
+			"If unsure use this option. "),"");
 
 
    // hide the "remove with configuration" from rpm users

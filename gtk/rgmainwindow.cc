@@ -1983,7 +1983,7 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
-   me->setStatusText(_("Starting help system..."));
+   me->setStatusText(_("Starting help viewer..."));
 
    if (is_binary_in_path("yelp"))
       system("yelp ghelp:synaptic &");
@@ -1992,10 +1992,10 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
    else if (is_binary_in_path("konqueror"))
       system("konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
    else
-      me->_userDialog->error(_("No help viewer is installed\n\n"
-                               "You need either the gnome viewer 'yelp', "
-                               "'konquoror' or the 'mozilla' browser to "
-                               "view the synaptic manual.\n\n"
+      me->_userDialog->error(_("No help viewer is installed!\n\n"
+                               "You need either the GNOME help viewer 'yelp', "
+                               "the 'konqueror' browser or the 'mozilla' "
+                               "browser to view the synaptic manual.\n\n"
                                "Alternativly you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
@@ -2136,13 +2136,13 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    RPackage *pkg = NULL;
    pkg = me->_lister->getPackage("libgnome2-perl");
    if (pkg && pkg->installedVersion() == NULL) {
-      me->_userDialog->error(_("No libgnome2-perl installed\n\n"
-                               "You have to install libgnome2-perl to "
-                               "use dpkg-reconfigure with synaptic"));
+      me->_userDialog->error(_("Cannot start configuration tool!\n"
+                               "You have to install the required package "
+			       	'libgnome2-perl'."));
       return;
    }
 
-   me->setStatusText(_("Starting dpkg-reconfigure..."));
+   me->setStatusText(_("Starting package configuration tool..."));
    cmd = g_strdup_printf("/usr/sbin/dpkg-reconfigure -f%s %s &",
                          frontend, me->selectedPackage()->name());
    system(cmd);
@@ -2154,7 +2154,7 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) data;
 
    //cout << "RGMainWindow::pkgHelpClicked()" << endl;
-   me->setStatusText(_("Starting package help..."));
+   me->setStatusText(_("Starting package documentation viewer..."));
 
    system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
 }
@@ -2193,8 +2193,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // check whether we can really do it
    if (!me->_lister->check()) {
-      me->_userDialog->error(_("Operation not possible with broken packages.\n"
-                               "Please fix them first."));
+             _("Could not apply changes!\n"
+             "There are broken packages.\n"
+             "Fix broken packages at first."));
       return;
    }
 
@@ -2212,7 +2213,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(TRUE);
    me->updatePackageInfo(NULL);
 
-   me->setStatusText(_("Performing selected changes... this may take a while"));
+   me->setStatusText(_("Applying marked changes. This may take a while..."));
 
    // fetch packages
    RGFetchProgress *fprogress = new RGFetchProgress(me);
@@ -2334,7 +2335,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    RGFetchProgress *progress = new RGFetchProgress(me);
    progress->setTitle(_("Retrieving Index Files..."));
 
-   me->setStatusText(_("Updating Package Lists from Servers..."));
+   me->setStatusText(_("Refreshing package list..."));
 
    me->setInterfaceLocked(TRUE);
    me->setTreeLocked(TRUE);
@@ -2391,9 +2392,9 @@ void RGMainWindow::cbFixBrokenClicked(GtkWidget *self, void *data)
    me->refreshTable(pkg);
 
    if (!res)
-      me->setStatusText(_("Dependency problem resolver failed."));
+      me->setStatusText(_("Failed to resolve dependency problems!"));
    else
-      me->setStatusText(_("Dependency problems successfully fixed."));
+      me->setStatusText(_("Successfully fixed dependency problems"));
 
    me->setInterfaceLocked(FALSE);
    me->showErrors();
@@ -2407,8 +2408,10 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    bool res, dist_upgrade;
 
    if (!me->_lister->check()) {
-      me->_userDialog->error(_("Automatic upgrade selection not possible\n"
-                               "with broken packages. Please fix them first."));
+      me->_userDialog->error(
+	                      _("Could not upgrade the system!\n
+	                        "There are broken packages. "
+				"Fix broken packages at first."));
       return;
    }
    // check if we have saved upgrade type
@@ -2435,7 +2438,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(TRUE);
    me->
       setStatusText(_
-                    ("Performing automatic selection of upgradadable packages..."));
+                    ("Marking all available upgrades..."));
 
    me->_lister->saveUndoState();
 
@@ -2449,9 +2452,9 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    if (res)
       me->
          setStatusText(_
-                       ("Automatic selection of upgradadable packages done."));
+                       ("Successfully marked all available upgrades"));
    else
-      me->setStatusText(_("Automatic upgrade selection failed."));
+      me->setStatusText(_("Failed to mark all available upgrades!"));
 
    me->setInterfaceLocked(FALSE);
    me->showErrors();

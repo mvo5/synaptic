@@ -391,6 +391,9 @@ int main(int argc, char **argv)
       userDialog.showErrors();
       exit(1);
    }
+   
+   bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
+   bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
    // check if there is another application runing and
    // act accordingly
@@ -426,6 +429,7 @@ int main(int argc, char **argv)
    }
    g_io_add_watch (sigterm_iochn, G_IO_IN, sigterm_iochn_data, mainWindow);
    signal (SIGUSR1, handle_sigusr1);
+   // -------------------------------------------------------------
 
    // read which default distro to use
    string s = _config->Find("Synaptic::DefaultDistro", "");
@@ -451,8 +455,12 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(true);
 
-   if (!packageLister->openCache(false))
+   //no need to open a cache that will invalid after the update
+   if(!UpdateMode) {
+      packageLister->openCache(false);
+      mainWindow->restoreState();
       mainWindow->showErrors();
+   }
 
    if (_config->FindB("Volatile::startInRepositories", false)) {
       mainWindow->cbShowSourcesWindow(NULL, mainWindow);
@@ -465,15 +473,20 @@ int main(int argc, char **argv)
    }
 
    mainWindow->setInterfaceLocked(false);
-   mainWindow->restoreState();
-   mainWindow->showErrors();
 
-   
    string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
    if(!cd_mount_point.empty()) {
       _config->Set("Acquire::cdrom::mount",cd_mount_point);
       _config->Set("APT::CDROM::NoMount", true);
       mainWindow->cbAddCDROM(NULL, mainWindow);
+   }
+
+   if(UpdateMode) {
+      mainWindow->cbUpdateClicked(NULL, mainWindow);
+      packageLister->openCache(false);
+      mainWindow->restoreState();
+      mainWindow->showErrors();
+      mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
    }
 
    if(_config->FindB("Volatile::Upgrade-Mode",false) 
@@ -482,16 +495,11 @@ int main(int argc, char **argv)
       mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
    }
 
-   if(_config->FindB("Volatile::Update-Mode",false)) {
-      mainWindow->cbUpdateClicked(NULL, mainWindow);
-      mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
-   }
-
    if(_config->FindB("Volatile::TaskWindow",false)) {
       mainWindow->cbTasksClicked(NULL, mainWindow);
    }
 
-   if (_config->FindB("Volatile::Non-Interactive", false)) {
+   if (NonInteractive) {
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       welcome_dialog(mainWindow);

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 13:42+0200\n"
+"POT-Creation-Date: 2003-10-19 21:28+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -585,11 +585,24 @@ msgstr ""
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
-#: gtk/gsynaptic.cc:168
+#: gtk/gsynaptic.cc:171
+msgid ""
+"Your locale settings are not supported by Xlib\n"
+"\n"
+"Please use locale settings like \"fr_FR\" or \"fr_FR@euro\" and do not use "
+"settings like \"fr_FR.iso8859-15@euro\". \n"
+"\n"
+"Because of this your locales are reseted.\n"
+"\n"
+"If you feel this is wrong, send a mail to:\n"
+"<synaptic-devel@nongnu.org> with the output of the \"locale\" command."
+msgstr ""
+
+#: gtk/gsynaptic.cc:187
 msgid "You must run this program as the root user."
 msgstr "您必須以 root 使用者身份執行此程式。"
 
-#: gtk/gsynaptic.cc:204
+#: gtk/gsynaptic.cc:223
 #, fuzzy
 msgid "Synaptic Package Manager "
 msgstr "套件變更"
@@ -646,7 +659,7 @@ msgid "To be kept"
 msgstr "將會維持原狀不升級的套件"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3546
+#: gtk/rgmainwindow.cc:3548
 msgid "An error occurred while saving configurations."
 msgstr "儲存設定時發生錯誤。"
 
@@ -1107,11 +1120,11 @@ msgstr ""
 msgid "Execute the selected changes"
 msgstr "不包括已選的組別"
 
-#: gtk/rgmainwindow.cc:3269
+#: gtk/rgmainwindow.cc:3271
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:3297
+#: gtk/rgmainwindow.cc:3299
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1119,7 +1132,7 @@ msgstr ""
 "移除這個套件或會導致您的系統完全失效。\n"
 "您確定要那樣做嗎?"
 
-#: gtk/rgmainwindow.cc:3456
+#: gtk/rgmainwindow.cc:3458
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1128,7 +1141,7 @@ msgstr ""
 "清單共有 %1$i 個套件，已安裝 %2$i 個，壞的有 %3$i 個。將安裝/升級 %4$i 個套"
 "件，移除 %5$i 個套件；將%7$s %6$sB 磁碟空間。"
 
-#: gtk/rgmainwindow.cc:3460
+#: gtk/rgmainwindow.cc:3462
 #, fuzzy, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1137,14 +1150,14 @@ msgstr ""
 "清單共有 %1$i 個套件，已安裝 %2$i 個，壞的有 %3$i 個。將安裝/升級 %4$i 個套"
 "件，移除 %5$i 個套件；將%7$s %6$sB 磁碟空間。"
 
-#: gtk/rgmainwindow.cc:3489 gtk/window_main_hpaned.glade.strings:29
+#: gtk/rgmainwindow.cc:3491 gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:66
 msgid "All Packages"
 msgstr "全部套件"
 
-#: gtk/rgmainwindow.cc:3571
+#: gtk/rgmainwindow.cc:3573
 msgid ""
 "The debtags database is not installed\n"
 "\n"

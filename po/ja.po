@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 13:42+0200\n"
+"POT-Creation-Date: 2003-10-19 21:28+0200\n"
 "PO-Revision-Date: 2003-10-19 07:19+0900\n"
 "Last-Translator: Daisuke SUZUKI <daisuke@linux.or.jp>\n"
 "Language-Team: Japanese <Vine@vinelinux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
 #, c-format
@@ -576,11 +576,24 @@ msgstr "-i=? スタート時に与えられた番号の初期フィルタを使�
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? 任意の設定オプションを指定します。(例: -o dir::cache=/tmp)\n"
 
-#: gtk/gsynaptic.cc:168
+#: gtk/gsynaptic.cc:171
+msgid ""
+"Your locale settings are not supported by Xlib\n"
+"\n"
+"Please use locale settings like \"fr_FR\" or \"fr_FR@euro\" and do not use "
+"settings like \"fr_FR.iso8859-15@euro\". \n"
+"\n"
+"Because of this your locales are reseted.\n"
+"\n"
+"If you feel this is wrong, send a mail to:\n"
+"<synaptic-devel@nongnu.org> with the output of the \"locale\" command."
+msgstr ""
+
+#: gtk/gsynaptic.cc:187
 msgid "You must run this program as the root user."
 msgstr "root ユーザでこのプログラムを実行してください。"
 
-#: gtk/gsynaptic.cc:204
+#: gtk/gsynaptic.cc:223
 msgid "Synaptic Package Manager "
 msgstr "Synaptic パッケージマネージャ"
 
@@ -632,7 +645,7 @@ msgid "To be kept"
 msgstr "保留されるパッケージ"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3546
+#: gtk/rgmainwindow.cc:3548
 msgid "An error occurred while saving configurations."
 msgstr "設定を保存中にエラーが発生しました。"
 
@@ -1090,11 +1103,11 @@ msgstr ""
 msgid "Execute the selected changes"
 msgstr "選択された変更を適用する"
 
-#: gtk/rgmainwindow.cc:3269
+#: gtk/rgmainwindow.cc:3271
 msgid "Do you want to add another CD-ROM?"
 msgstr "ほかのCD-ROMを追加しますか?"
 
-#: gtk/rgmainwindow.cc:3297
+#: gtk/rgmainwindow.cc:3299
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1102,7 +1115,7 @@ msgstr ""
 "このパッケージを削除するとシステムが動作不能になる可能性があります\n"
 "本当にこれを実行してもよろしいですか?"
 
-#: gtk/rgmainwindow.cc:3456
+#: gtk/rgmainwindow.cc:3458
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1111,7 +1124,7 @@ msgstr ""
 "全 %i パッケージ (インストール済: %i 個, 破損 %i 個, インストールまたはアップ"
 "グレード指定: %i 個, 削除指定: %i) ; %sB が開放されます"
 
-#: gtk/rgmainwindow.cc:3460
+#: gtk/rgmainwindow.cc:3462
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1120,14 +1133,14 @@ msgstr ""
 "全 %i パッケージ (インストール済: %i 個, 破損 %i 個, インストールまたはアップ"
 "グレード指定: %i 個, 削除指定: %i) ; %sB が消費されます"
 
-#: gtk/rgmainwindow.cc:3489 gtk/window_main_hpaned.glade.strings:29
+#: gtk/rgmainwindow.cc:3491 gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:66
 msgid "All Packages"
 msgstr "全てのパッケージ"
 
-#: gtk/rgmainwindow.cc:3571
+#: gtk/rgmainwindow.cc:3573
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1896,8 +1909,9 @@ msgstr "<b>インストール可能バージョン</b>"
 msgid ""
 "<b>Note:</b> This allows you to override the version selected by the package "
 "manager. Use with care."
-msgstr "<b>注意</b> パッケージマネージャで選択されたバージョンを上書きします。"
-"よく注意して仕様してください。"
+msgstr ""
+"<b>注意</b> パッケージマネージャで選択されたバージョンを上書きします。よく注"
+"意して仕様してください。"
 
 #: gtk/window_main_hpaned.glade.strings:92
 #: gtk/window_main_vpaned.glade.strings:108

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-17 00:23+0200\n"
+"POT-Creation-Date: 2003-10-19 21:28+0200\n"
 "PO-Revision-Date: 2003-10-18 15:52+0200\n"
 "Last-Translator: Emil Nowak <emil5@go2.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -373,8 +373,8 @@ msgstr ""
 #: common/rpackagefilter.cc:759
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
 msgstr ""
-"nazwa filtru jest dłuższa niż 55 znaków!? - zostanie ucięta. proszę, "
-"to zgłośić do autora programu"
+"nazwa filtru jest dłuższa niż 55 znaków!? - zostanie ucięta. proszę, to "
+"zgłośić do autora programu"
 
 #: common/rpackagelister.cc:215
 msgid "Search Filter"
@@ -475,8 +475,8 @@ msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
-"Pliki wydań z niektórych repozytoriów nie mogły być pobrane lub zweryfikowane. "
-"Repozytoria te zostały pominięte"
+"Pliki wydań z niektórych repozytoriów nie mogły być pobrane lub "
+"zweryfikowane. Repozytoria te zostały pominięte"
 
 #: common/rpackagelister.cc:1452
 msgid ""
@@ -543,11 +543,11 @@ msgstr ""
 #.
 #: gtk/dialog_quit.glade.strings:7
 msgid ""
-"<span weight=\"bold\" size=\"large\">Quit and ignore outstanding "
-"changes?</span>"
+"<span weight=\"bold\" size=\"large\">Quit and ignore outstanding changes?</"
+"span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Zkończyć z pominięciem ważnych "
-"zmian?</span>"
+"<span weight=\"bold\" size=\"larger\">Zkończyć z pominięciem ważnych zmian?</"
+"span>"
 
 #: gtk/dialog_quit.glade.strings:8
 msgid ""
@@ -582,11 +582,24 @@ msgstr "-i=? Uruchomienie wraz z filtrem inicjującym o określonym numerze\n"
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Ustawia określoną opcję konfiguracji, np. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:168
+#: gtk/gsynaptic.cc:171
+msgid ""
+"Your locale settings are not supported by Xlib\n"
+"\n"
+"Please use locale settings like \"fr_FR\" or \"fr_FR@euro\" and do not use "
+"settings like \"fr_FR.iso8859-15@euro\". \n"
+"\n"
+"Because of this your locales are reseted.\n"
+"\n"
+"If you feel this is wrong, send a mail to:\n"
+"<synaptic-devel@nongnu.org> with the output of the \"locale\" command."
+msgstr ""
+
+#: gtk/gsynaptic.cc:187
 msgid "You must run this program as the root user."
 msgstr "Ten program musi być uruchomiony przez użytkownika root."
 
-#: gtk/gsynaptic.cc:204
+#: gtk/gsynaptic.cc:223
 msgid "Synaptic Package Manager "
 msgstr "Synaptic Menedżer Pakietów"
 
@@ -638,7 +651,7 @@ msgid "To be kept"
 msgstr "Do wstrzymania"
 
 #: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:72
-#: gtk/rgmainwindow.cc:3546
+#: gtk/rgmainwindow.cc:3548
 msgid "An error occurred while saving configurations."
 msgstr "Nastąpił błąd podczas zapisywania konfiguracji."
 
@@ -1004,7 +1017,8 @@ msgstr "nie zainstalowane"
 msgid "_Downgrade"
 msgstr "_Cofnięcie wersji"
 
-#: gtk/rgmainwindow.cc:1484 gtk/window_main_vpaned.glade.strings:73
+#: gtk/rgmainwindow.cc:1484 gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_vpaned.glade.strings:73
 msgid "_Install Latest Version"
 msgstr "Zainstaluj _najnowszą wersję"
 
@@ -1100,11 +1114,11 @@ msgstr ""
 msgid "Execute the selected changes"
 msgstr "Wykonuje wybrane zmiany"
 
-#: gtk/rgmainwindow.cc:3269
+#: gtk/rgmainwindow.cc:3271
 msgid "Do you want to add another CD-ROM?"
 msgstr "Czy chcesz dodać kolejny CD-ROM?"
 
-#: gtk/rgmainwindow.cc:3297
+#: gtk/rgmainwindow.cc:3299
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1112,33 +1126,32 @@ msgstr ""
 "Usunięcie tego pakietu może spowodować, że system stanie się bezużyteczny.\n"
 "Czy na pewno chcesz to uczynić?"
 
-#: gtk/rgmainwindow.cc:3456
+#: gtk/rgmainwindow.cc:3458
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %sB will be freed"
 msgstr ""
-"%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do "
-"zainstalowania/aktualizacji, %i do usunięcia; %sB zostanie zwolnionych"
+"%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
+"aktualizacji, %i do usunięcia; %sB zostanie zwolnionych"
 
-#: gtk/rgmainwindow.cc:3460
+#: gtk/rgmainwindow.cc:3462
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %sB will be used"
 msgstr ""
-"%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do "
-"zainstalowania/aktualizacji, %i do usunięcia; zostanie dodatkowo użyte %sB "
-"miejsca na dysku."
+"%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
+"aktualizacji, %i do usunięcia; zostanie dodatkowo użyte %sB miejsca na dysku."
 
-#: gtk/rgmainwindow.cc:3489 gtk/window_main_hpaned.glade.strings:29
+#: gtk/rgmainwindow.cc:3491 gtk/window_main_hpaned.glade.strings:29
 #: gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:29
 #: gtk/window_main_vpaned.glade.strings:66
 msgid "All Packages"
 msgstr "Wszystkie pakiety"
 
-#: gtk/rgmainwindow.cc:3571
+#: gtk/rgmainwindow.cc:3573
 msgid ""
 "The debtags database is not installed\n"
 "\n"
@@ -1603,19 +1616,17 @@ msgid "Pac_kage"
 msgstr "Paki_ety"
 
 #: gtk/window_main_hpaned.glade.strings:20
-#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:20
 msgid "_Keep"
 msgstr "_Zatrzymaj"
 
 #: gtk/window_main_hpaned.glade.strings:21
-#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:21
 msgid "_Install"
 msgstr "_Instalacja"
 
 #: gtk/window_main_hpaned.glade.strings:23
-#: gtk/window_main_hpaned.glade.strings:98
+#: gtk/window_main_hpaned.glade.strings:99
 #: gtk/window_main_vpaned.glade.strings:23
 #: gtk/window_main_vpaned.glade.strings:75
 msgid "_Remove"
@@ -1831,8 +1842,9 @@ msgid " "
 msgstr " "
 
 #: gtk/window_main_hpaned.glade.strings:69
-msgid "Information"
-msgstr "Informacje"
+#: gtk/window_main_vpaned.glade.strings:84
+msgid "Common"
+msgstr "Wspólny"
 
 #: gtk/window_main_hpaned.glade.strings:71
 #: gtk/window_main_hpaned.glade.strings:87
@@ -1941,8 +1953,9 @@ msgid "Expert"
 msgstr "Ekspert"
 
 #: gtk/window_main_hpaned.glade.strings:93
-msgid "<b>Status</b>"
-msgstr "<b>Stan</b>"
+#: gtk/window_main_vpaned.glade.strings:69
+msgid "<b>Package Control</b>"
+msgstr "<b>Kontrola pakietu</b>"
 
 #: gtk/window_main_hpaned.glade.strings:94
 #: gtk/window_main_vpaned.glade.strings:98
@@ -1951,41 +1964,61 @@ msgid "     "
 msgstr "     "
 
 #: gtk/window_main_hpaned.glade.strings:95
+#: gtk/window_main_vpaned.glade.strings:71
+msgid "Status modification:"
+msgstr "Stan modyfikacji:"
+
+#: gtk/window_main_hpaned.glade.strings:96
 #: gtk/window_main_vpaned.glade.strings:72
 msgid "Install the latest version of the package"
 msgstr "Wybierz najnowszą wersję pakietu"
 
-#: gtk/window_main_hpaned.glade.strings:97
+#: gtk/window_main_hpaned.glade.strings:98
 #: gtk/window_main_vpaned.glade.strings:74
 msgid "Deinstall the package"
 msgstr "Odinstaluj Pakiet"
 
-#: gtk/window_main_hpaned.glade.strings:99
+#: gtk/window_main_hpaned.glade.strings:100
 #: gtk/window_main_vpaned.glade.strings:76
 msgid "Keep the package as supplied before and forget selected changes"
 msgstr ""
 
 #: gtk/window_main_hpaned.glade.strings:101
-msgid "Never upgrade this package"
-msgstr "Wybranie tej opcji powoduje, że pakiet nigdy nie będzie aktualizowany"
+#: gtk/window_main_vpaned.glade.strings:77
+msgid "Do _Not Modify"
+msgstr "_Nie modyfikuj"
 
 #: gtk/window_main_hpaned.glade.strings:102
-msgid "Hold package"
-msgstr ""
-"Wstrzymaj\n"
-"pakiet"
+#: gtk/window_main_vpaned.glade.strings:78
+msgid "Exclude the package from upgrades"
+msgstr "Pomiń pakiet podczas aktualizacji"
 
 #: gtk/window_main_hpaned.glade.strings:103
-msgid "Reconfigure"
-msgstr ""
-"Ponowna\n"
-"konfiguracja"
+#: gtk/window_main_vpaned.glade.strings:79
+msgid "Hold current version"
+msgstr "Zatrzymaj aktualną wersję"
 
 #: gtk/window_main_hpaned.glade.strings:104
-msgid "Show Pkg Help"
-msgstr "Pokaż pomoc dla pakietów"
+#: gtk/window_main_vpaned.glade.strings:80
+msgid "Configure the package using the debconf configuration system"
+msgstr "Konfiguracja pakietu za pomocą systemu konfigracyjnego debconf"
 
 #: gtk/window_main_hpaned.glade.strings:105
+#: gtk/window_main_vpaned.glade.strings:81
+msgid "_Configure"
+msgstr "_Konfiguracja"
+
+#: gtk/window_main_hpaned.glade.strings:106
+#: gtk/window_main_vpaned.glade.strings:82
+msgid "View installed online documentation related to the package"
+msgstr "Podgląd online dokumentacji danego pakietu"
+
+#: gtk/window_main_hpaned.glade.strings:107
+#: gtk/window_main_vpaned.glade.strings:83
+msgid "_Documentation"
+msgstr "_Dokumentacja"
+
+#: gtk/window_main_hpaned.glade.strings:108
 #: gtk/window_main_vpaned.glade.strings:109
 msgid "Synaptic - an apt frontend"
 msgstr "Synaptic - interfejs dla apt"
@@ -2006,49 +2039,9 @@ msgstr "_Zwykła lista"
 msgid "_Tag tree"
 msgstr "Drzewo _Znaczników"
 
-#: gtk/window_main_vpaned.glade.strings:69
-msgid "<b>Package Control</b>"
-msgstr "<b>Kontrola pakietu</b>"
-
 #: gtk/window_main_vpaned.glade.strings:70
 msgid "   "
 msgstr "   "
-
-#: gtk/window_main_vpaned.glade.strings:71
-msgid "Status modification:"
-msgstr "Stan modyfikacji:"
-
-#: gtk/window_main_vpaned.glade.strings:77
-msgid "Do _Not Modify"
-msgstr "_Nie modyfikuj"
-
-#: gtk/window_main_vpaned.glade.strings:78
-msgid "Exclude the package from upgrades"
-msgstr "Pomiń pakiet podczas aktualizacji"
-
-#: gtk/window_main_vpaned.glade.strings:79
-msgid "Hold current version"
-msgstr "Zatrzymaj aktualną wersję"
-
-#: gtk/window_main_vpaned.glade.strings:80
-msgid "Configure the package using the debconf configuration system"
-msgstr "Konfiguracja pakietu za pomocą systemu konfigracyjnego debconf"
-
-#: gtk/window_main_vpaned.glade.strings:81
-msgid "_Configure"
-msgstr "_Konfiguracja"
-
-#: gtk/window_main_vpaned.glade.strings:82
-msgid "View installed online documentation related to the package"
-msgstr "Podgląd online dokumentacji danego pakietu"
-
-#: gtk/window_main_vpaned.glade.strings:83
-msgid "_Documentation"
-msgstr "_Dokumentacja"
-
-#: gtk/window_main_vpaned.glade.strings:84
-msgid "Common"
-msgstr "Wspólny"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2061,11 +2054,11 @@ msgstr "Zastosuj"
 
 #: gtk/window_changes.glade.strings:8
 msgid ""
-"<span weight=\"bold\" size=\"larger\">Apply additional required "
-"changes?</span>"
+"<span weight=\"bold\" size=\"larger\">Apply additional required changes?</"
+"span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Dokonać dodatkowych niezbędnych "
-"zmian?</span>"
+"<span weight=\"bold\" size=\"larger\">Dokonać dodatkowych niezbędnych zmian?"
+"</span>"
 
 #: gtk/window_changes.glade.strings:9
 #, fuzzy
@@ -2330,8 +2323,9 @@ msgid ""
 "Comma sperated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
-"Oddzielona przecinkami lista hostów i domen z którymi połączenie nie będzie"
-"realizowane za pomocą pośrednika (proxy) - np. localhost, 192.186.1.231, .net"
+"Oddzielona przecinkami lista hostów i domen z którymi połączenie nie "
+"będzierealizowane za pomocą pośrednika (proxy) - np. localhost, "
+"192.186.1.231, .net"
 
 #: gtk/window_preferences.glade.strings:97
 msgid "Network"
@@ -2364,8 +2358,8 @@ msgid ""
 "<b>Note:</b> The package list will need to be reloaded and so all selections "
 "will be lost. Make sure to execute your changes first."
 msgstr ""
-"<b>Uwaga:</b> Lista pakietów musi zostać wczytana ponownie. Wszelki zaznaczenia "
-"zostaną utracone. Należy wcześniej \"wykoać\" wprowadzone zmiany."
+"<b>Uwaga:</b> Lista pakietów musi zostać wczytana ponownie. Wszelki "
+"zaznaczenia zostaną utracone. Należy wcześniej \"wykoać\" wprowadzone zmiany."
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2613,492 +2607,516 @@ msgstr "rpm-src"
 msgid "Vendors..."
 msgstr "Dostarczający..."
 
-msgid "Hold pkg"
-msgstr ""
-"Wstrzymaj\n"
-"pakiet"
+#~ msgid "Information"
+#~ msgstr "Informacje"
 
-msgid "Find Tool"
-msgstr "Narzędzie do wyszukiwania"
+#~ msgid "<b>Status</b>"
+#~ msgstr "<b>Stan</b>"
 
-msgid "_Apply"
-msgstr "_Zastosuj"
+#~ msgid "Never upgrade this package"
+#~ msgstr ""
+#~ "Wybranie tej opcji powoduje, że pakiet nigdy nie będzie aktualizowany"
 
-msgid "_Edit..."
-msgstr "_Edycja..."
+#~ msgid "Hold package"
+#~ msgstr ""
+#~ "Wstrzymaj\n"
+#~ "pakiet"
 
-msgid "_Find Tool..."
-msgstr "_Narzędzie do wyszukiwania..."
+#~ msgid "Reconfigure"
+#~ msgstr ""
+#~ "Ponowna\n"
+#~ "konfiguracja"
 
-msgid "Pattern:"
-msgstr "Wzorzec:"
+#~ msgid "Show Pkg Help"
+#~ msgstr "Pokaż pomoc dla pakietów"
 
-msgid "Search:"
-msgstr "Szukaj:"
+#~ msgid "Hold pkg"
+#~ msgstr ""
+#~ "Wstrzymaj\n"
+#~ "pakiet"
 
-msgid "Next match"
-msgstr "Następny pasujący"
+#~ msgid "Find Tool"
+#~ msgstr "Narzędzie do wyszukiwania"
 
-msgid ""
-"1 = Information area\n"
-"2 = Package list"
-msgstr ""
-"1 = obszar informacji\n"
-"2 = Lista pakietów"
+#~ msgid "_Apply"
+#~ msgstr "_Zastosuj"
 
-msgid "<b>Marked</b>"
-msgstr "<b>Oznaczone</b>"
+#~ msgid "_Edit..."
+#~ msgstr "_Edycja..."
 
-msgid "Select none"
-msgstr "Odznacz wszystko"
+#~ msgid "_Find Tool..."
+#~ msgstr "_Narzędzie do wyszukiwania..."
 
-msgid "Decription"
-msgstr "Opis"
+#~ msgid "Pattern:"
+#~ msgstr "Wzorzec:"
 
-msgid "Suggested or recommended"
-msgstr "Sugerowane lub Zalecane"
+#~ msgid "Search:"
+#~ msgstr "Szukaj:"
 
-msgid "includes"
-msgstr "zawierają"
+#~ msgid "Next match"
+#~ msgstr "Następny pasujący"
 
-msgid "excludes"
-msgstr "nie zawierają"
+#~ msgid ""
+#~ "1 = Information area\n"
+#~ "2 = Package list"
+#~ msgstr ""
+#~ "1 = obszar informacji\n"
+#~ "2 = Lista pakietów"
 
-msgid "To be marked for removal"
-msgstr "Zaznaczone do usunięcia"
+#~ msgid "<b>Marked</b>"
+#~ msgstr "<b>Oznaczone</b>"
 
-msgid "To be marked for upgrade"
-msgstr "Zaznaczone do aktualizacji"
+#~ msgid "Select none"
+#~ msgstr "Odznacz wszystko"
 
-msgid "To be marked for installation"
-msgstr "Zaznaczone do instalacji"
+#~ msgid "Decription"
+#~ msgstr "Opis"
 
-msgid "Set preferences"
-msgstr "Ustaw preferencje"
+#~ msgid "Suggested or recommended"
+#~ msgstr "Sugerowane lub Zalecane"
 
-msgid "Package Filters"
-msgstr "Filtry Pakietów"
+#~ msgid "includes"
+#~ msgstr "zawierają"
 
-msgid "Setup Repositories"
-msgstr "Ustawienia Repozytoriów"
+#~ msgid "excludes"
+#~ msgstr "nie zawierają"
 
-msgid "Find tool"
-msgstr "Narzędzie do wyszukiwania"
+#~ msgid "To be marked for removal"
+#~ msgstr "Zaznaczone do usunięcia"
 
-msgid "Actions"
-msgstr "_Działania"
+#~ msgid "To be marked for upgrade"
+#~ msgstr "Zaznaczone do aktualizacji"
 
-msgid "Keep"
-msgstr "Wstrzymaj"
+#~ msgid "To be marked for installation"
+#~ msgstr "Zaznaczone do instalacji"
 
-msgid "Install"
-msgstr "Instaluj"
+#~ msgid "Set preferences"
+#~ msgstr "Ustaw preferencje"
 
-msgid "Remove"
-msgstr "Usuń"
+#~ msgid "Package Filters"
+#~ msgstr "Filtry Pakietów"
 
-msgid "Remove with dependencies"
-msgstr "Usuń razem z zależnościami"
+#~ msgid "Setup Repositories"
+#~ msgstr "Ustawienia Repozytoriów"
 
-msgid "All packages"
-msgstr "Wszystkie pakiety"
+#~ msgid "Find tool"
+#~ msgstr "Narzędzie do wyszukiwania"
 
-msgid "View"
-msgstr "Podgląd"
+#~ msgid "Actions"
+#~ msgstr "_Działania"
 
-msgid "Expand all"
-msgstr "Rozwiń wszystko"
+#~ msgid "Keep"
+#~ msgstr "Wstrzymaj"
 
-msgid "Collapse all   "
-msgstr "Zwiń wszystko   "
+#~ msgid "Install"
+#~ msgstr "Instaluj"
 
-msgid "Section tree"
-msgstr "Drzewo pakietów"
-
-msgid "Alphabetic tree"
-msgstr "Alfabetyczne drzewo"
-
-msgid "Status tree"
-msgstr "Drzewo stanu"
-
-msgid "_Settings"
-msgstr "_Ustawienia"
-
-msgid "Set _generic option"
-msgstr "Ustaw _domyślne opcje"
-
-msgid "Pixmaps"
-msgstr "Ikony"
+#~ msgid "Remove"
+#~ msgstr "Usuń"
 
-msgid "Text"
-msgstr "Tekst"
+#~ msgid "Remove with dependencies"
+#~ msgstr "Usuń razem z zależnościami"
+
+#~ msgid "All packages"
+#~ msgstr "Wszystkie pakiety"
 
-msgid "Both"
-msgstr "Ikony i Tekst"
+#~ msgid "View"
+#~ msgstr "Podgląd"
 
-msgid "About..."
-msgstr "O programie..."
+#~ msgid "Expand all"
+#~ msgstr "Rozwiń wszystko"
 
-msgid "_Proceed"
-msgstr "_Wykonaj"
+#~ msgid "Collapse all   "
+#~ msgstr "Zwiń wszystko   "
 
-msgid "Select package filter"
-msgstr "Wybór filtru pakietów"
+#~ msgid "Section tree"
+#~ msgstr "Drzewo pakietów"
 
-msgid "Open package filter editor"
-msgstr "Otwiera edytor filtrowania pakietów"
-
-msgid "What it depends on"
-msgstr "Od czego zależy ten pakiet"
-
-msgid "What depends on it"
-msgstr "Co zależy od tego pakietu"
-
-msgid "What it would depend on"
-msgstr "Od czego będzie zależał"
-
-msgid "What it provides"
-msgstr "Co dostarcza"
-
-msgid "Keep selected package as is in the system, unmarking selections over it"
-msgstr ""
-"Pozostawia wybrane pakiety w aktualnej\n"
-"wersji - pomijając ogólne zaznaczenia"
-
-msgid "Mark selected package for installation/upgrade"
-msgstr "Zaznacza wybrane pakiety do instalacji/aktualizacji"
-
-msgid "Mark selected package for removal from system"
-msgstr "Zaznacza wybrane pakiety do usunięcia z systemu"
-
-msgid ""
-"\n"
-"Copyright (c) 2001-2003 Conectiva S/A\n"
-"Copyright (c) 2002,2003 Michael Vogt\n"
-"\n"
-"Authors:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"\n"
-"More information on http://www.nongnu.org/synaptic\n"
-"\n"
-"This software is licensed under the terms of the\n"
-"GNU General Public License, Version 2\n"
-msgstr ""
-"\n"
-"Copyright (c) 2001-2003 Conectiva S/A\n"
-"Copyright (c) 2002,2003 Michael Vogt\n"
-"\n"
-"Autorzy:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"\n"
-"Więcej informacji na: http://www.nongnu.org/synaptic\n"
-"\n"
-"Ten program rozpowszechniany jest na licencji\n"
-"GNU General Public License, w wersji 2\n"
+#~ msgid "Alphabetic tree"
+#~ msgstr "Alfabetyczne drzewo"
 
-msgid "Cache"
-msgstr "Pamięc podręczna"
+#~ msgid "Status tree"
+#~ msgstr "Drzewo stanu"
 
-msgid "stable"
-msgstr "stabilna"
+#~ msgid "_Settings"
+#~ msgstr "_Ustawienia"
 
-msgid "testing"
-msgstr "testowa"
+#~ msgid "Set _generic option"
+#~ msgstr "Ustaw _domyślne opcje"
 
-msgid "unstable"
-msgstr "niestabilna"
+#~ msgid "Pixmaps"
+#~ msgstr "Ikony"
 
-msgid " Processed by using Prefix '"
-msgstr " Przetwarzanie z użyciem przedrostka '"
+#~ msgid "Text"
+#~ msgstr "Tekst"
 
-msgid " records"
-msgstr " rekordów"
+#~ msgid "Both"
+#~ msgstr "Ikony i Tekst"
 
-msgid " with "
-msgstr " z "
+#~ msgid "About..."
+#~ msgstr "O programie..."
 
-msgid " missing files"
-msgstr "brakujących plików"
+#~ msgid "_Proceed"
+#~ msgstr "_Wykonaj"
 
-msgid " and"
-msgstr " i"
+#~ msgid "Select package filter"
+#~ msgstr "Wybór filtru pakietów"
 
-msgid " mismatched files"
-msgstr " niezgadzających się plików"
+#~ msgid "Open package filter editor"
+#~ msgstr "Otwiera edytor filtrowania pakietów"
 
-msgid "Failed, "
-msgstr "Błąd, "
+#~ msgid "What it depends on"
+#~ msgstr "Od czego zależy ten pakiet"
 
-msgid "    Version"
-msgstr "    Wersja"
+#~ msgid "What depends on it"
+#~ msgstr "Co zależy od tego pakietu"
 
-msgid "    Size"
-msgstr "    Rozmiar"
+#~ msgid "What it would depend on"
+#~ msgstr "Od czego będzie zależał"
 
-msgid ""
-"The selected package couldn't be installed/upgraded.\n"
-"\n"
-"This is most probably caused by unmet dependencies that are not available in "
-"any repository."
-msgstr ""
-"Nie udało się zainstalować/zaktualizować wybranych pakietów.\n"
-"\n"
-"Najprawdopodobniej jest to spowodowane tym że występują pakiety, których "
-"zależności nie są dostępne w repozytorium."
+#~ msgid "What it provides"
+#~ msgstr "Co dostarcza"
 
-msgid ""
-"There are unsaved changes. Are you sure\n"
-"you want to quit Synaptic?"
-msgstr ""
-"Ta sesja zawiera niezapisane zmiany.\n"
-"Zamknąć program Synaptic?"
+#~ msgid ""
+#~ "Keep selected package as is in the system, unmarking selections over it"
+#~ msgstr ""
+#~ "Pozostawia wybrane pakiety w aktualnej\n"
+#~ "wersji - pomijając ogólne zaznaczenia"
 
-msgid "<b>Included fields</b>"
-msgstr "<b>Przeszukiwane pola</b>"
+#~ msgid "Mark selected package for installation/upgrade"
+#~ msgstr "Zaznacza wybrane pakiety do instalacji/aktualizacji"
 
-msgid "Purge"
-msgstr "Wyczyść"
+#~ msgid "Mark selected package for removal from system"
+#~ msgstr "Zaznacza wybrane pakiety do usunięcia z systemu"
 
-msgid "_Open Selection"
-msgstr "_Otwórz Zaznaczenia"
+#~ msgid ""
+#~ "\n"
+#~ "Copyright (c) 2001-2003 Conectiva S/A\n"
+#~ "Copyright (c) 2002,2003 Michael Vogt\n"
+#~ "\n"
+#~ "Authors:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "\n"
+#~ "More information on http://www.nongnu.org/synaptic\n"
+#~ "\n"
+#~ "This software is licensed under the terms of the\n"
+#~ "GNU General Public License, Version 2\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Copyright (c) 2001-2003 Conectiva S/A\n"
+#~ "Copyright (c) 2002,2003 Michael Vogt\n"
+#~ "\n"
+#~ "Autorzy:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "\n"
+#~ "Więcej informacji na: http://www.nongnu.org/synaptic\n"
+#~ "\n"
+#~ "Ten program rozpowszechniany jest na licencji\n"
+#~ "GNU General Public License, w wersji 2\n"
 
-msgid "_Save Selection"
-msgstr "_Zapisz Zaznaczenia"
+#~ msgid "Cache"
+#~ msgstr "Pamięc podręczna"
 
-msgid "Save Selection _As"
-msgstr "Zapisz Zaznaczenia _jako"
+#~ msgid "stable"
+#~ msgstr "stabilna"
 
-msgid "Update Package Cache"
-msgstr "Uaktualnia listę pakietów"
+#~ msgid "testing"
+#~ msgstr "testowa"
 
-msgid "Pa_ckage"
-msgstr "Pa_kiet"
+#~ msgid "unstable"
+#~ msgstr "niestabilna"
 
-msgid "Info"
-msgstr "Info"
+#~ msgid " Processed by using Prefix '"
+#~ msgstr " Przetwarzanie z użyciem przedrostka '"
 
-msgid "_Update"
-msgstr "_Uaktualnienie"
+#~ msgid " records"
+#~ msgstr " rekordów"
 
-msgid "Up_grade All"
-msgstr "Aktualizuj _Wszystko"
+#~ msgid " with "
+#~ msgstr " z "
 
-msgid ""
-"Select latest version of already installed packages, even if new packages as "
-"dependency have to be installed"
-msgstr ""
-"Wybierz najnowsze wersje dla wszystkich zainstalowanych pakietów, nawet "
-"jeżeli pakiety posiadają dużo zależności do doinstalowania"
+#~ msgid " missing files"
+#~ msgstr "brakujących plików"
 
-msgid "Search: "
-msgstr "Szukaj: "
+#~ msgid " and"
+#~ msgstr " i"
 
-msgid "Search for a package name"
-msgstr "Wyszukiwanie nazwy pakietu"
+#~ msgid " mismatched files"
+#~ msgstr " niezgadzających się plików"
 
-msgid "Open the filter editor"
-msgstr "Otwiera edytor filtrowania pakietów"
+#~ msgid "Failed, "
+#~ msgstr "Błąd, "
 
-msgid "Name:"
-msgstr "Nazwa: "
+#~ msgid "    Version"
+#~ msgstr "    Wersja"
 
-msgid "Dependencies of this Package"
-msgstr "Zależności tego Pakietu"
+#~ msgid "    Size"
+#~ msgstr "    Rozmiar"
 
-msgid "Suggested and Recommended Packages"
-msgstr "Sugerowane i Zalecane"
+#~ msgid ""
+#~ "The selected package couldn't be installed/upgraded.\n"
+#~ "\n"
+#~ "This is most probably caused by unmet dependencies that are not available "
+#~ "in any repository."
+#~ msgstr ""
+#~ "Nie udało się zainstalować/zaktualizować wybranych pakietów.\n"
+#~ "\n"
+#~ "Najprawdopodobniej jest to spowodowane tym że występują pakiety, których "
+#~ "zależności nie są dostępne w repozytorium."
 
-msgid "Use terminal window when running the package manager"
-msgstr "Pokaż okno terminala podczas działania menedżera pakietów"
+#~ msgid ""
+#~ "There are unsaved changes. Are you sure\n"
+#~ "you want to quit Synaptic?"
+#~ msgstr ""
+#~ "Ta sesja zawiera niezapisane zmiany.\n"
+#~ "Zamknąć program Synaptic?"
 
-msgid "Ask to quit after proceeding"
-msgstr "Potwierdzenie zamknięcia programu"
+#~ msgid "<b>Included fields</b>"
+#~ msgstr "<b>Przeszukiwane pola</b>"
 
-msgid "Delete with dependencies"
-msgstr "Usuń z zależnościami"
+#~ msgid "Purge"
+#~ msgstr "Wyczyść"
 
-msgid "Ask when more packages are going to be affected by some action"
-msgstr "Pytaj gdy wybrane działania dotyczą większej ilości pakietów"
+#~ msgid "_Open Selection"
+#~ msgstr "_Otwórz Zaznaczenia"
 
-msgid "Automatically select recommended packages on actions"
-msgstr "Automatycznie wybieraj rekomendowane pakiety"
+#~ msgid "_Save Selection"
+#~ msgstr "_Zapisz Zaznaczenia"
 
-msgid "No Proxy example: localhost, ftp.debian.org"
-msgstr "Nie używaj proxy przykład: localhost, ftp.debian.org"
+#~ msgid "Save Selection _As"
+#~ msgstr "Zapisz Zaznaczenia _jako"
 
-msgid "Clean cache now"
-msgstr "Usuń zawartość pamięci podręcznej"
+#~ msgid "Update Package Cache"
+#~ msgstr "Uaktualnia listę pakietów"
 
-msgid "System"
-msgstr "System"
+#~ msgid "Pa_ckage"
+#~ msgstr "Pa_kiet"
 
-msgid "Use colors in main package list"
-msgstr "Używaj kolorów przy głównej liście pakietów"
+#~ msgid "Info"
+#~ msgstr "Info"
 
-msgid "Filter Manager"
-msgstr "Menedżer plików"
+#~ msgid "_Update"
+#~ msgstr "_Uaktualnienie"
 
-msgid "by Section"
-msgstr "wg. działu"
+#~ msgid "Up_grade All"
+#~ msgstr "Aktualizuj _Wszystko"
 
-msgid "Include packages that are ..."
-msgstr "Wyświetl pakiety, które są ..."
+#~ msgid ""
+#~ "Select latest version of already installed packages, even if new packages "
+#~ "as dependency have to be installed"
+#~ msgstr ""
+#~ "Wybierz najnowsze wersje dla wszystkich zainstalowanych pakietów, nawet "
+#~ "jeżeli pakiety posiadają dużo zależności do doinstalowania"
 
-msgid "Marked to keep"
-msgstr "Zaznaczone do wstrzymania"
+#~ msgid "Search: "
+#~ msgstr "Szukaj: "
 
-msgid "Marked to Install/Upgrade"
-msgstr "Oznaczonych od Instalacji/Aktualizacji"
+#~ msgid "Search for a package name"
+#~ msgstr "Wyszukiwanie nazwy pakietu"
 
-msgid "Marked to remove"
-msgstr "Zaznaczone do usunięcia"
+#~ msgid "Open the filter editor"
+#~ msgstr "Otwiera edytor filtrowania pakietów"
 
-msgid "Packages that are broken"
-msgstr "Pakiety, które są uszkodzone"
+#~ msgid "Name:"
+#~ msgstr "Nazwa: "
 
-msgid "by Status"
-msgstr "wg. Stanu"
+#~ msgid "Dependencies of this Package"
+#~ msgstr "Zależności tego Pakietu"
 
-msgid "are named"
-msgstr "w nazwie"
+#~ msgid "Suggested and Recommended Packages"
+#~ msgstr "Sugerowane i Zalecane"
 
-msgid "in Version"
-msgstr "w wersji"
+#~ msgid "Use terminal window when running the package manager"
+#~ msgstr "Pokaż okno terminala podczas działania menedżera pakietów"
 
-msgid "in decription"
-msgstr "w opisie"
+#~ msgid "Ask to quit after proceeding"
+#~ msgstr "Potwierdzenie zamknięcia programu"
 
-msgid "in Maintainer"
-msgstr "w polu Opiekun pakietu"
+#~ msgid "Delete with dependencies"
+#~ msgstr "Usuń z zależnościami"
 
-msgid "depends on"
-msgstr "w zależnościach"
+#~ msgid "Ask when more packages are going to be affected by some action"
+#~ msgstr "Pytaj gdy wybrane działania dotyczą większej ilości pakietów"
 
-msgid "provides"
-msgstr "w polu \"dostarcza\""
+#~ msgid "Automatically select recommended packages on actions"
+#~ msgstr "Automatycznie wybieraj rekomendowane pakiety"
 
-msgid "conflicts with"
-msgstr "w konflikcie z"
+#~ msgid "No Proxy example: localhost, ftp.debian.org"
+#~ msgstr "Nie używaj proxy przykład: localhost, ftp.debian.org"
 
-msgid "suggests or recommends"
-msgstr "sugerowane lub zalecane"
+#~ msgid "Clean cache now"
+#~ msgstr "Usuń zawartość pamięci podręcznej"
 
-msgid "by Package"
-msgstr "wg. Pakietu"
+#~ msgid "System"
+#~ msgstr "System"
 
-msgid "by Tags"
-msgstr "wg. Znaczników"
+#~ msgid "Use colors in main package list"
+#~ msgstr "Używaj kolorów przy głównej liście pakietów"
 
-msgid "Change View for this filter:"
-msgstr "Zmień Widok dla tego filtra:"
+#~ msgid "Filter Manager"
+#~ msgstr "Menedżer plików"
 
-msgid "Change View: "
-msgstr "Zmiana Widoku: "
+#~ msgid "by Section"
+#~ msgstr "wg. działu"
 
-msgid "Manipulate Tree: "
-msgstr "Modyfikacje drzewa: "
+#~ msgid "Include packages that are ..."
+#~ msgstr "Wyświetl pakiety, które są ..."
 
-msgid "View Mode"
-msgstr "Tryb Podglądu"
+#~ msgid "Marked to keep"
+#~ msgstr "Zaznaczone do wstrzymania"
 
-msgid ""
-"\n"
-"in drive "
-msgstr ""
-"\n"
-"w napędzie "
+#~ msgid "Marked to Install/Upgrade"
+#~ msgstr "Oznaczonych od Instalacji/Aktualizacji"
 
-msgid "Possible"
-msgstr "Możliwe"
+#~ msgid "Marked to remove"
+#~ msgstr "Zaznaczone do usunięcia"
 
-msgid "Package Upgrade"
-msgstr "Aktualizacja Pakietu"
+#~ msgid "Packages that are broken"
+#~ msgstr "Pakiety, które są uszkodzone"
 
-msgid "freed"
-msgstr "zwolnionych"
+#~ msgid "by Status"
+#~ msgstr "wg. Stanu"
 
-msgid "used"
-msgstr "użytych"
+#~ msgid "are named"
+#~ msgstr "w nazwie"
 
-msgid ""
-"Copyright (c) 2001 Conectiva S/A\n"
-"\n"
-"Author: Alfredo K. Kojima <kojima@conectiva.com.br>\n"
-"Icons shamelessly ripped from KDE\n"
-"APT backend: Jason Gunthorpe <jgg@debian.org>\n"
-"\n"
-"This software is licensed under the terms of the\n"
-"GNU General Public License, Version 2"
-msgstr ""
-"Copyright (c) 2001 Conectiva S/A\n"
-"\n"
-"Autor: Alfredo K. Kojima <kojima@conectiva.com.br>\n"
-"Ikonki pochodzą z KDE\n"
-"Obsługa APT: Jason Gunthorpe <jgg@debian.org>\n"
-"\n"
-"Ten program rozpowszechniany jest na licencji\n"
-"GNU General Public License, w wersji 2"
+#~ msgid "in Version"
+#~ msgstr "w wersji"
 
-msgid "Error"
-msgstr "Błąd"
+#~ msgid "in decription"
+#~ msgstr "w opisie"
 
-msgid "OK"
-msgstr "OK"
+#~ msgid "in Maintainer"
+#~ msgstr "w polu Opiekun pakietu"
 
-msgid "Delete obsoleted packages from cache"
-msgstr "Kasuj przestarzałe pakiety z magazynu podręcznego pakietów"
+#~ msgid "depends on"
+#~ msgstr "w zależnościach"
 
-msgid "Close"
-msgstr "Zamknij"
+#~ msgid "provides"
+#~ msgstr "w polu \"dostarcza\""
 
-msgid "Save"
-msgstr "Zapisz"
+#~ msgid "conflicts with"
+#~ msgstr "w konflikcie z"
 
-msgid "Disk Change"
-msgstr "Zmiana Dysk"
+#~ msgid "suggests or recommends"
+#~ msgstr "sugerowane lub zalecane"
 
-msgid "Continue"
-msgstr "Kontynułowanie"
+#~ msgid "by Package"
+#~ msgstr "wg. Pakietu"
 
-msgid "Set"
-msgstr "Ustaw"
+#~ msgid "by Tags"
+#~ msgstr "wg. Znaczników"
 
-msgid "Ok"
-msgstr "Ok"
+#~ msgid "Change View for this filter:"
+#~ msgstr "Zmień Widok dla tego filtra:"
 
-msgid "Warning"
-msgstr "Ostrzeżenie"
+#~ msgid "Change View: "
+#~ msgstr "Zmiana Widoku: "
 
-msgid "DistUpgrade"
-msgstr "Aktualizacja Dystrybucji"
+#~ msgid "Manipulate Tree: "
+#~ msgstr "Modyfikacje drzewa: "
 
-msgid "Proceed!"
-msgstr "Wykonaj!"
+#~ msgid "View Mode"
+#~ msgstr "Tryb Podglądu"
 
-msgid "Descr."
-msgstr "Opis"
+#~ msgid ""
+#~ "\n"
+#~ "in drive "
+#~ msgstr ""
+#~ "\n"
+#~ "w napędzie "
 
-msgid "Next"
-msgstr "Następne"
+#~ msgid "Possible"
+#~ msgstr "Możliwe"
 
-msgid "Available"
-msgstr "Dostępne"
+#~ msgid "Package Upgrade"
+#~ msgstr "Aktualizacja Pakietu"
 
-msgid "Quit"
-msgstr "Zakończ"
+#~ msgid "freed"
+#~ msgstr "zwolnionych"
 
-msgid "Add Repository"
-msgstr "Dodaj Repozytorium"
+#~ msgid "used"
+#~ msgstr "użytych"
 
-msgid "WARNING!!!"
-msgstr "UWAGA!!!"
+#~ msgid ""
+#~ "Copyright (c) 2001 Conectiva S/A\n"
+#~ "\n"
+#~ "Author: Alfredo K. Kojima <kojima@conectiva.com.br>\n"
+#~ "Icons shamelessly ripped from KDE\n"
+#~ "APT backend: Jason Gunthorpe <jgg@debian.org>\n"
+#~ "\n"
+#~ "This software is licensed under the terms of the\n"
+#~ "GNU General Public License, Version 2"
+#~ msgstr ""
+#~ "Copyright (c) 2001 Conectiva S/A\n"
+#~ "\n"
+#~ "Autor: Alfredo K. Kojima <kojima@conectiva.com.br>\n"
+#~ "Ikonki pochodzą z KDE\n"
+#~ "Obsługa APT: Jason Gunthorpe <jgg@debian.org>\n"
+#~ "\n"
+#~ "Ten program rozpowszechniany jest na licencji\n"
+#~ "GNU General Public License, w wersji 2"
 
-msgid "Description "
-msgstr "Opis "
+#~ msgid "Error"
+#~ msgstr "Błąd"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Delete obsoleted packages from cache"
+#~ msgstr "Kasuj przestarzałe pakiety z magazynu podręcznego pakietów"
+
+#~ msgid "Close"
+#~ msgstr "Zamknij"
+
+#~ msgid "Save"
+#~ msgstr "Zapisz"
+
+#~ msgid "Disk Change"
+#~ msgstr "Zmiana Dysk"
+
+#~ msgid "Continue"
+#~ msgstr "Kontynułowanie"
+
+#~ msgid "Set"
+#~ msgstr "Ustaw"
+
+#~ msgid "Ok"
+#~ msgstr "Ok"
+
+#~ msgid "Warning"
+#~ msgstr "Ostrzeżenie"
+
+#~ msgid "DistUpgrade"
+#~ msgstr "Aktualizacja Dystrybucji"
+
+#~ msgid "Proceed!"
+#~ msgstr "Wykonaj!"
+
+#~ msgid "Descr."
+#~ msgstr "Opis"
+
+#~ msgid "Next"
+#~ msgstr "Następne"
+
+#~ msgid "Available"
+#~ msgstr "Dostępne"
+
+#~ msgid "Quit"
+#~ msgstr "Zakończ"
+
+#~ msgid "Add Repository"
+#~ msgstr "Dodaj Repozytorium"
+
+#~ msgid "WARNING!!!"
+#~ msgstr "UWAGA!!!"
+
+#~ msgid "Description "
+#~ msgstr "Opis "
 
 #~ msgid "<b>Details</b>"
 #~ msgstr "<b>Szczegóły</b>"

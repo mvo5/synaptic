@@ -42,8 +42,8 @@ const char * RGPreferencesWindow::column_names[] =
    {"status", "name", "instVer", "availVer", "instSize", "descr", NULL };
 
 const char *RGPreferencesWindow::column_visible_names[] = 
-   {"Status", "Name", "InstalledVersion", "Available Version",
-    "Installed Size", "Description", NULL };
+   {_("Status"), _("Package Name"), _("Installed Version"), 
+    _("Available Version"), _("Installed Size"), _("Description"), NULL };
 
 
 
@@ -411,7 +411,7 @@ void RGPreferencesWindow::show()
    RGWindow::show();
 }
 
-enum {TREE_CHECKBOX_COLUMN, TREE_NAME_COLUMN};
+enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
 
 void RGPreferencesWindow::initTreeView()
 {
@@ -431,12 +431,18 @@ void RGPreferencesWindow::initTreeView()
    renderer = gtk_cell_renderer_text_new ();
    column = gtk_tree_view_column_new_with_attributes ("Name",
 						      renderer,
-						      "text", TREE_NAME_COLUMN,
+						      "text", TREE_VISIBLE_NAME_COLUMN,
 						      NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW (tree), column);
 
 
 }
+
+struct column_struct {
+   bool visible;
+   const char *name;
+   const char *visible_name;
+};
 
 void RGPreferencesWindow::readTreeViewValues()
 {
@@ -445,13 +451,15 @@ void RGPreferencesWindow::readTreeViewValues()
    int number_of_columns = sizeof(column_names)/sizeof(char*)-1;
 
    // the position in this vector is the position of the column
-   vector<pair<bool, string> > columns(number_of_columns);
+   vector<column_struct> columns(number_of_columns);
 
    // put into right place
    gchar *name;
    int pos;
    bool visible;
+   column_struct c;
    for(int i=0;column_names[i] != NULL; i++) {
+
       // pos
       name = g_strdup_printf("Synaptic::%sColumnPos",column_names[i]);
       pos = _config->FindI(name, i);
@@ -459,21 +467,28 @@ void RGPreferencesWindow::readTreeViewValues()
       
       // visible
       name = g_strdup_printf("Synaptic::%sColumnVisible",column_names[i]);
-      visible = _config->FindB(name, true);
+      c.visible = _config->FindB(name, true);
+
+      c.name = column_names[i];
+      c.visible_name = column_visible_names[i];
 
       //FIXME: sanity check pos!
-      columns[pos] = pair<bool, string>(visible, column_names[i]);
+      columns[pos] = c;
       g_free(name);
    }
 
    // put into GtkListStore
-   GtkListStore *store = _listColumns = gtk_list_store_new(2, G_TYPE_BOOLEAN, G_TYPE_STRING);
+   GtkListStore *store = _listColumns = gtk_list_store_new(3, 
+							   G_TYPE_BOOLEAN, 
+							   G_TYPE_STRING, 
+							   G_TYPE_STRING);
    GtkTreeIter iter;
    for(unsigned int i=0;i<columns.size();i++) {
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
-			  TREE_CHECKBOX_COLUMN, &columns[i].first,
-			  TREE_NAME_COLUMN, columns[i].second.c_str(),
+			  TREE_CHECKBOX_COLUMN, &columns[i].visible,
+			  TREE_NAME_COLUMN, columns[i].name,
+			  TREE_VISIBLE_NAME_COLUMN, _(columns[i].visible_name),
 			  -1);
       
    }

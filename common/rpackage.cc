@@ -659,144 +659,40 @@ bool RPackage::dependsOn(const char *pkgname)
    return false;
 }
 
-
-
-#if 0
-bool RPackage::enumDeps(const char *&type, const char *&what,
-                        const char *&pkg, const char *&which, char *&summary,
-                        bool &satisfied)
+#ifdef WITH_APT_AUTH
+bool RPackage::isTrusted()
 {
-   pkgCache::VerIterator ver;
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
-
-   if (state.Keep() || state.Held()) {
-      ver = (*_depcache)[*_package].InstVerIter(*_depcache);
-
-      if (ver.end())
-         ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   } else {
-      //ver = _package->VersionList();
-      ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   }
-   if (ver.end())
+   pkgCache::VerIterator Ver;
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   Ver = State.CandidateVerIter(*_depcache);
+   if (Ver == 0) {
+      cerr << "CanidateVer == 0" << endl;
       return false;
-
-   _depI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal    
-   _depStart = _depEnd;
-
-   return nextDeps(type, what, pkg, which, summary, satisfied);
-}
-
-
-bool RPackage::nextDeps(const char *&type, const char *&what,
-                        const char *&pkg, const char *&which, char *&summary,
-                        bool &satisfied)
-{
-   static char buffer[32];      // type
-   static char buffer2[32];     // which
-   static char buffer3[64];     // summary
-
-   while (1) {
-      if (_depStart == _depEnd) {
-         if (_depI.end())
-            return false;
-
-         _depI.GlobOr(_depStart, _depEnd);
-
-         snprintf(buffer, sizeof(buffer), "%s", _depEnd.DepType());
-      } else {
-         _depStart++;
-
-         snprintf(buffer, sizeof(buffer), "| %s", _depEnd.DepType());
-      }
-
-      if (isWeakDep(_depEnd))
-         continue;
-
-      satisfied = false;
-      if (((*_depcache)[_depStart] & pkgDepCache::DepGInstall) ==
-          pkgDepCache::DepGInstall)
-         satisfied = true;
-
-      type = buffer;
-      //cout << "type: " << buffer << endl;
-
-      pkgCache::PkgIterator depPkg = _depStart.TargetPkg();
-      what = depPkg.Name();
-
-      //cout << "what (before): " << what << endl;
-
-      if (depPkg->VersionList != 0)
-         pkg = what;
-      else if (depPkg->ProvidesList != 0)
-         pkg = depPkg.ProvidesList().OwnerPkg().Name();
-      else
-         pkg = 0;
-      //cout << "what (after): " << what << endl;     
-
-      if (_depStart.TargetVer()) {
-         snprintf(buffer2, sizeof(buffer2), "(%s %s)",
-                  _depStart.CompType(), _depStart.TargetVer());
-         which = buffer2;
-      } else {
-         which = "";
-      }
-      //cout << "which: " << buffer2 << endl;
-
-      buffer3[0] = 0;
-      if (!satisfied && depPkg->ProvidesList == 0) {
-         pkgCache::VerIterator Ver =
-            (*_depcache)[depPkg].InstVerIter(*_depcache);
-
-         if (!Ver.end())
-            snprintf(buffer3, sizeof(buffer3), _("%s is/will be installed"),
-                     Ver.VerStr());
-         else {
-            if ((*_depcache)[depPkg].CandidateVerIter(*_depcache).end()) {
-               if (depPkg->ProvidesList == 0)
-                  strcpy(buffer3, _("package is not installable"));
-               else
-                  strcpy(buffer3, _("package is a virtual package"));
-            } else
-               strcpy(buffer3, _("package is/will not be installed"));
-         }
-      } else if (satisfied) {
-         strcpy(buffer3, _("dependency is satisfied"));
-      }
-      summary = buffer3;
-      //cout << "summary: " << summary << endl;
-
-      break;
    }
-   return true;
+   pkgSourceList *Sources=_lister->getCache()->list();
+   for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++)
+   {
+      pkgIndexFile *Index;
+      if (Sources->FindIndex(i.File(),Index) == false)
+         continue;
+      if (_config->FindB("Debug::pkgAcquire::Auth", false))
+      {
+         std::cerr << "Checking index: " << Index->Describe()
+                   << "(Trusted=" << Index->IsTrusted() << ")\n";
+      }
+      if (Index->IsTrusted())
+         return true;
+   }
+   
+   return false;
 }
-
-RPackage::UpdateImportance RPackage::updateImportance()
-{
-   return IUnknown;             //(*name()) == 'a' ? ISecurity : INormal;
-}
-
-
-const char *RPackage::updateSummary()
-{
-   return "Test\nAdvisory\nYour computer will blow if you don't update.";
-   return NULL;
-}
-
-
-const char *RPackage::updateDate()
-{
-   return "2001-1-1 12:43 GMT";
-   return NULL;
-}
-
-
-const char *RPackage::updateURL()
-{
-   return "http://sekure.org/~dumped/exploitz";
-   return NULL;
-}
+#else
+// with apt-authentication we always trust that the package come from
+// a trusted source
+bool RPackage::isTrusted() 
+{ 
+   return true; 
+};
 #endif
 
 bool RPackage::wouldBreak()

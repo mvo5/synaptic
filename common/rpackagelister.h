@@ -308,6 +308,8 @@ class RPackageLister {
    bool readSelections(istream &in);
    bool writeSelections(ostream &out, bool fullState);
 
+   RPackageCache* getCache() { return _cache; };
+
    RPackageLister();
    ~RPackageLister();
 };

@@ -61,24 +61,6 @@ class RPackage {
    bool _notify;
 
    // Virtual pkgs provided by this one.
-#if 0
-   vector<pkgCache::PkgIterator> _virtualPackages;
-   vector<const char *> _provides;
-
-   // Stuff for enumerators
-   int _vpackI;
-   pkgCache::DepIterator _rdepI;
-
-   pkgCache::DepIterator _wdepI;
-   pkgCache::DepIterator _wdepStart;
-   pkgCache::DepIterator _wdepEnd;
-
-   pkgCache::DepIterator _depI;
-   pkgCache::DepIterator _depStart;
-   pkgCache::DepIterator _depEnd;
-
-   bool isWeakDep(pkgCache::DepIterator &dep);
-#endif
    // FIXME: broken right now 
    bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
@@ -168,37 +150,6 @@ class RPackage {
    long availableInstalledSize();
    long availablePackageSize();
 
-#if 0
-   // if this is an update
-   UpdateImportance updateImportance();
-   const char *updateSummary();
-   const char *updateDate();
-   const char *updateURL();
-
-   // special case: alway get the deps of the latest available version
-   // (not necessary the installed one)
-   bool enumAvailDeps(const char *&type, const char *&what, const char *&pkg,
-                      const char *&which, char *&summary, bool &satisfied);
-
-   // this gives the dependencies for the installed package
-   vector<RPackage *> getInstalledDeps();
-
-   // installed package if installed, scheduled/candidate if not or if marked
-   bool enumDeps(const char *&type, const char *&what, const char *&pkg,
-                 const char *&which, char *&summary, bool &satisfied);
-   bool nextDeps(const char *&type, const char *&what, const char *&pkg,
-                 const char *&which, char *&summary, bool &satisfied);
-
-   bool enumRDeps(const char *&dep, const char *&what);
-   bool nextRDeps(const char *&dep, const char *&what);
-
-   // weak dependencies
-   bool enumWDeps(const char *&type, const char *&what, bool &satisfied);
-   bool nextWDeps(const char *&type, const char *&what, bool &satisfied);
-
-   void addVirtualPackage(pkgCache::PkgIterator dep);
-#endif
-
    // does the pkg depends on this one?
    bool dependsOn(const char *pkgname);
 
@@ -211,6 +162,8 @@ class RPackage {
    int getFlags();
 
    bool wouldBreak();
+
+   bool isTrusted();
 
    void setKeep();
    void setInstall();

@@ -349,6 +349,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 //    cout <<   pkg->label() << endl;
 //    cout <<   pkg->component() << endl;
+//   cout << "trusted: " << pkg->isTrusted() << endl;
   
    // set menu according to pkg status
    int flags = pkg->getFlags();
@@ -502,8 +503,8 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    // ask if the user really want this changes
    bool changed = true;
    if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
-                                           toUpgrade, toRemove, toDowngrade,
-                                           exclude)) {
+				       toUpgrade, toRemove, toDowngrade,
+				       exclude)) {
       RGChangesWindow changes(this);
       changes.confirm(_lister, toKeep, toInstall, toReInstall,
 		      toUpgrade, toRemove, toDowngrade);

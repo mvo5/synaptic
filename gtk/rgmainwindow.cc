@@ -68,7 +68,7 @@
 #include "sections_trans.h"
 
 // icons and pixmaps
-#include "synaptic_mini.xpm"
+#include "synaptic.xpm"
 
 #include "i18n.h"
 
@@ -170,14 +170,14 @@ void RGMainWindow::refreshSubViewList()
       GtkTreeSelection *selection;
       GtkTreeModel *model;
       GtkTreeIter iter;
-      const char *str;
+      const char *str = NULL;
 
       selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_subViewList));
       model = gtk_tree_view_get_model(GTK_TREE_VIEW(_subViewList));
       bool ok =  gtk_tree_model_get_iter_first(model, &iter); 
       while(ok) {
 	 gtk_tree_model_get(model, &iter, 0, &str, -1);
-	 if(strcoll(str, selected.c_str()) == 0) {
+	 if(str && strcoll(str, selected.c_str()) == 0) {
 	    gtk_tree_selection_select_iter(selection, &iter);
 	    return;
 	 }
@@ -251,7 +251,7 @@ string RGMainWindow::selectedSubView()
 	 
 	 // check if first item is selected ("All")
 	 gchar *str=gtk_tree_model_get_string_from_iter(model, &iter);
-	 if(str[0] == '0')
+	 if(str[0] == '0' || subView == NULL)
 	    ret = "";
 	 else
 	    ret = subView;
@@ -348,7 +348,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_purgeM, FALSE);
    gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
    gtk_widget_set_sensitive(_pkgHelpM, FALSE);
-   gtk_widget_set_sensitive(_pkginfo, false);
+   gtk_widget_set_sensitive(_pkginfo, FALSE);
    gtk_widget_set_sensitive(_dl_changelogM, FALSE);
    gtk_widget_set_sensitive(_detailsM, FALSE);
    gtk_widget_set_sensitive(_propertiesB, FALSE);
@@ -1009,7 +1009,7 @@ void RGMainWindow::buildInterface()
 
 
    GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data((const char **)
-                                                  synaptic_mini_xpm);
+                                                  synaptic_xpm);
    gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
    gtk_window_resize(GTK_WINDOW(_win),
@@ -1207,7 +1207,7 @@ void RGMainWindow::buildInterface()
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
                         _("Apply all marked changes"), "");
 
-   _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
+   _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
    assert(_pkgCommonTextView);
    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_pkgCommonTextView),
                                GTK_WRAP_WORD);
@@ -2248,6 +2248,7 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 
 void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
 {
+#if 0
    RGMainWindow *me = (RGMainWindow *) data;
 
    if (me->_fmanagerWin == NULL) {
@@ -2257,6 +2258,12 @@ void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
    }
 
    me->_fmanagerWin->show();
+#endif
+   if (me->_fmanagerWin == NULL) {
+      me->_fmanagerWin = new RGFilterManagerWindow(me, me->_lister->filterView());
+
+   }
+   gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()));
 
 }
 

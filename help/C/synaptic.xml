@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY legal SYSTEM "gpl.xml">
-<!ENTITY appversion "0.52">
+<!ENTITY appversion "0.53">
 <!ENTITY app "<application>Synaptic Package Manager</application>">
-<!ENTITY manrevision "0.1">
+<!ENTITY manrevision "0.1.1">
 <!ENTITY date "October 2003">
 ]>
 <!-- =============Document Header ============================= -->
@@ -41,9 +41,7 @@
 </releaseinfo> 
 
 <legalnotice>
-	<title>
-		Legal Notice
-	</title>	
+	<title>Legal Notice</title>	
 	<para> 
 		This document is distributed under the terms of the GNU
 		Public license as published by the Free Software; either version 2 of the License, 
@@ -54,9 +52,7 @@
 </legalnotice>
 
 <legalnotice> 
-	<title>
-		Feedback
-	</title>
+	<title>Feedback</title>
 	<para>
 		To report a bug or make a suggestion regarding 
 		the &app; or this manual, use the bug report 
@@ -81,25 +77,23 @@
 </indexterm>
 
 <sect1 id="synaptic-introduction"> 
-	<title>
-		Introduction
-	</title> 
+	<title>Introduction</title> 
 	<para>
-		The &app; enables you to install software onto your computer and to manage the software that is 
+		The &app; enables you to install software onto your computer and to manage the software, that is 
 		already installed. The software is bundled in so called <emphasis>packages</emphasis>. A single 
 		application can even exist of several packages: e.g. the <application>Mozilla Internet Suite</application> is packaged 
-		to <emphasis>mozilla-browser</emphasis> that contains the actual browser and <emphasis>mozilla-mail
-		</emphasis> that contains the mail client (this example refers to Debian GNU/Linux and can be 
+		to <emphasis>mozilla-browser</emphasis>, that contains the actual browser, and <emphasis>mozilla-mail
+		</emphasis>, that contains the mail client (this example refers to Debian GNU/Linux and can be 
 		different on your distribution). 
 	</para>
 	<para>
-		To avoid duplications most applications reuse the functionality of other applications or libraries 
+		Nearly all applications reuse the functionality of other applications or libraries 
 		(libraries only provide functions to other libraries or applications and are no stand alone 
-		applications). So the most packages depend on other packages. The &app; resolves the <emphasis>
+		applications) to avoid doubled efforts. So the most packages depend on other packages. The &app; resolves the <emphasis>
 		dependencies</emphasis> for you automatically. 
 	</para>
 	<para>
-		Technically the &app; is based on the package manager <application>APT</application> and provides functions that are 
+		Technically the &app; is based on the package manager <application>APT</application> and provides functions, that are 
 		similar to the ones of the command line tool <command>apt-get</command> in a graphical environment.
 	</para>
 	<para>
@@ -123,7 +117,7 @@
 	                </listitem>
 		        <listitem>
 			        <para>
-				        Find packages by name, description and several other attributes.
+				        Search packages by name, description and several other attributes.
 	                        </para>
 		        </listitem>
 			<listitem>
@@ -148,14 +142,14 @@
 	                </listitem>
 	                <listitem>
 		                <para>
-			                Force the installation of a specifc package version.
+			                Force the installation of a specific package version.
 				</para>
 	                </listitem>
 		</itemizedlist>
 	</para>
 	<note>
 		<para>
-			You need root rights to install or modify software packages on your computer.
+			You need root rights to install or remove software packages on your computer.
 		</para>
 	</note>
 
@@ -317,14 +311,10 @@
 </sect2>
 
 <sect2 id="synaptic-win-toolbar">
-	<title>
-		Toolbar
-	</title>
+	<title>Toolbar</title>
 	
 	<figure>
-		<title>
-			&app; toolbar
-		</title> 
+		<title>&app; toolbar</title> 
 		<screenshot> 
 			<mediaobject> 
 				<imageobject>
@@ -346,17 +336,17 @@
 		<variablelist>
 			<varlistentry>
 				<term>
-					Refresh
+					Reload
 				</term>
 				<listitem>
 					<para>
-						Refresh the list of known packages.
+						Reload the list of known packages.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>
-					Upgrade System
+					Mark all Upgrades
 				</term>
 				<listitem>
 					<para>
@@ -380,17 +370,17 @@
 				</term>
 				<listitem>
 					<para>
-						Open the <xref linkend="synaptic-win-properties"/> dialog(s) of the selected package(s).
+						Open the <xref linkend="synaptic-win-properties"/> dialog of the selected package.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>
-					Find
+					Search
 				</term>
 				<listitem>
 					<para>
-						Open the find dialog.
+						Open the package search dialog.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -398,13 +388,11 @@
 	</para>
 </sect2>
 
-<sect2 id="synaptic-win-selector" xreflabel="selector">
-	<title>
-		Category Selector
-	</title>
+<sect2 id="synaptic-win-selector" xreflabel="category selector">
+	<title>Category Selector</title>
 	
 	<para>
-		The selector on the left side allows to narrow down the packages listed in the <xref linkend="synaptic-win-list"/>
+		The selector on the left side allows you to narrow down the packages, that are shown in the <xref linkend="synaptic-win-list"/>
 		by categories.
 	</para>
 
@@ -475,7 +463,7 @@
 			</varlistentry>
 			<varlistentry>
 				<term>
-					Find history
+					Search history
 				</term>
 				<listitem>
 					<para>
@@ -490,9 +478,7 @@
 
 
 <sect2 id="synaptic-win-list" xreflabel="package list">
-	<title>
-		Package List
-	</title>
+	<title>Package List</title>
 
 	<para>
 		The package list shows the packages of the selected category.
@@ -526,17 +512,14 @@
 
 	<tip>
 		<para>
-			The column order and the used colors can be changed in the preferences, see
-			<xref linkend="synaptic-prefs-ordercolor"/>.
+			The column order and the used colors can be changed in the preferences.
 		</para>	
 	</tip>
 </sect2>
 
 
 <sect2 id="synaptic-win-properties" xreflabel="properties">
-	<title>
-		Package Properties
-	</title>
+	<title>Package Properties</title>
 
 	<para>
 		To open the properties dialog of a selected package:
@@ -555,7 +538,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					Press the key combination <keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>
+					Press the key combination <keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo>
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -583,9 +566,7 @@
 		The notebook provides the following tabs:
 
 		<table frame="topbot" id="table-synaptic-propertiestabs">
-			<title>
-				Tabs in the properties dialog
-			</title>
+			<title>Tabs in the properties dialog</title>
 			<tgroup cols="2" colsep="0" rowsep="0">
 				<colspec colname="COLSPEC0" colwidth="30*"/>
 				<colspec colname="COLSPEC1" colwidth="70*"/>
@@ -634,11 +615,12 @@
 </sect1>
 
 
-<sect1 id="synaptic-browsefind"> 
-	<title>
-		Browsing and Finding Packages
-	</title> 
+<!-- sect1 id="synaptic-browsefind"> 
 
+NEEDS A REWRITE - SO DISABLED FOR 0.53
+	<title>Browsing and Searching for Packages</title> 
+
+	
 <sect2 id="synaptic-browse">
 	<title>
 		To Browse the List of Known Packages (FIXME)
@@ -684,9 +666,7 @@
 
 
 <sect2 id="synaptic-find"> 
-	<title>
-		To Find and Browse Packages (FIXME)
-	</title> 
+	<title>To Find and Browse Packages (FIXME)</title> 
 
 	<anchor id="anchor-find" xreflabel="found"/>
 
@@ -807,11 +787,9 @@
 	</varlistentry>
 </variablelist>
 </sect2>
-</sect1>
+</sect1 -->
 <sect1 id="synaptic-single"> 
-	<title>
-		Managing Packages
-	</title> 
+	<title>Managing Packages</title> 
 
 	<para>
 		This chapter covers the basic actions <xref linkend="anchor-installing"/>,
@@ -822,51 +800,48 @@
 		Furthermore performing a <xref linkend="anchor-dist-upgrade"/>,
 		<xref linkend="anchor-dwww"/> the online documentation, 
 		<xref linkend="anchor-changelog"/> the changelog	and the advanced actions
-		<xref linkend="anchor-force"/> the installation of a specifc package version,
-		<xref linkend="anchor-lock"/> a package to the current version are descripted.
+		<xref linkend="anchor-force"/> the installation of a specific package version,
+		<xref linkend="anchor-lock"/> a package to the current version are described.
 	</para>  
 
 <sect2 id="synaptic-pkg-install"> 
-	<title>
-		To Install Packages
-	</title>
+	<title>To Install Packages</title>
 
 	<anchor id="anchor-installing" xreflabel="installing"/>
 
 	<note>
 		<para>
 			If different version of the same package are available &app;  will select the most 
-			applicable by default. To force the installation of a specific version that is differnet 
+			applicable by default. To force the installation of a specific version that is different 
 			to the default one, see <xref linkend="synaptic-pkg-force"/>.
 		</para>
 	</note>
 
 	<para>
-		If you have <xref linkend="anchor-find"/> a package that you want to install 
-		perform the following steps:
+		If you want to install a package perform the following steps:
 	</para>
 	<orderedlist>
 		<listitem>
 			<para>
-				Refresh the list of known packages to be aware of the latest version available:
+				Reload the list of known packages to be aware of the latest version available:
 
 			<itemizedlist>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Edit</guimenu>
-						<guimenuitem>Refresh Package List</guimenuitem>
+						<guimenuitem>Reload Package List</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Refresh</guibutton> in the toolbar.
+						Click on <guibutton>Reload</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -939,7 +914,7 @@
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -954,14 +929,14 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				 </para>
 			</note>
 		</listitem>
 	</orderedlist>
@@ -978,8 +953,7 @@
 				from the system by default.
 			</para>
 			<para>
-				<emphasis>Debian only:</emphasis> You can change the default behavior in the 
-				<xref linkend="synaptic-prefs-action"/>.
+				<emphasis>Debian only:</emphasis> You can change the default behavior in the preferences.
 			</para>
 			<para>
 				<emphasis>Debian only:</emphasis> To remove all files related to the package
@@ -1037,8 +1011,7 @@
 					<listitem>
 						<para>
 							Select the package and
-							press the key combination <keycombo>
-							<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
+							press the key <keycap>Delete</keycap>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1061,7 +1034,7 @@
 					</listitem>
 					<listitem>
 						<para>
-							Choose <menuchoice><guimenu>Actions</guimenu>
+							Choose <menuchoice><guimenu>Edit</guimenu>
 							<guimenuitem>Apply Marked Changes</guimenuitem>
 							</menuchoice> from the menu.
 						</para>
@@ -1069,7 +1042,7 @@
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1084,22 +1057,20 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				</para>
 			</note>
 		</listitem>
 	</orderedlist>
 </sect2>
 <sect2 id="synaptic-pkg-upgrade"> 
-	<title>
-		To Upgrade Packages
-	</title>
+	<title>To Upgrade Packages</title>
 
 	<anchor id="anchor-upgrading" xreflabel="upgrading"/>
 
@@ -1109,25 +1080,25 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				Refresh the list of known packages to be aware of the latest version available:
+				Reload the list of known packages to be aware of the latest version available:
 
 				<itemizedlist>
 					<listitem>
 						<para>
 							Choose <menuchoice><guimenu>Edit</guimenu>
-							<guimenuitem>Refresh Package List</guimenuitem></menuchoice> 
+							<guimenuitem>Reload Package List</guimenuitem></menuchoice> 
 							from the menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Click on <guibutton>Refresh</guibutton> in the toolbar.
+							Click on <guibutton>Reload</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1136,7 +1107,7 @@
 
 		<listitem>
 			<para>
-				Marked the package for upgrade:
+				Mark the package for upgrade:
 
 				<itemizedlist>
 					<listitem>
@@ -1170,7 +1141,7 @@
 						<para>
 							Select the package and
 							press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1200,7 +1171,7 @@
 				<listitem>
 					<para>
 						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -1214,14 +1185,14 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				</para>
 			</note>
 		</listitem>
 	</orderedlist>
@@ -1235,24 +1206,16 @@
 
 
 <sect2 id="synaptic-pkg-upgradesystem"> 
-	<title>
-		To Upgrade the Whole System
-	</title>
+	<title>To Upgrade the Whole System</title>
 
 	<anchor id="anchor-dist-upgrade" xreflabel="system upgrade"/>
-
-
-	<para>
-		The global upgrade enables you to upgrade your system
-		to the latest version without having to mark and validate each package upgrade manually.
-	</para>
 	
 	<para>
-		&app; provides two global upgrade methods:
+		&app; provides two methods for marking packages for upgrade:
 		<variablelist>
 			<varlistentry>
 				<term>
-					Upgrade
+					Default Upgrade
 				</term>
 				<listitem>
 					<para> 
@@ -1270,7 +1233,7 @@
 				<listitem>
 					<para>
 						The smart upgrade method tries to resolve package conflicts intelligently. This includes
-						installing additional required packages and prefering packages with
+						installing additional required packages and preferring packages with
 						higher priority.
 					</para>
 					<para>
@@ -1295,24 +1258,24 @@
 	<orderedlist>
 		<listitem>
 			<para>
-				 Refresh the list of known packages to be aware of the latest version available:
+				 Reload the list of known packages to be aware of the latest version available:
 
 				<itemizedlist>
 					<listitem>
 						<para>
 							Choose <menuchoice><guimenu>Edit</guimenu>
-							<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
+							<guimenuitem>Reload Package List</guimenuitem></menuchoice> from the menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Click on <guibutton>Refresh</guibutton> in the toolbar.
+							Click on <guibutton>Reload</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
 							Press the key combination <keycombo>
-							<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+							<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1321,19 +1284,19 @@
 
 		<listitem>
 			<para>
-				Mark the package(s) for upgrade: 
+				Mark all possible upgrades: 
 
 				<itemizedlist>
 					<listitem>
 						<para>
-							Click on <guibutton>Upgrade System
+							Click on <guibutton>Mark all Upgrades
 							</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
 							Choose <menuchoice><guimenu>Edit</guimenu>
-							<guimenuitem>Upgrade System</guimenuitem>
+							<guimenuitem>Mark all Upgrades</guimenuitem>
 							</menuchoice> from the menu.
 						</para>
 					</listitem>
@@ -1359,7 +1322,7 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+							Click on <guibutton>Apply</guibutton> in the toolbar.
 						</para>
 					</listitem>
 					<listitem>
@@ -1372,7 +1335,7 @@
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1387,30 +1350,28 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				</para>
 			</note>
 		</listitem>
 	</orderedlist>
 
 	<tip>
 		<para>
-			You can change the default upgrade method in the
-			<xref linkend="synaptic-prefs-actions"/> for further upgrades.
+			You can change the default upgrade method for further upgrade in the preferences
+			<!-- xref linkend="synaptic-prefs-actions"/-->.
 		</para>
 	</tip>
 </sect2>
 
 <!-- sect2 id="synaptic-pkg-downgrade"> 
-	<title>
-		To Downgrade Packages
-	</title> 
+	<title>To Downgrade Packages</title> 
 
 	<caution>
 		<para>
@@ -1492,7 +1453,7 @@
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1502,9 +1463,7 @@
 </sect2 -->
 
 <sect2 id="synaptic-pkg-apply">
-	<title>
-		To Apply Marked Changes
-	</title>
+	<title>To Apply Marked Changes</title>
 
 	<tip>
 		<para>
@@ -1532,7 +1491,7 @@
 			<listitem>
 				<para>
 					Press the key combination 
-					<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -1543,21 +1502,19 @@
 	</para>
 	<para>
 		During the processing of the changes you will see a progressbar. Wait until
-		the changes have been applied. This can take some time depending on the size
-		of the changes. Afterwards you will be returned to the main window.
+		the changes have been applied. This can take some time depending on the number
+		of changes. Afterwards you will be returned to the main window.
 	</para>				
 	<note>
 		<para>
 			The progressbar is not available on Debian system. Instead you will
 			see a detailed terminal output.
-		  </para>
+		</para>
 	</note>
 </sect2>
 
 <sect2 id="synaptic-pkg-undo">
-	<title>
-		To Unmark Changes
-	</title>
+	<title>To Unmark Changes</title>
 
 	<para>
 		The following ways allow you to unmark changes:
@@ -1616,7 +1573,7 @@
 					from the menu.
 				</para>
 				<para>
-					This step can be repeated. The maxium number of undo operations can be set
+					This step can be repeated. The maxmium number of undo operations can be set
 					in the preferences. FIX link
 				</para>
 			</listitem>
@@ -1625,9 +1582,7 @@
 </sect2>
 
 <sect2 id="synaptic-pkg-config">
-	<title>
-		To Configure Packages (Debian only)
-	</title>
+	<title>To Configure Packages (Debian only)</title>
 
 	<para>
 		<note>
@@ -1669,9 +1624,7 @@
 </sect2>
 
 <sect2 id="synaptic-pkg-docu">
-	<title>
-		To View Documentation for Packages (Debian only)
- 	</title>
+	<title>To View Documentation for Packages (Debian only)</title>
 
 	<anchor id="anchor-dwww" xreflabel="browsing"/>
 
@@ -1685,7 +1638,7 @@
 	<para>
 		Dwww provides access to all the installed documentation
 		related to package with a web browser. The whole documentation is
-		hostet via a local HTTP server.
+		hosted via a local HTTP server.
 	</para>
 
 	<orderedlist>
@@ -1698,16 +1651,14 @@
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>Package</guimenu>
-				<guimenuitem>Documentation</guimenuitem></menuchoice>.
+				<guimenuitem>Browse Documentation</guimenuitem></menuchoice>.
 			</para>
 		</listitem>
 	</orderedlist>
 
 </sect2>
 <sect2 id="synaptic-pkg-changelog">
-	<title>
-		To View the Changelog of a Package (Debian only)
- 	</title>
+	<title>To View the Changelog of a Package (Debian only)</title>
 
 	<anchor id="anchor-changelog" xreflabel="reading"/>
 
@@ -1718,7 +1669,7 @@
 	</note>
 	
 	<para>
-		To view the changelog of a native Debian package perfrom the following steps:
+		To view the changelog of a native Debian package perform the following steps:
 	</para>
 
 	<orderedlist>
@@ -1737,9 +1688,7 @@
 </sect2>
 
 <sect2 id="synaptic-pkg-lock">
-	<title>
-		To Lock a Package to the Current Version (Debian only)
-	</title>
+	<title>To Lock a Package to the Current Version (Debian only)</title>
 
 	<anchor id="anchor-lock" xreflabel="locking"/>
 
@@ -1755,7 +1704,7 @@
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>Package</guimenu>
-				<guimenuitem>Lock</guimenuitem></menuchoice>.
+				<guimenuitem>Lock Version</guimenuitem></menuchoice>.
 			</para>
 			<para>
 				The &app; will reload the package list. You should now see, that the menu item <menuchoice>
@@ -1773,46 +1722,44 @@
 
 
 <sect2 id="synaptic-pkg-force">
-	<title>
-		To Force the Installation of a Specific Version
-	</title>
+	<title>To Force the Installation of a Specific Version</title>
 
 	<anchor id="anchor-force" xreflabel="forcing"/>
 
 	<warning>
 		<para>
 			The &app; always selects the most applicable version available. If you force a 
-			differnet version from the default one, errors in the dependency handling
+			different version from the default one, errors in the dependency handling
 			can occur.
 		</para>
 	</warning>
 
 	<para>
-		To force the installation of a version of package differnet to the default one 
+		To force the installation of a version of package different to the default one 
 		perform the following steps:
 	</para>
 	<orderedlist>
 		<listitem>
 			<para>
-				Refresh the list of known packages to be aware of the latest version available:
+				Reload the list of known packages to be aware of the latest version available:
 
 			<itemizedlist>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Edit</guimenu>
-						<guimenuitem>Refresh Package List</guimenuitem>
+						<guimenuitem>Reload Package List</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Refresh</guibutton> in the toolbar.
+						Click on <guibutton>Reload</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Press the key combination 
-						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -1832,7 +1779,7 @@
 		<listitem>
 			<para>
 				Select the version that should be marked for installation. To confirm your 
-				descision click on the button <guibutton>Force</guibutton>.
+				decision click on the button <guibutton>Force</guibutton>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1855,7 +1802,7 @@
 					<listitem>
 						<para>
 							Press the key combination 
-							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
 						</para>
 					</listitem>
 				</itemizedlist>
@@ -1870,22 +1817,20 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				 </para>
 			</note>
 		</listitem>
 	</orderedlist>
 </sect2>
 <sect2 id="synaptic-pkg-fix">
-	<title>
-		To Fix Broken Packages
-	</title>
+	<title>To Fix Broken Packages</title>
 	
 	<para>
 		&app; will not allow any further changes to the system before all broken packages are fixed.
@@ -1944,14 +1889,14 @@
 		<listitem>
 			<para>
 				During the processing of the changes you will see a progressbar. Wait until
-				the changes have been applied. This can take some time depending on the size
-				of the changes. Afterwards you will be returned to the main window.
+				the changes have been applied. This can take some time depending on the number
+				of changes. Afterwards you will be returned to the main window.
 			</para>				
 			<note>
 				<para>
 					The progressbar is not available on Debian system. Instead you will
 					see a detailed terminal output.
-				  </para>
+				</para>
 			</note>
 		</listitem>
 	</orderedlist>
@@ -1961,9 +1906,7 @@
 </sect1>
 
 <sect1 id="synaptic-repo">
-	<title>
-		Repositories
-	</title>
+	<title>Repositories</title>
 
 	<para>
 		Packages are made available through so called <emphasis>repositories</emphasis>. The repository contains the
@@ -1977,31 +1920,28 @@
 
 
 <sect2 id="synaptic-repo-update"> 
-	<title>
-		To Refresh the List of Known Packages
-	</title> 
+	<title>To Reload the List of Known Packages</title> 
 	<para>
-		
+		To collect the list of all available packages from the repositories choose one of the following
+		methods:
 	</para>
 	<itemizedlist>
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>Edit</guimenu>
-				<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
+				<guimenuitem>Reload Package List</guimenuitem></menuchoice> from the menu.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Click on <guibutton>Update List</guibutton> in the toolbar.
+				Click on <guibutton>Reload</guibutton> in the toolbar.
 			</para>
 		</listitem>
 	</itemizedlist>
 </sect2>
 
 <sect2 id="synaptic-repo-manage"> 
-	<title>
-		To Edit, Add or Remove Repositories
-	</title> 
+	<title>To Edit, Add or Remove Repositories</title> 
 	<para>
 		You can edit, add or delete repositories in the repository preferences.
 	</para>
@@ -2011,9 +1951,7 @@
 	</para>
 
 	<figure>
-		<title>
-			Repository Preferences
-		</title>
+		<title>Repository Preferences</title>
 		<screenshot> 
 			<mediaobject> 
 				<imageobject>
@@ -2032,9 +1970,7 @@
 </sect2>
 
 <sect2 id="synaptic-repo-cdrom"> 
-	<title>
-		To Add Repositories From CD-ROM
-	</title> 
+	<title>To Add Repositories From CD-ROM</title> 
 	<para> 
 		Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Add CD...</guimenuitem></menuchoice>
 		from the menu.
@@ -2042,18 +1978,14 @@
 </sect2>
 
 <sect2 id="synaptic-repo-aptline"> 
-	<title>
-		The Syntax of the APT line
-	</title> 
+	<title>The Syntax of the APT line</title> 
 	<para> 
 		The package manager stores all available repositories in a text based configuration file. 
-		Each line describes the type, location and content of one repositroy.
+		Each line describes the type, location and content of one repository.
 	</para>
 
 	<table frame="topbot" id="table-synaptic-aptline-syntax">
-		<title>
-			Synatax of an APT line e.g. <emphasis>deb http://ftp.debian.org sarge main</emphasis>
-		</title>
+		<title>Syntax of an APT line e.g. <emphasis>deb http://ftp.debian.org sarge main</emphasis></title>
 		<tgroup cols="2" colsep="0" rowsep="0">
 			<colspec colname="COLSPEC0" colwidth="30*"/>
 			<colspec colname="COLSPEC1" colwidth="70*"/>
@@ -2073,7 +2005,7 @@
 						deb
 					</entry>
 					<entry valign="top">
-						The first elements describes the type of the repositroy.
+						The first elements describes the type of the repository.
 						Possible values are <emphasis>deb</emphasis> (Debian binary packages), <emphasis>deb-src
 						</emphasis>(Debian source packages), <emphasis>rpm</emphasis> (RPM binary packages), 
 						<emphasis>rpm-src</emphasis> (Redhat source packages), <emphasis>rpmdir</emphasis>
@@ -2087,7 +2019,7 @@
 					</entry>
 					<entry valign="top">
 						The second element is the location of the repository.
-						The repositroy can be accessed by the protocols HTTP and 
+						The repository can be accessed by the protocols HTTP and 
 						FTP, or locally on a CD, DVD or hard disk.
 					</entry>
 			        </row>
@@ -2108,7 +2040,7 @@
 					</entry>
 					<entry valign="top">
 						The forth element describes sections of the 
-						repositroy that should be included. By default official Debian repositories are
+						repository that should be included. By default official Debian repositories are
 						separated into the sections <emphasis>main</emphasis>, <emphasis>
 						contrib</emphasis> and <emphasis>non-free</emphasis>, see the 
 						<ulink
@@ -2127,20 +2059,16 @@
 </sect1>
 
 <sect1 id="synaptic-filter">
-	<title>
-		Filters
-	</title>
+	<title>Custom Filters</title>
 	<para>
-		Filters enable you to narrow down the list of shown packages.
+		Filters enable you to narrow down the list of shown packages by a variety of package attributes.
 	</para>
 	<para>
 		&app; comes with a set of predefined filters.
 	</para>
 
 	<table frame="topbot" id="table-synaptic-filters">
-		<title>
-			Predefined Filters
-		</title>
+		<title>Predefined Filters</title>
 		<tgroup cols="2" colsep="0" rowsep="0">
 			<colspec colname="COLSPEC0" colwidth="30*"/>
 			<colspec colname="COLSPEC1" colwidth="70*"/>
@@ -2161,6 +2089,58 @@
 						Display all known packages.
 					</entry>
 				</row>
+				<row>
+					<entry valign="top">Marked Changes</entry>
+					<entry valign="top">
+						Display all packages that are marked for a status change.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">Pkg with Debconf</entry>
+					<entry valign="top">
+						Display all packages that can be configured through debconf
+						(Debian only).
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Broken</entry>
+					<entry valign="top">
+						Display only packages with broken dependencies.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Upgradable (upstream)</entry>
+					<entry valign="top">
+						Display all packages that can be upgraded to a later 
+						upstream version.
+			                </entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+
+
+	<para>
+		Because of some interface changes the set of predefined filters changed, too.
+		The old and deprecated filters are not removed automatically by Synaptic. 
+	</para>
+
+	<table frame="topbot" id="table-synaptic-filters-deprecated">
+		<title>Deprecated Filters</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Filter
+					</entry>
+					<entry valign="top" align="left">
+						Description
+					</entry>
+				</row>
+			</thead>
+			<tbody>
 				<row>
 					<entry valign="top">Install</entry>
 					<entry valign="top">
@@ -2222,8 +2202,7 @@
 				<row>
 					<entry valign="top">Search Filter</entry>
 					<entry valign="top">
-						Display the last results of the advanced package
-						package search, see <xref linkend="synaptic-pkg-find-advsearch"/>.
+						Display the results of the last package search.
 					</entry>
 				</row>
 			</tbody>
@@ -2231,43 +2210,36 @@
 	</table>
 
 <sect2 id="synaptic-filter-apply"> 
-	<title>
-		To Apply Filters
-	</title> 
+	<title>To Apply Filters</title> 
 	<para>
-		To apply a filter:
+		To apply a filter follow these steps:
 	</para>
-	<itemizedlist>
+	<orderedlist>
 		<listitem>
 			<para>
-				Choose the filter from the <guibutton>Show</guibutton> combobox in the main window.
+				Choose <guibutton>Custom Filters</guibutton> from the category combobox in 
+				the main window.
 			</para>	
 		</listitem>
-	</itemizedlist>
+		<listitem>
+			<para>
+				Choose the wished filter from the <xref linkend="synaptic-win-selector"/>.
+			</para>
+		</listitem>
+	</orderedlist>
 </sect2>
 
 <sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
-	<title>
-		To Edit or Create Filters
-	</title> 
+	<title>To Edit or Create Custom Filters</title> 
 
 	<para>
 		Filters can be created, deleted and modified in the filter editor:
 	</para>
 
-	<itemizedlist>
-		<listitem>
-			<para>
-				Choose from the menu <menuchoice><guimenu>View</guimenu><guimenuitem>
-				Edit Filters...</guimenuitem></menuchoice>.
-			</para>
-		</listitem>
-		<listitem>
-			<para>
-				Click on <guibutton>Filters...</guibutton> in the main window.
-			</para>
-		</listitem>
-	</itemizedlist>
+	<para>
+		Choose <menuchoice><guimenu>Preferences</guimenu><guimenuitem>
+		Filters</guimenuitem></menuchoice> from the menu.
+	</para>
 
 	<figure>
 		<title>Edit Filters</title> 
@@ -2303,16 +2275,6 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				View
-			</term>
-			<listitem>
-				<para>
-					Specify the arrangement of the results.
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term>
 				Rules
 			</term>
 			<listitem>
@@ -2327,7 +2289,7 @@
 						</term>
 						<listitem>
 							<para>
-								Allows you to select packages by their status.
+								Allows you to search packages by status.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -2337,7 +2299,7 @@
 						</term>
 						<listitem>
 							<para>
-								Allows you to select packages by their section.
+								Allows you to search packages by section.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -2347,6 +2309,8 @@
 						</term>
 						<listitem>
 							<para>
+								Allows you to search packages by a variety of
+								attributes e.g. name, dependencies or origin.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -2372,8 +2336,10 @@
 
 
 
-<sect1 id="snyaptic-prefs">
+<!-- sect1 id="snyaptic-prefs">
 	<title>Preferences</title>
+
+	NEEDS SOME LOVE - THEREFOR DISABLED
 
 <sect2 id="synaptic-prefs-general" xreflabel="action preferences"> 
 	<title>General</title> 
@@ -2493,9 +2459,7 @@
 </sect2>
 
 <sect2 id="synaptic-prefs-layout"> 
-	<title>
-		Layout
-	</title> 
+	<title>Layout</title> 
 	<para>
 		You can change the appearance of Synaptic.
 	</para>
@@ -2524,9 +2488,7 @@
 </sect2>
 
 <sect2 id="synaptic-prefs-ordercolor"> 
-	<title>
-		Column Order and Colours
-	</title> 
+	<title>Column Order and Colours</title> 
 	<para>
 		Modify the appearance of the package list in the main window.
 	</para>
@@ -2556,37 +2518,29 @@
 </sect2>    
 
 <sect2 id="synaptiac-prefs-temp"> 
-	<title>
-		Temporary Files
-	</title> 
+	<title>Temporary Files</title> 
 	<para>
 		Configure the management of completely or partially downloaded package files.
 	</para>
 </sect2> 
 
 <sect2 id="synaptiac-prefs-network"> 
-	<title>
-		Network
-	</title> 
+	<title>Network</title> 
 	<para> 
 		Configure the Internet connection and proxy server.
 	</para>
 </sect2> 
 
 <sect2 id="synaptiac-prefs-expert"> 
-	<title>
-		Expert
-	</title>
+	<title>Expert</title>
 	<para>
 		Undocumented.	
 	</para>
 </sect2> 
-</sect1>
+</sect1 -->
 
 <sect1 id="synaptic-bugs">
-	<title>
-		Known Bugs and Limitations
-	</title>
+	<title>Known Bugs and Limitations</title>
 	<para>
 		
 
@@ -2645,9 +2599,7 @@
 </sect1>
 
 <sect1 id="synaptic-shortcuts">
-	<title>
-		Keyboard Shortcuts
-	</title>
+	<title>Keyboard Shortcuts</title>
 	<para>
 		List of all global short cuts in &app;:
 	</para>
@@ -2659,82 +2611,117 @@
 			<tbody>
 				<row>
 					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
+						Reload the list of known packages
 					</entry>
-					<entry valign="top">
-						Apply all marked changes
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Open the package find dialog
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Mark all possible upgrades
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Mark the selected package(s) for installation
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Unmarked any changes and set package as before
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Upgrade the whole system by marking all available upgrade
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Mark the selected package(s) for installation
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Quit &app;
-					</entry>
-				</row>
-				<row>
 					<entry valign="top">
 						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
 					</entry>
+				</row>
+				<row>
 					<entry valign="top">
-						Mark the selected package(s) for removal
+						Open the package search dialog
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
+						Open the properties dialog for the selected package
 					</entry>
 					<entry valign="top">
-						Refresh the list of known package
+						<keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Mark the selected package(s) for installation
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Mark the selected package(s) for upgrade
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Mark the selected package(s) for removal
+					</entry>
+					<entry valign="top">
+						<keycap>Delete</keycap>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Mark the selected package(s) for complete removal (Debian only)
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Shift</keycap><keycap>Delete</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Unmark any changes to the selected package(s)
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Mark all possible upgrades
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Undo the last status change to a package and to the
+						therefor required dependencies
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>Z</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Redo the last reverted status change to a package and to the
+						therefor required dependencies
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Shift</keycap><keycap>Ctrl</keycap>
+						<keycap>Z</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Apply all marked changes
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Quit &app;
+					</entry>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Show the manual of &app;
+					</entry>
+					<entry valign="top">
+						<keycap>F1</keycap>
 					</entry>
 				</row>
 			</tbody>
@@ -2744,9 +2731,7 @@
 
 
 <sect1 id="myapp-about"> 
-	<title>
-		About &app;
-	</title> 
+	<title>About &app;</title> 
 	<para> 
 		&app; was originally written by Alfredo K. Kojima (<email>kojima@windowmaker.org</email>)
 		and is now maintained by Michael Vogt (<email>mvo@debian.org</email>) and

@@ -610,6 +610,10 @@ void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
       f.getPattern(i, type, pattern, exclude);
       setPatternRow(-1, exclude, type, utf8(pattern.c_str()));
    }
+   if(f.getAndMode())
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_and")), TRUE);
+   else
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_or")), TRUE);
 }
 
 void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
@@ -707,6 +711,9 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
       g_free(what);
       g_free(text);
    }
+   
+   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_and"))));
+
 }
 
 void RGFilterManagerWindow::editFilter()

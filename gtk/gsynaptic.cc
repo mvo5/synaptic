@@ -197,10 +197,9 @@ int main(int argc, char **argv)
       packageLister->registerObserver(mainWindow);
    }
 
+   mainWindow->setInterfaceLocked(false);
    mainWindow->restoreState();
    mainWindow->showErrors();
-
-   mainWindow->setInterfaceLocked(false);
 
    if(_config->FindB("Volatile::Upgrade-Mode",false)) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);

@@ -7,10 +7,15 @@
   <property name="title" translatable="yes">Preferences</property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_CENTER</property>
-  <property name="modal">False</property>
+  <property name="modal">True</property>
   <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
 
   <child>
     <widget class="GtkVBox" id="vbox8">
@@ -105,6 +110,7 @@
 			      <property name="label" translatable="yes">Show package properties in the main window</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -206,6 +212,7 @@
 			      <property name="label" translatable="yes">Ask to confirm changes also affecting other packages</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -224,6 +231,7 @@
 			      <property name="label" translatable="yes">Consider recommended packages as dependencies</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -243,6 +251,7 @@
 			      <property name="label" translatable="yes">Clicking on the status icon marks the most likely action</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -585,6 +594,7 @@
 			      <property name="label" translatable="yes">Apply changes in a terminal window</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -604,6 +614,7 @@
 			      <property name="label" translatable="yes">Ask to quit after the changes have been applied successfully</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -767,6 +778,7 @@
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
 				  <signal name="clicked" handler="on_button_column_up_clicked" last_modification_time="Fri, 16 Jul 2004 03:53:42 GMT"/>
 
 				  <child>
@@ -776,6 +788,10 @@
 				      <property name="yalign">0.5</property>
 				      <property name="xscale">0</property>
 				      <property name="yscale">0</property>
+				      <property name="top_padding">0</property>
+				      <property name="bottom_padding">0</property>
+				      <property name="left_padding">0</property>
+				      <property name="right_padding">0</property>
 
 				      <child>
 					<widget class="GtkHBox" id="hbox80">
@@ -837,6 +853,7 @@
 				  <property name="visible">True</property>
 				  <property name="can_focus">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
 				  <signal name="clicked" handler="on_button_column_down_clicked" last_modification_time="Fri, 16 Jul 2004 03:57:22 GMT"/>
 
 				  <child>
@@ -846,6 +863,10 @@
 				      <property name="yalign">0.5</property>
 				      <property name="xscale">0</property>
 				      <property name="yscale">0</property>
+				      <property name="top_padding">0</property>
+				      <property name="bottom_padding">0</property>
+				      <property name="left_padding">0</property>
+				      <property name="right_padding">0</property>
 
 				      <child>
 					<widget class="GtkHBox" id="hbox81">
@@ -1000,6 +1021,7 @@
 			      <property name="label" translatable="yes">Use custom application font</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -1022,6 +1044,7 @@
 			      <property name="label" translatable="yes">Use custom terminal font</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -1042,6 +1065,7 @@
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <signal name="clicked" handler="on_button_default_font_clicked" last_modification_time="Sun, 02 Nov 2003 14:15:14 GMT"/>
 
 			      <child>
@@ -1051,6 +1075,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xscale">0</property>
 				  <property name="yscale">0</property>
+				  <property name="top_padding">0</property>
+				  <property name="bottom_padding">0</property>
+				  <property name="left_padding">0</property>
+				  <property name="right_padding">0</property>
 
 				  <child>
 				    <widget class="GtkHBox" id="hbox69">
@@ -1114,6 +1142,7 @@
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <signal name="clicked" handler="on_button_terminal_font_clicked" last_modification_time="Sun, 02 Nov 2003 14:16:36 GMT"/>
 
 			      <child>
@@ -1123,6 +1152,10 @@
 				  <property name="yalign">0.5</property>
 				  <property name="xscale">0</property>
 				  <property name="yscale">0</property>
+				  <property name="top_padding">0</property>
+				  <property name="bottom_padding">0</property>
+				  <property name="left_padding">0</property>
+				  <property name="right_padding">0</property>
 
 				  <child>
 				    <widget class="GtkHBox" id="hbox70">
@@ -1302,6 +1335,7 @@
 			      <property name="label" translatable="yes">Color packages by their status</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -1362,6 +1396,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1415,6 +1450,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1468,6 +1504,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1521,6 +1558,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1574,6 +1612,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1627,6 +1666,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1680,6 +1720,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1733,6 +1774,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1786,6 +1828,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1839,6 +1882,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1892,6 +1936,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1944,6 +1989,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -1997,6 +2043,7 @@
 					  <property name="label" translatable="yes">Color</property>
 					  <property name="use_underline">True</property>
 					  <property name="relief">GTK_RELIEF_NORMAL</property>
+					  <property name="focus_on_click">True</property>
 					</widget>
 					<packing>
 					  <property name="padding">0</property>
@@ -2150,6 +2197,7 @@
 			      <property name="label" translatable="yes">Leave all downloaded packages in the cache</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">True</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -2168,6 +2216,7 @@
 			      <property name="label" translatable="yes">Delete downloaded packages after installation</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -2187,6 +2236,7 @@
 			      <property name="label" translatable="yes">Delete packages which are no longer available only</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
 			      <property name="active">False</property>
 			      <property name="inconsistent">False</property>
 			      <property name="draw_indicator">True</property>
@@ -2212,6 +2262,7 @@
 				  <property name="label" translatable="yes">_Delete Cached Package Files</property>
 				  <property name="use_underline">True</property>
 				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
 				  <signal name="clicked" handler="on_button_clean_cache_clicked" last_modification_time="Wed, 10 Sep 2003 11:05:20 GMT"/>
 				</widget>
 				<packing>
@@ -2367,6 +2418,7 @@
 			  <property name="label" translatable="yes">Direct connection to the internet</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
 			  <property name="active">True</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
@@ -2385,6 +2437,7 @@
 			  <property name="label" translatable="yes">Manual proxy configuration</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
 			  <property name="draw_indicator">True</property>
@@ -3055,6 +3108,7 @@
 	      <property name="label">gtk-apply</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <signal name="clicked" handler="on_apply_clicked" last_modification_time="Thu, 06 Feb 2003 15:53:47 GMT"/>
 	    </widget>
 	  </child>
@@ -3067,6 +3121,7 @@
 	      <property name="label">gtk-cancel</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <signal name="clicked" handler="on_close_clicked" last_modification_time="Thu, 06 Feb 2003 15:54:11 GMT"/>
 	    </widget>
 	  </child>
@@ -3079,6 +3134,7 @@
 	      <property name="label">gtk-ok</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <signal name="clicked" handler="on_ok_clicked" last_modification_time="Thu, 06 Feb 2003 15:50:24 GMT"/>
 	    </widget>
 	  </child>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 12:10+0200\n"
-"PO-Revision-Date: 2004-08-03 18:04+0200\n"
+"POT-Creation-Date: 2004-08-09 18:32+0200\n"
+"PO-Revision-Date: 2004-08-09 19:28+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -222,7 +222,7 @@ msgstr "Nem sikerült létrehozni az átmeneti fájlt"
 
 #: common/indexcopy.cc:87
 msgid "Internal Error: Couldn't fork gzip. Please report."
-msgstr "Belső hiba: nem lehet forkolni gzipre. Kérem jelentse."
+msgstr "Belső hiba: nem lehet elindítani a gzip-et. Kérem jelentse."
 
 #: common/indexcopy.cc:108
 msgid "gzip failed, perhaps the disk is full."
@@ -257,7 +257,7 @@ msgstr "Nem sikerült megnyitni a(z) %s.new fájlt"
 #: common/rcdscanner.cc:135 common/rcdscanner.cc:245
 #, c-format
 msgid "Failed to rename %s.new to %s"
-msgstr "Nem tudtam átnevezni %s.new-t %s nevűre"
+msgstr "Nem tudtam átnevezni %s.new-t a következőre: %s"
 
 #: common/rcdscanner.cc:200 common/rcdscanner.cc:233
 msgid "Internal error"
@@ -362,7 +362,7 @@ msgstr "HIBA: nem tudom megnyitni %s-t írásra"
 
 #: common/rconfiguration.cc:109
 msgid "ERROR: Could not get password entry for superuser"
-msgstr "HIBA: Nem találom a superuser jelszóbejegyzését"
+msgstr "HIBA: Nem találom a root felhasználó jelszóbejegyzését"
 
 #: common/rconfiguration.cc:118
 #, c-format
@@ -611,7 +611,7 @@ msgstr ""
 
 #: common/rpackagelister.cc:464
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
-msgstr "Belső hiba, MindentFrissít törött dolgok. Kérem jelentse."
+msgstr "Belső hiba, MindentFrissít megsértette az anyagot. Kérem jelentse."
 
 #: common/rpackagelister.cc:482
 msgid "dist upgrade Failed"
@@ -683,7 +683,7 @@ msgstr "Kijelölések beállítása..."
 
 #: common/rpmindexcopy.cc:116
 msgid "Internal Error: couldn't fork bzip2. Please report."
-msgstr "Belső hiba: nem sikerült forkolni a bzip2-t. Kérem jelentse."
+msgstr "Belső hiba: nem sikerült elindítani a bzip2-t. Kérem jelentse."
 
 #: common/rpmindexcopy.cc:136
 msgid "bzip2 failed, perhaps the disk is full."
@@ -719,7 +719,7 @@ msgstr "Telepítve (helyi vagy elavult)"
 
 #: common/rpackageview.cc:106
 msgid "Not installed (residual config)"
-msgstr "Nincs telepítve (visszamaradt konfig)"
+msgstr "Nincs telepítve (visszamaradt beállítások)"
 
 #: common/rpackageview.cc:353
 msgid "Search Filter"
@@ -959,9 +959,8 @@ msgid "Color selection"
 msgstr "Szín kijelölése"
 
 #: gtk/rgpreferenceswindow.cc:914
-#, fuzzy
 msgid "Visible"
-msgstr "Változó:"
+msgstr "Látható"
 
 #: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
 msgid "Preferences"
@@ -1105,7 +1104,8 @@ msgstr "Nincs csomag kiválasztva.\n"
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr ""
-"Válassza ki %s azon verzióját, amelynek telepítését ki akarja kényszeríteni"
+"Válassza ki a(z) %s csomag azon verzióját, amelynek telepítését ki akarja "
+"kényszeríteni"
 
 #: gtk/rgmainwindow.cc:456
 msgid ""
@@ -2421,7 +2421,7 @@ msgstr "Ütköző csomagok"
 
 #: gtk/window_filters.glade.h:9 gtk/window_details.glade.h:15
 msgid "Dependent Packages"
-msgstr "Füöggő csomagok"
+msgstr "Függő csomagok"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"

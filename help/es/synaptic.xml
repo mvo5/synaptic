@@ -1,0 +1,3378 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "gpl.xml">
+<!ENTITY appversion "0.52">
+<!ENTITY app "<application>Gestor de Paquetes Synaptic</application>">
+<!ENTITY manrevision "0.1">
+<!ENTITY date "Octubre de 2003">
+]>
+<!-- =============Document Header ============================= -->
+<article id="index" lang="es">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+<articleinfo> 
+<title>Manual del &app; V&manrevision;</title>       
+
+<copyright> 
+	<year>2003,2004</year> 
+	<holder>Sebastian Heinlein</holder> 
+</copyright>
+
+	<!-- translators: uncomment this: -->
+
+<copyright>
+	<year>2004</year>
+	<holder>Francisco Javier F. Serrador (Traducción al español)</holder>
+</copyright>
+
+
+<authorgroup> 
+	<author> 
+		<firstname>Sebastian</firstname> 
+		<surname>Heinlein</surname> 
+	</author>
+</authorgroup>
+
+<releaseinfo>
+	Este manual describe la versión &appversion; del Gestor de
+Paquetes Synaptic.
+</releaseinfo> 
+
+<legalnotice>
+	<title>
+		Aviso legal
+	</title>	
+	<para> 
+		Este documento se distribuye bajo los términos de la
+	Licencia Pública General GNU tal como la publica la Free
+	Software Foundation; en la versión 2 de la Licencia, o (a su
+	elección) cualquier versión posterior. Puede encontrar una
+	copia de esta licencia en este manual o en el archivo incluido con el
+	código fuente de este programa.
+	</para>
+</legalnotice>
+
+<legalnotice> 
+	<title>
+		Retroalimentación
+	</title>
+	<para>
+		Para informar de un fallo o hacer cualquier sugerencia
+		concerniente al &app; o este manual, use el sistema de
+		informe de fallos en <ulink url="http://www.nongnu.org/synaptic" 
+		type="http">la web de Synaptic</ulink>, contacte a
+		través de la lista de correo <email>synaptic-devel@nongnu.org</email>
+		o únase al canal IRC #synaptic en irc.freenode.org.
+	</para>
+	<!-- Translators may also add here feedback address for
+	translation -->
+        <para> Para informar de un fallo en la traducción al español
+	de este manual, póngase en contacto con el Equipo de
+	localización al español de Gnome, en la dirección
+	<email>traductores@es.gnome.org</email> o a través del
+	proyecto de documentación de Linux, TLDP-ES, en la lista de
+	correo <email>lucas@es.tldp.org</email>
+        </para>
+
+</legalnotice> 
+</articleinfo> 
+
+<indexterm zone="index"> 
+	<primary>Gestor de paquetes Synaptic</primary> 
+</indexterm> 
+<indexterm zone="index"> 
+	<primary>Paquetes</primary>
+</indexterm>
+<indexterm zone="index"> 
+	<primary>Software</primary>
+</indexterm>
+
+<sect1 id="synaptic-introduction"> 
+	<title>
+		Introducción
+	</title> 
+	<para>
+		La aplicación &app; le permite instalar software en su
+		equipo y gestionar el software que está ya
+		instalado. El software se entrega en lo que se conocen
+		como <emphasis>paquetes</emphasis>. Una aplicación
+		individual puede incluso tener varios paquetes: ej: la
+		aplicación <application>Mozilla Internet
+		Suite</application> se empaqueta en
+		<emphasis>mozilla-browser</emphasis> que contiene el
+		navegador y <emphasis>mozilla-mail</emphasis> que
+		contiene el cliente de correo (este ejemplo se refiere
+		a  Debian GNU/Linux y puede ser diferente a su distribución).
+	</para>
+	<para>
+		Para evitar duplicidades, la mayoría de las
+		aplicaciones reutiliza la funcionalidad de otras
+		aplicaciones o bibliotecas. Las bibliotecas sólo
+		proporcionan funciones a otras bibliotecas o
+		aplicaciones y no son aplicaciones por sí mismas. De
+		esta manera, la mayoría de los paquetes dependen de
+		otros paquetes. El &app; resuelve las
+		<emphasis>dependencias</emphasis> por usted automáticamente. 
+	</para>
+	<para>
+		Técnicamente el &app; se basa en el gestor de paquetes
+	        <application>APT</application> y proporciona funciones
+	        que son similares a las de la herramienta de línea de
+	        comandos <command>apt-get</command> en un entorno gráfico.
+	</para>
+	<para>
+		En detalle el &app; proporciona las características siguientes:
+
+	        <itemizedlist>
+		        <listitem>
+			        <para>
+				        Instalar, eliminar,
+				        configurar, actualizar y 
+				        desactualizar uno o varios paquetes.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+					Actualizar el sistema completo.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+	                                Administrar repositorios de paquetes.
+		                </para>
+	                </listitem>
+		        <listitem>
+			        <para>
+				        Buscar paquetes por nombre,
+				        descripción y varios otros atributos.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+					Seleccionar paquetes por
+					estado, sección, nombre o un
+					filtro personalizado.
+	                        </para>
+		        </listitem>
+			<listitem>
+				<para>
+	                                 Ordenar paquetes por nombre,
+	                                 estado, tamaño, o versión.
+		                </para>
+			</listitem>
+	                <listitem>
+		                <para>
+			                Examinar toda la documentación
+			                disponible en línea
+			                relacionada con un paquete.
+				</para>
+	                </listitem>
+	                <listitem>
+		                <para>
+			                Bloquear paquetes a la versión
+			                actual.
+				</para>
+	                </listitem>
+	                <listitem>
+		                <para>
+			                Forzar la instalación de una
+			                versión de paquete específica.
+				</para>
+	                </listitem>
+		</itemizedlist>
+	</para>
+	<note>
+		<para>
+			Necesita derechos de administrador (root) para
+			instalar o modificar los paquetes de software
+			en su equipo.
+		</para>
+	</note>
+
+	<para>
+		Puede iniciar <application>&app;</application> de las
+		siguientes maneras:
+
+	<variablelist>
+		<varlistentry>
+			<term>
+				Menú de
+				<guimenu>Aplicaciones</guimenu> de Gnome
+			</term>
+			<listitem>
+				<para>
+					Elija
+					<menuchoice>
+					<guisubmenu>Herramientas de sistema</guisubmenu>
+					<guimenuitem>Gestor de
+					paquetes Synaptic</guimenuitem>
+					</menuchoice>. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>Menú KDE</term>
+			<listitem>
+				<para>
+					Elija 
+					<menuchoice>
+					<guisubmenu>Configuración</guisubmenu>
+					<guisubmenu>Extra</guisubmenu>
+					<guimenuitem>Gestor de
+					paquetes Synaptic</guimenuitem>
+					</menuchoice>. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>Línea de comandos</term>
+			<listitem>
+				<para>
+					Para iniciar <application>&app;
+					</application> desde la línea
+					de comandos teclee lo
+					siguiente y pulse <keycap>Retorno</keycap>:
+				</para>
+				<para> 
+					<command>synaptic</command> 
+				</para> 
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	</para> 
+
+	<caution>
+		<para>
+			Puede inutilizar su sistema.
+		</para>
+		<para>
+			Synaptic permite realizar cambios en el
+			corazón de su sistema.
+		</para>
+		<para>
+			Siempre use el &app; con cuidado.
+		</para>
+	</caution>
+
+</sect1>
+
+<sect1 id="synatpic-win"> 
+	<title>Ventana principal</title> 
+
+<sect2 id="synaptic-win-overview">
+	<title>Vistazo general</title>
+	<para>
+		Cuando inicie <application>&app;</application>, se
+		mostrará la siguiente ventana.
+	</para>
+
+	<figure id="mainwindow-fig"> 
+		<title>Ventana de inicio de &app;</title> 
+		<screenshot> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="figures/synaptic-start.png" 
+					format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+					Muestra la ventana principal
+					de &app;. Contiene la barra de
+					título, la barra de menú, la
+					barra de herramientas, el área
+					de visualización, y las barras
+					de desplazamiento. La barra de
+					menú contiene los menús de
+					Archivo, Editar, Paquete, Preferencias 
+					y Ayuda. 
+					</phrase> 
+				</textobject> 
+			  </mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<table frame="topbot" id="table-synaptic-main">
+		<title>Componentes de la ventana de &app;</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Componente
+					</entry>
+					<entry valign="top" align="left">
+						Descripción
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						Barra de menú
+					</entry>
+					<entry valign="top">
+						Contiene menús que
+						puede usar para
+						realizar acciones
+						en el &app;.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Barra de herramientas
+					</entry>
+					<entry valign="top">
+						Proporciona las
+						acciones principales.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Selector
+					de categorías</entry>
+					<entry valign="top">
+						Proporciona categorías
+						para recortar la lista
+						de paquetes mostrados.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Lista de paquetes</entry>
+					<entry valign="top">
+						Lista paquetes
+						conocidos. La lista
+						puede ser reducida
+						usando filtros y categorías.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Campo de descripción</entry>
+					<entry valign="top">
+						Muestra la descripción
+						del paquete seleccionado.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Barra de estado</entry>
+					<entry valign="top">
+						Muestra la información
+						global acerca del
+						estado del &app;.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+</sect2>
+
+<sect2 id="synaptic-win-toolbar">
+	<title>
+		Barra de herramientas
+	</title>
+	
+	<figure>
+		<title>
+			Barra de herramientas de &app;
+		</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-toolbar.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra la barra de
+						herramientas de
+						ventana principal de  &app;
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		La barra de herramientas proporciona las siguientes acciones:
+	
+		<variablelist>
+			<varlistentry>
+				<term>
+					Refrescar
+				</term>
+				<listitem>
+					<para>
+						Refresca la lista de
+						paquetes conocidos.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Actualizar sistema
+				</term>
+				<listitem>
+					<para>
+						Marca todas las
+						actualizaciones
+						posibles y disponibles.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Aplicar
+				</term>
+				<listitem>
+					<para>
+						Aplicar todos los
+						cambios marcados.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Propiedades
+				</term>
+				<listitem>
+					<para>
+						Abre el diálogo <xref
+						linkend="synaptic-win-properties"/>
+						de los paquetes seleccionados.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Buscar
+				</term>
+				<listitem>
+					<para>
+						Abre el diálogo de búsqueda.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+</sect2>
+
+<sect2 id="synaptic-win-selector" xreflabel="selector">
+	<title>
+		Selector de categorías
+	</title>
+	
+	<para>
+		El selector en el lado izquierdo permite reducir la
+		lista de paquetes listados en la <xref linkend="synaptic-win-list"/>
+		por categorías.
+	</para>
+
+	<figure>
+		<title>Selector de categorías</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-categories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra el selector de
+						categorías en la
+						ventana principal de &app;.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		Las siguientes categorías están disponibles:
+		
+		<variablelist>
+			<varlistentry>
+				<term>
+					Secciones
+				</term>
+				<listitem>
+					<para>
+						Muestra los paquetes
+						pertenecientes a la
+						sección seleccionada, únicamente.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Estado
+				</term>
+				<listitem>
+					<para>
+						Muestra los paquetes
+						con el estado
+						seleccionado, únicamente.
+						
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Alfabético
+				</term>
+				<listitem>
+					<para>
+						Muestra los paquetes
+						con la letra inicial
+						seleccionada, únicamente.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Filtro
+				</term>
+				<listitem>
+					<para>
+						Muestra los paquetes
+						que coinciden con el
+						criterio personalizado
+						seleccionado, únicamente.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Histórico de búsqueda
+				</term>
+				<listitem>
+					<para>
+						Muestra los resultados
+						de la búsqueda
+						seleccionada,
+						únicamente.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+</sect2>
+
+
+<sect2 id="synaptic-win-list" xreflabel="package list">
+	<title>
+		Lista de paquetes
+	</title>
+
+	<para>
+		La lista de paquetes muestra los paquetes de la
+		categoría seleccionada.
+	</para>
+
+	<figure>
+		<title>Lista de paquetes</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagelist.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra la lista de
+						paquetes en la ventana
+						principal de &app;.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<tip>
+		<para>
+			Los iconos de estado usados se explican en la
+			leyenda de iconos. Para abrir la leyenda elija
+			<menuchoice><guimenu>Ayuda</guimenu><guimenuitem>Leyenda
+			de iconos</guimenuitem></menuchoice>
+			en el menú.
+		</para>
+	</tip>
+
+
+	<tip>
+		<para>
+			El orden de columnas y los colores usados
+			pueden cambiarse en las preferencias, vea
+			<xref linkend="synaptic-prefs-ordercolor"/>.
+		</para>	
+	</tip>
+</sect2>
+
+
+<sect2 id="synaptic-win-properties" xreflabel="properties">
+	<title>
+		Propiedades del paquete
+	</title>
+
+	<para>
+		Para abrir el diálogo de propiedades de un paquete seleccionado:
+		
+		<itemizedlist>
+			<listitem>
+				<para>
+					Elija <menuchoice><guimenu>Paquete</guimenu><guimenuitem>Propiedades</guimenuitem></menuchoice>
+					en el menú
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Pulse en
+					<guibutton>Propiedades</guibutton>
+					en la barra de herramientas
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Pulse la combinación de teclas
+					<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+		
+
+	<figure>
+		<title>Diálogo de propiedades del paquete</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagedetails.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra los detalles
+						del paquete en la
+						ventana principal del &app;.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		El cuaderno tiene las solapas siguientes:
+
+		<table frame="topbot" id="table-synaptic-propertiestabs">
+			<title>
+				Solapas en el diálogo de propiedades
+			</title>
+			<tgroup cols="2" colsep="0" rowsep="0">
+				<colspec colname="COLSPEC0" colwidth="30*"/>
+				<colspec colname="COLSPEC1" colwidth="70*"/>
+				<thead>
+					<row rowsep="1">
+						<entry valign="top" align="left">
+							Solapa
+						</entry>
+						<entry valign="top" align="left">
+							Descripción
+						</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry valign="top">
+							Común
+						</entry>
+						<entry valign="top">
+							Muestra la
+							información
+							básica del
+							paquete:
+							nombre,
+							descripción corta, mantenedor, estado, prioridad, etiquetas 
+							<emphasis>(si se soportan)</emphasis> y versión.
+						</entry>
+					</row>
+					<row>
+						<entry valign="top">
+							Descripción
+						</entry>
+						<entry valign="top">
+							Muestra una descripción extensa del paquete.
+						</entry>
+					</row>
+					<row>
+						<entry valign="top">
+							Dependencias
+						</entry>
+						<entry valign="top">
+							Lista los paquetes requeridos, dependientes, proporcionados, sugeridos y recomendados.
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</para>
+</sect2>
+
+</sect1>
+
+
+<sect1 id="synaptic-browsefind"> 
+	<title>
+		Examinar y buscar paquetes
+	</title> 
+
+<sect2 id="synaptic-browse">
+	<title>
+		Para examinar la lista de paquetes conocidos (ARRÉGLAME)
+	</title>
+	
+	<para>
+		&app; le proporciona una lista central de todos los paquetes conocidos. Esto incluye los paquetes que 
+                están disponibles, instalados o incluso rotos. Debido a que la mayoría de las distribuciones contienen 
+                muchos miles de paquetes, puede reducir la lista de paquetes mostrados. Los métodos siguientes permiten
+                examinar la lista de paquetes conocidos:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				La lista del examinados
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				El filtro
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				El campo de búsqueda
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+
+<sect2 id="synaptic-find"> 
+	<title>
+		Para buscar y examinar paquetes (ARREGLAME)
+	</title> 
+
+	<anchor id="anchor-find" xreflabel="found"/>
+
+
+<variablelist>
+<varlistentry id="synaptic-pkg-find-quicksearch">
+	<term>	
+		Para buscar un paquete específico
+	</term>
+	<listitem>
+	<para>
+		Para buscar un paquete específico siga los pasos siguientes:
+	</para>
+	<para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Abra el diálogo de búsqueda:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse la combinación de teclas 
+							<keycombo><keycap>Ctrl</keycap><keycap>f</keycap>
+							</keycombo>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse en
+							<guilabel>Buscar</guilabel> en la barra de herramientas.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija
+							<menuchoice><guimenu>Editar</guimenu><guimenuitem>Buscar</guimenuitem>
+							</menuchoice> del menú.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Introduzca la expresión de búsqueda en el campo
+				<guilabel>Buscar</guilabel>. E.j. "music
+				player" si quiere buscar un reproductor de música.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Seleccione los campos en los que desea buscar.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Pulse en <guilabel>Buscar</guilabel> para iniciar la búsqueda.
+				Esto puede llevar algún tiempo en máquinas lentas y amplios criterios de 
+                                búsqueda.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Después ARREGLAME
+			</para>
+		</listitem>
+	</orderedlist>
+	</para>
+	</listitem>
+</varlistentry>
+
+<varlistentry id="synaptic-pkg-find-advsearch">
+		<term>
+			Mostrar sólo los paquetes buscados
+		</term>
+	
+		<listitem>
+			<para>
+				Para mostrar sólo los paquetes coincidentes en la lista de paquetes, efectúe los siguientes pasos:
+			</para>
+			<para>
+		<orderedlist>
+			<listitem>
+				<para>
+					Abra el diálogo de búsqueda <menuchoice><guimenu>Paquete</guimenu>
+					<guimenuitem>Buscar...</guimenuitem>
+					</menuchoice> del menú o pulse <keycombo><keycap>Ctrl</keycap>
+					<keycap>F</keycap></keycombo>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Teclee la expresión de búsqueda en el campo, por ejemplo: "mp3 ogg player".
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Seleccione los campos que quiere buscar: ej: "nombre" y "descripción"
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Pulse en <guibutton>Buscar</guibutton> para iniciar la búsqueda. En nuestro ejemplo sólo se
+					listarán los reproductores de música y los paquetes relacionados.
+				</para>
+			</listitem>
+		</orderedlist>
+		</para>
+		<para>
+		<tip>
+			<para>
+				Puede crear filtros más complejos con el
+				<xref linkend="synaptic-filter-edit"></xref>.
+			</para>
+		</tip>
+		</para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</sect2>
+</sect1>
+<sect1 id="synaptic-single"> 
+	<title>
+		Gestión de paquetes
+	</title> 
+
+	<para>
+		Este capítulo cubre las acciones básicas <xref linkend="anchor-installing"/>,
+		<xref linkend="anchor-removing"/> y <xref linkend="anchor-upgrading"/>
+		de paquetes.
+	</para>
+	<para>
+		Además de puede efectuar una <xref linkend="anchor-dist-upgrade"/>,
+		ver la documentación en línea con <xref linkend="anchor-dwww"/>, 
+		el informe de cambios <xref
+		linkend="anchor-changelog"/> y las acciones avanzadas para
+		<xref linkend="anchor-force"/> la instalación de una
+		versión de paquete específica,<xref
+		linkend="anchor-lock"/> o describir un paquete en la
+		versión actual.
+	</para>  
+
+<sect2 id="synaptic-pkg-install"> 
+	<title>
+		Para instalar paquetes
+	</title>
+
+	<anchor id="anchor-installing" xreflabel="installing"/>
+
+	<note>
+		<para>
+			Si está disponible una versión diferente del mismo paquete
+			&app;  seleccionará la más idónea por
+			omisión. Para forzar una versión específica
+			que sea diferente de la predeterminada, vea <xref linkend="synaptic-pkg-force"/>.
+		</para>
+	</note>
+
+	<para>
+		Si tiene <xref linkend="anchor-find"/> un paquete que
+		quiere instalar efectúe los pasos siguientes:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Refresque la lista de paquetes
+				conocidos para conocer la última
+				versión disponible:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						Elija <menuchoice><guimenu>Editar</guimenu>
+						<guimenuitem>Refrescar
+						la lista de paquetes</guimenuitem>
+						</menuchoice> del menú.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Pulse en
+						<guibutton>Refrescar</guibutton>
+						en la barra de herramientas.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Pulse la combinación
+						de teclas <keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Maque el paquete para instalación:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse dos
+							veces en el
+							nombre del
+							paquete en
+							<xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+		                        <listitem>
+			                        <para>
+				                        Pulse en el
+					                icono de
+					                estado del
+					                paquete y
+					                elija  <guimenuitem>
+					                Marcar para
+					                instalar</guimenuitem>
+					                del menú.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Pulse con el
+							botón derecho
+							en el paquete
+							y elija <guimenuitem>
+							Marcar para
+							instalación</guimenuitem>
+							del menú contextual.
+						</para>
+					</listitem>
+			                <listitem>
+				                <para>
+					                Seleccione el
+							paquete y elija <menuchoice><guimenu>Paquete</guimenu>
+						        <guimenuitem>Marcar para instalación</guimenuitem>
+							</menuchoice>
+							del menú.
+	                                        </para>
+		                        </listitem>
+					<listitem>
+						<para>
+							Seleccione el
+							paquete y
+							pulse la
+							combinación de
+							teclas <keycombo>
+							<keycap>Ctrl</keycap><keycap>I</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				Si la instalación del paquete requiere
+				cambios adicionales, se le pedirá que
+				los confirme. Para marcar también los
+				cambios adicionales, pulse en el botón <guibutton>Marcar
+				</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplicar los cambios marcados para
+				instalar el paquete:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Aplicar</guibutton>
+							en la barra de
+							tareas.
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Aplicar
+							los cambios marcados</guimenuitem>
+							</menuchoice>
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Se le pedirá confirmación. Compruebe
+				los cambios que serán aplicados. Para
+				continuar con la instalación actual
+				confirme los cambios pulsando en <guibutton>Aplicar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Durante el procesamiento de los
+				cambios verá una barra de
+				progreso. espere hasta que los cambios
+				se hayan aplicado. Esto puede llevar
+				algo de tiempo dependiendo del tamaño
+				de los cambios. Después volverá a la
+				ventana principal.
+			</para>				
+			<note>
+				<para>
+					La barra de progreso no está
+					disponible en un sistema
+					Debian. En su lugar vera una
+					salida de terminal detallada.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-pkg-remove"> 
+	<title>Para eliminar paquetes</title>
+	<anchor id="anchor-removing" xreflabel="removing"/>
+
+	<para>
+		<note>
+			<para>
+				Los archivos de configuración y los
+				datos creados por el usuario (ej: un
+				sitio web en "/var/www") no se
+				eliminarán del sistema por omisión.
+			</para>
+			<para>
+				<emphasis>Sólo Debian:</emphasis>
+				Puede cambiar el comportamiento por
+				omisión en 
+				<xref linkend="synaptic-prefs-action"/>.
+			</para>
+			<para>
+				<emphasis>Sólo Debian:</emphasis> Para
+				eliminar todos los archivos
+				relacionados con un paquete elija
+				<menuchoice><guimenuitem>Marcar para
+				eliminación
+				completa</guimenuitem></menuchoice> en
+				vez de
+				<menuchoice><guimenuitem>Marcar para eliminación</guimenuitem></menuchoice>.
+			</para>
+		</note>
+	</para>
+	<!-- para>
+		<note>
+			<para>
+				<emphasis>Debian only:</emphasis> To also remove packages that are only installed as dependency 
+				of the to be removed 
+				package(s) and that would be no longer needed (orphaned) afterwards, choose 
+				<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
+				</menuchoice> instead of <menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
+			</para>
+		</note>
+	</para -->
+	<para>
+		Para eliminar un paquete siga los siguientes pasos:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Maque el paquete para eliminar:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse dos
+							veces en el
+							nombre del
+							paquete
+							instalado en
+							la 
+							<xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+		                        <listitem>
+			                        <para>
+				                        Pulse en el
+					                icono de
+					                estado del
+					                paquete y
+					                elija  <guimenuitem>
+					                Marcar para
+					                eliminación</guimenuitem>
+					                del menú.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Pulse con el
+							botón derecho
+							en el paquete
+							y elija <guimenuitem>
+							Eliminar</guimenuitem>
+							del menú contextual.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Seleccione el
+							paquete y elija <menuchoice><guimenu>Paquete</guimenu>
+							<guimenuitem>Marcar
+							para eliminación</guimenuitem>
+							</menuchoice>
+							en el menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Seleccione el
+							paquete y
+							pulse la
+							combinación de
+							teclas <keycombo>
+							<keycap>Ctrl</keycap><keycap>R</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				Si la eliminación del paquete requiere
+				cambios adicionales, se le pedirá
+				confirmación. Para marcar los cambios
+				adicionales pulse en el botón  <guibutton>Marcar
+				</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplique los cambios marcados para
+				eliminar los paquetes:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Aplicar</guibutton>
+							en la barra de herramientas.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Acciones</guimenu>
+							<guimenuitem>Aplicar
+							los cambios marcados</guimenuitem>
+							</menuchoice>
+							en el menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Se le pide confirmación. Compruebe el
+				resumen de los cambios que serán aplicados. 
+				Para continuar con la eliminación
+				actual confirme los cambios pulsando
+				en <guibutton>Apply</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Durante el procesado de los cambios
+				verá una barra de progreso. Espere
+				hasta que los cambios se hayan
+				aplicados. Esto llevará algo de tiempo
+				dependiente del tamaño de los
+				cambios. Después volverá a la ventana principal.
+			</para>				
+			<note>
+				<para>
+					La barra de progreso no está
+					disponible en los sistemas
+					debian. En su lugar verá la
+					salida detallada del terminal.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+<sect2 id="synaptic-pkg-upgrade"> 
+	<title>
+		Para actualizar paquetes
+	</title>
+
+	<anchor id="anchor-upgrading" xreflabel="upgrading"/>
+
+	<para>
+		Para actualizar un paquete siga los siguientes pasos:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Refresque la lista de paquetes
+				conocidos para estar seguro de que se
+				dispone de la última versión:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Refrescar
+							la lista de paquetes</guimenuitem></menuchoice> 
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Refrescar</guibutton>
+							en la barra de
+							herramientas.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas <keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+
+		<listitem>
+			<para>
+				Marcar el paquete que se va a actualizar:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse dos
+							veces en el
+							nombre del paquete con una versión más nueva disponible en 
+							la <xref linkend="synaptic-win-list"/>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+				                        Pulse en el icono de estado del paquete y elija <guimenuitem>
+			                                Marcar para actualizar</guimenuitem> en el menú.
+						</para>
+	                                </listitem>
+					<listitem>
+						<para>
+							Pulse con el botón derecho en el paquete y elija <guimenuitem>
+							Marcar para actualizar</guimenuitem> desde el menú contextual.
+						</para>
+		                        </listitem>
+					<listitem>
+						<para>
+							Seleccione el paquete y elija
+							<menuchoice><guimenu>Paquete</guimenu>
+							<guimenuitem>Marcar para actualizar</guimenuitem>
+							</menuchoice> del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Selecione el paquete y pulse la combinación de teclas
+							<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para>
+				Si la actualización del paquete requiere cambios adicionales, se le pedirá confirmación. Para marcar los cambios 
+adicionales pulse en el botón <guibutton>Marcar
+				</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplique los cambios marcados para
+				actualizar el paquete:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Pulse en
+						<guibutton>Aplicar</guibutton>
+						en la barra de tareas.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Elija <menuchoice><guimenu>Editar</guimenu>
+						<guimenuitem>Aplicar
+						cambios
+						marcados</guimenuitem></menuchoice>
+						del menú.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Pulse la combinación
+						de teclas<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Se le pedirá confirmación. Compruebe
+				el resumen de los cambios que serán
+				aplicados. Para continuar con la
+				actualización confirme los cambios
+				pulsando en <guibutton>Aplicar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Durante el procesamiento de los
+				cambios verá una barra de
+				progreso. Espere hasta que los cambios
+				se hayan aplicado. Esto puede llevar
+				algo de tiempo dependiendo del tamaño
+				de los cambios. Después se le
+				devolverá a la ventana principal.
+			</para>				
+			<note>
+				<para>
+					La barra de progreso no está
+					disponible en los sistemas
+					Debian. en su lugar verá una
+					salida de terminal detallada.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para>
+			Para actualizar todos los paquetes instalados
+			a la última versión, vea <xref linkend="synaptic-pkg-upgradesystem"/>.
+		</para>
+	</tip>
+</sect2>
+
+
+<sect2 id="synaptic-pkg-upgradesystem"> 
+	<title>
+		Para actualizar todo el sistema
+	</title>
+
+	<anchor id="anchor-dist-upgrade" xreflabel="system upgrade"/>
+
+
+	<para>
+		La actualización global le permite actualizar su
+		sistema a la última versión sin tener que ir marcando
+		y validando cada actualización de cada paquete manualmente.
+	</para>
+	
+	<para>
+		&app; proporciona dos métodos de actualización global:
+		<variablelist>
+			<varlistentry>
+				<term>
+					Actualización
+				</term>
+				<listitem>
+					<para> 
+						El método de
+						actualización
+						predeterminado marca
+						las actualizaciones de
+						paquetes instalados
+						únicamente. Si en una
+						versión posterior de
+						un paquete depende de
+						paquetes no instalados
+						o entra en conflicto
+						con un paquete ya
+						instalado, la
+						actualización no será marcada.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Actualización inteligente (Dist-Upgrade)
+				</term>
+				<listitem>
+					<para>
+						El método de
+						actualización
+						inteligente intenta
+						resolver los
+						conflictos entre
+						paquetes de  forma
+						inteligente. Esto
+						incluye la instalación
+						de paquetes
+						adicionales requeridos
+						y preferidos con mayor
+						prioridad.
+					</para>
+					<para>
+						La actualización
+						inteligente también se
+						conoce como
+						<emphasis>dist-upgrade</emphasis>
+						en la herramienta de
+						consola apt-get.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<note>
+			<para>
+				La actualización a una publicación
+				mayor del sistema operativo tienen que
+				hacerse con el método de actualización
+				inteligente. Ej: De Conectiva 9 a
+				Conectiva 10 o de Debian Woody a Debian Sarge.
+			</para>
+		</note>
+	</para>
+
+	<para>
+		Para actualizar su sistema a la última versión siga
+		los siguientes pasos:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				 Refresque la lista de paquetes
+				 conocidos para conocer las últimas
+				 versiones disponibles:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Refrescar
+							la lista de
+							paquetes</guimenuitem></menuchoice>
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Refrescar</guibutton>
+							en la barra
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas <keycombo>
+							<keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+
+		<listitem>
+			<para>
+				Marque los paquetes para la actualización:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Actualizar
+							sistema</guibutton>
+							en la barra de
+							herramientas.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Actualizar
+							el sistema</guimenuitem>
+							</menuchoice>
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas <keycombo>
+							<keycap>Ctrl</keycap><keycap>G</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		
+		<listitem>
+			<para>
+				Elija el método de actualización. La
+				actualización inteligente está recomendada.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplique los cambios marcados para
+				actualizar los paquetes.
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Aplicar
+							cambios</guibutton>
+							en la barra te
+							herramientas.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Aplicar
+							los cambios marcados</guimenuitem></menuchoice> 
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Se le pedirá confirmación. Compruebe
+				el resumen de los cambios que serán
+				aplicados. Para continuar con la
+				actualización confirme los cambios
+				pulsando en <guibutton>Aplicar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+					Durante el procesamiento de los
+				cambios verá una barra de
+				progreso. Espere hasta que los cambios
+				se hayan aplicado. Esto puede llevar
+				algo de tiempo dependiendo del tamaño
+				de los cambios. Después se le
+				devolverá a la ventana principal.
+			</para>				
+			<note>
+				<para>
+					La barra de progreso no está
+					disponible en los sistemas
+					Debian. en su lugar verá una
+					salida de terminal detallada.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+
+	<tip>
+		<para>
+			Puede cambiar el método predeterminado de
+			actualización en <xref
+			linkend="synaptic-prefs-actions"/> para las
+			actualizaciones futuras.
+		</para>
+	</tip>
+</sect2>
+
+<!-- sect2 id="synaptic-pkg-downgrade"> 
+	<title>
+		To Downgrade Packages
+	</title> 
+
+	<caution>
+		<para>
+			This may render your package system unusable!
+		</para>
+		<para>
+			Downgrading packages is a broken feature, since apt and &app; can only handle
+			conflicts and dependency resolution of upgrades. 
+		</para>
+		<para>
+			You may need this feature in some rare circumstances, but it is not recommended to use. 
+		</para>
+	</caution>
+
+	<para>
+		To downgrade a package you have to mark a specific version of the package:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package that you wish to downgrade in the 
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Open the Properties dialog of the package:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Properties</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Package</guimenu>
+							<guimenuitem>Properties</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Activate the <guibutton>Expert</guibutton> tab in the properties dialog. You will
+				see a list of all available version of the package.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose the version to be installed from the list and close the Properties dialog.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Apply the marked changes to actually downgrade the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply Changes</guibutton> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Edit</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+	</orderedlist>
+</sect2 -->
+
+<sect2 id="synaptic-pkg-apply">
+	<title>
+		Para aplicar los cambios marcados
+	</title>
+
+	<tip>
+		<para>
+			Para mostrar sólo los paquetes que están marcados
+			para un cambio de estado elija el filtro
+			«Cambios marcados», vea 
+			<xref linkend="synaptic-filter-apply"/>.
+		</para>
+	</tip>
+
+	<para>
+		Para aplicar los cambios marcados:
+
+		<itemizedlist>
+			<listitem>
+				<para>
+					Pulse en
+					<guibutton>Aplicar</guibutton>
+					en la barra de herramientas.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Elija <menuchoice><guimenu>Editar</guimenu>
+					<guimenuitem>Aplicar cambios
+					marcados</guimenuitem></menuchoice>
+					del menú.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Pulse la combinación de teclas
+					<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		Se le pedirá confirmación. Compruebe el resumen de
+		cambios que serán aplicados. Para confirmar los
+		cambios pulse en el botón <guibutton>Aplicar</guibutton>.
+	</para>
+	<para>
+			Durante el procesamiento de los
+			cambios verá una barra de
+			progreso. Espere hasta que los cambios
+			se hayan aplicado. Esto puede llevar
+			algo de tiempo dependiendo del tamaño
+			de los cambios. Después se le
+			devolverá a la ventana principal.
+	</para>				
+	<note>
+		<para>
+			La barra de progreso no está
+			disponible en los sistemas
+			Debian. en su lugar verá una
+			salida de terminal detallada.
+		  </para>
+	</note>
+</sect2>
+
+<sect2 id="synaptic-pkg-undo">
+	<title>
+		Para desmarcar cambios
+	</title>
+
+	<para>
+		Puede desmarcar los cambios de las siguientes maneras:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				Para desmarcar paquetes específicos:
+			</term>
+			<listitem>
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse con el
+							botón derecho
+							del ratón en
+							el paquete y
+							elija <menuchoice>
+							<guimenuitem>Desmarcar</guimenuitem></menuchoice>
+							del menú contextual.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Seleccione los
+							paquetes y elija <menuchoice>
+							<guimenu>Paquete</guimenu><guimenuitem>Desmarcar</guimenuitem>
+							</menuchoice>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Seleccione los
+							paquetes y
+							pulse <keycombo><keycap>Ctrl</keycap>
+							<keycap>N</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Para desmarcar todos los paquetes
+			</term>
+			<listitem>
+				<para>
+					Elija <menuchoice><guimenu>Editar</guimenu>
+					<guimenuitem>Desmarcar todo</guimenuitem></menuchoice>
+					del menú.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Para deshacer la última marca
+			</term>
+			<listitem>
+				<para>
+					Elija <menuchoice><guimenu>Editar</guimenu>
+					<guimenuitem>Deshacer</guimenuitem></menuchoice>
+					del menú.
+				</para>
+				<para>
+					Este paso puede ser
+					repetido. El máximo número de
+					operaciones deshacer puede
+					especificarse en las preferencias.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-pkg-config">
+	<title>
+		Para configurar los paquetes (Sólo Debian)
+	</title>
+
+	<para>
+		<note>
+			<para>
+				Para usar esta característica tiene
+				que instalar el paquete
+				<emphasis>libgnome2-perl</emphasis>.
+			</para>
+		</note>
+	</para>	
+
+	<para>
+		Debian proporciona un método unificado, llamado
+		<emphasis>debconf</emphasis>, para configurar los
+		paquetes de software. Esta característica no está
+		soportada por todos los paquetes. Si un paquete
+		soporta esta característica, la configuración puede
+		hacerse a través de un asistente.
+	</para>
+
+	<para>
+		Para configurar un paquete soportado:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Seleccione el paquete que quiere
+				configurar en 
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Elija <menuchoice><guimenu>Paquete</guimenu>
+				<guimenuitem>Configurar...</guimenuitem></menuchoice>
+				del menú.
+			</para>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para>
+			Para obtener una lista de todos los paquetes
+			configurables elija el filtro
+			<emphasis>Paquetes configurables</emphasis>.
+		</para>
+	</tip>
+</sect2>
+
+<sect2 id="synaptic-pkg-docu">
+	<title>
+		Para ver la documentación de los paquetes (Sólo Debian)
+ 	</title>
+
+	<anchor id="anchor-dwww" xreflabel="browsing"/>
+
+
+	<note>
+		<para>
+			Para usar esta característica tiene que
+			instalar el paquete <emphasis>dwww</emphasis>.
+		</para>
+	</note>
+	
+	<para>
+		Dwww proporciona acceso a toda la documentación
+		instalada relacionada con un paquete a través de un
+		navegador web. La documentación completa se encuentra
+		alojada en un servidor HTTP local.
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Seleccione el paquete acerca del que
+				quiere leer documentación adicional en
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Elija <menuchoice><guimenu>Paquete</guimenu>
+				<guimenuitem>Documentación</guimenuitem></menuchoice>.
+			</para>
+		</listitem>
+	</orderedlist>
+
+</sect2>
+<sect2 id="synaptic-pkg-changelog">
+	<title>
+		Para ver el informa de cambios de un Paquete (Sólo Debian)
+ 	</title>
+
+	<anchor id="anchor-changelog" xreflabel="reading"/>
+
+	<note>
+		<para>
+			Sólo puede verse el informe de cambios de
+			paquetes nativos de Debian.
+		</para>
+	</note>
+	
+	<para>
+		Para ver el informe de cambios de un paquete de Debian
+		nativo, realice los siguientes pasos:
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Seleccione el paquete en <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Elija <menuchoice><guimenu>Paquete</guimenu>
+				<guimenuitem>Descargar informe de cambios</guimenuitem></menuchoice>.
+			</para>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-pkg-lock">
+	<title>
+		Para bloquear un paquete a la versión actual (Sólo Debian)
+	</title>
+
+	<anchor id="anchor-lock" xreflabel="locking"/>
+
+	<para>
+		Para bloquear un paquete a la version actual siga los
+		pasos siguientes:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Seleccione el paquete que quiere
+				bloquear en <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Elija <menuchoice><guimenu>Paquete</guimenu>
+				<guimenuitem>Bloquear</guimenuitem></menuchoice>.
+			</para>
+			<para>
+				El &app; recargará la lista de
+				paquetes. Debería ver que el elemento
+				del menú  <menuchoice>
+				<guimenu>Paquete</guimenu><guimenuitem>Bloquear
+				versión</guimenuitem></menuchoice>
+				está marcado.
+				Además todas las acciones en el menú
+				<guimenu>Paquete</guimenu> ahora están
+				desactivadas.
+			</para>
+		</listitem>
+	</orderedlist>
+	<para>
+		Para desbloquear el paquete, desmarque
+		<menuchoice><guimenu>Paquete</guimenu><guimenuitem>Bloquear
+		versión</guimenuitem>
+		</menuchoice>.
+	</para>
+</sect2>
+
+
+
+<sect2 id="synaptic-pkg-force">
+	<title>
+		Para forzar la instalación de una versión específica
+	</title>
+
+	<anchor id="anchor-force" xreflabel="forcing"/>
+
+	<warning>
+		<para>
+			EL &app; siempre selecciona la versión más
+			nueva disponible. Si fuerza una versión
+			diferente de la predeterminada, pueden ocurrir
+			errores en la manipulación de las dependencias.
+		</para>
+	</warning>
+
+	<para>
+		Para forzar la instalación de una versión de un
+		paquete diferente a la predeterminada efectúe los
+		pasos siguientes:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Refresque la lista de paquetes
+				conocidos para saber las últimas
+				versiones disponibles:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						Elija <menuchoice><guimenu>Editar</guimenu>
+						<guimenuitem>Refrescar
+						la lista de paquetes</guimenuitem>
+						</menuchoice> del menú.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Pulse en
+						<guibutton>Refrescar</guibutton>
+						en la barra de tareas.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Pulse en la
+						combinación de teclas 
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Seleccione el paquete en la lista  <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Elija
+				<menuchoice><guimenu>Paquete</guimenu><guimenuitem>Forzar
+				versión...</guimenuitem>
+				</menuchoice> del menú para abrir un
+				diálogo con todas las versiones
+				disponibles del paquete.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Seleccione la versión que debería ser
+				marcada para instalación. Para
+				confirmar su decisión pulse en el
+				botón <guibutton>Forzar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplique los cambios marcados para
+			         forzar la instalación de la versión
+			         deseada del paquete:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Aplicar</guibutton>
+							en la barra de
+							tareas.
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Aplicar
+							los cambios marcados</guimenuitem>
+							</menuchoice>
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+					Se le pedirá confirmación. Compruebe el resumen de
+		cambios que serán aplicados. Para confirmar los
+		cambios pulse en el botón <guibutton>Aplicar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+					Durante el procesamiento de los
+				cambios verá una barra de
+				progreso. Espere hasta que los cambios
+				se hayan aplicado. Esto puede llevar
+				algo de tiempo dependiendo del tamaño
+				de los cambios. Después se le
+				devolverá a la ventana principal.
+			</para>				
+			<note>
+				<para>
+						La barra de progreso no está
+					disponible en los sistemas
+					Debian. en su lugar verá una
+					salida de terminal detallada.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+<sect2 id="synaptic-pkg-fix">
+	<title>
+		Para reparar paquetes rotos
+	</title>
+	
+	<para>
+		El &app; no permitirá ningún cambio más al sistema
+		antes de que todos los paquetes rotos sean reparados.
+	</para>
+	<tip>
+		<para>
+			Para mostrar todos los paquetes rotos elija el
+			filtro <emphasis>Rotos</emphasis>.
+		</para>
+	</tip>
+
+	<para>
+		Para corregir los paquetes rotos efectúe los
+		siguientes pasos: elija <menuchoice><guimenu>Editar</guimenu>
+		<guimenuitem>Reparar paquetes
+		rotos</guimenuitem></menuchoice> del menú.
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Elija
+				<menuchoice><guimenu>Editar</guimenu><guimenuitem>Reparar
+				paquetes rotos</guimenuitem>
+				</menuchoice> del menú.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Aplique los cambios marcados para
+				reparar los paquetes:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Pulse en
+							<guibutton>Aplicar</guibutton>
+							en la barra de
+							herramientas.	
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Elija <menuchoice><guimenu>Editar</guimenu>
+							<guimenuitem>Aplicar
+							cambios marcados</guimenuitem>
+							</menuchoice>
+							del menú.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Pulse la
+							combinación de
+							teclas
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Se le pedirá confirmación. Compruebe el resumen de
+		cambios que serán aplicados. Para confirmar los
+		cambios pulse en el botón <guibutton>Aplicar</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+					Durante el procesamiento de los
+				cambios verá una barra de
+				progreso. Espere hasta que los cambios
+				se hayan aplicado. Esto puede llevar
+				algo de tiempo dependiendo del tamaño
+				de los cambios. Después se le
+				devolverá a la ventana principal.
+			</para>				
+			<note>
+				<para>
+					La barra de progreso no está
+					disponible en los sistemas
+					Debian. en su lugar verá una
+					salida de terminal detallada.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+
+</sect1>
+
+<sect1 id="synaptic-repo">
+	<title>
+		Repositorios
+	</title>
+
+	<para>
+		Los paquetes se pones a su disposición a través de los
+		que se llaman <emphasis>repositorios</emphasis>. El
+		repositorio contiene los paquetes y un índice que
+		incluye alguna información básica acerca de los
+		paquetes, ej: dependencias requeridas o una
+		descripción breve.
+	</para>
+	<para>
+		Los repositorios pueden estar ubicados en muchos
+		soportes: CD-ROM/DVD, disco duro local, la Web (http,ftp) 
+		o un sistema de archivos remoto (nfs).
+	</para>
+
+
+<sect2 id="synaptic-repo-update"> 
+	<title>
+		Para refrescar la lista de paquetes conocidos
+	</title> 
+	<para>
+		
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Elija <menuchoice><guimenu>Editar</guimenu>
+				<guimenuitem>Refrescar la lista de
+				paquetes</guimenuitem></menuchoice>
+				del menú.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Pulse en <guibutton>Actualizar
+				lista</guibutton> en la barra de herramientas.
+			</para>
+		</listitem>
+	</itemizedlist>
+</sect2>
+
+<sect2 id="synaptic-repo-manage"> 
+	<title>
+		Para editar, añadir, o quitar repositorios
+	</title> 
+	<para>
+		Puede editar, añadir o borrar repositorios en las
+		preferencias del repositorio.
+	</para>
+	<para>
+		Abra el editor del repositorio con <menuchoice><guimenu>Preferencias</guimenu>
+		<guimenuitem>Repositorios</guimenuitem></menuchoice>
+		en el menú.
+	</para>
+
+	<figure>
+		<title>
+			Preferencias del repositorio
+		</title>
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-repositories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra las
+						preferencias del repositorio
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+</sect2>
+
+<sect2 id="synaptic-repo-cdrom"> 
+	<title>
+		Para añadir repositorios desde el CD-ROM
+	</title> 
+	<para> 
+		Elija
+	<menuchoice><guimenu>Editar</guimenu><guimenuitem>Añadir CD...</guimenuitem></menuchoice>
+		del menú.
+	</para>
+</sect2>
+
+<sect2 id="synaptic-repo-aptline"> 
+	<title>
+		La sintaxis de la línea APT 
+	</title> 
+	<para> 
+		El gestor de paquetes almacena todos los repositorios
+	disponibles en un fichero de texto de configuración. Cada
+	línea describe el tipo, ubicación y contenido de un repositorio.
+	</para>
+
+	<table frame="topbot" id="table-synaptic-aptline-syntax">
+		<title>
+			Sintaxis de una línea APT. Ej. <emphasis>deb http://ftp.debian.org sarge main</emphasis>
+		</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Elemento
+					</entry>
+					<entry valign="top" align="left">
+						Descripción
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						deb
+					</entry>
+					<entry valign="top">
+						El primer elemento
+						describe el tipo del repositorio.
+						Los valores posibles
+						son
+						<emphasis>deb</emphasis>
+						(Paquetes binarios de Debian), <emphasis>deb-src
+						</emphasis>(paquetes
+						de fuentes de Debian),
+						<emphasis>rpm</emphasis>
+						(paquetes binarios RPM), 
+						<emphasis>rpm-src</emphasis>
+						(paquetes de fuentes
+						de Redhat), <emphasis>rpmdir</emphasis>
+						(carpeta que contiene
+						paquetes binarios RPM) y <emphasis>rpmdir-src</emphasis> 
+						(carpeta que contiene
+						paquetes de fuentes RPM).
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						http://ftp.debian.org
+					</entry>
+					<entry valign="top">
+						El segundo elemento es
+						la ubicación del repositorio.
+						Se puede acceder al
+						repositorio por los
+						protocolos HTTP y FTP,
+						o localmente en un CD,
+						DVD o disco duro.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">
+						sarge
+					</entry>
+					<entry valign="top">
+						El tercer elemento
+						describe la
+						distribución para la
+						que los paquetes están
+						hechos, vea la <ulink 
+						url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.4">
+						Referencia del
+						Desarrollados de
+						Debian</ulink> para
+						más detalles acerca de
+						las distribuciones de Debian.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">
+						main
+					</entry>
+					<entry valign="top">
+						El cuarto elemento
+						describe las secciona
+						del repositorio que
+						deberían ser
+						incluidas. Por omisión
+						los repositorios
+						oficiales de Debian se
+						separan en las
+						secciones <emphasis>main</emphasis>, <emphasis>
+						contrib</emphasis> y
+						<emphasis>non-free</emphasis>,
+						vea la						<ulink
+						 url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.1">
+						 Referencia del
+						desarrollados de
+						Debian</ulink> para
+						más detalles acerca de
+						las secciones de Debian.
+					</entry>
+			        </row>
+			</tbody>
+		</tgroup>
+	</table>
+	<para>
+		<note><para>Los elementos de distribución y sección no
+		se requieren para cada tipo.</para></note>
+	</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="synaptic-filter">
+	<title>
+		Filtros
+	</title>
+	<para>
+	       Los filtros le permiten reducir la lista de paquetes mostrados.
+	</para>
+	<para>
+		El &app; viene con un conjunto de filtros predefinidos.
+	</para>
+
+	<table frame="topbot" id="table-synaptic-filters">
+		<title>
+			Filtros predefinidos
+		</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Filtro
+					</entry>
+					<entry valign="top" align="left">
+						Descripción
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">Todos los paquetes</entry>
+					<entry valign="top">
+						Muestra todos los
+						paquetes conocidos.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Instalados</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes actualmente instalados.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">No instalados</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes actualmente
+						no instalados.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Actualizables</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes con una
+						versión más nueva disponible.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Rotos</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes con
+						dependencias rotas.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Cambios programados</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes marcados
+						para ser modificados.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Nuevo en
+					el archivo</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes nuevos desde
+						la última
+						actualización del repositorio.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Residual</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes desinstalados
+						que han dejado datos o
+						ficheros de configuración en el sistema.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Paq. con Debconf</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes que pueden
+						ser configurados a
+						través del sistema de
+						configuración de Debian.		
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Obsoletos
+					o instalados localmente</entry>
+					<entry valign="top">
+						Muestra sólo los
+						paquetes que no están
+						(por más tiempo)
+						incluidos en uno de
+						los repositorios incluidos.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Filtro de búsqueda</entry>
+					<entry valign="top">
+						Muestra los últimos
+						resultados de la
+						búsqueda de paquetes
+						avanzada, vea el <xref linkend="synaptic-pkg-find-advsearch"/>.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+
+<sect2 id="synaptic-filter-apply"> 
+	<title>
+		Para filtrar
+	</title> 
+	<para>
+		Para usar un filtro:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Elija el filtro de la caja combo
+			<guibutton>Mostrar</guibutton> en la ventana principal.
+			</para>	
+		</listitem>
+	</itemizedlist>
+</sect2>
+
+<sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
+	<title>
+		Para editar o crear filtros
+	</title> 
+
+	<para>
+		Los filtros pueden ser creados, borrados y modificados
+		en el editor de filtros:
+	</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				Elija desde el menú <menuchoice><guimenu>Ver</guimenu><guimenuitem>
+				Editar filtros...</guimenuitem></menuchoice>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Pulse en
+				<guibutton>Filtros...</guibutton> en
+				la ventana principal.
+			</para>
+		</listitem>
+	</itemizedlist>
+
+	<figure>
+		<title>Editar filtros</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-filter.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Muestra el editor de filtros.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		El editor de filtros contiene los siguientes componentes:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				Lista de filtros
+			</term>
+			<listitem>
+				<para>
+					Muestra una lista de filtros disponibles.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Ver
+			</term>
+			<listitem>
+				<para>
+					Especifica la ordenación de
+					los resultados.				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Reglas
+			</term>
+			<listitem>
+				<para>
+					Las reglas permiten definir
+					qué paquetes deberían
+					mostrarse en la lista. Un
+					paquete tiene que cumplir
+					todos los criterios seleccionados.
+				</para>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Estado
+						</term>
+						<listitem>
+							<para>
+								Permite
+								seleccionar
+								los
+								paquetes
+								por su
+								estado.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Sección
+						</term>
+						<listitem>
+							<para>
+								Le
+								permite
+								seleccionar
+								los
+								paquetes
+								por sección.
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Propiedades
+						</term>
+						<listitem>
+							<para>
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Palabras clave
+						</term>
+						<listitem>
+							<para>
+								Las
+								palabras
+								clave
+								están
+								basadas
+								en las
+								debtags
+								(etiquetas
+								debian).
+								Sólo Debian GNU/Linux 
+								con
+								«debtags»
+								instalado
+								soporta
+								esta característica.
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
+</sect2>
+</sect1>
+
+
+
+
+<sect1 id="snyaptic-prefs">
+	<title>Preferencias</title>
+
+<sect2 id="synaptic-prefs-general" xreflabel="action preferences"> 
+	<title>General</title> 
+	<para>
+		Las preferencias generales incluyen la siguiente configuración:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				General
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Permite
+							expresiones
+							regulares en
+							las búsquedas
+							y los filtros
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									reguñares
+									son
+									un
+									método
+									avanzado
+									de
+									hacer
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Considerar los
+							paquetes
+							recomendados
+							como dependencias
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Acciones
+			</term>
+			<listitem>
+				<anchor id="synaptic-prefs-actions" xreflabel="action settings"/>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Aplicar los
+							cambios en una
+							ventana de terminal
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Preguntar si
+							debe salir
+							después de que
+							se apliquen
+							los cambios
+							con éxito
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Eliminar paquete
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Método de actualización
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Número de
+							operaciones deshacer
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Confirmar
+							acciones que
+							afecten a
+							otros paquetes
+						</term>
+							<listitem>
+								<para>
+									Las
+									expresiones
+									regulares
+									son
+									un
+									método
+									avanzado
+									de
+									coincidir
+									el
+									texto.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-prefs-layout"> 
+	<title>
+		Apariencia
+	</title> 
+	<para>
+		Puede cambiar la apariencia de Synaptic.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Ventana principal
+			</term>
+			<listitem>
+				<para>
+					Elija entre dos apariencias
+					distintas de la ventana principal.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Tipofgrafías
+			</term>
+			<listitem>
+				<para>
+					Especifique tipos
+					personalizados para la
+					aplicación y la salida del terminal.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-prefs-ordercolor"> 
+	<title>
+		Orden de columnas y colores
+	</title> 
+	<para>
+		Modifique la apariencia de la lista de paquetes en la
+		ventana principal.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Orden de columnas
+			</term>
+			<listitem>
+				<para>
+					Orden de columnas de la lista
+					de paquetes. Un valor de -1
+					oculta la columna.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Colores
+			</term>
+			<listitem>
+				<para>
+					Asigne colores para visualizar
+					el estado de los paquetes.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
+</sect2>    
+
+<sect2 id="synaptiac-prefs-temp"> 
+	<title>
+		Archivos temporales
+	</title> 
+	<para>
+		Configure la administración de los ficheros de
+		paquetes completa o parcialmente descargados.
+	</para>
+</sect2> 
+
+<sect2 id="synaptiac-prefs-network"> 
+	<title>
+		Red
+	</title> 
+	<para> 
+		Configure la conexión de Internet y el servidor proxy.
+	</para>
+</sect2> 
+
+<sect2 id="synaptiac-prefs-expert"> 
+	<title>
+		Experto
+	</title>
+	<para>
+		No documentado	
+	</para>
+</sect2> 
+</sect1>
+
+<sect1 id="synaptic-bugs">
+	<title>
+		Fallos conocidos y limitaciones
+	</title>
+	<para>
+		
+
+	<table frame="topbot" id="synaptic-bugs-table">
+		<title>Problemas conocidoas y formas de evitarlos</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left">
+						Problema
+					</entry>
+					<entry valign="top" align="left">
+						Arreglo
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">
+						Localización no soportada
+					</entry>
+					<entry valign="top">
+						Use una localización
+						soportada por Xlib.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						Una installación
+						fallída bloquea las
+						siguientes operaciones
+						en synaptic
+					</entry>
+					<entry valign="top">
+						<para>
+							Bajo algunas
+							raras
+							circunstancias
+							la instalación
+							o eliminación
+							de un paquete
+							puede fallar.
+							Como 
+							consecuencia
+							todas las
+							demás cambios
+							marcados se
+							cancelan también.
+						</para>
+						<para>
+							El &app;
+							requiere un
+							entorno limpio
+							sin paquetes a
+							medio instalar
+							para efectuar
+							cambios
+							adicionales.
+							Pero en este
+							momento no hay
+						       forma de
+							continuar las
+							instalaciones
+							canceladas
+							desde dentro
+							del &app;.
+						</para>
+						<para>
+							Para reparar
+							esta situación
+							teclee el
+							siguiente
+							comando en un
+							terminal, como
+							root, y luego
+							pulse <keycap>Retorno</keycap>:
+						</para>
+						<command>
+							apt-get install -f
+						</command>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+	</para>
+</sect1>
+
+<sect1 id="synaptic-shortcuts">
+	<title>
+		Combinaciones de teclas
+	</title>
+	<para>
+		Lista de todas las combinaciones de teclas globales en
+		&app;:
+	</para>
+	<informaltable frame="none" id="synaptic-shortcuts-table">
+	
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<tbody>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Aplicar todos los
+						cambios marcados
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Abrir el diálogo de
+						búsqueda de paquetes
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Marcar todas las
+						actualizaciones posibles
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Marcar los paquetes
+						seleccionados para instalación
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Desmarcar cualquier
+						cambio y poner al
+						paquete como antes
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Actualizar todo el
+						sistema marcando todas
+						las actualizaciones posibles
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Marcar el paquete
+						seleccionados para instalar
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Salir de &app;
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Marcar el paquete
+						seleccionado para desinstalación
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
+					</entry>
+					<entry valign="top">
+						Refrescar la lista de
+						paquetes conocidos
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</informaltable>
+</sect1>
+
+
+<sect1 id="myapp-about"> 
+	<title>
+		Acerca de &app;
+	</title> 
+	<para> 
+		El &app; fue escrito originalmente por Alfredo K. Kojima (<email>kojima@windowmaker.org</email>)
+		y ahora lo mantienen Michael Vogt (<email>mvo@debian.org</email>) y
+		Gustavo Niemeyer (<email>niemeyer@conectiva.com</email>).
+		Para obtener más información acerca de &app;, visite la 
+		<ulink url="http://www.nongnu.org/synaptic"
+	type="http">página web de Synaptic</ulink>.
+	</para>
+	<para>
+		Para informar de un fallo o hacer una sugerencia
+		concerniente al &app; 
+		o este manual, use el sistema de información de
+		errores en <ulink url="http://www.nongnu.org/synaptic"
+		type="http">el sitio web de Synaptic</ulink>, contacte
+		a través de la lista de correo
+		<email>synaptic@nongnu.org</email> o únase al canal IRC
+		#synaptic en irc.freenode.org.
+	</para>
+	<para> 
+		Este programa se distribuye bajo los términaos de la
+		Licencia Pública General GNU; ya sea en la versión 2
+		de la licencia, o a su criterio, cualquier versión
+		posterior. Puede encontrar una copia de esta licencia
+		en este manual o en un archivo incluido en el código
+		fuente de este programa.
+	</para>
+</sect1> 
+
+<!-- Appendix with GPL -->
+&legal;
+</article>

@@ -287,7 +287,8 @@ bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filter(RPackage *pkg)
 {
    bool found;
-   bool globalfound = true;
+   //   bool and_mode = _config->FindB("Synaptic::Filters::andMode", true);
+   bool globalfound = and_mode;
    bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
 
    if (_patterns.size() == 0)
@@ -345,7 +346,10 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
          found = !found;
       }
 
-      globalfound &= found;
+      if(and_mode)
+	 globalfound &= found;
+      else
+	 globalfound |= found;
    }
 
    return globalfound;
@@ -392,6 +396,8 @@ bool RPatternPackageFilter::write(ofstream &out, string pad)
    string pat;
    bool excl;
 
+   out << pad + "andMode " << and_mode << ";" << endl;
+
    out << pad + "patterns {" << endl;
 
    for (int i = 0; i < count(); i++) {
@@ -401,6 +407,7 @@ bool RPatternPackageFilter::write(ofstream &out, string pad)
    }
 
    out << pad + "};" << endl;
+
    return true;
 }
 
@@ -411,6 +418,8 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
    DepType type;
    string pat;
    bool excl;
+
+   and_mode = conf.FindB(key + "::andMode", true);
 
    top = conf.Tree(string(key + "::patterns").c_str());
    if (top == NULL)
@@ -440,6 +449,7 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 
 // copy constructor
 RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
+   : and_mode(true)
 {
    //cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
    for (unsigned int i = 0; i < f._patterns.size(); i++) {

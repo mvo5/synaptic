@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: synaptic 0.50\n"
+"Project-Id-Version: synaptic 0.53\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 12:10+0200\n"
-"PO-Revision-Date: 2004-06-28 00:33+0200\n"
+"POT-Creation-Date: 2004-08-09 18:32+0200\n"
+"PO-Revision-Date: 2004-08-09 14:26+0100\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -389,9 +389,8 @@ msgid "or dependency"
 msgstr "dependència «or»"
 
 #: common/rpackage.cc:401
-#, fuzzy
 msgid "Dependency of"
-msgstr "Dependències"
+msgstr "Dependència de"
 
 #: common/rpackage.cc:509
 #, c-format
@@ -654,14 +653,15 @@ msgstr "S'estan descartant registres invàlids al fitxer sources.list!"
 #. one is a detailed error message that
 #. is provided by apt
 #: common/rpackagelister.cc:1262
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s\n"
 "\n"
 msgstr ""
 "No s'ha pogut obtenir %s\n"
-"  %s"
+"  %s\n"
+"\n"
 
 #: common/rpackagelister.cc:1283
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -712,14 +712,12 @@ msgid "Alphabetic"
 msgstr "Alfabètic"
 
 #: common/rpackageview.h:137
-#, fuzzy
 msgid "Search History"
-msgstr "Filtre de cerca"
+msgstr "Històric de la cerca"
 
 #: common/rpackageview.h:180
-#, fuzzy
 msgid "Custom Filters"
-msgstr "Filtres"
+msgstr "Filtres personalitzats"
 
 #: common/rpackageview.cc:94 gtk/window_filters.glade.h:26
 msgid "New in repository"
@@ -730,9 +728,8 @@ msgid "Pinned"
 msgstr "Fixat"
 
 #: common/rpackageview.cc:100
-#, fuzzy
 msgid "Installed (local or obsolete)"
-msgstr "Instal·lats (obsolets)"
+msgstr "Instal·lats (locals o obsolets)"
 
 #: common/rpackageview.cc:106
 msgid "Not installed (residual config)"
@@ -882,7 +879,7 @@ msgstr "--non-interactive No demanes mai a l'usuari\n"
 
 #: gtk/gsynaptic.cc:64
 msgid "--task-window Open with task window\n"
-msgstr ""
+msgstr "--task-window Obre amb la finestra de tasques\n"
 
 #: gtk/gsynaptic.cc:139
 msgid "You must run this program as the root user."
@@ -949,14 +946,12 @@ msgid "Installed Version"
 msgstr "Versió instal·lada"
 
 #: gtk/rgpreferenceswindow.cc:46
-#, fuzzy
 msgid "Available Version"
-msgstr "<b>Versions disponibles</b>"
+msgstr "Versió disponible"
 
 #: gtk/rgpreferenceswindow.cc:46
-#, fuzzy
 msgid "Installed Size"
-msgstr "Mida instal·lada:"
+msgstr "Mida instal·lada"
 
 #: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
 #: gtk/rgterminstallprogress.cc:110
@@ -976,9 +971,8 @@ msgid "Color selection"
 msgstr "Selecció de color"
 
 #: gtk/rgpreferenceswindow.cc:914
-#, fuzzy
 msgid "Visible"
-msgstr "Variable:"
+msgstr "Visible"
 
 #: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
 msgid "Preferences"
@@ -1081,6 +1075,8 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
+"El sistema APT informa:\n"
+"%s"
 
 #: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:182
 msgid "Applying Changes"
@@ -1092,9 +1088,9 @@ msgid "%s Properties"
 msgstr "Propietats de «%s»"
 
 #: gtk/rgpkgdetails.cc:157
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%s)"
-msgstr "%s <i>(%s)</i>"
+msgstr "%s (%s)"
 
 #: gtk/rgmainwindow.cc:77
 msgid "Normal"
@@ -1122,22 +1118,20 @@ msgstr "No hi ha cap paquet seleccionat.\n"
 msgid "Select the version of %s that should be forced for installation"
 msgstr "Seleccioneu la versió de %s que s'ha d'instal·lar a la força"
 
-# FIXME
 #: gtk/rgmainwindow.cc:456
-#, fuzzy
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
-"El gestor de paquets sempre selecciona la millor versió disponible. Si "
-"forceu una versió diferent a la predeterminada, poden haver errors en la "
-"gestió de dependències."
+"El gestor de paquets sempre selecciona la versió més adequada de les "
+"disponibles. Si forceu una versió diferent a la predeterminada, poden haver "
+"errors en la gestió de dependències."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
 #: gtk/rgmainwindow.cc:778
 msgid "S"
-msgstr ""
+msgstr "E"
 
 #: gtk/rgmainwindow.cc:797
 msgid "Package"
@@ -1432,7 +1426,6 @@ msgid "Binary (deb)"
 msgstr "Binari (deb)"
 
 #: gtk/rgrepositorywin.cc:223
-#, fuzzy
 msgid "Source (deb-src)"
 msgstr "Font (deb-src)"
 
@@ -1608,9 +1601,9 @@ msgstr "Cerca"
 
 #. TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
 #: gtk/rgtaskswin.cc:141
-#, fuzzy, c-format
+#, c-format
 msgid "Description %s"
-msgstr "Descripció"
+msgstr "Descripció de %s"
 
 #: gtk/window_main.glade.h:1 gtk/window_fetch.glade.h:1
 #: gtk/window_preferences.glade.h:2 gtk/window_summary.glade.h:2
@@ -1635,6 +1628,8 @@ msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
+"<b>Nota:</b> Per a instal·lar una versió diferent a la predeterminada, "
+"seleccioneu <b>Paquet -> Força la versió...</b> des del menú."
 
 #: gtk/window_main.glade.h:6 gtk/window_details.glade.h:6
 msgid "<b>Package:</b>"
@@ -1669,9 +1664,8 @@ msgid "Apply"
 msgstr "Aplica"
 
 #: gtk/window_main.glade.h:14 gtk/window_details.glade.h:11
-#, fuzzy
 msgid "Available versions:"
-msgstr "<b>Versions disponibles</b>"
+msgstr "Versions disponibles:"
 
 #: gtk/window_main.glade.h:15 gtk/window_details.glade.h:12
 msgid "Common"
@@ -1696,9 +1690,8 @@ msgid "Download:"
 msgstr "Descàrrega:"
 
 #: gtk/window_main.glade.h:21
-#, fuzzy
 msgid "Icon _Legend"
-msgstr "Llegenda de la icona"
+msgstr "_Llegenda de la icona"
 
 #: gtk/window_main.glade.h:22 gtk/window_details.glade.h:18
 msgid "Installed Files"
@@ -1710,7 +1703,7 @@ msgstr "Marca totes les actualitzacions"
 
 #: gtk/window_main.glade.h:24
 msgid "Mark Packages by _Task..."
-msgstr ""
+msgstr "Marca els paquets per _tasques"
 
 #: gtk/window_main.glade.h:25
 msgid "Mark for Co_mplete Removal"
@@ -1742,18 +1735,16 @@ msgid "Release"
 msgstr "Llançament"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "Reload"
-msgstr "Llançament"
+msgstr "Refresca"
 
 #: gtk/window_main.glade.h:36
 msgid "Save Markings _As..."
 msgstr "_Anomena i desa les marques..."
 
 #: gtk/window_main.glade.h:37
-#, fuzzy
 msgid "Search"
-msgstr "Cerca en:"
+msgstr "Cerca"
 
 #: gtk/window_main.glade.h:39 gtk/window_details.glade.h:22
 msgid "Size:"
@@ -1784,9 +1775,8 @@ msgid "Version:"
 msgstr "Versió:"
 
 #: gtk/window_main.glade.h:47 gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Versions"
-msgstr "Versió"
+msgstr "Versions"
 
 #: gtk/window_main.glade.h:48
 msgid "_About"
@@ -1849,19 +1839,16 @@ msgid "_Lock Version"
 msgstr "B_loca la versió"
 
 #: gtk/window_main.glade.h:63
-#, fuzzy
 msgid "_Mark All Upgrades..."
 msgstr "_Marca totes les actualitzacions..."
 
 #: gtk/window_main.glade.h:64
-#, fuzzy
 msgid "_Package"
-msgstr "Paquet"
+msgstr "_Paquet"
 
 #: gtk/window_main.glade.h:65
-#, fuzzy
 msgid "_Properties"
-msgstr "Propietats"
+msgstr "_Propietats"
 
 #: gtk/window_main.glade.h:66
 msgid "_Quick Introduction"
@@ -1880,7 +1867,6 @@ msgid "_Redo"
 msgstr "_Refés"
 
 #: gtk/window_main.glade.h:70
-#, fuzzy
 msgid "_Reload Package List"
 msgstr "_Refresca la llista de paquets"
 
@@ -1893,19 +1879,16 @@ msgid "_Save Markings"
 msgstr "_Desa les marques"
 
 #: gtk/window_main.glade.h:73
-#, fuzzy
 msgid "_Search..."
-msgstr "S'està cercant..."
+msgstr "_Cerca..."
 
 #: gtk/window_main.glade.h:74
-#, fuzzy
 msgid "_Set Internal Option..."
-msgstr "Estableix una opció _interna..."
+msgstr "E_stableix una opció interna..."
 
 #: gtk/window_main.glade.h:75
-#, fuzzy
 msgid "_Settings"
-msgstr "Seccions"
+msgstr "_Paràmetres"
 
 #: gtk/window_main.glade.h:76
 msgid "_Text Only"
@@ -2032,14 +2015,12 @@ msgid "Look in:"
 msgstr "Cerca en:"
 
 #: gtk/window_find.glade.h:8
-#, fuzzy
 msgid "Search:"
-msgstr "Cerca en:"
+msgstr "Cerca:"
 
 #: gtk/window_find.glade.h:10
-#, fuzzy
 msgid "_Search"
-msgstr "Cerca en:"
+msgstr "_Cerca"
 
 #: gtk/window_fetch.glade.h:2
 msgid "<b>Single Files:</b>"
@@ -2138,7 +2119,6 @@ msgid "Apply changes in a terminal window"
 msgstr "Aplica els canvis en una finestra de terminal"
 
 #: gtk/window_preferences.glade.h:18
-#, fuzzy
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "Pregunta per a confirmar els canvis que afecten altres paquets"
 
@@ -2152,7 +2132,6 @@ msgid "Broken:"
 msgstr "Trencats:"
 
 #: gtk/window_preferences.glade.h:21
-#, fuzzy
 msgid "Clicking on the status icon marks the most likely action"
 msgstr "Fer clic en la icona d'estat marca l'acció més probable"
 
@@ -2185,7 +2164,6 @@ msgid "Completely"
 msgstr "Completament"
 
 #: gtk/window_preferences.glade.h:28
-#, fuzzy
 msgid "Consider recommended packages as dependencies"
 msgstr "Considera els paquets recomanats com dependències"
 
@@ -2306,11 +2284,12 @@ msgstr "No instal·lats:"
 msgid "Number of undo operations:"
 msgstr "Nombre d'operacions de desfer:"
 
+# FIXME Caps
 #: gtk/window_preferences.glade.h:59
-#, fuzzy
 msgid "Port number of the ftp proxy server"
 msgstr "Número de port del servidor intermediari d'FTP"
 
+# FIXME Caps
 #: gtk/window_preferences.glade.h:60
 msgid "Port number of the http proxy server"
 msgstr "Número de port del servidor intermediari d'HTTP"
@@ -2320,7 +2299,6 @@ msgid "Port: "
 msgstr "Port:"
 
 #: gtk/window_preferences.glade.h:63
-#, fuzzy
 msgid "Removal of packages: "
 msgstr "Eliminació de paquets: "
 
@@ -2333,10 +2311,9 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:65
 msgid "Show package properties in the main window"
-msgstr ""
+msgstr "Mostra les propietats del paquet a la finestra principal"
 
 #: gtk/window_preferences.glade.h:67
-#, fuzzy
 msgid "System upgrade:"
 msgstr "Actualització del sistema:"
 
@@ -2430,15 +2407,19 @@ msgstr ""
 "Aquesta és la vostra última oportunitat per a mirar a través de la llista de "
 "canvis marcats abans de que s'apliquen."
 
+# FIXME Full stop
 #: gtk/window_summary.glade.h:10
 msgid ""
 "Vendors sign theirs packages to verify the correct origin and integraty of "
 "the packages. Disabling the verification is a security risk"
 msgstr ""
+"Els venedors signen els seus paquets per a verificar que l'origen i "
+"integritat dels paquets és correcte. Inhabilitar la verificació és un risc "
+"de seguretat"
 
 #: gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
-msgstr ""
+msgstr "Verifica les signatures dels paquets"
 
 #: gtk/window_summary.glade.h:12
 msgid "_Show Details"
@@ -2461,9 +2442,8 @@ msgid "Conflicting Packages"
 msgstr "Paquets en conflicte"
 
 #: gtk/window_filters.glade.h:9 gtk/window_details.glade.h:15
-#, fuzzy
 msgid "Dependent Packages"
-msgstr "Paquets reemplaçats"
+msgstr "Paquets que en depenen"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"
@@ -2649,11 +2629,16 @@ msgid ""
 "There are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
+"<span size=\"large\" weight=\"bold\">Quines tasques hauria de realitzar el "
+"vostre ordinador?</span>\n"
+"\n"
+"Hi ha grups de paquets preseleccionats per a realitzar cada tasca. Si "
+"seleccioneu una tasca, es marcaran els paquets corresponents per a "
+"instal·lar."
 
 #: gtk/window_tasks.glade.h:4
-#, fuzzy
 msgid "_Description"
-msgstr "Descripció"
+msgstr "_Descripció"
 
 #: gtk/window_zvtinstallprogress.glade.h:1
 msgid "<b>Terminal Output:</b>"
@@ -2792,9 +2777,8 @@ msgstr "Paquets reemplaçats"
 
 #. suggests
 #: gtk/rgfiltermanager.h:76
-#, fuzzy
 msgid "Dependent packages"
-msgstr "Paquets reemplaçats"
+msgstr "Paquets que en depenen"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"

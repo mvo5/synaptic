@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-05 12:10+0200\n"
-"PO-Revision-Date: 2004-06-30 15:43+0300\n"
+"POT-Creation-Date: 2004-08-09 18:32+0200\n"
+"PO-Revision-Date: 2004-08-08 12:33+0300\n"
 "Last-Translator: Erçin EKER <erc.caldera@gmx.net>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -381,7 +381,6 @@ msgid "or dependency"
 msgstr "ya da bağımlılık"
 
 #: common/rpackage.cc:401
-#, fuzzy
 msgid "Dependency of"
 msgstr "Bağımlılıklar"
 
@@ -637,14 +636,15 @@ msgstr "\"sources.list\" dosyasındaki geçersiz kayıtlar göz ardı ediliyor!"
 #. one is a detailed error message that
 #. is provided by apt
 #: common/rpackagelister.cc:1262
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to fetch %s\n"
 "  %s\n"
 "\n"
 msgstr ""
 "%s adresinden indirme başarısız\n"
-" %s"
+"  %s\n"
+"\n"
 
 #: common/rpackagelister.cc:1283
 msgid "Some of the packages could not be retrieved from the server(s).\n"
@@ -693,14 +693,12 @@ msgid "Alphabetic"
 msgstr "Alfabetik"
 
 #: common/rpackageview.h:137
-#, fuzzy
 msgid "Search History"
-msgstr "Arama Süzgeci"
+msgstr "Arama Geçmişi"
 
 #: common/rpackageview.h:180
-#, fuzzy
 msgid "Custom Filters"
-msgstr "Süzgeçler"
+msgstr "Özel Süzgeçler"
 
 #: common/rpackageview.cc:94 gtk/window_filters.glade.h:26
 msgid "New in repository"
@@ -711,9 +709,8 @@ msgid "Pinned"
 msgstr "Sabitlenmiş (Pinned)"
 
 #: common/rpackageview.cc:100
-#, fuzzy
 msgid "Installed (local or obsolete)"
-msgstr "Kurulu (eski)"
+msgstr "Kurulu (yerel ya da eski)"
 
 #: common/rpackageview.cc:106
 msgid "Not installed (residual config)"
@@ -860,7 +857,7 @@ msgstr "--non-interactive Asla kullanıcı girdisi isteme\n"
 
 #: gtk/gsynaptic.cc:64
 msgid "--task-window Open with task window\n"
-msgstr ""
+msgstr "--task-window Görev penceresini aç\n"
 
 #: gtk/gsynaptic.cc:139
 msgid "You must run this program as the root user."
@@ -927,14 +924,12 @@ msgid "Installed Version"
 msgstr "Kurulu Sürüm"
 
 #: gtk/rgpreferenceswindow.cc:46
-#, fuzzy
 msgid "Available Version"
-msgstr "<b>Mevcut Sürümler</b>"
+msgstr "Mevcut Sürüm"
 
 #: gtk/rgpreferenceswindow.cc:46
-#, fuzzy
 msgid "Installed Size"
-msgstr "Kurulu Boyut:"
+msgstr "Kurulum Boyutu"
 
 #: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
 #: gtk/rgterminstallprogress.cc:110
@@ -954,9 +949,8 @@ msgid "Color selection"
 msgstr "Renk seçimi"
 
 #: gtk/rgpreferenceswindow.cc:914
-#, fuzzy
 msgid "Visible"
-msgstr "Değişken:"
+msgstr "Görünür"
 
 #: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
 msgid "Preferences"
@@ -987,12 +981,12 @@ msgstr ""
 #: gtk/rgfetchprogress.cc:230
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
-msgstr "%li dosyadan %li tanesi %s/s hızda aktarıldı - %s kaldı"
+msgstr "%2$li dosyadan %1$li tanesi %3$s/s hızda aktarıldı - %4$s kaldı"
 
 #: gtk/rgfetchprogress.cc:235
 #, c-format
 msgid "Downloading file %li of %li"
-msgstr "%li dosyadan %li dosya indiriliyor"
+msgstr "%2$li dosyadan %1$li dosya indiriliyor"
 
 #: gtk/rgfetchprogress.cc:300
 msgid "Queued"
@@ -1058,6 +1052,8 @@ msgid ""
 "APT system reports:\n"
 "%s"
 msgstr ""
+"APT sistem raporları:\n"
+"%s"
 
 #: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:182
 msgid "Applying Changes"
@@ -1069,9 +1065,9 @@ msgid "%s Properties"
 msgstr "%s Özellikleri"
 
 #: gtk/rgpkgdetails.cc:157
-#, fuzzy, c-format
+#, c-format
 msgid "%s (%s)"
-msgstr "%s <i>(%s)</i>"
+msgstr "%s (%s)"
 
 #: gtk/rgmainwindow.cc:77
 msgid "Normal"
@@ -1100,20 +1096,19 @@ msgid "Select the version of %s that should be forced for installation"
 msgstr "%s paketinin kurulmaya zorlanacak sürümünü seçin"
 
 #: gtk/rgmainwindow.cc:456
-#, fuzzy
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
-"Paket yöneticisi her zaman mevcut en yeni sürümü seçecektir. Öntanımlı olan "
+"Paket yöneticisi her zaman mevcut en uygun sürümü seçecektir. Öntanımlı olan "
 "dışında başka bir sürümün kurulumunu zorlarsanız, bağımlılık yönetiminde "
 "sorunlar çıkabilir."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
 #: gtk/rgmainwindow.cc:778
 msgid "S"
-msgstr ""
+msgstr "D"
 
 #: gtk/rgmainwindow.cc:797
 msgid "Package"
@@ -1405,7 +1400,6 @@ msgid "Binary (deb)"
 msgstr "İkili (deb)"
 
 #: gtk/rgrepositorywin.cc:223
-#, fuzzy
 msgid "Source (deb-src)"
 msgstr "Kaynak (deb-src)"
 
@@ -1581,9 +1575,9 @@ msgstr "Bul"
 
 #. TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
 #: gtk/rgtaskswin.cc:141
-#, fuzzy, c-format
+#, c-format
 msgid "Description %s"
-msgstr "Açıklama"
+msgstr "%s Açıklaması"
 
 #: gtk/window_main.glade.h:1 gtk/window_fetch.glade.h:1
 #: gtk/window_preferences.glade.h:2 gtk/window_summary.glade.h:2
@@ -1608,6 +1602,8 @@ msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
+"<b>Not:</b> Öntanımlı sürüm dışında bir sürüm yüklemek istiyorsanız, menüden "
+"<b>Paket -> Sürüme Zorla...</b> seçeneğini seçin."
 
 #: gtk/window_main.glade.h:6 gtk/window_details.glade.h:6
 msgid "<b>Package:</b>"
@@ -1642,9 +1638,8 @@ msgid "Apply"
 msgstr "Uygula"
 
 #: gtk/window_main.glade.h:14 gtk/window_details.glade.h:11
-#, fuzzy
 msgid "Available versions:"
-msgstr "<b>Mevcut Sürümler</b>"
+msgstr "Mevcut Sürümler:"
 
 #: gtk/window_main.glade.h:15 gtk/window_details.glade.h:12
 msgid "Common"
@@ -1669,9 +1664,8 @@ msgid "Download:"
 msgstr "İndir:"
 
 #: gtk/window_main.glade.h:21
-#, fuzzy
 msgid "Icon _Legend"
-msgstr "Simge Açıklamaları"
+msgstr "Simge _Açıklamaları"
 
 #: gtk/window_main.glade.h:22 gtk/window_details.glade.h:18
 msgid "Installed Files"
@@ -1683,7 +1677,7 @@ msgstr "Tüm Yükseltmeleri İşaretle"
 
 #: gtk/window_main.glade.h:24
 msgid "Mark Packages by _Task..."
-msgstr ""
+msgstr "Paketleri _Göreve göre seç..."
 
 #: gtk/window_main.glade.h:25
 msgid "Mark for Co_mplete Removal"
@@ -1715,18 +1709,16 @@ msgid "Release"
 msgstr "Sürüm"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "Reload"
-msgstr "Sürüm"
+msgstr "Tazele"
 
 #: gtk/window_main.glade.h:36
 msgid "Save Markings _As..."
 msgstr "Seçimi _Farklı Kaydet..."
 
 #: gtk/window_main.glade.h:37
-#, fuzzy
 msgid "Search"
-msgstr "İçinde ara:"
+msgstr "Ara"
 
 #: gtk/window_main.glade.h:39 gtk/window_details.glade.h:22
 msgid "Size:"
@@ -1757,9 +1749,8 @@ msgid "Version:"
 msgstr "Sürüm:"
 
 #: gtk/window_main.glade.h:47 gtk/window_details.glade.h:24
-#, fuzzy
 msgid "Versions"
-msgstr "Sürüm"
+msgstr "Sürümler"
 
 #: gtk/window_main.glade.h:48
 msgid "_About"
@@ -1822,19 +1813,16 @@ msgid "_Lock Version"
 msgstr "Sürümü _Sabitle"
 
 #: gtk/window_main.glade.h:63
-#, fuzzy
 msgid "_Mark All Upgrades..."
-msgstr "Tüm Yükseltmeleri İşaretle..."
+msgstr "Yükseltmeleri _İşaretle..."
 
 #: gtk/window_main.glade.h:64
-#, fuzzy
 msgid "_Package"
-msgstr "Paket"
+msgstr "_Paket"
 
 #: gtk/window_main.glade.h:65
-#, fuzzy
 msgid "_Properties"
-msgstr "Özellikler"
+msgstr "_Özellikler"
 
 #: gtk/window_main.glade.h:66
 msgid "_Quick Introduction"
@@ -1853,9 +1841,8 @@ msgid "_Redo"
 msgstr "_Yinele"
 
 #: gtk/window_main.glade.h:70
-#, fuzzy
 msgid "_Reload Package List"
-msgstr "Paket Girdilerini _Tazele"
+msgstr "Paket Listesini _Tazele"
 
 #: gtk/window_main.glade.h:71
 msgid "_Repositories"
@@ -1866,19 +1853,16 @@ msgid "_Save Markings"
 msgstr "Değişiklikleri _Kaydet"
 
 #: gtk/window_main.glade.h:73
-#, fuzzy
 msgid "_Search..."
-msgstr "Aranıyor..."
+msgstr "_Ara..."
 
 #: gtk/window_main.glade.h:74
-#, fuzzy
 msgid "_Set Internal Option..."
 msgstr "_Dahili Seçenek Ayarla..."
 
 #: gtk/window_main.glade.h:75
-#, fuzzy
 msgid "_Settings"
-msgstr "Bölümler"
+msgstr "_Ayarlar"
 
 #: gtk/window_main.glade.h:76
 msgid "_Text Only"
@@ -2004,14 +1988,12 @@ msgid "Look in:"
 msgstr "Ara:"
 
 #: gtk/window_find.glade.h:8
-#, fuzzy
 msgid "Search:"
-msgstr "İçinde ara:"
+msgstr "Ara:"
 
 #: gtk/window_find.glade.h:10
-#, fuzzy
 msgid "_Search"
-msgstr "İçinde ara:"
+msgstr "_Ara"
 
 #: gtk/window_fetch.glade.h:2
 msgid "<b>Single Files:</b>"
@@ -2112,7 +2094,6 @@ msgid "Apply changes in a terminal window"
 msgstr "Değişiklikleri bir uçbirim penceresinde uygula"
 
 #: gtk/window_preferences.glade.h:18
-#, fuzzy
 msgid "Ask to confirm changes also affecting other packages"
 msgstr "Diğer paketleri etkileyen değişikler için onay iste"
 
@@ -2125,9 +2106,8 @@ msgid "Broken:"
 msgstr "Bozuk:"
 
 #: gtk/window_preferences.glade.h:21
-#, fuzzy
 msgid "Clicking on the status icon marks the most likely action"
-msgstr "Durum simgesine tıklanırsa en çok kullanılan eylem uygulanır"
+msgstr "Durum simgesine tıklama en çok kullanılan eylemi uygular"
 
 #: gtk/window_preferences.glade.h:22
 msgid "Color"
@@ -2158,7 +2138,6 @@ msgid "Completely"
 msgstr "Tamamen"
 
 #: gtk/window_preferences.glade.h:28
-#, fuzzy
 msgid "Consider recommended packages as dependencies"
 msgstr "Önerilen paketleri bağımlılık olarak kabul et"
 
@@ -2279,7 +2258,6 @@ msgid "Number of undo operations:"
 msgstr "Geri alma sayısı:"
 
 #: gtk/window_preferences.glade.h:59
-#, fuzzy
 msgid "Port number of the ftp proxy server"
 msgstr "Ftp vekil sunucu kapı numarası"
 
@@ -2292,7 +2270,6 @@ msgid "Port: "
 msgstr "Kapı: "
 
 #: gtk/window_preferences.glade.h:63
-#, fuzzy
 msgid "Removal of packages: "
 msgstr "Paket kaldırma: "
 
@@ -2305,10 +2282,9 @@ msgstr ""
 
 #: gtk/window_preferences.glade.h:65
 msgid "Show package properties in the main window"
-msgstr ""
+msgstr "Ana pencerede paket tercihlerini göster"
 
 #: gtk/window_preferences.glade.h:67
-#, fuzzy
 msgid "System upgrade:"
 msgstr "Sistem yükseltmesi:"
 
@@ -2404,10 +2380,12 @@ msgid ""
 "Vendors sign theirs packages to verify the correct origin and integraty of "
 "the packages. Disabling the verification is a security risk"
 msgstr ""
+"Paket sağlayıcıları paketlerin kaynağını ve bütünlüğünü doğrulamak için "
+"paketleri imzalamktadır. Doğrulamayı iptal etmek güvenlik riski oluşturur"
 
 #: gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
-msgstr ""
+msgstr "Paket imzalarını doğrula"
 
 #: gtk/window_summary.glade.h:12
 msgid "_Show Details"
@@ -2430,9 +2408,8 @@ msgid "Conflicting Packages"
 msgstr "Çelişen Paketler"
 
 #: gtk/window_filters.glade.h:9 gtk/window_details.glade.h:15
-#, fuzzy
 msgid "Dependent Packages"
-msgstr "Değiştirilmiş Paketler"
+msgstr "Bağımlı Paketler"
 
 #: gtk/window_filters.glade.h:11
 msgid "Exclude"
@@ -2616,11 +2593,15 @@ msgid ""
 "There are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
+"<span size=\"large\" weight=\"bold\">Bilgisayarınız hangi görevler için "
+"kullanılacak?</span>\n"
+"\n"
+"Çeşitli göreler için önceden belirlenmiş paket grupları bulunmaktadır. Eğer "
+"Bir görev seçecek olursanız, ilgili paketler kurulum için seçilecek."
 
 #: gtk/window_tasks.glade.h:4
-#, fuzzy
 msgid "_Description"
-msgstr "Açıklama"
+msgstr "_Açıklama"
 
 #: gtk/window_zvtinstallprogress.glade.h:1
 msgid "<b>Terminal Output:</b>"
@@ -2754,9 +2735,8 @@ msgstr "Değiştirilen paketler"
 
 #. suggests
 #: gtk/rgfiltermanager.h:76
-#, fuzzy
 msgid "Dependent packages"
-msgstr "Değiştirilen paketler"
+msgstr "Bağımlı paketler"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"

@@ -48,14 +48,15 @@ CLEANFILES = omf_timestamp html_timestamp
 # If the following file is in a subdir (like help/) you need to add that to the path
 include $(top_srcdir)/omf.make
 
-all: omf html
+all: omf 
 
 html: html_timestamp
 
 html_timestamp:  $(docname).xml
-	rm -f $(top_builddir)/doc/html/*html
-	xmlto html -o  $(top_builddir)/doc/html --skip-validation $(docname).xml
-	cp  $(top_srcdir)/help/C/figures/*  $(top_builddir)/doc/html/figures
+	rm -f $(top_builddir)/doc/html/$(lang)/*html
+	xmlto html -o  $(top_builddir)/doc/html/$(lang) --skip-validation $(docname).xml
+	mkdir -p  $(top_builddir)/doc/html/$(lang)/figures
+	cp  $(top_srcdir)/help/$(lang)/figures/*  $(top_builddir)/doc/html/$(lang)/figures
 	touch html_timestamp
 
 $(docname).xml: $(entities)

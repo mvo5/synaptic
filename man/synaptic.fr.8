@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH SYNAPTIC 8 "10 juin 2003"
+.TH SYNAPTIC 8 "4 mars 2004"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -21,100 +21,53 @@ synaptic \- Interface graphique pour la gestion des paquets
 \fBsynaptic\fP [options]
 .br
 .SH DESCRIPTION
-Synaptic est une interface graphique pour apt. Synaptic s'utilise un peu comme
-apt-get. Vous ferez généralement une «\ mise à jour\ » qui mettra à jour la liste des
-paquets présents sur le serveur de votre fichier \fIsources.list\fR. Notez
-qu'ici aucun paquet n'est mis à jour, seules les informations sur les paquets le
-sont. Vous pouvez maintenant voir quels sont les paquets qui peuvent être «\ mis
-à jour\ ». Pour ce faire, appuyez simplement sur le filtre «\ Peut être
-mis-à-jour\ ». La liste changera et vous verrez seulement ceux dont une nouvelle
-version est disponible sur le serveur. Vous pouvez maintenant mettre à niveau
-chaque paquet individuellement en les sélectionnant et en appuyant sur le petit
-bouton «\ Mettre-à-jour\ » sur la gauche (ou double clique dans la version gtk)
-ou choisissez de mettre à niveau tous les paquets en cliquant sur le gros bouton
-du haut «\ Tout M-à-j\ ». Pour le moment, aucun paquet ne sera téléchargé ni mis à
-niveau, ils sont simplement marqués comme à mettre à jour. Vous voudrez
-probablement encore changer le filtre à «\ Changements programmés\ » pour voir
-ce qu'il se passera si vous continuez. Si vous aimez ce que vous voyez, appuyez
-sur «\ C'est parti\ !\ » et synaptic téléchargera et installera les paquets.
-.TP
-.SH Différence entre «\ Tout M-à-j\ » et «\ M-à-j distro\ »
-La différence entre «\ Tout M-à-j\ » et «\ M-à-j distro\ » est petite mais
-importante. «\ Tout M-à-j\ » signifie\ : marque les paquets comme pouvant être
-mis à niveau, sauf ceux qui ont de nouvelles dépendances. En aucun cas, les
-paquets actuellement installés ne sont supprimés ou les paquets qui ne sont
-encore pas installés ne sont récupérés et installés.
-
-«\ M-à-j distro\ », en plus de faire la mise à jour complète («\ Tout M-à-j\ »),
-manipule aussi intelligemment les changements de dépendances des nouvelles
-versions des paquets et utilise un astucieux système de résolution de conflits
-si cela s'avère nécessaire.
-
-D'ordinaire vous avez besoin de «\ M-à-j distro\ » si vous mettez à niveau votre
-distribution.
-.TP
-.SH Sélectionner plusieurs paquets
-Vous pouvez sélectionnez plus d'un paquet à la fois. Vous devez utiliser SHIFT
-ou CTRL pour sélectionnez plusieurs paquets. Si vous cliquez sur une action
-(installer/mettre à jour/supprimer) pour plusieurs paquet, l'action sera
-effectuée pour chacun des paquets (comme vous l'aurez probablement déjà
-remarquer :) ).
+Synaptic est une interface graphique au système de gestion de paquets apt. Il
+permet d'effectuer toutes les actions de la ligne de commande d'apt-get
+dans un environnement graphique. Cela inclut l'installation, la mise à niveau,
+la mise à niveau inférieur et la suppression d'un paquet et même la mise à
+niveau de tout votre système.
 .PP
-.\" TeX users may be more comfortable with the \fB<whatever>\fP and
-.\" \fI<whatever>\fP escape sequences to invoke bold face and italics, 
-.\" respectively.
-.TP
-.SH Raccourcis clavier
-La bibliothèque gtk possède quelques raccourcis clavier globaux\ :
-.br
-\fBCTRL-n\fR ne pas modifier
-.br
-\fBCTRL-i\fR installer
-.br
-\fBCTRL-r\fR supprimer
-.br
-\fBCTRL-f\fR rechercher
-.br
-\fBCTRL-g\fR mettre à niveau
-.br
-\fBCTRL-u\fR mettre à jour
-.br
-\fBCTRL-e\fR exécuter les changements
-.br
-\fBCTRL-q\fR quitter
-
-.TP
-.SH Filtres
-Synaptic affiche la liste des paquets en fonction du filtre sélectionné. Le
-filtre le plus simple est bien sûr «\ Tous les paquets\ ». Mais il y a plus de
-filtres que ça. Vous pouvez voir les filtres prédéfinis et faire vos propre
-filtres en appuyant sur «\ Filtres\ » au-dessus de la liste des paquets.
+Un manuel avec les instructions détaillées est disponible dans le menu d'aide de
+synaptic.
 
 .SH OPTIONS
-Synaptic reconnaît les options standards de X aussi bien que les suivantes\ :
+Synaptic accepte toutes les options standard de la ligne de commande de la boîte
+à outils GTK+ ainsi que les suivantes\ :
 .TP
 \fB-f\fR, \fB\-\-filter-file\fR=\fInomdefichier\fR
-donne un autre fichier de filtres
+spécifie un fichier de filtres alternatif
 .TP
 \fB-i\fR, \fB\-\-initial-filter\fR=\fInb\fR
-démarre avec le filtre numéro \fInb\fR
+applique le filtre numéro \fInb\fR au démarrage
 .TP
 \fB-o\fR, \fB\-\-option\fR=\fIoption\fR
-positionne une option de synaptic ou d'apt (experts seulement)
+positionne une option interne (experts seulement)
 
 .SH AUTEURS
-Synaptic a été développé pas Alfredo K. Kojima <kojima@conectiva.com.br>. Sa
-dernière version officielle fût la 0.16. Michael Vogt <mvo@debian.org> repris sa
-version CVS, où Alfredo ajouta un portage vers Gtk+ presque complet. Michael
-termina le portage et ajouta quelques fonctionnalités. Pour voir les changements
-visibles de ce dernier point, regardez le fichier \fINEWS\fR. Conectiva est
-toujours impliqué dans le développement de synaptic. Gustavo Niemeyer
-<niemeyer@conectiva.com> fait un gros travail.
+Synaptic a été originellement développé par Alfredo K. Kojima
+<kojima@conectiva.com.br>. Sa dernière version officielle fut la 0.16. Michael
+Vogt <mvo@debian.org> reprit sa version CVS, qui incluait un portage vers Gtk+
+presque complet. Michael termina le portage et ajouta quelques fonctionnalités.
+Pour voir les changements concernant ce dernier point, regardez le fichier
+\fINEWS\fR. Conectiva est toujours impliqué dans le développement de synaptic.
+Gustavo Niemeyer <niemeyer@conectiva.com> fait un gros travail.
 .PP
 Tout le développement est fait sur http://savannah.gnu.org/projects/synaptic
 .PP
-Cette page de manuel a été écrite par Wybo Dekker <wybo@servalys.nl> et
-Michael Vogt <mvo@debian.org>.
+Cette page de manuel a originellement été écrite par Wybo Dekker
+<wybo@servalys.nl> et Michael Vogt <mvo@debian.org> et modifiée par Sebastian
+Heinlein <sebastian.heinlein@campus.lmu.de>.
+
+.SH COPYRIGHT
+Copyright  (C)  2001-2004 Conectiva S/A
+.PP
+Copyright  (C)  2002-2004 Michael Vogt
+.PP
+Il n'y a AUCUNE garantie.
+Vous pouvez redistribuer ce logiciel sous les termes de la Licence Publique
+Générale GNU. Pour plus d'informations à ce propos, voyez le fichier nommé
+COPYING.
+
 .SH TRADUCTION
 Richard Bonichon <richard.bonichon@free.fr> et mise à jour par Julien Louis
 <leonptitlouis@ifrance.com>.

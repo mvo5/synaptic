@@ -1,505 +1,776 @@
 <?xml version="1.0"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-  <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appversion "0.46">
-  <!ENTITY app "<application>Synaptic Package Manager</application>">
-  <!ENTITY manrevision "0.1">
-  <!ENTITY date "October 2003">
+<!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY appversion "0.46">
+<!ENTITY app "<application>Synaptic Package Manager</application>">
+<!ENTITY manrevision "0.1">
+<!ENTITY date "October 2003">
 ]>
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-  <articleinfo> 
-    <title>&app; Manual V&manrevision;</title>       
+<articleinfo> 
+<title>&app; Manual V&manrevision;</title>       
 
-    <copyright> 
-      <year>2003</year> 
-      <holder>Sebastian Heinlein</holder> 
-    </copyright>
+<copyright> 
+	<year>2003</year> 
+	<holder>Sebastian Heinlein</holder> 
+</copyright>
 
-<!-- translators: uncomment this:
+	<!-- translators: uncomment this:
 
-  <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-  </copyright>
+<copyright>
+	<year>2002</year>
+	<holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+</copyright>
 
-   -->
+-->
 
-     <!-- This file  contains link to license for the documentation (GNU FDL), and 
-        other legal stuff such as "NO WARRANTY" statement. Please do not change 
-	any of this. -->
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+ legal stuff such as "NO WARRANTY" statement. Please do not change 
+ of this. -->
 
-    <authorgroup> 
-      <author> 
+<authorgroup> 
+	<author> 
 		<firstname>Sebastian</firstname> 
 		<surname>Heinlein</surname> 
-      </author>
-    </authorgroup>
+	</author>
+</authorgroup>
 
-    <releaseinfo>This manual describes version &appversion; of Synaptic Package Manager.
-    </releaseinfo> 
-    <legalnotice> 
-      <title>Feedback</title>
-      <para>To report a bug or make a suggestion regarding the &app; 
-      application or this manual, use the bug report system at <ulink 
-      url="http://www.nongnu.org/synaptic" type="http">Synaptic Web
-      page</ulink>, contact the mailing list <email>synaptic@nongnu.org</email>
-      or join the IRC channel #synaptic on irc.freenode.org.
-      </para>
-<!-- Translators may also add here feedback address for translations -->
-    </legalnotice> 
-  </articleinfo> 
+<releaseinfo>
+	This manual describes version &appversion; 
+	of Synaptic Package Manager.
+</releaseinfo> 
 
-  <indexterm zone="index"> 
-    <primary>Synaptic Package Manager</primary> 
-  </indexterm> 
-  <indexterm zone="index"> 
-    <primary>mygnomeapp</primary> 
-  </indexterm>
-
-<!-- ============= Document Body ============================= -->
-<!-- ============= Introduction ============================== -->
-<!-- Use the Introduction section to give a brief overview of what
-     the application is and what it does. -->
-  <sect1 id="synaptic-introduction"> 
-    <title>Introduction</title> 
-    <para>The &app; enables you to manage your software.
-    The software is organizied in so called packages and 
-    &app; features upgrading, installing, removing or even
-    downgrading of such software packages.</para>
-    
-    <para>Modifcations on the status of packages are not immediatly 
-    executed. &app; collects the planned modifications in a queue 
-    and commits them to apt. Apt is an unified package manager backend 
-    for RPM and DEB systems.
-    </para>
-    <para>You can start <application>&app;</application> in the following ways:
-    </para> 
-    <variablelist>
-    	<varlistentry>
-    		<term><guimenu>Applications</guimenu> menu</term>
-    		<listitem>
-    		<para>Choose 
-    		<menuchoice>
-    		<guisubmenu>Preferences</guisubmenu>
-		<guisubmenu>System Tools</guisubmenu>
-    		<guimenuitem>Software</guimenuitem>
-    		</menuchoice>. </para>
-    		</listitem>
-    	</varlistentry>
-    	<varlistentry>
-    		<term>Command line</term>
-    		<listitem>
-    		<para>To start <application>&app;</application> from a command line, type the following command, 
-    		then press <keycap>Return</keycap>:</para>
-    		<para> 
-			<command>synaptic</command> 
-    		</para> 
-    		</listitem>
-    	</varlistentry>
-    </variablelist>
-  </sect1>
-
-  <sect1 id="synatpic-win"> 
-    <title>The Main Window</title> 
-
-    <sect2 id="synaptic-win-overview">
-    <title>Overview</title>
-      <para>When you start <application>&app;</application>, the following 
-	window is displayed.</para>
-
-    <!-- ==== Figure ==== -->
-      <figure id="mainwindow-fig"> 
-	<title>&app; Start Up Window</title> 
-	<screenshot> 
-	  <mediaobject> 
-	    <imageobject><imagedata
-		fileref="figures/synaptic-start.png" format="PNG"/> 
-	    </imageobject>
-	    <textobject> 
-	      <phrase>Shows &app; main window. Contains titlebar, menubar, toolbar, display area, and
-	      scrollbars. Menubar contains File, View, Settings, and Help menus. </phrase> 
-	    </textobject> 
-	  </mediaobject> 
-	</screenshot> 
-      </figure>
-    <!-- ==== End of Figure ==== -->
-
-      <table frame="topbot" id="table-synaptic-main">
-	<title>&app; Window Components</title>
-        <tgroup cols="2" colsep="0" rowsep="0"><colspec colname="COLSPEC0" colwidth="30*"/>
-        <colspec colname="COLSPEC1" colwidth="70*"/>
-        <thead>
-                <row rowsep="1">
-                        <entry valign="top">Component</entry>
-                        <entry valign="top">Description</entry>
-                </row>
-        </thead>
-        <tbody>
-                <row>
-                        <entry valign="top">Menubar</entry>
-                        <entry valign="top">Contains menus that you use to perform
-                        tasks in &app;.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Toolbar</entry>
-                        <entry valign="top">Provides global actions (update, upgrade
-		        and execute) and a package search field.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Package list</entry>
-                        <entry valign="top">Lists available packages. The list can be narrowed
-	                down using filters.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Information area</entry>
-                        <entry valign="top">Provides information about a selected package
-		        package specific actions.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Statusbar</entry>
-                        <entry valign="top">Displays global informations about the status of
-	                &app; </entry>
-                </row>
-
-	    </tbody>
-	</tgroup>
-      </table>
-    </sect2>
-
-    <sect2 id="synaptic-win-toolbar">
-    <title>The Toolbar</title>
-      <para> </para>
-    </sect2>
-
-    <sect2 id="synaptic-win-list" xreflabel="package list">
-    <title>The Package List</title>
-      <para> </para>
-    </sect2>
-
-    <sect2 id="synaptic-win-info">
-    <title>The Information Area</title>
-      <para> </para>
-    </sect2>
-
-  </sect1>
-<!-- ================ Usage ================================ -->
-<!-- Use this section to describe how to use the application to perform the tasks for 
-  which the application is designed. -->
-  <sect1 id="synaptic-single"> 
-    <title>Managing Packages</title> 
-
-    <tip><para>All actions can also be applied to more than one package. Just select the
-	packages in the package list and choose the modifcation in the package control.
+<legalnotice> 
+	<title>Feedback</title>
+	<para>
+		To report a bug or make a suggestion regarding 
+		the &app; or this manual, use the bug report 
+		system at <ulink linkend="http://www.nongnu.org/synaptic" 
+		type="http">Synaptic Web</ulink>, contact the mailing list 
+		<email>synaptic@nongnu.org</email>
+		join the IRC channel #synaptic on irc.freenode.org.
 	</para>
-      </tip>
+	<!-- Translators may also add here feedback address for translation -->
+</legalnotice> 
+</articleinfo> 
+
+<indexterm zone="index"> 
+	<primary>Synaptic Package Manager</primary> 
+</indexterm> 
+<indexterm zone="index"> 
+	<primary>Packages</primary>
+	<secondary>To install</secondary>
+	<secondary>To remove</secondary>
+	<secondary>To upgrade</secondary>
+	<secondary>To downgrade</secondary>
+</indexterm>
+<indexterm zone="index"> 
+	<primary>Software</primary>
+	<secondary>To install</secondary>
+	<secondary>To remove</secondary>
+	<secondary>To upgrade</secondary>
+	<secondary>To downgrade</secondary>
+</indexterm>
+
+<sect1 id="synaptic-introduction"> 
+	<title>Introduction</title> 
+	<para>
+		The &app; enables you to manage your software.
+		 software is organizied in so called packages and 
+		&app; features upgrading, installing, removing or even
+		 of such software packages.
+	</para>
+
+	<para>
+		Modifcations on the status of packages are not immediatly 
+		. &app; collects the planned modifications in a queue 
+		 commits them to apt. Apt is an unified package manager 
+		 backend RPM and DEB systems.
+	</para>
+	<para>
+		You can start <application>&app;</application> in the 
+		following ways:
+	</para> 
+	<variablelist>
+		<varlistentry>
+			<term><guimenu>Applications</guimenu> menu</term>
+			<listitem>
+				<para>
+					Choose 
+					<menuchoice>
+					<guisubmenu>Preferences</guisubmenu>
+					<guisubmenu>System Tools</guisubmenu>
+					<guimenuitem>Software</guimenuitem>
+					</menuchoice>. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>Command line</term>
+			<listitem>
+				<para>
+					To start <application>&app;
+					</application>from a command you are 
+					in need of root rigths. Type the 
+					following , then press <keycap>Return
+					</keycap>:
+				</para>
+				<para> 
+					<command>synaptic</command> 
+				</para> 
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect1>
+
+<sect1 id="synatpic-win"> 
+	<title>The Main Window</title> 
+
+<sect2 id="synaptic-win-overview">
+	<title>Overview</title>
+	<para>
+		When you start <application>&app;</application>, the 
+		following is displayed.
+	</para>
+
+	<figure id="mainwindow-fig"> 
+		<title>&app; Start Up Window</title> 
+		<screenshot> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="figures/synaptic-start.png" 
+					format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+					Shows &app; main window. Contains titlebar, 
+					menubar, toolbar, display area, and
+					scrollbars. Menubar contains File, View, 
+					Settings, and Help menus. 
+					</phrase> 
+				</textobject> 
+			  </mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<table frame="topbot" id="table-synaptic-main">
+		<title>&app; Window Components</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top">Component</entry>
+					<entry valign="top">Description</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">Menubar</entry>
+					<entry valign="top">
+						Contains menus that you use to perform
+						 in &app;.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Toolbar</entry>
+					<entry valign="top">
+						Provides global actions (update, upgrade and 
+						execute) and a package search field.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Package list</entry>
+					<entry valign="top">
+						Lists available packages. The list
+						can be narrowed down using filters.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Information area</entry>
+					<entry valign="top">
+						Provides information about a selected package
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Statusbar</entry>
+					<entry valign="top">
+						Displays global informations about the status 
+						of &app; 
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+</sect2>
+
+<sect2 id="synaptic-win-toolbar">
+	<title>The Toolbar</title>
+	<figure>
+		<title>&app; toolbar</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-toolbar.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the toolbar of the &app; main window
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+	<para>
+		The toolbar consists of 2 parts:
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Global Actions
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Update
+						</term>
+						<listitem>
+							<para>
+								To query all package archives 
+								(repositories) and rebuild the list
+								known packages
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Upgrade
+						</term>
+						<listitem>
+							<para>
+								To upgrade all to the latest version
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Execute
+						</term>
+						<listitem>
+							<para>
+								To execute all queued
+							</para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Find Field
+				<anchor id="anchor-findfield"></anchor>
+			</term>
+			<listitem>
+				<para>
+					The quick search explained on detail in <xref 
+					linkend="synaptic-find"></xref>
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-win-list" xreflabel="package list">
+	<title>
+		The Package List
+	</title>
+	<para> 
+	</para>
+</sect2>
+
+<sect2 id="synaptic-win-info">
+	<title>
+		The Information Area
+	</title>
+	<para>
+	</para>
+</sect2>
+
+</sect1>
 
 
-    <sect2 id="synaptic-find"> 
-      <title>To Find a Specific Package</title> 
-      <para> </para>
-    </sect2>
+<sect1 id="synaptic-single"> 
+	<title>
+		Managing Packages
+	</title> 
+	<tip>
+		<para>
+			All actions can also be applied to more than one package. Just select the
+			in the package list and choose the modifcation in the package control.
+		</para>
+	</tip>
 
-    <sect2 id="synaptic-install"> 
-      <title>To Install a New Package</title> 
-      <para><orderedlist>
-	<listitem><para>Select the package(s) to be installed in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
-	<listitem><para>Choose one of the following ways to select the package for installation:</para>
-	    <itemizedlist>
-	      <listitem><para>Click on <guibutton>Install Latest Package</guibutton> in the
-		package control of the inforamtion area.</para></listitem>
-	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Install Latest Version
-		</guimenuitem></menuchoice></para></listitem>
-	      <listitem><para>Right click on the package and choose <guimenuitem>Install Latest Version
-		  </guimenuitem></para></listitem>
-	      <listitem><para>Press the key combination <keycombo><keysym>CRTL-I</keysym>
-		</keycombo></para></listitem>
-	    
-	     </itemizedlist>
-	    </listitem>
-	  </orderedlist></para>
-    </sect2>
-
-    <sect2 id="synaptic-remove"> 
-      <title>To Remove a Package</title> 
-      <para><orderedlist>
-	<listitem><para>Select the package(s) to be removed in the <xref linkend="synaptic-win-list"></xref>.</para></listitem>
-	<listitem><para>Choose one of the following ways to select the package for removal:</para>
-	    <itemizedlist>
-	      <listitem><para>Click on <guibutton>Remove</guibutton> in the
-		package control of the inforamtion area.</para></listitem>
-	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Remove
-		</guimenuitem></menuchoice></para></listitem>
-	      <listitem><para>Right click on the package and choose <guimenuitem>Remove
-		  </guimenuitem></para></listitem>
-	      <listitem><para>Press the key combination <keycombo><keysym>Remove</keysym>
-		</keycombo></para></listitem>
-	    
-	     </itemizedlist>
-	    </listitem>
-	  </orderedlist></para>
-
-    </sect2>
-
-    <sect2 id="synaptic-upgrade"> 
-      <title>To Upgrade a Package</title> 
-      <para>If a later version of a package is available the <guibutton>Install Latest Version
-      </guibutton> is renamed to <guibutton>Upgrade</guibutton>.</para>
-      <para><orderedlist>
-	<listitem><para>Select the package(s) to be upgraded in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
-	<listitem><para>Choose one of the following ways to select the package for upgrade:</para>
-	    <itemizedlist>
-	      <listitem><para>Click on <guibutton>Upgrade</guibutton> in the
-		package control of the inforamtion area.</para></listitem>
-	      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Upgrade
-		</guimenuitem></menuchoice></para></listitem>
-	      <listitem><para>Right click on the package and choose <guimenuitem>Upgrade
-		  </guimenuitem></para></listitem>
-	      <listitem><para>Press the key combination <keycombo><keysym>CRTL-U</keysym>
-		</keycombo></para></listitem>
-	    
-	     </itemizedlist>
-	    </listitem>
-	  </orderedlist></para>
-
-    </sect2>
-
-    <sect2 id="synaptic-upgradeall"> 
-      <title>To Upgrade All Packages</title> 
-      <para> </para>
-    </sect2>
-
-    <sect2 id="synaptic-downgrade"> 
-      <title>To Downgrade a Package</title> 
-      <warning><para>Downgrading a package is a broken feature, since it is not supported by
-      apt. It may work for you, but it is not recommended.</para></warning>
-      <para>The export tab in the information area of the package provides a list of all
-	available versions of the package. The tab is explained in detail in <xref linkend="synaptic-repo"></xref>. </para>
-    </sect2>
-
-  </sect1>
-
-  <sect1 id="synaptic-repo">
-    <title>Managing Package Sources</title>
-
-    <sect2 id="synaptic-repo-update"> 
-      <title>To Update List of Available Packages</title> 
-      <para> </para>
-    </sect2>
-
-    <sect2 id="synaptic-repo-manage"> 
-      <title>Using Repositories</title> 
-      <para> </para>
-    </sect2>
-
-    <sect2 id="synaptic-repo-cdrom"> 
-      <title>To Add Packages on CD-ROM</title> 
-      <para> </para>
-    </sect2>
-  </sect1>
-
-  <sect1 id="snyaptic-filter">
-      <title>Using Filters</title>
-      <para>Filters enable you to narrow down the list of shown packages in the main package list.
-      </para>
-
-    <sect2 id="synaptic-filter-apply"> 
-      <title>To Apply a Predefined Filter</title> 
-      <para>&app; comes with a list of predifend filters.</para>
-
-      <table frame="topbot" id="table-synaptic-filters">
-	<title>Predefined Filters</title>
-        <tgroup cols="2" colsep="0" rowsep="0"><colspec colname="COLSPEC0" colwidth="30*"/>
-        <colspec colname="COLSPEC1" colwidth="70*"/>
-        <thead>
-                <row rowsep="1">
-                        <entry valign="top">Filter</entry>
-                        <entry valign="top">Description</entry>
-                </row>
-        </thead>
-        <tbody>
-                <row>
-                        <entry valign="top">All packages</entry>
-                        <entry valign="top">Displays all known packages.
-                        </entry>
-                </row>
-                <row>
-                        <entry valign="top">Install</entry>
-                        <entry valign="top">Displays only currently installed packages.</entry>
-	        </row>
-                <row>
-                        <entry valign="top">Not installed</entry>
-                        <entry valign="top">Displays only currently not installed packages.
-	                </entry>
-                </row>
-                <row>
-                        <entry valign="top">Upgradable</entry>
-                        <entry valign="top">Displays only packages with a later version available.
-	                </entry>
-                </row>
-                <row>
-                        <entry valign="top">Broken</entry>
-                        <entry valign="top">Displays only packages with broken dependencies.
-	                </entry>
-                </row>
-                <row>
-                        <entry valign="top">Programmed Changes</entry>
-                        <entry valign="top">Displays only packages queued to be modified.
-	                </entry>
-                </row>
-                <row>
-                        <entry valign="top">New in archive</entry>
-                        <entry valign="top">Displays only new packages since the last repository
-	                update.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Residual</entry>
-                        <entry valign="top">Displays only former installed packages that left
-	                data or configuration files on the system.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Pkg with Debconf</entry>
-                        <entry valign="top">Displays only packages that can be configured through
-	                the debian package configuration system, so called debconf.</entry>
-                </row>
-                <row>
-                        <entry valign="top">Oboslete or locally installed</entry>
-                        <entry valign="top">Displays only packages that are not (for longer)
-		        included in one of the specified repositories.
-	                </entry>
-                </row>
-	</tbody>
-       </tgroup>
-     </table>
-
-
-    </sect2>
-
-    <sect2 id="synaptic-filter-edit"> 
-      <title>To Edit and Create Filters</title> 
-
-      <para>Filters can be created, deleted and modified in the filter editor. There are two
-      ways to start the editor:</para>
-
-      <itemizedlist>
-         <listitem>
-	    <para>Choose from the menu <menuchoice><guimenu>Search</guimenu><guimenuitem>Edit Filters...</guimenuitem></menuchoice> </para></listitem>
-	 <listitem>
-	    <para>Click on <guibutton>Filters...</guibutton> in the main window</para>
-	 </listitem>
+<sect2 id="synaptic-find"> 
+	<title>
+		To Find a Specific Package
+	</title> 
+	<para>
+		You can search for a package in two different ways:
+	</para>
+	<itemizedlist>
+		<listitem>
+			<para>
+				Search for a package name in the list of shown:
+			</para>
+			<orderedlist>
+				<listitem>
+					<para>
+						Type the name or a part of it into the
+						<xref linkend="anchor-findfield">find field</xref>
+						located in the toolbar. &app; will automatically
+						jump to the first matching package in the list
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						To find the next matching package press the 
+						the forward button next to the search field
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						To begin the search from the beginning of the
+						package list click on the upward button
+					</para>
+				</listitem>
+			</orderedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Filter the list of shown packages for a pattern e.g.
+				show only packages from the maintainer Joe User or only packages
+				with "german" in the name or description
+			</para>
+			<orderedlist>
+				<listitem>
+					<para>
+						Open the advanced search dialog via
+						<menuchoice><guimenu>Search</guimenu>
+						<guimenuitem>Advanced Search</guimenuitem>
+						</menuchoice>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Type the search expression into the find field
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Select the fields that you want to search in
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on <guibutton>Find</guibutton> to 
+						start the search
+					</para>
+				</listitem>
+			</orderedlist>
+			<tip>
+				<para>
+					You can create more sophisticated filters with the 
+					<xref linkend="synaptic-filter-edit"></xref>
+				</para>
+			</tip>
+		</listitem>
 	</itemizedlist>
-	 
-    <sect3 id="synaptic-filter-edit-view"> 
-      <title>To Change the View of the Results</title> 
-      <para>You can choose between several sorting modes for matching packages. See HAHAH 
-      for a detailed description of all available view modes.</para>
-    </sect3>
+</sect2>
 
-    <sect3 id="synaptic-filter-edit-status"> 
-      <title>To Select Packages by Status</title> 
-      <para> </para>
-    </sect3>
+<sect2 id="synaptic-install"> 
+	<title>To Install a New Package</title>
+	<para>
+		The following steps describe how to install a new package:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package(s) that you wish to install in the 
+				<xref linkend="synaptic-win-list">
+				</xref>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose one of the following ways to queue the package 
+				for installation:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Install Latest Package
+						</guibutton> in the package control area
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Package</guimenu>
+						<guimenuitem>Install Latest Version</guimenuitem>
+						</menuchoice>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Right click on the package and choose <guimenuitem>
+						Install Latest Version</guimenuitem> from the
+						context menu
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination <keycombo><keysym>CRTL-I
+						</keysym></keycombo>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				To actually get the package installed you have to execute the queued
+				changes:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Execute</guibutton> in the toolbar
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose from the menu <menuchoice><guimenu>Actions</guimenu>
+						<guimenuitem>Execute</guimenuitem></menuchoice>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keysym>CTRL-E</keysym></keycombo>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+	</orderedlist>
+</sect2>
 
-    <sect3 id="synaptic-filter-edit-section"> 
-      <title>To Select Packages by Sections</title> 
-      <para> </para>
-    </sect3>
+<sect2 id="synaptic-remove"> 
+<title>To Remove a Package</title> 
+<para><orderedlist>
+<listitem><para>Select the package(s) to be removed in the <xref linkend="synaptic-win-list"></xref>.</para></listitem>
+<listitem><para>Choose one of the following ways to select the package for removal:</para>
+    <itemizedlist>
+      <listitem><para>Click on <guibutton>Remove</guibutton> in the
+ control of the inforamtion area.</para></listitem>
+      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Remove
+</guimenuitem></menuchoice></para></listitem>
+      <listitem><para>Right click on the package and choose <guimenuitem>Remove
+  </guimenuitem></para></listitem>
+      <listitem><para>Press the key combination <keycombo><keysym>Remove</keysym>
+</keycombo></para></listitem>
+    
+     </itemizedlist>
+    </listitem>
+  </orderedlist></para>
 
-    <sect3 id="synaptic-filter-edit-properties"> 
-      <title>To Select Packages by Properites</title> 
-      <para> </para>
-    </sect3>
+</sect2>
 
-    <sect3 id="synaptic-filter-edit-tag"> 
-      <title>To Select Packages by Tags</title> 
-      <para> </para>
-    </sect3>
+<sect2 id="synaptic-upgrade"> 
+<title>To Upgrade a Package</title> 
+<para>If a later version then the installed one of a package is available the <guibutton>Install Latest Version
+</guibutton> is renamed to <guibutton>Upgrade</guibutton>.</para>
+<para><orderedlist>
+<listitem><para>Select the package(s) to be upgraded in the <xref linkend="synaptic-win-list" endterm="synaptic-win-list"></xref>.</para></listitem>
+<listitem><para>Choose one of the following ways to select the package for upgrade:</para>
+    <itemizedlist>
+      <listitem><para>Click on <guibutton>Upgrade</guibutton> in the
+ control of the inforamtion area.</para></listitem>
+      <listitem><para>Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Upgrade
+</guimenuitem></menuchoice></para></listitem>
+      <listitem><para>Right click on the package and choose <guimenuitem>Upgrade
+  </guimenuitem></para></listitem>
+      <listitem><para>Press the key combination <keycombo><keysym>CRTL-U</keysym>
+</keycombo></para></listitem>
+    
+     </itemizedlist>
+    </listitem>
+  </orderedlist></para>
 
-    </sect2>
-   </sect1>
+</sect2>
 
+<sect2 id="synaptic-upgradeall"> 
+<title>To Upgrade All Packages</title> 
+<para> </para>
+</sect2>
 
+<sect2 id="synaptic-downgrade"> 
+<title>To Downgrade a Package</title> 
+<warning><para>Downgrading a package is a broken feature, since it is not supported by
+. It may work for you, but it is not recommended.</para></warning>
+<para>The export tab in the information area of the package provides a list of all
+ versions of the package. The tab is explained in detail in <xref linkend="synaptic-repo"></xref>. </para>
+</sect2>
 
+</sect1>
 
-  <sect1 id="snyaptic-prefs">
-    <title>Preferences</title>
-<!-- =============== Customization Subsection ================ -->
-<!-- Use a new section to describe different tabbed sections on the Settings or Preferences dialog. -->
-    <sect2 id="synaptic-prefs-general"> 
-      <title>General</title> 
-      <para> </para>
-    </sect2>
+<sect1 id="synaptic-repo">
+<title>Managing Package Sources</title>
 
-    <sect2 id="synaptic-prefs-layout"> 
-      <title>Layout</title> 
-      <para> </para>
-    </sect2>
+<sect2 id="synaptic-repo-update"> 
+<title>To Update List of Available Packages</title> 
+<para> </para>
+</sect2>
+
+<sect2 id="synaptic-repo-manage"> 
+<title>Using Repositories</title> 
+<para> </para>
+</sect2>
+
+<sect2 id="synaptic-repo-cdrom"> 
+<title>To Add Packages on CD-ROM</title> 
+<para> </para>
+</sect2>
+</sect1>
+
+<sect1 id="snyaptic-filter">
+	<title>
+		Using Filters
+	</title>
+	<para>
+		Filters enable you to narrow down the list of shown packages in the main package list.
+	</para>
+
+<sect2 id="synaptic-filter-apply"> 
+	<title>
+		To Apply a Predefined Filter
+	</title> 
+	<para>
+		&app; comes with a list of predifend filters.
+	</para>
+
+	<table frame="topbot" id="table-synaptic-filters">
+		<title>
+			Predefined Filters
+		</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top">Filter</entry>
+					<entry valign="top">Description</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top">All packages</entry>
+					<entry valign="top">
+						Displays all known packages.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Install</entry>
+					<entry valign="top">
+						Displays only currently installed packages.
+					</entry>
+			        </row>
+				<row>
+					<entry valign="top">Not installed</entry>
+					<entry valign="top">
+						Displays only currently not installed packages.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Upgradable</entry>
+					<entry valign="top">
+						Displays only packages with a later version available.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Broken</entry>
+					<entry valign="top">
+						Displays only packages with broken dependencies.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">Programmed Changes</entry>
+					<entry valign="top">
+						Displays only packages queued to be modified.
+			                </entry>
+				</row>
+				<row>
+					<entry valign="top">New in archive</entry>
+					<entry valign="top">
+						Displays only new packages since the last 
+						repository update.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Residual</entry>
+					<entry valign="top">
+						Displays only former installed packages that left
+						data or configuration files on the system.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Pkg with Debconf</entry>
+					<entry valign="top">
+						Displays only packages that can be configured through
+						the debian package configuration system, so called debconf.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Oboslete or locally installed</entry>
+					<entry valign="top">
+						Displays only packages that are not (for longer)
+						included in one of the specified repositories.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+</sect2>
+
+<sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
+	<title>
+		To Edit and Create Filters
+	</title> 
+
+	<para>
+		Filters can be created, deleted and modified in the filter editor. There are two
+		to start the editor:
+	</para>
+
+	<itemizedlist>
+		<listitem>
+			<para>
+				Choose from the menu <menuchoice><guimenu>Search</guimenu><guimenuitem>
+				Edit Filters...</guimenuitem></menuchoice>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guibutton>Filters...</guibutton> in the main window
+			</para>
+		</listitem>
+	</itemizedlist>
  
-   <sect2 id="synaptiac-prefs-ordercolor"> 
-      <title>Column Order and Colors</title> 
-      <para> </para>
-   </sect2>    
+	<sect3 id="synaptic-filter-edit-view"> 
+		<title>To Change the View of the Results</title> 
+		<para>
+			You can choose between several sorting modes for matching packages. See HAHAH 
+			a detailed description of all available view modes.
+		</para>
+	</sect3>
 
-   <sect2 id="synaptiac-prefs-layout"> 
-      <title>Layout</title> 
-      <para> </para>
-   </sect2> 
+	<sect3 id="synaptic-filter-edit-status"> 
+		<title>To Select Packages by Status</title> 
+		<para> 
+		</para>
+	</sect3>
 
-   <sect2 id="synaptiac-prefs-temp"> 
-      <title>Temporary Files</title> 
-      <para> </para>
-   </sect2> 
+	<sect3 id="synaptic-filter-edit-section"> 
+		<title>
+			To Select Packages by Sections
+		</title> 
+		<para> </para>
+	</sect3>
 
-   <sect2 id="synaptiac-prefs-network"> 
-      <title>Network</title> 
-      <para> </para>
-    </sect2> 
+	<sect3 id="synaptic-filter-edit-properties"> 
+		<title>To Select Packages by Properites</title> 
+		<para> </para>
+	</sect3>
 
-   <sect2 id="synaptiac-prefs-expert"> 
-      <title>Expert</title> 
-      <para> </para>
-    </sect2> 
-  </sect1>
-<!-- ============= Bugs ================================== -->
-<!-- This section is optional and is commented out by default. 
-     You can use it to describe known bugs and limitations of the 
-	  program if there are any - please be frank and list all
-     problems you know of. 
-  
-  <sect1 id="mayapp-bugs">
-  <title>Known Bugs and Limitations</title>
-  <para> </para>
- </sect1>
--->
-<!-- ============= About ================================== -->
-<!-- This section contains info about the program (not docs), such as
-      author's name(s), web page, license, feedback address. This
-      section is optional: primary place for this info is "About.." box of
-      the program. However, if you do wish to include this info in the
-      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
-  <sect1 id="myapp-about"> 
-    <title>About &app;</title> 
-    <para> &app; was written by Michael vogt
-      (<email>mvo@debian.org</email>). To find more information about
-      &app;, please visit the 
-      <ulink url="http://www.nongnu.org/synaptic" type="http">Synaptic Web
-	page</ulink>. </para>
-      <para>To report a bug or make a suggestion regarding the &app; 
-      application or this manual, use the bug report system at <ulink 
-      url="http://www.nongnu.org/synaptic" type="http">Synaptic Web
-      page</ulink>, contact the mailing list <email>synaptic@nongnu.org</email>
-      or join the IRC channel #synaptic on irc.freenode.org.
-      </para>
+	<sect3 id="synaptic-filter-edit-tag"> 
+		<title>To Select Packages by Tags</title> 
+		<para> </para>
+	</sect3>
+</sect2>
+</sect1>
 
-    <para> This program is distributed under the terms of the GNU
-      General Public license as published by the Free Software
-      Foundation; either version 2 of the License, or (at your option)
-      any later version. A copy of this license can be found at this
-      <ulink url="ghelp:gpl" type="help">link</ulink>, or in the file
-      COPYING included with the source code of this program. </para>
 
-  </sect1> 
+
+
+<sect1 id="snyaptic-prefs">
+	<title>Preferences</title>
+
+<sect2 id="synaptic-prefs-general"> 
+	<title>General</title> 
+	<para> </para>
+</sect2>
+
+<sect2 id="synaptic-prefs-layout"> 
+	<title>Layout</title> 
+	<para> </para>
+</sect2>
+
+<sect2 id="synaptiac-prefs-ordercolor"> 
+	<title>Column Order and Colors</title> 
+	<para> </para>
+</sect2>    
+
+<sect2 id="synaptiac-prefs-layout"> 
+	<title>Layout</title> 
+	<para> </para>
+</sect2> 
+
+<sect2 id="synaptiac-prefs-temp"> 
+	<title>Temporary Files</title> 
+	<para> </para>
+</sect2> 
+
+<sect2 id="synaptiac-prefs-network"> 
+	<title>Network</title> 
+	<para> </para>
+</sect2> 
+
+<sect2 id="synaptiac-prefs-expert"> 
+	<title>Expert</title> 
+	<para> </para>
+</sect2> 
+</sect1>
+
+<sect1 id="mayapp-bugs">
+	<title>Known Bugs and Limitations</title>
+	<para> </para>
+</sect1>
+
+<sect1 id="myapp-about"> 
+	<title>About &app;</title> 
+	<para> 
+		&app; was originally written by .... and is now maintained by Michael Vogt 
+		(<email>mvo@debian.org</email>) and Alfredo K. Kojima 
+		(<email>kojima@conectiva.com.br</email>). To find more information about
+		&app;, please visit the <ulink url="http://www.nongnu.org/synaptic" type="http">
+		Synaptic Web</ulink>. 
+	</para>
+	<para>
+		To report a bug or make a suggestion regarding the &app; 
+		or this manual, use the bug report system at <ulink 
+		url="http://www.nongnu.org/synaptic" type="http">Synaptic Web</ulink>, contact 
+		the mailing list <email>synaptic@nongnu.org</email> join the IRC channel 
+		#synaptic on irc.freenode.org.
+	</para>
+	<para> 
+		This program is distributed under the terms of the GNU
+		Public license as published by the Free Software; either version 2 of the License, 
+		or (at your option) later version. A copy of this license can be found at this
+		<ulink url="ghelp:gpl" type="help">link</ulink>, or in the file included with 
+		the source code of this program. 
+	</para>
+</sect1> 
 </article>

@@ -116,10 +116,6 @@ class RGFilterManagerWindow:public RGGladeWindow {
 
    GtkTreePath *treeview_find_path_from_text(GtkTreeModel *model, char *text);
 
-   // close callbacks
-   RGFilterEditorCloseAction *_closeAction;
-   void *_closeData;
-   bool _okcancel;              // did the user click ok or cancel
 
    GtkWidget *_filterEntry;     /* GtkEntry */
    GdkCursor *_busyCursor;
@@ -203,9 +199,8 @@ class RGFilterManagerWindow:public RGGladeWindow {
  public:
    RGFilterManagerWindow(RGWindow *win, RPackageViewFilter *filterview);
 
-   void setCloseCallback(RGFilterEditorCloseAction *action, void *data);
-   virtual bool close();
-   virtual void show();
+   // need to be called before show or run_dialog
+   void readFilters();
 
 };
 

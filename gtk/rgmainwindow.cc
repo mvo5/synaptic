@@ -2248,23 +2248,24 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 
 void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
 {
-#if 0
+
    RGMainWindow *me = (RGMainWindow *) data;
 
    if (me->_fmanagerWin == NULL) {
       me->_fmanagerWin = new RGFilterManagerWindow(me, me->_lister->filterView());
-
-      me->_fmanagerWin->setCloseCallback(cbCloseFilterManagerAction, me);
    }
 
-   me->_fmanagerWin->show();
-#endif
-   if (me->_fmanagerWin == NULL) {
-      me->_fmanagerWin = new RGFilterManagerWindow(me, me->_lister->filterView());
+   me->_fmanagerWin->readFilters();
+   if(gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()))) {
+      me->setInterfaceLocked(TRUE);
 
+      me->_lister->filterView()->refreshFilters();
+      me->refreshTable();
+      me->refreshSubViewList();
+
+      me->setInterfaceLocked(FALSE);
    }
-   gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()));
-
+   
 }
 
 void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)

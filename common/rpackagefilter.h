@@ -143,7 +143,7 @@ class RPatternPackageFilter : public RPackageFilter {
 
    static char *TypeName[];
 
-   RPatternPackageFilter() {};
+   RPatternPackageFilter() : and_mode(true) {};
    RPatternPackageFilter(RPatternPackageFilter &f);
    virtual ~RPatternPackageFilter();
 

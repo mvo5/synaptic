@@ -84,7 +84,8 @@ string RSectionPackageFilter::section(int index)
 
 void RSectionPackageFilter::clear()
 {
-   _groups.erase(_groups.begin(), _groups.end());
+   //_groups.erase(_groups.begin(), _groups.end());
+   _groups.clear();
 }
 
 
@@ -449,13 +450,13 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 
 // copy constructor
 RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
-   : and_mode(true)
 {
    //cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
    for (unsigned int i = 0; i < f._patterns.size(); i++) {
       addPattern(f._patterns[i].where,
                  f._patterns[i].pattern, f._patterns[i].exclusive);
    }
+   f.and_mode = and_mode;
 }
 
 void RPatternPackageFilter::clear()

@@ -1650,6 +1650,11 @@ bool RPackageLister::readSelections(istream &in)
          if ((Pos++) % 5 == 0)
             _progMeter->Progress(Pos);
       }
+#ifdef WITH_LUA
+      _lua->SetDepCache(_cache->deps());
+      _lua->RunScripts("Scripts::Synaptic::ReadSelections", false);
+      _lua->ResetCaches();
+#endif
       _progMeter->Done();
       Fix.InstallProtect();
       Fix.Resolve(true);

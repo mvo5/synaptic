@@ -117,7 +117,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_remove_w_depsM, *_purgeM;
 
    GtkWidget *_actionBInstallLabel;
-   GtkWidget *_pinB;
    GtkWidget *_pinM;
    GtkWidget *_pkgHelp;
    GtkWidget *_pkgReconfigure;
@@ -326,7 +325,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // the buttons 
    static void actionClicked(GtkWidget *clickedB, void *data);
-   static void pinClicked(GtkWidget *self, void *data);
    static void pkgHelpClicked(GtkWidget *self, void *data);
    static void pkgReconfigureClicked(GtkWidget *self, void *data);
 

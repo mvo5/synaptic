@@ -1032,7 +1032,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_removeM, TRUE);
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
 	gtk_widget_set_sensitive(_purgeM, TRUE);
-	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
 	installed = TRUE;
@@ -1046,7 +1045,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_removeM, TRUE);
 	gtk_widget_set_sensitive(_purgeM, TRUE);
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
 	installed = TRUE;
@@ -1060,7 +1058,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_removeM, TRUE);
 	gtk_widget_set_sensitive(_purgeM, TRUE);
 	gtk_widget_set_sensitive(_remove_w_depsM, TRUE);
-	gtk_widget_set_sensitive(_pinB, TRUE);
 	gtk_widget_set_sensitive(_pinM, TRUE);
 	gtk_widget_set_sensitive(_pkgHelp, TRUE);
 	installed = TRUE;
@@ -1074,7 +1071,6 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
 	gtk_widget_set_sensitive(_removeM, FALSE);
 	gtk_widget_set_sensitive(_purgeM, FALSE);
 	gtk_widget_set_sensitive(_remove_w_depsM, FALSE);
-	gtk_widget_set_sensitive(_pinB, FALSE);
 	gtk_widget_set_sensitive(_pinM, FALSE);
 	gtk_widget_set_sensitive(_pkgHelp, FALSE);
 	break;
@@ -1143,7 +1139,7 @@ void RGMainWindow::updatePackageStatus(RPackage *pkg)
     // set button, but disable toggle signal
     bool locked = (RPackage::OPinned & pkg->getOtherStatus());
     _blockActions = TRUE;
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_pinB), locked);
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), locked);
     _blockActions = FALSE;
     gtk_widget_set_sensitive(_actionB[0], TRUE);
 
@@ -1509,83 +1505,77 @@ void RGMainWindow::menuPinClicked(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow*)data;
   
-  gtk_signal_emit_by_name(GTK_OBJECT(me->_pinB),"clicked", me);
-}
+  bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(me->_pinM));
+  GtkTreeSelection *selection;
+  GtkTreeIter iter;
+  RPackage *pkg;
 
-void RGMainWindow::pinClicked(GtkWidget *self, void *data)
-{
-    RGMainWindow *me = (RGMainWindow*)data;
-    bool active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_pinB));
-    GtkTreeSelection *selection;
-    GtkTreeIter iter;
-    RPackage *pkg;
-
-    if(me->_blockActions)
+  if(me->_blockActions)
       return;
 
-    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
-    GList *li, *list;
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
+  GList *li, *list;
 #if GTK_CHECK_VERSION(2,2,0)
-    list = li = gtk_tree_selection_get_selected_rows(selection,
- 						     &me->_activeTreeModel);
+  list = li = gtk_tree_selection_get_selected_rows(selection,
+						   &me->_activeTreeModel);
 #else
-    li = list = NULL;
-    gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
-					&list);
-    li = list;
+  li = list = NULL;
+  gtk_tree_selection_selected_foreach(selection, multipleSelectionHelper,
+				      &list);
+  li = list;
 #endif
-    if(li == NULL)
-	return;
-    
-    me->setInterfaceLocked(TRUE);
-    me->setTreeLocked(TRUE);
-    me->_lister->unregisterObserver(me);
+  if(li == NULL)
+      return;
+  
+  me->setInterfaceLocked(TRUE);
+  me->setTreeLocked(TRUE);
+  me->_lister->unregisterObserver(me);
+  
+  // save to temporary file
+  const gchar *file = g_strdup_printf("%s/selections.hold",RConfDir().c_str());
+  ofstream out(file);
+  if (!out != 0) {
+      _error->Error(_("Can't write %s"), file);
+      me->_userDialog->showErrors();
+      return;
+  }
+  me->_lister->writeSelections(out, false);
+  
+  while(li != NULL) {
+      gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
+			      (GtkTreePath*)(li->data));
+      gtk_tree_model_get(me->_activeTreeModel, &iter, 
+			 PKG_COLUMN, &pkg, -1);
+      if (pkg == NULL) {
+	  li=g_list_next(li);
+	  continue;    
+      }
+      
+      pkg->setPinned(active);
+      _roptions->setPackageLock(pkg->name(), active);
+      li=g_list_next(li);
+  }
+  me->_lister->openCache(TRUE);
+  
+  // reread saved selections
+  ifstream in(file);
+  if (!in != 0) {
+      _error->Error(_("Can't read %s"), file);
+      me->_userDialog->showErrors();
+      return;
+  }
+  me->_lister->readSelections(in);
+  unlink(file);
+  g_free((void*)file);
 
-    // save to temporary file
-    const gchar *file = g_strdup_printf("%s/selections.hold",RConfDir().c_str());
-    ofstream out(file);
-    if (!out != 0) {
-	_error->Error(_("Can't write %s"), file);
-	me->_userDialog->showErrors();
-	return;
-    }
-    me->_lister->writeSelections(out, false);
-
-    while(li != NULL) {
-	gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
-				(GtkTreePath*)(li->data));
-	gtk_tree_model_get(me->_activeTreeModel, &iter, 
-			   PKG_COLUMN, &pkg, -1);
-	if (pkg == NULL) {
-	    li=g_list_next(li);
-	    continue;    
-	}
-
-	pkg->setPinned(active);
-	_roptions->setPackageLock(pkg->name(), active);
-	li=g_list_next(li);
-    }
-    me->_lister->openCache(TRUE);
-
-    // reread saved selections
-    ifstream in(file);
-    if (!in != 0) {
-	_error->Error(_("Can't read %s"), file);
-	me->_userDialog->showErrors();
-	return;
-    }
-    me->_lister->readSelections(in);
-    unlink(file);
-    g_free((void*)file);
-
-    // free the list
-    g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
-    g_list_free (list);
-
-    me->_lister->registerObserver(me);
-    me->setTreeLocked(FALSE);
-    me->refreshTable();
-    me->setInterfaceLocked(FALSE);
+  // free the list
+  g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
+  g_list_free (list);
+  
+  me->_lister->registerObserver(me);
+  me->setTreeLocked(FALSE);
+  me->refreshTable();
+  me->setInterfaceLocked(FALSE);
 }
 
 
@@ -2777,13 +2767,6 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(menuActionClicked),
 				  GINT_TO_POINTER(PKG_PURGE));
 
-
-    _pinB = glade_xml_get_widget(_gladeXML, "checkbutton_pin");
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_pin_clicked",
-				  G_CALLBACK(pinClicked),
-				  this);
-
     _pinM = glade_xml_get_widget(_gladeXML, "menu_hold");
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_menu_pin",
@@ -2791,7 +2774,6 @@ void RGMainWindow::buildInterface()
 				  this);
     // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
-    gtk_widget_hide(_pinB);
     gtk_widget_hide(_pinM);
     widget = glade_xml_get_widget(_gladeXML, "hseparator_hold");
     if(widget != NULL)
@@ -3354,7 +3336,8 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
     //cout << "pkgInstallHelper()/start" << endl;
     // do the work
-    pkg->setInstall();
+    if(pkg->availableVersion() != NULL)
+	pkg->setInstall();
 
     // check whether something broke
     if (fixBroken && !_lister->check()) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-15 16:29+0100\n"
+"POT-Creation-Date: 2005-02-18 16:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -317,7 +317,7 @@ msgid ""
 msgstr ""
 
 #: ../common/rcdscanner.cc:380
-msgid "Disc not successfuly scanned."
+msgid "Disc not successfully scanned."
 msgstr ""
 
 #: ../common/rcdscanner.cc:384
@@ -355,7 +355,7 @@ msgstr ""
 msgid "Unable to read %s"
 msgstr ""
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:207
+#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:225
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr ""
@@ -371,10 +371,15 @@ msgstr ""
 
 #: ../common/rconfiguration.cc:148
 #, c-format
+msgid "ERROR: could not create tmp directory %s"
+msgstr ""
+
+#: ../common/rconfiguration.cc:166
+#, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr ""
 
-#: ../common/rconfiguration.cc:232
+#: ../common/rconfiguration.cc:250
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr ""
@@ -474,63 +479,63 @@ msgstr ""
 msgid " or"
 msgstr ""
 
-#: ../common/rpackage.cc:913
+#: ../common/rpackage.cc:892
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 
-#: ../common/rpackage.cc:1294
+#: ../common/rpackage.cc:1273
 msgid "Marked for installation"
 msgstr ""
 
-#: ../common/rpackage.cc:1295
+#: ../common/rpackage.cc:1274
 msgid "Marked for re-installation"
 msgstr ""
 
-#: ../common/rpackage.cc:1296
+#: ../common/rpackage.cc:1275
 msgid "Marked for upgrade"
 msgstr ""
 
-#: ../common/rpackage.cc:1297
+#: ../common/rpackage.cc:1276
 msgid "Marked for downgrade"
 msgstr ""
 
-#: ../common/rpackage.cc:1298
+#: ../common/rpackage.cc:1277
 msgid "Marked for removal"
 msgstr ""
 
-#: ../common/rpackage.cc:1299
+#: ../common/rpackage.cc:1278
 msgid "Marked for complete removal"
 msgstr ""
 
-#: ../common/rpackage.cc:1300 ../common/rpackageview.cc:123
+#: ../common/rpackage.cc:1279 ../common/rpackageview.cc:123
 #: ../gtk/window_filters.glade.h:31
 msgid "Not installed"
 msgstr ""
 
-#: ../common/rpackage.cc:1301
+#: ../common/rpackage.cc:1280
 msgid "Not installed (locked)"
 msgstr ""
 
-#: ../common/rpackage.cc:1302 ../common/rpackageview.cc:118
+#: ../common/rpackage.cc:1281 ../common/rpackageview.cc:118
 #: ../gtk/window_filters.glade.h:23
 msgid "Installed"
 msgstr ""
 
-#: ../common/rpackage.cc:1303 ../common/rpackageview.cc:138
+#: ../common/rpackage.cc:1282 ../common/rpackageview.cc:138
 #: ../gtk/gsynaptic.cc:489
 msgid "Installed (upgradable)"
 msgstr ""
 
-#: ../common/rpackage.cc:1304
+#: ../common/rpackage.cc:1283
 msgid "Installed (locked to the current version)"
 msgstr ""
 
-#: ../common/rpackage.cc:1305 ../common/rpackageview.cc:422
+#: ../common/rpackage.cc:1284 ../common/rpackageview.cc:422
 #: ../gtk/window_filters.glade.h:9
 msgid "Broken"
 msgstr ""
 
-#: ../common/rpackage.cc:1306
+#: ../common/rpackage.cc:1285
 msgid "Not installed (new in repository)"
 msgstr ""
 
@@ -605,7 +610,7 @@ msgid "Origin"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:126
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:78
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
 #: ../gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr ""
@@ -910,7 +915,7 @@ msgstr ""
 
 #: ../gtk/gsynaptic.cc:72
 msgid ""
-"-t   Give a alternative main window titel (e.g. hostname with `uname -n`\n"
+"-t   Give a alternative main window titel (e.g. hostname with `uname -n)`\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:73
@@ -922,11 +927,11 @@ msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:75
-msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
+msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:76
-msgid "--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n"
+msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:77
@@ -968,7 +973,7 @@ msgstr ""
 #: ../gtk/gsynaptic.cc:335
 msgid ""
 "This usually means that another package management application (like apt-get "
-"or aptitude) already runing. Please close that application first."
+"or aptitude) already running. Please close that application first."
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:377
@@ -1111,24 +1116,25 @@ msgstr ""
 msgid "Error in package %s"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:644
+#: ../gtk/rgdebinstallprogress.cc:649
 msgid "Installation finished"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:702
+#: ../gtk/rgdebinstallprogress.cc:707
 msgid ""
-"The marked changes are now applied. This can take some time. Please wait."
+"The marked changes are now being applied. This can take some time. Please "
+"wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:707
+#: ../gtk/rgdebinstallprogress.cc:712
 msgid "Installing and removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:709
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:711
+#: ../gtk/rgdebinstallprogress.cc:716
 msgid "Installing software"
 msgstr ""
 
@@ -1200,15 +1206,19 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:90 ../gtk/rgmainwindow.cc:932
+#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:932
 msgid "Size"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:97 ../gtk/rgrepositorywin.cc:177
+#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:825
+msgid "Package"
+msgstr ""
+
+#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:177
 msgid "URI"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:173
+#: ../gtk/rgfetchprogress.cc:188
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1216,7 +1226,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:186
+#: ../gtk/rgfetchprogress.cc:201
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1224,33 +1234,33 @@ msgid ""
 "in drive %s"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:297
+#: ../gtk/rgfetchprogress.cc:313
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:303
+#: ../gtk/rgfetchprogress.cc:319
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:305
+#: ../gtk/rgfetchprogress.cc:321
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:372
+#: ../gtk/rgfetchprogress.cc:388
 msgid "Queued"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:375
+#: ../gtk/rgfetchprogress.cc:391
 msgid "Done"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:378
+#: ../gtk/rgfetchprogress.cc:394
 msgid "Hit"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:381
+#: ../gtk/rgfetchprogress.cc:397
 msgid "Failed"
 msgstr ""
 
@@ -1350,10 +1360,6 @@ msgstr ""
 #: ../gtk/rgmainwindow.cc:805 ../gtk/window_preferences.glade.h:1
 #: ../gtk/window_summary.glade.h:1 ../gtk/window_filters.glade.h:1
 msgid " "
-msgstr ""
-
-#: ../gtk/rgmainwindow.cc:825
-msgid "Package"
 msgstr ""
 
 #: ../gtk/rgmainwindow.cc:911

@@ -231,6 +231,7 @@ class RPackageLister {
                            vector<RPackage *> &toReInstall,
                            vector<RPackage *> &toUpgrade,
                            vector<RPackage *> &toRemove,
+                           vector<RPackage *> &toPurge,
                            vector<RPackage *> &toDowngrade,
                            double &sizeChange);
 

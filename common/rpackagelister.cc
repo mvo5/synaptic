@@ -1104,6 +1104,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         vector<RPackage *> &toReInstall,
                                         vector<RPackage *> &toUpgrade,
                                         vector<RPackage *> &toRemove,
+                                        vector<RPackage *> &toPurge,
                                         vector<RPackage *> &toDowngrade,
                                         double &sizeChange)
 {
@@ -1149,7 +1150,9 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
          case RPackage::FRemove:
             if (flags & RPackage::FImportant)
                essential.push_back(pkg);
-            else
+            else if(flags & RPackage::FPurge)
+	       toPurge.push_back(pkg);
+	    else
                toRemove.push_back(pkg);
             break;
       }
@@ -1161,6 +1164,7 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
    sort(toUpgrade.begin(), toUpgrade.end(), bla());
    sort(essential.begin(), essential.end(), bla());
    sort(toRemove.begin(), toRemove.end(), bla());
+   sort(toPurge.begin(), toPurge.end(), bla());
    sort(held.begin(), held.end(), bla());
 
    sizeChange = deps->UsrSize();

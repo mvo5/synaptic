@@ -816,6 +816,57 @@ struct bla : public binary_function<RPackage*, RPackage*, bool> {
     }
 };
 
+void RPackageLister::saveUndoState(pkgState &state)
+{
+    cout << "RPackageLister::saveUndoState(state)" << endl;
+    undoStack.push(state);
+    for(int i=0;i<redoStack.size();i++)
+	redoStack.pop();
+}
+
+void RPackageLister::saveUndoState()
+{
+    cout << "RPackageLister::saveUndoState()" << endl;
+    pkgState state;
+    saveState(state);
+    undoStack.push(state);
+    for(int i=0;i<redoStack.size();i++)
+	redoStack.pop();
+}
+
+
+void RPackageLister::undo()
+{
+    cout << "RPackageLister::undo()" << endl;
+    pkgState state;
+    if(undoStack.empty()) {
+	cout << "undoStack empty" << endl;
+	return;
+    }
+    // save redo information
+    saveState(state);
+    redoStack.push(state);
+
+    // undo 
+    state = undoStack.top();
+    undoStack.pop();
+    restoreState(state);
+}
+
+void RPackageLister::redo()
+{
+    cout << "RPackageLister::redo()" << endl;
+    pkgState state;
+    if(redoStack.empty()) {
+	cout << "redoStack empty" << endl;
+	return;
+    }
+    state = redoStack.top();
+    redoStack.pop();
+    restoreState(state);
+}
+
+
 void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
     state.clear();

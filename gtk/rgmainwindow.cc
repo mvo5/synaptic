@@ -580,6 +580,9 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
     
     me->setInterfaceLocked(TRUE);
     me->setStatusText(_("Performing automatic selection of upgradadable packages..."));
+
+    me->_lister->saveUndoState();
+
     res = me->_lister->upgrade();
     me->refreshTable(pkg);
     
@@ -608,7 +611,10 @@ void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
     }
 
     me->setInterfaceLocked(TRUE);
-     me->setStatusText(_("Performing selection for distribution upgrade..."));
+    me->setStatusText(_("Performing selection for distribution upgrade..."));
+
+    // save state
+    me->_lister->saveUndoState();
 
     res = me->_lister->distUpgrade();
     me->refreshTable(pkg);
@@ -1380,6 +1386,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   GtkTreeIter iter;
   GList *li, *list;
   RPackage *pkg = NULL;
+  bool changed=true;
   vector<RPackage*> exclude;
 
   me->setInterfaceLocked(TRUE);
@@ -1446,9 +1453,13 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       			  toUpgrade, toRemove)) {
           // canceled operation
           me->_lister->restoreState(state);
+	  changed=false;
       }
       delete chng;
   }
+
+  if(changed)
+      me->_lister->saveUndoState(state);
 
   if (ask) {
       me->_lister->registerObserver(me);
@@ -1705,6 +1716,36 @@ void RGMainWindow::searchPkgDescriptionClicked(GtkWidget *self, void *data)
   me->_findWin->show();
 }
 
+void RGMainWindow::undoClicked(GtkWidget *self, void *data)
+{
+    //cout << "undoClicked" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+
+    me->_lister->unregisterObserver(me);
+
+    // undo
+    me->_lister->undo();
+
+    me->_lister->registerObserver(me);
+    me->refreshTable();
+
+}
+
+void RGMainWindow::redoClicked(GtkWidget *self, void *data)
+{
+    //cout << "redoClicked" << endl;
+    RGMainWindow *me = (RGMainWindow*)data;
+
+    me->_lister->unregisterObserver(me);
+
+    // redo
+    me->_lister->redo();
+
+    me->_lister->registerObserver(me);
+    me->refreshTable();
+}
+
+
 void RGMainWindow::buildInterface()
 {
     GtkWidget *button;
@@ -1801,6 +1842,15 @@ void RGMainWindow::buildInterface()
 				  G_CALLBACK(searchPkgNameClicked),
 				  this); 
 
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_undo1_activate",
+				  G_CALLBACK(undoClicked),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_redo1_activate",
+				  G_CALLBACK(redoClicked),
+				  this); 
 
 
     // workaround for a bug in libglade

@@ -29,6 +29,7 @@
 
 
 #include <vector>
+#include <stack>
 #include <map>
 #include <set>
 #include <regex.h>
@@ -93,6 +94,8 @@ public:
    } treeDisplayMode;
    treeDisplayMode _displayMode;
 
+   typedef vector<RPackage::MarkedStatus> pkgState;
+
 private:
    tree<pkgPair> _treeOrganizer;
 
@@ -123,7 +126,12 @@ private:
    vector<RPackageObserver*> _observers;
    
    RUserDialog *_userDialog;
-   
+
+   // undo/redo stuff
+   stack<pkgState> undoStack;
+   stack<pkgState> redoStack;
+
+  
 public:
    inline void getSections(vector<string> &sections) {sections=_sectionList; };
 
@@ -188,7 +196,10 @@ public:
 
    void getDownloadSummary(int &dlCount, double &dlSize);
 
-   typedef vector<RPackage::MarkedStatus> pkgState;
+   void saveUndoState(pkgState &state);
+   void saveUndoState();
+   void undo();
+   void redo();
    void saveState(pkgState &state);
    void restoreState(pkgState &state);
    bool getStateChanges(pkgState &state,

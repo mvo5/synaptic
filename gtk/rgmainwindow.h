@@ -182,7 +182,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    
    RPackage *selectedPackage();
 
-   void refreshTable(RPackage *selectedPkg);
+   void refreshTable(RPackage *selectedPkg=NULL);
    void restoreTableState(vector<string>& expanded_sections, GtkTreeIter it);
    GtkTreeIter saveTableState(vector<string>& expanded_sections);
 
@@ -251,6 +251,9 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    static void pinClicked(GtkWidget *self, void *data);
    static void menuPinClicked(GtkWidget *self, void *data);
+
+   static void undoClicked(GtkWidget *self, void *data);
+   static void redoClicked(GtkWidget *self, void *data);
 
    static void removeDepsClicked(GtkWidget *self, void *data);
 

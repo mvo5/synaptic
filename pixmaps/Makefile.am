@@ -13,6 +13,22 @@ button_DATA = update_small.png \
 	      stock_filter-data-by-criteria.png\
 	      stock_filter-navigator.png
 		      
+status_icondir = $(datadir)/synaptic/pixmaps
+status_icon_DATA = package-available-locked.png \
+		   package-available.png \
+		   package-broken.png \
+		   package-downgrade.png  \
+		   package-install.png \
+		   package-installed-locked.png \
+		   package-installed-outdated.png \
+		   package-installed-updated.png \
+		   package-new.png \
+		   package-purge.png \
+		   package-remove.png \
+		   package-upgrade.png
+
+		      
+		     
 
 abouticondir = $(datadir)/synaptic/glade
 abouticon_DATA = deb.png \
@@ -53,4 +69,6 @@ EXTRA_DIST=\
 	stock_filter-navigator.png\
 	$(appicon_DATA) \
 	$(button_DATA) \
-	$(abouticon_DATA)
+	$(abouticon_DATA) \
+	$(status_icon_DATA)
+

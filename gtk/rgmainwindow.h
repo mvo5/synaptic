@@ -113,7 +113,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    GtkWidget *_cmdPanel;
    
    GtkWidget *_findText;
-   GtkWidget *_findNextB;
+   GtkWidget *_findSearchB;
 
    GtkWidget *_editFilterB;
    GtkWidget *_filtersB;
@@ -217,10 +217,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
 
    static void pkgHelpClicked(GtkWidget *self, void *data);
 
-   static void findPackageObserver(GtkWidget *self);
-   
-   static void makeFinderFilterAction(GtkWidget *self, void *data);
-   static void findNextAction(GtkWidget *self, void *data);
+   static void searchAction(GtkWidget *self, void *data);
    
    static void switchCommandPanel(GtkWidget *self, void *data);
 

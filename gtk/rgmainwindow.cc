@@ -252,70 +252,17 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
     win->_aboutPanel->show();
 }
 
-/* search through whole tree_model 
-  <danielk> mvo: Use gtk_tree_model_foreach() with a GtkTreePath** as user_data, and return TRUE from the callback on match (plus the the user_data output arg).
-*/
-void RGMainWindow::findPackageObserver(GtkWidget *self)
-{
-    RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self), "me");
-    const char *text = gtk_entry_get_text(GTK_ENTRY(me->_findText));
-    int row;
-
-#if 0
-    row = me->_lister->findPackage(text);
-    if (row >= 0) {
-      gtk_clist_unselect_all(GTK_CLIST(me->_table));
-
-      // mvo: this is needed! otherwise the selection handling
-      // after searching will act funny (see debian BTS #171207 for
-      // details)
-      GTK_CLIST(me->_table)->anchor = row;
-
-      gtk_clist_select_row(GTK_CLIST(me->_table), row, 0);
-      gtk_clist_moveto(GTK_CLIST(me->_table), row, 0, 0.5, 0.0);
-      me->setStatusText();
-    } else {
-      me->setStatusText(_("No match."));
-    }
-#endif
-}
-
-
-void RGMainWindow::findNextAction(GtkWidget *self, void *data)
-{
-    RGMainWindow *me = (RGMainWindow*)data;
-    
-#if 0
-    int row = me->_lister->findNextPackage();
-    if (row >= 0) {
-      gtk_clist_unselect_all(GTK_CLIST(me->_table));
-      gtk_clist_select_row(GTK_CLIST(me->_table), row, 0);
-      gtk_clist_moveto(GTK_CLIST(me->_table), row, 0, 0.5, 0.0);
-      me->setStatusText();
-    } else {
-      me->setStatusText(_("No more matches."));
-    }
-#endif
-}
-
-
-void RGMainWindow::makeFinderFilterAction(GtkWidget *self, void *data)
+void RGMainWindow::searchAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
     RFilter *filter;
-    
     filter = me->_lister->findFilter(0);
-
+    filter->reset();
     const char *pattern = gtk_entry_get_text(GTK_ENTRY(me->_findText));
-
-    if (pattern && *pattern) {
-	filter->reset();
-	filter->pattern.addPattern(RPatternPackageFilter::Name,
-				   string(pattern), FALSE);
-	me->changeFilter(1);
-    }
+    filter->pattern.addPattern(RPatternPackageFilter::Name,
+			       pattern, FALSE);
+    me->changeFilter(1);
 }
-
 
 void RGMainWindow::saveFilterAction(void *self, RGFilterWindow *rwin)
 {
@@ -1980,26 +1927,21 @@ void RGMainWindow::buildInterface()
     assert(button);
     gtk_signal_connect(GTK_OBJECT(button), "clicked", 
 		       (GtkSignalFunc)showFilterWindow, this);
+
     _findText = glade_xml_get_widget(_gladeXML, "entry_find");
     assert(_findText);
     gtk_object_set_data(GTK_OBJECT(_findText), "me", this);
-    gtk_signal_connect(GTK_OBJECT(_findText), "changed",
-		       (GtkSignalFunc)findPackageObserver, this);
     gtk_signal_connect(GTK_OBJECT(_findText), "activate",
-		       (GtkSignalFunc)findPackageObserver, this);
+		       (GtkSignalFunc)searchAction, this);
 
-    _findNextB = glade_xml_get_widget(_gladeXML, "button_find_next");
-    assert(_findNextB);
-    gtk_signal_connect(GTK_OBJECT(_findNextB), "clicked",
-		       (GtkSignalFunc)findNextAction, this);
-    button = glade_xml_get_widget(_gladeXML, "button_to_filter");
-    assert(button);
-    gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		       (GtkSignalFunc)makeFinderFilterAction, this);
+    _findSearchB = glade_xml_get_widget(_gladeXML, "button_search");
+    assert(_findSearchB);
+    gtk_signal_connect(GTK_OBJECT(_findSearchB), "clicked",
+		       (GtkSignalFunc)searchAction, this);
 
     // the treeview stuff - long !-
     widget = glade_xml_get_widget(_gladeXML, "handlebox_find");
-    gtk_widget_hide(widget);
+    //gtk_widget_hide(widget);
     _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
     assert(_treeView);
 

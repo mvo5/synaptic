@@ -550,18 +550,51 @@
 
 <sect2 id="synaptic-pkg-browse">
 	<title>
-		To Browse the List of Packages
+		To Browse the List of Known Packages
 	</title>
 	
 	<para>
-		&app; provides you with a list of all known packages in the main window.
+		&app; provides you with a central list of all known packages. This includes packages that are available, 
+		installed or even broken. Because the most distributions contain many thousands packages, you can
+		narrow down the list of shown packages. The following methods allow you to browse through the list
+		of known packages:
 	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				The browser list
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				The filter
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				The find field
+			</term>
+			<listitem>
+				<para>
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
 </sect2>
 
 
 <sect2 id="synaptic-pkg-find"> 
 	<title>
-		To Find Packages
+		To Find Specific Packages
 	</title> 
 
 <variablelist>
@@ -759,27 +792,35 @@
 
 <sect2 id="synaptic-pkg-remove"> 
 	<title>To Remove Packages</title>
-	<note>
-		<para>
-			Configuration files and user created data (e.g. a Website in /var/www) are not removed
-			from the system by default. You can change this behavior in the
-			<xref linkend="synaptic-prefs-actions"></xref>.
-		</para>
-		<para>
-			Alternativly, choose <menuchoice><guimenuitem>Remove Including 
-			Configuration</guimenuitem></menuchoice> instead of 
-			<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice> 
-			to remove all files related to the package.
-		</para>
-	</note>
-	<note>
-		<para>
-			To also remove packages that are only installed as dependency of the to be removed 
-			package(s) and that would be no longer needed (orphaned) afterwards, choose 
-			<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
-			</menuchoice> instead of <menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
-		</para>
-	</note>
+
+	<para>
+		<note>
+			<para>
+				Configuration files and user created data (e.g. a Website in /var/www) are not removed
+				from the system by default.
+			</para>
+			<para>
+				Debian only. This behavior can changed in the preferences. FIX link
+			</para>
+			<para>
+				Debian only. To remove all files related to the package
+				choose <menuchoice><guimenuitem>Remove Including 
+				Configuration</guimenuitem></menuchoice> instead of 
+				<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
+			</para>
+		</note>
+	</para>
+	<para>
+		<note>
+			<para>
+				Debian only. To also remove packages that are only installed as dependency 
+				of the to be removed 
+				package(s) and that would be no longer needed (orphaned) afterwards, choose 
+				<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
+				</menuchoice> instead of <menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
+			</para>
+		</note>
+	</para>
 	<para>
 		To remove one or more packages follow these steps:
 	</para>
@@ -1235,6 +1276,7 @@
 		</listitem>
 	</itemizedlist>
 </sect2>
+
 <sect2 id="synaptic-pkg-undo">
 	<title>
 		To Unmark Changes
@@ -1246,29 +1288,27 @@
 	<variablelist>
 		<varlistentry>
 			<term>
-				To unmark a specific package
+				To undo marked changes to a specific package
 			</term>
 			<listitem>
 				<itemizedlist>
 					<listitem>
 						<para>
-							Right click on package and choose <menuchoice>
-							<guimenuitem>No Changes</guimenuitem></menuchoice> from 
+							Right click on the package and choose <menuchoice>
+							<guimenuitem>Unmark</guimenuitem></menuchoice> from 
 							the context menu.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Select package with a left mouse click and choose 
-							<guibutton>No Changes</guibutton> from the 
-							package control. To select further packages hold down 
-							the <keycap>Ctrl</keycap> key while 
-							left clicking on the additional package.
+							Select the package(s) and choose <menuchoice>
+							<guimenu>Package</guimenu><guimenuitem>Unmark Changes</guimenuitem>
+							</menuchoice>.
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							Select package(s) and press <keycombo><keycap>Ctrl</keycap>
+							Select the package(s) and press <keycombo><keycap>Ctrl</keycap>
 							<keycap>N</keycap></keycombo>.
 						</para>
 					</listitem>
@@ -1277,19 +1317,19 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Unmark all changes
+				To undo all changes
 			</term>
 			<listitem>
 				<para>
 					Choose <menuchoice><guimenu>Actions</guimenu>
-					<guimenuitem>Unmark All Changes</guimenuitem></menuchoice>
+					<guimenuitem>Undo All Changes</guimenuitem></menuchoice>
 					from the menu.
 				</para>
 			</listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Undo last change
+				To undo the last change(s)
 			</term>
 			<listitem>
 				<para>
@@ -1297,10 +1337,13 @@
 					<guimenuitem>Undo</guimenuitem></menuchoice>
 					from the menu.
 				</para>
+				<para>
+					This step can be repeated. The maxium number of undo operations can be set
+					in the preferences. FIX link
+				</para>
 			</listitem>
 		</varlistentry>
 	</variablelist>
-
 </sect2>
 
 <sect2 id="synaptic-pkg-config">
@@ -1308,11 +1351,13 @@
 		To Configure Packages
 	</title>
 
-	<note>
-		<para>
-			This feature is only available on Debian systems and requires the installation of "libgnome2-perl".
-		</para>
-	</note>
+	<para>
+		<note>
+			<para>
+				Debian only. Furthermore this feature requires the installation of "libgnome2-perl".
+			</para>
+		</note>
+	</para>	
 
 	<para>
 		Debian provides a unified method (called debconf) to configure software packages. This feature
@@ -1341,12 +1386,12 @@
 
 <sect2 id="synaptic-pkg-docu">
 	<title>
-		To Get Additional Package Documentation
+		To Get Documentation for Packages
  	</title>
 
 	<note>
 		<para>
-			This feature is only available on Debian systems and requires the installation of "dwww".
+			Debian only. Furthermore this feature requires the installation of "dwww".
 		</para>
 	</note>
 	
@@ -1363,7 +1408,8 @@
 		</listitem>
 		<listitem>
 			<para>
-				Click on <guibutton>Documentation</guibutton> in the package control.
+				Choose <menuchoice><guimenu>Package</guimenu>
+				<guimenuitem>Documentation</guimenuitem></menuchoice>.
 			</para>
 		</listitem>
 	</orderedlist>
@@ -1372,7 +1418,7 @@
 
 <sect2 id="synaptic-pkg-fix">
 	<title>
-		Fixing Broken Packages
+		To Fix Broken Packages
 	</title>
 	<para>
 		Errors in the dependencies of packages or during applying changes can break

@@ -1047,10 +1047,10 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
-			 depType, depPkg ? depPkg : depName, depVer);
+			 utf8(depType), depPkg ? depPkg : depName, depVer);
 	    } else {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
-			 depType, depName, depVer,
+			 utf8(depType), depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
 
@@ -1063,7 +1063,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 		gtk_tree_model_get(GTK_TREE_MODEL(_depListStore), &iter,
 				   DEP_NAME_COLUMN, &str, 
 				   -1);
-		if (strcmp(str, buffer) == 0) {
+		if (g_strcasecmp(str, buffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}
@@ -1102,7 +1102,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	do {
 	    GtkTreeIter iter;
 	    snprintf(buffer, sizeof(buffer), "%s: %s", 
-		     depType, depPkg);
+		     utf8(depType), depPkg);
 	    gtk_list_store_append(_recListStore, &iter);
 	    gtk_list_store_set(_recListStore, &iter, 
 			       DEP_NAME_COLUMN, buffer, 
@@ -1121,10 +1121,10 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 	    char buffer[512];
 	    if (byProvider) {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s", 
-			 depType, depPkg ? depPkg : depName, depVer);
+			 utf8(depType), depPkg ? depPkg : depName, depVer);
 	    } else {
 		snprintf(buffer, sizeof(buffer), "%s: %s %s[%s]",
-			 depType, depName, depVer,
+			 utf8(depType), depName, depVer,
 			 depPkg ? depPkg : "-");
 	    }
 	    // check if this item is duplicated
@@ -1136,7 +1136,7 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 				   DEP_NAME_COLUMN, &str, 
 				   -1);
 
-		if (strcmp(str, buffer) == 0) {
+		if (g_strcasecmp(str, buffer) == 0) {
 		    dup = TRUE;
 		    break;
 		}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.45.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-13 10:36+0100\n"
+"POT-Creation-Date: 2003-11-13 11:25+0100\n"
 "PO-Revision-Date: 2003-10-22 23:15+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
@@ -159,15 +159,20 @@ msgid "Unknown"
 msgstr "未知"
 
 #: common/sections_trans.h:42
-msgid "Non US"
-msgstr ""
-
-#: common/sections_trans.h:43
-msgid "(non free)"
+msgid "Converted from rpm/tgz by alien"
 msgstr ""
 
 #: common/sections_trans.h:44
-msgid "(contrib)"
+msgid "Non US"
+msgstr ""
+
+#: common/sections_trans.h:45
+#, fuzzy
+msgid "non free"
+msgstr "释放"
+
+#: common/sections_trans.h:46
+msgid "contrib"
 msgstr ""
 
 #: common/indexcopy.cc:51 common/rpmindexcopy.cc:75
@@ -526,154 +531,159 @@ msgstr "清空筛选器名！？永远都不应发生，请报告"
 msgid "filter name is longer than 55 chars!? Will be truncated.Please report"
 msgstr "筛选器名长度超过 55 个字符！？将被截短。请报告"
 
-#: common/rpackagelister.cc:221
+#: common/rpackagelister.cc:222
 msgid "Search Filter"
 msgstr "搜索筛选器"
 
-#: common/rpackagelister.cc:228 common/rpackagelister.cc:852
+#: common/rpackagelister.cc:229 common/rpackagelister.cc:858
 #: gtk/window_filters.glade.strings:26
 msgid "Installed"
 msgstr "已安装"
 
-#: common/rpackagelister.cc:235
+#: common/rpackagelister.cc:236
 msgid "Not Installed"
 msgstr "未安装"
 
-#: common/rpackagelister.cc:243
+#: common/rpackagelister.cc:244
 msgid "Tasks"
 msgstr "任务"
 
-#: common/rpackagelister.cc:249
+#: common/rpackagelister.cc:250
 msgid "Reduced View"
 msgstr "简化视图"
 
-#: common/rpackagelister.cc:257
+#: common/rpackagelister.cc:258
 msgid "Upgradable"
 msgstr "可升级"
 
-#: common/rpackagelister.cc:264 gtk/window_filters.glade.strings:52
+#: common/rpackagelister.cc:265 gtk/window_filters.glade.strings:52
 msgid "Broken"
 msgstr "已损坏"
 
-#: common/rpackagelister.cc:273 gtk/rgsummarywindow.cc:300
+#: common/rpackagelister.cc:274 gtk/rgsummarywindow.cc:300
 #, fuzzy
 msgid "Queued Changes"
 msgstr "执行更改(_X)"
 
-#: common/rpackagelister.cc:280 gtk/window_filters.glade.strings:44
+#: common/rpackagelister.cc:281 gtk/window_filters.glade.strings:44
 msgid "New in archive"
 msgstr "归档中的新内容"
 
-#: common/rpackagelister.cc:288 gtk/window_filters.glade.strings:30
+#: common/rpackagelister.cc:289 gtk/window_filters.glade.strings:30
 msgid "Residual config"
 msgstr "残存配置"
 
-#: common/rpackagelister.cc:296
+#: common/rpackagelister.cc:297
 msgid "Pkg with Debconf"
 msgstr "具有 Debconf 的 Pkg 包"
 
-#: common/rpackagelister.cc:303
+#: common/rpackagelister.cc:304
 msgid "Obsolete or locally installed"
 msgstr "过期的或本地安装的"
 
-#: common/rpackagelister.cc:425 common/rpackagelister.cc:428
-#: common/rpackagelister.cc:444
+#: common/rpackagelister.cc:426 common/rpackagelister.cc:429
+#: common/rpackagelister.cc:445
 msgid "Internal error recalculating dependency cache."
 msgstr "重新计算依赖关系时隐藏有内部错误。"
 
-#: common/rpackagelister.cc:498
+#: common/rpackagelister.cc:499
 msgid "Package "
 msgstr "软件包"
 
-#: common/rpackagelister.cc:498
+#: common/rpackagelister.cc:499
 msgid " has no section?!"
 msgstr " 不具备分组？！"
 
-#: common/rpackagelister.cc:653
+#: common/rpackagelister.cc:654
 msgid "Internal Error, AllUpgrade broke stuff"
 msgstr "内部错误，全部升级破坏了原有内容"
 
-#: common/rpackagelister.cc:667
+#: common/rpackagelister.cc:668
 msgid "dist upgrade Failed"
 msgstr "软件发布版升级失败"
 
-#: common/rpackagelister.cc:777
-msgid "Non US (non free)"
+#: common/rpackagelister.cc:778
+msgid "Non US <i>(non free)</i>"
 msgstr ""
 
-#: common/rpackagelister.cc:844
+#: common/rpackagelister.cc:803
+#, c-format
+msgid "%s <i>(%s)</i>"
+msgstr ""
+
+#: common/rpackagelister.cc:850
 msgid "New in repository"
 msgstr "软件库里的新内容"
 
-#: common/rpackagelister.cc:847
+#: common/rpackagelister.cc:853
 msgid "Obsolete and locally installed"
 msgstr "陈旧的和本地已安装的"
 
-#: common/rpackagelister.cc:850
+#: common/rpackagelister.cc:856
 #, fuzzy
 msgid "Installed and upgradable"
 msgstr "已安装的和可升级的"
 
-#: common/rpackagelister.cc:855
+#: common/rpackagelister.cc:861
 msgid "Not installed (residual config)"
 msgstr "未安装的(残存配置)"
 
-#: common/rpackagelister.cc:857 gtk/window_filters.glade.strings:32
+#: common/rpackagelister.cc:863 gtk/window_filters.glade.strings:32
 msgid "Not installed"
 msgstr "未安装的"
 
-#: common/rpackagelister.cc:1436
+#: common/rpackagelister.cc:1442
 msgid "Unable to lock the list directory"
 msgstr "无法锁定列表目录"
 
-#: common/rpackagelister.cc:1458
+#: common/rpackagelister.cc:1464
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "无法检索或验证某些软件库的 Release 文件，暂时忽略那些软件库。"
 
-#: common/rpackagelister.cc:1490
+#: common/rpackagelister.cc:1496
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
 msgstr "一些索引文件下载失败，它们已被忽略，或由较旧文件代替。"
 
-#: common/rpackagelister.cc:1515 common/rpackagelister.cc:1519
+#: common/rpackagelister.cc:1521 common/rpackagelister.cc:1525
 #: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "正在忽略 sources.list 文件里无效的记录！"
 
-#: common/rpackagelister.cc:1556
+#: common/rpackagelister.cc:1562
 msgid "Failed to fetch "
 msgstr "未能取回 "
 
-#: common/rpackagelister.cc:1576
+#: common/rpackagelister.cc:1582
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些软件包未能从服务器检索。\n"
 
-#: common/rpackagelister.cc:1579
+#: common/rpackagelister.cc:1585
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想忽略这些软件包，继续进行吗?"
 
-#: common/rpackagelister.cc:1586
+#: common/rpackagelister.cc:1592
 msgid "Unable to correct missing packages"
 msgstr "无法更正缺少的软件包"
 
-#: common/rpackagelister.cc:1649
+#: common/rpackagelister.cc:1655
 msgid "Unable to lock the download directory"
 msgstr "无法锁定下载目录"
 
-#: common/rpackagelister.cc:1752
+#: common/rpackagelister.cc:1758
 #, c-format
 msgid "Line %u too long in selection file."
 msgstr "选择文件里的行 %u 太长。"
 
-#: common/rpackagelister.cc:1766 common/rpackagelister.cc:1770
+#: common/rpackagelister.cc:1772 common/rpackagelister.cc:1776
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr "选择文件里的行 %u 畸形"
 
-#: common/rpackagelister.cc:1782
+#: common/rpackagelister.cc:1788
 msgid "Setting selections..."
 msgstr "设定选择..."
 
@@ -3350,9 +3360,6 @@ msgstr "发行商..."
 
 #~ msgid "    Importance"
 #~ msgstr "    重要性"
-
-#~ msgid "freed"
-#~ msgstr "释放"
 
 #~ msgid "used"
 #~ msgstr "使用"

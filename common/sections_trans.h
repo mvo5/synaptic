@@ -1,8 +1,5 @@
 /* Translation table for debian sections
  * 
- * we could use markup in here, but I fear the performance hit
- * if we go for markup, we only have to change one line in rgmainwindow.cc 
- * (search for '//"markup"'), currently L2391
 */
 char *transtable[][2] = {
    {"admin",_("System Administration")},
@@ -39,11 +36,11 @@ char *transtable[][2] = {
    {"web",_("World Wide Web")},
    {"x11",_("Miscellaneous  - Graphical")},
    {"unknown", _("Unknown")},
-   {"alien", _("Converted from rpm/tgz by alien")},
+   {"alien", _("Converted from rpm by alien")},
 
    {"non-US",_("Non US")},
-   {"non-free",_("<i>non free</i>")},
-   {"contrib",_("<i>contrib</i>")},
+   {"non-free",_("non free")},
+   {"contrib",_("contrib")},
    //{"non-free",_("<i>(non free)</i>")},
    //{"contrib",_("<i>(contrib)</i>")},
    {NULL, NULL}

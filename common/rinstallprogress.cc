@@ -43,9 +43,11 @@ void *RInstallProgress::loop(void *data)
     RInstallProgress *me = (RInstallProgress*)data;
 
     me->startUpdate();
-    while (waitpid(me->_child_id, NULL, WNOHANG) == 0)
+    while (me->_child_id >= 0)
 	me->updateInterface();
     me->finishUpdate();
+
+    pthread_exit(NULL);
 
     return NULL;
 }
@@ -97,10 +99,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
     _numPackages = numPackages;
     _numPackagesTotal = numPackagesTotal;
 
-    loop((void*)this);
-
-    close(_childin);
-
 #else
 
     _child_id = fork();
@@ -110,8 +108,15 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 	exit(0);
     }
 
-    loop((void*)this);
+#endif
 
+    startUpdate();
+    while (waitpid(_child_id, NULL, WNOHANG) == 0)
+	updateInterface();
+    finishUpdate();
+
+#ifdef HAVE_RPM
+    close(_childin);
 #endif
 
     return res;

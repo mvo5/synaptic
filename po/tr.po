@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.16\n"
-"POT-Creation-Date: 2003-02-25 11:15+0100\n"
+"POT-Creation-Date: 2003-03-01 18:38+0100\n"
 "PO-Revision-Date: 2003-01-09 13:46+0300\n"
 "Last-Translator: Rail Aliev <rail@iqchoice.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
@@ -141,7 +141,7 @@ msgstr "baðýmlýlýk saðlanmýþtýr"
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Ayarlar dosyasýndaki kayýtlar geçersiz, Paket baþlýðý yok"
 
-#: common/rpackagecache.cc:49 common/rpackagelister.cc:1044
+#: common/rpackagecache.cc:49 common/rpackagelister.cc:1102
 msgid "The list of sources could not be read."
 msgstr "Kaynaklar listesi okunamýyor."
 
@@ -161,12 +161,12 @@ msgstr "Desen"
 
 #. package info
 #. common information regardless of state
-#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1180
+#: common/rpackagefilter.cc:39 gtk/rgmainwindow.cc:1210
 #: wings/rwmainwindow.cc:1196
 msgid "Section"
 msgstr "Bölüm"
 
-#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1181
+#: common/rpackagefilter.cc:40 gtk/rgmainwindow.cc:1211
 #: wings/rwmainwindow.cc:1197
 msgid "Priority"
 msgstr "Öncelik"
@@ -176,7 +176,7 @@ msgid "Name"
 msgstr "Adý"
 
 #: common/rpackagefilter.cc:128 gtk/window_main.glade.strings:36
-#: gtk/window_main.glade.strings:64
+#: gtk/window_main.glade.strings:62
 msgid "Description"
 msgstr "Açýklama"
 
@@ -238,7 +238,7 @@ msgid "Upgradable"
 msgstr "Güncellenebilir"
 
 #: common/rpackagelister.cc:174 gtk/rgfiltereditor.cc:374
-#: wings/rwfiltereditor.cc:341
+#: wings/rwfiltereditor.cc:341 gtk/window_options.glade.strings:29
 msgid "Broken"
 msgstr "Yarým kalan"
 
@@ -251,11 +251,11 @@ msgstr "Programlanan deðiþiklikler"
 msgid "Internal error recalculating dependency cache."
 msgstr "  önbelleðin tekrar hesaplanmasýnda dahili hata."
 
-#: common/rpackagelister.cc:963
+#: common/rpackagelister.cc:1020
 msgid "Unable to lock the list directory"
 msgstr "Liste dosyasýnýn kilitlenmesi imkansýz"
 
-#: common/rpackagelister.cc:985
+#: common/rpackagelister.cc:1042
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -263,7 +263,7 @@ msgstr ""
 "Bazý depolarýn Release dosyalarý indirilemiyor veya geçerliliði kontrol "
 "edilemiyor. Bu depolar gözardý edilecektir."
 
-#: common/rpackagelister.cc:1017
+#: common/rpackagelister.cc:1074
 msgid ""
 "Some index files failed to download, they have been ignored, or old ones "
 "used instead."
@@ -271,44 +271,48 @@ msgstr ""
 "Bazý index dosyalarýnýn indirilmesi iptal edildi, dosyalar görmemezlikten "
 "gelindi veya onu yerine eski bir sürümü kullanýldý."
 
-#: common/rpackagelister.cc:1100
+#: common/rpackagelister.cc:1158
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Paketlerin bazýlarý sunucu(lar)dan geri alýnamadý. \n"
 
-#: common/rpackagelister.cc:1103
+#: common/rpackagelister.cc:1161
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Devam etmek ve bu paketleri görmemezlikten gelmek istiyor musunuz ?"
 
-#: common/rpackagelister.cc:1110
+#: common/rpackagelister.cc:1168
 msgid "Unabled to correct missing packages"
 msgstr "Eksik paketlerin düzeltilmesi olanaksýz"
 
-#: common/rpackagelister.cc:1166
+#: common/rpackagelister.cc:1231
 msgid "Unable to lock the download directory"
 msgstr "Ýndirme dizininin kilitlenmesi olanaksýz"
 
-#: common/rpackagelister.cc:1227
+#: common/rpackagelister.cc:1292
 #, fuzzy, c-format
 msgid "Line %u too long in selection file."
 msgstr "Otomatik güncelleme seçimi hatalý."
 
-#: common/rpackagelister.cc:1241 common/rpackagelister.cc:1245
+#: common/rpackagelister.cc:1306 common/rpackagelister.cc:1310
 #, c-format
 msgid "Malformed line %u in selection file"
 msgstr ""
 
-#: common/rpackagelister.cc:1256
+#: common/rpackagelister.cc:1321
 msgid "Setting selections..."
 msgstr ""
 
-#: gtk/gsynaptic.cc:132 wings/synaptic.cc:80
+#: gtk/gsynaptic.cc:159 wings/synaptic.cc:80
 msgid "You must run this program as the root user."
 msgstr "Bu programý root  kullanýcýsý olarak baþlatmanýz gerekli."
 
-#: gtk/rgconfigwindow.cc:64 gtk/rgmainwindow.cc:2505
+#: gtk/rgconfigwindow.cc:109 gtk/rgmainwindow.cc:2570
 #: wings/rwconfigwindow.cc:58
 msgid "An error occurred while saving configurations."
 msgstr "Ayarlar kaydolurken bilinmeyen bir hata oluþtu."
+
+#: gtk/rgconfigwindow.cc:216
+msgid "Color selection"
+msgstr ""
 
 #: gtk/rgfetchprogress.cc:60 wings/rwfetchprogress.cc:71
 msgid "Fetching Files"
@@ -436,7 +440,7 @@ msgstr "Ýþaretlileri sil"
 
 #: gtk/rgfiltereditor.cc:382 gtk/rgfiltereditor.cc:622
 #: gtk/rgfiltermanager.cc:82 wings/rwfiltereditor.cc:484
-#: wings/rwfiltermanager.cc:87
+#: wings/rwfiltermanager.cc:87 gtk/window_options.glade.strings:31
 msgid "New"
 msgstr "Yeni"
 
@@ -469,6 +473,7 @@ msgstr "Paketler"
 #: wings/rwfiltereditor.cc:490 wings/rwmainwindow.cc:1347
 #: wings/rwmainwindow.cc:1382 wings/rwmainwindow.cc:1667
 #: wings/rwsourceswindow.cc:154 gtk/window_main.glade.strings:20
+#: gtk/window_options.glade.strings:27
 msgid "Remove"
 msgstr "Sil"
 
@@ -519,11 +524,33 @@ msgstr "Vazgeç"
 msgid "Package Listing Filter  -  "
 msgstr "Paket Liste Süzgeci  -  "
 
-#: gtk/rginstallprogress.cc:109 wings/rwinstallprogress.cc:94
+#: gtk/rginstallprogress.cc:41
+#, fuzzy
+msgid "Package Manager output"
+msgstr "Paket deðiþiklikleri"
+
+#: gtk/rginstallprogress.cc:82
+#, fuzzy, c-format
+msgid ""
+"\n"
+"While installing package %s:\n"
+"\n"
+msgstr ""
+"\n"
+"Kurulu paket:\n"
+
+#: gtk/rginstallprogress.cc:86
+msgid ""
+"\n"
+"While preparing for installation:\n"
+"\n"
+msgstr ""
+
+#: gtk/rginstallprogress.cc:259 wings/rwinstallprogress.cc:94
 msgid "Performing Changes"
 msgstr "Deðiþiklikler uygulanýyor"
 
-#: gtk/rgmainwindow.cc:92 gtk/rgmainwindow.cc:1224 wings/rwmainwindow.cc:98
+#: gtk/rgmainwindow.cc:92 gtk/rgmainwindow.cc:1254 wings/rwmainwindow.cc:98
 #: wings/rwmainwindow.cc:1241
 msgid "Unknown"
 msgstr "Bilinmiyor"
@@ -548,15 +575,15 @@ msgstr "Index dosyalarý indiriliyor"
 msgid "Updating Package Lists from Servers..."
 msgstr "Paket listesi sunuculardan güncelleniyor..."
 
-#: gtk/rgmainwindow.cc:544 wings/rwmainwindow.cc:536
+#: gtk/rgmainwindow.cc:559 wings/rwmainwindow.cc:536
 msgid "Dependency problem resolver failed."
 msgstr "Baðýmlýlýk sorununun çözümlenmesinde hata."
 
-#: gtk/rgmainwindow.cc:546 wings/rwmainwindow.cc:538
+#: gtk/rgmainwindow.cc:561 wings/rwmainwindow.cc:538
 msgid "Dependency problems successfully fixed."
 msgstr "Baðýmlýlýk sorunu baþarýlý bir þekilde çözüldü."
 
-#: gtk/rgmainwindow.cc:561 gtk/rgmainwindow.cc:590 wings/rwmainwindow.cc:554
+#: gtk/rgmainwindow.cc:576 gtk/rgmainwindow.cc:608 wings/rwmainwindow.cc:554
 #: wings/rwmainwindow.cc:589
 msgid ""
 "Automatic upgrade selection not possible\n"
@@ -566,31 +593,31 @@ msgstr ""
 "yarým kalan paketlerde çalýþmaz. \n"
 "Lütfen ilk önce bu yarým kalan hata(lar)yý düzeltin."
 
-#: gtk/rgmainwindow.cc:567 wings/rwmainwindow.cc:562
+#: gtk/rgmainwindow.cc:582 wings/rwmainwindow.cc:562
 msgid "Performing automatic selection of upgradadable packages..."
 msgstr "Otomatik seçilen güncellenebilecek paketleri uygula..."
 
-#: gtk/rgmainwindow.cc:572 wings/rwmainwindow.cc:569
+#: gtk/rgmainwindow.cc:590 wings/rwmainwindow.cc:569
 msgid "Automatic selection of upgradadable packages done."
 msgstr "Otomatik seçilen güncellenebilecek paketler tamamlandý..."
 
-#: gtk/rgmainwindow.cc:574 wings/rwmainwindow.cc:571
+#: gtk/rgmainwindow.cc:592 wings/rwmainwindow.cc:571
 msgid "Automatic upgrade selection failed."
 msgstr "Otomatik güncelleme seçimi hatalý."
 
-#: gtk/rgmainwindow.cc:596 wings/rwmainwindow.cc:597
+#: gtk/rgmainwindow.cc:614 wings/rwmainwindow.cc:597
 msgid "Performing selection for distribution upgrade..."
 msgstr "Daðýtým güncellemesi için seçimleri uygula..."
 
-#: gtk/rgmainwindow.cc:602 wings/rwmainwindow.cc:604
+#: gtk/rgmainwindow.cc:623 wings/rwmainwindow.cc:604
 msgid "Selection for distribution upgrade done."
 msgstr "Daðýtým güncellemesi seçimleri tamamlandý."
 
-#: gtk/rgmainwindow.cc:604 wings/rwmainwindow.cc:606
+#: gtk/rgmainwindow.cc:625 wings/rwmainwindow.cc:606
 msgid "Selection for distribution upgrade failed."
 msgstr "Daðýtým güncellemesi seçimleri hatalý."
 
-#: gtk/rgmainwindow.cc:628 wings/rwmainwindow.cc:624
+#: gtk/rgmainwindow.cc:649 wings/rwmainwindow.cc:624
 msgid ""
 "Operation not possible with broken packages.\n"
 "Please fix them first."
@@ -598,7 +625,7 @@ msgstr ""
 "Bu iþlem yarým kalan paketlerde uygulanamaz. \n"
 "Lütfen ilk önce hatayý düzeltin."
 
-#: gtk/rgmainwindow.cc:647 wings/rwmainwindow.cc:642
+#: gtk/rgmainwindow.cc:668 wings/rwmainwindow.cc:642
 msgid ""
 "Performing selected changes... See the terminal from where you started "
 "Synaptic for more information."
@@ -606,58 +633,58 @@ msgstr ""
 "Ýþaretlenen deðiþiklikler uygulanýyor... Daha fazla bilgi  için Synaptic "
 "programýnýn çalýþtýrdýgýnýz terminali inceleyin."
 
-#: gtk/rgmainwindow.cc:651 wings/rwmainwindow.cc:646
+#: gtk/rgmainwindow.cc:672 wings/rwmainwindow.cc:646
 msgid "Retrieving Package Files"
 msgstr "Paket dosyalarý indiriliyor"
 
-#: gtk/rgmainwindow.cc:731 gtk/rgmainwindow.cc:1194 gtk/rgmainwindow.cc:1203
-#: gtk/rgmainwindow.cc:1207 wings/rwmainwindow.cc:811
+#: gtk/rgmainwindow.cc:752 gtk/rgmainwindow.cc:1224 gtk/rgmainwindow.cc:1233
+#: gtk/rgmainwindow.cc:1237 wings/rwmainwindow.cc:811
 #: wings/rwmainwindow.cc:1210 wings/rwmainwindow.cc:1217
 #: wings/rwmainwindow.cc:1220 wings/rwmainwindow.cc:1224
 msgid "N/A"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:918 wings/rwmainwindow.cc:924
+#: gtk/rgmainwindow.cc:948 wings/rwmainwindow.cc:924
 msgid "Package is installed."
 msgstr "Paket kurulu."
 
-#: gtk/rgmainwindow.cc:920 wings/rwmainwindow.cc:926
+#: gtk/rgmainwindow.cc:950 wings/rwmainwindow.cc:926
 msgid "Package is not installed."
 msgstr "Paket kurulu deðil."
 
-#: gtk/rgmainwindow.cc:924 wings/rwmainwindow.cc:930
+#: gtk/rgmainwindow.cc:954 wings/rwmainwindow.cc:930
 msgid "Package will be installed."
 msgstr "Paket kurulacak."
 
-#: gtk/rgmainwindow.cc:930 wings/rwmainwindow.cc:936
+#: gtk/rgmainwindow.cc:960 wings/rwmainwindow.cc:936
 msgid "Package will be upgraded."
 msgstr "Paket güncellenecek."
 
-#: gtk/rgmainwindow.cc:940 wings/rwmainwindow.cc:946
+#: gtk/rgmainwindow.cc:970 wings/rwmainwindow.cc:946
 msgid "Package will be uninstalled."
 msgstr "Paket kaldýrýlacak."
 
-#: gtk/rgmainwindow.cc:943
+#: gtk/rgmainwindow.cc:973
 msgid "Package is broken."
 msgstr "Hatalý paket."
 
-#: gtk/rgmainwindow.cc:949 gtk/rgmainwindow.cc:965
+#: gtk/rgmainwindow.cc:979 gtk/rgmainwindow.cc:995
 msgid "Package is pinned."
 msgstr "Paket tutuluyor."
 
-#: gtk/rgmainwindow.cc:952
+#: gtk/rgmainwindow.cc:982
 msgid "Package is new."
 msgstr "Yeni paket."
 
-#: gtk/rgmainwindow.cc:970 wings/rwmainwindow.cc:951
+#: gtk/rgmainwindow.cc:1000 wings/rwmainwindow.cc:951
 msgid "Broken dependencies."
 msgstr "Hatalý baðýmlýlýklar."
 
-#: gtk/rgmainwindow.cc:1165 gtk/window_main.glade.strings:83
+#: gtk/rgmainwindow.cc:1195 gtk/window_main.glade.strings:81
 msgid "_Install"
 msgstr "_Kur"
 
-#: gtk/rgmainwindow.cc:1168
+#: gtk/rgmainwindow.cc:1198
 msgid "_Upgrade"
 msgstr "_Güncelle"
 
@@ -666,7 +693,7 @@ msgstr "_Güncelle"
 #. appendTag(bufPtr, bufSize, "Vendor", utf8(pkg->vendor()));
 #.
 #. installed version info
-#: gtk/rgmainwindow.cc:1189 wings/rwmainwindow.cc:1205
+#: gtk/rgmainwindow.cc:1219 wings/rwmainwindow.cc:1205
 msgid ""
 "\n"
 "Installed Package:\n"
@@ -674,17 +701,17 @@ msgstr ""
 "\n"
 "Kurulu paket:\n"
 
-#: gtk/rgmainwindow.cc:1191 gtk/rgmainwindow.cc:1199
+#: gtk/rgmainwindow.cc:1221 gtk/rgmainwindow.cc:1229
 #: wings/rwmainwindow.cc:1207 wings/rwmainwindow.cc:1216
 msgid "    Version"
 msgstr "    Sürüm"
 
-#: gtk/rgmainwindow.cc:1193 gtk/rgmainwindow.cc:1202
+#: gtk/rgmainwindow.cc:1223 gtk/rgmainwindow.cc:1232
 #: wings/rwmainwindow.cc:1209 wings/rwmainwindow.cc:1219
 msgid "    Size"
 msgstr "    Boyut"
 
-#: gtk/rgmainwindow.cc:1197 wings/rwmainwindow.cc:1213
+#: gtk/rgmainwindow.cc:1227 wings/rwmainwindow.cc:1213
 msgid ""
 "\n"
 "Available Package:\n"
@@ -692,35 +719,35 @@ msgstr ""
 "\n"
 "Mevcut paket:\n"
 
-#: gtk/rgmainwindow.cc:1206 wings/rwmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1236 wings/rwmainwindow.cc:1223
 msgid "    Package Size"
 msgstr "    Paket boyutu"
 
-#: gtk/rgmainwindow.cc:1221 wings/rwmainwindow.cc:1238
+#: gtk/rgmainwindow.cc:1251 wings/rwmainwindow.cc:1238
 msgid "Not Relevant"
 msgstr "Uygun deðil"
 
-#: gtk/rgmainwindow.cc:1229 wings/rwmainwindow.cc:1246
+#: gtk/rgmainwindow.cc:1259 wings/rwmainwindow.cc:1246
 msgid "Recommended"
 msgstr "Önerilen"
 
-#: gtk/rgmainwindow.cc:1231 wings/rwmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1261 wings/rwmainwindow.cc:1248
 msgid "Possible"
 msgstr "Mümkün"
 
-#: gtk/rgmainwindow.cc:1234 wings/rwmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1264 wings/rwmainwindow.cc:1251
 msgid "Package Upgrade"
 msgstr "Paket güncelleme"
 
-#: gtk/rgmainwindow.cc:1236 wings/rwmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1266 wings/rwmainwindow.cc:1253
 msgid "    Importance"
 msgstr "    Önemi"
 
-#: gtk/rgmainwindow.cc:1238 wings/rwmainwindow.cc:1255
+#: gtk/rgmainwindow.cc:1268 wings/rwmainwindow.cc:1255
 msgid "    Date"
 msgstr "    Tarih"
 
-#: gtk/rgmainwindow.cc:1289
+#: gtk/rgmainwindow.cc:1320
 #, fuzzy
 msgid ""
 "There are unsaved changes.\n"
@@ -731,7 +758,7 @@ msgstr ""
 "Synaptic önbelleðini tazelemek zorunda\n"
 "Yaptýðýnýz iþlemler kaybolacaktýr. Emin misiniz?"
 
-#: gtk/rgmainwindow.cc:1396 gtk/rgmainwindow.cc:2240
+#: gtk/rgmainwindow.cc:1492 gtk/rgmainwindow.cc:2351
 #: wings/rwmainwindow.cc:1345 wings/rwmainwindow.cc:1380
 msgid ""
 "Removing this package may render the system unusable.\n"
@@ -740,35 +767,35 @@ msgstr ""
 "Bu paketin silinmesi sisteminizi kullanýlamaz hale sokabilir.\n"
 "Bunu yapmak istediðinizden eminmisiniz?"
 
-#: gtk/rgmainwindow.cc:1725 wings/rwmainwindow.cc:1562
+#: gtk/rgmainwindow.cc:1863 wings/rwmainwindow.cc:1562
 #: gtk/window_main.glade.strings:46
 msgid "Update package cache"
 msgstr "Paket önbellegini güncelle"
 
-#: gtk/rgmainwindow.cc:1729 wings/rwmainwindow.cc:1576
+#: gtk/rgmainwindow.cc:1867 wings/rwmainwindow.cc:1576
 #: gtk/window_main.glade.strings:48
 msgid "Mark packages for upgrade, except those with new dependencies"
 msgstr ""
 "Güncelleme için paketleri , yeni baðýmlýlýklarý ile bunlarýn haricinde "
 "iþaretle "
 
-#: gtk/rgmainwindow.cc:1733 wings/rwmainwindow.cc:1584
+#: gtk/rgmainwindow.cc:1871 wings/rwmainwindow.cc:1584
 #: gtk/window_main.glade.strings:50
 msgid ""
 "Upgrade installed distribution, including packages with new dependencies"
 msgstr ""
 "Kurulu daðýtýmý güncelle, ayný zamanda yeni baðýmlýklarýnýda göz önünde tut."
 
-#: gtk/rgmainwindow.cc:1737 wings/rwmainwindow.cc:1592
+#: gtk/rgmainwindow.cc:1875 wings/rwmainwindow.cc:1592
 #: gtk/window_main.glade.strings:52
 msgid "Commit (and download if necessary) selected changes on packages"
 msgstr "Paketlerdeki seçilen deðiþiklikleri tespit et (gerekirse indir)"
 
-#: gtk/rgmainwindow.cc:2186
+#: gtk/rgmainwindow.cc:2326
 msgid "Do you want to add another CD-ROM?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2426 wings/rwmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2491 wings/rwmainwindow.cc:2022
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -777,20 +804,20 @@ msgstr ""
 "%i paket listelendi, %i kuruldu, %i yarým kaldý. %i kurulacak/güncellenecek, "
 "%i silindi; %sB   %s"
 
-#: gtk/rgmainwindow.cc:2429 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2494 wings/rwmainwindow.cc:2025
 msgid "freed"
 msgstr "boþaltýldý"
 
-#: gtk/rgmainwindow.cc:2429 wings/rwmainwindow.cc:2025
+#: gtk/rgmainwindow.cc:2494 wings/rwmainwindow.cc:2025
 msgid "used"
 msgstr "kullanýyor"
 
-#: gtk/rgmainwindow.cc:2454 wings/rwmainwindow.cc:1839
+#: gtk/rgmainwindow.cc:2519 wings/rwmainwindow.cc:1839
 #: gtk/window_main.glade.strings:57
 msgid "All Packages"
 msgstr "Tüm paketler"
 
-#: gtk/rgmainwindow.cc:2534
+#: gtk/rgmainwindow.cc:2599
 #, fuzzy
 msgid ""
 "There are unsaved changes. Are you sure\n"
@@ -1097,12 +1124,13 @@ msgid "Warning"
 msgstr "Uyarý"
 
 #: wings/rwmainwindow.cc:1182 wings/rwmainwindow.cc:1659
-#: gtk/window_main.glade.strings:18
+#: gtk/window_main.glade.strings:18 gtk/window_options.glade.strings:24
 msgid "Install"
 msgstr "Kur"
 
 #: wings/rwmainwindow.cc:1184 wings/rwmainwindow.cc:1574
 #: gtk/window_main.glade.strings:13 gtk/window_main.glade.strings:19
+#: gtk/window_options.glade.strings:25
 msgid "Upgrade"
 msgstr "Güncelle"
 
@@ -1140,18 +1168,19 @@ msgid "Configure Synaptic options"
 msgstr "Synaptic seçeneklerini ayarla"
 
 #: wings/rwmainwindow.cc:1651 gtk/window_main.glade.strings:17
+#: gtk/window_options.glade.strings:23
 msgid "Keep"
 msgstr "Tut"
 
-#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:80
+#: wings/rwmainwindow.cc:1653 gtk/window_main.glade.strings:78
 msgid "Keep selected package as is in the system, unmarking selections over it"
 msgstr "Ýþaretli paketleri sistemde oldugu gibi (deðiþtirmeden) tut "
 
-#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:82
+#: wings/rwmainwindow.cc:1661 gtk/window_main.glade.strings:80
 msgid "Mark selected package for installation/upgrade"
 msgstr "Kurulum/Güncelle için paketleri seçin"
 
-#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:84
+#: wings/rwmainwindow.cc:1668 gtk/window_main.glade.strings:82
 msgid "Mark selected package for removal from system"
 msgstr "Sistemden silinebilecek olan paketleri seçin"
 
@@ -1172,15 +1201,15 @@ msgstr "Bilgi"
 msgid "Depends."
 msgstr "Baðýmlýlýklarý"
 
-#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:65
+#: wings/rwmainwindow.cc:1733 gtk/window_main.glade.strings:63
 msgid "What it depends on"
 msgstr "Baðýmlý olduðu"
 
-#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:66
+#: wings/rwmainwindow.cc:1734 gtk/window_main.glade.strings:64
 msgid "What depends on it"
 msgstr "Baðýmlýsý olan"
 
-#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:68
+#: wings/rwmainwindow.cc:1736 gtk/window_main.glade.strings:66
 msgid "Suggested and Recommended"
 msgstr "Teklif edilen ve önerilen"
 
@@ -1224,11 +1253,11 @@ msgstr "Paket süzgeç düzenleyicisini aç"
 msgid "Select package filter"
 msgstr "Paket süzgeci iþaretle"
 
-#: wings/rwmainwindow.cc:1846 gtk/window_main.glade.strings:59
+#: wings/rwmainwindow.cc:1846
 msgid "Edit Filter..."
 msgstr "Düzenle..."
 
-#: wings/rwmainwindow.cc:1848 gtk/window_main.glade.strings:58
+#: wings/rwmainwindow.cc:1848
 msgid "Edit selected filter"
 msgstr "Seçilen süzgeci düzenle"
 
@@ -1236,7 +1265,7 @@ msgstr "Seçilen süzgeci düzenle"
 msgid "Switch to package filter panel"
 msgstr "Paket süzgeç paneline git"
 
-#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:60
+#: wings/rwmainwindow.cc:1869 gtk/window_main.glade.strings:58
 msgid "Find Package"
 msgstr "Paket bul"
 
@@ -1349,7 +1378,7 @@ msgstr "Bitti."
 msgid "Find text:"
 msgstr ""
 
-#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:61
+#: gtk/window_find.glade.strings:9 gtk/window_main.glade.strings:59
 #: gtk/window_disc_name.glade.strings:9
 msgid "*"
 msgstr "*"
@@ -1503,79 +1532,79 @@ msgstr "Sürum Güncl."
 msgid "_Proceed"
 msgstr "_Uygula!"
 
-#: gtk/window_main.glade.strings:62
+#: gtk/window_main.glade.strings:60
 msgid " "
 msgstr " "
 
-#: gtk/window_main.glade.strings:63
+#: gtk/window_main.glade.strings:61
 msgid "Information"
 msgstr "Bilgi"
 
-#: gtk/window_main.glade.strings:67
+#: gtk/window_main.glade.strings:65
 msgid "What it would depend on"
 msgstr "Baðýmlý olacak"
 
-#: gtk/window_main.glade.strings:69
+#: gtk/window_main.glade.strings:67
 msgid "label62"
 msgstr ""
 
-#: gtk/window_main.glade.strings:70
+#: gtk/window_main.glade.strings:68
 msgid "label_dep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:71
+#: gtk/window_main.glade.strings:69
 msgid "label53"
 msgstr ""
 
-#: gtk/window_main.glade.strings:72
+#: gtk/window_main.glade.strings:70
 msgid "label57"
 msgstr ""
 
-#: gtk/window_main.glade.strings:73
+#: gtk/window_main.glade.strings:71
 msgid "label54"
 msgstr ""
 
-#: gtk/window_main.glade.strings:74
+#: gtk/window_main.glade.strings:72
 msgid "label58"
 msgstr ""
 
-#: gtk/window_main.glade.strings:75
+#: gtk/window_main.glade.strings:73
 msgid "label_availdep_info"
 msgstr ""
 
-#: gtk/window_main.glade.strings:76
+#: gtk/window_main.glade.strings:74
 msgid "label55"
 msgstr ""
 
-#: gtk/window_main.glade.strings:77
+#: gtk/window_main.glade.strings:75
 msgid "label59"
 msgstr ""
 
-#: gtk/window_main.glade.strings:78
+#: gtk/window_main.glade.strings:76
 msgid "label56"
 msgstr ""
 
-#: gtk/window_main.glade.strings:79
+#: gtk/window_main.glade.strings:77
 msgid "Dependencies"
 msgstr "Baðýmlýsý olan"
 
-#: gtk/window_main.glade.strings:81
+#: gtk/window_main.glade.strings:79
 msgid "_Keep"
 msgstr "_Tut"
 
-#: gtk/window_main.glade.strings:85
+#: gtk/window_main.glade.strings:83
 msgid "_Remove"
 msgstr "S_il"
 
-#: gtk/window_main.glade.strings:86
+#: gtk/window_main.glade.strings:84
 msgid "Never upgrade this package"
 msgstr "Bu paketi asla güncelleme"
 
-#: gtk/window_main.glade.strings:87
+#: gtk/window_main.glade.strings:85
 msgid "Hold package"
 msgstr "Paketi tut"
 
-#: gtk/window_main.glade.strings:88
+#: gtk/window_main.glade.strings:86
 msgid "Show Pkg Help"
 msgstr ""
 
@@ -1601,22 +1630,22 @@ msgid "Use regular expressions when searching or matching"
 msgstr "Arama veya eþleme esnasýnda düzenli ifadeler kullan"
 
 #: gtk/window_options.glade.strings:9
-msgid "Use text-only buttons in main window"
-msgstr "Ana pencerede sadece metin düðmesini kullan"
-
-#: gtk/window_options.glade.strings:10
 #, fuzzy
 msgid "Use colors in main package list"
 msgstr ""
 "Ana pencerede renleri kullan\n"
 "(tekrar baþlattýktan sonra etkinleþir)"
 
-#: gtk/window_options.glade.strings:11
+#: gtk/window_options.glade.strings:10
 msgid "Ask when more packages are going to be affected by some action."
 msgstr ""
 
-#: gtk/window_options.glade.strings:12
+#: gtk/window_options.glade.strings:11
 msgid "Use terminal window when running the package manager."
+msgstr ""
+
+#: gtk/window_options.glade.strings:12
+msgid "Number of possible undo operations"
 msgstr ""
 
 #: gtk/window_options.glade.strings:16
@@ -1631,49 +1660,19 @@ msgstr "Eskimiþ paketleri önbellekten sil"
 msgid "color"
 msgstr "renk"
 
-#: gtk/window_options.glade.strings:23
+#: gtk/window_options.glade.strings:26
 #, fuzzy
-msgid "MKeepColor"
-msgstr "Renkler"
-
-#: gtk/window_options.glade.strings:24
-#, fuzzy
-msgid "MInstallColor"
-msgstr "Kur"
-
-#: gtk/window_options.glade.strings:25
-#, fuzzy
-msgid "MUpgradeColor"
+msgid "Downgrade"
 msgstr "Güncelle"
 
-#: gtk/window_options.glade.strings:26
-msgid "MDowngradeColor"
-msgstr ""
-
-#: gtk/window_options.glade.strings:27
-#, fuzzy
-msgid "MRemoveColor"
-msgstr "Sil"
-
 #: gtk/window_options.glade.strings:28
-#, fuzzy
-msgid "MHeldColor"
-msgstr "Renkler"
-
-#: gtk/window_options.glade.strings:29
-#, fuzzy
-msgid "MBrokenColor"
-msgstr "Yarým kalan"
+msgid "Held"
+msgstr "Tutulan"
 
 #: gtk/window_options.glade.strings:30
 #, fuzzy
-msgid "MPinColor"
-msgstr "Renkler"
-
-#: gtk/window_options.glade.strings:31
-#, fuzzy
-msgid "MNewColor"
-msgstr "Renkler"
+msgid "Pin"
+msgstr "Askýda"
 
 #: gtk/window_options.glade.strings:36
 msgid "Colors"
@@ -1692,6 +1691,41 @@ msgstr "Disk deðiþtir"
 #: gtk/window_disc_name.glade.strings:8
 msgid "Enter the disc name"
 msgstr ""
+
+#~ msgid "Use text-only buttons in main window"
+#~ msgstr "Ana pencerede sadece metin düðmesini kullan"
+
+#, fuzzy
+#~ msgid "MKeepColor"
+#~ msgstr "Renkler"
+
+#, fuzzy
+#~ msgid "MInstallColor"
+#~ msgstr "Kur"
+
+#, fuzzy
+#~ msgid "MUpgradeColor"
+#~ msgstr "Güncelle"
+
+#, fuzzy
+#~ msgid "MRemoveColor"
+#~ msgstr "Sil"
+
+#, fuzzy
+#~ msgid "MHeldColor"
+#~ msgstr "Renkler"
+
+#, fuzzy
+#~ msgid "MBrokenColor"
+#~ msgstr "Yarým kalan"
+
+#, fuzzy
+#~ msgid "MPinColor"
+#~ msgstr "Renkler"
+
+#, fuzzy
+#~ msgid "MNewColor"
+#~ msgstr "Renkler"
 
 #~ msgid "Repositories"
 #~ msgstr "Depolar"
@@ -1783,9 +1817,6 @@ msgstr ""
 
 #~ msgid "Procceed"
 #~ msgstr "Devam "
-
-#~ msgid "Held"
-#~ msgstr "Tutulan"
 
 #~ msgid ""
 #~ "Test\n"

@@ -300,6 +300,7 @@ bool RPackageLister::openCache(bool reset)
         }
     }
     _progMeter->Done();
+    undoStack.clear();
 
     pkgDepCache *deps = _cache->deps();
 
@@ -818,7 +819,7 @@ struct bla : public binary_function<RPackage*, RPackage*, bool> {
 
 void RPackageLister::saveUndoState(pkgState &state)
 {
-    cout << "RPackageLister::saveUndoState(state)" << endl;
+    //cout << "RPackageLister::saveUndoState(state)" << endl;
     undoStack.push_front(state);
     redoStack.clear();
 
@@ -829,7 +830,7 @@ void RPackageLister::saveUndoState(pkgState &state)
 
 void RPackageLister::saveUndoState()
 {
-    cout << "RPackageLister::saveUndoState()" << endl;
+    //cout << "RPackageLister::saveUndoState()" << endl;
     pkgState state;
     saveState(state);
     saveUndoState(state);
@@ -841,7 +842,7 @@ void RPackageLister::undo()
     //cout << "RPackageLister::undo()" << endl;
     pkgState state;
     if(undoStack.empty()) {
-	cout << "undoStack empty" << endl;
+	//cout << "undoStack empty" << endl;
 	return;
     }
     // save redo information
@@ -860,7 +861,7 @@ void RPackageLister::redo()
     //cout << "RPackageLister::redo()" << endl;
     pkgState state;
     if(redoStack.empty()) {
-	cout << "redoStack empty" << endl;
+	//cout << "redoStack empty" << endl;
 	return;
     }
     saveState(state);

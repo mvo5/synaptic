@@ -77,6 +77,7 @@ RPackageLister::RPackageLister()
     if (FileExists(Recommends))
 	_actors.push_back(new RCacheActorRecommends(this, Recommends));
 #endif
+    _actors.push_back(new RCacheActorPkgTrack(this));
 }
 
 RPackageLister::~RPackageLister()
@@ -506,7 +507,7 @@ bool RPackageLister::openCache(bool reset)
  	    if (I->ProvidesList == 0) 
  		continue;
 	    string name = I.ProvidesList().OwnerPkg().Name();
-	    cout << I.Name() << " provides: " << name << endl;
+	    //cout << I.Name() << " provides: " << name << endl;
 	    map<string,RPackage*>::iterator I2 = pkgmap.find(name);
 	    if (I2 != pkgmap.end()) {
 		(*I2).second->addVirtualPackage(I);

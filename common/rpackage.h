@@ -54,6 +54,9 @@ class RPackage {
    bool _orphanedPackage;
    bool _debconfPackage;
 
+   enum ChangeReason {unknown, manual, weak_depends, libapt};
+   ChangeReason last_change;
+
    bool _notify;
 
    // virtual pkgs provided by this one

@@ -46,7 +46,8 @@ string RGFindWindow::getFindString()
 
 int RGFindWindow::getSearchType()
 {
-    const char *types[] = {"name", "version", "descr", "maint", NULL};
+    const char *types[] = {"name", "version", "descr", "maint","depends", 
+			   "provides", NULL};
     int searchType = 0;
 
     for(int i=0;types[i] != NULL; i++) {

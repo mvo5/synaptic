@@ -1770,6 +1770,15 @@ void RGMainWindow::searchPkgNameClicked(GtkWidget *self, void *data)
 	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Maintainer;
 	  filter->pattern.addPattern(type, S, false);
       }
+      if(searchType & 1<<RPatternPackageFilter::Depends) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Depends;
+	  filter->pattern.addPattern(type, S, false);
+      }
+      if(searchType & 1<<RPatternPackageFilter::Provides) {
+	  RPatternPackageFilter::DepType type = RPatternPackageFilter::Provides;
+	  filter->pattern.addPattern(type, S, false);
+      }
+
       me->changeFilter(1);
       gdk_window_set_cursor(me->_findWin->window()->window, NULL);
       me->_findWin->hide();

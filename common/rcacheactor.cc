@@ -10,6 +10,14 @@
 #include <algorithm>
 #include <fnmatch.h>
 
+void RCacheActorPkgTrack::run(vector<RPackage*> &List, int Action)
+{
+    for(vector<RPackage*>::iterator it=List.begin();it!=List.end();it++) {
+	cout << "pkg: " << (*it)->name() << " action " << Action << endl;
+    }
+    
+}
+
 void RCacheActor::notifyCachePostChange()
 {
     //cout << "RCacheActor::notifyCachePostChange()" << endl;

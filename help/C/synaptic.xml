@@ -155,7 +155,9 @@
 
 	<variablelist>
 		<varlistentry>
-			<term><guimenu>GNOME Applications</guimenu> menu</term>
+			<term>
+				<guimenu>GNOME Applications</guimenu> menu
+			</term>
 			<listitem>
 				<para>
 					Choose 
@@ -246,43 +248,57 @@
 			<colspec colname="COLSPEC1" colwidth="70*"/>
 			<thead>
 				<row rowsep="1">
-					<entry valign="top">Component</entry>
-					<entry valign="top">Description</entry>
+					<entry valign="top" align="left">
+						Component
+					</entry>
+					<entry valign="top" align="left">
+						Description
+					</entry>
 				</row>
 			</thead>
 			<tbody>
 				<row>
-					<entry valign="top">Menubar</entry>
 					<entry valign="top">
-						Contains menus that you use to perform
-						 in &app;.
+						Menubar
+					</entry>
+					<entry valign="top">
+						Contains menus that you can use to perform actions
+						in &app;.
 					</entry>
 				</row>
 				<row>
-					<entry valign="top">Toolbar</entry>
 					<entry valign="top">
-						Provides global actions (update, upgrade and 
-						apply and a package search field.
+						Toolbar
+					</entry>
+					<entry valign="top">
+						Provides main actions.
+					</entry>
+				</row>
+				<row>
+					<entry valign="top">Category selector</entry>
+					<entry valign="top">
+						Provides categories to narrow down the list of shown
+						listed packages.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Package list</entry>
 					<entry valign="top">
-						Lists available packages. The list
-						can be narrowed down using filters.
+						Lists known packages. The list
+						can be narrowed down by using filters and categories.
 					</entry>
 				</row>
 				<row>
-					<entry valign="top">Package details</entry>
+					<entry valign="top">Description field</entry>
 					<entry valign="top">
-						Provides information about a selected package
+						Shows the description of the selected package.
 					</entry>
 				</row>
 				<row>
 					<entry valign="top">Statusbar</entry>
 					<entry valign="top">
 						Displays global informations about the status 
-						of &app; 
+						of &app;.
 					</entry>
 				</row>
 			</tbody>
@@ -295,10 +311,6 @@
 		Toolbar
 	</title>
 	
-	<para>
-		The toolbar provides access to global actions and a quick search for packages.
-	</para>
-
 	<figure>
 		<title>
 			&app; toolbar
@@ -318,71 +330,119 @@
 		</screenshot> 
 	</figure>
 
-	<variablelist>
-		<varlistentry>
-			<term>
-				Global Actions
-			</term>
-			<listitem>
-				<variablelist>
-					<varlistentry>
-						<term>
-							Refresh Package  List
-						</term>
-						<listitem>
-							<para>
-								Query all package sources 
-								(repositories) and rebuild the list of
-								known packages.
-							</para>
-						</listitem>
-					</varlistentry>
-					<varlistentry>
-						<term>
-							Upgrade System
-						</term>
-						<listitem>
-							<para>
-								Apply all packages with a later version available 
-								than installed for upgrade.
-							</para>
-						</listitem>
-					</varlistentry>
-					<varlistentry>
-						<term>
-							Apply Changes
-						</term>
-						<listitem>
-							<para>
-								Apply all marked changes.
-							</para>
-						</listitem>
-					</varlistentry>
-				</variablelist>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term>
-				Find Field
-				<anchor id="synaptic-win-findfield" xreflabel="find field"></anchor>
-			</term>
-			<listitem>
-				<para>
-					Jump to the fist package in the list whose name matches the entry.
-				</para>
-				
-				<para>
-					<tip>
-						<para>
-							For detailed instructions on the quick search, see <xref 
-							linkend="synaptic-pkg-find"></xref>.
-						</para>
-					</tip>
-				</para>
-			</listitem>
-		</varlistentry>
-	</variablelist>
+	<para>
+		The toolbar provides the following actions:
+	
+		<variablelist>
+			<varlistentry>
+				<term>
+					Refresh
+				</term>
+				<listitem>
+					<para>
+						Refresh the list of known packages
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Upgrade System
+				</term>
+				<listitem>
+					<para>
+						Mark all possible and available upgrades
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Apply
+				</term>
+				<listitem>
+					<para>
+						Apply all marked changes
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Properties
+				</term>
+				<listitem>
+					<para>
+						Open the <xref linkend="synaptic-win-properties"/> dialog(s) of the selected package(s)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
 </sect2>
+
+<sect2 id="synaptic-win-selector" xreflabel="selector">
+	<title>
+		Category Selector
+	</title>
+	
+	<para>
+		The selector on the left side allows to narrow down the packages listed in the <xref linkend="synaptic-win-list"/>
+		by categories.
+	</para>
+
+	<figure>
+		<title>Category Selector</title> 
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-categories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the category selector in the &app; main window.
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
+	<para>
+		The following categories of packages are available:
+		
+		<variablelist>
+			<varlistentry>
+				<term>
+					Sections
+				</term>
+				<listitem>
+					<para>
+						Allows to choose packages by section
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Status
+				</term>
+				<listitem>
+					<para>
+						Allows to choose packages by status
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>
+					Alphabet
+				</term>
+				<listitem>
+					<para>
+						Allows to choose packages by their inital letter
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+</sect2>
+
 
 <sect2 id="synaptic-win-list" xreflabel="package list">
 	<title>
@@ -390,8 +450,8 @@
 	</title>
 
 	<para>
-		The package list shows all known packages by default. You can apply filters to narrow
-		down the list of shown packages, see <xref linkend="synaptic-filter"/>.
+		The package list shows the packages of the selected category. The list can be narrowed
+		down further by applying <xref linkend="synaptic-filter"/>.
 	</para>
 
 	<figure>
@@ -411,94 +471,55 @@
 		</screenshot> 
 	</figure>
 
-	<para>
-		To arrange the packages you can choose the following modes from <guimenu>View</guimenu> menu:
-	</para>
-	<table frame="topbot" id="table-synaptic-viewmodes">
-		<title>
-			View Modes
-		</title>
-		<tgroup cols="2" colsep="0" rowsep="0">
-			<colspec colname="COLSPEC0" colwidth="30*"/>
-			<colspec colname="COLSPEC1" colwidth="70*"/>
-			<thead>
-				<row rowsep="1">
-					<entry valign="top">
-						View
-					</entry>
-					<entry valign="top">
-						Description
-					</entry>
-				</row>
-			</thead>
-			<tbody>
-				<row>
-					<entry valign="top">
-						Flat list
-					</entry>
-					<entry valign="top">
-						List all packages non hierarchically.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						Alphabetic tree
-					</entry>
-					<entry valign="top">
-						Group the packages by their initial name letter.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						Section tree
-					</entry>
-					<entry valign="top">
-						Group the packages by their section, e.g. "admin", "base", "gnome",
-						etc.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						Status tree
-					</entry>
-					<entry valign="top">
-						Group the packages by their status, e.g. "installed", "not installed",
-						"obsolete" etc.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						Tag tree
-					</entry>
-					<entry valign="top">
-						Group the packages by their tag. Tags are keywords provided by
-						third parity. Only Debian GNU/Linux with installed "debtag"
-						supports this feature.
-					</entry>
-				</row>
-			</tbody>
-		</tgroup>
-	</table>	
-	
-	<para>
-		The column order and the used colours can be changed in the preferences, see
-		<xref linkend="synaptic-prefs-ordercolor"/>.
-	</para>
-	
+	<tip>
+		<para>
+			The used status icons are explained in the icon legend. To open the legend choose 
+			<menuchoice><guimenu>Help</guimenu><guimenuitem>Icon Legend</guimenuitem></menuchoice>
+			from the menu.
+		</para>
+	</tip>
+
+
+	<tip>
+		<para>
+			The column order and the used colours can be changed in the preferences, see
+			<xref linkend="synaptic-prefs-ordercolor"/>.
+		</para>	
+	</tip>
 </sect2>
 
-<sect2 id="synaptic-win-info">
+
+<sect2 id="synaptic-win-properties" xreflabel="properties">
 	<title>
-		Package Details
+		Package Properties
 	</title>
 
 	<para>
-		The package details area gives you detailed information about the selected package and also provides controls
-		to modify the status of the package.
- 	 </para>
+		To open the properties dialog of a selected package:
+		
+		<itemizedlist>
+			<listitem>
+				<para>
+					Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Properties</guimenuitem></menuchoice>
+					from the menu
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Click on <guibutton>Properties</guibutton> in the toolbar
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Press the key combination <keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>
+				</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+		
 
 	<figure>
-		<title>Package Details</title> 
+		<title>Package Properties Dialog</title> 
 		<screenshot> 
 			<mediaobject> 
 				<imageobject>
@@ -515,29 +536,55 @@
 	</figure>
 
 	<para>
-		The information notebook contains the following tabs:
-	</para>
+		The notebook provides the following tabs:
 
-	<variablelist>
-		<varlistentry>
-			<term>
-				Information notebook
-			</term>
-			<listitem>
-				<para>
-				</para>
-			</listitem>
-		</varlistentry>
-		<varlistentry>
-			<term>
-				Package controls
-			</term>
-			<listitem>
-				<para>
-				</para>
-			</listitem>
-		</varlistentry>
-	</variablelist>
+		<table frame="topbot" id="table-synaptic-propertiestabs">
+			<title>
+				Tabs in the properties dialog
+			</title>
+			<tgroup cols="2" colsep="0" rowsep="0">
+				<colspec colname="COLSPEC0" colwidth="30*"/>
+				<colspec colname="COLSPEC1" colwidth="70*"/>
+				<thead>
+					<row rowsep="1">
+						<entry valign="top" align="left">
+							Tab
+						</entry>
+						<entry valign="top" align="left">
+							Description
+						</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry valign="top">
+							Common
+						</entry>
+						<entry valign="top">
+							Shows basic information of the package: name, short description, maintainer, 
+							status, priority, tags <emphasis>(if supported)</emphasis> and version.
+						</entry>
+					</row>
+					<row>
+						<entry valign="top">
+							Description
+						</entry>
+						<entry valign="top">
+							Shows a long description of the package
+						</entry>
+					</row>
+					<row>
+						<entry valign="top">
+							Dependencies
+						</entry>
+						<entry valign="top">
+							Lists required, depending, provided, suggested and recommended packages
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</para>
 </sect2>
 
 </sect1>
@@ -611,7 +658,7 @@
 		<listitem>
 			<para>
 				Type the name or a part of it into the
-				<xref linkend="synaptic-win-findfield"/>
+				
 				located in the toolbar. &app; will automatically
 				jump to the first matching package in the list.
 			</para>
@@ -1376,13 +1423,14 @@
 	<para>
 		<note>
 			<para>
-				Debian only. Furthermore this feature requires the installation of "libgnome2-perl".
+				<emphasis>Debian only:</emphasis> This feature requires the installation of 
+				<emphasis>libgnome2-perl</emphasis>.
 			</para>
 		</note>
 	</para>	
 
 	<para>
-		Debian provides a unified method (called debconf) to configure software packages. This feature
+		Debian provides a unified method, called <emphasis>debconf</emphasis>, to configure software packages. This feature
 		is not supported by all packages. If a package supports this feautre the configuration can be done 
 		through an assistant.
 	</para>
@@ -1404,6 +1452,11 @@
 			</para>
 		</listitem>
 	</orderedlist>
+	<tip>
+		<para>
+			To get a list off all configurable packages apply the <emphasis>Configurable Packages</emphasis> filter.
+		</para>
+	</tip>
 </sect2>
 
 <sect2 id="synaptic-pkg-docu">
@@ -1413,7 +1466,7 @@
 
 	<note>
 		<para>
-			Debian only. Furthermore this feature requires the installation of "dwww".
+			<emphasis>Debian only:</emphasis> This feature requires the installation of <emphasis>dwww</emphasis>.
 		</para>
 	</note>
 	
@@ -1443,29 +1496,47 @@
 		To Fix Broken Packages
 	</title>
 	<para>
-		Errors in the dependencies of packages or during applying changes can break
+		Errors in the dependency field of packages or failed and incomplete installations can break
 		the dependencies structure.
 	</para>
 	
 	<para>
-		&app; will not allow any further changes on a broken system.
+		&app; will not allow any further changes to the system before all borken packages are fixed.
 	</para>
 
 	<para>
 		To correct the broken packages choose <menuchoice><guimenu>Actions</guimenu>
 		<guimenuitem>Fix Broken Packages</guimenuitem></menuchoice> from the menu.
 	</para>
+	<tip>
+		<para>
+			To get a list off all broken packages apply the <emphasis>Broken Packages</emphasis> filter.
+		</para>
+	</tip>
 </sect2>
 
 
 </sect1>
 
 <sect1 id="synaptic-repo">
-<title>Managing Package Sources</title>
+	<title>
+		To Manage Package Repositories
+	</title>
+
+	<para>
+		Packages are made available through so called <emphasis>repositories</emphasis>. The repository contains the
+		packages and an index which also includes some basic information about the packages, e.g. required dependencies	
+		or a short description.
+	</para>
+	<para>
+		Repositories can be located on many medias: On CD-Rom/DVDs, a local hard disk, the Web (http), via ftp 
+		or a removte file system (nfs).
+	</para>
+
 
 <sect2 id="synaptic-repo-update"> 
 	<title>
-		Updating List of Available Packages
+		To Refresh the List of Known Packages
 	</title> 
 	<para>
 		
@@ -1474,7 +1545,7 @@
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>Actions</guimenu>
-				<guimenuitem>Update Package List</guimenuitem></menuchoice> from the menu.
+				<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
 			</para>
 		</listitem>
 		<listitem>
@@ -1487,20 +1558,40 @@
 
 <sect2 id="synaptic-repo-manage"> 
 	<title>
-		Managing Repositories
+		To Edit, Add or Remove Repositories
 	</title> 
 	<para>
-		You can edit, add and delete repositories in the repository preferences.
+		You can edit, add or delete repositories in the repository preferences.
 	</para>
 	<para>
 		Open the repository editor with <menuchoice><guimenu>Preferences</guimenu>
 		<guimenuitem>Repositories</guimenuitem></menuchoice> from the menu.
 	</para>
+
+	<figure>
+		<title>
+			Repository Preferences
+		</title>
+		<screenshot> 
+			<mediaobject> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-repositories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject> 
+					<phrase>
+						Shows the repository preferences
+					</phrase>
+				</textobject> 
+			</mediaobject> 
+		</screenshot> 
+	</figure>
+
 </sect2>
 
 <sect2 id="synaptic-repo-cdrom"> 
 	<title>
-		Using Package Archives on CD-ROM
+		To Add Repositories From CD-ROM
 	</title> 
 	<para> 
 	</para>
@@ -1512,11 +1603,6 @@
 	<title>
 		Using Filters
 	</title>
-
-<sect2 id="synaptic-filter-apply"> 
-	<title>
-		Applying Filters
-	</title> 
 	<para>
 		Filters enable you to narrow down the list of shown packages.
 	</para>
@@ -1533,8 +1619,12 @@
 			<colspec colname="COLSPEC1" colwidth="70*"/>
 			<thead>
 				<row rowsep="1">
-					<entry valign="top">Filter</entry>
-					<entry valign="top">Description</entry>
+					<entry valign="top" align="left">
+						Filter
+					</entry>
+					<entry valign="top" align="left">
+						Description
+					</entry>
 				</row>
 			</thead>
 			<tbody>
@@ -1612,16 +1702,15 @@
 			</tbody>
 		</tgroup>
 	</table>
+
+<sect2 id="synaptic-filter-apply"> 
+	<title>
+		To Apply Filters
+	</title> 
 	<para>
 		To apply a filter:
 	</para>
 	<itemizedlist>
-		<listitem>
-			<para>
-				Choose <menuchoice><guimenu>View</guimenu><guisubmenu>Apply Filter</guisubmenu>
-				<guimenuitem>Filter</guimenuitem></menuchoice>.
-			</para>	
-		</listitem>
 		<listitem>
 			<para>
 				Choose the filter from the <guibutton>Show</guibutton> combobox in the main window.
@@ -1632,7 +1721,7 @@
 
 <sect2 id="synaptic-filter-edit" xreflabel="filter editor"> 
 	<title>
-		Editing and Creating Filters
+		To Edit or Create Filters
 	</title> 
 
 	<para>
@@ -1981,8 +2070,12 @@
 			<colspec colname="COLSPEC1" colwidth="70*"/>
 			<thead>
 				<row rowsep="1">
-					<entry valign="top">Problem</entry>
-					<entry valign="top">Workaround</entry>
+					<entry valign="top" align="left">
+						Problem
+					</entry>
+					<entry valign="top" align="left">
+						Workaround
+					</entry>
 				</row>
 			</thead>
 			<tbody>
@@ -2042,7 +2135,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Apply all marked changes.
+						Apply all marked changes
 					</entry>
 				</row>
 				<row>
@@ -2050,7 +2143,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Open the package find dialog.
+						Open the package find dialog
 					</entry>
 				</row>
 				<row>
@@ -2058,7 +2151,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Mark all possible upgrades.
+						Mark all possible upgrades
 					</entry>
 				</row>
 				<row>
@@ -2066,7 +2159,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Mark the selected package(s) for installation.
+						Mark the selected package(s) for installation
 					</entry>
 				</row>
 				<row>
@@ -2074,15 +2167,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Ignore any marked changes and set package as before.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Open the package find dialog.
+						Unmarked any changes and set package as before
 					</entry>
 				</row>
 				<row>
@@ -2090,7 +2175,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Upgrade system by marking all available upgrade.
+						Upgrade the whole system by marking all available upgrade
 					</entry>
 				</row>
 				<row>
@@ -2098,15 +2183,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Mark the selected package(s) for installation.
-					</entry>
-				</row>
-				<row>
-					<entry valign="top">
-						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
-					</entry>
-					<entry valign="top">
-						Unmark any changes to the package and set package as before.
+						Mark the selected package(s) for installation
 					</entry>
 				</row>
 				<row>
@@ -2114,7 +2191,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Quit &app;.
+						Quit &app;
 					</entry>
 				</row>
 				<row>
@@ -2122,7 +2199,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Mark the selected package(s) for removal.
+						Mark the selected package(s) for removal
 					</entry>
 				</row>
 				<row>
@@ -2130,7 +2207,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Update the list of known package.
+						Refresh the list of known package
 					</entry>
 				</row>
 			</tbody>

@@ -219,12 +219,13 @@ pkgPackageManager::OrderResult
 RGZvtInstallProgress::start(RPackageManager *pm,
                             int numPackages, int numPackagesTotal)
 {
+   void *dummy;
+   int open_max, ret = 250;
+   pid_t _child_id;
+
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
        return res;
-
-   void *dummy;
-   int open_max, ret = 250;
 
 #ifdef HAVE_ZVT
    _child_id = zvt_term_forkpty(ZVT_TERM(_term), FALSE);
@@ -250,23 +251,21 @@ RGZvtInstallProgress::start(RPackageManager *pm,
       // make sure, that term is set correctly
       setenv("TERM", "xterm", 1);
       res = pm->DoInstallPostFork();
+
       _exit(res);
    }
 
    startUpdate();
-   while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
 
-   res = (pkgPackageManager::OrderResult) WEXITSTATUS(ret);
-
-   finishUpdate();
+   while(waitpid(_child_id, &ret,WNOHANG) == 0)
+       updateInterface();
 
 #ifdef HAVE_ZVT
-   zvt_term_closepty(ZVT_TERM(_term));
+   res = (pkgPackageManager::OrderResult)zvt_term_closepty(ZVT_TERM(_term));
 #endif
-#ifdef HAVE_VTE
-   // nothing to do
-#endif
+   //FIXME: how to get the exit-status from vte?
+
+   finishUpdate();
 
    return res;
 }

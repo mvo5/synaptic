@@ -31,13 +31,9 @@
 
 class RInstallProgress {
  protected:
-   static void *loop(void *data);
-
    int _stdout;
    int _stderr;
    int _childin;
-
-   int _child_id;
 
    int _donePackages;
    int _numPackages;

@@ -199,10 +199,6 @@ int main(int argc, char **argv)
    }
 
    mainWindow->restoreState();
-#ifdef HAVE_DEBTAGS
-   if (!openCacheError)
-      mainWindow->initDebtags();
-#endif
    mainWindow->showErrors();
 
    mainWindow->setInterfaceLocked(false);

@@ -38,20 +38,6 @@
 
 #include "i18n.h"
 
-void *RInstallProgress::loop(void *data)
-{
-   RInstallProgress *me = (RInstallProgress *) data;
-
-   me->startUpdate();
-   while (me->_child_id >= 0)
-      me->updateInterface();
-   me->finishUpdate();
-
-   pthread_exit(NULL);
-
-   return NULL;
-}
-
 
 
 pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
@@ -61,6 +47,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    void *dummy;
    pkgPackageManager::OrderResult res;
    int ret;
+   pid_t _child_id;
 
    //cout << "RInstallProgress::start()" << endl;
 
@@ -104,6 +91,10 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
    _numPackagesTotal = numPackagesTotal;
 
 #else
+
+   res = pm->DoInstallPreFork();
+   if (res == pkgPackageManager::Failed)
+       return res;
 
    _child_id = fork();
 

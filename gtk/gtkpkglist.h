@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include "rpackagelister.h"
 #include "rcacheactor.h"
+#include "rpackagelistactor.h"
 #include "gsynaptic.h"
 
 
@@ -56,6 +57,8 @@ GType       gtk_pkg_list_get_type         ();
 GtkPkgList *gtk_pkg_list_new              (RPackageLister *lister);
 
 
+
+
 class RCacheActorPkgList : public RCacheActor
 {
  protected:
@@ -75,6 +78,22 @@ class RCacheActorPkgList : public RCacheActor
 		       GtkTreeView *pkgView)
 	:  RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};    
 };
+
+
+class RPackageListActorPkgList : public RPackageListActor
+{
+ protected:
+    GtkPkgList *_pkgList;
+    GtkTreeView *_pkgView;
+
+ public:
+    virtual void run(vector<RPackage*> &List, int pkgEvent);
+
+    RPackageListActorPkgList(RPackageLister *lister, GtkPkgList *pkgList,
+		       GtkTreeView *pkgView)
+	:  RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
+};
+
 
 
 

@@ -61,6 +61,8 @@ class RInstallProgress;
 class RPackageObserver {
 public:
    virtual void notifyChange(RPackage *pkg) = 0;
+   virtual void notifyPreFilteredChange() = 0;
+   virtual void notifyPostFilteredChange() = 0;
 };
 
 class RCacheObserver {
@@ -265,7 +267,7 @@ public:
    void unregisterCacheObserver(RCacheObserver *observer);
 
    bool readSelections(istream &in);
-   bool writeSelections(ostream &out);
+   bool writeSelections(ostream &out, bool fullState);
    
    RPackageLister();   
    ~RPackageLister();

@@ -64,7 +64,7 @@ class RCacheActor : public RCacheObserver
    };
 
    RCacheActor(RPackageLister *lister)
-	 : _lister(lister), _laststate(0)
+       : _lister(lister), _laststate(0)
    {
       _lister->registerCacheObserver(this);
    };

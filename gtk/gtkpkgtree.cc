@@ -73,11 +73,13 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
     RPackageLister::treeIter it;
     RPackageLister::pkgPair pair;
 
-    cout << "RCacheActorPkgTree::run()" << endl;
     for(unsigned int i=0;i<List.size();i++) {
+	cout << "RCacheActorPkgTree::run()" << endl;
+
 	pair.first = List[i]->name();
 	pair.second = List[i];
 	pkgTree = _lister->getTreeOrganizer();
+
 	//FIXME: we have room for optisation here
 	it = find(pkgTree->begin(),pkgTree->end(),pair);
 	// found
@@ -94,6 +96,8 @@ void RCacheActorPkgTree::run(vector<RPackage*> &List, int Action)
 	    gtk_tree_model_row_changed(GTK_TREE_MODEL(_pkgTree),
 				       path, &iter);
 	    gtk_tree_path_free(path);
+	} else {
+	    cout << "not found pkg: " << pair.first << endl;
 	}
     }
 }
@@ -259,41 +263,41 @@ gtk_pkg_tree_get_iter (GtkTreeModel *tree_model,
 		       GtkTreeIter  *iter,
 		       GtkTreePath  *path)
 {
-  tree<RPackageLister::pkgPair> *pkgTree;
+    tree<RPackageLister::pkgPair> *pkgTree;
 
-  GtkPkgTree *pkg_tree = (GtkPkgTree *) tree_model;
-  gint *indices;
-  gint depth;
+    GtkPkgTree *pkg_tree = (GtkPkgTree *) tree_model;
+    gint *indices;
+    gint depth;
 
-  //  g_print( "gtk_pkg_tree_get_iter()\n");
-  g_return_val_if_fail (GTK_IS_PKG_TREE (pkg_tree), FALSE);
+    //  g_print( "gtk_pkg_tree_get_iter()\n");
+    g_return_val_if_fail (GTK_IS_PKG_TREE (pkg_tree), FALSE);
 
-  indices = gtk_tree_path_get_indices (path);
-  depth = gtk_tree_path_get_depth (path);
+    indices = gtk_tree_path_get_indices (path);
+    depth = gtk_tree_path_get_depth (path);
 
-  pkgTree = pkg_tree->_lister->getTreeOrganizer();
+    pkgTree = pkg_tree->_lister->getTreeOrganizer();
 
-//   // tree is empty
-  if(pkgTree->size() == 0)
-    return FALSE;
+    //   // tree is empty
+    if(pkgTree->size() == 0)
+	return FALSE;
 
-  RPackageLister::treeIter it(pkgTree->begin());
+    RPackageLister::treeIter it(pkgTree->begin());
 
-  // we do not support more 
-  assert(depth <= 2);
+    // we do not support more 
+    assert(depth <= 2);
     
-  // jump to right spot 
-  for(int j=0;j<indices[0];j++) {
-    it.skip_children();
-    ++it;
-  }
-
-  // now go for the children 
-  if(depth == 2) {
-    for(int j=-1;j<indices[1];j++) {
-      ++it;
+    // jump to right spot 
+    for(int j=0;j<indices[0];j++) {
+	it.skip_children();
+	++it;
     }
-  }
+
+    // now go for the children 
+    if(depth == 2) {
+	for(int j=-1;j<indices[1];j++) {
+	    ++it;
+	}
+    }
 
 //      cout << "get_iter: index " << indices[0] << ":"<<indices[1] << " is: " 
 //           << (*it).first << " depth: " << depth
@@ -350,10 +354,14 @@ gtk_pkg_tree_get_value (GtkTreeModel *tree_model,
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
 
   RPackageLister::treeIter it((RPackageLister::treeNode*)iter->user_data);
-  //  cout << "get_value()" << column << " name: " << (*it).first << endl;
 
-  if(it == pkgTree->end())
+  //cout << "get_value() " << endl;
+
+  if(it == pkgTree->end() || pkgTree->size() == 0)
     return;
+
+  //cout << "size: " << pkgTree->size() << endl;
+  //cout << "column: " << column << " name: " << (*it).first << endl;
 
   const gchar *str;
   RPackage *pkg = (RPackage*)(*it).second;
@@ -470,10 +478,9 @@ gtk_pkg_tree_iter_children (GtkTreeModel *tree_model,
 			    GtkTreeIter  *iter,
 			    GtkTreeIter  *parent)
 {
-  g_return_val_if_fail (parent == NULL || parent->user_data != NULL, FALSE);
-
   tree<RPackageLister::pkgPair> *pkgTree;
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
+
   RPackageLister::treeIter it((RPackageLister::treeNode*)parent->user_data);
   //cout << "iter_children: parent: " << (*it).first << endl;  
 
@@ -583,6 +590,7 @@ gtk_pkg_tree_iter_parent (GtkTreeModel *tree_model,
   //g_print("gtk_pkg_tree_iter_parent ()\n");
   tree<RPackageLister::pkgPair> *pkgTree;
   pkgTree = GTK_PKG_TREE(tree_model)->_lister->getTreeOrganizer();
+
   RPackageLister::treeIter it((RPackageLister::treeNode*)child->user_data);
   
   RPackageLister::treeIter it_parent = pkgTree->parent(it);

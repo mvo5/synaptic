@@ -314,7 +314,7 @@ void RGMainWindow::closeFilterManagerAction(void *self, bool okcancel)
 	me->refreshFilterMenu();
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_filterPopup), i);
 	me->_lister->setFilter(i-1);
-	me->refreshTable();
+	me->refreshTable(NULL);
     }
 
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
@@ -527,7 +527,7 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     
     
     me->setTreeLocked(FALSE);
-    me->refreshTable();
+    me->refreshTable(pkg);
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
 
@@ -586,7 +586,7 @@ void RGMainWindow::fixBrokenClicked(GtkWidget *self, void *data)
     bool res = me->_lister->fixBroken();
     me->setInterfaceLocked(TRUE);
     me->refreshTable(pkg);
-    
+
     if (!res)
 	me->setStatusText(_("Dependency problem resolver failed."));
     else
@@ -617,7 +617,7 @@ void RGMainWindow::upgradeClicked(GtkWidget *self, void *data)
 
     res = me->_lister->upgrade();
     me->refreshTable(pkg);
-    
+
     if (res)
 	me->setStatusText(_("Automatic selection of upgradadable packages done."));
     else
@@ -649,7 +649,7 @@ void RGMainWindow::distUpgradeClicked(GtkWidget *self, void *data)
     me->_lister->saveUndoState();
 
     res = me->_lister->distUpgrade();
-    me->refreshTable(pkg);
+     me->refreshTable(pkg);
 
     if (res)
 	me->setStatusText(_("Selection for distribution upgrade done."));
@@ -774,7 +774,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     }
 
     me->setTreeLocked(FALSE);
-    me->refreshTable();
+    me->refreshTable(pkg);
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
     
@@ -817,8 +817,7 @@ void RGMainWindow::notifyChange(RPackage *pkg)
   //cout << "RGMainWindow::notifyChange("<<pkg->name()<<")" << endl;
     // we changed pkg's status
     updateDynPackageInfo(pkg);
-
-    //refreshTable(pkg);
+    refreshTable(pkg);
 
     setStatusText();
 }
@@ -890,14 +889,15 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
   }
 }
 
+
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
 #if 0
   vector<string> sections;
   vector<string> expanded_sections;
-  
-  cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
 
+  cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
+  
 //   cout << "_lister is at: " <<_lister << endl;
 //   if(selectedPkg != NULL)
 //       cout << selectedPkg->name() << endl;
@@ -906,8 +906,8 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
   saveTableState(expanded_sections);
 
   _pkgTree = gtk_pkg_tree_new(_lister);
-  gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
-			  GTK_TREE_MODEL(_pkgTree));
+  gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
+                         GTK_TREE_MODEL(_pkgTree));
   // always set search column after set_model
   gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
 
@@ -921,7 +921,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 #endif
   return;
 }
-
 
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
 {
@@ -1396,8 +1395,6 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 	_roptions->setPackageLock(pkg->name(), active);
 	li=g_list_next(li);
     }
-
-    // refresh
     me->refreshTable();
 
     // free the list
@@ -1540,8 +1537,8 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   if (ask) {
       me->_lister->registerObserver(me);
   }
-  //me->refreshTable(pkg);
-
+  me->refreshTable(pkg);
+  
   // free the list
   g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
   g_list_free (list);
@@ -1875,27 +1872,34 @@ void RGMainWindow::saveClicked(GtkWidget *self, void *data)
     ofstream out(me->selectionsFilename.c_str());
     // fixme, we need errorhandlin here
     me->_lister->unregisterObserver(me);
-    me->_lister->writeSelections(out);
+    me->_lister->writeSelections(out, me->saveFullState);
     me->_lister->registerObserver(me);
     me->setStatusText();
 
 }
 
-void RGMainWindow::doSaveSelections(GtkWidget *file_selector, 
+void RGMainWindow::doSaveSelections(GtkWidget *file_selector_button, 
 				    gpointer data) 
 {
+    GtkWidget *checkButton;
+    const gchar *file;
+
     cout << "void RGMainWindow::doSaveSelections()" << endl;
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(data), "me");
-    const gchar *file;
 
     file = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
     cout << "selected file: " << file << endl;
     me->selectionsFilename = file;
+    
+    // do we want the full state?
+    checkButton = (GtkWidget*)g_object_get_data(G_OBJECT(data), "checkButton");
+    me->saveFullState = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
+    cout << "fullState: " << me->saveFullState << endl;
 
     ofstream out(file);
-    // fixme, we need errorhandlin here
+    // fixme, we need error handling here
     me->_lister->unregisterObserver(me);
-    me->_lister->writeSelections(out);
+    me->_lister->writeSelections(out, me->saveFullState);
     me->_lister->registerObserver(me);
     me->setStatusText();
 }
@@ -1909,10 +1913,10 @@ void RGMainWindow::saveAsClicked(GtkWidget *self, void *data)
     GtkWidget *filesel;
     filesel = gtk_file_selection_new (_("Save changes"));
     g_object_set_data(G_OBJECT(filesel), "me", data);
-
+    
     g_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
                      "clicked", G_CALLBACK (doSaveSelections), filesel);
-   			   
+    
     g_signal_connect_swapped(GTK_OBJECT(GTK_FILE_SELECTION(filesel)->ok_button),
                              "clicked",
 			     G_CALLBACK (gtk_widget_destroy), 
@@ -1923,7 +1927,12 @@ void RGMainWindow::saveAsClicked(GtkWidget *self, void *data)
                              G_CALLBACK (gtk_widget_destroy),
                              (gpointer)filesel); 
    
-   gtk_widget_show (filesel);
+    GtkWidget *checkButton = gtk_check_button_new_with_label(_("Save full state, not only changes"));
+    gtk_box_pack_start_defaults(GTK_BOX(GTK_FILE_SELECTION(filesel)->main_vbox), 
+				checkButton);
+    g_object_set_data(G_OBJECT(filesel), "checkButton", checkButton);
+    gtk_widget_show(checkButton);
+    gtk_widget_show (filesel);
 }
 
 void RGMainWindow::redoClicked(GtkWidget *self, void *data)
@@ -2409,26 +2418,6 @@ void RGMainWindow::buildInterface()
     _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
     _menuDisplayMode = _treeDisplayMode;
 
-#if 0
-    if(_treeDisplayMode == RPackageLister::TREE_DISPLAY_FLAT) {
-	_pkgList = gtk_pkg_list_new(_lister);
-	if(_pkgListCacheObserver)
-	    delete _pkgListCacheObserver;
-	_pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
-						       GTK_TREE_VIEW(_treeView));
-    } else {
-	_pkgTree = gtk_pkg_tree_new (_lister);
-	if(_pkgCacheObserver)
-	    delete _pkgCacheObserver;
-	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
-						   GTK_TREE_VIEW(_treeView));
-    }
-#endif
-
-#if 0
-    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
- 			    GTK_TREE_MODEL(_pkgTree));
-#endif
     gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_treeView));
     gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
@@ -2638,6 +2627,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
       gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
       _pkgListCacheObserver = new RCacheActorPkgList(_lister, _pkgList, 
 						     GTK_TREE_VIEW(_treeView));
+      _pkgListPackageListObserver = new RPackageListActorPkgList(_lister, _pkgList, GTK_TREE_VIEW(_treeView));
   } else {
       _pkgTree = gtk_pkg_tree_new (_lister);
       _activeTreeModel = GTK_TREE_MODEL(_pkgTree);

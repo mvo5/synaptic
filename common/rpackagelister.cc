@@ -103,7 +103,22 @@ static string getServerErrorMessage(string errm)
 
 void RPackageLister::notifyChange(RPackage *pkg)
 {
+    cout << "RPackageLister::notifyChange(RPackage *pkg): " 
+	 << _packageObservers.size() 
+	 << endl;
+
+    for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
+	 I != _packageObservers.end(); I++) {
+	(*I)->notifyPreFilteredChange();
+	cout << "(*I): " << (*I) << endl;
+    }
+
     reapplyFilter();
+
+    for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
+	 I != _packageObservers.end(); I++) {
+	(*I)->notifyPostFilteredChange();
+    }
 
     for (vector<RPackageObserver*>::const_iterator I = _packageObservers.begin();
 	 I != _packageObservers.end(); I++) {
@@ -113,7 +128,13 @@ void RPackageLister::notifyChange(RPackage *pkg)
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
-    remove(_packageObservers.begin(), _packageObservers.end(), observer);
+    //remove(_packageObservers.begin(), _packageObservers.end(), observer);
+    vector<RPackageObserver*>::iterator I;
+    I = find(_packageObservers.begin(), _packageObservers.end(), observer);
+    if(I != _packageObservers.end())
+	_packageObservers.erase(I);
+    else
+	cout << "unregisterObserver() failed" << endl;
 }
 
 void RPackageLister::registerObserver(RPackageObserver *observer)
@@ -130,6 +151,7 @@ void RPackageLister::notifyCacheOpen()
 	 I != _cacheObservers.end(); I++) {
 	(*I)->notifyCacheOpen();
     }
+    
 }
 
 void RPackageLister::notifyCachePreChange()
@@ -1432,22 +1454,25 @@ bool RPackageLister::cleanPackageCache()
 }
 
 
-bool RPackageLister::writeSelections(ostream &out)
+bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
-    cout << "bool RPackageLister::writeSelections(ostream &out)"<<endl;
+    cout << "bool RPackageLister::writeSelections(out,fullState)"<<endl;
 
     for (unsigned i = 0; i < _count; i++) {
-	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
-	switch (status) {
+	RPackage::MarkedStatus mstatus = _packages[i]->getMarkedStatus();
+	RPackage::PackageStatus status = _packages[i]->getStatus();
+	switch (mstatus) {
 	    case RPackage::MInstall:
 	    case RPackage::MUpgrade:
 		out << _packages[i]->name() << "   \t   install" << endl;
+		// marked state has priority so we skip the rest
+		continue;
 		break;
-		
 	    case RPackage::MRemove:
 		out << _packages[i]->name() << "   \t   deinstall" << endl;
+		// marked state has priority so we skip the rest
+		continue;
 		break;
-		
 	    case RPackage::MHeld:
 	    case RPackage::MKeep:
 	    case RPackage::MDowngrade:
@@ -1456,6 +1481,15 @@ bool RPackageLister::writeSelections(ostream &out)
 	    case RPackage::MNew:
 		/* nothing */
 		break;
+	}
+	// full state saves all installed packages
+	if(fullState) {
+	    switch(status) {
+	    case RPackage::SInstalledUpdated:
+	    case RPackage::SInstalledOutdated:
+		out << _packages[i]->name() << "   \t   install" << endl;
+		break;
+	    }
 	}
     }
 }

@@ -12,14 +12,14 @@
 
 void RCacheActor::notifyCachePostChange()
 {
-    cout << "RCacheActor::notifyCachePostChange()" << endl;
+    //cout << "RCacheActor::notifyCachePostChange()" << endl;
     vector<RPackage*> toKeep;
     vector<RPackage*> toInstall; 
     vector<RPackage*> toUpgrade; 
     vector<RPackage*> toRemove;
     vector<RPackage*> exclude; // empty
 
-    cout << "_laststate: " << _laststate << endl;
+    //cout << "_laststate: " << _laststate << endl;
     if(_laststate == NULL)
 	return;
 

@@ -96,6 +96,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    GtkPkgList *_pkgList;
    RCacheActorPkgList *_pkgListCacheObserver;
+   RPackageListActorPkgList *_pkgListPackageListObserver;
    // the active model
    GtkTreeModel *_activeTreeModel;
 
@@ -190,7 +191,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    void buildInterface();
 
    // display/table releated
-   void refreshTable(RPackage *selectedPkg=NULL);
+   void refreshTable(RPackage *selectedPkg=NULL); 
    void restoreTableState(vector<string>& expanded_sections);
    void saveTableState(vector<string>& expanded_sections);
    void changeFilter(int filter, bool sethistory=true);
@@ -248,6 +249,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void doSaveSelections(GtkWidget *file_selector, 
 				gpointer data);
    string selectionsFilename;
+   bool saveFullState;
 
    // actions menu
    static void undoClicked(GtkWidget *self, void *data);
@@ -303,6 +305,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
+   virtual void notifyPreFilteredChange() {};
+   virtual void notifyPostFilteredChange() {};
 
    // obsolete
    //static void removeDepsClicked(GtkWidget *self, void *data);

@@ -328,7 +328,7 @@ void RGZvtInstallProgress::updateInterface()
    if (gtk_events_pending()) {
       while (gtk_events_pending()) gtk_main_iteration();
    } else {
-      // 0.1 secs
+      // 0.1 secs 
       usleep(10000);
    }
 }

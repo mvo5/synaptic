@@ -157,7 +157,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    for(int i=0;i<searchStrings.size();i++) {
       string searchString = searchStrings[i];
 
-      if(!str.empty() && strstr(str.c_str(), searchString.c_str())) {
+      if(!str.empty() && strcasestr(str.c_str(), searchString.c_str())) {
 	 global_found &= true;
       } else {
 	 global_found &= false;

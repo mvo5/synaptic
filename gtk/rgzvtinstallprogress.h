@@ -31,7 +31,7 @@
 
 #ifdef HAVE_TERMINAL
 
-class RGZvtInstallProgress : public RInstallProgress, public RGWindow {
+class RGZvtInstallProgress : public RInstallProgress, public RGGladeWindow {
   GtkWidget *_term;
   GtkWidget *_statusL;
   GtkWidget *_closeOnF;

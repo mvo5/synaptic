@@ -536,10 +536,10 @@ void RGMainWindow::pkgReconfigureClicked(GtkWidget *self, void *data)
     //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
     RPackage *pkg=NULL;
-    pkg = me->_lister->getElement("libgnome-perl");
+    pkg = me->_lister->getElement("libgnome2-perl");
     if(pkg && pkg->installedVersion() == NULL) {
-	me->_userDialog->error(_("No libgnome-perl installed\n\n"
-				 "You have to install libgnome-perl to "
+	me->_userDialog->error(_("No libgnome2-perl installed\n\n"
+				 "You have to install libgnome2-perl to "
 				 "use dpkg-reconfigure with synaptic"));
 	return;
     }

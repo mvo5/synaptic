@@ -47,8 +47,8 @@ const char *RGPreferencesWindow::column_visible_names[] =
     _("Component"), _("Installed Version"), _("Available Version"), 
     _("Installed Size"), _("Download Size"),_("Description"), NULL };
 
-const bool RGPreferencesWindow::column_visible_defaults[] = 
-   { true, true, true, false, false, true, true, false, false, true }; 
+const gboolean RGPreferencesWindow::column_visible_defaults[] = 
+   { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
 void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
 {
@@ -213,7 +213,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
    GtkTreeIter iter;
    int i=0;
    char *column_name, *config_name;
-   bool visible;
+   gboolean visible;
    gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
    do {
       gtk_tree_model_get (GTK_TREE_MODEL(store), &iter,

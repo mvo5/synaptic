@@ -29,7 +29,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
 
    struct column_struct {
-      bool visible;
+      gboolean visible;
       const char *name;
       const char *visible_name;
    };
@@ -37,7 +37,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    // the names for the VisibleColumnsTreeView
    static const char *column_names[];
    static const char *column_visible_names[];
-   static const bool column_visible_defaults[];
+   static const gboolean column_visible_defaults[];
 
    RGMainWindow *_mainWin;
    RPackageLister *_lister;

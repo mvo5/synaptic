@@ -77,7 +77,7 @@ void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
 
    gchar *s=gtk_combo_box_get_active_text(GTK_COMBO_BOX(self));
    if(s!=NULL) {
-      me->_defaultDistro;
+      me->_defaultDistro = s;
       //cout << "new default distro: " << me->_defaultDistro << endl;
       me->distroChanged = true;
    }

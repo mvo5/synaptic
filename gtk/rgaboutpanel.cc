@@ -29,18 +29,43 @@
 
 static void closeWindow(GtkWidget *self, void *data)
 {
-    RGAboutPanel *about = (RGAboutPanel*)data;
+    RGAboutPanel *me = (RGAboutPanel*)data;
     
-    about->hide();
+    me->hide();
+}
+
+RGCreditsPanel::RGCreditsPanel(RGWindow *parent) :
+    RGGladeWindow(parent, "about", "credits") 
+{
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_closebutton_clicked",
+				  G_CALLBACK(closeWindow),
+				  this); 
+};
+
+
+void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
+{
+    RGAboutPanel *me = (RGAboutPanel*)data;
+    
+    if(me->credits==NULL) {
+	me->credits = new RGCreditsPanel::RGCreditsPanel(me);
+    }
+    me->credits->show();
+  
 }
 
 
 RGAboutPanel::RGAboutPanel(RGWindow *parent) 
-    : RGGladeWindow(parent, "about")
+    : RGGladeWindow(parent, "about"), credits(NULL)
 {
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_okbutton_clicked",
 				 G_CALLBACK(closeWindow),
+				 this); 
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_button_credits_clicked",
+				 G_CALLBACK(creditsClicked),
 				 this); 
     
    setTitle(PACKAGE" version "VERSION);

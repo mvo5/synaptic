@@ -35,6 +35,7 @@
 #include <regex.h>
 #include <apt-pkg/depcache.h>
 
+#include "rpackagecache.h"
 #include "rpackage.h"
 #include "ruserdialog.h"
 #include "tree.hh"
@@ -283,6 +284,9 @@ public:
    inline void setProgressMeter(OpProgress *progMeter) { _progMeter = progMeter; };
 
    inline void setUserDialog(RUserDialog *dialog) { _userDialog = dialog; };
+
+   // policy stuff                             
+   vector<string> getPolicyArchives() { return _cache->getPolicyArchives(); };
 
    // notification stuff about changes in packages
    void notifyPreChange(RPackage *pkg);

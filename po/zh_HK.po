@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.32\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-30 22:47+0200\n"
+"POT-Creation-Date: 2003-10-01 23:50+0200\n"
 "PO-Revision-Date: 2002-01-21 09:49+0800\n"
 "Last-Translator: Anthony Fok <anthony@thizlinux.com>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -286,7 +286,7 @@ msgid "Internal Error, non-zero counts"
 msgstr ""
 
 #: common/rpackagefilter.cc:42 gtk/rgfetchprogress.cc:80
-#: gtk/window_preferences.glade.strings:56 gtk/window_filters.glade.strings:55
+#: gtk/window_preferences.glade.strings:38 gtk/window_filters.glade.strings:55
 msgid "Status"
 msgstr "狀態"
 
@@ -314,7 +314,7 @@ msgstr ""
 msgid "Tags"
 msgstr "任務"
 
-#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.strings:62
+#: common/rpackagefilter.cc:194 gtk/window_preferences.glade.strings:44
 #: gtk/window_setopt.glade.strings:11
 msgid "Name"
 msgstr "名稱"
@@ -327,7 +327,7 @@ msgstr "    　　版本"
 #: common/rpackagefilter.cc:196 gtk/rgmainwindow.cc:2245
 #: gtk/window_find.glade.strings:14 gtk/window_main_hpaned.glade.strings:70
 #: gtk/window_main_vpaned.glade.strings:77
-#: gtk/window_preferences.glade.strings:66
+#: gtk/window_preferences.glade.strings:48
 msgid "Description"
 msgstr "套件描述"
 
@@ -622,16 +622,20 @@ msgstr "標記套件，預備安裝或升級"
 msgid "To be kept back"
 msgstr "將會維持原狀不升級的套件"
 
-#: gtk/rgpreferenceswindow.cc:236 gtk/rgzvtinstallprogress.cc:72
+#: gtk/rgpreferenceswindow.cc:218 gtk/rgzvtinstallprogress.cc:72
 #: gtk/rgmainwindow.cc:3370
 msgid "An error occurred while saving configurations."
 msgstr "儲存設定時發生錯誤。"
 
-#: gtk/rgpreferenceswindow.cc:494
+#: gtk/rgpreferenceswindow.cc:461
 msgid "Color selection"
 msgstr ""
 
-#: gtk/rgpreferenceswindow.cc:651
+#: gtk/rgpreferenceswindow.cc:588
+msgid "ignore"
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:635
 #, fuzzy
 msgid "Set preferences"
 msgstr "偏好設定"
@@ -1303,39 +1307,85 @@ msgstr ""
 #. * DO NOT compile it as part of your application.
 #.
 #: gtk/window_about.glade.strings:7
-msgid "About"
-msgstr "關於"
-
-#: gtk/window_about.glade.strings:8
 #, fuzzy
-msgid ""
-"\n"
-"Copyright (c) 2001-2003 Conectiva S/A\n"
-"Copyright (c) 2002,2003 Michael Vogt\n"
-"\n"
-"Authors:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"\n"
-"More information on http://www.nongnu.org/synaptic\n"
-"\n"
-"This software is licensed under the terms of the\n"
-"GNU General Public License, Version 2\n"
+msgid "About Synaptic"
+msgstr "Synaptic「新立得」"
+
+#: gtk/window_about.glade.strings:8 gtk/window_about.glade.strings:16
+msgid "Credits"
 msgstr ""
+
+#: gtk/window_about.glade.strings:9
+msgid "<span size=\"large\" weight=\"bold\">Synaptic 0.45</span>"
+msgstr ""
+
+#: gtk/window_about.glade.strings:10
+#, fuzzy
+msgid "Package management software using apt."
+msgstr "套件變更"
+
+#: gtk/window_about.glade.strings:11
+msgid ""
+"Visit the home page at \n"
+"http//www.nongnu.org/synaptic"
+msgstr ""
+
+#: gtk/window_about.glade.strings:13
+msgid ""
+"This software is licensed under the terms of the GNU General Public License, "
+"Version 2"
+msgstr ""
+
+#: gtk/window_about.glade.strings:14
+msgid ""
+"<span size=\"small\">Copyrigt (c) 2001-2003 Connectiva S/A \n"
+"Copyright (c) 2002,2003 Michael Vogt</span>"
+msgstr ""
+
+#: gtk/window_about.glade.strings:17
+msgid ""
+"Original author:\n"
+"Alfredo K. Kojima <kojima@windowmaker.org>\n"
 "\n"
-"版權所有 (c) 2001 Alfredo K. Kojima\n"
-"　　　　 (c) 2002, 2003 Michael Vogt\n"
+"Maintainers:\n"
+"Michael Vogt <mvo@debian.org>\n"
+"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
 "\n"
-"作者：Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"　　　Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"　　　Michael Vogt <mvo@debian.org> \n"
-"\n"
-"圖示從 KDE 取得，謹此致謝。\n"
-"APT 後端：Jason Gunthorpe <jgg@debian.org>\n"
-"中文介面：即時系統科研有限公司 ThizLinux Laboratory Ltd.\n"
-"\n"
-"本軟件是以 GNU 通用公共許可證 (第二版) 的條款發行的。\n"
+"Contributors:\n"
+"Enrico Zini <enrico@debian.org>\n"
+"Sebastian Heinlein <allerlei@renates-welt.de>\n"
+"Panu Matilainen <pmatilai@welho.com>"
+msgstr ""
+
+#: gtk/window_about.glade.strings:28
+msgid "Written by"
+msgstr ""
+
+#: gtk/window_about.glade.strings:29
+msgid ""
+"Vital Khilko <dojlid@mova.org> (Belarusian)\n"
+"Keld Simonsen <keld@dkuug.dk> (Danish)\n"
+"Michael Vogt <mvo@debian.org> (German)\n"
+"Sebastain Heinlein <allerlei@renates-welt.de> (German)\n"
+"Francisco Javier F. Serrador <serrador@arrakis.es> (Spanish)\n"
+"Mathieu Roy <yeupou@gnu.org> (French)\n"
+"Mauro Colorio <linuxbox@interfree.it> (Italian)\n"
+"Luigi Maselli <metnik at tiscali it> (Italian)\n"
+"Daisuke Suzuki <daisuke@linux.or.jp> (Japanese)\n"
+"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu> (Dutch)\n"
+"Emil <emil5@go2.pl> (Polish)\n"
+"Marcia Norie Nakaza <norie@conectiva.com.br> (Portugese)\n"
+"Arnaldo Carvalho de Melo <acme@conectiva.com.br> (Portugese)\n"
+"Sviatoslav Sviridov <svd@altlinux.ru> (Russian)\n"
+"Vitaly Lipatov <lav@altlinux.ru> (Russian)\n"
+"Rail Aliev <rail@iqchoice.com> (Turkish)\n"
+"Anthony Fok <anthony@thizlinux.com> (Chinese)\n"
+"Alwin Meschede <ameschede@gmx.de> (German)"
+msgstr ""
+
+#: gtk/window_about.glade.strings:47
+msgid "Translated by"
+msgstr ""
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -1353,9 +1403,9 @@ msgstr "樣板"
 
 #: gtk/window_find.glade.strings:9 gtk/window_main_hpaned.glade.strings:65
 #: gtk/window_main_vpaned.glade.strings:61
-#: gtk/window_preferences.glade.strings:34
-#: gtk/window_preferences.glade.strings:38
-#: gtk/window_preferences.glade.strings:45
+#: gtk/window_preferences.glade.strings:85
+#: gtk/window_preferences.glade.strings:89
+#: gtk/window_preferences.glade.strings:96
 #: gtk/window_disc_name.glade.strings:9 gtk/window_setopt.glade.strings:8
 #: gtk/window_setopt.glade.strings:9 gtk/window_filters.glade.strings:8
 #: gtk/window_filters.glade.strings:71 gtk/window_filters.glade.strings:73
@@ -1374,14 +1424,16 @@ msgstr "搜尋篩選器"
 #: gtk/window_preferences.glade.strings:13
 #: gtk/window_preferences.glade.strings:19
 #: gtk/window_preferences.glade.strings:24
-#: gtk/window_preferences.glade.strings:29
-#: gtk/window_preferences.glade.strings:32
-#: gtk/window_preferences.glade.strings:47
-#: gtk/window_preferences.glade.strings:54
-#: gtk/window_preferences.glade.strings:68
-#: gtk/window_preferences.glade.strings:70 gtk/window_filters.glade.strings:10
-#: gtk/window_filters.glade.strings:22 gtk/window_filters.glade.strings:24
-#: gtk/window_filters.glade.strings:34 gtk/window_filters.glade.strings:42
+#: gtk/window_preferences.glade.strings:36
+#: gtk/window_preferences.glade.strings:50
+#: gtk/window_preferences.glade.strings:52
+#: gtk/window_preferences.glade.strings:73
+#: gtk/window_preferences.glade.strings:80
+#: gtk/window_preferences.glade.strings:83
+#: gtk/window_preferences.glade.strings:100
+#: gtk/window_filters.glade.strings:10 gtk/window_filters.glade.strings:22
+#: gtk/window_filters.glade.strings:24 gtk/window_filters.glade.strings:34
+#: gtk/window_filters.glade.strings:42
 #, fuzzy
 msgid "    "
 msgstr "    　日期"
@@ -1796,7 +1848,7 @@ msgstr "動作"
 
 #: gtk/window_main_hpaned.glade.strings:90
 #: gtk/window_main_vpaned.glade.strings:90
-#: gtk/window_preferences.glade.strings:91
+#: gtk/window_preferences.glade.strings:29
 #, fuzzy
 msgid "     "
 msgstr "    　日期"
@@ -1959,247 +2011,238 @@ msgid "General"
 msgstr "一般資訊"
 
 #: gtk/window_preferences.glade.strings:28
-#, fuzzy
-msgid "<b>Proxy Server</b>"
-msgstr "動作"
-
-#: gtk/window_preferences.glade.strings:30
-msgid "Direct connection to the internet"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:31
-msgid "Manual proxy configuration"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:33
-msgid "IP address or host name of the http proxy server"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:35
-#: gtk/window_preferences.glade.strings:39
-msgid "Port: "
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:36
-msgid "Port number of the http proxy server"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:37
-msgid "IP address or host name of the ftp proxy server"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:40
-msgid "Port numer of the ftp proxy server"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:41
-msgid "No proxy for: "
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:42
-msgid "FTP proxy: "
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:43
-msgid "HTTP proxy: "
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:44
-msgid ""
-"Comma sperated list of hosts and domains that will not be contacted through "
-"the proxy (e.g. localhost, 192.168.1.231, .net)"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:46
-#, fuzzy
-msgid "<b>Temporary Files</b>"
-msgstr "一般資訊"
-
-#: gtk/window_preferences.glade.strings:48
-msgid "Leave downloaded packages in the cache"
-msgstr "把已下載的套件留在緩衝區裏"
-
-#: gtk/window_preferences.glade.strings:49
-msgid "Delete downloaded packages after installation"
-msgstr "安裝後刪除已下載的套件"
-
-#: gtk/window_preferences.glade.strings:50
-msgid "Delete obsolete packages from cache"
-msgstr "刪除緩衝區裏過舊的套件"
-
-#: gtk/window_preferences.glade.strings:51
-msgid "Clear"
-msgstr "清除"
-
-#: gtk/window_preferences.glade.strings:52
-msgid "Cache"
-msgstr "緩衝區"
-
-#: gtk/window_preferences.glade.strings:53
-#, fuzzy
-msgid "<b>Column Order</b>"
-msgstr "色彩"
-
-#: gtk/window_preferences.glade.strings:55
-#: gtk/window_preferences.glade.strings:57
-#: gtk/window_preferences.glade.strings:59
-#: gtk/window_preferences.glade.strings:61
-#: gtk/window_preferences.glade.strings:63
-#: gtk/window_preferences.glade.strings:65
-msgid ""
-"The position of the column from left to right. A value of 0 hides the column"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:58
-#, fuzzy
-msgid "Installed version"
-msgstr "已安裝"
-
-#: gtk/window_preferences.glade.strings:60
-#, fuzzy
-msgid "Installed size"
-msgstr "已安裝"
-
-#: gtk/window_preferences.glade.strings:64
-#, fuzzy
-msgid "Available version"
-msgstr "最新版本"
-
-#: gtk/window_preferences.glade.strings:67
-#, fuzzy
-msgid "<b>Colors</b>"
-msgstr "色彩"
-
-#: gtk/window_preferences.glade.strings:69
-msgid "Colour packages by their status"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:71
-#, fuzzy
-msgid "Upgrade:"
-msgstr "升級"
-
-#: gtk/window_preferences.glade.strings:72
-#: gtk/window_preferences.glade.strings:74
-#: gtk/window_preferences.glade.strings:76
-#: gtk/window_preferences.glade.strings:78
-#: gtk/window_preferences.glade.strings:80
-#: gtk/window_preferences.glade.strings:82
-#: gtk/window_preferences.glade.strings:84
-#: gtk/window_preferences.glade.strings:86
-#: gtk/window_preferences.glade.strings:88
-#, fuzzy
-msgid "color"
-msgstr "色彩"
-
-#: gtk/window_preferences.glade.strings:73
-#, fuzzy
-msgid "Downgrade:"
-msgstr "升級"
-
-#: gtk/window_preferences.glade.strings:75
-#, fuzzy
-msgid "New:"
-msgstr "新增"
-
-#: gtk/window_preferences.glade.strings:77
-#, fuzzy
-msgid "Broken:"
-msgstr "安裝不完整"
-
-#: gtk/window_preferences.glade.strings:79
-#, fuzzy
-msgid "Remove:"
-msgstr "移除"
-
-#: gtk/window_preferences.glade.strings:81
-#, fuzzy
-msgid "Install:"
-msgstr "安裝"
-
-#: gtk/window_preferences.glade.strings:83
-#, fuzzy
-msgid "Keep:"
-msgstr "維持原狀"
-
-#: gtk/window_preferences.glade.strings:85
-#, fuzzy
-msgid "Held:"
-msgstr "保留永不更新 (Hold)"
-
-#: gtk/window_preferences.glade.strings:87
-#, fuzzy
-msgid "Pin:"
-msgstr "標記為永不升級的套件"
-
-#: gtk/window_preferences.glade.strings:89
-msgid "Columns and Colors"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:90
 msgid "<b>Main Window</b>"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:92
+#: gtk/window_preferences.glade.strings:30
 msgid ""
 "1 = Information area\n"
 "2 = Package list"
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:94
+#: gtk/window_preferences.glade.strings:32
 msgid ""
 "<b>Note:</b> You will need to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:96
+#: gtk/window_preferences.glade.strings:34
 msgid "Layout"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:35
+#, fuzzy
+msgid "<b>Column Order</b>"
+msgstr "色彩"
+
+#: gtk/window_preferences.glade.strings:37
+#: gtk/window_preferences.glade.strings:39
+#: gtk/window_preferences.glade.strings:41
+#: gtk/window_preferences.glade.strings:43
+#: gtk/window_preferences.glade.strings:45
+#: gtk/window_preferences.glade.strings:47
+msgid ""
+"The position of the column from left to right. A value of 0 hides the column"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:40
+#, fuzzy
+msgid "Installed version"
+msgstr "已安裝"
+
+#: gtk/window_preferences.glade.strings:42
+#, fuzzy
+msgid "Installed size"
+msgstr "已安裝"
+
+#: gtk/window_preferences.glade.strings:46
+#, fuzzy
+msgid "Available version"
+msgstr "最新版本"
+
+#: gtk/window_preferences.glade.strings:49
+#, fuzzy
+msgid "<b>Colors</b>"
+msgstr "色彩"
+
+#: gtk/window_preferences.glade.strings:51
+msgid "Colour packages by their status"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:53
+#, fuzzy
+msgid "Upgrade:"
+msgstr "升級"
+
+#: gtk/window_preferences.glade.strings:54
+#: gtk/window_preferences.glade.strings:56
+#: gtk/window_preferences.glade.strings:58
+#: gtk/window_preferences.glade.strings:60
+#: gtk/window_preferences.glade.strings:62
+#: gtk/window_preferences.glade.strings:64
+#: gtk/window_preferences.glade.strings:66
+#: gtk/window_preferences.glade.strings:68
+#: gtk/window_preferences.glade.strings:70
+#, fuzzy
+msgid "color"
+msgstr "色彩"
+
+#: gtk/window_preferences.glade.strings:55
+#, fuzzy
+msgid "Downgrade:"
+msgstr "升級"
+
+#: gtk/window_preferences.glade.strings:57
+#, fuzzy
+msgid "New:"
+msgstr "新增"
+
+#: gtk/window_preferences.glade.strings:59
+#, fuzzy
+msgid "Broken:"
+msgstr "安裝不完整"
+
+#: gtk/window_preferences.glade.strings:61
+#, fuzzy
+msgid "Remove:"
+msgstr "移除"
+
+#: gtk/window_preferences.glade.strings:63
+#, fuzzy
+msgid "Install:"
+msgstr "安裝"
+
+#: gtk/window_preferences.glade.strings:65
+#, fuzzy
+msgid "Keep:"
+msgstr "維持原狀"
+
+#: gtk/window_preferences.glade.strings:67
+#, fuzzy
+msgid "Held:"
+msgstr "保留永不更新 (Hold)"
+
+#: gtk/window_preferences.glade.strings:69
+#, fuzzy
+msgid "Pin:"
+msgstr "標記為永不升級的套件"
+
+#: gtk/window_preferences.glade.strings:71
+msgid "Columns and Colors"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:72
+#, fuzzy
+msgid "<b>Temporary Files</b>"
+msgstr "一般資訊"
+
+#: gtk/window_preferences.glade.strings:74
+msgid "Leave downloaded packages in the cache"
+msgstr "把已下載的套件留在緩衝區裏"
+
+#: gtk/window_preferences.glade.strings:75
+msgid "Delete downloaded packages after installation"
+msgstr "安裝後刪除已下載的套件"
+
+#: gtk/window_preferences.glade.strings:76
+msgid "Delete obsolete packages from cache"
+msgstr "刪除緩衝區裏過舊的套件"
+
+#: gtk/window_preferences.glade.strings:77
+msgid "Clear"
+msgstr "清除"
+
+#: gtk/window_preferences.glade.strings:78
+#, fuzzy
+msgid "Temporay Files"
+msgstr "一般資訊"
+
+#: gtk/window_preferences.glade.strings:79
+#, fuzzy
+msgid "<b>Proxy Server</b>"
+msgstr "動作"
+
+#: gtk/window_preferences.glade.strings:81
+msgid "Direct connection to the internet"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:82
+msgid "Manual proxy configuration"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:84
+msgid "IP address or host name of the http proxy server"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:86
+#: gtk/window_preferences.glade.strings:90
+msgid "Port: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:87
+msgid "Port number of the http proxy server"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:88
+msgid "IP address or host name of the ftp proxy server"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:91
+msgid "Port numer of the ftp proxy server"
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:92
+msgid "No proxy for: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:93
+msgid "FTP proxy: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:94
+msgid "HTTP proxy: "
+msgstr ""
+
+#: gtk/window_preferences.glade.strings:95
+msgid ""
+"Comma sperated list of hosts and domains that will not be contacted through "
+"the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
 #: gtk/window_preferences.glade.strings:97
 #, fuzzy
-msgid "<b>Distribution:</b>"
-msgstr "發行版本"
+msgid "Network"
+msgstr "色彩"
 
 #: gtk/window_preferences.glade.strings:98
-msgid "Default release: "
+msgid ""
+"<span size=\"large\" weight=\"bold\">These settings affect the core of your "
+"system. Consider changes carefully.</span>"
 msgstr ""
 
 #: gtk/window_preferences.glade.strings:99
-msgid "ignore (always use latest package version)"
-msgstr ""
-
-#: gtk/window_preferences.glade.strings:100
 #, fuzzy
-msgid "stable"
-msgstr "已安裝"
+msgid "<b>Distribution</b>"
+msgstr "發行版本"
 
 #: gtk/window_preferences.glade.strings:101
-#, fuzzy
-msgid "testing"
-msgstr "設定(_S)"
+msgid "Default archive: "
+msgstr ""
 
 #: gtk/window_preferences.glade.strings:102
-#, fuzzy
-msgid "unstable"
-msgstr "已安裝"
+msgid ""
+"Select the default release if more then one is specifed in the sources.list"
+msgstr ""
 
 #: gtk/window_preferences.glade.strings:103
 msgid ""
-"If you have more than one Release in your sources.list files,\n"
-"you may choose here which to use by default"
+"<b>Note:</b> The package list will need to be reloaded and so all selections "
+"will be lost. Make sure to execute your changes first."
 msgstr ""
 
-#: gtk/window_preferences.glade.strings:105
-msgid ""
-"<b>Note:</b> After changing the default release the cache needs \n"
-"to be reread and all selections will be lost (commit you changes first)"
+#: gtk/window_preferences.glade.strings:104
+msgid "Advanced"
 msgstr ""
-
-#: gtk/window_preferences.glade.strings:107
-#, fuzzy
-msgid "Expert"
-msgstr "不包括"
 
 #.
 #. * Translatable strings file generated by Glade.
@@ -2458,6 +2501,58 @@ msgstr ""
 msgid "Vendors"
 msgstr "發行商"
 
+#~ msgid "About"
+#~ msgstr "關於"
+
+#, fuzzy
+#~ msgid ""
+#~ "\n"
+#~ "Copyright (c) 2001-2003 Conectiva S/A\n"
+#~ "Copyright (c) 2002,2003 Michael Vogt\n"
+#~ "\n"
+#~ "Authors:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "\n"
+#~ "More information on http://www.nongnu.org/synaptic\n"
+#~ "\n"
+#~ "This software is licensed under the terms of the\n"
+#~ "GNU General Public License, Version 2\n"
+#~ msgstr ""
+#~ "\n"
+#~ "版權所有 (c) 2001 Alfredo K. Kojima\n"
+#~ "　　　　 (c) 2002, 2003 Michael Vogt\n"
+#~ "\n"
+#~ "作者：Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "　　　Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "　　　Michael Vogt <mvo@debian.org> \n"
+#~ "\n"
+#~ "圖示從 KDE 取得，謹此致謝。\n"
+#~ "APT 後端：Jason Gunthorpe <jgg@debian.org>\n"
+#~ "中文介面：即時系統科研有限公司 ThizLinux Laboratory Ltd.\n"
+#~ "\n"
+#~ "本軟件是以 GNU 通用公共許可證 (第二版) 的條款發行的。\n"
+
+#~ msgid "Cache"
+#~ msgstr "緩衝區"
+
+#, fuzzy
+#~ msgid "stable"
+#~ msgstr "已安裝"
+
+#, fuzzy
+#~ msgid "testing"
+#~ msgstr "設定(_S)"
+
+#, fuzzy
+#~ msgid "unstable"
+#~ msgstr "已安裝"
+
+#, fuzzy
+#~ msgid "Expert"
+#~ msgstr "不包括"
+
 #, fuzzy
 #~ msgid ""
 #~ "There are unsaved changes. Are you sure\n"
@@ -2587,10 +2682,6 @@ msgstr "發行商"
 #, fuzzy
 #~ msgid "Automatically select recommended packages on actions"
 #~ msgstr "自動選擇可升級套件完成。"
-
-#, fuzzy
-#~ msgid "Temporary Files"
-#~ msgstr "一般資訊"
 
 #, fuzzy
 #~ msgid "Use colors in main package list"
@@ -2978,10 +3069,6 @@ msgstr "發行商"
 
 #, fuzzy
 #~ msgid "MPinColor"
-#~ msgstr "色彩"
-
-#, fuzzy
-#~ msgid "MNewColor"
 #~ msgstr "色彩"
 
 #~ msgid "_Next"

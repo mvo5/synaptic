@@ -106,7 +106,31 @@ bool RPackageCache::reset(OpProgress &progress)
 
     return open(progress);
 }
+    
 
+vector<string> RPackageCache::getPolicyArchives() 
+{
+    //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
+
+    vector<string> archives;
+    for (pkgCache::PkgFileIterator F = _cache->FileBegin(); F.end() == false;
+	 F++)
+	{
+	    pkgIndexFile *Indx;
+	    _list->FindIndex(F,Indx);
+	    _system->FindIndex(F,Indx);
+	    
+	    if ( !F.RelStr().empty() ) {
+		//printf("Archive: %s, Origin: %s, Component: %s\n", 
+		//       F.Archive(), F.Origin(), F.Component());
+		if(find(archives.begin(),archives.end(),F.Archive())
+		   == archives.end()) {
+		    archives.push_back(F.Archive());
+		}
+	    }
+	}
+    return archives;
+}
 
 
 bool RPackageCache::lock()

@@ -31,7 +31,7 @@
 /*  the convention is that the top window is named:
    "window_$windowname" in your glade-source 
 */
-RGGladeWindow::RGGladeWindow(RGWindow *parent, string name)
+RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
 {
     //std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
 
@@ -40,7 +40,10 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name)
     gchar *main_widget = NULL;
     
     filename = g_strdup_printf("window_%s.glade",name.c_str());
-    main_widget = g_strdup_printf("window_%s", name.c_str());
+    if(mainName.empty())
+	main_widget = g_strdup_printf("window_%s", name.c_str());
+    else
+	main_widget = g_strdup_printf("window_%s", mainName.c_str());
     if(FileExists(filename)) {
 	_gladeXML = glade_xml_new(filename, main_widget, NULL);
     } else {

@@ -37,7 +37,7 @@ protected:
    GladeXML *_gladeXML;
    
 public:
-   RGGladeWindow(RGWindow *parent, string name);
+   RGGladeWindow(RGWindow *parent, string name, string main_widget="");
 };
 
 #endif

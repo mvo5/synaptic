@@ -47,6 +47,9 @@ class RGPreferencesWindow : public RGGladeWindow {
     GtkWidget *_optionmenuDel;
     GtkWidget *_useProxy;
 
+    // policy settings
+    GtkWidget *_optionmenuDefaultDistro;
+
     /* the color buttons */
     static char * color_buttons[];
     int columnPos[6];
@@ -54,10 +57,7 @@ class RGPreferencesWindow : public RGGladeWindow {
     void readColors();
 
     // distro selection
-    static void onDistroStable(GtkWidget *self, void *data);
-    static void onDistroTesting(GtkWidget *self, void *data);
-    static void onDistroUnstable(GtkWidget *self, void *data);
-    static void onDistroIgnore(GtkWidget *self, void *data);
+    static void onArchiveSelection(GtkWidget *self, void *data);
     bool distroChanged;
 
     // treeview stuff

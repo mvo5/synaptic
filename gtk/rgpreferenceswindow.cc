@@ -49,41 +49,23 @@ char * RGPreferencesWindow::color_buttons[] = {
   };
 
 
-void RGPreferencesWindow::onDistroStable(GtkWidget *self, void *data)
+void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
 {
-    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+    RGPreferencesWindow *me = (RGPreferencesWindow*)g_object_get_data(G_OBJECT(self),"me");;
+    //cout << "void RGPreferencesWindow::onArchiveSelection()" << endl;
+    //cout << "data is: " << (char*)data << endl;
 
-    _config->Set("APT::Default-Release","stable");
-    _config->Set("Synaptic::DefaultDistro","stable");
+    string s = (char*)data;    
+    if(s.empty()) {
+	_config->Clear("APT::Default-Release");
+	_config->Clear("Synaptic::DefaultDistro");
+    } else {
+	_config->Set("APT::Default-Release",s);
+	_config->Set("Synaptic::DefaultDistro",s);
+    }
     me->distroChanged = true;
 }
 
-void RGPreferencesWindow::onDistroTesting(GtkWidget *self, void *data)
-{
-    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
-
-    _config->Set("APT::Default-Release","testing");
-    _config->Set("Synaptic::DefaultDistro","testing");
-    me->distroChanged = true;
-}
-
-void RGPreferencesWindow::onDistroUnstable(GtkWidget *self, void *data)
-{
-    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
-
-    _config->Set("APT::Default-Release","unstable");
-    _config->Set("Synaptic::DefaultDistro","unstable");
-    me->distroChanged = true;
-}
-
-void RGPreferencesWindow::onDistroIgnore(GtkWidget *self, void *data)
-{
-    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
-
-    _config->Clear("APT::Default-Release");
-    _config->Clear("Synaptic::DefaultDistro");
-    me->distroChanged = true;
-}
 
 void RGPreferencesWindow::applyProxySettings()
 {
@@ -243,11 +225,6 @@ void RGPreferencesWindow::saveAction(GtkWidget *self, void *data)
 void RGPreferencesWindow::closeAction(GtkWidget *self, void *data)
 {
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
-    if(me->distroChanged) {
-	me->_mainWin->setTreeLocked(TRUE);
-	me->_lister->openCache(TRUE);
-	me->_mainWin->setTreeLocked(FALSE);
-    }
     me->close();
 }
 
@@ -255,6 +232,11 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
 {
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     me->saveAction(self, data);
+    if(me->distroChanged) {
+	me->_mainWin->setTreeLocked(TRUE);
+	me->_lister->openCache(TRUE);
+	me->_mainWin->setTreeLocked(FALSE);
+    }
     me->closeAction(self, data);
 }
 
@@ -358,21 +340,6 @@ void RGPreferencesWindow::show()
 	gtk_button_clicked(GTK_BUTTON(glade_xml_get_widget(_gladeXML, "button_hpaned")));
 	_synapticLayout = LAYOUT_HPANED;
     }
-
-    // default distro
-    string s = _config->Find("Synaptic::DefaultDistro","");
-    if(s != "") {
-	// set optionmenu according to the default disto
-	int i=0;
-	GtkWidget *w = glade_xml_get_widget(_gladeXML, 
-					    "optionmenu_default_distro");
-	if(s=="stable") i=2;
-	else if(s=="testing") i=3;
-	else if(s=="unstable") i=4;
-
-	gtk_option_menu_set_history(GTK_OPTION_MENU(w),i);
-    }
-
     RGWindow::show();
 }
 
@@ -611,27 +578,44 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 				  this); 
 
     // distro selection
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_stable_activate",
-				  G_CALLBACK(onDistroStable),
-				  this); 
+    string defaultDistro = _config->Find("Synaptic::DefaultDistro","");
+    int distroMatch = 0;
+    _optionmenuDefaultDistro = glade_xml_get_widget(_gladeXML, "optionmenu_default_distro");
+    assert(_optionmenuDefaultDistro);
+    gtk_option_menu_remove_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro));
+    vector<string> archives = _lister->getPolicyArchives();
+    GtkWidget *menu = gtk_menu_new();
+    GtkWidget *mi = gtk_menu_item_new_with_label(_("ignore"));
+    g_object_set_data(G_OBJECT(mi),"me",this);
+    g_signal_connect(G_OBJECT(mi),"activate",
+		     G_CALLBACK(onArchiveSelection), 
+		     (void*)"");
+    gtk_widget_show(mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    mi = gtk_separator_menu_item_new ();
+    gtk_widget_show(mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    for(int i=0;i<archives.size();i++) {
+	//cout << "archive: " << archives[i] << endl;
+	mi = gtk_menu_item_new_with_label(archives[i].c_str());
+	g_object_set_data(G_OBJECT(mi),"me",this);
+	g_signal_connect(G_OBJECT(mi),"activate",
+			 G_CALLBACK(onArchiveSelection), 
+			 g_strdup_printf("%s",archives[i].c_str()));
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+	if(defaultDistro == archives[i]) {
+	    //cout << "match for: " << archives[i] << endl;
+	    // i+2 because we have a ignore at pos 0 and a seperator at pos 1
+	    distroMatch = i+2;
+	}
+    }
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro),
+			     menu);
+    gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDefaultDistro), 
+				distroMatch);    
 
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_testing_activate",
-				  G_CALLBACK(onDistroTesting),
-				  this); 
-
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_unstable_activate",
-				  G_CALLBACK(onDistroUnstable),
-				  this); 
-
-    glade_xml_signal_connect_data(_gladeXML,
-				  "on_ignore_activate",
-				  G_CALLBACK(onDistroIgnore),
-				  this); 
-
-
+    // color stuff
     for(int i=0; color_buttons[i] != NULL; i++) {
 	button = glade_xml_get_widget(_gladeXML, color_buttons[i]);
 	g_object_set_data(G_OBJECT(button), "me", this);

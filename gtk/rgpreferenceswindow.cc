@@ -572,6 +572,24 @@ void RGPreferencesWindow::useProxyToggled(GtkWidget *self, void *data)
 			     useProxy);
 }
 
+void RGPreferencesWindow::checkbuttonUserFontToggled(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    GtkWidget *button = glade_xml_get_widget(me->_gladeXML,"button_default_font");
+    GtkWidget *check = glade_xml_get_widget(me->_gladeXML,"checkbutton_user_font");
+    gtk_widget_set_sensitive(button,gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)));
+}
+
+void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data)
+{
+    RGPreferencesWindow *me = (RGPreferencesWindow*)data;
+
+    GtkWidget *button = glade_xml_get_widget(me->_gladeXML,"button_terminal_font");
+    GtkWidget *check = glade_xml_get_widget(me->_gladeXML,"checkbutton_user_terminal_font");
+    gtk_widget_set_sensitive(button,gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)));
+}
+
 
 void RGPreferencesWindow::hpanedClickedAction(GtkWidget *self, void *data) 
 {
@@ -674,6 +692,15 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 				  GINT_TO_POINTER(FONT_DEFAULT)); 
 
     glade_xml_signal_connect_data(_gladeXML,
+				  "on_checkbutton_user_terminal_font_toggled",
+				  G_CALLBACK(checkbuttonUserTerminalFontToggled),
+				  this);
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_checkbutton_user_font_toggled",
+				  G_CALLBACK(checkbuttonUserFontToggled),
+				  this);
+
+    glade_xml_signal_connect_data(_gladeXML,
 				  "on_button_terminal_font_clicked",
 				  G_CALLBACK(changeFontAction),
 				  GINT_TO_POINTER(FONT_TERMINAL)); 
@@ -716,6 +743,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 			     menu);
     gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDefaultDistro), 
 				distroMatch);    
+
+    checkbuttonUserTerminalFontToggled(NULL, this);
+    checkbuttonUserFontToggled(NULL, this);
 
     // color stuff
     for(int i=0; color_buttons[i] != NULL; i++) {

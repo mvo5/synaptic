@@ -66,6 +66,8 @@ class RGPreferencesWindow : public RGGladeWindow {
     
     // callbacks
     static void changeFontAction(GtkWidget *self, void *data);
+    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
+    static void checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data);
 
     static void saveAction(GtkWidget *self, void *data);
     static void closeAction(GtkWidget *self, void *data);

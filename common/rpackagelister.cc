@@ -266,7 +266,7 @@ void RPackageLister::makePresetFilters()
 	filter->status.setStatus(RStatusPackageFilter::MarkInstall
 				 |RStatusPackageFilter::MarkRemove
 				 |RStatusPackageFilter::Broken);
-	filter->setName("Programmed Changes"); _("Programmed Changes");
+	filter->setName("Queued Changes"); _("Queued Changes");
 	registerFilter(filter);
     }
     {

@@ -266,6 +266,36 @@ void RPackageLister::makePresetFilters()
 	filter->setName("Programmed Changes"); _("Programmed Changes");
 	registerFilter(filter);
     }
+    {
+	filter = new RFilter(this);
+	filter->preset = true;
+	filter->status.setStatus(RStatusPackageFilter::NewPackage);
+	filter->setName("New in archive"); _("New in archive");
+	registerFilter(filter);
+    }
+    {
+	filter = new RFilter(this);
+	filter->preset = true;
+	filter->status.setStatus(RStatusPackageFilter::ResidualConfig);
+	filter->setName("Residual config"); _("Residual config");
+	registerFilter(filter);
+    }
+#ifndef HAVE_RPM
+    {
+	filter = new RFilter(this);
+	filter->preset = true;
+	filter->status.setStatus(RStatusPackageFilter::DebconfPackage);
+	filter->setName("Debconf"); _("Pkg with Debconf");
+	registerFilter(filter);
+    }
+#endif
+    {
+	filter = new RFilter(this);
+	filter->preset = true;
+	filter->status.setStatus(RStatusPackageFilter::NotInstallable);
+	filter->setName("NotInstallable"); _("Obsolete or local installed");
+	registerFilter(filter);
+    }
 }
 
 

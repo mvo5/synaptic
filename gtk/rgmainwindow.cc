@@ -2751,6 +2751,10 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    UpgradeType upgrade =
       (UpgradeType) _config->FindI("Synaptic::UpgradeType", UPGRADE_ASK);
 
+   // special case for non-interactive upgrades
+   if(upgrade == UPGRADE_ASK && _config->FindB("Volatile::Non-Interactive", false))
+      upgrade = UPGRADE_NORMAL;
+
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants
       GladeXML *gladeXML;

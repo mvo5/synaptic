@@ -58,17 +58,11 @@ static const int COLUMN_PERCENT_WIDTH=100;
 static const int COLUMN_PERCENT_HEIGHT=18;
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-: RGGladeWindow(win, "fetch")
+   : RGGladeWindow(win, "fetch"), _cursorDirty(false)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   //setTitle(_("Downloading Files"));
-#if 0
-   gint dummy;
-   gdk_window_get_geometry(_win->window, &dummy, &dummy, &dummy, &dummy,
-                           &_depth);
-#endif
    _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
    assert(_mainProgressBar);
 
@@ -118,7 +112,18 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    _barGC = style->bg_gc[0];
    _textGC = style->black_gc;
 
+   // emit a signal if the user changed the cursor
+   g_signal_connect(G_OBJECT(_table), "cursor-changed", 
+		    G_CALLBACK(cursorChanged), this);
+
    skipTaskbar(true);
+}
+
+void RGFetchProgress::cursorChanged(GtkTreeView *self, void *data)
+{
+   //cout << "cursor-changed" << endl;
+   RGFetchProgress *me = (RGFetchProgress *)data;
+   me->_cursorDirty=true;
 }
 
 void RGFetchProgress::setDescription(string mainText, string secondText)
@@ -370,7 +375,10 @@ void RGFetchProgress::refreshTable(int row, bool append)
       gtk_list_store_insert(_tableListStore, &iter, row);
       path = gtk_tree_path_new();
       gtk_tree_path_append_index(path, row);
-      gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
+      //gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
+      if(!_cursorDirty)
+	 gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),
+				      path, NULL, TRUE, 0.0, 0.0);
       gtk_tree_path_free(path);
       // can't we use the iterator here?
    } else {
@@ -382,8 +390,9 @@ void RGFetchProgress::refreshTable(int row, bool append)
                       SIZE_COLUMN, _items[row].size.c_str(),
                       URL_COLUMN, _items[row].uri.c_str(), -1);
    path = gtk_tree_model_get_path(GTK_TREE_MODEL(_tableListStore), &iter);
-   gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),
-                                path, NULL, TRUE, 0.0, 0.0);
+   if(!_cursorDirty)
+      gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),
+				   path, NULL, TRUE, 0.0, 0.0);
    gtk_tree_path_free(path);
 }
 

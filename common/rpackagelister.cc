@@ -1361,7 +1361,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 {
    FileFd lock;
    int numPackages = 0;
-   int numPackagesTotal = 0;
+   int numPackagesTotal;
    bool Ret = true;
 
    _updating = true;
@@ -1402,13 +1402,15 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
       string serverError;
 
+      numPackagesTotal = 0;
+
       // Print out errors
       bool Failed = false;
       for (pkgAcquire::ItemIterator I = fetcher.ItemsBegin();
            I != fetcher.ItemsEnd(); I++) {
 
          numPackagesTotal += 1;
-
+         
          if ((*I)->Status == pkgAcquire::Item::StatDone && (*I)->Complete) {
             numPackages += 1;
             continue;
@@ -1441,8 +1443,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             goto gave_wood;
 
          message =
-            _
-            ("Some of the packages could not be retrieved from the server(s).\n");
+            _("Some of the packages could not be retrieved from the server(s).\n");
          if (!serverError.empty())
             message += "(" + serverError + ")\n";
          message += _("Do you want to continue, ignoring these packages?");
@@ -1467,7 +1468,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          _cache->releaseLock();
 
          pkgPackageManager::OrderResult Res =
-		    iprog->start(&rPM, numPackages, numPackagesTotal);
+                   iprog->start(&rPM, numPackages, numPackagesTotal);
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
                goto gave_wood;

@@ -76,8 +76,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
       close(fd[1]);
 
       res = pm->DoInstallPostFork();
-
-      exit(0);
+      _exit(res);
    }
    // this is where we read stuff from the child
    _childin = fd[0];

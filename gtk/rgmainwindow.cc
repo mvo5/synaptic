@@ -2306,7 +2306,7 @@ bool RGMainWindow::restoreState()
 
   refreshFilterMenu();
   
-  int filterNr = _config->FindI("synaptic_nosave::initialFilter", 0);
+  int filterNr = _config->FindI("Volatile::initialFilter", 0);
   changeFilter(filterNr);
   refreshTable(NULL);
 

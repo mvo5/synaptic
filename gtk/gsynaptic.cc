@@ -63,9 +63,9 @@ bool ShowHelp(CommandLine &CmdL)
 
 CommandLine::Args Args[] = {
   {'h',"help","help",0},
-  {'f',"filter-file","synaptic_nosave::filterFile", CommandLine::HasArg}, 
-  {'i',"initial-filter","synaptic_nosave::initialFilter", CommandLine::HasArg},
-  {0,"set-selections", "Synaptic::Set-Selections", 0},
+  {'f',"filter-file","Volatile::filterFile", CommandLine::HasArg}, 
+  {'i',"initial-filter","Volatile::initialFilter", CommandLine::HasArg},
+  {0,"set-selections", "Volatile::Set-Selections", 0},
   {'o',"option",0,CommandLine::ArbItem},
   {0,0,0,0}
 };
@@ -138,7 +138,7 @@ int main(int argc, char **argv)
 	//exit(1);
     }
 
-    if (_config->FindB("Synaptic::Set-Selections", False)) {
+    if (_config->FindB("Volatile::Set-Selections", False)) {
         packageLister->readSelections(cin);
     }
 

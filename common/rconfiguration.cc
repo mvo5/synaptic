@@ -148,7 +148,7 @@ bool RInitConfiguration(string confFileName)
 bool RReadFilterData(Configuration &config)
 {
   string defaultPath = ConfigFileDir+"/filters";
-  string path = _config->Find("synaptic_nosave::filterFile", defaultPath.c_str());
+  string path = _config->Find("Volatile::filterFile", defaultPath.c_str());
 
   if(!FileExists(path)) {
     return false;
@@ -187,7 +187,7 @@ bool RPackageOptionsFile(ifstream &in)
 bool RFilterDataOutFile(ofstream &out)
 {
     string defaultPath = ConfigFileDir+"/filters";
-    string path = _config->Find("synaptic_nosave::filterFile", defaultPath.c_str());
+    string path = _config->Find("Volatile::filterFile", defaultPath.c_str());
 
     out.open(path.c_str(), ios::out);
 

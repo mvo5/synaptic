@@ -611,7 +611,7 @@ vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 
       // clear old values
       //dep.isOr=dep.isVirtual=dep.isSatisfied=false;
-      dep.isOr=dep.isVirtual=false;
+      dep.isOr=dep.isVirtual=dep.isSatisfied=false;
       dep.name=dep.version=dep.versionComp=dep.typeStr=NULL;
 
       // check target and or-depends status
@@ -623,6 +623,11 @@ vector<RPackage::DepInformation> RPackage::enumDeps(bool useCanidateVersion)
       dep.type = (pkgCache::Dep::DepType)D->Type;
       dep.typeStr = D.DepType();
       dep.name = Trg.Name();
+
+      // satisfied
+      if (((*_depcache)[D] & pkgDepCache::DepGInstall) ==
+          pkgDepCache::DepGInstall)
+         dep.isSatisfied = true;
 
       if (Trg->VersionList == 0) {
 	 dep.isVirtual = true;

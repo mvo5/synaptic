@@ -91,7 +91,7 @@ class RPackage {
       const char* name;            // target pkg name
       const char* version;         // target version  
       const char* versionComp;     // target version compare type ( << , > etc)
-      //      bool isSatisfied;            // dependecy is satified 
+      bool isSatisfied;            // dependecy is satified 
       bool isVirtual;              // package is virtual
       bool isOr;                   // or dependency (with next pkg)
    } DepInformation;

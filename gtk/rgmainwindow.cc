@@ -2101,6 +2101,13 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
    //cout << "RGMainWindow::pkgHelpClicked()" << endl;
    me->setStatusText(_("Starting package documentation viewer..."));
 
+   // mozilla eats bookmarks when run under sudo (because it does not
+   // change $HOME) so we better play safe here
+   if(getenv("SUDO_USER") != NULL) {
+      struct passwd *pw = getpwuid(0);
+      setenv("HOME", pw->pw_dir, 1);
+   }
+
    system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
 }
 
@@ -2240,6 +2247,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    me->setTreeLocked(FALSE);
    me->refreshTable();
+   me->refreshSubViewList();
    me->setInterfaceLocked(FALSE);
    me->setStatusText();
 }
@@ -2312,6 +2320,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 
    me->setTreeLocked(FALSE);
    me->refreshTable();
+   me->refreshSubViewList();
    me->setInterfaceLocked(FALSE);
    me->setStatusText();
 }
@@ -2500,6 +2509,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    for (int i = 0; item != NULL; item = g_list_next(item), i++) {
 
       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
+      gtk_widget_show(GTK_WIDGET(item->data));
 
       // This must be optimized. -- niemeyer
 
@@ -2560,39 +2570,47 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
          gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
-      // Seperator is i==6 (ignored)
-      // Properties is i==7 (always available)
+      // Seperator is i==6 (hide on left click)
+      if(i == 6 && event->button == 1)
+	 gtk_widget_hide(GTK_WIDGET(item->data));
+      // Properties is i==7 (available if only one pkg is selected)
       if (i == 7) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-#if 0 // i==7 used to be HOLD, no longer used (may come back later)
-         bool locked = (flags & RPackage::FPinned);
-         me->_blockActions = TRUE;
-         gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data),
-                                        locked);
-         me->_blockActions = FALSE;
-#endif
+	 if(event->button == 1)
+	    gtk_widget_hide(GTK_WIDGET(item->data));
+	 else if(selected_pkgs.size() == 1)
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
-      // i==8 is sperator
+      // i==8 is sperator, hide on left click
+      if(i == 8 && event->button == 1)
+	 gtk_widget_hide(GTK_WIDGET(item->data));
       // recommends
       if(i == 9) {
-	 GtkWidget *menu;
-	 menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends);
-	 if(menu != NULL) {
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
-	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
-	 } else
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+	 if(event->button == 1)
+	    gtk_widget_hide(GTK_WIDGET(item->data));
+	 else if(selected_pkgs.size() == 1) {
+	    GtkWidget *menu;
+	    menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends);
+	    if(menu != NULL) {
+	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
+	       gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
+	    } else
+	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+	 }
       }
       if(i == 10) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-	 GtkWidget *menu;
-	 menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests); 
-	 if( menu != NULL) {
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
-	    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
-	 } else
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+	 if(event->button == 1)
+	    gtk_widget_hide(GTK_WIDGET(item->data));
+	 else if(selected_pkgs.size() == 1) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+	    GtkWidget *menu;
+	    menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests); 
+	    if( menu != NULL) {
+	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
+	       gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
+	    } else
+	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
+	 }
       }
    }
 
@@ -2618,17 +2636,21 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
    vector<RPackage::DepInformation> deps = pkg->enumDeps();
    for(int i=0;i<deps.size();i++) {
       if(deps[i].type == type) {
+	 // not virtual
 	 if(!deps[i].isVirtual) {
 	    found = true;
 	    item = gtk_menu_item_new_with_label(deps[i].name);
 	    g_object_set_data(G_OBJECT(item), "me", this);
 	    gtk_widget_show(item);
 	    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-	    g_signal_connect(G_OBJECT(item), "activate",
-			     G_CALLBACK(pkgInstallByNameHelper), 
-			     (void*)deps[i].name);
+	    if(deps[i].isSatisfied)
+	       gtk_widget_set_sensitive(item, false);
+	    else
+	       g_signal_connect(G_OBJECT(item), "activate",
+				G_CALLBACK(pkgInstallByNameHelper), 
+				(void*)deps[i].name);
 	 } else {
-	    // expand virutal packages (expensive!?!)
+	    // TESTME: expand virutal packages (expensive!?!)
 	    const vector<RPackage *> pkgs = _lister->getPackages();
 	    for(int k=0;k<pkgs.size();k++) {
 	       vector<string> d = pkgs[k]->provides();
@@ -2639,10 +2661,13 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 		     g_object_set_data(G_OBJECT(item), "me", this);
 		     gtk_widget_show(item);
 		     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-		     g_signal_connect(G_OBJECT(item), "activate",
-				      G_CALLBACK(pkgInstallByNameHelper), 
-				      (void*)pkgs[k]->name());
-
+		     int f = pkgs[k]->getFlags();
+ 		     if((f & RPackage::FInstall) || (f & RPackage::FInstalled))
+ 			gtk_widget_set_sensitive(item, false);
+ 		     else
+			g_signal_connect(G_OBJECT(item), "activate",
+					 G_CALLBACK(pkgInstallByNameHelper), 
+					 (void*)pkgs[k]->name());
 		  }
 	    }
 	 }
@@ -2658,7 +2683,7 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
 {
    const char *name = (const char*)data;
-   cout << "pkgInstallByNameHelper: " << name << endl;
+   //cout << "pkgInstallByNameHelper: " << name << endl;
    
    RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
 

@@ -2209,6 +2209,7 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
 #endif
    me->refreshTable(NULL);
    gdk_window_set_cursor(me->window()->window, NULL);
+   me->updatePackageInfo(NULL);
 }
 
 void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)

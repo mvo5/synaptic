@@ -1066,6 +1066,9 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
 
     //cout << "void RGFilterManagerWindow::removeFilterAction()" << endl;
 
+    if(me->_selectedPath == NULL)
+	return;
+
     gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
 			    &iter, me->_selectedPath);
     gtk_tree_model_get(GTK_TREE_MODEL(me->_filterListStore), &iter,

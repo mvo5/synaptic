@@ -24,6 +24,7 @@
 #include <cassert>
 #include "gtkpkglist.h"
 #include "rgmisc.h"
+#include "rpackagelister.h"
 
 using namespace std;
 
@@ -628,30 +629,36 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 
    switch (pkg_list->sort_column_id) {
    case COLOR_COLUMN:
-      pkg_list->_lister->sortPackagesByStatus((int)pkg_list->order);
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_STATUS_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_STATUS_DES);
       break;
    case NAME_COLUMN:
-      pkg_list->_lister->sortPackagesByName();
+      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME);
       break;
    case PKG_SIZE_COLUMN:
-      pkg_list->_lister->sortPackagesByInstSize((int)pkg_list->order);
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_DES);
       break;
    case AVAILABLE_VERSION_COLUMN:
-      pkg_list->_lister->sortPackagesByVersion((int)pkg_list->order);
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_VERSION_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_VERSION_DES);
       break;
-      //default:
-      //cerr << "unknown sort column" << endl;
+   case INSTALLED_VERSION_COLUMN:
+      if(pkg_list->order)
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_INST_VERSION_ASC);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_INST_VERSION_DES);
+      break;
+   default:
+      //cerr << "unknown sort column: " << pkg_list->sort_column_id << endl;
+      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME);
    }
-
-//     GtkTreeIter iter;
-//     if(gtk_tree_model_iter_first(GTK_TREE_MODEL(pkg_list), &iter))
-//      do {
-//          GtkTreePath *path = gtk_tree_path_new();
-
-//          gtk_tree_model_row_changed(GTK_TREE_MODEL(pkg_list), 
-//                                     path, &iter))
-//      } while(gtk_tree_model_iter_next(GTK_TREE_MODEL(pkg_list), &iter));
-
 }
 
 // vim:ts=3:sw=3:et

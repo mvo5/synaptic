@@ -115,7 +115,9 @@ class RPackageLister {
       LIST_SORT_STATUS_ASC,
       LIST_SORT_STATUS_DES,
       LIST_SORT_VERSION_ASC,
-      LIST_SORT_VERSION_DES
+      LIST_SORT_VERSION_DES,
+      LIST_SORT_INST_VERSION_ASC,
+      LIST_SORT_INST_VERSION_DES
    } listSortMode;
    listSortMode _sortMode;
 
@@ -134,10 +136,7 @@ class RPackageLister {
 
    bool lockPackageCache(FileFd &lock);
 
-   void sortPackagesByStatus(vector<RPackage *> &packages, int order);
-   void sortPackagesByName(vector<RPackage *> &packages);
-   void sortPackagesByInstSize(vector<RPackage *> &packages, int order);
-   void sortPackagesByVersion(vector<RPackage *> &packages, int order);
+   void sortPackages(vector<RPackage *> &packages,listSortMode mode);
 
    struct {
       char *pattern;
@@ -156,17 +155,8 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
-   void sortPackagesByStatus(int order) {
-      sortPackagesByStatus(_viewPackages, order);
-   };
-   void sortPackagesByName() {
-      sortPackagesByName(_viewPackages);
-   };
-   void sortPackagesByInstSize(int order) {
-      sortPackagesByInstSize(_viewPackages, order);
-   };
-   void sortPackagesByVersion(int order) {
-      sortPackagesByVersion(_viewPackages, order);
+   void sortPackages(listSortMode mode) {
+      sortPackages(_viewPackages, mode);
    };
 
    void setView(int index);

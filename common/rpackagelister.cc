@@ -522,15 +522,6 @@ static void qsSortByName(vector<RPackage *> &packages, int start, int end)
       qsSortByName(packages, i, end);
 }
 
-void RPackageLister::sortPackagesByName(vector<RPackage *> &packages)
-{
-   //   cout << "RPackageLister::sortPackagesByName()" << endl;
-   _sortMode = LIST_SORT_NAME;
-   if (!packages.empty())
-      qsSortByName(packages, 0, packages.size() - 1);
-}
-
-
 void RPackageLister::reapplyFilter()
 {
    // PORTME
@@ -551,41 +542,7 @@ void RPackageLister::reapplyFilter()
       }
    }
 
-   // sort now according to the latest used sort method
-   switch (_sortMode) {
-      case LIST_SORT_STATUS_ASC:
-	 // make sure that we sort for names first, otherwise we get a funny list
-         sortPackagesByName();
-         sortPackagesByStatus(0);
-         break;
-      case LIST_SORT_STATUS_DES:
-	 // make sure that we sort for names first, otherwise we get a funny list
-         sortPackagesByName();
-         sortPackagesByStatus(1);
-         break;
-
-      case LIST_SORT_NAME:
-         sortPackagesByName();
-         break;
-
-      case LIST_SORT_SIZE_ASC:
-
-         sortPackagesByInstSize(0);
-         break;
-
-      case LIST_SORT_SIZE_DES:
-         sortPackagesByInstSize(1);
-         break;
-
-      case LIST_SORT_VERSION_ASC:
-         sortPackagesByVersion(0);
-         break;
-
-      case LIST_SORT_VERSION_DES:
-         sortPackagesByVersion(1);
-         break;
-
-   }
+   sortPackages(_sortMode);
 }
 
 
@@ -594,33 +551,14 @@ static const int status_sort_magic = (  RPackage::FInstalled
 				      | RPackage::FNew);
 struct statusSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
-      return (x->getFlags() & (status_sort_magic))  > 
+      return (x->getFlags() & (status_sort_magic))  <
 	     (y->getFlags() & (status_sort_magic));
 }};
 struct statusSortFuncDes {
    bool operator() (RPackage *x, RPackage *y) {
-      return (x->getFlags() & (status_sort_magic))  < 
+      return (x->getFlags() & (status_sort_magic))  > 
 	     (y->getFlags() & (status_sort_magic));
 }};
-
-void RPackageLister::sortPackagesByStatus(vector<RPackage *> &packages, 
-					  int order)
-{
-//    cout << "RPackageLister::sortPackagesByStatus() " 
-// 	<< "size: " << packages.size() << endl;
-
-   if (order == 0)
-      _sortMode = LIST_SORT_STATUS_ASC;
-   else
-      _sortMode = LIST_SORT_STATUS_DES;
-
-   if (!packages.empty())
-      if(order==0)
-	 stable_sort(packages.begin(), packages.end(), statusSortFuncAsc());
-      else
-	 stable_sort(packages.begin(), packages.end(), statusSortFuncDes());
-}
-
 
 struct instSizeSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
@@ -631,59 +569,81 @@ struct instSizeSortFuncDes {
       return x->installedSize() > y->installedSize();
 }};
 
-
-void RPackageLister::sortPackagesByInstSize(vector<RPackage *> &packages,
-                                            int order)
+// version string compare
+int verstrcmp(const char *x, const char *y)
 {
-   //cout << "RPackageLister::sortPackagesByInstSize()"<<endl;
-   if (order == 0)
-      _sortMode = LIST_SORT_SIZE_ASC;
-   else
-      _sortMode = LIST_SORT_SIZE_DES;
-
-   if (!packages.empty()) {
-      if (order == 0)
-         stable_sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
-      else
-         stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
-   }
+   if(x && y)
+      return strcmp(x,y) < 0;
+   
+   // if we compare with a non-existring version
+   if(y == NULL)
+      return false;
+   return true;
 }
-
 struct versionSortFuncAsc {
    bool operator() (RPackage *x, RPackage *y) {
-      const char *xstr = x->availableVersion();
-      const char *ystr = y->availableVersion();
-      if(xstr && ystr)
-	 if(strcmp(xstr,ystr) > 0) return true;
-      return false;
+      return verstrcmp(x->availableVersion(),
+		      y->availableVersion());
 }};
+
 struct versionSortFuncDes {
    bool operator() (RPackage *x, RPackage *y) {
-      const char *xstr = x->availableVersion();
-      const char *ystr = y->availableVersion();
-      if(xstr && ystr)
-	 if(strcmp(ystr,xstr) > 0) return true;
-      return false;
+      return verstrcmp(y->availableVersion(),
+		      x->availableVersion());
+}};
+struct instVersionSortFuncAsc {
+   bool operator() (RPackage *x, RPackage *y) {
+      return verstrcmp(x->installedVersion(),
+		      y->installedVersion());
+}};
+
+struct instVersionSortFuncDes {
+   bool operator() (RPackage *x, RPackage *y) {
+      return verstrcmp(y->installedVersion(),
+		      x->installedVersion());
 }};
 
 
-void RPackageLister::sortPackagesByVersion(vector<RPackage *> &packages,
-					   int order)
+void RPackageLister::sortPackages(vector<RPackage *> &packages, 
+				  listSortMode mode)
 {
-   //cout << "RPackageLister::sortPackagesByInstSize()"<<endl;
-   if (order == 0)
-      _sortMode = LIST_SORT_VERSION_ASC;
-   else
-      _sortMode = LIST_SORT_VERSION_DES;
+   _sortMode = mode;
+   if (packages.empty())
+      return;
 
-   if (!packages.empty()) {
-      if (order == 0)
-         stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());
-      else
-         stable_sort(packages.begin(), packages.end(), versionSortFuncDes());
+   switch(mode) {
+   case LIST_SORT_NAME:
+      qsSortByName(packages, 0, packages.size() - 1);
+      break;
+   case LIST_SORT_SIZE_ASC:
+      stable_sort(packages.begin(), packages.end(), instSizeSortFuncAsc());
+      break;
+   case LIST_SORT_SIZE_DES:
+      stable_sort(packages.begin(), packages.end(), instSizeSortFuncDes());
+      break;
+   case LIST_SORT_STATUS_ASC:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), statusSortFuncAsc());
+      break;
+   case LIST_SORT_STATUS_DES:
+      qsSortByName(packages, 0, packages.size() - 1);
+      stable_sort(packages.begin(), packages.end(), statusSortFuncDes());
+      break;
+   case LIST_SORT_VERSION_ASC:
+      stable_sort(packages.begin(), packages.end(), versionSortFuncAsc());
+      break;
+   case LIST_SORT_VERSION_DES:
+
+      stable_sort(packages.begin(), packages.end(), versionSortFuncDes());
+      break;
+   case LIST_SORT_INST_VERSION_ASC:
+      stable_sort(packages.begin(), packages.end(), instVersionSortFuncAsc());
+      break;
+   case LIST_SORT_INST_VERSION_DES:
+      stable_sort(packages.begin(), packages.end(), instVersionSortFuncDes());
+      break;
    }
 }
-
 
 int RPackageLister::findPackage(const char *pattern)
 {
@@ -818,7 +778,6 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
 
    sizeChange = deps->UsrSize();
 }
-
 
 
 

@@ -1033,17 +1033,21 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 	}
        
         // need this so that we first fetch everything and then install (for CDs)
-        if (Transient == false || _config->FindB("Acquire::cdrom::copy", false) == false) {
-	  
+	if (Transient == false || _config->FindB("Acquire::CDROM::Copy-All", false) == false) {
+
+	    if (Transient == true) {
+		// We must do that in a system independent way. */
+		_config->Set("RPM::Install-Options::", "--nodeps");
+	    }
+	    
 	    _cache->releaseLock();
-	    
+
 	    pkgPackageManager::OrderResult Res = iprog->start(_packMan);
-	    
 	    if (Res == pkgPackageManager::Failed || _error->PendingError())
 		goto gave_wood;
 	    if (Res == pkgPackageManager::Completed)
 		break;
-	    
+
 	    _cache->lock();
 	}
 	

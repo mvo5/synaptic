@@ -237,6 +237,18 @@ void RPackageViewFilter::refreshFilters()
    }
 }
 
+int RPackageViewFilter::getFilterIndex(RFilter *filter)
+{
+  if (filter == NULL)
+     filter = findFilter(_selectedName);
+  for(unsigned int i=0;i<_filterL.size();i++)  {
+    if(filter == _filterL[i])
+      return i;
+  }
+  return -1;
+}
+
+
 RPackageViewFilter::iterator RPackageViewFilter::begin() 
 { 
 //    cout << "RPackageViewFilter::begin() " << _selectedName <<  endl;

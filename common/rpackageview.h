@@ -165,6 +165,10 @@ class RPackageViewFilter : public RPackageView {
       else
          return _filterL[index];
    };
+
+   // used by kynaptic
+   int getFilterIndex(RFilter *filter);
+
    vector<string> getFilterNames();
    const set<string> &getSections() { return _sectionList; };
 

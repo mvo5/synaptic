@@ -664,8 +664,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    // purge not available 
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
-   gtk_widget_hide(_gladeXML, "optionmenu_delbutton_action");
-   gtk_widget_hide(_gladeXML, "label_removal");
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, 
+					"optionmenu_delbutton_action"));
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "label_removal"));
 #endif
    // now set the optionmenu
    // ugly :( but we need this -2 because RGPkgAction starts with 

@@ -1198,6 +1198,9 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
     
     updatePackageStatus(pkg);
     
+    if(pkg == NULL)
+	return;
+
     // dependencies
     gtk_label_set_text(GTK_LABEL(_depInfoL), "");    
 
@@ -1349,17 +1352,21 @@ void RGMainWindow::updateDynPackageInfo(RPackage *pkg)
 
 void RGMainWindow::updateVersionButtons(RPackage *pkg)
 {
+    // remove old radiobuttons
+    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
+    gtk_container_foreach(GTK_CONTAINER(vbox),
+			  (void (*)(GtkWidget*, void*))(gtk_widget_destroy),
+			  NULL);
+
+    if(pkg == NULL)
+	return;
+
     // get available versions
     static vector<pair<string,string> > versions;
     versions.clear();
     versions = pkg->getAvailableVersions();
 
     int mstatus = pkg->getMarkedStatus();
-    GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
-    // remove old widgets
-    gtk_container_foreach(GTK_CONTAINER(vbox),
-			  (void (*)(GtkWidget*, void*))(gtk_widget_destroy),
-			  NULL);
 
     // build new checkboxes
     GtkWidget *button;
@@ -1429,6 +1436,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 	gtk_widget_set_sensitive(_tabview, FALSE);
 	
+	updateVersionButtons(NULL);
 	return;
     }
     gtk_widget_set_sensitive(_tabview, TRUE);
@@ -3626,6 +3634,7 @@ void RGMainWindow::setTreeLocked(bool flag)
 {
     //cout << "setTreeLocked()" << endl;
     if (flag == true) {
+	updatePackageInfo(NULL);
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
     } else {
 	changeTreeDisplayMode(_treeDisplayMode);

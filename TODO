@@ -1,14 +1,15 @@
-- ask on debian-deity if it is possible to get a "DeletePin" function.
-  this way, we can do default release pining without rereading the cache
-  (see policy.cc:pkgPolicy::pkgPolicy())
+Unsorted:
+ - ask on debian-deity if it is possible to get a "DeletePin" function.
+   this way, we can do default release pining without rereading the cache
+   (see policy.cc:pkgPolicy::pkgPolicy())
 
-- make the RGUserDialog a dialog with a gtktextview to get a scrolled area
+ - make the RGUserDialog a dialog with a gtktextview to get a scrolled area
 
-"Install from multiple Distributions patch":
-  - save selected distribution when doing a "save selection"
-  - when "open cache" is called, make sure that the correct distribution 
-    is selected for save/restore
-  - fix "undo/redo"
+ "Install from multiple Distributions patch":
+   - save selected distribution when doing a "save selection"
+   - when "open cache" is called, make sure that the correct distribution 
+     is selected for save/restore
+   - fix "undo/redo"
 
 Configure:
    - allways give the correct path in the synaptic.desktop file
@@ -26,14 +27,11 @@ GUI:
      in the cache
    - add reduced view? (always ignore this package)
    - add ignore option for unwanted packages (use RPackageView?!)
-   - enable different sorting methods for the tree (e.g. size)
    - add context menu in the dependency list to install/remove/upgrade
    - add a dialog that show what dependency is unmet if a pkg can not be
      installed (like ShowBroken() in apt-get.cc)
    - changesWindow should also support installing recommends/suggested pkgs
    - add a sources.list wizard for debian (like base-config)?
-   - add a tab that shows all version of the package 
-     (like apt-cache showpkg)
    - add context-menu on right-click (del/inst/upgr/show descr in own window,
    - make a the used font in the treeview configurable 
    - add a button to undo all programmed changes 
@@ -57,6 +55,9 @@ General:
 
 
 Done:
+   - add a tab that shows all version of the package 
+     (like apt-cache showpkg)
+   - enable different sorting methods for the tree (e.g. size)
    - implement proxy settings 
    - implement a new (interactive) search function
    - config option what the default action of ("delete") button is

@@ -248,7 +248,7 @@ class RGMainWindow : public RGWindow, public RPackageObserver
    static void showFilterManagerWindow(GtkWidget *self, void *data);   
    static void saveFilterAction(void *self, RGFilterWindow *rwin);
    static void closeFilterAction(void *self, RGFilterWindow *rwin);
-   static void closeFilterManagerAction(void *self,RGFilterManagerWindow *win);
+   static void closeFilterManagerAction(void *self, bool okcancel);
    
    // search menu
    static void searchPkgDescriptionClicked(GtkWidget *self, void *data);

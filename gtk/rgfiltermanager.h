@@ -77,7 +77,7 @@ static char *DepOptions[] = {
 
 
 
-typedef void RGFilterEditorCloseAction(void *self, RGFilterManagerWindow *win);
+typedef void RGFilterEditorCloseAction(void *self, bool okcancel);
 
 class RGFilterManagerWindow : public RGWindow 
 {
@@ -117,6 +117,7 @@ class RGFilterManagerWindow : public RGWindow
    // close callbacks
    RGFilterEditorCloseAction *_closeAction;
    void *_closeData;
+   bool _okcancel;            // did the user click ok or cancel
 
    GtkWidget *_filterEntry;  /* GtkEntry */
 

@@ -554,8 +554,9 @@ bool RPackageLister::distUpgrade()
 
 void RPackageLister::setFilter(int index)
 {
-    if (index < 0) {
+    if (index < 0 || index >= _filterL.size() ) {
 	_filter = NULL;
+	cout << "setting filter to NULL" << endl;
     } else {
 	_filter = findFilter(index);
     }

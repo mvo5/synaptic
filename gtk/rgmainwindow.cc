@@ -279,18 +279,17 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::closeFilterManagerAction(void *self, 
-					    RGFilterManagerWindow *win)
+void RGMainWindow::closeFilterManagerAction(void *self, bool okcancel)
 {
     RGMainWindow *me = (RGMainWindow*)self;
 
-    // select 0, because they may have deleted the current filter
-    gtk_option_menu_set_history(GTK_OPTION_MENU(me->_filterPopup), 0);
-    //    changedFilter(me->_filterPopup);
+    // user clicked ok
+    if(okcancel) {
+	int i = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_filterPopup));
+	me->refreshFilterMenu();
+	me->changeFilter(i, true);
+    }
 
-    me->refreshFilterMenu();
-    
-    //gtk_widget_set_sensitive(me->_editFilterB, FALSE);
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
     gtk_widget_set_sensitive(me->_filterPopup, TRUE);
     gtk_widget_set_sensitive(me->_filterMenu, TRUE);
@@ -304,13 +303,12 @@ void RGMainWindow::showFilterManagerWindow(GtkWidget *self, void *data)
     if (win->_fmanagerWin == NULL) {
 	win->_fmanagerWin = new RGFilterManagerWindow(win, win->_lister);
 
-	win->_fmanagerWin->setCloseCallback(closeFilterManagerAction, win);
+	win->_fmanagerWin->setCloseCallback(closeFilterManagerAction, win); 
     }
 
     win->_fmanagerWin->show();
 
     gtk_widget_set_sensitive(win->_filtersB, FALSE);
-    //gtk_widget_set_sensitive(win->_editFilterB, FALSE);
     gtk_widget_set_sensitive(win->_filterPopup, FALSE);
     gtk_widget_set_sensitive(win->_filterMenu, FALSE);
 }
@@ -408,39 +406,37 @@ void RGMainWindow::changeFilter(int filter, bool sethistory)
     RPackage *pkg = selectedPackage();
     
     setInterfaceLocked(TRUE);    
+    // try to set filter
+    if(filter > 0) {
+	_lister->setFilter(filter-1);
+	RFilter *pkgfilter = _lister->getFilter();
+	if(pkgfilter != NULL) {
+	    // -2 because "0" is "unchanged" and "1" is the spacer in the menu
+	    // FIXME: yes I know this sucks
+	    int mode = pkgfilter->getViewMode().viewMode-2; 
+	    if(mode>=0)
+		changeTreeDisplayMode((RPackageLister::treeDisplayMode)mode);
+	    else
+		changeTreeDisplayMode(_menuDisplayMode);
+
+	    // FIXME: same problem as above, this magic numbers suck
+	    int expand=pkgfilter->getViewMode().expandMode;
+	    if(expand == 2)
+		gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
+	    if(expand == 3)
+		gtk_tree_view_collapse_all(GTK_TREE_VIEW(_treeView));
+	} else {
+	    filter = 0;
+	}
+    }
+
+    // no filter given or not available from above
     if (filter == 0) { // no filter
 	_lister->setFilter();
 	changeTreeDisplayMode(_menuDisplayMode);
-    } else {
-	_lister->setFilter(filter-1);
-	RFilter *filter = _lister->getFilter();
-	// -2 because "0" is "unchanged" and "1" is the spacer in the menu
-	// FIXME: yes I know this sucks
-	int mode = filter->getViewMode().viewMode-2; 
-	if(mode>=0)
-	    changeTreeDisplayMode((RPackageLister::treeDisplayMode)mode);
-	else
-            changeTreeDisplayMode(_menuDisplayMode);
-
-	// FIXME: same problem as above, this magic numbers suck
-	int expand=filter->getViewMode().expandMode;
-	if(expand == 2)
-	    gtk_tree_view_expand_all(GTK_TREE_VIEW(_treeView));
-	if(expand == 3)
-	    gtk_tree_view_collapse_all(GTK_TREE_VIEW(_treeView));
     }
-    refreshTable(pkg);
 
-#if 0    
-    int index = -1;
-    if (pkg) {	
-	index = _lister->getElementIndex(pkg);
-    }    
-    if (index >= 0) 
-	gtk_clist_moveto(GTK_CLIST(_table), index, 0, 0.5, 0.0);
-    else
-	updatePackageInfo(NULL);
-#endif  
+    refreshTable(pkg);
 
     setInterfaceLocked(FALSE);
     setStatusText();

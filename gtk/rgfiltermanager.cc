@@ -738,9 +738,10 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
 
     filter = new RFilter(me->_lister);
     filter->setName(_("A New Filter"));
-    me->_lister->registerFilter(filter);
+    if(!me->_lister->registerFilter(filter))
+	return;
 
-    GtkTreeIter   iter;
+    GtkTreeIter iter;
     gtk_list_store_append(me->_filterListStore, &iter); 
     gtk_list_store_set(me->_filterListStore, &iter,
 			NAME_COLUMN, filter->getName().c_str(),
@@ -749,8 +750,8 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
     GtkTreeSelection *selection;
     selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (me->_filterList));
     gtk_tree_selection_select_iter(selection, &iter);
-    gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),
-			    &iter, me->_selectedPath);
+    me->_selectedPath = gtk_tree_model_get_path(GTK_TREE_MODEL(me->_filterListStore), &iter);
+    me->_selectedFilter = filter;
 
     me->editFilter();
 }
@@ -803,7 +804,7 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
 void RGFilterManagerWindow::close()
 {
   if(_closeAction)
-    _closeAction(_closeData, this);
+    _closeAction(_closeData, _okcancel);
 
   RGWindow::close();
 }
@@ -827,6 +828,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
     for(i=0;i<me->_saveFilters.size();i++) 
 	me->_lister->registerFilter(me->_saveFilters[i]);
         
+    me->_okcancel = FALSE;
     me->close();
 }
 
@@ -835,6 +837,7 @@ void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
   RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
   //cout << "void RGFilterManagerWindow::okAction()"<<endl;
 
+  me->_okcancel = TRUE;
   me->applyFilterAction(self,data);
   me->close();
 }

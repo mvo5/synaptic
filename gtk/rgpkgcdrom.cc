@@ -109,11 +109,9 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
 bool RGCDScanner::run()
 {
-   bool res = false;
    pkgCdrom scanner;
 
-   scanner.Add(this);
-   return res;
+   return scanner.Add(this);
 }
 
 

@@ -41,6 +41,8 @@
 
 #ifdef HAVE_RPM
 #include "rpmindexcopy.h"
+#else
+#include "indexcopy.h"
 #endif
 
 using namespace std;
@@ -591,7 +593,7 @@ void RCDScanner::cleanSrcList(vector<string> &list)
 #ifdef HAVE_RPM
     DropRepeats(list, "srclist");
 #else
-    DropRepeats(sList,"Sources");
+    DropRepeats(list,"Sources");
 #endif
 }
 

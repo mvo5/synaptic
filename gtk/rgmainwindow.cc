@@ -1224,21 +1224,15 @@ void RGMainWindow::buildInterface()
 void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, 
 				    bool reInstall)
 {
-   //cout << "pkgInstallHelper()/start" << endl;
-   // do the work
    if (pkg->availableVersion() != NULL)
       pkg->setInstall();
 
-   if(reInstall == true) {
+   if(reInstall == true)
        pkg->setReInstall(true);
-   }
 
    // check whether something broke
-   if (fixBroken && !_lister->check()) {
-      cout << "inside fixBroken" << endl;
+   if (fixBroken && !_lister->check())
       _lister->fixBroken();
-   }
-   //cout << "pkgInstallHelper()/end" << endl;
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
@@ -1263,7 +1257,6 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)
 {
    pkg->setKeep();
-   pkg->setReInstall(false);
 }
 
 

@@ -122,11 +122,13 @@ vector<string> RPackageCache::getPolicyArchives()
 	    _system->FindIndex(F,Indx);
 	    
 	    if ( !F.RelStr().empty() ) {
-		//printf("Archive: %s, Origin: %s, Component: %s\n", 
-		//       F.Archive(), F.Origin(), F.Component());
-		if(find(archives.begin(),archives.end(),F.Archive())
-		   == archives.end()) {
-		    archives.push_back(F.Archive());
+// 		printf("Archive: %s, Origin: %s, Component: %s\n", 
+// 		       F.Archive(), F.Origin(), F.Component());
+		if(F.Archive() != NULL) {
+		    if(find(archives.begin(),archives.end(),F.Archive())
+		       == archives.end()) {
+			archives.push_back(F.Archive());
+		    }
 		}
 	    }
 	}

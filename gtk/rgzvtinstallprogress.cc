@@ -58,7 +58,7 @@ using namespace std;
 void RGZvtInstallProgress::startUpdate()
 {
   show();
-  gtk_label_set_text(GTK_LABEL(_statusL), _("Executing changes..."));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("<i>Running...</i>"));
   RGFlushInterface();
 }
 
@@ -98,7 +98,7 @@ void RGZvtInstallProgress::finishUpdate()
   else
     vte_terminal_feed(VTE_TERMINAL(_term), utf8(errorMsg.c_str()), (long)errorMsg.size());
 #endif
-  gtk_label_set_text(GTK_LABEL(_statusL), _("Completed all changes"));
+  gtk_label_set_text(GTK_LABEL(_statusL), _("<i>Finished</i>"));
 }
 
 void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
@@ -107,7 +107,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void* data)
 
   if(!me->updateFinished) {
     gtk_label_set_text(GTK_LABEL(me->_statusL), 
-		       _("Can't close while executing"));
+		       _("<i>Can't close while executing</i>"));
     return;
   } 
 

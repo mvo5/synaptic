@@ -258,7 +258,7 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 
     unsigned long ETA= (unsigned long)((TotalBytes - CurrentBytes)/CurrentCPS);
     long i = CurrentItems < TotalItems ? CurrentItems+1 : CurrentItems;
-    gchar *s = g_strdup_printf(_("Retrieved %li of %li files at %4s B/s - %6s remaining"),
+    gchar *s = g_strdup_printf(_("Retrieved %li of %li files at %s/s - %s remaining"),
 			       i, TotalItems,
 			       SizeToStr(CurrentCPS).c_str(),
 			       TimeToStr(ETA).c_str());

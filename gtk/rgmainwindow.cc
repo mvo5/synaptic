@@ -294,11 +294,9 @@ void RGMainWindow::searchAction(GtkWidget *self, void *data)
     filter = me->_lister->findFilter(0);
     filter->reset();
     const char *C = gtk_entry_get_text(GTK_ENTRY(me->_findText));
-    string S;
-    while (*C != 0) {
-	if (ParseQuoteWord(C, S) == true)
-	    filter->pattern.addPattern(RPatternPackageFilter::Name, S, false);
-    }
+    string S(C);
+    filter->pattern.addPattern(RPatternPackageFilter::Name, S, false);
+    
     me->changeFilter(1);
 }
 
@@ -313,8 +311,7 @@ void RGMainWindow::closeFilterManagerAction(void *self, bool okcancel)
 	int i = gtk_option_menu_get_history(GTK_OPTION_MENU(me->_filterPopup));
 	me->refreshFilterMenu();
 	gtk_option_menu_set_history(GTK_OPTION_MENU(me->_filterPopup), i);
-	me->_lister->setFilter(i-1);
-	me->refreshTable(NULL);
+	me->changeFilter(i);
     }
 
     gtk_widget_set_sensitive(me->_filtersB, TRUE);
@@ -1719,11 +1716,8 @@ void RGMainWindow::searchPkgAction(void *self, RGFindWindow *findWin)
   filter->reset();
   RPatternPackageFilter::DepType type = me->_findWin->getSearchType();
   const char *C = me->_findWin->getFindString().c_str();
-  string S;
-  while (*C != 0) {
-    if (ParseQuoteWord(C, S) == true)
-      filter->pattern.addPattern(type, S, false);
-  }
+  string S(C);
+  filter->pattern.addPattern(type, S, false);
   me->changeFilter(1);
 
   findWin->hide();

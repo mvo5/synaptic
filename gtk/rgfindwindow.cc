@@ -29,7 +29,8 @@ void RGFindWindow::show()
 {
   //cout << "void RGFindWindow::show()" << endl;
 
-  RGWindow::show();
+    gdk_window_set_cursor(_win->window,  NULL);      
+    RGWindow::show();
 }
 
 string RGFindWindow::getFindString()
@@ -73,7 +74,8 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
   
   me->_prevSearches = g_list_prepend(me->_prevSearches,g_strdup(str));
   gtk_combo_set_popdown_strings (GTK_COMBO(combo), me->_prevSearches);
-  
+
+  gdk_window_set_cursor(me->_win->window,  me->_busyCursor);  
   me->_findAction(me->_findObject, me);
 }
 
@@ -99,6 +101,7 @@ RGFindWindow::RGFindWindow(RGWindow *win)
   //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
  
   _prevSearches = NULL;
+  _busyCursor = gdk_cursor_new(GDK_WATCH);
 
   glade_xml_signal_connect_data(_gladeXML,
 				"on_button_find_clicked",

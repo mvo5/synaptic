@@ -32,7 +32,7 @@ class RGFindWindow : public RGGladeWindow {
   
   RPatternPackageFilter::DepType _searchType;
   GList *_prevSearches;
-
+  GdkCursor *_busyCursor;
   RGFindWindowFindAction *_findAction;
   void *_findObject;
 

@@ -634,12 +634,12 @@
 </sect1>
 
 
-<sect1 id="synaptic-single"> 
+<sect1 id="synaptic-browsefind"> 
 	<title>
-		Managing Packages
+		Browsing and Finding Packages
 	</title> 
 
-<sect2 id="synaptic-pkg-browse">
+<sect2 id="synaptic-browse">
 	<title>
 		To Browse the List of Known Packages (FIXME)
 	</title>
@@ -683,7 +683,7 @@
 </sect2>
 
 
-<sect2 id="synaptic-pkg-find"> 
+<sect2 id="synaptic-find"> 
 	<title>
 		To Find and Browse Packages (FIXME)
 	</title> 
@@ -804,11 +804,39 @@
 	</varlistentry>
 </variablelist>
 </sect2>
+</sect1>
+<sect1 id="synaptic-single"> 
+	<title>
+		Managing Packages
+	</title> 
+
+	<para>
+		This chapter covers the basic actions <xref linkend="synaptic-pkg-install" endterm="lalal"/>,
+		<xref linkend="synaptic-pkg-remove" endterm="removing"/> and <xref linkend="synaptic-pkg-upgrade" endterm="upgrading"/>
+		of packages.
+	</para>
+	<para>
+		Furthermore performing a <xref linkend="synaptic-pkg-upgradeall" endterm="system"/> upgrade,
+		<xref linkend="synaptic-pkg-dwww" endterm="browsing"/> the online documentation, 
+		<xref linkend="synaptic-pkg-changelog" endterm="reading"/> the changelog	and the advanced actions
+		<xref linkend="synaptic-pkg-force" endterm="forcing"/> the installation of a specifc package version,
+		<xref linkend="synaptic-pkg-lock" endterm="locking"/> a package to the current version are descripted.
+	</para>  
 
 <sect2 id="synaptic-pkg-install"> 
 	<title>To Install Packages</title>
+	
+	<note>
+		<para>
+			If different version of the same package are available &app;  will select the most 
+			applicable by default. To force the installation of a specific version that is differnet 
+			to the default one, see <xref linkend="synaptic-pkg-force"/>.
+		</para>
+	</note>
+
 	<para>
-		To install a packages perform the following steps:
+		If you have <xref linkend="synaptic-find" endterm="found"/> a package that you want to install 
+		perform the following steps:
 	</para>
 	<orderedlist>
 		<listitem>
@@ -913,15 +941,7 @@
 		<listitem>
 			<para>
 				You will be asked for confirmation. Check the summarized changes that will be applied. 
-				To continue with the actual installation confirm the changes: 
-
-				<itemizedlist>
-					<listitem>
-						<para>
-							Click on <guibutton>Apply</guibutton>.
-						</para>
-					</listitem>
-				</itemizedlist>
+				To continue with the actual installation confirm the changes click on <guibutton>Apply</guibutton>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1050,15 +1070,7 @@
 		<listitem>
 			<para>
 				You are asked for confirmation. Check the summarized changes that will be applied. 
-				To continue with the actual removal confirm the changes: 
-
-				<itemizedlist>
-					<listitem>
-						<para>
-							Click on <guibutton>Apply</guibutton>.
-						</para>
-					</listitem>
-				</itemizedlist>
+				To continue with the actual removal confirm the changes click on <guibutton>Apply</guibutton>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1183,15 +1195,7 @@
 		<listitem>
 			<para>
 				You are asked for confirmation. Check the summarized changes that will be applied. 
-				To continue with the actual upgrade confirm the changes: 
-
-				<itemizedlist>
-					<listitem>
-						<para>
-							Click on <guibutton>Apply</guibutton>.
-						</para>
-					</listitem>
-				</itemizedlist>
+				To continue with the actual upgrade confirm the changes click on <guibutton>Apply</guibutton>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1361,15 +1365,7 @@
 		<listitem>
 			<para>
 				You are asked for confirmation. Check the summarized changes that will be applied. 
-				To continue with the actual upgrade confirm the changes: 
-
-				<itemizedlist>
-					<listitem>
-						<para>
-							Click on <guibutton>Apply</guibutton>.
-						</para>
-					</listitem>
-				</itemizedlist>
+				To continue with the actual upgrade confirm the changes click on <guibutton>Apply</guibutton>.
 			</para>
 		</listitem>
 		<listitem>
@@ -1689,29 +1685,249 @@
 	</orderedlist>
 
 </sect2>
+<sect2 id="synaptic-pkg-docu">
+	<title>
+		To View the Changelog of a Package (Debian only)
+ 	</title>
 
-<sect2 id="synaptic-pkg-fix">
+	<note>
+		<para>
+			The changelog of native Debian packages can be viewed, only.
+		</para>
+	</note>
+	
+	<para>
+		To view the changelog of a native Debian package perfrom the following steps:
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package in the <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Package</guimenu>
+				<guimenuitem>Download Changelog</guimenuitem></menuchoice>.
+			</para>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-pkg-lock">
+	<title>
+		To Lock a Package to the Current Version (Debian only)
+	</title>
+	<para>
+		To lock a package to the current version follow these steps:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package that you want to lock in the <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Package</guimenu>
+				<guimenuitem>Lock</guimenuitem></menuchoice>.
+			</para>
+			<para>
+				The &app; will reload the package list. You should now see, that the menu item <menuchoice>
+				<guimenu>Package</guimenu><guimenuitem>Lock Version</guimenuitem></menuchoice> is checked.
+				Furthermore all actions in the menu <guimenu>Package</guimenu> are disabled now.
+			</para>
+		</listitem>
+	</orderedlist>
+	<para>
+		To unlock the package uncheck <menuchoice><guimenu>Package</guimenu><guimenuitem>Lock Version</guimenuitem>
+		</menuchoice>.
+	</para>
+</sect2>
+
+
+
+<sect2 id="synaptic-pkg-force">
+	<title>
+		To Force the Installation of a Specific Version
+	</title>
+	<warning>
+		<para>
+			The &app; always selects the most applicable version available. If you force a 
+			differnet version from the default one, errors in the dependency handling
+			can occur.
+		</para>
+	</warning>
+
+	<para>
+		To force the installation of a version of package differnet to the default one 
+		perform the following steps:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Refresh the list of known packages to be aware of the latest version available:
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Edit</guimenu>
+						<guimenuitem>Refresh Package List</guimenuitem>
+						</menuchoice> from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on <guibutton>Refresh</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>U</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Select the package in the <xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Package</guimenu><guimenuitem>Force Version...</guimenuitem>
+				</menuchoice> from the menu to open a dialog with all available versions of the package.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Select the version that should be marked for installation. To confirm your 
+				descision click on the button <guibutton>Force</guibutton>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Apply the marked changes to actually install the forced package version:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton> in the toolbar.	
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Edit</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				You will be asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual installation confirm the changes click on <guibutton>Apply</guibutton>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+<sect2 id="synaptic-pkg-force">
 	<title>
 		To Fix Broken Packages
 	</title>
-	<para>
-		Errors in the dependency field of packages or failed and incomplete installations can break
-		the dependencies structure.
-	</para>
 	
 	<para>
 		&app; will not allow any further changes to the system before all broken packages are fixed.
-	</para>
-
-	<para>
-		To correct the broken packages choose <menuchoice><guimenu>Edit</guimenu>
-		<guimenuitem>Fix Broken Packages</guimenuitem></menuchoice> from the menu.
 	</para>
 	<tip>
 		<para>
 			To show all broken packages choose the <emphasis>Broken</emphasis> filter.
 		</para>
 	</tip>
+
+	<para>
+		To correct the broken packages perform the following steps:
+		choose <menuchoice><guimenu>Edit</guimenu>
+		<guimenuitem>Fix Broken Packages</guimenuitem></menuchoice> from the menu.
+	</para>
+
+	<orderedlist>
+		<listitem>
+			<para>
+				Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Fix Broken Packages</guimenuitem>
+				</menuchoice> from the menu.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Apply the marked changes to actually fix the packages:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton>Apply</guibutton> in the toolbar.	
+					</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice><guimenu>Edit</guimenu>
+							<guimenuitem>Apply Marked Changes</guimenuitem>
+							</menuchoice> from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				You will be asked for confirmation. Check the summarized changes that will be applied. 
+				To continue with the actual repair confirm the changes click on <guibutton>Apply</guibutton>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				During the processing of the changes you will see a progressbar. Wait until
+				the changes have been applied. This can take some time depending on the size
+				of the changes. Afterwards you will be returned to the main window.
+			</para>				
+			<note>
+				<para>
+					The progressbar is not available on Debian system. Instead you will
+					see a detailed terminal output.
+				  </para>
+			</note>
+		</listitem>
+	</orderedlist>
 </sect2>
 
 

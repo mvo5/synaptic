@@ -307,8 +307,9 @@ int RPackage::getOtherStatus()
       status |= OResidualConfig;
     }
 
-    pkgCache::VerIterator ver = _package->VersionList();
-    if (ver != 0 && !ver.Downloadable()) {
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandidateVer == 0 ||
+	!State.CandidateVerIter(*_depcache).Downloadable()) {
 	//cout << "Not in archive found for: "<<name()<<endl;
 	status |= ONotInstallable;
     }

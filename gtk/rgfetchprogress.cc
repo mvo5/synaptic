@@ -152,21 +152,16 @@ bool RGFetchProgress::MediaChange(string Media,string Drive)
 void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 				   int status)
 {
-    bool reload = false;
-
     if (Itm.Owner->ID == 0) {
 	Item item;
 	item.uri = Itm.Description;
-	item.size = string(SizeToStr(Itm.Owner->FileSize));
+	item.size = SizeToStr(Itm.Owner->FileSize);
+	item.status = status;
 	_items.push_back(item);
 	Itm.Owner->ID = _items.size();
-	reload = true;
-    }
-    _items[Itm.Owner->ID-1].status = status;
-    if (reload) {
-	reloadTable();
-	gtk_clist_moveto(GTK_CLIST(_table), _items.size()-1, 0, 0.0, 0.5);
+	appendTable(Itm.Owner->ID-1);
     } else {
+        _items[Itm.Owner->ID-1].status = status;
 	refreshTable(Itm.Owner->ID-1);
     }
 }
@@ -174,32 +169,38 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm,
 
 void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
 {
+    gtk_clist_freeze(GTK_CLIST(_table));
     updateStatus(Itm, DLHit);
-
+    gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
 
 
 void RGFetchProgress::Fetch(pkgAcquire::ItemDesc &Itm)
 {
+    gtk_clist_freeze(GTK_CLIST(_table));
     updateStatus(Itm, DLQueued);
-
+    gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
 
 
 void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 {
+    gtk_clist_freeze(GTK_CLIST(_table));
     updateStatus(Itm, DLDone);
-
+    gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
 
 
 void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
+    if (Itm.Owner->Status == pkgAcquire::Item::StatIdle)
+        return;
+    gtk_clist_freeze(GTK_CLIST(_table));
     updateStatus(Itm, DLFailed);
-
+    gtk_clist_thaw(GTK_CLIST(_table));
     RGFlushInterface();
 }
 
@@ -249,7 +250,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
     }
 
     gtk_label_set_text(GTK_LABEL(_statusL), (char*)str.c_str());
-    reloadTable();
     gtk_clist_thaw(GTK_CLIST(_table));    
 
     RGFlushInterface();
@@ -260,7 +260,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 
 void RGFetchProgress::Start()
 {
-  //cout << "RGFetchProgress::Start()" << endl;
     pkgAcquireStatus::Start();
     _cancelled = false;
     show();
@@ -270,7 +269,6 @@ void RGFetchProgress::Start()
 
 void RGFetchProgress::Stop()
 {
-  //cout << "RGFetchProgress::Stop()" << endl;
     RGFlushInterface();
     hide();
     pkgAcquireStatus::Stop();
@@ -281,15 +279,12 @@ void RGFetchProgress::Stop()
     RGFlushInterface();
 }
 
-
-
 void RGFetchProgress::stopDownload(GtkWidget *self, void *data)
 {
     RGFetchProgress *me = (RGFetchProgress*)data;
     
     me->_cancelled = true;
 }
-
 
 GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 {
@@ -331,12 +326,6 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 	snprintf(buf, sizeof(buf), "%d%%", status);
 	str = buf;
     }
-#if 0
-    GdkFont *font = gdk_font_from_description(_font);
-    x = (width - gdk_string_width(font, str)) / 2;
-    y= gdk_string_height(font, str);
-    gdk_draw_string(pix, font, _textGC, x, y, str);
-#endif
 
     pango_layout_set_font_description(_layout, _font);
     pango_layout_set_text(_layout, str, -1);
@@ -350,38 +339,28 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
 
 void RGFetchProgress::refreshTable(int row)
 {
-    int w;
-    char *s[] = {"","",""};
-    static GdkPixmap *pix=NULL;
-
-    w = GTK_CLIST(_table)->column[0].button->allocation.width;
-
-    gtk_clist_freeze(GTK_CLIST(_table));
-    gtk_clist_insert( GTK_CLIST(_table), row, s);
-
-    // mvo: gtk_clist_set_pixmap() does in theory unref it, but we do
-    //      it also to be sure
-    if(pix != NULL) 
-      gdk_pixmap_unref(pix);
-
-    pix = statusDraw(w, TABLE_ROW_HEIGHT, _items[row].status),
+    int w = GTK_CLIST(_table)->column[0].button->allocation.width;
+    GdkPixmap *pix = statusDraw(w, TABLE_ROW_HEIGHT, _items[row].status);
     gtk_clist_set_pixmap(GTK_CLIST(_table), row, 0, pix, NULL);
+    gdk_pixmap_unref(pix);
 
     gtk_clist_set_text(GTK_CLIST(_table), row, 1, _items[row].size.c_str());
     gtk_clist_set_text(GTK_CLIST(_table), row, 2, _items[row].uri.c_str());
-    
-    gtk_clist_thaw(GTK_CLIST(_table));
 }
 
+void RGFetchProgress::appendTable(int row)
+{
+    char *s[] = {"","",""};
+    gtk_clist_insert(GTK_CLIST(_table), row, s);
+    refreshTable(row);
+    if (gtk_clist_row_is_visible(GTK_CLIST(_table), row-2))
+	gtk_clist_moveto(GTK_CLIST(_table), row, 0, 0.0, 0.0);
+}
 
 void RGFetchProgress::reloadTable()
 {
-    gtk_clist_freeze(GTK_CLIST(_table));
-    gtk_clist_clear(GTK_CLIST(_table));
-    
-    for (unsigned int i = 0; i < _items.size(); i++) {
+    for (unsigned int i = 0; i < _items.size(); i++)
 	refreshTable(i);
-    }
-    gtk_clist_moveto(GTK_CLIST(_table), _items.size()-1, 0, 0.0, 0.0);
-    gtk_clist_thaw(GTK_CLIST(_table));
 }
+
+// vim:sts=4:sw=4

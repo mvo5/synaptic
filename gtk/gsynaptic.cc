@@ -196,15 +196,6 @@ int main(int argc, char **argv)
    gtk_init(&argc, &argv);
    //XSynchronize(dpy, 1);
 
-   // check if the locales are actually supported, I got a number
-   // of bugreports that where caused by incorrect locales, try to
-   // work around this problem here
-   if (!XSupportsLocale()) {
-      RGGladeUserDialog locales(NULL);
-      // run a dialog that warns about the incorrect locale settings
-      locales.run("locales_warning");
-   }
-
    if (getuid() != 0) {
       RGUserDialog userDialog;
       userDialog.error(_("You must run this program as the root user."));

@@ -155,7 +155,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
  private:
    // display/table releated
-   void refreshTable(RPackage *selectedPkg = NULL);
    void refreshSubViewList();
 
    virtual bool close();
@@ -205,6 +204,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
  public:
    RGMainWindow(RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
+
+   void refreshTable(RPackage *selectedPkg = NULL);
 
    void changeView(int view, string subView="");
 

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.55\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 21:26+0100\n"
+"POT-Creation-Date: 2004-11-16 23:14+0100\n"
 "PO-Revision-Date: 2004-11-09 16:54+0200\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -360,7 +360,7 @@ msgstr "Невозможно перейти в %s"
 msgid "Unable to read %s"
 msgstr "Невозможно прочитать %s"
 
-#: common/rconfiguration.cc:83 common/rconfiguration.cc:184
+#: common/rconfiguration.cc:83 common/rconfiguration.cc:202
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "Ошибка: Невозможно открыть %s для записи"
@@ -374,7 +374,12 @@ msgstr "Ошибка: Невозможно прочитать пароль су�
 msgid "ERROR: could not create configuration directory %s"
 msgstr "Ошибка: Невозможно создать каталог для конфигурации %s"
 
-#: common/rconfiguration.cc:209
+#: common/rconfiguration.cc:143
+#, fuzzy, c-format
+msgid "ERROR: could not create log directory %s"
+msgstr "Ошибка: Невозможно создать каталог для конфигурации %s"
+
+#: common/rconfiguration.cc:227
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "Невозможно открыть %s для записи"
@@ -546,13 +551,13 @@ msgstr "Невозможно открыть или обработать файл
 msgid "Internal Error, non-zero counts"
 msgstr "Внутренняя ошибка: Ненулевые счётчики"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:899
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:900
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Имя"
 
 #: common/rpackagefilter.cc:46 gtk/rgpreferenceswindow.cc:48
-#: gtk/rgmainwindow.cc:996 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
+#: gtk/rgmainwindow.cc:970 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_main.glade.h:18 gtk/window_filters.glade.h:13
 #: gtk/rgfiltermanager.h:67 gtk/window_details.glade.h:16
 msgid "Description"
@@ -608,12 +613,12 @@ msgid "Status"
 msgstr "Состояние"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:186
+#: common/rpackagefilter.cc:62 gtk/rgfiltermanager.cc:179
 msgid "Pattern"
 msgstr "Шаблон"
 
 #: common/rpackagefilter.cc:63 gtk/rgpreferenceswindow.cc:46
-#: gtk/rgmainwindow.cc:868 gtk/window_filters.glade.h:52
+#: gtk/rgmainwindow.cc:842 gtk/window_filters.glade.h:52
 msgid "Section"
 msgstr "Раздел"
 
@@ -635,19 +640,19 @@ msgstr "Внутренняя ошибка: Невозможно открыть �
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Плохое регулярное выражение '%s' в файле сокращённого вида."
 
-#: common/rpackagelister.cc:297 common/rpackagelister.cc:303
-#: common/rpackagelister.cc:317
+#: common/rpackagelister.cc:298 common/rpackagelister.cc:304
+#: common/rpackagelister.cc:318
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Внутренняя ошибка при открытии кэша зависимостей (%d). Пожалуйста, сообщите "
 "об этом разработчикам."
 
-#: common/rpackagelister.cc:456
+#: common/rpackagelister.cc:457
 msgid "Unable to correct dependencies"
 msgstr "Невозможно исправить зависимости"
 
-#: common/rpackagelister.cc:458
+#: common/rpackagelister.cc:459
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -655,21 +660,21 @@ msgstr ""
 "Невозможно пометить для обновления\n"
 "Проверьте, нет ли ошибок в системе."
 
-#: common/rpackagelister.cc:470
+#: common/rpackagelister.cc:471
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Внутренняя ошибка при выполнении функции pkgAllUpgrade. Пожалуйста, сообщите "
 "об этом разработчикам."
 
-#: common/rpackagelister.cc:488
+#: common/rpackagelister.cc:489
 msgid "dist upgrade Failed"
 msgstr "Ошибка pkgDistUpgrade"
 
-#: common/rpackagelister.cc:1185
+#: common/rpackagelister.cc:1190
 msgid "Unable to lock the list directory"
 msgstr "Невозможно заблокировать каталог списков"
 
-#: common/rpackagelister.cc:1207
+#: common/rpackagelister.cc:1212
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -678,8 +683,8 @@ msgstr ""
 "проверены.\n"
 "Такие репозитории игнорируются."
 
-#: common/rpackagelister.cc:1274 common/rpackagelister.cc:1280
-#: gtk/rgrepositorywin.cc:320
+#: common/rpackagelister.cc:1282 common/rpackagelister.cc:1288
+#: gtk/rgrepositorywin.cc:322
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Пропущены недействительные записи в файле sources.list!"
 
@@ -687,7 +692,7 @@ msgstr "Пропущены недействительные записи в фа
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1325
+#: common/rpackagelister.cc:1333
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -698,33 +703,78 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: common/rpackagelister.cc:1349
+#: common/rpackagelister.cc:1357
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Некоторые из пакетов не могут быть получены с сервера(ов).\n"
 
-#: common/rpackagelister.cc:1352
+#: common/rpackagelister.cc:1360
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Желаете ли вы продолжить, пропустив эти пакеты?"
 
-#: common/rpackagelister.cc:1359
+#: common/rpackagelister.cc:1367
 msgid "Unable to correct missing packages"
 msgstr "Невозможно исправить отсутствующие пакеты"
 
-#: common/rpackagelister.cc:1422
+#: common/rpackagelister.cc:1464
+msgid ""
+"\n"
+"The follwoing ESSENTIAL packages are removed:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1472
+msgid ""
+"\n"
+"The follwoing packages are DOWNGRADED:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1480
+msgid ""
+"\n"
+"The follwoing packages are purged:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1488
+msgid ""
+"\n"
+"The follwoing packages are removed:\n"
+msgstr ""
+
+#: common/rpackagelister.cc:1496
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are upgraded:\n"
+msgstr "%d пакет будет обновлён\n"
+
+#: common/rpackagelister.cc:1506
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are installed:\n"
+msgstr "%d новый пакет будет установлен\n"
+
+#: common/rpackagelister.cc:1515
+#, fuzzy
+msgid ""
+"\n"
+"The follwoing packages are re-installed:\n"
+msgstr "%d новый пакет будет переустановлен\n"
+
+#: common/rpackagelister.cc:1532
 msgid "Unable to lock the download directory"
 msgstr "Невозможно закрепить каталог для скачивания"
 
-#: common/rpackagelister.cc:1500
+#: common/rpackagelister.cc:1610
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Строка %u слишком длинная в файле выбора."
 
-#: common/rpackagelister.cc:1514 common/rpackagelister.cc:1518
+#: common/rpackagelister.cc:1624 common/rpackagelister.cc:1628
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Неверная строка %u в фале выбора"
 
-#: common/rpackagelister.cc:1530
+#: common/rpackagelister.cc:1640
 msgid "Setting markings..."
 msgstr "Устанавливается отмеченное..."
 
@@ -792,7 +842,7 @@ msgstr "Задачи"
 msgid "Reduced View"
 msgstr "Сокращённый вид"
 
-#: common/rpackageview.cc:431 gtk/gsynaptic.cc:282 gtk/rgsummarywindow.cc:299
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:273 gtk/rgsummarywindow.cc:324
 msgid "Marked Changes"
 msgstr "Отмеченные изменения"
 
@@ -867,30 +917,6 @@ msgstr "Интеллектуальное обновление"
 msgid "This behavior can be changed in the preferences later."
 msgstr "Это поведение может быть позднее изменено в настройках"
 
-#: gtk/dialog_locales_warning.glade.h:1
-msgid ""
-"<b><big>The grafical user interface (xlib) does not support your chosen "
-"language environment</big></b>\n"
-"\n"
-"Synaptic can crash if you decide to continue with unchanged localisation "
-"preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
-"supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your language.\n"
-"\n"
-"Contact the mailing list for comments or help:\n"
-"<i>synaptic-devel@nongnu.org</i> \n"
-"Include the output of the \"locale\" command in your email."
-msgstr ""
-"<b><big>Графический интерфейс пользователя (XLib) не поддерживает выбранные "
-"языковые настройки</big></b>\n"
-"\n"
-"Может последовать аварийное завершение Synaptic!\n"
-" Используйте локальные настройки \"fr_FR\" или \"fr_FR@euro\", но не \"fr_FR."
-"iso8859-15@euro\".\n"
-"\n"
-"Обратитесь за помощью или объяснениями в рассылку:\n"
-"<i>synaptic-devel@nongnu.org</i> \n"
-"В сообщение вложите выходные данные команды \"locale\""
-
 #: gtk/gsynaptic.cc:65
 msgid "Usage: synaptic [options]\n"
 msgstr "Использование: synaptic [опции]\n"
@@ -928,11 +954,11 @@ msgstr "--non-interactive Никогда не запрашивать ввода 
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Открыть с окном задач\n"
 
-#: gtk/gsynaptic.cc:210
+#: gtk/gsynaptic.cc:201
 msgid "You must run this program as the root user."
 msgstr "Вы должны запускать эту программу как пользователь root."
 
-#: gtk/gsynaptic.cc:248
+#: gtk/gsynaptic.cc:239
 msgid "Synaptic Package Manager "
 msgstr "Менеджер пакетов Synaptic "
 
@@ -960,7 +986,7 @@ msgstr "О Synaptic"
 msgid "Package changes"
 msgstr "Изменения в пакетах"
 
-#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:109
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:111
 msgid "To be removed"
 msgstr "Для удаления"
 
@@ -968,15 +994,15 @@ msgstr "Для удаления"
 msgid "To be downgraded"
 msgstr "Для понижения версии"
 
-#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:121
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:137
 msgid "To be upgraded"
 msgstr "Для обновления"
 
-#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:133
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:149
 msgid "To be installed"
 msgstr "Для установки"
 
-#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:145
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:161
 msgid "To be re-installed"
 msgstr "Для повторной установки"
 
@@ -992,12 +1018,12 @@ msgstr "Поддерживаемые"
 msgid "Package Name"
 msgstr "Название пакета"
 
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:889
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:863
 msgid "Component"
 msgstr "Компонент"
 
 # This is filter name, it's better to not translate it
-#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:911
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:885
 msgid "Installed Version"
 msgstr "Установленная версия"
 
@@ -1013,40 +1039,40 @@ msgstr "Установленный размер"
 msgid "Download Size"
 msgstr "Размер загружаемых файлов"
 
-#: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1697
-#: gtk/rgterminstallprogress.cc:110
+#: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1649
+#: gtk/rgterminstallprogress.cc:99
 msgid "An error occurred while saving configurations."
 msgstr "Произошла ошибка при сохранении конфигураций."
 
-#: gtk/rgpreferenceswindow.cc:373
+#: gtk/rgpreferenceswindow.cc:374
 msgid "Choose font"
 msgstr "Выберите шрифт"
 
-#: gtk/rgpreferenceswindow.cc:578
+#: gtk/rgpreferenceswindow.cc:579
 msgid "ignore"
 msgstr "игнорировать"
 
-#: gtk/rgpreferenceswindow.cc:766
+#: gtk/rgpreferenceswindow.cc:767
 msgid "Color selection"
 msgstr "Выбор цвета"
 
-#: gtk/rgpreferenceswindow.cc:893
+#: gtk/rgpreferenceswindow.cc:894
 msgid "Visible"
 msgstr "Видимый"
 
-#: gtk/rgpreferenceswindow.cc:967 gtk/window_preferences.glade.h:64
+#: gtk/rgpreferenceswindow.cc:968 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Параметры"
 
-#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:953
+#: gtk/rgfetchprogress.cc:90 gtk/rgmainwindow.cc:927
 msgid "Size"
 msgstr "Размер"
 
-#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:175
+#: gtk/rgfetchprogress.cc:97 gtk/rgrepositorywin.cc:177
 msgid "URI"
 msgstr "URI"
 
-#: gtk/rgfetchprogress.cc:132
+#: gtk/rgfetchprogress.cc:153
 #, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
@@ -1057,7 +1083,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gtk/rgfetchprogress.cc:145
+#: gtk/rgfetchprogress.cc:166
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1068,45 +1094,45 @@ msgstr ""
 "%s\n"
 "в дисковод %s"
 
-#: gtk/rgfetchprogress.cc:251
+#: gtk/rgfetchprogress.cc:272
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "Загрузка файла %li из %li на %s/s - %s осталось"
 
-#: gtk/rgfetchprogress.cc:256
+#: gtk/rgfetchprogress.cc:277
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Загрузка файла %li из %li"
 
-#: gtk/rgfetchprogress.cc:321
+#: gtk/rgfetchprogress.cc:342
 msgid "Queued"
 msgstr "Добавлен в очередь"
 
-#: gtk/rgfetchprogress.cc:324
+#: gtk/rgfetchprogress.cc:345
 msgid "Done"
 msgstr "Готово"
 
-#: gtk/rgfetchprogress.cc:327
+#: gtk/rgfetchprogress.cc:348
 msgid "Hit"
 msgstr "Совпадение"
 
-#: gtk/rgfetchprogress.cc:330
+#: gtk/rgfetchprogress.cc:351
 msgid "Failed"
 msgstr "Неудачно"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:17
+#: gtk/rgfiltermanager.cc:39 gtk/window_filters.glade.h:17
 msgid "Filters"
 msgstr "Фильтры"
 
-#: gtk/rgfiltermanager.cc:171
+#: gtk/rgfiltermanager.cc:164
 msgid "Field"
 msgstr "Поле"
 
-#: gtk/rgfiltermanager.cc:178
+#: gtk/rgfiltermanager.cc:171
 msgid "Operator"
 msgstr "Оператор"
 
-#: gtk/rgfiltermanager.cc:760
+#: gtk/rgfiltermanager.cc:748
 #, c-format
 msgid "New Filter %i"
 msgstr "Новый фильтр %i"
@@ -1145,7 +1171,7 @@ msgstr ""
 "Система APT сообщает:\n"
 "%s"
 
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:183
+#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:166
 msgid "Applying Changes"
 msgstr "Внесение изменений..."
 
@@ -1171,22 +1197,22 @@ msgstr "Критический"
 msgid "Security"
 msgstr "Безопасность"
 
-#: gtk/rgmainwindow.cc:167
+#: gtk/rgmainwindow.cc:155
 msgid "All"
 msgstr "Все"
 
-#: gtk/rgmainwindow.cc:361 gtk/window_main.glade.h:29
+#: gtk/rgmainwindow.cc:342 gtk/window_main.glade.h:29
 #: gtk/window_details.glade.h:19
 msgid "No package is selected.\n"
 msgstr "Пакеты не выбраны.\n"
 
-#: gtk/rgmainwindow.cc:460
+#: gtk/rgmainwindow.cc:443
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr ""
 "Выберите версию %s, которая должна быть принудительно выбрана при установке"
 
-#: gtk/rgmainwindow.cc:462
+#: gtk/rgmainwindow.cc:445
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
@@ -1197,30 +1223,30 @@ msgstr ""
 "возможно появление ошибок при обработке зависимостей."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: gtk/rgmainwindow.cc:806
+#: gtk/rgmainwindow.cc:784
 msgid "S"
 msgstr "С"
 
 #. TRANSLATORS: Column header for the column "Supported" in the package list
-#: gtk/rgmainwindow.cc:822 gtk/window_preferences.glade.h:1
+#: gtk/rgmainwindow.cc:800 gtk/window_preferences.glade.h:1
 #: gtk/window_summary.glade.h:1 gtk/window_filters.glade.h:1
 msgid " "
 msgstr " "
 
-#: gtk/rgmainwindow.cc:842
+#: gtk/rgmainwindow.cc:820
 msgid "Package"
 msgstr "Пакет"
 
 # This is filter name, it's better to not translate it
-#: gtk/rgmainwindow.cc:932
+#: gtk/rgmainwindow.cc:906
 msgid "Latest Version"
 msgstr "Последняя версия"
 
-#: gtk/rgmainwindow.cc:974
+#: gtk/rgmainwindow.cc:948
 msgid "Download"
 msgstr "Получить"
 
-#: gtk/rgmainwindow.cc:1245
+#: gtk/rgmainwindow.cc:1201
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded  software packages."
@@ -1228,60 +1254,60 @@ msgstr ""
 "Получить сведения о пакетах, чтобы узнать о новых, удалённых или обновлённых "
 "пакетах программ."
 
-#: gtk/rgmainwindow.cc:1251
+#: gtk/rgmainwindow.cc:1207
 msgid "Mark all possible upgrades"
 msgstr "Добавить в очередь все возможные обновления"
 
-#: gtk/rgmainwindow.cc:1255 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1211 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "Внести все отмеченные изменения"
 
-#: gtk/rgmainwindow.cc:1434
+#: gtk/rgmainwindow.cc:1390
 msgid "Unmark"
 msgstr "Снять отметку"
 
-#: gtk/rgmainwindow.cc:1442
+#: gtk/rgmainwindow.cc:1398
 msgid "Mark for Installation"
 msgstr "Отметить для установки"
 
-#: gtk/rgmainwindow.cc:1450
+#: gtk/rgmainwindow.cc:1406
 msgid "Mark for Reinstallation"
 msgstr "Отметить для повторной установки"
 
-#: gtk/rgmainwindow.cc:1459
+#: gtk/rgmainwindow.cc:1415
 msgid "Mark for Upgrade"
 msgstr "Отметить для обновления"
 
-#: gtk/rgmainwindow.cc:1467
+#: gtk/rgmainwindow.cc:1423
 msgid "Mark for Removal"
 msgstr "Отметить для удаления"
 
-#: gtk/rgmainwindow.cc:1476
+#: gtk/rgmainwindow.cc:1432
 msgid "Mark for Complete Removal"
 msgstr "Отметить для полного удаления"
 
-#: gtk/rgmainwindow.cc:1488
+#: gtk/rgmainwindow.cc:1444
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Удалить учитывая зависимости"
 
-#: gtk/rgmainwindow.cc:1500
+#: gtk/rgmainwindow.cc:1456
 msgid "Hold Current Version"
 msgstr "Оставить текущую версию"
 
-#: gtk/rgmainwindow.cc:1509 gtk/window_main.glade.h:31
+#: gtk/rgmainwindow.cc:1465 gtk/window_main.glade.h:31
 #: gtk/window_filters.glade.h:46
 msgid "Properties"
 msgstr "Свойства"
 
-#: gtk/rgmainwindow.cc:1521
+#: gtk/rgmainwindow.cc:1477
 msgid "Mark Recommended for Installation"
 msgstr "Отметить рекомендуемые пакеты для установки"
 
-#: gtk/rgmainwindow.cc:1525
+#: gtk/rgmainwindow.cc:1481
 msgid "Mark Suggested for Installation"
 msgstr "Отметить предлагаемые пакеты для установки"
 
-#: gtk/rgmainwindow.cc:1614
+#: gtk/rgmainwindow.cc:1566
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1289,7 +1315,7 @@ msgstr ""
 "Удаление этого пакета может привести систему в нерабочее состояние.\n"
 "Вы действительно хотите это сделать?"
 
-#: gtk/rgmainwindow.cc:1650
+#: gtk/rgmainwindow.cc:1602
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1298,7 +1324,7 @@ msgstr ""
 "%i пакетов в списке, %i установлено, %i с ошибками. %i для установки/"
 "обновления, %i для удаления; %s B будет освобождено"
 
-#: gtk/rgmainwindow.cc:1656
+#: gtk/rgmainwindow.cc:1608
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1307,7 +1333,7 @@ msgstr ""
 "%i пакетов в списке, %i установлено, %i с ошибками. %i для установки/"
 "обновления, %i для удаления; %s B будет использовано"
 
-#: gtk/rgmainwindow.cc:1662
+#: gtk/rgmainwindow.cc:1614
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1316,7 +1342,7 @@ msgstr ""
 "%i пакетов в списке, %i установлено, %i с ошибками. %i для установки/"
 "обновления, %i для удаления"
 
-#: gtk/rgmainwindow.cc:1714
+#: gtk/rgmainwindow.cc:1666
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1339,11 +1365,11 @@ msgstr[2] ""
 "\n"
 "Попробуйте их исправить, зайдя в фильтр \"С ошибками\""
 
-#: gtk/rgmainwindow.cc:1886
+#: gtk/rgmainwindow.cc:1827
 msgid "Downloading changelog"
 msgstr "Журнал загрузки"
 
-#: gtk/rgmainwindow.cc:1887
+#: gtk/rgmainwindow.cc:1828
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1352,49 +1378,60 @@ msgstr ""
 "каждой версии пакета."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1900
+#: gtk/rgmainwindow.cc:1841
 #, c-format
 msgid "%s Changelog"
 msgstr "Исторя изменений %s"
 
-#: gtk/rgmainwindow.cc:1983
+#: gtk/rgmainwindow.cc:1924
 msgid "Do you want to add another CD-ROM?"
 msgstr "Добавить другой компакт-диск?"
 
-#: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
-#: gtk/rgmainwindow.cc:2867
+#: gtk/rgmainwindow.cc:1958 gtk/rgmainwindow.cc:2014
+msgid "Open changes"
+msgstr "Открыть изменения"
+
+#: gtk/rgmainwindow.cc:1971 gtk/rgmainwindow.cc:2557 gtk/rgmainwindow.cc:2639
+#: gtk/rgmainwindow.cc:2798
 #, c-format
 msgid "Can't read %s"
 msgstr "Невозможно прочитать %s"
 
-#: gtk/rgmainwindow.cc:2038
-msgid "Open changes"
-msgstr "Открыть изменения"
-
-#: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
-#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2844
+#: gtk/rgmainwindow.cc:1995 gtk/rgmainwindow.cc:2475 gtk/rgmainwindow.cc:2611
+#: gtk/rgmainwindow.cc:2775
 #, c-format
 msgid "Can't write %s"
 msgstr "Невозможно записать %s"
 
-#: gtk/rgmainwindow.cc:2088
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-#: gtk/rgmainwindow.cc:2105
+#: gtk/rgmainwindow.cc:2021
 msgid "Save full state, not only changes"
 msgstr "Сохранить всё состояние (не только изменения)"
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2098
+#, fuzzy
+msgid "Repositories changed"
+msgstr "Репозитории"
+
+#: gtk/rgmainwindow.cc:2099
+msgid ""
+"The repository information has changed. You have to click on the \"Reload\" "
+"button for your changes to take effect"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2110
+msgid "Never show this message again"
+msgstr ""
+
+#: gtk/rgmainwindow.cc:2164
 #, c-format
 msgid "Found %i packages"
 msgstr "Найдено %i пакет(ов)"
 
-#: gtk/rgmainwindow.cc:2261
+#: gtk/rgmainwindow.cc:2205
 msgid "Starting help viewer..."
 msgstr "Открытие системы помощи"
 
-#: gtk/rgmainwindow.cc:2281
+#: gtk/rgmainwindow.cc:2225
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1412,7 +1449,7 @@ msgstr ""
 "Также вы можете получить информацию о Synaptic, набрав в командной строке "
 "'man synaptic' или просмотрев html-версию в папке 'synaptic/html'."
 
-#: gtk/rgmainwindow.cc:2435
+#: gtk/rgmainwindow.cc:2373
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1420,23 +1457,23 @@ msgstr ""
 "Невозможно запустить программу настройки!\n"
 " Вы должны установить нужный для этого пакет 'libgnome2-perl'."
 
-#: gtk/rgmainwindow.cc:2441
+#: gtk/rgmainwindow.cc:2379
 msgid "Starting package configuration tool..."
 msgstr "Запуск программы настройки пакета"
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2456
+#: gtk/rgmainwindow.cc:2394
 msgid "Starting package documentation viewer..."
 msgstr "Открытие помощи по пакету..."
 
-#: gtk/rgmainwindow.cc:2468
+#: gtk/rgmainwindow.cc:2406
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Вы должны установить пакет \"dwww\" для просмотра документации к пакету"
 
-#: gtk/rgmainwindow.cc:2505
+#: gtk/rgmainwindow.cc:2443
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1444,27 +1481,27 @@ msgstr ""
 "Невозможно выполнить изменения!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: gtk/rgmainwindow.cc:2524
+#: gtk/rgmainwindow.cc:2460
 msgid "Applying marked changes. This may take a while..."
 msgstr "Внесение изменений... Это может занять некоторое время..."
 
-#: gtk/rgmainwindow.cc:2528
+#: gtk/rgmainwindow.cc:2464
 msgid "Downloading package files"
 msgstr "Загружаются файлы пакетов"
 
-#: gtk/rgmainwindow.cc:2529
+#: gtk/rgmainwindow.cc:2465
 msgid "The package files will be cached locally for installation."
 msgstr "Пакеты будут сохранены локально для последующей установки."
 
-#: gtk/rgmainwindow.cc:2604
+#: gtk/rgmainwindow.cc:2540
 msgid "Do you want to quit Synaptic?"
 msgstr "Вы хотите выйти из Synaptic?"
 
-#: gtk/rgmainwindow.cc:2660
+#: gtk/rgmainwindow.cc:2596
 msgid "Downloading package information"
 msgstr "Загружаются сведения о пакетах"
 
-#: gtk/rgmainwindow.cc:2661
+#: gtk/rgmainwindow.cc:2597
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1472,19 +1509,19 @@ msgstr ""
 "Репозитории будут проверены на новые, удалённые или обновлённые пакеты "
 "программ."
 
-#: gtk/rgmainwindow.cc:2664
+#: gtk/rgmainwindow.cc:2600
 msgid "Reloading package information..."
 msgstr "Получение сведений о пакетах..."
 
-#: gtk/rgmainwindow.cc:2728
+#: gtk/rgmainwindow.cc:2664
 msgid "Failed to resolve dependency problems!"
 msgstr "Ошибка исправления проблем в зависимостях!"
 
-#: gtk/rgmainwindow.cc:2730
+#: gtk/rgmainwindow.cc:2666
 msgid "Successfully fixed dependency problems"
 msgstr "Проблемы в зависимостях успешно разрешены"
 
-#: gtk/rgmainwindow.cc:2746
+#: gtk/rgmainwindow.cc:2682
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1492,15 +1529,15 @@ msgstr ""
 "Невозможно обновить систему!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: gtk/rgmainwindow.cc:2791
+#: gtk/rgmainwindow.cc:2727
 msgid "Marking all available upgrades..."
 msgstr "Отметить всё доступное для обновления..."
 
-#: gtk/rgmainwindow.cc:2803
+#: gtk/rgmainwindow.cc:2739
 msgid "Successfully marked available upgrades"
 msgstr "Отмечены все доступные для обновления пакеты"
 
-#: gtk/rgmainwindow.cc:2805
+#: gtk/rgmainwindow.cc:2741
 msgid "Failed to mark all available upgrades!"
 msgstr "Невозможно отметить всё доступное для обновления!"
 
@@ -1511,99 +1548,109 @@ msgid ""
 " Packages in this component are not supported. Are you sure?"
 msgstr ""
 
-#: gtk/rgrepositorywin.cc:118 gtk/window_repositories.glade.h:4
+#: gtk/rgrepositorywin.cc:120 gtk/window_repositories.glade.h:4
 msgid "Repositories"
 msgstr "Репозитории"
 
-#: gtk/rgrepositorywin.cc:142
+#: gtk/rgrepositorywin.cc:144
 msgid "Enabled"
 msgstr "Разрешён"
 
-#: gtk/rgrepositorywin.cc:152
+#: gtk/rgrepositorywin.cc:154
 msgid "Type"
 msgstr "Тип"
 
-#: gtk/rgrepositorywin.cc:162 gtk/rgvendorswindow.cc:62
+#: gtk/rgrepositorywin.cc:164 gtk/rgvendorswindow.cc:62
 #: gtk/rgvendorswindow.cc:80
 msgid "Vendor"
 msgstr "Поставщик"
 
-#: gtk/rgrepositorywin.cc:185
+#: gtk/rgrepositorywin.cc:187
 msgid "Distribution"
 msgstr "Дистрибутив"
 
-#: gtk/rgrepositorywin.cc:196
+#: gtk/rgrepositorywin.cc:198
 msgid "Section(s)"
 msgstr "Раздел(ы)"
 
-#: gtk/rgrepositorywin.cc:237
+#: gtk/rgrepositorywin.cc:239
 msgid "Binary (deb)"
 msgstr "Двоичный (deb)"
 
-#: gtk/rgrepositorywin.cc:242
+#: gtk/rgrepositorywin.cc:244
 msgid "Source (deb-src)"
 msgstr "Источник (deb-src)"
 
-#: gtk/rgrepositorywin.cc:251 gtk/rgrepositorywin.cc:373
+#: gtk/rgrepositorywin.cc:253 gtk/rgrepositorywin.cc:375
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(нет поставщика)"
 
-#: gtk/rgrepositorywin.cc:327
+#: gtk/rgrepositorywin.cc:329
 msgid "Cannot read vendors.list file"
 msgstr "Невозможно прочитать файл vendors.list"
 
-#: gtk/rgrepositorywin.cc:492
+#: gtk/rgrepositorywin.cc:496
 msgid "Unknown source type"
 msgstr "Неизвестный тип источника"
 
-#: gtk/rgsummarywindow.cc:83
+#: gtk/rgsummarywindow.cc:85
 msgid "(ESSENTIAL) to be removed"
 msgstr "(ВАЖНО) будет удален"
 
-#: gtk/rgsummarywindow.cc:96
+#: gtk/rgsummarywindow.cc:98
 msgid "To be DOWNGRADED"
 msgstr "Будет установлена УСТАРЕВШАЯ ВЕРСИЯ"
 
-#: gtk/rgsummarywindow.cc:160
+#: gtk/rgsummarywindow.cc:124
+#, fuzzy
+msgid "To be removed with configuration"
+msgstr "Сохранить настройки"
+
+#: gtk/rgsummarywindow.cc:176
 msgid "To be not upgraded"
 msgstr "Не будут обновлены"
 
-#: gtk/rgsummarywindow.cc:196
+#: gtk/rgsummarywindow.cc:213
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>важных</b>) будет удалено\n"
 
-#: gtk/rgsummarywindow.cc:205
+#: gtk/rgsummarywindow.cc:222
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>версия</b><b>%s</b> будет <b>понижена</b>\n"
 
-#: gtk/rgsummarywindow.cc:213
+#: gtk/rgsummarywindow.cc:230
+#, fuzzy, c-format
+msgid "<b>%s</b> will be removed with configuration\n"
+msgstr "<b>%s</b> будет удален\n"
+
+#: gtk/rgsummarywindow.cc:238
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> будет удален\n"
 
-#: gtk/rgsummarywindow.cc:222
+#: gtk/rgsummarywindow.cc:247
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (версия <i>%s</i>) будет повышена до версии <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:233
+#: gtk/rgsummarywindow.cc:258
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (версия <i>%s</i>) будет установлена\n"
 
-#: gtk/rgsummarywindow.cc:241
+#: gtk/rgsummarywindow.cc:266
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (версия <i>%s</i>) будет повторно установлен\n"
 
-#: gtk/rgsummarywindow.cc:276
+#: gtk/rgsummarywindow.cc:301
 msgid "Summary"
 msgstr "Краткое описание"
 
-#: gtk/rgsummarywindow.cc:346
+#: gtk/rgsummarywindow.cc:371
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -1611,7 +1658,7 @@ msgstr[0] "%d пакет заблокирован\n"
 msgstr[1] "%d пакета заблокировано\n"
 msgstr[2] "%d пакетов заблокировано\n"
 
-#: gtk/rgsummarywindow.cc:353
+#: gtk/rgsummarywindow.cc:378
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -1619,7 +1666,7 @@ msgstr[0] "%d пакет будет не обновлён и удержан\n"
 msgstr[1] "%d пакета будет не обновлено и удержано\n"
 msgstr[2] "%d пакетов будет не обновлено и удержано\n"
 
-#: gtk/rgsummarywindow.cc:360
+#: gtk/rgsummarywindow.cc:385
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -1627,7 +1674,7 @@ msgstr[0] "%d новый пакет будет установлен\n"
 msgstr[1] "%d новых пакета будет установлено\n"
 msgstr[2] "%d новых пакетов будет установлено\n"
 
-#: gtk/rgsummarywindow.cc:367
+#: gtk/rgsummarywindow.cc:392
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -1635,7 +1682,7 @@ msgstr[0] "%d новый пакет будет переустановлен\n"
 msgstr[1] "%d новых пакета будет переустановлено\n"
 msgstr[2] "%d новых пакетов будет переустановлено\n"
 
-#: gtk/rgsummarywindow.cc:374
+#: gtk/rgsummarywindow.cc:399
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -1643,7 +1690,7 @@ msgstr[0] "%d пакет будет обновлён\n"
 msgstr[1] "%d пакета будет обновлено\n"
 msgstr[2] "%d пакетов будет обновлено\n"
 
-#: gtk/rgsummarywindow.cc:381
+#: gtk/rgsummarywindow.cc:406
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -1651,7 +1698,7 @@ msgstr[0] "%d пакет будет удалён\n"
 msgstr[1] "%d пакета будет удалено\n"
 msgstr[2] "%d пакетов будет удалено\n"
 
-#: gtk/rgsummarywindow.cc:388
+#: gtk/rgsummarywindow.cc:413
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -1659,7 +1706,7 @@ msgstr[0] "У %d пакета будет <b>понижена версия</b>\n"
 msgstr[1] "У %d пакетов будет <b>понижена версия</b>\n"
 msgstr[2] "У %d пакетов будет <b>понижена версия</b>\n"
 
-#: gtk/rgsummarywindow.cc:396
+#: gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -1667,17 +1714,17 @@ msgstr[0] "<b>Внимание:</b> Будет удалён %d важный па
 msgstr[1] "<b>Внимание:</b> Будет удалено %d важных пакета\n"
 msgstr[2] "<b>Внимание:</b> Будет удалено %d важных пакетов\n"
 
-#: gtk/rgsummarywindow.cc:408
+#: gtk/rgsummarywindow.cc:433
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s будет использовано"
 
-#: gtk/rgsummarywindow.cc:411
+#: gtk/rgsummarywindow.cc:436
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s будет освобождено"
 
-#: gtk/rgsummarywindow.cc:417
+#: gtk/rgsummarywindow.cc:442
 #, c-format
 msgid ""
 "\n"
@@ -1686,7 +1733,7 @@ msgstr ""
 "\n"
 "%s необходимо получить."
 
-#: gtk/rgsummarywindow.cc:442
+#: gtk/rgsummarywindow.cc:467
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -1904,134 +1951,138 @@ msgid "Versions"
 msgstr "Версии"
 
 #: gtk/window_main.glade.h:46
+msgid "View Commit Log"
+msgstr ""
+
+#: gtk/window_main.glade.h:47
 msgid "_About"
 msgstr "_О программе"
 
-#: gtk/window_main.glade.h:47
+#: gtk/window_main.glade.h:48
 msgid "_Add CD-ROM..."
 msgstr "Добавить _компакт-диск..."
 
-#: gtk/window_main.glade.h:48
+#: gtk/window_main.glade.h:49
 msgid "_Browse Documentation"
 msgstr "_Просмотреть документацию"
 
-#: gtk/window_main.glade.h:49
+#: gtk/window_main.glade.h:50
 msgid "_Configure..."
 msgstr "Скон_фигурировать..."
 
-#: gtk/window_main.glade.h:50
+#: gtk/window_main.glade.h:51
 msgid "_Contents"
 msgstr "_Содержание"
 
-#: gtk/window_main.glade.h:51
+#: gtk/window_main.glade.h:52
 msgid "_Custom"
 msgstr "_Пользовательское"
 
-#: gtk/window_main.glade.h:52
+#: gtk/window_main.glade.h:53
 msgid "_Download Changelog"
 msgstr "Загрузить _историю изменений"
 
-#: gtk/window_main.glade.h:53
+#: gtk/window_main.glade.h:54
 msgid "_Edit"
 msgstr "_Редактирование"
 
-#: gtk/window_main.glade.h:54
+#: gtk/window_main.glade.h:55
 msgid "_File"
 msgstr "_Файл"
 
-#: gtk/window_main.glade.h:55
+#: gtk/window_main.glade.h:56
 msgid "_Filters"
 msgstr "_Фильтры"
 
-#: gtk/window_main.glade.h:56
+#: gtk/window_main.glade.h:57
 msgid "_Fix Broken Packages"
 msgstr "_Исправить пакеты \"с ошибками\""
 
-#: gtk/window_main.glade.h:57
+#: gtk/window_main.glade.h:58
 msgid "_Force Version..."
 msgstr "_Указать версию..."
 
-#: gtk/window_main.glade.h:58
+#: gtk/window_main.glade.h:59
 msgid "_Help"
 msgstr "_Помощь"
 
-#: gtk/window_main.glade.h:59
+#: gtk/window_main.glade.h:60
 msgid "_Hide"
 msgstr "_Скрыть"
 
-#: gtk/window_main.glade.h:60
+#: gtk/window_main.glade.h:61
 msgid "_Icons Only"
 msgstr "Только _пиктограммы"
 
-#: gtk/window_main.glade.h:61
+#: gtk/window_main.glade.h:62
 msgid "_Lock Version"
 msgstr "За_блокировать версию"
 
-#: gtk/window_main.glade.h:62
+#: gtk/window_main.glade.h:63
 msgid "_Mark All Upgrades..."
 msgstr "_Отметить всё для обновления..."
 
-#: gtk/window_main.glade.h:63
+#: gtk/window_main.glade.h:64
 msgid "_Package"
 msgstr "_Пакет"
 
-#: gtk/window_main.glade.h:64
+#: gtk/window_main.glade.h:65
 msgid "_Properties"
 msgstr "С_войства"
 
-#: gtk/window_main.glade.h:65
+#: gtk/window_main.glade.h:66
 msgid "_Quick Introduction"
 msgstr "_Быстрое введение"
 
-#: gtk/window_main.glade.h:66
+#: gtk/window_main.glade.h:67
 msgid "_Quit"
 msgstr "В_ыйти"
 
-#: gtk/window_main.glade.h:67
+#: gtk/window_main.glade.h:68
 msgid "_Read Markings..."
 msgstr "_Считать отмеченные..."
 
-#: gtk/window_main.glade.h:68
+#: gtk/window_main.glade.h:69
 msgid "_Redo"
 msgstr "_Повторить"
 
-#: gtk/window_main.glade.h:69
+#: gtk/window_main.glade.h:70
 msgid "_Reload Package Information"
 msgstr "_Получить сведения о пакетах"
 
-#: gtk/window_main.glade.h:70
+#: gtk/window_main.glade.h:71
 msgid "_Repositories"
 msgstr "_Репозитории"
 
-#: gtk/window_main.glade.h:71
+#: gtk/window_main.glade.h:72
 msgid "_Save Markings"
 msgstr "_Сохранить отмеченные"
 
-#: gtk/window_main.glade.h:72
+#: gtk/window_main.glade.h:73
 msgid "_Search..."
 msgstr "П_оиск..."
 
-#: gtk/window_main.glade.h:73
+#: gtk/window_main.glade.h:74
 msgid "_Sections"
 msgstr "_Разделы"
 
-#: gtk/window_main.glade.h:74
+#: gtk/window_main.glade.h:75
 msgid "_Set Internal Option..."
 msgstr "_Установить внутренний параметр..."
 
-#: gtk/window_main.glade.h:75
+#: gtk/window_main.glade.h:76
 msgid "_Settings"
 msgstr "_Установки"
 
-#: gtk/window_main.glade.h:76
+#: gtk/window_main.glade.h:77
 msgid "_Text Only"
 msgstr "Только _текст"
 
-#: gtk/window_main.glade.h:77
+#: gtk/window_main.glade.h:78
 msgid "_Toolbar"
 msgstr "_Панель инструментов"
 
-#: gtk/window_main.glade.h:78
+#: gtk/window_main.glade.h:79
 msgid "_Undo"
 msgstr "_Отказаться"
 
@@ -2952,11 +3003,11 @@ msgstr ""
 "<b>Следующие пиктограммы используются для отображения текущего состояния "
 "пакетов:</b>"
 
-#: gtk/rgterminstallprogress.cc:86
+#: gtk/rgterminstallprogress.cc:75
 msgid "<i>Running...</i>"
 msgstr "<i>Выполняется...</i>"
 
-#: gtk/rgterminstallprogress.cc:93
+#: gtk/rgterminstallprogress.cc:82
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now "
@@ -2964,7 +3015,7 @@ msgstr ""
 "\n"
 "Внесение изменений завершено. Вы можете закрыть это окно."
 
-#: gtk/rgterminstallprogress.cc:94
+#: gtk/rgterminstallprogress.cc:83
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in this buffer to see what went wrong "
@@ -2972,7 +3023,7 @@ msgstr ""
 "\n"
 "Обновление не было выполнено - смотрите лог установки для определения причины"
 
-#: gtk/rgterminstallprogress.cc:96
+#: gtk/rgterminstallprogress.cc:85
 msgid ""
 "\n"
 "Successfully installed all packages of the current medium. To continue the "
@@ -2982,11 +3033,11 @@ msgstr ""
 "Все пакеты с текущего носителя установлены. Для продолжения установки со "
 "следующего носителя закройте это окно."
 
-#: gtk/rgterminstallprogress.cc:145
+#: gtk/rgterminstallprogress.cc:128
 msgid "<i>Finished</i>"
 msgstr "<i>Завершено</i>"
 
-#: gtk/rgterminstallprogress.cc:154
+#: gtk/rgterminstallprogress.cc:137
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Невозможно закрыть во время работы</i>"
 
@@ -3011,7 +3062,7 @@ msgid ""
 "<span weight=\"bold\" size=\"larger\">Your package information is out of "
 "date</span>\n"
 "\n"
-"Your package information ist older than 48 hours. There could be important "
+"Your package information is older than 48 hours. There could be important "
 "security updates available. It is recommended to reload the package "
 "information regularly."
 msgstr ""
@@ -3025,6 +3076,33 @@ msgstr "Запомнить ответ для дальнейших обновле
 #, fuzzy
 msgid "_Reload"
 msgstr "Обновить"
+
+#~ msgid ""
+#~ "<b><big>The grafical user interface (xlib) does not support your chosen "
+#~ "language environment</big></b>\n"
+#~ "\n"
+#~ "Synaptic can crash if you decide to continue with unchanged localisation "
+#~ "preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
+#~ "supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your "
+#~ "language.\n"
+#~ "\n"
+#~ "Contact the mailing list for comments or help:\n"
+#~ "<i>synaptic-devel@nongnu.org</i> \n"
+#~ "Include the output of the \"locale\" command in your email."
+#~ msgstr ""
+#~ "<b><big>Графический интерфейс пользователя (XLib) не поддерживает "
+#~ "выбранные языковые настройки</big></b>\n"
+#~ "\n"
+#~ "Может последовать аварийное завершение Synaptic!\n"
+#~ " Используйте локальные настройки \"fr_FR\" или \"fr_FR@euro\", но не "
+#~ "\"fr_FR.iso8859-15@euro\".\n"
+#~ "\n"
+#~ "Обратитесь за помощью или объяснениями в рассылку:\n"
+#~ "<i>synaptic-devel@nongnu.org</i> \n"
+#~ "В сообщение вложите выходные данные команды \"locale\""
+
+#~ msgid "Save changes"
+#~ msgstr "Сохранить изменения"
 
 #~ msgid "Downloading Files"
 #~ msgstr "Загружаются файлы"

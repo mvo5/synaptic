@@ -194,35 +194,16 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 #ifdef HAVE_ZVT
   gtk_box_pack_end(GTK_BOX(hbox), scrollbar, FALSE, FALSE, 0);
 #endif
-  //gtk_box_pack_start(GTK_BOX(_topBox), hbox, TRUE, TRUE, 0);
 
-  //hbox = gtk_hbox_new(FALSE, 0);
-  //gtk_widget_set_usize(hbox, -1, 35);
-  //gtk_box_pack_start(GTK_BOX(_topBox), hbox, FALSE, TRUE, 0);
-
-  //_closeOnF = gtk_check_button_new_with_label(_("Close dialog after Package Manager is finished"));
   _closeOnF = glade_xml_get_widget(_gladeXML, "checkbutton_close_after_pm");
   assert(_closeOnF);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF), 
 			       _config->FindB("Synaptic::closeZvt", false));
 
-  //gtk_box_pack_start(GTK_BOX(hbox), _closeOnF, TRUE, TRUE, 5);
-
-  //_statusL = gtk_label_new("");
   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-  //gtk_misc_set_alignment(GTK_MISC(_statusL), 0, 0.5);
-  //gtk_box_pack_start(GTK_BOX(hbox), _statusL, TRUE, TRUE, 5);
-
-  //GtkWidget *btn;
-  //btn = gtk_button_new_from_stock(GTK_STOCK_CLOSE);
   GtkWidget *btn = glade_xml_get_widget(_gladeXML, "button_close");
   gtk_signal_connect(GTK_OBJECT(btn), "clicked",
 		     (GtkSignalFunc)stopShell, this);
-  //gtk_box_pack_start(GTK_BOX(hbox), btn, FALSE, TRUE, 5);
-
-  //gtk_window_set_resizable(GTK_WINDOW(_win), false);
-  //gtk_widget_show_all(GTK_WIDGET(_topBox));
-
 }
 
 

@@ -2990,7 +2990,8 @@ void RGMainWindow::buildInterface()
 #ifdef HAVE_RPM 
     widget = glade_xml_get_widget(_gladeXML, "notebook_info");
     assert(widget);
-    gtk_notebook_remove_page(GTK_NOTEBOOK(widget), -1);
+    // page of the "installed files"
+    gtk_notebook_remove_page(GTK_NOTEBOOK(widget), 3);
 #endif    
 
     // toolbar menu code

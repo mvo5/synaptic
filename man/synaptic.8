@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH SYNAPTIC 8 "Oct  27, 2002"
+.TH SYNAPTIC 8 "Jun 10, 2003"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -18,29 +18,97 @@
 .SH NAME
 synaptic
 .SH SYNOPSIS
-\fB synaptic [ \fB -h ] [\fB -f=filter-file ] [\fB -i=initial-filter ]  [\fB -o option=value ]
+\fBsynaptic\fP [options]
 .br
 .SH DESCRIPTION
 Synaptic is a graphical frontend for apt.
+Synaptic is used very much like apt-get. Usually you do an
+`update' which will update the package list from the servers in your
+\fIsources.list\fR file. Note that no packages are updated in this step,
+only information about the packages. Now you can view what packages
+are `upgradable'. To do this, just click on the filter `Upgradable'.
+The main list will change and you will see only those packages where
+a new version is available on the server. You can now upgrade
+individual packages by selecting them and then clicking on the small
+`upgrade' button on the left (or double click in the gtk-version) or
+choose to upgrade all packages by clicking on the big `Upgrade' button
+on the top. No packages will downloaded/upgraded yet, they are only
+marked as to be upgraded. You may want to change the filter again to
+`Expected Changes' to see what will happen if you continue. If you
+like what you see, click `Proceed!' and synaptic will download the
+packages and install them. 
+.TP
+.SH Difference between `Upgrade all' and `DistUpgrade'
+The difference between `Upgrade all' and `DistUpgrade' is small but
+important. `Upgrade all' means: Mark packages that are upgradable for
+upgrade, except those with new dependencies. Under no circumstances
+are currently installed packages removed, or packages not already
+installed retrieved and installed. 
+
+`DistUpgrade', in addition to performing the function of `Upgrade
+all', also intelligently handles changing dependencies with new
+versions of packages and uses a smart conflict resolution system if
+necessary. 
+
+Usually you only need `DistUpgrade' if you upgrade between major
+versions of your distribution.
+.TP
+.SH Selecting Multiple Packages
+You can select more than one package at a time. You have to
+use SHIFT or CTRL to select multiple packages. If you click on a action 
+(install/upgrade/remove) for multiple packages, the action will be performed
+for each package (as you probably already guessed (: ).
 .PP
 .\" TeX users may be more comfortable with the \fB<whatever>\fP and
-.\" \fI<whatever>\fP escape sequences to invode bold face and italics, 
+.\" \fI<whatever>\fP escape sequences to invoke bold face and italics, 
 .\" respectively.
-.SH OPTIONS
-.TP 
- \fB-h 
- show help text
 .TP
- \fB-f=filter-file 
- load alternative filter file
-.TP
- \fB-i=initial-filter-nr 
- apply the filter given with the number on startup
-.TP
- \fB-o option=value
- set APT or synaptic option directly (for experts only)
+.SH Keybindings
+The gtk has some global keybindings:
 .br
+\fBCTRL-k\fR keep
+.br
+\fBCTRL-i\fR install
+.br
+\fBCTRL-r\fR remove
+.br
+\fBCTRL-s\fR search 
+.br
+\fBCTRL-u\fR update
+.br
+\fBCTRL-p\fR proceed
+.br
+\fBCTRL-q\fR quit
+
+.TP
+.SH Filters
+Synaptic displays the main package list according to the filter you
+selected. The most simple filter is of course `All packages'. But
+there are much more filters than that. You can view the predefined
+filters and make your own filters by clicking on `Filters' above the
+main package list. 
+
+.SH OPTIONS
+Synaptic recognizes the standard X options as well as the following:
+.TP
+\fB-f\fR, \fB\-\-filter-file\fR=\fIfilename\fR
+give a alternative filter file
+.TP
+\fB-i\fR, \fB\-\-initial-filter\fR=\fIint\fR
+start with filter nr. \fIint\fR
+.TP
+\fB-o\fR, \fB\-\-option\fR=\fIoption\fR
+set a synaptic/apt option (expert only)
+
 .SH AUTHORS
-This manual page was written by Michael Vogt <mvo@debian.org>,
-
-
+Synaptic was developed by Alfredo K. Kojima
+<kojima@conectiva.com.br>. His last official release was 0.16. Michael
+Vogt <mvo@debian.org> took over his CVS version, where Alfredo added a
+nearly complete port to Gtk+. Michael completed the port and added some new
+features. See the \fINEWS\fR file for the user visible changes from
+that point on.
+.PP
+All development is done at http://savannah.gnu.org/projects/synaptic
+.PP
+This manual page was written by Wybo Dekker <wybo@servalys.nl> and 
+Michael Vogt <mvo@debian.org>.

@@ -24,7 +24,7 @@
 
 
 #include <stdio.h>
-#include <assert.h>
+#include <cassert>
 #include "config.h"
 #include "i18n.h"
 #include "rpackagelister.h"

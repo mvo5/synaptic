@@ -2,7 +2,7 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
 #include <glib.h>
-#include <assert.h>
+#include <cassert>
 #include "rgrepositorywin.h"
 #include "gsynaptic.h"
 #include "config.h"

@@ -22,7 +22,7 @@
 
 
 #include <apt-pkg/fileutl.h>
-#include <assert.h>
+#include <cassert>
 #include "config.h"
 #include "i18n.h"
 #include "rggladewindow.h"

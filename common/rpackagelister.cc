@@ -27,7 +27,7 @@
 
 #include "config.h"
 
-#include <assert.h>
+#include <cassert>
 #include <stdlib.h>
 #include <unistd.h>
 #include <map>

@@ -30,7 +30,7 @@
 #include "i18n.h"
 
 
-#include <assert.h>
+#include <cassert>
 #include <stdio.h>
 #include <ctype.h>
 #include <glade/glade.h>
@@ -764,12 +764,10 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     }
 
     if (pkgname != NULL) {
-      int row = me->_lister->findPackage(pkgname);
-      pkg = me->_lister->getElement(row);
+      pkg = me->_lister->getElement(pkgname);
     } else {
       pkg = NULL;
     }
-
     me->setTreeLocked(FALSE);
     me->refreshTable(pkg);
     me->setInterfaceLocked(FALSE);
@@ -908,6 +906,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 #endif
 
   updatePackageInfo(selectedPkg);
+  
   setStatusText();
 }
 

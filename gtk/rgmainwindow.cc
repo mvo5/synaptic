@@ -1079,7 +1079,7 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_KEEP);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Install"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Installation"));
    img = get_gtk_image("package-install");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
@@ -1087,7 +1087,7 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Reinstall"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Reinstall"));
    img = get_gtk_image("package-reinstall");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
    g_object_set_data(G_OBJECT(menuitem),"me",this);
@@ -1096,7 +1096,7 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Upgrade"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Upgrade"));
    img = get_gtk_image("package-upgrade");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
@@ -1104,7 +1104,7 @@ void RGMainWindow::buildInterface()
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Removal"));
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
@@ -1113,7 +1113,7 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 #ifndef HAVE_RPM
-   menuitem = gtk_image_menu_item_new_with_label(_("Remove Completely"));
+   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Complete Removal"));
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);

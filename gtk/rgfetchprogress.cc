@@ -207,44 +207,12 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
 
    pkgAcquireStatus::Pulse(Owner);
 
-#if 0                           // dead code from old dialog design (just for reference, will be deleted
-   string str;
-   if (CurrentCPS != 0) {
-      char buf[128];
-      long i;
-      unsigned long ETA =
-         (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);
-      i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
-      snprintf(buf, sizeof(buf),
-               _
-               ("Retrieved %-3lii of %-3li files at %4s B/s - %6s remaining\n"),
-               i, TotalItems, SizeToStr(CurrentCPS).c_str(),
-               TimeToStr(ETA).c_str());
-
-      str = string(buf);
-   } else {
-      str = _("(stalled)\n");
-   }
-#endif
-
    for (pkgAcquire::Worker * I = Owner->WorkersBegin(); I != 0;
         I = Owner->WorkerStep(I)) {
 
       if (I->CurrentItem == 0)
          continue;
 
-#if 0                           // dead code from old dialog design
-      if (I->CurrentItem == 0) {
-         if (!I->Status.empty()) {
-            str = str + '[' + I->Status.c_str() + "] ";
-         } else {
-            str = str + _("[Processing...] ");
-         }
-         continue;
-      }
-
-      str = str + _("[Receiving...] ");
-#endif
       if (I->TotalSize > 0)
          updateStatus(*I->CurrentItem,
                       long (double (I->CurrentSize * 100.0) /
@@ -265,12 +233,12 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
    gchar *s;
    if (CurrentCPS != 0 && ETA != 0) {
-      s = g_strdup_printf(_("Retrieved %li of %li files at %s/s - %s remaining"),
+      s = g_strdup_printf(_("Retrieving %li of %li files at %s/s - %s remaining"),
 			  i, TotalItems,
 			  SizeToStr(CurrentCPS).c_str(),
 			  TimeToStr(ETA).c_str());
    } else {
-      s = g_strdup_printf(_("Retrieved %li of %li files"), i, TotalItems);
+      s = g_strdup_printf(_("Retrieving %li of %li files"), i, TotalItems);
    }
 
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);

@@ -291,7 +291,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
    //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
    GtkTreeViewColumn *column;
-   column = gtk_tree_view_column_new_with_attributes(_("Queued Changes"),
+   column = gtk_tree_view_column_new_with_attributes(_("Marked Changes"),
                                                      renderer,
                                                      "text", PKG_COLUMN, NULL);
    /* Add the column to the view. */

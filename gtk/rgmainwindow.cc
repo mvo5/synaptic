@@ -955,15 +955,15 @@ void RGMainWindow::buildInterface()
    // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Update the list of available packages"), "");
+                        _("Refresh the list of known packages"), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_upgrade");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Queue all possible upgrades"), "");
+                        _("Mark all possible upgrades"), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_procceed");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Execute the queued changes"), "");
+                        _("Apply all marked changes"), "");
 
    _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
    assert(_pkgCommonTextView);

@@ -113,7 +113,7 @@ void RGZvtInstallProgress::stopShell(GtkWidget *self, void *data)
 
    if (!me->updateFinished) {
       gtk_label_set_markup(GTK_LABEL(me->_statusL),
-                           _("<i>Can't close while executing</i>"));
+                           _("<i>Can't close while running</i>"));
       return;
    }
 
@@ -142,7 +142,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
 : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"),
 updateFinished(false)
 {
-   setTitle(_("Executing Changes..."));
+   setTitle(_("Applying Changes..."));
 
    GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
    assert(hbox);

@@ -85,7 +85,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label2">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">The software on your system is organized in so called &lt;i&gt;packages&lt;/i&gt;. The package manager enables you to remove, install or upgrade software packages.</property>
+		      <property name="label" translatable="yes">The software on your system is organized in so called &lt;i&gt;packages&lt;/i&gt;.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -106,7 +106,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label1">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; Modifications are not executed instantly. They will be queued and have to be executed afterwards:</property>
+		      <property name="label" translatable="yes">The package manager enables you to install, upgrade or remove software packages:</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -125,20 +125,122 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkLabel" id="label4">
+		    <widget class="GtkVBox" id="vbox3">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">1. Select the package that you wish to install or remove
-2. Queue installation, removal or upgrade by just double clicking on the package or by choosing the action from the context menu
-3. Execute the queued change(s)</property>
-		      <property name="use_underline">False</property>
-		      <property name="use_markup">False</property>
-		      <property name="justify">GTK_JUSTIFY_LEFT</property>
-		      <property name="wrap">True</property>
-		      <property name="selectable">False</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">3</property>
+
+		      <child>
+			<widget class="GtkVBox" id="vbox4">
+			  <property name="visible">True</property>
+			  <property name="homogeneous">False</property>
+			  <property name="spacing">0</property>
+
+			  <child>
+			    <widget class="GtkLabel" id="label4">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">1. Mark package(s) for installation, upgrade or removal:</property>
+			      <property name="use_underline">False</property>
+			      <property name="use_markup">False</property>
+			      <property name="justify">GTK_JUSTIFY_LEFT</property>
+			      <property name="wrap">True</property>
+			      <property name="selectable">False</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHBox" id="hbox2">
+			      <property name="visible">True</property>
+			      <property name="homogeneous">False</property>
+			      <property name="spacing">0</property>
+
+			      <child>
+				<widget class="GtkLabel" id="label6">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">    </property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkLabel" id="label7">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">- Double click on the package name
+- Right click and choose action from the context menu
+- Click on the status icon to choose an action</property>
+				  <property name="use_underline">False</property>
+				  <property name="use_markup">False</property>
+				  <property name="justify">GTK_JUSTIFY_LEFT</property>
+				  <property name="wrap">False</property>
+				  <property name="selectable">False</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">False</property>
+				  <property name="fill">False</property>
+				</packing>
+			      </child>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">True</property>
+			      <property name="fill">True</property>
+			    </packing>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkLabel" id="label5">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">2. Apply the marked changes</property>
+			  <property name="use_underline">False</property>
+			  <property name="use_markup">False</property>
+			  <property name="justify">GTK_JUSTIFY_LEFT</property>
+			  <property name="wrap">False</property>
+			  <property name="selectable">False</property>
+			  <property name="xalign">0</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
 		    </widget>
 		    <packing>
 		      <property name="padding">0</property>

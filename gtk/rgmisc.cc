@@ -255,13 +255,13 @@ void RPackageStatus::init()
    memcpy(PackageStatusShortString, status_short, sizeof(status_short));
 
    char *status_long[N_STATUS_COUNT] = {
-      _("Queued for installation"),
-      _("Queued for re-installation"),
-      _("Queued for upgrade"),
-      _("Queued for downgrade"),
-      _("Queued for removal"),
-      _("Queued for removal including configuration"),
-      _("Not installed (available)"),
+      _("Marked for installation"),
+      _("Marked for re-installation"),
+      _("Marked for upgrade"),
+      _("Marked for downgrade"),
+      _("Marked for removal"),
+      _("Marked for removal including configuration"),
+      _("Not installed"),
       _("Not installed (locked)"),
       _("Installed"),
       _("Installed (update available)"),

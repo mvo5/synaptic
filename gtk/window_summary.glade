@@ -43,13 +43,13 @@
 	  <child>
 	    <widget class="GtkButton" id="button_execute">
 	      <property name="visible">True</property>
-	      <property name="tooltip" translatable="yes">Execute the changes</property>
+	      <property name="tooltip" translatable="yes">Apply all marked changes</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
-	      <property name="label">gtk-execute</property>
+	      <property name="label">gtk-apply</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
-	      <property name="response_id">-5</property>
+	      <property name="response_id">-10</property>
 	      <signal name="clicked" handler="on_button_execute_clicked" last_modification_time="Thu, 20 Nov 2003 13:50:19 GMT"/>
 	    </widget>
 	  </child>
@@ -101,7 +101,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label1">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Execute the following changes?&lt;/span&gt;</property>
+		      <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot; size=&quot;large&quot;&gt;Apply the following changes?&lt;/span&gt;</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -122,7 +122,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label2">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">This is your last opportunity to look through the list of queued changes before they are executed.</property>
+		      <property name="label" translatable="yes">This is your last opportunity to look through the list of marked changes before they are applied.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>

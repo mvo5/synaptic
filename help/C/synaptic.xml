@@ -548,6 +548,16 @@
 		Managing Packages
 	</title> 
 
+<sect2 id="synaptic-pkg-browse">
+	<title>
+		To Browse the List of Packages
+	</title>
+	
+	<para>
+		&app; provides you with a list of all known packages in the main window.
+	</para>
+</sect2>
+
 
 <sect2 id="synaptic-pkg-find"> 
 	<title>
@@ -959,7 +969,7 @@
 
 
 <sect2 id="synaptic-pkg-upgradesystem"> 
-	<title>Upgrading System</title>
+	<title>To Upgrade the Whole System</title>
 	<para>
 		The global upgrade enables you to upgrade your system
 		to the latest version without having to queue each package upgrade manually.
@@ -983,13 +993,16 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Dist-Upgrade
+				Smart Upgrade (Dist-Upgrade)
 			</term>
 			<listitem>
 				<para>
-					Dist-Upgrade tries to resolve package conflicts intelligently. This includes
+					The Smart Upgrade tries to resolve package conflicts intelligently. This includes
 					installing additional required packages and prefering packages with
 					higher priority.
+				</para>
+				<para>
+					Smart upgrade is also known as dist-upgrade in the console tool apt-get.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -998,8 +1011,8 @@
 
 	<note>
 		<para>
-			Upgrades to later operating system major releases have to be done with the 
-			dist-upgrade method, e.g. from Conectiva 9 to Conectiva 10 or from 
+			Upgrades to a later operating system major releases have to be performed with the 
+			smart upgrade method, e.g. from Conectiva 9 to Conectiva 10 or from 
 			Debian Woody to Debian Sarge.
 		</para>
 	</note>
@@ -1016,12 +1029,12 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Update Package List</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Refresh Package List</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						Click on <guibutton>Update List</guibutton> in the toolbar.
+						Click on <guibutton>Rerfesh List</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
@@ -1062,7 +1075,7 @@
 		
 		<listitem>
 			<para>
-				Choose the upgrade method. Dist-upgrade is recommended.
+				Choose the upgrade method. Smart upgrade is recommended.
 			</para>
 		</listitem>
 		<listitem>
@@ -1078,7 +1091,8 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> 
+						from the menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -1100,7 +1114,7 @@
 
 <sect2 id="synaptic-pkg-downgrade"> 
 	<title>
-		Downgrading Packages
+		To Downgrade Packages
 	</title> 
 
 	<caution>
@@ -1126,12 +1140,38 @@
 		</listitem>
 		<listitem>
 			<para>
-				Open the <guibutton>Expert</guibutton> tab in the detail area.
+				Open the Properties dialog of the package:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Click on <guibutton>Properties</guibutton> in the toolbar.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Choose <menuchoice><guimenu>Package</guimenu>
+						<guimenuitem>Properties</guimenuitem></menuchoice> 
+						from the menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Press the key combination 
+						<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+				Activate the <guibutton>Expert</guibutton> tab in the properties dialog. You will
+				see a list of all available version of the package.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
-				Choose the version to be installed from the list.
+				Choose the version to be installed from the list and close the Properties dialog.
 			</para>
 		</listitem>
 		<listitem>
@@ -1147,7 +1187,8 @@
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> 
+						from the menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -1163,8 +1204,14 @@
 
 <sect2 id="synaptic-pkg-executing">
 	<title>
-		Executing Queued Changes
+		To Execute Queued Changes
 	</title>
+	<tip>
+		<para>
+			To show only packages that are queued for changes list apply 
+			the "Queued Changes" filter to the package list.
+		</para>
+	</tip>
 	<para>
 		To execute queued changes:
 	</para>
@@ -1187,30 +1234,21 @@
 			</para>
 		</listitem>
 	</itemizedlist>
-	<tip>
-		<para>
-			To show only packages with queued changes in the package list apply 
-			the "Queued Changes" filter.
-		</para>
-	</tip>
 </sect2>
 <sect2 id="synaptic-pkg-undo">
 	<title>
-		Undoing Queued Changes
+		To Undo Queued Changes
 	</title>
 	<para>
-		To undo a queued change you have the following ways:
+		The following ways allow you to undo queued changes:
 	</para>
 	
 	<variablelist>
 		<varlistentry>
 			<term>
-				Remove package from queue
+				To dequeue a specific package
 			</term>
 			<listitem>
-				<para>
-					To remove a package from the queue:
-				</para>
 				<itemizedlist>
 					<listitem>
 						<para>
@@ -1221,8 +1259,10 @@
 					</listitem>
 					<listitem>
 						<para>
-							Select package with a left mouse click and choose <guibutton>No Changes</guibutton> from the 
-							package control. To select further packages hold down the <keycap>Ctrl</keycap> key while 
+							Select package with a left mouse click and choose 
+							<guibutton>No Changes</guibutton> from the 
+							package control. To select further packages hold down 
+							the <keycap>Ctrl</keycap> key while 
 							left clicking on the additional package.
 						</para>
 					</listitem>
@@ -1237,12 +1277,12 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Clear all queued changes
+				Undo all queued changes
 			</term>
 			<listitem>
 				<para>
 					Choose <menuchoice><guimenu>Actions</guimenu>
-					<guimenuitem>Clear All Queued Changes</guimenuitem></menuchoice>
+					<guimenuitem>Undo All Queued Changes</guimenuitem></menuchoice>
 					from the menu.
 				</para>
 			</listitem>
@@ -1265,13 +1305,21 @@
 
 <sect2 id="synaptic-pkg-config">
 	<title>
-		Configuring Package
+		To Configure Packages
 	</title>
 
+	<note>
+		<para>
+			This feature is only available on Debian systems and requires the installation of "libgnome2-perl".
+		</para>
+	</note>
 
 	<para>
-		Debian provides a unified configuration interface for packages, so called debconf.
+		Debian provides a unified method (called debconf) to configure software packages. This feature
+		is not supported by all packages. If a package supports this feautre the configuration can be done 
+		through an assistant.
 	</para>
+
 	<para>
 		To configure a supported package:
 	</para>
@@ -1284,24 +1332,24 @@
 		</listitem>
 		<listitem>
 			<para>
-				Click on <guibutton>Configure</guibutton> in the package control.
+				Choose <menuchoice><guimenu>Package</guimenu>
+				<guimenuitem>Configure...</guimenuitem></menuchoice> from the menu.
 			</para>
 		</listitem>
 	</orderedlist>
-
-	<note>
-		<para>
-			This feature requires the installation of "libgnome-perl".
-		</para>
-	</note>
 </sect2>
 
 <sect2 id="synaptic-pkg-docu">
 	<title>
-		Getting Additional Package Documentation
+		To Get Additional Package Documentation
  	</title>
 
-
+	<note>
+		<para>
+			This feature is only available on Debian systems and requires the installation of "dwww".
+		</para>
+	</note>
+	
 	<para>
 		asdasd
 	</para>
@@ -1320,11 +1368,6 @@
 		</listitem>
 	</orderedlist>
 
-	<note>
-		<para>
-			This feature requires the installation of "dwww".
-		</para>
-	</note>
 </sect2>
 
 <sect2 id="synaptic-pkg-fix">

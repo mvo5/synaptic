@@ -3627,10 +3627,10 @@ bool RGMainWindow::restoreState()
     if(broken > 0) {
 	gchar *msg;
 	if(broken == 1) {
-	    msg = ngettext("You have %d broken package on your system\n\n"
-			   "Please try to fix it by visiting the \"Broken\" filter",
-			   "You have %i broken packages on your system\n\n"
-			   "Please try to fix them by visiting the \"Broken\" filter", broken);
+	    msg = ngettext("You have %d broken package on your system!\n\n"
+			   "Use the \"Broken\" filter to locate it.",
+			   "You have %i broken packages on your system!\n\n"
+			   "Use the \"Broken\" filter to locate them.", broken);
 	    msg = g_strdup_printf(msg, broken);
 	}
 	_userDialog->warning(msg);

@@ -9,17 +9,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Synaptic cvs\n"
+"Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 23:51+0100\n"
-"PO-Revision-Date: 2004-08-09 17:35+0200\n"
+"POT-Creation-Date: 2004-11-21 13:02+0100\n"
+"PO-Revision-Date: 2004-11-21 13:15+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.3.1\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: common/sections_trans.cc:12
@@ -314,8 +314,7 @@ msgid "Cleaning package lists..."
 msgstr "Bezig met opschonen pakketlijsten..."
 
 #: common/rcdscanner.cc:326
-msgid ""
-"Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgid "Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr "Kan geen pakketbestanden vinden. Misschien is dit geen APT-schijf."
 
 #: common/rcdscanner.cc:377
@@ -372,9 +371,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "FOUT: kan configuratiemap %s niet aanmaken"
 
 #: common/rconfiguration.cc:143
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create log directory %s"
-msgstr "FOUT: kan configuratiemap %s niet aanmaken"
+msgstr "FOUT: kan logboekmap %s niet aanmaken"
 
 #: common/rconfiguration.cc:227
 #, c-format
@@ -705,53 +704,60 @@ msgid "Unable to correct missing packages"
 msgstr "Kan niet corrigeren voor missende pakketten"
 
 #: common/rpackagelister.cc:1464
-#, fuzzy
 msgid ""
 "\n"
 "The following ESSENTIAL packages are removed:\n"
-msgstr "Er zal %d pakket bijgewerkt worden\n"
+msgstr ""
+"\n"
+"De volgende ESSENTIËLE pakketten worden verwijderd:\n"
 
 #: common/rpackagelister.cc:1472
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are DOWNGRADED:\n"
-msgstr "Er zal %d pakket bijgewerkt worden\n"
+"The follwoing packages are DOWNGRADED:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden bijgewerkt naar een OUDERE VERSIE:\n"
 
 #: common/rpackagelister.cc:1480
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are purged:\n"
-msgstr "Er zal %d pakket bijgewerkt worden\n"
+"The follwoing packages are purged:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden volledig verwijderd:\n"
 
 #: common/rpackagelister.cc:1488
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are removed:\n"
-msgstr "Er zal %d pakket bijgewerkt worden\n"
+"The follwoing packages are removed:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden verwijderd:\n"
 
 #: common/rpackagelister.cc:1496
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are upgraded:\n"
-msgstr "Er zal %d pakket bijgewerkt worden\n"
+"The follwoing packages are upgraded:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden bijgewerkt:\n"
 
 #: common/rpackagelister.cc:1506
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are installed:\n"
-msgstr "Er zal %d nieuw pakket geïnstalleerd worden\n"
+"The follwoing packages are installed:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden geïnstalleerd:\n"
 
 #: common/rpackagelister.cc:1515
-#, fuzzy
 msgid ""
 "\n"
-"The following packages are re-installed:\n"
-msgstr "Er zal %d nieuw pakket ge-herinstalleerd worden\n"
+"The follwoing packages are re-installed:\n"
+msgstr ""
+"\n"
+"De volgende pakketten worden ge-herinstalleerd:\n"
 
 #: common/rpackagelister.cc:1532
 msgid "Unable to lock the download directory"
@@ -865,7 +871,6 @@ msgid "_Force Version"
 msgstr "Versie _forceren"
 
 #: gtk/dialog_upgrade.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
@@ -881,7 +886,7 @@ msgstr ""
 "<b><big>Nieuwe versie slim markeren?</big></b>\n"
 "\n"
 "De standaardmanier slaat pakketten over waarvan installatie van de nieuwe "
-"versie de installatie / verwijdering van andere pakketten zou introduceren.\n"
+"versie de installatie / verwijdering van andere pakketten zou vereisen.\n"
 "\n"
 "De slimme manier (dist-upgrade) probeert deze problemen zo slim mogelijk op "
 "eigen kracht op te lossen.\n"
@@ -1061,13 +1066,13 @@ msgid "URI"
 msgstr "URI"
 
 #: gtk/rgfetchprogress.cc:153
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<big><b>%s</b></big> \n"
 "\n"
 "%s"
 msgstr ""
-"<big><b>%s</b></big>\n"
+"<big><b>%s</b></big> \n"
 "\n"
 "%s"
 
@@ -1391,19 +1396,18 @@ msgid "Save full state, not only changes"
 msgstr "Volledige status opslaan, niet alleen veranderingen"
 
 #: gtk/rgmainwindow.cc:2098
-#, fuzzy
 msgid "Repositories changed"
-msgstr "Pakketbronnen"
+msgstr "Pakketbronnen veranderd"
 
 #: gtk/rgmainwindow.cc:2099
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
-msgstr ""
+msgstr "De informatie over de pakketbronnen is veranderd. U dient op de knop \"Herladen\" te klikken om de veranderingen door te voeren"
 
 #: gtk/rgmainwindow.cc:2110
 msgid "Never show this message again"
-msgstr ""
+msgstr "Dit bericht niet meer weergeven"
 
 #: gtk/rgmainwindow.cc:2164
 #, c-format
@@ -1580,7 +1584,7 @@ msgstr "Kan vendors.list bestand niet inlezen"
 
 #: gtk/rgrepositorywin.cc:496
 msgid "Unknown source type"
-msgstr "Obekend brontype"
+msgstr "Onbekend brontype"
 
 #: gtk/rgsummarywindow.cc:85
 msgid "(ESSENTIAL) to be removed"
@@ -1588,12 +1592,11 @@ msgstr "(ESSENTIEEL) te verwijderen"
 
 #: gtk/rgsummarywindow.cc:98
 msgid "To be DOWNGRADED"
-msgstr "Bijwerken met oudere versie"
+msgstr "Bijwerken naar OUDERE VERSIE"
 
 #: gtk/rgsummarywindow.cc:124
-#, fuzzy
 msgid "To be removed with configuration"
-msgstr "Configuratie behouden"
+msgstr "Volledig verwijderen"
 
 #: gtk/rgsummarywindow.cc:176
 msgid "To be not upgraded"
@@ -1610,9 +1613,9 @@ msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> zal vervangen worden <b>door een oudere versie</b>\n"
 
 #: gtk/rgsummarywindow.cc:230
-#, fuzzy, c-format
+#, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
-msgstr "<b>%s</b> zal verwijderd worden\n"
+msgstr "<b>%s</b> zal volledig verwijderd worden\n"
 
 #: gtk/rgsummarywindow.cc:238
 #, c-format
@@ -1622,8 +1625,7 @@ msgstr "<b>%s</b> zal verwijderd worden\n"
 #: gtk/rgsummarywindow.cc:247
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
-msgstr ""
-"<b>%s</b> (versie <i>%s</i>) zal bijgewerkt worden naar versie <i>%s</i>\n"
+msgstr "<b>%s</b> (versie <i>%s</i>) zal bijgewerkt worden naar versie <i>%s</i>\n"
 
 #: gtk/rgsummarywindow.cc:258
 #, c-format
@@ -1686,16 +1688,14 @@ msgstr[1] "Er zullen %d pakketten verwijderd worden\n"
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "Er zal %d pakket naar een <b>oudere versie</b> bijgewerkt worden\n"
-msgstr[1] ""
-"Er zullen %d pakketten naar een <b>oudere versie</b> bijgewerkt worden\n"
+msgstr[1] "Er zullen %d pakketten naar een <b>oudere versie</b> bijgewerkt worden\n"
 
 #: gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Waarschuwing:</b> %d essentieel pakket zal verwijderd worden!\n"
-msgstr[1] ""
-"<b>Waarschuwing:</b> %d essentiële pakketten zullen verwijderd worden!\n"
+msgstr[1] "<b>Waarschuwing:</b> %d essentiële pakketten zullen verwijderd worden!\n"
 
 #: gtk/rgsummarywindow.cc:433
 #, c-format
@@ -1933,7 +1933,7 @@ msgstr "Versies"
 
 #: gtk/window_main.glade.h:46
 msgid "View Commit Log"
-msgstr ""
+msgstr "Logboek raadplegen"
 
 #: gtk/window_main.glade.h:47
 msgid "_About"
@@ -2141,8 +2141,7 @@ msgstr "Pakketbeheer met apt."
 msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
-msgstr ""
-"Deze software wordt verspreid onder de GNU General Public License, Versie 2."
+msgstr "Deze software wordt verspreid onder de GNU General Public License, Versie 2."
 
 #: gtk/window_about.glade.h:29
 msgid "Translated by"
@@ -2205,8 +2204,7 @@ msgstr ""
 msgid ""
 "The chosen action also affects other packages. The following changes are "
 "required in order to proceed."
-msgstr ""
-"De gekozen actie vereist het doorvoeren van de volgende extra veranderingen."
+msgstr "De gekozen actie vereist het doorvoeren van de volgende extra veranderingen."
 
 #: gtk/window_changes.glade.h:3
 msgid "_Mark"
@@ -2279,8 +2277,7 @@ msgstr "Veranderingen toepassen in een terminal-venster"
 
 #: gtk/window_preferences.glade.h:18
 msgid "Ask to confirm changes also affecting other packages"
-msgstr ""
-"Bevestiging vragen voor veranderingen die ook andere pakketten beïnvloeden"
+msgstr "Bevestiging vragen voor veranderingen die ook andere pakketten beïnvloeden"
 
 #: gtk/window_preferences.glade.h:19
 msgid "Ask to quit after the changes have been applied successfully"
@@ -2298,8 +2295,7 @@ msgstr "Gebroken:"
 
 #: gtk/window_preferences.glade.h:22
 msgid "Clicking on the status icon marks the most likely action"
-msgstr ""
-"Klikken op het statuspictogram activeert de meest waarschijnlijke actie"
+msgstr "Klikken op het statuspictogram activeert de meest waarschijnlijke actie"
 
 #: gtk/window_preferences.glade.h:23
 msgid "Color"
@@ -2474,8 +2470,7 @@ msgid "Removal of packages: "
 msgstr "Verwijdering van pakketten: "
 
 #: gtk/window_preferences.glade.h:67
-msgid ""
-"Select the default release if more than one is specifed in the sources.list"
+msgid "Select the default release if more than one is specifed in the sources.list"
 msgstr "Kies de standaardversie als er meer dan een mogelijk zijn"
 
 #: gtk/window_preferences.glade.h:68
@@ -2511,10 +2506,8 @@ msgid "_Terminal Font"
 msgstr "_Terminal-lettertype"
 
 #: gtk/window_disc_name.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Geef de naam van de Cd-rom</span>"
+msgid "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">Geef de naam van de Cd-rom</span>"
 
 #: gtk/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2530,8 +2523,7 @@ msgstr ""
 
 #: gtk/window_setopt.glade.h:2
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Een interne optie instellen</span>"
+msgstr "<span size=\"large\" weight=\"bold\">Een interne optie instellen</span>"
 
 #: gtk/window_setopt.glade.h:3
 msgid "Only experts should use this."
@@ -2550,8 +2542,7 @@ msgid "<b>Summary</b>"
 msgstr "<b>Samenvatting</b>"
 
 #: gtk/window_summary.glade.h:4
-msgid ""
-"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+msgid "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">De volgende veranderingen toepassen?</"
 "span>"
@@ -2886,8 +2877,7 @@ msgstr ""
 "installeren en bij te werken."
 
 #: gtk/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
+msgid "You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
 "U kunt pakketten op diverse manieren markeren om bij te werken, te "
 "verwijderen of te installeren:"
@@ -3046,69 +3036,15 @@ msgid ""
 "security updates available. It is recommended to reload the package "
 "information regularly."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Uw pakketinformatie is verouderd</span>\n"
+"\n"
+"Uw pakketinformatie is meer dan 2 dagen oud. Er zouden belangrijke beveiligingsupdates kunnen zijn. U dient de pakketinformatie regelmatig bij te werken."
 
 #: gtk/dialog_update_outdated.glade.h:4
-#, fuzzy
 msgid "Remember the answer"
 msgstr "Dit antwoord onthouden"
 
 #: gtk/dialog_update_outdated.glade.h:5
-#, fuzzy
 msgid "_Reload"
-msgstr "Herladen"
+msgstr "_Herladen"
 
-#~ msgid ""
-#~ "<b><big>The grafical user interface (xlib) does not support your chosen "
-#~ "language environment</big></b>\n"
-#~ "\n"
-#~ "Synaptic can crash if you decide to continue with unchanged localisation "
-#~ "preferences. Language values like \"fr_FR.iso8859-15@euro\" are not "
-#~ "supported. Use values like \"fr_FR\" or \"fr_FR@euro\" for your "
-#~ "language.\n"
-#~ "\n"
-#~ "Contact the mailing list for comments or help:\n"
-#~ "<i>synaptic-devel@nongnu.org</i> \n"
-#~ "Include the output of the \"locale\" command in your email."
-#~ msgstr ""
-#~ "<b><big>De grafische schil (xlib) heeft geen ondersteuning voor uw "
-#~ "taalomgeving</big></b>\n"
-#~ "\n"
-#~ "Synaptic zou kunnen crashen als u besluit door te gaan met uw huidige "
-#~ "instellingen. Gebruik alstublieft instellingen als \"nl_NL\" of nl_NL@euro"
-#~ "\". Gebruik geen instellingen als \"nl_NL.iso8859-15@euro\".\n"
-#~ "\n"
-#~ "Neem (in het engels) contact op met de discussielijst voor commentaar of "
-#~ "hulp:\n"
-#~ "<i>synaptic-devel@nongnu.org</i> \n"
-#~ "Voeg de uitvoer van de opdracht \"locale\" als bijlage toe aan uw e-mail."
-
-#~ msgid "Save changes"
-#~ msgstr "Veranderingen opslaan"
-
-#~ msgid "Downloading Files"
-#~ msgstr "Ophalen van bestanden"
-
-#, fuzzy
-#~ msgid "Refresh the list of known packages from remote server"
-#~ msgstr "Lijst van bekende pakketten verversen"
-
-#~ msgid "Downloading Index Files"
-#~ msgstr "Ophalen van lijstbestanden"
-
-#~ msgid "Refreshing package list..."
-#~ msgstr "Opschonen van pakketlijsten..."
-
-#~ msgid "To be kept back"
-#~ msgstr "Onveranderd"
-
-#~ msgid "Alphabet"
-#~ msgstr "Alfabet"
-
-#~ msgid "Release"
-#~ msgstr "Uitgave"
-
-#~ msgid "<b>Single Files:</b>"
-#~ msgstr "<b>Losse bestanden:</b>"
-
-#~ msgid "<b>Total Progress:</b>"
-#~ msgstr "<b>Voortgang:</b>"

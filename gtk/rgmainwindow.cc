@@ -118,7 +118,9 @@ void RGMainWindow::changedDepView(GtkWidget *self, void *data)
 
 void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 {
-  RGMainWindow *me = (RGMainWindow*)gtk_object_get_data(GTK_OBJECT(self), "me");
+  RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
+  assert(me);
+
   RPackage *pkg, *newpkg;
   RFilter *filter;
   GList *selection;
@@ -129,12 +131,18 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
 
   me->_lister->unregisterObserver(me);
   me->setInterfaceLocked(TRUE);
-  
+
+  // we always save the state (for undo)
+  RPackageLister::pkgState state;
+  me->_lister->saveState(state);
+  me->_lister->saveUndoState(state);  
+
   // we need to go into "all package" mode 
   filter = me->_lister->getFilter();
   me->_lister->setFilter();
 
   pkg = (RPackage*)gtk_object_get_data(GTK_OBJECT(me->_recList),"pkg");
+  assert(pkg);
 
   switch((int)data) {
   case InstallRecommended:
@@ -839,7 +847,6 @@ void RGMainWindow::forgetNewPackages()
 void RGMainWindow::saveTableState(vector<string>& expanded_sections) 
 {
   GtkTreeIter parentIter;  /* Parent iter */
-  RPackage *pkg;
 
   if (gtk_tree_view_get_model(GTK_TREE_VIEW(_treeView)) == NULL)
       return;
@@ -1466,6 +1473,10 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 	  break;
       case PKG_INSTALL: // install
 	  me->pkgInstallHelper(pkg);
+	  if(_config->FindB("Synaptic::AutoInstallRecommended",0)) {
+	      cout << "auto installing recommended" << endl;
+	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
+	  }
 	  break;
       case PKG_DELETE: // delete
 	  me->pkgRemoveHelper(pkg);
@@ -1923,6 +1934,32 @@ void RGMainWindow::buildInterface()
 				  "on_redo1_activate",
 				  G_CALLBACK(redoClicked),
 				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_rec_install_clicked",
+				  G_CALLBACK(clickedRecInstall),
+				  GINT_TO_POINTER(InstallRecommended)); 
+    g_object_set_data(G_OBJECT(glade_xml_get_widget(_gladeXML, 
+						    "button_rec_install")),
+		      "me", this);
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_suc_install_clicked",
+				  G_CALLBACK(clickedRecInstall),
+				  GINT_TO_POINTER(InstallSuggested)); 
+    g_object_set_data(G_OBJECT(glade_xml_get_widget(_gladeXML, 
+						    "button_suc_install")),
+		      "me", this);
+
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_button_sel_install_clicked",
+				  G_CALLBACK(clickedRecInstall),
+				  GINT_TO_POINTER(InstallSelected)); 
+    g_object_set_data(G_OBJECT(glade_xml_get_widget(_gladeXML, 
+						    "button_sel_install")),
+		      "me", this);
+
 
 
     // workaround for a bug in libglade
@@ -2422,7 +2459,6 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 void RGMainWindow::pkgInstallHelper(RPackage *pkg)
 {
   pkg->setInstall();
-
   // check whether something broke
   if (!_lister->check()) {
       _lister->fixBroken();

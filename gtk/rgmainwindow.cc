@@ -351,6 +351,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_pkgHelpM, FALSE);
    gtk_widget_set_sensitive(_pkginfo, false);
    gtk_widget_set_sensitive(_dl_changelogM, FALSE);
+   gtk_widget_set_sensitive(_detailsM, FALSE);
+   gtk_widget_set_sensitive(_propertiesB, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -398,8 +400,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 					pkg->dependsOn("debconf-i18n")))
        gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
 
-   // changelog is always visible
+   // changelog and properties are always visible
    gtk_widget_set_sensitive(_dl_changelogM, TRUE);
+   gtk_widget_set_sensitive(_detailsM, TRUE);
+   gtk_widget_set_sensitive(_propertiesB, TRUE);
 
    // set the "keep" menu icon according to the current status
    GtkWidget *img;
@@ -1004,6 +1008,10 @@ void RGMainWindow::buildInterface()
                                  "on_save_as_activate",
                                  G_CALLBACK(cbSaveAsClicked), this);
 
+   widget = _detailsM = glade_xml_get_widget(_gladeXML, "menu_details");
+   assert(_detailsM);
+   g_object_set_data(G_OBJECT(widget), "me", this);
+
    widget = _keepM = glade_xml_get_widget(_gladeXML, "menu_keep");
    assert(_keepM);
    img = get_gtk_image("package-available");
@@ -1427,7 +1435,6 @@ void RGMainWindow::setStatusText(char *text)
 
    gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
    gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
-   gtk_widget_set_sensitive(_propertiesB, (bool)selectedPackage());
 
    gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
    gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);

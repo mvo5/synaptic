@@ -103,7 +103,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // menu items 
    GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;
-   GtkWidget *_dl_changelogM;
+   GtkWidget *_dl_changelogM, *_detailsM;
 
    // popup-menu
    GtkWidget *_popupMenu;

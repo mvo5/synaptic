@@ -94,6 +94,7 @@ bool SourcesList::ReadSourcePart(string listpath)
 			}
 		}
 
+#ifndef HAVE_RPM
 		// check for absolute dist
 		if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size()-1] == '/') {
 			// make sure there's no section
@@ -106,6 +107,7 @@ bool SourcesList::ReadSourcePart(string listpath)
 			AddSourceNode(rec);
 			continue;
 		}
+#endif
 
 		const char *tmp = p;
 		rec.NumSections = 0;

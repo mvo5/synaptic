@@ -78,12 +78,12 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    RGGladeUserDialog dia(this, "conffile");
    GladeXML *xml = dia.getGladeXML();
 
-   p = g_strdup_printf(_("Install new configuration file '%s'?"),conffile);
+   p = g_strdup_printf(_("Install new configuration file\n'%s'?"),conffile);
    s = g_strdup_printf(_("The configuration file %s was modified (by "
 			 "you or by a script). A updated version is shipped "
 			 "in this package. If you want to keep your current "
 			 "version say 'No'. Do you want to install the "
-			 "package maintainers version? "),conffile);
+			 "new package maintainers version? "),conffile);
 
    // setup dialog
    w = glade_xml_get_widget(xml, "label_message");

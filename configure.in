@@ -1,0 +1,182 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT(configure.in)
+
+AM_INIT_AUTOMAKE(synaptic, 0.32)
+AM_CONFIG_HEADER(config.h)
+AM_MAINTAINER_MODE
+
+dnl Checks for programs.
+AC_ISC_POSIX
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_HEADER_STDC
+AC_PROG_CXX
+AC_PROG_MAKE_SET
+AC_PROG_RANLIB
+
+dnl i18n
+ALL_LINGUAS="pt_BR es fr de tr zh_CN zh_HK zh_TW ru"
+AM_GLIB_GNU_GETTEXT
+GETTEXT_PACKAGE=synaptic
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE")
+     
+
+dnl ask for wings
+AC_ARG_WITH(wings,
+	[--with-wings   build with WINGs gui (obsolete)],
+	[AC_CHECK_PROG(WINGS, get-wings-flags, yes, no)
+	if test x"$WINGS" == xno; then
+	   AC_MSG_ERROR([WINGs is not installed])
+	fi
+	]
+)
+
+dnl Checks for gtk
+pkg_modules="gtk+-2.0 >= 2.0.0, libglade-2.0 >= 2.0.0, pango >= 1.0.0, glib-2.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+AC_SUBST(PACKAGE_CFLAGS)
+AC_SUBST(PACKAGE_LIBS)
+BUILD_gtk="gtk"	
+AC_SUBST(BUILD_gtk)
+
+
+if test x"$WINGS" = xno; then
+if test x"$GTK" = xno; then
+	AC_MSG_ERROR([Neither WINGs nor Gtk is installed, you need to install either one to get a GUI])
+fi
+fi
+
+if test x"$WINGS" = xyes; then
+	BUILD_wings="wings"
+	WINGS_LIBS=`get-wings-flags --ldflags`
+	WINGS_LIBS="$GUI_LIBS `get-wings-flags --libs`"
+	WINGS_HDRS=`get-wings-flags --cflags`
+	AC_SUBST(WINGS_LIBS)
+	AC_SUBST(WINGS_HDRS)
+fi
+AC_SUBST(BUILD_wings)
+
+
+
+dnl Check for rpm version 
+dnl =====================
+rpm_version="none"
+AC_MSG_CHECKING(RPM version)
+SAVE_LIBS="$LIBS"
+SAVE_CPPFLAGS="$CPPFLAGS"
+
+RPM_HDRS=""
+LIBS="$SAVE_LIBS -ldb -lrpmio -lrpmdb -lz -lbz2 -lpopt"
+CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
+AC_CHECK_HEADER(rpm/rpmlib.h,
+      [AC_CHECK_LIB(rpm,rpmdbInitIterator,
+        [AC_DEFINE(HAVE_RPM) 
+         RPM_LIBS="-lrpm -ldb -lrpmio -lrpmdb -lz -lbz2 -lpopt"
+         SAVE_CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
+	 RPM_HDRS="-I/usr/include/rpm"
+         rpm_version="4"])])
+
+if test $rpm_version = "none"; then
+LIBS="$SAVE_LIBS -ldb1 -lz -lbz2 -lpopt"
+CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
+AC_CHECK_HEADER(rpm/rpmlib.h,
+      [AC_CHECK_LIB(rpm,rpmdbOpen,
+        [AC_DEFINE(HAVE_RPM) 
+         RPM_LIBS="-lrpm -ldb1 -lz -lbz2 -lpopt"
+         SAVE_CPPFLAGS="$SAVE_CPPFLAGS -I/usr/include/rpm"
+	 RPM_HDRS="-I/usr/include/rpm"
+         rpm_version="3"])])
+fi
+
+AC_SUBST(RPM_LIBS)
+AC_SUBST(RPM_HDRS)
+CPPFLAGS="$SAVE_CPPFLAGS"
+LIBS="$SAVE_LIBS"
+AC_MSG_RESULT("RPM version is $rpm_version")
+
+
+DEB_HDRS=""
+AC_SUBST(DEB_HDRS)
+DEB_LIBS=""
+AC_SUBST(DEB_LIBS)
+
+
+dnl Checks for header files.
+AC_HEADER_STDC
+
+AC_CHECK_HEADERS(unistd.h libintl.h iconv.h)
+
+AC_LANG_CPLUSPLUS
+AC_CHECK_HEADER(apt-pkg/configuration.h)
+
+if test x$ac_cv_header_apt_pkg_configuration_h != xyes; then
+	AC_ERROR([You need the apt-pkg headers installed to compile synaptic.])
+fi
+
+AC_LANG_C
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+
+dnl Checks for library functions.
+AC_FUNC_STRCOLL
+AC_CHECK_FUNCS(regcomp strdup iconv)
+
+AC_ARG_WITH(pkg-hold, 
+	[--with-pkg-hold   build with experimental package "hold" feature],
+        AC_DEFINE(SYNAPTIC_PKG_HOLD)
+)
+
+
+AC_ARG_WITH(debian-description-parser,
+	[--with-debian-description-parser   build with alternative description parser for debian],
+        AC_DEFINE(SYNAPTIC_DEB_PARSER)
+)
+
+dnl if compiled with SWIG, do all the checking
+AC_ARG_WITH(swig,
+	      [--with-swig  compile with swig python interface],
+	      [AC_PATH_PROG(SWIG, swig swig1.3)
+	      if test x"$SWIG" != x; then
+	        AC_SUBST(PYTHON_INCLUDES)
+  		AC_PATH_PROG(PYTHON, python python2.2 python2.1 python2.0)
+		changequote(<<<, >>>)dnl
+		PYTHON_VERSION=`$PYTHON -c "import sys; print sys.version[:3]"`
+		changequote([, ])dnl
+		py_prefix=`$PYTHON -c "import sys; print sys.prefix"`
+		PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+		SAVE_CPPFLAGS="$CPPFLAGS"
+		CPPFLAGS="$SAVE_CPPFLAGS $PYTHON_INCLUDES"
+		AC_CHECK_HEADER(Python.h, ,
+			        AC_ERROR([Can't find Python.h]))
+		CPPFLAGS="$SAVE_CPPFLAGS"
+	      else
+	         AC_ERROR([Can't find swig >= 1.3])
+	      fi])
+AM_CONDITIONAL(COMPILE_SWIG, test x"$SWIG" != x)
+
+dnl check for libzvt
+AC_ARG_WITH(zvt, 
+	      [--with-zvt  compile with libzvt support (terminal output)], 
+	      [pkg_modules="libzvt-2.0 >= 2.0.0"
+	      PKG_CHECK_MODULES(ZVT, [$pkg_modules])
+	      AC_DEFINE(HAVE_ZVT)	 
+	      AC_SUBST(ZVT_CFLAGS)
+	      AC_SUBST(ZVT_LIBS)
+	      ]
+	      )
+
+AC_OUTPUT([
+common/Makefile 
+wings/Makefile 
+gtk/Makefile
+data/Makefile
+man/Makefile
+pixmaps/Makefile 
+po/Makefile.in
+Makefile
+],[sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile])
+
+

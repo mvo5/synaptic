@@ -1,0 +1,46 @@
+Configure:
+   - add install target for the python module
+   - allways give the correct path in the synaptic.desktop file
+     (currently hardcoded)
+
+GUI:
+   -  configure whether we want text under icons or not
+   - add a button to undo all programmed changes
+   - add context-menu on right-click (del/inst/upgr/show descr in own window)
+
+Filter:
+   - add missing functionality in rpackagefilter line 183 (Provides filter)
+   - add "immutable" filters that can be configured via /etc/synaptic/filters
+   - dependencies of selected package
+   - dependents of selected package
+   - obsolete packages (installed, but no install version available)
+
+General:
+   - problem if a pkglist is not available on startup (maybe rpm only?)
+   - make log-file
+   - current task support is broken, try to fix it
+   - implement raptoptions save/restore for getFlags/setFlags 
+   - add something that adds cdrom uris to the sources
+
+Done:
+   - implement some kind of deborphan functionality (make it a filter)
+   - filter for "residual configuration" (removed, but still configuration)
+   - make a extra warning if packages are deleted (via Summary Window)
+   - label with short description resizes the gui (ugly)
+   - add filters to menu (done)
+   - make easy way to filter for description 
+   - make more than one package selectable and allow "install", "keep" etc
+     on this groups (done)
+   - remove the update button in rgsrcwindow.cc (done)
+   - add more key-shortcuts (done)
+   - add repository dialog (done)
+   - new packages in repository (done)
+   - add cmdline argument for selecting a initial filter (done)
+   - test for "swig" in configure.in (done)
+   - get rid of all gtk_widget_set_usize() [mostly gone]
+   - use colors to show different stuff about the package 
+     (e.g. blue if upgradeable, red if broken etc) [done]
+   - some online-help/mini-tutorial (partly done)
+   - handle "|" case in WDepends (partly)
+   - implement "Hold package" (partly)   
+   - add man-page and localised man-page (done)

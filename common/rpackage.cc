@@ -1,0 +1,947 @@
+/* rpackage.cc - wrapper for accessing package information
+ * 
+ * Copyright (c) 2000, 2001 Conectiva S/A 
+ *               2002 Michael Vogt <mvo@debian.org>
+ * 
+ * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
+ *         Michael Vogt <mvo@debian.org>
+ * 
+ * Portions Taken from Gnome APT
+ *   Copyright (C) 1998 Havoc Pennington <hp@pobox.com>
+ * 
+ *
+ * This program is free software; you can redistribute it and/or 
+ * modify it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+ * USA
+ */
+
+
+#include "config.h"
+
+#include "rpackage.h"
+#include "rpackagelister.h"
+
+#include "i18n.h"
+
+#include <map>
+#include <fstream>
+#include <cstdio>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+#include <apt-pkg/pkgrecords.h>
+#include <apt-pkg/depcache.h>
+#include <apt-pkg/srcrecords.h>
+#include <apt-pkg/algorithms.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/tagfile.h>
+#include <apt-pkg/policy.h>
+#include <apt-pkg/sptr.h>
+#include <apt-pkg/strutl.h>
+
+#include "raptoptions.h"
+
+
+static char descrBuffer[4096];
+
+
+
+RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
+		   pkgRecords *records, pkgCache::PkgIterator &pkg)
+  : _lister(lister), _records(records), _depcache(depcache), 
+    _newPackage(false), _pinnedPackage(false), _orphanedPackage(false)
+{
+    _package = new pkgCache::PkgIterator(pkg);
+}
+
+
+RPackage::~RPackage()
+{
+  delete _package;
+}
+
+
+void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
+{
+  _virtualPackages.push_back(dep);
+}
+
+
+const char *RPackage::section()
+{
+    return _package->Section();
+}
+
+
+const string RPackage::summary()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (!ver.end()) {
+	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+	
+	return parser.ShortDesc();
+    }
+    return "";
+}
+
+
+const string RPackage::maintainer()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (!ver.end()) {
+//	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+	
+//	return parser.Maintainer();
+    }
+    return "";
+}
+    
+
+const char *RPackage::vendor()
+{
+    return "dunno";
+}
+
+const char *RPackage::installedVersion()
+{
+    pkgCache::VerIterator ver = _package->CurrentVer();
+
+    if (ver != 0)
+	return ver.VerStr();
+    else
+	return NULL;
+}
+
+
+const char *RPackage::availableVersion()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+
+    if (!ver.end()) {
+	return ver.VerStr();
+    } else 
+	return NULL;
+}
+
+const char *RPackage::availableDownloadableVersion()
+{
+  pkgCache::VerIterator ver = _package->VersionList();
+
+  while(!ver.end()) {
+    if(ver.Downloadable())
+      return ver.VerStr();
+    ver++;
+  }
+  return NULL;
+}
+
+bool RPackage::downloadable()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (ver != 0) {
+	return ver.Downloadable();
+    } else {
+	return false;
+    }
+}
+
+
+const char *RPackage::priority()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (ver != 0)
+	return ver.PriorityType();
+    else
+	return NULL;
+}
+
+
+
+bool RPackage::isImportant()
+{
+    if ((*_package)->Flags & (pkgCache::Flag::Important|pkgCache::Flag::Essential))
+	return true;
+
+    return false;
+}
+
+
+static char *parseDescription(string descr)
+{
+    const char *end;
+    const char *p;
+    int i;
+
+    if (descr.size() > sizeof(descrBuffer))
+	return "Description Too Long";
+
+    p = descr.c_str();
+    end = p+descr.size(); // mvo: hackish, but works
+
+    /* mvo: don't delete \n etc, honor lists */
+#ifdef SYNAPTIC_DEB_PARSER
+    unsigned int nlpos = descr.find('\n');
+    // delete first line
+    if( nlpos != string::npos )
+      descr.erase(0,nlpos+2); // del "\n " too
+    
+    while( nlpos < descr.length() ) {
+      nlpos = descr.find('\n', nlpos);
+      if( nlpos == string::npos )
+	break;
+
+      i = nlpos;
+      // del char after '\n' (always " ")
+      i++;
+      descr.erase(i,1);
+
+      // delete lines likes this: " .", makeing it a \n
+      if(descr[i] == '.') {
+	descr.erase(i,1);
+	nlpos++;
+	continue;
+      }
+
+      // skip ws
+      while(descr[++i] == ' ');
+
+//      // not a list, erase nl
+//       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
+// 	descr.erase(nlpos,1);
+
+      nlpos++;
+    }
+    strcpy(descrBuffer, descr.c_str());
+#else
+    int state = 0;
+    char *pp = (char*)descrBuffer;
+
+    while (p != end) {
+	switch (state) {
+	 case 0:
+	    if (*p == '\n')
+		state = 1;
+	    else
+		*pp++ = *p;
+	    break;
+	    
+	 case 1:
+	    if (*p == ' ')
+		state = 2;
+	    else {
+		*pp++ = *p;
+		state = 0;
+	    }
+	    break;
+	    
+	 case 2:
+	    if (!(*p == '\n' || *p == '.')) {
+		*pp++ = ' ';
+		*pp++ = *p;
+	    }
+	    state = 0;
+	    break;
+	}
+	p++;
+    }
+    *pp = '\0';
+#endif /* SYNAPTIC_NEW_PARSER */
+    
+    return descrBuffer;
+}
+
+
+const char *RPackage::description()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (!ver.end()) {
+	pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+
+	return parseDescription(parser.LongDesc());
+    } else {
+	return "";
+    }
+}
+
+
+
+long RPackage::installedSize()
+{
+    pkgCache::VerIterator ver = _package->CurrentVer();
+    
+    if (!ver.end())
+	return ver->InstalledSize;
+    else
+	return -1;
+}
+
+
+long RPackage::availableSize()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (!ver.end() && ver.Downloadable())
+	return ver->InstalledSize;
+    else
+	return -1;    
+}
+
+long RPackage::availableDownloadableSize()
+{
+  pkgCache::VerIterator ver = _package->VersionList();
+  
+  while(!ver.end()) {
+    if(ver.Downloadable())
+      return ver->InstalledSize;
+    ver++;
+  }
+  return -1;    
+}
+
+long RPackage::packageDownloadableSize()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    while(!ver.end()) {
+      if(ver.Downloadable())
+	return ver->Size;
+      ver++;
+    }
+    return -1;
+}
+
+
+long RPackage::packageSize()
+{
+    pkgCache::VerIterator ver = _package->VersionList();
+    
+    if (!ver.end() && ver.Downloadable())
+	return ver->Size;
+    else
+	return -1;
+}
+
+int RPackage::getOtherStatus()
+{
+    pkgCache::VerIterator ver = _package->CurrentVer();
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    int status = 0;
+
+    if(_newPackage) 
+      status |= ONew;
+
+    if(_pinnedPackage)
+      status |= OPinned;
+    
+    if(_orphanedPackage)
+      status |= OOrphaned;
+
+    if((*_package)->CurrentState == pkgCache::State::ConfigFiles) {
+      //cout << "ResidentalConfig found for: "<<name()<<endl;
+      status |= OResidualConfig;
+    }
+
+    return status;
+}
+
+
+RPackage::PackageStatus RPackage::getStatus()
+{
+    pkgCache::VerIterator ver = _package->CurrentVer();
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+
+    if (ver.end())
+	return SNotInstalled;
+    
+    if (state.NowBroken())
+	return SInstalledBroken;
+
+    if (state.Upgradable()) {
+	pkgCache::VerIterator cand = state.CandidateVerIter(*_depcache);
+	
+	if (!cand.end())
+	    return SInstalledOutdated;
+    }
+    if (!ver.end())
+	return SInstalledUpdated;
+
+    return SNotInstalled;
+}
+
+
+
+#if 0
+RPackage::PackageStatus RPackage::getFutureStatus()
+{
+    PackageStatus status = getStatus();
+    MarkedStatus mark = getMarkedStatus();
+    
+    switch (status) {
+     case SNotInstalled:
+	switch (mark) {
+	 case MInstall:
+	    if (_state.InstBroken()) 
+		return SInstalledBroken;
+	    else
+		return SInstalledUpdated;
+	 default:
+	    return SNotInstalled;
+	}
+	break;
+	
+     case SInstalledBroken:
+	if (_state.InstBroken()) 
+	    return SInstalledBroken;
+
+	switch (mark) {
+	 case MInstall:
+	 case MUpgrade:
+	    return SInstalledUpdated;
+	 case MDowngrade:
+	    return SInstalledOutdated;
+	 case MRemove:
+	    return SNotInstalled;
+	 default:
+	    if (_state.Upgradable()) {
+		pkgCache::VerIterator cand = _state.CandidateVerIter(*_depcache);
+		
+		if (!cand.end())
+		    return SInstalledOutdated;
+	    }
+	    return SInstalledUpdated;
+	}
+	break;
+
+     case SInstalledOutdated:
+	switch (mark) {
+	 case MInstall:
+	    if (_state.InstBroken())
+		return SInstalledBroken;
+	    
+	}
+	break;
+	
+     case SInstalledUpdated:
+	break;
+    }
+}
+#endif
+
+RPackage::MarkedStatus RPackage::getMarkedStatus()
+{
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    if (state.NewInstall())
+	return MInstall;
+    
+    if (state.Upgrade())
+	return MUpgrade;
+    
+    if (state.Downgrade())
+	return MDowngrade;
+    
+    if (state.Delete())
+	return MRemove;
+    
+    if (state.Install())
+	return MUpgrade;
+
+    if (state.Keep())
+	return MKeep;
+
+    if (state.Held())
+	return MHeld;
+    
+    cout << _("OH SHIT DUNNO WTF IS GOIN ON!") << endl;
+    return MKeep;
+}
+
+
+bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
+{
+    if (dep->Type != pkgCache::Dep::Suggests
+	&& dep->Type != pkgCache::Dep::Recommends)
+	return false;
+    else
+	return true;
+}
+
+
+bool RPackage::enumWDeps(const char *&type, const char *&what, bool &satisfied)
+{
+    pkgCache::VerIterator ver;
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+
+    if (state.Keep() || state.Held()) {
+	ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+
+	if (ver.end())
+	    ver = _package->VersionList();
+    } else {
+	ver = _package->VersionList();
+    }
+    if (ver.end())
+	return false;
+    
+    _wdepI = ver.DependsList();
+    // uninitialized but doesn't matter, they just have to be equal
+    _wdepStart = _wdepEnd;
+    
+    return nextWDeps(type, what, satisfied);
+}
+
+
+bool RPackage::nextWDeps(const char *&type, const char *&what, bool &satisfied)
+{
+    static char buffer[32];
+
+    while (1) {
+	if (_wdepStart == _wdepEnd) {
+	    if (_wdepI.end())
+		return false;
+
+	    _wdepI.GlobOr(_wdepStart, _wdepEnd);
+
+	    snprintf(buffer, sizeof(buffer), "%s", _wdepEnd.DepType());
+	} else {
+	    _wdepStart++;
+
+	    snprintf(buffer, sizeof(buffer), "| %s", _wdepEnd.DepType());
+	}
+
+	satisfied = false;
+	if (!isWeakDep(_wdepEnd))
+	    continue;
+
+	if (((*_depcache)[_wdepStart] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall)
+	    satisfied = true;
+
+	type = buffer;
+
+	pkgCache::PkgIterator depPkg = _wdepStart.TargetPkg();
+	what = depPkg.Name();
+
+	break;
+    }
+    return true;    
+}
+
+
+bool RPackage::enumRDeps(const char *&dep, const char *&what)
+{
+    _rdepI = _package->RevDependsList();
+
+    _vpackI = 0;
+
+    return nextRDeps(dep, what);
+}
+
+
+bool RPackage::nextRDeps(const char *&dep, const char *&what)
+{
+    while (_rdepI.end()) {
+	if ((unsigned)_vpackI == _virtualPackages.size())
+	    return false;
+
+	_rdepI = _virtualPackages[_vpackI].RevDependsList();
+	_vpackI++;
+    }
+    what = _rdepI.TargetPkg().Name();
+    dep = _rdepI.ParentPkg().Name();
+    
+    _rdepI++;
+
+    return true;
+}
+
+bool RPackage::enumAvailDeps(const char *&type, const char *&what, 
+			const char *&pkg, const char *&which, char *&summary,
+			bool &satisfied)
+{
+    pkgCache::VerIterator ver;
+    //pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    ver = _package->VersionList();
+
+    if (ver.end())
+	return false;
+    
+    _depI = ver.DependsList();
+    // uninitialized but doesn't matter, they just have to be equal    
+    _depStart = _depEnd;
+
+    return nextDeps(type, what, pkg, which, summary, satisfied);
+}
+
+
+bool RPackage::enumDeps(const char *&type, const char *&what, 
+			const char *&pkg, const char *&which, char *&summary,
+			bool &satisfied)
+{
+    pkgCache::VerIterator ver;
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    if (state.Keep() || state.Held()) {
+	ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+
+	if (ver.end())
+	    ver = _package->VersionList();
+    } else {
+	ver = _package->VersionList();
+    }
+    if (ver.end())
+	return false;
+    
+    _depI = ver.DependsList();
+    // uninitialized but doesn't matter, they just have to be equal    
+    _depStart = _depEnd;
+
+    return nextDeps(type, what, pkg, which, summary, satisfied);
+}
+
+
+bool RPackage::nextDeps(const char *&type, const char *&what,
+			const char *&pkg, const char *&which, char *&summary,
+			bool &satisfied)
+{
+    static char buffer[32];
+    static char buffer2[32];
+    static char buffer3[64];
+
+    while (1) {
+	if (_depStart == _depEnd) {
+	    if (_depI.end())
+		return false;
+
+	    _depI.GlobOr(_depStart, _depEnd);
+
+	    snprintf(buffer, sizeof(buffer), "%s", _depEnd.DepType());
+	} else {
+	    _depStart++;
+
+	    snprintf(buffer, sizeof(buffer), "| %s", _depEnd.DepType());
+	}
+
+	if (isWeakDep(_depEnd))
+	    continue;
+
+	satisfied = false;
+	if (((*_depcache)[_depStart] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall)
+	    satisfied = true;
+
+	type = buffer;
+
+	pkgCache::PkgIterator depPkg = _depStart.TargetPkg();
+	what = depPkg.Name();
+	
+
+	if (depPkg->VersionList!=0)
+	    pkg = what;
+	else if (depPkg->ProvidesList!=0)	    
+	    pkg = depPkg.ProvidesList().OwnerPkg().Name();
+	else
+	    pkg = 0;
+	
+	
+	if (_depStart.TargetVer()) {
+	    snprintf(buffer2, sizeof(buffer2), "(%s %s)",
+		     _depStart.CompType(), _depStart.TargetVer());
+	    which = buffer2;	
+	} else {
+	    which = "";
+	}
+
+	buffer3[0] = 0;
+	if (!satisfied && depPkg->ProvidesList == 0) {
+	    pkgCache::VerIterator Ver = (*_depcache)[depPkg].InstVerIter(*_depcache);
+	    
+	    if (!Ver.end())
+		snprintf(buffer3, sizeof(buffer3), _("%s is/will be installed"),
+			 Ver.VerStr());
+	    else {
+		if ((*_depcache)[depPkg].CandidateVerIter(*_depcache).end()) {
+		    if (depPkg->ProvidesList == 0)
+			strcpy(buffer3, _("package is not installable"));
+		    else
+			strcpy(buffer3, _("package is a virtual package"));
+		} else
+		    strcpy(buffer3, _("package is/will not be installed"));
+	    }
+	} else if (satisfied) {
+	    strcpy(buffer3, _("dependency is satisfied"));
+	}
+	summary = buffer3;	
+
+	break;
+    }
+    return true;
+}
+
+
+
+RPackage::UpdateImportance RPackage::updateImportance()
+{
+    return IUnknown;//(*name()) == 'a' ? ISecurity : INormal;
+}
+
+
+const char *RPackage::updateSummary()
+{
+    return "Test\nAdvisory\nYour computer will blow if you dont update.";
+    return NULL;
+}
+
+
+const char *RPackage::updateDate()
+{
+    return "2001-1-1 12:43 GMT";
+    return NULL;
+}
+
+
+const char *RPackage::updateURL()
+{
+    return "http://sekure.org/~dumped/exploitz";
+    return NULL;
+}
+
+
+bool RPackage::wouldBreak()
+{    
+    MarkedStatus mark = getMarkedStatus();
+    pkgDepCache::StateCache &state = (*_depcache)[*_package];
+
+    
+    if (getStatus() == SNotInstalled) {
+	if (mark == MKeep || mark == MHeld)
+	    return false;
+    } else {
+	if (mark == MRemove)
+	    return false;
+    }
+    return state.InstBroken();
+}
+
+
+void RPackage::setKeep()
+{
+    _depcache->MarkKeep(*_package, false);
+    _lister->notifyChange(this);
+}
+
+
+void RPackage::setInstall()
+{
+    _depcache->MarkInstall(*_package, true);
+    _lister->notifyChange(this);
+}
+
+
+void RPackage::setRemove(bool purge)
+{
+    pkgProblemResolver Fix(_depcache);
+    
+    Fix.Clear(*_package);
+    Fix.Protect(*_package);
+    Fix.Remove(*_package);
+    
+    Fix.InstallProtect();
+    Fix.Resolve(true);
+    
+    _depcache->MarkDelete(*_package, purge);
+    
+    _lister->notifyChange(this);
+}
+
+void create_tmpfile(const char *pattern, char **filename, FILE **out)
+{
+  char *tmpdir = NULL;
+  
+  // remove from pin-file
+  if (! ((tmpdir=getenv("TMPDIR")))) {        
+    tmpdir=getenv("TMP");                     
+  }                                         
+  if (!tmpdir) {
+    tmpdir = "/tmp";
+  }
+  *filename = (char*)malloc(strlen(tmpdir)+strlen(pattern)+2);  
+  assert(filename);
+
+  strcpy(*filename, tmpdir); 
+  strcat(*filename, "/");   
+  strcat(*filename, pattern);   
+  int tmp_fd = mkstemp(*filename);
+  *out = fdopen(tmp_fd, "w+b");
+}
+
+
+void RPackage::setPinned(bool flag)
+{
+  FILE *out;
+  char pattern[] = "syn-XXXXXX";
+  char *filename = NULL;
+  struct stat stat_buf;
+
+  string File = _config->FindFile("Dir::Etc::Preferences");
+  _pinnedPackage = flag;
+    
+  if (flag) {
+    // pkg already in pin-file
+    if(_roptions->getPackageLock(name()))
+      return;
+
+    // write to pin-file
+    ofstream out(File.c_str(), ios::app);
+    out << "Package: " << name() << endl;
+    out << "Pin: version " << installedVersion() << endl << endl;
+  } else {
+    // delete package from pinning file
+    stat(File.c_str(),&stat_buf);
+    create_tmpfile(pattern, &filename, &out);
+    if(out == NULL)
+      cerr << "error opening tmpfile: " << filename << endl;
+    FileFd Fd(File,FileFd::ReadOnly);
+    pkgTagFile TF(&Fd);
+    if (_error->PendingError() == true)
+      return;
+    pkgTagSection Tags;
+    while (TF.Step(Tags) == true) {
+      string Name = Tags.FindS("Package");
+      if (Name.empty() == true) {
+	_error->Error(_("Invalid record in the preferences file, no Package header"));
+	return;
+      }
+      if (Name != name()) {
+	TFRewriteData tfrd;
+	tfrd.Tag = 0;
+	tfrd.Rewrite = 0;
+	tfrd.NewTag = 0;
+	TFRewrite(out, Tags, TFRewritePackageOrder, &tfrd);
+	fprintf(out, "\n");
+      }
+    }
+    fflush(out);
+    rename(filename, File.c_str());
+    chmod(File.c_str(), stat_buf.st_mode);
+    free(filename);
+  }
+}
+
+
+bool RPackage::isShallowDependency(RPackage *pkg)
+{
+  pkgCache::DepIterator rdepI;
+
+  // check whether someone else depends on a virtual pkg of this
+  for (int i = -1; i < (int)pkg->_virtualPackages.size(); i++) {
+    if( i < 0 ) {
+      rdepI = pkg->_package->RevDependsList();
+    } else {
+      pkgCache::PkgIterator it = pkg->_virtualPackages[i];
+      rdepI = it.RevDependsList();
+    }
+
+    while (!rdepI.end()) {
+
+      // check whether the dependant is installed
+      if (rdepI.ParentPkg().CurrentVer().end()) { // not installed
+	// XXX check whether its marked for install
+	rdepI++;
+	continue;
+      }
+	    
+      // check whether the dependant isn't the own package
+      if (rdepI.ParentPkg() == *_package) {
+	rdepI++;
+	continue;
+      }
+
+      // XXX should check for dependencies that depend on
+      // dependencies of the same package
+	    
+      return false;
+    }
+  }
+    
+  return true;
+}
+
+
+void RPackage::setRemoveWithDeps(bool shallow, bool purge)
+{
+    setRemove();
+
+    // remove packages that this one depends on, including this
+    pkgCache::DepIterator deps = _package->VersionList().DependsList();
+    pkgCache::DepIterator start, end;
+
+    deps.GlobOr(start, end);
+    
+    while (1) {
+	if (start == end) {
+	    deps++;
+	    if (deps.end())
+		break;
+	    deps.GlobOr(start, end);
+	} else {
+	    start++;
+	}
+
+	if (!_depcache->IsImportantDep(start))
+	    continue;
+
+	if (((*_depcache)[start] & pkgDepCache::DepGInstall) == pkgDepCache::DepGInstall) {
+	    pkgCache::PkgIterator depPkg = start.TargetPkg();
+	    // get the real package, in case this is a virtual pkg
+	    if (depPkg->VersionList == 0) {
+		if (depPkg->ProvidesList != 0) {
+		    depPkg = depPkg.ProvidesList().OwnerPkg();
+		} else {
+		    continue;
+		}
+	    }
+
+	    RPackage *depackage = _lister->getElement(depPkg);
+	    
+	    if (!depackage)
+		continue;
+
+	    // skip important packages
+	    if (depackage->isImportant())
+		continue;
+
+	    // skip dependencies that are dependants of other packages
+	    // if shallow=true
+	    if (shallow && !isShallowDependency(depackage)) {
+		continue;
+	    }
+
+	    // set this package for removal
+	    depackage->setRemove(purge);
+	}
+    }
+}
+
+
+

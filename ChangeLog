@@ -1,0 +1,1416 @@
+2003-01-21 12:47  mvogt
+
+	* po/: zh_CN.po, zh_HK.po, zh_TW.po: * some po updates from Anthony
+	Fok
+
+2003-01-21 12:41  mvogt
+
+	* gtk/rgfetchprogress.cc: * progress bar uses the same font as the
+	rest of the window now
+
+2003-01-21 12:28  mvogt
+
+	* TODO, common/rpackage.cc, common/rpackage.h,
+	gtk/rgconfigwindow.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgwindow.cc, gtk/window_main.glade,
+	gtk/window_main.glade.strings, po/cat-id-tbl.c: * toolbar can now
+	be: pixmap, text, both, hide * some minor bugfixes
+
+2003-01-21 11:03  svd
+
+	* gtk/rgwindow.cc: Fixed segfault in RGWindow::RGWindow on
+	gfree(filename)
+
+2003-01-20 17:47  yeupou
+
+	* ChangeLog, po/fr.po: update french i18n
+
+2003-01-20 14:40  svd
+
+	* common/rpackagecache.cc, common/rpackagelister.cc,
+	common/rpackagelister.h, gtk/gsynaptic.cc, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h: Fixed behaviour when pkglist broken on
+	rpm-based systems
+
+2003-01-20 13:44  mvogt
+
+	* po/: zh_CN.po, zh_HK.po, zh_TW.po: * updated po files
+
+2003-01-20 13:28  svd
+
+	* common/: rpackagecache.cc, rpackagecache.h, rpackagelister.cc:
+	Fix segfault in operations with sourcelist on rpm-based systems
+
+2003-01-20 13:24  svd
+
+	* gtk/rgmainwindow.cc: Allow use RGZvtInstallProgress for rpm
+	systems
+
+2003-01-20 12:14  mvogt
+
+	* configure.in, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/ru.po, po/tr.po, po/zh_CN.po, po/zh_HK.po,
+	po/zh_TW.po: * added libpango to configure.in test
+
+2003-01-19 21:55  mvogt
+
+	* gtk/: rgfetchprogress.cc, rgfetchprogress.h: * fixed a small
+	resource leak with the new pango code
+
+2003-01-19 21:40  mvogt
+
+	* gtk/: rgaboutpanel.cc, rgfetchprogress.cc, rgmainwindow.cc,
+	window_options.glade, window_options.glade.strings: * removed some
+	dead code from rgaboutpanel * converted some code from
+	gdk_draw_string to pango * fixed a typo (thanks Anthony Fok)
+
+2003-01-17 23:55  mvogt
+
+	* gtk/: synaptic.glade, synaptic.glade.strings, synaptic.gladep: *
+	big synaptic.glade is replaced with multiple small glade files
+
+2003-01-17 23:50  mvogt
+
+	* NEWS, common/rpackage.cc, common/rpackage.h, gtk/Makefile.am,
+	gtk/rgmainwindow.cc, gtk/rgsummarywindow.cc, gtk/rgwindow.cc,
+	gtk/window_about.glade, gtk/window_about.glade.strings,
+	gtk/window_about.gladep, gtk/window_fetch.glade,
+	gtk/window_fetch.glade.strings, gtk/window_fetch.gladep,
+	gtk/window_find.glade, gtk/window_find.glade.strings,
+	gtk/window_find.gladep, gtk/window_install_progress.glade,
+	gtk/window_install_progress.glade.strings,
+	gtk/window_install_progress.gladep, gtk/window_main.glade,
+	gtk/window_main.glade.strings, gtk/window_main.gladep,
+	gtk/window_options.glade, gtk/window_options.glade.strings,
+	gtk/window_options.gladep, gtk/window_procceed.glade,
+	gtk/window_procceed.glade.strings, gtk/window_procceed.gladep,
+	po/POTFILES.in, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/tr.po, po/zh_CN.po, po/zh_HK.po, po/zh_TW.po: *
+	split up the glade file into multiple ones (should be nicer for the
+	translators) * fixed a resize bug in RGSummaryWindow
+
+2003-01-15 15:16  svd
+
+	* po/ru.po: Updated russian translation
+
+2003-01-13 12:41  mvogt
+
+	* po/README: * added README that explains some problems with glade
+
+2003-01-12 23:19  yeupou
+
+	* ChangeLog, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/ru.po, po/tr.po, po/zh_CN.po, po/zh_HK.po,
+	po/zh_TW.po: make update-po + update french strings
+
+2003-01-10 23:33  mvogt
+
+	* configure.in, common/rpackagefilter.cc, gtk/rgfiltermanager.cc,
+	gtk/rgfiltermanager.h, gtk/rgfilterwindow.cc, gtk/rgfilterwindow.h,
+	gtk/rgmainwindow.cc, gtk/synaptic.glade,
+	gtk/synaptic.glade.strings, po/cat-id-tbl.c: * fixed some small
+	bugs * removed some dead code (was #if 0) left from pre glade days
+
+2003-01-10 15:25  mvogt
+
+	* NEWS: * updated NEWS file
+
+2003-01-10 15:21  mvogt
+
+	* README: * removed the commets about gksu for now
+
+2003-01-10 15:19  mvogt
+
+	* data/synaptic.desktop, po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	po/ru.po, po/tr.po, po/zh_CN.po, po/zh_HK.po, po/zh_TW.po: *
+	changed back to xsu as default way to do su, because gksu has some
+	flaws
+
+2003-01-10 15:01  mvogt
+
+	* common/rpackagefilter.cc, po/cat-id-tbl.c, po/de.po, po/es.po,
+	po/fr.po, po/pt_BR.po, po/ru.po, po/tr.po, po/zh_CN.po,
+	po/zh_HK.po, po/zh_TW.po: * fixed a bug in rpackagefilter, now all
+	patternfilters are used,   not only the first one :)
+
+2003-01-09 22:34  mvogt
+
+	* po/ru.po: * updates to the russian translation
+
+2003-01-09 18:20  mvogt
+
+	* gtk/synaptic.glade, gtk/synaptic.glade.strings,
+	gtk/synaptic.gladep, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/ru.po, po/tr.po, po/zh_CN.po, po/zh_HK.po,
+	po/zh_TW.po: * updated turkish translation (thanks to Rail Aliev)
+
+2003-01-09 05:18  mvogt
+
+	* gtk/rgfindwindow.cc: * fixed a minor bug in findwindow
+
+2003-01-08 20:16  mvogt
+
+	* NEWS, TODO, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/tr.po, po/zh_CN.po, po/zh_HK.po, po/zh_TW.po: *
+	small documentation updates
+
+2003-01-08 19:39  mvogt
+
+	* gtk/: rgfindwindow.cc, rgfindwindow.h, rgmainwindow.cc,
+	synaptic.glade: * small fixes for the new search windo
+
+2003-01-08 16:30  mvogt
+
+	* configure.in, common/i18n.h, gtk/synaptic.glade, po/ru.po: *
+	added russian translation
+
+2003-01-08 12:48  mvogt
+
+	* po/: cat-id-tbl.c, de.po, es.po, fr.po, pt_BR.po, tr.po,
+	zh_CN.po, zh_HK.po, zh_TW.po: * some minor corrections (missing "
+	at end of line etc)
+
+2003-01-08 03:32  mvogt
+
+	* config.h.in, configure.in, gtk/rgmainwindow.cc, po/cat-id-tbl.c:
+	* removed --with-dwww-help, this is autodetected at runtime
+
+2003-01-08 03:27  mvogt
+
+	* common/rpackagefilter.h, gtk/Makefile.am, gtk/rgfindwindow.cc,
+	gtk/rgfindwindow.h, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgwindow.cc, gtk/synaptic.glade, po/cat-id-tbl.c: * added find
+	menu for easy searching for name/description
+
+2003-01-07 22:33  yeupou
+
+	* ChangeLog, po/fr.po: update french i18n strings
+
+2003-01-07 14:39  mvogt
+
+	* README, config.h.in, configure.in, common/rpackagefilter.cc,
+	data/synaptic.desktop, gtk/Makefile.am, gtk/rgfiltereditor.cc,
+	gtk/rgfiltermanager.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgsummarywindow.cc, gtk/synaptic.glade, po/cat-id-tbl.c,
+	po/de.po, po/es.po, po/fr.po, po/pt_BR.po, po/tr.po, po/zh_CN.po,
+	po/zh_HK.po, po/zh_TW.po: * added (crude) purge and search pkg
+	description support * added --with-dwww-help configure switch
+	(enables Pkg Help button) * some resizing fixes
+
+2003-01-04 17:08  mvogt
+
+	* NEWS, TODO, configure.in, common/raptoptions.h,
+	common/rpackage.cc, common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc, gtk/Makefile.am,
+	gtk/gsynaptic.cc, gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/synaptic.glade,
+	po/POTFILES.in, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/tr.po, po/zh_CN.po, po/zh_HK.po, po/zh_TW.po: *
+	added residual config filter * added chinese translation
+
+2002-12-27 13:28  mvogt
+
+	* gtk/rgmainwindow.cc: * fixed a problem with the new filters menu
+
+2002-12-27 02:37  mvogt
+
+	* NEWS, README, README.scripting, TODO, common/rpackage.cc,
+	common/rpackage.h, gtk/rgmainwindow.cc, gtk/synaptic.glade,
+	po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	po/tr.po: * small gui + documentation updates
+
+2002-12-26 23:20  mvogt
+
+	* TODO, gtk/rgaboutpanel.cc, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h, gtk/synaptic.glade: * added filters menu
+
+2002-12-20 00:48  mvogt
+
+	* TODO, common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, gtk/rgaboutpanel.cc,
+	gtk/rgfiltereditor.cc, gtk/rgwindow.cc, gtk/rgwindow.h,
+	gtk/synaptic.glade, pixmaps/Makefile.am, po/cat-id-tbl.c, po/de.po,
+	po/es.po, po/fr.po, po/pt_BR.po, po/tr.po: * some more filter like
+	depends on, reverse depends on, conflicts work now
+
+2002-12-17 19:46  mvogt
+
+	* gtk/: rgmainwindow.cc, synaptic.glade: * a fix for _depListL
+	handling
+
+2002-12-16 16:11  mvogt
+
+	* TODO, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/synaptic.glade: * save windows size and vpaned position between
+	sessions * (re)added tooltips to all buttons (there is a bug in
+	libglade2 for toolbar	buttons, a patch to the maintainer is
+	submited)
+
+2002-12-15 11:36  mvogt
+
+	* common/rpackage.cc, gtk/Makefile.am, gtk/rgmainwindow.cc,
+	gtk/synaptic.glade, pixmaps/Makefile.am,
+	pixmaps/distupgrade_small.xpm, pixmaps/proceed_small.xpm,
+	pixmaps/update_small.xpm, pixmaps/upgrade_small.xpm: * more fixes
+	for the new gui. should be complette now
+
+2002-12-13 22:38  mvogt
+
+	* gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/rgwindow.cc,
+	gtk/synaptic.glade, po/cat-id-tbl.c: * more fixes for the new gui
+
+2002-12-12 18:37  mvogt
+
+	* Makefile.am, acconfig.h, config.h.in, configure.in,
+	common/rrepositoryfile.cc, common/rrepositoryfile.h,
+	common/rsources.cc, gtk/Makefile.am, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h, gtk/rgsourceswindow.cc, gtk/rgsourceswindow.h,
+	gtk/rgsrcwindow.cc, gtk/rgwindow.cc, gtk/rgwindow.h,
+	gtk/synaptic.glade, gtk/synaptic.glade.strings,
+	gtk/synaptic.gladep, po/cat-id-tbl.c: * switched to the new gui
+	(should basicly work, but lots of rough edges) * removed unused
+	files
+
+2002-12-06 09:16  mvogt
+
+	* NEWS, TODO, configure.in, common/rpackagelister.cc,
+	common/rpackagelister.h, gtk/Makefile.am, gtk/galertpanel.c,
+	gtk/rgfetchprogress.cc, gtk/rgfetchprogress.h,
+	gtk/rgfiltermanager.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgsrcwindow.cc, gtk/rgsummarywindow.cc, gtk/rgsummarywindow.h,
+	gtk/rgvendorswindow.cc, gtk/rgzvtinstallprogress.cc,
+	gtk/rgzvtinstallprogress.h, pixmaps/synaptic_mini.xpm,
+	po/cat-id-tbl.c: * complette port to gtk2
+
+2002-12-03 12:13  mvogt
+
+	* gtk/rgzvtinstallprogress.cc: * always set TERM to xterm
+
+2002-11-29 21:08  mvogt
+
+	* pixmaps/Makefile.am, po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	po/tr.po: * minor makefile fix
+
+2002-11-29 13:15  mvogt
+
+	* gtk/rgmainwindow.cc, man/Makefile.am: * rgmainwindow.cc: small
+	setIcon() fix * man/Makefile.am: add french and turkish man page to
+	tgz
+
+2002-11-29 13:02  mvogt
+
+	* NEWS: * credits
+
+2002-11-29 03:35  mvogt
+
+	* Makefile.am, NEWS, README, configure.in, data/Makefile.am,
+	data/synaptic.desktop, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	pixmaps/Makefile.am, pixmaps/synaptic_48x48.png,
+	pixmaps/synaptic_mini.xpm, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po, po/tr.po: * some icons * a desktop entry for gnome
+	(uses xsu for now) * a wm icon (should work for both gnome/kde)
+
+2002-11-28 10:54  mvogt
+
+	* common/rpackagefilter.cc, gtk/rgfetchprogress.cc,
+	gtk/rgfiltereditor.cc, gtk/rgfiltermanager.cc, gtk/rgmainwindow.cc,
+	gtk/rgsrcwindow.cc, gtk/rgsummarywindow.cc, gtk/rgvendorswindow.cc,
+	po/cat-id-tbl.c: * applied a i18n patch from Rail Aliev (thanks!)
+
+2002-11-25 23:26  mvogt
+
+	* man/synaptic.tr.8: * added turkish man-page (thanks to Rail
+	Aliev)
+
+2002-11-25 23:06  mvogt
+
+	* configure.in, po/tr.po: * added turkish translation (thanks to
+	Rail Aliev)
+
+2002-11-25 14:40  mvogt
+
+	* gtk/rgfiltereditor.h: * fixed a filter bug in rgfiltereditor
+	(thanks to Sviatoslav Sviridov)
+
+2002-11-23 19:19  mvogt
+
+	* gtk/gsynaptic.cc: * commited setlocale->gtk_set_locale() patch
+	from Sviatoslav Sviridou (thanks!)
+
+2002-11-19 17:34  mvogt
+
+	* man/Makefile.am: * added Makefile.am
+
+2002-11-19 17:26  yeupou
+
+	* ChangeLog, man/synaptic.fr.8: Add french man page
+
+2002-11-12 12:53  mvogt
+
+	* common/raptoptions.cc: * improved the popen() call to deborphan a
+	bit
+
+2002-11-10 15:03  mvogt
+
+	* NEWS, common/rpackagelister.cc, gtk/rgsrcwindow.h,
+	gtk/rgvendorswindow.h, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	minor build fixes (for make distcheck)
+
+2002-11-09 14:09  mvogt
+
+	* configure.in, common/rpackage.cc, common/rpackagelister.cc: *
+	fixed a nasty memory leak in openCache()
+
+2002-11-09 01:45  mvogt
+
+	* NEWS, TODO, common/raptoptions.cc, common/raptoptions.h,
+	common/rpackage.cc, common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h, gtk/rgmainwindow.cc,
+	gtk/rgsummarywindow.cc, gtk/rgsummarywindow.h, po/cat-id-tbl.c,
+	po/de.po, po/es.po, po/fr.po, po/pt_BR.po: * reworked the
+	rgsummarywindow dialog, added a gtktree for the   "to be removed,
+	to be installed" etc packages * added deborphan functionalty
+	(debian only)
+
+2002-11-06 16:40  mvogt
+
+	* Makefile.am, TODO, configure.in: * added the makefile for the
+	man-page
+
+2002-11-04 00:59  mvogt
+
+	* gtk/: gsynaptic.cc, rgmainwindow.cc: * added some more
+	translateable strings
+
+2002-11-04 00:51  mvogt
+
+	* TODO, configure.in, common/rconfiguration.cc, common/rpackage.cc,
+	common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/rgconfigwindow.h, gtk/rgfiltereditor.cc,
+	gtk/rgfiltermanager.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	pixmaps/holdM.xpm, po/cat-id-tbl.c: * cleanups
+
+2002-11-02 22:11  yeupou
+
+	* po/: fr.po, fr.po: fix minor typo
+
+2002-11-02 21:57  yeupou
+
+	* ChangeLog, po/fr.po: fix typo
+
+2002-11-02 21:51  yeupou
+
+	* ChangeLog, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: upgrade
+	french i18n (typo + new stings)
+
+2002-10-30 11:55  mvogt
+
+	* gtk/rgconfigwindow.cc: * removed another gtk_set_usize() :)
+
+2002-10-28 14:41  mvogt
+
+	* gtk/rgmainwindow.cc: * and another small ui thing
+
+2002-10-28 14:37  mvogt
+
+	* gtk/rgmainwindow.cc, man/synaptic.8: * another minor resizing fix
+
+2002-10-28 14:11  mvogt
+
+	* TODO, gtk/rgmainwindow.cc: * fixed a nasty UI resizing problem *
+	small improvement for the GtkCList
+
+2002-10-28 12:47  mvogt
+
+	* NEWS, TODO, configure.in, gtk/rgconfigwindow.cc,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/synapticinterface.cc,
+	man/synaptic.8, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po: * added a manpage * added ColorStatus in the main
+	GtkCList * added option to switch colors on/off
+
+2002-10-27 10:56  mvogt
+
+	* gtk/rgsummarywindow.cc: * small ui improvements
+
+2002-10-09 18:27  mvogt
+
+	* TODO, gtk/rgmainwindow.cc: * minor documentation updates
+
+2002-10-09 10:18  mvogt
+
+	* gtk/rgmainwindow.cc: * some more usize fixes (still far from
+	perfect)
+
+2002-10-09 01:55  mvogt
+
+	* acconfig.h, config.h.in, configure.in, gtk/Makefile.am,
+	gtk/rgfetchprogress.cc, gtk/rgmainwindow.cc, po/de.po, po/es.po,
+	po/fr.po, po/pt_BR.po: * gtk/Makefile.am should work now with both
+	automake1.4 and automake1.6 * removed --new-gui (never quite there
+	anyway)
+
+2002-10-09 00:43  mvogt
+
+	* po/: de.po, fr.po: * fixed a bug for 8bit charackters
+
+2002-10-09 00:30  mvogt
+
+	* po/de.po: * added a german "umlaut"
+
+2002-10-06 17:03  mvogt
+
+	* configure.in: * fixed a bug in swig test
+
+2002-10-04 03:12  niemeyer
+
+	* gtk/: Makefile.am, rgmainwindow.cc, rgmainwindow.h,
+	synapticinterface.cc: - Do not expose internal interface of
+	RGMainWindow.  - Minor changes for automake 1.6 conformance.
+
+2002-10-04 02:40  niemeyer
+
+	* README.scripting: Minor typo fixes.
+
+2002-10-03 22:52  mvogt
+
+	* Makefile.am, NEWS, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	minor cleanups * documentation update
+
+2002-10-03 21:56  mvogt
+
+	* README.scripting, gtk/synapticinterface.cc,
+	gtk/synapticinterface.h: * some more code for the scripting
+	interface * added a basic README for the scripting stuff along with
+	a simple example
+
+2002-10-03 18:39  mvogt
+
+	* TODO, gtk/Makefile.am, po/de.po, po/es.po, po/fr.po, po/pt_BR.po:
+	* fixed the makefile for building the python module
+
+2002-10-03 15:28  mvogt
+
+	* macros/Makefile.am: * python.m4 file is removed from
+	macros/Makefile.am (it never worked)
+
+2002-10-03 15:25  mvogt
+
+	* Makefile.am, NEWS, TODO, acinclude.m4, configure.in,
+	gtk/Makefile.am, gtk/rgmainwindow.h, gtk/synapticinterface.cc,
+	gtk/synapticinterface.h, gtk/synapticinterface.i,
+	macros/Makefile.am, macros/Makefile.in: * added python interface
+	for synaptic
+
+2002-10-02 15:29  mvogt
+
+	* NEWS, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgvendorswindow.cc: * cleanups * removed _tempKludge as it's
+	not needed with the current code * reworked "installSelected"
+	Suggestions/Recommandation
+
+2002-10-02 11:34  mvogt
+
+	* README, gtk/gsynaptic.cc, gtk/rgmainwindow.cc: * removed some
+	debug messages * changed the names of the command line arguments  
+	(initialFilter -> initial-filter / filterFile -> filter-file)	to
+	match it with apt
+
+2002-10-01 16:18  mvogt
+
+	* README: * added some info about the multiple selection feature
+
+2002-10-01 15:53  mvogt
+
+	* NEWS, TODO, gtk/gsynaptic.cc, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h, po/cat-id-tbl.c: * multiple selection of
+	packages is possible now (use SHIFT/CTRL in the clist)
+
+2002-10-01 13:41  mvogt
+
+	* gtk/rgaboutpanel.cc: * added Gustavo to authors
+
+2002-09-30 22:48  mvogt
+
+	* NEWS, README, common/rconfiguration.cc, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h: * cosmetic stuff * fixed a bug in save/restore
+	state ("synaptic::" -> "Synaptic::", I wonder	why this ever
+	worked (: ) * updated the README file. It now point to the savannah
+	page
+
+2002-09-30 16:57  mvogt
+
+	* common/rconfiguration.cc, gtk/gsynaptic.cc: * fixed warnings if
+	files in /root/.synaptic are not there (the files are	just
+	created)
+
+2002-09-30 15:44  mvogt
+
+	* NEWS, README, TODO, configure.in, common/raptoptions.cc,
+	common/rconfiguration.cc, common/rpackage.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	gtk/gsynaptic.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h: *
+	reworked the "new" packages in list detection (much saner now) *
+	added some commandline options (alternative filterFile,
+	inititalFilter)
+
+2002-09-27 10:54  mvogt
+
+	* configure.in, common/raptoptions.cc: * version is now 0.24.1 *
+	the non-existance of /etc/apt/preferences is now ignored
+
+2002-09-27 01:05  mvogt
+
+	* Makefile.am, configure.in, common/raptoptions.cc: * two small
+	fixes (thanks to Richard Bos)
+
+2002-09-26 16:27  mvogt
+
+	* common/raptoptions.h, po/de.po, po/es.po, po/fr.po, po/pt_BR.po:
+	* fixed a g++-3.2 problem
+
+2002-09-26 16:06  mvogt
+
+	* gtk/rgsrcwindow.cc, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	changed "none" to "no vendor" in rgsrcwindow option menu
+
+2002-09-26 15:37  mvogt
+
+	* README, gtk/rgmainwindow.cc, pixmaps/Makefile.am,
+	po/cat-id-tbl.c: * keybinding for "update" is CTRL-u * added the
+	new pixmaps to extra_dist in pixmaps/Makefile.am
+
+2002-09-26 15:00  niemeyer
+
+	* AUTHORS, NEWS, gtk/rgvendorswindow.cc, gtk/rgvendorswindow.h: -
+	Oops, forgot to add vendors.list specific files.  - Included myself
+	in the AUTHORS file.  - 2 new entries for NEWS file.
+
+2002-09-25 22:20  niemeyer
+
+	* common/rsources.cc, common/rsources.h, gtk/Makefile.am,
+	gtk/rgsrcwindow.cc, gtk/rgsrcwindow.h: - Implemented full vendors
+	support.  - Fixed some minor bugs.  - Reworked sources list
+	interface (again).
+
+2002-09-25 16:09  niemeyer
+
+	* gtk/: rgsrcwindow.cc, rgsrcwindow.h: Reworked sources window.
+
+2002-09-25 14:54  niemeyer
+
+	* gtk/galertpanel.c: Fixed warning issued when first parameter of
+	gtk_run_alert_panel() was NULL (e.g. when running as a non-root
+	user).
+
+2002-09-25 14:48  niemeyer
+
+	* gtk/rgmainwindow.cc: Rolling back text changes introduced in
+	revision 1.37.
+
+2002-09-25 11:43  mvogt
+
+	* TODO: * some radom ideas
+
+2002-09-24 13:53  mvogt
+
+	* gtk/rgmainwindow.cc, po/cat-id-tbl.c: * minor correction for the
+	new/hold icons
+
+2002-09-24 13:48  mvogt
+
+	* gtk/rgmainwindow.cc, pixmaps/holdM.xpm, pixmaps/newM.xpm: * "new"
+	and "hold" packages have icons now * added pixmaps/newM.xpm and
+	pixmaps/holdM.xpm (ugly!)
+
+2002-09-24 12:29  mvogt
+
+	* gtk/galertpanel.c: * gtk/galertpanel.c: make the dialog transtent
+	to the parent
+
+2002-09-24 12:13  mvogt
+
+	* NEWS, acconfig.h, config.h.in, configure.in, gtk/rgmainwindow.cc:
+	* hold feature is enabled with "--with-pkg-hold" and the #define is
+	changed   to SYNAPTIC_PKG_HOLD. so the meaning is clearer IMHO.
+
+2002-09-24 11:52  mvogt
+
+	* INSTALL, NEWS, README, acconfig.h, config.h.in, configure.in,
+	gtk/Makefile.am, gtk/rgmainwindow.cc, wings/Makefile.am: * WINGs
+	version no longer build by default and renamed to "wsynaptic" *
+	Gtk+ version renamed to "synaptic" * added configure switch
+	"--with-hold" that enables a "hold" package feature * some
+	documentation updates regarding the changes to configure
+
+2002-09-24 00:47  mvogt
+
+	* common/rinstallprogress.cc, common/rpackagelister.cc,
+	gtk/rgzvtinstallprogress.cc, gtk/rgzvtinstallprogress.h,
+	po/cat-id-tbl.c: * keep RGZvtInstallProgress window open if
+	something goes wrong with   the installation so that the user can
+	inspect it
+
+2002-09-23 23:49  niemeyer
+
+	* common/: indexcopy.cc, rcdscanner.h, rconfiguration.cc,
+	rconfiguration.h, rpackagefilter.h, rpackagelister.cc: Minor
+	changes fixing compilation with GCC 3.2.
+
+2002-09-19 23:41  mvogt
+
+	* gtk/rgfetchprogress.cc, po/cat-id-tbl.c: * fixed a memory leask
+	in RGFetchProgress::refreshTable()
+
+2002-09-19 11:37  mvogt
+
+	* gtk/rgmainwindow.cc: * minor text changes (cosmetic)
+
+2002-09-19 00:48  mvogt
+
+	* common/rpackage.cc: * change permissions of the updateed
+	/etc/apt/preferences to 644
+
+2002-09-06 20:59  mvogt
+
+	* gtk/rgsrcwindow.cc, po/cat-id-tbl.c: * minor fix for the dialog
+
+2002-09-05 23:26  niemeyer
+
+	* common/rsources.cc, common/rsources.h, gtk/rgsrcwindow.cc,
+	gtk/rgsrcwindow.h: Added basic vendor support.
+
+2002-09-05 17:07  niemeyer
+
+	* gtk/rgmainwindow.cc: - Minor text changes.  - Reordered entries
+	in dependency combo box.
+
+2002-09-05 02:32  mvogt
+
+	* gtk/rgmainwindow.cc, po/cat-id-tbl.c: * more cosmetic fixes for
+	the hold feature
+
+2002-09-05 00:14  mvogt
+
+	* gtk/rgmainwindow.cc, po/cat-id-tbl.c: * the _holdB button has a
+	new home, I hope it looks better now
+
+2002-09-05 00:06  mvogt
+
+	* gtk/rgmainwindow.cc: minor cleanups
+
+2002-09-04 23:46  mvogt
+
+	* common/raptoptions.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/rgmainwindow.cc, po/cat-id-tbl.c: * fixed some Hold related
+	bugs
+
+2002-08-29 00:21  mvogt
+
+	* gtk/rgmainwindow.cc: * fixed a bug in "Dependecies of available
+	package"
+
+2002-08-29 00:06  mvogt
+
+	* NEWS: * new for version 0.24
+
+2002-08-28 22:38  mvogt
+
+	* gtk/rgfilterwindow.cc, po/cat-id-tbl.c: * changed order of
+	buttons in rgfilterwindow
+
+2002-08-28 22:26  mvogt
+
+	* gtk/rgmainwindow.cc: * removed a debug statement
+
+2002-08-28 22:21  mvogt
+
+	* common/raptoptions.cc, common/raptoptions.h, common/rpackage.cc,
+	common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/gsynaptic.cc, gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgmainwindow.cc, po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po: * implemented "Hold" feature using apt "pin"
+
+2002-08-26 14:34  mvogt
+
+	* common/rconfiguration.cc, gtk/rgmainwindow.cc, po/cat-id-tbl.c: *
+	windowsize is now saved/restored
+
+2002-08-26 14:03  mvogt
+
+	* TODO, configure.in, common/raptoptions.cc, common/raptoptions.h,
+	common/rconfiguration.cc, common/rconfiguration.h,
+	common/rpackage.h, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	po/cat-id-tbl.c: * raptoptions is now persistent and saves/restores
+	the "Locked" and   "New" Packages * "New" Packages are saved until
+	the next succesfull update * "Hold" is enabled in GUI, but still
+	not working. It's enabled for testing	the raptoptions
+	store/restore functions
+
+2002-08-25 13:32  mvogt
+
+	* po/: POTFILES.in, de.po, es.po, fr.po, pt_BR.po: * rgsrcwindow is
+	now in POTFILES
+
+2002-08-24 17:35  mvogt
+
+	* TODO: * nothing really
+
+2002-08-24 13:17  mvogt
+
+	* gtk/: rgfiltermanager.cc, rgfiltermanager.h, rgfilterwindow.cc,
+	rgfilterwindow.h, rgwindow.cc: * fixed a bug in delete-event of
+	rgfiltermanager/rgfilterwindow
+
+2002-08-23 20:08  mvogt
+
+	* TODO, common/rpackagelister.cc, gtk/rgfiltereditor.cc,
+	gtk/rgfiltermanager.cc, gtk/rgfiltermanager.h,
+	gtk/rgfilterwindow.cc, gtk/rgmainwindow.cc: * trying to fix a bug
+	in rgfiltermanager (unsuccessfull so far)
+
+2002-08-23 15:12  mvogt
+
+	* common/rpackage.cc, gtk/rgsrcwindow.cc: * -Wall cleanups
+
+2002-08-23 13:40  mvogt
+
+	* gtk/rgsrcwindow.cc: * cleanups/ui improvements for the GTK_CLIST
+
+2002-08-22 22:03  mvogt
+
+	* common/: raptoptions.h, rsources.h: * g++-3.0 fixes
+
+2002-08-22 18:18  mvogt
+
+	* NEWS, TODO: * documentation updates
+
+2002-08-22 13:57  mvogt
+
+	* common/rsources.cc, common/rsources.h, gtk/rgsrcwindow.cc,
+	gtk/rgsrcwindow.h: * cleaned up rsource.{cc,h} it now uses a STL
+	list * small ui improvement for rgsrcwindow.cc
+
+2002-08-21 02:59  mvogt
+
+	* common/rsources.cc: * added a FIXME for the rsource class. I will
+	rewrite it with a   STL list instead of the crappy (and buggy)
+	hand-coded one
+
+2002-08-20 21:20  niemeyer
+
+	* common/rsources.cc, common/rsources.h, gtk/rgsrcwindow.cc: -
+	Added rpm/rpm-src support in repositories dialog - Fixed bug which
+	was crashing repository updates (s/delete/delete []/).
+
+2002-08-20 01:03  mvogt
+
+	* common/rsources.cc, gtk/rgmainwindow.cc, gtk/rgsrcwindow.cc: *
+	some bugfixes in the new edit sources.list stuff
+
+2002-08-20 00:33  mvogt
+
+	* NEWS, configure.in, common/Makefile.am, common/rpackage.cc,
+	common/rsources.cc, common/rsources.h, gtk/Makefile.am,
+	gtk/rgmainwindow.cc, gtk/rgsourceswindow.cc, gtk/rgsourceswindow.h,
+	gtk/rgsrcwindow.cc, gtk/rgsrcwindow.h, po/cat-id-tbl.c: * added
+	sourceslist dialog (ported from deity)
+
+2002-07-27 16:07  mvogt
+
+	* common/Makefile.am, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	ups, bug in common/Makefile.am
+
+2002-07-27 15:57  mvogt
+
+	* configure.in, common/Makefile.am, common/rpackage.cc,
+	common/rpackagelister.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgzvtinstallprogress.cc: * some work on the new held feature,
+	but unfinished, because there	are some problems. I think I will
+	give the apt Pin feature a try
+
+2002-07-27 05:45  mvogt
+
+	* README, TODO, gtk/rgmainwindow.cc: * added CTRL-q keybinding to
+	quit and documented it * some updates to the TODO file
+
+2002-07-27 05:27  mvogt
+
+	* gtk/rgconfigwindow.cc: * no real changes
+
+2002-07-27 05:25  mvogt
+
+	* gtk/: rgconfigwindow.cc, rgzvtinstallprogress.cc: * the state of
+	"closeZvtOnFinish" is now saved
+
+2002-07-27 01:33  mvogt
+
+	* gtk/: rgzvtinstallprogress.cc, rgzvtinstallprogress.h: * more
+	fixes to rgzvtinstallprogress
+
+2002-07-27 01:17  mvogt
+
+	* common/rinstallprogress.cc, common/rinstallprogress.h,
+	gtk/rgconfigwindow.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rgmainwindow.cc, gtk/rgzvtinstallprogress.cc,
+	gtk/rgzvtinstallprogress.h, po/cat-id-tbl.c: * improved the
+	tgzvtinstallwindow
+
+2002-07-26 03:33  mvogt
+
+	* common/indexcopy.cc, gtk/rgzvtinstallprogress.cc,
+	wings/rwaboutpanel.h, wings/rwconfigwindow.cc,
+	wings/rwconfigwindow.h, wings/rwfetchprogress.cc,
+	wings/rwfiltereditor.cc, wings/rwfiltermanager.cc,
+	wings/rwfiltermanager.h, wings/rwinstallprogress.cc,
+	wings/rwinstallprogress.h, wings/rwmainwindow.cc,
+	wings/rwmainwindow.h, wings/rwsourceswindow.h,
+	wings/rwsummarywindow.h, wings/rwwindow.h: * more work to make
+	synaptic g++-3.0 and "-Wall" clean
+
+2002-07-25 22:47  mvogt
+
+	* configure.in, common/indexcopy.cc, common/rconfiguration.cc,
+	common/rinstallprogress.cc, common/rinstallprogress.h,
+	common/rpackage.cc, common/rpackagecache.cc,
+	common/rpackagecache.h, common/rpackagefilter.cc,
+	common/rpackagelister.cc, gtk/gsynaptic.cc, gtk/rgmainwindow.cc,
+	po/cat-id-tbl.c, po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	wings/Makefile.am, wings/synaptic.cc: * applied a APT-RPM patch
+	from Gustavo Niemeyer <niemeyer@connectiva.com> * increased version
+	to 0.23
+
+2002-07-24 22:19  mvogt
+
+	* configure.in: * bumped version to 0.22
+
+2002-07-24 20:22  mvogt
+
+	* NEWS, gtk/rgfiltermanager.cc: * fixed a bug in the
+	rgfiltermanager
+
+2002-07-24 11:31  mvogt
+
+	* common/rcdscanner.cc, common/rpackagefilter.cc,
+	gtk/rgzvtinstallprogress.cc: * made synaptic g++-3.0 clean (again)
+
+2002-07-23 16:42  mvogt
+
+	* TODO, gtk/rgmainwindow.cc: * cosmetic change in rgmainwindow
+
+2002-07-23 11:32  mvogt
+
+	* NEWS, TODO, configure.in, common/rcdscanner.cc,
+	common/rpackage.cc, common/rpackagecache.cc,
+	common/rpackagefilter.cc, common/rpackagefilter.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	gtk/rgaboutpanel.h, gtk/rgconfigwindow.cc, gtk/rgconfigwindow.h,
+	gtk/rgfetchprogress.cc, gtk/rgfiltereditor.cc,
+	gtk/rgfiltermanager.cc, gtk/rgfiltermanager.h,
+	gtk/rginstallprogress.cc, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	gtk/rgwindow.h, gtk/rgzvtinstallprogress.cc, po/de.po, po/es.po,
+	po/fr.po, po/pt_BR.po: * increased version to 0.22pre1 * made
+	synaptic (mostly) -Wall clean * fixed bugs in the new
+	"Recommends/Suggests" menu
+
+2002-07-22 14:24  mvogt
+
+	* TODO, common/rpackage.cc, common/rpackage.h, gtk/rgmainwindow.cc,
+	gtk/rgmainwindow.h, po/cat-id-tbl.c: * fixed suggests/recommends
+	tab * added new "Dependencies of available package" * added
+	"install recommended", "install suggested", "install selected"	
+	commands
+
+2002-07-19 13:18  mvogt
+
+	* README, configure.in: * bumped version to 0.21 * added a small
+	section about filters in the README
+
+2002-07-19 13:13  mvogt
+
+	* README, TODO: * better documentation, more TODO items
+
+2002-07-19 01:56  mvogt
+
+	* common/rpackagelister.cc, gtk/rgfiltermanager.cc: * fixed a
+	segfault in rgfiltermanager.cc
+
+2002-07-17 12:49  mvogt
+
+	* po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	wings/rwfetchprogress.cc: * another cosmetic fix in rwfetchprogress
+
+2002-07-17 12:22  mvogt
+
+	* gtk/rgsummarywindow.cc: * cosemtic fix for rgsummarywindow (left
+	align a label)
+
+2002-07-16 15:30  mvogt
+
+	* po/de.po, po/es.po, po/fr.po, po/pt_BR.po,
+	wings/rwfetchprogress.cc: * cosmetic change in
+	wings/rwfetchprogress.cc
+
+2002-07-16 14:59  mvogt
+
+	* configure.in, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	version is now 0.20 * no real changes since 0.20pre8, I think it's
+	ready now!
+
+2002-07-15 13:41  mvogt
+
+	* gtk/rgfetchprogress.cc, po/de.po, po/es.po, po/fr.po,
+	po/pt_BR.po: * cosmetic change in rgfetchprogress (label now left
+	alligned)
+
+2002-07-15 00:06  mvogt
+
+	* TODO: * minor todo update
+
+2002-07-15 00:05  mvogt
+
+	* INSTALL, README, TODO: * more documentation
+
+2002-07-14 23:52  mvogt
+
+	* configure.in: * no real change
+
+2002-07-14 23:49  mvogt
+
+	* NEWS, README: * added some documentation in preparation of the
+	0.20 version
+
+2002-07-14 23:41  mvogt
+
+	* README, gtk/rgmainwindow.cc: * added some keyboard shortcuts *
+	documented keyboard shortcuts in README * _statusL is now left
+	allignent
+
+2002-07-14 16:27  mvogt
+
+	* gtk/rgfetchprogress.cc: * fixed minor bug in rgfetchprogress
+
+2002-07-14 12:47  mvogt
+
+	* common/rinstallprogress.cc, common/rinstallprogress.h,
+	gtk/rgzvtinstallprogress.cc: * added my copyright on some files I
+	worked on
+
+2002-07-14 02:33  mvogt
+
+	* gtk/rgfetchprogress.cc: * experienced a bit with the hide()
+	problem (see rgfetchprogress::hide()),	 but found no solution
+
+2002-07-14 02:13  mvogt
+
+	* common/rinstallprogress.cc, common/rpackage.h, gtk/gsynaptic.cc,
+	gtk/rgfetchprogress.cc, gtk/rgmainwindow.cc: * if rgfetchprogress
+	is finished, but only one package is deleted,	rgfetchprogress
+	will not be hiden. I added a sleep(1)	[and this really sucks]
+
+2002-07-13 22:00  mvogt
+
+	* configure.in, gtk/rgfiltermanager.cc: * reanmed version to
+	0.20pre8 (but will not yet release) * fixed a bug in
+	rgfiltermanager.cc: if you clicked at delete and then save   (on
+	the last filter), it segfaults
+
+2002-07-13 21:48  mvogt
+
+	* acconfig.h, config.h.in, configure.in, common/rpackage.cc: *
+	renamed new-description-parser to debian-description-parser *
+	reworked the description parser (once again!)
+
+2002-07-12 20:55  mvogt
+
+	* common/rpackage.cc, po/de.po, po/es.po, po/fr.po, po/pt_BR.po: *
+	improved the NEW_DESCRIPTION_PARSER a bit (far from perfect,
+	though)
+
+2002-07-11 15:00  mvogt
+
+	* common/rinstallprogress.cc, gtk/rgzvtinstallprogress.cc,
+	po/cat-id-tbl.c, wings/rwfiltereditor.cc, wings/rwfiltereditor.h: *
+	removed filter option "New Package" from WINGs, as it's not
+	supported there   (and maybe never will) * removed some debug
+	output from rgzvtinstallprogress.cc, rinstallprogress.cc
+
+2002-07-11 13:56  mvogt
+
+	* common/Makefile.am, common/rrepositoryfile.cc,
+	common/rrepositoryfile.h, po/POTFILES.in, po/de.po, po/es.po,
+	po/fr.po, po/pt_BR.po: * removed rrepostoryfile.cc from
+	po/POTFILES.in as it's not ready yet
+
+2002-07-11 13:08  mvogt
+
+	* configure.in, gtk/rgfetchprogress.cc: * changed version to
+	0.20pre7
+
+2002-07-10 20:05  mvogt
+
+	* gtk/rgfetchprogress.cc, po/cat-id-tbl.c: * better rgfetchprogress
+	handling
+
+2002-07-10 19:10  mvogt
+
+	* gtk/: rgfetchprogress.cc, rgzvtinstallprogress.cc: * fixes for
+	rgfetprogress * fixes for rgzvtinstallprogress
+
+2002-07-10 10:59  mvogt
+
+	* NEWS, acconfig.h, config.h.in, configure.in, gtk/Makefile.am,
+	gtk/rgdummyinstallprogress.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rginstallprogress.h, gtk/rgmainwindow.cc,
+	gtk/rgzvtinstallprogress.cc, gtk/rgzvtinstallprogress.h,
+	wings/Makefile.am: * GTK_CFLAGS, GTK_LIBS, WINGS_HDRS, WINDGS_LIBS
+	are now set in configure.in   (got rid of `gtk-config` on every
+	invocation of gcc * added configure option "--with-zvt" to enable
+	terminal widget * added rgzvtinstallprogress.{cc,h} with initial
+	support for libzvt   as terminal
+
+2002-07-10 01:45  mvogt
+
+	* configure: * more files that shouldn't be in CVS
+
+2002-07-10 01:44  mvogt
+
+	* Makefile.in, NEWS, aclocal.m4, stamp-h.in, common/Makefile.in,
+	gtk/Makefile.in, pixmaps/Makefile.in, po/de.po, po/stamp-cat-id,
+	wings/Makefile.in: * removed some files that should never had made
+	it into cvs :)
+
+2002-07-09 23:32  mvogt
+
+	* configure, common/rinstallprogress.cc, common/rinstallprogress.h,
+	gtk/rgdummyinstallprogress.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rgsummarywindow.cc, po/de.po, po/es.po, po/fr.po, po/pt_BR.po:
+	* removed some gtk_set_usize() * prepeared for libzvt as
+	output-terminal
+
+2002-07-07 13:18  egon
+
+	* configure.in: * we're at version 0.20pre6 now
+
+2002-07-07 12:03  egon
+
+	* configure, configure.in, po/POTFILES.in, po/cat-id-tbl.c,
+	po/de.po, po/es.po, po/fr.po, po/pt_BR.po: * completeted german
+	translation
+
+2002-07-06 20:18  egon
+
+	* po/: es.po, fr.po, pt_BR.po: * added fr.po
+
+2002-07-03 21:32  egon
+
+	* configure, configure.in: * made version 0.20pre5
+
+2002-07-03 21:28  egon
+
+	* TODO, common/i18n.h, common/indexcopy.cc, common/indexcopy.h,
+	common/rcdscanner.cc, common/rcdscanner.h,
+	common/rconfiguration.cc, common/rconfiguration.h,
+	common/rdependency.h, common/rinstallprogress.cc,
+	common/rinstallprogress.h, common/rpackage.cc, common/rpackage.h,
+	common/rpackagefilter.cc, common/rpackagefilter.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	common/rpmindexcopy.cc, common/rrepositoryfile.cc,
+	common/rrepositoryfile.h, gtk/galertpanel.c, gtk/galertpanel.h,
+	gtk/rgaboutpanel.cc, gtk/rgaboutpanel.h, gtk/rgcacheprogress.cc,
+	gtk/rgcacheprogress.h, gtk/rgconfigwindow.cc, gtk/rgconfigwindow.h,
+	gtk/rgdummyinstallprogress.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rgfetchprogress.cc, gtk/rgfetchprogress.h,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgfiltermanager.cc, gtk/rgfiltermanager.h,
+	gtk/rgfilterwindow.cc, gtk/rgfilterwindow.h,
+	gtk/rginstallprogress.cc, gtk/rginstallprogress.h,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/rgsourceswindow.cc,
+	gtk/rgsourceswindow.h, gtk/rgsummarywindow.cc,
+	gtk/rgsummarywindow.h, gtk/rguserdialog.h, gtk/rgwindow.cc,
+	gtk/rgwindow.h, wings/rwaboutpanel.cc, wings/rwaboutpanel.h,
+	wings/rwcacheprogress.cc, wings/rwcacheprogress.h,
+	wings/rwconfigwindow.cc, wings/rwconfigwindow.h,
+	wings/rwdummyinstallprogress.cc, wings/rwdummyinstallprogress.h,
+	wings/rwfetchprogress.cc, wings/rwfetchprogress.h,
+	wings/rwfiltereditor.cc, wings/rwfiltereditor.h,
+	wings/rwfiltermanager.cc, wings/rwfiltermanager.h,
+	wings/rwfilterwindow.cc, wings/rwfilterwindow.h,
+	wings/rwinstallprogress.cc, wings/rwinstallprogress.h,
+	wings/rwmainwindow.cc, wings/rwsourceswindow.cc,
+	wings/rwsourceswindow.h, wings/rwsummarywindow.cc,
+	wings/rwsummarywindow.h, wings/rwuserdialog.h, wings/rwwindow.cc,
+	wings/rwwindow.h: * added copyright notic on every file
+
+2002-07-01 02:58  egon
+
+	* common/rpackage.cc, common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagelister.cc, gtk/rgfetchprogress.cc,
+	gtk/rgsummarywindow.cc, po/es.po, po/pt_BR.po: * fixed flickering
+	bug * fixed filter read/write bug (well, hopefully :)
+
+2002-07-01 02:58  egon
+
+	* configure, configure.in: * made 0.20pre4
+
+2002-07-01 01:41  egon
+
+	* po/synaptic.pot: * removed pot file (is recreated automaticly)
+
+2002-07-01 01:41  egon
+
+	* common/rpackagefilter.cc, gtk/rgmainwindow.cc, po/synaptic.pot: *
+	minor bugfix for the "new package" option
+
+2002-07-01 01:18  egon
+
+	* common/rpackage.h, gtk/rgmainwindow.cc, gtk/rgmainwindow.h,
+	po/synaptic.pot, wings/rwfilterwindow.cc: * a different approach to
+	refreshTable (stupid this time, but faster   than before?)
+
+2002-07-01 00:48  egon
+
+	* common/rpackage.cc, common/rpackage.h, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h, gtk/rgfilterwindow.cc,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, po/cat-id-tbl.c,
+	po/synaptic.pot, wings/rwfiltereditor.cc, wings/rwfiltereditor.h: *
+	reworked refreshTable (should be faster, but isn't :-/ * added
+	"newPackage" status (will only last until the next update)
+
+2002-06-27 15:17  egon
+
+	* TODO, configure, configure.in, common/rpackagefilter.cc,
+	common/rpackagefilter.h, common/rpackagelister.cc,
+	gtk/galertpanel.c, gtk/rgfetchprogress.cc, gtk/rgfiltermanager.cc,
+	gtk/rgfilterwindow.cc, gtk/rgmainwindow.cc, gtk/rgsourceswindow.cc,
+	po/es.po, po/pt_BR.po, po/synaptic.pot, wings/rwfiltermanager.cc,
+	wings/rwfilterwindow.cc, wings/rwmainwindow.cc: * released 0.20pre3
+
+2002-06-22 14:26  egon
+
+	* po/pt_BR.gmo: * remoed pt_BR.gmo
+
+2002-06-22 14:25  egon
+
+	* po/: es.po, pt_BR.gmo, pt_BR.po: * nothing
+
+2002-06-22 14:14  egon
+
+	* gtk/: galertpanel.c, rgmainwindow.cc: * fixed a bug that caused
+	alert_panel to run twice
+
+2002-06-22 12:12  egon
+
+	* common/indexcopy.h, common/rconfiguration.h, common/rpackage.cc,
+	common/rpackage.h, common/rpackagefilter.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	gtk/rgmainwindow.cc, gtk/rgwindow.h, po/synaptic.pot,
+	wings/rwmainwindow.cc, wings/rwwindow.h: * g++-3.0 clean
+
+2002-06-21 23:41  egon
+
+	* Makefile.in, aclocal.m4, configure, configure.in,
+	common/Makefile.in, gtk/Makefile.in, gtk/rgmainwindow.cc,
+	pixmaps/Makefile.in, po/es.po, po/pt_BR.gmo, po/pt_BR.po,
+	wings/Makefile.in: * new pre2
+
+2002-06-21 22:53  egon
+
+	* gtk/: rgaboutpanel.cc, rgmainwindow.cc, rgsummarywindow.cc: *
+	added myself to authors and copyright * added scrolled view for
+	_depList, _rdepList
+
+2002-06-21 15:25  egon
+
+	* configure, configure.in, common/rpackage.cc,
+	gtk/rgfetchprogress.cc, gtk/rgmainwindow.cc, po/synaptic.pot: *
+	fixed ugly bug in RPackage::isShallowDependency()
+
+2002-06-19 01:47  egon
+
+	* common/rconfiguration.cc, common/rpackage.cc,
+	common/rpackagefilter.cc, common/rpackagelister.cc,
+	gtk/rgfetchprogress.cc, gtk/rgfiltereditor.cc, gtk/rgmainwindow.cc,
+	po/es.po, po/pt_BR.gmo, po/pt_BR.po, po/synaptic.pot: * completted
+	saving of user defined rules (not perfect though)
+
+2002-06-19 01:46  egon
+
+	* acconfig.h, config.h.in, configure, configure.in: * added
+	--with-new-description-parser
+
+2002-06-18 13:06  egon
+
+	* common/rconfiguration.cc, common/rpackagefilter.cc,
+	common/rpackagelister.cc, gtk/rgfetchprogress.cc,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgfiltermanager.cc, gtk/rgmainwindow.cc, po/synaptic.pot: *
+	finished filter dialog (include/exclude pattern stuff) * started
+	work on loading the filters (writen out correctly, parse looks
+	wrong)
+
+2002-06-18 13:05  egon
+
+	* ChangeLog: * wrote some sort of changelog
+
+2002-06-16 21:35  egon
+
+	* gtk/: rgfiltermanager.cc, rgfiltermanager.h: * nearly finished
+	port of gtk/rgfiltermanager.{cc,h}
+
+2002-06-13 14:12  egon
+
+	* Makefile.am, Makefile.in, NEWS, README, TODO, aclocal.m4,
+	configure, configure.in, install-sh, missing, mkinstalldirs,
+	ABOUT-NLS, AUTHORS, COPYING, ChangeLog, INSTALL, acconfig.h,
+	acinclude.m4, autogen.sh, config.h.in, stamp-h.in, synaptic.spec,
+	common/Makefile.am, common/Makefile.in, common/i18n.h,
+	common/indexcopy.cc, common/indexcopy.h, common/raptoptions.cc,
+	common/raptoptions.h, common/rcdscanner.cc, common/rcdscanner.h,
+	common/rconfiguration.cc, common/rconfiguration.h,
+	common/rdependency.h, common/rinstallprogress.cc,
+	common/rinstallprogress.h, common/rpackage.cc, common/rpackage.h,
+	common/rpackagecache.cc, common/rpackagecache.h,
+	common/rpackagefilter.cc, common/rpackagefilter.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	common/rpmindexcopy.cc, common/rpmindexcopy.h,
+	common/rrepositoryfile.cc, common/rrepositoryfile.h,
+	gtk/Makefile.am, gtk/Makefile.in, gtk/galertpanel.c,
+	gtk/galertpanel.h, gtk/gsynaptic.cc, gtk/rgaboutpanel.cc,
+	gtk/rgaboutpanel.h, gtk/rgcacheprogress.cc, gtk/rgcacheprogress.h,
+	gtk/rgconfigwindow.cc, gtk/rgconfigwindow.h,
+	gtk/rgdummyinstallprogress.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rgfetchprogress.cc, gtk/rgfetchprogress.h,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgfiltermanager.cc, gtk/rgfiltermanager.h,
+	gtk/rgfilterwindow.cc, gtk/rgfilterwindow.h,
+	gtk/rginstallprogress.cc, gtk/rginstallprogress.h,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/rgsourceswindow.cc,
+	gtk/rgsourceswindow.h, gtk/rgsummarywindow.cc,
+	gtk/rgsummarywindow.h, gtk/rguserdialog.h, gtk/rgwindow.cc,
+	gtk/rgwindow.h, intl/ChangeLog, intl/Makefile.in,
+	intl/bindtextdom.c, intl/cat-compat.c, intl/dcgettext.c,
+	intl/dgettext.c, intl/explodename.c, intl/finddomain.c,
+	intl/gettext.c, intl/gettext.h, intl/gettextP.h,
+	intl/hash-string.h, intl/intl-compat.c, intl/l10nflist.c,
+	intl/libgettext.h, intl/linux-msg.sed, intl/loadinfo.h,
+	intl/loadmsgcat.c, intl/localealias.c, intl/po2tbl.sed.in,
+	intl/textdomain.c, intl/xopen-msg.sed, macros/Makefile,
+	macros/Makefile.am, macros/Makefile.in, macros/aclocal-include.m4,
+	macros/autogen.sh, macros/compiler-flags.m4, macros/curses.m4,
+	macros/gnome-bonobo-check.m4, macros/gnome-common.m4,
+	macros/gnome-fileutils.m4, macros/gnome-gettext.m4,
+	macros/gnome-ghttp-check.m4, macros/gnome-gnorba-check.m4,
+	macros/gnome-guile-checks.m4, macros/gnome-libgtop-check.m4,
+	macros/gnome-objc-checks.m4, macros/gnome-orbit-check.m4,
+	macros/gnome-print-check.m4, macros/gnome-pthread-check.m4,
+	macros/gnome-support.m4, macros/gnome-undelfs.m4,
+	macros/gnome-vfs.m4, macros/gnome-x-checks.m4,
+	macros/gnome-xml-check.m4, macros/gnome.m4, macros/gperf-check.m4,
+	macros/linger.m4, macros/need-declaration.m4, pixmaps/Makefile.am,
+	pixmaps/Makefile.in, pixmaps/alert.xpm, pixmaps/alertM.xpm,
+	pixmaps/brokenM.xpm, pixmaps/cdrom.xpm, pixmaps/cnc.xpm,
+	pixmaps/cnc2.xpm, pixmaps/deb.xpm, pixmaps/distupgrade.xpm,
+	pixmaps/down.xpm, pixmaps/downgradeM.xpm, pixmaps/filter.xpm,
+	pixmaps/find.xpm, pixmaps/fixbroken.xpm, pixmaps/heldM.xpm,
+	pixmaps/installM.xpm, pixmaps/keepM.xpm, pixmaps/logo.xpm,
+	pixmaps/options.xpm, pixmaps/proceed.xpm, pixmaps/removeM.xpm,
+	pixmaps/sources.xpm, pixmaps/stop.xpm, pixmaps/up.xpm,
+	pixmaps/update.xpm, pixmaps/upgrade.xpm, pixmaps/upgradeM.xpm,
+	po/Makefile.in.in, po/POTFILES.in, po/cat-id-tbl.c, po/es.po,
+	po/pt_BR.gmo, po/pt_BR.po, po/stamp-cat-id, po/synaptic.pot,
+	wings/Makefile.am, wings/Makefile.in, wings/rwaboutpanel.cc,
+	wings/rwaboutpanel.h, wings/rwcacheprogress.cc,
+	wings/rwcacheprogress.h, wings/rwconfigwindow.cc,
+	wings/rwconfigwindow.h, wings/rwdummyinstallprogress.cc,
+	wings/rwdummyinstallprogress.h, wings/rwfetchprogress.cc,
+	wings/rwfetchprogress.h, wings/rwfiltereditor.cc,
+	wings/rwfiltereditor.h, wings/rwfiltermanager.cc,
+	wings/rwfiltermanager.h, wings/rwfilterwindow.cc,
+	wings/rwfilterwindow.h, wings/rwinstallprogress.cc,
+	wings/rwinstallprogress.h, wings/rwmainwindow.cc,
+	wings/rwmainwindow.h, wings/rwsourceswindow.cc,
+	wings/rwsourceswindow.h, wings/rwsummarywindow.cc,
+	wings/rwsummarywindow.h, wings/rwuserdialog.h, wings/rwwindow.cc,
+	wings/rwwindow.h, wings/synaptic.cc: initial checkin
+
+2002-06-13 14:12  egon
+
+	* Makefile.am, Makefile.in, NEWS, README, TODO, aclocal.m4,
+	configure, configure.in, install-sh, missing, mkinstalldirs,
+	ABOUT-NLS, AUTHORS, COPYING, ChangeLog, INSTALL, acconfig.h,
+	acinclude.m4, autogen.sh, config.h.in, stamp-h.in, synaptic.spec,
+	common/Makefile.am, common/Makefile.in, common/i18n.h,
+	common/indexcopy.cc, common/indexcopy.h, common/raptoptions.cc,
+	common/raptoptions.h, common/rcdscanner.cc, common/rcdscanner.h,
+	common/rconfiguration.cc, common/rconfiguration.h,
+	common/rdependency.h, common/rinstallprogress.cc,
+	common/rinstallprogress.h, common/rpackage.cc, common/rpackage.h,
+	common/rpackagecache.cc, common/rpackagecache.h,
+	common/rpackagefilter.cc, common/rpackagefilter.h,
+	common/rpackagelister.cc, common/rpackagelister.h,
+	common/rpmindexcopy.cc, common/rpmindexcopy.h,
+	common/rrepositoryfile.cc, common/rrepositoryfile.h,
+	gtk/Makefile.am, gtk/Makefile.in, gtk/galertpanel.c,
+	gtk/galertpanel.h, gtk/gsynaptic.cc, gtk/rgaboutpanel.cc,
+	gtk/rgaboutpanel.h, gtk/rgcacheprogress.cc, gtk/rgcacheprogress.h,
+	gtk/rgconfigwindow.cc, gtk/rgconfigwindow.h,
+	gtk/rgdummyinstallprogress.cc, gtk/rgdummyinstallprogress.h,
+	gtk/rgfetchprogress.cc, gtk/rgfetchprogress.h,
+	gtk/rgfiltereditor.cc, gtk/rgfiltereditor.h,
+	gtk/rgfiltermanager.cc, gtk/rgfiltermanager.h,
+	gtk/rgfilterwindow.cc, gtk/rgfilterwindow.h,
+	gtk/rginstallprogress.cc, gtk/rginstallprogress.h,
+	gtk/rgmainwindow.cc, gtk/rgmainwindow.h, gtk/rgsourceswindow.cc,
+	gtk/rgsourceswindow.h, gtk/rgsummarywindow.cc,
+	gtk/rgsummarywindow.h, gtk/rguserdialog.h, gtk/rgwindow.cc,
+	gtk/rgwindow.h, intl/ChangeLog, intl/Makefile.in,
+	intl/bindtextdom.c, intl/cat-compat.c, intl/dcgettext.c,
+	intl/dgettext.c, intl/explodename.c, intl/finddomain.c,
+	intl/gettext.c, intl/gettext.h, intl/gettextP.h,
+	intl/hash-string.h, intl/intl-compat.c, intl/l10nflist.c,
+	intl/libgettext.h, intl/linux-msg.sed, intl/loadinfo.h,
+	intl/loadmsgcat.c, intl/localealias.c, intl/po2tbl.sed.in,
+	intl/textdomain.c, intl/xopen-msg.sed, macros/Makefile,
+	macros/Makefile.am, macros/Makefile.in, macros/aclocal-include.m4,
+	macros/autogen.sh, macros/compiler-flags.m4, macros/curses.m4,
+	macros/gnome-bonobo-check.m4, macros/gnome-common.m4,
+	macros/gnome-fileutils.m4, macros/gnome-gettext.m4,
+	macros/gnome-ghttp-check.m4, macros/gnome-gnorba-check.m4,
+	macros/gnome-guile-checks.m4, macros/gnome-libgtop-check.m4,
+	macros/gnome-objc-checks.m4, macros/gnome-orbit-check.m4,
+	macros/gnome-print-check.m4, macros/gnome-pthread-check.m4,
+	macros/gnome-support.m4, macros/gnome-undelfs.m4,
+	macros/gnome-vfs.m4, macros/gnome-x-checks.m4,
+	macros/gnome-xml-check.m4, macros/gnome.m4, macros/gperf-check.m4,
+	macros/linger.m4, macros/need-declaration.m4, pixmaps/Makefile.am,
+	pixmaps/Makefile.in, pixmaps/alert.xpm, pixmaps/alertM.xpm,
+	pixmaps/brokenM.xpm, pixmaps/cdrom.xpm, pixmaps/cnc.xpm,
+	pixmaps/cnc2.xpm, pixmaps/deb.xpm, pixmaps/distupgrade.xpm,
+	pixmaps/down.xpm, pixmaps/downgradeM.xpm, pixmaps/filter.xpm,
+	pixmaps/find.xpm, pixmaps/fixbroken.xpm, pixmaps/heldM.xpm,
+	pixmaps/installM.xpm, pixmaps/keepM.xpm, pixmaps/logo.xpm,
+	pixmaps/options.xpm, pixmaps/proceed.xpm, pixmaps/removeM.xpm,
+	pixmaps/sources.xpm, pixmaps/stop.xpm, pixmaps/up.xpm,
+	pixmaps/update.xpm, pixmaps/upgrade.xpm, pixmaps/upgradeM.xpm,
+	po/Makefile.in.in, po/POTFILES.in, po/cat-id-tbl.c, po/es.po,
+	po/pt_BR.gmo, po/pt_BR.po, po/stamp-cat-id, po/synaptic.pot,
+	wings/Makefile.am, wings/Makefile.in, wings/rwaboutpanel.cc,
+	wings/rwaboutpanel.h, wings/rwcacheprogress.cc,
+	wings/rwcacheprogress.h, wings/rwconfigwindow.cc,
+	wings/rwconfigwindow.h, wings/rwdummyinstallprogress.cc,
+	wings/rwdummyinstallprogress.h, wings/rwfetchprogress.cc,
+	wings/rwfetchprogress.h, wings/rwfiltereditor.cc,
+	wings/rwfiltereditor.h, wings/rwfiltermanager.cc,
+	wings/rwfiltermanager.h, wings/rwfilterwindow.cc,
+	wings/rwfilterwindow.h, wings/rwinstallprogress.cc,
+	wings/rwinstallprogress.h, wings/rwmainwindow.cc,
+	wings/rwmainwindow.h, wings/rwsourceswindow.cc,
+	wings/rwsourceswindow.h, wings/rwsummarywindow.cc,
+	wings/rwsummarywindow.h, wings/rwuserdialog.h, wings/rwwindow.cc,
+	wings/rwwindow.h, wings/synaptic.cc: Initial revision
+

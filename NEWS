@@ -1,0 +1,79 @@
+0.32
+ - bugfixes 
+ - translation updates 
+ - toolbar buttons can be configured now
+
+0.31
+ - added residual config filter
+ - added "purge" menu item (basic support)
+ - added easy way to search for pkg name or description 
+ - russian translation, chinese translation 
+   (thanks to Sviatoslav Sviridov and Anthony Fok)
+ - fixed some resize problems (thanks to Laurent Bonnaud)
+ - fixed some problems with the pattern filter (thanks to Scomodo)
+
+0.30
+ - ported to gtk2/libglade2, new gui - no new features
+
+0.28
+ - fixed a bug for rpm users (thanks to Sviatoslav Sviridou)
+ - added turkish translation (thanks to Rail Aliev)
+ - added handleBox for the main button bar
+ - added synaptic desktop file for gnome (needs xsu to work)
+ - added wm icon
+
+0.27:
+ - added tooltip for hold-button
+ - [debian only] added "orphaned" filter (using deborphan)
+ - reworked the rgsummarywindow dialog, nicer now
+ - fixed a nasty memory leak in openCache()
+
+0.26:
+ - SummaryWindow is a bigger now
+ - a man-page was added
+ - colors are now used in the main clist
+
+0.25:
+ - cleanups for the "new" packages filter
+ - added command line arguments (see README for details)
+ - removed some warning if no synaptic files can be found in ~/.synaptic
+ - multiple selection of packages is possible now (use SHIFT/CTRL)
+ - some internal code cleanups
+ - SWIG support for synaptic! a python module with the interface described 
+   in gtk/synapticinterface.h is generated and can be used to script synaptic
+   with python (see README.scripting for details)
+
+0.24:
+ - "hold" feature implemented. If you mark a package as "hold" no
+   upgrade will ever performed on this package 
+   (enable this with "--with-pkg-hold" in configure)
+ - "New Packages" filter improvments (now persistent to a certain extend)
+ - bugfixes and a fix for a nasty memory leak
+ - WINGs version no longer build by default and renamed to wsynaptic
+   (enable it with "--with-wings")
+ - GTK version now called "synaptic"
+ - Implemented vendors.list edition support
+ - Reworked sources.list edition dialog.
+
+0.23:
+ - new repository dialog 
+   (shamelessly stolen from deity-gtk, thanks to Patrick Cole <z@amused.net>)
+ - small ui improvements
+
+0.22:
+ - added working "Suggestions/Recommendations"
+ - added Dependencies display of the available version 
+   (to preview if the newest available version has different dependencies)
+
+0.21:
+ - bugfix in rgfiltermanager.cc
+ - documentation updates
+
+0.20:
+ - filter save/restore works
+ - gtk gui
+ - gtk keybindings
+ - simple "new packages" filter (very basic currently)
+ - support for output into a zvt terminal window (--with-zvt)
+ - new description parser optimized for debian
+ - double click cycle implemented in gtk version

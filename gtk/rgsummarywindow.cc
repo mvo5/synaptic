@@ -176,6 +176,7 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
     info = gtk_label_new("");
     gtk_label_set_justify(GTK_LABEL(info), GTK_JUSTIFY_LEFT);
     gtk_misc_set_alignment(GTK_MISC(info), 0.0f, 0.0f);
+    gtk_label_set_line_wrap(GTK_LABEL(info), true);
     gtk_widget_show(info);
     
     view = glade_xml_get_widget(me->_gladeXML,"scrolledwindow_summary");
@@ -205,40 +206,40 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 
     for (vector<RPackage*>::const_iterator p = essential.begin();
 	 p != essential.end(); p++) {
-	str = g_strdup_printf(_("%s: (ESSENTIAL) will be Removed\n"),(*p)->name());
+	str = g_strdup_printf(_("<b>%s</b>: (<b>ESSENTIAL</b>) will be Removed\n"),(*p)->name());
 	text += str;
 	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toDowngrade.begin(); 
 	 p != toDowngrade.end(); p++) {
-	str = g_strdup_printf(_("%s: will be DOWNGRADED\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b>: will be <b>DOWNGRADED</b>\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
     
     for (vector<RPackage*>::const_iterator p = toRemove.begin(); 
 	 p != toRemove.end(); p++) {
-	str = g_strdup_printf(_("%s: will be Removed\n"), (*p)->name());
+	str = g_strdup_printf(_("<b>%s</b>: will be Removed\n"), (*p)->name());
 	text += str;
 	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toUpgrade.begin(); 
 	 p != toUpgrade.end(); p++) {
-	str = g_strdup_printf(_("%s %s: will be Upgraded to %s\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
+	str = g_strdup_printf(_("<b>%s</b> (version: <i>%s</i>) will be Upgraded to version <i>%s</i>\n"),(*p)->name(),(*p)->installedVersion(),(*p)->availableVersion());
 	text += str;
 	g_free(str);
     }
 
     for (vector<RPackage*>::const_iterator p = toInstall.begin(); 
 	 p != toInstall.end(); p++) {
-	str = g_strdup_printf(_("%s %s: will be Installed\n"),(*p)->name(), (*p)->availableVersion());
+	str = g_strdup_printf(_("<b>%s</b> (version <i>%s</i>): will be Installed\n"),(*p)->name(), (*p)->availableVersion());
 	text += str;
 	g_free(str);
     }
     
-    gtk_label_set_text(GTK_LABEL(info), text.c_str());
+    gtk_label_set_markup(GTK_LABEL(info), text.c_str());
     
     me->_summaryL = info;
 }
@@ -345,9 +346,9 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
     
     if (toDowngrade)
 	if(toDowngrade == 1)
-	    g_string_append_printf(msg,_("1 package will be DOWNGRADED\n"));
+	    g_string_append_printf(msg,_("1 package will be <b>DOWNGRADED</b>\n"));
 	else
-	    g_string_append_printf(msg,_("%d packages will be DOWNGRADED\n"), 
+	    g_string_append_printf(msg,_("%d packages will be <b>DOWNGRADED</b>\n"), 
 				   toDowngrade);
 
     if (essential) {

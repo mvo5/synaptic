@@ -355,8 +355,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_detailsM, FALSE);
    gtk_widget_set_sensitive(_propertiesB, FALSE);
    gtk_widget_set_sensitive(_overrideVersionM, FALSE);
+   gtk_widget_set_sensitive(_pinM, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
+
 
    // return if no pkg is selected
    if (!pkg) 
@@ -375,6 +377,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_dl_changelogM, TRUE);
    gtk_widget_set_sensitive(_detailsM, TRUE);
    gtk_widget_set_sensitive(_propertiesB, TRUE);
+   gtk_widget_set_sensitive(_pinM, TRUE);
 
    if(_pkgDetails != NULL)
       _pkgDetails->fillInValues(pkg);

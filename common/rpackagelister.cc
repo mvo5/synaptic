@@ -580,21 +580,27 @@ void RPackageLister::setFilter(int index)
 
 void RPackageLister::setFilter(RFilter *filter)
 {
-  bool found=false;
-
+  _filter = NULL;
   for(unsigned int i=0;i<_filterL.size();i++)  {
     if(filter == _filterL[i]) {
       _filter = _filterL[i];
-      found=true;
+      break;
     }
   }
-  
-  if(!found)
-    _filter = NULL;
 
   reapplyFilter();
 }
 
+int RPackageLister::getFilterIndex(RFilter *filter)
+{
+  if (filter == NULL)
+    filter = _filter;
+  for(unsigned int i=0;i<_filterL.size();i++)  {
+    if(filter == _filterL[i])
+      return i;
+  }
+  return -1;
+}
 
 
 void RPackageLister::getFilterNames(vector<string> &filters)

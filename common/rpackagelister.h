@@ -174,6 +174,7 @@ public:
    // note that setFilter will only set it if the filter is already registered
    void setFilter(RFilter *filter);
    inline RFilter *getFilter() { return _filter; };
+   int getFilterIndex(RFilter *filter=NULL);
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);

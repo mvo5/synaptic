@@ -70,12 +70,24 @@ void RGChangesWindow::confirm(RPackageLister *lister,
 			      vector<RPackage *> &notAuthenticated)
 {
    GtkTreeIter iter, iter_child;
- 
+   GtkWidget *label;
+
+   if(!(toInstall.size() || toReInstall.size() || toUpgrade.size() ||
+	toRemove.size() || toDowngrade.size())) {
+      // we have no changes other than authentication warnings
+      label = glade_xml_get_widget(_gladeXML, "label_changes_header");
+      gtk_widget_hide(label);
+      label = glade_xml_get_widget(_gladeXML, "label_secondary");
+      gtk_widget_hide(label);
+   }
+
   if (notAuthenticated.size() > 0) {
-      GtkWidget *label;
       label = glade_xml_get_widget(_gladeXML, "label_auth_warning");
       assert(label);
-      gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
+      // FIXME: make this a message from a trust class (and remeber to
+      // change the text in rgsummarywindow then too)
+      gchar *msg = g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s"
+				   "</span>\n\n%s",
 				   _("Warning"), 
 				   _("You are about to install software that "
 				     "<b>can't be authenticated</b>! Doing "

@@ -15,7 +15,7 @@
 <title>&app; Manual V&manrevision;</title>       
 
 <copyright> 
-	<year>2003</year> 
+	<year>2003,2004</year> 
 	<holder>Sebastian Heinlein</holder> 
 </copyright>
 
@@ -96,8 +96,8 @@
 	
 	<note>
 		<para>
-			The modifications are not executed instantly. This allows you to queue several modifications and
-			execute them at once.
+			The modifications are not appled instantly. This allows you to mark several modifications and
+			apply them at once.
 		</para>
 	</note>
 
@@ -145,7 +145,7 @@
 	</para>
 	<note>
 		<para>
-			Root rights are required to execute changes in the package system.
+			Root rights are required to apply changes in the package system.
 		</para>
 	</note>
 
@@ -262,7 +262,7 @@
 					<entry valign="top">Toolbar</entry>
 					<entry valign="top">
 						Provides global actions (update, upgrade and 
-						execute) and a package search field.
+						apply and a package search field.
 					</entry>
 				</row>
 				<row>
@@ -343,18 +343,18 @@
 						</term>
 						<listitem>
 							<para>
-								Queue all packages with a later version available 
+								Apply all packages with a later version available 
 								than installed for upgrade.
 							</para>
 						</listitem>
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Execute
+							Apply Changes
 						</term>
 						<listitem>
 							<para>
-								Execute all queued changes.
+								Apply all marked changes.
 							</para>
 						</listitem>
 					</varlistentry>
@@ -692,7 +692,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				Queue the selected packages for installation:
+				Mark the selected packages for installation:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -731,18 +731,18 @@
 		</listitem>
 		<listitem>
 			<para>
-				Execute the queued changes to actually install the package(s):
+				Apply the marked changes to actually install the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.	
+						Click on <guibutton>Apply Changes</guibutton> in the toolbar.	
 				</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute Queued Changes</guimenuitem>
+						<guimenuitem>Apply Marked Changes</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
@@ -768,7 +768,7 @@
 		<para>
 			Alternativly, choose <menuchoice><guimenuitem>Remove Including 
 			Configuration</guimenuitem></menuchoice> instead of 
-			<guimenuchoice><guimenuitem>Remove</guimenuitem></guimenuchoice> 
+			<menuchoice><guimenuitem>Remove</guimenuitem></menuchoice> 
 			to remove all files related to the package.
 		</para>
 	</note>
@@ -777,7 +777,7 @@
 			To also remove packages that are only installed as dependency of the to be removed 
 			package(s) and that would be no longer needed (orphaned) afterwards, choose 
 			<menuchoice><guimenuitem>Remove Including Orphaned Dependecies</guimenuitem>
-			</menuchoice> instead of <guimenuchoice><guimenuitem>Remove</guimenuitem></guimenuchoice>.
+			</menuchoice> instead of <menuchoice><guimenuitem>Remove</guimenuitem></menuchoice>.
 		</para>
 	</note>
 	<para>
@@ -793,7 +793,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				Queue the selected package(s) for removal:
+				Mark the selected package(s) for removal:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -831,18 +831,18 @@
 		</listitem>
 		<listitem>
 			<para>
-				Execute the queued changes to actually remove the package(s):
+				Apply the marked changes to actually remove the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.
+						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute Queued Changes</guimenuitem>
+						<guimenuitem>Apply Marked Changes</guimenuitem>
 						</menuchoice> from the menu.
 					</para>
 				</listitem>
@@ -897,7 +897,7 @@
 		</listitem>
 		<listitem>
 			<para>
-				Queue the selected packages for upgrade:
+				Marked the selected packages for upgrade:
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -936,18 +936,18 @@
 		</listitem>
 		<listitem>
 			<para>
-				Execute the queued changes to actually upgrade the package(s):
+				Apply the marked changes to actually upgrade the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.
+						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> from the menu.
+						<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> from the menu.
 					</para>
 				</listitem>
 				<listitem>
@@ -972,7 +972,7 @@
 	<title>To Upgrade the Whole System</title>
 	<para>
 		The global upgrade enables you to upgrade your system
-		to the latest version without having to queue each package upgrade manually.
+		to the latest version without having to mark each package upgrade manually.
 	</para>
 	
 	<para>
@@ -984,10 +984,10 @@
 			</term>
 			<listitem>
 				<para> 
-					The default upgrade method queues upgrades of installed packages only. 
+					The default upgrade method marks upgrades of installed packages only. 
 					If the later version of a package depends on not installed packages 
 					or conflicts with an already installed package, 
-					the upgrade will not be queued.
+					the upgrade will not be marked.
 				</para>
 			</listitem>
 		</varlistentry>
@@ -1048,7 +1048,7 @@
 
 		<listitem>
 			<para>
-				Queue the package(s) for upgrade: 
+				Mark the package(s) for upgrade: 
 			</para>
 			<itemizedlist>
 				<listitem>
@@ -1080,18 +1080,18 @@
 		</listitem>
 		<listitem>
 			<para>
-				Execute the queued changes to actually upgrade the package(s):
+				Apply the marked changes to actually upgrade the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.
+						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> 
+						<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
 						from the menu.
 					</para>
 				</listitem>
@@ -1176,18 +1176,18 @@
 		</listitem>
 		<listitem>
 			<para>
-				Execute the queued changes to actually downgrade the package(s):
+				Apply the marked changes to actually downgrade the package(s):
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Click on <guibutton>Execute</guibutton> in the toolbar.
+						Click on <guibutton>Apply Changes</guibutton> in the toolbar.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
 						Choose <menuchoice><guimenu>Actions</guimenu>
-						<guimenuitem>Execute Queued Changes</guimenuitem></menuchoice> 
+						<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> 
 						from the menu.
 					</para>
 				</listitem>
@@ -1202,29 +1202,29 @@
 	</orderedlist>
 </sect2>
 
-<sect2 id="synaptic-pkg-executing">
+<sect2 id="synaptic-pkg-apply">
 	<title>
-		To Execute Queued Changes
+		To Apply Marked Changes
 	</title>
 	<tip>
 		<para>
-			To show only packages that are queued for changes list apply 
-			the "Queued Changes" filter to the package list.
+			To show only packages that are marked for change apply 
+			the "Marked Changes" filter to the package list.
 		</para>
 	</tip>
 	<para>
-		To execute queued changes:
+		To apply marked changes:
 	</para>
 	<itemizedlist>
 		<listitem>
 			<para>
-				Click on <guibutton>Execute</guibutton> in the toolbar.
+				Click on <guibutton>Apply</guibutton> in the toolbar.
 			</para>
 		</listitem>
 		<listitem>
 			<para>
 				Choose <menuchoice><guimenu>Actions</guimenu>
-				<guimenuitem>Execute</guimenuitem></menuchoice> from the menu.
+				<guimenuitem>Apply Marked Changes</guimenuitem></menuchoice> from the menu.
 			</para>
 		</listitem>
 		<listitem>
@@ -1237,16 +1237,16 @@
 </sect2>
 <sect2 id="synaptic-pkg-undo">
 	<title>
-		To Undo Queued Changes
+		To Unmark Changes
 	</title>
 	<para>
-		The following ways allow you to undo queued changes:
+		The following ways allow you to unmark changes:
 	</para>
 	
 	<variablelist>
 		<varlistentry>
 			<term>
-				To dequeue a specific package
+				To unmark a specific package
 			</term>
 			<listitem>
 				<itemizedlist>
@@ -1277,12 +1277,12 @@
 		</varlistentry>
 		<varlistentry>
 			<term>
-				Undo all queued changes
+				Unmark all changes
 			</term>
 			<listitem>
 				<para>
 					Choose <menuchoice><guimenu>Actions</guimenu>
-					<guimenuitem>Undo All Queued Changes</guimenuitem></menuchoice>
+					<guimenuitem>Unmark All Changes</guimenuitem></menuchoice>
 					from the menu.
 				</para>
 			</listitem>
@@ -1375,7 +1375,7 @@
 		Fixing Broken Packages
 	</title>
 	<para>
-		Errors in the dependencies of packages or during executing changes can break
+		Errors in the dependencies of packages or during applying changes can break
 		the dependencies structure.
 	</para>
 	
@@ -1503,7 +1503,7 @@
 				<row>
 					<entry valign="top">Programmed Changes</entry>
 					<entry valign="top">
-						Display only packages queued to be modified.
+						Display only packages marked to be modified.
 			                </entry>
 				</row>
 				<row>
@@ -1738,7 +1738,7 @@
 				<variablelist>
 					<varlistentry>
 						<term>
-							Show terminal window while executing
+							Apply changes in a teriminal window
 						</term>
 							<listitem>
 								<para>
@@ -1749,7 +1749,7 @@
 					</varlistentry>
 					<varlistentry>
 						<term>
-							Ask to quit after the changes have been executed
+							Ask to quit after the changes have been applied successfully
 						</term>
 							<listitem>
 								<para>
@@ -1933,7 +1933,7 @@
 					<entry valign="top">
 						<para>
 							Under some rare circumstances the actual installation or removal of a package can fail. 
-							As a consequence all other queued changes are canceled, too. 
+							As a consequence all other marked changes are canceled, too. 
 						</para>
 						<para>
 							&app; requires a 
@@ -1974,7 +1974,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>E</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Execute all queued changes.
+						Apply all marked changes.
 					</entry>
 				</row>
 				<row>
@@ -1990,7 +1990,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queue all possible upgrades.
+						Mark all possible upgrades.
 					</entry>
 				</row>
 				<row>
@@ -1998,7 +1998,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queue the selected package(s) for installation.
+						Mark the selected package(s) for installation.
 					</entry>
 				</row>
 				<row>
@@ -2006,7 +2006,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Ignore any queued changes and set package as before.
+						Ignore any marked changes and set package as before.
 					</entry>
 				</row>
 				<row>
@@ -2022,7 +2022,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>G</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queue the whole system for upgrade.
+						Upgrade system by marking all available upgrade.
 					</entry>
 				</row>
 				<row>
@@ -2030,7 +2030,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queue the selected package(s) for installation.
+						Mark the selected package(s) for installation.
 					</entry>
 				</row>
 				<row>
@@ -2038,7 +2038,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Ignore any queued changes and set package as before.
+						Unmark any changes to the package and set package as before.
 					</entry>
 				</row>
 				<row>
@@ -2054,7 +2054,7 @@
 						<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
 					</entry>
 					<entry valign="top">
-						Queue the selected package(s) for removal.
+						Mark the selected package(s) for removal.
 					</entry>
 				</row>
 				<row>

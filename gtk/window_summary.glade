@@ -18,7 +18,7 @@
     <widget class="GtkVBox" id="dialog-vbox1">
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
-      <property name="spacing">12</property>
+      <property name="spacing">6</property>
 
       <child internal-child="action_area">
 	<widget class="GtkHButtonBox" id="dialog-action_area1">
@@ -26,7 +26,7 @@
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancelbutton1">
+	    <widget class="GtkButton" id="button_cancel">
 	      <property name="visible">True</property>
 	      <property name="tooltip" translatable="yes">Return to the main screen</property>
 	      <property name="can_default">True</property>
@@ -95,7 +95,7 @@
 		<widget class="GtkVBox" id="vbox2">
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
-		  <property name="spacing">18</property>
+		  <property name="spacing">12</property>
 
 		  <child>
 		    <widget class="GtkLabel" id="label1">
@@ -121,7 +121,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label2">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">This is your opportunity to look through the list of queued changes before they are executed.</property>
+		      <property name="label" translatable="yes">This is your last opportunity to look through the list of queued changes before they are executed.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -140,7 +140,7 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkScrolledWindow" id="scrolledwindow1">
+		    <widget class="GtkScrolledWindow" id="scrolledwindow_summary">
 		      <property name="height_request">120</property>
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
@@ -150,10 +150,10 @@
 		      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		      <child>
-			<widget class="GtkTreeView" id="treeview1">
+			<widget class="GtkTreeView" id="treeview_summary">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="headers_visible">True</property>
+			  <property name="headers_visible">False</property>
 			  <property name="rules_hint">False</property>
 			  <property name="reorderable">False</property>
 			  <property name="enable_search">True</property>
@@ -171,7 +171,7 @@
 		    <widget class="GtkHBox" id="hbox2">
 		      <property name="visible">True</property>
 		      <property name="homogeneous">False</property>
-		      <property name="spacing">0</property>
+		      <property name="spacing">12</property>
 
 		      <child>
 			<widget class="GtkHBox" id="hbox3">
@@ -186,7 +186,7 @@
 			      <property name="spacing">6</property>
 
 			      <child>
-				<widget class="GtkLabel" id="label4">
+				<widget class="GtkLabel" id="label_summary_label">
 				  <property name="visible">True</property>
 				  <property name="label" translatable="yes">&lt;b&gt;Summary&lt;/b&gt;</property>
 				  <property name="use_underline">False</property>
@@ -287,6 +287,7 @@
 
 			  <child>
 			    <widget class="GtkToggleButton" id="togglebutton_details">
+			      <property name="visible">True</property>
 			      <property name="tooltip" translatable="yes">Switch between a detailed view and a general overview</property>
 			      <property name="can_focus">True</property>
 			      <property name="label" translatable="yes">_Show Details</property>

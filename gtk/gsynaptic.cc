@@ -78,7 +78,8 @@ bool ShowHelp(CommandLine & CmdL)
       _("--update-at-startup  Call \"Reload\" on startup\n")<<
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n") <<
-      _("--add-cdrom Add a cdrom at startup\n");
+      _("--add-cdrom Add a cdrom at startup (needs path for cdrom)\n") <<
+      _("--ask-cdrom Ask for adding a cdrom and exit\n");
    exit(0);
 }
 
@@ -101,6 +102,8 @@ CommandLine::Args Args[] = {
    0, "dist-upgrade-mode", "Volatile::DistUpgrade-Mode", 0}
    , {
    0, "add-cdrom", "Volatile::AddCdrom-Mode", CommandLine::HasArg}
+   , {
+   0, "ask-cdrom", "Volatile::AskCdrom-Mode", 0}
    , {
    0, "plug-progress-into", "Volatile::PlugProgressInto", CommandLine::HasArg}
    , {
@@ -261,7 +264,8 @@ pid_t TestLock(string File)
 	 // File does not exist, no there can't be a lock
 	 return 0; 
       } else {
-	 perror("open");
+	 //cout << "open, errno: " << errno << endl;
+	 //perror("open");
 	 return(-1);
       }
    }
@@ -470,6 +474,16 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(true);
 
+   string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
+   if(!cd_mount_point.empty()) {
+      _config->Set("Acquire::cdrom::mount",cd_mount_point);
+      _config->Set("APT::CDROM::NoMount", true);
+      mainWindow->cbAddCDROM(NULL, mainWindow);
+   } else if(_config->FindB("Volatile::AskCdrom-Mode",false)) {
+      mainWindow->cbAddCDROM(NULL, mainWindow);
+      return 0;
+   }
+
    //no need to open a cache that will invalid after the update
    if(!UpdateMode) {
       packageLister->openCache(false);
@@ -489,14 +503,7 @@ int main(int argc, char **argv)
 
    mainWindow->setInterfaceLocked(false);
 
-   string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
-   if(!cd_mount_point.empty()) {
-      _config->Set("Acquire::cdrom::mount",cd_mount_point);
-      _config->Set("APT::CDROM::NoMount", true);
-      mainWindow->cbAddCDROM(NULL, mainWindow);
-   }
-
-   if(UpdateMode) {
+if(UpdateMode) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       packageLister->openCache(false);
       mainWindow->restoreState();

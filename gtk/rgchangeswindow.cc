@@ -52,7 +52,7 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
    GtkTreeViewColumn *column;
    column = gtk_tree_view_column_new_with_attributes(_("Package changes"),
                                                      renderer,
-                                                     "text", PKG_COLUMN, NULL);
+                                                     "markup", PKG_COLUMN, NULL);
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
    gtk_widget_show(_tree);
@@ -111,15 +111,17 @@ void RGChangesWindow::confirm(RPackageLister *lister,
 
    if (toRemove.size() > 0) {
       /* removed */
+      gchar *str = g_strdup_printf("<b>%s</b>", _("To be removed"));
       gtk_tree_store_append(_treeStore, &iter, NULL);
       gtk_tree_store_set(_treeStore, &iter,
-                         PKG_COLUMN, _("To be removed"), -1);
+                         PKG_COLUMN, str, -1);
       for (vector<RPackage *>::const_iterator p = toRemove.begin();
            p != toRemove.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
                             PKG_COLUMN, (*p)->name(), -1);
       }
+      g_free(str);
    }
 
    if (toDowngrade.size() > 0) {

@@ -956,7 +956,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
 			glade_xml_get_widget(_gladeXML,"radiobutton_now"),
 		       _("Never upgrade to a new version automatically. "
-			    "Be _very_ carefull with this option as you will "
+			    "Be _very_ careful with this option as you will "
 			    "not get security updates automatically! "
 		       "If you manually force a version "
 		       "the package version will follow "

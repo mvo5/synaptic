@@ -2114,7 +2114,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 
 	 GtkWidget *label = gtk_label_new("");
 	 gtk_label_set_markup(GTK_LABEL(label),
-			      _("<big><b>Building repoitory dialog</b></big>\n\n"
+			      _("<big><b>Building repository dialog</b></big>\n\n"
 				"Please wait."));
 	 gtk_box_pack_start_defaults(GTK_BOX(vbox), label);
 	 gtk_widget_show(label);

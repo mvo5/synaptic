@@ -1,13 +1,13 @@
 # Danish messages for synaptic.
 # Copyright (C) 2001 Free Software Foundation, Inc.
 # Keld Simonsen <keld@dkuug.dk>, 2003.
-# Morten Brix Pedersen <morten@wtf.dk>, 2004.
+# Morten Brix Pedersen <morten@wtf.dk>, 2004-2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-01 15:27+0100\n"
-"PO-Revision-Date: 2004-11-19 23:03+0200\n"
+"PO-Revision-Date: 2005-02-02 22:40+0200\n"
 "Last-Translator: Morten Brix Pedersen <morten@wtf.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -645,7 +645,7 @@ msgstr "Intern fejl, AllUpgrade ødelagde ting. Rapportér dette."
 
 #: common/rpackagelister.cc:493
 msgid "dist upgrade Failed"
-msgstr "dist upgrade fejlede"
+msgstr "dist opgradering fejlede"
 
 #: common/rpackagelister.cc:1239
 msgid "Unable to lock the list directory"
@@ -693,27 +693,24 @@ msgstr "Kune ikke rette manglende pakker"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
 #: common/rpackagelister.cc:1565
-#, fuzzy
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
 msgstr ""
 "\n"
-"De følgende ESSENTIELLE pakker er fjernet:\n"
+"De følgende ESSENTIELLE pakker er blevet fjernet:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
 #: common/rpackagelister.cc:1574
-#, fuzzy
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
 msgstr ""
 "\n"
-"De følgende pakker er fjernet fuldstændigt:\n"
+"De følgende pakker er blevet nedgraderet:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
 #: common/rpackagelister.cc:1583
-#, fuzzy
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -723,43 +720,39 @@ msgstr ""
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
 #: common/rpackagelister.cc:1592
-#, fuzzy
 msgid ""
 "\n"
 "Removed the following packages:\n"
 msgstr ""
 "\n"
-"De følgende pakker er fjernet fuldstændigt:\n"
+"De følgende pakker er blevet fjernet:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
 #: common/rpackagelister.cc:1601
-#, fuzzy
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
 msgstr ""
 "\n"
-"De følgende pakker er fjernet fuldstændigt:\n"
+"De følgende pakker er blevet opgraderet:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
 #: common/rpackagelister.cc:1612
-#, fuzzy
 msgid ""
 "\n"
 "Installed the following packages:\n"
 msgstr ""
 "\n"
-"De følgende pakker er fjernet fuldstændigt:\n"
+"Installerede de følgende pakker:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
 #: common/rpackagelister.cc:1622
-#, fuzzy
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
 msgstr ""
 "\n"
-"Under installation af pakke %s:\n"
+"Geninstallerede de følgende pakker:\n"
 "\n"
 
 #: common/rpackagelister.cc:1639
@@ -869,7 +862,7 @@ msgstr ""
 
 #: gtk/dialog_conffile.glade.h:1
 msgid "Difference between the files"
-msgstr ""
+msgstr "Forskel mellem filerne"
 
 #: gtk/dialog_change_version.glade.h:1
 msgid "Force version:"
@@ -880,7 +873,6 @@ msgid "_Force Version"
 msgstr "_Tving version"
 
 #: gtk/dialog_upgrade.glade.h:1
-#, fuzzy
 msgid ""
 "<b><big>Mark upgrades in a smart way?</big></b>\n"
 "\n"
@@ -893,7 +885,7 @@ msgid ""
 "<b>Note:</b> The upgrades will be marked only. You still have to apply them "
 "afterwards."
 msgstr ""
-"<b><big>Markér opgradering på en smart måde?</big></b>\n"
+"<b><big>Markér opgraderinger på en smart måde?</big></b>\n"
 "\n"
 "Standard opgraderingsmetoden springer opgraderinger over, som introducerer "
 "konflikter eller kræver installation af nye pakker.\n"
@@ -909,9 +901,8 @@ msgid "Default Upgrade"
 msgstr "Standard opgradering"
 
 #: gtk/dialog_upgrade.glade.h:9
-#, fuzzy
 msgid "Remember my answer for future upgrades"
-msgstr "Husk svaret for fremtidige opgraderinger"
+msgstr "Husk mit svar til fremtidige opgraderinger"
 
 #: gtk/dialog_upgrade.glade.h:10 gtk/window_preferences.glade.h:68
 msgid "Smart Upgrade"
@@ -950,13 +941,12 @@ msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
 msgstr "--upgrade-mode  Kald Opdatér, Opgradér og vis ændringer\n"
 
 #: gtk/gsynaptic.cc:72
-#, fuzzy
 msgid "--dist-upgrade-mode  Call Refresh, DistUpgrade and display changes\n"
-msgstr "--upgrade-mode  Kald Opdatér, Opgradér og vis ændringer\n"
+msgstr "--dist-upgrade-mode  Kald Opdatér, DistOpgradér og vis ændringer\n"
 
 #: gtk/gsynaptic.cc:73
 msgid "--update-at-startup  Call \"reload\" on startup\n"
-msgstr ""
+msgstr "--update-at-startup  Kald \"genindlæs\" ved opstart\n"
 
 #: gtk/gsynaptic.cc:74
 msgid "--non-interactive Never prompt for user input\n"
@@ -968,7 +958,7 @@ msgstr "--task-window Åbn med 'opgave'-vindue\n"
 
 #: gtk/gsynaptic.cc:76
 msgid "--add-cdrom Add a cdrom at startup\n"
-msgstr ""
+msgstr "--add-cdrom Tilføj en cdrom ved opstart\n"
 
 #: gtk/gsynaptic.cc:210
 msgid "You must run this program as the root user."
@@ -1004,7 +994,7 @@ msgstr "Pakke ændringer"
 
 #: gtk/rgchangeswindow.cc:77 gtk/rgsummarywindow.cc:92
 msgid "NOT AUTHENTICATED"
-msgstr ""
+msgstr "IKKE GODKENDT"
 
 #: gtk/rgchangeswindow.cc:90 gtk/rgsummarywindow.cc:134
 msgid "To be removed"
@@ -1031,58 +1021,58 @@ msgid "To be kept"
 msgstr "Vil blive beholdt"
 
 #: gtk/rgdebinstallprogress.cc:57 gtk/rgdebinstallprogress.cc:68
-#, fuzzy, c-format
+#, c-format
 msgid "Preparing for removal %s"
-msgstr "Markeret til at fjernes"
+msgstr "Forbereder til fjernelse %s"
 
 #: gtk/rgdebinstallprogress.cc:58
 #, c-format
 msgid "Removing %s"
-msgstr ""
+msgstr "Fjerner %s"
 
 #: gtk/rgdebinstallprogress.cc:59 gtk/rgdebinstallprogress.cc:70
-#, fuzzy, c-format
+#, c-format
 msgid "Removed %s"
-msgstr "Fjern"
+msgstr "Fjernede %s"
 
 #: gtk/rgdebinstallprogress.cc:69 gtk/rgdebinstallprogress.cc:78
 #, c-format
 msgid "Removing with config %s"
-msgstr ""
+msgstr "Fjerner med opsætning %s"
 
 #: gtk/rgdebinstallprogress.cc:71 gtk/rgdebinstallprogress.cc:79
 #, c-format
 msgid "Removed with config %s"
-msgstr ""
+msgstr "Fjernet med opsætning %s"
 
 #: gtk/rgdebinstallprogress.cc:88 gtk/rgdebinstallprogress.cc:101
 #: gtk/rgdebinstallprogress.cc:116
-#, fuzzy, c-format
+#, c-format
 msgid "Preparing %s"
-msgstr "Forbereder..."
+msgstr "Forbereder %s"
 
 #: gtk/rgdebinstallprogress.cc:89 gtk/rgdebinstallprogress.cc:103
 #: gtk/rgdebinstallprogress.cc:117 gtk/rgdebinstallprogress.cc:119
 #, c-format
 msgid "Unpacking %s"
-msgstr ""
+msgstr "Udpakker %s"
 
 #: gtk/rgdebinstallprogress.cc:90 gtk/rgdebinstallprogress.cc:104
 #: gtk/rgdebinstallprogress.cc:120
-#, fuzzy, c-format
+#, c-format
 msgid "Configuring %s"
-msgstr "Behold opsætning"
+msgstr "Opsætter %s"
 
 #: gtk/rgdebinstallprogress.cc:91 gtk/rgdebinstallprogress.cc:105
 #: gtk/rgdebinstallprogress.cc:121
-#, fuzzy, c-format
+#, c-format
 msgid "Installed %s"
-msgstr "Installeret"
+msgstr "Installerede %s"
 
 #: gtk/rgdebinstallprogress.cc:102 gtk/rgdebinstallprogress.cc:118
-#, fuzzy, c-format
+#, c-format
 msgid "Installing %s"
-msgstr "Installerede filer"
+msgstr "Installerer %s"
 
 #: gtk/rgdebinstallprogress.cc:288
 #, c-format
@@ -1090,6 +1080,8 @@ msgid ""
 "Install new configuration file\n"
 "'%s'?"
 msgstr ""
+"Installér ny opsætningsfil\n"
+"'%s'?"
 
 #: gtk/rgdebinstallprogress.cc:289
 #, c-format
@@ -1098,6 +1090,9 @@ msgid ""
 "version is shipped in this package. If you want to keep your current version "
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
+"Opsætningsfilen %s er blevet ændret (af dig, eller et script). En opdateret "
+"version følger med denne pakker. Hvis du vil beholde din nuværende version, "
+"svar da 'Nej'. Vil du installere den nye version? "
 
 #: gtk/rgdebinstallprogress.cc:370 gtk/rginstallprogress.cc:284
 #: gtk/rgterminstallprogress.cc:168
@@ -1106,28 +1101,27 @@ msgstr "Anvender ændringer"
 
 #. error from dpkg
 #: gtk/rgdebinstallprogress.cc:437
-#, fuzzy, c-format
+#, c-format
 msgid "Error in package %s"
-msgstr "Fundet %i pakker"
+msgstr "Fejl i pakke %s"
 
 #: gtk/rgdebinstallprogress.cc:582
 msgid ""
 "The marked changes are now applied. This can take some time. Please wait."
 msgstr ""
+"De markerede ændringer anvendes nu. Dette kan tage noget tid. Vent."
 
 #: gtk/rgdebinstallprogress.cc:587
-#, fuzzy
 msgid "Installing and removing software"
-msgstr "Installér, fjern og opgradér software pakker"
+msgstr "Installerer og fjerner software"
 
 #: gtk/rgdebinstallprogress.cc:589
 msgid "Removing software"
-msgstr ""
+msgstr "Fjerner software"
 
 #: gtk/rgdebinstallprogress.cc:591
-#, fuzzy
 msgid "Installing software"
-msgstr "Installerede filer"
+msgstr "Installerer software"
 
 #: gtk/rgpreferenceswindow.cc:46
 msgid "Supported"
@@ -1177,6 +1171,10 @@ msgid ""
 "package version will follow that distribution until it enters the default "
 "distribution."
 msgstr ""
+"Foretræk pakke versioner fra den valgte distribution når der opgraderes "
+"pakker. Hvis du manuelt påtvinger en version fra en anden distribution, "
+"vil pakke versionen følge den distribution indtil den træder ind i "
+"standard distributionen."
 
 #: gtk/rgpreferenceswindow.cc:958
 msgid ""
@@ -1184,10 +1182,14 @@ msgid ""
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
+"Opgradér aldrig til en ny version automatisk. Vær _meget_ forsigtig med denne "
+"indstilling, eftersom du ikke vil få sikkerhedsopdateringer automatisk! Hvis "
+"du manuelt påtvinger en version, vil pakke versionen følge den valgte "
+"distribution."
 
 #: gtk/rgpreferenceswindow.cc:966
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
-msgstr ""
+msgstr "Lad synaptic vælge den bedste version til dig. Brug denne hvis usikker."
 
 #: gtk/rgpreferenceswindow.cc:1003
 msgid "Visible"
@@ -1374,7 +1376,6 @@ msgid "Download"
 msgstr "Download"
 
 #: gtk/rgmainwindow.cc:1203
-#, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
@@ -1531,6 +1532,9 @@ msgid ""
 "\n"
 "Please wait."
 msgstr ""
+"<big><b>Bygger arkiv dialog</b></big>\n"
+"\n"
+"Vent."
 
 #: gtk/rgmainwindow.cc:2159
 msgid "Repositories changed"
@@ -1733,14 +1737,12 @@ msgid "To be DOWNGRADED"
 msgstr "Vil blive NEDGRADERET"
 
 #: gtk/rgsummarywindow.cc:147
-#, fuzzy
 msgid "To be completely removed (including configuration files)"
-msgstr "Vil blive fjernet med opsætning"
+msgstr "Vil blive fuldstændig fjernet (inklusive opsætningsfiler)"
 
 #: gtk/rgsummarywindow.cc:199
-#, fuzzy
 msgid "Unchanged"
-msgstr "Åbn ændringer"
+msgstr "Uændret"
 
 #: gtk/rgsummarywindow.cc:244
 #, c-format
@@ -1867,7 +1869,7 @@ msgstr ""
 
 #: gtk/rguserdialog.cc:72
 msgid "The following problems were found on your system:"
-msgstr ""
+msgstr "De følgende problemer blev fundet på dit system:"
 
 #: gtk/rgvendorswindow.cc:39
 msgid "Setup Vendors"
@@ -1963,7 +1965,7 @@ msgstr "Tilgængelig versioner:"
 
 #: gtk/window_main.glade.h:14 gtk/window_details.glade.h:12
 msgid "Common"
-msgstr ""
+msgstr "Til fælles"
 
 #: gtk/window_main.glade.h:15
 msgid "Dependants"
@@ -2022,7 +2024,7 @@ msgstr "Markér for opgradering"
 #: gtk/window_main.glade.h:32 gtk/window_find.glade.h:7
 #: gtk/window_filters.glade.h:47 gtk/window_details.glade.h:21
 msgid "Provided Packages"
-msgstr ""
+msgstr "Forsynede pakker"
 
 #: gtk/window_main.glade.h:33
 msgid "Reload"
@@ -2134,9 +2136,8 @@ msgstr "_Skjul"
 
 #
 #: gtk/window_main.glade.h:60
-#, fuzzy
 msgid "_History"
-msgstr "Søgehistorik"
+msgstr "_Historik"
 
 #: gtk/window_main.glade.h:61
 msgid "_Icons Only"
@@ -2377,9 +2378,8 @@ msgid "<b>Fonts</b>"
 msgstr "<b>Skrifttyper</b>"
 
 #: gtk/window_preferences.glade.h:8
-#, fuzzy
 msgid "<b>History files</b>"
-msgstr "<b>Midlertidige filer</b>"
+msgstr "<b>Historik filer</b>"
 
 #: gtk/window_preferences.glade.h:9
 msgid "<b>Marking Changes</b>"
@@ -2387,7 +2387,7 @@ msgstr "<b>Markerer ændringer</b>"
 
 #: gtk/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
-msgstr ""
+msgstr "<b>Pakkeopgraderings opførsel (standard distribution)</b>"
 
 #: gtk/window_preferences.glade.h:11
 msgid "<b>Proxy Server</b>"
@@ -2398,7 +2398,6 @@ msgid "<b>Temporary Files</b>"
 msgstr "<b>Midlertidige filer</b>"
 
 #: gtk/window_preferences.glade.h:13
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider any changes carefully.</span>"
@@ -2416,18 +2415,17 @@ msgstr "Spørg altid"
 
 #: gtk/window_preferences.glade.h:16
 msgid "Always prefer the highest version"
-msgstr ""
+msgstr "Foretræk altid den højeste version"
 
 #: gtk/window_preferences.glade.h:17
 msgid "Always prefer the installed version"
-msgstr ""
+msgstr "Foretræk altid den installerede version"
 
 #: gtk/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
 msgstr "Anvend ændringer i et terminal vindue"
 
 #: gtk/window_preferences.glade.h:19
-#, fuzzy
 msgid "Ask to confirm changes that also affect other packages"
 msgstr ""
 "Spørg efter at bekræfte ændringer som også har indflydelse på andre pakker"
@@ -2482,7 +2480,7 @@ msgstr "Se anbefalede pakker som afhængigheder"
 
 #: gtk/window_preferences.glade.h:32
 msgid "Delete _History files older than:"
-msgstr ""
+msgstr "Slet _historik filer ældre end:"
 
 #: gtk/window_preferences.glade.h:33
 msgid "Direct connection to the internet"
@@ -2493,9 +2491,8 @@ msgid "FTP proxy: "
 msgstr "FTP mellemvært: "
 
 #: gtk/window_preferences.glade.h:36
-#, fuzzy
 msgid "Files"
-msgstr "Filtre"
+msgstr "Filer"
 
 #: gtk/window_preferences.glade.h:37
 msgid "General"
@@ -2570,7 +2567,6 @@ msgid "Network"
 msgstr "Netværk"
 
 #: gtk/window_preferences.glade.h:55
-#, fuzzy
 msgid "New in repository:"
 msgstr "Ny i arkiv:"
 
@@ -2603,9 +2599,8 @@ msgid "Port: "
 msgstr "Port: "
 
 #: gtk/window_preferences.glade.h:63
-#, fuzzy
 msgid "Prefer versions from: "
-msgstr "Tving version:"
+msgstr "Foretræk versioner fra: "
 
 #: gtk/window_preferences.glade.h:65
 msgid "Reloading outdated package information:"
@@ -2640,25 +2635,21 @@ msgid "_Delete Cached Package Files"
 msgstr "_Slet cachede pakkefiler"
 
 #: gtk/window_preferences.glade.h:74
-#, fuzzy
 msgid "_Delete downloaded packages after installation"
-msgstr "Slet nedhentede pakker efter installation"
+msgstr "_Slet nedhentede pakker efter installation"
 
 #
 #: gtk/window_preferences.glade.h:75
-#, fuzzy
 msgid "_Keep history"
-msgstr "Søgehistorik"
+msgstr "_Behold historik"
 
 #: gtk/window_preferences.glade.h:76
-#, fuzzy
 msgid "_Leave all downloaded packages in the cache"
-msgstr "Efterlad alle hentede pakker i cachen"
+msgstr "_Efterlad alle hentede pakker i cachen"
 
 #: gtk/window_preferences.glade.h:77
-#, fuzzy
 msgid "_Only delete packages which are no longer available"
-msgstr "Slet kun de pakker som ikke længere er tilgængelige"
+msgstr "Slet _kun de pakker som ikke længere er tilgængelige"
 
 #: gtk/window_preferences.glade.h:78
 msgid "_Terminal Font"
@@ -2666,7 +2657,7 @@ msgstr "_Terminal skrifttype"
 
 #: gtk/window_preferences.glade.h:79
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 #: gtk/window_disc_name.glade.h:2
 msgid ""
@@ -2720,7 +2711,6 @@ msgid "Return to the main screen"
 msgstr "Gå tilbage til hovedskærmen"
 
 #: gtk/window_summary.glade.h:8
-#, fuzzy
 msgid "The package files will be downloaded, but not installed"
 msgstr "Pakkefilerne vil kun blive hentet, og ikke installeret"
 
@@ -2733,14 +2723,13 @@ msgstr ""
 "ændringer før de bliver anvendt."
 
 #: gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk"
 msgstr ""
 "Leverandører laver digital signatur på deres pakker, for at sikre at "
 "oprindelsen og integriteten på pakkerne. Det udgør en sikkerhedsrisiko hvis "
-"verifikation på signaturen slås fra."
+"verifikation på signaturen slås fra"
 
 #: gtk/window_summary.glade.h:11
 msgid "Verify package signatures"
@@ -2768,7 +2757,7 @@ msgstr "OG"
 
 #: gtk/window_filters.glade.h:8
 msgid "Boolean operator between property criterias:"
-msgstr ""
+msgstr "Boolsk operatør mellem egenskabskriterier:"
 
 #: gtk/window_filters.glade.h:10
 msgid "Conflicting Packages"
@@ -2812,7 +2801,7 @@ msgstr "Inkluderinger"
 
 #: gtk/window_filters.glade.h:24
 msgid "Installed packages that are up-to-date"
-msgstr ""
+msgstr "Installerede pakker der er den nyeste version"
 
 #: gtk/window_filters.glade.h:25
 msgid "Installed packages that are upgradable"
@@ -2820,7 +2809,7 @@ msgstr "Installerede pakker der kan opgraderes"
 
 #: gtk/window_filters.glade.h:26
 msgid "Installed packages that are upgradable to a later upstream version"
-msgstr ""
+msgstr "Installerede pakker der kan opgraderes til en helt ny version"
 
 #: gtk/window_filters.glade.h:27
 msgid "Library packages that are no longer needed (deborphan is required)"
@@ -2844,7 +2833,7 @@ msgstr "ELLER"
 
 #: gtk/window_filters.glade.h:36
 msgid "Orphaned"
-msgstr ""
+msgstr "Forældreløs"
 
 #: gtk/window_filters.glade.h:38
 msgid "Packages that are new in the repository since that last \"Refresh\""
@@ -2953,14 +2942,12 @@ msgid "rpm-src"
 msgstr "rpm-src"
 
 #: gtk/window_rgdebinstall_progress.glade.h:1
-#, fuzzy
 msgid "<i>Preparing packages...</i>"
-msgstr "Renser pakkelister..."
+msgstr "<i>Forbereder pakker...</i>"
 
 #: gtk/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
 msgid "Terminal"
-msgstr "_Terminal skrifttype"
+msgstr "Terminal"
 
 #: gtk/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -2990,9 +2977,8 @@ msgid "<b>Terminal Output:</b>"
 msgstr "<b>Terminal uddata:</b>"
 
 #: gtk/window_zvtinstallprogress.glade.h:2
-#, fuzzy
 msgid "Close this dialog after the changes have been successfully applied"
-msgstr "Luk denne dialogboks, efter at ændringerne er blevet anvendt korrekt"
+msgstr "Luk denne dialogboks, efter at ændringerne er blevet anvendt"
 
 #: data/synaptic.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
@@ -3065,6 +3051,8 @@ msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
+"Du bør genindlæse pakke oplysninger ofte. Ellers kan du gå glip af vigtige "
+"sikkerhedsopdateringer."
 
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
@@ -3074,6 +3062,11 @@ msgid ""
 "The following packages have unresolvable dependencies. Make sure that all "
 "required repositories are added and enabled in the preferences."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">Kunne ikke markere alle pakker til "
+"installation eller opgradering</span>\n"
+"\n"
+"De følgende pakker har afhængigheder, der ikke kunne løses. Sørg for, at "
+"alle krævede arkiver er tilføjet og aktiveret i indstillingerne."
 
 #: gtk/dialog_changelog.glade.h:1
 msgid "Complete changelog of the latest version:"
@@ -3089,6 +3082,12 @@ msgid ""
 "network connection and the correct writing of the repository address in the "
 "preferences."
 msgstr ""
+"<big><b>Kunne ikke hente alle arkiv indeksfiler</b></big>\n"
+"\n"
+"Det kan være at arkivet ikke længere er tilgængeligt, eller det ikke "
+"kunne kontaktes pga. netværksproblemer. Hvis muligt vil en ældre version "
+"af indeksfilen blive brugt. Ellers vil arkivet blive ignoreret. Tjek din "
+"netværksforbindelse og om den korrekte adresse bliver brugt i indstillingerne."
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"
@@ -3101,7 +3100,7 @@ msgstr "Versions nummer"
 #. depends, predepends etc
 #: gtk/rgfiltermanager.h:71
 msgid "Provided packages"
-msgstr ""
+msgstr "Forsynede pakker"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:72
@@ -3175,7 +3174,6 @@ msgstr "<i>Kan ikke lukke mens kørende</li>"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3187,8 +3185,8 @@ msgstr ""
 "<big><b>Kunne ikke hente alle pakkefiler</b></big>\n"
 "\n"
 "Denne version af pakken som du vil installere, er muligvis ikke længere "
-"tilgængelig i arkivet. Eller de rkan være et problem med kilden af pakken. "
-"Genindlæs pakkelisten og tjek kilden for pakker (f.eks. CD eller netværks "
+"tilgængelig i arkivet. Eller der kan være et problem med kilden af pakken. "
+"Genindlæs pakkelisten og tjek kilden for pakker (f.eks. CD eller netværks"
 "forbindelse)."
 
 #: gtk/dialog_update_outdated.glade.h:1
@@ -3217,119 +3215,9 @@ msgstr "_Genindlæs"
 
 #
 #: gtk/window_logview.glade.h:1
-#, fuzzy
 msgid "History"
-msgstr "Søgehistorik"
+msgstr "Historik"
 
 #: gtk/window_logview.glade.h:2
-#, fuzzy
 msgid "History of installed, upgraded and removed software packages."
-msgstr "Installér, fjern og opgradér software pakker"
-
-#~ msgid "Temporary Files"
-#~ msgstr "Midlertidige filer"
-
-#, fuzzy
-#~ msgid "Dependencies of"
-#~ msgstr "Afhængigheder"
-
-#, fuzzy
-#~ msgid "Origion"
-#~ msgstr "Oprindelse"
-
-#, fuzzy
-#~ msgid "--non-interactive Try to run in complete automatic mode\n"
-#~ msgstr "--non-interactive  Spørg ikke efter bruger inddata\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "<span weight=\"bold\" size=\"larger\">Configuration file changed</span>\n"
-#~ "\n"
-#~ "Secondary Text"
-#~ msgstr ""
-#~ "<span weight=\"bold\" size=\"larger\">Markér yderligere krævede ændringer?"
-#~ "</span>"
-
-#~ msgid "ignore"
-#~ msgstr "ignorér"
-
-#~ msgid "<b>Distribution</b>"
-#~ msgstr "<b>Distribution</b>"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>Note:</b> The package information must be reloaded and all marked "
-#~ "changes will be lost. Make sure you apply your changes first."
-#~ msgstr ""
-#~ "<b>Bemærk:</b> Pakkelisten skal genindlæses og alle markerede ændringer "
-#~ "vil blive tabt. Sørg for at anvende dine ændringer først."
-
-#~ msgid "Default archive: "
-#~ msgstr "Standard arkiv: "
-
-#~ msgid "Expert"
-#~ msgstr "Ekspert"
-
-#~ msgid ""
-#~ "Select the default release if more than one is specifed in the sources."
-#~ "list"
-#~ msgstr ""
-#~ "Vælg standard-udgivelsen, hvis mere end én er angivet i sources.list"
-
-#~ msgid "%s is/will be installed"
-#~ msgstr "%s er/vil blive installeret"
-
-#~ msgid "package is not installable"
-#~ msgstr "pakke kan ikke installeres"
-
-#~ msgid "package is a virtual package"
-#~ msgstr "pakke er en virtuel pakke"
-
-#~ msgid "package is/will not be installed"
-#~ msgstr "pakke er ikke/vil ikke blive installeret"
-
-#~ msgid "dependency is satisfied"
-#~ msgstr "afhængighed er opfyldt"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "The following packages are DOWNGRADED:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "De følgende pakker er NEDGRADERET:\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "The following packages are removed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "De følgende pakker er fjernet:\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "The following packages are upgraded:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "De følgende pakker er opgraderet:\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "The following packages are installed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "De følgende pakker er installeret:\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "The following packages are re-installed:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "De følgende pakker er re-installeret:\n"
-
-#~ msgid "To be not upgraded"
-#~ msgstr "Vil ikke blive opgraderet"
+msgstr "Historik over installerede, opgraderede og fjernede software pakker."

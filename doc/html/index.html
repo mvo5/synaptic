@@ -1,0 +1,545 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML
+><HEAD
+><TITLE
+>Synaptic Package Manager Manual V0.1</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.7"><LINK
+REL="NEXT"
+TITLE="The Main Window"
+HREF="x90.html"></HEAD
+><BODY
+CLASS="article"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="title"
+><A
+NAME="AEN2"
+><SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+> Manual V0.1</A
+></H1
+><DIV
+CLASS="authorgroup"
+><A
+NAME="AEN8"
+></A
+><H3
+CLASS="author"
+><A
+NAME="AEN9"
+>Sebastian Heinlein</A
+></H3
+></DIV
+><SPAN
+CLASS="releaseinfo"
+>&#13;	This manual describes version 0.46 
+	of Synaptic Package Manager.
+<BR></SPAN
+><P
+CLASS="copyright"
+>Copyright &copy; 2003 Sebastian Heinlein</P
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="index.html#synaptic-introduction"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="x90.html"
+>The Main Window</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="x90.html#synaptic-win-overview"
+>Overview</A
+></DT
+><DT
+>2.2. <A
+HREF="x90.html#synaptic-win-toolbar"
+>Toolbar</A
+></DT
+><DT
+>2.3. <A
+HREF="x90.html#synaptic-win-list"
+>Package List</A
+></DT
+><DT
+>2.4. <A
+HREF="x90.html#synaptic-win-info"
+>Package Details</A
+></DT
+></DL
+></DD
+><DT
+>3. <A
+HREF="x218.html"
+>Managing Packages</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="x218.html#synaptic-pkg-find"
+>Finding a Specific Package</A
+></DT
+><DD
+><DL
+><DT
+>3.1.1. <A
+HREF="x218.html#synaptic-pkg-find-quicksearch"
+>Quick Search</A
+></DT
+><DT
+>3.1.2. <A
+HREF="x218.html#synaptic-pkg-find-advsearch"
+>Advanced Search</A
+></DT
+></DL
+></DD
+><DT
+>3.2. <A
+HREF="x218.html#synaptic-pkg-install"
+>Installing Packages</A
+></DT
+><DT
+>3.3. <A
+HREF="x218.html#synaptic-pkg-remove"
+>Removing Packages</A
+></DT
+><DT
+>3.4. <A
+HREF="x218.html#synaptic-pkg-upgrade"
+>Upgrading Single Packages</A
+></DT
+><DT
+>3.5. <A
+HREF="x218.html#synaptic-pkg-upgradesystem"
+>Upgrading System</A
+></DT
+><DT
+>3.6. <A
+HREF="x218.html#synaptic-pkg-downgrade"
+>Downgrading Packages</A
+></DT
+><DT
+>3.7. <A
+HREF="x218.html#synaptic-pkg-executing"
+>Executing Queued Changes</A
+></DT
+><DT
+>3.8. <A
+HREF="x218.html#synaptic-pkg-undo"
+>Undoing Queued Changes</A
+></DT
+><DT
+>3.9. <A
+HREF="x218.html#synaptic-pkg-config"
+>Configuring Package</A
+></DT
+><DT
+>3.10. <A
+HREF="x218.html#synaptic-pkg-docu"
+>Getting Additional Package Documentation</A
+></DT
+><DT
+>3.11. <A
+HREF="x218.html#synaptic-pkg-fix"
+>Fixing Broken Packages</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="x609.html"
+>Managing Package Sources</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="x609.html#synaptic-repo-update"
+>Updating List of Available Packages</A
+></DT
+><DT
+>4.2. <A
+HREF="x609.html#synaptic-repo-manage"
+>Managing Repositories</A
+></DT
+><DT
+>4.3. <A
+HREF="x609.html#synaptic-repo-cdrom"
+>Using Package Archives on CD-ROM</A
+></DT
+></DL
+></DD
+><DT
+>5. <A
+HREF="x633.html"
+>Using Filters</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="x633.html#synaptic-filter-apply"
+>Applying Filters</A
+></DT
+><DT
+>5.2. <A
+HREF="x633.html#synaptic-filter-edit"
+>Editing and Creating Filters</A
+></DT
+></DL
+></DD
+><DT
+>6. <A
+HREF="x746.html"
+>Preferences</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="x746.html#synaptic-prefs-general"
+>General</A
+></DT
+><DT
+>6.2. <A
+HREF="x746.html#synaptic-prefs-layout"
+>Layout</A
+></DT
+><DT
+>6.3. <A
+HREF="x746.html#synaptic-prefs-ordercolor"
+>Column Order and Colors</A
+></DT
+><DT
+>6.4. <A
+HREF="x746.html#synaptiac-prefs-layout"
+>Layout</A
+></DT
+><DT
+>6.5. <A
+HREF="x746.html#synaptiac-prefs-temp"
+>Temporary Files</A
+></DT
+><DT
+>6.6. <A
+HREF="x746.html#synaptiac-prefs-network"
+>Network</A
+></DT
+><DT
+>6.7. <A
+HREF="x746.html#synaptiac-prefs-expert"
+>Expert</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="x815.html"
+>Keyboard Shortcuts</A
+></DT
+><DT
+>8. <A
+HREF="x897.html"
+>About <SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+></A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="synaptic-introduction"
+>1. Introduction</A
+></H1
+><P
+>&#13;		The <SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+> is a graphical frontend to the apt package management system.
+	</P
+><P
+>&#13;		The software is organizied in so called packages.
+		Modifications are not executed instantly. This allows you to queue several modifications and
+		execute them at once.
+	</P
+><P
+>&#13;		<SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+> provides the following features:
+	</P
+><P
+></P
+><UL
+><LI
+><P
+>&#13;				Install, remove, configure, upgrade and downgrade single and multiple packages.
+			</P
+></LI
+><LI
+><P
+>&#13;				Upgrade your whole system.
+			</P
+></LI
+><LI
+><P
+>&#13;				Manage package repositories.
+			</P
+></LI
+><LI
+><P
+>&#13;				Search list of known packages by name, description...
+			</P
+></LI
+><LI
+><P
+>&#13;				Filter list of shown packages by status, section, property and tag.
+			</P
+></LI
+><LI
+><P
+>&#13;				Arrange list of shown packages by initial letter, status or tag.
+			</P
+></LI
+><LI
+><P
+>&#13;				Displays all available online documentation related to a package.
+			</P
+></LI
+></UL
+><DIV
+CLASS="warning"
+><P
+></P
+><TABLE
+CLASS="warning"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="/usr/share/sgml/docbook/stylesheet/dsssl/modular/images/warning.gif"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;			Your system can be damaged or rendered unusable.
+		</P
+><P
+>&#13;			Always use <SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+> with care.
+		</P
+></TD
+></TR
+></TABLE
+></DIV
+><DIV
+CLASS="note"
+><P
+></P
+><TABLE
+CLASS="note"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="/usr/share/sgml/docbook/stylesheet/dsssl/modular/images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;			Root rights are required to execute changes in the package system.
+		</P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>&#13;		You can start <SPAN
+CLASS="application"
+><SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+></SPAN
+> in the 
+		following ways:
+	</P
+><P
+></P
+><DIV
+CLASS="variablelist"
+><DL
+><DT
+><SPAN
+CLASS="guimenu"
+>GNOME Applications</SPAN
+> menu</DT
+><DD
+><P
+>&#13;					Choose 
+					<SPAN
+CLASS="guisubmenu"
+>Preferences</SPAN
+>-&gt;<SPAN
+CLASS="guisubmenu"
+>System Tools</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Software</SPAN
+>. 
+				</P
+></DD
+><DT
+>KDE menu</DT
+><DD
+><P
+>&#13;					Choose 
+					<SPAN
+CLASS="guisubmenu"
+>Settings</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Software</SPAN
+>. 
+				</P
+></DD
+><DT
+>Command line</DT
+><DD
+><P
+>&#13;					To start <SPAN
+CLASS="application"
+><SPAN
+CLASS="application"
+>Synaptic Package Manager</SPAN
+>
+					</SPAN
+>from a command line type the 
+					following , then press <B
+CLASS="keycap"
+>Return</B
+>:
+				</P
+><P
+> 
+					<B
+CLASS="command"
+>synaptic</B
+> 
+				</P
+></DD
+><DT
+>Red Hat and Fedora <SPAN
+CLASS="guimenu"
+>Applications</SPAN
+> menu</DT
+><DD
+><P
+>&#13;					Choose 
+					<SPAN
+CLASS="guisubmenu"
+>System Tools</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Software</SPAN
+>. 
+				</P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x90.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The Main Window</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -36,10 +36,11 @@ class RAPTOptions {
   class packageOptions  {
   public:
     packageOptions() 
-      : isLocked(false), isNew(false), isOrphaned(false) {};
+      : isLocked(false), isNew(false), isOrphaned(false), isDebconf(false) {};
      bool isLocked;
      bool isOrphaned;
      bool isNew;
+     bool isDebconf;
    };
 
   bool store();
@@ -47,6 +48,10 @@ class RAPTOptions {
   
   bool getPackageLock(const char *package);
   void setPackageLock(const char *package, bool lock);
+
+  bool getPackageDebconf(const char *package);
+  void setPackageDebconf(const char *package, bool flag=true);
+  void rereadDebconf();  
 
   bool getPackageOrphaned(const char *package);
   void setPackageOrphaned(const char *package, bool flag=true);

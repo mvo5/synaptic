@@ -427,6 +427,7 @@ void RPackageLister::applyInitialSelection()
   //cout << "RPackageLister::applyInitialSelection()" << endl;
 
   _roptions->rereadOrphaned();
+  _roptions->rereadDebconf();
   
   for (unsigned i = 0; i < _count; i++) {
     if (_roptions->getPackageLock(_packages[i]->name())) {
@@ -440,6 +441,11 @@ void RPackageLister::applyInitialSelection()
     if (_roptions->getPackageOrphaned(_packages[i]->name())) {
       //cout << "orphaned: " << _packages[i]->name() << endl;
       _packages[i]->setOrphaned(true);
+    }
+
+    if (_roptions->getPackageDebconf(_packages[i]->name())) {
+      //cout << "orphaned: " << _packages[i]->name() << endl;
+      _packages[i]->setDebconf(true);
     }
   }
 }

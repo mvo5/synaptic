@@ -2158,20 +2158,25 @@ void RGMainWindow::buildInterface()
 				  "on_collapse_all_activate",
 				  G_CALLBACK(onCollapseAll),
 				  this); 
-    
+
     int mode = _config->FindI("Synaptic::TreeDisplayMode", 0);
-    const char *widget_name = "section_tree";
+    _treeDisplayMode = (RPackageLister::treeDisplayMode)mode;
+    widget = glade_xml_get_widget(_gladeXML, "section_tree");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+				   mode == 0 ? TRUE : FALSE);
 
-    if (mode == RPackageLister::TREE_DISPLAY_ALPHABETIC)
-          widget_name = "alphabetic_tree";
-    else if (mode == RPackageLister::TREE_DISPLAY_STATUS)
-          widget_name = "status_tree";
-    else if (mode == RPackageLister::TREE_DISPLAY_FLAT)
-          widget_name = "flat_list";
+    widget = glade_xml_get_widget(_gladeXML, "alphabetic_tree");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+				   mode == 1 ? TRUE : FALSE);
 
-    widget = glade_xml_get_widget(_gladeXML, widget_name);
-    gtk_menu_item_activate(GTK_MENU_ITEM(widget));
-    
+    widget = glade_xml_get_widget(_gladeXML, "status_tree");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+				   mode == 2 ? TRUE : FALSE);
+
+    widget = glade_xml_get_widget(_gladeXML, "flat_list");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(widget),
+				   mode == 3 ? TRUE : FALSE);
+
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_section_tree_activate",
 				  G_CALLBACK(onSectionTree),
@@ -2198,6 +2203,7 @@ void RGMainWindow::buildInterface()
     
     // toolbar menu code
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_pixmaps");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
     g_object_set_data(G_OBJECT(button), "me", this);
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
@@ -2208,6 +2214,7 @@ void RGMainWindow::buildInterface()
 
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_text");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
     g_object_set_data(G_OBJECT(button), "me", this);
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
@@ -2218,6 +2225,7 @@ void RGMainWindow::buildInterface()
 
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_both");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
     g_object_set_data(G_OBJECT(button), "me", this);
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
@@ -2228,6 +2236,7 @@ void RGMainWindow::buildInterface()
 
 
     button = glade_xml_get_widget(_gladeXML, "menu_toolbar_hide");
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
     g_object_set_data(G_OBJECT(button), "me", this);
     g_signal_connect(G_OBJECT(button), 
 		       "activate",
@@ -2265,6 +2274,8 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 {
   setInterfaceLocked(TRUE);
   _blockActions = TRUE;
+
+  //  cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
   _lister->setTreeDisplayMode(mode);
   _lister->reapplyFilter();

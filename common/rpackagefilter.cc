@@ -415,6 +415,13 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
       }
     }
 
+    if(_status & DebconfPackage ) {
+      if(ostatus & RPackage::ODebconf) {
+	  //cout << "pkg(" << pkg->name() << ")->isDebconf()" << endl;
+	  return true;
+      }
+    }
+
     return false;
 }
 

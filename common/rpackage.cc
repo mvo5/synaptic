@@ -62,7 +62,8 @@ static char descrBuffer[4096];
 RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 		   pkgRecords *records, pkgCache::PkgIterator &pkg)
   : _lister(lister), _records(records), _depcache(depcache), 
-    _newPackage(false), _pinnedPackage(false), _orphanedPackage(false)
+    _newPackage(false), _pinnedPackage(false), _orphanedPackage(false),
+    _debconfPackage(false)
 {
     _package = new pkgCache::PkgIterator(pkg);
 }
@@ -347,13 +348,16 @@ int RPackage::getOtherStatus()
     int status = 0;
 
     if(_newPackage) 
-      status |= ONew;
+	status |= ONew;
 
     if(_pinnedPackage)
-      status |= OPinned;
+	status |= OPinned;
     
     if(_orphanedPackage)
-      status |= OOrphaned;
+	status |= OOrphaned;
+
+    if(_debconfPackage)
+	status |= ODebconf;
 
     if((*_package)->CurrentState == pkgCache::State::ConfigFiles) {
       //cout << "ResidentalConfig found for: "<<name()<<endl;

@@ -397,6 +397,12 @@ void RGFilterEditor::makeStatusFilterPanel(GtkWidget *tabview)
     gtk_box_pack_start(GTK_BOX(box), but, FALSE, TRUE, 0);
     _statusB[i++] = but;
 
+#ifndef HAVE_RPM /* mvo: only interessting for debian right now */
+    but = gtk_check_button_new_with_label(_("Debconf"));
+    gtk_box_pack_start(GTK_BOX(box), but, FALSE, TRUE, 0);
+    _statusB[i++] = but;
+#endif   
+
     gtk_widget_show_all(box);
     gtk_notebook_append_page(GTK_NOTEBOOK(_tabview), box, 
 			     gtk_label_new(_("by Status")));

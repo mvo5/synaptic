@@ -26,6 +26,7 @@
 #include "i18n.h"
 #include <fstream>
 #include <strstream>
+#include <dirent.h>
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
@@ -79,6 +80,8 @@ bool RAPTOptions::restore()
   string pkg, line;
   packageOptions o;
 
+  //cout << "bool RAPTOptions::restore()" << endl;
+
   ifstream in;
   if(!RPackageOptionsFile(in)) 
     return false;
@@ -131,39 +134,98 @@ bool RAPTOptions::restore()
 
   // deborphan stuff
   rereadOrphaned();
+
+  // debconf stuff
+  rereadDebconf();
   
   return true;
 }
 
-void RAPTOptions::rereadOrphaned() {
-  // forget about any previously orphaned packages
-  for(packageOptionsIter it = _roptions->_packageOptions.begin();
-      it != _roptions->_packageOptions.end(); 
-      it++) 
-    {
-      (*it).second.isOrphaned = false;
-    }
+bool RAPTOptions::getPackageDebconf(const char *package)
+{
+    string tmp = string(package);
 
-  //mvo: call deborphan and read package list from it
-  //     TODO: make deborphan a library to make this cleaner
-  FILE *fp;
-  char buf[255];
-  char cmd[] = "/usr/bin/deborphan";
-  //FIXME: fail silently if deborphan is not installed - change this?
-  if(!FileExists(cmd))
-    return;
-  fp = popen(cmd, "r");
-  if(fp==NULL) {
-    //cerr << "deborphan failed" << endl;
-    return;
-  }
-  while(fgets(buf, 255, fp) != NULL) {
-    //mvo: FIXME this sucks (remove newline at end)
-    buf[strlen(buf)-1] = 0;
-    //cout << "buf: " << buf << endl;
-    setPackageOrphaned(buf, true);
-  }
-  pclose(fp);
+    if (_packageOptions.find(tmp) == _packageOptions.end())
+	return false;
+
+    //cout << "getPackageOrphaned("<<package<<") called"<<endl;
+    return _packageOptions[tmp].isDebconf;
+}
+
+
+void RAPTOptions::setPackageDebconf(const char *package, bool flag=true)
+{
+    //cout << "debconf called pkg: " << package << endl;
+    _packageOptions[string(package)].isDebconf = flag;
+}
+
+void RAPTOptions::rereadDebconf() 
+{
+    //cout << "void RAPTOptions::rereadDebconf()" << endl;
+
+    // forget about any previously debconf packages
+    for(packageOptionsIter it = _roptions->_packageOptions.begin();
+	it != _roptions->_packageOptions.end(); 
+	it++) 
+	{
+	    (*it).second.isDebconf = false;
+	}
+    
+    // read dir
+    const char infodir[] = "/var/lib/dpkg/info";
+    const char configext[] = ".config";
+    
+    DIR *dir;
+    struct dirent *dent;
+    char *point;
+
+    if ((dir = opendir(infodir)) == NULL) {
+	//cerr << "Error opening " << infodir << endl;
+	return;
+    }
+    for(int i = 3; dent = readdir(dir); i++) {
+	if ((point = strrchr(dent->d_name, '.')) == NULL)
+	    continue;
+	if (strcmp(point, configext) == 0)
+        {
+	    bzero (point, strlen(point));
+	    //cout << (dent->d_name) << endl;
+	    setPackageDebconf(dent->d_name, true);
+	}
+    }
+    closedir(dir);
+}
+
+void RAPTOptions::rereadOrphaned() 
+{
+    // forget about any previously orphaned packages
+    for(packageOptionsIter it = _roptions->_packageOptions.begin();
+	it != _roptions->_packageOptions.end(); 
+	it++) 
+	{
+	    (*it).second.isOrphaned = false;
+	}
+
+    //mvo: call deborphan and read package list from it
+    //     TODO: make deborphan a library to make this cleaner
+    FILE *fp;
+    char buf[255];
+    char cmd[] = "/usr/bin/deborphan";
+    //FIXME: fail silently if deborphan is not installed - change this?
+    if(!FileExists(cmd))
+	return;
+    fp = popen(cmd, "r");
+    if(fp==NULL) {
+	//cerr << "deborphan failed" << endl;
+	return;
+    }
+    while(fgets(buf, 255, fp) != NULL) {
+	//mvo: FIXME this sucks (remove newline at end)
+	buf[strlen(buf)-1] = 0;
+	//cout << "buf: " << buf << endl;
+	setPackageOrphaned(buf, true);
+    }
+    pclose(fp);
 }
 
 

@@ -88,9 +88,9 @@ public:
    typedef tree<pkgPair>::tree_node treeNode;
    typedef enum {
      TREE_DISPLAY_SECTIONS,
-     TREE_DISPLAY_FLAT,
      TREE_DISPLAY_ALPHABETIC,
-     TREE_DISPLAY_STATUS
+     TREE_DISPLAY_STATUS,
+     TREE_DISPLAY_FLAT
    } treeDisplayMode;
    treeDisplayMode _displayMode;
 

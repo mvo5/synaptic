@@ -51,6 +51,7 @@ class RPackage {
    bool _newPackage;
    bool _pinnedPackage;
    bool _orphanedPackage;
+   bool _debconfPackage;
 
    // virtual pkgs provided by this one
    vector<pkgCache::PkgIterator> _virtualPackages; 
@@ -95,7 +96,8 @@ public:
      OOrphaned       = 1<<0,
      OPinned         = 1<<1, /* apt-pined */
      ONew            = 1<<2,
-     OResidualConfig = 1<<3
+     OResidualConfig = 1<<3,
+     ODebconf        = 1<<4
    };
    
    enum UpdateImportance {
@@ -175,6 +177,7 @@ public:
    void inline setNew(bool isNew=true) { _newPackage=isNew; };
    void setPinned(bool flag);
    void setOrphaned(bool flag=true) { _orphanedPackage=flag; };
+   void setDebconf(bool flag=true) { _debconfPackage=flag; };
 
    // change status
    void setKeep();

@@ -143,7 +143,8 @@ public:
        NewPackage = 1<<7, // new Package (after update)
        PinnedPackage = 1<<8, // pinned Package (never upgrade)
        OrphanedPackage = 1<<9, // orphaned (identfied with deborphan)
-       ResidualConfig = 1<<10  // not installed but has config left
+       ResidualConfig = 1<<10,  // not installed but has config left
+       DebconfPackage = 1<<11  // Package has debconf information
    };
 private:
    int _status;

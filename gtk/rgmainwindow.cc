@@ -292,11 +292,14 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
 	system("yelp ghelp:synaptic &");
     else if(is_binary_in_path("mozilla"))
 	system("mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
+    else if(is_binary_in_path("konqueror")) 
+	system("konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
     else
 	me->_userDialog->error(_("No help viewer is installed\n\n"
-				"You need either the gnome viewer 'yelp' "
-				"or the 'mozilla' browser to view the"
-				" synaptic manual.\n\n"
+				"You need either the gnome viewer 'yelp', "
+				"'konquoror' or the 'mozilla' browser to "
+				"view the "
+				"synaptic manual.\n\n"
 				"Alternativly you can open the man page "
 				"with 'man synaptic' from the "
 				"command line or view the html version located "

@@ -576,7 +576,7 @@ bool RGFilterManagerWindow::setPatternRow(int row,
    if (row < 0) {
       gtk_list_store_append(GTK_LIST_STORE(_patternListStore), &iter);
       gtk_list_store_set(GTK_LIST_STORE(_patternListStore), &iter,
-                         0, array[0], 1, array[1], 2, array[2], -1);
+                         0, array[0], 1, _(array[1]), 2, array[2], -1);
       GtkTreeSelection *select =
          gtk_tree_view_get_selection(GTK_TREE_VIEW(_patternList));
       gtk_tree_selection_select_iter(select, &iter);
@@ -586,7 +586,8 @@ bool RGFilterManagerWindow::setPatternRow(int row,
       if (gtk_tree_model_get_iter(GTK_TREE_MODEL(_patternListStore),
                                   &iter, path)) {
          gtk_list_store_set(GTK_LIST_STORE(_patternListStore),
-                            &iter, 0, array[0], 1, array[1], 2, array[2], -1);
+                            &iter, 0, array[0], 1, _(array[1]), 2, 
+			    array[2], -1);
       }
       gtk_tree_path_free(path);
    }
@@ -688,7 +689,7 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 
       // then check the options
       for (int j = 0; DepOptions[j]; j++) {
-         if (strcmp(what, DepOptions[j]) == 0) {
+         if (strcmp(what, _(DepOptions[j])) == 0) {
             type = (RPatternPackageFilter::DepType) j;
             break;
          }

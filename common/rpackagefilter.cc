@@ -40,7 +40,6 @@
 
 using namespace std;
 
-// don't translate this, they are only used in the filter file
 char *RPatternPackageFilter::TypeName[] = {
    N_("Name"),
    N_("Description"),

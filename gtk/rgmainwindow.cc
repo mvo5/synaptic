@@ -3611,12 +3611,13 @@ bool RGMainWindow::restoreState()
     _lister->getStats(installed, broken, toinstall, toremove,sizeChange);
     if(broken > 0) {
 	gchar *msg;
-	if(broken == 1)
-	    msg = g_strdup_printf(_("You have one broken package on your system\n\n"
-				      "Please try to fix it by visiting the \"Broken\" filter"));
-	else
-	    msg = g_strdup_printf(_("You have %i broken packages on your system\n\n"
-				      "Please try to fix them by visiting the \"Broken\" filter"), broken);
+	if(broken == 1) {
+	    msg = ngettext("You have %d broken package on your system\n\n"
+			   "Please try to fix it by visiting the \"Broken\" filter",
+			   "You have %i broken packages on your system\n\n"
+			   "Please try to fix them by visiting the \"Broken\" filter", broken);
+	    msg = g_strdup_printf(msg, broken);
+	}
 	_userDialog->warning(msg);
 	g_free(msg);
     }

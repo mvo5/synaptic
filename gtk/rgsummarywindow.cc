@@ -313,49 +313,52 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 		       sizeChange);
     lister->getDownloadSummary(dlCount, dlSize);
 
-    if (held)
-	if(held == 1)
-	    g_string_append_printf(msg,_("1 package is set on hold\n"));
-	else
-	    g_string_append_printf(msg,_("%d packages are set on hold\n"),held);
-    if (kept)
-	if(kept == 1)
-	    g_string_append_printf(msg,  _("1 package is kept back and not upgraded\n"));
-	else
-	    g_string_append_printf(msg,  _("%d packages are kept back and not upgraded\n"), kept);
+    if (held) {
+	char *str = ngettext("%d package is set on hold\n", 
+			     "%d packages are set on hold\n", held);
+	g_string_append_printf(msg, str, held);
+    }
 
-    if (toInstall)
-	if(toInstall == 1)
-	    g_string_append_printf(msg,_("1 new package will be installed\n"));
-	else
-	    g_string_append_printf(msg, _("%d new packages will be installed\n"), toInstall);
+    if (kept) {
+	char *str = ngettext("%d package is kept back and not upgraded\n", 
+			     "%d packages are kept back and not upgraded\n",
+			     kept);
+	g_string_append_printf(msg, str, kept);
+    }
+
+    if (toInstall) {
+	char *str = ngettext("%d new package will be installed\n",
+			     "%d new packages will be installed\n",
+			     toInstall);
+	g_string_append_printf(msg, str, toInstall);
+    }
 	    
-    if (toUpgrade)
-	if(toUpgrade == 1)
-	    g_string_append_printf(msg,_("1 package will be upgraded\n"));
-	else
-	    g_string_append_printf(msg,_("%d packages will be upgraded\n"), 
-				   toUpgrade);
+    if (toUpgrade) {
+	char *str = ngettext("%d package will be upgraded\n",
+			     "%d packages will be upgraded\n",
+			     toUpgrade);
+	g_string_append_printf(msg, str, toUpgrade);
+    }
 
-    if (toRemove)
-	if(toRemove == 1)
-	    g_string_append_printf(msg,_("1 package will be removed\n"));
-	else
-	    g_string_append_printf(msg,_("%d packages will be removed\n"), 
-				   toRemove);
+    if (toRemove) {
+	char *str = ngettext("%d package will be removed\n",
+			     "%d packages will be removed\n",
+			     toRemove);
+	g_string_append_printf(msg, str, toRemove);
+    }
     
-    if (toDowngrade)
-	if(toDowngrade == 1)
-	    g_string_append_printf(msg,_("1 package will be <b>downgraded</b>\n"));
-	else
-	    g_string_append_printf(msg,_("%d packages will be <b>downgraded</b>\n"), 
-				   toDowngrade);
+    if (toDowngrade) {
+	char *str = ngettext("%d package will be <b>downgraded</b>\n",
+			     "%d packages will be <b>downgraded</b>\n",
+			     toDowngrade);
+	g_string_append_printf(msg, str, toDowngrade);
+    }
 
     if (essential) {
-	if(essential == 1)
-	    g_string_append_printf(msg, _("<b>Warning:</b> 1 essential package will be removed\n"));
-	else
-	    g_string_append_printf(msg, _("<b>Warning:</b> %d essential packages will be removed\n"), essential);
+	char *str = ngettext("<b>Warning:</b> %d essential package will be removed\n",
+			     "<b>Warning:</b> %d essential packages will be removed\n",
+			     essential);
+	g_string_append_printf(msg, str, essential);
 	_potentialBreak = true;
     }
 

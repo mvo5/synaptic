@@ -1470,7 +1470,8 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
    if (pkg->getFlags() & RPackage::FImportant) {
       if (!_userDialog->confirm(_("Removing this package may render the "
                                   "system unusable.\n"
-                                  "Are you sure you want to do that?"))) {
+                                  "Are you sure you want to do that?"),
+				false)) {
          return;
       }
    }

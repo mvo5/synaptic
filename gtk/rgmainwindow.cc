@@ -1374,7 +1374,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     mstatus = pkg->getMarkedStatus();
 
     // get available versions (FIXME: make this a function)
-    vector<pair<string,string> > versions = pkg->getAvailableVersions();
+    static vector<pair<string,string> > versions;
+    versions = pkg->getAvailableVersions();
     GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_versions");
     // remove old widgets
     gtk_container_foreach(GTK_CONTAINER(vbox),
@@ -1383,16 +1384,23 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     GtkWidget *button;
     for(unsigned int i=0;i<versions.size();i++) {
 	button = gtk_button_new_with_label(g_strdup_printf("%s (%s)",versions[i].first.c_str(),versions[i].second.c_str()));
+	gtk_container_set_border_width(GTK_CONTAINER(button),6);
 	g_object_set_data(G_OBJECT(button),"me",this);
 	g_object_set_data(G_OBJECT(button),"pkg",pkg);
 	g_signal_connect(G_OBJECT(button),"clicked",
-			 G_CALLBACK(installFromRelease),
-			 g_strdup_printf("%s/%s",
-					 versions[i].first.c_str(),
-					 versions[i].second.c_str()));
+			 G_CALLBACK(installFromVersion),
+			 (gchar*)versions[i].first.c_str());
 	gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 6);
+	gtk_widget_show(button);
     }
     gtk_widget_show_all(vbox);
+    // mvo: we work around a stupid bug in libglade/gtk here (hide/show scrolledwin)
+    static bool first=true;
+    if(first) {
+	gtk_widget_hide(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+	gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_versions"));
+	first=false;
+    }
     //-------------------------------
 
 
@@ -1570,27 +1578,23 @@ void RGMainWindow::actionClicked(GtkWidget *clickedB, void *data)
   me->_currentB = clickedB;
 }
 
-// string is format: version/release (e.g. "3.51/unstable")
-void RGMainWindow::installFromRelease(GtkWidget *self, void *data)
+// install a specific version
+void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self),"me");
     RPackage *pkg = (RPackage*)g_object_get_data(G_OBJECT(self),"pkg");
-    gchar** verInfo = g_strsplit((gchar*)data, "/",2);
+    gchar *verInfo = (gchar*)data;
     if(verInfo == NULL) {
-	cerr << "installFromRelease() failed" << endl;
+	cerr << "installFromVersion() failed" << endl;
 	return;
     }
-//     cout << "requestedVersion: " << verInfo[0] << endl;
-//     cout << "requestedRelease: " << verInfo[1] << endl;
-//     cout << "installedVersion: " << pkg->installedVersion() << endl;
-
-    if(pkg->installedVersion() == string(verInfo[0])) {
+    if(pkg->installedVersion() == string(verInfo)) {
+	pkg->unsetVersion();
 	me->doPkgAction(me,PKG_KEEP);
     } else {
-	pkg->setDistribution(verInfo[1]);
+	pkg->setVersion(verInfo);
 	me->doPkgAction(me,PKG_INSTALL);
     }
-    g_strfreev(verInfo);
 }
 
 void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
@@ -2877,7 +2881,7 @@ void RGMainWindow::buildInterface()
 				   mode == 4 ? TRUE : FALSE);
 #else
     gtk_widget_hide(widget);
-    widget = glade_xml_get_widget(_gladeXML, "seperator_tag_tree");
+    widget = glade_xml_get_widget(_gladeXML, "separator_tag_tree");
     gtk_widget_hide(widget);
 #endif
 

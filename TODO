@@ -2,11 +2,21 @@
   this way, we can do default release pining without rereading the cache
   (see policy.cc:pkgPolicy::pkgPolicy())
 
+- make the RGUserDialog a dialog with a gtktextview to get a scrolled area
+
+"Install from multiple Distributions patch":
+  - save selected distribution when doing a "save selection"
+  - when "open cache" is called, make sure that the correct distribution 
+    is selected for save/restore
+  - fix "undo/redo"
+
 Configure:
    - allways give the correct path in the synaptic.desktop file
      (currently hardcoded)
 
 GUI:
+   - allow clicking in the depedency list so that the click takes
+     you to the package
    - add TaskView view to show tasks (add just a new view). 
    - add native debconf reconfigure frontend using the cmdpipe interface
      to debconf (cool!)

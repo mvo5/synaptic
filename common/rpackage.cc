@@ -54,6 +54,9 @@
 #include <apt-pkg/policy.h>
 #include <apt-pkg/sptr.h>
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/cacheiterators.h>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/versionmatch.h>
 
 #include "raptoptions.h"
 
@@ -70,6 +73,11 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
      _notify(true)
 {
     _package = new pkgCache::PkgIterator(pkg);
+    
+    pkgDepCache::StateCache &State = (*_depcache)[*_package];
+    if (State.CandVersion != 0) {
+	_candidateVer = strdup(State.CandVersion);
+    }
 }
 
 
@@ -939,54 +947,45 @@ bool RPackage::isShallowDependency(RPackage *pkg)
 vector<pair<string,string> > RPackage::getAvailableVersions()
 {
     string VerTag;
-    vector<pair<string,string> > versions;
+    static vector<pair<string,string> > versions;
 
     //cout << "vector<string> RPackage::getAvailableVersions()"<<endl;
     
-    vector<string> archives = _lister->getPolicyArchives();
-    for(int i=0;i<archives.size();i++) {
-	VerTag = archives[i];
-	pkgVersionMatch Match(VerTag,pkgVersionMatch::Release);
-    
-	pkgCache::VerIterator Ver = Match.Find(*_package);
-#if 0	 
-	if (Ver.end() == true)
-	    printf("Release '%s' for '%s' was not found\n",
-		   VerTag.c_str(),_package->Name());
-#endif
-	if (Ver && strcmp(VerTag.c_str(),Ver.VerStr()) != 0) {
-	    //printf("Found version %s (%s:%s) for %s\n",
-	    //Ver.VerStr(),Ver.RelStr().c_str(),archives[i].c_str(),
-	    //_package->Name());
-	    versions.push_back(pair<string,string>(Ver.VerStr(),archives[i]));
+    // get available Versions
+    for(pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
+	cout << "Ver: " << Ver.VerStr() << endl;
+	// we always take the first available version 
+	pkgCache::VerFileIterator VF = Ver.FileList();
+	if(!VF.end()) {
+	    pkgCache::PkgFileIterator File = VF.File();
+	    cout << "  Archive: " << File.Archive() << endl;
+	    cout << "  Site (origin): " << File.Site() << endl;
+	    
+	    if(File->Archive != 0)
+		versions.push_back(pair<string,string>(Ver.VerStr(),File.Archive()));
+	    else 
+		versions.push_back(pair<string,string>(Ver.VerStr(),File.Site()));
 	}
     }
+    //cout << endl;
     return versions;
-
-#if 0
-    pkgCache::VerIterator ver = _package->VersionList();
-    while(!ver.end()) {
-	cout << ver.VerStr() << endl;
-	ver++;
-    }
-#endif
 }
 
-bool RPackage::setDistribution(const char* VerTag)
-{
-    pkgVersionMatch Match(VerTag,pkgVersionMatch::Release);
-    
-    pkgCache::VerIterator Ver = Match.Find(*_package);
-			 
-    if (Ver.end() == true)
-	 return _error->Error(_("Release '%s' for '%s' was not found"),
-			      VerTag,_package->Name());
 
-    
-    if (strcmp(VerTag,Ver.VerStr()) != 0) {
-	printf("Selected version %s (%s) for %s\n",
-		Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
+bool RPackage::setVersion(const char* VerTag)
+{
+    pkgVersionMatch Match(VerTag,pkgVersionMatch::Version);
+    pkgCache::VerIterator Ver = Match.Find(*_package);
+			
+    cout << "Ver is: " << VerTag << endl;
+ 
+    if (Ver.end() == true) {
+	return _error->Error(_("Version '%s' for '%s' was not found"),
+				 VerTag,_package->Name());
     }
+
+    printf("Release: Selected version %s (%s) for %s\n",
+	   Ver.VerStr(),Ver.RelStr().c_str(),_package->Name());
    
     _depcache->SetCandidateVersion(Ver);
     return true;

@@ -49,6 +49,8 @@ class RPackage {
    pkgRecords *_records;
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
+   // save the default candidate version to undo version selection
+   const char *_candidateVer;
 
    bool _newPackage;
    bool _pinnedPackage;
@@ -206,8 +208,10 @@ public:
 
    void addVirtualPackage(pkgCache::PkgIterator dep);
 
-   // set distribution selection (like stable/testing/unstable)
-   bool setDistribution(const char* verTag);
+   // install verTag version
+   bool setVersion(const char* verTag);
+   // cancel version selection
+   void unsetVersion() { setVersion(_candidateVer); };
    string showWhyInstBroken();
 
    RPackage(RPackageLister *lister, pkgDepCache *depcache, pkgRecords *records,

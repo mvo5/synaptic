@@ -114,6 +114,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    GtkWidget *_keepM, *_installM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;
 
+   // popup-menu
+   GtkWidget *_popupMenu;
+
    GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinM;
    GtkWidget *_pkgHelp;

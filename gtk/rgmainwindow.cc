@@ -1511,7 +1511,7 @@ void RGMainWindow::menuPinClicked(GtkWidget *self, void *data)
 {
   RGMainWindow *me = (RGMainWindow*)data;
   
-  bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(me->_pinM));
+  bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
   GtkTreeSelection *selection;
   GtkTreeIter iter;
   RPackage *pkg;
@@ -1530,7 +1530,7 @@ void RGMainWindow::menuPinClicked(GtkWidget *self, void *data)
 				      &list);
   li = list;
 #endif
-  if(li == NULL)
+  if(li == NULL) 
       return;
   
   me->setInterfaceLocked(TRUE);
@@ -2146,57 +2146,57 @@ void RGMainWindow::treeviewPopupMenu(GtkWidget *treeview,
 				     RGMainWindow *me,
 				     RPackage *pkg)
 {
-    GtkWidget *menu, *menuitem;
-    GtkWidget *img;
-
-    menu = gtk_menu_new();
     RPackage::PackageStatus pstatus =  pkg->getStatus();
     RPackage::MarkedStatus  mstatus = pkg->getMarkedStatus();
 
-    // build menu
-    if(mstatus != RPackage::MKeep) {
-	menuitem = gtk_image_menu_item_new_with_label(_("Keep"));
-	img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
-	g_object_set_data(G_OBJECT(menuitem),"me",me);
-	g_signal_connect(menuitem, "activate",
-			 (GCallback) menuActionClicked, (void*)PKG_KEEP);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-    }
-    
-    if(pstatus == RPackage::SInstalledOutdated) {
-	menuitem = gtk_image_menu_item_new_with_label(_("Upgrade"));
-	img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
-	g_object_set_data(G_OBJECT(menuitem),"me",me);
-	g_signal_connect(menuitem, "activate",
-			 (GCallback) menuActionClicked, (void*)PKG_INSTALL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
+    // gray out buttons that don't make sense
+    GList *item=gtk_container_get_children(GTK_CONTAINER(me->_popupMenu));
+    for(int i=0; item!=NULL;item=g_list_next(item),i++)  {
+	// keep button
+	if(i == 0 && mstatus != RPackage::MKeep) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	} else {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),FALSE);
+	}
+
+	// install button
+	if(i == 1 && pstatus == RPackage::SNotInstalled
+	          && mstatus != RPackage::MInstall) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	}
+
+	// upgrade button
+	if(i == 2 && pstatus == RPackage::SInstalledOutdated
+	          && mstatus != RPackage::MUpgrade) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	}
+	// remove buttons (remove, remove with dependencies)
+	if((i == 3 ||  i == 5) && pstatus != RPackage::SNotInstalled
+	                   && mstatus != RPackage::MRemove) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	}
+	// purge
+	if(i == 4 && pstatus != RPackage::SNotInstalled
+	          && mstatus != RPackage::MRemove) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	} else if(i == 4 && RPackage::OResidualConfig & pkg->getOtherStatus()
+		         && mstatus != RPackage::MRemove) {
+		   gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	}
+	// seperator is i==6 (ignored)
+	// hold button 
+	if(i == 7) {
+	    gtk_widget_set_sensitive(GTK_WIDGET(item->data),TRUE);
+	    bool locked = (RPackage::OPinned & pkg->getOtherStatus());
+	    me->_blockActions = TRUE;
+	    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item->data), 
+					   locked);
+	    me->_blockActions = FALSE;
+	}
+
     }
 
-    if(pstatus == RPackage::SNotInstalled) {
-	menuitem = gtk_image_menu_item_new_with_label(_("Install"));
-	img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
-	g_object_set_data(G_OBJECT(menuitem),"me",me);
-	g_signal_connect(menuitem, "activate",
-			 (GCallback) menuActionClicked, (void*)PKG_INSTALL);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-    }
-
-
-    if( pstatus != RPackage::SNotInstalled) {
-	menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
-	img = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
-	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
-	g_object_set_data(G_OBJECT(menuitem),"me",me);
-	g_signal_connect(menuitem, "activate",
-			 (GCallback) menuActionClicked, (void*)PKG_DELETE);
-	gtk_menu_shell_append(GTK_MENU_SHELL(menu), menuitem);
-    }
-
-    gtk_widget_show_all(menu);
-    gtk_menu_popup(GTK_MENU(menu), NULL, NULL, NULL, NULL,
+    gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
                    (event != NULL) ? event->button : 0,
                    gdk_event_get_time((GdkEvent*)event));
 }
@@ -3142,6 +3142,64 @@ void RGMainWindow::buildInterface()
 		       GINT_TO_POINTER(TOOLBAR_HIDE)); 
     if(_toolbarStyle == TOOLBAR_HIDE)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
+
+    // build popup-menu
+    GtkWidget *menuitem, *img;
+    _popupMenu = gtk_menu_new();
+    menuitem = gtk_image_menu_item_new_with_label(_("No changes"));
+    img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback) menuActionClicked, (void*)PKG_KEEP);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_image_menu_item_new_with_label(_("Install Latest Version"));
+    img = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback) menuActionClicked, (void*)PKG_INSTALL);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_menu_item_new_with_label(_("Upgrade"));
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback) menuActionClicked, (void*)PKG_INSTALL);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_image_menu_item_new_with_label(_("Remove"));
+    img = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback) menuActionClicked, (void*)PKG_DELETE);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_menu_item_new_with_label(_("Remove Including Configuration"));
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback) menuActionClicked, (void*)PKG_PURGE);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback)menuActionClicked,(void*)PKG_DELETE_WITH_DEPS);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_separator_menu_item_new();
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+    menuitem = gtk_check_menu_item_new_with_label(_("Hold Current Version"));
+    g_object_set_data(G_OBJECT(menuitem),"me",this);
+    g_signal_connect(menuitem, "activate",
+		     (GCallback)menuPinClicked,this);
+    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+
+
+    gtk_widget_show_all(_popupMenu);
+
 
     // attach progress bar
     GtkWidget *boxy = glade_xml_get_widget(_gladeXML, "hbox_status");    

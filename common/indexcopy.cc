@@ -221,8 +221,8 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
       fclose(TargetFl);
 
       if (Debug == true)
-	 cout << _(" Processed by using Prefix '") << Prefix <<
-		 _("' and chop ") << Chop << endl;
+	  cout << " Processed by using Prefix '" << Prefix <<
+	     "' and chop " << Chop << endl;
 	 
       if (_config->FindB("APT::CDROM::NoAct",false) == false)
       {
@@ -272,13 +272,13 @@ bool IndexCopy::CopyPackages(string CDROM,string Name,vector<string> &List)
    Progress.Done();
    
    // Some stats
-   cout << _("Wrote ") << Packages << _(" records") ;
+   cout << "Wrote " << Packages << " records" ;
    if (NotFound != 0)
-      cout << _(" with ") << NotFound << _(" missing files");
+      cout << " with " << NotFound << " missing files";
    if (NotFound != 0 && WrongSize != 0)
-      cout << _(" and"); 
+      cout << " and"; 
    if (WrongSize != 0)
-      cout << _(" with ") << WrongSize << _(" mismatched files");
+      cout << " with " << WrongSize << " mismatched files";
    cout << '.' << endl;
    
    if (Packages == 0)
@@ -326,7 +326,7 @@ bool IndexCopy::ReconstructPrefix(string &Prefix,string OrigPath,string CD,
       if (stat(string(CD + MyPrefix + File).c_str(),&Buf) != 0)
       {
 	 if (Debug == true)
-	    cout << _("Failed, ") << CD + MyPrefix + File << endl;
+	    cout << "Failed, " << CD + MyPrefix + File << endl;
 	 if (GrabFirst(OrigPath,MyPrefix,Depth++) == true)
 	    continue;
 	 

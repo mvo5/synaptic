@@ -301,6 +301,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver
    static void menuToolbarClicked(GtkWidget *self, void *data);
 
    // help menu
+   static void helpAction(GtkWidget *self, void *data); 
    static void showAboutPanel(GtkWidget *self, void *data); 
 
    // end menu

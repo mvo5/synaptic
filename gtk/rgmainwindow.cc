@@ -287,6 +287,20 @@ void RGMainWindow::showAboutPanel(GtkWidget *self, void *data)
     win->_aboutPanel->show();
 }
 
+void RGMainWindow::helpAction(GtkWidget *self, void *data)
+{
+    RGMainWindow *me = (RGMainWindow*)data;
+
+    me->setStatusText(_("Starting help system"));
+ 
+    // TODO: check for more help systems and fall back to mozilla
+    if(FileExists("/usr/bin/yelp"))
+	system("yelp man:synaptic.8 &");
+    else
+	me->_userDialog->warning("Unable to start yelp");
+}
+
+
 void RGMainWindow::searchBeginAction(GtkWidget *self, void *data)
 {
     RGMainWindow *me = (RGMainWindow*)data;
@@ -2279,6 +2293,11 @@ void RGMainWindow::buildInterface()
     glade_xml_signal_connect_data(_gladeXML,
 				  "on_about_activate",
 				  G_CALLBACK(showAboutPanel),
+				  this); 
+
+    glade_xml_signal_connect_data(_gladeXML,
+				  "on_help_activate",
+				  G_CALLBACK(helpAction),
 				  this); 
 
     glade_xml_signal_connect_data(_gladeXML,

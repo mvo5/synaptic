@@ -354,6 +354,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_dl_changelogM, FALSE);
    gtk_widget_set_sensitive(_detailsM, FALSE);
    gtk_widget_set_sensitive(_propertiesB, FALSE);
+   gtk_widget_set_sensitive(_overrideVersionM, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -421,6 +422,9 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 					pkg->dependsOn("debconf-i18n")))
        gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
 
+   if(pkg->getAvailableVersions().size() > 1)
+      gtk_widget_set_sensitive(_overrideVersionM, TRUE);
+
    // set the "keep" menu icon according to the current status
    GtkWidget *img;
    if (!(flags & RPackage::FInstalled))
@@ -448,7 +452,7 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    GtkWidget *label = glade_xml_get_widget(dia.getGladeXML(),
 					   "label_text");
    gchar *str_name = g_strdup_printf(_("Select the version of %s that should be forced for installation"), pkg->name());
-   gchar *str = g_strdup_printf("<big><b>%s</b></big>\n%s", str_name,
+   gchar *str = g_strdup_printf("<big><b>%s</b></big>\n\n%s", str_name,
 				_("The package manager always selects the best version available. If you force a differnet version from the default one, errors in the dependency handling can occur."));
    gtk_label_set_markup(GTK_LABEL(label), str);
    g_free(str_name);
@@ -1196,7 +1200,8 @@ void RGMainWindow::buildInterface()
                                  G_CALLBACK(cbMenuPinClicked), this);
 
    _overrideVersionM = glade_xml_get_widget(_gladeXML, 
-					    "menu_override_version_");
+					    "menu_override_version");
+   assert(_overrideVersionM);
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_override_version_activate",
                                  G_CALLBACK(cbInstallFromVersion), this);

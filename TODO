@@ -1,3 +1,15 @@
+Unknown:
+ - split into user and root mode. User mode does all the changes and for
+   the final installation runs (with gksu or libgksu): 
+   # synaptic --set-selection --non-interactive --hide-main-window
+   (hide-main-window needs to be implemented)
+   -> MOST infrastructure is there. 
+      Problems: * set-version is not in selection file
+                * all settings are in in $USER/.synaptic (use --preserve-env?)
+		* proxy settings and stuff needs to be preserved/passed 
+		  "run-as-root synaptic"
+      
+
 0.53:
  - re-enable "default remove action" in the preferences window
  - > > (synaptic:24143): Gtk-CRITICAL **: file gtkwidget.c: line 1827

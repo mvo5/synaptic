@@ -113,8 +113,8 @@ GdkColor *StatusColors[12];
 
 
 
-#ifndef EVERBODY_USES_GTK2_2_NOW
-// this function sucks, but it's needed to be compatible with gtk2.0
+#if ! GTK_CHECK_VERSION(2,2,0)
+// this function is needed to be compatible with gtk2.0
 void multipleSelectionHelper(GtkTreeModel *model,
 			     GtkTreePath *path,
 			     GtkTreeIter *iter,
@@ -191,7 +191,7 @@ void RGMainWindow::clickedRecInstall(GtkWidget *self, void *data)
       GtkTreeIter iter;
       GList *list, *li;
       selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_recList));
-#ifdef EVERBODY_USES_GTK2_2_NOW
+#if GTK_CHECK_VERSION(2,2,0)
       list = li  = gtk_tree_selection_get_selected_rows(selection, NULL);
 #else
       li = list = NULL;
@@ -547,7 +547,7 @@ RPackage *RGMainWindow::selectedPackage()
     GList *li, *list;
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (_treeView));
-#ifdef EVERBODY_USES_GTK2_2_NOW
+#if GTK_CHECK_VERSION(2,2,0)
     list = li = gtk_tree_selection_get_selected_rows(selection,
 						     (GtkTreeModel**)(&_activeTreeModel));
 #else
@@ -1354,7 +1354,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
     GList *li, *list;
-#ifdef EVERBODY_USES_GTK2_2_NOW
+#if GTK_CHECK_VERSION(2,2,0)
     list = li = gtk_tree_selection_get_selected_rows(selection,
  						     &me->_activeTreeModel);
 #else
@@ -1447,7 +1447,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
 
   // get list of selected pkgs
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (me->_treeView));
-#ifdef EVERBODY_USES_GTK2_2_NOW
+#if GTK_CHECK_VERSION(2,2,0)
    list = li = gtk_tree_selection_get_selected_rows(selection,
 						    &me->_activeTreeModel);
 #else
@@ -2680,6 +2680,9 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), 
 				GTK_TREE_MODEL(_pkgTree));
 	gtk_tree_view_set_search_column (GTK_TREE_VIEW(_treeView), NAME_COLUMN);
+	// it may not be needed to use this actors for the tree,
+	// it should be fast enough with the traditional refreshTable
+	// approach, but this is just a educated guess
 	_pkgCacheObserver = new RCacheActorPkgTree(_lister, _pkgTree, 
 						 GTK_TREE_VIEW(_treeView));
 	_pkgTreePackageListObserver = new RPackageListActorPkgTree(_lister, _pkgTree, GTK_TREE_VIEW(_treeView));
@@ -2803,7 +2806,7 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 	return;
     }
 
-#ifdef EVERBODY_USES_GTK2_2_NOW
+#if GTK_CHECK_VERSION(2,2,0)
     list = li = gtk_tree_selection_get_selected_rows(selection,
  						     &me->_activeTreeModel);
 #else

@@ -1,5 +1,5 @@
 figdir = figures
-docname = synaptic-manual
+docname = synaptic
 lang = C
 omffile = synaptic-C.omf
 entities =

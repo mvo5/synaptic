@@ -24,211 +24,213 @@ SourcesList::~SourcesList()
 	
 SourcesList::SourceRecord* SourcesList::AddSourceNode(SourceRecord &rec)
 {
-	SourceRecord *newrec = new SourceRecord;
-	*newrec = rec;
-	SourceRecords.push_back(newrec);
-
-	return newrec;
+    SourceRecord *newrec = new SourceRecord;
+    *newrec = rec;
+    SourceRecords.push_back(newrec);
+    
+    return newrec;
 }
 
 bool SourcesList::ReadSourcePart(string listpath)
 {
-    cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
-	char buf[512];
-	const char *p;
-	ifstream ifs(listpath.c_str(), ios::in );
-	// cannot open file
-	if (!ifs != 0) return _error->Error(_("Can't read %s"), listpath.c_str());
+    //cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
+    char buf[512];
+    const char *p;
+    ifstream ifs(listpath.c_str(), ios::in );
 
-	while (ifs.eof() == false) {
-		p = buf;
-		SourceRecord rec;
-		string Type;
-		string Section;
-		string VURI;
+    // cannot open file
+    if (!ifs != 0) 
+	return _error->Error(_("Can't read %s"), listpath.c_str());
 
-		ifs.getline(buf, sizeof(buf));
-
-		rec.SourceFile = listpath;
-		while (isspace(*p)) p++;
-		if (*p == '#') {
-			rec.Type = Disabled;
-			p++;
-			while (isspace(*p)) p++;
-		}
-			
-		if (*p == '\r' || *p == '\n' || *p == 0) {
-			rec.Type = Comment;
-			rec.Comment = p;
-			
-			AddSourceNode(rec);
-			continue;
-		}
-
-		bool Failed = true;
-		if (ParseQuoteWord(p, Type) == true &&
-		    rec.SetType(Type) == true &&
-		    ParseQuoteWord(p, VURI) == true) {
-			if (VURI[0] == '[') {
-				rec.VendorID = VURI.substr(1, VURI.length()-2);
-				if (ParseQuoteWord(p, VURI) == true &&
-				    rec.SetURI(VURI) == true)
-					Failed = false;
-			}
-			else if (rec.SetURI(VURI) == true) {
-					Failed = false;
-			}
-			if (Failed == false &&
-			    ParseQuoteWord(p, rec.Dist) == false)
-				Failed = true;
-		}
-
-		if (Failed == true) {
-			if (rec.Type == Disabled) {
-				// treat as a comment field
-				rec.Type = Comment;
-				rec.Comment = buf;
-			} else {
-			  // syntax error on line
-			  return _error->Error(_("Syntax error in line %s"), buf);
-			}
-		}
-
-#ifndef HAVE_RPM
-		// check for absolute dist
-		if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size()-1] == '/') {
-			// make sure there's no section
-			if (ParseQuoteWord(p, Section) == true)
-			  return _error->Error(_("Syntax error in line %s"), buf);
-
-			rec.Dist = SubstVar(rec.Dist, "$(ARCH)",
-				_config->Find("APT::Architecture"));
-		
-			AddSourceNode(rec);
-			continue;
-		}
-#endif
-
-		const char *tmp = p;
-		rec.NumSections = 0;
-		while (ParseQuoteWord(p, Section) == true)
-			rec.NumSections++;
-		if (rec.NumSections > 0) {
-			p = tmp;
-			rec.Sections = new string[rec.NumSections];
-			rec.NumSections = 0;
-			while (ParseQuoteWord(p, Section) == true)
-				rec.Sections[rec.NumSections++] = Section;
-		}
-		AddSourceNode(rec);
+    while (ifs.eof() == false) {
+	p = buf;
+	SourceRecord rec;
+	string Type;
+	string Section;
+	string VURI;
+	
+	ifs.getline(buf, sizeof(buf));
+	
+	rec.SourceFile = listpath;
+	while (isspace(*p)) p++;
+	if (*p == '#') {
+	    rec.Type = Disabled;
+	    p++;
+	    while (isspace(*p)) p++;
+	}
+	
+	if (*p == '\r' || *p == '\n' || *p == 0) {
+	    rec.Type = Comment;
+	    rec.Comment = p;
+	    
+	    AddSourceNode(rec);
+	    continue;
 	}
 
-	ifs.close();
-	return true;
+	bool Failed = true;
+	if (ParseQuoteWord(p, Type) == true &&
+	    rec.SetType(Type) == true &&
+	    ParseQuoteWord(p, VURI) == true) {
+	    if (VURI[0] == '[') {
+		rec.VendorID = VURI.substr(1, VURI.length()-2);
+		if (ParseQuoteWord(p, VURI) == true &&
+		    rec.SetURI(VURI) == true)
+		    Failed = false;
+	    }
+	    else if (rec.SetURI(VURI) == true) {
+		Failed = false;
+	    }
+	    if (Failed == false &&
+		ParseQuoteWord(p, rec.Dist) == false)
+		Failed = true;
+	}
+
+	if (Failed == true) {
+	    if (rec.Type == Disabled) {
+		// treat as a comment field
+		rec.Type = Comment;
+		rec.Comment = buf;
+	    } else {
+		// syntax error on line
+		return _error->Error(_("Syntax error in line %s"), buf);
+	    }
+	}
+
+#ifndef HAVE_RPM
+	// check for absolute dist
+	if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size()-1] == '/') {
+	    // make sure there's no section
+	    if (ParseQuoteWord(p, Section) == true)
+		return _error->Error(_("Syntax error in line %s"), buf);
+	    
+	    rec.Dist = SubstVar(rec.Dist, "$(ARCH)",
+				_config->Find("APT::Architecture"));
+	    
+	    AddSourceNode(rec);
+	    continue;
+	}
+#endif
+	
+	const char *tmp = p;
+	rec.NumSections = 0;
+	while (ParseQuoteWord(p, Section) == true)
+	    rec.NumSections++;
+	if (rec.NumSections > 0) {
+	    p = tmp;
+	    rec.Sections = new string[rec.NumSections];
+	    rec.NumSections = 0;
+	    while (ParseQuoteWord(p, Section) == true)
+		rec.Sections[rec.NumSections++] = Section;
+	}
+	AddSourceNode(rec);
+    }
+    
+    ifs.close();
+    return true;
 }
 
 bool SourcesList::ReadSourceDir(string Dir)
 {
-    cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
+    //cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
 
-	DIR *D = opendir(Dir.c_str());
-	if (D == 0)
-		return _error->Errno("opendir",_("Unable to read %s"),Dir.c_str());
-                                                                                
-	vector<string> List;
-                                                                                	for (struct dirent *Ent = readdir(D); Ent != 0; Ent = readdir(D))
+    DIR *D = opendir(Dir.c_str());
+    if (D == 0)
+	return _error->Errno("opendir",_("Unable to read %s"),Dir.c_str());
+    
+    vector<string> List;
+    for (struct dirent *Ent = readdir(D); Ent != 0; Ent = readdir(D))
 	{
-		if (Ent->d_name[0] == '.')
-			continue;
-                                                                                
-      	// Skip bad file names ala run-parts
-      	const char *C = Ent->d_name;
-      	for (; *C != 0; C++)
+	    if (Ent->d_name[0] == '.')
+		continue;
+	    
+	    // Skip bad file names ala run-parts
+	    const char *C = Ent->d_name;
+	    for (; *C != 0; C++)
      		if (isalpha(*C) == 0 && isdigit(*C) == 0
-             	&& *C != '_' && *C != '-' && *C != '.')
-        		break;
-      		if (*C != 0)
-     			continue;
-                                                                                
-     	// Only look at files ending in .list to skip .rpmnew etc files
-     	if (strcmp(Ent->d_name+strlen(Ent->d_name)-5, ".list") != 0)
+		    && *C != '_' && *C != '-' && *C != '.')
+		    break;
+	    if (*C != 0)
+		continue;
+
+	    // Only look at files ending in .list to skip .rpmnew etc files
+	    if (strcmp(Ent->d_name+strlen(Ent->d_name)-5, ".list") != 0)
         	continue;
-                                                                                
-      	// Make sure it is a file and not something else
-      	string File = flCombine(Dir,Ent->d_name);
-      	struct stat St;
-      	if (stat(File.c_str(),&St) != 0 || S_ISREG(St.st_mode) == 0)
-			continue;
-                                                                                
-      	List.push_back(File);
+
+	    // Make sure it is a file and not something else
+	    string File = flCombine(Dir,Ent->d_name);
+	    struct stat St;
+	    if (stat(File.c_str(),&St) != 0 || S_ISREG(St.st_mode) == 0)
+		continue;
+	    List.push_back(File);
+
    	}
-   	closedir(D);
-                                                                                
-   	sort(List.begin(),List.end());
-                                                                                
-   	// Read the files
-   	for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
+    closedir(D);
+
+    sort(List.begin(),List.end());
+    
+    // Read the files
+    for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
       	if (ReadSourcePart(*I) == false)
-     		return false;
-   	return true;
+	    return false;
+    return true;
 }
 
 
 bool SourcesList::ReadSources()
 {
-    cout << "SourcesList::ReadSources() " << endl;
+    //cout << "SourcesList::ReadSources() " << endl;
 
-	bool Res = true;
+    bool Res = true;
 
-	string Parts = _config->FindDir("Dir::Etc::sourceparts");
-	if (FileExists(Parts) == true)
-		Res &= ReadSourceDir(Parts);
-	string Main = _config->FindFile("Dir::Etc::sourcelist");
-	if (FileExists(Main) == true)
-		Res &= ReadSourcePart(Main);
-
-	return Res;
+    string Parts = _config->FindDir("Dir::Etc::sourceparts");
+    if (FileExists(Parts) == true)
+	Res &= ReadSourceDir(Parts);
+    string Main = _config->FindFile("Dir::Etc::sourcelist");
+    if (FileExists(Main) == true)
+	Res &= ReadSourcePart(Main);
+    
+    return Res;
 }
 
 SourcesList::SourceRecord *SourcesList::AddEmptySource()
 {
-	SourceRecord rec;
+    SourceRecord rec;
 #ifdef HAVE_RPM
-	rec.Type = Rpm;
+    rec.Type = Rpm;
 #else
-	rec.Type = Deb;
+    rec.Type = Deb;
 #endif
-	rec.VendorID = "";
-	rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
-	rec.Dist = "";
-	rec.NumSections = 0;
-	return AddSourceNode(rec);
+    rec.VendorID = "";
+    rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
+    rec.Dist = "";
+    rec.NumSections = 0;
+    return AddSourceNode(rec);
 }
 
 SourcesList::SourceRecord *SourcesList::AddSource(RecType Type, string VendorID, string URI, string Dist, string *Sections, unsigned short count, string SourceFile)
 {
-	SourceRecord rec;
-	rec.Type = Type;
-	rec.VendorID = VendorID;
-	rec.SourceFile = SourceFile;
-
-	if (rec.SetURI(URI) == false) {
-	  return NULL;
-	}
-	rec.Dist = Dist;
-	rec.NumSections = count;
-	rec.Sections = new string[count];
-	for (unsigned int i = 0; i < count; i++)
-		rec.Sections[i] = Sections[i];
-
-	return AddSourceNode(rec);
+    SourceRecord rec;
+    rec.Type = Type;
+    rec.VendorID = VendorID;
+    rec.SourceFile = SourceFile;
+    
+    if (rec.SetURI(URI) == false) {
+	return NULL;
+    }
+    rec.Dist = Dist;
+    rec.NumSections = count;
+    rec.Sections = new string[count];
+    for (unsigned int i = 0; i < count; i++)
+	rec.Sections[i] = Sections[i];
+    
+    return AddSourceNode(rec);
 }
 
 void SourcesList::RemoveSource(SourceRecord *&rec)
 {
-        SourceRecords.remove(rec);
-	delete rec;
-	rec = 0;
+    SourceRecords.remove(rec);
+    delete rec;
+    rec = 0;
 }
 
 bool SourcesList::UpdateSources()

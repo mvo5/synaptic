@@ -697,7 +697,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     me->setInterfaceLocked(TRUE);
     me->updatePackageInfo(NULL);
 
-    me->setStatusText(_("Performing selected changes... See the terminal from where you started Synaptic for more information."));
+    me->setStatusText(_("Performing selected changes... this may take a while"));
 
     // fetch packages
     RGFetchProgress *fprogress = new RGFetchProgress(me);
@@ -708,11 +708,11 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
 
     RInstallProgress *iprogress;
 #ifdef HAVE_ZVT
-#ifdef HAVE_RPM
+ #ifdef HAVE_RPM
     bool UseTerminal = false;
-#else
+ #else
     bool UseTerminal = true;
-#endif
+ #endif
     RGZvtInstallProgress *zvt = NULL;
     if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
 	iprogress = zvt = new RGZvtInstallProgress(me);

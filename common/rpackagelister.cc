@@ -811,7 +811,7 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 		str=_("Obsolete and locally installed");
 	    else if(pkg->installedVersion() != NULL) {
 		if(pkg->getStatus() == RPackage::SInstalledOutdated)
-		    str=_("Installed and upgradeable");
+		    str=_("Installed and upgradable");
 		else
 		    str=_("Installed");
 	    } else {

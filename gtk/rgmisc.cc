@@ -182,7 +182,7 @@ const char *utf8(const char *str)
 void RPackageStatus::initColors()
 {
     char *default_status_colors[N_STATUS_COUNT] = {
-	"#83a67f", "#eed680", #ada7c8, "#c1665a", "#df421e",
+	"#83a67f", "#eed680", "#ada7c8", "#c1665a", "#df421e",
 	NULL, "#bab5ab", NULL, NULL, "#bab5ab", NULL, NULL
     };
     

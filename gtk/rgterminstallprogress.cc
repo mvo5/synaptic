@@ -203,6 +203,8 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
+   else
+      skipTaskbar(false);
 }
 
 

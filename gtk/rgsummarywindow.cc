@@ -480,6 +480,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    g_string_free(msg_space, TRUE);
    if(!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
+   else
+      skipTaskbar(false);
 }
 
 

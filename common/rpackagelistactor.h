@@ -45,7 +45,7 @@ class RPackageListActor : public RPackageObserver
 
    virtual void notifyPreFilteredChange()
    {
-       std::cout << "notifyPreFilteredChange()" << endl;
+       //std::cout << "notifyPreFilteredChange()" << endl; 
        updateState();
    };
 
@@ -54,7 +54,7 @@ class RPackageListActor : public RPackageObserver
    
    virtual void updateState()
    {
-       std::cout << "RPackageListActor::updateState(): " <<_lister->count() << endl;
+       //std::cout << "RPackageListActor::updateState(): " <<_lister->count() << endl; 
        _lastDisplayList.clear();
        _lastDisplayList.reserve(_lister->count());
        for(unsigned int i=0;i<_lister->count();i++)

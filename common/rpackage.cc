@@ -782,56 +782,56 @@ void create_tmpfile(const char *pattern, char **filename, FILE **out)
 
 void RPackage::setPinned(bool flag)
 {
-    cout << "void RPackage::setPinned(bool flag)" << endl;
+    //cout << "void RPackage::setPinned(bool flag)" << endl;
 
-  FILE *out;
-  char pattern[] = "syn-XXXXXX";
-  char *filename = NULL;
-  struct stat stat_buf;
+    FILE *out;
+    char pattern[] = "syn-XXXXXX";
+    char *filename = NULL;
+    struct stat stat_buf;
 
-  string File = _config->FindFile("Dir::Etc::Preferences");
-  _pinnedPackage = flag;
+    string File = _config->FindFile("Dir::Etc::Preferences");
+    _pinnedPackage = flag;
     
-  if (flag) {
-    // pkg already in pin-file
-    if(_roptions->getPackageLock(name()))
-      return;
+    if (flag) {
+	// pkg already in pin-file
+	if(_roptions->getPackageLock(name()))
+	    return;
 
-    // write to pin-file
-    ofstream out(File.c_str(), ios::app);
-    out << "Package: " << name() << endl;
-    out << "Pin: version " << installedVersion() << endl << endl;
-  } else {
-    // delete package from pinning file
-    stat(File.c_str(),&stat_buf);
-    create_tmpfile(pattern, &filename, &out);
-    if(out == NULL)
-      cerr << "error opening tmpfile: " << filename << endl;
-    FileFd Fd(File,FileFd::ReadOnly);
-    pkgTagFile TF(&Fd);
-    if (_error->PendingError() == true)
-      return;
-    pkgTagSection Tags;
-    while (TF.Step(Tags) == true) {
-      string Name = Tags.FindS("Package");
-      if (Name.empty() == true) {
-	_error->Error(_("Invalid record in the preferences file, no Package header"));
-	return;
-      }
-      if (Name != name()) {
-	TFRewriteData tfrd;
-	tfrd.Tag = 0;
-	tfrd.Rewrite = 0;
-	tfrd.NewTag = 0;
-	TFRewrite(out, Tags, TFRewritePackageOrder, &tfrd);
-	fprintf(out, "\n");
-      }
+	// write to pin-file
+	ofstream out(File.c_str(), ios::app);
+	out << "Package: " << name() << endl;
+	out << "Pin: version " << installedVersion() << endl << endl;
+    } else {
+	// delete package from pinning file
+	stat(File.c_str(),&stat_buf);
+	create_tmpfile(pattern, &filename, &out);
+	if(out == NULL)
+	    cerr << "error opening tmpfile: " << filename << endl;
+	FileFd Fd(File,FileFd::ReadOnly);
+	pkgTagFile TF(&Fd);
+	if (_error->PendingError() == true)
+	    return;
+	pkgTagSection Tags;
+	while (TF.Step(Tags) == true) {
+	    string Name = Tags.FindS("Package");
+	    if (Name.empty() == true) {
+		_error->Error(_("Invalid record in the preferences file, no Package header"));
+		return;
+	    }
+	    if (Name != name()) {
+		TFRewriteData tfrd;
+		tfrd.Tag = 0;
+		tfrd.Rewrite = 0;
+		tfrd.NewTag = 0;
+		TFRewrite(out, Tags, TFRewritePackageOrder, &tfrd);
+		fprintf(out, "\n");
+	    }
+	}
+	fflush(out);
+	rename(filename, File.c_str());
+	chmod(File.c_str(), stat_buf.st_mode);
+	free(filename);
     }
-    fflush(out);
-    rename(filename, File.c_str());
-    chmod(File.c_str(), stat_buf.st_mode);
-    free(filename);
-  }
 }
 
 

@@ -153,6 +153,10 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
     bool found = false;
     bool globalfound = false;
 
+    // if we don't use regexp all the time, we need a case insensitive strstr
+    //bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
+    bool useregexp = true;
+
     if (_patterns.size() == 0)
 	return true;
 
@@ -166,25 +170,25 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		if (strncasecmp(name, iter->pattern.c_str(), 
 				iter->pattern.length()) == 0)
 		    found = true;
-		else if (regexec(&reg, name, 0, NULL, 0) == 0)
+		else if (useregexp && regexec(&reg, name, 0, NULL, 0) == 0)
 		    found = true;
 	      
 	    } else if (iter->where == Version) {
 		if (strncasecmp(version, iter->pattern.c_str(), 
 				iter->pattern.length()) == 0)
 		    found = true;
-		else if (regexec(&reg, version, 0, NULL, 0) == 0)
+		else if (useregexp && regexec(&reg, version, 0, NULL, 0) == 0)
 		    found = true;
 
 	    } else if (iter->where == Description) {
 		if (strstr(descr, iter->pattern.c_str()) != NULL)
 		    found = true;
-		else if (regexec(&reg, descr, 0, NULL, 0) == 0)
+		else if (useregexp && regexec(&reg, descr, 0, NULL, 0) == 0)
 		    found = true;
 	    } else if (iter->where == Maintainer) {
 		if (strstr(maint, iter->pattern.c_str()) != NULL)
 		    found = true;
-		else if (regexec(&reg, maint, 0, NULL, 0) == 0)
+		else if (useregexp && regexec(&reg, maint, 0, NULL, 0) == 0)
 		    found = true;
 	    } else if (iter->where == Depends) {
 		const char *depType, *depPkg, *depName, *depVer;
@@ -198,7 +202,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
 					found = true;
 					break;
-				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+				    } else if (useregexp && regexec(&reg, depName, 0, NULL, 0) == 0) {
 					found = true;
 					break;
 				    }
@@ -210,7 +214,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 		    if(strstr(provides[i],iter->pattern.c_str()) != NULL) {
 			found = true;
 			break;
-		    } else if (regexec(&reg, provides[i], 0, NULL, 0) == 0) {
+		    } else if (useregexp && regexec(&reg, provides[i], 0, NULL, 0) == 0) {
 			found = true;
 			break;
 		    }
@@ -227,7 +231,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
 					found = true;
 					break;
-				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+				    } else if (useregexp && regexec(&reg, depName, 0, NULL, 0) == 0) {
 					found = true;
 					break;
 				    }
@@ -245,7 +249,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 				    if(strstr(depName,iter->pattern.c_str()) != NULL) {
 					found = true;
 					break;
-				    } else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+				    } else if (useregexp && regexec(&reg, depName, 0, NULL, 0) == 0) {
 					found = true;
 					break;
 				    }
@@ -260,7 +264,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			if(strstr(depPkg,iter->pattern.c_str()) != NULL) {
 			    found = true;
 			    break;
-			} else if (regexec(&reg, depPkg, 0, NULL, 0) == 0) {
+			} else if (useregexp && regexec(&reg, depPkg, 0, NULL, 0) == 0) {
 			    found = true;
 			    break;
 			}
@@ -273,7 +277,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 			if(strstr(depName,iter->pattern.c_str()) != NULL) {
 			    found = true;
 			    break;
-			} else if (regexec(&reg, depName, 0, NULL, 0) == 0) {
+			} else if (useregexp && regexec(&reg, depName, 0, NULL, 0) == 0) {
 			    found = true;
 			    break;
 			}

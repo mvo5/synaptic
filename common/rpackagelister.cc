@@ -127,9 +127,9 @@ void RPackageLister::notifyPostChange(RPackage *pkg)
 
 void RPackageLister::notifyChange(RPackage *pkg)
 {
-    cout << "RPackageLister::notifyChange(RPackage *pkg): " 
-	 << _packageObservers.size() 
-	 << endl;
+//     cout << "RPackageLister::notifyChange(RPackage *pkg): " 
+// 	 << _packageObservers.size() 
+// 	 << endl;
 
     notifyPreChange(pkg);
     notifyPostChange(pkg);
@@ -137,14 +137,14 @@ void RPackageLister::notifyChange(RPackage *pkg)
 
 void RPackageLister::unregisterObserver(RPackageObserver *observer)
 {
-    cout << "RPackageLister::unregisterObserver(RPackageObserver *observer)" << endl;
+//     cout << "RPackageLister::unregisterObserver(RPackageObserver *observer)" << endl;
 
     //remove(_packageObservers.begin(), _packageObservers.end(), observer);
     vector<RPackageObserver*>::iterator I;
     I = find(_packageObservers.begin(), _packageObservers.end(), observer);
     if(I != _packageObservers.end())
 	_packageObservers.erase(I);
-    else
+    else 
 	cout << "unregisterObserver() failed" << endl;
 }
 
@@ -183,7 +183,7 @@ void RPackageLister::notifyCachePostChange()
 
 void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
 {
-    cout << "RPackageLister::unregisterCacheObserver(RCacheObserver *observer)"<< endl;
+    //cout << "RPackageLister::unregisterCacheObserver(RCacheObserver *observer)"<< endl;
     //remove(_cacheObservers.begin(), _cacheObservers.end(), observer);
     vector<RCacheObserver*>::iterator I;
     I = find(_cacheObservers.begin(), _cacheObservers.end(), observer);
@@ -361,7 +361,7 @@ bool RPackageLister::upgradable()
 bool RPackageLister::openCache(bool reset)
 {
     static bool firstRun=true;
-    cout << "RPackageLister::openCache(bool reset)" << endl;
+    //cout << "RPackageLister::openCache(bool reset)" << endl;
 
     if (reset) {
 	if (!_cache->reset(*_progMeter)) {
@@ -1063,22 +1063,27 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
 
 void RPackageLister::restoreState(RPackageLister::pkgState &state)
 {
+    pkgDepCache *deps = _cache->deps();
+    RPackage *pkg;
+
     for (unsigned i = 0; i < _count; i++) {
-	RPackage::MarkedStatus status = _packages[i]->getMarkedStatus();
+	pkg = _packages[i];
+	RPackage::MarkedStatus status = pkg->getMarkedStatus();
+
 	if (state[i] != status) {
 	    switch (state[i]) {
-		case RPackage::MInstall:
-		case RPackage::MUpgrade:
-		    _packages[i]->setInstall();
-		    break;
+	    case RPackage::MInstall:
+	    case RPackage::MUpgrade:
+		deps->MarkInstall(*(pkg->package()), true);
+		break;
 		    
-		case RPackage::MRemove:
-		    _packages[i]->setRemove();
+	    case RPackage::MRemove:
+		deps->MarkDelete(*(pkg->package()), false);
 		    break;
 		
 		case RPackage::MHeld:
 		case RPackage::MKeep:
-		    _packages[i]->setKeep();
+		    deps->MarkKeep(*(pkg->package()), false);
 		    break;
 	    case RPackage::MDowngrade:
 	    case RPackage::MBroken:
@@ -1089,6 +1094,7 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 	    }
 	}
     }
+    notifyChange(NULL);
 }
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
@@ -1486,7 +1492,7 @@ bool RPackageLister::cleanPackageCache()
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
-    cout << "bool RPackageLister::writeSelections(out,fullState)"<<endl;
+    //cout << "bool RPackageLister::writeSelections(out,fullState)"<<endl;
 
     for (unsigned i = 0; i < _count; i++) {
 	RPackage::MarkedStatus mstatus = _packages[i]->getMarkedStatus();

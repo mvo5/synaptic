@@ -72,7 +72,7 @@ void RCacheActorPkgList::run(vector<RPackage*> &List, int Action)
     static GtkTreeIter iter;
 
     for(unsigned int i=0;i<List.size();i++) {
-	cout << "RCacheActorPkgList::run()" << endl;
+// 	cout << "RCacheActorPkgList::run()" << endl;
 	// fill in iter
 	iter.user_data = List[i];
 	iter.user_data2 = GINT_TO_POINTER(i);
@@ -88,7 +88,7 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 {
     static GtkTreeIter iter;
     unsigned int j;
-    cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
+//     cout << "RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)" << endl;
 
 //     cout << "action: " << pkgEvent << endl;
 //     cout << "listsize: " << List.size() << endl;
@@ -100,7 +100,7 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 	    for(j=0;j<_lastDisplayList.size();j++)
 		if(_lastDisplayList[j] == List[i])
 		    break;
-	    cout << "removed at pos: " << j << endl;
+// 	    cout << "removed at pos: " << j << endl;
 	    GtkTreePath *path = gtk_tree_path_new_from_indices(j,-1);
 	    gtk_tree_model_row_deleted(GTK_TREE_MODEL(_pkgList), path);
 	    gtk_tree_path_free(path);
@@ -109,7 +109,7 @@ void RPackageListActorPkgList::run(vector<RPackage*> &List, int pkgEvent)
 	    for(j=0;j<_lister->count();j++)
 		if(_lister->getElement(j) == List[i])
 		    break;
-	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
+// 	    cout << "inserted " << List[i]->name() << " at pos: " << j << endl;
 	    GtkTreePath *path = gtk_tree_path_new_from_indices(j,-1);
 	    iter.user_data = List[i];
 	    iter.user_data2 = GINT_TO_POINTER(j);
@@ -211,7 +211,7 @@ gtk_pkg_list_new (RPackageLister *lister)
 {
   GtkPkgList *retval=NULL;
 
-  g_print("pkg_list_new()\n");
+  //cout << "pkg_list_new()\n";
 
   retval = (GtkPkgList*) g_object_new (GTK_TYPE_PKG_LIST, NULL);
   assert(retval);

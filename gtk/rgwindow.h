@@ -49,7 +49,7 @@ public:
    inline virtual void show() { gtk_widget_show(_win); };
 
    RGWindow() : _win(0), _topBox(0) { 
-       std::cout << "RGWindow()" << endl; 
+       //std::cout << "RGWindow()" << endl; 
    };
    RGWindow(string name, bool makeBox = true);
    RGWindow(RGWindow *parent, string name, bool makeBox = true,

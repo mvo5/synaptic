@@ -12,7 +12,7 @@
 
 void RPackageListActor::notifyPostFilteredChange()
 {
-    cout << "RPackageListActor::notifyPostFilteredChange()" << endl;
+//     cout << "RPackageListActor::notifyPostFilteredChange()" << endl;
 
     vector<RPackage*> removedList;
     vector<RPackage*> insertedList;
@@ -22,7 +22,7 @@ void RPackageListActor::notifyPostFilteredChange()
     if(_lastDisplayList.size() == _lister->count())
 	return;
 
-    cout << "there are changes" << endl;
+//     cout << "there are changes" << endl;
     // init 
     for(unsigned int i=0;i<_lastDisplayList.size();i++) {
 	removedList.push_back(_lastDisplayList[i]);
@@ -39,13 +39,13 @@ void RPackageListActor::notifyPostFilteredChange()
 		if(it != removedList.end())
 		    removedList.erase(it);
 	    } else {
-		cout << "not found in _lastDisplayList" << endl;
+// // 		cout << "not found in _lastDisplayList" << endl;
 		// not found, must be inserted
 		insertedList.push_back(pkg);
 	    }
     }
-    cout << "removed: " << removedList.size() << endl;
-    cout << "inserted: " << insertedList.size() << endl;
+//     cout << "removed: " << removedList.size() << endl;
+//     cout << "inserted: " << insertedList.size() << endl;
     if(removedList.empty() == false) {
 	run(removedList, PKG_REMOVED);
     }

@@ -33,7 +33,7 @@
 */
 RGGladeWindow::RGGladeWindow(RGWindow *parent, string name)
 {
-    std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
+    //std::cout << "RGGladeWindow::RGGladeWindow(parent,name)" << endl;
 
     // for development
     gchar *filename = NULL;

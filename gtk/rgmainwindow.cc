@@ -429,7 +429,7 @@ void RGMainWindow::changedFilter(GtkWidget *self)
 
 void RGMainWindow::changeFilter(int filter, bool sethistory)
 {
-    cout << "RGMainWindow::changeFilter()"<<endl;
+    //cout << "RGMainWindow::changeFilter()"<<endl;
     
     if (sethistory) {
 	gtk_option_menu_set_history(GTK_OPTION_MENU(_filterPopup), filter);
@@ -893,17 +893,12 @@ void RGMainWindow::restoreTableState(vector<string>& expanded_sections)
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg)
 {
-#if 0
+    //cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
+  
+#if 0 // no longer needed
   vector<string> sections;
   vector<string> expanded_sections;
 
-  cout << "RGMainWindow::refreshTable(RPackage *selectedPkg)"<<endl;
-  
-//   cout << "_lister is at: " <<_lister << endl;
-//   if(selectedPkg != NULL)
-//       cout << selectedPkg->name() << endl;
-
-#if 0
   saveTableState(expanded_sections);
 
   _pkgTree = gtk_pkg_tree_new(_lister);
@@ -917,9 +912,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
 
   updatePackageInfo(selectedPkg);
   setStatusText();
-
-  //FIXME: selkectedPkg is the selectedPkg - set it via gtk_tree_selection
-#endif
 }
 
 void RGMainWindow::updatePackageStatus(RPackage *pkg)
@@ -1440,7 +1432,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   GtkTreeIter iter;
   GList *li, *list;
 
-  cout << "RGMainWindow::doPkgAction()" << endl;
+  //cout << "RGMainWindow::doPkgAction()" << endl;
 
   me->setInterfaceLocked(TRUE);
   me->_blockActions = TRUE;
@@ -1475,7 +1467,7 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
   vector<RPackage*> exclude;
   RPackage *pkg = NULL;
   while(li != NULL) {
-      cout << "doPkgAction()/loop" << endl;
+      //cout << "doPkgAction()/loop" << endl;
       gtk_tree_model_get_iter(me->_activeTreeModel, &iter, 
 			      (GtkTreePath*)(li->data));
       gtk_tree_model_get(me->_activeTreeModel, &iter, 
@@ -1496,11 +1488,11 @@ void RGMainWindow::doPkgAction(RGMainWindow *me, RGPkgAction action)
       case PKG_INSTALL: // install
 	  me->pkgInstallHelper(pkg, false);
 	  if(_config->FindB("Synaptic::UseRecommends",0)) {
-	      cout << "auto installing recommended" << endl;
+	      //cout << "auto installing recommended" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallRecommended));
 	  }
 	  if(_config->FindB("Synaptic::UseSuggests",0)) {
-	      cout << "auto installing suggested" << endl;
+	      //cout << "auto installing suggested" << endl;
 	      me->clickedRecInstall(me->_win, GINT_TO_POINTER(InstallSuggested));
 	  }
 	  break;
@@ -2649,7 +2641,7 @@ void RGMainWindow::changeTreeDisplayMode(RPackageLister::treeDisplayMode mode)
     setInterfaceLocked(TRUE);
     _blockActions = TRUE;
 
-    cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
+    //cout << "void RGMainWindow::changeTreeDisplayMode()" << mode << endl;
 
     _lister->setTreeDisplayMode(mode);
     _lister->reapplyFilter();
@@ -2773,13 +2765,13 @@ void RGMainWindow::onAddCDROM(GtkWidget *self, void *data)
 
 void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken)
 {
-    cout << "pkgInstallHelper()/start" << endl;
+    //cout << "pkgInstallHelper()/start" << endl;
     // do the work
     pkg->setInstall();
     // check whether something broke
     if (fixBroken && !_lister->check())
 	_lister->fixBroken();
-    cout << "pkgInstallHelper()/end" << endl;
+    //cout << "pkgInstallHelper()/end" << endl;
 }
 
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge)
@@ -2812,7 +2804,7 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
     RPackage *pkg;
     GList *li, *list;
 
-    cout << "selectedRow()" << endl;
+    //cout << "selectedRow()" << endl;
 
     if (me->_activeTreeModel == NULL) {
 	cerr << "selectedRow(): me->_pkgTree == NULL " << endl;
@@ -2842,9 +2834,9 @@ void RGMainWindow::selectedRow(GtkTreeSelection *selection, gpointer data)
 		       PKG_COLUMN, &pkg, -1);
     if (pkg == NULL)
 	return;    
-    cout << "selected: " << pkg->name() 
-	 << " path: " << (li->data)
-	 << endl;
+//     cout << "selected: " << pkg->name() 
+// 	 << " path: " << (li->data)
+// 	 << endl;
 
     // free the list
     g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);
@@ -2863,7 +2855,7 @@ void RGMainWindow::doubleClickRow(GtkTreeView *treeview,
   RPackage *pkg = NULL;
 
 
-  cout << "double click" << endl;
+  //  cout << "double click" << endl;
   if(!gtk_tree_model_get_iter(me->_activeTreeModel,
 			      &iter,path)) {
     return;
@@ -3113,7 +3105,7 @@ void RGMainWindow::setInterfaceLocked(bool flag)
 
 void RGMainWindow::setTreeLocked(bool flag)
 {
-    cout << "setTreeLocked()" << endl;
+    //cout << "setTreeLocked()" << endl;
     if (flag == true) {
 	gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
     } else {

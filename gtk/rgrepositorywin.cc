@@ -249,6 +249,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 				  "on_button_remove_clicked",
 				  G_CALLBACK(DoRemove),
 				  this);
+
+    gtk_window_resize(GTK_WINDOW(_win), 620, 400);
 }
 
 
@@ -262,14 +264,14 @@ RGRepositoryEditor::~RGRepositoryEditor()
 bool RGRepositoryEditor::Run()
 {
   if(_lst.ReadSources() == false) {
-    _error->Error(_("Cannot read sources.list file"));
-    _userDialog->showErrors();
-    return false;
+      _error->Error(_("Cannot read sources.list file"));
+      _userDialog->showErrors();
+      return false;
   }
   if(_lst.ReadVendors() == false) {
-    _error->Error(_("Cannot read vendors.list file"));
-    _userDialog->showErrors();
-    return false;
+      _error->Error(_("Cannot read vendors.list file"));
+      _userDialog->showErrors();
+      return false;
   }
 
   GdkColormap *cmap = gdk_colormap_get_system();

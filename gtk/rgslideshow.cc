@@ -22,6 +22,7 @@ RGSlideShow::RGSlideShow(GtkImage * image, string imgPath)
             _imageFileList.push_back(imgPath + entry->d_name);
       }
    }
+   sort(_imageFileList.begin(), _imageFileList.end());
 }
 
 void RGSlideShow::step()

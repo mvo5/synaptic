@@ -2444,19 +2444,19 @@ void RGMainWindow::buildInterface()
     // workaround for a bug in libglade
     button = glade_xml_get_widget(_gladeXML, "button_update");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Update package cache"),"");
+			 _("Update the list of available packages"),"");
 			 
     button = glade_xml_get_widget(_gladeXML, "button_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-			 _("Mark packages for upgrade, except those with new dependencies"),"");
+			 _("Select latest version of all already installed packages"),"");
     
     button = glade_xml_get_widget(_gladeXML, "button_dist_upgrade");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Upgrade installed distribution, including packages with new dependencies"),"");
+			 _("Select latest version of allready installed packages, even if new packages as dependency have to be installed"),"");
     
     button = glade_xml_get_widget(_gladeXML, "button_procceed");
     gtk_tooltips_set_tip(GTK_TOOLTIPS (_tooltips), button,
-			 _("Commit (and download if necessary) selected changes on packages"),"");
+			 _("Execute the selected changes"),"");
 
     
     _nameL = glade_xml_get_widget(_gladeXML, "label_pkgname"); 

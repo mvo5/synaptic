@@ -72,7 +72,7 @@ void RGLogView::readLogs()
 	 last_month = month;
       }
 
-      strftime(str, 512, "%c", &t);
+      strftime(str, 512, "%x %R", &t);
       gtk_tree_store_append (store, &date_iter, &month_iter);
       gtk_tree_store_set (store, &date_iter,
 			  COLUMN_LOG_DAY, str, 

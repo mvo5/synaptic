@@ -4,7 +4,6 @@
 <glade-interface>
 
 <widget class="GtkWindow" id="window_main_hpaned">
-  <property name="border_width">2</property>
   <property name="width_request">640</property>
   <property name="height_request">480</property>
   <property name="title" translatable="yes">Synaptic</property>
@@ -834,7 +833,7 @@
 		      <property name="tooltip" translatable="yes">Mark packages for upgrade, except those with new dependencies</property>
 		      <property name="label" translatable="yes">Up_grade All</property>
 		      <property name="use_underline">True</property>
-		      <property name="icon">upgrade_small.png</property>
+		      <property name="icon">upgrade_all.png</property>
 		      <property name="new_group">True</property>
 		      <signal name="clicked" handler="on_upgrade_packages" last_modification_time="Fri, 13 Dec 2002 11:58:59 GMT"/>
 		    </widget>
@@ -1119,7 +1118,6 @@
 
 	      <child>
 		<widget class="GtkVBox" id="vbox32">
-		  <property name="border_width">6</property>
 		  <property name="visible">True</property>
 		  <property name="homogeneous">False</property>
 		  <property name="spacing">0</property>
@@ -1562,7 +1560,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkTable" id="table4">
+						<widget class="GtkTable" id="table_installed">
 						  <property name="visible">True</property>
 						  <property name="n_rows">2</property>
 						  <property name="n_columns">2</property>
@@ -1742,7 +1740,7 @@
 					      </child>
 
 					      <child>
-						<widget class="GtkTable" id="table5">
+						<widget class="GtkTable" id="table_available">
 						  <property name="visible">True</property>
 						  <property name="n_rows">3</property>
 						  <property name="n_columns">2</property>
@@ -3283,44 +3281,62 @@ Changes override the version selected by the package manager. </property>
 	      <property name="fill">True</property>
 	    </packing>
 	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkHBox" id="hbox_status">
+	  <property name="visible">True</property>
+	  <property name="homogeneous">False</property>
+	  <property name="spacing">2</property>
 
 	  <child>
-	    <widget class="GtkHBox" id="hbox_status">
+	    <widget class="GtkScrolledWindow" id="scrolledwindow18">
 	      <property name="visible">True</property>
-	      <property name="homogeneous">False</property>
-	      <property name="spacing">2</property>
+	      <property name="can_focus">True</property>
+	      <property name="hscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
+	      <property name="shadow_type">GTK_SHADOW_NONE</property>
+	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label_status">
+		<widget class="GtkViewport" id="viewport4">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Synaptic - an apt frontend</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
+		  <property name="shadow_type">GTK_SHADOW_IN</property>
+
+		  <child>
+		    <widget class="GtkLabel" id="label_status">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Synaptic - an apt frontend</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">False</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">0.5</property>
+		      <property name="yalign">0.5</property>
+		      <property name="xpad">1</property>
+		      <property name="ypad">1</property>
+		    </widget>
+		  </child>
 		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
 	      </child>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
-	      <property name="expand">False</property>
+	      <property name="expand">True</property>
 	      <property name="fill">True</property>
 	    </packing>
 	  </child>
 	</widget>
 	<packing>
 	  <property name="padding">0</property>
-	  <property name="expand">True</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>

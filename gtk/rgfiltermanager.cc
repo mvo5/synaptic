@@ -675,7 +675,7 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
       me->_selectedFilter = filter;
       //cout << "You selected" << filter << endl;
       gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
-      //g_free (filtername);
+      g_free (filtername);
       
       me->editFilter();
   } else {
@@ -978,14 +978,21 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
 {
     RGFilterManagerWindow *me = (RGFilterManagerWindow*)data;
     RFilter *filter;
+    int i=1;
+    gchar *s;
 
     //cout << "void RGFilterManagerWindow::addFilterAction()" << endl;
 
-    filter = new RFilter(me->_lister);
-    filter->setName(_("A New Filter"));
-    if(!me->_lister->registerFilter(filter))
-	return;
 
+    do {
+	// no memleak, register filter takes care of it
+	filter = new RFilter(me->_lister);
+	s = g_strdup_printf(_("A New Filter %i"),i);
+	filter->setName(s);
+	g_free(s);
+	i++;
+    } while(!me->_lister->registerFilter(filter));
+    
     GtkTreeIter iter;
     gtk_list_store_append(me->_filterListStore, &iter); 
     gtk_list_store_set(me->_filterListStore, &iter,
@@ -1012,7 +1019,7 @@ void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
     RFilter *filter;
     //cout << "void RGFilterManagerWindow::applyFilterAction()"<<endl;
     if(me->_selectedPath == NULL) {
-	cout << "_selctedPath == NULL" << endl;
+	//cout << "_selctedPath == NULL" << endl;
 	return;
     }
     gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_filterListStore),

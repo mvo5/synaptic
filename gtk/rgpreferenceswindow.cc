@@ -76,8 +76,10 @@ void RGPreferencesWindow::applyProxySettings()
 	    g_strstrip(noProxyArray[j]);
 	    s = g_strdup_printf("Acquire::http::Proxy::%s",noProxyArray[j]);
 	    _config->Set(s,"DIRECT");
+	    g_free(s);
 	    s = g_strdup_printf("Acquire::ftp::Proxy::%s", noProxyArray[j]);
 	    _config->Set(s,"DIRECT");
+	    g_free(s);
 	}
 	g_strfreev(noProxyArray);
     } else {

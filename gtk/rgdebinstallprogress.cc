@@ -355,6 +355,7 @@ void RGDebInstallProgress::startUpdate()
    g_signal_connect(G_OBJECT(reaper), "child-exited",
 		    G_CALLBACK(child_exited),
 		    this);
+   putenv("DEBIAN_FRONTEND=gnome");
    show();
    RGFlushInterface();
 }

@@ -6,8 +6,6 @@
 #include <rqpackageitem.h>
 #include <rqpixmaps.h>
 
-#include <i18n.h>
-
 QString RQPackageItem::text(int column) const
 {
    QString res;

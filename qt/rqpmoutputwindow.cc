@@ -4,8 +4,6 @@
 
 #include <rqpmoutputwindow.h>
 
-#include <i18n.h>
-
 RQPMOutputWindow::RQPMOutputWindow(QWidget *parent)
    : WindowPMOutput(parent), _currentPackage(0), _hasHeader(0)
 {
@@ -17,9 +15,9 @@ void RQPMOutputWindow::addLine(const char *text)
    if (!_hasHeader) {
       _textEdit->setBold(true);
       if (!_currentPackage)
-         _textEdit->append(QString(_("\nWhile preparing for transaction:\n\n")));
+         _textEdit->append(QString(tr("\nWhile preparing for transaction:\n\n")));
       else
-         _textEdit->append(QString(_("\nWhile installing package %1:\n\n"))
+         _textEdit->append(QString(tr("\nWhile installing package %1:\n\n"))
                            .arg(_currentPackage));
       _textEdit->setBold(false);
       _hasHeader = true;

@@ -24,6 +24,7 @@
 #include <rqmainwindow.h>
 #include <rquserdialog.h>
 #include <rqobservers.h>
+#include <rqtranslator.h>
 
 #include <iostream>
 
@@ -118,6 +119,10 @@ int main(int argc, char **argv)
 #endif
 
    QApplication app(argc, argv);
+
+   RQTranslator translator;
+   app.installTranslator(&translator);
+
 
    if (getuid() != 0) {
       RQUserDialog userDialog;

@@ -12,8 +12,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <i18n.h>
-
 RQInstallWindow::RQInstallWindow(QWidget *parent,
                                      RPackageLister *lister)
    : WindowInstall(parent), _startCounting(false), _pmoutWindow(this)

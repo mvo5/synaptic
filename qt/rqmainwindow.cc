@@ -21,7 +21,6 @@
 #include <apt-pkg/configuration.h>
 
 #include <config.h>
-#include <i18n.h>
 
 RQMainWindow::RQMainWindow(RPackageLister *lister)
    : _lister(lister), _packagePopup(this), _userDialog(this),
@@ -144,10 +143,10 @@ void RQMainWindow::changedSubView(int index)
 void RQMainWindow::reloadFilters()
 {
    _filtersComboBox->clear();
-   _filtersComboBox->insertItem(_("All Packages"));
+   _filtersComboBox->insertItem(tr("All Packages"));
    vector<string> filters = _lister->getFilterNames();
    for (int i = 0; i != filters.size(); i++)
-      _filtersComboBox->insertItem(filters[i].c_str());
+      _filtersComboBox->insertItem(tr(filters[i].c_str()));
 }
 
 void RQMainWindow::changedFilter(int index)
@@ -266,8 +265,8 @@ void RQMainWindow::markPackagesFromPopup(int id)
 void RQMainWindow::distUpgrade()
 {
    if (!_lister->check()) {
-      _userDialog.error(_("Operation not possible with broken packages.\n"
-                          "Please fix them first."));
+      _userDialog.error(tr("Operation not possible with broken packages.\n"
+                           "Please fix them first."));
       return;
    }
 
@@ -291,7 +290,7 @@ void RQMainWindow::distUpgrade()
          _lister->saveUndoState(state);
       }
    } else {
-      _userDialog.proceed(_("Your system is up-to-date!"));
+      _userDialog.proceed(tr("Your system is up-to-date!"));
    }
 
    _packageListView->triggerUpdate();
@@ -300,7 +299,7 @@ void RQMainWindow::distUpgrade()
 void RQMainWindow::fixBroken()
 {
    if (_lister->check()) {
-      _userDialog.proceed(_("There are no broken packages."));
+      _userDialog.proceed(tr("There are no broken packages."));
       return;
    }
    
@@ -325,7 +324,7 @@ void RQMainWindow::fixBroken()
          _lister->saveUndoState(state);
       }
    } else {
-      _userDialog.error(_("Can't fix broken packages!"));
+      _userDialog.error(tr("Can't fix broken packages!"));
    }
 
    _packageListView->triggerUpdate();
@@ -334,8 +333,8 @@ void RQMainWindow::fixBroken()
 void RQMainWindow::commitChanges()
 {
    if (!_lister->check()) {
-      _userDialog.error(_("Operation not possible with broken packages.\n"
-                          "Please fix them first."));
+      _userDialog.error(tr("Operation not possible with broken packages.\n"
+                           "Please fix them first."));
       return;
    }
 

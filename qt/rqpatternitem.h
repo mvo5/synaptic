@@ -35,8 +35,8 @@ class RQPatternItem : public QListViewItem
                  bool exclude = false);
 };
 
-extern char *TypeName[];
-extern char *TypeOperationName[];
+extern QString TypeName[];
+extern QString TypeOperationName[];
 
 #endif
 

@@ -7,21 +7,19 @@
 
 #include <rpackage.h>
 
-#include <i18n.h>
-
 RQPackagePopup::RQPackagePopup(QWidget *parent)
    : QPopupMenu(parent)
 {
    insertItem(QIconSet(RQPixmaps::find("package-available.png")),
-              _("Unmark"), IdUnmark);
+              QWidget::tr("Unmark"), IdUnmark);
    insertItem(QIconSet(RQPixmaps::find("package-install.png")),
-              _("Install"), IdInstall);
+              QWidget::tr("Install"), IdInstall);
    insertItem(QIconSet(RQPixmaps::find("package-reinstall.png")),
-              _("Reinstall"), IdReinstall);
+              QWidget::tr("Reinstall"), IdReinstall);
    insertItem(QIconSet(RQPixmaps::find("package-upgrade.png")),
-              _("Upgrade"), IdUpgrade);
+              QWidget::tr("Upgrade"), IdUpgrade);
    insertItem(QIconSet(RQPixmaps::find("package-remove.png")),
-              _("Remove"), IdRemove);
+              QWidget::tr("Remove"), IdRemove);
 }
 
 void RQPackagePopup::update(QListView *packageListView)

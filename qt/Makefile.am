@@ -42,6 +42,7 @@ synaptic_SOURCES = \
 	$(synaptic_UI) \
 	qsynaptic.h \
 	qsynaptic.cc \
+	rqtranslator.h \
 	rqmainwindow.h \
 	rqmainwindow.cc \
 	rqmainwindow.moc.cc \

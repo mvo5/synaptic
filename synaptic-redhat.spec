@@ -5,16 +5,17 @@
 Summary: Graphical package management program using apt.
 Name: synaptic
 Version: 0.46
-Release: 1.fr
+Release: 1
 License: GPL
 Group: Applications/System
 Source: http://savannah.nongnu.org/download/synaptic/synaptic.pkg/%{version}/%{name}-%{version}.tar.gz
 URL: http://www.nongnu.org/synaptic/
 BuildRoot: %{_tmppath}/%{name}-root
-Requires: apt >= 0.5.4, usermode, gtk2, libglade2
+Requires: apt >= 0.5.4, usermode, gtk2, libglade2,scrollkeeper
 Requires: libstdc++
 BuildRequires: apt-devel >= 0.5.4, rpm-devel >= 4.0, gtk2-devel, libglade2-devel
-BuildRequires: libstdc++-devel, desktop-file-utils, sed
+BuildRequires: libstdc++-devel, desktop-file-utils, sed, docbook-utils
+BuildRequires: scrollkeeper, intltool
 
 %description
 Synaptic (previously known as raptor) is a graphical package management
@@ -89,16 +90,14 @@ rm -rf %{buildroot}
 %{_bindir}/%{name}
 %{_sbindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/control-center-*/capplets/%{name}.desktop
 %{_datadir}/%{name}
 %{_datadir}/gnome/help/synaptic
 %{_datadir}/omf/synaptic/synaptic-C.omf
 %{_mandir}/man8/%{name}.8*
 
 %changelog
-* Tue Nov 11 2003 Sebastian Heinlein <allerlei@renates-welt.de>
+* Tue Nov 17 2003 Sebastian Heinlein <allerlei@renates-welt.de>
 - Update to 0.46
-- Use upstream desktop file to get additional translations
 
 * Tue Aug 12 2003 Matthias Saou <matthias.saou@est.une.marmotte.net>
 - Update to 0.42.

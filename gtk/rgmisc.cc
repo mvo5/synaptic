@@ -179,19 +179,19 @@ const char *utf8(const char *str)
 void RPackageStatus::initColors()
 {
    char *default_status_colors[N_STATUS_COUNT] = {
-       "#83a67f",  // install
-       "#83a67f",  // re-install
-       "#eed680",  // upgrade
-       "#ada7c8",  // downgrade
-       "#c1665a",  // remove
-       "#df421e",  // purge
-       NULL,       // available
-       "#bab5ab",  // available-locked
-       NULL,       // installed-updated
-       NULL,       // installed-outdated
-       "#bab5ab",  // installed-locked 
-       NULL,       // broken
-       NULL        // new
+      "#83a67f",  // install
+      "#83a67f",  // re-install
+      "#eed680",  // upgrade
+      "#ada7c8",  // downgrade
+      "#c1665a",  // remove
+      "#df421e",  // purge
+      NULL,       // available
+      "#bab5ab",  // available-locked
+      NULL,       // installed-updated
+      NULL,       // installed-outdated
+      "#bab5ab",  // installed-locked 
+      NULL,       // broken
+      NULL        // new
    };
 
    gchar *config_string;

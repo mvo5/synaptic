@@ -2117,7 +2117,7 @@ void RGMainWindow::buildInterface()
 
     /* Package name */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes("Package", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Package"), renderer,
 						      "text", NAME_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
@@ -2125,7 +2125,7 @@ void RGMainWindow::buildInterface()
 
     /* Installed Version */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes("Installed Version", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Installed Version"), renderer,
 						      "text", INSTALLED_VERSION_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);
@@ -2133,7 +2133,7 @@ void RGMainWindow::buildInterface()
 
     /* Available Version */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes("Available Version", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Available Version"), renderer,
 
 						      "text", AVAILABLE_VERSION_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
@@ -2142,7 +2142,7 @@ void RGMainWindow::buildInterface()
 
     /* Description */
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes("Description", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Description"), renderer,
 						      "text", DESCR_COLUMN,
  						      "background-gdk", COLOR_COLUMN,
 						       NULL);

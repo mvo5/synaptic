@@ -65,7 +65,7 @@ void RGInstallProgress::updateInterface()
 	if (buf[0] == '\n') {
 	    float val;
 	    if (line[0] != '%') {
-		gtk_label_set_text(GTK_LABEL(_label), line);
+		gtk_label_set_text(GTK_LABEL(_label), utf8(line));
 		gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 0);
 		if (_startCounting) {
 		    _donePackages += 1;

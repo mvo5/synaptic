@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:32+0200\n"
+"POT-Creation-Date: 2004-11-01 18:15+0100\n"
 "PO-Revision-Date: 2004-08-08 12:33+0300\n"
 "Last-Translator: Erçin EKER <erc.caldera@gmx.net>\n"
 "Language-Team: Turkish <debian-l10n-turkish@lists.debian.org>\n"
@@ -399,87 +399,122 @@ msgstr ""
 "ve hiçbir zaman arşive yüklenmemiş, artık kullanılmıyor ya da sources.list "
 "dosyası içeriği bu dosyayı sağlayamıyor.\n"
 
-#: common/rpackage.cc:585
+#: common/rpackage.cc:544
+#, fuzzy, c-format
+msgid "\t%s %s but %s is to be installed"
+msgstr "%s kurulmuş/kurulacak"
+
+#: common/rpackage.cc:548
+#, fuzzy, c-format
+msgid " %s: %s %s but %s is to be installed"
+msgstr "%s kurulmuş/kurulacak"
+
+#: common/rpackage.cc:556
+#, fuzzy, c-format
+msgid "\t%s %s but it is not installable"
+msgstr "paket kurulamaz"
+
+#: common/rpackage.cc:564
+#, fuzzy, c-format
+msgid "\t%s but it is a virtual package"
+msgstr "paket sanal pakettir"
+
+#: common/rpackage.cc:567
+#, fuzzy, c-format
+msgid "%s: %s but it is a virtual package"
+msgstr "paket sanal pakettir"
+
+#: common/rpackage.cc:570
+#, fuzzy, c-format
+msgid "\t%s but it is not going to be installed"
+msgstr "%s kurulmuş/kurulacak"
+
+#: common/rpackage.cc:573
+#, c-format
+msgid "%s: %s but it is not going to be installed"
+msgstr ""
+
+#: common/rpackage.cc:592
 msgid " or"
 msgstr " ya da"
 
-#: common/rpackage.cc:746
+#: common/rpackage.cc:753
 #, c-format
 msgid "%s is/will be installed"
 msgstr "%s kurulmuş/kurulacak"
 
-#: common/rpackage.cc:751
+#: common/rpackage.cc:758
 msgid "package is not installable"
 msgstr "paket kurulamaz"
 
-#: common/rpackage.cc:753
+#: common/rpackage.cc:760
 msgid "package is a virtual package"
 msgstr "paket sanal pakettir"
 
-#: common/rpackage.cc:755
+#: common/rpackage.cc:762
 msgid "package is/will not be installed"
 msgstr "paket kurulmamış/kurulamayacak"
 
-#: common/rpackage.cc:758
+#: common/rpackage.cc:765
 msgid "dependency is satisfied"
 msgstr "bağımlılık sağlanmış"
 
-#: common/rpackage.cc:990
+#: common/rpackage.cc:997
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Ayarlar dosyasında geçersiz kayıt, \"Package\" başlığı yok"
 
-#: common/rpackage.cc:1309
+#: common/rpackage.cc:1365
 msgid "Marked for installation"
 msgstr "Kurulum için işaretlenmiş"
 
-#: common/rpackage.cc:1310
+#: common/rpackage.cc:1366
 msgid "Marked for re-installation"
 msgstr "Yeniden kurulum için işaretlenmiş"
 
-#: common/rpackage.cc:1311
+#: common/rpackage.cc:1367
 msgid "Marked for upgrade"
 msgstr "Yükseltme için işaretlenmiş"
 
-#: common/rpackage.cc:1312
+#: common/rpackage.cc:1368
 msgid "Marked for downgrade"
 msgstr "Alçaltma için işaretlenmiş"
 
-#: common/rpackage.cc:1313
+#: common/rpackage.cc:1369
 msgid "Marked for removal"
 msgstr "Kaldırma için işaretlenmiş"
 
-#: common/rpackage.cc:1314
+#: common/rpackage.cc:1370
 msgid "Marked for complete removal"
 msgstr "Tamamen kaldırılmak için işaretlenmiş"
 
-#: common/rpackage.cc:1315 common/rpackageview.cc:89
-#: gtk/window_filters.glade.h:28
+#: common/rpackage.cc:1371 common/rpackageview.cc:123
+#: gtk/window_filters.glade.h:31
 msgid "Not installed"
 msgstr "Kurulu olmayan"
 
-#: common/rpackage.cc:1316
+#: common/rpackage.cc:1372
 msgid "Not installed (locked)"
 msgstr "Kurulu değil (kilitli)"
 
-#: common/rpackage.cc:1317 common/rpackageview.cc:87
-#: gtk/window_filters.glade.h:20
+#: common/rpackage.cc:1373 common/rpackageview.cc:118
+#: gtk/window_filters.glade.h:23
 msgid "Installed"
 msgstr "Kurulu"
 
-#: common/rpackage.cc:1318 common/rpackageview.cc:103
+#: common/rpackage.cc:1374 common/rpackageview.cc:138
 msgid "Installed (upgradable)"
 msgstr "Kurulu (yükseltilebilir)"
 
-#: common/rpackage.cc:1319
+#: common/rpackage.cc:1375
 msgid "Installed (locked to the current version)"
 msgstr "Kurulu (mevcut sürüme kilitlenmiş)"
 
-#: common/rpackage.cc:1320 common/rpackageview.cc:375
-#: gtk/window_filters.glade.h:6
+#: common/rpackage.cc:1376 common/rpackageview.cc:422
+#: gtk/window_filters.glade.h:9
 msgid "Broken"
 msgstr "Bozuk"
 
-#: common/rpackage.cc:1321
+#: common/rpackage.cc:1377
 msgid "Not installed (new in repository)"
 msgstr "Kurulmamış (depoya yeni girmiş)"
 
@@ -499,20 +534,20 @@ msgstr "Paket listeleri veya \"status\" dosyası işlenemiyor veya açılamıyor
 msgid "Internal Error, non-zero counts"
 msgstr "Dahili Hata, sıfır olmayan sonuç"
 
-#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:920
+#: common/rpackagefilter.cc:45 gtk/rgpreferenceswindow.cc:934
 #: gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "İsim"
 
-#: common/rpackagefilter.cc:46 gtk/rgpreferenceswindow.cc:46
-#: gtk/rgmainwindow.cc:893 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
-#: gtk/window_main.glade.h:19 gtk/window_filters.glade.h:10
+#: common/rpackagefilter.cc:46 gtk/rgpreferenceswindow.cc:48
+#: gtk/rgmainwindow.cc:996 gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
+#: gtk/window_main.glade.h:18 gtk/window_filters.glade.h:13
 #: gtk/rgfiltermanager.h:67 gtk/window_details.glade.h:16
 msgid "Description"
 msgstr "Açıklama"
 
 #: common/rpackagefilter.cc:47 gtk/window_find.glade.h:5
-#: gtk/window_filters.glade.h:25 gtk/rgfiltermanager.h:68
+#: gtk/window_filters.glade.h:28 gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr "Geliştirici"
 
@@ -549,14 +584,14 @@ msgid "ReverseDepends"
 msgstr "TersBağımlılıklar"
 
 #. Reverse Depends
-#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:31
+#: common/rpackagefilter.cc:56 gtk/window_filters.glade.h:35
 #: gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr "Menşei"
 
-#: common/rpackagefilter.cc:61 common/rpackageview.h:114
-#: gtk/rgpreferenceswindow.cc:45 gtk/rgfetchprogress.cc:83
-#: gtk/window_main.glade.h:40 gtk/window_filters.glade.h:49
+#: common/rpackagefilter.cc:61 common/rpackageview.h:126
+#: gtk/rgpreferenceswindow.cc:46 gtk/rgfetchprogress.cc:84
+#: gtk/window_filters.glade.h:53
 msgid "Status"
 msgstr "Durum"
 
@@ -565,8 +600,8 @@ msgstr "Durum"
 msgid "Pattern"
 msgstr "Desen"
 
-#: common/rpackagefilter.cc:63 gtk/window_main.glade.h:38
-#: gtk/window_filters.glade.h:48
+#: common/rpackagefilter.cc:63 gtk/rgpreferenceswindow.cc:46
+#: gtk/rgmainwindow.cc:868 gtk/window_filters.glade.h:52
 msgid "Section"
 msgstr "Bölüm"
 
@@ -578,27 +613,27 @@ msgstr "Öncelik"
 msgid "ReducedView"
 msgstr "BasitGörünüm"
 
-#: common/rpackagefilter.cc:637
+#: common/rpackagefilter.cc:648
 #, c-format
 msgid "Internal Error: Could not open ReducedView file %s"
 msgstr "Dahili Hata: %s BasitGörünüm dosyası açılamıyor"
 
-#: common/rpackagefilter.cc:665
+#: common/rpackagefilter.cc:676
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "BasitGörünüm dosyası içinde hatalı düzenli ifade: '%s'."
 
-#: common/rpackagelister.cc:291 common/rpackagelister.cc:297
-#: common/rpackagelister.cc:311
+#: common/rpackagelister.cc:297 common/rpackagelister.cc:303
+#: common/rpackagelister.cc:317
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "Tampon açılırken dahili hata (%d). Lütfen hatayı bildirin."
 
-#: common/rpackagelister.cc:450
+#: common/rpackagelister.cc:456
 msgid "Unable to correct dependencies"
 msgstr "Bağımlılıklar düzeltilemiyor"
 
-#: common/rpackagelister.cc:452
+#: common/rpackagelister.cc:458
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -606,19 +641,19 @@ msgstr ""
 "Yükseltmeler işaretlenemiyor\n"
 "Sisteminizi hatalara karşı denetleyin."
 
-#: common/rpackagelister.cc:464
+#: common/rpackagelister.cc:470
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr "Dahili Hata, HepsiniYükselt birşeyleri bozdu. Lütfen hatayı bildirin."
 
-#: common/rpackagelister.cc:482
+#: common/rpackagelister.cc:488
 msgid "dist upgrade Failed"
 msgstr "sürüm yükseltme Hata ile sonuçlandı"
 
-#: common/rpackagelister.cc:1122
+#: common/rpackagelister.cc:1185
 msgid "Unable to lock the list directory"
 msgstr "Liste dizini kilitlenemiyor"
 
-#: common/rpackagelister.cc:1144
+#: common/rpackagelister.cc:1207
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -626,8 +661,8 @@ msgstr ""
 "Bazı depoların \"Release\" dosyaları indirilemiyor veya geçerliliği "
 "doğrulanamıyor. Bu depolar göz ardı edilecektir."
 
-#: common/rpackagelister.cc:1211 common/rpackagelister.cc:1217
-#: gtk/rgrepositorywin.cc:301
+#: common/rpackagelister.cc:1274 common/rpackagelister.cc:1280
+#: gtk/rgrepositorywin.cc:320
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "\"sources.list\" dosyasındaki geçersiz kayıtlar göz ardı ediliyor!"
 
@@ -635,7 +670,7 @@ msgstr "\"sources.list\" dosyasındaki geçersiz kayıtlar göz ardı ediliyor!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: common/rpackagelister.cc:1262
+#: common/rpackagelister.cc:1325
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -646,33 +681,33 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: common/rpackagelister.cc:1283
+#: common/rpackagelister.cc:1349
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Bazı paketler sunucu(lar)dan alınamadı.\n"
 
-#: common/rpackagelister.cc:1286
+#: common/rpackagelister.cc:1352
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Devam etmek ve bu paketleri göz ardı etmek istiyor musunuz?"
 
-#: common/rpackagelister.cc:1293
+#: common/rpackagelister.cc:1359
 msgid "Unable to correct missing packages"
 msgstr "Eksik paketler düzeltilemiyor."
 
-#: common/rpackagelister.cc:1356
+#: common/rpackagelister.cc:1422
 msgid "Unable to lock the download directory"
 msgstr "İndirme dizini kilitlenemiyor"
 
-#: common/rpackagelister.cc:1434
+#: common/rpackagelister.cc:1500
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Seçim dosyasındaki %u satırı çok uzun."
 
-#: common/rpackagelister.cc:1448 common/rpackagelister.cc:1452
+#: common/rpackagelister.cc:1514 common/rpackagelister.cc:1518
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Seçim dosyasındaki %u satırı bozuk"
 
-#: common/rpackagelister.cc:1464
+#: common/rpackagelister.cc:1530
 msgid "Setting markings..."
 msgstr "Seçimler yapılıyor..."
 
@@ -684,59 +719,70 @@ msgstr "Dahili Hata: bzip2 çalıştırılamıyor. Lütfen hatayı bildirin."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 başarısız oldu, disk dolu olabilir."
 
-#: common/rpackageview.h:89
+#: common/rpackageview.h:96
 msgid "Sections"
 msgstr "Bölümler"
 
-#: common/rpackageview.h:99
+#: common/rpackageview.h:106
 msgid "Alphabetic"
 msgstr "Alfabetik"
 
-#: common/rpackageview.h:137
+#: common/rpackageview.h:149
 msgid "Search History"
 msgstr "Arama Geçmişi"
 
-#: common/rpackageview.h:180
-msgid "Custom Filters"
+#: common/rpackageview.h:196
+#, fuzzy
+msgid "Custom"
 msgstr "Özel Süzgeçler"
 
-#: common/rpackageview.cc:94 gtk/window_filters.glade.h:26
+#: common/rpackageview.cc:116
+#, fuzzy
+msgid "Installed (unsupported)"
+msgstr "Kurulu (kilitlenmiş):"
+
+#: common/rpackageview.cc:121
+#, fuzzy
+msgid "Not installed (unsupported)"
+msgstr "Kurulu değil (kilitli)"
+
+#: common/rpackageview.cc:129 gtk/window_filters.glade.h:29
 msgid "New in repository"
 msgstr "Depoda yeni olanlar"
 
-#: common/rpackageview.cc:96 gtk/window_filters.glade.h:41
+#: common/rpackageview.cc:131 gtk/window_filters.glade.h:45
 msgid "Pinned"
 msgstr "Sabitlenmiş (Pinned)"
 
-#: common/rpackageview.cc:100
+#: common/rpackageview.cc:135
 msgid "Installed (local or obsolete)"
 msgstr "Kurulu (yerel ya da eski)"
 
-#: common/rpackageview.cc:106
+#: common/rpackageview.cc:141
 msgid "Not installed (residual config)"
 msgstr "Kurulu olmayan (yarım kalmış yapılandırma)"
 
-#: common/rpackageview.cc:353
+#: common/rpackageview.cc:400
 msgid "Search Filter"
 msgstr "Arama Süzgeci"
 
-#: common/rpackageview.cc:361
+#: common/rpackageview.cc:408
 msgid "Tasks"
 msgstr "Görevler"
 
-#: common/rpackageview.cc:367
+#: common/rpackageview.cc:414
 msgid "Reduced View"
 msgstr "Basit Görünüm"
 
-#: common/rpackageview.cc:384 gtk/gsynaptic.cc:208 gtk/rgsummarywindow.cc:299
+#: common/rpackageview.cc:431 gtk/gsynaptic.cc:282 gtk/rgsummarywindow.cc:299
 msgid "Marked Changes"
 msgstr "İşaretlenmiş Değişiklikler"
 
-#: common/rpackageview.cc:393
+#: common/rpackageview.cc:440
 msgid "Pkg with Debconf"
 msgstr "Debconf destekli paket"
 
-#: common/rpackageview.cc:400 gtk/window_filters.glade.h:53
+#: common/rpackageview.cc:447 gtk/window_filters.glade.h:57
 msgid "Upgradable (upstream)"
 msgstr "Yükseltilebilir (üst sürüm)"
 
@@ -783,7 +829,7 @@ msgstr ""
 "<b>Not:</b> Yükseltmeler sadece işaretlenecektir. Hâlâ değişiklikleri "
 "uygulamanız gerekecek."
 
-#: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:29
+#: gtk/dialog_upgrade.glade.h:8 gtk/window_preferences.glade.h:30
 msgid "Default Upgrade"
 msgstr "Öntanımlı Yükseltme"
 
@@ -791,7 +837,7 @@ msgstr "Öntanımlı Yükseltme"
 msgid "Remember the answer for further upgrades"
 msgstr "Cevabı sonraki yükseltmelerde hatırla"
 
-#: gtk/dialog_upgrade.glade.h:10 gtk/window_preferences.glade.h:66
+#: gtk/dialog_upgrade.glade.h:10 gtk/window_preferences.glade.h:69
 msgid "Smart Upgrade"
 msgstr "Akıllı Yükseltme"
 
@@ -823,47 +869,47 @@ msgstr ""
 "<i>synaptic-devel@nongnu.org</i> \n"
 "\"locale\" komutunun çıktısını postanıza eklemeyi unutmayın."
 
-#: gtk/gsynaptic.cc:56
+#: gtk/gsynaptic.cc:65
 msgid "Usage: synaptic [options]\n"
 msgstr "Kullanım: synaptic [seçenekler]\n"
 
-#: gtk/gsynaptic.cc:57
+#: gtk/gsynaptic.cc:66
 msgid "-h   This help text\n"
 msgstr "-h   Bu yardım metni\n"
 
-#: gtk/gsynaptic.cc:58
+#: gtk/gsynaptic.cc:67
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Depo görünümünde aç\n"
 
-#: gtk/gsynaptic.cc:59
+#: gtk/gsynaptic.cc:68
 msgid "-f=? Give a alternative filter file\n"
 msgstr "-f=? Alternatif süzgeç dosyası ver\n"
 
-#: gtk/gsynaptic.cc:60
+#: gtk/gsynaptic.cc:69
 msgid "-i=? Start with the initialFilter with the number given\n"
 msgstr "-i=? Verilen rakama karşı düşen başlangıçSüzgeci ile başla\n"
 
-#: gtk/gsynaptic.cc:61
+#: gtk/gsynaptic.cc:70
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Bir yapılandırma seçeneğini ayarla, ör. -o dir::cache=/tmp\n"
 
-#: gtk/gsynaptic.cc:62
+#: gtk/gsynaptic.cc:71
 msgid "--upgrade-mode  Call Refresh, Upgrade and display changes\n"
 msgstr "--upgrade-mode Tazeleme, Yükseltme yap ve değişiklikleri göster\n"
 
-#: gtk/gsynaptic.cc:63
+#: gtk/gsynaptic.cc:72
 msgid "--non-interactive Never prompt for user input\n"
 msgstr "--non-interactive Asla kullanıcı girdisi isteme\n"
 
-#: gtk/gsynaptic.cc:64
+#: gtk/gsynaptic.cc:73
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Görev penceresini aç\n"
 
-#: gtk/gsynaptic.cc:139
+#: gtk/gsynaptic.cc:210
 msgid "You must run this program as the root user."
 msgstr "Bu programı root kullanıcısı olarak çalıştırmalısınız."
 
-#: gtk/gsynaptic.cc:177
+#: gtk/gsynaptic.cc:248
 msgid "Synaptic Package Manager "
 msgstr "Synaptic Paket Yöneticisi"
 
@@ -887,88 +933,110 @@ msgstr "Katkı Sağlayanlar"
 msgid "About Synaptic"
 msgstr "Synaptic Hakkında"
 
-#: gtk/rgchangeswindow.cc:69
+#: gtk/rgchangeswindow.cc:52
 msgid "Package changes"
 msgstr "Paket değişiklikleri"
 
-#: gtk/rgchangeswindow.cc:105 gtk/rgsummarywindow.cc:109
+#: gtk/rgchangeswindow.cc:76 gtk/rgsummarywindow.cc:109
 msgid "To be removed"
 msgstr "Kaldırılacak"
 
-#: gtk/rgchangeswindow.cc:118
+#: gtk/rgchangeswindow.cc:89
 msgid "To be downgraded"
 msgstr "Alçaltılacak"
 
-#: gtk/rgchangeswindow.cc:131 gtk/rgsummarywindow.cc:121
+#: gtk/rgchangeswindow.cc:102 gtk/rgsummarywindow.cc:121
 msgid "To be upgraded"
 msgstr "Yükseltilecek"
 
-#: gtk/rgchangeswindow.cc:143 gtk/rgsummarywindow.cc:133
+#: gtk/rgchangeswindow.cc:114 gtk/rgsummarywindow.cc:133
 msgid "To be installed"
 msgstr "Kurulacak"
 
-#: gtk/rgchangeswindow.cc:155 gtk/rgsummarywindow.cc:145
+#: gtk/rgchangeswindow.cc:126 gtk/rgsummarywindow.cc:145
 msgid "To be re-installed"
 msgstr "Yeniden Kurulacak"
 
-#: gtk/rgchangeswindow.cc:166
+#: gtk/rgchangeswindow.cc:137
 msgid "To be kept"
 msgstr "Değişmeyecek"
 
-#: gtk/rgpreferenceswindow.cc:45 gtk/window_filters.glade.h:33
+#: gtk/rgpreferenceswindow.cc:46
+msgid "Supported"
+msgstr ""
+
+#: gtk/rgpreferenceswindow.cc:46 gtk/window_filters.glade.h:37
 msgid "Package Name"
 msgstr "Paket İsmi"
 
-#: gtk/rgpreferenceswindow.cc:45 gtk/rgmainwindow.cc:823
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:889
+#, fuzzy
+msgid "Component"
+msgstr "_İçerik"
+
+#: gtk/rgpreferenceswindow.cc:47 gtk/rgmainwindow.cc:911
 msgid "Installed Version"
 msgstr "Kurulu Sürüm"
 
-#: gtk/rgpreferenceswindow.cc:46
+#: gtk/rgpreferenceswindow.cc:47
 msgid "Available Version"
 msgstr "Mevcut Sürüm"
 
-#: gtk/rgpreferenceswindow.cc:46
+#: gtk/rgpreferenceswindow.cc:48
 msgid "Installed Size"
 msgstr "Kurulum Boyutu"
 
-#: gtk/rgpreferenceswindow.cc:321 gtk/rgmainwindow.cc:1602
+#: gtk/rgpreferenceswindow.cc:48
+#, fuzzy
+msgid "Download Size"
+msgstr "Dosyalar İndiriliyor"
+
+#: gtk/rgpreferenceswindow.cc:329 gtk/rgmainwindow.cc:1697
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "Ayarlar kaydedilirken bir hata oluştu."
 
-#: gtk/rgpreferenceswindow.cc:365
+#: gtk/rgpreferenceswindow.cc:373
 msgid "Choose font"
 msgstr "Yazıtipi seç"
 
-#: gtk/rgpreferenceswindow.cc:565
+#: gtk/rgpreferenceswindow.cc:578
 msgid "ignore"
 msgstr "göz ardı et"
 
-#: gtk/rgpreferenceswindow.cc:777
+#: gtk/rgpreferenceswindow.cc:791
 msgid "Color selection"
 msgstr "Renk seçimi"
 
-#: gtk/rgpreferenceswindow.cc:914
+#: gtk/rgpreferenceswindow.cc:928
 msgid "Visible"
 msgstr "Görünür"
 
-#: gtk/rgpreferenceswindow.cc:990 gtk/window_preferences.glade.h:62
+#: gtk/rgpreferenceswindow.cc:1002 gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Tercihler"
 
-#: gtk/rgfetchprogress.cc:64
+#: gtk/rgfetchprogress.cc:66
 msgid "Downloading Files"
 msgstr "Dosyalar İndiriliyor"
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:872
+#: gtk/rgfetchprogress.cc:96 gtk/rgmainwindow.cc:953
 msgid "Size"
 msgstr "Boyut"
 
-#: gtk/rgfetchprogress.cc:102 gtk/rgrepositorywin.cc:156
+#: gtk/rgfetchprogress.cc:103 gtk/rgrepositorywin.cc:175
 msgid "URI"
 msgstr "URI"
 
 #: gtk/rgfetchprogress.cc:128
+#, c-format
+msgid ""
+"<big><b>%s</b></big>\n"
+"\n"
+"%s"
+msgstr ""
+
+#: gtk/rgfetchprogress.cc:141
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -978,33 +1046,33 @@ msgstr ""
 "Lütfen şu etikete sahip diski %2$s sürücüsüne yerleştirin:\n"
 "%1$s"
 
-#: gtk/rgfetchprogress.cc:230
+#: gtk/rgfetchprogress.cc:247
 #, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
 msgstr "%2$li dosyadan %1$li tanesi %3$s/s hızda aktarıldı - %4$s kaldı"
 
-#: gtk/rgfetchprogress.cc:235
+#: gtk/rgfetchprogress.cc:252
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "%2$li dosyadan %1$li dosya indiriliyor"
 
-#: gtk/rgfetchprogress.cc:300
+#: gtk/rgfetchprogress.cc:317
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: gtk/rgfetchprogress.cc:303
+#: gtk/rgfetchprogress.cc:320
 msgid "Done"
 msgstr "Tamamlandı"
 
-#: gtk/rgfetchprogress.cc:306
+#: gtk/rgfetchprogress.cc:323
 msgid "Hit"
 msgstr "Başarılı"
 
-#: gtk/rgfetchprogress.cc:309
+#: gtk/rgfetchprogress.cc:326
 msgid "Failed"
 msgstr "Başarısız"
 
-#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:14
+#: gtk/rgfiltermanager.cc:46 gtk/window_filters.glade.h:17
 msgid "Filters"
 msgstr "Süzgeçler"
 
@@ -1016,7 +1084,7 @@ msgstr "Alan"
 msgid "Operator"
 msgstr "Operatör"
 
-#: gtk/rgfiltermanager.cc:749
+#: gtk/rgfiltermanager.cc:760
 #, c-format
 msgid "New Filter %i"
 msgstr "Yeni Süzgeç %i"
@@ -1055,7 +1123,7 @@ msgstr ""
 "APT sistem raporları:\n"
 "%s"
 
-#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:182
+#: gtk/rginstallprogress.cc:284 gtk/rgterminstallprogress.cc:183
 msgid "Applying Changes"
 msgstr "Değişiklikler Uygulanıyor"
 
@@ -1081,21 +1149,21 @@ msgstr "Kritik"
 msgid "Security"
 msgstr "Güvenlik"
 
-#: gtk/rgmainwindow.cc:164
+#: gtk/rgmainwindow.cc:167
 msgid "All"
 msgstr "Hepsi"
 
-#: gtk/rgmainwindow.cc:358 gtk/window_main.glade.h:30
+#: gtk/rgmainwindow.cc:361 gtk/window_main.glade.h:29
 #: gtk/window_details.glade.h:19
 msgid "No package is selected.\n"
 msgstr "Herhangi bir paket seçili değil.\n"
 
-#: gtk/rgmainwindow.cc:454
+#: gtk/rgmainwindow.cc:460
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr "%s paketinin kurulmaya zorlanacak sürümünü seçin"
 
-#: gtk/rgmainwindow.cc:456
+#: gtk/rgmainwindow.cc:462
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
@@ -1106,76 +1174,90 @@ msgstr ""
 "sorunlar çıkabilir."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: gtk/rgmainwindow.cc:778
+#: gtk/rgmainwindow.cc:806
 msgid "S"
 msgstr "D"
 
-#: gtk/rgmainwindow.cc:797
+#. TRANSLATORS: Column header for the column "Supported" in the package list
+#: gtk/rgmainwindow.cc:822 gtk/window_preferences.glade.h:1
+#: gtk/window_summary.glade.h:1 gtk/window_filters.glade.h:1
+msgid " "
+msgstr " "
+
+#: gtk/rgmainwindow.cc:842
 msgid "Package"
 msgstr "Paket"
 
-#: gtk/rgmainwindow.cc:844
+#: gtk/rgmainwindow.cc:932
 msgid "Latest Version"
 msgstr "Son Sürüm"
 
-#: gtk/rgmainwindow.cc:1153
-msgid "Refresh the list of known packages"
-msgstr "Bilinen paketler listesini tazele"
+#: gtk/rgmainwindow.cc:974
+#, fuzzy
+msgid "Download"
+msgstr "İndir:"
 
-#: gtk/rgmainwindow.cc:1157
+#: gtk/rgmainwindow.cc:1245
+#, fuzzy
+msgid ""
+"Reload the package information to become informed about new, removed or "
+"upgraded  software packages."
+msgstr "Paketleri kur, kaldır ya da yükselt"
+
+#: gtk/rgmainwindow.cc:1251
 msgid "Mark all possible upgrades"
 msgstr "Mümkün olan tüm paket yükseltmelerini işaretle"
 
-#: gtk/rgmainwindow.cc:1161 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1255 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "İşaretlenmiş tüm değişiklikleri uygula"
 
-#: gtk/rgmainwindow.cc:1339
+#: gtk/rgmainwindow.cc:1434
 msgid "Unmark"
 msgstr "İşaretleme"
 
-#: gtk/rgmainwindow.cc:1347
+#: gtk/rgmainwindow.cc:1442
 msgid "Mark for Installation"
 msgstr "Kurulum için İşaretle"
 
-#: gtk/rgmainwindow.cc:1355
+#: gtk/rgmainwindow.cc:1450
 msgid "Mark for Reinstallation"
 msgstr "Yeniden Kurulum için İşaretle"
 
-#: gtk/rgmainwindow.cc:1364
+#: gtk/rgmainwindow.cc:1459
 msgid "Mark for Upgrade"
 msgstr "Yükseltme için İşaretle"
 
-#: gtk/rgmainwindow.cc:1372
+#: gtk/rgmainwindow.cc:1467
 msgid "Mark for Removal"
 msgstr "Kaldırma için İşaretle"
 
-#: gtk/rgmainwindow.cc:1381
+#: gtk/rgmainwindow.cc:1476
 msgid "Mark for Complete Removal"
 msgstr "Tamamen Kaldırma için İşaretle"
 
-#: gtk/rgmainwindow.cc:1393
+#: gtk/rgmainwindow.cc:1488
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Gereksiz Bağımlılıklarıyla Birlikte Kaldır"
 
-#: gtk/rgmainwindow.cc:1405
+#: gtk/rgmainwindow.cc:1500
 msgid "Hold Current Version"
 msgstr "Mevcut Sürümü Tut"
 
-#: gtk/rgmainwindow.cc:1414 gtk/window_main.glade.h:32
-#: gtk/window_filters.glade.h:42
+#: gtk/rgmainwindow.cc:1509 gtk/window_main.glade.h:31
+#: gtk/window_filters.glade.h:46
 msgid "Properties"
 msgstr "Özellikler"
 
-#: gtk/rgmainwindow.cc:1426
+#: gtk/rgmainwindow.cc:1521
 msgid "Mark Recommended for Installation"
 msgstr "Önerilenleri Kurmak için İşaretle"
 
-#: gtk/rgmainwindow.cc:1430
+#: gtk/rgmainwindow.cc:1525
 msgid "Mark Suggested for Installation"
 msgstr "Teklif Edilenleri Kurmak için İşaretle"
 
-#: gtk/rgmainwindow.cc:1494
+#: gtk/rgmainwindow.cc:1614
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1183,7 +1265,7 @@ msgstr ""
 "Bu paketin silinmesi sisteminizi kullanılamaz hale sokabilir.\n"
 "Bunu yapmak istediğinizden emin misiniz?"
 
-#: gtk/rgmainwindow.cc:1530
+#: gtk/rgmainwindow.cc:1650
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1192,7 +1274,7 @@ msgstr ""
 "%i paket listelendi, %i kuruldu, %i yarım kaldı. %i kurulacak/yükseltilecek, "
 "%i kaldırılacak; %s disk alanı boşalacak"
 
-#: gtk/rgmainwindow.cc:1536
+#: gtk/rgmainwindow.cc:1656
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1201,7 +1283,7 @@ msgstr ""
 "%i paket listelendi, %i kuruldu, %i yarım kaldı. %i kurulacak/yükseltilecek, "
 "%i kaldırılacak; %s disk alanı boşalacak"
 
-#: gtk/rgmainwindow.cc:1542
+#: gtk/rgmainwindow.cc:1662
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1210,7 +1292,7 @@ msgstr ""
 "%i paket listelendi, %i kuruldu, %i yarım kaldı. %i kurulacak/yükseltilecek, "
 "%i kaldırılacak"
 
-#: gtk/rgmainwindow.cc:1619
+#: gtk/rgmainwindow.cc:1714
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1227,50 +1309,61 @@ msgstr[1] ""
 "Sisteminizde %i bozuk paket bulunuyor!\n"
 "\"Bozuk\" süzgecini kullanarak bunları görebilirsiniz."
 
+#: gtk/rgmainwindow.cc:1886
+#, fuzzy
+msgid "Downloading changelog"
+msgstr "Değişiklik Güncesini _İndir"
+
+#: gtk/rgmainwindow.cc:1887
+msgid ""
+"The changelog contains information about the changes and closed bugs in each "
+"version of the package."
+msgstr ""
+
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: gtk/rgmainwindow.cc:1801
+#: gtk/rgmainwindow.cc:1900
 #, c-format
 msgid "%s Changelog"
 msgstr "%s Changelog"
 
-#: gtk/rgmainwindow.cc:1884
+#: gtk/rgmainwindow.cc:1983
 msgid "Do you want to add another CD-ROM?"
 msgstr "Bir CD-ROM daha eklemek ister misiniz?"
 
-#: gtk/rgmainwindow.cc:1907 gtk/rgmainwindow.cc:2502 gtk/rgmainwindow.cc:2581
-#: gtk/rgmainwindow.cc:2741
+#: gtk/rgmainwindow.cc:2008 gtk/rgmainwindow.cc:2621 gtk/rgmainwindow.cc:2703
+#: gtk/rgmainwindow.cc:2863
 #, c-format
 msgid "Can't read %s"
 msgstr "%s okunamıyor"
 
-#: gtk/rgmainwindow.cc:1937
+#: gtk/rgmainwindow.cc:2038
 msgid "Open changes"
 msgstr "Değişiklikleri aç"
 
-#: gtk/rgmainwindow.cc:1968 gtk/rgmainwindow.cc:2031 gtk/rgmainwindow.cc:2420
-#: gtk/rgmainwindow.cc:2554 gtk/rgmainwindow.cc:2718
+#: gtk/rgmainwindow.cc:2069 gtk/rgmainwindow.cc:2132 gtk/rgmainwindow.cc:2539
+#: gtk/rgmainwindow.cc:2675 gtk/rgmainwindow.cc:2840
 #, c-format
 msgid "Can't write %s"
 msgstr "%s yazılamıyor"
 
-#: gtk/rgmainwindow.cc:1987
+#: gtk/rgmainwindow.cc:2088
 msgid "Save changes"
 msgstr "Değişiklikleri kaydet"
 
-#: gtk/rgmainwindow.cc:2004
+#: gtk/rgmainwindow.cc:2105
 msgid "Save full state, not only changes"
 msgstr "Sadece değişikliği değil, tam durumu kaydet"
 
-#: gtk/rgmainwindow.cc:2129
+#: gtk/rgmainwindow.cc:2231
 #, c-format
 msgid "Found %i packages"
 msgstr "%i paket bulundu"
 
-#: gtk/rgmainwindow.cc:2159
+#: gtk/rgmainwindow.cc:2261
 msgid "Starting help viewer..."
 msgstr "Yardım görüntüleyicisi başlatılıyor..."
 
-#: gtk/rgmainwindow.cc:2176
+#: gtk/rgmainwindow.cc:2281
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1289,7 +1382,7 @@ msgstr ""
 "Başka bir seçenek ise komut satırından 'man synaptic' komutuyla veya "
 "'synaptic/html' dizininden kılavuza ulaşabilirsiniz."
 
-#: gtk/rgmainwindow.cc:2322
+#: gtk/rgmainwindow.cc:2435
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1297,16 +1390,16 @@ msgstr ""
 "Yapılandırma aracı başlatılamıyor!\n"
 "Gerekli olan 'libgnome2-perl' paketini kurmanız gerekiyor."
 
-#: gtk/rgmainwindow.cc:2328
+#: gtk/rgmainwindow.cc:2441
 msgid "Starting package configuration tool..."
 msgstr "Paket yapılandırma aracı başlatılıyor..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2343
+#: gtk/rgmainwindow.cc:2456
 msgid "Starting package documentation viewer..."
 msgstr "Paket yardım görüntüleyicisi başlatılıyor..."
 
-#: gtk/rgmainwindow.cc:2355
+#: gtk/rgmainwindow.cc:2468
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1314,7 +1407,7 @@ msgstr ""
 "Bir paketin belgelerini görüntülemek için \"dwww\" paketinin kurulu olması "
 "gerekmektedir"
 
-#: gtk/rgmainwindow.cc:2387
+#: gtk/rgmainwindow.cc:2505
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1322,35 +1415,50 @@ msgstr ""
 "Değişiklikler uygulanamıyor!\n"
 "Öncelikle yarım kalan paketleri düzeltin."
 
-#: gtk/rgmainwindow.cc:2406
+#: gtk/rgmainwindow.cc:2524
 msgid "Applying marked changes. This may take a while..."
 msgstr "İşaretlenen değişiklikler uygulanıyor. Bu işlem zaman alabilir..."
 
-#: gtk/rgmainwindow.cc:2410
-msgid "Downloading Package Files"
+#: gtk/rgmainwindow.cc:2528
+#, fuzzy
+msgid "Downloading package files"
 msgstr "Paket Dosyalarını İndir"
 
-#: gtk/rgmainwindow.cc:2485
+#: gtk/rgmainwindow.cc:2529
+#, fuzzy
+msgid "The package files will be cached locally for installation."
+msgstr "Paket dosyaları sadece indirilecek, kurulumu yapılmayacak"
+
+#: gtk/rgmainwindow.cc:2604
 msgid "Do you want to quit Synaptic?"
 msgstr "Synaptic'ten çıkmak istiyor musunuz?"
 
-#: gtk/rgmainwindow.cc:2541
-msgid "Downloading Index Files"
-msgstr "İçerik Dosyaları İndiriliyor"
+#: gtk/rgmainwindow.cc:2660
+#, fuzzy
+msgid "Downloading package information"
+msgstr "Paket dosyalarını sadece indir"
 
-#: gtk/rgmainwindow.cc:2543
-msgid "Refreshing package list..."
-msgstr "Paket listesi tazeleniyor..."
+#: gtk/rgmainwindow.cc:2661
+#, fuzzy
+msgid ""
+"The repositories will be checked for new, removed or upgraded software "
+"packages."
+msgstr "Paketleri kur, kaldır ya da yükselt"
 
-#: gtk/rgmainwindow.cc:2606
+#: gtk/rgmainwindow.cc:2664
+#, fuzzy
+msgid "Reloading package information..."
+msgstr "Paket yapılandırma aracı başlatılıyor..."
+
+#: gtk/rgmainwindow.cc:2728
 msgid "Failed to resolve dependency problems!"
 msgstr "Bağımlılık problemi çözümlemesi başarısız!"
 
-#: gtk/rgmainwindow.cc:2608
+#: gtk/rgmainwindow.cc:2730
 msgid "Successfully fixed dependency problems"
 msgstr "Bağımlılık problemi çözümlemesi başarılı"
 
-#: gtk/rgmainwindow.cc:2624
+#: gtk/rgmainwindow.cc:2746
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1358,61 +1466,68 @@ msgstr ""
 "Sistem yükseltilemiyor!\n"
 "Öncelikle yarım kalan paketleri düzeltin."
 
-#: gtk/rgmainwindow.cc:2665
+#: gtk/rgmainwindow.cc:2787
 msgid "Marking all available upgrades..."
 msgstr "Mümkün olan tüm yükseltmeler işaretleniyor..."
 
-#: gtk/rgmainwindow.cc:2677
+#: gtk/rgmainwindow.cc:2799
 msgid "Successfully marked available upgrades"
 msgstr "Mevcut yükseltmeler başarıyla işaretlendi"
 
-#: gtk/rgmainwindow.cc:2679
+#: gtk/rgmainwindow.cc:2801
 msgid "Failed to mark all available upgrades!"
 msgstr "Mümkün olan tüm yükseltmeler işaretlenirken hata oluştu!"
 
-#: gtk/rgrepositorywin.cc:100 gtk/window_repositories.glade.h:4
+#: gtk/rgrepositorywin.cc:88
+msgid ""
+"You are adding the \"universe\" component.\n"
+"\n"
+" Packages in this component are not supported. Are you sure?"
+msgstr ""
+
+#: gtk/rgrepositorywin.cc:118 gtk/window_repositories.glade.h:4
 msgid "Repositories"
 msgstr "Depolar"
 
-#: gtk/rgrepositorywin.cc:123
+#: gtk/rgrepositorywin.cc:142
 msgid "Enabled"
 msgstr "Etkin"
 
-#: gtk/rgrepositorywin.cc:133
+#: gtk/rgrepositorywin.cc:152
 msgid "Type"
 msgstr "Tip"
 
-#: gtk/rgrepositorywin.cc:143 gtk/rgvendorswindow.cc:62
+#: gtk/rgrepositorywin.cc:162 gtk/rgvendorswindow.cc:62
 #: gtk/rgvendorswindow.cc:80
 msgid "Vendor"
 msgstr "Sağlayıcı"
 
-#: gtk/rgrepositorywin.cc:166
+#: gtk/rgrepositorywin.cc:185
 msgid "Distribution"
 msgstr "Dağıtım"
 
-#: gtk/rgrepositorywin.cc:177
+#: gtk/rgrepositorywin.cc:196
 msgid "Section(s)"
 msgstr "Bölüm(ler)"
 
-#: gtk/rgrepositorywin.cc:218
+#: gtk/rgrepositorywin.cc:237
 msgid "Binary (deb)"
 msgstr "İkili (deb)"
 
-#: gtk/rgrepositorywin.cc:223
+#: gtk/rgrepositorywin.cc:242
 msgid "Source (deb-src)"
 msgstr "Kaynak (deb-src)"
 
-#: gtk/rgrepositorywin.cc:232 gtk/rgrepositorywin.cc:354
+#: gtk/rgrepositorywin.cc:251 gtk/rgrepositorywin.cc:373
 #: gtk/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr "(imzasız)"
 
-#: gtk/rgrepositorywin.cc:308
+#: gtk/rgrepositorywin.cc:327
 msgid "Cannot read vendors.list file"
 msgstr "\"vendors.list\" dosyası okunamıyor"
 
-#: gtk/rgrepositorywin.cc:473
+#: gtk/rgrepositorywin.cc:492
 msgid "Unknown source type"
 msgstr "Bilinmeyen kaynak tipi"
 
@@ -1425,8 +1540,9 @@ msgid "To be DOWNGRADED"
 msgstr "ESKİ sürümü kurulacak"
 
 #: gtk/rgsummarywindow.cc:160
-msgid "To be kept back"
-msgstr "Değişmeyecek"
+#, fuzzy
+msgid "To be not upgraded"
+msgstr "Yükseltilecek"
 
 #: gtk/rgsummarywindow.cc:196
 #, c-format
@@ -1579,9 +1695,9 @@ msgstr "Bul"
 msgid "Description %s"
 msgstr "%s Açıklaması"
 
-#: gtk/window_main.glade.h:1 gtk/window_fetch.glade.h:1
-#: gtk/window_preferences.glade.h:2 gtk/window_summary.glade.h:2
-#: gtk/window_filters.glade.h:1 gtk/window_details.glade.h:1
+#: gtk/window_main.glade.h:1 gtk/window_preferences.glade.h:2
+#: gtk/window_summary.glade.h:2 gtk/window_filters.glade.h:2
+#: gtk/window_details.glade.h:1
 msgid "    "
 msgstr "    "
 
@@ -1630,87 +1746,89 @@ msgid "A_pply Marked Changes"
 msgstr "İşaretlenen Değişiklikleri U_ygula"
 
 #: gtk/window_main.glade.h:12
-msgid "Alphabet"
-msgstr "Alfabe"
-
-#: gtk/window_main.glade.h:13
 msgid "Apply"
 msgstr "Uygula"
 
-#: gtk/window_main.glade.h:14 gtk/window_details.glade.h:11
+#: gtk/window_main.glade.h:13 gtk/window_details.glade.h:11
 msgid "Available versions:"
 msgstr "Mevcut Sürümler:"
 
-#: gtk/window_main.glade.h:15 gtk/window_details.glade.h:12
+#: gtk/window_main.glade.h:14 gtk/window_details.glade.h:12
 msgid "Common"
 msgstr "Genel"
 
-#: gtk/window_main.glade.h:16
+#: gtk/window_main.glade.h:15
 msgid "Dependants"
 msgstr "Bağımlılıklar"
 
-#: gtk/window_main.glade.h:17 gtk/window_find.glade.h:2
-#: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:70
+#: gtk/window_main.glade.h:16 gtk/window_find.glade.h:2
+#: gtk/window_filters.glade.h:11 gtk/rgfiltermanager.h:70
 #: gtk/window_details.glade.h:13
 msgid "Dependencies"
 msgstr "Bağımlılıklar"
 
-#: gtk/window_main.glade.h:18 gtk/window_details.glade.h:14
+#: gtk/window_main.glade.h:17 gtk/window_details.glade.h:14
 msgid "Dependencies of the Latest Version"
 msgstr "Son Sürüm için Bağımlılıklar"
 
-#: gtk/window_main.glade.h:20 gtk/window_details.glade.h:17
+#: gtk/window_main.glade.h:19 gtk/window_details.glade.h:17
 msgid "Download:"
 msgstr "İndir:"
 
-#: gtk/window_main.glade.h:21
+#: gtk/window_main.glade.h:20
 msgid "Icon _Legend"
 msgstr "Simge _Açıklamaları"
 
-#: gtk/window_main.glade.h:22 gtk/window_details.glade.h:18
+#: gtk/window_main.glade.h:21 gtk/window_details.glade.h:18
 msgid "Installed Files"
 msgstr "Kurulu Dosyalar"
 
-#: gtk/window_main.glade.h:23
+#: gtk/window_main.glade.h:22
 msgid "Mark All Upgrades"
 msgstr "Tüm Yükseltmeleri İşaretle"
 
-#: gtk/window_main.glade.h:24
+#: gtk/window_main.glade.h:23
 msgid "Mark Packages by _Task..."
 msgstr "Paketleri _Göreve göre seç..."
 
-#: gtk/window_main.glade.h:25
+#: gtk/window_main.glade.h:24
 msgid "Mark for Co_mplete Removal"
 msgstr "_Tamamen Kaldırmak için İşaretle"
 
-#: gtk/window_main.glade.h:26
+#: gtk/window_main.glade.h:25
 msgid "Mark for R_einstallation"
 msgstr "_Yeniden Kurulum için İşaretle"
 
-#: gtk/window_main.glade.h:27
+#: gtk/window_main.glade.h:26
 msgid "Mark for _Installation"
 msgstr "K_urulum için İşaretle"
 
-#: gtk/window_main.glade.h:28
+#: gtk/window_main.glade.h:27
 msgid "Mark for _Removal"
 msgstr "_Kaldırmak için İşaretle"
 
-#: gtk/window_main.glade.h:29
+#: gtk/window_main.glade.h:28
 msgid "Mark for _Upgrade"
 msgstr "Yükse_ltme için İşaretle"
 
-#: gtk/window_main.glade.h:33 gtk/window_find.glade.h:7
-#: gtk/window_filters.glade.h:43 gtk/window_details.glade.h:21
+#: gtk/window_main.glade.h:32 gtk/window_find.glade.h:7
+#: gtk/window_filters.glade.h:47 gtk/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "Sağlanan Paketler"
 
-#: gtk/window_main.glade.h:34
-msgid "Release"
-msgstr "Sürüm"
-
-#: gtk/window_main.glade.h:35
+#: gtk/window_main.glade.h:33
 msgid "Reload"
 msgstr "Tazele"
+
+#: gtk/window_main.glade.h:34
+#, fuzzy
+msgid "S_earch"
+msgstr "Ara"
+
+#: gtk/window_main.glade.h:35
+#, fuzzy
+msgid "S_tatus"
+msgstr "Durum"
 
 #: gtk/window_main.glade.h:36
 msgid "Save Markings _As..."
@@ -1720,141 +1838,151 @@ msgstr "Seçimi _Farklı Kaydet..."
 msgid "Search"
 msgstr "Ara"
 
-#: gtk/window_main.glade.h:39 gtk/window_details.glade.h:22
+#: gtk/window_main.glade.h:38 gtk/window_details.glade.h:22
 msgid "Size:"
 msgstr "Boyut:"
 
-#: gtk/window_main.glade.h:41
+#: gtk/window_main.glade.h:39
 msgid "Synaptic"
 msgstr "Synaptic"
 
-#: gtk/window_main.glade.h:42
+#: gtk/window_main.glade.h:40
 msgid "Text Be_side Icons"
 msgstr "Metin Simge _Yanında"
 
-#: gtk/window_main.glade.h:43
+#: gtk/window_main.glade.h:41
 msgid "Text _Below Icons"
 msgstr "Metin Simge _Altında"
 
-#: gtk/window_main.glade.h:44
+#: gtk/window_main.glade.h:42
 msgid "U_nmark"
 msgstr "_İşaretleme"
 
-#: gtk/window_main.glade.h:45
+#: gtk/window_main.glade.h:43
 msgid "U_nmark All"
 msgstr "Tümünün İşaretini _Kaldır"
 
-#: gtk/window_main.glade.h:46 gtk/window_details.glade.h:23
+#: gtk/window_main.glade.h:44 gtk/window_details.glade.h:23
 msgid "Version:"
 msgstr "Sürüm:"
 
-#: gtk/window_main.glade.h:47 gtk/window_details.glade.h:24
+#: gtk/window_main.glade.h:45 gtk/window_details.glade.h:24
 msgid "Versions"
 msgstr "Sürümler"
 
-#: gtk/window_main.glade.h:48
+#: gtk/window_main.glade.h:46
 msgid "_About"
 msgstr "_Hakkında"
 
-#: gtk/window_main.glade.h:49
+#: gtk/window_main.glade.h:47
 msgid "_Add CD-ROM..."
 msgstr "CD-ROM _ekle..."
 
-#: gtk/window_main.glade.h:50
+#: gtk/window_main.glade.h:48
 msgid "_Browse Documentation"
 msgstr "Belgelere _Gözat"
 
-#: gtk/window_main.glade.h:51
+#: gtk/window_main.glade.h:49
 msgid "_Configure..."
 msgstr "_Yapılandır..."
 
-#: gtk/window_main.glade.h:52
+#: gtk/window_main.glade.h:50
 msgid "_Contents"
 msgstr "_İçerik"
 
-#: gtk/window_main.glade.h:53
+#: gtk/window_main.glade.h:51
+msgid "_Custom"
+msgstr ""
+
+#: gtk/window_main.glade.h:52
 msgid "_Download Changelog"
 msgstr "Değişiklik Güncesini _İndir"
 
-#: gtk/window_main.glade.h:54
+#: gtk/window_main.glade.h:53
 msgid "_Edit"
 msgstr "_Düzenle"
 
-#: gtk/window_main.glade.h:55
+#: gtk/window_main.glade.h:54
 msgid "_File"
 msgstr "_Dosya"
 
-#: gtk/window_main.glade.h:56
+#: gtk/window_main.glade.h:55
 msgid "_Filters"
 msgstr "_Süzgeçler"
 
-#: gtk/window_main.glade.h:57
+#: gtk/window_main.glade.h:56
 msgid "_Fix Broken Packages"
 msgstr "Yarım Kalmış Paketleri _Düzelt"
 
-#: gtk/window_main.glade.h:58
+#: gtk/window_main.glade.h:57
 msgid "_Force Version..."
 msgstr "Sürüme _Zorla..."
 
-#: gtk/window_main.glade.h:59
+#: gtk/window_main.glade.h:58
 msgid "_Help"
 msgstr "Ya_rdım"
 
-#: gtk/window_main.glade.h:60
+#: gtk/window_main.glade.h:59
 msgid "_Hide"
 msgstr "_Gizle"
 
-#: gtk/window_main.glade.h:61
+#: gtk/window_main.glade.h:60
 msgid "_Icons Only"
 msgstr "Sadece _Simgeler"
 
-#: gtk/window_main.glade.h:62
+#: gtk/window_main.glade.h:61
 msgid "_Lock Version"
 msgstr "Sürümü _Sabitle"
 
-#: gtk/window_main.glade.h:63
+#: gtk/window_main.glade.h:62
 msgid "_Mark All Upgrades..."
 msgstr "Yükseltmeleri _İşaretle..."
 
-#: gtk/window_main.glade.h:64
+#: gtk/window_main.glade.h:63
 msgid "_Package"
 msgstr "_Paket"
 
-#: gtk/window_main.glade.h:65
+#: gtk/window_main.glade.h:64
 msgid "_Properties"
 msgstr "_Özellikler"
 
-#: gtk/window_main.glade.h:66
+#: gtk/window_main.glade.h:65
 msgid "_Quick Introduction"
 msgstr "_Kısa Tanıtım"
 
-#: gtk/window_main.glade.h:67
+#: gtk/window_main.glade.h:66
 msgid "_Quit"
 msgstr "Çı_k"
 
-#: gtk/window_main.glade.h:68
+#: gtk/window_main.glade.h:67
 msgid "_Read Markings..."
 msgstr "Seçimleri _Yükle..."
 
-#: gtk/window_main.glade.h:69
+#: gtk/window_main.glade.h:68
 msgid "_Redo"
 msgstr "_Yinele"
 
-#: gtk/window_main.glade.h:70
-msgid "_Reload Package List"
+#: gtk/window_main.glade.h:69
+#, fuzzy
+msgid "_Reload Package Information"
 msgstr "Paket Listesini _Tazele"
 
-#: gtk/window_main.glade.h:71
+#: gtk/window_main.glade.h:70
 msgid "_Repositories"
 msgstr "_Depolar"
 
-#: gtk/window_main.glade.h:72
+#: gtk/window_main.glade.h:71
 msgid "_Save Markings"
 msgstr "Değişiklikleri _Kaydet"
 
-#: gtk/window_main.glade.h:73
+#: gtk/window_main.glade.h:72
 msgid "_Search..."
 msgstr "_Ara..."
+
+#: gtk/window_main.glade.h:73
+#, fuzzy
+msgid "_Sections"
+msgstr "Bölümler"
 
 #: gtk/window_main.glade.h:74
 msgid "_Set Internal Option..."
@@ -1970,12 +2098,13 @@ msgid "Written by"
 msgstr "Yazan"
 
 #: gtk/window_about.glade.h:33
-msgid "translators_credits"
+#, fuzzy
+msgid "translators-credits"
 msgstr "çevirici_kredileri"
 
 #: gtk/window_find.glade.h:1 gtk/window_preferences.glade.h:3
 #: gtk/window_disc_name.glade.h:1 gtk/window_setopt.glade.h:1
-#: gtk/window_filters.glade.h:2 gtk/window_repositories.glade.h:2
+#: gtk/window_filters.glade.h:3 gtk/window_repositories.glade.h:2
 msgid "*"
 msgstr "*"
 
@@ -1995,13 +2124,9 @@ msgstr "Ara:"
 msgid "_Search"
 msgstr "_Ara"
 
-#: gtk/window_fetch.glade.h:2
-msgid "<b>Single Files:</b>"
-msgstr "<b>Tek Dosyalar:</b>"
-
-#: gtk/window_fetch.glade.h:3
-msgid "<b>Total Progress:</b>"
-msgstr "<b>Tüm İşlem:</b>"
+#: gtk/window_fetch.glade.h:1
+msgid "Show progress of single files"
+msgstr ""
 
 #: gtk/window_changes.glade.h:1
 msgid ""
@@ -2022,10 +2147,6 @@ msgstr ""
 #: gtk/window_changes.glade.h:3
 msgid "_Mark"
 msgstr "_İşaretle"
-
-#: gtk/window_preferences.glade.h:1 gtk/window_summary.glade.h:1
-msgid " "
-msgstr " "
 
 #: gtk/window_preferences.glade.h:4
 msgid "<b>Appearance</b>"
@@ -2056,9 +2177,10 @@ msgid "<b>Marking Changes</b>"
 msgstr "<b>Değişiklikler İşaretleniyor</b>"
 
 #: gtk/window_preferences.glade.h:11
+#, fuzzy
 msgid ""
-"<b>Note:</b> The package list must be reloaded and all marked changes will "
-"be lost. Make sure to apply your changes first."
+"<b>Note:</b> The package information must be reloaded and all marked changes "
+"will be lost. Make sure to apply your changes first."
 msgstr ""
 "<b>Not:</b> Paket listesinin yeniden yüklenmesi gerekiyor, bu nedenle "
 "yapılan değişiklikler kaybolacak. İlk önce yaptığınız değişiklikleri "
@@ -2102,30 +2224,34 @@ msgid "Ask to quit after the changes have been applied successfully"
 msgstr "Değişiklikler başarıyla uygulandığında programdan çıkmak için sor"
 
 #: gtk/window_preferences.glade.h:20
+msgid "Automatically"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:21
 msgid "Broken:"
 msgstr "Bozuk:"
 
-#: gtk/window_preferences.glade.h:21
+#: gtk/window_preferences.glade.h:22
 msgid "Clicking on the status icon marks the most likely action"
 msgstr "Durum simgesine tıklama en çok kullanılan eylemi uygular"
 
-#: gtk/window_preferences.glade.h:22
+#: gtk/window_preferences.glade.h:23
 msgid "Color"
 msgstr "Renk"
 
-#: gtk/window_preferences.glade.h:23
+#: gtk/window_preferences.glade.h:24
 msgid "Color packages by their status"
 msgstr "Durumlarına göre paketleri renklendir"
 
-#: gtk/window_preferences.glade.h:24
+#: gtk/window_preferences.glade.h:25
 msgid "Colors"
 msgstr "Renkler"
 
-#: gtk/window_preferences.glade.h:25
+#: gtk/window_preferences.glade.h:26
 msgid "Columns and Fonts"
 msgstr "Sütunlar ve Yazıtipleri"
 
-#: gtk/window_preferences.glade.h:26
+#: gtk/window_preferences.glade.h:27
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
@@ -2133,182 +2259,191 @@ msgstr ""
 "Vekil Sunucu kullanarak bağlantı kurulmasını istemediğiniz alan ve "
 "sistemleri virgül ile ayırarak girin (ör. localhost, 192.168.1.231, .net)"
 
-#: gtk/window_preferences.glade.h:27
+#: gtk/window_preferences.glade.h:28
 msgid "Completely"
 msgstr "Tamamen"
 
-#: gtk/window_preferences.glade.h:28
+#: gtk/window_preferences.glade.h:29
 msgid "Consider recommended packages as dependencies"
 msgstr "Önerilen paketleri bağımlılık olarak kabul et"
 
-#: gtk/window_preferences.glade.h:30
+#: gtk/window_preferences.glade.h:31
 msgid "Default archive: "
 msgstr "Öntanımlı arşiv: "
 
-#: gtk/window_preferences.glade.h:31
+#: gtk/window_preferences.glade.h:32
 msgid "Delete downloaded packages after installation"
 msgstr "İndirilen paketi kurulumdan sonra sil"
 
-#: gtk/window_preferences.glade.h:32
+#: gtk/window_preferences.glade.h:33
 msgid "Delete packages which are no longer available only"
 msgstr "Artık mevcut olmayan paketleri sil"
 
-#: gtk/window_preferences.glade.h:33
+#: gtk/window_preferences.glade.h:34
 msgid "Direct connection to the internet"
 msgstr "İnternete doğrudan bağlantı"
 
-#: gtk/window_preferences.glade.h:34
+#: gtk/window_preferences.glade.h:35
 msgid "Expert"
 msgstr "Uzman"
 
-#: gtk/window_preferences.glade.h:35
+#: gtk/window_preferences.glade.h:36
 msgid "FTP proxy: "
 msgstr "FTP vekili: "
 
-#: gtk/window_preferences.glade.h:36
+#: gtk/window_preferences.glade.h:37
 msgid "General"
 msgstr "Genel"
 
-#: gtk/window_preferences.glade.h:37
+#: gtk/window_preferences.glade.h:38
 msgid "HTTP proxy: "
 msgstr "HTTP vekili: "
 
-#: gtk/window_preferences.glade.h:38
+#: gtk/window_preferences.glade.h:39
 msgid "IP address or host name of the ftp proxy server"
 msgstr "FTP vekil sunucusunun makine adı ya da IP adresi"
 
-#: gtk/window_preferences.glade.h:39
+#: gtk/window_preferences.glade.h:40
 msgid "IP address or host name of the http proxy server"
 msgstr "HTTP vekil sunucusunun makine adı ya da IP adresi"
 
-#: gtk/window_preferences.glade.h:40
+#: gtk/window_preferences.glade.h:41
+#, fuzzy
+msgid "Ignore"
+msgstr "göz ardı et"
+
+#: gtk/window_preferences.glade.h:42
 msgid "Installed (locked):"
 msgstr "Kurulu (kilitlenmiş):"
 
-#: gtk/window_preferences.glade.h:41
+#: gtk/window_preferences.glade.h:43
 msgid "Installed:"
 msgstr "Kurulu:"
 
-#: gtk/window_preferences.glade.h:42
+#: gtk/window_preferences.glade.h:44
 msgid "Keep Configuration"
 msgstr "Yapılandırmayı Sakla"
 
-#: gtk/window_preferences.glade.h:43
+#: gtk/window_preferences.glade.h:45
 msgid "Leave all downloaded packages in the cache"
 msgstr "İndirilen paketi \"cache\" dizininde bırak"
 
-#: gtk/window_preferences.glade.h:44
+#: gtk/window_preferences.glade.h:46
 msgid "Manual proxy configuration"
 msgstr "Özel vekil sunucu yapılandırması"
 
-#: gtk/window_preferences.glade.h:45
+#: gtk/window_preferences.glade.h:47
 msgid "Marked for complete removal:"
 msgstr "Tamamen kaldırılmak üzere işaretlenmiş:"
 
-#: gtk/window_preferences.glade.h:46
+#: gtk/window_preferences.glade.h:48
 msgid "Marked for downgrade:"
 msgstr "Eski sürüm kurulumu için işaretlenmiş"
 
-#: gtk/window_preferences.glade.h:47
+#: gtk/window_preferences.glade.h:49
 msgid "Marked for installation:"
 msgstr "Kurulum için işaretlenmiş:"
 
-#: gtk/window_preferences.glade.h:48
+#: gtk/window_preferences.glade.h:50
 msgid "Marked for reinstallation:"
 msgstr "Yeniden kurulum için işaretlenmiş:"
 
-#: gtk/window_preferences.glade.h:49
+#: gtk/window_preferences.glade.h:51
 msgid "Marked for removal:"
 msgstr "Kaldırmak için işaretlenmiş:"
 
-#: gtk/window_preferences.glade.h:50
+#: gtk/window_preferences.glade.h:52
 msgid "Marked for upgrade:"
 msgstr "Yükseltme için işaretlenmiş:"
 
-#: gtk/window_preferences.glade.h:51
+#: gtk/window_preferences.glade.h:53
 msgid "Move D_own"
 msgstr "_Aşağı Taşı"
 
-#: gtk/window_preferences.glade.h:52
+#: gtk/window_preferences.glade.h:54
 msgid "Move _Up"
 msgstr "_Yukarı Taşı"
 
-#: gtk/window_preferences.glade.h:53
+#: gtk/window_preferences.glade.h:55
 msgid "Network"
 msgstr "Ağ"
 
-#: gtk/window_preferences.glade.h:54
+#: gtk/window_preferences.glade.h:56
 msgid "New in respository:"
 msgstr "Depoda yeni olanlar:"
 
-#: gtk/window_preferences.glade.h:55
+#: gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr "Vekil sunucu kullanma: "
 
-#: gtk/window_preferences.glade.h:56
+#: gtk/window_preferences.glade.h:58
 msgid "Not installed (locked):"
 msgstr "Kurulu değil (kilitli):"
 
-#: gtk/window_preferences.glade.h:57
+#: gtk/window_preferences.glade.h:59
 msgid "Not installed:"
 msgstr "Kurulu değil:"
 
-#: gtk/window_preferences.glade.h:58
+#: gtk/window_preferences.glade.h:60
 msgid "Number of undo operations:"
 msgstr "Geri alma sayısı:"
 
-#: gtk/window_preferences.glade.h:59
+#: gtk/window_preferences.glade.h:61
 msgid "Port number of the ftp proxy server"
 msgstr "Ftp vekil sunucu kapı numarası"
 
-#: gtk/window_preferences.glade.h:60
+#: gtk/window_preferences.glade.h:62
 msgid "Port number of the http proxy server"
 msgstr "Http vekil sunucu kapı numarası"
 
-#: gtk/window_preferences.glade.h:61
+#: gtk/window_preferences.glade.h:63
 msgid "Port: "
 msgstr "Kapı: "
 
-#: gtk/window_preferences.glade.h:63
+#: gtk/window_preferences.glade.h:65
+msgid "Reloading outdated package information:"
+msgstr ""
+
+#: gtk/window_preferences.glade.h:66
 msgid "Removal of packages: "
 msgstr "Paket kaldırma: "
 
-#: gtk/window_preferences.glade.h:64
+#: gtk/window_preferences.glade.h:67
 msgid ""
 "Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 "\"sources.list\" dosyasında birden fazla dağıtım belirtilmişse öntanımlı "
 "olanı seç"
 
-#: gtk/window_preferences.glade.h:65
+#: gtk/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
 msgstr "Ana pencerede paket tercihlerini göster"
 
-#: gtk/window_preferences.glade.h:67
+#: gtk/window_preferences.glade.h:70
 msgid "System upgrade:"
 msgstr "Sistem yükseltmesi:"
 
-#: gtk/window_preferences.glade.h:68
+#: gtk/window_preferences.glade.h:71
 msgid "Temporary Files"
 msgstr "Geçici Dosyalar"
 
-#: gtk/window_preferences.glade.h:69
+#: gtk/window_preferences.glade.h:72
 msgid "Upgradable:"
 msgstr "Yükseltilebilir:"
 
-#: gtk/window_preferences.glade.h:70
+#: gtk/window_preferences.glade.h:73
 msgid "Use custom application font"
 msgstr "Uygulama için özel yazıtipi kullan"
 
-#: gtk/window_preferences.glade.h:71
+#: gtk/window_preferences.glade.h:74
 msgid "Use custom terminal font"
 msgstr "Özel uçbirim yazıtipi kullan"
 
-#: gtk/window_preferences.glade.h:72
+#: gtk/window_preferences.glade.h:75
 msgid "_Delete Cached Package Files"
 msgstr "Tamponda Saklanan Paketleri _Sil"
 
-#: gtk/window_preferences.glade.h:73
+#: gtk/window_preferences.glade.h:76
 msgid "_Terminal Font"
 msgstr "_Uçbirim Yazıtipi"
 
@@ -2391,161 +2526,173 @@ msgstr "Paket imzalarını doğrula"
 msgid "_Show Details"
 msgstr "_Ayrıntıları göster"
 
-#: gtk/window_filters.glade.h:3
+#: gtk/window_filters.glade.h:4
 msgid "<b>Current</b>"
 msgstr "<b>Geçerli</b>"
 
-#: gtk/window_filters.glade.h:4
+#: gtk/window_filters.glade.h:5
 msgid "<b>Marked</b>"
 msgstr "<b>İşaretlenmiş</b>"
 
-#: gtk/window_filters.glade.h:5
+#: gtk/window_filters.glade.h:6
 msgid "<b>Other</b>"
 msgstr "<b>Diğeri</b>"
 
 #: gtk/window_filters.glade.h:7
+msgid "AND"
+msgstr ""
+
+#: gtk/window_filters.glade.h:8
+msgid "Boolean operator between property criterias:"
+msgstr ""
+
+#: gtk/window_filters.glade.h:10
 msgid "Conflicting Packages"
 msgstr "Çelişen Paketler"
 
-#: gtk/window_filters.glade.h:9 gtk/window_details.glade.h:15
+#: gtk/window_filters.glade.h:12 gtk/window_details.glade.h:15
 msgid "Dependent Packages"
 msgstr "Bağımlı Paketler"
 
-#: gtk/window_filters.glade.h:11
+#: gtk/window_filters.glade.h:14
 msgid "Exclude"
 msgstr "Dahil etme"
 
-#: gtk/window_filters.glade.h:12
+#: gtk/window_filters.glade.h:15
 msgid "Exclude selected sections"
 msgstr "İşaretlenmiş bölümleri dahil etme"
 
-#: gtk/window_filters.glade.h:13 gtk/rgfiltermanager.h:60
+#: gtk/window_filters.glade.h:16 gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr "Dahil değil"
 
-#: gtk/window_filters.glade.h:15
+#: gtk/window_filters.glade.h:18
 msgid "For installation or upgrade"
 msgstr "Kurulacak ya da yükseltilecek"
 
-#: gtk/window_filters.glade.h:16
+#: gtk/window_filters.glade.h:19
 msgid "For removal"
 msgstr "Kaldırılacak"
 
-#: gtk/window_filters.glade.h:17
+#: gtk/window_filters.glade.h:20
 msgid "Include"
 msgstr "Dahil et"
 
-#: gtk/window_filters.glade.h:18
+#: gtk/window_filters.glade.h:21
 msgid "Include selected sections only"
 msgstr "Sadece işaretli bölümleri dahil et"
 
-#: gtk/window_filters.glade.h:19 gtk/rgfiltermanager.h:59
+#: gtk/window_filters.glade.h:22 gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr "Dahil"
 
-#: gtk/window_filters.glade.h:21
+#: gtk/window_filters.glade.h:24
 msgid "Installed packages that are up-to-date"
 msgstr "Güncel olan paketleri kur"
 
-#: gtk/window_filters.glade.h:22
+#: gtk/window_filters.glade.h:25
 msgid "Installed packages that are upgradable"
 msgstr "Yükseltilebilir durumda olan kurulu paketler"
 
-#: gtk/window_filters.glade.h:23
+#: gtk/window_filters.glade.h:26
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "Daha yeni sürümlerine yükseltilebilir durumda olan kurulu paketler"
 
-#: gtk/window_filters.glade.h:24
+#: gtk/window_filters.glade.h:27
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Artık ihtiyaç duyulmayan kitaplık paketleri (deborphan gerektirir)"
 
-#: gtk/window_filters.glade.h:27
+#: gtk/window_filters.glade.h:30
 msgid "Not installable"
 msgstr "Kurulabilir değil"
 
-#: gtk/window_filters.glade.h:29
+#: gtk/window_filters.glade.h:32
 msgid "Not installed packages"
 msgstr "Kurulu olmayan paketler"
 
-#: gtk/window_filters.glade.h:30
+#: gtk/window_filters.glade.h:33
 msgid "Not marked"
 msgstr "İşaretlenmemiş"
 
-#: gtk/window_filters.glade.h:32
+#: gtk/window_filters.glade.h:34
+msgid "OR"
+msgstr ""
+
+#: gtk/window_filters.glade.h:36
 msgid "Orphaned"
 msgstr "Gereksiz (öksüz kalmış)"
 
-#: gtk/window_filters.glade.h:34
+#: gtk/window_filters.glade.h:38
 msgid "Packages that are new in the repository since that last \"Refresh\""
 msgstr "Son \"Tazele\"den bu yana depoya yeni girmiş olan paketler"
 
-#: gtk/window_filters.glade.h:35
+#: gtk/window_filters.glade.h:39
 msgid "Packages that are not available in any repository"
 msgstr "Hiçbir depoda bulunmayan paketler"
 
-#: gtk/window_filters.glade.h:36
+#: gtk/window_filters.glade.h:40
 msgid "Packages that will be installed or upgraded"
 msgstr "Kurulacak ya da yükseltilecek paketler"
 
-#: gtk/window_filters.glade.h:37
+#: gtk/window_filters.glade.h:41
 msgid "Packages that will be removed"
 msgstr "Kaldırılacak paketler"
 
-#: gtk/window_filters.glade.h:38
+#: gtk/window_filters.glade.h:42
 msgid "Packages that will never be upgraded"
 msgstr "Asla yükseltilmeyecek olan paketler"
 
-#: gtk/window_filters.glade.h:39
+#: gtk/window_filters.glade.h:43
 msgid "Packages that won't be changed"
 msgstr "Değişmeyecek olan paketler"
 
-#: gtk/window_filters.glade.h:40
+#: gtk/window_filters.glade.h:44
 msgid "Packages with broken dependencies"
 msgstr "Bozulmuş bağımlılıklar içeren paketler"
 
 #. replaces/obsoletes
-#: gtk/window_filters.glade.h:44 gtk/rgfiltermanager.h:74
+#: gtk/window_filters.glade.h:48 gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr "Önerilenler"
 
-#: gtk/window_filters.glade.h:45
+#: gtk/window_filters.glade.h:49
 msgid "Removed packages that have left configuration files on the system"
 msgstr "Geride yapılandırma dosyaları kalan kaldırılmış paketler"
 
-#: gtk/window_filters.glade.h:46
+#: gtk/window_filters.glade.h:50
 msgid "Replaced Packages"
 msgstr "Değiştirilmiş Paketler"
 
-#: gtk/window_filters.glade.h:47
+#: gtk/window_filters.glade.h:51
 msgid "Residual config"
 msgstr "Yapılandırması yarım kalan"
 
 #. /recommends
-#: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
+#: gtk/window_filters.glade.h:54 gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr "Teklif edilenler"
 
-#: gtk/window_filters.glade.h:51
+#: gtk/window_filters.glade.h:55
 msgid "Tags"
 msgstr "Etiketler"
 
-#: gtk/window_filters.glade.h:52
+#: gtk/window_filters.glade.h:56
 msgid "Upgradable"
 msgstr "Yükseltilebilir"
 
-#: gtk/window_filters.glade.h:54
+#: gtk/window_filters.glade.h:58
 msgid "Version Number"
 msgstr "Sürüm Numarası"
 
-#: gtk/window_filters.glade.h:55
+#: gtk/window_filters.glade.h:59
 msgid "_Deselect All"
 msgstr "Tüm Seçimleri _iptal et"
 
-#: gtk/window_filters.glade.h:56
+#: gtk/window_filters.glade.h:60
 msgid "_Invert All"
 msgstr "_Tümünü Tersine Çevir"
 
-#: gtk/window_filters.glade.h:57
+#: gtk/window_filters.glade.h:61
 msgid "_Select All"
 msgstr "Tümünü _Seç"
 
@@ -2675,6 +2822,12 @@ msgid ""
 msgstr ""
 "Paketleri kurulum, yükseltme ve kaldırmak için işaretlemenin birkaç yolu var:"
 
+#: gtk/dialog_welcome.glade.h:11
+msgid ""
+"You should reload the package information regularly. Otherwise you could "
+"miss important security upgrades."
+msgstr ""
+
 #: gtk/dialog_unmet.glade.h:1
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
@@ -2742,6 +2895,11 @@ msgstr "Bağımlı paketler"
 msgid "Icon Legend"
 msgstr "Simge Açıklamaları"
 
+#: gtk/rgiconlegend.cc:73
+#, fuzzy
+msgid "Package is supported"
+msgstr "Paket Listesi"
+
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
 msgid ""
@@ -2781,11 +2939,11 @@ msgstr ""
 "Geçerli ortamdaki tüm paketler başarıyla kuruldu. Kuruluma sonraki ortam ile "
 "devam etmek için bu pencereyi kapatın."
 
-#: gtk/rgterminstallprogress.cc:144
+#: gtk/rgterminstallprogress.cc:145
 msgid "<i>Finished</i>"
 msgstr "<i>Tamamlandı</i>"
 
-#: gtk/rgterminstallprogress.cc:153
+#: gtk/rgterminstallprogress.cc:154
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Halen çalışırken kapatılamıyor</i>"
 
@@ -2804,6 +2962,31 @@ msgstr ""
 "Kurmak istediğiniz paketin bu sürümü artık depoda bulunmuyor olabilir ya da "
 "paket kaynağı ile ilgili bir sorun olabilir. Paket listesini yenileyin ve "
 "paket kaynağını denetleyin (ör. CD ya da ağ bağlantısı)."
+
+#, fuzzy
+#~ msgid "Refresh the list of known packages from remote server"
+#~ msgstr "Bilinen paketler listesini tazele"
+
+#~ msgid "Downloading Index Files"
+#~ msgstr "İçerik Dosyaları İndiriliyor"
+
+#~ msgid "Refreshing package list..."
+#~ msgstr "Paket listesi tazeleniyor..."
+
+#~ msgid "To be kept back"
+#~ msgstr "Değişmeyecek"
+
+#~ msgid "Alphabet"
+#~ msgstr "Alfabe"
+
+#~ msgid "Release"
+#~ msgstr "Sürüm"
+
+#~ msgid "<b>Single Files:</b>"
+#~ msgstr "<b>Tek Dosyalar:</b>"
+
+#~ msgid "<b>Total Progress:</b>"
+#~ msgstr "<b>Tüm İşlem:</b>"
 
 #~ msgid "Depended on by"
 #~ msgstr "Bağımlı"
@@ -3298,9 +3481,6 @@ msgstr ""
 
 #~ msgid "New in archive:"
 #~ msgstr "Arşivde yeni:"
-
-#~ msgid "Package List"
-#~ msgstr "Paket Listesi"
 
 #~ msgid "Required space"
 #~ msgstr "Gereken boş alan"

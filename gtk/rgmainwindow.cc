@@ -1242,7 +1242,9 @@ void RGMainWindow::buildInterface()
    // Workaround for a bug in libglade.
    button = glade_xml_get_widget(_gladeXML, "button_update");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,
-                        _("Refresh the list of known packages from remote server"), "");
+                        _("Reload the package information to become"
+                          " informed about new, removed or upgraded "
+                          " software packages."), "");
 
    button = glade_xml_get_widget(_gladeXML, "button_upgrade");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(_tooltips), button,

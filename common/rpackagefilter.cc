@@ -43,9 +43,9 @@ using namespace std;
 // don't translate this, they are only used in the filter file
 char *RPatternPackageFilter::TypeName[] = {
    N_("Name"),
-   N_("Version"),
    N_("Description"),
    N_("Maintainer"),
+   N_("Version"),
    N_("Depends"),
    N_("Provides"),
    N_("Conflicts"),
@@ -297,14 +297,14 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
       case Name:
 	 found = filterName(pat, pkg);
 	 break;
-      case Version:
-	 found = filterVersion(pat,pkg);
-	 break;
       case Description:
 	 found = filterDescription(pat, pkg);
 	 break;
       case Maintainer:
 	 found = filterMaintainer(pat, pkg);
+	 break;
+      case Version:
+	 found = filterVersion(pat,pkg);
 	 break;
       case Depends:
 	 found = filterDepends(pat, pkg, pkgCache::Dep::Depends);

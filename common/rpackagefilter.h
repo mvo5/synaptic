@@ -104,9 +104,9 @@ class RPatternPackageFilter : public RPackageFilter {
  public:
    typedef enum {
       Name,
-      Version,
       Description,
       Maintainer,
+      Version,
       Depends,
       Provides,
       Conflicts,

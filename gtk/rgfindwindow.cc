@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <cassert>
+
 #include "rgfindwindow.h"
 #include "rgmisc.h"
 
@@ -52,17 +54,10 @@ string RGFindWindow::getFindString()
 
 int RGFindWindow::getSearchType()
 {
-   const char *types[] = { "name", "version", "description", "maintainer", "depends",
-      "provides", NULL
-   };
-   int searchType = 0;
-
-   for (int i = 0; types[i] != NULL; i++) {
-      string s = "radiobutton_" + string(types[i]);
-      GtkWidget *check = glade_xml_get_widget(_gladeXML, s.c_str());
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(check)))
-         searchType = i;
-   }
+   int searchType;
+   GtkWidget *omenu = glade_xml_get_widget(_gladeXML, "optionmenu_where");
+   assert(omenu);
+   searchType = gtk_option_menu_get_history(GTK_OPTION_MENU(omenu));
 
    return searchType;
 }

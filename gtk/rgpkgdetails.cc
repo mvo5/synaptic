@@ -109,11 +109,7 @@ void RGPkgDetailsWindow::fillInValues(RPackage *pkg)
    setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
    setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
    setLabel("label_priority", pkg->priority());
-#ifdef HAVE_RPM
-   setLabel("label_section", pkg->section());
-#else
    setLabel("label_section", trans_section(pkg->section()).c_str());
-#endif
    setLabel("label_installed_version", pkg->installedVersion());
    setLabel("label_installed_size", pkg->installedSize());
 

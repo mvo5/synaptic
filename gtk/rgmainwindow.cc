@@ -498,7 +498,7 @@ void RGMainWindow::updateClicked(GtkWidget *self, void *data)
     
     
     me->setTreeLocked(FALSE);
-    me->refreshTable(pkg);
+    me->refreshTable();
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
 
@@ -737,7 +737,7 @@ void RGMainWindow::proceedClicked(GtkWidget *self, void *data)
     }
 
     me->setTreeLocked(FALSE);
-    me->refreshTable(pkg);
+    me->refreshTable();
     me->setInterfaceLocked(FALSE);
     me->setStatusText();
     
@@ -1319,7 +1319,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
 	return;
     
     if (me->_unsavedChanges == true && 
-	me->_userDialog->confirm(
+	!me->_userDialog->confirm(
 			    _("There are unsaved changes.\n"
 			      "Synaptic must reopen its cache.\n"
 			      "Your changes will be lost. Are you sure?")))
@@ -1349,7 +1349,7 @@ void RGMainWindow::pinClicked(GtkWidget *self, void *data)
     }
 
     // refresh
-    me->refreshTable(pkg);
+    me->refreshTable();
 
     // free the list
     g_list_foreach(list, (void (*)(void*,void*))gtk_tree_path_free, NULL);

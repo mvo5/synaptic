@@ -138,7 +138,7 @@ void RGZvtInstallProgress::finishUpdate()
    zvt_term_feed(ZVT_TERM(_term), (char*)msg, size);
 #endif
 #ifdef HAVE_VTE
-   vte_terminal_feed(VTE_TERMINAL(_term), utf8(msg), size);
+   vte_terminal_feed(VTE_TERMINAL(_term), utf8_to_locale(msg), size);
 #endif
 
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Finished</i>"));

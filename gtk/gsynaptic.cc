@@ -125,6 +125,9 @@ const char *utf8(const char *str)
     if (str == NULL)
 	return NULL;
     g_free(_str);
+    _str = NULL;
+    if (g_utf8_validate(str, -1, NULL) == true)
+	return str;
     _str = g_locale_to_utf8(str, -1, NULL, NULL, NULL);
     return _str;
 }

@@ -65,9 +65,9 @@ void RGZvtInstallProgress::startUpdate()
 
 void RGZvtInstallProgress::finishUpdate()
 {
-   string finishMsg = _("\nUpdate finished - You can close the window now");
+   string finishMsg = _("\nSuccessfully applied all changes. You can close the window now");
    string errorMsg =
-      _("\nUpdate failed - Scroll in this buffer to see what went wrong");
+      _("\nFailed to apply all changes! Scroll in this buffer to see what went wrong");
 
    gtk_widget_set_sensitive(_closeB, true);
 

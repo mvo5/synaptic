@@ -6,6 +6,7 @@ appicon_DATA = synaptic_48x48.png
 buttondir =  $(datadir)/synaptic/glade
 button_DATA = update_small.png \
 	      upgrade_small.png \
+	      upgrade_all.png \
 	      distupgrade_small.png\
               proceed_small.png \
 	      synaptic_mini.xpm \

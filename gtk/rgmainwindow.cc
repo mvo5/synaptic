@@ -1455,8 +1455,14 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
     importance = pkg->updateImportance();
     
     // name/summary
-    gchar *msg = g_strdup_printf("%s\n%s",pkg->name(),pkg->summary());
-    gtk_text_buffer_set_text (_pkgCommonTextBuffer, utf8(msg), -1);
+    GtkTextIter start, end;
+    const gchar *s = pkg->name();
+    gchar *msg = g_strdup_printf("%s\n%s", s,pkg->summary());
+    gtk_text_buffer_set_text(_pkgCommonTextBuffer, utf8(msg), -1);
+    gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &start, 0);
+    gtk_text_buffer_get_iter_at_offset(_pkgCommonTextBuffer, &end,strlen(s));
+    gtk_text_buffer_apply_tag(_pkgCommonTextBuffer, _pkgCommonBoldTag, 
+			      &start, &end);
     g_free(msg);
 
     // package info
@@ -2600,7 +2606,11 @@ void RGMainWindow::buildInterface()
     _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "textview_pkgcommon");
     assert(_pkgCommonTextView);
     _pkgCommonTextBuffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW(_pkgCommonTextView));
-    
+    _pkgCommonBoldTag = gtk_text_buffer_create_tag (_pkgCommonTextBuffer, 
+						    "bold",
+						    "weight",PANGO_WEIGHT_BOLD,
+						    NULL);
+
  
     _actionB[0] = glade_xml_get_widget(_gladeXML, "radiobutton_keep");
     glade_xml_signal_connect_data(_gladeXML,

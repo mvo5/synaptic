@@ -451,11 +451,6 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
 
-   if(!_config->FindB("Volatile::HideMainwindow", false))
-      skipTaskbar(true);
-   else
-      skipTaskbar(false);
-
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
    g_signal_connect(w, "notify::expanded",
 		    G_CALLBACK(expander_callback), this);
@@ -649,6 +644,7 @@ void RGDebInstallProgress::finishUpdate()
 			    _("Changes applied"));
    gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", s.c_str(),
 				_(getResultStr(res)));
+   setTitle(_("Changes applied"));
    GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);

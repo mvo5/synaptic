@@ -154,10 +154,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    g_signal_connect (expander, "notify::expanded",
 		     G_CALLBACK (expanderActivate), this);
 
-   if(!_config->FindB("Volatile::HideMainwindow", false))
-      skipTaskbar(true);
-   else
-      skipTaskbar(false);
 }
 
 void RGFetchProgress::expanderActivate(GObject    *object,

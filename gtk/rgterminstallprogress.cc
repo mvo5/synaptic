@@ -193,10 +193,6 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    if(_config->FindB("Volatile::Non-Interactive", false)) 
       gtk_widget_hide(_closeOnF);
    
-   if(!_config->FindB("Volatile::HideMainwindow", false))
-      skipTaskbar(true);
-   else
-      skipTaskbar(false);
 }
 
 

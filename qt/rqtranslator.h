@@ -17,7 +17,6 @@ class RQTranslator : public QTranslator
    {
       QTranslatorMessage tm = QTranslatorMessage(context, _(sourceText), comment);
       tm.setTranslation(QString::fromUtf8(_(sourceText)));
-      printf("%s\n", sourceText);
       return tm;
    }
 };

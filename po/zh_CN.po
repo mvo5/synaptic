@@ -7,13 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.50.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-05 16:35+0200\n"
-"PO-Revision-Date: 2004-06-09 06:40+0800\n"
+"POT-Creation-Date: 2004-06-11 22:24+0200\n"
+"PO-Revision-Date: 2004-06-12 02:45+0800\n"
 "Last-Translator: Liu Songhe <jackliu9999@msn.com>\n"
 "Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: common/sections_trans.cc:9
 msgid "System Administration"
@@ -388,71 +389,59 @@ msgid "Invalid record in the preferences file, no Package header"
 msgstr "首选项文件里的无效记录，没有软件包头文件"
 
 #: common/rpackage.cc:1292
-#, fuzzy
 msgid "Marked for installation"
 msgstr "已标记要安装的软件包"
 
 #: common/rpackage.cc:1293
-#, fuzzy
 msgid "Marked for re-installation"
-msgstr "已标记要安装的软件包"
+msgstr "已标记要重新安装的软件包"
 
 #: common/rpackage.cc:1294
-#, fuzzy
 msgid "Marked for upgrade"
 msgstr "已标记要升级的软件包"
 
 #: common/rpackage.cc:1295
-#, fuzzy
 msgid "Marked for downgrade"
-msgstr "将会降级的软件包"
+msgstr "已标记要降级的软件包"
 
 #: common/rpackage.cc:1296
-#, fuzzy
 msgid "Marked for removal"
 msgstr "已标记要删除的软件包"
 
 #: common/rpackage.cc:1297
-#, fuzzy
 msgid "Marked for complete removal"
-msgstr "已标记要删除的软件包"
+msgstr "已标记要彻底删除的软件包"
 
-#: common/rpackage.cc:1298 common/rpackageview.cc:104
+#: common/rpackage.cc:1298 common/rpackageview.cc:105
 #: gtk/window_filters.glade.h:25
 msgid "Not installed"
-msgstr "未安装的"
+msgstr "未安装"
 
 #: common/rpackage.cc:1299
-#, fuzzy
 msgid "Not installed (locked)"
-msgstr ""
-"\n"
-"已安装软件包：\n"
+msgstr "未安装(锁定的)"
 
-#: common/rpackage.cc:1300 common/rpackageview.cc:99
+#: common/rpackage.cc:1300 common/rpackageview.cc:100
 #: gtk/window_filters.glade.h:20
 msgid "Installed"
 msgstr "已安装"
 
-#: common/rpackage.cc:1301 common/rpackageview.cc:97
-#, fuzzy
+#: common/rpackage.cc:1301 common/rpackageview.cc:98
 msgid "Installed (upgradable)"
-msgstr "已安装的和可升级的"
+msgstr "已安装(可升级)"
 
 #: common/rpackage.cc:1302
-#, fuzzy
 msgid "Installed (locked to the current version)"
-msgstr "升级每个已安装的软件包到最新版"
+msgstr "已安装(锁定为当前版本)"
 
-#: common/rpackage.cc:1303 common/rpackageview.cc:348
+#: common/rpackage.cc:1303 common/rpackageview.cc:372
 #: gtk/window_filters.glade.h:6
 msgid "Broken"
 msgstr "已损坏"
 
 #: common/rpackage.cc:1304
-#, fuzzy
 msgid "Not installed (new in repository)"
-msgstr "未安装的(残存配置)"
+msgstr "未安装(软件库里的新版本)"
 
 #: common/rpackagecache.cc:50
 msgid ""
@@ -474,7 +463,7 @@ msgstr "内部错误，非零计数"
 msgid "Name"
 msgstr "名称"
 
-#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:780
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:787
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
@@ -558,17 +547,17 @@ msgstr "内部错误：无法打开简化视图文件 %s"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "简化视图文件里的错误正则表达式“%s”。"
 
-#: common/rpackagelister.cc:288 common/rpackagelister.cc:294
-#: common/rpackagelister.cc:308
+#: common/rpackagelister.cc:291 common/rpackagelister.cc:297
+#: common/rpackagelister.cc:311
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "打开高速缓存(%d)时有内部错误。请报告。"
 
-#: common/rpackagelister.cc:448
+#: common/rpackagelister.cc:451
 msgid "Unable to correct dependencies"
 msgstr "无法修正依赖关系"
 
-#: common/rpackagelister.cc:450
+#: common/rpackagelister.cc:453
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -576,30 +565,30 @@ msgstr ""
 "无法标记升级的包\n"
 "请检查您系统的错误。"
 
-#: common/rpackagelister.cc:462
+#: common/rpackagelister.cc:465
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr "内部错误，全部升级破坏了原有内容。请报告。"
 
-#: common/rpackagelister.cc:480
+#: common/rpackagelister.cc:483
 msgid "dist upgrade Failed"
 msgstr "软件发行版升级失败"
 
-#: common/rpackagelister.cc:1070
+#: common/rpackagelister.cc:1073
 msgid "Unable to lock the list directory"
 msgstr "无法锁定列表目录"
 
-#: common/rpackagelister.cc:1092
+#: common/rpackagelister.cc:1095
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr "无法检索或验证某些软件库的 Release 文件，暂时忽略那些软件库。"
 
-#: common/rpackagelister.cc:1159 common/rpackagelister.cc:1165
+#: common/rpackagelister.cc:1162 common/rpackagelister.cc:1168
 #: gtk/rgrepositorywin.cc:301
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "正在忽略 sources.list 文件里无效的记录！"
 
-#: common/rpackagelister.cc:1206
+#: common/rpackagelister.cc:1209
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -608,33 +597,33 @@ msgstr ""
 "未能取回 %s\n"
 "  %s"
 
-#: common/rpackagelister.cc:1227
+#: common/rpackagelister.cc:1230
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "有些软件包未能从服务器检索。\n"
 
-#: common/rpackagelister.cc:1230
+#: common/rpackagelister.cc:1233
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "您想忽略这些软件包，继续进行吗?"
 
-#: common/rpackagelister.cc:1237
+#: common/rpackagelister.cc:1240
 msgid "Unable to correct missing packages"
 msgstr "无法更正缺少的软件包"
 
-#: common/rpackagelister.cc:1300
+#: common/rpackagelister.cc:1303
 msgid "Unable to lock the download directory"
 msgstr "无法锁定下载目录"
 
-#: common/rpackagelister.cc:1378
+#: common/rpackagelister.cc:1381
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "正在标记的文件里的行 %u 太长。"
 
-#: common/rpackagelister.cc:1392 common/rpackagelister.cc:1396
+#: common/rpackagelister.cc:1395 common/rpackagelister.cc:1399
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "正在标记的文件里的行 %u 畸形"
 
-#: common/rpackagelister.cc:1408
+#: common/rpackagelister.cc:1411
 msgid "Setting markings..."
 msgstr "正在设定标记..."
 
@@ -654,47 +643,47 @@ msgstr "组别"
 msgid "Alphabetic"
 msgstr "依字母排列"
 
-#: common/rpackageview.h:130
+#: common/rpackageview.h:131
 msgid "Find History"
 msgstr "查找历史"
 
-#: common/rpackageview.h:173
+#: common/rpackageview.h:174
 msgid "Filter"
 msgstr "过滤器"
 
-#: common/rpackageview.cc:90
+#: common/rpackageview.cc:91 gtk/window_filters.glade.h:23
 msgid "New in repository"
-msgstr "软件库里的新内容"
+msgstr "软件仓库里的新内容"
 
-#: common/rpackageview.cc:94
+#: common/rpackageview.cc:95
 msgid "Installed (obsolete)"
 msgstr "已安装的(陈旧的)"
 
-#: common/rpackageview.cc:102
+#: common/rpackageview.cc:103
 msgid "Not installed (residual config)"
 msgstr "未安装的(残存配置)"
 
-#: common/rpackageview.cc:326
+#: common/rpackageview.cc:350
 msgid "Search Filter"
 msgstr "搜索过滤器"
 
-#: common/rpackageview.cc:334
+#: common/rpackageview.cc:358
 msgid "Tasks"
 msgstr "任务"
 
-#: common/rpackageview.cc:340
+#: common/rpackageview.cc:364
 msgid "Reduced View"
 msgstr "简化视图"
 
-#: common/rpackageview.cc:357 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:295
+#: common/rpackageview.cc:381 gtk/gsynaptic.cc:203 gtk/rgsummarywindow.cc:299
 msgid "Marked Changes"
 msgstr "已标记的变更"
 
-#: common/rpackageview.cc:366
+#: common/rpackageview.cc:390
 msgid "Pkg with Debconf"
 msgstr "具有 Debconf 的 Pkg 包"
 
-#: common/rpackageview.cc:373
+#: common/rpackageview.cc:397 gtk/window_filters.glade.h:53
 msgid "Upgradable (upstream)"
 msgstr "可升级(向上)"
 
@@ -752,7 +741,7 @@ msgid ""
 "The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
 "fulfill all dependencies of upgrades in a smart way."
 msgstr ""
-"智能升级(dist-upgrade)总是试图以一种智能的途径解决冲突并满足升级所需的所有依"
+"智能升级(dist-upgrade)总是试图以一种智能的途径解决冲突并满足升级所需的全部依"
 "赖关系。"
 
 #: gtk/dialog_upgrade.glade.h:9
@@ -877,7 +866,7 @@ msgstr "将会重新安装的软件包"
 msgid "To be kept"
 msgstr "将会维持原状的软件包"
 
-#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1409
+#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1416
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "保存配置时发生错误。"
@@ -902,7 +891,7 @@ msgstr "首选项"
 msgid "Downloading Files"
 msgstr "下载文件"
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:760
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:767
 msgid "Size"
 msgstr "文件大小"
 
@@ -922,14 +911,14 @@ msgstr ""
 "的光盘插入驱动器 %s"
 
 #: gtk/rgfetchprogress.cc:230
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li at %s/s - %s remaining"
-msgstr "%-3li/%-3li 文件     %4s B/s   尚余 %6s\n"
+msgstr "正在下载文件 %li(属于 %li)  速度 %s/s - 尚余 %s"
 
 #: gtk/rgfetchprogress.cc:235
-#, fuzzy, c-format
+#, c-format
 msgid "Downloading file %li of %li"
-msgstr "编辑过滤器(_E)"
+msgstr "正在下载文件 %li(属于 %li)"
 
 #: gtk/rgfetchprogress.cc:300
 msgid "Queued"
@@ -994,9 +983,9 @@ msgid "Applying Changes"
 msgstr "正在实施变更..."
 
 #: gtk/rgpkgdetails.cc:35
-#, fuzzy, c-format
+#, c-format
 msgid "%s Properties"
-msgstr "属性"
+msgstr "%s 属性"
 
 #: gtk/rgmainwindow.cc:76
 msgid "Normal"
@@ -1018,77 +1007,76 @@ msgstr "全部"
 msgid "No package is selected.\n"
 msgstr "没有选中任何软件包。\n"
 
-#: gtk/rgmainwindow.cc:690
+#: gtk/rgmainwindow.cc:697
 msgid "Package"
 msgstr "软件包"
 
-#: gtk/rgmainwindow.cc:715
+#: gtk/rgmainwindow.cc:722
 msgid "Installed Version"
 msgstr "已安装的版本"
 
-#: gtk/rgmainwindow.cc:734
+#: gtk/rgmainwindow.cc:741
 msgid "Latest Version"
 msgstr "最新版本"
 
-#: gtk/rgmainwindow.cc:989
-#, fuzzy
+#: gtk/rgmainwindow.cc:996
 msgid "Refresh the list of known packages"
-msgstr "过滤显示的软件包列表"
+msgstr "刷新已知软件包的列表"
 
-#: gtk/rgmainwindow.cc:993
+#: gtk/rgmainwindow.cc:1000
 msgid "Mark all possible upgrades"
 msgstr "标记全部可能的升级"
 
-#: gtk/rgmainwindow.cc:997 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1004 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "实施全部标记的变更"
 
-#: gtk/rgmainwindow.cc:1157
+#: gtk/rgmainwindow.cc:1164
 msgid "Unmark"
 msgstr "取消标记"
 
-#: gtk/rgmainwindow.cc:1165
+#: gtk/rgmainwindow.cc:1172
 msgid "Mark for Installation"
 msgstr "标记以便安装"
 
-#: gtk/rgmainwindow.cc:1173
+#: gtk/rgmainwindow.cc:1180
 msgid "Mark for Reinstallation"
 msgstr "标记以便重新安装"
 
-#: gtk/rgmainwindow.cc:1182
+#: gtk/rgmainwindow.cc:1189
 msgid "Mark for Upgrade"
 msgstr "标记以便升级"
 
-#: gtk/rgmainwindow.cc:1190
+#: gtk/rgmainwindow.cc:1197
 msgid "Mark for Removal"
 msgstr "标记以便删除"
 
-#: gtk/rgmainwindow.cc:1199
+#: gtk/rgmainwindow.cc:1206
 msgid "Mark for Complete Removal"
 msgstr "标记以便彻底删除"
 
-#: gtk/rgmainwindow.cc:1211
+#: gtk/rgmainwindow.cc:1218
 msgid "Remove Including Orphaned Dependencies"
 msgstr "删除包括孤儿依赖关系"
 
-#: gtk/rgmainwindow.cc:1223
+#: gtk/rgmainwindow.cc:1230
 msgid "Hold Current Version"
 msgstr "保留当前的版本"
 
-#: gtk/rgmainwindow.cc:1232 gtk/window_main.glade.h:15
+#: gtk/rgmainwindow.cc:1239 gtk/window_main.glade.h:15
 #: gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "属性"
 
-#: gtk/rgmainwindow.cc:1244
+#: gtk/rgmainwindow.cc:1251
 msgid "Mark Recommended for Installation"
 msgstr "标记推荐的以便安装"
 
-#: gtk/rgmainwindow.cc:1248
+#: gtk/rgmainwindow.cc:1255
 msgid "Mark Suggested for Installation"
 msgstr "标记建议的以便安装"
 
-#: gtk/rgmainwindow.cc:1299
+#: gtk/rgmainwindow.cc:1306
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1096,7 +1084,7 @@ msgstr ""
 "删除这个软件包可能导致您的系统不稳定。\n"
 "您确定要那样做吗?"
 
-#: gtk/rgmainwindow.cc:1338
+#: gtk/rgmainwindow.cc:1345
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1105,7 +1093,7 @@ msgstr ""
 "共列出 %i 个软件包，已安装 %i 个，已坏损 %i 个。将安装/升级 %i 个软件包，将删"
 "除 %i 个软件包；将释放 %s 磁盘空间。"
 
-#: gtk/rgmainwindow.cc:1344
+#: gtk/rgmainwindow.cc:1351
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1114,7 +1102,7 @@ msgstr ""
 "共列出 %i 个软件包，已安装 %i 个，已坏损 %i 个。将安装/升级 %i 个软件包，将删"
 "除 %i 个软件包；将占据 %s 磁盘空间。"
 
-#: gtk/rgmainwindow.cc:1350
+#: gtk/rgmainwindow.cc:1357
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1123,8 +1111,8 @@ msgstr ""
 "共列出 %i 个软件包，已安装 %i 个，已坏损 %i 个。将安装/升级 %i 个软件包，将删"
 "除 %i 个软件包"
 
-#: gtk/rgmainwindow.cc:1426
-#, fuzzy, c-format
+#: gtk/rgmainwindow.cc:1433
+#, c-format
 msgid ""
 "You have %d broken package on your system!\n"
 "\n"
@@ -1134,59 +1122,52 @@ msgid_plural ""
 "\n"
 "Use the \"Broken\" filter to locate them."
 msgstr[0] ""
-"在您的系统里有 1 个毁损的软件包\n"
+"您的系统里有 %d 个毁损的软件包！\n"
 "\n"
-"请尝试通过访问“Broken”过滤器来修复它们。"
-msgstr[1] ""
-"在您的系统里有 1 个毁损的软件包\n"
-"\n"
-"请尝试通过访问“Broken”过滤器来修复它们。"
+"请使用“Broken”过滤器定位它们。"
 
-#: gtk/rgmainwindow.cc:1663
+#: gtk/rgmainwindow.cc:1669
 msgid "Do you want to add another CD-ROM?"
 msgstr "您想添加其他 CD-ROM 吗？"
 
-#: gtk/rgmainwindow.cc:1686 gtk/rgmainwindow.cc:2251 gtk/rgmainwindow.cc:2330
-#: gtk/rgmainwindow.cc:2490
+#: gtk/rgmainwindow.cc:1692 gtk/rgmainwindow.cc:2272 gtk/rgmainwindow.cc:2351
+#: gtk/rgmainwindow.cc:2511
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
 
-#: gtk/rgmainwindow.cc:1702
+#: gtk/rgmainwindow.cc:1708
 msgid "Open changes"
 msgstr "打开变更方案"
 
-#: gtk/rgmainwindow.cc:1733 gtk/rgmainwindow.cc:1796 gtk/rgmainwindow.cc:2184
-#: gtk/rgmainwindow.cc:2303 gtk/rgmainwindow.cc:2467
+#: gtk/rgmainwindow.cc:1739 gtk/rgmainwindow.cc:1802 gtk/rgmainwindow.cc:2190
+#: gtk/rgmainwindow.cc:2324 gtk/rgmainwindow.cc:2488
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
 
-#: gtk/rgmainwindow.cc:1752
+#: gtk/rgmainwindow.cc:1758
 msgid "Save changes"
 msgstr "保存变更方案"
 
-#: gtk/rgmainwindow.cc:1769
+#: gtk/rgmainwindow.cc:1775
 msgid "Save full state, not only changes"
 msgstr "保存全部状态，不仅仅是变更"
 
-#: gtk/rgmainwindow.cc:1885
-#, fuzzy
+#: gtk/rgmainwindow.cc:1891
 msgid "Searching..."
-msgstr "搜索(_S)..."
+msgstr "正在搜索..."
 
-#: gtk/rgmainwindow.cc:1897
-#, fuzzy, c-format
+#: gtk/rgmainwindow.cc:1903
+#, c-format
 msgid "Found %i packages"
-msgstr "永不升级"
+msgstr "找到 %i 个软件包"
 
-#: gtk/rgmainwindow.cc:1926
-#, fuzzy
+#: gtk/rgmainwindow.cc:1932
 msgid "Starting help viewer..."
-msgstr "正在启动帮助系统..."
+msgstr "正在启动帮助查看器..."
 
-#: gtk/rgmainwindow.cc:1943
-#, fuzzy
+#: gtk/rgmainwindow.cc:1949
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1196,14 +1177,15 @@ msgid ""
 "Alternativly you can open the man page with 'man synaptic' from the command "
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
-"没有安装帮助浏览器\n"
+"没有安装帮助查看器！\n"
 "\n"
-"您要么需要 gnome 查看器“yelp”，要么需要“mozilla”浏览器来查看新立得指南。\n"
+"您要么需要 gnome 查看器“yelp”，要么需要“konqueror”或“mozilla”浏览器来查看新立"
+"得手册。\n"
 "\n"
 "另外您可以从命令行使用“man synaptic”打开手册页，或者查看位于“synaptic/html”文"
 "件夹下的 html 版。"
 
-#: gtk/rgmainwindow.cc:2082
+#: gtk/rgmainwindow.cc:2088
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1211,22 +1193,22 @@ msgstr ""
 "无法启动配置工具！\n"
 "您不得不安装所需的软件包“libgnome2-perl”。"
 
-#: gtk/rgmainwindow.cc:2088
+#: gtk/rgmainwindow.cc:2094
 msgid "Starting package configuration tool..."
 msgstr "正在启动软件包配置工具..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2103
+#: gtk/rgmainwindow.cc:2109
 msgid "Starting package documentation viewer..."
 msgstr "正在启动软件包文档查看器..."
 
-#: gtk/rgmainwindow.cc:2115
+#: gtk/rgmainwindow.cc:2121
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "您不得不安装软件包“dwww”以便浏览软件包文档"
 
-#: gtk/rgmainwindow.cc:2151
+#: gtk/rgmainwindow.cc:2157
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1234,35 +1216,35 @@ msgstr ""
 "无法实施变更！\n"
 "首先要修复损毁的软件包。"
 
-#: gtk/rgmainwindow.cc:2170
+#: gtk/rgmainwindow.cc:2176
 msgid "Applying marked changes. This may take a while..."
 msgstr "正在实施已标记的变更。这可能需要一会..."
 
-#: gtk/rgmainwindow.cc:2174
+#: gtk/rgmainwindow.cc:2180
 msgid "Downloading Package Files"
 msgstr "下载软件包文件"
 
-#: gtk/rgmainwindow.cc:2234
+#: gtk/rgmainwindow.cc:2255
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得吗？"
 
-#: gtk/rgmainwindow.cc:2290
+#: gtk/rgmainwindow.cc:2311
 msgid "Downloading Index Files"
 msgstr "下载索引文件"
 
-#: gtk/rgmainwindow.cc:2292
+#: gtk/rgmainwindow.cc:2313
 msgid "Refreshing package list..."
 msgstr "正在刷新软件包列表..."
 
-#: gtk/rgmainwindow.cc:2355
+#: gtk/rgmainwindow.cc:2376
 msgid "Failed to resolve dependency problems!"
 msgstr "无法解决软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2357
+#: gtk/rgmainwindow.cc:2378
 msgid "Successfully fixed dependency problems"
 msgstr "已成功修正软件包依赖关系问题！"
 
-#: gtk/rgmainwindow.cc:2373
+#: gtk/rgmainwindow.cc:2394
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1270,17 +1252,17 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复毁损的软件包。"
 
-#: gtk/rgmainwindow.cc:2414
+#: gtk/rgmainwindow.cc:2435
 msgid "Marking all available upgrades..."
-msgstr "正在标记所有可用的升级..."
+msgstr "正在标记全部可用的升级..."
 
-#: gtk/rgmainwindow.cc:2426
+#: gtk/rgmainwindow.cc:2447
 msgid "Successfully marked available upgrades"
-msgstr "已成功标记所有可用的升级"
+msgstr "已成功标记全部可用的升级"
 
-#: gtk/rgmainwindow.cc:2428
+#: gtk/rgmainwindow.cc:2449
 msgid "Failed to mark all available upgrades!"
-msgstr "无法标记所有可用的升级！"
+msgstr "无法标记全部可用的升级！"
 
 #: gtk/rgrepositorywin.cc:100 gtk/window_repositories.glade.h:4
 msgid "Repositories"
@@ -1340,107 +1322,99 @@ msgstr "将会被降级"
 msgid "To be kept back"
 msgstr "将会维持原状不升级的软件包"
 
-#: gtk/rgsummarywindow.cc:211
+#: gtk/rgsummarywindow.cc:196
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
 msgstr "<b>%s</b> (<b>必需的</b>) 将被删除！\n"
 
-#: gtk/rgsummarywindow.cc:220
+#: gtk/rgsummarywindow.cc:205
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
 msgstr "<b>%s</b> 将被<b>降级</b>\n"
 
-#: gtk/rgsummarywindow.cc:228
+#: gtk/rgsummarywindow.cc:213
 #, c-format
 msgid "<b>%s</b> will be removed\n"
 msgstr "<b>%s</b> 将被删除\n"
 
-#: gtk/rgsummarywindow.cc:237
+#: gtk/rgsummarywindow.cc:222
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr "<b>%s</b> (版本 <i>%s</i>) 将被升级到版本 <i>%s</i>\n"
 
-#: gtk/rgsummarywindow.cc:248
+#: gtk/rgsummarywindow.cc:233
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
 msgstr "<b>%s</b> (版本 <i>%s</i>) 将被安装\n"
 
-#: gtk/rgsummarywindow.cc:256
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:241
+#, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
-msgstr "<b>%s</b> (版本 <i>%s</i>) 将被安装\n"
+msgstr "<b>%s</b> (版本 <i>%s</i>) 将被重新安装\n"
 
-#: gtk/rgsummarywindow.cc:275
+#: gtk/rgsummarywindow.cc:276
 msgid "Summary"
 msgstr "摘要"
 
-#: gtk/rgsummarywindow.cc:336
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:340
+#, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
-msgstr[0] "没有选中任何软件包。\n"
-msgstr[1] "没有选中任何软件包。\n"
+msgstr[0] "%d 个软件包已锁定\n"
 
-#: gtk/rgsummarywindow.cc:343
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:347
+#, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
-msgstr[0] "1 个软件包将保持原样不升级\n"
-msgstr[1] "1 个软件包将保持原样不升级\n"
+msgstr[0] "%d 个软件包将保持原样不升级\n"
 
-#: gtk/rgsummarywindow.cc:350
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:354
+#, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d 个新软件包将被安装\n"
-msgstr[1] "%d 个新软件包将被安装\n"
 
-#: gtk/rgsummarywindow.cc:357
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:361
+#, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
-msgstr[0] "%d 个新软件包将被安装\n"
-msgstr[1] "%d 个新软件包将被安装\n"
+msgstr[0] "%d 个新软件包将被重新安装\n"
 
-#: gtk/rgsummarywindow.cc:364
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:368
+#, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d 个软件包将被升级\n"
-msgstr[1] "%d 个软件包将被升级\n"
 
-#: gtk/rgsummarywindow.cc:371
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:375
+#, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d 个软件包将被删除\n"
-msgstr[1] "%d 个软件包将被删除\n"
 
-#: gtk/rgsummarywindow.cc:378
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:382
+#, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d 个软件包将被<b>降级</b>\n"
-msgstr[1] "%d 个软件包将被<b>降级</b>\n"
 
-#: gtk/rgsummarywindow.cc:386
-#, fuzzy, c-format
+#: gtk/rgsummarywindow.cc:390
+#, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>警告：</b>%d 个必需的软件包将被删除\n"
-msgstr[1] "<b>警告：</b>%d 个必需的软件包将被删除\n"
 
-#: gtk/rgsummarywindow.cc:398
+#: gtk/rgsummarywindow.cc:402
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s 额外空间将被使用"
 
-#: gtk/rgsummarywindow.cc:401
+#: gtk/rgsummarywindow.cc:405
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s 额外空间将被释放"
 
-#: gtk/rgsummarywindow.cc:407
+#: gtk/rgsummarywindow.cc:411
 #, c-format
 msgid ""
 "\n"
@@ -1449,7 +1423,7 @@ msgstr ""
 "\n"
 "必须下载 %s"
 
-#: gtk/rgsummarywindow.cc:432
+#: gtk/rgsummarywindow.cc:436
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -1498,14 +1472,12 @@ msgid "Apply"
 msgstr "应用"
 
 #: gtk/window_main.glade.h:5
-#, fuzzy
 msgid "Mark All Up_grades..."
-msgstr "标记以便全部升级(_G)..."
+msgstr "标记全部软件包以便升级(_G)..."
 
 #: gtk/window_main.glade.h:6
-#, fuzzy
 msgid "Mark All Upgrades"
-msgstr "标记以便全部升级"
+msgstr "标记全部软件包以便升级"
 
 #: gtk/window_main.glade.h:7
 msgid "Mark for Co_mplete Removal"
@@ -1573,7 +1545,7 @@ msgstr "取消标记(_N)"
 
 #: gtk/window_main.glade.h:26
 msgid "U_nmark All"
-msgstr "取消所有标记(_N)"
+msgstr "取消全部标记(_N)"
 
 #: gtk/window_main.glade.h:27
 msgid "_About"
@@ -1592,28 +1564,24 @@ msgid "_Configure..."
 msgstr "配置(_C)..."
 
 #: gtk/window_main.glade.h:31
-#, fuzzy
 msgid "_Contents"
-msgstr "组件"
+msgstr "内容(_C)"
 
 #: gtk/window_main.glade.h:32
-#, fuzzy
 msgid "_Download Changelog"
-msgstr "仅仅下载软件包文件"
+msgstr "下载变更日志(_D)"
 
 #: gtk/window_main.glade.h:33
-#, fuzzy
 msgid "_Edit"
-msgstr "编辑器"
+msgstr "编辑(_E)"
 
 #: gtk/window_main.glade.h:34
 msgid "_File"
 msgstr "文件(_F)"
 
 #: gtk/window_main.glade.h:35
-#, fuzzy
 msgid "_Filters"
-msgstr "过滤器"
+msgstr "过滤器(_F)"
 
 #: gtk/window_main.glade.h:36
 msgid "_Find..."
@@ -1632,18 +1600,16 @@ msgid "_Hide"
 msgstr "隐藏(_H)"
 
 #: gtk/window_main.glade.h:40
-#, fuzzy
 msgid "_Icon Legend"
-msgstr "只有图标(_I)"
+msgstr "图标图例(_I)"
 
 #: gtk/window_main.glade.h:41
 msgid "_Icons Only"
 msgstr "只有图标(_I)"
 
 #: gtk/window_main.glade.h:42
-#, fuzzy
 msgid "_Lock Current Status and Version"
-msgstr "保持当前的版本(_H)"
+msgstr "锁定当前的状态和版本(_L)"
 
 #: gtk/window_main.glade.h:43
 msgid "_Quick Introduction"
@@ -1795,9 +1761,8 @@ msgid "Dependencies"
 msgstr "依赖关系"
 
 #: gtk/window_find.glade.h:3
-#, fuzzy
 msgid "Description and Name"
-msgstr "软件包描述"
+msgstr "软件包描述和名称"
 
 #: gtk/window_find.glade.h:4
 msgid "Find:"
@@ -1805,7 +1770,7 @@ msgstr "查找："
 
 #: gtk/window_find.glade.h:5
 msgid "Look in:"
-msgstr ""
+msgstr "搜索："
 
 #: gtk/window_find.glade.h:8 gtk/window_filters.glade.h:44
 #: gtk/window_details.glade.h:23
@@ -1819,29 +1784,25 @@ msgid "    "
 msgstr "    "
 
 #: gtk/window_fetch.glade.h:2
-#, fuzzy
 msgid "<b>Single Files:</b>"
-msgstr "<b>包括的字段</b>"
+msgstr "<b>单个文件：</b>"
 
 #: gtk/window_fetch.glade.h:3
-#, fuzzy
 msgid "<b>Total Progress:</b>"
-msgstr "<b>标记：</b>"
+msgstr "<b>总进程：</b>"
 
 #: gtk/window_changes.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">将附加的必需的变更纳入队列吗？</span>"
+msgstr "<span weight=\"bold\" size=\"larger\">标记附加的必需的变更吗？</span>"
 
 #: gtk/window_changes.glade.h:2
 msgid ""
 "The chosen action also affects other packages. The following changes are "
 "required in order to proceed."
 msgstr ""
-"选中的动作也影响了其他软件包。下列修改是必需的，以便继续进行下一步操作。"
+"选中的动作也影响了其他软件包。下列变更是必需的，以便继续进行下一步操作。"
 
 #: gtk/window_changes.glade.h:3
 msgid "_Mark"
@@ -1892,21 +1853,19 @@ msgid "<b>Marking Changes</b>"
 msgstr "<b>标记变更</b>"
 
 #: gtk/window_preferences.glade.h:14
-#, fuzzy
 msgid ""
 "<b>Note:</b> The package list must be reloaded and all marked changes will "
 "be lost. Make sure to apply your changes first."
 msgstr ""
-"<b>注意：</b>软件包列表需要重新载入，因此所有的选择都将丢失。请确保首先执行您"
-"的变更。"
+"<b>注意：</b>软件包列表必须重新载入，因此全部标记的变更都将丢失。请确保首先实"
+"施您的变更。"
 
 #: gtk/window_preferences.glade.h:15
-#, fuzzy
 msgid ""
 "<b>Note:</b> You will have to restart synaptic for \n"
 "this setting to take effect."
 msgstr ""
-"<b>注意：</b> 您需要重启新立得(synaptic)\n"
+"<b>注意：</b> 您必须重启新立得(synaptic)\n"
 "以便使该设置生效。"
 
 #: gtk/window_preferences.glade.h:17
@@ -1955,7 +1914,7 @@ msgstr "已损坏："
 
 #: gtk/window_preferences.glade.h:27
 msgid "Clicking on the status icon marks the most likely action"
-msgstr ""
+msgstr "点击状态图标会标记最合适的动作"
 
 #: gtk/window_preferences.glade.h:28
 msgid "Color"
@@ -2212,7 +2171,7 @@ msgstr "光盘标签："
 msgid ""
 "The label will be used to identify the CD-ROM if you want to install "
 "packages from it later."
-msgstr ""
+msgstr "如果您想今后从该 CD-ROM 光盘安装软件包，该标签将用于标识这张光盘。"
 
 #: gtk/window_setopt.glade.h:2
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
@@ -2248,16 +2207,14 @@ msgid "Return to the main screen"
 msgstr "返回主窗口"
 
 #: gtk/window_summary.glade.h:8
-#, fuzzy
 msgid "The package files will be downloaded only, but not installed"
-msgstr "软件包文件将仅被查询，而不会被安装或升级"
+msgstr "这些软件包文件只会被下载，而不会被安装"
 
 #: gtk/window_summary.glade.h:9
-#, fuzzy
 msgid ""
 "This is your last opportunity to look through the list of marked changes "
 "before they are applied."
-msgstr "这是您在那些纳入队列的变更被执行前回顾这一列表的最后机会。"
+msgstr "这是您在那些已标记的变更被实施前回顾这一列表的最后机会。"
 
 #: gtk/window_summary.glade.h:10
 msgid "_Show Details"
@@ -2265,12 +2222,11 @@ msgstr "显示细节(_S)"
 
 #: gtk/window_filters.glade.h:3
 msgid "<b>Current</b>"
-msgstr "<b>当前的</b>"
+msgstr "<b>当前</b>"
 
 #: gtk/window_filters.glade.h:4
-#, fuzzy
 msgid "<b>Marked</b>"
-msgstr "<b>软件包</b>"
+msgstr "<b>已标记</b>"
 
 #: gtk/window_filters.glade.h:5
 msgid "<b>Other</b>"
@@ -2283,7 +2239,6 @@ msgstr "有冲突的软件包"
 #. suggests
 #: gtk/window_filters.glade.h:8 gtk/rgfiltermanager.h:76
 #: gtk/window_details.glade.h:14
-#, fuzzy
 msgid "Dependants"
 msgstr "依赖此软件包的软件包"
 
@@ -2300,14 +2255,12 @@ msgid "Excludes"
 msgstr "不包括"
 
 #: gtk/window_filters.glade.h:15
-#, fuzzy
 msgid "For installation or upgrade"
-msgstr "将会被安装或升级的"
+msgstr "要安装或升级的"
 
 #: gtk/window_filters.glade.h:16
-#, fuzzy
 msgid "For removal"
-msgstr "已标记要删除的软件包"
+msgstr "要删除的"
 
 #: gtk/window_filters.glade.h:17
 msgid "Include"
@@ -2325,39 +2278,31 @@ msgstr "包括"
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "不再需要的库软件包(需要 deborphan)"
 
-#: gtk/window_filters.glade.h:23
-msgid "New in archive"
-msgstr "归档中的新内容"
-
 #: gtk/window_filters.glade.h:24
-#, fuzzy
 msgid "Not installable"
-msgstr "未安装的"
+msgstr "不可安装"
 
 #: gtk/window_filters.glade.h:26
-#, fuzzy
 msgid "Not marked"
-msgstr "未安装的"
+msgstr "未标记"
 
 #: gtk/window_filters.glade.h:28
 msgid "Orphaned"
-msgstr "再没有人维护的“孤儿”软件包"
+msgstr "无人维护的“孤儿”软件包"
 
 #: gtk/window_filters.glade.h:29
 msgid "Package Name"
 msgstr "软件包名称"
 
 #: gtk/window_filters.glade.h:30
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Refresh\""
-msgstr "仓库中自上次“更新”后的新软件包"
+msgstr "仓库中自上次“刷新”后的新软件包"
 
 #: gtk/window_filters.glade.h:31
 msgid "Packages that are not available in any repository"
 msgstr "在任何仓库里都无法获得的软件包"
 
 #: gtk/window_filters.glade.h:32
-#, fuzzy
 msgid ""
 "Packages that have been installed and a later upstream version ist available"
 msgstr "已安装并且具有可用的新版本的软件包"
@@ -2391,9 +2336,8 @@ msgid "Packages that will never be upgraded"
 msgstr "永远不再升级的软件包。"
 
 #: gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that won't be changed"
-msgstr "将会维持原状不升级的软件包"
+msgstr "将会维持原状不变化的软件包"
 
 #: gtk/window_filters.glade.h:41
 msgid "Packages with broken dependencies"
@@ -2405,9 +2349,8 @@ msgstr "标记为永不升级的软件包"
 
 #. replaces/obsoletes
 #: gtk/window_filters.glade.h:45 gtk/rgfiltermanager.h:74
-#, fuzzy
 msgid "Recommendations"
-msgstr "推荐的"
+msgstr "推荐的软件包"
 
 #: gtk/window_filters.glade.h:46
 msgid "Replaced Packages"
@@ -2419,42 +2362,32 @@ msgstr "残存配置"
 
 #. /recommends
 #: gtk/window_filters.glade.h:50 gtk/rgfiltermanager.h:75
-#, fuzzy
 msgid "Suggestions"
-msgstr "建议"
+msgstr "建议的软件包"
 
 #: gtk/window_filters.glade.h:51
 msgid "Tags"
 msgstr "标签"
 
 #: gtk/window_filters.glade.h:52
-#, fuzzy
 msgid "Upgradable"
-msgstr "可升级"
-
-#: gtk/window_filters.glade.h:53
-#, fuzzy
-msgid "Upgradable to a later upstream version"
-msgstr "安装最新版本"
+msgstr "可升级的软件包"
 
 #: gtk/window_filters.glade.h:54
 msgid "Version Number"
 msgstr "版本号"
 
 #: gtk/window_filters.glade.h:55
-#, fuzzy
 msgid "_Deselect All"
-msgstr "取消选择全部"
+msgstr "取消全部选中(_D)"
 
 #: gtk/window_filters.glade.h:56
-#, fuzzy
 msgid "_Invert All"
-msgstr "反向选择"
+msgstr "反向选择(_I)"
 
 #: gtk/window_filters.glade.h:57
-#, fuzzy
 msgid "_Select All"
-msgstr "选择全部"
+msgstr "选择全部(_S)"
 
 #: gtk/window_repositories.glade.h:3
 msgid "Distribution:"
@@ -2497,9 +2430,8 @@ msgid "<b>Terminal Output:</b>"
 msgstr "<b>终端输出：</b>"
 
 #: gtk/window_zvtinstallprogress.glade.h:2
-#, fuzzy
 msgid "Close this dialog after the changes have been applied successfully"
-msgstr "当变更执行后询问退出"
+msgstr "当变更成功实施后关闭此对话框"
 
 #: data/synaptic.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
@@ -2522,19 +2454,20 @@ msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then to apply them."
 msgstr ""
+"<b>注意：</b> 这些变更不会被立即实施。首先您必须标记全部的变更，然后再实施它"
+"们。"
 
 #: gtk/dialog_welcome.glade.h:3
-#, fuzzy
 msgid "Choose the action from the context menu of the package."
-msgstr "安装软件包的最新版本"
+msgstr "从软件包的上下文菜单选择动作。"
 
 #: gtk/dialog_welcome.glade.h:4
 msgid "Click on the status icon to open a menu that contains all actions."
-msgstr ""
+msgstr "点击状态图标来打开一个包括全部动作的菜单。"
 
 #: gtk/dialog_welcome.glade.h:5
 msgid "Double click on the package name."
-msgstr ""
+msgstr "在软件包名称上双击。"
 
 #: gtk/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
@@ -2542,11 +2475,11 @@ msgstr "快速指南"
 
 #: gtk/dialog_welcome.glade.h:7
 msgid "Select the package and choose the action from the 'Package' menu."
-msgstr ""
+msgstr "挑选软件包并从“软件包”菜单选择动作。"
 
 #: gtk/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
-msgstr ""
+msgstr "启动程序时显示此对话框"
 
 #: gtk/dialog_welcome.glade.h:9
 msgid ""
@@ -2554,33 +2487,32 @@ msgid ""
 "package manager enables you to install, to upgrade or to remove software "
 "packages."
 msgstr ""
+"您系统里的软件被组织为所谓的<i>软件包</i>。软件包管理器使您能够安装、升级或者"
+"删除软件包。"
 
 #: gtk/dialog_welcome.glade.h:10
-#, fuzzy
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
-msgstr "标记软件包，为安装或升级作准备"
+msgstr "您可以以多种途径标记软件包，为安装、升级或删除作准备："
 
 #: gtk/dialog_unmet.glade.h:1
-#, fuzzy
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Failed to mark all packages for "
 "installation or upgrade</span>\n"
 "\n"
 "The following packages have unmet dependencies:"
 msgstr ""
-"某些软件包无法安装。\n"
+"<span weight=\"bold\" size=\"larger\">无法为安装或升级标记全部软件包</span>\n"
 "\n"
-"下列软件包具有未满足的依赖关系：\n"
+"下列软件包具有未满足的依赖关系："
 
 #: gtk/dialog_changelog.glade.h:1
 msgid "<b>Full changelog of the latest version:</b>"
-msgstr ""
+msgstr "<b>最近版本的完整变更日志：</b>"
 
 #: gtk/dialog_changelog.glade.h:2
-#, fuzzy
 msgid "Changelog"
-msgstr "取消"
+msgstr "变更日志"
 
 #: gtk/dialog_update_failed.glade.h:1
 msgid ""
@@ -2590,56 +2522,53 @@ msgid ""
 "If available an older version of the failed index will be used. Otherwise "
 "the repository will be ignored."
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">无法下载全部索引文件</span>\n"
+"\n"
+"如果可用，一个旧版本的索引文件将被使用。否则该软件库将被忽略。"
 
 #: gtk/rgfiltermanager.h:66
 msgid "Package name"
 msgstr "软件包名称"
 
 #: gtk/rgfiltermanager.h:67
-#, fuzzy
 msgid "Version number"
 msgstr "版本号"
 
 #. depends, predepends etc
 #: gtk/rgfiltermanager.h:71
-#, fuzzy
 msgid "Provided packages"
 msgstr "提供的软件包"
 
 #. provides and name
 #: gtk/rgfiltermanager.h:72
-#, fuzzy
 msgid "Conflicting packages"
 msgstr "有冲突的软件包"
 
 #. conflicts
 #: gtk/rgfiltermanager.h:73
-#, fuzzy
 msgid "Replaced packages"
 msgstr "已替换的软件包"
 
 #: gtk/rgiconlegend.cc:41 gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
-msgstr ""
+msgstr "图标图例"
 
 #. vim:ts=3:sw=3:et
 #: gtk/window_iconlegend.glade.h:1
 msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
-msgstr ""
+msgstr "<b>下列图标用来指代软件包的当前状态：</b>"
 
 #: gtk/window_details.glade.h:2
 msgid "<b>Available Versions</b>"
-msgstr "<b>最新版本</b>"
+msgstr "<b>可用版本</b>"
 
 #: gtk/window_details.glade.h:3
-#, fuzzy
 msgid "<b>Installed Version</b>"
-msgstr "已安装的版本"
+msgstr "<b>已安装版本</b>"
 
 #: gtk/window_details.glade.h:4
-#, fuzzy
 msgid "<b>Latest Available Version</b>"
 msgstr "<b>最新版本</b>"
 
@@ -2701,25 +2630,23 @@ msgstr "版本："
 
 #: gtk/rgterminstallprogress.cc:86
 msgid "<i>Running...</i>"
-msgstr ""
+msgstr "<i>正在执行...</i>"
 
 #: gtk/rgterminstallprogress.cc:93
-#, fuzzy
 msgid ""
 "\n"
 "Successfully applied all changes. You can close the window now "
 msgstr ""
 "\n"
-"更新完成 - 您现在可以关闭该窗口"
+"成功实施全部变更。您现在可以关闭窗口"
 
 #: gtk/rgterminstallprogress.cc:94
-#, fuzzy
 msgid ""
 "\n"
 "Failed to apply all changes! Scroll in this buffer to see what went wrong "
 msgstr ""
 "\n"
-"更新失败 - 请回滚至此缓冲器以查看发生了什么错误"
+"无法实施全部变更！请回滚至此缓冲器以查看发生了什么错误"
 
 #: gtk/rgterminstallprogress.cc:96
 msgid ""
@@ -2727,15 +2654,22 @@ msgid ""
 "Successfully installed all packages of the current medium. To continue the "
 "installation with the next medium close this window."
 msgstr ""
+"\n"
+"成功安装当前媒介的全部软件包。要继续使用下一个媒介安装请关闭此窗口。"
 
 #: gtk/rgterminstallprogress.cc:144
 msgid "<i>Finished</i>"
-msgstr ""
+msgstr "<i>已完成</i>"
 
 #: gtk/rgterminstallprogress.cc:153
-#, fuzzy
 msgid "<i>Can't close while running</i>"
-msgstr "执行时无法关闭"
+msgstr "<i>正在执行时无法关闭</i>"
+
+#~ msgid "New in archive"
+#~ msgstr "归档中的新内容"
+
+#~ msgid "Upgradable to a later upstream version"
+#~ msgstr "可升级到较新版本"
 
 #~ msgid "Installed and upgradable"
 #~ msgstr "已安装的和可升级的"
@@ -2743,13 +2677,8 @@ msgstr "执行时无法关闭"
 #~ msgid "Not (no longer) installable"
 #~ msgstr "不可(不再)安装"
 
-#, fuzzy
 #~ msgid "unknown"
 #~ msgstr "未知"
-
-#, fuzzy
-#~ msgid "Installed (update available)"
-#~ msgstr "编辑可用的过滤器"
 
 #~ msgid "Queued Changes"
 #~ msgstr "将变更纳入队列"
@@ -2757,13 +2686,8 @@ msgstr "执行时无法关闭"
 #~ msgid "Up_grade System"
 #~ msgstr "升级系统(_G)"
 
-#, fuzzy
 #~ msgid "New in archive:"
-#~ msgstr "归档中的新内容"
-
-#, fuzzy
-#~ msgid "Update available:"
-#~ msgstr "编辑可用的过滤器"
+#~ msgstr "归档中的新内容："
 
 #, fuzzy
 #~ msgid ""
@@ -2818,11 +2742,9 @@ msgstr "执行时无法关闭"
 #~ "used instead."
 #~ msgstr "一些索引文件下载失败，它们已被忽略，或由较旧文件代替。"
 
-#, fuzzy
 #~ msgid "Reverse dependencies"
 #~ msgstr "反向依赖"
 
-#, fuzzy
 #~ msgid "Reverse Depends"
 #~ msgstr "反向依赖"
 
@@ -2835,22 +2757,12 @@ msgstr "执行时无法关闭"
 #~ msgid "Search in:"
 #~ msgstr "搜索："
 
-#, fuzzy
 #~ msgid "Search:"
 #~ msgstr "搜索："
-
-#, fuzzy
-#~ msgid "_Show Matching Packages Only"
-#~ msgstr "编辑过滤器(_E)"
-
-#, fuzzy
-#~ msgid "Marked for removal including config:"
-#~ msgstr "连同配置文件一并删除(_P)"
 
 #~ msgid "<b>Install</b>"
 #~ msgstr "<b>安装</b>"
 
-#, fuzzy
 #~ msgid "Recommended"
 #~ msgstr "推荐的"
 
@@ -2875,25 +2787,11 @@ msgstr "执行时无法关闭"
 #~ msgid "_Save Selections"
 #~ msgstr "保存选中的项目(_S)"
 
-#, fuzzy
-#~ msgid "Marked for removal including configuration"
-#~ msgstr "连同配置文件一并删除(_P)"
-
-#, fuzzy
-#~ msgid "Unable to minimize the upgrade set"
-#~ msgstr "无法读取 CD-ROM 数据库 %s"
-
-#, fuzzy
-#~ msgid "Retrieving %li of %li files"
-#~ msgstr "正在检索索引文件..."
-
-#, fuzzy
 #~ msgid "Retrieving Package Files"
-#~ msgstr "正在检索软件包文件..."
+#~ msgstr "检索软件包文件"
 
-#, fuzzy
 #~ msgid "Retrieving Index Files"
-#~ msgstr "正在检索索引文件..."
+#~ msgstr "检索索引文件"
 
 #~ msgid "WeakDepends"
 #~ msgstr "弱依赖"
@@ -2904,19 +2802,11 @@ msgstr "执行时无法关闭"
 #~ msgid "Install"
 #~ msgstr "安装"
 
-#, fuzzy
-#~ msgid "Reinstall"
-#~ msgstr "安装"
-
 #~ msgid "Upgrade"
 #~ msgstr "升级"
 
 #~ msgid "Remove Including Configuration"
 #~ msgstr "删除包括配置"
-
-#, fuzzy
-#~ msgid "R_einstall Current Version"
-#~ msgstr "保留当前的版本"
 
 #~ msgid "Remove Including _Configuration"
 #~ msgstr "删除包括配置(_C)"
@@ -2945,7 +2835,6 @@ msgstr "执行时无法关闭"
 #~ msgid "All Packages"
 #~ msgstr "全部软件包"
 
-#, fuzzy
 #~ msgid "Filter the list of shown packages"
 #~ msgstr "过滤显示的软件包列表"
 
@@ -2958,7 +2847,6 @@ msgstr "执行时无法关闭"
 #~ msgid "Suggestions or Recommendations"
 #~ msgstr "建议和推荐"
 
-#, fuzzy
 #~ msgid "Suggestions or recommendations"
 #~ msgstr "建议和推荐"
 
@@ -2967,14 +2855,6 @@ msgstr "执行时无法关闭"
 
 #~ msgid "Ac_tions"
 #~ msgstr "动作(_T)"
-
-#, fuzzy
-#~ msgid "Clear Package Cache Now"
-#~ msgstr "立即清空缓存"
-
-#, fuzzy
-#~ msgid "One click on status icon marks packages"
-#~ msgstr "软件包主列表使用色彩表示"
 
 #~ msgid "Enter the disc name"
 #~ msgstr "请输入光盘名称"
@@ -3014,16 +2894,6 @@ msgstr "执行时无法关闭"
 
 #~ msgid "Execute the queued changes"
 #~ msgstr "执行纳入队列的变更"
-
-#, fuzzy
-#~ msgid ""
-#~ "No libgnome2-perl installed\n"
-#~ "\n"
-#~ "You have to install libgnome2-perl to use dpkg-reconfigure with synaptic"
-#~ msgstr ""
-#~ "未安装 libgnome-perl\n"
-#~ "\n"
-#~ "您不得不安装 libgnome-perl 以便通过 synaptic 使用 dpkg-reconfigure"
 
 #~ msgid ""
 #~ "Operation not possible with broken packages.\n"
@@ -3066,10 +2936,6 @@ msgstr "执行时无法关闭"
 #~ msgid "<b>General</b>"
 #~ msgstr "<b>常规信息</b>"
 
-#, fuzzy
-#~ msgid "Queued for removal:"
-#~ msgstr "已标记要删除的软件包"
-
 #~ msgid "Execute the changes"
 #~ msgstr "执行变更"
 
@@ -3105,14 +2971,6 @@ msgstr "执行时无法关闭"
 
 #~ msgid "Tree: "
 #~ msgstr "树状视图："
-
-#, fuzzy
-#~ msgid "Queued for removal"
-#~ msgstr "已标记要删除的软件包"
-
-#, fuzzy
-#~ msgid "Not installed (available)"
-#~ msgstr "未安装的"
 
 #~ msgid "_Downgrade"
 #~ msgstr "降级(_D)"
@@ -3175,10 +3033,6 @@ msgstr "执行时无法关闭"
 #~ msgid "Synaptic - an apt frontend"
 #~ msgstr "新立得(Synaptic) - 一个 apt 前端"
 
-#, fuzzy
-#~ msgid "Up_grade All"
-#~ msgstr "升级(_G)"
-
 #~ msgid "Update package cache"
 #~ msgstr "更新软件包列表缓存 (apt-get update)"
 
@@ -3194,9 +3048,8 @@ msgstr "执行时无法关闭"
 #~ msgid "_Collapse All"
 #~ msgstr "收起全部(_C)"
 
-#, fuzzy
 #~ msgid "_Edit Filters..."
-#~ msgstr "编辑过滤器(_E)"
+#~ msgstr "编辑过滤器(_E)..."
 
 #~ msgid "_Execute"
 #~ msgstr "执行(_E)"
@@ -3239,20 +3092,6 @@ msgstr "执行时无法关闭"
 #~ msgid "_Collapse All   "
 #~ msgstr "收起全部(_C)"
 
-#, fuzzy
-#~ msgid "Available (New):"
-#~ msgstr "最新版本"
-
-#, fuzzy
-#~ msgid "Available (locked):"
-#~ msgstr ""
-#~ "\n"
-#~ "最新版软件包：\n"
-
-#, fuzzy
-#~ msgid "Available: "
-#~ msgstr "可用的标签"
-
 #~ msgid "Clear"
 #~ msgstr "清除"
 
@@ -3265,20 +3104,11 @@ msgstr "执行时无法关闭"
 #~ msgid "Layout"
 #~ msgstr "布局"
 
-#, fuzzy
-#~ msgid "Package List"
-#~ msgstr "软件包"
-
-#, fuzzy
 #~ msgid "Purge: "
-#~ msgstr "彻底删除 (Purge)"
+#~ msgstr "彻底删除(Purge)："
 
 #~ msgid "Remove:"
 #~ msgstr "删除："
-
-#, fuzzy
-#~ msgid "Upgrade of all packages:"
-#~ msgstr "更新最新软件包的列表"
 
 #~ msgid "Upgrade:"
 #~ msgstr "升级："
@@ -3325,15 +3155,9 @@ msgstr "执行时无法关闭"
 #~ "\n"
 #~ "这种行为可以今后在的首选项里变更。"
 
-#, fuzzy
 #~ msgid "%d package is set on hold\n"
 #~ msgid_plural "%d packages are set on hold\n"
-#~ msgstr[0] "1 个软件包被设置为保持不变\n"
-#~ msgstr[1] "1 个软件包被设置为保持不变\n"
-
-#, fuzzy
-#~ msgid "Will never be installed"
-#~ msgstr "%s 已安装或将会安装"
+#~ msgstr[0] "%d 个软件包被设置为保持不变\n"
 
 #~ msgid "Fetching Files"
 #~ msgstr "正在获取文件"
@@ -4121,7 +3945,7 @@ msgstr "执行时无法关闭"
 
 #~ msgid ""
 #~ "Make a filter in 'Search Filter' showing all packages matching the pattern"
-#~ msgstr "在“搜索筛选器”制作筛选器，显示所有匹配模板的软件包"
+#~ msgstr "在“搜索筛选器”制作筛选器，显示全部匹配模板的软件包"
 
 #~ msgid ""
 #~ "There are unsaved changes, are you sure\n"

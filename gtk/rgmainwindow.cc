@@ -1550,13 +1550,11 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
          vector<RPackage *> selected_pkgs;
          GList *li = NULL;
 
-         // Treat right click as additional selection, and left click
-         // as single selection. 
-         if (event->button == 1 &&
-             ((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK))
+         // Treat click with CONTROL as additional selection
+	 if((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK)
             gtk_tree_selection_unselect_all(selection);
          gtk_tree_selection_select_path(selection, path);
-         
+
          li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
          for (li = g_list_first(li); li != NULL; li = g_list_next(li)) {
             gtk_tree_model_get_iter(me->_pkgList, &iter,

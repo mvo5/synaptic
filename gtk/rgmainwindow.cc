@@ -444,15 +444,21 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
       return;
 
    RGGladeUserDialog dia(me,"change_version");
+
+   GtkWidget *label = glade_xml_get_widget(dia.getGladeXML(),
+					   "label_text");
+   gchar *str_name = g_strdup_printf(_("Select the version of %s that should be forced for installation"), pkg->name());
+   gchar *str = g_strdup_printf("<big><b>%s</b></big>\n%s", str_name,
+				_("The package manager always selects the best version available. If you force a differnet version from the default one, errors in the dependency handling can occur."));
+   gtk_label_set_markup(GTK_LABEL(label), str);
+   g_free(str_name);
+   g_free(str);
+   
    GtkWidget *optionMenu = glade_xml_get_widget(dia.getGladeXML(), 
 					"optionmenu_available_versions");
 
    GtkWidget *menu = gtk_menu_new(); 
    GtkWidget *item; 
-
-   item = gtk_menu_item_new_with_label(_("do not override"));
-   gtk_widget_show(item);
-   gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
 
    vector<pair<string, string> > versions = pkg->getAvailableVersions();
    for(unsigned int i=0;i<versions.size();i++) {
@@ -460,8 +466,7 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
       item = gtk_menu_item_new_with_label(str);
-      if(versions[i].second != "now")
-	 gtk_widget_show(item);
+      gtk_widget_show(item);
       gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
       //cout << "got: " << str << endl;
       g_free(str);
@@ -473,17 +478,10 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    }
 
    int nr = gtk_option_menu_get_history(GTK_OPTION_MENU(optionMenu));
-   // zero means "do not override" 
-   if(nr == 0) {
-      //cout << "no change selected" << endl;
-      pkg->unsetVersion();
-      me->pkgAction(PKG_KEEP);
-      return;
-   }
 
    pkg->setNotify(false);
    // nr-1 here as we add a "do not override" to the option menu
-   pkg->setVersion(versions[nr-1].first.c_str());
+   pkg->setVersion(versions[nr].first.c_str());
    me->pkgAction(PKG_INSTALL_FROM_VERSION);
    
    if (!(pkg->getFlags() & RPackage::FInstall))

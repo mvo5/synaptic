@@ -1,7 +1,7 @@
 # Makefile.am for the pixmaps
 
-appicondir = $(datadir)/synaptic/pixmaps
-appicon_DATA = synaptic_48x48.png 
+appicondir = $(datadir)/pixmaps
+appicon_DATA = synaptic.png 
 
 buttondir =  $(datadir)/synaptic/glade
 button_DATA = update_small.png \

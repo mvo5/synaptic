@@ -136,7 +136,7 @@ RGZvtInstallProgress::RGZvtInstallProgress(RGMainWindow *main)
   : RInstallProgress(), RGWindow(main, "installProgress", true, false), 
     updateFinished(false)
 {
-  setTitle(_("Performing Changes"));
+  setTitle(_("Executing Changes..."));
 
   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 

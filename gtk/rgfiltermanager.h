@@ -115,12 +115,6 @@ class RGFilterManagerWindow:public RGGladeWindow {
    void setPatternFilter(RPatternPackageFilter &f);
    void getPatternFilter(RPatternPackageFilter &f);
 
-#if 0                           //PORTME
-#ifdef HAVE_DEBTAGS
-   void setTagFilter(RTagPackageFilter & f);
-   void getTagFilter(RTagPackageFilter & f);
-#endif
-#endif
    void setFilterView(RFilter *f);
    void getFilterView(RFilter *f);
 

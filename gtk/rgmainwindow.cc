@@ -1374,7 +1374,6 @@ void RGMainWindow::saveState()
 {
    if (_config->FindB("Volatile::NoStateSaving", false) == true)
       return;
-   _lister->storeFilters();
    _config->Set("Synaptic::vpanedPos",
                 gtk_paned_get_position(GTK_PANED(_vpaned)));
    _config->Set("Synaptic::windowWidth", _win->allocation.width);

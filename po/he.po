@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
-"POT-Creation-Date: 2004-06-18 08:09+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-22 08:42+0200\n"
 "PO-Revision-Date: 2004-06-19 13:11+0000\n"
 "Last-Translator: Diego Iastrubni <elcuco@kdemail.net>\n"
 "Language-Team: hebrew <kde-il@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "X-Generator: KBabel 1.3.1\n"
 
@@ -185,7 +185,7 @@ msgid "Miscellaneous  - Graphical"
 msgstr "כל מני - גראפים"
 
 #. TRANSLATORS: The section of the package is not known
-#: common/sections_trans.cc:76 common/rpackage.cc:107 gtk/rgmainwindow.cc:75
+#: common/sections_trans.cc:76 common/rpackage.cc:107 gtk/rgmainwindow.cc:76
 msgid "Unknown"
 msgstr "לא ידוע"
 
@@ -312,7 +312,8 @@ msgid "Cleaning package lists..."
 msgstr "מנקה רשימות חבילות..."
 
 #: common/rcdscanner.cc:326
-msgid "Unable to locate any package files. Perhaps this is not an APT enabled disc."
+msgid ""
+"Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr "לא יכול למצוא חבילות. אולי תקליטור זה אינו כולל מאגר APT."
 
 #: common/rcdscanner.cc:377
@@ -501,7 +502,7 @@ msgstr "שגיאה פנימית, ספירה לא התאפסה"
 msgid "Name"
 msgstr "שם"
 
-#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:838
+#: common/rpackagefilter.cc:46 gtk/rgmainwindow.cc:842
 #: gtk/rgvendorswindow.cc:62 gtk/rgvendorswindow.cc:94
 #: gtk/window_filters.glade.h:10 gtk/rgfiltermanager.h:68
 #: gtk/window_details.glade.h:17
@@ -609,22 +610,23 @@ msgstr "שגיאה פמינית, AllUpgrade הרס דברים. נא לדווח."
 msgid "dist upgrade Failed"
 msgstr "שדרוג הפצה נכשל"
 
-#: common/rpackagelister.cc:1111
+#: common/rpackagelister.cc:1119
 msgid "Unable to lock the list directory"
 msgstr "לא יכול לנעול את ספריית הרשימה"
 
-#: common/rpackagelister.cc:1133
+#: common/rpackagelister.cc:1141
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
-msgstr "לא יכול להוריד או לוודא קבצי שיחרור עבור כמה מאגרים. מתעלם ממאגרים אלו."
+msgstr ""
+"לא יכול להוריד או לוודא קבצי שיחרור עבור כמה מאגרים. מתעלם ממאגרים אלו."
 
-#: common/rpackagelister.cc:1200 common/rpackagelister.cc:1206
+#: common/rpackagelister.cc:1208 common/rpackagelister.cc:1214
 #: gtk/rgrepositorywin.cc:301
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "מתעלם מרשומות לא טובות בקובץ sources.list"
 
-#: common/rpackagelister.cc:1247
+#: common/rpackagelister.cc:1255
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -633,33 +635,33 @@ msgstr ""
 "לא יכול להוריד %s\n"
 "   %s"
 
-#: common/rpackagelister.cc:1268
+#: common/rpackagelister.cc:1276
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "לא יכול להוריד כמה מהחבילות בשרת או שרתים.\n"
 
-#: common/rpackagelister.cc:1271
+#: common/rpackagelister.cc:1279
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "האם ברצונך להמשיך, תוך כדי התעלמות מהחבילות הללו?"
 
-#: common/rpackagelister.cc:1278
+#: common/rpackagelister.cc:1286
 msgid "Unable to correct missing packages"
 msgstr "לא יכול לתקן חבילות חסרות"
 
-#: common/rpackagelister.cc:1341
+#: common/rpackagelister.cc:1349
 msgid "Unable to lock the download directory"
 msgstr "לא יכול לנעול את ספריית ההורדה"
 
-#: common/rpackagelister.cc:1419
+#: common/rpackagelister.cc:1427
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "שורה %u ארוכה מדי בקובץ הבחירות"
 
-#: common/rpackagelister.cc:1433 common/rpackagelister.cc:1437
+#: common/rpackagelister.cc:1441 common/rpackagelister.cc:1445
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "שורה %u לא תקנית בקובץ הבחירות"
 
-#: common/rpackagelister.cc:1449
+#: common/rpackagelister.cc:1457
 #, fuzzy
 msgid "Setting markings..."
 msgstr "קובע בחירות..."
@@ -728,8 +730,10 @@ msgstr "ניתן שלדרוג"
 
 #. vim:sts=3:sw=3
 #: gtk/dialog_quit.glade.h:1
-msgid "<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</span>"
-msgstr "<span weight=\"bold\" size=\"large\">לצאת ולהתעלם מהשינויים המסומנים?</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Quit and ignore marked changes?</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">לצאת ולהתעלם מהשינויים המסומנים?</span>"
 
 #: gtk/dialog_quit.glade.h:2
 msgid ""
@@ -752,7 +756,8 @@ msgid ""
 msgstr ""
 
 #: gtk/dialog_upgrade.glade.h:3
-msgid "<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Mark upgrades in a smart way?</span>"
 msgstr ""
 "<span weight=\"bold\" size=\"large\">לסמן שינויים בשידרוג חכם (dist-upgrade)?"
 "</span>"
@@ -895,7 +900,7 @@ msgstr "להתקנה"
 msgid "To be kept"
 msgstr "להשארה"
 
-#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1488
+#: gtk/rgpreferenceswindow.cc:224 gtk/rgmainwindow.cc:1524
 #: gtk/rgterminstallprogress.cc:110
 msgid "An error occurred while saving configurations."
 msgstr "ארעה שגאיה בעת שמירת התצורה"
@@ -920,7 +925,7 @@ msgstr "העדפות"
 msgid "Downloading Files"
 msgstr "מוריד קבצים"
 
-#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:818
+#: gtk/rgfetchprogress.cc:95 gtk/rgmainwindow.cc:822
 msgid "Size"
 msgstr "גודל"
 
@@ -1011,128 +1016,128 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "מבצע שינויים"
 
-#: gtk/rgpkgdetails.cc:35
+#: gtk/rgpkgdetails.cc:97
 #, c-format
 msgid "%s Properties"
 msgstr "מאפיינים של %s"
 
-#: gtk/rgmainwindow.cc:76
+#: gtk/rgmainwindow.cc:77
 msgid "Normal"
 msgstr "רגיל"
 
-#: gtk/rgmainwindow.cc:77
+#: gtk/rgmainwindow.cc:78
 msgid "Critical"
 msgstr "חיוני"
 
-#: gtk/rgmainwindow.cc:78
+#: gtk/rgmainwindow.cc:79
 msgid "Security"
 msgstr "אבטחה"
 
-#: gtk/rgmainwindow.cc:165
+#: gtk/rgmainwindow.cc:166
 msgid "All"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:357 gtk/window_details.glade.h:21
+#: gtk/rgmainwindow.cc:358 gtk/window_details.glade.h:21
 msgid "No package is selected.\n"
 msgstr "לא נבחרה חבילה כלשהיא.\n"
 
-#: gtk/rgmainwindow.cc:748
+#: gtk/rgmainwindow.cc:752
 msgid "Package"
 msgstr "חבילה"
 
-#: gtk/rgmainwindow.cc:773
+#: gtk/rgmainwindow.cc:777
 msgid "Installed Version"
 msgstr "גרסה מותקנת"
 
-#: gtk/rgmainwindow.cc:792
+#: gtk/rgmainwindow.cc:796
 msgid "Latest Version"
 msgstr "גרסה אחרונה"
 
-#: gtk/rgmainwindow.cc:1070
+#: gtk/rgmainwindow.cc:1094
 msgid "Refresh the list of known packages"
 msgstr "עדכן את רשימת החבילות הזמינות"
 
-#: gtk/rgmainwindow.cc:1074
+#: gtk/rgmainwindow.cc:1098
 msgid "Mark all possible upgrades"
 msgstr "סמן את כל העדכונים האפשריים"
 
-#: gtk/rgmainwindow.cc:1078 gtk/window_summary.glade.h:5
+#: gtk/rgmainwindow.cc:1102 gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "החל את כל השינויים המסומנים"
 
-#: gtk/rgmainwindow.cc:1237
+#: gtk/rgmainwindow.cc:1261
 msgid "Unmark"
 msgstr "בטל סימון"
 
-#: gtk/rgmainwindow.cc:1245
+#: gtk/rgmainwindow.cc:1269
 msgid "Mark for Installation"
 msgstr "סמן עבור התקנה"
 
-#: gtk/rgmainwindow.cc:1253
+#: gtk/rgmainwindow.cc:1277
 msgid "Mark for Reinstallation"
 msgstr "סמן עבור התקנה מחדש"
 
-#: gtk/rgmainwindow.cc:1262
+#: gtk/rgmainwindow.cc:1286
 msgid "Mark for Upgrade"
 msgstr "סמן עבור שידרוג"
 
-#: gtk/rgmainwindow.cc:1270
+#: gtk/rgmainwindow.cc:1294
 msgid "Mark for Removal"
 msgstr "סמן עבור הסרה"
 
-#: gtk/rgmainwindow.cc:1279
+#: gtk/rgmainwindow.cc:1303
 msgid "Mark for Complete Removal"
 msgstr "סמן עבור הסרה מוחלטת"
 
-#: gtk/rgmainwindow.cc:1291
+#: gtk/rgmainwindow.cc:1315
 msgid "Remove Including Orphaned Dependencies"
 msgstr "הסר כולל תלויות יתומות"
 
-#: gtk/rgmainwindow.cc:1303
+#: gtk/rgmainwindow.cc:1327
 msgid "Hold Current Version"
 msgstr "החזק גרסה נוכחית"
 
-#: gtk/rgmainwindow.cc:1312 gtk/window_main.glade.h:15
+#: gtk/rgmainwindow.cc:1336 gtk/window_main.glade.h:15
 #: gtk/window_filters.glade.h:43
 msgid "Properties"
 msgstr "מאפיינים"
 
-#: gtk/rgmainwindow.cc:1324
+#: gtk/rgmainwindow.cc:1348
 msgid "Mark Recommended for Installation"
 msgstr "סמן גרסה מומלצת להתקנה"
 
-#: gtk/rgmainwindow.cc:1328
+#: gtk/rgmainwindow.cc:1352
 msgid "Mark Suggested for Installation"
 msgstr "סמן גרסה מומלצת להתקנה"
 
-#: gtk/rgmainwindow.cc:1379
+#: gtk/rgmainwindow.cc:1415
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1418
+#: gtk/rgmainwindow.cc:1454
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %s will be freed"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1424
+#: gtk/rgmainwindow.cc:1460
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %s will be used"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1430
+#: gtk/rgmainwindow.cc:1466
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1505
+#: gtk/rgmainwindow.cc:1541
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1145,48 +1150,48 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: gtk/rgmainwindow.cc:1741
+#: gtk/rgmainwindow.cc:1777
 msgid "Do you want to add another CD-ROM?"
 msgstr "האם ברצונך להוסיף עוד תקליטור?"
 
-#: gtk/rgmainwindow.cc:1764 gtk/rgmainwindow.cc:2346 gtk/rgmainwindow.cc:2425
-#: gtk/rgmainwindow.cc:2585
+#: gtk/rgmainwindow.cc:1800 gtk/rgmainwindow.cc:2385 gtk/rgmainwindow.cc:2464
+#: gtk/rgmainwindow.cc:2624
 #, c-format
 msgid "Can't read %s"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1780
+#: gtk/rgmainwindow.cc:1816
 msgid "Open changes"
 msgstr "פתח שינויים"
 
-#: gtk/rgmainwindow.cc:1811 gtk/rgmainwindow.cc:1874 gtk/rgmainwindow.cc:2264
-#: gtk/rgmainwindow.cc:2398 gtk/rgmainwindow.cc:2562
+#: gtk/rgmainwindow.cc:1847 gtk/rgmainwindow.cc:1910 gtk/rgmainwindow.cc:2303
+#: gtk/rgmainwindow.cc:2437 gtk/rgmainwindow.cc:2601
 #, c-format
 msgid "Can't write %s"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:1830
+#: gtk/rgmainwindow.cc:1866
 msgid "Save changes"
 msgstr "שמור שינויים"
 
-#: gtk/rgmainwindow.cc:1847
+#: gtk/rgmainwindow.cc:1883
 msgid "Save full state, not only changes"
 msgstr "שמירת המצב המלא, לא רק שינויים"
 
-#: gtk/rgmainwindow.cc:1963
+#: gtk/rgmainwindow.cc:2002
 msgid "Searching..."
 msgstr "מחפש..."
 
-#: gtk/rgmainwindow.cc:1975
+#: gtk/rgmainwindow.cc:2014
 #, c-format
 msgid "Found %i packages"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2005
+#: gtk/rgmainwindow.cc:2044
 msgid "Starting help viewer..."
 msgstr "מתחיל את מערכת העזרה..."
 
-#: gtk/rgmainwindow.cc:2022
+#: gtk/rgmainwindow.cc:2061
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1197,76 +1202,76 @@ msgid ""
 "line or view the html version located in the 'synaptic/html' folder."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2161
+#: gtk/rgmainwindow.cc:2200
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2167
+#: gtk/rgmainwindow.cc:2206
 msgid "Starting package configuration tool..."
 msgstr "מתחיל את כלי תצורת ההגדרות..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: gtk/rgmainwindow.cc:2182
+#: gtk/rgmainwindow.cc:2221
 msgid "Starting package documentation viewer..."
 msgstr "מתחיל את המציג התיעוד של החבילה..."
 
-#: gtk/rgmainwindow.cc:2194
+#: gtk/rgmainwindow.cc:2233
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2231
+#: gtk/rgmainwindow.cc:2270
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2250
+#: gtk/rgmainwindow.cc:2289
 msgid "Applying marked changes. This may take a while..."
 msgstr "מבצע את השינויים הנבחרים... זה יקח קצת זמן"
 
-#: gtk/rgmainwindow.cc:2254
+#: gtk/rgmainwindow.cc:2293
 msgid "Downloading Package Files"
 msgstr "מוריד חבילות"
 
-#: gtk/rgmainwindow.cc:2329
+#: gtk/rgmainwindow.cc:2368
 msgid "Do you want to quit Synaptic?"
 msgstr "האם ברצונך לצאת מ-Synaptic?"
 
-#: gtk/rgmainwindow.cc:2385
+#: gtk/rgmainwindow.cc:2424
 msgid "Downloading Index Files"
 msgstr "מוריד קבצי אינדקס"
 
-#: gtk/rgmainwindow.cc:2387
+#: gtk/rgmainwindow.cc:2426
 msgid "Refreshing package list..."
 msgstr "מרענן את רשימת החבילות..."
 
-#: gtk/rgmainwindow.cc:2450
+#: gtk/rgmainwindow.cc:2489
 msgid "Failed to resolve dependency problems!"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2452
+#: gtk/rgmainwindow.cc:2491
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2468
+#: gtk/rgmainwindow.cc:2507
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: gtk/rgmainwindow.cc:2509
+#: gtk/rgmainwindow.cc:2548
 msgid "Marking all available upgrades..."
 msgstr "מסמן את כל העדכונים האפשריים..."
 
-#: gtk/rgmainwindow.cc:2521
+#: gtk/rgmainwindow.cc:2560
 msgid "Successfully marked available upgrades"
 msgstr "כל העדכונים האפשריים סומנו בהצלחה"
 
-#: gtk/rgmainwindow.cc:2523
+#: gtk/rgmainwindow.cc:2562
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
@@ -1787,11 +1792,7 @@ msgstr ""
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
-msgstr ""
-"<span weight=\"bold\" size=\"large\"> "
-"לסמן שינויים?"
-"</span> "
-" "
+msgstr "<span weight=\"bold\" size=\"large\"> לסמן שינויים?</span>  "
 
 #: gtk/window_changes.glade.h:2
 msgid ""
@@ -2102,7 +2103,8 @@ msgid "Removal of packages: "
 msgstr ""
 
 #: gtk/window_preferences.glade.h:77
-msgid "Select the default release if more than one is specifed in the sources.list"
+msgid ""
+"Select the default release if more than one is specifed in the sources.list"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:78
@@ -2124,7 +2126,8 @@ msgid "Temporary Files"
 msgstr "קבצים זמניים"
 
 #: gtk/window_preferences.glade.h:83
-msgid "The position of the column from left to right. A value of -1 hides the column"
+msgid ""
+"The position of the column from left to right. A value of -1 hides the column"
 msgstr ""
 
 #: gtk/window_preferences.glade.h:84
@@ -2155,8 +2158,10 @@ msgstr "_גופן מסוף"
 
 #: gtk/window_disc_name.glade.h:2
 #, fuzzy
-msgid "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr "<span weight=\"bold\" size=\"large\">שימוש בשידרוג חכם (dist-upgrade)?</span>"
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">שימוש בשידרוג חכם (dist-upgrade)?</span>"
 
 #: gtk/window_disc_name.glade.h:3
 #, fuzzy
@@ -2191,8 +2196,10 @@ msgstr ""
 
 #: gtk/window_summary.glade.h:4
 #, fuzzy
-msgid "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
-msgstr "<span weight=\"bold\" size=\"large\">לצאת ולהתעלם מהשינויים בתור?</span>"
+msgid ""
+"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+msgstr ""
+"<span weight=\"bold\" size=\"large\">לצאת ולהתעלם מהשינויים בתור?</span>"
 
 #: gtk/window_summary.glade.h:6
 msgid "Download package files only"
@@ -2306,7 +2313,8 @@ msgid "Packages that are not available in any repository"
 msgstr ""
 
 #: gtk/window_filters.glade.h:32
-msgid "Packages that have been installed and a later upstream version ist available"
+msgid ""
+"Packages that have been installed and a later upstream version ist available"
 msgstr ""
 
 #: gtk/window_filters.glade.h:33
@@ -2496,7 +2504,8 @@ msgid ""
 msgstr ""
 
 #: gtk/dialog_welcome.glade.h:10
-msgid "You can mark packages for installation, upgrade or removal in several ways:"
+msgid ""
+"You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
 
 #: gtk/dialog_unmet.glade.h:1
@@ -2672,4 +2681,3 @@ msgstr ""
 #: gtk/rgterminstallprogress.cc:153
 msgid "<i>Can't close while running</i>"
 msgstr ""
-

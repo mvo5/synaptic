@@ -612,20 +612,6 @@ string RPackage::showWhyInstBroken()
 	bool FirstOr = true;
 	while (1)
          {
-            First = false;
-
-            if (FirstOr == false)
-		ioprintf(out,"\t");
-            else
-               ioprintf(out," %s: ",End.DepType());
-
-            FirstOr = false;
-            ioprintf(out, "%s", Start.TargetPkg().Name());
-
-            // Show a quick summary of the version requirements
-            if (Start.TargetVer() != 0)
-		ioprintf(out," (%s %s)",Start.CompType(),Start.TargetVer());
-
             /* Show a summary of the target package if possible. In the case
                of virtual packages we show nothing */
             pkgCache::PkgIterator Targ = Start.TargetPkg();
@@ -633,18 +619,43 @@ string RPackage::showWhyInstBroken()
 		ioprintf(out," ");
 		pkgCache::VerIterator Ver = (*_depcache)[Targ].InstVerIter(*_depcache);
 		if (Ver.end() == false)  {
-		    ioprintf(out,_("but %s is to be installed"),Ver.VerStr());
+		    if (FirstOr == false)
+			ioprintf(out,"\t%s but %s is to be installed", Start.TargetPkg().Name(), Ver.VerStr());
+		    else
+			ioprintf(out," %s: %s but %s is to be installed", End.DepType(),Start.TargetPkg().Name(), Ver.VerStr());
 		} else {
 		    if ((*_depcache)[Targ].CandidateVerIter(*_depcache).end() == true) {
 			if (Targ->ProvidesList == 0)
-			    ioprintf(out, _("but it is not installable"));
+			    if (FirstOr == false)
+				ioprintf(out,"\t%s but it is not installable", Start.TargetPkg().Name());
+			    else
+				ioprintf(out,"%s: %s but it is not installable", End.DepType(),Start.TargetPkg().Name());
 			else
-			    ioprintf(out,_("but it is a virtual package"));
+			    if (FirstOr == false)
+				ioprintf(out,"\t%s but it is a virtual package", Start.TargetPkg().Name());
+			    else
+				ioprintf(out,"%s: %s but it is a virtual package", End.DepType(),Start.TargetPkg().Name());
 		    }
 		    else
-			ioprintf(out,_("but it is not going to be installed"));
+			if (FirstOr == false)
+			    ioprintf(out,"\t%s but it is not going to be installed", Start.TargetPkg().Name());
+			else
+			    ioprintf(out,"%s: %s but it is not going to be installed", End.DepType(),Start.TargetPkg().Name());
 		}
-            }
+            } else {
+		// virtual pkgs
+		if (FirstOr == false)
+		    ioprintf(out,"\t%s", Start.TargetPkg().Name());
+		else
+		    ioprintf(out," %s: %s", End.DepType(),Start.TargetPkg().Name());
+		// Show a quick summary of the version requirements
+		if (Start.TargetVer() != 0) 
+		    ioprintf(out," (%s %s)",Start.CompType(),Start.TargetVer());
+	    }
+
+            First = false;
+            FirstOr = false;
+
             if (Start != End)
 		ioprintf(out, _(" or"));
             ioprintf(out,"\n");

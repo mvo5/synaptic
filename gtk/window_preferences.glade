@@ -2951,7 +2951,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label141">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">&lt;b&gt;Upgrade behaviour (default distribution)&lt;/b&gt;</property>
+		      <property name="label" translatable="yes">&lt;b&gt;Package upgrade behaviour (default distribution)&lt;/b&gt;</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">True</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3003,57 +3003,16 @@
 			  <property name="spacing">12</property>
 
 			  <child>
-			    <widget class="GtkHBox" id="hbox64">
+			    <widget class="GtkRadioButton" id="radiobutton_ignore">
 			      <property name="visible">True</property>
-			      <property name="homogeneous">False</property>
-			      <property name="spacing">12</property>
-
-			      <child>
-				<widget class="GtkLabel" id="label139">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">Prefer versions from: </property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">False</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">False</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">0</property>
-				  <property name="ypad">0</property>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">False</property>
-				  <property name="fill">False</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkOptionMenu" id="optionmenu_default_distro">
-				  <property name="visible">True</property>
-				  <property name="tooltip" translatable="yes">Prefer package versions from the selected distribution when upgrading packages. If you manually force a verison from a different distribution, the package version will follow that distribution until it enters the default distribution.</property>
-				  <property name="can_focus">True</property>
-				  <property name="history">-1</property>
-				  <signal name="changed" handler="on_optionmenu_default_distro_changed" last_modification_time="Wed, 01 Oct 2003 20:08:51 GMT"/>
-
-				  <child>
-				    <widget class="GtkMenu" id="menu3">
-
-				      <child>
-					<widget class="GtkMenuItem" id="separator2">
-					  <property name="visible">True</property>
-					</widget>
-				      </child>
-				    </widget>
-				  </child>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">True</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">Always prefer the highest version</property>
+			      <property name="use_underline">True</property>
+			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
+			      <property name="active">False</property>
+			      <property name="inconsistent">False</property>
+			      <property name="draw_indicator">True</property>
 			    </widget>
 			    <packing>
 			      <property name="padding">0</property>
@@ -3063,46 +3022,60 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkHBox" id="hbox65">
+			    <widget class="GtkRadioButton" id="radiobutton_now">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">Always prefer the installed version</property>
+			      <property name="use_underline">True</property>
+			      <property name="relief">GTK_RELIEF_NORMAL</property>
+			      <property name="focus_on_click">True</property>
+			      <property name="active">False</property>
+			      <property name="inconsistent">False</property>
+			      <property name="draw_indicator">True</property>
+			      <property name="group">radiobutton_ignore</property>
+			    </widget>
+			    <packing>
+			      <property name="padding">0</property>
+			      <property name="expand">False</property>
+			      <property name="fill">False</property>
+			    </packing>
+			  </child>
+
+			  <child>
+			    <widget class="GtkHBox" id="hbox82">
 			      <property name="visible">True</property>
 			      <property name="homogeneous">False</property>
 			      <property name="spacing">0</property>
 
 			      <child>
-				<widget class="GtkImage" id="image6">
+				<widget class="GtkRadioButton" id="radiobutton_distro">
 				  <property name="visible">True</property>
-				  <property name="stock">gtk-dialog-info</property>
-				  <property name="icon_size">5</property>
-				  <property name="xalign">0.5</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">6</property>
-				  <property name="ypad">6</property>
-				</widget>
-				<packing>
-				  <property name="padding">0</property>
-				  <property name="expand">False</property>
-				  <property name="fill">True</property>
-				</packing>
-			      </child>
-
-			      <child>
-				<widget class="GtkLabel" id="label142">
-				  <property name="visible">True</property>
-				  <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; The package information must be reloaded and all marked changes will be lost. Make sure you apply your changes first.</property>
-				  <property name="use_underline">False</property>
-				  <property name="use_markup">True</property>
-				  <property name="justify">GTK_JUSTIFY_LEFT</property>
-				  <property name="wrap">True</property>
-				  <property name="selectable">False</property>
-				  <property name="xalign">0</property>
-				  <property name="yalign">0.5</property>
-				  <property name="xpad">6</property>
-				  <property name="ypad">6</property>
+				  <property name="can_focus">True</property>
+				  <property name="label" translatable="yes">Prefer versions from: </property>
+				  <property name="use_underline">True</property>
+				  <property name="relief">GTK_RELIEF_NORMAL</property>
+				  <property name="focus_on_click">True</property>
+				  <property name="active">False</property>
+				  <property name="inconsistent">False</property>
+				  <property name="draw_indicator">True</property>
+				  <property name="group">radiobutton_ignore</property>
 				</widget>
 				<packing>
 				  <property name="padding">0</property>
 				  <property name="expand">False</property>
 				  <property name="fill">False</property>
+				</packing>
+			      </child>
+
+			      <child>
+				<widget class="GtkComboBox" id="combobox_default_distro">
+				  <property name="visible">True</property>
+				  <property name="items" translatable="yes"></property>
+				</widget>
+				<packing>
+				  <property name="padding">0</property>
+				  <property name="expand">True</property>
+				  <property name="fill">True</property>
 				</packing>
 			      </child>
 			    </widget>

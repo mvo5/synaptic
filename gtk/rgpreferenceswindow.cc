@@ -573,7 +573,7 @@ void RGPreferencesWindow::readExpert()
    distroChanged = false;
    string defaultDistro = _config->Find("Synaptic::DefaultDistro", "");
    int distroMatch = 0;
-      gtk_option_menu_remove_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro));
+   gtk_option_menu_remove_menu(GTK_OPTION_MENU(_optionmenuDefaultDistro));
    vector<string> archives = _lister->getPolicyArchives();
    GtkWidget *menu = gtk_menu_new();
    GtkWidget *mi = gtk_menu_item_new_with_label(_("ignore"));
@@ -855,8 +855,17 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    assert(_optionmenuDel);
 
    _optionmenuDefaultDistro =
-      glade_xml_get_widget(_gladeXML, "optionmenu_default_distro");
+      glade_xml_get_widget(_gladeXML, "combobox_default_distro");
    assert(_optionmenuDefaultDistro);
+   GtkTooltips *tips = gtk_tooltips_new();
+   gtk_tooltips_set_tip(GTK_TOOLTIPS(_optionmenuDefaultDistro),
+			_optionmenuDefaultDistro,
+		       "Prefer package versions from the selected "
+		       "distribution when upgrading packages. If you "
+		       "manually force a verison from a different "
+		       "distribution, the package version will follow "
+		       "that distribution until it enters the default "
+		       "distribution.","");
 
    // hide the "remove with configuration" from rpm users
 #ifdef HAVE_RPM

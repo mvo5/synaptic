@@ -233,9 +233,11 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
     RGPreferencesWindow *me = (RGPreferencesWindow*)data;
     me->saveAction(self, data);
     if(me->distroChanged) {
+	me->_lister->unregisterObserver(me->_mainWin);
 	me->_mainWin->setTreeLocked(TRUE);
 	me->_lister->openCache(TRUE);
 	me->_mainWin->setTreeLocked(FALSE);
+	me->_lister->registerObserver(me->_mainWin);
     }
     me->closeAction(self, data);
 }

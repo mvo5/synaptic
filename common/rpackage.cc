@@ -83,7 +83,8 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 
 RPackage::~RPackage()
 {
-  delete _package;
+    free((void*)_candidateVer);
+    delete _package;
 }
 
 
@@ -809,7 +810,6 @@ void RPackage::setInstall()
 
     // if there is something wrong, try to fix it
     if(!State.Install() || _depcache->BrokenCount() > 0) {
-	cout << "fixing pkgs" << endl;
 	pkgProblemResolver Fix(_depcache);
 	Fix.Clear(*_package);
 	Fix.Protect(*_package);

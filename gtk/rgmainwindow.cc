@@ -1598,6 +1598,14 @@ void RGMainWindow::installFromVersion(GtkWidget *self, void *data)
     } else {
 	pkg->setVersion(verInfo);
 	me->doPkgAction(me,PKG_INSTALL);
+	// check if this version was possible to install/upgrade/downgrade
+	// if not, unset the candiate version to prevent a corupted status view
+	int mstatus = pkg->getMarkedStatus();
+	if(!(mstatus == RPackage::MInstall ||
+	     mstatus == RPackage::MUpgrade ||
+	     mstatus == RPackage::MDowngrade) ) {
+	    pkg->unsetVersion();
+	}
     }
 }
 

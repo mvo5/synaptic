@@ -396,6 +396,9 @@ bool RPackageLister::openCache(bool reset)
     static bool firstRun=true;
     //cout << "RPackageLister::openCache(bool reset)" << endl;
 
+    // flush old errors
+    _error->Discard();
+
     if (reset) {
 	if (!_cache->reset(*_progMeter)) {
 	    _progMeter->Done();
@@ -408,8 +411,6 @@ bool RPackageLister::openCache(bool reset)
         }
     }
     _progMeter->Done();
-
-//    notifyCacheOpen();
 
     pkgDepCache *deps = _cache->deps();
 
@@ -438,10 +439,10 @@ bool RPackageLister::openCache(bool reset)
     }
     
     if (_packages) {
-      for(int i=0;_packages[i] != NULL;i++)
-	delete _packages[i];
-      delete [] _packages;
-      delete [] _packageindex;
+	for(int i=0;_packages[i] != NULL;i++)
+	    delete _packages[i];
+	delete [] _packages;
+	delete [] _packageindex;
     }
 
     int PackageCount = deps->Head().PackageCount;
@@ -460,7 +461,7 @@ bool RPackageLister::openCache(bool reset)
     set<string> sectionSet;
 
     for (; I.end() != true; I++) {
-	
+
 	if (I->CurrentVer != 0)
 	    _installedCount++;
 	else if (I->VersionList==0) 

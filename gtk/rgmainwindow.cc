@@ -291,13 +291,24 @@ void RGMainWindow::helpAction(GtkWidget *self, void *data)
 
     me->setStatusText(_("Starting help system"));
  
-    // TODO: check for more help systems and fall back to mozilla
-    if(FileExists("/usr/bin/yelp"))
+    gchar **path = g_strsplit(getenv("PATH"), ":",0);
+    bool found=false;
+    for(int i=0;path[i]!=NULL || found==true;i++) {
+	char *s = g_strdup_printf("%s/yelp",path[i]);
+	if(FileExists(s)) {
+	    found=true;
+	    g_free(s);
+	    break;
+	}
+	g_free(s);
+    }
+    if(found)
 	system("yelp ghelp:synaptic &");
     else
-	me->_userDialog->warning(_("You need the gnome \"yelp\" programm "
+	me->_userDialog->warning(_("You need the gnome \"yelp\" program "
 				   "to display the synaptic help\n\n"
 				   "This program is not found."));
+    g_strfreev(path);
 }
 
 

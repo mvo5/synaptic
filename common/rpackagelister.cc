@@ -772,6 +772,9 @@ void RPackageLister::addFilteredPackageToTree(tree<pkgPair>& pkgTree,
 	    if(itermap.find(sec) == itermap.end()) {
 #ifndef HAVE_RPM
 		string str = sec;
+		// baaaa, special case for stupid debian package naming
+		if(str=="non-US/non-free")
+		    str = _("Non US (non free)");
 		string suffix;
 		// if we have something like "contrib/web", make "contrib" the 
 		// suffix and translate it independently

@@ -13,7 +13,10 @@ button_DATA = update_small.png \
 	      pref_vpaned.xpm \
 	      pref_hpaned.xpm \
 	      stock_filter-data-by-criteria.png\
-	      stock_filter-navigator.png
+	      stock_filter-navigator.png \
+	      stock_menu_about.png \
+	      stock_help-book.png \
+	      system-upgrade-16.png
 		      
 status_icondir = $(datadir)/synaptic/pixmaps
 status_icon_DATA = package-available-locked.png \

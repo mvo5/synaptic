@@ -44,10 +44,11 @@ const char * RGPreferencesWindow::column_names[] =
 
 const char *RGPreferencesWindow::column_visible_names[] = 
    {_("Status"), _("Supported"), _("Package Name"), _("Section"),
-      _("Component"), _("Installed Version"), _("Available Version"), 
+    _("Component"), _("Installed Version"), _("Available Version"), 
     _("Installed Size"), _("Download Size"),_("Description"), NULL };
 
-
+const bool RGPreferencesWindow::column_visible_defaults[] = 
+   { true, true, true, false, false, true, true, false, false, true }; 
 
 void RGPreferencesWindow::onArchiveSelection(GtkWidget *self, void *data)
 {
@@ -472,6 +473,8 @@ void RGPreferencesWindow::readColumnsAndFonts()
       GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,
                                              "checkbutton_user_terminal_font")), b);
 
+   readTreeViewValues();
+
 }
 
 void RGPreferencesWindow::readColors()
@@ -631,7 +634,7 @@ void RGPreferencesWindow::readTreeViewValues()
       
       // visible
       name = g_strdup_printf("Synaptic::%sColumnVisible",column_names[i]);
-      c.visible = _config->FindB(name, true);
+      c.visible = _config->FindB(name, column_visible_defaults[i]);
       c.name = column_names[i];
       c.visible_name = column_visible_names[i];
       g_free(name);
@@ -926,8 +929,6 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 						      NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
-
-   readTreeViewValues();
 
    // lots of signals :)
    glade_xml_signal_connect_data(_gladeXML, "on_button_column_up_clicked",

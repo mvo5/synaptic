@@ -37,6 +37,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    // the names for the VisibleColumnsTreeView
    static const char *column_names[];
    static const char *column_visible_names[];
+   static const bool column_visible_defaults[];
 
    RGMainWindow *_mainWin;
    RPackageLister *_lister;

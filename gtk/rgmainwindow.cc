@@ -941,7 +941,7 @@ void RGMainWindow::buildTreeView()
    }
    // installed size
    pos = _config->FindI("Synaptic::instSizeColumnPos", 6);
-   visible = _config->FindI("Synaptic::instSizeColumnVisible", true);
+   visible = _config->FindI("Synaptic::instSizeColumnVisible", false);
    if (visible) {
       /* Installed size */
       renderer = gtk_cell_renderer_text_new();

@@ -62,7 +62,8 @@ void RGLogView::readLogs()
       t.tm_min = min;
       t.tm_sec = sec;
       GDate *date = g_date_new_dmy(day, (GDateMonth)month, year);
-      t.tm_wday = g_date_get_weekday(date);
+      t.tm_wday = g_date_get_weekday(date)-1; // -1 because glib counts from
+                                              // 1-7 and libc 0-6
 
       history_key = year*100+month;
       if(history_map.count(history_key) == 0) {

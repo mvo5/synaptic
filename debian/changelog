@@ -1,0 +1,877 @@
+synaptic (0.55+cvs20050406-1) hoary; urgency=low
+
+  * translation updates for: fr, es, lt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed,  6 Apr 2005 00:39:52 +0200
+
+synaptic (0.55+cvs20050404-1) hoary; urgency=low
+  
+  * New snapshot, xh translation added
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  4 Apr 2005 22:46:33 +0200
+
+synaptic (0.55+cvs20050330-1) hoary; urgency=low
+
+  * debian/control:
+    - gksu is recommended only (to make it kde friendlier)
+  * new desktop file for kde (#7395)
+  * fix a problem in the weekday calculation in logviewer 
+    (libc<->glib incompatibility)
+  * fix in the synaptic doc OMF file to make it show the correct
+    version in yelp (#8194)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 30 Mar 2005 17:11:33 +0200
+
+synaptic (0.55+cvs20050328-1) hoary; urgency=low
+
+  * New snapshot, fixes a utf8 problem in the logviewer (#8279)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 28 Mar 2005 17:36:25 +0200
+
+synaptic (0.55+cvs20050323-1) hoary; urgency=low
+  
+  * new snapshot, expose the preferences file (used for version 
+    locking) so that udpate-notifer/update-manager can use it too
+  * use 8pt font in the (hidden) terminal window in the installprogress
+    window
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 23 Mar 2005 15:53:29 +0100
+
+synaptic (0.55+cvs20050318-1) hoary; urgency=low
+
+  * New snapshot, fix for a locking problem when adding a cdrom
+    and instaling immediately
+  * make text in conf-file dialog non-editable and cursor invisible
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 18 Mar 2005 15:25:37 +0100
+
+synaptic (0.55+cvs20050311-1) hoary; urgency=low
+  
+  * New svn snapshot, bugfixes and translation updates:
+    - fix for a potential file descriptor leak
+    - be more clever when it comes to adding cdroms 
+      (don't load the cache before)
+    - make the "To be removed" column header in the changes
+      window bold (thanks to jdub for this idea)
+    - make the pulse step slower in the install preparation step 
+      (closes: #7212)
+    - make it possible to cancel when asking for cdrom 
+    - only switch cursor if the window is actual maped (causes some
+      gtk warnings to go away)
+    - fix a problem in the defaultDistro saving (closes: #6512)
+    - fix a problem that the fetch window is not correctly exapanded 
+    - translation updates for: ca, el, es, lt, ru, zh_CN
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 11 Mar 2005 18:31:42 +0100
+
+synaptic (0.55+cvs20050228-1) hoary; urgency=low
+  
+  * New svn snapshot
+  * make use of the new pkgAcquire::Run(pulseInterval) feature (#5879)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 28 Feb 2005 14:46:12 +0100
+
+synaptic (0.55+cvs20050224-1) hoary; urgency=low
+
+  * New svn snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 24 Feb 2005 14:02:49 +0100
+
+synaptic (0.55+cvs20050218-1) hoary; urgency=low
+  
+  * restored the ubuntu icon, there was a quoting error in the 
+    debian/rules file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
+
+synaptic (0.55+cvs20050218-1) hoary; urgency=low
+
+  * New snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 18 Feb 2005 11:14:12 +0100
+
+synaptic (0.55+cvs20050215-1) hoary; urgency=low
+
+  * new svn snapshot, fixes: 
+    - point to changelogs.ubuntu.com (#6540)
+    - don't issue a warning when a new source.list is added (#6312)
+    - allow only one instance of synaptic (#4533)
+    - save settings again (#6512,#6511,#6436)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 15 Feb 2005 16:31:39 +0100
+
+synaptic (0.55+cvs20050208-1) hoary; urgency=low
+
+  * New snapshop with changes, needed for latest update-manager
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  8 Feb 2005 21:45:21 +0100
+
+synaptic (0.55+cvs20050207-1) hoary; urgency=low
+  
+  * New svn snapshot, build-depends on libapt-pkg-dev 0.6.31 and 
+    will use the new add-cdrom interface
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  7 Feb 2005 12:46:55 +0100
+
+synaptic (0.55+cvs20050204-1) hoary; urgency=low
+
+  * New svn snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri,  4 Feb 2005 23:58:24 +0100
+
+synaptic (0.55+cvs20050201-1) hoary; urgency=low
+  
+  * New svn snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  1 Feb 2005 15:55:20 +0100
+
+synaptic (0.55+cvs20050131-1) hoary; urgency=low
+
+  * New svn snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 31 Jan 2005 23:02:50 +0100
+
+synaptic (0.55+cvs20050125-1) hoary; urgency=low
+
+  * New svn snapshot
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 25 Jan 2005 16:35:03 +0100
+
+synaptic (0.55+cvs20050119-1) hoary; urgency=low
+
+  * New svn snapshot
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 19 Jan 2005 22:47:37 +0100
+
+synaptic (0.55+cvs20050107-2) hoary; urgency=low
+
+  * added "restricted" to supported components (was there before, got
+    droped somehow)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 10 Jan 2005 10:35:41 +0100
+
+synaptic (0.55+cvs20050107-1) hoary; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Fri,  7 Jan 2005 10:01:46 +0100
+
+synaptic (0.55+cvs20041228-2) hoary; urgency=low
+
+  * apt-0.6 breaks PackageFile.Component(). work around that problem
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 29 Dec 2004 22:05:43 +0100
+
+synaptic (0.55+cvs20041228-1) hoary; urgency=low
+
+  * New cvs snapshot
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 29 Dec 2004 11:28:11 +0100
+
+synaptic (0.55+cvs20041213-1ubuntu1) hoary; urgency=low
+
+  * corrected build-depends (>= 0.6.27)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 13 Dec 2004 19:19:22 +0100
+
+synaptic (0.55+cvs20041213-1) hoary; urgency=low
+
+  * New cvs snapshot
+  * build against current apt-0.6
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 13 Dec 2004 16:55:13 +0100
+
+synaptic (0.55+cvs20041119-1ubuntu4) hoary; urgency=low
+
+  * added "--update-at-startup" cmdline option (for upgrade-notifier and update-manager)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 28 Nov 2004 13:52:33 +0100
+
+synaptic (0.55+cvs20041119-1ubuntu3) hoary; urgency=low
+
+  * added "sharutils" to build-depends :/
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 22 Nov 2004 14:15:02 +0100
+
+synaptic (0.55+cvs20041119-1ubuntu2) hoary; urgency=low
+
+  * fixed the location of the synaptic.desktop file
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 22 Nov 2004 11:24:24 +0100
+
+synaptic (0.55+cvs20041119-1ubuntu1) hoary; urgency=low
+
+  * added the ubuntu-patches again
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 19 Nov 2004 22:49:56 +0100
+
+synaptic (0.55-4) unstable; urgency=low
+
+  * fixed a spacing issue in the rgfetchdialog
+  * added missing README.supported (closes: #279688)
+
+ -- Michael Vogt <mvo@debian.org>  Thu,  4 Nov 2004 18:25:00 +0100
+
+synaptic (0.55-3) unstable; urgency=low
+
+  * added dialog_update_outdated.glade (fixes: #279573)
+
+ -- Michael Vogt <mvo@debian.org>  Wed,  3 Nov 2004 23:00:33 +0100
+
+synaptic (0.55-2) unstable; urgency=low
+
+  * fix for a ugly free() error message on startup
+
+ -- Michael Vogt <mvo@debian.org>  Tue,  2 Nov 2004 10:41:21 +0100
+
+synaptic (0.55-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Tue,  2 Nov 2004 09:16:18 +0100
+
+synaptic (0.53.4-6) unstable; urgency=medium
+
+  * one-line fix for a problem when adding a new cdrom
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 19 Oct 2004 22:52:20 +0200
+
+synaptic (0.53.4-5) unstable; urgency=medium
+
+  * one-line fix for a problem on ppc
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 14 Oct 2004 13:31:55 +0200
+
+synaptic (0.53.4-4) unstable; urgency=medium
+
+  * fixed a problem that can cause libglade to enter a infinite
+    loop and make synaptic unusable 
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  4 Oct 2004 13:46:32 +0200
+
+synaptic (0.53.4-3) unstable; urgency=medium
+
+  * rebuild. no changes. I uploaded a incomplete 0.53.4-2
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 25 Sep 2004 23:56:15 +0200
+
+synaptic (0.53.4-2) unstable; urgency=medium
+
+  * fixed a error in pl.po file
+  * added the sl.po translation
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 25 Sep 2004 22:52:33 +0200
+
+synaptic (0.53.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * no code changes, only translation and documentation updates
+  * urgency set to medium in hope to get it into sarge 
+  
+ -- Michael Vogt <mvo@debian.org>  Sat, 18 Sep 2004 00:15:59 +0200
+
+synaptic (0.53.3-2) unstable; urgency=medium
+
+  * changed order to initialize stuff to work around a gtk problem
+    (closes: #270309)
+  * urgency set to medium in hope to get it into sarge 
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  6 Sep 2004 22:01:19 +0200
+
+synaptic (0.53.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * minimal code change (fix a segfault) 
+  * updated Danish translation (thanks to Morten Brix Pedersen)
+  * synaptic.xpm updated to biger size (closes: #268293)
+  * urgency set to medium in hope to get it into sarge 
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 27 Aug 2004 12:09:27 +0200
+
+synaptic (0.53.2-1) unstable; urgency=medium
+
+  * New upstream release (no code changes, only some build fixes and 
+    and i18n updates)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 26 Aug 2004 13:14:36 +0200
+
+synaptic (0.53.1-2) unstable; urgency=medium
+
+  * added pt_BR translation (thanks to Andre Luis Lopes)
+    (closes: #266880)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 20 Aug 2004 12:38:02 +0200
+
+synaptic (0.53.1-1) unstable; urgency=medium
+
+  * New upstream release, no changes only added spanish documentation
+    (a _big_ thanks to Francisco Javier F. Serrador)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 17 Aug 2004 13:12:30 +0200
+
+synaptic (0.53-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 14 Aug 2004 20:57:29 +0200
+
+synaptic (0.53-0.2) unstable; urgency=low
+
+  * second testrelease for new upstream
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  2 Aug 2004 22:41:05 +0200
+
+synaptic (0.53-0.1) unstable; urgency=medium
+
+  * new upstream version
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 1 Aug 2004 01:29:30 +0200
+
+synaptic (0.52-2) unstable; urgency=medium
+
+  * changed su-to-root to /usr/sbin/su-to-root (closes: #262422)
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 31 Jul 2004 01:29:30 +0200
+
+synaptic (0.52-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  5 Jul 2004 18:42:50 +0200
+
+synaptic (0.52-0.5) unstable; urgency=low
+
+  * another test-release
+
+ -- Michael Vogt <mvo@debian.org>  Fri,  2 Jul 2004 00:02:29 +0200
+
+synaptic (0.52-0.4) unstable; urgency=low
+
+  * next test-release
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 29 Jun 2004 12:37:53 +0200
+
+synaptic (0.52-0.3) unstable; urgency=low
+
+  * third test-release
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 28 Jun 2004 12:30:37 +0200
+
+synaptic (0.52-0.2) unstable; urgency=low
+
+  * second test-release
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 27 Jun 2004 19:24:57 +0200
+
+synaptic (0.52-0.1) unstable; urgency=low
+
+  * first test-release
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 25 Jun 2004 17:48:18 +0200
+
+synaptic (0.51-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 21 Jun 2004 23:34:00 +0200
+
+synaptic (0.50-2) unstable; urgency=low
+
+  * build without --with-pkg-hold
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 16 Jun 2004 17:17:53 +0200
+
+synaptic (0.50-1) unstable; urgency=low
+
+  * initial upload into debian/unstable
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 15 Jun 2004 22:53:38 +0200
+
+synaptic (0.50-0.7) unstable; urgency=low
+
+  * and a new one
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 10 Jun 2004 20:19:18 +0200
+
+synaptic (0.50-0.6) unstable; urgency=low
+
+  * more pre-releases
+
+ -- Michael Vogt <mvo@debian.org>  Wed,  9 Jun 2004 23:17:59 +0200
+
+synaptic (0.50-0.5) unstable; urgency=low
+
+  * another testrelease
+
+ -- Michael Vogt <mvo@debian.org>  Sat,  5 Jun 2004 20:49:44 +0200
+
+synaptic (0.50-0.4) unstable; urgency=low
+
+  * and the next testrelease
+
+ -- Michael Vogt <mvo@debian.org>  Fri,  4 Jun 2004 00:01:53 +0200
+
+synaptic (0.50-0.3) unstable; urgency=low
+
+  * third testrelease
+
+ -- Michael Vogt <mvo@debian.org>  Wed,  2 Jun 2004 14:49:00 +0200
+
+synaptic (0.50-0.2) unstable; urgency=low
+
+  * second testrelease
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 30 May 2004 15:00:53 +0200
+
+synaptic (0.50-0.1) unstable; urgency=low
+
+  * First testrelease
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 20 May 2004 18:07:24 +0200
+
+synaptic (0.48.2-6) unstable; urgency=low
+
+  * use su-to-root for the menu file
+  * added local dtd to maunal
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 20 Apr 2004 21:44:06 +0200
+
+synaptic (0.48.2-4) unstable; urgency=medium
+
+  * fix for a LANG=non-C problem
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 19 Apr 2004 12:46:04 +0200
+
+synaptic (0.48.2-3) unstable; urgency=low
+
+  * archive of -2 was bad, rebuild
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 17 Apr 2004 08:55:35 +0200
+
+synaptic (0.48.2-2) unstable; urgency=medium
+
+  * updated french man-page (thanks to Julien Louis)
+    (closes: #231585)
+  * a workaround or a wired zvt terminal bug (I _hate_ libzvt)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 12 Apr 2004 20:32:30 +0200
+
+synaptic (0.48.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * sudo-mozilla-eats bookmarks bug fixed (thanks to hugo vanwoerkom)
+    (closes: #242053)
+  * converted png to xpm for debian menu (closes: #237748)
+  * fixed bad german translation (closes: #237758)
+  * added updated frensh man-page (closes: #231585)
+  
+ -- Michael Vogt <mvo@debian.org>  Sun, 14 Mar 2004 13:33:04 +0100
+
+synaptic (0.48.1-1) unstable; urgency=low
+
+  * New upstream release
+  * suggests changed to libgnome2-perl (for dpkg-reconfigure -f gnome) 
+    (closes: #237549)
+  * added suggestions for apt-watch
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 12 Mar 2004 08:58:56 +0100
+
+synaptic (0.48-2) unstable; urgency=medium
+
+  * rebuild against a correct apt 
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 11 Mar 2004 10:24:31 +0100
+
+synaptic (0.48-1) unstable; urgency=low
+
+  * New upstream release
+  * purge and delete are different now (closes: #191822)
+  * search dialog now closes when pressing the enter key (closes: #224532)
+  * synaptic now longer hangs when closing the changes window (closes: 224731) 
+  * broken sources.list are now longer accepted (closes: #187971)
+  * some tag fixes (closes: #225891)
+  * a typo fix for the description (closes: #219083)
+
+ -- Michael Vogt <mvo@debian.org>  Sat,  3 Jan 2004 03:01:49 +0100
+
+synaptic (0.47-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 20 Nov 2003 15:39:24 +0100
+
+synaptic (0.46-2) unstable; urgency=low
+
+  * added dependency to scrollkeeper (closes: #221157)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 16 Nov 2003 23:44:04 +0100
+
+synaptic (0.46-1) unstable; urgency=low
+
+  * New upstream release
+  * fixes a segfault when versionless packages used (closes: #219934)
+  * terminal font can be selected by users now (closes: #217089)
+  * pt_BT update (thanks to Leonardo Boiko) (closes: #218003)
+  * advanced search is no ddtp friendly (closes: #218825)
+  * synaptic desktop menu has moved (closes:  #219358)
+  * gui font can be selected now (closes: #218147)
+  
+ -- Michael Vogt <mvo@debian.org>  Thu,  6 Nov 2003 12:09:09 +0100
+
+synaptic (0.45-2) unstable; urgency=low
+
+  * minor debian description fix (closes: #219083)
+    (thanks Alfie)
+  * update to for pt_BT (closes: #218003)
+    (thanks Leonardo Boik)
+  * searching in translated descriptions is possible now (closes: #218825)
+    (thanks johnnybgate)
+
+ -- Michael Vogt <mvo@debian.org>  Tue,  4 Nov 2003 12:30:47 +0100
+
+synaptic (0.45-1) unstable; urgency=low
+
+  * New upstream release
+  * typo fixed (closes: #213095);
+  * workaround for buggy libzvt focus handling (closes: #215280)
+  * resizing of the terminal window no longer possible because of the
+    buggy libzvt resize handling (closes: #215513)
+  * correct spanish man-page included (closes: #215303)
+  * typo in preferences window fixed (closes: #215312)
+  * typo in pt_BR.po fixed (closes: #214959)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 28 Sep 2003 14:07:29 +0200
+
+synaptic (0.44-1) unstable; urgency=low
+
+  * New upstream release
+  * finally put translated man-pages to the correct location
+    (closes: #166303, #176923, #207334)
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  1 Sep 2003 11:15:05 +0200
+
+synaptic (0.43-2) unstable; urgency=low
+
+  * mini-patch to update to 0.43.1
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 16 Aug 2003 21:26:36 +0200
+
+synaptic (0.43-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 12 Aug 2003 00:18:41 +0200
+
+synaptic (0.42-1) unstable; urgency=low
+
+  * New upstream release
+  * saves selections on "pin", "update", "proceed" (closes: #191090)
+  * fixed a segfault (closes: #204809, #204864)
+  * fixed a sorting problem (closes: #204755)
+  
+ -- Michael Vogt <mvo@debian.org>  Thu,  7 Aug 2003 01:23:54 +0200
+
+synaptic (0.41-1) unstable; urgency=low
+
+  * New upstream release
+  * build new synaptic-debtags package as well
+  * added scrollbar in information tab (closes: #189428)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 27 Jul 2003 21:56:08 +0200
+
+synaptic (0.40-1) unstable; urgency=low
+
+  * New upstream release
+  * depends on gksu now (this used to be recommends) (closes: #189435)
+  * updated pt_br translation (thanks to Andre Luis Lopes <andrelop@ig.com.br>)
+    (closes:  #189924)
+  * synaptic now suggests libgnome-perl to allow debconf-reconfiguring using
+    a nice frontend (closes: #189849)
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 12 Jul 2003 11:32:47 +0200
+
+synaptic (0.39-2) unstable; urgency=low
+
+  * added libgnome-perl to suggests. libgnome-perl is needed to get 
+    gui dpkg-reconfigure support in synaptic (closes: #189849)
+
+ -- Michael Vogt <mvo@debian.org>  Tue,  8 Jul 2003 18:17:15 +0200
+
+synaptic (0.39-1) unstable; urgency=low
+
+  * New upstream release
+  * fixed location of the .desktop file (closes: #198423, #199080)
+  
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 28 Jun 2003 21:08:50 +0200
+
+synaptic (0.38-2) unstable; urgency=low
+
+  * place desktop file in /usr/share/applications now (closes: #198423)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 22 Jun 2003 22:58:42 +0200
+
+synaptic (0.38-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 20 Jun 2003 20:22:47 +0200
+
+synaptic (0.37-1) unstable; urgency=low
+
+  * new upstream release
+  * cache behaviour should work now (closes: #192766)
+  * url in copyright file corrected (closes: #195320)
+  * "hit" is displayed as 100% in download dialog (closes: #195284)
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  13 Jun 2003 23:30:12 +0200
+
+synaptic (0.36-6) unstable; urgency=low
+
+  * start making synaptic g++-3.3 clean
+  * moved all "<assert.h>" to "<cassert>" (closes: 196716)
+
+ -- Michael Vogt <mvo@debian.org>  Mon,  9 Jun 2003 23:30:12 +0200
+
+synaptic (0.36-5) unstable; urgency=low
+
+  * the menu file still used xsu, this is changed to gksu now (closes: #192593)
+  * synaptic now uses g++-3.2 as apt now uses it as well (closes: #185118)
+  * changed build-dep for libapt-pkg to libapt-pkg (>= 0.5.5)
+  * segfault on startup was fixed in 0.36-2 (closes: #189385, #189596, #189423)
+  * "download only mode" is working (closes: #191827)
+  * location for the synaptic.desktop file is changed to 
+    /usr/share/applications
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 13 May 2003 09:02:23 +0200
+
+synaptic (0.36-4) unstable; urgency=low
+
+  * droped build-depend for g++-2.95 (*oops*) (closes: #192475)
+  * removed a single "cout" from the code 
+    (don't know how this build on my machine) 
+
+ -- Michael Vogt <mvo@debian.org>  Fri,  9 May 2003 10:21:20 +0200
+
+synaptic (0.36-3) unstable; urgency=low
+
+  * rebuild for apt 0.5.5
+
+ -- Michael Vogt <mvo@debian.org>  Thu,  8 May 2003 11:21:50 +0200
+
+synaptic (0.36-2) unstable; urgency=low
+
+  * applied a patch to fix a segfault on startup when there are packages
+    without section in a apt list (closes: ##189385, #189596, #189423)
+    (thanks to all the bugreporters for helping me finding this bug)
+  * debconf filter+button is added (closes: #182761)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 20 Apr 2003 12:30:26 +0200
+
+synaptic (0.36-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 29 Mar 2003 14:50:33 +0100
+
+synaptic (0.35-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 25 Feb 2003 01:53:05 +0100
+
+synaptic (0.32-2) unstable; urgency=low
+
+  * recommends gksu now (closes: #178714)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 29 Jan 2003 23:49:43 +0100
+
+synaptic (0.32-1) unstable; urgency=low
+
+  * New upstream release
+  * closing FTBFS bug that was fixed in 0.31-3 (closes: #176529)
+  * resizing of RGSummaryWindow works correct now (closes: #175445)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 15 Jan 2003 15:22:00 +0100
+
+synaptic (0.31-3) unstable; urgency=low
+
+  * fixed build-depends for m68k
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 13 Jan 2003 16:45:44 +0100
+
+synaptic (0.31-2) unstable; urgency=low
+
+  * ups, xsu was in recommended list, it's suggested now
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 10 Jan 2003 22:35:16 +0100
+
+synaptic (0.31-1) unstable; urgency=low
+
+  * New upstream release
+  * resize bugs fixed (closes: #175445)
+  * description buffer increased (closes:  #174922)
+  * locales problem fixed (closes: #175668)
+  * easy way to filter for description added (closes: #175045)
+  * added QUIT button (closes: #171822)
+
+ -- Michael Vogt <mvo@debian.org>  Sat,  4 Jan 2003 21:36:50 +0100
+
+synaptic (0.30-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 27 Dec 2002 01:48:54 +0100
+
+synaptic (0.28-1) unstable; urgency=low
+
+  * New upstream release
+  * added menu file (closes: #170289)
+  * added recommend to xsu
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 26 Nov 2002 01:17:14 +0100
+
+synaptic (0.27-1) unstable; urgency=low
+
+  * New upstream release
+  * comiled with "--with-pkg-hold" (please report any problems with this
+    option)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 12 Nov 2002 15:19:34 +0100
+
+synaptic (0.26-1) unstable; urgency=low
+
+  * New upstream release
+  * show details window has a better size now (closes: #165902)
+
+ -- Michael Vogt <mvo@debian.org>  Wed,  6 Nov 2002 16:45:43 +0100
+
+synaptic (0.25-2) unstable; urgency=low
+
+  * g++ 3.0 fixes (closes: #163982)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 10 Oct 2002 12:52:42 +0200
+
+synaptic (0.25-1) unstable; urgency=low
+
+  * New upstream release
+  * no more messages on startup (closes: #123310)
+  * problem with 8bit locales fixed (closes: #162901)
+  * no quit button, but keyboard shortcut (closes: #150733)
+  
+ -- Michael Vogt <mvo@debian.org>  Wed,  9 Oct 2002 00:50:42 +0200
+
+synaptic (0.24.1-1) unstable; urgency=low
+
+  * New upstream release (bugfix release for 0.24, no new features)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 27 Sep 2002 11:03:30 +0200
+
+synaptic (0.24-1) unstable; urgency=low
+
+  * New upstream release
+  * already closed in last release (but a typo) (closes: #157160)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 26 Sep 2002 16:39:49 +0200
+
+synaptic (0.23-1) unstable; urgency=low
+
+  * new upstream release
+  * added scrollbar for "Dependencies of the available package"
+    (closes: * #157160)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 25 Aug 2002 13:16:59 +0200
+
+synaptic (0.22-2) unstable; urgency=low
+
+  * ups, I overlooked a g++-3.0 problem. fixed now
+    (closes: #154299)
+
+ -- Michael Vogt <mvo@debian.org>  Sun, 18 Aug 2002 12:09:59 +0200
+
+synaptic (0.22-1) unstable; urgency=low
+
+  * new upstream version
+  * added libzvt-dev to build-depends
+  * fixed g++-3.0 errors (closes: #154082)
+  * added tab to show dependencies of the latest
+    available version (closes: #153614)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 24 Jul 2002 23:06:52 +0200
+
+synaptic (0.21-2) unstable; urgency=low
+
+  * fixed a potential segfault in rgfiltermanager.cc
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 19 Jul 2002 13:44:18 +0200
+
+synaptic (0.21-1) unstable; urgency=low
+
+  * new upstream version
+  * better description parser for debian (closes:  #145893)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 19 Jul 2002 13:20:18 +0200
+
+synaptic (0.20-2) unstable; urgency=low
+
+  * fixed a bug in rgfiltereditor.cc (gtk-version)
+    (closes: #153505)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 19 Jul 2002 01:58:13 +0200
+
+synaptic (0.20-1) unstable; urgency=low
+
+  * new upstream version (and new upstream maintainer)
+  * no more error messages upon startup (closes: #123705)
+  * double click cycle now implemented (closes: #123877)
+  * synaptic segfault fixed (closes: #123705)
+  * filters are saved now (closes: #150731,#146970)
+  * added option to see new packages (closes: #150732)
+  * added zvt as output terminal
+  * some keybings for the Gtk+ version
+  * two packages are generated from the source now: 
+    synaptic (WINGs) and gsynaptic (gtk)
+  
+ -- Michael Vogt <mvo@debian.org>  Tue, 16 Jul 2002 15:02:32 +0200
+
+synaptic (0.16-6) unstable; urgency=low
+
+  * improved the description (closes: #133982)
+
+ -- Michael Vogt <mvo@debian.org>  Thu,  4 Apr 2002 12:23:30 +0200
+
+synaptic (0.16-5) unstable; urgency=low
+
+  * applied patch from LaMont Jones <lamont@smallone.fc.hp.com>
+    to make synaptic compile on hppa (g++-3.0)
+    (closes: #126771)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 28 Dec 2001 23:16:42 +0100
+
+synaptic (0.16-4) unstable; urgency=low
+
+  * corrected some spelling mistakes (closes: #125628)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Dec 2001 06:13:08 +0100
+
+synaptic (0.16-3) unstable; urgency=low
+
+  * added build-depend to hermes1-dev (closes: #121378)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 27 Nov 2001 12:28:09 +0100
+
+synaptic (0.16-2) unstable; urgency=low
+
+  * removed "conflict: apt-listchanges", because apt-listchanges can
+    be configured in a way that works with synaptic
+    (thanks to Paul Seelig)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 14 Nov 2001 23:42:32 +0100
+
+synaptic (0.16-1) unstable; urgency=low
+
+  * Initial Release (closes: #115167)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 13 Nov 2001 23:17:20 +0100
+
+

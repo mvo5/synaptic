@@ -1,0 +1,28 @@
+Source: synaptic
+Section: admin
+Priority: optional
+Maintainer: Michael Vogt <mvo@debian.org>
+Build-Depends: debhelper (>> 3.0.0), libapt-pkg-dev, gettext, libgtk2.0-dev, libvte-dev (>= 0.11.11), libglade2-dev, libxft2-dev, scrollkeeper, scrollkeeper, intltool, xmlto, libsm-dev , sharutils, dpatch, lsb-release
+Standards-Version: 3.6.1.0
+
+Package: synaptic
+Architecture: any
+Depends: ${shlibs:Depends}, scrollkeeper
+Provides: gsynaptic
+Replaces: gsynaptic
+Conflicts: gsynaptic, menu (<< 2.1.11)
+Recommends: gksu, deborphan, libgnome2-perl
+Description: Graphical package manager 
+ Synaptic is a graphical package management tool based on GTK+ and APT.
+ Synaptic enables you to install, upgrade and remove software packages in
+ a user friendly way.
+ .
+ Besides these basic functions the following features are provided:
+  * Search and filter the list of available packages
+  * Perform smart system upgrades
+  * Fix broken package dependencies
+  * Edit the list of used repositories (sources.list)
+  * Download the latest changelog of a package
+  * Configure packages through the debconf system
+  * Browse all available documentation related to a package (dwww is required)
+

@@ -1,0 +1,16 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_ubuntu_su_to_root.dpatch by  <egon@localhost.localdomain>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: don't use su, use gksudo instead
+
+@DPATCH@
+diff -urNad trunk/debian/synaptic.menu /tmp/dpep.6IQ8sl/trunk/debian/synaptic.menu
+--- trunk/debian/synaptic.menu	2005-04-06 00:39:28.000000000 +0200
++++ /tmp/dpep.6IQ8sl/trunk/debian/synaptic.menu	2005-05-06 10:33:58.259284776 +0200
+@@ -1,4 +1,4 @@
+ ?package(synaptic):needs="X11" section="Apps/System"\
+   title="Synaptic Package Manager" \
+   icon="/usr/share/synaptic/pixmaps/synaptic_32x32.xpm"\
+-  command="/usr/sbin/su-to-root -X -c /usr/sbin/synaptic"
++  command="/usr/bin/gksudo /usr/sbin/synaptic"

@@ -1,0 +1,114 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This is the debhelper compatability version to use.
+export DH_COMPAT=3
+
+build: build-stamp
+build-stamp: patch
+	dh_testdir
+	./configure --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --sysconfdir=/etc --with-vte --with-pkg-hold 
+	$(MAKE)
+	touch build-stamp
+
+
+#build-debtags: build-debtags-stamp
+#build-debtags-stamp:
+#	dh_testdir 
+#	./configure --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --sysconfdir=/etc --with-vte --with-debian-description-parser --with-pkg-hold --with-debtags
+#	$(MAKE)
+#	touch build-debtags-stamp
+
+
+clean: clean1 unpatch
+clean1: 
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp build-debtags-stamp install-stamp install-debtags-stamp
+	-$(MAKE) distclean
+	dh_clean
+
+#clean-debtags:
+#	dh_testdir
+#	dh_testroot
+#	rm -f build-stamp build-debtags-stamp install-stamp install-debtags-stamp
+#	dh_clean -k
+
+install: install-stamp
+install-stamp: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	#dh_installdirs
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic
+	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps
+
+
+#install-debtags: install-debtags-stamp
+#install-debtags-stamp: build-debtags
+#	dh_testdir 
+#	dh_testroot
+#	dh_clean -k
+	#dh_installdirs -psynaptic-debtags
+#	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic-debtags
+#	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic-debtags/usr/share/synaptic/pixmaps
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do here
+
+# Build architecture-dependent files here.
+binary-arch: build install synaptic 
+
+
+synaptic: build
+	dh_testdir -psynaptic
+	dh_testroot -psynaptic
+	dh_installdocs -psynaptic
+	dh_scrollkeeper -psynaptic
+	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
+	dh_installmenu -psynaptic
+	dh_installchangelogs ChangeLog -psynaptic
+	dh_link -psynaptic
+	dh_strip -psynaptic
+	dh_compress -psynaptic
+	dh_fixperms -psynaptic
+	dh_installdeb -psynaptic
+	dh_shlibdeps -psynaptic
+	dh_gencontrol -psynaptic
+	dh_md5sums -psynaptic
+	dh_builddeb -psynaptic
+
+#synaptic-debtags: install-debtags
+#	dh_testdir -psynaptic-debtags
+#	dh_testroot -psynaptic-debtags
+#	dh_installdocs -psynaptic-debtags 
+	#TODO README README.debtags NEWS debian/NEWS.Debian
+#	dh_scrollkeeper -psynaptic-debtags
+#	dh_installman -psynaptic-debtags man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
+#	dh_installmenu -psynaptic-debtags
+#	dh_installchangelogs ChangeLog -psynaptic-debtags
+#	dh_link -psynaptic-debtags
+#	dh_strip -psynaptic-debtags
+#	dh_compress -psynaptic-debtags
+#	dh_fixperms -psynaptic-debtags
+#	dh_installdeb -psynaptic-debtags
+#	dh_shlibdeps -psynaptic-debtags
+#	dh_gencontrol -psynaptic-debtags
+#	dh_md5sums -psynaptic-debtags
+#	dh_builddeb -psynaptic-debtags
+
+patch: patch-stamp
+patch-stamp:
+	dpatch apply-all
+	touch patch-stamp
+
+unpatch:
+	dpatch deapply-all
+	rm -rf patch-stamp debian/patched
+
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

@@ -1,0 +1,37 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 01_ubuntu_changelog.dpatch by  <egon@localhost.localdomain>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad synaptic-0.56/common/rpackage.cc /tmp/dpep.Ri9fRS/synaptic-0.56/common/rpackage.cc
+--- synaptic-0.56/common/rpackage.cc	2005-02-18 13:28:43.000000000 +0100
++++ /tmp/dpep.Ri9fRS/synaptic-0.56/common/rpackage.cc	2005-02-18 14:39:17.005309176 +0100
+@@ -810,7 +810,7 @@
+    if(verstr.find(':')!=verstr.npos)
+       verstr=string(verstr, verstr.find(':')+1);
+    char uri[512];
+-   snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
++   snprintf(uri,512,"http://changelogs.ubuntu.com/changelogs/pool/%s/%s/%s/%s_%s/changelog",
+                                src_section.c_str(),
+                                prefix.c_str(),
+                                srcpkg.c_str(),
+@@ -1293,7 +1293,7 @@
+       markUnsupported = true;
+ 
+       // read supported labels
+-      labels = _config->Find("Synaptic::supported-label", "Debian Debian-Security");
++      labels = _config->Find("Synaptic::supported-label", "Ubuntu");
+       stringstream sst1(labels);
+       while(!sst1.eof()) {
+ 	 sst1 >> s;
+@@ -1301,7 +1301,7 @@
+       }
+       
+       // read supported components
+-      components = _config->Find("Synaptic::supported-components", "main updates/main");
++      components = _config->Find("Synaptic::supported-components", "main updates/main restricted");
+       stringstream sst2(components);
+       while(!sst2.eof()) {
+ 	 sst2 >> s;

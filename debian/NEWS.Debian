@@ -1,0 +1,50 @@
+synaptic (0.50-1) unstable; urgency=low
+
+Synaptic does no longer is build with "package hold" support. This used
+to be implemented using apt pins but debian apt maintainer says that
+this is not the right way (see #235841 for details). If you used to
+"hold" packages with synaptic, please remove the pins by editing 
+/etc/apt/preferences.
+  
+Debtags support is no longer available but it will be readded once it's
+ported to the new code. 
+  
+  
+ -- Michael Vogt <mvo@debian.org>  Thu, 20 May 2004 18:07:24 +0200
+  
+synaptic (0.48-1) unstable; urgency=low
+
+The format of the color configuration changed for version 0.48. This 
+means that if you have customized the colors in synaptic, you will 
+have to do it once again. Sorry for this inconvenience.
+  
+ -- Michael Vogt <mvo@debian.org>  Sat,  3 Jan 2004 03:01:49 +0100
+
+synaptic (0.41-1) unstable; urgency=low
+
+There is a additional package now called "synaptic-debtags" that can
+be installed instead of synaptic. This package includes support for
+the new "debtags" system that makes searching and displaying of the
+packages much more flexible. The package is a bit more experimental
+than plain synaptic and there is some work to be done, but IMHO it's
+very promising. More information about synaptic-debtags can be found 
+at /usr/share/doc/synaptic-debtags/README.debtags.
+
+More information about debtags in general is available at:
+http://deb-usability.alioth.debian.org/debtags/
+
+Thanks to Enrico Zini for implementing debtag support in synaptic
+and Erich Schubert for building the debtag database!
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 12 Jul 2003 11:32:47 +0200
+
+synaptic (0.40-1) unstable; urgency=low
+
+The debconf filter has changed. It is no longer a button in the status
+filter tab but a simple pattern filter ("<Inlcude> <depends on> 
+"debconf"). Because of this filters that use the "Not (no longer) 
+installable" status button will need to be rechecked by hand. Sorry 
+for the inconvenience. 
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 12 Jul 2003 11:32:47 +0200
+

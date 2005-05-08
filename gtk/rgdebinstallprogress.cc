@@ -144,7 +144,7 @@ write_fd(int fd, void *ptr, size_t nbytes, int sendfd)
 
         union {
           struct cmsghdr        cm;
-          char                          control[CMSG_SPACE(sizeof(int))];
+          char   control[CMSG_SPACE(sizeof(int))];
         } control_un;
         struct cmsghdr  *cmptr;
 
@@ -174,12 +174,12 @@ read_fd(int fd, void *ptr, size_t nbytes, int *recvfd)
 {
         struct msghdr   msg;
         struct iovec    iov[1];
-        ssize_t                 n;
-        int                             newfd;
+        ssize_t  n;
+        int newfd;
 
         union {
           struct cmsghdr        cm;
-          char                          control[CMSG_SPACE(sizeof(int))];
+          char   control[CMSG_SPACE(sizeof(int))];
         } control_un;
         struct cmsghdr  *cmptr;
 

@@ -12,15 +12,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-28 14:21+0100\n"
-"PO-Revision-Date: 2005-03-14 11:36+0200\n"
+"POT-Creation-Date: 2005-04-29 12:44+0300\n"
+"PO-Revision-Date: 2005-04-29 12:42+0300\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <team@gnome.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.9.1\n"
+"X-Generator: KBabel 1.10\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -219,7 +219,7 @@ msgstr "contrib"
 #: ../common/indexcopy.cc:51 ../common/rpmindexcopy.cc:75
 #, c-format
 msgid "Stat failed for %s"
-msgstr "Αποτυχία Stat  για %s"
+msgstr "Αποτυχία Stat για %s"
 
 #: ../common/indexcopy.cc:78 ../common/rpmindexcopy.cc:107
 msgid "Unable to create a tmp file"
@@ -253,7 +253,7 @@ msgstr "Σφάλμα ανάλυσης εγγραφής αρχείου"
 #: ../common/rcdscanner.cc:112 ../common/rcdscanner.cc:162
 #, c-format
 msgid "Failed to open %s.new"
-msgstr "Αποτυχία ανοίγματος  %s.new"
+msgstr "Αποτυχία ανοίγματος %s.new"
 
 #: ../common/rcdscanner.cc:137 ../common/rcdscanner.cc:247
 #, c-format
@@ -357,7 +357,7 @@ msgstr "Αδυναμία αλλλαγής σε %s"
 msgid "Unable to read %s"
 msgstr "Αδυναμία ανάγνωσης %s"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:225
+#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "ΣΦΑΛΜΑ: Αδυναμία ανοίγματος %s για εγγραφή"
@@ -371,17 +371,22 @@ msgstr "ΣΦΑΛΜΑ: Αδυναμία λήψης εγγραφής κωδικο�
 msgid "ERROR: could not create configuration directory %s"
 msgstr "ΣΦΑΛΜΑ: αδυναμία δημιουργίας καταλόγου ρυθμίσεων %s"
 
-#: ../common/rconfiguration.cc:148
+#: ../common/rconfiguration.cc:147
+#, c-format
+msgid "ERROR: could not create state directory %s"
+msgstr "ΣΦΑΛΜΑ: αδυναμία δημιουργίας  καταλόγου state %s"
+
+#: ../common/rconfiguration.cc:164
 #, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "ΣΦΑΛΜΑ: αδυναμία δημιουργίας προσωρινού καταλόγου %s"
 
-#: ../common/rconfiguration.cc:166
+#: ../common/rconfiguration.cc:182
 #, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "ΣΦΑΛΜΑ: αδυναμία δημιουργίας καταλόγου καταγραφών %s"
 
-#: ../common/rconfiguration.cc:250
+#: ../common/rconfiguration.cc:266
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "αδυναμία ανοίγματος %s για εγγραφή"
@@ -535,7 +540,7 @@ msgid "Installed"
 msgstr "Εγκατεστημένα"
 
 #: ../common/rpackage.cc:1283 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:489
+#: ../gtk/gsynaptic.cc:515
 msgid "Installed (upgradable)"
 msgstr "Εγκατεστημένα (δυνατότητα αναβάθμισης)"
 
@@ -552,7 +557,7 @@ msgstr "Κατεστραμμένα"
 msgid "Not installed (new in repository)"
 msgstr "Μη εγκατατεστημένα (νέα στο repository)"
 
-#: ../common/rpackagecache.cc:65
+#: ../common/rpackagecache.cc:71
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
@@ -560,15 +565,15 @@ msgstr ""
 "Αδυναμία ανάγνωσης λίστας πηγών.\n"
 "Πηγαίνετε στο διάλογο repository για να διορθώσετε το πρόβλημα."
 
-#: ../common/rpackagecache.cc:76
+#: ../common/rpackagecache.cc:82
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "Αδυναμία ανάλυσης ή ανοίγματος το αρχείου λίστας ή κατάστασης πακέτων."
 
-#: ../common/rpackagecache.cc:113
+#: ../common/rpackagecache.cc:120
 msgid "Internal Error, non-zero counts"
 msgstr "Εσωτερικό σφάλμα, non-zero counts"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1009
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1006
 #: ../gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Όνομα"
@@ -651,21 +656,21 @@ msgstr "Μειωμένη προβολή"
 #: ../common/rpackagefilter.cc:675
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
-msgstr "Εσφαλμένη κανονική έκφραση '%s'  στο αρχείο  ReducedView."
+msgstr "Εσφαλμένη κανονική έκφραση '%s' στο αρχείο ReducedView."
 
-#: ../common/rpackagelister.cc:303 ../common/rpackagelister.cc:309
-#: ../common/rpackagelister.cc:323
+#: ../common/rpackagelister.cc:295 ../common/rpackagelister.cc:301
+#: ../common/rpackagelister.cc:315
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Εσωτερικό σφάλμα κατά το άνοιγμα της cache (%d). Παρακαλώ αναφέρετε το "
 "σφάλμα."
 
-#: ../common/rpackagelister.cc:462
+#: ../common/rpackagelister.cc:453
 msgid "Unable to correct dependencies"
 msgstr "Αδυναμία διόρθωσης εξαρτήσεων"
 
-#: ../common/rpackagelister.cc:464
+#: ../common/rpackagelister.cc:455
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -673,21 +678,21 @@ msgstr ""
 "Αδυναμία σημείωσης αναβαθμίσεων\n"
 "Ελέγξτε το σύστημα σας για σφάλματα."
 
-#: ../common/rpackagelister.cc:476
+#: ../common/rpackagelister.cc:467
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Εσωτερικό σφάλμα, Η αναβάθμιση όλων δημιούργησε προβλήματα. Παρακαλώ κάντε "
 "αναφορά."
 
-#: ../common/rpackagelister.cc:494
+#: ../common/rpackagelister.cc:485
 msgid "dist upgrade Failed"
 msgstr "Αποτυχία αναβάθμισης διανομής"
 
-#: ../common/rpackagelister.cc:1240
+#: ../common/rpackagelister.cc:1231
 msgid "Unable to lock the list directory"
 msgstr "Αδυναμία κλειδώματος του καταλόγου λίστας"
 
-#: ../common/rpackagelister.cc:1262
+#: ../common/rpackagelister.cc:1253
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -695,7 +700,7 @@ msgstr ""
 "Τα αρχεία έκδοσης για κάποια repositories δεν μπορούν να ανακτηθούν ή να "
 "πιστοποιηθούν.Τέτοια repositories αγνοούνται."
 
-#: ../common/rpackagelister.cc:1334 ../common/rpackagelister.cc:1340
+#: ../common/rpackagelister.cc:1325 ../common/rpackagelister.cc:1331
 #: ../gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Αγνόηση μη έγκυρων εγγραφών στο αρχείο sources.list!"
@@ -704,7 +709,7 @@ msgstr "Αγνόηση μη έγκυρων εγγραφών στο αρχείο 
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1388
+#: ../common/rpackagelister.cc:1379
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -715,21 +720,21 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1412
+#: ../common/rpackagelister.cc:1403
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr ""
 "Κάποια από τα πακέτα δεν είναι δυνατόν να ανακτηθούν από τους εξυπηρετητές.\n"
 
-#: ../common/rpackagelister.cc:1415
+#: ../common/rpackagelister.cc:1406
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Θέλετε να συνεχίσετε, αγνοώντας αυτά τα πακέτα;"
 
-#: ../common/rpackagelister.cc:1422
+#: ../common/rpackagelister.cc:1413
 msgid "Unable to correct missing packages"
 msgstr "Αδυναμία διόρθωσης πακέτων που λείπουν"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1562
+#: ../common/rpackagelister.cc:1553
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -738,7 +743,7 @@ msgstr ""
 "Τα ακόλουθα ΑΠΑΡΑΙΤΗΤΑ πακέτα απομακρύνονται:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1571
+#: ../common/rpackagelister.cc:1562
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -747,7 +752,7 @@ msgstr ""
 "Υποβάθμιση των ακόλουθων πακέτων:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1580
+#: ../common/rpackagelister.cc:1571
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -756,7 +761,7 @@ msgstr ""
 "Ολοκληρωτική απομάκρυνση των ακόλουθων πακέτων:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1589
+#: ../common/rpackagelister.cc:1580
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -765,7 +770,7 @@ msgstr ""
 "Απομάκρυνση των ακόλουθων πακέτων:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1598
+#: ../common/rpackagelister.cc:1589
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -774,7 +779,7 @@ msgstr ""
 "Αναβάθμιση των ακόλουθων πακέτων:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1609
+#: ../common/rpackagelister.cc:1600
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -783,7 +788,7 @@ msgstr ""
 "Εγκατάσταση των ακόλουθων πακέτων:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1619
+#: ../common/rpackagelister.cc:1610
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -791,21 +796,21 @@ msgstr ""
 "\n"
 "Επανεγκατάσταση των ακόλουθων πακέτων:\n"
 
-#: ../common/rpackagelister.cc:1636
+#: ../common/rpackagelister.cc:1627
 msgid "Unable to lock the download directory"
 msgstr "Αδυναμία κλειδώματος του καταλόγου λήψης αρχείων"
 
-#: ../common/rpackagelister.cc:1714
+#: ../common/rpackagelister.cc:1705
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Η γραμμή %u είναι πολύ μεγάλη στο αρχείο σημειώσεων."
 
-#: ../common/rpackagelister.cc:1728 ../common/rpackagelister.cc:1732
+#: ../common/rpackagelister.cc:1719 ../common/rpackagelister.cc:1723
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Κακοδιατυπωμένη γραμμή %u στο αρχείο σημειώσεων"
 
-#: ../common/rpackagelister.cc:1744
+#: ../common/rpackagelister.cc:1735
 msgid "Setting markings..."
 msgstr "Ρύθμιση σημειώσεων..."
 
@@ -831,7 +836,7 @@ msgstr "Προσαρμοσμένα"
 
 #: ../common/rpackageview.cc:116
 msgid "Installed (unsupported)"
-msgstr "Εγκατεστημένα (μη υποστηριζόμενα)"
+msgstr "Εγκατεστημένα (δεν υποστηρίζονται)"
 
 #: ../common/rpackageview.cc:121
 msgid "Not installed (unsupported)"
@@ -865,7 +870,7 @@ msgstr "Εργασίες"
 msgid "Reduced View"
 msgstr "Μειωμένη προβολή"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:521
 #: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "Σημειωμένες αλλαγές"
@@ -945,68 +950,71 @@ msgstr "Έξυπνη αναβάθμιση"
 msgid "This behavior can be changed in the preferences later."
 msgstr "Αυτή η συμπεριφορά μπορεί να αλλαχθεί αργότερα μέσω των προτιμήσεων."
 
-#: ../gtk/gsynaptic.cc:68
+#: ../gtk/gsynaptic.cc:69
 msgid "Usage: synaptic [options]\n"
 msgstr "Χρήση: synaptic [επιλογές]\n"
 
-#: ../gtk/gsynaptic.cc:69
+#: ../gtk/gsynaptic.cc:70
 msgid "-h   This help text\n"
 msgstr "-h   Αυτό το κείμενο βοηθειας\n"
 
-#: ../gtk/gsynaptic.cc:70
+#: ../gtk/gsynaptic.cc:71
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Άνοιγμα της οθόνης του repository\n"
 
-#: ../gtk/gsynaptic.cc:71
+#: ../gtk/gsynaptic.cc:72
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Δίνει ένα εναλλακτικό αρχείο φίλτρου\n"
 
-#: ../gtk/gsynaptic.cc:72
+#: ../gtk/gsynaptic.cc:73
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 
-#: ../gtk/gsynaptic.cc:73
+#: ../gtk/gsynaptic.cc:74
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? Εκκίνηση με το αρχικό φίλτρο με το δοθέντα αριθμό\n"
 
-#: ../gtk/gsynaptic.cc:74
+#: ../gtk/gsynaptic.cc:75
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Ορισμός μια τυχαίας επιλογής ρύθμισης, eg -o dir::cache=/tmp\n"
 
-#: ../gtk/gsynaptic.cc:75
+#: ../gtk/gsynaptic.cc:76
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr "--upgrade-mode  Αναβάθμιση και εμφάνιση αλλαγών\n"
 
-#: ../gtk/gsynaptic.cc:76
+#: ../gtk/gsynaptic.cc:77
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr "--dist-upgrade-mode  Αναβάθμιση διανομής και εμφάνιση αλλαγών\n"
 
-#: ../gtk/gsynaptic.cc:77
+#: ../gtk/gsynaptic.cc:78
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr "--update-at-startup  \"Ανανέωση\" κατά την εκκίνηση\n"
 
-#: ../gtk/gsynaptic.cc:78
+#: ../gtk/gsynaptic.cc:79
 msgid "--non-interactive Never prompt for user input\n"
 msgstr "--non-interactive Να μην ειδοποιείται ο χρήστης για ανάδραση\n"
 
-#: ../gtk/gsynaptic.cc:79
+#: ../gtk/gsynaptic.cc:80
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Άνοιγμα με παράθυρο εργασίας\n"
 
-#: ../gtk/gsynaptic.cc:80
-#, fuzzy
-msgid "--add-cdrom Add a cdrom at startup\n"
+#: ../gtk/gsynaptic.cc:81
+msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
 msgstr ""
 "--add-cdrom Προσθήκη ενός cdrom κατά την εκκίνηση (απαιτείται η διαδρομή του "
 "cdrom)\n"
 
-#: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
+#: ../gtk/gsynaptic.cc:82
+msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
+msgstr "--add-cdrom Ερώτηση για προσθήκη ενός cdrom και έξοδος\n"
+
+#: ../gtk/gsynaptic.cc:322 ../gtk/gsynaptic.cc:328
 msgid "Another synaptic is running"
 msgstr "Εκτελείται ένα άλλο synaptic"
 
-#: ../gtk/gsynaptic.cc:304
+#: ../gtk/gsynaptic.cc:323
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
@@ -1014,32 +1022,32 @@ msgstr ""
 "Υπάρχει μια άλλη διεργασία του synaptic που εκτελείται σε interactive mode. "
 "Θα πρέπει πρώτα να την κλείσετε."
 
-#: ../gtk/gsynaptic.cc:310
+#: ../gtk/gsynaptic.cc:329
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
 "Υπάρχει μια άλλη διεργασία του synaptic που εκτελείται σε non-interactive "
-"mode. Παρακαλώπεριμένετε να ολοκληρωθεί. "
+"mode. Παρακαλώ περιμένετε να ολοκληρωθεί. "
 
-#: ../gtk/gsynaptic.cc:334
+#: ../gtk/gsynaptic.cc:353
 msgid "Unable to get exclusive lock"
 msgstr "Αδυναμία λήψης αποκλειστικού κλειδώματος"
 
-#: ../gtk/gsynaptic.cc:335
+#: ../gtk/gsynaptic.cc:354
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
 "Αυτό συνήθως σημαίνει ότι εκτελείται ήδη μια άλλη εφαρμογή διαχείρισης "
-"πακέτων (όπως τοapt-get ή το aptitude). Παρακαλώ κλείστε πρώτα αυτή την "
+"πακέτων (όπως το apt-get ή το aptitude). Παρακαλώ κλείστε πρώτα αυτή την "
 "εφαρμογή."
 
-#: ../gtk/gsynaptic.cc:377
+#: ../gtk/gsynaptic.cc:396
 msgid "You must run this program as the root user."
 msgstr "Πρέπει να εκτελείτε αυτό το πρόγραμμα ως root."
 
-#: ../gtk/gsynaptic.cc:440
+#: ../gtk/gsynaptic.cc:459
 msgid "Synaptic Package Manager "
 msgstr "Διαχείριση πακέτων Synaptic"
 
@@ -1078,33 +1086,34 @@ msgid ""
 "system."
 msgstr ""
 "Πρόκειται να εγκαταστήσετε λογισμικό που <b>δεν μπορεί να πιστοποιηθεί</b>! "
-"Αυτόμπορεί να προκαλέσει ζημιά στον υπολογιστή σας από κακόβουλες επιθέσεις."
+"Αυτό μπορεί να προκαλέσει ζημιά στον υπολογιστή σας από κακόβουλες επιθέσεις."
 
 #: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr "ΧΩΡΙΣ ΠΙΣΤΟΠΟΙΗΣΗ"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
+#. removed
+#: ../gtk/rgchangeswindow.cc:114 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Προς απομάκρυνση"
 
-#: ../gtk/rgchangeswindow.cc:129
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Προς υποβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
+#: ../gtk/rgchangeswindow.cc:144 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Προς αναβάθμιση"
 
-#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
+#: ../gtk/rgchangeswindow.cc:156 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Προς εγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
+#: ../gtk/rgchangeswindow.cc:168 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Προς επανεγκατάσταση"
 
-#: ../gtk/rgchangeswindow.cc:177
+#: ../gtk/rgchangeswindow.cc:179
 msgid "To be kept"
 msgstr "Προς διατήρηση"
 
@@ -1179,8 +1188,9 @@ msgid ""
 "say 'No'. Do you want to install the new package maintainers version? "
 msgstr ""
 "Το αρχείο ρύθμισης  %s τροποποιήθηκε από εσάς ή από κάποια δέσμη ενεργειών. "
-"Μιαενημερωμένη έκδοση έρχεται με αυτό το πακέτο. Αν θέλετε να διατηρήσετε τη "
-"τρέχουσαέκδοση σας, πατήστε 'Όχι'. Θέλετε να εγκαταστήσετε την νέα έκδοση;"
+"Μια ενημερωμένη έκδοση έρχεται με αυτό το πακέτο. Αν θέλετε να διατηρήσετε "
+"τη τρέχουσα έκδοση σας, πατήστε 'Όχι'. Θέλετε να εγκαταστήσετε την νέα "
+"έκδοση;"
 
 #: ../gtk/rgdebinstallprogress.cc:421 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
@@ -1188,32 +1198,32 @@ msgid "Applying Changes"
 msgstr "Εφαρμογή αλλαγών"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:494
+#: ../gtk/rgdebinstallprogress.cc:495
 #, c-format
 msgid "Error in package %s"
 msgstr "Σφάλμα στο πακέτο %s"
 
-#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+#: ../gtk/rgdebinstallprogress.cc:645 ../gtk/rgdebinstallprogress.cc:648
 msgid "Changes applied"
 msgstr "Έγινε εφαρμογή των αλλαγών"
 
-#: ../gtk/rgdebinstallprogress.cc:703
+#: ../gtk/rgdebinstallprogress.cc:704
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 "Εφαρμόζονται τώρα οι σημειωμένες αλλαγές. Αυτό μπορεί να διαρκέσει κάποιο "
-"χρόνο. Παρακαλώπεριμένετε."
+"χρόνο. Παρακαλώ περιμένετε."
 
-#: ../gtk/rgdebinstallprogress.cc:708
+#: ../gtk/rgdebinstallprogress.cc:709
 msgid "Installing and removing software"
 msgstr "Εγκατάσταση και απομάκρυνση πακέτων λογισμικού"
 
-#: ../gtk/rgdebinstallprogress.cc:710
+#: ../gtk/rgdebinstallprogress.cc:711
 msgid "Removing software"
 msgstr "Απομάκρυνση λογισμικού"
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:713
 msgid "Installing software"
 msgstr "Εγκατάσταση λογισμικού"
 
@@ -1254,11 +1264,11 @@ msgstr "Δημιουργήθηκε σφάλμα κατά την αποθήκευ
 msgid "Choose font"
 msgstr "Επιλογή γραμματοσειράς"
 
-#: ../gtk/rgpreferenceswindow.cc:849
+#: ../gtk/rgpreferenceswindow.cc:846
 msgid "Color selection"
 msgstr "Χρώμα επιλογής"
 
-#: ../gtk/rgpreferenceswindow.cc:950
+#: ../gtk/rgpreferenceswindow.cc:947
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1266,32 +1276,32 @@ msgid ""
 "distribution."
 msgstr ""
 "Να επιλέγονται εκδόσεις πακέτων από την επιλεγμένη διανομή κατά την "
-"αναβάθμισηπακέτων. Αν εξαναγκάσετε χειρωνακτικά την εγκατάσταση μιας έκδοσης "
-"από άλλη διανομή, η έκδοση πακέτων θα ακολουθεί αυτή την διανομή μέχρι να "
-"πάει στην προεπιλεγμένη διανομή."
+"αναβάθμιση πακέτων. Αν εξαναγκάσετε χειρωνακτικά την εγκατάσταση μιας "
+"έκδοσης από άλλη διανομή, η έκδοση πακέτων θα ακολουθεί αυτή την διανομή "
+"μέχρι να πάει στην προεπιλεγμένη διανομή."
 
-#: ../gtk/rgpreferenceswindow.cc:958
+#: ../gtk/rgpreferenceswindow.cc:955
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
 "Να μην γίνεται αυτόματη αναβάθμιση έκδοσης. Να είστε πολύ προσεκτικοίμε αυτή "
-"την επιλογή μιας και δεν θα λαμβάνετε αυτόματα αναβαθμίσεις ασφαλείας!Αν "
+"την επιλογή μιας και δεν θα λαμβάνετε αυτόματα αναβαθμίσεις ασφαλείας! Αν "
 "εξαναγκάσετε χειρωνακτικά την εγκατάσταση μιας άλλης έκδοσης, η έκδοση "
 "πακέτων θα ακολουθείτην επιλεγμένη διανομή."
 
-#: ../gtk/rgpreferenceswindow.cc:966
+#: ../gtk/rgpreferenceswindow.cc:963
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 "Να επιλέγει το synaptic την καλύτερη έκδοση για εσάς. Χρησιμοποιήστε αυτή "
 "την επιλογή αν δεν είστε σίγουροι."
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1000
 msgid "Visible"
 msgstr "Ορατό"
 
-#: ../gtk/rgpreferenceswindow.cc:1077 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
@@ -1307,7 +1317,7 @@ msgstr "Πακέτο"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:197
+#: ../gtk/rgfetchprogress.cc:196
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1318,33 +1328,33 @@ msgstr ""
 "%s\n"
 "στον οδηγό %s"
 
-#: ../gtk/rgfetchprogress.cc:309
+#: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Ρυθμός λήψης αρχείων: %s/s - %s απομένουν"
 
-#: ../gtk/rgfetchprogress.cc:315
+#: ../gtk/rgfetchprogress.cc:323
 msgid "Download rate: unknown"
 msgstr "Ρυθμός λήψης αρχείων: άγνωστος"
 
-#: ../gtk/rgfetchprogress.cc:317
+#: ../gtk/rgfetchprogress.cc:325
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Λήψη αρχείου %li από %li"
 
-#: ../gtk/rgfetchprogress.cc:384
+#: ../gtk/rgfetchprogress.cc:392
 msgid "Queued"
 msgstr "Σε ουρά"
 
-#: ../gtk/rgfetchprogress.cc:387
+#: ../gtk/rgfetchprogress.cc:395
 msgid "Done"
 msgstr "Ολοκληρώθηκε"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:398
 msgid "Hit"
 msgstr "Επίσκεψη"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Failed"
 msgstr "Απέτυχε"
 
@@ -1400,11 +1410,11 @@ msgstr ""
 "Το σύστημα APT αναφέρει:\n"
 "%s"
 
-#: ../gtk/rglogview.cc:260
+#: ../gtk/rglogview.cc:264
 msgid "Not found"
 msgstr "Δεν βρέθηκε"
 
-#: ../gtk/rglogview.cc:262
+#: ../gtk/rglogview.cc:266
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr "Η έκφραση βρέθηκε, δείτε την λίστα στα αριστερά για τα αποτελέσματα."
@@ -1445,7 +1455,7 @@ msgid ""
 msgstr ""
 "Η διαχείριση πακέτων πάντα επιλέγει την πιο κατάλληλη έκδοση αν είναι "
 "διαθέσιμη.Αν εξαναγκάσετε την εγκατάσταση μιας διαφορετικής έκδοσης, μπορεί "
-"να συμβούν σφάλματαστον χειρισμό των εξαρτήσεων."
+"να συμβούν σφάλματα στον χειρισμό των εξαρτήσεων."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
 #: ../gtk/rgmainwindow.cc:783
@@ -1575,11 +1585,11 @@ msgstr[1] ""
 "\n"
 "Χρησιμοποιήστε το φίλτρο \"Κατεστραμμένα\" για να το εντοπίσετε."
 
-#: ../gtk/rgmainwindow.cc:1831
+#: ../gtk/rgmainwindow.cc:1833
 msgid "Downloading changelog"
 msgstr "Λήψη changelog"
 
-#: ../gtk/rgmainwindow.cc:1832
+#: ../gtk/rgmainwindow.cc:1834
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1588,36 +1598,36 @@ msgstr ""
 "σφάλματασε κάθε έκδοση του πακέτου."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1845
+#: ../gtk/rgmainwindow.cc:1847
 #, c-format
 msgid "%s Changelog"
 msgstr "%s Changelog"
 
-#: ../gtk/rgmainwindow.cc:1933
+#: ../gtk/rgmainwindow.cc:1935
 msgid "Do you want to add another CD-ROM?"
 msgstr "Θέλετε να προσθέσετε ένα ακόμα  CD-ROM;"
 
-#: ../gtk/rgmainwindow.cc:1967 ../gtk/rgmainwindow.cc:2023
+#: ../gtk/rgmainwindow.cc:1969 ../gtk/rgmainwindow.cc:2025
 msgid "Open changes"
 msgstr "Άνοιγμα αλλαγών"
 
-#: ../gtk/rgmainwindow.cc:1980 ../gtk/rgmainwindow.cc:2667
-#: ../gtk/rgmainwindow.cc:2752 ../gtk/rgmainwindow.cc:2915
+#: ../gtk/rgmainwindow.cc:1982 ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2754 ../gtk/rgmainwindow.cc:2917
 #, c-format
 msgid "Can't read %s"
 msgstr "Αδυναμία ανάγνωσης %s"
 
-#: ../gtk/rgmainwindow.cc:2004 ../gtk/rgmainwindow.cc:2585
-#: ../gtk/rgmainwindow.cc:2721 ../gtk/rgmainwindow.cc:2892
+#: ../gtk/rgmainwindow.cc:2006 ../gtk/rgmainwindow.cc:2587
+#: ../gtk/rgmainwindow.cc:2723 ../gtk/rgmainwindow.cc:2894
 #, c-format
 msgid "Can't write %s"
 msgstr "Αδυναμία εγγραφής %s"
 
-#: ../gtk/rgmainwindow.cc:2030
+#: ../gtk/rgmainwindow.cc:2032
 msgid "Save full state, not only changes"
 msgstr "Αποθήκευση πλήρους κατάστασης, όχι μόνο αλλαγές"
 
-#: ../gtk/rgmainwindow.cc:2129
+#: ../gtk/rgmainwindow.cc:2131
 msgid ""
 "<big><b>Building repository dialog</b></big>\n"
 "\n"
@@ -1627,14 +1637,14 @@ msgstr ""
 "\n"
 "Παρακαλώ περιμένετε."
 
-#: ../gtk/rgmainwindow.cc:2173
+#: ../gtk/rgmainwindow.cc:2175
 msgid "Repositories changed"
 msgstr "Τα repositories αλλάχθηκαν"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2177
+#: ../gtk/rgmainwindow.cc:2179
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1642,20 +1652,20 @@ msgstr ""
 "Οι πληροφορίες του repository έχουν αλλάξει. Πρέπει να πατήσετε το κουμπί "
 "\"Ανανέωση\"για να πραγματοποιηθούν οι αλλαγές σας."
 
-#: ../gtk/rgmainwindow.cc:2188
+#: ../gtk/rgmainwindow.cc:2190
 msgid "Never show this message again"
 msgstr "Να μην εμφανιστεί αυτό το μήνυμα ξανά"
 
-#: ../gtk/rgmainwindow.cc:2242
+#: ../gtk/rgmainwindow.cc:2244
 #, c-format
 msgid "Found %i packages"
 msgstr "Βρέθηκαν %i πακέτα"
 
-#: ../gtk/rgmainwindow.cc:2283
+#: ../gtk/rgmainwindow.cc:2285
 msgid "Starting help viewer..."
 msgstr "Εκκινείται προβολής βοήθειας..."
 
-#: ../gtk/rgmainwindow.cc:2303
+#: ../gtk/rgmainwindow.cc:2305
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1674,7 +1684,7 @@ msgstr ""
 "synaptic' ή να δείτε την html έκδοση που βρίσκεται στο φάκελο  'synaptic/"
 "html'."
 
-#: ../gtk/rgmainwindow.cc:2451
+#: ../gtk/rgmainwindow.cc:2453
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1682,16 +1692,16 @@ msgstr ""
 "Αδυναμία εκκίνησης εργαλείου ρύθμισης!\n"
 "Θα πρέπει να εγκαταστήσετε το πακέτο 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2457
+#: ../gtk/rgmainwindow.cc:2459
 msgid "Starting package configuration tool..."
 msgstr "Εκκίνηση εργαλείου ρύθμισης πακέτων...."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2472
+#: ../gtk/rgmainwindow.cc:2474
 msgid "Starting package documentation viewer..."
 msgstr "Εκκίνηση εφαρμογής προβολής τεκμηρίωσης πακέτων...."
 
-#: ../gtk/rgmainwindow.cc:2484
+#: ../gtk/rgmainwindow.cc:2486
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1699,7 +1709,7 @@ msgstr ""
 "Θα πρέπει να εγκαταστήσετε το πακέτο \"dwww\" για να περιηγηθείτε στην "
 "τεκμηρίωσητου πακέτου."
 
-#: ../gtk/rgmainwindow.cc:2549
+#: ../gtk/rgmainwindow.cc:2551
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1707,27 +1717,27 @@ msgstr ""
 "Αδυναμία εφαρμογής αλλαγών!\n"
 "Διορθώστε πρώτα τα κατεστραμμένα πακέτα."
 
-#: ../gtk/rgmainwindow.cc:2570
+#: ../gtk/rgmainwindow.cc:2572
 msgid "Applying marked changes. This may take a while..."
 msgstr "Εφαρμογή σημειωμένων αλλαγών. Αυτό μπορεί να πάρει λίγο χρόνο..."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2576
 msgid "Downloading package files"
 msgstr "Λήψη αρχείων πακέτου"
 
-#: ../gtk/rgmainwindow.cc:2575
+#: ../gtk/rgmainwindow.cc:2577
 msgid "The package files will be cached locally for installation."
 msgstr "Τα αρχεία πακέτων θα τοποθετούνται στην cache τοπικά για εγκατάσταση."
 
-#: ../gtk/rgmainwindow.cc:2650
+#: ../gtk/rgmainwindow.cc:2652
 msgid "Do you want to quit Synaptic?"
 msgstr "Θέλετε έξοδο από το Synaptic;"
 
-#: ../gtk/rgmainwindow.cc:2706
+#: ../gtk/rgmainwindow.cc:2708
 msgid "Downloading package information"
 msgstr "Λήψη πληροφοριών πακέτου"
 
-#: ../gtk/rgmainwindow.cc:2707
+#: ../gtk/rgmainwindow.cc:2709
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1735,19 +1745,19 @@ msgstr ""
 "Θα γίνει έλεγχος των repositories, για νέα, αναβαθμισμένα ή απομακρυνθέντα "
 "πακέτα λογισμικού."
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2712
 msgid "Reloading package information..."
 msgstr "Ανανέωση πληροφοριών πακέτου..."
 
-#: ../gtk/rgmainwindow.cc:2777
+#: ../gtk/rgmainwindow.cc:2779
 msgid "Failed to resolve dependency problems!"
 msgstr "Αποτυχία επίλυσης προβλημάτων εξάρτησης!"
 
-#: ../gtk/rgmainwindow.cc:2779
+#: ../gtk/rgmainwindow.cc:2781
 msgid "Successfully fixed dependency problems"
 msgstr "Επιτυχής επίλυση προβλημάτων εξαρτήσεων"
 
-#: ../gtk/rgmainwindow.cc:2795
+#: ../gtk/rgmainwindow.cc:2797
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1755,15 +1765,15 @@ msgstr ""
 "Αδυναμία αναβάθμισης του συστήματος!\n"
 "Διορθώστε πρώτα τα κατεστραμμένα πακέτα."
 
-#: ../gtk/rgmainwindow.cc:2844
+#: ../gtk/rgmainwindow.cc:2846
 msgid "Marking all available upgrades..."
 msgstr "Σημείωση όλων των διαθέσιμων πακέτων..."
 
-#: ../gtk/rgmainwindow.cc:2856
+#: ../gtk/rgmainwindow.cc:2858
 msgid "Successfully marked available upgrades"
 msgstr "Επιτυχής σημείωση όλων των διαθέσιμων αναβαθμίσεων!"
 
-#: ../gtk/rgmainwindow.cc:2858
+#: ../gtk/rgmainwindow.cc:2860
 msgid "Failed to mark all available upgrades!"
 msgstr "Αποτυχία σημείωσης όλων των διαθέσιμων αναβαθμίσεων!"
 
@@ -2574,7 +2584,7 @@ msgid ""
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 "Λίστα διαχωρισμένη με κόμμα των συστημάτων και των τομέων που θα γίνεται "
-"επικοινωνία μέσωproxy  (π.χ.. localhost, 192.168.1.231, .net)"
+"επικοινωνία μέσω proxy  (π.χ.. localhost, 192.168.1.231, .net)"
 
 #: ../gtk/window_preferences.glade.h:29
 msgid "Completely"
@@ -2828,7 +2838,7 @@ msgid ""
 "before they are applied."
 msgstr ""
 "Αυτή είναι η τελευταία σας ευκαιρία για να κοιτάξετε την λίστα των "
-"σημειωμένων αλλαγώνπριν να εφαρμοστούν."
+"σημειωμένων αλλαγών πριν να εφαρμοστούν."
 
 #: ../gtk/window_summary.glade.h:10
 msgid ""
@@ -3061,7 +3071,7 @@ msgstr "<i>Προετοιμασία πακέτων...</i>"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:2
 msgid "Automatically close after the changes have been successfully applied"
-msgstr "Αυτόματο κλείσιμο  μετά την επιτυχή εφαρμογή των αλλαγών"
+msgstr "Αυτόματο κλείσιμο μετά την επιτυχή εφαρμογή των αλλαγών"
 
 #: ../gtk/window_rgdebinstall_progress.glade.h:3
 msgid "Terminal"
@@ -3301,7 +3311,7 @@ msgstr ""
 
 #: ../gtk/dialog_update_outdated.glade.h:4
 msgid "Remember the answer"
-msgstr "Απομνημόνευση της απάντησης"
+msgstr "Απομνημόνευση της απάντησης μου"
 
 #: ../gtk/dialog_update_outdated.glade.h:5
 msgid "_Reload"
@@ -3316,6 +3326,3 @@ msgid "History of installed, upgraded and removed software packages."
 msgstr ""
 "Ιστορικό από εγκατεστημένα, απομακρυνθέντα και αναβαθμισμένα πακέτα "
 "λογισμικού"
-
-#~ msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
-#~ msgstr "--add-cdrom Ερώτηση για ροσθήκη ενός cdrom και έξοδος\n"

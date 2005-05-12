@@ -27,23 +27,34 @@
 #define RGCHANGESWINDOW_H
 
 #include "rggladewindow.h"
+#include <vector>
 
 class RPackageLister;
 
 class RGChangesWindow:public RGGladeWindow {
    enum {
       PKG_COLUMN,
+      PKG_PURGE_VISIBLE,
+      PKG_PURGE,
       N_COLUMNS
    };
 
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
+   std::vector<string> purge_list;
+   RPackageLister *_lister;
+
+ protected:
+   static void cell_toggled_callback (GtkCellRendererToggle *cell,
+				      gchar *path_string,
+				      gpointer user_data);
+
 
  public:
-   RGChangesWindow(RGWindow *win);
+   RGChangesWindow(RGWindow *win, RPackageLister *lister);
 
-   void confirm(RPackageLister *lister,
-		vector<RPackage *> &kept,
+   int Run();
+   void confirm(vector<RPackage *> &kept,
 		vector<RPackage *> &toInstall,
 		vector<RPackage *> &toReInstall,
 		vector<RPackage *> &toUpgrade,

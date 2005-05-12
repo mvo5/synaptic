@@ -499,10 +499,10 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
 				       toUpgrade, toRemove, toDowngrade,
 				       notAuthenticated, exclude)) {
-      RGChangesWindow changes(this);
-      changes.confirm(_lister, toKeep, toInstall, toReInstall,
+      RGChangesWindow changes(this, _lister);
+      changes.confirm(toKeep, toInstall, toReInstall,
 		      toUpgrade, toRemove, toDowngrade, notAuthenticated);
-      int res = gtk_dialog_run(GTK_DIALOG(changes.window()));
+      int res = changes.Run();
       if( res != GTK_RESPONSE_OK) {
          // canceled operation
          _lister->restoreState(state);
@@ -2118,6 +2118,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 int status;
 	 char *argv[5];
 	 GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	 gtk_window_set_title(GTK_WINDOW(win), _("Repositories"));
 	 gtk_window_set_default_size(GTK_WINDOW(win),400,500);
 	 gtk_container_set_border_width(GTK_CONTAINER(win), 6);
 	 gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(me->_win));

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-28 14:21+0100\n"
+"POT-Creation-Date: 2005-05-08 11:18+0200\n"
 "PO-Revision-Date: 2005-03-02 14:13MSK\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -355,7 +355,7 @@ msgstr "Невозможно перейти в %s"
 msgid "Unable to read %s"
 msgstr "Невозможно прочитать %s"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:225
+#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "Ошибка: Невозможно открыть %s для записи"
@@ -369,17 +369,22 @@ msgstr "Ошибка: Невозможно прочитать пароль су�
 msgid "ERROR: could not create configuration directory %s"
 msgstr "Ошибка: Невозможно создать каталог настроек %s"
 
-#: ../common/rconfiguration.cc:148
+#: ../common/rconfiguration.cc:147
+#, fuzzy, c-format
+msgid "ERROR: could not create state directory %s"
+msgstr "ОШИБКА: невозможно создать временный каталог %s"
+
+#: ../common/rconfiguration.cc:164
 #, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "ОШИБКА: невозможно создать временный каталог %s"
 
-#: ../common/rconfiguration.cc:166
+#: ../common/rconfiguration.cc:182
 #, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "Ошибка: Невозможно создать каталог для файлов журнала %s"
 
-#: ../common/rconfiguration.cc:250
+#: ../common/rconfiguration.cc:266
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "Невозможно открыть %s для записи"
@@ -535,7 +540,7 @@ msgid "Installed"
 msgstr "Установленные"
 
 #: ../common/rpackage.cc:1283 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:489
+#: ../gtk/gsynaptic.cc:515
 msgid "Installed (upgradable)"
 msgstr "Установленные и обновляемые"
 
@@ -553,7 +558,7 @@ msgstr "С ошибками"
 msgid "Not installed (new in repository)"
 msgstr "Не установленные (новые в репозитории)"
 
-#: ../common/rpackagecache.cc:65
+#: ../common/rpackagecache.cc:71
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
@@ -561,15 +566,15 @@ msgstr ""
 "Невозможно прочитать список источников обновлений.\n"
 "Исправьте ошибку в окне настройки репозиториев."
 
-#: ../common/rpackagecache.cc:76
+#: ../common/rpackagecache.cc:82
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "Невозможно открыть или обработать файл состояния или списки пакетов."
 
-#: ../common/rpackagecache.cc:113
+#: ../common/rpackagecache.cc:120
 msgid "Internal Error, non-zero counts"
 msgstr "Внутренняя ошибка: Ненулевые счётчики"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1009
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1006
 #: ../gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Название"
@@ -654,19 +659,19 @@ msgstr "Сокращённый вид"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Плохое регулярное выражение '%s' в файле сокращённого вида."
 
-#: ../common/rpackagelister.cc:303 ../common/rpackagelister.cc:309
-#: ../common/rpackagelister.cc:323
+#: ../common/rpackagelister.cc:295 ../common/rpackagelister.cc:301
+#: ../common/rpackagelister.cc:315
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Внутренняя ошибка при открытии кэша зависимостей (%d). Пожалуйста, сообщите "
 "об этом разработчикам."
 
-#: ../common/rpackagelister.cc:462
+#: ../common/rpackagelister.cc:453
 msgid "Unable to correct dependencies"
 msgstr "Невозможно исправить зависимости"
 
-#: ../common/rpackagelister.cc:464
+#: ../common/rpackagelister.cc:455
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -674,21 +679,21 @@ msgstr ""
 "Невозможно пометить для обновления\n"
 "Проверьте, нет ли ошибок в системе."
 
-#: ../common/rpackagelister.cc:476
+#: ../common/rpackagelister.cc:467
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Внутренняя ошибка при выполнении функции pkgAllUpgrade. Пожалуйста, сообщите "
 "об этом разработчикам."
 
-#: ../common/rpackagelister.cc:494
+#: ../common/rpackagelister.cc:485
 msgid "dist upgrade Failed"
 msgstr "Ошибка pkgDistUpgrade"
 
-#: ../common/rpackagelister.cc:1240
+#: ../common/rpackagelister.cc:1231
 msgid "Unable to lock the list directory"
 msgstr "Невозможно заблокировать каталог списков"
 
-#: ../common/rpackagelister.cc:1262
+#: ../common/rpackagelister.cc:1253
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -697,7 +702,7 @@ msgstr ""
 "проверены.\n"
 "Такие репозитории игнорируются."
 
-#: ../common/rpackagelister.cc:1334 ../common/rpackagelister.cc:1340
+#: ../common/rpackagelister.cc:1325 ../common/rpackagelister.cc:1331
 #: ../gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Пропущены недействительные записи в файле sources.list!"
@@ -706,7 +711,7 @@ msgstr "Пропущены недействительные записи в фа
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1388
+#: ../common/rpackagelister.cc:1379
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -717,20 +722,20 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1412
+#: ../common/rpackagelister.cc:1403
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Некоторые из пакетов не могут быть получены с сервера(ов).\n"
 
-#: ../common/rpackagelister.cc:1415
+#: ../common/rpackagelister.cc:1406
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Желаете ли вы продолжить, пропустив эти пакеты?"
 
-#: ../common/rpackagelister.cc:1422
+#: ../common/rpackagelister.cc:1413
 msgid "Unable to correct missing packages"
 msgstr "Невозможно исправить отсутствующие пакеты"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1562
+#: ../common/rpackagelister.cc:1553
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -739,7 +744,7 @@ msgstr ""
 "Следующие ВАЖНЫЕ пакеты удалены:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1571
+#: ../common/rpackagelister.cc:1562
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -748,7 +753,7 @@ msgstr ""
 "Следующие пакеты приведены к предыдущей версии:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1580
+#: ../common/rpackagelister.cc:1571
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -757,7 +762,7 @@ msgstr ""
 "Полностью удалены следующие пакеты:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1589
+#: ../common/rpackagelister.cc:1580
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -766,7 +771,7 @@ msgstr ""
 "Следующие пакеты удалены:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1598
+#: ../common/rpackagelister.cc:1589
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -775,7 +780,7 @@ msgstr ""
 "Следующие пакеты обновлены:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1609
+#: ../common/rpackagelister.cc:1600
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -784,7 +789,7 @@ msgstr ""
 "Следующие пакеты установлены:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1619
+#: ../common/rpackagelister.cc:1610
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -792,21 +797,21 @@ msgstr ""
 "\n"
 "Следующие пакеты установлены заново:\n"
 
-#: ../common/rpackagelister.cc:1636
+#: ../common/rpackagelister.cc:1627
 msgid "Unable to lock the download directory"
 msgstr "Невозможно закрепить каталог для скачивания"
 
-#: ../common/rpackagelister.cc:1714
+#: ../common/rpackagelister.cc:1705
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Строка %u слишком длинная в файле выбора."
 
-#: ../common/rpackagelister.cc:1728 ../common/rpackagelister.cc:1732
+#: ../common/rpackagelister.cc:1719 ../common/rpackagelister.cc:1723
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Неверная строка %u в фале выбора"
 
-#: ../common/rpackagelister.cc:1744
+#: ../common/rpackagelister.cc:1735
 msgid "Setting markings..."
 msgstr "Устанавливается отмеченное..."
 
@@ -868,7 +873,7 @@ msgstr "Задачи"
 msgid "Reduced View"
 msgstr "Сокращённый вид"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:521
 #: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "Отмеченные изменения"
@@ -949,66 +954,72 @@ msgstr "Интеллектуальное обновление"
 msgid "This behavior can be changed in the preferences later."
 msgstr "Это поведение может быть позднее изменено в настройках"
 
-#: ../gtk/gsynaptic.cc:68
+#: ../gtk/gsynaptic.cc:69
 msgid "Usage: synaptic [options]\n"
 msgstr "Использование: synaptic [параметры]\n"
 
-#: ../gtk/gsynaptic.cc:69
+#: ../gtk/gsynaptic.cc:70
 msgid "-h   This help text\n"
 msgstr "-h   Вывести этот текст справки\n"
 
-#: ../gtk/gsynaptic.cc:70
+#: ../gtk/gsynaptic.cc:71
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Открыть в окне репозитория\n"
 
-#: ../gtk/gsynaptic.cc:71
+#: ../gtk/gsynaptic.cc:72
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Задать альтернативный файл фильтров\n"
 
-#: ../gtk/gsynaptic.cc:72
+#: ../gtk/gsynaptic.cc:73
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
 "-t   Указать альтернативное названия главного окна (например hostname с "
 "`uname -n`)\n"
 
-#: ../gtk/gsynaptic.cc:73
+#: ../gtk/gsynaptic.cc:74
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? Начать с фильтра, имеющего указанный номер\n"
 
-#: ../gtk/gsynaptic.cc:74
+#: ../gtk/gsynaptic.cc:75
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Установить произвольный параметр, например, -o dir::cache=/tmp\n"
 
-#: ../gtk/gsynaptic.cc:75
+#: ../gtk/gsynaptic.cc:76
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr "--upgrade-mode  Вызвать обновление и показать изменения\n"
 
-#: ../gtk/gsynaptic.cc:76
+#: ../gtk/gsynaptic.cc:77
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr "--dist-upgrade-mode  Вызвать DistUpgrade и показать изменения\n"
 
-#: ../gtk/gsynaptic.cc:77
+#: ../gtk/gsynaptic.cc:78
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr "--update-at-startup  Вызвать \"Получить сведения\" при запуске\n"
 
-#: ../gtk/gsynaptic.cc:78
+#: ../gtk/gsynaptic.cc:79
 msgid "--non-interactive Never prompt for user input\n"
 msgstr "--non-interactive Никогда не запрашивать ввода пользователем\n"
 
-#: ../gtk/gsynaptic.cc:79
+#: ../gtk/gsynaptic.cc:80
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Открыть с окном задач\n"
 
-#: ../gtk/gsynaptic.cc:80
-msgid "--add-cdrom Add a cdrom at startup\n"
+#: ../gtk/gsynaptic.cc:81
+#, fuzzy
+msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
 msgstr "--add-cdrom Добавить компакт-диск при запуске\n"
 
-#: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
+#: ../gtk/gsynaptic.cc:82
+#, fuzzy
+msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
+msgstr "--add-cdrom Добавить компакт-диск при запуске\n"
+
+#: ../gtk/gsynaptic.cc:322 ../gtk/gsynaptic.cc:328
 msgid "Another synaptic is running"
 msgstr "Другой экземпляр synaptic уже запущен"
 
-#: ../gtk/gsynaptic.cc:304
+#: ../gtk/gsynaptic.cc:323
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
@@ -1016,7 +1027,7 @@ msgstr ""
 "Где-то уже запущен synaptic в диалоговом режиме. Пожалуйста, сначала "
 "закройте его."
 
-#: ../gtk/gsynaptic.cc:310
+#: ../gtk/gsynaptic.cc:329
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
@@ -1024,11 +1035,11 @@ msgstr ""
 "Где-то запущен другой synaptic в недиалоговом режиме. Пожалуйста, подождите "
 "пока он завершится."
 
-#: ../gtk/gsynaptic.cc:334
+#: ../gtk/gsynaptic.cc:353
 msgid "Unable to get exclusive lock"
 msgstr "Невозможно получить исключительную блокировку"
 
-#: ../gtk/gsynaptic.cc:335
+#: ../gtk/gsynaptic.cc:354
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
@@ -1036,11 +1047,11 @@ msgstr ""
 "Это обычно означает, что другая программа управления пакетами (как apt-get "
 "или aptitude) уже запущена. Пожалуйста, закройте перед запуском synaptic."
 
-#: ../gtk/gsynaptic.cc:377
+#: ../gtk/gsynaptic.cc:396
 msgid "You must run this program as the root user."
 msgstr "Вы должны запускать эту программу как пользователь root."
 
-#: ../gtk/gsynaptic.cc:440
+#: ../gtk/gsynaptic.cc:459
 msgid "Synaptic Package Manager "
 msgstr "Менеджер пакетов Synaptic "
 
@@ -1086,27 +1097,28 @@ msgstr ""
 msgid "NOT AUTHENTICATED"
 msgstr "ПОДЛИННОСТЬ НЕ ПОДТВЕРЖДЕНА"
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
+#. removed
+#: ../gtk/rgchangeswindow.cc:114 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Для удаления"
 
-#: ../gtk/rgchangeswindow.cc:129
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Для понижения версии"
 
-#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
+#: ../gtk/rgchangeswindow.cc:144 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Для обновления"
 
-#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
+#: ../gtk/rgchangeswindow.cc:156 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Для установки"
 
-#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
+#: ../gtk/rgchangeswindow.cc:168 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "Для повторной установки"
 
-#: ../gtk/rgchangeswindow.cc:177
+#: ../gtk/rgchangeswindow.cc:179
 msgid "To be kept"
 msgstr "Для сохранения"
 
@@ -1192,16 +1204,16 @@ msgid "Applying Changes"
 msgstr "Внесение изменений..."
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:494
+#: ../gtk/rgdebinstallprogress.cc:495
 #, c-format
 msgid "Error in package %s"
 msgstr "Ошибка в пакете %s"
 
-#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+#: ../gtk/rgdebinstallprogress.cc:645 ../gtk/rgdebinstallprogress.cc:648
 msgid "Changes applied"
 msgstr "Изменения применены"
 
-#: ../gtk/rgdebinstallprogress.cc:703
+#: ../gtk/rgdebinstallprogress.cc:704
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1209,15 +1221,15 @@ msgstr ""
 "Отмеченные изменения применяются. Это может занять некоторое время. "
 "Пожалуйста, подождите."
 
-#: ../gtk/rgdebinstallprogress.cc:708
+#: ../gtk/rgdebinstallprogress.cc:709
 msgid "Installing and removing software"
 msgstr "Установка и удаление программ"
 
-#: ../gtk/rgdebinstallprogress.cc:710
+#: ../gtk/rgdebinstallprogress.cc:711
 msgid "Removing software"
 msgstr "Удаление программ"
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:713
 msgid "Installing software"
 msgstr "Установка программ"
 
@@ -1259,11 +1271,11 @@ msgstr "Произошла ошибка при сохранении настро
 msgid "Choose font"
 msgstr "Выберите шрифт"
 
-#: ../gtk/rgpreferenceswindow.cc:849
+#: ../gtk/rgpreferenceswindow.cc:846
 msgid "Color selection"
 msgstr "Выбор цвета"
 
-#: ../gtk/rgpreferenceswindow.cc:950
+#: ../gtk/rgpreferenceswindow.cc:947
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1275,7 +1287,7 @@ msgstr ""
 "версия пакета будет следовать за этим дистрибутивов, пока он не войдёт в "
 "дистрибутив по умолчанию."
 
-#: ../gtk/rgpreferenceswindow.cc:958
+#: ../gtk/rgpreferenceswindow.cc:955
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
@@ -1286,17 +1298,17 @@ msgstr ""
 "безопасности автоматически! Если вы принудительно укажете версию пакета, "
 "версия будет следовать выбранному дистрибутиву."
 
-#: ../gtk/rgpreferenceswindow.cc:966
+#: ../gtk/rgpreferenceswindow.cc:963
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 "Позволить synaptic отметить лучшую версию. Если не уверены, используйте этот "
 "пункт."
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1000
 msgid "Visible"
 msgstr "Видимый"
 
-#: ../gtk/rgpreferenceswindow.cc:1077 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -1312,7 +1324,7 @@ msgstr "Название пакета"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:197
+#: ../gtk/rgfetchprogress.cc:196
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1323,33 +1335,33 @@ msgstr ""
 "%s\n"
 "в дисковод %s"
 
-#: ../gtk/rgfetchprogress.cc:309
+#: ../gtk/rgfetchprogress.cc:317
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Скорость загрузки: %s/с - %s осталось"
 
-#: ../gtk/rgfetchprogress.cc:315
+#: ../gtk/rgfetchprogress.cc:323
 msgid "Download rate: unknown"
 msgstr "Скорость загрузки: неизвестно"
 
-#: ../gtk/rgfetchprogress.cc:317
+#: ../gtk/rgfetchprogress.cc:325
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Загружается файл %li из %li"
 
-#: ../gtk/rgfetchprogress.cc:384
+#: ../gtk/rgfetchprogress.cc:392
 msgid "Queued"
 msgstr "Добавлен в очередь"
 
-#: ../gtk/rgfetchprogress.cc:387
+#: ../gtk/rgfetchprogress.cc:395
 msgid "Done"
 msgstr "Готово"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:398
 msgid "Hit"
 msgstr "Совпадение"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Failed"
 msgstr "Неудачно"
 
@@ -1405,11 +1417,11 @@ msgstr ""
 "Система APT сообщает:\n"
 "%s"
 
-#: ../gtk/rglogview.cc:260
+#: ../gtk/rglogview.cc:264
 msgid "Not found"
 msgstr "Не найден"
 
-#: ../gtk/rglogview.cc:262
+#: ../gtk/rglogview.cc:266
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr "Выражение было найдено, посмотрите в список слева."
@@ -1587,11 +1599,11 @@ msgstr[2] ""
 "\n"
 "Попробуйте их исправить, зайдя в фильтр \"С ошибками\""
 
-#: ../gtk/rgmainwindow.cc:1831
+#: ../gtk/rgmainwindow.cc:1833
 msgid "Downloading changelog"
 msgstr "Журнал загрузки"
 
-#: ../gtk/rgmainwindow.cc:1832
+#: ../gtk/rgmainwindow.cc:1834
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1600,36 +1612,36 @@ msgstr ""
 "каждой версии пакета."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1845
+#: ../gtk/rgmainwindow.cc:1847
 #, c-format
 msgid "%s Changelog"
 msgstr "История изменений %s"
 
-#: ../gtk/rgmainwindow.cc:1933
+#: ../gtk/rgmainwindow.cc:1935
 msgid "Do you want to add another CD-ROM?"
 msgstr "Добавить другой компакт-диск?"
 
-#: ../gtk/rgmainwindow.cc:1967 ../gtk/rgmainwindow.cc:2023
+#: ../gtk/rgmainwindow.cc:1969 ../gtk/rgmainwindow.cc:2025
 msgid "Open changes"
 msgstr "Открыть отметки пакетов"
 
-#: ../gtk/rgmainwindow.cc:1980 ../gtk/rgmainwindow.cc:2667
-#: ../gtk/rgmainwindow.cc:2752 ../gtk/rgmainwindow.cc:2915
+#: ../gtk/rgmainwindow.cc:1982 ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2754 ../gtk/rgmainwindow.cc:2917
 #, c-format
 msgid "Can't read %s"
 msgstr "Невозможно прочитать %s"
 
-#: ../gtk/rgmainwindow.cc:2004 ../gtk/rgmainwindow.cc:2585
-#: ../gtk/rgmainwindow.cc:2721 ../gtk/rgmainwindow.cc:2892
+#: ../gtk/rgmainwindow.cc:2006 ../gtk/rgmainwindow.cc:2587
+#: ../gtk/rgmainwindow.cc:2723 ../gtk/rgmainwindow.cc:2894
 #, c-format
 msgid "Can't write %s"
 msgstr "Невозможно записать %s"
 
-#: ../gtk/rgmainwindow.cc:2030
+#: ../gtk/rgmainwindow.cc:2032
 msgid "Save full state, not only changes"
 msgstr "Сохранить полное состояние (не только отметки)"
 
-#: ../gtk/rgmainwindow.cc:2129
+#: ../gtk/rgmainwindow.cc:2131
 msgid ""
 "<big><b>Building repository dialog</b></big>\n"
 "\n"
@@ -1639,14 +1651,14 @@ msgstr ""
 "\n"
 "Пожалуйста, подождите."
 
-#: ../gtk/rgmainwindow.cc:2173
+#: ../gtk/rgmainwindow.cc:2175
 msgid "Repositories changed"
 msgstr "Изменён список репозиториев"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2177
+#: ../gtk/rgmainwindow.cc:2179
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1654,20 +1666,20 @@ msgstr ""
 "Информация в репозитории изменилась. Вы должны нажать кнопку \"Получить "
 "сведения\", чтобы программа восприняла изменения."
 
-#: ../gtk/rgmainwindow.cc:2188
+#: ../gtk/rgmainwindow.cc:2190
 msgid "Never show this message again"
 msgstr "Больше не показывать это сообщение"
 
-#: ../gtk/rgmainwindow.cc:2242
+#: ../gtk/rgmainwindow.cc:2244
 #, c-format
 msgid "Found %i packages"
 msgstr "Найдено %i пакет(ов)"
 
-#: ../gtk/rgmainwindow.cc:2283
+#: ../gtk/rgmainwindow.cc:2285
 msgid "Starting help viewer..."
 msgstr "Открытие справочной системы"
 
-#: ../gtk/rgmainwindow.cc:2303
+#: ../gtk/rgmainwindow.cc:2305
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1685,7 +1697,7 @@ msgstr ""
 "Также вы можете получить информацию о Synaptic, набрав в командной строке "
 "'man synaptic' или просмотрев html-версию в каталоге 'synaptic/html'."
 
-#: ../gtk/rgmainwindow.cc:2451
+#: ../gtk/rgmainwindow.cc:2453
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1693,23 +1705,23 @@ msgstr ""
 "Невозможно запустить программу настройки!\n"
 " Вы должны установить нужный для этого пакет 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2457
+#: ../gtk/rgmainwindow.cc:2459
 msgid "Starting package configuration tool..."
 msgstr "Запуск программы настройки пакета..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2472
+#: ../gtk/rgmainwindow.cc:2474
 msgid "Starting package documentation viewer..."
 msgstr "Открытие справки по пакету..."
 
-#: ../gtk/rgmainwindow.cc:2484
+#: ../gtk/rgmainwindow.cc:2486
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Вы должны установить пакет \"dwww\" для просмотра документации к пакету"
 
-#: ../gtk/rgmainwindow.cc:2549
+#: ../gtk/rgmainwindow.cc:2551
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1717,27 +1729,27 @@ msgstr ""
 "Невозможно выполнить изменения!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: ../gtk/rgmainwindow.cc:2570
+#: ../gtk/rgmainwindow.cc:2572
 msgid "Applying marked changes. This may take a while..."
 msgstr "Внесение изменений... Это может занять некоторое время..."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2576
 msgid "Downloading package files"
 msgstr "Загружаются файлы пакетов"
 
-#: ../gtk/rgmainwindow.cc:2575
+#: ../gtk/rgmainwindow.cc:2577
 msgid "The package files will be cached locally for installation."
 msgstr "Пакеты будут сохранены локально для последующей установки."
 
-#: ../gtk/rgmainwindow.cc:2650
+#: ../gtk/rgmainwindow.cc:2652
 msgid "Do you want to quit Synaptic?"
 msgstr "Вы хотите выйти из Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2706
+#: ../gtk/rgmainwindow.cc:2708
 msgid "Downloading package information"
 msgstr "Загружаются сведения о пакетах"
 
-#: ../gtk/rgmainwindow.cc:2707
+#: ../gtk/rgmainwindow.cc:2709
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1745,19 +1757,19 @@ msgstr ""
 "Репозитории будут проверены на новые, удалённые или обновлённые пакеты "
 "программ."
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2712
 msgid "Reloading package information..."
 msgstr "Получение сведений о пакетах..."
 
-#: ../gtk/rgmainwindow.cc:2777
+#: ../gtk/rgmainwindow.cc:2779
 msgid "Failed to resolve dependency problems!"
 msgstr "Ошибка исправления проблем в зависимостях!"
 
-#: ../gtk/rgmainwindow.cc:2779
+#: ../gtk/rgmainwindow.cc:2781
 msgid "Successfully fixed dependency problems"
 msgstr "Проблемы в зависимостях успешно разрешены"
 
-#: ../gtk/rgmainwindow.cc:2795
+#: ../gtk/rgmainwindow.cc:2797
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1765,15 +1777,15 @@ msgstr ""
 "Невозможно обновить систему!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: ../gtk/rgmainwindow.cc:2844
+#: ../gtk/rgmainwindow.cc:2846
 msgid "Marking all available upgrades..."
 msgstr "Отметить всё доступное для обновления..."
 
-#: ../gtk/rgmainwindow.cc:2856
+#: ../gtk/rgmainwindow.cc:2858
 msgid "Successfully marked available upgrades"
 msgstr "Отмечены все доступные для обновления пакеты"
 
-#: ../gtk/rgmainwindow.cc:2858
+#: ../gtk/rgmainwindow.cc:2860
 msgid "Failed to mark all available upgrades!"
 msgstr "Невозможно отметить всё доступное для обновления!"
 

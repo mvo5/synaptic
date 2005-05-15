@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-28 14:21+0100\n"
+"POT-Creation-Date: 2005-05-08 11:18+0200\n"
 "PO-Revision-Date: 2004-02-04 20:58+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -360,7 +360,7 @@ msgstr "Не могу да променим на %s"
 msgid "Unable to read %s"
 msgstr "Не могу да прочитам %s"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:225
+#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "ГРЕШКА: нисам могао отворити %s за упис"
@@ -374,17 +374,22 @@ msgstr "ГРЕШКА: Нисам могао добити унос лозинке
 msgid "ERROR: could not create configuration directory %s"
 msgstr "ГРЕШКА: нисам могао направити директоријум са подешавањима %s"
 
-#: ../common/rconfiguration.cc:148
+#: ../common/rconfiguration.cc:147
+#, fuzzy, c-format
+msgid "ERROR: could not create state directory %s"
+msgstr "ГРЕШКА: нисам могао направити директоријум са подешавањима %s"
+
+#: ../common/rconfiguration.cc:164
 #, fuzzy, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "ГРЕШКА: нисам могао направити директоријум са подешавањима %s"
 
-#: ../common/rconfiguration.cc:166
+#: ../common/rconfiguration.cc:182
 #, fuzzy, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "ГРЕШКА: нисам могао направити директоријум са подешавањима %s"
 
-#: ../common/rconfiguration.cc:250
+#: ../common/rconfiguration.cc:266
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "нисам могао отворити %s за упис"
@@ -541,7 +546,7 @@ msgid "Installed"
 msgstr "Инсталирани"
 
 #: ../common/rpackage.cc:1283 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:489
+#: ../gtk/gsynaptic.cc:515
 #, fuzzy
 msgid "Installed (upgradable)"
 msgstr "Инсталирани и надоградиви"
@@ -560,7 +565,7 @@ msgstr "Оштећени"
 msgid "Not installed (new in repository)"
 msgstr "Нису инсталирани (нови у архиви)"
 
-#: ../common/rpackagecache.cc:65
+#: ../common/rpackagecache.cc:71
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
@@ -568,17 +573,17 @@ msgstr ""
 "Списак складишта се није могао прочитати.\n"
 "Идите у прозорче „Складиште“ како би разрешили проблем."
 
-#: ../common/rpackagecache.cc:76
+#: ../common/rpackagecache.cc:82
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
 "Спискови пакета или датотека са стањем се не може рашчланити или отворити."
 
 # bug: Internal error, no need for translation.
-#: ../common/rpackagecache.cc:113
+#: ../common/rpackagecache.cc:120
 msgid "Internal Error, non-zero counts"
 msgstr "Унутрашња грешка, ненулта повратна вредност"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1009
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1006
 #: ../gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "Име"
@@ -665,39 +670,39 @@ msgstr "Скраћен преглед"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Лош регуларни израз „%s“ у датотеци „Скраћен преглед“."
 
-#: ../common/rpackagelister.cc:303 ../common/rpackagelister.cc:309
-#: ../common/rpackagelister.cc:323
+#: ../common/rpackagelister.cc:295 ../common/rpackagelister.cc:301
+#: ../common/rpackagelister.cc:315
 #, fuzzy, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Унутрашња грешка при поновном радном прорачуну зависности. Молим пријавите "
 "грешку"
 
-#: ../common/rpackagelister.cc:462
+#: ../common/rpackagelister.cc:453
 msgid "Unable to correct dependencies"
 msgstr "Не могу да исправим зависности"
 
-#: ../common/rpackagelister.cc:464
+#: ../common/rpackagelister.cc:455
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
 msgstr ""
 
-#: ../common/rpackagelister.cc:476
+#: ../common/rpackagelister.cc:467
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Унутрашња грешка, позив „Надогради све“ је направио штету. Молим пријавите "
 "грешку"
 
-#: ../common/rpackagelister.cc:494
+#: ../common/rpackagelister.cc:485
 msgid "dist upgrade Failed"
 msgstr "неуспешна надоградња целог система"
 
-#: ../common/rpackagelister.cc:1240
+#: ../common/rpackagelister.cc:1231
 msgid "Unable to lock the list directory"
 msgstr "Не могу да закључам директоријум са списком"
 
-#: ../common/rpackagelister.cc:1262
+#: ../common/rpackagelister.cc:1253
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -705,7 +710,7 @@ msgstr ""
 "Датотеке са издањима за нека складишта нису могле бити преузете или "
 "аутентификоване. Таква складишта се занемарују."
 
-#: ../common/rpackagelister.cc:1334 ../common/rpackagelister.cc:1340
+#: ../common/rpackagelister.cc:1325 ../common/rpackagelister.cc:1331
 #: ../gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Занемаривање неисправних ставки у датотеци „sources.list“!"
@@ -714,7 +719,7 @@ msgstr "Занемаривање неисправних ставки у дато
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1388
+#: ../common/rpackagelister.cc:1379
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -722,20 +727,20 @@ msgid ""
 "\n"
 msgstr "Нисам успео да преузмем "
 
-#: ../common/rpackagelister.cc:1412
+#: ../common/rpackagelister.cc:1403
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Неки од пакета нису могли бити преузети са сервера.\n"
 
-#: ../common/rpackagelister.cc:1415
+#: ../common/rpackagelister.cc:1406
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Да ли желите да наставите, занемарујући ове пакете?"
 
-#: ../common/rpackagelister.cc:1422
+#: ../common/rpackagelister.cc:1413
 msgid "Unable to correct missing packages"
 msgstr "Не могу да исправим недостајуће пакете"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1562
+#: ../common/rpackagelister.cc:1553
 #, fuzzy
 msgid ""
 "\n"
@@ -743,7 +748,7 @@ msgid ""
 msgstr "Биће уклоњен 1 пакет\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1571
+#: ../common/rpackagelister.cc:1562
 #, fuzzy
 msgid ""
 "\n"
@@ -751,7 +756,7 @@ msgid ""
 msgstr "1 пакет ће бити надограђен\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1580
+#: ../common/rpackagelister.cc:1571
 #, fuzzy
 msgid ""
 "\n"
@@ -759,7 +764,7 @@ msgid ""
 msgstr "1 пакет ће бити надограђен\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1589
+#: ../common/rpackagelister.cc:1580
 #, fuzzy
 msgid ""
 "\n"
@@ -767,7 +772,7 @@ msgid ""
 msgstr "1 пакет ће бити надограђен\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1598
+#: ../common/rpackagelister.cc:1589
 #, fuzzy
 msgid ""
 "\n"
@@ -775,7 +780,7 @@ msgid ""
 msgstr "Надоградња свих пакета:"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1609
+#: ../common/rpackagelister.cc:1600
 #, fuzzy
 msgid ""
 "\n"
@@ -783,28 +788,28 @@ msgid ""
 msgstr "1 пакет ће бити надограђен\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1619
+#: ../common/rpackagelister.cc:1610
 #, fuzzy
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
 msgstr "Уклони пакет"
 
-#: ../common/rpackagelister.cc:1636
+#: ../common/rpackagelister.cc:1627
 msgid "Unable to lock the download directory"
 msgstr "Не могу да закључам директоријум за преузимање"
 
-#: ../common/rpackagelister.cc:1714
+#: ../common/rpackagelister.cc:1705
 #, fuzzy, c-format
 msgid "Line %u too long in markings file."
 msgstr "Линија %u је предугачка у датотеци са избором."
 
-#: ../common/rpackagelister.cc:1728 ../common/rpackagelister.cc:1732
+#: ../common/rpackagelister.cc:1719 ../common/rpackagelister.cc:1723
 #, fuzzy, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Лоше образована линија %u у датотеци са избором"
 
-#: ../common/rpackagelister.cc:1744
+#: ../common/rpackagelister.cc:1735
 #, fuzzy
 msgid "Setting markings..."
 msgstr "Постављање одабраних промена..."
@@ -874,7 +879,7 @@ msgstr "Задаци"
 msgid "Reduced View"
 msgstr "Скраћен преглед"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:521
 #: ../gtk/rgsummarywindow.cc:372
 #, fuzzy
 msgid "Marked Changes"
@@ -961,95 +966,99 @@ msgstr "Паметна надоградња"
 msgid "This behavior can be changed in the preferences later."
 msgstr "Ово понашање касније може бити промењено у поставкама"
 
-#: ../gtk/gsynaptic.cc:68
+#: ../gtk/gsynaptic.cc:69
 msgid "Usage: synaptic [options]\n"
 msgstr "Коришћење: synaptics [опције]\n"
 
-#: ../gtk/gsynaptic.cc:69
+#: ../gtk/gsynaptic.cc:70
 msgid "-h   This help text\n"
 msgstr "-h   Овај текст\n"
 
-#: ../gtk/gsynaptic.cc:70
+#: ../gtk/gsynaptic.cc:71
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   Отвори у екрану „Складишта“\n"
 
-#: ../gtk/gsynaptic.cc:71
+#: ../gtk/gsynaptic.cc:72
 #, fuzzy
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Задајте посебну датотеку филтра\n"
 
-#: ../gtk/gsynaptic.cc:72
+#: ../gtk/gsynaptic.cc:73
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:73
+#: ../gtk/gsynaptic.cc:74
 #, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? Покрени програм са филтром на основу редног броја тог филтра\n"
 
-#: ../gtk/gsynaptic.cc:74
+#: ../gtk/gsynaptic.cc:75
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr ""
 "-o=? Поставља једну необавезну могућност подешавања, нпр. -o dir::cache=/"
 "tmp\n"
 
-#: ../gtk/gsynaptic.cc:75
+#: ../gtk/gsynaptic.cc:76
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:76
+#: ../gtk/gsynaptic.cc:77
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:77
+#: ../gtk/gsynaptic.cc:78
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:78
+#: ../gtk/gsynaptic.cc:79
 msgid "--non-interactive Never prompt for user input\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:79
+#: ../gtk/gsynaptic.cc:80
 msgid "--task-window Open with task window\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:80
-msgid "--add-cdrom Add a cdrom at startup\n"
+#: ../gtk/gsynaptic.cc:81
+msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
+#: ../gtk/gsynaptic.cc:82
+msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
+msgstr ""
+
+#: ../gtk/gsynaptic.cc:322 ../gtk/gsynaptic.cc:328
 msgid "Another synaptic is running"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:304
+#: ../gtk/gsynaptic.cc:323
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:310
+#: ../gtk/gsynaptic.cc:329
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:334
+#: ../gtk/gsynaptic.cc:353
 #, fuzzy
 msgid "Unable to get exclusive lock"
 msgstr "Не могу да променим на %s"
 
-#: ../gtk/gsynaptic.cc:335
+#: ../gtk/gsynaptic.cc:354
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:377
+#: ../gtk/gsynaptic.cc:396
 msgid "You must run this program as the root user."
 msgstr "Овај програм морате покренути као администратор."
 
-#: ../gtk/gsynaptic.cc:440
+#: ../gtk/gsynaptic.cc:459
 msgid "Synaptic Package Manager "
 msgstr "Управник пакета „Synaptic“"
 
@@ -1094,28 +1103,29 @@ msgstr ""
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
+#. removed
+#: ../gtk/rgchangeswindow.cc:114 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "Пакети који ће бити уклоњени"
 
-#: ../gtk/rgchangeswindow.cc:129
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Биће инсталирана старија верзија"
 
-#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
+#: ../gtk/rgchangeswindow.cc:144 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "Пакети који ће бити надограђени"
 
-#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
+#: ../gtk/rgchangeswindow.cc:156 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "Пакети који ће бити инсталирани"
 
-#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
+#: ../gtk/rgchangeswindow.cc:168 ../gtk/rgsummarywindow.cc:201
 #, fuzzy
 msgid "To be re-installed"
 msgstr "Пакети који ће бити инсталирани"
 
-#: ../gtk/rgchangeswindow.cc:177
+#: ../gtk/rgchangeswindow.cc:179
 msgid "To be kept"
 msgstr "Пакети који ће бити причувани"
 
@@ -1195,31 +1205,31 @@ msgid "Applying Changes"
 msgstr "Извршавање промена..."
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:494
+#: ../gtk/rgdebinstallprogress.cc:495
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Пакет обезбеђује"
 
-#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+#: ../gtk/rgdebinstallprogress.cc:645 ../gtk/rgdebinstallprogress.cc:648
 msgid "Changes applied"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:703
+#: ../gtk/rgdebinstallprogress.cc:704
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:708
+#: ../gtk/rgdebinstallprogress.cc:709
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Инсталирај, уклони и надогради софтверске пакете"
 
-#: ../gtk/rgdebinstallprogress.cc:710
+#: ../gtk/rgdebinstallprogress.cc:711
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:713
 #, fuzzy
 msgid "Installing software"
 msgstr "Инсталирај"
@@ -1265,11 +1275,11 @@ msgstr "Догодила се грешка приликом чувања под�
 msgid "Choose font"
 msgstr "Изаберите писмо"
 
-#: ../gtk/rgpreferenceswindow.cc:849
+#: ../gtk/rgpreferenceswindow.cc:846
 msgid "Color selection"
 msgstr "Избор боја"
 
-#: ../gtk/rgpreferenceswindow.cc:950
+#: ../gtk/rgpreferenceswindow.cc:947
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1277,23 +1287,23 @@ msgid ""
 "distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:958
+#: ../gtk/rgpreferenceswindow.cc:955
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:966
+#: ../gtk/rgpreferenceswindow.cc:963
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1000
 #, fuzzy
 msgid "Visible"
 msgstr "Променљива:"
 
-#: ../gtk/rgpreferenceswindow.cc:1077 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "Поставке"
 
@@ -1309,7 +1319,7 @@ msgstr "Пакет"
 msgid "URI"
 msgstr "Адреса"
 
-#: ../gtk/rgfetchprogress.cc:197
+#: ../gtk/rgfetchprogress.cc:196
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1320,33 +1330,33 @@ msgstr ""
 "%s\n"
 "у уређај %s"
 
-#: ../gtk/rgfetchprogress.cc:309
+#: ../gtk/rgfetchprogress.cc:317
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Преузето: %li од %li датотека при брзини: %s/s - преостало: %s "
 
-#: ../gtk/rgfetchprogress.cc:315
+#: ../gtk/rgfetchprogress.cc:323
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:317
+#: ../gtk/rgfetchprogress.cc:325
 #, fuzzy, c-format
 msgid "Downloading file %li of %li"
 msgstr "Преузимање датотека..."
 
-#: ../gtk/rgfetchprogress.cc:384
+#: ../gtk/rgfetchprogress.cc:392
 msgid "Queued"
 msgstr "Стављени у ред"
 
-#: ../gtk/rgfetchprogress.cc:387
+#: ../gtk/rgfetchprogress.cc:395
 msgid "Done"
 msgstr "Урађено"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:398
 msgid "Hit"
 msgstr "Посећен"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Failed"
 msgstr "Неуспех"
 
@@ -1400,11 +1410,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gtk/rglogview.cc:260
+#: ../gtk/rglogview.cc:264
 msgid "Not found"
 msgstr ""
 
-#: ../gtk/rglogview.cc:262
+#: ../gtk/rglogview.cc:266
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
@@ -1589,55 +1599,55 @@ msgstr[2] ""
 "\n"
 "Молим покушајте да их поправите позивом филтра „Оштећени“"
 
-#: ../gtk/rgmainwindow.cc:1831
+#: ../gtk/rgmainwindow.cc:1833
 #, fuzzy
 msgid "Downloading changelog"
 msgstr "Само преузми пакете"
 
-#: ../gtk/rgmainwindow.cc:1832
+#: ../gtk/rgmainwindow.cc:1834
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1845
+#: ../gtk/rgmainwindow.cc:1847
 #, fuzzy, c-format
 msgid "%s Changelog"
 msgstr "Само преузми пакете"
 
-#: ../gtk/rgmainwindow.cc:1933
+#: ../gtk/rgmainwindow.cc:1935
 msgid "Do you want to add another CD-ROM?"
 msgstr "Да ли желите да додате још један цд уређај?"
 
-#: ../gtk/rgmainwindow.cc:1967 ../gtk/rgmainwindow.cc:2023
+#: ../gtk/rgmainwindow.cc:1969 ../gtk/rgmainwindow.cc:2025
 msgid "Open changes"
 msgstr "Учитај одабране промене"
 
-#: ../gtk/rgmainwindow.cc:1980 ../gtk/rgmainwindow.cc:2667
-#: ../gtk/rgmainwindow.cc:2752 ../gtk/rgmainwindow.cc:2915
+#: ../gtk/rgmainwindow.cc:1982 ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2754 ../gtk/rgmainwindow.cc:2917
 #, c-format
 msgid "Can't read %s"
 msgstr "Не могу да читам са %s"
 
-#: ../gtk/rgmainwindow.cc:2004 ../gtk/rgmainwindow.cc:2585
-#: ../gtk/rgmainwindow.cc:2721 ../gtk/rgmainwindow.cc:2892
+#: ../gtk/rgmainwindow.cc:2006 ../gtk/rgmainwindow.cc:2587
+#: ../gtk/rgmainwindow.cc:2723 ../gtk/rgmainwindow.cc:2894
 #, c-format
 msgid "Can't write %s"
 msgstr "Не могу да пишем на %s"
 
-#: ../gtk/rgmainwindow.cc:2030
+#: ../gtk/rgmainwindow.cc:2032
 msgid "Save full state, not only changes"
 msgstr "Сачувај пуно стање, не само промене"
 
-#: ../gtk/rgmainwindow.cc:2129
+#: ../gtk/rgmainwindow.cc:2131
 msgid ""
 "<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2173
+#: ../gtk/rgmainwindow.cc:2175
 #, fuzzy
 msgid "Repositories changed"
 msgstr "Складишта"
@@ -1645,27 +1655,27 @@ msgstr "Складишта"
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2177
+#: ../gtk/rgmainwindow.cc:2179
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2188
+#: ../gtk/rgmainwindow.cc:2190
 msgid "Never show this message again"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2242
+#: ../gtk/rgmainwindow.cc:2244
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "Проблематични пакети"
 
-#: ../gtk/rgmainwindow.cc:2283
+#: ../gtk/rgmainwindow.cc:2285
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Покрећем систем помоћи..."
 
-#: ../gtk/rgmainwindow.cc:2303
+#: ../gtk/rgmainwindow.cc:2305
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1685,99 +1695,99 @@ msgstr ""
 "synaptic“ из линије наредби или гледати html верзију смештену у "
 "директоријуму „synaptic/html."
 
-#: ../gtk/rgmainwindow.cc:2451
+#: ../gtk/rgmainwindow.cc:2453
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2457
+#: ../gtk/rgmainwindow.cc:2459
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Извршавам наредбу „dpkg-reconfigure“..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2472
+#: ../gtk/rgmainwindow.cc:2474
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Покрећем помоћ пакета..."
 
-#: ../gtk/rgmainwindow.cc:2484
+#: ../gtk/rgmainwindow.cc:2486
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2549
+#: ../gtk/rgmainwindow.cc:2551
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2570
+#: ../gtk/rgmainwindow.cc:2572
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Изводим одабране промене... ово може потрајати"
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2576
 #, fuzzy
 msgid "Downloading package files"
 msgstr "Преузимање датотека..."
 
-#: ../gtk/rgmainwindow.cc:2575
+#: ../gtk/rgmainwindow.cc:2577
 #, fuzzy
 msgid "The package files will be cached locally for installation."
 msgstr ""
 "Датотеке пакета ће само бити преузете али неће бити инсталиране или "
 "надограђене"
 
-#: ../gtk/rgmainwindow.cc:2650
+#: ../gtk/rgmainwindow.cc:2652
 msgid "Do you want to quit Synaptic?"
 msgstr "Да ли желите да напустите Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2706
+#: ../gtk/rgmainwindow.cc:2708
 #, fuzzy
 msgid "Downloading package information"
 msgstr "Само преузми пакете"
 
-#: ../gtk/rgmainwindow.cc:2707
+#: ../gtk/rgmainwindow.cc:2709
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "Инсталирај, уклони и надогради софтверске пакете"
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2712
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "Извршавам наредбу „dpkg-reconfigure“..."
 
-#: ../gtk/rgmainwindow.cc:2777
+#: ../gtk/rgmainwindow.cc:2779
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Не могу да исправим зависности"
 
-#: ../gtk/rgmainwindow.cc:2779
+#: ../gtk/rgmainwindow.cc:2781
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2795
+#: ../gtk/rgmainwindow.cc:2797
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2844
+#: ../gtk/rgmainwindow.cc:2846
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Пакет ће бити надограђен."
 
-#: ../gtk/rgmainwindow.cc:2856
+#: ../gtk/rgmainwindow.cc:2858
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Стави у ред све могуће надоградње"
 
-#: ../gtk/rgmainwindow.cc:2858
+#: ../gtk/rgmainwindow.cc:2860
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 

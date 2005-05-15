@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.50\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-28 14:21+0100\n"
+"POT-Creation-Date: 2005-05-08 11:18+0200\n"
 "PO-Revision-Date: 2004-06-12 11:13+0900\n"
 "Last-Translator: Son, Kyeong-uk <hey@gnome.or.kr>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -352,7 +352,7 @@ msgstr "%s(으)로 바꿀 수 없음"
 msgid "Unable to read %s"
 msgstr "%s을(를) 읽을 수 없음"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:225
+#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "오류: %s 파일을 읽기 상태로 열 수 없음"
@@ -366,17 +366,22 @@ msgstr "오류: 슈퍼유저의 열쇠글 엔트리를 얻을 수 없음"
 msgid "ERROR: could not create configuration directory %s"
 msgstr "오류: %s 설정 디렉토리를 만들 수 없음"
 
-#: ../common/rconfiguration.cc:148
+#: ../common/rconfiguration.cc:147
+#, fuzzy, c-format
+msgid "ERROR: could not create state directory %s"
+msgstr "오류: %s 설정 디렉토리를 만들 수 없음"
+
+#: ../common/rconfiguration.cc:164
 #, fuzzy, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "오류: %s 설정 디렉토리를 만들 수 없음"
 
-#: ../common/rconfiguration.cc:166
+#: ../common/rconfiguration.cc:182
 #, fuzzy, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "오류: %s 설정 디렉토리를 만들 수 없음"
 
-#: ../common/rconfiguration.cc:250
+#: ../common/rconfiguration.cc:266
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "%s 파일을 쓰기 상태로 열 수 없음"
@@ -529,7 +534,7 @@ msgid "Installed"
 msgstr "설치됨"
 
 #: ../common/rpackage.cc:1283 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:489
+#: ../gtk/gsynaptic.cc:515
 msgid "Installed (upgradable)"
 msgstr "설치됨 (업그레이드 가능)"
 
@@ -546,7 +551,7 @@ msgstr "깨짐"
 msgid "Not installed (new in repository)"
 msgstr "설치되지 않음 (저장소에 새로 들어옴)"
 
-#: ../common/rpackagecache.cc:65
+#: ../common/rpackagecache.cc:71
 msgid ""
 "The list of sources could not be read.\n"
 "Go to the repository dialog to correct the problem."
@@ -554,15 +559,15 @@ msgstr ""
 "소스 목록을 읽을 수 없습니다.\n"
 "문제점을 고치려면 저장소 창으로 가세요."
 
-#: ../common/rpackagecache.cc:76
+#: ../common/rpackagecache.cc:82
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "패키지 목록이나 상태 파일을 해석할 수 없거나 읽을 수가 없습니다."
 
-#: ../common/rpackagecache.cc:113
+#: ../common/rpackagecache.cc:120
 msgid "Internal Error, non-zero counts"
 msgstr "내부 오류: 0이 아닌 갯수"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1009
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1006
 #: ../gtk/window_find.glade.h:6
 msgid "Name"
 msgstr "이름"
@@ -647,18 +652,18 @@ msgstr "간단히보기"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "간단히보기 파일 안에 잘못된 정규식 '%s'이(가) 있습니다."
 
-#: ../common/rpackagelister.cc:303 ../common/rpackagelister.cc:309
-#: ../common/rpackagelister.cc:323
+#: ../common/rpackagelister.cc:295 ../common/rpackagelister.cc:301
+#: ../common/rpackagelister.cc:315
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "캐시 (%d)를 열다가 내부 오류가 발생했습니다. 저희에게 오류를 알려주세요."
 
-#: ../common/rpackagelister.cc:462
+#: ../common/rpackagelister.cc:453
 msgid "Unable to correct dependencies"
 msgstr "의존성이 성립되지 않음"
 
-#: ../common/rpackagelister.cc:464
+#: ../common/rpackagelister.cc:455
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -666,27 +671,27 @@ msgstr ""
 "업그레이드 표시를 할 수 없습니다\n"
 "시스템의 오류를 확인하세요."
 
-#: ../common/rpackagelister.cc:476
+#: ../common/rpackagelister.cc:467
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "내부 오류: '모두 업그레이드'가 실패했습니다. 저희에게 오류를 알려주세요."
 
-#: ../common/rpackagelister.cc:494
+#: ../common/rpackagelister.cc:485
 msgid "dist upgrade Failed"
 msgstr "배포판 업그레이드 실패"
 
-#: ../common/rpackagelister.cc:1240
+#: ../common/rpackagelister.cc:1231
 msgid "Unable to lock the list directory"
 msgstr "목록 디렉토리를 잠글 수 없음"
 
-#: ../common/rpackagelister.cc:1262
+#: ../common/rpackagelister.cc:1253
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
 "저장소의 파일을 가져오거나 인증할 수 없습니다. 해당 저장소는 무시됩니다."
 
-#: ../common/rpackagelister.cc:1334 ../common/rpackagelister.cc:1340
+#: ../common/rpackagelister.cc:1325 ../common/rpackagelister.cc:1331
 #: ../gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "sources.list 파일의 유효하지 않은 내용을 무시하겠습니다!"
@@ -695,7 +700,7 @@ msgstr "sources.list 파일의 유효하지 않은 내용을 무시하겠습니�
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1388
+#: ../common/rpackagelister.cc:1379
 #, fuzzy, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -705,20 +710,20 @@ msgstr ""
 "%s 합치기 실패\n"
 "  %s"
 
-#: ../common/rpackagelister.cc:1412
+#: ../common/rpackagelister.cc:1403
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "서버에서 몇몇 패키지를 받아올 수 없었습니다.\n"
 
-#: ../common/rpackagelister.cc:1415
+#: ../common/rpackagelister.cc:1406
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "이 패키지들을 무시하고 계속 진행하겠습니까?"
 
-#: ../common/rpackagelister.cc:1422
+#: ../common/rpackagelister.cc:1413
 msgid "Unable to correct missing packages"
 msgstr "잃어버린 패키지를 바로잡을 수 없음"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1562
+#: ../common/rpackagelister.cc:1553
 #, fuzzy
 msgid ""
 "\n"
@@ -726,7 +731,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1571
+#: ../common/rpackagelister.cc:1562
 #, fuzzy
 msgid ""
 "\n"
@@ -734,7 +739,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1580
+#: ../common/rpackagelister.cc:1571
 #, fuzzy
 msgid ""
 "\n"
@@ -742,7 +747,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1589
+#: ../common/rpackagelister.cc:1580
 #, fuzzy
 msgid ""
 "\n"
@@ -750,7 +755,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1598
+#: ../common/rpackagelister.cc:1589
 #, fuzzy
 msgid ""
 "\n"
@@ -758,7 +763,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1609
+#: ../common/rpackagelister.cc:1600
 #, fuzzy
 msgid ""
 "\n"
@@ -766,7 +771,7 @@ msgid ""
 msgstr "%d개 패키지가 업그레이드됨\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1619
+#: ../common/rpackagelister.cc:1610
 #, fuzzy
 msgid ""
 "\n"
@@ -776,21 +781,21 @@ msgstr ""
 "%s 패키지를 설치하고 있습니다:\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1636
+#: ../common/rpackagelister.cc:1627
 msgid "Unable to lock the download directory"
 msgstr "내려받기 디렉토리를 짐글 수 없음"
 
-#: ../common/rpackagelister.cc:1714
+#: ../common/rpackagelister.cc:1705
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "표시모음 파일의 %u번째 줄이 너무 깁니다."
 
-#: ../common/rpackagelister.cc:1728 ../common/rpackagelister.cc:1732
+#: ../common/rpackagelister.cc:1719 ../common/rpackagelister.cc:1723
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "표시모음 파일의 %u번째 줄이 잘못됨"
 
-#: ../common/rpackagelister.cc:1744
+#: ../common/rpackagelister.cc:1735
 msgid "Setting markings..."
 msgstr "표시모음을 설정중입니다..."
 
@@ -855,7 +860,7 @@ msgstr "작업"
 msgid "Reduced View"
 msgstr "간단히 보기"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:495
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:521
 #: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr "바뀐 내용 표시됨"
@@ -928,95 +933,99 @@ msgstr "똑똑한 업그레이드"
 msgid "This behavior can be changed in the preferences later."
 msgstr "이 기능은 나중에 기본 설정을 바꿀 수 있습니다."
 
-#: ../gtk/gsynaptic.cc:68
+#: ../gtk/gsynaptic.cc:69
 msgid "Usage: synaptic [options]\n"
 msgstr "사용법: synaptic [옵션]\n"
 
-#: ../gtk/gsynaptic.cc:69
+#: ../gtk/gsynaptic.cc:70
 msgid "-h   This help text\n"
 msgstr "-h   이 도움말 내용\n"
 
-#: ../gtk/gsynaptic.cc:70
+#: ../gtk/gsynaptic.cc:71
 msgid "-r   Open in the repository screen\n"
 msgstr "-r   저장소 화면 열기\n"
 
-#: ../gtk/gsynaptic.cc:71
+#: ../gtk/gsynaptic.cc:72
 #, fuzzy
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? 대신할 거르개 파일을 넣으세요\n"
 
-#: ../gtk/gsynaptic.cc:72
+#: ../gtk/gsynaptic.cc:73
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:73
+#: ../gtk/gsynaptic.cc:74
 #, fuzzy
 msgid "-i=? Start with the initial Filter with the number given\n"
 msgstr "-i=? 초기 거르개와 갯수를 가지고 시작합니다\n"
 
-#: ../gtk/gsynaptic.cc:74
+#: ../gtk/gsynaptic.cc:75
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? 임의의 설정 옵션을 -o dir::cache=/tmp 형식으로 넣습니다\n"
 
-#: ../gtk/gsynaptic.cc:75
+#: ../gtk/gsynaptic.cc:76
 #, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr "--upgrade-mode  새로고침, 설치, 바뀐내용 보기를 부름\n"
 
-#: ../gtk/gsynaptic.cc:76
+#: ../gtk/gsynaptic.cc:77
 #, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr "--upgrade-mode  새로고침, 설치, 바뀐내용 보기를 부름\n"
 
-#: ../gtk/gsynaptic.cc:77
+#: ../gtk/gsynaptic.cc:78
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:78
+#: ../gtk/gsynaptic.cc:79
 msgid "--non-interactive Never prompt for user input\n"
 msgstr "--non-interactive 사용자 입력을 프롬프트에 표시하지 않음\n"
 
-#: ../gtk/gsynaptic.cc:79
+#: ../gtk/gsynaptic.cc:80
 msgid "--task-window Open with task window\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:80
-msgid "--add-cdrom Add a cdrom at startup\n"
+#: ../gtk/gsynaptic.cc:81
+msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:303 ../gtk/gsynaptic.cc:309
+#: ../gtk/gsynaptic.cc:82
+msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
+msgstr ""
+
+#: ../gtk/gsynaptic.cc:322 ../gtk/gsynaptic.cc:328
 msgid "Another synaptic is running"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:304
+#: ../gtk/gsynaptic.cc:323
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:310
+#: ../gtk/gsynaptic.cc:329
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:334
+#: ../gtk/gsynaptic.cc:353
 #, fuzzy
 msgid "Unable to get exclusive lock"
 msgstr "%s(으)로 바꿀 수 없음"
 
-#: ../gtk/gsynaptic.cc:335
+#: ../gtk/gsynaptic.cc:354
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:377
+#: ../gtk/gsynaptic.cc:396
 msgid "You must run this program as the root user."
 msgstr "이 프로그램은 루트 유저로 실행해야 합니다."
 
-#: ../gtk/gsynaptic.cc:440
+#: ../gtk/gsynaptic.cc:459
 msgid "Synaptic Package Manager "
 msgstr "시냅틱 패키지 관리자 "
 
@@ -1059,27 +1068,28 @@ msgstr ""
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:116 ../gtk/rgsummarywindow.cc:151
+#. removed
+#: ../gtk/rgchangeswindow.cc:114 ../gtk/rgsummarywindow.cc:151
 msgid "To be removed"
 msgstr "지워짐"
 
-#: ../gtk/rgchangeswindow.cc:129
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "다운그레이드됨"
 
-#: ../gtk/rgchangeswindow.cc:142 ../gtk/rgsummarywindow.cc:177
+#: ../gtk/rgchangeswindow.cc:144 ../gtk/rgsummarywindow.cc:177
 msgid "To be upgraded"
 msgstr "업그레이드됨"
 
-#: ../gtk/rgchangeswindow.cc:154 ../gtk/rgsummarywindow.cc:189
+#: ../gtk/rgchangeswindow.cc:156 ../gtk/rgsummarywindow.cc:189
 msgid "To be installed"
 msgstr "설치됨"
 
-#: ../gtk/rgchangeswindow.cc:166 ../gtk/rgsummarywindow.cc:201
+#: ../gtk/rgchangeswindow.cc:168 ../gtk/rgsummarywindow.cc:201
 msgid "To be re-installed"
 msgstr "재설치됨"
 
-#: ../gtk/rgchangeswindow.cc:177
+#: ../gtk/rgchangeswindow.cc:179
 msgid "To be kept"
 msgstr "유지됨"
 
@@ -1158,31 +1168,31 @@ msgid "Applying Changes"
 msgstr "바뀐 내용을 적용하고 있습니다"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:494
+#: ../gtk/rgdebinstallprogress.cc:495
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "제공된 패키지"
 
-#: ../gtk/rgdebinstallprogress.cc:644 ../gtk/rgdebinstallprogress.cc:647
+#: ../gtk/rgdebinstallprogress.cc:645 ../gtk/rgdebinstallprogress.cc:648
 msgid "Changes applied"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:703
+#: ../gtk/rgdebinstallprogress.cc:704
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:708
+#: ../gtk/rgdebinstallprogress.cc:709
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "소프트웨어 패키지를 설치, 지우기, 업그레이드"
 
-#: ../gtk/rgdebinstallprogress.cc:710
+#: ../gtk/rgdebinstallprogress.cc:711
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:712
+#: ../gtk/rgdebinstallprogress.cc:713
 #, fuzzy
 msgid "Installing software"
 msgstr "설치된 파일"
@@ -1228,11 +1238,11 @@ msgstr "설정을 저장하는 동안 오류가 발생했습니다."
 msgid "Choose font"
 msgstr "글꼴 고르기"
 
-#: ../gtk/rgpreferenceswindow.cc:849
+#: ../gtk/rgpreferenceswindow.cc:846
 msgid "Color selection"
 msgstr "색깔 선택"
 
-#: ../gtk/rgpreferenceswindow.cc:950
+#: ../gtk/rgpreferenceswindow.cc:947
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1240,23 +1250,23 @@ msgid ""
 "distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:958
+#: ../gtk/rgpreferenceswindow.cc:955
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the choosen distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:966
+#: ../gtk/rgpreferenceswindow.cc:963
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1000
 #, fuzzy
 msgid "Visible"
 msgstr "변수:"
 
-#: ../gtk/rgpreferenceswindow.cc:1077 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
 msgid "Preferences"
 msgstr "기본 설정"
 
@@ -1272,7 +1282,7 @@ msgstr "패키지"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:197
+#: ../gtk/rgfetchprogress.cc:196
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1283,33 +1293,33 @@ msgstr ""
 "%2$s 드라이브의\n"
 "%1$s"
 
-#: ../gtk/rgfetchprogress.cc:309
+#: ../gtk/rgfetchprogress.cc:317
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "%2$li개 중 %1$li번째 파일을 %3$s/s로 내려받고있습니다 - %4$s 남음"
 
-#: ../gtk/rgfetchprogress.cc:315
+#: ../gtk/rgfetchprogress.cc:323
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:317
+#: ../gtk/rgfetchprogress.cc:325
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "%2$li개 중 %1$li번째 파일을 내려받고 있습니다"
 
-#: ../gtk/rgfetchprogress.cc:384
+#: ../gtk/rgfetchprogress.cc:392
 msgid "Queued"
 msgstr "대기됨"
 
-#: ../gtk/rgfetchprogress.cc:387
+#: ../gtk/rgfetchprogress.cc:395
 msgid "Done"
 msgstr "완료"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:398
 msgid "Hit"
 msgstr "적중"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Failed"
 msgstr "실패"
 
@@ -1363,11 +1373,11 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../gtk/rglogview.cc:260
+#: ../gtk/rglogview.cc:264
 msgid "Not found"
 msgstr ""
 
-#: ../gtk/rglogview.cc:262
+#: ../gtk/rglogview.cc:266
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
@@ -1531,55 +1541,55 @@ msgstr[0] ""
 "\n"
 "\"깨짐\" 거르개로 확인하세요."
 
-#: ../gtk/rgmainwindow.cc:1831
+#: ../gtk/rgmainwindow.cc:1833
 #, fuzzy
 msgid "Downloading changelog"
 msgstr "Changelog 내려받기(_D)"
 
-#: ../gtk/rgmainwindow.cc:1832
+#: ../gtk/rgmainwindow.cc:1834
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1845
+#: ../gtk/rgmainwindow.cc:1847
 #, fuzzy, c-format
 msgid "%s Changelog"
 msgstr "Changelog 내려받기(_D)"
 
-#: ../gtk/rgmainwindow.cc:1933
+#: ../gtk/rgmainwindow.cc:1935
 msgid "Do you want to add another CD-ROM?"
 msgstr "다른 씨디롬을 더할까요?"
 
-#: ../gtk/rgmainwindow.cc:1967 ../gtk/rgmainwindow.cc:2023
+#: ../gtk/rgmainwindow.cc:1969 ../gtk/rgmainwindow.cc:2025
 msgid "Open changes"
 msgstr "바뀐 내용 열기"
 
-#: ../gtk/rgmainwindow.cc:1980 ../gtk/rgmainwindow.cc:2667
-#: ../gtk/rgmainwindow.cc:2752 ../gtk/rgmainwindow.cc:2915
+#: ../gtk/rgmainwindow.cc:1982 ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2754 ../gtk/rgmainwindow.cc:2917
 #, c-format
 msgid "Can't read %s"
 msgstr "%s을(를) 읽을 수 없음"
 
-#: ../gtk/rgmainwindow.cc:2004 ../gtk/rgmainwindow.cc:2585
-#: ../gtk/rgmainwindow.cc:2721 ../gtk/rgmainwindow.cc:2892
+#: ../gtk/rgmainwindow.cc:2006 ../gtk/rgmainwindow.cc:2587
+#: ../gtk/rgmainwindow.cc:2723 ../gtk/rgmainwindow.cc:2894
 #, c-format
 msgid "Can't write %s"
 msgstr "%s을(를) 쓸 수 없음"
 
-#: ../gtk/rgmainwindow.cc:2030
+#: ../gtk/rgmainwindow.cc:2032
 msgid "Save full state, not only changes"
 msgstr "바뀐 내용 외에 모든 상태 저장"
 
-#: ../gtk/rgmainwindow.cc:2129
+#: ../gtk/rgmainwindow.cc:2131
 msgid ""
 "<big><b>Building repository dialog</b></big>\n"
 "\n"
 "Please wait."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2173
+#: ../gtk/rgmainwindow.cc:2175
 #, fuzzy
 msgid "Repositories changed"
 msgstr "저장소"
@@ -1587,26 +1597,26 @@ msgstr "저장소"
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2177
+#: ../gtk/rgmainwindow.cc:2179
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2188
+#: ../gtk/rgmainwindow.cc:2190
 msgid "Never show this message again"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2242
+#: ../gtk/rgmainwindow.cc:2244
 #, c-format
 msgid "Found %i packages"
 msgstr "%i개 패키지 찾음"
 
-#: ../gtk/rgmainwindow.cc:2283
+#: ../gtk/rgmainwindow.cc:2285
 msgid "Starting help viewer..."
 msgstr "도움말 뷰어를 시작하고 있습니다...."
 
-#: ../gtk/rgmainwindow.cc:2303
+#: ../gtk/rgmainwindow.cc:2305
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1625,7 +1635,7 @@ msgstr ""
 "그 외에 커맨드 라인에서 'man synaptic'을 쳐서 맨 페이지를 사용하거나 "
 "'synaptic/html' 폴더에 있는 HTML 버젼을 볼 수도 있습니다."
 
-#: ../gtk/rgmainwindow.cc:2451
+#: ../gtk/rgmainwindow.cc:2453
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1633,22 +1643,22 @@ msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
 "먼저 'libgnome2-perl' 패키지를 설치해야 합니다."
 
-#: ../gtk/rgmainwindow.cc:2457
+#: ../gtk/rgmainwindow.cc:2459
 msgid "Starting package configuration tool..."
 msgstr "패키지 설정 도구를 시작하고 있습니다..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2472
+#: ../gtk/rgmainwindow.cc:2474
 msgid "Starting package documentation viewer..."
 msgstr "패키지 문서 뷰어를 시작하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2484
+#: ../gtk/rgmainwindow.cc:2486
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "패키지 문서를 탐색하려면 \"dwww\" 패키지를 설치해야합니다"
 
-#: ../gtk/rgmainwindow.cc:2549
+#: ../gtk/rgmainwindow.cc:2551
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1656,50 +1666,50 @@ msgstr ""
 "바뀐 내용을 적용할 수 없습니다!\n"
 "깨진 패키지를 먼저 고치세요."
 
-#: ../gtk/rgmainwindow.cc:2570
+#: ../gtk/rgmainwindow.cc:2572
 msgid "Applying marked changes. This may take a while..."
 msgstr "표시된 내용을 적용중입니다. 이 작업은 시간이 걸릴 수 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2576
 #, fuzzy
 msgid "Downloading package files"
 msgstr "패키지 파일을 내려받고 있습니다"
 
-#: ../gtk/rgmainwindow.cc:2575
+#: ../gtk/rgmainwindow.cc:2577
 #, fuzzy
 msgid "The package files will be cached locally for installation."
 msgstr "패키지 파일을 설치하거나 업그레이드하지 않고 받기만 합니다"
 
-#: ../gtk/rgmainwindow.cc:2650
+#: ../gtk/rgmainwindow.cc:2652
 msgid "Do you want to quit Synaptic?"
 msgstr "시냅틱을 나갈까요?"
 
-#: ../gtk/rgmainwindow.cc:2706
+#: ../gtk/rgmainwindow.cc:2708
 #, fuzzy
 msgid "Downloading package information"
 msgstr "패키지 파일만 내려받기"
 
-#: ../gtk/rgmainwindow.cc:2707
+#: ../gtk/rgmainwindow.cc:2709
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "소프트웨어 패키지를 설치, 지우기, 업그레이드"
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2712
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "패키지 설정 도구를 시작하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2777
+#: ../gtk/rgmainwindow.cc:2779
 msgid "Failed to resolve dependency problems!"
 msgstr "의존성 문제를 해결하지 못했습니다!"
 
-#: ../gtk/rgmainwindow.cc:2779
+#: ../gtk/rgmainwindow.cc:2781
 msgid "Successfully fixed dependency problems"
 msgstr "의존성 문제가 성공적으로 고쳐졌습니다"
 
-#: ../gtk/rgmainwindow.cc:2795
+#: ../gtk/rgmainwindow.cc:2797
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1707,15 +1717,15 @@ msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
 "먼저 깨진 패키지를 고치세요."
 
-#: ../gtk/rgmainwindow.cc:2844
+#: ../gtk/rgmainwindow.cc:2846
 msgid "Marking all available upgrades..."
 msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2856
+#: ../gtk/rgmainwindow.cc:2858
 msgid "Successfully marked available upgrades"
 msgstr "가능한 모든 업그레이드가 성공적으로 표시됐습니다"
 
-#: ../gtk/rgmainwindow.cc:2858
+#: ../gtk/rgmainwindow.cc:2860
 msgid "Failed to mark all available upgrades!"
 msgstr "가능한 모든 업그레이드를 표시하는데 실패했습니다!"
 

@@ -15,4 +15,5 @@ kdeapp_DATA     = $(kdeapp_in_files:.desktop.in=.desktop)
 EXTRA_DIST = $(desktop_in_files) \
 		$(desktop_DATA) \
 		$(system_in_files) \
-		$(kdeapp_in_files)
+		$(kdeapp_in_files) \
+		$(kdeapp_DATA) 

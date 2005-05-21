@@ -1,0 +1,31 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06_debian_no_kde_desktop.dpatch by  <egon@top>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad synaptic-0.55+cvs20050503/data/Makefile.am /tmp/dpep.LFOctd/synaptic-0.55+cvs20050503/data/Makefile.am
+--- synaptic-0.55+cvs20050503/data/Makefile.am	2005-05-14 12:07:31.707672080 +0200
++++ /tmp/dpep.LFOctd/synaptic-0.55+cvs20050503/data/Makefile.am	2005-05-14 12:07:47.652248136 +0200
+@@ -10,7 +10,7 @@
+ 
+ kdeappdir       = $(datadir)/applications
+ kdeapp_in_files = synaptic-kde.desktop.in
+-kdeapp_DATA     = $(kdeapp_in_files:.desktop.in=.desktop)
++#kdeapp_DATA     = $(kdeapp_in_files:.desktop.in=.desktop)
+ 
+ EXTRA_DIST = $(desktop_in_files) \
+ 		$(desktop_DATA) \
+diff -urNad synaptic-0.55+cvs20050503/data/Makefile.in /tmp/dpep.LFOctd/synaptic-0.55+cvs20050503/data/Makefile.in
+--- synaptic-0.55+cvs20050503/data/Makefile.in	2005-04-12 15:26:17.000000000 +0200
++++ /tmp/dpep.LFOctd/synaptic-0.55+cvs20050503/data/Makefile.in	2005-05-14 12:07:52.336536016 +0200
+@@ -185,7 +185,7 @@
+ 
+ kdeappdir = $(datadir)/applications
+ kdeapp_in_files = synaptic-kde.desktop.in
+-kdeapp_DATA = $(kdeapp_in_files:.desktop.in=.desktop)
++#kdeapp_DATA = $(kdeapp_in_files:.desktop.in=.desktop)
+ 
+ EXTRA_DIST = $(desktop_in_files) \
+ 		$(desktop_DATA) \

@@ -6,28 +6,6 @@
 
 @DPATCH@
 diff -urNad synaptic-0.56/data/Makefile.am /tmp/dpep.bK5mR9/synaptic-0.56/data/Makefile.am
---- synaptic-0.56/data/Makefile.am	2005-03-30 17:13:44.743510264 +0200
-+++ /tmp/dpep.bK5mR9/synaptic-0.56/data/Makefile.am	2005-03-30 17:15:59.769983120 +0200
-@@ -1,6 +1,6 @@
- @INTLTOOL_DESKTOP_RULE@
- 
--desktopdir       = $(datadir)/applications
-+desktopdir       = $(datadir)/control-center-2.0/capplets
- desktop_in_files = synaptic.desktop.in
- desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
- 
-diff -urNad synaptic-0.56/data/Makefile.in /tmp/dpep.bK5mR9/synaptic-0.56/data/Makefile.in
---- synaptic-0.56/data/Makefile.in	2005-03-30 17:13:44.744510112 +0200
-+++ /tmp/dpep.bK5mR9/synaptic-0.56/data/Makefile.in	2005-03-30 17:15:59.769983120 +0200
-@@ -174,7 +174,7 @@
- sysconfdir = @sysconfdir@
- target_alias = @target_alias@
- 
--desktopdir = $(datadir)/applications
-+desktopdir = $(datadir)/control-center-2.0/capplets
- desktop_in_files = synaptic.desktop.in
- desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
- 
 diff -urNad synaptic-0.56/data/synaptic.desktop /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop
 --- synaptic-0.56/data/synaptic.desktop	2005-03-30 17:13:44.745509960 +0200
 +++ /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop	2005-03-30 17:15:59.770982968 +0200

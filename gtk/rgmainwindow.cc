@@ -2802,7 +2802,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    }
    // check if we have saved upgrade type
    UpgradeType upgrade =
-      (UpgradeType) _config->FindI("Synaptic::UpgradeType", UPGRADE_ASK);
+      (UpgradeType) _config->FindI("Synaptic::UpgradeType", UPGRADE_DIST);
 
    // special case for non-interactive upgrades
    if(_config->FindB("Volatile::Non-Interactive", false)) 

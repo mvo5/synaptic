@@ -393,6 +393,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // enable remove if package is installed
    if(flags & RPackage::FInstalled)
       gtk_widget_set_sensitive(_removeM, TRUE);
+
    // enable purge if package is installed or has residual config
    if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
       gtk_widget_set_sensitive(_purgeM, TRUE);
@@ -3003,24 +3004,19 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
             oneclickitem = item->data;
       }
 
-      if ((flags & RPackage::FInstalled) && !(flags & RPackage::FRemove)) {
-
-         // Remove buttons (remove)
-         if (i == 4) {
+      // remove
+      if (i == 4 &&  (flags & RPackage::FInstalled) 
+	  && (!(flags & RPackage::FRemove) || (flags & RPackage::FPurge)) ) {
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-            if (i == 4 && oneclickitem == NULL)
+            if (oneclickitem == NULL)
                oneclickitem = item->data;
-         }
-
-         // Purge
-         if (i == 5) {
-            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-	 }
       }
 
-      if (i == 5 && (flags & RPackage::FResidualConfig)
-          && !(flags & RPackage::FRemove)) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
+      // Purge
+      if (i == 5 
+	  && (flags&RPackage::FInstalled || flags&RPackage::FResidualConfig) 
+	  && !(flags & RPackage::FPurge) ) {
+	 gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
       }
 
       // Seperator is i==6 (hide on left click)

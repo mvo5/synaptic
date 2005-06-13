@@ -2858,7 +2858,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    else
       res = me->_lister->upgrade();
 
-   me->askStateChange(state, vector<RPackage*>());
+   // mvo: do we really want this?
+   //me->askStateChange(state, vector<RPackage*>());
 
    me->refreshTable(pkg);
 

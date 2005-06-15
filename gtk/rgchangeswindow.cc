@@ -205,13 +205,12 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
       }
    }
 
-
-   if (toUpgrade.size() > 0) {
+   if (toInstall.size() > 0) {
       gtk_tree_store_append(_treeStore, &iter, NULL);
       gtk_tree_store_set(_treeStore, &iter,
-                         PKG_COLUMN, _("To be upgraded"), -1);
-      for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
-           p != toUpgrade.end(); p++) {
+                         PKG_COLUMN, _("To be installed"), -1);
+      for (vector<RPackage *>::const_iterator p = toInstall.begin();
+           p != toInstall.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
                             PKG_COLUMN, (*p)->name(), 
@@ -219,12 +218,12 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
       }
    }
 
-   if (toInstall.size() > 0) {
+   if (toUpgrade.size() > 0) {
       gtk_tree_store_append(_treeStore, &iter, NULL);
       gtk_tree_store_set(_treeStore, &iter,
-                         PKG_COLUMN, _("To be installed"), -1);
-      for (vector<RPackage *>::const_iterator p = toInstall.begin();
-           p != toInstall.end(); p++) {
+                         PKG_COLUMN, _("To be upgraded"), -1);
+      for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
+           p != toUpgrade.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
                             PKG_COLUMN, (*p)->name(), 

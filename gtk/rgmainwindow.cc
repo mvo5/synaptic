@@ -2859,7 +2859,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       res = me->_lister->upgrade();
 
    // mvo: do we really want this?
-   //me->askStateChange(state, vector<RPackage*>());
+   me->askStateChange(state, vector<RPackage*>());
 
    me->refreshTable(pkg);
 

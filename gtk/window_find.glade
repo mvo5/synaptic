@@ -14,6 +14,12 @@
   <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="focus_on_map">True</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -35,6 +41,7 @@
 	      <property name="label">gtk-cancel</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
 	      <signal name="clicked" handler="on_button_close_clicked" last_modification_time="Wed, 08 Jan 2003 01:02:09 GMT"/>
 	    </widget>
@@ -47,6 +54,7 @@
 	      <property name="has_default">True</property>
 	      <property name="can_focus">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
 	      <signal name="clicked" handler="on_button_find_clicked" last_modification_time="Wed, 08 Jan 2003 00:59:37 GMT"/>
 
@@ -57,6 +65,10 @@
 		  <property name="yalign">0.5</property>
 		  <property name="xscale">0</property>
 		  <property name="yscale">0</property>
+		  <property name="top_padding">0</property>
+		  <property name="bottom_padding">0</property>
+		  <property name="left_padding">0</property>
+		  <property name="right_padding">0</property>
 
 		  <child>
 		    <widget class="GtkHBox" id="hbox21">
@@ -94,6 +106,10 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -154,6 +170,10 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			  <property name="width_chars">-1</property>
+			  <property name="single_line_mode">False</property>
+			  <property name="angle">0</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -190,7 +210,7 @@
 				  <property name="max_length">0</property>
 				  <property name="text" translatable="yes"></property>
 				  <property name="has_frame">True</property>
-				  <property name="invisible_char" translatable="yes">*</property>
+				  <property name="invisible_char">*</property>
 				  <property name="activates_default">False</property>
 				  <signal name="activate" handler="on_entry_find_activate" last_modification_time="Mon, 10 Feb 2003 15:19:41 GMT"/>
 				</widget>
@@ -225,6 +245,10 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -249,6 +273,10 @@
 			      <property name="yalign">0.5</property>
 			      <property name="xpad">0</property>
 			      <property name="ypad">0</property>
+			      <property name="ellipsize">PANGO_ELLIPSIZE_NONE</property>
+			      <property name="width_chars">-1</property>
+			      <property name="single_line_mode">False</property>
+			      <property name="angle">0</property>
 			    </widget>
 			    <packing>
 			      <property name="left_attach">0</property>
@@ -264,7 +292,7 @@
 			    <widget class="GtkOptionMenu" id="optionmenu_where">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="history">0</property>
+			      <property name="history">1</property>
 
 			      <child>
 				<widget class="GtkMenu" id="menu1">

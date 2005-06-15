@@ -544,8 +544,9 @@ int main(int argc, char **argv)
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       welcome_dialog(mainWindow);
+#if 0
       update_check(mainWindow, packageLister);
-      
+#endif 
       gtk_main();
    }
 

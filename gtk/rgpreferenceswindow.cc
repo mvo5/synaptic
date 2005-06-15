@@ -479,7 +479,7 @@ void RGPreferencesWindow::readGeneral()
 
    // System upgrade:
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
-   int i = _config->FindI("Synaptic::upgradeType", -1);
+   int i = _config->FindI("Synaptic::upgradeType", 1);
    gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_upgrade_method")), i + 1);
 
    i = _config->FindI("Synaptic::update::type", 0);

@@ -41,6 +41,7 @@
 #include <signal.h>
 #include <cassert>
 #include <errno.h>
+#include <fstream>
 
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
@@ -94,6 +95,8 @@ CommandLine::Args Args[] = {
    'i', "initial-filter", "Volatile::initialFilter", CommandLine::HasArg}
    , {
    0, "set-selections", "Volatile::Set-Selections", 0}
+   , {
+   0, "set-selections-file", "Volatile::Set-Selections-File", CommandLine::HasArg}
    , {
    0, "non-interactive", "Volatile::Non-Interactive", 0}
    , {
@@ -497,9 +500,21 @@ int main(int argc, char **argv)
       mainWindow->cbShowSourcesWindow(NULL, mainWindow);
    }
 
+   // selections from stdin
    if (_config->FindB("Volatile::Set-Selections", false) == true) {
       packageLister->unregisterObserver(mainWindow);
       packageLister->readSelections(cin);
+      packageLister->registerObserver(mainWindow);
+   }
+
+   // selections from a file
+   string selections_filename;
+   selections_filename =_config->Find("Volatile::Set-Selections-File", "");
+   if (selections_filename != "") {
+      packageLister->unregisterObserver(mainWindow);
+      ifstream selfile(selections_filename.c_str());
+      packageLister->readSelections(selfile);
+      selfile.close();
       packageLister->registerObserver(mainWindow);
    }
 

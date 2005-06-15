@@ -2340,7 +2340,8 @@ void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
    }
 
    me->_fmanagerWin->readFilters();
-   if(gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()))) {
+   int res = gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()));
+   if(res == GTK_RESPONSE_OK) {
       me->setInterfaceLocked(TRUE);
 
       me->_lister->filterView()->refreshFilters();

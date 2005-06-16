@@ -94,6 +94,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    // this map contains what stage is already completted
    map<string, int> _stagesMap;
 
+   // last time something changed
+   time_t last_term_action;
+
    pid_t _child_id;
    pkgPackageManager::OrderResult res;
    bool child_has_exited;
@@ -118,6 +121,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);
    static void cbClose(GtkWidget *self, void *data);
+   static void content_changed(GObject *object, gpointer    user_data);
    static void expander_callback(GObject *object,GParamSpec *param_spec,
 				  gpointer    user_data);
 

@@ -48,6 +48,9 @@
 
 #include "i18n.h"
 
+// timeout in sec until the expander is expanded
+static const int RGTERMINAL_TIMEOUT=60;
+
 // removing
 char* RGDebInstallProgress::remove_stages[NR_REMOVE_STAGES] = {
    "half-configured", 
@@ -348,6 +351,9 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
       vte_terminal_feed_child(VTE_TERMINAL(_term), "y\n",2);
    else
       vte_terminal_feed_child(VTE_TERMINAL(_term), "n\n",2);
+
+   // update the "action" clock
+   last_term_action = time(NULL);
 }
 
 void RGDebInstallProgress::startUpdate()
@@ -431,6 +437,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    // make sure we try to get a graphical debconf
    putenv("DEBIAN_FRONTEND=gnome");
+   putenv("APT_LISTCHANGES_FRONTEND=gtk");
 
    _startCounting = false;
    _label_status = glade_xml_get_widget(_gladeXML, "label_status");
@@ -465,13 +472,27 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    g_signal_connect(w, "notify::expanded",
 		    G_CALLBACK(expander_callback), this);
 
+   g_signal_connect(_term, "contents-changed",
+		    G_CALLBACK(content_changed), this);
+
    glade_xml_signal_connect_data(_gladeXML, "on_button_cancel_clicked",
 				 G_CALLBACK(cbCancel), this);
    glade_xml_signal_connect_data(_gladeXML, "on_button_close_clicked",
 				 G_CALLBACK(cbClose), this);
 
+   // init the timer
+   last_term_action = time(NULL);
 }
 
+void RGDebInstallProgress::content_changed(GObject *object, 
+					   gpointer data)
+{
+   //cout << "RGDebInstallProgress::content_changed()" << endl;
+
+   RGDebInstallProgress *me = (RGDebInstallProgress*)data;
+
+   me->last_term_action = time(NULL);
+}
 
 void RGDebInstallProgress::updateInterface()
 {
@@ -484,8 +505,11 @@ void RGDebInstallProgress::updateInterface()
       // This algorithm should be improved (it's the same as the rpm one ;)
       int len = read(_childin, buf, 1);
 
-      if(len < 1)
+      if(len < 1) {
 	 break;
+      }
+      last_term_action = time(NULL);
+
       if( buf[0] == '\n') {
 // 	 cout << line << endl;
 	 
@@ -553,6 +577,16 @@ void RGDebInstallProgress::updateInterface()
 	 buf[1] = 0;
 	 strcat(line, buf);
       }      
+   }
+
+   time_t now = time(NULL);
+   if ((now - last_term_action) > RGTERMINAL_TIMEOUT) {
+      cout << "no statusfd changes/content updates in terminal for " 
+	   << RGTERMINAL_TIMEOUT << "seconds" << endl;
+      GtkWidget *w;
+      w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+      gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
+      last_term_action = time(NULL);
    }
 
    if(!_startCounting) {

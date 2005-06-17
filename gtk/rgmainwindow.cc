@@ -2848,11 +2848,16 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    me->setStatusText(_("Marking all available upgrades..."));
 
    me->_lister->saveUndoState();
+   
+   RPackageLister::pkgState state;
+   me->_lister->saveState(state);
 
    if (dist_upgrade)
       res = me->_lister->distUpgrade();
    else
       res = me->_lister->upgrade();
+
+   me->askStateChange(state, vector<RPackage*>());
 
    me->refreshTable(pkg);
 

@@ -122,7 +122,8 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       /* (Essentail) removed */
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
-                         PKG_COLUMN, _("(ESSENTIAL) to be removed"), -1);
+                         PKG_COLUMN, _("<b>(ESSENTIAL) to be removed</b>"), 
+			 -1);
 
       for (vector<RPackage *>::const_iterator p = essential.begin();
            p != essential.end(); p++) {
@@ -135,7 +136,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       /* removed */
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
-                         PKG_COLUMN, _("To be DOWNGRADED"), -1);
+                         PKG_COLUMN, _("<b>To be DOWNGRADED</b>"), -1);
       for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
            p != toDowngrade.end(); p++) {
          gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
@@ -148,7 +149,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       /* removed */
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
-                         PKG_COLUMN, _("To be removed"), -1);
+                         PKG_COLUMN, _("<b>To be removed</b>"), -1);
       for (vector<RPackage *>::const_iterator p = toRemove.begin();
            p != toRemove.end(); p++) {
          gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
@@ -161,7 +162,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       /* removed */
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
-                         PKG_COLUMN, _("To be completely removed (including configuration files)"), 
+                         PKG_COLUMN, _("<b>To be completely removed (including configuration files)</b>"), 
 			 -1);
       for (vector<RPackage *>::const_iterator p = toPurge.begin();
            p != toPurge.end(); p++) {
@@ -371,7 +372,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    GtkTreeViewColumn *column;
    column = gtk_tree_view_column_new_with_attributes(_("Marked Changes"),
                                                      renderer,
-                                                     "text", PKG_COLUMN, NULL);
+                                                     "markup", PKG_COLUMN, NULL);
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
    gtk_widget_show(_tree);

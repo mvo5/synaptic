@@ -45,7 +45,7 @@ void RGLogView::readLogs()
    GtkTreeIter date_iter;  /* Child iter  */
 
    unsigned int year, month, day, hour, min, sec;
-   char str[512];
+   char str[128];
    const gchar *logfile;
    const gchar *logdir = RLogDir().c_str();
    GDir *dir = g_dir_open(logdir, 0, NULL);
@@ -71,11 +71,13 @@ void RGLogView::readLogs()
       history_key = year*100+month;
       if(history_map.count(history_key) == 0) {
 	 gtk_tree_store_append(store, &month_iter, NULL); 
-	 strftime(str, 512, "%B %Y", &t);
+	 strftime(str, 128, "%B %Y", &t);
+	 gchar *sort_key = g_strdup_printf("%i", history_key);
 	 gtk_tree_store_set (store, &month_iter,
 			     COLUMN_LOG_DAY, utf8(str),
-			     COLUMN_LOG_FILENAME, NULL, 
+			     COLUMN_LOG_FILENAME, sort_key, 
 			     -1);
+	 g_free(sort_key);
 	 history_map.insert(make_pair<int,GtkTreeIter>(history_key,month_iter));
       } else {
 	 month_iter = history_map[history_key];
@@ -125,7 +127,8 @@ void RGLogView::cbTreeSelectionChanged(GtkTreeSelection *selection,
 	 GtkTextIter start,end;
 
 	 gtk_tree_model_get (model, &iter, COLUMN_LOG_FILENAME, &file, -1);
-	 if(file == NULL)
+	 // the months do not have a valid file 
+	 if(!FileExists(RLogDir()+string(file)))
 	    return;
 
 	 buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(me->_textView));

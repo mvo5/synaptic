@@ -408,6 +408,14 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
    gtk_widget_grab_focus(me->_term);
 }
 
+bool RGDebInstallProgress::close()
+{
+   if(child_has_exited)
+      cbClose(NULL, this);
+
+   return TRUE;
+}
+
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister,

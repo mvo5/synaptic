@@ -344,6 +344,7 @@ void check_and_aquire_lock()
 	 g_free(msg);
       }
 
+      cout << "Another synaptic is running. Trying to bring it to the foreground" << endl;
       kill(LockedApp, SIGUSR1);
       exit(0);
    }

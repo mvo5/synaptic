@@ -105,7 +105,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
-   virtual bool close() {return TRUE;};
+   virtual bool close();
 
    virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
 		   				int numPackages = 0,

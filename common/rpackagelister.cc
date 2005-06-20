@@ -1743,15 +1743,18 @@ bool RPackageLister::readSelections(istream &in)
            I != actionMap.end(); I++) {
          Pkg = Cache.FindPkg((*I).first);
          if (Pkg.end() == false) {
-            Fix.Clear(Pkg);
-            Fix.Protect(Pkg);
+	    Fix.Clear(Pkg);
+	    Fix.Protect(Pkg);
             switch ((*I).second) {
                case ACTION_INSTALL:
-                  Cache.MarkInstall(Pkg, true);
+		  if(_config->FindB("Volatile::SetSelectionsNoFix","false"))
+		     Cache.MarkInstall(Pkg, false);
+		  else
+		     Cache.MarkInstall(Pkg, true);
                   break;
 
                case ACTION_UNINSTALL:
-                  Fix.Remove(Pkg);
+		  Fix.Remove(Pkg);
                   Cache.MarkDelete(Pkg, false);
                   break;
             }

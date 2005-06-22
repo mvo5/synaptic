@@ -54,7 +54,7 @@ html: html_timestamp
 
 html_timestamp:  $(docname).xml
 	rm -f $(top_builddir)/doc/html/$(lang)/*html
-	xmlto html -o  $(top_builddir)/doc/html/$(lang) --skip-validation $(docname).xml
+	xmlto html -o  $(top_builddir)/doc/html/$(lang) --skip-validation $(srcdir)/$(docname).xml
 	mkdir -p  $(top_builddir)/doc/html/$(lang)/figures
 	cp  $(top_srcdir)/help/$(lang)/figures/*  $(top_builddir)/doc/html/$(lang)/figures
 	touch html_timestamp

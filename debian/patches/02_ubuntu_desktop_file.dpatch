@@ -5,25 +5,6 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad synaptic-0.56/data/Makefile.am /tmp/dpep.bK5mR9/synaptic-0.56/data/Makefile.am
-diff -urNad synaptic-0.56/data/synaptic.desktop /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop
---- synaptic-0.56/data/synaptic.desktop	2005-03-30 17:13:44.745509960 +0200
-+++ /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop	2005-03-30 17:15:59.770982968 +0200
-@@ -82,11 +82,11 @@
- Comment[sr@Latn]=Instaliraj, ukloni i nadogradi softverske pakete
- Comment[tr]=Paketleri kur, kaldır ya da yükselt
- Comment[zh_CN]=安装，删除和升级软件包
--Exec=gksu -u root /usr/sbin/synaptic
-+Exec=gksudo /usr/sbin/synaptic
- Icon=synaptic.png
- Terminal=false
- MultipleArgs=false
- Type=Application
- Encoding=UTF-8
--Categories=PackageManager;GTK;System;Application
-+Categories=PackageManager;GTK;Settings;System;Application
- NotShowIn=KDE
-\ No newline at end of file
 diff -urNad synaptic-0.56/data/synaptic.desktop.in /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop.in
 --- synaptic-0.56/data/synaptic.desktop.in	2005-03-30 17:13:44.746509808 +0200
 +++ /tmp/dpep.bK5mR9/synaptic-0.56/data/synaptic.desktop.in	2005-03-30 17:15:59.770982968 +0200

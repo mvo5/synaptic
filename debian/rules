@@ -6,6 +6,10 @@
 # This is the debhelper compatability version to use.
 export DH_COMPAT=3
 
+DEB_BUILD_PROG:=debuild --preserve-envvar PATH --preserve-envvar CCACHE_DIR -us -uc $(DEB_BUILD_PROG_OPTS)
+S_DEBVER=$(shell dpkg-parsechangelog |sed -n -e '/^Version:/s/^Version: //p')
+
+
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
 COMMON_FLAGS= --prefix=/usr \
@@ -30,6 +34,7 @@ build-stamp: patch
 	dh_testdir
 	./configure  $(CONFIGURE_FLAGS) 
 	$(MAKE)
+	(cd po;intltool-update -p --verbose)
 	touch build-stamp
 
 
@@ -130,6 +135,13 @@ unpatch:
 	cp debian/patches/00list.$(DIST) debian/patches/00list
 	dpatch deapply-all
 	rm -rf patch-stamp debian/patched
+
+svn-build:
+	rm -rf debian/svn-build
+	mkdir -p debian/svn-build/synaptic-$(S_DEBVER)
+	svn ls -R | xargs tar --no-recursion -c -v -f -  | (cd debian/svn-build/synaptic-$(S_DEBVER) ; tar xf -)
+	debian/svn-build/synaptic-$(S_DEBVER)/autogen.sh
+	(cd debian/svn-build/synaptic-$(S_DEBVER); $(DEB_BUILD_PROG))
 
 
 binary: binary-indep binary-arch

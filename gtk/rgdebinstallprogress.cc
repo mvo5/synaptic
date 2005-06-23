@@ -505,9 +505,11 @@ void RGDebInstallProgress::updateInterface()
       // This algorithm should be improved (it's the same as the rpm one ;)
       int len = read(_childin, buf, 1);
 
-      if(len < 1) {
+      // nothing was read
+      if(len < 1) 
 	 break;
-      }
+
+      // update the time we last saw some action
       last_term_action = time(NULL);
 
       if( buf[0] == '\n') {

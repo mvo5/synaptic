@@ -72,7 +72,7 @@ bool ShowHelp(CommandLine & CmdL)
       _("-r   Open in the repository screen\n") <<
       _("-f=? Give an alternative filter file\n") <<
       _("-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n") <<
-      _("-i=? Start with the initial Filter with the number given\n") <<
+      _("-i=? Start with the initial Filter with given name\n") <<
       _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Upgrade and display changes\n") <<
       _("--dist-upgrade-mode  Call DistUpgrade and display changes\n") <<
@@ -540,6 +540,10 @@ int main(int argc, char **argv)
    if(_config->FindB("Volatile::TaskWindow",false)) {
       mainWindow->cbTasksClicked(NULL, mainWindow);
    }
+
+   string filter = _config->Find("Volatile::initialFilter","");
+   if(filter != "")
+      mainWindow->changeView(PACKAGE_VIEW_CUSTOM, filter);
 
    if (NonInteractive) {
       mainWindow->cbProceedClicked(NULL, mainWindow);

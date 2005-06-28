@@ -16,16 +16,15 @@ COMMON_FLAGS= --prefix=/usr \
 		--mandir=\$${prefix}/share/man \
 		 --infodir=\$${prefix}/share/info \
 		--localstatedir=/var/lib/synaptic \
-	         --sysconfdir=/etc --with-vte --with-pkg-hold
+	         --sysconfdir=/etc --with-vte --with-pkg-hold \
+		  --with-apt-authentication \
+		  --with-nice-dpkg-status
 
 CREATE_SUPPORTED_PIXMAP="true"
 CONFIGURE_FLAGS = $(COMMON_FLAGS)
 
 # special case for ubuntu
 ifeq "$(DIST)" "Ubuntu"
-	CONFIGURE_FLAGS = $(COMMON_FLAGS) \
-			  --with-apt-authentication \
-			  --with-nice-dpkg-status
 	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps/package-supported.png
 endif
 

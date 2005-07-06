@@ -55,7 +55,7 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
 {
    FileFd F(FileName, FileFd::ReadOnly);
    if (_error->PendingError()) {
-      _error->Error(_("could not open recommends file %s"), FileName.c_str());
+      _error->Error("could not open recommends file %s", FileName.c_str());
       return;
    }
    pkgTagFile Tags(&F);
@@ -81,7 +81,7 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
          if (regcomp(ptrn, Name.c_str(),
                      REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
             _error->
-               Warning(_("Bad regular expression '%s' in Recommends file."),
+               Warning("Bad regular expression '%s' in Recommends file.",
                        Name.c_str());
             delete ptrn;
          } else

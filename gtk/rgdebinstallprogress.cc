@@ -582,6 +582,15 @@ void RGDebInstallProgress::updateInterface()
    }
 
    time_t now = time(NULL);
+
+   if(!_startCounting) {
+      usleep(100000);
+      gtk_progress_bar_pulse (GTK_PROGRESS_BAR(_pbarTotal));
+      // wait until we get the first message from apt
+      last_term_action = now;
+   }
+
+
    if ((now - last_term_action) > RGTERMINAL_TIMEOUT) {
       cout << "no statusfd changes/content updates in terminal for " 
 	   << RGTERMINAL_TIMEOUT << "seconds" << endl;
@@ -589,12 +598,8 @@ void RGDebInstallProgress::updateInterface()
       w = glade_xml_get_widget(_gladeXML, "expander_terminal");
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
       last_term_action = time(NULL);
-   }
+   } 
 
-   if(!_startCounting) {
-      usleep(100000);
-      gtk_progress_bar_pulse (GTK_PROGRESS_BAR(_pbarTotal));
-   }
 
    if (gtk_events_pending()) {
       while (gtk_events_pending())

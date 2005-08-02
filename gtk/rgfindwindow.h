@@ -32,7 +32,7 @@ class RGFindWindow:public RGGladeWindow {
 
    //RPatternPackageFilter::DepType _searchType;
    GList *_prevSearches;
-   GtkWidget *_entry, *_findB;
+   GtkWidget *_entry, *_findB, *_omenu;
 
    static void doFind(GtkWindow *widget, void *data);
    static void doClose(GtkWindow *widget, void *data);

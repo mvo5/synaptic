@@ -32,13 +32,9 @@
 
 string RGFindWindow::getFindString()
 {
-   GtkWidget *entry;
-   string s;
-
-   entry = glade_xml_get_widget(_gladeXML, "entry_find");
-   const char *text = gtk_entry_get_text(GTK_ENTRY(entry));
-
-   return text;
+   GtkWidget *entry = glade_xml_get_widget(_gladeXML, "entry_find");
+    
+   return gtk_entry_get_text(GTK_ENTRY(entry));
 }
 
 void RGFindWindow::selectText()
@@ -51,9 +47,7 @@ void RGFindWindow::selectText()
 int RGFindWindow::getSearchType()
 {
    int searchType;
-   GtkWidget *omenu = glade_xml_get_widget(_gladeXML, "optionmenu_where");
-   assert(omenu);
-   searchType = gtk_option_menu_get_history(GTK_OPTION_MENU(omenu));
+   searchType = gtk_option_menu_get_history(GTK_OPTION_MENU(_omenu));
 
    return searchType;
 }
@@ -81,9 +75,12 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
 void RGFindWindow::doClose(GtkWindow *widget, void *data)
 {
    //cout << "void RGFindWindow::doClose()" << endl;  
-   RGFindWindow *w = (RGFindWindow *) data;
+   RGFindWindow *me = (RGFindWindow *) data;
 
-   w->hide();
+   _config->Set("Synaptic::LastSearchType",
+		gtk_option_menu_get_history(GTK_OPTION_MENU(me->_omenu)));
+
+   me->hide();
 }
 
 void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
@@ -124,6 +121,10 @@ RGFindWindow::RGFindWindow(RGWindow *win)
    _findB = glade_xml_get_widget(_gladeXML, "button_find");
    assert(_findB);
    gtk_widget_set_sensitive(_findB, FALSE);
+
+   _omenu = glade_xml_get_widget(_gladeXML, "optionmenu_where");
+   gtk_option_menu_set_history(GTK_OPTION_MENU(_omenu),
+			       _config->FindI("Synaptic::LastSearchType",1));
 
    setTitle(_("Find"));
    skipTaskbar(true);

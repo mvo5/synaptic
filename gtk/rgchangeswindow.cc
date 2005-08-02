@@ -34,19 +34,17 @@
 #include <stdio.h>
 #include <string>
 #include <cassert>
-#include <vector>
 
 #include "rgchangeswindow.h"
 
 #include "i18n.h"
 
 
-RGChangesWindow::RGChangesWindow(RGWindow *wwin , RPackageLister *lister)
-   : RGGladeWindow(wwin, "changes"), _lister(lister)
+RGChangesWindow::RGChangesWindow(RGWindow *wwin)
+: RGGladeWindow(wwin, "changes")
 {
    // new tree store
-   _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_BOOLEAN,
-				   G_TYPE_BOOLEAN);
+   _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
    _tree = glade_xml_get_widget(_gladeXML, "tree");
    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
@@ -57,71 +55,13 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin , RPackageLister *lister)
                                                      "markup", PKG_COLUMN, NULL);
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
-
-#ifndef HAVE_RPM // RPM has no concept for purge
-   renderer = gtk_cell_renderer_toggle_new();
-   g_object_set(renderer, "activatable", TRUE, NULL);
-   g_signal_connect(renderer, "toggled", 
-		    (GCallback) cell_toggled_callback, this);
-   column = gtk_tree_view_column_new_with_attributes(_("Purge"),
-                                                     renderer,
-                                                     "visible", PKG_PURGE_VISIBLE,
-						     "active", PKG_PURGE,
-						     NULL);
-   /* Add the column to the view. */
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
-#endif
-
    gtk_widget_show(_tree);
 }
 
-void RGChangesWindow::cell_toggled_callback (GtkCellRendererToggle *cell,
-					     gchar *path_string,
-					     gpointer user_data)
-{
-   GtkTreeIter iter;
-   gboolean res;
-   gchar *pkg;
 
-   RGChangesWindow *me = (RGChangesWindow *)user_data;
 
-   GtkTreeModel *model = GTK_TREE_MODEL(me->_treeStore);
-   GtkTreePath* path = gtk_tree_path_new_from_string(path_string);
-   gtk_tree_model_get_iter(model, &iter, path);
-   gtk_tree_model_get(GTK_TREE_MODEL(model), &iter,
-		      PKG_COLUMN, &pkg, 
-		      PKG_PURGE, &res, -1);
-   res = !res;
-   
-   if(res) {
-      me->purge_list.push_back(string(pkg));
-   } else {
-      vector<string>::iterator I;
-      I = find(me->purge_list.begin(), me->purge_list.end(), string(pkg));
-      if(I != me->purge_list.end())
-	 me->purge_list.erase(I);
-   }
-   
-   gtk_tree_store_set(GTK_TREE_STORE(model), &iter,
-		      PKG_PURGE, res,
-		      -1);
-}
-
-int RGChangesWindow::Run()
-{
-   int res;
-   res = gtk_dialog_run(GTK_DIALOG(window()));
-   if(res == GTK_RESPONSE_OK) {
-      for(int i=0;i<purge_list.size();i++) {
-	 RPackage *pkg = _lister->getPackage(purge_list[i]);
-	 if(pkg != NULL)
-	    pkg->setRemove(true);
-      }
-   }
-   return res;
-}
-
-void RGChangesWindow::confirm(vector<RPackage *> &kept,
+void RGChangesWindow::confirm(RPackageLister *lister,
+			      vector<RPackage *> &kept,
 			      vector<RPackage *> &toInstall,
 			      vector<RPackage *> &toReInstall,
 			      vector<RPackage *> &toUpgrade,
@@ -165,15 +105,11 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != notAuthenticated.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(),
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toRemove.size() > 0) {
-#ifndef HAVE_RPM
-      gtk_tree_view_set_headers_visible(GTK_TREE_VIEW(_tree), true);
-#endif
       /* removed */
       gchar *str = g_strdup_printf("<b>%s</b>", _("To be removed"));
       gtk_tree_store_append(_treeStore, &iter, NULL);
@@ -183,9 +119,7 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != toRemove.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 
-			    PKG_PURGE_VISIBLE, true,
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
       g_free(str);
    }
@@ -194,14 +128,12 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
       /* downgrade */
       gtk_tree_store_append(_treeStore, &iter, NULL);
       gtk_tree_store_set(_treeStore, &iter,
-                         PKG_COLUMN, _("To be downgraded"), 
-			 -1);
+                         PKG_COLUMN, _("To be downgraded"), -1);
       for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
            p != toDowngrade.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 			    
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
@@ -213,8 +145,7 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != toInstall.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
@@ -226,8 +157,7 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != toUpgrade.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
@@ -239,8 +169,7 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != toInstall.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
@@ -251,8 +180,7 @@ void RGChangesWindow::confirm(vector<RPackage *> &kept,
            p != kept.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
-                            PKG_COLUMN, (*p)->name(), 
-			    -1);
+                            PKG_COLUMN, (*p)->name(), -1);
       }
    }
 

@@ -500,10 +500,10 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
    if (ask && _lister->getStateChanges(state, toKeep, toInstall, toReInstall,
 				       toUpgrade, toRemove, toDowngrade,
 				       notAuthenticated, exclude)) {
-      RGChangesWindow changes(this, _lister);
-      changes.confirm(toKeep, toInstall, toReInstall,
+      RGChangesWindow changes(this);
+      changes.confirm(_lister, toKeep, toInstall, toReInstall,
 		      toUpgrade, toRemove, toDowngrade, notAuthenticated);
-      int res = changes.Run();
+      int res = gtk_dialog_run(GTK_DIALOG(changes.window()));
       if( res != GTK_RESPONSE_OK) {
          // canceled operation
          _lister->restoreState(state);

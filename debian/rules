@@ -8,7 +8,18 @@ export DH_COMPAT=3
 
 DEB_BUILD_PROG:=debuild --preserve-envvar PATH --preserve-envvar CCACHE_DIR -us -uc $(DEB_BUILD_PROG_OPTS)
 S_DEBVER=$(shell dpkg-parsechangelog |sed -n -e '/^Version:/s/^Version: //p')
+S_CONFVER=$(shell  sed -n -e 's/AM_INIT_AUTOMAKE(synaptic, \(.*\))/\1/p' configure.in)
 
+# Rebuild configure.in to have the correct version from the change log
+ifneq ($(S_DEBVER),$(S_CONFVER))
+ifneq ($(S_DEBVER),)
+.PHONY: configure.in
+configure.in:
+	sed -ie 's/$(S_CONFVER)/$(S_DEBVER)/' $@ 
+endif
+else
+configure.in:
+endif
 
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
@@ -28,36 +39,28 @@ ifeq "$(DIST)" "Ubuntu"
 	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps/package-supported.png
 endif
 
-build: build-stamp
-build-stamp: patch
+
+configure: configure.in
+configure-stamp:
 	dh_testdir
 	./configure  $(CONFIGURE_FLAGS) 
+	touch $@
+
+build: build-stamp 
+build-stamp: configure-stamp patch
+	dh_testdir
 	$(MAKE)
 	(cd po;intltool-update -p --verbose)
 	touch build-stamp
-
-
-#build-debtags: build-debtags-stamp
-#build-debtags-stamp:
-#	dh_testdir 
-#	./configure --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --sysconfdir=/etc --with-vte --with-debian-description-parser --with-pkg-hold --with-debtags
-#	$(MAKE)
-#	touch build-debtags-stamp
 
 
 clean: clean1 unpatch
 clean1: 
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp build-debtags-stamp install-stamp install-debtags-stamp
+	rm -f configure-stamp build-stamp install-stamp 
 	-$(MAKE) distclean
 	dh_clean
-
-#clean-debtags:
-#	dh_testdir
-#	dh_testroot
-#	rm -f build-stamp build-debtags-stamp install-stamp install-debtags-stamp
-#	dh_clean -k
 
 install: install-stamp
 install-stamp: build-stamp
@@ -69,15 +72,6 @@ install-stamp: build-stamp
 	$(CREATE_SUPPORTED_PIXMAP)
 	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps
 
-
-#install-debtags: install-debtags-stamp
-#install-debtags-stamp: build-debtags
-#	dh_testdir 
-#	dh_testroot
-#	dh_clean -k
-	#dh_installdirs -psynaptic-debtags
-#	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic-debtags
-#	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic-debtags/usr/share/synaptic/pixmaps
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -105,24 +99,6 @@ synaptic: build
 	dh_md5sums -psynaptic
 	dh_builddeb -psynaptic
 
-#synaptic-debtags: install-debtags
-#	dh_testdir -psynaptic-debtags
-#	dh_testroot -psynaptic-debtags
-#	dh_installdocs -psynaptic-debtags 
-	#TODO README README.debtags NEWS debian/NEWS.Debian
-#	dh_scrollkeeper -psynaptic-debtags
-#	dh_installman -psynaptic-debtags man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
-#	dh_installmenu -psynaptic-debtags
-#	dh_installchangelogs ChangeLog -psynaptic-debtags
-#	dh_link -psynaptic-debtags
-#	dh_strip -psynaptic-debtags
-#	dh_compress -psynaptic-debtags
-#	dh_fixperms -psynaptic-debtags
-#	dh_installdeb -psynaptic-debtags
-#	dh_shlibdeps -psynaptic-debtags
-#	dh_gencontrol -psynaptic-debtags
-#	dh_md5sums -psynaptic-debtags
-#	dh_builddeb -psynaptic-debtags
 
 patch: patch-stamp
 patch-stamp:

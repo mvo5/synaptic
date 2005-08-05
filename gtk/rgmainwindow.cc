@@ -2617,7 +2617,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
       iprogress = new RGInstallProgress(me, me->_lister);
 #else 
   #ifdef WITH_DPKG_STATUSFD
-      iprogress = new RGDebInstallProgress(me,me->_lister, me->_userDialog);
+      iprogress = new RGDebInstallProgress(me,me->_lister);
   #else 
    iprogress = new RGDummyInstallProgress();
   #endif // WITH_DPKG_STATUSFD

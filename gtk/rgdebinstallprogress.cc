@@ -423,13 +423,16 @@ bool RGDebInstallProgress::close()
    return TRUE;
 }
 
+RGDebInstallProgress::~RGDebInstallProgress()
+{
+   delete _userDialog;
+}
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
-					   RPackageLister *lister,
-					   RGUserDialog *userDialog)
+					   RPackageLister *lister)
 
    : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
-     _totalActions(0), _progress(0), _sock(0), _userDialog(userDialog)
+     _totalActions(0), _progress(0), _sock(0), _userDialog(0)
 
 {
    prepare(lister);
@@ -479,6 +482,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 				 G_CALLBACK(cbCancel), this);
    glade_xml_signal_connect_data(_gladeXML, "on_button_close_clicked",
 				 G_CALLBACK(cbClose), this);
+
+   if(_userDialog == NULL)
+      _userDialog = new RGUserDialog(this);
 
    // init the timer
    last_term_action = time(NULL);

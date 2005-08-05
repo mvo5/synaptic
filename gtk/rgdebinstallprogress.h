@@ -126,9 +126,8 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
 				  gpointer    user_data);
 
  public:
-   RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister,
-			RGUserDialog *userDialog);
-
+   RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
+   virtual ~RGDebInstallProgress();
 
 };
 

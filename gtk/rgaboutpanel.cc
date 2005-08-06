@@ -41,7 +41,7 @@ RGGladeWindow(parent, "about", "credits")
                                  "on_closebutton_clicked",
                                  G_CALLBACK(closeWindow), this);
 
-   skipTaskbar(true);
+   //   skipTaskbar(true);
 
    // hide translators credits if it is not found in the po file
    GtkWidget *credits;
@@ -76,7 +76,7 @@ RGAboutPanel::RGAboutPanel(RGWindow *parent)
                                  "on_button_credits_clicked",
                                  G_CALLBACK(creditsClicked), this);
 
-   skipTaskbar(true);
+   //skipTaskbar(true);
 
    setTitle(_("About Synaptic"));
    GtkWidget *w = glade_xml_get_widget(_gladeXML, "label_version");

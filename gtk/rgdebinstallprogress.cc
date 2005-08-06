@@ -51,78 +51,6 @@
 // timeout in sec until the expander is expanded
 static const int RGTERMINAL_TIMEOUT=60;
 
-// removing
-char* RGDebInstallProgress::remove_stages[NR_REMOVE_STAGES] = {
-   "half-configured", 
-   "half-installed", 
-   "config-files"};
-char* RGDebInstallProgress::remove_stages_translations[NR_REMOVE_STAGES] = {
-   N_("Preparing for removal %s"),
-   N_("Removing %s"),
-   N_("Removed %s")};
-
-// purging
-char *RGDebInstallProgress::purge_stages[NR_PURGE_STAGES] = { 
-   "half-configured",
-   "half-installed", 
-   "config-files", 
-   "not-installed"};
-char *RGDebInstallProgress::purge_stages_translations[NR_PURGE_STAGES] = { 
-   N_("Preparing for removal %s"),
-   N_("Removing with config %s"), 
-   N_("Removed %s"), 
-   N_("Removed with config %s")};
-
-// purge only (for packages that are alreay removed)
-char *RGDebInstallProgress::purge_only_stages[NR_PURGE_ONLY_STAGES] = { 
-   "config-files", 
-   "not-installed"};
-char *RGDebInstallProgress::purge_only_stages_translations[NR_PURGE_ONLY_STAGES] = { 
-   N_("Removing with config %s"), 
-   N_("Removed with config %s")};
-
-// install 
-char *RGDebInstallProgress::install_stages[NR_INSTALL_STAGES] = { 
-   "half-installed",
-   "unpacked",
-   "half-configured",
-   "installed"};
-char *RGDebInstallProgress::install_stages_translations[NR_INSTALL_STAGES] = { 
-   N_("Preparing %s"),
-   N_("Unpacking %s"),
-   N_("Configuring %s"),
-   N_("Installed %s")};
-
-// update
-char *RGDebInstallProgress::update_stages[NR_UPDATE_STAGES] = { 
-   "unpack",
-   "half-installed", 
-   "unpacked",
-   "half-configured",
-   "installed"};
-char *RGDebInstallProgress::update_stages_translations[NR_UPDATE_STAGES] = { 
-   N_("Preparing %s"),
-   N_("Installing %s"), 
-   N_("Unpacking %s"),
-   N_("Configuring %s"),
-   N_("Installed %s")};
-
-//reinstall
-char *RGDebInstallProgress::reinstall_stages[NR_REINSTALL_STAGES] = { 
-   "half-configured",
-   "unpacked",
-   "half-installed", 
-   "unpacked",
-   "half-configured",
-   "installed" };
-char *RGDebInstallProgress::reinstall_stages_translations[NR_REINSTALL_STAGES] = { 
-   N_("Preparing %s"),
-   N_("Unpacking %s"),
-   N_("Installing %s"), 
-   N_("Unpacking %s"),
-   N_("Configuring %s"),
-   N_("Installed %s") };
-
 
 void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
 					gint child_pid, gint ret, 
@@ -137,7 +65,6 @@ void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
       me->child_has_exited=true;
    }
 }
-
 
 ssize_t
 write_fd(int fd, void *ptr, size_t nbytes, int sendfd)
@@ -277,7 +204,6 @@ int ipc_recv_fd()
 
    return fd;
 }
-
 
 
 void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
@@ -519,67 +445,42 @@ void RGDebInstallProgress::updateInterface()
       last_term_action = time(NULL);
 
       if( buf[0] == '\n') {
-// 	 cout << line << endl;
+	 // cout << line << endl;
 	 
-	 gchar **split = g_strsplit(line, ":",4);
-	 
-	 gchar *s=NULL;
+	 gchar **split = g_strsplit(line, ":",5);
+	 gchar *status = g_strstrip(split[0]);
 	 gchar *pkg = g_strstrip(split[1]);
-	 gchar *status = g_strstrip(split[2]);
+	 gchar *percent = g_strstrip(split[2]);
+	 gchar *str = g_strdup(g_strstrip(split[3]));
+
 	 // major problem here, we got unexpected input. should _never_ happen
 	 if(!(pkg && status))
 	    continue;
 
 	 // first check for errors and conf-file prompts
 	 if(strstr(status, "error") != NULL) { 
-	    // error from dpkg
-	    s = g_strdup_printf(_("Error in package %s"), split[1]);
+	    // error from dpkg, needs to be parsed different
+	    str = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error(err.c_str());
 	 } else if(strstr(status, "conffile-prompt") != NULL) {
-	    // conffile-request
+	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;
 	    conffile(pkg, split[3]);
-	 } else if(_actionsMap.count(pkg) == 0) {
-	    // no known dpkg state (happens e.g if apt reports:
-	    // /bin/sh: apt-listchanges: command-not-found
-	    g_strfreev(split);
-	    line[0] = 0;
-	    continue;
 	 } else {
 	    _startCounting = true;
-
-	    // then go on with the package stuff
-	    char *next_stage_str = NULL;
-	    int next_stage = _stagesMap[pkg];
-	    // is a element is not found in the map, NULL is returned
-	    // (this happens when dpkg does some work left from a previous
-	    //  session (rare but happens))
-	    
-	    char **states = _actionsMap[pkg]; 
-	    char **translations = _translationsMap[pkg]; 
-	    if(states && translations) {
-	       next_stage_str = states[next_stage];
-// 	       cout << "waiting for: " << next_stage_str << endl;
-	       if(next_stage_str && (strstr(status, next_stage_str) != NULL)) {
-		  s = g_strdup_printf(_(translations[next_stage]), split[1]);
-		  next_stage++;
-		  _stagesMap[pkg] = next_stage;
-		  _progress++;
-	       }
-	    }
 	 }
 
-	 // each package goes through various stages
-	 float val = ((float)_progress)/((float)_totalActions);
-// 	 cout << _progress << "/" << _totalActions << " = " << val << endl;
+	 float val = atof(percent)/100.0;
+ 	 //cout << "progress: " << val << endl;
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
-	 if(s!=NULL)
-	    gtk_label_set(GTK_LABEL(_label_status),s);
+
+	 if(str!=NULL)
+	    gtk_label_set(GTK_LABEL(_label_status),str);
 	 
 	 // clean-up
 	 g_strfreev(split);
-	 g_free(s);
+	 g_free(str);
 	 line[0] = 0;
       } else {
 	 buf[1] = 0;
@@ -627,9 +528,8 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    if (res == pkgPackageManager::Failed)
        return res;
 
-   /*
-    * This will make a pipe from where we can read child's output
-    */
+   // we need to send the fds from the pipe over a socket because
+   // §""!%&§/ vte_terminal closes all our FDs 
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
 				    false,false,false);
    if (_child_id == 0) {
@@ -637,11 +537,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
       pipe(fd);
       ipc_send_fd(fd[0]); // send the read part of the pipe to the parent
 
-#ifdef WITH_DPKG_STATUSFD
       res = pm->DoInstallPostFork(fd[1]);
-#else
-      res = pm->DoInstallPostFork();
-#endif
 
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
@@ -674,6 +570,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
    finishUpdate();
 
    ::close(_childin);
+   _config->Clear("APT::Keep-Fds", _childin);
 
    return res;
 }
@@ -773,45 +670,6 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);
 
-   for (unsigned int row = 0; row < lister->packagesSize(); row++) {
-      RPackage *pkg = lister->getPackage(row);
-      int flags = pkg->getFlags();
-      string name = pkg->name();
-
-      if((flags & RPackage::FPurge)&&
-	 ((flags & RPackage::FInstalled)||(flags&RPackage::FOutdated))){
-	 _actionsMap.insert(pair<string,char**>(name, purge_stages));
-	 _translationsMap.insert(pair<string,char**>(name, purge_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_PURGE_STAGES;
-      } else if((flags & RPackage::FPurge)&& 
-		(!(flags & RPackage::FInstalled)||(flags&RPackage::FOutdated))){
-	 _actionsMap.insert(pair<string,char**>(name, purge_only_stages));
-	 _translationsMap.insert(pair<string,char**>(name, purge_only_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_PURGE_ONLY_STAGES;
-      } else if(flags & RPackage::FRemove) {
-	 _actionsMap.insert(pair<string,char**>(name, remove_stages));
-	 _translationsMap.insert(pair<string,char**>(name, remove_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_REMOVE_STAGES;
-      } else if(flags & RPackage::FNewInstall) {
-	 _actionsMap.insert(pair<string,char**>(name, install_stages));
-	 _translationsMap.insert(pair<string,char**>(name, install_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_INSTALL_STAGES;
-      } else if(flags & RPackage::FReInstall) {
-	 _actionsMap.insert(pair<string,char**>(name, reinstall_stages));
-	 _translationsMap.insert(pair<string,char**>(name, reinstall_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_REINSTALL_STAGES;
-      } else if((flags & RPackage::FUpgrade)||(flags & RPackage::FDowngrade)) {
-	 _actionsMap.insert(pair<string,char**>(name, update_stages));
-	 _translationsMap.insert(pair<string,char**>(name, update_stages_translations));
-	 _stagesMap.insert(pair<string,int>(name, 0));
-	 _totalActions += NR_UPDATE_STAGES;
-      }
-   }
 }
 
 #endif

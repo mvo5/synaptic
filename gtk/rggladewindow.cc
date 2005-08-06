@@ -56,14 +56,15 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    }
    assert(_gladeXML);
    _win = glade_xml_get_widget(_gladeXML, main_widget);
+   assert(_win);
 
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
    if(parent != NULL) 
       gtk_window_set_transient_for(GTK_WINDOW(_win), 
 				   GTK_WINDOW(parent->window()));
 
-   assert(_win);
+   gtk_window_set_position(GTK_WINDOW(_win),
+			   GTK_WIN_POS_CENTER_ON_PARENT);
+
    g_free(filename);
    g_free(main_widget);
 

@@ -40,8 +40,7 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
 				 "on_button_close_clicked",
 				 G_CALLBACK(cbCloseClicked),
 				 this); 
-   // fill in all the pkg-values
-   skipTaskbar(true);
+   //skipTaskbar(true);
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)

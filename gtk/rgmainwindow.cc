@@ -2123,7 +2123,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 gtk_window_set_default_size(GTK_WINDOW(win),400,500);
 	 gtk_container_set_border_width(GTK_CONTAINER(win), 6);
 	 gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(me->_win));
-	 gtk_window_set_skip_taskbar_hint(GTK_WINDOW(win), TRUE);
+	 //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(win), TRUE);
 	 GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
 	 gtk_container_add(GTK_CONTAINER(win), vbox);
 	 gtk_widget_show(vbox);

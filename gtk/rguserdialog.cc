@@ -194,7 +194,8 @@ bool RGGladeUserDialog::init(const char *name)
 
    gtk_window_set_position(GTK_WINDOW(_dialog),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
-   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
+   if(gtk_window_get_modal(GTK_WINDOW(_dialog)))
+      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), 
 				GTK_WINDOW(_parentWindow));
 

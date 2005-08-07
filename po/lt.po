@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-08 23:42+0200\n"
-"PO-Revision-Date: 2005-04-05 01:30+0300\n"
+"POT-Creation-Date: 2005-07-16 17:22+0300\n"
+"PO-Revision-Date: 2005-07-16 18:17+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -245,16 +244,6 @@ msgstr "Nepavyko rasti bylos vardo arba dydžio žymės"
 #: ../common/indexcopy.cc:485
 msgid "Error parsing file record"
 msgstr "Klaida nagrinėjant bylos įrašą"
-
-#: ../common/rcacheactor.cc:58
-#, c-format
-msgid "could not open recommends file %s"
-msgstr ""
-
-#: ../common/rcacheactor.cc:84
-#, fuzzy, c-format
-msgid "Bad regular expression '%s' in Recommends file."
-msgstr "SumažintoVaizdo byloje bloga reguliari išraiška '%s'."
 
 #: ../common/rcdscanner.cc:112 ../common/rcdscanner.cc:162
 #, c-format
@@ -565,9 +554,8 @@ msgid "Depends"
 msgstr "Priklauso"
 
 #: ../common/rpackage.h:52
-#, fuzzy
 msgid "PreDepends"
-msgstr "Priklauso"
+msgstr "Priešpriklauso"
 
 #: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
 msgid "Suggests"
@@ -587,12 +575,11 @@ msgstr "Pakeičia"
 
 #: ../common/rpackage.h:54
 msgid "Obsoletes"
-msgstr ""
+msgstr "Pasendina"
 
 #: ../common/rpackage.h:54
-#, fuzzy
 msgid "Dependency of"
-msgstr "Priklausomybės"
+msgstr "Priklausomybė paketo "
 
 #: ../common/rpackagecache.cc:71
 msgid ""
@@ -898,8 +885,8 @@ msgid "Upgradable (upstream)"
 msgstr "Atnaujintini (upstream)"
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:1983
-#: ../gtk/rgmainwindow.cc:2671 ../gtk/rgmainwindow.cc:2756
-#: ../gtk/rgmainwindow.cc:2924
+#: ../gtk/rgmainwindow.cc:2672 ../gtk/rgmainwindow.cc:2757
+#: ../gtk/rgmainwindow.cc:2926
 #, c-format
 msgid "Can't read %s"
 msgstr "Nepavyko perskaityti %s"
@@ -907,12 +894,12 @@ msgstr "Nepavyko perskaityti %s"
 #: ../common/rsources.cc:131
 #, c-format
 msgid "Syntax error in line %s"
-msgstr ""
+msgstr "Eilutėje %s sintaksės klaida"
 
 #: ../common/rsources.cc:458
 #, c-format
 msgid "Vendor block %s is invalid"
-msgstr ""
+msgstr "Platintojo blokas %s neteisingas"
 
 #. vim:sts=4:sw=4
 #: ../gtk/dialog_quit.glade.h:1
@@ -971,7 +958,7 @@ msgstr "Įprastas atnaujinimas"
 msgid "Remember my answer for future upgrades"
 msgstr "Atsiminti atsakymą tolesniems atnaujinimams"
 
-#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:68
+#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:69
 msgid "Smart Upgrade"
 msgstr "Gudrus atnaujinimas"
 
@@ -1003,8 +990,8 @@ msgstr ""
 "vardas su `uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:75
-msgid "-i=? Start with the initial Filter with the number given\n"
-msgstr "-i=? Paleisti su pradiniu filtru su nurodytu skaičiumi\n"
+msgid "-i=? Start with the initial Filter with given name\n"
+msgstr "-i=? Paleisti su pradiniu filtru naudojant nurodytą pavadinimą\n"
 
 #: ../gtk/gsynaptic.cc:76
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
@@ -1106,7 +1093,7 @@ msgstr "Paketo pakeitimai"
 
 #: ../gtk/rgchangeswindow.cc:66
 msgid "Purge"
-msgstr ""
+msgstr "Išvalyti"
 
 #: ../gtk/rgchangeswindow.cc:151 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
@@ -1135,87 +1122,86 @@ msgstr "Bus pašalinta"
 msgid "To be downgraded"
 msgstr "Bus pasendinta"
 
-#: ../gtk/rgchangeswindow.cc:212 ../gtk/rgsummarywindow.cc:178
-msgid "To be upgraded"
-msgstr "Bus atnaujinta"
-
-#: ../gtk/rgchangeswindow.cc:225 ../gtk/rgsummarywindow.cc:190
+#: ../gtk/rgchangeswindow.cc:211 ../gtk/rgsummarywindow.cc:190
 msgid "To be installed"
 msgstr "Bus įdiegta"
 
-#: ../gtk/rgchangeswindow.cc:238 ../gtk/rgsummarywindow.cc:202
+#: ../gtk/rgchangeswindow.cc:224 ../gtk/rgsummarywindow.cc:178
+msgid "To be upgraded"
+msgstr "Bus atnaujinta"
+
+#: ../gtk/rgchangeswindow.cc:237 ../gtk/rgsummarywindow.cc:202
 msgid "To be re-installed"
 msgstr "Bus pakartotinai įdiegta"
 
-#: ../gtk/rgchangeswindow.cc:250
+#: ../gtk/rgchangeswindow.cc:249
 msgid "To be kept"
 msgstr "Bus sulaikyta"
 
-#: ../gtk/rgdebinstallprogress.cc:57 ../gtk/rgdebinstallprogress.cc:68
+#: ../gtk/rgdebinstallprogress.cc:60 ../gtk/rgdebinstallprogress.cc:71
 #, c-format
 msgid "Preparing for removal %s"
 msgstr "Ruošiamasi pašalinti %s"
 
-#: ../gtk/rgdebinstallprogress.cc:58
+#: ../gtk/rgdebinstallprogress.cc:61
 #, c-format
 msgid "Removing %s"
 msgstr "Šalinama %s"
 
-#: ../gtk/rgdebinstallprogress.cc:59 ../gtk/rgdebinstallprogress.cc:70
+#: ../gtk/rgdebinstallprogress.cc:62 ../gtk/rgdebinstallprogress.cc:73
 #, c-format
 msgid "Removed %s"
 msgstr "%s pašalintas"
 
-#: ../gtk/rgdebinstallprogress.cc:69 ../gtk/rgdebinstallprogress.cc:78
+#: ../gtk/rgdebinstallprogress.cc:72 ../gtk/rgdebinstallprogress.cc:81
 #, c-format
 msgid "Removing with config %s"
 msgstr "%s šalinamas su konfigūracija"
 
-#: ../gtk/rgdebinstallprogress.cc:71 ../gtk/rgdebinstallprogress.cc:79
+#: ../gtk/rgdebinstallprogress.cc:74 ../gtk/rgdebinstallprogress.cc:82
 #, c-format
 msgid "Removed with config %s"
 msgstr "%s pašalintas su konfigūracija"
 
-#: ../gtk/rgdebinstallprogress.cc:88 ../gtk/rgdebinstallprogress.cc:101
-#: ../gtk/rgdebinstallprogress.cc:116
+#: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:104
+#: ../gtk/rgdebinstallprogress.cc:119
 #, c-format
 msgid "Preparing %s"
-msgstr "%s ruošiamas"
+msgstr "Ruošiamas %s"
 
-#: ../gtk/rgdebinstallprogress.cc:89 ../gtk/rgdebinstallprogress.cc:103
-#: ../gtk/rgdebinstallprogress.cc:117 ../gtk/rgdebinstallprogress.cc:119
+#: ../gtk/rgdebinstallprogress.cc:92 ../gtk/rgdebinstallprogress.cc:106
+#: ../gtk/rgdebinstallprogress.cc:120 ../gtk/rgdebinstallprogress.cc:122
 #, c-format
 msgid "Unpacking %s"
-msgstr "%s išpakuojamas"
+msgstr "Išpakuojamas %s"
 
-#: ../gtk/rgdebinstallprogress.cc:90 ../gtk/rgdebinstallprogress.cc:104
-#: ../gtk/rgdebinstallprogress.cc:120
+#: ../gtk/rgdebinstallprogress.cc:93 ../gtk/rgdebinstallprogress.cc:107
+#: ../gtk/rgdebinstallprogress.cc:123
 #, c-format
 msgid "Configuring %s"
-msgstr "%s konfigūruojamas"
+msgstr "Konfigūruojamas %s"
 
-#: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:105
-#: ../gtk/rgdebinstallprogress.cc:121
+#: ../gtk/rgdebinstallprogress.cc:94 ../gtk/rgdebinstallprogress.cc:108
+#: ../gtk/rgdebinstallprogress.cc:124
 #, c-format
 msgid "Installed %s"
 msgstr "%s įdiegtas"
 
-#: ../gtk/rgdebinstallprogress.cc:102 ../gtk/rgdebinstallprogress.cc:118
+#: ../gtk/rgdebinstallprogress.cc:105 ../gtk/rgdebinstallprogress.cc:121
 #, c-format
 msgid "Installing %s"
-msgstr "%s įdiegiamas"
+msgstr "Diegiamas %s"
 
-#: ../gtk/rgdebinstallprogress.cc:288
-#, fuzzy, c-format
+#: ../gtk/rgdebinstallprogress.cc:291
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr ""
-"Įdiegti naują konfigūracijos bylą\n"
+"Pakeisti konfigūracijos bylą\n"
 "„%s“?"
 
-#: ../gtk/rgdebinstallprogress.cc:289
-#, fuzzy, c-format
+#: ../gtk/rgdebinstallprogress.cc:292
+#, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
@@ -1223,25 +1209,26 @@ msgid ""
 "package maintainers version? "
 msgstr ""
 "Konfigūracijos byla %s buvo pakeista (Jūsų arba scenarijaus). Šiame pakete "
-"yra atnaujinta jos versija. Jeigu norite palikti Jūsų dabartinę versiją, "
-"spauskite „Ne“. Ar norite įdiegti naują paketo prižiūrėtojų versiją?"
+"yra atnaujinta jos versija. Jeigu norite pasilikti esamą versiją, "
+"spauskite „Pasilikti“. Ar norite pakeisti bylą ir įdiegti naują paketo "
+"prižiūrėtojų versiją?"
 
-#: ../gtk/rgdebinstallprogress.cc:430 ../gtk/rginstallprogress.cc:284
+#: ../gtk/rgdebinstallprogress.cc:436 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
 msgid "Applying Changes"
 msgstr "Pritaikomi pakeitimai"
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:504
+#: ../gtk/rgdebinstallprogress.cc:530
 #, c-format
 msgid "Error in package %s"
 msgstr "Klaida pakete %s"
 
-#: ../gtk/rgdebinstallprogress.cc:654 ../gtk/rgdebinstallprogress.cc:657
+#: ../gtk/rgdebinstallprogress.cc:695 ../gtk/rgdebinstallprogress.cc:698
 msgid "Changes applied"
 msgstr "Pakeitimai pritaikyti"
 
-#: ../gtk/rgdebinstallprogress.cc:713
+#: ../gtk/rgdebinstallprogress.cc:754
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1249,15 +1236,15 @@ msgstr ""
 "Dabar pritaikomi pažymėti pakeitimai. Tai gali truputėlį užtrukti. Prašom "
 "palaukti."
 
-#: ../gtk/rgdebinstallprogress.cc:718
+#: ../gtk/rgdebinstallprogress.cc:759
 msgid "Installing and removing software"
 msgstr "Diegiamos ir šalinamos programos"
 
-#: ../gtk/rgdebinstallprogress.cc:720
+#: ../gtk/rgdebinstallprogress.cc:761
 msgid "Removing software"
 msgstr "Šalinamos programos"
 
-#: ../gtk/rgdebinstallprogress.cc:722
+#: ../gtk/rgdebinstallprogress.cc:763
 msgid "Installing software"
 msgstr "Diegiamos programos"
 
@@ -1335,7 +1322,7 @@ msgstr ""
 msgid "Visible"
 msgstr "Matomas"
 
-#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:65
 msgid "Preferences"
 msgstr "Nustatymai"
 
@@ -1650,8 +1637,8 @@ msgstr "Ar norite pridėti kitą CD-ROM?"
 msgid "Open changes"
 msgstr "Atidaryti pakeitimus"
 
-#: ../gtk/rgmainwindow.cc:2007 ../gtk/rgmainwindow.cc:2589
-#: ../gtk/rgmainwindow.cc:2725 ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2007 ../gtk/rgmainwindow.cc:2590
+#: ../gtk/rgmainwindow.cc:2726 ../gtk/rgmainwindow.cc:2903
 #, c-format
 msgid "Can't write %s"
 msgstr "Nepavyko įrašyti %s"
@@ -1722,7 +1709,7 @@ msgstr ""
 "eilutėje komandą „man synaptic“ arba peržiūrėti html versiją esančią "
 "„synaptic/html“ aplanke."
 
-#: ../gtk/rgmainwindow.cc:2455
+#: ../gtk/rgmainwindow.cc:2456
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1730,22 +1717,22 @@ msgstr ""
 "Nepavyko paleisti konfigūravimo įrankio!\n"
 "Jums reikia įdiegti reikalingą paketą „libgnome2-perl“."
 
-#: ../gtk/rgmainwindow.cc:2461
+#: ../gtk/rgmainwindow.cc:2462
 msgid "Starting package configuration tool..."
 msgstr "Paleidžiamas paketų konfigūravimo įrankis..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2476
+#: ../gtk/rgmainwindow.cc:2477
 msgid "Starting package documentation viewer..."
 msgstr "Paleidžiama paketų dokumentacijos žiūryklė..."
 
-#: ../gtk/rgmainwindow.cc:2488
+#: ../gtk/rgmainwindow.cc:2489
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "Norėdami naršyti paketo dokumentaciją Jūs turite įdiegti „dwww“ paketą"
 
-#: ../gtk/rgmainwindow.cc:2553
+#: ../gtk/rgmainwindow.cc:2554
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1753,46 +1740,46 @@ msgstr ""
 "Nepavyko pritaikyti pakeitimų!\n"
 "Pirmiau pataisykite sugadintus paketus."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2575
 msgid "Applying marked changes. This may take a while..."
 msgstr "Pritaikomi pažymėti pakeitimai. Tai gali šiek tiek užtrukti..."
 
-#: ../gtk/rgmainwindow.cc:2578
+#: ../gtk/rgmainwindow.cc:2579
 msgid "Downloading package files"
 msgstr "Parsiunčiamos paketų bylos"
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2580
 msgid "The package files will be cached locally for installation."
 msgstr "Paketų bylos bus parsiųstos į šį kompiuterį įdiegimui."
 
-#: ../gtk/rgmainwindow.cc:2654
+#: ../gtk/rgmainwindow.cc:2655
 msgid "Do you want to quit Synaptic?"
 msgstr "Ar norite uždaryti Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2711
 msgid "Downloading package information"
 msgstr "Parsiunčiama paketų informacija"
 
-#: ../gtk/rgmainwindow.cc:2711
+#: ../gtk/rgmainwindow.cc:2712
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
 "Saugyklos bus patikrintos ar nėra naujų, pašalintų ar atnaujintų paketų."
 
-#: ../gtk/rgmainwindow.cc:2714
+#: ../gtk/rgmainwindow.cc:2715
 msgid "Reloading package information..."
 msgstr "Perkraunama paketų informacija..."
 
-#: ../gtk/rgmainwindow.cc:2781
+#: ../gtk/rgmainwindow.cc:2782
 msgid "Failed to resolve dependency problems!"
 msgstr "Nepavyko išspręsti priklausomybių problemų!"
 
-#: ../gtk/rgmainwindow.cc:2783
+#: ../gtk/rgmainwindow.cc:2784
 msgid "Successfully fixed dependency problems"
 msgstr "Priklausomybių problemos sėkmingai ištaisytos"
 
-#: ../gtk/rgmainwindow.cc:2799
+#: ../gtk/rgmainwindow.cc:2800
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1800,15 +1787,15 @@ msgstr ""
 "Sistemos atnaujinti nepavyko!\n"
 "Pirmiau pataisykit sugadintus paketus."
 
-#: ../gtk/rgmainwindow.cc:2848
+#: ../gtk/rgmainwindow.cc:2849
 msgid "Marking all available upgrades..."
 msgstr "Pažymimi visi galimi atnaujinimai..."
 
-#: ../gtk/rgmainwindow.cc:2865
+#: ../gtk/rgmainwindow.cc:2867
 msgid "Successfully marked available upgrades"
 msgstr "Prieinami atnaujinimai sėkmingai pažymėti"
 
-#: ../gtk/rgmainwindow.cc:2867
+#: ../gtk/rgmainwindow.cc:2869
 msgid "Failed to mark all available upgrades!"
 msgstr "Nepavyko pažymėti visų prieinamų atnaujinimų!"
 
@@ -1835,7 +1822,7 @@ msgstr "Tipas"
 msgid "Vendor"
 msgstr "Platintojas"
 
-#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:34
+#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:35
 msgid "Distribution"
 msgstr "Distribucija"
 
@@ -1865,24 +1852,20 @@ msgid "Unknown source type"
 msgstr "Nežinomas šaltinio tipas"
 
 #: ../gtk/rgsummarywindow.cc:125
-#, fuzzy
 msgid "<b>(ESSENTIAL) to be removed</b>"
-msgstr "(ESMINIAI) bus pašalinti"
+msgstr "<b>(ESMINIAI) bus pašalinti</b>"
 
 #: ../gtk/rgsummarywindow.cc:139
-#, fuzzy
 msgid "<b>To be DOWNGRADED</b>"
-msgstr "Bus PASENDINTI"
+msgstr "<b>Bus PASENDINTI</b>"
 
 #: ../gtk/rgsummarywindow.cc:152
-#, fuzzy
 msgid "<b>To be removed</b>"
-msgstr "Bus pašalinta"
+msgstr "<b>Bus pašalinta</b>"
 
 #: ../gtk/rgsummarywindow.cc:165
-#, fuzzy
 msgid "<b>To be completely removed (including configuration files)</b>"
-msgstr "Bus visiškai pašalinta (įskaitant ir konfigūracijos bylas)"
+msgstr "<b>Bus visiškai pašalinta (įskaitant ir konfigūracijos bylas)</b>"
 
 #: ../gtk/rgsummarywindow.cc:217
 msgid "Unchanged"
@@ -2643,178 +2626,182 @@ msgid "Delete _History files older than:"
 msgstr "Ištrinti _istorijos bykas senesnes nei:"
 
 #: ../gtk/window_preferences.glade.h:33
+msgid "Delete all cache package files now."
+msgstr "Ištrinti visas talpykloje laikomas paketų bylas."
+
+#: ../gtk/window_preferences.glade.h:34
 msgid "Direct connection to the internet"
 msgstr "Tiesioginis ryšys su Internetu"
 
-#: ../gtk/window_preferences.glade.h:35
+#: ../gtk/window_preferences.glade.h:36
 msgid "FTP proxy: "
 msgstr "FTP tarpinė stotis: "
 
-#: ../gtk/window_preferences.glade.h:36
+#: ../gtk/window_preferences.glade.h:37
 msgid "Files"
 msgstr "Bylos"
 
-#: ../gtk/window_preferences.glade.h:37
+#: ../gtk/window_preferences.glade.h:38
 msgid "General"
 msgstr "Bendra"
 
-#: ../gtk/window_preferences.glade.h:38
+#: ../gtk/window_preferences.glade.h:39
 msgid "HTTP proxy: "
 msgstr "HTTP tarpinė stotis: "
 
-#: ../gtk/window_preferences.glade.h:39
+#: ../gtk/window_preferences.glade.h:40
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Ftp tarpinės stoties serverio IP adresas arba kompiuterio vardas"
 
-#: ../gtk/window_preferences.glade.h:40
+#: ../gtk/window_preferences.glade.h:41
 msgid "IP address or host name of the http proxy server"
 msgstr "Http tarpinės stoties serverio IP adresas arba kompiuterio vardas"
 
-#: ../gtk/window_preferences.glade.h:41
+#: ../gtk/window_preferences.glade.h:42
 msgid "Ignore"
 msgstr "Ignoruoti"
 
-#: ../gtk/window_preferences.glade.h:42
+#: ../gtk/window_preferences.glade.h:43
 msgid "Installed (locked):"
 msgstr "Įdiegta (prirakinta):"
 
-#: ../gtk/window_preferences.glade.h:43
+#: ../gtk/window_preferences.glade.h:44
 msgid "Installed:"
 msgstr "Įdiegta:"
 
-#: ../gtk/window_preferences.glade.h:44
+#: ../gtk/window_preferences.glade.h:45
 msgid "Keep Configuration"
 msgstr "Palikti konfigūraciją"
 
-#: ../gtk/window_preferences.glade.h:45
+#: ../gtk/window_preferences.glade.h:46
 msgid "Manual proxy configuration"
 msgstr "Rankinis tarpinės stoties konfigūravimas"
 
-#: ../gtk/window_preferences.glade.h:46
+#: ../gtk/window_preferences.glade.h:47
 msgid "Marked for complete removal:"
 msgstr "Pažymėti visiškam pašalinimui:"
 
-#: ../gtk/window_preferences.glade.h:47
+#: ../gtk/window_preferences.glade.h:48
 msgid "Marked for downgrade:"
 msgstr "Pažymėti pasendinimui:"
 
-#: ../gtk/window_preferences.glade.h:48
+#: ../gtk/window_preferences.glade.h:49
 msgid "Marked for installation:"
 msgstr "Pažymėti įdiegimui:"
 
-#: ../gtk/window_preferences.glade.h:49
+#: ../gtk/window_preferences.glade.h:50
 msgid "Marked for reinstallation:"
 msgstr "Pažymėti pakartotiniam įdiegimui:"
 
-#: ../gtk/window_preferences.glade.h:50
+#: ../gtk/window_preferences.glade.h:51
 msgid "Marked for removal:"
 msgstr "Pažymėti pašalinimui:"
 
-#: ../gtk/window_preferences.glade.h:51
+#: ../gtk/window_preferences.glade.h:52
 msgid "Marked for upgrade:"
 msgstr "Pažymėti atnaujinimui:"
 
-#: ../gtk/window_preferences.glade.h:52
+#: ../gtk/window_preferences.glade.h:53
 msgid "Move D_own"
 msgstr "Perkelti ž_emyn"
 
-#: ../gtk/window_preferences.glade.h:53
+#: ../gtk/window_preferences.glade.h:54
 msgid "Move _Up"
 msgstr "Perkelti a_ukštyn"
 
-#: ../gtk/window_preferences.glade.h:54
+#: ../gtk/window_preferences.glade.h:55
 msgid "Network"
 msgstr "Tinklas"
 
-#: ../gtk/window_preferences.glade.h:55
+#: ../gtk/window_preferences.glade.h:56
 msgid "New in repository:"
 msgstr "Nauji saugykloje:"
 
-#: ../gtk/window_preferences.glade.h:56
+#: ../gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr "Nereikia tarpinės stoties: "
 
-#: ../gtk/window_preferences.glade.h:57
+#: ../gtk/window_preferences.glade.h:58
 msgid "Not installed (locked):"
 msgstr "Neįdiegti (prirakinti):"
 
-#: ../gtk/window_preferences.glade.h:58
+#: ../gtk/window_preferences.glade.h:59
 msgid "Not installed:"
 msgstr "Neįdiegti:"
 
-#: ../gtk/window_preferences.glade.h:59
+#: ../gtk/window_preferences.glade.h:60
 msgid "Number of undo operations:"
 msgstr "Atšaukimo operacijų kiekis:"
 
-#: ../gtk/window_preferences.glade.h:60
+#: ../gtk/window_preferences.glade.h:61
 msgid "Port number of the ftp proxy server"
 msgstr "Ftp tarpinės stoties serverio prievadas"
 
-#: ../gtk/window_preferences.glade.h:61
+#: ../gtk/window_preferences.glade.h:62
 msgid "Port number of the http proxy server"
 msgstr "Http tarpinės stoties prievadas"
 
-#: ../gtk/window_preferences.glade.h:62
+#: ../gtk/window_preferences.glade.h:63
 msgid "Port: "
 msgstr "Prievadas: "
 
-#: ../gtk/window_preferences.glade.h:63
+#: ../gtk/window_preferences.glade.h:64
 msgid "Prefer versions from: "
 msgstr "Teikti pirmenybę versijoms iš: "
 
-#: ../gtk/window_preferences.glade.h:65
+#: ../gtk/window_preferences.glade.h:66
 msgid "Reloading outdated package information:"
 msgstr "Perkraunama pasenusi paketų informacija:"
 
-#: ../gtk/window_preferences.glade.h:66
+#: ../gtk/window_preferences.glade.h:67
 msgid "Removal of packages: "
 msgstr "Paketų šalinimas:"
 
-#: ../gtk/window_preferences.glade.h:67
+#: ../gtk/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
 msgstr "Pagrindiniame lange rodyti paketų savybes"
 
-#: ../gtk/window_preferences.glade.h:69
+#: ../gtk/window_preferences.glade.h:70
 msgid "System upgrade:"
 msgstr "Sistemos atnaujinimas:"
 
-#: ../gtk/window_preferences.glade.h:70
+#: ../gtk/window_preferences.glade.h:71
 msgid "Upgradable:"
 msgstr "Atnaujintini:"
 
-#: ../gtk/window_preferences.glade.h:71
+#: ../gtk/window_preferences.glade.h:72
 msgid "Use custom application font"
 msgstr "Naudoti kitą programos šriftą"
 
-#: ../gtk/window_preferences.glade.h:72
+#: ../gtk/window_preferences.glade.h:73
 msgid "Use custom terminal font"
 msgstr "Naudoti kitą terminalo šriftą"
 
-#: ../gtk/window_preferences.glade.h:73
+#: ../gtk/window_preferences.glade.h:74
 msgid "_Delete Cached Package Files"
 msgstr "_Ištrinti talpykloje laikomas paketų bylas"
 
-#: ../gtk/window_preferences.glade.h:74
+#: ../gtk/window_preferences.glade.h:75
 msgid "_Delete downloaded packages after installation"
 msgstr "_Ištrinti parsiųstus paketus po jų įdiegimo"
 
-#: ../gtk/window_preferences.glade.h:75
+#: ../gtk/window_preferences.glade.h:76
 msgid "_Keep history"
 msgstr "_Saugoti istoriją"
 
-#: ../gtk/window_preferences.glade.h:76
+#: ../gtk/window_preferences.glade.h:77
 msgid "_Leave all downloaded packages in the cache"
 msgstr "_Palikti visus parsiųstus paketus talpykloje"
 
-#: ../gtk/window_preferences.glade.h:77
+#: ../gtk/window_preferences.glade.h:78
 msgid "_Only delete packages which are no longer available"
 msgstr "_Ištrinti tik tuos paketus, kurie daugiau neprieinami"
 
-#: ../gtk/window_preferences.glade.h:78
+#: ../gtk/window_preferences.glade.h:79
 msgid "_Terminal Font"
 msgstr "_Terminalo šriftas"
 
-#: ../gtk/window_preferences.glade.h:79
+#: ../gtk/window_preferences.glade.h:80
 msgid "days"
 msgstr "dienų"
 
@@ -3292,9 +3279,8 @@ msgid "Dependent packages"
 msgstr "Priklausomi paketai"
 
 #: ../gtk/rgpkgcdrom.cc:68
-#, fuzzy
 msgid "Please insert a disc in the drive."
-msgstr "Įdėkite diską į įrenginį."
+msgstr "Į įrenginį įdėkite diską."
 
 #: ../gtk/rgiconlegend.cc:41 ../gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
@@ -3371,3 +3357,7 @@ msgstr "Istorija"
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Įdiegtų, atnaujintų ir pašalintų programų paketų istorija."
+
+#, fuzzy
+#~ msgid "Bad regular expression '%s' in Recommends file."
+#~ msgstr "SumažintoVaizdo byloje bloga reguliari išraiška '%s'."

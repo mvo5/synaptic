@@ -1258,10 +1258,15 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    if (!_cache->list()->GetIndexes(&Fetcher))
       return false;
 
+// apt-rpm does not support the pulseInterval
+#ifdef HAVE_RPM 
    // Run it
    if (Fetcher.Run() == pkgAcquire::Failed)
       return false;
-
+#else
+   if (Fetcher.Run(50000) == pkgAcquire::Failed)
+      return false;
+#endif
 
 
    //bool AuthFailed = false;
@@ -1344,8 +1349,13 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    while (1) {
       bool Transient = false;
 
+#ifdef HAVE_RPM
       if (fetcher.Run() == pkgAcquire::Failed)
-         goto gave_wood;
+	 goto gave_wood;
+#else
+      if (fetcher.Run(50000) == pkgAcquire::Failed)
+	 goto gave_wood;
+#endif
 
       string serverError;
 

@@ -445,7 +445,7 @@ void RGDebInstallProgress::updateInterface()
       last_term_action = time(NULL);
 
       if( buf[0] == '\n') {
-	 // cout << line << endl;
+	 //cout << "got line: " << line << endl;
 	 
 	 gchar **split = g_strsplit(line, ":",5);
 	 gchar *status = g_strstrip(split[0]);
@@ -458,12 +458,12 @@ void RGDebInstallProgress::updateInterface()
 	    continue;
 
 	 // first check for errors and conf-file prompts
-	 if(strstr(status, "error") != NULL) { 
+	 if(strstr(status, "pmerror") != NULL) { 
 	    // error from dpkg, needs to be parsed different
 	    str = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error(err.c_str());
-	 } else if(strstr(status, "conffile-prompt") != NULL) {
+	 } else if(strstr(status, "pmconffile") != NULL) {
 	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;
 	    conffile(pkg, split[3]);

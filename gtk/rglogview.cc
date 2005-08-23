@@ -30,7 +30,10 @@
 
 enum { COLUMN_LOG_DAY, 
        COLUMN_LOG_FILENAME, 
+       COLUMN_LOG_TYPE, 
        N_LOG_COLUMNS };
+
+enum { LOG_TYPE_TOPLEVEL, LOG_TYPE_FILE };
 
 void RGLogView::readLogs()
 {
@@ -39,7 +42,8 @@ void RGLogView::readLogs()
 
    GtkTreeStore *store = gtk_tree_store_new(N_LOG_COLUMNS, 
 					    G_TYPE_STRING,
-					    G_TYPE_STRING);
+					    G_TYPE_STRING,
+					    G_TYPE_INT);
    
    GtkTreeIter month_iter;  /* Parent iter */
    GtkTreeIter date_iter;  /* Child iter  */
@@ -76,6 +80,7 @@ void RGLogView::readLogs()
 	 gtk_tree_store_set (store, &month_iter,
 			     COLUMN_LOG_DAY, utf8(str),
 			     COLUMN_LOG_FILENAME, sort_key, 
+			     COLUMN_LOG_TYPE, LOG_TYPE_TOPLEVEL, 
 			     -1);
 	 g_free(sort_key);
 	 history_map.insert(make_pair<int,GtkTreeIter>(history_key,month_iter));
@@ -88,6 +93,7 @@ void RGLogView::readLogs()
       gtk_tree_store_set (store, &date_iter,
 			  COLUMN_LOG_DAY, utf8(str),
 			  COLUMN_LOG_FILENAME, logfile, 
+			  COLUMN_LOG_TYPE, LOG_TYPE_FILE, 
 			  -1);
       g_free(date);
    }
@@ -170,15 +176,20 @@ gboolean RGLogView::filter_func(GtkTreeModel *model, GtkTreeIter *iter,
 {
    RGLogView *me = (RGLogView*)data;
    gchar *file;
+   int type;
    string s;
 
-   gtk_tree_model_get(model, iter, COLUMN_LOG_FILENAME, &file, -1);
-   // top-level expander
-   if(file == NULL) {
+   gtk_tree_model_get(model, iter, 
+		      COLUMN_LOG_FILENAME, &file, 
+		      COLUMN_LOG_TYPE, &type,
+		      -1);
+
+   if(type == LOG_TYPE_TOPLEVEL)
       return TRUE;
-   }
+
 
    string logfile = RLogDir() + string(file);
+
    ifstream in(logfile.c_str());
    if(!in) {
       g_warning("can't open logfile: %s",logfile.c_str());
@@ -196,11 +207,11 @@ gboolean RGLogView::filter_func(GtkTreeModel *model, GtkTreeIter *iter,
 gboolean empty_row_filter_func(GtkTreeModel *model, GtkTreeIter *iter, 
 			       gpointer data)
 {
-   gchar *file;
+   int type;
 
-   gtk_tree_model_get(model, iter, COLUMN_LOG_FILENAME, &file, -1);
+   gtk_tree_model_get(model, iter, COLUMN_LOG_TYPE, &type, -1);
    // top-level expander
-   if(file == NULL) {
+   if(type == LOG_TYPE_TOPLEVEL) {
       return gtk_tree_model_iter_has_child(model, iter);
    }
 

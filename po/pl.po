@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-08 23:42+0200\n"
+"POT-Creation-Date: 2005-09-05 12:34+0200\n"
 "PO-Revision-Date: 2005-02-20 01:22+0100\n"
 "Last-Translator: Emil Nowak <emil5@go2.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -193,22 +193,27 @@ msgstr "Nieznany"
 msgid "Converted From RPM by Alien"
 msgstr "Skonwertowane z rpm przez program alien"
 
+#. TRANSLATORS: Ubuntu translations section
+#: ../common/sections_trans.cc:82
+msgid "Internationalization and localization"
+msgstr "Tłumaczenia i lokalizacja"
+
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
 #. or restricted
-#: ../common/sections_trans.cc:85 ../common/sections_trans.cc:103
-#: ../common/sections_trans.cc:107
+#: ../common/sections_trans.cc:87 ../common/sections_trans.cc:105
+#: ../common/sections_trans.cc:109
 msgid "Restricted On Export"
 msgstr "Z ograniczeniami eksportu"
 
 #. TRANSLATORS: Alias for the Debian package section "non free"
-#: ../common/sections_trans.cc:87 ../common/sections_trans.cc:104
+#: ../common/sections_trans.cc:89 ../common/sections_trans.cc:106
 msgid "non free"
 msgstr "non free"
 
 #. TRANSLATORS: Alias for the Debian package section "contrib"
 #. Free software that depends on non-free software
-#: ../common/sections_trans.cc:90 ../common/sections_trans.cc:108
+#: ../common/sections_trans.cc:92 ../common/sections_trans.cc:110
 msgid "contrib"
 msgstr "contrib"
 
@@ -247,16 +252,6 @@ msgstr "Nie odnaleziono pliku o określonej nazwie lub rozmiarze"
 #: ../common/indexcopy.cc:485
 msgid "Error parsing file record"
 msgstr "Błąd przetwarzania pliku rekordów"
-
-#: ../common/rcacheactor.cc:58
-#, fuzzy, c-format
-msgid "could not open recommends file %s"
-msgstr "Błąd wewnętrzny: Nie udało się otworzyć pliku ZredukowanegoWidoku %s"
-
-#: ../common/rcacheactor.cc:84
-#, fuzzy, c-format
-msgid "Bad regular expression '%s' in Recommends file."
-msgstr "Niewłaściwe wyrażenie regularne '%s' w pliku zredukowanego podglądu."
 
 #: ../common/rcdscanner.cc:112 ../common/rcdscanner.cc:162
 #, c-format
@@ -327,9 +322,8 @@ msgstr ""
 "jest to płytka obsługiwana przez system APT."
 
 #: ../common/rcdscanner.cc:380
-#, fuzzy
 msgid "Disc not successfully scanned."
-msgstr "Skanowanie płytki nie powiodło się."
+msgstr "Skanowanie płyty nie powiodło się."
 
 #: ../common/rcdscanner.cc:384
 msgid "Empty disc name."
@@ -380,20 +374,23 @@ msgstr "BŁĄD: Nie udało się odczytać hasła dla użytkownika root"
 msgid "ERROR: could not create configuration directory %s"
 msgstr "BŁĄD: Nie można utworzyć katalogu konfiguracyjnego %s"
 
+# It's not important what kind of a directory this is IMHO
 #: ../common/rconfiguration.cc:147
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create state directory %s"
-msgstr "BŁĄD: Nie można utworzyć katalogu %s do zapisu dziennika zdarzeń"
+msgstr "BŁĄD: Nie można utworzyć katalogu %s"
 
+# It's not important what kind of a directory this is IMHO
 #: ../common/rconfiguration.cc:164
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create tmp directory %s"
-msgstr "BŁĄD: Nie można utworzyć katalogu %s do zapisu dziennika zdarzeń"
+msgstr "BŁĄD: Nie można utworzyć katalogu %s"
 
+# It's not important what kind of a directory this is IMHO
 #: ../common/rconfiguration.cc:182
 #, c-format
 msgid "ERROR: could not create log directory %s"
-msgstr "BŁĄD: Nie można utworzyć katalogu %s do zapisu dziennika zdarzeń"
+msgstr "BŁĄD: Nie można utworzyć katalogu %s"
 
 #: ../common/rconfiguration.cc:266
 #, c-format
@@ -569,10 +566,10 @@ msgstr "Nie zainstalowane (nowe w archiwum)"
 msgid "Depends"
 msgstr "Zależności"
 
+# FIXME
 #: ../common/rpackage.h:52
-#, fuzzy
 msgid "PreDepends"
-msgstr "Zależności"
+msgstr "Pre-Zależności"
 
 #: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
 msgid "Suggests"
@@ -595,9 +592,8 @@ msgid "Obsoletes"
 msgstr ""
 
 #: ../common/rpackage.h:54
-#, fuzzy
 msgid "Dependency of"
-msgstr "Zależności"
+msgstr "Zależność pakietu"
 
 #: ../common/rpackagecache.cc:71
 msgid ""
@@ -621,7 +617,7 @@ msgid "Name"
 msgstr "Nazwa"
 
 #: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:48
-#: ../gtk/rgmainwindow.cc:969 ../gtk/rgvendorswindow.cc:62
+#: ../gtk/rgmainwindow.cc:972 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:18
 #: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
 #: ../gtk/window_details.glade.h:16
@@ -663,7 +659,7 @@ msgid "Pattern"
 msgstr "Wzorzec"
 
 #: ../common/rpackagefilter.cc:62 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:841 ../gtk/window_filters.glade.h:54
+#: ../gtk/rgmainwindow.cc:844 ../gtk/window_filters.glade.h:54
 msgid "Section"
 msgstr "Dział"
 
@@ -719,7 +715,7 @@ msgstr ""
 "Pliki wydań z niektórych repozytoriów nie mogły być pobrane, lub "
 "zweryfikowane. Repozytoria te zostały pominięte."
 
-#: ../common/rpackagelister.cc:1325 ../common/rpackagelister.cc:1331
+#: ../common/rpackagelister.cc:1330 ../common/rpackagelister.cc:1336
 #: ../gtk/rgrepositorywin.cc:342
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Pominięto niewłaściwy/niewłaściwe wpis/wpisy z listy źródeł!"
@@ -728,7 +724,7 @@ msgstr "Pominięto niewłaściwy/niewłaściwe wpis/wpisy z listy źródeł!"
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1379
+#: ../common/rpackagelister.cc:1389
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -739,20 +735,20 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1403
+#: ../common/rpackagelister.cc:1413
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Nie udało się pobrać niektórych pakietów z serwera.\n"
 
-#: ../common/rpackagelister.cc:1406
+#: ../common/rpackagelister.cc:1416
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Czy chcesz kontynuować pomijając te pakiety?"
 
-#: ../common/rpackagelister.cc:1413
+#: ../common/rpackagelister.cc:1423
 msgid "Unable to correct missing packages"
 msgstr "Nie udało się naprawić brakujących pakietów"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1553
+#: ../common/rpackagelister.cc:1563
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -761,7 +757,7 @@ msgstr ""
 "Usunięto następujące WAŻNE DLA SYSTEMU pakiety:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1562
+#: ../common/rpackagelister.cc:1572
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -770,7 +766,7 @@ msgstr ""
 "Pobrano następujące pakiety:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1571
+#: ../common/rpackagelister.cc:1581
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -779,7 +775,7 @@ msgstr ""
 "Całkowicie usunięto następujące pakiety:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1580
+#: ../common/rpackagelister.cc:1590
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -788,7 +784,7 @@ msgstr ""
 "Usunięto następujące pakiety:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1589
+#: ../common/rpackagelister.cc:1599
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -797,7 +793,7 @@ msgstr ""
 "Zaktualizowano następujące pakiety:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1600
+#: ../common/rpackagelister.cc:1610
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -806,7 +802,7 @@ msgstr ""
 "Zainstalowano następujące pakiety:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1610
+#: ../common/rpackagelister.cc:1620
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -814,21 +810,21 @@ msgstr ""
 "\n"
 "Przeinstalowano następujące pakiety:\n"
 
-#: ../common/rpackagelister.cc:1627
+#: ../common/rpackagelister.cc:1637
 msgid "Unable to lock the download directory"
 msgstr "Nie można zablokować katalogu pobierań"
 
-#: ../common/rpackagelister.cc:1705
+#: ../common/rpackagelister.cc:1715
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Linia %u w pliku z zaznaczeniami jest zbyt długa."
 
-#: ../common/rpackagelister.cc:1719 ../common/rpackagelister.cc:1723
+#: ../common/rpackagelister.cc:1729 ../common/rpackagelister.cc:1733
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Uszkodzona linia %u w pliku zaznaczeń"
 
-#: ../common/rpackagelister.cc:1735
+#: ../common/rpackagelister.cc:1745
 msgid "Setting markings..."
 msgstr "Konfiguracja wybranych pakietów..."
 
@@ -898,17 +894,16 @@ msgstr "Zadania do wykonania"
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:442
-#, fuzzy
 msgid "Package with Debconf"
-msgstr "Pakiety z Debconfem"
+msgstr "Pakiety obsługujące Debconf"
 
 #: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
 msgstr "Do aktualizacji (upstream)"
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:1983
-#: ../gtk/rgmainwindow.cc:2671 ../gtk/rgmainwindow.cc:2756
-#: ../gtk/rgmainwindow.cc:2924
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:1988
+#: ../gtk/rgmainwindow.cc:2650 ../gtk/rgmainwindow.cc:2735
+#: ../gtk/rgmainwindow.cc:2904
 #, c-format
 msgid "Can't read %s"
 msgstr "Nie można odczytać %s"
@@ -981,7 +976,7 @@ msgstr "Domyślna aktualizacja"
 msgid "Remember my answer for future upgrades"
 msgstr "Zapamiętaj odpowiedź przy późniejszych aktualizacjach"
 
-#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:68
+#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:69
 msgid "Smart Upgrade"
 msgstr "Inteligenta Aktualizacja"
 
@@ -1002,41 +997,34 @@ msgid "-r   Open in the repository screen\n"
 msgstr "-r   Otwiera ekran repozytoriów\n"
 
 #: ../gtk/gsynaptic.cc:73
-#, fuzzy
 msgid "-f=? Give an alternative filter file\n"
 msgstr "-f=? Użycie alternatywnego pliku filtrów\n"
 
 #: ../gtk/gsynaptic.cc:74
-#, fuzzy
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
 "-t   Zmienia tytuł głównego okna programu (np..nazwę komputera za pomocą "
-"`uname -n` )\n"
+"`uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:75
-#, fuzzy
-msgid "-i=? Start with the initial Filter with the number given\n"
-msgstr "-i=? Uruchomienie wraz z filtrem inicjującym o określonym numerze\n"
+msgid "-i=? Start with the initial Filter with given name\n"
+msgstr "-i=? Uruchomienie wraz początkowym filtrem\n"
 
 #: ../gtk/gsynaptic.cc:76
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
 msgstr "-o=? Ustawia określoną opcję konfiguracji, np. -o dir::cache=/tmp\n"
 
 #: ../gtk/gsynaptic.cc:77
-#, fuzzy
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
-msgstr ""
-"--upgrade-mode  Wykonuje odświeżanie, aktualizację i wyświetla zmiany\n"
+msgstr "--upgrade-mode  Wykonuje aktualizacje i pokazuje zmiany\n"
 
 #: ../gtk/gsynaptic.cc:78
-#, fuzzy
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
-"--dist-upgrade-mode  Wykonuje odświeżanie, aktualizację i wyświetla zmiany\n"
+"--dist-upgrade-mode  Wykonuje aktualizacje dystrybucji i pokazuje zmiany\n"
 
 #: ../gtk/gsynaptic.cc:79
-#, fuzzy
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
 msgstr ""
 "--update-at-startup  \"Odświeża\" bazę danych pakietów po uruchomieniu\n"
@@ -1051,44 +1039,42 @@ msgid "--task-window Open with task window\n"
 msgstr "--task-window Otwiera okno zadań\n"
 
 #: ../gtk/gsynaptic.cc:82
-#, fuzzy
 msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
-msgstr "--add-cdrom Dodaje nowy cdrom po uruchomieniu\n"
+msgstr ""
+"--add-cdrom Dodaje nowy cdrom po uruchomieniu (wymaga ścieżki do cdrom'u)\n"
 
 #: ../gtk/gsynaptic.cc:83
-#, fuzzy
 msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
-msgstr "--add-cdrom Dodaje nowy cdrom po uruchomieniu\n"
+msgstr "--add-cdrom Pyta o dodaniu nowego cdrom'u po uruchomieniu\n"
 
 #: ../gtk/gsynaptic.cc:325 ../gtk/gsynaptic.cc:331
 msgid "Another synaptic is running"
-msgstr ""
+msgstr "Działa już inny synaptic"
 
 #: ../gtk/gsynaptic.cc:326
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
-msgstr ""
+msgstr "Synaptic jest już uruchomiony. Proszę go wpierw wyłączyć."
 
 #: ../gtk/gsynaptic.cc:332
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
-msgstr ""
+msgstr "Synaptic jest już uruchomiony. Proszę poczekać aż zakończy pracę."
 
 #: ../gtk/gsynaptic.cc:357
 msgid "Unable to get exclusive lock"
 msgstr "Nie można uzyskać pełnego dostępu do systemu zarządzania pakietami"
 
 #: ../gtk/gsynaptic.cc:358
-#, fuzzy
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
 msgstr ""
 "Najczęściej problem ten pojawia się gdy inny program do zarządzania "
-"pakietami (np. apt-get, lub aptitiude) jest uruchomiony. Przed uruchomieniem "
-"Synapic należy wyłączyć pozostałe programy tego typu."
+"pakietami (np. apt-get, lub aptitiude) jest uruchomiony. Proszę wpierw "
+"wyłączyć ten program"
 
 #: ../gtk/gsynaptic.cc:400
 msgid "You must run this program as the root user."
@@ -1114,123 +1100,66 @@ msgstr "Nazwa płytki"
 msgid "Credits"
 msgstr "Zasługi"
 
+#. skipTaskbar(true);
 #: ../gtk/rgaboutpanel.cc:81 ../gtk/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr "Informacje o Synaptic"
 
-#: ../gtk/rgchangeswindow.cc:55
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Zmiany w pakietach"
 
-#: ../gtk/rgchangeswindow.cc:66
-msgid "Purge"
-msgstr ""
-
-#: ../gtk/rgchangeswindow.cc:151 ../gtk/rgsummarywindow.cc:96
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:152 ../gtk/rgsummarywindow.cc:97
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
 "You are about to install software that <b>can't be authenticated</b>! Doing "
 "this could allow a malicious individual to damage or take control of your "
 "system."
 msgstr ""
 
-#: ../gtk/rgchangeswindow.cc:163 ../gtk/rgsummarywindow.cc:109
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr ""
 
 #. removed
-#: ../gtk/rgchangeswindow.cc:178
+#: ../gtk/rgchangeswindow.cc:114
 msgid "To be removed"
 msgstr "Do usunięcia"
 
-#: ../gtk/rgchangeswindow.cc:197
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Do cofnięcia na starą wersję"
 
-#: ../gtk/rgchangeswindow.cc:212 ../gtk/rgsummarywindow.cc:178
-msgid "To be upgraded"
-msgstr "Do aktualizacji"
-
-#: ../gtk/rgchangeswindow.cc:225 ../gtk/rgsummarywindow.cc:190
+#: ../gtk/rgchangeswindow.cc:143 ../gtk/rgsummarywindow.cc:190
 msgid "To be installed"
 msgstr "Do zainstalowania"
 
-#: ../gtk/rgchangeswindow.cc:238 ../gtk/rgsummarywindow.cc:202
+#: ../gtk/rgchangeswindow.cc:155 ../gtk/rgsummarywindow.cc:178
+msgid "To be upgraded"
+msgstr "Do aktualizacji"
+
+#: ../gtk/rgchangeswindow.cc:167 ../gtk/rgsummarywindow.cc:202
 msgid "To be re-installed"
 msgstr "Do prze instalowania"
 
-#: ../gtk/rgchangeswindow.cc:250
+#: ../gtk/rgchangeswindow.cc:178
 msgid "To be kept"
 msgstr "Do wstrzymania"
 
-#: ../gtk/rgdebinstallprogress.cc:57 ../gtk/rgdebinstallprogress.cc:68
+#: ../gtk/rgdebinstallprogress.cc:217
 #, c-format
-msgid "Preparing for removal %s"
-msgstr "Przygotowanie do usunięcia %s"
-
-#: ../gtk/rgdebinstallprogress.cc:58
-#, c-format
-msgid "Removing %s"
-msgstr "Usuwanie %s"
-
-#: ../gtk/rgdebinstallprogress.cc:59 ../gtk/rgdebinstallprogress.cc:70
-#, c-format
-msgid "Removed %s"
-msgstr "Usunięto %s"
-
-#: ../gtk/rgdebinstallprogress.cc:69 ../gtk/rgdebinstallprogress.cc:78
-#, c-format
-msgid "Removing with config %s"
-msgstr "Usuwanie wraz z konfiguracją %s"
-
-#: ../gtk/rgdebinstallprogress.cc:71 ../gtk/rgdebinstallprogress.cc:79
-#, c-format
-msgid "Removed with config %s"
-msgstr "Usunięto wraz z konfiguracją %s"
-
-#: ../gtk/rgdebinstallprogress.cc:88 ../gtk/rgdebinstallprogress.cc:101
-#: ../gtk/rgdebinstallprogress.cc:116
-#, c-format
-msgid "Preparing %s"
-msgstr "Przygotowanie %s"
-
-#: ../gtk/rgdebinstallprogress.cc:89 ../gtk/rgdebinstallprogress.cc:103
-#: ../gtk/rgdebinstallprogress.cc:117 ../gtk/rgdebinstallprogress.cc:119
-#, c-format
-msgid "Unpacking %s"
-msgstr "Rozpakowywanie %s"
-
-#: ../gtk/rgdebinstallprogress.cc:90 ../gtk/rgdebinstallprogress.cc:104
-#: ../gtk/rgdebinstallprogress.cc:120
-#, c-format
-msgid "Configuring %s"
-msgstr "Konfiguracja %s"
-
-#: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:105
-#: ../gtk/rgdebinstallprogress.cc:121
-#, c-format
-msgid "Installed %s"
-msgstr "Zainstalowano %s"
-
-#: ../gtk/rgdebinstallprogress.cc:102 ../gtk/rgdebinstallprogress.cc:118
-#, c-format
-msgid "Installing %s"
-msgstr "Instalowanie %s"
-
-#: ../gtk/rgdebinstallprogress.cc:288
-#, fuzzy, c-format
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr ""
-"Zainstalować nowy plik konfiguracyjny\n"
+"Zastąpić plik konfiguracyjny\n"
 "'%s' ?"
 
-#: ../gtk/rgdebinstallprogress.cc:289
-#, fuzzy, c-format
+#: ../gtk/rgdebinstallprogress.cc:218
+#, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
@@ -1242,39 +1171,38 @@ msgstr ""
 "właśnie pakiecie. Jeżeli chcesz zachować obecną wersję wybierz \"Nie\". "
 "Zainstalować nowy plik konfiguracyjny z pakietu ?"
 
-#: ../gtk/rgdebinstallprogress.cc:430 ../gtk/rginstallprogress.cc:284
+#: ../gtk/rgdebinstallprogress.cc:365 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
 msgid "Applying Changes"
 msgstr "Wykonywanie wybranych zmian"
 
-#. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:504
+#. error from dpkg, needs to be parsed different
+#: ../gtk/rgdebinstallprogress.cc:463
 #, c-format
 msgid "Error in package %s"
 msgstr "Błąd w pakiecie %s"
 
-#: ../gtk/rgdebinstallprogress.cc:654 ../gtk/rgdebinstallprogress.cc:657
+#: ../gtk/rgdebinstallprogress.cc:598 ../gtk/rgdebinstallprogress.cc:601
 msgid "Changes applied"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:713
-#, fuzzy
+#: ../gtk/rgdebinstallprogress.cc:657
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 "Wybrane wcześniej zmiany zostaną teraz wprowadzone do systemu. Proszę "
-"cierpliwie czekać."
+"cierpliwie poczekać."
 
-#: ../gtk/rgdebinstallprogress.cc:718
+#: ../gtk/rgdebinstallprogress.cc:662
 msgid "Installing and removing software"
 msgstr "Instalacja i usuwanie pakietów z oprogramowaniem"
 
-#: ../gtk/rgdebinstallprogress.cc:720
+#: ../gtk/rgdebinstallprogress.cc:664
 msgid "Removing software"
 msgstr "Usuwanie oprogramowania"
 
-#: ../gtk/rgdebinstallprogress.cc:722
+#: ../gtk/rgdebinstallprogress.cc:666
 msgid "Installing software"
 msgstr "Instalacja oprogramowania"
 
@@ -1286,11 +1214,11 @@ msgstr ""
 msgid "Package Name"
 msgstr "Nazwa pakietu"
 
-#: ../gtk/rgpreferenceswindow.cc:47 ../gtk/rgmainwindow.cc:862
+#: ../gtk/rgpreferenceswindow.cc:47 ../gtk/rgmainwindow.cc:865
 msgid "Component"
 msgstr "Dział"
 
-#: ../gtk/rgpreferenceswindow.cc:47 ../gtk/rgmainwindow.cc:884
+#: ../gtk/rgpreferenceswindow.cc:47 ../gtk/rgmainwindow.cc:887
 msgid "Installed Version"
 msgstr "Zainstalowana wersja"
 
@@ -1306,7 +1234,7 @@ msgstr "Rozmiar po instalacji"
 msgid "Download Size"
 msgstr "do pobrania"
 
-#: ../gtk/rgpreferenceswindow.cc:377 ../gtk/rgmainwindow.cc:1654
+#: ../gtk/rgpreferenceswindow.cc:377 ../gtk/rgmainwindow.cc:1659
 #: ../gtk/rgterminstallprogress.cc:104
 msgid "An error occurred while saving configurations."
 msgstr "Nastąpił błąd podczas zapisywania konfiguracji."
@@ -1353,15 +1281,15 @@ msgstr ""
 msgid "Visible"
 msgstr "Widoczne"
 
-#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:65
 msgid "Preferences"
 msgstr "Ustawienia"
 
-#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:926
+#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:929
 msgid "Size"
 msgstr "Rozmiar"
 
-#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:819
+#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:822
 msgid "Package"
 msgstr "Pakiety"
 
@@ -1462,16 +1390,16 @@ msgstr ""
 "System APT zgłosił:\n"
 "%s"
 
-#: ../gtk/rglogview.cc:267
+#: ../gtk/rglogview.cc:278
 msgid "Not found"
 msgstr ""
 
-#: ../gtk/rglogview.cc:269
+#: ../gtk/rglogview.cc:280
 msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
 
-#: ../gtk/rgpkgdetails.cc:107
+#: ../gtk/rgpkgdetails.cc:106
 #, c-format
 msgid "%s Properties"
 msgstr "%s - właściwości"
@@ -1480,26 +1408,26 @@ msgstr "%s - właściwości"
 #. the "Properties/Available versions" window
 #. e.g. "0.56 (unstable)"
 #. "0.53.4 (testing)"
-#: ../gtk/rgpkgdetails.cc:165
+#: ../gtk/rgpkgdetails.cc:164
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../gtk/rgmainwindow.cc:147
+#: ../gtk/rgmainwindow.cc:150
 msgid "All"
 msgstr "Wszystkie"
 
-#: ../gtk/rgmainwindow.cc:334 ../gtk/window_main.glade.h:29
+#: ../gtk/rgmainwindow.cc:337 ../gtk/window_main.glade.h:29
 #: ../gtk/window_details.glade.h:19
 msgid "No package is selected.\n"
 msgstr "Nie wybrano pakietu.\n"
 
-#: ../gtk/rgmainwindow.cc:437
+#: ../gtk/rgmainwindow.cc:440
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr "Wybierz wersję %s, której instalacja będzie wymuszona"
 
-#: ../gtk/rgmainwindow.cc:439
+#: ../gtk/rgmainwindow.cc:442
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
@@ -1510,19 +1438,19 @@ msgstr ""
 "się błędów w zależnościach."
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: ../gtk/rgmainwindow.cc:784
+#: ../gtk/rgmainwindow.cc:787
 msgid "S"
 msgstr "S"
 
-#: ../gtk/rgmainwindow.cc:905
+#: ../gtk/rgmainwindow.cc:908
 msgid "Latest Version"
 msgstr "Najnowsza wersja"
 
-#: ../gtk/rgmainwindow.cc:947
+#: ../gtk/rgmainwindow.cc:950
 msgid "Download"
 msgstr "Do pobrania"
 
-#: ../gtk/rgmainwindow.cc:1202
+#: ../gtk/rgmainwindow.cc:1207
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
@@ -1530,60 +1458,60 @@ msgstr ""
 "Odśwież bazę informacji o pakietach, aby otrzymać informacje o nowych, "
 "usuniętych, zaktualizowanych pakietach oprogramowania."
 
-#: ../gtk/rgmainwindow.cc:1208
+#: ../gtk/rgmainwindow.cc:1213
 msgid "Mark all possible upgrades"
 msgstr "Zaznacza wszystkie możliwe aktualizacje"
 
-#: ../gtk/rgmainwindow.cc:1212 ../gtk/window_summary.glade.h:5
+#: ../gtk/rgmainwindow.cc:1217 ../gtk/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr "Wykonuje wszystkie zaznaczone zmiany"
 
-#: ../gtk/rgmainwindow.cc:1391
+#: ../gtk/rgmainwindow.cc:1396
 msgid "Unmark"
 msgstr "Odznacz"
 
-#: ../gtk/rgmainwindow.cc:1399
+#: ../gtk/rgmainwindow.cc:1404
 msgid "Mark for Installation"
 msgstr "Zaznacz do instalacji"
 
-#: ../gtk/rgmainwindow.cc:1407
+#: ../gtk/rgmainwindow.cc:1412
 msgid "Mark for Reinstallation"
 msgstr "Zaznacz do re-instalacji"
 
-#: ../gtk/rgmainwindow.cc:1416
+#: ../gtk/rgmainwindow.cc:1421
 msgid "Mark for Upgrade"
 msgstr "Zaznacz do aktualizacji"
 
-#: ../gtk/rgmainwindow.cc:1424
+#: ../gtk/rgmainwindow.cc:1429
 msgid "Mark for Removal"
 msgstr "Zaznacz do usunięcia"
 
-#: ../gtk/rgmainwindow.cc:1433
+#: ../gtk/rgmainwindow.cc:1438
 msgid "Mark for Complete Removal"
 msgstr "Zaznacz do całkowitego usunięcia"
 
-#: ../gtk/rgmainwindow.cc:1445
+#: ../gtk/rgmainwindow.cc:1450
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Usuń razem z osamotnionymi zależnościami"
 
-#: ../gtk/rgmainwindow.cc:1457
+#: ../gtk/rgmainwindow.cc:1462
 msgid "Hold Current Version"
 msgstr "Zatrzymaj aktualną wersję"
 
-#: ../gtk/rgmainwindow.cc:1466 ../gtk/window_main.glade.h:31
+#: ../gtk/rgmainwindow.cc:1471 ../gtk/window_main.glade.h:31
 #: ../gtk/window_filters.glade.h:48
 msgid "Properties"
 msgstr "Właściwości"
 
-#: ../gtk/rgmainwindow.cc:1478
+#: ../gtk/rgmainwindow.cc:1483
 msgid "Mark Recommended for Installation"
 msgstr "Zaznacz pakiety rekomendowane do instalacji "
 
-#: ../gtk/rgmainwindow.cc:1482
+#: ../gtk/rgmainwindow.cc:1487
 msgid "Mark Suggested for Installation"
 msgstr "Zaznacz pakiety sugerowane do instalacji"
 
-#: ../gtk/rgmainwindow.cc:1567
+#: ../gtk/rgmainwindow.cc:1572
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1591,7 +1519,7 @@ msgstr ""
 "Usunięcie tego pakietu może spowodować, że system stanie się bezużyteczny.\n"
 "Czy na pewno chcesz to uczynić?"
 
-#: ../gtk/rgmainwindow.cc:1603
+#: ../gtk/rgmainwindow.cc:1608
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1600,7 +1528,7 @@ msgstr ""
 "%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
 "aktualizacji, %i do usunięcia; %s zostanie zwolnionych"
 
-#: ../gtk/rgmainwindow.cc:1609
+#: ../gtk/rgmainwindow.cc:1614
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1609,7 +1537,7 @@ msgstr ""
 "%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
 "aktualizacji, %i do usunięcia; zostanie dodatkowo użyte %s miejsca na dysku."
 
-#: ../gtk/rgmainwindow.cc:1615
+#: ../gtk/rgmainwindow.cc:1620
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1618,7 +1546,7 @@ msgstr ""
 "%i pakietów, %i zainstalowanych, %i uszkodzonych. %i do zainstalowania/"
 "aktualizacji, %i do usunięcia"
 
-#: ../gtk/rgmainwindow.cc:1671
+#: ../gtk/rgmainwindow.cc:1676
 #, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1641,11 +1569,11 @@ msgstr[2] ""
 "\n"
 "Należy je naprawić przechodząc do widoku z włączonym filtrem \"Uszkodzone\""
 
-#: ../gtk/rgmainwindow.cc:1834
+#: ../gtk/rgmainwindow.cc:1839
 msgid "Downloading changelog"
 msgstr "Pobieranie pliku zmian (Changlog)"
 
-#: ../gtk/rgmainwindow.cc:1835
+#: ../gtk/rgmainwindow.cc:1840
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1654,52 +1582,37 @@ msgstr ""
 "jakie zaszły w poszczególnych wersjach pakietu."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1848
+#: ../gtk/rgmainwindow.cc:1853
 #, c-format
 msgid "%s Changelog"
 msgstr "plik Changelog dla %s"
 
-#: ../gtk/rgmainwindow.cc:1936
+#: ../gtk/rgmainwindow.cc:1941
 msgid "Do you want to add another CD-ROM?"
 msgstr "Czy chcesz dodać kolejny CD-ROM?"
 
-#: ../gtk/rgmainwindow.cc:1970 ../gtk/rgmainwindow.cc:2026
+#: ../gtk/rgmainwindow.cc:1975 ../gtk/rgmainwindow.cc:2031
 msgid "Open changes"
 msgstr "Otwórz plik zmian"
 
-#: ../gtk/rgmainwindow.cc:2007 ../gtk/rgmainwindow.cc:2589
-#: ../gtk/rgmainwindow.cc:2725 ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2012 ../gtk/rgmainwindow.cc:2568
+#: ../gtk/rgmainwindow.cc:2704 ../gtk/rgmainwindow.cc:2881
 #, c-format
 msgid "Can't write %s"
 msgstr "Nie można zapisywać %s"
 
-#: ../gtk/rgmainwindow.cc:2033
+#: ../gtk/rgmainwindow.cc:2038
 msgid "Save full state, not only changes"
 msgstr "Zapisz pełny stan (nie tylko zmiany)"
 
-#: ../gtk/rgmainwindow.cc:2122 ../gtk/rgrepositorywin.cc:120
-#: ../gtk/window_repositories.glade.h:3
-msgid "Repositories"
-msgstr "Repozytoria"
-
-#: ../gtk/rgmainwindow.cc:2133
-msgid ""
-"<big><b>Building repository dialog</b></big>\n"
-"\n"
-"Please wait."
-msgstr ""
-"<big><b>Budowanie okna dialogowego repozytoriów</b></big>\n"
-"\n"
-"Proszę czekać."
-
-#: ../gtk/rgmainwindow.cc:2177
+#: ../gtk/rgmainwindow.cc:2155
 msgid "Repositories changed"
 msgstr "Repozytoria uległy zmianie"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2181
+#: ../gtk/rgmainwindow.cc:2159
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1707,21 +1620,20 @@ msgstr ""
 "Informacje o repozytoriach zostały zmienione. Należy wcisnąć przycisk "
 "\"Odśwież\", aby zaktualizować bazę danych informacji o pakietach."
 
-#: ../gtk/rgmainwindow.cc:2192
+#: ../gtk/rgmainwindow.cc:2170
 msgid "Never show this message again"
 msgstr "Nie pokazuj tej wiadomości w przyszłości."
 
-#: ../gtk/rgmainwindow.cc:2246
+#: ../gtk/rgmainwindow.cc:2224
 #, c-format
 msgid "Found %i packages"
 msgstr "Znaleziono %i pakietów"
 
-#: ../gtk/rgmainwindow.cc:2287
+#: ../gtk/rgmainwindow.cc:2265
 msgid "Starting help viewer..."
 msgstr "Uruchamianie systemu pomocy..."
 
-#: ../gtk/rgmainwindow.cc:2307
-#, fuzzy
+#: ../gtk/rgmainwindow.cc:2285
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1735,13 +1647,13 @@ msgstr ""
 "\n"
 "Aby przeglądać podręcznik programu Synaptic potrzebna jest przeglądarka "
 "pomocy. Należy zainstalowac jedną z nich: 'yelp' (z gnome),  'konqueror' lub "
-"'mozille'.\n"
+"'mozilla'.\n"
 "\n"
 "Ostatecznie można otworzyć stronę podręcznika wpisują 'man synaptic'z linii "
 "poleceń lub przejrzeć jego wersję html znajdującą się w katalogu 'synaptic/"
 "html'."
 
-#: ../gtk/rgmainwindow.cc:2455
+#: ../gtk/rgmainwindow.cc:2434
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1749,23 +1661,23 @@ msgstr ""
 "Nie można uruchomić narzędzia konfiguracyjnego!\n"
 "Należy zainstalować wymagany pakiet 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2461
+#: ../gtk/rgmainwindow.cc:2440
 msgid "Starting package configuration tool..."
 msgstr "Uruchamianie narzędzia do konfiguracji pakietów..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2476
+#: ../gtk/rgmainwindow.cc:2455
 msgid "Starting package documentation viewer..."
 msgstr "Uruchamianie przeglądarki do dokumentacji pakietów..."
 
-#: ../gtk/rgmainwindow.cc:2488
+#: ../gtk/rgmainwindow.cc:2467
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Aby przeglądać dokumentację pakietów, należy wcześniej zainstalować \"dwww\"."
 
-#: ../gtk/rgmainwindow.cc:2553
+#: ../gtk/rgmainwindow.cc:2532
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1773,29 +1685,29 @@ msgstr ""
 "Nie można wykoać zmian!\n"
 "Należy najpierw naprawić uszkodzone pakiety."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2553
 msgid "Applying marked changes. This may take a while..."
 msgstr "Dokonywanie wybranych wcześniej zmian - może to trochę potrwać..."
 
-#: ../gtk/rgmainwindow.cc:2578
+#: ../gtk/rgmainwindow.cc:2557
 msgid "Downloading package files"
 msgstr "Pobieranie plików z pakietami"
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2558
 msgid "The package files will be cached locally for installation."
 msgstr ""
 "Pliki z pakietami zostaną zapisane w magazynie podręcznym pakietów w celu "
 "późniejszej instalacji."
 
-#: ../gtk/rgmainwindow.cc:2654
+#: ../gtk/rgmainwindow.cc:2633
 msgid "Do you want to quit Synaptic?"
 msgstr "Zakończyć działanie programu Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2689
 msgid "Downloading package information"
 msgstr "Pobieranie informacji o pakietach"
 
-#: ../gtk/rgmainwindow.cc:2711
+#: ../gtk/rgmainwindow.cc:2690
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1803,19 +1715,19 @@ msgstr ""
 "Repozytoria zostaną sprawdzone w poszukiwaniu nowych, usuniętych lub "
 "zaktualizowanych pakietów."
 
-#: ../gtk/rgmainwindow.cc:2714
+#: ../gtk/rgmainwindow.cc:2693
 msgid "Reloading package information..."
 msgstr "Odświeżanie informacji o pakietach..."
 
-#: ../gtk/rgmainwindow.cc:2781
+#: ../gtk/rgmainwindow.cc:2760
 msgid "Failed to resolve dependency problems!"
 msgstr "Nie udało się naprawić brakujących zależności!"
 
-#: ../gtk/rgmainwindow.cc:2783
+#: ../gtk/rgmainwindow.cc:2762
 msgid "Successfully fixed dependency problems"
 msgstr "Pomyślnie rozwiązano problemy z zależnościami"
 
-#: ../gtk/rgmainwindow.cc:2799
+#: ../gtk/rgmainwindow.cc:2778
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1823,15 +1735,15 @@ msgstr ""
 "Nie można zaktualizować systemu!\n"
 "Należy najpierw naprawić uszkodzone pakiety."
 
-#: ../gtk/rgmainwindow.cc:2848
+#: ../gtk/rgmainwindow.cc:2827
 msgid "Marking all available upgrades..."
 msgstr "Zaznaczanie wszystkich możliwych pakietów do aktualizacji..."
 
-#: ../gtk/rgmainwindow.cc:2865
+#: ../gtk/rgmainwindow.cc:2845
 msgid "Successfully marked available upgrades"
 msgstr "Zaznaczono wszystkie możliwe pakiety do aktualizacji"
 
-#: ../gtk/rgmainwindow.cc:2867
+#: ../gtk/rgmainwindow.cc:2847
 msgid "Failed to mark all available upgrades!"
 msgstr "Nie udało się zaznaczyć wszystkich możliwych pakietów do aktualizacji!"
 
@@ -1841,6 +1753,10 @@ msgid ""
 "\n"
 " Packages in this component are not supported. Are you sure?"
 msgstr ""
+
+#: ../gtk/rgrepositorywin.cc:120 ../gtk/window_repositories.glade.h:3
+msgid "Repositories"
+msgstr "Repozytoria"
 
 #: ../gtk/rgrepositorywin.cc:144
 msgid "Enabled"
@@ -1855,7 +1771,7 @@ msgstr "Typ"
 msgid "Vendor"
 msgstr "Dostarczyciel"
 
-#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:34
+#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:35
 msgid "Distribution"
 msgstr "Dystrybucja"
 
@@ -1885,24 +1801,20 @@ msgid "Unknown source type"
 msgstr "Nieznany rodzaj źródła"
 
 #: ../gtk/rgsummarywindow.cc:125
-#, fuzzy
 msgid "<b>(ESSENTIAL) to be removed</b>"
-msgstr "(ISTOTNE) do usunięcia"
+msgstr "<b>(ISTOTNE) do usunięcia</b>"
 
 #: ../gtk/rgsummarywindow.cc:139
-#, fuzzy
 msgid "<b>To be DOWNGRADED</b>"
-msgstr "Do ZMNIEJSZENIA numeru wersji"
+msgstr "<b>Do ZMNIEJSZENIA numeru wersji</b>"
 
 #: ../gtk/rgsummarywindow.cc:152
-#, fuzzy
 msgid "<b>To be removed</b>"
-msgstr "Do usunięcia"
+msgstr "<b>Do usunięcia</b>"
 
 #: ../gtk/rgsummarywindow.cc:165
-#, fuzzy
 msgid "<b>To be completely removed (including configuration files)</b>"
-msgstr "Zaznaczone do usunięcia (wraz z plikami konfiguracyjnymi)"
+msgstr "<b>Zaznaczone do usunięcia (wraz z plikami konfiguracyjnymi)</b>"
 
 #: ../gtk/rgsummarywindow.cc:217
 msgid "Unchanged"
@@ -2070,11 +1982,11 @@ msgstr "Anuluj"
 #. TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
 #. happens when e.g. a package has no installed version (or no
 #. downloadable version)
-#: ../gtk/rggladewindow.cc:89 ../gtk/rggladewindow.cc:107
+#: ../gtk/rggladewindow.cc:90 ../gtk/rggladewindow.cc:108
 msgid "N/A"
 msgstr ""
 
-#: ../gtk/rgfindwindow.cc:128
+#: ../gtk/rgfindwindow.cc:129
 msgid "Find"
 msgstr "Szukaj"
 
@@ -2494,7 +2406,9 @@ msgstr ""
 "\n"
 "Wszelkie uwagi, sugestie, poprawki proszę kierować na: \n"
 "Adres e-mail <emil5@go2.pl>, lub\n"
-"przez sieć jabber - JID: emil5@jabber.org"
+"przez sieć jabber - JID: emil5@jabber.org\n"
+"Zmiany specyficzne dla Ubuntu:\n"
+"Zygmunt Krynicki <zkrynicki@gmail.com>"
 
 #: ../gtk/window_find.glade.h:2
 msgid "Description and Name"
@@ -2667,179 +2581,183 @@ msgid "Delete _History files older than:"
 msgstr "Kasowanie plików historii, których wiek przekracza:"
 
 #: ../gtk/window_preferences.glade.h:33
+msgid "Delete all cache package files now."
+msgstr "Wykasuj podręczne archiwum pakietów (cache)"
+
+#: ../gtk/window_preferences.glade.h:34
 msgid "Direct connection to the internet"
 msgstr "Bezpośrednie połączenie z internetem"
 
-#: ../gtk/window_preferences.glade.h:35
+#: ../gtk/window_preferences.glade.h:36
 msgid "FTP proxy: "
 msgstr "Pośrednik FTP: "
 
-#: ../gtk/window_preferences.glade.h:36
+#: ../gtk/window_preferences.glade.h:37
 msgid "Files"
 msgstr "Pliki"
 
-#: ../gtk/window_preferences.glade.h:37
+#: ../gtk/window_preferences.glade.h:38
 msgid "General"
 msgstr "Ogólne"
 
-#: ../gtk/window_preferences.glade.h:38
+#: ../gtk/window_preferences.glade.h:39
 msgid "HTTP proxy: "
 msgstr "Pośrednik HTTP: "
 
-#: ../gtk/window_preferences.glade.h:39
+#: ../gtk/window_preferences.glade.h:40
 msgid "IP address or host name of the ftp proxy server"
 msgstr "Adres IP lub nazwa hosta pośrednika ftp"
 
-#: ../gtk/window_preferences.glade.h:40
+#: ../gtk/window_preferences.glade.h:41
 msgid "IP address or host name of the http proxy server"
 msgstr "Adres IP lub nazwa hosta z pośrednikiem dla http"
 
-#: ../gtk/window_preferences.glade.h:41
+#: ../gtk/window_preferences.glade.h:42
 msgid "Ignore"
 msgstr "Ignoruj"
 
-#: ../gtk/window_preferences.glade.h:42
+#: ../gtk/window_preferences.glade.h:43
 msgid "Installed (locked):"
 msgstr "Zainstalowany (zablokowany):"
 
-#: ../gtk/window_preferences.glade.h:43
+#: ../gtk/window_preferences.glade.h:44
 msgid "Installed:"
 msgstr "Zainstalowane:"
 
-#: ../gtk/window_preferences.glade.h:44
+#: ../gtk/window_preferences.glade.h:45
 msgid "Keep Configuration"
 msgstr "Z zachowaniem plików konfiguracyjnych"
 
-#: ../gtk/window_preferences.glade.h:45
+#: ../gtk/window_preferences.glade.h:46
 msgid "Manual proxy configuration"
 msgstr "Ręczna konfiguracja pośrednika (proxy)"
 
-#: ../gtk/window_preferences.glade.h:46
+#: ../gtk/window_preferences.glade.h:47
 msgid "Marked for complete removal:"
 msgstr "Zaznaczone do całkowitego usunięcia:"
 
-#: ../gtk/window_preferences.glade.h:47
+#: ../gtk/window_preferences.glade.h:48
 msgid "Marked for downgrade:"
 msgstr "Zaznaczone do cofnięcia na starą wersję:"
 
-#: ../gtk/window_preferences.glade.h:48
+#: ../gtk/window_preferences.glade.h:49
 msgid "Marked for installation:"
 msgstr "Zaznaczone do instalacji:"
 
-#: ../gtk/window_preferences.glade.h:49
+#: ../gtk/window_preferences.glade.h:50
 msgid "Marked for reinstallation:"
 msgstr "Zaznaczone do re-instalacji:"
 
-#: ../gtk/window_preferences.glade.h:50
+#: ../gtk/window_preferences.glade.h:51
 msgid "Marked for removal:"
 msgstr "Zaznaczone do usunięcia:"
 
-#: ../gtk/window_preferences.glade.h:51
+#: ../gtk/window_preferences.glade.h:52
 msgid "Marked for upgrade:"
 msgstr "Zaznaczone do aktualizacji:"
 
-#: ../gtk/window_preferences.glade.h:52
+#: ../gtk/window_preferences.glade.h:53
 msgid "Move D_own"
 msgstr "Przesuń w _dół"
 
-#: ../gtk/window_preferences.glade.h:53
+#: ../gtk/window_preferences.glade.h:54
 msgid "Move _Up"
 msgstr "Przesuń w _górę"
 
-#: ../gtk/window_preferences.glade.h:54
+#: ../gtk/window_preferences.glade.h:55
 msgid "Network"
 msgstr "Sieć"
 
-#: ../gtk/window_preferences.glade.h:55
+#: ../gtk/window_preferences.glade.h:56
 msgid "New in repository:"
 msgstr "Nowe w repozytorium:"
 
-#: ../gtk/window_preferences.glade.h:56
+#: ../gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr "Nie używaj pośrednika dla: "
 
-#: ../gtk/window_preferences.glade.h:57
+#: ../gtk/window_preferences.glade.h:58
 msgid "Not installed (locked):"
 msgstr "Nie zainstalowane (zablokowane):"
 
-#: ../gtk/window_preferences.glade.h:58
+#: ../gtk/window_preferences.glade.h:59
 msgid "Not installed:"
 msgstr "Nie zainstalowane:"
 
-#: ../gtk/window_preferences.glade.h:59
+#: ../gtk/window_preferences.glade.h:60
 msgid "Number of undo operations:"
 msgstr "Liczba możliwych operacji \"Cofnij\":"
 
-#: ../gtk/window_preferences.glade.h:60
+#: ../gtk/window_preferences.glade.h:61
 msgid "Port number of the ftp proxy server"
 msgstr "Numer portu serwera pośredniczącego dla ftp"
 
-#: ../gtk/window_preferences.glade.h:61
+#: ../gtk/window_preferences.glade.h:62
 msgid "Port number of the http proxy server"
 msgstr "Numer portu serwera pośredniczącego (proxy)"
 
-#: ../gtk/window_preferences.glade.h:62
+#: ../gtk/window_preferences.glade.h:63
 msgid "Port: "
 msgstr "Port: "
 
-#: ../gtk/window_preferences.glade.h:63
+#: ../gtk/window_preferences.glade.h:64
 msgid "Prefer versions from: "
 msgstr "Wymuś konkretną wersję: "
 
-#: ../gtk/window_preferences.glade.h:65
+#: ../gtk/window_preferences.glade.h:66
 msgid "Reloading outdated package information:"
 msgstr "Odświeżanie przedawnionej bazy informacji o pakietach:"
 
-#: ../gtk/window_preferences.glade.h:66
+#: ../gtk/window_preferences.glade.h:67
 msgid "Removal of packages: "
 msgstr "Usunięcie pakietów: "
 
-#: ../gtk/window_preferences.glade.h:67
+#: ../gtk/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
 msgstr "Pokazywanie właściwości pakietu o oknie głównym"
 
-#: ../gtk/window_preferences.glade.h:69
+#: ../gtk/window_preferences.glade.h:70
 msgid "System upgrade:"
 msgstr "Aktualizacja systemu:"
 
-#: ../gtk/window_preferences.glade.h:70
+#: ../gtk/window_preferences.glade.h:71
 msgid "Upgradable:"
 msgstr "Do aktualizacji:"
 
-#: ../gtk/window_preferences.glade.h:71
+#: ../gtk/window_preferences.glade.h:72
 msgid "Use custom application font"
 msgstr "Własna czcionka dla aplikacji"
 
-#: ../gtk/window_preferences.glade.h:72
+#: ../gtk/window_preferences.glade.h:73
 msgid "Use custom terminal font"
 msgstr "Własna czcionka terminala"
 
-#: ../gtk/window_preferences.glade.h:73
+#: ../gtk/window_preferences.glade.h:74
 msgid "_Delete Cached Package Files"
 msgstr "_Wykasuj podręczne archiwum pakietów (cache)"
 
-#: ../gtk/window_preferences.glade.h:74
+#: ../gtk/window_preferences.glade.h:75
 msgid "_Delete downloaded packages after installation"
 msgstr "Kasowanie pobranych pakietów _po instalacji"
 
-#: ../gtk/window_preferences.glade.h:75
+#: ../gtk/window_preferences.glade.h:76
 msgid "_Keep history"
 msgstr "Zapisywanie _historii zmian"
 
-#: ../gtk/window_preferences.glade.h:76
+#: ../gtk/window_preferences.glade.h:77
 msgid "_Leave all downloaded packages in the cache"
 msgstr ""
 "Pozostawianie _wszystkich pobranych pakietów w magazynie podręcznym (cache)"
 
-#: ../gtk/window_preferences.glade.h:77
+#: ../gtk/window_preferences.glade.h:78
 msgid "_Only delete packages which are no longer available"
 msgstr "Usuwanie tylko tych pakietów, które nie są już _dostępne"
 
-#: ../gtk/window_preferences.glade.h:78
+#: ../gtk/window_preferences.glade.h:79
 msgid "_Terminal Font"
 msgstr "Czcionka _terminala"
 
-#: ../gtk/window_preferences.glade.h:79
+#: ../gtk/window_preferences.glade.h:80
 msgid "days"
 msgstr "dni"
 
@@ -2913,7 +2831,6 @@ msgstr ""
 "wykonaniem."
 
 #: ../gtk/window_summary.glade.h:10
-#, fuzzy
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
@@ -3032,7 +2949,6 @@ msgid "Orphaned"
 msgstr "Osierocone"
 
 #: ../gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr "Pakiety, które są nowe w repozytorium od ostatniej \"aktualizacji\""
 
@@ -3157,7 +3073,6 @@ msgstr ""
 "Pakietów"
 
 #: ../gtk/window_tasks.glade.h:1
-#, fuzzy
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -3323,7 +3238,6 @@ msgid "Dependent packages"
 msgstr "Zależące pakiety"
 
 #: ../gtk/rgpkgcdrom.cc:68
-#, fuzzy
 msgid "Please insert a disc in the drive."
 msgstr "Proszę włożyć płytę do napędu."
 
@@ -3357,7 +3271,6 @@ msgstr "<i>Nie można zamknąć podczas wykonywania</i>"
 
 #. vim:sts=3:sw=3
 #: ../gtk/dialog_download_error.glade.h:1
-#, fuzzy
 msgid ""
 "<big><b>Could not download all necessary package files</b></big>\n"
 "\n"
@@ -3404,6 +3317,55 @@ msgstr "Historia"
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Historia Instalacji, usuwania i aktualizacji pakietów oprogramowania. "
+
+#, fuzzy
+#~ msgid "could not open recommends file %s"
+#~ msgstr ""
+#~ "Błąd wewnętrzny: Nie udało się otworzyć pliku ZredukowanegoWidoku %s"
+
+#, fuzzy
+#~ msgid "Bad regular expression '%s' in Recommends file."
+#~ msgstr ""
+#~ "Niewłaściwe wyrażenie regularne '%s' w pliku zredukowanego podglądu."
+
+#~ msgid "Preparing for removal %s"
+#~ msgstr "Przygotowanie do usunięcia %s"
+
+#~ msgid "Removing %s"
+#~ msgstr "Usuwanie %s"
+
+#~ msgid "Removed %s"
+#~ msgstr "Usunięto %s"
+
+#~ msgid "Removing with config %s"
+#~ msgstr "Usuwanie wraz z konfiguracją %s"
+
+#~ msgid "Removed with config %s"
+#~ msgstr "Usunięto wraz z konfiguracją %s"
+
+#~ msgid "Preparing %s"
+#~ msgstr "Przygotowanie %s"
+
+#~ msgid "Unpacking %s"
+#~ msgstr "Rozpakowywanie %s"
+
+#~ msgid "Configuring %s"
+#~ msgstr "Konfiguracja %s"
+
+#~ msgid "Installed %s"
+#~ msgstr "Zainstalowano %s"
+
+#~ msgid "Installing %s"
+#~ msgstr "Instalowanie %s"
+
+#~ msgid ""
+#~ "<big><b>Building repository dialog</b></big>\n"
+#~ "\n"
+#~ "Please wait."
+#~ msgstr ""
+#~ "<big><b>Budowanie okna dialogowego repozytoriów</b></big>\n"
+#~ "\n"
+#~ "Proszę czekać."
 
 #~ msgid "Internal Error: Couldn't fork gzip. Please report."
 #~ msgstr ""

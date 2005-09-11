@@ -2118,46 +2118,20 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	 GPid pid;
 	 int status;
 	 char *argv[5];
-	 GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	 gtk_window_set_title(GTK_WINDOW(win), _("Repositories"));
-	 gtk_window_set_default_size(GTK_WINDOW(win),400,500);
-	 gtk_container_set_border_width(GTK_CONTAINER(win), 6);
-	 gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(me->_win));
-	 //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(win), TRUE);
-	 GtkWidget *vbox = gtk_vbox_new(FALSE, 12);
-	 gtk_container_add(GTK_CONTAINER(win), vbox);
-	 gtk_widget_show(vbox);
-
-	 GtkWidget *label = gtk_label_new("");
-	 gtk_label_set_markup(GTK_LABEL(label),
-			      _("<big><b>Building repository dialog</b></big>\n\n"
-				"Please wait."));
-	 gtk_box_pack_start_defaults(GTK_BOX(vbox), label);
-	 gtk_widget_show(label);
-	 
-	 GtkWidget *sock = gtk_socket_new();
-	 g_signal_connect(G_OBJECT(sock), "plug-added", 
-			  G_CALLBACK(plug_added),  label);
-	 gtk_box_pack_start_defaults(GTK_BOX(vbox), sock);
-	 
 	 argv[0] = "/usr/bin/gnome-software-properties";
 	 argv[1] = "-n";
-	 argv[2] = "-p";
-	 argv[3] = g_strdup_printf("%i", gtk_socket_get_id(GTK_SOCKET(sock)));
+	 argv[2] = "-t";
+	 argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));
 	 argv[4] = NULL;
-	 
-	 g_spawn_async(NULL, argv, NULL,(GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
-		       NULL, NULL, &pid, NULL);
+	 g_spawn_async(NULL, argv, NULL,
+				  (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
+				  NULL, NULL, &pid, NULL);
 	 // kill the child if the window is deleted
- 	 g_signal_connect(G_OBJECT(win), "delete-event", 
- 			  G_CALLBACK(kill_repos), &pid);
-	 gtk_widget_show_all(win);
 	 while(waitpid(pid, &status, WNOHANG) == 0) {
 	    usleep(50000);
 	    RGFlushInterface();
 	 }
 	 Changed = WEXITSTATUS(status);    
-	 gtk_widget_destroy(win);
 	 me->setInterfaceLocked(FALSE);
       }
    }

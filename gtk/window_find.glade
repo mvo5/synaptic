@@ -5,13 +5,12 @@
 
 <widget class="GtkDialog" id="window_find">
   <property name="border_width">6</property>
-  <property name="width_request">350</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes"></property>
   <property name="type">GTK_WINDOW_TOPLEVEL</property>
   <property name="window_position">GTK_WIN_POS_NONE</property>
   <property name="modal">False</property>
-  <property name="resizable">False</property>
+  <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
   <property name="icon">synaptic_mini.xpm</property>
   <property name="decorated">True</property>
@@ -292,7 +291,7 @@
 			    <widget class="GtkOptionMenu" id="optionmenu_where">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="history">1</property>
+			      <property name="history">0</property>
 
 			      <child>
 				<widget class="GtkMenu" id="menu1">
@@ -358,7 +357,6 @@
 			      <property name="right_attach">2</property>
 			      <property name="top_attach">1</property>
 			      <property name="bottom_attach">2</property>
-			      <property name="x_options">fill</property>
 			      <property name="y_options"></property>
 			    </packing>
 			  </child>

@@ -210,7 +210,7 @@ const char *RPackage::installedFiles()
 
 const char *RPackage::description()
 {
-   pkgCache::VerIterator ver = _package->VersionList();
+   ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());

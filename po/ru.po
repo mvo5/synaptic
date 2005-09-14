@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.56\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-08 23:42+0200\n"
-"PO-Revision-Date: 2005-03-02 14:13MSK\n"
+"POT-Creation-Date: 2005-08-30 02:59+0300\n"
+"PO-Revision-Date: 2005-08-30 03:19+0300\n"
 "Last-Translator: Vitaly Lipatov <lav@altlinux.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -248,16 +248,6 @@ msgstr "Невозможно найти тэг с названием файла 
 msgid "Error parsing file record"
 msgstr "Ошибка анализа записи файла"
 
-#: ../common/rcacheactor.cc:58
-#, fuzzy, c-format
-msgid "could not open recommends file %s"
-msgstr "Внутренняя ошибка: Невозможно открыть файл сокращённого вида%s"
-
-#: ../common/rcacheactor.cc:84
-#, fuzzy, c-format
-msgid "Bad regular expression '%s' in Recommends file."
-msgstr "Плохое регулярное выражение '%s' в файле сокращённого вида."
-
 #: ../common/rcdscanner.cc:112 ../common/rcdscanner.cc:162
 #, c-format
 msgid "Failed to open %s.new"
@@ -380,9 +370,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "Ошибка: Невозможно создать каталог настроек %s"
 
 #: ../common/rconfiguration.cc:147
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create state directory %s"
-msgstr "ОШИБКА: невозможно создать временный каталог %s"
+msgstr "ОШИБКА: невозможно создать каталог состяния %s"
 
 #: ../common/rconfiguration.cc:164
 #, c-format
@@ -573,9 +563,8 @@ msgid "Depends"
 msgstr "Зависит от"
 
 #: ../common/rpackage.h:52
-#, fuzzy
 msgid "PreDepends"
-msgstr "Зависит от"
+msgstr ""
 
 #: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
 msgid "Suggests"
@@ -912,8 +901,8 @@ msgid "Upgradable (upstream)"
 msgstr "Обновляемые (апстрим)"
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:1983
-#: ../gtk/rgmainwindow.cc:2671 ../gtk/rgmainwindow.cc:2756
-#: ../gtk/rgmainwindow.cc:2924
+#: ../gtk/rgmainwindow.cc:2672 ../gtk/rgmainwindow.cc:2757
+#: ../gtk/rgmainwindow.cc:2926
 #, c-format
 msgid "Can't read %s"
 msgstr "Невозможно прочитать %s"
@@ -921,7 +910,7 @@ msgstr "Невозможно прочитать %s"
 #: ../common/rsources.cc:131
 #, c-format
 msgid "Syntax error in line %s"
-msgstr ""
+msgstr "Синтаксическая ошибка в строке %s"
 
 #: ../common/rsources.cc:458
 #, c-format
@@ -986,7 +975,7 @@ msgstr "Стандартное обновление системы"
 msgid "Remember my answer for future upgrades"
 msgstr "Запомнить ответ для дальнейших обновлений"
 
-#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:68
+#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:69
 msgid "Smart Upgrade"
 msgstr "Интеллектуальное обновление"
 
@@ -1018,7 +1007,8 @@ msgstr ""
 "`uname -n`)\n"
 
 #: ../gtk/gsynaptic.cc:75
-msgid "-i=? Start with the initial Filter with the number given\n"
+#, fuzzy
+msgid "-i=? Start with the initial Filter with given name\n"
 msgstr "-i=? Начать с фильтра, имеющего указанный номер\n"
 
 #: ../gtk/gsynaptic.cc:76
@@ -1046,14 +1036,12 @@ msgid "--task-window Open with task window\n"
 msgstr "--task-window Открыть с окном задач\n"
 
 #: ../gtk/gsynaptic.cc:82
-#, fuzzy
 msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
-msgstr "--add-cdrom Добавить компакт-диск при запуске\n"
+msgstr "--add-cdrom Добавить компакт-диск при запуске (требуется путь к устройству)\n"
 
 #: ../gtk/gsynaptic.cc:83
-#, fuzzy
 msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
-msgstr "--add-cdrom Добавить компакт-диск при запуске\n"
+msgstr "--ask-cdrom Запросить добавление компакт-диска и выйти\n"
 
 #: ../gtk/gsynaptic.cc:325 ../gtk/gsynaptic.cc:331
 msgid "Another synaptic is running"
@@ -1115,19 +1103,15 @@ msgstr "Благодарности"
 msgid "About Synaptic"
 msgstr "О Synaptic"
 
-#: ../gtk/rgchangeswindow.cc:55
+#: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
 msgstr "Изменения в пакетах"
 
-#: ../gtk/rgchangeswindow.cc:66
-msgid "Purge"
-msgstr ""
-
-#: ../gtk/rgchangeswindow.cc:151 ../gtk/rgsummarywindow.cc:96
+#: ../gtk/rgchangeswindow.cc:91 ../gtk/rgsummarywindow.cc:96
 msgid "Warning"
 msgstr "Внимание"
 
-#: ../gtk/rgchangeswindow.cc:152 ../gtk/rgsummarywindow.cc:97
+#: ../gtk/rgchangeswindow.cc:92 ../gtk/rgsummarywindow.cc:97
 msgid ""
 "You are about to install software that <b>can't be authenticated</b>! Doing "
 "this could allow a malicious individual to damage or take control of your "
@@ -1137,128 +1121,124 @@ msgstr ""
 "определена</b>! Это может позволить злонамеренному человеку повредить или "
 "получить управление над вашей системой."
 
-#: ../gtk/rgchangeswindow.cc:163 ../gtk/rgsummarywindow.cc:109
+#: ../gtk/rgchangeswindow.cc:103 ../gtk/rgsummarywindow.cc:109
 msgid "NOT AUTHENTICATED"
 msgstr "ПОДЛИННОСТЬ НЕ ПОДТВЕРЖДЕНА"
 
 #. removed
-#: ../gtk/rgchangeswindow.cc:178
+#: ../gtk/rgchangeswindow.cc:114
 msgid "To be removed"
 msgstr "Для удаления"
 
-#: ../gtk/rgchangeswindow.cc:197
+#: ../gtk/rgchangeswindow.cc:131
 msgid "To be downgraded"
 msgstr "Для понижения версии"
 
-#: ../gtk/rgchangeswindow.cc:212 ../gtk/rgsummarywindow.cc:178
-msgid "To be upgraded"
-msgstr "Для обновления"
-
-#: ../gtk/rgchangeswindow.cc:225 ../gtk/rgsummarywindow.cc:190
+#: ../gtk/rgchangeswindow.cc:143 ../gtk/rgsummarywindow.cc:190
 msgid "To be installed"
 msgstr "Для установки"
 
-#: ../gtk/rgchangeswindow.cc:238 ../gtk/rgsummarywindow.cc:202
+#: ../gtk/rgchangeswindow.cc:155 ../gtk/rgsummarywindow.cc:178
+msgid "To be upgraded"
+msgstr "Для обновления"
+
+#: ../gtk/rgchangeswindow.cc:167 ../gtk/rgsummarywindow.cc:202
 msgid "To be re-installed"
 msgstr "Для повторной установки"
 
-#: ../gtk/rgchangeswindow.cc:250
+#: ../gtk/rgchangeswindow.cc:178
 msgid "To be kept"
 msgstr "Для сохранения"
 
-#: ../gtk/rgdebinstallprogress.cc:57 ../gtk/rgdebinstallprogress.cc:68
+#: ../gtk/rgdebinstallprogress.cc:60 ../gtk/rgdebinstallprogress.cc:71
 #, c-format
 msgid "Preparing for removal %s"
 msgstr "Подготовлено для удаления %s"
 
-#: ../gtk/rgdebinstallprogress.cc:58
+#: ../gtk/rgdebinstallprogress.cc:61
 #, c-format
 msgid "Removing %s"
 msgstr "Удаление %s"
 
-#: ../gtk/rgdebinstallprogress.cc:59 ../gtk/rgdebinstallprogress.cc:70
+#: ../gtk/rgdebinstallprogress.cc:62 ../gtk/rgdebinstallprogress.cc:73
 #, c-format
 msgid "Removed %s"
 msgstr "Удалены %s"
 
-#: ../gtk/rgdebinstallprogress.cc:69 ../gtk/rgdebinstallprogress.cc:78
+#: ../gtk/rgdebinstallprogress.cc:72 ../gtk/rgdebinstallprogress.cc:81
 #, c-format
 msgid "Removing with config %s"
 msgstr "Удаление с конфигурационным файлом %s"
 
-#: ../gtk/rgdebinstallprogress.cc:71 ../gtk/rgdebinstallprogress.cc:79
+#: ../gtk/rgdebinstallprogress.cc:74 ../gtk/rgdebinstallprogress.cc:82
 #, c-format
 msgid "Removed with config %s"
 msgstr "Удалены с конфигурационным файлом %s"
 
-#: ../gtk/rgdebinstallprogress.cc:88 ../gtk/rgdebinstallprogress.cc:101
-#: ../gtk/rgdebinstallprogress.cc:116
+#: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:104
+#: ../gtk/rgdebinstallprogress.cc:119
 #, c-format
 msgid "Preparing %s"
 msgstr "Подготавливается %s"
 
-#: ../gtk/rgdebinstallprogress.cc:89 ../gtk/rgdebinstallprogress.cc:103
-#: ../gtk/rgdebinstallprogress.cc:117 ../gtk/rgdebinstallprogress.cc:119
+#: ../gtk/rgdebinstallprogress.cc:92 ../gtk/rgdebinstallprogress.cc:106
+#: ../gtk/rgdebinstallprogress.cc:120 ../gtk/rgdebinstallprogress.cc:122
 #, c-format
 msgid "Unpacking %s"
 msgstr "Распаковывается %s"
 
-#: ../gtk/rgdebinstallprogress.cc:90 ../gtk/rgdebinstallprogress.cc:104
-#: ../gtk/rgdebinstallprogress.cc:120
+#: ../gtk/rgdebinstallprogress.cc:93 ../gtk/rgdebinstallprogress.cc:107
+#: ../gtk/rgdebinstallprogress.cc:123
 #, c-format
 msgid "Configuring %s"
 msgstr "Настраивается %s"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/rgdebinstallprogress.cc:91 ../gtk/rgdebinstallprogress.cc:105
-#: ../gtk/rgdebinstallprogress.cc:121
+#: ../gtk/rgdebinstallprogress.cc:94 ../gtk/rgdebinstallprogress.cc:108
+#: ../gtk/rgdebinstallprogress.cc:124
 #, c-format
 msgid "Installed %s"
 msgstr "Установлено %s"
 
-#: ../gtk/rgdebinstallprogress.cc:102 ../gtk/rgdebinstallprogress.cc:118
+#: ../gtk/rgdebinstallprogress.cc:105 ../gtk/rgdebinstallprogress.cc:121
 #, c-format
 msgid "Installing %s"
 msgstr "Устанавливается %s"
 
-#: ../gtk/rgdebinstallprogress.cc:288
-#, fuzzy, c-format
+#: ../gtk/rgdebinstallprogress.cc:291
+#, c-format
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr ""
-"Установить новый конфигурационный файл\n"
+"Заменить конфигурационный файл\n"
 "'%s'?"
 
-#: ../gtk/rgdebinstallprogress.cc:289
-#, fuzzy, c-format
+#: ../gtk/rgdebinstallprogress.cc:292
+#, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
 "say 'Keep'. Do you want to replace the current file and install the new "
 "package maintainers version? "
-msgstr ""
-"Конфигурационный файл %s был изменён (вами или по сценарию). Обновлённая "
-"версия поставляется с данным пакетом. Если вы хотите сохранить текущую "
-"версию, ответьте \"Нет\". Хотите ли вы установить конфигурационный файл из "
-"пакета?"
+msgstr "Конфигурационный файл %s был изменён (вами или по сценарию). Обновлённая версия поставляется с данным пакетом. Если вы хотите сохранить текущую версию, ответьте \"Нет\". Хотите ли вы заменить текущий файл файлом из пакета?"
 
-#: ../gtk/rgdebinstallprogress.cc:430 ../gtk/rginstallprogress.cc:284
+#: ../gtk/rgdebinstallprogress.cc:436 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
 msgid "Applying Changes"
 msgstr "Внесение изменений..."
 
 #. error from dpkg
-#: ../gtk/rgdebinstallprogress.cc:504
+#: ../gtk/rgdebinstallprogress.cc:530
 #, c-format
 msgid "Error in package %s"
 msgstr "Ошибка в пакете %s"
 
-#: ../gtk/rgdebinstallprogress.cc:654 ../gtk/rgdebinstallprogress.cc:657
+#: ../gtk/rgdebinstallprogress.cc:695 ../gtk/rgdebinstallprogress.cc:698
 msgid "Changes applied"
 msgstr "Изменения применены"
 
-#: ../gtk/rgdebinstallprogress.cc:713
+#: ../gtk/rgdebinstallprogress.cc:754
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1266,15 +1246,15 @@ msgstr ""
 "Отмеченные изменения применяются. Это может занять некоторое время. "
 "Пожалуйста, подождите."
 
-#: ../gtk/rgdebinstallprogress.cc:718
+#: ../gtk/rgdebinstallprogress.cc:759
 msgid "Installing and removing software"
 msgstr "Установка и удаление программ"
 
-#: ../gtk/rgdebinstallprogress.cc:720
+#: ../gtk/rgdebinstallprogress.cc:761
 msgid "Removing software"
 msgstr "Удаление программ"
 
-#: ../gtk/rgdebinstallprogress.cc:722
+#: ../gtk/rgdebinstallprogress.cc:763
 msgid "Installing software"
 msgstr "Установка программ"
 
@@ -1353,7 +1333,7 @@ msgstr ""
 msgid "Visible"
 msgstr "Видимый"
 
-#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:64
+#: ../gtk/rgpreferenceswindow.cc:1074 ../gtk/window_preferences.glade.h:65
 msgid "Preferences"
 msgstr "Параметры"
 
@@ -1670,8 +1650,8 @@ msgstr "Добавить другой компакт-диск?"
 msgid "Open changes"
 msgstr "Открыть отметки пакетов"
 
-#: ../gtk/rgmainwindow.cc:2007 ../gtk/rgmainwindow.cc:2589
-#: ../gtk/rgmainwindow.cc:2725 ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2007 ../gtk/rgmainwindow.cc:2590
+#: ../gtk/rgmainwindow.cc:2726 ../gtk/rgmainwindow.cc:2903
 #, c-format
 msgid "Can't write %s"
 msgstr "Невозможно записать %s"
@@ -1741,7 +1721,7 @@ msgstr ""
 "Также вы можете получить информацию о Synaptic, набрав в командной строке "
 "'man synaptic' или просмотрев html-версию в каталоге 'synaptic/html'."
 
-#: ../gtk/rgmainwindow.cc:2455
+#: ../gtk/rgmainwindow.cc:2456
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1749,23 +1729,23 @@ msgstr ""
 "Невозможно запустить программу настройки!\n"
 " Вы должны установить нужный для этого пакет 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2461
+#: ../gtk/rgmainwindow.cc:2462
 msgid "Starting package configuration tool..."
 msgstr "Запуск программы настройки пакета..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2476
+#: ../gtk/rgmainwindow.cc:2477
 msgid "Starting package documentation viewer..."
 msgstr "Открытие справки по пакету..."
 
-#: ../gtk/rgmainwindow.cc:2488
+#: ../gtk/rgmainwindow.cc:2489
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Вы должны установить пакет \"dwww\" для просмотра документации к пакету"
 
-#: ../gtk/rgmainwindow.cc:2553
+#: ../gtk/rgmainwindow.cc:2554
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1773,27 +1753,27 @@ msgstr ""
 "Невозможно выполнить изменения!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2575
 msgid "Applying marked changes. This may take a while..."
 msgstr "Внесение изменений... Это может занять некоторое время..."
 
-#: ../gtk/rgmainwindow.cc:2578
+#: ../gtk/rgmainwindow.cc:2579
 msgid "Downloading package files"
 msgstr "Загружаются файлы пакетов"
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2580
 msgid "The package files will be cached locally for installation."
 msgstr "Пакеты будут сохранены локально для последующей установки."
 
-#: ../gtk/rgmainwindow.cc:2654
+#: ../gtk/rgmainwindow.cc:2655
 msgid "Do you want to quit Synaptic?"
 msgstr "Вы хотите выйти из Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2710
+#: ../gtk/rgmainwindow.cc:2711
 msgid "Downloading package information"
 msgstr "Загружаются сведения о пакетах"
 
-#: ../gtk/rgmainwindow.cc:2711
+#: ../gtk/rgmainwindow.cc:2712
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1801,19 +1781,19 @@ msgstr ""
 "Репозитории будут проверены на новые, удалённые или обновлённые пакеты "
 "программ."
 
-#: ../gtk/rgmainwindow.cc:2714
+#: ../gtk/rgmainwindow.cc:2715
 msgid "Reloading package information..."
 msgstr "Получение сведений о пакетах..."
 
-#: ../gtk/rgmainwindow.cc:2781
+#: ../gtk/rgmainwindow.cc:2782
 msgid "Failed to resolve dependency problems!"
 msgstr "Ошибка исправления проблем в зависимостях!"
 
-#: ../gtk/rgmainwindow.cc:2783
+#: ../gtk/rgmainwindow.cc:2784
 msgid "Successfully fixed dependency problems"
 msgstr "Проблемы в зависимостях успешно разрешены"
 
-#: ../gtk/rgmainwindow.cc:2799
+#: ../gtk/rgmainwindow.cc:2800
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1821,15 +1801,15 @@ msgstr ""
 "Невозможно обновить систему!\n"
 "Сначала необходимо исправить проблемы в зависимостях."
 
-#: ../gtk/rgmainwindow.cc:2848
+#: ../gtk/rgmainwindow.cc:2849
 msgid "Marking all available upgrades..."
 msgstr "Отметить всё доступное для обновления..."
 
-#: ../gtk/rgmainwindow.cc:2865
+#: ../gtk/rgmainwindow.cc:2867
 msgid "Successfully marked available upgrades"
 msgstr "Отмечены все доступные для обновления пакеты"
 
-#: ../gtk/rgmainwindow.cc:2867
+#: ../gtk/rgmainwindow.cc:2869
 msgid "Failed to mark all available upgrades!"
 msgstr "Невозможно отметить всё доступное для обновления!"
 
@@ -1856,7 +1836,7 @@ msgstr "Тип"
 msgid "Vendor"
 msgstr "Поставщик"
 
-#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:34
+#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:35
 msgid "Distribution"
 msgstr "Дистрибутив"
 
@@ -1886,24 +1866,20 @@ msgid "Unknown source type"
 msgstr "Неизвестный тип источника"
 
 #: ../gtk/rgsummarywindow.cc:125
-#, fuzzy
 msgid "<b>(ESSENTIAL) to be removed</b>"
-msgstr "(ВАЖНО) будет удалён"
+msgstr "<b>(ВАЖНО) будет удалён</b>"
 
 #: ../gtk/rgsummarywindow.cc:139
-#, fuzzy
 msgid "<b>To be DOWNGRADED</b>"
-msgstr "Будет установлена УСТАРЕВШАЯ ВЕРСИЯ"
+msgstr "<b>Будет установлена УСТАРЕВШАЯ ВЕРСИЯ</b>"
 
 #: ../gtk/rgsummarywindow.cc:152
-#, fuzzy
 msgid "<b>To be removed</b>"
-msgstr "Для удаления"
+msgstr "<b>Для удаления</b>"
 
 #: ../gtk/rgsummarywindow.cc:165
-#, fuzzy
 msgid "<b>To be completely removed (including configuration files)</b>"
-msgstr "Будут полностью удалены (включая конфигурационные файлы)"
+msgstr "<b>Будут полностью удалены (включая конфигурационные файлы)</b>"
 
 #: ../gtk/rgsummarywindow.cc:217
 msgid "Unchanged"
@@ -2072,7 +2048,7 @@ msgstr "Отменить"
 #. downloadable version)
 #: ../gtk/rggladewindow.cc:89 ../gtk/rggladewindow.cc:107
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: ../gtk/rgfindwindow.cc:128
 msgid "Find"
@@ -2599,11 +2575,11 @@ msgstr "Всегда задавать этот вопрос"
 
 #: ../gtk/window_preferences.glade.h:16
 msgid "Always prefer the highest version"
-msgstr "Всегда предпочитать новейшую версию"
+msgstr "Всегда предпочитать _новейшую версию"
 
 #: ../gtk/window_preferences.glade.h:17
 msgid "Always prefer the installed version"
-msgstr "Всегда предпочитать установленную версию"
+msgstr "Всегда предпочитать _установленную версию"
 
 #: ../gtk/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
@@ -2667,187 +2643,191 @@ msgstr "Рассматривать рекомендуемые пакеты ка�
 
 #: ../gtk/window_preferences.glade.h:32
 msgid "Delete _History files older than:"
-msgstr "Удалить файлы _Истории старее чем:"
+msgstr "Удалить файлы _истории старее чем:"
 
+# Assigning hot key to "ч" instead of "О" to avoid conflict with button OK
 #: ../gtk/window_preferences.glade.h:33
+msgid "Delete all cache package files now."
+msgstr "О_чистить кэш файлов пакетов "
+
+#: ../gtk/window_preferences.glade.h:34
 msgid "Direct connection to the internet"
 msgstr "Прямое подключение к интернет"
 
-#: ../gtk/window_preferences.glade.h:35
+#: ../gtk/window_preferences.glade.h:36
 msgid "FTP proxy: "
 msgstr "FTP-прокси: "
 
-#: ../gtk/window_preferences.glade.h:36
+#: ../gtk/window_preferences.glade.h:37
 msgid "Files"
 msgstr "Файлы"
 
-#: ../gtk/window_preferences.glade.h:37
+#: ../gtk/window_preferences.glade.h:38
 msgid "General"
 msgstr "Основное"
 
-#: ../gtk/window_preferences.glade.h:38
+#: ../gtk/window_preferences.glade.h:39
 msgid "HTTP proxy: "
 msgstr "HTTP-прокси: "
 
-#: ../gtk/window_preferences.glade.h:39
+#: ../gtk/window_preferences.glade.h:40
 msgid "IP address or host name of the ftp proxy server"
 msgstr "IP-адрес или название прокси-сервера ftp"
 
-#: ../gtk/window_preferences.glade.h:40
+#: ../gtk/window_preferences.glade.h:41
 msgid "IP address or host name of the http proxy server"
 msgstr "IP-адрес или название прокси-сервера http"
 
-#: ../gtk/window_preferences.glade.h:41
+#: ../gtk/window_preferences.glade.h:42
 msgid "Ignore"
 msgstr "Игнорировать"
 
-#: ../gtk/window_preferences.glade.h:42
+#: ../gtk/window_preferences.glade.h:43
 msgid "Installed (locked):"
 msgstr "Установленные (заблокированные):"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_preferences.glade.h:43
+#: ../gtk/window_preferences.glade.h:44
 msgid "Installed:"
 msgstr "Установленные:"
 
-#: ../gtk/window_preferences.glade.h:44
+#: ../gtk/window_preferences.glade.h:45
 msgid "Keep Configuration"
 msgstr "Сохранить настройки"
 
-#: ../gtk/window_preferences.glade.h:45
+#: ../gtk/window_preferences.glade.h:46
 msgid "Manual proxy configuration"
 msgstr "Ручная настройка прокси-сервера"
 
-#: ../gtk/window_preferences.glade.h:46
+#: ../gtk/window_preferences.glade.h:47
 msgid "Marked for complete removal:"
 msgstr "Отмеченные для удаления:"
 
-#: ../gtk/window_preferences.glade.h:47
+#: ../gtk/window_preferences.glade.h:48
 msgid "Marked for downgrade:"
 msgstr "Для понижения версии:"
 
-#: ../gtk/window_preferences.glade.h:48
+#: ../gtk/window_preferences.glade.h:49
 msgid "Marked for installation:"
 msgstr "Отмеченные для установки:"
 
-#: ../gtk/window_preferences.glade.h:49
+#: ../gtk/window_preferences.glade.h:50
 msgid "Marked for reinstallation:"
 msgstr "Отмеченные для переустановки:"
 
-#: ../gtk/window_preferences.glade.h:50
+#: ../gtk/window_preferences.glade.h:51
 msgid "Marked for removal:"
 msgstr "Отмеченные для удаления:"
 
-#: ../gtk/window_preferences.glade.h:51
+#: ../gtk/window_preferences.glade.h:52
 msgid "Marked for upgrade:"
 msgstr "Отмеченные для обновления:"
 
-#: ../gtk/window_preferences.glade.h:52
+#: ../gtk/window_preferences.glade.h:53
 msgid "Move D_own"
 msgstr "Переместить _вниз"
 
-#: ../gtk/window_preferences.glade.h:53
+#: ../gtk/window_preferences.glade.h:54
 msgid "Move _Up"
 msgstr "Переместить _вверх"
 
-#: ../gtk/window_preferences.glade.h:54
+#: ../gtk/window_preferences.glade.h:55
 msgid "Network"
 msgstr "Сеть"
 
-#: ../gtk/window_preferences.glade.h:55
-#, fuzzy
+#: ../gtk/window_preferences.glade.h:56
 msgid "New in repository:"
 msgstr "Новые в репозитории:"
 
-#: ../gtk/window_preferences.glade.h:56
+#: ../gtk/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr "Не использовать прокси для: "
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_preferences.glade.h:57
+#: ../gtk/window_preferences.glade.h:58
 msgid "Not installed (locked):"
 msgstr "Не установленные (заблокированные):"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_preferences.glade.h:58
+#: ../gtk/window_preferences.glade.h:59
 msgid "Not installed:"
 msgstr "Не установленные:"
 
-#: ../gtk/window_preferences.glade.h:59
+#: ../gtk/window_preferences.glade.h:60
 msgid "Number of undo operations:"
 msgstr "Количество возможных операций отмены:"
 
-#: ../gtk/window_preferences.glade.h:60
+#: ../gtk/window_preferences.glade.h:61
 msgid "Port number of the ftp proxy server"
 msgstr "Номер порта для прокси-сервера ftp"
 
-#: ../gtk/window_preferences.glade.h:61
+#: ../gtk/window_preferences.glade.h:62
 msgid "Port number of the http proxy server"
 msgstr "Номер порта для прокси-сервера http"
 
-#: ../gtk/window_preferences.glade.h:62
+#: ../gtk/window_preferences.glade.h:63
 msgid "Port: "
 msgstr "Порт:"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_preferences.glade.h:63
+#: ../gtk/window_preferences.glade.h:64
 msgid "Prefer versions from: "
 msgstr "Предпочитать версии из:"
 
-#: ../gtk/window_preferences.glade.h:65
+#: ../gtk/window_preferences.glade.h:66
 msgid "Reloading outdated package information:"
 msgstr "Обновлять устаревшие сведения о пакетах:"
 
-#: ../gtk/window_preferences.glade.h:66
+#: ../gtk/window_preferences.glade.h:67
 msgid "Removal of packages: "
 msgstr "Удалить пакеты: "
 
-#: ../gtk/window_preferences.glade.h:67
+#: ../gtk/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
 msgstr "Показывать информацию о пакете в главном окне"
 
-#: ../gtk/window_preferences.glade.h:69
+#: ../gtk/window_preferences.glade.h:70
 msgid "System upgrade:"
 msgstr "Обновить систему:"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/window_preferences.glade.h:70
+#: ../gtk/window_preferences.glade.h:71
 msgid "Upgradable:"
 msgstr "Обновляемые:"
 
-#: ../gtk/window_preferences.glade.h:71
+#: ../gtk/window_preferences.glade.h:72
 msgid "Use custom application font"
 msgstr "Использовать выбранный шрифт приложения"
 
-#: ../gtk/window_preferences.glade.h:72
+#: ../gtk/window_preferences.glade.h:73
 msgid "Use custom terminal font"
 msgstr "Использовать выбранный шрифт терминала"
 
-#: ../gtk/window_preferences.glade.h:73
+#: ../gtk/window_preferences.glade.h:74
 msgid "_Delete Cached Package Files"
 msgstr "_Очистить кэш файлов пакетов"
 
-#: ../gtk/window_preferences.glade.h:74
+#: ../gtk/window_preferences.glade.h:75
 msgid "_Delete downloaded packages after installation"
 msgstr "_Удалить загруженные файлы после установки"
 
-#: ../gtk/window_preferences.glade.h:75
+#: ../gtk/window_preferences.glade.h:76
 msgid "_Keep history"
 msgstr "_Сохранять историю"
 
-#: ../gtk/window_preferences.glade.h:76
+#: ../gtk/window_preferences.glade.h:77
 msgid "_Leave all downloaded packages in the cache"
 msgstr "_Оставить все загруженные файлы в кэше"
 
-#: ../gtk/window_preferences.glade.h:77
+#: ../gtk/window_preferences.glade.h:78
 msgid "_Only delete packages which are no longer available"
 msgstr "_Удалять только те пакеты. которые более недоступны в репозитории"
 
-#: ../gtk/window_preferences.glade.h:78
+#: ../gtk/window_preferences.glade.h:79
 msgid "_Terminal Font"
 msgstr "_Шрифт терминала"
 
-#: ../gtk/window_preferences.glade.h:79
+#: ../gtk/window_preferences.glade.h:80
 msgid "days"
 msgstr "дней"
 
@@ -3040,7 +3020,6 @@ msgid "Orphaned"
 msgstr "\"Заброшенные\""
 
 #: ../gtk/window_filters.glade.h:40
-#, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr "Пакеты, появившиеся в репозитории после последнего обновления списков"
 
@@ -3330,9 +3309,8 @@ msgid "Dependent packages"
 msgstr "Зависящие пакеты"
 
 #: ../gtk/rgpkgcdrom.cc:68
-#, fuzzy
 msgid "Please insert a disc in the drive."
-msgstr "Вставьте диск."
+msgstr "Вставьте диск в привод."
 
 #: ../gtk/rgiconlegend.cc:41 ../gtk/window_iconlegend.glade.h:2
 msgid "Icon Legend"
@@ -3409,6 +3387,14 @@ msgstr "История"
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "История установленных, обновлённых и удалённых пакетов программ."
+
+#, fuzzy
+#~ msgid "could not open recommends file %s"
+#~ msgstr "Внутренняя ошибка: Невозможно открыть файл сокращённого вида%s"
+
+#, fuzzy
+#~ msgid "Bad regular expression '%s' in Recommends file."
+#~ msgstr "Плохое регулярное выражение '%s' в файле сокращённого вида."
 
 #~ msgid "Internal Error: Couldn't fork gzip. Please report."
 #~ msgstr ""

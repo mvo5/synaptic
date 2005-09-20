@@ -112,7 +112,7 @@ const char *RPackage::section()
 
 const char *RPackage::srcPackage()
 {
-   pkgCache::VerIterator ver = _package->VersionList();
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
    const char *s=rec.SourcePkg().empty()?name():rec.SourcePkg().c_str();
  
@@ -122,8 +122,7 @@ const char *RPackage::srcPackage()
 
 const char *RPackage::summary()
 {
-   pkgCache::VerIterator ver = _package->VersionList();
-
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
 
@@ -135,8 +134,7 @@ const char *RPackage::summary()
 
 const char *RPackage::maintainer()
 {
-   pkgCache::VerIterator ver = _package->VersionList();
-
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
       return parser.Maintainer().c_str();
@@ -167,8 +165,7 @@ const char *RPackage::availableVersion()
 
 const char *RPackage::priority()
 {
-   pkgCache::VerIterator ver = _package->VersionList();
-
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (ver != 0)
       return ver.PriorityType();
    else
@@ -210,7 +207,7 @@ const char *RPackage::installedFiles()
 
 const char *RPackage::description()
 {
-   ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());

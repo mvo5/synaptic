@@ -7,5 +7,5 @@ EXTRA_DIST = config.h.in \
              intltool-extract.in intltool-merge.in intltool-update.in \
 	     README.debtags FAQ \
              TRANSLATORS README.tasks README.supported \
-             po/synaptic.pot po/synaptic-manual.pot
+             po/synaptic.pot po-manual/synaptic-manual.pot
 

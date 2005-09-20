@@ -78,6 +78,8 @@
 
 #include "i18n.h"
 
+// include it here because depcache.h hates us if we have it before
+#include <gdk/gdkx.h>
 
 
 enum { WHAT_IT_DEPENDS_ON,

@@ -211,7 +211,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGMainWindow(RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
 
-   void refreshTable(RPackage *selectedPkg = NULL);
+   void refreshTable(RPackage *selectedPkg = NULL,bool setAdjustments=true);
 
    void changeView(int view, string subView="");
 

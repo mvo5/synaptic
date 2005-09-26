@@ -132,8 +132,16 @@ void RGMainWindow::changeView(int view, string subView)
 	    }
 	 } while(gtk_tree_model_iter_next(model, &iter));
       }
+
+      cout << "setting adjustment" << endl;
+      GtkAdjustment *ad;
+      ad = gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView));
+      g_object_set(ad,"value", 0,NULL);
+      gtk_tree_view_set_hadjustment(GTK_TREE_VIEW(_treeView), ad);
+      gtk_adjustment_value_changed(ad);
+
       _lister->reapplyFilter();
-      refreshTable(pkg);
+      refreshTable(pkg,false);
       setInterfaceLocked(FALSE);     
    }
    _blockActions = FALSE;
@@ -267,7 +275,7 @@ void RGMainWindow::forgetNewPackages()
 }
 
 
-void RGMainWindow::refreshTable(RPackage *selectedPkg)
+void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
    //cout << "RGMainWindow::refreshTable(): " << selectedPkg << endl;
 
@@ -278,10 +286,12 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg)
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
 
-   gtk_adjustment_value_changed(
-         gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView)));
-   gtk_adjustment_value_changed(
-         gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(_treeView)));
+   if(setAdjustment) {
+      gtk_adjustment_value_changed(
+	   gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView)));
+      gtk_adjustment_value_changed(
+	   gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(_treeView)));
+   }
 
    // set selected pkg to be selected again
    if(selectedPkg != NULL) {

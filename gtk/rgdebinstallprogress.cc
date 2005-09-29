@@ -462,7 +462,7 @@ void RGDebInstallProgress::updateInterface()
 	    // error from dpkg, needs to be parsed different
 	    str = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
-	    _error->Error(err.c_str());
+	    _error->Error(utf8(err.c_str()));
 	 } else if(strstr(status, "pmconffile") != NULL) {
 	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;

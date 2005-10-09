@@ -270,8 +270,9 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
-   //cout << "RGMainWindow::refreshTable(): " << selectedPkg << endl;
-
+   //cout << "RGMainWindow::refreshTable(): " << selectedPkg 
+	//<< " adj: " << setAdjustment <<endl;
+//
    string selected = selectedSubView();
    _lister->setSubView(utf8(selected.c_str()));
 
@@ -2490,7 +2491,7 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    RGMainWindow *me = (RGMainWindow *) data;
 
    me->setBusyCursor(true);
-   me->refreshTable(NULL);
+   me->refreshTable(NULL, false);
    me->setBusyCursor(false);
    me->updatePackageInfo(NULL);
 }

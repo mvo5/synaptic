@@ -462,7 +462,7 @@ void RGDebInstallProgress::updateInterface()
 	    // error from dpkg, needs to be parsed different
 	    str = g_strdup_printf(_("Error in package %s"), split[1]);
 	    string err = split[1] + string(": ") + split[3];
-	    _error->Error(utf8(err.c_str()));
+	    _error->Error("%s",utf8(err.c_str()));
 	 } else if(strstr(status, "pmconffile") != NULL) {
 	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;
@@ -476,7 +476,7 @@ void RGDebInstallProgress::updateInterface()
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 
 	 if(str!=NULL)
-	    gtk_label_set(GTK_LABEL(_label_status),str);
+	    gtk_label_set(GTK_LABEL(_label_status),utf8(str));
 	 
 	 // clean-up
 	 g_strfreev(split);

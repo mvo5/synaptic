@@ -700,10 +700,13 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
    else
       gtk_tree_path_next( path );
 
-   if(gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_sourcesListStore), &iter2, path ) ){
-     gtk_list_store_swap( me->_sourcesListStore, &iter, &iter2 );
-     gtk_tree_path_free(path);
-   }
+   // check if we can get a iter at the given path
+   if(!gtk_tree_model_get_iter(GTK_TREE_MODEL(me->_sourcesListStore), 
+			       &iter2, path) )
+      return;
+   
+   gtk_list_store_swap( me->_sourcesListStore, &iter, &iter2 );
+   gtk_tree_path_free(path);
    
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(GTK_TREE_MODEL(me->_sourcesListStore), &iter,

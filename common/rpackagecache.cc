@@ -59,9 +59,13 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
       return false;
 
    // delete any old structures
-   if(_dcache != NULL)
+   if(_dcache)
       delete _dcache;
-   if(_map != NULL)
+   if(_policy)
+      delete _policy;
+   if(_cache)
+      delete _cache;
+   if(_map)
       delete _map;
 
    // Read the source list
@@ -95,9 +99,6 @@ Go to the repository dialog to correct the problem."));
    if (_error->PendingError())
       return false;
 
-   // The policy engine
-   if (_policy != NULL)
-      delete _policy;
    _policy = new RPkgPolicy(_cache);
    if (_error->PendingError() == true)
       return false;
@@ -108,7 +109,6 @@ Go to the repository dialog to correct the problem."));
       return false;
 
    _dcache = new pkgDepCache(_cache, _policy);
-
    _dcache->Init(&progress);
 
    //progress.Done();

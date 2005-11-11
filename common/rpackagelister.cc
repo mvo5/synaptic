@@ -302,13 +302,12 @@ bool RPackageLister::openCache(bool lock)
                              "Please report."), 2);
    }
 
-#ifdef HAVE_RPM
-   // APT used to have a bug where the destruction order made
-   // this code segfault. APT-RPM has the right fix for this. -- niemeyer
+#if 0
+   // be gentle and free memory
    if (_records)
       delete _records;
 #endif
-
+   
    _records = new pkgRecords(*deps);
    if (_error->PendingError()) {
       _cacheValid = false;
@@ -1217,11 +1216,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    assert(_cache->list() != NULL);
    // Get the source list
    //pkgSourceList List;
-#ifdef HAVE_RPM
    _cache->list()->ReadMainList();
-#else
-   _cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist"));
-#endif
    // Lock the list directory
    FileFd Lock;
    if (_config->FindB("Debug::NoLocking", false) == false) {
@@ -1324,18 +1319,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
    assert(_cache->list() != NULL);
    // Read the source list
-#ifdef HAVE_RPM
    if (_cache->list()->ReadMainList() == false) {
       _userDialog->
          warning(_("Ignoring invalid record(s) in sources.list file!"));
    }
-#else
-   if (_cache->list()->Read(_config->FindFile("Dir::Etc::sourcelist")) ==
-       false) {
-      _userDialog->
-         warning(_("Ignoring invalid record(s) in sources.list file!"));
-   }
-#endif
 
    pkgPackageManager *PM;
    PM = _system->CreatePM(_cache->deps());

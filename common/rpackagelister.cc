@@ -302,7 +302,7 @@ bool RPackageLister::openCache(bool lock)
                              "Please report."), 2);
    }
 
-#if 0
+#ifdef HAVE_RPM
    // be gentle and free memory
    if (_records)
       delete _records;

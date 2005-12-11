@@ -5,15 +5,20 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad --exclude=CVS --exclude=.svn ./data/synaptic.desktop.in /tmp/dpep-work.8qeEsY/trunk/data/synaptic.desktop.in
---- ./data/synaptic.desktop.in	2005-08-01 14:58:13.000000000 +0200
-+++ /tmp/dpep-work.8qeEsY/trunk/data/synaptic.desktop.in	2005-08-01 15:05:17.000000000 +0200
+diff -urNad trunk~/data/synaptic.desktop.in trunk/data/synaptic.desktop.in
+--- trunk~/data/synaptic.desktop.in	2005-08-22 17:48:36.000000000 +0200
++++ trunk/data/synaptic.desktop.in	2005-12-09 15:25:45.000000000 +0100
 @@ -2,7 +2,7 @@
  _Name=Synaptic Package Manager
  _GenericName=Package Manager
  _Comment=Install, remove and upgrade software packages
 -Exec=gksu -u root /usr/sbin/synaptic
-+Exec=gksudo /usr/sbin/synaptic
++Exec=gksu /usr/sbin/synaptic
  Icon=synaptic.png
  Terminal=false
  MultipleArgs=false
+@@ -10,3 +10,4 @@
+ Encoding=UTF-8
+ Categories=PackageManager;GTK;System;Settings
+ NotShowIn=KDE
++X-KDE-SubstituteUID=true

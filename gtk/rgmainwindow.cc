@@ -2110,37 +2110,36 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
    // FIXME: make this all go into the repository window
    bool Changed = false;
    bool ForceReload = _config->FindB("Synaptic::UpdateAfterSrcChange",false);
+   
+   if(!g_file_test("/usr/bin/gnome-software-properties", 
+		   G_FILE_TEST_IS_EXECUTABLE) 
+      || _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) 
    {
-      if(!g_file_test("/usr/bin/gnome-software-properties", 
-		      G_FILE_TEST_IS_EXECUTABLE) 
-	 || _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) 
-      {
-	 RGRepositoryEditor w(me);
-	 Changed = w.Run();
-      } else {
-	 // use gnome-software-properties window
-	 me->setInterfaceLocked(TRUE);
-	 ForceReload = true;
-	 GPid pid;
-	 int status;
-	 char *argv[5];
-	 argv[0] = "/usr/bin/gnome-software-properties";
-	 argv[1] = "-n";
-	 argv[2] = "-t";
-	 argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));
-	 argv[4] = NULL;
-	 g_spawn_async(NULL, argv, NULL,
-				  (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
-				  NULL, NULL, &pid, NULL);
-	 // kill the child if the window is deleted
-	 while(waitpid(pid, &status, WNOHANG) == 0) {
-	    usleep(50000);
-	    RGFlushInterface();
-	 }
-	 Changed = WEXITSTATUS(status);    
-	 me->setInterfaceLocked(FALSE);
+      RGRepositoryEditor w(me);
+      Changed = w.Run();
+   } else {
+      // use gnome-software-properties window
+      me->setInterfaceLocked(TRUE);
+      GPid pid;
+      int status;
+      char *argv[5];
+      argv[0] = "/usr/bin/gnome-software-properties";
+      argv[1] = "-n";
+      argv[2] = "-t";
+      argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));
+      argv[4] = NULL;
+      g_spawn_async(NULL, argv, NULL,
+		    (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
+		    NULL, NULL, &pid, NULL);
+      // kill the child if the window is deleted
+      while(waitpid(pid, &status, WNOHANG) == 0) {
+	 usleep(50000);
+	 RGFlushInterface();
       }
+      Changed = WEXITSTATUS(status);    
+      me->setInterfaceLocked(FALSE);
    }
+   
    RGFlushInterface();
 
    // auto update after repostitory change

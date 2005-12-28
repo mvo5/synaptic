@@ -3276,11 +3276,12 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GtkWidget *self, void *data)
    me->_lister->readSelections(pkgs);
    me->_lister->registerObserver(me);
    me->refreshTable();
-   me->cbProceedClicked(NULL, me);
 
    // show any errors 
    me->_userDialog->showErrors();
-
+   
+   // click proceed
+   me->cbProceedClicked(NULL, me);
 
 #else
    me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");

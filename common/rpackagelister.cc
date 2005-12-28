@@ -58,6 +58,7 @@
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/md5.h>
 #ifndef HAVE_RPM
 #include <apt-pkg/debfile.h>
 #endif
@@ -1834,20 +1835,31 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
       return false;
    }
    
-   // FIXME: add md5sum check!
-   
    // correct version?
    string debVer = tag.FindS("Version");
    string candVer = pkg->availableVersion();
-   // if the canidate is older (-1) we ignore it
-   if(_system->VS->DoCmpVersion(candVer.c_str(), 
-				candVer.c_str()+candVer.size(),
-				debVer.c_str(), 
-				debVer.c_str()+candVer.size()) < 0) {
-      cerr << "Ignoring old candidate for " << pkgname << endl;
+   if(debVer != candVer) {
+      cerr << "Ignoring " << pkgname << " (different versions: "
+	   << debVer << " != " << candVer  << endl;
       return false;
    }
-   
+
+   // md5sum check
+   // first get the md5 of the candidate
+   pkgDepCache *dcache = _cache->deps();
+   pkgCache::VerIterator ver = dcache->GetCandidateVer(*pkg->package());
+   pkgCache::VerFileIterator Vf = ver.FileList(); 
+   pkgRecords::Parser &Parse = _records->Lookup(Vf);
+   string MD5 = Parse.MD5Hash();
+   // then calc the md5 of the pkg
+   MD5Summation debMD5;
+   in.Seek(0);
+   debMD5.AddFD(in.Fd(),in.Size());
+   if(MD5 != debMD5.Result().Value()) {
+      cerr << "Ignoring " << pkgname << " MD5 does not match"<< endl;
+      return false;
+   }
+      
    // copy to the cache
    in.Seek(0);
    FileFd out(_config->FindDir("Dir::Cache::archives")+string(flNotDir(archive)),

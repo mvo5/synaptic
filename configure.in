@@ -124,6 +124,16 @@ AC_SUBST(DEB_HDRS)
 DEB_LIBS=""
 AC_SUBST(DEB_LIBS)
 
+# launchpad integration
+AC_ARG_WITH(launchpad-integration,
+ 	[--launchpad-integration   build with launchpad-integration],
+	[PKG_CHECK_MODULES(LP, ["launchpad-integration"])
+	 AC_DEFINE(WITH_LAUNCHPAD_INTEGRATION, 1, [build with launchpad-integration] )
+	]
+)
+AC_SUBST(LP_CFLAGS)
+AC_SUBST(LP_LIBS)
+
 
 dnl Checks for header files.
 AC_HEADER_STDC

@@ -34,6 +34,7 @@
 #include <set>
 #include <regex.h>
 #include <apt-pkg/depcache.h>
+#include <apt-pkg/acquire.h>
 
 #include "rpackagecache.h"
 #include "rpackage.h"
@@ -267,19 +268,18 @@ class RPackageLister {
 
    // open it with lock
    bool openCache(bool lock=true);
-
    bool fixBroken();
-
    bool check();
    bool upgradable();
-
    bool upgrade();
    bool distUpgrade();
-
    bool cleanPackageCache(bool forceClean = false);
-
    bool updateCache(pkgAcquireStatus *status, string &error);
    bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
+
+   // some information
+   bool getDownloadUris(vector<string> &uris);
+   bool addArchiveToCache(string archiveDir, string &pkgname);
 
    void setProgressMeter(OpProgress *progMeter) {
       if(_progMeter != NULL)

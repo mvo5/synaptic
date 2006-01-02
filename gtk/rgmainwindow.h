@@ -68,42 +68,36 @@ typedef enum {
 } RGPkgAction;
 
 class RGMainWindow : public RGGladeWindow, public RPackageObserver {
+
    typedef enum {
       UPGRADE_ASK = -1,
       UPGRADE_NORMAL = 0,
       UPGRADE_DIST = 1
    } UpgradeType;
 
-   RPackageLister *_lister;
 
    bool _unsavedChanges;
+   bool _blockActions;        // block signals from the action and hold buttons
+   int _interfaceLocked;      
 
-   bool _blockActions;          // block signals from the action and hold buttons
-   GtkToolbarStyle _toolbarStyle;
-   int _interfaceLocked;
+   // the central class that has all the package information
+   RPackageLister *_lister;
 
-   GtkTooltips *_tooltips;
+   // interface stuff
+   GtkToolbarStyle _toolbarStyle; // hide, small, normal toolbar
 
-   GtkWidget *_sview;           // scrolled window for table
-
-   GtkTreeModel *_pkgList;
-   GtkWidget *_treeView;
+   GtkTreeModel *_pkgList;   // the custom list model for the packages
+   GtkWidget *_treeView;     // the display widget
 
    // the left-side view
    GtkWidget *_subViewList;
 
-   GtkWidget *_statusL;
-   GtkWidget *_progressBar;
 
    // menu items 
    GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
    GtkWidget *_remove_w_depsM, *_purgeM;
    GtkWidget *_dl_changelogM, *_detailsM;
 
-   // popup-menu
-   GtkWidget *_popupMenu;
-
-   GtkWidget *_actionBInstallLabel;
    GtkWidget *_pinM;
    GtkWidget *_overrideVersionM;
    GtkWidget *_pkgHelpM;
@@ -116,26 +110,13 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_propertiesB;
    GtkWidget *_fixBrokenM;
 
-   // filter/find panel   
-   GtkWidget *_cmdPanel;
+   // popup-menu in the treeview
+   GtkWidget *_popupMenu;
 
-   GtkWidget *_findText;
-   GtkWidget *_findSearchB;
-
-   // package info tabs   
-   GtkWidget *_pkginfo;
-   GtkWidget *_vpaned;
-   GtkWidget *_hpaned;
-
-   GtkWidget *_pkgCommonTextView;
+   // the description buffer
    GtkTextBuffer *_pkgCommonTextBuffer;
-   GtkTextTag *_pkgCommonBoldTag;
 
-   GtkWidget *_importP;
-
-   GtkWidget *_filesView;
-   GtkTextBuffer *_filesBuffer;
-
+   // the various dialogs
    RGFilterManagerWindow *_fmanagerWin;
    RGSourcesWindow *_sourcesWin;
    RGPreferencesWindow *_configWin;
@@ -146,13 +127,12 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGIconLegendPanel *_iconLegendPanel;
    RGPkgDetailsWindow *_pkgDetails;
    RGLogView *_logView;
-
-   RGCacheProgress *_cacheProgress;
    RGUserDialog *_userDialog;
-   GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
-
    RGFetchProgress *_fetchProgress;
    RGWindow *_installProgress;
+
+   // the buttons for the various views
+   GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
    // init stuff 
    void buildInterface();
@@ -175,12 +155,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RPackage *selectedPackage();
    string selectedSubView();
 
-#if INTERACTIVE_SEARCH_ON_KEYPRESS
-   // interactive search by pressing a key in treeview. 
-   // sebastian thinks it's too confusing (but it works)
-   static gboolean cbKeyPressedInTreeView(GtkWidget *widget, GdkEventKey *event, gpointer data);
-#endif
-
    // helpers
    void pkgAction(RGPkgAction action);
    bool askStateChange(RPackageLister::pkgState, vector<RPackage *> exclude);
@@ -194,9 +168,6 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // helper for recommends/suggests 
    // (data is the name of the pkg, self needs to have a pointer to "me" )
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
-#if 0
-   void installAllWeakDepends(RPackage *pkg, pkgCache::Dep::DepType type);
-#endif
    // install a non-standard version (data is a char* of the version)
    static void cbInstallFromVersion(GtkWidget *self, void *data);
 
@@ -273,6 +244,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbSaveAsClicked(GtkWidget *self, void *data);
    string selectionsFilename;
    bool saveFullState;
+   static void cbGenerateDownloadScriptClicked(GtkWidget *self, void *data);
+   static void cbAddDownloadedFilesClicked(GtkWidget *self, void *data);
    static void cbViewLogClicked(GtkWidget *self, void *data);
 
    // actions menu

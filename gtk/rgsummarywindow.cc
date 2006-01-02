@@ -487,11 +487,9 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
       sizeChange = -sizeChange;
    }
 
-   if (dlSize > 0) {
-      g_string_append_printf(msg_space, _("\n%s have to be downloaded"),
+   g_string_append_printf(msg_space, _("\n%s have to be downloaded"),
                              SizeToStr(dlSize).c_str());
-   }
-
+   
    gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
    g_string_free(msg, TRUE);

@@ -36,13 +36,17 @@
 #include <cmath>
 #include <algorithm>
 #include <fstream>
+#include <sstream>
 
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+
 #include <pwd.h>
 
 #include "raptoptions.h"
@@ -321,6 +325,10 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
    //cout << "RGMainWindow::updatePackageInfo(): " << pkg << endl;
 
+   // get required widgets from glade
+   GtkWidget *pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
+   assert(pkginfo);
+
    // set everything to non-sensitive (for both pkg != NULL && pkg == NULL)
    gtk_widget_set_sensitive(_keepM, FALSE);
    gtk_widget_set_sensitive(_installM, FALSE);
@@ -330,7 +338,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_purgeM, FALSE);
    gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
    gtk_widget_set_sensitive(_pkgHelpM, FALSE);
-   gtk_widget_set_sensitive(_pkginfo, FALSE);
+   gtk_widget_set_sensitive(pkginfo, FALSE);
    gtk_widget_set_sensitive(_dl_changelogM, FALSE);
    gtk_widget_set_sensitive(_detailsM, FALSE);
    gtk_widget_set_sensitive(_propertiesB, FALSE);
@@ -359,7 +367,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_pinM, TRUE);
 
    // set info
-   gtk_widget_set_sensitive(_pkginfo, true);
+   gtk_widget_set_sensitive(pkginfo, true);
    RGPkgDetailsWindow::fillInValues(this, pkg);
    // work around a stupid gtk-bug (see debian #279447)
    gtk_widget_queue_resize(glade_xml_get_widget(_gladeXML,"viewport_pkginfo"));
@@ -522,25 +530,6 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
 
    return changed;
 }
-
-#if 0
-void RGMainWindow::installAllWeakDepends(RPackage *pkg, 
-					 pkgCache::Dep::DepType type)
-{
-   //cout << "RGMainWindow::installWeakDepends()" << endl;
-   if(pkg == NULL) return;
-   
-   vector<DepInformation> deps = pkg->enumDeps();
-   for(unsigned int i=0;i<deps.size();i++) {
-      if(deps[i].type == type) {
-	 if(!deps[i].isVirtual) {
-	    RPackage *newpkg = (RPackage *) _lister->getPackage(deps[i].name);
-	    pkgInstallHelper(newpkg);
-	 }
-      }
-   } 
-}
-#endif
 
 void RGMainWindow::pkgAction(RGPkgAction action)
 {
@@ -707,18 +696,28 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    _interfaceLocked = 0;
 
    _lister->registerObserver(this);
-   _tooltips = gtk_tooltips_new();
 
    _toolbarStyle = (GtkToolbarStyle) _config->FindI("Synaptic::ToolbarState",
                                                     (int)GTK_TOOLBAR_BOTH);
 
-
+   // create all the interface stuff
    buildInterface();
    _userDialog = new RGUserDialog(this);
 
    packLister->setUserDialog(_userDialog);
 
+   // build the progress stuff
+   GtkWidget *progress, *label;
+   progress = glade_xml_get_widget(_gladeXML, "progressbar_main");
+   assert(progress);
+   label = glade_xml_get_widget(_gladeXML, "label_status");
+   assert(label);
+   RGCacheProgress *_cacheProgress;
+   _cacheProgress = new RGCacheProgress(progress, label);
+   assert(_cacheProgress);
    packLister->setProgressMeter(_cacheProgress);
+
+   // defaults for the various windows
    _findWin = NULL;
    _setOptWin = NULL;
    _sourcesWin = NULL;
@@ -1138,10 +1137,19 @@ void RGMainWindow::buildInterface()
                                  "on_view_commit_log_activate",
                                  G_CALLBACK(cbViewLogClicked), this);
 
-
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_save_as_activate",
                                  G_CALLBACK(cbSaveAsClicked), this);
+
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_generate_download_script_activate",
+                                 G_CALLBACK(cbGenerateDownloadScriptClicked), 
+				 this);
+
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_add_downloadedfiles_activate",
+                                 G_CALLBACK(cbAddDownloadedFilesClicked),
+				 this);
 
    widget = _detailsM = glade_xml_get_widget(_gladeXML, "menu_details");
    assert(_detailsM);
@@ -1203,6 +1211,7 @@ void RGMainWindow::buildInterface()
       gtk_widget_hide(glade_xml_get_widget(_gladeXML, "menu_tasks"));
 
    // Workaround for a bug in libglade.
+   GtkTooltips *_tooltips = gtk_tooltips_new();
    button = glade_xml_get_widget(_gladeXML, "button_update");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
 			     _("Reload the package information to become "
@@ -1217,12 +1226,10 @@ void RGMainWindow::buildInterface()
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
 
-   _pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
-   assert(_pkgCommonTextView);
-   gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(_pkgCommonTextView),
-                               GTK_WRAP_WORD);
-   _pkgCommonTextBuffer = gtk_text_view_get_buffer(
-                               GTK_TEXT_VIEW(_pkgCommonTextView));
+   GtkWidget *pkgCommonTextView;
+   pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
+   assert(pkgCommonTextView);
+   _pkgCommonTextBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(pkgCommonTextView));
 
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_action_keep",
@@ -1288,11 +1295,10 @@ void RGMainWindow::buildInterface()
 //       gtk_widget_hide(widget);
 #endif
 
-   _pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
-   assert(_pkginfo);
    GtkWidget *box = glade_xml_get_widget(_gladeXML, "vbox_pkgdescr");
    if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
-      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(_pkginfo), TRUE);
+      GtkWidget *pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
+      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), TRUE);
       gtk_container_set_border_width(GTK_CONTAINER(box), 12);
    } else {
       gtk_container_set_border_width(GTK_CONTAINER(box), 0);
@@ -1301,18 +1307,18 @@ void RGMainWindow::buildInterface()
    gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_filelist"));
 #endif
 
-   _vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
-   assert(_vpaned);
-   _hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
-   assert(_hpaned);
+   GtkWidget *vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
+   assert(vpaned);
+   GtkWidget *hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
+   assert(hpaned);
    // If the pane position is restored before the window is shown, it's
    // not restored in the same place as it was.
    if(!_config->FindB("Volatile::HideMainwindow", false))
       show();
    RGFlushInterface();
-   gtk_paned_set_position(GTK_PANED(_vpaned),
+   gtk_paned_set_position(GTK_PANED(vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
-   gtk_paned_set_position(GTK_PANED(_hpaned),
+   gtk_paned_set_position(GTK_PANED(hpaned),
                           _config->FindI("Synaptic::hpanedPos", 200));
 
 
@@ -1492,18 +1498,6 @@ void RGMainWindow::buildInterface()
 
    gtk_widget_show(_popupMenu);
 
-   // attach progress bar
-   _progressBar = glade_xml_get_widget(_gladeXML, "progressbar_main");
-   assert(_progressBar);
-   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-   assert(_statusL);
-
-   gtk_misc_set_alignment(GTK_MISC(_statusL), 0.0f, 0.0f);
-   gtk_widget_set_usize(GTK_WIDGET(_statusL), 100, -1);
-   _cacheProgress = new RGCacheProgress(_progressBar, _statusL);
-   assert(_cacheProgress);
-
-
    //FIXME/MAYBE: create this dynmaic?!?
    //    for (vector<string>::const_iterator I = views.begin();
    // I != views.end(); I++) {
@@ -1596,7 +1590,11 @@ void RGMainWindow::setStatusText(char *text)
    int toInstall, toReInstall, toRemove;
    double size;
 
-   _lister->getStats(installed, broken, toInstall, toReInstall, toRemove, size);
+
+   GtkWidget *_statusL = glade_xml_get_widget(_gladeXML, "label_status");
+   assert(_statusL);
+
+   _lister->getStats(installed,broken,toInstall,toReInstall,toRemove,size);
 
    if (text) {
       gtk_label_set_text(GTK_LABEL(_statusL), text);
@@ -1640,10 +1638,13 @@ void RGMainWindow::saveState()
 {
    if (_config->FindB("Volatile::NoStateSaving", false) == true)
       return;
+
+   GtkWidget *vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
+   GtkWidget *hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
    _config->Set("Synaptic::vpanedPos",
-                gtk_paned_get_position(GTK_PANED(_vpaned)));
+                gtk_paned_get_position(GTK_PANED(vpaned)));
    _config->Set("Synaptic::hpanedPos",
-                gtk_paned_get_position(GTK_PANED(_hpaned)));
+                gtk_paned_get_position(GTK_PANED(hpaned)));
    _config->Set("Synaptic::windowWidth", _win->allocation.width);
    _config->Set("Synaptic::windowHeight", _win->allocation.height);
    gint x, y;
@@ -2029,7 +2030,7 @@ void RGMainWindow::cbSaveAsClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow*)data;
 
    GtkWidget *filesel;
-   filesel = gtk_file_chooser_dialog_new(_("Open changes"), 
+   filesel = gtk_file_chooser_dialog_new(_("Save changes"), 
 					 GTK_WINDOW(me->window()),
 					 GTK_FILE_CHOOSER_ACTION_SAVE,
 					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -3200,6 +3201,90 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
    }
 }
 
+void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
+{
+   //cout << "cbGenerateDownloadScriptClicked()" << endl;
+   RGMainWindow *me = (RGMainWindow *) data;
 
+   vector<string> uris;
+   if(!me->_lister->getDownloadUris(uris))
+      return;
+
+   GtkWidget *filesel;
+   filesel = gtk_file_chooser_dialog_new(_("Save script"), 
+					 GTK_WINDOW(me->window()),
+					 GTK_FILE_CHOOSER_ACTION_SAVE,
+					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					 NULL);
+   int res = gtk_dialog_run(GTK_DIALOG(filesel));
+   const char *file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
+   gtk_widget_destroy(filesel);
+   if(res != GTK_RESPONSE_ACCEPT) 
+      return;
+
+   // FIXME: this is prototype code, hardcoding wget here suckx
+   ofstream out(file);
+   out << "#!/bin/sh" << endl;
+   for(int i=0;i<uris.size();i++) {
+      out << "wget " << uris[i] << endl;
+   }
+   chmod(file, 0755);
+}
+
+void RGMainWindow::cbAddDownloadedFilesClicked(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+#ifndef HAVE_RPM
+   //cout << "cbAddDownloadedFilesClicked()" << endl;
+   GtkWidget *filesel;
+   filesel = gtk_file_chooser_dialog_new(_("Select directory"), 
+					 GTK_WINDOW(me->window()),
+					 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					 NULL);
+   int res = gtk_dialog_run(GTK_DIALOG(filesel));
+   const char *path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
+   gtk_widget_destroy(filesel);
+   if(res != GTK_RESPONSE_ACCEPT) 
+      return;
+   if (!g_file_test(path, G_FILE_TEST_IS_DIR)) {
+      me->_userDialog->error(_("Please select a directory"));
+      return;
+   }
+   // now read the dir for debs
+   const gchar *file;
+   string pkgname;
+   stringstream pkgs;
+   GDir *dir = g_dir_open(path, 0, NULL);
+   while ( (file=g_dir_read_name(dir)) != NULL) {
+      if(g_pattern_match_simple("*_*.deb", file)) {
+	 if(me->_lister->addArchiveToCache(string(path)+"/"+string(file),
+					   pkgname))
+	    pkgs << pkgname << "\t install" << endl;
+      }
+   }
+   g_dir_close(dir);
+
+   // and set what we found as selection
+   pkgs.seekg(0);
+   if (pkgs.str() == "")
+      return;
+
+   me->_lister->unregisterObserver(me);
+   me->_lister->readSelections(pkgs);
+   me->_lister->registerObserver(me);
+   me->refreshTable();
+   me->cbProceedClicked(NULL, me);
+
+   // show any errors 
+   me->_userDialog->showErrors();
+
+
+#else
+   me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");
+#endif
+}
 
 // vim:ts=3:sw=3:et

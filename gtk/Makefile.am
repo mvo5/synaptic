@@ -14,7 +14,7 @@ sbin_PROGRAMS = synaptic
 
 synaptic_LDADD = \
 	${top_builddir}/common/libsynaptic.a\
-	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
+	-lapt-pkg -lapt-inst @RPM_LIBS@ @DEB_LIBS@ \
 	@PACKAGE_LIBS@ @VTE_LIBS@ \
 	-lpthread $(LIBTAGCOLL_LIBS) 
 

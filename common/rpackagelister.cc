@@ -53,10 +53,14 @@
 #include <apt-pkg/acquire.h>
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/clean.h>
+#include <apt-pkg/version.h>
 
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/strutl.h>
+#ifndef HAVE_RPM
+#include <apt-pkg/debfile.h>
+#endif
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -777,6 +781,15 @@ void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 {
    dlCount = 0;
    dlSize = _cache->deps()->DebSize();
+
+   pkgAcquire Fetcher;
+   pkgPackageManager *PM = _system->CreatePM(_cache->deps());
+   if (!PM->GetArchives(&Fetcher, _cache->list(), _records)) {
+      delete PM;
+      return;
+   }
+   dlSize = Fetcher.FetchNeeded();
+   delete PM;
 }
 
 
@@ -1198,17 +1211,19 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
 #ifdef WITH_APT_AUTH
    pkgAcquire Fetcher(NULL);
    pkgPackageManager *PM = _system->CreatePM(_cache->deps());
-   if (!PM->GetArchives(&Fetcher, _cache->list(), _records))
+   if (!PM->GetArchives(&Fetcher, _cache->list(), _records)) {
+      delete PM;
       return;
+   }
    for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin(); 
 	I < Fetcher.ItemsEnd(); ++I) {
       if (!(*I)->IsTrusted()) {
          notAuthenticated.push_back(string((*I)->ShortDesc()));
       }
    }
-#else
-   sizeChange = deps->UsrSize();
+   delete PM;
 #endif
+   sizeChange = deps->UsrSize();
 }
 
 bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
@@ -1297,7 +1312,22 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    return true;
 }
 
+bool RPackageLister::getDownloadUris(vector<string> &uris)
+{
+   pkgAcquire fetcher;
+   pkgPackageManager *PM = _system->CreatePM(_cache->deps());
+   if (!PM->GetArchives(&fetcher, _cache->list(), _records)) {
+      delete PM;
+      return false;
+   }
+   for (pkgAcquire::ItemIterator I = fetcher.ItemsBegin();
+	I != fetcher.ItemsEnd(); I++) {
+      uris.push_back((*I)->DescURI());
+   }
 
+   delete PM;
+   return true;
+}
 
 bool RPackageLister::commitChanges(pkgAcquireStatus *status,
                                    RInstallProgress *iprog)
@@ -1768,6 +1798,61 @@ bool RPackageLister::readSelections(istream &in)
       Fix.InstallProtect();
       Fix.Resolve(true);
    }
+
+   return true;
+}
+
+bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
+{
+   //cout << "addArchiveToCache() " << archive << endl;
+
+   // do sanity checking on the file (do we need this 
+   // version, arch, or a different one etc)
+   FileFd in(archive, FileFd::ReadOnly);
+   debDebFile deb(in);
+   debDebFile::MemControlExtract Extract("control");
+   if(!Extract.Read(deb)) {
+      cerr << "read failed" << endl;
+      return false;
+   }
+   pkgTagSection tag;
+   if(!tag.Scan(Extract.Control,Extract.Length+2)) {
+      cerr << "scan failed" << endl;
+      return false;
+   }
+   // do we have the pkg
+   pkgname = tag.FindS("Package");
+   RPackage *pkg = this->getPackage(pkgname);
+   if(pkg == NULL) {
+      cerr << "Can't find pkg " << pkgname << endl;
+      return false;
+   }
+   // is it the right architecture?
+   if(tag.FindS("Architecture") != "all" &&
+      tag.FindS("Architecture") != _config->Find("APT::Architecture")) {
+      cerr << "Ignoring different architecture for " << pkgname << endl;
+      return false;
+   }
+   
+   // FIXME: add md5sum check!
+   
+   // correct version?
+   string debVer = tag.FindS("Version");
+   string candVer = pkg->availableVersion();
+   // if the canidate is older (-1) we ignore it
+   if(_system->VS->DoCmpVersion(candVer.c_str(), 
+				candVer.c_str()+candVer.size(),
+				debVer.c_str(), 
+				debVer.c_str()+candVer.size()) < 0) {
+      cerr << "Ignoring old candidate for " << pkgname << endl;
+      return false;
+   }
+   
+   // copy to the cache
+   in.Seek(0);
+   FileFd out(_config->FindDir("Dir::Cache::archives")+string(flNotDir(archive)),
+	      FileFd::WriteAny);
+   CopyFile(in, out);
 
    return true;
 }

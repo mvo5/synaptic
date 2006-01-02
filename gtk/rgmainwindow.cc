@@ -3206,6 +3206,17 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    //cout << "cbGenerateDownloadScriptClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
+   int installed, broken, toInstall, toReInstall, toRemove;
+   double sizeChange;
+   me->_lister->getStats(installed, broken, toInstall, toReInstall,
+			 toRemove, sizeChange);
+   if(toInstall+toReInstall == 0) {
+      me->_userDialog->message("Nothing to install/upgrade\n\n"
+			       "Please select the \"Mark all Upgrades\" "
+			       "button or some packages to install/upgrade.");
+      return;
+   }
+
    vector<string> uris;
    if(!me->_lister->getDownloadUris(uris))
       return;

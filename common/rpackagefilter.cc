@@ -220,6 +220,11 @@ bool RPatternPackageFilter::filterDepends(Pattern pat, RPackage *pkg,
 					  pkgCache::Dep::DepType filterType)
 {
    vector<DepInformation> deps = pkg->enumDeps();
+
+   if (pat.regexps.size() == 0) {
+      return true;
+   }
+   
    for(unsigned int i=0;i<deps.size();i++) {
       if(deps[i].type == filterType) {
 	    if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
@@ -234,6 +239,11 @@ bool RPatternPackageFilter::filterProvides(Pattern pat, RPackage *pkg)
 {
    bool found = false;
    vector<string> provides = pkg->provides();
+
+   if (pat.regexps.size() == 0) {
+      return true;
+   }
+   
    for (unsigned int i = 0; i < provides.size(); i++) {
       if (regexec(pat.regexps[0], provides[i].c_str(), 0, NULL, 0) == 0) {
 	 found = true;
@@ -265,6 +275,11 @@ bool RPatternPackageFilter::filterWeakDepends(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
 {
    vector<DepInformation> deps = pkg->enumRDeps();
+
+   if (pat.regexps.size() == 0) {
+      return true;
+   }
+   
    for(unsigned int i=0;i<deps.size();i++) {
       if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
 	 return true;
@@ -277,6 +292,11 @@ bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
    bool found = false;
    string origin;
    origin = pkg->getCanidateOrigin();
+
+   if (pat.regexps.size() == 0) {
+      return true;
+   }
+   
    if(regexec(pat.regexps[0],origin.c_str(), 0, NULL, 0) == 0) {
       found = true;
    } 

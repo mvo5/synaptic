@@ -76,7 +76,7 @@ bool RGUserDialog::showErrors()
    GtkWidget *scroll = gtk_scrolled_window_new(NULL,NULL);
    GtkWidget *textview = gtk_text_view_new();
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
-   gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer),msg.c_str(), -1);
+   gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer),utf8(msg.c_str()), -1);
    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textview), GTK_WRAP_WORD);
    gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);

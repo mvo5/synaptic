@@ -1,16 +1,16 @@
 # Italian messages for synaptic.
-# Copyright (C) 2003, 2004, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the synaptic package.
-# Marco Colombo <m.colombo@ed.ac.uk>, 2005.
+# Marco Colombo <m.colombo@ed.ac.uk>, 2005, 2006.
 # Mauro Colorio <linuxbox@interfree.it>, 2004.
 # Luigi Maselli <metnik@tiscali.it>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.56\n"
+"Project-Id-Version: 0.57\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-08 23:42+0200\n"
-"PO-Revision-Date: 2005-02-25 16:14+0000\n"
+"PO-Revision-Date: 2006-01-09 14:29+0000\n"
 "Last-Translator: Marco Colombo <m.colombo@ed.ac.uk>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "MIME-Version: 1.0\n"
@@ -379,9 +379,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "ERRORE: impossibile creare la directory di configurazione %s"
 
 #: ../common/rconfiguration.cc:147
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create state directory %s"
-msgstr "ERRORE: impossibile creare la directory temporanea %s"
+msgstr "ERRORE: impossibile creare la directory di stato %s"
 
 #: ../common/rconfiguration.cc:164
 #, c-format
@@ -571,9 +571,8 @@ msgid "Depends"
 msgstr "Dipende"
 
 #: ../common/rpackage.h:52
-#, fuzzy
 msgid "PreDepends"
-msgstr "Dipende"
+msgstr "PreDipende"
 
 #: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
 msgid "Suggests"
@@ -593,12 +592,12 @@ msgstr "Sostituisce"
 
 #: ../common/rpackage.h:54
 msgid "Obsoletes"
-msgstr ""
+msgstr "Rende obsoleto"
 
+# FIXME
 #: ../common/rpackage.h:54
-#, fuzzy
 msgid "Dependency of"
-msgstr "Dipendenze"
+msgstr "Dipendenza di"
 
 #: ../common/rpackagecache.cc:71
 msgid ""
@@ -916,12 +915,12 @@ msgstr "Impossibile leggere %s"
 #: ../common/rsources.cc:131
 #, c-format
 msgid "Syntax error in line %s"
-msgstr ""
+msgstr "Errore di sintassi alla riga %s"
 
 #: ../common/rsources.cc:458
 #, c-format
 msgid "Vendor block %s is invalid"
-msgstr ""
+msgstr "Il blocco Fornitore %s non è valido"
 
 #. vim:sts=4:sw=4
 #: ../gtk/dialog_quit.glade.h:1
@@ -1044,14 +1043,12 @@ msgid "--task-window Open with task window\n"
 msgstr "--task-window Avvia con la finestra delle attività\n"
 
 #: ../gtk/gsynaptic.cc:82
-#, fuzzy
 msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
-msgstr "--add-cdrom Aggiunge un cdrom all'avvio\n"
+msgstr "--add-cdrom Aggiunge un cdrom all'avvio (è necessario il percorso del cdrom)\n"
 
 #: ../gtk/gsynaptic.cc:83
-#, fuzzy
 msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
-msgstr "--add-cdrom Aggiunge un cdrom all'avvio\n"
+msgstr "--ask-cdrom Chiede di aggiungere un cdrom ed esce\n"
 
 #: ../gtk/gsynaptic.cc:325 ../gtk/gsynaptic.cc:331
 msgid "Another synaptic is running"
@@ -1220,27 +1217,23 @@ msgid "Installing %s"
 msgstr "Installazione di %s"
 
 #: ../gtk/rgdebinstallprogress.cc:288
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr ""
-"Intallare il nuovo file di configurazione\n"
+"Sostituire il file di configurazione\n"
 "\"%s\"?"
 
 # FIXME UPSTREAM: should be '%s'
 #: ../gtk/rgdebinstallprogress.cc:289
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
 "say 'Keep'. Do you want to replace the current file and install the new "
 "package maintainers version? "
-msgstr ""
-"Il file di configurazione \"%s\" è stato modificato (dall'utente o da uno "
-"script). Questo pacchetto ne fornisce una versione aggiornata. Per mantenere "
-"la versione corrente, scegliere \"No\". Installare la versione contenuta nel "
-"nuovo pacchetto?"
+msgstr "Il file di configurazione \"%s\" è stato modificato (dall'utente o da uno script). Questo pacchetto ne fornisce una versione aggiornata. Per mantenere la versione corrente, scegliere \"Mantieni\". Sostituire il file corrente con la nuova versione contenuta nel pacchetto?"
 
 #: ../gtk/rgdebinstallprogress.cc:430 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
@@ -1257,14 +1250,11 @@ msgstr "Errori nel pacchetto %s"
 msgid "Changes applied"
 msgstr "Modifiche applicate"
 
-# FIXME
 #: ../gtk/rgdebinstallprogress.cc:713
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
-msgstr ""
-"Le modifiche marcate stanno venendo applicate. Questo può durare a lungo, "
-"attendere."
+msgstr "Le modifiche marcate stanno per essere applicate. Questo può durare a lungo, attendere."
 
 #: ../gtk/rgdebinstallprogress.cc:718
 msgid "Installing and removing software"
@@ -1695,7 +1685,6 @@ msgstr ""
 msgid "Repositories changed"
 msgstr "Archivi cambiati"
 
-# FIXME UPSTREAM: is this message correct? REPORTED
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
@@ -1887,24 +1876,20 @@ msgid "Unknown source type"
 msgstr "Tipo sorgente sconosciuta"
 
 #: ../gtk/rgsummarywindow.cc:125
-#, fuzzy
 msgid "<b>(ESSENTIAL) to be removed</b>"
-msgstr "(ESSENZIALE) da rimuovere"
+msgstr "<b>(ESSENZIALE) da rimuovere</b>"
 
 #: ../gtk/rgsummarywindow.cc:139
-#, fuzzy
 msgid "<b>To be DOWNGRADED</b>"
-msgstr "Da RETROCEDERE (downgrade)"
+msgstr "<b>Da RETROCEDERE</b> (downgrade)"
 
 #: ../gtk/rgsummarywindow.cc:152
-#, fuzzy
 msgid "<b>To be removed</b>"
-msgstr "Da rimuovere"
+msgstr "<b>Da rimuovere</b>"
 
 #: ../gtk/rgsummarywindow.cc:165
-#, fuzzy
 msgid "<b>To be completely removed (including configuration files)</b>"
-msgstr "Da rimuovere completamente (inclusi i file di configurazione)"
+msgstr "<b>Da rimuovere completamente (inclusi i file di configurazione)</b>"
 
 #: ../gtk/rgsummarywindow.cc:217
 msgid "Unchanged"
@@ -3321,7 +3306,6 @@ msgid "Dependent packages"
 msgstr "Pacchetti dipendenti"
 
 #: ../gtk/rgpkgcdrom.cc:68
-#, fuzzy
 msgid "Please insert a disc in the drive."
 msgstr "Inserire un disco nell'unità."
 

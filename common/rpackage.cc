@@ -873,7 +873,7 @@ void RPackage::setPinned(bool flag)
       // delete package from pinning file
       stat(File.c_str(), &stat_buf);
       // create a tmp_pin file in the internal dir
-      string filename = RTmpDir()+"/tmp_pin";
+      string filename = RStateDir() + "/.tmp_preferences";
       FILE *out = fopen(filename.c_str(),"w");
       if (out == NULL)
          cerr << "error opening tmpfile: " << filename << endl;

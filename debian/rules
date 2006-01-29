@@ -112,7 +112,7 @@ unpatch:
 	dpatch deapply-all
 	rm -rf patch-stamp debian/patched
 
-svn-build:
+svn-build: configure.in
 	rm -rf debian/svn-build
 	mkdir -p debian/svn-build/synaptic-$(S_DEBVER)
 	svn ls -R | xargs tar --no-recursion -c -v -f -  | (cd debian/svn-build/synaptic-$(S_DEBVER) ; tar xf -)

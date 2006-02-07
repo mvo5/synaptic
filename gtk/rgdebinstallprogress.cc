@@ -292,12 +292,16 @@ void RGDebInstallProgress::startUpdate()
 
    // check if we run embedded
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
-   //cout << "Plug ID: " << id << endl;
    if (id > 0) {
       GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_rgdebinstall_progress");
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show(_sock);
+   } else if (_config->FindI("Volatile::ParentWindowId", -1) > 0) {
+      id = _config->FindI("Volatile::ParentWindowId", -1);
+
+      GdkWindow *win = gdk_window_foreign_new(id);
+      gdk_window_set_transient_for(win);
    } else {
       show();
    }

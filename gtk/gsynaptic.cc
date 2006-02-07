@@ -108,6 +108,8 @@ CommandLine::Args Args[] = {
    , {
    0, "ask-cdrom", "Volatile::AskCdrom-Mode", 0}
    , {
+   0, "parent-window-id", "Volatile::ParentWindowId", CommandLine::HasArg}
+   , {
    0, "plug-progress-into", "Volatile::PlugProgressInto", CommandLine::HasArg}
    , {
    0, "progress-str", "Volatile::InstallProgressStr", CommandLine::HasArg} 

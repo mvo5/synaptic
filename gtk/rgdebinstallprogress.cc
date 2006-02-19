@@ -297,11 +297,6 @@ void RGDebInstallProgress::startUpdate()
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show(_sock);
-   } else if (_config->FindI("Volatile::ParentWindowId", -1) > 0) {
-      id = _config->FindI("Volatile::ParentWindowId", -1);
-
-      GdkWindow *win = gdk_window_foreign_new(id);
-      gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
    } else {
       show();
    }

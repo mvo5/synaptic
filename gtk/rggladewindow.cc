@@ -74,8 +74,14 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
                       (GtkSignalFunc) windowCloseCallback, this);
    _topBox = NULL;
-   //gtk_widget_realize(_win);
 
+   // honor foreign parent windows (to make embedding easy)
+   int id = _config->FindI("Volatile::ParentWindowId", -1);
+   if (id > 0) {
+      GdkWindow *win = gdk_window_foreign_new(id);
+      gtk_widget_realize(_win);
+      gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+   }
 }
 
 bool RGGladeWindow::setLabel(const char *widget_name, const char *value)

@@ -1,9 +1,12 @@
 Nice dpkg status output:
  - try to detect reads attempts of the child (via select() on _child_control?)
  - implement cancel as a last resort
-
+ 
 
 Misc:
+ - check download size against statvfs against /var/cache
+   and in generate download script on the target location
+
  - preferences: HIG instant apply only(fast enough for e.g. pkglist changes?)
  - human readable repositories (ubuntu bug #1347)
  - proxy username/password does not work with synaptic preferences 
@@ -18,7 +21,6 @@ Misc:
    >suggested package good for and decide whether or not to install
    >it. 
  - Scroll-bug (Eric Freyens, 25.10.2004)
- - check download size against statvfs 
  - add "pause download" feature (possible with the fetchers?)
  - integrate apt-get.org/fedoratracker.org into synaptic (savannah bug
    #10544), a "server list" similar to amule (or gnutella, etc).

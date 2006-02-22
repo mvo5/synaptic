@@ -350,7 +350,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    setTitle(_("Summary"));
    //gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
 
-
    _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
    assert(_summaryL);
 

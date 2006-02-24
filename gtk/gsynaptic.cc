@@ -406,6 +406,7 @@ int main(int argc, char **argv)
 			   "The application will run in read-only mode. "
 			   "You will not be able to change the package "
 			   "database."));
+   }
 
    if (!RInitConfiguration("synaptic.conf")) {
       RGUserDialog userDialog;

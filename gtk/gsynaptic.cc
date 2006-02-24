@@ -305,6 +305,9 @@ pid_t TestLock(string File)
 //    *) if not, show message and fail
 void check_and_aquire_lock()
 {
+   if (getuid() != 0) 
+      return;
+
    GtkWidget *dia;
    gchar *msg = NULL;
    pid_t LockedApp, runsNonInteractive;
@@ -399,9 +402,10 @@ int main(int argc, char **argv)
 
    if (getuid() != 0) {
       RGUserDialog userDialog;
-      userDialog.error(_("You must run this program as the root user."));
-      exit(1);
-   }
+      userDialog.warning(_("Not runing as root\n\n"
+			   "The application will run in read-only mode. "
+			   "You will not be able to change the package "
+			   "database."));
 
    if (!RInitConfiguration("synaptic.conf")) {
       RGUserDialog userDialog;

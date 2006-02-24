@@ -1064,6 +1064,7 @@ void RGMainWindow::buildInterface()
 
    _proceedB = glade_xml_get_widget(_gladeXML, "button_procceed");
    _proceedM = glade_xml_get_widget(_gladeXML, "menu_proceed");
+   
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_proceed_clicked",
                                  G_CALLBACK(cbProceedClicked), this);
@@ -1542,6 +1543,26 @@ void RGMainWindow::buildInterface()
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
 
+
+   // stuff for the non-root mode
+   if(getuid() != 0) {
+      GtkWidget *menu;
+      gtk_widget_set_sensitive(_proceedB, false);
+      gtk_widget_set_sensitive(_proceedM, false);
+      button = glade_xml_get_widget(_gladeXML, "button_update");
+      gtk_widget_set_sensitive(button, false);
+      menu = glade_xml_get_widget(_gladeXML,"menu_add_downloadedfiles");
+      gtk_widget_set_sensitive(menu, false);
+      menu = glade_xml_get_widget(_gladeXML,"menu_repositories");
+      gtk_widget_set_sensitive(menu, false);
+      menu = glade_xml_get_widget(_gladeXML,"view_commit_log");
+      gtk_widget_set_sensitive(menu, false);
+      menu = glade_xml_get_widget(_gladeXML,"update_package_entrys1");
+      gtk_widget_set_sensitive(menu, false);
+      menu = glade_xml_get_widget(_gladeXML,"add_cdrom");
+      gtk_widget_set_sensitive(menu, false);
+   }
+
 }
 
 
@@ -1626,8 +1647,10 @@ void RGMainWindow::setStatusText(char *text)
    gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
    gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
 
-   gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
-   gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);
+   if (getuid() == 0) {
+      gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
+      gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);
+   }
    _unsavedChanges = ((toInstall + toRemove) != 0);
 
    gtk_widget_queue_draw(_statusL);

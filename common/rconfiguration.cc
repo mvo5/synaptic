@@ -107,7 +107,7 @@ static bool checkConfigDir(string &path)
    struct stat stbuf;
    struct passwd *pwd;
 
-   pwd = getpwuid(0);
+   pwd = getpwuid(getuid());
    if (!pwd) {
       return _error->Errno("getpwuid",
                            _

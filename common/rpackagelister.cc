@@ -278,12 +278,17 @@ bool RPackageLister::upgradable()
    return _cache != NULL && _cache->deps() != NULL;
 }
 
-bool RPackageLister::openCache(bool lock)
+bool RPackageLister::openCache()
 {
    static bool firstRun = true;
 
    // Flush old errors
    _error->Discard();
+
+   // only lock if we run as root
+   bool lock = true;
+   if(getuid() != 0)
+      lock = false;
 
    if (!_cache->open(*_progMeter,lock)) {
       _progMeter->Done();

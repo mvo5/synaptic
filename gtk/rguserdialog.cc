@@ -84,6 +84,15 @@ bool RGUserDialog::showErrors()
    gtk_widget_show_all(scroll);
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dia)->vbox), scroll);
    gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dia)->vbox), 12);
+
+   // honor foreign parent windows (to make embedding easy)
+   int id = _config->FindI("Volatile::ParentWindowId", -1);
+   if (id > 0) {
+      GdkWindow *win = gdk_window_foreign_new(id);
+      gtk_widget_realize(dia);
+      gdk_window_set_transient_for(GDK_WINDOW(dia->window), win);
+   }
+
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
 

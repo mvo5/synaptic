@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-19 18:00+0200\n"
-"PO-Revision-Date: 2006-01-10 18:10+0200\n"
+"POT-Creation-Date: 2006-02-18 14:20+0200\n"
+"PO-Revision-Date: 2006-02-18 14:22+0200\n"
 "Last-Translator: Ilkka Tuohela <hile@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -399,11 +399,12 @@ msgstr ""
 #: ../common/rinstallprogress.cc:42
 msgid ""
 "\n"
-"Failed to apply all changes! Scroll in the terminal buffer to see what went "
-"wrong."
+"Not all changes and updates succeeded. If you are interessted in the details "
+"of the failure, please expand the the 'terminal' panel."
 msgstr ""
 "\n"
-"Kaikkia muutoksia ei voit tehdä! Lue tekstibufferista mikä meni pieleen."
+"Osa muutoksista tai päivityksistä epäonnistui. Jos olet kiinnostunut "
+"virheiden yksityiskohdista, voit lukea ne laajentamalla \"pääte\"-paneelin."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -537,7 +538,7 @@ msgid "Installed"
 msgstr "Asennettu"
 
 #: ../common/rpackage.cc:1280 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:531
+#: ../gtk/gsynaptic.cc:533
 msgid "Installed (upgradable)"
 msgstr "Asennettu (päivitettävissä)"
 
@@ -874,7 +875,7 @@ msgstr "Tehtävät"
 msgid "Reduced View"
 msgstr "Rajattu näkymä"
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:537
+#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:539
 #: ../gtk/rgsummarywindow.cc:373
 msgid "Marked Changes"
 msgstr "Merkityt muutokset"
@@ -1038,29 +1039,29 @@ msgstr "--add-cdrom Lisää CD-ROM käynnistyksessä (vaatii polun CD-ROMiin)\n"
 msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
 msgstr "--ask-cdrom Kysy CD-ROMin lisäyksestä ja lopeta\n"
 
-#: ../gtk/gsynaptic.cc:325 ../gtk/gsynaptic.cc:331
+#: ../gtk/gsynaptic.cc:327 ../gtk/gsynaptic.cc:333
 msgid "Another synaptic is running"
 msgstr "Toinen synaptic on jo käynnissä"
 
-#: ../gtk/gsynaptic.cc:326
+#: ../gtk/gsynaptic.cc:328
 msgid ""
 "There is another synaptic running in interactive mode. Please close it "
 "first. "
 msgstr ""
 "Toinen synaptic on käynnissä interaktiivisessa tilassa. Sulje se ensin."
 
-#: ../gtk/gsynaptic.cc:332
+#: ../gtk/gsynaptic.cc:334
 msgid ""
 "There is another synaptic running in non-interactive mode. Please wait for "
 "it to finish first."
 msgstr ""
 "Toinen synaptic on käynnistä tausta-ajona. Odota ensin että se lopettaa."
 
-#: ../gtk/gsynaptic.cc:357
+#: ../gtk/gsynaptic.cc:359
 msgid "Unable to get exclusive lock"
 msgstr "Pakettien hallintajärjestelmää ei voi lukita"
 
-#: ../gtk/gsynaptic.cc:358
+#: ../gtk/gsynaptic.cc:360
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) already running. Please close that application first."
@@ -1068,11 +1069,11 @@ msgstr ""
 "Tämä yleensä tarkoittaa, että joku toinen paketinhallintaohjelma, kuten apt-"
 "get tai aptitude, on jo käynnissä. Sulje tämä sovellus ensin."
 
-#: ../gtk/gsynaptic.cc:400
+#: ../gtk/gsynaptic.cc:402
 msgid "You must run this program as the root user."
 msgstr "Tämän ohjelman suoritus vaatii ylläpitäjän oikeudet."
 
-#: ../gtk/gsynaptic.cc:463
+#: ../gtk/gsynaptic.cc:465
 msgid "Synaptic Package Manager "
 msgstr "Synaptic Paketinhallinta "
 
@@ -1165,22 +1166,22 @@ msgstr ""
 "version, valitse 'Pidä'. Haluatko korvata nykyisen tiedoston ja asentaa "
 "paketin mukana tulevan version?"
 
-#: ../gtk/rgdebinstallprogress.cc:365 ../gtk/rginstallprogress.cc:284
+#: ../gtk/rgdebinstallprogress.cc:364 ../gtk/rginstallprogress.cc:284
 #: ../gtk/rgterminstallprogress.cc:160
 msgid "Applying Changes"
 msgstr "Toteutetaan muutokset"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:463
+#: ../gtk/rgdebinstallprogress.cc:462
 #, c-format
 msgid "Error in package %s"
 msgstr "Virhe paketissa %s"
 
-#: ../gtk/rgdebinstallprogress.cc:598 ../gtk/rgdebinstallprogress.cc:601
+#: ../gtk/rgdebinstallprogress.cc:597 ../gtk/rgdebinstallprogress.cc:600
 msgid "Changes applied"
 msgstr "Muutokset toteutettu"
 
-#: ../gtk/rgdebinstallprogress.cc:657
+#: ../gtk/rgdebinstallprogress.cc:656
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1188,15 +1189,15 @@ msgstr ""
 "Merkityt muutokset ollaan nyt toteuttamassa. Se voi viedä jonkin aikaa, "
 "odota kärsivällisesti."
 
-#: ../gtk/rgdebinstallprogress.cc:662
+#: ../gtk/rgdebinstallprogress.cc:661
 msgid "Installing and removing software"
 msgstr "Asennetaan ja poistetaan ohjelmia"
 
-#: ../gtk/rgdebinstallprogress.cc:664
+#: ../gtk/rgdebinstallprogress.cc:663
 msgid "Removing software"
 msgstr "Poistetaan ohjelmia"
 
-#: ../gtk/rgdebinstallprogress.cc:666
+#: ../gtk/rgdebinstallprogress.cc:665
 msgid "Installing software"
 msgstr "Asennetaan ohjelmia"
 
@@ -1974,7 +1975,7 @@ msgstr "Peru"
 #. TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
 #. happens when e.g. a package has no installed version (or no
 #. downloadable version)
-#: ../gtk/rggladewindow.cc:90 ../gtk/rggladewindow.cc:108
+#: ../gtk/rggladewindow.cc:96 ../gtk/rggladewindow.cc:114
 msgid "N/A"
 msgstr " - "
 
@@ -1996,7 +1997,7 @@ msgstr "     "
 
 #: ../gtk/window_main.glade.h:2 ../gtk/window_details.glade.h:2
 msgid "<b>Installed Version</b>"
-msgstr "<b<Asennettu versio</b>"
+msgstr "<b>Asennettu versio</b>"
 
 #: ../gtk/window_main.glade.h:3 ../gtk/window_details.glade.h:3
 msgid "<b>Latest Available Version</b>"
@@ -3305,3 +3306,11 @@ msgstr "Historia"
 #: ../gtk/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
 msgstr "Historia asennetuista, päivitetyistä ja poistetuista paketeista."
+
+#~ msgid ""
+#~ "\n"
+#~ "Failed to apply all changes! Scroll in the terminal buffer to see what "
+#~ "went wrong."
+#~ msgstr ""
+#~ "\n"
+#~ "Kaikkia muutoksia ei voit tehdä! Lue tekstibufferista mikä meni pieleen."

@@ -1298,7 +1298,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    }
 
    // Clean out any old list files
-   if (_config->FindB("APT::Get::List-Cleanup", true) == true) {
+   if (!Failed && _config->FindB("APT::Get::List-Cleanup", true) == true) {
       if (Fetcher.Clean(_config->FindDir("Dir::State::lists")) == false ||
           Fetcher.Clean(_config->FindDir("Dir::State::lists") + "partial/") ==
           false)

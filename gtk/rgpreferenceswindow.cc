@@ -66,6 +66,20 @@ gtk_combo_box_get_active_text (GtkComboBox *combo_box)
 }
 #endif
 
+void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
+{
+   // this function strips http:// from a entred proxy url
+   RGPreferencesWindow *me = (RGPreferencesWindow *) data;
+   const gchar *text = gtk_entry_get_text(GTK_ENTRY(self));
+   gchar *new_text = NULL;
+   if(g_str_has_prefix(text, "http://")) {
+      new_text = g_strdup_printf("%s", &text[strlen("http://")]);
+      gtk_entry_set_text(GTK_ENTRY(self), new_text);
+   }
+   if(new_text != NULL)
+      g_free(new_text);
+}
+
 void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
@@ -666,6 +680,11 @@ void RGPreferencesWindow::readDistribution()
    // set up combo-box
    g_signal_connect(G_OBJECT(_comboDefaultDistro), "changed",
 		    G_CALLBACK(cbArchiveSelection), this);
+
+   glade_xml_signal_connect_data(GLADE_XML(_gladeXML),
+				 "on_entry_http_proxy_changed",
+				 G_CALLBACK(cbHttpProxyEntryChanged),
+				 this);
 
    for (unsigned int i = 0; i < archives.size(); i++) {
       //cout << "archive: " << archives[i] << endl;

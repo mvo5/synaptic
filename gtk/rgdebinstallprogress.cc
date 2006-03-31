@@ -552,6 +552,12 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
 
+      // HACK: try to correct the situation
+      if(res == pkgPackageManager::Failed) {
+	 cerr << _("A package failed to install.  Trying to recover:") << endl;
+	 system("dpkg --configure -a");
+      }
+
       ::close(fd[0]);
       ::close(fd[1]);
 

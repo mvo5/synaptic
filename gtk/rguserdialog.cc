@@ -217,6 +217,14 @@ bool RGGladeUserDialog::init(const char *name)
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), 
 				GTK_WINDOW(_parentWindow));
 
+   // honor foreign parent windows (to make embedding easy)
+   int id = _config->FindI("Volatile::ParentWindowId", -1);
+   if (id > 0) {
+      GdkWindow *win = gdk_window_foreign_new(id);
+      gtk_widget_realize(_dialog);
+      gdk_window_set_transient_for(GDK_WINDOW(_dialog->window), win);
+   }
+
    g_free(filename);
    g_free(main_widget);
 }

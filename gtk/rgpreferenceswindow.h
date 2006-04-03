@@ -77,6 +77,8 @@ class RGPreferencesWindow:public RGGladeWindow {
    static void cbArchiveSelection(GtkWidget *self, void *data);
    static void cbRadioDistributionChanged(GtkWidget *self, void *data);
    bool distroChanged;
+   // the http proxy configuration
+   static void cbHttpProxyEntryChanged(GtkWidget *self, void *data);
 
    // treeview stuff
    void readTreeViewValues();

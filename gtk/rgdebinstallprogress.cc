@@ -48,8 +48,9 @@
 
 #include "i18n.h"
 
-// timeout in sec until the expander is expanded
-static const int RGTERMINAL_TIMEOUT=60;
+// timeout in sec until the expander is expanded 
+// (bigger nowdays because of the gconf stuff)
+static const int RGTERMINAL_TIMEOUT=120;
 
 
 void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
@@ -315,6 +316,7 @@ void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
    
 }
 
+
 void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
 {
    //cout << "cbCancel: sending SIGKILL to child" << endl;
@@ -411,6 +413,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    if(_userDialog == NULL)
       _userDialog = new RGUserDialog(this);
 
+   
+   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+
    // init the timer
    last_term_action = time(NULL);
 }
@@ -470,6 +475,10 @@ void RGDebInstallProgress::updateInterface()
 	    _startCounting = true;
 	 }
 
+	 // reset the urgency hint, something changed on the terminal
+	 if(gtk_window_get_urgency_hint(GTK_WINDOW(_win)))
+	    gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+
 	 float val = atof(percent)/100.0;
  	 //cout << "progress: " << val << endl;
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
@@ -504,6 +513,8 @@ void RGDebInstallProgress::updateInterface()
       w = glade_xml_get_widget(_gladeXML, "expander_terminal");
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
       last_term_action = time(NULL);
+      // try to get the attention of the user
+      gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
    } 
 
 
@@ -540,6 +551,12 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
 
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
+
+      // HACK: try to correct the situation
+      if(res == pkgPackageManager::Failed) {
+	 cerr << _("A package failed to install.  Trying to recover:") << endl;
+	 system("dpkg --configure -a");
+      }
 
       ::close(fd[0]);
       ::close(fd[1]);

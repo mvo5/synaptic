@@ -512,7 +512,9 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
    }
 
    if (_status & MarkInstall) {
-      if (flags & RPackage::FInstall)
+      // this is a bit of a hack (to include reinstall here)
+      // it would be better to seperate this 
+      if ((flags & RPackage::FInstall) || (flags & RPackage::FReInstall))
          return true;
    }
 

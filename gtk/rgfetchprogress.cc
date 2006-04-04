@@ -138,6 +138,10 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    } 
    show();
 
+   // reset the urgency hint here (gtk seems to like showing it for
+   // dialogs that come up)
+   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+
    GtkStyle *style = gtk_widget_get_style(_win);
    _font = style->font_desc;
    _gc = style->white_gc;

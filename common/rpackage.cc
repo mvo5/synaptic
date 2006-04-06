@@ -112,21 +112,25 @@ const char *RPackage::section()
 
 const char *RPackage::srcPackage()
 {
+   static string _srcPkg;
+
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
-   const char *s=rec.SourcePkg().empty()?name():rec.SourcePkg().c_str();
+   _srcPkg = rec.SourcePkg().empty()?name():rec.SourcePkg();
  
-   return s;
+   return _srcPkg.c_str();
 }
 
 
 const char *RPackage::summary()
 {
+   static string _summary;
+
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
-
-      return parser.ShortDesc().c_str();
+      _summary = parser.ShortDesc();
+      return _summary.c_str();
    }
    return "";
 }
@@ -134,10 +138,12 @@ const char *RPackage::summary()
 
 const char *RPackage::maintainer()
 {
+   static string _maintainer;
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
-      return parser.Maintainer().c_str();
+      _maintainer = parser.Maintainer();
+      return _maintainer.c_str();
    }
    return "";
 }
@@ -207,12 +213,13 @@ const char *RPackage::installedFiles()
 
 const char *RPackage::description()
 {
+   static string _description;
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
       pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
-
-      return parseDescription(parser.LongDesc());
+      _description = parseDescription(parser.LongDesc());
+      return _description.c_str();
    } else {
       return "";
    }

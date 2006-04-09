@@ -74,6 +74,7 @@ class RPackage {
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
 
+
    // save the default candidate version to undo version selection
    string _defaultCandVer;
 

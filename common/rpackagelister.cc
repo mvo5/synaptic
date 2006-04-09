@@ -589,8 +589,8 @@ struct sectionSortFunc {
 // version string compare
 int verstrcmp(const char *x, const char *y)
 {
-   if(x && y)
-      return strcmp(x,y) < 0;
+   if(x && y) 
+      return _system->VS->CmpVersion(x, y) < 0;
    
    // if we compare with a non-existring version
    if(y == NULL)

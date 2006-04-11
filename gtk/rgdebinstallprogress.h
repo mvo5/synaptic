@@ -85,6 +85,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    int _progress;
    int _totalActions;
 
+   // when the internal terminal timesout after no activity
+   int _terminalTimeout;
+
    // this map contains the name and a pointer to the stages arrays
    map<string, char**> _actionsMap;
 

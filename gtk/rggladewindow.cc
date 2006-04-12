@@ -83,8 +83,9 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
       gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
    }
    // if we have no parent, don't skip the taskbar hint
-   if(!_config->FindB("Volatile::HideMainwindow",false) && id < 0)
+   if(_config->FindB("Volatile::HideMainwindow",false) && id < 0)
    {
+      gtk_widget_realize(_win);
       gdk_window_set_skip_taskbar_hint(_win->window, FALSE);
       gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
    }

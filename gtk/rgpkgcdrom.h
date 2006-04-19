@@ -44,8 +44,8 @@ class RGCDScanner:public pkgCdromStatus, public RGWindow {
  public:
    RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
 
-   bool RGCDScanner::ChangeCdrom();
-   bool RGCDScanner::AskCdromName(string &defaultName);
+   bool ChangeCdrom();
+   bool AskCdromName(string &defaultName);
    void Update(string text, int current);
 
    bool run();

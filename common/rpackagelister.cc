@@ -616,7 +616,7 @@ struct supportedSortFunc {
    bool _ascent;
    RPackageStatus _status;
  public:
-   supportedSortFunc::supportedSortFunc(bool ascent, RPackageStatus &s) 
+   supportedSortFunc(bool ascent, RPackageStatus &s) 
       : _ascent(ascent), _status(s) {};
    bool operator() (RPackage *x, RPackage *y) {
       if(_ascent)

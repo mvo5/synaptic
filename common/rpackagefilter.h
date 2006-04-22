@@ -130,7 +130,7 @@ class RPatternPackageFilter : public RPackageFilter {
    bool and_mode; // patterns are applied in "AND" mode if true, "OR" if false
 
    inline bool filterName(Pattern pat, RPackage *pkg);
-   inline bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg);
+   inline bool filterVersion(Pattern pat, RPackage *pkg);
    inline bool filterDescription(Pattern pat, RPackage *pkg);
    inline bool filterMaintainer(Pattern pat, RPackage *pkg);
    inline bool filterDepends(Pattern pat, RPackage *pkg, 

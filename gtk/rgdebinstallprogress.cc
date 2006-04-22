@@ -48,11 +48,6 @@
 
 #include "i18n.h"
 
-// timeout in sec until the expander is expanded 
-// (bigger nowdays because of the gconf stuff)
-static const int RGTERMINAL_TIMEOUT=120;
-
-
 void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
 					gint child_pid, gint ret, 
 					gpointer data)
@@ -362,6 +357,10 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
      _totalActions(0), _progress(0), _sock(0), _userDialog(0)
 
 {
+   // timeout in sec until the expander is expanded 
+   // (bigger nowdays because of the gconf stuff)
+   _terminalTimeout=_config->FindI("Synaptic::TerminalTimeout",120);
+
    prepare(lister);
    setTitle(_("Applying Changes"));
 
@@ -506,9 +505,14 @@ void RGDebInstallProgress::updateInterface()
    }
 
 
-   if ((now - last_term_action) > RGTERMINAL_TIMEOUT) {
-      cout << "no statusfd changes/content updates in terminal for " 
-	   << RGTERMINAL_TIMEOUT << "seconds" << endl;
+   if ((now - last_term_action) > _terminalTimeout) {
+      // get some debug info
+      gchar *s;
+      gtk_label_get(GTK_LABEL(_label_status), &s);
+      g_warning("no statusfd changes/content updates in terminal for %i" 
+		" seconds",_terminalTimeout);
+      g_warning("TerminalTimeout in step: %s", s);
+      // now expand the terminal
       GtkWidget *w;
       w = glade_xml_get_widget(_gladeXML, "expander_terminal");
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);

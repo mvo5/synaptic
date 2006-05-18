@@ -99,9 +99,11 @@ bool RGGladeWindow::setLabel(const char *widget_name, const char *value)
       return false;
    }
 
-   if (!value)
-      value = _("N/A");
-   gtk_label_set_label(GTK_LABEL(widget), utf8(value));
+   const gchar *utf8value=utf8(value);
+
+   if (!utf8value)
+      utf8value = _("N/A");
+   gtk_label_set_label(GTK_LABEL(widget), utf8value);
    return true;
 }
 
@@ -179,7 +181,10 @@ bool RGGladeWindow::setTextView(const char *widget_name,
    }
 
    GtkTextBuffer *buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
-   gtk_text_buffer_set_text (buffer, utf8(value), -1);
+   const gchar *utf8value = utf8(value);
+   if(!utf8value)
+      utf8value = _("N/A");
+   gtk_text_buffer_set_text (buffer, utf8value, -1);
 
    if(use_headline) {
       GtkTextTagTable *tag_table = gtk_text_buffer_get_tag_table(buffer);

@@ -307,6 +307,9 @@ int RPackage::getFlags()
        !state.CandidateVerIter(*_depcache).Downloadable())
       flags |= FNotInstallable;
 
+   if (state.Garbage)
+      flags |= FIsGarbage;
+
    return flags | _boolFlags;
 }
 

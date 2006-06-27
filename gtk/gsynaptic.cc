@@ -402,10 +402,13 @@ int main(int argc, char **argv)
 
    if (getuid() != 0) {
       RGUserDialog userDialog;
-      userDialog.warning(_("Not runing as root\n\n"
-			   "The application will run in read-only mode. "
-			   "You will not be able to change the package "
-			   "database."));
+      userDialog.warning(g_strdup_printf("%s\n\n%s",
+                                         _("Starting without administrative "
+                                           "privileges")",
+				         _("You will not be able to apply any "
+				           "any changes. But you can still "
+					   "export the selection or create "
+					   "download scripts.")));
    }
 
    if (!RInitConfiguration("synaptic.conf")) {

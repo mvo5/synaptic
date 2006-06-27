@@ -402,13 +402,14 @@ int main(int argc, char **argv)
 
    if (getuid() != 0) {
       RGUserDialog userDialog;
-      userDialog.warning(g_strdup_printf("%s\n\n%s",
+      userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
                                          _("Starting without administrative "
-                                           "privileges")",
+                                           "privileges"),
 				         _("You will not be able to apply any "
 				           "any changes. But you can still "
-					   "export the selection or create "
-					   "download scripts.")));
+					   "export the marked changes or "
+					   "create a download script "
+					   "for them.")));
    }
 
    if (!RInitConfiguration("synaptic.conf")) {

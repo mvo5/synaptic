@@ -370,7 +370,7 @@ void check_and_aquire_lock()
 					       GTK_BUTTONS_CLOSE, msg);
       gtk_dialog_run(GTK_DIALOG(dia));
       g_free(msg);
-      exit(0);
+      exit(1);
    }
    
    // we can't get a lock?!?

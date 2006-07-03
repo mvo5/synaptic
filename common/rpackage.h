@@ -108,6 +108,7 @@ class RPackage {
       FPurge            = 1 << 17,
       FImportant        = 1 << 18,
       FOverrideVersion  = 1 << 19,
+      FIsGarbage        = 1 << 20
    };
 
    enum UpdateImportance {

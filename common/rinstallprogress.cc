@@ -64,7 +64,7 @@ const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 }
 
 
-pkgPackageManager::OrderResult RInstallProgress::start(RPackageManager *pm,
+pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackages,
                                                        int numPackagesTotal)
 {

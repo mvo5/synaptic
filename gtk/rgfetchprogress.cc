@@ -136,7 +136,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
       gtk_widget_show_all(_sock);
       _win = _sock;
    } 
-   show();
+   gtk_widget_realize(_win);
 
    // reset the urgency hint here (gtk seems to like showing it for
    // dialogs that come up)
@@ -341,6 +341,10 @@ void RGFetchProgress::Start()
    //cout << "RGFetchProgress::Start()" << endl;
    pkgAcquireStatus::Start();
    _cancelled = false;
+
+   // only show here if there is actually something to download/get
+   if (TotalBytes > 0)
+      show();
 
    RGFlushInterface();
 }

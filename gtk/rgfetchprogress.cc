@@ -288,6 +288,10 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
 
    pkgAcquireStatus::Pulse(Owner);
 
+   // only show here if there is actually something to download/get
+   if (TotalBytes > 0 && !GTK_WIDGET_VISIBLE(_win))
+      show();
+
    for (pkgAcquire::Worker * I = Owner->WorkersBegin(); I != 0;
         I = Owner->WorkerStep(I)) {
 
@@ -341,10 +345,6 @@ void RGFetchProgress::Start()
    //cout << "RGFetchProgress::Start()" << endl;
    pkgAcquireStatus::Start();
    _cancelled = false;
-
-   // only show here if there is actually something to download/get
-   if (TotalBytes > 0)
-      show();
 
    RGFlushInterface();
 }

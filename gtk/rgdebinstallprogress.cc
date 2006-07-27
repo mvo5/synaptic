@@ -373,6 +373,10 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.025);
    _autoClose = glade_xml_get_widget(_gladeXML, "checkbutton_auto_close");
+   // we don't save options in non-interactive mode, so there is no 
+   // point in showing this here
+   if(_config->FindB("Volatile::Non-Interactive", false))
+      gtk_widget_hide(_autoClose);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_autoClose), 
 				_config->FindB("Synaptic::closeZvt", false));
    //_image = glade_xml_get_widget(_gladeXML, "image");
@@ -611,7 +615,7 @@ void RGDebInstallProgress::finishUpdate()
    if(res == 0) {
       gtk_widget_grab_focus(_closeB);
       if(autoClose)
-	 _updateFinished = True;
+	 _updateFinished = true;
    }
 
    string s = _config->Find("Volatile::InstallFinishedStr",

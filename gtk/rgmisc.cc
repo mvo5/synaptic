@@ -183,17 +183,17 @@ RGPackageStatus RGPackageStatus::pkgStatus;
 void RGPackageStatus::initColors()
 {
    char *default_status_colors[N_STATUS_COUNT] = {
-      "#83a67f",  // install
-      "#83a67f",  // re-install
-      "#eed680",  // upgrade
-      "#ada7c8",  // downgrade
-      "#c1665a",  // remove
-      "#df421e",  // purge
+      "#8ae234",  // install
+      "#4e9a06",  // re-install
+      "#fce94f",  // upgrade
+      "#ad7fa8",  // downgrade
+      "#ef2929",  // remove
+      "#a40000",  // purge
       NULL,       // available
-      "#bab5ab",  // available-locked
+      "#a40000",  // available-locked
       NULL,       // installed-updated
       NULL,       // installed-outdated
-      "#bab5ab",  // installed-locked 
+      "#a40000",  // installed-locked 
       NULL,       // broken
       NULL        // new
    };

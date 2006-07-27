@@ -68,11 +68,16 @@ bool RGUserDialog::showErrors()
       msg = err + "\n"+ warn;
    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                msg_type, GTK_BUTTONS_OK,
-				_("The following problems were found "
-				  "on your system:"));
-   gtk_widget_set_size_request(dia,500,300);
-   gtk_container_set_border_width(GTK_CONTAINER(dia), 5);
+                                msg_type, GTK_BUTTONS_CLOSE,
+				NULL);
+   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG(dia),
+				  g_strdup_printf("<b><big>%s</big></b>\n\n%s",
+				                  _("An error occured"), 
+				                  _("The following details "
+						    "are provided:")));
+   gtk_widget_set_size_request(dia, 500, 300);
+   gtk_window_set_resizable(GTK_WINDOW(dia), TRUE);
+   gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
    GtkWidget *scroll = gtk_scrolled_window_new(NULL,NULL);
    GtkWidget *textview = gtk_text_view_new();
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
@@ -80,10 +85,15 @@ bool RGUserDialog::showErrors()
    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textview), GTK_WRAP_WORD);
    gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);
+   gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll), 
+                                       GTK_SHADOW_IN);
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
+                                  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+   gtk_container_set_border_width(GTK_CONTAINER(scroll), 6);
    gtk_container_add(GTK_CONTAINER(scroll), textview);
    gtk_widget_show_all(scroll);
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dia)->vbox), scroll);
-   gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dia)->vbox), 12);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
@@ -112,15 +122,15 @@ bool RGUserDialog::message(const char *msg,
    switch (dialog) {
       case RUserDialog::DialogInfo:
          gtkmessage = GTK_MESSAGE_INFO;
-         gtkbuttons = GTK_BUTTONS_OK;
+         gtkbuttons = GTK_BUTTONS_CLOSE;
          break;
       case RUserDialog::DialogWarning:
          gtkmessage = GTK_MESSAGE_WARNING;
-         gtkbuttons = GTK_BUTTONS_OK;
+         gtkbuttons = GTK_BUTTONS_CLOSE;
          break;
       case RUserDialog::DialogError:
          gtkmessage = GTK_MESSAGE_ERROR;
-         gtkbuttons = GTK_BUTTONS_OK;
+         gtkbuttons = GTK_BUTTONS_CLOSE;
          break;
       case RUserDialog::DialogQuestion:
          gtkmessage = GTK_MESSAGE_QUESTION;
@@ -132,7 +142,7 @@ bool RGUserDialog::message(const char *msg,
       case RUserDialog::ButtonsDefault:
          break;
       case RUserDialog::ButtonsOk:
-         gtkbuttons = GTK_BUTTONS_OK;
+         gtkbuttons = GTK_BUTTONS_CLOSE;
          break;
       case RUserDialog::ButtonsOkCancel:
          gtkbuttons = GTK_BUTTONS_OK_CANCEL;
@@ -142,9 +152,13 @@ bool RGUserDialog::message(const char *msg,
          break;
    }
 
-   dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
-                                GTK_DIALOG_DESTROY_WITH_PARENT,
-                                gtkmessage, gtkbuttons, "%s", utf8(msg));
+   dia = gtk_message_dialog_new (GTK_WINDOW(_parentWindow),
+                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                 gtkmessage, gtkbuttons, "%s", 
+			         NULL);
+   
+   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG(dia), utf8(msg));
+   gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
 
    if (defres) {
       switch (buttons) {
@@ -180,7 +194,7 @@ bool RGUserDialog::message(const char *msg,
 
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
+   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
 // RGGladeUserDialog
@@ -240,7 +254,7 @@ int RGGladeUserDialog::run(const char *name,bool return_gtk_response)
    if(return_gtk_response)
       return res;
    else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES);
+      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
 

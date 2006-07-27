@@ -125,7 +125,9 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    _view[str].push_back(pkg);
 
    str.clear();
-   if (flags & RPackage::FNew)
+   if (flags & RPackage::FNowBroken)
+      str = _("Broken dependencies");
+   else if (flags & RPackage::FNew)
       str = _("New in repository");
    else if (flags & RPackage::FPinned) 
       str = _("Pinned");
@@ -166,6 +168,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       break;
    case RPatternPackageFilter::Description:
       str = pkg->name();
+      str += string(pkg->summary());
       str += string(pkg->description());
       break;
    case RPatternPackageFilter::Maintainer:

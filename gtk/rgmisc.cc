@@ -182,20 +182,6 @@ GtkWidget *get_gtk_image(const gchar *name)
    if(!buf)
       return NULL;
    return gtk_image_new_from_pixbuf(buf);
-#if 0
-   gchar *filename;
-   GtkWidget *img;
-   filename = g_strdup_printf("../pixmaps/%s.png", name);
-   if (!FileExists(filename)) {
-      g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_PIXMAPDIR "%s.png", name);
-   }
-   img = gtk_image_new_from_file(filename);
-   if (img == NULL)
-      std::cerr << "Warning, failed to load: " << filename << std::endl;
-   g_free(filename);
-   return img;
-#endif
 }
 
 
@@ -241,31 +227,6 @@ void RGPackageStatus::initPixbufs()
       StatusPixbuf[i] = get_gdk_pixbuf(s);
    }
    supportedPix = get_gdk_pixbuf("package-supported");
-#if 0
-   gchar *filename = NULL;
-
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      filename = g_strdup_printf("../pixmaps/package-%s.png",
-                                 PackageStatusShortString[i]);
-      if (!FileExists(filename)) {
-         g_free(filename);
-         filename = g_strdup_printf(SYNAPTIC_PIXMAPDIR "package-%s.png",
-                                    PackageStatusShortString[i]);
-      }
-      StatusPixbuf[i] = gdk_pixbuf_new_from_file(filename, NULL);
-      if (StatusPixbuf[i] == NULL)
-         std::cerr << "Warning, failed to load: " << filename << std::endl;
-      g_free(filename);
-   }
-
-   filename = "../pixmaps/package-supported.png";
-   if (!FileExists(filename)) 
-      filename = SYNAPTIC_PIXMAPDIR "package-supported.png";
-   
-   supportedPix = gdk_pixbuf_new_from_file(filename, NULL);
-   if (supportedPix == NULL)
-      std::cerr << "Warning, failed to load: " << filename << std::endl;
-#endif
 }
 
 // class that finds out what do display to get user

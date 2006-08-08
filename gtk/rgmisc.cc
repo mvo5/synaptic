@@ -159,8 +159,30 @@ const char *utf8(const char *str)
    return _str;
 }
 
-GtkWidget *get_gtk_image(const char *name)
+GdkPixbuf *get_gdk_pixbuf(const gchar *name)
 {
+   GtkIconTheme *theme;
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+
+   theme = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, 16, 
+				     (GtkIconLookupFlags)0, &error);
+   if (pixbuf == NULL) 
+      std::cerr << "Warning, failed to load: " << name 
+		<< error->message << std::endl;
+
+   return pixbuf;
+}
+
+GtkWidget *get_gtk_image(const gchar *name)
+{
+   GdkPixbuf *buf;
+   buf = get_gdk_pixbuf(name);
+   if(!buf)
+      return NULL;
+   return gtk_image_new_from_pixbuf(buf);
+#if 0
    gchar *filename;
    GtkWidget *img;
    filename = g_strdup_printf("../pixmaps/%s.png", name);
@@ -173,6 +195,7 @@ GtkWidget *get_gtk_image(const char *name)
       std::cerr << "Warning, failed to load: " << filename << std::endl;
    g_free(filename);
    return img;
+#endif
 }
 
 
@@ -212,6 +235,13 @@ void RGPackageStatus::initColors()
 
 void RGPackageStatus::initPixbufs()
 {
+   gchar *s;
+   for (int i = 0; i < N_STATUS_COUNT; i++) {
+      s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
+      StatusPixbuf[i] = get_gdk_pixbuf(s);
+   }
+   supportedPix = get_gdk_pixbuf("package-supported");
+#if 0
    gchar *filename = NULL;
 
    for (int i = 0; i < N_STATUS_COUNT; i++) {
@@ -235,6 +265,7 @@ void RGPackageStatus::initPixbufs()
    supportedPix = gdk_pixbuf_new_from_file(filename, NULL);
    if (supportedPix == NULL)
       std::cerr << "Warning, failed to load: " << filename << std::endl;
+#endif
 }
 
 // class that finds out what do display to get user

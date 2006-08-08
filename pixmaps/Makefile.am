@@ -1,5 +1,7 @@
 # Makefile.am for the pixmaps
 
+SUBDIRS = hicolor
+
 appicondir = $(datadir)/pixmaps
 appicon_DATA = synaptic.png 
 
@@ -19,21 +21,21 @@ button_DATA = update_small.png \
 	      stock_help-book.png \
 	      system-upgrade-16.png
 		      
-status_icondir = $(datadir)/synaptic/pixmaps
-status_icon_DATA = package-available-locked.png \
-		   package-available.png \
-		   package-broken.png \
-		   package-downgrade.png  \
-		   package-install.png \
-		   package-reinstall.png \
-		   package-installed-locked.png \
-		   package-installed-outdated.png \
-		   package-installed-updated.png \
-		   package-new.png \
-		   package-purge.png \
-		   package-remove.png \
-		   package-supported.png \
-		   package-upgrade.png
+#status_icondir = $(datadir)/synaptic/pixmaps
+#status_icon_DATA = package-available-locked.png \
+#		   package-available.png \
+#		   package-broken.png \
+#		   package-downgrade.png  \
+#		   package-install.png \
+#		   package-reinstall.png \
+#		   package-installed-locked.png \
+#		   package-installed-outdated.png \
+#		   package-installed-updated.png \
+#		   package-new.png \
+#		   package-purge.png \
+#		   package-remove.png \
+#		   package-supported.png \
+#		   package-upgrade.png
 
 fetchstatusdir = $(datadir)/synaptic/pixmaps
 fetchstatus_DATA = green.png \
@@ -82,6 +84,5 @@ EXTRA_DIST=\
 	$(appicon_DATA) \
 	$(button_DATA) \
 	$(abouticon_DATA) \
-	$(fetchstatus_DATA)\
-	$(status_icon_DATA)
+	$(fetchstatus_DATA)
 

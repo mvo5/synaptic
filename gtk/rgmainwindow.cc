@@ -1051,7 +1051,10 @@ void RGMainWindow::buildInterface()
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
    _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
+   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
    _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
+				 get_gtk_image("system-upgrade"));
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_upgrade_packages",
                                  G_CALLBACK(cbUpgradeClicked), this);

@@ -1810,6 +1810,7 @@ bool RPackageLister::readSelections(istream &in)
 
 bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 {
+#ifndef HAVE_RPM
    //cout << "addArchiveToCache() " << archive << endl;
 
    // do sanity checking on the file (do we need this 
@@ -1872,6 +1873,9 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    CopyFile(in, out);
 
    return true;
+#else
+   return false;
+#endif
 }
 
 // vim:ts=3:sw=3:et

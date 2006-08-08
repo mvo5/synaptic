@@ -39,6 +39,8 @@ enum { ITEM_TYPE_RPM,
    ITEM_TYPE_RPMSRC,
    ITEM_TYPE_RPMDIR,
    ITEM_TYPE_RPMSRCDIR,
+   ITEM_TYPE_REPOMD,
+   ITEM_TYPE_REPOMDSRC,
    ITEM_TYPE_DEB,
    ITEM_TYPE_DEBSRC
 };
@@ -48,7 +50,9 @@ enum { ITEM_TYPE_DEB,
    ITEM_TYPE_RPM,
    ITEM_TYPE_RPMSRC,
    ITEM_TYPE_RPMDIR,
-   ITEM_TYPE_RPMSRCDIR
+   ITEM_TYPE_RPMSRCDIR,
+   ITEM_TYPE_REPOMD,
+   ITEM_TYPE_REPOMDSRC
 };
 #endif
 
@@ -235,6 +239,16 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
    gtk_widget_show(item);
    gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRCDIR);
+
+   item = gtk_menu_item_new_with_label("repomd");
+   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+   gtk_widget_show(item);
+   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_REPOMD);
+
+   item = gtk_menu_item_new_with_label("repomd-src");
+   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
+   gtk_widget_show(item);
+   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_REPOMDSRC);
 #else
    item = gtk_menu_item_new_with_label(_("Binary (deb)"));
    gtk_menu_append(GTK_MENU(_optTypeMenu), item);
@@ -512,6 +526,12 @@ void RGRepositoryEditor::doEdit()
       case ITEM_TYPE_RPMSRCDIR:
          rec->Type |= SourcesList::RpmSrcDir;
          break;
+      case ITEM_TYPE_REPOMD:
+         rec->Type |= SourcesList::Repomd;
+         break;
+      case ITEM_TYPE_REPOMDSRC:
+         rec->Type |= SourcesList::RepomdSrc;
+         break;
       default:
          _userDialog->error(_("Unknown source type"));
          return;
@@ -642,6 +662,10 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
          id = ITEM_TYPE_RPMDIR;
       else if (rec->Type & SourcesList::RpmSrcDir)
          id = ITEM_TYPE_RPMSRCDIR;
+      else if (rec->Type & SourcesList::Repomd)
+         id = ITEM_TYPE_REPOMD;
+      else if (rec->Type & SourcesList::RepomdSrc)
+         id = ITEM_TYPE_REPOMDSRC;
       gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), id);
 
       gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),

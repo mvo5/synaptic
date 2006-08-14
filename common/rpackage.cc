@@ -128,7 +128,8 @@ const char *RPackage::summary()
 
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgCache::DescIterator Desc = ver.TranslatedDescription();
+      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
       _summary = parser.ShortDesc();
       return _summary.c_str();
    }
@@ -217,7 +218,8 @@ const char *RPackage::description()
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgCache::DescIterator Desc = ver.TranslatedDescription();
+      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
       _description = parseDescription(parser.LongDesc());
       return _description.c_str();
    } else {

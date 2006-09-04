@@ -615,7 +615,7 @@ void RGDebInstallProgress::finishUpdate()
    if(res == 0) {
       gtk_widget_grab_focus(_closeB);
       if(autoClose)
-	 _updateFinished = True;
+	 _updateFinished = true;
    }
 
    string s = _config->Find("Volatile::InstallFinishedStr",

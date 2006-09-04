@@ -1348,7 +1348,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (!lockPackageCache(lock))
       return false;
 
-   pkgDepCache::ActionGroup group();
+   pkgDepCache::ActionGroup group(*_cache->deps());
 
    if(_config->FindB("Synaptic::Log::Changes",true))
       makeCommitLog();
@@ -1729,7 +1729,7 @@ bool RPackageLister::readSelections(istream &in)
    };
    map<string, int> actionMap;
 
-   pkgDepCache::ActionGroup group();
+   pkgDepCache::ActionGroup group(*_cache->deps());
 
    while (in.eof() == false) {
       in.getline(Buffer, sizeof(Buffer));

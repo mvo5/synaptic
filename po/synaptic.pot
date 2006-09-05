@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-04-21 10:00+0200\n"
+"POT-Creation-Date: 2006-08-08 12:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -509,7 +509,7 @@ msgid "Marked for complete removal"
 msgstr ""
 
 #: ../common/rpackage.cc:1284 ../common/rpackageview.cc:123
-#: ../gtk/window_filters.glade.h:33
+#: ../gtk/glade/window_filters.glade.h:33
 msgid "Not installed"
 msgstr ""
 
@@ -518,12 +518,12 @@ msgid "Not installed (locked)"
 msgstr ""
 
 #: ../common/rpackage.cc:1286 ../common/rpackageview.cc:118
-#: ../gtk/window_filters.glade.h:25
+#: ../gtk/glade/window_filters.glade.h:25
 msgid "Installed"
 msgstr ""
 
-#: ../common/rpackage.cc:1287 ../common/rpackageview.cc:138
-#: ../gtk/gsynaptic.cc:538
+#: ../common/rpackage.cc:1287 ../common/rpackageview.cc:140
+#: ../gtk/gsynaptic.cc:542
 msgid "Installed (upgradable)"
 msgstr ""
 
@@ -531,8 +531,8 @@ msgstr ""
 msgid "Installed (locked to the current version)"
 msgstr ""
 
-#: ../common/rpackage.cc:1289 ../common/rpackageview.cc:422
-#: ../gtk/window_filters.glade.h:11
+#: ../common/rpackage.cc:1289 ../common/rpackageview.cc:425
+#: ../gtk/glade/window_filters.glade.h:11
 msgid "Broken"
 msgstr ""
 
@@ -587,24 +587,24 @@ msgid "Internal Error, non-zero counts"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1025
-#: ../gtk/window_find.glade.h:5
+#: ../gtk/glade/window_find.glade.h:5
 msgid "Name"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:48
 #: ../gtk/rgmainwindow.cc:974 ../gtk/rgvendorswindow.cc:62
-#: ../gtk/rgvendorswindow.cc:94 ../gtk/window_main.glade.h:19
-#: ../gtk/window_filters.glade.h:15 ../gtk/rgfiltermanager.h:67
-#: ../gtk/window_details.glade.h:16
+#: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:20
+#: ../gtk/glade/window_filters.glade.h:15
+#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:67
 msgid "Description"
 msgstr ""
 
-#: ../common/rpackagefilter.cc:46 ../gtk/window_find.glade.h:4
-#: ../gtk/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
+#: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
+#: ../gtk/glade/window_filters.glade.h:30 ../gtk/rgfiltermanager.h:68
 msgid "Maintainer"
 msgstr ""
 
-#: ../common/rpackagefilter.cc:47 ../gtk/window_find.glade.h:8
+#: ../common/rpackagefilter.cc:47 ../gtk/glade/window_find.glade.h:8
 msgid "Version"
 msgstr ""
 
@@ -617,14 +617,14 @@ msgid "ReverseDepends"
 msgstr ""
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../gtk/window_filters.glade.h:37
+#: ../common/rpackagefilter.cc:55 ../gtk/glade/window_filters.glade.h:37
 #: ../gtk/rgfiltermanager.h:77
 msgid "Origin"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:60 ../common/rpackageview.h:126
 #: ../gtk/rgpreferenceswindow.cc:46 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/window_filters.glade.h:55
+#: ../gtk/glade/window_filters.glade.h:55
 msgid "Status"
 msgstr ""
 
@@ -634,7 +634,7 @@ msgid "Pattern"
 msgstr ""
 
 #: ../common/rpackagefilter.cc:62 ../gtk/rgpreferenceswindow.cc:46
-#: ../gtk/rgmainwindow.cc:846 ../gtk/window_filters.glade.h:54
+#: ../gtk/rgmainwindow.cc:846 ../gtk/glade/window_filters.glade.h:54
 msgid "Section"
 msgstr ""
 
@@ -685,7 +685,7 @@ msgid ""
 "Such repositories are being ignored."
 msgstr ""
 
-#: ../common/rpackagelister.cc:1360 ../gtk/rgrepositorywin.cc:342
+#: ../common/rpackagelister.cc:1360 ../gtk/rgrepositorywin.cc:356
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr ""
 
@@ -808,46 +808,50 @@ msgstr ""
 msgid "Not installed (unsupported)"
 msgstr ""
 
-#: ../common/rpackageview.cc:129 ../gtk/window_filters.glade.h:31
+#: ../common/rpackageview.cc:129
+msgid "Broken dependencies"
+msgstr ""
+
+#: ../common/rpackageview.cc:131 ../gtk/glade/window_filters.glade.h:31
 msgid "New in repository"
 msgstr ""
 
-#: ../common/rpackageview.cc:131 ../gtk/window_filters.glade.h:47
+#: ../common/rpackageview.cc:133 ../gtk/glade/window_filters.glade.h:47
 msgid "Pinned"
 msgstr ""
 
-#: ../common/rpackageview.cc:135
+#: ../common/rpackageview.cc:137
 msgid "Installed (local or obsolete)"
 msgstr ""
 
-#: ../common/rpackageview.cc:141
+#: ../common/rpackageview.cc:143
 msgid "Not installed (residual config)"
 msgstr ""
 
-#: ../common/rpackageview.cc:400
+#: ../common/rpackageview.cc:403
 msgid "Search Filter"
 msgstr ""
 
-#: ../common/rpackageview.cc:408
+#: ../common/rpackageview.cc:411
 msgid "Tasks"
 msgstr ""
 
-#: ../common/rpackageview.cc:414
+#: ../common/rpackageview.cc:417
 msgid "Reduced View"
 msgstr ""
 
-#: ../common/rpackageview.cc:431 ../gtk/gsynaptic.cc:544
+#: ../common/rpackageview.cc:434 ../gtk/gsynaptic.cc:548
 #: ../gtk/rgsummarywindow.cc:372
 msgid "Marked Changes"
 msgstr ""
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:442
+#: ../common/rpackageview.cc:445
 msgid "Package with Debconf"
 msgstr ""
 
-#: ../common/rpackageview.cc:449 ../gtk/window_filters.glade.h:59
+#: ../common/rpackageview.cc:452 ../gtk/glade/window_filters.glade.h:59
 msgid "Upgradable (upstream)"
 msgstr ""
 
@@ -863,68 +867,9 @@ msgstr ""
 msgid "Syntax error in line %s"
 msgstr ""
 
-#: ../common/rsources.cc:458
+#: ../common/rsources.cc:469
 #, c-format
 msgid "Vendor block %s is invalid"
-msgstr ""
-
-#. vim:sts=4:sw=4
-#: ../gtk/dialog_quit.glade.h:1
-msgid ""
-"<b><big>Quit and discard marked changes?</big></b>\n"
-"\n"
-"There are still marked changes that have not yet been applied. They will get "
-"lost if you choose to quit 'Synaptic'."
-msgstr ""
-
-#: ../gtk/dialog_conffile.glade.h:1
-msgid "Difference between the files"
-msgstr ""
-
-#: ../gtk/dialog_conffile.glade.h:2
-msgid "_Keep"
-msgstr ""
-
-#: ../gtk/dialog_conffile.glade.h:3
-msgid "_Replace"
-msgstr ""
-
-#: ../gtk/dialog_change_version.glade.h:1
-msgid "Force version:"
-msgstr ""
-
-#: ../gtk/dialog_change_version.glade.h:2
-msgid "_Force Version"
-msgstr ""
-
-#: ../gtk/dialog_upgrade.glade.h:1
-msgid ""
-"<b><big>Mark upgrades in a smart way?</big></b>\n"
-"\n"
-"The default upgrade method skips upgrades that would introduce conflicts or "
-"require installation of additional packages.\n"
-"\n"
-"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to fulfil "
-"all dependencies of upgrades in a smart way.\n"
-"\n"
-"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
-"afterwards."
-msgstr ""
-
-#: ../gtk/dialog_upgrade.glade.h:8 ../gtk/window_preferences.glade.h:31
-msgid "Default Upgrade"
-msgstr ""
-
-#: ../gtk/dialog_upgrade.glade.h:9
-msgid "Remember my answer for future upgrades"
-msgstr ""
-
-#: ../gtk/dialog_upgrade.glade.h:10 ../gtk/window_preferences.glade.h:69
-msgid "Smart Upgrade"
-msgstr ""
-
-#: ../gtk/dialog_upgrade.glade.h:11
-msgid "This behavior can be changed in the preferences later."
 msgstr ""
 
 #: ../gtk/gsynaptic.cc:70
@@ -1010,15 +955,17 @@ msgid ""
 "or aptitude) already running. Please close that application first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:405
-msgid ""
-"Not runing as root\n"
-"\n"
-"The application will run in read-only mode. You will not be able to change "
-"the package database."
+#: ../gtk/gsynaptic.cc:406
+msgid "Starting without administrative privileges"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:470
+#: ../gtk/gsynaptic.cc:408
+msgid ""
+"You will not be able to apply any any changes. But you can still export the "
+"marked changes or create a download script for them."
+msgstr ""
+
+#: ../gtk/gsynaptic.cc:474
 msgid "Synaptic Package Manager "
 msgstr ""
 
@@ -1034,12 +981,12 @@ msgstr ""
 msgid "Disc Label"
 msgstr ""
 
-#: ../gtk/rgaboutpanel.cc:63 ../gtk/window_about.glade.h:5
+#: ../gtk/rgaboutpanel.cc:63 ../gtk/glade/window_about.glade.h:5
 msgid "Credits"
 msgstr ""
 
 #. skipTaskbar(true);
-#: ../gtk/rgaboutpanel.cc:81 ../gtk/window_about.glade.h:4
+#: ../gtk/rgaboutpanel.cc:81 ../gtk/glade/window_about.glade.h:4
 msgid "About Synaptic"
 msgstr ""
 
@@ -1109,34 +1056,34 @@ msgid "Applying Changes"
 msgstr ""
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:466
+#: ../gtk/rgdebinstallprogress.cc:470
 #, c-format
 msgid "Error in package %s"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:561
+#: ../gtk/rgdebinstallprogress.cc:565
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:618 ../gtk/rgdebinstallprogress.cc:621
+#: ../gtk/rgdebinstallprogress.cc:622 ../gtk/rgdebinstallprogress.cc:625
 msgid "Changes applied"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:677
+#: ../gtk/rgdebinstallprogress.cc:681
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:686
 msgid "Installing and removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:684
+#: ../gtk/rgdebinstallprogress.cc:688
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:686
+#: ../gtk/rgdebinstallprogress.cc:690
 msgid "Installing software"
 msgstr ""
 
@@ -1144,7 +1091,7 @@ msgstr ""
 msgid "Supported"
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/window_filters.glade.h:39
+#: ../gtk/rgpreferenceswindow.cc:46 ../gtk/glade/window_filters.glade.h:39
 msgid "Package Name"
 msgstr ""
 
@@ -1204,7 +1151,8 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:1093 ../gtk/window_preferences.glade.h:65
+#: ../gtk/rgpreferenceswindow.cc:1093
+#: ../gtk/glade/window_preferences.glade.h:65
 msgid "Preferences"
 msgstr ""
 
@@ -1216,7 +1164,7 @@ msgstr ""
 msgid "Package"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:177
+#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
 msgstr ""
 
@@ -1228,37 +1176,37 @@ msgid ""
 "in drive %s"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:321
+#: ../gtk/rgfetchprogress.cc:325
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:327
+#: ../gtk/rgfetchprogress.cc:331
 msgid "Download rate: unknown"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:329
+#: ../gtk/rgfetchprogress.cc:333
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:396
+#: ../gtk/rgfetchprogress.cc:400
 msgid "Queued"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:399
+#: ../gtk/rgfetchprogress.cc:403
 msgid "Done"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:402
+#: ../gtk/rgfetchprogress.cc:406
 msgid "Hit"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:405
+#: ../gtk/rgfetchprogress.cc:409
 msgid "Failed"
 msgstr ""
 
-#: ../gtk/rgfiltermanager.cc:39 ../gtk/window_filters.glade.h:19
+#: ../gtk/rgfiltermanager.cc:39 ../gtk/glade/window_filters.glade.h:19
 msgid "Filters"
 msgstr ""
 
@@ -1276,7 +1224,7 @@ msgid "New Filter %i"
 msgstr ""
 
 #: ../gtk/rginstallprogress.cc:42
-#: ../gtk/window_rginstall_progress_msgs.glade.h:2
+#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:2
 msgid "Package Manager output"
 msgstr ""
 
@@ -1329,8 +1277,8 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:348 ../gtk/window_main.glade.h:31
-#: ../gtk/window_details.glade.h:19
+#: ../gtk/rgmainwindow.cc:348 ../gtk/glade/window_main.glade.h:33
+#: ../gtk/glade/window_details.glade.h:19
 msgid "No package is selected.\n"
 msgstr ""
 
@@ -1369,7 +1317,7 @@ msgstr ""
 msgid "Mark all possible upgrades"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1228 ../gtk/window_summary.glade.h:5
+#: ../gtk/rgmainwindow.cc:1228 ../gtk/glade/window_summary.glade.h:5
 msgid "Apply all marked changes"
 msgstr ""
 
@@ -1405,8 +1353,8 @@ msgstr ""
 msgid "Hold Current Version"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1479 ../gtk/window_main.glade.h:33
-#: ../gtk/window_filters.glade.h:48
+#: ../gtk/rgmainwindow.cc:1479 ../gtk/glade/window_main.glade.h:35
+#: ../gtk/glade/window_filters.glade.h:48
 msgid "Properties"
 msgstr ""
 
@@ -1628,56 +1576,56 @@ msgstr ""
 msgid "Please select a directory"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:88
+#: ../gtk/rgrepositorywin.cc:92
 msgid ""
 "You are adding the \"universe\" component.\n"
 "\n"
 " Packages in this component are not supported. Are you sure?"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:120 ../gtk/window_repositories.glade.h:3
+#: ../gtk/rgrepositorywin.cc:124 ../gtk/glade/window_repositories.glade.h:3
 msgid "Repositories"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:144
+#: ../gtk/rgrepositorywin.cc:148
 msgid "Enabled"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:154
+#: ../gtk/rgrepositorywin.cc:158
 msgid "Type"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:164 ../gtk/rgvendorswindow.cc:62
+#: ../gtk/rgrepositorywin.cc:168 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:80
 msgid "Vendor"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:187 ../gtk/window_preferences.glade.h:35
+#: ../gtk/rgrepositorywin.cc:191 ../gtk/glade/window_preferences.glade.h:35
 msgid "Distribution"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:198
+#: ../gtk/rgrepositorywin.cc:202
 msgid "Section(s)"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:239
+#: ../gtk/rgrepositorywin.cc:253
 msgid "Binary (deb)"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:244
+#: ../gtk/rgrepositorywin.cc:258
 msgid "Source (deb-src)"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:253 ../gtk/rgrepositorywin.cc:395
-#: ../gtk/window_repositories.glade.h:1
+#: ../gtk/rgrepositorywin.cc:267 ../gtk/rgrepositorywin.cc:409
+#: ../gtk/glade/window_repositories.glade.h:1
 msgid "(no vendor)"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:349
+#: ../gtk/rgrepositorywin.cc:363
 msgid "Cannot read vendors.list file"
 msgstr ""
 
-#: ../gtk/rgrepositorywin.cc:516
+#: ../gtk/rgrepositorywin.cc:536
 msgid "Unknown source type"
 msgstr ""
 
@@ -1819,8 +1767,12 @@ msgid ""
 "This may render your system unusable!\n"
 msgstr ""
 
-#: ../gtk/rguserdialog.cc:72
-msgid "The following problems were found on your system:"
+#: ../gtk/rguserdialog.cc:75
+msgid "An error occured"
+msgstr ""
+
+#: ../gtk/rguserdialog.cc:76
+msgid "The following details are provided:"
 msgstr ""
 
 #: ../gtk/rgvendorswindow.cc:39
@@ -1850,7 +1802,8 @@ msgstr ""
 #. TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
 #. happens when e.g. a package has no installed version (or no
 #. downloadable version)
-#: ../gtk/rggladewindow.cc:104 ../gtk/rggladewindow.cc:122
+#: ../gtk/rggladewindow.cc:105 ../gtk/rggladewindow.cc:123
+#: ../gtk/rggladewindow.cc:186
 msgid "N/A"
 msgstr ""
 
@@ -1864,340 +1817,354 @@ msgstr ""
 msgid "Description %s"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:1 ../gtk/window_preferences.glade.h:2
-#: ../gtk/window_summary.glade.h:2 ../gtk/window_filters.glade.h:2
-#: ../gtk/window_details.glade.h:1
+#: ../gtk/glade/window_main.glade.h:1
+#: ../gtk/glade/window_preferences.glade.h:2
+#: ../gtk/glade/window_summary.glade.h:2 ../gtk/glade/window_filters.glade.h:2
+#: ../gtk/glade/window_details.glade.h:1
 msgid "    "
 msgstr ""
 
-#: ../gtk/window_main.glade.h:2 ../gtk/window_details.glade.h:2
+#: ../gtk/glade/window_main.glade.h:2 ../gtk/glade/window_details.glade.h:2
 msgid "<b>Installed Version</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:3 ../gtk/window_details.glade.h:3
+#: ../gtk/glade/window_main.glade.h:3 ../gtk/glade/window_details.glade.h:3
 msgid "<b>Latest Available Version</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:4 ../gtk/window_details.glade.h:4
+#: ../gtk/glade/window_main.glade.h:4 ../gtk/glade/window_details.glade.h:4
 msgid "<b>Maintainer:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:5 ../gtk/window_details.glade.h:5
+#: ../gtk/glade/window_main.glade.h:5 ../gtk/glade/window_details.glade.h:5
 msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:6 ../gtk/window_details.glade.h:6
+#: ../gtk/glade/window_main.glade.h:6 ../gtk/glade/window_details.glade.h:6
 msgid "<b>Package:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:7 ../gtk/window_details.glade.h:7
+#: ../gtk/glade/window_main.glade.h:7 ../gtk/glade/window_details.glade.h:7
 msgid "<b>Priority:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:8 ../gtk/window_details.glade.h:8
+#: ../gtk/glade/window_main.glade.h:8 ../gtk/glade/window_details.glade.h:8
 msgid "<b>Section:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:9 ../gtk/window_details.glade.h:9
+#: ../gtk/glade/window_main.glade.h:9 ../gtk/glade/window_details.glade.h:9
 msgid "<b>Status:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:10 ../gtk/window_details.glade.h:10
+#: ../gtk/glade/window_main.glade.h:10 ../gtk/glade/window_details.glade.h:10
 msgid "<b>Tags:</b>"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:11
+#: ../gtk/glade/window_main.glade.h:11
 msgid "A_pply Marked Changes"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:12
+#: ../gtk/glade/window_main.glade.h:12
 msgid "Add downloaded packages"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:13
+#: ../gtk/glade/window_main.glade.h:13
+msgid ""
+"Add packages downloaded with the \"Generate package download script\" "
+"feature to the system"
+msgstr ""
+
+#: ../gtk/glade/window_main.glade.h:14
 msgid "Apply"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:14 ../gtk/window_details.glade.h:11
+#: ../gtk/glade/window_main.glade.h:15 ../gtk/glade/window_details.glade.h:11
 msgid "Available versions:"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:15 ../gtk/window_details.glade.h:12
+#: ../gtk/glade/window_main.glade.h:16 ../gtk/glade/window_details.glade.h:12
 msgid "Common"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:16
+#: ../gtk/glade/window_main.glade.h:17
 msgid "Dependants"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:17 ../gtk/window_find.glade.h:1
-#: ../gtk/window_filters.glade.h:13 ../gtk/rgfiltermanager.h:70
-#: ../gtk/window_details.glade.h:13
+#: ../gtk/glade/window_main.glade.h:18 ../gtk/glade/window_find.glade.h:1
+#: ../gtk/glade/window_filters.glade.h:13
+#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:70
 msgid "Dependencies"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:18 ../gtk/window_details.glade.h:14
+#: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_details.glade.h:14
 msgid "Dependencies of the Latest Version"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:20 ../gtk/window_details.glade.h:17
+#: ../gtk/glade/window_main.glade.h:21 ../gtk/glade/window_details.glade.h:17
 msgid "Download:"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:21
+#: ../gtk/glade/window_main.glade.h:22
+msgid ""
+"Generate a shell script so that you can download the selected packages on a "
+"different computer"
+msgstr ""
+
+#: ../gtk/glade/window_main.glade.h:23
 msgid "Generate package download script"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:22
+#: ../gtk/glade/window_main.glade.h:24
 msgid "Icon _Legend"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:23 ../gtk/window_details.glade.h:18
+#: ../gtk/glade/window_main.glade.h:25 ../gtk/glade/window_details.glade.h:18
 msgid "Installed Files"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:24
+#: ../gtk/glade/window_main.glade.h:26
 msgid "Mark All Upgrades"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:25
+#: ../gtk/glade/window_main.glade.h:27
 msgid "Mark Packages by _Task..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:26
+#: ../gtk/glade/window_main.glade.h:28
 msgid "Mark for Co_mplete Removal"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:27
+#: ../gtk/glade/window_main.glade.h:29
 msgid "Mark for R_einstallation"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:28
+#: ../gtk/glade/window_main.glade.h:30
 msgid "Mark for _Installation"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:29
+#: ../gtk/glade/window_main.glade.h:31
 msgid "Mark for _Removal"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:30
+#: ../gtk/glade/window_main.glade.h:32
 msgid "Mark for _Upgrade"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:34 ../gtk/window_find.glade.h:6
-#: ../gtk/window_filters.glade.h:49 ../gtk/window_details.glade.h:21
+#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_find.glade.h:6
+#: ../gtk/glade/window_filters.glade.h:49
+#: ../gtk/glade/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:35
+#: ../gtk/glade/window_main.glade.h:37
 msgid "Reload"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:36
-msgid "S_earch"
+#: ../gtk/glade/window_main.glade.h:38
+msgid "S_earch Results"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:37
+#: ../gtk/glade/window_main.glade.h:39
 msgid "S_tatus"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:38
+#: ../gtk/glade/window_main.glade.h:40
 msgid "Save Markings _As..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:39
+#: ../gtk/glade/window_main.glade.h:41
 msgid "Search"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:40 ../gtk/window_details.glade.h:22
+#: ../gtk/glade/window_main.glade.h:42 ../gtk/glade/window_details.glade.h:22
 msgid "Size:"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:41
+#: ../gtk/glade/window_main.glade.h:43
 msgid "Synaptic"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:42
+#: ../gtk/glade/window_main.glade.h:44
 msgid "Text Be_side Icons"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:43
+#: ../gtk/glade/window_main.glade.h:45
 msgid "Text _Below Icons"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:44
+#: ../gtk/glade/window_main.glade.h:46
 msgid "U_nmark"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:45
+#: ../gtk/glade/window_main.glade.h:47
 msgid "U_nmark All"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:46 ../gtk/window_details.glade.h:23
+#: ../gtk/glade/window_main.glade.h:48 ../gtk/glade/window_details.glade.h:23
 msgid "Version:"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:47 ../gtk/window_details.glade.h:24
+#: ../gtk/glade/window_main.glade.h:49 ../gtk/glade/window_details.glade.h:24
 msgid "Versions"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:48
+#: ../gtk/glade/window_main.glade.h:50
 msgid "_About"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:49
+#: ../gtk/glade/window_main.glade.h:51
 msgid "_Add CD-ROM..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:50
+#: ../gtk/glade/window_main.glade.h:52
 msgid "_Browse Documentation"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:51
+#: ../gtk/glade/window_main.glade.h:53
 msgid "_Configure..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:52
+#: ../gtk/glade/window_main.glade.h:54
 msgid "_Contents"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:53
-msgid "_Custom"
+#: ../gtk/glade/window_main.glade.h:55
+msgid "_Custom Filters"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:54
+#: ../gtk/glade/window_main.glade.h:56
 msgid "_Download Changelog"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:55
+#: ../gtk/glade/window_main.glade.h:57
 msgid "_Edit"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:56
+#: ../gtk/glade/window_main.glade.h:58
 msgid "_File"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:57
+#: ../gtk/glade/window_main.glade.h:59
 msgid "_Filters"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:58
+#: ../gtk/glade/window_main.glade.h:60
 msgid "_Fix Broken Packages"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:59
+#: ../gtk/glade/window_main.glade.h:61
 msgid "_Force Version..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:60
+#: ../gtk/glade/window_main.glade.h:62
 msgid "_Help"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:61
+#: ../gtk/glade/window_main.glade.h:63
 msgid "_Hide"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:62
+#: ../gtk/glade/window_main.glade.h:64
 msgid "_History"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:63
+#: ../gtk/glade/window_main.glade.h:65
 msgid "_Icons Only"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:64
+#: ../gtk/glade/window_main.glade.h:66
 msgid "_Lock Version"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:65
+#: ../gtk/glade/window_main.glade.h:67
 msgid "_Mark All Upgrades..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:66
+#: ../gtk/glade/window_main.glade.h:68
 msgid "_Package"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:67
+#: ../gtk/glade/window_main.glade.h:69
 msgid "_Properties"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:68
+#: ../gtk/glade/window_main.glade.h:70
 msgid "_Quick Introduction"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:69
+#: ../gtk/glade/window_main.glade.h:71
 msgid "_Quit"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:70
+#: ../gtk/glade/window_main.glade.h:72
 msgid "_Read Markings..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:71
+#: ../gtk/glade/window_main.glade.h:73
 msgid "_Redo"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:72
+#: ../gtk/glade/window_main.glade.h:74
 msgid "_Reload Package Information"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:73
+#: ../gtk/glade/window_main.glade.h:75
 msgid "_Repositories"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:74
+#: ../gtk/glade/window_main.glade.h:76
 msgid "_Save Markings"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:75
+#: ../gtk/glade/window_main.glade.h:77
 msgid "_Search..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:76
+#: ../gtk/glade/window_main.glade.h:78
 msgid "_Sections"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:77
+#: ../gtk/glade/window_main.glade.h:79
 msgid "_Set Internal Option..."
 msgstr ""
 
-#: ../gtk/window_main.glade.h:78
+#: ../gtk/glade/window_main.glade.h:80
 msgid "_Settings"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:79
+#: ../gtk/glade/window_main.glade.h:81
 msgid "_Text Only"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:80
+#: ../gtk/glade/window_main.glade.h:82
 msgid "_Toolbar"
 msgstr ""
 
-#: ../gtk/window_main.glade.h:81
+#: ../gtk/glade/window_main.glade.h:83
 msgid "_Undo"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:1
+#: ../gtk/glade/window_about.glade.h:1
 msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2004 Michael Vogt</span>"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:3
+#: ../gtk/glade/window_about.glade.h:3
 msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:6
+#: ../gtk/glade/window_about.glade.h:6
 msgid "Debtag support is enabled."
 msgstr ""
 
-#: ../gtk/window_about.glade.h:7
+#: ../gtk/glade/window_about.glade.h:7
 msgid "Documented by"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:8
+#: ../gtk/glade/window_about.glade.h:8
 msgid ""
 "Man page:\n"
 "Wybo Dekker <wybo@servalys.nl>\n"
@@ -2208,7 +2175,7 @@ msgid ""
 "Sebastian Heinlein <sebastain.heinlein@web.de>"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:15
+#: ../gtk/glade/window_about.glade.h:15
 msgid ""
 "Original author:\n"
 "Alfredo K. Kojima <kojima@windowmaker.org>\n"
@@ -2224,673 +2191,684 @@ msgid ""
 "Sviatoslav Sviridov <svd@lintec.minsk.by>"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:27
+#: ../gtk/glade/window_about.glade.h:27
 msgid "Package management software using apt."
 msgstr ""
 
-#: ../gtk/window_about.glade.h:28
+#: ../gtk/glade/window_about.glade.h:28
 msgid ""
 "This software is licensed under the terms of the GNU General Public License, "
 "Version 2"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:29
+#: ../gtk/glade/window_about.glade.h:29
 msgid "Translated by"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:30
+#: ../gtk/glade/window_about.glade.h:30
 msgid ""
 "Visit the home page at \n"
 "http://www.nongnu.org/synaptic/"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:32
+#: ../gtk/glade/window_about.glade.h:32
 msgid "Written by"
 msgstr ""
 
-#: ../gtk/window_about.glade.h:33
+#: ../gtk/glade/window_about.glade.h:33
 msgid "translators-credits"
 msgstr ""
 
-#: ../gtk/window_find.glade.h:2
+#: ../gtk/glade/window_find.glade.h:2
 msgid "Description and Name"
 msgstr ""
 
-#: ../gtk/window_find.glade.h:3
+#: ../gtk/glade/window_find.glade.h:3
 msgid "Look in:"
 msgstr ""
 
-#: ../gtk/window_find.glade.h:7
+#: ../gtk/glade/window_find.glade.h:7
 msgid "Search:"
 msgstr ""
 
-#: ../gtk/window_find.glade.h:9
+#: ../gtk/glade/window_find.glade.h:9
 msgid "_Search"
 msgstr ""
 
-#: ../gtk/window_fetch.glade.h:1
+#: ../gtk/glade/window_fetch.glade.h:1
 msgid "Show progress of single files"
 msgstr ""
 
-#: ../gtk/window_changes.glade.h:1
+#: ../gtk/glade/window_changes.glade.h:1
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
 msgstr ""
 
-#: ../gtk/window_changes.glade.h:2
+#: ../gtk/glade/window_changes.glade.h:2
 msgid ""
 "The chosen action also affects other packages. The following changes are "
 "required in order to proceed."
 msgstr ""
 
-#: ../gtk/window_changes.glade.h:3
+#: ../gtk/glade/window_changes.glade.h:3
 msgid "_Mark"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:1 ../gtk/window_summary.glade.h:1
-#: ../gtk/window_filters.glade.h:1
+#: ../gtk/glade/window_preferences.glade.h:1
+#: ../gtk/glade/window_summary.glade.h:1 ../gtk/glade/window_filters.glade.h:1
 msgid " "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:3
+#: ../gtk/glade/window_preferences.glade.h:3
 msgid "<b>Appearance</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:4
+#: ../gtk/glade/window_preferences.glade.h:4
 msgid "<b>Applying Changes</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:5
+#: ../gtk/glade/window_preferences.glade.h:5
 msgid "<b>Colors</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:6
+#: ../gtk/glade/window_preferences.glade.h:6
 msgid "<b>Columns</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:7
+#: ../gtk/glade/window_preferences.glade.h:7
 msgid "<b>Fonts</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:8
+#: ../gtk/glade/window_preferences.glade.h:8
 msgid "<b>History files</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:9
+#: ../gtk/glade/window_preferences.glade.h:9
 msgid "<b>Marking Changes</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:10
+#: ../gtk/glade/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:11
+#: ../gtk/glade/window_preferences.glade.h:11
 msgid "<b>Proxy Server</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:12
+#: ../gtk/glade/window_preferences.glade.h:12
 msgid "<b>Temporary Files</b>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:13
+#: ../gtk/glade/window_preferences.glade.h:13
 msgid ""
 "<span size=\"large\" weight=\"bold\">These settings affect the core of your "
 "system. Consider any changes carefully.</span>"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:14
+#: ../gtk/glade/window_preferences.glade.h:14
 msgid "A_pplication Font"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:15
+#: ../gtk/glade/window_preferences.glade.h:15
 msgid "Always Ask"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:16
+#: ../gtk/glade/window_preferences.glade.h:16
 msgid "Always prefer the highest version"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:17
+#: ../gtk/glade/window_preferences.glade.h:17
 msgid "Always prefer the installed version"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:18
+#: ../gtk/glade/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:19
+#: ../gtk/glade/window_preferences.glade.h:19
 msgid "Ask to confirm changes that also affect other packages"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:20
+#: ../gtk/glade/window_preferences.glade.h:20
 msgid "Ask to quit after the changes have been applied successfully"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:21
+#: ../gtk/glade/window_preferences.glade.h:21
 msgid "Automatically"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:22
+#: ../gtk/glade/window_preferences.glade.h:22
 msgid "Broken:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:23
+#: ../gtk/glade/window_preferences.glade.h:23
 msgid "Clicking on the status icon marks the most likely action"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:24
+#: ../gtk/glade/window_preferences.glade.h:24
 msgid "Color"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:25
+#: ../gtk/glade/window_preferences.glade.h:25
 msgid "Color packages by their status"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:26
+#: ../gtk/glade/window_preferences.glade.h:26
 msgid "Colors"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:27
+#: ../gtk/glade/window_preferences.glade.h:27
 msgid "Columns and Fonts"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:28
+#: ../gtk/glade/window_preferences.glade.h:28
 msgid ""
 "Comma separated list of hosts and domains that will not be contacted through "
 "the proxy (e.g. localhost, 192.168.1.231, .net)"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:29
+#: ../gtk/glade/window_preferences.glade.h:29
 msgid "Completely"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:30
+#: ../gtk/glade/window_preferences.glade.h:30
 msgid "Consider recommended packages as dependencies"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:32
+#: ../gtk/glade/window_preferences.glade.h:31
+#: ../gtk/glade/dialog_upgrade.glade.h:8
+msgid "Default Upgrade"
+msgstr ""
+
+#: ../gtk/glade/window_preferences.glade.h:32
 msgid "Delete _History files older than:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:33
+#: ../gtk/glade/window_preferences.glade.h:33
 msgid "Delete all cache package files now."
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:34
+#: ../gtk/glade/window_preferences.glade.h:34
 msgid "Direct connection to the internet"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:36
+#: ../gtk/glade/window_preferences.glade.h:36
 msgid "FTP proxy: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:37
+#: ../gtk/glade/window_preferences.glade.h:37
 msgid "Files"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:38
+#: ../gtk/glade/window_preferences.glade.h:38
 msgid "General"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:39
+#: ../gtk/glade/window_preferences.glade.h:39
 msgid "HTTP proxy: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:40
+#: ../gtk/glade/window_preferences.glade.h:40
 msgid "IP address or host name of the ftp proxy server"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:41
+#: ../gtk/glade/window_preferences.glade.h:41
 msgid "IP address or host name of the http proxy server"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:42
+#: ../gtk/glade/window_preferences.glade.h:42
 msgid "Ignore"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:43
+#: ../gtk/glade/window_preferences.glade.h:43
 msgid "Installed (locked):"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:44
+#: ../gtk/glade/window_preferences.glade.h:44
 msgid "Installed:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:45
+#: ../gtk/glade/window_preferences.glade.h:45
 msgid "Keep Configuration"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:46
+#: ../gtk/glade/window_preferences.glade.h:46
 msgid "Manual proxy configuration"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:47
+#: ../gtk/glade/window_preferences.glade.h:47
 msgid "Marked for complete removal:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:48
+#: ../gtk/glade/window_preferences.glade.h:48
 msgid "Marked for downgrade:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:49
+#: ../gtk/glade/window_preferences.glade.h:49
 msgid "Marked for installation:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:50
+#: ../gtk/glade/window_preferences.glade.h:50
 msgid "Marked for reinstallation:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:51
+#: ../gtk/glade/window_preferences.glade.h:51
 msgid "Marked for removal:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:52
+#: ../gtk/glade/window_preferences.glade.h:52
 msgid "Marked for upgrade:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:53
+#: ../gtk/glade/window_preferences.glade.h:53
 msgid "Move D_own"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:54
+#: ../gtk/glade/window_preferences.glade.h:54
 msgid "Move _Up"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:55
+#: ../gtk/glade/window_preferences.glade.h:55
 msgid "Network"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:56
+#: ../gtk/glade/window_preferences.glade.h:56
 msgid "New in repository:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:57
+#: ../gtk/glade/window_preferences.glade.h:57
 msgid "No proxy for: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:58
+#: ../gtk/glade/window_preferences.glade.h:58
 msgid "Not installed (locked):"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:59
+#: ../gtk/glade/window_preferences.glade.h:59
 msgid "Not installed:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:60
+#: ../gtk/glade/window_preferences.glade.h:60
 msgid "Number of undo operations:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:61
+#: ../gtk/glade/window_preferences.glade.h:61
 msgid "Port number of the ftp proxy server"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:62
+#: ../gtk/glade/window_preferences.glade.h:62
 msgid "Port number of the http proxy server"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:63
+#: ../gtk/glade/window_preferences.glade.h:63
 msgid "Port: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:64
+#: ../gtk/glade/window_preferences.glade.h:64
 msgid "Prefer versions from: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:66
+#: ../gtk/glade/window_preferences.glade.h:66
 msgid "Reloading outdated package information:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:67
+#: ../gtk/glade/window_preferences.glade.h:67
 msgid "Removal of packages: "
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:68
+#: ../gtk/glade/window_preferences.glade.h:68
 msgid "Show package properties in the main window"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:70
+#: ../gtk/glade/window_preferences.glade.h:69
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+msgid "Smart Upgrade"
+msgstr ""
+
+#: ../gtk/glade/window_preferences.glade.h:70
 msgid "System upgrade:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:71
+#: ../gtk/glade/window_preferences.glade.h:71
 msgid "Upgradable:"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:72
+#: ../gtk/glade/window_preferences.glade.h:72
 msgid "Use custom application font"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:73
+#: ../gtk/glade/window_preferences.glade.h:73
 msgid "Use custom terminal font"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:74
+#: ../gtk/glade/window_preferences.glade.h:74
 msgid "_Delete Cached Package Files"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:75
+#: ../gtk/glade/window_preferences.glade.h:75
 msgid "_Delete downloaded packages after installation"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:76
+#: ../gtk/glade/window_preferences.glade.h:76
 msgid "_Keep history"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:77
+#: ../gtk/glade/window_preferences.glade.h:77
 msgid "_Leave all downloaded packages in the cache"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:78
+#: ../gtk/glade/window_preferences.glade.h:78
 msgid "_Only delete packages which are no longer available"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:79
+#: ../gtk/glade/window_preferences.glade.h:79
 msgid "_Terminal Font"
 msgstr ""
 
-#: ../gtk/window_preferences.glade.h:80
+#: ../gtk/glade/window_preferences.glade.h:80
 msgid "days"
 msgstr ""
 
-#: ../gtk/window_disc_name.glade.h:1
+#: ../gtk/glade/window_disc_name.glade.h:1
 msgid "*"
 msgstr ""
 
-#: ../gtk/window_disc_name.glade.h:2
+#: ../gtk/glade/window_disc_name.glade.h:2
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
 msgstr ""
 
-#: ../gtk/window_disc_name.glade.h:3
+#: ../gtk/glade/window_disc_name.glade.h:3
 msgid "Disc label:"
 msgstr ""
 
-#: ../gtk/window_disc_name.glade.h:4
+#: ../gtk/glade/window_disc_name.glade.h:4
 msgid ""
 "The label will be used to identify the CD-ROM if you want to install "
 "packages from it later."
 msgstr ""
 
-#: ../gtk/window_setopt.glade.h:1
+#: ../gtk/glade/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
 msgstr ""
 
-#: ../gtk/window_setopt.glade.h:2
+#: ../gtk/glade/window_setopt.glade.h:2
 msgid "Only experts should use this."
 msgstr ""
 
-#: ../gtk/window_setopt.glade.h:3
+#: ../gtk/glade/window_setopt.glade.h:3
 msgid "Value:"
 msgstr ""
 
-#: ../gtk/window_setopt.glade.h:4
+#: ../gtk/glade/window_setopt.glade.h:4
 msgid "Variable:"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:3
+#: ../gtk/glade/window_summary.glade.h:3
 msgid "<b>Summary</b>"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:4
+#: ../gtk/glade/window_summary.glade.h:4
 msgid ""
 "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:6
+#: ../gtk/glade/window_summary.glade.h:6
 msgid "Download package files only"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:7
+#: ../gtk/glade/window_summary.glade.h:7
 msgid "Return to the main screen"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:8
+#: ../gtk/glade/window_summary.glade.h:8
 msgid "The package files will be downloaded, but not installed"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:9
+#: ../gtk/glade/window_summary.glade.h:9
 msgid ""
 "This is your last opportunity to look through the list of marked changes "
 "before they are applied."
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:10
+#: ../gtk/glade/window_summary.glade.h:10
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:11
+#: ../gtk/glade/window_summary.glade.h:11
 msgid "Verify package signatures"
 msgstr ""
 
-#: ../gtk/window_summary.glade.h:12
+#: ../gtk/glade/window_summary.glade.h:12
 msgid "_Show Details"
 msgstr ""
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
-#: ../gtk/window_filters.glade.h:4
+#: ../gtk/glade/window_filters.glade.h:4
 msgid "<b>Current</b>"
 msgstr ""
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
-#: ../gtk/window_filters.glade.h:6
+#: ../gtk/glade/window_filters.glade.h:6
 msgid "<b>Marked</b>"
 msgstr ""
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
-#: ../gtk/window_filters.glade.h:8
+#: ../gtk/glade/window_filters.glade.h:8
 msgid "<b>Other</b>"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:9
+#: ../gtk/glade/window_filters.glade.h:9
 msgid "AND"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:10
+#: ../gtk/glade/window_filters.glade.h:10
 msgid "Boolean operator between property criterias:"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:12
+#: ../gtk/glade/window_filters.glade.h:12
 msgid "Conflicting Packages"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:14 ../gtk/window_details.glade.h:15
+#: ../gtk/glade/window_filters.glade.h:14
+#: ../gtk/glade/window_details.glade.h:15
 msgid "Dependent Packages"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:16
+#: ../gtk/glade/window_filters.glade.h:16
 msgid "Exclude"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:17
+#: ../gtk/glade/window_filters.glade.h:17
 msgid "Exclude selected sections"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
+#: ../gtk/glade/window_filters.glade.h:18 ../gtk/rgfiltermanager.h:60
 msgid "Excludes"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:20
+#: ../gtk/glade/window_filters.glade.h:20
 msgid "For installation or upgrade"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:21
+#: ../gtk/glade/window_filters.glade.h:21
 msgid "For removal"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:22
+#: ../gtk/glade/window_filters.glade.h:22
 msgid "Include"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:23
+#: ../gtk/glade/window_filters.glade.h:23
 msgid "Include selected sections only"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
+#: ../gtk/glade/window_filters.glade.h:24 ../gtk/rgfiltermanager.h:59
 msgid "Includes"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:26
+#: ../gtk/glade/window_filters.glade.h:26
 msgid "Installed packages that are up-to-date"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:27
+#: ../gtk/glade/window_filters.glade.h:27
 msgid "Installed packages that are upgradable"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:28
+#: ../gtk/glade/window_filters.glade.h:28
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:29
+#: ../gtk/glade/window_filters.glade.h:29
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:32
+#: ../gtk/glade/window_filters.glade.h:32
 msgid "Not installable"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:34
+#: ../gtk/glade/window_filters.glade.h:34
 msgid "Not installed packages"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:35
+#: ../gtk/glade/window_filters.glade.h:35
 msgid "Not marked"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:36
+#: ../gtk/glade/window_filters.glade.h:36
 msgid "OR"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:38
+#: ../gtk/glade/window_filters.glade.h:38
 msgid "Orphaned"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:40
+#: ../gtk/glade/window_filters.glade.h:40
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:41
+#: ../gtk/glade/window_filters.glade.h:41
 msgid "Packages that are not available in any repository"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:42
+#: ../gtk/glade/window_filters.glade.h:42
 msgid "Packages that will be installed or upgraded"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:43
+#: ../gtk/glade/window_filters.glade.h:43
 msgid "Packages that will be removed"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:44
+#: ../gtk/glade/window_filters.glade.h:44
 msgid "Packages that will never be upgraded"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:45
+#: ../gtk/glade/window_filters.glade.h:45
 msgid "Packages that won't be changed"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:46
+#: ../gtk/glade/window_filters.glade.h:46
 msgid "Packages with broken dependencies"
 msgstr ""
 
 #. replaces/obsoletes
-#: ../gtk/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
+#: ../gtk/glade/window_filters.glade.h:50 ../gtk/rgfiltermanager.h:74
 msgid "Recommendations"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:51
+#: ../gtk/glade/window_filters.glade.h:51
 msgid "Removed packages that have left configuration files on the system"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:52
+#: ../gtk/glade/window_filters.glade.h:52
 msgid "Replaced Packages"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:53
+#: ../gtk/glade/window_filters.glade.h:53
 msgid "Residual config"
 msgstr ""
 
 #. /recommends
-#: ../gtk/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
+#: ../gtk/glade/window_filters.glade.h:56 ../gtk/rgfiltermanager.h:75
 msgid "Suggestions"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:57
+#: ../gtk/glade/window_filters.glade.h:57
 msgid "Tags"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:58
+#: ../gtk/glade/window_filters.glade.h:58
 msgid "Upgradable"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:60
+#: ../gtk/glade/window_filters.glade.h:60
 msgid "Version Number"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:61
+#: ../gtk/glade/window_filters.glade.h:61
 msgid "_Deselect All"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:62
+#: ../gtk/glade/window_filters.glade.h:62
 msgid "_Invert All"
 msgstr ""
 
-#: ../gtk/window_filters.glade.h:63
+#: ../gtk/glade/window_filters.glade.h:63
 msgid "_Select All"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:2
+#: ../gtk/glade/window_repositories.glade.h:2
 msgid "Distribution:"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:4
+#: ../gtk/glade/window_repositories.glade.h:4
 msgid "Section(s):"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:5
+#: ../gtk/glade/window_repositories.glade.h:5
 msgid "URI:"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:6
+#: ../gtk/glade/window_repositories.glade.h:6
 msgid "Vendors..."
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:7
+#: ../gtk/glade/window_repositories.glade.h:7
 msgid "deb"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:8
+#: ../gtk/glade/window_repositories.glade.h:8
 msgid "deb-src"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:9
+#: ../gtk/glade/window_repositories.glade.h:9
 msgid "rpm"
 msgstr ""
 
-#: ../gtk/window_repositories.glade.h:10
+#: ../gtk/glade/window_repositories.glade.h:10
 msgid "rpm-src"
 msgstr ""
 
-#: ../gtk/window_rgdebinstall_progress.glade.h:1
+#: ../gtk/glade/window_rgdebinstall_progress.glade.h:1
 msgid "<i>Preparing packages...</i>"
 msgstr ""
 
-#: ../gtk/window_rgdebinstall_progress.glade.h:2
+#: ../gtk/glade/window_rgdebinstall_progress.glade.h:2
 msgid "Automatically close after the changes have been successfully applied"
 msgstr ""
 
-#: ../gtk/window_rgdebinstall_progress.glade.h:3
-msgid "Terminal"
+#: ../gtk/glade/window_rgdebinstall_progress.glade.h:3
+msgid "Details"
 msgstr ""
 
-#: ../gtk/window_rginstall_progress_msgs.glade.h:1
+#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
 msgstr ""
 
-#: ../gtk/window_tasks.glade.h:1
+#: ../gtk/glade/window_tasks.glade.h:1
 msgid ""
 "<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
 "computer?</span>\n"
@@ -2899,16 +2877,188 @@ msgid ""
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
 
-#: ../gtk/window_tasks.glade.h:4
+#: ../gtk/glade/window_tasks.glade.h:4
 msgid "_Description"
 msgstr ""
 
-#: ../gtk/window_zvtinstallprogress.glade.h:1
+#: ../gtk/glade/window_zvtinstallprogress.glade.h:1
 msgid "<b>Terminal Output:</b>"
 msgstr ""
 
-#: ../gtk/window_zvtinstallprogress.glade.h:2
+#: ../gtk/glade/window_zvtinstallprogress.glade.h:2
 msgid "Close this dialog after the changes have been successfully applied"
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:1
+msgid " - "
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:2
+msgid ""
+"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
+"all changes and then to apply them."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:3
+msgid "Choose the action from the context menu of the package."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:4
+msgid "Click on the status icon to open a menu that contains all actions."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:5
+msgid "Double click on the package name."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:6
+msgid "Quick Introduction"
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:7
+msgid "Select the package and choose the action from the 'Package' menu."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:8
+msgid "Show this dialog at startup"
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:9
+msgid ""
+"The software on your system is organized in so called <i>packages</i>. The "
+"package manager enables you to install, to upgrade or to remove software "
+"packages."
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:10
+msgid ""
+"You can mark packages for installation, upgrade or removal in several ways:"
+msgstr ""
+
+#: ../gtk/glade/dialog_welcome.glade.h:11
+msgid ""
+"You should reload the package information regularly. Otherwise you could "
+"miss important security upgrades."
+msgstr ""
+
+#: ../gtk/glade/dialog_unmet.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
+"installation or upgrade</span>\n"
+"\n"
+"The following packages have unresolvable dependencies. Make sure that all "
+"required repositories are added and enabled in the preferences."
+msgstr ""
+
+#: ../gtk/glade/dialog_changelog.glade.h:1
+msgid "Complete changelog of the latest version:"
+msgstr ""
+
+#: ../gtk/glade/dialog_update_failed.glade.h:1
+msgid ""
+"<big><b>Could not download all repository indexes</b></big>\n"
+"\n"
+"The repository might be no longer available or could not be contacted "
+"because of network problems. If available an older version of the failed "
+"index will be used. Otherwise the repository will be ignored. Check your "
+"network connection and the correct writing of the repository address in the "
+"preferences."
+msgstr ""
+
+#: ../gtk/glade/window_iconlegend.glade.h:1
+msgid ""
+"<b>The following icons are used to indicate the current status of a package:"
+"</b>"
+msgstr ""
+
+#: ../gtk/glade/window_iconlegend.glade.h:2 ../gtk/rgiconlegend.cc:41
+msgid "Icon Legend"
+msgstr ""
+
+#: ../gtk/glade/dialog_download_error.glade.h:1
+msgid ""
+"<big><b>Could not download all necessary package files</b></big>\n"
+"\n"
+"The version of the package that you want to install might be no longer "
+"available in the repository, or there may be problems with the source of the "
+"package. Reload the package list and check the source of the package (e.g. "
+"CD or network connection)."
+msgstr ""
+
+#: ../gtk/glade/dialog_update_outdated.glade.h:1
+msgid ""
+"<span weight=\"bold\" size=\"larger\">Your package information is out of "
+"date</span>\n"
+"\n"
+"Your package information is older than 48 hours. There could be important "
+"security updates available. It is recommended to reload the package "
+"information regularly."
+msgstr ""
+
+#: ../gtk/glade/dialog_update_outdated.glade.h:4
+msgid "Remember the answer"
+msgstr ""
+
+#: ../gtk/glade/dialog_update_outdated.glade.h:5
+msgid "_Reload"
+msgstr ""
+
+#: ../gtk/glade/window_logview.glade.h:1
+msgid "History"
+msgstr ""
+
+#: ../gtk/glade/window_logview.glade.h:2
+msgid "History of installed, upgraded and removed software packages."
+msgstr ""
+
+#: ../gtk/glade/dialog_quit.glade.h:1
+msgid ""
+"<b><big>Quit and discard marked changes?</big></b>\n"
+"\n"
+"There are still marked changes that have not yet been applied. They will get "
+"lost if you choose to quit 'Synaptic'."
+msgstr ""
+
+#: ../gtk/glade/dialog_conffile.glade.h:1
+msgid "Difference between the files"
+msgstr ""
+
+#: ../gtk/glade/dialog_conffile.glade.h:2
+msgid "_Keep"
+msgstr ""
+
+#: ../gtk/glade/dialog_conffile.glade.h:3
+msgid "_Replace"
+msgstr ""
+
+#: ../gtk/glade/dialog_change_version.glade.h:1
+msgid "Force version:"
+msgstr ""
+
+#: ../gtk/glade/dialog_change_version.glade.h:2
+msgid "_Force Version"
+msgstr ""
+
+#: ../gtk/glade/dialog_upgrade.glade.h:1
+msgid ""
+"<b><big>Mark upgrades in a smart way?</big></b>\n"
+"\n"
+"The default upgrade method skips upgrades that would introduce conflicts or "
+"require installation of additional packages.\n"
+"\n"
+"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to fulfil "
+"all dependencies of upgrades in a smart way.\n"
+"\n"
+"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
+"afterwards."
+msgstr ""
+
+#: ../gtk/glade/dialog_upgrade.glade.h:9
+msgid "Remember my answer for future upgrades"
+msgstr ""
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+msgid "This behavior can be changed in the preferences later."
 msgstr ""
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
@@ -2921,82 +3071,6 @@ msgstr ""
 
 #: ../data/synaptic.desktop.in.h:3 ../data/synaptic-kde.desktop.in.h:3
 msgid "Synaptic Package Manager"
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:1
-msgid " - "
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:2
-msgid ""
-"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
-"all changes and then to apply them."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:3
-msgid "Choose the action from the context menu of the package."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:4
-msgid "Click on the status icon to open a menu that contains all actions."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:5
-msgid "Double click on the package name."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:6
-msgid "Quick Introduction"
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:7
-msgid "Select the package and choose the action from the 'Package' menu."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:8
-msgid "Show this dialog at startup"
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:9
-msgid ""
-"The software on your system is organized in so called <i>packages</i>. The "
-"package manager enables you to install, to upgrade or to remove software "
-"packages."
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
-msgstr ""
-
-#: ../gtk/dialog_welcome.glade.h:11
-msgid ""
-"You should reload the package information regularly. Otherwise you could "
-"miss important security upgrades."
-msgstr ""
-
-#: ../gtk/dialog_unmet.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
-"installation or upgrade</span>\n"
-"\n"
-"The following packages have unresolvable dependencies. Make sure that all "
-"required repositories are added and enabled in the preferences."
-msgstr ""
-
-#: ../gtk/dialog_changelog.glade.h:1
-msgid "Complete changelog of the latest version:"
-msgstr ""
-
-#: ../gtk/dialog_update_failed.glade.h:1
-msgid ""
-"<big><b>Could not download all repository indexes</b></big>\n"
-"\n"
-"The repository might be no longer available or could not be contacted "
-"because of network problems. If available an older version of the failed "
-"index will be used. Otherwise the repository will be ignored. Check your "
-"network connection and the correct writing of the repository address in the "
-"preferences."
 msgstr ""
 
 #: ../gtk/rgfiltermanager.h:66
@@ -3031,19 +3105,8 @@ msgstr ""
 msgid "Please insert a disc in the drive."
 msgstr ""
 
-#: ../gtk/rgiconlegend.cc:41 ../gtk/window_iconlegend.glade.h:2
-msgid "Icon Legend"
-msgstr ""
-
 #: ../gtk/rgiconlegend.cc:72
 msgid "Package is supported"
-msgstr ""
-
-#. vim:ts=3:sw=3:et
-#: ../gtk/window_iconlegend.glade.h:1
-msgid ""
-"<b>The following icons are used to indicate the current status of a package:"
-"</b>"
 msgstr ""
 
 #: ../gtk/rgterminstallprogress.cc:87
@@ -3056,41 +3119,4 @@ msgstr ""
 
 #: ../gtk/rgterminstallprogress.cc:128
 msgid "<i>Can't close while running</i>"
-msgstr ""
-
-#. vim:sts=3:sw=3
-#: ../gtk/dialog_download_error.glade.h:1
-msgid ""
-"<big><b>Could not download all necessary package files</b></big>\n"
-"\n"
-"The version of the package that you want to install might be no longer "
-"available in the repository, or there may be problems with the source of the "
-"package. Reload the package list and check the source of the package (e.g. "
-"CD or network connection)."
-msgstr ""
-
-#: ../gtk/dialog_update_outdated.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Your package information is out of "
-"date</span>\n"
-"\n"
-"Your package information is older than 48 hours. There could be important "
-"security updates available. It is recommended to reload the package "
-"information regularly."
-msgstr ""
-
-#: ../gtk/dialog_update_outdated.glade.h:4
-msgid "Remember the answer"
-msgstr ""
-
-#: ../gtk/dialog_update_outdated.glade.h:5
-msgid "_Reload"
-msgstr ""
-
-#: ../gtk/window_logview.glade.h:1
-msgid "History"
-msgstr ""
-
-#: ../gtk/window_logview.glade.h:2
-msgid "History of installed, upgraded and removed software packages."
 msgstr ""

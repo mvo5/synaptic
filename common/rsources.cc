@@ -352,8 +352,13 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= RpmDir;
    else if (S == "rpm-src-dir")
       Type |= RpmSrcDir;
+   else if (S == "repomd")
+      Type |= Repomd;
+   else if (S == "repomd-src")
+      Type |= RepomdSrc;
    else
       return false;
+   cout << S << " settype " << (Type | Repomd) << endl;
    return true;
 }
 
@@ -371,6 +376,11 @@ string SourcesList::SourceRecord::GetType()
       return "rpm-dir";
    else if ((Type & RpmSrcDir) != 0)
       return "rpm-src-dir";
+   else if ((Type & Repomd) != 0)
+      return "repomd";
+   else if ((Type & RepomdSrc) != 0)
+      return "repomd-src";
+   cout << "type " << (Type & Repomd) << endl;
    return "unknown";
 }
 
@@ -382,6 +392,7 @@ bool SourcesList::SourceRecord::SetURI(string S)
       return false;
 
    S = SubstVar(S, "$(ARCH)", _config->Find("APT::Architecture"));
+   S = SubstVar(S, "$(VERSION)", _config->Find("APT::DistroVersion"));
    URI = S;
 
    // append a / to the end if one is not already there
@@ -522,6 +533,10 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
       os << "RpmDir";
    if ((rec.Type & SourcesList::RpmSrcDir) != 0)
       os << "RpmSrcDir";
+   if ((rec.Type & SourcesList::Repomd) != 0)
+      os << "Repomd";
+   if ((rec.Type & SourcesList::RepomdSrc) != 0)
+      os << "RepomdSrc";
    os << endl;
    os << "SourceFile: " << rec.SourceFile << endl;
    os << "VendorID: " << rec.VendorID << endl;

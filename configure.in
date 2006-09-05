@@ -121,7 +121,7 @@ AM_CONDITIONAL(WITH_LUA, test "$enable_scripts" != "no")
 
 DEB_HDRS=""
 AC_SUBST(DEB_HDRS)
-DEB_LIBS=""
+DEB_LIBS="-lapt-inst"
 AC_SUBST(DEB_LIBS)
 
 # launchpad integration
@@ -206,9 +206,13 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
 AC_OUTPUT([
 common/Makefile 
 gtk/Makefile
+gtk/glade/Makefile
 data/Makefile
 man/Makefile
 pixmaps/Makefile 
+pixmaps/hicolor/Makefile 
+pixmaps/hicolor/16x16/Makefile 
+pixmaps/hicolor/24x24/Makefile 
 po/Makefile.in
 help/Makefile
 help/C/Makefile

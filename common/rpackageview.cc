@@ -125,7 +125,9 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    _view[str].push_back(pkg);
 
    str.clear();
-   if (flags & RPackage::FNew)
+   if (flags & RPackage::FNowBroken)
+      str = _("Broken dependencies");
+   else if (flags & RPackage::FNew)
       str = _("New in repository");
    else if (flags & RPackage::FPinned) 
       str = _("Pinned");

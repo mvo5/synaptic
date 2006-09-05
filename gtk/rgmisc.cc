@@ -159,20 +159,30 @@ const char *utf8(const char *str)
    return _str;
 }
 
-GtkWidget *get_gtk_image(const char *name)
+static GdkPixbuf *
+get_gdk_pixbuf(const gchar *name, int size=16)
 {
-   gchar *filename;
-   GtkWidget *img;
-   filename = g_strdup_printf("../pixmaps/%s.png", name);
-   if (!FileExists(filename)) {
-      g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_PIXMAPDIR "%s.png", name);
-   }
-   img = gtk_image_new_from_file(filename);
-   if (img == NULL)
-      std::cerr << "Warning, failed to load: " << filename << std::endl;
-   g_free(filename);
-   return img;
+   GtkIconTheme *theme;
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+
+   theme = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
+				     (GtkIconLookupFlags)0, &error);
+   if (pixbuf == NULL) 
+      std::cerr << "Warning, failed to load: " << name 
+		<< error->message << std::endl;
+
+   return pixbuf;
+}
+
+GtkWidget *get_gtk_image(const gchar *name, int size)
+{
+   GdkPixbuf *buf;
+   buf = get_gdk_pixbuf(name, size);
+   if(!buf)
+      return NULL;
+   return gtk_image_new_from_pixbuf(buf);
 }
 
 
@@ -212,29 +222,12 @@ void RGPackageStatus::initColors()
 
 void RGPackageStatus::initPixbufs()
 {
-   gchar *filename = NULL;
-
+   gchar *s;
    for (int i = 0; i < N_STATUS_COUNT; i++) {
-      filename = g_strdup_printf("../pixmaps/package-%s.png",
-                                 PackageStatusShortString[i]);
-      if (!FileExists(filename)) {
-         g_free(filename);
-         filename = g_strdup_printf(SYNAPTIC_PIXMAPDIR "package-%s.png",
-                                    PackageStatusShortString[i]);
-      }
-      StatusPixbuf[i] = gdk_pixbuf_new_from_file(filename, NULL);
-      if (StatusPixbuf[i] == NULL)
-         std::cerr << "Warning, failed to load: " << filename << std::endl;
-      g_free(filename);
+      s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
+      StatusPixbuf[i] = get_gdk_pixbuf(s);
    }
-
-   filename = "../pixmaps/package-supported.png";
-   if (!FileExists(filename)) 
-      filename = SYNAPTIC_PIXMAPDIR "package-supported.png";
-   
-   supportedPix = gdk_pixbuf_new_from_file(filename, NULL);
-   if (supportedPix == NULL)
-      std::cerr << "Warning, failed to load: " << filename << std::endl;
+   supportedPix = get_gdk_pixbuf("package-supported");
 }
 
 // class that finds out what do display to get user

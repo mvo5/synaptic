@@ -80,6 +80,8 @@ char *transtable[][2] = {
    {"alien", _("Converted From RPM by Alien")},
    // TRANSLATORS: Ubuntu translations section
    {"translations", _("Internationalization and localization")},
+   // TRANSLATORS: Ubuntu metapackages section
+   {"metapackages", _("Meta Packages")},
 
    // TRANSLATORS: Alias for the Debian package section "non-US"
    //              Export to the outside of the USA is not allowed

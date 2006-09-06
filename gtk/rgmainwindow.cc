@@ -108,10 +108,11 @@ void RGMainWindow::changeView(int view, string subView)
       view=0;
    }
 
+   _blockActions = TRUE;
+
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);
       
    RPackage *pkg = selectedPackage();
-   _blockActions = TRUE;
 
    _lister->setView(view);
 
@@ -2500,13 +2501,13 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
 {
+   RGMainWindow *me = (RGMainWindow *) data; 
+
    // only act on the active buttons
-   if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)))
+   if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)) ||
+      me->_blockActions == TRUE)
       return;
 
-   //   cout << "cbChangedView()"<<endl;
-
-   RGMainWindow *me = (RGMainWindow *) data; 
    long view = (long)gtk_object_get_data(GTK_OBJECT(self), "index");
    me->changeView(view);
 }
@@ -2515,6 +2516,8 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
+   if(me->_blockActions)
+      return;
 
    me->setBusyCursor(true);
    me->refreshTable(NULL, false);

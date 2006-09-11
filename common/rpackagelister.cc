@@ -1023,6 +1023,7 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
 void RPackageLister::restoreState(RPackageLister::pkgState &state)
 {
    pkgDepCache *deps = _cache->deps();
+   pkgDepCache::ActionGroup group(*deps);
 
    for (unsigned i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
@@ -1729,9 +1730,10 @@ bool RPackageLister::readSelections(istream &in)
    };
    map<string, int> actionMap;
 
-   pkgDepCache::ActionGroup group(*_cache->deps());
 
    while (in.eof() == false) {
+      pkgDepCache::ActionGroup group(*_cache->deps());
+
       in.getline(Buffer, sizeof(Buffer));
       CurLine++;
 

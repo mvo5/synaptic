@@ -71,6 +71,17 @@ void RPackageView::clearSelection()
    _selectedView.clear();
 }
 
+void RPackageView::refresh()
+{
+   //cout << "RPackageView::refresh() " << endl;
+
+   _view.clear();
+   for(unsigned int i=0;i<_all.size();i++) {
+      if(_all[i])
+	 addPackage(_all[i]);
+   }
+}
+
 void RPackageViewSections::addPackage(RPackage *package)
 {
    string str = trans_section(package->section());
@@ -149,6 +160,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    if(!str.empty())
       _view[str].push_back(pkg);
 }
+
 
 //------------------------------------------------------------------
 
@@ -296,6 +308,14 @@ RPackageViewFilter::iterator RPackageViewFilter::begin()
 
    return _selectedView.begin(); 
 }
+
+void RPackageViewFilter::refresh()
+{
+   //cout << "RPackageViewFilter::refresh() " << endl;
+
+   refreshFilters();
+}
+
 
 vector<string> RPackageViewFilter::getFilterNames()
 {

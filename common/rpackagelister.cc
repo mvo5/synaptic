@@ -379,9 +379,6 @@ bool RPackageLister::openCache()
       if (_roptions->getPackageLock(pkgName.c_str())) 
 	 pkg->setPinned(true);
 
-      for (unsigned int i = 0; i != _views.size(); i++)
-         _views[i]->addPackage(pkg);
-
       // Gather list of sections.
       if (I.Section())
          sectionSet.insert(I.Section());
@@ -390,6 +387,10 @@ bool RPackageLister::openCache()
          cerr << "Package " << I.Name() << " has no section?!" << endl;
 #endif
    }
+
+   // refresh the views
+   for (unsigned int i = 0; i != _views.size(); i++)
+      _views[i]->refresh();
 
    // Truncate due to virtual packages which were skipped above.
    _packages.resize(count);
@@ -553,6 +554,7 @@ void RPackageLister::reapplyFilter()
          _viewPackages.push_back(*I);
       }
    }
+
 
    sortPackages(_sortMode);
 }
@@ -1702,6 +1704,10 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
    return true;
 }
 
+void RPackageLister::refreshView()
+{
+   _selectedView->refresh();
+}
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
@@ -1876,5 +1882,6 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 
    return true;
 }
+
 
 // vim:ts=3:sw=3:et

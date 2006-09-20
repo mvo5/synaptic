@@ -84,6 +84,8 @@ class RPackageView {
 
    virtual void clear();
    virtual void clearSelection();
+
+   virtual void refresh();
 };
 
 
@@ -159,6 +161,7 @@ class RPackageViewFilter : public RPackageView {
    void restoreFilters();
    // called after the filtereditor was run
    void refreshFilters();
+   void refresh();
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);

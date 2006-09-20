@@ -541,8 +541,9 @@ void RPackageLister::reapplyFilter()
    if (_updating)
       return;
 
-   //   cout << "RPackageLister::reapplyFilter()" << endl;
+   //cout << "RPackageLister::reapplyFilter()" << endl;
 
+   _selectedView->refresh();
    _viewPackages.clear();
    _viewPackagesIndex.clear();
    _viewPackagesIndex.resize(_packagesIndex.size(), -1);

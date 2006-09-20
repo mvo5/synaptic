@@ -345,6 +345,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_propertiesB, FALSE);
    gtk_widget_set_sensitive(_overrideVersionM, FALSE);
    gtk_widget_set_sensitive(_pinM, FALSE);
+   gtk_widget_set_sensitive(_autoM, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -366,6 +367,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_detailsM, TRUE);
    gtk_widget_set_sensitive(_propertiesB, TRUE);
    gtk_widget_set_sensitive(_pinM, TRUE);
+   gtk_widget_set_sensitive(_autoM, TRUE);
 
    // set info
    gtk_widget_set_sensitive(pkginfo, true);
@@ -387,6 +389,14 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), false);
       _blockActions = FALSE;
    }
+
+   // Auto-Flag
+   _blockActions = true;
+   if( flags & RPackage::FIsAuto)
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), true);
+   else
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), false);
+   _blockActions = false;
 
    // enable unmark if a action is performed with the pkg
    if((flags & RPackage::FInstall)   || (flags & RPackage::FNewInstall) || 
@@ -1328,6 +1338,11 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_pin",
                                  G_CALLBACK(cbMenuPinClicked), this);
+
+   _autoM = glade_xml_get_widget(_gladeXML, "menu_auto_installed");
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_menu_auto_installed",
+                                 G_CALLBACK(cbMenuAutoInstalledClicked), this);
 
    _overrideVersionM = glade_xml_get_widget(_gladeXML, 
 					    "menu_override_version");

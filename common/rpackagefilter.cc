@@ -590,6 +590,16 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
          return true;
    }
 
+   if (_status & AutoInstalled) {
+      if (flags & RPackage::FIsAuto)
+         return true;
+   }
+
+   if (_status & Garbage) {
+      if (flags & RPackage::FIsGarbage)
+         return true;
+   }
+
    return false;
 }
 

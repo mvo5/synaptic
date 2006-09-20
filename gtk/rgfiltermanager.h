@@ -49,11 +49,13 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::OrphanedPackage,       // debian only
    RStatusPackageFilter::ResidualConfig,        // debian only
    RStatusPackageFilter::NotInstallable,
-   RStatusPackageFilter::UpstreamUpgradable
+   RStatusPackageFilter::UpstreamUpgradable,
+   RStatusPackageFilter::AutoInstalled,
+   RStatusPackageFilter::Garbage,
 };
 
 // FIXME: if you add a new status change this const! (calc automaticlly)
-static const int NrOfStatusBits = 13;
+static const int NrOfStatusBits = 15;
 
 static char *ActOptions[] = {
    _("Includes"),

@@ -543,7 +543,6 @@ void RPackageLister::reapplyFilter()
 
    //cout << "RPackageLister::reapplyFilter()" << endl;
 
-   _selectedView->refresh();
    _viewPackages.clear();
    _viewPackagesIndex.clear();
    _viewPackagesIndex.resize(_packagesIndex.size(), -1);
@@ -1705,6 +1704,10 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
    return true;
 }
 
+void RPackageLister::refreshView()
+{
+   _selectedView->refresh();
+}
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
@@ -1883,5 +1886,6 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    return false;
 #endif
 }
+
 
 // vim:ts=3:sw=3:et

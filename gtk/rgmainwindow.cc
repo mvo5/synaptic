@@ -484,6 +484,7 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
    me->_lister->unregisterObserver(me);
 
    me->_lister->getCache()->deps()->MarkAndSweep();
+   me->_lister->refreshView();
 
    me->_lister->registerObserver(me);
    me->refreshTable();

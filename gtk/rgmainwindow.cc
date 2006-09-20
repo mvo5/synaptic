@@ -479,20 +479,17 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
    RGCacheProgress cacheProgress(progress, label);
    me->_lister->getCache()->deps()->writeStateFile(&cacheProgress,true);
 
-#if 0
    // refresh
-   me->setTreeLocked(TRUE);
+   me->setInterfaceLocked(TRUE);
    me->_lister->unregisterObserver(me);
 
    me->_lister->getCache()->deps()->MarkAndSweep();
-   me->_lister->reapplyFilter();
 
-   me->setTreeLocked(FALSE);
    me->_lister->registerObserver(me);
-   me->refreshSubViewList();
    me->refreshTable();
    me->refreshSubViewList();
-#endif
+   me->setInterfaceLocked(FALSE);
+   
 }
 
 // install a specific version

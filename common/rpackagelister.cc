@@ -543,7 +543,6 @@ void RPackageLister::reapplyFilter()
 
    //   cout << "RPackageLister::reapplyFilter()" << endl;
 
-   _selectedView->refresh();
    _viewPackages.clear();
    _viewPackagesIndex.clear();
    _viewPackagesIndex.resize(_packagesIndex.size(), -1);

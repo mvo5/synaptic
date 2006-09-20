@@ -206,9 +206,7 @@ class RPackageLister {
    void reapplyFilter();
    
    // refresh view 
-   void refreshView() {
-      _selectedView->refresh();
-   };
+   void refreshView();
 
    // is is exposed for the stuff like filter manager window
    RPackageViewFilter *filterView() { return _filterView; };

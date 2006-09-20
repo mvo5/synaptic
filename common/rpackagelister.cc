@@ -1704,6 +1704,10 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
    return true;
 }
 
+void RPackageLister::refreshView()
+{
+   _selectedView->refresh();
+}
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
@@ -1879,5 +1883,6 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    return false;
 #endif
 }
+
 
 // vim:ts=3:sw=3:et

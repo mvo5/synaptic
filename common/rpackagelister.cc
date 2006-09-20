@@ -540,7 +540,7 @@ void RPackageLister::reapplyFilter()
    if (_updating)
       return;
 
-   //   cout << "RPackageLister::reapplyFilter()" << endl;
+   //cout << "RPackageLister::reapplyFilter()" << endl;
 
    _viewPackages.clear();
    _viewPackagesIndex.clear();

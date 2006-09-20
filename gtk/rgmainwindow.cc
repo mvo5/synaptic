@@ -435,6 +435,54 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 }
 
 
+void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   if (me->_blockActions)
+      return;
+   cout << "RGMainWindow::cbMenuAutoInstalledClickedn()" << endl;
+
+   bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
+
+   GtkTreeSelection *selection;
+   GtkTreeIter iter;
+   GList *list, *li;
+   RPackage *pkg;
+
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
+   while (li != NULL) {
+      gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
+      gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+      if (pkg == NULL) {
+         li = g_list_next(li);
+         continue;
+      }
+
+      pkg->setAuto(active);
+      li = g_list_next(li);
+   }
+
+   // write it
+   GtkWidget *progress = glade_xml_get_widget(me->_gladeXML, "progressbar_main");
+   GtkWidget *label = glade_xml_get_widget(me->_gladeXML, "label_status");
+   RGCacheProgress cacheProgress(progress, label);
+   me->_lister->getCache()->deps()->writeStateFile(&cacheProgress,true);
+
+   // refresh
+   me->setInterfaceLocked(TRUE);
+   me->_lister->unregisterObserver(me);
+
+   me->_lister->getCache()->deps()->MarkAndSweep();
+   me->_lister->refreshView();
+
+   me->_lister->registerObserver(me);
+   me->refreshTable();
+   me->refreshSubViewList();
+   me->setInterfaceLocked(FALSE);
+   
+}
+
 // install a specific version
 void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 {

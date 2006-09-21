@@ -102,7 +102,10 @@ enum { DEP_NAME_COLUMN,         /* text */
 
 void RGMainWindow::changeView(int view, string subView)
 {
-   //cout << "RGMainWindow::changeView()" << endl;
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::changeView(): view '%i' subView '%s'\n", 
+	       view, subView.size() > 0 ? subView.c_str() : "(empty)");
+
    if(view >= N_PACKAGE_VIEWS) {
       //cerr << "changeView called with invalid view NR: " << view << endl;
       view=0;
@@ -150,6 +153,11 @@ void RGMainWindow::refreshSubViewList()
 {
    string selected = selectedSubView();
 
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::refreshSubViewList(): selectedView '%s'\n", 
+	       selected.size() > 0 ? selected.c_str() : "(empty)");
+
+
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
@@ -175,8 +183,6 @@ void RGMainWindow::refreshSubViewList()
 	 ok = gtk_tree_model_iter_next(model, &iter);
       }
    } else {
-      // we auto set to "All" when we have gtk2.4 (without the list is 
-      // too slow)
       GtkTreeModel *model;
       GtkTreeSelection *selection;
       GtkTreeIter iter;
@@ -275,9 +281,11 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
-   //cout << "RGMainWindow::refreshTable(): " << selectedPkg 
-	//<< " adj: " << setAdjustment <<endl;
-//
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
+	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
+	       setAdjustment);
+
    string selected = selectedSubView();
    _lister->setSubView(utf8(selected.c_str()));
 

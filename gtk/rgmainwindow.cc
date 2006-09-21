@@ -704,6 +704,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);
 
+   refreshSubViewList();
    _blockActions = FALSE;
    setInterfaceLocked(FALSE);
    refreshTable(pkg);

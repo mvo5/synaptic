@@ -1042,7 +1042,9 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
             deps->MarkDelete(*(pkg->package()), oldflags & RPackage::FPurge);
          } else if (oldflags & RPackage::FKeep) {
             deps->MarkKeep(*(pkg->package()), false);
-         }
+	 }
+	 // fix the auto flag
+	 deps->MarkAuto(*pkg->package(), (oldflags & RPackage::FIsAuto));
       }
    }
    notifyChange(NULL);

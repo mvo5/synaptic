@@ -135,6 +135,13 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    }
    _view[str].push_back(pkg);
 
+   if ((flags & RPackage::FInstalled) &&
+       (flags & RPackage::FIsGarbage))
+   {
+      str = _("Installed (auto removable)");
+      _view[str].push_back(pkg);
+   }
+
    str.clear();
    if (flags & RPackage::FNowBroken)
       str = _("Broken dependencies");
@@ -142,9 +149,6 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
       str = _("New in repository");
    else if (flags & RPackage::FPinned) 
       str = _("Pinned");
-   else if ((flags & RPackage::FInstalled) &&
-	    (flags & RPackage::FIsGarbage))
-      str = _("Installed (auto removable)");
    else if ((flags & RPackage::FNotInstallable) &&
 	    !(flags & RPackage::FResidualConfig) &&
 	    (flags & RPackage::FInstalled))

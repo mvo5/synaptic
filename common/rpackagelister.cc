@@ -1737,10 +1737,9 @@ bool RPackageLister::readSelections(istream &in)
       ACTION_UNINSTALL
    };
    map<string, int> actionMap;
-
+   pkgDepCache::ActionGroup group(*_cache->deps());
 
    while (in.eof() == false) {
-      pkgDepCache::ActionGroup group(*_cache->deps());
 
       in.getline(Buffer, sizeof(Buffer));
       CurLine++;

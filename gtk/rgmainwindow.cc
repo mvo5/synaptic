@@ -627,6 +627,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    RPackage *pkg = NULL;
 
    while (li != NULL) {
+      pkgDepCache::ActionGroup group(*_lister->getCache()->deps());
       gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
       gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       li = g_list_next(li);

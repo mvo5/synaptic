@@ -152,12 +152,11 @@ void RGMainWindow::changeView(int view, string subView)
 void RGMainWindow::refreshSubViewList()
 {
    string selected = selectedSubView();
-
    if(_config->FindB("Debug::Synaptic::View",false))
       ioprintf(clog, "RGMainWindow::refreshSubViewList(): selectedView '%s'\n", 
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
-
+   _lister->refreshView();
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));

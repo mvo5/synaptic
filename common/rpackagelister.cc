@@ -541,7 +541,8 @@ void RPackageLister::reapplyFilter()
    if (_updating)
       return;
 
-   //cout << "RPackageLister::reapplyFilter()" << endl;
+   if(_config->FindB("Debug::Synaptic::View",false))
+      clog << "RPackageLister::reapplyFilter()" << endl;
 
    _viewPackages.clear();
    _viewPackagesIndex.clear();
@@ -636,6 +637,9 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
    _sortMode = mode;
    if (packages.empty())
       return;
+
+   if(_config->FindB("Debug::Synaptic::View",false))
+      clog << "RPackageLister::sortPackages(): " << packages.size() << endl;
 
    switch(mode) {
    case LIST_SORT_NAME:

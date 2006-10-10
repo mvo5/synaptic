@@ -286,9 +286,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
 
-   string selected = selectedSubView();
-   _lister->setSubView(utf8(selected.c_str()));
-
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
@@ -2590,6 +2587,9 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    RGMainWindow *me = (RGMainWindow *) data;
    if(me->_blockActions)
       return;
+
+   string selected = me->selectedSubView();
+   me->_lister->setSubView(utf8(selected.c_str()));
 
    me->setBusyCursor(true);
    me->refreshTable(NULL, false);

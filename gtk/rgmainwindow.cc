@@ -152,12 +152,11 @@ void RGMainWindow::changeView(int view, string subView)
 void RGMainWindow::refreshSubViewList()
 {
    string selected = selectedSubView();
-
    if(_config->FindB("Debug::Synaptic::View",false))
       ioprintf(clog, "RGMainWindow::refreshSubViewList(): selectedView '%s'\n", 
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
-
+   _lister->refreshView();
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
@@ -289,9 +288,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
       ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
-
-   string selected = selectedSubView();
-   _lister->setSubView(utf8(selected.c_str()));
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
@@ -2530,6 +2526,9 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    RGMainWindow *me = (RGMainWindow *) data;
    if(me->_blockActions)
       return;
+
+   string selected = me->selectedSubView();
+   me->_lister->setSubView(utf8(selected.c_str()));
 
    me->setBusyCursor(true);
    me->refreshTable(NULL, false);

@@ -250,7 +250,7 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
    for(unsigned int i=0;i<_all.size();i++) 
       if(_all[i]) 
 	 addPackage(_all[i]);
-         
+
    return found;
 }
 

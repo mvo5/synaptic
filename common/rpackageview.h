@@ -148,6 +148,9 @@ class RPackageViewSearch : public RPackageView {
    };
 
    void addPackage(RPackage *package);
+
+   // no-op
+   virtual void refresh() {};
 };
 
 

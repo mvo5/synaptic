@@ -149,6 +149,10 @@ vector<string> RPackageLister::getSubViews()
 
 bool RPackageLister::setSubView(string newSubView)
 {
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RPackageLister::setSubView(): newSubView '%s'\n", 
+	       newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
+
    if(newSubView.empty())
       _selectedView->showAll();
    else
@@ -184,8 +188,11 @@ void RPackageLister::notifyPreChange(RPackage *pkg)
 
 void RPackageLister::notifyPostChange(RPackage *pkg)
 {
-   reapplyFilter();
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RPackageLister::notifyPostChange(): '%s'\n",
+	       pkg == NULL ? "NULL" : pkg->name());
 
+   reapplyFilter();
 
    for (vector<RPackageObserver *>::const_iterator I =
         _packageObservers.begin(); I != _packageObservers.end(); I++) {
@@ -281,6 +288,9 @@ bool RPackageLister::upgradable()
 bool RPackageLister::openCache()
 {
    static bool firstRun = true;
+
+   if(_config->FindB("Debug::Synaptic::View",false))
+      clog << "RPackageLister::openCache()" << endl;
 
    // Flush old errors
    _error->Discard();
@@ -541,7 +551,8 @@ void RPackageLister::reapplyFilter()
    if (_updating)
       return;
 
-   //cout << "RPackageLister::reapplyFilter()" << endl;
+   if(_config->FindB("Debug::Synaptic::View",false))
+      clog << "RPackageLister::reapplyFilter()" << endl;
 
    _selectedView->refresh();
    _viewPackages.clear();
@@ -637,6 +648,9 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
    _sortMode = mode;
    if (packages.empty())
       return;
+
+   if(_config->FindB("Debug::Synaptic::View",false))
+      clog << "RPackageLister::sortPackages(): " << packages.size() << endl;
 
    switch(mode) {
    case LIST_SORT_NAME:

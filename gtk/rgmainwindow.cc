@@ -261,6 +261,10 @@ bool RGMainWindow::showErrors()
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::notifyChange(): '%s'\n",
+	       pkg != NULL ? pkg->name() : "(no pkg)");
+
    if (pkg != NULL)
       refreshTable(pkg);
 

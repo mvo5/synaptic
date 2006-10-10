@@ -112,7 +112,6 @@ void RGMainWindow::changeView(int view, string subView)
    }
 
    _blockActions = TRUE;
-
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);
       
    RPackage *pkg = selectedPackage();
@@ -127,6 +126,7 @@ void RGMainWindow::changeView(int view, string subView)
       GtkTreeIter iter;
       char *str;
 
+      setBusyCursor(true);
       setInterfaceLocked(TRUE);
       GtkWidget *view = glade_xml_get_widget(_gladeXML, "treeview_subviews");
       model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
@@ -140,10 +140,11 @@ void RGMainWindow::changeView(int view, string subView)
 	    }
 	 } while(gtk_tree_model_iter_next(model, &iter));
       }
-      
-      _lister->reapplyFilter();
+
+      _lister->setSubView(subView);
       refreshTable(pkg,false);
       setInterfaceLocked(FALSE);     
+      setBusyCursor(false);
    }
    _blockActions = FALSE;
    setStatusText();
@@ -156,7 +157,6 @@ void RGMainWindow::refreshSubViewList()
       ioprintf(clog, "RGMainWindow::refreshSubViewList(): selectedView '%s'\n", 
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
-   _lister->refreshView();
    vector<string> subViews = _lister->getSubViews();
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
@@ -288,9 +288,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
       ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
-
-   string selected = selectedSubView();
-   _lister->setSubView(utf8(selected.c_str()));
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
@@ -2309,8 +2306,8 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-      me->setBusyCursor(true);
       string str = me->_findWin->getFindString();
+      me->setBusyCursor(true);
 
       // we need to convert here as the DDTP project does not use utf-8
       const char *locale_str = utf8_to_locale(str.c_str());
@@ -2592,6 +2589,8 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
       return;
 
    me->setBusyCursor(true);
+   string selected = me->selectedSubView();
+   me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);
    me->setBusyCursor(false);
    me->updatePackageInfo(NULL);

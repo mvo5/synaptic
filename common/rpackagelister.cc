@@ -157,11 +157,12 @@ bool RPackageLister::setSubView(string newSubView)
       _selectedView->showAll();
    else
       _selectedView->setSelected(newSubView);
-   notifyPreChange(NULL);
 
-   reapplyFilter();
+   notifyChange(NULL);
 
-   notifyPostChange(NULL);
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "/RPackageLister::setSubView(): newSubView '%s'\n", 
+	       newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
 
    return true;
 }

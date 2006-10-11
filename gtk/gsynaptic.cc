@@ -331,7 +331,7 @@ void check_and_aquire_lock()
 			       _("There is another synaptic running in "
 				 "interactive mode. Please close it first. "
 				 ));
-      } else if(!weNonInteractive && runsNonInteractive) {
+      } else if(runsNonInteractive > 0) {
 	 msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s",
 			       _("Another synaptic is running"),
 			       _("There is another synaptic running in "

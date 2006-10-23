@@ -2911,7 +2911,6 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
       return;
 
    me->setInterfaceLocked(TRUE);
-   me->setTreeLocked(TRUE);
    me->_lister->unregisterObserver(me);
 
    // save to temporary file
@@ -2937,6 +2936,7 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
       _roptions->setPackageLock(pkg->name(), active);
       li = g_list_next(li);
    }
+   me->setTreeLocked(TRUE);
    me->_lister->openCache();
 
    // reread saved selections

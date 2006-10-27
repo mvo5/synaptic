@@ -420,13 +420,15 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
 void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
 {
    const char *fontName, *propName;
-
+   
    switch (GPOINTER_TO_INT(data)) {
       case FONT_DEFAULT:
          propName = "Synaptic::FontName";
+	      fontName = "sans 10";
          break;
       case FONT_TERMINAL:
          propName = "Synaptic::TerminalFontName";
+	      fontName = "monospace 10";
          break;
       default:
          cerr << "changeFontAction called with unknown argument" << endl;

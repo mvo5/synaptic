@@ -24,11 +24,6 @@ AC_PROG_INTLTOOL([0.23])
 synapticlocaledir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(synapticlocaledir)
      
-dnl check for xmlto
-AC_CHECK_PROG(XMLTO, xmlto, yes, no)
-if test x"$XMLTO" == xno; then
-	AC_MSG_ERROR([You need xmlto to build the documentation. Apt-get it or download it from http://cyberelk.net/tim/xmlto/])
-fi
 
 dnl ask for wings
 dnl AC_ARG_WITH(wings,

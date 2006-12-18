@@ -115,6 +115,7 @@ class RGPreferencesWindow:public RGGladeWindow {
    static void clearCacheAction(GtkWidget *self, void *data);
 
    static void colorClicked(GtkWidget *self, void *data);
+   static void buttonAuthenticationClicked(GtkWidget *self, void *data);
 
    static void useProxyToggled(GtkWidget *self, void *data);
 

@@ -370,7 +370,7 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
       GtkWidget *typePattern = glade_xml_get_widget(me->_gladeXML,
                                                     "optionmenu_pattern_what");
       for (int j = 0; DepOptions[j]; j++) {
-         if (strcmp(what, DepOptions[j]) == 0) {
+         if (strcmp(what, _(DepOptions[j])) == 0) {
             type = (RPatternPackageFilter::DepType) j;
             break;
          }

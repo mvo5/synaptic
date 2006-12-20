@@ -30,7 +30,8 @@ glade_DATA =                            \
 	dialog_update_outdated.glade \
 	dialog_upgrade.glade \
 	dialog_welcome.glade \
-	window_zvtinstallprogress.glade 
+	window_zvtinstallprogress.glade \
+	dialog_authentication.glade
 
 
 EXTRA_DIST = $(glade_DATA) 

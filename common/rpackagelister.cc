@@ -90,6 +90,7 @@ RPackageLister::RPackageLister()
    // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
    _views.push_back(new RPackageViewStatus(_packages));
+   _views.push_back(new RPackageViewOrigin(_packages));
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);

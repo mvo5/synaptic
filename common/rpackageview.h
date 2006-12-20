@@ -40,6 +40,7 @@ struct RFilter;
 
 enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_STATUS,
+      PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
       N_PACKAGE_VIEWS
@@ -113,6 +114,16 @@ class RPackageViewAlphabetic : public RPackageView {
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    };
+};
+
+class RPackageViewOrigin : public RPackageView {
+ public:
+   RPackageViewOrigin(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   string getName() {
+      return _("Origin");
+   };
+
+   void addPackage(RPackage *package);
 };
 
 class RPackageViewStatus:public RPackageView {

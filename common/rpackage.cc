@@ -69,8 +69,8 @@
 
 #include "raptoptions.h"
 
-
-static char descrBuffer[8192];
+static int descrBufferSize = 4096;
+static char *descrBuffer = new char[descrBufferSize];
 
 static char *parseDescription(string descr);
 
@@ -1179,9 +1179,11 @@ static char *stripWsParser(string descr)
 static char *parseDescription(string descr)
 {
 
-   if (descr.size() > sizeof(descrBuffer))
-      return "Description Too Long";
-
+   if (descr.size() + 1 > descrBufferSize) {
+      delete[] descrBuffer;
+      descrBufferSize = descr.size() + 1;
+      descrBuffer = new char[descrBufferSize];
+   }
 #ifdef HAVE_RPM
    int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
 #else

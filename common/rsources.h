@@ -41,11 +41,13 @@ class SourcesList {
       Disabled = 1 << 4,
       Comment = 1 << 5,
       RpmDir = 1 << 6,
-      RpmSrcDir = 1 << 7
+      RpmSrcDir = 1 << 7,
+      Repomd = 1 << 8,
+      RepomdSrc = 1 << 9
    };
 
    struct SourceRecord {
-      unsigned char Type;
+      unsigned int Type;
       string VendorID;
       string URI;
       string Dist;

@@ -24,11 +24,6 @@ AC_PROG_INTLTOOL([0.23])
 synapticlocaledir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(synapticlocaledir)
      
-dnl check for xmlto
-AC_CHECK_PROG(XMLTO, xmlto, yes, no)
-if test x"$XMLTO" == xno; then
-	AC_MSG_ERROR([You need xmlto to build the documentation. Apt-get it or download it from http://cyberelk.net/tim/xmlto/])
-fi
 
 dnl ask for wings
 dnl AC_ARG_WITH(wings,
@@ -121,7 +116,7 @@ AM_CONDITIONAL(WITH_LUA, test "$enable_scripts" != "no")
 
 DEB_HDRS=""
 AC_SUBST(DEB_HDRS)
-DEB_LIBS=""
+DEB_LIBS="-lapt-inst"
 AC_SUBST(DEB_LIBS)
 
 # launchpad integration
@@ -206,17 +201,23 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
 AC_OUTPUT([
 common/Makefile 
 gtk/Makefile
+gtk/glade/Makefile
 data/Makefile
 man/Makefile
 pixmaps/Makefile 
+pixmaps/hicolor/Makefile 
+pixmaps/hicolor/16x16/Makefile 
+pixmaps/hicolor/24x24/Makefile 
 po/Makefile.in
 help/Makefile
 help/C/Makefile
 help/es/Makefile
+help/sv/Makefile
 doc/Makefile
 doc/html/Makefile
 doc/html/C/Makefile
 doc/html/es/Makefile
+doc/html/sv/Makefile
 Makefile
 ],[sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile])
 

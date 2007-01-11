@@ -62,11 +62,15 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
    // package support status 
    hbox = gtk_hbox_new(FALSE, 12);
-   gchar *filename = "../pixmaps/package-supported.png";
-   if (!FileExists(filename)) {
-      filename = SYNAPTIC_PIXMAPDIR "package-supported.png";
-   }
-   pix = gtk_image_new_from_pixbuf(gdk_pixbuf_new_from_file(filename, NULL));
+   GtkIconTheme *theme;
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+   gchar *name = "package-supported";
+   theme = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, 16, 
+				     (GtkIconLookupFlags)0, &error);
+
+   pix = gtk_image_new_from_pixbuf(pixbuf);
    gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
    label = gtk_label_new(_config->Find("Synaptic::supported-text",
 				       _("Package is supported")).c_str());

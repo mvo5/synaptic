@@ -482,5 +482,15 @@ void RPackageViewFilter::makePresetFilters()
    registerFilter(filter);
 }
 
+void RPackageViewOrigin::addPackage(RPackage *package)
+{
+   string component =  package->component();
+   string origin = package->getCanidateOrigin();
+   if(origin == "")
+      origin = _("Local");
+   if(component == "")
+      component = _("Unknown");
+   _view[origin+"/"+component].push_back(package);
+ };
 
 // vim:sts=3:sw=3

@@ -53,6 +53,7 @@ char *RPatternPackageFilter::TypeName[] = {
    N_("Suggests"),
    N_("ReverseDepends"),
    N_("Origin"),
+   N_("Component"),
    NULL
 };
 
@@ -304,6 +305,23 @@ bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
    return found;
 }
 
+bool RPatternPackageFilter::filterComponent(Pattern pat, RPackage *pkg)
+{
+   bool found = false;
+   string origin;
+   origin = pkg->component();
+
+   if (pat.regexps.size() == 0) {
+      return true;
+   }
+   
+   if(regexec(pat.regexps[0],origin.c_str(), 0, NULL, 0) == 0) {
+      found = true;
+   } 
+
+   return found;
+}
+
 bool RPatternPackageFilter::filter(RPackage *pkg)
 {
    bool found;
@@ -354,6 +372,9 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
 	 break;
       case Origin:
 	 found = filterOrigin(pat, pkg);
+	 break;
+      case Component:
+	 found = filterComponent(pat, pkg);
 	 break;
       default:
 	 cerr << "unknown pattern package filter (shouldn't happen) " << endl;

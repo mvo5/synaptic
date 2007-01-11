@@ -90,6 +90,7 @@ RPackageLister::RPackageLister()
    // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
    _views.push_back(new RPackageViewStatus(_packages));
+   _views.push_back(new RPackageViewOrigin(_packages));
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);
@@ -398,6 +399,10 @@ bool RPackageLister::openCache()
          cerr << "Package " << I.Name() << " has no section?!" << endl;
 #endif
    }
+
+   // refresh the views
+   for (unsigned int i = 0; i != _views.size(); i++)
+      _views[i]->refresh();
 
    // Truncate due to virtual packages which were skipped above.
    _packages.resize(count);
@@ -1836,6 +1841,7 @@ bool RPackageLister::readSelections(istream &in)
 
 bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 {
+#ifndef HAVE_RPM
    //cout << "addArchiveToCache() " << archive << endl;
 
    // do sanity checking on the file (do we need this 
@@ -1898,6 +1904,9 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    CopyFile(in, out);
 
    return true;
+#else
+   return false;
+#endif
 }
 
 

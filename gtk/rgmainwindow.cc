@@ -1112,7 +1112,10 @@ void RGMainWindow::buildInterface()
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
    _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
+   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
    _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
+				 get_gtk_image("system-upgrade"));
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_upgrade_packages",
                                  G_CALLBACK(cbUpgradeClicked), this);
@@ -1570,25 +1573,36 @@ void RGMainWindow::buildInterface()
    // I != views.end(); I++) {
    // item = gtk_radiobutton_new((char *)(*I).c_str());
    GtkWidget *w;
+
+   // section
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_section_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_SECTION] = glade_xml_get_widget(_gladeXML, "radiobutton_sections");
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SECTION));
+   // status
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_status_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_STATUS] = glade_xml_get_widget(_gladeXML, "radiobutton_status");
-
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_STATUS));
+   // origin
+   w=_viewButtons[PACKAGE_VIEW_ORIGIN] = glade_xml_get_widget(_gladeXML, "radiobutton_origin");
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_ORIGIN));
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_origin_toggled",
+				 (GCallback) cbChangedView, this);
+   // custom
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_custom_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_CUSTOM] = glade_xml_get_widget(_gladeXML, "radiobutton_custom");
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_CUSTOM));
+   // find
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_find_toggled",
 				 (GCallback) cbChangedView, this);

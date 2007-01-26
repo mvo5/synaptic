@@ -1811,7 +1811,7 @@ bool RPackageLister::readSelections(istream &in)
 	    Fix.Protect(Pkg);
             switch ((*I).second) {
                case ACTION_INSTALL:
-		  if(_config->FindB("Volatile::SetSelectionsNoFix","false"))
+		  if(_config->FindB("Volatile::SetSelectionsNoFix",false))
 		     Cache.MarkInstall(Pkg, false);
 		  else
 		     Cache.MarkInstall(Pkg, true);

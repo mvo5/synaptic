@@ -122,7 +122,7 @@ unpatch:
 #	debian/svn-build/synaptic-$(S_DEBVER)/autogen.sh
 #	(cd debian/svn-build/synaptic-$(S_DEBVER); $(DEB_BUILD_PROG))
 
-arch-build:
+arch-build: configure.in
 	rm -rf debian/arch-build
 	mkdir -p debian/arch-build/$(PKG)-$(DEBVER)
 	tar -c --exclude=arch-build -f - `bzr inventory` | (cd debian/arch-build/$(PKG)-$(DEBVER);tar xf -)

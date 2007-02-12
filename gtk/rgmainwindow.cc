@@ -2215,7 +2215,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
    bool Changed = false;
    bool ForceReload = _config->FindB("Synaptic::UpdateAfterSrcChange",false);
    
-   if(!g_file_test("/usr/bin/software-properties", 
+   if(!g_file_test("/usr/bin/software-properties-gtk", 
 		   G_FILE_TEST_IS_EXECUTABLE) 
       || _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) 
    {
@@ -2227,7 +2227,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       GPid pid;
       int status;
       char *argv[5];
-      argv[0] = "/usr/bin/software-properties";
+      argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
       argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));

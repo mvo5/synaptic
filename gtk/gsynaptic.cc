@@ -80,7 +80,8 @@ bool ShowHelp(CommandLine & CmdL)
       _("--non-interactive Never prompt for user input\n") << 
       _("--task-window Open with task window\n") <<
       _("--add-cdrom Add a cdrom at startup (needs path for cdrom)\n") <<
-      _("--ask-cdrom Ask for adding a cdrom and exit\n");
+      _("--ask-cdrom Ask for adding a cdrom and exit\n") <<
+      _("--test-me-harder  Run test in a loop\n");
    exit(0);
 }
 
@@ -123,6 +124,8 @@ CommandLine::Args Args[] = {
    0, "hide-main-window", "Volatile::HideMainwindow", 0}
    , {
    0, "task-window", "Volatile::TaskWindow", 0}
+   , {
+   0, "test-me-harder", "Volatile::TestMeHarder", 0}
    , {
    'o', "option", 0, CommandLine::ArbItem}
    , {
@@ -521,7 +524,7 @@ int main(int argc, char **argv)
 
    // selections from a file
    string selections_filename;
-   selections_filename =_config->Find("Volatile::Set-Selections-File", "");
+   selections_filename = _config->Find("Volatile::Set-Selections-File", "");
    if (selections_filename != "") {
       packageLister->unregisterObserver(mainWindow);
       ifstream selfile(selections_filename.c_str());
@@ -540,6 +543,25 @@ int main(int argc, char **argv)
       mainWindow->setTreeLocked(false);
       mainWindow->showErrors();
       mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
+   }
+
+   if(_config->FindB("Volatile::TestMeHarder", false))
+   {
+      _config->Set("Volatile::Non-Interactive","true");
+      _config->Set("Synaptic::closeZvt","true");
+
+      while(true)
+      {
+	 mainWindow->cbUpdateClicked(NULL, mainWindow);
+	 mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed"));
+	 GtkTreePath *p = gtk_tree_path_new_from_string("0");
+	 mainWindow->cbPackageListRowActivated(NULL, p, NULL, mainWindow);
+
+	 GObject *o = (GObject*)g_object_new( G_TYPE_OBJECT,NULL);
+	 g_object_set_data(o, "me", mainWindow);
+	 mainWindow->cbPkgAction(GTK_WIDGET(o), (void*)PKG_REINSTALL);
+	 mainWindow->cbProceedClicked(NULL, mainWindow);
+      }
    }
 
    if(_config->FindB("Volatile::Upgrade-Mode",false) 

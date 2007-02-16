@@ -86,7 +86,8 @@ Go to the repository dialog to correct the problem."));
                ("The package lists or status file could not be parsed or opened."));
 
    // Open the cache file
-   FileFd File(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly);
+   FileFd File;
+   File.Open(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly);
    if (_error->PendingError())
       return false;
 

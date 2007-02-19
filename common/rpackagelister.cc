@@ -400,10 +400,6 @@ bool RPackageLister::openCache()
 #endif
    }
 
-   // refresh the views
-   for (unsigned int i = 0; i != _views.size(); i++)
-      _views[i]->refresh();
-
    // Truncate due to virtual packages which were skipped above.
    _packages.resize(count);
 

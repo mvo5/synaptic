@@ -1865,7 +1865,9 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    
    // correct version?
    string debVer = tag.FindS("Version");
-   string candVer = pkg->availableVersion();
+   string candVer = "_invalid_";
+   if(pkg->availableVersion() != NULL)
+      candVer = pkg->availableVersion();
    if(debVer != candVer) {
       cerr << "Ignoring " << pkgname << " (different versions: "
 	   << debVer << " != " << candVer  << endl;

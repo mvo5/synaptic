@@ -400,12 +400,12 @@ bool RPackageLister::openCache()
 #endif
    }
 
+   // Truncate due to virtual packages which were skipped above.
+   _packages.resize(count);
+
    // refresh the views
    for (unsigned int i = 0; i != _views.size(); i++)
       _views[i]->refresh();
-
-   // Truncate due to virtual packages which were skipped above.
-   _packages.resize(count);
 
    applyInitialSelection();
 

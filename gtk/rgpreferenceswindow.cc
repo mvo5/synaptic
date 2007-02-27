@@ -147,8 +147,8 @@ void RGPreferencesWindow::applyProxySettings()
       ftp = _config->Find("Synaptic::ftpProxy", "");
       ftpPort = _config->FindI("Synaptic::ftpProxyPort", 3128);
       noProxy = _config->Find("Synaptic::noProxy", "");
-      httpUser = _config->Find("Synaptic::httpProxy", "");
-      httpPass = _config->Find("Synaptic::httpProxy", "");
+      httpUser = _config->Find("Synaptic::httpProxyUser", "");
+      httpPass = _config->Find("Synaptic::httpProxyPass", "");
 
       if(!http.empty()) {
 	 s = g_strdup_printf("http://%s:%i", http.c_str(), httpPort);

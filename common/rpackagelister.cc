@@ -1367,8 +1367,6 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (!lockPackageCache(lock))
       return false;
 
-   pkgDepCache::ActionGroup group(*_cache->deps());
-
    if(_config->FindB("Synaptic::Log::Changes",true))
       makeCommitLog();
 

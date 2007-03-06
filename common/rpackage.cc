@@ -318,6 +318,14 @@ int RPackage::getFlags()
    return flags | _boolFlags;
 }
 
+const char* RPackage::name()
+{ 
+   const char *s = _package->Name(); 
+   if (s == NULL)
+      return "";
+   return s;
+};
+
 #if 0
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
 {

@@ -121,7 +121,7 @@ class RPackage {
 
    pkgCache::PkgIterator *package() { return _package; };
 
-   inline const char *name() { return _package->Name(); };
+   const char *name();
 
    const char *section();
    const char *priority();

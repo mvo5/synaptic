@@ -195,7 +195,7 @@ class RPackageViewFilter : public RPackageView {
    int getFilterIndex(RFilter *filter);
 
    vector<string> getFilterNames();
-   const set<string> &getSections() { return _sectionList; };
+   const set<string> &getSections();
 
    RPackageViewFilter(vector<RPackage *> &allPkgs);
 

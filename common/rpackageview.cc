@@ -328,8 +328,17 @@ vector<string> RPackageViewFilter::getFilterNames()
 void RPackageViewFilter::addPackage(RPackage *pkg)
 {
    // nothing to do for now, may add some sort of caching later
-   _sectionList.insert(pkg->section());
 }
+
+const set<string>& RPackageViewFilter::getSections() 
+{ 
+   if(_sectionList.empty())
+      for(unsigned int i=0;i<_all.size();i++)
+	 if(_all[i])
+	    _sectionList.insert(_all[i]->section());
+   return _sectionList; 
+};
+
 
 void RPackageViewFilter::storeFilters()
 {

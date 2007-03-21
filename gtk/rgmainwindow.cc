@@ -3288,7 +3288,7 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    ofstream out(file);
    out << "#!/bin/sh" << endl;
    for(int i=0;i<uris.size();i++) {
-      out << "wget " << uris[i] << endl;
+      out << "wget -c" << uris[i] << endl;
    }
    chmod(file, 0755);
 }

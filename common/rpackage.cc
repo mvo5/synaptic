@@ -78,7 +78,7 @@ static char *parseDescription(string descr);
 RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
                    pkgRecords *records, pkgCache::PkgIterator &pkg)
 : _lister(lister), _records(records), _depcache(depcache),
-_notify(true), _boolFlags(0)
+  _notify(true), _boolFlags(0)
 {
    _package = new pkgCache::PkgIterator(pkg);
 

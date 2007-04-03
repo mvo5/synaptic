@@ -420,7 +420,10 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
       me->hide();
       me->_lister->unregisterObserver(me->_mainWin);
       me->_mainWin->setTreeLocked(TRUE);
-      me->_lister->openCache();
+      if (!me->_lister->openCache()) {
+	 me->_mainWin->showErrors();
+	 exit(1);
+      }
       me->_mainWin->setTreeLocked(FALSE);
       me->_lister->registerObserver(me->_mainWin);
       me->_mainWin->refreshTable();

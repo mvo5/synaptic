@@ -1991,7 +1991,10 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
    scan.hide();
    if (updateCache) {
       me->setTreeLocked(TRUE);
-      me->_lister->openCache();
+      if (!me->_lister->openCache()) {
+         me->showErrors();
+         exit(1);
+      }
       me->setTreeLocked(FALSE);
       me->refreshTable(me->selectedPackage());
    }
@@ -2425,7 +2428,10 @@ void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
    me->setTreeLocked(TRUE);
 
    // reset
-   me->_lister->openCache();
+   if (!me->_lister->openCache()) {
+      me->showErrors();
+      exit(1);
+   }
 
    me->setTreeLocked(FALSE);
    me->_lister->registerObserver(me);
@@ -2778,9 +2784,10 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    // show errors and warnings (like the gpg failures for the package list)
    me->showErrors();
 
-   if(me->_lister->openCache())
+   if(!me->_lister->openCache()) {
       me->showErrors();
-
+      exit(1);
+   }
    // reread saved selections
    ifstream in(file);
    if (!in != 0) {
@@ -2948,7 +2955,10 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
       li = g_list_next(li);
    }
    me->setTreeLocked(TRUE);
-   me->_lister->openCache();
+   if (!me->_lister->openCache()) {
+      me->showErrors();
+      exit(1);
+   }
 
    // reread saved selections
    ifstream in(file);

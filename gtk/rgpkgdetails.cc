@@ -150,7 +150,7 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
    // set summary
    s = utf8(pkg->summary());
    gtk_text_buffer_get_start_iter(buf, &it);
-   gtk_text_buffer_insert(buf, &it, s, g_utf8_strlen(s, -1));
+   gtk_text_buffer_insert(buf, &it, s, -1);
    gtk_text_buffer_get_start_iter(buf, &start);
    gtk_text_buffer_apply_tag_by_name(buf, "bold", &start, &it);
    // set emblems 
@@ -176,7 +176,7 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
    // show the rest of the description
    gtk_text_buffer_insert(buf, &it, "\n", 1);
    s = utf8(pkg->description());
-   gtk_text_buffer_insert(buf, &it, s, g_utf8_strlen(s, -1));
+   gtk_text_buffer_insert(buf, &it, s, -1);
    
 
    // build dependency lists

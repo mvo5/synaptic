@@ -372,7 +372,6 @@ void RGPreferencesWindow::saveNetwork()
    _config->Set("Synaptic::noProxy", noProxy);
 
    applyProxySettings();
-
 }
  
 void RGPreferencesWindow::saveDistribution()
@@ -1121,14 +1120,10 @@ RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self, void *data)
    GtkWidget *entry_pass = glade_xml_get_widget(dia_xml,"entry_password");
 
    // now set the values
-   {
-      string now_user =  _config->Find("Synaptic::httpProxyUser","");
-      cout << now_user << endl;
-      gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
-      string now_pass =   _config->Find("Synaptic::httpProxyPass","");
-      cout << now_pass << endl;
-      gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
-   }
+   string now_user =  _config->Find("Synaptic::httpProxyUser","");
+   gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
+   string now_pass =   _config->Find("Synaptic::httpProxyPass","");
+   gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
 
    int res = dia.run();
 

@@ -305,7 +305,7 @@ bool RPackageLister::openCache()
    if (!_cache->open(*_progMeter,lock)) {
       _progMeter->Done();
       _cacheValid = false;
-      return false;
+      return _error->Error("_cache->open() failed, please report.");
    }
    _progMeter->Done();
 

@@ -505,7 +505,10 @@ int main(int argc, char **argv)
    //no need to open a cache that will invalid after the update
    if(!UpdateMode) {
       mainWindow->setTreeLocked(true);
-      packageLister->openCache();
+      if(!packageLister->openCache()) {
+	 mainWindow->showErrors();
+	 exit(1);
+      }
       mainWindow->restoreState();
       mainWindow->showErrors();
       mainWindow->setTreeLocked(false);
@@ -538,7 +541,10 @@ int main(int argc, char **argv)
    if(UpdateMode) {
       mainWindow->cbUpdateClicked(NULL, mainWindow);
       mainWindow->setTreeLocked(true);
-      packageLister->openCache();
+      if(!packageLister->openCache()) {
+	 mainWindow->showErrors();
+	 exit(1);
+      }
       mainWindow->restoreState();
       mainWindow->setTreeLocked(false);
       mainWindow->showErrors();

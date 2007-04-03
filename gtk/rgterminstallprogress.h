@@ -35,6 +35,7 @@
 
 class RGTermInstallProgress : public RInstallProgress, public RGGladeWindow {
   GtkWidget *_term;
+  GtkWidget *_scrollbar;
   GtkWidget *_statusL;
   GtkWidget *_closeB;
   GtkWidget *_closeOnF;

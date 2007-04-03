@@ -50,6 +50,39 @@
 
 using namespace std;
 
+
+RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
+   : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"), _sock(NULL)
+{
+   setTitle(_("Applying Changes"));
+
+   _term = vte_terminal_new();
+   _scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
+   GTK_WIDGET_UNSET_FLAGS (_scrollbar, GTK_CAN_FOCUS);
+   vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
+   if(_config->FindB("Synaptic::useUserTerminalFont")) {
+      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
+   } else {
+      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
+   }
+
+
+   _closeOnF = glade_xml_get_widget(_gladeXML, "checkbutton_close_after_pm");
+   assert(_closeOnF);
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF), 
+				_config->FindB("Synaptic::closeZvt", false));
+
+   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
+   _closeB = glade_xml_get_widget(_gladeXML, "button_close");
+   gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
+		      (GtkSignalFunc)stopShell, this);
+
+   if(_config->FindB("Volatile::Non-Interactive", false)) 
+      gtk_widget_hide(_closeOnF);
+}
+
+
 void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
 					gint child_pid, gint ret, 
 					gpointer data)
@@ -65,6 +98,15 @@ void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
 
 void RGTermInstallProgress::startUpdate()
 {
+   GtkWidget *win =  glade_xml_get_widget(_gladeXML, "window_zvtinstallprogress");
+   GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
+   assert(hbox);
+   gtk_widget_show_all(win);
+   gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
+   gtk_box_pack_end(GTK_BOX(hbox), _scrollbar, FALSE, FALSE, 0);
+   gtk_widget_show(_term);
+   gtk_widget_show(_scrollbar);
+
    child_has_exited=false;
    VteReaper* reaper = vte_reaper_get();
    g_signal_connect(G_OBJECT(reaper), "child-exited",
@@ -152,47 +194,6 @@ gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
    gtk_widget_grab_focus(widget);
     
    return FALSE;
-}
-
-RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
-   : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"), _sock(NULL)
-{
-   setTitle(_("Applying Changes"));
-
-   GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
-   assert(hbox);
-
-   _term = vte_terminal_new();
-   GtkWidget *scrollbar = 
-      gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
-   GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
-   vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
-   if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
-   } else {
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
-   }
-
-   gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
-   gtk_widget_show(_term);
-
-   gtk_box_pack_end(GTK_BOX(hbox), scrollbar, FALSE, FALSE, 0);
-   gtk_widget_show(scrollbar);
-
-   _closeOnF = glade_xml_get_widget(_gladeXML, "checkbutton_close_after_pm");
-   assert(_closeOnF);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF), 
-				_config->FindB("Synaptic::closeZvt", false));
-
-   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-   _closeB = glade_xml_get_widget(_gladeXML, "button_close");
-   gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
-		      (GtkSignalFunc)stopShell, this);
-
-   if(_config->FindB("Volatile::Non-Interactive", false)) 
-      gtk_widget_hide(_closeOnF);
-   
 }
 
 

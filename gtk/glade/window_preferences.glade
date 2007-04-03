@@ -184,6 +184,28 @@
                                   <widget class="GtkOptionMenu" id="optionmenu_update_ask">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+				  <child>
+				    <widget class="GtkMenu" id="menu5">
+
+				      <child>
+					<widget class="GtkMenuItem" id="menuitem2">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">Always Ask</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_always_ask_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
+					</widget>
+				      </child>
+
+				      <child>
+					<widget class="GtkMenuItem" id="menuitem4">
+					  <property name="visible">True</property>
+					  <property name="label" translatable="yes">Automatically</property>
+					  <property name="use_underline">True</property>
+					  <signal name="activate" handler="on_distribution_upgrade_activate" last_modification_time="Mon, 03 Nov 2003 23:57:02 GMT"/>
+					</widget>
+				      </child>
+				    </widget>
+				  </child>
                                   </widget>
                                   <packing>
                                     <property name="left_attach">1</property>

@@ -169,7 +169,7 @@ void RGChangesWindow::confirm(RPackageLister *lister,
       gtk_tree_store_set(_treeStore, &iter,
                          PKG_COLUMN, _("To be re-installed"), -1);
       for (vector<RPackage *>::const_iterator p = toReInstall.begin();
-           p != toInstall.end(); p++) {
+           p != toReInstall.end(); p++) {
          gtk_tree_store_append(_treeStore, &iter_child, &iter);
          gtk_tree_store_set(_treeStore, &iter_child,
                             PKG_COLUMN, (*p)->name(), -1);

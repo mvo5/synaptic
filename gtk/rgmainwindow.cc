@@ -564,7 +564,7 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 }
 
 bool RGMainWindow::askStateChange(RPackageLister::pkgState state, 
-				  vector<RPackage *> exclude)
+				  vector<RPackage *> &exclude)
 {
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
@@ -2953,7 +2953,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       res = me->_lister->upgrade();
 
    // mvo: do we really want this?
-   me->askStateChange(state, vector<RPackage*>());
+   vector<RPackage*> nullVector;
+   me->askStateChange(state, nullVector);
 
    me->refreshTable(pkg);
 

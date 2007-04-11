@@ -151,24 +151,27 @@ void RGPreferencesWindow::applyProxySettings()
       httpPass = _config->Find("Synaptic::httpProxyPass", "");
 
       if(!http.empty()) {
-	 s = g_strdup_printf("http://%s:%i", http.c_str(), httpPort);
+	 unsetenv("http_proxy");
+	 s = g_strdup_printf("http://%s:%i/", http.c_str(), httpPort);
 	 _config->Set("Acquire::http::Proxy", s);
 	 g_free(s);
       }
       // setup the proxy 
       if(!httpUser.empty() && !httpPass.empty()) {
-	 s = g_strdup_printf("http://%s:%s@%s:%i", 
+	 s = g_strdup_printf("http://%s:%s@%s:%i/", 
 			     httpUser.c_str(), httpPass.c_str(),
 			     http.c_str(), httpPort);
 	 _config->Set("Acquire::http::Proxy", s);
 	 g_free(s);
       }
       if(!ftp.empty()) {
+	 unsetenv("ftp_proxy");
 	 s = g_strdup_printf("http://%s:%i", ftp.c_str(), ftpPort);
 	 _config->Set("Acquire::ftp::Proxy", s);
 	 g_free(s);
       }
       // set the no-proxies
+      unsetenv("no_proxy");
       gchar **noProxyArray = g_strsplit(noProxy.c_str(), ",", 0);
       for (int j = 0; noProxyArray[j] != NULL; j++) {
          g_strstrip(noProxyArray[j]);

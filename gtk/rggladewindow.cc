@@ -82,8 +82,10 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
       GdkWindow *win = gdk_window_foreign_new(id);
-      gtk_widget_realize(_win);
-      gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+      if(win) {
+	 gtk_widget_realize(_win);
+	 gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+      }
    }
    // if we have no parent, don't skip the taskbar hint
    if(_config->FindB("Volatile::HideMainwindow",false) && id < 0)

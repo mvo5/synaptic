@@ -39,15 +39,17 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
 
    // for development
    gchar *filename = NULL;
+   gchar *local_filename = NULL;
    gchar *main_widget = NULL;
 
    filename = g_strdup_printf("window_%s.glade", name.c_str());
+   local_filename = g_strdup_printf("glade/%s", filename);
    if (mainName.empty())
       main_widget = g_strdup_printf("window_%s", name.c_str());
    else
       main_widget = g_strdup_printf("window_%s", mainName.c_str());
-   if (FileExists(filename)) {
-      _gladeXML = glade_xml_new(filename, main_widget, NULL);
+   if (FileExists(local_filename)) {
+      _gladeXML = glade_xml_new(local_filename, main_widget, NULL);
    } else {
       g_free(filename);
       filename =
@@ -66,6 +68,7 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
 			   GTK_WIN_POS_CENTER_ON_PARENT);
 
    g_free(filename);
+   g_free(local_filename);
    g_free(main_widget);
 
    //gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
@@ -79,8 +82,10 @@ RGGladeWindow::RGGladeWindow(RGWindow *parent, string name, string mainName)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
       GdkWindow *win = gdk_window_foreign_new(id);
-      gtk_widget_realize(_win);
-      gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+      if(win) {
+	 gtk_widget_realize(_win);
+	 gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+      }
    }
    // if we have no parent, don't skip the taskbar hint
    if(_config->FindB("Volatile::HideMainwindow",false) && id < 0)

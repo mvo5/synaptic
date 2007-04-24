@@ -69,8 +69,8 @@
 
 #include "raptoptions.h"
 
-
-static char descrBuffer[8192];
+static int descrBufferSize = 4096;
+static char *descrBuffer = new char[descrBufferSize];
 
 static char *parseDescription(string descr);
 
@@ -309,6 +309,14 @@ int RPackage::getFlags()
 
    return flags | _boolFlags;
 }
+
+const char* RPackage::name()
+{ 
+   const char *s = _package->Name(); 
+   if (s == NULL)
+      return "";
+   return s;
+};
 
 #if 0
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
@@ -1179,9 +1187,11 @@ static char *stripWsParser(string descr)
 static char *parseDescription(string descr)
 {
 
-   if (descr.size() > sizeof(descrBuffer))
-      return "Description Too Long";
-
+   if (descr.size() + 1 > descrBufferSize) {
+      delete[] descrBuffer;
+      descrBufferSize = descr.size() + 1;
+      descrBuffer = new char[descrBufferSize];
+   }
 #ifdef HAVE_RPM
    int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
 #else

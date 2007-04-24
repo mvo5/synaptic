@@ -40,6 +40,7 @@ struct RFilter;
 
 enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_STATUS,
+      PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
       N_PACKAGE_VIEWS
@@ -84,6 +85,8 @@ class RPackageView {
 
    virtual void clear();
    virtual void clearSelection();
+
+   virtual void refresh();
 };
 
 
@@ -111,6 +114,16 @@ class RPackageViewAlphabetic : public RPackageView {
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    };
+};
+
+class RPackageViewOrigin : public RPackageView {
+ public:
+   RPackageViewOrigin(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   string getName() {
+      return _("Origin");
+   };
+
+   void addPackage(RPackage *package);
 };
 
 class RPackageViewStatus:public RPackageView {
@@ -146,6 +159,9 @@ class RPackageViewSearch : public RPackageView {
    };
 
    void addPackage(RPackage *package);
+
+   // no-op
+   virtual void refresh() {};
 };
 
 
@@ -159,6 +175,7 @@ class RPackageViewFilter : public RPackageView {
    void restoreFilters();
    // called after the filtereditor was run
    void refreshFilters();
+   void refresh();
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);
@@ -178,7 +195,7 @@ class RPackageViewFilter : public RPackageView {
    int getFilterIndex(RFilter *filter);
 
    vector<string> getFilterNames();
-   const set<string> &getSections() { return _sectionList; };
+   const set<string> &getSections();
 
    RPackageViewFilter(vector<RPackage *> &allPkgs);
 

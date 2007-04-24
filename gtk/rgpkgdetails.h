@@ -29,7 +29,7 @@
 #include "rggladewindow.h"
 
 class RGPkgDetailsWindow : public RGGladeWindow {
-
+   
  protected:
    static vector<string> formatDepInformation(vector<DepInformation> deps);
    

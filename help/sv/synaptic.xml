@@ -1,0 +1,3001 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "gpl.xml">
+<!ENTITY appversion "0.53">
+<!ENTITY app "<application
+>Synaptic Package Manager</application
+>">
+<!ENTITY manrevision "0.1.2">
+<!ENTITY date "October 2003">
+]>
+<!-- =============Document Header ============================= -->
+<article id="index" lang="en">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+<articleinfo
+> 
+<title
+>&app; Manual V&manrevision;</title
+>       
+
+<copyright
+> 
+	<year
+>2003,2004</year
+> 
+	<holder
+>Sebastian Heinlein</holder
+> 
+</copyright>
+
+	<!-- translators: uncomment this:
+
+<copyright>
+	<year
+>2002</year>
+	<holder
+>ME-THE-TRANSLATOR (Latin translation)</holder>
+</copyright>
+
+-->
+
+<authorgroup
+> 
+	<author
+><firstname
+>Sebastian</firstname
+> <surname
+>Heinlein</surname
+> </author>
+</authorgroup>
+
+<releaseinfo>
+	This manual describes version &appversion; 
+	of Synaptic Package Manager.
+</releaseinfo
+> 
+
+<legalnotice>
+	<title
+>Juridisk notering</title
+>	
+	<para
+>Det här dokumentet distribueras under villkoren för GNU Public License som publicerats av The Free Software Foundation; antingen version 2 av licensen eller (upp till dig) senare version. En kopia av de här licensen kan hittas i, eller i filen som inkluderats med källkoden för det här programmet. </para>
+</legalnotice>
+
+<legalnotice
+> 
+	<title
+>Återkoppling</title>
+	<para
+>To report a bug or make a suggestion regarding the &app; or this manual, use the bug report system at <ulink url="http://www.nongnu.org/synaptic" type="http"
+>Synaptic Web</ulink
+>, contact the mailing list <email
+>synaptic-devel@nongnu.org</email
+> join the IRC channel #synaptic on irc.freenode.org. </para>
+	<!-- Translators may also add here feedback address for translation -->
+
+</legalnotice
+> 
+</articleinfo
+> 
+
+<indexterm zone="index"
+> 
+	<primary
+>Pakethanteraren Synaptic</primary
+> 
+</indexterm
+> 
+<indexterm zone="index"
+> 
+	<primary
+>Paket</primary>
+</indexterm>
+<indexterm zone="index"
+> 
+	<primary
+>Programvara</primary>
+</indexterm>
+
+<sect1 id="synaptic-introduction"
+> 
+	<title
+>Introduktion</title
+> 
+	<para
+>The &app; enables you to install software onto your computer and to manage the software, that is already installed. The software is bundled in so called <emphasis
+>packages</emphasis
+>. A single application can even exist of several packages: e.g. the <application
+>Mozilla Internet Suite</application
+> is packaged to <emphasis
+>mozilla-browser</emphasis
+>, that contains the actual browser, and <emphasis
+>mozilla-mail </emphasis
+>, that contains the mail client (this example refers to Debian GNU/Linux and can be different on your distribution). </para>
+	<para
+>Nearly all applications reuse the functionality of other applications or libraries (libraries only provide functions to other libraries or applications and are no stand alone applications) to avoid doubled efforts. So the most packages depend on other packages. The &app; resolves the <emphasis
+> dependencies</emphasis
+> for you automatically. </para>
+	<para
+>Technically the &app; is based on the package manager <application
+>APT</application
+> and provides functions, that are similar to the ones of the command line tool <command
+>apt-get</command
+> in a graphical environment. </para>
+	<para
+>In detail &app; provides the following features: <itemizedlist>
+		        <listitem>
+			        <para
+>Installera, ta bort, konfigurera, uppgradera och nedgradera ett eller flera paket. </para>
+		        </listitem>
+			<listitem>
+				<para
+>Uppgradera hela ditt system. </para>
+		        </listitem>
+			<listitem>
+				<para
+>Hantera paketförråd. </para>
+	                </listitem>
+		        <listitem>
+			        <para
+>Sök paket efter namn, beskrivning och flera andra attribut. </para>
+		        </listitem>
+			<listitem>
+				<para
+>Välj paket efter status, sektion, namn eller ett anpassat filter. </para>
+		        </listitem>
+			<listitem>
+				<para
+>Sortera paket efter namn, status, storlek eller version. </para>
+			</listitem>
+	                <listitem>
+		                <para
+>Bläddra bland tillgänglig dokumentation som relaterar till ett paket. </para>
+	                </listitem>
+	                <listitem>
+		                <para
+>Lås paket till den aktuella versionen. </para>
+	                </listitem>
+	                <listitem>
+		                <para
+>Tvinga installationen av en specifik paketversion. </para>
+	                </listitem>
+		</itemizedlist>
+	</para>
+	<note>
+		<para
+>Du behöver root-rättigheter för att installera eller ta bort programvarupaket på din dator. </para>
+	</note>
+
+	<para
+>You can start <application
+>&app;</application
+> in the following ways: <variablelist>
+		<varlistentry>
+			<term
+>Menyn <guimenu
+>GNOME-program</guimenu
+> </term>
+			<listitem>
+				<para
+>Choose <menuchoice
+> <guisubmenu
+>System Tools</guisubmenu
+> <guimenuitem
+>Synaptic Package Manager</guimenuitem
+> </menuchoice
+>. </para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term
+>KDE-meny</term>
+			<listitem>
+				<para
+>Choose <menuchoice
+> <guisubmenu
+>Settings</guisubmenu
+> <guisubmenu
+>Extra</guisubmenu
+> <guimenuitem
+>Synaptic Package Manager</guimenuitem
+> </menuchoice
+>. </para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term
+>Kommandorad</term>
+			<listitem>
+				<para
+>To start <application
+>&app; </application
+>from a command line type the following , then press <keycap
+>Return</keycap
+>: </para>
+				<para
+> 
+					<command
+>synaptic</command
+> 
+				</para
+> 
+			</listitem>
+		</varlistentry>
+	</variablelist>
+	</para
+> 
+
+	<caution>
+		<para
+>Du kan göra ditt system oanvändbart. </para>
+		<para
+>Synaptic låter dig genomföra ändringar i grunden av ditt system. </para>
+		<para
+>Always use &app; with care. </para>
+	</caution>
+
+</sect1>
+
+<sect1 id="synatpic-win"
+> 
+	<title
+>Huvudfönster</title
+> 
+
+<sect2 id="synaptic-win-overview">
+	<title
+>Översikt</title>
+	<para
+>When you start <application
+>&app;</application
+>, the following window is displayed. </para>
+
+	<figure id="mainwindow-fig"
+> 
+		<title
+>&app; Start Up Window</title
+> 
+		<screenshot
+> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="figures/synaptic-start.png" 
+					format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Shows &app; main window. Contains titlebar, menubar, toolbar, display area, and scrollbars. Menubar contains File, View, Settings, and Help menus. </phrase
+> 
+				</textobject
+> 
+			  </mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<table frame="topbot" id="table-synaptic-main">
+		<title
+>&app; Window Components</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left"
+>Komponent </entry>
+					<entry valign="top" align="left"
+>Beskrivning </entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top"
+>Menyrad </entry>
+					<entry valign="top"
+>Contains menus that you can use to perform actions in &app;. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Toolbar </entry>
+					<entry valign="top"
+>Tillhandahåller huvudåtgärder. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Kategoriväljare</entry>
+					<entry valign="top"
+>Tillhandahåller kategorier för att minska ner listan av visade paket. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Paketlista</entry>
+					<entry valign="top"
+>Listar kända paket. Listan kan minskas ner genom att använda filter och kategorier. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Beskrivningsfält</entry>
+					<entry valign="top"
+>Visar beskrivningen för det markerade paketet. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Statuslist</entry>
+					<entry valign="top"
+>Displays global informations about the status of &app;. </entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+</sect2>
+
+<sect2 id="synaptic-win-toolbar">
+	<title
+>Toolbar</title>
+	
+	<figure>
+		<title
+>&app; toolbar</title
+> 
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-toolbar.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Shows the toolbar of the &app; main window </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<para
+>The toolbar provides the following actions: <variablelist>
+			<varlistentry>
+				<term
+>Läs om </term>
+				<listitem>
+					<para
+>Uppdatera listan över kända paket. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Markera alla uppgraderingar </term>
+				<listitem>
+					<para
+>Markera alla möjliga och tillgängliga uppgraderingar. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Verkställ </term>
+				<listitem>
+					<para
+>Verkställ alla markerade ändringar. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Egenskaper </term>
+				<listitem>
+					<para
+>Öppnar <xref linkend="synaptic-win-properties"/>-dialogen för markerat paket. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Sök </term>
+				<listitem>
+					<para
+>Öppna dialogrutan för paketsökning. </para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+</sect2>
+
+<sect2 id="synaptic-win-selector" xreflabel="category selector">
+	<title
+>Kategoriväljare</title>
+	
+	<para
+>Väljaren på vänster sida låter dig minska ner paketlistan, som visas i <xref linkend="synaptic-win-list"/> efter kategorier. </para>
+
+	<figure>
+		<title
+>Kategoriväljare</title
+> 
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-categories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Shows the category selector in the &app; main window. </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<para
+>The following categories are available: <variablelist>
+			<varlistentry>
+				<term
+>Sektioner </term>
+				<listitem>
+					<para
+>Visa endast paket som tillhör den markerade sektionen. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Status </term>
+				<listitem>
+					<para
+>Visa endast paket med den markerade statusen. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Alfabet </term>
+				<listitem>
+					<para
+>Visa endast paket med den markerade inledande bokstaven. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Filter </term>
+				<listitem>
+					<para
+>Visa endast paket som matchar det markerade anpassningskriteriet. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Sökhistorik </term>
+				<listitem>
+					<para
+>Visar endast resultatet för den valda sökningen. </para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</para>
+</sect2>
+
+
+<sect2 id="synaptic-win-list" xreflabel="package list">
+	<title
+>Paketlista</title>
+
+	<para
+>Paketlistan visar paket av den markerade kategorin. </para>
+
+	<figure>
+		<title
+>Paketlista</title
+> 
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagelist.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Shows the package list in the &app; main window. </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<tip>
+		<para
+>Statusikonerna förklaras i ikonförklaringen. För att öppna förklaringen, välj <menuchoice
+><guimenu
+>Hjälp</guimenu
+><guimenuitem
+>Ikonförklaring</guimenuitem
+></menuchoice
+> från menyn. </para>
+	</tip>
+
+
+	<tip>
+		<para
+>Kolumnordningen och använda färger kan ändras i inställningarna. </para
+>	
+	</tip>
+</sect2>
+
+
+<sect2 id="synaptic-win-properties" xreflabel="properties">
+	<title
+>Paketegenskaper</title>
+
+	<para
+>To open the properties dialog of a selected package: <itemizedlist>
+			<listitem>
+				<para
+>Välj <menuchoice
+><guimenu
+>Paket</guimenu
+><guimenuitem
+>Egenskaper</guimenuitem
+></menuchoice
+> från menyn </para>
+			</listitem>
+			<listitem>
+				<para
+>Klicka på <guibutton
+>Egenskaper</guibutton
+> i verktygsraden </para>
+			</listitem>
+			<listitem>
+				<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>O</keycap
+></keycombo
+> </para>
+			</listitem>
+		</itemizedlist>
+	</para>
+		
+
+	<figure>
+		<title
+>Dialogrutan för paketegenskaper</title
+> 
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-packagedetails.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Shows the package details in the &app; main window. </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<para
+>The notebook provides the following tabs: <table frame="topbot" id="table-synaptic-propertiestabs">
+			<title
+>Flikar i egenskapsdialogen</title>
+			<tgroup cols="2" colsep="0" rowsep="0">
+				<colspec colname="COLSPEC0" colwidth="30*"/>
+				<colspec colname="COLSPEC1" colwidth="70*"/>
+				<thead>
+					<row rowsep="1">
+						<entry valign="top" align="left"
+>Tab </entry>
+						<entry valign="top" align="left"
+>Beskrivning </entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry valign="top"
+>Common </entry>
+						<entry valign="top"
+>Shows basic information of the package: name, short description, maintainer, status, priority, tags <emphasis
+>(if supported)</emphasis
+> and version. </entry>
+					</row>
+					<row>
+						<entry valign="top"
+>Beskrivning </entry>
+						<entry valign="top"
+>Shows a long description of the package. </entry>
+					</row>
+					<row>
+						<entry valign="top"
+>Dependencies </entry>
+						<entry valign="top"
+>Lists required, depending, provided, suggested and recommended packages. </entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</para>
+</sect2>
+
+</sect1>
+
+
+<!-- sect1 id="synaptic-browsefind"
+> 
+
+NEEDS A REWRITE - SO DISABLED FOR 0.53
+	<title
+>Browsing and Searching for Packages</title
+> 
+
+	
+<sect2 id="synaptic-browse">
+	<title>
+		To Browse the List of Known Packages (FIXME)
+	</title>
+	
+	<para>
+		&app; provides you with a central list of all known packages. This includes packages that are available, 
+		installed or even broken. Because the most distributions contain many thousands packages, you can
+		narrow down the list of shown packages. The following methods allow you to browse through the list
+		of known packages:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				The browser list
+			</term>
+			 
+		</varlistentry>
+		<varlistentry>
+			<term>
+				The filter
+			</term>
+			 
+		</varlistentry>
+		<varlistentry>
+			<term>
+				The find field
+			</term>
+			 
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+
+<sect2 id="synaptic-find"
+> 
+	<title
+>To Find and Browse Packages (FIXME)</title
+> 
+
+	<anchor id="anchor-find" xreflabel="found"/>
+
+
+<variablelist>
+<varlistentry id="synaptic-pkg-find-quicksearch">
+	<term
+>	
+		To find a specific package
+	</term>
+	<listitem>
+	<para>
+		To find a specific package follow these steps:
+	</para>
+	<para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Open the find dialog:
+				<itemizedlist>
+					<listitem>
+						<para>
+							Press the key combination
+							<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>f</keycap>
+							</keycombo
+>.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Click on
+							<guilabel
+>Find</guilabel
+> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose
+							<menuchoice
+><guimenu
+>Edit</guimenu
+><guimenuitem
+>Find</guimenuitem>
+							</menuchoice
+> from the menu.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Enter the search expression into the
+				<guilabel
+>Find</guilabel
+> field. E.g. "music
+				player" if you want to search for music player.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Select the fields in which to look. 
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Click on <guilabel
+>Find</guilabel
+> to start
+				the search. This can take some time on low machines and wide
+				search criteria.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				After the pro FIXME
+			</para>
+		</listitem>
+	</orderedlist>
+	</para>
+	</listitem>
+</varlistentry>
+
+<varlistentry id="synaptic-pkg-find-advsearch">
+		<term>
+			Showing only searched packages
+		</term>
+	
+		<listitem>
+			<para>
+				To only show matching packages in the package list perform the following steps:
+			</para>
+			<para>
+		<orderedlist>
+			<listitem>
+				<para>
+					Open the search dialog <menuchoice
+><guimenu
+>Package</guimenu>
+					<guimenuitem
+>Find...</guimenuitem>
+					</menuchoice
+> from the menu or press <keycombo
+><keycap
+>Ctrl</keycap>
+					<keycap
+>F</keycap
+></keycombo
+>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Type the search expression into the find field, e.g. "mp3 ogg player".
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Select the fields that you want to search in, e.g. "name" and "description"
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Click on <guibutton
+>Find</guibutton
+> to 
+					start the search. In our example only music players and related packages will be listed.
+				</para>
+			</listitem>
+		</orderedlist>
+		</para>
+		<para>
+		<tip>
+			<para>
+				You can create more complex filters with the 
+				<xref linkend="synaptic-filter-edit"
+></xref
+>.
+			</para>
+		</tip>
+		</para>
+		</listitem>
+	</varlistentry>
+</variablelist>
+</sect2>
+</sect1 -->
+<sect1 id="synaptic-single"
+> 
+	<title
+>Hantera paket</title
+> 
+
+	<para
+>Detta kaptiel täcker in de grundläggande åtgärderna <xref linkend="anchor-installing"/>, <xref linkend="anchor-removing"/> och <xref linkend="anchor-upgrading"/> av paket. </para>
+	<para
+>Kapitlet beskriver även hur man genomför en <xref linkend="anchor-dist-upgrade"/>, <xref linkend="anchor-dwww"/> i dokumentation, <xref linkend="anchor-changelog"/> ändringloggen och de avancerade åtgärderna <xref linkend="anchor-force"/> installationen av en specifik paketversion, <xref linkend="anchor-lock"/> ett paket till den aktuella versionen. </para
+>  
+
+<sect2 id="synaptic-pkg-install"
+> 
+	<title
+>Installera paket</title>
+
+	<anchor id="anchor-installing" xreflabel="installing"/>
+
+	<note>
+		<para
+>If different version of the same package are available &app; will select the most applicable by default. To force the installation of a specific version that is different to the default one, see <xref linkend="synaptic-pkg-force"/>. </para>
+	</note>
+
+	<para
+>Om du vill installera ett paket kan du genomföra följande steg: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Reload the package information to be aware of the latest versions available: <itemizedlist>
+				<listitem>
+					<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Reload Package Information</guimenuitem
+> </menuchoice
+> from the menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Klicka på <guibutton
+>Läs om</guibutton
+> i verktygsraden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>R</keycap
+></keycombo
+>. </para>
+				</listitem>
+			</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Mark the package for installation: <itemizedlist>
+					<listitem>
+						<para
+>Dubbelklicka på namnet på paketet i <xref linkend="synaptic-win-list"/>. </para>
+					</listitem>
+		                        <listitem>
+			                        <para
+>Klicka på statusikonen för paketet och välj <guimenuitem
+> Markera för installation</guimenuitem
+> från menyn. </para>
+	                                </listitem>
+					<listitem>
+						<para
+>Högerklicka på paketet och välj <guimenuitem
+> Markera för installation</guimenuitem
+> från sammanhangsmenyn. </para>
+					</listitem>
+			                <listitem>
+				                <para
+>Select the package and choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Mark for Installation</guimenuitem
+> </menuchoice
+> from the menu. </para>
+		                        </listitem>
+					<listitem>
+						<para
+>Select the package and press the key combination <keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>I</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para
+>Du kommer att bli frågad om att bekräfta om installationen av paketen kräver ytterligare ändringar. Klicka på knappen <guibutton
+>Markera </guibutton
+> för att även markera de ytterligare ändringarna. </para>
+		</listitem>
+		<listitem>
+			<para
+>Apply the marked changes to actually install the package: <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad om att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. Klicka på <guibutton
+>Verkställ</guibutton
+> för att bekräfta och fortsätta med installationen. </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-pkg-remove"
+> 
+	<title
+>Ta bort paket</title>
+	<anchor id="anchor-removing" xreflabel="removing"/>
+
+	<para>
+		<note>
+			<para
+>Konfigurationsfiler och användarskapat data (t.ex. en webbsida i "/var/www") kommer som standard inte att tas bort från systemet. </para>
+			<para
+><emphasis
+>Endast Debian:</emphasis
+> Du kan ändra standardbeteendet i inställningarna. </para>
+			<para
+><emphasis
+>Endast Debian:</emphasis
+> För att ta bort alla filer som relaterar till paketet, välj <menuchoice
+><guimenuitem
+>Markera för total borttagning</guimenuitem
+></menuchoice
+> istället för <menuchoice
+><guimenuitem
+>Markera för borttagning</guimenuitem
+></menuchoice
+>. </para>
+		</note>
+	</para>
+	<!-- para>
+		<note>
+			<para>
+				<emphasis
+>Debian only:</emphasis
+> To also remove packages that are only installed as dependency 
+				of the to be removed 
+				package(s) and that would be no longer needed (orphaned) afterwards, choose 
+				<menuchoice
+><guimenuitem
+>Remove Including Orphaned Dependecies</guimenuitem>
+				</menuchoice
+> instead of <menuchoice
+><guimenuitem
+>Remove</guimenuitem
+></menuchoice
+>.
+			</para>
+		</note>
+	</para -->
+	<para
+>För att ta bort ett paket, följ dessa steg: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Mark the package for removal: <itemizedlist>
+					<listitem>
+						<para
+>Dubbelklicka på namnet på det installerade paketet i <xref linkend="synaptic-win-list"/>. </para>
+					</listitem>
+		                        <listitem>
+			                        <para
+>Klicka på statusikonen för paketet och välj <guimenuitem
+> Markera för borttagning</guimenuitem
+> från menyn. </para>
+	                                </listitem>
+					<listitem>
+						<para
+>Högerklicka på paketet och välj <guimenuitem
+> Ta bort</guimenuitem
+> från sammanhangsmenyn. </para>
+					</listitem>
+					<listitem>
+						<para
+>Select the package and choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Mark for Removal</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Markera paketet och tryck på tangenten <keycap
+>Delete</keycap
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para
+>Om borttagningen av paketen kräver ytterligare ändringar kommer du att bli frågad om att bekräfta. För att även markera de ytterligare ändringarna, klicka på knappen <guibutton
+>Markera </guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Apply the marked changes to actually remove the package(s): <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad om att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att fortsätta med borttagningen, bekräfta ändringarna genom att klicka på <guibutton
+>Verkställ</guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+<sect2 id="synaptic-pkg-upgrade"
+> 
+	<title
+>Uppgradera paket</title>
+
+	<anchor id="anchor-upgrading" xreflabel="upgrading"/>
+
+	<para
+>För att uppgradera paket kan du följa de här stegen: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Reload the package information to be aware of the latest versions available: <itemizedlist>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Reload Package Information</guimenuitem
+></menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Läs om</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>R</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+
+		<listitem>
+			<para
+>Mark the package for upgrade: <itemizedlist>
+					<listitem>
+						<para
+>Dubbelklicka på namnet på paketet med en senare version tillgänglig i <xref linkend="synaptic-win-list"/>. </para>
+					</listitem>
+					<listitem>
+						<para
+>Klicka på statusikonen för paketet och välj <guimenuitem
+> Markera för uppgradering</guimenuitem
+> från menyn. </para>
+	                                </listitem>
+					<listitem>
+						<para
+>Högerklicka på paketet och välj <guimenuitem
+> Markera för uppgradering</guimenuitem
+> från sammanhangsmenyn. </para>
+		                        </listitem>
+					<listitem>
+						<para
+>Select the package and choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Mark for Upgrade</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Markera paketet och tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+			<para
+>Om uppgraderingen av paketen kräver ytterligare ändringar kommer du att bli frågad om att bekräfta. För att även markera de ytterligare ändringarna, klicka på knappen <guibutton
+>Markera </guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Verkställ de markerade ändringarna för att uppgradera paketet: </para>
+			<itemizedlist>
+				<listitem>
+					<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+></menuchoice
+> from the menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att fortsätta med uppgraderingen, bekräfta ändringarna genom att klicka på <guibutton
+>Verkställ</guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para
+>För att uppgradera alla installerade paket till den senaste versionen, se <xref linkend="synaptic-pkg-upgradesystem"/>. </para>
+	</tip>
+</sect2>
+
+
+<sect2 id="synaptic-pkg-upgradesystem"
+> 
+	<title
+>Uppgradera hela systemet</title>
+
+	<anchor id="anchor-dist-upgrade" xreflabel="system upgrade"/>
+	
+	<para
+>&app; provides two methods for marking packages for upgrade: <variablelist>
+			<varlistentry>
+				<term
+>Standarduppgradering </term>
+				<listitem>
+					<para
+>Standarduppgraderingsmetoden markerar endast uppgraderingar av installerade paket. Om en senare version av ett paket är beroende av ett paket som inte är installerat eller är i konflikt med ett redan installerat paket, kommer uppgraderingen inte att markeras. </para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term
+>Smart uppgradering (dist-upgrade) </term>
+				<listitem>
+					<para
+>Smarta uppgraderingsmetoden försöker att lösa paketkonflikter på ett smart sätt. Detta inkluderar installation av ytterligare nödvändiga paket och föredragna paket med högre prioritet. </para>
+					<para
+>Smart uppgradering är även känd som <emphasis
+>dist-upgrade</emphasis
+> i konsollverktyget apt-get. </para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<note>
+			<para
+>Uppgraderingar till en senare större operativsystemsutgåva måste genomföras med den smarta uppgraderingsmetoden, t.ex. från Conectiva 9 till Conectica 10 eller från Debian Woody till Debian Sarge. </para>
+		</note>
+	</para>
+
+	<para
+>För att uppgradera ditt system till den senaste versionen kan du följa de här stegen: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Reload the package information to be aware of the latest versions available: <itemizedlist>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Reload Package Information</guimenuitem
+></menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Läs om</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Press the key combination <keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>R</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+
+		<listitem>
+			<para
+>Mark all possible upgrades: <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Markera alla uppgraderingar </guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Mark all Upgrades</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Press the key combination <keycombo
+> <keycap
+>Ctrl</keycap
+><keycap
+>G</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		
+		<listitem>
+			<para
+>Välj uppgraderingsmetod. Smart uppgradering rekommenderas. </para>
+		</listitem>
+		<listitem>
+			<para
+>Apply the marked changes to actually upgrade the package(s): <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+></menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att fortsätta med uppgraderingen, bekräfta ändringarna genom att klicka på <guibutton
+>Verkställ</guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+
+	<tip>
+		<para
+>Du kan ändra standarduppgraderingsmetoden för framtida uppgraderingar i inställningarna. </para>
+	</tip>
+</sect2>
+
+<!-- sect2 id="synaptic-pkg-downgrade"
+> 
+	<title
+>To Downgrade Packages</title
+> 
+
+	<caution>
+		<para>
+			This may render your package system unusable!
+		</para>
+		<para>
+			Downgrading packages is a broken feature, since apt and &app; can only handle
+			conflicts and dependency resolution of upgrades. 
+		</para>
+		<para>
+			You may need this feature in some rare circumstances, but it is not recommended to use. 
+		</para>
+	</caution>
+
+	<para>
+		To downgrade a package you have to mark a specific version of the package:
+	</para>
+	<orderedlist>
+		<listitem>
+			<para>
+				Select the package that you wish to downgrade in the 
+				<xref linkend="synaptic-win-list"/>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Open the Properties dialog of the package:
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton
+>Properties</guibutton
+> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice
+><guimenu
+>Package</guimenu>
+							<guimenuitem
+>Properties</guimenuitem
+></menuchoice
+> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Activate the <guibutton
+>Expert</guibutton
+> tab in the properties dialog. You will
+				see a list of all available version of the package.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Choose the version to be installed from the list and close the Properties dialog.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Apply the marked changes to actually downgrade the package(s):
+
+				<itemizedlist>
+					<listitem>
+						<para>
+							Click on <guibutton
+>Apply Changes</guibutton
+> in the toolbar.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Choose <menuchoice
+><guimenu
+>Edit</guimenu>
+							<guimenuitem
+>Apply Marked Changes</guimenuitem
+></menuchoice
+> 
+							from the menu.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Press the key combination 
+							<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+	</orderedlist>
+</sect2 -->
+
+<sect2 id="synaptic-pkg-apply">
+	<title
+>Verkställ markerade ändringar</title>
+
+	<tip>
+		<para
+>För att endast visa paket som är markerade för en statusändring, välj filtret "Markerade ändringar", se <xref linkend="synaptic-filter-apply"/>. </para>
+	</tip>
+
+	<para
+>To apply marked changes: <itemizedlist>
+			<listitem>
+				<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+			</listitem>
+			<listitem>
+				<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+></menuchoice
+> from the menu. </para>
+			</listitem>
+			<listitem>
+				<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para
+>Du kommer att bli frågad om att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att bekräfta ändringarna, klicka på knappen <guibutton
+>Verkställ</guibutton
+>. </para>
+	<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+	<note>
+		<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+	</note>
+</sect2>
+
+<sect2 id="synaptic-pkg-undo">
+	<title
+>Avmarkera ändringar</title>
+
+	<para
+>Följande sätt låter dig avmarkera ändringar: </para>
+	
+	<variablelist>
+		<varlistentry>
+			<term
+>Ångra markering av specifika paket </term>
+			<listitem>
+				<itemizedlist>
+					<listitem>
+						<para
+>Right click on the package and choose <menuchoice
+> <guimenuitem
+>Unmark</guimenuitem
+></menuchoice
+> from the context menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Select the package(s) and choose <menuchoice
+> <guimenu
+>Package</guimenu
+><guimenuitem
+>Unmark</guimenuitem
+> </menuchoice
+>. </para>
+					</listitem>
+					<listitem>
+						<para
+>Select the package(s) and press <keycombo
+><keycap
+>Ctrl</keycap
+> <keycap
+>N</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term
+>Ångra alla markeringar </term>
+			<listitem>
+				<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Unmark All</guimenuitem
+></menuchoice
+> from the menu. </para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term
+>Ångra den senaste markeringen </term>
+			<listitem>
+				<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Undo</guimenuitem
+></menuchoice
+> from the menu. </para>
+				<para
+>Det här steget kan upprepas. Maximalt antal "Ångra"-åtgärder kan ställas in i inställningarna. FIXA länk </para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-pkg-config">
+	<title
+>Konfigurera paket (endast Debian)</title>
+
+	<para>
+		<note>
+			<para
+>För att använda den här funktionen behöver du installera paketet <emphasis
+>libgnome2-perl</emphasis
+>. </para>
+		</note>
+	</para
+>	
+
+	<para
+>Debian tillhandahåller en enhetlig metod, kallad <emphasis
+>debconf</emphasis
+>, för att konfigurera programvarupaket. Denna funktion stöds inte av alla paket. Om ett paket har stöd för denna funktion kan konfigurationen göras genom en assistent. </para>
+
+	<para
+>Konfigurera ett paket som stöds: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Markera det paket som du vill konfigurera i <xref linkend="synaptic-win-list"/>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Configure...</guimenuitem
+></menuchoice
+> from the menu. </para>
+		</listitem>
+	</orderedlist>
+	<tip>
+		<para
+>För att få en lista över alla konfigureringsbara paket, välj filtret <emphasis
+>Konfigureringsbara paket</emphasis
+> </para>
+	</tip>
+</sect2>
+
+<sect2 id="synaptic-pkg-docu">
+	<title
+>Visa dokumentation för paket (endast Debian)</title>
+
+	<anchor id="anchor-dwww" xreflabel="browsing"/>
+
+
+	<note>
+		<para
+>För att använda denna funktion måste du installera paketet <emphasis
+>dwww</emphasis
+>. </para>
+	</note>
+	
+	<para
+>Dwww tillhandahåller åtkomst via en webbläsare till all installerad dokumentation som relaterar till paketet. Hela dokumentationen är nåbar via en lokal webbserver. </para>
+
+	<orderedlist>
+		<listitem>
+			<para
+>Markera paketet som du vill läsa ytterligare dokumentation om i <xref linkend="synaptic-win-list"/>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Browse Documentation</guimenuitem
+></menuchoice
+>. </para>
+		</listitem>
+	</orderedlist>
+
+</sect2>
+<sect2 id="synaptic-pkg-changelog">
+	<title
+>Visa ändringslogg för ett paket (endast Debian)</title>
+
+	<anchor id="anchor-changelog" xreflabel="reading"/>
+
+	<note>
+		<para
+>Ändringsloggen kan endast visas för ett Debian-paket. </para>
+	</note>
+	
+	<para
+>För att visa ändringsloggen för ett Debian-paket, genomför följande steg: </para>
+
+	<orderedlist>
+		<listitem>
+			<para
+>Markera paketet i <xref linkend="synaptic-win-list"/>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Download Changelog</guimenuitem
+></menuchoice
+>. </para>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-pkg-lock">
+	<title
+>Lås ett paket till aktuell version (endast Debian)</title>
+
+	<anchor id="anchor-lock" xreflabel="locking"/>
+
+	<para
+>För att låsa ett paket till aktuell version, följ de här stegen: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Markera paketet som du vill låsa i <xref linkend="synaptic-win-list"/>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Package</guimenu
+> <guimenuitem
+>Lock Version</guimenuitem
+></menuchoice
+>. </para>
+			<para
+>The &app; will reload the package information. You should now see, that the menu item <menuchoice
+> <guimenu
+>Package</guimenu
+><guimenuitem
+>Lock Version</guimenuitem
+></menuchoice
+> is checked. Furthermore all actions in the menu <guimenu
+>Package</guimenu
+> are disabled now. </para>
+		</listitem>
+	</orderedlist>
+	<para
+>To unlock the package uncheck <menuchoice
+><guimenu
+>Package</guimenu
+><guimenuitem
+>Lock Version</guimenuitem
+> </menuchoice
+>. </para>
+</sect2>
+
+
+
+<sect2 id="synaptic-pkg-force">
+	<title
+>Tvinga installation av en specifik version</title>
+
+	<anchor id="anchor-force" xreflabel="forcing"/>
+
+	<warning>
+		<para
+>The &app; always selects the most applicable version available. If you force a different version from the default one, errors in the dependency handling can occur. </para>
+	</warning>
+
+	<para
+>För att tvinga fram installationen av en paketversion som är olik den som är standard, genomför följande steg: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Reload the package information to be aware of the latest versions available: <itemizedlist>
+				<listitem>
+					<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Reload Package Information</guimenuitem
+> </menuchoice
+> from the menu. </para>
+				</listitem>
+				<listitem>
+					<para
+>Klicka på <guibutton
+>Läs om</guibutton
+> i verktygsraden. </para>
+				</listitem>
+				<listitem>
+					<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>R</keycap
+></keycombo
+>. </para>
+				</listitem>
+			</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Markera paketet i <xref linkend="synaptic-win-list"/>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Package</guimenu
+><guimenuitem
+>Force Version...</guimenuitem
+> </menuchoice
+> from the menu to open a dialog with all available versions of the package. </para>
+		</listitem>
+		<listitem>
+			<para
+>Välj den version som ska markeras för installation. För att bekräfta ditt val, klicka på knappen <guibutton
+>Tvinga</guibutton
+>. </para>
+		</listitem>
+		<listitem>
+			<para
+>Apply the marked changes to actually install the forced package version: <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad om att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att fortsätta med installationen, bekräfta ändringarna genom att klicka på <guibutton
+>Verkställ</guibutton
+> </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+<sect2 id="synaptic-pkg-fix">
+	<title
+>Rätta till trasiga paket</title>
+	
+	<para
+>&app; will not allow any further changes to the system before all broken packages are fixed. </para>
+	<tip>
+		<para
+>För att visa alla trasiga paket, välj filtret <emphasis
+>Trasiga</emphasis
+>. </para>
+	</tip>
+
+	<para
+>To correct the broken packages perform the following steps: choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Fix Broken Packages</guimenuitem
+></menuchoice
+> from the menu. </para>
+
+	<orderedlist>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+><guimenuitem
+>Fix Broken Packages</guimenuitem
+> </menuchoice
+> from the menu. </para>
+		</listitem>
+		<listitem>
+			<para
+>Apply the marked changes to actually fix the packages: <itemizedlist>
+					<listitem>
+						<para
+>Klicka på <guibutton
+>Verkställ</guibutton
+> i verktygsraden. </para>
+					</listitem>
+					<listitem>
+						<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Apply Marked Changes</guimenuitem
+> </menuchoice
+> from the menu. </para>
+					</listitem>
+					<listitem>
+						<para
+>Tryck tangentkombinationen <keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>E</keycap
+></keycombo
+>. </para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</listitem>
+		<listitem>
+			<para
+>Du kommer att bli frågad om att bekräfta. Kontrollera de sammanfattade ändringarna som kommer att verkställas. För att fortsätta med reparationen, bekräfta ändringarna genom att klicka på <guibutton
+>Verkställ</guibutton
+> </para>
+		</listitem>
+		<listitem>
+			<para
+>Under behandlingen av ändringarna kommer du att se en förloppsmätare. Vänta tills ändringarna har verkställts. Detta kan ta lite tid beroende på antalet ändringar. Efteråt kommer du att återvända till huvudfönstret. </para
+>				
+			<note>
+				<para
+>Förloppsmätaren finns inte tillgänglig på Debian-system. Istället kommer du att se en detaljerad utskrift på en terminal. </para>
+			</note>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+
+</sect1>
+
+<sect1 id="synaptic-repo">
+	<title
+>Förråd</title>
+
+	<para
+>Paket görs tillgängliga genom så kallade <emphasis
+>förråd</emphasis
+>. Förrådet innehåller paketen och ett index som inkluderar grundläggande information om paketen, t.ex. nödvändiga beroenden eller en kort beskrivning. </para>
+	<para
+>Förråd kan finnas på många olika media: Cd-rom/Dvd, lokala hårddisken, webben (http, ftp) eller fjärrfilsystem (nfs). </para>
+
+
+<sect2 id="synaptic-repo-update"
+> 
+	<title
+>Läs om paketinformationen</title
+> 
+	<para
+>För att samla in listan på alla tillgängliga paket från förråden, välj en av följande metoder: </para>
+	<itemizedlist>
+		<listitem>
+			<para
+>Choose <menuchoice
+><guimenu
+>Edit</guimenu
+> <guimenuitem
+>Reload Package Information</guimenuitem
+></menuchoice
+> from the menu. </para>
+		</listitem>
+		<listitem>
+			<para
+>Klicka på <guibutton
+>Läs om</guibutton
+> i verktygsraden. </para>
+		</listitem>
+	</itemizedlist>
+</sect2>
+
+<sect2 id="synaptic-repo-manage"
+> 
+	<title
+>Redigera, lägg till eller ta bort förråd</title
+> 
+	<para
+>Du kan redigera, lägga till eller ta bort förråd i förrådsinställningarna. </para>
+	<para
+>Open the repository editor with <menuchoice
+><guimenu
+>Preferences</guimenu
+> <guimenuitem
+>Repositories</guimenuitem
+></menuchoice
+> from the menu. </para>
+
+	<figure>
+		<title
+>Inställningar för förråd</title>
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-repositories.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Visar förrådsinställningarna </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+</sect2>
+
+<sect2 id="synaptic-repo-cdrom"
+> 
+	<title
+>Lägga till förråd från cd-rom</title
+> 
+	<para
+>Välj <menuchoice
+><guimenu
+>Redigera</guimenu
+><guimenuitem
+>Lägg till cd...</guimenuitem
+></menuchoice
+> från menyn. </para>
+</sect2>
+
+<sect2 id="synaptic-repo-aptline"
+> 
+	<title
+>Syntaxen för APT-raden</title
+> 
+	<para
+>Pakethanteraren lagrar alla tillgängliga förråd i en textbaserad konfigurationsfil. Varje rad beskriver typen, platsen och innehållet i ett förråd. </para>
+
+	<table frame="topbot" id="table-synaptic-aptline-syntax">
+		<title
+>Syntax för en APT-rad, t.ex. <emphasis
+>deb http://ftp.se.debian.org sarge main</emphasis
+></title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left"
+>Element </entry>
+					<entry valign="top" align="left"
+>Beskrivning </entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top"
+>deb </entry>
+					<entry valign="top"
+>The first elements describes the type of the repository. Possible values are <emphasis
+>deb</emphasis
+> (Debian binary packages), <emphasis
+>deb-src </emphasis
+>(Debian source packages), <emphasis
+>rpm</emphasis
+> (RPM binary packages), <emphasis
+>rpm-src</emphasis
+> (Redhat source packages), <emphasis
+>rpmdir</emphasis
+> (folder that contains RPM binary packages) and <emphasis
+>rpmdir-src</emphasis
+> (folder that contains RPM source packages). </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>http://ftp.se.debian.org </entry>
+					<entry valign="top"
+>Det andra elementet är platsen för förrådet. Förrådet kan kommas åt genom protokollen HTTP och FTP, eller lokalt på en cd-, dvd-skiva eller hårddisk. </entry>
+			        </row>
+				<row>
+					<entry valign="top"
+>sarge </entry>
+					<entry valign="top"
+>The third element describes the distribution for which the packages are made for, see the <ulink url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.4"
+> Debian Developer's Reference</ulink
+> for more details on distributions of Debian. </entry>
+			        </row>
+				<row>
+					<entry valign="top"
+>main </entry>
+					<entry valign="top"
+>The forth element describes sections of the repository that should be included. By default official Debian repositories are separated into the sections <emphasis
+>main</emphasis
+>, <emphasis
+> contrib</emphasis
+> and <emphasis
+>non-free</emphasis
+>, see the <ulink url="http://www.debian.org/doc/packaging-manuals/developers-reference/ch-resources.en.html#s4.6.1"
+> Debian Developer's Reference</ulink
+> for more details on sections of Debian. </entry>
+			        </row>
+			</tbody>
+		</tgroup>
+	</table>
+	<para>
+		<note
+><para
+>Utgåvan och sektionselementet är inte nödvändiga för varje typ.</para
+></note>
+	</para>
+</sect2>
+
+</sect1>
+
+<sect1 id="synaptic-filter">
+	<title
+>Anpassade filter</title>
+	<para
+>Filter låter dig minska ner listan av visade paket genom ett antal paketattribut. </para>
+	<para
+>&app; comes with a set of predefined filters. </para>
+
+	<table frame="topbot" id="table-synaptic-filters">
+		<title
+>Fördefinierade filter</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left"
+>Filter </entry>
+					<entry valign="top" align="left"
+>Beskrivning </entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top"
+>Alla paket</entry>
+					<entry valign="top"
+>Visa alla kända paket. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markerade ändringar</entry>
+					<entry valign="top"
+>Visa alla paket som är markerade för en statusändring. </entry>
+			        </row>
+				<row>
+					<entry valign="top"
+>Paket med Debconf-stöd</entry>
+					<entry valign="top"
+>Visa alla paket som kan konfigureras genom Debconf (endast Debian). </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Trasigt</entry>
+					<entry valign="top"
+>Visa endast paket med trasiga beroenden. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Uppgraderingsbara (uppström)</entry>
+					<entry valign="top"
+>Visa alla paket som kan uppgraderas till en senare uppströmsversion. </entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+
+
+	<para
+>På grund av att vissa gränssnitt ändrar även uppsättningen av fördefinierade filter. De gamla och utfasade filtren tas inte bort automatiskt av Synaptic. </para>
+
+	<table frame="topbot" id="table-synaptic-filters-deprecated">
+		<title
+>Utfasade filter</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left"
+>Filter </entry>
+					<entry valign="top" align="left"
+>Beskrivning </entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top"
+>Installera</entry>
+					<entry valign="top"
+>Visa endast för närvarande installerade paket. </entry>
+			        </row>
+				<row>
+					<entry valign="top"
+>Inte installerat</entry>
+					<entry valign="top"
+>Visa endast paket som för närvarande inte är installerade. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Uppgraderingsbar</entry>
+					<entry valign="top"
+>Visa endast paket som har en nyare version tillgänglig. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Trasigt</entry>
+					<entry valign="top"
+>Visa endast paket med trasiga beroenden. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Programmerade ändringar</entry>
+					<entry valign="top"
+>Visa endast paket markerade att ändras. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Nya i arkivet</entry>
+					<entry valign="top"
+>Visa endast nya paket efter den senaste förrådsuppdateringen. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Kvarliggande</entry>
+					<entry valign="top"
+>Visa endast tidigare installerade paket som lämnat kvar data eller konfigurationsfiler på systemet. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Paket med Debconf-stöd</entry>
+					<entry valign="top"
+>Visa endast paket som kan konfigureras genom Debians paketkonfigurationssystem, det så kallade Debconf. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Föråldrat eller lokalt installerad</entry>
+					<entry valign="top"
+>Visa endast paket som inte (längre) är inkluderade i ett av de angivna förråden. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Sökfilter</entry>
+					<entry valign="top"
+>Visa resultatet för den senaste paketsökningen. </entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+
+<sect2 id="synaptic-filter-apply"
+> 
+	<title
+>Verkställa filter</title
+> 
+	<para
+>För att verkställa ett filter kan du följa dessa steg: </para>
+	<orderedlist>
+		<listitem>
+			<para
+>Välj <guibutton
+>Anpassade filter</guibutton
+> från kategorirutan i huvudfönstret. </para
+>	
+		</listitem>
+		<listitem>
+			<para
+>Välj det önskade filtret från <xref linkend="synaptic-win-selector"/>. </para>
+		</listitem>
+	</orderedlist>
+</sect2>
+
+<sect2 id="synaptic-filter-edit" xreflabel="filter editor"
+> 
+	<title
+>Redigera eller skapa anpassade filter</title
+> 
+
+	<para
+>Filter kan skapas, tas bort och ändras i filterredigeraren: </para>
+
+	<para
+>Välj <menuchoice
+><guimenu
+>Inställningar</guimenu
+><guimenuitem
+> Filter</guimenuitem
+></menuchoice
+> från menyn. </para>
+
+	<figure>
+		<title
+>Redigera filter</title
+> 
+		<screenshot
+> 
+			<mediaobject
+> 
+				<imageobject>
+					<imagedata fileref="figures/synaptic-filter.png" 
+						format="PNG"/> 
+				</imageobject>
+				<textobject
+> 
+					<phrase
+>Visar filterredigeraren. </phrase>
+				</textobject
+> 
+			</mediaobject
+> 
+		</screenshot
+> 
+	</figure>
+
+	<para
+>Filterredigeraren innehåller följande komponenter: </para>
+	
+	<variablelist>
+		<varlistentry>
+			<term
+>Lista på filter </term>
+			<listitem>
+				<para
+>Visar en lista av tillgängliga filter. </para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term
+>Regler </term>
+			<listitem>
+				<para
+>Regler låter dig definiera vilka paket som ska visas i listan. Ett paket måste uppfylla alla valda kriterier. </para>
+				<variablelist>
+					<varlistentry>
+						<term
+>Status </term>
+						<listitem>
+							<para
+>Låter dig söka paket efter dess status. </para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term
+>Sektion </term>
+						<listitem>
+							<para
+>Låter dig söka paket efter dess sektion. </para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term
+>Egenskaper </term>
+						<listitem>
+							<para
+>Låter dig söka paket efter ett antal olika attribut, t.ex. namn, beroenden eller ursprung. </para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term
+>Nyckelord </term>
+						<listitem>
+							<para
+>Nyckelord är baserade på debtaggar. Endast Debian GNU/Linux med installerade "debtags" har stöd för denna funktion. </para>
+						</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
+</sect2>
+</sect1>
+
+
+
+
+<!-- sect1 id="snyaptic-prefs">
+	<title
+>Preferences</title>
+
+	NEEDS SOME LOVE - THEREFOR DISABLED
+
+<sect2 id="synaptic-prefs-general" xreflabel="action preferences"
+> 
+	<title
+>General</title
+> 
+	<para>
+		The general preferences include the following settings:
+	</para>
+	
+	<variablelist>
+		<varlistentry>
+			<term>
+				General
+			</term>
+			<listitem>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Allow regular expressions in searches and filters
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Consider recommended packages as dependencies
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Actions
+			</term>
+			<listitem>
+				<anchor id="synaptic-prefs-actions" xreflabel="action settings"/>
+				<variablelist>
+					<varlistentry>
+						<term>
+							Apply changes in a terminal window
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Ask to quit after the changes have been applied successfully
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Remove package
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Upgrade method
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Number of undo operations
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>
+							Confirm actions also affecting other packages
+						</term>
+							<listitem>
+								<para>
+									Regular expression are an advanced method of text
+									matching.
+								</para>
+							</listitem>
+					</varlistentry>
+				</variablelist>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-prefs-layout"
+> 
+	<title
+>Layout</title
+> 
+	<para>
+		You can change the appearance of Synaptic.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Main Window
+			</term>
+			<listitem>
+				<para>
+					Choose between two different layouts of the main window.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Fonts
+			</term>
+			<listitem>
+				<para>
+					Specify custom fonts for the application and the terminal output.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</sect2>
+
+<sect2 id="synaptic-prefs-ordercolor"
+> 
+	<title
+>Column Order and Colours</title
+> 
+	<para>
+		Modify the appearance of the package list in the main window.
+	</para>
+	<variablelist>
+		<varlistentry>
+			<term>
+				Column Order
+			</term>
+			<listitem>
+				<para>
+					Order the columns of the package list. A value of -1 hides the column.
+				</para>
+			</listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>
+				Colors
+			</term>
+			<listitem>
+				<para>
+					Assign colors to visualize the package status.
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+
+</sect2
+>    
+
+<sect2 id="synaptiac-prefs-temp"
+> 
+	<title
+>Temporary Files</title
+> 
+	<para>
+		Configure the management of completely or partially downloaded package files.
+	</para>
+</sect2
+> 
+
+<sect2 id="synaptiac-prefs-network"
+> 
+	<title
+>Network</title
+> 
+	<para
+> 
+		Configure the Internet connection and proxy server.
+	</para>
+</sect2
+> 
+
+<sect2 id="synaptiac-prefs-expert"
+> 
+	<title
+>Expert</title>
+	<para>
+		Undocumented.	
+	</para>
+</sect2
+> 
+</sect1 -->
+
+<sect1 id="synaptic-bugs">
+	<title
+>Kända fel och begränsningar</title>
+	<para>
+		
+
+	<table frame="topbot" id="synaptic-bugs-table">
+		<title
+>Kända problem och lösningar</title>
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<thead>
+				<row rowsep="1">
+					<entry valign="top" align="left"
+>Problem </entry>
+					<entry valign="top" align="left"
+>Lösningar </entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry valign="top"
+>Lokalen stöds inte </entry>
+					<entry valign="top"
+>Använd en lokal som stöds av Xlib. </entry>
+				</row>
+				<row>
+					<entry valign="top"
+>En misslyckad installation blockerar ytterligare åtgärder i Synaptic </entry>
+					<entry valign="top">
+						<para
+>Under vissa sällsynta situationer kan installationen eller borttagningen av ett paket misslyckades. Som en konsekvens av detta kommer alla andra markerade ändringar att avbrytas. </para>
+						<para
+>&app; requires a clear environment with no half installed packages to perform additional changes. But at the moment there is no way to continue canceled installations within &app;. </para>
+						<para
+>För att rätta till denna situation, skriv in följande kommando i en terminal, tryck sedan <keycap
+>Return</keycap
+>: </para>
+						<command
+>apt-get install -f </command>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+	</para>
+</sect1>
+
+<sect1 id="synaptic-shortcuts">
+	<title
+>Tangentbordsgenvägar</title>
+	<para
+>List of all global short cuts in &app;: </para>
+	<informaltable frame="none" id="synaptic-shortcuts-table">
+	
+		<tgroup cols="2" colsep="0" rowsep="0">
+			<colspec colname="COLSPEC0" colwidth="30*"/>
+			<colspec colname="COLSPEC1" colwidth="70*"/>
+			<tbody>
+				<row>
+					<entry valign="top"
+>Läs om listan över kända paket </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>R</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Öppna paketsökningsdialogen </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>F</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Öppna egenskapsdialogen för markerat paket </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>O</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markera de valda paketen för installation </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>I</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markera de valda paketen för uppgradering </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>U</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markera de valda paketen för borttagning </entry>
+					<entry valign="top">
+						<keycap
+>Ta bort</keycap>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markera de valda paketen för total borttagning (endast Debian) </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Shift</keycap
+><keycap
+>Delete</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Avmarkera alla ändringar till de markerade paketen </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>N</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Markera alla möjliga uppgraderingar </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>G</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Tvinga fram installationen av en specifik version av paketet </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>E</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Ångra den senaste statusändringen på ett paket inklusive nödvändiga beroenden </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>Z</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Gör om den senaste ångrade statusändringen på ett paket inklusive nödvändiga beroenden </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Shift</keycap
+><keycap
+>Ctrl</keycap
+> <keycap
+>Z</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Verkställ alla markerade ändringar </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>P</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Quit &app; </entry>
+					<entry valign="top">
+						<keycombo
+><keycap
+>Ctrl</keycap
+><keycap
+>Q</keycap
+></keycombo>
+					</entry>
+				</row>
+				<row>
+					<entry valign="top"
+>Show the manual of &app; </entry>
+					<entry valign="top">
+						<keycap
+>F1</keycap>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</informaltable>
+</sect1>
+
+
+<sect1 id="myapp-about"
+> 
+	<title
+>About &app;</title
+> 
+	<para
+>&app; was originally written by Alfredo K. Kojima (<email
+>kojima@windowmaker.org</email
+>) and is now maintained by Michael Vogt (<email
+>mvo@debian.org</email
+>) and Gustavo Niemeyer (<email
+>niemeyer@conectiva.com</email
+>). To get more information about &app;, please visit the <ulink url="http://www.nongnu.org/synaptic" type="http"
+>Synaptic Web Page</ulink
+>. </para>
+	<para
+>To report a bug or make a suggestion regarding &app; or this manual, use the bug report system on the <ulink url="http://www.nongnu.org/synaptic" type="http"
+>Synaptic Web Site</ulink
+>, contact the mailing list <email
+>synaptic@nongnu.org</email
+> or join the IRC channel #synaptic on irc.freenode.org. </para>
+	<para
+>Det här programmet distribueras under villkoren för GNU Public License som publicerats av The Free Software Foundation; antingen version 2 av licensen eller (upp till dig) senare version. En kopia av den här licensen kan hittas i , eller i filen som inkluderats med källkoden för det här programmet. </para>
+</sect1
+> 
+
+<!-- Appendix with GPL -->
+&legal;
+</article>

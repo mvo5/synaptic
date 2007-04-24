@@ -102,16 +102,19 @@ enum { DEP_NAME_COLUMN,         /* text */
 
 void RGMainWindow::changeView(int view, string subView)
 {
-   //cout << "RGMainWindow::changeView()" << endl;
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::changeView(): view '%i' subView '%s'\n", 
+	       view, subView.size() > 0 ? subView.c_str() : "(empty)");
+
    if(view >= N_PACKAGE_VIEWS) {
       //cerr << "changeView called with invalid view NR: " << view << endl;
       view=0;
    }
 
+   _blockActions = TRUE;
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);
       
    RPackage *pkg = selectedPackage();
-   _blockActions = TRUE;
 
    _lister->setView(view);
 
@@ -123,6 +126,7 @@ void RGMainWindow::changeView(int view, string subView)
       GtkTreeIter iter;
       char *str;
 
+      setBusyCursor(true);
       setInterfaceLocked(TRUE);
       GtkWidget *view = glade_xml_get_widget(_gladeXML, "treeview_subviews");
       model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
@@ -136,10 +140,11 @@ void RGMainWindow::changeView(int view, string subView)
 	    }
 	 } while(gtk_tree_model_iter_next(model, &iter));
       }
-      
-      _lister->reapplyFilter();
+
+      _lister->setSubView(subView);
       refreshTable(pkg,false);
       setInterfaceLocked(FALSE);     
+      setBusyCursor(false);
    }
    _blockActions = FALSE;
    setStatusText();
@@ -148,6 +153,9 @@ void RGMainWindow::changeView(int view, string subView)
 void RGMainWindow::refreshSubViewList()
 {
    string selected = selectedSubView();
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::refreshSubViewList(): selectedView '%s'\n", 
+	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
    vector<string> subViews = _lister->getSubViews();
 
@@ -174,8 +182,6 @@ void RGMainWindow::refreshSubViewList()
 	 ok = gtk_tree_model_iter_next(model, &iter);
       }
    } else {
-      // we auto set to "All" when we have gtk2.4 (without the list is 
-      // too slow)
       GtkTreeModel *model;
       GtkTreeSelection *selection;
       GtkTreeIter iter;
@@ -254,6 +260,10 @@ bool RGMainWindow::showErrors()
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::notifyChange(): '%s'\n",
+	       pkg != NULL ? pkg->name() : "(no pkg)");
+
    if (pkg != NULL)
       refreshTable(pkg);
 
@@ -274,11 +284,10 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
-   //cout << "RGMainWindow::refreshTable(): " << selectedPkg 
-	//<< " adj: " << setAdjustment <<endl;
-//
-   string selected = selectedSubView();
-   _lister->setSubView(utf8(selected.c_str()));
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
+	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
+	       setAdjustment);
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
@@ -497,7 +506,7 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 }
 
 bool RGMainWindow::askStateChange(RPackageLister::pkgState state, 
-				  vector<RPackage *> exclude)
+				  vector<RPackage *> &exclude)
 {
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
@@ -646,8 +655,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    g_list_free(list);
 
    _blockActions = FALSE;
-   setInterfaceLocked(FALSE);
    refreshTable(pkg);
+   setInterfaceLocked(FALSE);
 }
 
 bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
@@ -1051,7 +1060,10 @@ void RGMainWindow::buildInterface()
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
    _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
+   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
    _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
+				 get_gtk_image("system-upgrade"));
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_upgrade_packages",
                                  G_CALLBACK(cbUpgradeClicked), this);
@@ -1504,25 +1516,36 @@ void RGMainWindow::buildInterface()
    // I != views.end(); I++) {
    // item = gtk_radiobutton_new((char *)(*I).c_str());
    GtkWidget *w;
+
+   // section
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_section_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_SECTION] = glade_xml_get_widget(_gladeXML, "radiobutton_sections");
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SECTION));
+   // status
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_status_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_STATUS] = glade_xml_get_widget(_gladeXML, "radiobutton_status");
-
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_STATUS));
+   // origin
+   w=_viewButtons[PACKAGE_VIEW_ORIGIN] = glade_xml_get_widget(_gladeXML, "radiobutton_origin");
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_ORIGIN));
+   glade_xml_signal_connect_data(_gladeXML,
+				 "on_radiobutton_origin_toggled",
+				 (GCallback) cbChangedView, this);
+   // custom
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_custom_toggled",
 				 (GCallback) cbChangedView, this);
    w=_viewButtons[PACKAGE_VIEW_CUSTOM] = glade_xml_get_widget(_gladeXML, "radiobutton_custom");
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_CUSTOM));
+   // find
    glade_xml_signal_connect_data(_gladeXML,
 				 "on_radiobutton_find_toggled",
 				 (GCallback) cbChangedView, this);
@@ -1968,7 +1991,10 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
    scan.hide();
    if (updateCache) {
       me->setTreeLocked(TRUE);
-      me->_lister->openCache();
+      if (!me->_lister->openCache()) {
+         me->showErrors();
+         exit(1);
+      }
       me->setTreeLocked(FALSE);
       me->refreshTable(me->selectedPackage());
    }
@@ -2233,8 +2259,8 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-      me->setBusyCursor(true);
       string str = me->_findWin->getFindString();
+      me->setBusyCursor(true);
 
       // we need to convert here as the DDTP project does not use utf-8
       const char *locale_str = utf8_to_locale(str.c_str());
@@ -2402,7 +2428,10 @@ void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
    me->setTreeLocked(TRUE);
 
    // reset
-   me->_lister->openCache();
+   if (!me->_lister->openCache()) {
+      me->showErrors();
+      exit(1);
+   }
 
    me->setTreeLocked(FALSE);
    me->_lister->registerObserver(me);
@@ -2497,13 +2526,13 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
 {
+   RGMainWindow *me = (RGMainWindow *) data; 
+
    // only act on the active buttons
-   if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)))
+   if(!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)) ||
+      me->_blockActions == TRUE)
       return;
 
-   //   cout << "cbChangedView()"<<endl;
-
-   RGMainWindow *me = (RGMainWindow *) data; 
    long view = (long)gtk_object_get_data(GTK_OBJECT(self), "index");
    me->changeView(view);
 }
@@ -2512,8 +2541,12 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
+   if(me->_blockActions)
+      return;
 
    me->setBusyCursor(true);
+   string selected = me->selectedSubView();
+   me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);
    me->setBusyCursor(false);
    me->updatePackageInfo(NULL);
@@ -2751,9 +2784,10 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    // show errors and warnings (like the gpg failures for the package list)
    me->showErrors();
 
-   if(me->_lister->openCache())
+   if(!me->_lister->openCache()) {
       me->showErrors();
-
+      exit(1);
+   }
    // reread saved selections
    ifstream in(file);
    if (!in != 0) {
@@ -2862,7 +2896,8 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
       res = me->_lister->upgrade();
 
    // mvo: do we really want this?
-   me->askStateChange(state, vector<RPackage*>());
+   vector<RPackage*> nullVector;
+   me->askStateChange(state, nullVector);
 
    me->refreshTable(pkg);
 
@@ -2921,7 +2956,10 @@ void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
       li = g_list_next(li);
    }
    me->setTreeLocked(TRUE);
-   me->_lister->openCache();
+   if (!me->_lister->openCache()) {
+      me->showErrors();
+      exit(1);
+   }
 
    // reread saved selections
    ifstream in(file);
@@ -3261,7 +3299,7 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    ofstream out(file);
    out << "#!/bin/sh" << endl;
    for(int i=0;i<uris.size();i++) {
-      out << "wget " << uris[i] << endl;
+      out << "wget -c" << uris[i] << endl;
    }
    chmod(file, 0755);
 }

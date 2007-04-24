@@ -71,6 +71,19 @@ void RPackageView::clearSelection()
    _selectedView.clear();
 }
 
+void RPackageView::refresh()
+{
+   if(_config->FindB("Debug::Synaptic::View",false))
+      ioprintf(clog, "RPackageView::refresh(): '%s'\n",
+	       getName().c_str());
+
+   _view.clear();
+   for(unsigned int i=0;i<_all.size();i++) {
+      if(_all[i])
+	 addPackage(_all[i]);
+   }
+}
+
 void RPackageViewSections::addPackage(RPackage *package)
 {
    string str = trans_section(package->section());
@@ -146,6 +159,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    if(!str.empty())
       _view[str].push_back(pkg);
 }
+
 
 //------------------------------------------------------------------
 
@@ -236,7 +250,7 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
    for(unsigned int i=0;i<_all.size();i++) 
       if(_all[i]) 
 	 addPackage(_all[i]);
-         
+
    return found;
 }
 
@@ -294,6 +308,14 @@ RPackageViewFilter::iterator RPackageViewFilter::begin()
    return _selectedView.begin(); 
 }
 
+void RPackageViewFilter::refresh()
+{
+   //cout << "RPackageViewFilter::refresh() " << endl;
+
+   refreshFilters();
+}
+
+
 vector<string> RPackageViewFilter::getFilterNames()
 {
    vector<string> filters;
@@ -306,8 +328,17 @@ vector<string> RPackageViewFilter::getFilterNames()
 void RPackageViewFilter::addPackage(RPackage *pkg)
 {
    // nothing to do for now, may add some sort of caching later
-   _sectionList.insert(pkg->section());
 }
+
+const set<string>& RPackageViewFilter::getSections() 
+{ 
+   if(_sectionList.empty())
+      for(unsigned int i=0;i<_all.size();i++)
+	 if(_all[i])
+	    _sectionList.insert(_all[i]->section());
+   return _sectionList; 
+};
+
 
 void RPackageViewFilter::storeFilters()
 {
@@ -453,5 +484,15 @@ void RPackageViewFilter::makePresetFilters()
    registerFilter(filter);
 }
 
+void RPackageViewOrigin::addPackage(RPackage *package)
+{
+   string component =  package->component();
+   string origin = package->getCanidateOrigin();
+   if(origin == "")
+      origin = _("Local");
+   if(component == "")
+      component = _("Unknown");
+   _view[origin+"/"+component].push_back(package);
+ };
 
 // vim:sts=3:sw=3

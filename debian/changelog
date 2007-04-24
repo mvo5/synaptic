@@ -1,3 +1,36 @@
+synaptic (0.58) unstable; urgency=low
+
+  * moved most icons use the icontheme
+  * support repmod on rpm systems
+  * when switching views, don't autoselect "AlL"
+  * gtk/gsyncaptic.cc:
+    - fix in the checking for already runing synaptic (lp: 62754)
+  * gtk/rgfilterwindow.cc:
+    - fix i18n problem in the filter settings 
+      (thanks to Alexander Bart)
+  * help/sv:
+    - added swedish manual (thanks to Daniel Nylander)
+      closes: #384388
+  * added support for GUI configuraton of http proxy
+  * translation updates:
+    - cs.po: thanks to Vít Pelcak
+  * debian/rules: 
+    - fix automatic version number generation
+  * make description buffer dynamic (thanks to Benjamin Jacobs)
+  * added component filter
+  * added emblem in the description to show support status
+  * move the desktop file out of settings because it does no longer
+    fit there with the new control center in gnome 2.17
+  * build with gcc 4.3 (closes: #413419)
+  * do not return a NULL pointer in name() 
+  * when generating the wget script, use wget -c
+  * po/cs.po:
+    - updated (thanks to Vit Pelcak)
+  * gtk/rguserdialog.cc, gtk/rggladewindow.cc:
+    - do not crash for invalid parent-window-ids
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Mar 2007 17:22:30 +0100
+
 synaptic (0.57.11.1) unstable; urgency=high
 
   * gtk/rgmainwindow.cc:

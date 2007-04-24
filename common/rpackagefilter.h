@@ -114,7 +114,8 @@ class RPatternPackageFilter : public RPackageFilter {
       Recommends,
       Suggests,
       RDepends,                  // reverse depends
-      Origin                   // package origin (like security.debian.org)
+      Origin,                   // package origin (like security.debian.org)
+      Component                   // package component (e.g. main)
    } DepType;
 
    
@@ -138,6 +139,7 @@ class RPatternPackageFilter : public RPackageFilter {
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
    inline bool filterOrigin(Pattern pat, RPackage *pkg);
+   inline bool filterComponent(Pattern pat, RPackage *pkg);
 
  public:
 

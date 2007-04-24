@@ -124,6 +124,7 @@ void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self,
 void RGPreferencesWindow::applyProxySettings()
 {
    string http, ftp, noProxy;
+   string httpUser, httpPass;
    gchar *s;
    int httpPort, ftpPort;
 
@@ -146,9 +147,19 @@ void RGPreferencesWindow::applyProxySettings()
       ftp = _config->Find("Synaptic::ftpProxy", "");
       ftpPort = _config->FindI("Synaptic::ftpProxyPort", 3128);
       noProxy = _config->Find("Synaptic::noProxy", "");
+      httpUser = _config->Find("Synaptic::httpProxyUser", "");
+      httpPass = _config->Find("Synaptic::httpProxyPass", "");
 
       if(!http.empty()) {
 	 s = g_strdup_printf("http://%s:%i", http.c_str(), httpPort);
+	 _config->Set("Acquire::http::Proxy", s);
+	 g_free(s);
+      }
+      // setup the proxy 
+      if(!httpUser.empty() && !httpPass.empty()) {
+	 s = g_strdup_printf("http://%s:%s@%s:%i", 
+			     httpUser.c_str(), httpPass.c_str(),
+			     http.c_str(), httpPort);
 	 _config->Set("Acquire::http::Proxy", s);
 	 g_free(s);
       }
@@ -409,7 +420,10 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
       me->hide();
       me->_lister->unregisterObserver(me->_mainWin);
       me->_mainWin->setTreeLocked(TRUE);
-      me->_lister->openCache();
+      if (!me->_lister->openCache()) {
+	 me->_mainWin->showErrors();
+	 exit(1);
+      }
       me->_mainWin->setTreeLocked(FALSE);
       me->_lister->registerObserver(me->_mainWin);
       me->_mainWin->refreshTable();
@@ -1056,6 +1070,11 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                                  G_CALLBACK(useProxyToggled), this);
 
    glade_xml_signal_connect_data(_gladeXML,
+                                 "on_button_authentication_clicked",
+                                 G_CALLBACK(buttonAuthenticationClicked),
+                                 this);
+
+   glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_default_font_clicked",
                                  G_CALLBACK(changeFontAction),
                                  GINT_TO_POINTER(FONT_DEFAULT));
@@ -1071,7 +1090,6 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                                  "on_button_terminal_font_clicked",
                                  G_CALLBACK(changeFontAction),
                                  GINT_TO_POINTER(FONT_TERMINAL));
-
 
    checkbuttonUserTerminalFontToggled(NULL, this);
    checkbuttonUserFontToggled(NULL, this);
@@ -1093,6 +1111,40 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    skipTaskbar(true);
    setTitle(_("Preferences"));
+}
+
+void 
+RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self, void *data)
+{
+   RGPreferencesWindow *me = (RGPreferencesWindow *)data;
+
+   RGGladeUserDialog dia(me, "authentication");
+   GladeXML *dia_xml = dia.getGladeXML();
+   GtkWidget *entry_user = glade_xml_get_widget(dia_xml,"entry_username");
+   GtkWidget *entry_pass = glade_xml_get_widget(dia_xml,"entry_password");
+
+   // now set the values
+   {
+      string now_user =  _config->Find("Synaptic::httpProxyUser","");
+      cout << now_user << endl;
+      gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
+      string now_pass =   _config->Find("Synaptic::httpProxyPass","");
+      cout << now_pass << endl;
+      gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
+   }
+
+   int res = dia.run();
+
+   if(!res) 
+      return;
+
+   // get the entered data
+   const gchar *user = gtk_entry_get_text(GTK_ENTRY(entry_user));
+   const gchar *pass = gtk_entry_get_text(GTK_ENTRY(entry_pass));
+   
+   // write out the configuration   
+   _config->Set("Synaptic::httpProxyUser",user);
+   _config->Set("Synaptic::httpProxyPass",pass);
 }
 
 // vim:ts=3:sw=3:et

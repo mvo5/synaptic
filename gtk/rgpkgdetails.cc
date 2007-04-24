@@ -40,7 +40,6 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
 				 "on_button_close_clicked",
 				 G_CALLBACK(cbCloseClicked),
 				 this); 
-   //skipTaskbar(true);
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
@@ -125,8 +124,60 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
    me->setLabel("label_latest_size", pkg->availableInstalledSize());
    me->setLabel("label_latest_download_size", pkg->availablePackageSize());
 
-   string descr = string(pkg->summary()) + "\n" + string(pkg->description());
-   me->setTextView("text_descr", descr.c_str(), true);
+   // format description nicely and use emblems
+   GtkWidget *textview;
+   GtkTextBuffer *buf;
+   GtkTextIter it, start, end;
+   GtkWidget *emblem;
+   const gchar *s;
+   static GtkTooltips *tips = gtk_tooltips_new ();
+
+   textview = glade_xml_get_widget(me->getGladeXML(), "text_descr");
+   assert(textview);
+   buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
+   // clear old buffer
+   gtk_text_buffer_get_start_iter(buf, &start);
+   gtk_text_buffer_get_end_iter(buf, &end);
+   gtk_text_buffer_delete(buf, &start, &end);
+   // create bold tag
+   GtkTextTagTable *tag_table = gtk_text_buffer_get_tag_table(buf);
+   if(gtk_text_tag_table_lookup(tag_table, "bold") == NULL) {
+      gtk_text_buffer_create_tag(buf, "bold", 
+				 "weight", PANGO_WEIGHT_BOLD,
+				 "scale", 1.1, 
+				 NULL);
+   }
+   // set summary
+   s = utf8(pkg->summary());
+   gtk_text_buffer_get_start_iter(buf, &it);
+   gtk_text_buffer_insert(buf, &it, s, -1);
+   gtk_text_buffer_get_start_iter(buf, &start);
+   gtk_text_buffer_apply_tag_by_name(buf, "bold", &start, &it);
+   // set emblems 
+   GdkPixbuf *pixbuf = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
+   if(pixbuf != NULL) {
+      // insert space
+      gtk_text_buffer_insert(buf, &it, " ", 1);
+      // make image
+      emblem = gtk_image_new_from_pixbuf(pixbuf);
+      gtk_image_set_pixel_size(GTK_IMAGE(emblem), 16);
+      // set eventbox and tooltip
+      GtkWidget *event = gtk_event_box_new();
+      GtkStyle *style = gtk_widget_get_style(textview);
+      gtk_widget_modify_bg(event, GTK_STATE_NORMAL, 
+			   &style->base[GTK_STATE_NORMAL]);
+      gtk_container_add(GTK_CONTAINER(event), emblem);
+      gtk_tooltips_set_tip(tips, event, _("This application is supported by the distribution"), "");
+      // create anchor
+      GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(buf, &it);
+      gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), event, anchor);
+      gtk_widget_show_all(event);
+   }
+   // show the rest of the description
+   gtk_text_buffer_insert(buf, &it, "\n", 1);
+   s = utf8(pkg->description());
+   gtk_text_buffer_insert(buf, &it, s, -1);
+   
 
    // build dependency lists
    vector<DepInformation> deps;

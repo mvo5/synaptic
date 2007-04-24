@@ -6,16 +6,16 @@
 
 PKG=synaptic
 DEBVER=$(shell dpkg-parsechangelog |sed -n -e '/^Version:/s/^Version: //p')
-CONFVER=$(shell  sed -n -e 's/AM_INIT_AUTOMAKE($PKG, \(.*\))/\1/p' configure.in)
+CONFVER=$(shell  sed -n -e 's/AM_INIT_AUTOMAKE(synaptic, \(.*\))/\1/p' configure.in)
 DEB_BUILD_PROG:=debuild --preserve-envvar PATH --preserve-envvar CCACHE_DIR -us -uc $(DEB_BUILD_PROG_OPTS)
 
 
 # Rebuild configure.in to have the correct version from the change log
-ifneq ($(S_DEBVER),$(S_CONFVER))
-ifneq ($(S_DEBVER),)
+ifneq ($(DEBVER),$(CONFVER))
+ifneq ($(DEBVER),)
 .PHONY: configure.in
 configure.in:
-	sed -ie 's/$(S_CONFVER)/$(S_DEBVER)/' $@ 
+	sed -ie 's/$(CONFVER)/$(DEBVER)/' $@ 
 endif
 else
 configure.in:
@@ -90,6 +90,9 @@ synaptic: build
 	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
 	dh_installmenu -psynaptic
 	dh_installchangelogs ChangeLog -psynaptic
+ifeq "$(DIST)" "Ubuntu"
+	dh_iconcache -psynaptic
+endif
 	dh_link -psynaptic
 	dh_strip -psynaptic
 	dh_compress -psynaptic
@@ -119,7 +122,7 @@ unpatch:
 #	debian/svn-build/synaptic-$(S_DEBVER)/autogen.sh
 #	(cd debian/svn-build/synaptic-$(S_DEBVER); $(DEB_BUILD_PROG))
 
-arch-build:
+arch-build: configure.in
 	rm -rf debian/arch-build
 	mkdir -p debian/arch-build/$(PKG)-$(DEBVER)
 	tar -c --exclude=arch-build -f - `bzr inventory` | (cd debian/arch-build/$(PKG)-$(DEBVER);tar xf -)

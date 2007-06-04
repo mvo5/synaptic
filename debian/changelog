@@ -1,9 +1,17 @@
-synaptic (0.57.11.1ubuntu15) feisty; urgency=low
+synaptic (0.57.11.1ubuntu15) gutsy; urgency=low
 
   * gtk/rgpreferenceswindow.cc:
     - overwrite the http_proxy environ when the user set the proxy
       explicitely (thanks to Berend De Schouwer, LP#105515)
-  * 
+  * common/rpackagelister.cc:
+    - added "Volatile::SetSelectionDoReInstall" to support 
+      reinstalling from --set-selections too
+  * common/rpackage.cc:
+    - only show a package as supported if it is authenticated
+  * po/eu.po:
+    - updated (thanks to dooteo, closes: #368951)
+  * gtk/rguserdialog.cc, gtk/rggladewindow.cc:
+    - do not crash for invalid parent-window-ids
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Apr 2007 11:16:31 +0200
 

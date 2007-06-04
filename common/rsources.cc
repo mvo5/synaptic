@@ -358,7 +358,7 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= RepomdSrc;
    else
       return false;
-   cout << S << " settype " << (Type | Repomd) << endl;
+   //cout << S << " settype " << (Type | Repomd) << endl;
    return true;
 }
 
@@ -380,7 +380,7 @@ string SourcesList::SourceRecord::GetType()
       return "repomd";
    else if ((Type & RepomdSrc) != 0)
       return "repomd-src";
-   cout << "type " << (Type & Repomd) << endl;
+   //cout << "type " << (Type & Repomd) << endl;
    return "unknown";
 }
 
@@ -543,9 +543,11 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
    os << "URI: " << rec.URI << endl;
    os << "Dist: " << rec.Dist << endl;
    os << "Section(s):" << endl;
+#if 0
    for (unsigned int J = 0; J < rec.NumSections; J++) {
       cout << "\t" << rec.Sections[J] << endl;
    }
+#endif
    os << endl;
    return os;
 }

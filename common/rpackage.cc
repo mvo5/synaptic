@@ -1364,7 +1364,7 @@ bool RPackageStatus::isSupported(RPackage *pkg)
 	    break;
 	 }
       }
-      res = (sc & sl);
+      res = (sc & sl & isTrusted());
    }
 
    return res;

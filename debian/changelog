@@ -35,6 +35,11 @@ synaptic (0.58) UNRELEASED; urgency=low
   * gtk/rgpreferenceswindow.cc:
     - overwrite the http_proxy environ when the user set the proxy
       explicitely (thanks to Berend De Schouwer)
+  * common/rpackagelister.cc:
+    - added "Volatile::SetSelectionDoReInstall" to support 
+      reinstalling from --set-selections too
+  * common/rpackage.cc:
+    - only show a package as supported if it is authenticated
   * po/eu.po:
     - updated (thanks to dooteo, closes: #368951)
 

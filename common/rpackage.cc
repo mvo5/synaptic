@@ -1350,7 +1350,7 @@ bool RPackageStatus::isSupported(RPackage *pkg)
 	    break;
 	 }
       }
-      res = (sc & sl & isTrusted());
+      res = (sc & sl & pkg->isTrusted());
    }
 
    return res;

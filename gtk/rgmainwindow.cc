@@ -591,14 +591,6 @@ void RGMainWindow::pkgAction(RGPkgAction action)
          case PKG_INSTALL:     // install
             instPkgs.push_back(pkg);
             pkgInstallHelper(pkg, false);
-#if 0 // handled in the pkgCache now (where it belongs)
-	    if(_config->FindB("Synaptic::UseRecommends", false)) {
-	       installAllWeakDepends(pkg, pkgCache::Dep::Recommends);
-	    }
-	    if(_config->FindB("Synaptic::UseSuggests", false)) {
-	       installAllWeakDepends(pkg, pkgCache::Dep::Suggests);
-	    }
-#endif
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
@@ -2161,7 +2153,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
    bool Changed = false;
    bool ForceReload = _config->FindB("Synaptic::UpdateAfterSrcChange",false);
    
-   if(!g_file_test("/usr/bin/software-properties", 
+   if(!g_file_test("/usr/bin/software-properties-gtk", 
 		   G_FILE_TEST_IS_EXECUTABLE) 
       || _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) 
    {
@@ -2173,7 +2165,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       GPid pid;
       int status;
       char *argv[5];
-      argv[0] = "/usr/bin/software-properties";
+      argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
       argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));

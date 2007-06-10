@@ -78,7 +78,7 @@ static char *parseDescription(string descr);
 RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
                    pkgRecords *records, pkgCache::PkgIterator &pkg)
 : _lister(lister), _records(records), _depcache(depcache),
-_notify(true), _boolFlags(0)
+  _notify(true), _boolFlags(0)
 {
    _package = new pkgCache::PkgIterator(pkg);
 
@@ -128,7 +128,8 @@ const char *RPackage::summary()
 
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgCache::DescIterator Desc = ver.TranslatedDescription();
+      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
       _summary = parser.ShortDesc();
       return _summary.c_str();
    }
@@ -694,7 +695,7 @@ bool RPackage::isTrusted()
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
    Ver = State.CandidateVerIter(*_depcache);
    if (Ver == 0) {
-      cerr << "CanidateVer == 0" << endl;
+      //cerr << "CanidateVer == 0" << endl;
       return false;
    }
    pkgSourceList *Sources=_lister->getCache()->list();

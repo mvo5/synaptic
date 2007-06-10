@@ -36,17 +36,6 @@ class OpProgress;
 class pkgCache;
 
 
-class RPkgPolicy : public pkgPolicy
-{
- public:
-   bool IsImportantDep(pkgCache::DepIterator dep);
-      
-   RPkgPolicy(pkgCache *Owner):
-      pkgPolicy(Owner) {};
-
-
-};
-
 class RPackageCache {
    MMap *_map;
 

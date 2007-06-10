@@ -87,7 +87,7 @@ Go to the repository dialog to correct the problem."));
    if (_error->PendingError())
       return false;
 
-   _policy = new RPkgPolicy(_cache);
+   _policy = new pkgPolicy(_cache);
    if (_error->PendingError() == true)
       return false;
    if (ReadPinFile(*_policy) == false)

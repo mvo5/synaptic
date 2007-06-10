@@ -40,7 +40,7 @@ class RPackageCache {
    MMap *_map;
 
    pkgCache *_cache;
-   RPkgPolicy *_policy;
+   pkgPolicy *_policy;
 
    pkgDepCache *_dcache;
    pkgSourceList *_list;

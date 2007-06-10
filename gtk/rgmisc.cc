@@ -27,6 +27,7 @@
 #include "i18n.h"
 #include "rgmisc.h"
 #include <stdio.h>
+#include <cstdlib>
 
 
 void RGFlushInterface()

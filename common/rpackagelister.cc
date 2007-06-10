@@ -295,7 +295,7 @@ bool RPackageLister::openCache()
    if (!_cache->open(*_progMeter,lock)) {
       _progMeter->Done();
       _cacheValid = false;
-      return false;
+      return _error->Error("_cache->open() failed, please report.");
    }
    _progMeter->Done();
 
@@ -314,13 +314,10 @@ bool RPackageLister::openCache()
                              "Please report."), 2);
    }
 
-#ifdef HAVE_RPM
-   // be gentle and free memory
    if (_records)
       delete _records;
-#endif
-   
    _records = new pkgRecords(*deps);
+
    if (_error->PendingError()) {
       _cacheValid = false;
       return _error->Error(_("Internal error opening cache (%d). "
@@ -546,6 +543,7 @@ void RPackageLister::reapplyFilter()
    if(_config->FindB("Debug::Synaptic::View",false))
       clog << "RPackageLister::reapplyFilter()" << endl;
 
+   _selectedView->refresh();
    _viewPackages.clear();
    _viewPackagesIndex.clear();
    _viewPackagesIndex.resize(_packagesIndex.size(), -1);

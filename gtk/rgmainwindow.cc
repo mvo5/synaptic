@@ -260,10 +260,6 @@ bool RGMainWindow::showErrors()
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
-   if(_config->FindB("Debug::Synaptic::View",false))
-      ioprintf(clog, "RGMainWindow::notifyChange(): '%s'\n",
-	       pkg != NULL ? pkg->name() : "(no pkg)");
-
    if (pkg != NULL)
       refreshTable(pkg);
 
@@ -353,6 +349,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_propertiesB, FALSE);
    gtk_widget_set_sensitive(_overrideVersionM, FALSE);
    gtk_widget_set_sensitive(_pinM, FALSE);
+   gtk_widget_set_sensitive(_autoM, FALSE);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -374,6 +371,7 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_detailsM, TRUE);
    gtk_widget_set_sensitive(_propertiesB, TRUE);
    gtk_widget_set_sensitive(_pinM, TRUE);
+   gtk_widget_set_sensitive(_autoM, TRUE);
 
    // set info
    gtk_widget_set_sensitive(pkginfo, true);
@@ -395,6 +393,14 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), false);
       _blockActions = FALSE;
    }
+
+   // Auto-Flag
+   _blockActions = true;
+   if( flags & RPackage::FIsAuto)
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), true);
+   else
+      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), false);
+   _blockActions = false;
 
    // enable unmark if a action is performed with the pkg
    if((flags & RPackage::FInstall)   || (flags & RPackage::FNewInstall) || 
@@ -442,6 +448,54 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 }
 
+
+void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   if (me->_blockActions)
+      return;
+   cout << "RGMainWindow::cbMenuAutoInstalledClickedn()" << endl;
+
+   bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
+
+   GtkTreeSelection *selection;
+   GtkTreeIter iter;
+   GList *list, *li;
+   RPackage *pkg;
+
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
+   while (li != NULL) {
+      gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
+      gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+      if (pkg == NULL) {
+         li = g_list_next(li);
+         continue;
+      }
+
+      pkg->setAuto(active);
+      li = g_list_next(li);
+   }
+
+   // write it
+   GtkWidget *progress = glade_xml_get_widget(me->_gladeXML, "progressbar_main");
+   GtkWidget *label = glade_xml_get_widget(me->_gladeXML, "label_status");
+   RGCacheProgress cacheProgress(progress, label);
+   me->_lister->getCache()->deps()->writeStateFile(&cacheProgress,true);
+
+   // refresh
+   me->setInterfaceLocked(TRUE);
+   me->_lister->unregisterObserver(me);
+
+   me->_lister->getCache()->deps()->MarkAndSweep();
+   me->_lister->refreshView();
+
+   me->_lister->registerObserver(me);
+   me->refreshTable();
+   me->refreshSubViewList();
+   me->setInterfaceLocked(FALSE);
+   
+}
 
 // install a specific version
 void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
@@ -573,6 +627,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    RPackage *pkg = NULL;
 
    while (li != NULL) {
+      pkgDepCache::ActionGroup group(*_lister->getCache()->deps());
       gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
       gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       li = g_list_next(li);
@@ -654,6 +709,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);
 
+   refreshSubViewList();
    _blockActions = FALSE;
    refreshTable(pkg);
    setInterfaceLocked(FALSE);
@@ -1291,6 +1347,11 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_menu_pin",
                                  G_CALLBACK(cbMenuPinClicked), this);
+
+   _autoM = glade_xml_get_widget(_gladeXML, "menu_auto_installed");
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_menu_auto_installed",
+                                 G_CALLBACK(cbMenuAutoInstalledClicked), this);
 
    _overrideVersionM = glade_xml_get_widget(_gladeXML, 
 					    "menu_override_version");

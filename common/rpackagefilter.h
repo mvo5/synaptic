@@ -194,7 +194,9 @@ class RStatusPackageFilter : public RPackageFilter {
       OrphanedPackage = 1 << 9, // orphaned (identfied with deborphan)
       ResidualConfig = 1 << 10, // not installed but has config left
       NotInstallable = 1 << 11,  // the package is not aviailable in repository
-      UpstreamUpgradable = 1 << 12 // new upstream version
+      UpstreamUpgradable = 1 << 12, // new upstream version
+      AutoInstalled = 1 << 13, // automatically installed
+      Garbage = 1 << 14 // automatically installed and no longer required
    };
 
    RStatusPackageFilter() : _status(~0)

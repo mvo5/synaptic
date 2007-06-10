@@ -200,7 +200,7 @@ gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
 
 
 pkgPackageManager::OrderResult 
-RGTermInstallProgress::start(RPackageManager *pm,
+RGTermInstallProgress::start(pkgPackageManager *pm,
 			    int numPackages,
 			    int numPackagesTotal)
 {

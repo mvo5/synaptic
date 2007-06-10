@@ -26,8 +26,8 @@
 #ifndef _RINSTALLPROGRESS_H_
 #define _RINSTALLPROGRESS_H_
 
+#include <apt-pkg/packagemanager.h>
 #include "config.h"
-#include <rpackagemanager.h>
 
 class RInstallProgress {
  protected:
@@ -57,7 +57,7 @@ class RInstallProgress {
  public:
    // get a str feed to the user with the result of the install run
    virtual const char* getResultStr(pkgPackageManager::OrderResult);
-   virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
                                                 int numPackages = 0,
                                                 int numPackagesTotal = 0);
 

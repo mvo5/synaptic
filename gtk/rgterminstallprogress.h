@@ -26,7 +26,6 @@
 
 #ifdef HAVE_TERMINAL
 
-#include "rpackagemanager.h"
 #include "rgmainwindow.h"
 #include "rinstallprogress.h"
 #include "rgwindow.h"
@@ -61,7 +60,7 @@ public:
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
 		   				int numPackages = 0,
 						int totalPackages = 0);
 

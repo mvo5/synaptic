@@ -108,6 +108,8 @@ class RPackage {
       FPurge            = 1 << 17,
       FImportant        = 1 << 18,
       FOverrideVersion  = 1 << 19,
+      FIsAuto           = 1 << 20,
+      FIsGarbage        = 1 << 21
    };
 
    enum UpdateImportance {
@@ -187,6 +189,9 @@ class RPackage {
    void setOrphaned(bool flag = true) {
       _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & ~FOrphaned);
    };
+
+   // set/unset the auto-installed flag
+   void setAuto(bool flag = true);
 
    void setNotify(bool flag = true);
 

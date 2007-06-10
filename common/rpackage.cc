@@ -308,6 +308,12 @@ int RPackage::getFlags()
        !state.CandidateVerIter(*_depcache).Downloadable())
       flags |= FNotInstallable;
 
+   if (state.Flags & pkgCache::Flag::Auto)
+      flags |= FIsAuto;
+
+   if (state.Garbage)
+      flags |= FIsGarbage;
+
    return flags | _boolFlags;
 }
 
@@ -736,6 +742,12 @@ void RPackage::setNotify(bool flag)
 {
    _notify = flag;
 }
+
+void RPackage::setAuto(bool flag)
+{
+   _depcache->MarkAuto(*_package, flag);
+}
+
 
 void RPackage::setKeep()
 {

@@ -534,7 +534,7 @@ void RGDebInstallProgress::updateInterface()
    }
 }
 
-pkgPackageManager::OrderResult RGDebInstallProgress::start(RPackageManager *pm,
+pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackages,
                                                        int numPackagesTotal)
 {

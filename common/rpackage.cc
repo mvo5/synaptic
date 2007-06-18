@@ -702,7 +702,7 @@ bool RPackage::isTrusted()
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
    Ver = State.CandidateVerIter(*_depcache);
    if (Ver == 0) {
-      cerr << "CanidateVer == 0" << endl;
+      //cerr << "CanidateVer == 0" << endl;
       return false;
    }
    pkgSourceList *Sources=_lister->getCache()->list();
@@ -1364,7 +1364,7 @@ bool RPackageStatus::isSupported(RPackage *pkg)
 	    break;
 	 }
       }
-      res = (sc & sl & isTrusted());
+      res = (sc & sl & pkg->isTrusted());
    }
 
    return res;

@@ -39,6 +39,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <cstdlib>
 #include <cassert>
 #include <errno.h>
 #include <fstream>

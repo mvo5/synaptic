@@ -1039,6 +1039,7 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
 void RPackageLister::restoreState(RPackageLister::pkgState &state)
 {
    pkgDepCache *deps = _cache->deps();
+   pkgDepCache::ActionGroup group(*deps);
 
    for (unsigned i = 0; i < _packages.size(); i++) {
       RPackage *pkg = _packages[i];
@@ -1055,7 +1056,9 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
             deps->MarkDelete(*(pkg->package()), oldflags & RPackage::FPurge);
          } else if (oldflags & RPackage::FKeep) {
             deps->MarkKeep(*(pkg->package()), false);
-         }
+	 }
+	 // fix the auto flag
+	 deps->MarkAuto(*pkg->package(), (oldflags & RPackage::FIsAuto));
       }
    }
    notifyChange(NULL);
@@ -1376,11 +1379,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          warning(_("Ignoring invalid record(s) in sources.list file!"));
    }
 
-   pkgPackageManager *PM;
-   PM = _system->CreatePM(_cache->deps());
-   RPackageManager *rPM = new RPackageManager(PM);
+   pkgPackageManager *rPM;
+   rPM = _system->CreatePM(_cache->deps());
 
-   if (!PM->GetArchives(&fetcher, _cache->list(), _records) ||
+   if (!rPM->GetArchives(&fetcher, _cache->list(), _records) ||
        _error->PendingError())
       goto gave_wood;
 
@@ -1458,7 +1460,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             goto gave_wood;
       }
       // Try to deal with missing package files
-      if (Failed == true && PM->FixMissing() == false) {
+      if (Failed == true && rPM->FixMissing() == false) {
          _error->Error(_("Unable to correct missing packages"));
          goto gave_wood;
       }
@@ -1494,7 +1496,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       // Reload the fetcher object and loop again for media swapping
       fetcher.Shutdown();
 
-      if (!PM->GetArchives(&fetcher, _cache->list(), _records))
+      if (!rPM->GetArchives(&fetcher, _cache->list(), _records))
          goto gave_wood;
    }
 
@@ -1507,12 +1509,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if(_config->FindB("Synaptic::Log::Changes",true))
       writeCommitLog();
 
-   delete PM;
    delete rPM;
    return Ret;
 
  gave_wood:
-   delete PM;
    delete rPM;
    return false;
 }
@@ -1749,8 +1749,10 @@ bool RPackageLister::readSelections(istream &in)
       ACTION_UNINSTALL
    };
    map<string, int> actionMap;
+   pkgDepCache::ActionGroup group(*_cache->deps());
 
    while (in.eof() == false) {
+
       in.getline(Buffer, sizeof(Buffer));
       CurLine++;
 

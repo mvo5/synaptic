@@ -113,7 +113,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    virtual void finishUpdate();
    virtual bool close();
 
-   virtual pkgPackageManager::OrderResult start(RPackageManager *pm,
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
 		   				int numPackages = 0,
 						int totalPackages = 0);
 

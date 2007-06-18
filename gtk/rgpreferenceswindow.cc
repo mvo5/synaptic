@@ -218,7 +218,7 @@ void RGPreferencesWindow::saveGeneral()
 
    // Consider recommended packages as dependencies
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionCheckRecom));
-   _config->Set("Synaptic::UseRecommends", newval ? "true" : "false");
+   _config->Set("APT::Install-Recommends", newval ? "true" : "false");
 
    // Clicking on the status icon marks the most likely action
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionOneClick));
@@ -493,7 +493,7 @@ void RGPreferencesWindow::readGeneral()
 
    // Consider recommended packages as dependencies
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionCheckRecom),
-                                _config->FindB("Synaptic::UseRecommends",
+                                _config->FindB("APT::Install-Recommends",
                                                false));
 
    // Clicking on the status icon marks the most likely action

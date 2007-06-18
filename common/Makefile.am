@@ -12,8 +12,6 @@ libsynaptic_a_SOURCES =\
 	pkg_acqfile.h\
 	rconfiguration.cc\
 	rconfiguration.h\
-	rswig.h\
-	rswig.cc\
 	rinstallprogress.cc\
 	rinstallprogress.h\
 	rpackage.cc\
@@ -24,7 +22,6 @@ libsynaptic_a_SOURCES =\
 	rpackagefilter.h\
 	rpackagelister.cc\
 	rpackagelister.h\
-	rpackagemanager.h\
 	rpackageview.cc\
 	rpackageview.h\
 	rcdscanner.cc\

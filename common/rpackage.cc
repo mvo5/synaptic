@@ -218,7 +218,8 @@ const char *RPackage::description()
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgCache::DescIterator Desc = ver.TranslatedDescription();
+      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
       _description = parseDescription(parser.LongDesc());
       return _description.c_str();
    } else {
@@ -307,6 +308,12 @@ int RPackage::getFlags()
    if (state.CandidateVer == 0 ||
        !state.CandidateVerIter(*_depcache).Downloadable())
       flags |= FNotInstallable;
+
+   if (state.Flags & pkgCache::Flag::Auto)
+      flags |= FIsAuto;
+
+   if (state.Garbage)
+      flags |= FIsGarbage;
 
    return flags | _boolFlags;
 }
@@ -736,6 +743,12 @@ void RPackage::setNotify(bool flag)
 {
    _notify = flag;
 }
+
+void RPackage::setAuto(bool flag)
+{
+   _depcache->MarkAuto(*_package, flag);
+}
+
 
 void RPackage::setKeep()
 {

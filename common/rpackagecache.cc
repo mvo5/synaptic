@@ -36,19 +36,6 @@
 #include <apt-pkg/policy.h>
 
 
-bool RPkgPolicy::IsImportantDep(pkgCache::DepIterator dep)
-{
-  if(pkgPolicy::IsImportantDep(dep))
-    return true;
-
-  if(dep->Type==pkgCache::Dep::Recommends) {
-     return _config->FindB("Synaptic::UseRecommends", false);
-  } else if(dep->Type==pkgCache::Dep::Suggests) {
-     return _config->FindB("Synaptic::UseSuggests", false);
-  } else {
-     return false;
-  }
-}
 
 bool RPackageCache::open(OpProgress &progress, bool locking)
 {
@@ -100,7 +87,7 @@ Go to the repository dialog to correct the problem."));
    if (_error->PendingError())
       return false;
 
-   _policy = new RPkgPolicy(_cache);
+   _policy = new pkgPolicy(_cache);
    if (_error->PendingError() == true)
       return false;
    if (ReadPinFile(*_policy) == false)

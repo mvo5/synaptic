@@ -99,6 +99,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    GtkWidget *_dl_changelogM, *_detailsM;
 
    GtkWidget *_pinM;
+   GtkWidget *_autoM;
    GtkWidget *_overrideVersionM;
    GtkWidget *_pkgHelpM;
    GtkWidget *_pkgReconfigureM;
@@ -260,6 +261,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    // packages menu
    static void cbMenuPinClicked(GtkWidget *self, void *data);
+   static void cbMenuAutoInstalledClicked(GtkWidget *self, void *data);
 
    // filter menu
    static void cbShowFilterManagerWindow(GtkWidget *self, void *data);

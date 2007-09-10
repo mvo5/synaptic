@@ -23,7 +23,8 @@
  */
 
 
-#include <stdio.h>
+#include <cstdio>
+#include <cstring>
 #include <cassert>
 #include "config.h"
 #include "rpackageview.h"

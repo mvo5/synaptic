@@ -22,6 +22,7 @@
  * USA
  */
 
+#include <cstring>
 #include <cassert>
 #include "config.h"
 #include "rgaboutpanel.h"

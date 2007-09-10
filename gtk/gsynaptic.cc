@@ -43,6 +43,7 @@
 #include <cassert>
 #include <errno.h>
 #include <fstream>
+#include <cstring>
 
 #include "rgmainwindow.h"
 #include "rguserdialog.h"

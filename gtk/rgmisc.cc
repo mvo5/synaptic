@@ -28,6 +28,7 @@
 #include "rgmisc.h"
 #include <stdio.h>
 #include <cstdlib>
+#include <cstring>
 
 
 void RGFlushInterface()

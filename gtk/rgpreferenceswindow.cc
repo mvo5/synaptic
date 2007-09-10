@@ -28,6 +28,8 @@
 #include <apt-pkg/configuration.h>
 #include <gtk/gtk.h>
 #include <cassert>
+#include <cstring>
+#include <cstdlib>
 
 #include "rconfiguration.h"
 #include "rgpreferenceswindow.h"

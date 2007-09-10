@@ -21,6 +21,7 @@
  */
 
 #include <cassert>
+#include <cstring>
 #include <map>
 #include "config.h"
 #include "rglogview.h"

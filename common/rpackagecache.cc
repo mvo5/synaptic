@@ -59,8 +59,8 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
    //pkgSourceList list;
    assert(_list != NULL);
    if (!_list->ReadMainList())
-      return _error->Error(_("The list of sources could not be read.\n\
-Go to the repository dialog to correct the problem."));
+      return _error->Error(_("The list of sources could not be read.\n"
+			     "Go to the repository dialog to correct the problem."));
 
    if(locking)
       pkgMakeStatusCache(*_list, progress);

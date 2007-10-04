@@ -535,7 +535,8 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
       item = gtk_menu_item_new_with_label(str);
-      if(versions[i].first == pkg->availableVersion())
+      const char *verStr = pkg->availableVersion();
+      if(verStr && versions[i].first == string(verStr))
 	 canidateNr = i;
       gtk_widget_show(item);
       gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);

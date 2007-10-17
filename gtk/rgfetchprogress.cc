@@ -142,12 +142,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    // dialogs that come up)
    gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
 
-   GtkStyle *style = gtk_widget_get_style(_win);
-   _font = style->font_desc;
-   _gc = style->white_gc;
-   _barGC = style->bg_gc[0];
-   _textGC = style->black_gc;
-
    // emit a signal if the user changed the cursor
    g_signal_connect(G_OBJECT(_table), "cursor-changed", 
 		    G_CALLBACK(cursorChanged), this);
@@ -383,6 +377,17 @@ GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
    char *str = "";
    GdkPixmap *pix;
    int px, pw;
+   GdkGC *_barGC;
+   GdkGC *_gc;
+   GdkGC *_textGC;
+   PangoFontDescription *_font;
+   GtkStyle *style;
+
+   style = gtk_widget_get_style(_win);
+   _font = style->font_desc;
+   _gc = style->white_gc;
+   _barGC = style->bg_gc[0];
+   _textGC = style->black_gc;
 
    pix = gdk_pixmap_new(_win->window, width, height, -1);
 

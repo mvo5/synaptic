@@ -621,6 +621,30 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
          return true;
    }
 
+   if (_status & NowPolicyBroken) {
+      if (!(flags & RPackage::FInstalled))
+      {
+	 pkgCache::DepIterator D;
+	 bool inOr = false;
+	 // FIXME: or-dependencies are not considered properly
+	 for (D = pkg->package()->RevDependsList(); D.end() == false; D++)
+	 {	    
+	    if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or)
+	       inOr = true;
+	    else
+	       inOr = false;
+	    pkgCache::PkgIterator parent = D.ParentPkg();
+	    if(parent->CurrentVer != 0)
+	    {
+	       RPackage *p = pkg->_lister->getPackage(parent);
+	       if(p != NULL)
+		  if(p->getFlags() & RPackage::FNowPolicyBroken)
+		     return true;
+	    }
+	 }
+      }
+   }
+
    return false;
 }
 

@@ -315,6 +315,12 @@ int RPackage::getFlags()
    if (state.Garbage)
       flags |= FIsGarbage;
 
+   if (state.NowPolicyBroken())
+      flags |= FNowPolicyBroken;
+
+   if (state.InstPolicyBroken())
+      flags |= FInstPolicyBroken;
+
    return flags | _boolFlags;
 }
 

@@ -66,9 +66,11 @@ typedef struct  {
 
 class RPackage {
 
+ public:
+   RPackageLister *_lister;
+
    protected:
 
-   RPackageLister *_lister;
 
    pkgRecords *_records;
    pkgDepCache *_depcache;
@@ -109,7 +111,9 @@ class RPackage {
       FImportant        = 1 << 18,
       FOverrideVersion  = 1 << 19,
       FIsAuto           = 1 << 20,
-      FIsGarbage        = 1 << 21
+      FIsGarbage        = 1 << 21,
+      FNowPolicyBroken  = 1 << 22,
+      FInstPolicyBroken  = 1 << 23,
    };
 
    enum UpdateImportance {

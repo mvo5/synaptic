@@ -68,10 +68,6 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
 
    void refreshTable(int row, bool append = false);
    GdkPixmap *statusDraw(int width, int height, int status);
-   GdkGC *_barGC;
-   GdkGC *_gc;
-   GdkGC *_textGC;
-   PangoFontDescription *_font;
 
  public:
    virtual bool MediaChange(string Media, string Drive);

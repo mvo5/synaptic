@@ -41,7 +41,8 @@
 #include <gtk/gtk.h>
 
 #include <unistd.h>
-#include <stdio.h>
+#include <cstdio>
+#include <cstdlib>
 
 #include <vte/vte.h>
 

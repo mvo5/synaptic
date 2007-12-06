@@ -1,15 +1,39 @@
-synaptic (0.60.1) unstable; urgency=low
+synaptic (0.61) unstable; urgency=low
 
+  [ Michael Vogt ]
   * fix missing Basque translation (closes: #429460)
+  * updatd Basque translation (thanks to mikel paskual)
   * update galician translation (thanks to Ignacio Casal)
   * updated Czech translation (thanks to Vit Pelcak)
   * updated Finish translation (thanks to Timo Jyrinki)
   * po/POTFILES.in, po/POTFILES.skip:
     - updated so that intltool-update -m is happy again (thanks
       to Nacho)
+  * po/be@latin.po:
+    - merged translation from Ihar H
+  * po/cs.po:
+    - bugfixes by Vít Pelčák
+  * gtk/rgmainwindow.cc:
+    - add missing space in the wget script (thanks to Avi Rozen)
+      (closes: #435682)
+  * make it build with g++ 4.3
+  * debian/synaptic.menu:
+    - fix menu section (thanks to Bill Allomber, closes: #445025)
+  * gtk/rgmainwindow.cc:
+    - fix crash in cbInstallFromVersion()
+  * gtk/rgfetchprogress.{cc,h}:
+    - fix crash in download progress on theme changes
   * added XS-Vcs-Bzr header
 
- --
+  [ Diego Escalante Urrelo ]
+  * The menu entry for Synaptic is back in System->Administration. It also  
+    removes the legacy Applications category.
+    closes: #429895
+
+  [ Loic Minier ]
+  * Set has_focus on the close button of the welcome dialog; closes: #148695.
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:05:08 +0100
 
 synaptic (0.60) unstable; urgency=low
 

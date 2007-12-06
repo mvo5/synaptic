@@ -196,7 +196,8 @@ class RStatusPackageFilter : public RPackageFilter {
       NotInstallable = 1 << 11,  // the package is not aviailable in repository
       UpstreamUpgradable = 1 << 12, // new upstream version
       AutoInstalled = 1 << 13, // automatically installed
-      Garbage = 1 << 14 // automatically installed and no longer required
+      Garbage = 1 << 14, // automatically installed and no longer required
+      NowPolicyBroken = 1 << 15,
    };
 
    RStatusPackageFilter() : _status(~0)

@@ -1,3 +1,11 @@
+synaptic (0.62) unstable; urgency=low
+
+  * debian/rules, debian/control:
+    - use dh_icons and add appropriate b-d on debhelper
+  * g++ 4.3 fixes (closes: #456044)
+
+ --
+
 synaptic (0.61) unstable; urgency=low
 
   [ Michael Vogt ]
@@ -23,6 +31,7 @@ synaptic (0.61) unstable; urgency=low
     - fix crash in cbInstallFromVersion()
   * gtk/rgfetchprogress.{cc,h}:
     - fix crash in download progress on theme changes
+  * added XS-Vcs-Bzr header
 
   [ Diego Escalante Urrelo ]
   * The menu entry for Synaptic is back in System->Administration. It also  
@@ -32,7 +41,7 @@ synaptic (0.61) unstable; urgency=low
   [ Loic Minier ]
   * Set has_focus on the close button of the welcome dialog; closes: #148695.
 
- --
+ -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:05:08 +0100
 
 synaptic (0.60) unstable; urgency=low
 

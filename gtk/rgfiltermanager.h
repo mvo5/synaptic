@@ -52,10 +52,10 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::UpstreamUpgradable,
    RStatusPackageFilter::AutoInstalled,
    RStatusPackageFilter::Garbage,
+   RStatusPackageFilter::NowPolicyBroken,
 };
 
-// FIXME: if you add a new status change this const! (calc automaticlly)
-static const int NrOfStatusBits = 15;
+static const int NrOfStatusBits = sizeof(StatusMasks)/sizeof(RStatusPackageFilter::Types);
 
 static char *ActOptions[] = {
    _("Includes"),

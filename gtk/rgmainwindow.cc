@@ -2824,7 +2824,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_lister->writeSelections(out, false);
 
    // update cache and forget about the previous new packages 
-   // (only if no error occured)
+   // (only if no error occurred)
    string error;
    if (!me->_lister->updateCache(progress,error)) {
       RGGladeUserDialog dia(me,"update_failed");

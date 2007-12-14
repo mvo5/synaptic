@@ -410,7 +410,7 @@ int main(int argc, char **argv)
       userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
                                          _("Starting without administrative "
                                            "privileges"),
-				         _("You will not be able to apply any "
+				         _("You will not be able to apply "
 				           "any changes. But you can still "
 					   "export the marked changes or "
 					   "create a download script "

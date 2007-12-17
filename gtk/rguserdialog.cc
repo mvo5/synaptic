@@ -72,7 +72,7 @@ bool RGUserDialog::showErrors()
 				NULL);
    gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG(dia),
 				  g_strdup_printf("<b><big>%s</big></b>\n\n%s",
-				                  _("An error occured"), 
+				                  _("An error occurred"), 
 				                  _("The following details "
 						    "are provided:")));
    gtk_widget_set_size_request(dia, 500, 300);

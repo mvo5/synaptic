@@ -178,8 +178,12 @@ void RGFetchProgress::cursorChanged(GtkTreeView *self, void *data)
 
 void RGFetchProgress::setDescription(string mainText, string secondText)
 {
+   gchar *str;
    gtk_window_set_title(GTK_WINDOW(_win), mainText.c_str());
-   gchar *str = g_strdup_printf("<big><b>%s</b></big> \n\n%s",
+   if(secondText.empty())
+      str = g_strdup_printf("<big><b>%s</b></big>",mainText.c_str());
+   else   
+      str = g_strdup_printf("<big><b>%s</b></big> \n\n%s",
 				  mainText.c_str(), secondText.c_str());
    gtk_label_set_markup(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_description")), str);
 			

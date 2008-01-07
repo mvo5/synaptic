@@ -36,7 +36,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
-#include <apt-pkg/cachefile.h>
 
 #include "rpackagelister.h"
 #include "rpackagecache.h"
@@ -1271,11 +1270,10 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    _updating = true;
 
 
-// apt-0.7.10 has the new CacheFile::UpdateList code, we use it
 #ifndef HAVE_RPM
-   pkgCacheFile cache;
+// apt-0.7.10 has the new UpdateList code in algorithms, we use it
    string s;
-   bool res = cache.ListUpdate(*status, *_cache->list(), 5000);
+   bool res = ListUpdate(*status, *_cache->list(), 5000);
    if(res == false)
    {
       while(!_error->empty())

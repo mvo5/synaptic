@@ -7,7 +7,7 @@
 
 #include "sections_trans.h"
 
-char *transtable[][2] = {
+const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "admin"
    {"admin", _("System Administration")},
    // TRANSLATORS: Alias for the Debian package section "base"

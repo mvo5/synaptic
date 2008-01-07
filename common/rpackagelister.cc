@@ -1257,6 +1257,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    // Get the source list
    //pkgSourceList List;
    _cache->list()->ReadMainList();
+
    // Lock the list directory
    FileFd Lock;
    if (_config->FindB("Debug::NoLocking", false) == false) {
@@ -1268,12 +1269,26 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 
    _updating = true;
 
+
+#ifndef HAVE_RPM
+// apt-0.7.10 has the new UpdateList code in algorithms, we use it
+   string s;
+   bool res = ListUpdate(*status, *_cache->list(), 5000);
+   if(res == false)
+   {
+      while(!_error->empty())
+      {
+	 bool isError = _error->PopMessage(s);
+	 error += s;
+      }
+   }
+   return res;
+#else
    // Create the download object
    pkgAcquire Fetcher(status);
 
    bool Failed = false;
 
-#if HAVE_RPM
    if (_cache->list()->GetReleases(&Fetcher) == false)
       return false;
    Fetcher.Run();
@@ -1288,21 +1303,13 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
       _error->Warning(_("Release files for some repositories could not be "
                         "retrieved or authenticated. Such repositories are "
                         "being ignored."));
-#endif /* HAVE_RPM */
 
    if (!_cache->list()->GetIndexes(&Fetcher))
       return false;
 
-// apt-rpm does not support the pulseInterval
-#ifdef HAVE_RPM 
    // Run it
    if (Fetcher.Run() == pkgAcquire::Failed)
       return false;
-#else
-   if (Fetcher.Run(50000) == pkgAcquire::Failed)
-      return false;
-#endif
-
 
    //bool AuthFailed = false;
    Failed = false;
@@ -1335,6 +1342,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
       return false; 
    }
    return true;
+#endif
 }
 
 bool RPackageLister::getDownloadUris(vector<string> &uris)

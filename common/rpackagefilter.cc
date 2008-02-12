@@ -794,6 +794,8 @@ bool RFilePackageFilter::addFile(string file)
 
 bool RFilePackageFilter::filter(RPackage *pkg)
 {
+   if (pkgs.size() == 0)
+      return true;
    return pkgs.find(pkg->name()) != pkgs.end();
 }
 

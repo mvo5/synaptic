@@ -489,6 +489,19 @@ void RPackageViewFilter::makePresetFilters()
    filter->status.setStatus(RStatusPackageFilter::UpstreamUpgradable);
    filter->setName("Upgradable (upstream)"); _("Upgradable (upstream)");
    registerFilter(filter);
+
+   filter = new RFilter();
+   filter->preset = true;
+   filter->pattern.addPattern(RPatternPackageFilter::Component,
+			      "main", true);
+   filter->pattern.addPattern(RPatternPackageFilter::Component,
+			      "restricted", true);
+   filter->pattern.addPattern(RPatternPackageFilter::Origin,
+			      "Ubuntu", false);
+   filter->pattern.setAndMode(true);
+   filter->status.setStatus(RStatusPackageFilter::Installed);
+   filter->setName(_("Community Supported (installed)"));
+   registerFilter(filter);
 }
 
 void RPackageViewOrigin::addPackage(RPackage *package)

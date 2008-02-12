@@ -97,7 +97,6 @@ class RSectionPackageFilter : public RPackageFilter {
    virtual bool write(ofstream &out, string pad);
 };
 
-
 extern const char *RPFPattern;
 
 class RPatternPackageFilter : public RPackageFilter {
@@ -264,6 +263,31 @@ class RReducedViewPackageFilter : public RPackageFilter {
    void disable() { _enabled = false; };
 };
 
+extern const char *RPFFile;
+
+class RFilePackageFilter : public RPackageFilter {
+   
+   protected:
+
+   string filename;
+   set<string> pkgs;
+
+   public:
+
+   RFilePackageFilter() {};
+   virtual ~RFilePackageFilter() {};
+
+   inline virtual void reset() {};
+   inline virtual const char *type() { return RPFFile; };
+
+   bool addFile(string file);
+
+   virtual bool filter(RPackage *pkg);
+   virtual bool read(Configuration &conf, string key);
+   virtual bool write(ofstream &out, string pad);
+};
+
+
 struct RFilter {
 
    public:
@@ -286,6 +310,7 @@ struct RFilter {
    RStatusPackageFilter status;
    RPriorityPackageFilter priority;
    RReducedViewPackageFilter reducedview;
+   RFilePackageFilter file;
 
    bool preset;
 

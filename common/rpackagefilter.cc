@@ -63,6 +63,7 @@ const char *RPFPattern = _("Pattern");
 const char *RPFSection = _("Section");
 const char *RPFPriority = _("Priority");
 const char *RPFReducedView = _("ReducedView");
+const char *RPFFile = _("File");
 
 int RSectionPackageFilter::count()
 {
@@ -838,6 +839,9 @@ bool RFilter::apply(RPackage *package)
    if (!reducedview.filter(package))
       return false;
 
+   if (!file.filter(package))
+      return false;
+
    return true;
 }
 
@@ -932,5 +936,7 @@ bool RFilter::write(ofstream &out)
 
    return res;
 }
+
+
 
 // vim:sts=3:sw=3

@@ -367,7 +367,7 @@ void check_and_aquire_lock()
 			    _("Unable to get exclusive lock"),
 			    _("This usually means that another "
 			      "package management application "
-			      "(like apt-get or aptitude) "
+			      "(like apt-get or aptitude) is"
 			      "already running. Please close that "
 			      "application first."));
       dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,

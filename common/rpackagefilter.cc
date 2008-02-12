@@ -777,6 +777,49 @@ bool RReducedViewPackageFilter::read(Configuration &conf, string key)
    return true;
 }
 
+bool RFilePackageFilter::addFile(string file)
+{
+  char str[255];
+  filename = file;
+  ifstream in(file.c_str());
+  if(!in) 
+     return false;
+  while(in) {
+     in.getline(str, 255);  
+     pkgs.insert(pkgs.begin(), string(str));
+  }
+  in.close();
+}
+
+bool RFilePackageFilter::filter(RPackage *pkg)
+{
+   if (pkgs.size() == 0)
+      return true;
+   return pkgs.find(pkg->name()) != pkgs.end();
+}
+
+bool RFilePackageFilter::write(ofstream &out, string pad)
+{
+   out << pad + "file {" << endl;
+   out << pad + "  \"" << filename << "\"; " << endl;
+   out << pad + "};" << endl;
+   return true;
+}
+
+bool RFilePackageFilter::read(Configuration &conf, string key)
+{
+   const Configuration::Item *top;
+
+   reset();
+
+   top = conf.Tree(string(key + "::file").c_str());
+   if (top != NULL) {
+      for (top = top->Child; top != NULL; top = top->Next)
+	 filename = top->Value;
+   }
+
+   return true;
+}
 
 bool RFilter::apply(RPackage *package)
 {

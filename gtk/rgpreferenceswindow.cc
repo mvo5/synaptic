@@ -996,7 +996,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 			    "not get security updates automatically! "
 		       "If you manually force a version "
 		       "the package version will follow "
-		       "the choosen distribution."),"");
+		       "the chosen distribution."),"");
    gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
 			glade_xml_get_widget(_gladeXML,"radiobutton_ignore"),
 			_("Let synaptic pick the best version for you. "

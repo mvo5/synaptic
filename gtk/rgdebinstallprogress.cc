@@ -650,16 +650,26 @@ void RGDebInstallProgress::finishUpdate()
    }
    gtk_widget_show(img);
    
-
-   // wait for the user to click on "close"
-   while(!_updateFinished && !autoClose) {
-      autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
+   // wait for user action
+   while(true) {
+      // events
       while (gtk_events_pending())
 	 gtk_main_iteration();
-      usleep(5000);
-   }
 
-   // get the value again, it may have changed
+      // user clicked "close" button
+      if(_updateFinished) 
+	 break;
+
+      // user has autoClose set *and* there was no error
+      autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
+      if(autoClose && res != 1)
+	 break;
+      
+      // wait a bit
+      g_usleep(100000);
+   }
+      
+   // set the value again, it may have changed
    _config->Set("Synaptic::closeZvt", autoClose	? "true" : "false");
 
    // hide and finish

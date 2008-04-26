@@ -367,7 +367,7 @@ void check_and_aquire_lock()
 			    _("Unable to get exclusive lock"),
 			    _("This usually means that another "
 			      "package management application "
-			      "(like apt-get or aptitude) "
+			      "(like apt-get or aptitude) is "
 			      "already running. Please close that "
 			      "application first."));
       dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
@@ -410,7 +410,7 @@ int main(int argc, char **argv)
       userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
                                          _("Starting without administrative "
                                            "privileges"),
-				         _("You will not be able to apply any "
+				         _("You will not be able to apply "
 				           "any changes. But you can still "
 					   "export the marked changes or "
 					   "create a download script "

@@ -37,7 +37,6 @@ class RGSummaryWindow:public RGGladeWindow {
    GtkWidget *_middleF;
    GtkWidget *_summaryL;
    GtkWidget *_summarySpaceL;
-   bool _confirmed;
    bool _potentialBreak;
    RPackageLister *_lister;
    GtkWidget *_dlonlyB;
@@ -50,10 +49,6 @@ class RGSummaryWindow:public RGGladeWindow {
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
 
-   GtkWidget *_defBtn;
-
-   static void clickedOk(GtkWidget *w, void *data);
-   static void clickedCancel(GtkWidget *w, void *data);
    static void buildTree(RGSummaryWindow *me);
    static void buildLabel(RGSummaryWindow *me);
    static void clickedDetails(GtkWidget *w, void *data);

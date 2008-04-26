@@ -41,23 +41,6 @@
 #include "i18n.h"
 
 
-void RGSummaryWindow::clickedOk(GtkWidget *self, void *data)
-{
-   RGSummaryWindow *me = (RGSummaryWindow *) data;
-
-   me->_confirmed = true;
-   gtk_main_quit();
-}
-
-
-void RGSummaryWindow::clickedCancel(GtkWidget *self, void *data)
-{
-   RGSummaryWindow *me = (RGSummaryWindow *) data;
-
-   me->_confirmed = false;
-   gtk_main_quit();
-}
-
 void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 {
    RPackageLister *lister = me->_lister;
@@ -390,18 +373,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_signal_connect(GTK_OBJECT(button), "clicked",
                       (GtkSignalFunc) clickedDetails, this);
 
-
-
-   button = _defBtn = glade_xml_get_widget(_gladeXML, "button_execute");
-   assert(button);
-   gtk_signal_connect(GTK_OBJECT(button), "clicked",
-                      (GtkSignalFunc) clickedOk, this);
-
-   button = glade_xml_get_widget(_gladeXML, "button_cancel");
-   assert(button);
-   gtk_signal_connect(GTK_OBJECT(button), "clicked",
-                      (GtkSignalFunc) clickedCancel, this);
-
    int toInstall, toReInstall, toRemove, toUpgrade, toDowngrade;
    int held, kept, essential, unAuthenticated;
    double sizeChange, dlSize;
@@ -506,13 +477,11 @@ bool RGSummaryWindow::showAndConfirm()
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_dlonlyB),
                                 _config->FindB("Volatile::Download-Only",
                                                false));
-
-   show();
-   gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
-   gtk_main();
+   int res = gtk_dialog_run(GTK_DIALOG(_win));
+   bool confirmed = (res == GTK_RESPONSE_APPLY);
 
    RGUserDialog userDialog(this);
-   if (_confirmed && _potentialBreak
+   if (confirmed && _potentialBreak
        && userDialog.warning(_("Essential packages will be removed.\n"
                                "This may render your system unusable!\n")
                              , false) == false)
@@ -527,5 +496,5 @@ bool RGSummaryWindow::showAndConfirm()
                 "true" : "false");
 #endif
 
-   return _confirmed;
+   return confirmed;
 }

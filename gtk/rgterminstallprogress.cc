@@ -44,9 +44,14 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/pkgsystem.h>
 #include <cassert>
+#include <cstring>
+#include <cstdlib>
 
 #include <vte/vte.h>
 #include <vte/reaper.h>
+
+#include <cstdlib>
+#include <cstring>
 
 using namespace std;
 

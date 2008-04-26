@@ -1942,7 +1942,7 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
     
    me->setInterfaceLocked(TRUE);
    RGFetchProgress *status = new RGFetchProgress(me);;
-   status->setDescription(_("Downloading changelog"),
+   status->setDescription(_("Downloading Changelog"),
 			  _("The changelog contains information about the"
              " changes and closed bugs in each version of"
              " the package."));
@@ -2670,8 +2670,8 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // fetch packages
    RGFetchProgress *fprogress=me->_fetchProgress = new RGFetchProgress(me);
-   fprogress->setDescription(_("Downloading package files"), 
-			     _("The package files will be cached locally for installation."));
+   fprogress->setDescription(_("Downloading Package Files"), "");
+//			     _("The package files will be cached locally for installation."));
 
    // Do not let the treeview access the cache during the update.
    me->setTreeLocked(TRUE);
@@ -2802,7 +2802,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_fmanagerWin = NULL;
 
    RGFetchProgress *progress=me->_fetchProgress= new RGFetchProgress(me);
-   progress->setDescription(_("Downloading package information"),
+   progress->setDescription(_("Downloading Package Information"),
 			    _("The repositories will be checked for new, removed "
                "or upgraded software packages."));
 
@@ -2824,7 +2824,7 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_lister->writeSelections(out, false);
 
    // update cache and forget about the previous new packages 
-   // (only if no error occured)
+   // (only if no error occurred)
    string error;
    if (!me->_lister->updateCache(progress,error)) {
       RGGladeUserDialog dia(me,"update_failed");

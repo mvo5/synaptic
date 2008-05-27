@@ -36,6 +36,10 @@
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/acquire.h>
 
+#ifdef WITH_EPT
+#include <ept/textsearch/textsearch.h>
+#endif
+
 #include "rpackagecache.h"
 #include "rpackage.h"
 #include "rpackageview.h"
@@ -44,12 +48,23 @@
 
 using namespace std;
 
+#ifdef WITH_EPT
+namespace ept {
+namespace textsearch {
+class TextSearch;
+}
+}
+#endif
+
 class OpProgress;
 class RPackageCache;
 class RPackageFilter;
 class RCacheActor;
 class RPackageViewFilter;
 class RPackageViewSearch;
+#ifdef WITH_EPT
+class RPackageViewEptSearch;
+#endif
 class pkgRecords;
 class pkgAcquireStatus;
 class pkgPackageManager;
@@ -100,6 +115,14 @@ class RPackageLister {
    RPackageCache * _cache;
    pkgRecords *_records;
    OpProgress *_progMeter;
+
+#ifdef WITH_EPT
+   // EPT stuff
+   ept::textsearch::TextSearch *_textsearch;
+
+   RPackageViewEptSearch *_eptSearchView; // the package view that does smart fast search using Xapian
+#endif
+
 
    // Other members.
    vector<RPackage *> _packages;
@@ -211,6 +234,9 @@ class RPackageLister {
    // is is exposed for the stuff like filter manager window
    RPackageViewFilter *filterView() { return _filterView; };
    RPackageViewSearch *searchView() { return _searchView; };
+#ifdef WITH_EPT
+   RPackageViewEptSearch *eptSearchView() { return _eptSearchView; };
+#endif
 
    // find 
    int findPackage(const char *pattern);
@@ -320,6 +346,9 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; };
+#ifdef WITH_EPT
+   ept::textsearch::TextSearch& textsearch() { return *_textsearch; }
+#endif
 
    RPackageLister();
    ~RPackageLister();

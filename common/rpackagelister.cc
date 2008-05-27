@@ -78,6 +78,9 @@ using namespace std;
 
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
+#ifdef WITH_EPT
+   , _textsearch(0)
+#endif
 {
    _cache = new RPackageCache();
 
@@ -96,6 +99,12 @@ RPackageLister::RPackageLister()
    _searchView =  new RPackageViewSearch(_packages);
    _views.push_back(_searchView);   
    //_views.push_back(new RPackageViewAlphabetic(_packages));
+#ifdef WITH_EPT
+   _eptSearchView = new RPackageViewEptSearch(this, _packages);
+   _views.push_back(_eptSearchView);   
+   _textsearch = new ept::textsearch::TextSearch;
+#endif
+
 
    if (_viewMode >= _views.size())
       _viewMode = 0;

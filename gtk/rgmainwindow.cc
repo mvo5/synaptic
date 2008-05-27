@@ -2326,8 +2326,19 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 	 locale_str = str.c_str();
 
       int type = me->_findWin->getSearchType();
-      int found = me->_lister->searchView()->setSearch(str,type, locale_str);
-      me->changeView(PACKAGE_VIEW_SEARCH, str);
+      int found;
+#ifdef WITH_EPT
+      if (me->_lister->textsearch().hasData())
+      {
+         found = me->_lister->eptSearchView()->setSearch(str, locale_str);
+         me->changeView(PACKAGE_VIEW_EPTSEARCH, str);
+      } else {
+#endif
+         found = me->_lister->searchView()->setSearch(str, type, locale_str);
+         me->changeView(PACKAGE_VIEW_SEARCH, str);
+#ifdef WITH_EPT
+      }
+#endif
 
       me->setBusyCursor(false);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);

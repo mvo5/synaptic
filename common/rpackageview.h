@@ -29,6 +29,11 @@
 #include <string>
 #include <map>
 
+#ifdef WITH_EPT
+#include <ept/textsearch/textsearch.h>
+#include <xapian.h>
+#endif
+
 #include "rpackage.h"
 #include "rpackagefilter.h"
 
@@ -43,6 +48,7 @@ enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
+      PACKAGE_VIEW_EPTSEARCH,
       N_PACKAGE_VIEWS
 };
 
@@ -212,6 +218,28 @@ class RPackageViewFilter : public RPackageView {
    void addPackage(RPackage *package);
 };
 
+#ifdef WITH_EPT
+class RPackageViewEptSearch : public RPackageView {
+ protected:
+   RPackageLister* lister;
+   string searchString;
+   string searchName;
+   int found; // nr of found pkgs for the last search
+ public:
+   RPackageViewEptSearch(RPackageLister* lister, vector<RPackage *> &allPkgs) 
+      : RPackageView(allPkgs), lister(lister), found(0) {};
+
+   int setSearch(string searchName, string searchString);
+
+   string getName() {
+      return _("Fast Search History");
+   };
+
+   void addPackage(RPackage *package);
+
+   virtual void refresh();
+};
+#endif
 
 
 #endif

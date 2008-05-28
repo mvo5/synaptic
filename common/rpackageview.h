@@ -220,30 +220,6 @@ class RPackageViewFilter : public RPackageView {
    void addPackage(RPackage *package);
 };
 
-#ifdef WITH_EPT
-class RPackageViewEptSearch : public RPackageView {
- protected:
-   RPackageLister* lister;
-   string searchString;
-   string searchName;
-   int found; // nr of found pkgs for the last search
- public:
-   RPackageViewEptSearch(RPackageLister* lister, vector<RPackage *> &allPkgs) 
-      : RPackageView(allPkgs), lister(lister), found(0) {};
-
-   int setSearch(string searchName, string searchString);
-
-   string getName() {
-      return _("Fast Search History");
-   };
-
-   void addPackage(RPackage *package);
-
-   virtual void refresh();
-};
-#endif
-
-
 #endif
 
 // vim:sts=3:sw=3

@@ -323,7 +323,7 @@ bool RPackageViewSearch::xapianSearch()
    return true;
 }
 #else
-bool RPackageViewEptSearch::xapianSearch() 
+bool RPackageViewSearch::xapianSearch() 
 { 
    return false; 
 }

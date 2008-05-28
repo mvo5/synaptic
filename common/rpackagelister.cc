@@ -96,15 +96,15 @@ RPackageLister::RPackageLister()
    _views.push_back(new RPackageViewOrigin(_packages));
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
-   _searchView =  new RPackageViewSearch(_packages);
+   _searchView =  new RPackageViewSearch(this, _packages);
    _views.push_back(_searchView);   
    //_views.push_back(new RPackageViewAlphabetic(_packages));
 #ifdef WITH_EPT
-   _eptSearchView = new RPackageViewEptSearch(this, _packages);
-   _views.push_back(_eptSearchView);   
-   _textsearch = new ept::textsearch::TextSearch;
+   try {
+      _textsearch = new ept::textsearch::TextSearch;
+   } catch (...) {};
+   
 #endif
-
 
    if (_viewMode >= _views.size())
       _viewMode = 0;

@@ -241,6 +241,7 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
    found = 0;
    searchType = type;
    searchName = aSearchName;
+   unsplitSearchString = searchString;
 
    _view[searchName].clear();
    searchStrings.clear();
@@ -253,6 +254,12 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
       searchStrings.push_back(s);
    }
 
+   // do text searches with xapian but fallback to
+   // regular search if the database is not usable
+   // or if synaptic if build without xapian support
+   if(type == RPatternPackageFilter::Description && xapianSearch())
+      return found;
+
    // reapply search when a new search strng is giben
    for(unsigned int i=0;i<_all.size();i++) 
       if(_all[i]) 
@@ -260,6 +267,68 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
 
    return found;
 }
+
+#ifdef WITH_EPT
+bool RPackageViewSearch::xapianSearch()
+{
+   const int qualityCutoff = 50;
+   ept::textsearch::TextSearch *ts = lister->textsearch();
+   if(!ts || !ts->hasData())
+      return false;
+
+   Xapian::Enquire enquire(ts->db());
+ 
+   // Set up the base query
+   Xapian::Query query = ts->makeORQuery(unsplitSearchString);
+   enquire.set_query(query);
+
+   // Get a set of tags to expand the query
+   vector<string> expand = ts->expand(enquire);
+
+   // Build the expanded query
+   Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
+   enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
+
+   // Retrieve the results
+   bool done = false;
+   int top_percent = 0;
+   for (size_t pos = 0; !done; pos += 20)
+   {
+      Xapian::MSet matches = enquire.get_mset(pos, 20);
+      if (matches.size() < 20)
+	 done = true;
+      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+      {
+	 RPackage* pkg = lister->getPackage(i.get_document().get_data());
+	 // Filter out results that apt doesn't know
+	 if (!pkg)
+	    continue;
+
+	 // Save the confidence interval of the top value, to use it as
+	 // a reference to compute an adaptive quality cutoff
+	 if (top_percent == 0)
+	    top_percent = i.get_percent();
+
+	 // Stop producing if the quality goes below a cutoff point
+	 if (i.get_percent() < qualityCutoff * top_percent / 100)
+	 {
+	    //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+	    done = true;
+	    break;
+	 }
+
+	 addPackage(pkg);
+      }
+   }
+   return true;
+}
+#else
+bool RPackageViewEptSearch::xapianSearch() 
+{ 
+   return false; 
+}
+#endif
+
 
 //------------------------------------------------------------------
 
@@ -504,83 +573,6 @@ void RPackageViewOrigin::addPackage(RPackage *package)
 
 
 
-#ifdef WITH_EPT
-//------------------------------------------------------------------
-
-void RPackageViewEptSearch::addPackage(RPackage *pkg)
-{
-   if(!pkg) return;
-
-   _view[searchName].push_back(pkg);
-   found++;
-}
-
-int RPackageViewEptSearch::setSearch(string aSearchName, 
-				     string searchString)
-{
-   found = 0;
-   searchName = aSearchName;
-
-   _view[searchName].clear();
-   this->searchString = searchString;
-
-   // reapply search when a new search strng is giben
-   refresh();
-
-   return found;
-}
-
-void RPackageViewEptSearch::refresh()
-{
-   const int qualityCutoff = 50;
-   ept::textsearch::TextSearch& ts = lister->textsearch();
-
-   Xapian::Enquire enquire(ts.db());
- 
-   // Set up the base query
-   Xapian::Query query = ts.makeORQuery(searchString);
-   enquire.set_query(query);
-
-   // Get a set of tags to expand the query
-   vector<string> expand = ts.expand(enquire);
-
-   // Build the expanded query
-   Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
-   enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
-
-   // Retrieve the results
-   bool done = false;
-   int top_percent = 0;
-   for (size_t pos = 0; !done; pos += 20)
-   {
-      Xapian::MSet matches = enquire.get_mset(pos, 20);
-      if (matches.size() < 20)
-	 done = true;
-      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
-      {
-	 RPackage* pkg = lister->getPackage(i.get_document().get_data());
-	 // Filter out results that apt doesn't know
-	 if (!pkg)
-	    continue;
-
-	 // Save the confidence interval of the top value, to use it as
-	 // a reference to compute an adaptive quality cutoff
-	 if (top_percent == 0)
-	    top_percent = i.get_percent();
-
-	 // Stop producing if the quality goes below a cutoff point
-	 if (i.get_percent() < qualityCutoff * top_percent / 100)
-	 {
-	    //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
-	    done = true;
-	    break;
-	 }
-
-	 addPackage(pkg);
-      }
-   }
-}
-#endif
 
 
 

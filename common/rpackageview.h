@@ -48,7 +48,6 @@ enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
-      PACKAGE_VIEW_EPTSEARCH,
       N_PACKAGE_VIEWS
 };
 
@@ -150,13 +149,16 @@ class RPackageViewStatus:public RPackageView {
 
 class RPackageViewSearch : public RPackageView {
  protected:
+   RPackageLister *lister;
    vector<string> searchStrings;
    string searchName;
+   string unsplitSearchString;
    int searchType;
    int found; // nr of found pkgs for the last search
+   bool xapianSearch();
  public:
-   RPackageViewSearch(vector<RPackage *> &allPkgs) 
-      : RPackageView(allPkgs), found(0) {};
+ RPackageViewSearch(RPackageLister *lister, vector<RPackage *> &allPkgs) 
+    : RPackageView(allPkgs), lister(lister), found(0) {};
 
    int setSearch(string searchName, int type, string searchString);
 

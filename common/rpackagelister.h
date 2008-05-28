@@ -347,7 +347,7 @@ class RPackageLister {
 
    RPackageCache* getCache() { return _cache; };
 #ifdef WITH_EPT
-   ept::textsearch::TextSearch& textsearch() { return *_textsearch; }
+   ept::textsearch::TextSearch* textsearch() { return _textsearch; }
 #endif
 
    RPackageLister();

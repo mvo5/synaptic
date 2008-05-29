@@ -62,9 +62,6 @@ class RPackageFilter;
 class RCacheActor;
 class RPackageViewFilter;
 class RPackageViewSearch;
-#ifdef WITH_EPT
-class RPackageViewEptSearch;
-#endif
 class pkgRecords;
 class pkgAcquireStatus;
 class pkgPackageManager;
@@ -119,8 +116,6 @@ class RPackageLister {
 #ifdef WITH_EPT
    // EPT stuff
    ept::textsearch::TextSearch *_textsearch;
-
-   RPackageViewEptSearch *_eptSearchView; // the package view that does smart fast search using Xapian
 #endif
 
 
@@ -145,6 +140,9 @@ class RPackageLister {
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
+
+   // helper for the limitBySearch() code
+   bool xapianSearch(string searchString);
    
    public:
 
@@ -211,6 +209,9 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
+   // limit what the current view displays
+   bool limitBySearch(string searchString);
+
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
 
@@ -234,9 +235,6 @@ class RPackageLister {
    // is is exposed for the stuff like filter manager window
    RPackageViewFilter *filterView() { return _filterView; };
    RPackageViewSearch *searchView() { return _searchView; };
-#ifdef WITH_EPT
-   RPackageViewEptSearch *eptSearchView() { return _eptSearchView; };
-#endif
 
    // find 
    int findPackage(const char *pattern);
@@ -347,7 +345,7 @@ class RPackageLister {
 
    RPackageCache* getCache() { return _cache; };
 #ifdef WITH_EPT
-   ept::textsearch::TextSearch& textsearch() { return *_textsearch; }
+   ept::textsearch::TextSearch* textsearch() { return _textsearch; }
 #endif
 
    RPackageLister();

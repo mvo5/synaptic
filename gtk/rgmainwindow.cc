@@ -1109,6 +1109,9 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_details_clicked",
                                  G_CALLBACK(cbDetailsWindow), this);
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_entry_fast_search_changed",
+                                 G_CALLBACK(cbSearchEntryChanged), this);
 
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
@@ -2327,18 +2330,8 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 
       int type = me->_findWin->getSearchType();
       int found;
-#ifdef WITH_EPT
-      if (me->_lister->textsearch().hasData())
-      {
-         found = me->_lister->eptSearchView()->setSearch(str, locale_str);
-         me->changeView(PACKAGE_VIEW_EPTSEARCH, str);
-      } else {
-#endif
-         found = me->_lister->searchView()->setSearch(str, type, locale_str);
-         me->changeView(PACKAGE_VIEW_SEARCH, str);
-#ifdef WITH_EPT
-      }
-#endif
+      found = me->_lister->searchView()->setSearch(str, type, locale_str);
+      me->changeView(PACKAGE_VIEW_SEARCH, str);
 
       me->setBusyCursor(false);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
@@ -2802,6 +2795,22 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
+void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
+{
+   const int qualityCutoff = 50;
+
+   //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
+   RGMainWindow *me = (RGMainWindow *) data;
+
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(edit));
+   if(str == NULL || strlen(str) < 2) {
+      me->_lister->reapplyFilter();
+      me->refreshTable();
+      return;
+   }
+   me->_lister->limitBySearch(str);
+   me->refreshTable();
+}
 
 void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 {

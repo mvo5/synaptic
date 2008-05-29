@@ -97,14 +97,14 @@ RPackageLister::RPackageLister()
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);
-   _views.push_back(_searchView);   
+   _views.push_back(_searchView);
    //_views.push_back(new RPackageViewAlphabetic(_packages));
 #ifdef WITH_EPT
-   _eptSearchView = new RPackageViewEptSearch(this, _packages);
-   _views.push_back(_eptSearchView);   
-   _textsearch = new ept::textsearch::TextSearch;
+   try {
+      _textsearch = new ept::textsearch::TextSearch;
+   } catch (...) {};
+   
 #endif
-
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -1912,6 +1912,75 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    return false;
 #endif
 }
+
+bool RPackageLister::limitBySearch(string searchString)
+{
+   cerr << "limitBySearch(): " << searchString << endl;
+   _viewPackages.clear();
+   xapianSearch(searchString);
+}
+
+#ifdef WITH_EPT
+bool RPackageLister::xapianSearch(string unsplitSearchString)
+{
+   const int qualityCutoff = 50;
+   ept::textsearch::TextSearch *ts = _textsearch;
+   if(!ts || !ts->hasData())
+      return false;
+
+   Xapian::Enquire enquire(ts->db());
+ 
+   // Set up the base query
+   Xapian::Query query = ts->makeORQuery(unsplitSearchString);
+   enquire.set_query(query);
+
+   // Get a set of tags to expand the query
+   vector<string> expand = ts->expand(enquire);
+
+   // Build the expanded query
+   Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
+   enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
+
+   // Retrieve the results
+   bool done = false;
+   int top_percent = 0;
+   for (size_t pos = 0; !done; pos += 20)
+   {
+      Xapian::MSet matches = enquire.get_mset(pos, 20);
+      if (matches.size() < 20)
+	 done = true;
+      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+      {
+	 RPackage* pkg = getPackage(i.get_document().get_data());
+	 // Filter out results that apt doesn't know
+	 if (!pkg || !_selectedView->hasPackage(pkg))
+	    continue;
+
+	 // Save the confidence interval of the top value, to use it as
+	 // a reference to compute an adaptive quality cutoff
+	 if (top_percent == 0)
+	    top_percent = i.get_percent();
+
+	 // Stop producing if the quality goes below a cutoff point
+	 if (i.get_percent() < qualityCutoff * top_percent / 100)
+	 {
+	    //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+	    done = true;
+	    break;
+	 }
+
+	 //cerr << "found: " << pkg->name() << endl;
+	 _viewPackages.push_back(pkg);
+      }
+   }
+   return true;
+}
+#else
+bool RPackageLister::xapianSearch(string searchString) 
+{ 
+   return false; 
+}
+#endif
 
 
 // vim:ts=3:sw=3:et

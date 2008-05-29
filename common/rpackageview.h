@@ -48,7 +48,6 @@ enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
-      PACKAGE_VIEW_EPTSEARCH,
       N_PACKAGE_VIEWS
 };
 
@@ -72,6 +71,8 @@ class RPackageView {
 
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };
+   bool hasPackage(RPackage *pkg);
+
    bool setSelected(string name);
    void showAll() { 
       _selectedView = _all; 
@@ -150,13 +151,15 @@ class RPackageViewStatus:public RPackageView {
 
 class RPackageViewSearch : public RPackageView {
  protected:
+   RPackageLister *lister;
    vector<string> searchStrings;
    string searchName;
    int searchType;
    int found; // nr of found pkgs for the last search
+   bool xapianSearch();
  public:
-   RPackageViewSearch(vector<RPackage *> &allPkgs) 
-      : RPackageView(allPkgs), found(0) {};
+ RPackageViewSearch(vector<RPackage *> &allPkgs) 
+    : RPackageView(allPkgs), found(0) {};
 
    int setSearch(string searchName, int type, string searchString);
 
@@ -217,30 +220,6 @@ class RPackageViewFilter : public RPackageView {
 
    void addPackage(RPackage *package);
 };
-
-#ifdef WITH_EPT
-class RPackageViewEptSearch : public RPackageView {
- protected:
-   RPackageLister* lister;
-   string searchString;
-   string searchName;
-   int found; // nr of found pkgs for the last search
- public:
-   RPackageViewEptSearch(RPackageLister* lister, vector<RPackage *> &allPkgs) 
-      : RPackageView(allPkgs), lister(lister), found(0) {};
-
-   int setSearch(string searchName, string searchString);
-
-   string getName() {
-      return _("Fast Search History");
-   };
-
-   void addPackage(RPackage *package);
-
-   virtual void refresh();
-};
-#endif
-
 
 #endif
 

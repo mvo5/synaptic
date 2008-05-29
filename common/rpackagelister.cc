@@ -1915,9 +1915,12 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 
 bool RPackageLister::limitBySearch(string searchString)
 {
-   cerr << "limitBySearch(): " << searchString << endl;
+   //cerr << "limitBySearch(): " << searchString << endl;
+   if(!_textsearch->hasData())
+      return false;
+
    _viewPackages.clear();
-   xapianSearch(searchString);
+   return xapianSearch(searchString);
 }
 
 #ifdef WITH_EPT

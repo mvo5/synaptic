@@ -1628,6 +1628,10 @@ void RGMainWindow::buildInterface()
 				"start_interactive_search", 0);
 
 
+   // only enable fast search if its usable
+   if(!_lister->textsearch() || !_lister->textsearch()->hasData())
+      gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;
@@ -2797,17 +2801,16 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
 
 void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
 {
-   const int qualityCutoff = 50;
-
    //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(edit));
-   if(str == NULL || strlen(str) < 2) {
+   if(str == NULL || strlen(str) < 1) {
       me->_lister->reapplyFilter();
       me->refreshTable();
       return;
    }
+   
    me->_lister->limitBySearch(str);
    me->refreshTable();
 }

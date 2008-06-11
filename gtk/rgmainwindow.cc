@@ -749,7 +749,8 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
-     _logView(0), _installProgress(0), _fetchProgress(0)
+     _logView(0), _installProgress(0), _fetchProgress(0), 
+     _fastSearchEventID(-1)
 {
    assert(_win);
 
@@ -2842,20 +2843,33 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
+gboolean RGMainWindow::xapianDoSearch(void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_fast_search");
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(entry));
+   me->_fastSearchEventID = -1;
+
+   if(str == NULL || strlen(str) < 1) {
+      me->_lister->reapplyFilter();
+      me->refreshTable();
+      return FALSE;
+   }
+
+   me->_lister->limitBySearch(str);
+   me->refreshTable();
+   return FALSE;
+}
+
 void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
 {
    //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
-
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(edit));
-   if(str == NULL || strlen(str) < 1) {
-      me->_lister->reapplyFilter();
-      me->refreshTable();
-      return;
+   if(me->_fastSearchEventID > 0) {
+      g_source_remove(me->_fastSearchEventID);
+      me->_fastSearchEventID = -1;
    }
-   
-   me->_lister->limitBySearch(str);
-   me->refreshTable();
+   me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
 }
 
 void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)

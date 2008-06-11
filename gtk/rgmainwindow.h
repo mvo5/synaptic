@@ -131,6 +131,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGUserDialog *_userDialog;
    RGFetchProgress *_fetchProgress;
    RGWindow *_installProgress;
+   int _fastSearchEventID;
 
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
@@ -175,6 +176,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // helpers for search-as-you-type 
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
    static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
+   static gboolean xapianDoSearch(void *data);
    void xapianDoIndexUpdate();
 
    // RPackageObserver

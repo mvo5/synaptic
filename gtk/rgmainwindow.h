@@ -172,8 +172,9 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // install a non-standard version (data is a char* of the version)
    static void cbInstallFromVersion(GtkWidget *self, void *data);
 
-   // helper for search-as-you-type 
+   // helpers for search-as-you-type 
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
+   static void xapianIndexUpdateFinished(GPid *pid, gint status, void* data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);

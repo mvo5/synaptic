@@ -428,7 +428,27 @@ bool RPackageLister::openCache()
    return true;
 }
 
+#ifdef WITH_EPT
+bool RPackageLister::xapianIndexNeedsUpdate()
+{
+   struct stat buf;
 
+   // check the xapian index
+   if(FileExists("/usr/sbin/update-apt-xapian-index") && 
+		 !_textsearch->hasData()) {
+	 std::cerr << "xapain index not build yet" << std::endl;
+	 return true;
+   } else {
+      // we default to rebuild at most once a day
+      stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
+      if((_textsearch->timestamp()*60*60*24) < buf.st_mtime) {
+	 std::cerr << "xapian outdated" << std::endl;
+	 return true;
+      }
+   }
+   return false;
+}
+#endif
 
 void RPackageLister::applyInitialSelection()
 {

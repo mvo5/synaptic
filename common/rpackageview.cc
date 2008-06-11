@@ -31,6 +31,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 #include "sections_trans.h"
 

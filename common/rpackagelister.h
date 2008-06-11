@@ -114,7 +114,6 @@ class RPackageLister {
    OpProgress *_progMeter;
 
 #ifdef WITH_EPT
-   // EPT stuff
    ept::textsearch::TextSearch *_textsearch;
 #endif
 
@@ -346,6 +345,7 @@ class RPackageLister {
    RPackageCache* getCache() { return _cache; };
 #ifdef WITH_EPT
    ept::textsearch::TextSearch* textsearch() { return _textsearch; }
+   bool xapianIndexNeedsUpdate();
 #endif
 
    RPackageLister();

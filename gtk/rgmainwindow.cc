@@ -799,11 +799,33 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    }
    g_value_unset(&value);
 
+#ifdef WITH_EPT
+   if(_lister->xapianIndexNeedsUpdate()) {
+      GPid pid;
+      std::cerr << "xapian index rebuild " << std::endl;
+      char *argp[] = {"/usr/bin/nice",
+		      "/usr/sbin/update-apt-xapian-index", 
+		      NULL};
+      if(g_spawn_async(NULL, argp, NULL, 
+		       (GSpawnFlags)(G_SPAWN_STDOUT_TO_DEV_NULL|
+				     G_SPAWN_STDERR_TO_DEV_NULL|
+				     G_SPAWN_DO_NOT_REAP_CHILD),
+		       NULL, NULL, &pid, NULL)) {
+	 g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
+      }
+   }
+#endif
+
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
 }
 
-
+void RGMainWindow::xapianIndexUpdateFinished(GPid *pid, gint status, void* data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   std::cerr << "xapianIndexUpdateFinished: " << WEXITSTATUS(status) << std::endl;
+   
+}
 
 // needed for the buildTreeView function
 struct mysort {

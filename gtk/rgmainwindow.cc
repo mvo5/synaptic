@@ -826,7 +826,7 @@ void RGMainWindow::xapianDoIndexUpdate()
    }
 }
 
-void RGMainWindow::xapianIndexUpdateFinished(GPid *pid, gint status, void* data)
+void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    //std::cerr << "xapianIndexUpdateFinished: " 
@@ -839,7 +839,7 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid *pid, gint status, void* data)
 		      _("Quick search"));
    gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, 
 						 "entry_fast_search"), TRUE);
-   g_spawn_close_pid(*pid);
+   g_spawn_close_pid(pid);
 }
 
 // needed for the buildTreeView function
@@ -2841,7 +2841,7 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
 
 void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
 {
-   cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
+   //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(edit));

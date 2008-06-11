@@ -174,7 +174,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
 
    // helpers for search-as-you-type 
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
-   static void xapianIndexUpdateFinished(GPid *pid, gint status, void* data);
+   static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
    void xapianDoIndexUpdate();
 
    // RPackageObserver

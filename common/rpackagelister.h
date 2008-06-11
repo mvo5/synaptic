@@ -346,6 +346,7 @@ class RPackageLister {
 #ifdef WITH_EPT
    ept::textsearch::TextSearch* textsearch() { return _textsearch; }
    bool xapianIndexNeedsUpdate();
+   bool openXapianIndex();
 #endif
 
    RPackageLister();

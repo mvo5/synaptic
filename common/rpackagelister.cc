@@ -100,10 +100,7 @@ RPackageLister::RPackageLister()
    _views.push_back(_searchView);
    //_views.push_back(new RPackageViewAlphabetic(_packages));
 #ifdef WITH_EPT
-   try {
-      _textsearch = new ept::textsearch::TextSearch;
-   } catch (...) {};
-   
+   openXapianIndex();
 #endif
 
    if (_viewMode >= _views.size())
@@ -435,18 +432,30 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 
    // check the xapian index
    if(FileExists("/usr/sbin/update-apt-xapian-index") && 
-		 !_textsearch->hasData()) {
-	 std::cerr << "xapain index not build yet" << std::endl;
-	 return true;
+      (!_textsearch || !_textsearch->hasData())) {
+      //std::cerr << "xapain index not build yet" << std::endl;
+      return true;
    } else {
       // we default to rebuild at most once a day
       stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
       if((_textsearch->timestamp()*60*60*24) < buf.st_mtime) {
-	 std::cerr << "xapian outdated" << std::endl;
+	 //std::cerr << "xapian outdated" << std::endl;
 	 return true;
       }
    }
    return false;
+}
+
+bool RPackageLister::openXapianIndex()
+{
+   if(_textsearch)
+      delete _textsearch;
+   try {
+      _textsearch = new ept::textsearch::TextSearch;
+   } catch (Xapian::DatabaseOpeningError) {
+      return false;
+   };
+   return true;
 }
 #endif
 
@@ -1933,6 +1942,8 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 #endif
 }
 
+
+#ifdef WITH_EPT
 bool RPackageLister::limitBySearch(string searchString)
 {
    //cerr << "limitBySearch(): " << searchString << endl;
@@ -1943,7 +1954,6 @@ bool RPackageLister::limitBySearch(string searchString)
    return xapianSearch(searchString);
 }
 
-#ifdef WITH_EPT
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
    const int qualityCutoff = 50;
@@ -1999,6 +2009,11 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    return true;
 }
 #else
+bool RPackageLister::limitBySearch(string searchString)
+{
+   return false;
+}
+
 bool RPackageLister::xapianSearch(string searchString) 
 { 
    return false; 

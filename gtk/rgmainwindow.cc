@@ -800,31 +800,46 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    g_value_unset(&value);
 
 #ifdef WITH_EPT
-   if(_lister->xapianIndexNeedsUpdate()) {
-      GPid pid;
-      std::cerr << "xapian index rebuild " << std::endl;
-      char *argp[] = {"/usr/bin/nice",
-		      "/usr/sbin/update-apt-xapian-index", 
-		      NULL};
-      if(g_spawn_async(NULL, argp, NULL, 
-		       (GSpawnFlags)(G_SPAWN_STDOUT_TO_DEV_NULL|
-				     G_SPAWN_STDERR_TO_DEV_NULL|
-				     G_SPAWN_DO_NOT_REAP_CHILD),
-		       NULL, NULL, &pid, NULL)) {
-	 g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
-      }
-   }
+   if(_lister->xapianIndexNeedsUpdate()) 
+      xapianDoIndexUpdate();
 #endif
 
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
 }
 
+void RGMainWindow::xapianDoIndexUpdate()
+{
+   //std::cerr << "xapianDoIndexUpdate()" << std::endl;
+   GPid pid;
+   char *argp[] = {"/usr/bin/nice",
+		   "/usr/sbin/update-apt-xapian-index", 
+		   "-q",
+		   NULL};
+   if(g_spawn_async(NULL, argp, NULL, 
+		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
+		    NULL, NULL, &pid, NULL)) {
+      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
+							"label_fast_search")),
+			 _("Search index update running in the background"));
+   }
+}
+
 void RGMainWindow::xapianIndexUpdateFinished(GPid *pid, gint status, void* data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-   std::cerr << "xapianIndexUpdateFinished: " << WEXITSTATUS(status) << std::endl;
-   
+   //std::cerr << "xapianIndexUpdateFinished: " 
+   //          << WEXITSTATUS(status) << std::endl;
+#ifdef WITH_EPT
+   me->_lister->openXapianIndex();
+#endif
+   gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
+						     "label_fast_search")),
+		      _("Quick search"));
+   gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, 
+						 "entry_fast_search"), TRUE);
+   g_spawn_close_pid(*pid);
 }
 
 // needed for the buildTreeView function
@@ -1651,9 +1666,12 @@ void RGMainWindow::buildInterface()
 
 
    // only enable fast search if its usable
+#ifdef WITH_EPT
    if(!_lister->textsearch() || !_lister->textsearch()->hasData())
       gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
-
+#else
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));
+#endif
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;
@@ -2823,7 +2841,7 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
 
 void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
 {
-   //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
+   cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(edit));

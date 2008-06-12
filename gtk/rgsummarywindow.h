@@ -49,8 +49,6 @@ class RGSummaryWindow:public RGGladeWindow {
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
 
-   GtkWidget *_defBtn;
-
    static void buildTree(RGSummaryWindow *me);
    static void buildLabel(RGSummaryWindow *me);
    static void clickedDetails(GtkWidget *w, void *data);

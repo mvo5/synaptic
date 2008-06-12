@@ -289,6 +289,14 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
 
+   // 
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
+   if(str != NULL && strlen(str) > 0) {
+      if(_config->FindB("Debug::Synaptic::View",false))
+	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
+      _lister->limitBySearch(str);
+   }
+
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
@@ -749,7 +757,8 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
-     _logView(0), _installProgress(0), _fetchProgress(0)
+     _logView(0), _installProgress(0), _fetchProgress(0), 
+     _fastSearchEventID(-1)
 {
    assert(_win);
 
@@ -799,11 +808,48 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    }
    g_value_unset(&value);
 
+#ifdef WITH_EPT
+   if(_lister->xapianIndexNeedsUpdate()) 
+      xapianDoIndexUpdate();
+#endif
+
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
 }
 
+void RGMainWindow::xapianDoIndexUpdate()
+{
+   //std::cerr << "xapianDoIndexUpdate()" << std::endl;
+   GPid pid;
+   char *argp[] = {"/usr/bin/nice",
+		   "/usr/sbin/update-apt-xapian-index", 
+		   "-q",
+		   NULL};
+   if(g_spawn_async(NULL, argp, NULL, 
+		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
+		    NULL, NULL, &pid, NULL)) {
+      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
+							"label_fast_search")),
+			 _("Search index update running in the background"));
+   }
+}
 
+void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   //std::cerr << "xapianIndexUpdateFinished: " 
+   //          << WEXITSTATUS(status) << std::endl;
+#ifdef WITH_EPT
+   me->_lister->openXapianIndex();
+#endif
+   gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
+						     "label_fast_search")),
+		      _("Quick search"));
+   gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, 
+						 "entry_fast_search"), TRUE);
+   g_spawn_close_pid(pid);
+}
 
 // needed for the buildTreeView function
 struct mysort {
@@ -1109,6 +1155,9 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_details_clicked",
                                  G_CALLBACK(cbDetailsWindow), this);
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_entry_fast_search_changed",
+                                 G_CALLBACK(cbSearchEntryChanged), this);
 
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
@@ -1624,7 +1673,15 @@ void RGMainWindow::buildInterface()
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
 
+   _entry_fast_search = glade_xml_get_widget(_gladeXML, "entry_fast_search");
 
+   // only enable fast search if its usable
+#ifdef WITH_EPT
+   if(!_lister->textsearch() || !_lister->textsearch()->hasData())
+      gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+#else
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));
+#endif
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;
@@ -2329,7 +2386,8 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 	 locale_str = str.c_str();
 
       int type = me->_findWin->getSearchType();
-      int found = me->_lister->searchView()->setSearch(str,type, locale_str);
+      int found;
+      found = me->_lister->searchView()->setSearch(str, type, locale_str);
       me->changeView(PACKAGE_VIEW_SEARCH, str);
 
       me->setBusyCursor(false);
@@ -2794,6 +2852,34 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
+gboolean RGMainWindow::xapianDoSearch(void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
+   me->_fastSearchEventID = -1;
+
+   if(str == NULL || strlen(str) < 1) {
+      me->_lister->reapplyFilter();
+      me->refreshTable();
+      return FALSE;
+   }
+
+   me->_lister->limitBySearch(str);
+   me->_lister->limitBySearch(str);
+   me->refreshTable();
+   return FALSE;
+}
+
+void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
+{
+   //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
+   RGMainWindow *me = (RGMainWindow *) data;
+   if(me->_fastSearchEventID > 0) {
+      g_source_remove(me->_fastSearchEventID);
+      me->_fastSearchEventID = -1;
+   }
+   me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
+}
 
 void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 {

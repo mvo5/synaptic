@@ -36,6 +36,10 @@
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/acquire.h>
 
+#ifdef WITH_EPT
+#include <ept/textsearch/textsearch.h>
+#endif
+
 #include "rpackagecache.h"
 #include "rpackage.h"
 #include "rpackageview.h"
@@ -43,6 +47,14 @@
 #include "config.h"
 
 using namespace std;
+
+#ifdef WITH_EPT
+namespace ept {
+namespace textsearch {
+class TextSearch;
+}
+}
+#endif
 
 class OpProgress;
 class RPackageCache;
@@ -101,6 +113,11 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
+#ifdef WITH_EPT
+   ept::textsearch::TextSearch *_textsearch;
+#endif
+
+
    // Other members.
    vector<RPackage *> _packages;
    vector<int> _packagesIndex;
@@ -122,6 +139,9 @@ class RPackageLister {
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
+
+   // helper for the limitBySearch() code
+   bool xapianSearch(string searchString);
    
    public:
 
@@ -188,6 +208,9 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
+   // limit what the current view displays
+   bool limitBySearch(string searchString);
+
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
 
@@ -320,6 +343,11 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; };
+#ifdef WITH_EPT
+   ept::textsearch::TextSearch* textsearch() { return _textsearch; }
+   bool xapianIndexNeedsUpdate();
+   bool openXapianIndex();
+#endif
 
    RPackageLister();
    ~RPackageLister();

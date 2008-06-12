@@ -132,6 +132,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGFetchProgress *_fetchProgress;
    RGWindow *_installProgress;
 
+   // fast search stuff
+   int _fastSearchEventID;
+   GtkWidget *_entry_fast_search;
+
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
@@ -171,6 +175,12 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void pkgInstallByNameHelper(GtkWidget *self, void *data);
    // install a non-standard version (data is a char* of the version)
    static void cbInstallFromVersion(GtkWidget *self, void *data);
+
+   // helpers for search-as-you-type 
+   static void cbSearchEntryChanged(GtkWidget *editable, void *data);
+   static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
+   static gboolean xapianDoSearch(void *data);
+   void xapianDoIndexUpdate();
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);

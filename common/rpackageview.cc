@@ -31,6 +31,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 #include "sections_trans.h"
 
@@ -62,6 +63,11 @@ void RPackageView::clear()
 {
    clearSelection();
    _view.clear();
+}
+
+bool RPackageView::hasPackage(RPackage *pkg)
+{
+   return find(_selectedView.begin(), _selectedView.end(), pkg)  != _selectedView.end();
 }
 
 void RPackageView::clearSelection()
@@ -260,7 +266,6 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
 
    return found;
 }
-
 //------------------------------------------------------------------
 
 RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs) 
@@ -514,5 +519,10 @@ void RPackageViewOrigin::addPackage(RPackage *package)
       component = _("Unknown");
    _view[origin+"/"+component].push_back(package);
  };
+
+
+
+
+
 
 // vim:sts=3:sw=3

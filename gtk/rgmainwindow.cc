@@ -289,6 +289,14 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
 
+   // 
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
+   if(str != NULL && strlen(str) > 0) {
+      if(_config->FindB("Debug::Synaptic::View",false))
+	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
+      _lister->limitBySearch(str);
+   }
+
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
@@ -1665,6 +1673,7 @@ void RGMainWindow::buildInterface()
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
 
+   _entry_fast_search = glade_xml_get_widget(_gladeXML, "entry_fast_search");
 
    // only enable fast search if its usable
 #ifdef WITH_EPT
@@ -2846,8 +2855,7 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
 gboolean RGMainWindow::xapianDoSearch(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_fast_search");
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(entry));
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
    me->_fastSearchEventID = -1;
 
    if(str == NULL || strlen(str) < 1) {
@@ -2856,6 +2864,7 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       return FALSE;
    }
 
+   me->_lister->limitBySearch(str);
    me->_lister->limitBySearch(str);
    me->refreshTable();
    return FALSE;

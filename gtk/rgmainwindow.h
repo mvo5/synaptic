@@ -131,7 +131,10 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    RGUserDialog *_userDialog;
    RGFetchProgress *_fetchProgress;
    RGWindow *_installProgress;
+
+   // fast search stuff
    int _fastSearchEventID;
+   GtkWidget *_entry_fast_search;
 
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];

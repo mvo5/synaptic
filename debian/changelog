@@ -1,3 +1,61 @@
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
+  * merge from debian, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - build against latest apt in ubuntu
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
+
+synaptic (0.62) unstable; urgency=low
+  * desktop-file-validate does not complain anymore
+    (LP: #33598)
+  * gtk/rgmainwindow.cc:
+    - wording fixes (thanks to Matthew Paul Thomas)
+  * po/he.po:
+    - translation update (thanks to Lior Kaplan, closes: #461139)
+  * po/pl.po:
+    - translation update (thanks to Tomasz Argasiński)
+  * po/cs.po:
+    - translation update (thanks to Kamil Páral)
+  * gtk/gsynaptic.cc:
+    - fix typo (thanks to  Sarah Hobbs)
+  * gtk/rgsummarywindow.cc:
+    - code cleanup and fix potential endless loop (thanks to
+      Sebastien Bacher)
+
+  [ Brian Murray ]
+  * typo fixes (LP: #64482, LP: #157850, LP: #179914, LP: #179912, LP: #179909)
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 26 Apr 2008 10:50:53 +0200
+
+synaptic (0.61+nmu1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix FTBFS with gcc-4.3. Thanks to Cyril Brulebois for the patch. (Closes:
+    #456044)
+  * Lintian cleanups:
+    - Correct the format of the NEWS file.
+    - Use su-to-root instead of gksu for the desktop file.
+    - Remove the empty /usr/bin directory from synaptic.dirs.
+    - Do not ignore errors from make clean.
+    - Use Vcs-Bzr instead of XS-Vcs-Bzr.
+
+ -- James Vega <jamessan@debian.org>  Sat, 05 Apr 2008 18:58:52 -0400
+
 synaptic (0.61ubuntu9) hardy; urgency=low
 
   * po/cs.po:
@@ -55,6 +113,7 @@ synaptic (0.61ubuntu3) hardy; urgency=low
 
 synaptic (0.61ubuntu2) hardy; urgency=low
 
+  [ Michael Vogt]
   * debian/rules, debian/control:
     - use dh_icons and add appropriate b-d on debhelper
   * g++ 4.3 fixes (closes: #456044)
@@ -108,7 +167,7 @@ synaptic (0.61) unstable; urgency=low
   [ Loic Minier ]
   * Set has_focus on the close button of the welcome dialog; closes: #148695.
 
- -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:05:08 +0100
+ -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:00:51 +0100
 
 synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
 

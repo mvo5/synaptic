@@ -50,6 +50,9 @@
 #include <vte/vte.h>
 #include <vte/reaper.h>
 
+#include <cstdlib>
+#include <cstring>
+
 using namespace std;
 
 

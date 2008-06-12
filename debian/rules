@@ -60,7 +60,7 @@ clean1:
 	dh_testdir
 	dh_testroot
 	rm -f configure-stamp build-stamp install-stamp 
-	-$(MAKE) distclean
+	if [ -f Makefile ]; then $(MAKE) distclean; fi
 	dh_clean
 
 install: install-stamp

@@ -820,6 +820,10 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 void RGMainWindow::xapianDoIndexUpdate()
 {
    //std::cerr << "xapianDoIndexUpdate()" << std::endl;
+   // do not run if we don't have it
+   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
+      return;
+
    GPid pid;
    char *argp[] = {"/usr/bin/nice",
 		   "/usr/sbin/update-apt-xapian-index", 
@@ -1677,8 +1681,11 @@ void RGMainWindow::buildInterface()
 
    // only enable fast search if its usable
 #ifdef WITH_EPT
-   if(!_lister->textsearch() || !_lister->textsearch()->hasData())
+   if(!_lister->textsearch() || 
+      !_lister->textsearch()->hasData() || 
+      !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+   }
 #else
    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));
 #endif

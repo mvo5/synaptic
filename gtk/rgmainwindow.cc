@@ -835,7 +835,7 @@ void RGMainWindow::xapianDoIndexUpdate()
       g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
       gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
 							"label_fast_search")),
-			 _("Search index update running in the background"));
+			 _("Rebuilding search index"));
    }
 }
 

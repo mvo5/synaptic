@@ -429,6 +429,7 @@ bool RPackageLister::openCache()
 bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
+   int xapian_age;
 
    // check the xapian index
    if(FileExists("/usr/sbin/update-apt-xapian-index") && 
@@ -438,7 +439,8 @@ bool RPackageLister::xapianIndexNeedsUpdate()
    } else {
       // we default to rebuild at most once a day
       stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-      if((_textsearch->timestamp()*60*60*24) < buf.st_mtime) {
+      xapian_age = _config->FindI("Synaptic::xapianMaxAge",48);
+      if((_textsearch->timestamp()+(60*60*xapian_age)) < buf.st_mtime) {
 	 //std::cerr << "xapian outdated" << std::endl;
 	 return true;
       }

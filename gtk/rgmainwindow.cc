@@ -708,8 +708,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    refreshSubViewList();
    _blockActions = FALSE;
-   refreshTable(pkg);
    setInterfaceLocked(FALSE);
+   refreshTable(pkg);
 }
 
 bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
@@ -2024,6 +2024,9 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
          me->pkgAction(PKG_KEEP);
    }
 
+   // make sure we do not lose the keyboard focus (this happens in
+   // pkgAction otherwise)
+   gtk_widget_grab_focus (GTK_WIDGET(treeview));
    gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_treeView), path, NULL, false);
 
    me->setStatusText();

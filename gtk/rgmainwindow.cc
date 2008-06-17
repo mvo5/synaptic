@@ -708,8 +708,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    refreshSubViewList();
    _blockActions = FALSE;
-   refreshTable(pkg);
    setInterfaceLocked(FALSE);
+   refreshTable(pkg);
 }
 
 bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)

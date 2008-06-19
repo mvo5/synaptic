@@ -24,10 +24,35 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
   * gtk/rgmainwindow.cc:
     - do not loose the keyboard focus after a package 
       action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
 
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
+
+
 synaptic (0.62) unstable; urgency=low
+
+  [ Michael Vogt]
+  * debian/rules, debian/control:
+    - use dh_icons and add appropriate b-d on debhelper
+  * g++ 4.3 fixes (closes: #456044)
   * desktop-file-validate does not complain anymore
     (LP: #33598)
   * gtk/rgmainwindow.cc:

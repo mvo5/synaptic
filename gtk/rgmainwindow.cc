@@ -809,7 +809,9 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    g_value_unset(&value);
 
 #ifdef WITH_EPT
-   if(_lister->xapianIndexNeedsUpdate()) 
+   // updated the index if needed and we run not non-interactive mode
+   if(_lister->xapianIndexNeedsUpdate() &&
+      _config->FindB("Volatile::Non-Interactive", false) == false)
       xapianDoIndexUpdate();
 #endif
 

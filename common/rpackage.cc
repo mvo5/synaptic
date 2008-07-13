@@ -1296,7 +1296,7 @@ string RPackage::label()
 // class that finds out what do display to get user
 void RPackageStatus::init()
 {
-   char *status_short[N_STATUS_COUNT] = {
+   const char *status_short[N_STATUS_COUNT] = {
       "install", "reinstall", "upgrade", "downgrade", "remove",
       "purge", "available", "available-locked",
       "installed-updated", "installed-outdated", "installed-locked",
@@ -1304,7 +1304,7 @@ void RPackageStatus::init()
    };
    memcpy(PackageStatusShortString, status_short, sizeof(status_short));
 
-   char *status_long[N_STATUS_COUNT] = {
+   const char *status_long[N_STATUS_COUNT] = {
       _("Marked for installation"),
       _("Marked for re-installation"),
       _("Marked for upgrade"),

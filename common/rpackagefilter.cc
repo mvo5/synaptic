@@ -40,7 +40,7 @@
 
 using namespace std;
 
-char *RPatternPackageFilter::TypeName[] = {
+const char *RPatternPackageFilter::TypeName[] = {
    N_("Name"),
    N_("Description"),
    N_("Maintainer"),

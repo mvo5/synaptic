@@ -142,7 +142,7 @@ class RPatternPackageFilter : public RPackageFilter {
 
  public:
 
-   static char *TypeName[];
+   static const char *TypeName[];
 
    RPatternPackageFilter() : and_mode(true) {};
    RPatternPackageFilter(RPatternPackageFilter &f);

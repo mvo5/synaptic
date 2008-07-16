@@ -1966,7 +1966,8 @@ bool RPackageLister::limitBySearch(string searchString)
 
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
-   const int qualityCutoff = 50;
+   string s;
+   const int qualityCutoff = 25;
    ept::textsearch::TextSearch *ts = _textsearch;
    if(!ts || !ts->hasData())
       return false;
@@ -1979,6 +1980,21 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 
    // Get a set of tags to expand the query
    vector<string> expand = ts->expand(enquire);
+
+   // now expand the query by adding the searching string as a package
+   // name so that those searches appear erlier
+   for (int i=0;i<unsplitSearchString.size();i++) 
+   {
+      if(isblank(unsplitSearchString[i])) {
+	 if(s.size() > 0)
+	    expand.push_back("XP"+s);
+	 s="";
+      } else 
+	 s+=unsplitSearchString[i];
+   }
+   // push the last string too
+   if(s.size() > 0)
+      expand.push_back("XP"+s);
 
    // Build the expanded query
    Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());

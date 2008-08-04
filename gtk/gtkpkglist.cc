@@ -498,6 +498,7 @@ gtk_pkg_list_iter_next(GtkTreeModel *tree_model, GtkTreeIter *iter)
    cout << "iter_next()  " << endl;
    cout << "old: " << oldpkg->name() << " [" << old << "] " << endl;
    cout << "new: " << pkg->name() << " [" << i << "] " << endl;
+   cout << "viewPackagesSize: " << pkg_list->_lister->viewPackagesSize() << endl;
 #endif
 
    iter->stamp = 140677;

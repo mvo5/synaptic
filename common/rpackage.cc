@@ -1304,7 +1304,7 @@ void RPackageStatus::init()
    };
    memcpy(PackageStatusShortString, status_short, sizeof(status_short));
 
-   char *status_long[N_STATUS_COUNT] = {
+   const char *status_long[N_STATUS_COUNT] = {
       _("Marked for installation"),
       _("Marked for re-installation"),
       _("Marked for upgrade"),

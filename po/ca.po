@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.58\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 15:50+0200\n"
+"POT-Creation-Date: 2008-08-01 21:38+0200\n"
 "PO-Revision-Date: 2005-10-23 22:23+0200\n"
 "Last-Translator: Jordi Mallach <jordi@debian.org>\n"
 "Language-Team: Catalan <debian-l10n-catalan@lists.debian.org>\n"
@@ -926,9 +926,9 @@ msgstr "Actualitzable (original)"
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2097
-#: ../gtk/rgmainwindow.cc:2766 ../gtk/rgmainwindow.cc:2852
-#: ../gtk/rgmainwindow.cc:3025
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
+#: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
+#: ../gtk/rgmainwindow.cc:3028
 #, c-format
 msgid "Can't read %s"
 msgstr "No es pot llegir %s"
@@ -1152,21 +1152,34 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "S'estan aplicant els canvis"
 
+#: ../gtk/rgdebinstallprogress.cc:448
+msgid "Ctrl-c pressed"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:449
+#, fuzzy
+msgid ""
+"This will abort the operation and may leave the system in a broken state. "
+"Are you sure you want to do that?"
+msgstr ""
+"L'eliminació d'aquest paquet pot fer que el sistema siga inutilitzable.\n"
+"Esteu segur que voleu fer això?"
+
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:471
+#: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
 msgstr "S'ha trobat un error al paquet %s"
 
-#: ../gtk/rgdebinstallprogress.cc:566
+#: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:623 ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
 msgstr "S'han aplicat els canvis"
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1174,15 +1187,15 @@ msgstr ""
 "Ara s'estan aplicant els canvis marcats. Això pot trigar un temps. Si us "
 "plau, espereu."
 
-#: ../gtk/rgdebinstallprogress.cc:687
+#: ../gtk/rgdebinstallprogress.cc:719
 msgid "Installing and removing software"
 msgstr "S'està instal·lant i eliminant programari"
 
-#: ../gtk/rgdebinstallprogress.cc:689
+#: ../gtk/rgdebinstallprogress.cc:721
 msgid "Removing software"
 msgstr "S'està eliminant programari"
 
-#: ../gtk/rgdebinstallprogress.cc:691
+#: ../gtk/rgdebinstallprogress.cc:723
 msgid "Installing software"
 msgstr "S'està instal·lant programari"
 
@@ -1568,36 +1581,36 @@ msgstr ""
 msgid "%s Changelog"
 msgstr "Registre de canvis del paquet %s"
 
-#: ../gtk/rgmainwindow.cc:2047
+#: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
 msgstr "Voleu afegir un altre CD-ROM"
 
-#: ../gtk/rgmainwindow.cc:2084
+#: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
 msgstr "Obre els canvis"
 
-#: ../gtk/rgmainwindow.cc:2121 ../gtk/rgmainwindow.cc:2684
-#: ../gtk/rgmainwindow.cc:2820 ../gtk/rgmainwindow.cc:2998
+#: ../gtk/rgmainwindow.cc:2124 ../gtk/rgmainwindow.cc:2687
+#: ../gtk/rgmainwindow.cc:2823 ../gtk/rgmainwindow.cc:3001
 #, c-format
 msgid "Can't write %s"
 msgstr "No es pot escriure %s"
 
-#: ../gtk/rgmainwindow.cc:2140
+#: ../gtk/rgmainwindow.cc:2143
 msgid "Save changes"
 msgstr "Desa els canvis"
 
-#: ../gtk/rgmainwindow.cc:2147
+#: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
 msgstr "Desa l'estat sencer, no només els canvis"
 
-#: ../gtk/rgmainwindow.cc:2264
+#: ../gtk/rgmainwindow.cc:2267
 msgid "Repositories changed"
 msgstr "Han canviat els dipòsits"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2268
+#: ../gtk/rgmainwindow.cc:2271
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1605,20 +1618,20 @@ msgstr ""
 "Ha canviat la informació dels dipòsits. Heu de fer clic al botó «Refresca» "
 "per a que els vostres canvis tinguen efecte"
 
-#: ../gtk/rgmainwindow.cc:2279
+#: ../gtk/rgmainwindow.cc:2282
 msgid "Never show this message again"
 msgstr "No mostres aquest missatge mai més"
 
-#: ../gtk/rgmainwindow.cc:2333
+#: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
 msgstr "S'han trobat %i paquets"
 
-#: ../gtk/rgmainwindow.cc:2374
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
 msgstr "S'està iniciant el visualitzador d'ajuda..."
 
-#: ../gtk/rgmainwindow.cc:2394
+#: ../gtk/rgmainwindow.cc:2397
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1637,7 +1650,7 @@ msgstr ""
 "línia d'ordres o veure la versió en html ubicada en la carpeta «synaptic/"
 "html»."
 
-#: ../gtk/rgmainwindow.cc:2546
+#: ../gtk/rgmainwindow.cc:2549
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1645,16 +1658,16 @@ msgstr ""
 "No s'ha pogut iniciar l'eina de configuració!\n"
 "Heu d'instal·lar el paquet requerit «libgnome2-perl»."
 
-#: ../gtk/rgmainwindow.cc:2552
+#: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
 msgstr "S'està iniciant l'eina de configuració de paquets..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2567
+#: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
 msgstr "S'està iniciant el visualitzador de la documentació del paquets..."
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1662,7 +1675,7 @@ msgstr ""
 "Heu d'instal·lar el paquet «dwww» per a navegar per la documentació d'un "
 "paquet"
 
-#: ../gtk/rgmainwindow.cc:2648
+#: ../gtk/rgmainwindow.cc:2651
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1670,25 +1683,25 @@ msgstr ""
 "No s'ha pogut aplicar els canvis!\n"
 "Corregiu els paquets trencats primer."
 
-#: ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
 msgstr "S'estan aplicant els canvis marcats. Això pot trigar una mica..."
 
-#: ../gtk/rgmainwindow.cc:2673
+#: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "S'estan descarregant els fitxers de paquets"
 
-#: ../gtk/rgmainwindow.cc:2749
+#: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
 msgstr "Voleu sortir de Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2805
+#: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "S'esta descarregant la informació dels paquets"
 
-#: ../gtk/rgmainwindow.cc:2806
+#: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1696,19 +1709,19 @@ msgstr ""
 "Es comprovaran els dipòsits per a paquets de programari nous, eliminats o "
 "actualitzats."
 
-#: ../gtk/rgmainwindow.cc:2809
+#: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
 msgstr "S'està refrescant la informació dels paquets..."
 
-#: ../gtk/rgmainwindow.cc:2877
+#: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
 msgstr "No s'han pogut resoldre els problemes de dependències!"
 
-#: ../gtk/rgmainwindow.cc:2879
+#: ../gtk/rgmainwindow.cc:2882
 msgid "Successfully fixed dependency problems"
 msgstr "S'han corregit amb èxit els problemes de dependències!"
 
-#: ../gtk/rgmainwindow.cc:2895
+#: ../gtk/rgmainwindow.cc:2898
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1716,29 +1729,29 @@ msgstr ""
 "No s'ha pogut actualitzar el sistema!\n"
 "Corregiu els paquets trencats primer."
 
-#: ../gtk/rgmainwindow.cc:2944
+#: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
 msgstr "S'estan marcant totes les actualitzacions disponibles..."
 
-#: ../gtk/rgmainwindow.cc:2963
+#: ../gtk/rgmainwindow.cc:2966
 msgid "Successfully marked available upgrades"
 msgstr "S'han marcat amb èxit les actualitzacions disponibles"
 
-#: ../gtk/rgmainwindow.cc:2965
+#: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
 msgstr "No s'han pogut marcar totes les actualitzacions disponibles!"
 
-#: ../gtk/rgmainwindow.cc:3344
+#: ../gtk/rgmainwindow.cc:3347
 #, fuzzy
 msgid "Save script"
 msgstr "Descripció"
 
-#: ../gtk/rgmainwindow.cc:3371
+#: ../gtk/rgmainwindow.cc:3374
 #, fuzzy
 msgid "Select directory"
 msgstr "Històric de la cerca"
 
-#: ../gtk/rgmainwindow.cc:3383
+#: ../gtk/rgmainwindow.cc:3386
 #, fuzzy
 msgid "Please select a directory"
 msgstr "Inseriu un disc en la unitat."
@@ -2445,7 +2458,8 @@ msgid "_Search"
 msgstr "_Cerca"
 
 #: ../gtk/glade/window_fetch.glade.h:1
-msgid "Show progress of single files"
+#, fuzzy
+msgid "Show for individual files"
 msgstr "Mostra el progrés per als fitxers individuals"
 
 #: ../gtk/glade/window_changes.glade.h:1
@@ -2601,7 +2615,6 @@ msgid "Consider recommended packages as dependencies"
 msgstr "Considera els paquets recomanats com dependències"
 
 #: ../gtk/glade/window_preferences.glade.h:32
-#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Default Upgrade"
 msgstr "Actualització normal"
 
@@ -2749,7 +2762,6 @@ msgid "Show package properties in the main window"
 msgstr "Mostra les propietats del paquet a la finestra principal"
 
 #: ../gtk/glade/window_preferences.glade.h:70
-#: ../gtk/glade/dialog_upgrade.glade.h:10
 msgid "Smart Upgrade"
 msgstr "Actualització intel·ligent"
 
@@ -3389,13 +3401,23 @@ msgstr ""
 "<b>Nota:</b> Les actualitzacions només es marcaran. Encara tindreu que "
 "aplicar-les més endavant."
 
-#: ../gtk/glade/dialog_upgrade.glade.h:9
+#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Remember my answer for future upgrades"
 msgstr "Recorda la resposta per a properes actualitzacions"
 
-#: ../gtk/glade/dialog_upgrade.glade.h:11
+#: ../gtk/glade/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr "Aquest comportament es pot canviar a les preferències més tard."
+
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+#, fuzzy
+msgid "_Default Upgrade"
+msgstr "Actualització normal"
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+#, fuzzy
+msgid "_Smart Upgrade"
+msgstr "Actualització intel·ligent"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"

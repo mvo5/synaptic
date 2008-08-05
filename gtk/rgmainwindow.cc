@@ -113,6 +113,13 @@ void RGMainWindow::changeView(int view, string subView)
 
    _blockActions = TRUE;
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_viewButtons[view]), TRUE);
+
+   // we need to set a empty model first so that gtklistview
+   // can do its cleanup, if we do not do that, then the cleanup
+   // code in gtktreeview gets confused and throws
+   // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
+   // at us, see LP: #38397 for more information
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
       
    RPackage *pkg = selectedPackage();
 
@@ -289,7 +296,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
 
-   // 
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
    if(str != NULL && strlen(str) > 0) {
       if(_config->FindB("Debug::Synaptic::View",false))
@@ -2673,6 +2679,13 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
       return;
 
    me->setBusyCursor(true);
+   // we need to set a empty model first so that gtklistview
+   // can do its cleanup, if we do not do that, then the cleanup
+   // code in gtktreeview gets confused and throws
+   // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
+   // at us, see LP: #38397 for more information
+   gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+
    string selected = me->selectedSubView();
    me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);

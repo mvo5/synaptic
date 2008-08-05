@@ -396,6 +396,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 8");
    }
    gtk_box_pack_start(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), _term, TRUE, TRUE, 0);
+   g_signal_connect(G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
+   
+
    gtk_widget_show(_term);
    gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), scrollbar, FALSE, FALSE, 0);
    gtk_widget_show(scrollbar);
@@ -432,6 +435,35 @@ void RGDebInstallProgress::content_changed(GObject *object,
    RGDebInstallProgress *me = (RGDebInstallProgress*)data;
 
    me->last_term_action = time(NULL);
+}
+
+gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget, 
+                                               GdkEventKey *event, 
+                                               gpointer user_data)
+{
+   RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
+
+   // user pressed ctrl-c
+   if (strlen(event->string) == 1 && event->string[0] == 3) {
+      gchar *summary = _("Ctrl-c pressed");
+      char *msg = _("This will abort the operation and may leave the system "
+                    "in a broken state. Are you sure you want to do that?");
+      GtkWidget *dia = gtk_message_dialog_new (GTK_WINDOW(me->_win),
+					       GTK_DIALOG_DESTROY_WITH_PARENT,
+					       GTK_MESSAGE_WARNING,
+					       GTK_BUTTONS_YES_NO,
+					       summary);
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(dia), msg);
+      int res = gtk_dialog_run (GTK_DIALOG (dia));
+      gtk_widget_destroy (dia);
+      switch(res) {
+	 case GTK_RESPONSE_YES:
+	    return false;
+	 case GTK_RESPONSE_NO:
+	    return true;
+      }
+   }
+   return false;
 }
 
 void RGDebInstallProgress::updateInterface()
@@ -687,7 +719,7 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    // build a meaningfull dialog
    int installed, broken, toInstall, toReInstall, toRemove;
    double sizeChange;
-   gchar *p = "Should never be displayed, please report";
+   const gchar *p = "Should never be displayed, please report";
    string s = _config->Find("Volatile::InstallProgressStr",
 			    _("The marked changes are now being applied. "
 			      "This can take some time. Please wait."));

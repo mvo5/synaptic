@@ -1,5 +1,9 @@
-synaptic (0.62.1ubuntu6) intrepid; urgency=low
+synaptic (0.62.1ubuntu5) intrepid; urgency=low
 
+  * debian/control: 
+    - make deborphan and apt-xapian-index suggests instead of recommends
+      to save space on the CD - this means we loose the quick search
+      feature in the default install
   * po/es.po:
     - updated spanish translation (thanks to 
       Francisco Javier Cuadrado)
@@ -14,14 +18,6 @@ synaptic (0.62.1ubuntu6) intrepid; urgency=low
   * gtk/rgmainwindow.cc:
     - fix "Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper"
       assertion failure error (LP: #38397, closes: #341645)
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 05 Aug 2008 11:01:42 +0200
-
-synaptic (0.62.1ubuntu5) intrepid; urgency=low
-
-  * debian/control: 
-    - make deborphan and apt-xapian-index suggests instead of recommends
-      to save space on the CD
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 01 Aug 2008 13:50:48 +0200
 

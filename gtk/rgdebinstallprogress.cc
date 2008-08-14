@@ -382,6 +382,11 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 				_config->FindB("Synaptic::closeZvt", false));
    //_image = glade_xml_get_widget(_gladeXML, "image");
 
+   // work around for kdesudo blocking our SIGCHLD (LP: #156041) 
+   sigset_t sset;
+   sigemptyset(&sset);
+   sigaddset(&sset, SIGCHLD);
+   sigprocmask(SIG_UNBLOCK, &sset, NULL);
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);

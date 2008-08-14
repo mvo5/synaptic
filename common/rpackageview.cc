@@ -505,7 +505,13 @@ void RPackageViewFilter::makePresetFilters()
 			      "Ubuntu", false);
    filter->pattern.setAndMode(true);
    filter->status.setStatus(RStatusPackageFilter::Installed);
-   filter->setName(_("Community Supported (installed)"));
+   filter->setName("Community Maintained (installed)"); _("Community Maintained (installed)");
+   registerFilter(filter);
+
+   filter = new RFilter();
+   filter->preset = true;
+   filter->status.setStatus(RStatusPackageFilter::NowPolicyBroken);
+   filter->setName("Missing Recommends"); _("Missing Recommends");
    registerFilter(filter);
 }
 

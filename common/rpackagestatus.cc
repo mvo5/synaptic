@@ -26,6 +26,8 @@
  * USA
  */
 
+#include <apt-pkg/tagfile.h>
+#include <apt-pkg/strutl.h>
 #include "rpackagestatus.h"
 
 // class that finds out what do display to get user
@@ -149,3 +151,39 @@ int RPackageStatus::getStatus(RPackage *pkg)
    return ret;
 }
 
+bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res) 
+{
+   pkgTagSection sec;
+   time_t release_date = -1;
+
+   string releaseFile = pkg->getCandidateReleaseFile();
+   if(!FileExists(releaseFile)) {
+      cerr << "mainenanceEndTime(): can not find " << releaseFile << endl;
+      return false;
+   }
+   
+   // read the relase file
+   FileFd fd(releaseFile, FileFd::ReadOnly);
+   pkgTagFile t(&fd);
+   t.Step(sec);
+   
+   // get the time_t form the string
+   if(!StrToTime(sec.FindS("Date"), release_date))
+      return false;
+
+   // if its not a supported package, return 0 
+   if(!isSupported(pkg))
+      return 0;
+
+   // now calculate the time until there is support
+   gmtime_r(&release_date, res);
+   
+   const int support_time =  _config->Find("Synaptic::supported-month", 0);
+   if (support_time <= 0)
+      return false;
+
+   res->tm_year += (support_time / 12) + ((res->tm_mon + support_time % 12) / 12);
+   res->tm_mon = (res->tm_mon + support_time) % 12;
+
+   return true;
+}

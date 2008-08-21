@@ -37,6 +37,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <time.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -56,6 +57,7 @@
 #include "rgfiltermanager.h"
 #include "rpackagefilter.h"
 #include "raptoptions.h"
+#include "rgpackagestatus.h"
 
 #include "rgrepositorywin.h"
 #include "rgpreferenceswindow.h"

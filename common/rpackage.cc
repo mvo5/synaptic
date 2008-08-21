@@ -867,13 +867,15 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
 
 string RPackage::getCanidateOrigin()
 {
-   for(pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
-      // we always take the first available version 
-      pkgCache::VerFileIterator VF = Ver.FileList();
-      if(!VF.end()) {
-	 return VF.File().Site();
-      }
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if(Ver.end())
+      return "";
+
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   if(!VF.end()) {
+      return VF.File().Site();
    }
+
    return "";
 }
 

@@ -868,13 +868,13 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
 string RPackage::getCanidateOrigin()
 {
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+
    if(Ver.end())
       return "";
 
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end()) {
+   if(!VF.end())
       return VF.File().Site();
-   }
 
    return "";
 }
@@ -1292,6 +1292,38 @@ string RPackage::label()
    res = File.Label();
 
    return res;
+}
+
+string RPackage::getCandidateReleaseFile()
+{
+   pkgIndexFile *index;
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+
+   if(Ver.end())
+      return "";
+
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   if(VF.end())
+      return "";
+
+   // search for the matching meta-index
+   pkgSourceList *list = _lister->getCache()->list();
+   if(list->FindIndex(VF.File(), index)) {
+      vector<metaIndex *>::const_iterator I;
+      for(I=list->begin(); I != list->end(); I++) {
+	 vector<pkgIndexFile *>  *ifv = (*I)->GetIndexFiles();
+	 if(find(ifv->begin(), ifv->end(), index) != ifv->end()) {
+	    string uri = _config->FindDir("Dir::State::lists");
+	    uri += URItoFileName((*I)->GetURI());
+	    uri += "dists_";
+	    uri += (*I)->GetDist();
+	    uri += "_Release";
+	    return uri;
+	 }
+      }
+   }
+
+   return "";
 }
 
 

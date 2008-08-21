@@ -144,6 +144,7 @@ class RPackage {
 
    // get origin of the package
    string getCanidateOrigin();
+   string getCandidateReleaseFile();
 
    // get installed component (like main, contrib, non-free)
    string component();

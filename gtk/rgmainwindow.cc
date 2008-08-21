@@ -2480,6 +2480,8 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    if (pkg == NULL)
       return;
 
+   cout << "release-file: " << pkg->getCandidateReleaseFile() << endl;
+
    // free the list
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
    g_list_free(list);

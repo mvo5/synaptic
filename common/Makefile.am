@@ -16,6 +16,8 @@ libsynaptic_a_SOURCES =\
 	rinstallprogress.h\
 	rpackage.cc\
 	rpackage.h\
+	rpackagestatus.cc\
+	rpackagestatus.h\
 	rpackagecache.cc\
 	rpackagecache.h\
 	rpackagefilter.cc\

@@ -29,6 +29,7 @@
 #include "rgpkgdetails.h"
 #include "rggladewindow.h"
 #include "rpackage.h"
+#include "rgpackagestatus.h"
 #include "sections_trans.h"
 
 

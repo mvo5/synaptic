@@ -28,7 +28,7 @@
 #include <assert.h>
 #include "i18n.h"
 #include "rguserdialog.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {

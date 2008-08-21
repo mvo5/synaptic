@@ -49,7 +49,8 @@
 #include "rguserdialog.h"
 #include "locale.h"
 #include "stdio.h"
-#include "rgmisc.h"
+#include "rgutils.h"
+#include "rgpackagestatus.h"
 
 
 

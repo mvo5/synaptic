@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include "rgdummyinstallprogress.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 #include <unistd.h>
 #include <stdio.h>

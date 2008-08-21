@@ -74,7 +74,7 @@
 #include "rgdummyinstallprogress.h"
 #include "rgdebinstallprogress.h"
 #include "rgterminstallprogress.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 #include "sections_trans.h"
 
 // icons and pixmaps
@@ -2479,8 +2479,6 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
    if (pkg == NULL)
       return;
-
-   cout << "release-file: " << pkg->getCandidateReleaseFile() << endl;
 
    // free the list
    g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);

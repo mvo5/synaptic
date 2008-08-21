@@ -1,4 +1,4 @@
-/* rgmisc.h
+/* rgpackagestatus.h - UI elements for the package status
  * 
  * Copyright (c) 2003 Michael Vogt
  * 
@@ -20,41 +20,12 @@
  * USA
  */
 
-#ifndef _RGMISC_H_
-#define _RGMISC_H_
+#ifndef _RGPACKAGESTATUS_H_
+#define _RGPACKAGESTATUS_H_
 
-#include <apt-pkg/configuration.h>
+
 #include "rpackage.h"
-
-enum {
-   PIXMAP_COLUMN,
-   SUPPORTED_COLUMN,
-   NAME_COLUMN,
-   COMPONENT_COLUMN,
-   SECTION_COLUMN,
-   PKG_SIZE_COLUMN,
-   PKG_DOWNLOAD_SIZE_COLUMN,
-   INSTALLED_VERSION_COLUMN,
-   AVAILABLE_VERSION_COLUMN,
-   DESCR_COLUMN,
-   COLOR_COLUMN,
-   PKG_COLUMN,
-   N_COLUMNS
-};
-
-void RGFlushInterface();
-
-bool is_binary_in_path(const char *program);
-
-char *gtk_get_string_from_color(GdkColor * colp);
-void gtk_get_color_from_string(const char *cpp, GdkColor ** colp);
-
-const char *utf8_to_locale(const char *str);
-const char *utf8(const char *str);
-
-GtkWidget *get_gtk_image(const char *name, int size=16);
-
-string SizeToStr(double Bytes);
+#include "rpackagestatus.h"
 
 class RGPackageStatus : public RPackageStatus {
  protected:
@@ -88,5 +59,6 @@ class RGPackageStatus : public RPackageStatus {
    // save color configuration to disk
    void saveColors();
 };
+
 
 #endif

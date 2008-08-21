@@ -23,7 +23,8 @@
 #include <cassert>
 #include "config.h"
 #include "rgiconlegend.h"
-#include "rgmisc.h"
+#include "rgutils.h"
+#include "rgpackagestatus.h"
 
 #include "i18n.h"
 

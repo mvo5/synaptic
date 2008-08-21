@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include "rgcacheprogress.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 #include "i18n.h"
 

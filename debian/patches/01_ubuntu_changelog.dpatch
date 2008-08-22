@@ -5,10 +5,10 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad synaptic-0.56/common/rpackage.cc /tmp/dpep.Ri9fRS/synaptic-0.56/common/rpackage.cc
---- synaptic-0.56/common/rpackage.cc	2005-02-18 13:28:43.000000000 +0100
-+++ /tmp/dpep.Ri9fRS/synaptic-0.56/common/rpackage.cc	2005-02-18 14:39:17.005309176 +0100
-@@ -810,7 +810,7 @@
+diff -urNad ubuntu~/common/rpackage.cc ubuntu/common/rpackage.cc
+--- ubuntu~/common/rpackage.cc	2008-08-22 12:39:49.000000000 +0200
++++ ubuntu/common/rpackage.cc	2008-08-22 12:46:58.000000000 +0200
+@@ -843,7 +843,7 @@
     if(verstr.find(':')!=verstr.npos)
        verstr=string(verstr, verstr.find(':')+1);
     char uri[512];
@@ -17,7 +17,10 @@ diff -urNad synaptic-0.56/common/rpackage.cc /tmp/dpep.Ri9fRS/synaptic-0.56/comm
                                 src_section.c_str(),
                                 prefix.c_str(),
                                 srcpkg.c_str(),
-@@ -1293,7 +1293,7 @@
+diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
+--- ubuntu~/common/rpackagestatus.cc	2008-08-22 12:39:49.000000000 +0200
++++ ubuntu/common/rpackagestatus.cc	2008-08-22 12:48:22.000000000 +0200
+@@ -65,7 +65,7 @@
        markUnsupported = true;
  
        // read supported labels
@@ -26,7 +29,7 @@ diff -urNad synaptic-0.56/common/rpackage.cc /tmp/dpep.Ri9fRS/synaptic-0.56/comm
        stringstream sst1(labels);
        while(!sst1.eof()) {
  	 sst1 >> s;
-@@ -1301,7 +1301,7 @@
+@@ -73,7 +73,7 @@
        }
        
        // read supported components

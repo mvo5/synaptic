@@ -166,14 +166,15 @@ bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res)
    FileFd fd(releaseFile, FileFd::ReadOnly);
    pkgTagFile t(&fd);
    t.Step(sec);
-   
+
+
    // get the time_t form the string
    if(!StrToTime(sec.FindS("Date"), release_date))
       return false;
 
    // if its not a supported package, return 0 
    if(!isSupported(pkg))
-      return 0;
+      return false;
 
    // now calculate the time until there is support
    gmtime_r(&release_date, res);

@@ -57,7 +57,6 @@
 #include "rgfiltermanager.h"
 #include "rpackagefilter.h"
 #include "raptoptions.h"
-#include "rgpackagestatus.h"
 
 #include "rgrepositorywin.h"
 #include "rgpreferenceswindow.h"

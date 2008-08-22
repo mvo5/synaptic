@@ -178,7 +178,7 @@ bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res)
    // now calculate the time until there is support
    gmtime_r(&release_date, res);
    
-   const int support_time =  _config->Find("Synaptic::supported-month", 0);
+   const int support_time =_config->FindI("Synaptic::supported-month", 0);
    if (support_time <= 0)
       return false;
 

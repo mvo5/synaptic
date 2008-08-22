@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 #include "rggladewindow.h"
 #include "rpackagefilter.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 #include "i18n.h"
 

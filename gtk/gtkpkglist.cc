@@ -23,7 +23,8 @@
 #include <apt-pkg/strutl.h>
 #include <cassert>
 #include "gtkpkglist.h"
-#include "rgmisc.h"
+#include "rgutils.h"
+#include "rgpackagestatus.h"
 #include "rpackagelister.h"
 
 using namespace std;

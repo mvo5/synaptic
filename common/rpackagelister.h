@@ -42,6 +42,7 @@
 
 #include "rpackagecache.h"
 #include "rpackage.h"
+#include "rpackagestatus.h"
 #include "rpackageview.h"
 #include "ruserdialog.h"
 #include "config.h"

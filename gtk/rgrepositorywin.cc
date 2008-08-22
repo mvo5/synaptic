@@ -30,7 +30,7 @@
 #include <cassert>
 #include "rgrepositorywin.h"
 #include "rguserdialog.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 #include "config.h"
 #include "i18n.h"
 

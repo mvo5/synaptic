@@ -23,9 +23,12 @@
 #include <cassert>
 #include <cstring>
 #include <map>
+#include <apt-pkg/fileutl.h>
+
 #include "config.h"
 #include "rglogview.h"
-#include "rgmisc.h"
+#include "rgutils.h"
+#include "rconfiguration.h"
 
 #include "i18n.h"
 

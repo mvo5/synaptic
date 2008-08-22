@@ -30,9 +30,10 @@
 #include <glade/glade.h>
 #include <string>
 #include <iostream>
+#include <vector>
 
 #include "rgwindow.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 using namespace std;
 

@@ -1065,6 +1065,12 @@ void RGMainWindow::buildTreeView()
 		"fixed_height_mode", TRUE,
 		NULL);
 
+   // we need to set a empty model first so that gtklistview
+   // can do its cleanup, if we do not do that, then the cleanup
+   // code in gtktreeview gets confused and throws
+   // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
+   // at us, see LP: #38397 for more information
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);

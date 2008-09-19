@@ -2894,8 +2894,6 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       // char searches tend to be very slow
       me->setBusyCursor(true);
       RGFlushInterface();
-
-      me->_lister->limitBySearch(str);
       me->refreshTable();
    }
    me->setBusyCursor(false);

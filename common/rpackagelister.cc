@@ -36,6 +36,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
+#include <algorithm>
 
 #include "rpackagelister.h"
 #include "rpackagecache.h"
@@ -1480,7 +1481,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
          serverError = getServerErrorMessage(errm);
 
-         _error->Warning(tmp.str().c_str());
+         _error->Warning("%s", tmp.str().c_str());
          Failed = true;
       }
 
@@ -1966,8 +1967,9 @@ bool RPackageLister::limitBySearch(string searchString)
 
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
+   //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
    string s;
-   const int qualityCutoff = 25;
+
    ept::textsearch::TextSearch *ts = _textsearch;
    if(!ts || !ts->hasData())
       return false;
@@ -1992,9 +1994,27 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
       } else 
 	 s+=unsplitSearchString[i];
    }
-   // push the last string too
-   if(s.size() > 0)
-      expand.push_back("XP"+s);
+
+   // the last string is always expanded to get better search as you
+   // type results 
+   if (s.size() > 0) {
+      Xapian::TermIterator I;
+      int j;
+
+      for(I=_textsearch->db().allterms_begin(s); 
+	  I != _textsearch->db().allterms_end(s); 
+	  I++) {
+	 //std::cerr << "expanded terms: " << *I << std::endl;
+	 expand.push_back(*I);
+	 expand.push_back("XP"+*I);
+	 // do not expand all alt terms, they can be huge > 100
+	 // and make the search very slow
+	 j++;
+	 if (j > maxAltTerms)
+	    break;
+      }
+   }
+
 
    // Build the expanded query
    Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());

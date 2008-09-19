@@ -298,7 +298,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       setAdjustment);
 
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
-   if(str != NULL && strlen(str) > 0) {
+   if(str != NULL && strlen(str) > 1) {
       if(_config->FindB("Debug::Synaptic::View",false))
 	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
       _lister->limitBySearch(str);
@@ -2879,17 +2879,27 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
-   me->_fastSearchEventID = -1;
 
+   me->_fastSearchEventID = -1;
+   me->setBusyCursor(true);
+   RGFlushInterface();
    if(str == NULL || strlen(str) < 1) {
+      // if the user has cleared the search, refresh the view
       me->_lister->reapplyFilter();
       me->refreshTable();
-      return FALSE;
-   }
 
-   me->_lister->limitBySearch(str);
-   me->_lister->limitBySearch(str);
-   me->refreshTable();
+      me->setBusyCursor(false);
+   } else if(strlen(str) > 1) {
+      // only search when there is more than one char entered, single
+      // char searches tend to be very slow
+      me->setBusyCursor(true);
+      RGFlushInterface();
+
+      me->_lister->limitBySearch(str);
+      me->refreshTable();
+   }
+   me->setBusyCursor(false);
+
    return FALSE;
 }
 

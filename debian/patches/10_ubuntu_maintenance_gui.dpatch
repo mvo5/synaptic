@@ -6,9 +6,19 @@
 
 @DPATCH@
 diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
---- ubuntu~/common/rpackagestatus.cc	2008-09-22 15:54:52.000000000 +0200
-+++ ubuntu/common/rpackagestatus.cc	2008-09-22 15:54:54.000000000 +0200
-@@ -193,7 +193,7 @@
+--- ubuntu~/common/rpackagestatus.cc	2008-09-22 16:38:15.000000000 +0200
++++ ubuntu/common/rpackagestatus.cc	2008-09-22 16:42:56.000000000 +0200
+@@ -169,7 +169,8 @@
+    pkgTagSection sec;
+    time_t release_date = -1;
+ 
+-   string distro = _config->Find("Synaptic::supported-label");
++   // FIXME: make this use the "labels" vector in the future
++   string distro = _config->Find("Synaptic::supported-label","Ubuntu");
+    string releaseFile = pkg->getReleaseFileForOrigin(distro, release);
+    if(!FileExists(releaseFile)) {
+       // happens e.g. when there is no release file and is harmless
+@@ -193,7 +194,7 @@
     // now calculate the time until there is support
     gmtime_r(&release_date, res);
     
@@ -18,8 +28,8 @@ diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
        return false;
  
 diff -urNad ubuntu~/gtk/glade/window_main.glade ubuntu/gtk/glade/window_main.glade
---- ubuntu~/gtk/glade/window_main.glade	2008-09-22 15:54:52.000000000 +0200
-+++ ubuntu/gtk/glade/window_main.glade	2008-09-22 15:54:54.000000000 +0200
+--- ubuntu~/gtk/glade/window_main.glade	2008-09-22 16:38:15.000000000 +0200
++++ ubuntu/gtk/glade/window_main.glade	2008-09-22 16:38:17.000000000 +0200
 @@ -1351,8 +1351,8 @@
  			      <property name="pixels_above_lines">3</property>
  			      <property name="pixels_below_lines">3</property>
@@ -32,8 +42,8 @@ diff -urNad ubuntu~/gtk/glade/window_main.glade ubuntu/gtk/glade/window_main.gla
  			      <property name="text" translatable="yes"></property>
  			    </widget>
 diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
---- ubuntu~/gtk/rgpkgdetails.cc	2008-09-22 15:42:50.000000000 +0200
-+++ ubuntu/gtk/rgpkgdetails.cc	2008-09-22 15:57:04.000000000 +0200
+--- ubuntu~/gtk/rgpkgdetails.cc	2008-09-22 16:38:04.000000000 +0200
++++ ubuntu/gtk/rgpkgdetails.cc	2008-09-22 16:38:17.000000000 +0200
 @@ -24,6 +24,8 @@
  #include "config.h"
  

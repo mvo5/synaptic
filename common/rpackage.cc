@@ -1294,21 +1294,41 @@ string RPackage::label()
    return res;
 }
 
-string RPackage::getCandidateReleaseFile()
+static pkgCache::PkgFileIterator
+_searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
+{
+   pkgCache::VerIterator Ver;
+   pkgCache::VerFileIterator VF;
+   pkgCache::PkgFileIterator PF;
+
+   for(Ver = Pkg->VersionList();!Ver.end();Ver++) {
+      for(VF = Ver.FileList();!VF.end(); VF++) {
+	 for(PF = VF.File(); !PF.end(); PF++) {
+	    if(!PF.end() && 
+	       PF.Label() && string(PF.Label()) == label &&
+	       PF.Origin() && string(PF.Origin()) == label &&
+	       PF.Archive() && PF.Archive() == release) {
+	       //cerr << "found: " << PF.FileName() << endl;
+	       return PF;
+	    }
+	 }
+      }
+   }
+   PF = pkgCache::PkgFileIterator(*Pkg->Cache());
+   return PF;
+}
+
+// look for a release file that matches the given label and origin string
+string RPackage::getReleaseFileForOrigin(string label, string release)
 {
    pkgIndexFile *index;
-   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-
-   if(Ver.end())
+   pkgCache::PkgFileIterator found = _searchPkgFileIter(_package, label, string(release));
+   if (found.end())
       return "";
-
-   pkgCache::VerFileIterator VF = Ver.FileList();
-   if(VF.end())
-      return "";
-
+   
    // search for the matching meta-index
    pkgSourceList *list = _lister->getCache()->list();
-   if(list->FindIndex(VF.File(), index)) {
+   if(list->FindIndex(found, index)) {
       vector<metaIndex *>::const_iterator I;
       for(I=list->begin(); I != list->end(); I++) {
 	 vector<pkgIndexFile *>  *ifv = (*I)->GetIndexFiles();
@@ -1325,7 +1345,5 @@ string RPackage::getCandidateReleaseFile()
 
    return "";
 }
-
-
 
 // vim:ts=3:sw=3:et

@@ -51,6 +51,8 @@ class RPackageStatus {
    };
 
  protected:
+   static char release[255];
+
    // the supported archive-labels and components
    vector<string> supportedLabels;
    vector<string> supportedComponents;
@@ -60,7 +62,6 @@ class RPackageStatus {
    const char *PackageStatusShortString[N_STATUS_COUNT];
    // this is the long string for the gui description of the state
    const char *PackageStatusLongString[N_STATUS_COUNT];
-
 
    // this does the actual work
    int getStatus(RPackage *pkg);

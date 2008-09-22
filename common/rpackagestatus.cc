@@ -30,6 +30,10 @@
 #include <apt-pkg/strutl.h>
 #include "rpackagestatus.h"
 
+// init the static release array so that we need to
+// run lsb_release only once
+char RPackageStatus::release[255] = {0,};
+
 // class that finds out what do display to get user
 void RPackageStatus::init()
 {
@@ -81,6 +85,13 @@ void RPackageStatus::init()
       }
    } 
 
+   // init the static release once
+   FILE *fp = popen("lsb_release -c -s","r");
+   if(fp) {
+      fgets((char *)RPackageStatus::release, 255, fp);
+      pclose(fp);
+      _strstrip(release);
+   } 
 }
 
 bool RPackageStatus::isSupported(RPackage *pkg) 
@@ -153,12 +164,16 @@ int RPackageStatus::getStatus(RPackage *pkg)
 
 bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res) 
 {
+   //cerr << "RPackageStatus::maintenanceEndTime()" << std::endl;
+
    pkgTagSection sec;
    time_t release_date = -1;
 
-   string releaseFile = pkg->getCandidateReleaseFile();
+   string distro = _config->Find("Synaptic::supported-label");
+   string releaseFile = pkg->getReleaseFileForOrigin(distro, release);
    if(!FileExists(releaseFile)) {
-      cerr << "mainenanceEndTime(): can not find " << releaseFile << endl;
+      // happens e.g. when there is no release file and is harmless
+      //cerr << "mainenanceEndTime(): can not find file: " << releaseFile << endl;
       return false;
    }
    
@@ -166,7 +181,6 @@ bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res)
    FileFd fd(releaseFile, FileFd::ReadOnly);
    pkgTagFile t(&fd);
    t.Step(sec);
-
 
    // get the time_t form the string
    if(!StrToTime(sec.FindS("Date"), release_date))

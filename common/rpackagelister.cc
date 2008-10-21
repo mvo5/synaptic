@@ -1976,6 +1976,24 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 
    Xapian::Enquire enquire(ts->db());
  
+   // a '-' is a legal part of a package name but also a special
+   // term for xapian, we apply the following heuristic:
+   // if the term is embedded into a word it gets quoted:
+   // multisync-tools -> multisync"-"tools
+   // 
+   // if its on its own, nothing is done, e.g.:
+   // multisync -tools 
+   size_t found = unsplitSearchString.find("-");
+   while (found != string::npos) {
+      if (unsplitSearchString[found-1] != ' ' &&
+          unsplitSearchString[found+1] != ' ') {
+	 unsplitSearchString.insert(found,"\"");
+	 unsplitSearchString.insert(found+2,"\"");
+	 found+=2;
+      }
+      found = unsplitSearchString.find("-", found+1);
+   }
+
    // Set up the base query
    Xapian::Query query = ts->makeORQuery(unsplitSearchString);
    enquire.set_query(query);

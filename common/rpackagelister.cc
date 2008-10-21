@@ -2017,7 +2017,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    // type results 
    if (s.size() > 0) {
       Xapian::TermIterator I;
-      int j;
+      int j=0;
 
       for(I=_textsearch->db().allterms_begin(s); 
 	  I != _textsearch->db().allterms_end(s); 

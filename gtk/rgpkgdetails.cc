@@ -101,6 +101,7 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 
    // hide button
    gtk_widget_hide(button);
+
    // get screenshot
    RGFetchProgress *status = new RGFetchProgress(NULL);;
    pkgAcquire fetcher(status);
@@ -108,6 +109,8 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
    GtkWidget *img = gtk_image_new_from_file(filename.c_str());
    gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview), GTK_WIDGET(img), si->anchor);
    gtk_widget_show(img);
+
+   // no click on screenshot to open webbrowser because we run as root
 }
 
 void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, 

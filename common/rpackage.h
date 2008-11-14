@@ -134,8 +134,10 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
-   // get changelog file from the debian server (debian only of course)
+   // get changelog file from the debian server 
    string getChangelogFile(pkgAcquire *fetcher);
+   // get screenshot file from the debian server 
+   string getScreenshotFile(pkgAcquire *fetcher);
 
    vector<string> provides();
 

@@ -95,7 +95,26 @@ RGPkgDetailsWindow::formatDepInformation(vector<DepInformation> deps)
    return depStrings;
 }
 
-void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
+void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
+{
+   struct screenshot_info *si = (struct screenshot_info*)data;
+
+   // hide button
+   gtk_widget_hide(button);
+
+   // get screenshot
+   RGFetchProgress *status = new RGFetchProgress(NULL);;
+   pkgAcquire fetcher(status);
+   string filename = si->pkg->getScreenshotFile(&fetcher);
+   GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+   gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview), GTK_WIDGET(img), si->anchor);
+   gtk_widget_show(img);
+
+   // no click on screenshot to open webbrowser because we run as root
+}
+
+void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, 
+                                      RPackage *pkg,
 				      bool setTitle)
 {
    assert(me!=NULL);
@@ -174,6 +193,21 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, RPackage *pkg,
       gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), event, anchor);
       gtk_widget_show_all(event);
    }
+
+   // add button to get screenshot
+   gtk_text_buffer_insert(buf, &it, "\n", 1);
+   GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(buf, &it);
+   GtkWidget *button = gtk_button_new_with_label(_("Get Screenshot"));
+   static struct screenshot_info si;
+   si.anchor = anchor;
+   si.textview = textview;
+   si.pkg = pkg;
+   g_signal_connect(G_OBJECT(button),"clicked", 
+                    G_CALLBACK(cbShowScreenshot), 
+                    &si);
+   gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
+   gtk_widget_show(button);
+
    // show the rest of the description
    gtk_text_buffer_insert(buf, &it, "\n", 1);
    s = utf8(pkg->description());

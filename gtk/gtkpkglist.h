@@ -24,7 +24,7 @@
 #include "rpackagelister.h"
 #include "rcacheactor.h"
 #include "rpackagelistactor.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 
 #define GTK_TYPE_PKG_LIST			(gtk_pkg_list_get_type ())

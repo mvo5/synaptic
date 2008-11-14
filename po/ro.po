@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ro\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 15:50+0200\n"
+"POT-Creation-Date: 2008-08-01 21:38+0200\n"
 "PO-Revision-Date: 2005-10-04 23:55+0300\n"
 "Last-Translator: Dan Damian <dand@ubuntu.ro>\n"
 "Language-Team: Romanian <ubuntu-ro@lists.ubuntu.com>\n"
@@ -916,9 +916,9 @@ msgstr "Actualizabile (upstream)"
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2097
-#: ../gtk/rgmainwindow.cc:2766 ../gtk/rgmainwindow.cc:2852
-#: ../gtk/rgmainwindow.cc:3025
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
+#: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
+#: ../gtk/rgmainwindow.cc:3028
 #, c-format
 msgid "Can't read %s"
 msgstr "Nu pot citi %s"
@@ -1144,21 +1144,35 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Aplic modificările"
 
+#: ../gtk/rgdebinstallprogress.cc:448
+msgid "Ctrl-c pressed"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:449
+#, fuzzy
+msgid ""
+"This will abort the operation and may leave the system in a broken state. "
+"Are you sure you want to do that?"
+msgstr ""
+"Prin dezinstalarea acestui pachet puteţi să vă aduceţi sistemul  într-o "
+"stare inutilizabilă\n"
+"Sigur doriţi să faceţi asta?"
+
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:471
+#: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
 msgstr "Eroare în pachetul %s"
 
-#: ../gtk/rgdebinstallprogress.cc:566
+#: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:623 ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
 msgstr "Modificări aplicate"
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1166,15 +1180,15 @@ msgstr ""
 "Modificările marcate sunt aplicate în acest moment. Această operaţiune poate "
 "dura un timp. Vă rog să aşteptaţi."
 
-#: ../gtk/rgdebinstallprogress.cc:687
+#: ../gtk/rgdebinstallprogress.cc:719
 msgid "Installing and removing software"
 msgstr "Instalez şi dezinstalez software"
 
-#: ../gtk/rgdebinstallprogress.cc:689
+#: ../gtk/rgdebinstallprogress.cc:721
 msgid "Removing software"
 msgstr "Dezinstalez software"
 
-#: ../gtk/rgdebinstallprogress.cc:691
+#: ../gtk/rgdebinstallprogress.cc:723
 msgid "Installing software"
 msgstr "Instalez software"
 
@@ -1565,37 +1579,37 @@ msgstr ""
 msgid "%s Changelog"
 msgstr "Istoric modificări pentru %s"
 
-#: ../gtk/rgmainwindow.cc:2047
+#: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
 msgstr "Doriţi să adăugaţi un alt CD-ROM?"
 
-#: ../gtk/rgmainwindow.cc:2084
+#: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
 msgstr "Deschide modificările"
 
-#: ../gtk/rgmainwindow.cc:2121 ../gtk/rgmainwindow.cc:2684
-#: ../gtk/rgmainwindow.cc:2820 ../gtk/rgmainwindow.cc:2998
+#: ../gtk/rgmainwindow.cc:2124 ../gtk/rgmainwindow.cc:2687
+#: ../gtk/rgmainwindow.cc:2823 ../gtk/rgmainwindow.cc:3001
 #, c-format
 msgid "Can't write %s"
 msgstr "Nu pot scrie %s"
 
-#: ../gtk/rgmainwindow.cc:2140
+#: ../gtk/rgmainwindow.cc:2143
 #, fuzzy
 msgid "Save changes"
 msgstr "Deschide modificările"
 
-#: ../gtk/rgmainwindow.cc:2147
+#: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
 msgstr "Salvează starea completă, nu doar modificările"
 
-#: ../gtk/rgmainwindow.cc:2264
+#: ../gtk/rgmainwindow.cc:2267
 msgid "Repositories changed"
 msgstr "Arhivele au fost modificate"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2268
+#: ../gtk/rgmainwindow.cc:2271
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1603,20 +1617,20 @@ msgstr ""
 "Informaţiile despre arhive au fost modificate. Trebuie să apăsaţi butonul "
 "„Reîncarcă” pentru ca modificările să aibe efect."
 
-#: ../gtk/rgmainwindow.cc:2279
+#: ../gtk/rgmainwindow.cc:2282
 msgid "Never show this message again"
 msgstr "Nu afişa acest dialog în viitor"
 
-#: ../gtk/rgmainwindow.cc:2333
+#: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
 msgstr "Am găsit %i pachete"
 
-#: ../gtk/rgmainwindow.cc:2374
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
 msgstr "Pornesc vizualizatorul de ajutor..."
 
-#: ../gtk/rgmainwindow.cc:2394
+#: ../gtk/rgmainwindow.cc:2397
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1635,7 +1649,7 @@ msgstr ""
 "synaptic” sau vizualiza versiunea HTML localizată în directorul „synaptic/"
 "html”."
 
-#: ../gtk/rgmainwindow.cc:2546
+#: ../gtk/rgmainwindow.cc:2549
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1643,16 +1657,16 @@ msgstr ""
 "Nu pot porni unealta de configurare!\n"
 "Trebuie să instalaţi pachetul „libgnome2-perl”."
 
-#: ../gtk/rgmainwindow.cc:2552
+#: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
 msgstr "Pornesc unealta de configurare a pachetelor..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2567
+#: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
 msgstr "Pornesc vizualizatorul de documentaţie a pachetelor..."
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
@@ -1660,7 +1674,7 @@ msgstr ""
 "Trebuie să instalaţi pachetul „dwww” pentru a naviga în documentaţia unui "
 "pachet"
 
-#: ../gtk/rgmainwindow.cc:2648
+#: ../gtk/rgmainwindow.cc:2651
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1668,44 +1682,44 @@ msgstr ""
 "Nu pot aplica modificările!\n"
 "Mai întâi trebuie să fixaţi pachetele deteriorate."
 
-#: ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
 msgstr "Aplic modificările marcate. Această operaţie poate dura un timp..."
 
-#: ../gtk/rgmainwindow.cc:2673
+#: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Descarc pachetele"
 
-#: ../gtk/rgmainwindow.cc:2749
+#: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
 msgstr "Doriţi să ieşiţi din Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2805
+#: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "Descarc informaţiile despre pachete"
 
-#: ../gtk/rgmainwindow.cc:2806
+#: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
 "Arhivele vor fi verificate pentru pachete noi, dezinstalate sau actualizate."
 
-#: ../gtk/rgmainwindow.cc:2809
+#: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
 msgstr "Reîncarc informaţiile despre pachete..."
 
-#: ../gtk/rgmainwindow.cc:2877
+#: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
 msgstr "Nu am putut rezolva problemele de dependenţă"
 
-#: ../gtk/rgmainwindow.cc:2879
+#: ../gtk/rgmainwindow.cc:2882
 msgid "Successfully fixed dependency problems"
 msgstr "Am fixat cu succes problemele de dependenţă"
 
-#: ../gtk/rgmainwindow.cc:2895
+#: ../gtk/rgmainwindow.cc:2898
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1713,29 +1727,29 @@ msgstr ""
 "Nu am putut actualiza sistemul!\n"
 "Mai întâi trebuie să fixaţi pachetele deteriorate."
 
-#: ../gtk/rgmainwindow.cc:2944
+#: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
 msgstr "Marchez toate actualizările disponibile..."
 
-#: ../gtk/rgmainwindow.cc:2963
+#: ../gtk/rgmainwindow.cc:2966
 msgid "Successfully marked available upgrades"
 msgstr "Am marcat cu succes toate actualizările disponibile"
 
-#: ../gtk/rgmainwindow.cc:2965
+#: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
 msgstr "Nu am putut marca toate actualizările posibile!"
 
-#: ../gtk/rgmainwindow.cc:3344
+#: ../gtk/rgmainwindow.cc:3347
 #, fuzzy
 msgid "Save script"
 msgstr "Descriere"
 
-#: ../gtk/rgmainwindow.cc:3371
+#: ../gtk/rgmainwindow.cc:3374
 #, fuzzy
 msgid "Select directory"
 msgstr "Istoric căutare"
 
-#: ../gtk/rgmainwindow.cc:3383
+#: ../gtk/rgmainwindow.cc:3386
 #, fuzzy
 msgid "Please select a directory"
 msgstr "Introduceţi vă rog un disc în unitate."
@@ -2456,7 +2470,8 @@ msgid "_Search"
 msgstr "_Caută"
 
 #: ../gtk/glade/window_fetch.glade.h:1
-msgid "Show progress of single files"
+#, fuzzy
+msgid "Show for individual files"
 msgstr "Afişează progresul pentru fiecare fişier în parte"
 
 #: ../gtk/glade/window_changes.glade.h:1
@@ -2611,7 +2626,6 @@ msgid "Consider recommended packages as dependencies"
 msgstr "Consideră pachetele recomandate ca dependenţe"
 
 #: ../gtk/glade/window_preferences.glade.h:32
-#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Default Upgrade"
 msgstr "Actualizare standard"
 
@@ -2756,7 +2770,6 @@ msgid "Show package properties in the main window"
 msgstr "Afişează proprietăţile pachetelor în fereastra principală"
 
 #: ../gtk/glade/window_preferences.glade.h:70
-#: ../gtk/glade/dialog_upgrade.glade.h:10
 msgid "Smart Upgrade"
 msgstr "Actualizare inteligentă"
 
@@ -3389,13 +3402,23 @@ msgstr ""
 "<b>Notă:</b> Actualizările vor fi doar marcate. Va trebui să le aplicaţi "
 "după aceea."
 
-#: ../gtk/glade/dialog_upgrade.glade.h:9
+#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Remember my answer for future upgrades"
 msgstr "Reţine răspunsul meu pentru viitoarele actualizări"
 
-#: ../gtk/glade/dialog_upgrade.glade.h:11
+#: ../gtk/glade/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr "Acest comportament poate fi modificat mai târziu în preferinţe."
+
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+#, fuzzy
+msgid "_Default Upgrade"
+msgstr "Actualizare standard"
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+#, fuzzy
+msgid "_Smart Upgrade"
+msgstr "Actualizare inteligentă"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"

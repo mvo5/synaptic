@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 15:50+0200\n"
+"POT-Creation-Date: 2008-08-01 21:38+0200\n"
 "PO-Revision-Date: 2005-09-06 00:29+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -918,9 +918,9 @@ msgstr "قابلة للترقية (للأصل)"
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2097
-#: ../gtk/rgmainwindow.cc:2766 ../gtk/rgmainwindow.cc:2852
-#: ../gtk/rgmainwindow.cc:3025
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
+#: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
+#: ../gtk/rgmainwindow.cc:3028
 #, c-format
 msgid "Can't read %s"
 msgstr "لا يمكن قراءة %s"
@@ -1137,36 +1137,49 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "تطبيق التغييرات"
 
+#: ../gtk/rgdebinstallprogress.cc:448
+msgid "Ctrl-c pressed"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:449
+#, fuzzy
+msgid ""
+"This will abort the operation and may leave the system in a broken state. "
+"Are you sure you want to do that?"
+msgstr ""
+"إزالة هذه الحزمة يجعل النظام غير قابل للاستخدام.\n"
+"هل أنت متأكد من عمل ذلك؟"
+
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:471
+#: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
 msgstr "خطأ في الحزمة %s"
 
-#: ../gtk/rgdebinstallprogress.cc:566
+#: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:623 ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
 msgstr "تم تطبيق التغييرات"
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 "يتم الآن تطبيق التغييرات المحددة. قد يستغرق هذا بعض الوقت. الرجاء الانتظار."
 
-#: ../gtk/rgdebinstallprogress.cc:687
+#: ../gtk/rgdebinstallprogress.cc:719
 msgid "Installing and removing software"
 msgstr "تثبيت وإزالة البرامج"
 
-#: ../gtk/rgdebinstallprogress.cc:689
+#: ../gtk/rgdebinstallprogress.cc:721
 msgid "Removing software"
 msgstr "إزالة البرامج"
 
-#: ../gtk/rgdebinstallprogress.cc:691
+#: ../gtk/rgdebinstallprogress.cc:723
 msgid "Installing software"
 msgstr "تثبيت البرامج"
 
@@ -1552,37 +1565,37 @@ msgstr ""
 msgid "%s Changelog"
 msgstr "سجل تغييرات %s"
 
-#: ../gtk/rgmainwindow.cc:2047
+#: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
 msgstr "هل تريد إضافة قرص مدمج آخر؟"
 
-#: ../gtk/rgmainwindow.cc:2084
+#: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
 msgstr "افتح التغييرات"
 
-#: ../gtk/rgmainwindow.cc:2121 ../gtk/rgmainwindow.cc:2684
-#: ../gtk/rgmainwindow.cc:2820 ../gtk/rgmainwindow.cc:2998
+#: ../gtk/rgmainwindow.cc:2124 ../gtk/rgmainwindow.cc:2687
+#: ../gtk/rgmainwindow.cc:2823 ../gtk/rgmainwindow.cc:3001
 #, c-format
 msgid "Can't write %s"
 msgstr "لا يمكن كتابة %s"
 
-#: ../gtk/rgmainwindow.cc:2140
+#: ../gtk/rgmainwindow.cc:2143
 #, fuzzy
 msgid "Save changes"
 msgstr "افتح التغييرات"
 
-#: ../gtk/rgmainwindow.cc:2147
+#: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
 msgstr "احفظ الحالة بالكامل، ليس التغييرات فقط"
 
-#: ../gtk/rgmainwindow.cc:2264
+#: ../gtk/rgmainwindow.cc:2267
 msgid "Repositories changed"
 msgstr "المستودعات تغيرت"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2268
+#: ../gtk/rgmainwindow.cc:2271
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1590,20 +1603,20 @@ msgstr ""
 "لقد تغيرت معلومات المستودعات. عليك بالضغط على زر \"إعادة التحميل\" كي يسري "
 "مفعول تغييراتك"
 
-#: ../gtk/rgmainwindow.cc:2279
+#: ../gtk/rgmainwindow.cc:2282
 msgid "Never show this message again"
 msgstr "عدم عرض هذه الرسالة مجدداً"
 
-#: ../gtk/rgmainwindow.cc:2333
+#: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
 msgstr "عثر على %i حزمة"
 
-#: ../gtk/rgmainwindow.cc:2374
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
 msgstr "تشغيل مستعرض المساعدة..."
 
-#: ../gtk/rgmainwindow.cc:2394
+#: ../gtk/rgmainwindow.cc:2397
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1621,7 +1634,7 @@ msgstr ""
 "بدلاً من ذلك يمكن فتح صفحة دليل man باستخدام 'man synaptic' من سطر الأوامر أو "
 "عرض نسخة html الموجودة في المجلد 'synaptic/html'."
 
-#: ../gtk/rgmainwindow.cc:2546
+#: ../gtk/rgmainwindow.cc:2549
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1629,22 +1642,22 @@ msgstr ""
 "تعذر تشغيل أداة التهيئة!\n"
 "يجب تثبيت الحزمة المطلوبة 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2552
+#: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
 msgstr "تشغيل أداة تهيئة الحزم..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2567
+#: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
 msgstr "تشغيل مستعرض وثائق الحزم..."
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "يجب تثبيت الحزمة \"dwww\" لاستعراض وثائق أي حزمة"
 
-#: ../gtk/rgmainwindow.cc:2648
+#: ../gtk/rgmainwindow.cc:2651
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1652,44 +1665,44 @@ msgstr ""
 "تعذر تطبيق التغييرات!\n"
 "يجب إصلاح الحزم المعطوبة أولاً."
 
-#: ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
 msgstr "تطبيق التغييرات المحددة. قد يستغرق هذا بعض الوقت..."
 
-#: ../gtk/rgmainwindow.cc:2673
+#: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "تنزيل ملفات الحزم"
 
-#: ../gtk/rgmainwindow.cc:2749
+#: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
 msgstr "هل تريد الخروج من Synaptic؟"
 
-#: ../gtk/rgmainwindow.cc:2805
+#: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "تنزيل معلومات الحزم"
 
-#: ../gtk/rgmainwindow.cc:2806
+#: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
 "سيتم التحقق من المستودعات لوجود أية حزم برامج جديدة، أو مُزالة أو مرقاة."
 
-#: ../gtk/rgmainwindow.cc:2809
+#: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
 msgstr "إعادة تحميل معلومات الحزم..."
 
-#: ../gtk/rgmainwindow.cc:2877
+#: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
 msgstr "تعذر حلّ مشاكل المعتمدات!"
 
-#: ../gtk/rgmainwindow.cc:2879
+#: ../gtk/rgmainwindow.cc:2882
 msgid "Successfully fixed dependency problems"
 msgstr "تم إصلاح مشاكل المعتمدات بنجاح"
 
-#: ../gtk/rgmainwindow.cc:2895
+#: ../gtk/rgmainwindow.cc:2898
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1697,29 +1710,29 @@ msgstr ""
 "تعذرت ترقية النظام!\n"
 "يجب إصلاح الحزم المعطوبة أولاً."
 
-#: ../gtk/rgmainwindow.cc:2944
+#: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
 msgstr "تحديد جميع الترقيات المتوفرة..."
 
-#: ../gtk/rgmainwindow.cc:2963
+#: ../gtk/rgmainwindow.cc:2966
 msgid "Successfully marked available upgrades"
 msgstr "تم تحديد الترقيات المتوفرة بنجاح"
 
-#: ../gtk/rgmainwindow.cc:2965
+#: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
 msgstr "تعذر تحديد جميع الترقيات المتوفرة!"
 
-#: ../gtk/rgmainwindow.cc:3344
+#: ../gtk/rgmainwindow.cc:3347
 #, fuzzy
 msgid "Save script"
 msgstr "الوصف"
 
-#: ../gtk/rgmainwindow.cc:3371
+#: ../gtk/rgmainwindow.cc:3374
 #, fuzzy
 msgid "Select directory"
 msgstr "البحث في السجل"
 
-#: ../gtk/rgmainwindow.cc:3383
+#: ../gtk/rgmainwindow.cc:3386
 msgid "Please select a directory"
 msgstr ""
 
@@ -2443,7 +2456,8 @@ msgid "_Search"
 msgstr "_بحث"
 
 #: ../gtk/glade/window_fetch.glade.h:1
-msgid "Show progress of single files"
+#, fuzzy
+msgid "Show for individual files"
 msgstr "إظهار تقدّم الملفات المفردة"
 
 #: ../gtk/glade/window_changes.glade.h:1
@@ -2597,7 +2611,6 @@ msgid "Consider recommended packages as dependencies"
 msgstr "اعتبار الحزم المستحسنة كمعتمدات"
 
 #: ../gtk/glade/window_preferences.glade.h:32
-#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Default Upgrade"
 msgstr "الترقية الافتراضية"
 
@@ -2743,7 +2756,6 @@ msgid "Show package properties in the main window"
 msgstr "إظهار خصائص الحزمة في النافذة الرئيسية"
 
 #: ../gtk/glade/window_preferences.glade.h:70
-#: ../gtk/glade/dialog_upgrade.glade.h:10
 msgid "Smart Upgrade"
 msgstr "الترقية الذكية"
 
@@ -3352,13 +3364,23 @@ msgstr ""
 "\n"
 "<b>ملاحظة:</b> سيتم فقط تحديد الترقيات. يجب تطبيقها بعد ذلك."
 
-#: ../gtk/glade/dialog_upgrade.glade.h:9
+#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Remember my answer for future upgrades"
 msgstr "تذكر جوابي للترقيات المستقبلية"
 
-#: ../gtk/glade/dialog_upgrade.glade.h:11
+#: ../gtk/glade/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr "يمكن تغيير هذا التصرّف في التفضيلات لاحقاً."
+
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+#, fuzzy
+msgid "_Default Upgrade"
+msgstr "الترقية الافتراضية"
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+#, fuzzy
+msgid "_Smart Upgrade"
+msgstr "الترقية الذكية"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"

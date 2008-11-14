@@ -489,6 +489,12 @@ void RPackageViewFilter::makePresetFilters()
    filter->status.setStatus(RStatusPackageFilter::UpstreamUpgradable);
    filter->setName("Upgradable (upstream)"); _("Upgradable (upstream)");
    registerFilter(filter);
+
+   filter = new RFilter();
+   filter->preset = true;
+   filter->status.setStatus(RStatusPackageFilter::NowPolicyBroken);
+   filter->setName("Missing Recommends"); _("Missing Recommends");
+   registerFilter(filter);
 }
 
 void RPackageViewOrigin::addPackage(RPackage *package)

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 15:50+0200\n"
+"POT-Creation-Date: 2008-08-01 21:38+0200\n"
 "PO-Revision-Date: 2007-07-20 07:31+0000\n"
 "Last-Translator: Timo Jyrinki <timo.jyrinki@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -921,9 +921,9 @@ msgstr "Päivitettävissä (upstream)"
 msgid "Local"
 msgstr "Paikallinen"
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2097
-#: ../gtk/rgmainwindow.cc:2766 ../gtk/rgmainwindow.cc:2852
-#: ../gtk/rgmainwindow.cc:3025
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
+#: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
+#: ../gtk/rgmainwindow.cc:3028
 #, c-format
 msgid "Can't read %s"
 msgstr "Ei voi lukea kohdetta %s"
@@ -1143,21 +1143,34 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "Toteutetaan muutokset"
 
+#: ../gtk/rgdebinstallprogress.cc:448
+msgid "Ctrl-c pressed"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:449
+#, fuzzy
+msgid ""
+"This will abort the operation and may leave the system in a broken state. "
+"Are you sure you want to do that?"
+msgstr ""
+"Tämän paketin poistaminen saattaa tehdä järjestelmästä käyttökelvottoman.\n"
+"Haluatko varmasti poistaa sen?"
+
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:471
+#: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
 msgstr "Virhe paketissa %s"
 
-#: ../gtk/rgdebinstallprogress.cc:566
+#: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
 msgstr "Jonkin pakkauksen asennus epäonnistui. Yritän toipua:"
 
-#: ../gtk/rgdebinstallprogress.cc:623 ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
 msgstr "Muutokset toteutettu"
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1165,15 +1178,15 @@ msgstr ""
 "Merkittyjä muutoksia toteutetaan. Se voi viedä jonkin aikaa, odota "
 "kärsivällisesti."
 
-#: ../gtk/rgdebinstallprogress.cc:687
+#: ../gtk/rgdebinstallprogress.cc:719
 msgid "Installing and removing software"
 msgstr "Asennetaan ja poistetaan ohjelmia"
 
-#: ../gtk/rgdebinstallprogress.cc:689
+#: ../gtk/rgdebinstallprogress.cc:721
 msgid "Removing software"
 msgstr "Poistetaan ohjelmia"
 
-#: ../gtk/rgdebinstallprogress.cc:691
+#: ../gtk/rgdebinstallprogress.cc:723
 msgid "Installing software"
 msgstr "Asennetaan ohjelmia"
 
@@ -1554,36 +1567,36 @@ msgstr ""
 msgid "%s Changelog"
 msgstr "Paketin %s muutosloki"
 
-#: ../gtk/rgmainwindow.cc:2047
+#: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
 msgstr "Haluatko lisätä CD-levyn?"
 
-#: ../gtk/rgmainwindow.cc:2084
+#: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
 msgstr "Avaa muutokset"
 
-#: ../gtk/rgmainwindow.cc:2121 ../gtk/rgmainwindow.cc:2684
-#: ../gtk/rgmainwindow.cc:2820 ../gtk/rgmainwindow.cc:2998
+#: ../gtk/rgmainwindow.cc:2124 ../gtk/rgmainwindow.cc:2687
+#: ../gtk/rgmainwindow.cc:2823 ../gtk/rgmainwindow.cc:3001
 #, c-format
 msgid "Can't write %s"
 msgstr "Ei voi kirjoittaa %s"
 
-#: ../gtk/rgmainwindow.cc:2140
+#: ../gtk/rgmainwindow.cc:2143
 msgid "Save changes"
 msgstr "Tallenna muutokset"
 
-#: ../gtk/rgmainwindow.cc:2147
+#: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
 msgstr "Tallenna muutosten lisäksi koko tila"
 
-#: ../gtk/rgmainwindow.cc:2264
+#: ../gtk/rgmainwindow.cc:2267
 msgid "Repositories changed"
 msgstr "Pakettivarastot muuttuneet"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2268
+#: ../gtk/rgmainwindow.cc:2271
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1591,20 +1604,20 @@ msgstr ""
 "Pakettivarastotiedot ovat muuttuneet. Sinun täytyy napsauttaa \"Päivitä\"-"
 "painiketta, jotta muutokset tulevat voimaan"
 
-#: ../gtk/rgmainwindow.cc:2279
+#: ../gtk/rgmainwindow.cc:2282
 msgid "Never show this message again"
 msgstr "Älä näytä tätä viestiä uudelleen"
 
-#: ../gtk/rgmainwindow.cc:2333
+#: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
 msgstr "Löytyi %i pakettia"
 
-#: ../gtk/rgmainwindow.cc:2374
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
 msgstr "Käynnistetään ohjeselain..."
 
-#: ../gtk/rgmainwindow.cc:2394
+#: ../gtk/rgmainwindow.cc:2397
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1622,7 +1635,7 @@ msgstr ""
 "Vaihtoehtoisesti voit lukea ohjelman käyttöohjesivun komentoriviltä "
 "komennolla 'man synaptic' tai lukea HTML-version kansiosta 'synaptic/html'."
 
-#: ../gtk/rgmainwindow.cc:2546
+#: ../gtk/rgmainwindow.cc:2549
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1630,23 +1643,23 @@ msgstr ""
 "Asetustyökalua ei voi käynnistää!\n"
 "Asenna ensin tarvittava paketti \"libgnome2-perl\"."
 
-#: ../gtk/rgmainwindow.cc:2552
+#: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
 msgstr "Käynnistetään paketin asetustyökalu..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2567
+#: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
 msgstr "Käynnistetään paketin dokumentaatioselain..."
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Paketti \"dwww\" täytyy asentaa, jotta voit selata pakettien dokumentaatioita"
 
-#: ../gtk/rgmainwindow.cc:2648
+#: ../gtk/rgmainwindow.cc:2651
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1654,44 +1667,44 @@ msgstr ""
 "Muutoksia ei voi toteuttaa!\n"
 "Korjaa ensin rikkinäiset paketit."
 
-#: ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
 msgstr "Toteutetaan merkityt muutokset. Tämä voi kestää hetken..."
 
-#: ../gtk/rgmainwindow.cc:2673
+#: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Noudetaan pakettitiedostoja"
 
-#: ../gtk/rgmainwindow.cc:2749
+#: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
 msgstr "Haluatko sulkea Synapticin?"
 
-#: ../gtk/rgmainwindow.cc:2805
+#: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "Noudetaan tietoja paketeista"
 
-#: ../gtk/rgmainwindow.cc:2806
+#: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
 "Pakettivarastoista etsitään uusia, poistettuja ja päivitettyjä paketteja."
 
-#: ../gtk/rgmainwindow.cc:2809
+#: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
 msgstr "Päivitetään pakettien tietoja..."
 
-#: ../gtk/rgmainwindow.cc:2877
+#: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
 msgstr "Riippuvuusongelmien korjaus epäonnistui!"
 
-#: ../gtk/rgmainwindow.cc:2879
+#: ../gtk/rgmainwindow.cc:2882
 msgid "Successfully fixed dependency problems"
 msgstr "Riippuvuusongelmat korjattiin onnistuneesti"
 
-#: ../gtk/rgmainwindow.cc:2895
+#: ../gtk/rgmainwindow.cc:2898
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1699,27 +1712,27 @@ msgstr ""
 "Järjestelmää ei voi päivittää!\n"
 "Korjaa ensin rikkinäiset paketit."
 
-#: ../gtk/rgmainwindow.cc:2944
+#: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
 msgstr "Merkitään saatavilla olevat päivitykset..."
 
-#: ../gtk/rgmainwindow.cc:2963
+#: ../gtk/rgmainwindow.cc:2966
 msgid "Successfully marked available upgrades"
 msgstr "Saatavilla olevat päivitykset merkittiin onnistuneesti"
 
-#: ../gtk/rgmainwindow.cc:2965
+#: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
 msgstr "Kaikkia saatavilla olevia päivityksiä ei voitu merkitä!"
 
-#: ../gtk/rgmainwindow.cc:3344
+#: ../gtk/rgmainwindow.cc:3347
 msgid "Save script"
 msgstr "Tallenna komentosarja"
 
-#: ../gtk/rgmainwindow.cc:3371
+#: ../gtk/rgmainwindow.cc:3374
 msgid "Select directory"
 msgstr "Valitse kansio"
 
-#: ../gtk/rgmainwindow.cc:3383
+#: ../gtk/rgmainwindow.cc:3386
 msgid "Please select a directory"
 msgstr "Ole hyvä ja valitse kansio"
 
@@ -2429,7 +2442,8 @@ msgid "_Search"
 msgstr "Et_si"
 
 #: ../gtk/glade/window_fetch.glade.h:1
-msgid "Show progress of single files"
+#, fuzzy
+msgid "Show for individual files"
 msgstr "Näytä yksittäisten tiedostojen edistyminen"
 
 #: ../gtk/glade/window_changes.glade.h:1
@@ -2583,7 +2597,6 @@ msgid "Consider recommended packages as dependencies"
 msgstr "Käsittele suositeltuja paketteja riippuvuuksina"
 
 #: ../gtk/glade/window_preferences.glade.h:32
-#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Default Upgrade"
 msgstr "Tavallinen päivitys"
 
@@ -2728,7 +2741,6 @@ msgid "Show package properties in the main window"
 msgstr "Näytä paketin ominaisuudet pääikkunassa"
 
 #: ../gtk/glade/window_preferences.glade.h:70
-#: ../gtk/glade/dialog_upgrade.glade.h:10
 msgid "Smart Upgrade"
 msgstr "Älykäs päivitys"
 
@@ -3349,13 +3361,23 @@ msgstr ""
 "<b>Huomautus:</b> Päivitykset ainoastaan merkitään ja ne täytyy erikseen "
 "vielä asentaa jälkeenpäin."
 
-#: ../gtk/glade/dialog_upgrade.glade.h:9
+#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Remember my answer for future upgrades"
 msgstr "Muista vastaukseni myöhemmissä päivityksissä"
 
-#: ../gtk/glade/dialog_upgrade.glade.h:11
+#: ../gtk/glade/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr "Tätä toimintatapaa voi muuttaa myöhemmin asetuksista."
+
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+#, fuzzy
+msgid "_Default Upgrade"
+msgstr "Tavallinen päivitys"
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+#, fuzzy
+msgid "_Smart Upgrade"
+msgstr "Älykäs päivitys"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"

@@ -31,11 +31,17 @@
 class RGPkgDetailsWindow : public RGGladeWindow {
    
  protected:
-   static vector<string> formatDepInformation(vector<DepInformation> deps);
-   
-   static void cbDependsMenuChanged(GtkWidget *self, void *data);
+   // used for the screenshot parameter passing
+   struct screenshot_info {
+      GtkTextChildAnchor *anchor;
+      GtkWidget *textview;
+      RPackage *pkg;
+   };
 
+   static vector<string> formatDepInformation(vector<DepInformation> deps);
+   static void cbDependsMenuChanged(GtkWidget *self, void *data);
    static void cbCloseClicked(GtkWidget *self, void *data);
+   static void cbShowScreenshot(GtkWidget *button, void *data);
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);

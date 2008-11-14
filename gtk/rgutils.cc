@@ -24,11 +24,12 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <string>
-#include "i18n.h"
-#include "rgmisc.h"
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+
+#include "i18n.h"
+#include "rgutils.h"
 
 
 void RGFlushInterface()
@@ -161,121 +162,7 @@ const char *utf8(const char *str)
    return _str;
 }
 
-static GdkPixbuf *
-get_gdk_pixbuf(const gchar *name, int size=16)
-{
-   GtkIconTheme *theme;
-   GdkPixbuf *pixbuf;
-   GError *error = NULL;
-
-   theme = gtk_icon_theme_get_default();
-   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
-				     (GtkIconLookupFlags)0, &error);
-   if (pixbuf == NULL) 
-      std::cerr << "Warning, failed to load: " << name 
-		<< error->message << std::endl;
-
-   return pixbuf;
-}
-
-GtkWidget *get_gtk_image(const gchar *name, int size)
-{
-   GdkPixbuf *buf;
-   buf = get_gdk_pixbuf(name, size);
-   if(!buf)
-      return NULL;
-   return gtk_image_new_from_pixbuf(buf);
-}
 
 
-// -------------------------------------------------------------------
-// RPackageStatus stuff
-RGPackageStatus RGPackageStatus::pkgStatus;
-
-void RGPackageStatus::initColors()
-{
-   char *default_status_colors[N_STATUS_COUNT] = {
-      "#8ae234",  // install
-      "#4e9a06",  // re-install
-      "#fce94f",  // upgrade
-      "#ad7fa8",  // downgrade
-      "#ef2929",  // remove
-      "#a40000",  // purge
-      NULL,       // available
-      "#a40000",  // available-locked
-      NULL,       // installed-updated
-      NULL,       // installed-outdated
-      "#a40000",  // installed-locked 
-      NULL,       // broken
-      NULL        // new
-   };
-
-   gchar *config_string;
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
-      gtk_get_color_from_string(_config->
-                                Find(config_string,
-                                     default_status_colors[i]).c_str(),
-                                &StatusColors[i]);
-      g_free(config_string);
-   }
-}
-
-void RGPackageStatus::initPixbufs()
-{
-   gchar *s;
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
-      StatusPixbuf[i] = get_gdk_pixbuf(s);
-   }
-   supportedPix = get_gdk_pixbuf("package-supported");
-}
-
-// class that finds out what do display to get user
-void RGPackageStatus::init()
-{
-   RPackageStatus::init();
-
-   initColors();
-   initPixbufs();
-}
-
-
-GdkColor *RGPackageStatus::getBgColor(RPackage *pkg)
-{
-   return StatusColors[getStatus(pkg)];
-}
-
-GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
-{
-   if(isSupported(pkg))
-      return supportedPix;
-   else
-      return NULL;
-}
-
-GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
-{
-   return StatusPixbuf[getStatus(pkg)];
-}
-
-void RGPackageStatus::setColor(int i, GdkColor * new_color)
-{
-   StatusColors[i] = new_color;
-}
-
-void RGPackageStatus::saveColors()
-{
-   gchar *color_string, *config_string;
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      color_string = gtk_get_string_from_color(StatusColors[i]);
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
-
-      _config->Set(config_string, color_string);
-      g_free(config_string);
-   }
-}
 
 // vim:ts=3:sw=3:et

@@ -818,6 +818,31 @@ void RPackage::setRemove(bool purge)
       _lister->notifyChange(this);
 }
 
+string RPackage::getScreenshotFile(pkgAcquire *fetcher)
+{
+   string descr("Screenshot for ");
+   descr+=name();
+
+   string verstr;
+   if(availableVersion() != NULL) 
+      verstr = availableVersion();
+   
+   if(verstr.find(':')!=verstr.npos)
+      verstr=string(verstr, verstr.find(':')+1);
+   char uri[512];
+   snprintf(uri,512,"http://screenshots.debian.net/thumbnail/%s", name());
+
+   cerr << "uri is: " << uri << endl;
+
+   string filename = RTmpDir()+"/tmp_sh";
+   unlink(filename.c_str());
+   new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
+
+   fetcher->Run();
+
+   return filename;
+}
+
 
 string RPackage::getChangelogFile(pkgAcquire *fetcher)
 {
@@ -867,13 +892,15 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
 
 string RPackage::getCanidateOrigin()
 {
-   for(pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
-      // we always take the first available version 
-      pkgCache::VerFileIterator VF = Ver.FileList();
-      if(!VF.end()) {
-	 return VF.File().Site();
-      }
-   }
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+
+   if(Ver.end())
+      return "";
+
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   if(!VF.end())
+      return VF.File().Site();
+
    return "";
 }
 
@@ -1292,127 +1319,56 @@ string RPackage::label()
    return res;
 }
 
-
-// class that finds out what do display to get user
-void RPackageStatus::init()
+static pkgCache::PkgFileIterator
+_searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
 {
-   char *status_short[N_STATUS_COUNT] = {
-      "install", "reinstall", "upgrade", "downgrade", "remove",
-      "purge", "available", "available-locked",
-      "installed-updated", "installed-outdated", "installed-locked",
-      "broken", "new"
-   };
-   memcpy(PackageStatusShortString, status_short, sizeof(status_short));
+   pkgCache::VerIterator Ver;
+   pkgCache::VerFileIterator VF;
+   pkgCache::PkgFileIterator PF;
 
-   char *status_long[N_STATUS_COUNT] = {
-      _("Marked for installation"),
-      _("Marked for re-installation"),
-      _("Marked for upgrade"),
-      _("Marked for downgrade"),
-      _("Marked for removal"),
-      _("Marked for complete removal"),
-      _("Not installed"),
-      _("Not installed (locked)"),
-      _("Installed"),
-      _("Installed (upgradable)"),
-      _("Installed (locked to the current version)"),
-      _("Broken"),
-      _("Not installed (new in repository)")
-   };
-   memcpy(PackageStatusLongString, status_long, sizeof(status_long));
-
-
-   // check for unsupported stuff
-   if(_config->FindB("Synaptic::mark-unsupported",true)) {
-      string s, labels, components;
-      markUnsupported = true;
-
-      // read supported labels
-      labels = _config->Find("Synaptic::supported-label", "Debian Debian-Security");
-      stringstream sst1(labels);
-      while(!sst1.eof()) {
-	 sst1 >> s;
-	 supportedLabels.push_back(s);
-      }
-      
-      // read supported components
-      components = _config->Find("Synaptic::supported-components", "main updates/main");
-      stringstream sst2(components);
-      while(!sst2.eof()) {
-	 sst2 >> s;
-	 supportedComponents.push_back(s);
-      }
-   } 
-
-}
-
-bool RPackageStatus::isSupported(RPackage *pkg) 
-{
-   bool res = true;
-
-   if(markUnsupported) {
-      bool sc, sl;
-
-      sc=sl=false;
-
-      string component = pkg->component();
-      string label = pkg->label();
-
-      for(unsigned int i=0;i<supportedComponents.size();i++) {
-	 if(supportedComponents[i] == component) {
-	    sc = true;
-	    break;
+   for(Ver = Pkg->VersionList();!Ver.end();Ver++) {
+      for(VF = Ver.FileList();!VF.end(); VF++) {
+	 for(PF = VF.File(); !PF.end(); PF++) {
+	    if(!PF.end() && 
+	       PF.Label() && string(PF.Label()) == label &&
+	       PF.Origin() && string(PF.Origin()) == label &&
+	       PF.Archive() && PF.Archive() == release) {
+	       //cerr << "found: " << PF.FileName() << endl;
+	       return PF;
+	    }
 	 }
       }
-      for(unsigned int i=0;i<supportedLabels.size();i++) {
-	 if(supportedLabels[i] == label) {
-	    sl = true;
-	    break;
+   }
+   PF = pkgCache::PkgFileIterator(*Pkg->Cache());
+   return PF;
+}
+
+// look for a release file that matches the given label and origin string
+string RPackage::getReleaseFileForOrigin(string label, string release)
+{
+   pkgIndexFile *index;
+   pkgCache::PkgFileIterator found = _searchPkgFileIter(_package, label, string(release));
+   if (found.end())
+      return "";
+   
+   // search for the matching meta-index
+   pkgSourceList *list = _lister->getCache()->list();
+   if(list->FindIndex(found, index)) {
+      vector<metaIndex *>::const_iterator I;
+      for(I=list->begin(); I != list->end(); I++) {
+	 vector<pkgIndexFile *>  *ifv = (*I)->GetIndexFiles();
+	 if(find(ifv->begin(), ifv->end(), index) != ifv->end()) {
+	    string uri = _config->FindDir("Dir::State::lists");
+	    uri += URItoFileName((*I)->GetURI());
+	    uri += "dists_";
+	    uri += (*I)->GetDist();
+	    uri += "_Release";
+	    return uri;
 	 }
       }
-      res = (sc & sl & pkg->isTrusted());
    }
 
-   return res;
+   return "";
 }
-
-int RPackageStatus::getStatus(RPackage *pkg)
-{
-   int flags = pkg->getFlags();
-   int ret = NotInstalled;
-
-   if (pkg->wouldBreak()) {
-      ret = IsBroken;
-   } else if (flags & RPackage::FNewInstall) {
-      ret = ToInstall;
-   } else if (flags & RPackage::FUpgrade) {
-      ret = ToUpgrade;
-   } else if (flags & RPackage::FReInstall) {
-      ret = ToReInstall;
-   } else if (flags & RPackage::FDowngrade) {
-      ret = ToDowngrade;
-   } else if (flags & RPackage::FPurge) {
-      ret = ToPurge;
-   } else if (flags & RPackage::FRemove) {
-      ret = ToRemove;
-   } else if (flags & RPackage::FInstalled) {
-      if (flags & RPackage::FPinned)
-         ret = InstalledLocked;
-      else if (flags & RPackage::FOutdated)
-         ret = InstalledOutdated;
-      else
-         ret = InstalledUpdated;
-   } else {
-      if (flags & RPackage::FPinned)
-         ret = NotInstalledLocked;
-      else if (flags & RPackage::FNew)
-         ret = IsNew;
-      else
-         ret = NotInstalled;
-   }
-
-   return ret;
-}
-
 
 // vim:ts=3:sw=3:et

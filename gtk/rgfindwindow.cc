@@ -26,7 +26,7 @@
 #include <cstring>
 
 #include "rgfindwindow.h"
-#include "rgmisc.h"
+#include "rgutils.h"
 
 #include "i18n.h"
 

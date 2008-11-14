@@ -42,8 +42,10 @@ synaptic_SOURCES= \
 	rgiconlegend.cc\
 	rglogview.cc\
 	rglogview.h\
-	rgmisc.cc\
-	rgmisc.h\
+	rgutils.cc\
+	rgutils.h\
+	rgpackagestatus.cc\
+	rgpackagestatus.h\
 	rgsetoptwindow.cc\
 	rgsetoptwindow.h\
 	rgdummyinstallprogress.cc\

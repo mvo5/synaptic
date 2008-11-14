@@ -134,8 +134,10 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
-   // get changelog file from the debian server (debian only of course)
+   // get changelog file from the debian server 
    string getChangelogFile(pkgAcquire *fetcher);
+   // get screenshot file from the debian server 
+   string getScreenshotFile(pkgAcquire *fetcher);
 
    vector<string> provides();
 
@@ -144,6 +146,9 @@ class RPackage {
 
    // get origin of the package
    string getCanidateOrigin();
+
+   // get the release file for the givel origin label string
+   string getReleaseFileForOrigin(string label, string release);
 
    // get installed component (like main, contrib, non-free)
    string component();
@@ -211,57 +216,6 @@ class RPackage {
             pkgRecords *records, pkgCache::PkgIterator &pkg);
    ~RPackage();
 };
-
-
-class RPackageStatus {
- public:
-   enum PkgStatus {
-      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
-      NotInstalled, NotInstalledLocked,
-      InstalledUpdated, InstalledOutdated, InstalledLocked,
-      IsBroken, IsNew,
-      N_STATUS_COUNT
-   };
-
- protected:
-   // the supported archive-labels and components
-   vector<string> supportedLabels;
-   vector<string> supportedComponents;
-   bool markUnsupported;
-
-   // this is the short string to load the icons
-   const char *PackageStatusShortString[N_STATUS_COUNT];
-   // this is the long string for the gui description of the state
-   const char *PackageStatusLongString[N_STATUS_COUNT];
-
-
-   // this does the actual work
-   int getStatus(RPackage *pkg);
-
-
- public:
-   RPackageStatus() : markUnsupported(false) {};
-   virtual ~RPackageStatus() {};
-
-   // this reads the pixmaps and the colors
-   virtual void init();
-
-   // here we get the description for the States
-   const char *getLongStatusString(int i) {
-      return PackageStatusLongString[i];
-   };
-   const char *getLongStatusString(RPackage *pkg) {
-      return PackageStatusLongString[getStatus(pkg)];
-   };
-
-   const char *getShortStatusString(int i) {
-      return PackageStatusShortString[i];
-   };
-
-   bool isSupported(RPackage *pkg);
-   
-};
-
 
 
 #endif

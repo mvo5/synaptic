@@ -127,6 +127,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow
    static void content_changed(GObject *object, gpointer    user_data);
    static void expander_callback(GObject *object,GParamSpec *param_spec,
 				  gpointer    user_data);
+   static gboolean key_press_event(GtkWidget   *widget,
+				   GdkEventKey *event,
+				   gpointer     user_data);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);

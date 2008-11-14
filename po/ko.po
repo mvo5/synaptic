@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.57.7.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 15:50+0200\n"
+"POT-Creation-Date: 2008-08-01 21:38+0200\n"
 "PO-Revision-Date: 2006-01-09 03:11+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -916,9 +916,9 @@ msgstr "업그레이드 가능 (상위 개발)"
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2097
-#: ../gtk/rgmainwindow.cc:2766 ../gtk/rgmainwindow.cc:2852
-#: ../gtk/rgmainwindow.cc:3025
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
+#: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
+#: ../gtk/rgmainwindow.cc:3028
 #, c-format
 msgid "Can't read %s"
 msgstr "%s을(를) 읽을 수 없습니다"
@@ -1132,21 +1132,34 @@ msgstr ""
 msgid "Applying Changes"
 msgstr "변경 사항을 적용하는 중입니다"
 
+#: ../gtk/rgdebinstallprogress.cc:448
+msgid "Ctrl-c pressed"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:449
+#, fuzzy
+msgid ""
+"This will abort the operation and may leave the system in a broken state. "
+"Are you sure you want to do that?"
+msgstr ""
+"이 꾸러미를 지우면 시스템을 사용할 수 없게 될 수도 있습니다.\n"
+"정말로 이 꾸러미를 지우시겠습니까?"
+
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:471
+#: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
 msgstr "%s 꾸러미에 오류"
 
-#: ../gtk/rgdebinstallprogress.cc:566
+#: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:623 ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
 msgstr "변경 사항을 적용했습니다"
 
-#: ../gtk/rgdebinstallprogress.cc:682
+#: ../gtk/rgdebinstallprogress.cc:714
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1154,15 +1167,15 @@ msgstr ""
 "표시한 사항을 적용하는 중입니다. 시간이 좀 걸릴 수 있습니다. 잠시 기다려 주십"
 "시오."
 
-#: ../gtk/rgdebinstallprogress.cc:687
+#: ../gtk/rgdebinstallprogress.cc:719
 msgid "Installing and removing software"
 msgstr "소프트웨어를 설치하고 지우는 중입니다"
 
-#: ../gtk/rgdebinstallprogress.cc:689
+#: ../gtk/rgdebinstallprogress.cc:721
 msgid "Removing software"
 msgstr "소프트웨어를 지우는 중입니다"
 
-#: ../gtk/rgdebinstallprogress.cc:691
+#: ../gtk/rgdebinstallprogress.cc:723
 msgid "Installing software"
 msgstr "소프트웨어를 설치하는 중입니다"
 
@@ -1540,36 +1553,36 @@ msgstr ""
 msgid "%s Changelog"
 msgstr "%s 꾸러미의 변경 사항 기록"
 
-#: ../gtk/rgmainwindow.cc:2047
+#: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
 msgstr "다른 CD-ROM을 더하시겠습니까?"
 
-#: ../gtk/rgmainwindow.cc:2084
+#: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
 msgstr "변경 사항 열기"
 
-#: ../gtk/rgmainwindow.cc:2121 ../gtk/rgmainwindow.cc:2684
-#: ../gtk/rgmainwindow.cc:2820 ../gtk/rgmainwindow.cc:2998
+#: ../gtk/rgmainwindow.cc:2124 ../gtk/rgmainwindow.cc:2687
+#: ../gtk/rgmainwindow.cc:2823 ../gtk/rgmainwindow.cc:3001
 #, c-format
 msgid "Can't write %s"
 msgstr "%s을(를) 쓸 수 없습니다"
 
-#: ../gtk/rgmainwindow.cc:2140
+#: ../gtk/rgmainwindow.cc:2143
 msgid "Save changes"
 msgstr "변경 사항 저장"
 
-#: ../gtk/rgmainwindow.cc:2147
+#: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
 msgstr "변경 사항 뿐만 아니라 전체 상태를 저장"
 
-#: ../gtk/rgmainwindow.cc:2264
+#: ../gtk/rgmainwindow.cc:2267
 msgid "Repositories changed"
 msgstr "저장소가 변경되었습니다"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repostiory (sources.list entry) a reload (apt-get udpate) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2268
+#: ../gtk/rgmainwindow.cc:2271
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1577,20 +1590,20 @@ msgstr ""
 "저장소 정보가 바뀌었습니다. 변경 사항을 적용하려면 먼저 \"새로 고침\" 단추를 "
 "눌러야 합니다."
 
-#: ../gtk/rgmainwindow.cc:2279
+#: ../gtk/rgmainwindow.cc:2282
 msgid "Never show this message again"
 msgstr "이 메세지를 다시 표시하지 않기"
 
-#: ../gtk/rgmainwindow.cc:2333
+#: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
 msgstr "%i개 꾸러미 있음"
 
-#: ../gtk/rgmainwindow.cc:2374
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
 msgstr "도움말 보기 프로그램을 시작하고 있습니다...."
 
-#: ../gtk/rgmainwindow.cc:2394
+#: ../gtk/rgmainwindow.cc:2397
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1608,7 +1621,7 @@ msgstr ""
 "그 외에 커맨드 라인에서 'man synaptic'을 실행해서 맨 페이지를 이용하거나 "
 "'synaptic/html' 폴더에 있는 HTML 버전을 볼 수도 있습니다."
 
-#: ../gtk/rgmainwindow.cc:2546
+#: ../gtk/rgmainwindow.cc:2549
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1616,22 +1629,22 @@ msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
 "먼저 필요한 'libgnome2-perl' 꾸러미를 설치해야 합니다."
 
-#: ../gtk/rgmainwindow.cc:2552
+#: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
 msgstr "꾸러미 설정 도구를 시작하고 있습니다..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2567
+#: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
 msgstr "꾸러미 문서 보기 프로그램을 시작하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2579
+#: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "꾸러미의 문서를 보려면 \"dwww\" 꾸러미를 설치해야 합니다"
 
-#: ../gtk/rgmainwindow.cc:2648
+#: ../gtk/rgmainwindow.cc:2651
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1639,25 +1652,25 @@ msgstr ""
 "변경 사항을 적용할 수 없습니다!\n"
 "먼저 깨진 꾸러미를 고치십시오."
 
-#: ../gtk/rgmainwindow.cc:2669
+#: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
 msgstr "표시된 변경 사항을 적용하는 중입니다. 시간이 좀 걸릴 수 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2673
+#: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "꾸러미 파일을 내려받고 있습니다"
 
-#: ../gtk/rgmainwindow.cc:2749
+#: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
 msgstr "시냅틱을 끝내시겠습니까?"
 
-#: ../gtk/rgmainwindow.cc:2805
+#: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "꾸러미 정보를 내려받는 중입니다"
 
-#: ../gtk/rgmainwindow.cc:2806
+#: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1665,19 +1678,19 @@ msgstr ""
 "저장소에 새로운 꾸러미, 지워진 꾸러미, 업그레이드한 꾸러미가 있는 지 검사합니"
 "다<."
 
-#: ../gtk/rgmainwindow.cc:2809
+#: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
 msgstr "꾸러미 정보를 다시 읽어들이고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2877
+#: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
 msgstr "의존성 문제를 해결하는 데 실패했습니다!"
 
-#: ../gtk/rgmainwindow.cc:2879
+#: ../gtk/rgmainwindow.cc:2882
 msgid "Successfully fixed dependency problems"
 msgstr "의존성 문제를 성공적으로 고쳤습니다"
 
-#: ../gtk/rgmainwindow.cc:2895
+#: ../gtk/rgmainwindow.cc:2898
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1685,27 +1698,27 @@ msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
 "먼저 깨진 꾸러미를 고치십시오."
 
-#: ../gtk/rgmainwindow.cc:2944
+#: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
 msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2963
+#: ../gtk/rgmainwindow.cc:2966
 msgid "Successfully marked available upgrades"
 msgstr "가능한 모든 업그레이드를 성공적으로 표시했습니다"
 
-#: ../gtk/rgmainwindow.cc:2965
+#: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
 msgstr "가능한 모든 업그레이드를 표시하는데 실패했습니다!"
 
-#: ../gtk/rgmainwindow.cc:3344
+#: ../gtk/rgmainwindow.cc:3347
 msgid "Save script"
 msgstr "스크립트 저장"
 
-#: ../gtk/rgmainwindow.cc:3371
+#: ../gtk/rgmainwindow.cc:3374
 msgid "Select directory"
 msgstr "디렉토리 선택"
 
-#: ../gtk/rgmainwindow.cc:3383
+#: ../gtk/rgmainwindow.cc:3386
 msgid "Please select a directory"
 msgstr "디렉토리를 선택하십시오"
 
@@ -2405,7 +2418,8 @@ msgid "_Search"
 msgstr "찾기(_S)"
 
 #: ../gtk/glade/window_fetch.glade.h:1
-msgid "Show progress of single files"
+#, fuzzy
+msgid "Show for individual files"
 msgstr "각각 파일의 진행 상황 표시"
 
 #: ../gtk/glade/window_changes.glade.h:1
@@ -2559,7 +2573,6 @@ msgid "Consider recommended packages as dependencies"
 msgstr "추천 꾸러미를 의존하는 것으로 간주"
 
 #: ../gtk/glade/window_preferences.glade.h:32
-#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Default Upgrade"
 msgstr "기본 업그레이드"
 
@@ -2704,7 +2717,6 @@ msgid "Show package properties in the main window"
 msgstr "메인 창에 꾸러미 등록 정보 표시"
 
 #: ../gtk/glade/window_preferences.glade.h:70
-#: ../gtk/glade/dialog_upgrade.glade.h:10
 msgid "Smart Upgrade"
 msgstr "똑똑한 업그레이드"
 
@@ -3319,13 +3331,23 @@ msgstr ""
 "<b>주의:</b> 업그레이드를 표시하기만 합니다. 나중에 직접 그 업그레이드를 적용"
 "해야 합니다."
 
-#: ../gtk/glade/dialog_upgrade.glade.h:9
+#: ../gtk/glade/dialog_upgrade.glade.h:8
 msgid "Remember my answer for future upgrades"
 msgstr "대답을 기억해서 앞으로 업그레이드할 때도 사용"
 
-#: ../gtk/glade/dialog_upgrade.glade.h:11
+#: ../gtk/glade/dialog_upgrade.glade.h:9
 msgid "This behavior can be changed in the preferences later."
 msgstr "이 동작은 나중에 기본 설정에서 바꿀 수 있습니다."
+
+#: ../gtk/glade/dialog_upgrade.glade.h:10
+#, fuzzy
+msgid "_Default Upgrade"
+msgstr "기본 업그레이드"
+
+#: ../gtk/glade/dialog_upgrade.glade.h:11
+#, fuzzy
+msgid "_Smart Upgrade"
+msgstr "똑똑한 업그레이드"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"

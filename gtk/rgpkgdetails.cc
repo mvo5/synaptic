@@ -95,6 +95,25 @@ RGPkgDetailsWindow::formatDepInformation(vector<DepInformation> deps)
    return depStrings;
 }
 
+void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box, 
+                                             GdkEventButton *event, 
+                                             void *data)
+{
+   //cerr << "cbShowBigScreenshot" << endl;
+   RPackage *pkg = (RPackage *)data;
+
+   RGFetchProgress *status = new RGFetchProgress(NULL);;
+   pkgAcquire fetcher(status);
+   string filename = pkg->getScreenshotFile(&fetcher, false);
+   GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+   GtkWidget *win = gtk_dialog_new();
+   gtk_dialog_add_button(GTK_DIALOG(win), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+   gtk_widget_show(img);
+   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(win)->vbox), img);
+   gtk_dialog_run(GTK_DIALOG(win));
+   gtk_widget_destroy(win);
+}
+
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info*)data;
@@ -106,11 +125,15 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
    RGFetchProgress *status = new RGFetchProgress(NULL);;
    pkgAcquire fetcher(status);
    string filename = si->pkg->getScreenshotFile(&fetcher);
+   GtkWidget *event = gtk_event_box_new();
    GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-   gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview), GTK_WIDGET(img), si->anchor);
-   gtk_widget_show(img);
-
-   // no click on screenshot to open webbrowser because we run as root
+   gtk_container_add(GTK_CONTAINER(event), img);
+   g_signal_connect(G_OBJECT(event), "button_press_event", 
+                    G_CALLBACK(cbShowBigScreenshot), 
+                    (void*)si->pkg);
+   gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview), 
+                                     GTK_WIDGET(event), si->anchor);
+   gtk_widget_show_all(event);
 }
 
 void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, 

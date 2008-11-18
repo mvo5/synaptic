@@ -137,7 +137,7 @@ class RPackage {
    // get changelog file from the debian server 
    string getChangelogFile(pkgAcquire *fetcher);
    // get screenshot file from the debian server 
-   string getScreenshotFile(pkgAcquire *fetcher);
+   string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
 
    vector<string> provides();
 

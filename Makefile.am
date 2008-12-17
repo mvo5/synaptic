@@ -1,6 +1,6 @@
 # synaptic makefile
 
-SUBDIRS = data common gtk man pixmaps po help doc
+SUBDIRS = data common gtk tests man pixmaps po help doc
 
 EXTRA_DIST = config.h.in \
 	     synaptic.spec synaptic-suse.spec synaptic-redhat.spec \

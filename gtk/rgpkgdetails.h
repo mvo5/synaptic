@@ -36,12 +36,14 @@ class RGPkgDetailsWindow : public RGGladeWindow {
       GtkTextChildAnchor *anchor;
       GtkWidget *textview;
       RPackage *pkg;
+      bool thumb;
    };
 
    static vector<string> formatDepInformation(vector<DepInformation> deps);
    static void cbDependsMenuChanged(GtkWidget *self, void *data);
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbShowScreenshot(GtkWidget *button, void *data);
+   static void cbShowBigScreenshot(GtkWidget *button, GdkEventButton *event, void *data);
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);

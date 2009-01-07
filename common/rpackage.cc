@@ -818,7 +818,7 @@ void RPackage::setRemove(bool purge)
       _lister->notifyChange(this);
 }
 
-string RPackage::getScreenshotFile(pkgAcquire *fetcher)
+string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 {
    string descr("Screenshot for ");
    descr+=name();
@@ -830,15 +830,19 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher)
    if(verstr.find(':')!=verstr.npos)
       verstr=string(verstr, verstr.find(':')+1);
    char uri[512];
-   snprintf(uri,512,"http://screenshots.debian.net/thumbnail/%s", name());
+   if(thumb)
+      snprintf(uri,512,"http://screenshots.debian.net/thumbnail/%s", name());
+   else
+      snprintf(uri,512,"http://screenshots.debian.net/screenshot/%s", name());
 
-   cerr << "uri is: " << uri << endl;
+   //cerr << "uri is: " << uri << endl;
 
    string filename = RTmpDir()+"/tmp_sh";
    unlink(filename.c_str());
    new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
 
-   fetcher->Run();
+   int res = fetcher->Run();
+   //cerr << "res: " << res << endl;
 
    return filename;
 }

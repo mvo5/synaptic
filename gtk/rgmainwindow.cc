@@ -2280,7 +2280,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 				       GTK_BUTTONS_CLOSE,
 				       _("Repositories changed"));
       // TRANSLATORS: this message appears when the user added/removed 
-      // a repostiory (sources.list entry) a reload (apt-get udpate) is 
+      // a repository (sources.list entry) a reload (apt-get update) is 
       // needed then
       gchar *msgstr = _("The repository information "
 			"has changed. "

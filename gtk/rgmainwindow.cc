@@ -218,7 +218,7 @@ RPackage *RGMainWindow::selectedPackage()
    if (list == NULL) // Empty.
       return NULL;
 
-   // We are only interessted in the last element
+   // We are only interested in the last element
    li = g_list_last(list);
    gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
 
@@ -2479,7 +2479,7 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
       me->updatePackageInfo(NULL);
       return;
    }
-   // we are only interessted in the last element
+   // we are only interested in the last element
    li = g_list_last(li);
    gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
 

@@ -315,9 +315,11 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) {
       gtk_widget_hide(s);
       gtk_widget_show(d);
+      gtk_button_set_label(GTK_BUTTON(self),_("_Hide Details"));
    } else {
       gtk_widget_show(s);
       gtk_widget_hide(d);
+      gtk_button_set_label(GTK_BUTTON(self),_("_Show Details"));
    }
 }
 

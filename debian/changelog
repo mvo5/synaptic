@@ -1,10 +1,70 @@
-synaptic (0.62.2ubuntu3) UNRELEASED; urgency=low
+synaptic (0.62.5ubuntu1) jaunty; urgency=low
 
-  * debian/patches/02_ubuntu_desktop_file.dpatch:
+  * po/th.po:
+    - updated Thai translation (closes: #512605)
+  * gtk/rgdebinstallprogress.cc:
+    - if forkpty() show a propper error message
+      (thanks to Evan) 
+  * gtk/rgfetchprogress.cc:
+    - if the ETA is huge report it as unknown (LP: #322871)
+  * debian/control:
+    - add depends to hicolor-icon-theme
+    - rebuild against latest libapt/libept
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 09 Feb 2009 16:03:03 +0100
+
+synaptic (0.62.5) unstable; urgency=low
+
+  * gtk/rgsummarywindow.cc:
+    - fix "Show details" button label (LP: #4055)
+  * gtk/glade/window_summary.glade:
+    - fix layout issues (LP: #314905), thanks to
+      Gabor Kelemen
+  * po/sk.po:
+    - updated Slovak translation, closes: #500957
+  * po/br.po:
+    - add Breton language
+  * data/synaptic.desktop.in:
     - desktop file cleanups (thanks to Chris Coulson)
       LP: #298172
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Jan 2009 09:30:06 +0100
+ -- Michael Vogt <mvo@debian.org>  Tue, 20 Jan 2009 09:45:41 +0100
+
+synaptic (0.62.4) unstable; urgency=low
+
+  * help/C/synaptic.xml:
+    -  "preferences" -> "settings", closes: #406430
+  * po/sk.po:
+    - added Slovak translation, closes: #500957)
+  * po/zh_CN.po:
+    - updated translation, thanks to Deng Xiyue
+      closes: #458423
+  * po/fr.po: 
+    - fixed typo, thanks to Philippe Cloutier
+      closes: #440971
+    - fixed typo, thanks to Christophe Combelles
+      closes: #357302
+    - fixed typos, thanks to Filipus Klutiero
+      closes: #342643, #339134
+   * po/ca.po:
+     - fix catalan translation, closes: #383450
+   * typo fix, thanks to Philip Miller, closes: #358694
+   * typo and de.po fixes (thanks to Jens Seidel),
+     closes: #313831
+  * common/rinstallprogress.cc:
+    - fix typo and incorrect message (LP: #139760)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 07 Jan 2009 20:17:12 +0100
+
+synaptic (0.62.3) unstable; urgency=low
+
+  * gtk/rgpkgdetails.{cc,h}:
+    - download/show big image when clicking on the
+      thumbnail 
+  * debian/rules, .bzr-builddeb/default.conf
+    - bybye arch-build, hello "bzr-buildpackage"
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Nov 2008 20:35:18 +0100
 
 synaptic (0.62.2ubuntu2) jaunty; urgency=low
 
@@ -1024,7 +1084,7 @@ synaptic (0.55+cvs20050328-1) hoary; urgency=low
 synaptic (0.55+cvs20050323-1) hoary; urgency=low
   
   * new snapshot, expose the preferences file (used for version 
-    locking) so that udpate-notifer/update-manager can use it too
+    locking) so that update-notifer/update-manager can use it too
   * use 8pt font in the (hidden) terminal window in the installprogress
     window
 

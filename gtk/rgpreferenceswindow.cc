@@ -106,7 +106,7 @@ void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self,
    //cout << "void RGPreferencesWindow::cbRadioDistributionChanged()" << endl;
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
    
-   // we are only interessted in the active one
+   // we are only interested in the active one
    if(me->_blockAction || !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) 
       return;
    

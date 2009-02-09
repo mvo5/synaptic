@@ -218,7 +218,7 @@ RPackage *RGMainWindow::selectedPackage()
    if (list == NULL) // Empty.
       return NULL;
 
-   // We are only interessted in the last element
+   // We are only interested in the last element
    li = g_list_last(list);
    gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *) (li->data));
 
@@ -2345,7 +2345,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 				       GTK_BUTTONS_CLOSE,
 				       _("Repositories changed"));
       // TRANSLATORS: this message appears when the user added/removed 
-      // a repostiory (sources.list entry) a reload (apt-get udpate) is 
+      // a repository (sources.list entry) a reload (apt-get update) is 
       // needed then
       gchar *msgstr = _("The repository information "
 			"has changed. "
@@ -2545,7 +2545,7 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
       me->updatePackageInfo(NULL);
       return;
    }
-   // we are only interessted in the last element
+   // we are only interested in the last element
    li = g_list_last(li);
    gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *) (li->data));
 

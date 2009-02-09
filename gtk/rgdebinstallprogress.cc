@@ -29,6 +29,7 @@
 #include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <errno.h>
 
 #include "rgmainwindow.h"
 #include "gsynaptic.h"
@@ -588,7 +589,22 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
    // §""!%&§/ vte_terminal closes all our FDs 
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
 				    false,false,false);
-   if (_child_id == 0) {
+   if (_child_id < 0) {
+      cerr << "vte_terminal_forkpty() failed. " << strerror(errno) << endl;
+      res = pkgPackageManager::Failed;
+      GtkWidget *dialog;
+      dialog = gtk_message_dialog_new (GTK_WINDOW(window()),
+                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_CLOSE,
+                                       NULL);
+      gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), 
+                                     _("Error failed to fork pty"));
+      gtk_dialog_run(GTK_DIALOG(dialog));
+      gtk_widget_destroy(dialog);
+      return res;
+   }
+   else if (_child_id == 0) {
       int fd[2];
       pipe(fd);
       ipc_send_fd(fd[0]); // send the read part of the pipe to the parent

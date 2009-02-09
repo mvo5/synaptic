@@ -22,7 +22,7 @@ const char *transtable[][2] = {
    {"editors", _("Editors")},
    // TRANSLATORS: Alias for the Debian package section "electronics"
    {"electronics", _("Electronics")},
-   // TRANSLATORS: Alias for the Debian package section "emmbedded"
+   // TRANSLATORS: Alias for the Debian package section "embedded"
    {"embedded", _("Embedded Devices")},
    // TRANSLATORS: Alias for the Debian package section "games"
    {"games", _("Games and Amusement")},

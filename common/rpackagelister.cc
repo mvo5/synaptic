@@ -431,21 +431,40 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
    int xapian_age;
+   
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapainIndexNeedsUpdate()" << std::endl;
 
    // check the xapian index
    if(FileExists("/usr/sbin/update-apt-xapian-index") && 
       (!_textsearch || !_textsearch->hasData())) {
-      //std::cerr << "xapain index not build yet" << std::endl;
+      if(_config->FindB("Debug::Synaptic::Xapian",false))
+	 std::cerr << "xapain index not build yet" << std::endl;
       return true;
-   } else {
-      // we default to rebuild at most once a day
-      stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-      xapian_age = _config->FindI("Synaptic::xapianMaxAge",48);
-      if((_textsearch->timestamp()+(60*60*xapian_age)) < buf.st_mtime) {
-	 //std::cerr << "xapian outdated" << std::endl;
-	 return true;
-      }
+   } 
+
+   // check the count of packages in the xapian cache vs our packages
+   int xapian_count = _textsearch->db().get_doccount();
+   int pkg_count = _packages.size();
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapian_count: " << xapian_count
+		<< " pkg_count: " << pkg_count
+		<< std::endl;
+   // if xapian has much less documents than our cache, rebuild
+   static const int xapian_max_delta = 30;
+   if (xapian_count + xapian_max_delta < pkg_count)
+      return true;
+
+   // do a rebuild because of timestamp mismatches  at most once
+   // every two days
+   stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
+   xapian_age = _config->FindI("Synaptic::xapianMaxAge",48);
+   if((_textsearch->timestamp()+(60*60*xapian_age)) < buf.st_mtime) {
+      if(_config->FindB("Debug::Synaptic::Xapian",false))
+	 std::cerr << "xapian outdated more than " << xapian_age << std::endl;
+      return true;
    }
+
    return false;
 }
 

@@ -180,7 +180,7 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
    static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
    static gboolean xapianDoSearch(void *data);
-   void xapianDoIndexUpdate();
+   static gboolean xapianDoIndexUpdate(void *data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);

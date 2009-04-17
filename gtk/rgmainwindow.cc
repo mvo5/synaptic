@@ -815,24 +815,41 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    }
    g_value_unset(&value);
 
-#ifdef WITH_EPT
-   // updated the index if needed and we run not non-interactive mode
-   if(_lister->xapianIndexNeedsUpdate() &&
-      _config->FindB("Volatile::Non-Interactive", false) == false)
-      xapianDoIndexUpdate();
-#endif
+   xapianDoIndexUpdate(this);
 
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
 }
 
-void RGMainWindow::xapianDoIndexUpdate()
+#ifdef HAVE_EPT
+gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 {
-   //std::cerr << "xapianDoIndexUpdate()" << std::endl;
+   RGMainWindow *me = (RGMainWindow *) data;
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapianDoIndexUpdate()" << std::endl;
+
+   // no need to update if we run non-interactive
+   if(_config->FindB("Volatile::Non-Interactive", false) == true)
+      return false;
+
+   // check if we need a update
+   if(!me->_lister->xapianIndexNeedsUpdate()) {
+      // if the cache is not open, check back when it is
+      if (me->_lister->packagesSize() == 0)
+	 g_timeout_add_seconds(30, xapianDoIndexUpdate, me);
+      return false;
+   }
+
    // do not run if we don't have it
    if(!FileExists("/usr/sbin/update-apt-xapian-index"))
-      return;
+      return false;
+   // no permission
+   if (getuid() != 0)
+      return false;
 
+   // if we make it to this point, we need a xapian update
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "running update-apt-xapian-index" << std::endl;
    GPid pid;
    char *argp[] = {"/usr/bin/nice",
 		   "/usr/sbin/update-apt-xapian-index", 
@@ -841,12 +858,19 @@ void RGMainWindow::xapianDoIndexUpdate()
    if(g_spawn_async(NULL, argp, NULL, 
 		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
 		    NULL, NULL, &pid, NULL)) {
-      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, this);
-      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
+      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
 							"label_fast_search")),
 			 _("Rebuilding search index"));
    }
+   return false;
 }
+#else
+gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
+{
+   return false;
+}
+#endif
 
 void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 {
@@ -2982,6 +3006,9 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
+
+   // check if the index needs to be rebuild
+   me->xapianDoIndexUpdate(me);
 
    me->setTreeLocked(FALSE);
    me->refreshTable();

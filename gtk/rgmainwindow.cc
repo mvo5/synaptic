@@ -821,7 +821,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    RGPreferencesWindow::applyProxySettings();
 }
 
-#ifdef HAVE_EPT
+#ifdef WITH_EPT
 gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;

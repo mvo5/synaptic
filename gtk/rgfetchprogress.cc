@@ -317,6 +317,9 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
 
    unsigned long ETA =
       (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);
+   // if the ETA is greater than two weeks, show unknown time
+   if (ETA > 14*24*60*60)
+      ETA = 0;
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
    gchar *s;
    if (CurrentCPS != 0 && ETA != 0) {

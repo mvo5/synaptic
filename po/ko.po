@@ -1,16 +1,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Son, Kyeong-uk <hey@gnome.or.kr>, 2005.
-# Changwoo Ryu <cwryu@debian.org>, 2005-2006.
-#
-#
+# Changwoo Ryu <cwryu@debian.org>, 2005, 2006, 2007.
+# 
+# 
 # 새로운 번역자가 업데이트하면 translator-credits에 이름, 메일 주소 추가하세요.
-#
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.57.7.1\n"
+"Project-Id-Version: synaptic 0.61\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 21:38+0200\n"
-"PO-Revision-Date: 2006-01-09 03:11+0900\n"
+"PO-Revision-Date: 2007-12-28 12:04+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "알 수 없음"
 #. TRANSLATORS: Alias for the Debian package section "alien"
 #: ../common/sections_trans.cc:80
 msgid "Converted From RPM by Alien"
-msgstr "Alien으로 RPM에서 변환한 것"
+msgstr "alien으로 RPM에서 변환"
 
 #. TRANSLATORS: Ubuntu translations section
 #: ../common/sections_trans.cc:82
@@ -205,7 +205,7 @@ msgstr "국제화 및 지역화"
 #: ../common/sections_trans.cc:87 ../common/sections_trans.cc:105
 #: ../common/sections_trans.cc:109
 msgid "Restricted On Export"
-msgstr "수출 제한"
+msgstr "미국에서 수출 제한"
 
 #. TRANSLATORS: Alias for the Debian package section "non free"
 #: ../common/sections_trans.cc:89 ../common/sections_trans.cc:106
@@ -216,7 +216,7 @@ msgstr "자유 아님"
 #. Free software that depends on non-free software
 #: ../common/sections_trans.cc:92 ../common/sections_trans.cc:110
 msgid "contrib"
-msgstr "자유 아님에 의존"
+msgstr "자유 제한적"
 
 #: ../common/indexcopy.cc:51 ../common/rpmindexcopy.cc:75
 #, c-format
@@ -311,13 +311,13 @@ msgstr "디스크를 읽고 있습니다..."
 
 #: ../common/rcdscanner.cc:316
 msgid "Cleaning package lists..."
-msgstr "꾸러미 목록을 지우고 있습니다..."
+msgstr "패키지 목록을 지우고 있습니다..."
 
 #: ../common/rcdscanner.cc:329
 msgid ""
 "Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr ""
-"꾸러미 파일이 없습니다. APT에서 사용할 수 있는 디스크가 아닌 것 같습니다."
+"패키지 파일이 없습니다. APT에서 사용할 수 있는 디스크가 아닌 것 같습니다."
 
 #: ../common/rcdscanner.cc:380
 msgid "Disc not successfully scanned."
@@ -333,7 +333,7 @@ msgstr "디스크를 등록하는 중입니다..."
 
 #: ../common/rcdscanner.cc:401
 msgid "Copying package lists..."
-msgstr "꾸러미 목록을 복사하는 중입니다..."
+msgstr "패키지 목록을 복사하는 중입니다..."
 
 #: ../common/rcdscanner.cc:410
 msgid "Writing sources list..."
@@ -363,11 +363,11 @@ msgstr "%s 디렉토리를 읽을 수 없습니다"
 #: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
-msgstr "오류: %s 파일을 읽기 모드로 열 수 없습니다"
+msgstr "오류: %s 파일을 쓰기 모드로 열 수 없습니다"
 
 #: ../common/rconfiguration.cc:114
 msgid "ERROR: Could not get password entry for superuser"
-msgstr "오류: 수퍼유저의 열쇠글 엔트리를 얻을 수 없습니다"
+msgstr "오류: 수퍼유저의 암호 엔트리를 얻을 수 없습니다"
 
 #: ../common/rconfiguration.cc:123
 #, c-format
@@ -408,6 +408,9 @@ msgid ""
 "Not all changes and updates succeeded. For further details of the the "
 "failure, please expand the 'terminal' panel below."
 msgstr ""
+"\n"
+"변경 사항 및 업데이트중에 성공하지 못한 사항이 있습니다. 실패한 사항에 대해 "
+"자세한 정보를 보려면, 아래의 '터미널' 패널을 보십시오."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -416,12 +419,12 @@ msgid ""
 "installation with the next medium close this window."
 msgstr ""
 "\n"
-"현재 미디어에 있는 꾸러미의 설치가 모두 끝났습니다. 다음 미디어에서 설치를 계"
+"현재 미디어에 있는 패키지의 설치가 모두 끝났습니다. 다음 미디어에서 설치를 계"
 "속하려면 이 창을 닫으십시오."
 
 #: ../common/rpackage.cc:203
 msgid "The list of installed files is only available for installed packages"
-msgstr "설치한 파일의 목록은 설치한 꾸러미의 경우에만 알 수 있습니다"
+msgstr "설치한 파일의 목록은 설치한 패키지의 경우에만 알 수 있습니다"
 
 #: ../common/rpackage.cc:424
 msgid "or dependency"
@@ -437,8 +440,8 @@ msgid ""
 "sources.list\n"
 msgstr ""
 "\n"
-"%s 꾸러미는 사용할 수 있는 버전이 없지만, 데이터베이스에는 들어 있습니다.\n"
-"이 경우는 꾸러미를 의존성에만 언급하고 꾸러미를 올리지 않았거나, 사라진 꾸러"
+"%s 패키지는 사용할 수 있는 버전이 없지만, 데이터베이스에는 들어 있습니다.\n"
+"이 경우는 패키지를 의존성에만 언급하고 패키지를 올리지 않았거나, 사라진 꾸러"
 "미이거나, sources.list에 있는 저장소에는 안 들어 있다는 뜻입니다.\n"
 
 #. TRANSLATORS: dependency error message, example:
@@ -446,49 +449,49 @@ msgstr ""
 #: ../common/rpackage.cc:575
 #, c-format
 msgid "\t%s %s but %s is to be installed"
-msgstr "\t%s %s, 하지만 %s 꾸러미를 설치할 예정입니다"
+msgstr "\t%s %s, 하지만 %s 패키지를 설치할 예정입니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
 #: ../common/rpackage.cc:581
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
-msgstr "%s: %s %s, 하지만 %s 꾸러미를 설치할 예정입니다"
+msgstr "%s: %s %s, 하지만 %s 패키지를 설치할 예정입니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
 #: ../common/rpackage.cc:591
 #, c-format
 msgid "\t%s %s but it is not installable"
-msgstr "\t%s %s, 하지만 이 꾸러미를 설치할 수 없습니다"
+msgstr "\t%s %s, 하지만 이 패키지를 설치할 수 없습니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
 #: ../common/rpackage.cc:603
 #, c-format
 msgid "\t%s but it is a virtual package"
-msgstr "\t%s, 하지만 이 꾸러미가 가상 꾸러미입니다"
+msgstr "\t%s, 하지만 이 패키지가 가상 패키지입니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
 #: ../common/rpackage.cc:608
 #, c-format
 msgid "%s: %s but it is a virtual package"
-msgstr "%s: %s, 하지만 이 꾸러미가 가상 꾸러미입니다"
+msgstr "%s: %s, 하지만 이 패키지가 가상 패키지입니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
 #: ../common/rpackage.cc:613
 #, c-format
 msgid "\t%s but it is not going to be installed"
-msgstr "\t%s, 하지만 이 꾸러미는 설치하지 않습니다"
+msgstr "\t%s, 하지만 이 패키지는 설치하지 않습니다"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
 #: ../common/rpackage.cc:618
 #, c-format
 msgid "%s: %s but it is not going to be installed"
-msgstr "%s: %s, 하지만 이 꾸러미는 설치하지 않습니다"
+msgstr "%s: %s, 하지만 이 패키지는 설치하지 않습니다"
 
 #: ../common/rpackage.cc:637
 msgid " or"
@@ -496,7 +499,7 @@ msgstr " 또는"
 
 #: ../common/rpackage.cc:925
 msgid "Invalid record in the preferences file, no Package header"
-msgstr "기본설정 파일에 꾸러미 헤더가 없는 잘못된 내용이 있습니다"
+msgstr "기본 설정 파일에 패키지 헤더가 없는 잘못된 내용이 있습니다"
 
 #: ../common/rpackage.cc:1308
 msgid "Marked for installation"
@@ -596,7 +599,7 @@ msgstr ""
 
 #: ../common/rpackagecache.cc:73
 msgid "The package lists or status file could not be parsed or opened."
-msgstr "꾸러미 목록이나 상태 파일을 해석할 수 없거나 열 수 없습니다."
+msgstr "패키지 목록이나 상태 파일을 해석할 수 없거나 열 수 없습니다."
 
 #: ../common/rpackagecache.cc:108
 msgid "Internal Error, non-zero counts"
@@ -739,15 +742,15 @@ msgstr ""
 
 #: ../common/rpackagelister.cc:1454
 msgid "Some of the packages could not be retrieved from the server(s).\n"
-msgstr "서버에서 일부 꾸러미를 받아올 수 없었습니다.\n"
+msgstr "서버에서 일부 패키지를 받아올 수 없었습니다.\n"
 
 #: ../common/rpackagelister.cc:1457
 msgid "Do you want to continue, ignoring these packages?"
-msgstr "이 꾸러미를 무시하고 계속 진행하겠습니까?"
+msgstr "이 패키지를 무시하고 계속 진행하겠습니까?"
 
 #: ../common/rpackagelister.cc:1464
 msgid "Unable to correct missing packages"
-msgstr "없어진 꾸러미를 바로잡을 수 없습니다"
+msgstr "없어진 패키지를 바로잡을 수 없습니다"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
 #: ../common/rpackagelister.cc:1602
@@ -756,7 +759,7 @@ msgid ""
 "Removed the following ESSENTIAL packages:\n"
 msgstr ""
 "\n"
-"다음 \"필수\" 꾸러미를 지웠습니다:\n"
+"다음 \"필수\" 패키지를 지웠습니다:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1611
@@ -765,7 +768,7 @@ msgid ""
 "Downgraded the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 다운그레이드했습니다:\n"
+"다음 패키지를 다운그레이드했습니다:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1620
@@ -774,7 +777,7 @@ msgid ""
 "Completely removed the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 완전히 지웠습니다:\n"
+"다음 패키지를 완전히 지웠습니다:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1629
@@ -783,7 +786,7 @@ msgid ""
 "Removed the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 지웠습니다:\n"
+"다음 패키지를 지웠습니다:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1638
@@ -792,7 +795,7 @@ msgid ""
 "Upgraded the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 업그레이드했습니다:\n"
+"다음 패키지를 업그레이드했습니다:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1649
@@ -801,7 +804,7 @@ msgid ""
 "Installed the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 설치했습니다:\n"
+"다음 패키지를 설치했습니다:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1659
@@ -810,11 +813,11 @@ msgid ""
 "Reinstalled the following packages:\n"
 msgstr ""
 "\n"
-"다음 꾸러미를 다시 설치했습니다:\n"
+"다음 패키지를 다시 설치했습니다:\n"
 
 #: ../common/rpackagelister.cc:1676
 msgid "Unable to lock the download directory"
-msgstr "내려받기 디렉토리를 짐글 수 없습니다"
+msgstr "다운로드 디렉토리를 잠글 수 없습니다"
 
 #: ../common/rpackagelister.cc:1760
 #, c-format
@@ -848,7 +851,7 @@ msgstr "찾기 기록"
 
 #: ../common/rpackageview.h:209
 msgid "Custom"
-msgstr "사용자 설정"
+msgstr "사용자 정의"
 
 #: ../common/rpackageview.cc:129
 msgid "Installed (unsupported)"
@@ -859,14 +862,12 @@ msgid "Not installed (unsupported)"
 msgstr "설치하지 않음 (지원하지 않음)"
 
 #: ../common/rpackageview.cc:143
-#, fuzzy
 msgid "Installed (auto removable)"
-msgstr "설치함 (업그레이드 가능)"
+msgstr "설치함 (자동 지우기)"
 
 #: ../common/rpackageview.cc:149
-#, fuzzy
 msgid "Broken dependencies"
-msgstr "의존성"
+msgstr "의존성 망가짐"
 
 #: ../common/rpackageview.cc:151 ../gtk/glade/window_filters.glade.h:37
 msgid "New in repository"
@@ -875,19 +876,19 @@ msgstr "저장소에 새로 들어옴"
 # pinning이라는 건 apt에서 사용하는 용어인데 뭐라고 해야 할지....  apt 맨페이지 참고.
 #: ../common/rpackageview.cc:153 ../gtk/glade/window_filters.glade.h:53
 msgid "Pinned"
-msgstr "방향 고정됨"
+msgstr "고정"
 
 #: ../common/rpackageview.cc:157
 msgid "Installed (local or obsolete)"
-msgstr "설치함 (로컬 혹은 사라짐)"
+msgstr "설치함 (로컬 패키지 또는 사라진 패키지)"
 
 #: ../common/rpackageview.cc:163
 msgid "Not installed (residual config)"
-msgstr "설치하지 않음 (설정 남음)"
+msgstr "설치하지 않음 (설정 남아 있음)"
 
 #: ../common/rpackageview.cc:441
 msgid "Search Filter"
-msgstr "찾기 거르게"
+msgstr "찾기 필터"
 
 #: ../common/rpackageview.cc:449
 msgid "Tasks"
@@ -906,7 +907,7 @@ msgstr "변경 사항 표시"
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:483
 msgid "Package with Debconf"
-msgstr "Debconf 사용하는 꾸러미"
+msgstr "Debconf 사용하는 패키지"
 
 #: ../common/rpackageview.cc:490 ../gtk/glade/window_filters.glade.h:66
 msgid "Upgradable (upstream)"
@@ -914,7 +915,7 @@ msgstr "업그레이드 가능 (상위 개발)"
 
 #: ../common/rpackageview.cc:499
 msgid "Local"
-msgstr ""
+msgstr "로컬"
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2100
 #: ../gtk/rgmainwindow.cc:2769 ../gtk/rgmainwindow.cc:2855
@@ -931,7 +932,7 @@ msgstr "%s번 줄에 문법 오류"
 #: ../common/rsources.cc:469
 #, c-format
 msgid "Vendor block %s is invalid"
-msgstr "꾸러미 공급자 부분 %s이(가) 잘못되었습니다"
+msgstr "패키지 공급자 부분 %s이(가) 잘못되었습니다"
 
 #: ../gtk/gsynaptic.cc:72
 msgid "Usage: synaptic [options]\n"
@@ -947,7 +948,7 @@ msgstr "-r   저장소 화면을 엽니다\n"
 
 #: ../gtk/gsynaptic.cc:75
 msgid "-f=? Give an alternative filter file\n"
-msgstr "-f=? 다른 거르개 파일을 지정합니다\n"
+msgstr "-f=? 다른 필터 파일을 지정합니다\n"
 
 #: ../gtk/gsynaptic.cc:76
 msgid ""
@@ -958,7 +959,7 @@ msgstr ""
 
 #: ../gtk/gsynaptic.cc:77
 msgid "-i=? Start with the initial Filter with given name\n"
-msgstr "-i=? 지정한 이름의 거르개로 시작합니다\n"
+msgstr "-i=? 주어진 이름의 필터로 시작합니다\n"
 
 #: ../gtk/gsynaptic.cc:78
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
@@ -995,7 +996,7 @@ msgstr "--ask-cdrom CD-ROM을 더하고 끝냅니다\n"
 
 #: ../gtk/gsynaptic.cc:86
 msgid "--test-me-harder  Run test in a loop\n"
-msgstr ""
+msgstr "--test-me-harder  반복문에서 테스트를 실행합니다\n"
 
 #: ../gtk/gsynaptic.cc:335 ../gtk/gsynaptic.cc:341
 msgid "Another synaptic is running"
@@ -1023,22 +1024,25 @@ msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) is already running. Please close that application first."
 msgstr ""
-"다른 꾸러미 관리 프로그램이 (예를 들어 apt-get이나 aptitude) 실행 중이라는 뜻"
+"다른 패키지 관리 프로그램이 (예를 들어 apt-get이나 aptitude) 실행 중이라는 뜻"
 "입니다. 해당 프로그램을 먼저 닫으십시오."
 
 #: ../gtk/gsynaptic.cc:411
 msgid "Starting without administrative privileges"
-msgstr ""
+msgstr "관리 권한 없이 시작합니다"
 
 #: ../gtk/gsynaptic.cc:413
+#, fuzzy
 msgid ""
 "You will not be able to apply any changes. But you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
+"변경한 사항을 적용할 수 없을 것입니다. 하지만 표시한 사항을 가져올 수 있고, "
+"다운로드 스크립트를 만들 수도 있습니다."
 
 #: ../gtk/gsynaptic.cc:479
 msgid "Synaptic Package Manager "
-msgstr "시냅틱 꾸러미 관리자 "
+msgstr "시냅틱 패키지 관리자 "
 
 #: ../gtk/rgcdscanner.cc:63 ../gtk/rgpkgcdrom.cc:86
 msgid "Scanning CD-ROM"
@@ -1063,7 +1067,7 @@ msgstr "시냅틱 정보"
 
 #: ../gtk/rgchangeswindow.cc:53
 msgid "Package changes"
-msgstr "꾸러미 변경 사항"
+msgstr "패키지 변경 사항"
 
 #: ../gtk/rgchangeswindow.cc:94 ../gtk/rgsummarywindow.cc:79
 msgid "Warning"
@@ -1123,8 +1127,8 @@ msgid ""
 "package maintainers version? "
 msgstr ""
 "%s 설정 파일을 수정했습니다. (직접 수정했거나 스크립트가 수정) 업데이트한 버"
-"전의 설정 파일이 이 꾸러미에 들어 있습니다. 현재 버전을 유지하려면 '유지'를 "
-"선택하십시오. 현재 파일을 덮어 써서 새로운 꾸러미에 들어 있는 메인테이너 버전"
+"전의 설정 파일이 이 패키지에 들어 있습니다. 현재 버전을 유지하려면 '유지'를 "
+"선택하십시오. 현재 파일을 덮어 써서 새로운 패키지에 들어 있는 메인테이너 버전"
 "을 설치하시겠습니까?"
 
 #: ../gtk/rgdebinstallprogress.cc:366 ../gtk/rginstallprogress.cc:286
@@ -1142,18 +1146,18 @@ msgid ""
 "This will abort the operation and may leave the system in a broken state. "
 "Are you sure you want to do that?"
 msgstr ""
-"이 꾸러미를 지우면 시스템을 사용할 수 없게 될 수도 있습니다.\n"
-"정말로 이 꾸러미를 지우시겠습니까?"
+"이 패키지를 지우면 시스템을 사용할 수 없게 될 수도 있습니다.\n"
+"정말로 이 패키지를 지우시겠습니까?"
 
 #. error from dpkg, needs to be parsed different
 #: ../gtk/rgdebinstallprogress.cc:503
 #, c-format
 msgid "Error in package %s"
-msgstr "%s 꾸러미에 오류"
+msgstr "%s 패키지에 오류"
 
 #: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
-msgstr ""
+msgstr "패키지를 설치하는 데 실패했습니다. 복구 시도합니다:"
 
 #: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
@@ -1185,7 +1189,7 @@ msgstr "지원함"
 
 #: ../gtk/rgpreferenceswindow.cc:48 ../gtk/glade/window_filters.glade.h:45
 msgid "Package Name"
-msgstr "꾸러미 이름"
+msgstr "패키지 이름"
 
 #: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgmainwindow.cc:951
 msgid "Installed Version"
@@ -1201,7 +1205,7 @@ msgstr "설치한 크기"
 
 #: ../gtk/rgpreferenceswindow.cc:50
 msgid "Download Size"
-msgstr "내려받기 크기"
+msgstr "다운로드 크기"
 
 #: ../gtk/rgpreferenceswindow.cc:406 ../gtk/rgmainwindow.cc:1765
 #: ../gtk/rgterminstallprogress.cc:151
@@ -1223,9 +1227,9 @@ msgid ""
 "package version will follow that distribution until it enters the default "
 "distribution."
 msgstr ""
-"꾸러미를 업그레이드할 때 선택한 배포판에 있는 버전을 우선으로 합니다. 다른 배"
+"패키지를 업그레이드할 때 선택한 배포판에 있는 버전을 우선으로 합니다. 다른 배"
 "포판에서 특정 버전을 수동으로 강제로 설치할 경우, 다시 기본 배포판을 입력할 "
-"때까지는 해당 꾸러미의 버전은 그 배포판을 따라갑니다."
+"때까지는 해당 패키지의 버전은 그 배포판을 따라갑니다."
 
 #: ../gtk/rgpreferenceswindow.cc:994
 #, fuzzy
@@ -1235,8 +1239,8 @@ msgid ""
 "force a version the package version will follow the chosen distribution."
 msgstr ""
 "새 버전으로 자동 업그레이드하지 않습니다. 이 옵션은 _매우_ 주의해야 합니다. "
-"보안 업데이트를 자동으로 받을 수 없을 지도 모릅니다. 꾸러미의 특정 버전을 수"
-"동으로 강제로 설치할 경우, 해당 꾸러미의 선택한 배포판을 따라갑니다."
+"보안 업데이트를 자동으로 받을 수 없을 지도 모릅니다. 패키지의 특정 버전을 수"
+"동으로 강제로 설치할 경우, 해당 패키지의 선택한 배포판을 따라갑니다."
 
 #: ../gtk/rgpreferenceswindow.cc:1002
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
@@ -1259,7 +1263,7 @@ msgstr "크기"
 
 #: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:886
 msgid "Package"
-msgstr "꾸러미"
+msgstr "패키지"
 
 #: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
@@ -1279,16 +1283,16 @@ msgstr ""
 #: ../gtk/rgfetchprogress.cc:323
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "내려받기 속도: %s/초 - %s 남음"
+msgstr "다운로드 속도: %s/s - %s 남음"
 
 #: ../gtk/rgfetchprogress.cc:329
 msgid "Download rate: unknown"
-msgstr "내려받기 속도: 알 수 없음"
+msgstr "다운로드 속도: 알 수 없음"
 
 #: ../gtk/rgfetchprogress.cc:331
 #, c-format
 msgid "Downloading file %li of %li"
-msgstr "%2$li개 중 %1$li번째 파일을 내려받는 중입니다"
+msgstr "%2$li개 중 %1$li번째 파일을 다운로드하는 중입니다"
 
 #: ../gtk/rgfetchprogress.cc:409
 msgid "Queued"
@@ -1308,7 +1312,7 @@ msgstr "실패"
 
 #: ../gtk/rgfiltermanager.cc:40 ../gtk/glade/window_filters.glade.h:24
 msgid "Filters"
-msgstr "거르개"
+msgstr "필터"
 
 #: ../gtk/rgfiltermanager.cc:165
 msgid "Field"
@@ -1321,12 +1325,12 @@ msgstr "연산자"
 #: ../gtk/rgfiltermanager.cc:750
 #, c-format
 msgid "New Filter %i"
-msgstr "새 거르개 %i"
+msgstr "새 필터 %i"
 
 #: ../gtk/rginstallprogress.cc:44
 #: ../gtk/glade/window_rginstall_progress_msgs.glade.h:2
 msgid "Package Manager output"
-msgstr "꾸러미 관리자 출력"
+msgstr "패키지 관리자 출력"
 
 #: ../gtk/rginstallprogress.cc:85
 #, c-format
@@ -1336,7 +1340,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"%s 꾸러미 설치를 준비하는 중에:\n"
+"%s 패키지 설치를 준비하는 중에:\n"
 "\n"
 
 #: ../gtk/rginstallprogress.cc:89
@@ -1371,11 +1375,11 @@ msgstr "해당 표현식을 찾았습니다. 왼쪽 목록에서 해당하는 �
 #: ../gtk/rgpkgdetails.cc:105
 #, c-format
 msgid "%s Properties"
-msgstr "%s 등록 정보"
+msgstr "%s 속성"
 
 #: ../gtk/rgpkgdetails.cc:170
 msgid "This application is supported by the distribution"
-msgstr ""
+msgstr "이 프로그램은 배포판이 지원합니다"
 
 #. TRANSLATORS: this the format of the available versions in
 #. the "Properties/Available versions" window
@@ -1393,7 +1397,7 @@ msgstr "모두"
 #: ../gtk/rgmainwindow.cc:358 ../gtk/glade/window_main.glade.h:34
 #: ../gtk/glade/window_details.glade.h:19
 msgid "No package is selected.\n"
-msgstr "꾸러미를 선택하지 않았습니다.\n"
+msgstr "패키지를 선택하지 않았습니다.\n"
 
 #: ../gtk/rgmainwindow.cc:518
 #, c-format
@@ -1406,7 +1410,7 @@ msgid ""
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
-"꾸러미 관리자는 사용 가능한 버전 중에서 언제나 가장 사용할 만한 버전을 선택합"
+"패키지 관리자는 사용 가능한 버전 중에서 언제나 가장 사용할 만한 버전을 선택합"
 "니다. 기본 버전과 다른 버전을 강제로 설치할 경우, 의존성 처리에 오류가 발생"
 "할 수도 있습니다."
 
@@ -1421,14 +1425,14 @@ msgstr "최신 버전"
 
 #: ../gtk/rgmainwindow.cc:1014
 msgid "Download"
-msgstr "내려받기"
+msgstr "다운로드"
 
 #: ../gtk/rgmainwindow.cc:1283
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
 msgstr ""
-"꾸러미 정보를 새로 고쳐서 새로운 꾸러미, 지운 꾸러미, 업그레이드한 꾸러미를 "
+"패키지 정보를 새로 고쳐서 새로운 패키지, 지운 패키지, 업그레이드한 패키지를 "
 "알아 냅니다."
 
 #: ../gtk/rgmainwindow.cc:1289
@@ -1474,7 +1478,7 @@ msgstr "현재 버전 고정"
 #: ../gtk/rgmainwindow.cc:1549 ../gtk/glade/window_main.glade.h:37
 #: ../gtk/glade/window_filters.glade.h:55
 msgid "Properties"
-msgstr "등록 정보"
+msgstr "속성"
 
 #: ../gtk/rgmainwindow.cc:1561
 msgid "Mark Recommended for Installation"
@@ -1489,8 +1493,8 @@ msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
 msgstr ""
-"이 꾸러미를 지우면 시스템을 사용할 수 없게 될 수도 있습니다.\n"
-"정말로 이 꾸러미를 지우시겠습니까?"
+"이 패키지를 지우면 시스템을 사용할 수 없게 될 수도 있습니다.\n"
+"정말로 이 패키지를 지우시겠습니까?"
 
 #: ../gtk/rgmainwindow.cc:1709
 #, c-format
@@ -1498,7 +1502,7 @@ msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %s will be freed"
 msgstr ""
-"%i개 꾸러미 목록, %i개 설치됨, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지"
+"%i개 패키지 목록, %i개 설치됨, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지"
 "울 예정; %s만큼의 용량 확보 예정"
 
 #: ../gtk/rgmainwindow.cc:1715
@@ -1507,7 +1511,7 @@ msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove; %s will be used"
 msgstr ""
-"%i개 꾸러미 목록, %i개 설치, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지울 "
+"%i개 패키지 목록, %i개 설치, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지울 "
 "예정; %s만큼의 용량 더 차지 예정"
 
 #: ../gtk/rgmainwindow.cc:1721
@@ -1516,7 +1520,7 @@ msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
 "remove"
 msgstr ""
-"%i개 꾸러미 목록, %i개 설치, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지울 "
+"%i개 패키지 목록, %i개 설치, %i개 깨짐. %i개 설치/업그레이드 예정, %i개 지울 "
 "예정"
 
 #: ../gtk/rgmainwindow.cc:1782
@@ -1530,28 +1534,28 @@ msgid_plural ""
 "\n"
 "Use the \"Broken\" filter to locate them."
 msgstr[0] ""
-"시스템에 깨진 꾸러미가 %d개 있습니다!\n"
+"시스템에 깨진 패키지가 %d개 있습니다!\n"
 "\n"
-"\"깨짐\" 거르개로 찾아 보십시오."
+"\"깨짐\" 필터로 찾아 보십시오."
 
 #: ../gtk/rgmainwindow.cc:1945
 #, fuzzy
 msgid "Downloading Changelog"
-msgstr "변경 사항 기록 내려받기"
+msgstr "변경 사항 기록 다운로드"
 
 #: ../gtk/rgmainwindow.cc:1946
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
 msgstr ""
-"변경 사항 기록에는 꾸러미의 각 버전별로 변경 사항과 해결한 문제점에 대한 정보"
+"변경 사항 기록에는 패키지의 각 버전별로 변경 사항과 해결한 문제점에 대한 정보"
 "가 들어 있습니다."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: ../gtk/rgmainwindow.cc:1959
 #, c-format
 msgid "%s Changelog"
-msgstr "%s 꾸러미의 변경 사항 기록"
+msgstr "%s 패키지의 변경 사항 기록"
 
 #: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
@@ -1597,7 +1601,7 @@ msgstr "이 메세지를 다시 표시하지 않기"
 #: ../gtk/rgmainwindow.cc:2336
 #, c-format
 msgid "Found %i packages"
-msgstr "%i개 꾸러미 있음"
+msgstr "%i개 패키지 있음"
 
 #: ../gtk/rgmainwindow.cc:2377
 msgid "Starting help viewer..."
@@ -1627,22 +1631,22 @@ msgid ""
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
-"먼저 필요한 'libgnome2-perl' 꾸러미를 설치해야 합니다."
+"먼저 필요한 'libgnome2-perl' 패키지를 설치해야 합니다."
 
 #: ../gtk/rgmainwindow.cc:2555
 msgid "Starting package configuration tool..."
-msgstr "꾸러미 설정 도구를 시작하고 있습니다..."
+msgstr "패키지 설정 도구를 시작하고 있습니다..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
 #: ../gtk/rgmainwindow.cc:2570
 msgid "Starting package documentation viewer..."
-msgstr "꾸러미 문서 보기 프로그램을 시작하고 있습니다..."
+msgstr "패키지 문서 보기 프로그램을 시작하고 있습니다..."
 
 #: ../gtk/rgmainwindow.cc:2582
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
-msgstr "꾸러미의 문서를 보려면 \"dwww\" 꾸러미를 설치해야 합니다"
+msgstr "패키지의 문서를 보려면 \"dwww\" 패키지를 설치해야 합니다"
 
 #: ../gtk/rgmainwindow.cc:2651
 msgid ""
@@ -1650,7 +1654,7 @@ msgid ""
 "Fix broken packages first."
 msgstr ""
 "변경 사항을 적용할 수 없습니다!\n"
-"먼저 깨진 꾸러미를 고치십시오."
+"먼저 깨진 패키지를 고치십시오."
 
 #: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
@@ -1659,7 +1663,7 @@ msgstr "표시된 변경 사항을 적용하는 중입니다. 시간이 좀 걸�
 #: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
 msgid "Downloading Package Files"
-msgstr "꾸러미 파일을 내려받고 있습니다"
+msgstr "패키지 파일을 다운로드하고 있습니다"
 
 #: ../gtk/rgmainwindow.cc:2752
 msgid "Do you want to quit Synaptic?"
@@ -1668,19 +1672,19 @@ msgstr "시냅틱을 끝내시겠습니까?"
 #: ../gtk/rgmainwindow.cc:2808
 #, fuzzy
 msgid "Downloading Package Information"
-msgstr "꾸러미 정보를 내려받는 중입니다"
+msgstr "패키지 정보를 다운로드하는 중입니다"
 
 #: ../gtk/rgmainwindow.cc:2809
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr ""
-"저장소에 새로운 꾸러미, 지워진 꾸러미, 업그레이드한 꾸러미가 있는 지 검사합니"
+"저장소에 새로운 패키지, 지워진 패키지, 업그레이드한 패키지가 있는 지 검사합니"
 "다<."
 
 #: ../gtk/rgmainwindow.cc:2812
 msgid "Reloading package information..."
-msgstr "꾸러미 정보를 다시 읽어들이고 있습니다..."
+msgstr "패키지 정보를 다시 읽어들이고 있습니다..."
 
 #: ../gtk/rgmainwindow.cc:2880
 msgid "Failed to resolve dependency problems!"
@@ -1696,7 +1700,7 @@ msgid ""
 "Fix broken packages first."
 msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
-"먼저 깨진 꾸러미를 고치십시오."
+"먼저 깨진 패키지를 고치십시오."
 
 #: ../gtk/rgmainwindow.cc:2947
 msgid "Marking all available upgrades..."
@@ -1730,7 +1734,7 @@ msgid ""
 msgstr ""
 "\"universe\" 구성 요소를 더합니다.\n"
 "\n"
-" 이 안에 있는 꾸러미는 지원하지 않습니다. 정말로 \"universe\"를 더하시겠습니"
+" 이 안에 있는 패키지는 지원하지 않습니다. 정말로 \"universe\"를 더하시겠습니"
 "까?"
 
 #: ../gtk/rgrepositorywin.cc:124 ../gtk/glade/window_repositories.glade.h:3
@@ -1748,7 +1752,7 @@ msgstr "종류"
 #: ../gtk/rgrepositorywin.cc:168 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:80
 msgid "Vendor"
-msgstr "꾸러미 공급자"
+msgstr "패키지 공급자"
 
 #: ../gtk/rgrepositorywin.cc:191 ../gtk/glade/window_preferences.glade.h:36
 msgid "Distribution"
@@ -1769,7 +1773,7 @@ msgstr "소스 (deb-src)"
 #: ../gtk/rgrepositorywin.cc:267 ../gtk/rgrepositorywin.cc:409
 #: ../gtk/glade/window_repositories.glade.h:1
 msgid "(no vendor)"
-msgstr "(꾸러미 공급자 없음)"
+msgstr "(패키지 공급자 없음)"
 
 #: ../gtk/rgrepositorywin.cc:363
 msgid "Cannot read vendors.list file"
@@ -1802,38 +1806,38 @@ msgstr "변경 사항 없음"
 #: ../gtk/rgsummarywindow.cc:245
 #, c-format
 msgid "<b>%s</b> (<b>essential</b>) will be removed\n"
-msgstr "<b>%s</b> (<b>필수</b>) 꾸러미를 지웁니다\n"
+msgstr "<b>%s</b> (<b>필수</b>) 패키지를 지웁니다\n"
 
 #: ../gtk/rgsummarywindow.cc:254
 #, c-format
 msgid "<b>%s</b> will be <b>downgraded</b>\n"
-msgstr "<b>%s</b> 꾸러미를 <b>다운그레이드</b>합니다\n"
+msgstr "<b>%s</b> 패키지를 <b>다운그레이드</b>합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:262
 #, c-format
 msgid "<b>%s</b> will be removed with configuration\n"
-msgstr "<b>%s</b> 꾸러미를 설정 파일까지 지웁니다\n"
+msgstr "<b>%s</b> 패키지를 설정 파일까지 지웁니다\n"
 
 #: ../gtk/rgsummarywindow.cc:270
 #, c-format
 msgid "<b>%s</b> will be removed\n"
-msgstr "<b>%s</b> 꾸러미를 지웁니다\n"
+msgstr "<b>%s</b> 패키지를 지웁니다\n"
 
 #: ../gtk/rgsummarywindow.cc:279
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be upgraded to version <i>%s</i>\n"
 msgstr ""
-"<b>%s</b> (<i>%s</i> 버전) 꾸러미를 <i>%s</i> 버전으로 업그레이드합니다\n"
+"<b>%s</b> (<i>%s</i> 버전) 패키지를 <i>%s</i> 버전으로 업그레이드합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:290
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be installed\n"
-msgstr "<b>%s</b> (<i>%s</i> 버전) 꾸러미를 설치합니다\n"
+msgstr "<b>%s</b> (<i>%s</i> 버전) 패키지를 설치합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:298
 #, c-format
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
-msgstr "<b>%s</b> (<i>%s</i> 버전) 꾸러미를 다시 설치합니다\n"
+msgstr "<b>%s</b> (<i>%s</i> 버전) 패키지를 다시 설치합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:333
 msgid "Summary"
@@ -1843,49 +1847,49 @@ msgstr "요약"
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
-msgstr[0] "%d개 꾸러미를 고정합니다\n"
+msgstr[0] "%d개 패키지를 고정합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:397
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
-msgstr[0] "%d개 꾸러미를 업그레이드하지 않고 유지합니다\n"
+msgstr[0] "%d개 패키지를 업그레이드하지 않고 유지합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:404
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
-msgstr[0] "%d개의 새로운 꾸러미를 설치합니다\n"
+msgstr[0] "%d개의 새로운 패키지를 설치합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:411
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
-msgstr[0] "%d개의 새로운 꾸러미를 다시 설치합니다\n"
+msgstr[0] "%d개의 새로운 패키지를 다시 설치합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:418
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
-msgstr[0] "%d개 꾸러미를 업그레이드합니다\n"
+msgstr[0] "%d개 패키지를 업그레이드합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:425
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
-msgstr[0] "%d개 꾸러미를 지웁니다\n"
+msgstr[0] "%d개 패키지를 지웁니다\n"
 
 #: ../gtk/rgsummarywindow.cc:432
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
-msgstr[0] "%d개 꾸러미를 <b>다운그레이드</b>합니다\n"
+msgstr[0] "%d개 패키지를 <b>다운그레이드</b>합니다\n"
 
 #: ../gtk/rgsummarywindow.cc:440
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
-msgstr[0] "<b>주의:</b> %d개의 필수 꾸러미를 지웁니다\n"
+msgstr[0] "<b>주의:</b> %d개의 필수 패키지를 지웁니다\n"
 
 #: ../gtk/rgsummarywindow.cc:452
 #, c-format
@@ -1904,27 +1908,28 @@ msgid ""
 "%s have to be downloaded"
 msgstr ""
 "\n"
-"%s을(를) 내려받아야 합니다"
+"%s을(를) 다운로드해야 합니다"
 
 #: ../gtk/rgsummarywindow.cc:485
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
 msgstr ""
-"필수 꾸러미를 지웁니다.\n"
-"이 꾸러미를 지우면 시스템을 쓸 수 없게 될 수 있습니다!\n"
+"필수 패키지를 지웁니다.\n"
+"이 패키지를 지우면 시스템을 쓸 수 없게 될 수 있습니다!\n"
 
 #: ../gtk/rguserdialog.cc:75
+#, fuzzy
 msgid "An error occurred"
-msgstr ""
+msgstr "오류가 발생했습니다"
 
 #: ../gtk/rguserdialog.cc:76
 msgid "The following details are provided:"
-msgstr ""
+msgstr "자세한 사항은 다음과 같습니다:"
 
 #: ../gtk/rgvendorswindow.cc:39
 msgid "Setup Vendors"
-msgstr "꾸러미 공급자 설정"
+msgstr "패키지 공급자 설정"
 
 #: ../gtk/rgvendorswindow.cc:62 ../gtk/rgvendorswindow.cc:107
 msgid "FingerPrint"
@@ -1988,12 +1993,12 @@ msgid ""
 "<b>Note:</b> To install a version that is different from the default one, "
 "choose <b>Package -> Force Version...</b> from the menu."
 msgstr ""
-"<b>Note:</b> 기본 버전이 아닌 버전을 설치하려면, 메뉴에서 <b>꾸러미 -> 버전 "
+"<b>Note:</b> 기본 버전이 아닌 버전을 설치하려면, 메뉴에서 <b>패키지 -> 버전 "
 "강제...<b>를 선택하십시오."
 
 #: ../gtk/glade/window_main.glade.h:6 ../gtk/glade/window_details.glade.h:6
 msgid "<b>Package:</b>"
-msgstr "<b>꾸러미:</b>"
+msgstr "<b>패키지:</b>"
 
 #: ../gtk/glade/window_main.glade.h:7 ../gtk/glade/window_details.glade.h:7
 msgid "<b>Priority:</b>"
@@ -2017,22 +2022,23 @@ msgstr "표시된 변경 사항 적용(_P)"
 
 #: ../gtk/glade/window_main.glade.h:12
 msgid "Add downloaded packages"
-msgstr "내려받은 꾸러미 더하기"
+msgstr "다운로드한 패키지 더하기"
 
 #: ../gtk/glade/window_main.glade.h:13
 msgid ""
 "Add packages downloaded with the \"Generate package download script\" "
 "feature to the system"
 msgstr ""
+"\"패키지 다운로드 스크립트 만들기\" 기능으로 다운로드한 패키지를 시스템에 더"
+"합니다"
 
 #: ../gtk/glade/window_main.glade.h:14
 msgid "Apply"
 msgstr "적용"
 
 #: ../gtk/glade/window_main.glade.h:15
-#, fuzzy
 msgid "Automatically installed"
-msgstr "자동으로"
+msgstr "자동 설치"
 
 #: ../gtk/glade/window_main.glade.h:16 ../gtk/glade/window_details.glade.h:11
 msgid "Available versions:"
@@ -2044,7 +2050,7 @@ msgstr "일반 정보"
 
 #: ../gtk/glade/window_main.glade.h:18
 msgid "Dependants"
-msgstr "이 꾸러미에 의존"
+msgstr "이 패키지에 의존"
 
 #: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
 #: ../gtk/glade/window_filters.glade.h:18
@@ -2058,17 +2064,19 @@ msgstr "최신 버전의 의존성"
 
 #: ../gtk/glade/window_main.glade.h:22 ../gtk/glade/window_details.glade.h:17
 msgid "Download:"
-msgstr "내려받기:"
+msgstr "다운로드:"
 
 #: ../gtk/glade/window_main.glade.h:23
 msgid ""
 "Generate a shell script so that you can download the selected packages on a "
 "different computer"
 msgstr ""
+"쉘 스크립트를 만들어서 선택한 패키지를 다른 컴퓨터에서 다운로드할 수 있도록 "
+"합니다."
 
 #: ../gtk/glade/window_main.glade.h:24
 msgid "Generate package download script"
-msgstr "꾸러미 내려받기 스크립트 만들기"
+msgstr "패키지 다운로드 스크립트 만들기"
 
 #: ../gtk/glade/window_main.glade.h:25
 msgid "Icon _Legend"
@@ -2084,7 +2092,7 @@ msgstr "모든 업그레이드 표시"
 
 #: ../gtk/glade/window_main.glade.h:28
 msgid "Mark Packages by _Task..."
-msgstr "태스크 기준으로 꾸러미 표시(_T)..."
+msgstr "태스크 기준으로 패키지 표시(_T)..."
 
 #: ../gtk/glade/window_main.glade.h:29
 msgid "Mark for Co_mplete Removal"
@@ -2110,16 +2118,15 @@ msgstr "업그레이드 표시(_U)"
 #: ../gtk/glade/window_filters.glade.h:56
 #: ../gtk/glade/window_details.glade.h:21
 msgid "Provided Packages"
-msgstr "제공하는 꾸러미"
+msgstr "제공하는 패키지"
 
 #: ../gtk/glade/window_main.glade.h:39
 msgid "Reload"
 msgstr "새로 고침"
 
 #: ../gtk/glade/window_main.glade.h:40
-#, fuzzy
 msgid "S_earch Results"
-msgstr "찾기 거르게"
+msgstr "찾기 결과(_E)"
 
 #: ../gtk/glade/window_main.glade.h:41
 msgid "S_tatus"
@@ -2186,13 +2193,12 @@ msgid "_Contents"
 msgstr "차례(_C)"
 
 #: ../gtk/glade/window_main.glade.h:57
-#, fuzzy
 msgid "_Custom Filters"
-msgstr "거르개(_F)"
+msgstr "사용자 정의 필터(_F)"
 
 #: ../gtk/glade/window_main.glade.h:58
 msgid "_Download Changelog"
-msgstr "변경 사항 기록 내려받기(_D)"
+msgstr "변경 사항 기록 다운로드(_D)"
 
 #: ../gtk/glade/window_main.glade.h:59
 msgid "_Edit"
@@ -2204,11 +2210,11 @@ msgstr "파일(_F)"
 
 #: ../gtk/glade/window_main.glade.h:61
 msgid "_Filters"
-msgstr "거르개(_F)"
+msgstr "필터(_F)"
 
 #: ../gtk/glade/window_main.glade.h:62
 msgid "_Fix Broken Packages"
-msgstr "깨진 꾸러미 고치기(_F)"
+msgstr "깨진 패키지 고치기(_F)"
 
 #: ../gtk/glade/window_main.glade.h:63
 msgid "_Force Version..."
@@ -2240,11 +2246,11 @@ msgstr "모든 업그레이드 표시(_M)..."
 
 #: ../gtk/glade/window_main.glade.h:70
 msgid "_Package"
-msgstr "꾸러미(_P)"
+msgstr "패키지(_P)"
 
 #: ../gtk/glade/window_main.glade.h:71
 msgid "_Properties"
-msgstr "등록 정보(_P)"
+msgstr "속성(_P)"
 
 #: ../gtk/glade/window_main.glade.h:72
 msgid "_Quick Introduction"
@@ -2264,7 +2270,7 @@ msgstr "다시 실행(_R)"
 
 #: ../gtk/glade/window_main.glade.h:76
 msgid "_Reload Package Information"
-msgstr "꾸러미 정보 새로 고침(_R)"
+msgstr "패키지 정보 새로 고침(_R)"
 
 #: ../gtk/glade/window_main.glade.h:77
 msgid "_Repositories"
@@ -2370,7 +2376,7 @@ msgstr ""
 
 #: ../gtk/glade/window_about.glade.h:27
 msgid "Package management software using apt."
-msgstr "APT를 사용하는 꾸러미 관리 프로그램."
+msgstr "APT를 사용하는 패키지 관리 프로그램."
 
 #: ../gtk/glade/window_about.glade.h:28
 msgid ""
@@ -2398,8 +2404,8 @@ msgstr "개발"
 #: ../gtk/glade/window_about.glade.h:33
 msgid "translators-credits"
 msgstr ""
-"손경욱 <hey@gnome.or.kr>\n"
-"류창우 <cwryu@debian.org>"
+"Son, Kyeong-uk <hey@gnome.or.kr>\n"
+"Changwoo Ryu <cwryu@debian.org>"
 
 #: ../gtk/glade/window_find.glade.h:2
 msgid "Description and Name"
@@ -2435,7 +2441,7 @@ msgid ""
 "The chosen action also affects other packages. The following changes are "
 "required in order to proceed."
 msgstr ""
-"선택하신 명령은 다른 꾸러미에도 영향을 미칩니다. 계속 진행하려면 아래의 사항"
+"선택하신 명령은 다른 패키지에도 영향을 미칩니다. 계속 진행하려면 아래의 사항"
 "이 필요합니다."
 
 #: ../gtk/glade/window_changes.glade.h:3
@@ -2477,7 +2483,7 @@ msgstr "<b>변경 사항 표시</b>"
 
 #: ../gtk/glade/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
-msgstr "<b>꾸러미 업그레이드 동작 (기본 배포판)</b>"
+msgstr "<b>패키지 업그레이드 동작 (기본 배포판)</b>"
 
 #: ../gtk/glade/window_preferences.glade.h:11
 msgid "<b>Proxy Server</b>"
@@ -2513,20 +2519,19 @@ msgstr "항상 설치된 버전 선택"
 
 #: ../gtk/glade/window_preferences.glade.h:18
 msgid "Apply changes in a terminal window"
-msgstr "터미널창에서 변경 사항 적용"
+msgstr "터미널 창에서 변경 사항 적용"
 
 #: ../gtk/glade/window_preferences.glade.h:19
 msgid "Ask to confirm changes that also affect other packages"
-msgstr "변경 사항이 다른 꾸러미에 영향을 미칠 때 확인"
+msgstr "변경 사항이 다른 패키지에 영향을 미칠 때 확인"
 
 #: ../gtk/glade/window_preferences.glade.h:20
 msgid "Ask to quit after the changes have been applied successfully"
 msgstr "변경 사항을 성공적으로 적용한 다음 끝낼지 물어보기"
 
 #: ../gtk/glade/window_preferences.glade.h:21
-#, fuzzy
 msgid "Authentication"
-msgstr "통신"
+msgstr "인증"
 
 #: ../gtk/glade/window_preferences.glade.h:22
 msgid "Automatically"
@@ -2546,7 +2551,7 @@ msgstr "색"
 
 #: ../gtk/glade/window_preferences.glade.h:26
 msgid "Color packages by their status"
-msgstr "꾸러미 상태에 따라 색 사용"
+msgstr "패키지 상태에 따라 색 사용"
 
 #: ../gtk/glade/window_preferences.glade.h:27
 msgid "Colors"
@@ -2570,7 +2575,7 @@ msgstr "완전히"
 
 #: ../gtk/glade/window_preferences.glade.h:31
 msgid "Consider recommended packages as dependencies"
-msgstr "추천 꾸러미를 의존하는 것으로 간주"
+msgstr "추천 패키지를 의존하는 것으로 간주"
 
 #: ../gtk/glade/window_preferences.glade.h:32
 msgid "Default Upgrade"
@@ -2582,7 +2587,7 @@ msgstr "다음보다 오래 된 히스토리 파일 지우기(_H):"
 
 #: ../gtk/glade/window_preferences.glade.h:34
 msgid "Delete all cache package files now."
-msgstr "보관 중인 꾸러미 파일을 지금 지웁니다."
+msgstr "임시 저장한 패키지 파일을 지금 모두 지웁니다."
 
 #: ../gtk/glade/window_preferences.glade.h:35
 msgid "Direct connection to the internet"
@@ -2630,11 +2635,11 @@ msgstr "설정 유지"
 
 #: ../gtk/glade/window_preferences.glade.h:47
 msgid "Manual proxy configuration"
-msgstr "수동으로 프록시 설정"
+msgstr "수동 프록시 설정"
 
 #: ../gtk/glade/window_preferences.glade.h:48
 msgid "Marked for complete removal:"
-msgstr "완전히 지우기 표시됨:"
+msgstr "완전히 지우기 표시:"
 
 #: ../gtk/glade/window_preferences.glade.h:49
 msgid "Marked for downgrade:"
@@ -2706,15 +2711,15 @@ msgstr "다음에 들어 있는 버전 우선:"
 
 #: ../gtk/glade/window_preferences.glade.h:67
 msgid "Reloading outdated package information:"
-msgstr "오래 된 꾸러미 정보 새로 고치기:"
+msgstr "오래 된 패키지 정보 새로 고치기:"
 
 #: ../gtk/glade/window_preferences.glade.h:68
 msgid "Removal of packages: "
-msgstr "꾸러미 지우기: "
+msgstr "패키지 지우기: "
 
 #: ../gtk/glade/window_preferences.glade.h:69
 msgid "Show package properties in the main window"
-msgstr "메인 창에 꾸러미 등록 정보 표시"
+msgstr "메인 창에 패키지 속성 표시"
 
 #: ../gtk/glade/window_preferences.glade.h:70
 msgid "Smart Upgrade"
@@ -2738,11 +2743,11 @@ msgstr "지정한 터미널 글꼴 사용"
 
 #: ../gtk/glade/window_preferences.glade.h:75
 msgid "_Delete Cached Package Files"
-msgstr "보관 중인 꾸러미 파일 지우기(_D)"
+msgstr "보관 중인 패키지 파일 지우기(_D)"
 
 #: ../gtk/glade/window_preferences.glade.h:76
 msgid "_Delete downloaded packages after installation"
-msgstr "설치한 다음 내려받은 꾸러미 지우기(_D)"
+msgstr "설치한 다음 다운로드한 패키지 지우기(_D)"
 
 #: ../gtk/glade/window_preferences.glade.h:77
 msgid "_Keep history"
@@ -2750,11 +2755,11 @@ msgstr "기록 보관(_K)"
 
 #: ../gtk/glade/window_preferences.glade.h:78
 msgid "_Leave all downloaded packages in the cache"
-msgstr "내려받은 꾸러미를 모두 보관해 두기(_L)"
+msgstr "다운로드한 패키지를 모두 보관해 두기(_L)"
 
 #: ../gtk/glade/window_preferences.glade.h:79
 msgid "_Only delete packages which are no longer available"
-msgstr "더 이상 사용하지 않는 꾸러미만 지우기(_O)"
+msgstr "더 이상 사용하지 않는 패키지만 지우기(_O)"
 
 #: ../gtk/glade/window_preferences.glade.h:80
 msgid "_Terminal Font"
@@ -2785,7 +2790,7 @@ msgid ""
 "The label will be used to identify the CD-ROM if you want to install "
 "packages from it later."
 msgstr ""
-"디스크 레이블은 나중에 디스크에서 꾸러미를 설치할 때 CD-ROM을 구분하는데 쓰입"
+"디스크 레이블은 나중에 디스크에서 패키지를 설치할 때 CD-ROM을 구분하는데 쓰입"
 "니다."
 
 #: ../gtk/glade/window_setopt.glade.h:1
@@ -2817,7 +2822,7 @@ msgstr ""
 
 #: ../gtk/glade/window_summary.glade.h:6
 msgid "Download package files only"
-msgstr "꾸러미 파일만 내려받기"
+msgstr "패키지 파일만 다운로드"
 
 #: ../gtk/glade/window_summary.glade.h:7
 msgid "Return to the main screen"
@@ -2825,7 +2830,7 @@ msgstr "메인 화면으로 돌아가기"
 
 #: ../gtk/glade/window_summary.glade.h:8
 msgid "The package files will be downloaded, but not installed"
-msgstr "꾸러미 파일을 내려받지만, 설치하지 않습니다"
+msgstr "패키지 파일을 다운로드하지만, 설치하지 않습니다"
 
 #: ../gtk/glade/window_summary.glade.h:9
 msgid ""
@@ -2839,12 +2844,12 @@ msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
-"꾸러미 공급자는 꾸러미에 디지털 서명을 남겨서, 이 서명으로 꾸러미의 출처와 올"
+"패키지 공급자는 패키지에 디지털 서명을 남겨서, 이 서명으로 패키지의 출처와 올"
 "바름을 확인합니다. 이 확인 기능을 끄면 보안상의 헛점이 발생할 수 있습니다."
 
 #: ../gtk/glade/window_summary.glade.h:11
 msgid "Verify package signatures"
-msgstr "꾸러미의 서명 확인"
+msgstr "패키지의 서명 확인"
 
 #: ../gtk/glade/window_summary.glade.h:12
 msgid "_Show Details"
@@ -2870,18 +2875,16 @@ msgid "AND"
 msgstr "AND"
 
 #: ../gtk/glade/window_filters.glade.h:10
-#, fuzzy
 msgid "Automatic install"
-msgstr "자동으로"
+msgstr "자동 설치"
 
 #: ../gtk/glade/window_filters.glade.h:11
 msgid "Automatic installed but no longer required by any other package"
-msgstr ""
+msgstr "자동 설치했지만 더 이상 필요한 패키지가 없음"
 
 #: ../gtk/glade/window_filters.glade.h:12
-#, fuzzy
 msgid "Automatic removable"
-msgstr "자동으로"
+msgstr "자동 지우기"
 
 #: ../gtk/glade/window_filters.glade.h:13
 msgid "Boolean operator between property criterias:"
@@ -2889,16 +2892,16 @@ msgstr "각 속성 기준들 사이에 사용할 불리언 연산자:"
 
 #: ../gtk/glade/window_filters.glade.h:16
 msgid "Conflicting Packages"
-msgstr "충돌하는 꾸러미"
+msgstr "충돌하는 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:17
 msgid "Currently in broken policy state"
-msgstr ""
+msgstr "현재 정책 어긋난 상태"
 
 #: ../gtk/glade/window_filters.glade.h:19
 #: ../gtk/glade/window_details.glade.h:15
 msgid "Dependent Packages"
-msgstr "의존하는 꾸러미"
+msgstr "의존하는 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:21
 msgid "Exclude"
@@ -2934,23 +2937,23 @@ msgstr "포함"
 
 #: ../gtk/glade/window_filters.glade.h:31
 msgid "Installed automatically as part of a dependency"
-msgstr ""
+msgstr "의존성때문에 자동으로 설치"
 
 #: ../gtk/glade/window_filters.glade.h:32
 msgid "Installed packages that are up-to-date"
-msgstr "최신으로 업데이트한 설치한 꾸러미"
+msgstr "최신으로 업데이트한 설치한 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:33
 msgid "Installed packages that are upgradable"
-msgstr "업그레이드 가능한 설치한 꾸러미"
+msgstr "업그레이드 가능한 설치한 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:34
 msgid "Installed packages that are upgradable to a later upstream version"
-msgstr "설치했고 다음 상위 개발 버전으로 업그레이드할 수 있는 꾸러미"
+msgstr "설치했고 다음 업스트림 버전으로 업그레이드할 수 있는 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:35
 msgid "Library packages that are no longer needed (deborphan is required)"
-msgstr "이제 필요 없는 라이브러리 꾸러미 (deborphan 프로그램 필요)"
+msgstr "이제 필요 없는 라이브러리 패키지 (deborphan 프로그램 필요)"
 
 #: ../gtk/glade/window_filters.glade.h:38
 msgid "Not installable"
@@ -2958,7 +2961,7 @@ msgstr "설치할 수 없음"
 
 #: ../gtk/glade/window_filters.glade.h:40
 msgid "Not installed packages"
-msgstr "설치하지 않은 꾸러미"
+msgstr "설치하지 않은 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:41
 msgid "Not marked"
@@ -2974,35 +2977,35 @@ msgstr "없음"
 
 #: ../gtk/glade/window_filters.glade.h:46
 msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "마지막으로 \"새로 고침\"했을 때 저장소에 새로 들어온 꾸러미"
+msgstr "마지막으로 \"새로 고침\"했을 때 저장소에 새로 들어온 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:47
 msgid "Packages that are not available in any repository"
-msgstr "어떤 저장소에서도 없는 꾸러미"
+msgstr "어떤 저장소에서도 없는 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:48
 msgid "Packages that will be installed or upgraded"
-msgstr "설치하거나 업그레이드할 꾸러미"
+msgstr "설치하거나 업그레이드할 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:49
 msgid "Packages that will be removed"
-msgstr "지울 꾸러미"
+msgstr "지울 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:50
 msgid "Packages that will never be upgraded"
-msgstr "업그레이드하지 않을 꾸러미"
+msgstr "업그레이드하지 않을 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:51
 msgid "Packages that won't be changed"
-msgstr "바꾸지 않을 꾸러미"
+msgstr "바꾸지 않을 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:52
 msgid "Packages with broken dependencies"
-msgstr "의존성이 깨진 꾸러미"
+msgstr "의존성이 깨진 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:54
 msgid "Policy broken"
-msgstr ""
+msgstr "정책 어긋남"
 
 #. replaces/obsoletes
 #: ../gtk/glade/window_filters.glade.h:57 ../gtk/rgfiltermanager.h:76
@@ -3011,11 +3014,11 @@ msgstr "추천"
 
 #: ../gtk/glade/window_filters.glade.h:58
 msgid "Removed packages that have left configuration files on the system"
-msgstr "설정 파일을 남겨놓고 지운 꾸러미"
+msgstr "설정 파일을 남겨놓고 지운 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:59
 msgid "Replaced Packages"
-msgstr "교체된 꾸러미"
+msgstr "교체된 패키지"
 
 #: ../gtk/glade/window_filters.glade.h:60
 msgid "Residual config"
@@ -3064,7 +3067,7 @@ msgstr "URI:"
 
 #: ../gtk/glade/window_repositories.glade.h:6
 msgid "Vendors..."
-msgstr "꾸러미 공급자..."
+msgstr "패키지 공급자..."
 
 #: ../gtk/glade/window_repositories.glade.h:7
 msgid "deb"
@@ -3084,20 +3087,19 @@ msgstr "rpm-src"
 
 #: ../gtk/glade/window_rgdebinstall_progress.glade.h:1
 msgid "<i>Preparing packages...</i>"
-msgstr "<i>꾸러미를 준비하는 중입니다...</i>"
+msgstr "<i>패키지를 준비하는 중입니다...</i>"
 
 #: ../gtk/glade/window_rgdebinstall_progress.glade.h:2
 msgid "Automatically close after the changes have been successfully applied"
 msgstr "바뀐 내용을 적용하는 데 성공하면 창 닫기"
 
 #: ../gtk/glade/window_rgdebinstall_progress.glade.h:3
-#, fuzzy
 msgid "Details"
-msgstr "자세히 표시(_S)"
+msgstr "자세히"
 
 #: ../gtk/glade/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
-msgstr "꾸러미 관리자 동작 중에 추가 출력이 있습니다"
+msgstr "패키지 관리자 동작 중에 추가 출력이 있습니다"
 
 #: ../gtk/glade/window_tasks.glade.h:1
 msgid ""
@@ -3110,8 +3112,8 @@ msgstr ""
 "<span size=\"large\" weight=\"bold\">컴퓨터에 어떤 태스크를 설치하시겠습니까?"
 "</span>\n"
 "\n"
-"각 작업을 수행하는 데 따라 미리 선택되어 있는 꾸러미 모음이 있습니다. 어떤 태"
-"스크를 선택하면 거기에 해당되는 꾸러미를 설치 표시합니다."
+"각 작업을 수행하는 데 따라 미리 선택되어 있는 패키지 모음이 있습니다. 어떤 태"
+"스크를 선택하면 거기에 해당되는 패키지를 설치 표시합니다."
 
 #: ../gtk/glade/window_tasks.glade.h:4
 msgid "_Description"
@@ -3140,7 +3142,7 @@ msgstr ""
 
 #: ../gtk/glade/dialog_welcome.glade.h:3
 msgid "Choose the action from the context menu of the package."
-msgstr "꾸러미에 마우스 오른쪽 단추를 누르고 명령을 고르십시오."
+msgstr "패키지에 마우스 오른쪽 단추를 누르고 명령을 고르십시오."
 
 #: ../gtk/glade/dialog_welcome.glade.h:4
 msgid "Click on the status icon to open a menu that contains all actions."
@@ -3148,7 +3150,7 @@ msgstr "상태 아이콘을 클릭하면 명령이 들어 있는 메뉴를 엽�
 
 #: ../gtk/glade/dialog_welcome.glade.h:5
 msgid "Double click on the package name."
-msgstr "꾸러미 이름을 두번 클릭하십시오."
+msgstr "패키지 이름을 두번 클릭하십시오."
 
 #: ../gtk/glade/dialog_welcome.glade.h:6
 msgid "Quick Introduction"
@@ -3156,7 +3158,7 @@ msgstr "간단한 소개"
 
 #: ../gtk/glade/dialog_welcome.glade.h:7
 msgid "Select the package and choose the action from the 'Package' menu."
-msgstr "꾸러미를 선택하고 '꾸러미' 메뉴에서 명령을 고르세요."
+msgstr "패키지를 선택하고 '패키지' 메뉴에서 명령을 고르세요."
 
 #: ../gtk/glade/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
@@ -3168,21 +3170,21 @@ msgid ""
 "package manager enables you to install, to upgrade or to remove software "
 "packages."
 msgstr ""
-"여러분의 시스템에 깔려있는 소프트웨어는 <i>꾸러미</i>라는 단위로 관리됩니다. "
-"꾸러미 관리자는 여러분이 소프트웨어 꾸러미를 설치하고, 업그레이드하고, 지울 "
+"여러분의 시스템에 깔려있는 소프트웨어는 <i>패키지</i>라는 단위로 관리됩니다. "
+"패키지 관리자는 여러분이 소프트웨어 패키지를 설치하고, 업그레이드하고, 지울 "
 "수 있게 도와줍니다."
 
 #: ../gtk/glade/dialog_welcome.glade.h:10
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
-msgstr "설치, 업그레이드, 제거를 위해 다음처럼 꾸러미에 표시할 수 있습니다:"
+msgstr "설치, 업그레이드, 제거를 위해 다음처럼 패키지에 표시할 수 있습니다:"
 
 #: ../gtk/glade/dialog_welcome.glade.h:11
 msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
-"꾸러미 정보를 정기적으로 새로 고쳐야 합니다. 그렇지 않으면 중요한 보안 업그레"
+"패키지 정보를 정기적으로 새로 고쳐야 합니다. 그렇지 않으면 중요한 보안 업그레"
 "이드를 놓칠 수도 있습니다."
 
 #: ../gtk/glade/dialog_unmet.glade.h:1
@@ -3196,7 +3198,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">설치나 업그레이드 표시를 하지 못한 패키"
 "지가 있습니다</span>\n"
 "\n"
-"다음 꾸러미는 의존성을 만족하지 못했습니다. 필요한 저장소를 모두 더하고 기본 "
+"다음 패키지는 의존성을 만족하지 못했습니다. 필요한 저장소를 모두 더하고 기본 "
 "설정에서 해당 저장소를 사용하도록 표시했는 지 확인하십시오."
 
 #: ../gtk/glade/dialog_changelog.glade.h:1
@@ -3213,9 +3215,9 @@ msgid ""
 "be used. Otherwise the repository will be ignored. Check your network "
 "connection and ensure the repository address in the preferences is correct."
 msgstr ""
-"<big><b>일부 저장소 인덱스 파일을 내려받지 못했습니다</b></big>\n"
+"<big><b>일부 저장소 인덱스 파일을 다운로드하지 못했습니다</b>\n"
 "\n"
-"저장소를 더 이상 사용할 수 없거나 네트워크 문제 때문에 연결할 수 없습니다. 가"
+"저장소를 더 이상 사용할 수 없거나 네트워크 문제때문에 연결할 수 없습니다. 가"
 "능한 경우라면 과거의 인덱스 파일을 사용합니다. 그렇게 하지 못한다면 해당 저장"
 "소를 무시합니다. 네트워크 연결이 올바른 지 확인하시고 기본 설정에서 저장소의 "
 "주소를 바로 잡으십시오."
@@ -3224,7 +3226,7 @@ msgstr ""
 msgid ""
 "<b>The following icons are used to indicate the current status of a package:"
 "</b>"
-msgstr "<b>아래의 아이콘은 꾸러미의 현재 상태를 표시합니다:</b>"
+msgstr "<b>아래의 아이콘은 패키지의 현재 상태를 표시합니다:</b>"
 
 #: ../gtk/glade/window_iconlegend.glade.h:2 ../gtk/rgiconlegend.cc:41
 msgid "Icon Legend"
@@ -3239,10 +3241,10 @@ msgid ""
 "package. Reload the package list and check the source of the package (e.g. "
 "CD or network connection)."
 msgstr ""
-"<big><b>필요한 꾸러미 파일을 일부 내려받지 못했습니다</b></big>\n"
+"<big><b>필요한 패키지 파일을 일부 다운로드하지 못했습니다</b></big>\n"
 "\n"
-"설치하려는 버전의 꾸러미가 더 이상 저장소에 없을 수도 있고, 꾸러미가 있는 곳"
-"에 문제가 생겼을 수도 있습니다. 꾸러미 목록을 새로 고쳐 보고 꾸러미의 소스를 "
+"설치하려는 버전의 패키지가 더 이상 저장소에 없을 수도 있고, 패키지가 있는 곳"
+"에 문제가 생겼을 수도 있습니다. 패키지 목록을 새로 고쳐 보고 패키지의 소스를 "
 "(예를 들어 CD-ROM이나 네트워크 연결) 확인하십시오."
 
 #: ../gtk/glade/dialog_update_outdated.glade.h:1
@@ -3254,10 +3256,10 @@ msgid ""
 "security updates available. It is recommended to reload the package "
 "information regularly."
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">꾸러미 정보가 오래 되었습니다</span>\n"
+"<span weight=\"bold\" size=\"larger\">패키지 정보가 오래 되었습니다</span>\n"
 "\n"
-"꾸러미 정보가 48시간보다 오래 되었습니다. 중요한 보안 업데이트가 있을 수도 있"
-"습니다. 정기적으로 꾸러미 정보를 새로 고치시기를 권합니다."
+"패키지 정보가 48시간보다 오래 되었습니다. 중요한 보안 업데이트가 있을 수도 있"
+"습니다. 정기적으로 패키지 정보를 새로 고치시기를 권합니다."
 
 #: ../gtk/glade/dialog_update_outdated.glade.h:4
 msgid "Remember the answer"
@@ -3273,7 +3275,7 @@ msgstr "기록"
 
 #: ../gtk/glade/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
-msgstr "소프트웨어 꾸러미를 설치하고, 업그레이드하고, 지운 기록."
+msgstr "소프트웨어 패키지를 설치하고, 업그레이드하고, 지운 기록."
 
 #: ../gtk/glade/dialog_quit.glade.h:1
 msgid ""
@@ -3322,7 +3324,7 @@ msgid ""
 msgstr ""
 "<b><big>업그레이드를 똑똑한 방법으로 표시할까요?</big></b>\n"
 "\n"
-"기본 업그레이드 방법은 그 업그레이드때문에 발생하는 충돌이나 추가 꾸러미의 설"
+"기본 업그레이드 방법은 그 업그레이드때문에 발생하는 충돌이나 추가 패키지의 설"
 "치에 대해서는 다루지 않습니다.\n"
 "\n"
 "똑똑한 업그레이드는 (dist-upgrade) 똑똑한 방법으로 충돌 사항을 바로잡고 모든 "
@@ -3351,19 +3353,19 @@ msgstr "똑똑한 업그레이드"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
-msgstr "소프트웨어 꾸러미를 설치, 지우기, 업그레이드"
+msgstr "소프트웨어 패키지를 설치, 지우기, 업그레이드"
 
 #: ../data/synaptic.desktop.in.h:2 ../data/synaptic-kde.desktop.in.h:2
 msgid "Package Manager"
-msgstr "꾸러미 관리자"
+msgstr "패키지 관리자"
 
 #: ../data/synaptic.desktop.in.h:3 ../data/synaptic-kde.desktop.in.h:3
 msgid "Synaptic Package Manager"
-msgstr "시냅틱 꾸러미 관리자"
+msgstr "시냅틱 패키지 관리자"
 
 #: ../gtk/rgfiltermanager.h:68
 msgid "Package name"
-msgstr "꾸러미 이름"
+msgstr "패키지 이름"
 
 #: ../gtk/rgfiltermanager.h:71
 msgid "Version number"
@@ -3372,22 +3374,22 @@ msgstr "버전 번호"
 #. depends, predepends etc
 #: ../gtk/rgfiltermanager.h:73
 msgid "Provided packages"
-msgstr "제공된 꾸러미"
+msgstr "제공된 패키지"
 
 #. provides and name
 #: ../gtk/rgfiltermanager.h:74
 msgid "Conflicting packages"
-msgstr "충돌한 꾸러미"
+msgstr "충돌한 패키지"
 
 #. conflicts
 #: ../gtk/rgfiltermanager.h:75
 msgid "Replaced packages"
-msgstr "바뀐 꾸러미"
+msgstr "바뀐 패키지"
 
 #. suggests
 #: ../gtk/rgfiltermanager.h:78
 msgid "Dependent packages"
-msgstr "의존 꾸러미"
+msgstr "의존 패키지"
 
 #: ../gtk/rgpkgcdrom.cc:68
 msgid "Please insert a disc in the drive."
@@ -3412,24 +3414,23 @@ msgstr "<i>작동중에는 닫을 수 없음</i>"
 #. vim:sts=3:sw=3
 #: ../gtk/glade/dialog_authentication.glade.h:1
 msgid "HTTP authentication"
-msgstr ""
+msgstr "HTTP 인증"
 
 #: ../gtk/glade/dialog_authentication.glade.h:2
 msgid "Password"
-msgstr ""
+msgstr "암호"
 
 #: ../gtk/glade/dialog_authentication.glade.h:3
 msgid "Username"
-msgstr ""
+msgstr "사용자 이름"
 
 #: ../gtk/glade/dialog_authentication.glade.h:4
-#, fuzzy
 msgid "gtk-cancel"
-msgstr "취소"
+msgstr "gtk-cancel"
 
 #: ../gtk/glade/dialog_authentication.glade.h:5
 msgid "gtk-ok"
-msgstr ""
+msgstr "gtk-ok"
 
 #: ../gtk/glade/dialog_disc_label.glade.h:2
 msgid ""
@@ -3439,11 +3440,15 @@ msgid ""
 "is recommended to also write the label on the CD-Rom to easily find it "
 "again.\n"
 msgstr ""
+"<span weight=\"bold\" size=\"larger\">이 CD-ROM의 레이블을 입력하십시오</"
+"span>\n"
+"\n"
+"이 CD-ROM에서 패키지를 설치하려면 레이블을 사용합니다. CD-ROM에도 이 레이블"
+"을 적어 두면 찾기 편합니다.\n"
 
 #: ../gtk/glade/dialog_disc_label.glade.h:6
-#, fuzzy
 msgid "Label:"
-msgstr "디스크 레이블"
+msgstr "레이블:"
 
 #: ../gtk/glade/dialog_new_repositroy.glade.h:2
 msgid ""
@@ -3454,87 +3459,19 @@ msgid ""
 "example <i>\"deb http://ftp.debian.org sarge main\"</i>. You can find a "
 "detailed description of the syntax in the documentation."
 msgstr ""
+"<big><b>추가하려는 저장소의 APT 줄 전체를 입력하십시오</b></big>\n"
+"\n"
+"APT 줄에는 저장소의 종류, 위치, 내용이 들어 있습니다. 예를 들어 <i>\"deb "
+"http://ftp.debian.org sarge main\"</i>같은 모양입니다. 문서 안에 자세한 형식"
+"을 설명합니다."
 
 #: ../gtk/glade/dialog_new_repositroy.glade.h:5
 msgid "APT line:"
-msgstr ""
+msgstr "APT 줄:"
 
 #: ../gtk/glade/dialog_new_repositroy.glade.h:6
-#, fuzzy
 msgid "_Add Repository"
-msgstr "저장소(_R)"
-
-#~ msgid ""
-#~ "\n"
-#~ "Failed to apply all changes! Scroll in the terminal buffer to see what "
-#~ "went wrong."
-#~ msgstr ""
-#~ "\n"
-#~ "변경 사항을 적용하는 데 실패했습니다! 무엇이 잘못되었는지 보려면 터미널의 "
-#~ "버퍼 내용을 보십시오."
-
-#~ msgid "You must run this program as the root user."
-#~ msgstr "이 프로그램은 루트 사용자로 실행해야 합니다."
+msgstr "저장소 추가(_A)"
 
 #~ msgid "The package files will be cached locally for installation."
-#~ msgstr "설치한 꾸러미 파일을 로컬에 보관합니다."
-
-#~ msgid "The following problems were found on your system:"
-#~ msgstr "시스템에 다음 문제가 있습니다:"
-
-#~ msgid "S_earch"
-#~ msgstr "찾기(_E)"
-
-#~ msgid "_Custom"
-#~ msgstr "사용자 설정(_C)"
-
-#~ msgid "Terminal"
-#~ msgstr "터미널"
-
-#~ msgid "could not open recommends file %s"
-#~ msgstr "%s 추천 파일을 열 수 없습니다"
-
-#~ msgid "Bad regular expression '%s' in Recommends file."
-#~ msgstr "추천 파일 안에 잘못된 정규식 '%s'이(가) 있습니다."
-
-#~ msgid "Purge"
-#~ msgstr "완전히 지우기"
-
-#~ msgid "Preparing for removal %s"
-#~ msgstr "%s 꾸러미 지우기를 준비하는 중입니다"
-
-#~ msgid "Removing %s"
-#~ msgstr "%s 꾸러미를 지우는 중입니다"
-
-#~ msgid "Removed %s"
-#~ msgstr "%s 꾸러미를 지웠습니다"
-
-#~ msgid "Removing with config %s"
-#~ msgstr "%s 꾸러미를 설정 파일까지 지우는 중입니다"
-
-#~ msgid "Removed with config %s"
-#~ msgstr "%s 꾸러미를 설정 파일까지 지웠습니다"
-
-#~ msgid "Preparing %s"
-#~ msgstr "%s 꾸러미를 준비하는 중입니다"
-
-#~ msgid "Unpacking %s"
-#~ msgstr "%s 꾸러미의 압축을 푸는 중입니다"
-
-#~ msgid "Configuring %s"
-#~ msgstr "%s 꾸러미를 설정하는 중입니다"
-
-#~ msgid "Installed %s"
-#~ msgstr "%s 꾸러미를 설치했습니다"
-
-#~ msgid "Installing %s"
-#~ msgstr "%s 꾸러미를 설치하는 중입니다"
-
-#~ msgid ""
-#~ "<big><b>Building repository dialog</b></big>\n"
-#~ "\n"
-#~ "Please wait."
-#~ msgstr ""
-#~ "<big><b>저장소 대화 상자를 만드는 중입니다</b></big>\n"
-#~ "\n"
-#~ "잠시 기다리십시오."
+#~ msgstr "설치한 패키지 파일을 로컬에 보관합니다."

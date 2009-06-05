@@ -1,4 +1,4 @@
-# translation of fr.po to 
+# translation of fr.po  
 # French i18n for synatic.
 # Copyright (C) 2002-2003 Mathieu Roy, <yeupou@gnu.org>.
 # 2004 Julien Louis <leonptitlouis@wanadoo.fr>
@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: Synaptic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-08-01 21:38+0200\n"
-"PO-Revision-Date: 2005-04-06 11:09+0200\n"
+"PO-Revision-Date: 2007-01-07 18:24+0100\n"
 "Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
@@ -196,7 +196,7 @@ msgstr "Paquets RPM convertis par Alien"
 #. TRANSLATORS: Ubuntu translations section
 #: ../common/sections_trans.cc:82
 msgid "Internationalization and localization"
-msgstr ""
+msgstr "Paramètres régionaux"
 
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
@@ -232,7 +232,7 @@ msgstr "Échec de gzip. Le disque est peut-être plein."
 
 #: ../common/indexcopy.cc:128
 msgid "Failed to reopen fd"
-msgstr "Impossible de réouvrir le fichier"
+msgstr "Impossible de rouvrir le fichier"
 
 #: ../common/indexcopy.cc:218 ../common/indexcopy.cc:242
 #: ../common/rpmindexcopy.cc:169 ../common/rpmindexcopy.cc:205
@@ -273,41 +273,41 @@ msgstr "Préparation des opérations..."
 #: ../common/rcdscanner.cc:273
 #, c-format
 msgid "Unable to read the cdrom database %s"
-msgstr "Impossible de lire la base de données %s du cédérom"
+msgstr "Impossible de lire la base de données %s du CD-ROM"
 
 #: ../common/rcdscanner.cc:280 ../common/rcdscanner.cc:322
 #: ../common/rcdscanner.cc:421
 msgid "Unmounting CD-ROM..."
-msgstr "Démontage du cédérom..."
+msgstr "Démontage du CD-ROM..."
 
 #: ../common/rcdscanner.cc:283
 msgid "Waiting for disc..."
-msgstr "En attente d'un cédérom..."
+msgstr "En attente d'un CD-ROM..."
 
 #: ../common/rcdscanner.cc:284
 msgid "Insert a disc in the drive."
-msgstr "Insérez un cédérom dans le lecteur."
+msgstr "Insérez un CD-ROM dans le lecteur."
 
 #. Mount the new CDROM
 #: ../common/rcdscanner.cc:288
 msgid "Mounting CD-ROM..."
-msgstr "Montage du cédérom..."
+msgstr "Montage du CD-ROM..."
 
 #: ../common/rcdscanner.cc:291
 msgid "Failed to mount the cdrom."
-msgstr "Impossible de monter le cédérom."
+msgstr "Impossible de monter le CD-ROM."
 
 #: ../common/rcdscanner.cc:295
 msgid "Identifying disc..."
-msgstr "Identification du cédérom..."
+msgstr "Identification du CD-ROM..."
 
 #: ../common/rcdscanner.cc:298
 msgid "Couldn't identify disc."
-msgstr "Impossible d'identifier le cédérom."
+msgstr "Impossible d'identifier le CD-ROM."
 
 #: ../common/rcdscanner.cc:301
 msgid "Scanning disc..."
-msgstr "Examen du cédérom..."
+msgstr "Examen du CD-ROM..."
 
 #: ../common/rcdscanner.cc:316
 msgid "Cleaning package lists..."
@@ -317,7 +317,7 @@ msgstr "Nettoyage des listes de paquets..."
 msgid ""
 "Unable to locate any package files. Perhaps this is not an APT enabled disc."
 msgstr ""
-"Impossible de trouver des paquets Debian. Le cédérom n'est peut-être pas "
+"Impossible de trouver des paquets Debian. Le CD-ROM n'est peut-être pas "
 "compatible avec APT."
 
 #: ../common/rcdscanner.cc:380
@@ -326,11 +326,11 @@ msgstr "Échec lors de l'examen du disque."
 
 #: ../common/rcdscanner.cc:384
 msgid "Empty disc name."
-msgstr "Aucun label pour ce cédérom."
+msgstr "Aucun label pour ce CD-ROM."
 
 #: ../common/rcdscanner.cc:387
 msgid "Registering disc..."
-msgstr "Référencement du cédérom..."
+msgstr "Référencement du CD-ROM..."
 
 #: ../common/rcdscanner.cc:401
 msgid "Copying package lists..."
@@ -374,9 +374,9 @@ msgid "ERROR: could not create configuration directory %s"
 msgstr "Erreur : impossible de créer le répertoire de configuration %s"
 
 #: ../common/rconfiguration.cc:147
-#, fuzzy, c-format
+#, c-format
 msgid "ERROR: could not create state directory %s"
-msgstr "Erreur : impossible de créer le répertoire temporaire %s"
+msgstr "Erreur : impossible de créer le répertoire d'état %s"
 
 #: ../common/rconfiguration.cc:164
 #, c-format
@@ -408,6 +408,10 @@ msgid ""
 "Not all changes and updates succeeded. For further details of the the "
 "failure, please expand the 'terminal' panel below."
 msgstr ""
+"\n"
+"Toutes les modifications et mises à jour n'ont pas été effectuées avec "
+"succès. Pour davantage d'informations, veuillez déplier le panneau de "
+"« terminal » ci-dessous."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -566,9 +570,8 @@ msgid "Depends"
 msgstr "Dépend de"
 
 #: ../common/rpackage.h:52
-#, fuzzy
 msgid "PreDepends"
-msgstr "Dépend de"
+msgstr "PreDepends"
 
 #: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
 msgid "Suggests"
@@ -588,12 +591,11 @@ msgstr "Remplace"
 
 #: ../common/rpackage.h:54
 msgid "Obsoletes"
-msgstr ""
+msgstr "Rend obsolète"
 
 #: ../common/rpackage.h:54
-#, fuzzy
 msgid "Dependency of"
-msgstr "Dépendances"
+msgstr "Dépendances de"
 
 #: ../common/rpackagecache.cc:62
 msgid ""
@@ -611,7 +613,7 @@ msgstr ""
 
 #: ../common/rpackagecache.cc:108
 msgid "Internal Error, non-zero counts"
-msgstr "Erreur interne, compteurs non-nuls"
+msgstr "Erreur interne, compteurs non nuls"
 
 #: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1045
 #: ../gtk/glade/window_find.glade.h:5
@@ -642,7 +644,7 @@ msgstr "Fournit"
 # Apparently, not to be translated
 #: ../common/rpackagefilter.cc:54
 msgid "ReverseDepends"
-msgstr "Dépendances inverses"
+msgstr "ReverseDepends"
 
 #. Reverse Depends
 #: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
@@ -809,7 +811,7 @@ msgid ""
 "Upgraded the following packages:\n"
 msgstr ""
 "\n"
-"Les paquets suivant ont été mis à jour :\n"
+"Les paquets suivants ont été mis à jour :\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
 #: ../common/rpackagelister.cc:1649
@@ -861,7 +863,7 @@ msgstr "Arborescence par ordre alphabétique"
 
 #: ../common/rpackageview.h:158
 msgid "Search History"
-msgstr "Historique de recherche"
+msgstr "Rechercher dans l'historique"
 
 #: ../common/rpackageview.h:209
 msgid "Custom"
@@ -881,9 +883,8 @@ msgid "Installed (auto removable)"
 msgstr "Installés (pouvant être mis à jour)"
 
 #: ../common/rpackageview.cc:149
-#, fuzzy
 msgid "Broken dependencies"
-msgstr "Dépendances"
+msgstr "Dépendances cassées"
 
 #: ../common/rpackageview.cc:151 ../gtk/glade/window_filters.glade.h:37
 msgid "New in repository"
@@ -943,16 +944,16 @@ msgstr "Impossible de lire %s"
 #: ../common/rsources.cc:131
 #, c-format
 msgid "Syntax error in line %s"
-msgstr ""
+msgstr "Erreur de syntaxe en ligne %s"
 
 #: ../common/rsources.cc:469
 #, c-format
 msgid "Vendor block %s is invalid"
-msgstr ""
+msgstr "Le bloc fournisseur %s est invalide"
 
 #: ../gtk/gsynaptic.cc:72
 msgid "Usage: synaptic [options]\n"
-msgstr "Usage : synaptic [options]\n"
+msgstr "Syntaxe  : synaptic [options]\n"
 
 #: ../gtk/gsynaptic.cc:73
 msgid "-h   This help text\n"
@@ -970,13 +971,13 @@ msgstr "-f=? Fournir un fichier de sélection différent\n"
 msgid ""
 "-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n"
 msgstr ""
-"-t   Affiche un titre de remplacement pour la fenêtre principale (p. ex. le\n"
+"-t   Afficher un titre de remplacement pour la fenêtre principale (p. ex. "
+"le\n"
 "     nom d'hôte donné par la commande « uname -n »)\n"
 
 #: ../gtk/gsynaptic.cc:77
-#, fuzzy
 msgid "-i=? Start with the initial Filter with given name\n"
-msgstr "-i=? Démarrer avec le filtre initial du numéro donné\n"
+msgstr "-i=? Démarrer avec le nom donné comme filtre initial\n"
 
 #: ../gtk/gsynaptic.cc:78
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
@@ -985,36 +986,36 @@ msgstr "-o=? Définir une option de configuration, p.ex. -o dir::cache=/tmp\n"
 #: ../gtk/gsynaptic.cc:79
 msgid "--upgrade-mode  Call Upgrade and display changes\n"
 msgstr ""
-"--upgrade-mode  Rafraîchit, sélectionne les mises à jour et\n"
-"                affiche les changements\n"
+"--upgrade-mode  Rafraîchir, sélectionner les mises à jour et\n"
+"                afficher les changements\n"
 
 #: ../gtk/gsynaptic.cc:80
 msgid "--dist-upgrade-mode  Call DistUpgrade and display changes\n"
 msgstr ""
-"--dist-upgrade-mode  Rafraîchit, sélectionne les mises à jour\n"
-"                     et affiche les changements\n"
+"--dist-upgrade-mode  Rafraîchir, sélectionner les mises à jour\n"
+"                     et afficher les changements\n"
 
 #: ../gtk/gsynaptic.cc:81
 msgid "--update-at-startup  Call \"Reload\" on startup\n"
-msgstr "--update-at-startup  Appelle « Reload » lors du démarrage\n"
+msgstr "--update-at-startup  Appeler « Reload » lors du démarrage\n"
 
 #: ../gtk/gsynaptic.cc:82
 msgid "--non-interactive Never prompt for user input\n"
-msgstr "--non-interactive Ne demande jamais l'avis de l'utilisateur\n"
+msgstr "--non-interactive Ne jamais demander l'avis de l'utilisateur\n"
 
 #: ../gtk/gsynaptic.cc:83
 msgid "--task-window Open with task window\n"
 msgstr "--task-window Ouverture avec la fenêtre des tâches\n"
 
 #: ../gtk/gsynaptic.cc:84
-#, fuzzy
 msgid "--add-cdrom Add a cdrom at startup (needs path for cdrom)\n"
-msgstr "--add-cdrom Ajouter un cédérom au démarrage\n"
+msgstr ""
+"--add-cdrom Ajouter un CD-ROM au démarrage (demande de fournir un chemin "
+"vers le CD-ROM)\n"
 
 #: ../gtk/gsynaptic.cc:85
-#, fuzzy
 msgid "--ask-cdrom Ask for adding a cdrom and exit\n"
-msgstr "--ask-cdrom Ajouter un cédérom au démarrage\n"
+msgstr "--add-cdrom Demander à ajouter un CD-ROM et quitter\n"
 
 #: ../gtk/gsynaptic.cc:86
 msgid "--test-me-harder  Run test in a loop\n"
@@ -1056,13 +1057,17 @@ msgstr ""
 
 #: ../gtk/gsynaptic.cc:411
 msgid "Starting without administrative privileges"
-msgstr ""
+msgstr "Lancement sans les privilèges de l'administrateur"
 
 #: ../gtk/gsynaptic.cc:413
+#, fuzzy
 msgid ""
 "You will not be able to apply any changes. But you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
+"Vous ne pourrez appliquer aucune des modifications. Mais vous pourrez "
+"continuer à exporter les modifications ou créer un script de téléchargement "
+"pour celles-ci."
 
 #: ../gtk/gsynaptic.cc:479
 msgid "Synaptic Package Manager "
@@ -1070,15 +1075,15 @@ msgstr "Gestionnaire de paquets Synaptic "
 
 #: ../gtk/rgcdscanner.cc:63 ../gtk/rgpkgcdrom.cc:86
 msgid "Scanning CD-ROM"
-msgstr "Examen du cédérom"
+msgstr "Examen du CD-ROM"
 
 #: ../gtk/rgcdscanner.cc:109
 msgid "Invalid disc name!"
-msgstr "Label du cédérom incorrect !"
+msgstr "Label du CD-ROM incorrect !"
 
 #: ../gtk/rgcdscanner.cc:121 ../gtk/rgpkgcdrom.cc:122
 msgid "Disc Label"
-msgstr "Label du cédérom"
+msgstr "Label du CD-ROM"
 
 #: ../gtk/rgaboutpanel.cc:64 ../gtk/glade/window_about.glade.h:5
 msgid "Credits"
@@ -1103,8 +1108,8 @@ msgid ""
 "this could allow a malicious individual to damage or take control of your "
 "system."
 msgstr ""
-"Vous allez installer un logiciel qui ne <b>peut pas être authentifié</b> !. "
-"Ceci peut permettre à un individu malintentionné de prendre le contrôle de "
+"Vous allez installer un logiciel qui ne <b>peut pas être authentifié</b> ! "
+"Ceci peut permettre à un individu mal intentionné de prendre le contrôle de "
 "votre système."
 
 #: ../gtk/rgchangeswindow.cc:106 ../gtk/rgsummarywindow.cc:92
@@ -1137,16 +1142,16 @@ msgid "To be kept"
 msgstr "À conserver"
 
 #: ../gtk/rgdebinstallprogress.cc:214
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr ""
-"Faut-il installer le nouveau fichier de configuration\n"
+"Faut-il remplacer le fichier de configuration\n"
 "« %s » ?"
 
 #: ../gtk/rgdebinstallprogress.cc:215
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
 "version is shipped in this package. If you want to keep your current version "
@@ -1154,9 +1159,10 @@ msgid ""
 "package maintainers version? "
 msgstr ""
 "Le fichier de configuration %s a été modifié (par vous-même ou par un "
-"script). Une version mise à jour est fournie avec ce paquet. Répondre « Non » "
-"si vous souhaitez conserver votre version actuelle. Voulez-vous installer la "
-"nouvelle version fournie par le responsable du paquet ?"
+"script). Une version mise à jour est fournie avec ce paquet. Répondre "
+"« Conserver » si vous souhaitez conserver votre version actuelle. Voulez-vous "
+"remplacer le fichier actuel avec la nouvelle version fournie par le "
+"responsable du paquet ?"
 
 #: ../gtk/rgdebinstallprogress.cc:366 ../gtk/rginstallprogress.cc:286
 #: ../gtk/rgterminstallprogress.cc:62
@@ -1184,7 +1190,7 @@ msgstr "Erreur dans la paquet %s"
 
 #: ../gtk/rgdebinstallprogress.cc:598
 msgid "A package failed to install.  Trying to recover:"
-msgstr ""
+msgstr "Échec de l'installation d'un paquet. Tentative de récupération :"
 
 #: ../gtk/rgdebinstallprogress.cc:655 ../gtk/rgdebinstallprogress.cc:658
 msgid "Changes applied"
@@ -1305,7 +1311,7 @@ msgid ""
 "%s\n"
 "in drive %s"
 msgstr ""
-"Veuillez insérer le cédérom nommé :\n"
+"Veuillez insérer le CD-ROM nommé :\n"
 "%s\n"
 "dans le lecteur %s"
 
@@ -1595,7 +1601,7 @@ msgstr "Journal des modifications de %s"
 
 #: ../gtk/rgmainwindow.cc:2050
 msgid "Do you want to add another CD-ROM?"
-msgstr "Souhaitez-vous ajouter un autre cédérom ?"
+msgstr "Souhaitez-vous ajouter un autre CD-ROM ?"
 
 #: ../gtk/rgmainwindow.cc:2087
 msgid "Open changes"
@@ -1608,9 +1614,8 @@ msgid "Can't write %s"
 msgstr "Impossible d'écrire %s"
 
 #: ../gtk/rgmainwindow.cc:2143
-#, fuzzy
 msgid "Save changes"
-msgstr "Ouvrir le journal des modifications"
+msgstr "Enregistrer les modifications"
 
 #: ../gtk/rgmainwindow.cc:2150
 msgid "Save full state, not only changes"
@@ -1628,7 +1633,7 @@ msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
 msgstr ""
-"L'information des dépôts à changé. Veuillez cliquer sur le bouton "
+"L'information des dépôts a changé. Veuillez cliquer sur le bouton "
 "« Recharger » pour que vos modifications soient prises en compte"
 
 #: ../gtk/rgmainwindow.cc:2282
@@ -1699,7 +1704,7 @@ msgstr ""
 
 #: ../gtk/rgmainwindow.cc:2672
 msgid "Applying marked changes. This may take a while..."
-msgstr "Les modifications sont en cours. Veuillez patienter..."
+msgstr "Les modifications demandées sont en cours. Veuillez patienter..."
 
 #: ../gtk/rgmainwindow.cc:2676
 #, fuzzy
@@ -1753,22 +1758,19 @@ msgstr "Les mises à niveau disponibles ont été correctement sélectionnées"
 
 #: ../gtk/rgmainwindow.cc:2968
 msgid "Failed to mark all available upgrades!"
-msgstr "Échec de la sélection des mises à niveau disponibles"
+msgstr "Échec de la sélection des mises à niveau disponibles."
 
 #: ../gtk/rgmainwindow.cc:3347
-#, fuzzy
 msgid "Save script"
-msgstr "Description"
+msgstr "Enregistrer le script"
 
 #: ../gtk/rgmainwindow.cc:3374
-#, fuzzy
 msgid "Select directory"
-msgstr "Historique de recherche"
+msgstr "Choisir un répertoire"
 
 #: ../gtk/rgmainwindow.cc:3386
-#, fuzzy
 msgid "Please select a directory"
-msgstr "Insérez un cédérom dans le lecteur."
+msgstr "Veuillez indiquer un répertoire"
 
 #: ../gtk/rgrepositorywin.cc:92
 msgid ""
@@ -1778,7 +1780,8 @@ msgid ""
 msgstr ""
 "Vous êtes sur le point d'installer le composant « univers ».\n"
 "\n"
-" Les paquets de ce composant ne sont pas gérés. Voulez-vous continuer ?"
+" Les paquets de ce composant ne sont pas supportés.\n"
+"Voulez-vous continuer ?"
 
 #: ../gtk/rgrepositorywin.cc:124 ../gtk/glade/window_repositories.glade.h:3
 msgid "Repositories"
@@ -1827,25 +1830,21 @@ msgid "Unknown source type"
 msgstr "Type de source inconnue"
 
 #: ../gtk/rgsummarywindow.cc:108
-#, fuzzy
 msgid "<b>(ESSENTIAL) to be removed</b>"
-msgstr "(ESSENTIEL) à désinstaller"
+msgstr "<b>(ESSENTIEL) à désinstaller</b>"
 
 #: ../gtk/rgsummarywindow.cc:122
-#, fuzzy
 msgid "<b>To be DOWNGRADED</b>"
-msgstr "À réinstaller vers une version ANTÉRIEURE"
+msgstr "<b>À réinstaller vers une version ANTÉRIEURE</b>"
 
 #: ../gtk/rgsummarywindow.cc:135
-#, fuzzy
 msgid "<b>To be removed</b>"
-msgstr "À désinstaller"
+msgstr "<b>À désinstaller</b>"
 
 #: ../gtk/rgsummarywindow.cc:148
-#, fuzzy
 msgid "<b>To be completely removed (including configuration files)</b>"
 msgstr ""
-"Vont être complètement supprimés (y compris les fichiers de configuration)"
+"<b>A supprimer complètement (y compris les fichiers de configuration)</b>"
 
 #: ../gtk/rgsummarywindow.cc:200
 msgid "Unchanged"
@@ -1903,7 +1902,7 @@ msgstr[1] "%d paquets verrouillés\n"
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d paquet conservé et non mis à niveau\n"
-msgstr[1] "%d paquets conservés et non mis à jour\n"
+msgstr[1] "%d paquets conservés et non mis à niveau\n"
 
 #: ../gtk/rgsummarywindow.cc:404
 #, c-format
@@ -1924,7 +1923,7 @@ msgstr[1] "%d paquets vont être réinstallés\n"
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d paquet va être mis à niveau\n"
-msgstr[1] "%d paquets vont être mis à jour\n"
+msgstr[1] "%d paquets vont être mis à iniveau\n"
 
 #: ../gtk/rgsummarywindow.cc:425
 #, c-format
@@ -1975,12 +1974,13 @@ msgstr ""
 "Il existe un risque que votre système devienne inutilisable.\n"
 
 #: ../gtk/rguserdialog.cc:75
+#, fuzzy
 msgid "An error occurred"
-msgstr ""
+msgstr "Un erreur s'est produite"
 
 #: ../gtk/rguserdialog.cc:76
 msgid "The following details are provided:"
-msgstr ""
+msgstr "Les détails suivants sont donnés :"
 
 #: ../gtk/rgvendorswindow.cc:39
 msgid "Setup Vendors"
@@ -1992,7 +1992,7 @@ msgstr "Signature"
 
 #: ../gtk/rgvendorswindow.cc:128
 msgid "OK"
-msgstr "OK"
+msgstr "Accepter"
 
 #: ../gtk/rgvendorswindow.cc:132
 msgid "Add"
@@ -2076,15 +2076,16 @@ msgid "A_pply Marked Changes"
 msgstr "_Appliquer les modifications sélectionnées"
 
 #: ../gtk/glade/window_main.glade.h:12
-#, fuzzy
 msgid "Add downloaded packages"
-msgstr "Téléchargement des fichiers en cours"
+msgstr "Ajouter les paquets téléchargés"
 
 #: ../gtk/glade/window_main.glade.h:13
 msgid ""
 "Add packages downloaded with the \"Generate package download script\" "
 "feature to the system"
 msgstr ""
+"Ajouter au système les paquets téléchargés avec la fonctionnalité « Créer un "
+"script de téléchargement de paquet »"
 
 #: ../gtk/glade/window_main.glade.h:14
 msgid "Apply"
@@ -2126,10 +2127,12 @@ msgid ""
 "Generate a shell script so that you can download the selected packages on a "
 "different computer"
 msgstr ""
+"Créer un script de l'interpréteur de commandes de manière à pourvoir "
+"télécharger les paquets sélectionnés sur un autre ordinateur"
 
 #: ../gtk/glade/window_main.glade.h:24
 msgid "Generate package download script"
-msgstr ""
+msgstr "Créer un script de téléchargement de paquets"
 
 #: ../gtk/glade/window_main.glade.h:25
 msgid "Icon _Legend"
@@ -2141,7 +2144,7 @@ msgstr "Fichiers installés"
 
 #: ../gtk/glade/window_main.glade.h:27
 msgid "Mark All Upgrades"
-msgstr "Tout mettre à jour"
+msgstr "Tout mettre à niveau"
 
 #: ../gtk/glade/window_main.glade.h:28
 msgid "Mark Packages by _Task..."
@@ -2178,9 +2181,8 @@ msgid "Reload"
 msgstr "Recharger"
 
 #: ../gtk/glade/window_main.glade.h:40
-#, fuzzy
 msgid "S_earch Results"
-msgstr "Filtre de recherche"
+msgstr "Rechercher les ré_sultats"
 
 #: ../gtk/glade/window_main.glade.h:41
 msgid "S_tatus"
@@ -2232,7 +2234,7 @@ msgstr "_À propos"
 
 #: ../gtk/glade/window_main.glade.h:53
 msgid "_Add CD-ROM..."
-msgstr "Ajouter un _cédérom..."
+msgstr "Ajouter un _CD-ROM..."
 
 #: ../gtk/glade/window_main.glade.h:54
 msgid "_Browse Documentation"
@@ -2247,9 +2249,8 @@ msgid "_Contents"
 msgstr "_Contenu"
 
 #: ../gtk/glade/window_main.glade.h:57
-#, fuzzy
 msgid "_Custom Filters"
-msgstr "_Filtres"
+msgstr "_Filtres personnalisés"
 
 #: ../gtk/glade/window_main.glade.h:58
 msgid "_Download Changelog"
@@ -2285,7 +2286,7 @@ msgstr "_Cacher"
 
 #: ../gtk/glade/window_main.glade.h:66
 msgid "_History"
-msgstr "_Historique"
+msgstr "_Historique des recherches"
 
 #: ../gtk/glade/window_main.glade.h:67
 msgid "_Icons Only"
@@ -2337,11 +2338,11 @@ msgstr "_Enregistrer les sélections"
 
 #: ../gtk/glade/window_main.glade.h:79
 msgid "_Search..."
-msgstr "Rechercher..."
+msgstr "Rec_hercher..."
 
 #: ../gtk/glade/window_main.glade.h:80
 msgid "_Sections"
-msgstr "Catégories"
+msgstr "Catégorie_s"
 
 #: ../gtk/glade/window_main.glade.h:81
 msgid "_Set Internal Option..."
@@ -2459,7 +2460,7 @@ msgstr "Écrit par"
 
 #: ../gtk/glade/window_about.glade.h:33
 msgid "translators-credits"
-msgstr "Remerciements aux traducteurs"
+msgstr "Contributeurs de la liste debian-l10n-french"
 
 #: ../gtk/glade/window_find.glade.h:2
 msgid "Description and Name"
@@ -2487,7 +2488,8 @@ msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
 "span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Sélectionner les changements additionnels nécessaires?</span>"
+"<span weight=\"bold\" size=\"large\">Prévoir d'effectuer d'autres "
+"changements ?</span>"
 
 #: ../gtk/glade/window_changes.glade.h:2
 msgid ""
@@ -2537,7 +2539,7 @@ msgstr "<b>Sélection des changements</b>"
 #: ../gtk/glade/window_preferences.glade.h:10
 msgid "<b>Package upgrade behaviour (default distribution)</b>"
 msgstr ""
-"<b>Comportement pour la mise à niveau des paquet (distribution par défaut)</"
+"<b>Comportement pour la mise à niveau des paquets (distribution par défaut)</"
 "b>"
 
 #: ../gtk/glade/window_preferences.glade.h:11
@@ -2645,9 +2647,8 @@ msgid "Delete _History files older than:"
 msgstr "Effacer les fichiers d'historiques plus vieux que :"
 
 #: ../gtk/glade/window_preferences.glade.h:34
-#, fuzzy
 msgid "Delete all cache package files now."
-msgstr "_Supprimer les paquets en cache"
+msgstr "Supprimer maintenant tous les fichiers de paquets en cache."
 
 #: ../gtk/glade/window_preferences.glade.h:35
 msgid "Direct connection to the internet"
@@ -2751,7 +2752,7 @@ msgstr "Non installé :"
 
 #: ../gtk/glade/window_preferences.glade.h:61
 msgid "Number of undo operations:"
-msgstr "Nombre d'annulations possibles :"
+msgstr "Nombre d'annulations possible :"
 
 #: ../gtk/glade/window_preferences.glade.h:62
 msgid "Port number of the ftp proxy server"
@@ -2838,7 +2839,7 @@ msgstr "*"
 #: ../gtk/glade/window_disc_name.glade.h:2
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Entrez le nom du cédérom</span>"
+msgstr "<span weight=\"bold\" size=\"large\">Entrez le nom du CD-ROM</span>"
 
 #: ../gtk/glade/window_disc_name.glade.h:3
 msgid "Disc label:"
@@ -2849,8 +2850,8 @@ msgid ""
 "The label will be used to identify the CD-ROM if you want to install "
 "packages from it later."
 msgstr ""
-"Le nom sera utilisé pour identifier le cédérom lorsque vous voudrez "
-"installer des paquets à partir de celui-ci."
+"Le nom sera utilisé pour identifier le CD-ROM lorsque vous voudrez installer "
+"des paquets à partir de celui-ci."
 
 #: ../gtk/glade/window_setopt.glade.h:1
 msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
@@ -3164,9 +3165,8 @@ msgstr ""
 "succès"
 
 #: ../gtk/glade/window_rgdebinstall_progress.glade.h:3
-#, fuzzy
 msgid "Details"
-msgstr "Afficher le_s informations détaillées"
+msgstr "Informations détaillées"
 
 #: ../gtk/glade/window_rginstall_progress_msgs.glade.h:1
 msgid "Extra output was generated during Package Manager operation"
@@ -3213,7 +3213,7 @@ msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then apply them."
 msgstr ""
-"<b>Remarque :</b> Les modifications ne sont pas appliquées instantanément. "
+"<b>Remarque :</b> les modifications ne sont pas appliquées instantanément. "
 "Vous devez d'abord les sélectionner, puis les appliquer."
 
 #: ../gtk/glade/dialog_welcome.glade.h:3
@@ -3240,7 +3240,7 @@ msgstr ""
 
 #: ../gtk/glade/dialog_welcome.glade.h:8
 msgid "Show this dialog at startup"
-msgstr "Montrer cette fenêtre de dialogue au lancement"
+msgstr "Afficher cette fenêtre de dialogue au lancement"
 
 #: ../gtk/glade/dialog_welcome.glade.h:9
 msgid ""
@@ -3298,7 +3298,7 @@ msgstr ""
 "<big><b>Échec du téléchargement de tous les fichiers d'index</b></big>\n"
 "\n"
 "Le dépôt ne semple plus être disponible ou ne peut être contacté à cause de "
-"problèmes réseau. S'il existe un fichier d'index plus ancien il sera "
+"problèmes de réseau. S'il existe un fichier d'index plus ancien, il sera "
 "utilisé. Sinon, le dépôt sera ignoré. Vérifiez votre connexion réseau et "
 "corrigez l'adresse du dépôt dans les préférences."
 
@@ -3327,7 +3327,7 @@ msgstr ""
 "La version du paquet que vous voulez installer ne semble plus être "
 "disponible dans le dépôt, ou il peut y avoir des problèmes avec l'accès au "
 "dépôt. Rafraîchissez la liste des paquets et vérifiez que vous pouvez "
-"accéder au dépôt (par ex. : cédérom ou connexion réseau)."
+"accéder au dépôt (par ex. : CD-ROM ou connexion réseau)."
 
 #: ../gtk/glade/dialog_update_outdated.glade.h:1
 msgid ""
@@ -3341,7 +3341,7 @@ msgstr ""
 "<span weight=\"bold\" size=\"larger\">L'information sur les paquets est "
 "périmée</span>\n"
 "\n"
-"L'information concernant les paquets date de plus de 48 heures. Il peut y "
+"L'information concernant les paquets date de plus de 48 heures. Il peut y "
 "avoir des mises à jour de sécurité importantes. Il est recommandé de "
 "recharger régulièrement l'information sur les paquets."
 
@@ -3378,14 +3378,12 @@ msgid "Difference between the files"
 msgstr "Différence entre les fichiers"
 
 #: ../gtk/glade/dialog_conffile.glade.h:2
-#, fuzzy
 msgid "_Keep"
-msgstr "_Aide"
+msgstr "_Garder"
 
 #: ../gtk/glade/dialog_conffile.glade.h:3
-#, fuzzy
 msgid "_Replace"
-msgstr "Remplace"
+msgstr "_Remplacer"
 
 #: ../gtk/glade/dialog_change_version.glade.h:1
 msgid "Force version:"
@@ -3393,7 +3391,7 @@ msgstr "Forcer la version :"
 
 #: ../gtk/glade/dialog_change_version.glade.h:2
 msgid "_Force Version"
-msgstr "_Forcer la Version"
+msgstr "_Forcer la version"
 
 #: ../gtk/glade/dialog_upgrade.glade.h:1
 msgid ""
@@ -3482,13 +3480,12 @@ msgid "Dependent packages"
 msgstr "Paquets dépendant de"
 
 #: ../gtk/rgpkgcdrom.cc:68
-#, fuzzy
 msgid "Please insert a disc in the drive."
-msgstr "Insérez un cédérom dans le lecteur."
+msgstr "Veuillez insérer un CD-ROM dans le lecteur."
 
 #: ../gtk/rgiconlegend.cc:76
 msgid "Package is supported"
-msgstr "Le paquet est géré"
+msgstr "Le paquet est supporté"
 
 #: ../gtk/rgterminstallprogress.cc:134
 msgid "<i>Running...</i>"
@@ -3536,7 +3533,7 @@ msgstr ""
 #: ../gtk/glade/dialog_disc_label.glade.h:6
 #, fuzzy
 msgid "Label:"
-msgstr "Label du cédérom"
+msgstr "Label du CD-ROM"
 
 #: ../gtk/glade/dialog_new_repositroy.glade.h:2
 msgid ""
@@ -3557,74 +3554,7 @@ msgstr ""
 msgid "_Add Repository"
 msgstr "_Dépôts"
 
-#, fuzzy
-#~ msgid "Bad regular expression '%s' in Recommends file."
-#~ msgstr "Expression rationnelle « %s » incorrecte dans la vue réduite."
-
-#~ msgid ""
-#~ "\n"
-#~ "Failed to apply all changes! Scroll in the terminal buffer to see what "
-#~ "went wrong."
-#~ msgstr ""
-#~ "\n"
-#~ "Échec, toutes les modifications n'ont pas pu être appliquées. - Faites "
-#~ "défiler la fenêtre pour trouver l'erreur."
-
-#~ msgid "You must run this program as the root user."
-#~ msgstr "Ce programme doit s'exécuter avec les droits de superutilisateur."
-
-#~ msgid "Preparing for removal %s"
-#~ msgstr "Préparation de la suppression de %s"
-
-#~ msgid "Removing %s"
-#~ msgstr "Suppression de %s"
-
-#~ msgid "Removed %s"
-#~ msgstr "%s supprimé"
-
-#~ msgid "Removing with config %s"
-#~ msgstr "Suppression de %s et de ses fichiers de configuration"
-
-#~ msgid "Removed with config %s"
-#~ msgstr "%s supprimé, y compris ses fichiers de configuration"
-
-#~ msgid "Preparing %s"
-#~ msgstr "Préparation de %s"
-
-#~ msgid "Unpacking %s"
-#~ msgstr "Dépaquetage de %s"
-
-#~ msgid "Configuring %s"
-#~ msgstr "Configuration de %s"
-
-#~ msgid "Installed %s"
-#~ msgstr "%s installé"
-
-#~ msgid "Installing %s"
-#~ msgstr "Installation de %s"
-
-#~ msgid ""
-#~ "<big><b>Building repository dialog</b></big>\n"
-#~ "\n"
-#~ "Please wait."
-#~ msgstr ""
-#~ "<big><b>Construction du dialogue de dépôt</b></big>\n"
-#~ "\n"
-#~ "Veuillez patienter."
-
 #~ msgid "The package files will be cached locally for installation."
 #~ msgstr ""
 #~ "Les fichiers de paquets seront mis en cache localement afin d'être "
 #~ "installés."
-
-#~ msgid "The following problems were found on your system:"
-#~ msgstr "Les problèmes suivant ont été rencontrés sur votre système :"
-
-#~ msgid "S_earch"
-#~ msgstr "R_echercher"
-
-#~ msgid "_Custom"
-#~ msgstr "Personnalisé"
-
-#~ msgid "Terminal"
-#~ msgstr "Terminal"

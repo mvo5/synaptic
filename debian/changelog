@@ -1,3 +1,59 @@
+synaptic (0.62.6ubuntu1) karmic; urgency=low
+
+  * merge from Debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - merged ept branch
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 08 Jun 2009 10:47:19 +0200
+
+synaptic (0.62.6) unstable; urgency=low
+
+  * po/th.po:
+    - updated Thai translation,
+      thanks to Theppiak Karoonboonyanan, closes: #512605, #441571
+  * po/br.po:
+    - updated breton translation,
+      thanks to Denis ARNAUD
+  * po/sk.po:
+    - updated Slovak translation,
+      thanks to Ivan Masár, closes: #531063
+  * po/es.po:
+    - updated Spanish translation,
+      thanks to Francisco Javier Cuadrado, closes: #500400
+  * po/tr.po:
+    - updated Turkish translation,
+      thanks to Mert Dirik, closes: #488995
+  * po/eu.po:
+    - updated Basque translation,
+      thanks to Piarres Beobide, closes: #476438
+  * po/ja.po:
+    - updated Japanese translation,
+      thanks to Kenshi Muto, closes: #455209
+  * po/ko.po:
+    - updated Korean translation,
+      thanks to Changwoo Ryu, closes: #416194
+  * po/fr.po:
+    - updated French translation,
+      thanks to Jean-Luc Coulon, closes: #406882
+  * po/sv.po:
+    - updated Swedish translation,
+      thanks to Daniel Nylander, closes: #384107
+  * gtk/rgdebinstallprogress.cc:
+    - if forkpty() show a propper error message
+      (thanks to Evan)
+  * gtk/rgfetchprogress.cc:
+    - if the ETA is huge report it as unknown (LP: #322871)
+  * debian/control:
+    - add depends to hicolor-icon-theme
+  * common/sections_trans.cc:
+    - updated for the new section (like httpd, vcs, ...)
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 05 Jun 2009 16:22:48 +0200
+
 synaptic (0.62.5ubuntu3) jaunty-proposed; urgency=low
 
   * improve the logic when the xapian index needs

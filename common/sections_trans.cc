@@ -12,34 +12,58 @@ const char *transtable[][2] = {
    {"admin", _("System Administration")},
    // TRANSLATORS: Alias for the Debian package section "base"
    {"base", _("Base System")},
+   // TRANSLATORS: Alias for the Debian package section "cli-mono"
+   {"cli-mono", _("Mono/CLI Infrastructure")},
    // TRANSLATORS: Alias for the Debian package section "comm"
    {"comm", _("Communication")},
+   // TRANSLATORS: Alias for the Debian package section "database"
+   {"database", _("Databases")},
    // TRANSLATORS: Alias for the Debian package section "devel"
    {"devel", _("Development")},
    // TRANSLATORS: Alias for the Debian package section "doc"
    {"doc", _("Documentation")},
+   // TRANSLATORS: Alias for the Debian package section "debug"
+   {"debug", _("Debug")},
    // TRANSLATORS: Alias for the Debian package section "editors"
    {"editors", _("Editors")},
    // TRANSLATORS: Alias for the Debian package section "electronics"
    {"electronics", _("Electronics")},
    // TRANSLATORS: Alias for the Debian package section "embedded"
    {"embedded", _("Embedded Devices")},
+   // TRANSLATORS: Alias for the Debian package section "fonts"
+   {"fonts", _("Fonts")},
    // TRANSLATORS: Alias for the Debian package section "games"
    {"games", _("Games and Amusement")},
    // TRANSLATORS: Alias for the Debian package section "gnome"
    {"gnome", _("GNOME Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "graphics"
    {"graphics", _("Graphics")},
+   // TRANSLATORS: Alias for the Debian package section "gnu-r"
+   {"gnu-r", _("GNU R staticial system")},
+   // TRANSLATORS: Alias for the Debian package section "gnustep"
+   {"gnustep", _("Gnustep Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "hamradio"
    {"hamradio", _("Amateur Radio")},
+   // TRANSLATORS: Alias for the Debian package section "haskel"
+   {"haskel", _("Haskel Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "httpd"
+   {"httpd", _("Web servers")},
    // TRANSLATORS: Alias for the Debian package section "interpreters"
    {"interpreters", _("Interpreted Computer Languages")},
+   // TRANSLATORS: Alias for the Debian package section "java"
+   {"java", _("Java Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "KDE"
    {"kde", _("KDE Desktop Environment")},
+   // TRANSLATORS: Alias for the Debian package section "kernel"
+   {"kernel", _("Kernel and modules")},
    // TRANSLATORS: Alias for the Debian package section "libdevel"
    {"libdevel", _("Libraries - Development")},
    // TRANSLATORS: Alias for the Debian package section "libs"
    {"libs", _("Libraries")},
+   // TRANSLATORS: Alias for the Debian package section "lisp"
+   {"lisp", _("Lisp Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "localization"
+   {"localization", _("Localization")},
    // TRANSLATORS: Alias for the Debian package section "mail"
    {"mail", _("Email")},
    // TRANSLATORS: Alias for the Debian package section "math"
@@ -50,14 +74,20 @@ const char *transtable[][2] = {
    {"net", _("Networking")},
    // TRANSLATORS: Alias for the Debian package section "news"
    {"news", _("Newsgroup")},
+   // TRANSLATORS: Alias for the Debian package section "ocaml"
+   {"ocaml", _("OCaml Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "oldlibs"
    {"oldlibs", _("Libraries - Old")},
    // TRANSLATORS: Alias for the Debian package section "otherosfs"
    {"otherosfs", _("Cross Platform")},
    // TRANSLATORS: Alias for the Debian package section "perl"
    {"perl", _("Perl Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "php"
+   {"php", _("PHP Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "python"
    {"python", _("Python Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "ruby"
+   {"ruby", _("Ruby Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "science"
    {"science", _("Science")},
    // TRANSLATORS: Alias for the Debian package section "shells"
@@ -70,10 +100,18 @@ const char *transtable[][2] = {
    {"text", _("Word Processing")},
    // TRANSLATORS: Alias for the Debian package section "utils"
    {"utils", _("Utilities")},
+   // TRANSLATORS: Alias for the Debian package section "vcs"
+   {"vcs", _("Version Control Systems")},
+   // TRANSLATORS: Alias for the Debian package section "video"
+   {"video", _("Video software")},
    // TRANSLATORS: Alias for the Debian package section "web"
    {"web", _("World Wide Web")},
    // TRANSLATORS: Alias for the Debian package section "x11"
    {"x11", _("Miscellaneous  - Graphical")},
+   // TRANSLATORS: Alias for the Debian package section "xfce"
+   {"xfce", _("Xfce Desktop Environment")},
+   // TRANSLATORS: Alias for the Debian package section "zope"
+   {"zope", _("Zope/Plone Environment")},
    // TRANSLATORS: The section of the package is not known
    {"unknown", _("Unknown")},
    // TRANSLATORS: Alias for the Debian package section "alien"

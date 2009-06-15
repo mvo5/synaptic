@@ -161,7 +161,8 @@ class RPackageViewSearch : public RPackageView {
  RPackageViewSearch(vector<RPackage *> &allPkgs) 
     : RPackageView(allPkgs), found(0) {};
 
-   int setSearch(string searchName, int type, string searchString);
+   int setSearch(string searchName, int type, string searchString, 
+		 OpProgress &searchProgress);
 
    string getName() {
       return _("Search History");

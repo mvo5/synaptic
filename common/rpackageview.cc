@@ -235,8 +235,10 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    //_view[searchString].push_back(NULL);
 }
 
-int RPackageViewSearch::setSearch(string aSearchName, int type, 
-				  string searchString)
+int RPackageViewSearch::setSearch(string aSearchName, 
+				  int type, 
+				  string searchString, 
+				  OpProgress &searchProgress)
 {
    found = 0;
    searchType = type;
@@ -253,11 +255,15 @@ int RPackageViewSearch::setSearch(string aSearchName, int type,
       searchStrings.push_back(s);
    }
 
-   // reapply search when a new search strng is giben
+   // setup search progress (0 done, _all.size() in total, 1 subtask)
+   searchProgress.OverallProgress(0, _all.size(), 1, _("Searching"));
+   // reapply search when a new search strng is given
    for(unsigned int i=0;i<_all.size();i++) 
-      if(_all[i]) 
-	 addPackage(_all[i]);
-
+     if(_all[i]) {
+       searchProgress.Progress(i);
+       addPackage(_all[i]);
+     }
+   searchProgress.Done();
    return found;
 }
 

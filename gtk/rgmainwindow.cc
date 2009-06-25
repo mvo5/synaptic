@@ -2343,7 +2343,12 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 	 locale_str = str.c_str();
 
       int type = me->_findWin->getSearchType();
-      int found = me->_lister->searchView()->setSearch(str,type, locale_str);
+      GtkWidget *progress = glade_xml_get_widget(me->_gladeXML, "progressbar_main");
+      GtkWidget *label = glade_xml_get_widget(me->_gladeXML, "label_status");
+      RGCacheProgress searchProgress(progress, label);
+      int found = me->_lister->searchView()->setSearch(str,type, 
+						       locale_str,
+						       searchProgress);
       me->changeView(PACKAGE_VIEW_SEARCH, str);
 
       me->setBusyCursor(false);

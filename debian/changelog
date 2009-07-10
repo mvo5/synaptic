@@ -1,3 +1,13 @@
+synaptic (0.62.6ubuntu3) karmic; urgency=low
+
+  * common/rpackagelister.cc:
+    - remove all fuzzy matching in xapianIndexNeedsUpdate()
+  * gtk/rgmainwindow.cc:
+    - run update-apt-xapian-index --udpate under ionice, rebuild
+      the index every time the timestamps do not match
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 10 Jul 2009 13:00:47 +0200
+
 synaptic (0.62.6ubuntu2) karmic; urgency=low
 
   * show progress when searching and not not block the UI

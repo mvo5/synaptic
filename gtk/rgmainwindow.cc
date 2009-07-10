@@ -852,8 +852,9 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
       std::cerr << "running update-apt-xapian-index" << std::endl;
    GPid pid;
    char *argp[] = {"/usr/bin/nice",
+		   "/usr/bin/ionice","-c3",
 		   "/usr/sbin/update-apt-xapian-index", 
-		   "-q",
+		   "--update", "-q",
 		   NULL};
    if(g_spawn_async(NULL, argp, NULL, 
 		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
@@ -875,8 +876,9 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-   //std::cerr << "xapianIndexUpdateFinished: " 
-   //          << WEXITSTATUS(status) << std::endl;
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapianIndexUpdateFinished: "  
+		<< WEXITSTATUS(status) << std::endl;
 #ifdef WITH_EPT
    me->_lister->openXapianIndex();
 #endif

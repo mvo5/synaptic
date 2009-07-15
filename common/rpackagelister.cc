@@ -1975,13 +1975,14 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
    //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
    string s;
-
+   string originalSearchString = unsplitSearchString;
+   
    ept::textsearch::TextSearch *ts = _textsearch;
    if(!ts || !ts->hasData())
       return false;
 
    Xapian::Enquire enquire(ts->db());
- 
+
    // a '-' is a legal part of a package name but also a special
    // term for xapian, we apply the following heuristic:
    // if the term is embedded into a word it gets quoted:
@@ -1992,10 +1993,13 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    size_t found = unsplitSearchString.find("-");
    while (found != string::npos) {
       if (unsplitSearchString[found-1] != ' ' &&
-          unsplitSearchString[found+1] != ' ') {
+          unsplitSearchString[found+1] != ' ') 
+      {
 	 unsplitSearchString.insert(found,"\"");
 	 unsplitSearchString.insert(found+2,"\"");
 	 found+=2;
+	 if(_config->FindB("Debug::Synaptic::Xapian",false))
+	    cerr << "inserting \"\", new str: " << unsplitSearchString << endl;
       }
       found = unsplitSearchString.find("-", found+1);
    }
@@ -2009,15 +2013,22 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 
    // now expand the query by adding the searching string as a package
    // name so that those searches appear erlier
-   for (int i=0;i<unsplitSearchString.size();i++) 
+   for (int i=0;i<originalSearchString.size();i++) 
    {
-      if(isblank(unsplitSearchString[i])) {
-	 if(s.size() > 0)
+      if(isblank(originalSearchString[i])) {
+	 if(s.size() > 0) {
+	    if(_config->FindB("Debug::Synaptic::Xapian",false))
+	       std::cerr << "adding to querry: XP" << s << std::endl;
 	    expand.push_back("XP"+s);
+	 }
 	 s="";
       } else 
-	 s+=unsplitSearchString[i];
+	 s+=originalSearchString[i];
    }
+   // now add to the last found string
+   if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+      std::cerr << "adding: XP" << s << std::endl;
+   expand.push_back("XP"+s);
 
    // the last string is always expanded to get better search as you
    // type results 
@@ -2027,8 +2038,10 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 
       for(I=_textsearch->db().allterms_begin(s); 
 	  I != _textsearch->db().allterms_end(s); 
-	  I++) {
-	 //std::cerr << "expanded terms: " << *I << std::endl;
+	  I++) 
+      {
+	 if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+	    std::cerr << "expanded terms: " << *I << std::endl;
 	 expand.push_back(*I);
 	 expand.push_back("XP"+*I);
 	 // do not expand all alt terms, they can be huge > 100

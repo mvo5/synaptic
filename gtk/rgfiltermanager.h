@@ -53,6 +53,7 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::AutoInstalled,
    RStatusPackageFilter::Garbage,
    RStatusPackageFilter::NowPolicyBroken,
+   RStatusPackageFilter::ManualInstalled,
 };
 
 static const int NrOfStatusBits = sizeof(StatusMasks)/sizeof(RStatusPackageFilter::Types);

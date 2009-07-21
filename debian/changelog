@@ -1,8 +1,12 @@
-synaptic (0.62.7ubuntu3) karmic; urgency=low
+synaptic (0.62.7ubuntu3) UNRELEASEDkarmic; urgency=low
 
   * common/rpackagelister.cc:
     - add prefixes for "name" and "section" in the quick search
       This allows "name:apt" or "section:devel" searches
+  * debian/control:
+    - recommends gksu|kdebase-bin (kdsu is fine too) 
+      closes: #442421
+  * add filter for manual installed packages (LP: #122047)
   
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 20 Jul 2009 19:12:23 +0200
 

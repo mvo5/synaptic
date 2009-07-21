@@ -1983,6 +1983,8 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
 
    Xapian::Enquire enquire(ts->db());
    Xapian::QueryParser parser;
+   parser.add_prefix("name","XP");
+   parser.add_prefix("section","XS");
    Xapian::Query query = parser.parse_query(unsplitSearchString);
    enquire.set_query(query);
 

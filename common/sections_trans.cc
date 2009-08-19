@@ -44,8 +44,8 @@ char *transtable[][2] = {
    {"gnustep", _("Gnustep Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "hamradio"
    {"hamradio", _("Amateur Radio")},
-   // TRANSLATORS: Alias for the Debian package section "haskel"
-   {"haskel", _("Haskel Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "haskell"
+   {"haskell", _("Haskell Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "httpd"
    {"httpd", _("Web servers")},
    // TRANSLATORS: Alias for the Debian package section "interpreters"

@@ -646,6 +646,12 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
       }
    }
 
+   if (_status & ManualInstalled) {
+      if ( !(flags & RPackage::FIsAuto) && 
+            (flags & RPackage::FInstalled))
+         return true;
+   }
+
    return false;
 }
 

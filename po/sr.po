@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Synaptic-0.48\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-05 16:24+0200\n"
+"POT-Creation-Date: 2009-08-19 09:05+0200\n"
 "PO-Revision-Date: 2004-02-04 20:58+0100\n"
 "Last-Translator: Слободан Средојевић <ssl@uns.ns.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -112,10 +112,10 @@ msgstr "Радно окружење Гном"
 msgid "Amateur Radio"
 msgstr "Аматерски радио"
 
-#. TRANSLATORS: Alias for the Debian package section "haskel"
+#. TRANSLATORS: Alias for the Debian package section "haskell"
 #: ../common/sections_trans.cc:48
 #, fuzzy
-msgid "Haskel Programming Language"
+msgid "Haskell Programming Language"
 msgstr "Програмски језик „Перл“"
 
 #. TRANSLATORS: Alias for the Debian package section "httpd"
@@ -294,7 +294,7 @@ msgstr "Радно окружење КДЕ"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:507
+#: ../common/rpackageview.cc:520
 msgid "Unknown"
 msgstr "Непознато"
 
@@ -676,7 +676,7 @@ msgid "Marked for complete removal"
 msgstr "Стављени у ред чекања за уклањање"
 
 #: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:136
-#: ../gtk/glade/window_filters.glade.h:39
+#: ../gtk/glade/window_filters.glade.h:41
 msgid "Not installed"
 msgstr "Нису инсталирани"
 
@@ -689,7 +689,7 @@ msgstr "Нису инсталирани (закључани)"
 msgid "Installed"
 msgstr "Инсталирани"
 
-#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:160
+#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:167
 #: ../gtk/gsynaptic.cc:554
 #, fuzzy
 msgid "Installed (upgradable)"
@@ -699,7 +699,7 @@ msgstr "Инсталирани и надоградиви"
 msgid "Installed (locked to the current version)"
 msgstr "Инсталирани (закључани на текућу верзију)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:463
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "Оштећени"
@@ -736,12 +736,12 @@ msgstr "Име"
 #: ../gtk/rgmainwindow.cc:1044 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:21
 #: ../gtk/glade/window_filters.glade.h:20
-#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:69
+#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:70
 msgid "Description"
 msgstr "Опис"
 
 #: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
-#: ../gtk/glade/window_filters.glade.h:36 ../gtk/rgfiltermanager.h:70
+#: ../gtk/glade/window_filters.glade.h:37 ../gtk/rgfiltermanager.h:71
 msgid "Maintainer"
 msgstr "Одржавалац"
 
@@ -759,22 +759,22 @@ msgstr "Зависност уназад"
 
 #. Reverse Depends
 #: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
-#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:43
-#: ../gtk/rgfiltermanager.h:79
+#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr ""
 
 #. Origin (e.g. security.debian.org)
 #: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:50
 #: ../gtk/rgmainwindow.cc:937 ../gtk/glade/window_filters.glade.h:15
-#: ../gtk/rgfiltermanager.h:80
+#: ../gtk/rgfiltermanager.h:81
 #, fuzzy
 msgid "Component"
 msgstr "С_адржај"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
 #: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/glade/window_filters.glade.h:62
+#: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "Стање"
 
@@ -784,7 +784,7 @@ msgid "Pattern"
 msgstr "Образац"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:49
-#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:61
+#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:63
 msgid "Section"
 msgstr "Одељак"
 
@@ -801,7 +801,7 @@ msgstr "Скраћен преглед"
 msgid "File"
 msgstr "_Датотека"
 
-#: ../common/rpackagefilter.cc:753
+#: ../common/rpackagefilter.cc:759
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Лош регуларни израз „%s“ у датотеци „Скраћен преглед“."
@@ -963,12 +963,12 @@ msgstr "Одељак"
 msgid "Alphabetic"
 msgstr "Азбучно стабло"
 
-#: ../common/rpackageview.h:158
+#: ../common/rpackageview.h:159
 #, fuzzy
 msgid "Search History"
 msgstr "Филтер за претрагу"
 
-#: ../common/rpackageview.h:209
+#: ../common/rpackageview.h:210
 #, fuzzy
 msgid "Custom"
 msgstr "Филтри"
@@ -988,43 +988,54 @@ msgstr "Нису инсталирани (закључани)"
 msgid "Installed (auto removable)"
 msgstr "Инсталирани и надоградиви"
 
-#: ../common/rpackageview.cc:149
+#: ../common/rpackageview.cc:150
+#, fuzzy
+msgid "Installed (manual)"
+msgstr "Инсталирани и надоградиви"
+
+#: ../common/rpackageview.cc:156
 #, fuzzy
 msgid "Broken dependencies"
 msgstr "Обрнуте зависности"
 
-#: ../common/rpackageview.cc:151 ../gtk/glade/window_filters.glade.h:37
+#: ../common/rpackageview.cc:158 ../gtk/glade/window_filters.glade.h:39
 msgid "New in repository"
 msgstr "Нови у складишту"
 
-#: ../common/rpackageview.cc:153 ../gtk/glade/window_filters.glade.h:53
+#: ../common/rpackageview.cc:160 ../gtk/glade/window_filters.glade.h:55
 msgid "Pinned"
 msgstr "Издвојени"
 
-#: ../common/rpackageview.cc:157
+#: ../common/rpackageview.cc:164
 #, fuzzy
 msgid "Installed (local or obsolete)"
 msgstr "Инсталирани и надоградиви"
 
 # bug: Internal error, no need for translation.
-#: ../common/rpackageview.cc:163
+#: ../common/rpackageview.cc:170
 msgid "Not installed (residual config)"
 msgstr "Није инсталиран (унутрашње подешавање)"
 
-#: ../common/rpackageview.cc:441
+#. setup search progress (0 done, _all.size() in total, 1 subtask)
+#: ../common/rpackageview.cc:266
+#, fuzzy
+msgid "Searching"
+msgstr "Тражи у:"
+
+#: ../common/rpackageview.cc:454
 #, fuzzy
 msgid "Search Filter"
 msgstr "Филтер за претрагу"
 
-#: ../common/rpackageview.cc:449
+#: ../common/rpackageview.cc:462
 msgid "Tasks"
 msgstr "Задаци"
 
-#: ../common/rpackageview.cc:455
+#: ../common/rpackageview.cc:468
 msgid "Reduced View"
 msgstr "Скраћен преглед"
 
-#: ../common/rpackageview.cc:472 ../gtk/gsynaptic.cc:579
+#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
 #: ../gtk/rgsummarywindow.cc:357
 #, fuzzy
 msgid "Marked Changes"
@@ -1033,28 +1044,28 @@ msgstr "Промене на чекању"
 # bug: потражи боље
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:483
+#: ../common/rpackageview.cc:496
 #, fuzzy
 msgid "Package with Debconf"
 msgstr "Запаковано алатом „Debconf“"
 
-#: ../common/rpackageview.cc:490 ../gtk/glade/window_filters.glade.h:66
+#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
 #, fuzzy
 msgid "Upgradable (upstream)"
 msgstr "Надог_ради систем"
 
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:509
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "Препоручен"
 
-#: ../common/rpackageview.cc:505
+#: ../common/rpackageview.cc:518
 msgid "Local"
 msgstr ""
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2114
-#: ../gtk/rgmainwindow.cc:2790 ../gtk/rgmainwindow.cc:2876
-#: ../gtk/rgmainwindow.cc:3049
+#: ../gtk/rgmainwindow.cc:2795 ../gtk/rgmainwindow.cc:2881
+#: ../gtk/rgmainwindow.cc:3054
 #, c-format
 msgid "Can't read %s"
 msgstr "Не могу да читам са %s"
@@ -1320,7 +1331,7 @@ msgstr "Инсталирај"
 msgid "Supported"
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:47
 msgid "Package Name"
 msgstr "Име пакета"
 
@@ -1611,7 +1622,7 @@ msgid "Hold Current Version"
 msgstr "Закључај текућу верзију и стање"
 
 #: ../gtk/rgmainwindow.cc:1563 ../gtk/glade/window_main.glade.h:37
-#: ../gtk/glade/window_filters.glade.h:55
+#: ../gtk/glade/window_filters.glade.h:57
 msgid "Properties"
 msgstr "Особине"
 
@@ -1711,8 +1722,8 @@ msgstr "Да ли желите да додате још један цд уређ
 msgid "Open changes"
 msgstr "Учитај одабране промене"
 
-#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2708
-#: ../gtk/rgmainwindow.cc:2844 ../gtk/rgmainwindow.cc:3022
+#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2713
+#: ../gtk/rgmainwindow.cc:2849 ../gtk/rgmainwindow.cc:3027
 #, c-format
 msgid "Can't write %s"
 msgstr "Не могу да пишем на %s"
@@ -1743,17 +1754,17 @@ msgstr ""
 msgid "Never show this message again"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2350
+#: ../gtk/rgmainwindow.cc:2355
 #, fuzzy, c-format
 msgid "Found %i packages"
 msgstr "Проблематични пакети"
 
-#: ../gtk/rgmainwindow.cc:2391
+#: ../gtk/rgmainwindow.cc:2396
 #, fuzzy
 msgid "Starting help viewer..."
 msgstr "Покрећем систем помоћи..."
 
-#: ../gtk/rgmainwindow.cc:2411
+#: ../gtk/rgmainwindow.cc:2416
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1773,106 +1784,106 @@ msgstr ""
 "synaptic“ из линије наредби или гледати html верзију смештену у "
 "директоријуму „synaptic/html."
 
-#: ../gtk/rgmainwindow.cc:2563
+#: ../gtk/rgmainwindow.cc:2568
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2569
+#: ../gtk/rgmainwindow.cc:2574
 #, fuzzy
 msgid "Starting package configuration tool..."
 msgstr "Извршавам наредбу „dpkg-reconfigure“..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2584
+#: ../gtk/rgmainwindow.cc:2589
 #, fuzzy
 msgid "Starting package documentation viewer..."
 msgstr "Покрећем помоћ пакета..."
 
-#: ../gtk/rgmainwindow.cc:2596
+#: ../gtk/rgmainwindow.cc:2601
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2672
+#: ../gtk/rgmainwindow.cc:2677
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2693
+#: ../gtk/rgmainwindow.cc:2698
 #, fuzzy
 msgid "Applying marked changes. This may take a while..."
 msgstr "Изводим одабране промене... ово може потрајати"
 
-#: ../gtk/rgmainwindow.cc:2697
+#: ../gtk/rgmainwindow.cc:2702
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Преузимање датотека..."
 
-#: ../gtk/rgmainwindow.cc:2773
+#: ../gtk/rgmainwindow.cc:2778
 msgid "Do you want to quit Synaptic?"
 msgstr "Да ли желите да напустите Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2829
+#: ../gtk/rgmainwindow.cc:2834
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "Само преузми пакете"
 
-#: ../gtk/rgmainwindow.cc:2830
+#: ../gtk/rgmainwindow.cc:2835
 #, fuzzy
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "Инсталирај, уклони и надогради софтверске пакете"
 
-#: ../gtk/rgmainwindow.cc:2833
+#: ../gtk/rgmainwindow.cc:2838
 #, fuzzy
 msgid "Reloading package information..."
 msgstr "Извршавам наредбу „dpkg-reconfigure“..."
 
-#: ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2906
 #, fuzzy
 msgid "Failed to resolve dependency problems!"
 msgstr "Не могу да исправим зависности"
 
-#: ../gtk/rgmainwindow.cc:2903
+#: ../gtk/rgmainwindow.cc:2908
 msgid "Successfully fixed dependency problems"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2919
+#: ../gtk/rgmainwindow.cc:2924
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2968
+#: ../gtk/rgmainwindow.cc:2973
 #, fuzzy
 msgid "Marking all available upgrades..."
 msgstr "Пакет ће бити надограђен."
 
-#: ../gtk/rgmainwindow.cc:2987
+#: ../gtk/rgmainwindow.cc:2992
 #, fuzzy
 msgid "Successfully marked available upgrades"
 msgstr "Стави у ред све могуће надоградње"
 
-#: ../gtk/rgmainwindow.cc:2989
+#: ../gtk/rgmainwindow.cc:2994
 msgid "Failed to mark all available upgrades!"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:3368
+#: ../gtk/rgmainwindow.cc:3373
 #, fuzzy
 msgid "Save script"
 msgstr "Опис"
 
-#: ../gtk/rgmainwindow.cc:3395
+#: ../gtk/rgmainwindow.cc:3400
 #, fuzzy
 msgid "Select directory"
 msgstr "Филтер за претрагу"
 
-#: ../gtk/rgmainwindow.cc:3407
+#: ../gtk/rgmainwindow.cc:3412
 #, fuzzy
 msgid "Please select a directory"
 msgstr "Ставите диск у уређај."
@@ -2234,7 +2245,7 @@ msgstr "Зависи од"
 
 #: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
 #: ../gtk/glade/window_filters.glade.h:18
-#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:72
+#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:73
 msgid "Dependencies"
 msgstr "Зависности"
 
@@ -2301,7 +2312,7 @@ msgid "Mark for _Upgrade"
 msgstr "Стављени у ред чекања за надоградњу"
 
 #: ../gtk/glade/window_main.glade.h:38 ../gtk/glade/window_find.glade.h:6
-#: ../gtk/glade/window_filters.glade.h:56
+#: ../gtk/glade/window_filters.glade.h:58
 #: ../gtk/glade/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "Пакет обезбеђује"
@@ -3168,7 +3179,7 @@ msgstr "Искључи"
 msgid "Exclude selected sections"
 msgstr "Искључи одабране промене"
 
-#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:62
+#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "Искључује"
 
@@ -3190,7 +3201,7 @@ msgstr "Укључи"
 msgid "Include selected sections only"
 msgstr "Укључи само одабране промене"
 
-#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:61
+#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "Укључује"
 
@@ -3199,129 +3210,138 @@ msgid "Installed automatically as part of a dependency"
 msgstr ""
 
 #: ../gtk/glade/window_filters.glade.h:32
-msgid "Installed packages that are up-to-date"
+msgid "Installed manually (not as a dependency by something else)"
 msgstr ""
 
 #: ../gtk/glade/window_filters.glade.h:33
+msgid "Installed packages that are up-to-date"
+msgstr ""
+
+#: ../gtk/glade/window_filters.glade.h:34
 #, fuzzy
 msgid "Installed packages that are upgradable"
 msgstr "Инсталирани и надоградиви"
 
-#: ../gtk/glade/window_filters.glade.h:34
+#: ../gtk/glade/window_filters.glade.h:35
 #, fuzzy
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "_Инсталирај најновију верзију"
 
-#: ../gtk/glade/window_filters.glade.h:35
+#: ../gtk/glade/window_filters.glade.h:36
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "Библиотеке које више нису потребне (deborphan је захтеван)"
 
 #: ../gtk/glade/window_filters.glade.h:38
 #, fuzzy
-msgid "Not installable"
+msgid "Manual installed"
 msgstr "Нису инсталирани"
 
 #: ../gtk/glade/window_filters.glade.h:40
 #, fuzzy
+msgid "Not installable"
+msgstr "Нису инсталирани"
+
+#: ../gtk/glade/window_filters.glade.h:42
+#, fuzzy
 msgid "Not installed packages"
 msgstr "Нису инсталирани (закључани)"
 
-#: ../gtk/glade/window_filters.glade.h:41
+#: ../gtk/glade/window_filters.glade.h:43
 #, fuzzy
 msgid "Not marked"
 msgstr "Нису инсталирани"
 
-#: ../gtk/glade/window_filters.glade.h:42
+#: ../gtk/glade/window_filters.glade.h:44
 msgid "OR"
 msgstr ""
 
-#: ../gtk/glade/window_filters.glade.h:44
+#: ../gtk/glade/window_filters.glade.h:46
 msgid "Orphaned"
 msgstr "Напуштени"
 
-#: ../gtk/glade/window_filters.glade.h:46
+#: ../gtk/glade/window_filters.glade.h:48
 #, fuzzy
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr "Пакети који су нови у складишту од последњег освежавања "
 
-#: ../gtk/glade/window_filters.glade.h:47
+#: ../gtk/glade/window_filters.glade.h:49
 msgid "Packages that are not available in any repository"
 msgstr "Пакети који нису доступни ни на једном складишту"
 
-#: ../gtk/glade/window_filters.glade.h:48
+#: ../gtk/glade/window_filters.glade.h:50
 msgid "Packages that will be installed or upgraded"
 msgstr "Пакети који ће бити инсталирани или надограђени"
 
-#: ../gtk/glade/window_filters.glade.h:49
+#: ../gtk/glade/window_filters.glade.h:51
 msgid "Packages that will be removed"
 msgstr "Пакети који ће бити уклоњени"
 
-#: ../gtk/glade/window_filters.glade.h:50
+#: ../gtk/glade/window_filters.glade.h:52
 msgid "Packages that will never be upgraded"
 msgstr "Пакети који никада неће бити надограђени"
 
-#: ../gtk/glade/window_filters.glade.h:51
+#: ../gtk/glade/window_filters.glade.h:53
 #, fuzzy
 msgid "Packages that won't be changed"
 msgstr "Пакети који ће се сачувати"
 
-#: ../gtk/glade/window_filters.glade.h:52
+#: ../gtk/glade/window_filters.glade.h:54
 msgid "Packages with broken dependencies"
 msgstr "Пакети са разбијеним зависностима"
 
-#: ../gtk/glade/window_filters.glade.h:54
+#: ../gtk/glade/window_filters.glade.h:56
 msgid "Policy broken"
 msgstr ""
 
 #. replaces/obsoletes
-#: ../gtk/glade/window_filters.glade.h:57 ../gtk/rgfiltermanager.h:76
+#: ../gtk/glade/window_filters.glade.h:59 ../gtk/rgfiltermanager.h:77
 #, fuzzy
 msgid "Recommendations"
 msgstr "Препоручен"
 
-#: ../gtk/glade/window_filters.glade.h:58
+#: ../gtk/glade/window_filters.glade.h:60
 #, fuzzy
 msgid "Removed packages that have left configuration files on the system"
 msgstr "Подеси пакет коришћењем „debconf“ система за подешавање"
 
-#: ../gtk/glade/window_filters.glade.h:59
+#: ../gtk/glade/window_filters.glade.h:61
 msgid "Replaced Packages"
 msgstr "Замењени пакети"
 
-#: ../gtk/glade/window_filters.glade.h:60
+#: ../gtk/glade/window_filters.glade.h:62
 msgid "Residual config"
 msgstr "Остављена подешавања"
 
 #. /recommends
-#: ../gtk/glade/window_filters.glade.h:63 ../gtk/rgfiltermanager.h:77
+#: ../gtk/glade/window_filters.glade.h:65 ../gtk/rgfiltermanager.h:78
 #, fuzzy
 msgid "Suggestions"
 msgstr "Одељак"
 
-#: ../gtk/glade/window_filters.glade.h:64
+#: ../gtk/glade/window_filters.glade.h:66
 msgid "Tags"
 msgstr "Ознаке"
 
-#: ../gtk/glade/window_filters.glade.h:65
+#: ../gtk/glade/window_filters.glade.h:67
 #, fuzzy
 msgid "Upgradable"
 msgstr "Надоградиви"
 
-#: ../gtk/glade/window_filters.glade.h:67
+#: ../gtk/glade/window_filters.glade.h:69
 msgid "Version Number"
 msgstr "Број верзије"
 
-#: ../gtk/glade/window_filters.glade.h:68
+#: ../gtk/glade/window_filters.glade.h:70
 #, fuzzy
 msgid "_Deselect All"
 msgstr "Уклони означено"
 
-#: ../gtk/glade/window_filters.glade.h:69
+#: ../gtk/glade/window_filters.glade.h:71
 #, fuzzy
 msgid "_Invert All"
 msgstr "Обрни све"
 
-#: ../gtk/glade/window_filters.glade.h:70
+#: ../gtk/glade/window_filters.glade.h:72
 #, fuzzy
 msgid "_Select All"
 msgstr "Означи све"
@@ -3626,31 +3646,31 @@ msgstr "Управник пакета"
 msgid "Synaptic Package Manager"
 msgstr "Управник пакета „Synaptic“"
 
-#: ../gtk/rgfiltermanager.h:68
+#: ../gtk/rgfiltermanager.h:69
 msgid "Package name"
 msgstr "Име пакета"
 
-#: ../gtk/rgfiltermanager.h:71
+#: ../gtk/rgfiltermanager.h:72
 msgid "Version number"
 msgstr "Верзија"
 
 #. depends, predepends etc
-#: ../gtk/rgfiltermanager.h:73
+#: ../gtk/rgfiltermanager.h:74
 msgid "Provided packages"
 msgstr "Пакет обезбеђује"
 
 #. provides and name
-#: ../gtk/rgfiltermanager.h:74
+#: ../gtk/rgfiltermanager.h:75
 msgid "Conflicting packages"
 msgstr "Проблематични пакети"
 
 #. conflicts
-#: ../gtk/rgfiltermanager.h:75
+#: ../gtk/rgfiltermanager.h:76
 msgid "Replaced packages"
 msgstr "Замењени пакети"
 
 #. suggests
-#: ../gtk/rgfiltermanager.h:78
+#: ../gtk/rgfiltermanager.h:79
 #, fuzzy
 msgid "Dependent packages"
 msgstr "Замењени пакети"
@@ -3691,15 +3711,6 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: ../gtk/glade/dialog_authentication.glade.h:4
-#, fuzzy
-msgid "gtk-cancel"
-msgstr "Поништи"
-
-#: ../gtk/glade/dialog_authentication.glade.h:5
-msgid "gtk-ok"
-msgstr ""
-
 #: ../gtk/glade/dialog_disc_label.glade.h:2
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter a label for this CD-Rom</span>\n"
@@ -3733,6 +3744,10 @@ msgstr "Издвој:"
 #, fuzzy
 msgid "_Add Repository"
 msgstr "_Складишта"
+
+#, fuzzy
+#~ msgid "gtk-cancel"
+#~ msgstr "Поништи"
 
 #, fuzzy
 #~ msgid "could not open recommends file %s"
@@ -4243,9 +4258,6 @@ msgstr "_Складишта"
 
 #~ msgid "Packages Depending on this One"
 #~ msgstr "Пакети који зависе од овог пакета"
-
-#~ msgid "Search in:"
-#~ msgstr "Тражи у:"
 
 #, fuzzy
 #~ msgid "_Show Matching Packages Only"

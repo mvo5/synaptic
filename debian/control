@@ -3,6 +3,7 @@ Section: admin
 Priority: optional
 Maintainer: Michael Vogt <mvo@debian.org>
 Build-Depends: debhelper (>= 5.0.51), libapt-pkg-dev (>= 0.7.0), gettext, libgtk2.0-dev, libvte-dev (>= 0.11.11), libglade2-dev, libxft2-dev, scrollkeeper, intltool, xmlto, libsm-dev , sharutils, dpatch, lsb-release, dpkg (>= 1.13.9)
+Build-Conflicts: librpm-dev
 Standards-Version: 3.7.2.2
 Vcs-Bzr: http://bzr.debian.org/synaptic/synaptic/debian-sid
 
@@ -12,7 +13,7 @@ Depends: ${shlibs:Depends}, scrollkeeper, hicolor-icon-theme
 Provides: gsynaptic
 Replaces: gsynaptic
 Conflicts: gsynaptic, menu (<< 2.1.11)
-Recommends: gksu, deborphan, libgnome2-perl, menu
+Recommends: gksu|kdebase-bin, deborphan, libgnome2-perl, menu
 Suggests: dwww
 Description: Graphical package manager 
  Synaptic is a graphical package management tool based on GTK+ and APT.

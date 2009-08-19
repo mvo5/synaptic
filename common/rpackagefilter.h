@@ -197,6 +197,7 @@ class RStatusPackageFilter : public RPackageFilter {
       AutoInstalled = 1 << 13, // automatically installed
       Garbage = 1 << 14, // automatically installed and no longer required
       NowPolicyBroken = 1 << 15,
+      ManualInstalled = 1 << 16,  // !AutoInstalled
    };
 
    RStatusPackageFilter() : _status(~0)

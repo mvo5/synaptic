@@ -427,7 +427,7 @@ vector<DepInformation> RPackage::enumRDeps()
 
       //FIXME: HACK ALARM, we need a "RDepends" type, so we use the last
       // one in pkg-dep
-      dep.type = (pkgCache::Dep::DepType)(pkgCache::Dep::Obsoletes+1);
+      dep.type = (pkgCache::Dep::DepType)(pkgCache::Dep::Enhances+1);
       dep.name = D.ParentPkg().Name();
 
       if(Trg->VersionList == 0)

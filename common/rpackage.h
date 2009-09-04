@@ -47,7 +47,7 @@ class pkgRecords;
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier 
-// (and added "RDepends" after "Obsoletes"
+// (and added "RDepends" as last element)
 static const char *DepTypeStr[] = 
    {"",
     _("Depends"),
@@ -59,6 +59,13 @@ static const char *DepTypeStr[] =
     _("Obsoletes"), 
     _("Breaks"),
     _("Enhances"),
+    /* padding */
+    "", 
+    "",
+    "",
+    "",
+    "",
+    // make sure this is always the last member
     _("Dependency of"),
 };
 

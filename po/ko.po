@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.61\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-05 16:24+0200\n"
+"POT-Creation-Date: 2009-08-19 09:05+0200\n"
 "PO-Revision-Date: 2007-12-28 12:04+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -109,10 +109,10 @@ msgstr "그놈 데스크탑 환경"
 msgid "Amateur Radio"
 msgstr "아마추어 라디오"
 
-#. TRANSLATORS: Alias for the Debian package section "haskel"
+#. TRANSLATORS: Alias for the Debian package section "haskell"
 #: ../common/sections_trans.cc:48
 #, fuzzy
-msgid "Haskel Programming Language"
+msgid "Haskell Programming Language"
 msgstr "펄 프로그램 언어"
 
 #. TRANSLATORS: Alias for the Debian package section "httpd"
@@ -290,7 +290,7 @@ msgstr "KDE 데스크탑 환경"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:507
+#: ../common/rpackageview.cc:520
 msgid "Unknown"
 msgstr "알 수 없음"
 
@@ -664,7 +664,7 @@ msgid "Marked for complete removal"
 msgstr "완전히 지우기 표시"
 
 #: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:136
-#: ../gtk/glade/window_filters.glade.h:39
+#: ../gtk/glade/window_filters.glade.h:41
 msgid "Not installed"
 msgstr "설치하지 않음"
 
@@ -677,7 +677,7 @@ msgstr "설치하지 않음 (고정)"
 msgid "Installed"
 msgstr "설치함"
 
-#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:160
+#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:167
 #: ../gtk/gsynaptic.cc:554
 msgid "Installed (upgradable)"
 msgstr "설치함 (업그레이드 가능)"
@@ -686,7 +686,7 @@ msgstr "설치함 (업그레이드 가능)"
 msgid "Installed (locked to the current version)"
 msgstr "설치함 (현재 버전으로 고정)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:463
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "깨짐"
@@ -720,12 +720,12 @@ msgstr "이름"
 #: ../gtk/rgmainwindow.cc:1044 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:21
 #: ../gtk/glade/window_filters.glade.h:20
-#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:69
+#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:70
 msgid "Description"
 msgstr "설명"
 
 #: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
-#: ../gtk/glade/window_filters.glade.h:36 ../gtk/rgfiltermanager.h:70
+#: ../gtk/glade/window_filters.glade.h:37 ../gtk/rgfiltermanager.h:71
 msgid "Maintainer"
 msgstr "관리자"
 
@@ -743,21 +743,21 @@ msgstr "여기에 의존"
 
 #. Reverse Depends
 #: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
-#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:43
-#: ../gtk/rgfiltermanager.h:79
+#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr "출처"
 
 #. Origin (e.g. security.debian.org)
 #: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:50
 #: ../gtk/rgmainwindow.cc:937 ../gtk/glade/window_filters.glade.h:15
-#: ../gtk/rgfiltermanager.h:80
+#: ../gtk/rgfiltermanager.h:81
 msgid "Component"
 msgstr "구성 요소"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
 #: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/glade/window_filters.glade.h:62
+#: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "상태"
 
@@ -767,7 +767,7 @@ msgid "Pattern"
 msgstr "패턴"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:49
-#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:61
+#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:63
 msgid "Section"
 msgstr "분류"
 
@@ -784,7 +784,7 @@ msgstr "간단히 보기"
 msgid "File"
 msgstr "파일(_F)"
 
-#: ../common/rpackagefilter.cc:753
+#: ../common/rpackagefilter.cc:759
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "간단히 보기 파일 안에 잘못된 정규식 '%s'이(가) 있습니다."
@@ -951,11 +951,11 @@ msgstr "분류"
 msgid "Alphabetic"
 msgstr "알파벳순"
 
-#: ../common/rpackageview.h:158
+#: ../common/rpackageview.h:159
 msgid "Search History"
 msgstr "찾기 기록"
 
-#: ../common/rpackageview.h:209
+#: ../common/rpackageview.h:210
 msgid "Custom"
 msgstr "사용자 정의"
 
@@ -971,66 +971,77 @@ msgstr "설치하지 않음 (지원하지 않음)"
 msgid "Installed (auto removable)"
 msgstr "설치함 (자동 지우기)"
 
-#: ../common/rpackageview.cc:149
+#: ../common/rpackageview.cc:150
+#, fuzzy
+msgid "Installed (manual)"
+msgstr "설치함 (업그레이드 가능)"
+
+#: ../common/rpackageview.cc:156
 msgid "Broken dependencies"
 msgstr "의존성 망가짐"
 
-#: ../common/rpackageview.cc:151 ../gtk/glade/window_filters.glade.h:37
+#: ../common/rpackageview.cc:158 ../gtk/glade/window_filters.glade.h:39
 msgid "New in repository"
 msgstr "저장소에 새로 들어옴"
 
 # pinning이라는 건 apt에서 사용하는 용어인데 뭐라고 해야 할지....  apt 맨페이지 참고.
-#: ../common/rpackageview.cc:153 ../gtk/glade/window_filters.glade.h:53
+#: ../common/rpackageview.cc:160 ../gtk/glade/window_filters.glade.h:55
 msgid "Pinned"
 msgstr "고정"
 
-#: ../common/rpackageview.cc:157
+#: ../common/rpackageview.cc:164
 msgid "Installed (local or obsolete)"
 msgstr "설치함 (로컬 패키지 또는 사라진 패키지)"
 
-#: ../common/rpackageview.cc:163
+#: ../common/rpackageview.cc:170
 msgid "Not installed (residual config)"
 msgstr "설치하지 않음 (설정 남아 있음)"
 
-#: ../common/rpackageview.cc:441
+#. setup search progress (0 done, _all.size() in total, 1 subtask)
+#: ../common/rpackageview.cc:266
+#, fuzzy
+msgid "Searching"
+msgstr "찾기"
+
+#: ../common/rpackageview.cc:454
 msgid "Search Filter"
 msgstr "찾기 필터"
 
-#: ../common/rpackageview.cc:449
+#: ../common/rpackageview.cc:462
 msgid "Tasks"
 msgstr "태스크"
 
-#: ../common/rpackageview.cc:455
+#: ../common/rpackageview.cc:468
 msgid "Reduced View"
 msgstr "간단히 보기"
 
-#: ../common/rpackageview.cc:472 ../gtk/gsynaptic.cc:579
+#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
 #: ../gtk/rgsummarywindow.cc:357
 msgid "Marked Changes"
 msgstr "변경 사항 표시"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:483
+#: ../common/rpackageview.cc:496
 msgid "Package with Debconf"
 msgstr "Debconf 사용하는 패키지"
 
-#: ../common/rpackageview.cc:490 ../gtk/glade/window_filters.glade.h:66
+#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "업그레이드 가능 (상위 개발)"
 
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:509
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "추천"
 
-#: ../common/rpackageview.cc:505
+#: ../common/rpackageview.cc:518
 msgid "Local"
 msgstr "로컬"
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2114
-#: ../gtk/rgmainwindow.cc:2790 ../gtk/rgmainwindow.cc:2876
-#: ../gtk/rgmainwindow.cc:3049
+#: ../gtk/rgmainwindow.cc:2795 ../gtk/rgmainwindow.cc:2881
+#: ../gtk/rgmainwindow.cc:3054
 #, c-format
 msgid "Can't read %s"
 msgstr "%s을(를) 읽을 수 없습니다"
@@ -1302,7 +1313,7 @@ msgstr "소프트웨어를 설치하는 중입니다"
 msgid "Supported"
 msgstr "지원함"
 
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:47
 msgid "Package Name"
 msgstr "패키지 이름"
 
@@ -1595,7 +1606,7 @@ msgid "Hold Current Version"
 msgstr "현재 버전 고정"
 
 #: ../gtk/rgmainwindow.cc:1563 ../gtk/glade/window_main.glade.h:37
-#: ../gtk/glade/window_filters.glade.h:55
+#: ../gtk/glade/window_filters.glade.h:57
 msgid "Properties"
 msgstr "속성"
 
@@ -1684,8 +1695,8 @@ msgstr "다른 CD-ROM을 더하시겠습니까?"
 msgid "Open changes"
 msgstr "변경 사항 열기"
 
-#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2708
-#: ../gtk/rgmainwindow.cc:2844 ../gtk/rgmainwindow.cc:3022
+#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2713
+#: ../gtk/rgmainwindow.cc:2849 ../gtk/rgmainwindow.cc:3027
 #, c-format
 msgid "Can't write %s"
 msgstr "%s을(를) 쓸 수 없습니다"
@@ -1717,16 +1728,16 @@ msgstr ""
 msgid "Never show this message again"
 msgstr "이 메세지를 다시 표시하지 않기"
 
-#: ../gtk/rgmainwindow.cc:2350
+#: ../gtk/rgmainwindow.cc:2355
 #, c-format
 msgid "Found %i packages"
 msgstr "%i개 패키지 있음"
 
-#: ../gtk/rgmainwindow.cc:2391
+#: ../gtk/rgmainwindow.cc:2396
 msgid "Starting help viewer..."
 msgstr "도움말 보기 프로그램을 시작하고 있습니다...."
 
-#: ../gtk/rgmainwindow.cc:2411
+#: ../gtk/rgmainwindow.cc:2416
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1744,7 +1755,7 @@ msgstr ""
 "그 외에 커맨드 라인에서 'man synaptic'을 실행해서 맨 페이지를 이용하거나 "
 "'synaptic/html' 폴더에 있는 HTML 버전을 볼 수도 있습니다."
 
-#: ../gtk/rgmainwindow.cc:2563
+#: ../gtk/rgmainwindow.cc:2568
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1752,22 +1763,22 @@ msgstr ""
 "설정 도구를 시작할 수 없습니다!\n"
 "먼저 필요한 'libgnome2-perl' 패키지를 설치해야 합니다."
 
-#: ../gtk/rgmainwindow.cc:2569
+#: ../gtk/rgmainwindow.cc:2574
 msgid "Starting package configuration tool..."
 msgstr "패키지 설정 도구를 시작하고 있습니다..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2584
+#: ../gtk/rgmainwindow.cc:2589
 msgid "Starting package documentation viewer..."
 msgstr "패키지 문서 보기 프로그램을 시작하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2596
+#: ../gtk/rgmainwindow.cc:2601
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "패키지의 문서를 보려면 \"dwww\" 패키지를 설치해야 합니다"
 
-#: ../gtk/rgmainwindow.cc:2672
+#: ../gtk/rgmainwindow.cc:2677
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1775,25 +1786,25 @@ msgstr ""
 "변경 사항을 적용할 수 없습니다!\n"
 "먼저 깨진 패키지를 고치십시오."
 
-#: ../gtk/rgmainwindow.cc:2693
+#: ../gtk/rgmainwindow.cc:2698
 msgid "Applying marked changes. This may take a while..."
 msgstr "표시된 변경 사항을 적용하는 중입니다. 시간이 좀 걸릴 수 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2697
+#: ../gtk/rgmainwindow.cc:2702
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "패키지 파일을 다운로드하고 있습니다"
 
-#: ../gtk/rgmainwindow.cc:2773
+#: ../gtk/rgmainwindow.cc:2778
 msgid "Do you want to quit Synaptic?"
 msgstr "시냅틱을 끝내시겠습니까?"
 
-#: ../gtk/rgmainwindow.cc:2829
+#: ../gtk/rgmainwindow.cc:2834
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "패키지 정보를 다운로드하는 중입니다"
 
-#: ../gtk/rgmainwindow.cc:2830
+#: ../gtk/rgmainwindow.cc:2835
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1801,19 +1812,19 @@ msgstr ""
 "저장소에 새로운 패키지, 지워진 패키지, 업그레이드한 패키지가 있는 지 검사합니"
 "다<."
 
-#: ../gtk/rgmainwindow.cc:2833
+#: ../gtk/rgmainwindow.cc:2838
 msgid "Reloading package information..."
 msgstr "패키지 정보를 다시 읽어들이고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2906
 msgid "Failed to resolve dependency problems!"
 msgstr "의존성 문제를 해결하는 데 실패했습니다!"
 
-#: ../gtk/rgmainwindow.cc:2903
+#: ../gtk/rgmainwindow.cc:2908
 msgid "Successfully fixed dependency problems"
 msgstr "의존성 문제를 성공적으로 고쳤습니다"
 
-#: ../gtk/rgmainwindow.cc:2919
+#: ../gtk/rgmainwindow.cc:2924
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1821,27 +1832,27 @@ msgstr ""
 "시스템을 업그레이드할 수 없습니다!\n"
 "먼저 깨진 패키지를 고치십시오."
 
-#: ../gtk/rgmainwindow.cc:2968
+#: ../gtk/rgmainwindow.cc:2973
 msgid "Marking all available upgrades..."
 msgstr "가능한 모든 업그레이드를 표시하고 있습니다..."
 
-#: ../gtk/rgmainwindow.cc:2987
+#: ../gtk/rgmainwindow.cc:2992
 msgid "Successfully marked available upgrades"
 msgstr "가능한 모든 업그레이드를 성공적으로 표시했습니다"
 
-#: ../gtk/rgmainwindow.cc:2989
+#: ../gtk/rgmainwindow.cc:2994
 msgid "Failed to mark all available upgrades!"
 msgstr "가능한 모든 업그레이드를 표시하는데 실패했습니다!"
 
-#: ../gtk/rgmainwindow.cc:3368
+#: ../gtk/rgmainwindow.cc:3373
 msgid "Save script"
 msgstr "스크립트 저장"
 
-#: ../gtk/rgmainwindow.cc:3395
+#: ../gtk/rgmainwindow.cc:3400
 msgid "Select directory"
 msgstr "디렉토리 선택"
 
-#: ../gtk/rgmainwindow.cc:3407
+#: ../gtk/rgmainwindow.cc:3412
 msgid "Please select a directory"
 msgstr "디렉토리를 선택하십시오"
 
@@ -2182,7 +2193,7 @@ msgstr "이 패키지에 의존"
 
 #: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
 #: ../gtk/glade/window_filters.glade.h:18
-#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:72
+#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:73
 msgid "Dependencies"
 msgstr "의존성"
 
@@ -2243,7 +2254,7 @@ msgid "Mark for _Upgrade"
 msgstr "업그레이드 표시(_U)"
 
 #: ../gtk/glade/window_main.glade.h:38 ../gtk/glade/window_find.glade.h:6
-#: ../gtk/glade/window_filters.glade.h:56
+#: ../gtk/glade/window_filters.glade.h:58
 #: ../gtk/glade/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "제공하는 패키지"
@@ -3039,7 +3050,7 @@ msgstr "제외"
 msgid "Exclude selected sections"
 msgstr "선택한 분류 제외"
 
-#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:62
+#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "제외"
 
@@ -3059,7 +3070,7 @@ msgstr "포함"
 msgid "Include selected sections only"
 msgstr "선택된 분류만 포함"
 
-#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:61
+#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "포함"
 
@@ -3068,116 +3079,126 @@ msgid "Installed automatically as part of a dependency"
 msgstr "의존성때문에 자동으로 설치"
 
 #: ../gtk/glade/window_filters.glade.h:32
+#, fuzzy
+msgid "Installed manually (not as a dependency by something else)"
+msgstr "의존성때문에 자동으로 설치"
+
+#: ../gtk/glade/window_filters.glade.h:33
 msgid "Installed packages that are up-to-date"
 msgstr "최신으로 업데이트한 설치한 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:33
+#: ../gtk/glade/window_filters.glade.h:34
 msgid "Installed packages that are upgradable"
 msgstr "업그레이드 가능한 설치한 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:34
+#: ../gtk/glade/window_filters.glade.h:35
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "설치했고 다음 업스트림 버전으로 업그레이드할 수 있는 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:35
+#: ../gtk/glade/window_filters.glade.h:36
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "이제 필요 없는 라이브러리 패키지 (deborphan 프로그램 필요)"
 
 #: ../gtk/glade/window_filters.glade.h:38
+#, fuzzy
+msgid "Manual installed"
+msgstr "설치하지 않음"
+
+#: ../gtk/glade/window_filters.glade.h:40
 msgid "Not installable"
 msgstr "설치할 수 없음"
 
-#: ../gtk/glade/window_filters.glade.h:40
+#: ../gtk/glade/window_filters.glade.h:42
 msgid "Not installed packages"
 msgstr "설치하지 않은 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:41
+#: ../gtk/glade/window_filters.glade.h:43
 msgid "Not marked"
 msgstr "표시하지 않음"
 
-#: ../gtk/glade/window_filters.glade.h:42
+#: ../gtk/glade/window_filters.glade.h:44
 msgid "OR"
 msgstr "OR"
 
-#: ../gtk/glade/window_filters.glade.h:44
+#: ../gtk/glade/window_filters.glade.h:46
 msgid "Orphaned"
 msgstr "없음"
 
-#: ../gtk/glade/window_filters.glade.h:46
+#: ../gtk/glade/window_filters.glade.h:48
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr "마지막으로 \"새로 고침\"했을 때 저장소에 새로 들어온 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:47
+#: ../gtk/glade/window_filters.glade.h:49
 msgid "Packages that are not available in any repository"
 msgstr "어떤 저장소에서도 없는 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:48
+#: ../gtk/glade/window_filters.glade.h:50
 msgid "Packages that will be installed or upgraded"
 msgstr "설치하거나 업그레이드할 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:49
+#: ../gtk/glade/window_filters.glade.h:51
 msgid "Packages that will be removed"
 msgstr "지울 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:50
+#: ../gtk/glade/window_filters.glade.h:52
 msgid "Packages that will never be upgraded"
 msgstr "업그레이드하지 않을 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:51
+#: ../gtk/glade/window_filters.glade.h:53
 msgid "Packages that won't be changed"
 msgstr "바꾸지 않을 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:52
+#: ../gtk/glade/window_filters.glade.h:54
 msgid "Packages with broken dependencies"
 msgstr "의존성이 깨진 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:54
+#: ../gtk/glade/window_filters.glade.h:56
 msgid "Policy broken"
 msgstr "정책 어긋남"
 
 #. replaces/obsoletes
-#: ../gtk/glade/window_filters.glade.h:57 ../gtk/rgfiltermanager.h:76
+#: ../gtk/glade/window_filters.glade.h:59 ../gtk/rgfiltermanager.h:77
 msgid "Recommendations"
 msgstr "추천"
 
-#: ../gtk/glade/window_filters.glade.h:58
+#: ../gtk/glade/window_filters.glade.h:60
 msgid "Removed packages that have left configuration files on the system"
 msgstr "설정 파일을 남겨놓고 지운 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:59
+#: ../gtk/glade/window_filters.glade.h:61
 msgid "Replaced Packages"
 msgstr "교체된 패키지"
 
-#: ../gtk/glade/window_filters.glade.h:60
+#: ../gtk/glade/window_filters.glade.h:62
 msgid "Residual config"
 msgstr "설정 남겨두기"
 
 #. /recommends
-#: ../gtk/glade/window_filters.glade.h:63 ../gtk/rgfiltermanager.h:77
+#: ../gtk/glade/window_filters.glade.h:65 ../gtk/rgfiltermanager.h:78
 msgid "Suggestions"
 msgstr "제안"
 
-#: ../gtk/glade/window_filters.glade.h:64
+#: ../gtk/glade/window_filters.glade.h:66
 msgid "Tags"
 msgstr "태그"
 
-#: ../gtk/glade/window_filters.glade.h:65
+#: ../gtk/glade/window_filters.glade.h:67
 msgid "Upgradable"
 msgstr "업그레이드 가능"
 
-#: ../gtk/glade/window_filters.glade.h:67
+#: ../gtk/glade/window_filters.glade.h:69
 msgid "Version Number"
 msgstr "버전 번호"
 
-#: ../gtk/glade/window_filters.glade.h:68
+#: ../gtk/glade/window_filters.glade.h:70
 msgid "_Deselect All"
 msgstr "모든 선택 취소(_D)"
 
-#: ../gtk/glade/window_filters.glade.h:69
+#: ../gtk/glade/window_filters.glade.h:71
 msgid "_Invert All"
 msgstr "모두 반대로(_I)"
 
-#: ../gtk/glade/window_filters.glade.h:70
+#: ../gtk/glade/window_filters.glade.h:72
 msgid "_Select All"
 msgstr "모두 선택(_S)"
 
@@ -3491,31 +3512,31 @@ msgstr "패키지 관리자"
 msgid "Synaptic Package Manager"
 msgstr "시냅틱 패키지 관리자"
 
-#: ../gtk/rgfiltermanager.h:68
+#: ../gtk/rgfiltermanager.h:69
 msgid "Package name"
 msgstr "패키지 이름"
 
-#: ../gtk/rgfiltermanager.h:71
+#: ../gtk/rgfiltermanager.h:72
 msgid "Version number"
 msgstr "버전 번호"
 
 #. depends, predepends etc
-#: ../gtk/rgfiltermanager.h:73
+#: ../gtk/rgfiltermanager.h:74
 msgid "Provided packages"
 msgstr "제공된 패키지"
 
 #. provides and name
-#: ../gtk/rgfiltermanager.h:74
+#: ../gtk/rgfiltermanager.h:75
 msgid "Conflicting packages"
 msgstr "충돌한 패키지"
 
 #. conflicts
-#: ../gtk/rgfiltermanager.h:75
+#: ../gtk/rgfiltermanager.h:76
 msgid "Replaced packages"
 msgstr "바뀐 패키지"
 
 #. suggests
-#: ../gtk/rgfiltermanager.h:78
+#: ../gtk/rgfiltermanager.h:79
 msgid "Dependent packages"
 msgstr "의존 패키지"
 
@@ -3551,14 +3572,6 @@ msgstr "암호"
 #: ../gtk/glade/dialog_authentication.glade.h:3
 msgid "Username"
 msgstr "사용자 이름"
-
-#: ../gtk/glade/dialog_authentication.glade.h:4
-msgid "gtk-cancel"
-msgstr "gtk-cancel"
-
-#: ../gtk/glade/dialog_authentication.glade.h:5
-msgid "gtk-ok"
-msgstr "gtk-ok"
 
 #: ../gtk/glade/dialog_disc_label.glade.h:2
 msgid ""
@@ -3600,6 +3613,12 @@ msgstr "APT 줄:"
 #: ../gtk/glade/dialog_new_repositroy.glade.h:6
 msgid "_Add Repository"
 msgstr "저장소 추가(_A)"
+
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-cancel"
+
+#~ msgid "gtk-ok"
+#~ msgstr "gtk-ok"
 
 #~ msgid "The package files will be cached locally for installation."
 #~ msgstr "설치한 패키지 파일을 로컬에 보관합니다."

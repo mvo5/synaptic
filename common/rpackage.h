@@ -47,11 +47,27 @@ class pkgRecords;
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier 
-// (and added "RDepends" after "Obsoletes"
+// (and added "RDepends" as last element)
 static const char *DepTypeStr[] = 
-   {"",_("Depends"),_("PreDepends"),_("Suggests"),
-    _("Recommends"),_("Conflicts"),_("Replaces"),
-    _("Obsoletes"), _("Dependency of")};
+   {"",
+    _("Depends"),
+    _("PreDepends"),
+    _("Suggests"),
+    _("Recommends"),
+    _("Conflicts"),
+    _("Replaces"),
+    _("Obsoletes"), 
+    _("Breaks"),
+    _("Enhances"),
+    /* padding */
+    "", 
+    "",
+    "",
+    "",
+    "",
+    // make sure this is always the last member
+    _("Dependency of"),
+};
 
 typedef struct  {
    pkgCache::Dep::DepType type; // type as enum

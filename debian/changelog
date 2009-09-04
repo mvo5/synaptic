@@ -4,10 +4,17 @@ synaptic (0.62.7ubuntu3) UNRELEASEDkarmic; urgency=low
     - add prefixes for "name" and "section" in the quick search
       This allows "name:apt" or "section:devel" searches
   * debian/control:
+    - add build-conflict against librpm-dev
     - recommends gksu|kdebase-bin (kdsu is fine too) 
       closes: #442421
   * add filter for manual installed packages (LP: #122047)
-  
+   * fix typo (thanks to Florentin Duneau), closes: #542122
+  * po/pt_BR.po:
+    - updated translation, thanks to Sergio Cipolla
+      (closes: #532473)
+  * common/rpackage.{cc,h}:
+    - fix potential segfault
+
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 20 Jul 2009 19:12:23 +0200
 
 synaptic (0.62.7ubuntu2) karmic; urgency=low

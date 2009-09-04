@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.57.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-05 16:24+0200\n"
+"POT-Creation-Date: 2009-08-19 09:05+0200\n"
 "PO-Revision-Date: 2007-12-31 14:59+0800\n"
 "Last-Translator: Deng Xiyue <manphiz@gmail.com>\n"
 "Language-Team: Debian Chinese Simplified <debian-chinese-gb@lists.debian."
@@ -109,10 +109,10 @@ msgstr "GNOME 桌面环境"
 msgid "Amateur Radio"
 msgstr "业余无线电"
 
-#. TRANSLATORS: Alias for the Debian package section "haskel"
+#. TRANSLATORS: Alias for the Debian package section "haskell"
 #: ../common/sections_trans.cc:48
 #, fuzzy
-msgid "Haskel Programming Language"
+msgid "Haskell Programming Language"
 msgstr "Perl 程序设计语言"
 
 #. TRANSLATORS: Alias for the Debian package section "httpd"
@@ -290,7 +290,7 @@ msgstr "KDE 桌面环境"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:507
+#: ../common/rpackageview.cc:520
 msgid "Unknown"
 msgstr "未知"
 
@@ -656,7 +656,7 @@ msgid "Marked for complete removal"
 msgstr "已标记要彻底删除的软件包"
 
 #: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:136
-#: ../gtk/glade/window_filters.glade.h:39
+#: ../gtk/glade/window_filters.glade.h:41
 msgid "Not installed"
 msgstr "未安装"
 
@@ -669,7 +669,7 @@ msgstr "未安装(锁定的)"
 msgid "Installed"
 msgstr "已安装"
 
-#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:160
+#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:167
 #: ../gtk/gsynaptic.cc:554
 msgid "Installed (upgradable)"
 msgstr "已安装(可升级)"
@@ -678,7 +678,7 @@ msgstr "已安装(可升级)"
 msgid "Installed (locked to the current version)"
 msgstr "已安装(锁定为当前版本)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:463
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "已损坏"
@@ -712,12 +712,12 @@ msgstr "名称"
 #: ../gtk/rgmainwindow.cc:1044 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:21
 #: ../gtk/glade/window_filters.glade.h:20
-#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:69
+#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:70
 msgid "Description"
 msgstr "软件包描述"
 
 #: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
-#: ../gtk/glade/window_filters.glade.h:36 ../gtk/rgfiltermanager.h:70
+#: ../gtk/glade/window_filters.glade.h:37 ../gtk/rgfiltermanager.h:71
 msgid "Maintainer"
 msgstr "维护者"
 
@@ -735,21 +735,21 @@ msgstr "反向依赖"
 
 #. Reverse Depends
 #: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
-#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:43
-#: ../gtk/rgfiltermanager.h:79
+#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr "源自"
 
 #. Origin (e.g. security.debian.org)
 #: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:50
 #: ../gtk/rgmainwindow.cc:937 ../gtk/glade/window_filters.glade.h:15
-#: ../gtk/rgfiltermanager.h:80
+#: ../gtk/rgfiltermanager.h:81
 msgid "Component"
 msgstr "包含内容"
 
 #: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
 #: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
-#: ../gtk/glade/window_filters.glade.h:62
+#: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "状态"
 
@@ -759,7 +759,7 @@ msgid "Pattern"
 msgstr "模板"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:49
-#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:61
+#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:63
 msgid "Section"
 msgstr "组别"
 
@@ -776,7 +776,7 @@ msgstr "简化视图"
 msgid "File"
 msgstr "文件(_F)"
 
-#: ../common/rpackagefilter.cc:753
+#: ../common/rpackagefilter.cc:759
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "简化视图文件里的错误正则表达式“%s”。"
@@ -941,11 +941,11 @@ msgstr "组别"
 msgid "Alphabetic"
 msgstr "依字母排列"
 
-#: ../common/rpackageview.h:158
+#: ../common/rpackageview.h:159
 msgid "Search History"
 msgstr "搜索历史"
 
-#: ../common/rpackageview.h:209
+#: ../common/rpackageview.h:210
 msgid "Custom"
 msgstr "自定义"
 
@@ -962,66 +962,77 @@ msgstr "未安装(不被支持)"
 msgid "Installed (auto removable)"
 msgstr "已安装(可升级)"
 
-#: ../common/rpackageview.cc:149
+#: ../common/rpackageview.cc:150
+#, fuzzy
+msgid "Installed (manual)"
+msgstr "已安装(可升级)"
+
+#: ../common/rpackageview.cc:156
 #, fuzzy
 msgid "Broken dependencies"
 msgstr "反向依赖"
 
-#: ../common/rpackageview.cc:151 ../gtk/glade/window_filters.glade.h:37
+#: ../common/rpackageview.cc:158 ../gtk/glade/window_filters.glade.h:39
 msgid "New in repository"
 msgstr "软件仓库里的新内容"
 
-#: ../common/rpackageview.cc:153 ../gtk/glade/window_filters.glade.h:53
+#: ../common/rpackageview.cc:160 ../gtk/glade/window_filters.glade.h:55
 msgid "Pinned"
 msgstr "标记为永不升级的软件包"
 
-#: ../common/rpackageview.cc:157
+#: ../common/rpackageview.cc:164
 msgid "Installed (local or obsolete)"
 msgstr "已安装的(本地的或者陈旧的)"
 
-#: ../common/rpackageview.cc:163
+#: ../common/rpackageview.cc:170
 msgid "Not installed (residual config)"
 msgstr "未安装的(残存配置)"
 
-#: ../common/rpackageview.cc:441
+#. setup search progress (0 done, _all.size() in total, 1 subtask)
+#: ../common/rpackageview.cc:266
+#, fuzzy
+msgid "Searching"
+msgstr "搜索："
+
+#: ../common/rpackageview.cc:454
 msgid "Search Filter"
 msgstr "搜索过滤器"
 
-#: ../common/rpackageview.cc:449
+#: ../common/rpackageview.cc:462
 msgid "Tasks"
 msgstr "任务"
 
-#: ../common/rpackageview.cc:455
+#: ../common/rpackageview.cc:468
 msgid "Reduced View"
 msgstr "简化视图"
 
-#: ../common/rpackageview.cc:472 ../gtk/gsynaptic.cc:579
+#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
 #: ../gtk/rgsummarywindow.cc:357
 msgid "Marked Changes"
 msgstr "已标记的变更"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:483
+#: ../common/rpackageview.cc:496
 msgid "Package with Debconf"
 msgstr "具有 Debconf 的包"
 
-#: ../common/rpackageview.cc:490 ../gtk/glade/window_filters.glade.h:66
+#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "可升级(向上)"
 
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:509
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "推荐"
 
-#: ../common/rpackageview.cc:505
+#: ../common/rpackageview.cc:518
 msgid "Local"
 msgstr ""
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2114
-#: ../gtk/rgmainwindow.cc:2790 ../gtk/rgmainwindow.cc:2876
-#: ../gtk/rgmainwindow.cc:3049
+#: ../gtk/rgmainwindow.cc:2795 ../gtk/rgmainwindow.cc:2881
+#: ../gtk/rgmainwindow.cc:3054
 #, c-format
 msgid "Can't read %s"
 msgstr "无法读取 %s"
@@ -1285,7 +1296,7 @@ msgstr "安装软件"
 msgid "Supported"
 msgstr "支持"
 
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:45
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:47
 msgid "Package Name"
 msgstr "软件包名称"
 
@@ -1573,7 +1584,7 @@ msgid "Hold Current Version"
 msgstr "保留当前的版本"
 
 #: ../gtk/rgmainwindow.cc:1563 ../gtk/glade/window_main.glade.h:37
-#: ../gtk/glade/window_filters.glade.h:55
+#: ../gtk/glade/window_filters.glade.h:57
 msgid "Properties"
 msgstr "属性"
 
@@ -1660,8 +1671,8 @@ msgstr "您想添加其他 CD-ROM 吗？"
 msgid "Open changes"
 msgstr "打开变更方案"
 
-#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2708
-#: ../gtk/rgmainwindow.cc:2844 ../gtk/rgmainwindow.cc:3022
+#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2713
+#: ../gtk/rgmainwindow.cc:2849 ../gtk/rgmainwindow.cc:3027
 #, c-format
 msgid "Can't write %s"
 msgstr "无法写入 %s"
@@ -1691,16 +1702,16 @@ msgstr "仓库信息已变更。您必须点击“刷新”按钮以便使您的
 msgid "Never show this message again"
 msgstr "禁止再显示该消息"
 
-#: ../gtk/rgmainwindow.cc:2350
+#: ../gtk/rgmainwindow.cc:2355
 #, c-format
 msgid "Found %i packages"
 msgstr "找到 %i 个软件包"
 
-#: ../gtk/rgmainwindow.cc:2391
+#: ../gtk/rgmainwindow.cc:2396
 msgid "Starting help viewer..."
 msgstr "正在启动帮助查看器..."
 
-#: ../gtk/rgmainwindow.cc:2411
+#: ../gtk/rgmainwindow.cc:2416
 msgid ""
 "No help viewer is installed!\n"
 "\n"
@@ -1718,7 +1729,7 @@ msgstr ""
 "另外您可以从命令行使用“man synaptic”打开手册页，或者查看位于“synaptic/html”文"
 "件夹下的 html 版。"
 
-#: ../gtk/rgmainwindow.cc:2563
+#: ../gtk/rgmainwindow.cc:2568
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1726,22 +1737,22 @@ msgstr ""
 "无法启动配置工具！\n"
 "您不得不安装所需的软件包“libgnome2-perl”。"
 
-#: ../gtk/rgmainwindow.cc:2569
+#: ../gtk/rgmainwindow.cc:2574
 msgid "Starting package configuration tool..."
 msgstr "正在启动软件包配置工具..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2584
+#: ../gtk/rgmainwindow.cc:2589
 msgid "Starting package documentation viewer..."
 msgstr "正在启动软件包文档查看器..."
 
-#: ../gtk/rgmainwindow.cc:2596
+#: ../gtk/rgmainwindow.cc:2601
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "您不得不安装软件包“dwww”以便浏览软件包文档"
 
-#: ../gtk/rgmainwindow.cc:2672
+#: ../gtk/rgmainwindow.cc:2677
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1749,43 +1760,43 @@ msgstr ""
 "无法实施变更！\n"
 "首先要修复损毁的软件包。"
 
-#: ../gtk/rgmainwindow.cc:2693
+#: ../gtk/rgmainwindow.cc:2698
 msgid "Applying marked changes. This may take a while..."
 msgstr "正在实施已标记的变更。这可能需要一会..."
 
-#: ../gtk/rgmainwindow.cc:2697
+#: ../gtk/rgmainwindow.cc:2702
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "正在下载软件包文件"
 
-#: ../gtk/rgmainwindow.cc:2773
+#: ../gtk/rgmainwindow.cc:2778
 msgid "Do you want to quit Synaptic?"
 msgstr "您真的要退出新立得吗？"
 
-#: ../gtk/rgmainwindow.cc:2829
+#: ../gtk/rgmainwindow.cc:2834
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "正在下载软件包信息"
 
-#: ../gtk/rgmainwindow.cc:2830
+#: ../gtk/rgmainwindow.cc:2835
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
 msgstr "将校验软件库里全新、已删除或已升级的软件包"
 
-#: ../gtk/rgmainwindow.cc:2833
+#: ../gtk/rgmainwindow.cc:2838
 msgid "Reloading package information..."
 msgstr "正在重新载入软件包信息..."
 
-#: ../gtk/rgmainwindow.cc:2901
+#: ../gtk/rgmainwindow.cc:2906
 msgid "Failed to resolve dependency problems!"
 msgstr "无法解决软件包依赖关系问题！"
 
-#: ../gtk/rgmainwindow.cc:2903
+#: ../gtk/rgmainwindow.cc:2908
 msgid "Successfully fixed dependency problems"
 msgstr "已成功修正软件包依赖关系问题！"
 
-#: ../gtk/rgmainwindow.cc:2919
+#: ../gtk/rgmainwindow.cc:2924
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1793,29 +1804,29 @@ msgstr ""
 "无法升级系统！\n"
 "请先修复(依赖关系)毁损的软件包。"
 
-#: ../gtk/rgmainwindow.cc:2968
+#: ../gtk/rgmainwindow.cc:2973
 msgid "Marking all available upgrades..."
 msgstr "正在标记全部可用的升级..."
 
-#: ../gtk/rgmainwindow.cc:2987
+#: ../gtk/rgmainwindow.cc:2992
 msgid "Successfully marked available upgrades"
 msgstr "已成功标记全部可用的升级"
 
-#: ../gtk/rgmainwindow.cc:2989
+#: ../gtk/rgmainwindow.cc:2994
 msgid "Failed to mark all available upgrades!"
 msgstr "无法标记全部可用的升级！"
 
-#: ../gtk/rgmainwindow.cc:3368
+#: ../gtk/rgmainwindow.cc:3373
 #, fuzzy
 msgid "Save script"
 msgstr "软件包描述"
 
-#: ../gtk/rgmainwindow.cc:3395
+#: ../gtk/rgmainwindow.cc:3400
 #, fuzzy
 msgid "Select directory"
 msgstr "搜索历史"
 
-#: ../gtk/rgmainwindow.cc:3407
+#: ../gtk/rgmainwindow.cc:3412
 #, fuzzy
 msgid "Please select a directory"
 msgstr "请向驱动器内放入一张光盘。"
@@ -2153,7 +2164,7 @@ msgstr "依赖此软件包的软件包"
 
 #: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
 #: ../gtk/glade/window_filters.glade.h:18
-#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:72
+#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:73
 msgid "Dependencies"
 msgstr "依赖关系"
 
@@ -2213,7 +2224,7 @@ msgid "Mark for _Upgrade"
 msgstr "标记以便升级(_U)"
 
 #: ../gtk/glade/window_main.glade.h:38 ../gtk/glade/window_find.glade.h:6
-#: ../gtk/glade/window_filters.glade.h:56
+#: ../gtk/glade/window_filters.glade.h:58
 #: ../gtk/glade/window_details.glade.h:21
 msgid "Provided Packages"
 msgstr "提供的软件包"
@@ -3006,7 +3017,7 @@ msgstr "不包括"
 msgid "Exclude selected sections"
 msgstr "不包括已选的组别"
 
-#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:62
+#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:63
 msgid "Excludes"
 msgstr "不包括"
 
@@ -3026,7 +3037,7 @@ msgstr "包括"
 msgid "Include selected sections only"
 msgstr "只包括已选的组别"
 
-#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:61
+#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:62
 msgid "Includes"
 msgstr "包括"
 
@@ -3035,117 +3046,126 @@ msgid "Installed automatically as part of a dependency"
 msgstr ""
 
 #: ../gtk/glade/window_filters.glade.h:32
+msgid "Installed manually (not as a dependency by something else)"
+msgstr ""
+
+#: ../gtk/glade/window_filters.glade.h:33
 msgid "Installed packages that are up-to-date"
 msgstr "已安装的软件包是最新版本"
 
-#: ../gtk/glade/window_filters.glade.h:33
+#: ../gtk/glade/window_filters.glade.h:34
 msgid "Installed packages that are upgradable"
 msgstr "已安装的软件包可升级"
 
-#: ../gtk/glade/window_filters.glade.h:34
+#: ../gtk/glade/window_filters.glade.h:35
 msgid "Installed packages that are upgradable to a later upstream version"
 msgstr "较之上次升级的版本已安装的软件包还可升级到更新版本"
 
-#: ../gtk/glade/window_filters.glade.h:35
+#: ../gtk/glade/window_filters.glade.h:36
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr "不再需要的库软件包(需要 deborphan)"
 
 #: ../gtk/glade/window_filters.glade.h:38
+#, fuzzy
+msgid "Manual installed"
+msgstr "未安装的软件包"
+
+#: ../gtk/glade/window_filters.glade.h:40
 msgid "Not installable"
 msgstr "不可安装"
 
-#: ../gtk/glade/window_filters.glade.h:40
+#: ../gtk/glade/window_filters.glade.h:42
 msgid "Not installed packages"
 msgstr "未安装的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:41
+#: ../gtk/glade/window_filters.glade.h:43
 msgid "Not marked"
 msgstr "未标记的"
 
-#: ../gtk/glade/window_filters.glade.h:42
+#: ../gtk/glade/window_filters.glade.h:44
 msgid "OR"
 msgstr "或"
 
-#: ../gtk/glade/window_filters.glade.h:44
+#: ../gtk/glade/window_filters.glade.h:46
 msgid "Orphaned"
 msgstr "孤立的"
 
-#: ../gtk/glade/window_filters.glade.h:46
+#: ../gtk/glade/window_filters.glade.h:48
 msgid "Packages that are new in the repository since that last \"Reload\""
 msgstr "仓库中自上次“刷新”后新出现的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:47
+#: ../gtk/glade/window_filters.glade.h:49
 msgid "Packages that are not available in any repository"
 msgstr "在任何仓库里都无法获得的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:48
+#: ../gtk/glade/window_filters.glade.h:50
 msgid "Packages that will be installed or upgraded"
 msgstr "将会被安装或升级的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:49
+#: ../gtk/glade/window_filters.glade.h:51
 msgid "Packages that will be removed"
 msgstr "将会被删除的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:50
+#: ../gtk/glade/window_filters.glade.h:52
 msgid "Packages that will never be upgraded"
 msgstr "永远不再升级的软件包。"
 
-#: ../gtk/glade/window_filters.glade.h:51
+#: ../gtk/glade/window_filters.glade.h:53
 msgid "Packages that won't be changed"
 msgstr "将会维持原状不变化的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:52
+#: ../gtk/glade/window_filters.glade.h:54
 msgid "Packages with broken dependencies"
 msgstr "依赖关系有问题的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:54
+#: ../gtk/glade/window_filters.glade.h:56
 #, fuzzy
 msgid "Policy broken"
 msgstr "修正问题"
 
 #. replaces/obsoletes
-#: ../gtk/glade/window_filters.glade.h:57 ../gtk/rgfiltermanager.h:76
+#: ../gtk/glade/window_filters.glade.h:59 ../gtk/rgfiltermanager.h:77
 msgid "Recommendations"
 msgstr "推荐的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:58
+#: ../gtk/glade/window_filters.glade.h:60
 msgid "Removed packages that have left configuration files on the system"
 msgstr "删除已经在系统里残留配置文件的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:59
+#: ../gtk/glade/window_filters.glade.h:61
 msgid "Replaced Packages"
 msgstr "已替换的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:60
+#: ../gtk/glade/window_filters.glade.h:62
 msgid "Residual config"
 msgstr "残存配置"
 
 #. /recommends
-#: ../gtk/glade/window_filters.glade.h:63 ../gtk/rgfiltermanager.h:77
+#: ../gtk/glade/window_filters.glade.h:65 ../gtk/rgfiltermanager.h:78
 msgid "Suggestions"
 msgstr "建议的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:64
+#: ../gtk/glade/window_filters.glade.h:66
 msgid "Tags"
 msgstr "标签"
 
-#: ../gtk/glade/window_filters.glade.h:65
+#: ../gtk/glade/window_filters.glade.h:67
 msgid "Upgradable"
 msgstr "可升级的软件包"
 
-#: ../gtk/glade/window_filters.glade.h:67
+#: ../gtk/glade/window_filters.glade.h:69
 msgid "Version Number"
 msgstr "版本号"
 
-#: ../gtk/glade/window_filters.glade.h:68
+#: ../gtk/glade/window_filters.glade.h:70
 msgid "_Deselect All"
 msgstr "取消全部选中(_D)"
 
-#: ../gtk/glade/window_filters.glade.h:69
+#: ../gtk/glade/window_filters.glade.h:71
 msgid "_Invert All"
 msgstr "反向选择(_I)"
 
-#: ../gtk/glade/window_filters.glade.h:70
+#: ../gtk/glade/window_filters.glade.h:72
 msgid "_Select All"
 msgstr "选择全部(_S)"
 
@@ -3451,31 +3471,31 @@ msgstr "软件包管理器"
 msgid "Synaptic Package Manager"
 msgstr "新立得软件包管理器"
 
-#: ../gtk/rgfiltermanager.h:68
+#: ../gtk/rgfiltermanager.h:69
 msgid "Package name"
 msgstr "软件包名称"
 
-#: ../gtk/rgfiltermanager.h:71
+#: ../gtk/rgfiltermanager.h:72
 msgid "Version number"
 msgstr "版本号"
 
 #. depends, predepends etc
-#: ../gtk/rgfiltermanager.h:73
+#: ../gtk/rgfiltermanager.h:74
 msgid "Provided packages"
 msgstr "提供的软件包"
 
 #. provides and name
-#: ../gtk/rgfiltermanager.h:74
+#: ../gtk/rgfiltermanager.h:75
 msgid "Conflicting packages"
 msgstr "有冲突的软件包"
 
 #. conflicts
-#: ../gtk/rgfiltermanager.h:75
+#: ../gtk/rgfiltermanager.h:76
 msgid "Replaced packages"
 msgstr "已替换的软件包"
 
 #. suggests
-#: ../gtk/rgfiltermanager.h:78
+#: ../gtk/rgfiltermanager.h:79
 msgid "Dependent packages"
 msgstr "依赖的软件包"
 
@@ -3512,15 +3532,6 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: ../gtk/glade/dialog_authentication.glade.h:4
-#, fuzzy
-msgid "gtk-cancel"
-msgstr "取消"
-
-#: ../gtk/glade/dialog_authentication.glade.h:5
-msgid "gtk-ok"
-msgstr ""
-
 #: ../gtk/glade/dialog_disc_label.glade.h:2
 msgid ""
 "<span weight=\"bold\" size=\"larger\">Enter a label for this CD-Rom</span>\n"
@@ -3554,6 +3565,10 @@ msgstr "标记为永不升级的："
 #, fuzzy
 msgid "_Add Repository"
 msgstr "添加软件库"
+
+#, fuzzy
+#~ msgid "gtk-cancel"
+#~ msgstr "取消"
 
 #~ msgid "could not open recommends file %s"
 #~ msgstr "无法打开推荐的文件 %s"
@@ -3981,9 +3996,6 @@ msgstr "添加软件库"
 
 #~ msgid "Packages Depending on this One"
 #~ msgstr "依赖此软件包的软件包"
-
-#~ msgid "Search in:"
-#~ msgstr "搜索："
 
 #~ msgid "<b>Install</b>"
 #~ msgstr "<b>安装</b>"
@@ -4456,9 +4468,6 @@ msgstr "添加软件库"
 
 #~ msgid "clickedRecInstall called with invalid parm: "
 #~ msgstr "clickedRecInstall 调用使用了无效参数："
-
-#~ msgid "not installed"
-#~ msgstr "未安装的软件包"
 
 #~ msgid "%s: (ESSENTIAL) will be Removed\n"
 #~ msgstr "%s：(必需软件包) 将会被删除\n"

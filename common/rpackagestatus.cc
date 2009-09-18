@@ -64,8 +64,8 @@ void RPackageStatus::init()
 
 
    // check for unsupported stuff
-   if(_config->FindB("Synaptic::mark-unsupported",true)) {
-      string s, labels, components;
+   if(_config->FindB("Synaptic::mark-unsupported", true)) {
+      string s, labels, origin, components;
       markUnsupported = true;
 
       // read supported labels
@@ -75,12 +75,20 @@ void RPackageStatus::init()
 	 sst1 >> s;
 	 supportedLabels.push_back(s);
       }
+
+      // read supported origins
+      origin = _config->Find("Synaptic::supported-origins", "Debian");
+      stringstream sst2(origin);
+      while(!sst2.eof()) {
+	 sst2 >> s;
+	 supportedOrigins.push_back(s);
+      }
       
       // read supported components
       components = _config->Find("Synaptic::supported-components", "main updates/main");
-      stringstream sst2(components);
-      while(!sst2.eof()) {
-	 sst2 >> s;
+      stringstream sst3(components);
+      while(!sst3.eof()) {
+	 sst3 >> s;
 	 supportedComponents.push_back(s);
       }
    } 
@@ -99,12 +107,13 @@ bool RPackageStatus::isSupported(RPackage *pkg)
    bool res = true;
 
    if(markUnsupported) {
-      bool sc, sl;
+      bool sc, sl, so;
 
-      sc=sl=false;
+      sc=sl=so=false;
 
       string component = pkg->component();
       string label = pkg->label();
+      string origin = pkg->origin();
 
       for(unsigned int i=0;i<supportedComponents.size();i++) {
 	 if(supportedComponents[i] == component) {
@@ -118,7 +127,14 @@ bool RPackageStatus::isSupported(RPackage *pkg)
 	    break;
 	 }
       }
-      res = (sc & sl & pkg->isTrusted());
+      for(unsigned int i=0;i<supportedOrigins.size();i++) {
+	 if(supportedOrigins[i] == origin) {
+	    so = true;
+	    break;
+	 }
+      }
+
+      res = (sc & sl & so & pkg->isTrusted());
    }
 
    return res;

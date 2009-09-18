@@ -6,9 +6,9 @@
 
 @DPATCH@
 diff -urNad ubuntu~/common/rpackage.cc ubuntu/common/rpackage.cc
---- ubuntu~/common/rpackage.cc	2008-08-22 12:39:49.000000000 +0200
-+++ ubuntu/common/rpackage.cc	2008-08-22 12:46:58.000000000 +0200
-@@ -843,7 +843,7 @@
+--- ubuntu~/common/rpackage.cc	2009-09-18 23:37:47.000000000 +0200
++++ ubuntu/common/rpackage.cc	2009-09-18 23:40:55.071662698 +0200
+@@ -875,7 +875,7 @@
     if(verstr.find(':')!=verstr.npos)
        verstr=string(verstr, verstr.find(':')+1);
     char uri[512];
@@ -18,9 +18,9 @@ diff -urNad ubuntu~/common/rpackage.cc ubuntu/common/rpackage.cc
                                 prefix.c_str(),
                                 srcpkg.c_str(),
 diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
---- ubuntu~/common/rpackagestatus.cc	2008-08-22 12:39:49.000000000 +0200
-+++ ubuntu/common/rpackagestatus.cc	2008-08-22 12:48:22.000000000 +0200
-@@ -65,7 +65,7 @@
+--- ubuntu~/common/rpackagestatus.cc	2009-09-18 23:37:47.000000000 +0200
++++ ubuntu/common/rpackagestatus.cc	2009-09-18 23:41:36.086660327 +0200
+@@ -69,7 +69,7 @@
        markUnsupported = true;
  
        // read supported labels
@@ -29,12 +29,21 @@ diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
        stringstream sst1(labels);
        while(!sst1.eof()) {
  	 sst1 >> s;
-@@ -73,7 +73,7 @@
+@@ -77,7 +77,7 @@
+       }
+ 
+       // read supported origins
+-      origin = _config->Find("Synaptic::supported-origins", "Debian");
++      origin = _config->Find("Synaptic::supported-origins", "Ubuntu");
+       stringstream sst2(origin);
+       while(!sst2.eof()) {
+ 	 sst2 >> s;
+@@ -85,7 +85,7 @@
        }
        
        // read supported components
 -      components = _config->Find("Synaptic::supported-components", "main updates/main");
 +      components = _config->Find("Synaptic::supported-components", "main updates/main restricted");
-       stringstream sst2(components);
-       while(!sst2.eof()) {
- 	 sst2 >> s;
+       stringstream sst3(components);
+       while(!sst3.eof()) {
+ 	 sst3 >> s;

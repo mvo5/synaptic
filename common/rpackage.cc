@@ -1326,6 +1326,27 @@ string RPackage::label()
    return res;
 }
 
+string RPackage::origin()
+{
+   string res;
+   pkgCache::VerIterator Ver;
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   if (State.CandidateVer == 0) {
+      return "";
+   }
+   Ver = State.CandidateVerIter(*_depcache);
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   pkgCache::PkgFileIterator File = VF.File();
+
+   if(File.Origin() == NULL) {
+      return "";
+   }
+
+   res = File.Origin();
+
+   return res;
+}
+
 static pkgCache::PkgFileIterator
 _searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
 {

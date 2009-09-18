@@ -171,6 +171,9 @@ class RPackage {
    
    // get label of download site
    string label();
+
+   // get origin (Origin tag from the release file)
+   string origin();
    
    const char *maintainer();
    const char *vendor();

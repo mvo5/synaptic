@@ -55,6 +55,7 @@ class RPackageStatus {
 
    // the supported archive-labels and components
    vector<string> supportedLabels;
+   vector<string> supportedOrigins;
    vector<string> supportedComponents;
    bool markUnsupported;
 

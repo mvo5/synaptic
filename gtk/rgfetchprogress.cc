@@ -48,7 +48,8 @@ enum {
 };
 
 enum {
-   FETCH_PIXMAP_COLUMN,
+   FETCH_PROGRESS_COLUMN,
+   FETCH_PROGRESS_TEXT_COLUMN,
    FETCH_SIZE_COLUMN,
    FETCH_DESCR_COLUMN,
    FETCH_URL_COLUMN,
@@ -77,17 +78,19 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
    _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
    _tableListStore = gtk_list_store_new(N_FETCH_COLUMNS,
-                                        GDK_TYPE_PIXBUF,
-                                        G_TYPE_STRING, G_TYPE_STRING, 
+                                        G_TYPE_INT,
+                                        G_TYPE_STRING, 
+                                        G_TYPE_STRING, 
+                                        G_TYPE_STRING, 
 					G_TYPE_STRING);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_table),
                            GTK_TREE_MODEL(_tableListStore));
 
    /* percent column */
-   renderer = gtk_cell_renderer_pixbuf_new();
+   renderer = gtk_cell_renderer_progress_new();
    column = gtk_tree_view_column_new_with_attributes(_("Status"), renderer,
-                                                     "pixbuf",
-                                                     FETCH_PIXMAP_COLUMN,
+                                                     "value", FETCH_PROGRESS_COLUMN,
+                                                     "text", FETCH_PROGRESS_TEXT_COLUMN,
                                                      NULL);
    gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
    gtk_tree_view_column_set_fixed_width(column, COLUMN_PERCENT_WIDTH);
@@ -378,66 +381,42 @@ void RGFetchProgress::stopDownload(GtkWidget *self, void *data)
 }
 
 
-GdkPixmap *RGFetchProgress::statusDraw(int width, int height, int status)
+char* RGFetchProgress::getStatusStr(int status)
 {
-   int x, y;
-   char *str = "";
-   GdkPixmap *pix;
-   int px, pw;
-   GdkGC *_barGC;
-   GdkGC *_gc;
-   GdkGC *_textGC;
-   PangoFontDescription *_font;
-   GtkStyle *style;
-
-   style = gtk_widget_get_style(_win);
-   _font = style->font_desc;
-   _gc = style->white_gc;
-   _barGC = style->bg_gc[0];
-   _textGC = style->black_gc;
-
-   pix = gdk_pixmap_new(_win->window, width, height, -1);
-
-   px = 0;
-   pw = status * width / 100;
-
+   // special status
    if (status < 0) {
-      if (status == DLDone || status == DLHit)
-         gdk_draw_rectangle(pix, _barGC, TRUE, px, 0, pw, height);
-      else
-         gdk_draw_rectangle(pix, _gc, TRUE, px, 0, pw, height);
-
       switch (status) {
          case DLQueued:
-            str = _("Queued");
+            return _("Queued");
             break;
          case DLDone:
-            str = _("Done");
+            return _("Done");
             break;
          case DLHit:
-            str = _("Hit");
+            return _("Hit");
             break;
          case DLFailed:
-            str = _("Failed");
+            return _("Failed");
             break;
       }
-   } else {
-      static char buf[16];
+   } 
 
-      gdk_draw_rectangle(pix, _barGC, TRUE, px, 0, pw, height);
-      gdk_draw_rectangle(pix, _gc, TRUE, px + pw, 0, width - pw - 2, height);
+   // default label
+   return NULL;
+}
 
-      snprintf(buf, sizeof(buf), "%d%%", status);
-      str = buf;
+int RGFetchProgress::getStatusPercent(int status)
+{
+   // special status
+   if (status < 0) {
+      // on done/hit show full status, otherwise empty
+      if (status == DLDone || status == DLHit)
+         return 100;
+      else
+         return 0;
    }
 
-   pango_layout_set_font_description(_layout, _font);
-   pango_layout_set_text(_layout, str, -1);
-   pango_layout_get_pixel_size(_layout, &x, &y);
-   x = (width - x) / 2;
-   gdk_draw_layout(pix, _textGC, x, 0, _layout);
-
-   return pix;
+   return status;
 }
 
 
@@ -445,39 +424,27 @@ void RGFetchProgress::refreshTable(int row, bool append)
 {
    //cout << "RGFetchProgress::refreshTable() " << row << endl;
    GtkTreeIter iter;
-   static GdkPixmap *pix = NULL;
-   static GdkPixbuf *buf = NULL;
-   int w, h;
-
-   // unref pix first (they start with a usage count of 1
-   // why not unref'ing it after adding in the table? -- niemeyer
-   if (pix != NULL)
-      gdk_pixmap_unref(pix);
-   if (buf != NULL)
-      gdk_pixbuf_unref(buf);
-
-   w = COLUMN_PERCENT_WIDTH;   //gtk_tree_view_column_get_width(_statusColumn);
-   h = COLUMN_PERCENT_HEIGHT; // FIXME: height -> get it from somewhere
-
-   pix = statusDraw(w, h, _items[row].status);
-   buf = gdk_pixbuf_get_from_drawable(NULL, pix, NULL, 0, 0, 0, 0, w, h);
    GtkTreePath *path;
+
+   // find the right iter
    if (append == true) {
       gtk_list_store_insert(_tableListStore, &iter, row);
-      path = gtk_tree_path_new();
-      gtk_tree_path_append_index(path, row);
-      //gtk_tree_view_set_cursor(GTK_TREE_VIEW(_table), path, NULL, false);
-      if(!_cursorDirty)
+      if(!_cursorDirty) {
+	 path = gtk_tree_path_new();
+	 gtk_tree_path_append_index(path, row);
 	 gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_table),
 				      path, NULL, TRUE, 0.0, 0.0);
-      gtk_tree_path_free(path);
-      // can't we use the iterator here?
+	 gtk_tree_path_free(path);
+      }
    } else {
       gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(_tableListStore),
                                     &iter, NULL, row);
    }
+
+   // set the data
    gtk_list_store_set(_tableListStore, &iter,
-                      FETCH_PIXMAP_COLUMN, buf,
+                      FETCH_PROGRESS_COLUMN, getStatusPercent(_items[row].status),
+                      FETCH_PROGRESS_TEXT_COLUMN, getStatusStr(_items[row].status),
                       FETCH_SIZE_COLUMN, _items[row].size.c_str(),
                       FETCH_DESCR_COLUMN, _items[row].descr.c_str(),
                       FETCH_URL_COLUMN, _items[row].uri.c_str(), -1);

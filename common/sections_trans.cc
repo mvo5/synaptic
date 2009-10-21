@@ -39,7 +39,7 @@ char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "graphics"
    {"graphics", _("Graphics")},
    // TRANSLATORS: Alias for the Debian package section "gnu-r"
-   {"gnu-r", _("GNU R staticial system")},
+   {"gnu-r", _("GNU R statistical system")},
    // TRANSLATORS: Alias for the Debian package section "gnustep"
    {"gnustep", _("Gnustep Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "hamradio"

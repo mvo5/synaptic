@@ -1,9 +1,20 @@
-synaptic (0.62.9) unstable; urgency=low
+synaptic (0.63) unstable; urgency=low
 
   * common/rpackage.h:
     - fix segfault with latest apt
+  * common/sections_trans.cc:
+    - fix typo in gnu-r section description
+  * po/fr.po:
+    - updated, thanks to Stéphane Blondon, closes: #543981
+  * po/sl.po:
+    - updated, thanks to Matej Urbančič
+  * take the "Origin" field from the release file into account
+    when looking for supported packages
+  * gtk/rgfetchprogress.{cc,h}:
+    - remove the custom progress rendering and replace with
+      stock gtk progress
 
- -- Michael Vogt <mvo@debian.org>  Thu, 27 Aug 2009 18:47:10 +0200
+ -- Michael Vogt <mvo@debian.org>  Wed, 21 Oct 2009 11:19:56 +0200
 
 synaptic (0.62.8) unstable; urgency=low
 

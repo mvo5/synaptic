@@ -425,9 +425,12 @@ vector<DepInformation> RPackage::enumRDeps()
 	 dep.versionComp = "";
       }
 
-      //FIXME: HACK ALARM, we need a "RDepends" type, so we use the last
-      // one in pkg-dep
-      dep.type = (pkgCache::Dep::DepType)(pkgCache::Dep::Enhances+1);
+      // HACK: we (ab)use the DepType for the dependency type,
+      //       but add our own RDepends type that is always the
+      //       last element of DepTypeStr[] 
+      // FIXME: make this less hacky
+      int nr_elements = sizeof(DepTypeStr)/sizeof(char*);
+      dep.type = (pkgCache::Dep::DepType)(nr_elements-1);
       dep.name = D.ParentPkg().Name();
 
       if(Trg->VersionList == 0)
@@ -1319,6 +1322,27 @@ string RPackage::label()
    }
 
    res = File.Label();
+
+   return res;
+}
+
+string RPackage::origin()
+{
+   string res;
+   pkgCache::VerIterator Ver;
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   if (State.CandidateVer == 0) {
+      return "";
+   }
+   Ver = State.CandidateVerIter(*_depcache);
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   pkgCache::PkgFileIterator File = VF.File();
+
+   if(File.Origin() == NULL) {
+      return "";
+   }
+
+   res = File.Origin();
 
    return res;
 }

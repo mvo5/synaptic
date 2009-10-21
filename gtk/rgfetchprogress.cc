@@ -407,8 +407,6 @@ char* RGFetchProgress::getStatusStr(int status)
 
 int RGFetchProgress::getStatusPercent(int status)
 {
-   std::cerr << "status: " << status << std::endl;
-
    // special status
    if (status < 0) {
       // on done/hit show full status, otherwise empty
@@ -424,7 +422,7 @@ int RGFetchProgress::getStatusPercent(int status)
 
 void RGFetchProgress::refreshTable(int row, bool append)
 {
-   cout << "RGFetchProgress::refreshTable() " << row << endl;
+   //cout << "RGFetchProgress::refreshTable() " << row << endl;
    GtkTreeIter iter;
    GtkTreePath *path;
 

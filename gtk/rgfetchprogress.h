@@ -66,6 +66,8 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
 				gpointer    user_data);
    bool _cursorDirty;
 
+   char *getStatusStr(int status);
+   int getStatusPercent(int status);
    void refreshTable(int row, bool append = false);
    GdkPixmap *statusDraw(int width, int height, int status);
 

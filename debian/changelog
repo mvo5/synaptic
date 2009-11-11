@@ -1,3 +1,47 @@
+synaptic (0.63ubuntu1) lucid; urgency=low
+
+  * merged from debian, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - merged ept branch
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Nov 2009 14:10:05 +0100
+
+synaptic (0.63) unstable; urgency=low
+
+  * common/rpackage.h:
+    - fix segfault with latest apt
+  * common/sections_trans.cc:
+    - fix typo in gnu-r section description
+  * po/fr.po:
+    - updated, thanks to Stéphane Blondon, closes: #543981
+  * po/sl.po:
+    - updated, thanks to Matej Urbančič
+  * take the "Origin" field from the release file into account
+    when looking for supported packages
+  * gtk/rgfetchprogress.{cc,h}:
+    - remove the custom progress rendering and replace with
+      stock gtk progress
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 21 Oct 2009 11:19:56 +0200
+
+synaptic (0.62.8) unstable; urgency=low
+
+  * debian/control:
+    - add build-conflict against librpm-dev
+    - recommends gksu|kdebase-bin (kdsu is fine too)
+      closes: #442421
+  * add filter for manual installed packages (LP: #122047)
+  * fix typo (thanks to Florentin Duneau), closes: #542122
+  * po/pt_BR.po:
+    - updated translation, thanks to Sergio Cipolla
+      (closes: #532473)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 27 Aug 2009 10:00:10 +0200
+
 synaptic (0.62.7ubuntu7~ppa1) karmic; urgency=low
 
   * gtk/rgfetchprogress.{cc,h}:

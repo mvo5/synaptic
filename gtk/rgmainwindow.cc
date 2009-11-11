@@ -2925,10 +2925,11 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
    me->setBusyCursor(true);
    RGFlushInterface();
    if(str == NULL || strlen(str) < 1) {
+      // reset the color
+      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, NULL);
       // if the user has cleared the search, refresh the view
       me->_lister->reapplyFilter();
       me->refreshTable();
-
       me->setBusyCursor(false);
    } else if(strlen(str) > 1) {
       // only search when there is more than one char entered, single
@@ -2936,6 +2937,10 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       me->setBusyCursor(true);
       RGFlushInterface();
       me->refreshTable();
+      // set color to a light yellow to make it more obvious that a search
+      // is performed
+      GdkColor yellowish = {0, 63479,63479,48830};
+      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, &yellowish);
    }
    me->setBusyCursor(false);
 

@@ -2421,10 +2421,15 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    if (me->_findWin == NULL) {
       me->_findWin = new RGFindWindow(me);
    }
-
+   
    me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
+
+      // clear the quick search, otherwise both apply and that is
+      // confusing
+      gtk_entry_set_text(GTK_ENTRY(me->_entry_fast_search), "");
+
       string str = me->_findWin->getFindString();
       me->setBusyCursor(true);
 

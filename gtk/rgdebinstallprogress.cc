@@ -260,14 +260,16 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    char buf[512];
    char *cmd = g_strdup_printf("/usr/bin/diff -u %s %s", orig_file.c_str(), new_file.c_str());
    FILE *f = popen(cmd,"r");
-   while(fgets(buf,512,f) != NULL) {
+   while(fgets(buf,sizeof(buf),f) != NULL) {
       diff += utf8(buf);
    }
    pclose(f);
    g_free(cmd);
 
    // set into buffer
-   GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(glade_xml_get_widget(xml,"textview_diff")));
+   GtkWidget *text_view = glade_xml_get_widget(xml,"textview_diff");
+   gtk_widget_modify_font(text_view, pango_font_description_from_string("monospace"));
+   GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
 
    int res = dia.run(NULL,true);

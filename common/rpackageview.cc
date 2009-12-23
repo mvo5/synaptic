@@ -189,11 +189,11 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    const char *tmp=NULL;
    bool global_found=true;
 
-   if(!pkg || searchStrings.empty())
+   if(!pkg || _currentSearchItem.searchStrings.empty())
       return;
 
    // build the string
-   switch(searchType) {
+   switch(_currentSearchItem.searchType) {
    case RPatternPackageFilter::Name:
       tmp = pkg->name();
       break;
@@ -228,8 +228,8 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       str = tmp;
       
    // find the search pattern in the string "str"
-   for(unsigned int i=0;i<searchStrings.size();i++) {
-      string searchString = searchStrings[i];
+   for(unsigned int i=0;i<_currentSearchItem.searchStrings.size();i++) {
+      string searchString = _currentSearchItem.searchStrings[i];
 
       if(!str.empty() && strcasestr(str.c_str(), searchString.c_str())) {
 	 global_found &= true;
@@ -238,7 +238,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       }
    }
    if(global_found) {
-      _view[searchName].push_back(pkg);
+      _view[_currentSearchItem.searchName].push_back(pkg);
       found++;
    }
 
@@ -248,26 +248,64 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    //_view[searchString].push_back(NULL);
 }
 
+bool RPackageViewSearch::setSelected(string name)
+{
+   // if we do not have the search name in the current view, 
+   // check if we only have it in the searchHistory and if so,
+   // redo the search
+   if (_view.find(name) == _view.end()) {
+      map<string, searchItem>::iterator J = searchHistory.find(name);
+      if (J != searchHistory.end()) {
+	 cerr << "found in search histroy, reapplying search" << endl;
+	 string s;
+	 OpProgress progress;
+	 for(int i=0;i < (*J).second.searchStrings.size();i++)
+	    s += string(" ") + (*J).second.searchStrings[i];
+	 // do search but do not add to history (we have it there already)
+	 setSearch((*J).second.searchName, (*J).second.searchType, s, 
+		   // FIXME: re-use progress from setSearch()
+		   progress);
+      }
+   }
+
+   // call parent
+   return RPackageView::setSelected(name);
+}
+
+vector<string> RPackageViewSearch::getSubViews()
+{
+   vector<string> subviews;
+   for(map<string, searchItem>::iterator I = searchHistory.begin();
+       I != searchHistory.end();
+       I++)
+     subviews.push_back((*I).first);
+   return subviews;
+}
+
 int RPackageViewSearch::setSearch(string aSearchName, 
 				  int type, 
 				  string searchString, 
 				  OpProgress &searchProgress)
 {
    found = 0;
-   searchType = type;
-   searchName = aSearchName;
 
-   _view[searchName].clear();
-   searchStrings.clear();
+   _currentSearchItem.searchType = type;
+   _currentSearchItem.searchName = aSearchName;
+
+   _view[_currentSearchItem.searchName].clear();
+   _currentSearchItem.searchStrings.clear();
 
    // tokenize the str and add to the searchString vector
    stringstream sstream(searchString);
    string s;
    while(!sstream.eof()) {
       sstream >> s;
-      searchStrings.push_back(s);
+      _currentSearchItem.searchStrings.push_back(s);
    }
 
+   // overwrite existing ones
+   searchHistory[aSearchName] =  _currentSearchItem;
+   
    // setup search progress (0 done, _all.size() in total, 1 subtask)
    searchProgress.OverallProgress(0, _all.size(), 1, _("Searching"));
    // reapply search when a new search strng is given

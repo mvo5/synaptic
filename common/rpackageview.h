@@ -72,15 +72,15 @@ class RPackageView {
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };
    bool hasPackage(RPackage *pkg);
+   virtual bool setSelected(string name);
 
-   bool setSelected(string name);
    void showAll() { 
       _selectedView = _all; 
       _hasSelection = false;
       _selectedName.clear();
    };
 
-   vector<string> getSubViews();
+   virtual vector<string> getSubViews();
 
    virtual string getName() = 0;
    virtual void addPackage(RPackage *package) = 0;
@@ -150,13 +150,18 @@ class RPackageViewStatus:public RPackageView {
 };
 
 class RPackageViewSearch : public RPackageView {
- protected:
-   RPackageLister *lister;
-   vector<string> searchStrings;
-   string searchName;
-   int searchType;
+   struct searchItem {
+      vector<string> searchStrings;
+      string searchName;
+      int searchType;
+   };
+   // the search history
+   map<string, searchItem> searchHistory;
+   searchItem _currentSearchItem;
    int found; // nr of found pkgs for the last search
+
    bool xapianSearch();
+
  public:
  RPackageViewSearch(vector<RPackage *> &allPkgs) 
     : RPackageView(allPkgs), found(0) {};
@@ -167,6 +172,10 @@ class RPackageViewSearch : public RPackageView {
    string getName() {
       return _("Search History");
    };
+
+   // return search history here
+   virtual vector<string> getSubViews();
+   virtual bool setSelected(string name);
 
    void addPackage(RPackage *package);
 

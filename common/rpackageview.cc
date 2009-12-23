@@ -568,13 +568,32 @@ void RPackageViewFilter::makePresetFilters()
 
 void RPackageViewOrigin::addPackage(RPackage *package)
 {
+   string subview;
    string component =  package->component();
-   string origin = package->getCanidateOrigin();
-   if(origin == "")
-      origin = _("Local");
+   string origin_url = package->getCandidateOriginSiteUrl();
+   string suite  = package->getCandidateOriginSuite();
+   string origin_str  = package->getCandidateOriginStr();
+
+   // local origins are all put under local (no matter what component, section)
+   if(origin_url == "") {
+      origin_url = _("Local");
+      _view[origin_url].push_back(package);
+      return;
+   }
+
+   // PPAs are special too
+   if(origin_str.find("LP-PPA-") != string::npos) {
+     _view[origin_str+"/"+suite].push_back(package);
+     return;
+   }
+
    if(component == "")
       component = _("Unknown");
-   _view[origin+"/"+component].push_back(package);
+   if(suite == "now")
+      suite = "";
+
+   subview = suite+"/"+component+" ("+origin_url+")";
+   _view[subview].push_back(package);
  };
 
 

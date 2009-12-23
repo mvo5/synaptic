@@ -897,17 +897,36 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    return filename;
 }
 
-string RPackage::getCanidateOrigin()
+string RPackage::getCandidateOriginStr()
 {
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-
    if(Ver.end())
       return "";
-
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end())
-      return VF.File().Site();
+   if(!VF.end() && VF.File() && VF.File().Origin())
+      return VF.File().Origin();
+   return "";
+}
 
+string RPackage::getCandidateOriginSuite()
+{
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if(Ver.end())
+      return "";
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   if(!VF.end() && VF.File() && VF.File().Archive())
+      return VF.File().Archive();
+   return "";
+}
+
+string RPackage::getCandidateOriginSiteUrl()
+{
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if(Ver.end())
+      return "";
+   pkgCache::VerFileIterator VF = Ver.FileList();
+   if(!VF.end() && VF.File() && VF.File().Site())
+      return VF.File().Site();
    return "";
 }
 

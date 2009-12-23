@@ -160,8 +160,12 @@ class RPackage {
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
 
-   // get origin of the package
-   string getCanidateOrigin();
+   // get origin url of the package 
+   string getCandidateOriginSiteUrl();
+   // get origin "archive" release header (e.g. karmic, karmic-updates)
+   string getCandidateOriginSuite();
+   // get origin "origin" release header (e.g. Ubuntu, 
+   string getCandidateOriginStr();
 
    // get the release file for the givel origin label string
    string getReleaseFileForOrigin(string label, string release);

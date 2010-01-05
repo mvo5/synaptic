@@ -509,6 +509,7 @@ void RGDebInstallProgress::updateInterface()
 	 if(strstr(status, "pmerror") != NULL) { 
 	    // error from dpkg, needs to be parsed different
 	    str = g_strdup_printf(_("Error in package %s"), split[1]);
+	    gtk_label_set(GTK_LABEL(_label_status), str);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error("%s",utf8(err.c_str()));
 	 } else if(strstr(status, "pmconffile") != NULL) {

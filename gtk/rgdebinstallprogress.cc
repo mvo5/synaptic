@@ -512,6 +512,11 @@ void RGDebInstallProgress::updateInterface()
 	    gtk_label_set(GTK_LABEL(_label_status), str);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error("%s",utf8(err.c_str()));
+	 // first check for errors and conf-file prompts
+	 } else if(strstr(status, "pmrecover") != NULL) { 
+	    // running dpkg --configure -a
+	    str = g_strdup(_("Trying to recover from package failure"));
+	    gtk_label_set(GTK_LABEL(_label_status), str);
 	 } else if(strstr(status, "pmconffile") != NULL) {
 	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;
@@ -620,6 +625,8 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
       // HACK: try to correct the situation
       if(res == pkgPackageManager::Failed) {
 	 cerr << _("A package failed to install.  Trying to recover:") << endl;
+	 const char *rstatus = "pmrecover:dpkg:0:Trying to recover\n";
+	 write(fd[1], rstatus, strlen(rstatus));
 	 system("dpkg --configure -a");
       }
 

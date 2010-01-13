@@ -29,7 +29,7 @@
 class RGCreditsPanel:public RGGladeWindow {
  public:
    RGCreditsPanel(RGWindow *parent);
-   virtual ~ RGCreditsPanel() {
+   virtual ~RGCreditsPanel() {
    };
 };
 

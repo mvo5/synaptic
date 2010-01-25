@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 09:05+0200\n"
+"POT-Creation-Date: 2010-01-25 17:47+0100\n"
 "PO-Revision-Date: 2004-12-31 11:37+0200\n"
 "Last-Translator: Ihar Hrachyshka <ihar.hrachyshka@gmail.com>\n"
 "Language-Team: Belarusian Latin <i18n@mova.org>\n"
@@ -95,7 +95,7 @@ msgstr "Hrafika"
 
 #. TRANSLATORS: Alias for the Debian package section "gnu-r"
 #: ../common/sections_trans.cc:42
-msgid "GNU R staticial system"
+msgid "GNU R statistical system"
 msgstr ""
 
 #. TRANSLATORS: Alias for the Debian package section "gnustep"
@@ -290,7 +290,7 @@ msgstr "Asiarodździe KDE"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:520
+#: ../common/rpackageview.cc:573
 msgid "Unknown"
 msgstr "Nieviadomaje"
 
@@ -526,11 +526,11 @@ msgid "The list of installed files is only available for installed packages"
 msgstr ""
 "Śpis zainstalavanych fajłaŭ dastupny tolki dla zainstalavanych pakunkaŭ"
 
-#: ../common/rpackage.cc:424
+#: ../common/rpackage.cc:463
 msgid "or dependency"
 msgstr "ci zaležnaść"
 
-#: ../common/rpackage.cc:538
+#: ../common/rpackage.cc:580
 #, c-format
 msgid ""
 "\n"
@@ -546,91 +546,101 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:575
+#: ../common/rpackage.cc:617
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s, ale budzie zainstalavany %s"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:581
+#: ../common/rpackage.cc:623
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr " %s: %s %s, ale budzie zainstalavany %s"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:591
+#: ../common/rpackage.cc:633
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s, ale jaho niemahčyma zainstalavać"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:603
+#: ../common/rpackage.cc:645
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s, ale heta virtualny pakunak"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:608
+#: ../common/rpackage.cc:650
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s, ale heta virtualny pakunak"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:613
+#: ../common/rpackage.cc:655
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s, ale jon nia budzie zainstalavany"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:618
+#: ../common/rpackage.cc:660
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s, ale jon nia budzie zainstalavany"
 
-#: ../common/rpackage.cc:637
+#: ../common/rpackage.cc:679
 msgid " or"
 msgstr " ci"
 
-#: ../common/rpackage.cc:956
+#: ../common/rpackage.cc:1017
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Niapravilny zapis u fajle naładaŭ, niama zahałoŭka pakunka"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:48
+#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:48
 msgid "Depends"
 msgstr "Zaležyć"
 
-#: ../common/rpackage.h:52
+#: ../common/rpackage.h:54
 #, fuzzy
 msgid "PreDepends"
 msgstr "Zaležyć"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
+#: ../common/rpackage.h:55 ../common/rpackagefilter.cc:53
 msgid "Suggests"
 msgstr "Prapanuje"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:52
+#: ../common/rpackage.h:56 ../common/rpackagefilter.cc:52
 msgid "Recommends"
 msgstr "Rekamenduje"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:50
+#: ../common/rpackage.h:57 ../common/rpackagefilter.cc:50
 msgid "Conflicts"
 msgstr "Kanfliktuje"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:51
+#: ../common/rpackage.h:58 ../common/rpackagefilter.cc:51
 msgid "Replaces"
 msgstr "Zamianiaje"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:59
 msgid "Obsoletes"
 msgstr ""
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:60
+msgid "Breaks"
+msgstr ""
+
+#: ../common/rpackage.h:61
+#, fuzzy
+msgid "Enhances"
+msgstr "Pakažy źmieny"
+
+#. make sure this is always the last member
+#: ../common/rpackage.h:69
 #, fuzzy
 msgid "Dependency of"
 msgstr "Zaležnaści"
@@ -685,7 +695,7 @@ msgid "Installed (locked to the current version)"
 msgstr "Zainstalavany (zablakavanaja dziejnaja versija)"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "Złamany"
@@ -741,7 +751,7 @@ msgid "ReverseDepends"
 msgstr "Advarotna zaležyć"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
 #: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
@@ -754,8 +764,8 @@ msgstr ""
 msgid "Component"
 msgstr "Kampanent"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
 #: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "Status"
@@ -946,19 +956,19 @@ msgstr "Akreśleńnie paznakaŭ..."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "Pamyłka bzip2, dysk zapoŭnieny."
 
-#: ../common/rpackageview.h:99
+#: ../common/rpackageview.h:100
 msgid "Sections"
 msgstr "Raździeły"
 
-#: ../common/rpackageview.h:109
+#: ../common/rpackageview.h:110
 msgid "Alphabetic"
 msgstr "Pavodle alfabetu"
 
-#: ../common/rpackageview.h:159
+#: ../common/rpackageview.h:166
 msgid "Search History"
 msgstr "Historyja pošuku"
 
-#: ../common/rpackageview.h:210
+#: ../common/rpackageview.h:221
 msgid "Custom"
 msgstr "Asablivy"
 
@@ -1002,45 +1012,45 @@ msgid "Not installed (residual config)"
 msgstr "Nie zainstalavany (reštavaja kanfihuracyja)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:266
+#: ../common/rpackageview.cc:304
 #, fuzzy
 msgid "Searching"
 msgstr "Šukaj"
 
-#: ../common/rpackageview.cc:454
+#: ../common/rpackageview.cc:492
 msgid "Search Filter"
 msgstr "Filter pošuku"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackageview.cc:462
+#: ../common/rpackageview.cc:500
 msgid "Tasks"
 msgstr "Zadačy"
 
-#: ../common/rpackageview.cc:468
+#: ../common/rpackageview.cc:506
 msgid "Reduced View"
 msgstr "Pamienšany vyhlad"
 
-#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:357
+#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
+#: ../gtk/rgsummarywindow.cc:356
 msgid "Marked Changes"
 msgstr "Paznačanyja źmieny"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:534
 msgid "Package with Debconf"
 msgstr "Pakunak z Debconf"
 
-#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "Nieaktualny (ad aŭtaraŭ)"
 
-#: ../common/rpackageview.cc:509
+#: ../common/rpackageview.cc:547
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "Rekamenduje"
 
-#: ../common/rpackageview.cc:518
+#: ../common/rpackageview.cc:561
 msgid "Local"
 msgstr ""
 
@@ -1261,16 +1271,16 @@ msgstr ""
 "dziejnuju versiju, adkažy \"Nie\". Chočaš zainstalavać versiju z novaha "
 "pakunku?"
 
-#: ../gtk/rgdebinstallprogress.cc:367 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "Prymianieńnie źmienaŭ"
 
-#: ../gtk/rgdebinstallprogress.cc:454
+#: ../gtk/rgdebinstallprogress.cc:456
 msgid "Ctrl-c pressed"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:455
+#: ../gtk/rgdebinstallprogress.cc:457
 #, fuzzy
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
@@ -1280,24 +1290,29 @@ msgstr ""
 "Ty sapraŭdy chočaš zrabić heta?"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:509
+#: ../gtk/rgdebinstallprogress.cc:511
 #, c-format
 msgid "Error in package %s"
 msgstr "Pamyłka ŭ pakunku %s"
 
-#: ../gtk/rgdebinstallprogress.cc:602
+#. running dpkg --configure -a
+#: ../gtk/rgdebinstallprogress.cc:518
+msgid "Trying to recover from package failure"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:609
 msgid "Error failed to fork pty"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:619
+#: ../gtk/rgdebinstallprogress.cc:626
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:676 ../gtk/rgdebinstallprogress.cc:679
+#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
 msgid "Changes applied"
 msgstr "Źmieny prymienienyja"
 
-#: ../gtk/rgdebinstallprogress.cc:735
+#: ../gtk/rgdebinstallprogress.cc:744
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1305,15 +1320,15 @@ msgstr ""
 "Ciapier prymianiajucca paznačanyja źmieny. Heta moža zaniać peŭny čas. Kali "
 "łaska, pačakaj."
 
-#: ../gtk/rgdebinstallprogress.cc:740
+#: ../gtk/rgdebinstallprogress.cc:749
 msgid "Installing and removing software"
 msgstr "Instalacyja j vydaleńnie prahramaŭ"
 
-#: ../gtk/rgdebinstallprogress.cc:742
+#: ../gtk/rgdebinstallprogress.cc:751
 msgid "Removing software"
 msgstr "Vydaleńnie prahramaŭ"
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:753
 msgid "Installing software"
 msgstr "Instalacyja prahramaŭ"
 
@@ -1393,19 +1408,19 @@ msgstr "Bačny"
 msgid "Preferences"
 msgstr "Nałady"
 
-#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
 msgid "Size"
 msgstr "Pamier"
 
-#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
 msgid "Package"
 msgstr "Pakunak"
 
-#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
+#: ../gtk/rgfetchprogress.cc:117 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
 msgstr "Adras"
 
-#: ../gtk/rgfetchprogress.cc:198
+#: ../gtk/rgfetchprogress.cc:201
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1416,33 +1431,33 @@ msgstr ""
 "%s\n"
 "u pryvod %s"
 
-#: ../gtk/rgfetchprogress.cc:326
+#: ../gtk/rgfetchprogress.cc:329
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Chutkaść zahruzki: %s/s - zastałosia %s"
 
-#: ../gtk/rgfetchprogress.cc:332
+#: ../gtk/rgfetchprogress.cc:335
 msgid "Download rate: unknown"
 msgstr "Chutkaść zahruzki: nieviadomaja"
 
-#: ../gtk/rgfetchprogress.cc:334
+#: ../gtk/rgfetchprogress.cc:337
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Zahruzka fajłu %li·z·%li"
 
-#: ../gtk/rgfetchprogress.cc:412
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Queued"
 msgstr "U čarzie"
 
-#: ../gtk/rgfetchprogress.cc:415
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Done"
 msgstr "Zroblena"
 
-#: ../gtk/rgfetchprogress.cc:418
+#: ../gtk/rgfetchprogress.cc:396
 msgid "Hit"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:421
+#: ../gtk/rgfetchprogress.cc:399
 msgid "Failed"
 msgstr "Pamyłka"
 
@@ -2000,7 +2015,7 @@ msgstr "_Pakažy padrabiaznaści"
 msgid "Summary"
 msgstr "Ahlad"
 
-#: ../gtk/rgsummarywindow.cc:392
+#: ../gtk/rgsummarywindow.cc:393
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -2008,7 +2023,7 @@ msgstr[0] "%d zablakavany pakunak\n"
 msgstr[1] "%d zablakavanyja pakunki\n"
 msgstr[2] "%d zablakavanych pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:399
+#: ../gtk/rgsummarywindow.cc:400
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -2016,7 +2031,7 @@ msgstr[0] "%d pakunak budzie pakinuty i nie aktualizavany\n"
 msgstr[1] "%d pakunki buduć pakinutyja i nie aktualizavanyja\n"
 msgstr[2] "%d pakunkaŭ buduć pakinutyja i nie aktualizavanyja\n"
 
-#: ../gtk/rgsummarywindow.cc:406
+#: ../gtk/rgsummarywindow.cc:407
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -2024,7 +2039,7 @@ msgstr[0] "Budzie zainstalavany %d novy pakunak\n"
 msgstr[1] "Buduć zainstalavanyja %d novyja pakunki\n"
 msgstr[2] "Buduć zainstalavanyja %d novych pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:413
+#: ../gtk/rgsummarywindow.cc:414
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -2032,7 +2047,7 @@ msgstr[0] "Budzie pierainstalavany %d novy pakunak\n"
 msgstr[1] "Buduć pierainstalavanyja %d novyja pakunki\n"
 msgstr[2] "Buduć pierainstalavanyja %d novych pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:420
+#: ../gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -2040,7 +2055,7 @@ msgstr[0] "Budzie aktualizavany %d pakunak\n"
 msgstr[1] "Buduć aktualizavanyja %d pakunki\n"
 msgstr[2] "Buduć aktualizavanyja %d pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:427
+#: ../gtk/rgsummarywindow.cc:428
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -2048,7 +2063,7 @@ msgstr[0] "Budzie vydaleny %d pakunak\n"
 msgstr[1] "Buduć vydalenyja %d pakunki\n"
 msgstr[2] "Buduć vydalenyja %d pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:434
+#: ../gtk/rgsummarywindow.cc:435
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -2056,7 +2071,7 @@ msgstr[0] "Budzie <d>viernuty nazad</b> %d pakunak\n"
 msgstr[1] "Buduć <d>viernutyja nazad</b> %d pakunki\n"
 msgstr[2] "Buduć <d>viernutyja nazad</b> %d pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:442
+#: ../gtk/rgsummarywindow.cc:443
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -2064,17 +2079,17 @@ msgstr[0] "<b>Uvaha:</b> budzie vydaleny %d važny pakunak\n"
 msgstr[1] "<b>Uvaha:</b> buduć vydalenyja %d važnyja pakunki\n"
 msgstr[2] "<b>Uvaha:</b> buduć vydalenyja %d važnych pakunkaŭ\n"
 
-#: ../gtk/rgsummarywindow.cc:454
+#: ../gtk/rgsummarywindow.cc:455
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "Budzie zaniata jašče %s dyskavaj prastory"
 
-#: ../gtk/rgsummarywindow.cc:457
+#: ../gtk/rgsummarywindow.cc:458
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Budzie vyzvalena jašče %s dyskavaj prastory"
 
-#: ../gtk/rgsummarywindow.cc:462
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid ""
 "\n"
@@ -2083,7 +2098,7 @@ msgstr ""
 "\n"
 "Treba zahruzić %s"
 
-#: ../gtk/rgsummarywindow.cc:487
+#: ../gtk/rgsummarywindow.cc:488
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"

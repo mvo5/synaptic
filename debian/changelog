@@ -1,3 +1,15 @@
+synaptic (0.63ubuntu3) UNRELEASED; urgency=low
+
+  * gtk/rgsummarywindow.cc:
+    - move the gtk_tree_view_set_model() down to speed up the
+      operation
+  * gtk/rgdebinstallprogress.cc:
+    - on error, set error string into status label
+    - when the recovery is run (dpkg --configure -a) display a 
+      proper status label for that
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 25 Jan 2010 09:58:35 +0100
+
 synaptic (0.63ubuntu2) lucid; urgency=low
 
   * po/pt_BR.po:

@@ -349,7 +349,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    buildTree(this);
    _tree = glade_xml_get_widget(_gladeXML, "treeview_summary");
    assert(_tree);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
    //GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN, "pkg", NULL);
@@ -360,6 +359,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
    gtk_widget_show(_tree);
+   /* set model last */
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
    _dlonlyB = glade_xml_get_widget(_gladeXML, "checkbutton_download_only");
 

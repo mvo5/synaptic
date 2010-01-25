@@ -185,6 +185,12 @@ class RPackage {
    const char *installedVersion();
    long installedSize();
 
+   // get tag from pkg record
+   string findTagFromPkgRecord(const char *tag);
+
+   // get the raw package record
+   string getRawRecord(bool useCandidateVersion=true);
+
    // sourcepkg
    const char *srcPackage();
 

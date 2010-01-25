@@ -509,14 +509,14 @@ void RGDebInstallProgress::updateInterface()
 	 if(strstr(status, "pmerror") != NULL) { 
 	    // error from dpkg, needs to be parsed different
 	    str = g_strdup_printf(_("Error in package %s"), split[1]);
-	    gtk_label_set(GTK_LABEL(_label_status), str);
+	    gtk_label_set_text(GTK_LABEL(_label_status), str);
 	    string err = split[1] + string(": ") + split[3];
 	    _error->Error("%s",utf8(err.c_str()));
 	 // first check for errors and conf-file prompts
 	 } else if(strstr(status, "pmrecover") != NULL) { 
 	    // running dpkg --configure -a
 	    str = g_strdup(_("Trying to recover from package failure"));
-	    gtk_label_set(GTK_LABEL(_label_status), str);
+	    gtk_label_set_text(GTK_LABEL(_label_status), str);
 	 } else if(strstr(status, "pmconffile") != NULL) {
 	    // conffile-request from dpkg, needs to be parsed different
 	    //cout << split[2] << " " << split[3] << endl;
@@ -534,7 +534,7 @@ void RGDebInstallProgress::updateInterface()
 	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 
 	 if(str!=NULL)
-	    gtk_label_set(GTK_LABEL(_label_status),utf8(str));
+	    gtk_label_set_text(GTK_LABEL(_label_status),utf8(str));
 	 
 	 // clean-up
 	 g_strfreev(split);
@@ -558,8 +558,7 @@ void RGDebInstallProgress::updateInterface()
 
    if ((now - last_term_action) > _terminalTimeout) {
       // get some debug info
-      gchar *s;
-      gtk_label_get(GTK_LABEL(_label_status), &s);
+      const gchar *s = gtk_label_get_text(GTK_LABEL(_label_status));
       g_warning("no statusfd changes/content updates in terminal for %i" 
 		" seconds",_terminalTimeout);
       g_warning("TerminalTimeout in step: %s", s);

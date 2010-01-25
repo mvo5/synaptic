@@ -227,6 +227,45 @@ const char *RPackage::description()
    }
 }
 
+string RPackage::getRawRecord(bool useCandidateVersion)
+{
+   pkgCache::VerIterator ver;
+   if(!useCandidateVersion)
+      ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+   if(useCandidateVersion || ver.end())
+      ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if(ver.end() == false) {
+      const char *start, *stop;
+      unsigned long len;
+      pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
+      rec.GetRec(start, stop);
+      len = stop-start;
+      return string(start, len);
+   }
+   return string();
+}
+
+string RPackage::findTagFromPkgRecord(const char *tag)
+{
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+
+   if (!ver.end()) {
+      const char *start, *stop;
+      pkgTagSection sec;
+      unsigned long len;
+
+      pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
+      rec.GetRec(start, stop);
+      len = stop-start;
+      // add +1 to ensure we have the double lineline in the buffer
+      if (start && sec.Scan(start, len+1))
+	 return sec.FindS(tag);
+   } 
+
+   return string();
+}
+
+
 long RPackage::installedSize()
 {
    pkgCache::VerIterator ver = _package->CurrentVer();

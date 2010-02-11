@@ -32,7 +32,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.62.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 09:05+0200\n"
+"POT-Creation-Date: 2010-01-25 17:47+0100\n"
 "PO-Revision-Date: 2009-06-16 15:57+0100\n"
 "Last-Translator: Francisco Javier Cuadrado <fcocuadrado@gmail.com>\n"
 "Language-Team: Debian l10n Spanish <debian-l10n-spanish@lists.debian.org>\n"
@@ -118,7 +118,8 @@ msgstr "Gráficos"
 
 #. TRANSLATORS: Alias for the Debian package section "gnu-r"
 #: ../common/sections_trans.cc:42
-msgid "GNU R staticial system"
+#, fuzzy
+msgid "GNU R statistical system"
 msgstr "Sistema estadístico R de GNU"
 
 #. TRANSLATORS: Alias for the Debian package section "gnustep"
@@ -304,7 +305,7 @@ msgstr "Entorno Zope/Plone"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:520
+#: ../common/rpackageview.cc:573
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -546,11 +547,11 @@ msgstr ""
 "La lista de archivos instalados está disponible únicamente para paquetes "
 "instalados"
 
-#: ../common/rpackage.cc:424
+#: ../common/rpackage.cc:463
 msgid "or dependency"
 msgstr "o dependencia"
 
-#: ../common/rpackage.cc:538
+#: ../common/rpackage.cc:580
 #, c-format
 msgid ""
 "\n"
@@ -568,91 +569,101 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:575
+#: ../common/rpackage.cc:617
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s pero se va a instalar %s"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:581
+#: ../common/rpackage.cc:623
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr " %s: %s %s pero se va a instalar %s"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:591
+#: ../common/rpackage.cc:633
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s pero no es instalable"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:603
+#: ../common/rpackage.cc:645
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s pero es un paquete virtual"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:608
+#: ../common/rpackage.cc:650
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s pero es un paquete virtual"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:613
+#: ../common/rpackage.cc:655
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s pero no va a ser instalado"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:618
+#: ../common/rpackage.cc:660
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s pero no va a ser instalado"
 
-#: ../common/rpackage.cc:637
+#: ../common/rpackage.cc:679
 msgid " or"
 msgstr " o"
 
-#: ../common/rpackage.cc:956
+#: ../common/rpackage.cc:1017
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Registro inválido en el archivo de preferencias, falta la cabecera Package"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:48
+#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:48
 msgid "Depends"
 msgstr "Depende"
 
-#: ../common/rpackage.h:52
+#: ../common/rpackage.h:54
 msgid "PreDepends"
 msgstr "PreDepende"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
+#: ../common/rpackage.h:55 ../common/rpackagefilter.cc:53
 msgid "Suggests"
 msgstr "Sugiere"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:52
+#: ../common/rpackage.h:56 ../common/rpackagefilter.cc:52
 msgid "Recommends"
 msgstr "Recomienda"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:50
+#: ../common/rpackage.h:57 ../common/rpackagefilter.cc:50
 msgid "Conflicts"
 msgstr "Incompatibilidad"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:51
+#: ../common/rpackage.h:58 ../common/rpackagefilter.cc:51
 msgid "Replaces"
 msgstr "Reemplaza"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:59
 msgid "Obsoletes"
 msgstr "Hace obsoleto"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:60
+msgid "Breaks"
+msgstr ""
+
+#: ../common/rpackage.h:61
+#, fuzzy
+msgid "Enhances"
+msgstr "Abrir cambios"
+
+#. make sure this is always the last member
+#: ../common/rpackage.h:69
 msgid "Dependency of"
 msgstr "Depende de"
 
@@ -703,7 +714,7 @@ msgstr "Instalados (actualizables)"
 msgid "Installed (locked to the current version)"
 msgstr "Instalado (bloqueado a la versión actual)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "Roto"
@@ -761,7 +772,7 @@ msgid "ReverseDepends"
 msgstr "Depende inversamente"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
 #: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
@@ -774,8 +785,8 @@ msgstr "Origen"
 msgid "Component"
 msgstr "Componente"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
 #: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "Estado"
@@ -963,19 +974,19 @@ msgstr "Estableciendo las selecciones…"
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "ha fallado bzip2, quizá el disco esté lleno."
 
-#: ../common/rpackageview.h:99
+#: ../common/rpackageview.h:100
 msgid "Sections"
 msgstr "Secciones"
 
-#: ../common/rpackageview.h:109
+#: ../common/rpackageview.h:110
 msgid "Alphabetic"
 msgstr "Alfabético"
 
-#: ../common/rpackageview.h:159
+#: ../common/rpackageview.h:166
 msgid "Search History"
 msgstr "Histórico de búsqueda"
 
-#: ../common/rpackageview.h:210
+#: ../common/rpackageview.h:221
 msgid "Custom"
 msgstr "Personalizado"
 
@@ -1017,43 +1028,43 @@ msgid "Not installed (residual config)"
 msgstr "No instalados (conf. residual)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:266
+#: ../common/rpackageview.cc:304
 #, fuzzy
 msgid "Searching"
 msgstr "Buscar"
 
-#: ../common/rpackageview.cc:454
+#: ../common/rpackageview.cc:492
 msgid "Search Filter"
 msgstr "Filtro de búsqueda"
 
-#: ../common/rpackageview.cc:462
+#: ../common/rpackageview.cc:500
 msgid "Tasks"
 msgstr "Tareas"
 
-#: ../common/rpackageview.cc:468
+#: ../common/rpackageview.cc:506
 msgid "Reduced View"
 msgstr "Vista reducida"
 
-#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:357
+#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
+#: ../gtk/rgsummarywindow.cc:356
 msgid "Marked Changes"
 msgstr "Cambios marcados"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:534
 msgid "Package with Debconf"
 msgstr "Paquete con Debconf"
 
-#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "Actualizable (versión superior)"
 
-#: ../common/rpackageview.cc:509
+#: ../common/rpackageview.cc:547
 msgid "Missing Recommends"
 msgstr "Recomendaciones perdidas"
 
-#: ../common/rpackageview.cc:518
+#: ../common/rpackageview.cc:561
 msgid "Local"
 msgstr "Local"
 
@@ -1274,16 +1285,16 @@ msgstr ""
 "conservar su versión actual pulse «Conservar». ¿Quiere reemplazar el archivo "
 "actual e instalar la versión nueva del mantenedor del paquete? "
 
-#: ../gtk/rgdebinstallprogress.cc:367 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "Aplicando los cambios"
 
-#: ../gtk/rgdebinstallprogress.cc:454
+#: ../gtk/rgdebinstallprogress.cc:456
 msgid "Ctrl-c pressed"
 msgstr "Se ha pulsado Ctrl-c"
 
-#: ../gtk/rgdebinstallprogress.cc:455
+#: ../gtk/rgdebinstallprogress.cc:457
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
 "Are you sure you want to do that?"
@@ -1292,24 +1303,29 @@ msgstr ""
 "hacer eso?"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:509
+#: ../gtk/rgdebinstallprogress.cc:511
 #, c-format
 msgid "Error in package %s"
 msgstr "Error en el paquete %s"
 
-#: ../gtk/rgdebinstallprogress.cc:602
+#. running dpkg --configure -a
+#: ../gtk/rgdebinstallprogress.cc:518
+msgid "Trying to recover from package failure"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:609
 msgid "Error failed to fork pty"
 msgstr "Error no se pudo realizar un «fork» de pty"
 
-#: ../gtk/rgdebinstallprogress.cc:619
+#: ../gtk/rgdebinstallprogress.cc:626
 msgid "A package failed to install.  Trying to recover:"
 msgstr "Un paquete no se pudo instalar. Tratando de recuperarlo:"
 
-#: ../gtk/rgdebinstallprogress.cc:676 ../gtk/rgdebinstallprogress.cc:679
+#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
 msgid "Changes applied"
 msgstr "Cambios aplicados"
 
-#: ../gtk/rgdebinstallprogress.cc:735
+#: ../gtk/rgdebinstallprogress.cc:744
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
@@ -1317,15 +1333,15 @@ msgstr ""
 "Los cambios marcados se están aplicando ahora. Esto puede llevar algo de "
 "tiempo. Por favor, espere."
 
-#: ../gtk/rgdebinstallprogress.cc:740
+#: ../gtk/rgdebinstallprogress.cc:749
 msgid "Installing and removing software"
 msgstr "Instalar y quitar los paquetes de software"
 
-#: ../gtk/rgdebinstallprogress.cc:742
+#: ../gtk/rgdebinstallprogress.cc:751
 msgid "Removing software"
 msgstr "Quitando software"
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:753
 msgid "Installing software"
 msgstr "Instalar software"
 
@@ -1404,19 +1420,19 @@ msgstr "Visible"
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
 msgid "Size"
 msgstr "Tamaño"
 
-#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
 msgid "Package"
 msgstr "Paquete"
 
-#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
+#: ../gtk/rgfetchprogress.cc:117 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:198
+#: ../gtk/rgfetchprogress.cc:201
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1427,33 +1443,33 @@ msgstr ""
 "%s\n"
 "en la unidad %s"
 
-#: ../gtk/rgfetchprogress.cc:326
+#: ../gtk/rgfetchprogress.cc:329
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Tasa de descarga: %s/s - quedan %s"
 
-#: ../gtk/rgfetchprogress.cc:332
+#: ../gtk/rgfetchprogress.cc:335
 msgid "Download rate: unknown"
 msgstr "Tasa de descarga: desconocida"
 
-#: ../gtk/rgfetchprogress.cc:334
+#: ../gtk/rgfetchprogress.cc:337
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Descargando el archivo %li de %li"
 
-#: ../gtk/rgfetchprogress.cc:412
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Queued"
 msgstr "Marcado"
 
-#: ../gtk/rgfetchprogress.cc:415
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Done"
 msgstr "Hecho"
 
-#: ../gtk/rgfetchprogress.cc:418
+#: ../gtk/rgfetchprogress.cc:396
 msgid "Hit"
 msgstr "Comprobado"
 
-#: ../gtk/rgfetchprogress.cc:421
+#: ../gtk/rgfetchprogress.cc:399
 msgid "Failed"
 msgstr "Falló"
 
@@ -2008,73 +2024,73 @@ msgstr "Mo_strar detalles"
 msgid "Summary"
 msgstr "Resumen"
 
-#: ../gtk/rgsummarywindow.cc:392
+#: ../gtk/rgsummarywindow.cc:393
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "Hay %d paquete bloqueado.\n"
 msgstr[1] "Hay %d paquetes bloqueados.\n"
 
-#: ../gtk/rgsummarywindow.cc:399
+#: ../gtk/rgsummarywindow.cc:400
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d paquete será conservado y no actualizado\n"
 msgstr[1] "%d paquetes serán conservados y no actualizados\n"
 
-#: ../gtk/rgsummarywindow.cc:406
+#: ../gtk/rgsummarywindow.cc:407
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d paquete nuevo será instalado\n"
 msgstr[1] "%d paquetes nuevos serán instalados\n"
 
-#: ../gtk/rgsummarywindow.cc:413
+#: ../gtk/rgsummarywindow.cc:414
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d paquete nuevo será reinstalado\n"
 msgstr[1] "%d paquetes nuevos serán reinstalados\n"
 
-#: ../gtk/rgsummarywindow.cc:420
+#: ../gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d paquete será actualizado\n"
 msgstr[1] "%d paquetes serán actualizados\n"
 
-#: ../gtk/rgsummarywindow.cc:427
+#: ../gtk/rgsummarywindow.cc:428
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d paquete será eliminado\n"
 msgstr[1] "%d paquetes serán eliminados\n"
 
-#: ../gtk/rgsummarywindow.cc:434
+#: ../gtk/rgsummarywindow.cc:435
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d paquete será <b>desactualizado</b>\n"
 msgstr[1] "%d paquetes serán <b>desactualizados</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:442
+#: ../gtk/rgsummarywindow.cc:443
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Advertencia:</b> %d paquete esencial será eliminado\n"
 msgstr[1] "<b>Advertencia:</b> %d paquetes esenciales serán eliminados\n"
 
-#: ../gtk/rgsummarywindow.cc:454
+#: ../gtk/rgsummarywindow.cc:455
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "Se usará %s de espacio extra"
 
-#: ../gtk/rgsummarywindow.cc:457
+#: ../gtk/rgsummarywindow.cc:458
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "Se liberarán %s de espacio extra"
 
-#: ../gtk/rgsummarywindow.cc:462
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid ""
 "\n"
@@ -2083,7 +2099,7 @@ msgstr ""
 "\n"
 "Se necesitan descargar %s"
 
-#: ../gtk/rgsummarywindow.cc:487
+#: ../gtk/rgsummarywindow.cc:488
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"

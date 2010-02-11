@@ -59,7 +59,7 @@ void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
    RGAboutPanel *me = (RGAboutPanel *) data;
 
    if (me->credits == NULL) {
-      me->credits = new RGCreditsPanel::RGCreditsPanel(me);
+      me->credits = new RGCreditsPanel(me);
    }
    me->credits->setTitle(_("Credits"));
 

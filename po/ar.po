@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 09:05+0200\n"
+"POT-Creation-Date: 2010-01-25 17:47+0100\n"
 "PO-Revision-Date: 2005-09-06 00:29+0300\n"
 "Last-Translator: Ossama M. Khayat <okhayat@yahoo.com>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -98,7 +98,7 @@ msgstr "الرسوميّات"
 
 #. TRANSLATORS: Alias for the Debian package section "gnu-r"
 #: ../common/sections_trans.cc:42
-msgid "GNU R staticial system"
+msgid "GNU R statistical system"
 msgstr ""
 
 #. TRANSLATORS: Alias for the Debian package section "gnustep"
@@ -293,7 +293,7 @@ msgstr "بيئة سطح مكتب كيدي"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:520
+#: ../common/rpackageview.cc:573
 msgid "Unknown"
 msgstr "مجهول"
 
@@ -529,11 +529,11 @@ msgstr ""
 msgid "The list of installed files is only available for installed packages"
 msgstr "اللائحة بأسماء الملفات المثبتة متوفّر فقط للحزم المثبّتة"
 
-#: ../common/rpackage.cc:424
+#: ../common/rpackage.cc:463
 msgid "or dependency"
 msgstr "أو المعتمد"
 
-#: ../common/rpackage.cc:538
+#: ../common/rpackage.cc:580
 #, c-format
 msgid ""
 "\n"
@@ -549,91 +549,101 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:575
+#: ../common/rpackage.cc:617
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s لكن %s سيتم تثبيتها"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:581
+#: ../common/rpackage.cc:623
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr " %s: %s %s لكن %s سيتم تثبيتها"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:591
+#: ../common/rpackage.cc:633
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s لكن لا يمكن تثبيتها"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:603
+#: ../common/rpackage.cc:645
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s لكنها حزمة وهمية"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:608
+#: ../common/rpackage.cc:650
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s لكنها حزمة وهمية"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:613
+#: ../common/rpackage.cc:655
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s لكن لن يتم تثبيتها"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:618
+#: ../common/rpackage.cc:660
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s لكن لن يتم تثبيتها"
 
-#: ../common/rpackage.cc:637
+#: ../common/rpackage.cc:679
 msgid " or"
 msgstr "أو"
 
-#: ../common/rpackage.cc:956
+#: ../common/rpackage.cc:1017
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "سجل غير صالح في ملف التفضيلات، لا ترويسة حزمة"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:48
+#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:48
 msgid "Depends"
 msgstr "يعتمد على"
 
-#: ../common/rpackage.h:52
+#: ../common/rpackage.h:54
 #, fuzzy
 msgid "PreDepends"
 msgstr "يعتمد على"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
+#: ../common/rpackage.h:55 ../common/rpackagefilter.cc:53
 msgid "Suggests"
 msgstr "تقترح"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:52
+#: ../common/rpackage.h:56 ../common/rpackagefilter.cc:52
 msgid "Recommends"
 msgstr "تستحسن"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:50
+#: ../common/rpackage.h:57 ../common/rpackagefilter.cc:50
 msgid "Conflicts"
 msgstr "يتضارب مع"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:51
+#: ../common/rpackage.h:58 ../common/rpackagefilter.cc:51
 msgid "Replaces"
 msgstr "يستبدل"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:59
 msgid "Obsoletes"
 msgstr ""
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:60
+msgid "Breaks"
+msgstr ""
+
+#: ../common/rpackage.h:61
+#, fuzzy
+msgid "Enhances"
+msgstr "افتح التغييرات"
+
+#. make sure this is always the last member
+#: ../common/rpackage.h:69
 #, fuzzy
 msgid "Dependency of"
 msgstr "المُعتمَدات"
@@ -685,7 +695,7 @@ msgstr "مثبّتة (قابلة للترقية)"
 msgid "Installed (locked to the current version)"
 msgstr "مثبّتة (مقفلة على النسخة الحالية)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "معطوبة"
@@ -741,7 +751,7 @@ msgid "ReverseDepends"
 msgstr "تعتمد رجوعاً"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
 #: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
@@ -754,8 +764,8 @@ msgstr "المصدر"
 msgid "Component"
 msgstr "المكوّن"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
 #: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "الحالة"
@@ -942,19 +952,19 @@ msgstr "تعيين التحديدات..."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "أخفق bzip2، يبدو أن القرص مليئ."
 
-#: ../common/rpackageview.h:99
+#: ../common/rpackageview.h:100
 msgid "Sections"
 msgstr "الأقسام"
 
-#: ../common/rpackageview.h:109
+#: ../common/rpackageview.h:110
 msgid "Alphabetic"
 msgstr "أبجدي"
 
-#: ../common/rpackageview.h:159
+#: ../common/rpackageview.h:166
 msgid "Search History"
 msgstr "البحث في السجل"
 
-#: ../common/rpackageview.h:210
+#: ../common/rpackageview.h:221
 msgid "Custom"
 msgstr "مخصص"
 
@@ -998,44 +1008,44 @@ msgid "Not installed (residual config)"
 msgstr "غير مثبّتة (إعداد متبقي)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:266
+#: ../common/rpackageview.cc:304
 #, fuzzy
 msgid "Searching"
 msgstr "بحث"
 
-#: ../common/rpackageview.cc:454
+#: ../common/rpackageview.cc:492
 msgid "Search Filter"
 msgstr "مرشح البحث"
 
-#: ../common/rpackageview.cc:462
+#: ../common/rpackageview.cc:500
 msgid "Tasks"
 msgstr "مهامّ"
 
-#: ../common/rpackageview.cc:468
+#: ../common/rpackageview.cc:506
 msgid "Reduced View"
 msgstr "العرض الملخّص"
 
-#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:357
+#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
+#: ../gtk/rgsummarywindow.cc:356
 msgid "Marked Changes"
 msgstr "التغييرات المحددة"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:534
 msgid "Package with Debconf"
 msgstr "تعليب بواسطة Debconf"
 
-#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "قابلة للترقية (للأصل)"
 
-#: ../common/rpackageview.cc:509
+#: ../common/rpackageview.cc:547
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "تستحسن"
 
-#: ../common/rpackageview.cc:518
+#: ../common/rpackageview.cc:561
 msgid "Local"
 msgstr ""
 
@@ -1253,16 +1263,16 @@ msgstr ""
 "مع هذه النسخة من الحزمة. إن كنت تريد إبقاء نسختك الحالية جاوب ب'لا'. هل تريد "
 "تثبيت نسخة مشرفي الحزمة الجديدة؟"
 
-#: ../gtk/rgdebinstallprogress.cc:367 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "تطبيق التغييرات"
 
-#: ../gtk/rgdebinstallprogress.cc:454
+#: ../gtk/rgdebinstallprogress.cc:456
 msgid "Ctrl-c pressed"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:455
+#: ../gtk/rgdebinstallprogress.cc:457
 #, fuzzy
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
@@ -1272,39 +1282,44 @@ msgstr ""
 "هل أنت متأكد من عمل ذلك؟"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:509
+#: ../gtk/rgdebinstallprogress.cc:511
 #, c-format
 msgid "Error in package %s"
 msgstr "خطأ في الحزمة %s"
 
-#: ../gtk/rgdebinstallprogress.cc:602
+#. running dpkg --configure -a
+#: ../gtk/rgdebinstallprogress.cc:518
+msgid "Trying to recover from package failure"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:609
 msgid "Error failed to fork pty"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:619
+#: ../gtk/rgdebinstallprogress.cc:626
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:676 ../gtk/rgdebinstallprogress.cc:679
+#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
 msgid "Changes applied"
 msgstr "تم تطبيق التغييرات"
 
-#: ../gtk/rgdebinstallprogress.cc:735
+#: ../gtk/rgdebinstallprogress.cc:744
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 "يتم الآن تطبيق التغييرات المحددة. قد يستغرق هذا بعض الوقت. الرجاء الانتظار."
 
-#: ../gtk/rgdebinstallprogress.cc:740
+#: ../gtk/rgdebinstallprogress.cc:749
 msgid "Installing and removing software"
 msgstr "تثبيت وإزالة البرامج"
 
-#: ../gtk/rgdebinstallprogress.cc:742
+#: ../gtk/rgdebinstallprogress.cc:751
 msgid "Removing software"
 msgstr "إزالة البرامج"
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:753
 msgid "Installing software"
 msgstr "تثبيت البرامج"
 
@@ -1382,19 +1397,19 @@ msgstr "ظاهر"
 msgid "Preferences"
 msgstr "تفضيلات"
 
-#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
 msgid "Size"
 msgstr "الحجم"
 
-#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
 msgid "Package"
 msgstr "حزمة"
 
-#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
+#: ../gtk/rgfetchprogress.cc:117 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:198
+#: ../gtk/rgfetchprogress.cc:201
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1405,33 +1420,33 @@ msgstr ""
 "%s\n"
 "في القارئ %s"
 
-#: ../gtk/rgfetchprogress.cc:326
+#: ../gtk/rgfetchprogress.cc:329
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "معدّل سرعة التنزيل: %s/s - %s متبقية"
 
-#: ../gtk/rgfetchprogress.cc:332
+#: ../gtk/rgfetchprogress.cc:335
 msgid "Download rate: unknown"
 msgstr "معدّل سرعة التنزيل: مجهول"
 
-#: ../gtk/rgfetchprogress.cc:334
+#: ../gtk/rgfetchprogress.cc:337
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "تنزيل الملف %li من %li"
 
-#: ../gtk/rgfetchprogress.cc:412
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Queued"
 msgstr "مصطفّ"
 
-#: ../gtk/rgfetchprogress.cc:415
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Done"
 msgstr "تم"
 
-#: ../gtk/rgfetchprogress.cc:418
+#: ../gtk/rgfetchprogress.cc:396
 msgid "Hit"
 msgstr "Hit"
 
-#: ../gtk/rgfetchprogress.cc:421
+#: ../gtk/rgfetchprogress.cc:399
 msgid "Failed"
 msgstr "فشل"
 
@@ -1993,7 +2008,7 @@ msgstr "إ_ظهار التفاصيل"
 msgid "Summary"
 msgstr "الملخّص"
 
-#: ../gtk/rgsummarywindow.cc:392
+#: ../gtk/rgsummarywindow.cc:393
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -2002,7 +2017,7 @@ msgstr[1] "الحزمتان مقفلتان.\n"
 msgstr[2] "%d حزم مقفلة\n"
 msgstr[3] "%d حزمة مقفلة\n"
 
-#: ../gtk/rgsummarywindow.cc:399
+#: ../gtk/rgsummarywindow.cc:400
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -2011,7 +2026,7 @@ msgstr[1] "سيتم إبقاء حزمتان دون ترقية\n"
 msgstr[2] "سيتم إبقاء %d حزم جديدة دون ترقية\n"
 msgstr[3] "سيتم إبقاء %d حزمة جديدة دون ترقية\n"
 
-#: ../gtk/rgsummarywindow.cc:406
+#: ../gtk/rgsummarywindow.cc:407
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -2020,7 +2035,7 @@ msgstr[1] "سيتم تثبيت حزمتين جديدتين\n"
 msgstr[2] "سيتم تثبيت %d حزم جديدة\n"
 msgstr[3] "سيتم تثبيت %d حزمة جديدة\n"
 
-#: ../gtk/rgsummarywindow.cc:413
+#: ../gtk/rgsummarywindow.cc:414
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -2029,7 +2044,7 @@ msgstr[1] "سيتم إعادة تثبيت حزمتين جديدتين\n"
 msgstr[2] "سيتم إعادة تثبيت %d حزم جديدة\n"
 msgstr[3] "سيتم إعادة تثبيت %d حزمة جديدة\n"
 
-#: ../gtk/rgsummarywindow.cc:420
+#: ../gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -2038,7 +2053,7 @@ msgstr[1] "سيتم ترقية حزمتان\n"
 msgstr[2] "سيتم ترقية %d حزم\n"
 msgstr[3] "سيتم ترقية %d حزمة\n"
 
-#: ../gtk/rgsummarywindow.cc:427
+#: ../gtk/rgsummarywindow.cc:428
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -2047,7 +2062,7 @@ msgstr[1] "سيتم إزالة حزمتان\n"
 msgstr[2] "سيتم إزالة %d حزم\n"
 msgstr[3] "سيتم إزالة %d حزم\n"
 
-#: ../gtk/rgsummarywindow.cc:434
+#: ../gtk/rgsummarywindow.cc:435
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -2056,7 +2071,7 @@ msgstr[1] "سيتم <b>تثبيط</b> حزمتان\n"
 msgstr[2] "سيتم <b>تثبيط</b> %d حزم\n"
 msgstr[3] "سيتم <b>تثبيط</b> %d حزمة\n"
 
-#: ../gtk/rgsummarywindow.cc:442
+#: ../gtk/rgsummarywindow.cc:443
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -2065,17 +2080,17 @@ msgstr[1] "<b>تحذير:</b> سيتم إزالة حزمتان أساسيتان\
 msgstr[2] "<b>تحذير:</b> سيتم إزالة %d حزم أساسية\n"
 msgstr[3] "<b>تحذير:</b> سيتم إزالة %d حزمة أساسية\n"
 
-#: ../gtk/rgsummarywindow.cc:454
+#: ../gtk/rgsummarywindow.cc:455
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s من المساحة الإضافية سوف تستخدم"
 
-#: ../gtk/rgsummarywindow.cc:457
+#: ../gtk/rgsummarywindow.cc:458
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s من المساحة الإضافية سوف تُفرّغ"
 
-#: ../gtk/rgsummarywindow.cc:462
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid ""
 "\n"
@@ -2084,7 +2099,7 @@ msgstr ""
 "\n"
 "%s يجب تحميلها"
 
-#: ../gtk/rgsummarywindow.cc:487
+#: ../gtk/rgsummarywindow.cc:488
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"

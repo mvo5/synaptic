@@ -576,7 +576,8 @@ void RGDebInstallProgress::updateInterface()
       while (gtk_events_pending())
          gtk_main_iteration();
    } else {
-      usleep(5000);
+      // 25fps
+      usleep(1000000/25);
    }
 }
 

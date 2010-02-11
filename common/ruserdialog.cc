@@ -22,7 +22,7 @@
  */
 
 #include <apt-pkg/error.h>
-
+#include <string>
 #include <ruserdialog.h>
 
 bool RUserDialog::showErrors()
@@ -31,7 +31,7 @@ bool RUserDialog::showErrors()
       return false;
 
    while (!_error->empty()) {
-      string message;
+      std::string message;
       bool iserror = _error->PopMessage(message);
 
       // Ignore some stupid error messages.

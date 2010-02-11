@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic 0.57.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-19 09:05+0200\n"
+"POT-Creation-Date: 2010-01-25 17:47+0100\n"
 "PO-Revision-Date: 2007-12-31 14:59+0800\n"
 "Last-Translator: Deng Xiyue <manphiz@gmail.com>\n"
 "Language-Team: Debian Chinese Simplified <debian-chinese-gb@lists.debian."
@@ -95,7 +95,7 @@ msgstr "制图"
 
 #. TRANSLATORS: Alias for the Debian package section "gnu-r"
 #: ../common/sections_trans.cc:42
-msgid "GNU R staticial system"
+msgid "GNU R statistical system"
 msgstr ""
 
 #. TRANSLATORS: Alias for the Debian package section "gnustep"
@@ -290,7 +290,7 @@ msgstr "KDE 桌面环境"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:520
+#: ../common/rpackageview.cc:573
 msgid "Unknown"
 msgstr "未知"
 
@@ -524,11 +524,11 @@ msgstr ""
 msgid "The list of installed files is only available for installed packages"
 msgstr "已安装文件的列表仅可用于已安装的软件包"
 
-#: ../common/rpackage.cc:424
+#: ../common/rpackage.cc:463
 msgid "or dependency"
 msgstr "或依赖关系"
 
-#: ../common/rpackage.cc:538
+#: ../common/rpackage.cc:580
 #, c-format
 msgid ""
 "\n"
@@ -544,90 +544,101 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:575
+#: ../common/rpackage.cc:617
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s 但是 %s 将会被安装"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:581
+#: ../common/rpackage.cc:623
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr "%s: %s %s 但是 %s 将会被安装"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:591
+#: ../common/rpackage.cc:633
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s 但是此软件包不能安装"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:603
+#: ../common/rpackage.cc:645
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s 但是此软件包是一个虚拟软件包"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:608
+#: ../common/rpackage.cc:650
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s 但是此软件包是一个虚拟软件包"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:613
+#: ../common/rpackage.cc:655
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s 但是此软件包将不会被安装"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:618
+#: ../common/rpackage.cc:660
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s 但是此软件包将不会被安装"
 
-#: ../common/rpackage.cc:637
+#: ../common/rpackage.cc:679
 msgid " or"
 msgstr " 或者"
 
-#: ../common/rpackage.cc:956
+#: ../common/rpackage.cc:1017
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "首选项文件里的无效记录，没有软件包头文件"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:48
+#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:48
 msgid "Depends"
 msgstr "依赖"
 
-#: ../common/rpackage.h:52
+#: ../common/rpackage.h:54
 msgid "PreDepends"
 msgstr "安装前依赖"
 
-#: ../common/rpackage.h:52 ../common/rpackagefilter.cc:53
+#: ../common/rpackage.h:55 ../common/rpackagefilter.cc:53
 msgid "Suggests"
 msgstr "建议"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:52
+#: ../common/rpackage.h:56 ../common/rpackagefilter.cc:52
 msgid "Recommends"
 msgstr "推荐"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:50
+#: ../common/rpackage.h:57 ../common/rpackagefilter.cc:50
 msgid "Conflicts"
 msgstr "冲突"
 
-#: ../common/rpackage.h:53 ../common/rpackagefilter.cc:51
+#: ../common/rpackage.h:58 ../common/rpackagefilter.cc:51
 msgid "Replaces"
 msgstr "取代"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:59
 msgid "Obsoletes"
 msgstr "陈旧"
 
-#: ../common/rpackage.h:54
+#: ../common/rpackage.h:60
+#, fuzzy
+msgid "Breaks"
+msgstr "取代"
+
+#: ../common/rpackage.h:61
+#, fuzzy
+msgid "Enhances"
+msgstr "打开变更方案"
+
+#. make sure this is always the last member
+#: ../common/rpackage.h:69
 msgid "Dependency of"
 msgstr "依赖关系"
 
@@ -678,7 +689,7 @@ msgstr "已安装(可升级)"
 msgid "Installed (locked to the current version)"
 msgstr "已安装(锁定为当前版本)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:476
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
 #: ../gtk/glade/window_filters.glade.h:14
 msgid "Broken"
 msgstr "已损坏"
@@ -734,7 +745,7 @@ msgid "ReverseDepends"
 msgstr "反向依赖"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:123
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
 #: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
@@ -747,8 +758,8 @@ msgstr "源自"
 msgid "Component"
 msgstr "包含内容"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:139
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:88
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
+#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
 #: ../gtk/glade/window_filters.glade.h:64
 msgid "Status"
 msgstr "状态"
@@ -933,19 +944,19 @@ msgstr "正在设定标记..."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 失败，可能磁盘已满。"
 
-#: ../common/rpackageview.h:99
+#: ../common/rpackageview.h:100
 msgid "Sections"
 msgstr "组别"
 
-#: ../common/rpackageview.h:109
+#: ../common/rpackageview.h:110
 msgid "Alphabetic"
 msgstr "依字母排列"
 
-#: ../common/rpackageview.h:159
+#: ../common/rpackageview.h:166
 msgid "Search History"
 msgstr "搜索历史"
 
-#: ../common/rpackageview.h:210
+#: ../common/rpackageview.h:221
 msgid "Custom"
 msgstr "自定义"
 
@@ -989,44 +1000,44 @@ msgid "Not installed (residual config)"
 msgstr "未安装的(残存配置)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:266
+#: ../common/rpackageview.cc:304
 #, fuzzy
 msgid "Searching"
 msgstr "搜索："
 
-#: ../common/rpackageview.cc:454
+#: ../common/rpackageview.cc:492
 msgid "Search Filter"
 msgstr "搜索过滤器"
 
-#: ../common/rpackageview.cc:462
+#: ../common/rpackageview.cc:500
 msgid "Tasks"
 msgstr "任务"
 
-#: ../common/rpackageview.cc:468
+#: ../common/rpackageview.cc:506
 msgid "Reduced View"
 msgstr "简化视图"
 
-#: ../common/rpackageview.cc:485 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:357
+#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
+#: ../gtk/rgsummarywindow.cc:356
 msgid "Marked Changes"
 msgstr "已标记的变更"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:496
+#: ../common/rpackageview.cc:534
 msgid "Package with Debconf"
 msgstr "具有 Debconf 的包"
 
-#: ../common/rpackageview.cc:503 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
 msgid "Upgradable (upstream)"
 msgstr "可升级(向上)"
 
-#: ../common/rpackageview.cc:509
+#: ../common/rpackageview.cc:547
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "推荐"
 
-#: ../common/rpackageview.cc:518
+#: ../common/rpackageview.cc:561
 msgid "Local"
 msgstr ""
 
@@ -1238,16 +1249,16 @@ msgstr ""
 "配置文件 %s 已修改(由您或一个脚本)。一个升级版本被该软件包引入。如果您希望保"
 "留当前版本请回答“保留”。您想替换当前文件并安装这个新的软件包维护者版本吗？"
 
-#: ../gtk/rgdebinstallprogress.cc:367 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "正在实施变更..."
 
-#: ../gtk/rgdebinstallprogress.cc:454
+#: ../gtk/rgdebinstallprogress.cc:456
 msgid "Ctrl-c pressed"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:455
+#: ../gtk/rgdebinstallprogress.cc:457
 #, fuzzy
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
@@ -1257,38 +1268,43 @@ msgstr ""
 "您确定要那样做吗?"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:509
+#: ../gtk/rgdebinstallprogress.cc:511
 #, c-format
 msgid "Error in package %s"
 msgstr "软件包有错误 %s"
 
-#: ../gtk/rgdebinstallprogress.cc:602
+#. running dpkg --configure -a
+#: ../gtk/rgdebinstallprogress.cc:518
+msgid "Trying to recover from package failure"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:609
 msgid "Error failed to fork pty"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:619
+#: ../gtk/rgdebinstallprogress.cc:626
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:676 ../gtk/rgdebinstallprogress.cc:679
+#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
 msgid "Changes applied"
 msgstr "变更已实施"
 
-#: ../gtk/rgdebinstallprogress.cc:735
+#: ../gtk/rgdebinstallprogress.cc:744
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr "已标记的变更现在正在实施。这会花费一些时间。请稍候。"
 
-#: ../gtk/rgdebinstallprogress.cc:740
+#: ../gtk/rgdebinstallprogress.cc:749
 msgid "Installing and removing software"
 msgstr "安装和删除软件包"
 
-#: ../gtk/rgdebinstallprogress.cc:742
+#: ../gtk/rgdebinstallprogress.cc:751
 msgid "Removing software"
 msgstr "删除软件"
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:753
 msgid "Installing software"
 msgstr "安装软件"
 
@@ -1364,19 +1380,19 @@ msgstr "显示项目"
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../gtk/rgfetchprogress.cc:100 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
 msgid "Size"
 msgstr "文件大小"
 
-#: ../gtk/rgfetchprogress.cc:107 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
 msgid "Package"
 msgstr "软件包"
 
-#: ../gtk/rgfetchprogress.cc:114 ../gtk/rgrepositorywin.cc:181
+#: ../gtk/rgfetchprogress.cc:117 ../gtk/rgrepositorywin.cc:181
 msgid "URI"
 msgstr "网址"
 
-#: ../gtk/rgfetchprogress.cc:198
+#: ../gtk/rgfetchprogress.cc:201
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1387,33 +1403,33 @@ msgstr ""
 "%s\n"
 "的光盘插入驱动器 %s"
 
-#: ../gtk/rgfetchprogress.cc:326
+#: ../gtk/rgfetchprogress.cc:329
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "下载速度：%s/s - 尚余 %s"
 
-#: ../gtk/rgfetchprogress.cc:332
+#: ../gtk/rgfetchprogress.cc:335
 msgid "Download rate: unknown"
 msgstr "下载速度：未知"
 
-#: ../gtk/rgfetchprogress.cc:334
+#: ../gtk/rgfetchprogress.cc:337
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "正在下载第 %li 个文件(共 %li 个文件)"
 
-#: ../gtk/rgfetchprogress.cc:412
+#: ../gtk/rgfetchprogress.cc:390
 msgid "Queued"
 msgstr "已列队"
 
-#: ../gtk/rgfetchprogress.cc:415
+#: ../gtk/rgfetchprogress.cc:393
 msgid "Done"
 msgstr "已下载"
 
-#: ../gtk/rgfetchprogress.cc:418
+#: ../gtk/rgfetchprogress.cc:396
 msgid "Hit"
 msgstr "成功"
 
-#: ../gtk/rgfetchprogress.cc:421
+#: ../gtk/rgfetchprogress.cc:399
 msgid "Failed"
 msgstr "失败"
 
@@ -1954,65 +1970,65 @@ msgstr "显示细节(_S)"
 msgid "Summary"
 msgstr "摘要"
 
-#: ../gtk/rgsummarywindow.cc:392
+#: ../gtk/rgsummarywindow.cc:393
 #, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d 个软件包已锁定\n"
 
-#: ../gtk/rgsummarywindow.cc:399
+#: ../gtk/rgsummarywindow.cc:400
 #, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d 个软件包将保持原样不升级\n"
 
-#: ../gtk/rgsummarywindow.cc:406
+#: ../gtk/rgsummarywindow.cc:407
 #, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d 个新软件包将被安装\n"
 
-#: ../gtk/rgsummarywindow.cc:413
+#: ../gtk/rgsummarywindow.cc:414
 #, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d 个新软件包将被重新安装\n"
 
-#: ../gtk/rgsummarywindow.cc:420
+#: ../gtk/rgsummarywindow.cc:421
 #, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d 个软件包将被升级\n"
 
-#: ../gtk/rgsummarywindow.cc:427
+#: ../gtk/rgsummarywindow.cc:428
 #, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d 个软件包将被删除\n"
 
-#: ../gtk/rgsummarywindow.cc:434
+#: ../gtk/rgsummarywindow.cc:435
 #, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d 个软件包将被<b>降级</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:442
+#: ../gtk/rgsummarywindow.cc:443
 #, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>警告：</b>%d 个必需的软件包将被删除\n"
 
-#: ../gtk/rgsummarywindow.cc:454
+#: ../gtk/rgsummarywindow.cc:455
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s 额外空间将被使用"
 
-#: ../gtk/rgsummarywindow.cc:457
+#: ../gtk/rgsummarywindow.cc:458
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s 额外空间将被释放"
 
-#: ../gtk/rgsummarywindow.cc:462
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid ""
 "\n"
@@ -2021,7 +2037,7 @@ msgstr ""
 "\n"
 "必须下载 %s"
 
-#: ../gtk/rgsummarywindow.cc:487
+#: ../gtk/rgsummarywindow.cc:488
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -4885,9 +4901,6 @@ msgstr "添加软件库"
 
 #~ msgid "conflicts with"
 #~ msgstr "与之冲突的软件包为"
-
-#~ msgid "relaces"
-#~ msgstr "取代"
 
 #~ msgid "suggests or recommends"
 #~ msgstr "建议或推荐"

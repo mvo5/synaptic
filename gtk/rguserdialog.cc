@@ -26,6 +26,7 @@
 #include <apt-pkg/fileutl.h>
 
 #include <assert.h>
+#include <string>
 #include "i18n.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
@@ -39,7 +40,7 @@ static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 bool RGUserDialog::showErrors()
 {
    GtkWidget *dia;
-   string err,warn;
+   std::string err,warn;
    
    if (_error->empty())
       return false;

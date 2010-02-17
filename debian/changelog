@@ -1,3 +1,43 @@
+synaptic (0.63.1ubuntu1) UNRELEASED; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
+
+synaptic (0.63.1) unstable; urgency=low
+
+  * po/pt_BR.po:
+    - Updated pt_BR.po, thanks to Sergio Cipolla (closes: #561853)
+  * po/sk.po:
+    - Updated sk.po, thanks to helix84 (closes: #559283)
+  * po/uk.po
+    - add ukrainian translation, thanks to Serhij Dubyk 
+  * common/rpackageview.{cc,h}:
+    - remember search history accross package transactions
+  * make the origin filter more fine grained
+  * gtk/rgsummarywindow.cc:
+    - move the gtk_tree_view_set_model() down to speed up the
+      operation
+  * gtk/rgdebinstallprogress.cc:
+    - on error, set error string into status label
+    - when the recovery is run (dpkg --configure -a) display a 
+      proper status label for that
+  * gtk/rgaboutpanel.cc:
+    - fix FTBFS with gcc-4.5 (closes: #565077)
+  * additions to the (internal) API
+  * gtk/rgdebinstallprogress.cc:
+    - make the dpkg progress code less cpu intensive
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 11 Feb 2010 19:58:40 +0100
+
 synaptic (0.63ubuntu4) lucid; urgency=low
 
   * gtk/rgdebinstallprogress.cc:
@@ -74,12 +114,12 @@ synaptic (0.62.8) unstable; urgency=low
 
   * debian/control:
     - add build-conflict against librpm-dev
-    - recommends gksu|kdebase-bin (kdsu is fine too)
+    - recommends gksu|kdebase-bin (kdsu is fine too) 
       closes: #442421
   * add filter for manual installed packages (LP: #122047)
   * fix typo (thanks to Florentin Duneau), closes: #542122
   * po/pt_BR.po:
-    - updated translation, thanks to Sergio Cipolla
+    - updated translation, thanks to Sergio Cipolla 
       (closes: #532473)
 
  -- Michael Vogt <mvo@debian.org>  Thu, 27 Aug 2009 10:00:10 +0200
@@ -161,14 +201,14 @@ synaptic (0.62.7) unstable; urgency=low
   * show progress when searching and not not block the UI
     (LP: #24188)
   * gtk/glade/dialog_authentication.glade:
-    - add two missing "translatable" entries, thanks to
+    - add two missing "translatable" entries, thanks to 
       Daniele Forsi)
   * po/sk.po:
-    - updated translation, thanks to helix84, closes: #532790
+    - updated translation, thanks to helix84, closes: #532790 
   * po/it.po:
     - updated translation, thanks to Milo Casagrande, closes: #534351
   * po/es.po:
-    - updated translation, thanks to Francisco Javier Cuadrado,
+    - updated translation, thanks to Francisco Javier Cuadrado, 
       closes: #533322
 
  -- Michael Vogt <mvo@debian.org>  Thu, 25 Jun 2009 16:17:56 +0200
@@ -208,7 +248,7 @@ synaptic (0.62.6) unstable; urgency=low
     - updated Thai translation,
       thanks to Theppiak Karoonboonyanan, closes: #512605, #441571
   * po/br.po:
-    - updated breton translation,
+    - updated breton translation, 
       thanks to Denis ARNAUD
   * po/sk.po:
     - updated Slovak translation,
@@ -236,7 +276,7 @@ synaptic (0.62.6) unstable; urgency=low
       thanks to Daniel Nylander, closes: #384107
   * gtk/rgdebinstallprogress.cc:
     - if forkpty() show a propper error message
-      (thanks to Evan)
+      (thanks to Evan) 
   * gtk/rgfetchprogress.cc:
     - if the ETA is huge report it as unknown (LP: #322871)
   * debian/control:
@@ -352,9 +392,9 @@ synaptic (0.62.2ubuntu1) jaunty; urgency=low
 synaptic (0.62.2) unstable; urgency=low
 
   * po/es.po:
-    - updated spanish translation (thanks to
+    - updated spanish translation (thanks to 
       Francisco Javier Cuadrado)
-  * po/cz.po:
+  * po/cz.po: 
     - updated Czech translation (thanks to Kamil Páral)
   * gtk/glade/dialog_upgrade.glade:
     - provide a mnemonics in the upgrade dialog,
@@ -523,6 +563,22 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
 
  -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
 
+synaptic (0.62.1) unstable; urgency=low
+
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
 
 synaptic (0.62) unstable; urgency=low
 
@@ -764,11 +820,37 @@ synaptic (0.60) unstable; urgency=low
   * added support for GUI configuraton of http proxy
   * translation updates:
     - cs.po: thanks to Vít Pelcak
+  * debian/rules: 
+    - fix automatic version number generation
   * make description buffer dynamic (thanks to Benjamin Jacobs)
   * added component filter
   * added emblem in the description to show support status
+  * move the desktop file out of settings because it does no longer
+    fit there with the new control center in gnome 2.17
+  * build with gcc 4.3 (closes: #413419)
+  * do not return a NULL pointer in name() 
+  * when generating the wget script, use wget -c
+  * po/cs.po:
+    - updated (thanks to Vit Pelcak)
+  * gtk/rguserdialog.cc, gtk/rggladewindow.cc:
+    - do not crash for invalid parent-window-ids
+  * gtk/rgpreferenceswindow.cc:
+    - overwrite the http_proxy environ when the user set the proxy
+      explicitely (thanks to Berend De Schouwer)
+  * common/rpackagelister.cc:
+    - added "Volatile::SetSelectionDoReInstall" to support 
+      reinstalling from --set-selections too
+  * common/rpackage.cc:
+    - only show a package as supported if it is authenticated
+  * po/eu.po:
+    - updated (thanks to dooteo, closes: #368951)
+  * merged gcc 4.3 compiler fix, closes: #413419
+    (thanks to Martin Michlmayr)
+  * merged support for translated package description
+  * merged support for automatic removal of unused dependencies
+  * merged support for native apts install-recommends feature
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 11 Jan 2007 16:32:32 +0100
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Mar 2007 17:22:30 +0100
 
 synaptic (0.57.11.1ubuntu15) gutsy; urgency=low
 
@@ -1173,13 +1255,17 @@ synaptic (0.57.8) unstable; urgency=low
   * po/gl.po: added Galician translation (thanks to Nacho Resa)
   * po/es.po: updated Spanish translation 
     (thanks to Francisco Javier F. Serrador)
+  * po/th.po: updated Thai Translation (thanks to Isriya Paireepairit)
   * po/fi.po: updated Finnish translation (thanks to Ilkka Tuohela)
+  * po/el.po: updated Greek translation (thanks to Kostas Papadimas)
   * fix version number in about dialog (and make sure this is done
     automatically in the future) (closes: #348839)
   * applied patch from Robert Chéramy to fix un-lock problem
     (closes: #334168)
   * added --parent-window-id to make embedding easier
   * wording fixes (malone #22090)
+  * only clean the list dir if a update was successful
+  * make "mark" the default response in the "Mark change dialog"
   
  -- Michael Vogt <mvo@debian.org>  Tue, 28 Feb 2006 09:44:42 +0100
 
@@ -2188,5 +2274,4 @@ synaptic (0.16-1) unstable; urgency=low
   * Initial Release (closes: #115167)
 
  -- Michael Vogt <mvo@debian.org>  Tue, 13 Nov 2001 23:17:20 +0100
-
 

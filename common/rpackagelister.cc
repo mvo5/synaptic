@@ -89,7 +89,7 @@ RPackageLister::RPackageLister()
    _searchData.isRegex = false;
    _viewMode = _config->FindI("Synaptic::ViewMode", 0);
    _updating = true;
-   _sortMode = LIST_SORT_NAME;
+   _sortMode = LIST_SORT_NAME_ASC;
 
    // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
@@ -563,34 +563,6 @@ bool RPackageLister::distUpgrade()
    return true;
 }
 
-static void qsSortByName(vector<RPackage *> &packages, int start, int end)
-{
-   int i, j;
-   RPackage *pivot, *tmp;
-
-   i = start;
-   j = end;
-   pivot = packages[(i + j) / 2];
-   do {
-      while (strcoll(packages[i]->name(), pivot->name()) < 0)
-         i++;
-      while (strcoll(pivot->name(), packages[j]->name()) < 0)
-         j--;
-      if (i <= j) {
-         tmp = packages[i];
-         packages[i] = packages[j];
-         packages[j] = tmp;
-         i++;
-         j--;
-      }
-   } while (i <= j);
-
-   if (start < j)
-      qsSortByName(packages, start, j);
-   if (i < end)
-      qsSortByName(packages, i, end);
-}
-
 void RPackageLister::reapplyFilter()
 {
    // PORTME
@@ -643,7 +615,7 @@ struct componentSortFunc {
 
 struct sectionSortFunc {
    bool operator() (RPackage *x, RPackage *y) {
-      return x->section() < y->section();
+      return std::strcmp(x->section(), y->section())<0;
 }};
 
 // version string compare
@@ -686,6 +658,11 @@ struct supportedSortFunc {
    }
 };
 
+struct nameSortFunc {
+   bool operator() (RPackage *x, RPackage *y) {
+      return std::strcmp(x->name(), y->name())<0;
+}};
+
 
 
 void RPackageLister::sortPackages(vector<RPackage *> &packages, 
@@ -698,9 +675,18 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
    if(_config->FindB("Debug::Synaptic::View",false))
       clog << "RPackageLister::sortPackages(): " << packages.size() << endl;
 
+   /* Always sort by name to have packages ordered inside another sort 
+    * criteria */
+   sort(packages.begin(), packages.end(), 
+      sortFunc<nameSortFunc>(true));
+
    switch(mode) {
-   case LIST_SORT_NAME:
-      qsSortByName(packages, 0, packages.size() - 1);
+   case LIST_SORT_NAME_ASC:
+      // Do nothing, already done
+      break;
+   case LIST_SORT_NAME_DES:
+      sort(packages.begin(), packages.end(), 
+		  sortFunc<nameSortFunc>(false));
       break;
    case LIST_SORT_SIZE_ASC:
       stable_sort(packages.begin(), packages.end(), 
@@ -719,42 +705,34 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
 		  sortFunc<dlSizeSortFunc>(false));
       break;
    case LIST_SORT_COMPONENT_ASC:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<componentSortFunc>(true));
       break;
    case LIST_SORT_COMPONENT_DES:
-      qsSortByName(packages, 0, packages.size() - 1);
-      stable_sort(packages.begin(), packages.end(), 		  
+      stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<componentSortFunc>(false));
       break;
    case LIST_SORT_SECTION_ASC:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<sectionSortFunc>(true));
       break;
    case LIST_SORT_SECTION_DES:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<sectionSortFunc>(false));
       break;
    case LIST_SORT_STATUS_ASC:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<statusSortFunc>(true));
       break;
    case LIST_SORT_STATUS_DES:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  sortFunc<statusSortFunc>(false));
       break;
    case LIST_SORT_SUPPORTED_ASC:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  supportedSortFunc(true, _pkgStatus));
       break;
    case LIST_SORT_SUPPORTED_DES:
-      qsSortByName(packages, 0, packages.size() - 1);
       stable_sort(packages.begin(), packages.end(), 
 		  supportedSortFunc(false, _pkgStatus));
       break;

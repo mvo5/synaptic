@@ -151,7 +151,8 @@ class RPackageLister {
    unsigned int _viewMode;
 
    typedef enum {
-      LIST_SORT_NAME,
+      LIST_SORT_NAME_ASC,
+      LIST_SORT_NAME_DES,
       LIST_SORT_SIZE_ASC,
       LIST_SORT_SIZE_DES,
       LIST_SORT_SUPPORTED_ASC,

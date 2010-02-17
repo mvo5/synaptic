@@ -657,31 +657,34 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SUPPORTED_DES);
       break;
    case NAME_COLUMN:
-      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME);
+      if(pkg_list->order)
+     pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME_DES);
+      else
+     pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME_ASC);
       break;
    case PKG_SIZE_COLUMN:
       if(pkg_list->order)
-	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_ASC);
-      else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_DES);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SIZE_ASC);
       break;
    case COMPONENT_COLUMN:
       if(pkg_list->order)
-	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_COMPONENT_ASC);
-      else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_COMPONENT_DES);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_COMPONENT_ASC);
       break;
    case SECTION_COLUMN:
       if(pkg_list->order)
-	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SECTION_ASC);
-      else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SECTION_DES);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_SECTION_ASC);
       break;
    case PKG_DOWNLOAD_SIZE_COLUMN:
       if(pkg_list->order)
-	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DLSIZE_ASC);
-      else
 	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DLSIZE_DES);
+      else
+	 pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DLSIZE_ASC);
       break;
    case AVAILABLE_VERSION_COLUMN:
       if(pkg_list->order)
@@ -697,7 +700,7 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
       break;
    default:
       //cerr << "unknown sort column: " << pkg_list->sort_column_id << endl;
-      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME);
+      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME_ASC);
    }
 }
 

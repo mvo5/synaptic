@@ -183,6 +183,7 @@ const char *RPackage::priority()
 const char *RPackage::installedFiles()
 {
    static string filelist;
+   vector<string> sV;
    string s;
 
    filelist.erase(filelist.begin(), filelist.end());
@@ -194,10 +195,12 @@ const char *RPackage::installedFiles()
          return "";
       while (in.eof() == false) {
          getline(in, s);
-         filelist += s + "\n";
+         sV.push_back( s );
       }
+      sort(sV.begin(), sV.end());
+      for (unsigned int i = 1; i < sV.size(); i++)
+         filelist += sV[i] + "\n";
 
-      in >> filelist;
       return filelist.c_str();
    }
    filelist = _("The list of installed files is only available for installed packages");

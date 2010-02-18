@@ -2048,8 +2048,21 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
             _viewPackages.push_back(pkg);
          }
       }
+      // re-apply sort criteria
+      sortPackages(_sortMode);
       return true;
    } catch (const Xapian::Error & error) {
+      /* We are here if a Xapian call failed. The main cause is a parser exception.
+       * The error message is always in English currently. 
+       * The possible parser errors are:
+       *    Unknown range operation
+       *    parse error
+       *    Syntax: <expression> AND <expression>
+       *    Syntax: <expression> AND NOT <expression>
+       *    Syntax: <expression> NOT <expression>
+       *    Syntax: <expression> OR <expression>
+       *    Syntax: <expression> XOR <expression>
+       */
       cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg() << endl;
       return false;
    }

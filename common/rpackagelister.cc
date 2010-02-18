@@ -1945,7 +1945,6 @@ bool RPackageLister::limitBySearch(string searchString)
    if(!_textsearch->hasData())
       return false;
 
-   _viewPackages.clear();
    return xapianSearch(searchString);
 }
 
@@ -1959,95 +1958,101 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    if(!ts || !ts->hasData())
       return false;
 
-   Xapian::Enquire enquire(ts->db());
-   Xapian::QueryParser parser;
-   parser.add_prefix("name","XP");
-   parser.add_prefix("section","XS");
-   Xapian::Query query = parser.parse_query(unsplitSearchString);
-   enquire.set_query(query);
-
-   // Get a set of tags to expand the query
-   vector<string> expand = ts->expand(enquire);
-
-   // now expand the query by adding the searching string as a package
-   // name so that those searches appear erlier
-   for (int i=0;i<originalSearchString.size();i++) 
-   {
-      if(isblank(originalSearchString[i])) {
-	 if(s.size() > 0) {
-	    if(_config->FindB("Debug::Synaptic::Xapian",false))
-	       std::cerr << "adding to querry: XP" << s << std::endl;
-	    expand.push_back("XP"+s);
-	 }
-	 s="";
-      } else 
-	 s+=originalSearchString[i];
-   }
-   // now add to the last found string
-   if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-      std::cerr << "adding: XP" << s << std::endl;
-   expand.push_back("XP"+s);
-
-   // the last string is always expanded to get better search as you
-   // type results 
-   if (s.size() > 0) {
-      Xapian::TermIterator I;
-      int j=0;
-
-      for(I=_textsearch->db().allterms_begin(s); 
-	  I != _textsearch->db().allterms_end(s); 
-	  I++) 
+   try {
+      Xapian::Enquire enquire(ts->db());
+      Xapian::QueryParser parser;
+      parser.add_prefix("name","XP");
+      parser.add_prefix("section","XS");
+      Xapian::Query query = parser.parse_query(unsplitSearchString);
+      enquire.set_query(query);
+   
+      // Get a set of tags to expand the query
+      vector<string> expand = ts->expand(enquire);
+   
+      // now expand the query by adding the searching string as a package
+      // name so that those searches appear erlier
+      for (int i=0;i<originalSearchString.size();i++) 
       {
-	 if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-	    std::cerr << "expanded terms: " << *I << std::endl;
-	 expand.push_back(*I);
-	 expand.push_back("XP"+*I);
-	 // do not expand all alt terms, they can be huge > 100
-	 // and make the search very slow
-	 j++;
-	 if (j > maxAltTerms)
-	    break;
+         if(isblank(originalSearchString[i])) {
+            if(s.size() > 0) {
+               if(_config->FindB("Debug::Synaptic::Xapian",false))
+                  std::cerr << "adding to querry: XP" << s << std::endl;
+               expand.push_back("XP"+s);
+            }
+            s="";
+         } else 
+            s+=originalSearchString[i];
       }
-   }
-
-
-   // Build the expanded query
-   Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
-   enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
-
-   // Retrieve the results
-   bool done = false;
-   int top_percent = 0;
-   for (size_t pos = 0; !done; pos += 20)
-   {
-      Xapian::MSet matches = enquire.get_mset(pos, 20);
-      if (matches.size() < 20)
-	 done = true;
-      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+      // now add to the last found string
+      if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+         std::cerr << "adding: XP" << s << std::endl;
+      expand.push_back("XP"+s);
+   
+      // the last string is always expanded to get better search as you
+      // type results 
+      if (s.size() > 0) {
+         Xapian::TermIterator I;
+         int j=0;
+   
+         for(I=_textsearch->db().allterms_begin(s); 
+             I != _textsearch->db().allterms_end(s); 
+             I++) 
+         {
+            if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+               std::cerr << "expanded terms: " << *I << std::endl;
+            expand.push_back(*I);
+            expand.push_back("XP"+*I);
+            // do not expand all alt terms, they can be huge > 100
+            // and make the search very slow
+            j++;
+            if (j > maxAltTerms)
+               break;
+         }
+      }
+   
+   
+      // Build the expanded query
+      Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
+      enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
+   
+      // Retrieve the results
+      bool done = false;
+      int top_percent = 0;
+      _viewPackages.clear();
+      for (size_t pos = 0; !done; pos += 20)
       {
-	 RPackage* pkg = getPackage(i.get_document().get_data());
-	 // Filter out results that apt doesn't know
-	 if (!pkg || !_selectedView->hasPackage(pkg))
-	    continue;
-
-	 // Save the confidence interval of the top value, to use it as
-	 // a reference to compute an adaptive quality cutoff
-	 if (top_percent == 0)
-	    top_percent = i.get_percent();
-
-	 // Stop producing if the quality goes below a cutoff point
-	 if (i.get_percent() < qualityCutoff * top_percent / 100)
-	 {
-	    //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
-	    done = true;
-	    break;
-	 }
-
-	 //cerr << "found: " << pkg->name() << endl;
-	 _viewPackages.push_back(pkg);
+         Xapian::MSet matches = enquire.get_mset(pos, 20);
+         if (matches.size() < 20)
+            done = true;
+         for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+         {
+            RPackage* pkg = getPackage(i.get_document().get_data());
+            // Filter out results that apt doesn't know
+            if (!pkg || !_selectedView->hasPackage(pkg))
+               continue;
+   
+            // Save the confidence interval of the top value, to use it as
+            // a reference to compute an adaptive quality cutoff
+            if (top_percent == 0)
+               top_percent = i.get_percent();
+   
+            // Stop producing if the quality goes below a cutoff point
+            if (i.get_percent() < qualityCutoff * top_percent / 100)
+            {
+               //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+               done = true;
+               break;
+            }
+   
+            //cerr << "found: " << pkg->name() << endl;
+            _viewPackages.push_back(pkg);
+         }
       }
+      return true;
+   } catch (const Xapian::Error & error) {
+      cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg() << endl;
+      return false;
    }
-   return true;
 }
 #else
 bool RPackageLister::limitBySearch(string searchString)

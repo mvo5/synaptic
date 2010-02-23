@@ -142,8 +142,8 @@ class RPackageLister {
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
 
    // helper for the limitBySearch() code
-   static const int qualityCutoff = 25;
-   static const int maxAltTerms = 15;
+   static const int defaultQualityCutoff = 25;
+   static const int defaultMaxItems = 1000;
    bool xapianSearch(string searchString);
 
    public:

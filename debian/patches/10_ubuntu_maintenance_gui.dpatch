@@ -6,8 +6,8 @@
 
 @DPATCH@
 diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
---- ubuntu~/common/rpackagestatus.cc	2010-01-25 12:01:12.070416517 +0100
-+++ ubuntu/common/rpackagestatus.cc	2010-01-25 12:02:01.380407389 +0100
+--- ubuntu~/common/rpackagestatus.cc	2010-02-24 12:30:23.000000000 +0100
++++ ubuntu/common/rpackagestatus.cc	2010-02-24 12:30:23.000000000 +0100
 @@ -185,7 +185,8 @@
     pkgTagSection sec;
     time_t release_date = -1;
@@ -47,8 +47,8 @@ diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
     res->tm_mon = (res->tm_mon + support_time) % 12;
  
 diff -urNad ubuntu~/gtk/glade/window_main.glade ubuntu/gtk/glade/window_main.glade
---- ubuntu~/gtk/glade/window_main.glade	2010-01-25 12:01:12.100413355 +0100
-+++ ubuntu/gtk/glade/window_main.glade	2010-01-25 12:02:01.561112535 +0100
+--- ubuntu~/gtk/glade/window_main.glade	2010-02-24 12:30:23.000000000 +0100
++++ ubuntu/gtk/glade/window_main.glade	2010-02-24 12:30:23.000000000 +0100
 @@ -1351,8 +1351,8 @@
  			      <property name="pixels_above_lines">3</property>
  			      <property name="pixels_below_lines">3</property>
@@ -61,8 +61,8 @@ diff -urNad ubuntu~/gtk/glade/window_main.glade ubuntu/gtk/glade/window_main.gla
  			      <property name="text" translatable="yes"></property>
  			    </widget>
 diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
---- ubuntu~/gtk/rgpkgdetails.cc	2010-01-25 11:59:47.000000000 +0100
-+++ ubuntu/gtk/rgpkgdetails.cc	2010-01-25 12:02:01.561112535 +0100
+--- ubuntu~/gtk/rgpkgdetails.cc	2010-02-24 12:26:40.000000000 +0100
++++ ubuntu/gtk/rgpkgdetails.cc	2010-02-24 12:31:01.000000000 +0100
 @@ -24,6 +24,8 @@
  #include "config.h"
  
@@ -111,7 +111,7 @@ diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
     // add button to get screenshot
     gtk_text_buffer_insert(buf, &it, "\n", 1);
     GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(buf, &it);
-@@ -237,6 +223,51 @@
+@@ -237,6 +223,58 @@
     s = utf8(pkg->description());
     gtk_text_buffer_insert(buf, &it, s, -1);
     
@@ -119,7 +119,10 @@ diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
 +   gchar *maint_str = NULL;
 +   struct tm end_time;
 +   if(pkg->label() == "Ubuntu" && pkg->origin() == "Ubuntu") {
++      gchar *old_lctime = g_strdup(setlocale(LC_TIME, NULL));
++      gchar *new_lctime = g_strdup(setlocale(LC_MESSAGES, NULL));
 +      if(RGPackageStatus::pkgStatus.maintenanceEndTime(pkg, &end_time)) {
++         setlocale(LC_TIME, new_lctime);
 + 	 if (pkg->component() == "main")
 + 	    maint_str = g_strdup_printf(_("\n\n"
 + 	    "Canonical provides critical updates for %s "
@@ -154,6 +157,10 @@ diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
 + 	    "by the Ubuntu community."),
 + 	    pkg->name());
 +      }
++      // Restore old locale settings
++      setlocale(LC_TIME, old_lctime);
++      g_free(old_lctime);
++      g_free(new_lctime);
 +   }
 +   if(maint_str)
 +      gtk_text_buffer_insert_with_tags_by_name(buf, 
@@ -164,8 +171,8 @@ diff -urNad ubuntu~/gtk/rgpkgdetails.cc ubuntu/gtk/rgpkgdetails.cc
     // build dependency lists
     vector<DepInformation> deps;
 diff -urNad ubuntu~/tests/test_rpackage.cc ubuntu/tests/test_rpackage.cc
---- ubuntu~/tests/test_rpackage.cc	2010-01-25 11:59:47.000000000 +0100
-+++ ubuntu/tests/test_rpackage.cc	2010-01-25 12:02:01.561112535 +0100
+--- ubuntu~/tests/test_rpackage.cc	2010-02-24 12:26:40.000000000 +0100
++++ ubuntu/tests/test_rpackage.cc	2010-02-24 12:30:23.000000000 +0100
 @@ -17,6 +17,7 @@
     RPackage *pkg = lister->getPackage("eog");
     cerr << "pkg: " << pkg->name() << endl;

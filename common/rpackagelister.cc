@@ -1965,7 +1965,24 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
       parser.set_database(ts->db());
       parser.add_prefix("name","XP");
       parser.add_prefix("section","XS");
+      // default op is AND to narrow down the resultset
+      parser.set_default_op( Xapian::Query::OP_AND );
    
+      /* Workaround to allow searching an hyphenated package name using a prefix (name:)
+       * LP: #282995
+       * Xapian currently doesn't support wildcard for boolean prefix and 
+       * doesn't handle implicit wildcards at the end of hypenated phrases.
+       *
+       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu* res*'
+       * however 'name:(ubuntu* res*) won't return any result because the 
+       * index is built with the full package name
+       */
+      string::size_type pos = 0;
+      while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
+         unsplitSearchString.replace(pos, 1, "* ");
+         pos+=2;
+      }
+
       if(_config->FindB("Debug::Synaptic::Xapian",false)) 
          std::cerr << "searching for : " << unsplitSearchString << std::endl;
       
@@ -1973,7 +1990,6 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
       Xapian::Query query = parser.parse_query(unsplitSearchString, 
          Xapian::QueryParser::FLAG_WILDCARD |
          Xapian::QueryParser::FLAG_BOOLEAN |
-         Xapian::QueryParser::FLAG_PHRASE |
          Xapian::QueryParser::FLAG_PARTIAL);
       enquire.set_query(query);
       Xapian::MSet matches = enquire.get_mset(0, maxItems);

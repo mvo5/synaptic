@@ -1963,7 +1963,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
       Xapian::Enquire enquire(ts->db());
       Xapian::QueryParser parser;
       parser.set_database(ts->db());
-      parser.add_prefix("name","XP");
+      parser.add_boolean_prefix("name","XP");
       parser.add_prefix("section","XS");
       // default op is AND to narrow down the resultset
       parser.set_default_op( Xapian::Query::OP_AND );
@@ -1973,14 +1973,24 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
        * Xapian currently doesn't support wildcard for boolean prefix and 
        * doesn't handle implicit wildcards at the end of hypenated phrases.
        *
-       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu* res*'
+       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu res*'
        * however 'name:(ubuntu* res*) won't return any result because the 
        * index is built with the full package name
        */
-      string::size_type pos = 0;
+      // Always search for the package name
+      string xpString = "name:";
+      string::size_type pos = unsplitSearchString.find_first_of(" ,;");
+      if (pos > 0) {
+          xpString += unsplitSearchString.substr(0,pos);
+      } else {
+          xpString += unsplitSearchString;
+      }
+      Xapian::Query xpQuery = parser.parse_query(xpString);
+
+      pos = 0;
       while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
-         unsplitSearchString.replace(pos, 1, "* ");
-         pos+=2;
+         unsplitSearchString.replace(pos, 1, " ");
+         pos+=1;
       }
 
       if(_config->FindB("Debug::Synaptic::Xapian",false)) 
@@ -1991,6 +2001,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          Xapian::QueryParser::FLAG_WILDCARD |
          Xapian::QueryParser::FLAG_BOOLEAN |
          Xapian::QueryParser::FLAG_PARTIAL);
+      query = Xapian::Query(Xapian::Query::OP_OR, query, xpQuery);
       enquire.set_query(query);
       Xapian::MSet matches = enquire.get_mset(0, maxItems);
 

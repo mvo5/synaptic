@@ -382,8 +382,11 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(_dl_changelogM, TRUE);
    gtk_widget_set_sensitive(_detailsM, TRUE);
    gtk_widget_set_sensitive(_propertiesB, TRUE);
-   gtk_widget_set_sensitive(_pinM, TRUE);
-   gtk_widget_set_sensitive(_autoM, TRUE);
+   // activate for root only
+   if(getuid() == 0) {
+       gtk_widget_set_sensitive(_pinM, TRUE);
+       gtk_widget_set_sensitive(_autoM, TRUE);
+   }    
 
    // set info
    gtk_widget_set_sensitive(pkginfo, true);
@@ -1655,6 +1658,8 @@ void RGMainWindow::buildInterface()
       menu = glade_xml_get_widget(_gladeXML,"update_package_entrys1");
       gtk_widget_set_sensitive(menu, false);
       menu = glade_xml_get_widget(_gladeXML,"add_cdrom");
+      gtk_widget_set_sensitive(menu, false);
+      menu = glade_xml_get_widget(_gladeXML,"menu_hold");
       gtk_widget_set_sensitive(menu, false);
    }
 

@@ -128,32 +128,34 @@ void RGMainWindow::changeView(int view, string subView)
 
    refreshSubViewList();
 
+   GtkTreeSelection* selection;
+   setBusyCursor(true);
+   setInterfaceLocked(TRUE);
+   GtkWidget *tview = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tview));
    if(!subView.empty()) {
-      GtkTreeSelection* selection;
       GtkTreeModel *model;
       GtkTreeIter iter;
       char *str;
 
-      setBusyCursor(true);
-      setInterfaceLocked(TRUE);
-      GtkWidget *view = glade_xml_get_widget(_gladeXML, "treeview_subviews");
-      model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
-      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+      model = gtk_tree_view_get_model(GTK_TREE_VIEW(tview));
       if(gtk_tree_model_get_iter_first(model, &iter)) {
-	 do {
-	    gtk_tree_model_get(model, &iter, 0, &str, -1);
-	    if(strcoll(str,subView.c_str()) == 0) {
-	       gtk_tree_selection_select_iter(selection, &iter);
-	       break;
-	    }
-	 } while(gtk_tree_model_iter_next(model, &iter));
+         do {
+            gtk_tree_model_get(model, &iter, 0, &str, -1);
+            if(strcoll(str,subView.c_str()) == 0) {
+               gtk_tree_selection_select_iter(selection, &iter);
+               break;
+            }
+         } while(gtk_tree_model_iter_next(model, &iter));
       }
-
-      _lister->setSubView(subView);
-      refreshTable(pkg,false);
-      setInterfaceLocked(FALSE);     
-      setBusyCursor(false);
+   } else {
+      GtkTreePath * path = gtk_tree_path_new_from_string( "0" );
+      gtk_tree_selection_select_path( selection, path );
    }
+   _lister->setSubView(subView);
+   refreshTable(pkg,false);
+   setInterfaceLocked(FALSE);     
+   setBusyCursor(false);
    _blockActions = FALSE;
    setStatusText();
 }
@@ -2924,10 +2926,13 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
    me->_fastSearchEventID = -1;
    me->setBusyCursor(true);
    RGFlushInterface();
-   if(str == NULL || strlen(str) < 1) {
+   if(str == NULL || strlen(str) <= 1) {
       // reset the color
       gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, NULL);
       // if the user has cleared the search, refresh the view
+      // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
+      // at us, see LP: #38397 for more information
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
       me->_lister->reapplyFilter();
       me->refreshTable();
       me->setBusyCursor(false);
@@ -2936,6 +2941,7 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       // char searches tend to be very slow
       me->setBusyCursor(true);
       RGFlushInterface();
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
       me->refreshTable();
       // set color to a light yellow to make it more obvious that a search
       // is performed

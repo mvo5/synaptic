@@ -1,3 +1,20 @@
+synaptic (0.63.2) UNRELEASED; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
+
 synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
 
   [ Jean-Baptiste Lallement ]
@@ -539,6 +556,23 @@ synaptic (0.62.1ubuntu2) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu1) intrepid; urgency=low
 
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
+
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
   * merge from debian, remaining changes:
     - ubuntu icons for supported applications
     - launchpad-integration
@@ -560,23 +594,6 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
     - switch bzr branch to bzr.debian.org
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
-
-synaptic (0.62.1ubuntu1) intrepid; urgency=low
-
-  * po/es.po:
-    - updated Spanish translation (thanks to
-       Francisco Javier Cuadrado)
-  * debian/control:
-    - added "menu" to the recommends (closes: #478250)
-  * gtk/glade/window_main.glade:
-    - make the main vpane shinkable
-  * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
-      action in the listview
-  * debian/control:
-    - switch bzr branch to bzr.debian.org
-
- -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
 
 synaptic (0.62.1) unstable; urgency=low
 
@@ -749,24 +766,6 @@ synaptic (0.61) unstable; urgency=low
 
  -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:00:51 +0100
 
-synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
-
-  * gtk/rgfetchprogress.{cc,h}:
-    - fix crash in download progress on theme changes (LP: #67995)
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 17 Oct 2007 11:14:03 +0200
-
-synaptic (0.60ubuntu5) gutsy; urgency=low
-  
-  [ Loic Minier ]
-  * Set has_focus on the close button of the welcome dialog; LP: #148695.
-  
-  [ Michael Vogt ]
-  * gtk/rgmainwindow.cc:
-    - fix crash in cbInstallFromVersion() (LP: #145685)
-
- -- Loic Minier <lool@dooz.org>  Wed, 03 Oct 2007 22:33:28 +0200
-
 synaptic (0.61) unstable; urgency=low
 
   [ Michael Vogt ]
@@ -790,6 +789,24 @@ synaptic (0.61) unstable; urgency=low
   * Set has_focus on the close button of the welcome dialog; closes: #148695.
 
  -- Loic Minier <lool@dooz.org>  Wed, 03 Oct 2007 22:25:09 +0200
+
+synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
+
+  * gtk/rgfetchprogress.{cc,h}:
+    - fix crash in download progress on theme changes (LP: #67995)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 17 Oct 2007 11:14:03 +0200
+
+synaptic (0.60ubuntu5) gutsy; urgency=low
+  
+  [ Loic Minier ]
+  * Set has_focus on the close button of the welcome dialog; LP: #148695.
+  
+  [ Michael Vogt ]
+  * gtk/rgmainwindow.cc:
+    - fix crash in cbInstallFromVersion() (LP: #145685)
+
+ -- Loic Minier <lool@dooz.org>  Wed, 03 Oct 2007 22:33:28 +0200
 
 synaptic (0.60ubuntu3) gutsy; urgency=low
 
@@ -1004,6 +1021,15 @@ synaptic (0.57.11.1) unstable; urgency=high
 
  -- Michael Vogt <mvo@debian.org>  Mon, 18 Dec 2006 10:52:08 +0100
 
+synaptic (0.57.11.1) unstable; urgency=high
+
+  * gtk/rgmainwindow.cc:
+    - fix crash in "Lock package"
+  * gtk/rgpreferenceswindow.cc:
+    - add default font to fix crash
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 18 Dec 2006 10:52:08 +0100
+
 synaptic (0.57.11ubuntu13) edgy; urgency=low
 
   * gtk/rgmainwindow.cc:
@@ -1091,15 +1117,6 @@ synaptic (0.57.11ubuntu1) edgy; urgency=low
   * merged with debian
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 27 Jul 2006 15:17:03 +0200
-
-synaptic (0.57.11.1) unstable; urgency=high
-
-  * gtk/rgmainwindow.cc:
-    - fix crash in "Lock package"
-  * gtk/rgpreferenceswindow.cc:
-    - add default font to fix crash
-
- -- Michael Vogt <mvo@debian.org>  Mon, 18 Dec 2006 10:52:08 +0100
 
 synaptic (0.57.11) unstable; urgency=low
 
@@ -1501,10 +1518,11 @@ synaptic (0.55+cvs20050218-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
 
 synaptic (0.55+cvs20050218-1) hoary; urgency=low
+  
+  * restored the ubuntu icon, there was a quoting error in the 
+    debian/rules file
 
-  * New snapshot
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 18 Feb 2005 11:14:12 +0100
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
 
 synaptic (0.55+cvs20050215-1) hoary; urgency=low
 

@@ -12,12 +12,6 @@ synaptic (0.63.2) UNRELEASED; urgency=low
   * Set version labels selectable in package properties (LP: #76568)
   * disable 'Lock Version' and 'Automatically installed' menu entries for a
     normal user (LP: #309906)
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
-
-synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
-
-  [ Jean-Baptiste Lallement ]
   * common/rpackagelister.cc:
     - in RPackageLister::xapianSearch() catch xapian exception to
       prevent crash when xapian interprets search string as a syntax 
@@ -27,6 +21,8 @@ synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
     - Start with focus set on fast search entry (LP: #326155)
   * Select first subview on view change (LP: #403165)
   * Fix Gtk-CRITICAL when the fast search entry is cleared (LP: #385739)
+  * Ignore DEL accelerator when fast search has focus (LP: #294178)
+  * Do not start help viewer as root but as SUDO_USER (LP: #110224)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 18 Feb 2010 09:29:15 +0100
 

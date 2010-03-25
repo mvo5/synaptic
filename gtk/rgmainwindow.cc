@@ -1984,6 +1984,11 @@ void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
    assert(me);
+   // Ignore DEL accelerator when fastsearch has focus
+   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_fast_search");
+   if (gtk_widget_has_focus (entry) && GPOINTER_TO_INT(data) == PKG_DELETE) {
+      return;
+   }
    me->pkgAction((RGPkgAction)GPOINTER_TO_INT(data));
 }
 
@@ -2498,24 +2503,19 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    me->setStatusText(_("Starting help viewer..."));
 
+   string cmd;
    if (is_binary_in_path("yelp"))
-      system("yelp ghelp:synaptic &");
+      cmd = "yelp ghelp:synaptic";
 #if 0 // FIXME: khelpcenter can't display this? check again!
     else if(is_binary_in_path("khelpcenter")) {
        system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
     }
 #endif
    else if (is_binary_in_path("mozilla")) {
-      // mozilla eats bookmarks when run under sudo (because it does not
-      // change $HOME)
-      if(getenv("SUDO_USER") != NULL) {
-         struct passwd *pw = getpwuid(0);
-         setenv("HOME", pw->pw_dir, 1);
-      }
-      system("mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
-   } else if (is_binary_in_path("konqueror"))
-      system("konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
-   else
+      cmd = "mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   } else if (is_binary_in_path("konqueror")) {
+      cmd = "konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   } else {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
                                "the 'konqueror' browser or the 'mozilla' "
@@ -2524,6 +2524,20 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));
+   }
+
+   if (!cmd.empty()) {
+      gchar * sudo_user;
+      sudo_user = g_strdup(getenv("SUDO_USER"));
+      // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
+      if(is_binary_in_path("gksu") && (sudo_user != NULL))
+         cmd = "gksu -u " + string(sudo_user) + " " + cmd;
+      g_free(sudo_user);
+      cmd += " &";
+      if(system(cmd.c_str()) < 0) {
+         g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
+      }
+   }
 }
 
 void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)

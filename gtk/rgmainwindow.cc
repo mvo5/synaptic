@@ -2530,8 +2530,8 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
       gchar * sudo_user;
       sudo_user = g_strdup(getenv("SUDO_USER"));
       // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
-      if(is_binary_in_path("gksu") && (sudo_user != NULL))
-         cmd = "gksu -u " + string(sudo_user) + " " + cmd;
+      if(is_binary_in_path("sudo") && (sudo_user != NULL))
+         cmd = "sudo -u " + string(sudo_user) + " " + cmd;
       g_free(sudo_user);
       cmd += " &";
       if(system(cmd.c_str()) < 0) {

@@ -27,8 +27,14 @@ synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
   * set textarea read-only in generic error dialog (LP: #403100)
   * Change 'Icon Legend' dialog to fixed size (LP: #374376)
   * add tooltip to 'properties' and 'search' buttons (LP: #202681)
- 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
+  * gtk/glade/window_main.glade:
+    - put the fastsearch entry out of the toolbar (LP: #502582)
+    - move the fastsearch entry to the upper-right (LP: #290524)
+  * gtk/rgfetchprogress.cc:
+    - change "Download rate: unknown" to "Download rate: ..." 
+      (LP: #393358)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 18 Feb 2010 09:29:15 +0100
 
 synaptic (0.63.1ubuntu1) lucid; urgency=low
 
@@ -556,6 +562,23 @@ synaptic (0.62.1ubuntu2) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu1) intrepid; urgency=low
 
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
+
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
   * merge from debian, remaining changes:
     - ubuntu icons for supported applications
     - launchpad-integration
@@ -577,23 +600,6 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
     - switch bzr branch to bzr.debian.org
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
-
-synaptic (0.62.1ubuntu1) intrepid; urgency=low
-
-  * po/es.po:
-    - updated Spanish translation (thanks to
-       Francisco Javier Cuadrado)
-  * debian/control:
-    - added "menu" to the recommends (closes: #478250)
-  * gtk/glade/window_main.glade:
-    - make the main vpane shinkable
-  * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
-      action in the listview
-  * debian/control:
-    - switch bzr branch to bzr.debian.org
-
- -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
 
 synaptic (0.62.1) unstable; urgency=low
 
@@ -777,18 +783,31 @@ synaptic (0.61) unstable; urgency=low
   * po/POTFILES.in, po/POTFILES.skip:
     - updated so that intltool-update -m is happy again (thanks
       to Nacho)
+  * po/be@latin.po:
+    - merged translation from Ihar H
+  * po/cs.po:
+    - bugfixes by Vít Pelčák
   * gtk/rgmainwindow.cc:
     - add missing space in the wget script (thanks to Avi Rozen)
+      (closes: #435682)
   * make it build with g++ 4.3
+  * debian/synaptic.menu:
+    - fix menu section (thanks to Bill Allomber, closes: #445025)
   * gtk/rgmainwindow.cc:
     - fix crash in cbInstallFromVersion()
   * gtk/rgfetchprogress.{cc,h}:
     - fix crash in download progress on theme changes
+  * added XS-Vcs-Bzr header
+
+  [ Diego Escalante Urrelo ]
+  * The menu entry for Synaptic is back in System->Administration. It also  
+    removes the legacy Applications category.
+    closes: #429895
 
   [ Loic Minier ]
   * Set has_focus on the close button of the welcome dialog; closes: #148695.
 
- -- Loic Minier <lool@dooz.org>  Wed, 03 Oct 2007 22:25:09 +0200
+ -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:00:51 +0100
 
 synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
 

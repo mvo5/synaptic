@@ -1391,14 +1391,6 @@ void RGMainWindow::buildInterface()
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button_details");
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-                        _("View package properties"), "");
-
-   button = glade_xml_get_widget(_gladeXML, "button1");
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-                        _("Search for packages"), "");
-
    GtkWidget *pkgCommonTextView;
    pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
    assert(pkgCommonTextView);

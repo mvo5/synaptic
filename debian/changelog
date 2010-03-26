@@ -1,4 +1,4 @@
-synaptic (0.63.2) UNRELEASED; urgency=low
+synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
@@ -23,8 +23,12 @@ synaptic (0.63.2) UNRELEASED; urgency=low
   * Fix Gtk-CRITICAL when the fast search entry is cleared (LP: #385739)
   * Ignore DEL accelerator when fast search has focus (LP: #294178)
   * Do not start help viewer as root but as SUDO_USER (LP: #110224)
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 18 Feb 2010 09:29:15 +0100
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+  * add tooltip to 'properties' and 'search' buttons (LP: #202681)
+ 
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
 
 synaptic (0.63.1ubuntu1) lucid; urgency=low
 
@@ -552,23 +556,6 @@ synaptic (0.62.1ubuntu2) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu1) intrepid; urgency=low
 
-  * po/es.po:
-    - updated Spanish translation (thanks to
-       Francisco Javier Cuadrado)
-  * debian/control:
-    - added "menu" to the recommends (closes: #478250)
-  * gtk/glade/window_main.glade:
-    - make the main vpane shinkable
-  * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
-      action in the listview
-  * debian/control:
-    - switch bzr branch to bzr.debian.org
-
- -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
-
-synaptic (0.62.1ubuntu1) intrepid; urgency=low
-
   * merge from debian, remaining changes:
     - ubuntu icons for supported applications
     - launchpad-integration
@@ -590,6 +577,23 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
     - switch bzr branch to bzr.debian.org
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
+
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
 
 synaptic (0.62.1) unstable; urgency=low
 

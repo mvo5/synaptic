@@ -1395,7 +1395,7 @@ void RGMainWindow::buildInterface()
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("View package properties"), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button1");
+   button = glade_xml_get_widget(_gladeXML, "button_search");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Search for packages"), "");
 

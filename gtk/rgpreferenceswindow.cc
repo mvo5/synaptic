@@ -26,6 +26,7 @@
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/strutl.h>
 #include <gtk/gtk.h>
 #include <cassert>
 #include <cstring>
@@ -160,10 +161,11 @@ void RGPreferencesWindow::applyProxySettings()
 	 g_free(s);
       }
       // setup the proxy 
-      if(!httpUser.empty() && !httpPass.empty()) {
-	 s = g_strdup_printf("http://%s:%s@%s:%i/", 
-			     httpUser.c_str(), httpPass.c_str(),
-			     http.c_str(), httpPort);
+      if(!httpUser.empty() && !httpPass.empty()) { 
+          s = g_strdup_printf("http://%s:%s@%s:%i/",
+                  QuoteString(httpUser, "@%:/").c_str(),
+                  QuoteString(httpPass, "@%:/").c_str(),
+                  http.c_str(), httpPort);
 	 _config->Set("Acquire::http::Proxy", s);
 	 g_free(s);
       }

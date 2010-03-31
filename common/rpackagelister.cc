@@ -89,7 +89,7 @@ RPackageLister::RPackageLister()
    _searchData.isRegex = false;
    _viewMode = _config->FindI("Synaptic::ViewMode", 0);
    _updating = true;
-   _sortMode = LIST_SORT_NAME_ASC;
+   _sortMode = LIST_SORT_DEFAULT;
 
    // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
@@ -682,6 +682,7 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
 
    switch(mode) {
    case LIST_SORT_NAME_ASC:
+   case LIST_SORT_DEFAULT:
       // Do nothing, already done
       break;
    case LIST_SORT_NAME_DES:
@@ -2048,8 +2049,9 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
             _viewPackages.push_back(pkg);
          }
       }
-      // re-apply sort criteria
-      sortPackages(_sortMode);
+      // re-apply sort criteria only if an explicit search is set
+      if (_sortMode != LIST_SORT_DEFAULT)
+          sortPackages(_sortMode);
       return true;
    } catch (const Xapian::Error & error) {
       /* We are here if a Xapian call failed. The main cause is a parser exception.

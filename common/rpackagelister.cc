@@ -1951,8 +1951,6 @@ bool RPackageLister::limitBySearch(string searchString)
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
    //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
-   // Max number of items returned by the query. The more the slower.
-   int maxItems = _config->FindI("Synaptic::Xapian::maxItems", defaultMaxItems);
    int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", defaultQualityCutoff);
 
    ept::textsearch::TextSearch *ts = _textsearch;
@@ -1960,10 +1958,11 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
       return false;
 
    try {
+      int maxItems = ts->db().get_doccount();
       Xapian::Enquire enquire(ts->db());
       Xapian::QueryParser parser;
       parser.set_database(ts->db());
-      parser.add_boolean_prefix("name","XP");
+      parser.add_prefix("name","XP");
       parser.add_prefix("section","XS");
       // default op is AND to narrow down the resultset
       parser.set_default_op( Xapian::Query::OP_AND );
@@ -1997,11 +1996,13 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          std::cerr << "searching for : " << unsplitSearchString << std::endl;
       
       // Build the query
+      // apply a weight factor to XP term to increase relevancy on package name
       Xapian::Query query = parser.parse_query(unsplitSearchString, 
          Xapian::QueryParser::FLAG_WILDCARD |
          Xapian::QueryParser::FLAG_BOOLEAN |
          Xapian::QueryParser::FLAG_PARTIAL);
-      query = Xapian::Query(Xapian::Query::OP_OR, query, xpQuery);
+      query = Xapian::Query(Xapian::Query::OP_OR, query, 
+              Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
       enquire.set_query(query);
       Xapian::MSet matches = enquire.get_mset(0, maxItems);
 
@@ -2010,12 +2011,6 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          cerr << "matches estimated: " << matches.get_matches_estimated() << " results found" << endl;
       }
 
-      if ( matches.get_matches_estimated() > maxItems ) {
-         if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-            cerr << "number of matches exceeded the limit of " << maxItems << endl;
-         return false;
-      }
-   
       // Retrieve the results
       int top_percent = 0;
       _viewPackages.clear();
@@ -2039,7 +2034,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          }
    
          if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-            cerr << "found: " << pkg->name() << endl;
+            cerr << i.get_rank() + 1 << ": " << i.get_percent() << "% docid=" << *i << "	[" << i.get_document().get_data() << "]" << endl;
          _viewPackages.push_back(pkg);
          }
       // re-apply sort criteria

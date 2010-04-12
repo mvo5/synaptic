@@ -767,6 +767,7 @@ bool RPackage::isTrusted()
          std::cerr << "Checking index: " << Index->Describe()
                    << "(Trusted=" << Index->IsTrusted() << ")\n";
       }
+
       if (Index->IsTrusted())
          return true;
    }
@@ -892,6 +893,24 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    return filename;
 }
 
+string RPackage::getChangelogBaseURI() 
+{
+   //FIXME: get the supportedOrigins from pkgStatus
+   if(origin() == "Ubuntu") {
+       return "http://changelogs.ubuntu.com/";
+   }
+
+   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgSourceList *Sources=_lister->getCache()->list();
+   for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++) {
+      pkgIndexFile *Index;
+      if (Sources->FindIndex(i.File(),Index) == false)
+         continue;
+      return Index->ArchiveURI("");
+   }
+
+   return "";
+}
 
 string RPackage::getChangelogFile(pkgAcquire *fetcher)
 {
@@ -917,24 +936,47 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    if(verstr.find(':')!=verstr.npos)
       verstr=string(verstr, verstr.find(':')+1);
    char uri[512];
-   snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
+   string baseuri = getChangelogBaseURI();
+   snprintf(uri,512,"%schangelogs/pool/%s/%s/%s/%s_%s/changelog",
+                               baseuri.c_str(),
                                src_section.c_str(),
                                prefix.c_str(),
                                srcpkg.c_str(),
                                srcpkg.c_str(),
                                verstr.c_str());
 
-   //cout << "uri is: " << uri << endl;
-
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
-   ofstream out(filename.c_str());
-   out << "Failed to fetch the changelog for " << name() << endl;
-   out << "URI was: " << uri << endl;
-   out.close();
-   new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
 
-   fetcher->Run();
+   new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
+   cerr << "**DEBUG** origin: " << origin() << endl;
+   cerr << "**DEBUG** uri: " << uri << endl;
+   cerr << "**DEBUG** filename: " << filename << endl;
+
+   ofstream out(filename.c_str());
+   if(fetcher->Run() == pkgAcquire::Failed) {
+      out << "Failed to download the list of changes. " << endl;
+      out << "Please check your Internet connection." << endl;
+      // FIXME: Need to dequeue the item
+   } else {
+      struct stat filestatus;
+      stat(filename.c_str(), &filestatus );
+      cerr << filestatus.st_size << " bytes\n";
+      if (filestatus.st_size == 0) {
+      // FIXME: Use supportedOrigins
+         if(origin() == "Ubuntu") {
+            out << "The list of changes is not available yet.\n" << endl;
+            out << "Please use http://launchpad.net/ubuntu/+source/"<< srcpkg << 
+                "/" << verstr << "/+changelog" << endl;
+            out << "until the changes become available or try again later." << endl;
+         } else {
+            out << "This change is not coming from a source that supports changelogs.\n" << endl;
+            out << "Failed to fetch the changelog for " << name() << endl;
+            out << "URI was: " << uri << endl;
+         }
+      }
+   };
+   out.close();
 
    return filename;
 }

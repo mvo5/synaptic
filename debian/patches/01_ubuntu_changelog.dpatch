@@ -5,31 +5,44 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad bug.153966.debian~/common/rpackage.cc bug.153966.debian/common/rpackage.cc
---- bug.153966.debian~/common/rpackage.cc	2010-04-13 11:24:08.000000000 +0200
-+++ bug.153966.debian/common/rpackage.cc	2010-04-13 11:29:17.000000000 +0200
-@@ -895,8 +895,8 @@
- string RPackage::getChangelogBaseURI() 
+diff -urNad bug.153966.452564~/common/rpackage.cc bug.153966.452564/common/rpackage.cc
+--- bug.153966.452564~/common/rpackage.cc	2010-04-14 00:16:09.000000000 +0200
++++ bug.153966.452564/common/rpackage.cc	2010-04-14 00:20:52.000000000 +0200
+@@ -896,7 +896,7 @@
  {
+    char uri[512];
     //FIXME: get the supportedOrigins from pkgStatus
 -   if(origin() == "Debian") {
--       return "http://packages.debian.org/";
 +   if(origin() == "Ubuntu") {
-+       return "http://changelogs.ubuntu.com/";
-    }
+       string prefix;
+       string srcpkg = srcPackage();
  
-    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-@@ -962,9 +962,17 @@
+@@ -917,7 +917,7 @@
+       if(verstr.find(':')!=verstr.npos)
+          verstr=string(verstr, verstr.find(':')+1);
+ 
+-      snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
++      snprintf(uri,512,"http://changelogs.ubuntu.com/changelogs/pool/%s/%s/%s/%s_%s/changelog",
+                                src_section.c_str(),
+                                prefix.c_str(),
+                                srcpkg.c_str(),
+@@ -956,9 +956,23 @@
+       struct stat filestatus;
        stat(filename.c_str(), &filestatus );
-       cerr << filestatus.st_size << " bytes\n";
        if (filestatus.st_size == 0) {
 -         out << "This change is not coming from a source that supports changelogs.\n" << endl;
 -         out << "Failed to fetch the changelog for " << name() << endl;
 -         out << "URI was: " << uri << endl;
 +      // FIXME: Use supportedOrigins
 +         if(origin() == "Ubuntu") {
++            string verstr;
++            if(availableVersion() != NULL) 
++               verstr = availableVersion();
++            
++            if(verstr.find(':')!=verstr.npos)
++               verstr=string(verstr, verstr.find(':')+1);
 +            out << "The list of changes is not available yet.\n" << endl;
-+            out << "Please use http://launchpad.net/ubuntu/+source/"<< srcpkg << 
++            out << "Please use http://launchpad.net/ubuntu/+source/"<< srcPackage() << 
 +                "/" << verstr << "/+changelog" << endl;
 +            out << "until the changes become available or try again later." << endl;
 +         } else {
@@ -40,9 +53,9 @@ diff -urNad bug.153966.debian~/common/rpackage.cc bug.153966.debian/common/rpack
        }
     };
     out.close();
-diff -urNad bug.153966.debian~/common/rpackagestatus.cc bug.153966.debian/common/rpackagestatus.cc
---- bug.153966.debian~/common/rpackagestatus.cc	2010-04-13 10:56:20.000000000 +0200
-+++ bug.153966.debian/common/rpackagestatus.cc	2010-04-13 11:29:17.000000000 +0200
+diff -urNad bug.153966.452564~/common/rpackagestatus.cc bug.153966.452564/common/rpackagestatus.cc
+--- bug.153966.452564~/common/rpackagestatus.cc	2010-04-13 23:31:39.000000000 +0200
++++ bug.153966.452564/common/rpackagestatus.cc	2010-04-14 00:18:59.000000000 +0200
 @@ -69,7 +69,7 @@
        markUnsupported = true;
  

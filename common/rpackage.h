@@ -246,7 +246,7 @@ class RPackage {
    ~RPackage();
 
    private:
-   string getChangelogBaseURI();
+   string getChangelogURI();
 };
 
 

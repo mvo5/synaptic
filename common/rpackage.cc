@@ -892,58 +892,53 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    return filename;
 }
 
-string RPackage::getChangelogBaseURI() 
+string RPackage::getChangelogURI() 
 {
+   char uri[512];
    //FIXME: get the supportedOrigins from pkgStatus
    if(origin() == "Debian") {
-       return "http://packages.debian.org/";
-   }
+      string prefix;
+      string srcpkg = srcPackage();
 
-   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   pkgSourceList *Sources=_lister->getCache()->list();
-   for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++) {
-      pkgIndexFile *Index;
-      if (Sources->FindIndex(i.File(),Index) == false)
-         continue;
-      return Index->ArchiveURI("");
-   }
+      string src_section=section();
+      if(src_section.find('/')!=src_section.npos)
+         src_section=string(src_section, 0, src_section.find('/'));
+      else
+         src_section="main";
 
-   return "";
-}
+      prefix+=srcpkg[0];
+      if(srcpkg.size()>3 && srcpkg[0]=='l' && srcpkg[1]=='i' && srcpkg[2]=='b')
+         prefix=std::string("lib")+srcpkg[3];
 
-string RPackage::getChangelogFile(pkgAcquire *fetcher)
-{
-   string prefix;
-   string srcpkg = srcPackage();
-   string descr("Changelog for ");
-   descr+=name();
+      string verstr;
+      if(availableVersion() != NULL) 
+         verstr = availableVersion();
+      
+      if(verstr.find(':')!=verstr.npos)
+         verstr=string(verstr, verstr.find(':')+1);
 
-   string src_section=section();
-   if(src_section.find('/')!=src_section.npos)
-      src_section=string(src_section, 0, src_section.find('/'));
-   else
-      src_section="main";
-
-   prefix+=srcpkg[0];
-   if(srcpkg.size()>3 && srcpkg[0]=='l' && srcpkg[1]=='i' && srcpkg[2]=='b')
-      prefix=std::string("lib")+srcpkg[3];
-
-   string verstr;
-   if(availableVersion() != NULL) 
-      verstr = availableVersion();
-   
-   if(verstr.find(':')!=verstr.npos)
-      verstr=string(verstr, verstr.find(':')+1);
-   char uri[512];
-   string baseuri = getChangelogBaseURI();
-   snprintf(uri,512,"%schangelogs/pool/%s/%s/%s/%s_%s/changelog",
-                               baseuri.c_str(),
+      snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
                                src_section.c_str(),
                                prefix.c_str(),
                                srcpkg.c_str(),
                                srcpkg.c_str(),
                                verstr.c_str());
+   } else {
+       string pkgfilename = findTagFromPkgRecord("Filename");
+       pkgfilename = pkgfilename.substr(0, pkgfilename.find_last_of('.')) + ".changelog";
+       snprintf(uri,512,"http://%s/%s",
+               getCandidateOriginSiteUrl().c_str(),
+               pkgfilename.c_str());
+   }
+   return string(uri);
+}
 
+string RPackage::getChangelogFile(pkgAcquire *fetcher)
+{
+   string descr("Changelog for ");
+   descr+=name();
+
+   string uri = getChangelogURI();
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
 

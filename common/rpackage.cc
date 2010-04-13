@@ -767,7 +767,6 @@ bool RPackage::isTrusted()
          std::cerr << "Checking index: " << Index->Describe()
                    << "(Trusted=" << Index->IsTrusted() << ")\n";
       }
-
       if (Index->IsTrusted())
          return true;
    }
@@ -896,8 +895,8 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 string RPackage::getChangelogBaseURI() 
 {
    //FIXME: get the supportedOrigins from pkgStatus
-   if(origin() == "Ubuntu") {
-       return "http://changelogs.ubuntu.com/";
+   if(origin() == "Debian") {
+       return "http://packages.debian.org/";
    }
 
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
@@ -949,9 +948,9 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    string filename = RTmpDir()+"/tmp_cl";
 
    new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
-   cerr << "**DEBUG** origin: " << origin() << endl;
-   cerr << "**DEBUG** uri: " << uri << endl;
-   cerr << "**DEBUG** filename: " << filename << endl;
+   //cerr << "**DEBUG** origin: " << origin() << endl;
+   //cerr << "**DEBUG** uri: " << uri << endl;
+   //cerr << "**DEBUG** filename: " << filename << endl;
 
    ofstream out(filename.c_str());
    if(fetcher->Run() == pkgAcquire::Failed) {
@@ -961,19 +960,10 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    } else {
       struct stat filestatus;
       stat(filename.c_str(), &filestatus );
-      cerr << filestatus.st_size << " bytes\n";
       if (filestatus.st_size == 0) {
-      // FIXME: Use supportedOrigins
-         if(origin() == "Ubuntu") {
-            out << "The list of changes is not available yet.\n" << endl;
-            out << "Please use http://launchpad.net/ubuntu/+source/"<< srcpkg << 
-                "/" << verstr << "/+changelog" << endl;
-            out << "until the changes become available or try again later." << endl;
-         } else {
-            out << "This change is not coming from a source that supports changelogs.\n" << endl;
-            out << "Failed to fetch the changelog for " << name() << endl;
-            out << "URI was: " << uri << endl;
-         }
+         out << "This change is not coming from a source that supports changelogs.\n" << endl;
+         out << "Failed to fetch the changelog for " << name() << endl;
+         out << "URI was: " << uri << endl;
       }
    };
    out.close();

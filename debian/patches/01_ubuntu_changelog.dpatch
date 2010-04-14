@@ -5,21 +5,57 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad ubuntu~/common/rpackage.cc ubuntu/common/rpackage.cc
---- ubuntu~/common/rpackage.cc	2009-09-18 23:37:47.000000000 +0200
-+++ ubuntu/common/rpackage.cc	2009-09-18 23:40:55.071662698 +0200
-@@ -875,7 +875,7 @@
-    if(verstr.find(':')!=verstr.npos)
-       verstr=string(verstr, verstr.find(':')+1);
+diff -urNad bug.153966.452564~/common/rpackage.cc bug.153966.452564/common/rpackage.cc
+--- bug.153966.452564~/common/rpackage.cc	2010-04-14 00:16:09.000000000 +0200
++++ bug.153966.452564/common/rpackage.cc	2010-04-14 00:20:52.000000000 +0200
+@@ -896,7 +896,7 @@
+ {
     char uri[512];
--   snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
-+   snprintf(uri,512,"http://changelogs.ubuntu.com/changelogs/pool/%s/%s/%s/%s_%s/changelog",
+    //FIXME: get the supportedOrigins from pkgStatus
+-   if(origin() == "Debian") {
++   if(origin() == "Ubuntu") {
+       string prefix;
+       string srcpkg = srcPackage();
+ 
+@@ -917,7 +917,7 @@
+       if(verstr.find(':')!=verstr.npos)
+          verstr=string(verstr, verstr.find(':')+1);
+ 
+-      snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
++      snprintf(uri,512,"http://changelogs.ubuntu.com/changelogs/pool/%s/%s/%s/%s_%s/changelog",
                                 src_section.c_str(),
                                 prefix.c_str(),
                                 srcpkg.c_str(),
-diff -urNad ubuntu~/common/rpackagestatus.cc ubuntu/common/rpackagestatus.cc
---- ubuntu~/common/rpackagestatus.cc	2009-09-18 23:37:47.000000000 +0200
-+++ ubuntu/common/rpackagestatus.cc	2009-09-18 23:41:36.086660327 +0200
+@@ -956,9 +956,23 @@
+       struct stat filestatus;
+       stat(filename.c_str(), &filestatus );
+       if (filestatus.st_size == 0) {
+-         out << "This change is not coming from a source that supports changelogs.\n" << endl;
+-         out << "Failed to fetch the changelog for " << name() << endl;
+-         out << "URI was: " << uri << endl;
++      // FIXME: Use supportedOrigins
++         if(origin() == "Ubuntu") {
++            string verstr;
++            if(availableVersion() != NULL) 
++               verstr = availableVersion();
++            
++            if(verstr.find(':')!=verstr.npos)
++               verstr=string(verstr, verstr.find(':')+1);
++            out << "The list of changes is not available yet.\n" << endl;
++            out << "Please use http://launchpad.net/ubuntu/+source/"<< srcPackage() << 
++                "/" << verstr << "/+changelog" << endl;
++            out << "until the changes become available or try again later." << endl;
++         } else {
++            out << "This change is not coming from a source that supports changelogs.\n" << endl;
++            out << "Failed to fetch the changelog for " << name() << endl;
++            out << "URI was: " << uri << endl;
++         }
+       }
+    };
+    out.close();
+diff -urNad bug.153966.452564~/common/rpackagestatus.cc bug.153966.452564/common/rpackagestatus.cc
+--- bug.153966.452564~/common/rpackagestatus.cc	2010-04-13 23:31:39.000000000 +0200
++++ bug.153966.452564/common/rpackagestatus.cc	2010-04-14 00:18:59.000000000 +0200
 @@ -69,7 +69,7 @@
        markUnsupported = true;
  

@@ -666,7 +666,6 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
       // needed for the stateChange 
       exclude.push_back(pkg);
-      /* do the dirty deed */
       switch (action) {
          case PKG_KEEP:        // keep
             pkgKeepHelper(pkg);

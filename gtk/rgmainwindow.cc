@@ -650,6 +650,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    vector<RPackage *> exclude;
    vector<RPackage *> instPkgs;
    RPackage *pkg = NULL;
+   int flags;
 
    while (li != NULL) {
       pkgDepCache::ActionGroup group(*_lister->getCache()->deps());
@@ -658,6 +659,8 @@ void RGMainWindow::pkgAction(RGPkgAction action)
       li = g_list_next(li);
       if (pkg == NULL)
          continue;
+
+      flags = pkg->getFlags();
 
       pkg->setNotify(false);
 
@@ -669,24 +672,34 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             pkgKeepHelper(pkg);
             break;
          case PKG_INSTALL:     // install
-            instPkgs.push_back(pkg);
-            pkgInstallHelper(pkg, false);
+            // install only if not installed
+            if(!(flags & RPackage::FInstalled))
+               pkgInstallHelper(pkg, false);
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
-            pkgInstallHelper(pkg, false);
+            if(!(flags & RPackage::FInstalled))
+               pkgInstallHelper(pkg, false);
             break;
          case PKG_REINSTALL:      // reinstall
-	    instPkgs.push_back(pkg);
-	    pkgInstallHelper(pkg, false, true);
-	    break;
+            // Only reinstall installable packages and non outdated packages
+            if(flags & RPackage::FInstalled 
+               && !(flags & RPackage::FNotInstallable)
+               && !(flags & RPackage::FOutdated)) {
+               instPkgs.push_back(pkg);
+               pkgInstallHelper(pkg, false, true);
+            }
+            break;
          case PKG_DELETE:      // delete
-            pkgRemoveHelper(pkg);
+            if(flags & RPackage::FInstalled)
+               pkgRemoveHelper(pkg);
             break;
          case PKG_PURGE:       // purge
-            pkgRemoveHelper(pkg, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true);
             break;
          case PKG_DELETE_WITH_DEPS:
-            pkgRemoveHelper(pkg, true, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true, true);
             break;
          default:
             cout << "uh oh!!!!!!!!!" << endl;

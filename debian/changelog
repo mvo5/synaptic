@@ -1,4 +1,4 @@
-synaptic (0.63.1ubuntu4) UNRELEASED; urgency=low
+synaptic (0.63.1ubuntu4) lucid; urgency=low
 
   [ Michael Vogt ]
   * po/it.po:
@@ -16,13 +16,18 @@ synaptic (0.63.1ubuntu4) UNRELEASED; urgency=low
   * gtk/rgmainwindow.cc: 
     - check package flags when applying an action to a package list
       (LP: #513460)
+  * common/rpackagelister.cc
+    - workaround to allow searching for terms with an hyphen (LP: #282995)
+  * common/rpackagelister.cc:
+    - xapianSearch: do not expand the first term when replacing the hyphen
+    to reduce size of the resultse
   
   [ Oliver Joos ]
   * common/rconfiguration.cc:
     - Fix to store setting "Consider recommended packages as dependencies"
       (closes debian #440027 and LP: #154349)
   
- -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Apr 2010 01:41:06 +0200
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Apr 2010 01:59:51 +0200
   
 synaptic (0.63.1ubuntu3) lucid; urgency=low
 

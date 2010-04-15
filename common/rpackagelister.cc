@@ -1952,103 +1952,92 @@ bool RPackageLister::limitBySearch(string searchString)
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
    //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
-   string s;
-   string originalSearchString = unsplitSearchString;
-   
+   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", defaultQualityCutoff);
+
    ept::textsearch::TextSearch *ts = _textsearch;
    if(!ts || !ts->hasData())
       return false;
 
    try {
+      int maxItems = ts->db().get_doccount();
       Xapian::Enquire enquire(ts->db());
       Xapian::QueryParser parser;
+      parser.set_database(ts->db());
       parser.add_prefix("name","XP");
       parser.add_prefix("section","XS");
-      Xapian::Query query = parser.parse_query(unsplitSearchString);
-      enquire.set_query(query);
+      // default op is AND to narrow down the resultset
+      parser.set_default_op( Xapian::Query::OP_AND );
    
-      // Get a set of tags to expand the query
-      vector<string> expand = ts->expand(enquire);
-   
-      // now expand the query by adding the searching string as a package
-      // name so that those searches appear erlier
-      for (int i=0;i<originalSearchString.size();i++) 
-      {
-         if(isblank(originalSearchString[i])) {
-            if(s.size() > 0) {
-               if(_config->FindB("Debug::Synaptic::Xapian",false))
-                  std::cerr << "adding to querry: XP" << s << std::endl;
-               expand.push_back("XP"+s);
-            }
-            s="";
-         } else 
-            s+=originalSearchString[i];
+      /* Workaround to allow searching an hyphenated package name using a prefix (name:)
+       * LP: #282995
+       * Xapian currently doesn't support wildcard for boolean prefix and 
+       * doesn't handle implicit wildcards at the end of hypenated phrases.
+       *
+       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu res*'
+       * however 'name:(ubuntu* res*) won't return any result because the 
+       * index is built with the full package name
+       */
+      // Always search for the package name
+      string xpString = "name:";
+      string::size_type pos = unsplitSearchString.find_first_of(" ,;");
+      if (pos > 0) {
+          xpString += unsplitSearchString.substr(0,pos);
+      } else {
+          xpString += unsplitSearchString;
       }
-      // now add to the last found string
+      Xapian::Query xpQuery = parser.parse_query(xpString);
+
+      pos = 0;
+      while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
+         unsplitSearchString.replace(pos, 1, " ");
+         pos+=1;
+      }
+
       if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-         std::cerr << "adding: XP" << s << std::endl;
-      expand.push_back("XP"+s);
-   
-      // the last string is always expanded to get better search as you
-      // type results 
-      if (s.size() > 0) {
-         Xapian::TermIterator I;
-         int j=0;
-   
-         for(I=_textsearch->db().allterms_begin(s); 
-             I != _textsearch->db().allterms_end(s); 
-             I++) 
-         {
-            if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-               std::cerr << "expanded terms: " << *I << std::endl;
-            expand.push_back(*I);
-            expand.push_back("XP"+*I);
-            // do not expand all alt terms, they can be huge > 100
-            // and make the search very slow
-            j++;
-            if (j > maxAltTerms)
-               break;
-         }
+         std::cerr << "searching for : " << unsplitSearchString << std::endl;
+      
+      // Build the query
+      // apply a weight factor to XP term to increase relevancy on package name
+      Xapian::Query query = parser.parse_query(unsplitSearchString, 
+         Xapian::QueryParser::FLAG_WILDCARD |
+         Xapian::QueryParser::FLAG_BOOLEAN |
+         Xapian::QueryParser::FLAG_PARTIAL);
+      query = Xapian::Query(Xapian::Query::OP_OR, query, 
+              Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
+      enquire.set_query(query);
+      Xapian::MSet matches = enquire.get_mset(0, maxItems);
+
+      if(_config->FindB("Debug::Synaptic::Xapian",false)) {
+         cerr << "enquire: " << enquire.get_description() << endl;
+         cerr << "matches estimated: " << matches.get_matches_estimated() << " results found" << endl;
       }
-   
-   
-      // Build the expanded query
-      Xapian::Query expansion(Xapian::Query::OP_OR, expand.begin(), expand.end());
-      enquire.set_query(Xapian::Query(Xapian::Query::OP_OR, query, expansion));
-   
+
       // Retrieve the results
-      bool done = false;
       int top_percent = 0;
       _viewPackages.clear();
-      for (size_t pos = 0; !done; pos += 20)
+      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
       {
-         Xapian::MSet matches = enquire.get_mset(pos, 20);
-         if (matches.size() < 20)
-            done = true;
-         for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+         RPackage* pkg = getPackage(i.get_document().get_data());
+         // Filter out results that apt doesn't know
+         if (!pkg || !_selectedView->hasPackage(pkg))
+            continue;
+
+         // Save the confidence interval of the top value, to use it as
+         // a reference to compute an adaptive quality cutoff
+         if (top_percent == 0)
+            top_percent = i.get_percent();
+   
+         // Stop producing if the quality goes below a cutoff point
+         if (i.get_percent() < qualityCutoff * top_percent / 100)
          {
-            RPackage* pkg = getPackage(i.get_document().get_data());
-            // Filter out results that apt doesn't know
-            if (!pkg || !_selectedView->hasPackage(pkg))
-               continue;
-   
-            // Save the confidence interval of the top value, to use it as
-            // a reference to compute an adaptive quality cutoff
-            if (top_percent == 0)
-               top_percent = i.get_percent();
-   
-            // Stop producing if the quality goes below a cutoff point
-            if (i.get_percent() < qualityCutoff * top_percent / 100)
-            {
-               //cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
-               done = true;
-               break;
-            }
-   
-            //cerr << "found: " << pkg->name() << endl;
-            _viewPackages.push_back(pkg);
+            cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+            break;
          }
-      }
+   
+         if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+            cerr << i.get_rank() + 1 << ": " << i.get_percent() << "% docid=" << *i << "	[" << i.get_document().get_data() << "]" << endl;
+         _viewPackages.push_back(pkg);
+         }
       // re-apply sort criteria only if an explicit search is set
       if (_sortMode != LIST_SORT_DEFAULT)
           sortPackages(_sortMode);

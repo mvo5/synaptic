@@ -671,8 +671,9 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             pkgKeepHelper(pkg);
             break;
          case PKG_INSTALL:     // install
-            // install only if not installed
-            if(!(flags & RPackage::FInstalled))
+            // install only if not installed or outdated (upgrade)
+            if(!(flags & RPackage::FInstalled) 
+               || (flags & RPackage::FOutdated))
                pkgInstallHelper(pkg, false);
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version

@@ -142,7 +142,7 @@ void RGMainWindow::changeView(int view, string subView)
       if(gtk_tree_model_get_iter_first(model, &iter)) {
          do {
             gtk_tree_model_get(model, &iter, 0, &str, -1);
-            if(strcoll(str,subView.c_str()) == 0) {
+            if(strcoll(str, MarkupEscapeString(subView).c_str()) == 0) {
                gtk_tree_selection_select_iter(selection, &iter);
                break;
             }
@@ -168,6 +168,9 @@ void RGMainWindow::refreshSubViewList()
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
    vector<string> subViews = _lister->getSubViews();
+
+   for(unsigned int i=0; i<subViews.size(); i++)
+       subViews[i] = MarkupEscapeString(subViews[i]);
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
    subViews.insert(subViews.begin(), str);
@@ -2764,7 +2767,7 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    // at us, see LP: #38397 for more information
    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
 
-   string selected = me->selectedSubView();
+   string selected = MarkupUnescapeString(me->selectedSubView());
    me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);
    me->setBusyCursor(false);

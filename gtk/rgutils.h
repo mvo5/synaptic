@@ -56,5 +56,7 @@ GtkWidget *get_gtk_image(const char *name, int size=16);
 
 string SizeToStr(double Bytes);
 
+string MarkupEscapeString(string str);
+string MarkupUnescapeString(string str);
 
 #endif

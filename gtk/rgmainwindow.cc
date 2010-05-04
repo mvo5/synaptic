@@ -2150,7 +2150,7 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
       else if (flags & RPackage::FInstall)
-         me->pkgAction(PKG_DELETE);
+         me->pkgAction(PKG_KEEP);
    } else if (flags & RPackage::FOutdated) {
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);

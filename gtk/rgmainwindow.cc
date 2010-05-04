@@ -682,8 +682,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             }
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
-            if(!(flags & RPackage::FInstalled))
-               pkgInstallHelper(pkg, false);
+            pkgInstallHelper(pkg, false);
             break;
          case PKG_REINSTALL:      // reinstall
             // Only reinstall installable packages and non outdated packages

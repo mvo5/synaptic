@@ -142,7 +142,7 @@ void RGMainWindow::changeView(int view, string subView)
       if(gtk_tree_model_get_iter_first(model, &iter)) {
          do {
             gtk_tree_model_get(model, &iter, 0, &str, -1);
-            if(strcoll(str,subView.c_str()) == 0) {
+            if(strcoll(str, MarkupEscapeString(subView).c_str()) == 0) {
                gtk_tree_selection_select_iter(selection, &iter);
                break;
             }
@@ -168,6 +168,9 @@ void RGMainWindow::refreshSubViewList()
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
    vector<string> subViews = _lister->getSubViews();
+
+   for(unsigned int i=0; i<subViews.size(); i++)
+       subViews[i] = MarkupEscapeString(subViews[i]);
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
    subViews.insert(subViews.begin(), str);
@@ -650,6 +653,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    vector<RPackage *> exclude;
    vector<RPackage *> instPkgs;
    RPackage *pkg = NULL;
+   int flags;
 
    while (li != NULL) {
       pkgDepCache::ActionGroup group(*_lister->getCache()->deps());
@@ -659,34 +663,47 @@ void RGMainWindow::pkgAction(RGPkgAction action)
       if (pkg == NULL)
          continue;
 
+      flags = pkg->getFlags();
+
       pkg->setNotify(false);
 
       // needed for the stateChange 
       exclude.push_back(pkg);
-      /* do the dirty deed */
       switch (action) {
          case PKG_KEEP:        // keep
             pkgKeepHelper(pkg);
             break;
          case PKG_INSTALL:     // install
-            instPkgs.push_back(pkg);
-            pkgInstallHelper(pkg, false);
+            // install only if not installed or outdated (upgrade)
+            if(!(flags & RPackage::FInstalled) 
+               || (flags & RPackage::FOutdated)) {
+               instPkgs.push_back(pkg);
+               pkgInstallHelper(pkg, false);
+            }
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
             break;
          case PKG_REINSTALL:      // reinstall
-	    instPkgs.push_back(pkg);
-	    pkgInstallHelper(pkg, false, true);
-	    break;
+            // Only reinstall installable packages and non outdated packages
+            if(flags & RPackage::FInstalled 
+               && !(flags & RPackage::FNotInstallable)
+               && !(flags & RPackage::FOutdated)) {
+               instPkgs.push_back(pkg);
+               pkgInstallHelper(pkg, false, true);
+            }
+            break;
          case PKG_DELETE:      // delete
-            pkgRemoveHelper(pkg);
+            if(flags & RPackage::FInstalled)
+               pkgRemoveHelper(pkg);
             break;
          case PKG_PURGE:       // purge
-            pkgRemoveHelper(pkg, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true);
             break;
          case PKG_DELETE_WITH_DEPS:
-            pkgRemoveHelper(pkg, true, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true, true);
             break;
          default:
             cout << "uh oh!!!!!!!!!" << endl;
@@ -1390,7 +1407,7 @@ void RGMainWindow::buildInterface()
    button = glade_xml_get_widget(_gladeXML, "button_procceed");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
-
+#if 1
    button = glade_xml_get_widget(_gladeXML, "button_details");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("View package properties"), "");
@@ -1398,7 +1415,7 @@ void RGMainWindow::buildInterface()
    button = glade_xml_get_widget(_gladeXML, "button_search");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Search for packages"), "");
-
+#endif
    GtkWidget *pkgCommonTextView;
    pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
    assert(pkgCommonTextView);
@@ -2141,7 +2158,7 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
       else if (flags & RPackage::FInstall)
-         me->pkgAction(PKG_DELETE);
+         me->pkgAction(PKG_KEEP);
    } else if (flags & RPackage::FOutdated) {
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
@@ -2757,7 +2774,7 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    // at us, see LP: #38397 for more information
    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
 
-   string selected = me->selectedSubView();
+   string selected = MarkupUnescapeString(me->selectedSubView());
    me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);
    me->setBusyCursor(false);

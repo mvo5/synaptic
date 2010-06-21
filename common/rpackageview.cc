@@ -256,7 +256,7 @@ bool RPackageViewSearch::setSelected(string name)
    if (_view.find(name) == _view.end()) {
       map<string, searchItem>::iterator J = searchHistory.find(name);
       if (J != searchHistory.end()) {
-	 cerr << "found in search histroy, reapplying search" << endl;
+	 //cerr << "found in search history, reapplying search" << endl;
 	 string s;
 	 OpProgress progress;
 	 for(int i=0;i < (*J).second.searchStrings.size();i++)

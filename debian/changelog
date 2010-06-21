@@ -1,4 +1,4 @@
-synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
+synaptic (0.63.1ubuntu10) UNRELEASED; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
@@ -36,6 +36,114 @@ synaptic (0.63.1ubuntu2) UNRELEASED; urgency=low
   * Sort by relevancy when doing quicksearch and no search column is set.
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 18 Feb 2010 09:29:15 +0100
+
+synaptic (0.63.1ubuntu7) lucid-proposed; urgency=low
+
+  [ Michael Vogt ]
+  * common/rpackageview.cc:
+    - silence debug output (thanks to Bob Huffman)
+  
+  [ Jean-Baptiste Lallement ]
+  * gtk/rgmainwindow.cc, gtk/rgutils.{cc,h}:
+    - un/escape markup when getting/setting subviews name to avoid markup
+      insertion in GtkTree items (LP: #567172) 
+  * gtk/rgmainwindow.cc:
+    - fix force version. regression over beta2 (LP: #568925)
+  * gtk/rgmainwindow.cc:
+    - fix double-click doesn't unmark a previously marked for install/upgrade
+      package. regression over beta2 (LP: #566779)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 04 May 2010 17:10:50 +0200
+
+synaptic (0.63.1ubuntu6) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]  
+  * gtk/rgmainwindow.cc:
+    - fix 'broken package installation' regression over beta2 (LP: #565816)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 19 Apr 2010 11:24:00 +0200
+  
+synaptic (0.63.1ubuntu5) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]
+  * gtk/rgmainwindow.cc: 
+    - Fix 'Mark for upgrade' regression over beta2 (LP: #564320)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 16 Apr 2010 12:04:36 +0200
+
+synaptic (0.63.1ubuntu4) lucid; urgency=low
+
+  [ Michael Vogt ]
+  * po/it.po:
+    - updated, thanks to Milo Casagrande  (closes: #575685)
+  
+  [ Jean-Baptiste Lallement ]
+  * common/rpackage.{cc,h}:
+    - Use simplified URI for third party changelogs (LP: #45129)
+  * debian/patches/01_ubuntu_changelog.dpatch:
+    - update patch to support third party changelogs
+  * common/rpackage.{cc,h}:
+    - Support third party changelogs by using ArchiveURI() (LP: #153966)
+    - Display LP links when changelog is not available for download 
+      (LP: #452564)
+  * gtk/rgmainwindow.cc: 
+    - check package flags when applying an action to a package list
+      (LP: #513460)
+  * common/rpackagelister.cc
+    - workaround to allow searching for terms with an hyphen (LP: #282995)
+  * common/rpackagelister.cc:
+    - xapianSearch: do not expand the first term when replacing the hyphen
+    to reduce size of the resultse
+  
+  [ Oliver Joos ]
+  * common/rconfiguration.cc:
+    - Fix to store setting "Consider recommended packages as dependencies"
+      (closes debian #440027 and LP: #154349)
+  
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Apr 2010 01:59:51 +0200
+  
+synaptic (0.63.1ubuntu3) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]
+  * * gtk/rgpreferenceswindow.cc: escape '@/:%' in proxy auth string (LP: 130289)
+  * Sort by relevancy when doing quicksearch and no search column is set.
+  * debian/patches/10_ubuntu_maintenance_gui.dpatch:
+  - Fix mixed-language maintenance status when LC_TIME differs from LC_MESSAGES
+    (LP: 511890)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 31 Mar 2010 22:59:36 +0200
+
+synaptic (0.63.1ubuntu2) lucid; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  * build from the lp:~ubuntu-core-dev/synaptic/lucid branch
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+  * common/rpackagelister.cc:
+    - in RPackageLister::xapianSearch() catch xapian exception to
+      prevent crash when xapian interprets search string as a syntax 
+      error
+    - fix sorting in xapian search mode (LP: #508220)
+  * gtk/gsynaptic.cc
+    - Start with focus set on fast search entry (LP: #326155)
+  * Select first subview on view change (LP: #403165)
+  * Fix Gtk-CRITICAL when the fast search entry is cleared (LP: #385739)
+  * Ignore DEL accelerator when fast search has focus (LP: #294178)
+  * Do not start help viewer as root but as SUDO_USER (LP: #110224)
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+ 
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
 
 synaptic (0.63.1ubuntu1) lucid; urgency=low
 
@@ -563,23 +671,6 @@ synaptic (0.62.1ubuntu2) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu1) intrepid; urgency=low
 
-  * po/es.po:
-    - updated Spanish translation (thanks to
-       Francisco Javier Cuadrado)
-  * debian/control:
-    - added "menu" to the recommends (closes: #478250)
-  * gtk/glade/window_main.glade:
-    - make the main vpane shinkable
-  * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
-      action in the listview
-  * debian/control:
-    - switch bzr branch to bzr.debian.org
-
- -- Michael Vogt <mvo@debian.org>  Tue, 18 Jun 2008 10:17:31 +0200
-
-synaptic (0.62.1ubuntu1) intrepid; urgency=low
-
   * merge from debian, remaining changes:
     - ubuntu icons for supported applications
     - launchpad-integration
@@ -735,43 +826,6 @@ synaptic (0.61ubuntu1) hardy; urgency=low
     - x-ubuntu-gettext-domain in desktop file
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 13 Dec 2007 15:49:12 +0100
-
-synaptic (0.61) unstable; urgency=low
-
-  [ Michael Vogt ]
-  * fix missing Basque translation (closes: #429460)
-  * updatd Basque translation (thanks to mikel paskual)
-  * update galician translation (thanks to Ignacio Casal)
-  * updated Czech translation (thanks to Vit Pelcak)
-  * updated Finish translation (thanks to Timo Jyrinki)
-  * po/POTFILES.in, po/POTFILES.skip:
-    - updated so that intltool-update -m is happy again (thanks
-      to Nacho)
-  * po/be@latin.po:
-    - merged translation from Ihar H
-  * po/cs.po:
-    - bugfixes by Vít Pelčák
-  * gtk/rgmainwindow.cc:
-    - add missing space in the wget script (thanks to Avi Rozen)
-      (closes: #435682)
-  * make it build with g++ 4.3
-  * debian/synaptic.menu:
-    - fix menu section (thanks to Bill Allomber, closes: #445025)
-  * gtk/rgmainwindow.cc:
-    - fix crash in cbInstallFromVersion()
-  * gtk/rgfetchprogress.{cc,h}:
-    - fix crash in download progress on theme changes
-  * added XS-Vcs-Bzr header
-
-  [ Diego Escalante Urrelo ]
-  * The menu entry for Synaptic is back in System->Administration. It also  
-    removes the legacy Applications category.
-    closes: #429895
-
-  [ Loic Minier ]
-  * Set has_focus on the close button of the welcome dialog; closes: #148695.
-
- -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:00:51 +0100
 
 synaptic (0.61) unstable; urgency=low
 
@@ -1031,15 +1085,6 @@ synaptic (0.57.11.1ubuntu1) feisty; urgency=low
   * merged with debian
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Dec 2006 17:30:46 +0100
-
-synaptic (0.57.11.1) unstable; urgency=high
-
-  * gtk/rgmainwindow.cc:
-    - fix crash in "Lock package"
-  * gtk/rgpreferenceswindow.cc:
-    - add default font to fix crash
-
- -- Michael Vogt <mvo@debian.org>  Mon, 18 Dec 2006 10:52:08 +0100
 
 synaptic (0.57.11.1) unstable; urgency=high
 
@@ -1529,13 +1574,6 @@ synaptic (0.55+cvs20050224-1) hoary; urgency=low
   * New svn snapshot
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 24 Feb 2005 14:02:49 +0100
-
-synaptic (0.55+cvs20050218-1) hoary; urgency=low
-  
-  * restored the ubuntu icon, there was a quoting error in the 
-    debian/rules file
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
 
 synaptic (0.55+cvs20050218-1) hoary; urgency=low
   

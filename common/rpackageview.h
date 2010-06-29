@@ -30,8 +30,7 @@
 #include <map>
 
 #ifdef WITH_EPT
-#include <ept/textsearch/textsearch.h>
-#include <xapian.h>
+#include <ept/axi/axi.h>
 #endif
 
 #include "rpackage.h"

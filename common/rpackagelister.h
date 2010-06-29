@@ -37,7 +37,7 @@
 #include <apt-pkg/acquire.h>
 
 #ifdef WITH_EPT
-#include <ept/textsearch/textsearch.h>
+#include <ept/axi/axi.h>
 #endif
 
 #include "rpackagecache.h"
@@ -48,14 +48,6 @@
 #include "config.h"
 
 using namespace std;
-
-#ifdef WITH_EPT
-namespace ept {
-namespace textsearch {
-class TextSearch;
-}
-}
-#endif
 
 class OpProgress;
 class RPackageCache;
@@ -115,7 +107,7 @@ class RPackageLister {
    OpProgress *_progMeter;
 
 #ifdef WITH_EPT
-   ept::textsearch::TextSearch *_textsearch;
+   Xapian::Database *_xapianDatabase;
 #endif
 
 
@@ -348,7 +340,7 @@ class RPackageLister {
 
    RPackageCache* getCache() { return _cache; };
 #ifdef WITH_EPT
-   ept::textsearch::TextSearch* textsearch() { return _textsearch; }
+   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
    bool xapianIndexNeedsUpdate();
    bool openXapianIndex();
 #endif

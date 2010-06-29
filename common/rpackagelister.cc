@@ -80,7 +80,7 @@ using namespace std;
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
 #ifdef WITH_EPT
-   , _textsearch(0)
+   , _xapianDatabase(0)
 #endif
 {
    _cache = new RPackageCache();
@@ -436,7 +436,7 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 
    // check the xapian index
    if(FileExists("/usr/sbin/update-apt-xapian-index") && 
-      (!_textsearch || !_textsearch->hasData())) {
+      (!_xapianDatabase )) {
       if(_config->FindB("Debug::Synaptic::Xapian",false))
 	 std::cerr << "xapain index not build yet" << std::endl;
       return true;
@@ -445,10 +445,10 @@ bool RPackageLister::xapianIndexNeedsUpdate()
    // compare timestamps, rebuild everytime, its now cheap(er) 
    // because we use u-a-x-i --update
    stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-   if(_textsearch->timestamp() < buf.st_mtime) {
+   if(ept::axi::timestamp() < buf.st_mtime) {
       if(_config->FindB("Debug::Synaptic::Xapian",false))
 	 std::cerr << "xapian outdated " 
-		   << buf.st_mtime - _textsearch->timestamp()  << std::endl;
+		   << buf.st_mtime - ept::axi::timestamp()  << std::endl;
       return true;
    }
 
@@ -457,10 +457,10 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 
 bool RPackageLister::openXapianIndex()
 {
-   if(_textsearch)
-      delete _textsearch;
+   if(_xapianDatabase)
+      delete _xapianDatabase;
    try {
-      _textsearch = new ept::textsearch::TextSearch;
+      _xapianDatabase = new Xapian::Database(ept::axi::path_db());
    } catch (Xapian::DatabaseOpeningError) {
       return false;
    };
@@ -1943,9 +1943,8 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 bool RPackageLister::limitBySearch(string searchString)
 {
    //cerr << "limitBySearch(): " << searchString << endl;
-   if(!_textsearch->hasData())
-      return false;
-
+    if (ept::axi::timestamp() == 0)
+        return false;
    return xapianSearch(searchString);
 }
 
@@ -1954,15 +1953,14 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
    int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", defaultQualityCutoff);
 
-   ept::textsearch::TextSearch *ts = _textsearch;
-   if(!ts || !ts->hasData())
-      return false;
+    if (ept::axi::timestamp() == 0) 
+        return false;
 
    try {
-      int maxItems = ts->db().get_doccount();
-      Xapian::Enquire enquire(ts->db());
+      int maxItems = _xapianDatabase->get_doccount();
+      Xapian::Enquire enquire(*_xapianDatabase);
       Xapian::QueryParser parser;
-      parser.set_database(ts->db());
+      parser.set_database(*_xapianDatabase);
       parser.add_prefix("name","XP");
       parser.add_prefix("section","XS");
       // default op is AND to narrow down the resultset

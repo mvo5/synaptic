@@ -1752,8 +1752,7 @@ void RGMainWindow::buildInterface()
 
    // only enable fast search if its usable
 #ifdef WITH_EPT
-   if(!_lister->textsearch() || 
-      !_lister->textsearch()->hasData() || 
+   if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
    }

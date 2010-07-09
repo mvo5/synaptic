@@ -23,7 +23,7 @@
 #include "config.h"
 
 #ifdef WITH_DPKG_STATUSFD
-
+#include <math.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/fcntl.h>
@@ -523,6 +523,7 @@ void RGDebInstallProgress::updateInterface()
 	    conffile(pkg, split[3]);
 	 } else {
 	    _startCounting = true;
+            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 0);
 	 }
 
 	 // reset the urgency hint, something changed on the terminal
@@ -531,7 +532,8 @@ void RGDebInstallProgress::updateInterface()
 
 	 float val = atof(percent)/100.0;
  	 //cout << "progress: " << val << endl;
-	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
+         if (fabs(val-gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_pbarTotal))) > 0.1)
+            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 
 	 if(str!=NULL)
 	    gtk_label_set_text(GTK_LABEL(_label_status),utf8(str));

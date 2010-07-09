@@ -23,7 +23,7 @@
  */
 
 #include "config.h"
-
+#include <math.h>
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/acquire-worker.h>
 #include <apt-pkg/strutl.h>
@@ -315,8 +315,10 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    if(CurrentItems == TotalItems)
       percent=100.0;
 
-   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
-                                 percent / 100.0);
+   if (fabs(percent*100.0-
+            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))) > 0.1)
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
+                                    percent / 100.0);
 
    unsigned long ETA =
       (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);

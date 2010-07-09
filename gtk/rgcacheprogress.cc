@@ -20,6 +20,8 @@
  * USA
  */
 
+#include <math.h>
+
 #include "config.h"
 
 #include "rgcacheprogress.h"
@@ -66,7 +68,11 @@ void RGCacheProgress::Update()
    if (MajorChange)
       gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-   gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), (float)Percent / 100.0);
+   // only call set_fraction when the changes are noticable (0.1%)
+   if (fabs(Percent-
+           gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog))) > 0.1)
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 
+                                    (float)Percent / 100.0);
 
    RGFlushInterface();
 

@@ -70,7 +70,7 @@ void RGCacheProgress::Update()
 
    // only call set_fraction when the changes are noticable (0.1%)
    if (fabs(Percent-
-           gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog))) > 0.1)
+            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog))*100.0) > 0.1)
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 
                                     (float)Percent / 100.0);
 

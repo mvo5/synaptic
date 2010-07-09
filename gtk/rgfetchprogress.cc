@@ -293,6 +293,25 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    if (TotalBytes > 0 && !GTK_WIDGET_VISIBLE(_win))
       show();
 
+   float percent =
+      long (double ((CurrentBytes + CurrentItems) * 100.0) /
+            double (TotalBytes + TotalItems));
+
+   // work-around a stupid problem with libapt
+   if(CurrentItems == TotalItems)
+      percent=100.0;
+
+
+   if (fabsf(percent-
+            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))*100.0) < 0.1) 
+   {
+      RGFlushInterface();
+      return !_cancelled;
+   }
+
+   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
+                                 percent / 100.0);
+
    for (pkgAcquire::Worker * I = Owner->WorkersBegin(); I != 0;
         I = Owner->WorkerStep(I)) {
 
@@ -307,18 +326,6 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
          updateStatus(*I->CurrentItem, 100);
 
    }
-
-   float percent =
-      long (double ((CurrentBytes + CurrentItems) * 100.0) /
-            double (TotalBytes + TotalItems));
-   // work-around a stupid problem with libapt
-   if(CurrentItems == TotalItems)
-      percent=100.0;
-
-   if (fabs(percent*100.0-
-            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))) > 0.1)
-      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
-                                    percent / 100.0);
 
    unsigned long ETA =
       (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);

@@ -2654,10 +2654,12 @@ void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
       exit(1);
    }
 
-   me->setTreeLocked(FALSE);
    me->_lister->registerObserver(me);
+   me->setTreeLocked(FALSE);
    me->refreshTable();
+   me->refreshSubViewList();
    me->setInterfaceLocked(FALSE);
+   me->setStatusText();
 }
 
 

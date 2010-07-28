@@ -1,3 +1,34 @@
+synaptic (0.63.2) UNRELEASED; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  * po/it.po:
+    - updated, thanks to Milo Casagrande  (closes: #575685)
+  * po/et.po:
+    - added, thanks to G. Tabbernuk
+  
+  [ Bilal Akhtar ]
+  * debian/patches/11-lp-155930:
+    - Modify gtk/rgmainwindow.cc to populate package list again after 
+     'Unmark All' is selected. (LP: #155930)
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+  * add tooltip to 'properties' and 'search' buttons (LP: #202681)
+  * * gtk/rgpreferenceswindow.cc: escape '@/:%' in proxy auth string (LP: 130289)
+ 
+ -- Michael Vogt <mvo@debian.org>  Wed, 28 Jul 2010 11:40:15 +0200
+
 synaptic (0.63.1) unstable; urgency=low
 
   * po/pt_BR.po:

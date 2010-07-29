@@ -1,5 +1,8 @@
-synaptic (0.63.3) UNRELEASED; urgency=low
+synaptic (0.70) UNRELEASED; urgency=low
 
+  * New upstream release that merges all changes from 
+    Debian and Ubuntu into a single tree again. This include libept 
+    support and lots of fixes.
   * po/sl.po:
     - updated, thanks to Matej Urbančič 
 
@@ -36,6 +39,206 @@ synaptic (0.63.2) unstable; urgency=low
  
  -- Michael Vogt <mvo@debian.org>  Wed, 28 Jul 2010 11:40:15 +0200
 
+synaptic (0.63.1ubuntu13) maverick; urgency=low
+
+  [ Michael Vogt ]
+  * rebuild against latest libapt
+  * common/rpackagelister.{cc,h}:
+    - move quality cutoff into the .cc file to workaround ld crash
+  * gtk/rgpackagestatus.cc:
+    - remove no longer needed gdkx.h include (that causes compiler
+      failures with the latest libapt)
+
+  [ Bilal Akhtar ]
+  * debian/patches/11-lp-155930:
+    - Modify gtk/rgmainwindow.cc to populate package list again after 
+     'Unmark All' is selected. (LP: #155930)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 29 Jul 2010 14:13:46 +0200
+
+synaptic (0.63.1ubuntu12) maverick; urgency=low
+
+  * gtk/rgfetchprogress.cc:
+    - do less redrawing in the pulse() code
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 09 Jul 2010 13:09:42 +0200
+
+synaptic (0.63.1ubuntu11) maverick; urgency=low
+
+  [ Martin Pitt ]
+  * debian/control: Replace obsolete scrollkeeper package with rarian-compat,
+    and drop it from Depends to Recommends.
+  
+  [ Jean-Baptiste Lallement ]
+  * port to libept 1.0
+  
+  [ Michael Vogt ]
+  * limit amount of calls to set_fraction() to avoid too high cpu
+    usage on nouveau
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 09 Jul 2010 10:06:55 +0200
+
+synaptic (0.63.1ubuntu10) maverick; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+  * common/rpackagelister.cc:
+    - in RPackageLister::xapianSearch() catch xapian exception to
+      prevent crash when xapian interprets search string as a syntax 
+      error
+    - fix sorting in xapian search mode (LP: #508220)
+  * gtk/gsynaptic.cc
+    - Start with focus set on fast search entry (LP: #326155)
+  * Select first subview on view change (LP: #403165)
+  * Fix Gtk-CRITICAL when the fast search entry is cleared (LP: #385739)
+  * Ignore DEL accelerator when fast search has focus (LP: #294178)
+  * Do not start help viewer as root but as SUDO_USER (LP: #110224)
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+  * add tooltip to 'properties' and 'search' buttons (LP: #202681)
+  * gtk/glade/window_main.glade:
+    - put the fastsearch entry out of the toolbar (LP: #502582)
+    - move the fastsearch entry to the upper-right (LP: #290524)
+  * gtk/rgfetchprogress.cc:
+    - change "Download rate: unknown" to "Download rate: ..." 
+      (LP: #393358)
+  * Sort by relevancy when doing quicksearch and no search column is set.
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 21 Jun 2010 13:12:54 +0200
+
+synaptic (0.63.1ubuntu7) lucid-proposed; urgency=low
+
+  [ Michael Vogt ]
+  * common/rpackageview.cc:
+    - silence debug output (thanks to Bob Huffman)
+  
+  [ Jean-Baptiste Lallement ]
+  * gtk/rgmainwindow.cc, gtk/rgutils.{cc,h}:
+    - un/escape markup when getting/setting subviews name to avoid markup
+      insertion in GtkTree items (LP: #567172) 
+  * gtk/rgmainwindow.cc:
+    - fix force version. regression over beta2 (LP: #568925)
+  * gtk/rgmainwindow.cc:
+    - fix double-click doesn't unmark a previously marked for install/upgrade
+      package. regression over beta2 (LP: #566779)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 04 May 2010 17:10:50 +0200
+
+synaptic (0.63.1ubuntu6) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]  
+  * gtk/rgmainwindow.cc:
+    - fix 'broken package installation' regression over beta2 (LP: #565816)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 19 Apr 2010 11:24:00 +0200
+  
+synaptic (0.63.1ubuntu5) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]
+  * gtk/rgmainwindow.cc: 
+    - Fix 'Mark for upgrade' regression over beta2 (LP: #564320)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 16 Apr 2010 12:04:36 +0200
+
+synaptic (0.63.1ubuntu4) lucid; urgency=low
+
+  [ Michael Vogt ]
+  * po/it.po:
+    - updated, thanks to Milo Casagrande  (closes: #575685)
+  
+  [ Jean-Baptiste Lallement ]
+  * common/rpackage.{cc,h}:
+    - Use simplified URI for third party changelogs (LP: #45129)
+  * debian/patches/01_ubuntu_changelog.dpatch:
+    - update patch to support third party changelogs
+  * common/rpackage.{cc,h}:
+    - Support third party changelogs by using ArchiveURI() (LP: #153966)
+    - Display LP links when changelog is not available for download 
+      (LP: #452564)
+  * gtk/rgmainwindow.cc: 
+    - check package flags when applying an action to a package list
+      (LP: #513460)
+  * common/rpackagelister.cc
+    - workaround to allow searching for terms with an hyphen (LP: #282995)
+  * common/rpackagelister.cc:
+    - xapianSearch: do not expand the first term when replacing the hyphen
+    to reduce size of the resultse
+  
+  [ Oliver Joos ]
+  * common/rconfiguration.cc:
+    - Fix to store setting "Consider recommended packages as dependencies"
+      (closes debian #440027 and LP: #154349)
+  
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Apr 2010 01:59:51 +0200
+  
+synaptic (0.63.1ubuntu3) lucid; urgency=low
+
+  [ Jean-Baptiste Lallement ]
+  * * gtk/rgpreferenceswindow.cc: escape '@/:%' in proxy auth string (LP: 130289)
+  * Sort by relevancy when doing quicksearch and no search column is set.
+  * debian/patches/10_ubuntu_maintenance_gui.dpatch:
+  - Fix mixed-language maintenance status when LC_TIME differs from LC_MESSAGES
+    (LP: 511890)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 31 Mar 2010 22:59:36 +0200
+
+synaptic (0.63.1ubuntu2) lucid; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  * build from the lp:~ubuntu-core-dev/synaptic/lucid branch
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+  * common/rpackagelister.cc:
+    - in RPackageLister::xapianSearch() catch xapian exception to
+      prevent crash when xapian interprets search string as a syntax 
+      error
+    - fix sorting in xapian search mode (LP: #508220)
+  * gtk/gsynaptic.cc
+    - Start with focus set on fast search entry (LP: #326155)
+  * Select first subview on view change (LP: #403165)
+  * Fix Gtk-CRITICAL when the fast search entry is cleared (LP: #385739)
+  * Ignore DEL accelerator when fast search has focus (LP: #294178)
+  * Do not start help viewer as root but as SUDO_USER (LP: #110224)
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+ 
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
+
+synaptic (0.63.1ubuntu1) lucid; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 17 Feb 2010 23:27:47 +0100
+
 synaptic (0.63.1) unstable; urgency=low
 
   * po/pt_BR.po:
@@ -61,6 +264,56 @@ synaptic (0.63.1) unstable; urgency=low
     - make the dpkg progress code less cpu intensive
 
  -- Michael Vogt <mvo@debian.org>  Thu, 11 Feb 2010 19:58:40 +0100
+
+synaptic (0.63ubuntu4) lucid; urgency=low
+
+  * gtk/rgdebinstallprogress.cc:
+    - make the dpkg progress code less cpu intensive
+  * po/uk.po
+    - add ukrainian translation, thanks to Serhij Dubyk 
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 11 Feb 2010 15:23:38 +0100
+
+synaptic (0.63ubuntu3) lucid; urgency=low
+
+  * gtk/rgsummarywindow.cc:
+    - move the gtk_tree_view_set_model() down to speed up the
+      operation
+  * gtk/rgdebinstallprogress.cc:
+    - on error, set error string into status label
+    - when the recovery is run (dpkg --configure -a) display a 
+      proper status label for that
+  * gtk/rgaboutpanel.cc:
+    - fix FTBFS with gcc-4.5 (closes: #565077)
+  * additions to the (internal) API
+  * debian/patches/10_ubuntu_maintenance_gui.dpatch:
+    - updated to support LTS and new "Supported" flags 
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 25 Jan 2010 09:58:35 +0100
+
+synaptic (0.63ubuntu2) lucid; urgency=low
+
+  * po/pt_BR.po:
+    - Updated pt_BR.po, thanks to Sergio Cipolla (closes: #561853)
+  * po/sk.po:
+    - Updated sk.po, thanks to helix84 (closes: #559283)
+  * common/rpackageview.{cc,h}:
+    - remember search history accross package transactions
+  * make the origin filter more fine grained
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 23 Dec 2009 15:30:54 +0100
+
+synaptic (0.63ubuntu1) lucid; urgency=low
+
+  * merged from debian, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - merged ept branch
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Nov 2009 14:10:05 +0100
 
 synaptic (0.63) unstable; urgency=low
 
@@ -98,6 +351,78 @@ synaptic (0.62.8) unstable; urgency=low
 
  -- Michael Vogt <mvo@debian.org>  Thu, 27 Aug 2009 10:00:10 +0200
 
+synaptic (0.62.7ubuntu7~ppa1) karmic; urgency=low
+
+  * gtk/rgfetchprogress.{cc,h}:
+    - remove the custom progress rendering and replace with
+      stock gtk progress
+  * gtk/rgmainwindow.cc:
+    - use yellowish background in quick search mode
+    - reset quick search when the find dialog is popped up
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 21 Oct 2009 11:03:54 +0200
+
+synaptic (0.62.7ubuntu6) karmic; urgency=low
+
+  * gtk/glade/window_fetch.glade:
+    - add default_width to avoid fetch window resizing 
+      (LP: #450451)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Oct 2009 10:13:17 +0200
+
+synaptic (0.62.7ubuntu5) karmic; urgency=low
+
+  * rebuild against latest libapt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 25 Sep 2009 22:35:18 +0200
+
+synaptic (0.62.7ubuntu4) karmic; urgency=low
+
+  * common/sections_trans.cc:
+    - fix typo in gnu-r section description
+  * po/fr.po:
+    - updated, thanks to Stéphane Blondon, closes: #543981
+  * po/sl.po:
+    - updated, thanks to Matej Urbančič
+  * take the "Origin" field from the release file into account
+    when looking for supported packages
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 22 Sep 2009 17:49:45 +0200
+
+synaptic (0.62.7ubuntu3) karmic; urgency=low
+
+  * common/rpackagelister.cc:
+    - add prefixes for "name" and "section" in the quick search
+      This allows "name:apt" or "section:devel" searches
+  * debian/control:
+    - recommends gksu|kdebase-bin (kdsu is fine too) 
+      closes: #442421
+  * add filter for manual installed packages (LP: #122047)
+  * fix typo (thanks to Florentin Duneau), closes: #542122
+  * po/pt_BR.po:
+    - updated translation, thanks to Sergio Cipolla
+      (closes: #532473)
+  * common/rpackage.{cc,h}:
+    - fix potential segfault
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 04 Sep 2009 11:52:17 +0200
+
+synaptic (0.62.7ubuntu2) karmic; urgency=low
+
+  * common/rpackagelister.cc:
+    - fixes in the xapian search (thanks to seb128)
+    - more debug output with Debug::Synaptic::Xapian=true
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 15 Jul 2009 16:14:50 +0200
+
+synaptic (0.62.7ubuntu1) karmic; urgency=low
+
+  * merged from debian
+  * debian/control:
+    - add build-conflict against librpm-dev
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 10 Jul 2009 14:35:17 +0200
+
 synaptic (0.62.7) unstable; urgency=low
 
   * show progress when searching and not not block the UI
@@ -114,6 +439,35 @@ synaptic (0.62.7) unstable; urgency=low
       closes: #533322
 
  -- Michael Vogt <mvo@debian.org>  Thu, 25 Jun 2009 16:17:56 +0200
+
+synaptic (0.62.6ubuntu3) karmic; urgency=low
+
+  * common/rpackagelister.cc:
+    - remove all fuzzy matching in xapianIndexNeedsUpdate()
+  * gtk/rgmainwindow.cc:
+    - run update-apt-xapian-index --udpate under ionice, rebuild
+      the index every time the timestamps do not match
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 10 Jul 2009 13:00:47 +0200
+
+synaptic (0.62.6ubuntu2) karmic; urgency=low
+
+  * show progress when searching and not not block the UI
+    (LP: #24188)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 15 Jun 2009 17:17:28 +0200
+
+synaptic (0.62.6ubuntu1) karmic; urgency=low
+
+  * merge from Debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - merged ept branch
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 08 Jun 2009 10:47:19 +0200
 
 synaptic (0.62.6) unstable; urgency=low
 
@@ -158,6 +512,35 @@ synaptic (0.62.6) unstable; urgency=low
     - updated for the new section (like httpd, vcs, ...)
 
  -- Michael Vogt <mvo@debian.org>  Fri, 05 Jun 2009 16:22:48 +0200
+
+synaptic (0.62.5ubuntu3) jaunty-proposed; urgency=low
+
+  * improve the logic when the xapian index needs
+    rebuilding by checking the xapian document count
+    against the available packages (LP: #365151)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 17 Apr 2009 16:14:30 +0200
+
+synaptic (0.62.5ubuntu2) jaunty; urgency=low
+
+  * No-change upload to strip translations from .desktop files. (LP: #348225)
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Mon, 30 Mar 2009 12:57:47 +0200
+
+synaptic (0.62.5ubuntu1) jaunty; urgency=low
+
+  * po/th.po:
+    - updated Thai translation (closes: #512605)
+  * gtk/rgdebinstallprogress.cc:
+    - if forkpty() show a propper error message
+      (thanks to Evan) 
+  * gtk/rgfetchprogress.cc:
+    - if the ETA is huge report it as unknown (LP: #322871)
+  * debian/control:
+    - add depends to hicolor-icon-theme
+    - rebuild against latest libapt/libept
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 09 Feb 2009 16:03:03 +0100
 
 synaptic (0.62.5) unstable; urgency=low
 
@@ -212,6 +595,27 @@ synaptic (0.62.3) unstable; urgency=low
 
  -- Michael Vogt <mvo@debian.org>  Tue, 18 Nov 2008 20:35:18 +0100
 
+synaptic (0.62.2ubuntu2) jaunty; urgency=low
+
+  * gtk/rgpkgdetails.{cc,h}:
+    - download/show big image when clicking on the
+      thumbnail 
+  * debian/rules, .bzr-builddeb/default.conf
+    - bybye arch-build, hello "bzr-buildpackage"
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 18 Nov 2008 19:21:16 +0100
+
+synaptic (0.62.2ubuntu1) jaunty; urgency=low
+
+  * Merge from debian, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+    - support end time calculation
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 14 Nov 2008 12:42:42 +0100
+
 synaptic (0.62.2) unstable; urgency=low
 
   * po/es.po:
@@ -243,6 +647,131 @@ synaptic (0.62.2) unstable; urgency=low
     - add "Get Screenshot" button that talks to screenshots.debian.net
 
  -- Michael Vogt <mvo@debian.org>  Fri, 14 Nov 2008 11:44:43 +0100
+
+synaptic (0.62.1ubuntu10) intrepid; urgency=low
+
+  * common/rpackagelister.cc:
+    - add special handling for "-" char in the xapian
+      search (thanks to kiko)
+    - fix hang in quick search for huge result lists 
+     (like "li") LP: #282188
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 21 Oct 2008 15:19:02 +0200
+
+synaptic (0.62.1ubuntu9) intrepid; urgency=low
+
+  * gtk/rgmainwindow.cc:
+    - only xapian search when more than one char is used
+      in the search querry (LP: #260739)
+  * common/rpackagelister.{cc,h}:
+    - expand partial strings in search as you type so that
+      "ged" finds "gedit" (LP: #261423)
+  * 10_ubuntu_maintenance_gui.dpatch:
+    - make sure to look only for immutable release files
+      when calculating the support time
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 22 Sep 2008 15:57:58 +0200
+
+synaptic (0.62.1ubuntu8) intrepid; urgency=low
+
+  * common/rpackageview.cc:
+    - add new "Missing Recommends" default filter
+  * common/rpackage.cc:
+    - fix code to get candidate origin
+    - support getting the candidate release file name
+  * common/rpackagestatus.cc:
+    - support maintenanceEndTime() (if the distro supports that)
+  * 10_ubuntu_maintenance_gui.dpatch:
+    - add support for displaying when the maintaince ends
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 22 Aug 2008 12:40:10 +0200
+
+synaptic (0.62.1ubuntu7) intrepid; urgency=low
+
+  * debian/control:
+    - add apt-xapian-index to the recommends again, we have some
+      space on the CDs again (thanks to Steve Langasek)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 19 Jun 2008 14:45:42 +0200
+
+synaptic (0.62.1ubuntu6) intrepid; urgency=low
+
+  * gtk/rgdebinstallprogress.cc:
+    - make sure that SIGCHLD is not blocked to work around
+      kdesudo (LP: #156041)
+  * common/rpackageview.cc:
+    - add new "Missing Recommends" default filter
+    - fix incorrect display of the "Community Maintained" filter
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 14 Aug 2008 12:01:56 +0200
+
+synaptic (0.62.1ubuntu5) intrepid; urgency=low
+
+  * debian/control: 
+    - make deborphan and apt-xapian-index suggests instead of recommends
+      to save space on the CD - this means we loose the quick search
+      feature in the default install
+  * po/es.po:
+    - updated spanish translation (thanks to 
+      Francisco Javier Cuadrado)
+  * gtk/glade/dialog_upgrade.glade:
+    - provide a mnemonics in the upgrade dialog,
+      closes: #491179 (thanks to Matt Kraai)
+  * gtk/glade/window_fetch.glade:
+    - dialog fix (thanks to Oded Arbel) (LP: #228127)
+  * gtk/rgdebinstallprogress.cc:
+    - intercept ctrl-c in the terminal window and ask
+      if that is really the desired action
+  * gtk/rgmainwindow.cc:
+    - fix "Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper"
+      assertion failure error (LP: #38397, closes: #341645)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 01 Aug 2008 13:50:48 +0200
+
+synaptic (0.62.1ubuntu4) intrepid; urgency=low
+
+  * improve the search as you type to weight packagename in the
+    search heigher
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 16 Jul 2008 16:00:26 +0100
+
+synaptic (0.62.1ubuntu3) intrepid; urgency=low
+
+  * do not run the index update when called in backend 
+    (non-interactive) mode
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 03 Jul 2008 21:58:28 +0200
+
+synaptic (0.62.1ubuntu2) intrepid; urgency=low
+
+  * added support for quick search using xapian (thanks to
+    Enrico Zini for his help)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 17 Jun 2008 14:37:19 +0200
+
+synaptic (0.62.1ubuntu1) intrepid; urgency=low
+
+  * merge from debian, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - build against latest apt in ubuntu
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+
+  * po/es.po:
+    - updated Spanish translation (thanks to
+       Francisco Javier Cuadrado)
+  * debian/control:
+    - added "menu" to the recommends (closes: #478250)
+  * gtk/glade/window_main.glade:
+    - make the main vpane shinkable
+  * gtk/rgmainwindow.cc:
+    - do not loose the keyboard focus after a package 
+      action in the listview
+  * debian/control:
+    - switch bzr branch to bzr.debian.org
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jun 2008 15:57:44 +0200
 
 synaptic (0.62.1) unstable; urgency=low
 
@@ -302,6 +831,82 @@ synaptic (0.61+nmu1) unstable; urgency=low
 
  -- James Vega <jamessan@debian.org>  Sat, 05 Apr 2008 18:58:52 -0400
 
+synaptic (0.61ubuntu9) hardy; urgency=low
+
+  * po/cs.po:
+    - translation update (thanks to Kamil Páral)
+  * rebuild for liblaunchpad-integration change
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 10 Apr 2008 16:25:00 +0200
+
+synaptic (0.61ubuntu8) hardy; urgency=low
+
+  * pixmaps/hicolor/16x16/package-purge.png:
+    - make the icon different from the "remove" icon
+  * gtk/rgsummarywindow.cc:
+    - code cleanup and fix potential endless loop (thanks to
+      Sebastien Bacher)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 01 Apr 2008 14:39:18 +0200
+
+synaptic (0.61ubuntu7) hardy; urgency=low
+
+  * do not auto-close on package install errors when run with
+    closeZvt=true (LP: #183209)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 03 Mar 2008 15:05:55 +0100
+
+synaptic (0.61ubuntu6) hardy; urgency=low
+
+  * recommend software-properties-gtk
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 21 Feb 2008 11:33:11 +0100
+
+synaptic (0.61ubuntu5) hardy; urgency=low
+
+  [ Brian Murray ]
+  * typo fixes (LP: #64482, LP: #157850, LP: #179914, LP: #179912, LP: #179909)
+
+  [ Michael Vogt ]
+  * add new RFilePackageFilter 
+  * added default custom filter that shows installed community software
+  
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 12 Feb 2008 22:54:39 +0100
+
+synaptic (0.61ubuntu4) hardy; urgency=low
+
+  * fix incorect transient settings when run with --no-main-window
+    (thanks to Robert Colins for reporting)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 31 Jan 2008 10:51:31 +0100
+
+synaptic (0.61ubuntu3) hardy; urgency=low
+
+  * use new ListUpdate() code from apt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 07 Jan 2008 21:20:49 +0100
+
+synaptic (0.61ubuntu2) hardy; urgency=low
+
+  [ Michael Vogt]
+  * debian/rules, debian/control:
+    - use dh_icons and add appropriate b-d on debhelper
+  * g++ 4.3 fixes (closes: #456044)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 13 Dec 2007 20:48:57 +0100
+
+synaptic (0.61ubuntu1) hardy; urgency=low
+
+  * merged from debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - maintained filed changed
+    - launchpad-integration
+    - build against latest apt in ubuntu
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 13 Dec 2007 15:49:12 +0100
+
 synaptic (0.61) unstable; urgency=low
 
   [ Michael Vogt ]
@@ -338,6 +943,52 @@ synaptic (0.61) unstable; urgency=low
   * Set has_focus on the close button of the welcome dialog; closes: #148695.
 
  -- Michael Vogt <mvo@debian.org>  Thu, 06 Dec 2007 16:00:51 +0100
+
+synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
+
+  * gtk/rgfetchprogress.{cc,h}:
+    - fix crash in download progress on theme changes (LP: #67995)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 17 Oct 2007 11:14:03 +0200
+
+synaptic (0.60ubuntu5) gutsy; urgency=low
+  
+  [ Loic Minier ]
+  * Set has_focus on the close button of the welcome dialog; LP: #148695.
+  
+  [ Michael Vogt ]
+  * gtk/rgmainwindow.cc:
+    - fix crash in cbInstallFromVersion() (LP: #145685)
+
+ -- Loic Minier <lool@dooz.org>  Wed, 03 Oct 2007 22:33:28 +0200
+
+synaptic (0.60ubuntu3) gutsy; urgency=low
+
+  * build against latest apt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 03 Aug 2007 21:15:40 +0200
+
+synaptic (0.60ubuntu2) gutsy; urgency=low
+
+  * debian/control:
+    - added XS-Vcs-Bzr field
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 30 Jul 2007 15:04:48 +0200
+
+synaptic (0.60ubuntu1) gutsy; urgency=low
+
+  * merged from debian/unstable, remaining changes:
+    - 01_ubuntu_changelog: 
+      + default to changelogs.ubuntu.com
+    - 03_hide_browse_documentation:
+      + don't show the dwww documentation button
+    - 04_ubuntu_lpi:
+      + launchpad integration added
+    - 06_ubuntu_su_to_root:
+      + use gksu instead of su-to-root
+    - ubuntu branding icon
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 18 Jun 2007 15:08:09 +0200
 
 synaptic (0.60) unstable; urgency=low
 
@@ -387,6 +1038,134 @@ synaptic (0.60) unstable; urgency=low
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Mar 2007 17:22:30 +0100
 
+synaptic (0.57.11.1ubuntu15) gutsy; urgency=low
+
+  * gtk/rgpreferenceswindow.cc:
+    - overwrite the http_proxy environ when the user set the proxy
+      explicitely (thanks to Berend De Schouwer, LP#105515)
+  * common/rpackagelister.cc:
+    - added "Volatile::SetSelectionDoReInstall" to support 
+      reinstalling from --set-selections too
+  * common/rpackage.cc:
+    - only show a package as supported if it is authenticated
+  * po/eu.po:
+    - updated (thanks to dooteo, closes: #368951)
+  * gtk/rguserdialog.cc, gtk/rggladewindow.cc:
+    - do not crash for invalid parent-window-ids
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Apr 2007 11:16:31 +0200
+
+synaptic (0.57.11.1ubuntu14) feisty; urgency=low
+
+  * gtk/rgchangeswindow.cc:
+    - fix crash in confirm changes (LP#80922) 
+      Thanks to John Millikin for the instructions how to reproduce the
+      bug
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed,  4 Apr 2007 13:01:23 +0200
+
+synaptic (0.57.11.1ubuntu13) feisty; urgency=low
+
+  * when generating the wget script, use wget -c (LP#76462)
+  * po/cs.po:
+    - updated (thanks to Vit Pelcak)
+  * gtk/rgpkgdetails.cc:
+    - fix chinese descriptions display, thanks to Liu Qishuai 
+      (LP#102228)
+  * fix drop down boxes in preferences (LP#100072)
+  * fix terminal window (LP#99877)
+  * show error and exit if opening the cache fails (LP#90016)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  3 Apr 2007 22:23:48 +0200
+
+synaptic (0.57.11.1ubuntu12) feisty; urgency=low
+
+  * data/synaptic.desktop.in:
+    - fix in the Category to make it show up in g-a-i (LP#88877)
+  * common/rpackageview.cc:
+    - fix in the getSections() code (LP##91888)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 13 Mar 2007 20:18:09 +0100
+
+synaptic (0.57.11.1ubuntu11) feisty; urgency=low
+
+  * build with gcc 4.3 (closes: #413419)
+  * do not return a NULL pointer in name() 
+  * remove unneeded pkgActionGroup that seems to cause havoc
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Mar 2007 19:02:44 +0100
+
+synaptic (0.57.11.1ubuntu10) feisty; urgency=low
+
+  * debian/control:
+    - changed ubuntu maintainer 
+    - added XS-Vcs-Bzr
+  * gtk/rgpreferenceswindow.cc:
+    - fix proxy authentication (thanks to Jan de Mooij) 
+      (LP#86769)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 27 Feb 2007 12:34:12 +0100
+
+synaptic (0.57.11.1ubuntu9) feisty; urgency=low
+
+  * remove file descriptor resource leak 
+  * depend on latest apt (needs rebuild to fix resource leak)
+  * fix crash in "Add downloaded packages" (LP#85934)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 26 Feb 2007 14:31:31 +0100
+
+synaptic (0.57.11.1ubuntu8) feisty; urgency=low
+
+  * move the desktop file back into new control center as it confused
+    too many people and we want to get rid of Applications/System Tools
+    (LP: #84984)
+  * fixed memory corruption problem on reopening the cache
+    (LP#81624)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 19 Feb 2007 10:33:32 +0100
+
+synaptic (0.57.11.1ubuntu7) feisty; urgency=low
+
+  * really use software-properties-gtk if available (LP#84248)
+  * move the desktop file out of settings because it does no longer
+    fit there with the new control center in gnome 2.17
+    (LP: #83658)
+  * fix version number generation for the about dialog (lp: #84626)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 12 Feb 2007 19:05:35 +0100
+
+synaptic (0.57.11.1ubuntu6) feisty; urgency=low
+
+  * use software-properties-gtk if available
+  * rebuild against latest apt version
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Feb 2007 16:37:48 +0100
+
+synaptic (0.57.11.1ubuntu5) feisty; urgency=low
+
+  * fix corner-case bug in --set-selections, --non-interactive (lp: #81428)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 26 Jan 2007 10:41:48 +0100
+
+synaptic (0.57.11.1ubuntu4) feisty; urgency=low
+
+  * debian/rules: 
+    - fix automatic version number generation
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 22 Jan 2007 15:27:59 +0100
+
+synaptic (0.57.11.1ubuntu2) feisty; urgency=low
+
+  * added "Origins" view (AlwaysEnableUniverseMultiverse spec)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Dec 2006 19:05:08 +0100
+
+synaptic (0.57.11.1ubuntu1) feisty; urgency=low
+
+  * merged with debian
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Dec 2006 17:30:46 +0100
+
 synaptic (0.57.11.1) unstable; urgency=high
 
   * gtk/rgmainwindow.cc:
@@ -395,6 +1174,94 @@ synaptic (0.57.11.1) unstable; urgency=high
     - add default font to fix crash
 
  -- Michael Vogt <mvo@debian.org>  Mon, 18 Dec 2006 10:52:08 +0100
+
+synaptic (0.57.11ubuntu13) edgy; urgency=low
+
+  * gtk/rgmainwindow.cc:
+    - fix crash in "Lock package" (lp: 64005)
+  * gtk/rgpreferenceswindow.cc:
+    - add default font to fix crash (lp: 65553)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 23 Oct 2006 16:12:55 +0200
+
+synaptic (0.57.11ubuntu12) edgy; urgency=low
+
+  * gtk/gsyncaptic.cc:
+    - fix in the checking for already runing synaptic (lp: 62754)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 11 Oct 2006 18:09:16 +0200
+
+synaptic (0.57.11ubuntu11) edgy; urgency=low
+
+  * common/rpackagelister.cc:
+    - use pkgActionGroup to fix performance regression in setSelection()
+  * performance regression fixes (lp: #63171)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 10 Oct 2006 13:57:42 +0200
+
+synaptic (0.57.11ubuntu10) edgy; urgency=low
+
+  * common/rpackagelister.cc:
+    - run refresh() after re-adjusting the size of the packages (lp: #62298)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 26 Sep 2006 17:33:28 +0200
+
+synaptic (0.57.11ubuntu9) edgy; urgency=low
+
+  * fix problem with pkgs disappering from the current view when
+    certain auto-removable packages are marked for removal
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 21 Sep 2006 13:39:35 +0200
+
+synaptic (0.57.11ubuntu8) edgy; urgency=low
+
+  * redo the auto flag on "restoreState()" too
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 21 Sep 2006 00:55:16 +0200
+
+synaptic (0.57.11ubuntu7) edgy; urgency=low
+
+  * auto install/garbage filter added
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Sep 2006 15:04:36 +0200
+
+synaptic (0.57.11ubuntu6) edgy; urgency=low
+
+  * fix mark/unmark auto 
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Sep 2006 14:18:43 +0200
+
+synaptic (0.57.11ubuntu5) edgy; urgency=low
+
+  * fix performance regression when canceling a operation
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 11 Sep 2006 11:52:30 +0200
+
+synaptic (0.57.11ubuntu4) edgy; urgency=low
+
+  * when switching views, don't autoselect "All"
+  * support the "metapackages" section
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed,  6 Sep 2006 20:30:45 +0200
+
+synaptic (0.57.11ubuntu3) edgy; urgency=low
+
+  * make "Fix Missing" and "Set Selections" faster (thanks to seb128
+    for discovering this problem)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  4 Sep 2006 15:59:20 +0200
+
+synaptic (0.57.11ubuntu2) edgy; urgency=low
+
+  * merged the ddtp support
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 14 Aug 2006 16:26:28 +0200
+
+synaptic (0.57.11ubuntu1) edgy; urgency=low
+
+  * merged with debian
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 27 Jul 2006 15:17:03 +0200
 
 synaptic (0.57.11) unstable; urgency=low
 
@@ -408,6 +1275,32 @@ synaptic (0.57.11) unstable; urgency=low
     - updated (thanks to Sebastian Heinlein)
   
  -- Michael Vogt <mvo@debian.org>  Thu, 27 Jul 2006 15:12:31 +0200
+
+synaptic (0.57.10ubuntu3) edgy; urgency=low
+
+  * show broken packages in the status view as well
+  * don't show a download window if nothing is going to be downloaded
+  * cleanups
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 21 Jul 2006 11:47:31 +0200
+
+synaptic (0.57.10ubuntu2) edgy; urgency=low
+
+  * fixed FTBFS
+  * build-dep on latest vte
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  4 Jul 2006 16:17:25 +0200
+
+synaptic (0.57.10ubuntu1) edgy; urgency=low
+
+  * po/ja.po: updated japanese translation (thanks to Daisuke SUZUKI)
+  * po/sv.po: updated translation (thanks to Daniel Nylander)
+  * UI and string fixes (thanks to Sebastian Heinlein)
+  * merged with debian
+  * merged simple support for the apt auto-mark of automatic dependencies
+    feature (new "Installed (auto removable)" status)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  3 Jul 2006 21:38:16 +0200
 
 synaptic (0.57.10) unstable; urgency=low
 
@@ -433,6 +1326,99 @@ synaptic (0.57.9) unstable; urgency=low
   * fix memory corruption problem
 
  -- Michael Vogt <mvo@debian.org>  Tue, 28 Feb 2006 09:44:42 +0100
+
+synaptic (0.57.8ubuntu11) dapper; urgency=low
+
+  * fix bug that the window is not visisble in the tasklist when run 
+    in "install all upgrades" mode from update-notifier (thanks to
+    seb128 for reporting)
+  * hide the "auto-close" checkbutton when runing non-interactively,
+    because synaptic won't save options then (Ubuntu: #28250)
+  * better deal with invalid utf8 in the package descriptions 
+    (Ubuntu: #37050, #38399)
+  * increase the size of the diff dialog textview (ubuntu: #44012)
+  * search in summary too (ubuntu: #32337)
+  * fix focus problem (ubuntu: #39971)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 18 May 2006 11:41:18 +0200
+
+synaptic (0.57.8ubuntu10) dapper; urgency=low
+
+  * g++-4.1 fixes (thanks to Martin Michlmayr) (closes: 357863)
+  * fix the invocation of the external software-properties
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 21 Apr 2006 10:02:28 +0200
+
+synaptic (0.57.8ubuntu9) dapper; urgency=low
+
+  * fix a bug in the skip-taskbar handling (thanks to seb128)
+  * fix the column sorting (closes: #361070)
+  * use the urgency hint for the conffile prompt (ubuntu: #21898)
+  * better handling of the automatic terminal expanding (ubuntu: #38935)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 12 Apr 2006 20:43:23 +0200
+
+synaptic (0.57.8ubuntu8) dapper; urgency=low
+
+  * fix memory corruption problem (ubuntu #37817, #37987)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  4 Apr 2006 19:59:35 +0200
+
+synaptic (0.57.8ubuntu7) dapper; urgency=low
+
+  * gtk/window_changes.glade:
+    - make the dialog icon "info" instead of "warning" (ubuntu: #17085)
+  * remove http:// when it was entered as part of the proxy uri 
+    (ubuntu: #18038)
+  * if a dpkg error happens during install run "dpkg --configure -a" 
+    to recover as much as possible (ubuntu: #19021)
+  * if no terminal activity is detected and the terminal is expanded
+    set the urgency hint as well (ubuntu: #31436)
+  * remove http:// when it was entered as part of the proxy uri
+  * include reinstall markings in the "changes" filter
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Sun,  2 Apr 2006 11:40:45 +0200
+
+synaptic (0.57.8ubuntu6) dapper; urgency=low
+
+  * wording fix (ubuntu #36488)
+  * if no terminal activity is detected and the terminal is expanded
+    set the urgency hint as well (ubuntu: #31436)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 29 Mar 2006 14:33:19 +0200
+
+synaptic (0.57.8ubuntu5) dapper; urgency=low
+
+  * fix problem with fetch window not centered on parent (thanks to
+    seb128 and glatzor)
+  * fix a missing set_transient() problem (ubuntu #36030)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 23 Mar 2006 00:10:25 +0100
+
+synaptic (0.57.8ubuntu4) dapper; urgency=low
+
+  * fix another set_transient() problem with run with --parent-window-id
+    (ubuntu #33406)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu,  2 Mar 2006 15:38:08 +0100
+
+synaptic (0.57.8ubuntu3) dapper; urgency=low
+
+  * data/synaptic.desktop.in: set X-Ubuntu-Gettext-Domain
+  * make "mark" the default response in the "Mark change dialog" (ubuntu #31189)
+  * don't fail if run as non-root, just explain what's wrong
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 24 Feb 2006 10:35:43 +0100
+
+synaptic (0.57.8ubuntu2) dapper; urgency=low
+
+  * po/th.po: updated Thai Translation (thanks to Isriya Paireepairit)
+  * po/el.po: updated Greek translation (thanks to Kostas Papadimas)
+  * only clean the list dir if a update was successful
+  * fix problem that some windows have a skip taskbar hint but no
+    transient parent (thanks to Seb128 for reporting the problem)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 21 Feb 2006 18:59:52 +0100
 
 synaptic (0.57.8) unstable; urgency=low
 
@@ -675,12 +1661,6 @@ synaptic (0.55+cvs20050218-1) hoary; urgency=low
     debian/rules file
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
-
-synaptic (0.55+cvs20050218-1) hoary; urgency=low
-
-  * New snapshot
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 18 Feb 2005 11:14:12 +0100
 
 synaptic (0.55+cvs20050215-1) hoary; urgency=low
 
@@ -1465,5 +2445,4 @@ synaptic (0.16-1) unstable; urgency=low
   * Initial Release (closes: #115167)
 
  -- Michael Vogt <mvo@debian.org>  Tue, 13 Nov 2001 23:17:20 +0100
-
 

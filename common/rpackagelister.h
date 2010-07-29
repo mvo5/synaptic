@@ -36,6 +36,10 @@
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/acquire.h>
 
+#ifdef WITH_EPT
+#include <ept/axi/axi.h>
+#endif
+
 #include "rpackagecache.h"
 #include "rpackage.h"
 #include "rpackagestatus.h"
@@ -102,6 +106,11 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
+#ifdef WITH_EPT
+   Xapian::Database *_xapianDatabase;
+#endif
+
+
    // Other members.
    vector<RPackage *> _packages;
    vector<int> _packagesIndex;
@@ -123,12 +132,16 @@ class RPackageLister {
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
-   
+
+   // helper for the limitBySearch() code
+   bool xapianSearch(string searchString);
+
    public:
 
    unsigned int _viewMode;
 
    typedef enum {
+      LIST_SORT_DEFAULT,
       LIST_SORT_NAME_ASC,
       LIST_SORT_NAME_DES,
       LIST_SORT_SIZE_ASC,
@@ -190,6 +203,9 @@ class RPackageLister {
    list<pkgState> redoStack;
 
    public:
+   // limit what the current view displays
+   bool limitBySearch(string searchString);
+
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
 
@@ -322,6 +338,11 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; };
+#ifdef WITH_EPT
+   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
+   bool xapianIndexNeedsUpdate();
+   bool openXapianIndex();
+#endif
 
    RPackageLister();
    ~RPackageLister();

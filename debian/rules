@@ -29,6 +29,7 @@ COMMON_FLAGS= --prefix=/usr \
 	      --localstatedir=/var/lib/synaptic \
 	      --sysconfdir=/etc --with-vte --with-pkg-hold \
 	      --with-apt-authentication \
+              --enable-ept \
 	      --with-nice-dpkg-status
 
 CREATE_SUPPORTED_PIXMAP="true"
@@ -37,7 +38,7 @@ CONFIGURE_FLAGS = $(COMMON_FLAGS)
 # special case for ubuntu
 ifeq "$(DIST)" "Ubuntu"
 	CONFIGURE_FLAGS = $(COMMON_FLAGS) --with-launchpad-integration
-	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps/package-supported.png
+	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png
 endif
 
 

@@ -82,6 +82,32 @@ bool RWriteConfigFile(Configuration &Conf)
    if(_config->FindB("Volatile::Non-Interactive", false) == true) 
       return true;
 
+   // store option 'consider recommended packages as dependencies'
+   // to config of apt if we run as root
+   if (getuid() == 0) {
+      // FIXME: use findDir
+      string aptConfPath = _config->Find("Dir", "/")
+                         + _config->Find("Dir::Etc", "etc/apt/")
+                         + _config->Find("Dir::Etc:parts", "apt.conf.d")
+                         + "/99synaptic";
+      ofstream aptfile(aptConfPath.c_str(), ios::out);
+      if (!aptfile != 0) {
+         cerr << "cannot open " << aptConfPath.c_str() <<
+                 " to write APT::Install-Recommends" << endl;
+      } else {
+         if (_config->FindB("APT::Install-Recommends", false))
+            aptfile << "APT::Install-Recommends \"true\";" << endl;
+         else
+            aptfile << "APT::Install-Recommends \"false\";" << endl;
+         aptfile.close();
+      }
+   }
+   // and backup Install-Recommends to config of synaptic
+   _config->Set("Synaptic::Install-Recommends",
+                _config->FindB("APT::Install-Recommends",
+                _config->FindB("Synaptic::Install-Recommends",
+                false)));
+
    ofstream cfile(ConfigFilePath.c_str(), ios::out);
    if (!cfile != 0)
       return _error->Errno("ofstream",
@@ -209,6 +235,20 @@ bool RInitConfiguration(string confFileName)
 
    if (!ReadConfigFile(*_config, ConfigFilePath)) {
       _error->Discard();
+   }
+
+   // read Install-Recommends, preferably from APT:: if we run as root
+   // or from Synaptic:: otherwise
+   if(getuid() == 0) {
+      _config->Set("APT::Install-Recommends",
+                   _config->FindB("APT::Install-Recommends",
+                   _config->FindB("Synaptic::Install-Recommends",
+                   false)));
+   } else {
+      _config->Set("APT::Install-Recommends",
+                   _config->FindB("Synaptic::Install-Recommends",
+                   _config->FindB("APT::Install-Recommends",
+                   false)));
    }
 
    return true;

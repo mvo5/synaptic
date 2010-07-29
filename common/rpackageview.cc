@@ -31,6 +31,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <algorithm>
 
 #include "sections_trans.h"
 
@@ -62,6 +63,11 @@ void RPackageView::clear()
 {
    clearSelection();
    _view.clear();
+}
+
+bool RPackageView::hasPackage(RPackage *pkg)
+{
+   return find(_selectedView.begin(), _selectedView.end(), pkg)  != _selectedView.end();
 }
 
 void RPackageView::clearSelection()
@@ -250,7 +256,7 @@ bool RPackageViewSearch::setSelected(string name)
    if (_view.find(name) == _view.end()) {
       map<string, searchItem>::iterator J = searchHistory.find(name);
       if (J != searchHistory.end()) {
-	 cerr << "found in search histroy, reapplying search" << endl;
+	 //cerr << "found in search history, reapplying search" << endl;
 	 string s;
 	 OpProgress progress;
 	 for(int i=0;i < (*J).second.searchStrings.size();i++)
@@ -311,7 +317,6 @@ int RPackageViewSearch::setSearch(string aSearchName,
    searchProgress.Done();
    return found;
 }
-
 //------------------------------------------------------------------
 
 RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs) 
@@ -543,6 +548,19 @@ void RPackageViewFilter::makePresetFilters()
 
    filter = new RFilter();
    filter->preset = true;
+   filter->pattern.addPattern(RPatternPackageFilter::Component,
+			      "main", true);
+   filter->pattern.addPattern(RPatternPackageFilter::Component,
+			      "restricted", true);
+   filter->pattern.addPattern(RPatternPackageFilter::Origin,
+			      "Ubuntu", false);
+   filter->pattern.setAndMode(true);
+   filter->status.setStatus(RStatusPackageFilter::Installed);
+   filter->setName("Community Maintained (installed)"); _("Community Maintained (installed)");
+   registerFilter(filter);
+
+   filter = new RFilter();
+   filter->preset = true;
    filter->status.setStatus(RStatusPackageFilter::NowPolicyBroken);
    filter->setName("Missing Recommends"); _("Missing Recommends");
    registerFilter(filter);
@@ -577,5 +595,10 @@ void RPackageViewOrigin::addPackage(RPackage *package)
    subview = suite+"/"+component+" ("+origin_url+")";
    _view[subview].push_back(package);
  };
+
+
+
+
+
 
 // vim:sts=3:sw=3

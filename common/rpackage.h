@@ -244,6 +244,9 @@ class RPackage {
    RPackage(RPackageLister *lister, pkgDepCache *depcache,
             pkgRecords *records, pkgCache::PkgIterator &pkg);
    ~RPackage();
+
+   private:
+   string getChangelogURI();
 };
 
 

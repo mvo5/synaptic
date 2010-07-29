@@ -109,7 +109,8 @@ void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
    GtkWidget *win = gtk_dialog_new();
    gtk_dialog_add_button(GTK_DIALOG(win), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
    gtk_widget_show(img);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(win)->vbox), img);
+   GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG (win));
+   gtk_container_add(GTK_CONTAINER(content_area), img);
    gtk_dialog_run(GTK_DIALOG(win));
    gtk_widget_destroy(win);
 }

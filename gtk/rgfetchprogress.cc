@@ -23,7 +23,7 @@
  */
 
 #include "config.h"
-
+#include <math.h>
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/acquire-worker.h>
 #include <apt-pkg/strutl.h>
@@ -293,6 +293,25 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    if (TotalBytes > 0 && !GTK_WIDGET_VISIBLE(_win))
       show();
 
+   float percent =
+      long (double ((CurrentBytes + CurrentItems) * 100.0) /
+            double (TotalBytes + TotalItems));
+
+   // work-around a stupid problem with libapt
+   if(CurrentItems == TotalItems)
+      percent=100.0;
+
+   // only do something if there is some real progress
+   if (fabsf(percent-
+            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))*100.0) < 0.1) 
+   {
+      RGFlushInterface();
+      return !_cancelled;
+   }
+
+   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
+                                 percent / 100.0);
+
    for (pkgAcquire::Worker * I = Owner->WorkersBegin(); I != 0;
         I = Owner->WorkerStep(I)) {
 
@@ -308,16 +327,6 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
 
    }
 
-   float percent =
-      long (double ((CurrentBytes + CurrentItems) * 100.0) /
-            double (TotalBytes + TotalItems));
-   // work-around a stupid problem with libapt
-   if(CurrentItems == TotalItems)
-      percent=100.0;
-
-   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
-                                 percent / 100.0);
-
    unsigned long ETA =
       (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);
    // if the ETA is greater than two weeks, show unknown time
@@ -332,7 +341,7 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
       gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),s);
       g_free(s);
    } else {
-      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),_("Download rate: unknown"));
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),_("Download rate: ..."));
    }
    s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);

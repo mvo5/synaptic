@@ -162,6 +162,62 @@ const char *utf8(const char *str)
    return _str;
 }
 
+/*
+ * MarkupEscapeString: Escape markup from a string
+ * ----------------------------------------------------
+ * @unescaped: string to escape markup from
+ *
+ * we use g_markup_escape_text which only support 5 standard entities: 
+ * &amp; &lt; &gt; &quot; &apos;
+ * We must escape the string used as list item of a GtkTree
+ */
+ string MarkupEscapeString(string unescaped) {
+   string escaped;
+   char *c_esc = g_markup_escape_text(unescaped.c_str(), -1);
+   escaped = string(c_esc);
+   g_free(c_esc);
+   return escaped;  
+}
+
+/*
+ * MarkupUnescapeString: Unescape markup from a string
+ * ----------------------------------------------------
+ * @escaped: string to unescape markup from
+ * unescaped entities: &amp; &lt; &gt; &quot; &apos;
+ *
+ * sadly there is no simple way to unescape a previously escaped string with 
+ * g_markup_escape_text
+ */
+ string MarkupUnescapeString(string escaped) {
+   size_t pos = 0, end = 0;
+   string entity, str;
+   while ((pos = escaped.find("&", pos)) != string::npos ) {
+      end = escaped.find(";", pos);
+      if (end == string::npos)
+          break;
+
+      entity = escaped.substr(pos,end-pos+1);
+      str = "";
+      if(entity == "&lt;")
+         str = "<";
+      else if(entity == "&gt;")
+         str = ">";
+      else if(entity == "&amp;")
+         str = "&";
+      else if(entity == "&quot;")
+         str = "\"";
+      else if(entity == "&apos;")
+         str = "'";
+
+      if(!str.empty()) {
+          escaped.replace(pos, entity.size(), str);
+          pos++; 
+      } else {
+          pos = end;
+      }
+   }
+   return escaped;
+}
 
 
 

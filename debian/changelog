@@ -1,11 +1,19 @@
-synaptic (0.63.1ubuntu13) UNRELEASED; urgency=low
+synaptic (0.63.1ubuntu13) maverick; urgency=low
+
+  [ Michael Vogt ]
+  * rebuild against latest libapt
+  * common/rpackagelister.{cc,h}:
+    - move quality cutoff into the .cc file to workaround ld crash
+  * gtk/rgpackagestatus.cc:
+    - remove no longer needed gdkx.h include (that causes compiler
+      failures with the latest libapt)
 
   [ Bilal Akhtar ]
   * debian/patches/11-lp-155930:
     - Modify gtk/rgmainwindow.cc to populate package list again after 
      'Unmark All' is selected. (LP: #155930)
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 28 Jul 2010 10:00:53 +0200
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 29 Jul 2010 14:13:46 +0200
 
 synaptic (0.63.1ubuntu12) maverick; urgency=low
 

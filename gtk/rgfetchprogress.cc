@@ -301,7 +301,7 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    if(CurrentItems == TotalItems)
       percent=100.0;
 
-
+   // only do something if there is some real progress
    if (fabsf(percent-
             gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))*100.0) < 0.1) 
    {

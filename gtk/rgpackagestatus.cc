@@ -21,7 +21,6 @@
  */
 
 #include <gtk/gtk.h>
-#include <gdk/gdkx.h>
 #include <string>
 #include <stdio.h>
 #include <cstdlib>

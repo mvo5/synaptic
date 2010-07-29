@@ -1951,8 +1951,9 @@ bool RPackageLister::limitBySearch(string searchString)
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
    //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
-   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", defaultQualityCutoff);
-
+   static const int defaultQualityCutoff = 15;
+   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", 
+                                      defaultQualityCutoff);
     if (ept::axi::timestamp() == 0) 
         return false;
 

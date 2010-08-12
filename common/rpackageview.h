@@ -29,6 +29,10 @@
 #include <string>
 #include <map>
 
+#ifdef WITH_EPT
+#include <ept/axi/axi.h>
+#endif
+
 #include "rpackage.h"
 #include "rpackagefilter.h"
 
@@ -66,6 +70,7 @@ class RPackageView {
 
    bool hasSelection() { return _hasSelection; };
    string getSelected() { return _selectedName; };
+   bool hasPackage(RPackage *pkg);
    virtual bool setSelected(string name);
 
    void showAll() { 
@@ -144,7 +149,6 @@ class RPackageViewStatus:public RPackageView {
 };
 
 class RPackageViewSearch : public RPackageView {
-   
    struct searchItem {
       vector<string> searchStrings;
       string searchName;
@@ -155,9 +159,11 @@ class RPackageViewSearch : public RPackageView {
    searchItem _currentSearchItem;
    int found; // nr of found pkgs for the last search
 
+   bool xapianSearch();
+
  public:
-   RPackageViewSearch(vector<RPackage *> &allPkgs) 
-      : RPackageView(allPkgs), found(0) {};
+ RPackageViewSearch(vector<RPackage *> &allPkgs) 
+    : RPackageView(allPkgs), found(0) {};
 
    int setSearch(string searchName, int type, string searchString, 
 		 OpProgress &searchProgress);
@@ -223,8 +229,6 @@ class RPackageViewFilter : public RPackageView {
 
    void addPackage(RPackage *package);
 };
-
-
 
 #endif
 

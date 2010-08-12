@@ -700,7 +700,7 @@ static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
       break;
    default:
       //cerr << "unknown sort column: " << pkg_list->sort_column_id << endl;
-      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_NAME_ASC);
+      pkg_list->_lister->sortPackages(RPackageLister::LIST_SORT_DEFAULT);
    }
 }
 

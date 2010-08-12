@@ -591,6 +591,8 @@ int main(int argc, char **argv)
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       welcome_dialog(mainWindow);
+      gtk_widget_grab_focus( glade_xml_get_widget(mainWindow->getGladeXML(),
+                                              "entry_fast_search"));
 #if 0
       update_check(mainWindow, packageLister);
 #endif 

@@ -23,7 +23,7 @@
 #include "config.h"
 
 #ifdef WITH_DPKG_STATUSFD
-
+#include <math.h>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <sys/fcntl.h>
@@ -523,6 +523,7 @@ void RGDebInstallProgress::updateInterface()
 	    conffile(pkg, split[3]);
 	 } else {
 	    _startCounting = true;
+            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 0);
 	 }
 
 	 // reset the urgency hint, something changed on the terminal
@@ -531,7 +532,8 @@ void RGDebInstallProgress::updateInterface()
 
 	 float val = atof(percent)/100.0;
  	 //cout << "progress: " << val << endl;
-	 gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
+         if (fabs(val-gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_pbarTotal))) > 0.1)
+            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
 
 	 if(str!=NULL)
 	    gtk_label_set_text(GTK_LABEL(_label_status),utf8(str));
@@ -713,16 +715,26 @@ void RGDebInstallProgress::finishUpdate()
    }
    gtk_widget_show(img);
    
-
-   // wait for the user to click on "close"
-   while(!_updateFinished && !autoClose) {
-      autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
+   // wait for user action
+   while(true) {
+      // events
       while (gtk_events_pending())
 	 gtk_main_iteration();
-      usleep(5000);
-   }
 
-   // get the value again, it may have changed
+      // user clicked "close" button
+      if(_updateFinished) 
+	 break;
+
+      // user has autoClose set *and* there was no error
+      autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
+      if(autoClose && res != 1)
+	 break;
+      
+      // wait a bit
+      g_usleep(100000);
+   }
+      
+   // set the value again, it may have changed
    _config->Set("Synaptic::closeZvt", autoClose	? "true" : "false");
 
    // hide and finish

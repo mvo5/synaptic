@@ -128,32 +128,34 @@ void RGMainWindow::changeView(int view, string subView)
 
    refreshSubViewList();
 
+   GtkTreeSelection* selection;
+   setBusyCursor(true);
+   setInterfaceLocked(TRUE);
+   GtkWidget *tview = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tview));
    if(!subView.empty()) {
-      GtkTreeSelection* selection;
       GtkTreeModel *model;
       GtkTreeIter iter;
       char *str;
 
-      setBusyCursor(true);
-      setInterfaceLocked(TRUE);
-      GtkWidget *view = glade_xml_get_widget(_gladeXML, "treeview_subviews");
-      model = gtk_tree_view_get_model(GTK_TREE_VIEW(view));
-      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+      model = gtk_tree_view_get_model(GTK_TREE_VIEW(tview));
       if(gtk_tree_model_get_iter_first(model, &iter)) {
-	 do {
-	    gtk_tree_model_get(model, &iter, 0, &str, -1);
-	    if(strcoll(str,subView.c_str()) == 0) {
-	       gtk_tree_selection_select_iter(selection, &iter);
-	       break;
-	    }
-	 } while(gtk_tree_model_iter_next(model, &iter));
+         do {
+            gtk_tree_model_get(model, &iter, 0, &str, -1);
+            if(strcoll(str, MarkupEscapeString(subView).c_str()) == 0) {
+               gtk_tree_selection_select_iter(selection, &iter);
+               break;
+            }
+         } while(gtk_tree_model_iter_next(model, &iter));
       }
-
-      _lister->setSubView(subView);
-      refreshTable(pkg,false);
-      setInterfaceLocked(FALSE);     
-      setBusyCursor(false);
+   } else {
+      GtkTreePath * path = gtk_tree_path_new_from_string( "0" );
+      gtk_tree_selection_select_path( selection, path );
    }
+   _lister->setSubView(subView);
+   refreshTable(pkg,false);
+   setInterfaceLocked(FALSE);     
+   setBusyCursor(false);
    _blockActions = FALSE;
    setStatusText();
 }
@@ -166,6 +168,9 @@ void RGMainWindow::refreshSubViewList()
 	       selected.size() > 0 ? selected.c_str() : "(empty)");
 
    vector<string> subViews = _lister->getSubViews();
+
+   for(unsigned int i=0; i<subViews.size(); i++)
+       subViews[i] = MarkupEscapeString(subViews[i]);
 
    gchar *str = g_strdup_printf("<b>%s</b>", _("All"));
    subViews.insert(subViews.begin(), str);
@@ -296,7 +301,14 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
       ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
-   
+
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
+   if(str != NULL && strlen(str) > 1) {
+      if(_config->FindB("Debug::Synaptic::View",false))
+	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
+      _lister->limitBySearch(str);
+   }
+
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
@@ -641,6 +653,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    vector<RPackage *> exclude;
    vector<RPackage *> instPkgs;
    RPackage *pkg = NULL;
+   int flags;
 
    while (li != NULL) {
       pkgDepCache::ActionGroup group(*_lister->getCache()->deps());
@@ -650,34 +663,47 @@ void RGMainWindow::pkgAction(RGPkgAction action)
       if (pkg == NULL)
          continue;
 
+      flags = pkg->getFlags();
+
       pkg->setNotify(false);
 
       // needed for the stateChange 
       exclude.push_back(pkg);
-      /* do the dirty deed */
       switch (action) {
          case PKG_KEEP:        // keep
             pkgKeepHelper(pkg);
             break;
          case PKG_INSTALL:     // install
-            instPkgs.push_back(pkg);
-            pkgInstallHelper(pkg, false);
+            // install only if not installed or outdated (upgrade)
+            if(!(flags & RPackage::FInstalled) 
+               || (flags & RPackage::FOutdated)) {
+               instPkgs.push_back(pkg);
+               pkgInstallHelper(pkg, false);
+            }
             break;
          case PKG_INSTALL_FROM_VERSION:     // install with specific version
             pkgInstallHelper(pkg, false);
             break;
          case PKG_REINSTALL:      // reinstall
-	    instPkgs.push_back(pkg);
-	    pkgInstallHelper(pkg, false, true);
-	    break;
+            // Only reinstall installable packages and non outdated packages
+            if(flags & RPackage::FInstalled 
+               && !(flags & RPackage::FNotInstallable)
+               && !(flags & RPackage::FOutdated)) {
+               instPkgs.push_back(pkg);
+               pkgInstallHelper(pkg, false, true);
+            }
+            break;
          case PKG_DELETE:      // delete
-            pkgRemoveHelper(pkg);
+            if(flags & RPackage::FInstalled)
+               pkgRemoveHelper(pkg);
             break;
          case PKG_PURGE:       // purge
-            pkgRemoveHelper(pkg, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true);
             break;
          case PKG_DELETE_WITH_DEPS:
-            pkgRemoveHelper(pkg, true, true);
+            if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
+               pkgRemoveHelper(pkg, true, true);
             break;
          default:
             cout << "uh oh!!!!!!!!!" << endl;
@@ -760,7 +786,8 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
-     _logView(0), _installProgress(0), _fetchProgress(0)
+     _logView(0), _installProgress(0), _fetchProgress(0), 
+     _fastSearchEventID(-1)
 {
    assert(_win);
 
@@ -810,11 +837,80 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    }
    g_value_unset(&value);
 
+   xapianDoIndexUpdate(this);
+
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
 }
 
+#ifdef WITH_EPT
+gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapianDoIndexUpdate()" << std::endl;
 
+   // no need to update if we run non-interactive
+   if(_config->FindB("Volatile::Non-Interactive", false) == true)
+      return false;
+
+   // check if we need a update
+   if(!me->_lister->xapianIndexNeedsUpdate()) {
+      // if the cache is not open, check back when it is
+      if (me->_lister->packagesSize() == 0)
+	 g_timeout_add_seconds(30, xapianDoIndexUpdate, me);
+      return false;
+   }
+
+   // do not run if we don't have it
+   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
+      return false;
+   // no permission
+   if (getuid() != 0)
+      return false;
+
+   // if we make it to this point, we need a xapian update
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "running update-apt-xapian-index" << std::endl;
+   GPid pid;
+   char *argp[] = {"/usr/bin/nice",
+		   "/usr/bin/ionice","-c3",
+		   "/usr/sbin/update-apt-xapian-index", 
+		   "--update", "-q",
+		   NULL};
+   if(g_spawn_async(NULL, argp, NULL, 
+		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
+		    NULL, NULL, &pid, NULL)) {
+      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
+							"label_fast_search")),
+			 _("Rebuilding search index"));
+   }
+   return false;
+}
+#else
+gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
+{
+   return false;
+}
+#endif
+
+void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapianIndexUpdateFinished: "  
+		<< WEXITSTATUS(status) << std::endl;
+#ifdef WITH_EPT
+   me->_lister->openXapianIndex();
+#endif
+   gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
+						     "label_fast_search")),
+		      _("Quick search"));
+   gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, 
+						 "entry_fast_search"), TRUE);
+   g_spawn_close_pid(pid);
+}
 
 // needed for the buildTreeView function
 struct mysort {
@@ -835,11 +931,15 @@ void RGMainWindow::buildTreeView()
 
    // remove old tree columns
    if (_treeView) {
+      // unset model fist, otherwise the _remove_column takes *ages*
+      // (within the seconds range for each call)
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
       GList *columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(_treeView));
-      for (GList * li = g_list_first(columns); li != NULL;
+      for (GList * li = g_list_first(columns); 
+           li != NULL;
            li = g_list_next(li)) {
-         gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
-                                     GTK_TREE_VIEW_COLUMN(li->data));
+         int i = gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
+                                             GTK_TREE_VIEW_COLUMN(li->data));
       }
       // need to free the list here
       g_list_free(columns);
@@ -1126,6 +1226,9 @@ void RGMainWindow::buildInterface()
    glade_xml_signal_connect_data(_gladeXML,
                                  "on_button_details_clicked",
                                  G_CALLBACK(cbDetailsWindow), this);
+   glade_xml_signal_connect_data(_gladeXML,
+                                 "on_entry_fast_search_changed",
+                                 G_CALLBACK(cbSearchEntryChanged), this);
 
    _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
    assert(_propertiesB);
@@ -1308,15 +1411,15 @@ void RGMainWindow::buildInterface()
    button = glade_xml_get_widget(_gladeXML, "button_procceed");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
-
+#if 1
    button = glade_xml_get_widget(_gladeXML, "button_details");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("View package properties"), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button1");
+   button = glade_xml_get_widget(_gladeXML, "button_search");
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Search for packages"), "");
-
+#endif
    GtkWidget *pkgCommonTextView;
    pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
    assert(pkgCommonTextView);
@@ -1649,7 +1752,17 @@ void RGMainWindow::buildInterface()
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
 
+   _entry_fast_search = glade_xml_get_widget(_gladeXML, "entry_fast_search");
 
+   // only enable fast search if its usable
+#ifdef WITH_EPT
+   if(!_lister->xapiandatabase() ||
+      !FileExists("/usr/sbin/update-apt-xapian-index")) {
+      gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+   }
+#else
+   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));
+#endif
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;
@@ -1899,6 +2012,11 @@ void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
    assert(me);
+   // Ignore DEL accelerator when fastsearch has focus
+   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_fast_search");
+   if (gtk_widget_has_focus (entry) && GPOINTER_TO_INT(data) == PKG_DELETE) {
+      return;
+   }
    me->pkgAction((RGPkgAction)GPOINTER_TO_INT(data));
 }
 
@@ -2043,7 +2161,7 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
       else if (flags & RPackage::FInstall)
-         me->pkgAction(PKG_DELETE);
+         me->pkgAction(PKG_KEEP);
    } else if (flags & RPackage::FOutdated) {
       if (flags & RPackage::FKeep)
          me->pkgAction(PKG_INSTALL);
@@ -2343,10 +2461,15 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
    if (me->_findWin == NULL) {
       me->_findWin = new RGFindWindow(me);
    }
-
+   
    me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
+
+      // clear the quick search, otherwise both apply and that is
+      // confusing
+      gtk_entry_set_text(GTK_ENTRY(me->_entry_fast_search), "");
+
       string str = me->_findWin->getFindString();
       me->setBusyCursor(true);
 
@@ -2408,24 +2531,19 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    me->setStatusText(_("Starting help viewer..."));
 
+   string cmd;
    if (is_binary_in_path("yelp"))
-      system("yelp ghelp:synaptic &");
+      cmd = "yelp ghelp:synaptic";
 #if 0 // FIXME: khelpcenter can't display this? check again!
     else if(is_binary_in_path("khelpcenter")) {
        system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
     }
 #endif
    else if (is_binary_in_path("mozilla")) {
-      // mozilla eats bookmarks when run under sudo (because it does not
-      // change $HOME)
-      if(getenv("SUDO_USER") != NULL) {
-         struct passwd *pw = getpwuid(0);
-         setenv("HOME", pw->pw_dir, 1);
-      }
-      system("mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
-   } else if (is_binary_in_path("konqueror"))
-      system("konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html &");
-   else
+      cmd = "mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   } else if (is_binary_in_path("konqueror")) {
+      cmd = "konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   } else {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
                                "the 'konqueror' browser or the 'mozilla' "
@@ -2434,6 +2552,20 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));
+   }
+
+   if (!cmd.empty()) {
+      gchar * sudo_user;
+      sudo_user = g_strdup(getenv("SUDO_USER"));
+      // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
+      if(is_binary_in_path("sudo") && (sudo_user != NULL))
+         cmd = "sudo -u " + string(sudo_user) + " " + cmd;
+      g_free(sudo_user);
+      cmd += " &";
+      if(system(cmd.c_str()) < 0) {
+         g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
+      }
+   }
 }
 
 void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
@@ -2647,7 +2779,7 @@ void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection,
    // at us, see LP: #38397 for more information
    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
 
-   string selected = me->selectedSubView();
+   string selected = MarkupUnescapeString(me->selectedSubView());
    me->_lister->setSubView(utf8(selected.c_str()));
    me->refreshTable(NULL, false);
    me->setBusyCursor(false);
@@ -2835,6 +2967,51 @@ void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
+gboolean RGMainWindow::xapianDoSearch(void *data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
+
+   me->_fastSearchEventID = -1;
+   me->setBusyCursor(true);
+   RGFlushInterface();
+   if(str == NULL || strlen(str) <= 1) {
+      // reset the color
+      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, NULL);
+      // if the user has cleared the search, refresh the view
+      // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
+      // at us, see LP: #38397 for more information
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+      me->_lister->reapplyFilter();
+      me->refreshTable();
+      me->setBusyCursor(false);
+   } else if(strlen(str) > 1) {
+      // only search when there is more than one char entered, single
+      // char searches tend to be very slow
+      me->setBusyCursor(true);
+      RGFlushInterface();
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+      me->refreshTable();
+      // set color to a light yellow to make it more obvious that a search
+      // is performed
+      GdkColor yellowish = {0, 63479,63479,48830};
+      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, &yellowish);
+   }
+   me->setBusyCursor(false);
+
+   return FALSE;
+}
+
+void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
+{
+   //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
+   RGMainWindow *me = (RGMainWindow *) data;
+   if(me->_fastSearchEventID > 0) {
+      g_source_remove(me->_fastSearchEventID);
+      me->_fastSearchEventID = -1;
+   }
+   me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
+}
 
 void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
 {
@@ -2900,6 +3077,9 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->_lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
+
+   // check if the index needs to be rebuild
+   me->xapianDoIndexUpdate(me);
 
    me->setTreeLocked(FALSE);
    me->refreshTable();

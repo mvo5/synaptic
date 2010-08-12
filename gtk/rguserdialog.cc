@@ -239,7 +239,7 @@ bool RGGladeUserDialog::init(const char *name)
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0 && _parentWindow == NULL) {
+   if (id > 0 && !GTK_WIDGET_VISIBLE(_parentWindow)) {
       GdkWindow *win = gdk_window_foreign_new(id);
       if(win) {
 	 gtk_widget_realize(_dialog);

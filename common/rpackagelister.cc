@@ -36,6 +36,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <time.h>
+#include <algorithm>
 
 #include "rpackagelister.h"
 #include "rpackagecache.h"
@@ -78,6 +79,9 @@ using namespace std;
 
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
+#ifdef WITH_EPT
+   , _xapianDatabase(0)
+#endif
 {
    _cache = new RPackageCache();
 
@@ -85,7 +89,7 @@ RPackageLister::RPackageLister()
    _searchData.isRegex = false;
    _viewMode = _config->FindI("Synaptic::ViewMode", 0);
    _updating = true;
-   _sortMode = LIST_SORT_NAME_ASC;
+   _sortMode = LIST_SORT_DEFAULT;
 
    // keep order in sync with rpackageview.h 
    _views.push_back(new RPackageViewSections(_packages));
@@ -94,8 +98,11 @@ RPackageLister::RPackageLister()
    _filterView = new RPackageViewFilter(_packages);
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_packages);
-   _views.push_back(_searchView);   
+   _views.push_back(_searchView);
    //_views.push_back(new RPackageViewAlphabetic(_packages));
+#ifdef WITH_EPT
+   openXapianIndex();
+#endif
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -419,7 +426,47 @@ bool RPackageLister::openCache()
    return true;
 }
 
+#ifdef WITH_EPT
+bool RPackageLister::xapianIndexNeedsUpdate()
+{
+   struct stat buf;
+   
+   if(_config->FindB("Debug::Synaptic::Xapian",false))
+      std::cerr << "xapainIndexNeedsUpdate()" << std::endl;
 
+   // check the xapian index
+   if(FileExists("/usr/sbin/update-apt-xapian-index") && 
+      (!_xapianDatabase )) {
+      if(_config->FindB("Debug::Synaptic::Xapian",false))
+	 std::cerr << "xapain index not build yet" << std::endl;
+      return true;
+   } 
+
+   // compare timestamps, rebuild everytime, its now cheap(er) 
+   // because we use u-a-x-i --update
+   stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
+   if(ept::axi::timestamp() < buf.st_mtime) {
+      if(_config->FindB("Debug::Synaptic::Xapian",false))
+	 std::cerr << "xapian outdated " 
+		   << buf.st_mtime - ept::axi::timestamp()  << std::endl;
+      return true;
+   }
+
+   return false;
+}
+
+bool RPackageLister::openXapianIndex()
+{
+   if(_xapianDatabase)
+      delete _xapianDatabase;
+   try {
+      _xapianDatabase = new Xapian::Database(ept::axi::path_db());
+   } catch (Xapian::DatabaseOpeningError) {
+      return false;
+   };
+   return true;
+}
+#endif
 
 void RPackageLister::applyInitialSelection()
 {
@@ -635,6 +682,7 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
 
    switch(mode) {
    case LIST_SORT_NAME_ASC:
+   case LIST_SORT_DEFAULT:
       // Do nothing, already done
       break;
    case LIST_SORT_NAME_DES:
@@ -1235,6 +1283,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    // Get the source list
    //pkgSourceList List;
    _cache->list()->ReadMainList();
+
    // Lock the list directory
    FileFd Lock;
    if (_config->FindB("Debug::NoLocking", false) == false) {
@@ -1246,12 +1295,26 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 
    _updating = true;
 
+
+#ifndef HAVE_RPM
+// apt-0.7.10 has the new UpdateList code in algorithms, we use it
+   string s;
+   bool res = ListUpdate(*status, *_cache->list(), 5000);
+   if(res == false)
+   {
+      while(!_error->empty())
+      {
+	 bool isError = _error->PopMessage(s);
+	 error += s;
+      }
+   }
+   return res;
+#else
    // Create the download object
    pkgAcquire Fetcher(status);
 
    bool Failed = false;
 
-#if HAVE_RPM
    if (_cache->list()->GetReleases(&Fetcher) == false)
       return false;
    Fetcher.Run();
@@ -1266,21 +1329,13 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
       _error->Warning(_("Release files for some repositories could not be "
                         "retrieved or authenticated. Such repositories are "
                         "being ignored."));
-#endif /* HAVE_RPM */
 
    if (!_cache->list()->GetIndexes(&Fetcher))
       return false;
 
-// apt-rpm does not support the pulseInterval
-#ifdef HAVE_RPM 
    // Run it
    if (Fetcher.Run() == pkgAcquire::Failed)
       return false;
-#else
-   if (Fetcher.Run(50000) == pkgAcquire::Failed)
-      return false;
-#endif
-
 
    //bool AuthFailed = false;
    Failed = false;
@@ -1313,6 +1368,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
       return false; 
    }
    return true;
+#endif
 }
 
 bool RPackageLister::getDownloadUris(vector<string> &uris)
@@ -1410,7 +1466,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
          serverError = getServerErrorMessage(errm);
 
-         _error->Warning(tmp.str().c_str());
+         _error->Warning("%s", tmp.str().c_str());
          Failed = true;
       }
 
@@ -1881,6 +1937,137 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    return false;
 #endif
 }
+
+
+#ifdef WITH_EPT
+bool RPackageLister::limitBySearch(string searchString)
+{
+   //cerr << "limitBySearch(): " << searchString << endl;
+    if (ept::axi::timestamp() == 0)
+        return false;
+   return xapianSearch(searchString);
+}
+
+bool RPackageLister::xapianSearch(string unsplitSearchString)
+{
+   //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
+   static const int defaultQualityCutoff = 15;
+   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", 
+                                      defaultQualityCutoff);
+    if (ept::axi::timestamp() == 0) 
+        return false;
+
+   try {
+      int maxItems = _xapianDatabase->get_doccount();
+      Xapian::Enquire enquire(*_xapianDatabase);
+      Xapian::QueryParser parser;
+      parser.set_database(*_xapianDatabase);
+      parser.add_prefix("name","XP");
+      parser.add_prefix("section","XS");
+      // default op is AND to narrow down the resultset
+      parser.set_default_op( Xapian::Query::OP_AND );
+   
+      /* Workaround to allow searching an hyphenated package name using a prefix (name:)
+       * LP: #282995
+       * Xapian currently doesn't support wildcard for boolean prefix and 
+       * doesn't handle implicit wildcards at the end of hypenated phrases.
+       *
+       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu res*'
+       * however 'name:(ubuntu* res*) won't return any result because the 
+       * index is built with the full package name
+       */
+      // Always search for the package name
+      string xpString = "name:";
+      string::size_type pos = unsplitSearchString.find_first_of(" ,;");
+      if (pos > 0) {
+          xpString += unsplitSearchString.substr(0,pos);
+      } else {
+          xpString += unsplitSearchString;
+      }
+      Xapian::Query xpQuery = parser.parse_query(xpString);
+
+      pos = 0;
+      while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
+         unsplitSearchString.replace(pos, 1, " ");
+         pos+=1;
+      }
+
+      if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+         std::cerr << "searching for : " << unsplitSearchString << std::endl;
+      
+      // Build the query
+      // apply a weight factor to XP term to increase relevancy on package name
+      Xapian::Query query = parser.parse_query(unsplitSearchString, 
+         Xapian::QueryParser::FLAG_WILDCARD |
+         Xapian::QueryParser::FLAG_BOOLEAN |
+         Xapian::QueryParser::FLAG_PARTIAL);
+      query = Xapian::Query(Xapian::Query::OP_OR, query, 
+              Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
+      enquire.set_query(query);
+      Xapian::MSet matches = enquire.get_mset(0, maxItems);
+
+      if(_config->FindB("Debug::Synaptic::Xapian",false)) {
+         cerr << "enquire: " << enquire.get_description() << endl;
+         cerr << "matches estimated: " << matches.get_matches_estimated() << " results found" << endl;
+      }
+
+      // Retrieve the results
+      int top_percent = 0;
+      _viewPackages.clear();
+      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+      {
+         RPackage* pkg = getPackage(i.get_document().get_data());
+         // Filter out results that apt doesn't know
+         if (!pkg || !_selectedView->hasPackage(pkg))
+            continue;
+
+         // Save the confidence interval of the top value, to use it as
+         // a reference to compute an adaptive quality cutoff
+         if (top_percent == 0)
+            top_percent = i.get_percent();
+   
+         // Stop producing if the quality goes below a cutoff point
+         if (i.get_percent() < qualityCutoff * top_percent / 100)
+         {
+            cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+            break;
+         }
+   
+         if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+            cerr << i.get_rank() + 1 << ": " << i.get_percent() << "% docid=" << *i << "	[" << i.get_document().get_data() << "]" << endl;
+         _viewPackages.push_back(pkg);
+         }
+      // re-apply sort criteria only if an explicit search is set
+      if (_sortMode != LIST_SORT_DEFAULT)
+          sortPackages(_sortMode);
+      return true;
+   } catch (const Xapian::Error & error) {
+      /* We are here if a Xapian call failed. The main cause is a parser exception.
+       * The error message is always in English currently. 
+       * The possible parser errors are:
+       *    Unknown range operation
+       *    parse error
+       *    Syntax: <expression> AND <expression>
+       *    Syntax: <expression> AND NOT <expression>
+       *    Syntax: <expression> NOT <expression>
+       *    Syntax: <expression> OR <expression>
+       *    Syntax: <expression> XOR <expression>
+       */
+      cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg() << endl;
+      return false;
+   }
+}
+#else
+bool RPackageLister::limitBySearch(string searchString)
+{
+   return false;
+}
+
+bool RPackageLister::xapianSearch(string searchString) 
+{ 
+   return false; 
+}
+#endif
 
 
 // vim:ts=3:sw=3:et

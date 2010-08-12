@@ -931,11 +931,15 @@ void RGMainWindow::buildTreeView()
 
    // remove old tree columns
    if (_treeView) {
+      // unset model fist, otherwise the _remove_column takes *ages*
+      // (within the seconds range for each call)
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
       GList *columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(_treeView));
-      for (GList * li = g_list_first(columns); li != NULL;
+      for (GList * li = g_list_first(columns); 
+           li != NULL;
            li = g_list_next(li)) {
-         gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
-                                     GTK_TREE_VIEW_COLUMN(li->data));
+         int i = gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
+                                             GTK_TREE_VIEW_COLUMN(li->data));
       }
       // need to free the list here
       g_list_free(columns);

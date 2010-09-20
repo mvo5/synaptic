@@ -334,7 +334,7 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
    // it when run hidden. this workaround will scroll to the end of
    // the current buffer
    gtk_widget_realize(GTK_WIDGET(me->_term));
-   GtkAdjustment *a = GTK_ADJUSTMENT (VTE_TERMINAL(me->_term)->adjustment);
+   GtkAdjustment *a = vte_terminal_get_adjustment(VTE_TERMINAL(me->_term));
    gtk_adjustment_set_value(a, a->upper - a->page_size);
    gtk_adjustment_value_changed(a);
 
@@ -393,8 +393,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
-   GtkWidget *scrollbar = 
-      gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
+   GtkWidget *scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
    GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
    if(_config->FindB("Synaptic::useUserTerminalFont")) {

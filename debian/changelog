@@ -8,6 +8,9 @@ synaptic (0.70~pre2) UNRELEASED; urgency=low
     - updated, thansk to Yuri Kozlov (closes: #571712)
   * gtk/rgdebinstallprogress.cc, gtk/rgterminstallprogress.cc:
     - fix FTBFS on latest vte (closes: #597384)
+  * common/rpackagecache.{cc,h}, common/rpackage.cc:
+    - add cache for PkgFileIterator->pkgIndexFile* to speed up
+      RPackage::IsTrusted (LP: #165181)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 23 Aug 2010 10:27:49 +0200
 

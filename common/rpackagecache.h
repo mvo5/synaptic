@@ -24,7 +24,7 @@
 #ifndef _RPACKAGECACHE_H_
 #define _RPACKAGECACHE_H_
 
-
+#include <map>
 
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/sourcelist.h>
@@ -45,6 +45,9 @@ class RPackageCache {
    pkgDepCache *_dcache;
    pkgSourceList *_list;
 
+   // speed up IsTrusted()
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile*> _trust_cache;
+
    bool _locked;
 
  public:
@@ -53,6 +56,9 @@ class RPackageCache {
    };
    inline pkgSourceList *list() {
       return _list;
+   };
+   inline std::map<pkgCache::PkgFileIterator, pkgIndexFile*>& trust_cache() {
+      return _trust_cache;
    };
 
    bool open(OpProgress &progress, bool lock=true);

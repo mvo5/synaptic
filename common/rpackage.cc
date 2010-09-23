@@ -757,11 +757,23 @@ bool RPackage::isTrusted()
       return false;
    }
    pkgSourceList *Sources=_lister->getCache()->list();
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile*>::iterator it;   
    for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++)
    {
       pkgIndexFile *Index;
-      if (Sources->FindIndex(i.File(),Index) == false)
-         continue;
+
+      // FIXME: instead of doing his dance (he trust cache is just
+      //        a couple of items big, that should be done in apt itself
+      it = _lister->getCache()->trust_cache().find(i.File());
+      if (it == _lister->getCache()->trust_cache().end()) {
+         if (Sources->FindIndex(i.File(),Index) == false)
+            continue;
+      } else {
+            Index = (*it).second;
+      }
+      _lister->getCache()->trust_cache().insert(
+         pair<pkgCache::PkgFileIterator, pkgIndexFile*>(i.File(), Index) );
+
       if (_config->FindB("Debug::pkgAcquire::Auth", false))
       {
          std::cerr << "Checking index: " << Index->Describe()

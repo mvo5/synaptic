@@ -99,6 +99,8 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
    _dcache = new pkgDepCache(_cache, _policy);
    _dcache->Init(&progress);
 
+   _trust_cache.clear();
+
    //progress.Done();
    if (_error->PendingError())
       return false;

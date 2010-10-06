@@ -36,17 +36,21 @@ static void closeWindow(GtkWidget *self, void *data)
 }
 
 RGCreditsPanel::RGCreditsPanel(RGWindow *parent):
-RGGladeWindow(parent, "about", "credits")
+RGGtkBuilderWindow(parent, "about", "credits")
 {
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_closebutton_clicked",
-                                 G_CALLBACK(closeWindow), this);
+   GtkWidget *closebutton;
+   closebutton = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                   "credits_closebutton"));
+   gtk_signal_connect (closebutton,
+                       "on_closebutton_clicked",
+                       G_CALLBACK(closeWindow), this);
 
    //   skipTaskbar(true);
 
    // hide translators credits if it is not found in the po file
    GtkWidget *credits;
-   credits = glade_xml_get_widget(_gladeXML,"label_translator_credits");
+   credits = GTK_WIDGET(gtk_builder_get_object(_builder,"label_translator_credits"));
+
    assert(credits);
    const char* s = gtk_label_get_text(GTK_LABEL(credits));
    if(strcmp(s, "translators-credits") == 0)
@@ -68,20 +72,25 @@ void RGAboutPanel::creditsClicked(GtkWidget *self, void *data)
 
 
 RGAboutPanel::RGAboutPanel(RGWindow *parent)
-: RGGladeWindow(parent, "about"), credits(NULL)
+: RGGtkBuilderWindow(parent, "about"), credits(NULL)
 {
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_okbutton_clicked",
-                                 G_CALLBACK(closeWindow), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_credits_clicked",
-                                 G_CALLBACK(creditsClicked), this);
+   GtkWidget *okbutton, *button_credits;
+   okbutton = GTK_WIDGET(gtk_builder_get_object(_builder, "about_okbutton"));
+   button_credits = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                      "button_credits"));
+   gtk_signal_connect(okbutton,
+                      "on_okbutton_clicked",
+                      G_CALLBACK(closeWindow), this);
+   gtk_signal_connect(button_credits,
+                      "on_button_credits_clicked",
+                      G_CALLBACK(creditsClicked), this);
 
    //skipTaskbar(true);
 
    setTitle(_("About Synaptic"));
-   GtkWidget *w = glade_xml_get_widget(_gladeXML, "label_version");
+   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "label_version"));
    assert(w);
+
    gchar *s =
       g_strdup_printf("<span size=\"xx-large\" weight=\"bold\">%s</span>",
                       PACKAGE " " VERSION);

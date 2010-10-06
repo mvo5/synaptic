@@ -68,15 +68,15 @@ bool RGFetchProgress::close()
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-   : RGGladeWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
+   : RGGtkBuilderWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
+   _mainProgressBar = GTK_WIDGET(gtk_builder_get_object(_builder, "progressbar_download"));
    assert(_mainProgressBar);
 
-   _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
+   _table = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_fetch"));
    _tableListStore = gtk_list_store_new(N_FETCH_COLUMNS,
                                         G_TYPE_INT,
                                         G_TYPE_STRING, 
@@ -120,7 +120,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
 
-   glade_xml_signal_connect_data(_gladeXML,
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
                                  "on_button_cancel_clicked",
                                  G_CALLBACK(stopDownload), this);
 

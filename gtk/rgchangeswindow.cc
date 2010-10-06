@@ -41,11 +41,11 @@
 
 
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
-: RGGladeWindow(wwin, "changes")
+: RGGtkBuilderWindow(wwin, "changes")
 {
    // new tree store
    _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
-   _tree = glade_xml_get_widget(_gladeXML, "tree");
+   _tree = GTK_WIDGET(gtk_builder_get_object(_builder, "tree"));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
@@ -78,14 +78,14 @@ void RGChangesWindow::confirm(RPackageLister *lister,
    if(!(toInstall.size() || toReInstall.size() || toUpgrade.size() ||
 	toRemove.size() || toDowngrade.size())) {
       // we have no changes other than authentication warnings
-      label = glade_xml_get_widget(_gladeXML, "label_changes_header");
+      label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_changes_header"));
       gtk_widget_hide(label);
-      label = glade_xml_get_widget(_gladeXML, "label_secondary");
+      label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_secondary"));
       gtk_widget_hide(label);
    }
 
   if (notAuthenticated.size() > 0) {
-      label = glade_xml_get_widget(_gladeXML, "label_auth_warning");
+      label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_auth_warning"));
       assert(label);
       // FIXME: make this a message from a trust class (and remeber to
       // change the text in rgsummarywindow then too)

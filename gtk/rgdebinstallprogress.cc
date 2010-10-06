@@ -209,8 +209,8 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    string primary, secondary;
    gchar *m,*s,*p;
    GtkWidget *w;
-   RGGladeUserDialog dia(this, "conffile");
-   GladeXML *xml = dia.getGladeXML();
+   RGGtkBuilderUserDialog dia(this, "conffile");
+   GtkBuilder *dia_builder = dia.getGtkBuilder();
 
    p = g_strdup_printf(_("Replace configuration file\n'%s'?"),conffile);
    s = g_strdup_printf(_("The configuration file %s was modified (by "
@@ -221,7 +221,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 			 "maintainers version? "),conffile);
 
    // setup dialog
-   w = glade_xml_get_widget(xml, "label_message");
+   w = GTK_WIDGET(gtk_builder_det_object(dia_builder, "label_message"));
    m = g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s </span> "
 		       "\n\n%s", p, s);
    gtk_label_set_markup(GTK_LABEL(w), m);
@@ -267,7 +267,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    g_free(cmd);
 
    // set into buffer
-   GtkWidget *text_view = glade_xml_get_widget(xml,"textview_diff");
+   GtkWidget *text_view = GTK_WIDGET(gtk_builder_get_object(xml,"textview_diff"));
    gtk_widget_modify_font(text_view, pango_font_description_from_string("monospace"));
    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
@@ -293,7 +293,7 @@ void RGDebInstallProgress::startUpdate()
    // check if we run embedded
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    if (id > 0) {
-      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_rgdebinstall_progress");
+      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_rgdebinstall_progress"));
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show(_sock);
@@ -357,7 +357,7 @@ RGDebInstallProgress::~RGDebInstallProgress()
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister)
 
-   : RInstallProgress(), RGGladeWindow(main, "rgdebinstall_progress"),
+   : RInstallProgress(), RGGtkBuilderWindow(main, "rgdebinstall_progress"),
      _totalActions(0), _progress(0), _sock(0), _userDialog(0)
 
 {
@@ -373,17 +373,17 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    putenv("APT_LISTCHANGES_FRONTEND=gtk");
 
    _startCounting = false;
-   _label_status = glade_xml_get_widget(_gladeXML, "label_status");
-   _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
+   _label_status = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
+   _pbarTotal = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"));
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.025);
-   _autoClose = glade_xml_get_widget(_gladeXML, "checkbutton_auto_close");
+   _autoClose = GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_auto_close"));
    // we don't save options in non-interactive mode, so there is no 
    // point in showing this here
    if(_config->FindB("Volatile::Non-Interactive", false))
       gtk_widget_hide(_autoClose);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_autoClose), 
 				_config->FindB("Synaptic::closeZvt", false));
-   //_image = glade_xml_get_widget(_gladeXML, "image");
+   //_image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
 
    // work around for kdesudo blocking our SIGCHLD (LP: #156041) 
    sigset_t sset;
@@ -402,26 +402,28 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    } else {
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 8");
    }
-   gtk_box_pack_start(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), _term, TRUE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"))), _term, TRUE, TRUE, 0);
    g_signal_connect(G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
    
 
    gtk_widget_show(_term);
-   gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), scrollbar, FALSE, FALSE, 0);
+   gtk_box_pack_end(GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"))), scrollbar, FALSE, FALSE, 0);
    gtk_widget_show(scrollbar);
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
 
-   GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
    g_signal_connect(w, "notify::expanded",
 		    G_CALLBACK(expander_callback), this);
 
    g_signal_connect(_term, "contents-changed",
 		    G_CALLBACK(content_changed), this);
 
-   glade_xml_signal_connect_data(_gladeXML, "on_button_cancel_clicked",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
+                                 "on_button_cancel_clicked",
 				 G_CALLBACK(cbCancel), this);
-   glade_xml_signal_connect_data(_gladeXML, "on_button_close_clicked",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_close")),
+                                 "on_button_close_clicked",
 				 G_CALLBACK(cbClose), this);
 
    if(_userDialog == NULL)
@@ -565,7 +567,7 @@ void RGDebInstallProgress::updateInterface()
       g_warning("TerminalTimeout in step: %s", s);
       // now expand the terminal
       GtkWidget *w;
-      w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+      w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
       last_term_action = time(NULL);
       // try to get the attention of the user
@@ -640,7 +642,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
 
    if(_childin < 0) {
       // something _bad_ happend. so the terminal window and hope for the best
-      GtkWidget *w = glade_xml_get_widget(_gladeXML, "expander_terminal");
+      GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
       gtk_widget_hide(_pbarTotal);
    }
@@ -673,7 +675,7 @@ void RGDebInstallProgress::finishUpdate()
    }
    RGFlushInterface();
 
-   GtkWidget *_closeB = glade_xml_get_widget(_gladeXML, "button_close");
+   GtkWidget *_closeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
    gtk_widget_set_sensitive(_closeB, TRUE);
 
    bool autoClose= gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_autoClose));
@@ -688,7 +690,7 @@ void RGDebInstallProgress::finishUpdate()
    gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n%s", s.c_str(),
 				_(getResultStr(res)));
    setTitle(_("Changes applied"));
-   GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
+   GtkWidget *l = GTK_WIDGET(gtk_builder_get_object(_builder, "label_action"));
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);
 
@@ -696,7 +698,7 @@ void RGDebInstallProgress::finishUpdate()
    gtk_widget_hide(_pbarTotal);
    gtk_widget_hide(_label_status);
 
-   GtkWidget *img = glade_xml_get_widget(_gladeXML,"image_finished");
+   GtkWidget *img = GTK_WIDGET(gtk_builder_get_object(_builder, "image_finished"));
    switch(res) {
    case 0: // success
       gtk_image_set_from_file(GTK_IMAGE(img),
@@ -765,7 +767,7 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
       p =  _("Installing software");
 
    gchar *msg = g_strdup_printf("<big><b>%s</b></big>\n\n%s", p, s.c_str());
-   GtkWidget *l = glade_xml_get_widget(_gladeXML, "label_action");
+   GtkWidget *l = GTK_WIDGET(gtk_builder_get_object(_builder, "label_action"));
    gtk_label_set_markup(GTK_LABEL(l), msg);
    g_free(msg);
 
@@ -773,5 +775,3 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
 
 #endif
 
-
-// vim:ts=3:sw=3:et

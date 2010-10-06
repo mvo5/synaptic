@@ -161,10 +161,10 @@ void welcome_dialog(RGMainWindow *mainWindow)
       // show welcome dialog
       if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
 	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
-         RGGladeUserDialog dia(mainWindow);
+         RGGtkBuilderUserDialog dia(mainWindow);
          dia.run("welcome");
-         GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-                                              "checkbutton_show_again");
+         GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+                                              "checkbutton_show_again"));
          assert(cb);
          _config->Set("Synaptic::showWelcomeDialog",
                       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
@@ -204,10 +204,10 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
 	 if(update == UPDATE_AUTO) 
 	    mainWindow->cbUpdateClicked(NULL, mainWindow);
 	 else {
-	    RGGladeUserDialog dia(mainWindow);
+	    RGGtkBuilderUserDialog dia(mainWindow);
 	    int res = dia.run("update_outdated",true);
-	    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-						 "checkbutton_remember");
+	    GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+						 "checkbutton_remember"));
 	    assert(cb);
 	    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
 	       if(res == GTK_RESPONSE_CANCEL)
@@ -591,8 +591,9 @@ int main(int argc, char **argv)
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       welcome_dialog(mainWindow);
-      gtk_widget_grab_focus( glade_xml_get_widget(mainWindow->getGladeXML(),
-                                              "entry_fast_search"));
+      gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
+                                          mainWindow->getGtkBuilder(),
+                                          "entry_fast_search")));
 #if 0
       update_check(mainWindow, packageLister);
 #endif 

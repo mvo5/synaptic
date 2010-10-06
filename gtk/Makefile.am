@@ -1,11 +1,11 @@
-SUBDIRS = glade
+SUBDIRS = gtkbuilder
 
 
 INCLUDES= -I${top_srcdir}/common \
 	-I${top_srcdir}/pixmaps  \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	-DSYNAPTIC_GLADEDIR=\""$(datadir)/synaptic/glade/"\" \
+	-DSYNAPTIC_GTKBUILDERDIR=\""$(datadir)/synaptic/gtkbuilder/"\" \
 	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
 	@PACKAGE_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBEPT_CFLAGS)
 
@@ -78,8 +78,8 @@ synaptic_SOURCES= \
 	rguserdialog.h\
 	rgwindow.cc\
 	rgwindow.h\
-	rggladewindow.cc\
-	rggladewindow.h
+	rggtkbuilderwindow.cc\
+	rggtkbuilderwindow.h
 
 CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 

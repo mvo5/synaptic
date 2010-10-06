@@ -28,11 +28,11 @@
 
 #include <vector>
 #include <set>
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
+class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 
    struct Item {
       string descr;

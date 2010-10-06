@@ -27,7 +27,7 @@
 #include "rgwindow.h"
 #include "rgmainwindow.h"
 #include "rgpkgdetails.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rpackage.h"
 #include "rgpackagestatus.h"
 #include "sections_trans.h"
@@ -35,9 +35,10 @@
 
 
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
-   : RGGladeWindow(parent, "details")
+   : RGGtkBuilderWindow(parent, "details")
 {
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "close")),
 				 "on_button_close_clicked",
 				 G_CALLBACK(cbCloseClicked),
 				 this); 
@@ -137,7 +138,7 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
    gtk_widget_show_all(event);
 }
 
-void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, 
+void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me, 
                                       RPackage *pkg,
 				      bool setTitle)
 {
@@ -176,7 +177,8 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
    const gchar *s;
    static GtkTooltips *tips = gtk_tooltips_new ();
 
-   textview = glade_xml_get_widget(me->getGladeXML(), "text_descr");
+   textview = GTK_WIDGET(gtk_builder_get_object
+                         (me->getGtkBuilder(), "text_descr"));
    assert(textview);
    buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
    // clear old buffer
@@ -257,8 +259,9 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
 
    // file list
 #ifndef HAVE_RPM
-   gtk_widget_show(glade_xml_get_widget(me->getGladeXML(),
-					"scrolledwindow_filelist"));
+   gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
+                              (me->getGtkBuilder(),
+                               "scrolledwindow_filelist")));
    me->setTextView("textview_files", pkg->installedFiles());
 #endif
 
@@ -279,7 +282,8 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
    }
    me->setTreeList("treeview_versions", list);
 
-   glade_xml_signal_connect_data(me->getGladeXML(), 
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (me->getGtkBuilder(), "optionmenu_depends")),
 				 "on_optionmenu_depends_changed",
 				 G_CALLBACK(cbDependsMenuChanged), me);
 }
@@ -289,8 +293,8 @@ void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
    RGPkgDetailsWindow *me = (RGPkgDetailsWindow*)data;
 
    int nr =  gtk_option_menu_get_history(GTK_OPTION_MENU(self));
-   GtkWidget *notebook = glade_xml_get_widget(me->_gladeXML, 
-					      "notebook_dep_tab");
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "notebook_dep_tab"));
    assert(notebook);
    gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
 }

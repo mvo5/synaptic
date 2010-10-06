@@ -128,8 +128,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkAction" id="upgrade1">
-            <property name="name">upgrade1</property>
+          <object class="GtkAction" id="upgrade">
+            <property name="name">upgrade</property>
             <property name="label" translatable="yes">_Mark All Upgrades...</property>
             <signal handler="on_upgrade_packages" last_modification_time="Fri, 13 Dec 2002 11:58:50 GMT" name="activate"/>
           </object>
@@ -292,8 +292,8 @@
           </object>
         </child>
         <child>
-          <object class="GtkAction" id="edit1">
-            <property name="name">edit1</property>
+          <object class="GtkAction" id="edit_filter">
+            <property name="name">edit_filter</property>
             <property name="label" translatable="yes">_Filters</property>
             <signal handler="on_edit_filter_activate" last_modification_time="Wed, 25 Dec 2002 18:01:15 GMT" name="activate"/>
           </object>
@@ -363,17 +363,17 @@
           </object>
         </child>
         <child>
-          <object class="GtkAction" id="item1">
+          <object class="GtkAction" id="menu_help">
             <property name="stock_id">gtk-help</property>
-            <property name="name">item1</property>
+            <property name="name">menu_help</property>
             <property name="label" translatable="yes">_Contents</property>
             <signal handler="on_help_activate" last_modification_time="Mon, 10 Nov 2003 23:17:44 GMT" name="activate"/>
           </object>
           <accelerator key="F1" modifiers="0"/>
         </child>
         <child>
-          <object class="GtkAction" id="quick_introduction1">
-            <property name="name">quick_introduction1</property>
+          <object class="GtkAction" id="quick_introduction">
+            <property name="name">quick_introduction</property>
             <property name="label" translatable="yes">_Quick Introduction</property>
             <signal handler="on_introduction_activate" last_modification_time="Wed, 28 Jan 2004 13:56:20 GMT" name="activate"/>
           </object>
@@ -418,7 +418,7 @@
           <menuitem action="update_package_entrys1"/>
           <menuitem action="add_cdrom"/>
           <separator/>
-          <menuitem action="upgrade1"/>
+          <menuitem action="upgrade"/>
           <menuitem action="fix_broken_packages"/>
           <menuitem action="menu_tasks"/>
           <separator/>
@@ -445,7 +445,7 @@
         <menu action="settings2">
           <menuitem action="menu_preferences"/>
           <menuitem action="menu_repositories"/>
-          <menuitem action="edit1"/>
+          <menuitem action="edit_filter"/>
           <separator/>
           <menuitem action="menu_set_option"/>
           <separator/>
@@ -458,8 +458,8 @@
           </menu>
         </menu>
         <menu action="help1">
-          <menuitem action="item1"/>
-          <menuitem action="quick_introduction1"/>
+          <menuitem action="menu_help"/>
+          <menuitem action="quick_introduction"/>
           <menuitem action="icon_legend"/>
           <menuitem action="menu_about"/>
         </menu>

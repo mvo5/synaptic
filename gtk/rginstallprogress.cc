@@ -38,13 +38,16 @@
 #include "i18n.h"
 
 RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
-: RGGladeWindow(win, "rginstall_progress_msgs"),
+: RGGtkBuilderWindow(win, "rginstall_progress_msgs"),
 _currentPackage(0), _hasHeader(false)
 {
    setTitle(_("Package Manager output"));
-   GtkWidget *textView = glade_xml_get_widget(_gladeXML, "textview");
+   GtkWidget *textView = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                           "textview"));
    _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
-   glade_xml_signal_connect_data(_gladeXML, "on_close_clicked",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "close")),
+                                 "on_close_clicked",
                                  G_CALLBACK(onCloseClicked), this);
    PangoFontDescription *font;
    font = pango_font_description_from_string("helvetica 10");
@@ -280,7 +283,7 @@ class GeometryParser {
 
 RGInstallProgress::RGInstallProgress(RGMainWindow *main,
                                      RPackageLister *lister)
-: RInstallProgress(), RGGladeWindow(main, "rginstall_progress"), _msgs(main)
+: RInstallProgress(), RGGtkBuilderWindow(main, "rginstall_progress"), _msgs(main)
 {
    prepare(lister);
    setTitle(_("Applying Changes"));
@@ -294,11 +297,12 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
    if (Geo.HasPosition())
       gtk_widget_set_uposition(GTK_WIDGET(_win), Geo.XPos(), Geo.YPos());
 
-   _label = glade_xml_get_widget(_gladeXML, "label_name");
-   _labelSummary = glade_xml_get_widget(_gladeXML, "label_summary");
-   _pbar = glade_xml_get_widget(_gladeXML, "progress_package");
-   _pbarTotal = glade_xml_get_widget(_gladeXML, "progress_total");
-   _image = glade_xml_get_widget(_gladeXML, "image");
+   _label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"));
+   _labelSummary = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                     "label_summary"));
+   _pbar = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_package"));
+   _pbarTotal = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"));
+   _image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
 
    string ssDir = _config->Find("Synaptic::SlideShow", "");
    if (!ssDir.empty()) {

@@ -34,7 +34,7 @@
 
 #include "i18n.h"
 
-class RGDiscName : public RGGladeWindow 
+class RGDiscName : public RGGtkBuilderWindow 
 {
  protected:
 
@@ -117,16 +117,18 @@ bool RGCDScanner::run()
 
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
-: RGGladeWindow(wwin, "disc_name")
+: RGGtkBuilderWindow(wwin, "disc_name")
 {
    setTitle(_("Disc Label"));
-   _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
+   _textEntry = GTK_WIDGET(gtk_builder_get_object(_builder, "text_entry"));
    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "ok")),
                                  "on_ok_clicked",
                                  G_CALLBACK(onOkClicked), this);
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "cancel")),
                                  "on_cancel_clicked",
                                  G_CALLBACK(onCancelClicked), this);
    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);

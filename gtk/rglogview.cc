@@ -297,15 +297,15 @@ void RGLogView::show()
 }
 
 RGLogView::RGLogView(RGWindow *parent)
-   : RGGladeWindow(parent, "logview"), findStr(NULL)
+   : RGGtkBuilderWindow(parent, "logview"), findStr(NULL)
 {
-   GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_main");
+   GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
    assert(vbox);
 
-   _entryFind = glade_xml_get_widget(_gladeXML, "entry_find");
+   _entryFind = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
    assert(_entryFind);
 
-   _treeView = glade_xml_get_widget(_gladeXML, "treeview_dates");
+   _treeView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_dates"));
    assert(_treeView);
    
    GtkCellRenderer *renderer;
@@ -319,10 +319,14 @@ RGLogView::RGLogView(RGWindow *parent)
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
    // find button
-   glade_xml_signal_connect_data(_gladeXML, "on_button_find_clicked",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_find")),
+                                 "on_button_find_clicked",
 				 G_CALLBACK(cbButtonFind), this);
    // close
-   glade_xml_signal_connect_data(_gladeXML,"on_button_close_clicked",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_close")),
+                                 "on_button_close_clicked",
                                  G_CALLBACK(cbCloseClicked), this);
 
  
@@ -333,10 +337,12 @@ RGLogView::RGLogView(RGWindow *parent)
    g_signal_connect(G_OBJECT(select), "changed",
 		    G_CALLBACK (cbTreeSelectionChanged),
 		    this);
-   _textView = glade_xml_get_widget(_gladeXML, "textview_log");
+   _textView = GTK_WIDGET(gtk_builder_get_object(_builder, "textview_log"));
    assert(_textView);
 
-   glade_xml_signal_connect_data(_gladeXML, "on_entry_find_activate",
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "entry_find")),
+                                 "on_entry_find_activate",
 				 G_CALLBACK(cbButtonFind), this);
 
    GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));

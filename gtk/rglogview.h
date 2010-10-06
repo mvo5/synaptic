@@ -24,10 +24,10 @@
 #ifndef _RGLOGVIEW_H_
 #define _RGLOGVIEW_H_
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 
-class RGLogView : public RGGladeWindow {
+class RGLogView : public RGGtkBuilderWindow {
  protected:
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbButtonFind(GtkWidget *self, void *data);

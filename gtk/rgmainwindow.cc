@@ -29,7 +29,6 @@
 #include <cassert>
 #include <stdio.h>
 #include <ctype.h>
-#include <glade/glade.h>
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
@@ -131,7 +130,7 @@ void RGMainWindow::changeView(int view, string subView)
    GtkTreeSelection* selection;
    setBusyCursor(true);
    setInterfaceLocked(TRUE);
-   GtkWidget *tview = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+   GtkWidget *tview = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_subviews"));
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tview));
    if(!subView.empty()) {
       GtkTreeModel *model;
@@ -354,8 +353,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
    //cout << "RGMainWindow::updatePackageInfo(): " << pkg << endl;
 
-   // get required widgets from glade
-   GtkWidget *pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
+   // get required widgets from gtkbuilder
+   GtkWidget *pkginfo = GTK_WIDGET(gtk_builder_get_object(_builder, "notebook_pkginfo"));
    assert(pkginfo);
 
    // set everything to non-sensitive (for both pkg != NULL && pkg == NULL)
@@ -404,7 +403,8 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    gtk_widget_set_sensitive(pkginfo, true);
    RGPkgDetailsWindow::fillInValues(this, pkg);
    // work around a stupid gtk-bug (see debian #279447)
-   gtk_widget_queue_resize(glade_xml_get_widget(_gladeXML,"viewport_pkginfo"));
+   gtk_widget_queue_resize(GTK_WIDGET(gtk_builder_get_object
+                                      (_builder, "viewport_pkginfo")));
 
    if(_pkgDetails != NULL)
       RGPkgDetailsWindow::fillInValues(_pkgDetails,pkg, true);
@@ -505,8 +505,10 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
    }
 
    // write it
-   GtkWidget *progress = glade_xml_get_widget(me->_gladeXML, "progressbar_main");
-   GtkWidget *label = glade_xml_get_widget(me->_gladeXML, "label_status");
+   GtkWidget *progress = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "progressbar_main"));
+   GtkWidget *label = GTK_WIDGET(gtk_builder_get_object
+                                 (me->_builder, "label_status"));
    RGCacheProgress cacheProgress(progress, label);
    me->_lister->getCache()->deps()->writeStateFile(&cacheProgress,true);
 
@@ -534,10 +536,10 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    if(pkg == NULL)
       return;
 
-   RGGladeUserDialog dia(me,"change_version");
+   RGGtkBuilderUserDialog dia(me,"change_version");
 
-   GtkWidget *label = glade_xml_get_widget(dia.getGladeXML(),
-					   "label_text");
+   GtkWidget *label = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+					                "label_text"));
    gchar *str_name = g_strdup_printf(_("Select the version of %s that should be forced for installation"), pkg->name());
    gchar *str = g_strdup_printf("<big><b>%s</b></big>\n\n%s", str_name,
 				_("The package manager always selects the most applicable version available. If you force a different version from the default one, errors in the dependency handling can occur."));
@@ -545,8 +547,9 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    g_free(str_name);
    g_free(str);
    
-   GtkWidget *optionMenu = glade_xml_get_widget(dia.getGladeXML(), 
-					"optionmenu_available_versions");
+   GtkWidget *optionMenu = GTK_WIDGET(gtk_builder_get_object
+                                      (dia.getGtkBuilder(),
+                                       "optionmenu_available_versions"));
 
    GtkWidget *menu = gtk_menu_new(); 
    GtkWidget *item; 
@@ -768,9 +771,9 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
       }
    }
    if (failed) {
-      RGGladeUserDialog dia(this,"unmet");
-      GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
-					   "textview");
+      RGGtkBuilderUserDialog dia(this,"unmet");
+      GtkWidget *tv = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+					                "textview"));
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
       dia.run();
@@ -784,7 +787,7 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 }
 
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
-   : RGGladeWindow(NULL, name), _lister(packLister), _pkgList(0), 
+   : RGGtkBuilderWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
      _logView(0), _installProgress(0), _fetchProgress(0), 
      _fastSearchEventID(-1)
@@ -808,9 +811,9 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 
    // build the progress stuff
    GtkWidget *progress, *label;
-   progress = glade_xml_get_widget(_gladeXML, "progressbar_main");
+   progress = GTK_WIDGET(gtk_builder_get_object(_builder, "progressbar_main"));
    assert(progress);
-   label = glade_xml_get_widget(_gladeXML, "label_status");
+   label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    assert(label);
    RGCacheProgress *_cacheProgress;
    _cacheProgress = new RGCacheProgress(progress, label);
@@ -882,8 +885,8 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
 		    NULL, NULL, &pid, NULL)) {
       g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
-      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
-							"label_fast_search")),
+      gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
+							  "label_fast_search"))),
 			 _("Rebuilding search index"));
    }
    return false;
@@ -904,11 +907,11 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 #ifdef WITH_EPT
    me->_lister->openXapianIndex();
 #endif
-   gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(me->_gladeXML, 
+   gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
 						     "label_fast_search")),
 		      _("Quick search"));
-   gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, 
-						 "entry_fast_search"), TRUE);
+   gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                            (me->_builder, "entry_fast_search")), TRUE);
    g_spawn_close_pid(pid);
 }
 
@@ -945,7 +948,8 @@ void RGMainWindow::buildTreeView()
       g_list_free(columns);
    }
 
-   _treeView = glade_xml_get_widget(_gladeXML, "treeview_packages");
+   _treeView = GTK_WIDGET(gtk_builder_get_object
+                          (_builder, "treeview_packages"));
    assert(_treeView);
    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(_treeView),TRUE);
 
@@ -1202,313 +1206,352 @@ void RGMainWindow::buildInterface()
    RGFlushInterface();
 
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_about")),
                                  "on_about_activate",
                                  G_CALLBACK(cbShowAboutPanel), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "quick_introduction")),
                                  "on_introduction_activate",
                                  G_CALLBACK(cbShowWelcomeDialog), this);
 
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "icon_legend")),
                                  "on_icon_legend_activate",
                                  G_CALLBACK(cbShowIconLegendPanel), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_help")),
                                  "on_help_activate",
                                  G_CALLBACK(cbHelpAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "button_update")),
                                  "on_update_packages",
                                  G_CALLBACK(cbUpdateClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "button_details")),
                                  "on_button_details_clicked",
                                  G_CALLBACK(cbDetailsWindow), this);
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "entry_fast_search")),
                                  "on_entry_fast_search_changed",
                                  G_CALLBACK(cbSearchEntryChanged), this);
 
-   _propertiesB = glade_xml_get_widget(_gladeXML, "button_details");
+   _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    assert(_propertiesB);
-   _upgradeB = glade_xml_get_widget(_gladeXML, "button_upgrade");
+   _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
-   _upgradeM = glade_xml_get_widget(_gladeXML, "upgrade1");
+   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "upgrade"));
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_upgrade_packages",
-                                 G_CALLBACK(cbUpgradeClicked), this);
+   gtk_signal_connect(_upgradeB,
+                      "on_upgrade_packages",
+                      G_CALLBACK(cbUpgradeClicked), this);
 
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
       gtk_widget_hide(_upgradeB);
-      widget = glade_xml_get_widget(_gladeXML, "alignment_upgrade");
+      widget = GTK_WIDGET(gtk_builder_get_object(_builder, "alignment_upgrade"));
       gtk_widget_hide(widget);
    }
 
-   _proceedB = glade_xml_get_widget(_gladeXML, "button_procceed");
-   _proceedM = glade_xml_get_widget(_gladeXML, "menu_proceed");
+   _proceedB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
+   _proceedM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_proceed"));
    
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_proceed_clicked",
-                                 G_CALLBACK(cbProceedClicked), this);
+   gtk_signal_connect(_proceedB,
+                      "on_proceed_clicked",
+                      G_CALLBACK(cbProceedClicked), this);
 
-   _fixBrokenM = glade_xml_get_widget(_gladeXML, "fix_broken_packages");
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_fix_broken_packages",
-                                 G_CALLBACK(cbFixBrokenClicked), this);
+   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "fix_broken_packages"));
+   gtk_signal_connect(_proceedB,
+                      "on_fix_broken_packages",
+                      G_CALLBACK(cbFixBrokenClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_preferences")),
                                  "on_preferences_activate",
                                  G_CALLBACK(cbShowConfigWindow), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_set_options")),
                                  "on_set_option_activate",
                                  G_CALLBACK(cbShowSetOptWindow), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_repositories")),
                                  "on_repositories_activate",
                                  G_CALLBACK(cbShowSourcesWindow), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_exit")),
                                  "on_exit_activate",
                                  G_CALLBACK(closeWin), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "edit_filter")),
                                  "on_edit_filter_activate",
                                  G_CALLBACK(cbShowFilterManagerWindow), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_pkghelp_clicked",
-                                 G_CALLBACK(cbPkgHelpClicked), this);
-   _pkgHelpM = glade_xml_get_widget(_gladeXML, "menu_documentation");
+   _pkgHelpM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_documentation"));
    assert(_pkgHelpM);
+   gtk_signal_connect(_pkgHelpM,
+                      "on_button_pkghelp_clicked",
+                      G_CALLBACK(cbPkgHelpClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_pkgreconfigure_clicked",
-                                 G_CALLBACK(cbPkgReconfigureClicked), this);
-   _pkgReconfigureM = glade_xml_get_widget(_gladeXML, "menu_configure");
+   _pkgReconfigureM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_configure"));
    assert(_pkgReconfigureM);
+   gtk_signal_connect(_pkgReconfigureM,
+                      "on_button_pkgreconfigure_clicked",
+                      G_CALLBACK(cbPkgReconfigureClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "button_search")),
                                  "on_search_name",
                                  G_CALLBACK(cbFindToolClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "undo1")),
                                  "on_undo1_activate",
                                  G_CALLBACK(cbUndoClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "redo1")),
                                  "on_redo1_activate",
                                  G_CALLBACK(cbRedoClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "redo1")),
                                  "on_clear_all_changes_activate",
                                  G_CALLBACK(cbClearAllChangesClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "redo1")),
                                  "on_tasks_activate",
                                  G_CALLBACK(cbTasksClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "redo1")),
                                  "on_open_activate",
                                  G_CALLBACK(cbOpenClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "redo1")),
                                  "on_save_activate",
                                  G_CALLBACK(cbSaveClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "view_commit_log")),
                                  "on_view_commit_log_activate",
                                  G_CALLBACK(cbViewLogClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_save_as")),
                                  "on_save_as_activate",
                                  G_CALLBACK(cbSaveAsClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "generate_download_script1")),
                                  "on_generate_download_script_activate",
                                  G_CALLBACK(cbGenerateDownloadScriptClicked), 
 				 this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_add_downloadedfiles")),
                                  "on_add_downloadedfiles_activate",
                                  G_CALLBACK(cbAddDownloadedFilesClicked),
 				 this);
 
-   widget = _detailsM = glade_xml_get_widget(_gladeXML, "menu_details");
+   widget = _detailsM = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "menu_details"));
    assert(_detailsM);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _keepM = glade_xml_get_widget(_gladeXML, "menu_keep");
+   widget = _keepM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_keep"));
    assert(_keepM);
    img = get_gtk_image("package-available");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _installM = glade_xml_get_widget(_gladeXML, "menu_install");
+   widget = _installM = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "menu_install"));
    assert(_installM);
    img = get_gtk_image("package-install");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _reinstallM = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+   widget = _reinstallM = GTK_WIDGET(gtk_builder_get_object
+                                     (_builder, "menu_reinstall"));
    assert(_reinstallM);
    img = get_gtk_image("package-reinstall");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _pkgupgradeM = glade_xml_get_widget(_gladeXML, "menu_upgrade");
+   widget = _pkgupgradeM = GTK_WIDGET(gtk_builder_get_object
+                                      (_builder, "menu_upgrade"));
    assert(_upgradeM);
    img = get_gtk_image("package-upgrade");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _removeM = glade_xml_get_widget(_gladeXML, "menu_remove");
+   widget = _removeM = GTK_WIDGET(gtk_builder_get_object
+                                  (_builder, "menu_remove"));
    assert(_removeM);
    img = get_gtk_image("package-remove");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = _purgeM = glade_xml_get_widget(_gladeXML, "menu_purge");
+   widget = _purgeM = GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_purge"));
    assert(_purgeM);
    img = get_gtk_image("package-purge");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
 #if 0
-   _remove_w_depsM = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
+   _remove_w_depsM = GTK_WIDGET(gtk_builder_get_object
+                                (_builder, "menu_remove_with_deps"));
    assert(_remove_w_depsM);
 #endif
 
-   _dl_changelogM = glade_xml_get_widget(_gladeXML, "menu_download_changelog");
+   _dl_changelogM = GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "menu_download_changelog"));
    assert(_dl_changelogM);
 #ifdef HAVE_RPM
    gtk_widget_hide(_purgeM);
    gtk_widget_hide(_pkgReconfigureM);
    gtk_widget_hide(_pkgHelpM);
    gtk_widget_hide(_dl_changelogM);
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML,"menu_changelog_separator"));
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML,"separator_debian"));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                              (_builder, "menu_changelog_separator")));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                              (_builder, "separator_debian")));
 #endif
    
    if(!FileExists(_config->Find("Synaptic::taskHelperProg","/usr/bin/tasksel")))
-      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "menu_tasks"));
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "menu_tasks")));
 
-   // Workaround for a bug in libglade.
    GtkTooltips *_tooltips = gtk_tooltips_new();
-   button = glade_xml_get_widget(_gladeXML, "button_update");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_update"));
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
 			     _("Reload the package information to become "
 			       "informed about new, removed or upgraded "
 			       "software packages."), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button_upgrade");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips),
                         _("Mark all possible upgrades"), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button_procceed");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Apply all marked changes"), "");
 #if 1
-   button = glade_xml_get_widget(_gladeXML, "button_details");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("View package properties"), "");
 
-   button = glade_xml_get_widget(_gladeXML, "button_search");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_search"));
    gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
                         _("Search for packages"), "");
 #endif
    GtkWidget *pkgCommonTextView;
-   pkgCommonTextView = glade_xml_get_widget(_gladeXML, "text_descr");
+   pkgCommonTextView = GTK_WIDGET(gtk_builder_get_object(_builder, "text_descr"));
    assert(pkgCommonTextView);
    _pkgCommonTextBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(pkgCommonTextView));
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_keep")),
                                  "on_menu_action_keep",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_KEEP));
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_install")),
                                  "on_menu_action_install",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_INSTALL));
    // callback same as for install
-   widget = glade_xml_get_widget(_gladeXML, "menu_upgrade");
+   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
-   widget = glade_xml_get_widget(_gladeXML, "menu_reinstall");
+   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_reinstall"));
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_menu_action_reinstall",
-				 G_CALLBACK(cbPkgAction),
-				 GINT_TO_POINTER(PKG_REINSTALL));
+   gtk_signal_connect(widget,
+                      "on_menu_action_reinstall",
+                      G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_REINSTALL));
    
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_remove")),
                                  "on_menu_action_delete",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE));
 #if 0
-   widget = glade_xml_get_widget(_gladeXML, "menu_remove_with_deps");
+   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_remove_with_deps"));
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_remove_with_deps")),
                                  "on_menu_action_delete_with_deps",
                                  G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
 #endif
 
-   widget = glade_xml_get_widget(_gladeXML, "menu_purge");
+   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_purge"));
    assert(widget);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_menu_action_purge",
-                                 G_CALLBACK(cbPkgAction),
-                                 GINT_TO_POINTER(PKG_PURGE));
+   gtk_signal_connect(widget,
+                      "on_menu_action_purge",
+                      G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_PURGE));
 
-   _pinM = glade_xml_get_widget(_gladeXML, "menu_hold");
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_menu_pin",
-                                 G_CALLBACK(cbMenuPinClicked), this);
+   _pinM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_hold"));
+   gtk_signal_connect(_pinM,
+                      "on_menu_pin",
+                      G_CALLBACK(cbMenuPinClicked), this);
 
-   _autoM = glade_xml_get_widget(_gladeXML, "menu_auto_installed");
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_menu_auto_installed",
-                                 G_CALLBACK(cbMenuAutoInstalledClicked), this);
+   _autoM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_auto_installed"));
+   gtk_signal_connect(_autoM,
+                      "on_menu_auto_installed",
+                      G_CALLBACK(cbMenuAutoInstalledClicked), this);
 
-   _overrideVersionM = glade_xml_get_widget(_gladeXML, 
-					    "menu_override_version");
+   _overrideVersionM = GTK_WIDGET(gtk_builder_get_object(_builder, 
+                                  "menu_override_version"));
    assert(_overrideVersionM);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_menu_override_version_activate",
-                                 G_CALLBACK(cbInstallFromVersion), this);
+   gtk_signal_connect(_overrideVersionM,
+                      "on_menu_override_version_activate",
+                      G_CALLBACK(cbInstallFromVersion), this);
 
 
    // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
    gtk_widget_hide(_pinM);
-//    widget = glade_xml_get_widget(_gladeXML, "separator_hold");
+//    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "separator_hold"));
 //    if (widget != NULL)
 //       gtk_widget_hide(widget);
 #endif
 
-   GtkWidget *box = glade_xml_get_widget(_gladeXML, "vbox_pkgdescr");
+   GtkWidget *box = GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "vbox_pkgdescr"));
    if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
-      GtkWidget *pkginfo = glade_xml_get_widget(_gladeXML, "notebook_pkginfo");
+      GtkWidget *pkginfo = GTK_WIDGET(gtk_builder_get_object
+                                      (_builder, "notebook_pkginfo"));
       gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), TRUE);
       gtk_container_set_border_width(GTK_CONTAINER(box), 12);
    } else {
       gtk_container_set_border_width(GTK_CONTAINER(box), 0);
    }
 #ifndef HAVE_RPM
-   gtk_widget_show(glade_xml_get_widget(_gladeXML,"scrolledwindow_filelist"));
+   gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
+                              (_builder, "scrolledwindow_filelist"));
 #endif
 
-   GtkWidget *vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
+   GtkWidget *vpaned = GTK_WIDGET(gtk_builder_get_object
+                                  (_builder, "vpaned_main"));
    assert(vpaned);
-   GtkWidget *hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
+   GtkWidget *hpaned = GTK_WIDGET(gtk_builder_get_object
+                                  (_builder, "hpaned_main"));
    assert(hpaned);
    // If the pane position is restored before the window is shown, it's
    // not restored in the same place as it was.
@@ -1535,11 +1578,13 @@ void RGMainWindow::buildInterface()
    g_signal_connect(G_OBJECT(_treeView), "row-activated",
                     G_CALLBACK(cbPackageListRowActivated), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "add_cdrom")),
                                  "on_add_cdrom_activate",
                                  G_CALLBACK(cbAddCDROM), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "menu_download_changelog")),
                                  "on_download_changelog_activate",
                                  G_CALLBACK(cbChangelogDialog),
                                  this); 
@@ -1547,7 +1592,7 @@ void RGMainWindow::buildInterface()
    /* --------------------------------------------------------------- */
 
    // toolbar menu code
-   button = glade_xml_get_widget(_gladeXML, "menu_toolbar_pixmaps");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_pixmaps"));
    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
    g_object_set_data(G_OBJECT(button), "me", this);
    g_signal_connect(G_OBJECT(button),
@@ -1557,7 +1602,7 @@ void RGMainWindow::buildInterface()
    if (_toolbarStyle == GTK_TOOLBAR_ICONS)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
-   button = glade_xml_get_widget(_gladeXML, "menu_toolbar_text");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_text"));
    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
    g_object_set_data(G_OBJECT(button), "me", this);
    g_signal_connect(G_OBJECT(button),
@@ -1567,7 +1612,7 @@ void RGMainWindow::buildInterface()
    if (_toolbarStyle == GTK_TOOLBAR_TEXT)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
-   button = glade_xml_get_widget(_gladeXML, "menu_toolbar_both");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_both"));
    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
    g_object_set_data(G_OBJECT(button), "me", this);
    g_signal_connect(G_OBJECT(button),
@@ -1577,7 +1622,7 @@ void RGMainWindow::buildInterface()
    if (_toolbarStyle == GTK_TOOLBAR_BOTH)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
-   button = glade_xml_get_widget(_gladeXML, "menu_toolbar_beside");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_beside"));
    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
    g_object_set_data(G_OBJECT(button), "me", this);
    g_signal_connect(G_OBJECT(button),
@@ -1587,7 +1632,7 @@ void RGMainWindow::buildInterface()
    if (_toolbarStyle == GTK_TOOLBAR_BOTH_HORIZ)
       gtk_menu_item_activate(GTK_MENU_ITEM(button));
 
-   button = glade_xml_get_widget(_gladeXML, "menu_toolbar_hide");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_hide"));
    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
    g_object_set_data(G_OBJECT(button), "me", this);
    g_signal_connect(G_OBJECT(button),
@@ -1704,42 +1749,53 @@ void RGMainWindow::buildInterface()
    GtkWidget *w;
 
    // section
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_section_toggled",
-				 (GCallback) cbChangedView, this);
-   w=_viewButtons[PACKAGE_VIEW_SECTION] = glade_xml_get_widget(_gladeXML, "radiobutton_sections");
+   w=_viewButtons[PACKAGE_VIEW_SECTION] = GTK_WIDGET(gtk_builder_get_object
+                                                     (_builder,
+                                                      "radiobutton_sections"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SECTION));
+   gtk_signal_connect(w,
+                      "on_radiobutton_section_toggled",
+                      (GCallback) cbChangedView, this);
    // status
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_status_toggled",
-				 (GCallback) cbChangedView, this);
-   w=_viewButtons[PACKAGE_VIEW_STATUS] = glade_xml_get_widget(_gladeXML, "radiobutton_status");
+   w=_viewButtons[PACKAGE_VIEW_STATUS] = GTK_WIDGET(gtk_builder_get_object
+                                                    (_builder,
+                                                     "radiobutton_status"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_STATUS));
+   gtk_signal_connect(w,
+                      "on_radiobutton_status_toggled",
+                      (GCallback) cbChangedView, this);
    // origin
-   w=_viewButtons[PACKAGE_VIEW_ORIGIN] = glade_xml_get_widget(_gladeXML, "radiobutton_origin");
+   w=_viewButtons[PACKAGE_VIEW_ORIGIN] = GTK_WIDGET(gtk_builder_get_object
+                                                    (_builder,
+                                                     "radiobutton_origin"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_ORIGIN));
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_origin_toggled",
-				 (GCallback) cbChangedView, this);
+   gtk_signal_connect(w,
+                      "on_radiobutton_origin_toggled",
+                      (GCallback) cbChangedView, this);
    // custom
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_custom_toggled",
-				 (GCallback) cbChangedView, this);
-   w=_viewButtons[PACKAGE_VIEW_CUSTOM] = glade_xml_get_widget(_gladeXML, "radiobutton_custom");
+   w=_viewButtons[PACKAGE_VIEW_CUSTOM] = GTK_WIDGET(gtk_builder_get_object
+                                                    (_builder,
+                                                     "radiobutton_custom"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_CUSTOM));
+   gtk_signal_connect(w,
+                      "on_radiobutton_custom_toggled",
+                      (GCallback) cbChangedView, this);
    // find
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_find_toggled",
-				 (GCallback) cbChangedView, this);
-   w=_viewButtons[PACKAGE_VIEW_SEARCH] = glade_xml_get_widget(_gladeXML, "radiobutton_find");
+   w=_viewButtons[PACKAGE_VIEW_SEARCH] = GTK_WIDGET(gtk_builder_get_objecti
+                                                    (_builder,
+                                                     "radiobutton_find"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SEARCH));
+   gtk_signal_connect(w,
+                      "on_radiobutton_find_toggled",
+                      (GCallback) cbChangedView, this);
 
-   _subViewList = glade_xml_get_widget(_gladeXML, "treeview_subviews");
+   _subViewList = GTK_WIDGET(gtk_builder_get_object
+                             (_builder, "treeview_subviews"));
    assert(_subViewList);
    setTreeList("treeview_subviews", vector<string>(), true);
    // Setup the selection handler 
@@ -1752,35 +1808,41 @@ void RGMainWindow::buildInterface()
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
 
-   _entry_fast_search = glade_xml_get_widget(_gladeXML, "entry_fast_search");
+   _entry_fast_search = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "entry_fast_search"));
 
    // only enable fast search if its usable
 #ifdef WITH_EPT
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
-      gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                                          (_builder, "entry_fast_search")),
+                               FALSE);
    }
 #else
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                              (_builder, "vbox_fast_search")));
 #endif
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;
       gtk_widget_set_sensitive(_proceedB, false);
       gtk_widget_set_sensitive(_proceedM, false);
-      button = glade_xml_get_widget(_gladeXML, "button_update");
+      button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_update"));
       gtk_widget_set_sensitive(button, false);
-      menu = glade_xml_get_widget(_gladeXML,"menu_add_downloadedfiles");
+      menu = GTK_WIDGET(gtk_builder_get_object
+                        (_builder, "menu_add_downloadedfiles"));
       gtk_widget_set_sensitive(menu, false);
-      menu = glade_xml_get_widget(_gladeXML,"menu_repositories");
+      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_repositories"));
       gtk_widget_set_sensitive(menu, false);
-      menu = glade_xml_get_widget(_gladeXML,"view_commit_log");
+      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "view_commit_log"));
       gtk_widget_set_sensitive(menu, false);
-      menu = glade_xml_get_widget(_gladeXML,"update_package_entrys1");
+      menu = GTK_WIDGET(gtk_builder_get_object
+                        (_builder, "update_package_entrys1"));
       gtk_widget_set_sensitive(menu, false);
-      menu = glade_xml_get_widget(_gladeXML,"add_cdrom");
+      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "add_cdrom"));
       gtk_widget_set_sensitive(menu, false);
-      menu = glade_xml_get_widget(_gladeXML,"menu_hold");
+      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_hold"));
       gtk_widget_set_sensitive(menu, false);
    }
 
@@ -1833,7 +1895,7 @@ void RGMainWindow::setStatusText(char *text)
    double size;
 
 
-   GtkWidget *_statusL = glade_xml_get_widget(_gladeXML, "label_status");
+   GtkWidget *_statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    assert(_statusL);
 
    _lister->getStats(installed,broken,toInstall,toReInstall,toRemove,size);
@@ -1883,8 +1945,10 @@ void RGMainWindow::saveState()
    if (_config->FindB("Volatile::NoStateSaving", false) == true)
       return;
 
-   GtkWidget *vpaned = glade_xml_get_widget(_gladeXML, "vpaned_main");
-   GtkWidget *hpaned = glade_xml_get_widget(_gladeXML, "hpaned_main");
+   GtkWidget *vpaned = GTK_WIDGET(gtk_builder_get_object
+                                  (_builder, "vpaned_main"));
+   GtkWidget *hpaned = GTK_WIDGET(gtk_builder_get_object
+                                  (_builder, "hpaned_main"));
    _config->Set("Synaptic::vpanedPos",
                 gtk_paned_get_position(GTK_PANED(vpaned)));
    _config->Set("Synaptic::hpanedPos",
@@ -1953,7 +2017,7 @@ bool RGMainWindow::close()
    if (_interfaceLocked > 0)
       return true;
 
-   RGGladeUserDialog dia(this);
+   RGGtkBuilderUserDialog dia(this);
    if (_unsavedChanges == false || dia.run("quit")) {
       _error->Discard();
       saveState();
@@ -2013,7 +2077,8 @@ void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
    assert(me);
    // Ignore DEL accelerator when fastsearch has focus
-   GtkWidget *entry = glade_xml_get_widget(me->_gladeXML, "entry_fast_search");
+   GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object
+                                 (me->_builder, "entry_fast_search"));
    if (gtk_widget_has_focus (entry) && GPOINTER_TO_INT(data) == PKG_DELETE) {
       return;
    }
@@ -2094,11 +2159,11 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
    pkgAcquire fetcher(status);
    string filename = pkg->getChangelogFile(&fetcher);
    
-   RGGladeUserDialog dia(me,"changelog");
+   RGGtkBuilderUserDialog dia(me,"changelog");
 
    // set title
-   GtkWidget *win = glade_xml_get_widget(dia.getGladeXML(), 
-					   "dialog_changelog");
+   GtkWidget *win = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), 
+					              "dialog_changelog"));
    assert(win);
    // TRANSLATORS: Title of the changelog dialog - %s is the name of the package
    gchar *str = g_strdup_printf(_("%s Changelog"), pkg->name());
@@ -2107,8 +2172,9 @@ void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
 
 
    // set changelog data
-   GtkWidget *textview = glade_xml_get_widget(dia.getGladeXML(),
-					      "textview_changelog");
+   GtkWidget *textview = GTK_WIDGET(gtk_builder_get_object
+                                    (dia.getGtkBuilder(),
+                                     "textview_changelog"));
    assert(textview);
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
    GtkTextIter start,end;
@@ -2441,14 +2507,17 @@ void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
    GtkWidget *widget;
    // save new toolbar state
    me->_toolbarStyle = (GtkToolbarStyle) GPOINTER_TO_INT(data);
-   GtkWidget *toolbar = glade_xml_get_widget(me->_gladeXML, "toolbar_main");
+   GtkWidget *toolbar = GTK_WIDGET(gtk_builder_get_object
+                                   (me->_builder, "toolbar_main"));
    assert(toolbar);
    if (me->_toolbarStyle == TOOLBAR_HIDE) {
-      widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
+      widget = GTK_WIDGET(gtk_builder_get_object
+                          (me->_builder, "handlebox_button_toolbar"));
       gtk_widget_hide(widget);
       return;
    } else {
-      widget = glade_xml_get_widget(me->_gladeXML, "handlebox_button_toolbar");
+      widget = GTK_WIDGET(gtk_builder_get_object
+                          (me->_builder, "handlebox_button_toolbar"));
       gtk_widget_show(widget);
    }
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), me->_toolbarStyle);
@@ -2479,8 +2548,10 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 	 locale_str = str.c_str();
 
       int type = me->_findWin->getSearchType();
-      GtkWidget *progress = glade_xml_get_widget(me->_gladeXML, "progressbar_main");
-      GtkWidget *label = glade_xml_get_widget(me->_gladeXML, "label_status");
+      GtkWidget *progress = GTK_WIDGET(gtk_builder_get_object
+                                       (me->_builder, "progressbar_main"));
+      GtkWidget *label = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "label_status"));
       RGCacheProgress searchProgress(progress, label);
       int found = me->_lister->searchView()->setSearch(str,type, 
 						       locale_str,
@@ -2958,10 +3029,10 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-   RGGladeUserDialog dia(me);
+   RGGtkBuilderUserDialog dia(me);
    dia.run("welcome");
-   GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-                                        "checkbutton_show_again");
+   GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object
+                              (dia.getGtkBuilder(), "checkbutton_show_again"));
    assert(cb);
    _config->Set("Synaptic::showWelcomeDialog",
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
@@ -3048,8 +3119,9 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    // (only if no error occurred)
    string error;
    if (!me->_lister->updateCache(progress,error)) {
-      RGGladeUserDialog dia(me,"update_failed");
-      GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(), "textview");
+      RGGtkBuilderUserDialog dia(me,"update_failed");
+      GtkWidget *tv = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+                                                        "textview"));
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(error.c_str()), -1);
       dia.run();
@@ -3134,10 +3206,10 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants
-      GladeXML *gladeXML;
+      GtkBuilder *builder;
       GtkWidget *button;
 
-      RGGladeUserDialog dia(me);
+      RGGtkBuilderUserDialog dia(me);
       res = dia.run("upgrade", true);
       switch(res) {
       case GTK_RESPONSE_CANCEL:
@@ -3153,9 +3225,10 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
 	 cerr << "unknown return " << res
 	      << " from UpgradeDialog, please report" << endl;
       }
-      gladeXML = dia.getGladeXML();
+      builder = dia.getGtkBuilder();
       // see if the user wants the answer saved
-      button = glade_xml_get_widget(gladeXML, "checkbutton_remember");
+      button = GTK_WIDGET(gtk_builder_get_object
+                          (builder, "checkbutton_remember"));
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)))
          _config->Set("Synaptic::upgradeType", dist_upgrade);
    } else {

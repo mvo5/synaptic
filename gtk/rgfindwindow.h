@@ -21,14 +21,14 @@
  */
 
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"
 
 class RGFindWindow;
 
 typedef void RGFindWindowFindAction(void *self, RGFindWindow * win);
 
-class RGFindWindow:public RGGladeWindow {
+class RGFindWindow:public RGGtkBuilderWindow {
 
    //RPatternPackageFilter::DepType _searchType;
    GList *_prevSearches;

@@ -33,14 +33,14 @@
 
 string RGFindWindow::getFindString()
 {
-   GtkWidget *entry = glade_xml_get_widget(_gladeXML, "entry_find");
+   GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
     
    return gtk_entry_get_text(GTK_ENTRY(entry));
 }
 
 void RGFindWindow::selectText()
 {
-   GtkWidget *entry = glade_xml_get_widget(_gladeXML, "entry_find");
+   GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
    gtk_widget_grab_focus(entry);
    gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
 }
@@ -59,7 +59,7 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
    //cout << "RGFindWindow::doFind()"<<endl;
    RGFindWindow *me = (RGFindWindow *) data;
 
-   GtkWidget *combo = glade_xml_get_widget(me->_gladeXML, "combo_find");
+   GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(me->_builder, "combo_find"));
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry));
 
    if(strlen(str) == 0)
@@ -96,34 +96,37 @@ void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
 
 
 RGFindWindow::RGFindWindow(RGWindow *win)
-: RGGladeWindow(win, "find"), _prevSearches(0)
+: RGGtkBuilderWindow(win, "find"), _prevSearches(0)
 {
    //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                        "button_find")),
                                  "on_button_find_clicked",
                                  G_CALLBACK(doFind), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                        "entry_find")),
                                  "on_entry_find_activate",
                                  G_CALLBACK(doFind), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                        "button_close")),
                                  "on_button_close_clicked",
                                  G_CALLBACK(doClose), this);
 
-   GtkWidget *combo = glade_xml_get_widget(_gladeXML, "combo_find");
+   GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_find"));
    gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
 
-   _entry = glade_xml_get_widget(_gladeXML, "entry_find");
+   _entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
    assert(_entry);
    g_signal_connect(G_OBJECT(_entry), "changed", 
 		   G_CALLBACK(cbEntryChanged), this);
-   _findB = glade_xml_get_widget(_gladeXML, "button_find");
+   _findB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_find"));
    assert(_findB);
    gtk_widget_set_sensitive(_findB, FALSE);
 
-   _omenu = glade_xml_get_widget(_gladeXML, "optionmenu_where");
+   _omenu = GTK_WIDGET(gtk_builder_get_object(_builder, "optionmenu_where"));
    gtk_option_menu_set_history(GTK_OPTION_MENU(_omenu),
 			       _config->FindI("Synaptic::LastSearchType",1));
 

@@ -1,4 +1,4 @@
-/* rggladewindow.cc
+/* rggtkbuilderwindow.cc
  *
  * Copyright (c) 2003 Michael Vogt
  *
@@ -56,7 +56,7 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
    } else {
       g_free(filename);
       filename =
-         g_strdup_printf(SYNAPTIC_GLADEDIR "window_%s.glade", name.c_str());
+         g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "window_%s.ui", name.c_str());
       if (!gtk_builder_add_from_file (_builder, filename, &error)) {
          g_warning ("Couldn't load builder file: %s", error->message);
          g_error_free (error);

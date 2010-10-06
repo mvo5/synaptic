@@ -1,4 +1,4 @@
-/* rggladewindow.h
+/* rggtkbuilderwindow.h
  *
  * Copyright (c) 2003 Michael Vogt <mvo@debian.org>
  *

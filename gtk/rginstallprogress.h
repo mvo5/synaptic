@@ -26,12 +26,12 @@
 
 
 #include "rinstallprogress.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rgslideshow.h"
 
 class RGMainWindow;
 
-class RGInstallProgressMsgs:public RGGladeWindow {
+class RGInstallProgressMsgs:public RGGtkBuilderWindow {
 
    GtkTextBuffer *_textBuffer;
    static void onCloseClicked(GtkWidget *self, void *data);
@@ -53,7 +53,7 @@ class RGInstallProgressMsgs:public RGGladeWindow {
    RGInstallProgressMsgs(RGWindow *win);
 };
 
-class RGInstallProgress:public RInstallProgress, public RGGladeWindow {
+class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
 
    GtkWidget *_label;
    GtkWidget *_labelSummary;

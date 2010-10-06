@@ -34,69 +34,83 @@
 
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                                              RPackageViewFilter *filterview)
-: RGGladeWindow(win, "filters"), _selectedPath(NULL),
+: RGGtkBuilderWindow(win, "filters"), _selectedPath(NULL),
   _selectedFilter(NULL), _filterview(filterview)
 {
    setTitle(_("Filters"));
 
    _busyCursor = gdk_cursor_new(GDK_WATCH);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_filters_add_clicked",
-                                 G_CALLBACK(addFilterAction), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_filters_add")),
+                      "on_button_filters_add_clicked",
+                      G_CALLBACK(addFilterAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_filters_remove_clicked",
-                                 G_CALLBACK(removeFilterAction), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "buttons_filters_remove")),
+                      "on_button_filters_remove_clicked",
+                      G_CALLBACK(removeFilterAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_ok_clicked",
-                                 G_CALLBACK(okAction), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_ok")),
+                      "on_button_ok_clicked",
+                      G_CALLBACK(okAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_cancel_clicked",
-                                 G_CALLBACK(cancelAction), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_cancel")),
+                      "on_button_cancel_clicked",
+                      G_CALLBACK(cancelAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_entry_pattern_text_changed",
-                                 G_CALLBACK(patternChanged), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_optionmenu_pattern_do_changed",
-                                 G_CALLBACK(patternChanged), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_optionmenu_pattern_what_changed",
-                                 G_CALLBACK(patternChanged), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_pattern_new_clicked",
-                                 G_CALLBACK(patternNew), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_pattern_delete_clicked",
-                                 G_CALLBACK(patternDelete), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "entry_pattern_text")),
+                      "on_entry_pattern_text_changed",
+                      G_CALLBACK(patternChanged), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "optionmenu_pattern_do")),
+                      "on_optionmenu_pattern_do_changed",
+                      G_CALLBACK(patternChanged), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "optionmenu_pattern_what")),
+                      "on_optionmenu_pattern_what_changed",
+                      G_CALLBACK(patternChanged), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_pattern_new")),
+                      "on_button_pattern_new_clicked",
+                      G_CALLBACK(patternNew), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_pattern_delete")),
+                      "on_button_pattern_delete_clicked",
+                      G_CALLBACK(patternDelete), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_status_select_all_clicked",
-                                 G_CALLBACK(statusAllClicked), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_status_select_none_clicked",
-                                 G_CALLBACK(statusNoneClicked), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_status_invert_clicked",
-                                 G_CALLBACK(statusInvertClicked), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_status_select_all")),
+                      "on_button_status_select_all_clicked",
+                      G_CALLBACK(statusAllClicked), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_status_select_none")),
+                      "on_button_status_select_none_clicked",
+                      G_CALLBACK(statusNoneClicked), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "button_status_invert")),
+                      "on_button_status_invert_clicked",
+                      G_CALLBACK(statusInvertClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_entry_filters_changed",
-                                 G_CALLBACK(filterNameChanged), this);
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                                 "entry_filters")),
+                      "on_entry_filters_changed",
+                      G_CALLBACK(filterNameChanged), this);
 
    gtk_signal_connect(GTK_OBJECT(_win), "delete_event",
                       GTK_SIGNAL_FUNC(deleteEventAction), this);
 
 
-   _filterDetailsBox = glade_xml_get_widget(_gladeXML, "vbox_filter_details");
+   _filterDetailsBox = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                         "vbox_filter_details");
    assert(_filterDetailsBox);
 
    // filter list view
-   _filterEntry = glade_xml_get_widget(_gladeXML, "entry_filters");
-   _filterList = glade_xml_get_widget(_gladeXML, "treeview_filters");
+   _filterEntry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_filters"));
+   _filterList = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_filters"));
    _filterListStore = gtk_list_store_new(N_COLUMNS,
                                          G_TYPE_STRING, G_TYPE_POINTER);
    GtkCellRenderer *renderer;
@@ -120,7 +134,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
    // section list
    const set<string> &sections = _filterview->getSections();
-   _sectionList = glade_xml_get_widget(_gladeXML, "treeview_sections");
+   _sectionList = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_sections"));
    _sectionListStore = gtk_list_store_new(SECTION_N_COLUMNS, G_TYPE_STRING);
    renderer = gtk_cell_renderer_text_new();
    column = gtk_tree_view_column_new_with_attributes("Name",
@@ -146,7 +160,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    char *s;
    for (int i = 0; i < NrOfStatusBits; i++) {
       s = g_strdup_printf("checkbutton_status%i", i + 1);
-      _statusB[i] = glade_xml_get_widget(_gladeXML, s);
+      _statusB[i] = GTK_WIDGET(gtk_builder_get_object(_builder, s));
       //cout << "loaded: " << s << endl;
       assert(_statusB[i]);
 #ifdef HAVE_RPM // hide debian only boxes
@@ -157,7 +171,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    }
 
    // pattern stuff
-   _patternList = glade_xml_get_widget(_gladeXML, "treeview_pattern");
+   _patternList = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_pattern"));
    _patternListStore = gtk_list_store_new(PATTERN_N_COLUMNS,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING, G_TYPE_STRING);
@@ -193,7 +207,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
    // remove the debtags tab
 #ifndef HAVE_DEBTAGS
-   GtkWidget *notebook = glade_xml_get_widget(_gladeXML, "notebook_details");
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object(_builder, "notebook_details"));
    assert(notebook);
    //if(first_run)
    gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), 3);
@@ -296,12 +310,12 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    //cout << "patternChanged" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
 
-   GtkWidget *w = glade_xml_get_widget(me->_gladeXML, "entry_pattern_text");
+   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_pattern_text"));
    gtk_signal_handler_block_by_func(GTK_OBJECT(w),
                                     GTK_SIGNAL_FUNC(patternChanged), data);
 
-   GtkWidget *menuDo = glade_xml_get_widget(me->_gladeXML,
-                                            "optionmenu_pattern_do");
+   GtkWidget *menuDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                            "optionmenu_pattern_do"));
    menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(menuDo));
    item = gtk_menu_get_active(GTK_MENU(menu));
    if (strcmp("menuitem_excl", gtk_widget_get_name(item)) == 0)
@@ -309,8 +323,8 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    else
       exclude = false;
 
-   GtkWidget *menuType = glade_xml_get_widget(me->_gladeXML,
-                                              "optionmenu_pattern_what");
+   GtkWidget *menuType = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                              "optionmenu_pattern_what"));
    menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(menuType));
    item = gtk_menu_get_active(GTK_MENU(menu));
    const gchar *name = gtk_widget_get_name(item);
@@ -318,8 +332,8 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 
    type = (RPatternPackageFilter::DepType) i;
 
-   GtkWidget *patternEntry = glade_xml_get_widget(me->_gladeXML,
-                                                  "entry_pattern_text");
+   GtkWidget *patternEntry = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                  "entry_pattern_text"));
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(patternEntry));
 
    // get path
@@ -354,8 +368,8 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
    gchar *dopatt, *what, *text;
 
    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-      gtk_widget_set_sensitive(glade_xml_get_widget
-                               (me->_gladeXML, "hbox_pattern"), TRUE);
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                               (me->_builder, "hbox_pattern"), TRUE));
       gtk_tree_model_get(model, &iter, PATTERN_DO_COLUMN, &dopatt,
                          PATTERN_WHAT_COLUMN, &what, PATTERN_TEXT_COLUMN,
                          &text, -1);
@@ -364,12 +378,12 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
          exclude = false;
       else
          exclude = true;
-      GtkWidget *doPattern = glade_xml_get_widget(me->_gladeXML,
-                                                  "optionmenu_pattern_do");
+      GtkWidget *doPattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                  "optionmenu_pattern_do"));
       gtk_option_menu_set_history(GTK_OPTION_MENU(doPattern), exclude ? 1 : 0);
 
-      GtkWidget *typePattern = glade_xml_get_widget(me->_gladeXML,
-                                                    "optionmenu_pattern_what");
+      GtkWidget *typePattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                    "optionmenu_pattern_what"));
       for (int j = 0; DepOptions[j]; j++) {
          if (strcmp(what, _(DepOptions[j])) == 0) {
             type = (RPatternPackageFilter::DepType) j;
@@ -378,15 +392,15 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
       }
       gtk_option_menu_set_history(GTK_OPTION_MENU(typePattern), (int)type);
 
-      GtkWidget *patternText = glade_xml_get_widget(me->_gladeXML,
-                                                    "entry_pattern_text");
+      GtkWidget *patternText = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                    "entry_pattern_text"));
       gtk_entry_set_text(GTK_ENTRY(patternText), text);
       g_free(dopatt);
       g_free(what);
       g_free(text);
    } else {
-      gtk_widget_set_sensitive(glade_xml_get_widget
-                               (me->_gladeXML, "hbox_pattern"), FALSE);
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                               (me->_builder, "hbox_pattern")), FALSE);
    }
 }
 
@@ -473,8 +487,8 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
       GtkTreeSelection *select;
       select = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_patternList));
       gtk_tree_selection_unselect_all(select);
-      gtk_widget_set_sensitive(glade_xml_get_widget
-                               (me->_gladeXML, "hbox_pattern"), false);
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                               (me->_builder, "hbox_pattern")), false);
    } else {
       gtk_widget_set_sensitive(me->_filterDetailsBox, false);
    }
@@ -519,7 +533,7 @@ void RGFilterManagerWindow::setSectionFilter(RSectionPackageFilter & f)
    GtkTreePath *path;
    string section;
 
-   treeView = glade_xml_get_widget(_gladeXML, "treeview_sections");
+   treeView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_sections"));
    model = gtk_tree_view_get_model(GTK_TREE_VIEW(treeView));
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeView));
    gtk_tree_selection_unselect_all(selection);
@@ -533,9 +547,9 @@ void RGFilterManagerWindow::setSectionFilter(RSectionPackageFilter & f)
       }
    }
 
-   GtkWidget *_inclGB = glade_xml_get_widget(_gladeXML, "radiobutton_incl");
+   GtkWidget *_inclGB = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_incl"));
    assert(_inclGB);
-   GtkWidget *_exclGB = glade_xml_get_widget(_gladeXML, "radiobutton_excl");
+   GtkWidget *_exclGB = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_excl"));
    assert(_exclGB);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_inclGB), FALSE);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_exclGB), FALSE);
@@ -610,9 +624,13 @@ void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
       setPatternRow(-1, exclude, type, utf8(pattern.c_str()));
    }
    if(f.getAndMode())
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_and")), TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
+                                   (gtk_builder_get_object(_builder,
+                                    "radiobutton_properties_and")), TRUE);
    else
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_or")), TRUE);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
+                                   (gtk_builder_get_object(_builder,
+                                    "radiobutton_properties_or")), TRUE);
 }
 
 void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
@@ -623,7 +641,7 @@ void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
    char *text;
    GList *list;
 
-   GtkWidget *w = glade_xml_get_widget(_gladeXML, "radiobutton_incl");
+   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_incl"));
    assert(w);
    int inclusive = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(w));
    f.setInclusive(inclusive == TRUE);
@@ -706,7 +724,9 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
       g_free(text);
    }
    
-   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radiobutton_properties_and"))));
+   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+                                             (gtk_builder_get_object(_builder,
+                                              "radiobutton_properties_and"))));
 
 }
 

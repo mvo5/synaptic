@@ -37,13 +37,14 @@ static void closeWindow(GtkWidget *self, void *data)
 
 
 RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
-: RGGladeWindow(parent, "iconlegend")
+: RGGtkBuilderWindow(parent, "iconlegend")
 {
    setTitle(_("Icon Legend"));
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_close_clicked",
-                                 G_CALLBACK(closeWindow), this);
-   GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_main");
+   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
+                      "button_close")),
+                      "on_button_close_clicked",
+                      G_CALLBACK(closeWindow), this);
+   GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
    assert(vbox);
 
    GtkWidget *hbox, *label, *pix;

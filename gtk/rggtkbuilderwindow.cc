@@ -25,7 +25,7 @@
 #include <cassert>
 #include "config.h"
 #include "i18n.h"
-#include "rggtkwindow.h"
+#include "rggtkbuilderwindow.h"
 
 
 /*  the convention is that the top window is named:

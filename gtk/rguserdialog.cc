@@ -222,11 +222,11 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    filename = g_strdup_printf("dialog_%s.ui", name);
    main_widget = g_strdup_printf("dialog_%s", name);
    if (FileExists(filename)) {
-      builder_status = gtk_builder_add_from_file(filename, main_widget, NULL);
+      builder_status = gtk_builder_add_from_file(builder, filename, NULL);
    } else {
       g_free(filename);
       filename = g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "dialog_%s.ui", name);
-      builder_status = gtk_builder_add_from_file(filename, main_widget, NULL);
+      builder_status = gtk_builder_add_from_file(builder, filename, NULL);
    }
    assert(builder_status != 0);
    _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));

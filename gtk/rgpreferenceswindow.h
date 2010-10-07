@@ -20,10 +20,10 @@
  * USA
  */
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 
-class RGPreferencesWindow:public RGGladeWindow {
+class RGPreferencesWindow:public RGGtkBuilderWindow {
    bool _blockAction;
 
    enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};

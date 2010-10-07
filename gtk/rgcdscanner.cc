@@ -122,12 +122,12 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
    _textEntry = GTK_WINDOW(gtk_builder_get_object(_builder, "text_entry"));
    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "ok")),
-                      "on_ok_clicked",
-                      G_CALLBACK(onOkClicked), this);
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "cancel")),
-                      "on_cancel_clicked",
-                      G_CALLBACK(onCancelClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "ok"),
+                    "on_ok_clicked",
+                    G_CALLBACK(onOkClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
+                    "on_cancel_clicked",
+                    G_CALLBACK(onCancelClicked), this);
 
    //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_win), 

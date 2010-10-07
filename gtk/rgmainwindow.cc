@@ -1206,40 +1206,33 @@ void RGMainWindow::buildInterface()
    RGFlushInterface();
 
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_about")),
-                                 "on_about_activate",
-                                 G_CALLBACK(cbShowAboutPanel), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_about"),
+                    "on_about_activate",
+                    G_CALLBACK(cbShowAboutPanel), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "quick_introduction")),
-                                 "on_introduction_activate",
-                                 G_CALLBACK(cbShowWelcomeDialog), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "quick_introduction"),
+                    "on_introduction_activate",
+                    G_CALLBACK(cbShowWelcomeDialog), this);
 
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "icon_legend")),
-                                 "on_icon_legend_activate",
-                                 G_CALLBACK(cbShowIconLegendPanel), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "icon_legend"),
+                    "on_icon_legend_activate",
+                    G_CALLBACK(cbShowIconLegendPanel), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_help")),
-                                 "on_help_activate",
-                                 G_CALLBACK(cbHelpAction), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_help"),
+                    "on_help_activate",
+                    G_CALLBACK(cbHelpAction), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "button_update")),
-                                 "on_update_packages",
-                                 G_CALLBACK(cbUpdateClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_update"),
+                    "on_update_packages",
+                    G_CALLBACK(cbUpdateClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "button_details")),
-                                 "on_button_details_clicked",
-                                 G_CALLBACK(cbDetailsWindow), this);
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "entry_fast_search")),
-                                 "on_entry_fast_search_changed",
-                                 G_CALLBACK(cbSearchEntryChanged), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
+                    "on_button_details_clicked",
+                    G_CALLBACK(cbDetailsWindow), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
+                    "on_entry_fast_search_changed",
+                    G_CALLBACK(cbSearchEntryChanged), this);
 
    _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    assert(_propertiesB);
@@ -1248,9 +1241,9 @@ void RGMainWindow::buildInterface()
    _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "upgrade"));
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
-   gtk_signal_connect(_upgradeB,
-                      "on_upgrade_packages",
-                      G_CALLBACK(cbUpgradeClicked), this);
+   g_signal_connect(G_OBJECT(_upgradeB),
+                    "on_upgrade_packages",
+                    G_CALLBACK(cbUpgradeClicked), this);
 
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
       gtk_widget_hide(_upgradeB);
@@ -1261,108 +1254,90 @@ void RGMainWindow::buildInterface()
    _proceedB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
    _proceedM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_proceed"));
    
-   gtk_signal_connect(_proceedB,
-                      "on_proceed_clicked",
-                      G_CALLBACK(cbProceedClicked), this);
+   g_signal_connect(G_OBJECT(_proceedB),
+                    "on_proceed_clicked",
+                    G_CALLBACK(cbProceedClicked), this);
 
    _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "fix_broken_packages"));
-   gtk_signal_connect(_proceedB,
-                      "on_fix_broken_packages",
-                      G_CALLBACK(cbFixBrokenClicked), this);
+   g_signal_connect(G_OBJECT(_proceedB),
+                    "on_fix_broken_packages",
+                    G_CALLBACK(cbFixBrokenClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_preferences")),
-                                 "on_preferences_activate",
-                                 G_CALLBACK(cbShowConfigWindow), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_preferences"),
+                    "on_preferences_activate",
+                    G_CALLBACK(cbShowConfigWindow), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_set_options")),
-                                 "on_set_option_activate",
-                                 G_CALLBACK(cbShowSetOptWindow), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_options"),
+                    "on_set_option_activate",
+                    G_CALLBACK(cbShowSetOptWindow), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_repositories")),
-                                 "on_repositories_activate",
-                                 G_CALLBACK(cbShowSourcesWindow), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_repositories"),
+                    "on_repositories_activate",
+                    G_CALLBACK(cbShowSourcesWindow), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_exit")),
-                                 "on_exit_activate",
-                                 G_CALLBACK(closeWin), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_exit"),
+                    "on_exit_activate",
+                    G_CALLBACK(closeWin), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "edit_filter")),
-                                 "on_edit_filter_activate",
-                                 G_CALLBACK(cbShowFilterManagerWindow), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "edit_filter"),
+                    "on_edit_filter_activate",
+                    G_CALLBACK(cbShowFilterManagerWindow), this);
 
    _pkgHelpM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_documentation"));
    assert(_pkgHelpM);
-   gtk_signal_connect(_pkgHelpM,
-                      "on_button_pkghelp_clicked",
-                      G_CALLBACK(cbPkgHelpClicked), this);
+   g_signal_connect(G_OBJECT(_pkgHelpM),
+                    "on_button_pkghelp_clicked",
+                    G_CALLBACK(cbPkgHelpClicked), this);
 
    _pkgReconfigureM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_configure"));
    assert(_pkgReconfigureM);
-   gtk_signal_connect(_pkgReconfigureM,
-                      "on_button_pkgreconfigure_clicked",
-                      G_CALLBACK(cbPkgReconfigureClicked), this);
+   g_signal_connect(G_OBJECT(_pkgReconfigureM),
+                    "on_button_pkgreconfigure_clicked",
+                    G_CALLBACK(cbPkgReconfigureClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "button_search")),
-                                 "on_search_name",
-                                 G_CALLBACK(cbFindToolClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_search"),
+                    "on_search_name",
+                    G_CALLBACK(cbFindToolClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "undo1")),
-                                 "on_undo1_activate",
-                                 G_CALLBACK(cbUndoClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "undo1"),
+                    "on_undo1_activate",
+                    G_CALLBACK(cbUndoClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "redo1")),
-                                 "on_redo1_activate",
-                                 G_CALLBACK(cbRedoClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "redo1"),
+                    "on_redo1_activate",
+                    G_CALLBACK(cbRedoClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "redo1")),
-                                 "on_clear_all_changes_activate",
-                                 G_CALLBACK(cbClearAllChangesClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "clear_all_changes"),
+                    "on_clear_all_changes_activate",
+                    G_CALLBACK(cbClearAllChangesClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "redo1")),
-                                 "on_tasks_activate",
-                                 G_CALLBACK(cbTasksClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_tasks"),
+                    "on_tasks_activate",
+                    G_CALLBACK(cbTasksClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "redo1")),
-                                 "on_open_activate",
-                                 G_CALLBACK(cbOpenClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_open"),
+                    "on_open_activate",
+                    G_CALLBACK(cbOpenClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "redo1")),
-                                 "on_save_activate",
-                                 G_CALLBACK(cbSaveClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_save"),
+                    "on_save_activate",
+                    G_CALLBACK(cbSaveClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "view_commit_log")),
-                                 "on_view_commit_log_activate",
-                                 G_CALLBACK(cbViewLogClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "view_commit_log"),
+                    "on_view_commit_log_activate",
+                    G_CALLBACK(cbViewLogClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_save_as")),
-                                 "on_save_as_activate",
-                                 G_CALLBACK(cbSaveAsClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_save_as"),
+                      "on_save_as_activate",
+                      G_CALLBACK(cbSaveAsClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "generate_download_script1")),
-                                 "on_generate_download_script_activate",
-                                 G_CALLBACK(cbGenerateDownloadScriptClicked), 
-				 this);
+   g_signal_connect(gtk_builder_get_object(_builder, "generate_download_script1"),
+                    "on_generate_download_script_activate",
+                    G_CALLBACK(cbGenerateDownloadScriptClicked), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_add_downloadedfiles")),
-                                 "on_add_downloadedfiles_activate",
-                                 G_CALLBACK(cbAddDownloadedFilesClicked),
-				 this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_add_downloadedfiles"),
+                    "on_add_downloadedfiles_activate",
+                    G_CALLBACK(cbAddDownloadedFilesClicked), this);
 
    widget = _detailsM = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "menu_details"));
@@ -1461,17 +1436,14 @@ void RGMainWindow::buildInterface()
    assert(pkgCommonTextView);
    _pkgCommonTextBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(pkgCommonTextView));
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_keep")),
-                                 "on_menu_action_keep",
-                                 G_CALLBACK(cbPkgAction),
-                                 GINT_TO_POINTER(PKG_KEEP));
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_keep"),
+                    "on_menu_action_keep",
+                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_KEEP));
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_install")),
-                                 "on_menu_action_install",
-                                 G_CALLBACK(cbPkgAction),
-                                 GINT_TO_POINTER(PKG_INSTALL));
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_install"),
+                    "on_menu_action_install",
+                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_INSTALL));
+
    // callback same as for install
    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
    assert(widget);
@@ -1480,48 +1452,45 @@ void RGMainWindow::buildInterface()
    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_reinstall"));
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
-   gtk_signal_connect(widget,
+   g_signal_connect(G_OBJECT(widget),
                       "on_menu_action_reinstall",
                       G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_REINSTALL));
    
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_remove")),
-                                 "on_menu_action_delete",
-                                 G_CALLBACK(cbPkgAction),
-                                 GINT_TO_POINTER(PKG_DELETE));
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_remove"),
+                    "on_menu_action_delete",
+                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_DELETE));
 #if 0
    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_remove_with_deps"));
    assert(widget);
    g_object_set_data(G_OBJECT(widget), "me", this);
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_remove_with_deps")),
-                                 "on_menu_action_delete_with_deps",
-                                 G_CALLBACK(cbPkgAction),
+   g_signal_connect(G_OBJECT(widget),
+                    "on_menu_action_delete_with_deps",
+                    G_CALLBACK(cbPkgAction),
                                  GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
 #endif
 
    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_purge"));
    assert(widget);
-   gtk_signal_connect(widget,
-                      "on_menu_action_purge",
-                      G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_PURGE));
+   g_signal_connect(G_OBJECT(widget),
+                    "on_menu_action_purge",
+                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_PURGE));
 
    _pinM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_hold"));
-   gtk_signal_connect(_pinM,
-                      "on_menu_pin",
-                      G_CALLBACK(cbMenuPinClicked), this);
+   g_signal_connect(G_OBJECT(_pinM),
+                    "on_menu_pin",
+                    G_CALLBACK(cbMenuPinClicked), this);
 
    _autoM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_auto_installed"));
-   gtk_signal_connect(_autoM,
-                      "on_menu_auto_installed",
-                      G_CALLBACK(cbMenuAutoInstalledClicked), this);
+   g_signal_connect(G_OBJECT(_autoM),
+                    "on_menu_auto_installed",
+                    G_CALLBACK(cbMenuAutoInstalledClicked), this);
 
    _overrideVersionM = GTK_WIDGET(gtk_builder_get_object(_builder, 
                                   "menu_override_version"));
    assert(_overrideVersionM);
-   gtk_signal_connect(_overrideVersionM,
-                      "on_menu_override_version_activate",
-                      G_CALLBACK(cbInstallFromVersion), this);
+   g_signal_connect(G_OBJECT(_overrideVersionM),
+                    "on_menu_override_version_activate",
+                    G_CALLBACK(cbInstallFromVersion), this);
 
 
    // only if pkg help is enabled
@@ -1578,16 +1547,13 @@ void RGMainWindow::buildInterface()
    g_signal_connect(G_OBJECT(_treeView), "row-activated",
                     G_CALLBACK(cbPackageListRowActivated), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "add_cdrom")),
-                                 "on_add_cdrom_activate",
-                                 G_CALLBACK(cbAddCDROM), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "add_cdrom"),
+                    "on_add_cdrom_activate",
+                    G_CALLBACK(cbAddCDROM), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_download_changelog")),
-                                 "on_download_changelog_activate",
-                                 G_CALLBACK(cbChangelogDialog),
-                                 this); 
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_download_changelog"),
+                    "on_download_changelog_activate",
+                    G_CALLBACK(cbChangelogDialog), this); 
 
    /* --------------------------------------------------------------- */
 
@@ -1754,45 +1720,45 @@ void RGMainWindow::buildInterface()
                                                       "radiobutton_sections"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SECTION));
-   gtk_signal_connect(w,
-                      "on_radiobutton_section_toggled",
-                      (GCallback) cbChangedView, this);
+   g_signal_connect(G_OBJECT(w),
+                    "on_radiobutton_section_toggled",
+                    (GCallback) cbChangedView, this);
    // status
    w=_viewButtons[PACKAGE_VIEW_STATUS] = GTK_WIDGET(gtk_builder_get_object
                                                     (_builder,
                                                      "radiobutton_status"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_STATUS));
-   gtk_signal_connect(w,
-                      "on_radiobutton_status_toggled",
-                      (GCallback) cbChangedView, this);
+   g_signal_connect(G_OBJECT(w),
+                    "on_radiobutton_status_toggled",
+                    (GCallback) cbChangedView, this);
    // origin
    w=_viewButtons[PACKAGE_VIEW_ORIGIN] = GTK_WIDGET(gtk_builder_get_object
                                                     (_builder,
                                                      "radiobutton_origin"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_ORIGIN));
-   gtk_signal_connect(w,
-                      "on_radiobutton_origin_toggled",
-                      (GCallback) cbChangedView, this);
+   g_signal_connect(G_OBJECT(w),
+                    "on_radiobutton_origin_toggled",
+                    (GCallback) cbChangedView, this);
    // custom
    w=_viewButtons[PACKAGE_VIEW_CUSTOM] = GTK_WIDGET(gtk_builder_get_object
                                                     (_builder,
                                                      "radiobutton_custom"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_CUSTOM));
-   gtk_signal_connect(w,
-                      "on_radiobutton_custom_toggled",
-                      (GCallback) cbChangedView, this);
+   g_signal_connect(G_OBJECT(w),
+                    "on_radiobutton_custom_toggled",
+                    (GCallback) cbChangedView, this);
    // find
    w=_viewButtons[PACKAGE_VIEW_SEARCH] = GTK_WIDGET(gtk_builder_get_objecti
                                                     (_builder,
                                                      "radiobutton_find"));
    g_object_set_data(G_OBJECT(w), "index", 
 		     GINT_TO_POINTER(PACKAGE_VIEW_SEARCH));
-   gtk_signal_connect(w,
-                      "on_radiobutton_find_toggled",
-                      (GCallback) cbChangedView, this);
+   g_signal_connect(G_OBJECT(w),
+                    "on_radiobutton_find_toggled",
+                    (GCallback) cbChangedView, this);
 
    _subViewList = GTK_WIDGET(gtk_builder_get_object
                              (_builder, "treeview_subviews"));

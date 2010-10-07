@@ -57,7 +57,7 @@ using namespace std;
 
 
 RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
-   : RInstallProgress(), RGGladeWindow(main, "zvtinstallprogress"), _sock(NULL)
+   : RInstallProgress(), RGGtkBuilderWindow(main, "zvtinstallprogress"), _sock(NULL)
 {
    setTitle(_("Applying Changes"));
 
@@ -73,13 +73,14 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    }
 
 
-   _closeOnF = glade_xml_get_widget(_gladeXML, "checkbutton_close_after_pm");
+   _closeOnF = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                 "checkbutton_close_after_pm"));
    assert(_closeOnF);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF), 
 				_config->FindB("Synaptic::closeZvt", false));
 
-   _statusL = glade_xml_get_widget(_gladeXML, "label_status");
-   _closeB = glade_xml_get_widget(_gladeXML, "button_close");
+   _statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
+   _closeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
    gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
 		      (GtkSignalFunc)stopShell, this);
 
@@ -103,8 +104,10 @@ void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
 
 void RGTermInstallProgress::startUpdate()
 {
-   GtkWidget *win =  glade_xml_get_widget(_gladeXML, "window_zvtinstallprogress");
-   GtkWidget *hbox = glade_xml_get_widget(_gladeXML, "hbox_terminal");
+   GtkWidget *win =  GTK_WIDGET(gtk_builder_get_object
+                                (_builder, "window_zvtinstallprogress"));
+   GtkWidget *hbox = GTK_WIDGET(gtk_builder_get_object
+                                (_builder, "hbox_terminal"));
    assert(hbox);
    gtk_widget_show_all(win);
    gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
@@ -122,8 +125,10 @@ void RGTermInstallProgress::startUpdate()
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    //cout << "Plug ID: " << id << endl;
    if (id > 0) {
-      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "window_zvtinstallprogress"));
-      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_terminstall_progress");
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "window_zvtinstallprogress")));
+      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "vbox_terminstall_progress"));
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show(_sock);

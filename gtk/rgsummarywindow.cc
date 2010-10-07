@@ -70,7 +70,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 #ifdef WITH_APT_AUTH
    if(notAuthenticated.size() > 0) {
       GtkWidget *label;
-      label = glade_xml_get_widget(me->_gladeXML, "label_auth_warning");
+      label = GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_auth_warning"));
       assert(label);
       // FIXME: make this a message from a trust class (and remeber to
       // change the text in rgchangeswindow then too)
@@ -217,7 +217,7 @@ void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
    string text;
    gchar *str;
 
-   info = glade_xml_get_widget(me->_gladeXML, "label_details");
+   info = GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_details"));
 
    vector<RPackage *> held;
    vector<RPackage *> kept;
@@ -309,8 +309,10 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
    GtkWidget *s,*d;
    GtkWidget *info;
 
-   s = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_summary");
-   d = glade_xml_get_widget(me->_gladeXML, "scrolledwindow_details");
+   s = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                         "scrolledwindow_summary"));
+   d = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                         "scrolledwindow_details"));
 
    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) {
       gtk_widget_hide(s);
@@ -325,7 +327,7 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 
 
 RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
-: RGGladeWindow(wwin, "summary")
+: RGGtkBuilderWindow(wwin, "summary")
 {
    GtkWidget *button;
 
@@ -335,10 +337,11 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    setTitle(_("Summary"));
    //gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
 
-   _summaryL = glade_xml_get_widget(_gladeXML, "label_summary");
+   _summaryL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
    assert(_summaryL);
 
-   _summarySpaceL = glade_xml_get_widget(_gladeXML, "label_summary_space");
+   _summarySpaceL = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                      "label_summary_space"));
    assert(_summarySpaceL);
 
    // details label
@@ -347,7 +350,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    // new tree store
    _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
    buildTree(this);
-   _tree = glade_xml_get_widget(_gladeXML, "treeview_summary");
+   _tree = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_summary"));
    assert(_tree);
 
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
@@ -362,9 +365,11 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    /* set model last */
    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
-   _dlonlyB = glade_xml_get_widget(_gladeXML, "checkbutton_download_only");
+   _dlonlyB = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                "checkbutton_download_only"));
 
-   _checkSigsB = glade_xml_get_widget(_gladeXML, "checkbutton_check_signatures");
+   _checkSigsB = GTK_WIDGET(gtk_builder_get_object
+                            (_builder, "checkbutton_check_signatures");
    assert(_checkSigsB);
 #ifdef HAVE_RPM
    bool check = _config->FindB("RPM::GPG-Check", true);
@@ -372,7 +377,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_widget_show(_checkSigsB);
 #endif
 
-   button = glade_xml_get_widget(_gladeXML, "togglebutton_details");
+   button = GTK_WIDGET(gtk_builder_get_object(_builder,"togglebutton_details"));
    gtk_signal_connect(GTK_OBJECT(button), "clicked",
                       (GtkSignalFunc) clickedDetails, this);
 

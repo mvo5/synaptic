@@ -45,8 +45,7 @@ _currentPackage(0), _hasHeader(false)
    GtkWidget *textView = GTK_WIDGET(gtk_builder_get_object(_builder,
                                                            "textview"));
    _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                 "close")),
+   g_signal_connect(gtk_builder_get_object(_builder, "close"),
                                  "on_close_clicked",
                                  G_CALLBACK(onCloseClicked), this);
    PangoFontDescription *font;

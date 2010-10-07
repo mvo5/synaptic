@@ -419,12 +419,12 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    g_signal_connect(_term, "contents-changed",
 		    G_CALLBACK(content_changed), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
-                                 "on_button_cancel_clicked",
-				 G_CALLBACK(cbCancel), this);
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_close")),
-                                 "on_button_close_clicked",
-				 G_CALLBACK(cbClose), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_cancel"),
+                    "on_button_cancel_clicked",
+                    G_CALLBACK(cbCancel), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
+                    "on_button_close_clicked",
+                    G_CALLBACK(cbClose), this);
 
    if(_userDialog == NULL)
       _userDialog = new RGUserDialog(this);

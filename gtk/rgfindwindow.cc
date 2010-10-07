@@ -100,20 +100,20 @@ RGFindWindow::RGFindWindow(RGWindow *win)
 {
    //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                        "button_find")),
-                                 "on_button_find_clicked",
-                                 G_CALLBACK(doFind), this);
+   g_signal_connect(gtk_builder_get_object(_builder,
+                                           "button_find"),
+                               "on_button_find_clicked",
+                               G_CALLBACK(doFind), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                        "entry_find")),
-                                 "on_entry_find_activate",
-                                 G_CALLBACK(doFind), this);
+   g_signal_connect(gtk_builder_get_object(_builder,
+                                           "entry_find"),
+                               "on_entry_find_activate",
+                               G_CALLBACK(doFind), this);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                        "button_close")),
-                                 "on_button_close_clicked",
-                                 G_CALLBACK(doClose), this);
+   g_signal_connect(gtk_builder_get_object(_builder,
+                                           "button_close"),
+                               "on_button_close_clicked",
+                               G_CALLBACK(doClose), this);
 
    GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_find"));
    gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);

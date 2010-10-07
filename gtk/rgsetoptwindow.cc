@@ -31,8 +31,8 @@ void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 {
    RGSetOptWindow *me = (RGSetOptWindow *) data;
 
-   GtkWidget *entry_name = glade_xml_get_widget(me->_gladeXML, "entry_name");
-   GtkWidget *entry_value = glade_xml_get_widget(me->_gladeXML, "entry_value");
+   GtkWidget *entry_name = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
+   GtkWidget *entry_value = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
 
    const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
    const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
@@ -48,15 +48,17 @@ void RGSetOptWindow::DoClose(GtkWindow *widget, void *data)
 }
 
 RGSetOptWindow::RGSetOptWindow(RGWindow *win)
-: RGGladeWindow(win, "setopt")
+: RGGtkBuilderWindow(win, "setopt")
 {
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_apply_clicked",
-                                 G_CALLBACK(DoApply), this);
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "button_apply")),
+                    "on_button_apply_clicked",
+                    G_CALLBACK(DoApply), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_close_clicked",
-                                 G_CALLBACK(DoClose), this);
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "button_close")),
+                    "on_button_close_clicked",
+                    G_CALLBACK(DoClose), this);
 
    setTitle("");
    skipTaskbar(true);

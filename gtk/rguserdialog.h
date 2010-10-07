@@ -25,7 +25,6 @@
 #ifndef RGUSERDIALOG_H
 #define RGUSERDIALOG_H
 
-#include <glade/glade.h>
 #include "ruserdialog.h"
 #include "rgwindow.h"
 
@@ -53,11 +52,11 @@ public:
 
 /*
  * A alternative interface for the ruserdialog, here is how it works:
- * the glade file must called "dialog_$NAME.glade"
+ * the gtkbuilder file must called "dialog_$NAME.ui"
  * the buttons must have valid RESPONSE_IDs attached
- * see gtk/dialog_quit.glade as an example
+ * see gtkbuilder/dialog_quit.ui as an example
  * Example:
-  	RGGladeUserDialog dia(this);
+  	RGGtkBuilderUserDialog dia(this);
 	// return true is user clicked on a button with GTK_RESPONSE_OK
 	if(dia->run("quit")) {
 	    do_response_ok_stuff();
@@ -66,28 +65,29 @@ public:
         }
  *
  * 
- * if you need more complex interaction, use the getGladeXML() call to ask
- * for specific widgets in the dialog (see gtk/dialog_upgrade.glade as example
+ * if you need more complex interaction, use the getGtkBuilder() call to ask
+ * for specific widgets in the dialog (see gtkbuilder/dialog_upgrade.ui as
+ * example.
 */
-class RGGladeUserDialog : public RGUserDialog
+class RGGtkBuilderUserDialog : public RGUserDialog
 {
  protected:
     GtkWidget *_dialog;
     GtkResponseType res;
-    GladeXML *gladeXML;
+    GtkBuilder *builder;
     bool init(const char *name);
 
  public:
-    RGGladeUserDialog(RGWindow* parent) : gladeXML(0) {};
-    RGGladeUserDialog(RGWindow* parent, const char *name);
-    virtual ~RGGladeUserDialog()  { gtk_widget_destroy(_dialog); };
+    RGGtkBuilderUserDialog(RGWindow* parent) : builder(0) {};
+    RGGtkBuilderUserDialog(RGWindow* parent, const char *name);
+    virtual ~RGGtkBuilderUserDialog()  { gtk_widget_destroy(_dialog); };
 
     void setTitle(string title) { 
        gtk_window_set_title(GTK_WINDOW(_dialog),title.c_str());
     }
 
     int run(const char *name=NULL, bool return_gtk_response=false);
-    GladeXML *getGladeXML() { return gladeXML; };
+    GtkBuilder *getGtkBuilder() { return builder; };
 };
 #endif
 

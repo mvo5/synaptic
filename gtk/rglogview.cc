@@ -319,15 +319,13 @@ RGLogView::RGLogView(RGWindow *parent)
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
    // find button
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                 "button_find")),
-                                 "on_button_find_clicked",
-				 G_CALLBACK(cbButtonFind), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_find"),
+                    "on_button_find_clicked",
+                    G_CALLBACK(cbButtonFind), this);
    // close
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                 "button_close")),
-                                 "on_button_close_clicked",
-                                 G_CALLBACK(cbCloseClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
+                    "on_button_close_clicked",
+                    G_CALLBACK(cbCloseClicked), this);
 
  
    /* Setup the selection handler */
@@ -340,10 +338,9 @@ RGLogView::RGLogView(RGWindow *parent)
    _textView = GTK_WIDGET(gtk_builder_get_object(_builder, "textview_log"));
    assert(_textView);
 
-   gtk_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder,
-                                 "entry_find")),
-                                 "on_entry_find_activate",
-				 G_CALLBACK(cbButtonFind), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "entry_find"),
+                    "on_entry_find_activate",
+                    G_CALLBACK(cbButtonFind), this);
 
    GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
    _markTag = gtk_text_buffer_create_tag (buf, "mark",

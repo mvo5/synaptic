@@ -113,7 +113,7 @@ enum {
 
 
 RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
-   : RGGladeWindow(parent, "repositories"), _dirty(false)
+   : RGGtkBuilderWindow(parent, "repositories"), _dirty(false)
 {
    //cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
    assert(_win);
@@ -135,7 +135,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                           G_TYPE_STRING,
                                           G_TYPE_POINTER, GDK_TYPE_COLOR);
 
-   _sourcesListView = glade_xml_get_widget(_gladeXML, "treeview_repositories");
+   _sourcesListView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_repositories"));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_sourcesListView),
                            GTK_TREE_MODEL(_sourcesListStore));
 
@@ -213,9 +213,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    g_signal_connect(G_OBJECT(select), "changed",
                     G_CALLBACK(SelectionChanged), this);
 
-   //_cbEnabled = glade_xml_get_widget(_gladeXML, "checkbutton_enabled");
+   //_cbEnabled = GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_enabled"));
 
-   _optType = glade_xml_get_widget(_gladeXML, "optionmenu_type");
+   _optType = GTK_WIDGET(gtk_builder_get_object(_builder, "optionmenu_type"));
    _optTypeMenu = gtk_menu_new();
 
    GtkWidget *item;
@@ -262,7 +262,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 #endif
    gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
 
-   _optVendor = glade_xml_get_widget(_gladeXML, "optionmenu_vendor");
+   _optVendor = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                  "optionmenu_vendor"));
    _optVendorMenu = gtk_menu_new();
    item = gtk_menu_item_new_with_label(_("(no vendor)"));
    gtk_menu_append(GTK_MENU(_optVendorMenu), item);
@@ -273,66 +274,71 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 #ifndef HAVE_RPM
    // debian can't use the vendors menu, so we hide it
    gtk_widget_hide(GTK_WIDGET(_optVendor));
-   GtkWidget *vendors = glade_xml_get_widget(_gladeXML,"button_edit_vendors");
+   GtkWidget *vendors = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "button_edit_vendors"));
    assert(vendors);
    gtk_widget_hide(GTK_WIDGET(vendors));
 #endif
 
-   _entryURI = glade_xml_get_widget(_gladeXML, "entry_uri");
+   _entryURI = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_uri"));
    assert(_entryURI);
-   _entryDist = glade_xml_get_widget(_gladeXML, "entry_distribution");
+   _entryDist = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                  "entry_distribution"));
    assert(_entryDist);
-   _entrySect = glade_xml_get_widget(_gladeXML, "entry_sections");
+   _entrySect = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_sections"));
    assert(_entrySect);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_ok_clicked",
-                                 G_CALLBACK(DoOK), this);
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_ok")),
+                    "on_button_ok_clicked",
+                    G_CALLBACK(DoOK), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_cancel_clicked",
-                                 G_CALLBACK(DoCancel), this);
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "button_remove")),
+                    "on_button_cancel_clicked",
+                    G_CALLBACK(DoCancel), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_edit_vendors_clicked",
-                                 G_CALLBACK(VendorsWindow), this);
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "button_edit_vendors")),
+                    "on_button_edit_vendors_clicked",
+                    G_CALLBACK(VendorsWindow), this);
 
    /*
-      glade_xml_signal_connect_data(_gladeXML,
+      g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+      (_builder, "button_clear")),
       "on_button_clear_clicked",
       G_CALLBACK(DoClear),
       this);
     */
 
-   glade_xml_signal_connect_data(_gladeXML,
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
+                               (_builder, "button_add")),
                                  "on_button_add_clicked",
                                  G_CALLBACK(DoAdd), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_remove_clicked",
-                                 G_CALLBACK(DoRemove), this);
-
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_updown_clicked",
-                                 G_CALLBACK(DoUpDown), this);
-   
-   GtkWidget *button = glade_xml_get_widget(_gladeXML, "button_up");
-   g_object_set_data(G_OBJECT(button), "up", GINT_TO_POINTER(1));
-   g_object_set_data(G_OBJECT(button), "down", GINT_TO_POINTER(0));
-
-   _upBut = glade_xml_get_widget(_gladeXML, "button_up");
+   _upBut = GTK_WIDGET(gtk_builder_get_object(_builder, "button_up"));
    assert(_upBut);
+   g_object_set_data(G_OBJECT(_upBut), "up", GINT_TO_POINTER(1));
+   g_signal_connect(_upBut,
+                    "on_button_updown_clicked",
+                    G_CALLBACK(DoUpDown), this);
    gtk_widget_set_sensitive(_upBut, FALSE);
 
-   _downBut = glade_xml_get_widget(_gladeXML, "button_down");
+   _downBut = GTK_WIDGET(gtk_builder_get_object(_builder, "button_down"));
    assert(_downBut);
+   g_object_set_data(G_OBJECT(_downBut), "down", GINT_TO_POINTER(0));
+   g_signal_connect(_downBut,
+                    "on_button_updown_clicked",
+                    G_CALLBACK(DoUpDown), this);
    gtk_widget_set_sensitive(_downBut, FALSE);
    
-   _deleteBut = glade_xml_get_widget(_gladeXML, "button_add");
+   _deleteBut = GTK_WIDGET(gtk_builder_get_object(_builder, "button_remove"));
    assert(_deleteBut);
+   g_signal_connect(_deleteBut,
+                    "on_button_remove_clicked",
+                    G_CALLBACK(DoRemove), this);
    gtk_widget_set_sensitive(_deleteBut, FALSE);
 
-   _editTable = glade_xml_get_widget(_gladeXML, "table_edit");
+   _editTable = GTK_WIDGET(gtk_builder_get_object(_builder, "table_edit"));
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
 

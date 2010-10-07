@@ -221,7 +221,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 			 "maintainers version? "),conffile);
 
    // setup dialog
-   w = GTK_WIDGET(gtk_builder_det_object(dia_builder, "label_message"));
+   w = GTK_WIDGET(gtk_builder_get_object(dia_builder, "label_message"));
    m = g_strdup_printf("<span weight=\"bold\" size=\"larger\">%s </span> "
 		       "\n\n%s", p, s);
    gtk_label_set_markup(GTK_LABEL(w), m);
@@ -267,7 +267,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    g_free(cmd);
 
    // set into buffer
-   GtkWidget *text_view = GTK_WIDGET(gtk_builder_get_object(xml,"textview_diff"));
+   GtkWidget *text_view = GTK_WIDGET(gtk_builder_get_object(dia_builder, "textview_diff"));
    gtk_widget_modify_font(text_view, pango_font_description_from_string("monospace"));
    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);

@@ -129,10 +129,10 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
    g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
                     "on_cancel_clicked",
                     G_CALLBACK(onCancelClicked), this);
-   g_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
-   g_window_set_transient_for(GTK_WINDOW(_win), 
+   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(_win), 
                                 GTK_WINDOW(wwin->window()));
-   g_window_set_position(GTK_WINDOW(_win),
+   gtk_window_set_position(GTK_WINDOW(_win),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
 }
 

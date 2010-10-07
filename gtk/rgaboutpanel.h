@@ -24,7 +24,7 @@
 #ifndef _RGABOUTPANEL_H_
 #define _RGABOUTPANEL_H_
 
-#include "rggtikbuilderwindow.h"
+#include "rggtkbuilderwindow.h"
 
 class RGCreditsPanel:public RGGtkBuilderWindow {
  public:

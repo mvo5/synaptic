@@ -886,7 +886,7 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 		    NULL, NULL, &pid, NULL)) {
       g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
       gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
-							  "label_fast_search"))),
+							  "label_fast_search")),
 			 _("Rebuilding search index"));
    }
    return false;
@@ -1513,7 +1513,7 @@ void RGMainWindow::buildInterface()
    }
 #ifndef HAVE_RPM
    gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
-                              (_builder, "scrolledwindow_filelist"));
+                              (_builder, "scrolledwindow_filelist")));
 #endif
 
    GtkWidget *vpaned = GTK_WIDGET(gtk_builder_get_object
@@ -1751,7 +1751,7 @@ void RGMainWindow::buildInterface()
                     "on_radiobutton_custom_toggled",
                     (GCallback) cbChangedView, this);
    // find
-   w=_viewButtons[PACKAGE_VIEW_SEARCH] = GTK_WIDGET(gtk_builder_get_objecti
+   w=_viewButtons[PACKAGE_VIEW_SEARCH] = GTK_WIDGET(gtk_builder_get_object
                                                     (_builder,
                                                      "radiobutton_find"));
    g_object_set_data(G_OBJECT(w), "index", 

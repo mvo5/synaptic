@@ -205,7 +205,7 @@ void RGPreferencesWindow::saveGeneral()
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain));
    _config->Set("Synaptic::ShowAllPkgInfoInMain", newval ? "true" : "false");
    // apply the changes
-   GtkWidget *notebook = GTK_WIDGET(gtk_buidler_get_object
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
                                     (_mainWin->getGtkBuilder(),
                                      "notebook_pkginfo"));
    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), newval);
@@ -1049,9 +1049,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    // set data for the checkbutton
    g_object_set_data(gtk_builder_get_object
-                      (_builder, "checkbutton_user_font")), "me", this);
+                      (_builder, "checkbutton_user_font"), "me", this);
    g_object_set_data(gtk_builder_get_object
-                      (_builder, "checkbutton_user_terminal_font")), "me",
+                      (_builder, "checkbutton_user_terminal_font"), "me",
                      this);
 
    // save the lister

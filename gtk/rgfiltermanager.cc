@@ -95,7 +95,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
 
    _filterDetailsBox = GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                         "vbox_filter_details");
+                                                         "vbox_filter_details"));
    assert(_filterDetailsBox);
 
    // filter list view
@@ -359,7 +359,7 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
 
    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
       gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
-                               (me->_builder, "hbox_pattern"), TRUE));
+                                          (me->_builder, "hbox_pattern")), TRUE);
       gtk_tree_model_get(model, &iter, PATTERN_DO_COLUMN, &dopatt,
                          PATTERN_WHAT_COLUMN, &what, PATTERN_TEXT_COLUMN,
                          &text, -1);

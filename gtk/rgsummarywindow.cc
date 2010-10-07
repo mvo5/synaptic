@@ -369,7 +369,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
                                                 "checkbutton_download_only"));
 
    _checkSigsB = GTK_WIDGET(gtk_builder_get_object
-                            (_builder, "checkbutton_check_signatures");
+                            (_builder, "checkbutton_check_signatures"));
    assert(_checkSigsB);
 #ifdef HAVE_RPM
    bool check = _config->FindB("RPM::GPG-Check", true);

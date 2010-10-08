@@ -215,6 +215,7 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    gchar *filename = NULL;
    gchar *main_widget = NULL;
    guint builder_status;
+   GError* error = NULL;
 
    //cout << "RGGtkBuilderUserDialog::RGGtkBuilderUserDialog()" << endl;
 
@@ -222,13 +223,18 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    filename = g_strdup_printf("dialog_%s.ui", name);
    main_widget = g_strdup_printf("dialog_%s", name);
    if (FileExists(filename)) {
-      builder_status = gtk_builder_add_from_file(builder, filename, NULL);
+      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+         g_warning ("Couldn't load builder file: %s", error->message);
+         g_error_free (error);
+      }
    } else {
       g_free(filename);
       filename = g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "dialog_%s.ui", name);
-      builder_status = gtk_builder_add_from_file(builder, filename, NULL);
+      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+         g_warning ("Couldn't load builder file: %s", error->message);
+         g_error_free (error);
+      }
    }
-   assert(builder_status != 0);
    _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
    assert(_dialog);
 

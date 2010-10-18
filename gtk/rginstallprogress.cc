@@ -46,7 +46,7 @@ _currentPackage(0), _hasHeader(false)
                                                            "textview"));
    _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
    g_signal_connect(gtk_builder_get_object(_builder, "close"),
-                                 "on_close_clicked",
+                                 "clicked",
                                  G_CALLBACK(onCloseClicked), this);
    PangoFontDescription *font;
    font = pango_font_description_from_string("helvetica 10");

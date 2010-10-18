@@ -123,10 +123,10 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 
    g_signal_connect(gtk_builder_get_object(_builder, "ok"),
-                    "on_ok_clicked",
+                    "clicked",
                     G_CALLBACK(onOkClicked), this);
    g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
-                    "on_cancel_clicked",
+                    "clicked",
                     G_CALLBACK(onCancelClicked), this);
 
    //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);

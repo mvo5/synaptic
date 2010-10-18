@@ -52,12 +52,12 @@ RGSetOptWindow::RGSetOptWindow(RGWindow *win)
 {
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
                                (_builder, "button_apply")),
-                    "on_button_apply_clicked",
+                    "clicked",
                     G_CALLBACK(DoApply), this);
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
                                (_builder, "button_close")),
-                    "on_button_close_clicked",
+                    "clicked",
                     G_CALLBACK(DoClose), this);
 
    setTitle("");

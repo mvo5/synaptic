@@ -420,10 +420,10 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 		    G_CALLBACK(content_changed), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_cancel"),
-                    "on_button_cancel_clicked",
+                    "clicked",
                     G_CALLBACK(cbCancel), this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
-                    "on_button_close_clicked",
+                    "clicked",
                     G_CALLBACK(cbClose), this);
 
    if(_userDialog == NULL)

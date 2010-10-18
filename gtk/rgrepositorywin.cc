@@ -289,37 +289,37 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    assert(_entrySect);
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_ok")),
-                    "on_button_ok_clicked",
+                    "clicked",
                     G_CALLBACK(DoOK), this);
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
                                (_builder, "button_remove")),
-                    "on_button_cancel_clicked",
+                    "clicked",
                     G_CALLBACK(DoCancel), this);
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
                                (_builder, "button_edit_vendors")),
-                    "on_button_edit_vendors_clicked",
+                    "clicked",
                     G_CALLBACK(VendorsWindow), this);
 
    /*
       g_signal_connect(GTK_WIDGET(gtk_builder_get_object
       (_builder, "button_clear")),
-      "on_button_clear_clicked",
+      "clicked",
       G_CALLBACK(DoClear),
       this);
     */
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
                                (_builder, "button_add")),
-                                 "on_button_add_clicked",
+                                 "clicked",
                                  G_CALLBACK(DoAdd), this);
 
    _upBut = GTK_WIDGET(gtk_builder_get_object(_builder, "button_up"));
    assert(_upBut);
    g_object_set_data(G_OBJECT(_upBut), "up", GINT_TO_POINTER(1));
    g_signal_connect(_upBut,
-                    "on_button_updown_clicked",
+                    "clicked",
                     G_CALLBACK(DoUpDown), this);
    gtk_widget_set_sensitive(_upBut, FALSE);
 
@@ -327,14 +327,14 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    assert(_downBut);
    g_object_set_data(G_OBJECT(_downBut), "down", GINT_TO_POINTER(0));
    g_signal_connect(_downBut,
-                    "on_button_updown_clicked",
+                    "clicked",
                     G_CALLBACK(DoUpDown), this);
    gtk_widget_set_sensitive(_downBut, FALSE);
    
    _deleteBut = GTK_WIDGET(gtk_builder_get_object(_builder, "button_remove"));
    assert(_deleteBut);
    g_signal_connect(_deleteBut,
-                    "on_button_remove_clicked",
+                    "clicked",
                     G_CALLBACK(DoRemove), this);
    gtk_widget_set_sensitive(_deleteBut, FALSE);
 

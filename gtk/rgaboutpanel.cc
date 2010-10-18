@@ -42,7 +42,7 @@ RGGtkBuilderWindow(parent, "about", "credits")
    closebutton = GTK_WIDGET(gtk_builder_get_object(_builder,
                                                    "credits_closebutton"));
    g_signal_connect(G_OBJECT(closebutton),
-                    "on_closebutton_clicked",
+                    "clicked",
                     G_CALLBACK(closeWindow), this);
 
    //   skipTaskbar(true);
@@ -79,10 +79,10 @@ RGAboutPanel::RGAboutPanel(RGWindow *parent)
    button_credits = GTK_WIDGET(gtk_builder_get_object(_builder,
                                                       "button_credits"));
    g_signal_connect(G_OBJECT(okbutton),
-                      "on_okbutton_clicked",
+                      "clicked",
                       G_CALLBACK(closeWindow), this);
    g_signal_connect(G_OBJECT(button_credits),
-                      "on_button_credits_clicked",
+                      "clicked",
                       G_CALLBACK(creditsClicked), this);
 
    //skipTaskbar(true);

@@ -1366,7 +1366,7 @@ void RGMainWindow::buildInterface()
 
    widget = _pkgupgradeM = GTK_WIDGET(gtk_builder_get_object
                                       (_builder, "menu_upgrade"));
-   assert(_upgradeM);
+   assert(_pkgupgradeM);
    img = get_gtk_image("package-upgrade");
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);

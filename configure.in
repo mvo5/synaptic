@@ -119,6 +119,41 @@ AC_SUBST(DEB_HDRS)
 DEB_LIBS="-lapt-inst"
 AC_SUBST(DEB_LIBS)
 
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(unistd.h libintl.h iconv.h)
+
+# check apt configuration 
+AC_LANG([C++])
+# bail out if we don't have apts headers
+AC_CHECK_HEADER(apt-pkg/configuration.h, [],
+ AC_ERROR([You need the apt-pkg headers installed to compile synaptic.]))
+
+# if metaindex is there we use a apt with authentication support
+AC_CHECK_HEADER(apt-pkg/metaindex.h,
+        AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support] )
+)
+# check if we have apts new-style cdrom.h
+AC_CHECK_HEADER(apt-pkg/cdrom.h, 
+                AC_DEFINE(HAVE_APTPKG_CDROM, 1, 
+		[whether apt-pkg/cdrom.h is present]) )
+
+# check and use libept if available
+AC_CHECK_HEADER(ept/axi/axi.h,
+        [AC_DEFINE(WITH_EPT, 1, 
+                   [Define if libept is found.])
+         LIBEPT_DEFS])
+
+AC_LANG([C])
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+
+dnl Checks for library functions.
+AC_FUNC_STRCOLL
+AC_CHECK_FUNCS(regcomp strdup iconv)
+
 # launchpad integration
 AC_ARG_WITH(launchpad-integration,
  	[--launchpad-integration   build with launchpad-integration],
@@ -129,52 +164,9 @@ AC_ARG_WITH(launchpad-integration,
 AC_SUBST(LP_CFLAGS)
 AC_SUBST(LP_LIBS)
 
-AC_MSG_CHECKING(for --enable-ept)
-AC_ARG_ENABLE([ept],
-             AC_HELP_STRING(--enable-ept, enable libept functionality),
-             [enable_ept="$enableval"],[enable_ept="yes"])
-if test "$enable_ept" != "no"; then
-  AC_MSG_RESULT(no)
-  AC_DEFINE(WITH_EPT, 1, 
-           [Define if you want to enable the ept functions.]) 
-  LIBEPT_DEFS
-else
-  AC_MSG_RESULT(yes)
-fi
-
-
-dnl Checks for header files.
-AC_HEADER_STDC
-
-AC_CHECK_HEADERS(unistd.h libintl.h iconv.h)
-
-AC_LANG_CPLUSPLUS
-AC_CHECK_HEADER(apt-pkg/configuration.h)
-
-if test x$ac_cv_header_apt_pkg_configuration_h != xyes; then
-	AC_ERROR([You need the apt-pkg headers installed to compile synaptic.])
-fi
-
-AC_LANG_C
-
-dnl Checks for typedefs, structures, and compiler characteristics.
-AC_C_CONST
-AC_C_INLINE
-
-
-
-dnl Checks for library functions.
-AC_FUNC_STRCOLL
-AC_CHECK_FUNCS(regcomp strdup iconv)
-
 AC_ARG_WITH(pkg-hold, 
 	[--with-pkg-hold   build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
-)
-
-AC_ARG_WITH(apt-authentication, 
-	[--with-apt-authentication  build with support for apt authentication],
-        AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support] )
 )
 
 AC_ARG_WITH(nice-dpkg-status, 
@@ -185,13 +177,6 @@ AC_ARG_WITH(nice-dpkg-status,
 	]
 )
 
-
-AC_ARG_WITH(debtags, 
-	[--with-debtags-support   build with experimental debtags support],
-        [AC_DEFINE(HAVE_DEBTAGS, 1, [build with debtags support])
-	LIBTAGCOLL_DEFS
-	]
-)
 
 dnl check for libvte
 AC_ARG_WITH(vte, 
@@ -204,11 +189,6 @@ AC_ARG_WITH(vte,
 	      AC_SUBST(VTE_LIBS)
 	      ]
 	      )
-
-AC_LANG([C++])
-AC_CHECK_HEADER(apt-pkg/cdrom.h, 
-                AC_DEFINE(HAVE_APTPKG_CDROM, 1, 
-		[whether apt-pkg/cdrom.h is present]) )
 
 
 AC_OUTPUT([

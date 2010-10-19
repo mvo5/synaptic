@@ -9,7 +9,7 @@ export DH_COMPAT=3
 build: build-stamp
 build-stamp: patch
 	dh_testdir
-	./configure --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --sysconfdir=/etc --with-vte --with-pkg-hold 
+	./configure --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --sysconfdir=/etc --with-pkg-hold 
 	$(MAKE)
 	touch build-stamp
 

@@ -155,35 +155,46 @@ AC_FUNC_STRCOLL
 AC_CHECK_FUNCS(regcomp strdup iconv)
 
 # use vte if available
-pkg_modules="vte >= 0.10.11"
-PKG_CHECK_MODULES(VTE, [$pkg_modules],
+vte_modules="vte >= 0.10.11"
+PKG_CHECK_MODULES(VTE, [$vte_modules],
 	      [AC_DEFINE(HAVE_VTE, 1, [build with VTE as output terminal])
 	       AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
 	       AC_SUBST(VTE_CFLAGS)
-	       AC_SUBST(VTE_LIBS)], 
-              [AC_MSG_NOTICE([no vte found, building without])])
+	       AC_SUBST(VTE_LIBS)
+              ], 
+              [AC_MSG_NOTICE([no vte found, building without])
+              ])
+
+# use dpkg progress by default unless the user disables it
+AC_ARG_WITH(dpkg-progress,
+	[  --without-dpkg-progress build without support for dpkg progress bar],
+	[],
+        [with_dpkg_progress=yes])
+# if dpkg-progress is used, we need vte, so check that here
+# (FIXME: is this actually true? we could build without terminal and progress
+#  bar only)
+AS_IF([test "x$with_dpkg_progress" != xno],
+        [PKG_CHECK_MODULES(VTE, [$vte_modules], 
+                           [], 
+                           [AC_MSG_FAILURE([dpkg-progress requires vte, you can build without vte when using --without-dpkg-progress])
+                           ])
+         AC_DEFINE(WITH_DPKG_STATUSFD, 1, [build with dpkg progress bar])
+        ],
+        [])
 
 # launchpad integration
 AC_ARG_WITH(launchpad-integration,
- 	[--launchpad-integration   build with launchpad-integration],
+ 	[  --with-launchpad-integration   build with launchpad-integration],
 	[PKG_CHECK_MODULES(LP, ["launchpad-integration"])
-	 AC_DEFINE(WITH_LAUNCHPAD_INTEGRATION, 1, [build with launchpad-integration] )
+	 AC_DEFINE(WITH_LAUNCHPAD_INTEGRATION, 1, [build with launchpad-integration])
+         AC_SUBST(LP_CFLAGS)
+         AC_SUBST(LP_LIBS)
 	]
 )
-AC_SUBST(LP_CFLAGS)
-AC_SUBST(LP_LIBS)
 
 AC_ARG_WITH(pkg-hold, 
-	[--with-pkg-hold   build with experimental package "hold" feature],
+	[  --with-pkg-hold   build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
-)
-
-AC_ARG_WITH(nice-dpkg-status, 
-	[--with-nice-dpkg-status build with support for dpkg progress bar],
-	[pkg_modules="vte >= 0.10.11"
-	PKG_CHECK_MODULES(VTE, [$pkg_modules])
-        AC_DEFINE(WITH_DPKG_STATUSFD, 1, [build with dpkg progress bar] )
-	]
 )
 
 

@@ -38,7 +38,7 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "details")
 {
    g_signal_connect(gtk_builder_get_object(_builder, "close"),
-                    "on_button_close_clicked",
+                    "clicked",
                     G_CALLBACK(cbCloseClicked), this); 
 }
 
@@ -282,7 +282,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
 
    g_signal_connect(gtk_builder_get_object
                     (me->getGtkBuilder(), "optionmenu_depends"),
-                    "on_optionmenu_depends_changed",
+                    "changed",
                     G_CALLBACK(cbDependsMenuChanged), me);
 }
 

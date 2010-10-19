@@ -121,7 +121,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
-                                 "on_button_cancel_clicked",
+                                 "clicked",
                                  G_CALLBACK(stopDownload), this);
 
    PangoContext *context = gdk_pango_context_get();

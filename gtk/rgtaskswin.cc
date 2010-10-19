@@ -289,13 +289,13 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    gtk_tree_view_set_model(GTK_TREE_VIEW(tree), GTK_TREE_MODEL(store));
    
    g_signal_connect(gtk_builder_get_object(_builder, "button_ok"),
-                    "on_button_ok_clicked",
+                    "clicked",
                     (GCallback) cbButtonOkClicked, this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_cancel"),
-                    "on_button_cancel_clicked",
+                    "clicked",
                     (GCallback) cbButtonCancelClicked, this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
-                    "on_button_details_clicked",
+                    "clicked",
                     (GCallback) cbButtonDetailsClicked, this);
 
 };

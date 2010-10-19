@@ -102,17 +102,17 @@ RGFindWindow::RGFindWindow(RGWindow *win)
 
    g_signal_connect(gtk_builder_get_object(_builder,
                                            "button_find"),
-                               "on_button_find_clicked",
+                               "clicked",
                                G_CALLBACK(doFind), this);
 
    g_signal_connect(gtk_builder_get_object(_builder,
                                            "entry_find"),
-                               "on_entry_find_activate",
+                               "activate",
                                G_CALLBACK(doFind), this);
 
    g_signal_connect(gtk_builder_get_object(_builder,
                                            "button_close"),
-                               "on_button_close_clicked",
+                               "clicked",
                                G_CALLBACK(doClose), this);
 
    GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_find"));

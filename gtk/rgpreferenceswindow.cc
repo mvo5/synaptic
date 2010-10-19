@@ -676,17 +676,17 @@ void RGPreferencesWindow::readDistribution()
    ignore = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_ignore"));
    g_object_set_data(G_OBJECT(ignore),"defaultDistro",(void*)"");
    g_signal_connect(G_OBJECT(ignore),
-                    "on_radiobutton_distribution_group_changed",
+                    "changed",
                     G_CALLBACK(cbRadioDistributionChanged), this);
    now = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_now"));
    g_object_set_data(G_OBJECT(now),"defaultDistro",(void*)"now");
    g_signal_connect(G_OBJECT(now),
-                    "on_radiobutton_distribution_group_changed",
+                    "changed",
                     G_CALLBACK(cbRadioDistributionChanged), this);
    distro = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_distro"));
    g_object_set_data(G_OBJECT(distro),"defaultDistro",(void*)"distro");
    g_signal_connect(G_OBJECT(distro),
-                    "on_radiobutton_distribution_group_changed",
+                    "changed",
                     G_CALLBACK(cbRadioDistributionChanged), this);
 
    // clear the combo box
@@ -714,7 +714,7 @@ void RGPreferencesWindow::readDistribution()
 		    G_CALLBACK(cbArchiveSelection), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_http_proxy"),
-				 "on_entry_http_proxy_changed",
+				 "changed",
 				 G_CALLBACK(cbHttpProxyEntryChanged), this);
 
    for (unsigned int i = 0; i < archives.size(); i++) {
@@ -1079,60 +1079,48 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
 
    // lots of signals :)
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_column_up")),
-                    "on_button_column_up_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_column_up"),
+                    "clicked",
                     G_CALLBACK(cbMoveColumnUp), this);
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_column_down")),
-                    "on_button_column_down_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_column_down"),
+                    "clicked",
                     G_CALLBACK(cbMoveColumnDown), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "close")),
-                    "on_close_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "close"),
+                    "clicked",
                     G_CALLBACK(closeAction), this);
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "apply")),
-                    "on_apply_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "apply"),
+                    "clicked",
                     G_CALLBACK(saveAction), this);
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "ok")),
-                    "on_ok_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "ok"),
+                    "clicked",
                     G_CALLBACK(doneAction), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_clean_cache")),
-                    "on_button_clean_cache_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_clean_cache"),
+                    "clicked",
                     G_CALLBACK(clearCacheAction), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "radio_use_proxy")),
-                    "on_radio_use_proxy_toggled",
+   g_signal_connect(gtk_builder_get_object(_builder, "radio_use_proxy"),
+                    "toggled",
                     G_CALLBACK(useProxyToggled), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_authentication")),
-                    "on_button_authentication_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_authentication"),
+                    "clicked",
                     G_CALLBACK(buttonAuthenticationClicked), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_default_font")),
-                    "on_button_default_font_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_default_font"),
+                    "clicked",
                     G_CALLBACK(changeFontAction),GINT_TO_POINTER(FONT_DEFAULT));
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "checkbutton_user_terminal_font")),
-                    "on_checkbutton_user_terminal_font_toggled",
+   g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font"),
+                    "toggled",
                     G_CALLBACK (checkbuttonUserTerminalFontToggled), this);
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "checkbutton_user_font")),
-                    "on_checkbutton_user_font_toggled",
+   g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_font"),
+                    "toggled",
                     G_CALLBACK(checkbuttonUserFontToggled), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_terminal_font")),
-                                 "on_button_terminal_font_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_terminal_font"),
+                                 "clicked",
                                  G_CALLBACK(changeFontAction),
                                  GINT_TO_POINTER(FONT_TERMINAL));
 

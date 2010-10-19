@@ -42,52 +42,52 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    _busyCursor = gdk_cursor_new(GDK_WATCH);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_filters_add"),
-                    "on_button_filters_add_clicked",
+                    "clicked",
                     G_CALLBACK(addFilterAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "buttons_filters_remove"),
-                    "on_button_filters_remove_clicked",
+                    "clicked",
                     G_CALLBACK(removeFilterAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_ok"),
-                    "on_button_ok_clicked",
+                    "clicked",
                     G_CALLBACK(okAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_cancel"),
-                    "on_button_cancel_clicked",
+                    "clicked",
                     G_CALLBACK(cancelAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_pattern_text"),
-                    "on_entry_pattern_text_changed",
+                    "changed",
                     G_CALLBACK(patternChanged), this);
    g_signal_connect(gtk_builder_get_object(_builder, "optionmenu_pattern_do"),
-                    "on_optionmenu_pattern_do_changed",
+                    "changed",
                     G_CALLBACK(patternChanged), this);
    g_signal_connect(gtk_builder_get_object(_builder, "optionmenu_pattern_what"),
-                    "on_optionmenu_pattern_what_changed",
+                    "changed",
                     G_CALLBACK(patternChanged), this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_pattern_new"),
-                    "on_button_pattern_new_clicked",
+                    "clicked",
                     G_CALLBACK(patternNew), this);
    g_signal_connect(gtk_builder_get_object(_builder,
                                  "button_pattern_delete"),
-                      "on_button_pattern_delete_clicked",
+                      "clicked",
                       G_CALLBACK(patternDelete), this);
 
    g_signal_connect(gtk_builder_get_object(_builder,
                                  "button_status_select_all"),
-                      "on_button_status_select_all_clicked",
+                      "clicked",
                       G_CALLBACK(statusAllClicked), this);
    g_signal_connect(gtk_builder_get_object(_builder,
                                  "button_status_select_none"),
-                      "on_button_status_select_none_clicked",
+                      "clicked",
                       G_CALLBACK(statusNoneClicked), this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_status_invert"),
-                      "on_button_status_invert_clicked",
+                      "clicked",
                       G_CALLBACK(statusInvertClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_filters"),
-                      "on_entry_filters_changed",
+                      "changed",
                       G_CALLBACK(filterNameChanged), this);
 
    gtk_signal_connect(GTK_OBJECT(_win), "delete_event",

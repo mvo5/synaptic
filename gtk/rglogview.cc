@@ -320,11 +320,11 @@ RGLogView::RGLogView(RGWindow *parent)
 
    // find button
    g_signal_connect(gtk_builder_get_object(_builder, "button_find"),
-                    "on_button_find_clicked",
+                    "clicked",
                     G_CALLBACK(cbButtonFind), this);
    // close
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
-                    "on_button_close_clicked",
+                    "clicked",
                     G_CALLBACK(cbCloseClicked), this);
 
  
@@ -339,7 +339,7 @@ RGLogView::RGLogView(RGWindow *parent)
    assert(_textView);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_find"),
-                    "on_entry_find_activate",
+                    "activate",
                     G_CALLBACK(cbButtonFind), this);
 
    GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));

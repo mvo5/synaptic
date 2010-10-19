@@ -41,7 +41,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 {
    setTitle(_("Icon Legend"));
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
-                      "on_button_close_clicked",
+                      "clicked",
                       G_CALLBACK(closeWindow), this);
    GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
    assert(vbox);

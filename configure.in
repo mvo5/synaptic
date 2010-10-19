@@ -154,6 +154,15 @@ dnl Checks for library functions.
 AC_FUNC_STRCOLL
 AC_CHECK_FUNCS(regcomp strdup iconv)
 
+# use vte if available
+pkg_modules="vte >= 0.10.11"
+PKG_CHECK_MODULES(VTE, [$pkg_modules],
+	      [AC_DEFINE(HAVE_VTE, 1, [build with VTE as output terminal])
+	       AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
+	       AC_SUBST(VTE_CFLAGS)
+	       AC_SUBST(VTE_LIBS)], 
+              [AC_MSG_NOTICE([no vte found, building without])])
+
 # launchpad integration
 AC_ARG_WITH(launchpad-integration,
  	[--launchpad-integration   build with launchpad-integration],
@@ -176,19 +185,6 @@ AC_ARG_WITH(nice-dpkg-status,
         AC_DEFINE(WITH_DPKG_STATUSFD, 1, [build with dpkg progress bar] )
 	]
 )
-
-
-dnl check for libvte
-AC_ARG_WITH(vte, 
-	      [--with-vte  compile with libvte support (terminal output)], 
-	      [pkg_modules="vte >= 0.10.11"
-	      PKG_CHECK_MODULES(VTE, [$pkg_modules])
-	      AC_DEFINE(HAVE_VTE, 1, [build with VTE as output terminal])
-	      AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 
-	      AC_SUBST(VTE_CFLAGS)
-	      AC_SUBST(VTE_LIBS)
-	      ]
-	      )
 
 
 AC_OUTPUT([

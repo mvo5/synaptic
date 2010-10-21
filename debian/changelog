@@ -1,5 +1,6 @@
 synaptic (0.70~pre2) UNRELEASED; urgency=low
 
+  [ Michael Vogt ]
   * po/pt_BR.po:
     - updated, thanks to Sergio Cipolla 
   * po/id.po:
@@ -14,6 +15,14 @@ synaptic (0.70~pre2) UNRELEASED; urgency=low
   * gtk/rgdebinstallprogress.cc:
     - merge fix for error string if those contain a ":" 
       (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
+  
+   [ Jean-Baptiste Lallement ]
+   * gtk/rgdebinstallprogress.{cc,h}: Terminal shortcuts fixes
+     - fix <CTRL><SHIFT>c behavior (LP: #250359)
+     - add shortcuts <CTRL>a and <CTRL><SHIFT>a to select all/none text
+       in the terminal
+     - add contextual menu to the terminal to select all and copy text
+       (LP: #31396)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 23 Aug 2010 10:27:49 +0200
 

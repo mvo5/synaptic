@@ -21,8 +21,8 @@ diff -urNad --exclude=CVS --exclude=.svn ./gtk/rgmainwindow.cc /tmp/dpep-work.0m
        gtk_window_maximize(GTK_WINDOW(_win));
     RGFlushInterface();
  
-+   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "help1_menu"));
-+   launchpad_integration_add_items (widget, -1, TRUE, TRUE);
++   GtkWidget *lpi = GTK_WIDGET(gtk_builder_get_object(_builder, "help1_menu"));
++   launchpad_integration_add_items (lpi, -1, TRUE, TRUE);
  
     glade_xml_signal_connect_data(_gladeXML,
                                   "on_about_activate",

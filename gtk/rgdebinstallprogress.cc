@@ -494,7 +494,7 @@ void RGDebInstallProgress::updateInterface()
       if( buf[0] == '\n') {
 	 //cout << "got line: " << line << endl;
 	 
-	 gchar **split = g_strsplit(line, ":",5);
+	 gchar **split = g_strsplit(line, ":",4);
 	 gchar *status = g_strstrip(split[0]);
 	 gchar *pkg = g_strstrip(split[1]);
 	 gchar *percent = g_strstrip(split[2]);

@@ -11,6 +11,9 @@ synaptic (0.70~pre2) UNRELEASED; urgency=low
   * common/rpackagecache.{cc,h}, common/rpackage.cc:
     - add cache for PkgFileIterator->pkgIndexFile* to speed up
       RPackage::IsTrusted (LP: #165181)
+  * gtk/rgdebinstallprogress.cc:
+    - merge fix for error string if those contain a ":" 
+      (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 23 Aug 2010 10:27:49 +0200
 

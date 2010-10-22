@@ -90,8 +90,8 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                       "changed",
                       G_CALLBACK(filterNameChanged), this);
 
-   gtk_signal_connect(GTK_OBJECT(_win), "delete_event",
-                      GTK_SIGNAL_FUNC(deleteEventAction), this);
+   g_signal_connect(G_OBJECT(_win), "delete_event",
+                      G_CALLBACK(deleteEventAction), this);
 
 
    _filterDetailsBox = GTK_WIDGET(gtk_builder_get_object(_builder,

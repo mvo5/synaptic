@@ -291,7 +291,7 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    pkgAcquireStatus::Pulse(Owner);
 
    // only show here if there is actually something to download/get
-   if (TotalBytes > 0 && !GTK_WIDGET_VISIBLE(_win))
+   if (TotalBytes > 0 && !gtk_widget_get_visible(_win))
       show();
 
    float percent =

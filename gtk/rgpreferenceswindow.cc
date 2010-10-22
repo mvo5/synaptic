@@ -232,7 +232,7 @@ void RGPreferencesWindow::saveGeneral()
    _config->Set("Synaptic::OneClickOnStatusActions", newval ? "true" : "false");
 
    // Removal of packages: 
-   int delAction= gtk_option_menu_get_history(GTK_OPTION_MENU(_optionmenuDel));
+   int delAction = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboRemovalAction));
    // ugly :( but we need this +2 because RGPkgAction starts with 
    //         "keep","install"
    delAction += 2;
@@ -240,11 +240,11 @@ void RGPreferencesWindow::saveGeneral()
 
    // System upgrade:
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
-   i = gtk_option_menu_get_history(GTK_OPTION_MENU(gtk_builder_get_object(_builder, "optionmenu_upgrade_method")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_upgrade_method")));
    _config->Set("Synaptic::upgradeType", i - 1);
 
    // package list update date check
-   i = gtk_option_menu_get_history(GTK_OPTION_MENU(gtk_builder_get_object(_builder, "optionmenu_update_ask")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_update_ask")));
    _config->Set("Synaptic::update::type", i);
    
 
@@ -508,19 +508,19 @@ void RGPreferencesWindow::readGeneral()
 
    // Removal of packages: 
    int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
-   // now set the optionmenu
+   // now set the combobox
    // ugly :( but we need this -2 because RGPkgAction starts with 
    //         "keep","install"
-   gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel), delAction - 2);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboRemovalAction), delAction - 2);
 
 
    // System upgrade:
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    int i = _config->FindI("Synaptic::upgradeType", 1);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(gtk_builder_get_object(_builder, "optionmenu_upgrade_method")), i + 1);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_upgrade_method")), i + 1);
 
    i = _config->FindI("Synaptic::update::type", 0);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(gtk_builder_get_object(_builder, "optionmenu_update_ask")), i);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_update_ask")), i);
 
 
    // Number of undo operations:
@@ -663,7 +663,7 @@ void RGPreferencesWindow::readNetwork()
 
 void RGPreferencesWindow::readDistribution()
 {
-   // distro selection, block actions here because the optionmenu changes
+   // distro selection, block actions here because the combobox changes
    // and a signal is emited
    _blockAction = true;
 
@@ -693,7 +693,7 @@ void RGPreferencesWindow::readDistribution()
    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro));
    int num = gtk_tree_model_iter_n_children(model, NULL);
    for(;num >= 0;num--)
-      gtk_combo_box_remove_text(GTK_COMBO_BOX(_comboDefaultDistro), num);
+      gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(_comboDefaultDistro), num);
 
    if(defaultDistro == "") {
       button = ignore;
@@ -722,7 +722,7 @@ void RGPreferencesWindow::readDistribution()
       // ignore "now", it's a toggle button item now
       if(archives[i] == "now")
 	 continue;
-      gtk_combo_box_append_text(GTK_COMBO_BOX(_comboDefaultDistro),
+      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(_comboDefaultDistro),
 				 archives[i].c_str());
       if (defaultDistro == archives[i]) {
          //cout << "match for: " << archives[i] << " (" << i << ")" << endl;
@@ -894,7 +894,9 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
    me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
    color_dialog = gtk_color_selection_dialog_new(_("Color selection"));
-   color_selection = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
+   color_selection =
+	gtk_color_selection_dialog_get_color_selection(
+		GTK_COLOR_SELECTION_DIALOG(color_dialog));
 
    GdkColor *color = NULL;
    color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
@@ -999,38 +1001,34 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                                                  "spinbutton_max_undos"));
    assert(_maxUndoE);
 
-   _optionmenuDel =
+   _comboRemovalAction =
       GTK_WIDGET(gtk_builder_get_object(_builder,
-                                        "optionmenu_delbutton_action"));
-   assert(_optionmenuDel);
+                                        "combo_removal_action"));
+   assert(_comboRemovalAction);
 
    _comboDefaultDistro =
       GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_default_distro"));
    assert(_comboDefaultDistro);
-   GtkTooltips *tips = gtk_tooltips_new();
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-			GTK_WIDGET(gtk_builder_get_object
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "radiobutton_distro")),
 		       _("Prefer package versions from the selected "
 		       "distribution when upgrading packages. If you "
 		       "manually force a version from a different "
 		       "distribution, the package version will follow "
 		       "that distribution until it enters the default "
-		       "distribution."),"");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-                        GTK_WIDGET(gtk_builder_get_object	
+		       "distribution."));
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object	
                                    (_builder, "radiobutton_now")),
 		       _("Never upgrade to a new version automatically. "
 			    "Be _very_ careful with this option as you will "
 			    "not get security updates automatically! "
 		       "If you manually force a version "
 		       "the package version will follow "
-		       "the chosen distribution."),"");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-			GTK_WIDGET(gtk_builder_get_object
+		       "the chosen distribution."));
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object
                                    (_builder,"radiobutton_ignore")),
 			_("Let synaptic pick the best version for you. "
-			"If unsure use this option. "),"");
+			"If unsure use this option. "));
 
 
    // hide the "remove with configuration" from rpm users
@@ -1042,8 +1040,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    // purge not available 
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
-   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, 
-					"optionmenu_delbutton_action"));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"combo_removal_action"));
    gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"label_removal"));
 #endif
 

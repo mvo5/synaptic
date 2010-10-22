@@ -69,7 +69,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    char *getStatusStr(int status);
    int getStatusPercent(int status);
    void refreshTable(int row, bool append = false);
-   GdkPixmap *statusDraw(int width, int height, int status);
+   //GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
    virtual bool MediaChange(string Media, string Drive);

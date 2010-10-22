@@ -347,9 +347,12 @@ void check_and_aquire_lock()
       }
 
       if(msg != NULL) {
-	 dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
-						  GTK_MESSAGE_ERROR, 
-						  GTK_BUTTONS_CLOSE, msg);
+	 dia = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+					GTK_MESSAGE_ERROR, 
+					GTK_BUTTONS_CLOSE, 
+					NULL);
+
+         gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
 	 gtk_dialog_run(GTK_DIALOG(dia));
 	 gtk_widget_destroy(dia);
 	 g_free(msg);
@@ -371,9 +374,12 @@ void check_and_aquire_lock()
 			      "(like apt-get or aptitude) is "
 			      "already running. Please close that "
 			      "application first."));
-      dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
-					       GTK_MESSAGE_ERROR, 
-					       GTK_BUTTONS_CLOSE, msg);
+      dia = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+					GTK_MESSAGE_ERROR, 
+					GTK_BUTTONS_CLOSE,
+					NULL);
+
+      gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
       gtk_dialog_run(GTK_DIALOG(dia));
       g_free(msg);
       exit(1);

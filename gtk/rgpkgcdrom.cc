@@ -97,7 +97,7 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    _pbar = gtk_progress_bar_new();
    gtk_widget_show(_pbar);
-   gtk_widget_set_usize(_pbar, -1, 25);
+   gtk_widget_set_size_request(_pbar, -1, 25);
    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
 
    //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);

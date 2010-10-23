@@ -7,7 +7,11 @@ INCLUDES= -I${top_srcdir}/common \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DSYNAPTIC_GTKBUILDERDIR=\""$(datadir)/synaptic/gtkbuilder/"\" \
 	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
-	@PACKAGE_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBEPT_CFLAGS)
+	@PACKAGE_CFLAGS@ \
+	@VTE_CFLAGS@ \
+	@LP_CFLAGS@ \
+	@GTK_DISABLE_DEPRECATED@ \
+	$(LIBEPT_CFLAGS)
 
 sbin_PROGRAMS = synaptic 
 

@@ -196,7 +196,11 @@ AC_ARG_WITH(pkg-hold,
 	[  --with-pkg-hold   build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
 )
-
+AC_ARG_WITH(gtk-disable-deprecated,
+        [  --with-gtk-disable-deprecated  build with -DGTK_DISABLE_DEPRECATED],
+        [GTK_DISABLE_DEPRECATED="-DGTK_DISABLE_DEPRECATED"
+         AC_SUBST(GTK_DISABLE_DEPRECATED)]
+)
 
 AC_OUTPUT([
 tests/Makefile 

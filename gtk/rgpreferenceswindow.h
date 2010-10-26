@@ -62,7 +62,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    GtkWidget *_pathT;
    GtkWidget *_sizeT;
    GtkWidget *_maxUndoE;
-   GtkWidget *_optionmenuDel;
+   GtkWidget *_comboRemovalAction;
    GtkWidget *_useProxy;
 
    // policy settings

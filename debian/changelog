@@ -15,8 +15,11 @@ synaptic (0.70~pre2) UNRELEASED; urgency=low
   * gtk/rgdebinstallprogress.cc:
     - merge fix for error string if those contain a ":" 
       (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
-  * When sorting by support status use STL stable_parition to speed
-    up the list view (thanks to David Purcell)
+  * common/rpackagelister.cc:
+    - when sorting by support status use STL stable_parition to speed
+      up the list view (thanks to David Purcell)
+    - when clicking on the "supported" column, default to showing the
+      supported items first, then the unsupported ones
   
    [ Jean-Baptiste Lallement ]
    * gtk/rgdebinstallprogress.{cc,h}: Terminal shortcuts fixes

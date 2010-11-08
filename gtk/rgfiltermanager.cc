@@ -75,10 +75,10 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    g_signal_connect(gtk_builder_get_object(_builder, "entry_pattern_text"),
                     "changed",
                     G_CALLBACK(patternChanged), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "optionmenu_pattern_do"),
+   g_signal_connect(gtk_builder_get_object(_builder, "combobox_pattern_what"),
                     "changed",
                     G_CALLBACK(patternChanged), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "optionmenu_pattern_what"),
+   g_signal_connect(gtk_builder_get_object(_builder, "combobox_pattern_what"),
                     "changed",
                     G_CALLBACK(patternChanged), this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_pattern_new"),
@@ -309,7 +309,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    RPatternPackageFilter::DepType type;
    bool exclude;
    int i, nr;
-
+   GtkWidget* menu, item;
 
    //cout << "patternChanged" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
@@ -318,22 +318,23 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    g_signal_handlers_block_by_func(GTK_OBJECT(w),
                                    (GClosure*)patternChanged, data);
 
-   GtkWidget *menuDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                            "optionmenu_pattern_do"));
-   nr = gtk_combox_box_get_active(GTK_COMBO_BOX(menu));
-   if (nr == 1):
+   GtkWidget *comboDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                            "combobox_pattern_do"));
+   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(comboDo));
+   if (nr == 1)
       exclude = true;
    else
       exclude = false;
 
-   GtkWidget *menuType = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                              "optionmenu_pattern_what"));
-   menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(menuType));
-   item = gtk_menu_get_active(GTK_MENU(menu));
-   const gchar *name = gtk_widget_get_name(item);
-   sscanf(name, "menuitem_type%i", &i);
+   GtkWidget *comboType = GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                              "combobox_pattern_what"));
+   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(comboType));
 
-   type = (RPatternPackageFilter::DepType) i;
+   // HACK: try to use nr right away, for testing :D
+   //const gchar *name = gtk_widget_get_name(item);
+   //sscanf(name, "menuitem_type%i", &i);
+   //type = (RPatternPackageFilter::DepType) i;
+   type = (RPatternPackageFilter::DepType) nr;
 
    GtkWidget *patternEntry = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                   "entry_pattern_text"));

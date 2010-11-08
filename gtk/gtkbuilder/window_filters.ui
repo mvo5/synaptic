@@ -2,6 +2,44 @@
 <interface>
   <!-- interface-requires gtk+ 2.12 -->
   <!-- interface-naming-policy toplevel-contextual -->
+  <object class="GtkListStore" id="ls_pattern_what">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name desc -->
+      <column type="gchararray"/>
+      <!-- column-name maint -->
+      <column type="gchararray"/>
+      <!-- column-name version -->
+      <column type="gchararray"/>
+      <!-- column-name depends -->
+      <column type="gchararray"/>
+      <!-- column-name provides -->
+      <column type="gchararray"/>
+      <!-- column-name conflicts -->
+      <column type="gchararray"/>
+      <!-- column-name replaces -->
+      <column type="gchararray"/>
+      <!-- column-name recommends -->
+      <column type="gchararray"/>
+      <!-- column-name suggests -->
+      <column type="gchararray"/>
+      <!-- column-name rdepends -->
+      <column type="gchararray"/>
+      <!-- column-name origin -->
+      <column type="gchararray"/>
+      <!-- column-name component -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="ls_pattern_do">
+    <columns>
+      <!-- column-name includes -->
+      <column type="gchararray"/>
+      <!-- column-name excludes -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkDialog" id="window_filters">
     <property name="visible">True</property>
     <property name="border_width">6</property>
@@ -29,7 +67,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="text" translatable="yes"> </property>
-                    <signal name="changed" handler="on_entry_filters_changed"/>
+                    <signal name="changed" handler="on_entry_filters_changed" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -74,7 +112,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_button_filters_add_clicked"/>
+                            <signal name="clicked" handler="on_button_filters_add_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -90,7 +128,7 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_button_filters_remove_clicked"/>
+                            <signal name="clicked" handler="on_button_filters_remove_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -597,7 +635,7 @@
                                 <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
-                                <signal name="clicked" handler="on_button_status_select_all_clicked"/>
+                                <signal name="clicked" handler="on_button_status_select_all_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -613,7 +651,7 @@
                                 <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
-                                <signal name="clicked" handler="on_button_status_select_none_clicked"/>
+                                <signal name="clicked" handler="on_button_status_select_none_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -629,7 +667,7 @@
                                 <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_underline">True</property>
-                                <signal name="clicked" handler="on_button_status_invert_clicked"/>
+                                <signal name="clicked" handler="on_button_status_invert_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -770,6 +808,7 @@
                             <child>
                               <object class="GtkComboBox" id="combobox_pattern_what">
                                 <property name="visible">True</property>
+                                <property name="model">ls_pattern_what</property>
                               </object>
                               <packing>
                                 <property name="position">0</property>
@@ -778,6 +817,7 @@
                             <child>
                               <object class="GtkComboBox" id="combobox_pattern_do">
                                 <property name="visible">True</property>
+                                <property name="model">ls_pattern_do</property>
                               </object>
                               <packing>
                                 <property name="position">1</property>
@@ -787,7 +827,7 @@
                               <object class="GtkEntry" id="entry_pattern_text">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <signal name="changed" handler="on_entry_pattern_text_changed"/>
+                                <signal name="changed" handler="on_entry_pattern_text_changed" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="position">2</property>
@@ -865,7 +905,7 @@
                                 <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_stock">True</property>
-                                <signal name="clicked" handler="on_button_pattern_new_clicked"/>
+                                <signal name="clicked" handler="on_button_pattern_new_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -881,7 +921,7 @@
                                 <property name="can_default">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_stock">True</property>
-                                <signal name="clicked" handler="on_button_pattern_delete_clicked"/>
+                                <signal name="clicked" handler="on_button_pattern_delete_clicked" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -966,7 +1006,7 @@
                                         <property name="can_focus">True</property>
                                         <property name="can_default">True</property>
                                         <property name="receives_default">False</property>
-                                        <signal name="clicked" handler="on_button_include_clicked"/>
+                                        <signal name="clicked" handler="on_button_include_clicked" swapped="no"/>
                                         <child>
                                           <object class="GtkAlignment" id="alignment7">
                                             <property name="visible">True</property>
@@ -1016,7 +1056,7 @@
                                         <property name="can_focus">True</property>
                                         <property name="can_default">True</property>
                                         <property name="receives_default">False</property>
-                                        <signal name="clicked" handler="on_button_exclude_clicked"/>
+                                        <signal name="clicked" handler="on_button_exclude_clicked" swapped="no"/>
                                         <child>
                                           <object class="GtkAlignment" id="alignment6">
                                             <property name="visible">True</property>
@@ -1089,7 +1129,7 @@
                                           <object class="GtkTreeView" id="treeview_included_tags">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <signal name="row_activated" handler="on_treeview_included_tags_row_activated"/>
+                                            <signal name="row-activated" handler="on_treeview_included_tags_row_activated" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="position">0</property>
@@ -1099,7 +1139,7 @@
                                           <object class="GtkTreeView" id="treeview_excluded_tags">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <signal name="row_activated" handler="on_treeview_excluded_tags_row_activated"/>
+                                            <signal name="row-activated" handler="on_treeview_excluded_tags_row_activated" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="position">1</property>
@@ -1162,7 +1202,7 @@
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-                <signal name="clicked" handler="on_button_cancel_clicked"/>
+                <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1178,7 +1218,7 @@
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="use_stock">True</property>
-                <signal name="clicked" handler="on_button_ok_clicked"/>
+                <signal name="clicked" handler="on_button_ok_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

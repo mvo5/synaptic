@@ -47,7 +47,7 @@ dnl AC_SUBST(BUILD_wings)
 
 dnl Checks for gtk
 dnl if test -z "$BUILD_wings" ; then
-	pkg_modules="gtk+-3.0 >= 2.91.0, pango >= 1.0.0, glib-2.0"
+	pkg_modules="gtk+-2.0 >= 2.4.0, pango >= 1.0.0, glib-2.0"
 	PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
 	BUILD_gtk="gtk"	
 dnl fi
@@ -196,7 +196,11 @@ AC_ARG_WITH(pkg-hold,
 	[  --with-pkg-hold   build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
 )
-
+AC_ARG_WITH(gtk-disable-deprecated,
+        [  --with-gtk-disable-deprecated  build with -DGTK_DISABLE_DEPRECATED],
+        [GTK_DISABLE_DEPRECATED="-DGTK_DISABLE_DEPRECATED"
+         AC_SUBST(GTK_DISABLE_DEPRECATED)]
+)
 
 AC_OUTPUT([
 tests/Makefile 

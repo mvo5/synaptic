@@ -32,6 +32,21 @@
 
 #include "i18n.h"
 
+// option menu what
+//  Package Name
+//  Description
+//  Maintainer 
+//  Version Number
+//  Dependencies
+//  Provided Packages
+//  Conflicting Packages
+//  Replaced Packages
+//  Recommendations
+//  Suggestions
+//  Dependent Packages
+//  Origin
+//  Component
+
 RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                                              RPackageViewFilter *filterview)
 : RGGtkBuilderWindow(win, "filters"), _selectedPath(NULL),
@@ -293,22 +308,20 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 {
    RPatternPackageFilter::DepType type;
    bool exclude;
-   int i;
-   GtkWidget *item, *menu;
+   int i, nr;
 
 
    //cout << "patternChanged" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
 
    GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_pattern_text"));
-   gtk_signal_handler_block_by_func(GTK_OBJECT(w),
-                                    GTK_SIGNAL_FUNC(patternChanged), data);
+   g_signal_handlers_block_by_func(GTK_OBJECT(w),
+                                   (GClosure*)patternChanged, data);
 
    GtkWidget *menuDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                             "optionmenu_pattern_do"));
-   menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(menuDo));
-   item = gtk_menu_get_active(GTK_MENU(menu));
-   if (strcmp("menuitem_excl", gtk_widget_get_name(item)) == 0)
+   nr = gtk_combox_box_get_active(GTK_COMBO_BOX(menu));
+   if (nr == 1):
       exclude = true;
    else
       exclude = false;
@@ -340,8 +353,8 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
       me->setPatternRow(indices[0], exclude, type, str);
       gtk_tree_path_free(path);
    }
-   gtk_signal_handler_unblock_by_func(GTK_OBJECT(w),
-                                      GTK_SIGNAL_FUNC(patternChanged), data);
+   g_signal_handlers_unblock_by_func(GTK_OBJECT(w),
+                                     (GClosure*)patternChanged, data);
 
 }
 

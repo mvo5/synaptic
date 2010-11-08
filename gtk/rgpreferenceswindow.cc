@@ -70,6 +70,12 @@ gtk_combo_box_get_active_text (GtkComboBox *combo_box)
 }
 #endif
 
+#if !GTK_CHECK_VERSION(3,0,0)
+ #define GTK_COMBO_BOX_TEXT GTK_COMBO_BOX
+ #define gtk_combo_box_text_remove gtk_combo_box_remove_text
+ #define gtk_combo_box_text_append_text gtk_combo_box_append_text
+#endif
+
 void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
 {
    // this function strips http:// from a entred proxy url

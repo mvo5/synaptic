@@ -63,7 +63,7 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 
    _term = vte_terminal_new();
    _scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
-   GTK_WIDGET_UNSET_FLAGS (_scrollbar, GTK_CAN_FOCUS);
+   gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
       char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
@@ -81,8 +81,8 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 
    _statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    _closeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
-   gtk_signal_connect(GTK_OBJECT(_closeB), "clicked",
-		      (GtkSignalFunc)stopShell, this);
+   g_signal_connect(G_OBJECT(_closeB), "clicked",
+		      G_CALLBACK(stopShell), this);
 
    if(_config->FindB("Volatile::Non-Interactive", false)) 
       gtk_widget_hide(_closeOnF);

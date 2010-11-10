@@ -335,7 +335,7 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
    // the current buffer
    gtk_widget_realize(GTK_WIDGET(me->_term));
    GtkAdjustment *a = vte_terminal_get_adjustment(VTE_TERMINAL(me->_term));
-   gtk_adjustment_set_value(a, a->upper - a->page_size);
+   gtk_adjustment_set_value(a, gtk_adjustment_get_upper(a) - gtk_adjustment_get_page_size(a));
    gtk_adjustment_value_changed(a);
 
    gtk_widget_grab_focus(me->_term);
@@ -394,7 +394,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
    GtkWidget *scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
-   GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
+   gtk_widget_set_can_focus (scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
       char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();

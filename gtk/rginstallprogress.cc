@@ -292,9 +292,9 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
    string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");
    GeometryParser Geo(GeoStr);
    if (Geo.HasSize())
-      gtk_widget_set_usize(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
+      gtk_widget_set_size_request(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
    if (Geo.HasPosition())
-      gtk_widget_set_uposition(GTK_WIDGET(_win), Geo.XPos(), Geo.YPos());
+      gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
 
    _label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"));
    _labelSummary = GTK_WIDGET(gtk_builder_get_object(_builder,

@@ -315,7 +315,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
 
    GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_pattern_text"));
-   g_signal_handlers_block_by_func(GTK_OBJECT(w),
+   g_signal_handlers_block_by_func(G_OBJECT(w),
                                    (GClosure*)patternChanged, data);
 
    GtkWidget *comboDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
@@ -354,7 +354,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
       me->setPatternRow(indices[0], exclude, type, str);
       gtk_tree_path_free(path);
    }
-   g_signal_handlers_unblock_by_func(GTK_OBJECT(w),
+   g_signal_handlers_unblock_by_func(G_OBJECT(w),
                                      (GClosure*)patternChanged, data);
 
 }
@@ -383,18 +383,18 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
       else
          exclude = true;
       GtkWidget *doPattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                                  "optionmenu_pattern_do"));
-      gtk_option_menu_set_history(GTK_OPTION_MENU(doPattern), exclude ? 1 : 0);
+                                                  "combobox_pattern_do"));
+      gtk_combo_box_set_active(GTK_COMBO_BOX(doPattern), exclude ? 1 : 0);
 
       GtkWidget *typePattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                                    "optionmenu_pattern_what"));
+                                                    "combobox_pattern_what"));
       for (int j = 0; DepOptions[j]; j++) {
          if (strcmp(what, _(DepOptions[j])) == 0) {
             type = (RPatternPackageFilter::DepType) j;
             break;
          }
       }
-      gtk_option_menu_set_history(GTK_OPTION_MENU(typePattern), (int)type);
+      gtk_combo_box_set_active(GTK_COMBO_BOX(typePattern), (int)type);
 
       GtkWidget *patternText = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                     "entry_pattern_text"));

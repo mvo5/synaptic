@@ -1,3 +1,43 @@
+synaptic (0.70~pre2) UNRELEASED; urgency=low
+
+  [ Michael Vogt ]
+  * po/pt_BR.po:
+    - updated, thanks to Sergio Cipolla  (closes: #593758)
+  * po/id.po:
+    - added, thanks to Dirgita
+  * po/ru.po:
+    - updated, thansk to Yuri Kozlov (closes: #571712)
+  * po/de.po:
+    - fix fuzzy string, thanks to Alek (closes: #599744)
+  * po/et.po:
+    - updated, thanks to Guido Tabbernuk
+  * po/he.po:
+    - updated, thanks to Lior Kaplan and Sergio Cipolla 
+      (closes: #586940)
+  * gtk/rgdebinstallprogress.cc, gtk/rgterminstallprogress.cc:
+    - fix FTBFS on latest vte (closes: #597384)
+  * common/rpackagecache.{cc,h}, common/rpackage.cc:
+    - add cache for PkgFileIterator->pkgIndexFile* to speed up
+      RPackage::IsTrusted (LP: #165181)
+  * gtk/rgdebinstallprogress.cc:
+    - merge fix for error string if those contain a ":" 
+      (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
+  * common/rpackagelister.cc:
+    - when sorting by support status use STL stable_parition to speed
+      up the list view (thanks to David Purcell)
+    - when clicking on the "supported" column, default to showing the
+      supported items first, then the unsupported ones
+  
+   [ Jean-Baptiste Lallement ]
+   * gtk/rgdebinstallprogress.{cc,h}: Terminal shortcuts fixes
+     - fix <CTRL><SHIFT>c behavior (LP: #250359)
+     - add shortcuts <CTRL>a and <CTRL><SHIFT>a to select all/none text
+       in the terminal
+     - add contextual menu to the terminal to select all and copy text
+       (LP: #31396)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 10 Nov 2010 17:27:50 +0100
+
 synaptic (0.70~pre1) unstable; urgency=low
 
   * New upstream release that merges all changes from 

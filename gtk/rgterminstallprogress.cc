@@ -62,7 +62,7 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    setTitle(_("Applying Changes"));
 
    _term = vte_terminal_new();
-   _scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
+   _scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
    GTK_WIDGET_UNSET_FLAGS (_scrollbar, GTK_CAN_FOCUS);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
    if(_config->FindB("Synaptic::useUserTerminalFont")) {

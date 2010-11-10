@@ -46,6 +46,7 @@
 #include <cstdlib>
 
 #include <vte/vte.h>
+#include <gdk/gdkkeysyms.h>
 
 
 #include "i18n.h"
@@ -334,7 +335,7 @@ void RGDebInstallProgress::expander_callback (GObject    *object,
    // it when run hidden. this workaround will scroll to the end of
    // the current buffer
    gtk_widget_realize(GTK_WIDGET(me->_term));
-   GtkAdjustment *a = GTK_ADJUSTMENT (VTE_TERMINAL(me->_term)->adjustment);
+   GtkAdjustment *a = vte_terminal_get_adjustment(VTE_TERMINAL(me->_term));
    gtk_adjustment_set_value(a, a->upper - a->page_size);
    gtk_adjustment_value_changed(a);
 
@@ -393,8 +394,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
-   GtkWidget *scrollbar = 
-      gtk_vscrollbar_new (GTK_ADJUSTMENT (VTE_TERMINAL(_term)->adjustment));
+   GtkWidget *scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
    GTK_WIDGET_UNSET_FLAGS (scrollbar, GTK_CAN_FOCUS);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
@@ -405,9 +405,32 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    }
    gtk_box_pack_start(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), _term, TRUE, TRUE, 0);
    g_signal_connect(G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
-   
+   g_signal_connect(G_OBJECT(_term), "button-press-event",
+           (GCallback) cbTerminalClicked, this);
 
    gtk_widget_show(_term);
+
+   // Terminal contextual menu
+   GtkWidget *img, *menuitem;
+   _popupMenu = gtk_menu_new();
+   menuitem = gtk_image_menu_item_new_with_label(_("Copy"));
+   img = gtk_image_new_from_stock(GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   g_object_set_data(G_OBJECT(menuitem), "me", this);
+   g_signal_connect(menuitem, "activate",
+                    (GCallback) cbMenuitemClicked, (void *)EDIT_COPY);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+   gtk_widget_show(menuitem);
+
+   menuitem = gtk_image_menu_item_new_with_label(_("Select All"));
+   img = gtk_image_new_from_stock(GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
+   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   g_object_set_data(G_OBJECT(menuitem), "me", this);
+   g_signal_connect(menuitem, "activate",
+                    (GCallback) cbMenuitemClicked, (void *)EDIT_SELECT_ALL);
+   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
+   gtk_widget_show(menuitem);
+
    gtk_box_pack_end(GTK_BOX(glade_xml_get_widget(_gladeXML,"hbox_vte")), scrollbar, FALSE, FALSE, 0);
    gtk_widget_show(scrollbar);
 
@@ -452,7 +475,7 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
    RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
 
    // user pressed ctrl-c
-   if (strlen(event->string) == 1 && event->string[0] == 3) {
+   if (event->keyval == GDK_c && event->state & GDK_CONTROL_MASK) {
       gchar *summary = _("Ctrl-c pressed");
       char *msg = _("This will abort the operation and may leave the system "
                     "in a broken state. Are you sure you want to do that?");
@@ -470,8 +493,55 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
 	 case GTK_RESPONSE_NO:
 	    return true;
       }
+   } else if (event->keyval == GDK_C && 
+           event->state & (GDK_CONTROL_MASK|GDK_SHIFT_MASK)) {
+      // ctrl+shift+C copy to clipboard to mimic gnome-terminal behavior
+      me->terminalAction(me->_term, EDIT_COPY);
+	  return true;
+   } else if (event->keyval == GDK_a && event->state & GDK_CONTROL_MASK) {
+      me->terminalAction(me->_term, EDIT_SELECT_ALL);
+	  return true;
+   } else if (event->keyval == GDK_A &&
+           event->state & (GDK_CONTROL_MASK|GDK_SHIFT_MASK)) {
+      me->terminalAction(me->_term, EDIT_SELECT_NONE);
+	  return true;
+   } 
+   return false;
+}
+
+gboolean RGDebInstallProgress::cbTerminalClicked(GtkWidget *widget,
+        GdkEventButton *event, gpointer user_data)
+{
+   if (event->button == 3) {
+      RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
+      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
+              event->button,
+              gdk_event_get_time((GdkEvent *) event));
+      return true;
    }
    return false;
+}
+
+void RGDebInstallProgress::cbMenuitemClicked(GtkMenuItem *menuitem,
+        gpointer user_data) {
+   RGDebInstallProgress *me = 
+       (RGDebInstallProgress *)g_object_get_data(G_OBJECT(menuitem), "me");
+   me->terminalAction(me->_term, (TermAction)GPOINTER_TO_INT(user_data));
+}
+
+void RGDebInstallProgress::terminalAction(GtkWidget *terminal,
+        TermAction action) {
+   switch(action) {
+      case EDIT_COPY:
+          vte_terminal_copy_clipboard(VTE_TERMINAL(terminal));
+          break;
+      case EDIT_SELECT_ALL:
+          vte_terminal_select_all(VTE_TERMINAL(terminal));
+          break;
+      case EDIT_SELECT_NONE:
+          vte_terminal_select_none(VTE_TERMINAL(terminal));
+          break;
+   }
 }
 
 void RGDebInstallProgress::updateInterface()
@@ -495,7 +565,7 @@ void RGDebInstallProgress::updateInterface()
       if( buf[0] == '\n') {
 	 //cout << "got line: " << line << endl;
 	 
-	 gchar **split = g_strsplit(line, ":",5);
+	 gchar **split = g_strsplit(line, ":",4);
 	 gchar *status = g_strstrip(split[0]);
 	 gchar *pkg = g_strstrip(split[1]);
 	 gchar *percent = g_strstrip(split[2]);

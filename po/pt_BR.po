@@ -7,14 +7,14 @@
 # Leonardo F. S. Boiko <leoboiko@fastmail.fm>, 2003.
 # André Luís Lopes <andrelop@debian.org>, 2004.
 # André Luís Lopes <andrelop@debian.org>, 2005.
-# Sérgio Brandão Cipolla <secipolla@gmail.com>, 2009
+# Sérgio Brandão Cipolla <secipolla@gmail.com>, 2009, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-29 15:13+0200\n"
-"PO-Revision-Date: 2010-07-30 15:25-0300\n"
+"PO-Revision-Date: 2010-10-26 09:22-0300\n"
 "Last-Translator: Sérgio Cipolla <secipolla@gmail.com>\n"
 "Language-Team: Debian-BR Project <debian-l10n-portuguese@lists.debian.org>\n"
 "Language: \n"
@@ -62,7 +62,7 @@ msgstr "Documentação"
 #. TRANSLATORS: Alias for the Debian package section "debug"
 #: ../common/sections_trans.cc:26
 msgid "Debug"
-msgstr "Debug"
+msgstr "Depuração de Erros"
 
 #. TRANSLATORS: Alias for the Debian package section "editors"
 #: ../common/sections_trans.cc:28
@@ -262,7 +262,7 @@ msgstr "Sistemas de Controle de Versão"
 #. TRANSLATORS: Alias for the Debian package section "video"
 #: ../common/sections_trans.cc:106
 msgid "Video software"
-msgstr "Aplicações de Vídeo"
+msgstr "Aplicativos de Vídeo"
 
 #. TRANSLATORS: Alias for the Debian package section "web"
 #: ../common/sections_trans.cc:108
@@ -845,7 +845,7 @@ msgid ""
 "Check your system for errors."
 msgstr ""
 "Incapaz de marcar atualizações\n"
-"Cheque seu sistema a procura de erros."
+"Verifique seu sistema a procura de erros."
 
 #: ../common/rpackagelister.cc:533
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
@@ -857,7 +857,7 @@ msgstr "o \"dist upgrade\" falhou"
 
 #: ../common/rpackagelister.cc:1293
 msgid "Unable to lock the list directory"
-msgstr "Incapaz de trancar o diretório de listas"
+msgstr "Incapaz de obter o lock do diretório de listas"
 
 #: ../common/rpackagelister.cc:1329
 msgid "Release files for some repositories could not be retrieved or authenticated. Such repositories are being ignored."
@@ -960,7 +960,7 @@ msgstr ""
 
 #: ../common/rpackagelister.cc:1710
 msgid "Unable to lock the download directory"
-msgstr "Incapaz de trancar o diretório de \"download\""
+msgstr "Incapaz de obter o lock do diretório de \"download\""
 
 #: ../common/rpackagelister.cc:1794
 #, c-format
@@ -1177,11 +1177,11 @@ msgstr "Existe um outro Synaptic sendo executado em modo não-interativo. Por fa
 
 #: ../gtk/gsynaptic.cc:368
 msgid "Unable to get exclusive lock"
-msgstr "Não foi possível obter bloqueio exclusivo"
+msgstr "Não foi possível obter lock exclusivo"
 
 #: ../gtk/gsynaptic.cc:369
 msgid "This usually means that another package management application (like apt-get or aptitude) is already running. Please close that application first."
-msgstr "Isso normalmente significa que uma outra aplicação de gerenciamento de pacotes (como o apt-get ou o Aptitude) já está em execução. Por favor, feche essa aplicação primeiro."
+msgstr "Isso normalmente significa que um outro aplicativo de gerenciamento de pacotes (como o apt-get ou o Aptitude) já está em execução. Por favor, feche esse aplicativo primeiro."
 
 #: ../gtk/gsynaptic.cc:412
 msgid "Starting without administrative privileges"
@@ -1522,7 +1522,7 @@ msgstr "Propriedades %s"
 
 #: ../gtk/rgpkgdetails.cc:214
 msgid "This application is supported by the distribution"
-msgstr "Esta aplicação é suportada pela distribuição"
+msgstr "Este aplicativo é suportado pela distribuição"
 
 #: ../gtk/rgpkgdetails.cc:224
 msgid "Get Screenshot"
@@ -1693,7 +1693,7 @@ msgstr "Baixando o Registro de Mudanças"
 
 #: ../gtk/rgmainwindow.cc:2087
 msgid "The changelog contains information about the changes and closed bugs in each version of the package."
-msgstr "O registro de mudanças contém informação sobre as mudanças e sobre os bugs corrigidos em cada versão do pacote."
+msgstr "O relatório de mudanças contém informações sobre as mudanças e sobre os erros corrigidos em cada versão do pacote."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
 #: ../gtk/rgmainwindow.cc:2100
@@ -1815,15 +1815,15 @@ msgstr "Deseja sair do Synaptic?"
 
 #: ../gtk/rgmainwindow.cc:3022
 msgid "Downloading Package Information"
-msgstr "Baixando a Informação dos Pacotes"
+msgstr "Baixando as Informações dos Pacotes"
 
 #: ../gtk/rgmainwindow.cc:3023
 msgid "The repositories will be checked for new, removed or upgraded software packages."
-msgstr "Os repositórios serão checados a procura de pacotes de software novos, removidos ou atualizados."
+msgstr "Os repositórios serão verificados a procura de pacotes de software novos, removidos ou atualizados."
 
 #: ../gtk/rgmainwindow.cc:3026
 msgid "Reloading package information..."
-msgstr "Recarregando a informação de pacotes..."
+msgstr "Recarregando as informações dos pacotes..."
 
 #: ../gtk/rgmainwindow.cc:3097
 msgid "Failed to resolve dependency problems!"
@@ -2447,7 +2447,7 @@ msgstr "Re_fazer"
 
 #: ../gtk/glade/window_main.glade.h:77
 msgid "_Reload Package Information"
-msgstr "Recarregar _Informação dos Pacotes"
+msgstr "Recarregar _Informações dos Pacotes"
 
 #: ../gtk/glade/window_main.glade.h:78
 msgid "_Repositories"
@@ -2553,11 +2553,11 @@ msgstr ""
 
 #: ../gtk/glade/window_about.glade.h:27
 msgid "Package management software using apt."
-msgstr "Software de gerenciamento de pacotes usando o apt."
+msgstr "Aplicativo de gerenciamento de pacotes usando o APT."
 
 #: ../gtk/glade/window_about.glade.h:28
 msgid "This software is licensed under the terms of the GNU General Public License, Version 2"
-msgstr "Este software está licenciado nos termos da GNU General Public License, Versão 2"
+msgstr "Este aplicativo está licenciado nos termos da GNU General Public License, Versão 2"
 
 #: ../gtk/glade/window_about.glade.h:29
 msgid "Translated by"
@@ -2583,7 +2583,7 @@ msgstr ""
 "Arnaldo Carvalho de Melo <acme@conectiva.com.br>, 2003\n"
 "Leonardo F. S. Boiko <leoboiko@fastmail.fm>, 2003\n"
 "André Luís Lopes <andrelop@debian.org>, 2003-2005\n"
-"et al."
+"Sérgio B. Cipolla <secipolla@gmail.com>, 2009-2010"
 
 #: ../gtk/glade/window_find.glade.h:2
 msgid "Description and Name"
@@ -2613,7 +2613,7 @@ msgstr "<span weight=\"bold\" size=\"larger\">Marcar mudanças adicionais requer
 
 #: ../gtk/glade/window_changes.glade.h:2
 msgid "The chosen action also affects other packages. The following changes are required in order to proceed."
-msgstr "A ação escolhida também afeta outros pacotes. As seguintes mudanças são requeridas para prosseguir."
+msgstr "A ação escolhida também afeta outros pacotes. As seguintes mudanças são requeridas para prosseguir:"
 
 #: ../gtk/glade/window_changes.glade.h:3
 msgid "_Mark"
@@ -2875,7 +2875,7 @@ msgstr "Preferir versões de: "
 
 #: ../gtk/glade/window_preferences.glade.h:67
 msgid "Reloading outdated package information:"
-msgstr "Recarregar informação de pacote desatualizado:"
+msgstr "Recarregar informações de pacote desatualizado:"
 
 #: ../gtk/glade/window_preferences.glade.h:68
 msgid "Removal of packages: "
@@ -2899,7 +2899,7 @@ msgstr "Atualizável:"
 
 #: ../gtk/glade/window_preferences.glade.h:73
 msgid "Use custom application font"
-msgstr "Utilizar fonte customizada para a aplicação"
+msgstr "Utilizar fonte customizada para o aplicativo"
 
 #: ../gtk/glade/window_preferences.glade.h:74
 msgid "Use custom terminal font"
@@ -3321,7 +3321,7 @@ msgstr "Você pode marcar pacotes para instalação, atualização ou remoção 
 
 #: ../gtk/glade/dialog_welcome.glade.h:11
 msgid "You should reload the package information regularly. Otherwise you could miss important security upgrades."
-msgstr "Você deve recarregar a informação dos pacotes regularmente. Caso contrário você pode perder importantes atualizações de segurança."
+msgstr "Você deve recarregar as informações dos pacotes regularmente. Caso contrário você pode perder importantes atualizações de segurança."
 
 #: ../gtk/glade/dialog_unmet.glade.h:1
 msgid ""
@@ -3345,7 +3345,7 @@ msgid ""
 msgstr ""
 "<big><b>Não foi possível baixar todos os índices de repositórios</b></big>\n"
 "\n"
-"O repositório pode não estar mais disponível ou pode não ter sido possível entrar em contato com o mesmo devido a problemas de rede. Caso esteja disponível, uma versão mais antiga do índice que falhou será usada. Senão o repositório será ignorado. Cheque sua conexão de rede e certifique-se de que o endereço do repositório esteja correto nas preferências."
+"O repositório pode não estar mais disponível ou pode não ter sido possível entrar em contato com o mesmo devido a problemas de rede. Caso esteja disponível, uma versão mais antiga do índice que falhou será usada. Senão o repositório será ignorado. Verifique sua conexão de rede e certifique-se de que o endereço do repositório esteja correto nas preferências."
 
 #: ../gtk/glade/window_iconlegend.glade.h:1
 msgid "<b>The following icons are used to indicate the current status of a package:</b>"
@@ -3364,7 +3364,7 @@ msgid ""
 msgstr ""
 "<big><b>Não foi possível baixar todos os arquivos do pacote</b></big>\n"
 "\n"
-"A versão do pacote que você deseja instalar pode não estar mais disponível no repositório ou pode haver algum problema com a origem do pacote. Recarregue a lista de pacotes e cheque a origem do pacote (p.ex., o CD ou a conexão de rede)."
+"A versão do pacote que você deseja instalar pode não estar mais disponível no repositório ou pode haver algum problema com a origem do pacote. Recarregue a lista de pacotes e verifique a origem do pacote (p.ex., o CD ou a conexão de rede)."
 
 #: ../gtk/glade/dialog_update_outdated.glade.h:1
 msgid ""
@@ -3390,7 +3390,7 @@ msgstr "Histórico"
 
 #: ../gtk/glade/window_logview.glade.h:2
 msgid "History of installed, upgraded and removed software packages."
-msgstr "Histórico de pacotes de software instalados, removidos e atualizados"
+msgstr "Histórico de pacotes de software instalados, removidos e atualizados."
 
 #: ../gtk/glade/dialog_quit.glade.h:1
 msgid ""

@@ -682,24 +682,24 @@ void RGPreferencesWindow::readDistribution()
    ignore = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_ignore"));
    g_object_set_data(G_OBJECT(ignore),"defaultDistro",(void*)"");
    g_signal_connect(G_OBJECT(ignore),
-                    "changed",
+                    "toggled",
                     G_CALLBACK(cbRadioDistributionChanged), this);
    now = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_now"));
    g_object_set_data(G_OBJECT(now),"defaultDistro",(void*)"now");
    g_signal_connect(G_OBJECT(now),
-                    "changed",
+                    "toggled",
                     G_CALLBACK(cbRadioDistributionChanged), this);
    distro = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_distro"));
    g_object_set_data(G_OBJECT(distro),"defaultDistro",(void*)"distro");
    g_signal_connect(G_OBJECT(distro),
-                    "changed",
+                    "toggled",
                     G_CALLBACK(cbRadioDistributionChanged), this);
 
    // clear the combo box
    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro));
    int num = gtk_tree_model_iter_n_children(model, NULL);
    for(;num >= 0;num--)
-      gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(_comboDefaultDistro), num);
+      gtk_combo_box_text_remove(GTK_COMBO_BOX(_comboDefaultDistro), num);
 
    if(defaultDistro == "") {
       button = ignore;
@@ -723,19 +723,27 @@ void RGPreferencesWindow::readDistribution()
 				 "changed",
 				 G_CALLBACK(cbHttpProxyEntryChanged), this);
 
+   GtkTreeIter distroIter;
+   GtkListStore *distroStore
+      = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro)));
    for (unsigned int i = 0; i < archives.size(); i++) {
-      //cout << "archive: " << archives[i] << endl;
       // ignore "now", it's a toggle button item now
       if(archives[i] == "now")
 	 continue;
-      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(_comboDefaultDistro),
-				 archives[i].c_str());
+      gtk_list_store_append(distroStore, &distroIter);
+      gtk_list_store_set(distroStore, &distroIter, 0, archives[i].c_str(), -1);
       if (defaultDistro == archives[i]) {
          //cout << "match for: " << archives[i] << " (" << i << ")" << endl;
 	 // we ignored the "now" archive, so we have to subtract by one
          distroMatch=i-1;
       }
    }
+   GtkCellRenderer *crt;
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboDefaultDistro));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboDefaultDistro), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboDefaultDistro),
+                                 crt, "text", 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(_comboDefaultDistro), distroMatch);
 
    _blockAction = false;

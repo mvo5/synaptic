@@ -931,11 +931,15 @@ void RGMainWindow::buildTreeView()
 
    // remove old tree columns
    if (_treeView) {
+      // unset model fist, otherwise the _remove_column takes *ages*
+      // (within the seconds range for each call)
+      gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), NULL);
       GList *columns = gtk_tree_view_get_columns(GTK_TREE_VIEW(_treeView));
-      for (GList * li = g_list_first(columns); li != NULL;
+      for (GList * li = g_list_first(columns); 
+           li != NULL;
            li = g_list_next(li)) {
-         gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
-                                     GTK_TREE_VIEW_COLUMN(li->data));
+         int i = gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
+                                             GTK_TREE_VIEW_COLUMN(li->data));
       }
       // need to free the list here
       g_list_free(columns);
@@ -1755,6 +1759,10 @@ void RGMainWindow::buildInterface()
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
+                                                        "label_fast_search")),
+                         _("No apt-xapian-index found"));
+
    }
 #else
    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));

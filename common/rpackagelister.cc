@@ -643,18 +643,15 @@ struct instVersionSortFunc {
 		       x->installedVersion());
 }};
 
-struct supportedSortFunc {
+struct supportedPartFunc {
  protected:
    bool _ascent;
    RPackageStatus _status;
  public:
-   supportedSortFunc(bool ascent, RPackageStatus &s) 
+   supportedPartFunc(bool ascent, RPackageStatus &s) 
       : _ascent(ascent), _status(s) {};
-   bool operator() (RPackage *x, RPackage *y) {
-      if(_ascent)
-	 return _status.isSupported(y) < _status.isSupported(x);
-      else
-	 return _status.isSupported(y) > _status.isSupported(x);
+   bool operator() (RPackage *x) {
+      return (_ascent==_status.isSupported(x));
    }
 };
 
@@ -730,12 +727,12 @@ void RPackageLister::sortPackages(vector<RPackage *> &packages,
 		  sortFunc<statusSortFunc>(false));
       break;
    case LIST_SORT_SUPPORTED_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  supportedSortFunc(true, _pkgStatus));
+      stable_partition(packages.begin(), packages.end(), 
+		  supportedPartFunc(false, _pkgStatus));
       break;
    case LIST_SORT_SUPPORTED_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  supportedSortFunc(false, _pkgStatus));
+      stable_partition(packages.begin(), packages.end(), 
+		  supportedPartFunc(true, _pkgStatus));
       break;
    case LIST_SORT_VERSION_ASC:
       stable_sort(packages.begin(), packages.end(), 

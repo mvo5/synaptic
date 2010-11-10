@@ -1,3 +1,107 @@
+synaptic (0.70~pre2ubuntu1) natty; urgency=low
+  
+  * merged from debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+  
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 10 Nov 2010 19:44:31 +0100
+
+synaptic (0.70~pre2) unstable; urgency=low
+
+  [ Michael Vogt ]
+  * po/pt_BR.po:
+    - updated, thanks to Sergio Cipolla  (closes: #593758)
+  * po/id.po:
+    - added, thanks to Dirgita
+  * po/ru.po:
+    - updated, thansk to Yuri Kozlov (closes: #571712)
+  * po/de.po:
+    - fix fuzzy string, thanks to Alek (closes: #599744)
+  * po/et.po:
+    - updated, thanks to Guido Tabbernuk
+  * po/he.po:
+    - updated, thanks to Lior Kaplan and Sergio Cipolla 
+      (closes: #586940)
+  * gtk/rgdebinstallprogress.cc, gtk/rgterminstallprogress.cc:
+    - fix FTBFS on latest vte (closes: #597384)
+  * common/rpackagecache.{cc,h}, common/rpackage.cc:
+    - add cache for PkgFileIterator->pkgIndexFile* to speed up
+      RPackage::IsTrusted (LP: #165181)
+  * gtk/rgdebinstallprogress.cc:
+    - merge fix for error string if those contain a ":" 
+      (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
+  * common/rpackagelister.cc:
+    - when sorting by support status use STL stable_parition to speed
+      up the list view (thanks to David Purcell)
+    - when clicking on the "supported" column, default to showing the
+      supported items first, then the unsupported ones
+  * gtk/rgmainwindow.cc:
+    - show message in quick search label if no apt-xapian-index can
+      be found
+  
+   [ Jean-Baptiste Lallement ]
+   * gtk/rgdebinstallprogress.{cc,h}: Terminal shortcuts fixes
+     - fix <CTRL><SHIFT>c behavior (LP: #250359)
+     - add shortcuts <CTRL>a and <CTRL><SHIFT>a to select all/none text
+       in the terminal
+     - add contextual menu to the terminal to select all and copy text
+       (LP: #31396)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 10 Nov 2010 18:08:14 +0100
+
+synaptic (0.70~pre1) unstable; urgency=low
+
+  * New upstream release that merges all changes from 
+    Debian and Ubuntu into a single tree again. This include libept 
+    support and lots of fixes.
+  * po/sl.po:
+    - updated, thanks to Matej Urbančič 
+  * po/pt_BR.po:
+    - updatd, thanks to Sergio Cipolla, closes: #579296
+  * gtk/rgmainwindow.cc:
+    - fix hang when applying the preferences (LP: #172487)
+  * po/th.po:
+    - updated, thanks to Theppitak Karoonboonyanan
+      (closes: #592696)
+  * pre-build.sh:
+    - ensure version number gets updated on build
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 12 Aug 2010 17:37:18 +0200
+
+synaptic (0.63.2) unstable; urgency=low
+
+  [ Michael Vogt ]
+  * po/uk.po:
+    - updated, thanks to Serhij Dubyk 
+  * po/it.po:
+    - updated, thanks to Milo Casagrande  (closes: #575685)
+  * po/et.po:
+    - added, thanks to G. Tabbernuk
+  
+  [ Bilal Akhtar ]
+  * gtk/rgmainwindow.cc
+    - Modify gtk/rgmainwindow.cc to populate package list again after 
+     'Unmark All' is selected. (LP: #155930)
+  
+  [ Jean-Baptiste Lallement ]
+  * Fix sorting issues of the package list
+    - Fix sort by name and by section (LP: #518509)
+    - Improve sort by column performance
+  * sort 'installed files' list in alphabetical order (LP: #32550)
+  * Set version labels selectable in package properties (LP: #76568)
+  * disable 'Lock Version' and 'Automatically installed' menu entries for a
+    normal user (LP: #309906)
+  * wrap lines in textarea of dialog_update_failed (LP: #237455)
+  * set textarea read-only in generic error dialog (LP: #403100)
+  * Change 'Icon Legend' dialog to fixed size (LP: #374376)
+  * add tooltip to 'properties' and 'search' buttons (LP: #202681)
+  * * gtk/rgpreferenceswindow.cc: escape '@/:%' in proxy auth string (LP: 130289)
+ 
+ -- Michael Vogt <mvo@debian.org>  Wed, 28 Jul 2010 11:40:15 +0200
+
 synaptic (0.63.1ubuntu14.1) UNRELEASED; urgency=low
 
   * common/rpackagecache.{cc,h}, common/rpackage.cc:

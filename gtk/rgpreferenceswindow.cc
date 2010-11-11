@@ -54,6 +54,15 @@ const char *RGPreferencesWindow::column_visible_names[] =
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
+const char *RGPreferencesWindow::removal_actions[] =
+   { _("Keep Configuration"), _("Completely"), NULL };
+
+const char *RGPreferencesWindow::update_ask[] =
+   { _("Always Ask"), _("Ignore"), _("Automatically"), NULL };
+
+const char *RGPreferencesWindow::upgrade_method[] =
+   { _("Always Ask"), _("Default Upgrade"), _("Smart Upgrade"), NULL };
+
 #if !GTK_CHECK_VERSION(2,6,0)
 gchar *
 gtk_combo_box_get_active_text (GtkComboBox *combo_box)
@@ -246,11 +255,11 @@ void RGPreferencesWindow::saveGeneral()
 
    // System upgrade:
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
-   i = gtk_combo_box_get_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_upgrade_method")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboUpgradeMethod));
    _config->Set("Synaptic::upgradeType", i - 1);
 
    // package list update date check
-   i = gtk_combo_box_get_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_update_ask")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboUpdateAsk));
    _config->Set("Synaptic::update::type", i);
    
 
@@ -523,10 +532,10 @@ void RGPreferencesWindow::readGeneral()
    // System upgrade:
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    int i = _config->FindI("Synaptic::upgradeType", 1);
-   gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_upgrade_method")), i + 1);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpgradeMethod), i + 1);
 
    i = _config->FindI("Synaptic::update::type", 0);
-   gtk_combo_box_set_active(GTK_COMBO_BOX(gtk_builder_get_object(_builder, "combo_update_ask")), i);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpdateAsk), i);
 
 
    // Number of undo operations:
@@ -976,6 +985,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    : RGGtkBuilderWindow(win, "preferences"), distroChanged(false)
 {
    GtkWidget *button;
+   GtkCellRenderer *crt;
+   GtkListStore *comboStore;
+   GtkTreeIter comboIter;
 
    _optionShowAllPkgInfoInMain = GTK_WIDGET(gtk_builder_get_object
                                             (_builder,
@@ -1018,7 +1030,55 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    _comboRemovalAction =
       GTK_WIDGET(gtk_builder_get_object(_builder,
                                         "combo_removal_action"));
+   
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboRemovalAction)));
+   for (int i = 0; removal_actions[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, removal_actions[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboRemovalAction));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboRemovalAction), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboRemovalAction),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboRemovalAction), 0);
    assert(_comboRemovalAction);
+
+   _comboUpdateAsk = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                       "combo_update_ask"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboUpdateAsk)));
+   for (int i = 0; update_ask[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, update_ask[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpdateAsk));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboUpdateAsk), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboUpdateAsk),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpdateAsk), 0);
+   assert(_comboUpdateAsk);
+   
+   _comboUpgradeMethod = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                       "combo_upgrade_method"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboUpgradeMethod)));
+   for (int i = 0; upgrade_method[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, upgrade_method[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpgradeMethod));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboUpgradeMethod), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboUpgradeMethod),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpgradeMethod), 0);
+   assert(_comboUpgradeMethod);
 
    _comboDefaultDistro =
       GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_default_distro"));
@@ -1054,7 +1114,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
    // purge not available 
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
-   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"combo_removal_action"));
+   gtk_widget_hide(GTK_WIDGET(_comboRemovalAction));
    gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"label_removal"));
 #endif
 

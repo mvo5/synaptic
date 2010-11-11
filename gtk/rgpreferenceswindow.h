@@ -39,6 +39,10 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    static const char *column_visible_names[];
    static const gboolean column_visible_defaults[];
 
+   static const char *removal_actions[];
+   static const char *update_ask[];
+   static const char *upgrade_method[];
+
    RGMainWindow *_mainWin;
    RPackageLister *_lister;
    // option buttons
@@ -63,6 +67,8 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    GtkWidget *_sizeT;
    GtkWidget *_maxUndoE;
    GtkWidget *_comboRemovalAction;
+   GtkWidget *_comboUpdateAsk;
+   GtkWidget *_comboUpgradeMethod;
    GtkWidget *_useProxy;
 
    // policy settings

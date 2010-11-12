@@ -20,7 +20,7 @@ sbin_PROGRAMS = synaptic
 synaptic_LDADD = \
 	${top_builddir}/common/libsynaptic.a\
 	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
-	@GTK2_LIBS@ @GTK3_LIBS@\
+	@GTK_LIBS@ \
 	@VTE_LIBS@ @LP_LIBS@\
 	-lpthread $(LIBEPT_LIBS)  
 

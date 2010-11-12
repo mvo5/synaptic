@@ -37,7 +37,7 @@
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "details")
 {
-   g_signal_connect(gtk_builder_get_object(_builder, "close"),
+   g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
                     "clicked",
                     G_CALLBACK(cbCloseClicked), this); 
 }

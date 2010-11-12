@@ -40,6 +40,12 @@ class RGMainWindow;
 
 class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow 
 {
+   typedef enum {
+      EDIT_COPY,
+      EDIT_SELECT_ALL,
+      EDIT_SELECT_NONE,
+   } TermAction;
+
    // the various stages of dpkg
    static const int NR_REMOVE_STAGES=3;
    static char* remove_stages[NR_REMOVE_STAGES];
@@ -75,6 +81,8 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    GtkWidget *_term;
    GtkWidget *_autoClose; // checkbutton
 
+   GtkWidget *_popupMenu; // Popup menu of the terminal
+
    // if we run embedded
    GtkWidget *_sock;
 
@@ -105,6 +113,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    bool child_has_exited;
    static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
 			    gpointer data);
+   static void terminalAction(GtkWidget *terminal, TermAction action);
 
 
  protected:
@@ -130,6 +139,9 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    static gboolean key_press_event(GtkWidget   *widget,
 				   GdkEventKey *event,
 				   gpointer     user_data);
+   static gboolean cbTerminalClicked(GtkWidget *widget, GdkEventButton *event,
+           gpointer user_data);
+   static void cbMenuitemClicked(GtkMenuItem *menuitem, gpointer user_data);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);

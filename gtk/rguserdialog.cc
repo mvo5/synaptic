@@ -217,10 +217,10 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    guint builder_status;
    GError* error = NULL;
 
-   //cout << "RGGtkBuilderUserDialog::RGGtkBuilderUserDialog()" << endl;
+   //cout << "RGGtkBuilderUserDialog::RGGtkBuilderUserDialog() " << name << endl;
 
    builder = gtk_builder_new();
-   filename = g_strdup_printf("dialog_%s.ui", name);
+   filename = g_strdup_printf("gtkbuilder/dialog_%s.ui", name);
    main_widget = g_strdup_printf("dialog_%s", name);
    if (FileExists(filename)) {
       if (!gtk_builder_add_from_file (builder, filename, &error)) {

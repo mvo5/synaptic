@@ -475,6 +475,16 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 }
 
+void RGMainWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *)data;
+
+   int nr =  gtk_combo_box_get_active(GTK_COMBO_BOX(self));
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "notebook_dep_tab"));
+   assert(notebook);
+   gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
+}
 
 void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
 {
@@ -1515,6 +1525,29 @@ void RGMainWindow::buildInterface()
    gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
                               (_builder, "scrolledwindow_filelist")));
 #endif
+
+   // Handle the combobox stuff for dependencies in PpkgInfoInMain mode
+   // ourselves
+   GtkWidget *comboDepends = GTK_WIDGET(gtk_builder_get_object
+                                        (_builder, "combobox_depends"));
+   g_signal_connect(G_OBJECT(comboDepends),
+                    "changed",
+                    G_CALLBACK(cbDependsMenuChanged), this); 
+   GtkListStore *relTypes = gtk_list_store_new(1, G_TYPE_STRING);
+   GtkTreeIter relIter;
+   for (int i = 0; relOptions[i] != NULL; i++) {
+      gtk_list_store_append(relTypes, &relIter);
+      gtk_list_store_set(relTypes, &relIter, 0, relOptions[i], -1);
+   }
+   gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
+                           GTK_TREE_MODEL(relTypes));
+   GtkCellRenderer *relRenderText = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(comboDepends));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(comboDepends),
+                              relRenderText, FALSE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(comboDepends),
+                                 relRenderText, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(comboDepends), 0);
 
    GtkWidget *vpaned = GTK_WIDGET(gtk_builder_get_object
                                   (_builder, "vpaned_main"));

@@ -120,7 +120,8 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
 
    GtkTreePath *treeview_find_path_from_text(GtkTreeModel *model, char *text);
 
-
+   GtkWidget *_comboPatternWhat;
+   GtkWidget *_comboPatternDo;
    GtkWidget *_filterEntry;     /* GtkEntry */
    GdkCursor *_busyCursor;
 

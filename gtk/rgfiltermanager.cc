@@ -52,9 +52,45 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 : RGGtkBuilderWindow(win, "filters"), _selectedPath(NULL),
   _selectedFilter(NULL), _filterview(filterview)
 {
+   GtkListStore *comboStore;
+   GtkTreeIter comboIter;
+   GtkCellRenderer *crt;
+
    setTitle(_("Filters"));
 
    _busyCursor = gdk_cursor_new(GDK_WATCH);
+
+   _comboPatternWhat = GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_pattern_what"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboPatternWhat)));
+   for (int i = 0; DepOptions[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, DepOptions[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboPatternWhat));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboPatternWhat), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboPatternWhat),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboPatternWhat), 0);
+   assert(_comboPatternWhat);
+   
+   _comboPatternDo = GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_pattern_do"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboPatternDo)));
+   for (int i = 0; ActOptions[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, ActOptions[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboPatternDo));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboPatternDo), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboPatternDo),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboPatternDo), 0);
+   assert(_comboPatternDo);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_filters_add"),
                     "clicked",
@@ -75,10 +111,10 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    g_signal_connect(gtk_builder_get_object(_builder, "entry_pattern_text"),
                     "changed",
                     G_CALLBACK(patternChanged), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "combobox_pattern_what"),
+   g_signal_connect(G_OBJECT(_comboPatternWhat),
                     "changed",
                     G_CALLBACK(patternChanged), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "combobox_pattern_what"),
+   g_signal_connect(G_OBJECT(_comboPatternDo),
                     "changed",
                     G_CALLBACK(patternChanged), this);
    g_signal_connect(gtk_builder_get_object(_builder, "button_pattern_new"),
@@ -318,17 +354,13 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
    g_signal_handlers_block_by_func(G_OBJECT(w),
                                    (GClosure*)patternChanged, data);
 
-   GtkWidget *comboDo = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                            "combobox_pattern_do"));
-   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(comboDo));
+   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(me->_comboPatternDo));
    if (nr == 1)
       exclude = true;
    else
       exclude = false;
 
-   GtkWidget *comboType = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                              "combobox_pattern_what"));
-   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(comboType));
+   nr = gtk_combo_box_get_active(GTK_COMBO_BOX(me->_comboPatternWhat));
 
    // HACK: try to use nr right away, for testing :D
    //const gchar *name = gtk_widget_get_name(item);
@@ -382,19 +414,15 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
          exclude = false;
       else
          exclude = true;
-      GtkWidget *doPattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                                  "combobox_pattern_do"));
-      gtk_combo_box_set_active(GTK_COMBO_BOX(doPattern), exclude ? 1 : 0);
+      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_comboPatternDo), exclude ? 1 : 0);
 
-      GtkWidget *typePattern = GTK_WIDGET(gtk_builder_get_object(me->_builder,
-                                                    "combobox_pattern_what"));
       for (int j = 0; DepOptions[j]; j++) {
          if (strcmp(what, _(DepOptions[j])) == 0) {
             type = (RPatternPackageFilter::DepType) j;
             break;
          }
       }
-      gtk_combo_box_set_active(GTK_COMBO_BOX(typePattern), (int)type);
+      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_comboPatternWhat), (int)type);
 
       GtkWidget *patternText = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                     "entry_pattern_text"));

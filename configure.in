@@ -44,16 +44,22 @@ dnl	AC_SUBST(WINGS_HDRS)
 dnl fi
 dnl AC_SUBST(BUILD_wings)
 
-
-dnl Checks for gtk
-dnl if test -z "$BUILD_wings" ; then
+AC_ARG_ENABLE([gtk3],
+  AC_HELP_STRING(--enable-gtk3, enable gtk3 build),
+  	      [enable_gtk3="$enableval"],
+              [enable_gtk3="no"]
+)
+if test "$enable_gtk3" != "no"; then
+	pkg_modules="gtk+-3.0 >= 2.91.0, pango >= 1.0.0, glib-2.0"
+else
 	pkg_modules="gtk+-2.0 >= 2.4.0, pango >= 1.0.0, glib-2.0"
-	PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-	BUILD_gtk="gtk"	
-dnl fi
+fi
 
-AC_SUBST(PACKAGE_CFLAGS)
-AC_SUBST(PACKAGE_LIBS)
+PKG_CHECK_MODULES(GTK, [$pkg_modules])
+BUILD_gtk="gtk"	
+
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
 AC_SUBST(BUILD_gtk)
 
 dnl if test x"$WINGS" = xno; then

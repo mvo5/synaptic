@@ -31,24 +31,23 @@
 #include "i18n.h"
 
 
-string RGFindWindow::getFindString()
+gchar* RGFindWindow::getFindString()
 {
-   GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
-    
-   return gtk_entry_get_text(GTK_ENTRY(entry));
+   return gtk_combo_box_get_active_text(GTK_COMBO_BOX(_comboFind));
 }
 
 void RGFindWindow::selectText()
 {
-   GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
-   gtk_widget_grab_focus(entry);
-   gtk_editable_select_region(GTK_EDITABLE(entry), 0, -1);
+   /* no need to do something hugely special here, on focus the last text is
+    * selected automatically
+    */
+   gtk_widget_grab_focus(_comboFind);
 }
 
 int RGFindWindow::getSearchType()
 {
    int searchType;
-   searchType = gtk_combo_box_get_active(GTK_COMBO_BOX(_omenu));
+   searchType = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboSearchType));
 
    return searchType;
 }
@@ -58,18 +57,17 @@ void RGFindWindow::doFind(GtkWindow *widget, void *data)
 {
    //cout << "RGFindWindow::doFind()"<<endl;
    RGFindWindow *me = (RGFindWindow *) data;
+   GtkListStore *prevSearchStore = GTK_LIST_STORE( gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(me->_comboFind)));
+   GtkTreeIter searchIter;
 
-   GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(me->_builder, "combo_find"));
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry));
-
+   const gchar *str = me->getFindString();
    if(strlen(str) == 0)
       return;
 
    me->_prevSearches = g_list_prepend(me->_prevSearches, g_strdup(str));
-
-   // FIXME: properly somehow go through each item to add it to combo
-   //for (int previ = 0; previ <= sizeof(me->_prevSearches); previ++)
-   //    gtk_combo_text_append_text(me->_prevSearches[previ]);
+   gtk_list_store_prepend(prevSearchStore, &searchIter);
+   gtk_list_store_set(prevSearchStore, &searchIter, 0, str, -1);
 
    doClose(widget, data);
    gtk_dialog_response(GTK_DIALOG(((RGFindWindow *) data)->window()),
@@ -82,7 +80,7 @@ void RGFindWindow::doClose(GtkWindow *widget, void *data)
    RGFindWindow *me = (RGFindWindow *) data;
 
    _config->Set("Synaptic::LastSearchType",
-		gtk_combo_box_get_active(GTK_COMBO_BOX(me->_omenu)));
+		gtk_combo_box_get_active(GTK_COMBO_BOX(me->_comboSearchType)));
 
    me->hide();
 }
@@ -91,7 +89,7 @@ void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
 {
    RGFindWindow *me = (RGFindWindow *) data;
 
-   if( strlen(gtk_entry_get_text(GTK_ENTRY(me->_entry))) >0 )
+   if ( strlen(me->getFindString()) > 0 )
       gtk_widget_set_sensitive(me->_findB, TRUE);
    else
       gtk_widget_set_sensitive(me->_findB, FALSE);
@@ -101,38 +99,49 @@ void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
 RGFindWindow::RGFindWindow(RGWindow *win)
 : RGGtkBuilderWindow(win, "find"), _prevSearches(0)
 {
+   GtkListStore *comboStore;
+   GtkTreeIter comboIter;
+   GtkCellRenderer *crt;
    //cout << " RGFindWindow::RGFindWindow(RGWindow *win) "<< endl;
-
-   g_signal_connect(gtk_builder_get_object(_builder,
-                                           "button_find"),
-                               "clicked",
-                               G_CALLBACK(doFind), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder,
-                                           "entry_find"),
-                               "activate",
-                               G_CALLBACK(doFind), this);
 
    g_signal_connect(gtk_builder_get_object(_builder,
                                            "button_close"),
                                "clicked",
                                G_CALLBACK(doClose), this);
 
-   GtkWidget *combo = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_find"));
-   // FIXME: find out how to properly port this...
-   //gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
-
-   _entry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
-   assert(_entry);
-   g_signal_connect(G_OBJECT(_entry), "changed", 
+   _comboFind = GTK_WIDGET(gtk_builder_get_object(_builder, "comboentry_search"));
+   assert(_comboFind);
+   g_signal_connect(G_OBJECT(_comboFind), "changed", 
 		   G_CALLBACK(cbEntryChanged), this);
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboFind));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboFind), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboFind),
+                                          crt, "text", 0);
+
+   _comboSearchType = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_lookin"));
+   assert(_comboSearchType);
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboSearchType)));
+   for (int i = 0; SearchTypes[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, SearchTypes[i], -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboSearchType));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboSearchType), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboSearchType),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboSearchType),
+			       _config->FindI("Synaptic::LastSearchType",1));
+
    _findB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_find"));
    assert(_findB);
+   g_signal_connect(G_OBJECT(_findB),
+                    "clicked",
+                    G_CALLBACK(doFind), this);
    gtk_widget_set_sensitive(_findB, FALSE);
-
-   _omenu = GTK_WIDGET(gtk_builder_get_object(_builder, "optionmenu_where"));
-   gtk_combo_box_set_active(GTK_COMBO_BOX(_omenu),
-			       _config->FindI("Synaptic::LastSearchType",1));
 
    setTitle(_("Find"));
    skipTaskbar(true);

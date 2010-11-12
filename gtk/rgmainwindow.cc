@@ -1353,6 +1353,9 @@ void RGMainWindow::buildInterface()
                                    (_builder, "menu_details"));
    assert(_detailsM);
    g_object_set_data(G_OBJECT(widget), "me", this);
+   g_signal_connect(G_OBJECT(_detailsM),
+                    "activate",
+                    G_CALLBACK(cbDetailsWindow), this);
 
    widget = _keepM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_keep"));
    assert(_keepM);

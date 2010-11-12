@@ -123,7 +123,7 @@ void gtk_get_color_from_string(const char *cpp, GdkColor **colp)
    gboolean result;
 
    // "" means no color
-   if (strlen(cpp) == 0) {
+   if (cpp || strlen(cpp) == 0) {
       *colp = NULL;
       return;
    }

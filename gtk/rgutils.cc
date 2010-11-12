@@ -128,6 +128,7 @@ void gtk_get_color_from_string(const char *cpp, GdkColor **colp)
       return;
    }
 
+   new_color = g_new(GdkColor, 1);
    result = gdk_color_parse(cpp, new_color);
    *colp = new_color;
 }

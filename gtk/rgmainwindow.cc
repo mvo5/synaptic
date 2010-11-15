@@ -1248,7 +1248,8 @@ void RGMainWindow::buildInterface()
    assert(_propertiesB);
    _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
-   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "upgrade"));
+   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
+
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
    g_signal_connect(G_OBJECT(_upgradeB),
@@ -1277,7 +1278,7 @@ void RGMainWindow::buildInterface()
                     "activate",
                     G_CALLBACK(cbShowConfigWindow), this);
 
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_options"),
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_option"),
                     "activate",
                     G_CALLBACK(cbShowSetOptWindow), this);
 
@@ -1296,13 +1297,13 @@ void RGMainWindow::buildInterface()
    _pkgHelpM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_documentation"));
    assert(_pkgHelpM);
    g_signal_connect(G_OBJECT(_pkgHelpM),
-                    "clicked",
+                    "activate",
                     G_CALLBACK(cbPkgHelpClicked), this);
 
    _pkgReconfigureM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_configure"));
    assert(_pkgReconfigureM);
    g_signal_connect(G_OBJECT(_pkgReconfigureM),
-                    "clicked",
+                    "activate",
                     G_CALLBACK(cbPkgReconfigureClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_search"),

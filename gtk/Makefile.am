@@ -77,6 +77,8 @@ synaptic_SOURCES= \
 	rgvendorswindow.h\
 	rgsummarywindow.cc\
 	rgsummarywindow.h\
+	rgchangelogdialog.cc\
+	rgchangelogdialog.h\
 	rgchangeswindow.cc\
 	rgchangeswindow.h\
 	rguserdialog.cc\

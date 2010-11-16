@@ -215,7 +215,4 @@ const char *utf8(const char *str)
    }
    return escaped;
 }
-
-
-
 // vim:ts=3:sw=3:et

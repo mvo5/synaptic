@@ -67,6 +67,14 @@ typedef enum {
    PKG_REINSTALL
 } RGPkgAction;
 
+static char *relOptions[] = {
+   _("Dependencies"),
+   _("Dependants"),
+   _("Dependencies of the Latest Version"),
+   _("Provided Packages"),
+   NULL
+};
+
 class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
 
    typedef enum {
@@ -223,6 +231,8 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // --------------------------------------------------------------------
    // Callbacks
    //
+
+   static void cbDependsMenuChanged(GtkWidget *self, void *data);
 
    static void cbPkgAction(GtkWidget *self, void *data);
 

@@ -475,6 +475,16 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
 
 }
 
+void RGMainWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
+{
+   RGMainWindow *me = (RGMainWindow *)data;
+
+   int nr =  gtk_combo_box_get_active(GTK_COMBO_BOX(self));
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "notebook_dep_tab"));
+   assert(notebook);
+   gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
+}
 
 void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
 {
@@ -1238,7 +1248,8 @@ void RGMainWindow::buildInterface()
    assert(_propertiesB);
    _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
-   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "upgrade"));
+   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
+
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
    g_signal_connect(G_OBJECT(_upgradeB),
@@ -1267,7 +1278,7 @@ void RGMainWindow::buildInterface()
                     "activate",
                     G_CALLBACK(cbShowConfigWindow), this);
 
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_options"),
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_option"),
                     "activate",
                     G_CALLBACK(cbShowSetOptWindow), this);
 
@@ -1286,13 +1297,13 @@ void RGMainWindow::buildInterface()
    _pkgHelpM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_documentation"));
    assert(_pkgHelpM);
    g_signal_connect(G_OBJECT(_pkgHelpM),
-                    "clicked",
+                    "activate",
                     G_CALLBACK(cbPkgHelpClicked), this);
 
    _pkgReconfigureM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_configure"));
    assert(_pkgReconfigureM);
    g_signal_connect(G_OBJECT(_pkgReconfigureM),
-                    "clicked",
+                    "activate",
                     G_CALLBACK(cbPkgReconfigureClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_search"),
@@ -1343,6 +1354,9 @@ void RGMainWindow::buildInterface()
                                    (_builder, "menu_details"));
    assert(_detailsM);
    g_object_set_data(G_OBJECT(widget), "me", this);
+   g_signal_connect(G_OBJECT(_detailsM),
+                    "activate",
+                    G_CALLBACK(cbDetailsWindow), this);
 
    widget = _keepM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_keep"));
    assert(_keepM);
@@ -1515,6 +1529,29 @@ void RGMainWindow::buildInterface()
    gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
                               (_builder, "scrolledwindow_filelist")));
 #endif
+
+   // Handle the combobox stuff for dependencies in PpkgInfoInMain mode
+   // ourselves
+   GtkWidget *comboDepends = GTK_WIDGET(gtk_builder_get_object
+                                        (_builder, "combobox_depends"));
+   g_signal_connect(G_OBJECT(comboDepends),
+                    "changed",
+                    G_CALLBACK(cbDependsMenuChanged), this); 
+   GtkListStore *relTypes = gtk_list_store_new(1, G_TYPE_STRING);
+   GtkTreeIter relIter;
+   for (int i = 0; relOptions[i] != NULL; i++) {
+      gtk_list_store_append(relTypes, &relIter);
+      gtk_list_store_set(relTypes, &relIter, 0, relOptions[i], -1);
+   }
+   gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
+                           GTK_TREE_MODEL(relTypes));
+   GtkCellRenderer *relRenderText = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(comboDepends));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(comboDepends),
+                              relRenderText, FALSE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(comboDepends),
+                                 relRenderText, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(comboDepends), 0);
 
    GtkWidget *vpaned = GTK_WIDGET(gtk_builder_get_object
                                   (_builder, "vpaned_main"));

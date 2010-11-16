@@ -1250,13 +1250,15 @@ void RGMainWindow::buildInterface()
    _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    assert(_propertiesB);
    _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
-   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
-   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
-
+   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB), "system-upgrade");
+   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade_all"));
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
    g_signal_connect(G_OBJECT(_upgradeB),
                     "clicked",
+                    G_CALLBACK(cbUpgradeClicked), this);
+   g_signal_connect(G_OBJECT(_upgradeM),
+                    "activate",
                     G_CALLBACK(cbUpgradeClicked), this);
 
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {

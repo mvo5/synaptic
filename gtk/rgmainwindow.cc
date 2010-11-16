@@ -1236,6 +1236,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(gtk_builder_get_object(_builder, "button_update"),
                     "clicked",
                     G_CALLBACK(cbUpdateClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_update_packages"),
+                    "activate",
+                    G_CALLBACK(cbUpdateClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
                     "clicked",
@@ -1247,13 +1250,15 @@ void RGMainWindow::buildInterface()
    _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    assert(_propertiesB);
    _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
-   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB),"system-upgrade");
-   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
-
+   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB), "system-upgrade");
+   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade_all"));
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
 				 get_gtk_image("system-upgrade"));
    g_signal_connect(G_OBJECT(_upgradeB),
                     "clicked",
+                    G_CALLBACK(cbUpgradeClicked), this);
+   g_signal_connect(G_OBJECT(_upgradeM),
+                    "activate",
                     G_CALLBACK(cbUpgradeClicked), this);
 
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
@@ -1264,14 +1269,16 @@ void RGMainWindow::buildInterface()
 
    _proceedB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
    _proceedM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_proceed"));
-   
    g_signal_connect(G_OBJECT(_proceedB),
                     "clicked",
                     G_CALLBACK(cbProceedClicked), this);
+   g_signal_connect(G_OBJECT(_proceedM),
+                    "activate",
+                    G_CALLBACK(cbProceedClicked), this);
 
-   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "fix_broken_packages"));
-   g_signal_connect(G_OBJECT(_proceedB),
-                    "clicked",
+   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_fix_broken_packages"));
+   g_signal_connect(G_OBJECT(_fixBrokenM),
+                    "activate",
                     G_CALLBACK(cbFixBrokenClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "menu_preferences"),
@@ -1308,6 +1315,9 @@ void RGMainWindow::buildInterface()
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_search"),
                     "clicked",
+                    G_CALLBACK(cbFindToolClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_search"),
+                    "activate",
                     G_CALLBACK(cbFindToolClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "undo1"),
@@ -1844,7 +1854,7 @@ void RGMainWindow::buildInterface()
       menu = GTK_WIDGET(gtk_builder_get_object(_builder, "view_commit_log"));
       gtk_widget_set_sensitive(menu, false);
       menu = GTK_WIDGET(gtk_builder_get_object
-                        (_builder, "update_package_entrys1"));
+                        (_builder, "menu_update_packages"));
       gtk_widget_set_sensitive(menu, false);
       menu = GTK_WIDGET(gtk_builder_get_object(_builder, "add_cdrom"));
       gtk_widget_set_sensitive(menu, false);

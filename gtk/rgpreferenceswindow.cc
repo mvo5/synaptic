@@ -55,13 +55,13 @@ const gboolean RGPreferencesWindow::column_visible_defaults[] =
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
 const char *RGPreferencesWindow::removal_actions[] =
-   { _("Keep Configuration"), _("Completely"), NULL };
+   { N_("Keep Configuration"), N_("Completely"), NULL };
 
 const char *RGPreferencesWindow::update_ask[] =
-   { _("Always Ask"), _("Ignore"), _("Automatically"), NULL };
+   { N_("Always Ask"), N_("Ignore"), N_("Automatically"), NULL };
 
 const char *RGPreferencesWindow::upgrade_method[] =
-   { _("Always Ask"), _("Default Upgrade"), _("Smart Upgrade"), NULL };
+   { N_("Always Ask"), N_("Default Upgrade"), N_("Smart Upgrade"), NULL };
 
 #if !GTK_CHECK_VERSION(2,6,0)
 gchar *
@@ -1036,7 +1036,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                       GTK_COMBO_BOX(_comboRemovalAction)));
    for (int i = 0; removal_actions[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, removal_actions[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(removal_actions[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboRemovalAction));
@@ -1053,7 +1053,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                       GTK_COMBO_BOX(_comboUpdateAsk)));
    for (int i = 0; update_ask[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, update_ask[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(update_ask[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpdateAsk));
@@ -1070,7 +1070,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                       GTK_COMBO_BOX(_comboUpgradeMethod)));
    for (int i = 0; upgrade_method[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, upgrade_method[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(upgrade_method[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpgradeMethod));

@@ -1269,14 +1269,16 @@ void RGMainWindow::buildInterface()
 
    _proceedB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
    _proceedM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_proceed"));
-   
    g_signal_connect(G_OBJECT(_proceedB),
                     "clicked",
                     G_CALLBACK(cbProceedClicked), this);
+   g_signal_connect(G_OBJECT(_proceedM),
+                    "activate",
+                    G_CALLBACK(cbProceedClicked), this);
 
-   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "fix_broken_packages"));
-   g_signal_connect(G_OBJECT(_proceedB),
-                    "clicked",
+   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_fix_broken_packages"));
+   g_signal_connect(G_OBJECT(_fixBrokenM),
+                    "activate",
                     G_CALLBACK(cbFixBrokenClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "menu_preferences"),

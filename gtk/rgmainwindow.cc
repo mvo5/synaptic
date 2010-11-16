@@ -1312,6 +1312,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(gtk_builder_get_object(_builder, "button_search"),
                     "clicked",
                     G_CALLBACK(cbFindToolClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_search"),
+                    "activate",
+                    G_CALLBACK(cbFindToolClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "undo1"),
                     "activate",

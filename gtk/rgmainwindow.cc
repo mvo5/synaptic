@@ -1236,6 +1236,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(gtk_builder_get_object(_builder, "button_update"),
                     "clicked",
                     G_CALLBACK(cbUpdateClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "menu_update_packages"),
+                    "activate",
+                    G_CALLBACK(cbUpdateClicked), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
                     "clicked",
@@ -1844,7 +1847,7 @@ void RGMainWindow::buildInterface()
       menu = GTK_WIDGET(gtk_builder_get_object(_builder, "view_commit_log"));
       gtk_widget_set_sensitive(menu, false);
       menu = GTK_WIDGET(gtk_builder_get_object
-                        (_builder, "update_package_entrys1"));
+                        (_builder, "menu_update_packages"));
       gtk_widget_set_sensitive(menu, false);
       menu = GTK_WIDGET(gtk_builder_get_object(_builder, "add_cdrom"));
       gtk_widget_set_sensitive(menu, false);

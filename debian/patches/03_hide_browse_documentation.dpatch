@@ -8,20 +8,14 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad '--exclude=CVS' '--exclude=.svn' '--exclude=.git' '--exclude=.arch' '--exclude=.hg' '--exclude=_darcs' '--exclude=.bzr' porting-to-gtkbuilder~/gtk/gtkbuilder/window_main.ui porting-to-gtkbuilder/gtk/gtkbuilder/window_main.ui
---- porting-to-gtkbuilder~/gtk/gtkbuilder/window_main.ui	2010-10-19 09:25:27.000000000 +0200
-+++ porting-to-gtkbuilder/gtk/gtkbuilder/window_main.ui	2010-10-19 10:40:35.104901001 +0200
-@@ -335,13 +335,6 @@
-                       </object>
+diff -urNad '--exclude=CVS' '--exclude=.svn' '--exclude=.git' '--exclude=.arch' '--exclude=.hg' '--exclude=_darcs' '--exclude=.bzr' gtk3~/gtk/gtkbuilder/window_main.ui gtk3/gtk/gtkbuilder/window_main.ui
+--- gtk3~/gtk/gtkbuilder/window_main.ui	2010-11-16 21:52:42.000000000 +0100
++++ gtk3/gtk/gtkbuilder/window_main.ui	2010-11-17 12:31:21.329230009 +0100
+@@ -336,6 +336,7 @@
                      </child>
                      <child>
--                      <object class="GtkMenuItem" id="menu_documentation">
--                        <property name="label" translatable="yes">_Browse Documentation</property>
--                        <property name="use_underline">True</property>
--                        <signal name="activate" handler="on_button_pkghelp_clicked"/>
--                      </object>
--                    </child>
--                    <child>
-                       <object class="GtkMenuItem" id="menu_download_changelog">
-                         <property name="visible">True</property>
-                         <property name="label" translatable="yes">_Download Changelog</property>
+                       <object class="GtkMenuItem" id="menu_documentation">
++                        <property name="visible">False</property>
+                         <property name="label" translatable="yes">_Browse Documentation</property>
+                         <property name="use_underline">True</property>
+                         <signal name="activate" handler="on_button_pkghelp_clicked"/>

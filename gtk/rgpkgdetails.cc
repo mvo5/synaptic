@@ -30,9 +30,8 @@
 #include "rggtkbuilderwindow.h"
 #include "rpackage.h"
 #include "rgpackagestatus.h"
+#include "rgchangelogdialog.h"
 #include "sections_trans.h"
-
-
 
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "details")
@@ -54,7 +53,7 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    //       We already include it, so we get those for free.
    for (int i = 0; relOptions[i] != NULL; i++) {
       gtk_list_store_append(relTypes, &relIter);
-      gtk_list_store_set(relTypes, &relIter, 0, relOptions[i], -1);
+      gtk_list_store_set(relTypes, &relIter, 0, _(relOptions[i]), -1);
    }
    gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
                            GTK_TREE_MODEL(relTypes));
@@ -162,6 +161,13 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
    gtk_widget_show_all(event);
 }
 
+void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
+{
+   RPackage *pkg = (RPackage*)data;
+   RGWindow *parent = (RGWindow*)g_object_get_data(G_OBJECT(button), "me");
+   ShowChangelogDialog(parent, pkg);
+}
+
 void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me, 
                                       RPackage *pkg,
 				      bool setTitle)
@@ -255,6 +261,17 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    g_signal_connect(G_OBJECT(button),"clicked", 
                     G_CALLBACK(cbShowScreenshot), 
                     &si);
+   gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
+   gtk_widget_show(button);
+
+   // add button to get changelog
+   gtk_text_buffer_insert(buf, &it, "    ", 1);
+   anchor = gtk_text_buffer_create_child_anchor(buf, &it);
+   button = gtk_button_new_with_label(_("Get Changelog"));
+   g_object_set_data(G_OBJECT(button), "me", me);
+   g_signal_connect(G_OBJECT(button),"clicked", 
+                    G_CALLBACK(cbShowChangelog),
+                    pkg);
    gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
    gtk_widget_show(button);
 

@@ -68,10 +68,10 @@ typedef enum {
 } RGPkgAction;
 
 static char *relOptions[] = {
-   _("Dependencies"),
-   _("Dependants"),
-   _("Dependencies of the Latest Version"),
-   _("Provided Packages"),
+   N_("Dependencies"),
+   N_("Dependants"),
+   N_("Dependencies of the Latest Version"),
+   N_("Provided Packages"),
    NULL
 };
 

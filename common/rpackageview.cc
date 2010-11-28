@@ -151,7 +151,8 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    }
 
    if ((flags & RPackage::FInstalled) &&
-       !(flags & RPackage::FIsAuto))
+       !(flags & RPackage::FIsAuto) &&
+       !(flags & RPackage::FImportant))
    {
       str = _("Installed (manual)");
       _view[str].push_back(pkg);

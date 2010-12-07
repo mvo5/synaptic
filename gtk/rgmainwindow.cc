@@ -919,7 +919,7 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 #endif
    gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
 						     "label_fast_search")),
-		      _("Quick search"));
+		      _("Quick filter"));
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
                             (me->_builder, "entry_fast_search")), TRUE);
    g_spawn_close_pid(pid);

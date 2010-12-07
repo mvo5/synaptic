@@ -1759,6 +1759,10 @@ void RGMainWindow::buildInterface()
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "entry_fast_search"), FALSE);
+      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, 
+                                                        "label_fast_search")),
+                         _("No apt-xapian-index found"));
+
    }
 #else
    gtk_widget_hide(glade_xml_get_widget(_gladeXML, "vbox_fast_search"));

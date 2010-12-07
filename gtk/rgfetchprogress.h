@@ -28,11 +28,11 @@
 
 #include <vector>
 #include <set>
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
+class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 
    struct Item {
       string descr;
@@ -69,7 +69,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGladeWindow {
    char *getStatusStr(int status);
    int getStatusPercent(int status);
    void refreshTable(int row, bool append = false);
-   GdkPixmap *statusDraw(int width, int height, int status);
+   //GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
    virtual bool MediaChange(string Media, string Drive);

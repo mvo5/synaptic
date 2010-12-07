@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic-be\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 17:47+0100\n"
+"POT-Creation-Date: 2010-11-16 16:49+0100\n"
 "PO-Revision-Date: 2004-12-31 11:37+0200\n"
 "Last-Translator: Vital Khilko <vk@altlinux.ru>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
+"Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -291,7 +292,7 @@ msgstr "Асяродзьдзе KDE"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:573
+#: ../common/rpackageview.cc:591
 msgid "Unknown"
 msgstr "Невядомы"
 
@@ -305,22 +306,28 @@ msgstr "Сканвэртаванае з RPM·пры дапамозе·Alien"
 msgid "Internationalization and localization"
 msgstr ""
 
+#. TRANSLATORS: Ubuntu metapackages section
+#: ../common/sections_trans.cc:122
+#, fuzzy
+msgid "Meta Packages"
+msgstr "Пакеты якія будуць замененыя"
+
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
 #. or restricted
-#: ../common/sections_trans.cc:125 ../common/sections_trans.cc:143
-#: ../common/sections_trans.cc:147
+#: ../common/sections_trans.cc:127 ../common/sections_trans.cc:145
+#: ../common/sections_trans.cc:149
 msgid "Restricted On Export"
 msgstr "Экспартна-абмежаванае"
 
 #. TRANSLATORS: Alias for the Debian package section "non free"
-#: ../common/sections_trans.cc:127 ../common/sections_trans.cc:144
+#: ../common/sections_trans.cc:129 ../common/sections_trans.cc:146
 msgid "non free"
 msgstr "экспартна абмежаванае"
 
 #. TRANSLATORS: Alias for the Debian package section "contrib"
 #. Free software that depends on non-free software
-#: ../common/sections_trans.cc:130 ../common/sections_trans.cc:148
+#: ../common/sections_trans.cc:132 ../common/sections_trans.cc:150
 msgid "contrib"
 msgstr "contrib"
 
@@ -466,36 +473,36 @@ msgstr "Немагчыма перайсьці ў %s"
 msgid "Unable to read %s"
 msgstr "Немагчыма прачытаць %s"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
+#: ../common/rconfiguration.cc:114 ../common/rconfiguration.cc:281
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "ПАМЫЛКА: немагчыма адкрыць %s для запісу"
 
-#: ../common/rconfiguration.cc:114
+#: ../common/rconfiguration.cc:140
 msgid "ERROR: Could not get password entry for superuser"
 msgstr "ПАМЫЛКА: Немагчыма атрымаць зьвесткі аб карыстальніку root"
 
-#: ../common/rconfiguration.cc:123
+#: ../common/rconfiguration.cc:149
 #, c-format
 msgid "ERROR: could not create configuration directory %s"
 msgstr "ПАМЫЛКА: немагчыма стварыць каталёг для канфігурацыі %s"
 
-#: ../common/rconfiguration.cc:147
+#: ../common/rconfiguration.cc:173
 #, fuzzy, c-format
 msgid "ERROR: could not create state directory %s"
 msgstr "ПАМЫЛКА: немагчыма стварыць каталёг для канфігурацыі %s"
 
-#: ../common/rconfiguration.cc:164
+#: ../common/rconfiguration.cc:190
 #, fuzzy, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "ПАМЫЛКА: немагчыма стварыць каталёг для канфігурацыі %s"
 
-#: ../common/rconfiguration.cc:182
+#: ../common/rconfiguration.cc:208
 #, fuzzy, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "ПАМЫЛКА: немагчыма стварыць каталёг для канфігурацыі %s"
 
-#: ../common/rconfiguration.cc:266
+#: ../common/rconfiguration.cc:306
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "немагчыма адкрыць %s для запісу"
@@ -526,15 +533,15 @@ msgstr ""
 "Усе пакеты з бягучага носьбіту пасьпяхова ўсталяваныя. Каб "
 "працягнуцьусталёўку з наступнага носьбіту закрыйце гэтае акно."
 
-#: ../common/rpackage.cc:203
+#: ../common/rpackage.cc:206
 msgid "The list of installed files is only available for installed packages"
 msgstr "Сьпіс усталяваных файлаў даступны толькі для усталяваных пакетаў"
 
-#: ../common/rpackage.cc:463
+#: ../common/rpackage.cc:466
 msgid "or dependency"
 msgstr "ці залежнасьць"
 
-#: ../common/rpackage.cc:580
+#: ../common/rpackage.cc:583
 #, c-format
 msgid ""
 "\n"
@@ -546,58 +553,58 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:617
+#: ../common/rpackage.cc:620
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\t%s %s але %s будзе усталяваны"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:623
+#: ../common/rpackage.cc:626
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr " %s: %s %s але %s будзе усталяваны"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:633
+#: ../common/rpackage.cc:636
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\t%s %s але пакет не можа быць усталяваны"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:645
+#: ../common/rpackage.cc:648
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\t%s але пакет зьяўляецца віртуальным"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:650
+#: ../common/rpackage.cc:653
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s але пакет зьяўляецца віртуальным"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:655
+#: ../common/rpackage.cc:658
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\t%s але не будзе усталяваны"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:660
+#: ../common/rpackage.cc:663
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s але не будзе усталяваны"
 
-#: ../common/rpackage.cc:679
+#: ../common/rpackage.cc:682
 msgid " or"
 msgstr " ці"
 
-#: ../common/rpackage.cc:1017
+#: ../common/rpackage.cc:1059
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Памылковы запіс у файле перавагаў, няма загалоўка пакету"
 
@@ -670,8 +677,7 @@ msgid "Marked for complete removal"
 msgstr "Пазначаны для поўнага выдаленьня"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:136
-#: ../gtk/glade/window_filters.glade.h:41
+#: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:142
 msgid "Not installed"
 msgstr "Неўсталяваны"
 
@@ -680,13 +686,13 @@ msgid "Not installed (locked)"
 msgstr "Неўсталяваны (замкнёны)"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackagestatus.cc:57 ../common/rpackageview.cc:131
-#: ../gtk/gsynaptic.cc:565 ../gtk/glade/window_filters.glade.h:30
+#: ../common/rpackagestatus.cc:57 ../common/rpackageview.cc:137
+#: ../gtk/gsynaptic.cc:571
 msgid "Installed"
 msgstr "Усталяваны"
 
-#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:167
-#: ../gtk/gsynaptic.cc:554
+#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:173
+#: ../gtk/gsynaptic.cc:560
 msgid "Installed (upgradable)"
 msgstr "Усталяваны (здольны абнаўляцца)"
 
@@ -695,8 +701,7 @@ msgid "Installed (locked to the current version)"
 msgstr "Усталяваны (замкнёны на бягучае вэрсіі)"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
-#: ../gtk/glade/window_filters.glade.h:14
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:519
 msgid "Broken"
 msgstr "Сапсаваны"
 
@@ -716,29 +721,25 @@ msgstr ""
 msgid "The package lists or status file could not be parsed or opened."
 msgstr "Немагчыма адкрыць ці апрацаваць файл стану ці сьпісы пакетаў."
 
-#: ../common/rpackagecache.cc:108
+#: ../common/rpackagecache.cc:110
 msgid "Internal Error, non-zero counts"
 msgstr "Унутраная памылка, не-нулявыя лічыльнікі"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1046
-#: ../gtk/glade/window_find.glade.h:5
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1145
 msgid "Name"
 msgstr "Назва"
 
-#: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:51
-#: ../gtk/rgmainwindow.cc:1044 ../gtk/rgvendorswindow.cc:62
-#: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:21
-#: ../gtk/glade/window_filters.glade.h:20
-#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:70
+#: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:52
+#: ../gtk/rgmainwindow.cc:1161 ../gtk/rgvendorswindow.cc:62
+#: ../gtk/rgvendorswindow.cc:94 ../gtk/rgfiltermanager.h:70
 msgid "Description"
 msgstr "Апісаньне"
 
-#: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
-#: ../gtk/glade/window_filters.glade.h:37 ../gtk/rgfiltermanager.h:71
+#: ../common/rpackagefilter.cc:46 ../gtk/rgfiltermanager.h:71
 msgid "Maintainer"
 msgstr "Майнтайнэр"
 
-#: ../common/rpackagefilter.cc:47 ../gtk/glade/window_find.glade.h:8
+#: ../common/rpackagefilter.cc:47
 msgid "Version"
 msgstr "Вэрсія"
 
@@ -751,32 +752,29 @@ msgid "ReverseDepends"
 msgstr "ЗваротныяЗалежнасьці"
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
-#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:129
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr "Арыгінальнае"
 
 #. Origin (e.g. security.debian.org)
-#: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:50
-#: ../gtk/rgmainwindow.cc:937 ../gtk/glade/window_filters.glade.h:15
-#: ../gtk/rgfiltermanager.h:81
+#: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgmainwindow.cc:1054 ../gtk/rgfiltermanager.h:81
 msgid "Component"
 msgstr "Кампанэнт"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
-#: ../gtk/glade/window_filters.glade.h:64
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:145
+#: ../gtk/rgpreferenceswindow.cc:50 ../gtk/rgfetchprogress.cc:91
 msgid "Status"
 msgstr "Стан"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: ../common/rpackagefilter.cc:62 ../gtk/rgfiltermanager.cc:180
+#: ../common/rpackagefilter.cc:62 ../gtk/rgfiltermanager.cc:235
 msgid "Pattern"
 msgstr "Шаблён"
 
-#: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:49
-#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:63
+#: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:50
+#: ../gtk/rgmainwindow.cc:1033
 msgid "Section"
 msgstr "Падзел"
 
@@ -798,19 +796,19 @@ msgstr "_Файл"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Кепскі сталы выраз '%s' у файле ReducedView."
 
-#: ../common/rpackagelister.cc:317 ../common/rpackagelister.cc:323
-#: ../common/rpackagelister.cc:333
+#: ../common/rpackagelister.cc:324 ../common/rpackagelister.cc:330
+#: ../common/rpackagelister.cc:340
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr ""
 "Унутраная памылка у часе адкрыцьця кэшу (%d).·Калі ласка паведаміце аб "
 "памылцы распрацоўнікам."
 
-#: ../common/rpackagelister.cc:472
+#: ../common/rpackagelister.cc:519
 msgid "Unable to correct dependencies"
 msgstr "Немагчыма выправіць залежнасьці"
 
-#: ../common/rpackagelister.cc:474
+#: ../common/rpackagelister.cc:521
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -818,21 +816,21 @@ msgstr ""
 "Немагчыма пазначыць абнаўленьні\n"
 "Праверце вашу сыстэму на наяўнасьць памылак."
 
-#: ../common/rpackagelister.cc:486
+#: ../common/rpackagelister.cc:533
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Унутраная памылка у часе выкананьня функцыяў pkgAllUpgrade, калі ласка "
 "паведаміце аб гэтым распрацоўнікам."
 
-#: ../common/rpackagelister.cc:504
+#: ../common/rpackagelister.cc:551
 msgid "dist upgrade Failed"
 msgstr "збой абнаўленьня дыстрыбутыву"
 
-#: ../common/rpackagelister.cc:1266
+#: ../common/rpackagelister.cc:1290
 msgid "Unable to lock the list directory"
 msgstr "Немагчыма заблякаваць каталёг сьпісаў"
 
-#: ../common/rpackagelister.cc:1288
+#: ../common/rpackagelister.cc:1326
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -840,7 +838,7 @@ msgstr ""
 "Release-файлы для пэўных сховішчаў не могуць быць атрыманыя ці правераныя.\n"
 "Гэткія сховішчы ігнараваныя."
 
-#: ../common/rpackagelister.cc:1379 ../gtk/rgrepositorywin.cc:356
+#: ../common/rpackagelister.cc:1410 ../gtk/rgrepositorywin.cc:362
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ігнараваньне памылковыя запісы ў файле sources.list!"
 
@@ -848,7 +846,7 @@ msgstr "Ігнараваньне памылковыя запісы ў файле
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1430
+#: ../common/rpackagelister.cc:1461
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -859,27 +857,27 @@ msgstr ""
 "  %s\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1454
+#: ../common/rpackagelister.cc:1485
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Пэўныя з пакетаў не могуць быць атрыманыя з паслужніка(ў).\n"
 
-#: ../common/rpackagelister.cc:1457
+#: ../common/rpackagelister.cc:1488
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Працягваць ігнаруючы гэтыя пакеты?"
 
-#: ../common/rpackagelister.cc:1464
+#: ../common/rpackagelister.cc:1495
 msgid "Unable to correct missing packages"
 msgstr "Немагчыма выправіць адсутныя пакеты"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1602
+#: ../common/rpackagelister.cc:1633
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
 msgstr ""
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1611
+#: ../common/rpackagelister.cc:1642
 #, fuzzy
 msgid ""
 "\n"
@@ -887,7 +885,7 @@ msgid ""
 msgstr "пакет зьяўляецца віртуальным"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1620
+#: ../common/rpackagelister.cc:1651
 #, fuzzy
 msgid ""
 "\n"
@@ -897,7 +895,7 @@ msgstr ""
 "Гэтая апэрацыя патрабуе наступныя зьмены.\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1629
+#: ../common/rpackagelister.cc:1660
 #, fuzzy
 msgid ""
 "\n"
@@ -905,7 +903,7 @@ msgid ""
 msgstr "Выдаленьне пакетаў: "
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1638
+#: ../common/rpackagelister.cc:1669
 #, fuzzy
 msgid ""
 "\n"
@@ -913,7 +911,7 @@ msgid ""
 msgstr "пакет зьяўляецца віртуальным"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1649
+#: ../common/rpackagelister.cc:1680
 #, fuzzy
 msgid ""
 "\n"
@@ -923,7 +921,7 @@ msgstr ""
 "Усталяваны пакет:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1659
+#: ../common/rpackagelister.cc:1690
 #, fuzzy
 msgid ""
 "\n"
@@ -932,21 +930,21 @@ msgstr ""
 "\n"
 "Усталяваны пакет:\n"
 
-#: ../common/rpackagelister.cc:1676
+#: ../common/rpackagelister.cc:1707
 msgid "Unable to lock the download directory"
 msgstr "Немагчыма заблякаваць каталёг для пампаваньня"
 
-#: ../common/rpackagelister.cc:1760
+#: ../common/rpackagelister.cc:1791
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr "Радок %u задаўгі ў файле пазначэньня."
 
-#: ../common/rpackagelister.cc:1774 ../common/rpackagelister.cc:1778
+#: ../common/rpackagelister.cc:1805 ../common/rpackagelister.cc:1809
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr "Памылковы радок %u у файле пазначэньня"
 
-#: ../common/rpackagelister.cc:1790
+#: ../common/rpackagelister.cc:1821
 msgid "Setting markings..."
 msgstr "Усталёўваецца пазначэньне..."
 
@@ -954,108 +952,112 @@ msgstr "Усталёўваецца пазначэньне..."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "памылка bzzip2, магчыма дыск перапоўнены."
 
-#: ../common/rpackageview.h:100
+#: ../common/rpackageview.h:105
 msgid "Sections"
 msgstr "Падзелы"
 
-#: ../common/rpackageview.h:110
+#: ../common/rpackageview.h:115
 msgid "Alphabetic"
 msgstr "Па альфабэце"
 
-#: ../common/rpackageview.h:166
+#: ../common/rpackageview.h:172
 msgid "Search History"
 msgstr "Гісторыя пошуку"
 
-#: ../common/rpackageview.h:221
+#: ../common/rpackageview.h:227
 msgid "Custom"
 msgstr "Асабіста"
 
-#: ../common/rpackageview.cc:129
+#: ../common/rpackageview.cc:135
 msgid "Installed (unsupported)"
 msgstr "Усталяваны (не падтрымліваецца)"
 
-#: ../common/rpackageview.cc:134
+#: ../common/rpackageview.cc:140
 msgid "Not installed (unsupported)"
 msgstr "Не усталяваны (не падтрымліваецца)"
 
-#: ../common/rpackageview.cc:143
+#: ../common/rpackageview.cc:149
 #, fuzzy
 msgid "Installed (auto removable)"
 msgstr "Усталяваны (здольны абнаўляцца)"
 
-#: ../common/rpackageview.cc:150
+#: ../common/rpackageview.cc:156
 #, fuzzy
 msgid "Installed (manual)"
 msgstr "Усталяваны (здольны абнаўляцца)"
 
-#: ../common/rpackageview.cc:156
+#: ../common/rpackageview.cc:162
 #, fuzzy
 msgid "Broken dependencies"
 msgstr "адваротныя залежнасьці"
 
-#: ../common/rpackageview.cc:158 ../gtk/glade/window_filters.glade.h:39
+#: ../common/rpackageview.cc:164
 msgid "New in repository"
 msgstr "Новы ў сховішчы"
 
-#: ../common/rpackageview.cc:160 ../gtk/glade/window_filters.glade.h:55
+#: ../common/rpackageview.cc:166
 msgid "Pinned"
 msgstr "Прычэплены"
 
-#: ../common/rpackageview.cc:164
+#: ../common/rpackageview.cc:170
 msgid "Installed (local or obsolete)"
 msgstr "Усталяваныя (мясцовыя ці састарэлыя)"
 
-#: ../common/rpackageview.cc:170
+#: ../common/rpackageview.cc:176
 msgid "Not installed (residual config)"
 msgstr "Не ўсталяваны (рэшткавая канфігурацыя)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:304
+#: ../common/rpackageview.cc:310
 #, fuzzy
 msgid "Searching"
 msgstr "Пошук"
 
-#: ../common/rpackageview.cc:492
+#: ../common/rpackageview.cc:497
 msgid "Search Filter"
 msgstr "Фільтар пошуку"
 
 # This is filter name, it's better to not translate it
-#: ../common/rpackageview.cc:500
+#: ../common/rpackageview.cc:505
 msgid "Tasks"
 msgstr "Заданьні"
 
-#: ../common/rpackageview.cc:506
+#: ../common/rpackageview.cc:511
 msgid "Reduced View"
 msgstr "Паменшаны выгляд"
 
-#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:356
+#: ../common/rpackageview.cc:528 ../gtk/gsynaptic.cc:585
+#: ../gtk/rgsummarywindow.cc:359
 msgid "Marked Changes"
 msgstr "Пазначаныя зьмены"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:534
+#: ../common/rpackageview.cc:539
 #, fuzzy
 msgid "Package with Debconf"
 msgstr "Пакет з файлам канфігурацыі"
 
-#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:546
 msgid "Upgradable (upstream)"
 msgstr "Абнаўляльны (з асноўнае галіны)"
 
-#: ../common/rpackageview.cc:547
+#: ../common/rpackageview.cc:559
+msgid "Community Maintained (installed)"
+msgstr ""
+
+#: ../common/rpackageview.cc:565
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "Рэкамэндаваны"
 
-#: ../common/rpackageview.cc:561
+#: ../common/rpackageview.cc:579
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2114
-#: ../gtk/rgmainwindow.cc:2795 ../gtk/rgmainwindow.cc:2881
-#: ../gtk/rgmainwindow.cc:3054
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2327
+#: ../gtk/rgmainwindow.cc:3029 ../gtk/rgmainwindow.cc:3161
+#: ../gtk/rgmainwindow.cc:3338
 #, c-format
 msgid "Can't read %s"
 msgstr "Немагчыма прачытаць %s"
@@ -1151,28 +1153,28 @@ msgid ""
 "it to finish first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:368
+#: ../gtk/gsynaptic.cc:371
 #, fuzzy
 msgid "Unable to get exclusive lock"
 msgstr "Немагчыма перайсьці ў %s"
 
-#: ../gtk/gsynaptic.cc:369
+#: ../gtk/gsynaptic.cc:372
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) is already running. Please close that application first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:412
+#: ../gtk/gsynaptic.cc:418
 msgid "Starting without administrative privileges"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:414
+#: ../gtk/gsynaptic.cc:420
 msgid ""
 "You will not be able to apply any changes. But you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:480
+#: ../gtk/gsynaptic.cc:486
 msgid "Synaptic Package Manager "
 msgstr "Кіраўнік пакетаў Synaptic "
 
@@ -1188,12 +1190,12 @@ msgstr "Памылковая назва дыска!"
 msgid "Disc Label"
 msgstr "Назва дыска"
 
-#: ../gtk/rgaboutpanel.cc:64 ../gtk/glade/window_about.glade.h:5
+#: ../gtk/rgaboutpanel.cc:68
 msgid "Credits"
 msgstr "Падзякі"
 
 #. skipTaskbar(true);
-#: ../gtk/rgaboutpanel.cc:82 ../gtk/glade/window_about.glade.h:4
+#: ../gtk/rgaboutpanel.cc:90
 msgid "About Synaptic"
 msgstr "Пра Synaptic"
 
@@ -1241,14 +1243,14 @@ msgstr "Будуць пераўсталяваныя"
 msgid "To be kept"
 msgstr "Будуць захаваныя"
 
-#: ../gtk/rgdebinstallprogress.cc:215
+#: ../gtk/rgdebinstallprogress.cc:216
 #, fuzzy, c-format
 msgid ""
 "Replace configuration file\n"
 "'%s'?"
 msgstr "Пакінуць канфігурацыю"
 
-#: ../gtk/rgdebinstallprogress.cc:216
+#: ../gtk/rgdebinstallprogress.cc:217
 #, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
@@ -1257,16 +1259,25 @@ msgid ""
 "package maintainers version? "
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:370 ../gtk/rginstallprogress.cc:288
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "Ужываньне зьменаў"
 
-#: ../gtk/rgdebinstallprogress.cc:456
+#: ../gtk/rgdebinstallprogress.cc:418
+msgid "Copy"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:427
+#, fuzzy
+msgid "Select All"
+msgstr "Вылучыць _усё"
+
+#: ../gtk/rgdebinstallprogress.cc:482
 msgid "Ctrl-c pressed"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:457
+#: ../gtk/rgdebinstallprogress.cc:483
 #, fuzzy
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
@@ -1276,88 +1287,116 @@ msgstr ""
 "Вы сапраўды жадаеце гэта зрабіць?"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:511
+#: ../gtk/rgdebinstallprogress.cc:584
 #, fuzzy, c-format
 msgid "Error in package %s"
 msgstr "Прапаноўвае пакеты"
 
 #. running dpkg --configure -a
-#: ../gtk/rgdebinstallprogress.cc:518
+#: ../gtk/rgdebinstallprogress.cc:591
 msgid "Trying to recover from package failure"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:609
+#: ../gtk/rgdebinstallprogress.cc:685
 msgid "Error failed to fork pty"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:702
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
+#: ../gtk/rgdebinstallprogress.cc:761 ../gtk/rgdebinstallprogress.cc:764
 #, fuzzy
 msgid "Changes applied"
 msgstr "Зьмяніць выгляд: "
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:830
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
 "wait."
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:749
+#: ../gtk/rgdebinstallprogress.cc:835
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Усталёўвае, выдаляе і абнаўляе пакеты"
 
-#: ../gtk/rgdebinstallprogress.cc:751
+#: ../gtk/rgdebinstallprogress.cc:837
 msgid "Removing software"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:753
+#: ../gtk/rgdebinstallprogress.cc:839
 #, fuzzy
 msgid "Installing software"
 msgstr "Усталяваць прапанаванае"
 
-#: ../gtk/rgpreferenceswindow.cc:49
+#: ../gtk/rgpreferenceswindow.cc:50
 msgid "Supported"
 msgstr "Падтрыманае"
 
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:47
+#: ../gtk/rgpreferenceswindow.cc:50
 msgid "Package Name"
 msgstr "Назва пакета"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/rgpreferenceswindow.cc:50 ../gtk/rgmainwindow.cc:959
+#: ../gtk/rgpreferenceswindow.cc:51 ../gtk/rgmainwindow.cc:1076
 msgid "Installed Version"
 msgstr "Усталяваная вэрсія"
 
-#: ../gtk/rgpreferenceswindow.cc:50
+#: ../gtk/rgpreferenceswindow.cc:51
 msgid "Available Version"
 msgstr "Даступная вэрсія"
 
-#: ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgpreferenceswindow.cc:52
 msgid "Installed Size"
 msgstr "Усталяваны памер"
 
-#: ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgpreferenceswindow.cc:52
 msgid "Download Size"
 msgstr "Памер для выгрузкі"
 
-#: ../gtk/rgpreferenceswindow.cc:407 ../gtk/rgmainwindow.cc:1779
-#: ../gtk/rgterminstallprogress.cc:151
+#: ../gtk/rgpreferenceswindow.cc:58
+msgid "Keep Configuration"
+msgstr "Пакінуць канфігурацыю"
+
+#: ../gtk/rgpreferenceswindow.cc:58
+msgid "Completely"
+msgstr "Цалкам"
+
+#: ../gtk/rgpreferenceswindow.cc:61 ../gtk/rgpreferenceswindow.cc:64
+msgid "Always Ask"
+msgstr "Заўсёды пытацца"
+
+#: ../gtk/rgpreferenceswindow.cc:61
+msgid "Ignore"
+msgstr "Ігнараваць"
+
+#: ../gtk/rgpreferenceswindow.cc:61
+msgid "Automatically"
+msgstr "Аўтаматычна"
+
+#: ../gtk/rgpreferenceswindow.cc:64
+msgid "Default Upgrade"
+msgstr "Дапомнае абнаўленьне"
+
+#: ../gtk/rgpreferenceswindow.cc:64
+msgid "Smart Upgrade"
+msgstr "Разумнае абнаўленьне"
+
+#: ../gtk/rgpreferenceswindow.cc:424 ../gtk/rgmainwindow.cc:1985
+#: ../gtk/rgterminstallprogress.cc:156
 msgid "An error occurred while saving configurations."
 msgstr "Адбылася памылка ў часе захаваньня канфігурацыяў."
 
-#: ../gtk/rgpreferenceswindow.cc:457
+#: ../gtk/rgpreferenceswindow.cc:474
 msgid "Choose font"
 msgstr "Выберыце шрыфт"
 
-#: ../gtk/rgpreferenceswindow.cc:886
+#: ../gtk/rgpreferenceswindow.cc:919
 msgid "Color selection"
 msgstr "Выбар колеру"
 
-#: ../gtk/rgpreferenceswindow.cc:987
+#: ../gtk/rgpreferenceswindow.cc:1088
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1365,31 +1404,30 @@ msgid ""
 "distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:995
+#: ../gtk/rgpreferenceswindow.cc:1096
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
 "option as you will not get security updates automatically! If you manually "
 "force a version the package version will follow the chosen distribution."
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1104
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:1040
+#: ../gtk/rgpreferenceswindow.cc:1139
 msgid "Visible"
 msgstr "Бачнае"
 
-#: ../gtk/rgpreferenceswindow.cc:1118
-#: ../gtk/glade/window_preferences.glade.h:66
+#: ../gtk/rgpreferenceswindow.cc:1217
 msgid "Preferences"
 msgstr "Перавагі"
 
-#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1118
 msgid "Size"
 msgstr "Памер"
 
-#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:1011
 msgid "Package"
 msgstr "Пакет"
 
@@ -1397,7 +1435,7 @@ msgstr "Пакет"
 msgid "URI"
 msgstr "URI"
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:202
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1408,59 +1446,59 @@ msgstr ""
 "%s\n"
 "у прыладу·%s"
 
-#: ../gtk/rgfetchprogress.cc:329
+#: ../gtk/rgfetchprogress.cc:340
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Выгрузка файла %li·з·%li·з·%s/s·-·%s·засталося"
 
-#: ../gtk/rgfetchprogress.cc:335
-msgid "Download rate: unknown"
-msgstr ""
+#: ../gtk/rgfetchprogress.cc:346
+#, fuzzy
+msgid "Download rate: ..."
+msgstr "Выгрузіць:"
 
-#: ../gtk/rgfetchprogress.cc:337
+#: ../gtk/rgfetchprogress.cc:348
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Выгрузка файлу %li·з·%li"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Queued"
 msgstr "Пастаўлены ў чаргу"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:404
 msgid "Done"
 msgstr "Зроблена"
 
-#: ../gtk/rgfetchprogress.cc:396
+#: ../gtk/rgfetchprogress.cc:407
 msgid "Hit"
 msgstr "Хіт"
 
-#: ../gtk/rgfetchprogress.cc:399
+#: ../gtk/rgfetchprogress.cc:410
 msgid "Failed"
 msgstr "Няўдала"
 
-#: ../gtk/rgfiltermanager.cc:40 ../gtk/glade/window_filters.glade.h:24
+#: ../gtk/rgfiltermanager.cc:59
 msgid "Filters"
 msgstr "Фільтры"
 
-#: ../gtk/rgfiltermanager.cc:165
+#: ../gtk/rgfiltermanager.cc:220
 msgid "Field"
 msgstr "Поле"
 
-#: ../gtk/rgfiltermanager.cc:172
+#: ../gtk/rgfiltermanager.cc:227
 msgid "Operator"
 msgstr "Апэратар"
 
-#: ../gtk/rgfiltermanager.cc:750
+#: ../gtk/rgfiltermanager.cc:802
 #, c-format
 msgid "New Filter %i"
 msgstr "Новы фільтар %i"
 
 #: ../gtk/rginstallprogress.cc:44
-#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:2
 msgid "Package Manager output"
 msgstr "Вывад кіраўніка пакетаў"
 
-#: ../gtk/rginstallprogress.cc:85
+#: ../gtk/rginstallprogress.cc:87
 #, c-format
 msgid ""
 "\n"
@@ -1471,7 +1509,7 @@ msgstr ""
 "У часе ўсталёўкі пакета %s:\n"
 "\n"
 
-#: ../gtk/rginstallprogress.cc:89
+#: ../gtk/rginstallprogress.cc:91
 #, c-format
 msgid ""
 "\n"
@@ -1482,7 +1520,7 @@ msgstr ""
 "У часе падрыхтоўкі да ўсталяваньня:\n"
 "\n"
 
-#: ../gtk/rginstallprogress.cc:131
+#: ../gtk/rginstallprogress.cc:133
 #, c-format
 msgid ""
 "APT system reports:\n"
@@ -1501,16 +1539,16 @@ msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
 
-#: ../gtk/rgpkgdetails.cc:148
+#: ../gtk/rgpkgdetails.cc:174
 #, c-format
 msgid "%s Properties"
 msgstr "%s уласьцівасьці"
 
-#: ../gtk/rgpkgdetails.cc:213
+#: ../gtk/rgpkgdetails.cc:240
 msgid "This application is supported by the distribution"
 msgstr ""
 
-#: ../gtk/rgpkgdetails.cc:223
+#: ../gtk/rgpkgdetails.cc:250
 msgid "Get Screenshot"
 msgstr ""
 
@@ -1518,47 +1556,54 @@ msgstr ""
 #. the "Properties/Available versions" window
 #. e.g. "0.56 (unstable)"
 #. "0.53.4 (testing)"
-#: ../gtk/rgpkgdetails.cc:273
+#: ../gtk/rgpkgdetails.cc:301
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../gtk/rgmainwindow.cc:170
+#: ../gtk/rgmainwindow.cc:174
 msgid "All"
 msgstr "Усё"
 
-#: ../gtk/rgmainwindow.cc:366 ../gtk/glade/window_main.glade.h:34
-#: ../gtk/glade/window_details.glade.h:19
+#: ../gtk/rgmainwindow.cc:377
 msgid "No package is selected.\n"
 msgstr "Няма вылучаных пакетаў.\n"
 
-#: ../gtk/rgmainwindow.cc:526
+#: ../gtk/rgmainwindow.cc:553
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr "Выбраць вэрсію %s якая мусіць быць усталявана"
 
-#: ../gtk/rgmainwindow.cc:528
+#: ../gtk/rgmainwindow.cc:555
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
 
+#: ../gtk/rgmainwindow.cc:900
+msgid "Rebuilding search index"
+msgstr ""
+
+#: ../gtk/rgmainwindow.cc:922
+msgid "Quick search"
+msgstr ""
+
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: ../gtk/rgmainwindow.cc:859
+#: ../gtk/rgmainwindow.cc:976
 msgid "S"
 msgstr "С"
 
 # This is filter name, it's better to not translate it
-#: ../gtk/rgmainwindow.cc:980
+#: ../gtk/rgmainwindow.cc:1097
 msgid "Latest Version"
 msgstr "Апошняя вэрсія"
 
-#: ../gtk/rgmainwindow.cc:1022
+#: ../gtk/rgmainwindow.cc:1139
 msgid "Download"
 msgstr "Выгрузіць"
 
-#: ../gtk/rgmainwindow.cc:1297
+#: ../gtk/rgmainwindow.cc:1438
 #, fuzzy
 msgid ""
 "Reload the package information to become informed about new, removed or "
@@ -1567,60 +1612,73 @@ msgstr ""
 "Перазагрузка зьвестак аб пакетах для паведамленьня аб новых, выдаленых ці "
 "абноўленых пакетах."
 
-#: ../gtk/rgmainwindow.cc:1303
+#: ../gtk/rgmainwindow.cc:1444
 msgid "Mark all possible upgrades"
 msgstr "Пазначыць усе магчымыя абнаўленьні"
 
-#: ../gtk/rgmainwindow.cc:1307 ../gtk/glade/window_summary.glade.h:5
+#: ../gtk/rgmainwindow.cc:1448
 msgid "Apply all marked changes"
 msgstr "Ужыць усе пазначаныя зьмены"
 
-#: ../gtk/rgmainwindow.cc:1488
+#: ../gtk/rgmainwindow.cc:1452
+#, fuzzy
+msgid "View package properties"
+msgstr "Адлюстраваць уласьцівасьці пакету ў асноўным акне"
+
+#: ../gtk/rgmainwindow.cc:1456
+#, fuzzy
+msgid "Search for packages"
+msgstr "Пошук"
+
+#: ../gtk/rgmainwindow.cc:1660
 msgid "Unmark"
 msgstr "Зьняць вылучэньне"
 
-#: ../gtk/rgmainwindow.cc:1496
+#: ../gtk/rgmainwindow.cc:1668
 msgid "Mark for Installation"
 msgstr "Пазначыць для ўсталёўкі"
 
-#: ../gtk/rgmainwindow.cc:1504
+#: ../gtk/rgmainwindow.cc:1676
 msgid "Mark for Reinstallation"
 msgstr "Пазначыць для пераўсталёўкі"
 
-#: ../gtk/rgmainwindow.cc:1513
+#: ../gtk/rgmainwindow.cc:1685
 msgid "Mark for Upgrade"
 msgstr "Пазначыць для абнаўленьня"
 
-#: ../gtk/rgmainwindow.cc:1521
+#: ../gtk/rgmainwindow.cc:1693
 msgid "Mark for Removal"
 msgstr "Пазначыць для выдаленьня"
 
-#: ../gtk/rgmainwindow.cc:1530
+#: ../gtk/rgmainwindow.cc:1702
 msgid "Mark for Complete Removal"
 msgstr "Пазначыць для поўнага выдаленьня"
 
-#: ../gtk/rgmainwindow.cc:1542
+#: ../gtk/rgmainwindow.cc:1714
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Выдаліць з улікам залежнасьцяў закінутых пакетаў"
 
-#: ../gtk/rgmainwindow.cc:1554
+#: ../gtk/rgmainwindow.cc:1726
 msgid "Hold Current Version"
 msgstr "Замкнуць бягучую вэрсію"
 
-#: ../gtk/rgmainwindow.cc:1563 ../gtk/glade/window_main.glade.h:37
-#: ../gtk/glade/window_filters.glade.h:57
+#: ../gtk/rgmainwindow.cc:1735
 msgid "Properties"
 msgstr "Уласьцівасьці"
 
-#: ../gtk/rgmainwindow.cc:1575
+#: ../gtk/rgmainwindow.cc:1747
 msgid "Mark Recommended for Installation"
 msgstr "Пазначыць рэкамэндаванае для ўсталёўкі"
 
-#: ../gtk/rgmainwindow.cc:1579
+#: ../gtk/rgmainwindow.cc:1751
 msgid "Mark Suggested for Installation"
 msgstr "Пазначыць прапанаванае для ўсталёўкі"
 
-#: ../gtk/rgmainwindow.cc:1683
+#: ../gtk/rgmainwindow.cc:1836
+msgid "No apt-xapian-index found"
+msgstr ""
+
+#: ../gtk/rgmainwindow.cc:1887
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1628,7 +1686,7 @@ msgstr ""
 "Выдаленьне гэтага пакету можа прывесьці сыстэму ў непрацоўны стан.\n"
 "Вы сапраўды жадаеце гэта зрабіць?"
 
-#: ../gtk/rgmainwindow.cc:1723
+#: ../gtk/rgmainwindow.cc:1927
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1637,7 +1695,7 @@ msgstr ""
 "%i пакетаў у сьпісе, %i усталяваныя, %i сапсаваныя. %i для усталёўкі/"
 "абнаўленьня, %i для выдаленьня; %s будзе вызвалена"
 
-#: ../gtk/rgmainwindow.cc:1729
+#: ../gtk/rgmainwindow.cc:1933
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1646,7 +1704,7 @@ msgstr ""
 "%i пакетаў у сьпісе, %i усталяваныя, %i сапсаваныя. %i для усталёўкі/"
 "абнаўленьня, %i для выдаленьня; %s будзе скарыстана"
 
-#: ../gtk/rgmainwindow.cc:1735
+#: ../gtk/rgmainwindow.cc:1939
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1655,7 +1713,7 @@ msgstr ""
 "%i пакетаў у сьпісе, %i усталяваныя, %i сапсаваныя. %i для усталёўкі/"
 "абнаўленьня, %i для выдаленьня"
 
-#: ../gtk/rgmainwindow.cc:1796
+#: ../gtk/rgmainwindow.cc:2002
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1687,12 +1745,12 @@ msgstr[2] ""
 "\n"
 "Скарыстайце фільтар \"Сапсаваны\" каб вызначыць іх."
 
-#: ../gtk/rgmainwindow.cc:1959
+#: ../gtk/rgmainwindow.cc:2171
 #, fuzzy
 msgid "Downloading Changelog"
 msgstr "Выгрузка часопісу зьменаў"
 
-#: ../gtk/rgmainwindow.cc:1960
+#: ../gtk/rgmainwindow.cc:2172
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1701,34 +1759,34 @@ msgstr ""
 "кожнай вэрсіі пакету."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1973
+#: ../gtk/rgmainwindow.cc:2185
 #, c-format
 msgid "%s Changelog"
 msgstr "Часопіс зьменаў для %s"
 
-#: ../gtk/rgmainwindow.cc:2064
+#: ../gtk/rgmainwindow.cc:2277
 msgid "Do you want to add another CD-ROM?"
 msgstr "Жадаеце дадаць іншы CD-ROM?"
 
-#: ../gtk/rgmainwindow.cc:2101
+#: ../gtk/rgmainwindow.cc:2314
 msgid "Open changes"
 msgstr "Адкрыць зьмены"
 
-#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2713
-#: ../gtk/rgmainwindow.cc:2849 ../gtk/rgmainwindow.cc:3027
+#: ../gtk/rgmainwindow.cc:2351 ../gtk/rgmainwindow.cc:2947
+#: ../gtk/rgmainwindow.cc:3128 ../gtk/rgmainwindow.cc:3311
 #, c-format
 msgid "Can't write %s"
 msgstr "Немагчыма запісаць %s"
 
-#: ../gtk/rgmainwindow.cc:2157
+#: ../gtk/rgmainwindow.cc:2370
 msgid "Save changes"
 msgstr "Захаваць зьмены"
 
-#: ../gtk/rgmainwindow.cc:2164
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Save full state, not only changes"
 msgstr "Захаваць поўны стан (не толькі зьмены)"
 
-#: ../gtk/rgmainwindow.cc:2281
+#: ../gtk/rgmainwindow.cc:2494
 #, fuzzy
 msgid "Repositories changed"
 msgstr "Сховішчы"
@@ -1736,26 +1794,26 @@ msgstr "Сховішчы"
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repository (sources.list entry) a reload (apt-get update) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2285
+#: ../gtk/rgmainwindow.cc:2498
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2296
+#: ../gtk/rgmainwindow.cc:2509
 msgid "Never show this message again"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:2355
+#: ../gtk/rgmainwindow.cc:2578
 #, c-format
 msgid "Found %i packages"
 msgstr "Маецца %i пакетаў"
 
-#: ../gtk/rgmainwindow.cc:2396
+#: ../gtk/rgmainwindow.cc:2619
 msgid "Starting help viewer..."
 msgstr "Запуск праглядальніку дапамогі..."
 
-#: ../gtk/rgmainwindow.cc:2416
+#: ../gtk/rgmainwindow.cc:2634
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1775,7 +1833,14 @@ msgstr ""
 "ці прагледзіць вэрсію ў фармаце html, якая знаходзіцца ў тэчцы 'synaptic/"
 "html'."
 
-#: ../gtk/rgmainwindow.cc:2568
+#: ../gtk/rgmainwindow.cc:2653
+#, fuzzy, c-format
+msgid ""
+"An error occured while starting the help viewer\n"
+"\tCommand: %s"
+msgstr "Адбылася памылка ў часе захаваньня канфігурацыяў."
+
+#: ../gtk/rgmainwindow.cc:2802
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1783,22 +1848,22 @@ msgstr ""
 "Немагчыма выканаць праграму наладкі!\n"
 "Вы мусіце усталяваць пакет 'libgnome2-perl'."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2808
 msgid "Starting package configuration tool..."
 msgstr "Выкананьне праграмы наладкі пакету..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2589
+#: ../gtk/rgmainwindow.cc:2823
 msgid "Starting package documentation viewer..."
 msgstr "Выкананьне праглядальніку дакумэнтацыі пакету..."
 
-#: ../gtk/rgmainwindow.cc:2601
+#: ../gtk/rgmainwindow.cc:2835
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr "Вы мусіце усталяваць пакет \"dwww\" каб гартаць дакумэнтацыю пакету"
 
-#: ../gtk/rgmainwindow.cc:2677
+#: ../gtk/rgmainwindow.cc:2911
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1806,25 +1871,25 @@ msgstr ""
 "Немагчыма ужыць зьмены!\n"
 "Сьпярша выпраўце сапсаваныя пакеты."
 
-#: ../gtk/rgmainwindow.cc:2698
+#: ../gtk/rgmainwindow.cc:2932
 msgid "Applying marked changes. This may take a while..."
 msgstr "Выконваюцца выбраныя зьмены. Гэта можа заняць пэўны час."
 
-#: ../gtk/rgmainwindow.cc:2702
+#: ../gtk/rgmainwindow.cc:2936
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Загрузка файлаў пакету"
 
-#: ../gtk/rgmainwindow.cc:2778
+#: ../gtk/rgmainwindow.cc:3012
 msgid "Do you want to quit Synaptic?"
 msgstr "Жадаеце выйсьці з Synaptic?"
 
-#: ../gtk/rgmainwindow.cc:2834
+#: ../gtk/rgmainwindow.cc:3113
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "Загрузка зьвестак аб пакеце"
 
-#: ../gtk/rgmainwindow.cc:2835
+#: ../gtk/rgmainwindow.cc:3114
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1832,19 +1897,19 @@ msgstr ""
 "Сховішча будзе праверана на наяўнасьць новых , выдаленых і абноўленых "
 "пакетаў."
 
-#: ../gtk/rgmainwindow.cc:2838
+#: ../gtk/rgmainwindow.cc:3117
 msgid "Reloading package information..."
 msgstr "Перазагрузка зьвестак аб пакетах..."
 
-#: ../gtk/rgmainwindow.cc:2906
+#: ../gtk/rgmainwindow.cc:3189
 msgid "Failed to resolve dependency problems!"
 msgstr "Збой разьвязаньня праблемаў залежнасьцяў!"
 
-#: ../gtk/rgmainwindow.cc:2908
+#: ../gtk/rgmainwindow.cc:3191
 msgid "Successfully fixed dependency problems"
 msgstr "Праблемы залежнасьцяў пасьпяхова разьвязаныя"
 
-#: ../gtk/rgmainwindow.cc:2924
+#: ../gtk/rgmainwindow.cc:3207
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1852,29 +1917,29 @@ msgstr ""
 "Немагчыма абнавіць сыстэму!\n"
 "Сьпярша выпраўце сапсаваныя пакеты."
 
-#: ../gtk/rgmainwindow.cc:2973
+#: ../gtk/rgmainwindow.cc:3257
 msgid "Marking all available upgrades..."
 msgstr "Пазначэньне усіх магчымых абнаўленьняў..."
 
-#: ../gtk/rgmainwindow.cc:2992
+#: ../gtk/rgmainwindow.cc:3276
 msgid "Successfully marked available upgrades"
 msgstr "Усе магчымыя абнаўленьні пасьпяхова пазначаны"
 
-#: ../gtk/rgmainwindow.cc:2994
+#: ../gtk/rgmainwindow.cc:3278
 msgid "Failed to mark all available upgrades!"
 msgstr "Збой пазначэньня абнаўленьняў!"
 
-#: ../gtk/rgmainwindow.cc:3373
+#: ../gtk/rgmainwindow.cc:3657
 #, fuzzy
 msgid "Save script"
 msgstr "Апісаньне"
 
-#: ../gtk/rgmainwindow.cc:3400
+#: ../gtk/rgmainwindow.cc:3684
 #, fuzzy
 msgid "Select directory"
 msgstr "Гісторыя пошуку"
 
-#: ../gtk/rgmainwindow.cc:3412
+#: ../gtk/rgmainwindow.cc:3696
 #, fuzzy
 msgid "Please select a directory"
 msgstr "Устаўце дыск ў прыладу."
@@ -1890,7 +1955,7 @@ msgstr ""
 " Пакеты ў гэтым кампанэнце не падтрымліваюцца. Вы упэўненыя ў сваіх "
 "дзеяньнях?"
 
-#: ../gtk/rgrepositorywin.cc:124 ../gtk/glade/window_repositories.glade.h:3
+#: ../gtk/rgrepositorywin.cc:124
 msgid "Repositories"
 msgstr "Сховішчы"
 
@@ -1907,7 +1972,7 @@ msgstr "Тып"
 msgid "Vendor"
 msgstr "Пастаўшчык"
 
-#: ../gtk/rgrepositorywin.cc:191 ../gtk/glade/window_preferences.glade.h:36
+#: ../gtk/rgrepositorywin.cc:191
 msgid "Distribution"
 msgstr "Дыстрыбутыў"
 
@@ -1923,16 +1988,15 @@ msgstr "Бінарны (deb/rpm)"
 msgid "Source (deb-src)"
 msgstr "Крынічны (*-src)"
 
-#: ../gtk/rgrepositorywin.cc:267 ../gtk/rgrepositorywin.cc:409
-#: ../gtk/glade/window_repositories.glade.h:1
+#: ../gtk/rgrepositorywin.cc:268 ../gtk/rgrepositorywin.cc:415
 msgid "(no vendor)"
 msgstr "(няма пастаўшчыка)"
 
-#: ../gtk/rgrepositorywin.cc:363
+#: ../gtk/rgrepositorywin.cc:369
 msgid "Cannot read vendors.list file"
 msgstr "Немагчыма прачытаць файл vendors.list"
 
-#: ../gtk/rgrepositorywin.cc:536
+#: ../gtk/rgrepositorywin.cc:542
 msgid "Unknown source type"
 msgstr "Невядомы тып крыніцы"
 
@@ -1997,20 +2061,20 @@ msgstr "<b>%s</b> (вэрсія <i>%s</i>) мусіць быць усталяв�
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (вэрсія <i>%s</i>) мусіць быць пераўсталяваны\n"
 
-#: ../gtk/rgsummarywindow.cc:318
+#: ../gtk/rgsummarywindow.cc:320
 #, fuzzy
 msgid "_Hide Details"
 msgstr "_Паказаць падрабязнасьці"
 
-#: ../gtk/rgsummarywindow.cc:322 ../gtk/glade/window_summary.glade.h:11
+#: ../gtk/rgsummarywindow.cc:324
 msgid "_Show Details"
 msgstr "_Паказаць падрабязнасьці"
 
-#: ../gtk/rgsummarywindow.cc:335
+#: ../gtk/rgsummarywindow.cc:337
 msgid "Summary"
 msgstr "Кароткае апісаньне"
 
-#: ../gtk/rgsummarywindow.cc:393
+#: ../gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
@@ -2018,7 +2082,7 @@ msgstr[0] "%d пакет замкнёны\n"
 msgstr[1] "%d пакет замкнёны\n"
 msgstr[2] "%d пакет замкнёны\n"
 
-#: ../gtk/rgsummarywindow.cc:400
+#: ../gtk/rgsummarywindow.cc:405
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
@@ -2026,7 +2090,7 @@ msgstr[0] "%d пакет мусіць быць пакінуты і не абна
 msgstr[1] "%d пакет мусіць быць пакінуты і не абнаўляцца\n"
 msgstr[2] "%d пакет мусіць быць пакінуты і не абнаўляцца\n"
 
-#: ../gtk/rgsummarywindow.cc:407
+#: ../gtk/rgsummarywindow.cc:412
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
@@ -2034,7 +2098,7 @@ msgstr[0] "%d новы пакет мусіць быць усталяваны\n"
 msgstr[1] "%d новы пакет мусіць быць усталяваны\n"
 msgstr[2] "%d новы пакет мусіць быць усталяваны\n"
 
-#: ../gtk/rgsummarywindow.cc:414
+#: ../gtk/rgsummarywindow.cc:419
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
@@ -2042,7 +2106,7 @@ msgstr[0] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[1] "%d новы(х) %s будзе ўсталявана;\n"
 msgstr[2] "%d новы(х) %s будзе ўсталявана;\n"
 
-#: ../gtk/rgsummarywindow.cc:421
+#: ../gtk/rgsummarywindow.cc:426
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
@@ -2050,7 +2114,7 @@ msgstr[0] "Пакет будзе абноўлены."
 msgstr[1] "Пакет будзе абноўлены."
 msgstr[2] "Пакет будзе абноўлены."
 
-#: ../gtk/rgsummarywindow.cc:428
+#: ../gtk/rgsummarywindow.cc:433
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
@@ -2058,7 +2122,7 @@ msgstr[0] "%d %s будзе выдалена;\n"
 msgstr[1] "%d %s будзе выдалена;\n"
 msgstr[2] "%d %s будзе выдалена;\n"
 
-#: ../gtk/rgsummarywindow.cc:435
+#: ../gtk/rgsummarywindow.cc:440
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
@@ -2066,7 +2130,7 @@ msgstr[0] "Пакет будзе абноўлены."
 msgstr[1] "Пакет будзе абноўлены."
 msgstr[2] "Пакет будзе абноўлены."
 
-#: ../gtk/rgsummarywindow.cc:443
+#: ../gtk/rgsummarywindow.cc:448
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
@@ -2074,17 +2138,17 @@ msgstr[0] "УВАГА: %d важных %s будзе выдалена!\n"
 msgstr[1] "УВАГА: %d важных %s будзе выдалена!\n"
 msgstr[2] "УВАГА: %d важных %s будзе выдалена!\n"
 
-#: ../gtk/rgsummarywindow.cc:455
+#: ../gtk/rgsummarywindow.cc:460
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "%s дадатковае прасторы будзе скарыстана"
 
-#: ../gtk/rgsummarywindow.cc:458
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "%s дадатковае прасторы будзе вызвалена"
 
-#: ../gtk/rgsummarywindow.cc:463
+#: ../gtk/rgsummarywindow.cc:468
 #, c-format
 msgid ""
 "\n"
@@ -2093,7 +2157,7 @@ msgstr ""
 "\n"
 "%s неабходна будзе выгрузіць"
 
-#: ../gtk/rgsummarywindow.cc:488
+#: ../gtk/rgsummarywindow.cc:493
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2101,11 +2165,11 @@ msgstr ""
 "Неад'емная частка пакетаў будзе выдаленая.\n"
 "Гэта можа прывесьці вашу сыстэму ў непрацоўны стан!!!\n"
 
-#: ../gtk/rguserdialog.cc:75
+#: ../gtk/rguserdialog.cc:76
 msgid "An error occurred"
 msgstr ""
 
-#: ../gtk/rguserdialog.cc:76
+#: ../gtk/rguserdialog.cc:77
 msgid "The following details are provided:"
 msgstr ""
 
@@ -2136,12 +2200,12 @@ msgstr "Скасаваць"
 #. TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
 #. happens when e.g. a package has no installed version (or no
 #. downloadable version)
-#: ../gtk/rggladewindow.cc:110 ../gtk/rggladewindow.cc:128
-#: ../gtk/rggladewindow.cc:191
+#: ../gtk/rggtkbuilderwindow.cc:115 ../gtk/rggtkbuilderwindow.cc:133
+#: ../gtk/rggtkbuilderwindow.cc:196
 msgid "N/A"
 msgstr "Адсутнічае"
 
-#: ../gtk/rgfindwindow.cc:130
+#: ../gtk/rgfindwindow.cc:146
 msgid "Find"
 msgstr "Шукаць"
 
@@ -2150,1400 +2214,6 @@ msgstr "Шукаць"
 #, c-format
 msgid "Description %s"
 msgstr "Апісаньне %s"
-
-#: ../gtk/glade/window_main.glade.h:1
-#: ../gtk/glade/window_preferences.glade.h:2
-#: ../gtk/glade/window_summary.glade.h:2 ../gtk/glade/window_filters.glade.h:2
-#: ../gtk/glade/window_details.glade.h:1
-msgid "    "
-msgstr "    "
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_main.glade.h:2 ../gtk/glade/window_details.glade.h:2
-msgid "<b>Installed Version</b>"
-msgstr "<b>Усталяваная вэрсія</b>"
-
-#: ../gtk/glade/window_main.glade.h:3 ../gtk/glade/window_details.glade.h:3
-msgid "<b>Latest Available Version</b>"
-msgstr "<b>Апошняя даступная вэрсія</b>"
-
-#: ../gtk/glade/window_main.glade.h:4 ../gtk/glade/window_details.glade.h:4
-msgid "<b>Maintainer:</b>"
-msgstr "<b>Майнтайнэр:</b>"
-
-#: ../gtk/glade/window_main.glade.h:5 ../gtk/glade/window_details.glade.h:5
-msgid ""
-"<b>Note:</b> To install a version that is different from the default one, "
-"choose <b>Package -> Force Version...</b> from the menu."
-msgstr ""
-"<b>Нататка:</b> Каб усталяваць вэрсію якая адрозьніваецца ад дапомнай, "
-"выберыце <b>Пакет -> Фарсіраваць вэрсію...</b> з мэню."
-
-#: ../gtk/glade/window_main.glade.h:6 ../gtk/glade/window_details.glade.h:6
-msgid "<b>Package:</b>"
-msgstr "<b>Пакет:</b>"
-
-#: ../gtk/glade/window_main.glade.h:7 ../gtk/glade/window_details.glade.h:7
-msgid "<b>Priority:</b>"
-msgstr "<b>Прыярытэт:</b>"
-
-#: ../gtk/glade/window_main.glade.h:8 ../gtk/glade/window_details.glade.h:8
-msgid "<b>Section:</b>"
-msgstr "<b>Падзел:</b>"
-
-#: ../gtk/glade/window_main.glade.h:9 ../gtk/glade/window_details.glade.h:9
-msgid "<b>Status:</b>"
-msgstr "<b>Стан:</b>"
-
-#: ../gtk/glade/window_main.glade.h:10 ../gtk/glade/window_details.glade.h:10
-msgid "<b>Tags:</b>"
-msgstr "<b>Тэгі:</b>"
-
-#: ../gtk/glade/window_main.glade.h:11
-msgid "A_pply Marked Changes"
-msgstr "_Ужыць пазначаныя зьмены"
-
-#: ../gtk/glade/window_main.glade.h:12
-#, fuzzy
-msgid "Add downloaded packages"
-msgstr "Загрузка файлаў пакету"
-
-#: ../gtk/glade/window_main.glade.h:13
-msgid ""
-"Add packages downloaded with the \"Generate package download script\" "
-"feature to the system"
-msgstr ""
-
-#: ../gtk/glade/window_main.glade.h:14
-msgid "Apply"
-msgstr "Ужыць"
-
-#: ../gtk/glade/window_main.glade.h:15
-#, fuzzy
-msgid "Automatically installed"
-msgstr "Аўтаматычна"
-
-#: ../gtk/glade/window_main.glade.h:16 ../gtk/glade/window_details.glade.h:11
-msgid "Available versions:"
-msgstr "Даступныя вэрсіі:"
-
-#: ../gtk/glade/window_main.glade.h:17 ../gtk/glade/window_details.glade.h:12
-msgid "Common"
-msgstr "Агульнае"
-
-#: ../gtk/glade/window_main.glade.h:18
-msgid "Dependants"
-msgstr "Залежыць ад"
-
-#: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
-#: ../gtk/glade/window_filters.glade.h:18
-#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:73
-msgid "Dependencies"
-msgstr "Залежнасьці"
-
-#: ../gtk/glade/window_main.glade.h:20 ../gtk/glade/window_details.glade.h:14
-msgid "Dependencies of the Latest Version"
-msgstr "Залежнасьці апошняе вэрсіі"
-
-#: ../gtk/glade/window_main.glade.h:22 ../gtk/glade/window_details.glade.h:17
-msgid "Download:"
-msgstr "Выгрузіць:"
-
-#: ../gtk/glade/window_main.glade.h:23
-msgid ""
-"Generate a shell script so that you can download the selected packages on a "
-"different computer"
-msgstr ""
-
-#: ../gtk/glade/window_main.glade.h:24
-#, fuzzy
-msgid "Generate package download script"
-msgstr "Выканаць толькі загрузку пакетаў."
-
-#: ../gtk/glade/window_main.glade.h:25
-msgid "Icon _Legend"
-msgstr "Значэньне значак"
-
-#: ../gtk/glade/window_main.glade.h:26 ../gtk/glade/window_details.glade.h:18
-msgid "Installed Files"
-msgstr "Усталяваныя файлы"
-
-#: ../gtk/glade/window_main.glade.h:27
-msgid "Mark All Upgrades"
-msgstr "Пазначыць усё для абнаўленьня"
-
-#: ../gtk/glade/window_main.glade.h:28
-msgid "Mark Packages by _Task..."
-msgstr "Пазначыць пакеты па _заданьнях..."
-
-#: ../gtk/glade/window_main.glade.h:29
-msgid "Mark for Co_mplete Removal"
-msgstr "Пазначыць для поўнага выдаленьня"
-
-#: ../gtk/glade/window_main.glade.h:30
-msgid "Mark for R_einstallation"
-msgstr "Пазначыць для пераўсталёўкі"
-
-#: ../gtk/glade/window_main.glade.h:31
-msgid "Mark for _Installation"
-msgstr "Пазначыць для _ўсталёўкі"
-
-#: ../gtk/glade/window_main.glade.h:32
-msgid "Mark for _Removal"
-msgstr "Пазначыць для вы_даленьня"
-
-#: ../gtk/glade/window_main.glade.h:33
-msgid "Mark for _Upgrade"
-msgstr "Пазначыць для _абнаўленьня"
-
-#: ../gtk/glade/window_main.glade.h:38 ../gtk/glade/window_find.glade.h:6
-#: ../gtk/glade/window_filters.glade.h:58
-#: ../gtk/glade/window_details.glade.h:21
-msgid "Provided Packages"
-msgstr "Прадстаўляе пакеты"
-
-#: ../gtk/glade/window_main.glade.h:39
-msgid "Reload"
-msgstr "Перагрузіць"
-
-#: ../gtk/glade/window_main.glade.h:40
-#, fuzzy
-msgid "S_earch Results"
-msgstr "Фільтар пошуку"
-
-#: ../gtk/glade/window_main.glade.h:41
-msgid "S_tatus"
-msgstr "_Стан"
-
-#: ../gtk/glade/window_main.glade.h:42
-msgid "Save Markings _As..."
-msgstr "Захаваць пазначэньні _як..."
-
-#: ../gtk/glade/window_main.glade.h:43
-msgid "Search"
-msgstr "Пошук"
-
-#: ../gtk/glade/window_main.glade.h:44 ../gtk/glade/window_details.glade.h:22
-msgid "Size:"
-msgstr "Памер:"
-
-#: ../gtk/glade/window_main.glade.h:45
-msgid "Synaptic"
-msgstr "Synaptic"
-
-#: ../gtk/glade/window_main.glade.h:46
-msgid "Text Be_side Icons"
-msgstr "Тэкст по_бач са значкамі"
-
-#: ../gtk/glade/window_main.glade.h:47
-msgid "Text _Below Icons"
-msgstr "Тэкст пад _значкамі"
-
-#: ../gtk/glade/window_main.glade.h:48
-msgid "U_nmark"
-msgstr "_Скінуць пазначэньне"
-
-#: ../gtk/glade/window_main.glade.h:49
-msgid "U_nmark All"
-msgstr "С_кінуць усе пазначэньні"
-
-#: ../gtk/glade/window_main.glade.h:50 ../gtk/glade/window_details.glade.h:23
-msgid "Version:"
-msgstr "Вэрсія:"
-
-#: ../gtk/glade/window_main.glade.h:51 ../gtk/glade/window_details.glade.h:24
-msgid "Versions"
-msgstr "Вэрсіі"
-
-#: ../gtk/glade/window_main.glade.h:52
-msgid "_About"
-msgstr "Пра праграму"
-
-#: ../gtk/glade/window_main.glade.h:53
-msgid "_Add CD-ROM..."
-msgstr "_Дадаць CD-ROM..."
-
-#: ../gtk/glade/window_main.glade.h:54
-msgid "_Browse Documentation"
-msgstr "_Гартаць дакумэнтацыю"
-
-#: ../gtk/glade/window_main.glade.h:55
-msgid "_Configure..."
-msgstr "_Наладзіць..."
-
-#: ../gtk/glade/window_main.glade.h:56
-msgid "_Contents"
-msgstr "_Зьмест"
-
-#: ../gtk/glade/window_main.glade.h:57
-#, fuzzy
-msgid "_Custom Filters"
-msgstr "_Фільтры"
-
-#: ../gtk/glade/window_main.glade.h:58
-msgid "_Download Changelog"
-msgstr "_Выгрузіць часопіс зьменаў"
-
-#: ../gtk/glade/window_main.glade.h:59
-msgid "_Edit"
-msgstr "_Рэдагаваньне"
-
-#: ../gtk/glade/window_main.glade.h:60
-msgid "_File"
-msgstr "_Файл"
-
-#: ../gtk/glade/window_main.glade.h:61
-msgid "_Filters"
-msgstr "_Фільтры"
-
-#: ../gtk/glade/window_main.glade.h:62
-msgid "_Fix Broken Packages"
-msgstr "_Выправіць сапсаваныя пакеты"
-
-#: ../gtk/glade/window_main.glade.h:63
-msgid "_Force Version..."
-msgstr "_Фарсіраваць вэрсію..."
-
-#: ../gtk/glade/window_main.glade.h:64
-msgid "_Help"
-msgstr "_Даведка"
-
-#: ../gtk/glade/window_main.glade.h:65
-msgid "_Hide"
-msgstr "С_хаваць"
-
-#: ../gtk/glade/window_main.glade.h:66
-#, fuzzy
-msgid "_History"
-msgstr "Інструмэнт пошуку"
-
-#: ../gtk/glade/window_main.glade.h:67
-msgid "_Icons Only"
-msgstr "Толькі _значкі"
-
-#: ../gtk/glade/window_main.glade.h:68
-msgid "_Lock Version"
-msgstr "Замкнуць _вэрсію"
-
-#: ../gtk/glade/window_main.glade.h:69
-msgid "_Mark All Upgrades..."
-msgstr "Па_значыць усе абнаўленьні..."
-
-#: ../gtk/glade/window_main.glade.h:70
-msgid "_Package"
-msgstr "_Пакет"
-
-#: ../gtk/glade/window_main.glade.h:71
-msgid "_Properties"
-msgstr "_Уласьцівасьці"
-
-#: ../gtk/glade/window_main.glade.h:72
-msgid "_Quick Introduction"
-msgstr "_Уводзіны"
-
-#: ../gtk/glade/window_main.glade.h:73
-msgid "_Quit"
-msgstr "_Выйсьці"
-
-#: ../gtk/glade/window_main.glade.h:74
-msgid "_Read Markings..."
-msgstr "_Прачытаць пазначэньні..."
-
-#: ../gtk/glade/window_main.glade.h:75
-msgid "_Redo"
-msgstr "В_ярнуцца"
-
-#: ../gtk/glade/window_main.glade.h:76
-msgid "_Reload Package Information"
-msgstr "Пе_рагрузіць зьвесткі пакету"
-
-#: ../gtk/glade/window_main.glade.h:77
-msgid "_Repositories"
-msgstr "_Сховішчы"
-
-#: ../gtk/glade/window_main.glade.h:78
-msgid "_Save Markings"
-msgstr "Захаваць _пазначэньні"
-
-#: ../gtk/glade/window_main.glade.h:79
-msgid "_Search..."
-msgstr "_Пошук..."
-
-#: ../gtk/glade/window_main.glade.h:80
-msgid "_Sections"
-msgstr "Па_дзелы"
-
-#: ../gtk/glade/window_main.glade.h:81
-msgid "_Set Internal Option..."
-msgstr "Усталяваць _унутраны выбар..."
-
-#: ../gtk/glade/window_main.glade.h:82
-msgid "_Settings"
-msgstr "_Усталёўкі"
-
-#: ../gtk/glade/window_main.glade.h:83
-msgid "_Text Only"
-msgstr "_Толькі тэкст"
-
-#: ../gtk/glade/window_main.glade.h:84
-msgid "_Toolbar"
-msgstr "Панэль _інструмэнтаў"
-
-#: ../gtk/glade/window_main.glade.h:85
-msgid "_Undo"
-msgstr "_Адкаціць"
-
-#: ../gtk/glade/window_about.glade.h:1
-msgid ""
-"<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
-"Copyright (c) 2002-2004 Michael Vogt</span>"
-msgstr ""
-"<span size=\"small\">Аўтарскае права (c) 2001-2004 Connectiva S/A \n"
-"Аўтарскае права (c) 2002-2004 Michael Vogt</span>"
-
-#: ../gtk/glade/window_about.glade.h:3
-msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
-msgstr "<span size=\"xx-large\" weight=\"bold\">Вэрсія Synaptic</span>"
-
-#: ../gtk/glade/window_about.glade.h:6
-msgid "Debtag support is enabled."
-msgstr "Падтрымка Debtag уключана."
-
-#: ../gtk/glade/window_about.glade.h:7
-msgid "Documented by"
-msgstr "Дакумэнтавана"
-
-#: ../gtk/glade/window_about.glade.h:8
-#, fuzzy
-msgid ""
-"Man page:\n"
-"Wybo Dekker <wybo@servalys.nl>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Manual:\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>"
-msgstr ""
-"Старонкі кіраўніцтва (man):\n"
-"Wybo Dekker <wybo@servalys.nl>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
-"\n"
-"Кіраўніцтва:\n"
-"Sebastian Heinlein <sebastain.heinlein@web.de>"
-
-#: ../gtk/glade/window_about.glade.h:15
-msgid ""
-"Original author:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"\n"
-"Maintainers:\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Contributors:\n"
-"Enrico Zini <enrico@debian.org>\n"
-"Panu Matilainen <pmatilai@welho.com>\n"
-"Sviatoslav Sviridov <svd@lintec.minsk.by>"
-msgstr ""
-"Аўтар і стваральнік:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"\n"
-"Майнтайнэры:\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Памочнікі:\n"
-"Enrico Zini <enrico@debian.org>\n"
-"Panu Matilainen <pmatilai@welho.com>\n"
-"Sviatoslav Sviridov <svd@lintec.minsk.by>"
-
-#: ../gtk/glade/window_about.glade.h:27
-msgid "Package management software using apt."
-msgstr "Кіраўнік пакетаў які выкарыстоўвае apt."
-
-#: ../gtk/glade/window_about.glade.h:28
-msgid ""
-"This software is licensed under the terms of the GNU General Public License, "
-"Version 2"
-msgstr ""
-"Гэтае праграмнае забесьпячэньне ліцэнзаванае на ўмовах GNU General Public "
-"License, Вэрсіі 2"
-
-#: ../gtk/glade/window_about.glade.h:29
-msgid "Translated by"
-msgstr "Перакладзена"
-
-#: ../gtk/glade/window_about.glade.h:30
-msgid ""
-"Visit the home page at \n"
-"http://www.nongnu.org/synaptic/"
-msgstr ""
-"Наведайце хатнюю старонку на \n"
-"http://www.nongnu.org/synaptic/"
-
-#: ../gtk/glade/window_about.glade.h:32
-msgid "Written by"
-msgstr "Напісана "
-
-#: ../gtk/glade/window_about.glade.h:33
-msgid "translators-credits"
-msgstr "Віталь Хілько <v.khilko@sam-solutions.net>"
-
-#: ../gtk/glade/window_find.glade.h:2
-msgid "Description and Name"
-msgstr "Апісаньне  і назва"
-
-#: ../gtk/glade/window_find.glade.h:3
-msgid "Look in:"
-msgstr "Глядзець у:"
-
-#: ../gtk/glade/window_find.glade.h:7
-msgid "Search:"
-msgstr "Пошук:"
-
-#: ../gtk/glade/window_find.glade.h:9
-msgid "_Search"
-msgstr "_Пошук"
-
-#: ../gtk/glade/window_fetch.glade.h:1
-#, fuzzy
-msgid "Show for individual files"
-msgstr "Адлюстроўваць прагрэс асобных файлаў"
-
-#: ../gtk/glade/window_changes.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
-"span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Ці пазначаць далей патрэбныя зьмены?</"
-"span>"
-
-#: ../gtk/glade/window_changes.glade.h:2
-msgid ""
-"The chosen action also affects other packages. The following changes are "
-"required in order to proceed."
-msgstr ""
-
-#: ../gtk/glade/window_changes.glade.h:3
-msgid "_Mark"
-msgstr "_Пазначыць"
-
-#: ../gtk/glade/window_preferences.glade.h:1
-#: ../gtk/glade/window_summary.glade.h:1 ../gtk/glade/window_filters.glade.h:1
-msgid " "
-msgstr " "
-
-#: ../gtk/glade/window_preferences.glade.h:3
-msgid "<b>Appearance</b>"
-msgstr "<b>Выгляд</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:4
-msgid "<b>Applying Changes</b>"
-msgstr "<b>Ужываньне зьменаў</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:5
-msgid "<b>Colors</b>"
-msgstr "<b>Колеры</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:6
-msgid "<b>Columns</b>"
-msgstr "<b>Слупкі</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:7
-msgid "<b>Fonts</b>"
-msgstr "<b>Шрыфты</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:8
-#, fuzzy
-msgid "<b>History files</b>"
-msgstr "<b>Часовыя файлы</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:9
-msgid "<b>Marking Changes</b>"
-msgstr "<b>Пазначэньне зьменаў</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:10
-msgid "<b>Package upgrade behavior (default distribution)</b>"
-msgstr ""
-
-#: ../gtk/glade/window_preferences.glade.h:11
-msgid "<b>Proxy Server</b>"
-msgstr "<b>Паўнамоцны паслужнік</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:12
-msgid "<b>Temporary Files</b>"
-msgstr "<b>Часовыя файлы</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:13
-#, fuzzy
-msgid ""
-"<span size=\"large\" weight=\"bold\">These settings affect the core of your "
-"system. Consider any changes carefully.</span>"
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Гэтыя усталёўкі прывядуць да "
-"непрацаздольнасьці вашае сыстэмы. Вельмі уважліва разгледзьце зьмены.</span>"
-
-#: ../gtk/glade/window_preferences.glade.h:14
-msgid "A_pplication Font"
-msgstr "Шрыфт дастасаваньня"
-
-#: ../gtk/glade/window_preferences.glade.h:15
-msgid "Always Ask"
-msgstr "Заўсёды пытацца"
-
-#: ../gtk/glade/window_preferences.glade.h:16
-msgid "Always prefer the highest version"
-msgstr ""
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:17
-#, fuzzy
-msgid "Always prefer the installed version"
-msgstr "Усталяваная вэрсыя "
-
-#: ../gtk/glade/window_preferences.glade.h:18
-msgid "Apply changes in a terminal window"
-msgstr "Ужываць зьмены ў акне тэрміналу"
-
-#: ../gtk/glade/window_preferences.glade.h:19
-#, fuzzy
-msgid "Ask to confirm changes that also affect other packages"
-msgstr "Пытацца пацьверджаньня"
-
-#: ../gtk/glade/window_preferences.glade.h:20
-msgid "Ask to quit after the changes have been applied successfully"
-msgstr "Выйсьці пасьля пасьпяховага заканчэньня ужываньня зьменаў"
-
-#: ../gtk/glade/window_preferences.glade.h:21
-#, fuzzy
-msgid "Authentication"
-msgstr "Камунікацыі"
-
-#: ../gtk/glade/window_preferences.glade.h:22
-msgid "Automatically"
-msgstr "Аўтаматычна"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:23
-msgid "Broken:"
-msgstr "Сапсаваныя:"
-
-#: ../gtk/glade/window_preferences.glade.h:24
-msgid "Clicking on the status icon marks the most likely action"
-msgstr "Шчаўчок па значцы стану пазначае некалькі магчымых дзеяньняў"
-
-#: ../gtk/glade/window_preferences.glade.h:25
-msgid "Color"
-msgstr "Колер"
-
-#: ../gtk/glade/window_preferences.glade.h:26
-msgid "Color packages by their status"
-msgstr "Колеры пакетаў па іх стане"
-
-#: ../gtk/glade/window_preferences.glade.h:27
-msgid "Colors"
-msgstr "Колеры"
-
-#: ../gtk/glade/window_preferences.glade.h:28
-msgid "Columns and Fonts"
-msgstr "Слупкі і шрыфты"
-
-#: ../gtk/glade/window_preferences.glade.h:29
-msgid ""
-"Comma separated list of hosts and domains that will not be contacted through "
-"the proxy (e.g. localhost, 192.168.1.231, .net)"
-msgstr ""
-"Падзелены коскамі сьпіс вузлоў і дамэнаў далучэньне да якіх адбываецца без "
-"выкарыстаньня проксі (напрыклад: localhost, 192.168.1.231, .net)"
-
-#: ../gtk/glade/window_preferences.glade.h:30
-msgid "Completely"
-msgstr "Цалкам"
-
-#: ../gtk/glade/window_preferences.glade.h:31
-msgid "Consider recommended packages as dependencies"
-msgstr "Разглядаць рэкамэндаваныя пакеты як залежнасьці"
-
-#: ../gtk/glade/window_preferences.glade.h:32
-msgid "Default Upgrade"
-msgstr "Дапомнае абнаўленьне"
-
-#: ../gtk/glade/window_preferences.glade.h:33
-msgid "Delete _History files older than:"
-msgstr ""
-
-#: ../gtk/glade/window_preferences.glade.h:34
-#, fuzzy
-msgid "Delete all cache package files now."
-msgstr "Выдаліць за_кэшаваныя файлы пакетаў"
-
-#: ../gtk/glade/window_preferences.glade.h:35
-msgid "Direct connection to the internet"
-msgstr "Наўпроставае далучэньне да інтэрнэту"
-
-#: ../gtk/glade/window_preferences.glade.h:37
-msgid "FTP proxy: "
-msgstr "FTP проксі: "
-
-#: ../gtk/glade/window_preferences.glade.h:38
-#, fuzzy
-msgid "Files"
-msgstr "Фільтры"
-
-#: ../gtk/glade/window_preferences.glade.h:39
-msgid "General"
-msgstr "Асноўнае"
-
-#: ../gtk/glade/window_preferences.glade.h:40
-msgid "HTTP proxy: "
-msgstr "HTTP проксі: "
-
-#: ../gtk/glade/window_preferences.glade.h:41
-msgid "IP address or host name of the ftp proxy server"
-msgstr "ІР адрас ці назва вузлу паўнамоцнага ftp паслужніку"
-
-#: ../gtk/glade/window_preferences.glade.h:42
-msgid "IP address or host name of the http proxy server"
-msgstr "ІР адрас ці назва вузлу паўнамоцнага http паслужніку"
-
-#: ../gtk/glade/window_preferences.glade.h:43
-msgid "Ignore"
-msgstr "Ігнараваць"
-
-#: ../gtk/glade/window_preferences.glade.h:44
-msgid "Installed (locked):"
-msgstr "Усталяваныя (замкнёныя):"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:45
-msgid "Installed:"
-msgstr "Усталяваныя:"
-
-#: ../gtk/glade/window_preferences.glade.h:46
-msgid "Keep Configuration"
-msgstr "Пакінуць канфігурацыю"
-
-#: ../gtk/glade/window_preferences.glade.h:47
-msgid "Manual proxy configuration"
-msgstr "Асабістая наладка проксі"
-
-#: ../gtk/glade/window_preferences.glade.h:48
-msgid "Marked for complete removal:"
-msgstr "Пазначаныя для поўнага выдаленьня:"
-
-#: ../gtk/glade/window_preferences.glade.h:49
-msgid "Marked for downgrade:"
-msgstr "Пазначаныя для вяртаньня:"
-
-#: ../gtk/glade/window_preferences.glade.h:50
-msgid "Marked for installation:"
-msgstr "Пазначаныя для ўсталёўкі:"
-
-#: ../gtk/glade/window_preferences.glade.h:51
-msgid "Marked for reinstallation:"
-msgstr "Пазначаныя для пераўсталёўкі:"
-
-#: ../gtk/glade/window_preferences.glade.h:52
-msgid "Marked for removal:"
-msgstr "Пазначаныя для выдаленьня:"
-
-#: ../gtk/glade/window_preferences.glade.h:53
-msgid "Marked for upgrade:"
-msgstr "Пазначаныя для абнаўленьня:"
-
-#: ../gtk/glade/window_preferences.glade.h:54
-msgid "Move D_own"
-msgstr "Апусьціць _ніжэй"
-
-#: ../gtk/glade/window_preferences.glade.h:55
-msgid "Move _Up"
-msgstr "Падняць _вышэй"
-
-#: ../gtk/glade/window_preferences.glade.h:56
-msgid "Network"
-msgstr "Сетка"
-
-#: ../gtk/glade/window_preferences.glade.h:57
-#, fuzzy
-msgid "New in repository:"
-msgstr "Новыя ў сховішчы:"
-
-#: ../gtk/glade/window_preferences.glade.h:58
-msgid "No proxy for: "
-msgstr "Без проксі для: "
-
-#: ../gtk/glade/window_preferences.glade.h:59
-msgid "Not installed (locked):"
-msgstr "Не ўсталяваныя (замкнёныя):"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:60
-msgid "Not installed:"
-msgstr "Не ўсталяваныя:"
-
-#: ../gtk/glade/window_preferences.glade.h:61
-msgid "Number of undo operations:"
-msgstr "Колькасьць апэрацыяў адкату:"
-
-#: ../gtk/glade/window_preferences.glade.h:62
-msgid "Port number of the ftp proxy server"
-msgstr "Нумар порту паўнамоцнага ftp паслужніку"
-
-#: ../gtk/glade/window_preferences.glade.h:63
-msgid "Port number of the http proxy server"
-msgstr "Нумар порту паўнамоцнага http паслужніку"
-
-#: ../gtk/glade/window_preferences.glade.h:64
-msgid "Port: "
-msgstr "Порт: "
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:65
-#, fuzzy
-msgid "Prefer versions from: "
-msgstr "Узмоцненая вэрсія:"
-
-#: ../gtk/glade/window_preferences.glade.h:67
-msgid "Reloading outdated package information:"
-msgstr "Перагружаць састарэлыя зьвесткі пакетаў:"
-
-#: ../gtk/glade/window_preferences.glade.h:68
-msgid "Removal of packages: "
-msgstr "Выдаленьне пакетаў: "
-
-#: ../gtk/glade/window_preferences.glade.h:69
-msgid "Show package properties in the main window"
-msgstr "Адлюстраваць уласьцівасьці пакету ў асноўным акне"
-
-#: ../gtk/glade/window_preferences.glade.h:70
-msgid "Smart Upgrade"
-msgstr "Разумнае абнаўленьне"
-
-#: ../gtk/glade/window_preferences.glade.h:71
-msgid "System upgrade:"
-msgstr "Абнаўленьне сыстэмы:"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_preferences.glade.h:72
-msgid "Upgradable:"
-msgstr "Здольныя абнаўляцца:"
-
-#: ../gtk/glade/window_preferences.glade.h:73
-msgid "Use custom application font"
-msgstr "Выкарыстоўваць свой шрыфт дастасаваньня"
-
-#: ../gtk/glade/window_preferences.glade.h:74
-msgid "Use custom terminal font"
-msgstr "Выкарыстоўваць свой шрыфт для тэрміналу"
-
-#: ../gtk/glade/window_preferences.glade.h:75
-msgid "_Delete Cached Package Files"
-msgstr "Выдаліць за_кэшаваныя файлы пакетаў"
-
-#: ../gtk/glade/window_preferences.glade.h:76
-#, fuzzy
-msgid "_Delete downloaded packages after installation"
-msgstr "Выдаліць загружаныя пакеты пасьля ўсталёўкі"
-
-#: ../gtk/glade/window_preferences.glade.h:77
-msgid "_Keep history"
-msgstr ""
-
-#: ../gtk/glade/window_preferences.glade.h:78
-#, fuzzy
-msgid "_Leave all downloaded packages in the cache"
-msgstr "Пакінуць усе загружаныя пакеты ў кэшы"
-
-#: ../gtk/glade/window_preferences.glade.h:79
-#, fuzzy
-msgid "_Only delete packages which are no longer available"
-msgstr "Усталяваныя пакеты якія здольныя абнаўляцца"
-
-#: ../gtk/glade/window_preferences.glade.h:80
-msgid "_Terminal Font"
-msgstr "_Шрыфт тэрміналу"
-
-#: ../gtk/glade/window_preferences.glade.h:81
-msgid "days"
-msgstr ""
-
-#: ../gtk/glade/window_disc_name.glade.h:1
-#: ../gtk/glade/dialog_disc_label.glade.h:1
-#: ../gtk/glade/dialog_new_repositroy.glade.h:1
-msgid "*"
-msgstr "*"
-
-#: ../gtk/glade/window_disc_name.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Пазначце назву для гэтага CD-ROM</span>"
-
-#: ../gtk/glade/window_disc_name.glade.h:3
-msgid "Disc label:"
-msgstr "Назва дыска:"
-
-#: ../gtk/glade/window_disc_name.glade.h:4
-msgid ""
-"The label will be used to identify the CD-ROM if you want to install "
-"packages from it later."
-msgstr ""
-"Назва мусіць выкарыстоўвацца для ідэнтыфікацыі CD-ROM калі вы пажадаеце "
-"ўсталёўваць пакеты з яго й далей."
-
-#: ../gtk/glade/window_setopt.glade.h:1
-msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
-msgstr "<span size=\"large\" weight=\"bold\">Усталяваць унутраны выбар</span>"
-
-#: ../gtk/glade/window_setopt.glade.h:2
-msgid "Only experts should use this."
-msgstr "Толькі экспэрты карыстаюцца гэтым."
-
-#: ../gtk/glade/window_setopt.glade.h:3
-msgid "Value:"
-msgstr "Значэньне:"
-
-#: ../gtk/glade/window_setopt.glade.h:4
-msgid "Variable:"
-msgstr "Пераменная:"
-
-#: ../gtk/glade/window_summary.glade.h:3
-msgid "<b>Summary</b>"
-msgstr "<b>Кароткае апісаньне</b>"
-
-#: ../gtk/glade/window_summary.glade.h:4
-msgid ""
-"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
-msgstr "<span weight=\"bold\" size=\"larger\">Ужыць наступныя зьмены?</span>"
-
-#: ../gtk/glade/window_summary.glade.h:6
-msgid "Return to the main screen"
-msgstr "Вярнуцца да асноўнага акна"
-
-#: ../gtk/glade/window_summary.glade.h:7
-#, fuzzy
-msgid "The package files will be downloaded, but not installed"
-msgstr "Файлы пакетаў мусяць толькі загружацца, але не ўсталёўвацца"
-
-#: ../gtk/glade/window_summary.glade.h:8
-msgid ""
-"This is your last opportunity to look through the list of marked changes "
-"before they are applied."
-msgstr ""
-
-#: ../gtk/glade/window_summary.glade.h:9
-msgid ""
-"Vendors sign their packages to verify the origin and integrity of the "
-"packages. Disabling the verification is a security risk."
-msgstr ""
-
-#: ../gtk/glade/window_summary.glade.h:10
-#, fuzzy
-msgid "_Download package files only"
-msgstr "Толькі загружаць файлы пакетаў"
-
-#: ../gtk/glade/window_summary.glade.h:12
-#, fuzzy
-msgid "_Verify package signatures"
-msgstr "Праверка подпісаў пакетаў"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
-#: ../gtk/glade/window_filters.glade.h:4
-msgid "<b>Current</b>"
-msgstr "<b>Бягучы</b>"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
-#: ../gtk/glade/window_filters.glade.h:6
-msgid "<b>Marked</b>"
-msgstr "<b>Пазначанае</b>"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
-#: ../gtk/glade/window_filters.glade.h:8
-msgid "<b>Other</b>"
-msgstr "<b>Іншае</b>"
-
-#: ../gtk/glade/window_filters.glade.h:9
-msgid "AND"
-msgstr "І"
-
-#: ../gtk/glade/window_filters.glade.h:10
-#, fuzzy
-msgid "Automatic install"
-msgstr "Аўтаматычна"
-
-#: ../gtk/glade/window_filters.glade.h:11
-msgid "Automatic installed but no longer required by any other package"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:12
-#, fuzzy
-msgid "Automatic removable"
-msgstr "Аўтаматычна"
-
-#: ../gtk/glade/window_filters.glade.h:13
-msgid "Boolean operator between property criterias:"
-msgstr "Булевы апэратар паміж крытэраў:"
-
-#: ../gtk/glade/window_filters.glade.h:16
-msgid "Conflicting Packages"
-msgstr "Канфліктуючыя пакеты"
-
-#: ../gtk/glade/window_filters.glade.h:17
-msgid "Currently in broken policy state"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:19
-#: ../gtk/glade/window_details.glade.h:15
-msgid "Dependent Packages"
-msgstr "Залежныя пакеты"
-
-#: ../gtk/glade/window_filters.glade.h:21
-msgid "Exclude"
-msgstr "Выключыць"
-
-#: ../gtk/glade/window_filters.glade.h:22
-msgid "Exclude selected sections"
-msgstr "Выключаць выбраныя падзелы"
-
-#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:63
-msgid "Excludes"
-msgstr "Выключае"
-
-#: ../gtk/glade/window_filters.glade.h:25
-msgid "For installation or upgrade"
-msgstr "Для ўсталёўкі і абнаўленьня"
-
-#: ../gtk/glade/window_filters.glade.h:26
-msgid "For removal"
-msgstr "Для выдаленьня"
-
-#: ../gtk/glade/window_filters.glade.h:27
-msgid "Include"
-msgstr "Уключыць"
-
-#: ../gtk/glade/window_filters.glade.h:28
-msgid "Include selected sections only"
-msgstr "Уключаць толькі вылучаныя падзелы"
-
-#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:62
-msgid "Includes"
-msgstr "Уключае"
-
-#: ../gtk/glade/window_filters.glade.h:31
-msgid "Installed automatically as part of a dependency"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:32
-msgid "Installed manually (not as a dependency by something else)"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:33
-msgid "Installed packages that are up-to-date"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:34
-msgid "Installed packages that are upgradable"
-msgstr "Усталяваныя пакеты якія здольныя абнаўляцца"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:35
-msgid "Installed packages that are upgradable to a later upstream version"
-msgstr ""
-"Усталяваная пакеты якія могуць быць абноўленыя да апошняе вэрсіі галіны "
-"распрацоўкі"
-
-#: ../gtk/glade/window_filters.glade.h:36
-msgid "Library packages that are no longer needed (deborphan is required)"
-msgstr ""
-"Пакеты бібліятэк, якія больш непатрэбны (патрабуецца deborphan для працы)"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:38
-#, fuzzy
-msgid "Manual installed"
-msgstr "Не ўсталяваныя"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:40
-msgid "Not installable"
-msgstr "Не магчыма ўсталяваць"
-
-#: ../gtk/glade/window_filters.glade.h:42
-msgid "Not installed packages"
-msgstr "Не ўсталяваныя пакеты"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:43
-msgid "Not marked"
-msgstr "Не пазначаны"
-
-#: ../gtk/glade/window_filters.glade.h:44
-msgid "OR"
-msgstr "ЦІ"
-
-#: ../gtk/glade/window_filters.glade.h:46
-msgid "Orphaned"
-msgstr "Закінутыя"
-
-#: ../gtk/glade/window_filters.glade.h:48
-#, fuzzy
-msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "Пакеты, якія зьявіліся ў сховішчы пасьля апошняга абнаўленьня"
-
-#: ../gtk/glade/window_filters.glade.h:49
-msgid "Packages that are not available in any repository"
-msgstr "Пакеты, якія не даступныя ні ў адным сховішчы"
-
-#: ../gtk/glade/window_filters.glade.h:50
-msgid "Packages that will be installed or upgraded"
-msgstr "Пакеты, якія будуць усталяваны ці абноўлены"
-
-#: ../gtk/glade/window_filters.glade.h:51
-msgid "Packages that will be removed"
-msgstr "Пакеты, якія будуць выдалены"
-
-#: ../gtk/glade/window_filters.glade.h:52
-msgid "Packages that will never be upgraded"
-msgstr "Пакеты, якія ніколі ня будуць абноўленыя"
-
-#: ../gtk/glade/window_filters.glade.h:53
-msgid "Packages that won't be changed"
-msgstr "Пакеты, якія мусяць абнавіцца"
-
-#: ../gtk/glade/window_filters.glade.h:54
-msgid "Packages with broken dependencies"
-msgstr "Пакеты з сапсаванымі залежнасьцямі"
-
-#: ../gtk/glade/window_filters.glade.h:56
-#, fuzzy
-msgid "Policy broken"
-msgstr "Выправіць сапсаванае"
-
-#. replaces/obsoletes
-#: ../gtk/glade/window_filters.glade.h:59 ../gtk/rgfiltermanager.h:77
-msgid "Recommendations"
-msgstr "Рэкамэндацыі"
-
-#: ../gtk/glade/window_filters.glade.h:60
-msgid "Removed packages that have left configuration files on the system"
-msgstr "Выдаленыя пакеты, для якіх у сыстэме засталіся канфігурацыйныя файлы"
-
-#: ../gtk/glade/window_filters.glade.h:61
-msgid "Replaced Packages"
-msgstr "Пакеты якія будуць замененыя"
-
-#: ../gtk/glade/window_filters.glade.h:62
-msgid "Residual config"
-msgstr "Рэшткавыя"
-
-#. /recommends
-#: ../gtk/glade/window_filters.glade.h:65 ../gtk/rgfiltermanager.h:78
-msgid "Suggestions"
-msgstr "Прапановы"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:66
-msgid "Tags"
-msgstr "Тэгі"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/window_filters.glade.h:67
-msgid "Upgradable"
-msgstr "Здольны абнаўляцца"
-
-#: ../gtk/glade/window_filters.glade.h:69
-msgid "Version Number"
-msgstr "Вэрсія"
-
-#: ../gtk/glade/window_filters.glade.h:70
-msgid "_Deselect All"
-msgstr "С_кінуць усё"
-
-#: ../gtk/glade/window_filters.glade.h:71
-msgid "_Invert All"
-msgstr "_Інвэртаваць усё"
-
-#: ../gtk/glade/window_filters.glade.h:72
-msgid "_Select All"
-msgstr "Вылучыць _усё"
-
-#: ../gtk/glade/window_repositories.glade.h:2
-msgid "Distribution:"
-msgstr "Дыстрыбутыў:"
-
-#: ../gtk/glade/window_repositories.glade.h:4
-msgid "Section(s):"
-msgstr "Падзел(ы):"
-
-#: ../gtk/glade/window_repositories.glade.h:5
-msgid "URI:"
-msgstr "URI:"
-
-#: ../gtk/glade/window_repositories.glade.h:6
-msgid "Vendors..."
-msgstr "Пастаўшчыкі..."
-
-#: ../gtk/glade/window_repositories.glade.h:7
-msgid "deb"
-msgstr "deb"
-
-#: ../gtk/glade/window_repositories.glade.h:8
-msgid "deb-src"
-msgstr "deb-src"
-
-#: ../gtk/glade/window_repositories.glade.h:9
-msgid "rpm"
-msgstr "rpm"
-
-#: ../gtk/glade/window_repositories.glade.h:10
-msgid "rpm-src"
-msgstr "rpm-src"
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:1
-#, fuzzy
-msgid "<i>Preparing packages...</i>"
-msgstr "Ачыстка сьпісаў пакетаў..."
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
-msgid "Automatically close after the changes have been successfully applied"
-msgstr "Выйсьці пасьля пасьпяховага заканчэньня ужываньня зьменаў"
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:3
-#, fuzzy
-msgid "Details"
-msgstr "_Паказаць падрабязнасьці"
-
-#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:1
-msgid "Extra output was generated during Package Manager operation"
-msgstr "Вывад згенераваны ў часе выкананьня кіраўніка пакетаў"
-
-#: ../gtk/glade/window_tasks.glade.h:1
-msgid ""
-"<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
-"computer?</span>\n"
-"\n"
-"These are preselected groups of packages to perform each task. If you select "
-"a task, the corresponding packages will be marked for installation."
-msgstr ""
-
-#: ../gtk/glade/window_tasks.glade.h:4
-msgid "_Description"
-msgstr "А_пісаньне"
-
-#: ../gtk/glade/window_zvtinstallprogress.glade.h:1
-msgid "<b>Terminal Output:</b>"
-msgstr "<b>Вывад тэрміналу:</b>"
-
-#: ../gtk/glade/window_zvtinstallprogress.glade.h:2
-#, fuzzy
-msgid "Close this dialog after the changes have been successfully applied"
-msgstr "Закрыць гэты дыялёг пасьля пасьпяховага заканчэньня ужываньня зьменаў"
-
-#: ../gtk/glade/dialog_welcome.glade.h:1
-msgid " - "
-msgstr " - "
-
-#: ../gtk/glade/dialog_welcome.glade.h:2
-#, fuzzy
-msgid ""
-"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
-"all changes and then apply them."
-msgstr ""
-"<b>Нататка:</b> Зьмены не могуць быць ужытыя імгненна. Сьпярша вы мусіце "
-"пазначыць усе неабходныя зьмены і толькі потым ужыць іх."
-
-#: ../gtk/glade/dialog_welcome.glade.h:3
-msgid "Choose the action from the context menu of the package."
-msgstr "Выберыце дзеяньне з кантэкстнага мэню пакету."
-
-#: ../gtk/glade/dialog_welcome.glade.h:4
-msgid "Click on the status icon to open a menu that contains all actions."
-msgstr "Шчаўчок па значцы стану адкрывае мэню якое ўтрымлівае усе апэрацыі."
-
-#: ../gtk/glade/dialog_welcome.glade.h:5
-msgid "Double click on the package name."
-msgstr "Падвойны шчаўчок на назове пакету."
-
-#: ../gtk/glade/dialog_welcome.glade.h:6
-msgid "Quick Introduction"
-msgstr "Уводзіны"
-
-#: ../gtk/glade/dialog_welcome.glade.h:7
-msgid "Select the package and choose the action from the 'Package' menu."
-msgstr "Выберыце пакет і дзеяньне па-над ім з мэню 'Пакет'."
-
-#: ../gtk/glade/dialog_welcome.glade.h:8
-msgid "Show this dialog at startup"
-msgstr "Адлюстроўваць дыялёг пасьля запуску"
-
-#: ../gtk/glade/dialog_welcome.glade.h:9
-msgid ""
-"The software on your system is organized in so called <i>packages</i>. The "
-"package manager enables you to install, to upgrade or to remove software "
-"packages."
-msgstr ""
-"Праграмнае забесьпячэньне у вашае сыстэме арганізавана ў выглядзе "
-"<i>пакетаў</i>. Кіраўнік пакетаў дазваляе вам усталёўваць, абнаўляць ці "
-"выдаляць пакеты."
-
-#: ../gtk/glade/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
-msgstr ""
-"Вы можаце пазначыць пакеты для усталёўкі, абнаўленьня ці выдаленьня "
-"некалькімі шляхамі:"
-
-#: ../gtk/glade/dialog_welcome.glade.h:11
-msgid ""
-"You should reload the package information regularly. Otherwise you could "
-"miss important security upgrades."
-msgstr ""
-"Вы мусіце рэгулярна перагружаць зьвесткі аб пакетах, у іншым выпадку вы "
-"можаце прапусьціць важныя абнаўленьні ў бясьпецы."
-
-#: ../gtk/glade/dialog_unmet.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
-"installation or upgrade</span>\n"
-"\n"
-"The following packages have unresolvable dependencies. Make sure that all "
-"required repositories are added and enabled in the preferences."
-msgstr ""
-
-#: ../gtk/glade/dialog_changelog.glade.h:1
-msgid "Complete changelog of the latest version:"
-msgstr "Поўны часопіс зьменаў апошняе вэрсіі:"
-
-#: ../gtk/glade/dialog_update_failed.glade.h:1
-msgid ""
-"<big><b>Could not download all repository indexes</b></big>\n"
-"\n"
-"The repository may no longer be available or could not be contacted because "
-"of network problems. If available an older version of the failed index will "
-"be used. Otherwise the repository will be ignored. Check your network "
-"connection and ensure the repository address in the preferences is correct."
-msgstr ""
-
-#: ../gtk/glade/window_iconlegend.glade.h:1
-msgid ""
-"<b>The following icons are used to indicate the current status of a package:"
-"</b>"
-msgstr "<b>Наступныя значкі выкарыстоўваюцца для пазначэньня стану пакету:</b>"
-
-#: ../gtk/glade/window_iconlegend.glade.h:2 ../gtk/rgiconlegend.cc:42
-msgid "Icon Legend"
-msgstr "Значэньне значак"
-
-#: ../gtk/glade/dialog_download_error.glade.h:1
-msgid ""
-"<big><b>Could not download all necessary package files</b></big>\n"
-"\n"
-"The version of the package that you want to install might be no longer "
-"available in the repository, or there may be problems with the source of the "
-"package. Reload the package list and check the source of the package (e.g. "
-"CD or network connection)."
-msgstr ""
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Your package information is out of "
-"date</span>\n"
-"\n"
-"Your package information is older than 48 hours. There could be important "
-"security updates available. It is recommended to reload the package "
-"information regularly."
-msgstr ""
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:4
-#, fuzzy
-msgid "Remember the answer"
-msgstr "Запомніць адказ для далейшых абнаўленьняў"
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:5
-#, fuzzy
-msgid "_Reload"
-msgstr "Перагрузіць"
-
-#: ../gtk/glade/window_logview.glade.h:1
-#, fuzzy
-msgid "History"
-msgstr "Інструмэнт пошуку"
-
-#: ../gtk/glade/window_logview.glade.h:2
-#, fuzzy
-msgid "History of installed, upgraded and removed software packages."
-msgstr "Усталёўвае, выдаляе і абнаўляе пакеты"
-
-#: ../gtk/glade/dialog_quit.glade.h:1
-msgid ""
-"<b><big>Quit and discard marked changes?</big></b>\n"
-"\n"
-"There are still marked changes that have not yet been applied. They will get "
-"lost if you choose to quit 'Synaptic'."
-msgstr ""
-"<b><big>Выйсьці і скасаваць пазначаныя зьмены?</big></b>\n"
-"\n"
-"Засталося шмат пазначаных зьменаў якія яшчэ не былі ужытыя. Вы згубіце ўсе "
-"выбраныя зьмены, калі вы выберыце выхад з 'Synaptic'."
-
-#: ../gtk/glade/dialog_conffile.glade.h:1
-msgid "Difference between the files"
-msgstr ""
-
-#: ../gtk/glade/dialog_conffile.glade.h:2
-msgid "_Keep"
-msgstr "За_хаваць"
-
-#: ../gtk/glade/dialog_conffile.glade.h:3
-#, fuzzy
-msgid "_Replace"
-msgstr "Замяняе"
-
-# This is filter name, it's better to not translate it
-#: ../gtk/glade/dialog_change_version.glade.h:1
-msgid "Force version:"
-msgstr "Узмоцненая вэрсія:"
-
-#: ../gtk/glade/dialog_change_version.glade.h:2
-msgid "_Force Version"
-msgstr "Узмоцненая вэрсія"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:1
-msgid ""
-"<b><big>Mark upgrades in a smart way?</big></b>\n"
-"\n"
-"The default upgrade method skips upgrades that would introduce conflicts or "
-"require installation of additional packages.\n"
-"\n"
-"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to fulfil "
-"all dependencies of upgrades in a smart way.\n"
-"\n"
-"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
-"afterwards."
-msgstr ""
-
-#: ../gtk/glade/dialog_upgrade.glade.h:8
-#, fuzzy
-msgid "Remember my answer for future upgrades"
-msgstr "Запомніць адказ для далейшых абнаўленьняў"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:9
-msgid "This behavior can be changed in the preferences later."
-msgstr "Гэтыя паводзіны могуць быць зьмененыя пазьней у перавагах."
-
-#: ../gtk/glade/dialog_upgrade.glade.h:10
-#, fuzzy
-msgid "_Default Upgrade"
-msgstr "Дапомнае абнаўленьне"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:11
-#, fuzzy
-msgid "_Smart Upgrade"
-msgstr "Разумнае абнаўленьне"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
@@ -3557,6 +2227,14 @@ msgstr "Кіраўнік пакетамі"
 msgid "Synaptic Package Manager"
 msgstr "Кіраўнік пакетаў Synaptic"
 
+#: ../gtk/rgfiltermanager.h:62
+msgid "Includes"
+msgstr "Уключае"
+
+#: ../gtk/rgfiltermanager.h:63
+msgid "Excludes"
+msgstr "Выключае"
+
 #: ../gtk/rgfiltermanager.h:69
 msgid "Package name"
 msgstr "Назва пакету"
@@ -3564,6 +2242,10 @@ msgstr "Назва пакету"
 #: ../gtk/rgfiltermanager.h:72
 msgid "Version number"
 msgstr "Вэрсія"
+
+#: ../gtk/rgfiltermanager.h:73
+msgid "Dependencies"
+msgstr "Залежнасьці"
 
 #. depends, predepends etc
 #: ../gtk/rgfiltermanager.h:74
@@ -3580,6 +2262,16 @@ msgstr "Канфліктуючыя пакеты"
 msgid "Replaced packages"
 msgstr "Замяняе пакеты"
 
+#. replaces/obsoletes
+#: ../gtk/rgfiltermanager.h:77
+msgid "Recommendations"
+msgstr "Рэкамэндацыі"
+
+#. /recommends
+#: ../gtk/rgfiltermanager.h:78
+msgid "Suggestions"
+msgstr "Прапановы"
+
 #. suggests
 #: ../gtk/rgfiltermanager.h:79
 msgid "Dependent packages"
@@ -3590,68 +2282,965 @@ msgstr "Залежныя пакеты"
 msgid "Please insert a disc in the drive."
 msgstr "Устаўце дыск ў прыладу."
 
+#: ../gtk/rgiconlegend.cc:42
+msgid "Icon Legend"
+msgstr "Значэньне значак"
+
 #: ../gtk/rgiconlegend.cc:77
 msgid "Package is supported"
 msgstr "Пакет падтрымліваецца"
 
-#: ../gtk/rgterminstallprogress.cc:134
+#: ../gtk/rgterminstallprogress.cc:139
 msgid "<i>Running...</i>"
 msgstr "<i>Выкананьне...</i>"
 
-#: ../gtk/rgterminstallprogress.cc:164
+#: ../gtk/rgterminstallprogress.cc:169
 msgid "<i>Finished</i>"
 msgstr "<i>Завершана</i>"
 
-#: ../gtk/rgterminstallprogress.cc:175
+#: ../gtk/rgterminstallprogress.cc:180
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Не магчыма закрыць у часе выкананьня</i>"
 
-#. vim:sts=3:sw=3
-#: ../gtk/glade/dialog_authentication.glade.h:1
-msgid "HTTP authentication"
-msgstr ""
+#~ msgid "    "
+#~ msgstr "    "
 
-#: ../gtk/glade/dialog_authentication.glade.h:2
-msgid "Password"
-msgstr ""
+# This is filter name, it's better to not translate it
+#~ msgid "<b>Installed Version</b>"
+#~ msgstr "<b>Усталяваная вэрсія</b>"
 
-#: ../gtk/glade/dialog_authentication.glade.h:3
-msgid "Username"
-msgstr ""
+#~ msgid "<b>Latest Available Version</b>"
+#~ msgstr "<b>Апошняя даступная вэрсія</b>"
 
-#: ../gtk/glade/dialog_disc_label.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter a label for this CD-Rom</span>\n"
-"\n"
-"The label will be used if you want to install packages from this CD-Rom. It "
-"is recommended to also write the label on the CD-Rom to easily find it "
-"again.\n"
-msgstr ""
+#~ msgid "<b>Maintainer:</b>"
+#~ msgstr "<b>Майнтайнэр:</b>"
 
-#: ../gtk/glade/dialog_disc_label.glade.h:6
+#~ msgid ""
+#~ "<b>Note:</b> To install a version that is different from the default one, "
+#~ "choose <b>Package -> Force Version...</b> from the menu."
+#~ msgstr ""
+#~ "<b>Нататка:</b> Каб усталяваць вэрсію якая адрозьніваецца ад дапомнай, "
+#~ "выберыце <b>Пакет -> Фарсіраваць вэрсію...</b> з мэню."
+
+#~ msgid "<b>Package:</b>"
+#~ msgstr "<b>Пакет:</b>"
+
+#~ msgid "<b>Priority:</b>"
+#~ msgstr "<b>Прыярытэт:</b>"
+
+#~ msgid "<b>Section:</b>"
+#~ msgstr "<b>Падзел:</b>"
+
+#~ msgid "<b>Status:</b>"
+#~ msgstr "<b>Стан:</b>"
+
+#~ msgid "<b>Tags:</b>"
+#~ msgstr "<b>Тэгі:</b>"
+
+#~ msgid "A_pply Marked Changes"
+#~ msgstr "_Ужыць пазначаныя зьмены"
+
 #, fuzzy
-msgid "Label:"
-msgstr "Назва дыска"
+#~ msgid "Add downloaded packages"
+#~ msgstr "Загрузка файлаў пакету"
 
-#: ../gtk/glade/dialog_new_repositroy.glade.h:2
-msgid ""
-"<big><b>Enter the complete APT line of the repository that you want to add</"
-"b></big>\n"
-"\n"
-"The APT line contains the type, location and content of a repository, for "
-"example <i>\"deb http://ftp.debian.org sarge main\"</i>. You can find a "
-"detailed description of the syntax in the documentation."
-msgstr ""
+#~ msgid "Apply"
+#~ msgstr "Ужыць"
 
-#: ../gtk/glade/dialog_new_repositroy.glade.h:5
 #, fuzzy
-msgid "APT line:"
-msgstr "Зачэплены"
+#~ msgid "Automatically installed"
+#~ msgstr "Аўтаматычна"
 
-#: ../gtk/glade/dialog_new_repositroy.glade.h:6
+#~ msgid "Available versions:"
+#~ msgstr "Даступныя вэрсіі:"
+
+#~ msgid "Common"
+#~ msgstr "Агульнае"
+
+#~ msgid "Dependants"
+#~ msgstr "Залежыць ад"
+
+#~ msgid "Dependencies of the Latest Version"
+#~ msgstr "Залежнасьці апошняе вэрсіі"
+
 #, fuzzy
-msgid "_Add Repository"
-msgstr "Дадаць сховішча"
+#~ msgid "Generate package download script"
+#~ msgstr "Выканаць толькі загрузку пакетаў."
+
+#~ msgid "Icon _Legend"
+#~ msgstr "Значэньне значак"
+
+#~ msgid "Installed Files"
+#~ msgstr "Усталяваныя файлы"
+
+#~ msgid "Mark All Upgrades"
+#~ msgstr "Пазначыць усё для абнаўленьня"
+
+#~ msgid "Mark Packages by _Task..."
+#~ msgstr "Пазначыць пакеты па _заданьнях..."
+
+#~ msgid "Mark for Co_mplete Removal"
+#~ msgstr "Пазначыць для поўнага выдаленьня"
+
+#~ msgid "Mark for R_einstallation"
+#~ msgstr "Пазначыць для пераўсталёўкі"
+
+#~ msgid "Mark for _Installation"
+#~ msgstr "Пазначыць для _ўсталёўкі"
+
+#~ msgid "Mark for _Removal"
+#~ msgstr "Пазначыць для вы_даленьня"
+
+#~ msgid "Mark for _Upgrade"
+#~ msgstr "Пазначыць для _абнаўленьня"
+
+#~ msgid "Provided Packages"
+#~ msgstr "Прадстаўляе пакеты"
+
+#~ msgid "Reload"
+#~ msgstr "Перагрузіць"
+
+#, fuzzy
+#~ msgid "S_earch Results"
+#~ msgstr "Фільтар пошуку"
+
+#~ msgid "S_tatus"
+#~ msgstr "_Стан"
+
+#~ msgid "Save Markings _As..."
+#~ msgstr "Захаваць пазначэньні _як..."
+
+#~ msgid "Search"
+#~ msgstr "Пошук"
+
+#~ msgid "Size:"
+#~ msgstr "Памер:"
+
+#~ msgid "Synaptic"
+#~ msgstr "Synaptic"
+
+#~ msgid "Text Be_side Icons"
+#~ msgstr "Тэкст по_бач са значкамі"
+
+#~ msgid "Text _Below Icons"
+#~ msgstr "Тэкст пад _значкамі"
+
+#~ msgid "U_nmark"
+#~ msgstr "_Скінуць пазначэньне"
+
+#~ msgid "U_nmark All"
+#~ msgstr "С_кінуць усе пазначэньні"
+
+#~ msgid "Version:"
+#~ msgstr "Вэрсія:"
+
+#~ msgid "Versions"
+#~ msgstr "Вэрсіі"
+
+#~ msgid "_About"
+#~ msgstr "Пра праграму"
+
+#~ msgid "_Add CD-ROM..."
+#~ msgstr "_Дадаць CD-ROM..."
+
+#~ msgid "_Browse Documentation"
+#~ msgstr "_Гартаць дакумэнтацыю"
+
+#~ msgid "_Configure..."
+#~ msgstr "_Наладзіць..."
+
+#~ msgid "_Contents"
+#~ msgstr "_Зьмест"
+
+#, fuzzy
+#~ msgid "_Custom Filters"
+#~ msgstr "_Фільтры"
+
+#~ msgid "_Download Changelog"
+#~ msgstr "_Выгрузіць часопіс зьменаў"
+
+#~ msgid "_Edit"
+#~ msgstr "_Рэдагаваньне"
+
+#~ msgid "_File"
+#~ msgstr "_Файл"
+
+#~ msgid "_Filters"
+#~ msgstr "_Фільтры"
+
+#~ msgid "_Fix Broken Packages"
+#~ msgstr "_Выправіць сапсаваныя пакеты"
+
+#~ msgid "_Force Version..."
+#~ msgstr "_Фарсіраваць вэрсію..."
+
+#~ msgid "_Help"
+#~ msgstr "_Даведка"
+
+#~ msgid "_Hide"
+#~ msgstr "С_хаваць"
+
+#, fuzzy
+#~ msgid "_History"
+#~ msgstr "Інструмэнт пошуку"
+
+#~ msgid "_Icons Only"
+#~ msgstr "Толькі _значкі"
+
+#~ msgid "_Lock Version"
+#~ msgstr "Замкнуць _вэрсію"
+
+#~ msgid "_Mark All Upgrades..."
+#~ msgstr "Па_значыць усе абнаўленьні..."
+
+#~ msgid "_Package"
+#~ msgstr "_Пакет"
+
+#~ msgid "_Properties"
+#~ msgstr "_Уласьцівасьці"
+
+#~ msgid "_Quick Introduction"
+#~ msgstr "_Уводзіны"
+
+#~ msgid "_Quit"
+#~ msgstr "_Выйсьці"
+
+#~ msgid "_Read Markings..."
+#~ msgstr "_Прачытаць пазначэньні..."
+
+#~ msgid "_Redo"
+#~ msgstr "В_ярнуцца"
+
+#~ msgid "_Reload Package Information"
+#~ msgstr "Пе_рагрузіць зьвесткі пакету"
+
+#~ msgid "_Repositories"
+#~ msgstr "_Сховішчы"
+
+#~ msgid "_Save Markings"
+#~ msgstr "Захаваць _пазначэньні"
+
+#~ msgid "_Search..."
+#~ msgstr "_Пошук..."
+
+#~ msgid "_Sections"
+#~ msgstr "Па_дзелы"
+
+#~ msgid "_Set Internal Option..."
+#~ msgstr "Усталяваць _унутраны выбар..."
+
+#~ msgid "_Settings"
+#~ msgstr "_Усталёўкі"
+
+#~ msgid "_Text Only"
+#~ msgstr "_Толькі тэкст"
+
+#~ msgid "_Toolbar"
+#~ msgstr "Панэль _інструмэнтаў"
+
+#~ msgid "_Undo"
+#~ msgstr "_Адкаціць"
+
+#~ msgid ""
+#~ "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
+#~ "Copyright (c) 2002-2004 Michael Vogt</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">Аўтарскае права (c) 2001-2004 Connectiva S/A \n"
+#~ "Аўтарскае права (c) 2002-2004 Michael Vogt</span>"
+
+#~ msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
+#~ msgstr "<span size=\"xx-large\" weight=\"bold\">Вэрсія Synaptic</span>"
+
+#~ msgid "Debtag support is enabled."
+#~ msgstr "Падтрымка Debtag уключана."
+
+#~ msgid "Documented by"
+#~ msgstr "Дакумэнтавана"
+
+#, fuzzy
+#~ msgid ""
+#~ "Man page:\n"
+#~ "Wybo Dekker <wybo@servalys.nl>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Manual:\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>"
+#~ msgstr ""
+#~ "Старонкі кіраўніцтва (man):\n"
+#~ "Wybo Dekker <wybo@servalys.nl>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Sebastian Heinlein <sebastain.heinlein@web.de>\n"
+#~ "\n"
+#~ "Кіраўніцтва:\n"
+#~ "Sebastian Heinlein <sebastain.heinlein@web.de>"
+
+#~ msgid ""
+#~ "Original author:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "\n"
+#~ "Maintainers:\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Contributors:\n"
+#~ "Enrico Zini <enrico@debian.org>\n"
+#~ "Panu Matilainen <pmatilai@welho.com>\n"
+#~ "Sviatoslav Sviridov <svd@lintec.minsk.by>"
+#~ msgstr ""
+#~ "Аўтар і стваральнік:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "\n"
+#~ "Майнтайнэры:\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Памочнікі:\n"
+#~ "Enrico Zini <enrico@debian.org>\n"
+#~ "Panu Matilainen <pmatilai@welho.com>\n"
+#~ "Sviatoslav Sviridov <svd@lintec.minsk.by>"
+
+#~ msgid "Package management software using apt."
+#~ msgstr "Кіраўнік пакетаў які выкарыстоўвае apt."
+
+#~ msgid ""
+#~ "This software is licensed under the terms of the GNU General Public "
+#~ "License, Version 2"
+#~ msgstr ""
+#~ "Гэтае праграмнае забесьпячэньне ліцэнзаванае на ўмовах GNU General Public "
+#~ "License, Вэрсіі 2"
+
+#~ msgid "Translated by"
+#~ msgstr "Перакладзена"
+
+#~ msgid ""
+#~ "Visit the home page at \n"
+#~ "http://www.nongnu.org/synaptic/"
+#~ msgstr ""
+#~ "Наведайце хатнюю старонку на \n"
+#~ "http://www.nongnu.org/synaptic/"
+
+#~ msgid "Written by"
+#~ msgstr "Напісана "
+
+#~ msgid "translators-credits"
+#~ msgstr "Віталь Хілько <v.khilko@sam-solutions.net>"
+
+#~ msgid "Description and Name"
+#~ msgstr "Апісаньне  і назва"
+
+#~ msgid "Look in:"
+#~ msgstr "Глядзець у:"
+
+#~ msgid "Search:"
+#~ msgstr "Пошук:"
+
+#~ msgid "_Search"
+#~ msgstr "_Пошук"
+
+#, fuzzy
+#~ msgid "Show for individual files"
+#~ msgstr "Адлюстроўваць прагрэс асобных файлаў"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
+#~ "span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Ці пазначаць далей патрэбныя зьмены?"
+#~ "</span>"
+
+#~ msgid "_Mark"
+#~ msgstr "_Пазначыць"
+
+#~ msgid " "
+#~ msgstr " "
+
+#~ msgid "<b>Appearance</b>"
+#~ msgstr "<b>Выгляд</b>"
+
+#~ msgid "<b>Applying Changes</b>"
+#~ msgstr "<b>Ужываньне зьменаў</b>"
+
+#~ msgid "<b>Colors</b>"
+#~ msgstr "<b>Колеры</b>"
+
+#~ msgid "<b>Columns</b>"
+#~ msgstr "<b>Слупкі</b>"
+
+#~ msgid "<b>Fonts</b>"
+#~ msgstr "<b>Шрыфты</b>"
+
+#, fuzzy
+#~ msgid "<b>History files</b>"
+#~ msgstr "<b>Часовыя файлы</b>"
+
+#~ msgid "<b>Marking Changes</b>"
+#~ msgstr "<b>Пазначэньне зьменаў</b>"
+
+#~ msgid "<b>Proxy Server</b>"
+#~ msgstr "<b>Паўнамоцны паслужнік</b>"
+
+#~ msgid "<b>Temporary Files</b>"
+#~ msgstr "<b>Часовыя файлы</b>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<span size=\"large\" weight=\"bold\">These settings affect the core of "
+#~ "your system. Consider any changes carefully.</span>"
+#~ msgstr ""
+#~ "<span size=\"large\" weight=\"bold\">Гэтыя усталёўкі прывядуць да "
+#~ "непрацаздольнасьці вашае сыстэмы. Вельмі уважліва разгледзьце зьмены.</"
+#~ "span>"
+
+#~ msgid "A_pplication Font"
+#~ msgstr "Шрыфт дастасаваньня"
+
+# This is filter name, it's better to not translate it
+#, fuzzy
+#~ msgid "Always prefer the installed version"
+#~ msgstr "Усталяваная вэрсыя "
+
+#~ msgid "Apply changes in a terminal window"
+#~ msgstr "Ужываць зьмены ў акне тэрміналу"
+
+#, fuzzy
+#~ msgid "Ask to confirm changes that also affect other packages"
+#~ msgstr "Пытацца пацьверджаньня"
+
+#~ msgid "Ask to quit after the changes have been applied successfully"
+#~ msgstr "Выйсьці пасьля пасьпяховага заканчэньня ужываньня зьменаў"
+
+#, fuzzy
+#~ msgid "Authentication"
+#~ msgstr "Камунікацыі"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Broken:"
+#~ msgstr "Сапсаваныя:"
+
+#~ msgid "Clicking on the status icon marks the most likely action"
+#~ msgstr "Шчаўчок па значцы стану пазначае некалькі магчымых дзеяньняў"
+
+#~ msgid "Color"
+#~ msgstr "Колер"
+
+#~ msgid "Color packages by their status"
+#~ msgstr "Колеры пакетаў па іх стане"
+
+#~ msgid "Colors"
+#~ msgstr "Колеры"
+
+#~ msgid "Columns and Fonts"
+#~ msgstr "Слупкі і шрыфты"
+
+#~ msgid ""
+#~ "Comma separated list of hosts and domains that will not be contacted "
+#~ "through the proxy (e.g. localhost, 192.168.1.231, .net)"
+#~ msgstr ""
+#~ "Падзелены коскамі сьпіс вузлоў і дамэнаў далучэньне да якіх адбываецца "
+#~ "без выкарыстаньня проксі (напрыклад: localhost, 192.168.1.231, .net)"
+
+#~ msgid "Consider recommended packages as dependencies"
+#~ msgstr "Разглядаць рэкамэндаваныя пакеты як залежнасьці"
+
+#, fuzzy
+#~ msgid "Delete all cache package files now."
+#~ msgstr "Выдаліць за_кэшаваныя файлы пакетаў"
+
+#~ msgid "Direct connection to the internet"
+#~ msgstr "Наўпроставае далучэньне да інтэрнэту"
+
+#~ msgid "FTP proxy: "
+#~ msgstr "FTP проксі: "
+
+#, fuzzy
+#~ msgid "Files"
+#~ msgstr "Фільтры"
+
+#~ msgid "General"
+#~ msgstr "Асноўнае"
+
+#~ msgid "HTTP proxy: "
+#~ msgstr "HTTP проксі: "
+
+#~ msgid "IP address or host name of the ftp proxy server"
+#~ msgstr "ІР адрас ці назва вузлу паўнамоцнага ftp паслужніку"
+
+#~ msgid "IP address or host name of the http proxy server"
+#~ msgstr "ІР адрас ці назва вузлу паўнамоцнага http паслужніку"
+
+#~ msgid "Installed (locked):"
+#~ msgstr "Усталяваныя (замкнёныя):"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Installed:"
+#~ msgstr "Усталяваныя:"
+
+#~ msgid "Manual proxy configuration"
+#~ msgstr "Асабістая наладка проксі"
+
+#~ msgid "Marked for complete removal:"
+#~ msgstr "Пазначаныя для поўнага выдаленьня:"
+
+#~ msgid "Marked for downgrade:"
+#~ msgstr "Пазначаныя для вяртаньня:"
+
+#~ msgid "Marked for installation:"
+#~ msgstr "Пазначаныя для ўсталёўкі:"
+
+#~ msgid "Marked for reinstallation:"
+#~ msgstr "Пазначаныя для пераўсталёўкі:"
+
+#~ msgid "Marked for removal:"
+#~ msgstr "Пазначаныя для выдаленьня:"
+
+#~ msgid "Marked for upgrade:"
+#~ msgstr "Пазначаныя для абнаўленьня:"
+
+#~ msgid "Move D_own"
+#~ msgstr "Апусьціць _ніжэй"
+
+#~ msgid "Move _Up"
+#~ msgstr "Падняць _вышэй"
+
+#~ msgid "Network"
+#~ msgstr "Сетка"
+
+#, fuzzy
+#~ msgid "New in repository:"
+#~ msgstr "Новыя ў сховішчы:"
+
+#~ msgid "No proxy for: "
+#~ msgstr "Без проксі для: "
+
+#~ msgid "Not installed (locked):"
+#~ msgstr "Не ўсталяваныя (замкнёныя):"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Not installed:"
+#~ msgstr "Не ўсталяваныя:"
+
+#~ msgid "Number of undo operations:"
+#~ msgstr "Колькасьць апэрацыяў адкату:"
+
+#~ msgid "Port number of the ftp proxy server"
+#~ msgstr "Нумар порту паўнамоцнага ftp паслужніку"
+
+#~ msgid "Port number of the http proxy server"
+#~ msgstr "Нумар порту паўнамоцнага http паслужніку"
+
+#~ msgid "Port: "
+#~ msgstr "Порт: "
+
+# This is filter name, it's better to not translate it
+#, fuzzy
+#~ msgid "Prefer versions from: "
+#~ msgstr "Узмоцненая вэрсія:"
+
+#~ msgid "Reloading outdated package information:"
+#~ msgstr "Перагружаць састарэлыя зьвесткі пакетаў:"
+
+#~ msgid "Removal of packages: "
+#~ msgstr "Выдаленьне пакетаў: "
+
+#~ msgid "System upgrade:"
+#~ msgstr "Абнаўленьне сыстэмы:"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Upgradable:"
+#~ msgstr "Здольныя абнаўляцца:"
+
+#~ msgid "Use custom application font"
+#~ msgstr "Выкарыстоўваць свой шрыфт дастасаваньня"
+
+#~ msgid "Use custom terminal font"
+#~ msgstr "Выкарыстоўваць свой шрыфт для тэрміналу"
+
+#~ msgid "_Delete Cached Package Files"
+#~ msgstr "Выдаліць за_кэшаваныя файлы пакетаў"
+
+#, fuzzy
+#~ msgid "_Delete downloaded packages after installation"
+#~ msgstr "Выдаліць загружаныя пакеты пасьля ўсталёўкі"
+
+#, fuzzy
+#~ msgid "_Leave all downloaded packages in the cache"
+#~ msgstr "Пакінуць усе загружаныя пакеты ў кэшы"
+
+#, fuzzy
+#~ msgid "_Only delete packages which are no longer available"
+#~ msgstr "Усталяваныя пакеты якія здольныя абнаўляцца"
+
+#~ msgid "_Terminal Font"
+#~ msgstr "_Шрыфт тэрміналу"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Пазначце назву для гэтага CD-ROM</"
+#~ "span>"
+
+#~ msgid "Disc label:"
+#~ msgstr "Назва дыска:"
+
+#~ msgid ""
+#~ "The label will be used to identify the CD-ROM if you want to install "
+#~ "packages from it later."
+#~ msgstr ""
+#~ "Назва мусіць выкарыстоўвацца для ідэнтыфікацыі CD-ROM калі вы пажадаеце "
+#~ "ўсталёўваць пакеты з яго й далей."
+
+#~ msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
+#~ msgstr ""
+#~ "<span size=\"large\" weight=\"bold\">Усталяваць унутраны выбар</span>"
+
+#~ msgid "Only experts should use this."
+#~ msgstr "Толькі экспэрты карыстаюцца гэтым."
+
+#~ msgid "Value:"
+#~ msgstr "Значэньне:"
+
+#~ msgid "Variable:"
+#~ msgstr "Пераменная:"
+
+#~ msgid "<b>Summary</b>"
+#~ msgstr "<b>Кароткае апісаньне</b>"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Ужыць наступныя зьмены?</span>"
+
+#~ msgid "Return to the main screen"
+#~ msgstr "Вярнуцца да асноўнага акна"
+
+#, fuzzy
+#~ msgid "The package files will be downloaded, but not installed"
+#~ msgstr "Файлы пакетаў мусяць толькі загружацца, але не ўсталёўвацца"
+
+#, fuzzy
+#~ msgid "_Download package files only"
+#~ msgstr "Толькі загружаць файлы пакетаў"
+
+#, fuzzy
+#~ msgid "_Verify package signatures"
+#~ msgstr "Праверка подпісаў пакетаў"
+
+#~ msgid "<b>Current</b>"
+#~ msgstr "<b>Бягучы</b>"
+
+#~ msgid "<b>Marked</b>"
+#~ msgstr "<b>Пазначанае</b>"
+
+#~ msgid "<b>Other</b>"
+#~ msgstr "<b>Іншае</b>"
+
+#~ msgid "AND"
+#~ msgstr "І"
+
+#, fuzzy
+#~ msgid "Automatic install"
+#~ msgstr "Аўтаматычна"
+
+#, fuzzy
+#~ msgid "Automatic removable"
+#~ msgstr "Аўтаматычна"
+
+#~ msgid "Boolean operator between property criterias:"
+#~ msgstr "Булевы апэратар паміж крытэраў:"
+
+#~ msgid "Conflicting Packages"
+#~ msgstr "Канфліктуючыя пакеты"
+
+#~ msgid "Dependent Packages"
+#~ msgstr "Залежныя пакеты"
+
+#~ msgid "Exclude"
+#~ msgstr "Выключыць"
+
+#~ msgid "Exclude selected sections"
+#~ msgstr "Выключаць выбраныя падзелы"
+
+#~ msgid "For installation or upgrade"
+#~ msgstr "Для ўсталёўкі і абнаўленьня"
+
+#~ msgid "For removal"
+#~ msgstr "Для выдаленьня"
+
+#~ msgid "Include"
+#~ msgstr "Уключыць"
+
+#~ msgid "Include selected sections only"
+#~ msgstr "Уключаць толькі вылучаныя падзелы"
+
+#~ msgid "Installed packages that are upgradable"
+#~ msgstr "Усталяваныя пакеты якія здольныя абнаўляцца"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Installed packages that are upgradable to a later upstream version"
+#~ msgstr ""
+#~ "Усталяваная пакеты якія могуць быць абноўленыя да апошняе вэрсіі галіны "
+#~ "распрацоўкі"
+
+#~ msgid "Library packages that are no longer needed (deborphan is required)"
+#~ msgstr ""
+#~ "Пакеты бібліятэк, якія больш непатрэбны (патрабуецца deborphan для працы)"
+
+# This is filter name, it's better to not translate it
+#, fuzzy
+#~ msgid "Manual installed"
+#~ msgstr "Не ўсталяваныя"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Not installable"
+#~ msgstr "Не магчыма ўсталяваць"
+
+#~ msgid "Not installed packages"
+#~ msgstr "Не ўсталяваныя пакеты"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Not marked"
+#~ msgstr "Не пазначаны"
+
+#~ msgid "OR"
+#~ msgstr "ЦІ"
+
+#~ msgid "Orphaned"
+#~ msgstr "Закінутыя"
+
+#, fuzzy
+#~ msgid "Packages that are new in the repository since that last \"Reload\""
+#~ msgstr "Пакеты, якія зьявіліся ў сховішчы пасьля апошняга абнаўленьня"
+
+#~ msgid "Packages that are not available in any repository"
+#~ msgstr "Пакеты, якія не даступныя ні ў адным сховішчы"
+
+#~ msgid "Packages that will be installed or upgraded"
+#~ msgstr "Пакеты, якія будуць усталяваны ці абноўлены"
+
+#~ msgid "Packages that will be removed"
+#~ msgstr "Пакеты, якія будуць выдалены"
+
+#~ msgid "Packages that will never be upgraded"
+#~ msgstr "Пакеты, якія ніколі ня будуць абноўленыя"
+
+#~ msgid "Packages that won't be changed"
+#~ msgstr "Пакеты, якія мусяць абнавіцца"
+
+#~ msgid "Packages with broken dependencies"
+#~ msgstr "Пакеты з сапсаванымі залежнасьцямі"
+
+#, fuzzy
+#~ msgid "Policy broken"
+#~ msgstr "Выправіць сапсаванае"
+
+#~ msgid "Removed packages that have left configuration files on the system"
+#~ msgstr ""
+#~ "Выдаленыя пакеты, для якіх у сыстэме засталіся канфігурацыйныя файлы"
+
+#~ msgid "Residual config"
+#~ msgstr "Рэшткавыя"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Tags"
+#~ msgstr "Тэгі"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Upgradable"
+#~ msgstr "Здольны абнаўляцца"
+
+#~ msgid "Version Number"
+#~ msgstr "Вэрсія"
+
+#~ msgid "_Deselect All"
+#~ msgstr "С_кінуць усё"
+
+#~ msgid "_Invert All"
+#~ msgstr "_Інвэртаваць усё"
+
+#~ msgid "Distribution:"
+#~ msgstr "Дыстрыбутыў:"
+
+#~ msgid "Section(s):"
+#~ msgstr "Падзел(ы):"
+
+#~ msgid "URI:"
+#~ msgstr "URI:"
+
+#~ msgid "Vendors..."
+#~ msgstr "Пастаўшчыкі..."
+
+#~ msgid "deb"
+#~ msgstr "deb"
+
+#~ msgid "deb-src"
+#~ msgstr "deb-src"
+
+#~ msgid "rpm"
+#~ msgstr "rpm"
+
+#~ msgid "rpm-src"
+#~ msgstr "rpm-src"
+
+#, fuzzy
+#~ msgid "<i>Preparing packages...</i>"
+#~ msgstr "Ачыстка сьпісаў пакетаў..."
+
+#, fuzzy
+#~ msgid "Automatically close after the changes have been successfully applied"
+#~ msgstr "Выйсьці пасьля пасьпяховага заканчэньня ужываньня зьменаў"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "_Паказаць падрабязнасьці"
+
+#~ msgid "Extra output was generated during Package Manager operation"
+#~ msgstr "Вывад згенераваны ў часе выкананьня кіраўніка пакетаў"
+
+#~ msgid "_Description"
+#~ msgstr "А_пісаньне"
+
+#~ msgid "<b>Terminal Output:</b>"
+#~ msgstr "<b>Вывад тэрміналу:</b>"
+
+#, fuzzy
+#~ msgid "Close this dialog after the changes have been successfully applied"
+#~ msgstr ""
+#~ "Закрыць гэты дыялёг пасьля пасьпяховага заканчэньня ужываньня зьменаў"
+
+#~ msgid " - "
+#~ msgstr " - "
+
+#, fuzzy
+#~ msgid ""
+#~ "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
+#~ "all changes and then apply them."
+#~ msgstr ""
+#~ "<b>Нататка:</b> Зьмены не могуць быць ужытыя імгненна. Сьпярша вы мусіце "
+#~ "пазначыць усе неабходныя зьмены і толькі потым ужыць іх."
+
+#~ msgid "Choose the action from the context menu of the package."
+#~ msgstr "Выберыце дзеяньне з кантэкстнага мэню пакету."
+
+#~ msgid "Click on the status icon to open a menu that contains all actions."
+#~ msgstr "Шчаўчок па значцы стану адкрывае мэню якое ўтрымлівае усе апэрацыі."
+
+#~ msgid "Double click on the package name."
+#~ msgstr "Падвойны шчаўчок на назове пакету."
+
+#~ msgid "Quick Introduction"
+#~ msgstr "Уводзіны"
+
+#~ msgid "Select the package and choose the action from the 'Package' menu."
+#~ msgstr "Выберыце пакет і дзеяньне па-над ім з мэню 'Пакет'."
+
+#~ msgid "Show this dialog at startup"
+#~ msgstr "Адлюстроўваць дыялёг пасьля запуску"
+
+#~ msgid ""
+#~ "The software on your system is organized in so called <i>packages</i>. "
+#~ "The package manager enables you to install, to upgrade or to remove "
+#~ "software packages."
+#~ msgstr ""
+#~ "Праграмнае забесьпячэньне у вашае сыстэме арганізавана ў выглядзе "
+#~ "<i>пакетаў</i>. Кіраўнік пакетаў дазваляе вам усталёўваць, абнаўляць ці "
+#~ "выдаляць пакеты."
+
+#~ msgid ""
+#~ "You can mark packages for installation, upgrade or removal in several "
+#~ "ways:"
+#~ msgstr ""
+#~ "Вы можаце пазначыць пакеты для усталёўкі, абнаўленьня ці выдаленьня "
+#~ "некалькімі шляхамі:"
+
+#~ msgid ""
+#~ "You should reload the package information regularly. Otherwise you could "
+#~ "miss important security upgrades."
+#~ msgstr ""
+#~ "Вы мусіце рэгулярна перагружаць зьвесткі аб пакетах, у іншым выпадку вы "
+#~ "можаце прапусьціць важныя абнаўленьні ў бясьпецы."
+
+#~ msgid "Complete changelog of the latest version:"
+#~ msgstr "Поўны часопіс зьменаў апошняе вэрсіі:"
+
+#~ msgid ""
+#~ "<b>The following icons are used to indicate the current status of a "
+#~ "package:</b>"
+#~ msgstr ""
+#~ "<b>Наступныя значкі выкарыстоўваюцца для пазначэньня стану пакету:</b>"
+
+#, fuzzy
+#~ msgid "Remember the answer"
+#~ msgstr "Запомніць адказ для далейшых абнаўленьняў"
+
+#, fuzzy
+#~ msgid "_Reload"
+#~ msgstr "Перагрузіць"
+
+#, fuzzy
+#~ msgid "History"
+#~ msgstr "Інструмэнт пошуку"
+
+#, fuzzy
+#~ msgid "History of installed, upgraded and removed software packages."
+#~ msgstr "Усталёўвае, выдаляе і абнаўляе пакеты"
+
+#~ msgid ""
+#~ "<b><big>Quit and discard marked changes?</big></b>\n"
+#~ "\n"
+#~ "There are still marked changes that have not yet been applied. They will "
+#~ "get lost if you choose to quit 'Synaptic'."
+#~ msgstr ""
+#~ "<b><big>Выйсьці і скасаваць пазначаныя зьмены?</big></b>\n"
+#~ "\n"
+#~ "Засталося шмат пазначаных зьменаў якія яшчэ не былі ужытыя. Вы згубіце "
+#~ "ўсе выбраныя зьмены, калі вы выберыце выхад з 'Synaptic'."
+
+#~ msgid "_Keep"
+#~ msgstr "За_хаваць"
+
+#, fuzzy
+#~ msgid "_Replace"
+#~ msgstr "Замяняе"
+
+# This is filter name, it's better to not translate it
+#~ msgid "Force version:"
+#~ msgstr "Узмоцненая вэрсія:"
+
+#~ msgid "_Force Version"
+#~ msgstr "Узмоцненая вэрсія"
+
+#, fuzzy
+#~ msgid "Remember my answer for future upgrades"
+#~ msgstr "Запомніць адказ для далейшых абнаўленьняў"
+
+#~ msgid "This behavior can be changed in the preferences later."
+#~ msgstr "Гэтыя паводзіны могуць быць зьмененыя пазьней у перавагах."
+
+#, fuzzy
+#~ msgid "_Default Upgrade"
+#~ msgstr "Дапомнае абнаўленьне"
+
+#, fuzzy
+#~ msgid "_Smart Upgrade"
+#~ msgstr "Разумнае абнаўленьне"
+
+#, fuzzy
+#~ msgid "Label:"
+#~ msgstr "Назва дыска"
+
+#, fuzzy
+#~ msgid "APT line:"
+#~ msgstr "Зачэплены"
+
+#, fuzzy
+#~ msgid "_Add Repository"
+#~ msgstr "Дадаць сховішча"
 
 #, fuzzy
 #~ msgid "gtk-cancel"
@@ -4038,10 +3627,6 @@ msgstr "Дадаць сховішча"
 #, fuzzy
 #~ msgid "Remove Including Orphaned _Dependencies"
 #~ msgstr "Выдаліць з улікам залежнасьцяў"
-
-#, fuzzy
-#~ msgid "Search for:"
-#~ msgstr "Пошук"
 
 #~ msgid "_Save Selections"
 #~ msgstr "_Захаваць вылучэньні"

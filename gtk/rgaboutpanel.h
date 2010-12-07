@@ -24,16 +24,16 @@
 #ifndef _RGABOUTPANEL_H_
 #define _RGABOUTPANEL_H_
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
-class RGCreditsPanel:public RGGladeWindow {
+class RGCreditsPanel:public RGGtkBuilderWindow {
  public:
    RGCreditsPanel(RGWindow *parent);
    virtual ~RGCreditsPanel() {
    };
 };
 
-class RGAboutPanel:public RGGladeWindow {
+class RGAboutPanel:public RGGtkBuilderWindow {
    static void creditsClicked(GtkWidget *self, void *data);
    RGCreditsPanel *credits;
  public:

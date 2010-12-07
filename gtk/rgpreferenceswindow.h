@@ -20,10 +20,10 @@
  * USA
  */
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 
-class RGPreferencesWindow:public RGGladeWindow {
+class RGPreferencesWindow:public RGGtkBuilderWindow {
    bool _blockAction;
 
    enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
@@ -38,6 +38,10 @@ class RGPreferencesWindow:public RGGladeWindow {
    static const char *column_names[];
    static const char *column_visible_names[];
    static const gboolean column_visible_defaults[];
+
+   static const char *removal_actions[];
+   static const char *update_ask[];
+   static const char *upgrade_method[];
 
    RGMainWindow *_mainWin;
    RPackageLister *_lister;
@@ -62,7 +66,9 @@ class RGPreferencesWindow:public RGGladeWindow {
    GtkWidget *_pathT;
    GtkWidget *_sizeT;
    GtkWidget *_maxUndoE;
-   GtkWidget *_optionmenuDel;
+   GtkWidget *_comboRemovalAction;
+   GtkWidget *_comboUpdateAsk;
+   GtkWidget *_comboUpgradeMethod;
    GtkWidget *_useProxy;
 
    // policy settings

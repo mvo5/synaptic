@@ -29,7 +29,7 @@
 #ifdef WITH_DPKG_STATUSFD
 
 #include "rinstallprogress.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
 #include<map>
 #include <vte/reaper.h>
@@ -38,7 +38,7 @@
 class RGMainWindow;
 
 
-class RGDebInstallProgress:public RInstallProgress, public RGGladeWindow 
+class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow 
 {
    typedef enum {
       EDIT_COPY,

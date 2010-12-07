@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-01-25 17:47+0100\n"
+"POT-Creation-Date: 2010-11-16 16:49+0100\n"
 "PO-Revision-Date: 2005-04-09 17:05+0200\n"
 "Last-Translator: Arangel Angov <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
+"Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -288,7 +289,7 @@ msgstr "КДЕ работна околина"
 
 #. TRANSLATORS: The section of the package is not known
 #: ../common/sections_trans.cc:116 ../common/rpackage.cc:110
-#: ../common/rpackageview.cc:573
+#: ../common/rpackageview.cc:591
 msgid "Unknown"
 msgstr "Непознато"
 
@@ -302,22 +303,28 @@ msgstr "Конвертирано од RPM со Alien"
 msgid "Internationalization and localization"
 msgstr ""
 
+#. TRANSLATORS: Ubuntu metapackages section
+#: ../common/sections_trans.cc:122
+#, fuzzy
+msgid "Meta Packages"
+msgstr "Заменети пакети"
+
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
 #. or restricted
-#: ../common/sections_trans.cc:125 ../common/sections_trans.cc:143
-#: ../common/sections_trans.cc:147
+#: ../common/sections_trans.cc:127 ../common/sections_trans.cc:145
+#: ../common/sections_trans.cc:149
 msgid "Restricted On Export"
 msgstr "Забранети за експорт"
 
 #. TRANSLATORS: Alias for the Debian package section "non free"
-#: ../common/sections_trans.cc:127 ../common/sections_trans.cc:144
+#: ../common/sections_trans.cc:129 ../common/sections_trans.cc:146
 msgid "non free"
 msgstr "неслободни"
 
 #. TRANSLATORS: Alias for the Debian package section "contrib"
 #. Free software that depends on non-free software
-#: ../common/sections_trans.cc:130 ../common/sections_trans.cc:148
+#: ../common/sections_trans.cc:132 ../common/sections_trans.cc:150
 msgid "contrib"
 msgstr "придонесени"
 
@@ -464,36 +471,36 @@ msgstr "Не можам да сменам во %s"
 msgid "Unable to read %s"
 msgstr "Не можам да прочитам %s"
 
-#: ../common/rconfiguration.cc:88 ../common/rconfiguration.cc:241
+#: ../common/rconfiguration.cc:114 ../common/rconfiguration.cc:281
 #, c-format
 msgid "ERROR: couldn't open %s for writing"
 msgstr "ГРЕШКА: не можам да го отворам %s за запишување"
 
-#: ../common/rconfiguration.cc:114
+#: ../common/rconfiguration.cc:140
 msgid "ERROR: Could not get password entry for superuser"
 msgstr "ГРЕШКА: Не можам да го добијам записот со лозинката за суперкорисникот"
 
-#: ../common/rconfiguration.cc:123
+#: ../common/rconfiguration.cc:149
 #, c-format
 msgid "ERROR: could not create configuration directory %s"
 msgstr "ГРЕШКА: не можам да креирам конфигурациски директориум %s"
 
-#: ../common/rconfiguration.cc:147
+#: ../common/rconfiguration.cc:173
 #, fuzzy, c-format
 msgid "ERROR: could not create state directory %s"
 msgstr "ГРЕШКА: не можам да креирам директориум за записи %s"
 
-#: ../common/rconfiguration.cc:164
+#: ../common/rconfiguration.cc:190
 #, fuzzy, c-format
 msgid "ERROR: could not create tmp directory %s"
 msgstr "ГРЕШКА: не можам да креирам директориум за записи %s"
 
-#: ../common/rconfiguration.cc:182
+#: ../common/rconfiguration.cc:208
 #, c-format
 msgid "ERROR: could not create log directory %s"
 msgstr "ГРЕШКА: не можам да креирам директориум за записи %s"
 
-#: ../common/rconfiguration.cc:266
+#: ../common/rconfiguration.cc:306
 #, c-format
 msgid "couldn't open %s for writing"
 msgstr "не можам да го отворам %s за запишување"
@@ -524,15 +531,15 @@ msgstr ""
 "Успешно ги инсталирав сите пакети од тековниот медиум. Затворете го "
 "прозорецот за да ја продолжите инсталацијата со друг медиум."
 
-#: ../common/rpackage.cc:203
+#: ../common/rpackage.cc:206
 msgid "The list of installed files is only available for installed packages"
 msgstr "Листа на инсталирани пакети е достапна само за инсталираните пакети"
 
-#: ../common/rpackage.cc:463
+#: ../common/rpackage.cc:466
 msgid "or dependency"
 msgstr "или зависност"
 
-#: ../common/rpackage.cc:580
+#: ../common/rpackage.cc:583
 #, c-format
 msgid ""
 "\n"
@@ -549,58 +556,58 @@ msgstr ""
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:617
+#: ../common/rpackage.cc:620
 #, c-format
 msgid "\t%s %s but %s is to be installed"
 msgstr "\\t%s %s но %s ќе биде инсталиран"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-#: ../common/rpackage.cc:623
+#: ../common/rpackage.cc:626
 #, c-format
 msgid " %s: %s %s but %s is to be installed"
 msgstr " %s: %s %s но %s ќе биде инсталиран"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but it is not installable"
-#: ../common/rpackage.cc:633
+#: ../common/rpackage.cc:636
 #, c-format
 msgid "\t%s %s but it is not installable"
 msgstr "\\t%s %s но не може да се инсталира"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is a virtual package"
-#: ../common/rpackage.cc:645
+#: ../common/rpackage.cc:648
 #, c-format
 msgid "\t%s but it is a virtual package"
 msgstr "\\t%s но е вирутелен пакет"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
-#: ../common/rpackage.cc:650
+#: ../common/rpackage.cc:653
 #, c-format
 msgid "%s: %s but it is a virtual package"
 msgstr "%s: %s но е виртуелен пакет"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt but it is not going to be installed"
-#: ../common/rpackage.cc:655
+#: ../common/rpackage.cc:658
 #, c-format
 msgid "\t%s but it is not going to be installed"
 msgstr "\\t%s но нема да биде инсталиран"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is not going to be installed"
-#: ../common/rpackage.cc:660
+#: ../common/rpackage.cc:663
 #, c-format
 msgid "%s: %s but it is not going to be installed"
 msgstr "%s: %s но нема да биде инсталиран"
 
-#: ../common/rpackage.cc:679
+#: ../common/rpackage.cc:682
 msgid " or"
 msgstr " или"
 
-#: ../common/rpackage.cc:1017
+#: ../common/rpackage.cc:1059
 msgid "Invalid record in the preferences file, no Package header"
 msgstr "Невалиден запис во преференците, пакетот нема заглавје"
 
@@ -671,8 +678,7 @@ msgstr "Обележано за отстранување"
 msgid "Marked for complete removal"
 msgstr "Обележано за целосно отстранување"
 
-#: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:136
-#: ../gtk/glade/window_filters.glade.h:41
+#: ../common/rpackagestatus.cc:55 ../common/rpackageview.cc:142
 msgid "Not installed"
 msgstr "Неинсталирани"
 
@@ -680,13 +686,13 @@ msgstr "Неинсталирани"
 msgid "Not installed (locked)"
 msgstr "Неинсталирани (заклучено)"
 
-#: ../common/rpackagestatus.cc:57 ../common/rpackageview.cc:131
-#: ../gtk/gsynaptic.cc:565 ../gtk/glade/window_filters.glade.h:30
+#: ../common/rpackagestatus.cc:57 ../common/rpackageview.cc:137
+#: ../gtk/gsynaptic.cc:571
 msgid "Installed"
 msgstr "Инсталирани"
 
-#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:167
-#: ../gtk/gsynaptic.cc:554
+#: ../common/rpackagestatus.cc:58 ../common/rpackageview.cc:173
+#: ../gtk/gsynaptic.cc:560
 msgid "Installed (upgradable)"
 msgstr "Инсталирани (надградливи)"
 
@@ -694,8 +700,7 @@ msgstr "Инсталирани (надградливи)"
 msgid "Installed (locked to the current version)"
 msgstr "Инсталирани (заклучени на тековната верзија)"
 
-#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:514
-#: ../gtk/glade/window_filters.glade.h:14
+#: ../common/rpackagestatus.cc:60 ../common/rpackageview.cc:519
 msgid "Broken"
 msgstr "Расипани"
 
@@ -717,29 +722,25 @@ msgstr ""
 "Листата на пакети или датотеката за статус не можат да бидат парсирани или "
 "отворени."
 
-#: ../common/rpackagecache.cc:108
+#: ../common/rpackagecache.cc:110
 msgid "Internal Error, non-zero counts"
 msgstr "Внатрешна грешка"
 
-#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1046
-#: ../gtk/glade/window_find.glade.h:5
+#: ../common/rpackagefilter.cc:44 ../gtk/rgpreferenceswindow.cc:1145
 msgid "Name"
 msgstr "Име"
 
-#: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:51
-#: ../gtk/rgmainwindow.cc:1044 ../gtk/rgvendorswindow.cc:62
-#: ../gtk/rgvendorswindow.cc:94 ../gtk/glade/window_main.glade.h:21
-#: ../gtk/glade/window_filters.glade.h:20
-#: ../gtk/glade/window_details.glade.h:16 ../gtk/rgfiltermanager.h:70
+#: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:52
+#: ../gtk/rgmainwindow.cc:1161 ../gtk/rgvendorswindow.cc:62
+#: ../gtk/rgvendorswindow.cc:94 ../gtk/rgfiltermanager.h:70
 msgid "Description"
 msgstr "Опис"
 
-#: ../common/rpackagefilter.cc:46 ../gtk/glade/window_find.glade.h:4
-#: ../gtk/glade/window_filters.glade.h:37 ../gtk/rgfiltermanager.h:71
+#: ../common/rpackagefilter.cc:46 ../gtk/rgfiltermanager.h:71
 msgid "Maintainer"
 msgstr "Одржувач"
 
-#: ../common/rpackagefilter.cc:47 ../gtk/glade/window_find.glade.h:8
+#: ../common/rpackagefilter.cc:47
 msgid "Version"
 msgstr "Верзија"
 
@@ -752,32 +753,29 @@ msgid "ReverseDepends"
 msgstr ""
 
 #. Reverse Depends
-#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:124
-#: ../gtk/glade/window_main.glade.h:36 ../gtk/glade/window_filters.glade.h:45
+#: ../common/rpackagefilter.cc:55 ../common/rpackageview.h:129
 #: ../gtk/rgfiltermanager.h:80
 msgid "Origin"
 msgstr "Потекло"
 
 #. Origin (e.g. security.debian.org)
-#: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:50
-#: ../gtk/rgmainwindow.cc:937 ../gtk/glade/window_filters.glade.h:15
-#: ../gtk/rgfiltermanager.h:81
+#: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgmainwindow.cc:1054 ../gtk/rgfiltermanager.h:81
 msgid "Component"
 msgstr "Компонента"
 
-#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:140
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/rgfetchprogress.cc:91
-#: ../gtk/glade/window_filters.glade.h:64
+#: ../common/rpackagefilter.cc:61 ../common/rpackageview.h:145
+#: ../gtk/rgpreferenceswindow.cc:50 ../gtk/rgfetchprogress.cc:91
 msgid "Status"
 msgstr "Статус"
 
 #. g_object_set(G_OBJECT(renderer), "editable", TRUE, NULL);
-#: ../common/rpackagefilter.cc:62 ../gtk/rgfiltermanager.cc:180
+#: ../common/rpackagefilter.cc:62 ../gtk/rgfiltermanager.cc:235
 msgid "Pattern"
 msgstr "Шема"
 
-#: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:49
-#: ../gtk/rgmainwindow.cc:916 ../gtk/glade/window_filters.glade.h:63
+#: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:50
+#: ../gtk/rgmainwindow.cc:1033
 msgid "Section"
 msgstr "Оддел"
 
@@ -799,17 +797,17 @@ msgstr "_Датотека"
 msgid "Bad regular expression '%s' in ReducedView file."
 msgstr "Лош регуларен израз '%s' во датотеката за намален поглед."
 
-#: ../common/rpackagelister.cc:317 ../common/rpackagelister.cc:323
-#: ../common/rpackagelister.cc:333
+#: ../common/rpackagelister.cc:324 ../common/rpackagelister.cc:330
+#: ../common/rpackagelister.cc:340
 #, c-format
 msgid "Internal error opening cache (%d). Please report."
 msgstr "Внатрешна грешка при отворање на кешот (%d). Ве молам пријавете."
 
-#: ../common/rpackagelister.cc:472
+#: ../common/rpackagelister.cc:519
 msgid "Unable to correct dependencies"
 msgstr "Не успав да ги поправам зависностите"
 
-#: ../common/rpackagelister.cc:474
+#: ../common/rpackagelister.cc:521
 msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
@@ -817,21 +815,21 @@ msgstr ""
 "Не можам да ги обележам надградбите\n"
 "Проверете да не има грешки на системот."
 
-#: ../common/rpackagelister.cc:486
+#: ../common/rpackagelister.cc:533
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
 "Внатрешна грешка, надградбата на сите пакети расипа нешто. Ве молам "
 "пријавете."
 
-#: ../common/rpackagelister.cc:504
+#: ../common/rpackagelister.cc:551
 msgid "dist upgrade Failed"
 msgstr "Надградбата не успеа"
 
-#: ../common/rpackagelister.cc:1266
+#: ../common/rpackagelister.cc:1290
 msgid "Unable to lock the list directory"
 msgstr "Не можам да ја заклучам листата"
 
-#: ../common/rpackagelister.cc:1288
+#: ../common/rpackagelister.cc:1326
 msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
@@ -839,7 +837,7 @@ msgstr ""
 "Не можат да бидат собрани или пак проверени објавени датотеки од некои "
 "складишта. Ваквите складишта ќе бидат игнорирани."
 
-#: ../common/rpackagelister.cc:1379 ../gtk/rgrepositorywin.cc:356
+#: ../common/rpackagelister.cc:1410 ../gtk/rgrepositorywin.cc:362
 msgid "Ignoring invalid record(s) in sources.list file!"
 msgstr "Ги игнорирам невалидните записи од датотеката sources.list!"
 
@@ -847,7 +845,7 @@ msgstr "Ги игнорирам невалидните записи од дат�
 #. The first %s is the URL and the second
 #. one is a detailed error message that
 #. is provided by apt
-#: ../common/rpackagelister.cc:1430
+#: ../common/rpackagelister.cc:1461
 #, c-format
 msgid ""
 "Failed to fetch %s\n"
@@ -858,20 +856,20 @@ msgstr ""
 "••%s\n"
 "\n"
 
-#: ../common/rpackagelister.cc:1454
+#: ../common/rpackagelister.cc:1485
 msgid "Some of the packages could not be retrieved from the server(s).\n"
 msgstr "Некои од пакетите не можат да бидат преземени од серверот.\n"
 
-#: ../common/rpackagelister.cc:1457
+#: ../common/rpackagelister.cc:1488
 msgid "Do you want to continue, ignoring these packages?"
 msgstr "Дали сакате да продолжите и да ги игнорирате овие пакети?"
 
-#: ../common/rpackagelister.cc:1464
+#: ../common/rpackagelister.cc:1495
 msgid "Unable to correct missing packages"
 msgstr "Не можам да ги исправам пакетите што недостасуваат"
 
 #. _logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
-#: ../common/rpackagelister.cc:1602
+#: ../common/rpackagelister.cc:1633
 msgid ""
 "\n"
 "Removed the following ESSENTIAL packages:\n"
@@ -880,7 +878,7 @@ msgstr ""
 "Ги отстранив следниве ВАЖНИ пакети:\n"
 
 #. _logEntry += _("\n<b>Downgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1611
+#: ../common/rpackagelister.cc:1642
 msgid ""
 "\n"
 "Downgraded the following packages:\n"
@@ -889,7 +887,7 @@ msgstr ""
 "Инсталирав постари верзии од следниве пакети:\n"
 
 #. _logEntry += _("\n<b>Completely removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1620
+#: ../common/rpackagelister.cc:1651
 msgid ""
 "\n"
 "Completely removed the following packages:\n"
@@ -898,7 +896,7 @@ msgstr ""
 "Целосно ги отстранив следниве пакети:\n"
 
 #. _logEntry += _("\n<b>Removed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1629
+#: ../common/rpackagelister.cc:1660
 msgid ""
 "\n"
 "Removed the following packages:\n"
@@ -907,7 +905,7 @@ msgstr ""
 "Ги отстранив следниве пакети:\n"
 
 #. _logEntry += _("\n<b>Upgraded the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1638
+#: ../common/rpackagelister.cc:1669
 msgid ""
 "\n"
 "Upgraded the following packages:\n"
@@ -916,7 +914,7 @@ msgstr ""
 "Ги надградив следниве пакети:\n"
 
 #. _logEntry += _("\n<b>Installed the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1649
+#: ../common/rpackagelister.cc:1680
 msgid ""
 "\n"
 "Installed the following packages:\n"
@@ -925,7 +923,7 @@ msgstr ""
 "Ги инсталирав следниве пакети:\n"
 
 #. _logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
-#: ../common/rpackagelister.cc:1659
+#: ../common/rpackagelister.cc:1690
 msgid ""
 "\n"
 "Reinstalled the following packages:\n"
@@ -933,21 +931,21 @@ msgstr ""
 "\n"
 "Повторно ги инсталирав следниве пакети:\n"
 
-#: ../common/rpackagelister.cc:1676
+#: ../common/rpackagelister.cc:1707
 msgid "Unable to lock the download directory"
 msgstr "Не можам да го заклучам директориумот за преземања"
 
-#: ../common/rpackagelister.cc:1760
+#: ../common/rpackagelister.cc:1791
 #, c-format
 msgid "Line %u too long in markings file."
 msgstr ""
 
-#: ../common/rpackagelister.cc:1774 ../common/rpackagelister.cc:1778
+#: ../common/rpackagelister.cc:1805 ../common/rpackagelister.cc:1809
 #, c-format
 msgid "Malformed line %u in markings file"
 msgstr ""
 
-#: ../common/rpackagelister.cc:1790
+#: ../common/rpackagelister.cc:1821
 msgid "Setting markings..."
 msgstr "Обележувам..."
 
@@ -955,107 +953,111 @@ msgstr "Обележувам..."
 msgid "bzip2 failed, perhaps the disk is full."
 msgstr "bzip2 не успеав, можеби дискот е преполн."
 
-#: ../common/rpackageview.h:100
+#: ../common/rpackageview.h:105
 msgid "Sections"
 msgstr "Оддели"
 
-#: ../common/rpackageview.h:110
+#: ../common/rpackageview.h:115
 msgid "Alphabetic"
 msgstr "По азбучен ред"
 
-#: ../common/rpackageview.h:166
+#: ../common/rpackageview.h:172
 msgid "Search History"
 msgstr "Историја на пребарување"
 
-#: ../common/rpackageview.h:221
+#: ../common/rpackageview.h:227
 msgid "Custom"
 msgstr "Сопствени"
 
-#: ../common/rpackageview.cc:129
+#: ../common/rpackageview.cc:135
 msgid "Installed (unsupported)"
 msgstr "Инсталирани (поддржани)"
 
-#: ../common/rpackageview.cc:134
+#: ../common/rpackageview.cc:140
 msgid "Not installed (unsupported)"
 msgstr "Неинсталирани (неподдржани)"
 
-#: ../common/rpackageview.cc:143
+#: ../common/rpackageview.cc:149
 #, fuzzy
 msgid "Installed (auto removable)"
 msgstr "Инсталирани (надградливи)"
 
-#: ../common/rpackageview.cc:150
+#: ../common/rpackageview.cc:156
 #, fuzzy
 msgid "Installed (manual)"
 msgstr "Инсталирани (надградливи)"
 
-#: ../common/rpackageview.cc:156
+#: ../common/rpackageview.cc:162
 #, fuzzy
 msgid "Broken dependencies"
 msgstr "Зависности"
 
-#: ../common/rpackageview.cc:158 ../gtk/glade/window_filters.glade.h:39
+#: ../common/rpackageview.cc:164
 msgid "New in repository"
 msgstr "Нови во складиште"
 
-#: ../common/rpackageview.cc:160 ../gtk/glade/window_filters.glade.h:55
+#: ../common/rpackageview.cc:166
 msgid "Pinned"
 msgstr ""
 
-#: ../common/rpackageview.cc:164
+#: ../common/rpackageview.cc:170
 msgid "Installed (local or obsolete)"
 msgstr "Инсталирани (локално)"
 
-#: ../common/rpackageview.cc:170
+#: ../common/rpackageview.cc:176
 msgid "Not installed (residual config)"
 msgstr "Неинсталирани (дупла конфигурација)"
 
 #. setup search progress (0 done, _all.size() in total, 1 subtask)
-#: ../common/rpackageview.cc:304
+#: ../common/rpackageview.cc:310
 #, fuzzy
 msgid "Searching"
 msgstr "Барај"
 
-#: ../common/rpackageview.cc:492
+#: ../common/rpackageview.cc:497
 msgid "Search Filter"
 msgstr "Филтер за пребарување"
 
-#: ../common/rpackageview.cc:500
+#: ../common/rpackageview.cc:505
 msgid "Tasks"
 msgstr "Задачи"
 
-#: ../common/rpackageview.cc:506
+#: ../common/rpackageview.cc:511
 msgid "Reduced View"
 msgstr "Намален поглед"
 
-#: ../common/rpackageview.cc:523 ../gtk/gsynaptic.cc:579
-#: ../gtk/rgsummarywindow.cc:356
+#: ../common/rpackageview.cc:528 ../gtk/gsynaptic.cc:585
+#: ../gtk/rgsummarywindow.cc:359
 msgid "Marked Changes"
 msgstr "Обележи промени"
 
 #. TRANSLATORS: This is a filter that will give you all packages
 #. with debconf support (that can be reconfigured with debconf)
-#: ../common/rpackageview.cc:534
+#: ../common/rpackageview.cc:539
 #, fuzzy
 msgid "Package with Debconf"
 msgstr "Pkg со Debconf"
 
-#: ../common/rpackageview.cc:541 ../gtk/glade/window_filters.glade.h:68
+#: ../common/rpackageview.cc:546
 msgid "Upgradable (upstream)"
 msgstr "Надградливи (нови)"
 
-#: ../common/rpackageview.cc:547
+#: ../common/rpackageview.cc:559
+msgid "Community Maintained (installed)"
+msgstr ""
+
+#: ../common/rpackageview.cc:565
 #, fuzzy
 msgid "Missing Recommends"
 msgstr "Препорачува"
 
-#: ../common/rpackageview.cc:561
+#: ../common/rpackageview.cc:579
 msgid "Local"
 msgstr ""
 
-#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2114
-#: ../gtk/rgmainwindow.cc:2795 ../gtk/rgmainwindow.cc:2881
-#: ../gtk/rgmainwindow.cc:3054
+#: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2327
+#: ../gtk/rgmainwindow.cc:3029 ../gtk/rgmainwindow.cc:3161
+#: ../gtk/rgmainwindow.cc:3338
 #, c-format
 msgid "Can't read %s"
 msgstr "Не можам да прочитам %s"
@@ -1151,28 +1153,28 @@ msgid ""
 "it to finish first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:368
+#: ../gtk/gsynaptic.cc:371
 #, fuzzy
 msgid "Unable to get exclusive lock"
 msgstr "Не можам да сменам во %s"
 
-#: ../gtk/gsynaptic.cc:369
+#: ../gtk/gsynaptic.cc:372
 msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) is already running. Please close that application first."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:412
+#: ../gtk/gsynaptic.cc:418
 msgid "Starting without administrative privileges"
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:414
+#: ../gtk/gsynaptic.cc:420
 msgid ""
 "You will not be able to apply any changes. But you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
 
-#: ../gtk/gsynaptic.cc:480
+#: ../gtk/gsynaptic.cc:486
 msgid "Synaptic Package Manager "
 msgstr "Менаџер за пакет - Синаптик "
 
@@ -1188,12 +1190,12 @@ msgstr "Невалидно име на диск!"
 msgid "Disc Label"
 msgstr "Ознака на дискот"
 
-#: ../gtk/rgaboutpanel.cc:64 ../gtk/glade/window_about.glade.h:5
+#: ../gtk/rgaboutpanel.cc:68
 msgid "Credits"
 msgstr "Заслуги"
 
 #. skipTaskbar(true);
-#: ../gtk/rgaboutpanel.cc:82 ../gtk/glade/window_about.glade.h:4
+#: ../gtk/rgaboutpanel.cc:90
 msgid "About Synaptic"
 msgstr "За Синаптик"
 
@@ -1241,7 +1243,7 @@ msgstr "За повторна инсталација"
 msgid "To be kept"
 msgstr "Задржани"
 
-#: ../gtk/rgdebinstallprogress.cc:215
+#: ../gtk/rgdebinstallprogress.cc:216
 #, fuzzy, c-format
 msgid ""
 "Replace configuration file\n"
@@ -1250,7 +1252,7 @@ msgstr ""
 "Да инсталирам нова конфигурациска датотека\n"
 "'%s'?"
 
-#: ../gtk/rgdebinstallprogress.cc:216
+#: ../gtk/rgdebinstallprogress.cc:217
 #, fuzzy, c-format
 msgid ""
 "The configuration file %s was modified (by you or by a script). An updated "
@@ -1263,16 +1265,25 @@ msgstr ""
 "зачувате старата верзија одберете „Не“. Дали сакате да ја инсталирате новата "
 "верзија на пакетот?"
 
-#: ../gtk/rgdebinstallprogress.cc:369 ../gtk/rginstallprogress.cc:286
+#: ../gtk/rgdebinstallprogress.cc:370 ../gtk/rginstallprogress.cc:288
 #: ../gtk/rgterminstallprogress.cc:62
 msgid "Applying Changes"
 msgstr "Ги применувам промените"
 
-#: ../gtk/rgdebinstallprogress.cc:456
+#: ../gtk/rgdebinstallprogress.cc:418
+msgid "Copy"
+msgstr ""
+
+#: ../gtk/rgdebinstallprogress.cc:427
+#, fuzzy
+msgid "Select All"
+msgstr "_Одбери се"
+
+#: ../gtk/rgdebinstallprogress.cc:482
 msgid "Ctrl-c pressed"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:457
+#: ../gtk/rgdebinstallprogress.cc:483
 #, fuzzy
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
@@ -1282,29 +1293,29 @@ msgstr ""
 "Дали сте сигурни дека сакате да го направите ова?"
 
 #. error from dpkg, needs to be parsed different
-#: ../gtk/rgdebinstallprogress.cc:511
+#: ../gtk/rgdebinstallprogress.cc:584
 #, c-format
 msgid "Error in package %s"
 msgstr "Грешка во пакетот %s"
 
 #. running dpkg --configure -a
-#: ../gtk/rgdebinstallprogress.cc:518
+#: ../gtk/rgdebinstallprogress.cc:591
 msgid "Trying to recover from package failure"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:609
+#: ../gtk/rgdebinstallprogress.cc:685
 msgid "Error failed to fork pty"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:626
+#: ../gtk/rgdebinstallprogress.cc:702
 msgid "A package failed to install.  Trying to recover:"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:685 ../gtk/rgdebinstallprogress.cc:688
+#: ../gtk/rgdebinstallprogress.cc:761 ../gtk/rgdebinstallprogress.cc:764
 msgid "Changes applied"
 msgstr ""
 
-#: ../gtk/rgdebinstallprogress.cc:744
+#: ../gtk/rgdebinstallprogress.cc:830
 #, fuzzy
 msgid ""
 "The marked changes are now being applied. This can take some time. Please "
@@ -1314,59 +1325,87 @@ msgstr ""
 "\n"
 "Обележаните промени се применети. Ова може да потрае. Ве молам почекајте."
 
-#: ../gtk/rgdebinstallprogress.cc:749
+#: ../gtk/rgdebinstallprogress.cc:835
 #, fuzzy
 msgid "Installing and removing software"
 msgstr "Инсталирајте, отстранете или надградете софтверски пакети"
 
-#: ../gtk/rgdebinstallprogress.cc:751
+#: ../gtk/rgdebinstallprogress.cc:837
 #, fuzzy
 msgid "Removing software"
 msgstr "Отстранувам %s"
 
-#: ../gtk/rgdebinstallprogress.cc:753
+#: ../gtk/rgdebinstallprogress.cc:839
 #, fuzzy
 msgid "Installing software"
 msgstr "Инсталирам %s"
 
-#: ../gtk/rgpreferenceswindow.cc:49
+#: ../gtk/rgpreferenceswindow.cc:50
 msgid "Supported"
 msgstr "Поддржани"
 
-#: ../gtk/rgpreferenceswindow.cc:49 ../gtk/glade/window_filters.glade.h:47
+#: ../gtk/rgpreferenceswindow.cc:50
 msgid "Package Name"
 msgstr "Име на пакет"
 
-#: ../gtk/rgpreferenceswindow.cc:50 ../gtk/rgmainwindow.cc:959
+#: ../gtk/rgpreferenceswindow.cc:51 ../gtk/rgmainwindow.cc:1076
 msgid "Installed Version"
 msgstr "Инсталирана верзија"
 
-#: ../gtk/rgpreferenceswindow.cc:50
+#: ../gtk/rgpreferenceswindow.cc:51
 msgid "Available Version"
 msgstr "Достапна верзија"
 
-#: ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgpreferenceswindow.cc:52
 msgid "Installed Size"
 msgstr "Големина на инсталирани"
 
-#: ../gtk/rgpreferenceswindow.cc:51
+#: ../gtk/rgpreferenceswindow.cc:52
 msgid "Download Size"
 msgstr "Големина за преземање"
 
-#: ../gtk/rgpreferenceswindow.cc:407 ../gtk/rgmainwindow.cc:1779
-#: ../gtk/rgterminstallprogress.cc:151
+#: ../gtk/rgpreferenceswindow.cc:58
+msgid "Keep Configuration"
+msgstr "Задржи конфигурација"
+
+#: ../gtk/rgpreferenceswindow.cc:58
+msgid "Completely"
+msgstr "Целосно"
+
+#: ../gtk/rgpreferenceswindow.cc:61 ../gtk/rgpreferenceswindow.cc:64
+msgid "Always Ask"
+msgstr "Прашувај секогаш"
+
+#: ../gtk/rgpreferenceswindow.cc:61
+msgid "Ignore"
+msgstr "Игнорирај"
+
+#: ../gtk/rgpreferenceswindow.cc:61
+msgid "Automatically"
+msgstr "Автоматски"
+
+#: ../gtk/rgpreferenceswindow.cc:64
+msgid "Default Upgrade"
+msgstr "Стандардна надградба"
+
+#: ../gtk/rgpreferenceswindow.cc:64
+msgid "Smart Upgrade"
+msgstr "Паметена надградба"
+
+#: ../gtk/rgpreferenceswindow.cc:424 ../gtk/rgmainwindow.cc:1985
+#: ../gtk/rgterminstallprogress.cc:156
 msgid "An error occurred while saving configurations."
 msgstr "Се појави грешка при зачувувањето на конфигурациите."
 
-#: ../gtk/rgpreferenceswindow.cc:457
+#: ../gtk/rgpreferenceswindow.cc:474
 msgid "Choose font"
 msgstr "Одберете фонт"
 
-#: ../gtk/rgpreferenceswindow.cc:886
+#: ../gtk/rgpreferenceswindow.cc:919
 msgid "Color selection"
 msgstr "Избор на боја"
 
-#: ../gtk/rgpreferenceswindow.cc:987
+#: ../gtk/rgpreferenceswindow.cc:1088
 msgid ""
 "Prefer package versions from the selected distribution when upgrading "
 "packages. If you manually force a version from a different distribution, the "
@@ -1378,7 +1417,7 @@ msgstr ""
 "верзијата на пакетот ќе ја следи таа дистрибуција се додека не стигне до "
 "стандардната дистрибуција."
 
-#: ../gtk/rgpreferenceswindow.cc:995
+#: ../gtk/rgpreferenceswindow.cc:1096
 #, fuzzy
 msgid ""
 "Never upgrade to a new version automatically. Be _very_ careful with this "
@@ -1388,26 +1427,25 @@ msgstr ""
 "Никогаш не надградувајте автоматски на нови верзии Бидете _многу_ внимателни "
 "со оваа опција бидејќи автоматски не ги добивате и безбедносните надградби!"
 
-#: ../gtk/rgpreferenceswindow.cc:1003
+#: ../gtk/rgpreferenceswindow.cc:1104
 msgid "Let synaptic pick the best version for you. If unsure use this option. "
 msgstr ""
 "Дозволете му на Синаптик да ја одбере најсоодветната верзија. Ако не сте "
 "сигурни одберете ја оваа опција."
 
-#: ../gtk/rgpreferenceswindow.cc:1040
+#: ../gtk/rgpreferenceswindow.cc:1139
 msgid "Visible"
 msgstr "Видливи"
 
-#: ../gtk/rgpreferenceswindow.cc:1118
-#: ../gtk/glade/window_preferences.glade.h:66
+#: ../gtk/rgpreferenceswindow.cc:1217
 msgid "Preferences"
 msgstr "Преференци"
 
-#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1001
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1118
 msgid "Size"
 msgstr "Големина"
 
-#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:894
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:1011
 msgid "Package"
 msgstr "Пакет"
 
@@ -1415,7 +1453,7 @@ msgstr "Пакет"
 msgid "URI"
 msgstr "Адреса"
 
-#: ../gtk/rgfetchprogress.cc:201
+#: ../gtk/rgfetchprogress.cc:202
 #, c-format
 msgid ""
 "Please insert the disk labeled:\n"
@@ -1426,59 +1464,59 @@ msgstr ""
 "%s\n"
 "во уредот %s"
 
-#: ../gtk/rgfetchprogress.cc:329
+#: ../gtk/rgfetchprogress.cc:340
 #, fuzzy, c-format
 msgid "Download rate: %s/s - %s remaining"
 msgstr "Преземам датотеката %li од %li со %s/с - %s преостанато"
 
-#: ../gtk/rgfetchprogress.cc:335
-msgid "Download rate: unknown"
-msgstr ""
+#: ../gtk/rgfetchprogress.cc:346
+#, fuzzy
+msgid "Download rate: ..."
+msgstr "Преземање:"
 
-#: ../gtk/rgfetchprogress.cc:337
+#: ../gtk/rgfetchprogress.cc:348
 #, c-format
 msgid "Downloading file %li of %li"
 msgstr "Преземам датотека %li од %li"
 
-#: ../gtk/rgfetchprogress.cc:390
+#: ../gtk/rgfetchprogress.cc:401
 msgid "Queued"
 msgstr "Чекам"
 
-#: ../gtk/rgfetchprogress.cc:393
+#: ../gtk/rgfetchprogress.cc:404
 msgid "Done"
 msgstr "Завршив"
 
-#: ../gtk/rgfetchprogress.cc:396
+#: ../gtk/rgfetchprogress.cc:407
 msgid "Hit"
 msgstr "Hit"
 
-#: ../gtk/rgfetchprogress.cc:399
+#: ../gtk/rgfetchprogress.cc:410
 msgid "Failed"
 msgstr "Неуспешно"
 
-#: ../gtk/rgfiltermanager.cc:40 ../gtk/glade/window_filters.glade.h:24
+#: ../gtk/rgfiltermanager.cc:59
 msgid "Filters"
 msgstr "Филтри"
 
-#: ../gtk/rgfiltermanager.cc:165
+#: ../gtk/rgfiltermanager.cc:220
 msgid "Field"
 msgstr "Поле"
 
-#: ../gtk/rgfiltermanager.cc:172
+#: ../gtk/rgfiltermanager.cc:227
 msgid "Operator"
 msgstr "Оператор"
 
-#: ../gtk/rgfiltermanager.cc:750
+#: ../gtk/rgfiltermanager.cc:802
 #, c-format
 msgid "New Filter %i"
 msgstr "Нов филтер %i"
 
 #: ../gtk/rginstallprogress.cc:44
-#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:2
 msgid "Package Manager output"
 msgstr "Резултат од менаџерот на пакети"
 
-#: ../gtk/rginstallprogress.cc:85
+#: ../gtk/rginstallprogress.cc:87
 #, c-format
 msgid ""
 "\n"
@@ -1489,7 +1527,7 @@ msgstr ""
 "Додека го инсталирам пакетот %s:\n"
 "\n"
 
-#: ../gtk/rginstallprogress.cc:89
+#: ../gtk/rginstallprogress.cc:91
 #, c-format
 msgid ""
 "\n"
@@ -1500,7 +1538,7 @@ msgstr ""
 "Додека припремам за инсталација:\n"
 "\n"
 
-#: ../gtk/rginstallprogress.cc:131
+#: ../gtk/rginstallprogress.cc:133
 #, c-format
 msgid ""
 "APT system reports:\n"
@@ -1518,16 +1556,16 @@ msgid ""
 "Expression was found, please see the list on the left for matching entries."
 msgstr ""
 
-#: ../gtk/rgpkgdetails.cc:148
+#: ../gtk/rgpkgdetails.cc:174
 #, c-format
 msgid "%s Properties"
 msgstr "%s својства"
 
-#: ../gtk/rgpkgdetails.cc:213
+#: ../gtk/rgpkgdetails.cc:240
 msgid "This application is supported by the distribution"
 msgstr ""
 
-#: ../gtk/rgpkgdetails.cc:223
+#: ../gtk/rgpkgdetails.cc:250
 msgid "Get Screenshot"
 msgstr ""
 
@@ -1535,27 +1573,26 @@ msgstr ""
 #. the "Properties/Available versions" window
 #. e.g. "0.56 (unstable)"
 #. "0.53.4 (testing)"
-#: ../gtk/rgpkgdetails.cc:273
+#: ../gtk/rgpkgdetails.cc:301
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../gtk/rgmainwindow.cc:170
+#: ../gtk/rgmainwindow.cc:174
 msgid "All"
 msgstr "Сѐ"
 
-#: ../gtk/rgmainwindow.cc:366 ../gtk/glade/window_main.glade.h:34
-#: ../gtk/glade/window_details.glade.h:19
+#: ../gtk/rgmainwindow.cc:377
 msgid "No package is selected.\n"
 msgstr "Не се одбрани пакети.\n"
 
-#: ../gtk/rgmainwindow.cc:526
+#: ../gtk/rgmainwindow.cc:553
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr ""
 "Одберете ја верзијата на %s која што треба да биде наметната за инсталација"
 
-#: ../gtk/rgmainwindow.cc:528
+#: ../gtk/rgmainwindow.cc:555
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
@@ -1565,20 +1602,28 @@ msgstr ""
 "наметнете друга верзија наместо стандардната можат да се појават грешки со "
 "зависности."
 
+#: ../gtk/rgmainwindow.cc:900
+msgid "Rebuilding search index"
+msgstr ""
+
+#: ../gtk/rgmainwindow.cc:922
+msgid "Quick search"
+msgstr ""
+
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: ../gtk/rgmainwindow.cc:859
+#: ../gtk/rgmainwindow.cc:976
 msgid "S"
 msgstr "С"
 
-#: ../gtk/rgmainwindow.cc:980
+#: ../gtk/rgmainwindow.cc:1097
 msgid "Latest Version"
 msgstr "Последна верзија"
 
-#: ../gtk/rgmainwindow.cc:1022
+#: ../gtk/rgmainwindow.cc:1139
 msgid "Download"
 msgstr "Преземање"
 
-#: ../gtk/rgmainwindow.cc:1297
+#: ../gtk/rgmainwindow.cc:1438
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
@@ -1586,60 +1631,73 @@ msgstr ""
 "Освежете ги информациите за пакетите за да се информирате за нови, "
 "отстранети или надградени софтверски пакети."
 
-#: ../gtk/rgmainwindow.cc:1303
+#: ../gtk/rgmainwindow.cc:1444
 msgid "Mark all possible upgrades"
 msgstr "Обележи ги сите можни надградби"
 
-#: ../gtk/rgmainwindow.cc:1307 ../gtk/glade/window_summary.glade.h:5
+#: ../gtk/rgmainwindow.cc:1448
 msgid "Apply all marked changes"
 msgstr "Примени ги сите обележани промени"
 
-#: ../gtk/rgmainwindow.cc:1488
+#: ../gtk/rgmainwindow.cc:1452
+#, fuzzy
+msgid "View package properties"
+msgstr "Покажи ги својствата на пакетот во главниот прозорец"
+
+#: ../gtk/rgmainwindow.cc:1456
+#, fuzzy
+msgid "Search for packages"
+msgstr "Заменети пакети"
+
+#: ../gtk/rgmainwindow.cc:1660
 msgid "Unmark"
 msgstr "Откажи"
 
-#: ../gtk/rgmainwindow.cc:1496
+#: ../gtk/rgmainwindow.cc:1668
 msgid "Mark for Installation"
 msgstr "Обележи за инсталација"
 
-#: ../gtk/rgmainwindow.cc:1504
+#: ../gtk/rgmainwindow.cc:1676
 msgid "Mark for Reinstallation"
 msgstr "Обележи за повторна инсталација"
 
-#: ../gtk/rgmainwindow.cc:1513
+#: ../gtk/rgmainwindow.cc:1685
 msgid "Mark for Upgrade"
 msgstr "Обележи за надградба"
 
-#: ../gtk/rgmainwindow.cc:1521
+#: ../gtk/rgmainwindow.cc:1693
 msgid "Mark for Removal"
 msgstr "Обележи за отстранување"
 
-#: ../gtk/rgmainwindow.cc:1530
+#: ../gtk/rgmainwindow.cc:1702
 msgid "Mark for Complete Removal"
 msgstr "Обележи за целосно отстранување"
 
-#: ../gtk/rgmainwindow.cc:1542
+#: ../gtk/rgmainwindow.cc:1714
 msgid "Remove Including Orphaned Dependencies"
 msgstr "Отстрани го вклучените останати зависности"
 
-#: ../gtk/rgmainwindow.cc:1554
+#: ../gtk/rgmainwindow.cc:1726
 msgid "Hold Current Version"
 msgstr "Задржи ја тековната верзија"
 
-#: ../gtk/rgmainwindow.cc:1563 ../gtk/glade/window_main.glade.h:37
-#: ../gtk/glade/window_filters.glade.h:57
+#: ../gtk/rgmainwindow.cc:1735
 msgid "Properties"
 msgstr "Својства"
 
-#: ../gtk/rgmainwindow.cc:1575
+#: ../gtk/rgmainwindow.cc:1747
 msgid "Mark Recommended for Installation"
 msgstr "Обележи ги препорачаните за инсталација"
 
-#: ../gtk/rgmainwindow.cc:1579
+#: ../gtk/rgmainwindow.cc:1751
 msgid "Mark Suggested for Installation"
 msgstr "Обележи ги препорачаните за инсталација"
 
-#: ../gtk/rgmainwindow.cc:1683
+#: ../gtk/rgmainwindow.cc:1836
+msgid "No apt-xapian-index found"
+msgstr ""
+
+#: ../gtk/rgmainwindow.cc:1887
 msgid ""
 "Removing this package may render the system unusable.\n"
 "Are you sure you want to do that?"
@@ -1647,7 +1705,7 @@ msgstr ""
 "Ако го отстраните пакетот Вашиот систем може да стане нестабилен.\n"
 "Дали сте сигурни дека сакате да го направите ова?"
 
-#: ../gtk/rgmainwindow.cc:1723
+#: ../gtk/rgmainwindow.cc:1927
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1656,7 +1714,7 @@ msgstr ""
 "%i пакети во листата, %i iинсталирани, %i расипани. %i за инсталација/"
 "надградба, %i за отстранување; ќе бидат ослободени %s"
 
-#: ../gtk/rgmainwindow.cc:1729
+#: ../gtk/rgmainwindow.cc:1933
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1665,7 +1723,7 @@ msgstr ""
 "%i пакети во листата, %i iинсталирани, %i расипани. %i за инсталација/"
 "надградба, %i за отстранување; ќе бидат искористени %s"
 
-#: ../gtk/rgmainwindow.cc:1735
+#: ../gtk/rgmainwindow.cc:1939
 #, c-format
 msgid ""
 "%i packages listed, %i installed, %i broken. %i to install/upgrade, %i to "
@@ -1674,7 +1732,7 @@ msgstr ""
 "%i пакети во листата, %i iинсталирани, %i расипани. %i за инсталација/"
 "надградба, %i за отстранување"
 
-#: ../gtk/rgmainwindow.cc:1796
+#: ../gtk/rgmainwindow.cc:2002
 #, fuzzy, c-format
 msgid ""
 "You have %d broken package on your system!\n"
@@ -1692,12 +1750,12 @@ msgstr[0] ""
 "\n"
 "Употребете·го·филтерот·за·\"Расипани\"·за·да·ги·лоцирате."
 
-#: ../gtk/rgmainwindow.cc:1959
+#: ../gtk/rgmainwindow.cc:2171
 #, fuzzy
 msgid "Downloading Changelog"
 msgstr "Ја преземам датотеката со промени"
 
-#: ../gtk/rgmainwindow.cc:1960
+#: ../gtk/rgmainwindow.cc:2172
 msgid ""
 "The changelog contains information about the changes and closed bugs in each "
 "version of the package."
@@ -1706,42 +1764,42 @@ msgstr ""
 "за секоја верзија на пакетот."
 
 #. TRANSLATORS: Title of the changelog dialog - %s is the name of the package
-#: ../gtk/rgmainwindow.cc:1973
+#: ../gtk/rgmainwindow.cc:2185
 #, c-format
 msgid "%s Changelog"
 msgstr "Датотека со промени за %s"
 
-#: ../gtk/rgmainwindow.cc:2064
+#: ../gtk/rgmainwindow.cc:2277
 msgid "Do you want to add another CD-ROM?"
 msgstr "Дали сакате да додадете друг CD-ROM?"
 
-#: ../gtk/rgmainwindow.cc:2101
+#: ../gtk/rgmainwindow.cc:2314
 msgid "Open changes"
 msgstr "Отвори променети"
 
-#: ../gtk/rgmainwindow.cc:2138 ../gtk/rgmainwindow.cc:2713
-#: ../gtk/rgmainwindow.cc:2849 ../gtk/rgmainwindow.cc:3027
+#: ../gtk/rgmainwindow.cc:2351 ../gtk/rgmainwindow.cc:2947
+#: ../gtk/rgmainwindow.cc:3128 ../gtk/rgmainwindow.cc:3311
 #, c-format
 msgid "Can't write %s"
 msgstr "Не можам да запишам %s"
 
-#: ../gtk/rgmainwindow.cc:2157
+#: ../gtk/rgmainwindow.cc:2370
 #, fuzzy
 msgid "Save changes"
 msgstr "Отвори променети"
 
-#: ../gtk/rgmainwindow.cc:2164
+#: ../gtk/rgmainwindow.cc:2377
 msgid "Save full state, not only changes"
 msgstr "Зачувај целосна состојба, не само промени"
 
-#: ../gtk/rgmainwindow.cc:2281
+#: ../gtk/rgmainwindow.cc:2494
 msgid "Repositories changed"
 msgstr "Складиштата се променети"
 
 #. TRANSLATORS: this message appears when the user added/removed
 #. a repository (sources.list entry) a reload (apt-get update) is
 #. needed then
-#: ../gtk/rgmainwindow.cc:2285
+#: ../gtk/rgmainwindow.cc:2498
 msgid ""
 "The repository information has changed. You have to click on the \"Reload\" "
 "button for your changes to take effect"
@@ -1749,20 +1807,20 @@ msgstr ""
 "Информациите за складиштата се променети. Треба да кликнете на копчето "
 "„Освежи“ за да се применат промените."
 
-#: ../gtk/rgmainwindow.cc:2296
+#: ../gtk/rgmainwindow.cc:2509
 msgid "Never show this message again"
 msgstr "Не ја покажувај оваа порака пак"
 
-#: ../gtk/rgmainwindow.cc:2355
+#: ../gtk/rgmainwindow.cc:2578
 #, c-format
 msgid "Found %i packages"
 msgstr "Пронајдов %i пакети"
 
-#: ../gtk/rgmainwindow.cc:2396
+#: ../gtk/rgmainwindow.cc:2619
 msgid "Starting help viewer..."
 msgstr "Го подигнувам прегледувачот за помош..."
 
-#: ../gtk/rgmainwindow.cc:2416
+#: ../gtk/rgmainwindow.cc:2634
 #, fuzzy
 msgid ""
 "No help viewer is installed!\n"
@@ -1779,7 +1837,14 @@ msgstr ""
 "\n"
 "Инаку можете да го отворите и во терминал со командата „man synaptic“."
 
-#: ../gtk/rgmainwindow.cc:2568
+#: ../gtk/rgmainwindow.cc:2653
+#, fuzzy, c-format
+msgid ""
+"An error occured while starting the help viewer\n"
+"\tCommand: %s"
+msgstr "Се појави грешка при зачувувањето на конфигурациите."
+
+#: ../gtk/rgmainwindow.cc:2802
 msgid ""
 "Cannot start configuration tool!\n"
 "You have to install the required package 'libgnome2-perl'."
@@ -1787,23 +1852,23 @@ msgstr ""
 "Не можам да ја подигнам алатката за конфигурација!\n"
 "Морате да го инсталирате пакетот „libgnome2-perl“."
 
-#: ../gtk/rgmainwindow.cc:2574
+#: ../gtk/rgmainwindow.cc:2808
 msgid "Starting package configuration tool..."
 msgstr "Ја подигнувам алатката за конфигурација на пакети..."
 
 #. cout << "RGMainWindow::pkgHelpClicked()" << endl;
-#: ../gtk/rgmainwindow.cc:2589
+#: ../gtk/rgmainwindow.cc:2823
 msgid "Starting package documentation viewer..."
 msgstr "Го подигнувам прегледувачот за документација"
 
-#: ../gtk/rgmainwindow.cc:2601
+#: ../gtk/rgmainwindow.cc:2835
 msgid ""
 "You have to install the package \"dwww\" to browse the documentation of a "
 "package"
 msgstr ""
 "Морате да инсталирате „dwww“ за да можете да ја разгледувате документацијата"
 
-#: ../gtk/rgmainwindow.cc:2677
+#: ../gtk/rgmainwindow.cc:2911
 msgid ""
 "Could not apply changes!\n"
 "Fix broken packages first."
@@ -1811,25 +1876,25 @@ msgstr ""
 "Не можам да ги применам промените!\n"
 "Прво поправете ги расипаните пакети."
 
-#: ../gtk/rgmainwindow.cc:2698
+#: ../gtk/rgmainwindow.cc:2932
 msgid "Applying marked changes. This may take a while..."
 msgstr "Ги применувам промените. Ова може да потрае..."
 
-#: ../gtk/rgmainwindow.cc:2702
+#: ../gtk/rgmainwindow.cc:2936
 #, fuzzy
 msgid "Downloading Package Files"
 msgstr "Ги преземам пакетите"
 
-#: ../gtk/rgmainwindow.cc:2778
+#: ../gtk/rgmainwindow.cc:3012
 msgid "Do you want to quit Synaptic?"
 msgstr "Дали сакате да излезете од Синаптик?"
 
-#: ../gtk/rgmainwindow.cc:2834
+#: ../gtk/rgmainwindow.cc:3113
 #, fuzzy
 msgid "Downloading Package Information"
 msgstr "Ги преземам информациите за пакетите"
 
-#: ../gtk/rgmainwindow.cc:2835
+#: ../gtk/rgmainwindow.cc:3114
 msgid ""
 "The repositories will be checked for new, removed or upgraded software "
 "packages."
@@ -1837,19 +1902,19 @@ msgstr ""
 "Складиштата ќе бидат проверени за нови, отстранети или надградени софтверски "
 "пакети."
 
-#: ../gtk/rgmainwindow.cc:2838
+#: ../gtk/rgmainwindow.cc:3117
 msgid "Reloading package information..."
 msgstr "Ги освежувам информациите за пакетите..."
 
-#: ../gtk/rgmainwindow.cc:2906
+#: ../gtk/rgmainwindow.cc:3189
 msgid "Failed to resolve dependency problems!"
 msgstr "Не успеав да ги решам проблемите со зависностите!"
 
-#: ../gtk/rgmainwindow.cc:2908
+#: ../gtk/rgmainwindow.cc:3191
 msgid "Successfully fixed dependency problems"
 msgstr "Успешно ги поправив проблемите со зависностите"
 
-#: ../gtk/rgmainwindow.cc:2924
+#: ../gtk/rgmainwindow.cc:3207
 msgid ""
 "Could not upgrade the system!\n"
 "Fix broken packages first."
@@ -1857,29 +1922,29 @@ msgstr ""
 "Не можам да го надградам системот!\n"
 "Прво поравете ги расипаните пакети."
 
-#: ../gtk/rgmainwindow.cc:2973
+#: ../gtk/rgmainwindow.cc:3257
 msgid "Marking all available upgrades..."
 msgstr "Ги обележувам сите достапни надградби..."
 
-#: ../gtk/rgmainwindow.cc:2992
+#: ../gtk/rgmainwindow.cc:3276
 msgid "Successfully marked available upgrades"
 msgstr "Успешно ги обележав достапните надградби"
 
-#: ../gtk/rgmainwindow.cc:2994
+#: ../gtk/rgmainwindow.cc:3278
 msgid "Failed to mark all available upgrades!"
 msgstr "Не успеав да ги обележам достапните надградби!"
 
-#: ../gtk/rgmainwindow.cc:3373
+#: ../gtk/rgmainwindow.cc:3657
 #, fuzzy
 msgid "Save script"
 msgstr "Опис"
 
-#: ../gtk/rgmainwindow.cc:3400
+#: ../gtk/rgmainwindow.cc:3684
 #, fuzzy
 msgid "Select directory"
 msgstr "Историја на пребарување"
 
-#: ../gtk/rgmainwindow.cc:3412
+#: ../gtk/rgmainwindow.cc:3696
 #, fuzzy
 msgid "Please select a directory"
 msgstr "Внесете диск во уредот."
@@ -1894,7 +1959,7 @@ msgstr ""
 "\n"
 " Пакетите од оваа компонента не се поддржани. Дали сте сигурни?"
 
-#: ../gtk/rgrepositorywin.cc:124 ../gtk/glade/window_repositories.glade.h:3
+#: ../gtk/rgrepositorywin.cc:124
 msgid "Repositories"
 msgstr "Складишта"
 
@@ -1911,7 +1976,7 @@ msgstr "Тип"
 msgid "Vendor"
 msgstr "Производител"
 
-#: ../gtk/rgrepositorywin.cc:191 ../gtk/glade/window_preferences.glade.h:36
+#: ../gtk/rgrepositorywin.cc:191
 msgid "Distribution"
 msgstr "Дистрибуција"
 
@@ -1927,16 +1992,15 @@ msgstr "Бинарни (deb)"
 msgid "Source (deb-src)"
 msgstr "Изворен код (deb-src)"
 
-#: ../gtk/rgrepositorywin.cc:267 ../gtk/rgrepositorywin.cc:409
-#: ../gtk/glade/window_repositories.glade.h:1
+#: ../gtk/rgrepositorywin.cc:268 ../gtk/rgrepositorywin.cc:415
 msgid "(no vendor)"
 msgstr "(нема производител)"
 
-#: ../gtk/rgrepositorywin.cc:363
+#: ../gtk/rgrepositorywin.cc:369
 msgid "Cannot read vendors.list file"
 msgstr "Не можам да ја прочитам датотеката vendors.list"
 
-#: ../gtk/rgrepositorywin.cc:536
+#: ../gtk/rgrepositorywin.cc:542
 msgid "Unknown source type"
 msgstr "Непознат тип на извор"
 
@@ -2001,78 +2065,78 @@ msgstr "<b>%s</b> (верзијата <i>%s</i>) ќе биде инсталир�
 msgid "<b>%s</b> (version <i>%s</i>) will be re-installed\n"
 msgstr "<b>%s</b> (верзијата <i>%s</i>) ќе биде инсталирана повторно\n"
 
-#: ../gtk/rgsummarywindow.cc:318
+#: ../gtk/rgsummarywindow.cc:320
 #, fuzzy
 msgid "_Hide Details"
 msgstr "_Покажи детали"
 
-#: ../gtk/rgsummarywindow.cc:322 ../gtk/glade/window_summary.glade.h:11
+#: ../gtk/rgsummarywindow.cc:324
 msgid "_Show Details"
 msgstr "_Покажи детали"
 
-#: ../gtk/rgsummarywindow.cc:335
+#: ../gtk/rgsummarywindow.cc:337
 msgid "Summary"
 msgstr "На кратко"
 
-#: ../gtk/rgsummarywindow.cc:393
+#: ../gtk/rgsummarywindow.cc:398
 #, fuzzy, c-format
 msgid "%d package is locked\n"
 msgid_plural "%d packages are locked\n"
 msgstr[0] "%d пакет е заклучен\n"
 
-#: ../gtk/rgsummarywindow.cc:400
+#: ../gtk/rgsummarywindow.cc:405
 #, fuzzy, c-format
 msgid "%d package will be held back and not upgraded\n"
 msgid_plural "%d packages will be held back and not upgraded\n"
 msgstr[0] "%d пакет ќе биде задржан и нема да биде надграден\n"
 
-#: ../gtk/rgsummarywindow.cc:407
+#: ../gtk/rgsummarywindow.cc:412
 #, fuzzy, c-format
 msgid "%d new package will be installed\n"
 msgid_plural "%d new packages will be installed\n"
 msgstr[0] "%d нов пакет ќе биде инсталиран\n"
 
-#: ../gtk/rgsummarywindow.cc:414
+#: ../gtk/rgsummarywindow.cc:419
 #, fuzzy, c-format
 msgid "%d new package will be re-installed\n"
 msgid_plural "%d new packages will be re-installed\n"
 msgstr[0] "%d нов пакет ќе биде реинсталиран\n"
 
-#: ../gtk/rgsummarywindow.cc:421
+#: ../gtk/rgsummarywindow.cc:426
 #, fuzzy, c-format
 msgid "%d package will be upgraded\n"
 msgid_plural "%d packages will be upgraded\n"
 msgstr[0] "%d пакет ќе биде надграден\n"
 
-#: ../gtk/rgsummarywindow.cc:428
+#: ../gtk/rgsummarywindow.cc:433
 #, fuzzy, c-format
 msgid "%d package will be removed\n"
 msgid_plural "%d packages will be removed\n"
 msgstr[0] "%d пакет ќе биде отстранет\n"
 
-#: ../gtk/rgsummarywindow.cc:435
+#: ../gtk/rgsummarywindow.cc:440
 #, fuzzy, c-format
 msgid "%d package will be <b>downgraded</b>\n"
 msgid_plural "%d packages will be <b>downgraded</b>\n"
 msgstr[0] "%d пакет ќе биде заменет за <b>пониска верзија</b>\n"
 
-#: ../gtk/rgsummarywindow.cc:443
+#: ../gtk/rgsummarywindow.cc:448
 #, fuzzy, c-format
 msgid "<b>Warning:</b> %d essential package will be removed\n"
 msgid_plural "<b>Warning:</b> %d essential packages will be removed\n"
 msgstr[0] "<b>Предупредување:</b> %d ќе бидат отстранети важни пакети\n"
 
-#: ../gtk/rgsummarywindow.cc:455
+#: ../gtk/rgsummarywindow.cc:460
 #, c-format
 msgid "%s of extra space will be used"
 msgstr "ќе биде искористен %s дополнителен простор"
 
-#: ../gtk/rgsummarywindow.cc:458
+#: ../gtk/rgsummarywindow.cc:463
 #, c-format
 msgid "%s of extra space will be freed"
 msgstr "ќе се ослободи %s простор"
 
-#: ../gtk/rgsummarywindow.cc:463
+#: ../gtk/rgsummarywindow.cc:468
 #, c-format
 msgid ""
 "\n"
@@ -2081,7 +2145,7 @@ msgstr ""
 "\n"
 "треба да бидат преземени %s"
 
-#: ../gtk/rgsummarywindow.cc:488
+#: ../gtk/rgsummarywindow.cc:493
 msgid ""
 "Essential packages will be removed.\n"
 "This may render your system unusable!\n"
@@ -2089,11 +2153,11 @@ msgstr ""
 "Ќе бидат отстранети важни пакети.\n"
 "Вашиот систем може да стане нестабилен!\n"
 
-#: ../gtk/rguserdialog.cc:75
+#: ../gtk/rguserdialog.cc:76
 msgid "An error occurred"
 msgstr ""
 
-#: ../gtk/rguserdialog.cc:76
+#: ../gtk/rguserdialog.cc:77
 msgid "The following details are provided:"
 msgstr ""
 
@@ -2124,12 +2188,12 @@ msgstr "Откажи"
 #. TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
 #. happens when e.g. a package has no installed version (or no
 #. downloadable version)
-#: ../gtk/rggladewindow.cc:110 ../gtk/rggladewindow.cc:128
-#: ../gtk/rggladewindow.cc:191
+#: ../gtk/rggtkbuilderwindow.cc:115 ../gtk/rggtkbuilderwindow.cc:133
+#: ../gtk/rggtkbuilderwindow.cc:196
 msgid "N/A"
 msgstr ""
 
-#: ../gtk/rgfindwindow.cc:130
+#: ../gtk/rgfindwindow.cc:146
 msgid "Find"
 msgstr "Пронајди"
 
@@ -2138,1413 +2202,6 @@ msgstr "Пронајди"
 #, c-format
 msgid "Description %s"
 msgstr "Опис %s"
-
-#: ../gtk/glade/window_main.glade.h:1
-#: ../gtk/glade/window_preferences.glade.h:2
-#: ../gtk/glade/window_summary.glade.h:2 ../gtk/glade/window_filters.glade.h:2
-#: ../gtk/glade/window_details.glade.h:1
-msgid "    "
-msgstr "    "
-
-#: ../gtk/glade/window_main.glade.h:2 ../gtk/glade/window_details.glade.h:2
-msgid "<b>Installed Version</b>"
-msgstr "<b>Инсталирана верзија</b>"
-
-#: ../gtk/glade/window_main.glade.h:3 ../gtk/glade/window_details.glade.h:3
-msgid "<b>Latest Available Version</b>"
-msgstr "<b>Последна достапна верзија</b>"
-
-#: ../gtk/glade/window_main.glade.h:4 ../gtk/glade/window_details.glade.h:4
-msgid "<b>Maintainer:</b>"
-msgstr "<b>Одржувач:</b>"
-
-#: ../gtk/glade/window_main.glade.h:5 ../gtk/glade/window_details.glade.h:5
-msgid ""
-"<b>Note:</b> To install a version that is different from the default one, "
-"choose <b>Package -> Force Version...</b> from the menu."
-msgstr ""
-"<b>Забелешка:</b> За да инсталирате верзија која што е различна од "
-"стандардната, одберете <b>Пакет -> Наметни верзија...</b>."
-
-#: ../gtk/glade/window_main.glade.h:6 ../gtk/glade/window_details.glade.h:6
-msgid "<b>Package:</b>"
-msgstr "<b>Пакет:</b>"
-
-#: ../gtk/glade/window_main.glade.h:7 ../gtk/glade/window_details.glade.h:7
-msgid "<b>Priority:</b>"
-msgstr "<b>Приоритет:</b>"
-
-#: ../gtk/glade/window_main.glade.h:8 ../gtk/glade/window_details.glade.h:8
-msgid "<b>Section:</b>"
-msgstr "<b>Оддел:</b>"
-
-#: ../gtk/glade/window_main.glade.h:9 ../gtk/glade/window_details.glade.h:9
-msgid "<b>Status:</b>"
-msgstr "<b>Статус:</b>"
-
-#: ../gtk/glade/window_main.glade.h:10 ../gtk/glade/window_details.glade.h:10
-msgid "<b>Tags:</b>"
-msgstr "<b>Тагови:</b>"
-
-#: ../gtk/glade/window_main.glade.h:11
-msgid "A_pply Marked Changes"
-msgstr "П_римени ги обележаните промени"
-
-#: ../gtk/glade/window_main.glade.h:12
-#, fuzzy
-msgid "Add downloaded packages"
-msgstr "Ги преземам пакетите"
-
-#: ../gtk/glade/window_main.glade.h:13
-msgid ""
-"Add packages downloaded with the \"Generate package download script\" "
-"feature to the system"
-msgstr ""
-
-#: ../gtk/glade/window_main.glade.h:14
-msgid "Apply"
-msgstr "Примени"
-
-#: ../gtk/glade/window_main.glade.h:15
-#, fuzzy
-msgid "Automatically installed"
-msgstr "Автоматски"
-
-#: ../gtk/glade/window_main.glade.h:16 ../gtk/glade/window_details.glade.h:11
-msgid "Available versions:"
-msgstr "Достапни верзии:"
-
-#: ../gtk/glade/window_main.glade.h:17 ../gtk/glade/window_details.glade.h:12
-msgid "Common"
-msgstr "Вообичаено"
-
-#: ../gtk/glade/window_main.glade.h:18
-msgid "Dependants"
-msgstr "Зависности"
-
-#: ../gtk/glade/window_main.glade.h:19 ../gtk/glade/window_find.glade.h:1
-#: ../gtk/glade/window_filters.glade.h:18
-#: ../gtk/glade/window_details.glade.h:13 ../gtk/rgfiltermanager.h:73
-msgid "Dependencies"
-msgstr "Зависности"
-
-#: ../gtk/glade/window_main.glade.h:20 ../gtk/glade/window_details.glade.h:14
-msgid "Dependencies of the Latest Version"
-msgstr "Зависности на последната верзија"
-
-#: ../gtk/glade/window_main.glade.h:22 ../gtk/glade/window_details.glade.h:17
-msgid "Download:"
-msgstr "Преземање:"
-
-#: ../gtk/glade/window_main.glade.h:23
-msgid ""
-"Generate a shell script so that you can download the selected packages on a "
-"different computer"
-msgstr ""
-
-#: ../gtk/glade/window_main.glade.h:24
-msgid "Generate package download script"
-msgstr ""
-
-#: ../gtk/glade/window_main.glade.h:25
-msgid "Icon _Legend"
-msgstr "Легенда на _икони"
-
-#: ../gtk/glade/window_main.glade.h:26 ../gtk/glade/window_details.glade.h:18
-msgid "Installed Files"
-msgstr "Инсталирани датотеки"
-
-#: ../gtk/glade/window_main.glade.h:27
-msgid "Mark All Upgrades"
-msgstr "Обележи сѐ"
-
-#: ../gtk/glade/window_main.glade.h:28
-msgid "Mark Packages by _Task..."
-msgstr "Обележи ги пакетите по _намена..."
-
-#: ../gtk/glade/window_main.glade.h:29
-msgid "Mark for Co_mplete Removal"
-msgstr "Обележи за цел_осно отстранување"
-
-#: ../gtk/glade/window_main.glade.h:30
-msgid "Mark for R_einstallation"
-msgstr "Обележи за п_овторно инсталирање"
-
-#: ../gtk/glade/window_main.glade.h:31
-msgid "Mark for _Installation"
-msgstr "Обележи за _инсталација"
-
-#: ../gtk/glade/window_main.glade.h:32
-msgid "Mark for _Removal"
-msgstr "Обележи за _отстранување"
-
-#: ../gtk/glade/window_main.glade.h:33
-msgid "Mark for _Upgrade"
-msgstr "Обележи за _надградба"
-
-#: ../gtk/glade/window_main.glade.h:38 ../gtk/glade/window_find.glade.h:6
-#: ../gtk/glade/window_filters.glade.h:58
-#: ../gtk/glade/window_details.glade.h:21
-msgid "Provided Packages"
-msgstr "Понудени пакети"
-
-#: ../gtk/glade/window_main.glade.h:39
-msgid "Reload"
-msgstr "Освежи"
-
-#: ../gtk/glade/window_main.glade.h:40
-#, fuzzy
-msgid "S_earch Results"
-msgstr "Филтер за пребарување"
-
-#: ../gtk/glade/window_main.glade.h:41
-msgid "S_tatus"
-msgstr "С_татус"
-
-#: ../gtk/glade/window_main.glade.h:42
-msgid "Save Markings _As..."
-msgstr "Зачувај ги обележаните _како..."
-
-#: ../gtk/glade/window_main.glade.h:43
-msgid "Search"
-msgstr "Барај"
-
-#: ../gtk/glade/window_main.glade.h:44 ../gtk/glade/window_details.glade.h:22
-msgid "Size:"
-msgstr "Големина:"
-
-#: ../gtk/glade/window_main.glade.h:45
-msgid "Synaptic"
-msgstr "Синаптик"
-
-#: ../gtk/glade/window_main.glade.h:46
-msgid "Text Be_side Icons"
-msgstr "Текст по_крај иконите"
-
-#: ../gtk/glade/window_main.glade.h:47
-msgid "Text _Below Icons"
-msgstr "Текст _под икони"
-
-#: ../gtk/glade/window_main.glade.h:48
-msgid "U_nmark"
-msgstr "О_ткажи"
-
-#: ../gtk/glade/window_main.glade.h:49
-msgid "U_nmark All"
-msgstr "О_ткажи се"
-
-#: ../gtk/glade/window_main.glade.h:50 ../gtk/glade/window_details.glade.h:23
-msgid "Version:"
-msgstr "Верзија:"
-
-#: ../gtk/glade/window_main.glade.h:51 ../gtk/glade/window_details.glade.h:24
-msgid "Versions"
-msgstr "Верзии"
-
-#: ../gtk/glade/window_main.glade.h:52
-msgid "_About"
-msgstr "_За"
-
-#: ../gtk/glade/window_main.glade.h:53
-msgid "_Add CD-ROM..."
-msgstr "_Додај CD-ROM..."
-
-#: ../gtk/glade/window_main.glade.h:54
-msgid "_Browse Documentation"
-msgstr "_Разгледај документација"
-
-#: ../gtk/glade/window_main.glade.h:55
-msgid "_Configure..."
-msgstr "_Конфигурирај..."
-
-#: ../gtk/glade/window_main.glade.h:56
-msgid "_Contents"
-msgstr "_Содржини"
-
-#: ../gtk/glade/window_main.glade.h:57
-#, fuzzy
-msgid "_Custom Filters"
-msgstr "_Филтри"
-
-#: ../gtk/glade/window_main.glade.h:58
-msgid "_Download Changelog"
-msgstr "_Преземи датотека со промени"
-
-#: ../gtk/glade/window_main.glade.h:59
-msgid "_Edit"
-msgstr "_Уреди"
-
-#: ../gtk/glade/window_main.glade.h:60
-msgid "_File"
-msgstr "_Датотека"
-
-#: ../gtk/glade/window_main.glade.h:61
-msgid "_Filters"
-msgstr "_Филтри"
-
-#: ../gtk/glade/window_main.glade.h:62
-msgid "_Fix Broken Packages"
-msgstr "_Поправи ги расипаните пакети"
-
-#: ../gtk/glade/window_main.glade.h:63
-msgid "_Force Version..."
-msgstr "_Наметни верзија..."
-
-#: ../gtk/glade/window_main.glade.h:64
-msgid "_Help"
-msgstr "_Помош"
-
-#: ../gtk/glade/window_main.glade.h:65
-msgid "_Hide"
-msgstr "_Сокриј"
-
-#: ../gtk/glade/window_main.glade.h:66
-msgid "_History"
-msgstr "_Историја"
-
-#: ../gtk/glade/window_main.glade.h:67
-msgid "_Icons Only"
-msgstr "_Само икони"
-
-#: ../gtk/glade/window_main.glade.h:68
-msgid "_Lock Version"
-msgstr "_Заклучи верзија"
-
-#: ../gtk/glade/window_main.glade.h:69
-msgid "_Mark All Upgrades..."
-msgstr "_Обележи ги сите надградби..."
-
-#: ../gtk/glade/window_main.glade.h:70
-msgid "_Package"
-msgstr "_Пакет"
-
-#: ../gtk/glade/window_main.glade.h:71
-msgid "_Properties"
-msgstr "_Својства"
-
-#: ../gtk/glade/window_main.glade.h:72
-msgid "_Quick Introduction"
-msgstr "_Брза инсталација"
-
-#: ../gtk/glade/window_main.glade.h:73
-msgid "_Quit"
-msgstr "_Излез"
-
-#: ../gtk/glade/window_main.glade.h:74
-msgid "_Read Markings..."
-msgstr "_Прочитај обележани..."
-
-#: ../gtk/glade/window_main.glade.h:75
-msgid "_Redo"
-msgstr "_Повтори"
-
-#: ../gtk/glade/window_main.glade.h:76
-msgid "_Reload Package Information"
-msgstr "_Освежи ги информациите за пакетите"
-
-#: ../gtk/glade/window_main.glade.h:77
-msgid "_Repositories"
-msgstr "_Складишта"
-
-#: ../gtk/glade/window_main.glade.h:78
-msgid "_Save Markings"
-msgstr "_Зачувај обележани"
-
-#: ../gtk/glade/window_main.glade.h:79
-msgid "_Search..."
-msgstr "_Барај..."
-
-#: ../gtk/glade/window_main.glade.h:80
-msgid "_Sections"
-msgstr "_Оддели"
-
-#: ../gtk/glade/window_main.glade.h:81
-msgid "_Set Internal Option..."
-msgstr "_Постави внатрешна опција"
-
-#: ../gtk/glade/window_main.glade.h:82
-msgid "_Settings"
-msgstr "_Поставувања"
-
-#: ../gtk/glade/window_main.glade.h:83
-msgid "_Text Only"
-msgstr "_Само текст"
-
-#: ../gtk/glade/window_main.glade.h:84
-msgid "_Toolbar"
-msgstr "_Лента со алатки"
-
-#: ../gtk/glade/window_main.glade.h:85
-msgid "_Undo"
-msgstr "_Врати"
-
-#: ../gtk/glade/window_about.glade.h:1
-msgid ""
-"<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
-"Copyright (c) 2002-2004 Michael Vogt</span>"
-msgstr ""
-"<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A•↵\n"
-"Copyright (c) 2002-2004 Michael Vogt</span>"
-
-#: ../gtk/glade/window_about.glade.h:3
-msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
-msgstr "<span size=\"xx-large\" weight=\"bold\">Синаптик верзија</span>"
-
-#: ../gtk/glade/window_about.glade.h:6
-msgid "Debtag support is enabled."
-msgstr ""
-
-#: ../gtk/glade/window_about.glade.h:7
-msgid "Documented by"
-msgstr "Документирано од"
-
-#: ../gtk/glade/window_about.glade.h:8
-#, fuzzy
-msgid ""
-"Man page:\n"
-"Wybo Dekker <wybo@servalys.nl>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Manual:\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>"
-msgstr ""
-"Man страни:\n"
-"Wybo Dekker <wybo@servalys.nl>\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Sebastian Heinlein <sebastain.heinlein@web.de>\n"
-"\n"
-"Manual:\n"
-"Sebastian Heinlein <sebastain.heinlein@web.de>"
-
-#: ../gtk/glade/window_about.glade.h:15
-msgid ""
-"Original author:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"\n"
-"Maintainers:\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Contributors:\n"
-"Enrico Zini <enrico@debian.org>\n"
-"Panu Matilainen <pmatilai@welho.com>\n"
-"Sviatoslav Sviridov <svd@lintec.minsk.by>"
-msgstr ""
-"Оригинален автор:\n"
-"Alfredo K. Kojima <kojima@windowmaker.org>\n"
-"\n"
-"Оддржувачи:\n"
-"Michael Vogt <mvo@debian.org>\n"
-"Gustavo Niemeyer <niemeyer@conectiva.com>\n"
-"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
-"\n"
-"Придонесувачи:\n"
-"Enrico Zini <enrico@debian.org>\n"
-"Panu Matilainen <pmatilai@welho.com>\n"
-"Sviatoslav Sviridov <svd@lintec.minsk.by>"
-
-#: ../gtk/glade/window_about.glade.h:27
-msgid "Package management software using apt."
-msgstr "Софтвер за справување со пакети кој што користи apt."
-
-#: ../gtk/glade/window_about.glade.h:28
-msgid ""
-"This software is licensed under the terms of the GNU General Public License, "
-"Version 2"
-msgstr ""
-"Овој софтвер е лиценциран под условите на „GNU General Public LIcense, "
-"Version 2“"
-
-#: ../gtk/glade/window_about.glade.h:29
-msgid "Translated by"
-msgstr "Преведено од"
-
-#: ../gtk/glade/window_about.glade.h:30
-msgid ""
-"Visit the home page at \n"
-"http://www.nongnu.org/synaptic/"
-msgstr ""
-"Посетете ја домашната страна на \n"
-"http://www.nongnu.org/synaptic/"
-
-#: ../gtk/glade/window_about.glade.h:32
-msgid "Written by"
-msgstr "Напишано од"
-
-#: ../gtk/glade/window_about.glade.h:33
-msgid "translators-credits"
-msgstr "Арангел Ангов <ufo@linux.net.mk>"
-
-#: ../gtk/glade/window_find.glade.h:2
-msgid "Description and Name"
-msgstr "Име и опис"
-
-#: ../gtk/glade/window_find.glade.h:3
-msgid "Look in:"
-msgstr "Барај во:"
-
-#: ../gtk/glade/window_find.glade.h:7
-msgid "Search:"
-msgstr "Пребарај:"
-
-#: ../gtk/glade/window_find.glade.h:9
-msgid "_Search"
-msgstr "_Барај"
-
-#: ../gtk/glade/window_fetch.glade.h:1
-#, fuzzy
-msgid "Show for individual files"
-msgstr "Покажувај го напредокот поединечно"
-
-#: ../gtk/glade/window_changes.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
-"span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Обележи ги дополнителните потребни "
-"промени?</span>"
-
-#: ../gtk/glade/window_changes.glade.h:2
-msgid ""
-"The chosen action also affects other packages. The following changes are "
-"required in order to proceed."
-msgstr ""
-"Одбраното дејство има ефект и врз други пакети. За да продолжите ќе бидат "
-"потребни следниве промени."
-
-#: ../gtk/glade/window_changes.glade.h:3
-msgid "_Mark"
-msgstr "_Обележи"
-
-#: ../gtk/glade/window_preferences.glade.h:1
-#: ../gtk/glade/window_summary.glade.h:1 ../gtk/glade/window_filters.glade.h:1
-msgid " "
-msgstr " "
-
-#: ../gtk/glade/window_preferences.glade.h:3
-msgid "<b>Appearance</b>"
-msgstr "<b>Изглед</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:4
-msgid "<b>Applying Changes</b>"
-msgstr "<b>Ги применувам промените</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:5
-msgid "<b>Colors</b>"
-msgstr "<b>Бои</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:6
-msgid "<b>Columns</b>"
-msgstr "<b>Колони</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:7
-msgid "<b>Fonts</b>"
-msgstr "<b>Фонтови</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:8
-msgid "<b>History files</b>"
-msgstr "<b>Датотеки во историја</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:9
-msgid "<b>Marking Changes</b>"
-msgstr "<b>Обележувам промени</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:10
-#, fuzzy
-msgid "<b>Package upgrade behavior (default distribution)</b>"
-msgstr "<b>Однесување за надградба на пакети (стандардна дистрибуција)</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:11
-msgid "<b>Proxy Server</b>"
-msgstr "<b>Proxy сервер</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:12
-msgid "<b>Temporary Files</b>"
-msgstr "<b>Привремени датотеки</b>"
-
-#: ../gtk/glade/window_preferences.glade.h:13
-msgid ""
-"<span size=\"large\" weight=\"bold\">These settings affect the core of your "
-"system. Consider any changes carefully.</span>"
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Овие поставувања ќе имаат ефект врз "
-"јадрото на Вашиот систем. Внимателно разгледувајте ги промените.</span>"
-
-#: ../gtk/glade/window_preferences.glade.h:14
-msgid "A_pplication Font"
-msgstr "Ф_онт на апликацијата"
-
-#: ../gtk/glade/window_preferences.glade.h:15
-msgid "Always Ask"
-msgstr "Прашувај секогаш"
-
-#: ../gtk/glade/window_preferences.glade.h:16
-msgid "Always prefer the highest version"
-msgstr "Секогаш повисоката верзија"
-
-#: ../gtk/glade/window_preferences.glade.h:17
-msgid "Always prefer the installed version"
-msgstr "Секогаш инсталираната верзија"
-
-#: ../gtk/glade/window_preferences.glade.h:18
-msgid "Apply changes in a terminal window"
-msgstr "Примени промени во терминален прозорец"
-
-#: ../gtk/glade/window_preferences.glade.h:19
-msgid "Ask to confirm changes that also affect other packages"
-msgstr "Прашај за потврда на промени кои што имаат ефект врз други пакети"
-
-#: ../gtk/glade/window_preferences.glade.h:20
-msgid "Ask to quit after the changes have been applied successfully"
-msgstr "Прашај за излез откатко промените ќе бидат применети"
-
-#: ../gtk/glade/window_preferences.glade.h:21
-#, fuzzy
-msgid "Authentication"
-msgstr "Комуникации"
-
-#: ../gtk/glade/window_preferences.glade.h:22
-msgid "Automatically"
-msgstr "Автоматски"
-
-#: ../gtk/glade/window_preferences.glade.h:23
-msgid "Broken:"
-msgstr "Расипани:"
-
-#: ../gtk/glade/window_preferences.glade.h:24
-msgid "Clicking on the status icon marks the most likely action"
-msgstr "Со кликнување на иконата го обележувате највообичаеното дејство"
-
-#: ../gtk/glade/window_preferences.glade.h:25
-msgid "Color"
-msgstr "Боја"
-
-#: ../gtk/glade/window_preferences.glade.h:26
-msgid "Color packages by their status"
-msgstr "Обој ги пакетите споерд нивниот статус"
-
-#: ../gtk/glade/window_preferences.glade.h:27
-msgid "Colors"
-msgstr "Бои"
-
-#: ../gtk/glade/window_preferences.glade.h:28
-msgid "Columns and Fonts"
-msgstr "Колони и фонтови"
-
-#: ../gtk/glade/window_preferences.glade.h:29
-msgid ""
-"Comma separated list of hosts and domains that will not be contacted through "
-"the proxy (e.g. localhost, 192.168.1.231, .net)"
-msgstr ""
-"Хостовите и домените кои што се одделени со запирка нема да бидат "
-"контактирани преку proxy (пр. localhost, 192.168.1.231,  .net)"
-
-#: ../gtk/glade/window_preferences.glade.h:30
-msgid "Completely"
-msgstr "Целосно"
-
-#: ../gtk/glade/window_preferences.glade.h:31
-msgid "Consider recommended packages as dependencies"
-msgstr "Сметај ги препорачаните пакети како зависности"
-
-#: ../gtk/glade/window_preferences.glade.h:32
-msgid "Default Upgrade"
-msgstr "Стандардна надградба"
-
-#: ../gtk/glade/window_preferences.glade.h:33
-msgid "Delete _History files older than:"
-msgstr "Избриши ги _датотеките во „Историја“ постари од:"
-
-#: ../gtk/glade/window_preferences.glade.h:34
-#, fuzzy
-msgid "Delete all cache package files now."
-msgstr "_Избриши ги кешираните пакети"
-
-#: ../gtk/glade/window_preferences.glade.h:35
-msgid "Direct connection to the internet"
-msgstr "Директна врска до интернет"
-
-#: ../gtk/glade/window_preferences.glade.h:37
-msgid "FTP proxy: "
-msgstr "FTP prxy: "
-
-#: ../gtk/glade/window_preferences.glade.h:38
-msgid "Files"
-msgstr "Датотеки"
-
-#: ../gtk/glade/window_preferences.glade.h:39
-msgid "General"
-msgstr "Општо"
-
-#: ../gtk/glade/window_preferences.glade.h:40
-msgid "HTTP proxy: "
-msgstr "HTTP proxy: "
-
-#: ../gtk/glade/window_preferences.glade.h:41
-msgid "IP address or host name of the ftp proxy server"
-msgstr "IP адреса или име на хост на ftp proxy серверот"
-
-#: ../gtk/glade/window_preferences.glade.h:42
-msgid "IP address or host name of the http proxy server"
-msgstr "IP адреса или име на хост на http proxy серверот"
-
-#: ../gtk/glade/window_preferences.glade.h:43
-msgid "Ignore"
-msgstr "Игнорирај"
-
-#: ../gtk/glade/window_preferences.glade.h:44
-msgid "Installed (locked):"
-msgstr "Инсталирани (заклучени):"
-
-#: ../gtk/glade/window_preferences.glade.h:45
-msgid "Installed:"
-msgstr "Инсталирани:"
-
-#: ../gtk/glade/window_preferences.glade.h:46
-msgid "Keep Configuration"
-msgstr "Задржи конфигурација"
-
-#: ../gtk/glade/window_preferences.glade.h:47
-msgid "Manual proxy configuration"
-msgstr "Рачна конфигурација за proxy"
-
-#: ../gtk/glade/window_preferences.glade.h:48
-msgid "Marked for complete removal:"
-msgstr "Обележани за комплетно отстранување:"
-
-#: ../gtk/glade/window_preferences.glade.h:49
-msgid "Marked for downgrade:"
-msgstr "Обележани за инсталирање на пониска верзија"
-
-#: ../gtk/glade/window_preferences.glade.h:50
-msgid "Marked for installation:"
-msgstr "Обележани за инсталација:"
-
-#: ../gtk/glade/window_preferences.glade.h:51
-msgid "Marked for reinstallation:"
-msgstr "Обележани за повторна инсталација:"
-
-#: ../gtk/glade/window_preferences.glade.h:52
-msgid "Marked for removal:"
-msgstr "Обележани за отстранување:"
-
-#: ../gtk/glade/window_preferences.glade.h:53
-msgid "Marked for upgrade:"
-msgstr "Обележани за надградба:"
-
-#: ../gtk/glade/window_preferences.glade.h:54
-msgid "Move D_own"
-msgstr "Помести д_оле"
-
-#: ../gtk/glade/window_preferences.glade.h:55
-msgid "Move _Up"
-msgstr "Помести _горе"
-
-#: ../gtk/glade/window_preferences.glade.h:56
-msgid "Network"
-msgstr "Мрежа"
-
-#: ../gtk/glade/window_preferences.glade.h:57
-msgid "New in repository:"
-msgstr "Ново во складиште:"
-
-#: ../gtk/glade/window_preferences.glade.h:58
-msgid "No proxy for: "
-msgstr "Нема proxy за: "
-
-#: ../gtk/glade/window_preferences.glade.h:59
-msgid "Not installed (locked):"
-msgstr "Неинсталирани (заклучени):"
-
-#: ../gtk/glade/window_preferences.glade.h:60
-msgid "Not installed:"
-msgstr "Неинсталирани:"
-
-#: ../gtk/glade/window_preferences.glade.h:61
-msgid "Number of undo operations:"
-msgstr "Број на операции за враќање:"
-
-#: ../gtk/glade/window_preferences.glade.h:62
-msgid "Port number of the ftp proxy server"
-msgstr "Број на порта за ftp proxy серверот"
-
-#: ../gtk/glade/window_preferences.glade.h:63
-msgid "Port number of the http proxy server"
-msgstr "Број на порта за http proxy серверот"
-
-#: ../gtk/glade/window_preferences.glade.h:64
-msgid "Port: "
-msgstr "Порта: "
-
-#: ../gtk/glade/window_preferences.glade.h:65
-msgid "Prefer versions from: "
-msgstr "Преферирај верзии од: "
-
-#: ../gtk/glade/window_preferences.glade.h:67
-msgid "Reloading outdated package information:"
-msgstr "Повторно ги вчитувам информациите за старите пакети:"
-
-#: ../gtk/glade/window_preferences.glade.h:68
-msgid "Removal of packages: "
-msgstr "Отстранување на пакети: "
-
-#: ../gtk/glade/window_preferences.glade.h:69
-msgid "Show package properties in the main window"
-msgstr "Покажи ги својствата на пакетот во главниот прозорец"
-
-#: ../gtk/glade/window_preferences.glade.h:70
-msgid "Smart Upgrade"
-msgstr "Паметена надградба"
-
-#: ../gtk/glade/window_preferences.glade.h:71
-msgid "System upgrade:"
-msgstr "Надградба на системот:"
-
-#: ../gtk/glade/window_preferences.glade.h:72
-msgid "Upgradable:"
-msgstr "Надградливи:"
-
-#: ../gtk/glade/window_preferences.glade.h:73
-msgid "Use custom application font"
-msgstr "Користи сопствен фонт за апликацијата"
-
-#: ../gtk/glade/window_preferences.glade.h:74
-msgid "Use custom terminal font"
-msgstr "Користи сопствен фонт за терминалот"
-
-#: ../gtk/glade/window_preferences.glade.h:75
-msgid "_Delete Cached Package Files"
-msgstr "_Избриши ги кешираните пакети"
-
-#: ../gtk/glade/window_preferences.glade.h:76
-msgid "_Delete downloaded packages after installation"
-msgstr "_Избриши ги преземените пакети после инсталацијата"
-
-#: ../gtk/glade/window_preferences.glade.h:77
-msgid "_Keep history"
-msgstr "_Чувај историја"
-
-#: ../gtk/glade/window_preferences.glade.h:78
-msgid "_Leave all downloaded packages in the cache"
-msgstr "_Остави ги сите преземени пакети во кеш"
-
-#: ../gtk/glade/window_preferences.glade.h:79
-msgid "_Only delete packages which are no longer available"
-msgstr "_Избриши ги само пакетите кои што не се достапни повеќе"
-
-#: ../gtk/glade/window_preferences.glade.h:80
-msgid "_Terminal Font"
-msgstr "_Фонт за терминал"
-
-#: ../gtk/glade/window_preferences.glade.h:81
-msgid "days"
-msgstr "дена"
-
-#: ../gtk/glade/window_disc_name.glade.h:1
-#: ../gtk/glade/dialog_disc_label.glade.h:1
-#: ../gtk/glade/dialog_new_repositroy.glade.h:1
-msgid "*"
-msgstr "*"
-
-#: ../gtk/glade/window_disc_name.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Внесете го името на CD-ROM-от</span>"
-
-#: ../gtk/glade/window_disc_name.glade.h:3
-msgid "Disc label:"
-msgstr "Име на дискот:"
-
-#: ../gtk/glade/window_disc_name.glade.h:4
-msgid ""
-"The label will be used to identify the CD-ROM if you want to install "
-"packages from it later."
-msgstr ""
-"Името ќе се користи за идентификација на CD-ROM-от доколку сакате да "
-"инсталирате пакети од истиот."
-
-#: ../gtk/glade/window_setopt.glade.h:1
-msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
-msgstr "<span size=\"large\" weight=\"bold\">Постави внатрешна опција</span>"
-
-#: ../gtk/glade/window_setopt.glade.h:2
-msgid "Only experts should use this."
-msgstr "Само експерти би требало да го користат ова."
-
-#: ../gtk/glade/window_setopt.glade.h:3
-msgid "Value:"
-msgstr "Вредност:"
-
-#: ../gtk/glade/window_setopt.glade.h:4
-msgid "Variable:"
-msgstr "Променлива:"
-
-#: ../gtk/glade/window_summary.glade.h:3
-msgid "<b>Summary</b>"
-msgstr "<b>Накратко</b>"
-
-#: ../gtk/glade/window_summary.glade.h:4
-msgid ""
-"<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
-msgstr "<span weight=\"bold\" size=\"large\">Да ги применам промените?</span>"
-
-#: ../gtk/glade/window_summary.glade.h:6
-msgid "Return to the main screen"
-msgstr "Врати се на главниот екран"
-
-#: ../gtk/glade/window_summary.glade.h:7
-msgid "The package files will be downloaded, but not installed"
-msgstr "Пакетот ќе биде преземен но не и инсталиран"
-
-#: ../gtk/glade/window_summary.glade.h:8
-msgid ""
-"This is your last opportunity to look through the list of marked changes "
-"before they are applied."
-msgstr ""
-"Ова Ви е последна шанса да ја проверите листата пред да се применат "
-"промените."
-
-#: ../gtk/glade/window_summary.glade.h:9
-#, fuzzy
-msgid ""
-"Vendors sign their packages to verify the origin and integrity of the "
-"packages. Disabling the verification is a security risk."
-msgstr ""
-"Производителите додаваат потпис на своите пакети заради проверка на нивниот "
-"интегритет. Оневозможувањето на ова претставува безбедносен ризик"
-
-#: ../gtk/glade/window_summary.glade.h:10
-#, fuzzy
-msgid "_Download package files only"
-msgstr "Преземај само пакети "
-
-#: ../gtk/glade/window_summary.glade.h:12
-#, fuzzy
-msgid "_Verify package signatures"
-msgstr "Проверувај го потписот на пакетите"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
-#: ../gtk/glade/window_filters.glade.h:4
-msgid "<b>Current</b>"
-msgstr "<b>Тековен</b>"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Marked [status]"
-#: ../gtk/glade/window_filters.glade.h:6
-msgid "<b>Marked</b>"
-msgstr "<b>Обележан</b>"
-
-#. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Other [status]"
-#: ../gtk/glade/window_filters.glade.h:8
-msgid "<b>Other</b>"
-msgstr "<b>Друго</b>"
-
-#: ../gtk/glade/window_filters.glade.h:9
-msgid "AND"
-msgstr "и"
-
-#: ../gtk/glade/window_filters.glade.h:10
-#, fuzzy
-msgid "Automatic install"
-msgstr "Автоматски"
-
-#: ../gtk/glade/window_filters.glade.h:11
-msgid "Automatic installed but no longer required by any other package"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:12
-#, fuzzy
-msgid "Automatic removable"
-msgstr "Автоматски"
-
-#: ../gtk/glade/window_filters.glade.h:13
-msgid "Boolean operator between property criterias:"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:16
-msgid "Conflicting Packages"
-msgstr "Пакети со конфликт"
-
-#: ../gtk/glade/window_filters.glade.h:17
-msgid "Currently in broken policy state"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:19
-#: ../gtk/glade/window_details.glade.h:15
-msgid "Dependent Packages"
-msgstr "Зависни пакети"
-
-#: ../gtk/glade/window_filters.glade.h:21
-msgid "Exclude"
-msgstr "Одвои"
-
-#: ../gtk/glade/window_filters.glade.h:22
-msgid "Exclude selected sections"
-msgstr "Одвои ги одбраните оддели"
-
-#: ../gtk/glade/window_filters.glade.h:23 ../gtk/rgfiltermanager.h:63
-msgid "Excludes"
-msgstr "Одвоени"
-
-#: ../gtk/glade/window_filters.glade.h:25
-msgid "For installation or upgrade"
-msgstr "За инсталација или надградба"
-
-#: ../gtk/glade/window_filters.glade.h:26
-msgid "For removal"
-msgstr "За отстранување"
-
-#: ../gtk/glade/window_filters.glade.h:27
-msgid "Include"
-msgstr "Вклучи"
-
-#: ../gtk/glade/window_filters.glade.h:28
-msgid "Include selected sections only"
-msgstr "Вклучи ги само одбраните оддели"
-
-#: ../gtk/glade/window_filters.glade.h:29 ../gtk/rgfiltermanager.h:62
-msgid "Includes"
-msgstr "Вклучени"
-
-#: ../gtk/glade/window_filters.glade.h:31
-msgid "Installed automatically as part of a dependency"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:32
-msgid "Installed manually (not as a dependency by something else)"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:33
-msgid "Installed packages that are up-to-date"
-msgstr "Инсталирани пакети кои што се најнови"
-
-#: ../gtk/glade/window_filters.glade.h:34
-msgid "Installed packages that are upgradable"
-msgstr "Инсталираните пакети кои што се надградливи"
-
-#: ../gtk/glade/window_filters.glade.h:35
-msgid "Installed packages that are upgradable to a later upstream version"
-msgstr "Инсталираните пакети се надградливи до понова верзија"
-
-#: ../gtk/glade/window_filters.glade.h:36
-msgid "Library packages that are no longer needed (deborphan is required)"
-msgstr "Пакети за библиотеки кои што повеќе не се потребни"
-
-#: ../gtk/glade/window_filters.glade.h:38
-#, fuzzy
-msgid "Manual installed"
-msgstr "Неинсталирани"
-
-#: ../gtk/glade/window_filters.glade.h:40
-msgid "Not installable"
-msgstr "Не се инсталира"
-
-#: ../gtk/glade/window_filters.glade.h:42
-msgid "Not installed packages"
-msgstr "Неинсталирани"
-
-#: ../gtk/glade/window_filters.glade.h:43
-msgid "Not marked"
-msgstr "Необележани"
-
-#: ../gtk/glade/window_filters.glade.h:44
-msgid "OR"
-msgstr "или"
-
-#: ../gtk/glade/window_filters.glade.h:46
-msgid "Orphaned"
-msgstr ""
-
-#: ../gtk/glade/window_filters.glade.h:48
-#, fuzzy
-msgid "Packages that are new in the repository since that last \"Reload\""
-msgstr "Пакети кои што се нови во складиштето од последното „Освежување“"
-
-#: ../gtk/glade/window_filters.glade.h:49
-msgid "Packages that are not available in any repository"
-msgstr "Пакети кои што не се достапни во складиштето"
-
-#: ../gtk/glade/window_filters.glade.h:50
-msgid "Packages that will be installed or upgraded"
-msgstr "Пакети кои што ќе бидат инсталирани или надградени"
-
-#: ../gtk/glade/window_filters.glade.h:51
-msgid "Packages that will be removed"
-msgstr "Пакети кои што ќе бидат отстранети"
-
-#: ../gtk/glade/window_filters.glade.h:52
-msgid "Packages that will never be upgraded"
-msgstr "Пакети што нема никогаш да бидат надградени"
-
-#: ../gtk/glade/window_filters.glade.h:53
-msgid "Packages that won't be changed"
-msgstr "Пакети што нема да бидат променети"
-
-#: ../gtk/glade/window_filters.glade.h:54
-msgid "Packages with broken dependencies"
-msgstr "Пакети со расипани зависности"
-
-#: ../gtk/glade/window_filters.glade.h:56
-msgid "Policy broken"
-msgstr ""
-
-#. replaces/obsoletes
-#: ../gtk/glade/window_filters.glade.h:59 ../gtk/rgfiltermanager.h:77
-msgid "Recommendations"
-msgstr "Препораки"
-
-#: ../gtk/glade/window_filters.glade.h:60
-msgid "Removed packages that have left configuration files on the system"
-msgstr "Отстранети пакети кои што оставиле конфигурациски датотеки на системот"
-
-#: ../gtk/glade/window_filters.glade.h:61
-msgid "Replaced Packages"
-msgstr "Заменети пакети"
-
-#: ../gtk/glade/window_filters.glade.h:62
-msgid "Residual config"
-msgstr "Дупла конфигурација"
-
-#. /recommends
-#: ../gtk/glade/window_filters.glade.h:65 ../gtk/rgfiltermanager.h:78
-msgid "Suggestions"
-msgstr "Предлози"
-
-#: ../gtk/glade/window_filters.glade.h:66
-msgid "Tags"
-msgstr "Тагови"
-
-#: ../gtk/glade/window_filters.glade.h:67
-msgid "Upgradable"
-msgstr "Надградливи"
-
-#: ../gtk/glade/window_filters.glade.h:69
-msgid "Version Number"
-msgstr "Број на верзија"
-
-#: ../gtk/glade/window_filters.glade.h:70
-msgid "_Deselect All"
-msgstr "_Остави сѐ"
-
-#: ../gtk/glade/window_filters.glade.h:71
-msgid "_Invert All"
-msgstr "_Одбери обратно"
-
-#: ../gtk/glade/window_filters.glade.h:72
-msgid "_Select All"
-msgstr "_Одбери се"
-
-#: ../gtk/glade/window_repositories.glade.h:2
-msgid "Distribution:"
-msgstr "Дистрибуција:"
-
-#: ../gtk/glade/window_repositories.glade.h:4
-msgid "Section(s):"
-msgstr "Оддел(и):"
-
-#: ../gtk/glade/window_repositories.glade.h:5
-msgid "URI:"
-msgstr "Адреса:"
-
-#: ../gtk/glade/window_repositories.glade.h:6
-msgid "Vendors..."
-msgstr "Производители..."
-
-#: ../gtk/glade/window_repositories.glade.h:7
-msgid "deb"
-msgstr "deb"
-
-#: ../gtk/glade/window_repositories.glade.h:8
-msgid "deb-src"
-msgstr "deb-src"
-
-#: ../gtk/glade/window_repositories.glade.h:9
-msgid "rpm"
-msgstr "rpm"
-
-#: ../gtk/glade/window_repositories.glade.h:10
-msgid "rpm-src"
-msgstr "rpm-src"
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:1
-msgid "<i>Preparing packages...</i>"
-msgstr "<i>Припремам пакети...</i>"
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:2
-#, fuzzy
-msgid "Automatically close after the changes have been successfully applied"
-msgstr "Затвори го овој дијалог откако ќе се применат промените"
-
-#: ../gtk/glade/window_rgdebinstall_progress.glade.h:3
-#, fuzzy
-msgid "Details"
-msgstr "_Покажи детали"
-
-#: ../gtk/glade/window_rginstall_progress_msgs.glade.h:1
-msgid "Extra output was generated during Package Manager operation"
-msgstr ""
-
-#: ../gtk/glade/window_tasks.glade.h:1
-#, fuzzy
-msgid ""
-"<span size=\"large\" weight=\"bold\">Which tasks should be performed by your "
-"computer?</span>\n"
-"\n"
-"These are preselected groups of packages to perform each task. If you select "
-"a task, the corresponding packages will be marked for installation."
-msgstr ""
-"<span size=\"large\" weight=\"bold\">Кои задачи треба да бидат извршени од "
-"страна на Вашиот компјутер<span>\n"
-"\n"
-"Има претходно одбрани групи на пакети за извршување на секоја задача. Ако "
-"одберете задача, соодветните пакети ќе бидат одбрани за инсталација."
-
-#: ../gtk/glade/window_tasks.glade.h:4
-msgid "_Description"
-msgstr "_Опис"
-
-#: ../gtk/glade/window_zvtinstallprogress.glade.h:1
-msgid "<b>Terminal Output:</b>"
-msgstr "<b>Резултат на терминалот:</b>"
-
-#: ../gtk/glade/window_zvtinstallprogress.glade.h:2
-msgid "Close this dialog after the changes have been successfully applied"
-msgstr "Затвори го овој дијалог откако ќе се применат промените"
-
-#: ../gtk/glade/dialog_welcome.glade.h:1
-msgid " - "
-msgstr " - "
-
-#: ../gtk/glade/dialog_welcome.glade.h:2
-#, fuzzy
-msgid ""
-"<b>Note:</b> Changes are not applied instantly. At first you have to mark "
-"all changes and then apply them."
-msgstr ""
-"<b>Забелешка:</b> Промените не се применуваат веднаш. Прво морате да ги "
-"обележите сите промени па дури потоа да ги примените."
-
-#: ../gtk/glade/dialog_welcome.glade.h:3
-msgid "Choose the action from the context menu of the package."
-msgstr "Одберете дејство од менито врз пакетот."
-
-#: ../gtk/glade/dialog_welcome.glade.h:4
-msgid "Click on the status icon to open a menu that contains all actions."
-msgstr ""
-"Кликнете на иконата за статус за да отворите мени кое ги содржи сите дејства."
-
-#: ../gtk/glade/dialog_welcome.glade.h:5
-msgid "Double click on the package name."
-msgstr "Два пати кликнете врз името на пакетот."
-
-#: ../gtk/glade/dialog_welcome.glade.h:6
-msgid "Quick Introduction"
-msgstr "Брзо запознавање"
-
-#: ../gtk/glade/dialog_welcome.glade.h:7
-msgid "Select the package and choose the action from the 'Package' menu."
-msgstr "Одберете пакет и изберете дејство од менито „Пакети“."
-
-#: ../gtk/glade/dialog_welcome.glade.h:8
-msgid "Show this dialog at startup"
-msgstr "Покажи го дијалогот на почеток"
-
-#: ../gtk/glade/dialog_welcome.glade.h:9
-msgid ""
-"The software on your system is organized in so called <i>packages</i>. The "
-"package manager enables you to install, to upgrade or to remove software "
-"packages."
-msgstr ""
-"Софтверот на Вашиот систем е организиран во <i>пакети</i>. Менаџерот за "
-"пакети Ви дозволува да инсталирате, надградувате или пак да отстранувате "
-"софтверски пакети."
-
-#: ../gtk/glade/dialog_welcome.glade.h:10
-msgid ""
-"You can mark packages for installation, upgrade or removal in several ways:"
-msgstr ""
-"Можете да обележувате пакети за инсталација, надградба или отстранување на "
-"неколку начини:"
-
-#: ../gtk/glade/dialog_welcome.glade.h:11
-msgid ""
-"You should reload the package information regularly. Otherwise you could "
-"miss important security upgrades."
-msgstr ""
-"Треба да ги освежувате информациите за пакетите често за да не пропуштите "
-"важни безбедносни надградби."
-
-#: ../gtk/glade/dialog_unmet.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
-"installation or upgrade</span>\n"
-"\n"
-"The following packages have unresolvable dependencies. Make sure that all "
-"required repositories are added and enabled in the preferences."
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Не можам да ги обележам сите пакети за "
-"надградба</span>\n"
-"\n"
-"Следниве пакети имаат нерешливи зависности.Осигурајте се дека се додадени "
-"сите складишта и дека истите се вклучени во преференците."
-
-#: ../gtk/glade/dialog_changelog.glade.h:1
-msgid "Complete changelog of the latest version:"
-msgstr "Комплетна датотека со промени од последната верзија:"
-
-#: ../gtk/glade/dialog_update_failed.glade.h:1
-#, fuzzy
-msgid ""
-"<big><b>Could not download all repository indexes</b></big>\n"
-"\n"
-"The repository may no longer be available or could not be contacted because "
-"of network problems. If available an older version of the failed index will "
-"be used. Otherwise the repository will be ignored. Check your network "
-"connection and ensure the repository address in the preferences is correct."
-msgstr ""
-"<big><b>Не можам да ги преземам сите индекси на складиштата</b></big>\n"
-"\n"
-"Складиштата може повеќе да не се достапни или пак да не можете да ги "
-"контактирате поради мрежни проблеми. Доколку има достапна, ќе биде "
-"искористена постара верзија на индексите. Доколку нема, складиштата ќе бидат "
-"игнорирани. Проверете ја Вашата мрежна врска или пак адресите за складиштата."
-
-#: ../gtk/glade/window_iconlegend.glade.h:1
-msgid ""
-"<b>The following icons are used to indicate the current status of a package:"
-"</b>"
-msgstr ""
-"<b>Следниве икони се користат за покажување на тековниот статус на пакет:</b>"
-
-#: ../gtk/glade/window_iconlegend.glade.h:2 ../gtk/rgiconlegend.cc:42
-msgid "Icon Legend"
-msgstr "Легенда на икони"
-
-#: ../gtk/glade/dialog_download_error.glade.h:1
-#, fuzzy
-msgid ""
-"<big><b>Could not download all necessary package files</b></big>\n"
-"\n"
-"The version of the package that you want to install might be no longer "
-"available in the repository, or there may be problems with the source of the "
-"package. Reload the package list and check the source of the package (e.g. "
-"CD or network connection)."
-msgstr ""
-"<big><b>Не можам да ги преземам сите потребни пакети</b></big>\n"
-"\n"
-"Верзијата на пакетот што сакате да ја инсталирате може повеќе да не е "
-"достапна во складиштето или пак да има проблеми со изворниот код на пакетот. "
-"Освежете ги информациите за пакетите и проверете го изворниот код на пакетот."
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:1
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Your package information is out of "
-"date</span>\n"
-"\n"
-"Your package information is older than 48 hours. There could be important "
-"security updates available. It is recommended to reload the package "
-"information regularly."
-msgstr ""
-"<span weight=\"bold\" size=\"larger\">Информациите за Вашите пакети се "
-"застарени</span>\n"
-"\n"
-"Информациите за Вашите пакети се постари од 48 часа. Можно е да постојат "
-"важни безбедноси надградби. Препорачливо е да ги освежувате податоците за "
-"пакетите почесто."
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:4
-msgid "Remember the answer"
-msgstr "Запамти го одговорот"
-
-#: ../gtk/glade/dialog_update_outdated.glade.h:5
-msgid "_Reload"
-msgstr "_Освежи"
-
-#: ../gtk/glade/window_logview.glade.h:1
-msgid "History"
-msgstr "Историја"
-
-#: ../gtk/glade/window_logview.glade.h:2
-msgid "History of installed, upgraded and removed software packages."
-msgstr "Историја на инсталирани, надградени и отстранети софтверски пакети."
-
-#: ../gtk/glade/dialog_quit.glade.h:1
-msgid ""
-"<b><big>Quit and discard marked changes?</big></b>\n"
-"\n"
-"There are still marked changes that have not yet been applied. They will get "
-"lost if you choose to quit 'Synaptic'."
-msgstr ""
-"<b><big>Излези и заборави ги промените?</big></b>\n"
-"\n"
-"Сеуште има обележани промени кои што не се применети. Истите ќе бидат "
-"изгубени доколку го затворите „Synaptic“."
-
-#: ../gtk/glade/dialog_conffile.glade.h:1
-msgid "Difference between the files"
-msgstr "Разлика помеѓу датотеките"
-
-#: ../gtk/glade/dialog_conffile.glade.h:2
-#, fuzzy
-msgid "_Keep"
-msgstr "_Помош"
-
-#: ../gtk/glade/dialog_conffile.glade.h:3
-#, fuzzy
-msgid "_Replace"
-msgstr "Го заменува"
-
-#: ../gtk/glade/dialog_change_version.glade.h:1
-msgid "Force version:"
-msgstr "Наметни верзија:"
-
-#: ../gtk/glade/dialog_change_version.glade.h:2
-msgid "_Force Version"
-msgstr "_Наметни верзија"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:1
-msgid ""
-"<b><big>Mark upgrades in a smart way?</big></b>\n"
-"\n"
-"The default upgrade method skips upgrades that would introduce conflicts or "
-"require installation of additional packages.\n"
-"\n"
-"The smart upgrade (dist-upgrade) attempts to resolve conflicts and to fulfil "
-"all dependencies of upgrades in a smart way.\n"
-"\n"
-"<b>Note:</b> The upgrades will be marked only. You still have to apply them "
-"afterwards."
-msgstr ""
-"<b><big>Да ги обележам надградбите паметно?</big></b>\n"
-"\n"
-"Стандардниот метод за надградба ги прескокнува надградбите кои што би можеле "
-"да предизвикаат конфликт или пак кои што имаат потреба од додатни пакети.\n"
-"\n"
-"Методот за паметна надградба (dist-upgrade) се обидува да ги разреши сите "
-"конфликти и да ги инсталира сите потребни пакети на паметен начин.\n"
-"\n"
-"<b>Забелешка:</b> Надградбите ќе бидат само обележани. Морате да ги "
-"примените потоа."
-
-#: ../gtk/glade/dialog_upgrade.glade.h:8
-msgid "Remember my answer for future upgrades"
-msgstr "Запамти го одговорот"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:9
-msgid "This behavior can be changed in the preferences later."
-msgstr "Однесувањето може да се промени во преференците подоцна."
-
-#: ../gtk/glade/dialog_upgrade.glade.h:10
-#, fuzzy
-msgid "_Default Upgrade"
-msgstr "Стандардна надградба"
-
-#: ../gtk/glade/dialog_upgrade.glade.h:11
-#, fuzzy
-msgid "_Smart Upgrade"
-msgstr "Паметена надградба"
 
 #: ../data/synaptic.desktop.in.h:1 ../data/synaptic-kde.desktop.in.h:1
 msgid "Install, remove and upgrade software packages"
@@ -3558,6 +2215,14 @@ msgstr "Менаџер за пакети"
 msgid "Synaptic Package Manager"
 msgstr "Менаџер за пакети - Синаптик"
 
+#: ../gtk/rgfiltermanager.h:62
+msgid "Includes"
+msgstr "Вклучени"
+
+#: ../gtk/rgfiltermanager.h:63
+msgid "Excludes"
+msgstr "Одвоени"
+
 #: ../gtk/rgfiltermanager.h:69
 msgid "Package name"
 msgstr "Име на пакет"
@@ -3565,6 +2230,10 @@ msgstr "Име на пакет"
 #: ../gtk/rgfiltermanager.h:72
 msgid "Version number"
 msgstr "Број на верзија"
+
+#: ../gtk/rgfiltermanager.h:73
+msgid "Dependencies"
+msgstr "Зависности"
 
 #. depends, predepends etc
 #: ../gtk/rgfiltermanager.h:74
@@ -3581,6 +2250,16 @@ msgstr "Пакети со конфликт"
 msgid "Replaced packages"
 msgstr "Заменети пакети"
 
+#. replaces/obsoletes
+#: ../gtk/rgfiltermanager.h:77
+msgid "Recommendations"
+msgstr "Препораки"
+
+#. /recommends
+#: ../gtk/rgfiltermanager.h:78
+msgid "Suggestions"
+msgstr "Предлози"
+
 #. suggests
 #: ../gtk/rgfiltermanager.h:79
 msgid "Dependent packages"
@@ -3591,67 +2270,1050 @@ msgstr "Зависни пакети"
 msgid "Please insert a disc in the drive."
 msgstr "Внесете диск во уредот."
 
+#: ../gtk/rgiconlegend.cc:42
+msgid "Icon Legend"
+msgstr "Легенда на икони"
+
 #: ../gtk/rgiconlegend.cc:77
 msgid "Package is supported"
 msgstr "Пакетот е поддржан"
 
-#: ../gtk/rgterminstallprogress.cc:134
+#: ../gtk/rgterminstallprogress.cc:139
 msgid "<i>Running...</i>"
 msgstr "<i>Извршувам...</i>"
 
-#: ../gtk/rgterminstallprogress.cc:164
+#: ../gtk/rgterminstallprogress.cc:169
 msgid "<i>Finished</i>"
 msgstr "<i>Завршив</i>"
 
-#: ../gtk/rgterminstallprogress.cc:175
+#: ../gtk/rgterminstallprogress.cc:180
 msgid "<i>Can't close while running</i>"
 msgstr "<i>Не може да се затвори додека работи</i>"
 
-#. vim:sts=3:sw=3
-#: ../gtk/glade/dialog_authentication.glade.h:1
-msgid "HTTP authentication"
-msgstr ""
+#~ msgid "    "
+#~ msgstr "    "
 
-#: ../gtk/glade/dialog_authentication.glade.h:2
-msgid "Password"
-msgstr ""
+#~ msgid "<b>Installed Version</b>"
+#~ msgstr "<b>Инсталирана верзија</b>"
 
-#: ../gtk/glade/dialog_authentication.glade.h:3
-msgid "Username"
-msgstr ""
+#~ msgid "<b>Latest Available Version</b>"
+#~ msgstr "<b>Последна достапна верзија</b>"
 
-#: ../gtk/glade/dialog_disc_label.glade.h:2
-msgid ""
-"<span weight=\"bold\" size=\"larger\">Enter a label for this CD-Rom</span>\n"
-"\n"
-"The label will be used if you want to install packages from this CD-Rom. It "
-"is recommended to also write the label on the CD-Rom to easily find it "
-"again.\n"
-msgstr ""
+#~ msgid "<b>Maintainer:</b>"
+#~ msgstr "<b>Одржувач:</b>"
 
-#: ../gtk/glade/dialog_disc_label.glade.h:6
+#~ msgid ""
+#~ "<b>Note:</b> To install a version that is different from the default one, "
+#~ "choose <b>Package -> Force Version...</b> from the menu."
+#~ msgstr ""
+#~ "<b>Забелешка:</b> За да инсталирате верзија која што е различна од "
+#~ "стандардната, одберете <b>Пакет -> Наметни верзија...</b>."
+
+#~ msgid "<b>Package:</b>"
+#~ msgstr "<b>Пакет:</b>"
+
+#~ msgid "<b>Priority:</b>"
+#~ msgstr "<b>Приоритет:</b>"
+
+#~ msgid "<b>Section:</b>"
+#~ msgstr "<b>Оддел:</b>"
+
+#~ msgid "<b>Status:</b>"
+#~ msgstr "<b>Статус:</b>"
+
+#~ msgid "<b>Tags:</b>"
+#~ msgstr "<b>Тагови:</b>"
+
+#~ msgid "A_pply Marked Changes"
+#~ msgstr "П_римени ги обележаните промени"
+
 #, fuzzy
-msgid "Label:"
-msgstr "Ознака на дискот"
+#~ msgid "Add downloaded packages"
+#~ msgstr "Ги преземам пакетите"
 
-#: ../gtk/glade/dialog_new_repositroy.glade.h:2
-msgid ""
-"<big><b>Enter the complete APT line of the repository that you want to add</"
-"b></big>\n"
-"\n"
-"The APT line contains the type, location and content of a repository, for "
-"example <i>\"deb http://ftp.debian.org sarge main\"</i>. You can find a "
-"detailed description of the syntax in the documentation."
-msgstr ""
+#~ msgid "Apply"
+#~ msgstr "Примени"
 
-#: ../gtk/glade/dialog_new_repositroy.glade.h:5
-msgid "APT line:"
-msgstr ""
-
-#: ../gtk/glade/dialog_new_repositroy.glade.h:6
 #, fuzzy
-msgid "_Add Repository"
-msgstr "_Складишта"
+#~ msgid "Automatically installed"
+#~ msgstr "Автоматски"
+
+#~ msgid "Available versions:"
+#~ msgstr "Достапни верзии:"
+
+#~ msgid "Common"
+#~ msgstr "Вообичаено"
+
+#~ msgid "Dependants"
+#~ msgstr "Зависности"
+
+#~ msgid "Dependencies of the Latest Version"
+#~ msgstr "Зависности на последната верзија"
+
+#~ msgid "Icon _Legend"
+#~ msgstr "Легенда на _икони"
+
+#~ msgid "Installed Files"
+#~ msgstr "Инсталирани датотеки"
+
+#~ msgid "Mark All Upgrades"
+#~ msgstr "Обележи сѐ"
+
+#~ msgid "Mark Packages by _Task..."
+#~ msgstr "Обележи ги пакетите по _намена..."
+
+#~ msgid "Mark for Co_mplete Removal"
+#~ msgstr "Обележи за цел_осно отстранување"
+
+#~ msgid "Mark for R_einstallation"
+#~ msgstr "Обележи за п_овторно инсталирање"
+
+#~ msgid "Mark for _Installation"
+#~ msgstr "Обележи за _инсталација"
+
+#~ msgid "Mark for _Removal"
+#~ msgstr "Обележи за _отстранување"
+
+#~ msgid "Mark for _Upgrade"
+#~ msgstr "Обележи за _надградба"
+
+#~ msgid "Provided Packages"
+#~ msgstr "Понудени пакети"
+
+#~ msgid "Reload"
+#~ msgstr "Освежи"
+
+#, fuzzy
+#~ msgid "S_earch Results"
+#~ msgstr "Филтер за пребарување"
+
+#~ msgid "S_tatus"
+#~ msgstr "С_татус"
+
+#~ msgid "Save Markings _As..."
+#~ msgstr "Зачувај ги обележаните _како..."
+
+#~ msgid "Search"
+#~ msgstr "Барај"
+
+#~ msgid "Size:"
+#~ msgstr "Големина:"
+
+#~ msgid "Synaptic"
+#~ msgstr "Синаптик"
+
+#~ msgid "Text Be_side Icons"
+#~ msgstr "Текст по_крај иконите"
+
+#~ msgid "Text _Below Icons"
+#~ msgstr "Текст _под икони"
+
+#~ msgid "U_nmark"
+#~ msgstr "О_ткажи"
+
+#~ msgid "U_nmark All"
+#~ msgstr "О_ткажи се"
+
+#~ msgid "Version:"
+#~ msgstr "Верзија:"
+
+#~ msgid "Versions"
+#~ msgstr "Верзии"
+
+#~ msgid "_About"
+#~ msgstr "_За"
+
+#~ msgid "_Add CD-ROM..."
+#~ msgstr "_Додај CD-ROM..."
+
+#~ msgid "_Browse Documentation"
+#~ msgstr "_Разгледај документација"
+
+#~ msgid "_Configure..."
+#~ msgstr "_Конфигурирај..."
+
+#~ msgid "_Contents"
+#~ msgstr "_Содржини"
+
+#, fuzzy
+#~ msgid "_Custom Filters"
+#~ msgstr "_Филтри"
+
+#~ msgid "_Download Changelog"
+#~ msgstr "_Преземи датотека со промени"
+
+#~ msgid "_Edit"
+#~ msgstr "_Уреди"
+
+#~ msgid "_File"
+#~ msgstr "_Датотека"
+
+#~ msgid "_Filters"
+#~ msgstr "_Филтри"
+
+#~ msgid "_Fix Broken Packages"
+#~ msgstr "_Поправи ги расипаните пакети"
+
+#~ msgid "_Force Version..."
+#~ msgstr "_Наметни верзија..."
+
+#~ msgid "_Help"
+#~ msgstr "_Помош"
+
+#~ msgid "_Hide"
+#~ msgstr "_Сокриј"
+
+#~ msgid "_History"
+#~ msgstr "_Историја"
+
+#~ msgid "_Icons Only"
+#~ msgstr "_Само икони"
+
+#~ msgid "_Lock Version"
+#~ msgstr "_Заклучи верзија"
+
+#~ msgid "_Mark All Upgrades..."
+#~ msgstr "_Обележи ги сите надградби..."
+
+#~ msgid "_Package"
+#~ msgstr "_Пакет"
+
+#~ msgid "_Properties"
+#~ msgstr "_Својства"
+
+#~ msgid "_Quick Introduction"
+#~ msgstr "_Брза инсталација"
+
+#~ msgid "_Quit"
+#~ msgstr "_Излез"
+
+#~ msgid "_Read Markings..."
+#~ msgstr "_Прочитај обележани..."
+
+#~ msgid "_Redo"
+#~ msgstr "_Повтори"
+
+#~ msgid "_Reload Package Information"
+#~ msgstr "_Освежи ги информациите за пакетите"
+
+#~ msgid "_Repositories"
+#~ msgstr "_Складишта"
+
+#~ msgid "_Save Markings"
+#~ msgstr "_Зачувај обележани"
+
+#~ msgid "_Search..."
+#~ msgstr "_Барај..."
+
+#~ msgid "_Sections"
+#~ msgstr "_Оддели"
+
+#~ msgid "_Set Internal Option..."
+#~ msgstr "_Постави внатрешна опција"
+
+#~ msgid "_Settings"
+#~ msgstr "_Поставувања"
+
+#~ msgid "_Text Only"
+#~ msgstr "_Само текст"
+
+#~ msgid "_Toolbar"
+#~ msgstr "_Лента со алатки"
+
+#~ msgid "_Undo"
+#~ msgstr "_Врати"
+
+#~ msgid ""
+#~ "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
+#~ "Copyright (c) 2002-2004 Michael Vogt</span>"
+#~ msgstr ""
+#~ "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A•↵\n"
+#~ "Copyright (c) 2002-2004 Michael Vogt</span>"
+
+#~ msgid "<span size=\"xx-large\" weight=\"bold\">Synaptic version</span>"
+#~ msgstr "<span size=\"xx-large\" weight=\"bold\">Синаптик верзија</span>"
+
+#~ msgid "Documented by"
+#~ msgstr "Документирано од"
+
+#, fuzzy
+#~ msgid ""
+#~ "Man page:\n"
+#~ "Wybo Dekker <wybo@servalys.nl>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Manual:\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>"
+#~ msgstr ""
+#~ "Man страни:\n"
+#~ "Wybo Dekker <wybo@servalys.nl>\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Sebastian Heinlein <sebastain.heinlein@web.de>\n"
+#~ "\n"
+#~ "Manual:\n"
+#~ "Sebastian Heinlein <sebastain.heinlein@web.de>"
+
+#~ msgid ""
+#~ "Original author:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "\n"
+#~ "Maintainers:\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Contributors:\n"
+#~ "Enrico Zini <enrico@debian.org>\n"
+#~ "Panu Matilainen <pmatilai@welho.com>\n"
+#~ "Sviatoslav Sviridov <svd@lintec.minsk.by>"
+#~ msgstr ""
+#~ "Оригинален автор:\n"
+#~ "Alfredo K. Kojima <kojima@windowmaker.org>\n"
+#~ "\n"
+#~ "Оддржувачи:\n"
+#~ "Michael Vogt <mvo@debian.org>\n"
+#~ "Gustavo Niemeyer <niemeyer@conectiva.com>\n"
+#~ "Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+#~ "\n"
+#~ "Придонесувачи:\n"
+#~ "Enrico Zini <enrico@debian.org>\n"
+#~ "Panu Matilainen <pmatilai@welho.com>\n"
+#~ "Sviatoslav Sviridov <svd@lintec.minsk.by>"
+
+#~ msgid "Package management software using apt."
+#~ msgstr "Софтвер за справување со пакети кој што користи apt."
+
+#~ msgid ""
+#~ "This software is licensed under the terms of the GNU General Public "
+#~ "License, Version 2"
+#~ msgstr ""
+#~ "Овој софтвер е лиценциран под условите на „GNU General Public LIcense, "
+#~ "Version 2“"
+
+#~ msgid "Translated by"
+#~ msgstr "Преведено од"
+
+#~ msgid ""
+#~ "Visit the home page at \n"
+#~ "http://www.nongnu.org/synaptic/"
+#~ msgstr ""
+#~ "Посетете ја домашната страна на \n"
+#~ "http://www.nongnu.org/synaptic/"
+
+#~ msgid "Written by"
+#~ msgstr "Напишано од"
+
+#~ msgid "translators-credits"
+#~ msgstr "Арангел Ангов <ufo@linux.net.mk>"
+
+#~ msgid "Description and Name"
+#~ msgstr "Име и опис"
+
+#~ msgid "Look in:"
+#~ msgstr "Барај во:"
+
+#~ msgid "Search:"
+#~ msgstr "Пребарај:"
+
+#~ msgid "_Search"
+#~ msgstr "_Барај"
+
+#, fuzzy
+#~ msgid "Show for individual files"
+#~ msgstr "Покажувај го напредокот поединечно"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Mark additional required changes?</"
+#~ "span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Обележи ги дополнителните потребни "
+#~ "промени?</span>"
+
+#~ msgid ""
+#~ "The chosen action also affects other packages. The following changes are "
+#~ "required in order to proceed."
+#~ msgstr ""
+#~ "Одбраното дејство има ефект и врз други пакети. За да продолжите ќе бидат "
+#~ "потребни следниве промени."
+
+#~ msgid "_Mark"
+#~ msgstr "_Обележи"
+
+#~ msgid " "
+#~ msgstr " "
+
+#~ msgid "<b>Appearance</b>"
+#~ msgstr "<b>Изглед</b>"
+
+#~ msgid "<b>Applying Changes</b>"
+#~ msgstr "<b>Ги применувам промените</b>"
+
+#~ msgid "<b>Colors</b>"
+#~ msgstr "<b>Бои</b>"
+
+#~ msgid "<b>Columns</b>"
+#~ msgstr "<b>Колони</b>"
+
+#~ msgid "<b>Fonts</b>"
+#~ msgstr "<b>Фонтови</b>"
+
+#~ msgid "<b>History files</b>"
+#~ msgstr "<b>Датотеки во историја</b>"
+
+#~ msgid "<b>Marking Changes</b>"
+#~ msgstr "<b>Обележувам промени</b>"
+
+#, fuzzy
+#~ msgid "<b>Package upgrade behavior (default distribution)</b>"
+#~ msgstr "<b>Однесување за надградба на пакети (стандардна дистрибуција)</b>"
+
+#~ msgid "<b>Proxy Server</b>"
+#~ msgstr "<b>Proxy сервер</b>"
+
+#~ msgid "<b>Temporary Files</b>"
+#~ msgstr "<b>Привремени датотеки</b>"
+
+#~ msgid ""
+#~ "<span size=\"large\" weight=\"bold\">These settings affect the core of "
+#~ "your system. Consider any changes carefully.</span>"
+#~ msgstr ""
+#~ "<span size=\"large\" weight=\"bold\">Овие поставувања ќе имаат ефект врз "
+#~ "јадрото на Вашиот систем. Внимателно разгледувајте ги промените.</span>"
+
+#~ msgid "A_pplication Font"
+#~ msgstr "Ф_онт на апликацијата"
+
+#~ msgid "Always prefer the highest version"
+#~ msgstr "Секогаш повисоката верзија"
+
+#~ msgid "Always prefer the installed version"
+#~ msgstr "Секогаш инсталираната верзија"
+
+#~ msgid "Apply changes in a terminal window"
+#~ msgstr "Примени промени во терминален прозорец"
+
+#~ msgid "Ask to confirm changes that also affect other packages"
+#~ msgstr "Прашај за потврда на промени кои што имаат ефект врз други пакети"
+
+#~ msgid "Ask to quit after the changes have been applied successfully"
+#~ msgstr "Прашај за излез откатко промените ќе бидат применети"
+
+#, fuzzy
+#~ msgid "Authentication"
+#~ msgstr "Комуникации"
+
+#~ msgid "Broken:"
+#~ msgstr "Расипани:"
+
+#~ msgid "Clicking on the status icon marks the most likely action"
+#~ msgstr "Со кликнување на иконата го обележувате највообичаеното дејство"
+
+#~ msgid "Color"
+#~ msgstr "Боја"
+
+#~ msgid "Color packages by their status"
+#~ msgstr "Обој ги пакетите споерд нивниот статус"
+
+#~ msgid "Colors"
+#~ msgstr "Бои"
+
+#~ msgid "Columns and Fonts"
+#~ msgstr "Колони и фонтови"
+
+#~ msgid ""
+#~ "Comma separated list of hosts and domains that will not be contacted "
+#~ "through the proxy (e.g. localhost, 192.168.1.231, .net)"
+#~ msgstr ""
+#~ "Хостовите и домените кои што се одделени со запирка нема да бидат "
+#~ "контактирани преку proxy (пр. localhost, 192.168.1.231,  .net)"
+
+#~ msgid "Consider recommended packages as dependencies"
+#~ msgstr "Сметај ги препорачаните пакети како зависности"
+
+#~ msgid "Delete _History files older than:"
+#~ msgstr "Избриши ги _датотеките во „Историја“ постари од:"
+
+#, fuzzy
+#~ msgid "Delete all cache package files now."
+#~ msgstr "_Избриши ги кешираните пакети"
+
+#~ msgid "Direct connection to the internet"
+#~ msgstr "Директна врска до интернет"
+
+#~ msgid "FTP proxy: "
+#~ msgstr "FTP prxy: "
+
+#~ msgid "Files"
+#~ msgstr "Датотеки"
+
+#~ msgid "General"
+#~ msgstr "Општо"
+
+#~ msgid "HTTP proxy: "
+#~ msgstr "HTTP proxy: "
+
+#~ msgid "IP address or host name of the ftp proxy server"
+#~ msgstr "IP адреса или име на хост на ftp proxy серверот"
+
+#~ msgid "IP address or host name of the http proxy server"
+#~ msgstr "IP адреса или име на хост на http proxy серверот"
+
+#~ msgid "Installed (locked):"
+#~ msgstr "Инсталирани (заклучени):"
+
+#~ msgid "Installed:"
+#~ msgstr "Инсталирани:"
+
+#~ msgid "Manual proxy configuration"
+#~ msgstr "Рачна конфигурација за proxy"
+
+#~ msgid "Marked for complete removal:"
+#~ msgstr "Обележани за комплетно отстранување:"
+
+#~ msgid "Marked for downgrade:"
+#~ msgstr "Обележани за инсталирање на пониска верзија"
+
+#~ msgid "Marked for installation:"
+#~ msgstr "Обележани за инсталација:"
+
+#~ msgid "Marked for reinstallation:"
+#~ msgstr "Обележани за повторна инсталација:"
+
+#~ msgid "Marked for removal:"
+#~ msgstr "Обележани за отстранување:"
+
+#~ msgid "Marked for upgrade:"
+#~ msgstr "Обележани за надградба:"
+
+#~ msgid "Move D_own"
+#~ msgstr "Помести д_оле"
+
+#~ msgid "Move _Up"
+#~ msgstr "Помести _горе"
+
+#~ msgid "Network"
+#~ msgstr "Мрежа"
+
+#~ msgid "New in repository:"
+#~ msgstr "Ново во складиште:"
+
+#~ msgid "No proxy for: "
+#~ msgstr "Нема proxy за: "
+
+#~ msgid "Not installed (locked):"
+#~ msgstr "Неинсталирани (заклучени):"
+
+#~ msgid "Not installed:"
+#~ msgstr "Неинсталирани:"
+
+#~ msgid "Number of undo operations:"
+#~ msgstr "Број на операции за враќање:"
+
+#~ msgid "Port number of the ftp proxy server"
+#~ msgstr "Број на порта за ftp proxy серверот"
+
+#~ msgid "Port number of the http proxy server"
+#~ msgstr "Број на порта за http proxy серверот"
+
+#~ msgid "Port: "
+#~ msgstr "Порта: "
+
+#~ msgid "Prefer versions from: "
+#~ msgstr "Преферирај верзии од: "
+
+#~ msgid "Reloading outdated package information:"
+#~ msgstr "Повторно ги вчитувам информациите за старите пакети:"
+
+#~ msgid "Removal of packages: "
+#~ msgstr "Отстранување на пакети: "
+
+#~ msgid "System upgrade:"
+#~ msgstr "Надградба на системот:"
+
+#~ msgid "Upgradable:"
+#~ msgstr "Надградливи:"
+
+#~ msgid "Use custom application font"
+#~ msgstr "Користи сопствен фонт за апликацијата"
+
+#~ msgid "Use custom terminal font"
+#~ msgstr "Користи сопствен фонт за терминалот"
+
+#~ msgid "_Delete Cached Package Files"
+#~ msgstr "_Избриши ги кешираните пакети"
+
+#~ msgid "_Delete downloaded packages after installation"
+#~ msgstr "_Избриши ги преземените пакети после инсталацијата"
+
+#~ msgid "_Keep history"
+#~ msgstr "_Чувај историја"
+
+#~ msgid "_Leave all downloaded packages in the cache"
+#~ msgstr "_Остави ги сите преземени пакети во кеш"
+
+#~ msgid "_Only delete packages which are no longer available"
+#~ msgstr "_Избриши ги само пакетите кои што не се достапни повеќе"
+
+#~ msgid "_Terminal Font"
+#~ msgstr "_Фонт за терминал"
+
+#~ msgid "days"
+#~ msgstr "дена"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Enter the label of the CD-ROM</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Внесете го името на CD-ROM-от</span>"
+
+#~ msgid "Disc label:"
+#~ msgstr "Име на дискот:"
+
+#~ msgid ""
+#~ "The label will be used to identify the CD-ROM if you want to install "
+#~ "packages from it later."
+#~ msgstr ""
+#~ "Името ќе се користи за идентификација на CD-ROM-от доколку сакате да "
+#~ "инсталирате пакети од истиот."
+
+#~ msgid "<span size=\"large\" weight=\"bold\">Set an internal option</span>"
+#~ msgstr ""
+#~ "<span size=\"large\" weight=\"bold\">Постави внатрешна опција</span>"
+
+#~ msgid "Only experts should use this."
+#~ msgstr "Само експерти би требало да го користат ова."
+
+#~ msgid "Value:"
+#~ msgstr "Вредност:"
+
+#~ msgid "Variable:"
+#~ msgstr "Променлива:"
+
+#~ msgid "<b>Summary</b>"
+#~ msgstr "<b>Накратко</b>"
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"large\">Apply the following changes?</span>"
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"large\">Да ги применам промените?</span>"
+
+#~ msgid "Return to the main screen"
+#~ msgstr "Врати се на главниот екран"
+
+#~ msgid "The package files will be downloaded, but not installed"
+#~ msgstr "Пакетот ќе биде преземен но не и инсталиран"
+
+#~ msgid ""
+#~ "This is your last opportunity to look through the list of marked changes "
+#~ "before they are applied."
+#~ msgstr ""
+#~ "Ова Ви е последна шанса да ја проверите листата пред да се применат "
+#~ "промените."
+
+#, fuzzy
+#~ msgid ""
+#~ "Vendors sign their packages to verify the origin and integrity of the "
+#~ "packages. Disabling the verification is a security risk."
+#~ msgstr ""
+#~ "Производителите додаваат потпис на своите пакети заради проверка на "
+#~ "нивниот интегритет. Оневозможувањето на ова претставува безбедносен ризик"
+
+#, fuzzy
+#~ msgid "_Download package files only"
+#~ msgstr "Преземај само пакети "
+
+#, fuzzy
+#~ msgid "_Verify package signatures"
+#~ msgstr "Проверувај го потписот на пакетите"
+
+#~ msgid "<b>Current</b>"
+#~ msgstr "<b>Тековен</b>"
+
+#~ msgid "<b>Marked</b>"
+#~ msgstr "<b>Обележан</b>"
+
+#~ msgid "<b>Other</b>"
+#~ msgstr "<b>Друго</b>"
+
+#~ msgid "AND"
+#~ msgstr "и"
+
+#, fuzzy
+#~ msgid "Automatic install"
+#~ msgstr "Автоматски"
+
+#, fuzzy
+#~ msgid "Automatic removable"
+#~ msgstr "Автоматски"
+
+#~ msgid "Conflicting Packages"
+#~ msgstr "Пакети со конфликт"
+
+#~ msgid "Dependent Packages"
+#~ msgstr "Зависни пакети"
+
+#~ msgid "Exclude"
+#~ msgstr "Одвои"
+
+#~ msgid "Exclude selected sections"
+#~ msgstr "Одвои ги одбраните оддели"
+
+#~ msgid "For installation or upgrade"
+#~ msgstr "За инсталација или надградба"
+
+#~ msgid "For removal"
+#~ msgstr "За отстранување"
+
+#~ msgid "Include"
+#~ msgstr "Вклучи"
+
+#~ msgid "Include selected sections only"
+#~ msgstr "Вклучи ги само одбраните оддели"
+
+#~ msgid "Installed packages that are up-to-date"
+#~ msgstr "Инсталирани пакети кои што се најнови"
+
+#~ msgid "Installed packages that are upgradable"
+#~ msgstr "Инсталираните пакети кои што се надградливи"
+
+#~ msgid "Installed packages that are upgradable to a later upstream version"
+#~ msgstr "Инсталираните пакети се надградливи до понова верзија"
+
+#~ msgid "Library packages that are no longer needed (deborphan is required)"
+#~ msgstr "Пакети за библиотеки кои што повеќе не се потребни"
+
+#, fuzzy
+#~ msgid "Manual installed"
+#~ msgstr "Неинсталирани"
+
+#~ msgid "Not installable"
+#~ msgstr "Не се инсталира"
+
+#~ msgid "Not installed packages"
+#~ msgstr "Неинсталирани"
+
+#~ msgid "Not marked"
+#~ msgstr "Необележани"
+
+#~ msgid "OR"
+#~ msgstr "или"
+
+#, fuzzy
+#~ msgid "Packages that are new in the repository since that last \"Reload\""
+#~ msgstr "Пакети кои што се нови во складиштето од последното „Освежување“"
+
+#~ msgid "Packages that are not available in any repository"
+#~ msgstr "Пакети кои што не се достапни во складиштето"
+
+#~ msgid "Packages that will be installed or upgraded"
+#~ msgstr "Пакети кои што ќе бидат инсталирани или надградени"
+
+#~ msgid "Packages that will be removed"
+#~ msgstr "Пакети кои што ќе бидат отстранети"
+
+#~ msgid "Packages that will never be upgraded"
+#~ msgstr "Пакети што нема никогаш да бидат надградени"
+
+#~ msgid "Packages that won't be changed"
+#~ msgstr "Пакети што нема да бидат променети"
+
+#~ msgid "Packages with broken dependencies"
+#~ msgstr "Пакети со расипани зависности"
+
+#~ msgid "Removed packages that have left configuration files on the system"
+#~ msgstr ""
+#~ "Отстранети пакети кои што оставиле конфигурациски датотеки на системот"
+
+#~ msgid "Residual config"
+#~ msgstr "Дупла конфигурација"
+
+#~ msgid "Tags"
+#~ msgstr "Тагови"
+
+#~ msgid "Upgradable"
+#~ msgstr "Надградливи"
+
+#~ msgid "Version Number"
+#~ msgstr "Број на верзија"
+
+#~ msgid "_Deselect All"
+#~ msgstr "_Остави сѐ"
+
+#~ msgid "_Invert All"
+#~ msgstr "_Одбери обратно"
+
+#~ msgid "Distribution:"
+#~ msgstr "Дистрибуција:"
+
+#~ msgid "Section(s):"
+#~ msgstr "Оддел(и):"
+
+#~ msgid "URI:"
+#~ msgstr "Адреса:"
+
+#~ msgid "Vendors..."
+#~ msgstr "Производители..."
+
+#~ msgid "deb"
+#~ msgstr "deb"
+
+#~ msgid "deb-src"
+#~ msgstr "deb-src"
+
+#~ msgid "rpm"
+#~ msgstr "rpm"
+
+#~ msgid "rpm-src"
+#~ msgstr "rpm-src"
+
+#~ msgid "<i>Preparing packages...</i>"
+#~ msgstr "<i>Припремам пакети...</i>"
+
+#, fuzzy
+#~ msgid "Automatically close after the changes have been successfully applied"
+#~ msgstr "Затвори го овој дијалог откако ќе се применат промените"
+
+#, fuzzy
+#~ msgid "Details"
+#~ msgstr "_Покажи детали"
+
+#, fuzzy
+#~ msgid ""
+#~ "<span size=\"large\" weight=\"bold\">Which tasks should be performed by "
+#~ "your computer?</span>\n"
+#~ "\n"
+#~ "These are preselected groups of packages to perform each task. If you "
+#~ "select a task, the corresponding packages will be marked for installation."
+#~ msgstr ""
+#~ "<span size=\"large\" weight=\"bold\">Кои задачи треба да бидат извршени "
+#~ "од страна на Вашиот компјутер<span>\n"
+#~ "\n"
+#~ "Има претходно одбрани групи на пакети за извршување на секоја задача. Ако "
+#~ "одберете задача, соодветните пакети ќе бидат одбрани за инсталација."
+
+#~ msgid "_Description"
+#~ msgstr "_Опис"
+
+#~ msgid "<b>Terminal Output:</b>"
+#~ msgstr "<b>Резултат на терминалот:</b>"
+
+#~ msgid "Close this dialog after the changes have been successfully applied"
+#~ msgstr "Затвори го овој дијалог откако ќе се применат промените"
+
+#~ msgid " - "
+#~ msgstr " - "
+
+#, fuzzy
+#~ msgid ""
+#~ "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
+#~ "all changes and then apply them."
+#~ msgstr ""
+#~ "<b>Забелешка:</b> Промените не се применуваат веднаш. Прво морате да ги "
+#~ "обележите сите промени па дури потоа да ги примените."
+
+#~ msgid "Choose the action from the context menu of the package."
+#~ msgstr "Одберете дејство од менито врз пакетот."
+
+#~ msgid "Click on the status icon to open a menu that contains all actions."
+#~ msgstr ""
+#~ "Кликнете на иконата за статус за да отворите мени кое ги содржи сите "
+#~ "дејства."
+
+#~ msgid "Double click on the package name."
+#~ msgstr "Два пати кликнете врз името на пакетот."
+
+#~ msgid "Quick Introduction"
+#~ msgstr "Брзо запознавање"
+
+#~ msgid "Select the package and choose the action from the 'Package' menu."
+#~ msgstr "Одберете пакет и изберете дејство од менито „Пакети“."
+
+#~ msgid "Show this dialog at startup"
+#~ msgstr "Покажи го дијалогот на почеток"
+
+#~ msgid ""
+#~ "The software on your system is organized in so called <i>packages</i>. "
+#~ "The package manager enables you to install, to upgrade or to remove "
+#~ "software packages."
+#~ msgstr ""
+#~ "Софтверот на Вашиот систем е организиран во <i>пакети</i>. Менаџерот за "
+#~ "пакети Ви дозволува да инсталирате, надградувате или пак да отстранувате "
+#~ "софтверски пакети."
+
+#~ msgid ""
+#~ "You can mark packages for installation, upgrade or removal in several "
+#~ "ways:"
+#~ msgstr ""
+#~ "Можете да обележувате пакети за инсталација, надградба или отстранување "
+#~ "на неколку начини:"
+
+#~ msgid ""
+#~ "You should reload the package information regularly. Otherwise you could "
+#~ "miss important security upgrades."
+#~ msgstr ""
+#~ "Треба да ги освежувате информациите за пакетите често за да не пропуштите "
+#~ "важни безбедносни надградби."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Could not mark all packages for "
+#~ "installation or upgrade</span>\n"
+#~ "\n"
+#~ "The following packages have unresolvable dependencies. Make sure that all "
+#~ "required repositories are added and enabled in the preferences."
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Не можам да ги обележам сите пакети "
+#~ "за надградба</span>\n"
+#~ "\n"
+#~ "Следниве пакети имаат нерешливи зависности.Осигурајте се дека се додадени "
+#~ "сите складишта и дека истите се вклучени во преференците."
+
+#~ msgid "Complete changelog of the latest version:"
+#~ msgstr "Комплетна датотека со промени од последната верзија:"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Could not download all repository indexes</b></big>\n"
+#~ "\n"
+#~ "The repository may no longer be available or could not be contacted "
+#~ "because of network problems. If available an older version of the failed "
+#~ "index will be used. Otherwise the repository will be ignored. Check your "
+#~ "network connection and ensure the repository address in the preferences "
+#~ "is correct."
+#~ msgstr ""
+#~ "<big><b>Не можам да ги преземам сите индекси на складиштата</b></big>\n"
+#~ "\n"
+#~ "Складиштата може повеќе да не се достапни или пак да не можете да ги "
+#~ "контактирате поради мрежни проблеми. Доколку има достапна, ќе биде "
+#~ "искористена постара верзија на индексите. Доколку нема, складиштата ќе "
+#~ "бидат игнорирани. Проверете ја Вашата мрежна врска или пак адресите за "
+#~ "складиштата."
+
+#~ msgid ""
+#~ "<b>The following icons are used to indicate the current status of a "
+#~ "package:</b>"
+#~ msgstr ""
+#~ "<b>Следниве икони се користат за покажување на тековниот статус на пакет:"
+#~ "</b>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<big><b>Could not download all necessary package files</b></big>\n"
+#~ "\n"
+#~ "The version of the package that you want to install might be no longer "
+#~ "available in the repository, or there may be problems with the source of "
+#~ "the package. Reload the package list and check the source of the package "
+#~ "(e.g. CD or network connection)."
+#~ msgstr ""
+#~ "<big><b>Не можам да ги преземам сите потребни пакети</b></big>\n"
+#~ "\n"
+#~ "Верзијата на пакетот што сакате да ја инсталирате може повеќе да не е "
+#~ "достапна во складиштето или пак да има проблеми со изворниот код на "
+#~ "пакетот. Освежете ги информациите за пакетите и проверете го изворниот "
+#~ "код на пакетот."
+
+#~ msgid ""
+#~ "<span weight=\"bold\" size=\"larger\">Your package information is out of "
+#~ "date</span>\n"
+#~ "\n"
+#~ "Your package information is older than 48 hours. There could be important "
+#~ "security updates available. It is recommended to reload the package "
+#~ "information regularly."
+#~ msgstr ""
+#~ "<span weight=\"bold\" size=\"larger\">Информациите за Вашите пакети се "
+#~ "застарени</span>\n"
+#~ "\n"
+#~ "Информациите за Вашите пакети се постари од 48 часа. Можно е да постојат "
+#~ "важни безбедноси надградби. Препорачливо е да ги освежувате податоците за "
+#~ "пакетите почесто."
+
+#~ msgid "Remember the answer"
+#~ msgstr "Запамти го одговорот"
+
+#~ msgid "_Reload"
+#~ msgstr "_Освежи"
+
+#~ msgid "History"
+#~ msgstr "Историја"
+
+#~ msgid "History of installed, upgraded and removed software packages."
+#~ msgstr "Историја на инсталирани, надградени и отстранети софтверски пакети."
+
+#~ msgid ""
+#~ "<b><big>Quit and discard marked changes?</big></b>\n"
+#~ "\n"
+#~ "There are still marked changes that have not yet been applied. They will "
+#~ "get lost if you choose to quit 'Synaptic'."
+#~ msgstr ""
+#~ "<b><big>Излези и заборави ги промените?</big></b>\n"
+#~ "\n"
+#~ "Сеуште има обележани промени кои што не се применети. Истите ќе бидат "
+#~ "изгубени доколку го затворите „Synaptic“."
+
+#~ msgid "Difference between the files"
+#~ msgstr "Разлика помеѓу датотеките"
+
+#, fuzzy
+#~ msgid "_Keep"
+#~ msgstr "_Помош"
+
+#, fuzzy
+#~ msgid "_Replace"
+#~ msgstr "Го заменува"
+
+#~ msgid "Force version:"
+#~ msgstr "Наметни верзија:"
+
+#~ msgid "_Force Version"
+#~ msgstr "_Наметни верзија"
+
+#~ msgid ""
+#~ "<b><big>Mark upgrades in a smart way?</big></b>\n"
+#~ "\n"
+#~ "The default upgrade method skips upgrades that would introduce conflicts "
+#~ "or require installation of additional packages.\n"
+#~ "\n"
+#~ "The smart upgrade (dist-upgrade) attempts to resolve conflicts and to "
+#~ "fulfil all dependencies of upgrades in a smart way.\n"
+#~ "\n"
+#~ "<b>Note:</b> The upgrades will be marked only. You still have to apply "
+#~ "them afterwards."
+#~ msgstr ""
+#~ "<b><big>Да ги обележам надградбите паметно?</big></b>\n"
+#~ "\n"
+#~ "Стандардниот метод за надградба ги прескокнува надградбите кои што би "
+#~ "можеле да предизвикаат конфликт или пак кои што имаат потреба од додатни "
+#~ "пакети.\n"
+#~ "\n"
+#~ "Методот за паметна надградба (dist-upgrade) се обидува да ги разреши сите "
+#~ "конфликти и да ги инсталира сите потребни пакети на паметен начин.\n"
+#~ "\n"
+#~ "<b>Забелешка:</b> Надградбите ќе бидат само обележани. Морате да ги "
+#~ "примените потоа."
+
+#~ msgid "Remember my answer for future upgrades"
+#~ msgstr "Запамти го одговорот"
+
+#~ msgid "This behavior can be changed in the preferences later."
+#~ msgstr "Однесувањето може да се промени во преференците подоцна."
+
+#, fuzzy
+#~ msgid "_Default Upgrade"
+#~ msgstr "Стандардна надградба"
+
+#, fuzzy
+#~ msgid "_Smart Upgrade"
+#~ msgstr "Паметена надградба"
+
+#, fuzzy
+#~ msgid "Label:"
+#~ msgstr "Ознака на дискот"
+
+#, fuzzy
+#~ msgid "_Add Repository"
+#~ msgstr "_Складишта"
 
 #, fuzzy
 #~ msgid "gtk-cancel"

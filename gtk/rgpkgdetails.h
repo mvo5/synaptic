@@ -26,9 +26,9 @@
 
 #include <gtk/gtk.h>
 #include "rpackage.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
-class RGPkgDetailsWindow : public RGGladeWindow {
+class RGPkgDetailsWindow : public RGGtkBuilderWindow {
    
  protected:
    // used for the screenshot parameter passing
@@ -44,10 +44,11 @@ class RGPkgDetailsWindow : public RGGladeWindow {
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbShowScreenshot(GtkWidget *button, void *data);
    static void cbShowBigScreenshot(GtkWidget *button, GdkEventButton *event, void *data);
+   static void cbShowChangelog(GtkWidget *button, void *data);
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);
-   static void fillInValues(RGGladeWindow *me, RPackage *pkg, 
+   static void fillInValues(RGGtkBuilderWindow *me, RPackage *pkg, 
 			    bool setTitle=false);
    ~RGPkgDetailsWindow();
 };

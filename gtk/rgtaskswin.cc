@@ -135,14 +135,14 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
    }
 
    // display the result in a nice dialog
-   RGGladeUserDialog dia(me, "task_descr");
+   RGGtkBuilderUserDialog dia(me, "task_descr");
    
    //TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
    gchar *title = g_strdup_printf(_("Description %s"), str);
    dia.setTitle(title);
    
-   GtkWidget *tv = glade_xml_get_widget(dia.getGladeXML(),
-					"textview");
+   GtkWidget *tv = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+                                                     "textview"));
    GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
    gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
    
@@ -180,10 +180,12 @@ void RGTasksWin::cell_toggled_callback (GtkCellRendererToggle *cell,
       selected--;
 
    if(selected > 0)
-      gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"button_ok"),
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                                 "button_ok")),
 			       true);
    else 
-      gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML,"button_ok"),
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                                 "button_ok")),
 			       false);
 }
 
@@ -204,10 +206,11 @@ void RGTasksWin::selection_changed_callback(GtkTreeSelection *selection,
 
 
 RGTasksWin::RGTasksWin(RGWindow *parent) 
-   : RGGladeWindow(parent, "tasks")
+   : RGGtkBuilderWindow(parent, "tasks")
 {
    _mainWin = (RGMainWindow *)parent;
-   _detailsButton = glade_xml_get_widget(_gladeXML, "button_details");
+   _detailsButton = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                      "button_details"));
    assert(_detailsButton);
 
    GtkListStore *store= _store = gtk_list_store_new (TASK_N_COLUMNS, 
@@ -249,7 +252,8 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
    GtkWidget *tree;
    GtkTreeSelection * select;
 
-   tree = _taskView = glade_xml_get_widget(_gladeXML, "treeview_tasks");
+   tree = _taskView = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                        "treeview_tasks"));
    select = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree));
    gtk_tree_selection_set_mode (select, GTK_SELECTION_SINGLE);
    g_signal_connect (G_OBJECT (select), "changed",
@@ -284,11 +288,14 @@ RGTasksWin::RGTasksWin(RGWindow *parent)
 
    gtk_tree_view_set_model(GTK_TREE_VIEW(tree), GTK_TREE_MODEL(store));
    
-   glade_xml_signal_connect_data(_gladeXML, "on_button_ok_clicked",
-			    (GCallback) cbButtonOkClicked, this);
-   glade_xml_signal_connect_data(_gladeXML, "on_button_cancel_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_ok"),
+                    "clicked",
+                    (GCallback) cbButtonOkClicked, this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_cancel"),
+                    "clicked",
                     (GCallback) cbButtonCancelClicked, this);
-   glade_xml_signal_connect_data(_gladeXML, "on_button_details_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
+                    "clicked",
                     (GCallback) cbButtonDetailsClicked, this);
 
 };

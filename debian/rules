@@ -27,10 +27,7 @@ COMMON_FLAGS= --prefix=/usr \
 	      --mandir=\$${prefix}/share/man \
 	      --infodir=\$${prefix}/share/info \
 	      --localstatedir=/var/lib/synaptic \
-	      --sysconfdir=/etc --with-vte --with-pkg-hold \
-	      --with-apt-authentication \
-              --enable-ept \
-	      --with-nice-dpkg-status
+	      --sysconfdir=/etc --with-pkg-hold
 
 CREATE_SUPPORTED_PIXMAP="true"
 CONFIGURE_FLAGS = $(COMMON_FLAGS)
@@ -87,7 +84,6 @@ synaptic: build
 	dh_testdir -psynaptic
 	dh_testroot -psynaptic
 	dh_installdocs -psynaptic
-	dh_scrollkeeper -psynaptic
 	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
 	dh_installmenu -psynaptic
 	dh_installchangelogs ChangeLog -psynaptic

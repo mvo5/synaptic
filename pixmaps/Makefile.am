@@ -5,7 +5,7 @@ SUBDIRS = hicolor
 appicondir = $(datadir)/pixmaps
 appicon_DATA = synaptic.png 
 
-buttondir =  $(datadir)/synaptic/glade
+buttondir =  $(datadir)/synaptic/gtkbuilder
 button_DATA = update_small.png \
 	      upgrade_small.png \
 	      distupgrade_small.png\
@@ -24,7 +24,7 @@ fetchstatus_DATA = green.png \
 		   yellow.png \
 		   red.png
 
-abouticondir = $(datadir)/synaptic/glade
+abouticondir = $(datadir)/synaptic/gtkbuilder
 abouticon_DATA = deb.png \
 		 cnc.png \
 		 logo.png

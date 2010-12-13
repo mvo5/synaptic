@@ -10,8 +10,10 @@ synaptic (0.75~pre3) UNRELEASED; urgency=low
   (LP: #688897)
 
   [ Michael Vogt ]
-  * make sure /etc/apt/apt.conf.d/99synaptic is mode 644
+  * make sure /etc/apt/apt.conf.d/99synaptic is mode 0644
     (LP: #637157)
+  * common/rpackagecache.cc:
+    - read pindir as well as the pinfile (LP: #628818)
 
   [ Luca Falavigna ]
   * common/rpackageview.cc:

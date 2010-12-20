@@ -159,7 +159,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    }
 
    str.clear();
-   if (flags & RPackage::FNowBroken)
+   if (flags & RPackage::FNowBroken || flags & RPackage::FInstBroken)
       str = _("Broken dependencies");
    else if (flags & RPackage::FNew)
       str = _("New in repository");

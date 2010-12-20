@@ -2196,6 +2196,9 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
 					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 					 NULL);
    if(gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      gtk_widget_hide(filesel);
+      RGFlushInterface();
+
       const char *file;
       file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
       me->selectionsFilename = file;
@@ -2209,6 +2212,9 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
       me->_lister->unregisterObserver(me);
       me->_lister->readSelections(in);
       me->_lister->registerObserver(me);
+      // refresh to ensure that broken dependencies are displayed
+      me->refreshTable();
+      me->refreshSubViewList();
       me->setStatusText();
    }
    gtk_widget_destroy(filesel);

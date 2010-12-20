@@ -1858,6 +1858,11 @@ bool RPackageLister::readSelections(istream &in)
       _progMeter->Done();
       Fix.InstallProtect();
       Fix.Resolve(true);
+
+      // refresh all views
+      for (unsigned int i = 0; i != _views.size(); i++)
+         _views[i]->refresh();
+
    }
 
    return true;

@@ -587,8 +587,8 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    pkg->setNotify(true);
 }
 
-bool RGMainWindow::askStateChange(RPackageLister::pkgState state, 
-				  vector<RPackage *> &exclude)
+bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
+				  const vector<RPackage *> &exclude)
 {
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
@@ -2196,8 +2196,12 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
 					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
 					 NULL);
    if(gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      me->setInterfaceLocked(TRUE);
       gtk_widget_hide(filesel);
       RGFlushInterface();
+
+      RPackageLister::pkgState state;
+      me->_lister->saveState(state);
 
       const char *file;
       file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
@@ -2210,12 +2214,16 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
 	 return;
       }
       me->_lister->unregisterObserver(me);
+      // read the selections from the file
       me->_lister->readSelections(in);
-      me->_lister->registerObserver(me);
+      me->askStateChange(state);
+
       // refresh to ensure that broken dependencies are displayed
+      me->_lister->registerObserver(me);
       me->refreshTable();
       me->refreshSubViewList();
       me->setStatusText();
+      me->setInterfaceLocked(FALSE);
    }
    gtk_widget_destroy(filesel);
 }
@@ -3143,10 +3151,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    else
       res = me->_lister->upgrade();
 
-   // mvo: do we really want this?
-   vector<RPackage*> nullVector;
-   me->askStateChange(state, nullVector);
-
+   me->askStateChange(state);
    me->refreshTable(pkg);
 
    if (res)

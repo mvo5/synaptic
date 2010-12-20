@@ -991,7 +991,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
 				     vector<RPackage *> &notAuthenticated,
-                                     vector<RPackage *> &exclude,
+                                     const vector<RPackage *> &exclude,
                                      bool sorted)
 {
    bool changed = false;
@@ -1096,7 +1096,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
 				     vector<RPackage *> &notAuthenticated,
-                                     vector<RPackage *> &exclude,
+                                     const vector<RPackage *> &exclude,
                                      bool sorted)
 {
    bool changed = false;

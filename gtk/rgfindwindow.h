@@ -21,18 +21,28 @@
  */
 
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"
 
 class RGFindWindow;
 
 typedef void RGFindWindowFindAction(void *self, RGFindWindow * win);
 
-class RGFindWindow:public RGGladeWindow {
+static char *SearchTypes[] = {
+   _("Name"),
+   _("Description and Name"),
+   _("Maintainer"),
+   _("Version"),
+   _("Dependencies"),           // depends, predepends etc
+   _("Provided packages"),      // provides and name
+   NULL
+};
+
+class RGFindWindow:public RGGtkBuilderWindow {
 
    //RPatternPackageFilter::DepType _searchType;
    GList *_prevSearches;
-   GtkWidget *_entry, *_findB, *_omenu;
+   GtkWidget *_comboFind, *_findB, *_comboSearchType;
 
    static void doFind(GtkWindow *widget, void *data);
    static void doClose(GtkWindow *widget, void *data);
@@ -45,6 +55,6 @@ class RGFindWindow:public RGGladeWindow {
 
    int getSearchType();
 
-   string getFindString();
+   gchar* getFindString();
    void selectText();
 };

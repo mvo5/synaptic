@@ -24,11 +24,11 @@
 #ifndef _RGTASKSWIN_H_
 #define _RGTASKSWIN_H_
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 class RGMainWindow;
 
-class RGTasksWin : public RGGladeWindow {
+class RGTasksWin : public RGGtkBuilderWindow {
  protected:
    RGMainWindow *_mainWin;
    GtkListStore *_store;

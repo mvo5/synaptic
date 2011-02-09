@@ -27,19 +27,44 @@
 #include "rgwindow.h"
 #include "rgmainwindow.h"
 #include "rgpkgdetails.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rpackage.h"
 #include "rgpackagestatus.h"
 #include "rgchangelogdialog.h"
 #include "sections_trans.h"
 
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
-   : RGGladeWindow(parent, "details")
+   : RGGtkBuilderWindow(parent, "details")
 {
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_button_close_clicked",
-				 G_CALLBACK(cbCloseClicked),
-				 this); 
+   g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
+                    "clicked",
+                    G_CALLBACK(cbCloseClicked), this); 
+   
+   GtkWidget *comboDepends = GTK_WIDGET(gtk_builder_get_object
+                                        (_builder, "combobox_depends"));
+   g_signal_connect(G_OBJECT(comboDepends),
+                    "changed",
+                    G_CALLBACK(cbDependsMenuChanged), this);
+   GtkListStore *relTypes = gtk_list_store_new(1, G_TYPE_STRING);
+   GtkTreeIter relIter;
+
+   // HACK: the labels for the combo box items are defined as
+   //       the relOptions array in gtk/rgmainwindow.h.
+   //       We already include it, so we get those for free.
+   for (int i = 0; relOptions[i] != NULL; i++) {
+      gtk_list_store_append(relTypes, &relIter);
+      gtk_list_store_set(relTypes, &relIter, 0, _(relOptions[i]), -1);
+   }
+   gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
+                           GTK_TREE_MODEL(relTypes));
+   GtkCellRenderer *relRenderText = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(comboDepends));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(comboDepends),
+                              relRenderText, FALSE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(comboDepends),
+                                 relRenderText, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(comboDepends), 0);
+
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
@@ -143,7 +168,7 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
    ShowChangelogDialog(parent, pkg);
 }
 
-void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me, 
+void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me, 
                                       RPackage *pkg,
 				      bool setTitle)
 {
@@ -182,7 +207,8 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
    const gchar *s;
    static GtkTooltips *tips = gtk_tooltips_new ();
 
-   textview = glade_xml_get_widget(me->getGladeXML(), "text_descr");
+   textview = GTK_WIDGET(gtk_builder_get_object
+                         (me->getGtkBuilder(), "text_descr"));
    assert(textview);
    buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
    // clear old buffer
@@ -274,8 +300,9 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
 
    // file list
 #ifndef HAVE_RPM
-   gtk_widget_show(glade_xml_get_widget(me->getGladeXML(),
-					"scrolledwindow_filelist"));
+   gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
+                              (me->getGtkBuilder(),
+                               "scrolledwindow_filelist")));
    me->setTextView("textview_files", pkg->installedFiles());
 #endif
 
@@ -296,18 +323,21 @@ void RGPkgDetailsWindow::fillInValues(RGGladeWindow *me,
    }
    me->setTreeList("treeview_versions", list);
 
-   glade_xml_signal_connect_data(me->getGladeXML(), 
-				 "on_optionmenu_depends_changed",
-				 G_CALLBACK(cbDependsMenuChanged), me);
+   /*
+   g_signal_connect(gtk_builder_get_object
+                    (me->getGtkBuilder(), "combobox_depends"),
+                    "changed",
+                    G_CALLBACK(cbDependsMenuChanged), me);
+   */
 }
 
 void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
 {
    RGPkgDetailsWindow *me = (RGPkgDetailsWindow*)data;
 
-   int nr =  gtk_option_menu_get_history(GTK_OPTION_MENU(self));
-   GtkWidget *notebook = glade_xml_get_widget(me->_gladeXML, 
-					      "notebook_dep_tab");
+   int nr =  gtk_combo_box_get_active(GTK_COMBO_BOX(self));
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
+                                    (me->_builder, "notebook_dep_tab"));
    assert(notebook);
    gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
 }

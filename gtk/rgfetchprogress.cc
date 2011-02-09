@@ -68,15 +68,15 @@ bool RGFetchProgress::close()
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-   : RGGladeWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
+   : RGGtkBuilderWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 
-   _mainProgressBar = glade_xml_get_widget(_gladeXML, "progressbar_download");
+   _mainProgressBar = GTK_WIDGET(gtk_builder_get_object(_builder, "progressbar_download"));
    assert(_mainProgressBar);
 
-   _table = glade_xml_get_widget(_gladeXML, "treeview_fetch");
+   _table = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_fetch"));
    _tableListStore = gtk_list_store_new(N_FETCH_COLUMNS,
                                         G_TYPE_INT,
                                         G_TYPE_STRING, 
@@ -120,8 +120,8 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    gtk_tree_view_append_column(GTK_TREE_VIEW(_table), column);
 
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_cancel_clicked",
+   g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
+                                 "clicked",
                                  G_CALLBACK(stopDownload), this);
 
    PangoContext *context = gdk_pango_context_get();
@@ -132,8 +132,8 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    //cout << "Plug ID: " << id << endl;
    if (id > 0) {
-      gtk_widget_hide(glade_xml_get_widget(_gladeXML, "window_fetch"));
-      GtkWidget *vbox = glade_xml_get_widget(_gladeXML, "vbox_fetch");
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "window_fetch")));
+      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_fetch"));
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show_all(_sock);
@@ -150,7 +150,7 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 		    G_CALLBACK(cursorChanged), this);
 
    // emit a signal if the user changed the cursor
-   GtkWidget *expander = glade_xml_get_widget(_gladeXML, "expander");
+   GtkWidget *expander = GTK_WIDGET(gtk_builder_get_object(_builder, "expander"));
    assert(expander);
    g_signal_connect (expander, "notify::expanded",
 		     G_CALLBACK (expanderActivate), this);
@@ -164,7 +164,7 @@ void RGFetchProgress::expanderActivate(GObject    *object,
    GtkExpander *expander = GTK_EXPANDER (object);
    RGFetchProgress *me = (RGFetchProgress*)data;
 
-   GtkWidget *win = glade_xml_get_widget(me->_gladeXML, "window_fetch");
+   GtkWidget *win = GTK_WIDGET(gtk_builder_get_object(me->_builder, "window_fetch"));
    if (gtk_expander_get_expanded (expander)) 
       gtk_window_set_resizable(GTK_WINDOW(win),TRUE);
    else 
@@ -188,8 +188,9 @@ void RGFetchProgress::setDescription(string mainText, string secondText)
    else   
       str = g_strdup_printf("<big><b>%s</b></big> \n\n%s",
 				  mainText.c_str(), secondText.c_str());
-   gtk_label_set_markup(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_description")), str);
-			
+
+   GObject *label_desc = gtk_builder_get_object(_builder, "label_description");
+   gtk_label_set_markup(GTK_LABEL(GTK_WIDGET(label_desc)), str);
 
    g_free(str);
 }
@@ -290,7 +291,7 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
    pkgAcquireStatus::Pulse(Owner);
 
    // only show here if there is actually something to download/get
-   if (TotalBytes > 0 && !GTK_WIDGET_VISIBLE(_win))
+   if (TotalBytes > 0 && !gtk_widget_get_visible(_win))
       show();
 
    float percent =
@@ -334,14 +335,15 @@ bool RGFetchProgress::Pulse(pkgAcquire * Owner)
       ETA = 0;
    long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
    gchar *s;
+   GObject *label_eta = gtk_builder_get_object(_builder, "label_eta");
    if (CurrentCPS != 0 && ETA != 0) {
       s = g_strdup_printf(_("Download rate: %s/s - %s remaining"),
 			  SizeToStr(CurrentCPS).c_str(),
 			  TimeToStr(ETA).c_str());
-      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),s);
+      gtk_label_set_text(GTK_LABEL(GTK_WIDGET(label_eta)),s);
       g_free(s);
    } else {
-      gtk_label_set_text(GTK_LABEL(glade_xml_get_widget(_gladeXML, "label_eta")),_("Download rate: ..."));
+      gtk_label_set_text(GTK_LABEL(GTK_WIDGET(label_eta)),_("Download rate: ..."));
    }
    s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);

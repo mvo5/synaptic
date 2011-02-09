@@ -26,7 +26,7 @@
 #define _RGFILTERMANAGER_H_
 
 #include <gtk/gtk.h>
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"
 #include "rgutils.h"
 
@@ -86,7 +86,7 @@ static char *DepOptions[] = {
 
 typedef void RGFilterEditorCloseAction(void *self, bool okcancel);
 
-class RGFilterManagerWindow:public RGGladeWindow {
+class RGFilterManagerWindow:public RGGtkBuilderWindow {
    static void addFilterAction(GtkWidget *self, void *data);
    static void removeFilterAction(GtkWidget *self, void *data);
 
@@ -120,7 +120,8 @@ class RGFilterManagerWindow:public RGGladeWindow {
 
    GtkTreePath *treeview_find_path_from_text(GtkTreeModel *model, char *text);
 
-
+   GtkWidget *_comboPatternWhat;
+   GtkWidget *_comboPatternDo;
    GtkWidget *_filterEntry;     /* GtkEntry */
    GdkCursor *_busyCursor;
 

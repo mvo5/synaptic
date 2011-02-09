@@ -54,6 +54,15 @@ const char *RGPreferencesWindow::column_visible_names[] =
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
 
+const char *RGPreferencesWindow::removal_actions[] =
+   { N_("Keep Configuration"), N_("Completely"), NULL };
+
+const char *RGPreferencesWindow::update_ask[] =
+   { N_("Always Ask"), N_("Ignore"), N_("Automatically"), NULL };
+
+const char *RGPreferencesWindow::upgrade_method[] =
+   { N_("Always Ask"), N_("Default Upgrade"), N_("Smart Upgrade"), NULL };
+
 #if !GTK_CHECK_VERSION(2,6,0)
 gchar *
 gtk_combo_box_get_active_text (GtkComboBox *combo_box)
@@ -68,6 +77,12 @@ gtk_combo_box_get_active_text (GtkComboBox *combo_box)
 
   return text;
 }
+#endif
+
+#if !GTK_CHECK_VERSION(3,0,0)
+ #define GTK_COMBO_BOX_TEXT GTK_COMBO_BOX
+ #define gtk_combo_box_text_remove gtk_combo_box_remove_text
+ #define gtk_combo_box_text_append_text gtk_combo_box_append_text
 #endif
 
 void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
@@ -205,11 +220,13 @@ void RGPreferencesWindow::saveGeneral()
    newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain));
    _config->Set("Synaptic::ShowAllPkgInfoInMain", newval ? "true" : "false");
    // apply the changes
-   GtkWidget *notebook = glade_xml_get_widget(_mainWin->getGladeXML(),
-					      "notebook_pkginfo");
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
+                                    (_mainWin->getGtkBuilder(),
+                                     "notebook_pkginfo"));
    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), newval);
-   GtkWidget *box = glade_xml_get_widget(_mainWin->getGladeXML(),
-					 "vbox_pkgdescr");
+   GtkWidget *box = GTK_WIDGET(gtk_builder_get_object
+                               (_mainWin->getGtkBuilder(),
+                                "vbox_pkgdescr"));
    if(newval) {
       gtk_container_set_border_width(GTK_CONTAINER(box), 6);
    } else {
@@ -230,7 +247,7 @@ void RGPreferencesWindow::saveGeneral()
    _config->Set("Synaptic::OneClickOnStatusActions", newval ? "true" : "false");
 
    // Removal of packages: 
-   int delAction= gtk_option_menu_get_history(GTK_OPTION_MENU(_optionmenuDel));
+   int delAction = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboRemovalAction));
    // ugly :( but we need this +2 because RGPkgAction starts with 
    //         "keep","install"
    delAction += 2;
@@ -238,11 +255,11 @@ void RGPreferencesWindow::saveGeneral()
 
    // System upgrade:
    // upgrade type, (ask=-1,normal=0,dist-upgrade=1)
-   i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_upgrade_method")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboUpgradeMethod));
    _config->Set("Synaptic::upgradeType", i - 1);
 
    // package list update date check
-   i = gtk_option_menu_get_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_update_ask")));
+   i = gtk_combo_box_get_active(GTK_COMBO_BOX(_comboUpdateAsk));
    _config->Set("Synaptic::update::type", i);
    
 
@@ -265,7 +282,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
    bool newval;
 
    // Use custom application font
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "checkbutton_user_font")));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_font")));
    _config->Set("Synaptic::useUserFont", newval);
 
    GValue value = { 0, };
@@ -283,7 +300,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
    }
    g_value_unset(&value);
 
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "checkbutton_user_terminal_font")));
+   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font")));
    _config->Set("Synaptic::useUserTerminalFont", newval);
    
 
@@ -361,22 +378,20 @@ void RGPreferencesWindow::saveNetwork()
    _config->Set("Synaptic::useProxy", useProxy);
    // http
    http = gtk_entry_get_text(
-      GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_http_proxy")));
+      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_http_proxy")));
    _config->Set("Synaptic::httpProxy", http);
    httpPort = (int) gtk_spin_button_get_value(
-      GTK_SPIN_BUTTON(glade_xml_get_widget(_gladeXML,
-                                           "spinbutton_http_port")));
+      GTK_SPIN_BUTTON(gtk_builder_get_object(_builder,"spinbutton_http_port")));
    _config->Set("Synaptic::httpProxyPort", httpPort);
    // ftp
    ftp = gtk_entry_get_text(
-      GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_ftp_proxy")));
+      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_ftp_proxy")));
    _config->Set("Synaptic::ftpProxy", ftp);
    ftpPort = (int) gtk_spin_button_get_value(
-      GTK_SPIN_BUTTON(glade_xml_get_widget(_gladeXML,
-                                           "spinbutton_ftp_port")));
+      GTK_SPIN_BUTTON(gtk_builder_get_object(_builder,"spinbutton_ftp_port")));
    _config->Set("Synaptic::ftpProxyPort", ftpPort);
    noProxy = gtk_entry_get_text(
-      GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_no_proxy")));
+      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_no_proxy")));
    _config->Set("Synaptic::noProxy", noProxy);
 
    applyProxySettings();
@@ -508,19 +523,19 @@ void RGPreferencesWindow::readGeneral()
 
    // Removal of packages: 
    int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
-   // now set the optionmenu
+   // now set the combobox
    // ugly :( but we need this -2 because RGPkgAction starts with 
    //         "keep","install"
-   gtk_option_menu_set_history(GTK_OPTION_MENU(_optionmenuDel), delAction - 2);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboRemovalAction), delAction - 2);
 
 
    // System upgrade:
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    int i = _config->FindI("Synaptic::upgradeType", 1);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_upgrade_method")), i + 1);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpgradeMethod), i + 1);
 
    i = _config->FindI("Synaptic::update::type", 0);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(glade_xml_get_widget(_gladeXML, "optionmenu_update_ask")), i);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpdateAsk), i);
 
 
    // Number of undo operations:
@@ -562,11 +577,11 @@ void RGPreferencesWindow::readColumnsAndFonts()
    // font stuff
    bool b = _config->FindB("Synaptic::useUserFont", false);
    gtk_toggle_button_set_active(
-      GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,
+      GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder,
                                              "checkbutton_user_font")), b);
    b = _config->FindB("Synaptic::useUserTerminalFont", false);
    gtk_toggle_button_set_active(
-      GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML,
+      GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder,
                                              "checkbutton_user_terminal_font")), b);
 
    readTreeViewValues();
@@ -590,7 +605,7 @@ void RGPreferencesWindow::readColors()
          g_strdup_printf("button_%s_color",
                          RGPackageStatus::pkgStatus.
                          getShortStatusString(RGPackageStatus::PkgStatus(i)));
-      button = glade_xml_get_widget(_gladeXML, color_button);
+      button = GTK_WIDGET(gtk_builder_get_object(_builder, color_button));
       assert(button);
       if (RGPackageStatus::pkgStatus.getColor(i) != NULL) {
          color = RGPackageStatus::pkgStatus.getColor(i);
@@ -634,32 +649,36 @@ void RGPreferencesWindow::readNetwork()
 {
    // proxy stuff
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(glade_xml_get_widget(_gladeXML, "radio_use_proxy")), useProxy);
-   gtk_widget_set_sensitive(glade_xml_get_widget(_gladeXML, "table_proxy"),
+   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object
+                                                  (_builder,"radio_use_proxy")),
+                                                  useProxy);
+   gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                            (_builder, "table_proxy")),
                             useProxy);
    string str = _config->Find("Synaptic::httpProxy", "");
-   gtk_entry_set_text(GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_http_proxy")), str.c_str());
+   gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object
+                                (_builder, "entry_http_proxy")), str.c_str());
    int i = _config->FindI("Synaptic::httpProxyPort", 3128);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON
-                             (glade_xml_get_widget
-                              (_gladeXML, "spinbutton_http_port")), i);
+                             (gtk_builder_get_object
+                              (_builder, "spinbutton_http_port")), i);
 
    str = _config->Find("Synaptic::ftpProxy", "");
    gtk_entry_set_text(
-      GTK_ENTRY(glade_xml_get_widget(_gladeXML, "entry_ftp_proxy")), str.c_str());
+      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_ftp_proxy")), str.c_str());
    i = _config->FindI("Synaptic::ftpProxyPort", 3128);
    gtk_spin_button_set_value(
-      GTK_SPIN_BUTTON(glade_xml_get_widget(_gladeXML, "spinbutton_ftp_port")), i);
+      GTK_SPIN_BUTTON(gtk_builder_get_object(_builder, "spinbutton_ftp_port")), i);
    str = _config->Find("Synaptic::noProxy", "");
-   gtk_entry_set_text(GTK_ENTRY(glade_xml_get_widget(_gladeXML,
-                                                     "entry_no_proxy")),
+   gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(_builder,
+                                                       "entry_no_proxy")),
                       str.c_str());
 
 }
 
 void RGPreferencesWindow::readDistribution()
 {
-   // distro selection, block actions here because the optionmenu changes
+   // distro selection, block actions here because the combobox changes
    // and a signal is emited
    _blockAction = true;
 
@@ -669,22 +688,27 @@ void RGPreferencesWindow::readDistribution()
   
    // setup the toggle buttons
    GtkWidget *button, *ignore,*now,*distro;
-   ignore = glade_xml_get_widget(_gladeXML, "radiobutton_ignore");
+   ignore = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_ignore"));
    g_object_set_data(G_OBJECT(ignore),"defaultDistro",(void*)"");
-   now = glade_xml_get_widget(_gladeXML, "radiobutton_now");
+   g_signal_connect(G_OBJECT(ignore),
+                    "toggled",
+                    G_CALLBACK(cbRadioDistributionChanged), this);
+   now = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_now"));
    g_object_set_data(G_OBJECT(now),"defaultDistro",(void*)"now");
-   distro = glade_xml_get_widget(_gladeXML, "radiobutton_distro");
+   g_signal_connect(G_OBJECT(now),
+                    "toggled",
+                    G_CALLBACK(cbRadioDistributionChanged), this);
+   distro = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_distro"));
    g_object_set_data(G_OBJECT(distro),"defaultDistro",(void*)"distro");
-   glade_xml_signal_connect_data(_gladeXML,
-				 "on_radiobutton_distribution_group_changed",
-				 G_CALLBACK(cbRadioDistributionChanged),
-				 this);
+   g_signal_connect(G_OBJECT(distro),
+                    "toggled",
+                    G_CALLBACK(cbRadioDistributionChanged), this);
 
    // clear the combo box
    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro));
    int num = gtk_tree_model_iter_n_children(model, NULL);
    for(;num >= 0;num--)
-      gtk_combo_box_remove_text(GTK_COMBO_BOX(_comboDefaultDistro), num);
+      gtk_combo_box_text_remove(GTK_COMBO_BOX(_comboDefaultDistro), num);
 
    if(defaultDistro == "") {
       button = ignore;
@@ -704,24 +728,31 @@ void RGPreferencesWindow::readDistribution()
    g_signal_connect(G_OBJECT(_comboDefaultDistro), "changed",
 		    G_CALLBACK(cbArchiveSelection), this);
 
-   glade_xml_signal_connect_data(GLADE_XML(_gladeXML),
-				 "on_entry_http_proxy_changed",
-				 G_CALLBACK(cbHttpProxyEntryChanged),
-				 this);
+   g_signal_connect(gtk_builder_get_object(_builder, "entry_http_proxy"),
+				 "changed",
+				 G_CALLBACK(cbHttpProxyEntryChanged), this);
 
+   GtkTreeIter distroIter;
+   GtkListStore *distroStore
+      = GTK_LIST_STORE(gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro)));
    for (unsigned int i = 0; i < archives.size(); i++) {
-      //cout << "archive: " << archives[i] << endl;
       // ignore "now", it's a toggle button item now
       if(archives[i] == "now")
 	 continue;
-      gtk_combo_box_append_text(GTK_COMBO_BOX(_comboDefaultDistro),
-				 archives[i].c_str());
+      gtk_list_store_append(distroStore, &distroIter);
+      gtk_list_store_set(distroStore, &distroIter, 0, archives[i].c_str(), -1);
       if (defaultDistro == archives[i]) {
          //cout << "match for: " << archives[i] << " (" << i << ")" << endl;
 	 // we ignored the "now" archive, so we have to subtract by one
          distroMatch=i-1;
       }
    }
+   GtkCellRenderer *crt;
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboDefaultDistro));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboDefaultDistro), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboDefaultDistro),
+                                 crt, "text", 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(_comboDefaultDistro), distroMatch);
 
    _blockAction = false;
@@ -886,7 +917,9 @@ void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
    me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
    color_dialog = gtk_color_selection_dialog_new(_("Color selection"));
-   color_selection = GTK_COLOR_SELECTION_DIALOG(color_dialog)->colorsel;
+   color_selection =
+	gtk_color_selection_dialog_get_color_selection(
+		GTK_COLOR_SELECTION_DIALOG(color_dialog));
 
    GdkColor *color = NULL;
    color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
@@ -911,7 +944,8 @@ void RGPreferencesWindow::useProxyToggled(GtkWidget *self, void *data)
 
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
    useProxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_useProxy));
-   gtk_widget_set_sensitive(glade_xml_get_widget(me->_gladeXML, "table_proxy"),
+   gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                                              "table_proxy")),
                             useProxy);
 }
 
@@ -921,9 +955,9 @@ void RGPreferencesWindow::checkbuttonUserFontToggled(GtkWidget *self,
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
 
    GtkWidget *button =
-      glade_xml_get_widget(me->_gladeXML, "button_default_font");
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "button_default_font"));
    GtkWidget *check =
-      glade_xml_get_widget(me->_gladeXML, "checkbutton_user_font");
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "checkbutton_user_font"));
    gtk_widget_set_sensitive(button,
                             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
                                                          (check)));
@@ -935,9 +969,10 @@ void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self,
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
 
    GtkWidget *button =
-      glade_xml_get_widget(me->_gladeXML, "button_terminal_font");
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "button_terminal_font"));
    GtkWidget *check =
-      glade_xml_get_widget(me->_gladeXML, "checkbutton_user_terminal_font");
+      GTK_WIDGET(gtk_builder_get_object(me->_builder,
+                                        "checkbutton_user_terminal_font"));
    gtk_widget_set_sensitive(button,
                             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
                                                          (check)));
@@ -947,92 +982,154 @@ void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self,
 
 RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
                                          RPackageLister *lister)
-   : RGGladeWindow(win, "preferences"), distroChanged(false)
+   : RGGtkBuilderWindow(win, "preferences"), distroChanged(false)
 {
    GtkWidget *button;
+   GtkCellRenderer *crt;
+   GtkListStore *comboStore;
+   GtkTreeIter comboIter;
 
-   _optionShowAllPkgInfoInMain = glade_xml_get_widget(_gladeXML, "check_show_all_pkg_info");
+   _optionShowAllPkgInfoInMain = GTK_WIDGET(gtk_builder_get_object
+                                            (_builder,
+                                             "check_show_all_pkg_info"));
    _optionUseStatusColors =
-      glade_xml_get_widget(_gladeXML, "check_use_colors");
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_use_colors"));
 
-   _optionAskRelated = glade_xml_get_widget(_gladeXML, "check_ask_related");
-   _optionUseTerminal = glade_xml_get_widget(_gladeXML, "check_terminal");
-   _optionCheckRecom = glade_xml_get_widget(_gladeXML, "check_recommends");
-   _optionAskQuit = glade_xml_get_widget(_gladeXML, "check_ask_quit");
-   _optionOneClick = glade_xml_get_widget(_gladeXML, "check_oneclick");
+   _optionAskRelated =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_ask_related"));
+   _optionUseTerminal =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_terminal"));
+   _optionCheckRecom =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_recommends"));
+   _optionAskQuit =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_ask_quit"));
+   _optionOneClick =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_oneclick"));
 
    // cache
-   _cacheLeave = glade_xml_get_widget(_gladeXML, "radio_cache_leave");
-   _cacheClean = glade_xml_get_widget(_gladeXML, "radio_cache_del_after");
+   _cacheLeave = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                   "radio_cache_leave"));
+   _cacheClean = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                   "radio_cache_del_after"));
    // history
-   _delHistory = glade_xml_get_widget(_gladeXML, "radio_delete_history");
-   _keepHistory = glade_xml_get_widget(_gladeXML, "radio_keep_history");
-   _spinDelHistory = glade_xml_get_widget(_gladeXML, "spin_del_history");
+   _delHistory = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                   "radio_delete_history"));
+   _keepHistory = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                    "radio_keep_history"));
+   _spinDelHistory = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                       "spin_del_history"));
    _cacheAutoClean =
-      glade_xml_get_widget(_gladeXML, "radio_cache_del_obsolete");
-   _useProxy = glade_xml_get_widget(_gladeXML, "radio_use_proxy");
+      GTK_WIDGET(gtk_builder_get_object(_builder, "radio_cache_del_obsolete"));
+   _useProxy = GTK_WIDGET(gtk_builder_get_object(_builder, "radio_use_proxy"));
    _mainWin = (RGMainWindow *) win;
 
-   _maxUndoE = glade_xml_get_widget(_gladeXML, "spinbutton_max_undos");
+   _maxUndoE = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                 "spinbutton_max_undos"));
    assert(_maxUndoE);
 
-   _optionmenuDel =
-      glade_xml_get_widget(_gladeXML, "optionmenu_delbutton_action");
-   assert(_optionmenuDel);
+   _comboRemovalAction =
+      GTK_WIDGET(gtk_builder_get_object(_builder,
+                                        "combo_removal_action"));
+   
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboRemovalAction)));
+   for (int i = 0; removal_actions[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(removal_actions[i]), -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboRemovalAction));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboRemovalAction), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboRemovalAction),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboRemovalAction), 0);
+   assert(_comboRemovalAction);
+
+   _comboUpdateAsk = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                       "combo_update_ask"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboUpdateAsk)));
+   for (int i = 0; update_ask[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(update_ask[i]), -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpdateAsk));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboUpdateAsk), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboUpdateAsk),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpdateAsk), 0);
+   assert(_comboUpdateAsk);
+   
+   _comboUpgradeMethod = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                       "combo_upgrade_method"));
+   comboStore = GTK_LIST_STORE(
+                   gtk_combo_box_get_model(
+                      GTK_COMBO_BOX(_comboUpgradeMethod)));
+   for (int i = 0; upgrade_method[i] != NULL; i++) {
+      gtk_list_store_append(comboStore, &comboIter);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(upgrade_method[i]), -1);
+   }
+   crt = gtk_cell_renderer_text_new();
+   gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboUpgradeMethod));
+   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_comboUpgradeMethod), crt, TRUE);
+   gtk_cell_layout_add_attribute(GTK_CELL_LAYOUT(_comboUpgradeMethod),
+                                          crt, "text", 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpgradeMethod), 0);
+   assert(_comboUpgradeMethod);
 
    _comboDefaultDistro =
-      glade_xml_get_widget(_gladeXML, "combobox_default_distro");
+      GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_default_distro"));
    assert(_comboDefaultDistro);
-   GtkTooltips *tips = gtk_tooltips_new();
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-			glade_xml_get_widget(_gladeXML,"radiobutton_distro"),
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "radiobutton_distro")),
 		       _("Prefer package versions from the selected "
 		       "distribution when upgrading packages. If you "
 		       "manually force a version from a different "
 		       "distribution, the package version will follow "
 		       "that distribution until it enters the default "
-		       "distribution."),"");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-			glade_xml_get_widget(_gladeXML,"radiobutton_now"),
+		       "distribution."));
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object	
+                                   (_builder, "radiobutton_now")),
 		       _("Never upgrade to a new version automatically. "
 			    "Be _very_ careful with this option as you will "
 			    "not get security updates automatically! "
 		       "If you manually force a version "
 		       "the package version will follow "
-		       "the chosen distribution."),"");
-   gtk_tooltips_set_tip(GTK_TOOLTIPS(tips),
-			glade_xml_get_widget(_gladeXML,"radiobutton_ignore"),
+		       "the chosen distribution."));
+   gtk_widget_set_tooltip_text(GTK_WIDGET(gtk_builder_get_object
+                                   (_builder,"radiobutton_ignore")),
 			_("Let synaptic pick the best version for you. "
-			"If unsure use this option. "),"");
+			"If unsure use this option. "));
 
 
    // hide the "remove with configuration" from rpm users
 #ifdef HAVE_RPM
-   GtkWidget *w = glade_xml_get_widget(_gladeXML, "menuitem_purge");
+   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder,
+                                                    "menuitem_purge"));
    gtk_widget_hide(w);
    int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
    // purge not available 
    if (delAction == PKG_PURGE)
       delAction = PKG_DELETE;
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML, 
-					"optionmenu_delbutton_action"));
-   gtk_widget_hide(glade_xml_get_widget(_gladeXML, "label_removal"));
+   gtk_widget_hide(GTK_WIDGET(_comboRemovalAction));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"label_removal"));
 #endif
 
    // set data for the checkbutton
-   g_object_set_data(G_OBJECT
-                     (glade_xml_get_widget
-                      (_gladeXML, "checkbutton_user_font")), "me", this);
-   g_object_set_data(G_OBJECT
-                     (glade_xml_get_widget
-                      (_gladeXML, "checkbutton_user_terminal_font")), "me",
+   g_object_set_data(gtk_builder_get_object
+                      (_builder, "checkbutton_user_font"), "me", this);
+   g_object_set_data(gtk_builder_get_object
+                      (_builder, "checkbutton_user_terminal_font"), "me",
                      this);
 
    // save the lister
    _lister = lister;
 
    // treeview stuff
-   _treeView = glade_xml_get_widget(_gladeXML, "treeview_columns");
+   _treeView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_columns"));
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
    renderer = gtk_cell_renderer_toggle_new ();
@@ -1053,48 +1150,48 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
 
    // lots of signals :)
-   glade_xml_signal_connect_data(_gladeXML, "on_button_column_up_clicked",
-			     G_CALLBACK(cbMoveColumnUp), this);
-   glade_xml_signal_connect_data(_gladeXML, "on_button_column_down_clicked",
-			     G_CALLBACK(cbMoveColumnDown), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_column_up"),
+                    "clicked",
+                    G_CALLBACK(cbMoveColumnUp), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_column_down"),
+                    "clicked",
+                    G_CALLBACK(cbMoveColumnDown), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_close_clicked",
-                                 G_CALLBACK(closeAction), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_apply_clicked",
-                                 G_CALLBACK(saveAction), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_ok_clicked",
-                                 G_CALLBACK(doneAction), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "close"),
+                    "clicked",
+                    G_CALLBACK(closeAction), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "apply"),
+                    "clicked",
+                    G_CALLBACK(saveAction), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "ok"),
+                    "clicked",
+                    G_CALLBACK(doneAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_clean_cache_clicked",
-                                 G_CALLBACK(clearCacheAction), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_clean_cache"),
+                    "clicked",
+                    G_CALLBACK(clearCacheAction), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_radio_use_proxy_toggled",
-                                 G_CALLBACK(useProxyToggled), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "radio_use_proxy"),
+                    "toggled",
+                    G_CALLBACK(useProxyToggled), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_authentication_clicked",
-                                 G_CALLBACK(buttonAuthenticationClicked),
-                                 this);
+   g_signal_connect(gtk_builder_get_object(_builder, "button_authentication"),
+                    "clicked",
+                    G_CALLBACK(buttonAuthenticationClicked), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_default_font_clicked",
-                                 G_CALLBACK(changeFontAction),
-                                 GINT_TO_POINTER(FONT_DEFAULT));
+   g_signal_connect(gtk_builder_get_object(_builder, "button_default_font"),
+                    "clicked",
+                    G_CALLBACK(changeFontAction),GINT_TO_POINTER(FONT_DEFAULT));
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_checkbutton_user_terminal_font_toggled",
-                                 G_CALLBACK
-                                 (checkbuttonUserTerminalFontToggled), this);
-   glade_xml_signal_connect_data(_gladeXML, "on_checkbutton_user_font_toggled",
-                                 G_CALLBACK(checkbuttonUserFontToggled), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font"),
+                    "toggled",
+                    G_CALLBACK (checkbuttonUserTerminalFontToggled), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_font"),
+                    "toggled",
+                    G_CALLBACK(checkbuttonUserFontToggled), this);
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_button_terminal_font_clicked",
+   g_signal_connect(gtk_builder_get_object(_builder, "button_terminal_font"),
+                                 "clicked",
                                  G_CALLBACK(changeFontAction),
                                  GINT_TO_POINTER(FONT_TERMINAL));
 
@@ -1108,7 +1205,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
          g_strdup_printf("button_%s_color",
                          RGPackageStatus::pkgStatus.
                          getShortStatusString(RGPackageStatus::PkgStatus(i)));
-      button = glade_xml_get_widget(_gladeXML, color_button);
+      button = GTK_WIDGET(gtk_builder_get_object(_builder, color_button));
       assert(button);
       g_object_set_data(G_OBJECT(button), "me", this);
       g_signal_connect(G_OBJECT(button), "clicked",
@@ -1125,10 +1222,10 @@ RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me = (RGPreferencesWindow *)data;
 
-   RGGladeUserDialog dia(me, "authentication");
-   GladeXML *dia_xml = dia.getGladeXML();
-   GtkWidget *entry_user = glade_xml_get_widget(dia_xml,"entry_username");
-   GtkWidget *entry_pass = glade_xml_get_widget(dia_xml,"entry_password");
+   RGGtkBuilderUserDialog dia(me, "authentication");
+   GtkBuilder *dia_xml = dia.getGtkBuilder();
+   GtkWidget *entry_user = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_username"));
+   GtkWidget *entry_pass = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_password"));
 
    // now set the values
    string now_user =  _config->Find("Synaptic::httpProxyUser","");

@@ -28,7 +28,7 @@
 #include <config.h>
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include <apt-pkg/cdrom.h>
 
 class RGMainWindow;

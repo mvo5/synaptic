@@ -30,20 +30,22 @@ void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
    pkgAcquire fetcher(status);
    string filename = pkg->getChangelogFile(&fetcher);
    
-   RGGladeUserDialog dia(me,"changelog");
+   RGGtkBuilderUserDialog dia(me,"changelog");
 
    // set title
-   GtkWidget *win = glade_xml_get_widget(dia.getGladeXML(), 
-					   "dialog_changelog");
+   GtkWidget *win = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), 
+					              "dialog_changelog"));
    assert(win);
    // TRANSLATORS: Title of the changelog dialog - %s is the name of the package
    gchar *str = g_strdup_printf(_("%s Changelog"), pkg->name());
    gtk_window_set_title(GTK_WINDOW(win), str);
    g_free(str);
 
+
    // set changelog data
-   GtkWidget *textview = glade_xml_get_widget(dia.getGladeXML(),
-					      "textview_changelog");
+   GtkWidget *textview = GTK_WIDGET(gtk_builder_get_object
+                                    (dia.getGtkBuilder(),
+                                     "textview_changelog"));
    assert(textview);
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
    GtkTextIter start,end;

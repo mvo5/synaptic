@@ -26,9 +26,9 @@
 
 #include <gtk/gtk.h>
 #include "rpackage.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
-class RGPkgDetailsWindow : public RGGladeWindow {
+class RGPkgDetailsWindow : public RGGtkBuilderWindow {
    
  protected:
    // used for the screenshot parameter passing
@@ -48,7 +48,7 @@ class RGPkgDetailsWindow : public RGGladeWindow {
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);
-   static void fillInValues(RGGladeWindow *me, RPackage *pkg, 
+   static void fillInValues(RGGtkBuilderWindow *me, RPackage *pkg, 
 			    bool setTitle=false);
    ~RGPkgDetailsWindow();
 };

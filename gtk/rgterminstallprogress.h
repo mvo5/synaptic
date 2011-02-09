@@ -33,7 +33,7 @@
 #include <vte/vte.h>
 #include <vte/reaper.h>
 
-class RGTermInstallProgress : public RInstallProgress, public RGGladeWindow {
+class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow {
   GtkWidget *_term;
   GtkWidget *_scrollbar;
   GtkWidget *_statusL;

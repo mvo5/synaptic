@@ -26,11 +26,11 @@
 #ifndef RGCHANGESWINDOW_H
 #define RGCHANGESWINDOW_H
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 class RPackageLister;
 
-class RGChangesWindow:public RGGladeWindow {
+class RGChangesWindow:public RGGtkBuilderWindow {
    enum {
       PKG_COLUMN,
       N_COLUMNS

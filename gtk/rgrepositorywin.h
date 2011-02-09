@@ -29,14 +29,14 @@
 
 #include <gtk/gtk.h>
 #include "rsources.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rgvendorswindow.h"
 #include "rguserdialog.h"
 
 typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
-class RGRepositoryEditor:RGGladeWindow {
+class RGRepositoryEditor:RGGtkBuilderWindow {
    SourcesList _lst, _savedList;
 
    int _selectedRow;

@@ -38,7 +38,7 @@ using namespace std;
 #include "rgtaskswin.h"
 #include "rgfetchprogress.h"
 #include "rinstallprogress.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rgiconlegend.h"
 #include "gtkpkglist.h"
 #include "rgpkgdetails.h"
@@ -67,7 +67,15 @@ typedef enum {
    PKG_REINSTALL
 } RGPkgAction;
 
-class RGMainWindow : public RGGladeWindow, public RPackageObserver {
+static char *relOptions[] = {
+   N_("Dependencies"),
+   N_("Dependants"),
+   N_("Dependencies of the Latest Version"),
+   N_("Provided Packages"),
+   NULL
+};
+
+class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
 
    typedef enum {
       UPGRADE_ASK = -1,
@@ -224,6 +232,8 @@ class RGMainWindow : public RGGladeWindow, public RPackageObserver {
    // --------------------------------------------------------------------
    // Callbacks
    //
+
+   static void cbDependsMenuChanged(GtkWidget *self, void *data);
 
    static void cbPkgAction(GtkWidget *self, void *data);
 

@@ -1,4 +1,4 @@
-synaptic (0.75~pre1) UNRELEASEDy; urgency=low
+synaptic (0.75~pre5) UNRELEASEDy; urgency=low
 
   [ Michael Vogt ]
   * show changelog button alongside the screenshot button
@@ -31,6 +31,51 @@ synaptic (0.75~pre1) UNRELEASEDy; urgency=low
   
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 09 Feb 2011 14:25:00 +0100
 
+synaptic (0.75~pre4) natty; urgency=low
+
+  * debian/control:
+    - recommend libgtk2-perl instead of libgnome2-perl to get
+      the latest debconf gtk goodness (thanks to Colin Watson)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 17 Dec 2010 15:05:09 +0100
+
+synaptic (0.75~pre3) natty; urgency=low
+
+  [ Gabor Kelemen ]
+  * Add gettext type to .ui files
+  * Change .glade files to .ui files, stop intltool from complaining
+  * Translate searchable field names
+  * Mark strings for translation
+  * Add missing files
+  * Fix image paths: glade -> gtkbuilder
+  (LP: #688897)
+
+  [ Michael Vogt ]
+  * make sure /etc/apt/apt.conf.d/99synaptic is mode 0644
+    (LP: #637157)
+  * common/rpackagecache.cc:
+    - read pindir as well as the pinfile (LP: #628818)
+
+  [ Luca Falavigna ]
+  * common/rpackageview.cc:
+    - Do not display base packages in manual view.
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 13 Dec 2010 11:34:53 +0100
+
+synaptic (0.75~pre2) natty; urgency=low
+
+  * build from the bzr ubuntu branch
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 07 Dec 2010 15:44:15 +0100
+
+synaptic (0.75~pre1) natty; urgency=low
+
+  * merged lp:~mathieu-tl/synaptic/gtk3 this brings gtkbuilder
+    (instead of glade) and the preparation for updating for gtk3
+    Many thanks to Mathieu Trudel-Lapierre
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 07 Dec 2010 10:29:57 +0100
+
 synaptic (0.70) unstable; urgency=low
   
   * po/hu.po:
@@ -45,6 +90,17 @@ synaptic (0.70~pre3) UNRELEASED; urgency=low
     - show message in quick search label if no apt-xapian-index can
       be found
   * show changelog button alongside the screenshot button
+  
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 10 Nov 2010 19:44:31 +0100
+
+synaptic (0.70~pre2ubuntu1) natty; urgency=low
+  
+  * merged from debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
   
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 10 Nov 2010 19:44:31 +0100
 
@@ -141,10 +197,25 @@ synaptic (0.63.2) unstable; urgency=low
  
  -- Michael Vogt <mvo@debian.org>  Wed, 28 Jul 2010 11:40:15 +0200
 
+synaptic (0.63.1ubuntu14.1) UNRELEASED; urgency=low
+
+  * common/rpackagecache.{cc,h}, common/rpackage.cc:
+    - add cache for PkgFileIterator->pkgIndexFile* to speed up
+      RPackage::IsTrusted (LP: #165181)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 23 Sep 2010 21:37:21 +0200
+
+synaptic (0.63.1ubuntu14) maverick; urgency=low
+
+  * gtk/rgdebinstallprogress.cc, gtk/rgterminstallprogress.cc:
+    - fix FTBFS on latest vte (closes: #597384)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 20 Sep 2010 16:29:25 +0200
+
 synaptic (0.63.1ubuntu13) maverick; urgency=low
 
   [ Michael Vogt ]
-  * rebuild against latest libapt
+  * rebuild against latest libapt, libept
   * common/rpackagelister.{cc,h}:
     - move quality cutoff into the .cc file to workaround ld crash
   * gtk/rgpackagestatus.cc:

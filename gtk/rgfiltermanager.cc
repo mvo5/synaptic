@@ -66,7 +66,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                       GTK_COMBO_BOX(_comboPatternWhat)));
    for (int i = 0; DepOptions[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, DepOptions[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(DepOptions[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboPatternWhat));
@@ -82,7 +82,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                       GTK_COMBO_BOX(_comboPatternDo)));
    for (int i = 0; ActOptions[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, ActOptions[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(ActOptions[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboPatternDo));
@@ -623,7 +623,7 @@ bool RGFilterManagerWindow::setPatternRow(int row,
    if (row < 0) {
       gtk_list_store_append(GTK_LIST_STORE(_patternListStore), &iter);
       gtk_list_store_set(GTK_LIST_STORE(_patternListStore), &iter,
-                         0, array[0], 1, _(array[1]), 2, array[2], -1);
+                         0, _(array[0]), 1, _(array[1]), 2, array[2], -1);
       GtkTreeSelection *select =
          gtk_tree_view_get_selection(GTK_TREE_VIEW(_patternList));
       gtk_tree_selection_select_iter(select, &iter);
@@ -633,7 +633,7 @@ bool RGFilterManagerWindow::setPatternRow(int row,
       if (gtk_tree_model_get_iter(GTK_TREE_MODEL(_patternListStore),
                                   &iter, path)) {
          gtk_list_store_set(GTK_LIST_STORE(_patternListStore),
-                            &iter, 0, array[0], 1, _(array[1]), 2, 
+                            &iter, 0, _(array[0]), 1, _(array[1]), 2, 
 			    array[2], -1);
       }
       gtk_tree_path_free(path);

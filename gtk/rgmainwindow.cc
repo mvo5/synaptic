@@ -1551,7 +1551,7 @@ void RGMainWindow::buildInterface()
    GtkTreeIter relIter;
    for (int i = 0; relOptions[i] != NULL; i++) {
       gtk_list_store_append(relTypes, &relIter);
-      gtk_list_store_set(relTypes, &relIter, 0, relOptions[i], -1);
+      gtk_list_store_set(relTypes, &relIter, 0, _(relOptions[i]), -1);
    }
    gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
                            GTK_TREE_MODEL(relTypes));

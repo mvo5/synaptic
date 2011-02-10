@@ -126,7 +126,7 @@ RGFindWindow::RGFindWindow(RGWindow *win)
                       GTK_COMBO_BOX(_comboSearchType)));
    for (int i = 0; SearchTypes[i] != NULL; i++) {
       gtk_list_store_append(comboStore, &comboIter);
-      gtk_list_store_set(comboStore, &comboIter, 0, SearchTypes[i], -1);
+      gtk_list_store_set(comboStore, &comboIter, 0, _(SearchTypes[i]), -1);
    }
    crt = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(_comboSearchType));

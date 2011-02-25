@@ -285,7 +285,8 @@ class RPackageLister {
                         vector<RPackage *> &toRemove,
                         vector<RPackage *> &toDowngrade,
 			vector<RPackage *> &notAuthenticated,
-                        vector<RPackage *> &exclude, bool sorted = true);
+                        const vector<RPackage *> &exclude, 
+                        bool sorted = true);
 
    // open (lock if run as root)
    bool openCache();

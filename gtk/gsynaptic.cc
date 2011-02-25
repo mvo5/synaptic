@@ -161,10 +161,10 @@ void welcome_dialog(RGMainWindow *mainWindow)
       // show welcome dialog
       if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
 	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
-         RGGladeUserDialog dia(mainWindow);
+         RGGtkBuilderUserDialog dia(mainWindow);
          dia.run("welcome");
-         GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-                                              "checkbutton_show_again");
+         GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+                                              "checkbutton_show_again"));
          assert(cb);
          _config->Set("Synaptic::showWelcomeDialog",
                       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
@@ -204,10 +204,10 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
 	 if(update == UPDATE_AUTO) 
 	    mainWindow->cbUpdateClicked(NULL, mainWindow);
 	 else {
-	    RGGladeUserDialog dia(mainWindow);
+	    RGGtkBuilderUserDialog dia(mainWindow);
 	    int res = dia.run("update_outdated",true);
-	    GtkWidget *cb = glade_xml_get_widget(dia.getGladeXML(),
-						 "checkbutton_remember");
+	    GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+						 "checkbutton_remember"));
 	    assert(cb);
 	    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
 	       if(res == GTK_RESPONSE_CANCEL)
@@ -347,9 +347,12 @@ void check_and_aquire_lock()
       }
 
       if(msg != NULL) {
-	 dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
-						  GTK_MESSAGE_ERROR, 
-						  GTK_BUTTONS_CLOSE, msg);
+	 dia = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+					GTK_MESSAGE_ERROR, 
+					GTK_BUTTONS_CLOSE, 
+					NULL);
+
+         gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
 	 gtk_dialog_run(GTK_DIALOG(dia));
 	 gtk_widget_destroy(dia);
 	 g_free(msg);
@@ -371,9 +374,12 @@ void check_and_aquire_lock()
 			      "(like apt-get or aptitude) is "
 			      "already running. Please close that "
 			      "application first."));
-      dia = gtk_message_dialog_new_with_markup(NULL, GTK_DIALOG_MODAL,
-					       GTK_MESSAGE_ERROR, 
-					       GTK_BUTTONS_CLOSE, msg);
+      dia = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL,
+					GTK_MESSAGE_ERROR, 
+					GTK_BUTTONS_CLOSE,
+					NULL);
+
+      gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
       gtk_dialog_run(GTK_DIALOG(dia));
       g_free(msg);
       exit(1);
@@ -591,8 +597,9 @@ int main(int argc, char **argv)
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
       welcome_dialog(mainWindow);
-      gtk_widget_grab_focus( glade_xml_get_widget(mainWindow->getGladeXML(),
-                                              "entry_fast_search"));
+      gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
+                                          mainWindow->getGtkBuilder(),
+                                          "entry_fast_search")));
 #if 0
       update_check(mainWindow, packageLister);
 #endif 

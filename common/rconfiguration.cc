@@ -90,6 +90,8 @@ bool RWriteConfigFile(Configuration &Conf)
                          + _config->Find("Dir::Etc", "etc/apt/")
                          + _config->Find("Dir::Etc:parts", "apt.conf.d")
                          + "/99synaptic";
+
+      int old_umask = umask(0022);
       ofstream aptfile(aptConfPath.c_str(), ios::out);
       if (!aptfile != 0) {
          cerr << "cannot open " << aptConfPath.c_str() <<
@@ -101,6 +103,7 @@ bool RWriteConfigFile(Configuration &Conf)
             aptfile << "APT::Install-Recommends \"false\";" << endl;
          aptfile.close();
       }
+      umask(old_umask);
    }
    // and backup Install-Recommends to config of synaptic
    _config->Set("Synaptic::Install-Recommends",

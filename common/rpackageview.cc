@@ -151,14 +151,15 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    }
 
    if ((flags & RPackage::FInstalled) &&
-       !(flags & RPackage::FIsAuto))
+       !(flags & RPackage::FIsAuto) &&
+       !(flags & RPackage::FImportant))
    {
       str = _("Installed (manual)");
       _view[str].push_back(pkg);
    }
 
    str.clear();
-   if (flags & RPackage::FNowBroken)
+   if (flags & RPackage::FNowBroken || flags & RPackage::FInstBroken)
       str = _("Broken dependencies");
    else if (flags & RPackage::FNew)
       str = _("New in repository");

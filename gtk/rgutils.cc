@@ -34,7 +34,7 @@
 
 void RGFlushInterface()
 {
-   XSync(gdk_display, False);
+   XSync(GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), False);
 
    while (gtk_events_pending()) {
       gtk_main_iteration();
@@ -120,19 +120,16 @@ char *gtk_get_string_from_color(GdkColor * colp)
 void gtk_get_color_from_string(const char *cpp, GdkColor **colp)
 {
    GdkColor *new_color;
-   int result;
+   gboolean result;
 
    // "" means no color
-   if (strlen(cpp) == 0) {
+   if (cpp == NULL || strlen(cpp) == 0) {
       *colp = NULL;
       return;
    }
 
-   GdkColormap *colormap = gdk_colormap_get_system();
-
    new_color = g_new(GdkColor, 1);
    result = gdk_color_parse(cpp, new_color);
-   gdk_colormap_alloc_color(colormap, new_color, FALSE, TRUE);
    *colp = new_color;
 }
 
@@ -218,7 +215,4 @@ const char *utf8(const char *str)
    }
    return escaped;
 }
-
-
-
 // vim:ts=3:sw=3:et

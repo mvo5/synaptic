@@ -81,7 +81,7 @@ void RGCacheProgress::Update()
 
 void RGCacheProgress::Done()
 {
-   gtk_progress_bar_update(GTK_PROGRESS_BAR(_prog), 1.0);
+   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 1.0);
    RGFlushInterface();
 
    gtk_widget_hide(_prog);

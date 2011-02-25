@@ -1,13 +1,17 @@
-SUBDIRS = glade
+SUBDIRS = gtkbuilder
 
 
 INCLUDES= -I${top_srcdir}/common \
 	-I${top_srcdir}/pixmaps  \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-	-DSYNAPTIC_GLADEDIR=\""$(datadir)/synaptic/glade/"\" \
+	-DSYNAPTIC_GTKBUILDERDIR=\""$(datadir)/synaptic/gtkbuilder/"\" \
 	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
-	@PACKAGE_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBEPT_CFLAGS)
+	@GTK_CFLAGS@ \
+	@VTE_CFLAGS@ \
+	@LP_CFLAGS@ \
+	@GTK_DISABLE_DEPRECATED@ \
+	$(LIBEPT_CFLAGS)
 
 sbin_PROGRAMS = synaptic 
 
@@ -15,8 +19,9 @@ sbin_PROGRAMS = synaptic
 
 synaptic_LDADD = \
 	${top_builddir}/common/libsynaptic.a\
-	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
-	@PACKAGE_LIBS@ @VTE_LIBS@ @LP_LIBS@\
+	-lapt-pkg -lX11 @RPM_LIBS@ @DEB_LIBS@ \
+	@GTK_LIBS@ \
+	@VTE_LIBS@ @LP_LIBS@\
 	-lpthread $(LIBEPT_LIBS)  
 
 synaptic_SOURCES= \
@@ -72,14 +77,16 @@ synaptic_SOURCES= \
 	rgvendorswindow.h\
 	rgsummarywindow.cc\
 	rgsummarywindow.h\
+	rgchangelogdialog.cc\
+	rgchangelogdialog.h\
 	rgchangeswindow.cc\
 	rgchangeswindow.h\
 	rguserdialog.cc\
 	rguserdialog.h\
 	rgwindow.cc\
 	rgwindow.h\
-	rggladewindow.cc\
-	rggladewindow.h
+	rggtkbuilderwindow.cc\
+	rggtkbuilderwindow.h
 
 CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 

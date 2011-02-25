@@ -24,10 +24,10 @@
 #ifndef _RGICONLEGEND_H_
 #define _RGICONLEGEND_H_
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 
-class RGIconLegendPanel:public RGGladeWindow {
+class RGIconLegendPanel:public RGGtkBuilderWindow {
  public:
    RGIconLegendPanel(RGWindow *parent);
    virtual ~RGIconLegendPanel() {};

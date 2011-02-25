@@ -34,7 +34,7 @@
 
 #include "i18n.h"
 
-class RGDiscName : public RGGladeWindow 
+class RGDiscName : public RGGtkBuilderWindow 
 {
  protected:
 
@@ -97,7 +97,7 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    _pbar = gtk_progress_bar_new();
    gtk_widget_show(_pbar);
-   gtk_widget_set_usize(_pbar, -1, 25);
+   gtk_widget_set_size_request(_pbar, -1, 25);
    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
 
    //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
@@ -117,18 +117,18 @@ bool RGCDScanner::run()
 
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
-: RGGladeWindow(wwin, "disc_name")
+: RGGtkBuilderWindow(wwin, "disc_name")
 {
    setTitle(_("Disc Label"));
-   _textEntry = glade_xml_get_widget(_gladeXML, "text_entry");
+   _textEntry = GTK_WIDGET(gtk_builder_get_object(_builder, "text_entry"));
    gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
 
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_ok_clicked",
-                                 G_CALLBACK(onOkClicked), this);
-   glade_xml_signal_connect_data(_gladeXML,
-                                 "on_cancel_clicked",
-                                 G_CALLBACK(onCancelClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "ok"),
+                    "clicked",
+                    G_CALLBACK(onOkClicked), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
+                    "clicked",
+                    G_CALLBACK(onCancelClicked), this);
    gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_win), 
                                 GTK_WINDOW(wwin->window()));

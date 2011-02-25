@@ -92,6 +92,8 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
       return false;
    if (ReadPinFile(*_policy) == false)
       return false;
+   if (ReadPinDir(*_policy) == false)
+      return false;
 
    if (ReadPinFile(*_policy, RStateDir() + "/preferences") == false)
       return false;

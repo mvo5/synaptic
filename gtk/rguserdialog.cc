@@ -203,31 +203,39 @@ bool RGUserDialog::message(const char *msg,
    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
-// RGGladeUserDialog
-RGGladeUserDialog::RGGladeUserDialog(RGWindow *parent, const char *name)
+// RGGtkBuilderUserDialog
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent, const char *name)
 {
    _parentWindow = parent->window();
    init(name);
 }
 
-bool RGGladeUserDialog::init(const char *name)
+bool RGGtkBuilderUserDialog::init(const char *name)
 {
    gchar *filename = NULL;
    gchar *main_widget = NULL;
+   guint builder_status;
+   GError* error = NULL;
 
-   //cout << "RGGladeUserDialog::RGGladeUserDialog()" << endl;
+   //cout << "RGGtkBuilderUserDialog::RGGtkBuilderUserDialog() " << name << endl;
 
-   filename = g_strdup_printf("dialog_%s.glade", name);
+   builder = gtk_builder_new();
+   filename = g_strdup_printf("gtkbuilder/dialog_%s.ui", name);
    main_widget = g_strdup_printf("dialog_%s", name);
    if (FileExists(filename)) {
-      gladeXML = glade_xml_new(filename, main_widget, NULL);
+      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+         g_warning ("Couldn't load builder file: %s", error->message);
+         g_error_free (error);
+      }
    } else {
       g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_GLADEDIR "dialog_%s.glade", name);
-      gladeXML = glade_xml_new(filename, main_widget, NULL);
+      filename = g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "dialog_%s.ui", name);
+      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+         g_warning ("Couldn't load builder file: %s", error->message);
+         g_error_free (error);
+      }
    }
-   assert(gladeXML);
-   _dialog = glade_xml_get_widget(gladeXML, main_widget);
+   _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
    assert(_dialog);
 
    gtk_window_set_position(GTK_WINDOW(_dialog),
@@ -251,7 +259,7 @@ bool RGGladeUserDialog::init(const char *name)
    g_free(main_widget);
 }
 
-int RGGladeUserDialog::run(const char *name,bool return_gtk_response)
+int RGGtkBuilderUserDialog::run(const char *name,bool return_gtk_response)
 {
    if(name != NULL)
       init(name);

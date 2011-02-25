@@ -991,7 +991,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
 				     vector<RPackage *> &notAuthenticated,
-                                     vector<RPackage *> &exclude,
+                                     const vector<RPackage *> &exclude,
                                      bool sorted)
 {
    bool changed = false;
@@ -1096,7 +1096,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toRemove,
                                      vector<RPackage *> &toDowngrade,
 				     vector<RPackage *> &notAuthenticated,
-                                     vector<RPackage *> &exclude,
+                                     const vector<RPackage *> &exclude,
                                      bool sorted)
 {
    bool changed = false;
@@ -1858,6 +1858,11 @@ bool RPackageLister::readSelections(istream &in)
       _progMeter->Done();
       Fix.InstallProtect();
       Fix.Resolve(true);
+
+      // refresh all views
+      for (unsigned int i = 0; i != _views.size(); i++)
+         _views[i]->refresh();
+
    }
 
    return true;

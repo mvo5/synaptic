@@ -28,7 +28,7 @@
 #ifndef HAVE_APTPKG_CDROM
 
 #include "rcdscanner.h"
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 class RGMainWindow;
 

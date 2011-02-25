@@ -26,13 +26,13 @@
 #ifndef _RGSUMMARYWINDOW_H_
 #define _RGSUMMARYWINDOW_H_
 
-#include "rggladewindow.h"
+#include "rggtkbuilderwindow.h"
 
 
 class RPackageLister;
 
 
-class RGSummaryWindow:public RGGladeWindow {
+class RGSummaryWindow:public RGGtkBuilderWindow {
    GtkWidget *_topF;
    GtkWidget *_middleF;
    GtkWidget *_summaryL;

@@ -1828,12 +1828,8 @@ void RGMainWindow::buildInterface()
 #ifdef WITH_EPT
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
-      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
-                                          (_builder, "entry_fast_search")),
-                               FALSE);
-      gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(_builder,
-                                                          "label_fast_search")),
-                         _("No apt-xapian-index found"));
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "vbox_fast_search")));
    }
 #else
    gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object

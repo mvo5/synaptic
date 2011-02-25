@@ -1,6 +1,9 @@
-synaptic (0.75~pre5) UNRELEASEDy; urgency=low
+synaptic (0.75) unstable; urgency=low
 
   [ Michael Vogt ]
+  * merged lp:~mathieu-tl/synaptic/gtk3 this brings gtkbuilder
+    (instead of glade) and the preparation for updating for gtk3
+    Many thanks to Mathieu Trudel-Lapierre
   * show changelog button alongside the screenshot button
   * make sure /etc/apt/apt.conf.d/99synaptic is mode 644
     (LP: #637157)
@@ -10,9 +13,6 @@ synaptic (0.75~pre5) UNRELEASEDy; urgency=low
     so that broken dependencies are displayed
   * show /ask about the pkg state changes when reading selections
     from a file, simpify askStateChanges code
-  * merged lp:~mathieu-tl/synaptic/gtk3 this brings gtkbuilder
-    (instead of glade) and the preparation for updating for gtk3
-    Many thanks to Mathieu Trudel-Lapierre
   * merged
     lp:~chris-ascentsoftware/ubuntu/natty/synaptic/synaptic-fix-706271
     many thanks! (LP: #706271)
@@ -29,7 +29,7 @@ synaptic (0.75~pre5) UNRELEASEDy; urgency=low
   * common/rpackageview.cc:
     - Do not display base packages in manual view.
   
- -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 09 Feb 2011 14:25:00 +0100
+ -- Michael Vogt <mvo@debian.org>  Thu, 10 Feb 2011 09:56:20 +0100
 
 synaptic (0.75~pre4) natty; urgency=low
 
@@ -83,15 +83,6 @@ synaptic (0.70) unstable; urgency=low
   * fix some linitian warnings
   
  -- Michael Vogt <mvo@debian.org>  Mon, 06 Dec 2010 16:44:24 +0100
-
-synaptic (0.70~pre3) UNRELEASED; urgency=low
-  
-  * gtk/rgmainwindow.cc:
-    - show message in quick search label if no apt-xapian-index can
-      be found
-  * show changelog button alongside the screenshot button
-  
- -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 10 Nov 2010 19:44:31 +0100
 
 synaptic (0.70~pre2ubuntu1) natty; urgency=low
   

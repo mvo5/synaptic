@@ -293,7 +293,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                     G_CALLBACK(DoOK), this);
 
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_remove")),
+                               (_builder, "button_cancel")),
                     "clicked",
                     G_CALLBACK(DoCancel), this);
 

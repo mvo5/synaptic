@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-03-05 04:30+0000\n"
+"X-Launchpad-Export-Date: 2011-03-06 04:30+0000\n"
 "X-Generator: Launchpad (build 12351)\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
@@ -599,7 +599,7 @@ msgstr "%s: %s pero nun se va a instalar"
 msgid " or"
 msgstr " o"
 
-#: ../common/rpackage.cc:1059
+#: ../common/rpackage.cc:1073
 msgid "Invalid record in the preferences file, no Package header"
 msgstr ""
 "Rexistru inválidu nel ficheru de preferencies, falta la cabecera Package"
@@ -712,6 +712,8 @@ msgstr ""
 #: ../common/rpackagecache.cc:73
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
+"Les llistes de paquetes o'l ficheru d'estáu nun se puen analizar "
+"sintáuticamente o abrir."
 
 #: ../common/rpackagecache.cc:112
 msgid "Internal Error, non-zero counts"
@@ -723,7 +725,7 @@ msgid "Name"
 msgstr "Nome"
 
 #: ../common/rpackagefilter.cc:45 ../gtk/rgpreferenceswindow.cc:52
-#: ../gtk/rgmainwindow.cc:1161 ../gtk/rgvendorswindow.cc:62
+#: ../gtk/rgmainwindow.cc:1165 ../gtk/rgvendorswindow.cc:62
 #: ../gtk/rgvendorswindow.cc:94 ../gtk/gtkbuilder/window_main.ui.h:19
 #: ../gtk/gtkbuilder/window_details.ui.h:14 ../gtk/rgfiltermanager.h:70
 msgid "Description"
@@ -754,7 +756,7 @@ msgstr "Orixe"
 
 #. Origin (e.g. security.debian.org)
 #: ../common/rpackagefilter.cc:56 ../gtk/rgpreferenceswindow.cc:51
-#: ../gtk/rgmainwindow.cc:1054 ../gtk/rgfiltermanager.h:81
+#: ../gtk/rgmainwindow.cc:1058 ../gtk/rgfiltermanager.h:81
 msgid "Component"
 msgstr "Componente"
 
@@ -770,7 +772,7 @@ msgid "Pattern"
 msgstr "Patrón"
 
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:50
-#: ../gtk/rgmainwindow.cc:1033 ../gtk/gtkbuilder/window_filters.ui.h:50
+#: ../gtk/rgmainwindow.cc:1037 ../gtk/gtkbuilder/window_filters.ui.h:50
 msgid "Section"
 msgstr ""
 
@@ -780,7 +782,7 @@ msgstr "Prioridá"
 
 #: ../common/rpackagefilter.cc:65
 msgid "ReducedView"
-msgstr ""
+msgstr "Vista reducida"
 
 #: ../common/rpackagefilter.cc:66
 msgid "File"
@@ -789,7 +791,7 @@ msgstr "Ficheru"
 #: ../common/rpackagefilter.cc:759
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
-msgstr ""
+msgstr "Expresión regular errónea «%s» nel ficheru de vista reducida"
 
 #: ../common/rpackagelister.cc:324 ../common/rpackagelister.cc:330
 #: ../common/rpackagelister.cc:340
@@ -1030,7 +1032,7 @@ msgstr "Paquete con Debconf"
 
 #: ../common/rpackageview.cc:547 ../gtk/gtkbuilder/window_filters.ui.h:54
 msgid "Upgradable (upstream)"
-msgstr ""
+msgstr "Anovable (versión d'orixe)"
 
 #: ../common/rpackageview.cc:560
 msgid "Community Maintained (installed)"
@@ -1086,7 +1088,7 @@ msgstr ""
 
 #: ../gtk/gsynaptic.cc:78
 msgid "-i=? Start with the initial Filter with given name\n"
-msgstr ""
+msgstr "-i=? Entamar usando'l filtru anicial col nome dau\n"
 
 #: ../gtk/gsynaptic.cc:79
 msgid "-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n"
@@ -1355,7 +1357,7 @@ msgstr ""
 msgid "Package Name"
 msgstr ""
 
-#: ../gtk/rgpreferenceswindow.cc:51 ../gtk/rgmainwindow.cc:1076
+#: ../gtk/rgpreferenceswindow.cc:51 ../gtk/rgmainwindow.cc:1080
 msgid "Installed Version"
 msgstr ""
 
@@ -1449,11 +1451,11 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1118
+#: ../gtk/rgfetchprogress.cc:103 ../gtk/rgmainwindow.cc:1122
 msgid "Size"
 msgstr ""
 
-#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:1011
+#: ../gtk/rgfetchprogress.cc:110 ../gtk/rgmainwindow.cc:1015
 msgid "Package"
 msgstr ""
 
@@ -1594,111 +1596,111 @@ msgstr ""
 msgid "%s (%s)"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:174
+#: ../gtk/rgmainwindow.cc:176
 msgid "All"
 msgstr "Too"
 
-#: ../gtk/rgmainwindow.cc:377
+#: ../gtk/rgmainwindow.cc:379
 msgid "No package is selected.\n"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:553
+#: ../gtk/rgmainwindow.cc:555
 #, c-format
 msgid "Select the version of %s that should be forced for installation"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:555
+#: ../gtk/rgmainwindow.cc:557
 msgid ""
 "The package manager always selects the most applicable version available. If "
 "you force a different version from the default one, errors in the dependency "
 "handling can occur."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:900
+#: ../gtk/rgmainwindow.cc:902
 msgid "Rebuilding search index"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:922 ../gtk/gtkbuilder/window_main.ui.h:34
+#: ../gtk/rgmainwindow.cc:924 ../gtk/gtkbuilder/window_main.ui.h:34
 msgid "Quick filter"
 msgstr ""
 
 #. TRANSLATORS: Column header for the column "Status" in the package list
-#: ../gtk/rgmainwindow.cc:976
+#: ../gtk/rgmainwindow.cc:978
 msgid "S"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1097
+#: ../gtk/rgmainwindow.cc:1101
 msgid "Latest Version"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1139
+#: ../gtk/rgmainwindow.cc:1143
 msgid "Download"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1438
+#: ../gtk/rgmainwindow.cc:1442
 msgid ""
 "Reload the package information to become informed about new, removed or "
 "upgraded software packages."
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1444
+#: ../gtk/rgmainwindow.cc:1448
 msgid "Mark all possible upgrades"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1448 ../gtk/gtkbuilder/window_summary.ui.h:5
+#: ../gtk/rgmainwindow.cc:1452 ../gtk/gtkbuilder/window_summary.ui.h:5
 msgid "Apply all marked changes"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1452
+#: ../gtk/rgmainwindow.cc:1456
 msgid "View package properties"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1456
+#: ../gtk/rgmainwindow.cc:1460
 msgid "Search for packages"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1660
+#: ../gtk/rgmainwindow.cc:1664
 msgid "Unmark"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1668
+#: ../gtk/rgmainwindow.cc:1672
 msgid "Mark for Installation"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1676
+#: ../gtk/rgmainwindow.cc:1680
 msgid "Mark for Reinstallation"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1685
+#: ../gtk/rgmainwindow.cc:1689
 msgid "Mark for Upgrade"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1693
+#: ../gtk/rgmainwindow.cc:1697
 msgid "Mark for Removal"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1702
+#: ../gtk/rgmainwindow.cc:1706
 msgid "Mark for Complete Removal"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1714
+#: ../gtk/rgmainwindow.cc:1718
 msgid "Remove Including Orphaned Dependencies"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1726
+#: ../gtk/rgmainwindow.cc:1730
 msgid "Hold Current Version"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1735 ../gtk/gtkbuilder/window_main.ui.h:33
+#: ../gtk/rgmainwindow.cc:1739 ../gtk/gtkbuilder/window_main.ui.h:33
 #: ../gtk/gtkbuilder/window_filters.ui.h:47
 msgid "Properties"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1747
+#: ../gtk/rgmainwindow.cc:1751
 msgid "Mark Recommended for Installation"
 msgstr ""
 
-#: ../gtk/rgmainwindow.cc:1751
+#: ../gtk/rgmainwindow.cc:1755
 msgid "Mark Suggested for Installation"
 msgstr ""
 
@@ -2352,15 +2354,15 @@ msgstr ""
 msgid "_About"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:49
+#: ../gtk/gtkbuilder/window_main.ui.h:48
 msgid "_Add CD-ROM..."
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:50
+#: ../gtk/gtkbuilder/window_main.ui.h:49
 msgid "_Browse Documentation"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:51
+#: ../gtk/gtkbuilder/window_main.ui.h:50
 msgid "_Configure..."
 msgstr ""
 
@@ -2368,75 +2370,75 @@ msgstr ""
 msgid "_Contents"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:53
+#: ../gtk/gtkbuilder/window_main.ui.h:51
 msgid "_Custom Filters"
 msgstr "_Filtros personalizaos"
 
-#: ../gtk/gtkbuilder/window_main.ui.h:54
+#: ../gtk/gtkbuilder/window_main.ui.h:52
 msgid "_Download Changelog"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:55
+#: ../gtk/gtkbuilder/window_main.ui.h:53
 msgid "_Edit"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:56
+#: ../gtk/gtkbuilder/window_main.ui.h:54
 msgid "_File"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:57
+#: ../gtk/gtkbuilder/window_main.ui.h:55
 msgid "_Filters"
 msgstr "_Filtros"
 
-#: ../gtk/gtkbuilder/window_main.ui.h:58
+#: ../gtk/gtkbuilder/window_main.ui.h:56
 msgid "_Fix Broken Packages"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:59
+#: ../gtk/gtkbuilder/window_main.ui.h:57
 msgid "_Force Version..."
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:60
+#: ../gtk/gtkbuilder/window_main.ui.h:58
 msgid "_Help"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:61
+#: ../gtk/gtkbuilder/window_main.ui.h:59
 msgid "_Hide"
 msgstr "_Anubrir"
 
-#: ../gtk/gtkbuilder/window_main.ui.h:62
+#: ../gtk/gtkbuilder/window_main.ui.h:60
 msgid "_History"
 msgstr "_Históricu"
 
-#: ../gtk/gtkbuilder/window_main.ui.h:63
+#: ../gtk/gtkbuilder/window_main.ui.h:61
 msgid "_Icons Only"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:64
+#: ../gtk/gtkbuilder/window_main.ui.h:62
 msgid "_Lock Version"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:65
+#: ../gtk/gtkbuilder/window_main.ui.h:63
 msgid "_Mark All Upgrades..."
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:66
+#: ../gtk/gtkbuilder/window_main.ui.h:64
 msgid "_Package"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:67
+#: ../gtk/gtkbuilder/window_main.ui.h:65
 msgid "_Properties"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:68
+#: ../gtk/gtkbuilder/window_main.ui.h:66
 msgid "_Quick Introduction"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:69
+#: ../gtk/gtkbuilder/window_main.ui.h:67
 msgid "_Quit"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:70
+#: ../gtk/gtkbuilder/window_main.ui.h:68
 msgid "_Read Markings..."
 msgstr ""
 
@@ -2444,39 +2446,39 @@ msgstr ""
 msgid "_Redo"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:72
+#: ../gtk/gtkbuilder/window_main.ui.h:69
 msgid "_Reload Package Information"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:73
+#: ../gtk/gtkbuilder/window_main.ui.h:70
 msgid "_Repositories"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:74
+#: ../gtk/gtkbuilder/window_main.ui.h:71
 msgid "_Save Markings"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:75
+#: ../gtk/gtkbuilder/window_main.ui.h:72
 msgid "_Search..."
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:76
+#: ../gtk/gtkbuilder/window_main.ui.h:73
 msgid "_Sections"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:77
+#: ../gtk/gtkbuilder/window_main.ui.h:74
 msgid "_Set Internal Option..."
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:78
+#: ../gtk/gtkbuilder/window_main.ui.h:75
 msgid "_Settings"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:79
+#: ../gtk/gtkbuilder/window_main.ui.h:76
 msgid "_Text Only"
 msgstr ""
 
-#: ../gtk/gtkbuilder/window_main.ui.h:80
+#: ../gtk/gtkbuilder/window_main.ui.h:77
 msgid "_Toolbar"
 msgstr ""
 
@@ -2713,7 +2715,7 @@ msgstr ""
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:31
 msgid "Direct connection to the Internet"
-msgstr ""
+msgstr "Conexón direuta a Internet"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:33
 msgid "FTP proxy: "

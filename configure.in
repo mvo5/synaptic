@@ -202,11 +202,21 @@ AC_ARG_WITH(pkg-hold,
 	[  --with-pkg-hold   build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
 )
+
 AC_ARG_WITH(gtk-disable-deprecated,
         [  --with-gtk-disable-deprecated  build with -DGTK_DISABLE_DEPRECATED],
         [GTK_DISABLE_DEPRECATED="-DGTK_DISABLE_DEPRECATED"
          AC_SUBST(GTK_DISABLE_DEPRECATED)]
 )
+
+#use multiarch unless the user disables it
+AC_ARG_WITH(apt-multiarch-support,
+	[  --without-apt-multiarch-support build without support for apt multiarch],
+        [], [with_apt_multiarch_support=yes])
+AS_IF([test "x$with_apt_multiarch_support" != "xno"],
+	[AC_DEFINE(WITH_APT_MULTIARCH_SUPPORT, 1, [build with multiarch])]
+      )
+
 
 AC_OUTPUT([
 tests/Makefile 

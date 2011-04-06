@@ -4,6 +4,11 @@ synaptic (0.75.2) UNRELEASED; urgency=low
     - updated, thanks to Alexander Sashanov (closes: #614969)
   * po/pt_BR.po:
     - updated, thanks to Sérgio Cipolla (closes: #606447)
+  * common/rpackage.{cc,h}:
+    - add basic multiarch support, enabled by default, can
+      be disabled at build time with 
+      ./configure --without-apt-multiarch-support
+    - no changes on non-multiarch enabled configurations
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 22 Mar 2011 17:04:55 +0100
 

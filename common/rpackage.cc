@@ -82,6 +82,10 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
 {
    _package = new pkgCache::PkgIterator(pkg);
 
+#ifdef WITH_APT_MULTIARCH_SUPPORT
+   fullname = _package->FullName(true);
+#endif
+
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
    if (State.CandVersion != NULL)
       _defaultCandVer = State.CandVersion;
@@ -368,11 +372,15 @@ int RPackage::getFlags()
 
 const char* RPackage::name()
 { 
+#ifdef WITH_APT_MULTIARCH_SUPPORT
+   return fullname.c_str();
+#else
    const char *s = _package->Name(); 
    if (s == NULL)
       return "";
    return s;
-};
+#endif
+}
 
 #if 0
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)

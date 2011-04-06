@@ -87,11 +87,10 @@ class RPackage {
 
    protected:
 
-
+   string fullname;
    pkgRecords *_records;
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
-
 
    // save the default candidate version to undo version selection
    string _defaultCandVer;

@@ -145,7 +145,7 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
 		[whether apt-pkg/cdrom.h is present]) )
 
 # check and use libept if available
-PKG_CHECK_MODULES(libept, [libept >= 1.0],
+PKG_CHECK_MODULES([LIBEPT], [libept >= 1.0],
                   [AC_DEFINE(WITH_EPT, 1, [build with libept])
                    AC_SUBST(LIBEPT_CFLAGS)
 	           AC_SUBST(LIBEPT_LIBS)

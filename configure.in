@@ -145,10 +145,13 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
 		[whether apt-pkg/cdrom.h is present]) )
 
 # check and use libept if available
-AC_CHECK_HEADER(ept/axi/axi.h,
-        [AC_DEFINE(WITH_EPT, 1, 
-                   [Define if libept is found.])
-         LIBEPT_DEFS])
+PKG_CHECK_MODULES(libept, [libept >= 1.0],
+                  [AC_DEFINE(WITH_EPT, 1, [build with libept])
+                   AC_SUBST(LIBEPT_CFLAGS)
+	           AC_SUBST(LIBEPT_LIBS)
+                  ],
+                  [AC_MSG_NOTICE([no libept found, building without])
+                  ])
 
 AC_LANG([C])
 

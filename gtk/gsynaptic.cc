@@ -411,6 +411,18 @@ int main(int argc, char **argv)
 
    gtk_init(&argc, &argv);
    //XSynchronize(dpy, 1);
+   
+   // read the cmdline
+   CommandLine CmdL(Args, _config);
+
+   if (CmdL.Parse(argc, (const char **)argv) == false) {
+      RGUserDialog userDialog;
+      userDialog.showErrors();
+      exit(1);
+   }
+   
+   if (_config->FindB("help") == true)
+      ShowHelp(CmdL);
 
    if (getuid() != 0) {
       RGUserDialog userDialog;
@@ -430,14 +442,6 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   // read the cmdline
-   CommandLine CmdL(Args, _config);
-   if (CmdL.Parse(argc, (const char **)argv) == false) {
-      RGUserDialog userDialog;
-      userDialog.showErrors();
-      exit(1);
-   }
-   
    bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
    bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
@@ -447,9 +451,6 @@ int main(int argc, char **argv)
 
    // read configuration early
    _roptions->restore();
-
-   if (_config->FindB("help") == true)
-      ShowHelp(CmdL);
 
    SetLanguages();
 

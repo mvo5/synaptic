@@ -355,8 +355,8 @@ void check_and_aquire_lock()
          gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
 	 gtk_dialog_run(GTK_DIALOG(dia));
 	 gtk_widget_destroy(dia);
-	 g_free(msg);
       }
+      g_free(msg);
 
       cout << "Another synaptic is running. Trying to bring it to the foreground" << endl;
       kill(LockedApp, SIGUSR1);

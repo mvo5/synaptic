@@ -2794,12 +2794,16 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
       setenv("HOME", pw->pw_dir, 1);
    }
 
-   if (is_binary_in_path("dwww"))
-      system(g_strdup_printf("dwww %s &", me->selectedPackage()->name()));
-   else
+   if (is_binary_in_path("dwww")) {
+      gchar *cmd[5];
+      cmd[0] = "dwww";
+      cmd[1] = (gchar*)me->selectedPackage()->name();
+      cmd[2] = NULL;
+      g_spawn_async("/tmp", cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, NULL);
+   } else {
       me->_userDialog->error(_("You have to install the package \"dwww\" "
 			       "to browse the documentation of a package"));
-
+   }
 }
 
 

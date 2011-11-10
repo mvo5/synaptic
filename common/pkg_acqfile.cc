@@ -38,12 +38,15 @@
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/pkgrecords.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/indexfile.h>
 
 // Let's all sing a song about apt-pkg's brokenness..
 
-pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, string URI,
-			       string Description, string ShortDesc,
-			       string filename):
+pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, std::string URI,
+			       std::string Description, std::string ShortDesc,
+			       std::string filename):
   Item(Owner)
 {
   Retries=_config->FindI("Acquire::Retries",0);
@@ -59,7 +62,7 @@ pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner, string URI,
 
 // Straight from acquire-item.cc
 /* Here we try other sources */
-void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
+void pkgAcqFileSane::Failed(std::string Message,pkgAcquire::MethodConfig *Cnf)
 {
   ErrorText = LookupTag(Message,"Message");
 
@@ -79,7 +82,7 @@ void pkgAcqFileSane::Failed(string Message,pkgAcquire::MethodConfig *Cnf)
 // Mostly copied from pkgAcqArchive.
 bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
 		 pkgRecords *Recs, pkgCache::VerIterator const &Version,
-		 string directory, string &StoreFilename)
+		 std::string directory, std::string &StoreFilename)
 {
   pkgCache::VerFileIterator Vf=Version.FileList();
 
@@ -130,13 +133,13 @@ bool get_archive(pkgAcquire *Owner, pkgSourceList *Sources,
       if (_error->PendingError() == true)
          return false;
 
-      string PkgFile = Parse.FileName();
+      std::string PkgFile = Parse.FileName();
       if (PkgFile.empty() == true)
          return _error->Error(_("The package index files are corrupted. No Filename: "
                               "field for package %s."),
                               Version.ParentPkg().Name());
 
-      string DestFile = directory + "/" + flNotDir(StoreFilename);
+      std::string DestFile = directory + "/" + flNotDir(StoreFilename);
 
       // Create the item
       new pkgAcqFileSane(Owner, Index->ArchiveURI(PkgFile),

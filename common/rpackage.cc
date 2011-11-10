@@ -46,7 +46,6 @@
 #include <sstream>
 
 
-
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/srcrecords.h>
@@ -62,6 +61,8 @@
 #include <apt-pkg/versionmatch.h>
 #include <apt-pkg/version.h>
 #include <apt-pkg/policy.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/metaindex.h>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -1056,8 +1057,10 @@ void RPackage::setPinned(bool flag)
          cerr << "error opening tmpfile: " << filename << endl;
       FileFd Fd(File, FileFd::ReadOnly);
       pkgTagFile TF(&Fd);
-      if (_error->PendingError() == true)
+      if (_error->PendingError() == true) {
+         fclose(out);
          return;
+      }
       pkgTagSection Tags;
       while (TF.Step(Tags) == true) {
          string Name = Tags.FindS("Package");

@@ -2,6 +2,9 @@ synaptic (0.75.3) UNRELEASED; urgency=low
 
   * gtk/rgfetchprogress.cc:
     - fix potential crash due to division through zero
+  * gtk/gtkpkglist.cc:
+    - fix potential crash when gtk_pkg_list_iter_children is called
+      on a empty list
   * po/et.po:
     - updated, thanks to Guido Tabbernuk
   * debian/synaptic.postrm:

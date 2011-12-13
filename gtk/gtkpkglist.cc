@@ -525,6 +525,10 @@ gtk_pkg_list_iter_children(GtkTreeModel *tree_model,
 
    GtkPkgList *pkg_list = (GtkPkgList *) tree_model;
 
+   // should never happen, but does apparently with atk turned on
+   if (pkg_list->_lister->getViewPackages().size() == 0)
+      return FALSE;
+
    RPackage *pkg = pkg_list->_lister->getViewPackage(0);
 
    iter->stamp = 140677;

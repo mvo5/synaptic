@@ -205,7 +205,6 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    GtkTextIter it, start, end;
    GtkWidget *emblem;
    const gchar *s;
-   static GtkTooltips *tips = gtk_tooltips_new ();
 
    textview = GTK_WIDGET(gtk_builder_get_object
                          (me->getGtkBuilder(), "text_descr"));
@@ -243,7 +242,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       gtk_widget_modify_bg(event, GTK_STATE_NORMAL, 
 			   &style->base[GTK_STATE_NORMAL]);
       gtk_container_add(GTK_CONTAINER(event), emblem);
-      gtk_tooltips_set_tip(tips, event, _("This application is supported by the distribution"), "");
+      gtk_widget_set_tooltip_text(event, _("This application is supported by the distribution"));
       // create anchor
       GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(buf, &it);
       gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), event, anchor);

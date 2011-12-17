@@ -30,7 +30,13 @@
 #include <gtk/gtk.h>
 #include "rsources.h"
 #include "rggtkbuilderwindow.h"
-#include "rgvendorswindow.h"
+
+#if !GTK_CHECK_VERSION(3,0,0)
+ #include "rgvendorswindow.h"
+#else
+ #warning "no rgvendorswindow in gtk3"
+#endif
+
 #include "rguserdialog.h"
 
 typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;

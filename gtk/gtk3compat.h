@@ -47,4 +47,5 @@ gtk_combo_box_get_active_text (GtkComboBox *combo_box)
  #define gtk_combo_box_text_remove gtk_combo_box_remove_text
  #define gtk_combo_box_text_append_text gtk_combo_box_append_text
  #define gtk_combo_box_text_get_active_text gtk_combo_box_get_active_text
+
 #endif

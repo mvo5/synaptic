@@ -38,9 +38,9 @@
 #include "rinstallprogress.h"
 
 #include "i18n.h"
-string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now.");
-string RInstallProgress::errorMsg = _("\nNot all changes and updates succeeded. For further details of the failure, please expand the 'Details' panel below.");
-string RInstallProgress::incompleteMsg = 
+std::string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now.");
+std::string RInstallProgress::errorMsg = _("\nNot all changes and updates succeeded. For further details of the failure, please expand the 'Details' panel below.");
+std::string RInstallProgress::incompleteMsg = 
       _("\nSuccessfully installed all packages of the current medium. "
 	"To continue the installation with the next medium close "
 	"this window.");

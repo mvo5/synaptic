@@ -18,15 +18,17 @@ class FileFd;
 class RPMIndexCopy {
  protected:
 
-   string RipComponent(string Path);
-   string RipDirectory(string Path);
-   string RipDistro(string Path);
+   std::string RipComponent(std::string Path);
+   std::string RipDirectory(std::string Path);
+   std::string RipDistro(std::string Path);
 
-   void ConvertToSourceList(string CD, string &Path);
+   void ConvertToSourceList(std::string CD, std::string &Path);
 
  public:
 
-   bool CopyPackages(string CDROM, string Name, vector<string> &List);
+   bool CopyPackages(std::string CDROM, 
+                     std::string Name, 
+                     std::vector<std::string> &List);
 };
 
 

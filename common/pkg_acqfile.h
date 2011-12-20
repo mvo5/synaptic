@@ -13,16 +13,17 @@ class pkgAcqFileSane:public pkgAcquire::Item
 //  Based heavily on that class, though.
 {
   pkgAcquire::ItemDesc Desc;
-  string Md5Hash;
+  std::string Md5Hash;
   unsigned int Retries;
 
 public:
-  pkgAcqFileSane(pkgAcquire *Owner, string URI,
-		 string Description, string ShortDesc, string filename);
+  pkgAcqFileSane(pkgAcquire *Owner, std::string URI,
+		 std::string Description, std::string ShortDesc,
+                 std::string filename);
 
-  void Failed(string Message, pkgAcquire::MethodConfig *Cnf);
-  string MD5Sum() {return Md5Hash;}
-  string DescURI() {return Desc.URI;}
+  void Failed(std::string Message, pkgAcquire::MethodConfig *Cnf);
+  std::string MD5Sum() {return Md5Hash;}
+  std::string DescURI() {return Desc.URI;}
   virtual ~pkgAcqFileSane() {}
 };
 

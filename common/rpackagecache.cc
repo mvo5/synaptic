@@ -34,7 +34,7 @@
 #include <apt-pkg/pkgcachegen.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/policy.h>
-
+#include <apt-pkg/fileutl.h>
 
 
 bool RPackageCache::open(OpProgress &progress, bool locking)

@@ -34,6 +34,7 @@
 #include <string>
 #include <sstream>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/fileutl.h>
 
 #include "i18n.h"
 #include "rpackage.h"

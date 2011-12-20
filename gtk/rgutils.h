@@ -54,9 +54,9 @@ const char *utf8(const char *str);
 
 GtkWidget *get_gtk_image(const char *name, int size=16);
 
-string SizeToStr(double Bytes);
+std::string SizeToStr(double Bytes);
 
-string MarkupEscapeString(string str);
-string MarkupUnescapeString(string str);
+std::string MarkupEscapeString(std::string str);
+std::string MarkupUnescapeString(std::string str);
 
 #endif

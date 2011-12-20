@@ -43,9 +43,9 @@ class RInstallProgress {
    // update is finished, we can close the window
    bool _updateFinished;
 
-   static string finishMsg;
-   static string errorMsg;
-   static string incompleteMsg; 
+   static std::string finishMsg;
+   static std::string errorMsg;
+   static std::string incompleteMsg; 
 
    virtual void startUpdate() {
    };

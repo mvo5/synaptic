@@ -51,7 +51,7 @@ void RGFlushInterface()
  * mvo: we use out own SizeToStr function as the SI spec says we need a 
  *      space between the number and the unit (this isn't the case in stock apt
  */
-string SizeToStr(double Size)
+std::string SizeToStr(double Size)
 {
    char S[300];
    double ASize;
@@ -168,10 +168,10 @@ const char *utf8(const char *str)
  * &amp; &lt; &gt; &quot; &apos;
  * We must escape the string used as list item of a GtkTree
  */
- string MarkupEscapeString(string unescaped) {
-   string escaped;
+ std::string MarkupEscapeString(std::string unescaped) {
+   std::string escaped;
    char *c_esc = g_markup_escape_text(unescaped.c_str(), -1);
-   escaped = string(c_esc);
+   escaped = std::string(c_esc);
    g_free(c_esc);
    return escaped;  
 }
@@ -185,12 +185,12 @@ const char *utf8(const char *str)
  * sadly there is no simple way to unescape a previously escaped string with 
  * g_markup_escape_text
  */
- string MarkupUnescapeString(string escaped) {
+ std::string MarkupUnescapeString(std::string escaped) {
    size_t pos = 0, end = 0;
-   string entity, str;
-   while ((pos = escaped.find("&", pos)) != string::npos ) {
+   std::string entity, str;
+   while ((pos = escaped.find("&", pos)) != std::string::npos ) {
       end = escaped.find(";", pos);
-      if (end == string::npos)
+      if (end == std::string::npos)
           break;
 
       entity = escaped.substr(pos,end-pos+1);

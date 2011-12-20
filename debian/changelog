@@ -1,3 +1,18 @@
+synaptic (0.75.4) unstable; urgency=low
+
+  * gtk/gtkpkglist.cc:
+    - fix potential crash when gtk_pkg_list_iter_children is called
+      on a empty list
+  * debian/synaptic.postrm:
+    - remove /etc/apt/apt.conf.d/99synaptic on purge (closes: #64550)
+  * gtk/rgmainwindow.cc, gtk/gsynaptic.cc:
+    - cleanup 
+  * fix build with apt in experimental
+  * po/*:
+    - auto updates from LP
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 20 Dec 2011 22:32:21 +0100
+
 synaptic (0.75.3) unstable; urgency=low
 
   * gtk/rgfetchprogress.cc:

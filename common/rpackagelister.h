@@ -35,6 +35,7 @@
 #include <regex.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/acquire.h>
+#include <apt-pkg/progress.h>
 
 #ifdef WITH_EPT
 #include <ept/axi/axi.h>

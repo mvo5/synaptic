@@ -20,7 +20,7 @@
  * USA
  */
 
-#include <gtk/gtkx.h>
+#include <gdk/gdkx.h>
 
 #include <apt-pkg/fileutl.h>
 #include <cassert>

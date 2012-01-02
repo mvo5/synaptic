@@ -164,7 +164,7 @@ AC_FUNC_STRCOLL
 AC_CHECK_FUNCS(regcomp strdup iconv)
 
 # use vte if available
-vte_modules="vte >= 0.10.11"
+vte_modules="vte-2.90 >= 2.90"
 PKG_CHECK_MODULES(VTE, [$vte_modules],
 	      [AC_DEFINE(HAVE_VTE, 1, [build with VTE as output terminal])
 	       AC_DEFINE(HAVE_TERMINAL, 1, [build with a terminal widget]) 

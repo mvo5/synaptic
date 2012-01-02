@@ -30,7 +30,7 @@
 bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
 {
    //cout << "windowCloseCallback" << endl;
-   RGWindow *rwin = (RGWindow *) gtk_object_get_data(GTK_OBJECT(window), "me");
+   RGWindow *rwin = (RGWindow *) g_object_get_data(G_OBJECT(window), "me");
 
    return rwin->close();
 }
@@ -41,9 +41,9 @@ RGWindow::RGWindow(string name, bool makeBox)
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
-   gtk_object_set_data(GTK_OBJECT(_win), "me", this);
-   gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-                      (GtkSignalFunc) windowCloseCallback, this);
+   g_object_set_data(G_OBJECT(_win), "me", this);
+   g_signal_connect(G_OBJECT(_win), "delete-event",
+                    G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_vbox_new(FALSE, 0);
@@ -67,10 +67,10 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
-   gtk_object_set_data(GTK_OBJECT(_win), "me", this);
+   g_object_set_data(G_OBJECT(_win), "me", this);
 
-   gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-                      (GtkSignalFunc) windowCloseCallback, this);
+   g_signal_connect(G_OBJECT(_win), "delete-event",
+                    G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_vbox_new(FALSE, 0);

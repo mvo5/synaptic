@@ -24,9 +24,11 @@ class RGVendorsEditor:RGWindow {
    static void DoRemove(GtkWidget *, gpointer);
    static void DoOK(GtkWidget *, gpointer);
    static void DoCancel(GtkWidget *, gpointer);
+#if 0 // PORTME TO GTk3
    static void UpdateDisplay(GtkCList *, gint, gint, GdkEventButton *,
                              gpointer);
    static void UnselectRow(GtkCList *, gint, gint, GdkEventButton *, gpointer);
+#endif
 
  public:
    RGVendorsEditor(RGWindow *parent, SourcesList &lst);

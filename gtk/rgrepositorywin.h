@@ -54,11 +54,11 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    GtkWidget *_editTable;
    GtkWidget *_optVendor;
-   GtkWidget *_optVendorMenu;
+   GtkListStore *_optVendorMenu;
    GtkWidget *_entryURI;
    GtkWidget *_entrySect;
    GtkWidget *_optType;
-   GtkWidget *_optTypeMenu;
+   GtkListStore *_optTypeMenu;
    GtkWidget *_entryDist;
    //GtkWidget *_cbEnabled;
    

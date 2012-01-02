@@ -1961,8 +1961,11 @@ void RGMainWindow::saveState()
                 gtk_paned_get_position(GTK_PANED(vpaned)));
    _config->Set("Synaptic::hpanedPos",
                 gtk_paned_get_position(GTK_PANED(hpaned)));
-   _config->Set("Synaptic::windowWidth", gtk_widget_get_allocated_width(_win));
-   _config->Set("Synaptic::windowHeight", gtk_widget_get_allocated_height(_win));
+
+   GtkAllocation allocation;
+   gtk_widget_get_allocation(_win, &allocation);
+   _config->Set("Synaptic::windowWidth", allocation.width);
+   _config->Set("Synaptic::windowHeight", allocation.height);
    gint x, y;
    gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
    _config->Set("Synaptic::windowX", x);

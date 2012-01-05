@@ -24,7 +24,6 @@
 #define _RGMISC_H_
 
 #include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
 
 enum {
    PIXMAP_COLUMN,

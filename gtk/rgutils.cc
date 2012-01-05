@@ -20,6 +20,8 @@
  * USA
  */
 
+#include <apt-pkg/fileutl.h>
+
 #include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>

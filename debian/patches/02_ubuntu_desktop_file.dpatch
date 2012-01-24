@@ -13,7 +13,7 @@ diff -urNad bug298172~/data/synaptic.desktop.in bug298172/data/synaptic.desktop.
  _GenericName=Package Manager
  _Comment=Install, remove and upgrade software packages
 -Exec=su-to-root -X -c /usr/sbin/synaptic
-+Exec=gksu --description /usr/share/applications/synaptic.desktop /usr/sbin/synaptic
++Exec=synaptic-pkexec
  Icon=synaptic
  Terminal=false
  Type=Application

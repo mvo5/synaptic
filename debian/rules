@@ -34,6 +34,8 @@ CONFIGURE_FLAGS = $(COMMON_FLAGS)
 
 # special case for ubuntu
 ifeq "$(DIST)" "Ubuntu"
+	# mvo: disabled to get unified debian/ubuntu build
+	#CONFIGURE_FLAGS = $(COMMON_FLAGS) --with-launchpad-integration
 	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png
 endif
 

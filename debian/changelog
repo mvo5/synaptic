@@ -1,19 +1,35 @@
-synaptic (0.75.3) UNRELEASED; urgency=low
+synaptic (0.75.5~exp1) experimental; urgency=low
 
-  * gtk/rgfetchprogress.cc:
-    - fix potential crash due to division through zero
+  * merged from lp:synaptic
+  * build against libapt in experimental
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 24 Jan 2012 14:37:30 +0100
+
+synaptic (0.75.4) unstable; urgency=low
+
   * gtk/gtkpkglist.cc:
     - fix potential crash when gtk_pkg_list_iter_children is called
       on a empty list
-  * po/et.po:
-    - updated, thanks to Guido Tabbernuk
   * debian/synaptic.postrm:
     - remove /etc/apt/apt.conf.d/99synaptic on purge (closes: #64550)
   * gtk/rgmainwindow.cc, gtk/gsynaptic.cc:
     - cleanup 
   * fix build with apt in experimental
+  * po/*:
+    - auto updates from LP
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 01 Aug 2011 14:34:13 +0200
+ -- Michael Vogt <mvo@debian.org>  Tue, 20 Dec 2011 22:32:21 +0100
+
+synaptic (0.75.3) unstable; urgency=low
+
+  * gtk/rgfetchprogress.cc:
+    - fix potential crash due to division through zero
+  * po/et.po:
+    - updated, thanks to Guido Tabbernuk
+  * po/*:
+    - auto updates from LP
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 19 Sep 2011 10:45:38 +0200
 
 synaptic (0.75.2) unstable; urgency=low
 

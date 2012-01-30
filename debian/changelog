@@ -1,3 +1,17 @@
+synaptic (0.75.5~exp2) UNRELEASEDexperimental; urgency=low
+
+  * merge changes from Ubuntu:
+    - debian/changelog: updated
+    - debian/control: add or-dependency policykit-1 for pkexec support
+    - debian/rules: install apport hook and pkgexec wrapper
+    - pre-build.sh: run autoreconf after updating the configure.in versions
+  * debian/control:
+    - fix Vcs-Bzr
+  * debian/rules:
+    - do not build --with-launchpad-integration anymore
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 30 Jan 2012 12:00:34 +0100
+
 synaptic (0.75.5~exp1) experimental; urgency=low
 
   * merged from lp:synaptic
@@ -31,6 +45,95 @@ synaptic (0.75.3) unstable; urgency=low
 
  -- Michael Vogt <mvo@debian.org>  Mon, 19 Sep 2011 10:45:38 +0200
 
+synaptic (0.75.2ubuntu9) precise; urgency=low
+
+  * No-change rebuild to drop spurious libsfgcc1 dependency on armhf.
+
+ -- Adam Conrad <adconrad@0c3.net>  Fri, 02 Dec 2011 21:25:58 -0700
+
+synaptic (0.75.2ubuntu8) oneiric; urgency=low
+
+  * debian/source_synaptic.py: add in an apport package hook (LP: #863792)
+
+ -- Brian Murray <brian@ubuntu.com>  Wed, 05 Oct 2011 11:02:19 -0700
+
+synaptic (0.75.2ubuntu7) oneiric; urgency=low
+
+  [ Julien Lavergne ]
+  * debian/control:
+    - Demote apt-xapian-index from Recommends to Suggests to not pull it by
+      default on Lubuntu. (LP: #798437).
+
+  [ Michael Terry ]
+  * debian/control:
+    - Drop Vcs-Bzr line, this is no longer maintained by core devs but by
+      MOTU
+
+ -- Michael Terry <mterry@ubuntu.com>  Mon, 26 Sep 2011 12:13:46 -0400
+
+synaptic (0.75.2ubuntu6) oneiric; urgency=low
+
+  * Fix missing policy file (again!) (LP: #828315)
+    - debian/patches/11_use-pkexec.dpatch: remove Makefile.in changes.
+    - debian/rules: call automake.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 18 Aug 2011 07:56:50 -0400
+
+synaptic (0.75.2ubuntu5) oneiric; urgency=low
+
+  [ Michael Vogt ]
+  * debian/control:
+    - fix vcs-bzr header
+
+  [ Marc Deslauriers ]
+  * debian/patches/11_use-pkexec.dpatch: fix timestamps to prevent race
+    from regenerating the Makefile. (LP: #828315)
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Aug 2011 20:23:46 -0400
+
+synaptic (0.75.2ubuntu4) oneiric; urgency=low
+
+  * debian/synaptic-pkexec: use /bin/sh, not /bin/bash.
+  * debian/rules: install synaptic-pkexec wrapper to /usr/bin, not
+    /usr/sbin as it may not be in the path. (LP: #824985, LP: #827878)
+  * debian/patches/11_use-pkexec.dpatch: rename extra .patch from filename,
+    remove superfluous line break in policy files.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Aug 2011 08:44:11 -0400
+
+ synaptic (0.75.2ubuntu3) oneiric; urgency=low
+
+  * Use pkexec instead of gksu for authentication:
+    - debian/patches/02_ubuntu_desktop_file.dpatch: switch to pkexec
+      wrapper.
+    - debian/patches/06_ubuntu_su_to_root.dpatch: switch to pkexec wrapper.
+    - debian/patches/11_use-pkexec.dpatch: add policy file and adjust
+      Makefiles.
+    - debian/control: remove gksu from recommends.
+    - debian/rules, debian/synaptic-pkexec: install wrapper to work around
+      .desktop files not being able to call pkexec directly.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 11 Aug 2011 08:48:51 -0400
+
+synaptic (0.75.2ubuntu2) oneiric; urgency=low
+
+  * gtk/rgfetchprogress.cc:
+    - fix potential crash due to division through zero
+  * rebuild against latest libapt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 08 Aug 2011 14:28:35 +0200
+
+synaptic (0.75.2ubuntu1) oneiric; urgency=low
+
+  * merged from debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 21 Jun 2011 16:05:18 +0200
+
 synaptic (0.75.2) unstable; urgency=low
 
   [ Michael Vogt ]
@@ -57,6 +160,27 @@ synaptic (0.75.2) unstable; urgency=low
     checking for administrative privileges (LP: #791135)
 
  -- Michael Vogt <mvo@debian.org>  Tue, 21 Jun 2011 15:10:59 +0200
+
+synaptic (0.75.1ubuntu2) natty; urgency=low
+
+  * merge fixes from trunk:
+    - po/ru.po:
+      - updated, thanks to Alexander Sashanov (closes: #614969)
+    - po/pt_BR.po:
+      - updated, thanks to Sérgio Cipolla (closes: #606447)
+    - common/rpackage.{cc,h}:
+      - add basic multiarch support, enabled by default, can
+        be disabled at build time with 
+        ./configure --without-apt-multiarch-support
+      - no changes on non-multiarch enabled configurations
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 06 Apr 2011 14:08:12 +0200
+
+synaptic (0.75.1ubuntu1) natty; urgency=low
+
+  * merged fixed from debian/sid
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 04 Mar 2011 12:29:46 +0100
 
 synaptic (0.75.1) unstable; urgency=low
 

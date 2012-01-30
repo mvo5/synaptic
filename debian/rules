@@ -34,7 +34,6 @@ CONFIGURE_FLAGS = $(COMMON_FLAGS)
 
 # special case for ubuntu
 ifeq "$(DIST)" "Ubuntu"
-	CONFIGURE_FLAGS = $(COMMON_FLAGS) --with-launchpad-integration
 	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png
 endif
 
@@ -48,6 +47,7 @@ configure-stamp:
 build: build-stamp 
 build-stamp: configure-stamp patch
 	dh_testdir
+	automake --add-missing --copy
 	$(MAKE)
 	(cd po;intltool-update -p --verbose)
 	touch build-stamp
@@ -70,6 +70,10 @@ install-stamp: build-stamp
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic	
 	$(CREATE_SUPPORTED_PIXMAP)
 	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps
+	# install the apport stuff
+	install -o root -g root -m 644 debian/source_synaptic.py debian/synaptic/usr/share/apport/package-hooks
+	# ... and the pkexec stuff
+	install -D -p -o root -g root -m 755 debian/synaptic-pkexec debian/synaptic/usr/bin/synaptic-pkexec
 
 
 # Build architecture-independent files here.

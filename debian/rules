@@ -2,35 +2,30 @@
 
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
-COMMON_FLAGS= --prefix=/usr \
+CONFIGURE_FLAGS= --prefix=/usr \
 	      --mandir=\$${prefix}/share/man \
 	      --infodir=\$${prefix}/share/info \
 	      --localstatedir=/var/lib/synaptic \
 	      --sysconfdir=/etc \
 	      --with-pkg-hold
 
-CREATE_SUPPORTED_PIXMAP="true"
-CONFIGURE_FLAGS = $(COMMON_FLAGS)
-
-# special case for ubuntu
-ifeq "$(DIST)" "Ubuntu"
-	# mvo: disabled to get unified debian/ubuntu build
-	#CONFIGURE_FLAGS = $(COMMON_FLAGS) --with-launchpad-integration
-	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png
-endif
-
 %:
 	dh $@ --with autoreconf
-
-override_dh_installman:
-	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
 
 override_dh_auto_configure:
 	dh_auto_configure -- $(CONFIGURE_FLAGS) 
 
 override_dh_auto_install:
-	$(CREATE_SUPPORTED_PIXMAP)
 	dh_auto_install
+	# allow per distro supported PIXMAP, FIXME: make this part
+	# of the install (e.g. package-supported.{Ubuntu,Debian} and
+	# do run-time switching
+	if [ -f debian/package-supported.png.$(DIST) ]; then \
+		cp debian/package-supported.png.$(DIST) $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png; \
+	fi
+
+override_dh_installman:
+	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
 
 # FIXME: use quilt instead
 # patch

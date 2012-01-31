@@ -119,6 +119,11 @@ class RPackageLister {
    vector<RPackage *> _viewPackages;
    vector<int> _viewPackagesIndex;
 
+   // this is what we feed to the views as "all packages" to avoid
+   // to show all the multiarch versions by default, the user can
+   // turn that off with a config option
+   vector<RPackage *> _nativeArchPackages;
+
    // It shouldn't be needed to control this inside this class. -- niemeyer
    bool _updating;
 

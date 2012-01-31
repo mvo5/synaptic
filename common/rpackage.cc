@@ -386,11 +386,11 @@ const char* RPackage::name()
 bool RPackage::isMultiArchDuplicate()
 {
    // Installed packages are never "hidden"
-   // 
+   if ((*_package)->CurrentVer != 0)
+      return false;
    // find the "best" package for the given group, if that is different
    // from our PkgIterator this is not a interessting pkg
-   return ( (*_package)->CurrentVer != 0 ||
-            (_package->Group().FindPkg() != *_package) );
+   return (_package->Group().FindPkg() != *_package);
 }
 
 #if 0

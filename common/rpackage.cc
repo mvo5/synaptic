@@ -383,6 +383,16 @@ const char* RPackage::name()
 #endif
 }
 
+bool RPackage::isMultiArchDuplicate()
+{
+   // Installed packages are never "hidden"
+   // 
+   // find the "best" package for the given group, if that is different
+   // from our PkgIterator this is not a interessting pkg
+   return ( (*_package)->CurrentVer != 0 ||
+            (_package->Group().FindPkg() != *_package) );
+}
+
 #if 0
 bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
 {

@@ -130,10 +130,7 @@ class RPackageViewArchitecture : public RPackageView {
       return _("Architecture");
    };
 
-   void addPackage(RPackage *package) {
-      string arch = package->package()->Arch();
-      _view[arch].push_back(package);
-   };
+   void addPackage(RPackage *package);
 };
 
 class RPackageViewOrigin : public RPackageView {

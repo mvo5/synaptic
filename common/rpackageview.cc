@@ -598,7 +598,16 @@ void RPackageViewOrigin::addPackage(RPackage *package)
  };
 
 
+void RPackageViewArchitecture::addPackage(RPackage *package)
+{
+   string arch = "arch: " + package->arch();
 
+   // FIXME: add pseudo arch for packages only in one group arch
+   //        but not the other
+   
+
+   _view[arch].push_back(package);
+};
 
 
 

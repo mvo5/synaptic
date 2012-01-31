@@ -327,6 +327,9 @@ class RPackageLister {
          return vector<string>();
    };
 
+   // multiarch
+   bool isMultiarchSystem();
+
    // notification stuff about changes in packages
    void notifyPreChange(RPackage *pkg);
    void notifyPostChange(RPackage *pkg);

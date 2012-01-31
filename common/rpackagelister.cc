@@ -99,7 +99,8 @@ RPackageLister::RPackageLister()
    _views.push_back(_filterView);
    _searchView =  new RPackageViewSearch(_nativeArchPackages);
    _views.push_back(_searchView);
-   //_views.push_back(new RPackageViewAlphabetic(_packages));
+   // its import that we use "_packages" here instead of _nativeArchPackages
+   _views.push_back(new RPackageViewArchitecture(_packages));
 #ifdef WITH_EPT
    openXapianIndex();
 #endif
@@ -356,8 +357,6 @@ bool RPackageLister::openCache()
    int count = 0;
 
    bool showAllMultiArch = _config->FindB("Synaptic::ShowAllMultiArch", false);
-   std::cerr << "s: " << showAllMultiArch << std::endl;
-   std::cerr << "s: " << _config->FindB("Synaptic::ShowAllMultiArch", false) << std::endl;
 
    _installedCount = 0;
 
@@ -2080,5 +2079,13 @@ bool RPackageLister::xapianSearch(string searchString)
 }
 #endif
 
+bool RPackageLister::isMultiarchSystem()
+{
+#ifdef WITH_APT_MULTIARCH_SUPPORT
+   return (APT::Configuration::getArchitectures().size() > 1);
+#else
+   return false;
+#endif
+}
 
 // vim:ts=3:sw=3:et

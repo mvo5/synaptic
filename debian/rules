@@ -1,33 +1,13 @@
 #!/usr/bin/make -f
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
-
-
-PKG=synaptic
-DEBVER=$(shell dpkg-parsechangelog |sed -n -e '/^Version:/s/^Version: //p')
-CONFVER=$(shell  sed -n -e 's/AM_INIT_AUTOMAKE(synaptic, \(.*\))/\1/p' configure.in)
-DEB_BUILD_PROG:=debuild --preserve-envvar PATH --preserve-envvar CCACHE_DIR -us -uc $(DEB_BUILD_PROG_OPTS)
-
-
-# Rebuild configure.in to have the correct version from the change log
-ifneq ($(DEBVER),$(CONFVER))
-ifneq ($(DEBVER),)
-.PHONY: configure.in
-configure.in:
-	sed -ie 's/$(CONFVER)/$(DEBVER)/' $@ 
-endif
-else
-configure.in:
-endif
-
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
 COMMON_FLAGS= --prefix=/usr \
 	      --mandir=\$${prefix}/share/man \
 	      --infodir=\$${prefix}/share/info \
 	      --localstatedir=/var/lib/synaptic \
-	      --sysconfdir=/etc --with-pkg-hold
+	      --sysconfdir=/etc \
+	      --with-pkg-hold
 
 CREATE_SUPPORTED_PIXMAP="true"
 CONFIGURE_FLAGS = $(COMMON_FLAGS)
@@ -39,97 +19,29 @@ ifeq "$(DIST)" "Ubuntu"
 	CREATE_SUPPORTED_PIXMAP=uudecode debian/package-supported.png.uu -o $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png
 endif
 
+%:
+	dh $@ --with autoreconf
 
-configure: configure.in
-configure-stamp:
-	dh_testdir
-	./configure  $(CONFIGURE_FLAGS) 
-	touch $@
-
-build: build-stamp 
-build-stamp: configure-stamp patch
-	dh_testdir
-	automake --add-missing --copy
-	$(MAKE)
-	(cd po;intltool-update -p --verbose)
-	touch build-stamp
-
-
-clean: clean1 unpatch
-clean1: 
-	dh_testdir
-	dh_testroot
-	rm -f configure-stamp build-stamp install-stamp 
-	if [ -f Makefile ]; then $(MAKE) distclean; fi
-	dh_clean
-
-install: install-stamp
-install-stamp: build-stamp
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs -psynaptic
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic	
-	$(CREATE_SUPPORTED_PIXMAP)
-	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps
-	# install the apport stuff
-	install -o root -g root -m 644 debian/source_synaptic.py debian/synaptic/usr/share/apport/package-hooks
-	# ... and the pkexec stuff
-	install -D -p -o root -g root -m 755 debian/synaptic-pkexec debian/synaptic/usr/bin/synaptic-pkexec
-
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do here
-
-# Build architecture-dependent files here.
-binary-arch: build install synaptic 
-
-
-synaptic: build
-	dh_testdir -psynaptic
-	dh_testroot -psynaptic
-	dh_installdocs -psynaptic
+override_dh_installman:
 	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.tr.8 man/synaptic.pt_BR.8
-	dh_installmenu -psynaptic
-	dh_installchangelogs ChangeLog -psynaptic
-	dh_icons -psynaptic
-	dh_link -psynaptic
-	dh_strip -psynaptic
-	dh_compress -psynaptic
-	dh_fixperms -psynaptic
-	dh_installdeb -psynaptic
-	dh_shlibdeps -psynaptic
-	dh_gencontrol -psynaptic
-	dh_md5sums -psynaptic
-	dh_builddeb -psynaptic
 
+override_dh_auto_configure:
+	dh_auto_configure -- $(CONFIGURE_FLAGS) 
 
-patch: patch-stamp
-patch-stamp:
+override_dh_auto_install:
+	$(CREATE_SUPPORTED_PIXMAP)
+	dh_auto_install
+
+# FIXME: use quilt instead
+# patch
+override_dh_auto_build:
 	cp debian/patches/00list.$(DIST) debian/patches/00list
 	dpatch apply-all
-	touch patch-stamp
+	dh_auto_build
 
-unpatch:
+# unpatch
+override_dh_auto_clean:
 	cp debian/patches/00list.$(DIST) debian/patches/00list
 	dpatch deapply-all
 	rm -rf patch-stamp debian/patched
-
-#svn-build: configure.in
-#	rm -rf debian/svn-build
-#	mkdir -p debian/svn-build/synaptic-$(S_DEBVER)
-#	svn ls -R | xargs tar --no-recursion -c -v -f -  | (cd debian/svn-build/synaptic-$(S_DEBVER) ; tar xf -)
-#	debian/svn-build/synaptic-$(S_DEBVER)/autogen.sh
-#	(cd debian/svn-build/synaptic-$(S_DEBVER); $(DEB_BUILD_PROG))
-
-#arch-build: configure.in
-#	rm -rf debian/arch-build
-#	mkdir -p debian/arch-build/$(PKG)-$(DEBVER)
-#	tar -c --exclude=arch-build -f - `bzr inventory` | (cd debian/arch-build/$(PKG)-$(DEBVER);tar xf -)
-#	debian/arch-build/$(PKG)-$(DEBVER)/autogen.sh
-#	(cd debian/arch-build/$(PKG)-$(DEBVER) && $(DEB_BUILD_PROG))
-
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install patch unpatch
+	dh_auto_clean

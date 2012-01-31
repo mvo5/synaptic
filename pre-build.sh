@@ -6,4 +6,4 @@ if [ "$DEBVER" != "$CONFVER" ]; then
 	sed -i -e "s/$CONFVER/$DEBVER/" configure.in
 fi
 
-autoreconf -i
+

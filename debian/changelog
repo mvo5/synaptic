@@ -1,3 +1,13 @@
+synaptic (0.75.5~exp3) UNRELEASEDexperimental; urgency=low
+
+  * move to dh8
+  * modernize packaging
+  * debian/patches/11_use-pkexec.dpatch:
+    - merged to have pkexec as a additional auth mechanism, thanks
+      to Marc Deslaurier (closes: #648311)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 31 Jan 2012 09:55:23 +0100
+
 synaptic (0.75.5~exp2) experimental; urgency=low
 
   * merge changes from Ubuntu:
@@ -101,7 +111,7 @@ synaptic (0.75.2ubuntu4) oneiric; urgency=low
 
  -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Aug 2011 08:44:11 -0400
 
- synaptic (0.75.2ubuntu3) oneiric; urgency=low
+synaptic (0.75.2ubuntu3) oneiric; urgency=low
 
   * Use pkexec instead of gksu for authentication:
     - debian/patches/02_ubuntu_desktop_file.dpatch: switch to pkexec

@@ -149,6 +149,12 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
+   string arch();
+
+   // package is also available for the native architecture
+   // (note that packages installed are never considered a duplicate
+   bool isMultiArchDuplicate();
+
    // get changelog file from the debian server 
    string getChangelogFile(pkgAcquire *fetcher);
    // get screenshot file from the debian server 

@@ -154,6 +154,18 @@ const char *RPackage::maintainer()
    return "";
 }
 
+string RPackage::arch()
+{
+   pkgCache::VerIterator ver;
+
+   ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+
+   // the arch:all property is part of the version
+   if (ver && ver.Arch())
+      return ver.Arch();
+
+   return _package->Arch();
+}
 
 const char *RPackage::vendor()
 {
@@ -381,6 +393,16 @@ const char* RPackage::name()
       return "";
    return s;
 #endif
+}
+
+bool RPackage::isMultiArchDuplicate()
+{
+   // Installed packages are never "hidden"
+   if ((*_package)->CurrentVer != 0)
+      return false;
+   // find the "best" package for the given group, if that is different
+   // from our PkgIterator this is not a interessting pkg
+   return (_package->Group().FindPkg() != *_package);
 }
 
 #if 0

@@ -47,6 +47,7 @@ enum {PACKAGE_VIEW_SECTION,
       PACKAGE_VIEW_ORIGIN,
       PACKAGE_VIEW_CUSTOM,
       PACKAGE_VIEW_SEARCH,
+      PACKAGE_VIEW_ARCHITECTURE,
       N_PACKAGE_VIEWS
 };
 
@@ -120,6 +121,16 @@ class RPackageViewAlphabetic : public RPackageView {
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    };
+};
+
+class RPackageViewArchitecture : public RPackageView {
+ public:
+   RPackageViewArchitecture(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   string getName() {
+      return _("Architecture");
+   };
+
+   void addPackage(RPackage *package);
 };
 
 class RPackageViewOrigin : public RPackageView {
@@ -229,6 +240,7 @@ class RPackageViewFilter : public RPackageView {
 
    void addPackage(RPackage *package);
 };
+
 
 #endif
 

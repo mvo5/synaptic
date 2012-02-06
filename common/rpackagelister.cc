@@ -92,14 +92,15 @@ RPackageLister::RPackageLister()
    _sortMode = LIST_SORT_DEFAULT;
 
    // keep order in sync with rpackageview.h 
-   _views.push_back(new RPackageViewSections(_packages));
-   _views.push_back(new RPackageViewStatus(_packages));
-   _views.push_back(new RPackageViewOrigin(_packages));
-   _filterView = new RPackageViewFilter(_packages);
+   _views.push_back(new RPackageViewSections(_nativeArchPackages));
+   _views.push_back(new RPackageViewStatus(_nativeArchPackages));
+   _views.push_back(new RPackageViewOrigin(_nativeArchPackages));
+   _filterView = new RPackageViewFilter(_nativeArchPackages);
    _views.push_back(_filterView);
-   _searchView =  new RPackageViewSearch(_packages);
+   _searchView =  new RPackageViewSearch(_nativeArchPackages);
    _views.push_back(_searchView);
-   //_views.push_back(new RPackageViewAlphabetic(_packages));
+   // its import that we use "_packages" here instead of _nativeArchPackages
+   _views.push_back(new RPackageViewArchitecture(_packages));
 #ifdef WITH_EPT
    openXapianIndex();
 #endif
@@ -347,12 +348,15 @@ bool RPackageLister::openCache()
 
    int packageCount = deps->Head().PackageCount;
    _packages.resize(packageCount);
+   _nativeArchPackages.resize(packageCount);
 
    _packagesIndex.clear();
    _packagesIndex.resize(packageCount, -1);
 
    string pkgName;
    int count = 0;
+
+   bool showAllMultiArch = _config->FindB("Synaptic::ShowAllMultiArch", false);
 
    _installedCount = 0;
 
@@ -373,6 +377,10 @@ bool RPackageLister::openCache()
       RPackage *pkg = new RPackage(this, deps, _records, I);
       _packagesIndex[I->ID] = count;
       _packages[count++] = pkg;
+
+      // this is what is feed to the views
+      if (showAllMultiArch || !pkg->isMultiArchDuplicate())
+         _nativeArchPackages.push_back(pkg);
 
       pkgName = pkg->name();
 
@@ -2071,5 +2079,13 @@ bool RPackageLister::xapianSearch(string searchString)
 }
 #endif
 
+bool RPackageLister::isMultiarchSystem()
+{
+#ifdef WITH_APT_MULTIARCH_SUPPORT
+   return (APT::Configuration::getArchitectures().size() > 1);
+#else
+   return false;
+#endif
+}
 
 // vim:ts=3:sw=3:et

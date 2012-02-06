@@ -1807,6 +1807,20 @@ void RGMainWindow::buildInterface()
                     "toggled",
                     (GCallback) cbChangedView, this);
 
+   // architecture
+   w=_viewButtons[PACKAGE_VIEW_ARCHITECTURE] = GTK_WIDGET(gtk_builder_get_object
+                                                    (_builder,
+                                                     "radiobutton_architecture"));
+   g_object_set_data(G_OBJECT(w), "index", 
+		     GINT_TO_POINTER(PACKAGE_VIEW_ARCHITECTURE));
+   g_signal_connect(G_OBJECT(w),
+                    "toggled",
+                    (GCallback) cbChangedView, this);
+   // the architecture does not make much sense on a non-multiarch
+   // system
+   if (!_lister->isMultiarchSystem())
+      gtk_widget_hide(w);
+
    _subViewList = GTK_WIDGET(gtk_builder_get_object
                              (_builder, "treeview_subviews"));
    assert(_subViewList);

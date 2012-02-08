@@ -22,6 +22,7 @@
  * USA
  */
 
+#include <apt-pkg/version.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>
 #include <rpackage.h>
@@ -593,8 +594,33 @@ void RPackageViewOrigin::addPackage(RPackage *package)
    if(suite == "now")
       suite = "";
 
+   // normal package
    subview = suite+"/"+component+" ("+origin_url+")";
    _view[subview].push_back(package);
+
+   // see if we have versions that are higher than the candidate
+   // (e.g. experimental/backports)
+   for (pkgCache::VerIterator Ver = package->package()->VersionList();
+        Ver.end() == false; Ver++)
+   {
+      pkgCache::VerFileIterator VF = Ver.FileList();
+      if ( (VF.end() == true) || (VF.File() == NULL) )
+         continue;
+      // ignore versions that are lower or equal than the candidate
+      if (_system->VS->CmpVersion(Ver.VerStr(), 
+                                  package->availableVersion()) <= 0)
+         continue;
+      // ignore "now"
+      if(strcmp(VF.File().Archive(), "now") == 0)
+         continue;
+      //std::cerr << "version.second: " << version.second 
+      //          << " origin_str: " << suite << std::endl;
+      string prefix = _("Not automatic: ");
+      string suite = VF.File().Archive();
+      string origin_url = VF.File().Site();
+      string subview = prefix + suite + "(" + origin_url + ")";
+      _view[subview].push_back(package);
+   }
  };
 
 

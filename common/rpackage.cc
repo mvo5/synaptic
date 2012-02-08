@@ -1186,6 +1186,20 @@ bool RPackage::setVersion(string verTag)
 
    _depcache->SetCandidateVersion(Ver);
 
+   string archive;
+   for (pkgCache::VerFileIterator VF = Ver.FileList();
+        VF.end() == false;
+        VF++)
+   {
+      if (!VF.File() || !VF.File().Archive())
+         continue;
+      //std::cerr << "vf: " << VF.File().Archive() << std::endl;
+      archive = VF.File().Archive();
+      if(!_depcache->SetCandidateRelease(Ver, archive))
+         std::cerr << "Failed to SetCandidateRelease for " << archive << std::endl;
+      break;
+   }
+
    _boolFlags |= FOverrideVersion;
 
    return true;

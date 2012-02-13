@@ -1,3 +1,15 @@
+synaptic (0.75.5~exp6) UNRELEASEDexperimental; urgency=low
+
+  * unless the config option "Synaptic::InlineScreenshots" is set
+    to true do not show the tiny screenshot thumbnails inline but
+    instead download the big screenshot and show it in a window when
+    clicking on the "Show screenshot" button
+  * gtk/gtkbuilder/window_main.ui:
+    - fix "can_focus" property of entry_fast_search from false to
+      true. Looks like glade messed this up.
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 08 Feb 2012 21:38:40 +0100
+
 synaptic (0.75.5~exp5) experimental; urgency=low
 
   * common/rpackage.cc:

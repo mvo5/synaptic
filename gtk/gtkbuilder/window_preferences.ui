@@ -26,6 +26,16 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkImage" id="move_down_image">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-go-down</property>
+  </object>
+  <object class="GtkImage" id="move_up_image">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-go-up</property>
+  </object>
   <object class="GtkWindow" id="window_preferences">
     <property name="title" translatable="yes">Preferences</property>
     <property name="resizable">False</property>
@@ -515,49 +525,19 @@
                             <child>
                               <object class="GtkVBox" id="vbox39">
                                 <property name="visible">True</property>
+                                <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
                                 <child>
                                   <object class="GtkButton" id="button_column_up">
+                                    <property name="label" translatable="yes">Move _Up</property>
+                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <signal name="clicked" handler="on_button_column_up_clicked"/>
-                                    <child>
-                                      <object class="GtkAlignment" id="alignment4">
-                                        <property name="visible">True</property>
-                                        <property name="xscale">0</property>
-                                        <property name="yscale">0</property>
-                                        <child>
-                                          <object class="GtkHBox" id="hbox80">
-                                            <property name="visible">True</property>
-                                            <property name="spacing">2</property>
-                                            <child>
-                                              <object class="GtkImage" id="image11">
-                                                <property name="visible">True</property>
-                                                <property name="stock">gtk-go-up</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkLabel" id="label163">
-                                                <property name="visible">True</property>
-                                                <property name="label" translatable="yes">Move _Up</property>
-                                                <property name="use_underline">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
+                                    <property name="use_action_appearance">False</property>
+                                    <property name="image">move_up_image</property>
+                                    <property name="use_underline">True</property>
+                                    <signal name="clicked" handler="on_button_column_up_clicked" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -567,46 +547,15 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button_column_down">
+                                    <property name="label" translatable="yes">Move D_own</property>
+                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <signal name="clicked" handler="on_button_column_down_clicked"/>
-                                    <child>
-                                      <object class="GtkAlignment" id="alignment5">
-                                        <property name="visible">True</property>
-                                        <property name="xscale">0</property>
-                                        <property name="yscale">0</property>
-                                        <child>
-                                          <object class="GtkHBox" id="hbox81">
-                                            <property name="visible">True</property>
-                                            <property name="spacing">2</property>
-                                            <child>
-                                              <object class="GtkImage" id="image12">
-                                                <property name="visible">True</property>
-                                                <property name="stock">gtk-go-down</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkLabel" id="label164">
-                                                <property name="visible">True</property>
-                                                <property name="label" translatable="yes">Move D_own</property>
-                                                <property name="use_underline">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                        </child>
-                                      </object>
-                                    </child>
+                                    <property name="use_action_appearance">False</property>
+                                    <property name="image">move_down_image</property>
+                                    <property name="use_underline">True</property>
+                                    <signal name="clicked" handler="on_button_column_down_clicked" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>

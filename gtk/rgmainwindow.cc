@@ -2402,7 +2402,7 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    if(me->_pkgDetails == NULL)
       me->_pkgDetails = new RGPkgDetailsWindow(me);
 
-   RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg);
+   RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg, true);
    me->_pkgDetails->show();
 }
 

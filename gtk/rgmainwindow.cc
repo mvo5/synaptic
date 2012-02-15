@@ -2469,7 +2469,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       dialog = gtk_message_dialog_new (GTK_WINDOW(me->window()),
 				       GTK_DIALOG_DESTROY_WITH_PARENT,
 				       GTK_MESSAGE_INFO,
-				       GTK_BUTTONS_CLOSE,
+				       GTK_BUTTONS_NONE,
 				       _("Repositories changed"));
       // TRANSLATORS: this message appears when the user added/removed 
       // a repository (sources.list entry) a reload (apt-get update) is 
@@ -2485,12 +2485,20 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 #else
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
 #endif
+      gtk_dialog_add_buttons(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
+      GtkWidget* reload_button = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+      GtkWidget* refresh_image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
+      gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
       gtk_box_pack_start_defaults(GTK_BOX(GTK_DIALOG(dialog)->vbox),cb);
       gtk_widget_show(cb);
-      gtk_dialog_run (GTK_DIALOG (dialog));
+      gint response = gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_hide(dialog);
       if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
 	    _config->Set("Synaptic::AskForUpdateAfterSrcChange", false);
+      }
+      if (response == GTK_RESPONSE_ACCEPT) {
+         me->cbUpdateClicked(NULL, data);
       }
       gtk_widget_destroy (dialog);
    }

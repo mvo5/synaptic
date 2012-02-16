@@ -117,6 +117,22 @@ bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
    return true;
 }
 
+bool RGGtkBuilderWindow::setMarkup(const char *widget_name, const char *value)
+{
+   GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (_builder, widget_name));
+   if (widget == NULL) {
+      cout << "widget == NULL with: " << widget_name << endl;
+      return false;
+   }
+
+   const gchar *utf8value=utf8(value);
+
+   if (!utf8value)
+      utf8value = _("N/A");
+   gtk_label_set_markup(GTK_LABEL(widget), utf8value);
+   return true;
+}
+
 bool RGGtkBuilderWindow::setLabel(const char *widget_name, const long value)
 {
    string strVal;

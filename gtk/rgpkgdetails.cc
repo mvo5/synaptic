@@ -200,7 +200,17 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    me->setTextView("textview_pkgcommon", pkg_summary, true);
    g_free(pkg_summary);
 
-   me->setLabel("label_maintainer", pkg->maintainer());
+   string maintainer = pkg->maintainer();
+   int start_index = maintainer.find("<");
+   int end_index = maintainer.rfind(">");
+   if (start_index != -1 && end_index != -1) {
+       gchar*  maintainer_label = g_markup_printf_escaped("<a href=\"mailto:%s\">%s</a>", maintainer.substr(start_index+1, end_index - start_index - 1).c_str(), maintainer.c_str() );
+       me->setMarkup("label_maintainer", maintainer_label);
+       g_free(maintainer_label);
+   } else {
+       me->setLabel("label_maintainer", pkg->maintainer());
+   }
+   
    me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
    me->setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
    me->setLabel("label_priority", pkg->priority());

@@ -53,6 +53,7 @@ class RGGtkBuilderWindow:public RGWindow {
 
    // functions to set various widgets
    bool setLabel(const char *name, const char *value);
+   bool setMarkup(const char *widget_name, const char *value);
    bool setLabel(const char *name, const long value);
    bool setTextView(const char *widget_name, const char *value,
 		    bool useHeadline=false);

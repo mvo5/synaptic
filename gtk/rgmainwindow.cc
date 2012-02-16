@@ -1894,10 +1894,13 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken,
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
    if (pkg->getFlags() & RPackage::FImportant) {
-      if (!_userDialog->confirm(_("Removing this package may render the "
-                                  "system unusable.\n"
-                                  "Are you sure you want to do that?"),
-				false)) {
+      gchar* warning = g_strdup_printf(_( "Removing package %s may render the "
+                                          "system unusable.\n"
+                                          "Are you sure you want to do that?"), 
+                                       pkg->name());
+      bool confirmed = _userDialog->confirm(warning, false);
+      g_free(warning);
+      if (!confirmed) {
          return;
       }
    }

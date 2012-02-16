@@ -1894,7 +1894,7 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken,
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
    if (pkg->getFlags() & RPackage::FImportant) {
-      gchar* warning = g_strdup_printf(_( "Removing package %s may render the "
+      gchar* warning = g_strdup_printf(_( "Removing package \"%s\" may render the "
                                           "system unusable.\n"
                                           "Are you sure you want to do that?"), 
                                        pkg->name());

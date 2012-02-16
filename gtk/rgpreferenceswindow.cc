@@ -48,8 +48,8 @@ const char * RGPreferencesWindow::column_names[] =
 
 const char *RGPreferencesWindow::column_visible_names[] = 
    {_("Status"), _("Supported"), _("Package Name"), _("Section"),
-    _("Component"), _("Installed Version"), _("Available Version"), 
-    _("Installed Size"), _("Download Size"),_("Description"), NULL };
+    _("Component"), _("Installed Version"), _("Latest Version"), 
+    _("Size"), _("Download Size"),_("Description"), NULL };
 
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 

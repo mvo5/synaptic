@@ -965,7 +965,7 @@ void RGMainWindow::buildTreeView()
 
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(_treeView), NAME_COLUMN);
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
-   gtk_tree_selection_set_mode(selection, GTK_SELECTION_MULTIPLE);
+   gtk_tree_selection_set_mode(selection, GTK_SELECTION_SINGLE);
 
    /* Status(pixmap) column */
    pos = _config->FindI("Synaptic::statusColumnPos", 0);

@@ -34,6 +34,33 @@
 #include "rgutils.h"
 
 
+// helper
+GdkPixbuf *
+get_gdk_pixbuf(const gchar *name, int size)
+{
+   GtkIconTheme *theme;
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+
+   theme = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
+				     (GtkIconLookupFlags)0, &error);
+   if (pixbuf == NULL) 
+      std::cerr << "Warning, failed to load: " << name 
+		<< error->message << std::endl;
+
+   return pixbuf;
+}
+
+GtkWidget *get_gtk_image(const gchar *name, int size)
+{
+   GdkPixbuf *buf;
+   buf = get_gdk_pixbuf(name, size);
+   if(!buf)
+      return NULL;
+   return gtk_image_new_from_pixbuf(buf);
+}
+
 void RGFlushInterface()
 {
    XSync(GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), False);

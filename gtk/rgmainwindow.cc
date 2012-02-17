@@ -77,9 +77,6 @@
 #include "rgutils.h"
 #include "sections_trans.h"
 
-// icons and pixmaps
-#include "synaptic.xpm"
-
 #include "i18n.h"
 
 // include it here because depcache.h hates us if we have it before
@@ -1200,9 +1197,7 @@ void RGMainWindow::buildInterface()
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-
-   GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data((const char **)
-                                                  synaptic_xpm);
+   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
    gtk_window_resize(GTK_WINDOW(_win),

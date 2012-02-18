@@ -488,8 +488,7 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) data;
    if (me->_blockActions)
       return;
-   cout << "RGMainWindow::cbMenuAutoInstalledClickedn()" << endl;
-
+   
    bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
 
    GtkTreeSelection *selection;

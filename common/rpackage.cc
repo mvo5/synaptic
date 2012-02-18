@@ -154,6 +154,19 @@ const char *RPackage::maintainer()
    return "";
 }
 
+const char *RPackage::homepage()
+{
+   static string _homepage;
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
+      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      _homepage = parser.Homepage();
+      return _homepage .c_str();
+   }
+   return "";
+}
+
+
 string RPackage::arch()
 {
    pkgCache::VerIterator ver;

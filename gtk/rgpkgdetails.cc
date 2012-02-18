@@ -298,6 +298,20 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
    gtk_widget_show(button);
 
+   // add button to open the homepage
+   if (strlen(pkg->homepage())) {
+       gtk_text_buffer_insert(buf, &it, "    ", 1);
+       anchor = gtk_text_buffer_create_child_anchor(buf, &it);
+       button = gtk_link_button_new_with_label(pkg->homepage(), _("Visit Homepage"));
+       char *homepage_tooltip = g_strdup_printf("Visit %s",
+					     pkg->homepage());
+       gtk_widget_set_tooltip_text(button, homepage_tooltip);
+       g_free(homepage_tooltip);
+       g_object_set_data(G_OBJECT(button), "me", me);
+       gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
+       gtk_widget_show(button);
+   }
+
    // show the rest of the description
    gtk_text_buffer_insert(buf, &it, "\n", 1);
    s = utf8(pkg->description());

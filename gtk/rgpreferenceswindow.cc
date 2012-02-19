@@ -650,8 +650,8 @@ void RGPreferencesWindow::readNetwork()
    // proxy stuff
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object
-                                                  (_builder,"radio_use_proxy")),
-                                                  useProxy);
+                                                  (_builder,"radio_no_proxy")),
+                                                  !useProxy);
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
                             (_builder, "table_proxy")),
                             useProxy);

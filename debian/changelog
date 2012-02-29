@@ -7,6 +7,9 @@ synaptic (0.75.5~exp6) UNRELEASEDexperimental; urgency=low
   * gtk/gtkbuilder/window_main.ui:
     - fix "can_focus" property of entry_fast_search from false to
       true. Looks like glade messed this up.
+  * common/rpackagelister.cc:
+    - simplify openCache() code to use more modern std::vector features
+      and fix crash along the way (LP: #936677)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 08 Feb 2012 21:38:40 +0100
 

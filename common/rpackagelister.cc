@@ -347,8 +347,11 @@ bool RPackageLister::openCache()
       delete (*I);
 
    int packageCount = deps->Head().PackageCount;
-   _packages.resize(packageCount);
-   _nativeArchPackages.resize(packageCount);
+   _packages.clear();
+   _packages.reserve(packageCount);
+
+   _nativeArchPackages.clear();
+   _nativeArchPackages.reserve(packageCount);
 
    _packagesIndex.clear();
    _packagesIndex.resize(packageCount, -1);
@@ -376,7 +379,8 @@ bool RPackageLister::openCache()
 
       RPackage *pkg = new RPackage(this, deps, _records, I);
       _packagesIndex[I->ID] = count;
-      _packages[count++] = pkg;
+      _packages.push_back(pkg);
+      count++;
 
       // this is what is feed to the views
       if (showAllMultiArch || !pkg->isMultiArchDuplicate())
@@ -411,9 +415,6 @@ bool RPackageLister::openCache()
          cerr << "Package " << I.Name() << " has no section?!" << endl;
 #endif
    }
-
-   // Truncate due to virtual packages which were skipped above.
-   _packages.resize(count);
 
    // refresh the views
    for (unsigned int i = 0; i != _views.size(); i++)

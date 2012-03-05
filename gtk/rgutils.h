@@ -55,6 +55,8 @@ GtkWidget *get_gtk_image(const char *name, int size=16);
 GdkPixbuf *get_gdk_pixbuf(const gchar *name, int size=16);
 
 std::string SizeToStr(double Bytes);
+std::string RunAsSudoUserCommand(std::string cmd);
+std::string GetBrowserCommand(std::string link);
 
 std::string MarkupEscapeString(std::string str);
 std::string MarkupUnescapeString(std::string str);

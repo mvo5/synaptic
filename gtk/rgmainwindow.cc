@@ -2603,39 +2603,29 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
    me->setStatusText(_("Starting help viewer..."));
 
    string cmd;
-   if (is_binary_in_path("yelp"))
+   string browsercmd;
+   if (is_binary_in_path("yelp")) {
       cmd = "yelp ghelp:synaptic";
 #if 0 // FIXME: khelpcenter can't display this? check again!
     else if(is_binary_in_path("khelpcenter")) {
        system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
     }
 #endif
-   else if (is_binary_in_path("mozilla")) {
-      cmd = "mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html";
-   } else if (is_binary_in_path("konqueror")) {
-      cmd = "konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   } else if (!(browsercmd=GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html")).empty()) {
+      cmd = browsercmd;
    } else {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
-                               "the 'konqueror' browser or the 'mozilla' "
+                               "the 'konqueror' browser or the 'firefox' "
                                "browser to view the synaptic manual.\n\n"
                                "Alternatively you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));
    }
-
-   if (!cmd.empty()) {
-      gchar * sudo_user;
-      sudo_user = g_strdup(getenv("SUDO_USER"));
-      // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
-      if(is_binary_in_path("sudo") && (sudo_user != NULL))
-         cmd = "sudo -u " + string(sudo_user) + " " + cmd;
-      g_free(sudo_user);
-      cmd += " &";
-      if(system(cmd.c_str()) < 0) {
-         g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
-      }
+   cmd = RunAsSudoUserCommand(cmd);
+   if(!cmd.empty() && (system(cmd.c_str()) < 0)) {
+      g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
    }
 }
 

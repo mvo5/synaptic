@@ -45,6 +45,7 @@ class RGPkgDetailsWindow : public RGGtkBuilderWindow {
    static void cbShowScreenshot(GtkWidget *button, void *data);
    static void cbShowBigScreenshot(GtkWidget *button, GdkEventButton *event, void *data);
    static void cbShowChangelog(GtkWidget *button, void *data);
+   static gboolean cbOpenHomepage(GtkWidget *button, void *data);
    static void doShowBigScreenshot(RPackage *pkg);
 
  public:

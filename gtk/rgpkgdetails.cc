@@ -181,6 +181,18 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
    ShowChangelogDialog(parent, pkg);
 }
 
+gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void* data)
+{
+   RPackage *pkg = (RPackage*)data;
+   std::string cmd = GetBrowserCommand(pkg->homepage());
+   cmd = RunAsSudoUserCommand(cmd);
+   printf ("Running command %s\n", cmd.c_str());
+   if(!cmd.empty() && (system(cmd.c_str()) < 0)) {
+      g_warning(_("An error occured while opening homepage\n\tCommand: %s"), cmd.c_str());
+   }
+   return TRUE;
+}
+
 void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me, 
                                       RPackage *pkg,
 				      bool setTitle)
@@ -305,6 +317,9 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
        button = gtk_link_button_new_with_label(pkg->homepage(), _("Visit Homepage"));
        char *homepage_tooltip = g_strdup_printf("Visit %s",
 					     pkg->homepage());
+       g_signal_connect(G_OBJECT(button),"activate", 
+                    G_CALLBACK(cbOpenHomepage),
+                    pkg);
        gtk_widget_set_tooltip_text(button, homepage_tooltip);
        g_free(homepage_tooltip);
        g_object_set_data(G_OBJECT(button), "me", me);

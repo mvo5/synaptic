@@ -111,6 +111,36 @@ std::string SizeToStr(double Size)
    return S;
 }
 
+std::string GetBrowserCommand(std::string link)
+{
+   if (is_binary_in_path("xdg-open")) {
+      return "xdg-open "+link;
+   } else if (is_binary_in_path("firefox")) {
+      return "firefox "+link;
+   } else if (is_binary_in_path("konqueror")) {
+      return "konqueror "+link;
+   }
+   return "";
+}
+
+std::string RunAsSudoUserCommand(std::string cmd)
+{
+    std::string result = "" + cmd;
+    if (cmd.empty()) {
+       return "";
+    }
+    gchar * sudo_user;
+    sudo_user = g_strdup(getenv("PKEXEC_UID"));
+    if (sudo_user == NULL) {
+       sudo_user = g_strdup(getenv("SUDO_USER"));
+    }
+    // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
+    if(is_binary_in_path("sudo") && (sudo_user != NULL))
+       result = "sudo -u " + string(sudo_user) + " " + cmd+" &";
+    g_free(sudo_user);
+    printf("Command is %s\n", result.c_str());
+    return result;
+}
 
 bool is_binary_in_path(const char *program)
 {

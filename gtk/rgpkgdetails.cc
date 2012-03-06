@@ -185,6 +185,7 @@ gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void* data)
 {
    RPackage *pkg = (RPackage*)data;
    std::vector<const gchar*> cmd = GetBrowserCommand(pkg->homepage());
+   std::cerr << "cbOpenHomepage: " << cmd[0] << std::endl;
    RunAsSudoUserCommand(cmd);
 
    return TRUE;
@@ -311,10 +312,10 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    if (strlen(pkg->homepage())) {
        gtk_text_buffer_insert(buf, &it, "    ", 1);
        anchor = gtk_text_buffer_create_child_anchor(buf, &it);
-       button = gtk_link_button_new_with_label(pkg->homepage(), _("Visit Homepage"));
+       button = gtk_link_button_new_with_label("", _("Visit Homepage"));
        char *homepage_tooltip = g_strdup_printf("Visit %s",
 					     pkg->homepage());
-       g_signal_connect(G_OBJECT(button),"activate", 
+       g_signal_connect(G_OBJECT(button),"clicked", 
                     G_CALLBACK(cbOpenHomepage),
                     pkg);
        gtk_widget_set_tooltip_text(button, homepage_tooltip);

@@ -184,12 +184,9 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void* data)
 {
    RPackage *pkg = (RPackage*)data;
-   std::string cmd = GetBrowserCommand(pkg->homepage());
-   cmd = RunAsSudoUserCommand(cmd);
-   printf ("Running command %s\n", cmd.c_str());
-   if(!cmd.empty() && (system(cmd.c_str()) < 0)) {
-      g_warning(_("An error occured while opening homepage\n\tCommand: %s"), cmd.c_str());
-   }
+   std::vector<const gchar*> cmd = GetBrowserCommand(pkg->homepage());
+   RunAsSudoUserCommand(cmd);
+
    return TRUE;
 }
 

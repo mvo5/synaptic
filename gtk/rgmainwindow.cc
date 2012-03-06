@@ -2598,18 +2598,16 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    me->setStatusText(_("Starting help viewer..."));
 
-   string cmd;
-   string browsercmd;
+   // FIXME: move this into rgutils as well (or rgspawn.cc)
+   vector<const gchar*> cmd;
    if (is_binary_in_path("yelp")) {
-      cmd = "yelp ghelp:synaptic";
-#if 0 // FIXME: khelpcenter can't display this? check again!
-    else if(is_binary_in_path("khelpcenter")) {
-       system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
-    }
-#endif
-   } else if (!(browsercmd=GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html")).empty()) {
-      cmd = browsercmd;
+      cmd.push_back("yelp");
+      cmd.push_back("ghelp:synaptic");
    } else {
+      cmd = GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html");
+   }
+
+   if (cmd.empty()) {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
                                "the 'konqueror' browser or the 'firefox' "
@@ -2618,11 +2616,9 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));
+      return;
    }
-   cmd = RunAsSudoUserCommand(cmd);
-   if(!cmd.empty() && (system(cmd.c_str()) < 0)) {
-      g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
-   }
+   RunAsSudoUserCommand(cmd);
 }
 
 void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
@@ -2758,8 +2754,6 @@ void RGMainWindow::cbRedoClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
 {
-   char frontend[] = "gnome";
-   char *cmd;
    RGMainWindow *me = (RGMainWindow *) data;
    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
@@ -2776,9 +2770,15 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    }
 
    me->setStatusText(_("Starting package configuration tool..."));
-   cmd = g_strdup_printf("/usr/sbin/dpkg-reconfigure -f%s %s &",
-                         frontend, me->selectedPackage()->name());
-   system(cmd);
+   const gchar *cmd[] = { "/usr/sbin/dpkg-reconfigure",
+                    "-fgnome",
+                    me->selectedPackage()->name(),
+                    NULL };
+   GError *error = NULL;
+   g_spawn_async("/", (gchar**)cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+   if(error != NULL) {
+      std::cerr << "failed to run dpkg-reconfigure cmd" << std::endl;
+   }
 }
 
 

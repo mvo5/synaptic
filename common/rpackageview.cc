@@ -611,7 +611,9 @@ void RPackageViewOrigin::addPackage(RPackage *package)
                                   package->availableVersion()) <= 0)
          continue;
       // ignore "now"
-      if(strcmp(VF.File().Archive(), "now") == 0)
+      if(VF.File() && 
+         VF.File().Archive() && 
+         strcmp(VF.File().Archive(), "now") == 0)
          continue;
       //std::cerr << "version.second: " << version.second 
       //          << " origin_str: " << suite << std::endl;

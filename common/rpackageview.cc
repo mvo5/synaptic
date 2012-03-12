@@ -604,16 +604,15 @@ void RPackageViewOrigin::addPackage(RPackage *package)
         Ver.end() == false; Ver++)
    {
       pkgCache::VerFileIterator VF = Ver.FileList();
-      if ( (VF.end() == true) || (VF.File() == NULL) )
+      if ( (VF.end() == true) || (VF.File() == NULL) || 
+           (VF.File().Archive() == NULL) || (VF.File().Site() == NULL) )
          continue;
       // ignore versions that are lower or equal than the candidate
       if (_system->VS->CmpVersion(Ver.VerStr(), 
                                   package->availableVersion()) <= 0)
          continue;
       // ignore "now"
-      if(VF.File() && 
-         VF.File().Archive() && 
-         strcmp(VF.File().Archive(), "now") == 0)
+      if(strcmp(VF.File().Archive(), "now") == 0)
          continue;
       //std::cerr << "version.second: " << version.second 
       //          << " origin_str: " << suite << std::endl;

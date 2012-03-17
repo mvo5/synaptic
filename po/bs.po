@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-03-13 08:58+0000\n"
-"PO-Revision-Date: 2011-06-24 22:37+0000\n"
-"Last-Translator: CERminator <Unknown>\n"
+"PO-Revision-Date: 2012-03-16 13:03+0000\n"
+"Last-Translator: Kenan Dervišević <kenan3008@gmail.com>\n"
 "Language-Team: Bosnian <bs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2012-03-14 04:30+0000\n"
-"X-Generator: Launchpad (build 14933)\n"
+"X-Launchpad-Export-Date: 2012-03-17 04:30+0000\n"
+"X-Generator: Launchpad (build 14951)\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -179,11 +179,10 @@ msgstr "Razno — tekst"
 msgid "Networking"
 msgstr "Mreža"
 
-# bug: rasprava o ovome nazivu je na dopisnoj listi pod naslovom Synaptic (26. decembar 2003) - za sada  ostavljam
 #. TRANSLATORS: Alias for the Debian package section "news"
 #: ../common/sections_trans.cc:76
 msgid "Newsgroup"
-msgstr "Pričaonice"
+msgstr "Novinske grupe"
 
 #. TRANSLATORS: Alias for the Debian package section "ocaml"
 #: ../common/sections_trans.cc:78
@@ -304,12 +303,12 @@ msgstr "Meta paketi"
 #. TRANSLATORS: Alias for the Debian package section "education"
 #: ../common/sections_trans.cc:124
 msgid "Education"
-msgstr ""
+msgstr "Obrazovanje"
 
 #. TRANSLATORS: Alias for the Debian package section "introspection"
 #: ../common/sections_trans.cc:126
 msgid "GObject Introspection data"
-msgstr ""
+msgstr "GObject samoposmatrački podaci"
 
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
@@ -521,6 +520,9 @@ msgid ""
 "Not all changes and updates succeeded. For further details of the failure, "
 "please expand the 'Details' panel below."
 msgstr ""
+"\n"
+"Sve promjene i ažuriranja nisu uspjela. Za više detalja o greški, molimo vas "
+"da kliknete na 'Detalji'."
 
 #: ../common/rinstallprogress.cc:44
 msgid ""
@@ -582,7 +584,7 @@ msgstr "\t%s %s, ali nije moguće instalirati"
 #: ../common/rpackage.cc:679
 #, c-format
 msgid "\t%s but it is a virtual package"
-msgstr "\tPaket \t%s je virtualni paket"
+msgstr "\t%s ali je on virtualni paket"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
@@ -795,7 +797,7 @@ msgstr "Skraćen pregled"
 
 #: ../common/rpackagefilter.cc:66
 msgid "File"
-msgstr "Fajl"
+msgstr "Datoteka"
 
 #: ../common/rpackagefilter.cc:759
 #, c-format
@@ -969,7 +971,7 @@ msgstr "Abecedno stablo"
 
 #: ../common/rpackageview.h:130
 msgid "Architecture"
-msgstr ""
+msgstr "Arhitektura"
 
 #: ../common/rpackageview.h:183
 msgid "Search History"
@@ -1065,7 +1067,7 @@ msgstr "Lokal"
 #. << " origin_str: " << suite << std::endl;
 #: ../common/rpackageview.cc:619
 msgid "Not automatic: "
-msgstr ""
+msgstr "Neautomatski: "
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2295
 #: ../gtk/rgmainwindow.cc:3008 ../gtk/rgmainwindow.cc:3140
@@ -1181,6 +1183,8 @@ msgid ""
 "This usually means that another package management application (like apt-get "
 "or aptitude) is already running. Please close that application first."
 msgstr ""
+"Ovo obično znači da je neki drugi menadžer paket (kao apt-get ili aptitude) "
+"već pokrenut. Molimo vas da prvo zatvorite tu aplikaciju."
 
 #: ../gtk/gsynaptic.cc:430
 msgid "Starting without administrative privileges"
@@ -1191,6 +1195,8 @@ msgid ""
 "You will not be able to apply any changes. But you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
+"Nećete moći sačuvati bilo kakve promjene, ali možete snimiti označene "
+"promjene ili kreirati skriptu preuzimanja za njih."
 
 #: ../gtk/gsynaptic.cc:487
 msgid "Synaptic Package Manager "
@@ -1311,21 +1317,23 @@ msgstr "Izvršavanje promjena"
 
 #: ../gtk/rgdebinstallprogress.cc:418
 msgid "Copy"
-msgstr ""
+msgstr "Kopiraj"
 
 #: ../gtk/rgdebinstallprogress.cc:427
 msgid "Select All"
-msgstr ""
+msgstr "Označi sve"
 
 #: ../gtk/rgdebinstallprogress.cc:482
 msgid "Ctrl-c pressed"
-msgstr ""
+msgstr "Pritisnuto Ctrl-c"
 
 #: ../gtk/rgdebinstallprogress.cc:483
 msgid ""
 "This will abort the operation and may leave the system in a broken state. "
 "Are you sure you want to do that?"
 msgstr ""
+"Ovim ćeteprekinuti operaciju i možete ostaviti sistem u neispravnom stanju. "
+"Da li ste sigurni da to želite učiniti?"
 
 #. error from dpkg, needs to be parsed different
 #: ../gtk/rgdebinstallprogress.cc:584
@@ -1336,11 +1344,11 @@ msgstr "Greška u paketu %s"
 #. running dpkg --configure -a
 #: ../gtk/rgdebinstallprogress.cc:591
 msgid "Trying to recover from package failure"
-msgstr ""
+msgstr "Pokušavam popravak greške paketa"
 
 #: ../gtk/rgdebinstallprogress.cc:685
 msgid "Error failed to fork pty"
-msgstr ""
+msgstr "Greška pri dupliranju 'pty'"
 
 #: ../gtk/rgdebinstallprogress.cc:702
 msgid "A package failed to install.  Trying to recover:"
@@ -1517,7 +1525,7 @@ msgstr "Brzina preuzimanja: %s/s - %s preostalo"
 
 #: ../gtk/rgfetchprogress.cc:350
 msgid "Download rate: ..."
-msgstr ""
+msgstr "Brzina preuzimanja: ..."
 
 #: ../gtk/rgfetchprogress.cc:352
 #, c-format
@@ -1627,7 +1635,7 @@ msgstr "Ova aplikacija je podržana od strane distribucije"
 
 #: ../gtk/rgpkgdetails.cc:269
 msgid "Get Screenshot"
-msgstr ""
+msgstr "Napravi sliku ekrana"
 
 #: ../gtk/rgpkgdetails.cc:283
 msgid "Get Changelog"
@@ -1667,7 +1675,7 @@ msgstr ""
 
 #: ../gtk/rgmainwindow.cc:900
 msgid "Rebuilding search index"
-msgstr ""
+msgstr "Obnavljam indeks pretrage"
 
 #: ../gtk/rgmainwindow.cc:922 ../gtk/gtkbuilder/window_main.ui.h:52
 msgid "Quick filter"
@@ -1704,11 +1712,11 @@ msgstr "Primjeni sve označene promjene"
 
 #: ../gtk/rgmainwindow.cc:1452
 msgid "View package properties"
-msgstr ""
+msgstr "Vidi svojstva paketa"
 
 #: ../gtk/rgmainwindow.cc:1456
 msgid "Search for packages"
-msgstr ""
+msgstr "Pretraga za paketima"
 
 #: ../gtk/rgmainwindow.cc:1660
 msgid "Unmark"
@@ -1853,7 +1861,7 @@ msgid ""
 "button for your changes to take effect"
 msgstr ""
 "Informacije o repozitorijumu su promijenjene. Sada morate kliknuti na tipku "
-"\"Osveži\" koko bi se primenle promjene"
+"\"Osvježi\" kako bi se promjene počele primjenjivati"
 
 #: ../gtk/rgmainwindow.cc:2484
 msgid "Never show this message again"
@@ -1893,6 +1901,8 @@ msgid ""
 "An error occured while starting the help viewer\n"
 "\tCommand: %s"
 msgstr ""
+"Došlo je do greške pri pokretanju prikaza pomoći\n"
+"\tNaredba: %s"
 
 #: ../gtk/rgmainwindow.cc:2777
 msgid ""
@@ -1932,7 +1942,7 @@ msgstr "Izvodim odabrane promjene... ovo može potrajati"
 
 #: ../gtk/rgmainwindow.cc:2915
 msgid "Downloading Package Files"
-msgstr ""
+msgstr "Pruzimam datoteke paketa"
 
 #: ../gtk/rgmainwindow.cc:2991
 msgid "Do you want to quit Synaptic?"
@@ -1940,7 +1950,7 @@ msgstr "Da li želite da napustite Synaptic?"
 
 #: ../gtk/rgmainwindow.cc:3092
 msgid "Downloading Package Information"
-msgstr ""
+msgstr "Preuzimam informacije o paketima"
 
 #: ../gtk/rgmainwindow.cc:3093
 msgid ""
@@ -1972,7 +1982,7 @@ msgstr ""
 
 #: ../gtk/rgmainwindow.cc:3236
 msgid "Marking all available upgrades..."
-msgstr "Obeležavam sve dostupne nadogradnje..."
+msgstr "Obilježavam sve dostupne nadogradnje..."
 
 #: ../gtk/rgmainwindow.cc:3252
 msgid "Successfully marked available upgrades"
@@ -2108,7 +2118,7 @@ msgstr "<b>%s</b> (verzija <i>%s</i>) će biti instaliran\n"
 
 #: ../gtk/rgsummarywindow.cc:320
 msgid "_Hide Details"
-msgstr ""
+msgstr "_Sakrij detalje"
 
 #: ../gtk/rgsummarywindow.cc:324 ../gtk/gtkbuilder/window_summary.ui.h:7
 msgid "_Show Details"
@@ -2211,7 +2221,7 @@ msgstr ""
 
 #: ../gtk/rguserdialog.cc:76
 msgid "An error occurred"
-msgstr ""
+msgstr "Došlo je do greške"
 
 #: ../gtk/rguserdialog.cc:77
 msgid "The following details are provided:"
@@ -2273,11 +2283,11 @@ msgstr "_Čitam odabrane promjene..."
 
 #: ../gtk/gtkbuilder/window_main.ui.h:4
 msgid "_Save Markings"
-msgstr "Sačuvaj obeleženo"
+msgstr "Sačuvaj obilježeno"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:5
 msgid "Save Markings _As..."
-msgstr "Sačuvaj obeleženo kao..."
+msgstr "Sačuvaj obilježeno _kao..."
 
 #: ../gtk/gtkbuilder/window_main.ui.h:6
 msgid ""
@@ -2309,7 +2319,7 @@ msgstr "Istorijat"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:11
 msgid "_Quit"
-msgstr "_Kraj"
+msgstr "_Izlaz"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:12
 msgid "_Edit"
@@ -2461,7 +2471,7 @@ msgstr "Učitaj ponovo"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:49
 msgid "Mark All Upgrades"
-msgstr "Obeleži sve nadogradnje"
+msgstr "Obilježi sve nadogradnje"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:50
 msgid "Apply"
@@ -2489,7 +2499,7 @@ msgstr "Prilagođeni filteri"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:59
 msgid "_Architecture"
-msgstr ""
+msgstr "_Arhitektura"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:61
 #: ../gtk/gtkbuilder/window_details.ui.h:1
@@ -2616,6 +2626,8 @@ msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2012 Michael Vogt</span>"
 msgstr ""
+"<span size=\"small\">Sva prava zadržana (c) 2001-2004 Connectiva S/A \n"
+"Sva prava zadržana(c) 2002-2012 Michael Vogt</span>"
 
 #: ../gtk/gtkbuilder/window_about.ui.h:11
 msgid ""
@@ -2667,6 +2679,13 @@ msgid ""
 "Manual:\n"
 "Sebastian Heinlein <sebastian.heinlein@web.de>"
 msgstr ""
+"Dokumentacija:\n"
+"Wybo Dekker <wybo@servalys.nl>\n"
+"Michael Vogt <mvo@debian.org>\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>\n"
+"\n"
+"Uputstvo:\n"
+"Sebastian Heinlein <sebastian.heinlein@web.de>"
 
 #: ../gtk/gtkbuilder/window_about.ui.h:33
 msgid "Documented by"
@@ -2686,7 +2705,7 @@ msgstr "Pretraga"
 
 #: ../gtk/gtkbuilder/window_fetch.ui.h:1
 msgid "Show for individual files"
-msgstr ""
+msgstr "Prikaži za pojedinačne datoteke"
 
 #: ../gtk/gtkbuilder/window_changes.ui.h:1
 msgid "_Mark"
@@ -2697,7 +2716,7 @@ msgid ""
 "<span weight=\"bold\" size=\"larger\">Mark additional required "
 "changes?</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Obeleži dodatne zahtjevane "
+"<span weight=\"bold\" size=\"larger\">Obilježi dodatne zahtjevane "
 "promjene?</span>"
 
 #: ../gtk/gtkbuilder/window_changes.ui.h:3
@@ -2730,7 +2749,7 @@ msgstr "Razmotri preporučene pakete kao zavisnosti"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:8
 msgid "Clicking on the status icon marks the most likely action"
-msgstr "Klik na sličicu stanja obeležava najčešće akcije"
+msgstr "Klik na sličicu stanja obilježava najčešće akcije"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:9
 msgid "Removal of packages:"
@@ -2742,7 +2761,7 @@ msgstr "Nadogradnja sistema:"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:11
 msgid "Number of undo operations:"
-msgstr "Broj radnji „opozovi“:"
+msgstr "Broj radnji za poništavanja:"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:12
 #: ../gtk/gtkbuilder/window_summary.ui.h:8
@@ -2892,7 +2911,7 @@ msgstr "_Ukloni samo nedostupne pakete"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:48
 msgid "_Delete Cached Package Files"
-msgstr "Izbriši fajlove paketa sačuvane na disku"
+msgstr "Izbriši datoteke paketa koje su sačuvane na disku"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:49
 msgid "Delete all cache package files now."
@@ -2916,7 +2935,7 @@ msgstr "dana"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:54
 msgid "Files"
-msgstr "Fajlovi"
+msgstr "Datoteke"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:55
 msgid "<b>Proxy Server</b>"
@@ -2924,7 +2943,7 @@ msgstr "<b>Posrednik</b>"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:56
 msgid "Direct connection to the Internet"
-msgstr ""
+msgstr "Direktna veza na Internet"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:57
 msgid "Manual proxy configuration"
@@ -2988,7 +3007,7 @@ msgstr ""
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:70
 msgid "<b>Package upgrade behavior (default distribution)</b>"
-msgstr ""
+msgstr "<b>Ponašanje nadogradnje paketa (početna distribucija)</b>"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:71
 msgid "Always prefer the highest version"
@@ -3071,19 +3090,19 @@ msgstr "Datoteke paketa će samo biti preuzete ali neće biti instalirane"
 
 #: ../gtk/gtkbuilder/window_summary.ui.h:10
 msgid "_Download package files only"
-msgstr ""
+msgstr "Samo _preuzmi datoteke paketa"
 
 #: ../gtk/gtkbuilder/window_summary.ui.h:11
 msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
-"Snabdevači softverom obeležavaju njihove pakete kako bi potvrdili poreklo i "
-"ispravnost. Isključivanje verifikacije nosi bezbijednosni rizik."
+"Snabdjevači softverom obilježavaju njihove pakete kako bi potvrdili "
+"porijeklo i ispravnost. Isključivanje verifikacije nosi bezbjednosni rizik."
 
 #: ../gtk/gtkbuilder/window_summary.ui.h:12
 msgid "_Verify package signatures"
-msgstr ""
+msgstr "Provjeri obilježja paketa"
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/gtkbuilder/window_filters.ui.h:4
@@ -3206,11 +3225,11 @@ msgstr "Trenutno u oštećenom stanju"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:42
 msgid "Manual installed"
-msgstr ""
+msgstr "Ručno instalirani"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:43
 msgid "Installed manually (not as a dependency by something else)"
-msgstr ""
+msgstr "Ručno instalirani (ne nekim drugim kao zavisnost)"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:44
 msgid "_Select All"
@@ -3349,7 +3368,7 @@ msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
-"Informacije o paketima bi ste trebali da osvežavate redovno. U suprotnom bi "
+"Informacije o paketima bi ste trebali da osvježavate redovno. U suprotnom bi "
 "ste mogli propustiti važne sigurnosne nadogradnje."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:4
@@ -3357,15 +3376,15 @@ msgid ""
 "<b>Note:</b> Changes are not applied instantly. At first you have to mark "
 "all changes and then apply them."
 msgstr ""
-"<b>Primedba:</b> Promjene se ne izvršavaju odmah. Potrebno je da obeležite "
+"<b>Primjedba:</b> Promjene se ne izvršavaju odmah. Potrebno je da obilježite "
 "sve izmjene, a onda da ih izvršite."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:5
 msgid ""
 "You can mark packages for installation, upgrade or removal in several ways:"
 msgstr ""
-"Pakete za instalacij, nadogradnju ili uklaljalje možete označiti na nekoliko "
-"načina:"
+"Pakete za instalaciju, nadogradnju ili uklanjanje možete označiti na "
+"nekoliko načina:"
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:6
 msgid " - "
@@ -3467,10 +3486,10 @@ msgid ""
 "information regularly."
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Informacije o paketu su "
-"zastarele</span>\n"
+"zastarJele</span>\n"
 "\n"
 "Informacije o paketu su starije od 48 sati. Možda se pojavilo važno "
-"bezbijednosno ažuriranje. Preporučljivo je da redovno osvežavate informacije "
+"bezbjednosno ažuriranje. Preporučljivo je da redovno osvježavate informacije "
 "o paketu."
 
 #: ../gtk/gtkbuilder/dialog_update_outdated.ui.h:5
@@ -3519,11 +3538,11 @@ msgstr "Prisili verziju:"
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:1
 msgid "_Default Upgrade"
-msgstr ""
+msgstr "_Podrazumijevana nadogradnja"
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:2
 msgid "_Smart Upgrade"
-msgstr ""
+msgstr "_Smart nadogradnja"
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:3
 msgid ""
@@ -3538,7 +3557,7 @@ msgid ""
 "<b>Note:</b> The upgrades will be marked only. You still have to apply them "
 "afterwards."
 msgstr ""
-"<b><big>Da obeležim nadogradnju na pametan način?</big></b>\n"
+"<b><big>Da obilježim nadogradnju na pametan način?</big></b>\n"
 "\n"
 "Podrazumijevani metod za nadogradnju preskače nadogradnje koje dovode do "
 "sukoba ili zahtijevaju dodatne pakete.\n"
@@ -3547,7 +3566,7 @@ msgstr ""
 "zavisnosti u nadogradnji na pametan način.\n"
 "\n"
 "<b>Napomena:</b> Samo će nadogradnja biti označena. I dalje ćete morati da "
-"ih primijenite posle svega."
+"ih primijenite poslije svega."
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:10
 msgid "This behavior can be changed in the preferences later."
@@ -3626,6 +3645,8 @@ msgstr "Instaliraj, ukloni i nadogradi softverske pakete"
 #: ../data/com.ubuntu.pkexec.synaptic.policy.in.h:1
 msgid "Authentication is required to run the Synaptic Package Manager"
 msgstr ""
+"Autentifikacija je neophodna da biste mogli pokrenuti Synaptic menadžer "
+"paketa"
 
 #: ../gtk/rgfiltermanager.h:62
 msgid "Includes"

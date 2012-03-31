@@ -111,35 +111,75 @@ std::string SizeToStr(double Size)
    return S;
 }
 
-std::string GetBrowserCommand(std::string link)
+std::vector<const gchar*> GetBrowserCommand(const gchar *link)
 {
-   if (is_binary_in_path("xdg-open")) {
-      return "xdg-open "+link;
-   } else if (is_binary_in_path("firefox")) {
-      return "firefox "+link;
-   } else if (is_binary_in_path("konqueror")) {
-      return "konqueror "+link;
+   std::vector<const gchar*> cmd;
+   if (FileExists("/usr/bin/xdg-open")) {
+      cmd.push_back("/usr/bin/xdg-open");
+      cmd.push_back(link);
+   } else if (FileExists("/usr/bin/firefox")) {
+      cmd.push_back("/usr/bin/firefox");
+      cmd.push_back(link);
+   } else if (FileExists("/usr/bin/konqueror")) {
+      cmd.push_back("/usr/bin/konqueror");
+      cmd.push_back(link);
    }
-   return "";
+   return cmd;
 }
 
-std::string RunAsSudoUserCommand(std::string cmd)
+bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
 {
-    std::string result = "" + cmd;
+   std::vector<const gchar*> prefix;
+    gchar *sudo_user;
+
     if (cmd.empty()) {
-       return "";
+       std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
+       return true;
     }
-    gchar * sudo_user;
-    sudo_user = g_strdup(getenv("PKEXEC_UID"));
+
+    // try pkexec first, then sudo
+    sudo_user = getenv("PKEXEC_UID");
     if (sudo_user == NULL) {
-       sudo_user = g_strdup(getenv("SUDO_USER"));
+       sudo_user = getenv("SUDO_USER");
     }
-    // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
-    if(is_binary_in_path("sudo") && (sudo_user != NULL))
-       result = "sudo -u " + string(sudo_user) + " " + cmd+" &";
-    g_free(sudo_user);
-    printf("Command is %s\n", result.c_str());
-    return result;
+#if 0 // does not work for some reason
+    if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)
+    {
+       prefix.push_back("/usr/bin/pkexec");
+       prefix.push_back("--user");
+       prefix.push_back(sudo_user);
+    }
+#endif
+    if(FileExists("/usr/bin/sudo") && sudo_user != NULL)
+    {
+       prefix.push_back("/usr/bin/sudo");
+       prefix.push_back("-u");
+       prefix.push_back(sudo_user);
+    }
+    // insert the prefix string
+    cmd.insert(cmd.begin(), prefix.begin(), prefix.end());
+
+    for(std::vector<const gchar*>::iterator it = cmd.begin();
+        it != cmd.end(); it++)
+       printf("cmd '%s'\n", *it);
+
+    // build the c stract to make g_spawn_async happy
+    char **c_cmd = new char*[cmd.size()+1];
+    int i;
+    for(i=0; i<cmd.size(); i++)
+       c_cmd[i] = (gchar*)cmd[i];
+    c_cmd[i] = NULL;
+
+    GError *error = NULL;
+    g_spawn_async("/", c_cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+    if (error != NULL) {
+       std::cerr << "Failed to run cmd: " << cmd[0] << std::endl;
+    }
+
+    // and free the memory again
+    delete c_cmd;
+
+    return true;
 }
 
 bool is_binary_in_path(const char *program)

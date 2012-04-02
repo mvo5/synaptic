@@ -1,3 +1,16 @@
+synaptic (0.75.8) unstable; urgency=low
+
+  * debian/control:
+    - add X-Ubuntu-Use-Langpack to enable langpack support
+  * debian/rules:
+    - run dh_translations if available, this will enable langpack
+      support
+  * po/*.po, configure.in:
+    - refresh translations from LP and update ALL_LINGUAS to match
+      the new translations (LP: #889351)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 02 Apr 2012 11:26:34 +0200
+
 synaptic (0.75.7) unstable; urgency=low
 
   * common/rpackage.cc:

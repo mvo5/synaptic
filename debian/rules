@@ -45,9 +45,7 @@ override_dh_auto_build:
 	dh_auto_build
 	# ubuntu specific for universe langpacks but will not do any
 	#  harm on debian
-	if [ -x /usr/bin/dh_translations ]; then \
-	  dh_translations; \
-	fi;
+	make -C po synaptic.pot
 
 # unpatch
 override_dh_auto_clean:

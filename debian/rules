@@ -43,6 +43,9 @@ override_dh_auto_build:
 	cp debian/patches/00list.$(DIST) debian/patches/00list
 	dpatch apply-all
 	dh_auto_build
+	# ubuntu specific for universe langpacks but will not do any
+	#  harm on debian
+	make -C po synaptic.pot
 
 # unpatch
 override_dh_auto_clean:

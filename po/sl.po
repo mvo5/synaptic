@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-04-02 09:07+0000\n"
-"PO-Revision-Date: 2012-04-17 13:24+0000\n"
+"PO-Revision-Date: 2012-04-21 12:11+0000\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2012-04-18 04:30+0000\n"
-"X-Generator: Launchpad (build 15108)\n"
+"X-Launchpad-Export-Date: 2012-04-22 04:30+0000\n"
+"X-Generator: Launchpad (build 15120)\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
 #: ../common/sections_trans.cc:12
@@ -508,7 +508,7 @@ msgid ""
 "Successfully applied all changes. You can close the window now."
 msgstr ""
 "\n"
-"Posodobitev je bila uspešna. Okno lahko zaprete."
+"Posodobitev je uspešno končana. Okno se lahko zapre."
 
 #: ../common/rinstallprogress.cc:42
 msgid ""
@@ -528,7 +528,7 @@ msgid ""
 msgstr ""
 "\n"
 "S trenutnega vira so bili uspešno nameščeni vsi paketi. Za nadaljevanje z "
-"naslednjim virom, zaprite to okno."
+"naslednjim virom je treba to okno zapreti."
 
 #: ../common/rpackage.cc:227
 msgid "The list of installed files is only available for installed packages"
@@ -550,8 +550,8 @@ msgstr ""
 "\n"
 "Paket %s ni na voljo, vendar pa podatki o njem v zbirki obstajajo.\n"
 "To običajno pomeni, da je paket del odvisnosti, vendar nikoli ni bil poslan "
-"na strežnik, je zastarel ali pa podatkov do nesta paketa ni v datoteki "
-"sources.list.\n"
+"na strežnik, je zastarel ali pa podatki o poti do paketa niso navedeni v "
+"datoteki sources.list.\n"
 
 #. TRANSLATORS: dependency error message, example:
 #. "apt 0.5.4 but 0.5.3 is to be installed"
@@ -579,7 +579,7 @@ msgstr "\t%s %s, vendar paketa ni mogoče namestiti"
 #: ../common/rpackage.cc:683
 #, c-format
 msgid "\t%s but it is a virtual package"
-msgstr "\t%s, vendar je navidezni paket"
+msgstr "\t%s, vendar je to navidezni paket"
 
 #. TRANSLATORS: dependency error message, example:
 #. "Depends: apt but it is a virtual package"
@@ -640,7 +640,7 @@ msgstr "Zastarelo"
 
 #: ../common/rpackage.h:60
 msgid "Breaks"
-msgstr "Razdrto"
+msgstr "Okvarjeno"
 
 #: ../common/rpackage.h:61
 msgid "Enhances"
@@ -713,12 +713,12 @@ msgid ""
 "Go to the repository dialog to correct the problem."
 msgstr ""
 "Seznama virov ni mogoče prebrati.\n"
-"Med nastavitvami skladišča odpravite težavo."
+"Težavo je mogoče odpraviti z ustreznimi nastavitvami skladišča."
 
 #: ../common/rpackagecache.cc:73
 msgid "The package lists or status file could not be parsed or opened."
 msgstr ""
-"Seznama paketov ali datoteke stanja ni mogoče razčleniti ali odpreti."
+"Seznama paketov ali datoteke stanja ni mogoče razčleniti oziroma odpreti."
 
 #: ../common/rpackagecache.cc:112
 msgid "Internal Error, non-zero counts"
@@ -796,7 +796,7 @@ msgstr "Datoteka"
 #: ../common/rpackagefilter.cc:759
 #, c-format
 msgid "Bad regular expression '%s' in ReducedView file."
-msgstr "neveljavni logični izraz '%s' v datoteki okleščenega pogleda."
+msgstr "Neveljaven logični izraz '%s' v datoteki okleščenega pogleda."
 
 #: ../common/rpackagelister.cc:325 ../common/rpackagelister.cc:331
 #: ../common/rpackagelister.cc:341
@@ -814,18 +814,18 @@ msgid ""
 "Unable to mark upgrades\n"
 "Check your system for errors."
 msgstr ""
-"Nadgradenj ni mogoče označiti.\n"
-"Preverite sistem za morebitne napake."
+"Nadgradenj ni mogoče pravilno označiti.\n"
+"Preveriti je treba sistem za morebitne napake."
 
 #: ../common/rpackagelister.cc:542
 msgid "Internal Error, AllUpgrade broke stuff. Please report."
 msgstr ""
-"Notranja napaka, Z \"nadgradnjo vsega\" se je pokvaril paketni sistem. "
+"Notranja napaka. Z \"nadgradnjo vsega\" se je pokvaril paketni sistem. "
 "Pošljite poročilo."
 
 #: ../common/rpackagelister.cc:560
 msgid "dist upgrade Failed"
-msgstr "neuspešna nadgradnja sistema"
+msgstr "nadgradnja sistema je spodletela"
 
 #: ../common/rpackagelister.cc:1299
 msgid "Unable to lock the list directory"
@@ -854,13 +854,13 @@ msgid ""
 "  %s\n"
 "\n"
 msgstr ""
-"Ni mogoče prenesti %s\n"
+"Ni mogoče pridobiti %s\n"
 "  %s\n"
 "\n"
 
 #: ../common/rpackagelister.cc:1494
 msgid "Some of the packages could not be retrieved from the server(s).\n"
-msgstr "Nekaterih paketov ni bilo mogoče prenesti s strežnika.\n"
+msgstr "Nekaterih paketov ni mogoče pridobiti s strežnika.\n"
 
 #: ../common/rpackagelister.cc:1497
 msgid "Do you want to continue, ignoring these packages?"
@@ -957,7 +957,7 @@ msgstr "bzip2 je spodletel, morda je disk zapolnjen."
 
 #: ../common/rpackageview.h:106
 msgid "Sections"
-msgstr "Razdelki"
+msgstr "Odseki"
 
 #: ../common/rpackageview.h:116
 msgid "Alphabetic"
@@ -993,11 +993,11 @@ msgstr "Nameščeno (ročno)"
 
 #: ../common/rpackageview.cc:164
 msgid "Broken dependencies"
-msgstr "Pokvarjene odvisnosti"
+msgstr "Okvarjene odvisnosti"
 
 #: ../common/rpackageview.cc:166 ../gtk/gtkbuilder/window_filters.ui.h:26
 msgid "New in repository"
-msgstr "Novost v skladišču"
+msgstr "Novosti v skladišču"
 
 #: ../common/rpackageview.cc:168 ../gtk/gtkbuilder/window_filters.ui.h:28
 msgid "Pinned"
@@ -1045,7 +1045,7 @@ msgstr "Nadgradljivo (na novejše)"
 
 #: ../common/rpackageview.cc:561
 msgid "Community Maintained (installed)"
-msgstr "Nameščeno - vzdržuje skupnost"
+msgstr "Zunanji nameščeni paketi (vzdržuje skupnost)"
 
 #: ../common/rpackageview.cc:567
 msgid "Missing Recommends"
@@ -1088,7 +1088,7 @@ msgstr "-h   To besedilo pomoči\n"
 
 #: ../gtk/gsynaptic.cc:75
 msgid "-r   Open in the repository screen\n"
-msgstr "-r   Odpri v skladiščnem zaslonu\n"
+msgstr "-r   Odpri na zaslonu skladišča\n"
 
 #: ../gtk/gsynaptic.cc:76
 msgid "-f=? Give an alternative filter file\n"
@@ -1193,7 +1193,7 @@ msgstr "Upravljalnik paketov Synaptic "
 
 #: ../gtk/rgcdscanner.cc:63 ../gtk/rgpkgcdrom.cc:86
 msgid "Scanning CD-ROM"
-msgstr "Preiskovanje CD nosilca"
+msgstr "Preiskovanje nosilca CD"
 
 #: ../gtk/rgcdscanner.cc:109
 msgid "Invalid disc name!"
@@ -1321,8 +1321,8 @@ msgid ""
 "This will abort the operation and may leave the system in a broken state. "
 "Are you sure you want to do that?"
 msgstr ""
-"S tem bo prekinjeno posodabljanje in bo sistem ostal v nedoločenem stanju. "
-"Ali ste prepričani, da želite to narediti?"
+"S tem bo prekinjeno posodabljanje, sistem pa bo ostal v nedoločenem stanju. "
+"Ali ste prepričani, da želite to storiti?"
 
 #. error from dpkg, needs to be parsed different
 #: ../gtk/rgdebinstallprogress.cc:584
@@ -1341,7 +1341,7 @@ msgstr "Napaka razvejanja pty"
 
 #: ../gtk/rgdebinstallprogress.cc:702
 msgid "A package failed to install.  Trying to recover:"
-msgstr "Neuspešna namestitev paketa. Namestitev se poskuša obnoviti:"
+msgstr "Neuspešna namestitev paketa. Poteka poskus obnove namestitve:"
 
 #: ../gtk/rgdebinstallprogress.cc:761 ../gtk/rgdebinstallprogress.cc:764
 msgid "Changes applied"
@@ -1503,18 +1503,18 @@ msgid ""
 "%s\n"
 "in drive %s"
 msgstr ""
-"Vstavite CD z oznako:\n"
+"Vstavite nosilec CD z oznako:\n"
 "%s\n"
 "v pogon %s"
 
 #: ../gtk/rgfetchprogress.cc:344
 #, c-format
 msgid "Download rate: %s/s - %s remaining"
-msgstr "Hitrost prejemanja: %s/s - %s preostalih"
+msgstr "Hitrost prejemanja: %s/s - še %s"
 
 #: ../gtk/rgfetchprogress.cc:350
 msgid "Download rate: ..."
-msgstr "Hitrost prejema: ..."
+msgstr "Hitrost prejema: (poteka določevanje)"
 
 #: ../gtk/rgfetchprogress.cc:352
 #, c-format

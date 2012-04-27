@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-04-02 09:07+0000\n"
-"PO-Revision-Date: 2012-04-25 13:38+0000\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"PO-Revision-Date: 2012-04-26 08:40+0000\n"
+"Last-Translator: Roman Maurer <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
 "n%100==4 ? 3 : 0);\n"
-"X-Launchpad-Export-Date: 2012-04-26 04:30+0000\n"
+"X-Launchpad-Export-Date: 2012-04-27 04:30+0000\n"
 "X-Generator: Launchpad (build 15149)\n"
 
 #. TRANSLATORS: Alias for the Debian package section "admin"
@@ -779,7 +779,7 @@ msgstr "Vzorec"
 #: ../common/rpackagefilter.cc:63 ../gtk/rgpreferenceswindow.cc:50
 #: ../gtk/rgmainwindow.cc:1033 ../gtk/gtkbuilder/window_filters.ui.h:50
 msgid "Section"
-msgstr "Odsek"
+msgstr "Razdelek"
 
 #: ../common/rpackagefilter.cc:64
 msgid "Priority"
@@ -957,7 +957,7 @@ msgstr "bzip2 je spodletel, morda je disk zapolnjen."
 
 #: ../common/rpackageview.h:106
 msgid "Sections"
-msgstr "Odseki"
+msgstr "Razdelki"
 
 #: ../common/rpackageview.h:116
 msgid "Alphabetic"
@@ -3074,8 +3074,7 @@ msgstr ""
 msgid ""
 "This is your last opportunity to look through the list of marked changes "
 "before they are applied."
-msgstr ""
-"Na voljo je še zadnji pregled označenih sprememb, preden se uveljavijo."
+msgstr "Na voljo je še zadnji pregled označenih sprememb pred uveljavitvijo."
 
 #: ../gtk/gtkbuilder/window_summary.ui.h:5
 msgid "<b>Summary</b>"
@@ -3094,8 +3093,8 @@ msgid ""
 "Vendors sign their packages to verify the origin and integrity of the "
 "packages. Disabling the verification is a security risk."
 msgstr ""
-"Ponudniki podpišejo pakete za overitev vira in varnosti paketa. Onemogočanje "
-"preverjanja predstavlja varnostno luknjo."
+"Ponudniki paketu dodajo podpis za overitev vira in varnosti paketa. "
+"Onemogočanje preverjanja predstavlja varnostno luknjo."
 
 #: ../gtk/gtkbuilder/window_summary.ui.h:12
 msgid "_Verify package signatures"
@@ -3128,7 +3127,7 @@ msgstr "Preostale nastavitve"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:13
 msgid "Removed packages that have left configuration files on the system"
-msgstr "Odstranjeni paketi, ki so v sistemu pustili nastavitvene datoteke"
+msgstr "Odstranjeni paketi, katerih nastavitvene datoteke niso izbrisane"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:15
 msgid "Not installed packages"
@@ -3183,7 +3182,8 @@ msgstr "Osiroteli"
 #: ../gtk/gtkbuilder/window_filters.ui.h:31
 msgid "Library packages that are no longer needed (deborphan is required)"
 msgstr ""
-"Knjižnični paketi, ki niso več v rabi (nameščen mora biti paket deborphan)"
+"Paketi programskih knjižnic, ki niso več v uporabi (nameščen mora biti paket "
+"deborphan)"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:32
 msgid "Not installable"
@@ -3191,7 +3191,7 @@ msgstr "Ni mogoče namestiti"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:33
 msgid "Packages that are not available in any repository"
-msgstr "Paketi, ki jih ni mogoče več najti v nobenem skladišču"
+msgstr "Paketi, ki niso na voljo v nobenem skladišču"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:35
 msgid "Packages with broken dependencies"
@@ -3219,7 +3219,7 @@ msgstr "Pokvarjeno"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:41
 msgid "Currently in broken policy state"
-msgstr "Trenutno v pokvarjenem stanju"
+msgstr "Trenutno v pokvarjenem stanju namestitve"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:42
 msgid "Manual installed"
@@ -3263,7 +3263,7 @@ msgstr "ali"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:55
 msgid "Include"
-msgstr "Vključi"
+msgstr "Upoštevaj"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:56
 msgid "Exclude"
@@ -3275,7 +3275,7 @@ msgstr "Oznake"
 
 #: ../gtk/gtkbuilder/window_repositories.ui.h:2
 msgid "URI:"
-msgstr "URI:"
+msgstr "Naslov URI:"
 
 #: ../gtk/gtkbuilder/window_repositories.ui.h:3
 msgid "Distribution:"
@@ -3329,8 +3329,8 @@ msgid ""
 "These are preselected groups of packages to perform each task. If you select "
 "a task, the corresponding packages will be marked for installation."
 msgstr ""
-"<span size=\"large\" weight=\"bold\">katere naloge naj izvaja vaš "
-"računalnik?</span>\n"
+"<span size=\"large\" weight=\"bold\">Katere naloge naj se izvajajo na "
+"računalniku?</span>\n"
 "\n"
 "Izbrane skupine paketov določajo posamezne naloge. Z izborom naloge bodo "
 "označeni ustrezni paketi na namestitev."
@@ -3358,15 +3358,15 @@ msgid ""
 "packages."
 msgstr ""
 "Programi operacijskega sistema so urejeni v tako imenovane <i>pakete</i>. "
-"Upravljalnik paketov vam omogoča, da te programske pakete namestite, "
-"nadgradite ali odstranite."
+"Upravljalnik paketov omogoča namestitev, nadgradnjo ali odstranjevanje teh "
+"programskih paketov."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:3
 msgid ""
 "You should reload the package information regularly. Otherwise you could "
 "miss important security upgrades."
 msgstr ""
-"Podatke o paketih je treba redno osveževati, sicer sistem ni posodobljen s "
+"Podatki o paketih morajo biti vedno osveženi, sicer sistem ni posodobljen s "
 "pomembnimi varnostnimi popravki."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:4
@@ -3375,7 +3375,7 @@ msgid ""
 "all changes and then apply them."
 msgstr ""
 "<b>Opomba:</b> spremembe niso uveljavljene takoj. Najprej je treba označiti "
-"vse želene spremembe, nato pa jih je mogoče skupaj uveljaviti."
+"vse želene spremembe, nato pa jih je mogoče uveljaviti v enem koraku."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:5
 msgid ""
@@ -3390,23 +3390,24 @@ msgstr " - "
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:7
 msgid "Select the package and choose the action from the 'Package' menu."
-msgstr "Izberite paket in dejanje z menija 'Paket'"
+msgstr ""
+"z zborom paketa in nato z izborom ustreznega dejanja v meniju 'Paket'"
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:8
 msgid "Double click on the package name."
-msgstr "Kliknite dvojni klik na imenu paketa."
+msgstr "z dvojnim klikom na ime paketa."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:9
 msgid "Choose the action from the context menu of the package."
-msgstr "Iz vsebinskega menija paketa izberite dejanje."
+msgstr "z izborom ustreznega dejanja iz vsebinskega menija."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:10
 msgid "Click on the status icon to open a menu that contains all actions."
-msgstr "Kliknite ikono stanja, da odprete meni, ki vsebuje vsa dejanja"
+msgstr "s klikom na ikono stanja za prikaz menija z vsemi mogočimi dejanji."
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:11
 msgid "Show this dialog at startup"
-msgstr "Pogovorno okno prikaži ob zagonu"
+msgstr "Pogovorno okno prikaži ob vsakem zagonu."
 
 #: ../gtk/gtkbuilder/dialog_unmet.ui.h:1
 msgid ""
@@ -3417,10 +3418,10 @@ msgid ""
 "required repositories are added and enabled in the preferences."
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Vseh paketov ni mogoče izbrati za "
-"namestitev ali nadgradnjo</span>\n"
+"namestitev ali nadgradnjo.</span>\n"
 "\n"
-"Naslednji paketi imajo nerazrešljive odvisnosti. Prepričajte se, da so "
-"dodana vsa zahtevana skladišča in da so med možnostmi tudi omogočena."
+"Nekateri paketi imajo nerazrešljive odvisnosti. Preveriti je treba, da so "
+"dodana vsa zahtevana skladišča in da so ta tudi omogočena."
 
 #: ../gtk/gtkbuilder/dialog_changelog.ui.h:1
 msgid "Complete changelog of the latest version:"
@@ -3435,16 +3436,16 @@ msgid ""
 "be used. Otherwise the repository will be ignored. Check your network "
 "connection and ensure the repository address in the preferences is correct."
 msgstr ""
-"<big><b>Ni mogoče prejeti vseh določil skladišča</b></big>\n"
+"<big><b>Ni mogoče prejeti vseh določil skladišča.</b></big>\n"
 "\n"
-"Skladišče morda ni več na voljo ali pa so težave z omrežjem. V primeru, da "
-"je na voljo, bo uporabljena starejša različica določil, sicer pa bo "
-"skladišče prezrto. Preverite omrežno povezavo in naslov skladišča med "
-"nastavitvami."
+"Skladišče morda ni več na voljo ali pa podatkov skladišča ni mogoče "
+"posodobiti. V primeru, da je na voljo starejša različica podatkov, bodo "
+"uporabljeni ti, sicer pa bo skladišče prezrto. Preveriti je treba delovanje "
+"omrežne povezave in naslov skladišča med nastavitvami."
 
 #: ../gtk/gtkbuilder/window_iconlegend.ui.h:1 ../gtk/rgiconlegend.cc:42
 msgid "Icon Legend"
-msgstr "Legenda ikone"
+msgstr "Legenda ikon"
 
 #: ../gtk/gtkbuilder/window_iconlegend.ui.h:2
 msgid ""
@@ -3461,12 +3462,12 @@ msgid ""
 "package. Reload the package list and check the source of the package (e.g. "
 "CD or network connection)."
 msgstr ""
-"<big><b>Ni mogoče prejeti vseh zahtevanih paketov</b></big>\n"
+"<big><b>Ni mogoče prejeti vseh zahtevanih paketov.</b></big>\n"
 "\n"
-"Različice paketa, ki ga želite namestiti, ni več v skladišču, ali pa ima "
-"paket določeno nepravilno povezavo do vira paketov. Posodobite seznam "
-"paketov in preverite, da je vir paketa pravilno določen (primer: CD ali "
-"omrežna povezava)."
+"Različice paketa, ki je pripravljena za namestitev, ni več v skladišču, ali "
+"pa ima paket določeno nepravilno povezavo do vira paketov. Posodobiti je "
+"treba seznam paketov in preveriti ali je vir paketa pravilno določen "
+"(primer: nosilec CD ali omrežna povezava)."
 
 #: ../gtk/gtkbuilder/dialog_update_outdated.ui.h:1
 msgid "_Reload"
@@ -3482,11 +3483,11 @@ msgid ""
 "information regularly."
 msgstr ""
 "<span weight=\"bold\" size=\"larger\">Podrobnosti o paketih so "
-"zastarele</span>\n"
+"zastarele.</span>\n"
 "\n"
 "Podrobnosti o paketih so starejše od 48 ur. Morda so že na voljo pomembni "
-"novejši popravki in  posodobitve. Priporočeno je, da so podrobnosti o "
-"paketih vedno posodobljene."
+"novejši popravki in posodobitve. Priporočeno je, da so podrobnosti o paketih "
+"vedno posodobljene na zadnjo različico."
 
 #: ../gtk/gtkbuilder/dialog_update_outdated.ui.h:5
 msgid "Remember the answer"
@@ -3507,10 +3508,9 @@ msgid ""
 "There are still marked changes that have not yet been applied. They will get "
 "lost if you choose to quit 'Synaptic'."
 msgstr ""
-"<b><big>Ali želite končati in zanemariti označene spremembe?</big></b>\n"
+"<b><big>Ali želite končati in zavreči označene spremembe?</big></b>\n"
 "\n"
-"Obstajajo spremembe, ki še niso uveljavljene in bodo izgubljene, v kolikor "
-"se program zaključi."
+"Obstajajo spremembe, ki še niso uveljavljene in bodo izgubljene."
 
 #: ../gtk/gtkbuilder/dialog_conffile.ui.h:1
 msgid "_Keep"
@@ -3562,12 +3562,12 @@ msgstr ""
 "S pametnim načinom posodabljanja (posodobitev distribucije) pa se spore med "
 "paketi poskuša razrešiti in namestiti tudi vse odvisnosti.\n"
 "\n"
-"<b>Opomba:</b> posodobitve bodo v prvem koraku le označene. Po tem pa lahko "
-"spremembe tudi uveljavite."
+"<b>Opomba:</b> posodobitve bodo v prvem koraku le označene, po tem pa je "
+"mogoče spremembe tudi uveljaviti."
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:10
 msgid "This behavior can be changed in the preferences later."
-msgstr "Način odziva je mogoče spremeniti kasneje med nastavitvami."
+msgstr ""
 
 #: ../gtk/gtkbuilder/dialog_upgrade.ui.h:11
 msgid "Remember my answer for future upgrades"
@@ -3575,7 +3575,7 @@ msgstr "Zapomni si odgovor za prihodnje posodobitve"
 
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:1
 msgid "HTTP authentication"
-msgstr "HTTP overitev"
+msgstr "Overitev HTTP"
 
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:2
 msgid "Username"
@@ -3593,15 +3593,15 @@ msgid ""
 "is recommended to also write the label on the CD-Rom to easily find it "
 "again.\n"
 msgstr ""
-"<span weight=\"bold\" size=\"larger\">Vnesite oznako za CD-ROM</span>\n"
+"<span weight=\"bold\" size=\"larger\">Vnos oznake nosilca CD</span>\n"
 "\n"
-"Oznaka bo uporabljena v primeru, da bodo nameščeni paketi s tega CD nosilc. "
+"Oznaka bo uporabljena v primeru, da bodo nameščeni paketi s tega nosilca CD. "
 "Priporočljivo je, da je ista oznaka napisana tudi na ovitku, saj je nosilec "
 "tako kasneje lažje najti.\n"
 
 #: ../gtk/gtkbuilder/dialog_disc_label.ui.h:5
 msgid "Label:"
-msgstr "Naziv:"
+msgstr "Oznaka:"
 
 #: ../gtk/gtkbuilder/dialog_new_repositroy.ui.h:1
 msgid ""
@@ -3612,12 +3612,11 @@ msgid ""
 "example <i>\"deb http://ftp.debian.org sarge main\"</i>. You can find a "
 "detailed description of the syntax in the documentation."
 msgstr ""
-"<big><b>Vnesite popolno vrstico APT skladišča, ki ga želite "
-"dodati</b></big>\n"
+"<big><b>Vnos vrstice APT za dodajanje novega skladišč.</b></big>\n"
 "\n"
-"APT vrstica vsebuje vrsto, mesto in vsebino skladišča, npr. <i>\"deb "
-"http://ftp.debian.org sarge main\"</i>. V dokumentaciji lahko najdete "
-"podroben opis skladnje ukaza."
+"Ukazna vrstica APT vsebuje podatke o vrsti, mestu in vsebini skladišča, "
+"npr.: <i>\"deb http://ftp.debian.org sarge main\"</i>. V dokumentaciji je "
+"podan podroben opis skladnje ukaza apt."
 
 #: ../gtk/gtkbuilder/dialog_new_repositroy.ui.h:4
 msgid "APT line:"
@@ -3687,11 +3686,11 @@ msgstr "Odvisni paketi"
 
 #: ../gtk/rgpkgcdrom.cc:68
 msgid "Please insert a disc in the drive."
-msgstr "Vstavite disk v pogon."
+msgstr ""
 
 #: ../gtk/rgiconlegend.cc:77
 msgid "Package is supported"
-msgstr "Podprt paket"
+msgstr "Paket je podprt"
 
 #: ../gtk/rgterminstallprogress.cc:139
 msgid "<i>Running...</i>"
@@ -3703,7 +3702,7 @@ msgstr "<i>Končano</i>"
 
 #: ../gtk/rgterminstallprogress.cc:180
 msgid "<i>Can't close while running</i>"
-msgstr "<i>Med opravili, okna ni mogoče zapreti.</i>"
+msgstr "<i>Med izvajanjem opravil, okna ni mogoče zapreti.</i>"
 
 #~ msgid "Dependent Packages"
 #~ msgstr "Odvisni paketi"

@@ -3,11 +3,6 @@
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
 
-# Debian does not currently does multiarch so we disable it here
-ifeq ($(DIST),Debian)
-    MULTIARCH = --without-apt-multiarch-support
-endif
-
 CONFIGURE_FLAGS= --prefix=/usr \
 	      --mandir=\$${prefix}/share/man \
 	      --infodir=\$${prefix}/share/info \

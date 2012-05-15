@@ -67,13 +67,7 @@ typedef enum {
    PKG_REINSTALL
 } RGPkgAction;
 
-static char *relOptions[] = {
-   N_("Dependencies"),
-   N_("Dependants"),
-   N_("Dependencies of the Latest Version"),
-   N_("Provided Packages"),
-   NULL
-};
+extern const char *relOptions[];
 
 class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
 

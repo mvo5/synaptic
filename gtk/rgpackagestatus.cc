@@ -61,7 +61,7 @@ RGPackageStatus RGPackageStatus::pkgStatus;
 
 void RGPackageStatus::initColors()
 {
-   char *default_status_colors[N_STATUS_COUNT] = {
+   const char *default_status_colors[N_STATUS_COUNT] = {
       "#8ae234",  // install
       "#4e9a06",  // re-install
       "#fce94f",  // upgrade

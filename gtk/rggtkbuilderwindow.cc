@@ -140,7 +140,7 @@ bool RGGtkBuilderWindow::setLabel(const char *widget_name, const long value)
 bool RGGtkBuilderWindow::setTreeList(const char *widget_name, vector<string> values,
 				bool use_markup)
 {
-   char *type;
+   const char *type;
    string strVal;
    GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (_builder, widget_name));
    if (widget == NULL) {

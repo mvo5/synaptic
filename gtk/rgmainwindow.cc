@@ -85,6 +85,13 @@
 // include it here because depcache.h hates us if we have it before
 #include <gdk/gdkx.h>
 
+const char *relOptions[] = {
+   N_("Dependencies"),
+   N_("Dependants"),
+   N_("Dependencies of the Latest Version"),
+   N_("Provided Packages"),
+   NULL
+};
 
 enum { WHAT_IT_DEPENDS_ON,
    WHAT_DEPENDS_ON_IT,

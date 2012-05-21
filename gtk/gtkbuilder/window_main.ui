@@ -526,6 +526,7 @@
                         <property name="label" translatable="yes">_Download Changelog</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="on_download_changelog_activate" swapped="no"/>
+                        <accelerator key="L" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </object>
                     </child>
                     <child>
@@ -702,7 +703,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_help">
-                        <property name="label">_Contents</property>
+                        <property name="label" translatable="yes">_Contents</property>
                         <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>

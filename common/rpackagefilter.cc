@@ -292,7 +292,7 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
 {
    bool found = false;
-   vector<string>origins = pkg->getCandidateOriginSiteUrl();
+   vector<string>origins = pkg->getCandidateOriginSiteUrls();
 
    if (pat.regexps.size() == 0) {
       return true;

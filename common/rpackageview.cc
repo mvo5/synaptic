@@ -572,8 +572,8 @@ void RPackageViewOrigin::addPackage(RPackage *package)
 {
    string subview;
    string component =  package->component();
-   vector<string> origin_urls = package->getCandidateOriginSiteUrl();
-   string suite  = package->getCandidateOriginSuite();
+   vector<string> origin_urls = package->getCandidateOriginSiteUrls();
+   vector<string> suites  = package->getCandidateOriginSuites();
    string origin_str  = package->getCandidateOriginStr();
 
    for (vector<string>::iterator it = origin_urls.begin();
@@ -589,20 +589,27 @@ void RPackageViewOrigin::addPackage(RPackage *package)
          continue;
       }
 
-      // PPAs are special too
-      if(origin_str.find("LP-PPA-") != string::npos) {
-         _view[origin_str+"/"+suite].push_back(package);
-         continue;
+      for (vector<string>::const_iterator it2 = suites.begin();
+           it2 != suites.end();
+           it2++)
+      {
+         string suite = *it2;
+         // PPAs are special too
+         if(origin_str.find("LP-PPA-") != string::npos) {
+            _view[origin_str+"/"+suite].push_back(package);
+            continue;
+         }
+
+         if(component == "")
+            component = _("Unknown");
+
+         if(suite == "now")
+            suite = _("Local");
+
+         // normal package
+         subview = suite+"/"+component+" ("+origin_url+")";
+         _view[subview].push_back(package);
       }
-
-      if(component == "")
-         component = _("Unknown");
-      if(suite == "now")
-         suite = "";
-
-      // normal package
-      subview = suite+"/"+component+" ("+origin_url+")";
-      _view[subview].push_back(package);
       
       // see if we have versions that are higher than the candidate
       // (e.g. experimental/backports)

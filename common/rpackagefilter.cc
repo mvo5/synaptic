@@ -292,16 +292,20 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
 {
    bool found = false;
-   string origin;
-   origin = pkg->getCandidateOriginSiteUrl();
+   vector<string>origins = pkg->getCandidateOriginSiteUrl();
 
    if (pat.regexps.size() == 0) {
       return true;
    }
    
-   if(regexec(pat.regexps[0],origin.c_str(), 0, NULL, 0) == 0) {
-      found = true;
-   } 
+   for (vector<string>::iterator it = origins.begin();
+        it != origins.end();
+        ++it)
+   {
+      if(regexec(pat.regexps[0],(*it).c_str(), 0, NULL, 0) == 0) {
+         found = true;
+      }
+   }
 
    return found;
 }
@@ -329,6 +333,8 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
    //   bool and_mode = _config->FindB("Synaptic::Filters::andMode", true);
    bool globalfound = and_mode;
    bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
+
+   bool debug = _config->FindB("Debug::Synaptic::Filters", "false");
 
    if (_patterns.size() == 0)
       return true;
@@ -380,6 +386,10 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
       default:
 	 cerr << "unknown pattern package filter (shouldn't happen) " << endl;
       }
+
+      if (found && debug)
+         clog << "RPatternPackageFilter::filter match for "
+              << pkg->name() << endl;
 
       // each filter is applied in AND fasion
       // that means a include depends "mono" and include name "sharp"

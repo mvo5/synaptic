@@ -165,8 +165,8 @@ class RPackage {
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
 
-   // get origin url of the package 
-   string getCandidateOriginSiteUrl();
+   // get origins url of the package (e.g. http://security.ubuntu.com)
+   vector<string> getCandidateOriginSiteUrl();
    // get origin "archive" release header (e.g. karmic, karmic-updates)
    string getCandidateOriginSuite();
    // get origin "origin" release header (e.g. Ubuntu, 

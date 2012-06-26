@@ -582,10 +582,16 @@ void RPackageViewOrigin::addPackage(RPackage *package)
    {
       string origin_url = *it;
 
-      // local origins are all put under local (no matter what component, section)
-      if(origin_url == "") {
-         origin_url = _("Local");
-         _view[origin_url].push_back(package);
+      // local origins are all put under local if not downloadable and
+      // are ignored otherwise because they are available via some
+      // other origin_url
+      if (origin_url == "")
+      { 
+         if (package->getFlags() & RPackage::FNotInstallable)
+         {
+            origin_url = _("Local");
+            _view[origin_url].push_back(package);
+         }
          continue;
       }
 

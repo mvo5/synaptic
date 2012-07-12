@@ -669,7 +669,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
        return res;
 
    // we need to send the fds from the pipe over a socket because
-   // §""!%&§/ vte_terminal closes all our FDs 
+   // the vte_terminal closes all our FDs 
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
 				    false,false,false);
    if (_child_id < 0) {
@@ -773,8 +773,8 @@ void RGDebInstallProgress::finishUpdate()
    GtkWidget *img = GTK_WIDGET(gtk_builder_get_object(_builder, "image_finished"));
    switch(res) {
    case 0: // success
-      gtk_image_set_from_file(GTK_IMAGE(img),
-			      PACKAGE_DATA_DIR"/pixmaps/synaptic.png");
+      gtk_image_set_from_icon_name(GTK_IMAGE(img),
+			      "synaptic", GTK_ICON_SIZE_DIALOG);
       break;
    case 1: // error
       gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_ERROR,

@@ -393,6 +393,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 		      toDowngrade, unAuthenticated,sizeChange);
    lister->getDownloadSummary(dlCount, dlSize);
 
+   gtk_widget_set_visible(_dlonlyB, (dlSize > 0));
 #if 0
    if (held) {
       char *str = ngettext("%d package is locked\n",

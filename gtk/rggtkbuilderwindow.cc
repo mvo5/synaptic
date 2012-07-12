@@ -71,6 +71,8 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
 
    gtk_window_set_position(GTK_WINDOW(_win),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
+   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
+   gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
    g_free(filename);
    g_free(local_filename);
@@ -114,6 +116,22 @@ bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
    if (!utf8value)
       utf8value = _("N/A");
    gtk_label_set_label(GTK_LABEL(widget), utf8value);
+   return true;
+}
+
+bool RGGtkBuilderWindow::setMarkup(const char *widget_name, const char *value)
+{
+   GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (_builder, widget_name));
+   if (widget == NULL) {
+      cout << "widget == NULL with: " << widget_name << endl;
+      return false;
+   }
+
+   const gchar *utf8value=utf8(value);
+
+   if (!utf8value)
+      utf8value = _("N/A");
+   gtk_label_set_markup(GTK_LABEL(widget), utf8value);
    return true;
 }
 

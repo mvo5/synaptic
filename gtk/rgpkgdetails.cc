@@ -65,6 +65,10 @@ RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
                                  relRenderText, "text", 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(comboDepends), 0);
 
+   GtkWidget *label;
+   label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_maintainer"));
+   g_signal_connect(G_OBJECT(label), "activate-link", 
+                    G_CALLBACK(cbOpenLink), NULL);
 }
 
 void RGPkgDetailsWindow::cbCloseClicked(GtkWidget *self, void *data)
@@ -181,6 +185,29 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
    ShowChangelogDialog(parent, pkg);
 }
 
+gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label, 
+                                        gchar *uri, 
+                                        void *data)
+{
+   //std::cerr << "cbOpenLink: " << uri << std::endl;
+   std::vector<const gchar *> cmd;
+   cmd.push_back("xdg-open");
+   cmd.push_back(uri);
+   RunAsSudoUserCommand(cmd);
+
+   return TRUE;
+}
+
+gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void* data)
+{
+   RPackage *pkg = (RPackage*)data;
+   std::vector<const gchar*> cmd = GetBrowserCommand(pkg->homepage());
+   //std::cerr << "cbOpenHomepage: " << cmd[0] << std::endl;
+   RunAsSudoUserCommand(cmd);
+
+   return TRUE;
+}
+
 void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me, 
                                       RPackage *pkg,
 				      bool setTitle)
@@ -200,7 +227,21 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    me->setTextView("textview_pkgcommon", pkg_summary, true);
    g_free(pkg_summary);
 
-   me->setLabel("label_maintainer", pkg->maintainer());
+   string maintainer = pkg->maintainer();
+   int start_index = maintainer.find("<");
+   int end_index = maintainer.rfind(">");
+   if (start_index != -1 && end_index != -1) {
+       gchar*  maintainer_label = g_markup_printf_escaped(
+          "<a href=\"mailto:%s\">%s</a>", 
+          maintainer.substr(start_index+1, end_index - start_index - 1).c_str(),
+          maintainer.c_str() 
+          );
+       me->setMarkup("label_maintainer", maintainer_label);
+       g_free(maintainer_label);
+   } else {
+       me->setLabel("label_maintainer", pkg->maintainer());
+   }
+
    me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
    me->setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
    me->setLabel("label_priority", pkg->priority());
@@ -287,6 +328,23 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
                     pkg);
    gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
    gtk_widget_show(button);
+
+   // add button to open the homepage
+   if (strlen(pkg->homepage())) {
+       gtk_text_buffer_insert(buf, &it, "    ", 1);
+       anchor = gtk_text_buffer_create_child_anchor(buf, &it);
+       button = gtk_link_button_new_with_label("", _("Visit Homepage"));
+       char *homepage_tooltip = g_strdup_printf("Visit %s",
+					     pkg->homepage());
+       g_signal_connect(G_OBJECT(button),"clicked", 
+                    G_CALLBACK(cbOpenHomepage),
+                    pkg);
+       gtk_widget_set_tooltip_text(button, homepage_tooltip);
+       g_free(homepage_tooltip);
+       g_object_set_data(G_OBJECT(button), "me", me);
+       gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), button, anchor);
+       gtk_widget_show(button);
+   }
 
    // show the rest of the description
    gtk_text_buffer_insert(buf, &it, "\n", 1);

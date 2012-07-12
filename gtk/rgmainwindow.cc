@@ -77,9 +77,6 @@
 #include "rgutils.h"
 #include "sections_trans.h"
 
-// icons and pixmaps
-#include "synaptic.xpm"
-
 #include "i18n.h"
 
 // include it here because depcache.h hates us if we have it before
@@ -498,8 +495,7 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
    RGMainWindow *me = (RGMainWindow *) data;
    if (me->_blockActions)
       return;
-   cout << "RGMainWindow::cbMenuAutoInstalledClickedn()" << endl;
-
+   
    bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
 
    GtkTreeSelection *selection;
@@ -1207,9 +1203,7 @@ void RGMainWindow::buildInterface()
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-
-   GdkPixbuf *icon = gdk_pixbuf_new_from_xpm_data((const char **)
-                                                  synaptic_xpm);
+   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
    gtk_window_resize(GTK_WINDOW(_win),
@@ -1897,10 +1891,13 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken,
 void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
 {
    if (pkg->getFlags() & RPackage::FImportant) {
-      if (!_userDialog->confirm(_("Removing this package may render the "
-                                  "system unusable.\n"
-                                  "Are you sure you want to do that?"),
-				false)) {
+      gchar* warning = g_strdup_printf(_( "Removing package \"%s\" may render the "
+                                          "system unusable.\n"
+                                          "Are you sure you want to do that?"), 
+                                       pkg->name());
+      bool confirmed = _userDialog->confirm(warning, false);
+      g_free(warning);
+      if (!confirmed) {
          return;
       }
    }
@@ -2405,7 +2402,7 @@ void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
    if(me->_pkgDetails == NULL)
       me->_pkgDetails = new RGPkgDetailsWindow(me);
 
-   RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg);
+   RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg, true);
    me->_pkgDetails->show();
 }
 
@@ -2472,7 +2469,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       dialog = gtk_message_dialog_new (GTK_WINDOW(me->window()),
 				       GTK_DIALOG_DESTROY_WITH_PARENT,
 				       GTK_MESSAGE_INFO,
-				       GTK_BUTTONS_CLOSE,
+				       GTK_BUTTONS_NONE,
 				       _("Repositories changed"));
       // TRANSLATORS: this message appears when the user added/removed 
       // a repository (sources.list entry) a reload (apt-get update) is 
@@ -2488,12 +2485,20 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 #else
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
 #endif
+      gtk_dialog_add_buttons(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
+      GtkWidget* reload_button = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
+      GtkWidget* refresh_image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
+      gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
       gtk_box_pack_start_defaults(GTK_BOX(GTK_DIALOG(dialog)->vbox),cb);
       gtk_widget_show(cb);
-      gtk_dialog_run (GTK_DIALOG (dialog));
+      gint response = gtk_dialog_run (GTK_DIALOG (dialog));
+      gtk_widget_hide(dialog);
       if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
 	    _config->Set("Synaptic::AskForUpdateAfterSrcChange", false);
+      }
+      if (response == GTK_RESPONSE_ACCEPT) {
+         me->cbUpdateClicked(NULL, data);
       }
       gtk_widget_destroy (dialog);
    }
@@ -2600,41 +2605,27 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
 
    me->setStatusText(_("Starting help viewer..."));
 
-   string cmd;
-   if (is_binary_in_path("yelp"))
-      cmd = "yelp ghelp:synaptic";
-#if 0 // FIXME: khelpcenter can't display this? check again!
-    else if(is_binary_in_path("khelpcenter")) {
-       system("konqueror ghelp:///" PACKAGE_DATA_DIR "/gnome/help/synaptic/C/synaptic.xml &");
-    }
-#endif
-   else if (is_binary_in_path("mozilla")) {
-      cmd = "mozilla " PACKAGE_DATA_DIR "/synaptic/html/index.html";
-   } else if (is_binary_in_path("konqueror")) {
-      cmd = "konqueror " PACKAGE_DATA_DIR "/synaptic/html/index.html";
+   // FIXME: move this into rgutils as well (or rgspawn.cc)
+   vector<const gchar*> cmd;
+   if (is_binary_in_path("yelp")) {
+      cmd.push_back("yelp");
+      cmd.push_back("ghelp:synaptic");
    } else {
+      cmd = GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html");
+   }
+
+   if (cmd.empty()) {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
-                               "the 'konqueror' browser or the 'mozilla' "
+                               "the 'konqueror' browser or the 'firefox' "
                                "browser to view the synaptic manual.\n\n"
                                "Alternatively you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
                                "in the 'synaptic/html' folder."));
+      return;
    }
-
-   if (!cmd.empty()) {
-      gchar * sudo_user;
-      sudo_user = g_strdup(getenv("SUDO_USER"));
-      // if gksu is not found or SUDO_USER is not set, run the help viewer anyway
-      if(is_binary_in_path("sudo") && (sudo_user != NULL))
-         cmd = "sudo -u " + string(sudo_user) + " " + cmd;
-      g_free(sudo_user);
-      cmd += " &";
-      if(system(cmd.c_str()) < 0) {
-         g_warning(_("An error occured while starting the help viewer\n\tCommand: %s"), cmd.c_str());
-      }
-   }
+   RunAsSudoUserCommand(cmd);
 }
 
 void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
@@ -2770,8 +2761,6 @@ void RGMainWindow::cbRedoClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
 {
-   char frontend[] = "gnome";
-   char *cmd;
    RGMainWindow *me = (RGMainWindow *) data;
    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
 
@@ -2788,9 +2777,15 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
    }
 
    me->setStatusText(_("Starting package configuration tool..."));
-   cmd = g_strdup_printf("/usr/sbin/dpkg-reconfigure -f%s %s &",
-                         frontend, me->selectedPackage()->name());
-   system(cmd);
+   const gchar *cmd[] = { "/usr/sbin/dpkg-reconfigure",
+                    "-fgnome",
+                    me->selectedPackage()->name(),
+                    NULL };
+   GError *error = NULL;
+   g_spawn_async("/", (gchar**)cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+   if(error != NULL) {
+      std::cerr << "failed to run dpkg-reconfigure cmd" << std::endl;
+   }
 }
 
 

@@ -22,6 +22,7 @@
  * USA
  */
 
+#include <apt-pkg/version.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>
 #include <rpackage.h>
@@ -571,34 +572,89 @@ void RPackageViewOrigin::addPackage(RPackage *package)
 {
    string subview;
    string component =  package->component();
-   string origin_url = package->getCandidateOriginSiteUrl();
-   string suite  = package->getCandidateOriginSuite();
+   vector<string> origin_urls = package->getCandidateOriginSiteUrls();
+   vector<string> suites  = package->getCandidateOriginSuites();
    string origin_str  = package->getCandidateOriginStr();
 
-   // local origins are all put under local (no matter what component, section)
-   if(origin_url == "") {
-      origin_url = _("Local");
-      _view[origin_url].push_back(package);
-      return;
+   for (vector<string>::iterator it = origin_urls.begin();
+        it != origin_urls.end();
+        it++)
+   {
+      string origin_url = *it;
+
+      // local origins are all put under local if not downloadable and
+      // are ignored otherwise because they are available via some
+      // other origin_url
+      if (origin_url == "")
+      { 
+         if (package->getFlags() & RPackage::FNotInstallable)
+         {
+            origin_url = _("Local");
+            _view[origin_url].push_back(package);
+         }
+         continue;
+      }
+
+      for (vector<string>::const_iterator it2 = suites.begin();
+           it2 != suites.end();
+           it2++)
+      {
+         string suite = *it2;
+         // PPAs are special too
+         if(origin_str.find("LP-PPA-") != string::npos) {
+            _view[origin_str+"/"+suite].push_back(package);
+            continue;
+         }
+
+         if(component == "")
+            component = _("Unknown");
+
+         if(suite == "now")
+            suite = _("Local");
+
+         // normal package
+         subview = suite+"/"+component+" ("+origin_url+")";
+         _view[subview].push_back(package);
+      }
+      
+      // see if we have versions that are higher than the candidate
+      // (e.g. experimental/backports)
+      for (pkgCache::VerIterator Ver = package->package()->VersionList();
+           Ver.end() == false; Ver++)
+      {
+         pkgCache::VerFileIterator VF = Ver.FileList();
+         if ( (VF.end() == true) || (VF.File() == NULL) || 
+              (VF.File().Archive() == NULL) || (VF.File().Site() == NULL) )
+            continue;
+         // ignore versions that are lower or equal than the candidate
+         if (_system->VS->CmpVersion(Ver.VerStr(), 
+                                     package->availableVersion()) <= 0)
+            continue;
+         // ignore "now"
+         if(strcmp(VF.File().Archive(), "now") == 0)
+            continue;
+         //std::cerr << "version.second: " << version.second 
+         //          << " origin_str: " << suite << std::endl;
+         string prefix = _("Not automatic: ");
+         string suite = VF.File().Archive();
+         string origin_url = VF.File().Site();
+         string subview = prefix + suite + "(" + origin_url + ")";
+         _view[subview].push_back(package);
+      }
    }
-
-   // PPAs are special too
-   if(origin_str.find("LP-PPA-") != string::npos) {
-     _view[origin_str+"/"+suite].push_back(package);
-     return;
-   }
-
-   if(component == "")
-      component = _("Unknown");
-   if(suite == "now")
-      suite = "";
-
-   subview = suite+"/"+component+" ("+origin_url+")";
-   _view[subview].push_back(package);
- };
+}
 
 
+void RPackageViewArchitecture::addPackage(RPackage *package)
+{
+   string arch = "arch: " + package->arch();
 
+   // FIXME: add pseudo arch for packages only in one group arch
+   //        but not the other
+   
+
+   _view[arch].push_back(package);
+};
 
 
 

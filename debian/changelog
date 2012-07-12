@@ -1,19 +1,338 @@
-synaptic (0.75.3) UNRELEASED; urgency=low
+synaptic (0.80) UNRELEASED; urgency=low
 
-  * gtk/rgfetchprogress.cc:
-    - fix potential crash due to division through zero
+  [ Robert Roth ]
+  * * Disables typeahead in summary dialog, as it doesn't do anything, 
+    so it's unnecesary (LP: #24319)
+  * Move up and Move down buttons in columns preferences changed to 
+    respect buttons_have_icons preference (LP: #66574)
+  * Set the title of the package properties dialog opened for the first 
+    time (it has not been set before, so it was synaptic the first time 
+    the dialog has been opened) (LP: #932495)
+  * Added a reload button to the repositories changed dialog (LP: #78987)
+  * Updated the wording of the expander on the download progress dialog to 
+    Show individual files" instead of "Show for individual files"
+    (LP: #301428)
+  * Fixed inconsistencies between column namings in column headers and 
+    column visibility preferences (LP: #335723)
+  * Linkified maintainer label in the package properties dialog 
+    when running as non-root (LP: #321380)
+  * Added package name in the warning scaring you about breaking your 
+    system (LP: #63974)
+  * Added name of the application (Synaptic Package Manager) in the 
+    titleless dialog shown when starting without administrative 
+    privilegess (LP: #510261)
+  * Improved filter editing checkbox tooltips (LP: #790420)
+  * Made all the property values from the package properties dialog 
+    selectable (LP: #173464)
+  * Changed Package Properties accelerator from Ctrl+O to widely used 
+    (nautilus, eog, evince etc) Alt+Enter (LP: #933554)
+  * Hide the only download packages checkbox if there are no files
+    to download (LP: #413453)
+  * Use the synaptic icon from the user's icon theme, or fall back to
+    the old one if the current theme does not provide a synaptic icon
+    (LP: #153755)
+  * Focus the Apply button by default. (LP: #488718)
+  * Removed log message from automatically installed item click
+    (LP: #883984)
+  * Fixed delete filter button not working caused by a typo in the
+    name of the button when getting it from the GtkBuilder object 
+    (LP: #779756)
+  * Added suggests tasksel as with tasksel installed synaptic
+    provides additional functionality (LP: #605186)
+  * Fixes incorrect radiobutton handling in the proxy preferences
+    (LP: #706262)
+  
+  [ Michael Vogt ]
+  * ensure external helpers are runs as the user uid
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 12 Jul 2012 21:22:15 +0200
+
+synaptic (0.75.13) unstable; urgency=low
+
+  * debian/synaptic.menu:
+    - use x-terminal-emulator -e synaptic-pkexec to support systems
+      that do not have a GUI policykit agent running (closes: #678847)
+  * include all origins in the origin filter not just the first one
+  * show all "archives" in the origins view even if they are "shadowed"
+    by another one
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 12 Jul 2012 21:14:23 +0200
+
+synaptic (0.75.12) unstable; urgency=low
+
+  * updated Telugu translation, thanks to  Praveen Illa
+  * Fix  "Enter on keypad cannot work with Find dialog" (closes: #673804),
+    thanks to YunQiang Su
+  * po/de.po:
+    - fix incorrect translation of breaks (closes: #622752)
+  * use synaptic-pkexec in debian as well and remove from the
+    Ubuntu patch set (closes: #674071)
+  * debian/patches/03_hide_browse_documentation.dpatch:
+    - removed, not worth the delta
+  * common/sections_trans.cc:
+    - make "Tasks" translatable, thanks to Sergey Alyoshin
+      (closes: #675862)
+  * po/ru.po:
+    - updated russian translation, thanks to Sergey Alyoshin
+      (closes: #675859)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 11 Jun 2012 17:49:09 +0200
+
+synaptic (0.75.11) unstable; urgency=low
+
+  [  Sergey Alyoshin ]
+  * Fix some compiler warnings, closes: #672919
+  * Fix missing Help/Contents localization, closes: #670961
+  
+  [ Michael Vogt ]
+  * add "ctrl-l" accelerator key for downloading the changelog,
+    closes: #388250
+  * merge patch from Carsten Hey to support multiarch deborphan,
+    closes: #670542
+  * only try to apply distro specific patches if there are any,
+    thanks to  Moritz Muehlenhoff, closes: #626257
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 21 May 2012 13:52:30 +0200
+
+synaptic (0.75.10) unstable; urgency=low
+
+  * rebuild with multiarch support
+  * debian/control:
+    - remove X-Ubuntu-Use-Langpack again
+    - update build-dependencies for libapt-pkg-dev
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 16 Apr 2012 21:17:14 +0200
+
+synaptic (0.75.9) unstable; urgency=low
+
+  * generate synaptic.pot during the package build to really enable
+    langpack support
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 03 Apr 2012 09:45:48 +0200
+
+synaptic (0.75.8) unstable; urgency=low
+
+  * debian/control:
+    - add X-Ubuntu-Use-Langpack to enable langpack support
+  * debian/rules:
+    - run dh_translations if available, this will enable langpack
+      support
+  * po/*.po, configure.in:
+    - refresh translations from LP and update ALL_LINGUAS to match
+      the new translations (LP: #889351)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 02 Apr 2012 11:26:34 +0200
+
+synaptic (0.75.7) unstable; urgency=low
+
+  * common/rpackage.cc:
+    - fix reading multiarch file list (LP: #960250)
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 27 Mar 2012 16:14:46 +0200
+
+synaptic (0.75.6) unstable; urgency=low
+
+  * fix segfault for packages without VerFile attribute, thanks to
+    Hans-Georg Bork, closes: #663016
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 12 Mar 2012 22:08:32 +0100
+
+synaptic (0.75.5) unstable; urgency=low
+
+  * common/rpackagelister.cc:
+    - simplify openCache() code to use more modern std::vector features
+      and fix crash along the way (LP: #936677)
+  * common/sections_trans.cc:
+    - add "metapackages", "education", "introspection"
+  * debian/rules:
+    - do not build multiarch support in Debian to make it work on 
+      unstable that has no multiarch apt yet
+
+ -- Michael Vogt <mvo@debian.org>  Fri, 02 Mar 2012 10:20:59 +0100
+
+synaptic (0.75.5~exp6) experimental; urgency=low
+
+  * unless the config option "Synaptic::InlineScreenshots" is set
+    to true do not show the tiny screenshot thumbnails inline but
+    instead download the big screenshot and show it in a window when
+    clicking on the "Show screenshot" button
+  * gtk/gtkbuilder/window_main.ui:
+    - fix "can_focus" property of entry_fast_search from false to
+      true. Looks like glade messed this up.
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 13 Feb 2012 17:50:45 +0100
+
+synaptic (0.75.5~exp5) experimental; urgency=low
+
+  * common/rpackage.cc:
+    - use SetCandidateRelease() when forcing a version to ensure
+      that experimental/backports work better
+  * common/rpackageview.cc:
+    - add subview for not-automatic package in the origins filter,
+      this is useful for e.g. debian/experimental or ubuntu-backports
+      Note that you need to force the version using the menu:
+     "Package/Force Version"
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 08 Feb 2012 21:21:43 +0100
+
+synaptic (0.75.5~exp4) experimental; urgency=low
+
+  * debian/patches/03_hide_browse_documentation.dpatch:
+    - fix patch to build on ubuntu
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 07 Feb 2012 21:15:28 +0100
+
+synaptic (0.75.5~exp3) experimental; urgency=low
+
+  * move to dh8
+  * modernize packaging
+  * debian/patches/11_use-pkexec.dpatch:
+    - merged to have pkexec as a additional auth mechanism, thanks
+      to Marc Deslaurier (closes: #648311)
+  * common/rpackagelister.{cc,h}:
+    - add new "Synaptic::ShowAllMultiArch" config option that control
+      if all multiarch packages are displayed or only those that are
+      not available for the native arch
+  * common/rpackageview.{cc,hh}:
+    - add ArchitectureView on the main left on multiarch systems
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 06 Feb 2012 19:16:45 +0100
+
+synaptic (0.75.5~exp2) experimental; urgency=low
+
+  * merge changes from Ubuntu:
+    - debian/changelog: updated
+    - debian/control: add or-dependency policykit-1 for pkexec support
+    - debian/rules: install apport hook and pkgexec wrapper
+    - pre-build.sh: run autoreconf after updating the configure.in versions
+  * debian/control:
+    - fix Vcs-Bzr
+  * debian/rules:
+    - do not build --with-launchpad-integration anymore
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 30 Jan 2012 12:32:01 +0100
+
+synaptic (0.75.5~exp1) experimental; urgency=low
+
+  * merged from lp:synaptic
+  * build against libapt in experimental
+
+ -- Michael Vogt <mvo@debian.org>  Tue, 24 Jan 2012 14:37:30 +0100
+
+synaptic (0.75.4) unstable; urgency=low
+
   * gtk/gtkpkglist.cc:
     - fix potential crash when gtk_pkg_list_iter_children is called
       on a empty list
-  * po/et.po:
-    - updated, thanks to Guido Tabbernuk
   * debian/synaptic.postrm:
     - remove /etc/apt/apt.conf.d/99synaptic on purge (closes: #64550)
   * gtk/rgmainwindow.cc, gtk/gsynaptic.cc:
     - cleanup 
   * fix build with apt in experimental
+  * po/*:
+    - auto updates from LP
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 01 Aug 2011 14:34:13 +0200
+ -- Michael Vogt <mvo@debian.org>  Tue, 20 Dec 2011 22:32:21 +0100
+
+synaptic (0.75.3) unstable; urgency=low
+
+  * gtk/rgfetchprogress.cc:
+    - fix potential crash due to division through zero
+  * po/et.po:
+    - updated, thanks to Guido Tabbernuk
+  * po/*:
+    - auto updates from LP
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 19 Sep 2011 10:45:38 +0200
+
+synaptic (0.75.2ubuntu9) precise; urgency=low
+
+  * No-change rebuild to drop spurious libsfgcc1 dependency on armhf.
+
+ -- Adam Conrad <adconrad@0c3.net>  Fri, 02 Dec 2011 21:25:58 -0700
+
+synaptic (0.75.2ubuntu8) oneiric; urgency=low
+
+  * debian/source_synaptic.py: add in an apport package hook (LP: #863792)
+
+ -- Brian Murray <brian@ubuntu.com>  Wed, 05 Oct 2011 11:02:19 -0700
+
+synaptic (0.75.2ubuntu7) oneiric; urgency=low
+
+  [ Julien Lavergne ]
+  * debian/control:
+    - Demote apt-xapian-index from Recommends to Suggests to not pull it by
+      default on Lubuntu. (LP: #798437).
+
+  [ Michael Terry ]
+  * debian/control:
+    - Drop Vcs-Bzr line, this is no longer maintained by core devs but by
+      MOTU
+
+ -- Michael Terry <mterry@ubuntu.com>  Mon, 26 Sep 2011 12:13:46 -0400
+
+synaptic (0.75.2ubuntu6) oneiric; urgency=low
+
+  * Fix missing policy file (again!) (LP: #828315)
+    - debian/patches/11_use-pkexec.dpatch: remove Makefile.in changes.
+    - debian/rules: call automake.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 18 Aug 2011 07:56:50 -0400
+
+synaptic (0.75.2ubuntu5) oneiric; urgency=low
+
+  [ Michael Vogt ]
+  * debian/control:
+    - fix vcs-bzr header
+
+  [ Marc Deslauriers ]
+  * debian/patches/11_use-pkexec.dpatch: fix timestamps to prevent race
+    from regenerating the Makefile. (LP: #828315)
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Aug 2011 20:23:46 -0400
+
+synaptic (0.75.2ubuntu4) oneiric; urgency=low
+
+  * debian/synaptic-pkexec: use /bin/sh, not /bin/bash.
+  * debian/rules: install synaptic-pkexec wrapper to /usr/bin, not
+    /usr/sbin as it may not be in the path. (LP: #824985, LP: #827878)
+  * debian/patches/11_use-pkexec.dpatch: rename extra .patch from filename,
+    remove superfluous line break in policy files.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 17 Aug 2011 08:44:11 -0400
+
+synaptic (0.75.2ubuntu3) oneiric; urgency=low
+
+  * Use pkexec instead of gksu for authentication:
+    - debian/patches/02_ubuntu_desktop_file.dpatch: switch to pkexec
+      wrapper.
+    - debian/patches/06_ubuntu_su_to_root.dpatch: switch to pkexec wrapper.
+    - debian/patches/11_use-pkexec.dpatch: add policy file and adjust
+      Makefiles.
+    - debian/control: remove gksu from recommends.
+    - debian/rules, debian/synaptic-pkexec: install wrapper to work around
+      .desktop files not being able to call pkexec directly.
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 11 Aug 2011 08:48:51 -0400
+
+synaptic (0.75.2ubuntu2) oneiric; urgency=low
+
+  * gtk/rgfetchprogress.cc:
+    - fix potential crash due to division through zero
+  * rebuild against latest libapt
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 08 Aug 2011 14:28:35 +0200
+
+synaptic (0.75.2ubuntu1) oneiric; urgency=low
+
+  * merged from debian/unstable, remaining changes:
+    - ubuntu icons for supported applications
+    - launchpad-integration
+    - ubuntu changelog download support
+    - support section metapackages
+    - x-ubuntu-gettext-domain in desktop file
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 21 Jun 2011 16:05:18 +0200
 
 synaptic (0.75.2) unstable; urgency=low
 
@@ -41,6 +360,27 @@ synaptic (0.75.2) unstable; urgency=low
     checking for administrative privileges (LP: #791135)
 
  -- Michael Vogt <mvo@debian.org>  Tue, 21 Jun 2011 15:10:59 +0200
+
+synaptic (0.75.1ubuntu2) natty; urgency=low
+
+  * merge fixes from trunk:
+    - po/ru.po:
+      - updated, thanks to Alexander Sashanov (closes: #614969)
+    - po/pt_BR.po:
+      - updated, thanks to Sérgio Cipolla (closes: #606447)
+    - common/rpackage.{cc,h}:
+      - add basic multiarch support, enabled by default, can
+        be disabled at build time with 
+        ./configure --without-apt-multiarch-support
+      - no changes on non-multiarch enabled configurations
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 06 Apr 2011 14:08:12 +0200
+
+synaptic (0.75.1ubuntu1) natty; urgency=low
+
+  * merged fixed from debian/sid
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 04 Mar 2011 12:29:46 +0100
 
 synaptic (0.75.1) unstable; urgency=low
 

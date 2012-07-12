@@ -48,7 +48,6 @@
     <property name="modal">True</property>
     <property name="default_width">640</property>
     <property name="default_height">480</property>
-    <property name="icon">synaptic_mini.xpm</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
@@ -112,7 +111,6 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_button_filters_add_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -128,7 +126,6 @@
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
                             <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_button_filters_remove_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -533,7 +530,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Installed automatically as part of a dependency</property>
+                                                <property name="tooltip_text" translatable="yes">Packages installed automatically as part of a dependency</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="draw_indicator">True</property>
                                               </object>
@@ -549,7 +546,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Automatic installed but no longer required by any other package</property>
+                                                <property name="tooltip_text" translatable="yes">Packages installed automatically but no longer required by any other package</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="draw_indicator">True</property>
                                               </object>
@@ -581,7 +578,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Installed manually (not as a dependency by something else)</property>
+                                                <property name="tooltip_text" translatable="yes">Packages installed manually (not as a dependency of something else)</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="draw_indicator">True</property>
                                               </object>

@@ -49,8 +49,8 @@ const char * RGPreferencesWindow::column_names[] =
 
 const char *RGPreferencesWindow::column_visible_names[] = 
    {_("Status"), _("Supported"), _("Package Name"), _("Section"),
-    _("Component"), _("Installed Version"), _("Available Version"), 
-    _("Installed Size"), _("Download Size"),_("Description"), NULL };
+    _("Component"), _("Installed Version"), _("Latest Version"), 
+    _("Size"), _("Download Size"),_("Description"), NULL };
 
 const gboolean RGPreferencesWindow::column_visible_defaults[] = 
    { TRUE, TRUE, TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE }; 
@@ -630,8 +630,8 @@ void RGPreferencesWindow::readNetwork()
    // proxy stuff
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object
-                                                  (_builder,"radio_use_proxy")),
-                                                  useProxy);
+                                                  (_builder,"radio_no_proxy")),
+                                                  !useProxy);
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
                             (_builder, "table_proxy")),
                             useProxy);

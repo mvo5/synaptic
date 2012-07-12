@@ -221,9 +221,9 @@ void RAPTOptions::rereadOrphaned()
       //cerr << "deborphan failed" << endl;
       return;
    }
-   while (fgets(buf, 254, fp) != NULL) {
-      //mvo: FIXME this sucks (remove newline at end)
-      buf[strlen(buf) - 1] = 0;
+   while (fgets(buf, sizeof(buf), fp) != NULL) {
+      // remove newline at end and strip architecture suffix
+      buf[strcspn(buf, "\n:")] = '\0';
       //cout << "buf: " << buf << endl;
       setPackageOrphaned(buf, true);
    }

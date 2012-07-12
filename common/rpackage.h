@@ -149,6 +149,12 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
+   string arch();
+
+   // package is also available for the native architecture
+   // (note that packages installed are never considered a duplicate
+   bool isMultiArchDuplicate();
+
    // get changelog file from the debian server 
    string getChangelogFile(pkgAcquire *fetcher);
    // get screenshot file from the debian server 
@@ -159,10 +165,10 @@ class RPackage {
    // get all available versions (version, release)
    vector<pair<string, string> > getAvailableVersions();
 
-   // get origin url of the package 
-   string getCandidateOriginSiteUrl();
+   // get origins url of the package (e.g. http://security.ubuntu.com)
+   vector<string> getCandidateOriginSiteUrls();
    // get origin "archive" release header (e.g. karmic, karmic-updates)
-   string getCandidateOriginSuite();
+   vector<string> getCandidateOriginSuites();
    // get origin "origin" release header (e.g. Ubuntu, 
    string getCandidateOriginStr();
 
@@ -179,6 +185,7 @@ class RPackage {
    string origin();
    
    const char *maintainer();
+   const char *homepage();
    const char *vendor();
 
    const char *installedVersion();

@@ -96,7 +96,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                     "clicked",
                     G_CALLBACK(addFilterAction), this);
 
-   g_signal_connect(gtk_builder_get_object(_builder, "buttons_filters_remove"),
+   g_signal_connect(gtk_builder_get_object(_builder, "button_filters_remove"),
                     "clicked",
                     G_CALLBACK(removeFilterAction), this);
 

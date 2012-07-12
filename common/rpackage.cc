@@ -154,6 +154,31 @@ const char *RPackage::maintainer()
    return "";
 }
 
+const char *RPackage::homepage()
+{
+   static string _homepage;
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
+      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      _homepage = parser.Homepage();
+      return _homepage .c_str();
+   }
+   return "";
+}
+
+
+string RPackage::arch()
+{
+   pkgCache::VerIterator ver;
+
+   ver = (*_depcache)[*_package].InstVerIter(*_depcache);
+
+   // the arch:all property is part of the version
+   if (ver && ver.Arch())
+      return ver.Arch();
+
+   return _package->Arch();
+}
 
 const char *RPackage::vendor()
 {
@@ -193,7 +218,11 @@ const char *RPackage::installedFiles()
 
    filelist.erase(filelist.begin(), filelist.end());
 
+   // try normal file first
    string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
+   // try multiarch name next
+   if (!FileExists(f))
+      f = "/var/lib/dpkg/info/" + string(name()) + ":" + arch() + ".list";
    if (FileExists(f)) {
       ifstream in(f.c_str());
       if (!in != 0)
@@ -381,6 +410,16 @@ const char* RPackage::name()
       return "";
    return s;
 #endif
+}
+
+bool RPackage::isMultiArchDuplicate()
+{
+   // Installed packages are never "hidden"
+   if ((*_package)->CurrentVer != 0)
+      return false;
+   // find the "best" package for the given group, if that is different
+   // from our PkgIterator this is not a interessting pkg
+   return (_package->Group().FindPkg() != *_package);
 }
 
 #if 0
@@ -947,9 +986,11 @@ string RPackage::getChangelogURI()
    } else {
        string pkgfilename = findTagFromPkgRecord("Filename");
        pkgfilename = pkgfilename.substr(0, pkgfilename.find_last_of('.')) + ".changelog";
-       snprintf(uri,512,"http://%s/%s",
-               getCandidateOriginSiteUrl().c_str(),
-               pkgfilename.c_str());
+       vector<string> origin_urls = getCandidateOriginSiteUrls();
+       if (origin_urls.size() > 0) 
+          snprintf(uri,512,"http://%s/%s",
+                   origin_urls[0].c_str(),
+                   pkgfilename.c_str());
    }
    return string(uri);
 }
@@ -998,26 +1039,35 @@ string RPackage::getCandidateOriginStr()
    return "";
 }
 
-string RPackage::getCandidateOriginSuite()
+vector<string> RPackage::getCandidateOriginSuites()
 {
+   vector<string> res;
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if(Ver.end())
-      return "";
+      return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end() && VF.File() && VF.File().Archive())
-      return VF.File().Archive();
-   return "";
+   for ( ; !VF.end(); VF++)
+   {
+      if(VF.File() && VF.File().Archive())
+         res.push_back(string(VF.File().Archive()));
+   }
+
+   return res;
 }
 
-string RPackage::getCandidateOriginSiteUrl()
+vector<string> RPackage::getCandidateOriginSiteUrls()
 {
+   vector<string> res;
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if(Ver.end())
-      return "";
+      return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end() && VF.File() && VF.File().Site())
-      return VF.File().Site();
-   return "";
+   for ( ; !VF.end(); VF++)
+   {
+      if(VF.File() && VF.File().Site())
+         res.push_back(string(VF.File().Site()));
+   }
+   return res;
 }
 
 
@@ -1163,6 +1213,20 @@ bool RPackage::setVersion(string verTag)
       return false;
 
    _depcache->SetCandidateVersion(Ver);
+
+   string archive;
+   for (pkgCache::VerFileIterator VF = Ver.FileList();
+        VF.end() == false;
+        VF++)
+   {
+      if (!VF.File() || !VF.File().Archive())
+         continue;
+      //std::cerr << "vf: " << VF.File().Archive() << std::endl;
+      archive = VF.File().Archive();
+      if(!_depcache->SetCandidateRelease(Ver, archive))
+         std::cerr << "Failed to SetCandidateRelease for " << archive << std::endl;
+      break;
+   }
 
    _boolFlags |= FOverrideVersion;
 

@@ -25,7 +25,7 @@
 #include "config.h"
 #include "i18n.h"
 #include "rgwindow.h"
-
+#include "rgutils.h"
 
 bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
 {
@@ -40,6 +40,8 @@ RGWindow::RGWindow(string name, bool makeBox)
    //std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
+   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
+   gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
    g_object_set_data(G_OBJECT(_win), "me", this);
    g_signal_connect(G_OBJECT(_win), "delete-event",

@@ -973,9 +973,11 @@ string RPackage::getChangelogURI()
    } else {
        string pkgfilename = findTagFromPkgRecord("Filename");
        pkgfilename = pkgfilename.substr(0, pkgfilename.find_last_of('.')) + ".changelog";
-       snprintf(uri,512,"http://%s/%s",
-               getCandidateOriginSiteUrl().c_str(),
-               pkgfilename.c_str());
+       vector<string> origin_urls = getCandidateOriginSiteUrls();
+       if (origin_urls.size() > 0) 
+          snprintf(uri,512,"http://%s/%s",
+                   origin_urls[0].c_str(),
+                   pkgfilename.c_str());
    }
    return string(uri);
 }
@@ -1024,26 +1026,35 @@ string RPackage::getCandidateOriginStr()
    return "";
 }
 
-string RPackage::getCandidateOriginSuite()
+vector<string> RPackage::getCandidateOriginSuites()
 {
+   vector<string> res;
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if(Ver.end())
-      return "";
+      return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end() && VF.File() && VF.File().Archive())
-      return VF.File().Archive();
-   return "";
+   for ( ; !VF.end(); VF++)
+   {
+      if(VF.File() && VF.File().Archive())
+         res.push_back(string(VF.File().Archive()));
+   }
+
+   return res;
 }
 
-string RPackage::getCandidateOriginSiteUrl()
+vector<string> RPackage::getCandidateOriginSiteUrls()
 {
+   vector<string> res;
    pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if(Ver.end())
-      return "";
+      return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end() && VF.File() && VF.File().Site())
-      return VF.File().Site();
-   return "";
+   for ( ; !VF.end(); VF++)
+   {
+      if(VF.File() && VF.File().Site())
+         res.push_back(string(VF.File().Site()));
+   }
+   return res;
 }
 
 

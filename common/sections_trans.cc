@@ -94,6 +94,8 @@ const char *transtable[][2] = {
    {"shells", _("Shells")},
    // TRANSLATORS: Alias for the Debian package section "sound"
    {"sound", _("Multimedia")},
+   // TRANSLATORS: Alias for the Debian package section "task"
+   {"tasks", _("Tasks")},
    // TRANSLATORS: Alias for the Debian package section "tex"
    {"tex", _("TeX Authoring")},
    // TRANSLATORS: Alias for the Debian package section "text"

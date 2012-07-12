@@ -1,3 +1,34 @@
+synaptic (0.75.13) UNRELEASED; urgency=low
+
+  * debian/synaptic.menu:
+    - use x-terminal-emulator -e synaptic-pkexec to support systems
+      that do not have a GUI policykit agent running (closes: #678847)
+  * include all origins in the origin filter not just the first one
+  * show all "archives" in the origins view even if they are "shadowed"
+    by another one
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 26 Jun 2012 12:31:38 +0200
+
+synaptic (0.75.12) unstable; urgency=low
+
+  * updated Telugu translation, thanks to  Praveen Illa
+  * Fix  "Enter on keypad cannot work with Find dialog" (closes: #673804),
+    thanks to YunQiang Su
+  * po/de.po:
+    - fix incorrect translation of breaks (closes: #622752)
+  * use synaptic-pkexec in debian as well and remove from the
+    Ubuntu patch set (closes: #674071)
+  * debian/patches/03_hide_browse_documentation.dpatch:
+    - removed, not worth the delta
+  * common/sections_trans.cc:
+    - make "Tasks" translatable, thanks to Sergey Alyoshin
+      (closes: #675862)
+  * po/ru.po:
+    - updated russian translation, thanks to Sergey Alyoshin
+      (closes: #675859)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 11 Jun 2012 17:49:09 +0200
+
 synaptic (0.75.11) unstable; urgency=low
 
   [  Sergey Alyoshin ]

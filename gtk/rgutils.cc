@@ -20,13 +20,17 @@
  * USA
  */
 
-#include <X11/Xlib.h>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/fileutl.h>
+
+
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+
 
 #include "i18n.h"
 #include "rgutils.h"

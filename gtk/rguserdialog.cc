@@ -21,12 +21,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
  */
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-
-#include <apt-pkg/error.h>
-#include <apt-pkg/fileutl.h>
 
 #include <assert.h>
 #include <string>

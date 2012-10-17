@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkDialog" id="dialog_change_version">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -8,9 +8,6 @@
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="type_hint">normal</property>
-    <property name="resizable">False</property>
-    <property name="destroy_with_parent">False</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -24,12 +21,10 @@
             <child>
               <object class="GtkButton" id="cancelbutton1">
                 <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -41,12 +36,10 @@
             <child>
               <object class="GtkButton" id="okbutton1">
                 <property name="label" translatable="yes">_Force Version</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_underline">True</property>
               </object>
               <packing>
@@ -86,7 +79,6 @@
             </child>
             <child>
               <object class="GtkVBox" id="vbox2">
-                <property name="orientation">vertical</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">12</property>

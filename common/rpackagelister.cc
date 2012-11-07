@@ -1801,9 +1801,8 @@ bool RPackageLister::readSelections(istream &in)
                               CurLine);
 
       _strtabexpand(Buffer, sizeof(Buffer));
-      _strstrip(Buffer);
 
-      const char *C = Buffer;
+      const char *C = _strstrip(Buffer);
 
       // Comment or blank
       if (C[0] == '#' || C[0] == 0)

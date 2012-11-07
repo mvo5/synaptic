@@ -252,6 +252,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    me->setLabel("label_latest_version", pkg->availableVersion());
    me->setLabel("label_latest_size", pkg->availableInstalledSize());
    me->setLabel("label_latest_download_size", pkg->availablePackageSize());
+   me->setLabel("label_source", pkg->srcPackage());
 
    // format description nicely and use emblems
    GtkWidget *textview;

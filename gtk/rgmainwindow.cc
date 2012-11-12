@@ -3247,7 +3247,7 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    else
       res = me->_lister->upgrade();
 
-   me->askStateChange(state);
+   res = res & me->askStateChange(state);
    me->refreshTable(pkg);
 
    if (res)

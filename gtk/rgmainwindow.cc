@@ -3247,13 +3247,18 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    else
       res = me->_lister->upgrade();
 
-   me->askStateChange(state);
-   me->refreshTable(pkg);
+   if(me->askStateChange(state))
+   {
+      me->refreshTable(pkg);
 
-   if (res)
-      me->setStatusText(_("Successfully marked available upgrades"));
-   else
-      me->setStatusText(_("Failed to mark all available upgrades!"));
+      if (res)
+         me->setStatusText(_("Successfully marked available upgrades"));
+      else
+         me->setStatusText(_("Failed to mark all available upgrades!"));
+   } else {
+      // if the user canceled the action, just show the default message
+      me->setStatusText();
+   }
 
    me->setInterfaceLocked(FALSE);
    me->showErrors();

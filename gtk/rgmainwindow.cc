@@ -560,12 +560,9 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    g_free(str_name);
    g_free(str);
    
-   GtkWidget *optionMenu = GTK_WIDGET(gtk_builder_get_object
+   GtkWidget *comboBox = GTK_WIDGET(gtk_builder_get_object
                                       (dia.getGtkBuilder(),
-                                       "optionmenu_available_versions"));
-
-   GtkWidget *menu = gtk_menu_new(); 
-   GtkWidget *item; 
+                                       "combobox_available_versions"));
 
    int canidateNr = 0;
    vector<pair<string, string> > versions = pkg->getAvailableVersions();
@@ -573,23 +570,20 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
       gchar *str = g_strdup_printf("%s (%s)", 
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
-      item = gtk_menu_item_new_with_label(str);
       const char *verStr = pkg->availableVersion();
       if(verStr && versions[i].first == string(verStr))
-	 canidateNr = i;
-      gtk_widget_show(item);
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+         canidateNr = i;
+      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboBox), str);
       //cout << "got: " << str << endl;
       g_free(str);
    }
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(optionMenu), menu);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(optionMenu), canidateNr);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox), canidateNr);
    if(!dia.run()) {
       //cout << "cancel" << endl;
       return;    // user clicked cancel
    }
 
-   int nr = gtk_option_menu_get_history(GTK_OPTION_MENU(optionMenu));
+   int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(comboBox));
 
    pkg->setNotify(false);
    // nr-1 here as we add a "do not override" to the option menu

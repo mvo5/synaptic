@@ -19,9 +19,11 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
  */
-
-
+#include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
+
+#include <gdk/gdkx.h>
+
 #include <cassert>
 #include "config.h"
 #include "i18n.h"
@@ -80,18 +82,19 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
 
    //gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
-   gtk_object_set_data(GTK_OBJECT(_win), "me", this);
-   gtk_signal_connect(GTK_OBJECT(_win), "delete-event",
-                      (GtkSignalFunc) windowCloseCallback, this);
+   g_object_set_data(G_OBJECT(_win), "me", this);
+   g_signal_connect(G_OBJECT(_win), "delete-event",
+                    G_CALLBACK(windowCloseCallback), this);
    _topBox = NULL;
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
-      GdkWindow *win = gdk_window_foreign_new(id);
+      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
+         gdk_display_get_default(), id);
       if(win) {
 	 gtk_widget_realize(_win);
-	 gdk_window_set_transient_for(GDK_WINDOW(_win->window), win);
+	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_win)), win);
       }
    }
    // if we have no parent, don't skip the taskbar hint
@@ -250,15 +253,15 @@ bool RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
 void RGGtkBuilderWindow::setBusyCursor(bool flag) 
 {
    if(flag) {
-      if(GTK_WIDGET_VISIBLE(_win))
-	 gdk_window_set_cursor(window()->window, _busyCursor);
+      if(gtk_widget_get_visible(_win))
+	 gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
 #if GTK_CHECK_VERSION(2,4,0)
       // if we don't iterate here, the busy cursor is not shown
       while (gtk_events_pending())
 	 gtk_main_iteration();
 #endif
    } else {
-      if(GTK_WIDGET_VISIBLE(_win))
-	 gdk_window_set_cursor(window()->window, NULL);
+      if(gtk_widget_get_visible(_win))
+	 gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
    }
 }

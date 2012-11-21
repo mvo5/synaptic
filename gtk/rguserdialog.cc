@@ -21,9 +21,12 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
  */
-
+#include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
+
+#include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 
 #include <assert.h>
 #include <string>
@@ -98,15 +101,17 @@ bool RGUserDialog::showErrors()
    gtk_container_set_border_width(GTK_CONTAINER(scroll), 6);
    gtk_container_add(GTK_CONTAINER(scroll), textview);
    gtk_widget_show_all(scroll);
-   gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dia)->vbox), scroll);
+   gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))), scroll);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
-      GdkWindow *win = gdk_window_foreign_new(id);
+      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
+         gdk_display_get_default(), id);
       if(win) {
 	 gtk_widget_realize(dia);
-	 gdk_window_set_transient_for(GDK_WINDOW(dia->window), win);
+	 gdk_window_set_transient_for(
+            GDK_WINDOW(gtk_widget_get_window(dia)), win);
       }
    }
 
@@ -161,7 +166,7 @@ bool RGUserDialog::message(const char *msg,
 
    dia = gtk_message_dialog_new (GTK_WINDOW(_parentWindow),
                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 gtkmessage, gtkbuttons, "%s", 
+                                 gtkmessage, gtkbuttons, "%s", "",
 			         NULL);
    GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(dia), icon);
@@ -190,16 +195,17 @@ bool RGUserDialog::message(const char *msg,
       }
    }
 
-   g_signal_connect(GTK_OBJECT(dia), "response",
+   g_signal_connect(G_OBJECT(dia), "response",
                     G_CALLBACK(actionResponse), (gpointer) & res);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
-      GdkWindow *win = gdk_window_foreign_new(id);
+      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
+         gdk_display_get_default(), id);
       if(win) {
 	 gtk_widget_realize(dia);
-	 gdk_window_set_transient_for(GDK_WINDOW(dia->window), win);
+	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)), win);
       }
    }
 
@@ -254,11 +260,12 @@ bool RGGtkBuilderUserDialog::init(const char *name)
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0 && !GTK_WIDGET_VISIBLE(_parentWindow)) {
-      GdkWindow *win = gdk_window_foreign_new(id);
+   if (id > 0 && !gtk_widget_get_visible(_parentWindow)) {
+      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
+         gdk_display_get_default(), id);
       if(win) {
 	 gtk_widget_realize(_dialog);
-	 gdk_window_set_transient_for(GDK_WINDOW(_dialog->window), win);
+	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
       }
    }
 

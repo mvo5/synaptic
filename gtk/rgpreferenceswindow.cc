@@ -37,6 +37,7 @@
 #include "rguserdialog.h"
 #include "gsynaptic.h"
 #include "rgpackagestatus.h"
+#include "gtk3compat.h"
 
 #include "i18n.h"
 
@@ -63,27 +64,6 @@ const char *RGPreferencesWindow::update_ask[] =
 const char *RGPreferencesWindow::upgrade_method[] =
    { N_("Always Ask"), N_("Default Upgrade"), N_("Smart Upgrade"), NULL };
 
-#if !GTK_CHECK_VERSION(2,6,0)
-gchar *
-gtk_combo_box_get_active_text (GtkComboBox *combo_box)
-{
-  GtkTreeIter iter;
-  gchar *text = NULL;
-
-  GtkTreeModel* model = gtk_combo_box_get_model(combo_box);
-
-  if (gtk_combo_box_get_active_iter (combo_box, &iter))
-    gtk_tree_model_get (model, &iter, 0, &text, -1);
-
-  return text;
-}
-#endif
-
-#if !GTK_CHECK_VERSION(3,0,0)
- #define GTK_COMBO_BOX_TEXT GTK_COMBO_BOX
- #define gtk_combo_box_text_remove gtk_combo_box_remove_text
- #define gtk_combo_box_text_append_text gtk_combo_box_append_text
-#endif
 
 void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
 {
@@ -108,7 +88,7 @@ void RGPreferencesWindow::cbArchiveSelection(GtkWidget *self, void *data)
    if(me->_blockAction)
       return;
 
-   gchar *s=gtk_combo_box_get_active_text(GTK_COMBO_BOX(self));
+   gchar *s=gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(self));
    if(s!=NULL) {
       me->_defaultDistro = s;
       //cout << "new default distro: " << me->_defaultDistro << endl;
@@ -129,7 +109,7 @@ void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self,
    gchar *defaultDistro = (gchar*)g_object_get_data(G_OBJECT(self),"defaultDistro");
    if(strcmp(defaultDistro, "distro") == 0) {
       gtk_widget_set_sensitive(GTK_WIDGET(me->_comboDefaultDistro),TRUE);
-      gchar *s = gtk_combo_box_get_active_text(GTK_COMBO_BOX(me->_comboDefaultDistro));
+      gchar *s = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(me->_comboDefaultDistro));
       if(s!=NULL)
 	 me->_defaultDistro = s;
    } else {
@@ -708,7 +688,7 @@ void RGPreferencesWindow::readDistribution()
    GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(_comboDefaultDistro));
    int num = gtk_tree_model_iter_n_children(model, NULL);
    for(;num >= 0;num--)
-      gtk_combo_box_text_remove(GTK_COMBO_BOX(_comboDefaultDistro), num);
+      gtk_combo_box_text_remove(GTK_COMBO_BOX_TEXT(_comboDefaultDistro), num);
 
    if(defaultDistro == "") {
       button = ignore;

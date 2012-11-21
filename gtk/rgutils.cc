@@ -22,13 +22,14 @@
 
 #include <apt-pkg/fileutl.h>
 
-#include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+
+#include <iostream>
 
 #include "i18n.h"
 #include "rgutils.h"

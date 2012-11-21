@@ -27,13 +27,13 @@
 
 #include "rgfindwindow.h"
 #include "rgutils.h"
-
+#include "gtk3compat.h"
 #include "i18n.h"
 
 
 gchar* RGFindWindow::getFindString()
 {
-   return gtk_combo_box_get_active_text(GTK_COMBO_BOX(_comboFind));
+   return gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(_comboFind));
 }
 
 void RGFindWindow::selectText()

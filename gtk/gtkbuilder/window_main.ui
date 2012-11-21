@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires gtk+ 3.0 -->
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -102,7 +102,6 @@
             <property name="can_focus">False</property>
             <child>
               <object class="GtkMenuItem" id="file1">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_File</property>
@@ -113,7 +112,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_open">
                         <property name="label" translatable="yes">_Read Markings...</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -125,7 +123,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_save">
                         <property name="label" translatable="yes">_Save Markings</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -137,7 +134,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_save_as">
                         <property name="label" translatable="yes">Save Markings _As...</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -154,7 +150,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="generate_download_script1">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Generate a shell script so that you can download the selected packages on a different computer</property>
@@ -165,7 +160,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_add_downloadedfiles">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="tooltip_text" translatable="yes">Add packages downloaded with the "Generate package download script" feature to the system</property>
@@ -182,7 +176,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="view_commit_log">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_History</property>
@@ -199,7 +192,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_exit">
                         <property name="label" translatable="yes">_Quit</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -215,7 +207,6 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="actions1">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Edit</property>
@@ -226,7 +217,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="undo1">
                         <property name="label">gtk-undo</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -238,7 +228,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="redo1">
                         <property name="label">gtk-redo</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -249,7 +238,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="clear_all_changes">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">U_nmark All</property>
@@ -266,7 +254,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_search">
                         <property name="label" translatable="yes">_Search...</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -285,7 +272,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_update_packages">
                         <property name="label" translatable="yes">_Reload Package Information</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -298,7 +284,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="add_cdrom">
                         <property name="label" translatable="yes">_Add CD-ROM...</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -316,7 +301,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_upgrade_all">
                         <property name="label" translatable="yes">_Mark All Upgrades...</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -328,7 +312,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_fix_broken_packages">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Fix Broken Packages</property>
@@ -338,7 +321,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_tasks">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Mark Packages by _Task...</property>
@@ -355,7 +337,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_proceed">
                         <property name="label" translatable="yes">A_pply Marked Changes</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -371,7 +352,6 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="menu_package">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Package</property>
@@ -382,7 +362,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_keep">
                         <property name="label" translatable="yes">U_nmark</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -395,7 +374,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_install">
                         <property name="label" translatable="yes">Mark for _Installation</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -408,7 +386,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_reinstall">
                         <property name="label" translatable="yes">Mark for R_einstallation</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -420,7 +397,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_upgrade">
                         <property name="label" translatable="yes">Mark for _Upgrade</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -433,7 +409,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_remove">
                         <property name="label" translatable="yes">Mark for _Removal</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -446,7 +421,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_purge">
                         <property name="label" translatable="yes">Mark for Co_mplete Removal</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -464,7 +438,6 @@
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="menu_hold">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Lock Version</property>
@@ -474,7 +447,6 @@
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="menu_auto_installed">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Automatically installed</property>
@@ -484,7 +456,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_override_version">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Force Version...</property>
@@ -501,7 +472,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_configure">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Configure...</property>
@@ -511,7 +481,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_documentation">
-                        <property name="use_action_appearance">False</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Browse Documentation</property>
                         <property name="use_underline">True</property>
@@ -520,13 +489,12 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_download_changelog">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Download Changelog</property>
                         <property name="use_underline">True</property>
-                        <signal name="activate" handler="on_download_changelog_activate" swapped="no"/>
                         <accelerator key="L" signal="activate" modifiers="GDK_CONTROL_MASK"/>
+                        <signal name="activate" handler="on_download_changelog_activate" swapped="no"/>
                       </object>
                     </child>
                     <child>
@@ -538,7 +506,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_details">
                         <property name="label" translatable="yes">_Properties</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -554,7 +521,6 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="settings2">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Settings</property>
@@ -565,7 +531,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_preferences">
                         <property name="label">gtk-preferences</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -575,7 +540,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_repositories">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Repositories</property>
@@ -586,7 +550,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="edit_filter">
                         <property name="label" translatable="yes">_Filters</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -603,7 +566,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="menu_set_option">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Set Internal Option...</property>
@@ -619,7 +581,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="toolbar2">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Toolbar</property>
@@ -630,7 +591,6 @@
                             <property name="can_focus">False</property>
                             <child>
                               <object class="GtkRadioMenuItem" id="menu_toolbar_pixmaps">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Icons Only</property>
@@ -640,7 +600,6 @@
                             </child>
                             <child>
                               <object class="GtkRadioMenuItem" id="menu_toolbar_text">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Text Only</property>
@@ -651,7 +610,6 @@
                             </child>
                             <child>
                               <object class="GtkRadioMenuItem" id="menu_toolbar_both">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Text _Below Icons</property>
@@ -662,7 +620,6 @@
                             </child>
                             <child>
                               <object class="GtkRadioMenuItem" id="menu_toolbar_beside">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Text Be_side Icons</property>
@@ -673,7 +630,6 @@
                             </child>
                             <child>
                               <object class="GtkRadioMenuItem" id="menu_toolbar_hide">
-                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">_Hide</property>
@@ -693,7 +649,6 @@
             </child>
             <child>
               <object class="GtkMenuItem" id="help1">
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Help</property>
@@ -703,8 +658,7 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="menu_help">
-                        <property name="label" translatable="yes">_Contents</property>
-                        <property name="use_action_appearance">False</property>
+                        <property name="label">_Contents</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -715,7 +669,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="quick_introduction">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">_Quick Introduction</property>
@@ -725,7 +678,6 @@
                     </child>
                     <child>
                       <object class="GtkMenuItem" id="icon_legend">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Icon _Legend</property>
@@ -736,7 +688,6 @@
                     <child>
                       <object class="GtkImageMenuItem" id="menu_about">
                         <property name="label">gtk-about</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="use_underline">True</property>
@@ -772,10 +723,8 @@
                     <property name="show_arrow">False</property>
                     <child>
                       <object class="GtkToolButton" id="button_update">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="is_important">True</property>
                         <property name="label" translatable="yes">Reload</property>
                         <property name="use_underline">True</property>
@@ -789,10 +738,8 @@
                     </child>
                     <child>
                       <object class="GtkToolButton" id="button_upgrade">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="is_important">True</property>
                         <property name="label" translatable="yes">Mark All Upgrades</property>
                         <property name="use_underline">True</property>
@@ -805,10 +752,8 @@
                     </child>
                     <child>
                       <object class="GtkToolButton" id="button_procceed">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="is_important">True</property>
                         <property name="label" translatable="yes">Apply</property>
                         <property name="use_underline">True</property>
@@ -831,10 +776,8 @@
                     </child>
                     <child>
                       <object class="GtkToolButton" id="button_details">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="is_important">True</property>
                         <property name="label" translatable="yes">Properties</property>
                         <property name="use_underline">True</property>
@@ -918,10 +861,8 @@
                     </child>
                     <child>
                       <object class="GtkToolButton" id="button_search">
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="is_important">True</property>
                         <property name="label" translatable="yes">Search</property>
                         <property name="use_underline">True</property>
@@ -1007,28 +948,26 @@
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_sections">
                         <property name="label" translatable="yes">_Sections</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <signal name="toggled" handler="on_radiobutton_section_toggled" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_find">
                         <property name="label" translatable="yes">S_earch Results</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <property name="group">radiobutton_sections</property>
                         <signal name="toggled" handler="on_radiobutton_find_toggled" swapped="no"/>
@@ -1036,18 +975,17 @@
                       <packing>
                         <property name="top_attach">4</property>
                         <property name="bottom_attach">5</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_status">
                         <property name="label" translatable="yes">S_tatus</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <property name="group">radiobutton_sections</property>
                         <signal name="toggled" handler="on_radiobutton_status_toggled" swapped="no"/>
@@ -1056,18 +994,17 @@
                         <property name="top_attach">1</property>
                         <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_custom">
                         <property name="label" translatable="yes">_Custom Filters</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <property name="group">radiobutton_sections</property>
                         <signal name="toggled" handler="on_radiobutton_custom_toggled" swapped="no"/>
@@ -1076,18 +1013,17 @@
                         <property name="top_attach">3</property>
                         <property name="bottom_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_origin">
                         <property name="label" translatable="yes">Origin</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <property name="group">radiobutton_sections</property>
                         <signal name="toggled" handler="on_radiobutton_origin_toggled" swapped="no"/>
@@ -1096,25 +1032,24 @@
                         <property name="top_attach">2</property>
                         <property name="bottom_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkRadioButton" id="radiobutton_architecture">
                         <property name="label" translatable="yes">_Architecture</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
+                        <property name="xalign">0.5</property>
                         <property name="draw_indicator">False</property>
                         <property name="group">radiobutton_sections</property>
                       </object>
                       <packing>
                         <property name="top_attach">5</property>
                         <property name="bottom_attach">6</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                   </object>
@@ -1268,7 +1203,7 @@
                                         <property name="top_attach">4</property>
                                         <property name="bottom_attach">5</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1285,7 +1220,7 @@
                                         <property name="top_attach">4</property>
                                         <property name="bottom_attach">5</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1301,7 +1236,7 @@
                                         <property name="top_attach">3</property>
                                         <property name="bottom_attach">4</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1316,7 +1251,7 @@
                                         <property name="top_attach">3</property>
                                         <property name="bottom_attach">4</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1333,7 +1268,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1350,7 +1285,7 @@
                                         <property name="top_attach">1</property>
                                         <property name="bottom_attach">2</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1415,7 +1350,7 @@
                                       <packing>
                                         <property name="left_attach">1</property>
                                         <property name="right_attach">2</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1429,7 +1364,7 @@
                                         <property name="top_attach">5</property>
                                         <property name="bottom_attach">6</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                                     <child>
@@ -1443,7 +1378,7 @@
                                         <property name="top_attach">5</property>
                                         <property name="bottom_attach">6</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
                     <child>
@@ -1493,7 +1428,7 @@
                                         <property name="top_attach">2</property>
                                         <property name="bottom_attach">3</property>
                                         <property name="x_options">GTK_FILL</property>
-                                        <property name="y_options"></property>
+                                        <property name="y_options"/>
                                       </packing>
                                     </child>
 
@@ -1558,7 +1493,7 @@
                                                 <property name="top_attach">1</property>
                                                 <property name="bottom_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1570,7 +1505,7 @@
                                               </object>
                                               <packing>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1583,7 +1518,7 @@
                                                 <property name="left_attach">1</property>
                                                 <property name="right_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1599,7 +1534,7 @@
                                                 <property name="top_attach">1</property>
                                                 <property name="bottom_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                           </object>
@@ -1677,7 +1612,7 @@
                                                 <property name="top_attach">2</property>
                                                 <property name="bottom_attach">3</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1691,7 +1626,7 @@
                                                 <property name="top_attach">1</property>
                                                 <property name="bottom_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1703,7 +1638,7 @@
                                               </object>
                                               <packing>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1716,7 +1651,7 @@
                                                 <property name="left_attach">1</property>
                                                 <property name="right_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1732,7 +1667,7 @@
                                                 <property name="top_attach">1</property>
                                                 <property name="bottom_attach">2</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                             <child>
@@ -1747,7 +1682,7 @@
                                                 <property name="top_attach">2</property>
                                                 <property name="bottom_attach">3</property>
                                                 <property name="x_options">GTK_FILL</property>
-                                                <property name="y_options"></property>
+                                                <property name="y_options"/>
                                               </packing>
                                             </child>
                                           </object>

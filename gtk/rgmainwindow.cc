@@ -49,6 +49,8 @@
 
 #include <pwd.h>
 
+#include "gtk3compat.h"
+
 #include "raptoptions.h"
 #include "rconfiguration.h"
 #include "rgmainwindow.h"
@@ -560,12 +562,9 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    g_free(str_name);
    g_free(str);
    
-   GtkWidget *optionMenu = GTK_WIDGET(gtk_builder_get_object
-                                      (dia.getGtkBuilder(),
-                                       "optionmenu_available_versions"));
-
-   GtkWidget *menu = gtk_menu_new(); 
-   GtkWidget *item; 
+   GtkWidget *available_versions_combo = GTK_WIDGET(gtk_builder_get_object
+                                                    (dia.getGtkBuilder(),
+                                                     "combobox_available_versions"));
 
    int canidateNr = 0;
    vector<pair<string, string> > versions = pkg->getAvailableVersions();
@@ -573,23 +572,21 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
       gchar *str = g_strdup_printf("%s (%s)", 
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
-      item = gtk_menu_item_new_with_label(str);
+      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(available_versions_combo),
+                                     str);
       const char *verStr = pkg->availableVersion();
       if(verStr && versions[i].first == string(verStr))
 	 canidateNr = i;
-      gtk_widget_show(item);
-      gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-      //cout << "got: " << str << endl;
       g_free(str);
    }
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(optionMenu), menu);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(optionMenu), canidateNr);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo), 
+                            canidateNr);
    if(!dia.run()) {
       //cout << "cancel" << endl;
       return;    // user clicked cancel
    }
 
-   int nr = gtk_option_menu_get_history(GTK_OPTION_MENU(optionMenu));
+   int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));
 
    pkg->setNotify(false);
    // nr-1 here as we add a "do not override" to the option menu
@@ -1433,29 +1430,28 @@ void RGMainWindow::buildInterface()
    if(!FileExists(_config->Find("Synaptic::taskHelperProg","/usr/bin/tasksel")))
       gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "menu_tasks")));
 
-   GtkTooltips *_tooltips = gtk_tooltips_new();
    button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_update"));
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-			     _("Reload the package information to become "
-			       "informed about new, removed or upgraded "
-			       "software packages."), "");
+   gtk_widget_set_tooltip_text(button,
+                               _("Reload the package information to become "
+                                 "informed about new, removed or upgraded "
+                                 "software packages."));
 
    button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips),
-                        _("Mark all possible upgrades"), "");
+   gtk_widget_set_tooltip_text(button,
+                               _("Mark all possible upgrades"));
 
    button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-                        _("Apply all marked changes"), "");
-#if 1
+   gtk_widget_set_tooltip_text(button,
+                               _("Apply all marked changes"));
+
    button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-                        _("View package properties"), "");
+   gtk_widget_set_tooltip_text(button,
+                               _("View package properties"));
 
    button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_search"));
-   gtk_tool_item_set_tooltip(GTK_TOOL_ITEM(button), GTK_TOOLTIPS(_tooltips), 
-                        _("Search for packages"), "");
-#endif
+   gtk_widget_set_tooltip_text(button,
+                               _("Search for packages"));
+
    GtkWidget *pkgCommonTextView;
    pkgCommonTextView = GTK_WIDGET(gtk_builder_get_object(_builder, "text_descr"));
    assert(pkgCommonTextView);
@@ -1979,14 +1975,17 @@ void RGMainWindow::saveState()
                 gtk_paned_get_position(GTK_PANED(vpaned)));
    _config->Set("Synaptic::hpanedPos",
                 gtk_paned_get_position(GTK_PANED(hpaned)));
-   _config->Set("Synaptic::windowWidth", _win->allocation.width);
-   _config->Set("Synaptic::windowHeight", _win->allocation.height);
+
+   GtkAllocation allocation;
+   gtk_widget_get_allocation(_win, &allocation);
+   _config->Set("Synaptic::windowWidth", allocation.width);
+   _config->Set("Synaptic::windowHeight", allocation.height);
    gint x, y;
    gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
    _config->Set("Synaptic::windowX", x);
    _config->Set("Synaptic::windowY", y);
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-   if(gdk_window_get_state(_win->window) & GDK_WINDOW_STATE_MAXIMIZED)
+   if(gdk_window_get_state(gtk_widget_get_window(_win)) & GDK_WINDOW_STATE_MAXIMIZED)
       _config->Set("Synaptic::Maximized", true);
    else
       _config->Set("Synaptic::Maximized", false);
@@ -2063,8 +2062,8 @@ void RGMainWindow::setInterfaceLocked(bool flag)
          return;
 
       gtk_widget_set_sensitive(_win, FALSE);
-      if(GTK_WIDGET_VISIBLE(_win))
-	 gdk_window_set_cursor(_win->window, _busyCursor);
+      if(gtk_widget_get_visible(_win))
+	 gdk_window_set_cursor(gtk_widget_get_window(_win), _busyCursor);
    } else {
       assert(_interfaceLocked > 0);
 
@@ -2073,8 +2072,8 @@ void RGMainWindow::setInterfaceLocked(bool flag)
          return;
 
       gtk_widget_set_sensitive(_win, TRUE);
-      if(GTK_WIDGET_VISIBLE(_win))
-	 gdk_window_set_cursor(_win->window, NULL);
+      if(gtk_widget_get_visible(_win))
+	 gdk_window_set_cursor(gtk_widget_get_window(_win), NULL);
    }
 
    // fast enough with the new fixed-height mode
@@ -2138,7 +2137,8 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
          /* Check if it's either a right-button click, or a left-button
           * click on the status column. */
          if (!(event->button == 3 ||
-               (event->button == 1 && strcmp(column->title, "S") == 0)))
+               (event->button == 1 && 
+                strcmp(gtk_tree_view_column_get_title(column), "S") == 0)))
             return false;
 
          vector<RPackage *> selected_pkgs;
@@ -2443,7 +2443,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
-      argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(me->_win->window));
+      argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
       argv[4] = NULL;
       g_spawn_async(NULL, argv, NULL,
 		    (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
@@ -2490,7 +2490,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       GtkWidget* refresh_image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
       gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
-      gtk_box_pack_start_defaults(GTK_BOX(GTK_DIALOG(dialog)->vbox),cb);
+      gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), cb, true, true, 0);
       gtk_widget_show(cb);
       gint response = gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_hide(dialog);
@@ -2828,7 +2828,7 @@ void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
       me->_blockActions == TRUE)
       return;
 
-   long view = (long)gtk_object_get_data(GTK_OBJECT(self), "index");
+   long view = (long)g_object_get_data(G_OBJECT(self), "index");
    me->changeView(view);
 }
 
@@ -2865,9 +2865,9 @@ void RGMainWindow::activeWindowToForeground()
    }
 
    // harder, we run without mainWindow (in non-interactive mode most likly)
-   if( _fetchProgress && GTK_WIDGET_VISIBLE(_fetchProgress->window()))
+   if( _fetchProgress && gtk_widget_get_visible(_fetchProgress->window()))
       gtk_window_present(GTK_WINDOW(_fetchProgress->window()));
-   else if(_installProgress && GTK_WIDGET_VISIBLE(_installProgress->window()))
+   else if(_installProgress && gtk_widget_get_visible(_installProgress->window()))
       gtk_window_present(GTK_WINDOW(_installProgress->window()));
    else
       g_critical("activeWindowToForeground(): no active window found\n");
@@ -2969,7 +2969,7 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 #ifdef HAVE_TERMINAL
    // wait until the term dialog is closed
    if (term != NULL) {
-      while (GTK_WIDGET_VISIBLE(GTK_WIDGET(term->window()))) {
+      while (gtk_widget_get_visible(GTK_WIDGET(term->window()))) {
          RGFlushInterface();
          usleep(100000);
       }

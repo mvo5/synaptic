@@ -23,7 +23,7 @@
 #ifndef _RGMISC_H_
 #define _RGMISC_H_
 
-#include <apt-pkg/configuration.h>
+#include <vector>
 
 enum {
    PIXMAP_COLUMN,

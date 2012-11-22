@@ -317,7 +317,6 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
-
    if(setAdjustment) {
       gtk_adjustment_value_changed(
 	   gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView)));
@@ -329,10 +328,11 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
    if(selectedPkg != NULL) {
       GtkTreeIter iter;
       RPackage *pkg;
-      
+      GtkTreePath *start = gtk_tree_path_new();
       // make sure we have the keyboard focus after the refresh
       gtk_widget_grab_focus(_treeView);
 
+      gtk_tree_view_get_visible_range(GTK_TREE_VIEW(_treeView), &start, NULL);
       // find and select the pkg we are looking for
       bool ok =  gtk_tree_model_get_iter_first(_pkgList, &iter); 
       while(ok) {
@@ -340,13 +340,15 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	 if(pkg == selectedPkg) {
 	    GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
 	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path, 
-				     NULL, false);
+		 		     NULL, false);
 	    gtk_tree_path_free(path);
 	    break;
 	 }
 
 	 ok = gtk_tree_model_iter_next(_pkgList, &iter);
       }
+      gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);
+      gtk_tree_path_free(start);
    }
 
    setStatusText();

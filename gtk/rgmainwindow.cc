@@ -347,7 +347,9 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 
 	 ok = gtk_tree_model_iter_next(_pkgList, &iter);
       }
-      gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);
+      if (gtk_tree_model_get_iter_first(_pkgList, &iter)) {
+          gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);
+      }
       gtk_tree_path_free(start);
    }
 
@@ -2226,7 +2228,9 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
    gtk_widget_grab_focus (GTK_WIDGET(treeview));
    gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, false);
 
-   gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), start, NULL, true, 0.0, 0.0);
+   if (gtk_tree_model_get_iter_first(me->_pkgList, &iter)) {
+       gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), start, NULL, true, 0.0, 0.0);
+   }
    gtk_tree_path_free(start);
 
    me->setStatusText();

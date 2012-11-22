@@ -2220,8 +2220,14 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
 
    // make sure we do not lose the keyboard focus (this happens in
    // pkgAction otherwise)
+   GtkTreePath *start = gtk_tree_path_new();
+   gtk_tree_view_get_visible_range(GTK_TREE_VIEW(treeview), &start, NULL);
+
    gtk_widget_grab_focus (GTK_WIDGET(treeview));
-   gtk_tree_view_set_cursor(GTK_TREE_VIEW(me->_treeView), path, NULL, false);
+   gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, false);
+
+   gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), start, NULL, true, 0.0, 0.0);
+   gtk_tree_path_free(start);
 
    me->setStatusText();
 }

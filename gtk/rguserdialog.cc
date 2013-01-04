@@ -79,6 +79,7 @@ bool RGUserDialog::showErrors()
 				                  _("An error occurred"), 
 				                  _("The following details "
 						    "are provided:")));
+   gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_CLOSE);
    GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(dia), icon);
 
@@ -101,7 +102,7 @@ bool RGUserDialog::showErrors()
    gtk_container_set_border_width(GTK_CONTAINER(scroll), 6);
    gtk_container_add(GTK_CONTAINER(scroll), textview);
    gtk_widget_show_all(scroll);
-   gtk_container_add(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))), scroll);
+   gtk_container_add_with_properties(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))), scroll, "expand", TRUE, NULL);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);

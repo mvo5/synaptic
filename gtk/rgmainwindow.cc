@@ -569,18 +569,18 @@ void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
    GtkWidget *available_versions_combo = GTK_WIDGET(gtk_builder_get_object
                                                     (dia.getGtkBuilder(),
                                                      "combobox_available_versions"));
-
    int canidateNr = 0;
    vector<pair<string, string> > versions = pkg->getAvailableVersions();
    for(unsigned int i=0;i<versions.size();i++) {
       gchar *str = g_strdup_printf("%s (%s)", 
 				   versions[i].first.c_str(), 
 				   versions[i].second.c_str() );
-      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(available_versions_combo),
-                                     str);
       const char *verStr = pkg->availableVersion();
       if(verStr && versions[i].first == string(verStr))
-	 canidateNr = i;
+         canidateNr = i;
+      gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(available_versions_combo),
+                                     str);
+      //cout << "got: " << str << endl;
       g_free(str);
    }
    gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo), 

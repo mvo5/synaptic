@@ -331,7 +331,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
        gtk_text_buffer_insert(buf, &it, "    ", 1);
        anchor = gtk_text_buffer_create_child_anchor(buf, &it);
        button = gtk_link_button_new_with_label(pkg->homepage(), _("Visit Homepage"));
-       char *homepage_tooltip = g_strdup_printf("Visit %s",
+       char *homepage_tooltip = g_strdup_printf(_("Visit %s"),
 					     pkg->homepage());
        g_signal_connect(G_OBJECT(button),"activate-link", 
                     G_CALLBACK(cbOpenHomepage),

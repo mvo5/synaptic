@@ -120,10 +120,13 @@ const char *RPackage::srcPackage()
    static string _srcPkg;
 
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
-   _srcPkg = rec.SourcePkg().empty()?name():rec.SourcePkg();
+   if (!ver.end()) {
+      pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+      _srcPkg = rec.SourcePkg().empty() ? name() : rec.SourcePkg();
+      return _srcPkg.c_str();
+   }
  
-   return _srcPkg.c_str();
+   return name();
 }
 
 

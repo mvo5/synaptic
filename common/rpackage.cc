@@ -1,7 +1,7 @@
 /* rpackage.cc - wrapper for accessing package information
  * 
  * Copyright (c) 2000-2003 Conectiva S/A 
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002-2013 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>

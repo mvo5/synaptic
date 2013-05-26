@@ -584,11 +584,13 @@ void RGRepositoryEditor::doEdit()
          return;
    }
 
+#if 0 // PORTME, no vendor id support right now
    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);
    gtk_tree_model_get(GTK_TREE_MODEL(_optVendorMenu), &item,
                       1, &type,
                       -1);
    rec->VendorID = type;
+#endif
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
@@ -725,7 +727,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
 
       for (unsigned int I = 0; I < rec->NumSections; I++) {
-         int pos = -1; // FIXME: is this insert at end?
+         int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));
          gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect),
                                   utf8(rec->Sections[I].c_str()),
                                   -1,

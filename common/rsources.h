@@ -60,7 +60,7 @@ class SourcesList {
       string GetType();
       bool SetURI(string);
 
-        SourceRecord():Type(0), Sections(0), NumSections(0) {
+      SourceRecord():Type(0), Sections(0), NumSections(0) {
       };
       ~SourceRecord() {
          if (Sections)

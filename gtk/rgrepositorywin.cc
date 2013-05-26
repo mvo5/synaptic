@@ -584,11 +584,13 @@ void RGRepositoryEditor::doEdit()
          return;
    }
 
+#if 0 // PORTME, no vendor id support right now
    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);
    gtk_tree_model_get(GTK_TREE_MODEL(_optVendorMenu), &item,
                       1, &type,
                       -1);
    rec->VendorID = type;
+#endif
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 

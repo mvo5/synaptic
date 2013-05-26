@@ -30,7 +30,13 @@
 #include <gtk/gtk.h>
 #include "rsources.h"
 #include "rggtkbuilderwindow.h"
-#include "rgvendorswindow.h"
+
+#if !GTK_CHECK_VERSION(3,0,0)
+ #include "rgvendorswindow.h"
+#else
+ #warning "no rgvendorswindow in gtk3"
+#endif
+
 #include "rguserdialog.h"
 
 typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
@@ -48,11 +54,11 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    GtkWidget *_editTable;
    GtkWidget *_optVendor;
-   GtkWidget *_optVendorMenu;
+   GtkListStore *_optVendorMenu;
    GtkWidget *_entryURI;
    GtkWidget *_entrySect;
    GtkWidget *_optType;
-   GtkWidget *_optTypeMenu;
+   GtkListStore *_optTypeMenu;
    GtkWidget *_entryDist;
    //GtkWidget *_cbEnabled;
    

@@ -76,7 +76,7 @@ bool ShowHelp(CommandLine & CmdL)
       _("-f=? Give an alternative filter file\n") <<
       _("-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n") <<
       _("-i=? Start with the initial Filter with given name\n") <<
-      _("-o=? Set an arbitary configuration option, eg -o dir::cache=/tmp\n")<<
+      _("-o=? Set an arbitrary configuration option, eg -o dir::cache=/tmp\n")<<
       _("--upgrade-mode  Call Upgrade and display changes\n") <<
       _("--dist-upgrade-mode  Call DistUpgrade and display changes\n") <<
       _("--update-at-startup  Call \"Reload\" on startup\n")<<
@@ -427,10 +427,10 @@ int main(int argc, char **argv)
    if (getuid() != 0) {
       RGUserDialog userDialog;
       userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
-                                         _("Starting without administrative "
-                                           "privileges"),
+                                         _("Starting \"Synaptic Package Manager\" without "
+                                           "administrative privileges"),
 				         _("You will not be able to apply "
-				           "any changes. But you can still "
+				           "any changes, but you can still "
 					   "export the marked changes or "
 					   "create a download script "
 					   "for them.")));

@@ -185,6 +185,7 @@ class RPackage {
    string origin();
    
    const char *maintainer();
+   const char *homepage();
    const char *vendor();
 
    const char *installedVersion();

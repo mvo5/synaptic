@@ -22,7 +22,6 @@
 
 #include <apt-pkg/fileutl.h>
 
-#include <X11/Xlib.h>
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <string>
@@ -30,9 +29,38 @@
 #include <cstdlib>
 #include <cstring>
 
+#include <iostream>
+
 #include "i18n.h"
 #include "rgutils.h"
 
+
+// helper
+GdkPixbuf *
+get_gdk_pixbuf(const gchar *name, int size)
+{
+   GtkIconTheme *theme;
+   GdkPixbuf *pixbuf;
+   GError *error = NULL;
+
+   theme = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
+				     (GtkIconLookupFlags)0, &error);
+   if (pixbuf == NULL) 
+      std::cerr << "Warning, failed to load: " << name 
+		<< error->message << std::endl;
+
+   return pixbuf;
+}
+
+GtkWidget *get_gtk_image(const gchar *name, int size)
+{
+   GdkPixbuf *buf;
+   buf = get_gdk_pixbuf(name, size);
+   if(!buf)
+      return NULL;
+   return gtk_image_new_from_pixbuf(buf);
+}
 
 void RGFlushInterface()
 {
@@ -84,6 +112,78 @@ std::string SizeToStr(double Size)
    return S;
 }
 
+std::vector<const gchar*> GetBrowserCommand(const gchar *link)
+{
+   std::vector<const gchar*> cmd;
+   if (FileExists("/usr/bin/xdg-open")) {
+      cmd.push_back("/usr/bin/xdg-open");
+      cmd.push_back(link);
+   } else if (FileExists("/usr/bin/firefox")) {
+      cmd.push_back("/usr/bin/firefox");
+      cmd.push_back(link);
+   } else if (FileExists("/usr/bin/konqueror")) {
+      cmd.push_back("/usr/bin/konqueror");
+      cmd.push_back(link);
+   }
+   return cmd;
+}
+
+bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
+{
+   std::vector<const gchar*> prefix;
+    gchar *sudo_user;
+
+    if (cmd.empty()) {
+       std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
+       return true;
+    }
+
+    // try pkexec first, then sudo
+    sudo_user = getenv("PKEXEC_UID");
+    if (sudo_user == NULL) {
+       sudo_user = getenv("SUDO_USER");
+    }
+#if 0 // does not work for some reason
+    if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)
+    {
+       prefix.push_back("/usr/bin/pkexec");
+       prefix.push_back("--user");
+       prefix.push_back(sudo_user);
+    }
+#endif
+    if(FileExists("/usr/bin/sudo") && sudo_user != NULL)
+    {
+       prefix.push_back("/usr/bin/sudo");
+       prefix.push_back("-u");
+       prefix.push_back(sudo_user);
+    }
+    // insert the prefix string
+    cmd.insert(cmd.begin(), prefix.begin(), prefix.end());
+
+#if 0
+    for(std::vector<const gchar*>::iterator it = cmd.begin();
+        it != cmd.end(); it++)
+       printf("cmd '%s'\n", *it);
+#endif
+
+    // build the c way to make g_spawn_async happy
+    char **c_cmd = new char*[cmd.size()+1];
+    int i;
+    for(i=0; i<cmd.size(); i++)
+       c_cmd[i] = (gchar*)cmd[i];
+    c_cmd[i] = NULL;
+
+    GError *error = NULL;
+    g_spawn_async("/", c_cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+    if (error != NULL) {
+       std::cerr << "Failed to run cmd: " << cmd[0] << std::endl;
+    }
+
+    // and free the memory again
+    delete [] c_cmd;
+
+    return true;
+}
 
 bool is_binary_in_path(const char *program)
 {

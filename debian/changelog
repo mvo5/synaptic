@@ -1,3 +1,100 @@
+synaptic (0.80.1) UNRELEASED; urgency=low
+
+  * fix default distribution combo box (closes: #707544)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 22 May 2013 16:54:05 +0200
+
+synaptic (0.80) unstable; urgency=low
+
+  * update translations from launchpad
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 08 May 2013 21:11:11 +0200
+
+synaptic (0.80~exp2raring1) raring-proposed; urgency=low
+
+  * po/nb.po: cherry-pick some strings from Launchpad to fix crash
+    (LP: #880493)
+
+ -- Dmitry Shachnev <mitya57@ubuntu.com>  Mon, 29 Apr 2013 18:46:32 +0400
+
+synaptic (0.80~exp2) experimental; urgency=low
+
+  [ Robert Roth ]
+  * merged lp: ~bkerensa/synaptic/fix-for-1153409
+    thanks to Benjamin Kerensa:
+      - Fix Typo
+      - Add Homepage Field to debian/control
+
+  [ Michael Vogt ]
+  * po/de.po:
+    - fix typo, thanks to Zac Diggum 
+  
+  [ Patrik Lundquist ]
+  * common/rpackage.cc:
+    - fix crash when srcPackage does not have a version
+      (LP: #1097532)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 18 Apr 2013 20:05:02 +0200
+
+synaptic (0.80~exp1) experimental; urgency=low
+
+  [ Robert Roth ]
+  * Disables typeahead in summary dialog, as it doesn't do anything, 
+    so it's unnecesary (LP: #24319)
+  * Move up and Move down buttons in columns preferences changed to 
+    respect buttons_have_icons preference (LP: #66574)
+  * Set the title of the package properties dialog opened for the first 
+    time (it has not been set before, so it was synaptic the first time 
+    the dialog has been opened) (LP: #932495)
+  * Added a reload button to the repositories changed dialog (LP: #78987)
+  * Updated the wording of the expander on the download progress dialog to 
+    Show individual files" instead of "Show for individual files"
+    (LP: #301428)
+  * Fixed inconsistencies between column namings in column headers and 
+    column visibility preferences (LP: #335723)
+  * Linkified maintainer label in the package properties dialog 
+    when running as non-root (LP: #321380)
+  * Added package name in the warning scaring you about breaking your 
+    system (LP: #63974)
+  * Added name of the application (Synaptic Package Manager) in the 
+    titleless dialog shown when starting without administrative 
+    privilegess (LP: #510261)
+  * Improved filter editing checkbox tooltips (LP: #790420)
+  * Made all the property values from the package properties dialog 
+    selectable (LP: #173464)
+  * Changed Package Properties accelerator from Ctrl+O to widely used 
+    (nautilus, eog, evince etc) Alt+Enter (LP: #933554)
+  * Use the synaptic icon from the user's icon theme, or fall back to
+    the old one if the current theme does not provide a synaptic icon
+    (LP: #153755)
+  * Focus the Apply button by default. (LP: #488718)
+  * Removed log message from automatically installed item click
+    (LP: #883984)
+  * Fixed delete filter button not working caused by a typo in the
+    name of the button when getting it from the GtkBuilder object 
+    (LP: #779756)
+  * Added suggests tasksel as with tasksel installed synaptic
+    provides additional functionality (LP: #605186)
+  * Fixes incorrect radiobutton handling in the proxy preferences
+    (LP: #706262)
+  * Fixed incorrect status message when canceling 'Mark all available 
+    upgrades' feedback dialog (LP: #975578)
+  
+  [ Michael Vogt ]
+  * ensure external helpers are runs as the user uid
+  * build for gtk3 and update build-depends
+  * move software-propoerties-gtk into suggests
+  * strip strings properly in a markings file, thanks to
+    Vassilis Palassopoulos (palasso) 
+  * show source package name in the details (closes: #692528)
+  * merged lp:~fitoschido/synaptic/es-redundancy:
+    - Remove empty es_ES .po files. Spanish translations are already 
+      provided in es files. Thanks to Adolfo Jayme Barrientos (fitoschido)
+  * common/rpackagelister.cc:
+    - add support for complete removal (purge) in the markings file
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 13 Dec 2012 10:08:37 +0100
+
 synaptic (0.75.14) UNRELEASED; urgency=low
 
   * po/fr.po:

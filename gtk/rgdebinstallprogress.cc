@@ -31,11 +31,14 @@
 #include <sys/un.h>
 #include <errno.h>
 
+#include "gtk3compat.h"
+
 #include "rgmainwindow.h"
 #include "gsynaptic.h"
 
 #include "rgdebinstallprogress.h"
 #include "rguserdialog.h"
+
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
@@ -294,10 +297,14 @@ void RGDebInstallProgress::startUpdate()
    // check if we run embedded
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    if (id > 0) {
+#if !GTK_CHECK_VERSION(3,0,0)
       GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_rgdebinstall_progress"));
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show(_sock);
+#else
+      g_error("gtk_plugin_new not supported with gtk3");
+#endif
    } else {
       show();
    }
@@ -669,7 +676,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
        return res;
 
    // we need to send the fds from the pipe over a socket because
-   // §""!%&§/ vte_terminal closes all our FDs 
+   // the vte_terminal closes all our FDs 
    _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
 				    false,false,false);
    if (_child_id < 0) {
@@ -773,8 +780,8 @@ void RGDebInstallProgress::finishUpdate()
    GtkWidget *img = GTK_WIDGET(gtk_builder_get_object(_builder, "image_finished"));
    switch(res) {
    case 0: // success
-      gtk_image_set_from_file(GTK_IMAGE(img),
-			      PACKAGE_DATA_DIR"/pixmaps/synaptic.png");
+      gtk_image_set_from_icon_name(GTK_IMAGE(img),
+			      "synaptic", GTK_ICON_SIZE_DIALOG);
       break;
    case 1: // error
       gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_ERROR,

@@ -28,6 +28,9 @@
 #include <apt-pkg/sourcelist.h>
 #include <glib.h>
 #include <cassert>
+
+#include <gdk/gdk.h>
+
 #include "rgrepositorywin.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
@@ -68,7 +71,12 @@ enum {
    N_SOURCES_COLUMNS
 };
 
- void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell, 
+enum {
+   COL_NAME,
+   COL_TYPE,
+};
+
+void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell, 
 				       gchar *path_str, gpointer data)
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *)g_object_get_data(G_OBJECT(cell), "me");
@@ -123,7 +131,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 
    setTitle(_("Repositories"));
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
-   gtk_window_set_policy(GTK_WINDOW(_win), TRUE, TRUE, FALSE);
+   //gtk_window_set_policy(GTK_WINDOW(_win), TRUE, TRUE, FALSE);
 
    // build gtktreeview
    _sourcesListStore = gtk_list_store_new(N_SOURCES_COLUMNS,
@@ -215,61 +223,87 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 
    //_cbEnabled = GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_enabled"));
 
-   _optType = GTK_WIDGET(gtk_builder_get_object(_builder, "optionmenu_type"));
-   _optTypeMenu = gtk_menu_new();
+   _optType = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_type"));
 
-   GtkWidget *item;
+   renderer = gtk_cell_renderer_text_new();
+   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (_optType), renderer, TRUE);
+   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (_optType), renderer,
+                                   "text", COL_NAME,
+                                   NULL);
+   _optTypeMenu = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
+
+   GtkTreeIter item;
 #if HAVE_RPM
-   item = gtk_menu_item_new_with_label("rpm");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPM);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "rpm", 
+                      COL_TYPE, ITEM_TYPE_RPM,
+                      -1);
 
-   item = gtk_menu_item_new_with_label("rpm-src");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRC);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "rpm-src", 
+                      COL_TYPE, ITEM_TYPE_RPMSRC,
+                      -1);
 
-   item = gtk_menu_item_new_with_label("rpm-dir");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMDIR);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "rpm-dir", 
+                      COL_TYPE, ITEM_TYPE_RPMDIR,
+                      -1);
 
-   item = gtk_menu_item_new_with_label("rpm-src-dir");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_RPMSRCDIR);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "rpm-src-dir",
+                      COL_TYPE, ITEM_TYPE_RPMSRCDIR,
+                      -1);
 
-   item = gtk_menu_item_new_with_label("repomd");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_REPOMD);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "repomd",
+                      COL_TYPE, ITEM_TYPE_REPOMD,
+                      -1);
 
-   item = gtk_menu_item_new_with_label("repomd-src");
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_REPOMDSRC);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, "repomd-src",
+                      COL_TYPE, ITEM_TYPE_REPOMDSRC,
+                      -1);
 #else
-   item = gtk_menu_item_new_with_label(_("Binary (deb)"));
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEB);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, _("Binary (deb)"),
+                      COL_TYPE, ITEM_TYPE_DEB,
+                      -1);
 
-   item = gtk_menu_item_new_with_label(_("Source (deb-src)"));
-   gtk_menu_append(GTK_MENU(_optTypeMenu), item);
-   gtk_widget_show(item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) ITEM_TYPE_DEBSRC);
+   gtk_list_store_append(_optTypeMenu, &item);
+   gtk_list_store_set(_optTypeMenu, &item, 
+                      COL_NAME, _("Source (deb-src)"),
+                      COL_TYPE, ITEM_TYPE_DEBSRC,
+                      -1);
 #endif
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_optType), _optTypeMenu);
+   gtk_combo_box_set_model(GTK_COMBO_BOX(_optType),
+                           GTK_TREE_MODEL(_optTypeMenu));
 
+
+   // the (rpm) vendor menu
    _optVendor = GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                  "optionmenu_vendor"));
-   _optVendorMenu = gtk_menu_new();
-   item = gtk_menu_item_new_with_label(_("(no vendor)"));
-   gtk_menu_append(GTK_MENU(_optVendorMenu), item);
-   gtk_widget_show(item);
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_optVendor), _optVendorMenu);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) "");
+                                                  "combo_vendor"));
+   renderer = gtk_cell_renderer_text_new();
+   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (_optVendor), renderer, TRUE);
+   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (_optVendor), renderer,
+                                   "text", 0,
+                                   NULL);
+   _optVendorMenu = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
+
+   gtk_list_store_append(_optVendorMenu, &item);
+   gtk_list_store_set(_optVendorMenu, &item, 
+                      0, _("(no vendor)"),
+                      1, "",
+                      -1);
+
+   gtk_combo_box_set_model(GTK_COMBO_BOX(_optVendor),
+                           GTK_TREE_MODEL(_optVendorMenu));
 
 #ifndef HAVE_RPM
    // debian can't use the vendors menu, so we hide it
@@ -371,9 +405,8 @@ bool RGRepositoryEditor::Run()
       return false;
    }
 
-   GdkColormap *cmap = gdk_colormap_get_system();
+   // FIXME: is this good enough?
    _gray.red = _gray.green = _gray.blue = 0xAA00;
-   gdk_color_alloc(cmap, &_gray);
 
    GtkTreeIter iter;
    for (SourcesListIter it = _lst.SourceRecords.begin();
@@ -410,21 +443,23 @@ bool RGRepositoryEditor::Run()
 
 void RGRepositoryEditor::UpdateVendorMenu()
 {
-   gtk_option_menu_remove_menu(GTK_OPTION_MENU(_optVendor));
-   _optVendorMenu = gtk_menu_new();
-   GtkWidget *item = gtk_menu_item_new_with_label(_("(no vendor)"));
-   gtk_menu_append(GTK_MENU(_optVendorMenu), item);
-   gtk_object_set_data(GTK_OBJECT(item), "id", (gpointer) "");
-   gtk_widget_show(item);
+   GtkTreeIter item;
+   gtk_list_store_clear(_optVendorMenu);
+
+   gtk_list_store_append(_optVendorMenu, &item);
+   gtk_list_store_set(_optVendorMenu, &item, 
+                      0, _("(no vendor)"),
+                      1, "",
+                      -1);
+
    for (VendorsListIter it = _lst.VendorRecords.begin();
         it != _lst.VendorRecords.end(); it++) {
-      item = gtk_menu_item_new_with_label((*it)->VendorID.c_str());
-      gtk_menu_append(GTK_MENU(_optVendorMenu), item);
-      gtk_widget_show(item);
-      gtk_object_set_data(GTK_OBJECT(item), "id",
-                          (gpointer) (*it)->VendorID.c_str());
+      gtk_list_store_append(_optVendorMenu, &item);
+      gtk_list_store_set(_optVendorMenu, &item, 
+                         0, (*it)->VendorID.c_str(),
+                         1, (*it)->VendorID.c_str(),
+                         -1);
    }
-   gtk_option_menu_set_menu(GTK_OPTION_MENU(_optVendor), _optVendorMenu);
 }
 
 int RGRepositoryEditor::VendorMenuIndex(string VendorID)
@@ -444,8 +479,8 @@ void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
    RGRepositoryEditor *me = (RGRepositoryEditor *) data;
    //cout << "RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)"<<endl;
 
-   gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), 0);
-   gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor), 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), 0);
+   gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor), 0);
    gtk_entry_set_text(GTK_ENTRY(me->_entryURI), "");
    gtk_entry_set_text(GTK_ENTRY(me->_entryDist), "");
    gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
@@ -512,8 +547,14 @@ void RGRepositoryEditor::doEdit()
    if (!status)
       rec->Type |= SourcesList::Disabled;
 
-   GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(_optTypeMenu));
-   switch ((long)(gtk_object_get_data(GTK_OBJECT(menuitem), "id"))) {
+   GtkTreeIter item;
+   int type;
+   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optType), &item);
+   gtk_tree_model_get(GTK_TREE_MODEL(_optTypeMenu), &item,
+                      1, &type,
+                      -1);
+
+   switch (type) {
       case ITEM_TYPE_DEB:
          rec->Type |= SourcesList::Deb;
          break;
@@ -543,9 +584,11 @@ void RGRepositoryEditor::doEdit()
          return;
    }
 
-   menuitem = gtk_menu_get_active(GTK_MENU(_optVendorMenu));
-   rec->VendorID = (char *)gtk_object_get_data(GTK_OBJECT(menuitem), "id");
-
+   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);
+   gtk_tree_model_get(GTK_TREE_MODEL(_optVendorMenu), &item,
+                      1, &type,
+                      -1);
+   rec->VendorID = type;
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
@@ -672,9 +715,9 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
          id = ITEM_TYPE_REPOMD;
       else if (rec->Type & SourcesList::RepomdSrc)
          id = ITEM_TYPE_REPOMDSRC;
-      gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optType), id);
+      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), id);
 
-      gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),
+      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor),
                                   me->VendorMenuIndex(rec->VendorID));
 
       gtk_entry_set_text(GTK_ENTRY(me->_entryURI), utf8(rec->URI.c_str()));
@@ -682,9 +725,12 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
 
       for (unsigned int I = 0; I < rec->NumSections; I++) {
-         gtk_entry_append_text(GTK_ENTRY(me->_entrySect),
-                               utf8(rec->Sections[I].c_str()));
-         gtk_entry_append_text(GTK_ENTRY(me->_entrySect), " ");
+         int pos = -1; // FIXME: is this insert at end?
+         gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect),
+                                  utf8(rec->Sections[I].c_str()),
+                                  -1,
+                                  &pos);
+         gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect), " ", -1, &pos);
       }
    } else {
       //cout << "no selection" << endl;
@@ -698,14 +744,16 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 
 void RGRepositoryEditor::VendorsWindow(GtkWidget *, void *data)
 {
+#if 0 // PORTME
    RGRepositoryEditor *me = (RGRepositoryEditor *) data;
    RGVendorsEditor w(me, me->_lst);
    w.Run();
    GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(me->_optVendorMenu));
-   string VendorID = (char *)gtk_object_get_data(GTK_OBJECT(menuitem), "id");
+   string VendorID = (char *)g_object_get_data(G_OBJECT(menuitem), "id");
    me->UpdateVendorMenu();
    gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),
                                me->VendorMenuIndex(VendorID));
+#endif
 }
 
 void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)

@@ -23,11 +23,13 @@
  */
 
 #include "config.h"
+
 #include <math.h>
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/acquire-worker.h>
-#include <apt-pkg/strutl.h>
+#include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/strutl.h>
 
 #include "rgfetchprogress.h"
 #include "rguserdialog.h"
@@ -132,12 +134,16 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    //cout << "Plug ID: " << id << endl;
    if (id > 0) {
+#if !GTK_CHECK_VERSION(3,0,0)
       gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "window_fetch")));
       GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_fetch"));
       _sock =  gtk_plug_new(id);
       gtk_widget_reparent(vbox, _sock);
       gtk_widget_show_all(_sock);
       _win = _sock;
+#else
+      g_error("gtk_plugin_new not supported with gtk3");
+#endif
    } 
    gtk_widget_realize(_win);
 
@@ -265,7 +271,7 @@ void RGFetchProgress::Fetch(pkgAcquire::ItemDesc & Itm)
 }
 
 
-void RGFetchProgress::Done(pkgAcquire::ItemDesc & Itm)
+void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 {
    updateStatus(Itm, DLDone);
 
@@ -273,7 +279,7 @@ void RGFetchProgress::Done(pkgAcquire::ItemDesc & Itm)
 }
 
 
-void RGFetchProgress::Fail(pkgAcquire::ItemDesc & Itm)
+void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
    if (Itm.Owner->Status == pkgAcquire::Item::StatIdle)
       return;
@@ -284,7 +290,7 @@ void RGFetchProgress::Fail(pkgAcquire::ItemDesc & Itm)
 }
 
 
-bool RGFetchProgress::Pulse(pkgAcquire * Owner)
+bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 {
    //cout << "RGFetchProgress::Pulse(pkgAcquire *Owner)" << endl;
 

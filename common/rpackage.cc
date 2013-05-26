@@ -1,7 +1,7 @@
 /* rpackage.cc - wrapper for accessing package information
  * 
  * Copyright (c) 2000-2003 Conectiva S/A 
- *               2002 Michael Vogt <mvo@debian.org>
+ *               2002-2013 Michael Vogt <mvo@debian.org>
  * 
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
@@ -120,10 +120,13 @@ const char *RPackage::srcPackage()
    static string _srcPkg;
 
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
-   _srcPkg = rec.SourcePkg().empty()?name():rec.SourcePkg();
+   if (!ver.end()) {
+      pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
+      _srcPkg = parser.SourcePkg().empty() ? name() : parser.SourcePkg();
+      return _srcPkg.c_str();
+   }
  
-   return _srcPkg.c_str();
+   return name();
 }
 
 
@@ -153,6 +156,19 @@ const char *RPackage::maintainer()
    }
    return "";
 }
+
+const char *RPackage::homepage()
+{
+   static string _homepage;
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
+      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      _homepage = parser.Homepage();
+      return _homepage .c_str();
+   }
+   return "";
+}
+
 
 string RPackage::arch()
 {

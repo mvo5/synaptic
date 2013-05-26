@@ -2,17 +2,18 @@ Source: synaptic
 Section: admin
 Priority: optional
 Maintainer: Michael Vogt <mvo@debian.org>
-Build-Depends: debhelper (>= 8), libapt-pkg-dev (>= 0.8.16~exp12), gettext, libgtk2.0-dev, libvte-dev (>= 0.11.11), libxft2-dev, rarian-compat, intltool, xmlto, libsm-dev , sharutils, dpatch, lsb-release, dpkg (>= 1.13.9), libept-dev (>= 1.0.5), dh-autoreconf
+Build-Depends: debhelper (>= 8), libapt-pkg-dev (>= 0.8.16~exp12), gettext, libgtk-3-dev, libvte-2.90-dev, rarian-compat, intltool, xmlto, libsm-dev , sharutils, dpatch, lsb-release, dpkg (>= 1.13.9), libept-dev (>= 1.0.5), dh-autoreconf
 Build-Conflicts: librpm-dev
 Standards-Version: 3.7.2.2
 Vcs-Bzr: https://code.launchpad.net/~synaptic-developers/synaptic/trunk
+Homepage: http://www.nongnu.org/synaptic/
 
 Package: synaptic
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, hicolor-icon-theme
 Conflicts: menu (<< 2.1.11)
-Recommends: gksu|kdebase-bin|policykit-1, libgtk2-perl (>= 1:1.130), rarian-compat, software-properties-gtk
-Suggests: dwww, menu, deborphan, apt-xapian-index
+Recommends: gksu|kdebase-bin|policykit-1, libgtk2-perl (>= 1:1.130), rarian-compat
+Suggests: dwww, menu, deborphan, apt-xapian-index, tasksel, software-properties-gtk
 Description: Graphical package manager 
  Synaptic is a graphical package management tool based on GTK+ and APT.
  Synaptic enables you to install, upgrade and remove software packages in

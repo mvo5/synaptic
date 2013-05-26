@@ -1772,6 +1772,8 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
       if (flags & RPackage::FInstall ||
           fullState && (flags &RPackage::FInstalled)) {
          out << _packages[i]->name() << "\t\tinstall" << endl;
+      } else if (flags & RPackage::FPurge) {
+         out << _packages[i]->name() << "\t\tpurge" << endl;
       } else if (flags & RPackage::FRemove) {
          out << _packages[i]->name() << "\t\tdeinstall" << endl;
       }
@@ -1786,7 +1788,8 @@ bool RPackageLister::readSelections(istream &in)
    int CurLine = 0;
    enum Action {
       ACTION_INSTALL,
-      ACTION_UNINSTALL
+      ACTION_UNINSTALL,
+      ACTION_PURGE
    };
    map<string, int> actionMap;
    pkgDepCache::ActionGroup group(*_cache->deps());
@@ -1801,9 +1804,8 @@ bool RPackageLister::readSelections(istream &in)
                               CurLine);
 
       _strtabexpand(Buffer, sizeof(Buffer));
-      _strstrip(Buffer);
 
-      const char *C = Buffer;
+      const char *C = _strstrip(Buffer);
 
       // Comment or blank
       if (C[0] == '#' || C[0] == 0)
@@ -1818,10 +1820,15 @@ bool RPackageLister::readSelections(istream &in)
          return _error->Error(_("Malformed line %u in markings file"),
                               CurLine);
 
+      // install
       if (Action[0] == 'i') {
          actionMap[PkgName] = ACTION_INSTALL;
-      } else if (Action[0] == 'u' || Action[0] == 'd') {
+         // uninstall, deinstall, remove
+      } else if (Action[0] == 'u' || Action[0] == 'd' || Action[0] == 'r') {
          actionMap[PkgName] = ACTION_UNINSTALL;
+         // purge
+      } else if (Action[0] == 'p') {
+         actionMap[PkgName] = ACTION_PURGE;
       }
    }
 
@@ -1854,6 +1861,12 @@ bool RPackageLister::readSelections(istream &in)
 		  Fix.Remove(Pkg);
                   Cache.MarkDelete(Pkg, false);
                   break;
+
+               case ACTION_PURGE:
+		  Fix.Remove(Pkg);
+                  Cache.MarkDelete(Pkg, true);
+                  break;
+
             }
          }
          if ((Pos++) % 5 == 0)

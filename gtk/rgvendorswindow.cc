@@ -19,6 +19,7 @@ RGVendorsEditor::~RGVendorsEditor()
 
 GtkWidget *RGVendorsEditor::CreateWidget()
 {
+#if 0 // PORTME
    GtkWidget *dlgSrcList;
    GtkWidget *dialog_vbox1;
    GtkWidget *frmMain;
@@ -158,10 +159,12 @@ GtkWidget *RGVendorsEditor::CreateWidget()
                       GTK_SIGNAL_FUNC(DoCancel), (gpointer) this);
 
    return dlgSrcList;
+#endif
 }
 
 void RGVendorsEditor::Run()
 {
+#if 0 // PORTME
    GdkColormap *cmap = gdk_colormap_get_system();
    GdkColor gray;
    gray.red = gray.green = gray.blue = 0xAA00;
@@ -185,10 +188,12 @@ void RGVendorsEditor::Run()
 
    gtk_widget_show_all(dialog);
    gtk_main();
+#endif
 }
 
 void RGVendorsEditor::DoAdd(GtkWidget *, gpointer data)
 {
+#if 0 // PORTME
    RGVendorsEditor *me = (RGVendorsEditor *) data;
    string VendorID;
    string Description;
@@ -212,10 +217,12 @@ void RGVendorsEditor::DoAdd(GtkWidget *, gpointer data)
       gtk_clist_moveto(GTK_CLIST(me->lstVendors), row, 0, 1.0, 0.0);
    gtk_clist_set_row_data(GTK_CLIST(me->lstVendors), row, (gpointer) rec);
    gtk_clist_select_row(GTK_CLIST(me->lstVendors), row, 0);
+#endif
 }
 
 void RGVendorsEditor::DoEdit(GtkWidget *, gpointer data)
 {
+#if 0 // PORTME
    RGVendorsEditor *me = (RGVendorsEditor *) data;
 
    if (me->selectedrow < 0)
@@ -237,10 +244,12 @@ void RGVendorsEditor::DoEdit(GtkWidget *, gpointer data)
                       1, rec.Description.c_str());
    gtk_clist_set_text(GTK_CLIST(me->lstVendors), me->selectedrow,
                       2, rec.FingerPrint.c_str());
+#endif
 }
 
 void RGVendorsEditor::DoRemove(GtkWidget *, gpointer data)
 {
+#if 0 // PORTME
    RGVendorsEditor *me = (RGVendorsEditor *) data;
    gint row = me->selectedrow;
    if (row < 0)
@@ -253,6 +262,7 @@ void RGVendorsEditor::DoRemove(GtkWidget *, gpointer data)
 
    me->lst.RemoveVendor(rec);
    gtk_clist_remove(GTK_CLIST(me->lstVendors), row);
+#endif
 }
 
 void RGVendorsEditor::DoOK(GtkWidget *, gpointer data)
@@ -269,6 +279,7 @@ void RGVendorsEditor::DoCancel(GtkWidget *, gpointer data)
    gtk_main_quit();
 }
 
+#if 0 // PORTME
 void RGVendorsEditor::UnselectRow(GtkCList * clist, gint row, gint col,
                                   GdkEventButton * event, gpointer data)
 {
@@ -295,3 +306,4 @@ void RGVendorsEditor::UpdateDisplay(GtkCList * clist, gint row, gint col,
    gtk_entry_set_text(GTK_ENTRY(me->entryDesc), rec.Description.c_str());
    gtk_entry_set_text(GTK_ENTRY(me->entryFPrint), rec.FingerPrint.c_str());
 }
+#endif

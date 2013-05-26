@@ -378,8 +378,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 #endif
 
    button = GTK_WIDGET(gtk_builder_get_object(_builder,"togglebutton_details"));
-   gtk_signal_connect(GTK_OBJECT(button), "clicked",
-                      (GtkSignalFunc) clickedDetails, this);
+   g_signal_connect(G_OBJECT(button), "clicked",
+                    G_CALLBACK(clickedDetails), this);
 
    int toInstall, toReInstall, toRemove, toUpgrade, toDowngrade;
    int held, kept, essential, unAuthenticated;

@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+#include <pwd.h>
 
 #include <iostream>
 
@@ -132,7 +133,7 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
 {
    std::vector<const gchar*> prefix;
     gchar *sudo_user;
-
+    passwd* pwd;
     if (cmd.empty()) {
        std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
        return true;
@@ -141,8 +142,10 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
     // try pkexec first, then sudo
     sudo_user = getenv("PKEXEC_UID");
     if (sudo_user == NULL) {
-       sudo_user = getenv("SUDO_USER");
+       sudo_user = getenv("SUDO_UID");
     }
+    pwd = getpwuid(atoi(sudo_user));
+    sudo_user = pwd->pw_name;
 #if 0 // does not work for some reason
     if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)
     {

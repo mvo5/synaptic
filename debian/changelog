@@ -1,3 +1,13 @@
+synaptic (0.80.3) UNRELEASED; urgency=low
+
+  * gtk/rgmainwindow.cc, gtk/gtkbuilder/window_main.ui:
+    - workaround "Gtk-WARNING **: GtkNotebook 0x998580 is mapped but visible 
+      child GtkLabel 0x9ac140 is not mapped" by setting "show_tabs=True" in
+      the GtkBuilder file and then setting it in buildInterface() again
+      (closes: #721539)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 02 Sep 2013 09:57:32 +0200
+
 synaptic (0.80.2) unstable; urgency=low
 
   * gtk/gtkbuilder/window_repositories.ui:

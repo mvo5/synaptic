@@ -1528,13 +1528,14 @@ void RGMainWindow::buildInterface()
 
    GtkWidget *box = GTK_WIDGET(gtk_builder_get_object
                                (_builder, "vbox_pkgdescr"));
+   GtkWidget *pkginfo = GTK_WIDGET(gtk_builder_get_object
+                                   (_builder, "notebook_pkginfo"));
    if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
-      GtkWidget *pkginfo = GTK_WIDGET(gtk_builder_get_object
-                                      (_builder, "notebook_pkginfo"));
       gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), TRUE);
       gtk_container_set_border_width(GTK_CONTAINER(box), 12);
    } else {
       gtk_container_set_border_width(GTK_CONTAINER(box), 0);
+      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), FALSE);
    }
 #ifndef HAVE_RPM
    gtk_widget_show(GTK_WIDGET(gtk_builder_get_object

@@ -34,6 +34,8 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
       const char *visible_name;
    };
 
+   GtkCssProvider *_css_provider;
+
    // the names for the VisibleColumnsTreeView
    static const char *column_names[];
    static const char *column_visible_names[];
@@ -127,7 +129,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
 
  public:
    RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
-   virtual ~RGPreferencesWindow() {};
+   virtual ~RGPreferencesWindow();
    virtual void show();
 
    // call this to set the proxy stuff for apt

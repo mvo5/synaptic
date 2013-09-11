@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkDialog" id="window_zvtinstallprogress">
+  <object class="GtkWindow" id="window_zvtinstallprogress">
     <property name="can_focus">False</property>
     <property name="border_width">6</property>
     <property name="type_hint">dialog</property>
-    <child internal-child="vbox">
+    <child>
       <object class="GtkBox" id="vbox_terminstall_progress">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
-        <child internal-child="action_area">
+        <child>
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -88,7 +88,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="hbox_terminal">
+                  <object class="GtkHBox" id="hbox_vte">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -133,8 +133,5 @@
         </child>
       </object>
     </child>
-    <action-widgets>
-      <action-widget response="-7">button_close</action-widget>
-    </action-widgets>
   </object>
 </interface>

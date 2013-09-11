@@ -62,6 +62,7 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    setTitle(_("Applying Changes"));
 
    _term = vte_terminal_new();
+   vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
    _scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
    gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
@@ -71,7 +72,11 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    } else {
       vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
    }
-
+   GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"));
+   gtk_box_pack_start(GTK_BOX(box), _term, TRUE, TRUE, 0);
+   gtk_box_pack_end(GTK_BOX(box), _scrollbar, FALSE, FALSE, 0);
+   gtk_widget_show(_term);
+   gtk_widget_show(_scrollbar);
 
    _closeOnF = GTK_WIDGET(gtk_builder_get_object(_builder,
                                                  "checkbutton_close_after_pm"));
@@ -106,14 +111,7 @@ void RGTermInstallProgress::startUpdate()
 {
    GtkWidget *win =  GTK_WIDGET(gtk_builder_get_object
                                 (_builder, "window_zvtinstallprogress"));
-   GtkWidget *hbox = GTK_WIDGET(gtk_builder_get_object
-                                (_builder, "hbox_terminal"));
-   assert(hbox);
    gtk_widget_show_all(win);
-   gtk_box_pack_start(GTK_BOX(hbox), _term, TRUE, TRUE, 0);
-   gtk_box_pack_end(GTK_BOX(hbox), _scrollbar, FALSE, FALSE, 0);
-   gtk_widget_show(_term);
-   gtk_widget_show(_scrollbar);
 
    child_has_exited=false;
    VteReaper* reaper = vte_reaper_get();

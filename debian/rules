@@ -3,6 +3,7 @@
 # make the package build on ubuntu and debian
 DIST = $(shell lsb_release -i -s)
 
+DHFLAGS=--parallel
 CONFIGURE_FLAGS= --prefix=/usr \
 	      --mandir=\$${prefix}/share/man \
 	      --infodir=\$${prefix}/share/info \
@@ -12,13 +13,13 @@ CONFIGURE_FLAGS= --prefix=/usr \
 	      $(MULTIARCH)
 
 %:
-	dh $@ --with autoreconf
+	dh $@ --with autoreconf $(DHFLAGS)
 
 override_dh_auto_configure:
-	dh_auto_configure -- $(CONFIGURE_FLAGS) 
+	dh_auto_configure $(DHFLAGS) -- $(CONFIGURE_FLAGS) 
 
 override_dh_auto_install:
-	dh_auto_install
+	dh_auto_install $(DHFLAGS)
 	# allow per distro supported PIXMAP, FIXME: make this part
 	# of the install (e.g. package-supported.{Ubuntu,Debian} and
 	# do run-time switching
@@ -40,7 +41,7 @@ override_dh_auto_build:
 	  cp debian/patches/00list.$(DIST) debian/patches/00list;\
 	  dpatch apply-all;\
 	fi;
-	dh_auto_build
+	dh_auto_build $(DHFLAGS)
 	# ubuntu specific for universe langpacks but will not do any
 	#  harm on debian
 	make -C po synaptic.pot
@@ -50,4 +51,4 @@ override_dh_auto_clean:
 	cp debian/patches/00list.$(DIST) debian/patches/00list
 	dpatch deapply-all
 	rm -rf patch-stamp debian/patched
-	dh_auto_clean
+	dh_auto_clean $(DHFLAGS)

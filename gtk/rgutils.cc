@@ -29,7 +29,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <pwd.h>
-
+#include <assert.h>
 #include <iostream>
 
 #include "i18n.h"
@@ -138,13 +138,29 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
        std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
        return true;
     }
-
+    bool getuidbyname = false;
     // try pkexec first, then sudo
     sudo_user = getenv("PKEXEC_UID");
+    
     if (sudo_user == NULL) {
        sudo_user = getenv("SUDO_UID");
     }
-    pwd = getpwuid(atoi(sudo_user));
+    if (sudo_user == NULL) {
+       sudo_user = getenv("USER");
+       getuidbyname = true;
+    }
+    if (sudo_user == NULL) {
+       return false;
+    }
+    if(strncmp("root", sudo_user, strlen("root")) == 0){
+        return false;
+    }
+    if(!getuidbyname){
+        pwd = getpwuid(atoi(sudo_user));
+    }
+    else{
+         pwd = getpwnam(sudo_user);
+    }
     sudo_user = pwd->pw_name;
 #if 0 // does not work for some reason
     if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)

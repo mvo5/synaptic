@@ -24,9 +24,9 @@
 #ifndef HAVE_APTPKG_CDROM
 
 #include <sys/stat.h>
-#include <sys/fcntl.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <iostream>
 #include <fstream>
 #include <algorithm>

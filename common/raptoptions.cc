@@ -192,7 +192,7 @@ void RAPTOptions::rereadDebconf()
       if ((point = strrchr(dent->d_name, '.')) == NULL)
          continue;
       if (strcmp(point, configext) == 0) {
-         bzero(point, strlen(point));
+         memset(point, 0, strlen(point));
          //cout << (dent->d_name) << endl;
          setPackageDebconf(dent->d_name, true);
       }

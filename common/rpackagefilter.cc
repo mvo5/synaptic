@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <fnmatch.h>
+#include <string.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
@@ -584,10 +585,10 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
 	 strncpy(availVer, pkg->availableVersion(), 300);
 	 
 	 // strip from last "-" on
-	 s = rindex(instVer,'-');
+	 s = strrchr(instVer,'-');
 	 if(s != NULL)
 	    *s = '\0';
-	 s = rindex(availVer,'-');
+	 s = strrchr(availVer,'-');
 	 if(s != NULL)
 	    *s = '\0';
 

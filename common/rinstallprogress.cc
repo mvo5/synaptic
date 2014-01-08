@@ -25,7 +25,7 @@
 #include "config.h"
 
 #include <unistd.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <iostream>

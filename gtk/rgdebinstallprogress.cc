@@ -26,10 +26,10 @@
 #include <math.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <sys/fcntl.h>
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include "gtk3compat.h"
 
@@ -152,7 +152,7 @@ int ipc_send_fd(int fd)
    // open connection to server
    struct sockaddr_un servaddr;
    int serverfd = socket(AF_LOCAL, SOCK_STREAM, 0);
-   bzero(&servaddr, sizeof(servaddr));
+   memset(&servaddr, 0, sizeof(servaddr));
    servaddr.sun_family = AF_LOCAL;
    strcpy(servaddr.sun_path, UNIXSTR_PATH);
 
@@ -181,7 +181,7 @@ int ipc_recv_fd()
    fcntl(listenfd, F_SETFL, O_NONBLOCK);
 
    unlink(UNIXSTR_PATH);
-   bzero(&servaddr, sizeof(servaddr));
+   memset(&servaddr, 0, sizeof(servaddr));
    servaddr.sun_family = AF_LOCAL;
    strcpy(servaddr.sun_path, UNIXSTR_PATH);
    bind(listenfd, (struct sockaddr *)&servaddr, sizeof(servaddr));

@@ -123,7 +123,7 @@ void RGInstallProgress::startUpdate()
 void RGInstallProgress::finishUpdate()
 {
    char buf[1024];
-   bzero(buf, 1024);
+   memset(buf, 0, 1024);
    int len = read(_childin, buf, 1023);
    if (len > 0) {
       GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(this->window()),

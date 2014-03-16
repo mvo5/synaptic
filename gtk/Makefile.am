@@ -87,7 +87,9 @@ synaptic_SOURCES= \
 	rgwindow.cc\
 	rgwindow.h\
 	rggtkbuilderwindow.cc\
-	rggtkbuilderwindow.h
+	rggtkbuilderwindow.h\
+	rgpkgtreeview.cc\
+	rgpkgtreeview.h
 
 CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
 

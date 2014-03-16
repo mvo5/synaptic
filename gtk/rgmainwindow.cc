@@ -300,6 +300,15 @@ void RGMainWindow::forgetNewPackages()
    _roptions->forgetNewPackages();
 }
 
+bool RGMainWindow::setTableAdjustmentWhenReady(gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *)data;
+
+   GtkAdjustment *adj = gtk_tree_view_get_vadjustment(GTK_TREE_VIEW(me->_treeView));
+
+   gtk_adjustment_set_value(adj, me->v_adj_value);
+   return FALSE;
+}
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
@@ -315,16 +324,19 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
       _lister->limitBySearch(str);
    }
 
-   GtkAdjustment *v_adj = gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(_treeView));
+   v_adj_value = gtk_adjustment_get_value(gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(_treeView)));
 
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
                            GTK_TREE_MODEL(_pkgList));
    if(setAdjustment) {
-      gtk_adjustment_value_changed(
-	   gtk_tree_view_get_hadjustment(GTK_TREE_VIEW(_treeView)));
-      gtk_scrollable_set_vadjustment(GTK_SCROLLABLE(_treeView), v_adj);
+      // 25ms is arbitrary
+      // we can't do it right here as the treeview adjustment is calculated 
+      // delayed
+      // when using idle_add we get ugly jumping around
+      g_timeout_add(25, (GSourceFunc)setTableAdjustmentWhenReady, this);
    }
+
 
    // set selected pkg to be selected again
    if(selectedPkg != NULL) {

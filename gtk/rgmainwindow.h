@@ -154,10 +154,6 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
       return ((RGMainWindow *) me)->close();
    };
 
-   // gtktreeview adjustment helper
-   static bool setTableAdjustmentWhenReady(gpointer data);
-   gdouble v_adj_value;
-
    // misc
    void forgetNewPackages();
 

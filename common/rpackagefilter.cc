@@ -335,7 +335,7 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
    bool globalfound = and_mode;
    bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
 
-   bool debug = _config->FindB("Debug::Synaptic::Filters", "false");
+   bool debug = _config->FindB("Debug::Synaptic::Filters", false);
 
    if (_patterns.size() == 0)
       return true;

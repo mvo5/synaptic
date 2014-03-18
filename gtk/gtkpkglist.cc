@@ -353,7 +353,7 @@ static GtkTreePath *gtk_pkg_list_get_path(GtkTreeModel *tree_model,
 
    g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), NULL);
    g_return_val_if_fail(iter != NULL, NULL);
-   g_return_val_if_fail(iter->user_data != NULL, NULL);
+   //g_return_val_if_fail(iter->user_data != NULL, NULL);
 
    retval = gtk_tree_path_new();
    int i = GPOINTER_TO_INT(iter->user_data2);
@@ -487,10 +487,12 @@ gtk_pkg_list_iter_next(GtkTreeModel *tree_model, GtkTreeIter *iter)
    int i, old;
 
    old = GPOINTER_TO_INT(iter->user_data2);
-
    i = old + 1;
-   if (i >= pkg_list->_lister->viewPackagesSize())
+   if (i >= pkg_list->_lister->viewPackagesSize()) {
+      GtkTreePath *path = gtk_tree_path_new_from_indices(i, -1);
+      gtk_tree_model_row_deleted(tree_model, path);
       return FALSE;
+   }
 
    RPackage *pkg = pkg_list->_lister->getViewPackage(i);
 

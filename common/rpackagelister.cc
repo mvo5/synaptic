@@ -491,6 +491,10 @@ void RPackageLister::applyInitialSelection()
 
 RPackage *RPackageLister::getPackage(pkgCache::PkgIterator &iter)
 {
+   if (iter->ID > _packagesIndex.size()) {
+      //std::cerr << "requesting ID " << iter->ID << " but packageIndex size is only " << _packagesIndex.size() << std::endl;
+      return NULL;
+   }
    int index = _packagesIndex[iter->ID];
    if (index != -1)
       return _packages[index];

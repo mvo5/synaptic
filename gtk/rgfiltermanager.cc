@@ -449,7 +449,9 @@ gint RGFilterManagerWindow::deleteEventAction(GtkWidget *widget,
 void RGFilterManagerWindow::readFilters()
 {
    _selectedFilter = NULL;
-   
+   GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_filterList));
+   gtk_tree_selection_unselect_all(selection);
+
    vector<string> filters = _filterview->getFilterNames();
    GtkTreeIter iter;
 
@@ -463,7 +465,6 @@ void RGFilterManagerWindow::readFilters()
                          FILTER_COLUMN, filter, -1);
    }
 
-   GtkTreeSelection *selection;
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_filterList));
    if (_selectedPath != NULL) {
       gtk_tree_selection_select_path(selection, _selectedPath);

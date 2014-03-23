@@ -539,6 +539,7 @@ void RGRepositoryEditor::doEdit()
 
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
+   assert(rec);
 
    rec->Type = 0;
    gboolean status;
@@ -644,10 +645,10 @@ void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
       assert(rec);
 
       me->_lst.RemoveSource(rec);
-      gtk_list_store_remove(me->_sourcesListStore, &iter);
       if (me->_lastIter != NULL)
 	gtk_tree_iter_free(me->_lastIter);
       me->_lastIter = NULL;
+      gtk_list_store_remove(me->_sourcesListStore, &iter);
    }
    me->_dirty=true;
 }

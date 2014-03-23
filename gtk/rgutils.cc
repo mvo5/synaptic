@@ -122,6 +122,9 @@ std::vector<const gchar*> GetBrowserCommand(const gchar *link)
    } else if (FileExists("/usr/bin/firefox")) {
       cmd.push_back("/usr/bin/firefox");
       cmd.push_back(link);
+   } else if (FileExists("/usr/bin/iceweasel")) {
+      cmd.push_back("/usr/bin/iceweasel");
+      cmd.push_back(link);
    } else if (FileExists("/usr/bin/konqueror")) {
       cmd.push_back("/usr/bin/konqueror");
       cmd.push_back(link);

@@ -508,7 +508,7 @@ RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
       addPattern(f._patterns[i].where,
                  f._patterns[i].pattern, f._patterns[i].exclusive);
    }
-   f.and_mode = and_mode;
+   and_mode = f.and_mode;
 }
 
 void RPatternPackageFilter::clear()

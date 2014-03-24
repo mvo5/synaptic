@@ -472,16 +472,15 @@ void RGFilterManagerWindow::readFilters()
    }
 
    gtk_entry_set_text(GTK_ENTRY(_filterEntry), "");
+   
+   // cleanup
+   _saveFilters.clear();
 
    // save filter list (do a real copy, needed for cancel)
-   _saveFilters.clear();
    for (guint i = 0; i < _filterview->nrOfFilters(); i++) {
       RFilter *filter = _filterview->findFilter(i);
       _saveFilters.push_back(new RFilter(*filter));
    }
-
-
-
    RGWindow::show();
 }
 

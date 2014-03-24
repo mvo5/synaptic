@@ -473,7 +473,11 @@ void RGFilterManagerWindow::readFilters()
 
    gtk_entry_set_text(GTK_ENTRY(_filterEntry), "");
    
-   // cleanup
+   // cleanup previous saved filters
+   for(vector<RFilter*>::const_iterator I = _saveFilters.begin();
+       I != _saveFilters.end(); ++I) {
+      delete (*I);
+   }
    _saveFilters.clear();
 
    // save filter list (do a real copy, needed for cancel)
@@ -882,7 +886,7 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "void RGFilterManagerWindow::cancelAction()"<<endl;
 
-   // unregister all old filters
+   // unregister all current filters
    guint size = me->_filterview->nrOfFilters();
    for (i = 0; i < size; i++) {
       RFilter *filter = me->_filterview->findFilter(0);
@@ -891,8 +895,11 @@ void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
    }
 
    // restore the old filters
-   for (i = 0; i < me->_saveFilters.size(); i++)
-      me->_filterview->registerFilter(me->_saveFilters[i]);
+   RFilter *filter;
+   for (i = 0; i < me->_saveFilters.size(); i++) {
+      filter = new RFilter(*me->_saveFilters[i]);
+      me->_filterview->registerFilter(filter);
+   }
 
    me->close();
 }

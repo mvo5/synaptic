@@ -321,6 +321,9 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
                               GTK_TREE_MODEL(_pkgList));
    }
 
+   // debian bug #747566
+   gtk_widget_queue_draw(_treeView);
+
 #if 0
    // set selected pkg to be selected again
    if(selectedPkg != NULL) {

@@ -1,3 +1,12 @@
+synaptic (0.81.4) UNRELEASED; urgency=medium
+
+  * gtk/gtkbuilder/window_setopt.ui, gtk/gtkbuilder/dialog_download_error.ui:
+    - fix crash in internal dialog because gtk decided to not load the file
+      when it encounters the previously valid property "has_separator"
+      (closes: #774056)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 07 Jul 2015 08:37:06 +0200
+
 synaptic (0.81.3) unstable; urgency=low
 
   [ Alex Henrie ]

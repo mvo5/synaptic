@@ -1010,6 +1010,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
                     "changed",
                     G_CALLBACK(cbSearchEntryChanged), this);
+   g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
+                    "icon-press",
+                    G_CALLBACK(cbSearchEntryClean), this);
 
    _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
    assert(_propertiesB);
@@ -2853,6 +2856,15 @@ void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
       me->_fastSearchEventID = -1;
    }
    me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
+}
+
+void RGMainWindow::cbSearchEntryClean(GtkEntry *entry,
+                                      GtkEntryIconPosition icon_pos,
+                                      GdkEvent *event,
+                                      void *data)
+{
+   if (icon_pos == GTK_ENTRY_ICON_SECONDARY)
+      gtk_entry_set_text(GTK_ENTRY(entry), "");
 }
 
 void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)

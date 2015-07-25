@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="dialog_welcome">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -44,10 +45,9 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkBox" id="box1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="border_width">6</property>
             <property name="spacing">12</property>
             <child>
               <object class="GtkImage" id="image1">
@@ -55,7 +55,7 @@
                 <property name="can_focus">False</property>
                 <property name="yalign">0</property>
                 <property name="stock">gtk-dialog-info</property>
-                <property name="icon-size">6</property>
+                <property name="icon_size">6</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -64,24 +64,44 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox1-1">
+              <object class="GtkBox" id="box2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
                 <child>
-                  <object class="GtkVBox" id="vbox1">
+                  <object class="GtkCheckButton" id="checkbutton_show_again">
+                    <property name="label" translatable="yes">Show this dialog at startup</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="valign">end</property>
+                    <property name="use_underline">True</property>
+                    <property name="xalign">0</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox" id="box3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkLabel" id="label16">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
-                        <property name="yalign">0</property>
                         <property name="label" translatable="yes">The software on your system is organized in so called &lt;i&gt;packages&lt;/i&gt;. The package manager enables you to install, to upgrade or to remove software packages.</property>
                         <property name="use_markup">True</property>
                         <property name="wrap">True</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -93,9 +113,9 @@
                       <object class="GtkLabel" id="label27">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">You should reload the package information regularly. Otherwise you could miss important security upgrades.</property>
                         <property name="wrap">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -107,11 +127,11 @@
                       <object class="GtkLabel" id="label17">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
-                        <property name="yalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Note:&lt;/b&gt; Changes are not applied instantly. At first you have to mark all changes and then apply them.</property>
                         <property name="use_markup">True</property>
                         <property name="wrap">True</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -123,10 +143,10 @@
                       <object class="GtkLabel" id="label18">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
-                        <property name="yalign">0</property>
                         <property name="label" translatable="yes">You can mark packages for installation, upgrade or removal in several ways:</property>
                         <property name="wrap">True</property>
+                        <property name="xalign">0</property>
+                        <property name="yalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -143,17 +163,15 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="label" translatable="yes">Select the package and choose the action from the 'Package' menu.</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -161,17 +179,15 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="label" translatable="yes">Double click on the package name.</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -179,17 +195,15 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="label" translatable="yes">Choose the action from the context menu of the package.</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">2</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -197,17 +211,15 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="label" translatable="yes">Click on the status icon to open a menu that contains all actions.</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">1</property>
                             <property name="top_attach">3</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -216,18 +228,16 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="xpad">6</property>
                             <property name="label" translatable="yes">-</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">0</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -236,18 +246,16 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="xpad">6</property>
                             <property name="label" translatable="yes">-</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">1</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -256,18 +264,16 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="xpad">6</property>
                             <property name="label" translatable="yes">-</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">2</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                         <child>
@@ -276,18 +282,16 @@
                             <property name="can_focus">False</property>
                             <property name="halign">start</property>
                             <property name="valign">start</property>
-                            <property name="xalign">0</property>
-                            <property name="yalign">0</property>
                             <property name="xpad">6</property>
                             <property name="label" translatable="yes">-</property>
                             <property name="justify">fill</property>
                             <property name="wrap">True</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0</property>
                           </object>
                           <packing>
                             <property name="left_attach">0</property>
                             <property name="top_attach">3</property>
-                            <property name="width">1</property>
-                            <property name="height">1</property>
                           </packing>
                         </child>
                       </object>
@@ -301,24 +305,6 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="checkbutton_show_again">
-                    <property name="label" translatable="yes">Show this dialog at startup</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="valign">end</property>
-                    <property name="use_underline">True</property>
-                    <property name="xalign">0.5</property>
-                    <property name="draw_indicator">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="pack_type">end</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -333,7 +319,7 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
       </object>

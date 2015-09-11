@@ -31,7 +31,6 @@
 
 #include "rpackage.h"
 #include "rpackagelister.h"
-#include "pkg_acqfile.h"
 
 #include "i18n.h"
 
@@ -63,6 +62,7 @@
 #include <apt-pkg/policy.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/metaindex.h>
+#include <apt-pkg/acquire-item.h>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -947,7 +947,7 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 
    string filename = RTmpDir()+"/tmp_sh";
    unlink(filename.c_str());
-   new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    int res = fetcher->Run();
    //cerr << "res: " << res << endl;
@@ -1007,7 +1007,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
 
-   new pkgAcqFileSane(fetcher, uri, descr, name(), filename);
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
    //cerr << "**DEBUG** origin: " << origin() << endl;
    //cerr << "**DEBUG** uri: " << uri << endl;
    //cerr << "**DEBUG** filename: " << filename << endl;
@@ -1194,7 +1194,7 @@ vector<pair<string, string> > RPackage::getAvailableVersions()
       if (!VF.end()) {
          pkgCache::PkgFileIterator File = VF.File();
 
-         if (File->Archive != 0)
+         if (File.Archive() != 0)
             versions.push_back(pair < string,
                                string > (Ver.VerStr(), File.Archive()));
          else

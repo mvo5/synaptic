@@ -222,6 +222,12 @@ RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent, const char *nam
    init(name);
 }
 
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
+   : builder(0)
+{
+   _parentWindow = parent->window();
+}
+
 bool RGGtkBuilderUserDialog::init(const char *name)
 {
    gchar *filename = NULL;
@@ -229,7 +235,7 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    guint builder_status;
    GError* error = NULL;
 
-   //cout << "RGGtkBuilderUserDialog::RGGtkBuilderUserDialog() " << name << endl;
+   //cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
 
    builder = gtk_builder_new();
    filename = g_strdup_printf("gtkbuilder/dialog_%s.ui", name);
@@ -274,7 +280,7 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    g_free(main_widget);
 }
 
-int RGGtkBuilderUserDialog::run(const char *name,bool return_gtk_response)
+int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
 {
    if(name != NULL)
       init(name);

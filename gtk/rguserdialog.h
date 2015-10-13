@@ -78,7 +78,7 @@ class RGGtkBuilderUserDialog : public RGUserDialog
     bool init(const char *name);
 
  public:
-    RGGtkBuilderUserDialog(RGWindow* parent) : builder(0) {};
+    RGGtkBuilderUserDialog(RGWindow* parent);
     RGGtkBuilderUserDialog(RGWindow* parent, const char *name);
     virtual ~RGGtkBuilderUserDialog()  { gtk_widget_destroy(_dialog); };
 

@@ -31,6 +31,7 @@
 
 #include "rpackage.h"
 #include "rpackagelister.h"
+#include "pkg_acqfile.h"
 
 #include "i18n.h"
 
@@ -62,7 +63,6 @@
 #include <apt-pkg/policy.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/metaindex.h>
-#include <apt-pkg/acquire-item.h>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -947,7 +947,7 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 
    string filename = RTmpDir()+"/tmp_sh";
    unlink(filename.c_str());
-   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFileSane(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    int res = fetcher->Run();
    //cerr << "res: " << res << endl;
@@ -1007,7 +1007,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
 
-   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFileSane(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
    //cerr << "**DEBUG** origin: " << origin() << endl;
    //cerr << "**DEBUG** uri: " << uri << endl;
    //cerr << "**DEBUG** filename: " << filename << endl;

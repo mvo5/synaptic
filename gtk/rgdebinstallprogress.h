@@ -32,7 +32,7 @@
 #include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
 #include<map>
-#include <vte/reaper.h>
+#include <vte/vte.h>
 
 
 class RGMainWindow;
@@ -111,7 +111,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    pid_t _child_id;
    pkgPackageManager::OrderResult res;
    bool child_has_exited;
-   static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
+   static void child_exited(VteTerminal *vteterminal, gint ret,
 			    gpointer data);
    static void terminalAction(GtkWidget *terminal, TermAction action);
 

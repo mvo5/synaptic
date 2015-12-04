@@ -1,4 +1,4 @@
-/* rgzvtinstallprogress.cc
+/* rgterminstallprogress.cc
  *
  * Copyright (c) 2002 Michael Vogt
  *
@@ -20,7 +20,7 @@
  * USA
  */
 
-
+#include <pty.h>
 
 #include "config.h"
 
@@ -48,7 +48,6 @@
 #include <cstdlib>
 
 #include <vte/vte.h>
-#include <vte/reaper.h>
 
 #include <cstdlib>
 #include <cstring>
@@ -63,15 +62,20 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
-   _scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
+   _scrollbar = gtk_vscrollbar_new (gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(VTE_TERMINAL(_term))));
    gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
+
+   char *s;
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
       char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
    } else {
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 10");
+      s = "monospace 10";
    }
+   PangoFontDescription *fontdesc = pango_font_description_from_string(s);
+   vte_terminal_set_font(VTE_TERMINAL(_term), fontdesc);
+   pango_font_description_free(fontdesc);
+
    GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"));
    gtk_box_pack_start(GTK_BOX(box), _term, TRUE, TRUE, 0);
    gtk_box_pack_end(GTK_BOX(box), _scrollbar, FALSE, FALSE, 0);
@@ -94,17 +98,14 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 }
 
 
-void RGTermInstallProgress::child_exited(VteReaper *vtereaper,
-					gint child_pid, gint ret, 
+void RGTermInstallProgress::child_exited(VteTerminal *vteterminal,
+					gint ret,
 					gpointer data)
 {
    RGTermInstallProgress *me = (RGTermInstallProgress*)data;
-   if(child_pid == me->_child_id) {
-//        cout << "child exited" << endl;
-//        cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
-      me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
-      me->child_has_exited=true;
-   }
+
+   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+   me->child_has_exited=true;
 }
 
 void RGTermInstallProgress::startUpdate()
@@ -114,8 +115,7 @@ void RGTermInstallProgress::startUpdate()
    gtk_widget_show_all(win);
 
    child_has_exited=false;
-   VteReaper* reaper = vte_reaper_get();
-   g_signal_connect(G_OBJECT(reaper), "child-exited",
+   g_signal_connect(VTE_TERMINAL(_term), "child-exited",
 		    G_CALLBACK(child_exited),
 		    this);
  
@@ -225,14 +225,13 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
    if (res == pkgPackageManager::Failed)
       return res;
 
-   _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,false,false,false);
-   if (_child_id == -1) {
+   int master;
+   _child_id = forkpty(&master, NULL, NULL, NULL);
+   if (_child_id < 0) {
       cerr << "Internal Error: impossible to fork children. Synaptics is going to stop. Please report." << endl;
       cerr << "errorcode: " << errno << endl;
       exit(1);
-   }
-
-   if (_child_id == 0) {
+   } else if (_child_id == 0) {
 
       // we ignore sigpipe as it is thrown sporadic on
       // debian, kernel 2.6 systems
@@ -243,6 +242,19 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
       res = pm->DoInstallPostFork();
       _exit(res);
    }
+   // parent: assign pty to the vte terminal
+   GError *err = NULL;
+   VtePty *pty = vte_pty_new_foreign_sync(master, NULL, &err);
+   if (err != NULL) {
+      std::cerr << "failed to create new pty: " << err->message << std::endl;
+      g_error_free (err);
+      return pkgPackageManager::Failed;
+   }
+
+   vte_terminal_set_pty(VTE_TERMINAL(_term), pty);
+   // FIXME: is there a race here? i.e. what if the child is dead before
+   //        we can set it?
+   vte_terminal_watch_child(VTE_TERMINAL(_term), _child_id);
 
    startUpdate();
    // make sure that the child has really exited and we catched the
@@ -251,6 +263,8 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
       updateInterface();
 
    finishUpdate();
+
+   ::close(master);
 
    return res;
 }

@@ -42,6 +42,8 @@
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/indexfile.h>
 
+#if APT_PKG_MAJOR < 5
+
 // Let's all sing a song about apt-pkg's brokenness..
 pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner,
                                std::string URI,
@@ -82,3 +84,5 @@ void pkgAcqFileSane::Failed(std::string Message,pkgAcquire::MethodConfig *Cnf)
 
   Item::Failed(Message,Cnf);
 }
+
+#endif

@@ -1,11 +1,40 @@
-synaptic (0.81.4) UNRELEASED; urgency=medium
+synaptic (0.82) unstable; urgency=medium
 
+  [ Michael Vogt ]
+  * Add xdg-utils to the recommends (Closes: #791375)
+  * Fix bulding with apt from experimental
+  * Fix missing _parentWindow setup in RGUserDialog::RGUserDialog(parent*)
+  * Set all dialog_*.ui to "visible=False" so that
+    gtk_window_set_transient_for() works
+  * Set all window_*.ui top-level windows to "visible=False" s that
+    gtk_window_set_transient_for() works
+
+  [ HumanG33k ]
+  * Upgrade deprecated gtk elements in:
+    dialog_auth[...].ui, dialog_changelog.ui,
+    dialog_change_version, dialog_columns.ui,
+    dialog_conffile.ui, dialog_disc_label.ui,
+    dialog_download_error.ui,  dialog_example.ui,
+    dialog_new_repositroy.ui, dialog_quit.ui,
+    dialog_task_descr.ui, dialog_unmet.ui,
+    dialog_update_failed.ui, dialog_update_outdated.ui,
+    dialog_upgrade.ui, dialog_welcome.ui
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 15 Oct 2015 20:58:42 +0200
+
+synaptic (0.81.4) unstable; urgency=medium
+
+  [ Michael Vogt ]
   * gtk/gtkbuilder/window_setopt.ui, gtk/gtkbuilder/dialog_download_error.ui:
     - fix crash in internal dialog because gtk decided to not load the file
       when it encounters the previously valid property "has_separator"
       (closes: #774056)
+  * move code to git
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 07 Jul 2015 08:37:06 +0200
+  [ Gianni Lerro ]
+  * Add to "Quick filter" text entry a button to clean it (Closes: #791749)
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 11 Jul 2015 12:01:12 +0200
 
 synaptic (0.81.3) unstable; urgency=low
 

@@ -30,6 +30,7 @@
 #include <sys/un.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <pty.h>
 
 #include "gtk3compat.h"
 
@@ -54,18 +55,14 @@
 
 #include "i18n.h"
 
-void RGDebInstallProgress::child_exited(VteReaper *vtereaper,
-					gint child_pid, gint ret, 
+void RGDebInstallProgress::child_exited(VteTerminal *vteterminal,
+					gint ret,
 					gpointer data)
 {
    RGDebInstallProgress *me = (RGDebInstallProgress*)data;
 
-   if(child_pid == me->_child_id) {
-//        cout << "correct child exited" << endl;
-//        cout << "waitpid returned: " << WEXITSTATUS(ret) << endl;
-      me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
-      me->child_has_exited=true;
-   }
+   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+   me->child_has_exited=true;
 }
 
 ssize_t
@@ -289,10 +286,6 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 void RGDebInstallProgress::startUpdate()
 {
    child_has_exited=false;
-   VteReaper* reaper = vte_reaper_get();
-   g_signal_connect(G_OBJECT(reaper), "child-exited",
-		    G_CALLBACK(child_exited),
-		    this);
 
    // check if we run embedded
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
@@ -329,24 +322,6 @@ void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
    //cout << "cbCancel: sending SIGKILL to child" << endl;
    RGDebInstallProgress *me = (RGDebInstallProgress*)data;
    me->_updateFinished = true;
-}
-
-
-void RGDebInstallProgress::expander_callback (GObject    *object,
-					      GParamSpec *param_spec,
-					      gpointer    user_data) 
-{
-   RGDebInstallProgress *me = (RGDebInstallProgress*)user_data;
-
-   // this crap here is needed because VteTerminal does not like
-   // it when run hidden. this workaround will scroll to the end of
-   // the current buffer
-   gtk_widget_realize(GTK_WIDGET(me->_term));
-   GtkAdjustment *a = vte_terminal_get_adjustment(VTE_TERMINAL(me->_term));
-   gtk_adjustment_set_value(a, gtk_adjustment_get_upper(a) - gtk_adjustment_get_page_size(a));
-   gtk_adjustment_value_changed(a);
-
-   gtk_widget_grab_focus(me->_term);
 }
 
 bool RGDebInstallProgress::close()
@@ -401,15 +376,20 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
-   GtkWidget *scrollbar = gtk_vscrollbar_new (vte_terminal_get_adjustment(VTE_TERMINAL(_term)));
+   GtkWidget *scrollbar = gtk_vscrollbar_new (gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(VTE_TERMINAL(_term))));
    gtk_widget_set_can_focus (scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
+
+   char *s;
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), s);
+      s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
    } else {
-      vte_terminal_set_font_from_string(VTE_TERMINAL(_term), "monospace 8");
+      s = "monospace 8";
    }
+   PangoFontDescription *fontdesc = pango_font_description_from_string(s);
+   vte_terminal_set_font(VTE_TERMINAL(_term), fontdesc);
+   pango_font_description_free(fontdesc);
+
    gtk_box_pack_start(GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"))), _term, TRUE, TRUE, 0);
    g_signal_connect(G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
    g_signal_connect(G_OBJECT(_term), "button-press-event",
@@ -444,10 +424,6 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
 
-   GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
-   g_signal_connect(w, "notify::expanded",
-		    G_CALLBACK(expander_callback), this);
-
    g_signal_connect(_term, "contents-changed",
 		    G_CALLBACK(content_changed), this);
 
@@ -457,6 +433,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
                     "clicked",
                     G_CALLBACK(cbClose), this);
+   g_signal_connect(VTE_TERMINAL(_term), "child-exited",
+		    G_CALLBACK(child_exited),
+		    this);
 
    if(_userDialog == NULL)
       _userDialog = new RGUserDialog(this);
@@ -549,7 +528,7 @@ void RGDebInstallProgress::terminalAction(GtkWidget *terminal,
           vte_terminal_select_all(VTE_TERMINAL(terminal));
           break;
       case EDIT_SELECT_NONE:
-          vte_terminal_select_none(VTE_TERMINAL(terminal));
+          vte_terminal_unselect_all(VTE_TERMINAL(terminal));
           break;
    }
 }
@@ -674,12 +653,10 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
        return res;
-
-   // we need to send the fds from the pipe over a socket because
-   // the vte_terminal closes all our FDs 
-   _child_id = vte_terminal_forkpty(VTE_TERMINAL(_term),NULL,NULL,
-				    false,false,false);
-   if (_child_id < 0) {
+   
+   int master;
+   _child_id = forkpty(&master, NULL, NULL, NULL);
+   if(_child_id < 0) {
       cerr << "vte_terminal_forkpty() failed. " << strerror(errno) << endl;
       res = pkgPackageManager::Failed;
       GtkWidget *dialog;
@@ -693,8 +670,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
       gtk_dialog_run(GTK_DIALOG(dialog));
       gtk_widget_destroy(dialog);
       return res;
-   }
-   else if (_child_id == 0) {
+   } else if (_child_id == 0) {
       int fd[2];
       pipe(fd);
       ipc_send_fd(fd[0]); // send the read part of the pipe to the parent
@@ -717,8 +693,20 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
 
       _exit(res);
    }
-   _childin = ipc_recv_fd();
+   // parent: assign pty to the vte terminal
+   GError *err = NULL;
+   VtePty *pty = vte_pty_new_foreign_sync(master, NULL, &err);
+   if (err != NULL) {
+      std::cerr << "failed to create new pty: " << err->message << std::endl;
+      g_error_free (err);
+      return pkgPackageManager::Failed;
+   }
+   vte_terminal_set_pty(VTE_TERMINAL(_term), pty);
+   // FIXME: is there a race here? i.e. what if the child is dead before
+   //        we can set it?
+   vte_terminal_watch_child(VTE_TERMINAL(_term), _child_id);
 
+   _childin = ipc_recv_fd();
    if(_childin < 0) {
       // something _bad_ happend. so the terminal window and hope for the best
       GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
@@ -740,6 +728,8 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
    finishUpdate();
 
    ::close(_childin);
+   ::close(master);
+
    _config->Clear("APT::Keep-Fds", _childin);
 
    return res;

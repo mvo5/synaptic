@@ -31,7 +31,6 @@
 #include "rgwindow.h"
 
 #include <vte/vte.h>
-#include <vte/reaper.h>
 
 class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow {
   GtkWidget *_term;
@@ -46,7 +45,7 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
 
 protected:
   bool child_has_exited;
-  static void child_exited(VteReaper *vtereaper,gint child_pid, gint ret,
+  static void child_exited(VteTerminal *vteterminal, gint ret,
 			   gpointer data);
   virtual void startUpdate();
   virtual void updateInterface();

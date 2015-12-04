@@ -55,8 +55,7 @@ void RGLogView::readLogs()
    unsigned int year, month, day, hour, min, sec;
    char str[128];
    const gchar *logfile;
-   const gchar *logdir = RLogDir().c_str();
-   GDir *dir = g_dir_open(logdir, 0, NULL);
+   GDir *dir = g_dir_open(RLogDir().c_str(), 0, NULL);
    while((logfile=g_dir_read_name(dir)) != NULL) {
       if(sscanf(logfile, "%4u-%2u-%2u.%2u%2u%2u.log", 
 		&year, &month, &day, &hour, &min, &sec) != 6)

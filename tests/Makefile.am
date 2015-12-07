@@ -6,9 +6,9 @@ noinst_PROGRAMS = test_rpackage test_rpackageview test_gtkpkglist test_rpackagef
 
 LDADD = \
 	${top_builddir}/common/libsynaptic.a\
-	-lapt-pkg @RPM_LIBS@ @DEB_LIBS@ \
+	-lapt-pkg -lX11 @RPM_LIBS@ @DEB_LIBS@ \
 	@GTK_LIBS@ @VTE_LIBS@ @LP_LIBS@\
-	-lpthread $(LIBTAGCOLL_LIBS) $(LIBEPT_LIBS)
+	-lpthread $(LIBEPT_LIBS)
 
 test_rpackage_SOURCES= test_rpackage.cc
 

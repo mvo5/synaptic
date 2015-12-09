@@ -30,7 +30,7 @@
 class RGPackageStatus : public RPackageStatus {
  protected:
    GdkPixbuf *StatusPixbuf[N_STATUS_COUNT];
-   GdkColor *StatusColors[N_STATUS_COUNT];
+   GdkRGBA *StatusColors[N_STATUS_COUNT];
 
    GdkPixbuf *supportedPix;
 
@@ -44,7 +44,7 @@ class RGPackageStatus : public RPackageStatus {
    virtual void init();
    
    // this is what the package listers use
-   GdkColor *getBgColor(RPackage *pkg);
+   GdkRGBA *getBgColor(RPackage *pkg);
    GdkPixbuf *getSupportedPix(RPackage *pkg);
    GdkPixbuf *getPixbuf(RPackage *pkg);
    GdkPixbuf *getPixbuf(int i) {
@@ -52,8 +52,8 @@ class RGPackageStatus : public RPackageStatus {
    }
 
    // this is for the configuration of the colors
-   void setColor(int i, GdkColor * new_color);
-   GdkColor *getColor(int i) {
+   void setColor(int i, GdkRGBA * new_color);
+   GdkRGBA *getColor(int i) {
       return StatusColors[i];
    };
    // save color configuration to disk

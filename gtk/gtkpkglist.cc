@@ -78,7 +78,7 @@ static gboolean gtk_pkg_list_has_default_sort_func(GtkTreeSortable *sortable);
 static GObjectClass *parent_class = NULL;
 
 extern GdkPixbuf *StatusPixbuf[12];
-extern GdkColor *StatusColors[12];
+extern GdkRGBA *StatusColors[12];
 
 void RCacheActorPkgList::run(vector<RPackage *> &List, int Action)
 {
@@ -237,7 +237,7 @@ static void gtk_pkg_list_init(GtkPkgList *pkg_list)
    pkg_list->column_headers[7] = G_TYPE_STRING;
    pkg_list->column_headers[8] = G_TYPE_STRING;
    pkg_list->column_headers[9] = G_TYPE_STRING;
-   pkg_list->column_headers[10] = GDK_TYPE_COLOR;
+   pkg_list->column_headers[10] = GDK_TYPE_RGBA;
    pkg_list->column_headers[11] = G_TYPE_POINTER;
 }
 
@@ -449,7 +449,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
        {
 	  if(_config->FindB("Synaptic::UseStatusColors", TRUE) == FALSE) 
 	     return;
-          GdkColor *bg;
+          GdkRGBA *bg;
           bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
           g_value_set_boxed(value, bg);
           break;

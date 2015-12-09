@@ -451,11 +451,19 @@ void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
          return;
    }
 
+#if GTK_CHECK_VERSION(3, 2, 0)
+   GtkWidget *fontsel = gtk_font_chooser_dialog_new(_("Choose font"),
+         GTK_WINDOW(gtk_widget_get_toplevel(self)));
+
+   gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontsel),
+                             _config->Find(propName, fontName).c_str());
+#else
    GtkWidget *fontsel = gtk_font_selection_dialog_new(_("Choose font"));
 
    gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(fontsel),
                                            _config->Find(propName,
                                                          fontName).c_str());
+#endif
 
    gint result = gtk_dialog_run(GTK_DIALOG(fontsel));
    if (result != GTK_RESPONSE_OK) {
@@ -463,9 +471,13 @@ void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
       return;
    }
 
+#if GTK_CHECK_VERSION(3, 2, 0)
+   fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
+#else
    fontName =
       gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG
                                               (fontsel));
+#endif
 
    //cout << "fontname: " << fontName << endl;
 

@@ -35,7 +35,7 @@
 */
 RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mainName)
 {
-   _busyCursor = gdk_cursor_new(GDK_WATCH);
+   _busyCursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
    _builder = gtk_builder_new ();
 
    // for development

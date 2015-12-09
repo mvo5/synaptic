@@ -58,7 +58,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
    setTitle(_("Filters"));
 
-   _busyCursor = gdk_cursor_new(GDK_WATCH);
+   _busyCursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
 
    _comboPatternWhat = GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_pattern_what"));
    comboStore = GTK_LIST_STORE(

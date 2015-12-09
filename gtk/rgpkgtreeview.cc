@@ -25,8 +25,10 @@ void setupTreeView(GtkWidget *treeview)
   std::vector<std::pair<int, GtkTreeViewColumn *> > all_columns;
   int pos = 0;
   bool visible;
- 
+
+#if !GTK_CHECK_VERSION(3, 14, 0)
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview),TRUE);
+#endif
 
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), NAME_COLUMN);
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));

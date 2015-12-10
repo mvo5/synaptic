@@ -224,7 +224,7 @@ bool is_binary_in_path(const char *program)
    return false;
 }
 
-char *gtk_get_string_from_color(GdkColor * colp)
+char *gtk_get_string_from_color(GdkRGBA * colp)
 {
    static char *_str = NULL;
 
@@ -233,17 +233,14 @@ char *gtk_get_string_from_color(GdkColor * colp)
       _str = g_strdup("");
       return _str;
    }
-   _str = g_strdup_printf("#%4X%4X%4X", colp->red, colp->green, colp->blue);
-   for (char *ptr = _str; *ptr; ptr++)
-      if (*ptr == ' ')
-         *ptr = '0';
+   _str = gdk_rgba_to_string(colp);
 
    return _str;
 }
 
-void gtk_get_color_from_string(const char *cpp, GdkColor **colp)
+void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp)
 {
-   GdkColor *new_color;
+   GdkRGBA *new_color;
    gboolean result;
 
    // "" means no color
@@ -252,8 +249,8 @@ void gtk_get_color_from_string(const char *cpp, GdkColor **colp)
       return;
    }
 
-   new_color = g_new(GdkColor, 1);
-   result = gdk_color_parse(cpp, new_color);
+   new_color = g_new(GdkRGBA, 1);
+   result = gdk_rgba_parse(new_color, cpp);
    *colp = new_color;
 }
 

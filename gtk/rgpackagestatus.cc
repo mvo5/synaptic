@@ -82,7 +82,7 @@ void RGPackageStatus::init()
 }
 
 
-GdkColor *RGPackageStatus::getBgColor(RPackage *pkg)
+GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
 {
    return StatusColors[getStatus(pkg)];
 }
@@ -100,7 +100,7 @@ GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
    return StatusPixbuf[getStatus(pkg)];
 }
 
-void RGPackageStatus::setColor(int i, GdkColor * new_color)
+void RGPackageStatus::setColor(int i, GdkRGBA * new_color)
 {
    StatusColors[i] = new_color;
 }

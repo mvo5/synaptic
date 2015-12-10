@@ -451,11 +451,19 @@ void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
          return;
    }
 
+#if GTK_CHECK_VERSION(3, 2, 0)
+   GtkWidget *fontsel = gtk_font_chooser_dialog_new(_("Choose font"),
+         GTK_WINDOW(gtk_widget_get_toplevel(self)));
+
+   gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontsel),
+                             _config->Find(propName, fontName).c_str());
+#else
    GtkWidget *fontsel = gtk_font_selection_dialog_new(_("Choose font"));
 
    gtk_font_selection_dialog_set_font_name(GTK_FONT_SELECTION_DIALOG(fontsel),
                                            _config->Find(propName,
                                                          fontName).c_str());
+#endif
 
    gint result = gtk_dialog_run(GTK_DIALOG(fontsel));
    if (result != GTK_RESPONSE_OK) {
@@ -463,9 +471,13 @@ void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
       return;
    }
 
+#if GTK_CHECK_VERSION(3, 2, 0)
+   fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
+#else
    fontName =
       gtk_font_selection_dialog_get_font_name(GTK_FONT_SELECTION_DIALOG
                                               (fontsel));
+#endif
 
    //cout << "fontname: " << fontName << endl;
 
@@ -570,7 +582,7 @@ void RGPreferencesWindow::readColumnsAndFonts()
 
 void RGPreferencesWindow::readColors()
 {
-   GdkColor *color;
+   GdkRGBA *color;
    gchar *color_button = NULL;
    GtkWidget *button = NULL;
 
@@ -593,15 +605,15 @@ void RGPreferencesWindow::readColors()
          color = RGPackageStatus::pkgStatus.getColor(i);
          // I whish I could just use gtk_widget_change_background_color
          // but see gtk bug https://bugzilla.gnome.org/show_bug.cgi?id=656461
+         gchar *color_string = gdk_rgba_to_string(color);
          g_string_append_printf(custom_css,
             "GtkButton#%s { "
             " background:none; "
-            " background-color:#%02x%02x%02x; "
+            " background-color:%s; "
             "} ", 
             color_button, 
-            color->red / 256, 
-            color->green / 256, 
-            color->blue / 256);
+            color_string);
+         g_free(color_string);
       }
       gtk_css_provider_load_from_data(_css_provider, custom_css->str, -1, NULL);
       g_free(color_button);
@@ -904,26 +916,39 @@ void RGPreferencesWindow::cbToggleColumn(GtkWidget *self, char*path_string,
 void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
 {
    GtkWidget *color_dialog;
-   GtkWidget *color_selection;
    RGPreferencesWindow *me;
    me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
+#if GTK_CHECK_VERSION(3, 4, 0)
+   color_dialog = gtk_color_chooser_dialog_new(_("Color selection"),
+         GTK_WINDOW(gtk_builder_get_object(me->_builder, "window_preferences")));
+   gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(color_dialog), false);
+#else
    color_dialog = gtk_color_selection_dialog_new(_("Color selection"));
-   color_selection =
+   GtkWidget *color_selection =
 	gtk_color_selection_dialog_get_color_selection(
 		GTK_COLOR_SELECTION_DIALOG(color_dialog));
+#endif
 
-   GdkColor *color = NULL;
+   GdkRGBA *color = NULL;
    color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
    if (color != NULL)
-      gtk_color_selection_set_current_color(GTK_COLOR_SELECTION
+#if GTK_CHECK_VERSION(3, 4, 0)
+      gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(color_dialog), color);
+#else
+      gtk_color_selection_set_current_rgba(GTK_COLOR_SELECTION
                                             (color_selection), color);
+#endif
 
    if (gtk_dialog_run(GTK_DIALOG(color_dialog)) == GTK_RESPONSE_OK) {
-      GdkColor current_color;
-      gtk_color_selection_get_current_color(GTK_COLOR_SELECTION(color_selection), &current_color);
+      GdkRGBA current_color;
+#if GTK_CHECK_VERSION(3, 4, 0)
+      gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(color_dialog), &current_color);
+#else
+      gtk_color_selection_get_current_rgba(GTK_COLOR_SELECTION(color_selection), &current_color);
+#endif
       RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
-					  gdk_color_copy(&current_color));
+					  gdk_rgba_copy(&current_color));
       me->readColors();
    }
    gtk_widget_destroy(color_dialog);

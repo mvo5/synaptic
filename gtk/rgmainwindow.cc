@@ -1422,8 +1422,6 @@ void RGMainWindow::buildInterface()
    // build popup-menu
    _popupMenu = gtk_menu_new();
    menuitem = gtk_image_menu_item_new_with_label(_("Unmark"));
-   img = gtk_image_new_from_stock(GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_KEEP);
@@ -1497,7 +1495,7 @@ void RGMainWindow::buildInterface()
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Properties"));
-   img = gtk_image_new_from_stock(GTK_STOCK_PROPERTIES,GTK_ICON_SIZE_MENU);
+   img = gtk_image_new_from_icon_name("document-properties", GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
@@ -2053,8 +2051,8 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
    filesel = gtk_file_chooser_dialog_new(_("Open changes"), 
 					 GTK_WINDOW(me->window()),
 					 GTK_FILE_CHOOSER_ACTION_OPEN,
-					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					 _("_Cancel"), GTK_RESPONSE_CANCEL,
+					 _("_Open"), GTK_RESPONSE_ACCEPT,
 					 NULL);
    if(gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
       me->setInterfaceLocked(TRUE);
@@ -2123,8 +2121,8 @@ void RGMainWindow::cbSaveAsClicked(GtkWidget *self, void *data)
    filesel = gtk_file_chooser_dialog_new(_("Save changes"), 
 					 GTK_WINDOW(me->window()),
 					 GTK_FILE_CHOOSER_ACTION_SAVE,
-					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					 _("_Cancel"), GTK_RESPONSE_CANCEL,
+					 _("_Save"), GTK_RESPONSE_ACCEPT,
 					 NULL);
    GtkWidget *checkButton =
       gtk_check_button_new_with_label(_("Save full state, not only changes"));
@@ -2259,9 +2257,9 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 #else
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
 #endif
-      gtk_dialog_add_buttons(GTK_DIALOG(dialog), GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
+      gtk_dialog_add_buttons(GTK_DIALOG(dialog), _("_Cancel"), GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
       GtkWidget* reload_button = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-      GtkWidget* refresh_image = gtk_image_new_from_stock(GTK_STOCK_REFRESH, GTK_ICON_SIZE_BUTTON);
+      GtkWidget* refresh_image = gtk_image_new_from_icon_name("view-refresh", GTK_ICON_SIZE_BUTTON);
       gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
       gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), cb, true, true, 0);
@@ -3414,8 +3412,8 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    filesel = gtk_file_chooser_dialog_new(_("Save script"), 
 					 GTK_WINDOW(me->window()),
 					 GTK_FILE_CHOOSER_ACTION_SAVE,
-					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					 GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+					 _("_Cancel"), GTK_RESPONSE_CANCEL,
+					 _("_Save"), GTK_RESPONSE_ACCEPT,
 					 NULL);
    int res = gtk_dialog_run(GTK_DIALOG(filesel));
    const char *file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
@@ -3441,8 +3439,8 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GtkWidget *self, void *data)
    filesel = gtk_file_chooser_dialog_new(_("Select directory"), 
 					 GTK_WINDOW(me->window()),
 					 GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-					 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-					 GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+					 _("_Cancel"), GTK_RESPONSE_CANCEL,
+					 _("_Open"), GTK_RESPONSE_ACCEPT,
 					 NULL);
    int res = gtk_dialog_run(GTK_DIALOG(filesel));
    const char *path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));

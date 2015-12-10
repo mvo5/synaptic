@@ -141,7 +141,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
-                                          G_TYPE_POINTER, GDK_TYPE_COLOR);
+                                          G_TYPE_POINTER, GDK_TYPE_RGBA);
 
    _sourcesListView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_repositories"));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_sourcesListView),

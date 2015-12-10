@@ -48,7 +48,7 @@ RGWindow::RGWindow(string name, bool makeBox)
                     G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
-      _topBox = gtk_vbox_new(FALSE, 0);
+      _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
       gtk_container_add(GTK_CONTAINER(_win), _topBox);
       gtk_widget_show(_topBox);
       gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
@@ -75,7 +75,7 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
                     G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
-      _topBox = gtk_vbox_new(FALSE, 0);
+      _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
       gtk_container_add(GTK_CONTAINER(_win), _topBox);
       gtk_widget_show(_topBox);
       gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);

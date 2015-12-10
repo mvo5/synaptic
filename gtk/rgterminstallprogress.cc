@@ -62,7 +62,8 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
-   _scrollbar = gtk_vscrollbar_new (gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(VTE_TERMINAL(_term))));
+   _scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL,
+                                   gtk_scrollable_get_vadjustment(GTK_SCROLLABLE(VTE_TERMINAL(_term))));
    gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
 

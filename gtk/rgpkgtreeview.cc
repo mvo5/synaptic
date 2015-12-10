@@ -25,8 +25,10 @@ void setupTreeView(GtkWidget *treeview)
   std::vector<std::pair<int, GtkTreeViewColumn *> > all_columns;
   int pos = 0;
   bool visible;
- 
+
+#if !GTK_CHECK_VERSION(3, 14, 0)
   gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(treeview),TRUE);
+#endif
 
    gtk_tree_view_set_search_column(GTK_TREE_VIEW(treeview), NAME_COLUMN);
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
@@ -76,7 +78,7 @@ void setupTreeView(GtkWidget *treeview)
          gtk_tree_view_column_new_with_attributes(_("Package"), renderer,
                                                   "markup", NAME_COLUMN,
                                                   //"text", NAME_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 200);
@@ -98,7 +100,7 @@ void setupTreeView(GtkWidget *treeview)
          gtk_tree_view_column_new_with_attributes(_("Section"),
                                                   renderer, "text",
                                                   SECTION_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 130);
@@ -119,7 +121,7 @@ void setupTreeView(GtkWidget *treeview)
          gtk_tree_view_column_new_with_attributes(_("Component"),
                                                   renderer, "text",
                                                   COMPONENT_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 130);
@@ -141,7 +143,7 @@ void setupTreeView(GtkWidget *treeview)
          gtk_tree_view_column_new_with_attributes(_("Installed Version"),
                                                   renderer, "text",
                                                   INSTALLED_VERSION_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 130);
@@ -162,7 +164,7 @@ void setupTreeView(GtkWidget *treeview)
          gtk_tree_view_column_new_with_attributes(_("Latest Version"),
                                                   renderer, "text",
                                                   AVAILABLE_VERSION_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 130);
@@ -183,7 +185,7 @@ void setupTreeView(GtkWidget *treeview)
       column = gtk_tree_view_column_new_with_attributes(_("Size"), renderer,
                                                         "text",
 							PKG_SIZE_COLUMN,
-                                                        "background-gdk",
+                                                        "background-rgba",
                                                         COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 80);
@@ -204,7 +206,7 @@ void setupTreeView(GtkWidget *treeview)
       column = gtk_tree_view_column_new_with_attributes(_("Download"), 
 							renderer,"text",
                                                         PKG_DOWNLOAD_SIZE_COLUMN,
-                                                        "background-gdk",
+                                                        "background-rgba",
                                                         COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 80);
@@ -225,7 +227,7 @@ void setupTreeView(GtkWidget *treeview)
       column =
          gtk_tree_view_column_new_with_attributes(_("Description"), renderer,
                                                   "text", DESCR_COLUMN,
-                                                  "background-gdk",
+                                                  "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 500);

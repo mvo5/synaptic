@@ -404,7 +404,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    GtkWidget *img, *menuitem;
    _popupMenu = gtk_menu_new();
    menuitem = gtk_image_menu_item_new_with_label(_("Copy"));
-   img = gtk_image_new_from_stock(GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
+   img = gtk_image_new_from_icon_name("edit-copy", GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
@@ -413,7 +413,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_widget_show(menuitem);
 
    menuitem = gtk_image_menu_item_new_with_label(_("Select All"));
-   img = gtk_image_new_from_stock(GTK_STOCK_COPY, GTK_ICON_SIZE_MENU);
+   img = gtk_image_new_from_icon_name("edit-select-all", GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
@@ -775,12 +775,12 @@ void RGDebInstallProgress::finishUpdate()
 			      "synaptic", GTK_ICON_SIZE_DIALOG);
       break;
    case 1: // error
-      gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_ERROR,
+      gtk_image_set_from_icon_name(GTK_IMAGE(img), "dialog-error",
 			       GTK_ICON_SIZE_DIALOG);
       _userDialog->showErrors();
       break;
    case 2: // incomplete
-      gtk_image_set_from_stock(GTK_IMAGE(img), GTK_STOCK_DIALOG_INFO,
+      gtk_image_set_from_icon_name(GTK_IMAGE(img), "dialog-information",
 			       GTK_ICON_SIZE_DIALOG);
       break;
    }

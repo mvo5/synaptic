@@ -49,7 +49,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    GtkWidget *hbox, *label, *pix;
 
    for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
-      hbox = gtk_hbox_new(FALSE, 12);
+      hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 
       pix = gtk_image_new_from_pixbuf(RGPackageStatus::pkgStatus.getPixbuf(i));
       gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
@@ -62,7 +62,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
 
    // package support status 
-   hbox = gtk_hbox_new(FALSE, 12);
+   hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
    GtkIconTheme *theme;
    GdkPixbuf *pixbuf;
    GError *error = NULL;

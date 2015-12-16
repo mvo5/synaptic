@@ -48,12 +48,19 @@ _currentPackage(0), _hasHeader(false)
    g_signal_connect(gtk_builder_get_object(_builder, "close"),
                                  "clicked",
                                  G_CALLBACK(onCloseClicked), this);
+   _cssProvider = gtk_css_provider_new();
+   GtkStyleContext *styleContext = gtk_widget_get_style_context(textView);
+   gtk_css_provider_load_from_data(_cssProvider, "TextView { font-family: helvetica; font-size: 10pt; }", -1, NULL);
+   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    PangoFontDescription *font;
-   font = pango_font_description_from_string("helvetica 10");
-   gtk_widget_modify_font(textView, font);
    font = pango_font_description_from_string("helvetica bold 10");
    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
    skipTaskbar(true);
+}
+
+RGInstallProgressMsgs::~RGInstallProgressMsgs()
+{
+   g_object_unref(_cssProvider);
 }
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
@@ -312,13 +319,15 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
       _ss = NULL;
    }
 
-   PangoFontDescription *bfont;
-   PangoFontDescription *font;
-   bfont = pango_font_description_from_string("helvetica bold 10");
-   font = pango_font_description_from_string("helvetica 10");
-
-   gtk_widget_modify_font(_label, bfont);
-   gtk_widget_modify_font(_labelSummary, font);
+   _cssProviderBold = gtk_css_provider_new();
+   GtkStyleContext *styleContext = gtk_widget_get_style_context(_label);
+   gtk_css_provider_load_from_data(_cssProviderBold, "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }", -1, NULL);
+   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProviderBold), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  
+   _cssProvider = gtk_css_provider_new();
+   styleContext = gtk_widget_get_style_context(_labelSummary);
+   gtk_css_provider_load_from_data(_cssProvider, "Label { font-family: helvetica; font-size: 10pt; }", -1, NULL);
+   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
    gtk_label_set_text(GTK_LABEL(_label), "");
    gtk_label_set_text(GTK_LABEL(_labelSummary), "");
@@ -333,6 +342,8 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 RGInstallProgress::~RGInstallProgress()
 {
    delete _ss;
+   g_object_unref(_cssProvider);
+   g_object_unref(_cssProviderBold);
 }
 
 bool GeometryParser::ParseSize(char **size)

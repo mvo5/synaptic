@@ -269,7 +269,9 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 
    // set into buffer
    GtkWidget *text_view = GTK_WIDGET(gtk_builder_get_object(dia_builder, "textview_diff"));
-   gtk_widget_modify_font(text_view, pango_font_description_from_string("monospace"));
+   GtkStyleContext *styleContext = gtk_widget_get_style_context(text_view);
+   gtk_css_provider_load_from_data(_cssProvider, "GtkTextView { font-family: monospace; }", -1, NULL);
+   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
 
@@ -335,6 +337,7 @@ bool RGDebInstallProgress::close()
 RGDebInstallProgress::~RGDebInstallProgress()
 {
    delete _userDialog;
+   g_object_unref(_cssProvider);
 }
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
@@ -446,6 +449,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    // init the timer
    last_term_action = time(NULL);
+
+   _cssProvider = gtk_css_provider_new();
 }
 
 void RGDebInstallProgress::content_changed(GObject *object, 

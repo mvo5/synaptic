@@ -39,6 +39,8 @@ class RGInstallProgressMsgs:public RGGtkBuilderWindow {
    const char *_currentPackage;
    bool _hasHeader;
 
+   GtkCssProvider *_cssProvider;
+
  protected:
    virtual void addText(const char *text, bool bold = false);
 
@@ -51,6 +53,7 @@ class RGInstallProgressMsgs:public RGGtkBuilderWindow {
    virtual bool close();
 
    RGInstallProgressMsgs(RGWindow *win);
+   ~RGInstallProgressMsgs();
 };
 
 class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
@@ -70,6 +73,9 @@ class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
    RGInstallProgressMsgs _msgs;
 
    RGSlideShow *_ss;
+
+   GtkCssProvider *_cssProvider;
+   GtkCssProvider *_cssProviderBold;
 
  protected:
    virtual void startUpdate();

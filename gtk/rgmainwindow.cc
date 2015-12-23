@@ -2253,7 +2253,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 			"take effect");
 #if GTK_CHECK_VERSION(2,6,0)
       gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
-					       msgstr);
+					       "%s", msgstr);
 #else
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
 #endif

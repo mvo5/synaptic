@@ -355,8 +355,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    setTitle(_("Applying Changes"));
 
    // make sure we try to get a graphical debconf
-   putenv("DEBIAN_FRONTEND=gnome");
-   putenv("APT_LISTCHANGES_FRONTEND=gtk");
+   setenv("DEBIAN_FRONTEND", "gnome", FALSE);
+   setenv("APT_LISTCHANGES_FRONTEND", "gtk", FALSE);
 
    _startCounting = false;
    _label_status = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
@@ -384,9 +384,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_widget_set_can_focus (scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
 
-   char *s;
+   const char *s;
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      s = _config->Find("Synaptic::TerminalFontName").c_str();
    } else {
       s = "monospace 8";
    }

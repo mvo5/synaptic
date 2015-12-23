@@ -478,8 +478,8 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
 					       GTK_DIALOG_DESTROY_WITH_PARENT,
 					       GTK_MESSAGE_WARNING,
 					       GTK_BUTTONS_YES_NO,
-					       summary);
-      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(dia), msg);
+					       "%s", summary);
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(dia), "%s", msg);
       int res = gtk_dialog_run (GTK_DIALOG (dia));
       gtk_widget_destroy (dia);
       switch(res) {

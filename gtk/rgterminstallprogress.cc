@@ -67,9 +67,9 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
 
-   char *s;
+   const char *s;
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      char *s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      s = _config->Find("Synaptic::TerminalFontName").c_str();
    } else {
       s = "monospace 10";
    }

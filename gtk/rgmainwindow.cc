@@ -891,12 +891,12 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
    if(_config->FindB("Debug::Synaptic::Xapian",false))
       std::cerr << "running update-apt-xapian-index" << std::endl;
    GPid pid;
-   char *argp[] = {"/usr/bin/nice",
+   const char *argp[] = {"/usr/bin/nice",
 		   "/usr/bin/ionice","-c3",
 		   "/usr/sbin/update-apt-xapian-index", 
 		   "--update", "-q",
 		   NULL};
-   if(g_spawn_async(NULL, argp, NULL, 
+   if(g_spawn_async(NULL, const_cast<char **>(argp), NULL, 
 		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
 		    NULL, NULL, &pid, NULL)) {
       g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
@@ -2211,13 +2211,13 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       me->setInterfaceLocked(TRUE);
       GPid pid;
       int status;
-      char *argv[5];
+      const char *argv[5];
       argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
       argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
       argv[4] = NULL;
-      g_spawn_async(NULL, argv, NULL,
+      g_spawn_async(NULL, const_cast<char **>(argv), NULL,
 		    (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,
 		    NULL, NULL, &pid, NULL);
       // kill the child if the window is deleted
@@ -2554,7 +2554,7 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
                     me->selectedPackage()->name(),
                     NULL };
    GError *error = NULL;
-   g_spawn_async("/", (gchar**)cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+   g_spawn_async("/", const_cast<gchar **>(cmd), NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
    if(error != NULL) {
       std::cerr << "failed to run dpkg-reconfigure cmd" << std::endl;
    }
@@ -2579,11 +2579,11 @@ void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
    }
 
    if (is_binary_in_path("dwww")) {
-      gchar *cmd[5];
+      const gchar *cmd[5];
       cmd[0] = "dwww";
-      cmd[1] = (gchar*)me->selectedPackage()->name();
+      cmd[1] = me->selectedPackage()->name();
       cmd[2] = NULL;
-      g_spawn_async("/tmp", cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, NULL);
+      g_spawn_async("/tmp", const_cast<gchar **>(cmd), NULL, (GSpawnFlags)0, NULL, NULL, NULL, NULL);
    } else {
       me->_userDialog->error(_("You have to install the package \"dwww\" "
 			       "to browse the documentation of a package"));

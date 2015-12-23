@@ -66,7 +66,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    GtkIconTheme *theme;
    GdkPixbuf *pixbuf;
    GError *error = NULL;
-   gchar *name = "package-supported";
+   const gchar *name = "package-supported";
    theme = gtk_icon_theme_get_default();
    pixbuf = gtk_icon_theme_load_icon(theme, name, 16, 
 				     (GtkIconLookupFlags)0, &error);

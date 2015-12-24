@@ -107,6 +107,8 @@ enum { DEP_NAME_COLUMN,         /* text */
 };                              /* additional info (install 
                                    not installed) as text */
 
+GtkCssProvider *RGMainWindow::_fastSearchCssProvider = NULL;
+
 void RGMainWindow::changeView(int view, string subView)
 {
    if(_config->FindB("Debug::Synaptic::View",false))
@@ -979,6 +981,11 @@ void RGMainWindow::buildInterface()
       gtk_window_maximize(GTK_WINDOW(_win));
    RGFlushInterface();
 
+   if (_fastSearchCssProvider == NULL) {
+      _fastSearchCssProvider = gtk_css_provider_new();
+      gtk_css_provider_load_from_data(_fastSearchCssProvider,
+                                      "GtkEntry:not(:selected) { background: #F7F7BE; }", -1, NULL);
+   }
 
    g_signal_connect(gtk_builder_get_object(_builder, "menu_about"),
                     "activate",
@@ -2811,13 +2818,14 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
+   GtkStyleContext *styleContext = gtk_widget_get_style_context(me->_entry_fast_search);
 
    me->_fastSearchEventID = -1;
    me->setBusyCursor(true);
    RGFlushInterface();
    if(str == NULL || strlen(str) <= 1) {
       // reset the color
-      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, NULL);
+      gtk_style_context_remove_provider(styleContext, GTK_STYLE_PROVIDER(_fastSearchCssProvider));
       // if the user has cleared the search, refresh the view
       // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node != NULL' failed
       // at us, see LP: #38397 for more information
@@ -2834,8 +2842,8 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       me->refreshTable();
       // set color to a light yellow to make it more obvious that a search
       // is performed
-      GdkColor yellowish = {0, 63479,63479,48830};
-      gtk_widget_modify_base(me->_entry_fast_search, GTK_STATE_NORMAL, &yellowish);
+      gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_fastSearchCssProvider),
+                                     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    }
    me->setBusyCursor(false);
 

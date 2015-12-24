@@ -137,6 +137,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // fast search stuff
    int _fastSearchEventID;
    GtkWidget *_entry_fast_search;
+   static GtkCssProvider *_fastSearchCssProvider;
 
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];

@@ -2185,7 +2185,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
       argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
-      argv[3] = g_strdup_printf("%i", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
+      argv[3] = g_strdup_printf("%lu", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
       argv[4] = NULL;
       g_spawn_async(NULL, const_cast<char **>(argv), NULL,
 		    (GSpawnFlags)G_SPAWN_DO_NOT_REAP_CHILD,

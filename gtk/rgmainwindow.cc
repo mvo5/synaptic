@@ -477,15 +477,6 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    if(pkg->getAvailableVersions().size() > 1)
       gtk_widget_set_sensitive(_overrideVersionM, TRUE);
 
-   // set the "keep" menu icon according to the current status
-   GtkWidget *img;
-   if (!(flags & RPackage::FInstalled))
-      img = get_gtk_image("package-available");
-   else
-      img = get_gtk_image("package-installed-updated");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_keepM), img);
-
-
 }
 
 void RGMainWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
@@ -1023,8 +1014,6 @@ void RGMainWindow::buildInterface()
    _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
    gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB), "system-upgrade");
    _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade_all"));
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_upgradeM), 
-				 get_gtk_image("system-upgrade"));
    g_signal_connect(G_OBJECT(_upgradeB),
                     "clicked",
                     G_CALLBACK(cbUpgradeClicked), this);
@@ -1141,43 +1130,31 @@ void RGMainWindow::buildInterface()
 
    widget = _keepM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_keep"));
    assert(_keepM);
-   img = get_gtk_image("package-available");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
    widget = _installM = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "menu_install"));
    assert(_installM);
-   img = get_gtk_image("package-install");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
    widget = _reinstallM = GTK_WIDGET(gtk_builder_get_object
                                      (_builder, "menu_reinstall"));
    assert(_reinstallM);
-   img = get_gtk_image("package-reinstall");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
    widget = _pkgupgradeM = GTK_WIDGET(gtk_builder_get_object
                                       (_builder, "menu_upgrade"));
    assert(_pkgupgradeM);
-   img = get_gtk_image("package-upgrade");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
    widget = _removeM = GTK_WIDGET(gtk_builder_get_object
                                   (_builder, "menu_remove"));
    assert(_removeM);
-   img = get_gtk_image("package-remove");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
    widget = _purgeM = GTK_WIDGET(gtk_builder_get_object
                                  (_builder, "menu_purge"));
    assert(_purgeM);
-   img = get_gtk_image("package-purge");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(widget), img);
    g_object_set_data(G_OBJECT(widget), "me", this);
 
 #if 0
@@ -1428,49 +1405,39 @@ void RGMainWindow::buildInterface()
 
    // build popup-menu
    _popupMenu = gtk_menu_new();
-   menuitem = gtk_image_menu_item_new_with_label(_("Unmark"));
+   menuitem = gtk_menu_item_new_with_label(_("Unmark"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_KEEP);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Installation"));
-   img = get_gtk_image("package-install");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Mark for Installation"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Reinstallation"));
-   img = get_gtk_image("package-reinstall");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+   menuitem = gtk_menu_item_new_with_label(_("Mark for Reinstallation"));
    g_object_set_data(G_OBJECT(menuitem),"me",this);
    g_signal_connect(menuitem, "activate",
 		    (GCallback) cbPkgAction, (void*)PKG_REINSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Upgrade"));
-   img = get_gtk_image("package-upgrade");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem),img);
+   menuitem = gtk_menu_item_new_with_label(_("Mark for Upgrade"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_INSTALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Removal"));
-   img = get_gtk_image("package-remove");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Mark for Removal"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_DELETE);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark for Complete Removal"));
-   img = get_gtk_image("package-purge");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Mark for Complete Removal"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction, (void *)PKG_PURGE);
@@ -1480,9 +1447,7 @@ void RGMainWindow::buildInterface()
 #endif
 
 #if 0  // disabled for now
-   menuitem = gtk_image_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
-   img = get_gtk_image("package-remove");
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbPkgAction,
@@ -1501,9 +1466,7 @@ void RGMainWindow::buildInterface()
    menuitem = gtk_separator_menu_item_new ();
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Properties"));
-   img = gtk_image_new_from_icon_name("document-properties", GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Properties"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbDetailsWindow, this);
@@ -1513,11 +1476,11 @@ void RGMainWindow::buildInterface()
    menuitem = gtk_separator_menu_item_new ();
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark Recommended for Installation"));
+   menuitem = gtk_menu_item_new_with_label(_("Mark Recommended for Installation"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Mark Suggested for Installation"));
+   menuitem = gtk_menu_item_new_with_label(_("Mark Suggested for Installation"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
 #endif
@@ -3153,14 +3116,6 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
             gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
             oneclickitem = item->data;
          }
-
-         GtkWidget *img;
-         if (!(flags & RPackage::FInstalled))
-            img = get_gtk_image("package-available");
-         else
-            img = get_gtk_image("package-installed-updated");
-         gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item->data), img);
-         gtk_widget_show(img);
       }
 
       // Install button

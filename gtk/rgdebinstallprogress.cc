@@ -406,18 +406,14 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    // Terminal contextual menu
    GtkWidget *img, *menuitem;
    _popupMenu = gtk_menu_new();
-   menuitem = gtk_image_menu_item_new_with_label(_("Copy"));
-   img = gtk_image_new_from_icon_name("edit-copy", GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Copy"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbMenuitemClicked, (void *)EDIT_COPY);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
    gtk_widget_show(menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Select All"));
-   img = gtk_image_new_from_icon_name("edit-select-all", GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Select All"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbMenuitemClicked, (void *)EDIT_SELECT_ALL);

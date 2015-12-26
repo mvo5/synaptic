@@ -167,8 +167,7 @@ bool RGUserDialog::message(const char *msg,
 
    dia = gtk_message_dialog_new (GTK_WINDOW(_parentWindow),
                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 gtkmessage, gtkbuttons, "%s", "",
-			         NULL);
+                                 gtkmessage, gtkbuttons, NULL);
    GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(dia), icon);
 

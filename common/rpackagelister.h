@@ -252,7 +252,7 @@ class RPackageLister {
    int packagesSize() { return _packages.size(); };
    int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); };
 
-   void getStats(int &installed, int &broken, int &toInstall, int &toReInstall,
+   void getStats(int &installed, int &broken, int &toInstall,
 		 int &toRemove, double &sizeChange);
 
    void getSummary(int &held, int &kept, int &essential,

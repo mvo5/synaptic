@@ -822,14 +822,13 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    //cout << "prepeare called" << endl;
 
    // build a meaningfull dialog
-   int installed, broken, toInstall, toReInstall, toRemove;
+   int installed, broken, toInstall, toRemove;
    double sizeChange;
    const gchar *p = "Should never be displayed, please report";
    string s = _config->Find("Volatile::InstallProgressStr",
 			    _("The marked changes are now being applied. "
 			      "This can take some time. Please wait."));
-   lister->getStats(installed, broken, toInstall, toReInstall, 
-		    toRemove, sizeChange);
+   lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
    if(toRemove > 0 && toInstall > 0) 
       p = _("Installing and removing software");
    else if(toRemove > 0)

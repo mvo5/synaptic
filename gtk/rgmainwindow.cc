@@ -2257,12 +2257,12 @@ void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
    assert(toolbar);
    if (me->_toolbarStyle == TOOLBAR_HIDE) {
       widget = GTK_WIDGET(gtk_builder_get_object
-                          (me->_builder, "handlebox_button_toolbar"));
+                          (me->_builder, "hbox_button_toolbar"));
       gtk_widget_hide(widget);
       return;
    } else {
       widget = GTK_WIDGET(gtk_builder_get_object
-                          (me->_builder, "handlebox_button_toolbar"));
+                          (me->_builder, "hbox_button_toolbar"));
       gtk_widget_show(widget);
    }
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), me->_toolbarStyle);

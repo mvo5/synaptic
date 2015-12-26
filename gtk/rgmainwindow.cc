@@ -1571,11 +1571,15 @@ void RGMainWindow::buildInterface()
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "vbox_fast_search")));
+                                 (_builder, "toolitem_fast_search")));
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                                 (_builder, "separatortoolitem2")));
    }
 #else
    gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
-                              (_builder, "vbox_fast_search")));
+                              (_builder, "toolitem_fast_search")));
+   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
+                              (_builder, "separatortoolitem2")));
 #endif
    // stuff for the non-root mode
    if(getuid() != 0) {

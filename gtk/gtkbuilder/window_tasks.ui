@@ -33,7 +33,7 @@
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
-                    <property name="stock">gtk-dialog-question</property>
+                    <property name="icon_name">dialog-question</property>
                     <property name="icon-size">6</property>
                   </object>
                   <packing>
@@ -141,12 +141,12 @@ These are preselected groups of packages to perform each task. If you select a t
                 </child>
                 <child>
                   <object class="GtkButton" id="button_cancel">
-                    <property name="label">gtk-cancel</property>
+                    <property name="label" translatable="yes">_Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -157,13 +157,13 @@ These are preselected groups of packages to perform each task. If you select a t
                 </child>
                 <child>
                   <object class="GtkButton" id="button_ok">
-                    <property name="label">gtk-ok</property>
+                    <property name="label" translatable="yes">_OK</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_ok_clicked" swapped="no"/>
                   </object>
                   <packing>

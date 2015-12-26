@@ -1,92 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkImage" id="image1">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-open</property>
-  </object>
-  <object class="GtkImage" id="image10">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image11">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image12">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image13">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image14">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image15">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-missing-image</property>
-  </object>
-  <object class="GtkImage" id="image16">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-properties</property>
-  </object>
-  <object class="GtkImage" id="image17">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-edit</property>
-  </object>
-  <object class="GtkImage" id="image2">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-save</property>
-  </object>
-  <object class="GtkImage" id="image3">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-save-as</property>
-  </object>
-  <object class="GtkImage" id="image4">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="yalign">0.47999998927116394</property>
-    <property name="stock">gtk-quit</property>
-  </object>
-  <object class="GtkImage" id="image5">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-find</property>
-  </object>
-  <object class="GtkImage" id="image6">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-refresh</property>
-  </object>
-  <object class="GtkImage" id="image7">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-  </object>
-  <object class="GtkImage" id="image8">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-goto-top</property>
-  </object>
-  <object class="GtkImage" id="image9">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-apply</property>
-  </object>
   <object class="GtkWindow" id="window_main">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Synaptic</property>
@@ -687,7 +601,7 @@
                     <property name="is_important">True</property>
                     <property name="label" translatable="yes">Reload</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-refresh</property>
+                    <property name="icon_name">view-refresh</property>
                     <signal name="clicked" handler="on_update_packages" swapped="no"/>
                   </object>
                   <packing>
@@ -716,7 +630,7 @@
                     <property name="is_important">True</property>
                     <property name="label" translatable="yes">Apply</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-apply</property>
+                    <property name="icon_name">system-run</property>
                     <signal name="clicked" handler="on_proceed_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -740,7 +654,7 @@
                     <property name="is_important">True</property>
                     <property name="label" translatable="yes">Properties</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-properties</property>
+                    <property name="icon_name">document-properties</property>
                     <signal name="clicked" handler="on_button_details_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -826,7 +740,7 @@
                     <property name="is_important">True</property>
                     <property name="label" translatable="yes">Search</property>
                     <property name="use_underline">True</property>
-                    <property name="stock_id">gtk-find</property>
+                    <property name="icon_name">edit-find</property>
                     <signal name="clicked" handler="on_search_name" swapped="no"/>
                   </object>
                   <packing>
@@ -2032,7 +1946,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
-                                        <property name="stock">gtk-dialog-info</property>
+                                        <property name="icon_name">dialog-information</property>
                                         <property name="icon-size">5</property>
                                       </object>
                                       <packing>

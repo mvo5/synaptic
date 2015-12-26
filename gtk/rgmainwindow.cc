@@ -1648,14 +1648,14 @@ void RGMainWindow::setStatusText(char *text)
 {
 
    int listed, installed, broken;
-   int toInstall, toReInstall, toRemove;
+   int toInstall, toRemove;
    double size;
 
 
    GtkWidget *_statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    assert(_statusL);
 
-   _lister->getStats(installed,broken,toInstall,toReInstall,toRemove,size);
+   _lister->getStats(installed,broken,toInstall,toRemove,size);
 
    if (text) {
       gtk_label_set_text(GTK_LABEL(_statusL), text);
@@ -1738,9 +1738,9 @@ bool RGMainWindow::restoreState()
 
    // see if we have broken packages (might be better in some
    // RGMainWindow::preGuiStart funktion)
-   int installed, broken, toInstall, toReInstall, toRemove;
+   int installed, broken, toInstall, toRemove;
    double sizeChange;
-   _lister->getStats(installed, broken, toInstall, toReInstall, toRemove, sizeChange);
+   _lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
    if (broken > 0) {
       gchar *msg;
       msg = ngettext("You have %d broken package on your system!\n\n"
@@ -2622,10 +2622,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
 
    // nothing to do
    int listed, installed, broken;
-   int toInstall, toReInstall, toRemove;
+   int toInstall, toRemove;
    double size;
-   me->_lister->getStats(installed, broken, toInstall, toReInstall, 
-			 toRemove, size);
+   me->_lister->getStats(installed, broken, toInstall, toRemove, size);
    if((toInstall + toRemove) == 0)
       return;
 
@@ -3356,11 +3355,10 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    //cout << "cbGenerateDownloadScriptClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
-   int installed, broken, toInstall, toReInstall, toRemove;
+   int installed, broken, toInstall, toRemove;
    double sizeChange;
-   me->_lister->getStats(installed, broken, toInstall, toReInstall,
-			 toRemove, sizeChange);
-   if(toInstall+toReInstall == 0) {
+   me->_lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
+   if(toInstall== 0) {
       me->_userDialog->message("Nothing to install/upgrade\n\n"
 			       "Please select the \"Mark all Upgrades\" "
 			       "button or some packages to install/upgrade.");

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkWindow" id="window_repositories">
     <property name="can_focus">False</property>
     <property name="border_width">6</property>
@@ -48,19 +48,20 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVButtonBox" id="vbuttonbox1">
+                  <object class="GtkButtonBox" id="vbuttonbox1">
+                    <property name="orientation">vertical</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
                     <property name="layout_style">spread</property>
                     <child>
                       <object class="GtkButton" id="button_up">
-                        <property name="label">gtk-go-up</property>
+                        <property name="label" translatable="yes">_Up</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="can_default">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_stock">True</property>
+                        <property name="use_underline">True</property>
                         <signal name="clicked" handler="on_button_updown_clicked" swapped="no"/>
                       </object>
                       <packing>
@@ -71,12 +72,12 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="button_down">
-                        <property name="label">gtk-go-down</property>
+                        <property name="label" translatable="yes">_Down</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="can_default">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_stock">True</property>
+                        <property name="use_underline">True</property>
                         <signal name="clicked" handler="on_button_updown_clicked" swapped="no"/>
                       </object>
                       <packing>
@@ -202,7 +203,7 @@
                                   <object class="GtkImage" id="image1">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="stock">gtk-preferences</property>
+                                    <property name="icon_name">preferences-system</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -305,7 +306,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHSeparator" id="hseparator1">
+          <object class="GtkSeparator" id="hseparator1">
+            <property name="orientation">horizontal</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
           </object>
@@ -321,19 +323,20 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkHButtonBox" id="hbuttonbox2">
+              <object class="GtkButtonBox" id="hbuttonbox2">
+                <property name="orientation">horizontal</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="layout_style">start</property>
                 <child>
                   <object class="GtkButton" id="button_add">
-                    <property name="label">gtk-new</property>
+                    <property name="label" translatable="yes">_New</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_add_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -344,13 +347,13 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button_remove">
-                    <property name="label">gtk-delete</property>
+                    <property name="label" translatable="yes">_Delete</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_remove_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -367,19 +370,20 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHButtonBox" id="hbuttonbox1">
+              <object class="GtkButtonBox" id="hbuttonbox1">
+                <property name="orientation">horizontal</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="layout_style">end</property>
                 <child>
                   <object class="GtkButton" id="button_cancel">
-                    <property name="label">gtk-cancel</property>
+                    <property name="label" translatable="yes">_Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -390,13 +394,13 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button_ok">
-                    <property name="label">gtk-ok</property>
+                    <property name="label" translatable="yes">_OK</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_ok_clicked" swapped="no"/>
                   </object>
                   <packing>

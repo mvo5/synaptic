@@ -269,7 +269,9 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 
    // set into buffer
    GtkWidget *text_view = GTK_WIDGET(gtk_builder_get_object(dia_builder, "textview_diff"));
-   gtk_widget_modify_font(text_view, pango_font_description_from_string("monospace"));
+   GtkStyleContext *styleContext = gtk_widget_get_style_context(text_view);
+   gtk_css_provider_load_from_data(_cssProvider, "GtkTextView { font-family: monospace; }", -1, NULL);
+   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
 
@@ -335,6 +337,7 @@ bool RGDebInstallProgress::close()
 RGDebInstallProgress::~RGDebInstallProgress()
 {
    delete _userDialog;
+   g_object_unref(_cssProvider);
 }
 
 RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
@@ -352,8 +355,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    setTitle(_("Applying Changes"));
 
    // make sure we try to get a graphical debconf
-   putenv("DEBIAN_FRONTEND=gnome");
-   putenv("APT_LISTCHANGES_FRONTEND=gtk");
+   setenv("DEBIAN_FRONTEND", "gnome", FALSE);
+   setenv("APT_LISTCHANGES_FRONTEND", "gtk", FALSE);
 
    _startCounting = false;
    _label_status = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
@@ -381,9 +384,9 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_widget_set_can_focus (scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
 
-   char *s;
+   const char *s;
    if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      s =(char*)_config->Find("Synaptic::TerminalFontName").c_str();
+      s = _config->Find("Synaptic::TerminalFontName").c_str();
    } else {
       s = "monospace 8";
    }
@@ -403,18 +406,14 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    // Terminal contextual menu
    GtkWidget *img, *menuitem;
    _popupMenu = gtk_menu_new();
-   menuitem = gtk_image_menu_item_new_with_label(_("Copy"));
-   img = gtk_image_new_from_icon_name("edit-copy", GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Copy"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbMenuitemClicked, (void *)EDIT_COPY);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
    gtk_widget_show(menuitem);
 
-   menuitem = gtk_image_menu_item_new_with_label(_("Select All"));
-   img = gtk_image_new_from_icon_name("edit-select-all", GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menuitem), img);
+   menuitem = gtk_menu_item_new_with_label(_("Select All"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
    g_signal_connect(menuitem, "activate",
                     (GCallback) cbMenuitemClicked, (void *)EDIT_SELECT_ALL);
@@ -446,6 +445,8 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    // init the timer
    last_term_action = time(NULL);
+
+   _cssProvider = gtk_css_provider_new();
 }
 
 void RGDebInstallProgress::content_changed(GObject *object, 
@@ -473,8 +474,8 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
 					       GTK_DIALOG_DESTROY_WITH_PARENT,
 					       GTK_MESSAGE_WARNING,
 					       GTK_BUTTONS_YES_NO,
-					       summary);
-      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(dia), msg);
+					       "%s", summary);
+      gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG(dia), "%s", msg);
       int res = gtk_dialog_run (GTK_DIALOG (dia));
       gtk_widget_destroy (dia);
       switch(res) {
@@ -821,14 +822,13 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
    //cout << "prepeare called" << endl;
 
    // build a meaningfull dialog
-   int installed, broken, toInstall, toReInstall, toRemove;
+   int installed, broken, toInstall, toRemove;
    double sizeChange;
    const gchar *p = "Should never be displayed, please report";
    string s = _config->Find("Volatile::InstallProgressStr",
 			    _("The marked changes are now being applied. "
 			      "This can take some time. Please wait."));
-   lister->getStats(installed, broken, toInstall, toReInstall, 
-		    toRemove, sizeChange);
+   lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
    if(toRemove > 0 && toInstall > 0) 
       p = _("Installing and removing software");
    else if(toRemove > 0)

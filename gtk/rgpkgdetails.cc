@@ -293,9 +293,6 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       gtk_image_set_pixel_size(GTK_IMAGE(emblem), 16);
       // set eventbox and tooltip
       GtkWidget *event = gtk_event_box_new();
-      GtkStyle *style = gtk_widget_get_style(textview);
-      gtk_widget_modify_bg(event, GTK_STATE_NORMAL, 
-			   &style->base[GTK_STATE_NORMAL]);
       gtk_container_add(GTK_CONTAINER(event), emblem);
       gtk_widget_set_tooltip_text(event, _("This application is supported by the distribution"));
       // create anchor

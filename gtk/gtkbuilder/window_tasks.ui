@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.0 -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkWindow" id="window_tasks">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -33,7 +33,7 @@
                     <property name="can_focus">False</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
-                    <property name="stock">gtk-dialog-question</property>
+                    <property name="icon_name">dialog-question</property>
                     <property name="icon-size">6</property>
                   </object>
                   <packing>
@@ -116,7 +116,8 @@ These are preselected groups of packages to perform each task. If you select a t
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <child>
-              <object class="GtkHButtonBox" id="hbuttonbox1">
+              <object class="GtkButtonBox" id="hbuttonbox1">
+                <property name="orientation">horizontal</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
@@ -140,12 +141,12 @@ These are preselected groups of packages to perform each task. If you select a t
                 </child>
                 <child>
                   <object class="GtkButton" id="button_cancel">
-                    <property name="label">gtk-cancel</property>
+                    <property name="label" translatable="yes">_Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -156,13 +157,13 @@ These are preselected groups of packages to perform each task. If you select a t
                 </child>
                 <child>
                   <object class="GtkButton" id="button_ok">
-                    <property name="label">gtk-ok</property>
+                    <property name="label" translatable="yes">_OK</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
                     <property name="receives_default">False</property>
-                    <property name="use_stock">True</property>
+                    <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_ok_clicked" swapped="no"/>
                   </object>
                   <packing>

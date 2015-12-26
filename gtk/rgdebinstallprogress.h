@@ -115,6 +115,7 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
 			    gpointer data);
    static void terminalAction(GtkWidget *terminal, TermAction action);
 
+   GtkCssProvider *_cssProvider;
 
  protected:
    virtual void startUpdate();

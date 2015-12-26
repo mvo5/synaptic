@@ -817,15 +817,14 @@ int RPackageLister::findNextPackage()
 }
 
 void RPackageLister::getStats(int &installed, int &broken,
-                              int &toInstall, int &toReInstall,
-			      int &toRemove,  double &sizeChange)
+                              int &toInstall, int &toRemove,
+                              double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
 
    if (deps != NULL) {
       sizeChange = deps->UsrSize();
       
-      //FIXME: toReInstall not reported?
       installed = _installedCount;
       broken = deps->BrokenCount();
       toInstall = deps->InstCount();

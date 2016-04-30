@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: synaptic\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-04-29 10:57+0200\n"
-"PO-Revision-Date: 2016-04-29 17:02+0200\n"
+"PO-Revision-Date: 2016-04-30 23:57+0200\n"
 "Last-Translator: gogo <trebelnik2@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "Language: hr\n"
@@ -618,11 +618,11 @@ msgstr "Pogrešan zapis u datoteci osobitostima, nedostaje zaglavlje paketa"
 
 #: ../common/rpackage.h:53 ../common/rpackagefilter.cc:49
 msgid "Depends"
-msgstr "Ovisi"
+msgstr "Zavisi od"
 
 #: ../common/rpackage.h:54
 msgid "PreDepends"
-msgstr "Prethodno ovisi"
+msgstr "Prethodno zavisi od"
 
 #: ../common/rpackage.h:55 ../common/rpackagefilter.cc:54
 msgid "Suggests"
@@ -630,11 +630,11 @@ msgstr "Predlaže"
 
 #: ../common/rpackage.h:56 ../common/rpackagefilter.cc:53
 msgid "Recommends"
-msgstr "Preporuke"
+msgstr "Preporučuje"
 
 #: ../common/rpackage.h:57 ../common/rpackagefilter.cc:51
 msgid "Conflicts"
-msgstr "U sukobu"
+msgstr "U sukobu sa"
 
 #: ../common/rpackage.h:58 ../common/rpackagefilter.cc:52
 msgid "Replaces"
@@ -646,7 +646,7 @@ msgstr "Zastarjeva"
 
 #: ../common/rpackage.h:60
 msgid "Breaks"
-msgstr "Prekida"
+msgstr "Slomljuje"
 
 #: ../common/rpackage.h:61
 msgid "Enhances"
@@ -655,7 +655,7 @@ msgstr "Poboljšava"
 #. make sure this is always the last member
 #: ../common/rpackage.h:69
 msgid "Dependency of"
-msgstr "Zavisnost od"
+msgstr "Ovisi od"
 
 #: ../common/rpackagestatus.cc:49
 msgid "Marked for installation"
@@ -762,7 +762,7 @@ msgstr "O njemu ovisi"
 #: ../common/rpackagefilter.cc:56 ../common/rpackageview.h:140
 #: ../gtk/gtkbuilder/window_main.ui.h:63 ../gtk/rgfiltermanager.h:80
 msgid "Origin"
-msgstr "Izvor"
+msgstr "Repozitoriji"
 
 #. Origin (e.g. security.debian.org)
 #: ../common/rpackagefilter.cc:57 ../gtk/rgpreferenceswindow.cc:52
@@ -838,8 +838,8 @@ msgid ""
 "Release files for some repositories could not be retrieved or authenticated. "
 "Such repositories are being ignored."
 msgstr ""
-"Preuzimanje ili autentifikacija datoteka izdavanja za neke repozitorije nije "
-"uspjelo. Takvi repozitoriji biti će zanemareni."
+"Preuzimanje ili ovjera datoteka izdanja za neke repozitorije nije uspjelo. "
+"Takvi repozitoriji biti će zanemareni."
 
 #: ../common/rpackagelister.cc:1422 ../gtk/rgrepositorywin.cc:396
 msgid "Ignoring invalid record(s) in sources.list file!"
@@ -1039,7 +1039,7 @@ msgstr "Debconf paketi"
 
 #: ../common/rpackageview.cc:548 ../gtk/gtkbuilder/window_filters.ui.h:14
 msgid "Upgradable (upstream)"
-msgstr "Nadogradivo (izvorni paketi)"
+msgstr "Nadogradivo (upstream)"
 
 #: ../common/rpackageview.cc:561
 msgid "Community Maintained (installed)"
@@ -1242,13 +1242,12 @@ msgid ""
 "this could allow a malicious individual to damage or take control of your "
 "system."
 msgstr ""
-"Instalirat ćete softver koji <b>ne može biti autentificiran</b>! To može "
-"omogućiti zlonamjernom pojedincu da ošteti ili preuzme kontrolu nad vašim "
-"sustavom."
+"Instalirat ćete softver koji <b>ne može biti ovjeren</b>! To može omogućiti "
+"zlonamjernom pojedincu da ošteti ili preuzme kontrolu nad vašim sustavom."
 
 #: ../gtk/rgchangeswindow.cc:106 ../gtk/rgsummarywindow.cc:92
 msgid "NOT AUTHENTICATED"
-msgstr "NIJE AUTENTIFICIRAN"
+msgstr "NIJE OVJEREN"
 
 #. removed
 #: ../gtk/rgchangeswindow.cc:117
@@ -1623,7 +1622,7 @@ msgstr "Ovu aplikaciju podržava distiribucija"
 
 #: ../gtk/rgpkgdetails.cc:307
 msgid "Get Screenshot"
-msgstr "Prikaži sliku zaslona"
+msgstr "Slika paketa"
 
 #: ../gtk/rgpkgdetails.cc:321
 msgid "Get Changelog"
@@ -1653,7 +1652,7 @@ msgstr "Preuzimanje"
 
 #: ../gtk/rgmainwindow.cc:90
 msgid "Dependants"
-msgstr "Ovisni"
+msgstr "Ovisnosti"
 
 #: ../gtk/rgmainwindow.cc:91
 msgid "Dependencies of the Latest Version"
@@ -1665,7 +1664,7 @@ msgstr "Omogućeni paketi"
 
 #: ../gtk/rgmainwindow.cc:183
 msgid "All"
-msgstr "Svi"
+msgstr "Svi paketi"
 
 #: ../gtk/rgmainwindow.cc:390
 msgid "No package is selected.\n"
@@ -2280,7 +2279,7 @@ msgstr "nije primjenjivo"
 
 #: ../gtk/rgfindwindow.cc:146
 msgid "Find"
-msgstr "Pronađi"
+msgstr "Pretraži"
 
 #. TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or "mail server")
 #: ../gtk/rgtaskswin.cc:141
@@ -2382,7 +2381,7 @@ msgstr "Odaberi pakete po _zadatku..."
 
 #: ../gtk/gtkbuilder/window_main.ui.h:22
 msgid "A_pply Marked Changes"
-msgstr "_Primjeni odabrane promjene"
+msgstr "_Primijeni odabrane promjene"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:23
 msgid "_Package"
@@ -3036,7 +3035,7 @@ msgstr ""
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:67
 msgid "Authentication"
-msgstr "Provjera autentičnosti"
+msgstr "Podaci ovjere"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:68
 msgid "Network"
@@ -3052,11 +3051,11 @@ msgstr ""
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:70
 msgid "<b>Package upgrade behavior (default distribution)</b>"
-msgstr "<b>Ponašanje nadogradnje paketa (zadana distribucija)</b>"
+msgstr "<b>Ponašanje nadogradnje paketa (zadano distribucijom)</b>"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:71
 msgid "Always prefer the highest version"
-msgstr "Uvijek preferiraj višu inačicu"
+msgstr "Uvijek preferiraj noviju inačicu"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:72
 msgid "Always prefer the installed version"
@@ -3064,7 +3063,7 @@ msgstr "Uvijek preferiraj instaliranu inačicu"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:73
 msgid "Prefer versions from: "
-msgstr "Preferiraj inačicu iz: "
+msgstr "Preferiraj inačicu za: "
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:75
 #: ../gtk/gtkbuilder/window_setopt.ui.h:2
@@ -3629,7 +3628,7 @@ msgstr "Ovo ponašanje moguće je kasnije promijeniti u osobitostima."
 
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:1
 msgid "HTTP authentication"
-msgstr "HTTP provjera autentičnosti"
+msgstr "HTTP podaci ovjere"
 
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:4
 msgid "Username"
@@ -3695,8 +3694,7 @@ msgstr "Instaliraj, ukloni i nadogradi softverske pakete"
 
 #: ../data/com.ubuntu.pkexec.synaptic.policy.in.h:1
 msgid "Authentication is required to run the Synaptic Package Manager"
-msgstr ""
-"Autentifikacija je potrebna za pokretanje Synaptic upravitelja paketima"
+msgstr "Potrebna je ovjera za pokretanje Synaptic upravitelja paketima"
 
 #: ../gtk/rgfiltermanager.h:62
 msgid "Includes"

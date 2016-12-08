@@ -52,6 +52,8 @@ const char *transtable[][2] = {
    {"interpreters", _("Interpreted Computer Languages")},
    // TRANSLATORS: Alias for the Debian package section "java"
    {"java", _("Java Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "javascript"
+   {"javascript", _("JavaScript Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "KDE"
    {"kde", _("KDE Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "kernel"
@@ -88,6 +90,8 @@ const char *transtable[][2] = {
    {"python", _("Python Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "ruby"
    {"ruby", _("Ruby Programming Language")},
+   // TRANSLATORS: Alias for the Debian package section "rust"
+   {"rust", _("Rust Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "science"
    {"science", _("Science")},
    // TRANSLATORS: Alias for the Debian package section "shells"

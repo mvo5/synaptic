@@ -87,7 +87,7 @@ bool RWriteConfigFile(Configuration &Conf)
    // store option 'consider recommended packages as dependencies'
    // to config of apt if we run as root
    if (getuid() == 0) {
-      string aptConfPath = _config->FindDir("Dir::Etc:parts", "/etc/apt/apt.conf.d/")
+      string aptConfPath = _config->FindDir("Dir::Etc::parts", "/etc/apt/apt.conf.d/")
                          + "99synaptic";
 
       int old_umask = umask(0022);

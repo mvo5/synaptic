@@ -87,11 +87,8 @@ bool RWriteConfigFile(Configuration &Conf)
    // store option 'consider recommended packages as dependencies'
    // to config of apt if we run as root
    if (getuid() == 0) {
-      // FIXME: use findDir
-      string aptConfPath = _config->Find("Dir", "/")
-                         + _config->Find("Dir::Etc", "etc/apt/")
-                         + _config->Find("Dir::Etc:parts", "apt.conf.d")
-                         + "/99synaptic";
+      string aptConfPath = _config->FindDir("Dir::Etc::parts", "/etc/apt/apt.conf.d/")
+                         + "99synaptic";
 
       int old_umask = umask(0022);
       ofstream aptfile(aptConfPath.c_str(), ios::out);

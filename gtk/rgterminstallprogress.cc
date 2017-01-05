@@ -60,6 +60,10 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
 {
    setTitle(_("Applying Changes"));
 
+   // make sure we try to get a graphical debconf
+   putenv("DEBIAN_FRONTEND=gnome");
+   putenv("APT_LISTCHANGES_FRONTEND=gtk");
+
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term),80,23);
    _scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_VERTICAL,

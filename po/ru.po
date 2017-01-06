@@ -309,14 +309,13 @@ msgstr "Метапакеты"
 
 #. TRANSLATORS: Alias for the Debian package section "education"
 #: ../common/sections_trans.cc:126
-#, fuzzy
 msgid "Education"
-msgstr "Связь"
+msgstr "Образование"
 
 #. TRANSLATORS: Alias for the Debian package section "introspection"
 #: ../common/sections_trans.cc:128
 msgid "GObject Introspection data"
-msgstr ""
+msgstr "Данные интроспекции GObject"
 
 #. TRANSLATORS: Alias for the Debian package section "non-US"
 #. Export to the outside of the USA is not allowed
@@ -980,7 +979,7 @@ msgstr "Алфавитное дерево"
 
 #: ../common/rpackageview.h:130
 msgid "Architecture"
-msgstr ""
+msgstr "Архитектура"
 
 #: ../common/rpackageview.h:183
 msgid "Search History"
@@ -1001,7 +1000,7 @@ msgstr "Не установленные (не поддерживаемые)"
 
 #: ../common/rpackageview.cc:150
 msgid "Installed (auto removable)"
-msgstr "Установленные (авто удаляемые)"
+msgstr "Установленные (удаляемые автоматически)"
 
 #: ../common/rpackageview.cc:158
 msgid "Installed (manual)"
@@ -1049,7 +1048,7 @@ msgstr "Отмеченные изменения"
 #. with debconf support (that can be reconfigured with debconf)
 #: ../common/rpackageview.cc:541
 msgid "Package with Debconf"
-msgstr "Пакеты поддерживаемые debconf"
+msgstr "Пакеты, поддерживаемые debconf"
 
 #: ../common/rpackageview.cc:548 ../gtk/gtkbuilder/window_filters.ui.h:14
 msgid "Upgradable (upstream)"
@@ -1071,7 +1070,7 @@ msgstr "Локальные"
 #. << " origin_str: " << suite << std::endl;
 #: ../common/rpackageview.cc:638
 msgid "Not automatic: "
-msgstr ""
+msgstr "Не устанавливаемые автоматически: "
 
 #: ../common/rsources.cc:69 ../gtk/rgmainwindow.cc:2045
 #: ../gtk/rgmainwindow.cc:2755 ../gtk/rgmainwindow.cc:2888
@@ -1187,17 +1186,15 @@ msgstr ""
 "Synaptic."
 
 #: ../gtk/gsynaptic.cc:430
-#, fuzzy
 msgid "Starting \"Synaptic Package Manager\" without administrative privileges"
-msgstr "Запущено без привилегий администратора"
+msgstr "Запуск менеджера пакетов Synaptic без привилегий администратора"
 
 #: ../gtk/gsynaptic.cc:432
-#, fuzzy
 msgid ""
 "You will not be able to apply any changes, but you can still export the "
 "marked changes or create a download script for them."
 msgstr ""
-"Вы не сможете применить какие-либо изменения. Но вы сможете сохранить "
+"Вы не сможете применить какие-либо изменения, но сможете сохранить "
 "отмеченные изменения или создать для них сценарий загрузки."
 
 #: ../gtk/gsynaptic.cc:487
@@ -1627,7 +1624,7 @@ msgstr "Выражение было найдено, посмотрите в сп
 #: ../gtk/gtkbuilder/window_logview.ui.h:2
 #: ../gtk/gtkbuilder/dialog_task_descr.ui.h:1
 msgid "_Close"
-msgstr ""
+msgstr "_Закрыть"
 
 #: ../gtk/rgpkgdetails.cc:220
 #, c-format
@@ -1636,7 +1633,7 @@ msgstr "Свойства %s"
 
 #: ../gtk/rgpkgdetails.cc:297
 msgid "This application is supported by the distribution"
-msgstr "Это приложения поддерживается дистрибутивом"
+msgstr "Это приложение поддерживается дистрибутивом"
 
 #: ../gtk/rgpkgdetails.cc:307
 msgid "Get Screenshot"
@@ -1648,7 +1645,7 @@ msgstr "Получить список изменений"
 
 #: ../gtk/rgpkgdetails.cc:333
 msgid "Visit Homepage"
-msgstr ""
+msgstr "Посетить домашнюю страницу"
 
 #. TRANSLATORS: this the format of the available versions in
 #. the "Properties/Available versions" window
@@ -1867,13 +1864,12 @@ msgstr "Открыть отметки пакетов"
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:2
 #: ../gtk/gtkbuilder/dialog_disc_label.ui.h:1
 #: ../gtk/gtkbuilder/dialog_new_repositroy.ui.h:6
-#, fuzzy
 msgid "_Cancel"
-msgstr "Отменить"
+msgstr "О_тмена"
 
 #: ../gtk/rgmainwindow.cc:2029 ../gtk/rgmainwindow.cc:3408
 msgid "_Open"
-msgstr ""
+msgstr "_Открыть"
 
 #: ../gtk/rgmainwindow.cc:2076 ../gtk/rgmainwindow.cc:2673
 #: ../gtk/rgmainwindow.cc:2855 ../gtk/rgmainwindow.cc:3040
@@ -1887,7 +1883,7 @@ msgstr "Сохранить изменения"
 
 #: ../gtk/rgmainwindow.cc:2099 ../gtk/rgmainwindow.cc:3381
 msgid "_Save"
-msgstr ""
+msgstr "_Сохранить"
 
 #: ../gtk/rgmainwindow.cc:2102
 msgid "Save full state, not only changes"
@@ -2031,6 +2027,16 @@ msgstr "Отмечены все доступные для обновления �
 #: ../gtk/rgmainwindow.cc:3003
 msgid "Failed to mark all available upgrades!"
 msgstr "Невозможно отметить всё доступное для обновления!"
+
+#: ../gtk/rgmainwindow.cc:3366
+msgid ""
+"Nothing to install/upgrade\n\n"
+"Please select the \"Mark all Upgrades\" "
+"button or some packages to install/upgrade."
+msgstr ""
+"Нечего устанавливать/обновлять\n\n"
+"Выберите пункт \"Отметить все обновления\" "
+"или определенные пакеты для установки/обновления."
 
 #: ../gtk/rgmainwindow.cc:3377
 msgid "Save script"
@@ -2387,7 +2393,7 @@ msgstr "Добавить _компакт-диск..."
 
 #: ../gtk/gtkbuilder/window_main.ui.h:19
 msgid "_Mark All Upgrades..."
-msgstr "_Отметить для обновления..."
+msgstr "_Отметить все обновления..."
 
 #: ../gtk/gtkbuilder/window_main.ui.h:20
 msgid "_Fix Broken Packages"
@@ -2462,9 +2468,8 @@ msgid "_Settings"
 msgstr "_Настройки"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:38
-#, fuzzy
 msgid "_Preferences"
-msgstr "Параметры"
+msgstr "_Параметры"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:39
 msgid "_Repositories"
@@ -2529,7 +2534,7 @@ msgstr "Обновить"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:54
 msgid "Mark All Upgrades"
-msgstr "Отметить всё"
+msgstr "Отметить все обновления"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:55
 msgid "Apply"
@@ -2557,7 +2562,7 @@ msgstr "Специальные _фильтры"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:64
 msgid "_Architecture"
-msgstr ""
+msgstr "_Архитектура"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:66
 #: ../gtk/gtkbuilder/window_details.ui.h:2
@@ -2591,9 +2596,8 @@ msgstr "<b>Теги:</b>"
 
 #: ../gtk/gtkbuilder/window_main.ui.h:72
 #: ../gtk/gtkbuilder/window_details.ui.h:8
-#, fuzzy
 msgid "<b>Source:</b>"
-msgstr "<b>Состояние:</b>"
+msgstr "<b>Источник:</b>"
 
 # This is filter name, it's better to not translate it
 #: ../gtk/gtkbuilder/window_main.ui.h:73
@@ -2688,7 +2692,6 @@ msgstr ""
 "License, Version 2"
 
 #: ../gtk/gtkbuilder/window_about.ui.h:10
-#, fuzzy
 msgid ""
 "<span size=\"small\">Copyright (c) 2001-2004 Connectiva S/A \n"
 "Copyright (c) 2002-2012 Michael Vogt</span>"
@@ -2776,7 +2779,6 @@ msgid "Look in:"
 msgstr "Искать в:"
 
 #: ../gtk/gtkbuilder/window_fetch.ui.h:1
-#, fuzzy
 msgid "Show individual files"
 msgstr "Подробнее"
 
@@ -2988,7 +2990,7 @@ msgstr "Удалять загруженные файлы _после устан�
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:47
 msgid "_Only delete packages which are no longer available"
-msgstr "_Удалять только для пакетов более недоступных в репозитории"
+msgstr "_Удалять только для пакетов, более недоступных в репозитории"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:48
 msgid "_Delete Cached Package Files"
@@ -3008,7 +3010,7 @@ msgstr "_Сохранять историю"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:52
 msgid "Delete _History files older than:"
-msgstr "Удалять файлы _истории старее чем:"
+msgstr "Удалять файлы _истории старше, чем:"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:53
 msgid "days"
@@ -3024,7 +3026,7 @@ msgstr "<b>Прокси-сервер</b>"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:56
 msgid "Direct connection to the Internet"
-msgstr "Прямое подключение к Интернет"
+msgstr "Прямое подключение к Интернету"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:57
 msgid "Manual proxy configuration"
@@ -3106,9 +3108,8 @@ msgstr "Предпочитать версии из: "
 #: ../gtk/gtkbuilder/window_preferences.ui.h:75
 #: ../gtk/gtkbuilder/window_setopt.ui.h:2
 #: ../gtk/gtkbuilder/window_summary.ui.h:3
-#, fuzzy
 msgid "_Apply"
-msgstr "Применить"
+msgstr "_Применить"
 
 #: ../gtk/gtkbuilder/window_preferences.ui.h:77
 #: ../gtk/gtkbuilder/window_disc_name.ui.h:5
@@ -3116,9 +3117,8 @@ msgstr "Применить"
 #: ../gtk/gtkbuilder/window_repositories.ui.h:11
 #: ../gtk/gtkbuilder/window_tasks.ui.h:6
 #: ../gtk/gtkbuilder/dialog_authentication.ui.h:3
-#, fuzzy
 msgid "_OK"
-msgstr "OK"
+msgstr "_OK"
 
 #: ../gtk/gtkbuilder/window_disc_name.ui.h:1
 msgid ""
@@ -3199,12 +3199,12 @@ msgstr ""
 #: ../gtk/gtkbuilder/window_filters.ui.h:5
 #: ../gtk/gtkbuilder/window_repositories.ui.h:8
 msgid "_New"
-msgstr ""
+msgstr "_Новый"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:6
 #: ../gtk/gtkbuilder/window_repositories.ui.h:9
 msgid "_Delete"
-msgstr ""
+msgstr "_Удалить"
 
 #. TRANSLATORS: this is a label embedded in the "Status" notebook tab, so it describes the "Current [status]"
 #: ../gtk/gtkbuilder/window_filters.ui.h:8
@@ -3283,7 +3283,7 @@ msgstr "Пакеты, появившиеся в репозитории посл�
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:33
 msgid "Packages that will never be upgraded"
-msgstr "Пакет, которые никогда не будут обновлены"
+msgstr "Пакеты, которые никогда не будут обновлены"
 
 #: ../gtk/gtkbuilder/window_filters.ui.h:34
 msgid "Orphaned"
@@ -3392,12 +3392,12 @@ msgstr "Теги"
 
 #: ../gtk/gtkbuilder/window_repositories.ui.h:2
 msgid "_Up"
-msgstr ""
+msgstr "_Вверх"
 
 #: ../gtk/gtkbuilder/window_repositories.ui.h:3
 #, fuzzy
 msgid "_Down"
-msgstr "Получить"
+msgstr "_Вниз"
 
 #: ../gtk/gtkbuilder/window_repositories.ui.h:4
 msgid "URI:"
@@ -3504,7 +3504,7 @@ msgstr "Отметьте пакет и выберите действие из м
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:9
 msgid "Double click on the package name."
-msgstr "Нажмите мышкой дважды на название пакета;"
+msgstr "Дважды нажмите левой кнопкой мыши на название пакета;"
 
 #: ../gtk/gtkbuilder/dialog_welcome.ui.h:10
 msgid "Choose the action from the context menu of the package."
@@ -3620,7 +3620,7 @@ msgstr ""
 "<b><big>Выйти и отказаться от намеченных изменений?</big></b>\n"
 "\n"
 "Намечены действия, которые ещё не были выполнены. Они будут утеряны, если вы "
-"выйдите из Synaptic."
+"выйдете из Synaptic."
 
 #: ../gtk/gtkbuilder/dialog_conffile.ui.h:1
 msgid "_Keep"
@@ -3752,7 +3752,7 @@ msgstr "Установить, удалить и обновить пакеты"
 
 #: ../data/com.ubuntu.pkexec.synaptic.policy.in.h:1
 msgid "Authentication is required to run the Synaptic Package Manager"
-msgstr ""
+msgstr "Для запуска менеджера пакетов Synaptic требуется аутентификация"
 
 #: ../gtk/rgfiltermanager.h:62
 msgid "Includes"

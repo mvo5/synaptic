@@ -980,7 +980,7 @@ string RPackage::getChangelogURI()
       if(verstr.find(':')!=verstr.npos)
          verstr=string(verstr, verstr.find(':')+1);
 
-      snprintf(uri,512,"https://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
+      snprintf(uri,512,"http://packages.debian.org/changelogs/pool/%s/%s/%s/%s_%s/changelog",
                                src_section.c_str(),
                                prefix.c_str(),
                                srcpkg.c_str(),

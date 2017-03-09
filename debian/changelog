@@ -1,3 +1,15 @@
+synaptic (0.84.2) unstable; urgency=medium
+
+  [ Simon McVittie ]
+  * Depend on policykit-1 instead of recommending
+    gksu|kdebase-bin|policykit-1. data/synaptic.desktop.in and
+    debian/synaptic.menu both use debian/synaptic-pkexec, which
+    unconditionally runs pkexec. (Closes: #856520)
+  * Pushing the recommendation up to a Depends ensures that the menu entry
+    can in fact be launched (Closes: #415408)
+
+ -- Michael Vogt <mvo@debian.org>  Thu, 09 Mar 2017 16:28:15 +0100
+
 synaptic (0.84.1) unstable; urgency=medium
 
   [ Vadim Kalmakov ]

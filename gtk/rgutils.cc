@@ -65,8 +65,6 @@ GtkWidget *get_gtk_image(const gchar *name, int size)
 
 void RGFlushInterface()
 {
-   XSync(GDK_DISPLAY_XDISPLAY (gdk_display_get_default ()), False);
-
    while (gtk_events_pending()) {
       gtk_main_iteration();
    }

@@ -42,6 +42,8 @@ const char *transtable[][2] = {
    {"gnu-r", _("GNU R statistical system")},
    // TRANSLATORS: Alias for the Debian package section "gnustep"
    {"gnustep", _("Gnustep Desktop Environment")},
+   // TRANSLATORS: Alias for the Debian package section "golang"
+   {"golang", _("Go Programming Language")},
    // TRANSLATORS: Alias for the Debian package section "hamradio"
    {"hamradio", _("Amateur Radio")},
    // TRANSLATORS: Alias for the Debian package section "haskell"
@@ -113,7 +115,7 @@ const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "web"
    {"web", _("World Wide Web")},
    // TRANSLATORS: Alias for the Debian package section "x11"
-   {"x11", _("Miscellaneous  - Graphical")},
+   {"x11", _("Miscellaneous - Graphical")},
    // TRANSLATORS: Alias for the Debian package section "xfce"
    {"xfce", _("Xfce Desktop Environment")},
    // TRANSLATORS: Alias for the Debian package section "zope"
@@ -131,17 +133,11 @@ const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "introspection"
    {"introspection", _("GObject Introspection data")},
 
-   // TRANSLATORS: Alias for the Debian package section "non-US"
-   //              Export to the outside of the USA is not allowed
-   //              or restricted
-   {"non-US", _("Restricted On Export")},
    // TRANSLATORS: Alias for the Debian package section "non free"
    {"non-free", _("non free")},
    // TRANSLATORS: Alias for the Debian package section "contrib"
    //              Free software that depends on non-free software
    {"contrib", _("contrib")},
-   //{"non-free",_("<i>(non free)</i>")},
-   //{"contrib",_("<i>(contrib)</i>")},
    {NULL, NULL}
 };
 
@@ -150,15 +146,6 @@ string trans_section(string sec)
 {
    string str = sec;
    string suffix;
-   // baaaa, special case for stupid debian package naming
-   if (str == "non-US/non-free") {
-      str = _("Restricted On Export");
-      suffix = _("non free");
-   }
-   if (str == "non-US/non-free") {
-      str = _("Restricted On Export");
-      suffix = _("contrib");
-   }
    // if we have something like "contrib/web", make "contrib" the
    // suffix and translate it independently
    string::size_type n = str.find("/");

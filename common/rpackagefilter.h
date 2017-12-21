@@ -1,13 +1,13 @@
 /* rpackagefilter.h - filters for package listing
- * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -58,15 +58,15 @@ class RPackageFilter {
    virtual bool read(Configuration &conf, string key) = 0;
    virtual bool write(ofstream &out, string pad) = 0;
 
-   RPackageFilter() {};
-   virtual ~RPackageFilter() {};
+   RPackageFilter() {}
+   virtual ~RPackageFilter() {}
 };
 
 
 extern const char *RPFSection;
 
 class RSectionPackageFilter : public RPackageFilter {
-   
+
    protected:
 
    vector<string> _groups;
@@ -74,20 +74,20 @@ class RSectionPackageFilter : public RPackageFilter {
 
    public:
 
-   RSectionPackageFilter() : _inclusive(false) {};
-   virtual ~RSectionPackageFilter() {};
+   RSectionPackageFilter() : _inclusive(false) {}
+   virtual ~RSectionPackageFilter() {}
 
    inline virtual void reset() {
       clear();
       _inclusive = false;
-   };
+   }
 
-   inline virtual const char *type() { return RPFSection; };
+   inline virtual const char *type() { return RPFSection; }
 
-   void setInclusive(bool flag) { _inclusive = flag; };
+   void setInclusive(bool flag) { _inclusive = flag; }
    bool inclusive();
 
-   inline void addSection(string group) { _groups.push_back(group); };
+   inline void addSection(string group) { _groups.push_back(group); }
    int count();
    string section(int index);
    void clear();
@@ -117,7 +117,7 @@ class RPatternPackageFilter : public RPackageFilter {
       Component                   // package component (e.g. main)
    } DepType;
 
-   
+
  protected:
    struct Pattern {
       DepType where;
@@ -126,14 +126,14 @@ class RPatternPackageFilter : public RPackageFilter {
         vector<regex_t *> regexps;
    };
    vector<Pattern> _patterns;
-   
+
    bool and_mode; // patterns are applied in "AND" mode if true, "OR" if false
 
    inline bool filterName(Pattern pat, RPackage *pkg);
    inline bool filterVersion(Pattern pat, RPackage *pkg);
    inline bool filterDescription(Pattern pat, RPackage *pkg);
    inline bool filterMaintainer(Pattern pat, RPackage *pkg);
-   inline bool filterDepends(Pattern pat, RPackage *pkg, 
+   inline bool filterDepends(Pattern pat, RPackage *pkg,
 			     pkgCache::Dep::DepType filterType);
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
@@ -144,25 +144,25 @@ class RPatternPackageFilter : public RPackageFilter {
 
    static const char *TypeName[];
 
-   RPatternPackageFilter() : and_mode(true) {};
+   RPatternPackageFilter() : and_mode(true) {}
    RPatternPackageFilter(RPatternPackageFilter &f);
    virtual ~RPatternPackageFilter();
 
-   inline virtual void reset() { clear(); };
+   inline virtual void reset() { clear(); }
 
-   inline virtual const char *type() { return RPFPattern; };
+   inline virtual const char *type() { return RPFPattern; }
 
    void addPattern(DepType type, string pattern, bool exclusive);
-   inline int count() { return _patterns.size(); };
+   inline int count() { return _patterns.size(); }
    inline void getPattern(int index, DepType &type, string &pattern,
                           bool &exclusive) {
       type = _patterns[index].where;
       pattern = _patterns[index].pattern;
       exclusive = _patterns[index].exclusive;
-   };
+   }
    void clear();
-   bool getAndMode() { return and_mode; };
-   void setAndMode(bool b) { and_mode=b; };
+   bool getAndMode() { return and_mode; }
+   void setAndMode(bool b) { and_mode=b; }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -175,7 +175,7 @@ extern const char *RPFStatus;
 class RStatusPackageFilter : public RPackageFilter {
 
    protected:
-      
+
    int _status;
 
    public:
@@ -201,13 +201,13 @@ class RStatusPackageFilter : public RPackageFilter {
    };
 
    RStatusPackageFilter() : _status(~0)
-   {};
-   inline virtual void reset() { _status = ~0; };
+   {}
+   inline virtual void reset() { _status = ~0; }
 
-   inline virtual const char *type() { return RPFStatus; };
+   inline virtual const char *type() { return RPFStatus; }
 
-   inline void setStatus(int status) { _status = status; };
-   inline int status() { return _status; };
+   inline void setStatus(int status) { _status = status; }
+   inline int status() { return _status; }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -221,11 +221,11 @@ class RPriorityPackageFilter:public RPackageFilter {
 
    public:
 
-   RPriorityPackageFilter()  {};
+   RPriorityPackageFilter()  {}
 
-   inline virtual void reset() {};
+   inline virtual void reset() {}
 
-   inline virtual const char *type() { return RPFPriority; };
+   inline virtual const char *type() { return RPFPriority; }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -249,25 +249,25 @@ class RReducedViewPackageFilter : public RPackageFilter {
 
    public:
 
-   RReducedViewPackageFilter() : _enabled(false) {};
+   RReducedViewPackageFilter() : _enabled(false) {}
    ~RReducedViewPackageFilter();
 
-   inline virtual void reset() { _hide.clear(); };
+   inline virtual void reset() { _hide.clear(); }
 
-   inline virtual const char *type() { return RPFReducedView; };
+   inline virtual const char *type() { return RPFReducedView; }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
    virtual bool write(ofstream &out, string pad);
 
-   void enable() { _enabled = true; };
-   void disable() { _enabled = false; };
+   void enable() { _enabled = true; }
+   void disable() { _enabled = false; }
 };
 
 extern const char *RPFFile;
 
 class RFilePackageFilter : public RPackageFilter {
-   
+
    protected:
 
    string filename;
@@ -275,11 +275,11 @@ class RFilePackageFilter : public RPackageFilter {
 
    public:
 
-   RFilePackageFilter() {};
-   virtual ~RFilePackageFilter() {};
+   RFilePackageFilter() {}
+   virtual ~RFilePackageFilter() {}
 
-   inline virtual void reset() {};
-   inline virtual const char *type() { return RPFFile; };
+   inline virtual void reset() {}
+   inline virtual const char *type() { return RPFFile; }
 
    bool addFile(string file);
 
@@ -296,7 +296,7 @@ struct RFilter {
    RFilter()
       :   section(), pattern(), status(),
           priority(), reducedview(), preset()
-   {};
+   {}
 
    void setName(string name);
    string getName();

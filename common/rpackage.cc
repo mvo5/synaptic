@@ -1,17 +1,17 @@
 /* rpackage.cc - wrapper for accessing package information
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002-2013 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
- * 
+ *
  * Portions Taken from Gnome APT
  *   Copyright (C) 1998 Havoc Pennington <hp@pobox.com>
- * 
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -125,7 +125,7 @@ const char *RPackage::srcPackage()
       _srcPkg = parser.SourcePkg().empty() ? name() : parser.SourcePkg();
       return _srcPkg.c_str();
    }
- 
+
    return name();
 }
 
@@ -300,7 +300,7 @@ string RPackage::findTagFromPkgRecord(const char *tag)
       // add +1 to ensure we have the double lineline in the buffer
       if (start && sec.Scan(start, len+1))
 	 return sec.FindS(tag);
-   } 
+   }
 
    return string();
 }
@@ -404,11 +404,11 @@ int RPackage::getFlags()
 }
 
 const char* RPackage::name()
-{ 
+{
 #ifdef WITH_APT_MULTIARCH_SUPPORT
    return fullname.c_str();
 #else
-   const char *s = _package->Name(); 
+   const char *s = _package->Name();
    if (s == NULL)
       return "";
    return s;
@@ -520,7 +520,7 @@ vector<DepInformation> RPackage::enumRDeps()
 
       // HACK: we (ab)use the DepType for the dependency type,
       //       but add our own RDepends type that is always the
-      //       last element of DepTypeStr[] 
+      //       last element of DepTypeStr[]
       // FIXME: make this less hacky
       int nr_elements = sizeof(DepTypeStr)/sizeof(char*);
       dep.type = (pkgCache::Dep::DepType)(nr_elements-1);
@@ -578,7 +578,7 @@ bool RPackage::enumAvailDeps(const char *&type, const char *&what,
       return false;
 
    _depI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal    
+   // uninitialized but doesn't matter, they just have to be equal
    _depStart = _depEnd;
 
    return nextDeps(type, what, pkg, which, summary, satisfied);
@@ -599,7 +599,7 @@ vector<RPackage *> RPackage::getInstalledDeps()
       return deps;
 
    _depI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal    
+   // uninitialized but doesn't matter, they just have to be equal
 
    pkgCache::DepIterator depIter = _depI;
    while (!depIter.end()) {
@@ -685,7 +685,7 @@ string RPackage::showWhyInstBroken()
 			// TRANSLATORS: dependency error message, example:
 			// "apt 0.5.4 but it is not installable"
                         ioprintf(out, _("\t%s %s but it is not installable"),
-                                 Start.TargetPkg().Name(), 
+                                 Start.TargetPkg().Name(),
 				 requiredVersion.c_str());
                      else
 			// TRANSLATORS: dependency error message, example:
@@ -753,7 +753,7 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
    if(useCanidateVersion || Cur.end())
       Cur = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
-   // no information found 
+   // no information found
    if(Cur.end())
       return deps;
 
@@ -808,7 +808,7 @@ bool RPackage::isTrusted()
       return false;
    }
    pkgSourceList *Sources=_lister->getCache()->list();
-   std::map<pkgCache::PkgFileIterator, pkgIndexFile*>::iterator it;   
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile*>::iterator it;
    for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++)
    {
       pkgIndexFile *Index;
@@ -833,16 +833,16 @@ bool RPackage::isTrusted()
       if (Index->IsTrusted())
          return true;
    }
-   
+
    return false;
 }
 #else
 // with apt-authentication we always trust that the package come from
 // a trusted source
-bool RPackage::isTrusted() 
-{ 
-   return true; 
-};
+bool RPackage::isTrusted()
+{
+   return true;
+}
 #endif
 
 bool RPackage::wouldBreak()
@@ -932,9 +932,9 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    descr+=name();
 
    string verstr;
-   if(availableVersion() != NULL) 
+   if(availableVersion() != NULL)
       verstr = availableVersion();
-   
+
    if(verstr.find(':')!=verstr.npos)
       verstr=string(verstr, verstr.find(':')+1);
    char uri[512];
@@ -955,7 +955,7 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    return filename;
 }
 
-string RPackage::getChangelogURI() 
+string RPackage::getChangelogURI()
 {
    char uri[512];
    //FIXME: get the supportedOrigins from pkgStatus
@@ -974,9 +974,9 @@ string RPackage::getChangelogURI()
          prefix=std::string("lib")+srcpkg[3];
 
       string verstr;
-      if(availableVersion() != NULL) 
+      if(availableVersion() != NULL)
          verstr = availableVersion();
-      
+
       if(verstr.find(':')!=verstr.npos)
          verstr=string(verstr, verstr.find(':')+1);
 
@@ -990,7 +990,7 @@ string RPackage::getChangelogURI()
        string pkgfilename = findTagFromPkgRecord("Filename");
        pkgfilename = pkgfilename.substr(0, pkgfilename.find_last_of('.')) + ".changelog";
        vector<string> origin_urls = getCandidateOriginSiteUrls();
-       if (origin_urls.size() > 0) 
+       if (origin_urls.size() > 0)
           snprintf(uri,512,"http://%s/%s",
                    origin_urls[0].c_str(),
                    pkgfilename.c_str());
@@ -1093,7 +1093,7 @@ void RPackage::setPinned(bool flag)
       out << "Package: " << name() << endl;
       // if the package is not installed, we pin it to the available version
       // and prevent installation of this package this way
-      if(installedVersion() != NULL) 
+      if(installedVersion() != NULL)
 	 out << "Pin: version " << installedVersion() << endl;
       else
 	 out << "Pin: version " << " 0.0 " << endl;
@@ -1235,11 +1235,11 @@ bool RPackage::setVersion(string verTag)
 
    return true;
 }
- 
-void RPackage::unsetVersion() 
-{ 
+
+void RPackage::unsetVersion()
+{
    //cout << "set version to " << _defaultCandVer << endl;
-   setVersion(_defaultCandVer); 
+   setVersion(_defaultCandVer);
    _boolFlags &= ~FOverrideVersion;
 }
 
@@ -1535,7 +1535,7 @@ _searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
    for(Ver = Pkg->VersionList();!Ver.end();Ver++) {
       for(VF = Ver.FileList();!VF.end(); VF++) {
 	 for(PF = VF.File(); !PF.end(); PF++) {
-	    if(!PF.end() && 
+	    if(!PF.end() &&
 	       PF.Label() && string(PF.Label()) == label &&
 	       PF.Origin() && string(PF.Origin()) == label &&
 	       PF.Archive() && PF.Archive() == release) {
@@ -1556,7 +1556,7 @@ string RPackage::getReleaseFileForOrigin(string label, string release)
    pkgCache::PkgFileIterator found = _searchPkgFileIter(_package, label, string(release));
    if (found.end())
       return "";
-   
+
    // search for the matching meta-index
    pkgSourceList *list = _lister->getCache()->list();
    if(list->FindIndex(found, index)) {

@@ -1,17 +1,17 @@
 /* rpackagestatus.h - wrapper for accessing packagestatus information
- * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
  *               2002-2008 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
- * 
+ *
  * Portions Taken from Gnome APT
  *   Copyright (C) 1998 Havoc Pennington <hp@pobox.com>
- * 
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -70,8 +70,8 @@ class RPackageStatus {
 
 
  public:
-   RPackageStatus() : markUnsupported(false) {};
-   virtual ~RPackageStatus() {};
+   RPackageStatus() : markUnsupported(false) {}
+   virtual ~RPackageStatus() {}
 
    // this reads the pixmaps and the colors
    virtual void init();
@@ -79,14 +79,14 @@ class RPackageStatus {
    // here we get the description for the States
    const char *getLongStatusString(int i) {
       return PackageStatusLongString[i];
-   };
+   }
    const char *getLongStatusString(RPackage *pkg) {
       return PackageStatusLongString[getStatus(pkg)];
-   };
+   }
 
    const char *getShortStatusString(int i) {
       return PackageStatusShortString[i];
-   };
+   }
 
    bool isSupported(RPackage *pkg);
 

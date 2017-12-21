@@ -1,13 +1,13 @@
 /* rpackagelister.h - package cache and list manipulation
- * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -88,9 +88,9 @@ class sortFunc {
    bool _ascent;
    T cmp;
  public:
-   sortFunc(bool ascent) : _ascent(ascent) {};
+   sortFunc(bool ascent) : _ascent(ascent) {}
    bool operator() (RPackage *x, RPackage *y) {
-      if(_ascent) 
+      if(_ascent)
 	 return cmp(x,y);
       else
 	 return cmp(y,x);
@@ -128,7 +128,7 @@ class RPackageLister {
    bool _updating;
 
    // all known packages (needed identifing "new" pkgs)
-   set<string> packageNames; 
+   set<string> packageNames;
 
    bool _cacheValid;            // is the cache valid?
 
@@ -180,7 +180,7 @@ class RPackageLister {
    vector<RPackageView *> _views;
    RPackageView *_selectedView;
    RPackageStatus _pkgStatus;
-   
+
    void applyInitialSelection();
 
    bool lockPackageCache(FileFd &lock);
@@ -217,7 +217,7 @@ class RPackageLister {
 
    void sortPackages(listSortMode mode) {
       sortPackages(_viewPackages, mode);
-   };
+   }
 
    void setView(unsigned int index);
    vector<string> getViews();
@@ -228,36 +228,36 @@ class RPackageLister {
 
    // this needs a different name, something like refresh
    void reapplyFilter();
-   
-   // refresh view 
+
+   // refresh view
    void refreshView();
 
    // is is exposed for the stuff like filter manager window
-   RPackageViewFilter *filterView() { return _filterView; };
-   RPackageViewSearch *searchView() { return _searchView; };
+   RPackageViewFilter *filterView() { return _filterView; }
+   RPackageViewSearch *searchView() { return _searchView; }
 
-   // find 
+   // find
    int findPackage(const char *pattern);
    int findNextPackage();
 
-   const vector<RPackage *> &getPackages() { return _packages; };
-   const vector<RPackage *> &getViewPackages() { return _viewPackages; };
-   RPackage *getPackage(int index) { return _packages.at(index); };
-   RPackage *getViewPackage(int index) { return _viewPackages.at(index); };
+   const vector<RPackage *> &getPackages() { return _packages; }
+   const vector<RPackage *> &getViewPackages() { return _viewPackages; }
+   RPackage *getPackage(int index) { return _packages.at(index); }
+   RPackage *getViewPackage(int index) { return _viewPackages.at(index); }
    RPackage *getPackage(pkgCache::PkgIterator &pkg);
    RPackage *getPackage(string name);
    int getPackageIndex(RPackage *pkg);
    int getViewPackageIndex(RPackage *pkg);
 
-   int packagesSize() { return _packages.size(); };
-   int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); };
+   int packagesSize() { return _packages.size(); }
+   int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); }
 
    void getStats(int &installed, int &broken, int &toInstall,
 		 int &toRemove, double &sizeChange);
 
    void getSummary(int &held, int &kept, int &essential,
-                   int &toInstall, int &toReInstall, int &toUpgrade, 
-		   int &toRemove,  int &toDowngrade, 
+                   int &toInstall, int &toReInstall, int &toUpgrade,
+		   int &toRemove,  int &toDowngrade,
 		   int &unAuthenticated,  double &sizeChange);
 
 
@@ -291,7 +291,7 @@ class RPackageLister {
                         vector<RPackage *> &toRemove,
                         vector<RPackage *> &toDowngrade,
 			vector<RPackage *> &notAuthenticated,
-                        const vector<RPackage *> &exclude, 
+                        const vector<RPackage *> &exclude,
                         bool sorted = true);
 
    // open (lock if run as root)
@@ -313,19 +313,19 @@ class RPackageLister {
       if(_progMeter != NULL)
 	 delete _progMeter;
       _progMeter = progMeter;
-   };
+   }
 
    void setUserDialog(RUserDialog *dialog) {
       _userDialog = dialog;
-   };
+   }
 
-   // policy stuff                             
+   // policy stuff
    vector<string> getPolicyArchives(bool filenames_only=false) {
       if (_cacheValid)
          return _cache->getPolicyArchives(filenames_only);
       else
          return vector<string>();
-   };
+   }
 
    // multiarch
    bool isMultiarchSystem();
@@ -347,7 +347,7 @@ class RPackageLister {
    bool readSelections(istream &in);
    bool writeSelections(ostream &out, bool fullState);
 
-   RPackageCache* getCache() { return _cache; };
+   RPackageCache* getCache() { return _cache; }
 #ifdef WITH_EPT
    Xapian::Database* xapiandatabase() { return _xapianDatabase; }
    bool xapianIndexNeedsUpdate();

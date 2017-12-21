@@ -1,12 +1,12 @@
 /* ruserdialog.h
- * 
- * Copyright (c) 2003 Conectiva S/A 
- * 
+ *
+ * Copyright (c) 2003 Conectiva S/A
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -47,20 +47,20 @@ class RUserDialog {
 
    virtual bool confirm(const char *msg, bool defres = true) {
       return message(msg, DialogQuestion, ButtonsYesNo, defres);
-   };
+   }
 
    virtual bool proceed(const char *msg, bool defres = true) {
       return message(msg, DialogInfo, ButtonsOkCancel, defres);
-   };
+   }
 
    virtual bool warning(const char *msg, bool nocancel = true) {
       return nocancel ? message(msg, DialogWarning)
          : message(msg, DialogWarning, ButtonsOkCancel, false);
-   };
+   }
 
    virtual void error(const char *msg) {
       message(msg, DialogError);
-   };
+   }
 
    virtual bool showErrors();
 

@@ -1,13 +1,13 @@
 /* rpackageview.cc - Package sectioning system
- * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -95,9 +95,9 @@ void RPackageViewSections::addPackage(RPackage *package)
 {
    string str = trans_section(package->section());
    _view[str].push_back(package);
-};
+}
 
-RPackageViewStatus::RPackageViewStatus(vector<RPackage *> &allPkgs) 
+RPackageViewStatus::RPackageViewStatus(vector<RPackage *> &allPkgs)
    : RPackageView(allPkgs), markUnsupported(false)
 {
    if(_config->FindB("Synaptic::mark-unsupported",false)) {
@@ -111,7 +111,7 @@ RPackageViewStatus::RPackageViewStatus(vector<RPackage *> &allPkgs)
 	 supportedComponents.push_back(s);
       }
    }
-};
+}
 
 void RPackageViewStatus::addPackage(RPackage *pkg)
 {
@@ -119,7 +119,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    int flags = pkg->getFlags();
    string component = pkg->component();
    bool unsupported = false;
-   
+
    // we mark packages as unsupported if requested
    if(markUnsupported) {
       unsupported = true;
@@ -134,7 +134,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
    if(flags & RPackage::FInstalled) {
       if( !(flags & RPackage::FNotInstallable) && unsupported)
 	 str = _("Installed (unsupported)");
-      else 
+      else
 	 str = _("Installed");
    } else {
       if( unsupported )
@@ -164,7 +164,7 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
       str = _("Broken dependencies");
    else if (flags & RPackage::FNew)
       str = _("New in repository");
-   else if (flags & RPackage::FPinned) 
+   else if (flags & RPackage::FPinned)
       str = _("Pinned");
    else if ((flags & RPackage::FNotInstallable) &&
 	    !(flags & RPackage::FResidualConfig) &&
@@ -210,14 +210,14 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
    case RPatternPackageFilter::Maintainer:
       tmp = pkg->maintainer();
       break;
-   case RPatternPackageFilter::Depends: 
+   case RPatternPackageFilter::Depends:
       {
 	 vector<DepInformation> d = pkg->enumDeps(true);
 	 for(unsigned int i=0;i<d.size();i++)
 	    str += string(d[i].name);
-	 break; 
+	 break;
       }
-   case RPatternPackageFilter::Provides: 
+   case RPatternPackageFilter::Provides:
       {
 	 vector<string> d = pkg->provides();
 	 for(unsigned int i=0;i<d.size();i++)
@@ -228,7 +228,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
 
    if(tmp!=NULL)
       str = tmp;
-      
+
    // find the search pattern in the string "str"
    for(unsigned int i=0;i<_currentSearchItem.searchStrings.size();i++) {
       string searchString = _currentSearchItem.searchStrings[i];
@@ -252,7 +252,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
 
 bool RPackageViewSearch::setSelected(string name)
 {
-   // if we do not have the search name in the current view, 
+   // if we do not have the search name in the current view,
    // check if we only have it in the searchHistory and if so,
    // redo the search
    if (_view.find(name) == _view.end()) {
@@ -264,7 +264,7 @@ bool RPackageViewSearch::setSelected(string name)
 	 for(int i=0;i < (*J).second.searchStrings.size();i++)
 	    s += string(" ") + (*J).second.searchStrings[i];
 	 // do search but do not add to history (we have it there already)
-	 setSearch((*J).second.searchName, (*J).second.searchType, s, 
+	 setSearch((*J).second.searchName, (*J).second.searchType, s,
 		   // FIXME: re-use progress from setSearch()
 		   progress);
       }
@@ -284,9 +284,9 @@ vector<string> RPackageViewSearch::getSubViews()
    return subviews;
 }
 
-int RPackageViewSearch::setSearch(string aSearchName, 
-				  int type, 
-				  string searchString, 
+int RPackageViewSearch::setSearch(string aSearchName,
+				  int type,
+				  string searchString,
 				  OpProgress &searchProgress)
 {
    found = 0;
@@ -307,11 +307,11 @@ int RPackageViewSearch::setSearch(string aSearchName,
 
    // overwrite existing ones
    searchHistory[aSearchName] =  _currentSearchItem;
-   
+
    // setup search progress (0 done, _all.size() in total, 1 subtask)
    searchProgress.OverallProgress(0, _all.size(), 1, _("Searching"));
    // reapply search when a new search strng is given
-   for(unsigned int i=0;i<_all.size();i++) 
+   for(unsigned int i=0;i<_all.size();i++)
      if(_all[i]) {
        searchProgress.Progress(i);
        addPackage(_all[i]);
@@ -321,7 +321,7 @@ int RPackageViewSearch::setSearch(string aSearchName,
 }
 //------------------------------------------------------------------
 
-RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs) 
+RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs)
    : RPackageView(allPkgs)
 {
    // restore the filters
@@ -353,8 +353,8 @@ int RPackageViewFilter::getFilterIndex(RFilter *filter)
 }
 
 
-RPackageViewFilter::iterator RPackageViewFilter::begin() 
-{ 
+RPackageViewFilter::iterator RPackageViewFilter::begin()
+{
 //    cout << "RPackageViewFilter::begin() " << _selectedName <<  endl;
 
    string name = _selectedName;
@@ -370,7 +370,7 @@ RPackageViewFilter::iterator RPackageViewFilter::begin()
       _selectedView = _view[name];
    }
 
-   return _selectedView.begin(); 
+   return _selectedView.begin();
 }
 
 void RPackageViewFilter::refresh()
@@ -395,14 +395,14 @@ void RPackageViewFilter::addPackage(RPackage *pkg)
    // nothing to do for now, may add some sort of caching later
 }
 
-const set<string>& RPackageViewFilter::getSections() 
-{ 
+const set<string>& RPackageViewFilter::getSections()
+{
    if(_sectionList.empty())
       for(unsigned int i=0;i<_all.size();i++)
 	 if(_all[i])
 	    _sectionList.insert(_all[i]->section());
-   return _sectionList; 
-};
+   return _sectionList;
+}
 
 
 void RPackageViewFilter::storeFilters()
@@ -586,7 +586,7 @@ void RPackageViewOrigin::addPackage(RPackage *package)
       // are ignored otherwise because they are available via some
       // other origin_url
       if (origin_url == "")
-      { 
+      {
          if (package->getFlags() & RPackage::FNotInstallable)
          {
             origin_url = _("Local");
@@ -616,24 +616,24 @@ void RPackageViewOrigin::addPackage(RPackage *package)
          subview = suite+"/"+component+" ("+origin_url+")";
          _view[subview].push_back(package);
       }
-      
+
       // see if we have versions that are higher than the candidate
       // (e.g. experimental/backports)
       for (pkgCache::VerIterator Ver = package->package()->VersionList();
            Ver.end() == false; Ver++)
       {
          pkgCache::VerFileIterator VF = Ver.FileList();
-         if ( (VF.end() == true) || (VF.File() == NULL) || 
+         if ( (VF.end() == true) || (VF.File() == NULL) ||
               (VF.File().Archive() == NULL) || (VF.File().Site() == NULL) )
             continue;
          // ignore versions that are lower or equal than the candidate
-         if (_system->VS->CmpVersion(Ver.VerStr(), 
+         if (_system->VS->CmpVersion(Ver.VerStr(),
                                      package->availableVersion()) <= 0)
             continue;
          // ignore "now"
          if(strcmp(VF.File().Archive(), "now") == 0)
             continue;
-         //std::cerr << "version.second: " << version.second 
+         //std::cerr << "version.second: " << version.second
          //          << " origin_str: " << suite << std::endl;
          string prefix = _("Not automatic: ");
          string suite = VF.File().Archive();
@@ -651,10 +651,10 @@ void RPackageViewArchitecture::addPackage(RPackage *package)
 
    // FIXME: add pseudo arch for packages only in one group arch
    //        but not the other
-   
+
 
    _view[arch].push_back(package);
-};
+}
 
 
 

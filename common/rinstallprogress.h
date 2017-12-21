@@ -45,14 +45,14 @@ class RInstallProgress {
 
    static std::string finishMsg;
    static std::string errorMsg;
-   static std::string incompleteMsg; 
+   static std::string incompleteMsg;
 
    virtual void startUpdate() {
-   };
+   }
    virtual void updateInterface() {
-   };
+   }
    virtual void finishUpdate() {
-   };
+   }
 
  public:
    // get a str feed to the user with the result of the install run
@@ -62,7 +62,7 @@ class RInstallProgress {
                                                 int numPackagesTotal = 0);
 
 
-   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {};
+   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {}
 };
 
 

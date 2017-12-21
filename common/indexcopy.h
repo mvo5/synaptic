@@ -4,7 +4,7 @@
 /* ######################################################################
 
    Index Copying - Aid for copying and verifying the index files
-   
+
    ##################################################################### */
                                                                         /*}}} */
 #ifndef INDEXCOPY_H
@@ -48,10 +48,10 @@ class PackageCopy:public IndexCopy {
    virtual bool RewriteEntry(FILE *Target, string File);
    virtual const char *GetFileName() {
       return "Packages";
-   };
+   }
    virtual const char *Type() {
       return "Package";
-   };
+   }
 
  public:
 };
@@ -63,10 +63,10 @@ class SourceCopy:public IndexCopy {
    virtual bool RewriteEntry(FILE *Target, string File);
    virtual const char *GetFileName() {
       return "Sources";
-   };
+   }
    virtual const char *Type() {
       return "Source";
-   };
+   }
 
  public:
 };

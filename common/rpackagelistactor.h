@@ -1,11 +1,11 @@
 /* rcacheactor.h
- * 
+ *
  * Copyright (c) 2003 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
- * 
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -46,23 +46,23 @@ class RPackageListActor : public RPackageObserver {
 
    virtual void notifyPreFilteredChange() {
       updateState();
-   };
+   }
 
    virtual void notifyPostFilteredChange();
-   virtual void notifyChange(RPackage *pkg) {};
+   virtual void notifyChange(RPackage *pkg) {}
 
    virtual void updateState() {
       _lastDisplayList = _lister->getPackages();
-   };
+   }
 
    RPackageListActor(RPackageLister *lister)
          : _lister(lister) {
       _lister->registerObserver(this);
-   };
+   }
 
    virtual ~RPackageListActor() {
       _lister->unregisterObserver(this);
-   };
+   }
 };
 
 

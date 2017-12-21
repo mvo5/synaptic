@@ -1,14 +1,14 @@
 /* rsource.h - access the sources.list file
- * 
+ *
  * Copyright (c) 1999 Patrick Cole <z@amused.net>
- *           (c) 2002 Synaptic development team      
- * 
+ *           (c) 2002 Synaptic development team
+ *
  * Author: Patrick Cole <z@amused.net>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -61,11 +61,11 @@ class SourcesList {
       bool SetURI(string);
 
       SourceRecord():Type(0), Sections(0), NumSections(0) {
-      };
+      }
       ~SourceRecord() {
          if (Sections)
             delete[]Sections;
-      };
+      }
       SourceRecord &operator=(const SourceRecord &);
    };
 
@@ -104,7 +104,7 @@ class SourcesList {
    bool UpdateVendors();
 
    SourcesList() {
-   };
+   }
    ~SourcesList();
 };
 

@@ -1,13 +1,13 @@
 /* rpackageview.h - Package sectioning system
- * 
- * Copyright (c) 2004 Conectiva S/A 
+ *
+ * Copyright (c) 2004 Conectiva S/A
  *               2004 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Gustavo Niemeyer
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -66,19 +66,19 @@ class RPackageView {
    vector<RPackage *> &_all;
 
  public:
-   RPackageView(vector<RPackage *> &allPackages): _all(allPackages) {};
-   virtual ~RPackageView() {};
+   RPackageView(vector<RPackage *> &allPackages): _all(allPackages) {}
+   virtual ~RPackageView() {}
 
-   bool hasSelection() { return _hasSelection; };
-   string getSelected() { return _selectedName; };
+   bool hasSelection() { return _hasSelection; }
+   string getSelected() { return _selectedName; }
    bool hasPackage(RPackage *pkg);
    virtual bool setSelected(string name);
 
-   void showAll() { 
-      _selectedView = _all; 
+   void showAll() {
+      _selectedView = _all;
       _hasSelection = false;
       _selectedName.clear();
-   };
+   }
 
    virtual vector<string> getSubViews();
 
@@ -87,8 +87,8 @@ class RPackageView {
 
    typedef vector<RPackage *>::iterator iterator;
 
-   virtual iterator begin() { return _selectedView.begin(); };
-   virtual iterator end() { return _selectedView.end(); };
+   virtual iterator begin() { return _selectedView.begin(); }
+   virtual iterator end() { return _selectedView.end(); }
 
    virtual void clear();
    virtual void clearSelection();
@@ -100,7 +100,7 @@ class RPackageView {
 
 class RPackageViewSections : public RPackageView {
  public:
-   RPackageViewSections(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   RPackageViewSections(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
 
    string getName() {
       return _("Sections");
@@ -111,34 +111,34 @@ class RPackageViewSections : public RPackageView {
 
 class RPackageViewAlphabetic : public RPackageView {
  public:
-   RPackageViewAlphabetic(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   RPackageViewAlphabetic(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
    string getName() {
       return _("Alphabetic");
-   };
+   }
 
    void addPackage(RPackage *package) {
       char letter[2] = { ' ', '\0' };
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
-   };
+   }
 };
 
 class RPackageViewArchitecture : public RPackageView {
  public:
-   RPackageViewArchitecture(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   RPackageViewArchitecture(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
    string getName() {
       return _("Architecture");
-   };
+   }
 
    void addPackage(RPackage *package);
 };
 
 class RPackageViewOrigin : public RPackageView {
  public:
-   RPackageViewOrigin(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {};
+   RPackageViewOrigin(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
    string getName() {
       return _("Origin");
-   };
+   }
 
    void addPackage(RPackage *package);
 };
@@ -154,7 +154,7 @@ class RPackageViewStatus:public RPackageView {
 
    string getName() {
       return _("Status");
-   };
+   }
 
    void addPackage(RPackage *package);
 };
@@ -173,15 +173,15 @@ class RPackageViewSearch : public RPackageView {
    bool xapianSearch();
 
  public:
- RPackageViewSearch(vector<RPackage *> &allPkgs) 
-    : RPackageView(allPkgs), found(0) {};
+ RPackageViewSearch(vector<RPackage *> &allPkgs)
+    : RPackageView(allPkgs), found(0) {}
 
-   int setSearch(string searchName, int type, string searchString, 
+   int setSearch(string searchName, int type, string searchString,
 		 OpProgress &searchProgress);
 
    string getName() {
       return _("Search History");
-   };
+   }
 
    // return search history here
    virtual vector<string> getSubViews();
@@ -190,7 +190,7 @@ class RPackageViewSearch : public RPackageView {
    void addPackage(RPackage *package);
 
    // no-op
-   virtual void refresh() {};
+   virtual void refresh() {}
 };
 
 
@@ -212,13 +212,13 @@ class RPackageViewFilter : public RPackageView {
    void makePresetFilters();
 
    RFilter* findFilter(string name);
-   unsigned int nrOfFilters() { return _filterL.size(); };
+   unsigned int nrOfFilters() { return _filterL.size(); }
    RFilter *findFilter(unsigned int index) {
       if (index > _filterL.size())
          return NULL;
       else
          return _filterL[index];
-   };
+   }
 
    // used by kynaptic
    int getFilterIndex(RFilter *filter);
@@ -232,11 +232,11 @@ class RPackageViewFilter : public RPackageView {
    virtual iterator begin();
 
    // we never need to clear because we build the view "on-demand"
-   virtual void clear() {clearSelection();};
+   virtual void clear() { clearSelection(); }
 
    string getName() {
       return _("Custom");
-   };
+   }
 
    void addPackage(RPackage *package);
 };

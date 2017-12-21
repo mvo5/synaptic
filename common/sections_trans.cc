@@ -1,6 +1,6 @@
 /* sections_trans.cc - translate debian sections into friendlier names
- *  (c) 2004 Michael Vogt 
- *  
+ *  (c) 2004 Michael Vogt
+ *
  */
 
 #include <libintl.h>
@@ -159,7 +159,7 @@ string trans_section(string sec)
       str = _("Restricted On Export");
       suffix = _("contrib");
    }
-   // if we have something like "contrib/web", make "contrib" the 
+   // if we have something like "contrib/web", make "contrib" the
    // suffix and translate it independently
    string::size_type n = str.find("/");
    if (n != string::npos) {

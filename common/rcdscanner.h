@@ -45,7 +45,7 @@ class RCDScanProgress {
  public:
    void setTotal(int total) {
       _total = total;
-   };
+   }
 
    virtual void update(string text, int current) = 0;
 };
@@ -107,7 +107,7 @@ class RCDScanner {
 
    RCDScanner(RUserDialog *userDialog)
  :   _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0) {
-   };
+   }
 };
 
 #endif

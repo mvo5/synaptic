@@ -28,7 +28,7 @@
 // information, and the original Synaptic process wouldn't be
 // aware about it.
 //
-// Very unfortunately, we *do* need to access stuff which is 
+// Very unfortunately, we *do* need to access stuff which is
 // declared as protected in the packagemanager.h header. To do
 // that, we need this awful hack. Make sure to include all headers
 // included by packagemanager.h before the hack, so that we reduce
@@ -51,7 +51,7 @@ class RPackageManager {
    protected:
 
    pkgPackageManager::OrderResult Res;
-   
+
    public:
 
    pkgPackageManager *pm;
@@ -59,19 +59,19 @@ class RPackageManager {
    pkgPackageManager::OrderResult DoInstallPreFork() {
       Res = pm->OrderInstall();
       return Res;
-   };
+   }
 #ifdef WITH_DPKG_STATUSFD
    pkgPackageManager::OrderResult DoInstallPostFork(int statusFd=-1) {
       return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
-   };
+   }
 #else
    pkgPackageManager::OrderResult DoInstallPostFork() {
       return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
-   };
+   }
 #endif
 
-   RPackageManager(pkgPackageManager *pm) : pm(pm) {};
-   
+   RPackageManager(pkgPackageManager *pm) : pm(pm) {}
+
 };
 
 #endif

@@ -49,27 +49,27 @@ class RCacheActor:public RCacheObserver {
 
    virtual void notifyCachePreChange() {
       updateState();
-   };
+   }
 
    virtual void notifyCachePostChange();
 
    virtual void notifyCacheOpen() {
-   };
+   }
 
    virtual void updateState() {
       delete _laststate;
       _laststate = new RPackageLister::pkgState;
       _lister->saveState(*_laststate);
-   };
+   }
 
    RCacheActor(RPackageLister *lister)
  :   _lister(lister), _laststate(0) {
       _lister->registerCacheObserver(this);
-   };
+   }
 
    virtual ~ RCacheActor() {
       _lister->unregisterCacheObserver(this);
-   };
+   }
 };
 
 class RCacheActorRecommends:public RCacheActor {
@@ -105,7 +105,7 @@ class RCacheActorRecommends:public RCacheActor {
          return true;
       }
       return false;
-   };
+   }
 
 
  public:

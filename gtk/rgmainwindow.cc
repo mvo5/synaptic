@@ -1272,16 +1272,17 @@ void RGMainWindow::buildInterface()
 //       gtk_widget_hide(widget);
 #endif
 
-   GtkWidget *box = GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "vbox_pkgdescr"));
-   GtkWidget *pkginfo = GTK_WIDGET(gtk_builder_get_object
+   // soc
+   GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "notebook_pkginfo"));
    if(_config->FindB("Synaptic::ShowAllPkgInfoInMain", false)) {
-      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), TRUE);
-      gtk_container_set_border_width(GTK_CONTAINER(box), 12);
+      gtk_widget_set_margin_top(notebook, 6);
+      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), TRUE);
+      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "button_details")));
    } else {
-      gtk_container_set_border_width(GTK_CONTAINER(box), 0);
-      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(pkginfo), FALSE);
+      gtk_widget_set_margin_top(notebook, 0);
+      gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), FALSE);
+      gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(_builder, "button_details")));
    }
 #ifndef HAVE_RPM
    gtk_widget_show(GTK_WIDGET(gtk_builder_get_object
@@ -2256,9 +2257,13 @@ void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
    GtkWidget *widget;
    // save new toolbar state
    me->_toolbarStyle = (GtkToolbarStyle) GPOINTER_TO_INT(data);
-   GtkWidget *toolbar = GTK_WIDGET(gtk_builder_get_object
-                                   (me->_builder, "toolbar_main"));
-   assert(toolbar);
+   GtkWidget *toolbar_main =
+         GTK_WIDGET(gtk_builder_get_object(me->_builder, "toolbar_main"));
+   GtkWidget *toolbar_search =
+         GTK_WIDGET(gtk_builder_get_object(me->_builder, "toolbar_search"));
+   assert(toolbar_main);
+   assert(toolbar_search);
+
    if (me->_toolbarStyle == TOOLBAR_HIDE) {
       widget = GTK_WIDGET(gtk_builder_get_object
                           (me->_builder, "hbox_button_toolbar"));
@@ -2269,7 +2274,8 @@ void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
                           (me->_builder, "hbox_button_toolbar"));
       gtk_widget_show(widget);
    }
-   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), me->_toolbarStyle);
+   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar_main), me->_toolbarStyle);
+   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar_search), me->_toolbarStyle);
 }
 
 void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)

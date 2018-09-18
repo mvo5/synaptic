@@ -227,7 +227,7 @@ RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
    _parentWindow = parent->window();
 }
 
-bool RGGtkBuilderUserDialog::init(const char *name)
+void RGGtkBuilderUserDialog::init(const char *name)
 {
    gchar *main_widget = NULL;
    guint builder_status;

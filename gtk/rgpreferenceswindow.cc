@@ -204,14 +204,18 @@ void RGPreferencesWindow::saveGeneral()
                                     (_mainWin->getGtkBuilder(),
                                      "notebook_pkginfo"));
    gtk_notebook_set_show_tabs(GTK_NOTEBOOK(notebook), newval);
-   GtkWidget *box = GTK_WIDGET(gtk_builder_get_object
-                               (_mainWin->getGtkBuilder(),
-                                "vbox_pkgdescr"));
+
    if(newval) {
-      gtk_container_set_border_width(GTK_CONTAINER(box), 6);
+      GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object
+                                     (_mainWin->getGtkBuilder(), "button_details"));
+      gtk_widget_hide(widget);
+      gtk_widget_set_margin_top(notebook, 6);
    } else {
+      GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object
+                                     (_mainWin->getGtkBuilder(), "button_details"));
+      gtk_widget_show(widget);
       gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), 0);
-      gtk_container_set_border_width(GTK_CONTAINER(box), 0);
+      gtk_widget_set_margin_top(notebook, 0);
    }
 
    // Ask to confirm changes also affecting other packages

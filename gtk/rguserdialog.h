@@ -75,7 +75,7 @@ class RGGtkBuilderUserDialog : public RGUserDialog
     GtkWidget *_dialog;
     GtkResponseType res;
     GtkBuilder *builder;
-    bool init(const char *name);
+    void init(const char *name);
 
  public:
     RGGtkBuilderUserDialog(RGWindow* parent);

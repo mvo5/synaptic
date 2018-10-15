@@ -227,9 +227,8 @@ RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
    _parentWindow = parent->window();
 }
 
-bool RGGtkBuilderUserDialog::init(const char *name)
+void RGGtkBuilderUserDialog::init(const char *name)
 {
-   gchar *filename = NULL;
    gchar *main_widget = NULL;
    guint builder_status;
    GError* error = NULL;
@@ -237,17 +236,16 @@ bool RGGtkBuilderUserDialog::init(const char *name)
    //cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
 
    builder = gtk_builder_new();
-   filename = g_strdup_printf("gtkbuilder/dialog_%s.ui", name);
+   std::string filename = std::string("gtkbuilder/dialog_")+name+std::string(".ui");
    main_widget = g_strdup_printf("dialog_%s", name);
    if (FileExists(filename)) {
-      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+      if (!gtk_builder_add_from_file (builder, filename.c_str(), &error)) {
          g_warning ("Couldn't load builder file: %s", error->message);
          g_error_free (error);
       }
    } else {
-      g_free(filename);
-      filename = g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "dialog_%s.ui", name);
-      if (!gtk_builder_add_from_file (builder, filename, &error)) {
+      filename = std::string(SYNAPTIC_GTKBUILDERDIR "dialog_") + name + std::string(".ui");
+      if (!gtk_builder_add_from_file (builder, filename.c_str(), &error)) {
          g_warning ("Couldn't load builder file: %s", error->message);
          g_error_free (error);
       }
@@ -275,7 +273,6 @@ bool RGGtkBuilderUserDialog::init(const char *name)
       }
    }
 
-   g_free(filename);
    g_free(main_widget);
 }
 

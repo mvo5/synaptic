@@ -42,13 +42,10 @@ docdir = $(datadir)/gnome/help/$(docname)/$(lang)
 # **************  You should not have to edit below this line  *******************
 xml_files = $(entities) $(docname).xml
 
-EXTRA_DIST = $(xml_files) $(omffile)
-CLEANFILES = omf_timestamp html_timestamp
+EXTRA_DIST = $(xml_files)
+CLEANFILES = html_timestamp
 
-# If the following file is in a subdir (like help/) you need to add that to the path
-include $(top_srcdir)/omf.make
-
-all: omf html
+all: html
 
 html: html_timestamp
 
@@ -73,7 +70,7 @@ app-dist-hook: html
 	  done \
 	fi
 
-install-data-local: omf 
+install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)
 	for file in $(xml_files); do \
 	  cp $(srcdir)/$$file $(DESTDIR)$(docdir); \
@@ -86,9 +83,7 @@ install-data-local: omf
 	  done \
 	fi
 
-install-data-hook: install-data-hook-omf
-
-uninstall-local: uninstall-local-doc uninstall-local-omf
+uninstall-local: uninstall-local-doc
 
 uninstall-local-doc:
 	-if test "$(figdir)"; then \

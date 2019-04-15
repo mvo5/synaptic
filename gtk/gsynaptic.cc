@@ -409,7 +409,14 @@ int main(int argc, char **argv)
 #endif
 #endif
 
-   gtk_init(&argc, &argv);
+   if (!gtk_init_check(&argc, &argv)) {
+      std::cout <<
+         _("Failed to initialize GTK.\n") <<
+         "\n" <<
+         _("Probably you're running Synaptic on Wayland with root permission.\n") <<
+         _("Please restart your session without Wayland, or run Synaptic without root permission\n");
+      exit(1);
+   };
    //XSynchronize(dpy, 1);
    
    // read the cmdline

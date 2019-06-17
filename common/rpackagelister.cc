@@ -56,6 +56,7 @@
 #include <apt-pkg/clean.h>
 #include <apt-pkg/version.h>
 #include <apt-pkg/update.h>
+#include <apt-pkg/upgrade.h>
 
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
@@ -540,7 +541,7 @@ bool RPackageLister::fixBroken()
 
 bool RPackageLister::upgrade()
 {
-   if (pkgAllUpgrade(*_cache->deps()) == false) {
+   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::FORBID_REMOVE_PACKAGES | APT::Upgrade::FORBID_INSTALL_NEW_PACKAGES) == false) {
       return _error->
          Error(_("Internal Error, AllUpgrade broke stuff. Please report."));
    }
@@ -559,7 +560,7 @@ bool RPackageLister::upgrade()
 
 bool RPackageLister::distUpgrade()
 {
-   if (pkgDistUpgrade(*_cache->deps()) == false) {
+   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::ALLOW_EVERYTHING) == false) {
       cout << _("dist upgrade Failed") << endl;
       return false;
    }

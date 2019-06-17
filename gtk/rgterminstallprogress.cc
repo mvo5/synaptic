@@ -42,6 +42,7 @@
 #include <sys/types.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/install-progress.h>
 #include <apt-pkg/pkgsystem.h>
 #include <cassert>
 #include <cstring>
@@ -244,7 +245,8 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
       memset( &new_act, 0, sizeof( new_act ) );
       new_act.sa_handler = SIG_IGN;
       sigaction( SIGPIPE, &new_act, NULL);
-      res = pm->DoInstallPostFork();
+      APT::Progress::PackageManagerProgressFd progress(-1);
+      res = pm->DoInstallPostFork(&progress);
       _exit(res);
    }
    // parent: assign pty to the vte terminal

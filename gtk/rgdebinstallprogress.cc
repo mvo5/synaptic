@@ -43,6 +43,7 @@
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/install-progress.h>
 #include <gtk/gtk.h>
 
 #include <unistd.h>
@@ -677,7 +678,8 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
       pipe(fd);
       ipc_send_fd(fd[0]); // send the read part of the pipe to the parent
 
-      res = pm->DoInstallPostFork(fd[1]);
+      APT::Progress::PackageManagerProgressFd progress(fd[1]);
+      res = pm->DoInstallPostFork(&progress);
 
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();

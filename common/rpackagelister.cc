@@ -55,6 +55,7 @@
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/clean.h>
 #include <apt-pkg/version.h>
+#include <apt-pkg/update.h>
 
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>

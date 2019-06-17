@@ -28,8 +28,6 @@ libsynaptic_a_SOURCES =\
 	rpackageview.h\
 	rcdscanner.cc\
 	rcdscanner.h\
-	indexcopy.cc\
-	indexcopy.h\
 	rpmindexcopy.cc \
 	rpmindexcopy.h \
 	raptoptions.cc \

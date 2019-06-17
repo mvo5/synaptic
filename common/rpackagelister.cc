@@ -1949,7 +1949,7 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    // md5sum check
    // first get the md5 of the candidate
    pkgDepCache *dcache = _cache->deps();
-   pkgCache::VerIterator ver = dcache->GetCandidateVer(*pkg->package());
+   pkgCache::VerIterator ver = dcache->GetCandidateVersion(*pkg->package());
    pkgCache::VerFileIterator Vf = ver.FileList(); 
    pkgRecords::Parser &Parse = _records->Lookup(Vf);
    string MD5 = Parse.MD5Hash();

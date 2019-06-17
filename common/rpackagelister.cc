@@ -1738,7 +1738,17 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
 
       lockPackageCache(lock);
 
-      pkgArchiveCleaner cleaner;
+      class SimpleCleaner : public pkgArchiveCleaner {
+#if APT_PKG_ABI >= 590
+         void Erase(int const dirfd, char const * const File, std::string const &Pkg, std::string const &Ver,struct stat const &St) override {
+            RemoveFileAt("Cleaner::Erase", dirfd, File);
+         }
+#else
+         void Erase(const char * File, std::string /*Pkg*/, std::string /*Ver*/, struct stat & /*St*/) override {
+            RemoveFile("Cleaner::Erase", File);
+         }
+#endif
+      } cleaner;
 
       bool res;
 

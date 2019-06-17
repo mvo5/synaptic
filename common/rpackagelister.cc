@@ -1952,13 +1952,13 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    pkgCache::VerIterator ver = dcache->GetCandidateVersion(*pkg->package());
    pkgCache::VerFileIterator Vf = ver.FileList(); 
    pkgRecords::Parser &Parse = _records->Lookup(Vf);
-   string MD5 = Parse.MD5Hash();
-   // then calc the md5 of the pkg
-   MD5Summation debMD5;
+   HashStringList hashes = Parse.Hashes();
+   // then calc the hashes of the pkg
+   Hashes debHashes(hashes);
    in.Seek(0);
-   debMD5.AddFD(in.Fd(),in.Size());
-   if(MD5 != debMD5.Result().Value()) {
-      cerr << "Ignoring " << pkgname << " MD5 does not match"<< endl;
+   debHashes.AddFD(in.Fd(),in.Size());
+   if(hashes != debHashes.GetHashStringList()) {
+      cerr << "Ignoring " << pkgname << " hashes does not match"<< endl;
       return false;
    }
       

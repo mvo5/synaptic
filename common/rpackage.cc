@@ -107,11 +107,14 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 
 const char *RPackage::section()
 {
-   const char *s = _package->Section();
-   if (s != NULL)
-      return s;
-   else
-      return _("Unknown");
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
+      const char *s = ver.Section();
+      if (s != NULL)
+         return s;
+   }
+
+   return _("Unknown");
 }
 
 const char *RPackage::srcPackage()
@@ -1447,7 +1450,11 @@ string RPackage::component()
    string res;
 #ifdef WITH_APT_AUTH
    // the apt-secure patch breaks File.Component
-   const char *s = _package->Section();
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   const char *s = NULL;
+   if (!ver.end())
+      s = ver.Section();
+
    if(s == NULL)
       return "";
 

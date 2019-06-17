@@ -408,12 +408,10 @@ bool RPackageLister::openCache()
 	 pkg->setPinned(true);
 
       // Gather list of sections.
-      if (I.Section())
-         sectionSet.insert(I.Section());
-#if 0 // may confuse users
-      else
-         cerr << "Package " << I.Name() << " has no section?!" << endl;
-#endif
+      for (auto Ver = I.VersionList(); !Ver.end(); Ver++) {
+         if (Ver.Section())
+            sectionSet.insert(Ver.Section());
+      }
    }
 
    // refresh the views

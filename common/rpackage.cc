@@ -918,7 +918,6 @@ void RPackage::setRemove(bool purge)
    Fix.Protect(*_package);
    Fix.Remove(*_package);
 
-   Fix.InstallProtect();
    Fix.Resolve(true);
 
    _depcache->SetReInstall(*_package, false);

@@ -1879,7 +1879,6 @@ bool RPackageLister::readSelections(istream &in)
       _lua->ResetCaches();
 #endif
       _progMeter->Done();
-      Fix.InstallProtect();
       Fix.Resolve(true);
 
       // refresh all views

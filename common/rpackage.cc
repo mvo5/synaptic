@@ -203,6 +203,15 @@ const char *RPackage::availableVersion()
    return State.CandidateVerIter(*_depcache).VerStr();
 }
 
+pkgCache::VerIterator RPackage::availableVersionIter()
+{
+   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+//    if (State.CandidateVer == 0)
+//       return NULL;
+   return State.CandidateVerIter(*_depcache);
+}
+
+
 const char *RPackage::priority()
 {
    pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
@@ -1003,7 +1012,9 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    string descr("Changelog for ");
    descr+=name();
 
-   string uri = getChangelogURI();
+   pkgCache::VerIterator Ver = availableVersionIter();
+   std::string uri = pkgAcqChangelog::URI(Ver);
+   
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
 
@@ -1011,6 +1022,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    //cerr << "**DEBUG** origin: " << origin() << endl;
    //cerr << "**DEBUG** uri: " << uri << endl;
    //cerr << "**DEBUG** filename: " << filename << endl;
+
 
    ofstream out(filename.c_str());
    if(fetcher->Run() == pkgAcquire::Failed) {
@@ -1023,7 +1035,10 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
       if (filestatus.st_size == 0) {
          out << "This change is not coming from a source that supports changelogs.\n" << endl;
          out << "Failed to fetch the changelog for " << name() << endl;
-         out << "URI was: " << uri << endl;
+         if (uri.empty())
+            out << "URI was empty" << endl;
+         else
+            out << "URI was: " << uri << endl;
       }
    };
    out.close();

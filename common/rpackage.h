@@ -202,6 +202,7 @@ class RPackage {
 
    // relative to version that would be installed
    const char *availableVersion();
+   pkgCache::VerIterator availableVersionIter();
    long availableInstalledSize();
    long availablePackageSize();
 

@@ -54,7 +54,6 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/tagfile.h>
 #include <apt-pkg/policy.h>
-#include <apt-pkg/sptr.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/cacheiterators.h>
 #include <apt-pkg/pkgcache.h>
@@ -108,11 +107,14 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 
 const char *RPackage::section()
 {
-   const char *s = _package->Section();
-   if (s != NULL)
-      return s;
-   else
-      return _("Unknown");
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
+      const char *s = ver.Section();
+      if (s != NULL)
+         return s;
+   }
+
+   return _("Unknown");
 }
 
 const char *RPackage::srcPackage()
@@ -916,7 +918,6 @@ void RPackage::setRemove(bool purge)
    Fix.Protect(*_package);
    Fix.Remove(*_package);
 
-   Fix.InstallProtect();
    Fix.Resolve(true);
 
    _depcache->SetReInstall(*_package, false);
@@ -1105,13 +1106,13 @@ void RPackage::setPinned(bool flag)
       stat(File.c_str(), &stat_buf);
       // create a tmp_pin file in the internal dir
       string filename = RStateDir() + "/.tmp_preferences";
-      FILE *out = fopen(filename.c_str(),"w");
-      if (out == NULL)
-         cerr << "error opening tmpfile: " << filename << endl;
+      FileFd out(filename, FileFd::WriteOnly | FileFd::Create | FileFd::Empty);
+      if (!out.IsOpen()) {
+         _error->DumpErrors();
+      }
       FileFd Fd(File, FileFd::ReadOnly);
       pkgTagFile TF(&Fd);
       if (_error->PendingError() == true) {
-         fclose(out);
          return;
       }
       pkgTagSection Tags;
@@ -1123,19 +1124,14 @@ void RPackage::setPinned(bool flag)
                      ("Invalid record in the preferences file, no Package header"));
             return;
          }
-         if (Name != name()) {
-            TFRewriteData tfrd;
-            tfrd.Tag = 0;
-            tfrd.Rewrite = 0;
-            tfrd.NewTag = 0;
-            TFRewrite(out, Tags, TFRewritePackageOrder, &tfrd);
-            fprintf(out, "\n");
-         }
+         if (Name != name())
+            Tags.Write(out, TFRewritePackageOrder, {});
+         out.Write("\n", 1);
       }
-      fflush(out);
+      out.Flush();
       rename(filename.c_str(), File.c_str());
       chmod(File.c_str(), stat_buf.st_mode);
-      fclose(out);
+      out.Close();
    }
 }
 
@@ -1448,7 +1444,11 @@ string RPackage::component()
    string res;
 #ifdef WITH_APT_AUTH
    // the apt-secure patch breaks File.Component
-   const char *s = _package->Section();
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   const char *s = NULL;
+   if (!ver.end())
+      s = ver.Section();
+
    if(s == NULL)
       return "";
 

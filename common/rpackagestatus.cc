@@ -199,7 +199,7 @@ bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res)
    t.Step(sec);
 
    // get the time_t form the string
-   if(!StrToTime(sec.FindS("Date"), release_date))
+   if(!RFC1123StrToTime(sec.FindS("Date").c_str(), release_date))
       return false;
 
    // if its not a supported package, return 0 

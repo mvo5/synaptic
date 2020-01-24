@@ -63,9 +63,9 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
 			     "Go to the repository dialog to correct the problem."));
 
    if(locking)
-      pkgMakeStatusCache(*_list, progress);
+      pkgCacheGenerator::MakeStatusCache(*_list, &progress, nullptr, false);
    else
-      pkgMakeStatusCache(*_list, progress, 0, true);
+      pkgCacheGenerator::MakeStatusCache(*_list, &progress, nullptr, true);
 
    if (_error->PendingError())
       return _error->

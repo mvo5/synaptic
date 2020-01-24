@@ -44,7 +44,7 @@
 #ifdef HAVE_RPM
 #include "rpmindexcopy.h"
 #else
-#include "indexcopy.h"
+#include <apt-pkg/indexcopy.h>
 #endif
 
 using namespace std;

@@ -55,6 +55,8 @@
 #include <apt-pkg/acquire-item.h>
 #include <apt-pkg/clean.h>
 #include <apt-pkg/version.h>
+#include <apt-pkg/update.h>
+#include <apt-pkg/upgrade.h>
 
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
@@ -408,12 +410,10 @@ bool RPackageLister::openCache()
 	 pkg->setPinned(true);
 
       // Gather list of sections.
-      if (I.Section())
-         sectionSet.insert(I.Section());
-#if 0 // may confuse users
-      else
-         cerr << "Package " << I.Name() << " has no section?!" << endl;
-#endif
+      for (auto Ver = I.VersionList(); !Ver.end(); Ver++) {
+         if (Ver.Section())
+            sectionSet.insert(Ver.Section());
+      }
    }
 
    // refresh the views
@@ -541,7 +541,7 @@ bool RPackageLister::fixBroken()
 
 bool RPackageLister::upgrade()
 {
-   if (pkgAllUpgrade(*_cache->deps()) == false) {
+   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::FORBID_REMOVE_PACKAGES | APT::Upgrade::FORBID_INSTALL_NEW_PACKAGES) == false) {
       return _error->
          Error(_("Internal Error, AllUpgrade broke stuff. Please report."));
    }
@@ -560,7 +560,7 @@ bool RPackageLister::upgrade()
 
 bool RPackageLister::distUpgrade()
 {
-   if (pkgDistUpgrade(*_cache->deps()) == false) {
+   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::ALLOW_EVERYTHING) == false) {
       cout << _("dist upgrade Failed") << endl;
       return false;
    }
@@ -1738,7 +1738,17 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
 
       lockPackageCache(lock);
 
-      pkgArchiveCleaner cleaner;
+      class SimpleCleaner : public pkgArchiveCleaner {
+#if APT_PKG_ABI >= 590
+         void Erase(int const dirfd, char const * const File, std::string const &Pkg, std::string const &Ver,struct stat const &St) override {
+            RemoveFileAt("Cleaner::Erase", dirfd, File);
+         }
+#else
+         void Erase(const char * File, std::string /*Pkg*/, std::string /*Ver*/, struct stat & /*St*/) override {
+            RemoveFile("Cleaner::Erase", File);
+         }
+#endif
+      } cleaner;
 
       bool res;
 
@@ -1881,7 +1891,6 @@ bool RPackageLister::readSelections(istream &in)
       _lua->ResetCaches();
 #endif
       _progMeter->Done();
-      Fix.InstallProtect();
       Fix.Resolve(true);
 
       // refresh all views
@@ -1940,16 +1949,16 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    // md5sum check
    // first get the md5 of the candidate
    pkgDepCache *dcache = _cache->deps();
-   pkgCache::VerIterator ver = dcache->GetCandidateVer(*pkg->package());
+   pkgCache::VerIterator ver = dcache->GetCandidateVersion(*pkg->package());
    pkgCache::VerFileIterator Vf = ver.FileList(); 
    pkgRecords::Parser &Parse = _records->Lookup(Vf);
-   string MD5 = Parse.MD5Hash();
-   // then calc the md5 of the pkg
-   MD5Summation debMD5;
+   HashStringList hashes = Parse.Hashes();
+   // then calc the hashes of the pkg
+   Hashes debHashes(hashes);
    in.Seek(0);
-   debMD5.AddFD(in.Fd(),in.Size());
-   if(MD5 != debMD5.Result().Value()) {
-      cerr << "Ignoring " << pkgname << " MD5 does not match"<< endl;
+   debHashes.AddFD(in.Fd(),in.Size());
+   if(hashes != debHashes.GetHashStringList()) {
+      cerr << "Ignoring " << pkgname << " hashes does not match"<< endl;
       return false;
    }
       

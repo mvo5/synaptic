@@ -31,6 +31,7 @@
 #include <iostream>
 #include <cstdio>
 #include <apt-pkg/error.h>
+#include <apt-pkg/install-progress.h>
 #ifdef HAVE_RPM
 #include <apt-pkg/configuration.h>
 #endif
@@ -99,7 +100,8 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
       close(fd[0]);
       close(fd[1]);
 
-      res = pm->DoInstallPostFork();
+      APT::Progress::PackageManagerProgressFd progress(-1);
+      res = pm->DoInstallPostFork(&progress);
       // dump errors into cerr (pass it to the parent process)	
       _error->DumpErrors();
       _exit(res);
@@ -124,7 +126,8 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    _child_id = fork();
 
    if (_child_id == 0) {
-      res = pm->DoInstallPostFork();
+      APT::Progress::PackageManagerProgressFd progress(-1);
+      res = pm->DoInstallPostFork(&progress);
       _exit(res);
    }
 #endif

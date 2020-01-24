@@ -25,6 +25,8 @@
 #define _RPACKAGECACHE_H_
 
 #include <map>
+#include <string>
+#include <vector>
 
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/sourcelist.h>
@@ -63,7 +65,7 @@ class RPackageCache {
 
    bool open(OpProgress &progress, bool lock=true);
 
-   vector<string> getPolicyArchives(bool filenames_only);
+   std::vector<std::string> getPolicyArchives(bool filenames_only);
 
    bool lock();
    void releaseLock();

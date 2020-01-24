@@ -116,7 +116,7 @@ AM_CONDITIONAL(WITH_LUA, test "$enable_scripts" != "no")
 
 DEB_HDRS=""
 AC_SUBST(DEB_HDRS)
-DEB_LIBS="-lapt-inst"
+AC_CHECK_LIB(apt-inst, main, [DEB_LIBS=-lapt-inst], [DEB_LIBS=])
 AC_SUBST(DEB_LIBS)
 
 dnl Checks for header files.

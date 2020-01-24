@@ -17,6 +17,12 @@ struct mysort {
       return x.first < y.first;
 }};
 
+static void onColWidthChange(GObject *w, GParamSpec *pspec, gpointer data) {
+   int width;
+   g_object_get (G_OBJECT (w), "width", &width, NULL);
+   _config->Set((char*)data, width);
+}
+
 void setupTreeView(GtkWidget *treeview)
 {
   GtkCellRenderer *renderer;
@@ -71,6 +77,7 @@ void setupTreeView(GtkWidget *treeview)
    pos = _config->FindI("Synaptic::nameColumnPos", 2);
    visible = _config->FindI("Synaptic::nameColumnVisible", true);
    if (visible) {
+      const char *columnSizeName = "Synaptic::packageColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -81,7 +88,9 @@ void setupTreeView(GtkWidget *treeview)
                                                   "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 200);
+      int width = std::max(_config->FindI(columnSizeName, 200), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
 
       //gtk_tree_view_insert_column(GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
@@ -93,6 +102,7 @@ void setupTreeView(GtkWidget *treeview)
    pos = _config->FindI("Synaptic::sectionColumnPos", 2);
    visible = _config->FindI("Synaptic::sectionColumnVisible", false);
    if (visible) {
+      const char *columnSizeName = "Synaptic::sectionColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -103,7 +113,9 @@ void setupTreeView(GtkWidget *treeview)
                                                   "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 130);
+      int width = std::max(_config->FindI(columnSizeName, 130), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
       //gtk_tree_view_insert_column (GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_sort_column_id(column, SECTION_COLUMN);
@@ -114,6 +126,7 @@ void setupTreeView(GtkWidget *treeview)
    pos = _config->FindI("Synaptic::componentColumnPos", 3);
    visible = _config->FindI("Synaptic::componentColumnVisible", false);
    if (visible) {
+      const char *columnSizeName = "Synaptic::componentColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -124,7 +137,10 @@ void setupTreeView(GtkWidget *treeview)
                                                   "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 130);
+      gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
+      int width = std::max(_config->FindI(columnSizeName, 130), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
       //gtk_tree_view_insert_column (GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_sort_column_id(column, COMPONENT_COLUMN);
@@ -136,6 +152,7 @@ void setupTreeView(GtkWidget *treeview)
    pos = _config->FindI("Synaptic::instVerColumnPos", 4);
    visible = _config->FindI("Synaptic::instVerColumnVisible", true);
    if (visible) {
+      const char *columnSizeName = "Synaptic::instVerColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -146,7 +163,9 @@ void setupTreeView(GtkWidget *treeview)
                                                   "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 130);
+      int width = std::max(_config->FindI(columnSizeName, 130), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
       //gtk_tree_view_insert_column (GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_sort_column_id(column, INSTALLED_VERSION_COLUMN);
@@ -157,6 +176,7 @@ void setupTreeView(GtkWidget *treeview)
    pos = _config->FindI("Synaptic::availVerColumnPos", 5);
    visible = _config->FindI("Synaptic::availVerColumnVisible", true);
    if (visible) {
+      const char *columnSizeName = "Synaptic::availVerColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -167,7 +187,9 @@ void setupTreeView(GtkWidget *treeview)
                                                   "background-rgba",
                                                   COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 130);
+      int width = std::max(_config->FindI(columnSizeName, 130), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
       //gtk_tree_view_insert_column (GTK_TREE_VIEW (treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_sort_column_id(column, AVAILABLE_VERSION_COLUMN);
@@ -178,6 +200,7 @@ void setupTreeView(GtkWidget *treeview)
    visible = _config->FindI("Synaptic::instSizeColumnVisible", false);
    if (visible) {
       /* Installed size */
+      const char *columnSizeName = "Synaptic::instSizeColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -188,7 +211,10 @@ void setupTreeView(GtkWidget *treeview)
                                                         "background-rgba",
                                                         COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 80);
+      int width = std::max(_config->FindI(columnSizeName, 80), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
+
       //gtk_tree_view_insert_column (GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_resizable(column, TRUE);
@@ -199,6 +225,7 @@ void setupTreeView(GtkWidget *treeview)
    visible = _config->FindI("Synaptic::downloadSizeColumnVisible", false);
    if (visible) {
       /* Download size */
+      const char *columnSizeName = "Synaptic::downloadSizeColumnWidth";
       renderer = gtk_cell_renderer_text_new();
       gtk_cell_renderer_text_set_fixed_height_from_font(GTK_CELL_RENDERER_TEXT
                                                         (renderer), 1);
@@ -209,7 +236,9 @@ void setupTreeView(GtkWidget *treeview)
                                                         "background-rgba",
                                                         COLOR_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
-      gtk_tree_view_column_set_fixed_width(column, 80);
+      int width = std::max(_config->FindI(columnSizeName, 80), 20);
+      gtk_tree_view_column_set_fixed_width(column, width);
+      g_signal_connect(G_OBJECT(column), "notify::width", G_CALLBACK(onColWidthChange), (gpointer)columnSizeName);
       //gtk_tree_view_insert_column (GTK_TREE_VIEW(treeview), column, pos);
       all_columns.push_back(std::pair<int, GtkTreeViewColumn *>(pos, column));
       gtk_tree_view_column_set_resizable(column, TRUE);

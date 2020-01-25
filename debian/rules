@@ -13,10 +13,10 @@ CONFIGURE_FLAGS= --prefix=/usr \
 	      $(MULTIARCH)
 
 %:
-	dh $@ --with autoreconf $(DHFLAGS)
+	dh $@ $(DHFLAGS)
 
 override_dh_auto_configure:
-	dh_auto_configure $(DHFLAGS) -- $(CONFIGURE_FLAGS) 
+	dh_auto_configure $(DHFLAGS) -- $(CONFIGURE_FLAGS)
 
 override_dh_auto_install:
 	dh_auto_install $(DHFLAGS)
@@ -30,7 +30,7 @@ override_dh_auto_install:
 override_dh_installman:
 	dh_installman -psynaptic man/synaptic.es.8 man/synaptic.fr.8 man/synaptic.hr.8 man/synaptic.ja.8 man/synaptic.pt_BR.8 man/synaptic.ru.8 man/synaptic.tr.8
 
-# FIXME: use quilt instead - quilt has a nice concept of 
+# FIXME: use quilt instead - quilt has a nice concept of
 #        debian/patches/{ubuntu,debian}.series but that does not
 #        work for native packages :/
 

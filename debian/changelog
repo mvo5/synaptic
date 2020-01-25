@@ -1,8 +1,42 @@
-synaptic (0.90) UNRELEASED; urgency=medium
+synaptic (0.90) unstable; urgency=medium
 
-  * ported to apt 1.9
+  [ Julian Andres Klode ]
+  * Update config.h.in and INSTALL file
+  * Remove obsolete <apt-pkg/sptr.h> include
+  * Use RFC1123StrToTime instead of StrToTime
+  * Use VerIterator::Section() instead of PkgIterator::Section()
+  * Use APT::Progress::PackageManager subclass instead of fd
+  * Remove calls to no-op InstallProtect()
+  * Port code from TFRewrite to pkgTagSection::Write
+  * Fix un-namespaced use of std::vector and std::string
+  * Port pkgMakeStatusCache to pkgCacheGenerator::MakeStatusCache
+  * Add missing #include <apt-pkg/update.h>
+  * Port to APT::Upgrade::Upgrade
+  * Port to a subclass of pkgArchiveCleaner that actually removes
+  * Port GetCandidateVer to GetCandidateVersion
+  * Swich from MD5 to Hashes
+  * Use apt-pkg's indexcopy, it was merged in 2005
+  * CurrentSize and co in acquire worker moved to CurrentItem
+  * configure.in: apt-inst is optional
 
- -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 24 Jan 2020 19:51:22 +0200
+  [ Reuben ]
+  * Use pkgAcqChangelog to get changelog URI.
+  * Remove obsolete getChangelogURI() function
+
+  [ Michael Vogt ]
+  * rgpkgtreeview.cc: save column width changes in config
+
+  [ Debian Janitor ]
+  * Trim trailing whitespace.
+  * Use secure URI in Homepage field.
+  * debian/control: Add Vcs-Browser field
+  * Bump debhelper from deprecated 8 to 12.
+  * Set debhelper-compat version in Build-Depends.
+  * Drop unnecessary dependency on dh-autoreconf.
+  * Use canonical URL in Vcs-Git.
+  * Fix day-of-week for changelog entries 0.62.1, 0.37-1.
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 25 Jan 2020 15:15:30 +0200
 
 synaptic (0.84.8) unstable; urgency=medium
 

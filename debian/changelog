@@ -1,3 +1,9 @@
+synaptic (0.84.9) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Sat, 25 Jan 2020 01:35:46 +0000
+
 synaptic (0.84.8) unstable; urgency=medium
 
   * debian/control:
@@ -129,7 +135,7 @@ synaptic (0.84) unstable; urgency=medium
     Thanks to Anders Jonsson (Closes: 793597)
 
   [ muzena ]
-  * Make croatian manual, translate hr.po... 
+  * Make croatian manual, translate hr.po...
 
   [ rezso ]
   * Update Hungarian translation
@@ -266,7 +272,7 @@ synaptic (0.81.3) unstable; urgency=low
   [ Alex Henrie ]
   * lp:~alexhenrie24/synaptic/synaptic:
      - fix expand in the properties window
-  
+
   [ Gabor Kelemen ]
   * lp:~kelemeng/synaptic/bug1327956:
     - fix proxy auth config (LP: #1327956)
@@ -291,7 +297,7 @@ synaptic (0.81.1) unstable; urgency=low
     fully ready (closes: #741154)
   * add iceweasel as fallback if xdg-open fails (closes: #742166)
   * po/pl.po:
-    - updated, thanks to Emil Nowak 
+    - updated, thanks to Emil Nowak
   * gtk/rgrepositorywin.cc:
     - do not crash when a sources.list entry is removed (closes: #720605)
   * gtk/rgfiltermanager.cc:
@@ -307,28 +313,28 @@ synaptic (0.81) unstable; urgency=low
 
   [ Jonathan Dowland ]
   * Support parallel building.
-  
+
   [ Luke Drummond ]
   * fix crash when no SUDO_USER is set (closes: #725885, #728714)
 
   [ Hans Joachim Desserud ]
-  * lp:~hjd/synaptic/bug1242219: 
+  * lp:~hjd/synaptic/bug1242219:
     fix "Untranslatable '_Contents' string in help menu (LP: #1242219)
-  
+
   [ Rafaël Carré ]
   * po/fr.po:
     - fix typo in "%d packages will be upgraded\n" string
-  
+
   [ Igor Pashev ]
   * portability fixes for rindex/bzero/fcntl (closes: #734473)
     to make it build on "dyson"
-  
+
   [ Michael Vogt ]
   * replace rindex() with strrchr() (thanks to Igor Pashev for the
     suggestion)
-  * change refreshTable() code to avoid "jumping" around on the 
+  * change refreshTable() code to avoid "jumping" around on the
     screen when a package gets marked
-  
+
  -- Michael Vogt <mvo@debian.org>  Tue, 18 Mar 2014 21:02:46 +0100
 
 synaptic (0.80.4) unstable; urgency=low
@@ -344,14 +350,14 @@ synaptic (0.80.4) unstable; urgency=low
 synaptic (0.80.3) unstable; urgency=low
 
   * gtk/rgmainwindow.cc, gtk/gtkbuilder/window_main.ui:
-    - workaround "Gtk-WARNING **: GtkNotebook 0x998580 is mapped but visible 
+    - workaround "Gtk-WARNING **: GtkNotebook 0x998580 is mapped but visible
       child GtkLabel 0x9ac140 is not mapped" by setting "show_tabs=True" in
       the GtkBuilder file and then setting it in buildInterface() again
       (closes: #721539)
     - fix warning" Gtk-CRITICAL **: gtk_tree_row_reference_new_proxy:
       assertion `path->depth > 0' failed" (closes: #721539)
   * gtk/rgpreferenceswindow.{cc,h}:
-    - make button colored in the preferencess window again, this broke 
+    - make button colored in the preferencess window again, this broke
       because gtk3 and gtk_widget_override_background() does not work
       (see gtk bug https://bugzilla.gnome.org/show_bug.cgi?id=656461)
 
@@ -396,8 +402,8 @@ synaptic (0.80~exp2) experimental; urgency=low
 
   [ Michael Vogt ]
   * po/de.po:
-    - fix typo, thanks to Zac Diggum 
-  
+    - fix typo, thanks to Zac Diggum
+
   [ Patrik Lundquist ]
   * common/rpackage.cc:
     - fix crash when srcPackage does not have a version
@@ -408,30 +414,30 @@ synaptic (0.80~exp2) experimental; urgency=low
 synaptic (0.80~exp1) experimental; urgency=low
 
   [ Robert Roth ]
-  * Disables typeahead in summary dialog, as it doesn't do anything, 
+  * Disables typeahead in summary dialog, as it doesn't do anything,
     so it's unnecesary (LP: #24319)
-  * Move up and Move down buttons in columns preferences changed to 
+  * Move up and Move down buttons in columns preferences changed to
     respect buttons_have_icons preference (LP: #66574)
-  * Set the title of the package properties dialog opened for the first 
-    time (it has not been set before, so it was synaptic the first time 
+  * Set the title of the package properties dialog opened for the first
+    time (it has not been set before, so it was synaptic the first time
     the dialog has been opened) (LP: #932495)
   * Added a reload button to the repositories changed dialog (LP: #78987)
-  * Updated the wording of the expander on the download progress dialog to 
+  * Updated the wording of the expander on the download progress dialog to
     Show individual files" instead of "Show for individual files"
     (LP: #301428)
-  * Fixed inconsistencies between column namings in column headers and 
+  * Fixed inconsistencies between column namings in column headers and
     column visibility preferences (LP: #335723)
-  * Linkified maintainer label in the package properties dialog 
+  * Linkified maintainer label in the package properties dialog
     when running as non-root (LP: #321380)
-  * Added package name in the warning scaring you about breaking your 
+  * Added package name in the warning scaring you about breaking your
     system (LP: #63974)
-  * Added name of the application (Synaptic Package Manager) in the 
-    titleless dialog shown when starting without administrative 
+  * Added name of the application (Synaptic Package Manager) in the
+    titleless dialog shown when starting without administrative
     privilegess (LP: #510261)
   * Improved filter editing checkbox tooltips (LP: #790420)
-  * Made all the property values from the package properties dialog 
+  * Made all the property values from the package properties dialog
     selectable (LP: #173464)
-  * Changed Package Properties accelerator from Ctrl+O to widely used 
+  * Changed Package Properties accelerator from Ctrl+O to widely used
     (nautilus, eog, evince etc) Alt+Enter (LP: #933554)
   * Use the synaptic icon from the user's icon theme, or fall back to
     the old one if the current theme does not provide a synaptic icon
@@ -440,24 +446,24 @@ synaptic (0.80~exp1) experimental; urgency=low
   * Removed log message from automatically installed item click
     (LP: #883984)
   * Fixed delete filter button not working caused by a typo in the
-    name of the button when getting it from the GtkBuilder object 
+    name of the button when getting it from the GtkBuilder object
     (LP: #779756)
   * Added suggests tasksel as with tasksel installed synaptic
     provides additional functionality (LP: #605186)
   * Fixes incorrect radiobutton handling in the proxy preferences
     (LP: #706262)
-  * Fixed incorrect status message when canceling 'Mark all available 
+  * Fixed incorrect status message when canceling 'Mark all available
     upgrades' feedback dialog (LP: #975578)
-  
+
   [ Michael Vogt ]
   * ensure external helpers are runs as the user uid
   * build for gtk3 and update build-depends
   * move software-propoerties-gtk into suggests
   * strip strings properly in a markings file, thanks to
-    Vassilis Palassopoulos (palasso) 
+    Vassilis Palassopoulos (palasso)
   * show source package name in the details (closes: #692528)
   * merged lp:~fitoschido/synaptic/es-redundancy:
-    - Remove empty es_ES .po files. Spanish translations are already 
+    - Remove empty es_ES .po files. Spanish translations are already
       provided in es files. Thanks to Adolfo Jayme Barrientos (fitoschido)
   * common/rpackagelister.cc:
     - add support for complete removal (purge) in the markings file
@@ -508,7 +514,7 @@ synaptic (0.75.11) unstable; urgency=low
   [  Sergey Alyoshin ]
   * Fix some compiler warnings, closes: #672919
   * Fix missing Help/Contents localization, closes: #670961
-  
+
   [ Michael Vogt ]
   * add "ctrl-l" accelerator key for downloading the changelog,
     closes: #388250
@@ -570,7 +576,7 @@ synaptic (0.75.5) unstable; urgency=low
   * common/sections_trans.cc:
     - add "metapackages", "education", "introspection"
   * debian/rules:
-    - do not build multiarch support in Debian to make it work on 
+    - do not build multiarch support in Debian to make it work on
       unstable that has no multiarch apt yet
 
  -- Michael Vogt <mvo@debian.org>  Fri, 02 Mar 2012 10:20:59 +0100
@@ -652,7 +658,7 @@ synaptic (0.75.4) unstable; urgency=low
   * debian/synaptic.postrm:
     - remove /etc/apt/apt.conf.d/99synaptic on purge (closes: #64550)
   * gtk/rgmainwindow.cc, gtk/gsynaptic.cc:
-    - cleanup 
+    - cleanup
   * fix build with apt in experimental
   * po/*:
     - auto updates from LP
@@ -768,17 +774,17 @@ synaptic (0.75.2) unstable; urgency=low
     - updated, thanks to Sérgio Cipolla (closes: #606447)
   * common/rpackage.{cc,h}:
     - add basic multiarch support, enabled by default, can
-      be disabled at build time with 
+      be disabled at build time with
       ./configure --without-apt-multiarch-support
     - no changes on non-multiarch enabled configurations
   * po/et.po:
-    - updated, thanks to Mattias Põldaru 
+    - updated, thanks to Mattias Põldaru
   * po/de.po:
     - fix translation of breaks (closes: #622752)
   * po/pt_BR.po:
     - updaed, thanks to  Sergio Cipolla
   * updated translations from launchpad
-  
+
   [ Robert Roth ]
   * Remove statusbar border and add padding (LP: #157574)
   * Moved command line argument parsing and displaying help before
@@ -795,7 +801,7 @@ synaptic (0.75.1ubuntu2) natty; urgency=low
       - updated, thanks to Sérgio Cipolla (closes: #606447)
     - common/rpackage.{cc,h}:
       - add basic multiarch support, enabled by default, can
-        be disabled at build time with 
+        be disabled at build time with
         ./configure --without-apt-multiarch-support
       - no changes on non-multiarch enabled configurations
 
@@ -844,9 +850,9 @@ synaptic (0.75) unstable; urgency=low
   * merged
     lp:~chris-ascentsoftware/ubuntu/natty/synaptic/synaptic-fix-706271
     many thanks! (LP: #706271)
-  * merged lp:~kelemeng/synaptic/bug702181, many thanks! 
+  * merged lp:~kelemeng/synaptic/bug702181, many thanks!
     (LP: #702181)
-  * merged lp:~kelemeng/synaptic/bug688897, many thanks! 
+  * merged lp:~kelemeng/synaptic/bug688897, many thanks!
     (LP: #688897)
 
   [ Chris McGinlay ]
@@ -856,7 +862,7 @@ synaptic (0.75) unstable; urgency=low
   [ Luca Falavigna ]
   * common/rpackageview.cc:
     - Do not display base packages in manual view.
-  
+
  -- Michael Vogt <mvo@debian.org>  Thu, 10 Feb 2011 09:56:20 +0100
 
 synaptic (0.75~pre4) natty; urgency=low
@@ -905,22 +911,22 @@ synaptic (0.75~pre1) natty; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 07 Dec 2010 10:29:57 +0100
 
 synaptic (0.70) unstable; urgency=low
-  
+
   * po/hu.po:
-    - updated, thanks to Gabor Kum 
+    - updated, thanks to Gabor Kum
   * fix some linitian warnings
-  
+
  -- Michael Vogt <mvo@debian.org>  Mon, 06 Dec 2010 16:44:24 +0100
 
 synaptic (0.70~pre2ubuntu1) natty; urgency=low
-  
+
   * merged from debian/unstable, remaining changes:
     - ubuntu icons for supported applications
     - launchpad-integration
     - ubuntu changelog download support
     - support section metapackages
     - x-ubuntu-gettext-domain in desktop file
-  
+
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 10 Nov 2010 19:44:31 +0100
 
 synaptic (0.70~pre2) unstable; urgency=low
@@ -937,7 +943,7 @@ synaptic (0.70~pre2) unstable; urgency=low
   * po/et.po:
     - updated, thanks to Guido Tabbernuk
   * po/he.po:
-    - updated, thanks to Lior Kaplan and Sergio Cipolla 
+    - updated, thanks to Lior Kaplan and Sergio Cipolla
       (closes: #586940)
   * gtk/rgdebinstallprogress.cc, gtk/rgterminstallprogress.cc:
     - fix FTBFS on latest vte (closes: #597384)
@@ -945,8 +951,8 @@ synaptic (0.70~pre2) unstable; urgency=low
     - add cache for PkgFileIterator->pkgIndexFile* to speed up
       RPackage::IsTrusted (LP: #165181)
   * gtk/rgdebinstallprogress.cc:
-    - merge fix for error string if those contain a ":" 
-      (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement 
+    - merge fix for error string if those contain a ":"
+      (LP: #600658), thanks to Jonathan Thomas and Jean-Baptiste Lallement
   * common/rpackagelister.cc:
     - when sorting by support status use STL stable_parition to speed
       up the list view (thanks to David Purcell)
@@ -955,7 +961,7 @@ synaptic (0.70~pre2) unstable; urgency=low
   * gtk/rgmainwindow.cc:
     - show message in quick search label if no apt-xapian-index can
       be found
-  
+
    [ Jean-Baptiste Lallement ]
    * gtk/rgdebinstallprogress.{cc,h}: Terminal shortcuts fixes
      - fix <CTRL><SHIFT>c behavior (LP: #250359)
@@ -968,11 +974,11 @@ synaptic (0.70~pre2) unstable; urgency=low
 
 synaptic (0.70~pre1) unstable; urgency=low
 
-  * New upstream release that merges all changes from 
-    Debian and Ubuntu into a single tree again. This include libept 
+  * New upstream release that merges all changes from
+    Debian and Ubuntu into a single tree again. This include libept
     support and lots of fixes.
   * po/sl.po:
-    - updated, thanks to Matej Urbančič 
+    - updated, thanks to Matej Urbančič
   * po/pt_BR.po:
     - updatd, thanks to Sergio Cipolla, closes: #579296
   * gtk/rgmainwindow.cc:
@@ -989,17 +995,17 @@ synaptic (0.63.2) unstable; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
-    - updated, thanks to Serhij Dubyk 
+    - updated, thanks to Serhij Dubyk
   * po/it.po:
     - updated, thanks to Milo Casagrande  (closes: #575685)
   * po/et.po:
     - added, thanks to G. Tabbernuk
-  
+
   [ Bilal Akhtar ]
   * gtk/rgmainwindow.cc
-    - Modify gtk/rgmainwindow.cc to populate package list again after 
+    - Modify gtk/rgmainwindow.cc to populate package list again after
      'Unmark All' is selected. (LP: #155930)
-  
+
   [ Jean-Baptiste Lallement ]
   * Fix sorting issues of the package list
     - Fix sort by name and by section (LP: #518509)
@@ -1013,7 +1019,7 @@ synaptic (0.63.2) unstable; urgency=low
   * Change 'Icon Legend' dialog to fixed size (LP: #374376)
   * add tooltip to 'properties' and 'search' buttons (LP: #202681)
   * * gtk/rgpreferenceswindow.cc: escape '@/:%' in proxy auth string (LP: 130289)
- 
+
  -- Michael Vogt <mvo@debian.org>  Wed, 28 Jul 2010 11:40:15 +0200
 
 synaptic (0.63.1ubuntu14.1) UNRELEASED; urgency=low
@@ -1043,7 +1049,7 @@ synaptic (0.63.1ubuntu13) maverick; urgency=low
 
   [ Bilal Akhtar ]
   * debian/patches/11-lp-155930:
-    - Modify gtk/rgmainwindow.cc to populate package list again after 
+    - Modify gtk/rgmainwindow.cc to populate package list again after
      'Unmark All' is selected. (LP: #155930)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 29 Jul 2010 14:13:46 +0200
@@ -1060,10 +1066,10 @@ synaptic (0.63.1ubuntu11) maverick; urgency=low
   [ Martin Pitt ]
   * debian/control: Replace obsolete scrollkeeper package with rarian-compat,
     and drop it from Depends to Recommends.
-  
+
   [ Jean-Baptiste Lallement ]
   * port to libept 1.0
-  
+
   [ Michael Vogt ]
   * limit amount of calls to set_fraction() to avoid too high cpu
     usage on nouveau
@@ -1074,8 +1080,8 @@ synaptic (0.63.1ubuntu10) maverick; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
-    - updated, thanks to Serhij Dubyk 
-  
+    - updated, thanks to Serhij Dubyk
+
   [ Jean-Baptiste Lallement ]
   * Fix sorting issues of the package list
     - Fix sort by name and by section (LP: #518509)
@@ -1086,7 +1092,7 @@ synaptic (0.63.1ubuntu10) maverick; urgency=low
     normal user (LP: #309906)
   * common/rpackagelister.cc:
     - in RPackageLister::xapianSearch() catch xapian exception to
-      prevent crash when xapian interprets search string as a syntax 
+      prevent crash when xapian interprets search string as a syntax
       error
     - fix sorting in xapian search mode (LP: #508220)
   * gtk/gsynaptic.cc
@@ -1103,7 +1109,7 @@ synaptic (0.63.1ubuntu10) maverick; urgency=low
     - put the fastsearch entry out of the toolbar (LP: #502582)
     - move the fastsearch entry to the upper-right (LP: #290524)
   * gtk/rgfetchprogress.cc:
-    - change "Download rate: unknown" to "Download rate: ..." 
+    - change "Download rate: unknown" to "Download rate: ..."
       (LP: #393358)
   * Sort by relevancy when doing quicksearch and no search column is set.
 
@@ -1114,11 +1120,11 @@ synaptic (0.63.1ubuntu7) lucid-proposed; urgency=low
   [ Michael Vogt ]
   * common/rpackageview.cc:
     - silence debug output (thanks to Bob Huffman)
-  
+
   [ Jean-Baptiste Lallement ]
   * gtk/rgmainwindow.cc, gtk/rgutils.{cc,h}:
     - un/escape markup when getting/setting subviews name to avoid markup
-      insertion in GtkTree items (LP: #567172) 
+      insertion in GtkTree items (LP: #567172)
   * gtk/rgmainwindow.cc:
     - fix force version. regression over beta2 (LP: #568925)
   * gtk/rgmainwindow.cc:
@@ -1129,16 +1135,16 @@ synaptic (0.63.1ubuntu7) lucid-proposed; urgency=low
 
 synaptic (0.63.1ubuntu6) lucid; urgency=low
 
-  [ Jean-Baptiste Lallement ]  
+  [ Jean-Baptiste Lallement ]
   * gtk/rgmainwindow.cc:
     - fix 'broken package installation' regression over beta2 (LP: #565816)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 19 Apr 2010 11:24:00 +0200
-  
+
 synaptic (0.63.1ubuntu5) lucid; urgency=low
 
   [ Jean-Baptiste Lallement ]
-  * gtk/rgmainwindow.cc: 
+  * gtk/rgmainwindow.cc:
     - Fix 'Mark for upgrade' regression over beta2 (LP: #564320)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 16 Apr 2010 12:04:36 +0200
@@ -1148,7 +1154,7 @@ synaptic (0.63.1ubuntu4) lucid; urgency=low
   [ Michael Vogt ]
   * po/it.po:
     - updated, thanks to Milo Casagrande  (closes: #575685)
-  
+
   [ Jean-Baptiste Lallement ]
   * common/rpackage.{cc,h}:
     - Use simplified URI for third party changelogs (LP: #45129)
@@ -1156,9 +1162,9 @@ synaptic (0.63.1ubuntu4) lucid; urgency=low
     - update patch to support third party changelogs
   * common/rpackage.{cc,h}:
     - Support third party changelogs by using ArchiveURI() (LP: #153966)
-    - Display LP links when changelog is not available for download 
+    - Display LP links when changelog is not available for download
       (LP: #452564)
-  * gtk/rgmainwindow.cc: 
+  * gtk/rgmainwindow.cc:
     - check package flags when applying an action to a package list
       (LP: #513460)
   * common/rpackagelister.cc
@@ -1166,14 +1172,14 @@ synaptic (0.63.1ubuntu4) lucid; urgency=low
   * common/rpackagelister.cc:
     - xapianSearch: do not expand the first term when replacing the hyphen
     to reduce size of the resultse
-  
+
   [ Oliver Joos ]
   * common/rconfiguration.cc:
     - Fix to store setting "Consider recommended packages as dependencies"
       (closes debian #440027 and LP: #154349)
-  
+
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Apr 2010 01:59:51 +0200
-  
+
 synaptic (0.63.1ubuntu3) lucid; urgency=low
 
   [ Jean-Baptiste Lallement ]
@@ -1189,9 +1195,9 @@ synaptic (0.63.1ubuntu2) lucid; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
-    - updated, thanks to Serhij Dubyk 
+    - updated, thanks to Serhij Dubyk
   * build from the lp:~ubuntu-core-dev/synaptic/lucid branch
-  
+
   [ Jean-Baptiste Lallement ]
   * Fix sorting issues of the package list
     - Fix sort by name and by section (LP: #518509)
@@ -1202,7 +1208,7 @@ synaptic (0.63.1ubuntu2) lucid; urgency=low
     normal user (LP: #309906)
   * common/rpackagelister.cc:
     - in RPackageLister::xapianSearch() catch xapian exception to
-      prevent crash when xapian interprets search string as a syntax 
+      prevent crash when xapian interprets search string as a syntax
       error
     - fix sorting in xapian search mode (LP: #508220)
   * gtk/gsynaptic.cc
@@ -1214,15 +1220,15 @@ synaptic (0.63.1ubuntu2) lucid; urgency=low
   * wrap lines in textarea of dialog_update_failed (LP: #237455)
   * set textarea read-only in generic error dialog (LP: #403100)
   * Change 'Icon Legend' dialog to fixed size (LP: #374376)
- 
+
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 16 Feb 2010 11:13:45 +0100
 
 synaptic (0.63.1ubuntu1) lucid; urgency=low
 
   [ Michael Vogt ]
   * po/uk.po:
-    - updated, thanks to Serhij Dubyk 
-  
+    - updated, thanks to Serhij Dubyk
+
   [ Jean-Baptiste Lallement ]
   * Fix sorting issues of the package list
     - Fix sort by name and by section (LP: #518509)
@@ -1238,7 +1244,7 @@ synaptic (0.63.1) unstable; urgency=low
   * po/sk.po:
     - Updated sk.po, thanks to helix84 (closes: #559283)
   * po/uk.po
-    - add ukrainian translation, thanks to Serhij Dubyk 
+    - add ukrainian translation, thanks to Serhij Dubyk
   * common/rpackageview.{cc,h}:
     - remember search history accross package transactions
   * make the origin filter more fine grained
@@ -1247,7 +1253,7 @@ synaptic (0.63.1) unstable; urgency=low
       operation
   * gtk/rgdebinstallprogress.cc:
     - on error, set error string into status label
-    - when the recovery is run (dpkg --configure -a) display a 
+    - when the recovery is run (dpkg --configure -a) display a
       proper status label for that
   * gtk/rgaboutpanel.cc:
     - fix FTBFS with gcc-4.5 (closes: #565077)
@@ -1262,7 +1268,7 @@ synaptic (0.63ubuntu4) lucid; urgency=low
   * gtk/rgdebinstallprogress.cc:
     - make the dpkg progress code less cpu intensive
   * po/uk.po
-    - add ukrainian translation, thanks to Serhij Dubyk 
+    - add ukrainian translation, thanks to Serhij Dubyk
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 11 Feb 2010 15:23:38 +0100
 
@@ -1273,13 +1279,13 @@ synaptic (0.63ubuntu3) lucid; urgency=low
       operation
   * gtk/rgdebinstallprogress.cc:
     - on error, set error string into status label
-    - when the recovery is run (dpkg --configure -a) display a 
+    - when the recovery is run (dpkg --configure -a) display a
       proper status label for that
   * gtk/rgaboutpanel.cc:
     - fix FTBFS with gcc-4.5 (closes: #565077)
   * additions to the (internal) API
   * debian/patches/10_ubuntu_maintenance_gui.dpatch:
-    - updated to support LTS and new "Supported" flags 
+    - updated to support LTS and new "Supported" flags
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 25 Jan 2010 09:58:35 +0100
 
@@ -1333,12 +1339,12 @@ synaptic (0.62.8) unstable; urgency=low
 
   * debian/control:
     - add build-conflict against librpm-dev
-    - recommends gksu|kdebase-bin (kdsu is fine too) 
+    - recommends gksu|kdebase-bin (kdsu is fine too)
       closes: #442421
   * add filter for manual installed packages (LP: #122047)
   * fix typo (thanks to Florentin Duneau), closes: #542122
   * po/pt_BR.po:
-    - updated translation, thanks to Sergio Cipolla 
+    - updated translation, thanks to Sergio Cipolla
       (closes: #532473)
 
  -- Michael Vogt <mvo@debian.org>  Thu, 27 Aug 2009 10:00:10 +0200
@@ -1357,7 +1363,7 @@ synaptic (0.62.7ubuntu7~ppa1) karmic; urgency=low
 synaptic (0.62.7ubuntu6) karmic; urgency=low
 
   * gtk/glade/window_fetch.glade:
-    - add default_width to avoid fetch window resizing 
+    - add default_width to avoid fetch window resizing
       (LP: #450451)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 15 Oct 2009 10:13:17 +0200
@@ -1387,7 +1393,7 @@ synaptic (0.62.7ubuntu3) karmic; urgency=low
     - add prefixes for "name" and "section" in the quick search
       This allows "name:apt" or "section:devel" searches
   * debian/control:
-    - recommends gksu|kdebase-bin (kdsu is fine too) 
+    - recommends gksu|kdebase-bin (kdsu is fine too)
       closes: #442421
   * add filter for manual installed packages (LP: #122047)
   * fix typo (thanks to Florentin Duneau), closes: #542122
@@ -1420,14 +1426,14 @@ synaptic (0.62.7) unstable; urgency=low
   * show progress when searching and not not block the UI
     (LP: #24188)
   * gtk/glade/dialog_authentication.glade:
-    - add two missing "translatable" entries, thanks to 
+    - add two missing "translatable" entries, thanks to
       Daniele Forsi)
   * po/sk.po:
-    - updated translation, thanks to helix84, closes: #532790 
+    - updated translation, thanks to helix84, closes: #532790
   * po/it.po:
     - updated translation, thanks to Milo Casagrande, closes: #534351
   * po/es.po:
-    - updated translation, thanks to Francisco Javier Cuadrado, 
+    - updated translation, thanks to Francisco Javier Cuadrado,
       closes: #533322
 
  -- Michael Vogt <mvo@debian.org>  Thu, 25 Jun 2009 16:17:56 +0200
@@ -1467,7 +1473,7 @@ synaptic (0.62.6) unstable; urgency=low
     - updated Thai translation,
       thanks to Theppiak Karoonboonyanan, closes: #512605, #441571
   * po/br.po:
-    - updated breton translation, 
+    - updated breton translation,
       thanks to Denis ARNAUD
   * po/sk.po:
     - updated Slovak translation,
@@ -1495,7 +1501,7 @@ synaptic (0.62.6) unstable; urgency=low
       thanks to Daniel Nylander, closes: #384107
   * gtk/rgdebinstallprogress.cc:
     - if forkpty() show a propper error message
-      (thanks to Evan) 
+      (thanks to Evan)
   * gtk/rgfetchprogress.cc:
     - if the ETA is huge report it as unknown (LP: #322871)
   * debian/control:
@@ -1525,7 +1531,7 @@ synaptic (0.62.5ubuntu1) jaunty; urgency=low
     - updated Thai translation (closes: #512605)
   * gtk/rgdebinstallprogress.cc:
     - if forkpty() show a propper error message
-      (thanks to Evan) 
+      (thanks to Evan)
   * gtk/rgfetchprogress.cc:
     - if the ETA is huge report it as unknown (LP: #322871)
   * debian/control:
@@ -1560,7 +1566,7 @@ synaptic (0.62.4) unstable; urgency=low
   * po/zh_CN.po:
     - updated translation, thanks to Deng Xiyue
       closes: #458423
-  * po/fr.po: 
+  * po/fr.po:
     - fixed typo, thanks to Philippe Cloutier
       closes: #440971
     - fixed typo, thanks to Christophe Combelles
@@ -1581,7 +1587,7 @@ synaptic (0.62.3) unstable; urgency=low
 
   * gtk/rgpkgdetails.{cc,h}:
     - download/show big image when clicking on the
-      thumbnail 
+      thumbnail
   * debian/rules, .bzr-builddeb/default.conf
     - bybye arch-build, hello "bzr-buildpackage"
 
@@ -1591,7 +1597,7 @@ synaptic (0.62.2ubuntu2) jaunty; urgency=low
 
   * gtk/rgpkgdetails.{cc,h}:
     - download/show big image when clicking on the
-      thumbnail 
+      thumbnail
   * debian/rules, .bzr-builddeb/default.conf
     - bybye arch-build, hello "bzr-buildpackage"
 
@@ -1611,9 +1617,9 @@ synaptic (0.62.2ubuntu1) jaunty; urgency=low
 synaptic (0.62.2) unstable; urgency=low
 
   * po/es.po:
-    - updated spanish translation (thanks to 
+    - updated spanish translation (thanks to
       Francisco Javier Cuadrado)
-  * po/cz.po: 
+  * po/cz.po:
     - updated Czech translation (thanks to Kamil Páral)
   * gtk/glade/dialog_upgrade.glade:
     - provide a mnemonics in the upgrade dialog,
@@ -1645,7 +1651,7 @@ synaptic (0.62.1ubuntu10) intrepid; urgency=low
   * common/rpackagelister.cc:
     - add special handling for "-" char in the xapian
       search (thanks to kiko)
-    - fix hang in quick search for huge result lists 
+    - fix hang in quick search for huge result lists
      (like "li") LP: #282188
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 21 Oct 2008 15:19:02 +0200
@@ -1699,12 +1705,12 @@ synaptic (0.62.1ubuntu6) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu5) intrepid; urgency=low
 
-  * debian/control: 
+  * debian/control:
     - make deborphan and apt-xapian-index suggests instead of recommends
       to save space on the CD - this means we loose the quick search
       feature in the default install
   * po/es.po:
-    - updated spanish translation (thanks to 
+    - updated spanish translation (thanks to
       Francisco Javier Cuadrado)
   * gtk/glade/dialog_upgrade.glade:
     - provide a mnemonics in the upgrade dialog,
@@ -1729,7 +1735,7 @@ synaptic (0.62.1ubuntu4) intrepid; urgency=low
 
 synaptic (0.62.1ubuntu3) intrepid; urgency=low
 
-  * do not run the index update when called in backend 
+  * do not run the index update when called in backend
     (non-interactive) mode
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 03 Jul 2008 21:58:28 +0200
@@ -1758,7 +1764,7 @@ synaptic (0.62.1ubuntu1) intrepid; urgency=low
   * gtk/glade/window_main.glade:
     - make the main vpane shinkable
   * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
+    - do not loose the keyboard focus after a package
       action in the listview
   * debian/control:
     - switch bzr branch to bzr.debian.org
@@ -1775,7 +1781,7 @@ synaptic (0.62.1) unstable; urgency=low
   * gtk/glade/window_main.glade:
     - make the main vpane shinkable
   * gtk/rgmainwindow.cc:
-    - do not loose the keyboard focus after a package 
+    - do not loose the keyboard focus after a package
       action in the listview
   * debian/control:
     - switch bzr branch to bzr.debian.org
@@ -1860,9 +1866,9 @@ synaptic (0.61ubuntu5) hardy; urgency=low
   * typo fixes (LP: #64482, LP: #157850, LP: #179914, LP: #179912, LP: #179909)
 
   [ Michael Vogt ]
-  * add new RFilePackageFilter 
+  * add new RFilePackageFilter
   * added default custom filter that shows installed community software
-  
+
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 12 Feb 2008 22:54:39 +0100
 
 synaptic (0.61ubuntu4) hardy; urgency=low
@@ -1927,7 +1933,7 @@ synaptic (0.61) unstable; urgency=low
   * added XS-Vcs-Bzr header
 
   [ Diego Escalante Urrelo ]
-  * The menu entry for Synaptic is back in System->Administration. It also  
+  * The menu entry for Synaptic is back in System->Administration. It also
     removes the legacy Applications category.
     closes: #429895
 
@@ -1944,10 +1950,10 @@ synaptic (0.60ubuntu5.1) gutsy-proposed; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 17 Oct 2007 11:14:03 +0200
 
 synaptic (0.60ubuntu5) gutsy; urgency=low
-  
+
   [ Loic Minier ]
   * Set has_focus on the close button of the welcome dialog; LP: #148695.
-  
+
   [ Michael Vogt ]
   * gtk/rgmainwindow.cc:
     - fix crash in cbInstallFromVersion() (LP: #145685)
@@ -1970,7 +1976,7 @@ synaptic (0.60ubuntu2) gutsy; urgency=low
 synaptic (0.60ubuntu1) gutsy; urgency=low
 
   * merged from debian/unstable, remaining changes:
-    - 01_ubuntu_changelog: 
+    - 01_ubuntu_changelog:
       + default to changelogs.ubuntu.com
     - 03_hide_browse_documentation:
       + don't show the dwww documentation button
@@ -1990,7 +1996,7 @@ synaptic (0.60) unstable; urgency=low
   * gtk/gsyncaptic.cc:
     - fix in the checking for already runing synaptic (lp: 62754)
   * gtk/rgfilterwindow.cc:
-    - fix i18n problem in the filter settings 
+    - fix i18n problem in the filter settings
       (thanks to Alexander Bart)
   * help/sv:
     - added swedish manual (thanks to Daniel Nylander)
@@ -1998,7 +2004,7 @@ synaptic (0.60) unstable; urgency=low
   * added support for GUI configuraton of http proxy
   * translation updates:
     - cs.po: thanks to Vít Pelcak
-  * debian/rules: 
+  * debian/rules:
     - fix automatic version number generation
   * make description buffer dynamic (thanks to Benjamin Jacobs)
   * added component filter
@@ -2006,7 +2012,7 @@ synaptic (0.60) unstable; urgency=low
   * move the desktop file out of settings because it does no longer
     fit there with the new control center in gnome 2.17
   * build with gcc 4.3 (closes: #413419)
-  * do not return a NULL pointer in name() 
+  * do not return a NULL pointer in name()
   * when generating the wget script, use wget -c
   * po/cs.po:
     - updated (thanks to Vit Pelcak)
@@ -2016,7 +2022,7 @@ synaptic (0.60) unstable; urgency=low
     - overwrite the http_proxy environ when the user set the proxy
       explicitely (thanks to Berend De Schouwer)
   * common/rpackagelister.cc:
-    - added "Volatile::SetSelectionDoReInstall" to support 
+    - added "Volatile::SetSelectionDoReInstall" to support
       reinstalling from --set-selections too
   * common/rpackage.cc:
     - only show a package as supported if it is authenticated
@@ -2036,7 +2042,7 @@ synaptic (0.57.11.1ubuntu15) gutsy; urgency=low
     - overwrite the http_proxy environ when the user set the proxy
       explicitely (thanks to Berend De Schouwer, LP#105515)
   * common/rpackagelister.cc:
-    - added "Volatile::SetSelectionDoReInstall" to support 
+    - added "Volatile::SetSelectionDoReInstall" to support
       reinstalling from --set-selections too
   * common/rpackage.cc:
     - only show a package as supported if it is authenticated
@@ -2050,7 +2056,7 @@ synaptic (0.57.11.1ubuntu15) gutsy; urgency=low
 synaptic (0.57.11.1ubuntu14) feisty; urgency=low
 
   * gtk/rgchangeswindow.cc:
-    - fix crash in confirm changes (LP#80922) 
+    - fix crash in confirm changes (LP#80922)
       Thanks to John Millikin for the instructions how to reproduce the
       bug
 
@@ -2062,7 +2068,7 @@ synaptic (0.57.11.1ubuntu13) feisty; urgency=low
   * po/cs.po:
     - updated (thanks to Vit Pelcak)
   * gtk/rgpkgdetails.cc:
-    - fix chinese descriptions display, thanks to Liu Qishuai 
+    - fix chinese descriptions display, thanks to Liu Qishuai
       (LP#102228)
   * fix drop down boxes in preferences (LP#100072)
   * fix terminal window (LP#99877)
@@ -2082,7 +2088,7 @@ synaptic (0.57.11.1ubuntu12) feisty; urgency=low
 synaptic (0.57.11.1ubuntu11) feisty; urgency=low
 
   * build with gcc 4.3 (closes: #413419)
-  * do not return a NULL pointer in name() 
+  * do not return a NULL pointer in name()
   * remove unneeded pkgActionGroup that seems to cause havoc
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  6 Mar 2007 19:02:44 +0100
@@ -2090,17 +2096,17 @@ synaptic (0.57.11.1ubuntu11) feisty; urgency=low
 synaptic (0.57.11.1ubuntu10) feisty; urgency=low
 
   * debian/control:
-    - changed ubuntu maintainer 
+    - changed ubuntu maintainer
     - added XS-Vcs-Bzr
   * gtk/rgpreferenceswindow.cc:
-    - fix proxy authentication (thanks to Jan de Mooij) 
+    - fix proxy authentication (thanks to Jan de Mooij)
       (LP#86769)
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue, 27 Feb 2007 12:34:12 +0100
 
 synaptic (0.57.11.1ubuntu9) feisty; urgency=low
 
-  * remove file descriptor resource leak 
+  * remove file descriptor resource leak
   * depend on latest apt (needs rebuild to fix resource leak)
   * fix crash in "Add downloaded packages" (LP#85934)
 
@@ -2141,7 +2147,7 @@ synaptic (0.57.11.1ubuntu5) feisty; urgency=low
 
 synaptic (0.57.11.1ubuntu4) feisty; urgency=low
 
-  * debian/rules: 
+  * debian/rules:
     - fix automatic version number generation
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 22 Jan 2007 15:27:59 +0100
@@ -2219,7 +2225,7 @@ synaptic (0.57.11ubuntu7) edgy; urgency=low
 
 synaptic (0.57.11ubuntu6) edgy; urgency=low
 
-  * fix mark/unmark auto 
+  * fix mark/unmark auto
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 20 Sep 2006 14:18:43 +0200
 
@@ -2265,7 +2271,7 @@ synaptic (0.57.11) unstable; urgency=low
   * return non-zero exit code on error
   * po-manual/synaptic-manual.pot:
     - updated (thanks to Sebastian Heinlein)
-  
+
  -- Michael Vogt <mvo@debian.org>  Thu, 27 Jul 2006 15:12:31 +0200
 
 synaptic (0.57.10ubuntu3) edgy; urgency=low
@@ -2321,12 +2327,12 @@ synaptic (0.57.9) unstable; urgency=low
 
 synaptic (0.57.8ubuntu11) dapper; urgency=low
 
-  * fix bug that the window is not visisble in the tasklist when run 
+  * fix bug that the window is not visisble in the tasklist when run
     in "install all upgrades" mode from update-notifier (thanks to
     seb128 for reporting)
   * hide the "auto-close" checkbutton when runing non-interactively,
     because synaptic won't save options then (Ubuntu: #28250)
-  * better deal with invalid utf8 in the package descriptions 
+  * better deal with invalid utf8 in the package descriptions
     (Ubuntu: #37050, #38399)
   * increase the size of the diff dialog textview (ubuntu: #44012)
   * search in summary too (ubuntu: #32337)
@@ -2360,9 +2366,9 @@ synaptic (0.57.8ubuntu7) dapper; urgency=low
 
   * gtk/window_changes.glade:
     - make the dialog icon "info" instead of "warning" (ubuntu: #17085)
-  * remove http:// when it was entered as part of the proxy uri 
+  * remove http:// when it was entered as part of the proxy uri
     (ubuntu: #18038)
-  * if a dpkg error happens during install run "dpkg --configure -a" 
+  * if a dpkg error happens during install run "dpkg --configure -a"
     to recover as much as possible (ubuntu: #19021)
   * if no terminal activity is detected and the terminal is expanded
     set the urgency hint as well (ubuntu: #31436)
@@ -2422,7 +2428,7 @@ synaptic (0.57.8) unstable; urgency=low
   * po/zh_HK.po: removed as requested by Anthony Fok (closes: #346081)
   * typo fix in po/fr.po, thanks to  Filipus Klutiero  (closes: #336999)
   * po/gl.po: added Galician translation (thanks to Nacho Resa)
-  * po/es.po: updated Spanish translation 
+  * po/es.po: updated Spanish translation
     (thanks to Francisco Javier F. Serrador)
   * po/th.po: updated Thai Translation (thanks to Isriya Paireepairit)
   * po/fi.po: updated Finnish translation (thanks to Ilkka Tuohela)
@@ -2435,7 +2441,7 @@ synaptic (0.57.8) unstable; urgency=low
   * wording fixes (malone #22090)
   * only clean the list dir if a update was successful
   * make "mark" the default response in the "Mark change dialog"
-  
+
  -- Michael Vogt <mvo@debian.org>  Tue, 28 Feb 2006 09:44:42 +0100
 
 synaptic (0.57.7) unstable; urgency=low
@@ -2443,7 +2449,7 @@ synaptic (0.57.7) unstable; urgency=low
   * po/fi.po: added Finnish translation (thanks to Ilkka Tuohela)
   * po/lt.po: updated Lithuanian translation (thanks to Zygimantas Berucka)
   * po/ja.po: updated Japanese translation (thanks to AWASHIRO Ikuya)
-  * po/bg.po: updated Bulgarian translation (thanks to Yavor Doganov) 
+  * po/bg.po: updated Bulgarian translation (thanks to Yavor Doganov)
     (closes: #335032)
   * po/ca.po: updated Catalan translation (thanks to Jordi Mallach)
   * po/sv.po: updated Swedish translation (thanks to Daniel Nylander)
@@ -2465,7 +2471,7 @@ synaptic (0.57.6) unstable; urgency=low
   * po/sv.po:
     - new swedish translation (thanks to Daniel Nylander)
       (closes: #339370)
-  * always use pkgSourceList::ReadMainList() 
+  * always use pkgSourceList::ReadMainList()
 
  -- Michael Vogt <mvo@debian.org>  Wed, 23 Nov 2005 12:35:26 +0100
 
@@ -2489,7 +2495,7 @@ synaptic (0.57.5) unstable; urgency=low
   * improved the support for error and conffile handling from
     apt/dpkg
 
- -- Michael Vogt <mvo@debian.org>  Wed, 5 Oct 2005 16:23:15 +0200 
+ -- Michael Vogt <mvo@debian.org>  Wed, 5 Oct 2005 16:23:15 +0200
 
 synaptic (0.57.4) unstable; urgency=low
 
@@ -2510,7 +2516,7 @@ synaptic (0.57.3) unstable; urgency=low
   * only skip_taskbar for modal windows (ubuntu #12640)
   * relocated to gnome 2.10 System menu (closes: #314453)
   * is a native debian package now (make more sense this way)
-  
+
  -- Michael Vogt <mvo@debian.org>  Mon,  1 Aug 2005 14:05:10 +0200
 
 synaptic (0.57.2-1) unstable; urgency=low
@@ -2522,13 +2528,13 @@ synaptic (0.57.2-1) unstable; urgency=low
 synaptic (0.57.1-1) unstable; urgency=low
 
   * new upstream release
-  * make use of the new dpkg and apt 
+  * make use of the new dpkg and apt
 
  -- Michael Vogt <mvo@debian.org>  Sat, 18 Jun 2005 12:19:00 +0200
 
 synaptic (0.57-2) unstable; urgency=low
 
-  * don't hide the desktop file in a kde enviroment 
+  * don't hide the desktop file in a kde enviroment
     (closes: #313309)
 
  -- Michael Vogt <mvo@debian.org>  Mon, 13 Jun 2005 11:29:38 +0200
@@ -2551,11 +2557,11 @@ synaptic (0.57-1) unstable; urgency=low
     - #10762 (can't purge when remove is already selected)
     - #10752 (should install into /usr/share/applications)
     - #8522 (synaptic uses su-to-root instead of gksudo in menu)
-    - #7822 ("X" (window manager close) won't close install dialog) 
+    - #7822 ("X" (window manager close) won't close install dialog)
     - #11029 (synaptic exits silently if another synaptic is running)
   * fixes debian:
     - closes: #308474 (can't purge a package that is marked for removal)
-    - closes: #242037 (don't understand the difference between 
+    - closes: #242037 (don't understand the difference between
                        smart upgrade and upgrade)
     - closes: #296551 (unresolved dependency error omits version information)
     - closes: #292034 (icon toolbar does not display)
@@ -2575,7 +2581,7 @@ synaptic (0.55+cvs20050406-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Wed,  6 Apr 2005 00:39:52 +0200
 
 synaptic (0.55+cvs20050404-1) hoary; urgency=low
-  
+
   * New snapshot, xh translation added
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  4 Apr 2005 22:46:33 +0200
@@ -2585,7 +2591,7 @@ synaptic (0.55+cvs20050330-1) hoary; urgency=low
   * debian/control:
     - gksu is recommended only (to make it kde friendlier)
   * new desktop file for kde (#7395)
-  * fix a problem in the weekday calculation in logviewer 
+  * fix a problem in the weekday calculation in logviewer
     (libc<->glib incompatibility)
   * fix in the synaptic doc OMF file to make it show the correct
     version in yelp (#8194)
@@ -2599,8 +2605,8 @@ synaptic (0.55+cvs20050328-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon, 28 Mar 2005 17:36:25 +0200
 
 synaptic (0.55+cvs20050323-1) hoary; urgency=low
-  
-  * new snapshot, expose the preferences file (used for version 
+
+  * new snapshot, expose the preferences file (used for version
     locking) so that update-notifer/update-manager can use it too
   * use 8pt font in the (hidden) terminal window in the installprogress
     window
@@ -2616,26 +2622,26 @@ synaptic (0.55+cvs20050318-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 18 Mar 2005 15:25:37 +0100
 
 synaptic (0.55+cvs20050311-1) hoary; urgency=low
-  
+
   * New svn snapshot, bugfixes and translation updates:
     - fix for a potential file descriptor leak
-    - be more clever when it comes to adding cdroms 
+    - be more clever when it comes to adding cdroms
       (don't load the cache before)
     - make the "To be removed" column header in the changes
       window bold (thanks to jdub for this idea)
-    - make the pulse step slower in the install preparation step 
+    - make the pulse step slower in the install preparation step
       (closes: #7212)
-    - make it possible to cancel when asking for cdrom 
+    - make it possible to cancel when asking for cdrom
     - only switch cursor if the window is actual maped (causes some
       gtk warnings to go away)
     - fix a problem in the defaultDistro saving (closes: #6512)
-    - fix a problem that the fetch window is not correctly exapanded 
+    - fix a problem that the fetch window is not correctly exapanded
     - translation updates for: ca, el, es, lt, ru, zh_CN
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Fri, 11 Mar 2005 18:31:42 +0100
 
 synaptic (0.55+cvs20050228-1) hoary; urgency=low
-  
+
   * New svn snapshot
   * make use of the new pkgAcquire::Run(pulseInterval) feature (#5879)
 
@@ -2648,15 +2654,15 @@ synaptic (0.55+cvs20050224-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 24 Feb 2005 14:02:49 +0100
 
 synaptic (0.55+cvs20050218-1) hoary; urgency=low
-  
-  * restored the ubuntu icon, there was a quoting error in the 
+
+  * restored the ubuntu icon, there was a quoting error in the
     debian/rules file
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Sun, 20 Feb 2005 11:31:20 +0100
 
 synaptic (0.55+cvs20050215-1) hoary; urgency=low
 
-  * new svn snapshot, fixes: 
+  * new svn snapshot, fixes:
     - point to changelogs.ubuntu.com (#6540)
     - don't issue a warning when a new source.list is added (#6312)
     - allow only one instance of synaptic (#4533)
@@ -2671,8 +2677,8 @@ synaptic (0.55+cvs20050208-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  8 Feb 2005 21:45:21 +0100
 
 synaptic (0.55+cvs20050207-1) hoary; urgency=low
-  
-  * New svn snapshot, build-depends on libapt-pkg-dev 0.6.31 and 
+
+  * New svn snapshot, build-depends on libapt-pkg-dev 0.6.31 and
     will use the new add-cdrom interface
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Mon,  7 Feb 2005 12:46:55 +0100
@@ -2684,7 +2690,7 @@ synaptic (0.55+cvs20050204-1) hoary; urgency=low
  -- Michael Vogt <michael.vogt@ubuntu.com>  Fri,  4 Feb 2005 23:58:24 +0100
 
 synaptic (0.55+cvs20050201-1) hoary; urgency=low
-  
+
   * New svn snapshot
 
  -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  1 Feb 2005 15:55:20 +0100
@@ -2809,7 +2815,7 @@ synaptic (0.53.4-5) unstable; urgency=medium
 synaptic (0.53.4-4) unstable; urgency=medium
 
   * fixed a problem that can cause libglade to enter a infinite
-    loop and make synaptic unusable 
+    loop and make synaptic unusable
 
  -- Michael Vogt <mvo@debian.org>  Mon,  4 Oct 2004 13:46:32 +0200
 
@@ -2830,31 +2836,31 @@ synaptic (0.53.4-1) unstable; urgency=medium
 
   * New upstream release
   * no code changes, only translation and documentation updates
-  * urgency set to medium in hope to get it into sarge 
-  
+  * urgency set to medium in hope to get it into sarge
+
  -- Michael Vogt <mvo@debian.org>  Sat, 18 Sep 2004 00:15:59 +0200
 
 synaptic (0.53.3-2) unstable; urgency=medium
 
   * changed order to initialize stuff to work around a gtk problem
     (closes: #270309)
-  * urgency set to medium in hope to get it into sarge 
+  * urgency set to medium in hope to get it into sarge
 
  -- Michael Vogt <mvo@debian.org>  Mon,  6 Sep 2004 22:01:19 +0200
 
 synaptic (0.53.3-1) unstable; urgency=medium
 
   * New upstream release
-  * minimal code change (fix a segfault) 
+  * minimal code change (fix a segfault)
   * updated Danish translation (thanks to Morten Brix Pedersen)
   * synaptic.xpm updated to biger size (closes: #268293)
-  * urgency set to medium in hope to get it into sarge 
+  * urgency set to medium in hope to get it into sarge
 
  -- Michael Vogt <mvo@debian.org>  Fri, 27 Aug 2004 12:09:27 +0200
 
 synaptic (0.53.2-1) unstable; urgency=medium
 
-  * New upstream release (no code changes, only some build fixes and 
+  * New upstream release (no code changes, only some build fixes and
     and i18n updates)
 
  -- Michael Vogt <mvo@debian.org>  Thu, 26 Aug 2004 13:14:36 +0200
@@ -3028,13 +3034,13 @@ synaptic (0.48.2-1) unstable; urgency=medium
   * converted png to xpm for debian menu (closes: #237748)
   * fixed bad german translation (closes: #237758)
   * added updated frensh man-page (closes: #231585)
-  
+
  -- Michael Vogt <mvo@debian.org>  Sun, 14 Mar 2004 13:33:04 +0100
 
 synaptic (0.48.1-1) unstable; urgency=low
 
   * New upstream release
-  * suggests changed to libgnome2-perl (for dpkg-reconfigure -f gnome) 
+  * suggests changed to libgnome2-perl (for dpkg-reconfigure -f gnome)
     (closes: #237549)
   * added suggestions for apt-watch
 
@@ -3042,7 +3048,7 @@ synaptic (0.48.1-1) unstable; urgency=low
 
 synaptic (0.48-2) unstable; urgency=medium
 
-  * rebuild against a correct apt 
+  * rebuild against a correct apt
 
  -- Michael Vogt <mvo@debian.org>  Thu, 11 Mar 2004 10:24:31 +0100
 
@@ -3051,7 +3057,7 @@ synaptic (0.48-1) unstable; urgency=low
   * New upstream release
   * purge and delete are different now (closes: #191822)
   * search dialog now closes when pressing the enter key (closes: #224532)
-  * synaptic now longer hangs when closing the changes window (closes: 224731) 
+  * synaptic now longer hangs when closing the changes window (closes: 224731)
   * broken sources.list are now longer accepted (closes: #187971)
   * some tag fixes (closes: #225891)
   * a typo fix for the description (closes: #219083)
@@ -3079,7 +3085,7 @@ synaptic (0.46-1) unstable; urgency=low
   * advanced search is no ddtp friendly (closes: #218825)
   * synaptic desktop menu has moved (closes:  #219358)
   * gui font can be selected now (closes: #218147)
-  
+
  -- Michael Vogt <mvo@debian.org>  Thu,  6 Nov 2003 12:09:09 +0100
 
 synaptic (0.45-2) unstable; urgency=low
@@ -3132,7 +3138,7 @@ synaptic (0.42-1) unstable; urgency=low
   * saves selections on "pin", "update", "proceed" (closes: #191090)
   * fixed a segfault (closes: #204809, #204864)
   * fixed a sorting problem (closes: #204755)
-  
+
  -- Michael Vogt <mvo@debian.org>  Thu,  7 Aug 2003 01:23:54 +0200
 
 synaptic (0.41-1) unstable; urgency=low
@@ -3156,7 +3162,7 @@ synaptic (0.40-1) unstable; urgency=low
 
 synaptic (0.39-2) unstable; urgency=low
 
-  * added libgnome-perl to suggests. libgnome-perl is needed to get 
+  * added libgnome-perl to suggests. libgnome-perl is needed to get
     gui dpkg-reconfigure support in synaptic (closes: #189849)
 
  -- Michael Vogt <mvo@debian.org>  Tue,  8 Jul 2003 18:17:15 +0200
@@ -3165,7 +3171,7 @@ synaptic (0.39-1) unstable; urgency=low
 
   * New upstream release
   * fixed location of the .desktop file (closes: #198423, #199080)
-  
+
 
  -- Michael Vogt <mvo@debian.org>  Sat, 28 Jun 2003 21:08:50 +0200
 
@@ -3204,7 +3210,7 @@ synaptic (0.36-5) unstable; urgency=low
   * changed build-dep for libapt-pkg to libapt-pkg (>= 0.5.5)
   * segfault on startup was fixed in 0.36-2 (closes: #189385, #189596, #189423)
   * "download only mode" is working (closes: #191827)
-  * location for the synaptic.desktop file is changed to 
+  * location for the synaptic.desktop file is changed to
     /usr/share/applications
 
  -- Michael Vogt <mvo@debian.org>  Tue, 13 May 2003 09:02:23 +0200
@@ -3212,8 +3218,8 @@ synaptic (0.36-5) unstable; urgency=low
 synaptic (0.36-4) unstable; urgency=low
 
   * droped build-depend for g++-2.95 (*oops*) (closes: #192475)
-  * removed a single "cout" from the code 
-    (don't know how this build on my machine) 
+  * removed a single "cout" from the code
+    (don't know how this build on my machine)
 
  -- Michael Vogt <mvo@debian.org>  Fri,  9 May 2003 10:21:20 +0200
 
@@ -3322,7 +3328,7 @@ synaptic (0.25-1) unstable; urgency=low
   * no more messages on startup (closes: #123310)
   * problem with 8bit locales fixed (closes: #162901)
   * no quit button, but keyboard shortcut (closes: #150733)
-  
+
  -- Michael Vogt <mvo@debian.org>  Wed,  9 Oct 2002 00:50:42 +0200
 
 synaptic (0.24.1-1) unstable; urgency=low
@@ -3393,9 +3399,9 @@ synaptic (0.20-1) unstable; urgency=low
   * added option to see new packages (closes: #150732)
   * added zvt as output terminal
   * some keybings for the Gtk+ version
-  * two packages are generated from the source now: 
+  * two packages are generated from the source now:
     synaptic (WINGs) and gsynaptic (gtk)
-  
+
  -- Michael Vogt <mvo@debian.org>  Tue, 16 Jul 2002 15:02:32 +0200
 
 synaptic (0.16-6) unstable; urgency=low
@@ -3437,4 +3443,3 @@ synaptic (0.16-1) unstable; urgency=low
   * Initial Release (closes: #115167)
 
  -- Michael Vogt <mvo@debian.org>  Tue, 13 Nov 2001 23:17:20 +0100
-

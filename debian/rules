@@ -13,7 +13,7 @@ CONFIGURE_FLAGS= --prefix=/usr \
 	      $(MULTIARCH)
 
 %:
-	dh $@ --with autoreconf $(DHFLAGS)
+	dh $@ $(DHFLAGS)
 
 override_dh_auto_configure:
 	dh_auto_configure $(DHFLAGS) -- $(CONFIGURE_FLAGS)

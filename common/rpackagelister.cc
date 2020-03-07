@@ -61,7 +61,7 @@
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/strutl.h>
-#include <apt-pkg/md5.h>
+#include <apt-pkg/hashes.h>
 #ifndef HAVE_RPM
 #include <apt-pkg/debfile.h>
 #endif
@@ -312,7 +312,7 @@ bool RPackageLister::openCache()
    if(getuid() != 0)
       lock = false;
 
-   if (!_cache->open(*_progMeter,lock)) {
+   if (!_cache->open(_progMeter,lock)) {
       _progMeter->Done();
       _cacheValid = false;
       return _error->Error("_cache->open() failed, please report.");

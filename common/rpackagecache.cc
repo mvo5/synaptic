@@ -37,7 +37,7 @@
 #include <apt-pkg/fileutl.h>
 
 
-bool RPackageCache::open(OpProgress &progress, bool locking)
+bool RPackageCache::open(OpProgress *progress, bool locking)
 {
    if(locking)
       lock();
@@ -45,61 +45,13 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
    if (_error->PendingError())
       return false;
 
-   // delete any old structures
-   if(_dcache)
-      delete _dcache;
-   if(_policy)
-      delete _policy;
-   if(_cache)
-      delete _cache;
-   if(_map)
-      delete _map;
+   cache.Close();
 
-   // Read the source list
-   //pkgSourceList list;
-   assert(_list != NULL);
-   if (!_list->ReadMainList())
-      return _error->Error(_("The list of sources could not be read.\n"
-			     "Go to the repository dialog to correct the problem."));
-
-   if(locking)
-      pkgCacheGenerator::MakeStatusCache(*_list, &progress, nullptr, false);
-   else
-      pkgCacheGenerator::MakeStatusCache(*_list, &progress, nullptr, true);
-
-   if (_error->PendingError())
-      return _error->
-         Error(_
-               ("The package lists or status file could not be parsed or opened."));
-
-   // Open the cache file
-   FileFd File;
-   File.Open(_config->FindFile("Dir::Cache::pkgcache"), FileFd::ReadOnly);
-   if (_error->PendingError())
+   if (!cache.Open(progress, false))
       return false;
 
-   _map = new MMap(File, MMap::Public | MMap::ReadOnly);
-   if (_error->PendingError())
+   if (ReadPinFile(*cache.GetPolicy(), RStateDir() + "/preferences") == false)
       return false;
-
-   // Create the dependency cache
-   _cache = new pkgCache(_map);
-   if (_error->PendingError())
-      return false;
-
-   _policy = new pkgPolicy(_cache);
-   if (_error->PendingError() == true)
-      return false;
-   if (ReadPinFile(*_policy) == false)
-      return false;
-   if (ReadPinDir(*_policy) == false)
-      return false;
-
-   if (ReadPinFile(*_policy, RStateDir() + "/preferences") == false)
-      return false;
-
-   _dcache = new pkgDepCache(_cache, _policy);
-   _dcache->Init(&progress);
 
    _trust_cache.clear();
 
@@ -108,7 +60,7 @@ bool RPackageCache::open(OpProgress &progress, bool locking)
       return false;
 
    // Check that the system is OK
-   if (_dcache->DelCount() != 0 || _dcache->InstCount() != 0)
+   if (deps()->DelCount() != 0 || deps()->InstCount() != 0)
       return _error->Error(_("Internal Error, non-zero counts"));
 
    return true;
@@ -119,10 +71,10 @@ vector<string> RPackageCache::getPolicyArchives(bool filenames_only=false)
    //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
 
    vector<string> archives;
-   for (pkgCache::PkgFileIterator F = _cache->FileBegin(); F.end() == false;
+   for (pkgCache::PkgFileIterator F = pkgCache(cache).FileBegin(); F.end() == false;
         F++) {
       pkgIndexFile *Indx;
-      _list->FindIndex(F, Indx);
+      list()->FindIndex(F, Indx);
       _system->FindIndex(F, Indx);
 
       if(filenames_only) {

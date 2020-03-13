@@ -1,7 +1,7 @@
 SUBDIRS = gtkbuilder
 
 
-INCLUDES= -I${top_srcdir}/common \
+AM_CPPFLAGS = -I${top_srcdir}/common \
 	-I${top_srcdir}/pixmaps  \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \

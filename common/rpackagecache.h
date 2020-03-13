@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 
+#include <apt-pkg/cachefile.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/pkgsystem.h>
@@ -39,14 +40,7 @@ class pkgCache;
 
 
 class RPackageCache {
-   MMap *_map;
-
-   pkgCache *_cache;
-   pkgPolicy *_policy;
-
-   pkgDepCache *_dcache;
-   pkgSourceList *_list;
-
+   pkgCacheFile cache;
    // speed up IsTrusted()
    std::map<pkgCache::PkgFileIterator, pkgIndexFile*> _trust_cache;
 
@@ -54,29 +48,26 @@ class RPackageCache {
 
  public:
    inline pkgDepCache *deps() {
-      return _dcache;
+      return cache.GetDepCache();
    }
    inline pkgSourceList *list() {
-      return _list;
+      return cache.GetSourceList();
    }
    inline std::map<pkgCache::PkgFileIterator, pkgIndexFile*>& trust_cache() {
       return _trust_cache;
    }
 
-   bool open(OpProgress &progress, bool lock=true);
+   bool open(OpProgress *progress, bool lock=true);
 
    std::vector<std::string> getPolicyArchives(bool filenames_only);
 
    bool lock();
    void releaseLock();
 
-   RPackageCache()
-     : _map(0), _cache(0), _policy(0), _dcache(0), _locked(false)
+   RPackageCache() : _locked(false)
    {
-      _list = new pkgSourceList();
    }
    ~RPackageCache() {
-      delete _list;
    }
 };
 

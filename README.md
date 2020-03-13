@@ -27,7 +27,7 @@ On a Debian system, you can have more than one "release" in your
 sources.list file. You can choose which one to use in the "expert" tab
 in the preferences dialog. 
 
-All development is done at https://savannah.nongnu.org/projects/synaptic
+All development is done at https://github.com/mvo5/synaptic
 
 Tutorial:
 ---------

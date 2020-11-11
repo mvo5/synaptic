@@ -36,11 +36,6 @@ override_dh_installman:
 
 # patch
 override_dh_auto_build:
-	# apply distro specific patches if we have them
-	if [ -e debian/patches/00list.$(DIST) ]; then \
-	  cp debian/patches/00list.$(DIST) debian/patches/00list;\
-	  dpatch apply-all;\
-	fi;
 	dh_auto_build $(DHFLAGS)
 	# ubuntu specific for universe langpacks but will not do any
 	#  harm on debian
@@ -48,7 +43,4 @@ override_dh_auto_build:
 
 # unpatch
 override_dh_auto_clean:
-	cp debian/patches/00list.$(DIST) debian/patches/00list
-	dpatch deapply-all
-	rm -rf patch-stamp debian/patched
 	dh_auto_clean $(DHFLAGS)

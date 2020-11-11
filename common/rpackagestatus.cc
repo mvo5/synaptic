@@ -69,7 +69,11 @@ void RPackageStatus::init()
       markUnsupported = true;
 
       // read supported labels
+#if defined(VENDOR_DERIVES_FROM_UBUNTU)
+      labels = _config->Find("Synaptic::supported-label", "Ubuntu UbuntuESM UbuntuESMApps");
+#else
       labels = _config->Find("Synaptic::supported-label", "Debian Debian-Security");
+#endif
       stringstream sst1(labels);
       while(!sst1.eof()) {
 	 sst1 >> s;
@@ -77,7 +81,11 @@ void RPackageStatus::init()
       }
 
       // read supported origins
+#if defined(VENDOR_DERIVES_FROM_UBUNTU)
+      origin = _config->Find("Synaptic::supported-origins", "Ubuntu UbuntuESM UbuntuESMApps");
+#else
       origin = _config->Find("Synaptic::supported-origins", "Debian");
+#endif
       stringstream sst2(origin);
       while(!sst2.eof()) {
 	 sst2 >> s;
@@ -85,7 +93,11 @@ void RPackageStatus::init()
       }
       
       // read supported components
+#if defined(VENDOR_DERIVES_FROM_UBUNTU)
+      components = _config->Find("Synaptic::supported-components", "main restricted");
+#else
       components = _config->Find("Synaptic::supported-components", "main updates/main");
+#endif
       stringstream sst3(components);
       while(!sst3.eof()) {
 	 sst3 >> s;

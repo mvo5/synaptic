@@ -214,7 +214,9 @@ AS_IF([test "x$with_apt_multiarch_support" != "xno"],
 	[AC_DEFINE(WITH_APT_MULTIARCH_SUPPORT, 1, [build with multiarch])]
       )
 
-
+AS_IF([dpkg-vendor --derives-from ubuntu],
+	[AC_DEFINE(VENDOR_DERIVES_FROM_UBUNTU, 1, [vendor derives from ubuntu])]
+      )
 AC_OUTPUT([
 tests/Makefile 
 common/Makefile 

@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(synaptic, 0.90)
+AC_INIT(synaptic, 0.90+nmu1)
 
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AM_CONFIG_HEADER(config.h)
@@ -214,7 +214,9 @@ AS_IF([test "x$with_apt_multiarch_support" != "xno"],
 	[AC_DEFINE(WITH_APT_MULTIARCH_SUPPORT, 1, [build with multiarch])]
       )
 
-
+AS_IF([dpkg-vendor --derives-from ubuntu],
+	[AC_DEFINE(VENDOR_DERIVES_FROM_UBUNTU, 1, [vendor derives from ubuntu])]
+      )
 AC_OUTPUT([
 tests/Makefile 
 common/Makefile 

@@ -386,7 +386,7 @@ gtk_tag_tree_get_value(GtkTreeModel *tree_model,
 #endif
 
    const gchar *str;
-
+   std::string cppstr;
    switch (column) {
       case NAME_COLUMN:
          str = utf8(name.c_str());
@@ -396,8 +396,8 @@ gtk_tag_tree_get_value(GtkTreeModel *tree_model,
          if (pkg == NULL)
             return;
          if (pkg->installedVersion()) {
-            str = SizeToStr(pkg->installedSize()).c_str();
-            g_value_set_string(value, str);
+            cppstr = SizeToStr(pkg->installedSize());
+            g_value_set_string(value, cppstr.c_str());
          }
          break;
       case INSTALLED_VERSION_COLUMN:

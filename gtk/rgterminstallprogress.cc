@@ -129,17 +129,7 @@ void RGTermInstallProgress::startUpdate()
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    //cout << "Plug ID: " << id << endl;
    if (id > 0) {
-#if !GTK_CHECK_VERSION(3,0,0)
-      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "window_zvtinstallprogress")));
-      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object
-                                   (_builder, "vbox_terminstall_progress"));
-      _sock =  gtk_plug_new(id);
-      gtk_widget_reparent(vbox, _sock);
-      gtk_widget_show(_sock);
-#else
       g_error("gtk_plugin_new not supported with gtk3");
-#endif
    } else {
       show();
    }

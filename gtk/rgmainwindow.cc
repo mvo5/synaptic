@@ -32,6 +32,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkkeysyms-compat.h>
 #include <cmath>
 #include <algorithm>
 #include <fstream>
@@ -48,8 +49,6 @@
 #include <apt-pkg/configuration.h>
 
 #include <pwd.h>
-
-#include "gtk3compat.h"
 
 #include "raptoptions.h"
 #include "rconfiguration.h"
@@ -2226,12 +2225,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 			"You have to click on the "
 			"\"Reload\" button for your changes to "
 			"take effect");
-#if GTK_CHECK_VERSION(2,6,0)
-      gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
-					       "%s", msgstr);
-#else
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
-#endif
       gtk_dialog_add_buttons(GTK_DIALOG(dialog), _("_Cancel"), GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
       GtkWidget* reload_button = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
       GtkWidget* refresh_image = gtk_image_new_from_icon_name("view-refresh", GTK_ICON_SIZE_BUTTON);

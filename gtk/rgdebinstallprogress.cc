@@ -32,8 +32,6 @@
 #include <fcntl.h>
 #include <pty.h>
 
-#include "gtk3compat.h"
-
 #include "rgmainwindow.h"
 #include "gsynaptic.h"
 
@@ -52,6 +50,7 @@
 
 #include <vte/vte.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkkeysyms-compat.h>
 
 
 #include "i18n.h"

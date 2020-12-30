@@ -25,26 +25,6 @@ AC_PROG_INTLTOOL([0.23])
 synapticlocaledir='${prefix}/${DATADIRNAME}/locale'
 AC_SUBST(synapticlocaledir)
      
-
-dnl ask for wings
-dnl AC_ARG_WITH(wings,
-dnl 	[--with-wings   build with WINGs gui (obsolete)],
-dnl	[AC_CHECK_PROG(WINGS, get-wings-flags, yes, no)
-dnl	if test x"$WINGS" == xno; then
-dnl	   AC_MSG_ERROR([WINGs is not installed])
-dnl	fi
-dnl	]
-dnl )
-dnl if test x"$WINGS" = xyes; then
-dnl	BUILD_wings="wings"
-dnl 	WINGS_LIBS=`get-wings-flags --ldflags`
-dnl	WINGS_LIBS="$GUI_LIBS `get-wings-flags --libs`"
-dnl	WINGS_HDRS=`get-wings-flags --cflags`
-dnl	AC_SUBST(WINGS_LIBS)
-dnl	AC_SUBST(WINGS_HDRS)
-dnl fi
-dnl AC_SUBST(BUILD_wings)
-
 dnl we build for gtk3 by default now
 pkg_modules="gtk+-3.0 >= 3.4.0, pango >= 1.0.0, glib-2.0"
 vte_modules="vte-2.91"
@@ -56,7 +36,6 @@ AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 AC_SUBST(BUILD_gtk)
 
-dnl if test x"$WINGS" = xno; then
 if test x"$GTK" = xno; then
 	AC_MSG_ERROR([ Gtk is not installed, you need to install it to get a GUI])
 fi

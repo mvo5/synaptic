@@ -37,7 +37,6 @@
 #include "rguserdialog.h"
 #include "gsynaptic.h"
 #include "rgpackagestatus.h"
-#include "gtk3compat.h"
 
 #include "i18n.h"
 

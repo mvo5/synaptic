@@ -134,17 +134,8 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    //cout << "Plug ID: " << id << endl;
    if (id > 0) {
-#if !GTK_CHECK_VERSION(3,0,0)
-      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "window_fetch")));
-      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_fetch"));
-      _sock =  gtk_plug_new(id);
-      gtk_widget_reparent(vbox, _sock);
-      gtk_widget_show_all(_sock);
-      _win = _sock;
-#else
       g_error("gtk_plugin_new not supported with gtk3");
-#endif
-   } 
+   }
    gtk_widget_realize(_win);
 
    // reset the urgency hint here (gtk seems to like showing it for

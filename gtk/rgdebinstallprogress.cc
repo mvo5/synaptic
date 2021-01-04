@@ -32,8 +32,6 @@
 #include <fcntl.h>
 #include <pty.h>
 
-#include "gtk3compat.h"
-
 #include "rgmainwindow.h"
 #include "gsynaptic.h"
 
@@ -52,6 +50,7 @@
 
 #include <vte/vte.h>
 #include <gdk/gdkkeysyms.h>
+#include <gdk/gdkkeysyms-compat.h>
 
 
 #include "i18n.h"
@@ -293,14 +292,7 @@ void RGDebInstallProgress::startUpdate()
    // check if we run embedded
    int id = _config->FindI("Volatile::PlugProgressInto", -1);
    if (id > 0) {
-#if !GTK_CHECK_VERSION(3,0,0)
-      GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_rgdebinstall_progress"));
-      _sock =  gtk_plug_new(id);
-      gtk_widget_reparent(vbox, _sock);
-      gtk_widget_show(_sock);
-#else
       g_error("gtk_plugin_new not supported with gtk3");
-#endif
    } else {
       show();
    }

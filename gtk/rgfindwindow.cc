@@ -27,7 +27,6 @@
 
 #include "rgfindwindow.h"
 #include "rgutils.h"
-#include "gtk3compat.h"
 #include "i18n.h"
 
 

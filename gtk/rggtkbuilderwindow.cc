@@ -255,11 +255,6 @@ void RGGtkBuilderWindow::setBusyCursor(bool flag)
    if(flag) {
       if(gtk_widget_get_visible(_win))
 	 gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
-#if GTK_CHECK_VERSION(2,4,0)
-      // if we don't iterate here, the busy cursor is not shown
-      while (gtk_events_pending())
-	 gtk_main_iteration();
-#endif
    } else {
       if(gtk_widget_get_visible(_win))
 	 gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);

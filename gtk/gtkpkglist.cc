@@ -404,6 +404,7 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
       return;
    }
 
+   std::string cppstr;
    const gchar *str;
    switch (column) {
       case NAME_COLUMN:
@@ -412,13 +413,13 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
          break;
       case PKG_SIZE_COLUMN:
          if (pkg->installedVersion()) {
-            str = SizeToStr(pkg->installedSize()).c_str();
-            g_value_set_string(value, str);
+            cppstr = SizeToStr(pkg->installedSize());
+            g_value_set_string(value, cppstr.c_str());
          }
          break;
       case PKG_DOWNLOAD_SIZE_COLUMN:
-	 str = SizeToStr(pkg->availablePackageSize()).c_str();
-	 g_value_set_string(value, str);
+	 cppstr = SizeToStr(pkg->availablePackageSize());
+	 g_value_set_string(value, cppstr.c_str());
          break;
       case SECTION_COLUMN:
 	 str = pkg->section();

@@ -75,8 +75,6 @@ synaptic_SOURCES= \
 	rgpkgdetails.h \
 	rgrepositorywin.cc\
 	rgrepositorywin.h\
-	rgvendorswindow.cc\
-	rgvendorswindow.h\
 	rgsummarywindow.cc\
 	rgsummarywindow.h\
 	rgchangelogdialog.cc\

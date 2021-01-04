@@ -125,14 +125,7 @@ void RGTermInstallProgress::startUpdate()
 		    G_CALLBACK(child_exited),
 		    this);
  
-   // check if we run embedded
-   int id = _config->FindI("Volatile::PlugProgressInto", -1);
-   //cout << "Plug ID: " << id << endl;
-   if (id > 0) {
-      g_error("gtk_plugin_new not supported with gtk3");
-   } else {
-      show();
-   }
+   show();
 
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
    gtk_widget_set_sensitive(_closeB, false);

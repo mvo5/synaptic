@@ -288,14 +288,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 void RGDebInstallProgress::startUpdate()
 {
    child_has_exited=false;
-
-   // check if we run embedded
-   int id = _config->FindI("Volatile::PlugProgressInto", -1);
-   if (id > 0) {
-      g_error("gtk_plugin_new not supported with gtk3");
-   } else {
-      show();
-   }
+   show();
    RGFlushInterface();
 }
 

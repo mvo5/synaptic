@@ -129,13 +129,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    PangoContext *context = gdk_pango_context_get();
    _layout = pango_layout_new(context);
 
-   // check if we should run embedded somewhere
-   // we need to make the window show before we obtain the _gc
-   int id = _config->FindI("Volatile::PlugProgressInto", -1);
-   //cout << "Plug ID: " << id << endl;
-   if (id > 0) {
-      g_error("gtk_plugin_new not supported with gtk3");
-   }
    gtk_widget_realize(_win);
 
    // reset the urgency hint here (gtk seems to like showing it for

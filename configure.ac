@@ -46,7 +46,7 @@ dnl fi
 dnl AC_SUBST(BUILD_wings)
 
 dnl we build for gtk3 by default now
-pkg_modules="gtk+-3.0 >= 2.91.0, pango >= 1.0.0, glib-2.0"
+pkg_modules="gtk+-3.0 >= 3.4.0, pango >= 1.0.0, glib-2.0"
 vte_modules="vte-2.91"
 
 PKG_CHECK_MODULES(GTK, [$pkg_modules])

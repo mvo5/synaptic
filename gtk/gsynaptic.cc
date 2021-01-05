@@ -114,8 +114,6 @@ CommandLine::Args Args[] = {
    , {
    0, "parent-window-id", "Volatile::ParentWindowId", CommandLine::HasArg}
    , {
-   0, "plug-progress-into", "Volatile::PlugProgressInto", CommandLine::HasArg}
-   , {
    0, "progress-str", "Volatile::InstallProgressStr", CommandLine::HasArg} 
    , {
    0, "finish-str", "Volatile::InstallFinishedStr", CommandLine::HasArg} 

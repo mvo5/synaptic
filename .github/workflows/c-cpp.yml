@@ -13,11 +13,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: update
-      run: sudo apt update
-    - name: install packages
-      run: sudo apt-get install --no-install-recommends -y debhelper-compat devscripts libapt-pkg-dev gettext libgtk-3-dev libvte-2.91-dev intltool xmlto sharutils libept-dev
-      # libsm-dev lsb-release (already installed on image)
+    - name: update and install packages
+      run: |
+        sudo apt update
+        sudo apt build-dep -y ./
+        #Devscripts for bringing in debuild
+        sudo apt install devscripts -y
+
     - name: autogen.sh
       run: ./autogen.sh
     - name: configure
@@ -26,7 +28,8 @@ jobs:
       run: make
     - name: debuild
       run: debuild -B -us -uc
-#    - name: make check
-#      run: make check
-#    - name: make distcheck
-#      run: make distcheck
+    - name: install deb
+      run: sudo apt install ../synaptic_*.deb
+    - name: remove deb
+      run: sudo apt remove synaptic
+# TODO ? add make check or distcheck?

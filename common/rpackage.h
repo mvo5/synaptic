@@ -99,7 +99,7 @@ class RPackage {
 
    // Virtual pkgs provided by this one.
    // FIXME: broken right now
-   bool isShallowDependency(RPackage *pkg);
+   //bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:

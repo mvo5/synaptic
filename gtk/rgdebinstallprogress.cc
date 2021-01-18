@@ -510,7 +510,7 @@ void RGDebInstallProgress::terminalAction(GtkWidget *terminal,
         TermAction action) {
    switch(action) {
       case EDIT_COPY:
-          vte_terminal_copy_clipboard(VTE_TERMINAL(terminal));
+          vte_terminal_copy_clipboard_format(VTE_TERMINAL(terminal), VTE_FORMAT_TEXT);
           break;
       case EDIT_SELECT_ALL:
           vte_terminal_select_all(VTE_TERMINAL(terminal));

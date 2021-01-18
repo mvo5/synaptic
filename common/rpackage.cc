@@ -1109,9 +1109,9 @@ void RPackage::setPinned(bool flag)
 
 
 // FIXME: this function is broken right now (and it never really wasn't :/
+#if 0
 bool RPackage::isShallowDependency(RPackage *pkg)
 {
-#if 0
    pkgCache::DepIterator rdepI;
 
    // check whether someone else depends on a virtual pkg of this
@@ -1144,8 +1144,9 @@ bool RPackage::isShallowDependency(RPackage *pkg)
    }
 
    return true;
-#endif
 }
+#endif
+
 
 // format: first version, second archives
 vector<pair<string, string> > RPackage::getAvailableVersions()
@@ -1279,9 +1280,9 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 
       // skip dependencies that are dependants of other packages
       // if shallow=true
-      if (shallow && !isShallowDependency(depackage)) {
+      /*if (shallow && !isShallowDependency(depackage)) {
          continue;
-      }
+      }*/
       // set this package for removal
       depackage->setRemove(purge);
    }

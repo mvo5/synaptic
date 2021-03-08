@@ -111,25 +111,6 @@ std::string SizeToStr(double Size)
    return S;
 }
 
-std::vector<const gchar*> GetBrowserCommand(const gchar *link)
-{
-   std::vector<const gchar*> cmd;
-   if (FileExists("/usr/bin/xdg-open")) {
-      cmd.push_back("/usr/bin/xdg-open");
-      cmd.push_back(link);
-   } else if (FileExists("/usr/bin/firefox")) {
-      cmd.push_back("/usr/bin/firefox");
-      cmd.push_back(link);
-   } else if (FileExists("/usr/bin/iceweasel")) {
-      cmd.push_back("/usr/bin/iceweasel");
-      cmd.push_back(link);
-   } else if (FileExists("/usr/bin/konqueror")) {
-      cmd.push_back("/usr/bin/konqueror");
-      cmd.push_back(link);
-   }
-   return cmd;
-}
-
 bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
 {
    std::vector<const gchar*> prefix;

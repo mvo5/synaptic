@@ -118,6 +118,11 @@
                     <property name="can_focus">True</property>
                     <property name="text" translatable="yes"> </property>
                     <signal name="changed" handler="on_entry_filters_changed" swapped="no"/>
+                    <child internal-child="accessible">
+                      <object class="AtkObject" id="filters_name">
+                        <property name="AtkObject::accessible-name" translatable="yes">Filters</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>

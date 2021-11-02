@@ -110,7 +110,10 @@
                             <property name="editable">False</property>
                             <property name="wrap_mode">word</property>
                             <property name="left_margin">6</property>
-                            <property name="cursor_visible">False</property>
+                            <property name="cursor_visible">True</property>
+                            <style>
+                              <class name="hidden_cursor"></class>
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -134,6 +137,11 @@
                             <property name="can_default">True</property>
                             <property name="has_default">True</property>
                             <signal name="activate" handler="on_entry_find_activate" swapped="no"/>
+                            <child internal-child="accessible">
+                              <object class="AtkObject" id="find_name">
+                                <property name="AtkObject::accessible-name" translatable="yes">Find</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">True</property>

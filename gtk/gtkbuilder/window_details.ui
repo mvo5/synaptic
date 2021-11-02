@@ -241,8 +241,11 @@
                             <property name="wrap_mode">word</property>
                             <property name="left_margin">3</property>
                             <property name="right_margin">3</property>
-                            <property name="cursor_visible">False</property>
+                            <property name="cursor_visible">True</property>
                             <property name="buffer">textbuffer1</property>
+                            <style>
+                              <class name="hidden_cursor"></class>
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -875,7 +878,15 @@
                     <property name="editable">False</property>
                     <property name="left_margin">3</property>
                     <property name="right_margin">3</property>
-                    <property name="cursor_visible">False</property>
+                    <property name="cursor_visible">True</property>
+                    <child internal-child="accessible">
+                      <object class="AtkObject" id="files_name">
+                        <property name="AtkObject::accessible-name" translatable="yes">Installed Files</property>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="hidden_cursor"></class>
+                    </style>
                   </object>
                 </child>
               </object>
@@ -1055,7 +1066,15 @@
                         <property name="wrap_mode">word</property>
                         <property name="left_margin">3</property>
                         <property name="right_margin">3</property>
-                        <property name="cursor_visible">False</property>
+                        <property name="cursor_visible">True</property>
+                        <style>
+                          <class name="hidden_cursor"></class>
+                        </style>
+                        <child internal-child="accessible">
+                          <object class="AtkObject" id="descr_name">
+                            <property name="AtkObject::accessible-name" translatable="yes">Description</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>

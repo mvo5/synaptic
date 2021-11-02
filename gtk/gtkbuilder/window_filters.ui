@@ -252,12 +252,12 @@
                                     <property name="can_focus">False</property>
                                     <property name="spacing">18</property>
                                     <child>
-                                      <object class="GtkBox" id="vbox21">
-                                        <property name="orientation">vertical</property>
+                                      <object class="GtkFrame" id="current_frame">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="spacing">6</property>
-                                        <child>
+                                        <property name="label_xalign">0</property>
+                                        <property name="shadow_type">none</property>
+                                        <child type="label">
                                           <object class="GtkLabel" id="label25">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
@@ -265,310 +265,20 @@
                                             <property name="label" translatable="yes" comments="TRANSLATORS: this is a label embedded in the &quot;Status&quot; notebook tab, so it describes the &quot;Current [status]&quot;">&lt;b&gt;Current&lt;/b&gt;</property>
                                             <property name="use_markup">True</property>
                                           </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">0</property>
-                                          </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox" id="hbox18">
-                                            <property name="orientation">horizontal</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <child>
-                                              <object class="GtkLabel" id="label24">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label" translatable="yes">    </property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkBox" id="vbox16">
-                                                <property name="orientation">vertical</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status3">
-                                                    <property name="label" translatable="yes">Installed</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Installed packages that are up-to-date</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">0</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status2">
-                                                    <property name="label" translatable="yes">Upgradable</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Installed packages that are upgradable</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">1</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status13">
-                                                    <property name="label" translatable="yes">Upgradable (upstream)</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Installed packages that are upgradable to a later upstream version</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">2</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status11">
-                                                    <property name="label" translatable="yes">Residual config</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Removed packages that have left configuration files on the system</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">3</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status1">
-                                                    <property name="label" translatable="yes">Not installed</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Not installed packages</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">4</property>
-                                                  </packing>
-                                                </child>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkBox" id="vbox22">
-                                        <property name="orientation">vertical</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="spacing">6</property>
-                                        <child>
-                                          <object class="GtkLabel" id="label22">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="xalign">0</property>
-                                            <property name="label" translatable="yes" comments="TRANSLATORS: this is a label embedded in the &quot;Status&quot; notebook tab, so it describes the &quot;Marked [status]&quot;">&lt;b&gt;Marked&lt;/b&gt;</property>
-                                            <property name="use_markup">True</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkBox" id="hbox20">
-                                            <property name="orientation">horizontal</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <child>
-                                              <object class="GtkLabel" id="label23">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="label" translatable="yes">    </property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkBox" id="vbox17">
-                                                <property name="orientation">vertical</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status4">
-                                                    <property name="label" translatable="yes">Not marked</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Packages that won't be changed</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">0</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status5">
-                                                    <property name="label" translatable="yes">For installation or upgrade</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Packages that will be installed or upgraded</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">1</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkCheckButton" id="checkbutton_status6">
-                                                    <property name="label" translatable="yes">For removal</property>
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">True</property>
-                                                    <property name="receives_default">False</property>
-                                                    <property name="tooltip_text" translatable="yes">Packages that will be removed</property>
-                                                    <property name="use_underline">True</property>
-                                                    <property name="xalign">0.5</property>
-                                                    <property name="draw_indicator">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">2</property>
-                                                  </packing>
-                                                </child>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkBox" id="vbox23">
-                                    <property name="orientation">vertical</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="spacing">6</property>
-                                    <child>
-                                      <object class="GtkLabel" id="label26">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="xalign">0</property>
-                                        <property name="label" translatable="yes" comments="TRANSLATORS: this is a label embedded in the &quot;Status&quot; notebook tab, so it describes the &quot;Other [status]&quot;">&lt;b&gt;Other&lt;/b&gt;</property>
-                                        <property name="use_markup">True</property>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <object class="GtkBox" id="hbox21">
-                                        <property name="orientation">horizontal</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <child>
-                                          <object class="GtkLabel" id="label27">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">    </property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkBox" id="vbox18">
+                                          <object class="GtkBox" id="vbox16">
                                             <property name="orientation">vertical</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
+                                            <property name="margin_start">20</property>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status8">
-                                                <property name="label" translatable="yes">New in repository</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status3">
+                                                <property name="label" translatable="yes">Installed</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages that are new in the repository since that last "Reload"</property>
+                                                <property name="tooltip_text" translatable="yes">Installed packages that are up-to-date</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -580,12 +290,12 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status9">
-                                                <property name="label" translatable="yes">Pinned</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status2">
+                                                <property name="label" translatable="yes">Upgradable</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages that will never be upgraded</property>
+                                                <property name="tooltip_text" translatable="yes">Installed packages that are upgradable</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -597,12 +307,12 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status10">
-                                                <property name="label" translatable="yes">Orphaned</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status13">
+                                                <property name="label" translatable="yes">Upgradable (upstream)</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Library packages that are no longer needed (deborphan is required)</property>
+                                                <property name="tooltip_text" translatable="yes">Installed packages that are upgradable to a later upstream version</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -614,12 +324,12 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status12">
-                                                <property name="label" translatable="yes">Not installable</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status11">
+                                                <property name="label" translatable="yes">Residual config</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages that are not available in any repository</property>
+                                                <property name="tooltip_text" translatable="yes">Removed packages that have left configuration files on the system</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -631,12 +341,12 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status7">
-                                                <property name="label" translatable="yes">Broken</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status1">
+                                                <property name="label" translatable="yes">Not installed</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages with broken dependencies</property>
+                                                <property name="tooltip_text" translatable="yes">Not installed packages</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -647,13 +357,38 @@
                                                 <property name="position">4</property>
                                               </packing>
                                             </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkFrame" id="marked_frame">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label_xalign">0</property>
+                                        <property name="shadow_type">none</property>
+                                        <child type="label">
+                                          <object class="GtkLabel" id="label22">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="xalign">0</property>
+                                            <property name="label" translatable="yes" comments="TRANSLATORS: this is a label embedded in the &quot;Status&quot; notebook tab, so it describes the &quot;Marked [status]&quot;">&lt;b&gt;Marked&lt;/b&gt;</property>
+                                            <property name="use_markup">True</property>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkBox" id="vbox17">
+                                            <property name="orientation">vertical</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="margin_start">20</property>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status14">
-                                                <property name="label" translatable="yes">Automatic install</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status4">
+                                                <property name="label" translatable="yes">Not marked</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages installed automatically as part of a dependency</property>
+                                                <property name="tooltip_text" translatable="yes">Packages that won't be changed</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -661,16 +396,16 @@
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">False</property>
-                                                <property name="position">5</property>
+                                                <property name="position">0</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status15">
-                                                <property name="label" translatable="yes">Automatic removable</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status5">
+                                                <property name="label" translatable="yes">For installation or upgrade</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages installed automatically but no longer required by any other package</property>
+                                                <property name="tooltip_text" translatable="yes">Packages that will be installed or upgraded</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -678,16 +413,16 @@
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">False</property>
-                                                <property name="position">6</property>
+                                                <property name="position">1</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status16">
-                                                <property name="label" translatable="yes">Policy broken</property>
+                                              <object class="GtkCheckButton" id="checkbutton_status6">
+                                                <property name="label" translatable="yes">For removal</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Currently in broken policy state</property>
+                                                <property name="tooltip_text" translatable="yes">Packages that will be removed</property>
                                                 <property name="use_underline">True</property>
                                                 <property name="xalign">0.5</property>
                                                 <property name="draw_indicator">True</property>
@@ -695,26 +430,63 @@
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">False</property>
-                                                <property name="position">7</property>
+                                                <property name="position">2</property>
                                               </packing>
                                             </child>
-                                            <child>
-                                              <object class="GtkCheckButton" id="checkbutton_status17">
-                                                <property name="label" translatable="yes">Manual installed</property>
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="receives_default">False</property>
-                                                <property name="tooltip_text" translatable="yes">Packages installed manually (not as a dependency of something else)</property>
-                                                <property name="use_underline">True</property>
-                                                <property name="xalign">0.5</property>
-                                                <property name="draw_indicator">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">8</property>
-                                              </packing>
-                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                                <child>
+                                    <object class="GtkFrame" id="other_frame">
+                                      <property name="visible">True</property>
+                                      <property name="can_focus">False</property>
+                                      <property name="label_xalign">0</property>
+                                      <property name="shadow_type">none</property>
+                                    <child type="label">
+                                      <object class="GtkLabel" id="label26">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="xalign">0</property>
+                                        <property name="label" translatable="yes" comments="TRANSLATORS: this is a label embedded in the &quot;Status&quot; notebook tab, so it describes the &quot;Other [status]&quot;">&lt;b&gt;Other&lt;/b&gt;</property>
+                                        <property name="use_markup">True</property>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkBox" id="vbox18">
+                                        <property name="orientation">vertical</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="margin_start">20</property>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status8">
+                                            <property name="label" translatable="yes">New in repository</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages that are new in the repository since that last "Reload"</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status9">
+                                            <property name="label" translatable="yes">Pinned</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages that will never be upgraded</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -722,33 +494,132 @@
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status10">
+                                            <property name="label" translatable="yes">Orphaned</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Library packages that are no longer needed (deborphan is required)</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status12">
+                                            <property name="label" translatable="yes">Not installable</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages that are not available in any repository</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status7">
+                                            <property name="label" translatable="yes">Broken</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages with broken dependencies</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">4</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status14">
+                                            <property name="label" translatable="yes">Automatic install</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages installed automatically as part of a dependency</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">5</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status15">
+                                            <property name="label" translatable="yes">Automatic removable</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages installed automatically but no longer required by any other package</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">6</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status16">
+                                            <property name="label" translatable="yes">Policy broken</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Currently in broken policy state</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">7</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="checkbutton_status17">
+                                            <property name="label" translatable="yes">Manual installed</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="tooltip_text" translatable="yes">Packages installed manually (not as a dependency of something else)</property>
+                                            <property name="use_underline">True</property>
+                                            <property name="xalign">0.5</property>
+                                            <property name="draw_indicator">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">8</property>
+                                          </packing>
+                                        </child>
                                       </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
                                     </child>
                                   </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
                                 </child>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">0</property>
-                              </packing>
                             </child>
                           </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">0</property>
-                          </packing>
                         </child>
                         <child>
                           <object class="GtkButtonBox" id="hbuttonbox4">

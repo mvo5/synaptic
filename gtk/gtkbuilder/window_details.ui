@@ -342,12 +342,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox34">
-                    <property name="orientation">vertical</property>
+                  <object class="GtkFrame" id="installed_versions_frame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="spacing">6</property>
-                    <child>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child type="label">
                       <object class="GtkLabel" id="label115">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -355,29 +355,12 @@
                         <property name="label" translatable="yes">&lt;b&gt;Installed Version&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="hbox37">
                         <property name="orientation">horizontal</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkLabel" id="label118">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">    </property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkTable" id="table_installed">
                             <property name="visible">True</property>
@@ -386,6 +369,7 @@
                             <property name="n_columns">2</property>
                             <property name="column_spacing">12</property>
                             <property name="row_spacing">6</property>
+                            <property name="margin_start">20</property>
                             <child>
                               <object class="GtkLabel" id="label105">
                                 <property name="visible">True</property>
@@ -452,26 +436,16 @@
                           </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
                 <child>
-                  <object class="GtkBox" id="vbox35">
-                    <property name="orientation">vertical</property>
+                  <object class="GtkFrame" id="available_versions_frame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="spacing">6</property>
-                    <child>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">none</property>
+                    <child type="label">
                       <object class="GtkLabel" id="label116">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
@@ -479,29 +453,12 @@
                         <property name="label" translatable="yes">&lt;b&gt;Latest Available Version&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkBox" id="hbox36">
                         <property name="orientation">horizontal</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkLabel" id="label117">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">    </property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkTable" id="table_available">
                             <property name="visible">True</property>
@@ -510,6 +467,7 @@
                             <property name="n_columns">2</property>
                             <property name="column_spacing">12</property>
                             <property name="row_spacing">6</property>
+                            <property name="margin_start">20</property>
                             <child>
                               <object class="GtkLabel" id="label114">
                                 <property name="visible">True</property>
@@ -600,18 +558,8 @@
                               </packing>
                             </child>
                           </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">1</property>
-                          </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>

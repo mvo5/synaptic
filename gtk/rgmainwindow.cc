@@ -3232,9 +3232,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
        _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
       gtk_menu_item_activate(GTK_MENU_ITEM(oneclickitem));
    } else {
-      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-                     (event != NULL) ? event->button : 0,
-                     gdk_event_get_time((GdkEvent *) event));
+      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
    }
 }
 

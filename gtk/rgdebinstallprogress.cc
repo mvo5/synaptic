@@ -491,9 +491,7 @@ gboolean RGDebInstallProgress::cbTerminalClicked(GtkWidget *widget,
 {
    if (event->button == 3) {
       RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
-      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-              event->button,
-              gdk_event_get_time((GdkEvent *) event));
+      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
       return true;
    }
    return false;

@@ -30,6 +30,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <unistd.h>
+
 #include <apt-pkg/init.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>

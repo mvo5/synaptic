@@ -2381,14 +2381,15 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
       cmd.push_back("yelp");
       cmd.push_back("ghelp:synaptic");
    } else {
-      cmd = GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html");
+      cmd.push_back("/usr/bin/xdg-open");
+      cmd.push_back(PACKAGE_DATA_DIR "/synaptic/html/index.html");
    }
 
    if (cmd.empty()) {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
-                               "the 'konqueror' browser or the 'firefox' "
-                               "browser to view the synaptic manual.\n\n"
+                               "or any browser setup to use xdg-open "
+                               "to view the synaptic manual.\n\n"
                                "Alternatively you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
@@ -3231,9 +3232,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
        _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
       gtk_menu_item_activate(GTK_MENU_ITEM(oneclickitem));
    } else {
-      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-                     (event != NULL) ? event->button : 0,
-                     gdk_event_get_time((GdkEvent *) event));
+      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
    }
 }
 

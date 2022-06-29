@@ -201,7 +201,9 @@ gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label,
 gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void* data)
 {
    RPackage *pkg = (RPackage*)data;
-   std::vector<const gchar*> cmd = GetBrowserCommand(pkg->homepage());
+   std::vector<const gchar *> cmd;
+   cmd.push_back("xdg-open");
+   cmd.push_back(pkg->homepage());
    //std::cerr << "cbOpenHomepage: " << cmd[0] << std::endl;
    RunAsSudoUserCommand(cmd);
 

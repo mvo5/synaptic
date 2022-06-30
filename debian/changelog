@@ -1,11 +1,19 @@
-synaptic (0.91.1) UNRELEASED; urgency=medium
+synaptic (0.91.1) unstable; urgency=medium
 
+  [ Debian Janitor ]
   * Remove constraints unnecessary since buster:
     + Build-Depends: Drop versioned constraint on dpkg, libapt-pkg-dev and
       libept-dev.
     + synaptic: Drop versioned constraint on menu in Conflicts.
 
- -- Debian Janitor <janitor@jelmer.uk>  Sun, 27 Feb 2022 16:50:07 -0000
+  [ Pino Toscano ]
+  * Stop suggesting 'menu', as it is not needed/used anymore since 0.75.12
+    (Closes: #1012436)
+
+  [ Michael Vogt ]
+  * Revert "gtk: remove fixed-size for status/supported pixmap columns"
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 30 Jun 2022 14:49:44 +0200
 
 synaptic (0.91) unstable; urgency=medium
 

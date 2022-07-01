@@ -64,12 +64,13 @@ void RGPackageStatus::initColors()
 
 void RGPackageStatus::initPixbufs()
 {
-   gchar *s;
+   const int statusPixbufSize = 22;
+
    for (int i = 0; i < N_STATUS_COUNT; i++) {
-      s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
-      StatusPixbuf[i] = get_gdk_pixbuf(s);
+      gchar *s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
+      StatusPixbuf[i] = get_gdk_pixbuf(s, statusPixbufSize);
    }
-   supportedPix = get_gdk_pixbuf("package-supported");
+   supportedPix = get_gdk_pixbuf("package-supported", statusPixbufSize);
 }
 
 // class that finds out what do display to get user

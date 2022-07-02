@@ -1,1 +1,1 @@
-SUBDIRS=16x16 24x24
+SUBDIRS=16x16/actions 24x24/actions

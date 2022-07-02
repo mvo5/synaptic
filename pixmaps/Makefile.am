@@ -10,8 +10,6 @@ button_DATA = update_small.png \
 	      upgrade_small.png \
 	      distupgrade_small.png\
               proceed_small.png \
-	      synaptic_mini.xpm \
-	      synaptic.xpm \
 	      pref_vpaned.xpm \
 	      pref_hpaned.xpm \
 	      stock_filter-data-by-criteria.png\
@@ -58,7 +56,6 @@ EXTRA_DIST=\
 	upgradeM.xpm\
 	up.xpm\
 	down.xpm\
-	synaptic_mini.xpm\
 	stock_filter-data-by-criteria.png\
 	stock_filter-navigator.png\
 	$(appicon_DATA) \

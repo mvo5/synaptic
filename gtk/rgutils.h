@@ -51,12 +51,11 @@ void gtk_get_color_from_string(const char *cpp, GdkRGBA ** colp);
 const char *utf8_to_locale(const char *str);
 const char *utf8(const char *str);
 
-GtkWidget *get_gtk_image(const char *name, int size=16);
-GdkPixbuf *get_gdk_pixbuf(const gchar *name, int size=16);
+GtkWidget *get_gtk_image(const char *name, int size=48);
+GdkPixbuf *get_gdk_pixbuf(const gchar *name, int size=48);
 
 std::string SizeToStr(double Bytes);
 bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);
-std::vector<const gchar*> GetBrowserCommand(const gchar *link);
 
 std::string MarkupEscapeString(std::string str);
 std::string MarkupUnescapeString(std::string str);

@@ -43,7 +43,6 @@ install-stamp: build
 	dh_clean -k
 	#dh_installdirs
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic
-	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic/usr/share/synaptic/pixmaps
 
 
 #install-debtags: install-debtags-stamp
@@ -53,7 +52,6 @@ install-stamp: build
 #	dh_clean -k
 	#dh_installdirs -psynaptic-debtags
 #	$(MAKE) install DESTDIR=$(CURDIR)/debian/synaptic-debtags
-#	cp debian/synaptic_32x32.xpm $(CURDIR)/debian/synaptic-debtags/usr/share/synaptic/pixmaps
 
 # Build architecture-independent files here.
 binary-indep: build install

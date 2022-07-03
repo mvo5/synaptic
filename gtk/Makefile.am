@@ -31,8 +31,6 @@ synaptic_SOURCES= \
 	gsynaptic.h\
 	gtkpkglist.cc\
 	gtkpkglist.h\
-	rgaboutpanel.cc\
-	rgaboutpanel.h\
 	rgcacheprogress.cc\
 	rgcacheprogress.h\
 	rgpkgcdrom.cc \

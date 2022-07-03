@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(synaptic, 0.90.1)
+AC_INIT(synaptic, 0.91.2)
 
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AM_CONFIG_HEADER(config.h)
@@ -27,7 +27,7 @@ AC_SUBST(synapticlocaledir)
      
 dnl we build for gtk3 by default now
 pkg_modules="gtk+-3.0 >= 3.4.0, pango >= 1.0.0, glib-2.0"
-vte_modules="vte-2.91"
+vte_modules="vte-2.91 >= 0.5"
 
 PKG_CHECK_MODULES(GTK, [$pkg_modules])
 BUILD_gtk="gtk"	
@@ -205,8 +205,9 @@ data/Makefile
 man/Makefile
 pixmaps/Makefile 
 pixmaps/hicolor/Makefile 
-pixmaps/hicolor/16x16/Makefile 
-pixmaps/hicolor/24x24/Makefile 
+pixmaps/hicolor/16x16/actions/Makefile 
+pixmaps/hicolor/24x24/actions/Makefile 
+pixmaps/hicolor/48x48/apps/Makefile 
 po/Makefile.in
 help/Makefile
 help/C/Makefile

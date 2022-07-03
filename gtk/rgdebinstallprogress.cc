@@ -491,9 +491,7 @@ gboolean RGDebInstallProgress::cbTerminalClicked(GtkWidget *widget,
 {
    if (event->button == 3) {
       RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
-      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-              event->button,
-              gdk_event_get_time((GdkEvent *) event));
+      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
       return true;
    }
    return false;
@@ -510,7 +508,7 @@ void RGDebInstallProgress::terminalAction(GtkWidget *terminal,
         TermAction action) {
    switch(action) {
       case EDIT_COPY:
-          vte_terminal_copy_clipboard(VTE_TERMINAL(terminal));
+          vte_terminal_copy_clipboard_format(VTE_TERMINAL(terminal), VTE_FORMAT_TEXT);
           break;
       case EDIT_SELECT_ALL:
           vte_terminal_select_all(VTE_TERMINAL(terminal));

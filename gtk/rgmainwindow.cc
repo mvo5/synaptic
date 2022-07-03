@@ -60,7 +60,6 @@
 
 #include "rgrepositorywin.h"
 #include "rgpreferenceswindow.h"
-#include "rgaboutpanel.h"
 #include "rgsummarywindow.h"
 #include "rgchangeswindow.h"
 #include "rgcdscanner.h"
@@ -2318,11 +2317,36 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 
 void RGMainWindow::cbShowAboutPanel(GtkWidget *self, void *data)
 {
-   RGMainWindow *win = (RGMainWindow *) data;
+      const char *authors[] = {
+      "Alfredo K. Kojima",
+      "Michael Vogt",
+      "Gustavo Niemeyer",
+      "Sebastian Heinlein",
+      "Enrico Zini",
+      "Panu Matilainen",
+      "Sviatoslav Sviridov",
+      NULL
+   };
+	const char *documenters [] = {
+      "Wybo Dekker",
+      "Michael Vogt",
+      "Sebastian Heinlein",
+      NULL
+   };
 
-   if (win->_aboutPanel == NULL)
-      win->_aboutPanel = new RGAboutPanel(win);
-   win->_aboutPanel->show();
+   gtk_show_about_dialog (NULL,
+                       "program-name", _("Synaptic Package Manager"),
+                       "version", VERSION,
+                       "logo-icon-name", "synaptic",
+                       "copyright", _("© 2001-2004 Connectiva S/A \n © 2002-2021 Michael Vogt"),
+                       "authors", authors,
+                       "documenters", documenters,
+                       "translator-credits", _("translator-credits"),
+                       "comments", _("Package management software using apt. \n" 
+                                    "https://github.com/mvo5/synaptic/wiki \n\n"
+                                    "This program comes with absolutely no warranty. \n"
+                                    "Released using the GNU General Public License, version 2 or later"),
+                       NULL);
 }
 
 void RGMainWindow::cbShowIconLegendPanel(GtkWidget *self, void *data)
@@ -2357,14 +2381,15 @@ void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
       cmd.push_back("yelp");
       cmd.push_back("ghelp:synaptic");
    } else {
-      cmd = GetBrowserCommand(PACKAGE_DATA_DIR "/synaptic/html/index.html");
+      cmd.push_back("/usr/bin/xdg-open");
+      cmd.push_back(PACKAGE_DATA_DIR "/synaptic/html/index.html");
    }
 
    if (cmd.empty()) {
       me->_userDialog->error(_("No help viewer is installed!\n\n"
                                "You need either the GNOME help viewer 'yelp', "
-                               "the 'konqueror' browser or the 'firefox' "
-                               "browser to view the synaptic manual.\n\n"
+                               "or any browser setup to use xdg-open "
+                               "to view the synaptic manual.\n\n"
                                "Alternatively you can open the man page "
                                "with 'man synaptic' from the "
                                "command line or view the html version located "
@@ -3207,9 +3232,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
        _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
       gtk_menu_item_activate(GTK_MENU_ITEM(oneclickitem));
    } else {
-      gtk_menu_popup(GTK_MENU(me->_popupMenu), NULL, NULL, NULL, NULL,
-                     (event != NULL) ? event->button : 0,
-                     gdk_event_get_time((GdkEvent *) event));
+      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
    }
 }
 

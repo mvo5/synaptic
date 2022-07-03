@@ -1,3 +1,88 @@
+synaptic (0.91.2) unstable; urgency=medium
+
+  * gtk: fix incorrect status/support pixbuf icon sizes (Closes: #1014164)
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Sat, 02 Jul 2022 09:59:20 +0200
+
+synaptic (0.91.1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster:
+    + Build-Depends: Drop versioned constraint on dpkg, libapt-pkg-dev and
+      libept-dev.
+    + synaptic: Drop versioned constraint on menu in Conflicts.
+
+  [ Pino Toscano ]
+  * Stop suggesting 'menu', as it is not needed/used anymore since 0.75.12
+    (Closes: #1012436)
+
+  [ Michael Vogt ]
+  * Revert "gtk: remove fixed-size for status/supported pixmap columns"
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Thu, 30 Jun 2022 14:49:44 +0200
+
+synaptic (0.91) unstable; urgency=medium
+
+  [ Bryan Quigley ]
+  * Follow https://wiki.gnome.org/Projects/GnomeCommon/Migration
+  * Updated Readme and add initial Contributing.md
+  * Update all the home page mentions that appear current
+  * drop gtk3-compat
+  * Drop gtk_plugin bits that haven't been used since gtk3
+  * Remove plug-progress-into option
+  * make gtk3.4 the new miniumum
+  * Github actions: add a basic make and debuild
+  * drop rgvendorswindow*
+  * add install/removing the deb
+  * "vte_terminal_copy_clipboard has been deprecated since version 0.50 and should not be used in newly-written code.
+  * Fully disable the remove dependencies code so we don't get warnngs from it.
+  * Update vte min requirements
+  * Clean more unused files
+  * This really wants to be in a different part of the file
+  * Move to using gtk_about_dialog
+  * Drop hardcoded browsers
+
+  [ Janvitus ]
+  * Updated italian translation.
+
+  [ Federico Grau ]
+  * Update default icon size for application
+
+  [ baranzadeoglu ]
+  * Update synaptic.8
+
+  [ Fatih Altun ]
+  * Update Turkish translations
+
+  [ Emilian Nowak ]
+  * Updated polish translation
+
+  [ yusufymz ]
+  * Update tr.po
+
+  [ Michael Vogt ]
+  * gtk: move from deprecated gtk_menu_popup to gtk_menu_popup_at_pointer
+  * gtk: remove fixed-size for status/supported pixmap columns
+
+  [ Boyuan Yang ]
+  * c/rconfiguration.cc: include unistd.h to prevent FTBFS (Closes: #1011688)
+
+ -- Michael Vogt <mvo@debian.org>  Wed, 29 Jun 2022 20:26:48 +0200
+
+synaptic (0.90.2) unstable; urgency=medium
+
+  [ Heimen Stoffels ]
+  * Updated Dutch translation
+
+  [ rezso ]
+  * Update autogen.sh
+
+  [ Michael Vogt ]
+  * gtk: fix invalid assignment from SizeToStr to intermediate value
+    (Closes: 974790, 974725)
+
+ -- Michael Vogt <mvo@debian.org>  Mon, 16 Nov 2020 09:56:34 +0100
+
 synaptic (0.90.1) unstable; urgency=medium
 
   [ Michael Vogt ]

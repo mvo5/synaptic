@@ -1,3 +1,33 @@
+synaptic (0.91.3) unstable; urgency=medium
+
+  [ Bryan Quigley ]
+  * Drop WINGS gui
+
+  [ Pino Toscano ]
+  * Drop menu file and its pixmap, since synaptic already provides
+    a .desktop file
+  * debian: don't manually create dirs created by the buildsystem
+  * Drop unused XPM versions of the application icon
+  * Move global hicolor icons to category subdirectory
+  * Install app icon in the global hicolor icon theme
+  * Drop old KDE-related item from TODO
+
+  [ Michael Vogt ]
+  * gtk: build with -DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
+  * common: do not ask the user to report a bug when _cache->open() fails
+  * debian: rename NEWS.Debian -> NEWS
+  * debian: drop old comment about quilt in rules
+  * debian: move to standards version 4.5.0
+
+  [ Akbarkhon Variskhanov ]
+  * debian: rename README in synaptic.docs as well
+
+  [ Simon McVittie ]
+  * d/control: Depend on polkitd and pkexec in preference to policykit-1
+    (Closes: #1025630)
+
+ -- Michael Vogt <mvo@debian.org>  Sat, 11 Feb 2023 09:56:53 +0100
+
 synaptic (0.91.2) unstable; urgency=medium
 
   * gtk: fix incorrect status/support pixbuf icon sizes (Closes: #1014164)

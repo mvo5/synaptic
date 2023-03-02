@@ -1,9 +1,9 @@
 Synaptic
 ========
 
-Synaptic is a graphical package management tool based on GTK+ and APT.
+Synaptic is a graphical package management tool based on GTK and APT.
 Synaptic enables you to install, upgrade and remove software packages in
-a user friendly way.
+a user-friendly way.
 
 Besides these basic functions the following features are provided:
  * Search and filter the list of available packages
@@ -66,7 +66,7 @@ Global keybings:
 * Alt-P  proceed
 * Ctrl-F find
 
-Command line options
+Command-line options
 ---------------------
 Synaptic supports the following command-line options:
  '-f <filename>' or "--filter-file <filename>" = give a alternative filter file

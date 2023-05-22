@@ -418,19 +418,19 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
          }
          break;
       case PKG_DOWNLOAD_SIZE_COLUMN:
-	 cppstr = SizeToStr(pkg->availablePackageSize());
-	 g_value_set_string(value, cppstr.c_str());
+         cppstr = SizeToStr(pkg->availablePackageSize());
+         g_value_set_string(value, cppstr.c_str());
          break;
       case SECTION_COLUMN:
-	 str = pkg->section();
-	 if(str != NULL)
-	    g_value_set_string(value, str);
-	 break;
+         str = pkg->section();
+         if (str != NULL)
+            g_value_set_string(value, str);
+      break;
       case COMPONENT_COLUMN:
-	 str = pkg->component().c_str();
-	 if(str)
-	    g_value_set_string(value, str);
-	 break;
+         cppstr = pkg->component();
+         if (cppstr != "")
+            g_value_set_string(value, cppstr.c_str());
+         break;
       case INSTALLED_VERSION_COLUMN:
          str = pkg->installedVersion();
          g_value_set_string(value, str);

@@ -427,9 +427,9 @@ gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 	    g_value_set_string(value, str);
 	 break;
       case COMPONENT_COLUMN:
-	 str = pkg->component().c_str();
-	 if(str)
-	    g_value_set_string(value, str);
+         cppstr = pkg->component();
+	 if(cppstr.c_str() != NULL)
+	    g_value_set_string(value, cppstr.c_str());
 	 break;
       case INSTALLED_VERSION_COLUMN:
          str = pkg->installedVersion();

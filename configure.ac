@@ -207,7 +207,8 @@ pixmaps/Makefile
 pixmaps/hicolor/Makefile 
 pixmaps/hicolor/16x16/actions/Makefile 
 pixmaps/hicolor/24x24/actions/Makefile 
-pixmaps/hicolor/48x48/apps/Makefile 
+pixmaps/hicolor/256x256/apps/Makefile 
+pixmaps/hicolor/scalable/apps/Makefile 
 po/Makefile.in
 help/Makefile
 help/C/Makefile

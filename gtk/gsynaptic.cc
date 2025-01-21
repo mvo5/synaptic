@@ -169,6 +169,19 @@ void welcome_dialog(RGMainWindow *mainWindow)
       }
 }
 
+void admin_privileges_dialog()
+{
+     if (_config->FindB("Synaptic::ShowAdminPrivilegesDialog", true)) {
+         RGGtkBuilderUserDialog dia("admin_privileges");
+         dia.run();
+         GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
+				    "checkbutton_admin_privileges_not_show_again"));
+         assert(cb);
+         _config->Set("Synaptic::ShowAdminPrivilegesDialog",
+                      ! gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+      }
+}
+
 void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
 {
    struct stat st;
@@ -429,22 +442,14 @@ int main(int argc, char **argv)
    if (_config->FindB("help") == true)
       ShowHelp(CmdL);
 
-   if (getuid() != 0) {
-      RGUserDialog userDialog;
-      userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
-                                         _("Starting \"Synaptic Package Manager\" without "
-                                           "administrative privileges"),
-				         _("You will not be able to apply "
-				           "any changes, but you can still "
-					   "export the marked changes or "
-					   "create a download script "
-					   "for them.")));
-   }
-
    if (!RInitConfiguration("synaptic.conf")) {
       RGUserDialog userDialog;
       userDialog.showErrors();
       exit(1);
+   }
+
+   if (getuid() != 0) {
+      admin_privileges_dialog();
    }
 
    bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);

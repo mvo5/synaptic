@@ -2338,7 +2338,7 @@ void RGMainWindow::cbShowAboutPanel(GtkWidget *self, void *data)
                        "program-name", _("Synaptic Package Manager"),
                        "version", VERSION,
                        "logo-icon-name", "synaptic",
-                       "copyright", _("© 2001-2004 Connectiva S/A \n © 2002-2021 Michael Vogt"),
+                       "copyright", _("© 2001-2004 Connectiva S/A \n © 2002-2025 Michael Vogt"),
                        "authors", authors,
                        "documenters", documenters,
                        "translator-credits", _("translator-credits"),

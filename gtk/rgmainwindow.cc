@@ -294,7 +294,7 @@ void RGMainWindow::forgetNewPackages()
    int row = 0;
    while (row < _lister->viewPackagesSize()) {
       RPackage *elem = _lister->getViewPackage(row);
-      if (elem->getFlags() && RPackage::FNew)
+      if (elem->getFlags() & RPackage::FNew)
          elem->setNew(false);
    }
    _roptions->forgetNewPackages();

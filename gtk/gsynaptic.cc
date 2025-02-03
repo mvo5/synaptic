@@ -169,11 +169,11 @@ void welcome_dialog(RGMainWindow *mainWindow)
       }
 }
 
-void admin_privileges_dialog()
+void admin_privileges_dialog(RGMainWindow *mainWindow)
 {
      if (_config->FindB("Synaptic::ShowAdminPrivilegesDialog", true)) {
-         RGGtkBuilderUserDialog dia("admin_privileges");
-         dia.run();
+         RGGtkBuilderUserDialog dia(mainWindow);
+         dia.run("admin_privileges");
          GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
 				    "checkbutton_admin_privileges_not_show_again"));
          assert(cb);
@@ -448,10 +448,6 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   if (getuid() != 0) {
-      admin_privileges_dialog();
-   }
-
    bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
    bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
@@ -607,6 +603,9 @@ int main(int argc, char **argv)
    if (NonInteractive) {
       mainWindow->cbProceedClicked(NULL, mainWindow);
    } else {
+      if (getuid() != 0) {
+         admin_privileges_dialog(mainWindow);
+      }
       welcome_dialog(mainWindow);
       gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
                                           mainWindow->getGtkBuilder(),

@@ -178,7 +178,7 @@ void admin_privileges_dialog()
 				    "checkbutton_admin_privileges_not_show_again"));
          assert(cb);
          _config->Set("Synaptic::ShowAdminPrivilegesDialog",
-                      ! gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+                      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
       }
 }
 

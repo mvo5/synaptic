@@ -131,27 +131,6 @@ bool RWriteConfigFile(Configuration &Conf)
    return true;
 }
 
-static bool mkdirWithParents(const string &path)
-{
-   struct stat stbuf;
-   string delimeter("/");
-   const char *partial_path;
-   auto pos = path.find(delimeter, 1);
-
-   while (pos != string::npos) {
-      partial_path = path.substr(0, pos).c_str();
-
-      if ( stat(partial_path, &stbuf) < 0 &&
-	   mkdir(partial_path, 0700) < 0) {
-	 return _error->Errno("mkdir",
-			      _("ERROR: could not create directory %s"),
-			      partial_path);
-      }
-      pos = path.find(delimeter, pos + 1);
-   }
-   return true;
-}
-
 static bool checkConfigDir(string &path)
 {
    struct stat stbuf;
@@ -193,8 +172,7 @@ static bool checkConfigDir(string &path)
    //path = "/etc/synaptic";
    path = xdg_data_dir + "/synaptic";
 
-
-   if (! mkdirWithParents(xdg_data_dir)) {
+   if (! CreateDirectory(home_dir, xdg_data_dir)) {
       return _error->Errno("mkdir",
 			   _("ERROR: could not create XDG home directory %s"),
 			   xdg_data_dir.c_str());

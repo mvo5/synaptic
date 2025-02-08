@@ -32,10 +32,24 @@
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/tagfile.h>
+
 #include <algorithm>
 #include <fstream>
 #include "config.h"
 #include "i18n.h"
+
+// XXX: copied from libapt :(
+static std::vector<std::string> FindMultiValue(pkgTagSection &Tags, char const *const Field) /*{{{*/
+{
+   auto values = Tags.FindS(Field);
+   // we ignore duplicate spaces by removing empty values
+   std::replace_if(values.begin(), values.end(), isspace_ascii, ' ');
+   auto vect = VectorizeString(values, ' ');
+   vect.erase(std::remove_if(vect.begin(), vect.end(), [](std::string const &s) { return s.empty(); }), vect.end());
+   return vect;
+}
 
 SourcesList::~SourcesList()
 {
@@ -56,9 +70,61 @@ SourcesList::SourceRecord *SourcesList::AddSourceNode(SourceRecord &rec)
    return newrec;
 }
 
-bool SourcesList::ReadSourcePart(string listpath)
+bool SourcesList::ReadSourcePartDeb822(string listpath)
 {
-   //cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
+   FileFd Fd = FileFd(listpath, FileFd::ReadOnly);
+   pkgTagFile Sources(&Fd, pkgTagFile::SUPPORT_COMMENTS);
+   if (Fd.IsOpen() == false || Fd.Failed())
+      return _error->Error(_("Malformed stanza %u in source list %s (type)"),0,listpath.c_str());
+
+   // read step by step
+   pkgTagSection Tags;
+   unsigned int i = 0;
+   while (Sources.Step(Tags) == true)
+   {
+      ++i;
+      if(Tags.Exists("Types") == false)
+	 return _error->Error(_("Malformed stanza %u in source list %s (type)"),i,listpath.c_str());
+
+      for (auto const &type : FindMultiValue(Tags, "Types")) {
+	 auto const list_uris = FindMultiValue(Tags, "URIs");
+	 auto const list_comp = FindMultiValue(Tags, "Components");
+	 auto list_suite = FindMultiValue(Tags, "Suites");
+	 for (auto URI : list_uris) {
+		 for (auto const &S : list_suite) {
+			 bool failed = false;
+			 SourceRecord rec;
+			 
+			 rec.SourceFile = listpath;
+			 
+			 if (!rec.SetType(type)) {
+				 failed = true;
+			 }
+			 rec.SetURI(URI);
+			 rec.Dist = S;
+			 // XXX
+			 rec.NumSections = list_comp.size();
+			 rec.Sections = new string[rec.NumSections];
+			 int i = 0;
+			 for (auto comp : list_comp) {
+				 std::printf("%i %s\n", i, comp);
+				 rec.Sections[i++] = strdup(comp.c_str());
+			 }
+
+			 if (failed == false)
+				 AddSourceNode(rec);
+		 }
+	 }
+      }
+   }
+   
+   return true;
+}
+
+
+bool SourcesList::ReadSourcePartOldStyle(string listpath)
+{
+   //cout << "SourcesList::ReadSourcePartOldStyle() "<< listpath  << endl;
    char buf[512];
    const char *p;
    ifstream ifs(listpath.c_str(), ios::in);
@@ -168,6 +234,14 @@ bool SourcesList::ReadSourcePart(string listpath)
    return record_ok;
 }
 
+bool SourcesList::ReadSourcePart(string listpath) {
+	cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
+	if (flExtension(listpath) == "sources")
+		return ReadSourcePartDeb822(listpath);
+	else
+		return ReadSourcePartOldStyle(listpath);
+}
+
 bool SourcesList::ReadSourceDir(string Dir)
 {
    //cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
@@ -191,8 +265,8 @@ bool SourcesList::ReadSourceDir(string Dir)
          continue;
 
       // Only look at files ending in .list to skip .rpmnew etc files
-      if (strcmp(Ent->d_name + strlen(Ent->d_name) - 5, ".list") != 0)
-         continue;
+      if (flExtension(Ent->d_name) != "list" && flExtension(Ent->d_name) != "sources")
+	   continue;
 
       // Make sure it is a file and not something else
       string File = flCombine(Dir, Ent->d_name);

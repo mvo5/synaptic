@@ -81,6 +81,8 @@ class SourcesList {
  private:
    SourceRecord *AddSourceNode(SourceRecord &);
    VendorRecord *AddVendorNode(VendorRecord &);
+   bool ReadSourcePartOldStyle(string listpath);
+   bool ReadSourcePartDeb822(string listpath);
 
  public:
    SourceRecord *AddSource(RecType Type,

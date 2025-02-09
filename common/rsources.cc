@@ -347,44 +347,41 @@ void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
 bool SourcesList::UpdateSources()
 {
    list<string> filenames;
-   for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-        it != SourceRecords.end(); it++) {
-      if ((*it)->SourceFile == "")
+   for (auto srec: SourceRecords) {
+      if (srec->SourceFile == "")
          continue;
-      filenames.push_front((*it)->SourceFile);
+      filenames.push_front(srec->SourceFile);
    }
    filenames.sort();
    filenames.unique();
 
-   for (list<string>::iterator fi = filenames.begin();
-        fi != filenames.end(); fi++) {
-      ofstream ofs((*fi).c_str(), ios::out);
+   for (auto fi : filenames) {
+      ofstream ofs(fi.c_str(), ios::out);
       if (!ofs != 0)
          return false;
 
-      for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-           it != SourceRecords.end(); it++) {
-         if ((*fi) != (*it)->SourceFile)
+      for (auto srec: SourceRecords) {
+         if (fi != srec->SourceFile)
             continue;
          string S;
-         if (((*it)->Type & Comment) != 0) {
-            S = (*it)->Comment;
-         } else if ((*it)->URI.empty() || (*it)->Dist.empty()) {
+         if ((srec->Type & Comment) != 0) {
+            S = srec->Comment;
+         } else if (srec->URI.empty() || srec->Dist.empty()) {
             continue;
          } else {
-            if (((*it)->Type & Disabled) != 0)
+            if ((srec->Type & Disabled) != 0)
                S = "# ";
 
-            S += (*it)->GetType() + " ";
+            S += srec->GetType() + " ";
 
-            if ((*it)->VendorID.empty() == false)
-               S += "[" + (*it)->VendorID + "] ";
+            if (srec->VendorID.empty() == false)
+               S += "[" + srec->VendorID + "] ";
 
-            S += (*it)->URI + " ";
-            S += (*it)->Dist + " ";
+            S += srec->URI + " ";
+            S += srec->Dist + " ";
 
-            for (unsigned int J = 0; J < (*it)->Sections.size(); J++)
-               S += (*it)->Sections[J] + " ";
+            for (unsigned int J = 0; J < srec->Sections.size(); J++)
+               S += srec->Sections[J] + " ";
 
          }
          ofs << S << endl;

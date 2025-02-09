@@ -376,7 +376,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
 
-   gtk_window_resize(GTK_WINDOW(_win), 620, 400);
+   gtk_window_resize(GTK_WINDOW(_win), 900, 600);
    skipTaskbar(true);
    show();
 }

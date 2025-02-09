@@ -28,6 +28,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -51,8 +52,7 @@ class SourcesList {
       string VendorID;
       string URI;
       string Dist;
-      string *Sections;
-      unsigned short NumSections;
+      std::vector<string> Sections;
       string Comment;
       string SourceFile;
 
@@ -60,11 +60,9 @@ class SourcesList {
       string GetType();
       bool SetURI(string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
+      SourceRecord():Type(0) {
       }
       ~SourceRecord() {
-         if (Sections)
-            delete[]Sections;
       }
       SourceRecord &operator=(const SourceRecord &);
    };
@@ -89,8 +87,8 @@ class SourcesList {
                            string VendorID,
                            string URI,
                            string Dist,
-                           string *Sections,
-                           unsigned short count, string SourceFile);
+                           std::vector<string> Sections,
+                           string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
    void SwapSources( SourceRecord *&, SourceRecord *& );

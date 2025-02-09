@@ -102,14 +102,7 @@ bool SourcesList::ReadSourcePartDeb822(string listpath)
 			 }
 			 rec.SetURI(URI);
 			 rec.Dist = S;
-			 // XXX
-			 rec.NumSections = list_comp.size();
-			 rec.Sections = new string[rec.NumSections];
-			 int i = 0;
-			 for (auto comp : list_comp) {
-				 std::printf("%i %s\n", i, comp);
-				 rec.Sections[i++] = strdup(comp.c_str());
-			 }
+			 rec.Sections = list_comp;
 
 			 if (failed == false)
 				 AddSourceNode(rec);
@@ -205,14 +198,7 @@ bool SourcesList::ReadSourcePartOldStyle(string listpath)
 #endif
 
       const char *tmp = p;
-      rec.NumSections = 0;
-      while (ParseQuoteWord(p, Section) == true)
-         rec.NumSections++;
-      if (rec.NumSections > 0) {
-         p = tmp;
-         rec.Sections = new string[rec.NumSections];
-         rec.NumSections = 0;
-         while (ParseQuoteWord(p, Section) == true) {
+      while (ParseQuoteWord(p, Section) == true) {
             // comments inside the record are preserved
             if (Section[0] == '#') {
                SourceRecord rec;
@@ -223,9 +209,8 @@ bool SourcesList::ReadSourcePartOldStyle(string listpath)
                AddSourceNode(rec);
                break;
             } else {
-               rec.Sections[rec.NumSections++] = Section;
+	       rec.Sections.push_back(Section);
             }
-         }
       }
       AddSourceNode(rec);
    }
@@ -235,11 +220,12 @@ bool SourcesList::ReadSourcePartOldStyle(string listpath)
 }
 
 bool SourcesList::ReadSourcePart(string listpath) {
-	cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
+	//cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
+      
 	if (flExtension(listpath) == "sources")
-		return ReadSourcePartDeb822(listpath);
+	    return ReadSourcePartDeb822(listpath);
 	else
-		return ReadSourcePartOldStyle(listpath);
+	   return ReadSourcePartOldStyle(listpath);
 }
 
 bool SourcesList::ReadSourceDir(string Dir)
@@ -316,15 +302,13 @@ SourcesList::SourceRecord *SourcesList::AddEmptySource()
    rec.VendorID = "";
    rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
    rec.Dist = "";
-   rec.NumSections = 0;
    return AddSourceNode(rec);
 }
 
 SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
                                                    string VendorID, string URI,
                                                    string Dist,
-                                                   string *Sections,
-                                                   unsigned short count,
+						  std::vector<string> Sections,
                                                    string SourceFile)
 {
    SourceRecord rec;
@@ -336,10 +320,7 @@ SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
       return NULL;
    }
    rec.Dist = Dist;
-   rec.NumSections = count;
-   rec.Sections = new string[count];
-   for (unsigned int i = 0; i < count; i++)
-      rec.Sections[i] = Sections[i];
+   rec.Sections = Sections;
 
    return AddSourceNode(rec);
 }
@@ -402,8 +383,9 @@ bool SourcesList::UpdateSources()
             S += (*it)->URI + " ";
             S += (*it)->Dist + " ";
 
-            for (unsigned int J = 0; J < (*it)->NumSections; J++)
+            for (unsigned int J = 0; J < (*it)->Sections.size(); J++)
                S += (*it)->Sections[J] + " ";
+
          }
          ofs << S << endl;
       }
@@ -484,10 +466,7 @@ operator=(const SourceRecord &rhs)
    VendorID = rhs.VendorID;
    URI = rhs.URI;
    Dist = rhs.Dist;
-   Sections = new string[rhs.NumSections];
-   for (unsigned int I = 0; I < rhs.NumSections; I++)
-      Sections[I] = rhs.Sections[I];
-   NumSections = rhs.NumSections;
+   Sections = rhs.Sections;
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
 
@@ -617,11 +596,6 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
    os << "URI: " << rec.URI << endl;
    os << "Dist: " << rec.Dist << endl;
    os << "Section(s):" << endl;
-#if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
-   }
-#endif
    os << endl;
    return os;
 }

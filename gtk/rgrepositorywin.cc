@@ -414,9 +414,11 @@ bool RGRepositoryEditor::Run()
       if ((*it)->Type & SourcesList::Comment)
          continue;
       string Sections;
-      for (unsigned int J = 0; J < (*it)->NumSections; J++) {
+      for (unsigned int J = 0; J < (*it)->Sections.size(); J++) {
          Sections += (*it)->Sections[J];
          Sections += " ";
+	 std::cout << Sections << std::endl;
+
       }
 
       gtk_list_store_append(_sourcesListStore, &iter);
@@ -523,7 +525,7 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
 
 void RGRepositoryEditor::doEdit()
 {
-   //cout << "RGRepositoryEditor::doEdit()"<<endl;
+   cout << "RGRepositoryEditor::doEdit()"<<endl;
 
 
    //GtkTreeSelection *selection;
@@ -595,25 +597,17 @@ void RGRepositoryEditor::doEdit()
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
-   delete[]rec->Sections;
-   rec->NumSections = 0;
-
+   rec->Sections.clear();
    const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-   if (Section != 0 && Section[0] != 0)
-      rec->NumSections++;
-
-   rec->Sections = new string[rec->NumSections];
-   rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-
-   if (Section != 0 && Section[0] != 0)
-      rec->Sections[rec->NumSections++] = Section;
+   if (Section != NULL && Section[0] != 0)
+      rec->Sections.push_back(Section);
 
    string Sect;
-   for (unsigned int I = 0; I < rec->NumSections; I++) {
+   for (unsigned int I = 0; I < rec->Sections.size(); I++) {
       Sect += rec->Sections[I];
       Sect += " ";
    }
+   std::cout << "done" << std::endl;
 
    /* repaint screen */
    gtk_list_store_set(_sourcesListStore, _lastIter,
@@ -727,7 +721,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
       gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
 
-      for (unsigned int I = 0; I < rec->NumSections; I++) {
+      for (unsigned int I = 0; I < rec->Sections.size(); I++) {
          int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));
          gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect),
                                   utf8(rec->Sections[I].c_str()),

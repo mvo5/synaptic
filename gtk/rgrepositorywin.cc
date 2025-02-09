@@ -417,8 +417,6 @@ bool RGRepositoryEditor::Run()
       for (unsigned int J = 0; J < (*it)->Sections.size(); J++) {
          Sections += (*it)->Sections[J];
          Sections += " ";
-	 std::cout << Sections << std::endl;
-
       }
 
       gtk_list_store_append(_sourcesListStore, &iter);
@@ -721,8 +719,8 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
       gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
 
+      int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));
       for (unsigned int I = 0; I < rec->Sections.size(); I++) {
-         int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));
          gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect),
                                   utf8(rec->Sections[I].c_str()),
                                   -1,

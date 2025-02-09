@@ -344,18 +344,12 @@ void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
   SourceRecords.erase( rec_n );
 }
 
-bool SourcesList::UpdateSources()
+bool SourcesList::UpdateSourcesOldStyle(list<string> &filenames)
 {
-   list<string> filenames;
-   for (auto srec: SourceRecords) {
-      if (srec->SourceFile == "")
-         continue;
-      filenames.push_front(srec->SourceFile);
-   }
-   filenames.sort();
-   filenames.unique();
-
    for (auto fi : filenames) {
+      if (flExtension(fi) != "list")
+	      continue;
+
       ofstream ofs(fi.c_str(), ios::out);
       if (!ofs != 0)
          return false;
@@ -389,6 +383,105 @@ bool SourcesList::UpdateSources()
       ofs.close();
    }
    return true;
+}
+
+bool SourcesList::UpdateSourcesDeb822(list<string> &filenames)
+{
+   for (auto fi : filenames) {
+      if (flExtension(fi) != "sources")
+	      continue;
+	   
+      ofstream ofs(fi.c_str(), ios::out);
+      if (!ofs != 0)
+         return false;
+
+      // deb822 does not match very well to the current data structures
+      // so we try our best (this should be refactored at some point)
+      // We do:
+      // 1. Combine each URI into a single stanza, this is not ideal
+      //    as a original stanza can have multiple URIs but should be ok
+      //    in practise (the default sources.list has only a single uri)
+      // 2. collect based on that
+      // ...
+      // 3. profit!
+      map<string, vector<SourceRecord*>> byURI;
+      for (auto srec: SourceRecords) {
+         if (fi != srec->SourceFile)
+            continue;
+
+	 // XXX!!!!! deal with unknown keys, signed-by, X- foo etc
+	 // XXX: deal with comments, disabled sources
+	 if (srec->URI.empty() || srec->Dist.empty())
+            continue;
+
+	 // collect by URI for this filename
+	 auto pos = byURI.find(srec->URI);
+	 if (pos == byURI.end()) {
+		 std::cout << "creating new vector for " << srec->URI << std::endl;
+	    byURI.insert({srec->URI, vector<SourceRecord*>()});
+	 } else {
+		 std::cout << "found vector for " << srec->URI << std::endl;		 }
+	 vector<SourceRecord*> srecs = byURI[srec->URI];
+	 std::cout << " vector before len " << srecs.size() << std::endl;	
+	 srecs.push_back(srec);
+	 std::cout << " vector after len " << srecs.size() << std::endl;      
+	 std::cout << "srec len for " << srec->URI << " " << srecs.size() << std::endl;
+	 byURI[srec->URI] = srecs;
+      }
+      std::cout << "byURI size" << byURI.size() << std::endl;
+	      
+      for (auto uriAndSrecs: byURI) {
+	 // use ordered sets here?
+	 set<string> types;
+	 set<string> suitesDists;
+	 set<string> componentsSections;
+	 for (auto srec : uriAndSrecs.second) {
+	     types.insert({srec->GetType()});
+	     suitesDists.insert({srec->Dist});
+	     for (auto sec : srec->Sections)
+		 componentsSections.insert({sec});
+	 }
+	 std::cout << uriAndSrecs.first << std::endl;
+	 std::cout << "types " << types.size() << std::endl;
+	 std::cout << "suitesDists " << suitesDists.size() << std::endl;
+	 std::cout << "comps " << componentsSections.size() << std::endl;
+	 
+	 ofs << "Types: ";
+	 for (auto typ : types)
+		 ofs << typ << " ";
+	 ofs << std::endl;
+	 ofs << "URIs: " << uriAndSrecs.first << std::endl;
+	 ofs << "Suites: ";
+	 for (auto suite : suitesDists)
+		 ofs << suite << " ";
+	 ofs << std::endl;
+	 ofs << "Components: ";
+	 for (auto comp : componentsSections)
+		 ofs << comp << " ";
+
+	 ofs << std::endl << std::endl;
+      }
+      
+      ofs.close();
+   }
+   return true;
+}
+
+bool SourcesList::UpdateSources()
+{
+   list<string> filenames;
+   for (auto srec: SourceRecords) {
+      if (srec->SourceFile == "")
+         continue;
+      filenames.push_front(srec->SourceFile);
+   }
+   filenames.sort();
+   filenames.unique();
+
+   bool res = true;
+   res &= UpdateSourcesOldStyle(filenames);
+   res &= UpdateSourcesDeb822(filenames);
+   return res;
 }
 
 bool SourcesList::SourceRecord::SetType(string S)

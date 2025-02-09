@@ -81,7 +81,9 @@ class SourcesList {
    VendorRecord *AddVendorNode(VendorRecord &);
    bool ReadSourcePartOldStyle(string listpath);
    bool ReadSourcePartDeb822(string listpath);
-
+   bool UpdateSourcesOldStyle(list<string> &filenames);
+   bool UpdateSourcesDeb822(list<string> &filenames);
+	
  public:
    SourceRecord *AddSource(RecType Type,
                            string VendorID,

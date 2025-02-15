@@ -1797,7 +1797,7 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 
 bool RPackageLister::readSelections(istream &in)
 {
-   char Buffer[300];
+   std::string Buffer;
    int CurLine = 0;
    enum Action {
       ACTION_INSTALL,
@@ -1809,21 +1809,20 @@ bool RPackageLister::readSelections(istream &in)
 
    while (in.eof() == false) {
 
-      in.getline(Buffer, sizeof(Buffer));
+      std::getline(in, Buffer);
       CurLine++;
 
       if (in.fail() && !in.eof())
          return _error->Error(_("Line %u too long in markings file."),
                               CurLine);
 
-      _strtabexpand(Buffer, sizeof(Buffer));
-
-      const char *C = _strstrip(Buffer);
+      std::string CS = std::string{APT::String::Strip(SubstVar(Buffer, "\t", "        "))};
 
       // Comment or blank
-      if (C[0] == '#' || C[0] == 0)
+      if (CS[0] == '#' || CS[0] == 0)
          continue;
 
+      auto C = CS.c_str();
       string PkgName;
       if (ParseQuoteWord(C, PkgName) == false)
          return _error->Error(_("Malformed line %u in markings file"),

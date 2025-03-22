@@ -131,11 +131,15 @@ bool RWriteConfigFile(Configuration &Conf)
    return true;
 }
 
-
 static bool checkConfigDir(string &path)
 {
    struct stat stbuf;
    struct passwd *pwd;
+   char *buf;
+   string xdg_data_dir;
+   string old_path;
+   string home_dir;
+   int l;
 
    pwd = getpwuid(getuid());
    if (!pwd) {
@@ -143,16 +147,54 @@ static bool checkConfigDir(string &path)
                            _
                            ("ERROR: Could not get password entry for superuser"));
    }
-   path = string(pwd->pw_dir) + "/.synaptic";
-   //path = "/etc/synaptic";
 
-   if (stat(path.c_str(), &stbuf) < 0) {
-      if (mkdir(path.c_str(), 0700) < 0) {
-         return _error->Errno("mkdir",
-                              _
-                              ("ERROR: could not create configuration directory %s"),
-                              path.c_str());
-      }
+   home_dir = string(pwd->pw_dir);
+   xdg_data_dir = home_dir + "/.config";
+   old_path = home_dir + "/.synaptic";
+   buf = getenv("XDG_CONFIG_HOME");
+
+   if (buf) {
+     l = strlen(buf) - 1;
+     if (buf[l] == '/') {
+       buf[l] = '\0';
+     }
+     xdg_data_dir=buf;
+
+     // Guarantee that XDG_CONFIG_HOME is inside home directory.
+     if (xdg_data_dir.substr(0,home_dir.length()) != home_dir) {
+       xdg_data_dir = home_dir + "/.config";
+       cerr << "Warning: XDG_CONFIG_HOME=" << buf
+	    << " is not in the home directory. Using " << xdg_data_dir
+	    << " instead." << std::endl;
+     }
+   }
+
+   //path = "/etc/synaptic";
+   path = xdg_data_dir + "/synaptic";
+
+   if (! CreateDirectory(home_dir, xdg_data_dir)) {
+      return _error->Errno("mkdir",
+			   _("ERROR: could not create XDG home directory %s"),
+			   xdg_data_dir.c_str());
+   }
+
+   // Move old config dir (if any) to the new one
+   // Consider to delete this code in the future
+   if (stat(old_path.c_str(), &stbuf) == 0 &&
+       rename(old_path.c_str(), path.c_str()) < 0) {
+      return _error->Errno("rename",
+			   _("ERROR: could not move old configuration "
+			     "directory %s to the new configuration "
+			     "directory %s"),
+			   old_path.c_str(), path.c_str());
+   }
+
+   if (stat(path.c_str(), &stbuf) < 0 &&
+       mkdir(path.c_str(), 0700) < 0) {
+      return _error->Errno("mkdir",
+			   _
+			   ("ERROR: could not create configuration directory %s"),
+			   path.c_str());
    }
    return true;
 }

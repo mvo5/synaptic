@@ -29,7 +29,7 @@
 #include <string>
 #include <map>
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
 #include <ept/axi/axi.h>
 #endif
 

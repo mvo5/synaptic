@@ -37,7 +37,7 @@
 #include <apt-pkg/acquire.h>
 #include <apt-pkg/progress.h>
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
 #include <ept/axi/axi.h>
 #endif
 
@@ -107,7 +107,7 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    Xapian::Database *_xapianDatabase;
 #endif
 
@@ -348,7 +348,7 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; }
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    Xapian::Database* xapiandatabase() { return _xapianDatabase; }
    bool xapianIndexNeedsUpdate();
    bool openXapianIndex();

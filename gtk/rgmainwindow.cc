@@ -852,7 +852,7 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    RGPreferencesWindow::applyProxySettings();
 }
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
 gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
@@ -910,7 +910,7 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
    if(_config->FindB("Debug::Synaptic::Xapian",false))
       std::cerr << "xapianIndexUpdateFinished: "  
 		<< WEXITSTATUS(status) << std::endl;
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    me->_lister->openXapianIndex();
 #endif
    gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
@@ -1566,7 +1566,7 @@ void RGMainWindow::buildInterface()
                                    (_builder, "entry_fast_search"));
 
    // only enable fast search if its usable
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    if(!_lister->xapiandatabase() ||
       !FileExists("/usr/sbin/update-apt-xapian-index")) {
       gtk_widget_hide(GTK_WIDGET(

@@ -81,7 +81,7 @@ using namespace std;
 
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    , _xapianDatabase(0)
 #endif
 {
@@ -103,7 +103,7 @@ RPackageLister::RPackageLister()
    _views.push_back(_searchView);
    // its import that we use "_packages" here instead of _nativeArchPackages
    _views.push_back(new RPackageViewArchitecture(_packages));
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
    openXapianIndex();
 #endif
 
@@ -435,7 +435,7 @@ bool RPackageLister::openCache()
    return true;
 }
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
 bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
@@ -1974,7 +1974,7 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 }
 
 
-#ifdef WITH_EPT
+#ifdef WITH_SQLITE
 bool RPackageLister::limitBySearch(string searchString)
 {
    //cerr << "limitBySearch(): " << searchString << endl;

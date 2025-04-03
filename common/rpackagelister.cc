@@ -1944,34 +1944,77 @@ bool RPackageLister::xapianSearch(string unsplitSearchString, void (*iter)())
     if (not database)
     {
         char *err;
-        printf("Trying to open\n");
-        if (sqlite3_open(":memory:", &database) != SQLITE_OK)
+        std::string dir;
+        if (auto d = getenv("XDG_RUNTIME_DIRECTORY"))
+            dir = d;
+        else if (getuid())
+            dir = flCombine("/run/user/", std::to_string(getuid()));
+        else
+            dir = std::string{"/run"};
+
+        std::string file = ":memory:";
+        if (struct stat st; !dir.empty() || access(dir.c_str(), X_OK) != 0)
+            file = flCombine(dir, "synaptic.db");
+
+        struct stat cacheStat{};
+        struct stat dbStat{};
+        stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &cacheStat);
+        stat(file.c_str(), &dbStat);
+
+        if (dbStat.st_mtime && dbStat.st_mtime != cacheStat.st_mtime)
+            unlink(file.c_str());
+
+        if (sqlite3_open(file.c_str(), &database) != SQLITE_OK &&
+            sqlite3_open(":memory:", &database) != SQLITE_OK)
             return _error->Error("Cannot open database");
-        if (sqlite3_exec(database, "CREATE VIRTUAL TABLE fts USING fts5(name, description);", nullptr, nullptr, &err) != SQLITE_OK)
+        if (sqlite3_exec(database, "CREATE VIRTUAL TABLE IF NOT EXISTS fts USING fts5(name, description);", nullptr, nullptr, &err) != SQLITE_OK)
             return _error->Error("Cannot create table: %s", err);
 
         static sqlite3_stmt *insert_stmt = nullptr;
         if (not insert_stmt && sqlite3_prepare_v2(database,  "INSERT INTO fts VALUES(?, ?)", -1, &insert_stmt, NULL) != SQLITE_OK)
             return _error->Error("Cannot prepare insert statement");
-        for (auto pkg : _packages)
+
+        // We abuse the callback here, if we have no rows, the callback returns 0, and then
+        // sqlite3_exec() returns SQLITE_DONE; whereas if we have a row, it returns 1, and
+        // the exec returns SQLITE_ABORT.
+        if (sqlite3_exec(database, "SELECT name FROM fts LIMIT 1", [](void*, int nrows, char**, char**) -> int {
+            return nrows > 0;
+            }, nullptr, &err) != SQLITE_ABORT)
         {
-            if (auto name = pkg->name(); sqlite3_bind_text(insert_stmt, 1, name, strlen(name), nullptr) != SQLITE_OK)
-                return _error->Error("Cannot bind name '%s': %s", name, sqlite3_errmsg(database));
-            if (auto desc = pkg->description(); sqlite3_bind_text(insert_stmt, 2, desc, strlen(desc), nullptr) != SQLITE_OK)
-                return _error->Error("Cannot bind desc '%s': %s", desc, sqlite3_errmsg(database));
 
-            if (sqlite3_step(insert_stmt) != SQLITE_DONE)
-                return _error->Error("Insert failed of '%s': %s", pkg->name(), sqlite3_errmsg(database));
+            if (sqlite3_exec(database, "BEGIN", nullptr, nullptr, &err) != SQLITE_OK)
+                return _error->Error("Cannot begin: %s", err);
 
-            sqlite3_reset(insert_stmt);
-            iter();
+            for (auto pkg : _packages)
+            {
+                if (auto name = pkg->name(); sqlite3_bind_text(insert_stmt, 1, name, strlen(name), nullptr) != SQLITE_OK)
+                    return _error->Error("Cannot bind name '%s': %s", name, sqlite3_errmsg(database));
+                if (auto desc = pkg->description(); sqlite3_bind_text(insert_stmt, 2, desc, strlen(desc), nullptr) != SQLITE_OK)
+                    return _error->Error("Cannot bind desc '%s': %s", desc, sqlite3_errmsg(database));
+
+                if (sqlite3_step(insert_stmt) != SQLITE_DONE)
+                    return _error->Error("Insert failed of '%s': %s", pkg->name(), sqlite3_errmsg(database));
+
+                sqlite3_reset(insert_stmt);
+                iter();
+            }
+
+            if (sqlite3_exec(database, "END", nullptr, nullptr, &err) != SQLITE_OK)
+                return _error->Error("Cannot begin: %s", err);
+
+            if (cacheStat.st_mtime != 0)
+            {
+                struct timeval tv[]{timeval{time(NULL), 0}, timeval{cacheStat.st_mtime, 0}};
+                utimes(file.c_str(), tv);
+            }
         }
+
+
     }
-    printf("HELLO\n");
     static sqlite3_stmt *select_stmt = nullptr;
     if (select_stmt)
         sqlite3_reset(select_stmt);
-    else if (sqlite3_prepare_v2(database,  "SELECT name FROM fts WHERE fts MATCH ?" , -1, &select_stmt, NULL) != SQLITE_OK)
+    else if (sqlite3_prepare_v2(database,  "SELECT DISTINCT name FROM fts WHERE fts MATCH ?" , -1, &select_stmt, NULL) != SQLITE_OK)
         return _error->Error("Cannot prepare statement");
                      
     if (sqlite3_bind_text(select_stmt, 1, unsplitSearchString.c_str(), unsplitSearchString.size(), nullptr) != SQLITE_OK)

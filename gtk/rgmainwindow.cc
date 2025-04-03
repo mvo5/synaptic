@@ -852,57 +852,10 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    RGPreferencesWindow::applyProxySettings();
 }
 
-#ifdef WITH_SQLITE
-gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
-{
-   RGMainWindow *me = (RGMainWindow *) data;
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "xapianDoIndexUpdate()" << std::endl;
-
-   // no need to update if we run non-interactive
-   if(_config->FindB("Volatile::Non-Interactive", false) == true)
-      return false;
-
-   // check if we need a update
-   if(!me->_lister->xapianIndexNeedsUpdate()) {
-      // if the cache is not open, check back when it is
-      if (me->_lister->packagesSize() == 0)
-	 g_timeout_add_seconds(30, xapianDoIndexUpdate, me);
-      return false;
-   }
-
-   // do not run if we don't have it
-   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
-      return false;
-   // no permission
-   if (getuid() != 0)
-      return false;
-
-   // if we make it to this point, we need a xapian update
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "running update-apt-xapian-index" << std::endl;
-   GPid pid;
-   const char *argp[] = {"/usr/bin/nice",
-		   "/usr/bin/ionice","-c3",
-		   "/usr/sbin/update-apt-xapian-index", 
-		   "--update", "-q",
-		   NULL};
-   if(g_spawn_async(NULL, const_cast<char **>(argp), NULL, 
-		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
-		    NULL, NULL, &pid, NULL)) {
-      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
-      gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
-							  "label_fast_search")),
-			 _("Rebuilding search index"));
-   }
-   return false;
-}
-#else
 gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 {
    return false;
 }
-#endif
 
 void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 {
@@ -910,9 +863,6 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
    if(_config->FindB("Debug::Synaptic::Xapian",false))
       std::cerr << "xapianIndexUpdateFinished: "  
 		<< WEXITSTATUS(status) << std::endl;
-#ifdef WITH_SQLITE
-   me->_lister->openXapianIndex();
-#endif
    gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
 						     "label_fast_search")),
 		      _("Quick filter"));
@@ -1565,21 +1515,6 @@ void RGMainWindow::buildInterface()
    _entry_fast_search = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "entry_fast_search"));
 
-   // only enable fast search if its usable
-#ifdef WITH_SQLITE
-   if(!_lister->xapiandatabase() ||
-      !FileExists("/usr/sbin/update-apt-xapian-index")) {
-      gtk_widget_hide(GTK_WIDGET(
-            gtk_builder_get_object(_builder, "toolitem_fast_search")));
-      gtk_box_set_center_widget(GTK_BOX(
-            gtk_builder_get_object(_builder, "hbox_button_toolbar")), NULL);
-   }
-#else
-   gtk_widget_hide(GTK_WIDGET(
-         gtk_builder_get_object(_builder, "toolitem_fast_search")));
-   gtk_box_set_center_widget(GTK_BOX(
-         gtk_builder_get_object(_builder, "hbox_button_toolbar")), NULL);
-#endif
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;

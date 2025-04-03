@@ -29,10 +29,6 @@
 #include <string>
 #include <map>
 
-#ifdef WITH_SQLITE
-#include <ept/axi/axi.h>
-#endif
-
 #include "rpackage.h"
 #include "rpackagefilter.h"
 

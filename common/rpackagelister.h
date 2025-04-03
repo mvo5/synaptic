@@ -38,7 +38,7 @@
 #include <apt-pkg/progress.h>
 
 #ifdef WITH_SQLITE
-#include <ept/axi/axi.h>
+#include <sqlite3.h>
 #endif
 
 #include "rpackagecache.h"
@@ -106,11 +106,6 @@ class RPackageLister {
    RPackageCache * _cache;
    pkgRecords *_records;
    OpProgress *_progMeter;
-
-#ifdef WITH_SQLITE
-   Xapian::Database *_xapianDatabase;
-#endif
-
 
    // Other members.
    vector<RPackage *> _packages;
@@ -348,11 +343,6 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; }
-#ifdef WITH_SQLITE
-   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
-   bool xapianIndexNeedsUpdate();
-   bool openXapianIndex();
-#endif
 
    RPackageLister();
    ~RPackageLister();

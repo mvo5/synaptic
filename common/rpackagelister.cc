@@ -1930,15 +1930,15 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 
 
 #ifdef WITH_SQLITE
-bool RPackageLister::limitBySearch(string searchString)
+bool RPackageLister::limitBySearch(string searchString, void (*iter)())
 {
    //cerr << "limitBySearch(): " << searchString << endl;
-   if (not xapianSearch(searchString))
+   if (not xapianSearch(searchString, iter))
        _error->DumpErrors();
    return true;
 }
 
-bool RPackageLister::xapianSearch(string unsplitSearchString)
+bool RPackageLister::xapianSearch(string unsplitSearchString, void (*iter)())
 {
     static sqlite3 *database = nullptr;
     if (not database)
@@ -1964,8 +1964,8 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
                 return _error->Error("Insert failed of '%s': %s", pkg->name(), sqlite3_errmsg(database));
 
             sqlite3_reset(insert_stmt);
+            iter();
         }
-
     }
     printf("HELLO\n");
     static sqlite3_stmt *select_stmt = nullptr;
@@ -1980,6 +1980,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
     int rc;
     _viewPackages.clear();
     while(SQLITE_ROW == (rc = sqlite3_step(select_stmt))) {
+        iter();
         const char *name = (const char*)sqlite3_column_text(select_stmt, 0);
         auto pkg = getPackage(name);
         if (!pkg || !_selectedView->hasPackage(pkg))
@@ -1992,12 +1993,12 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
     return true;
 }
 #else
-bool RPackageLister::limitBySearch(string searchString)
+bool RPackageLister::limitBySearch(string searchString, void (*iter)())
 {
    return false;
 }
 
-bool RPackageLister::xapianSearch(string searchString) 
+bool RPackageLister::xapianSearch(string searchString, void (*iter)())
 { 
    return false; 
 }

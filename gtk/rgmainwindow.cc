@@ -311,7 +311,10 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
    if(str != NULL && strlen(str) > 1) {
       if(_config->FindB("Debug::Synaptic::View",false))
 	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
-      _lister->limitBySearch(str);
+      _lister->limitBySearch(str, [](){
+         while (gtk_events_pending ())
+           gtk_main_iteration ();
+      });
    }
 
    if(_pkgList == NULL)

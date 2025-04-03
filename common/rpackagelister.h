@@ -135,7 +135,7 @@ class RPackageLister {
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
 
    // helper for the limitBySearch() code
-   bool xapianSearch(string searchString);
+   bool xapianSearch(string searchString, void (*iter)());
 
    public:
 
@@ -205,7 +205,7 @@ class RPackageLister {
 
    public:
    // limit what the current view displays
-   bool limitBySearch(string searchString);
+   bool limitBySearch(string searchString, void (*iter)());
 
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();

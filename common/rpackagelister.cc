@@ -1516,9 +1516,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             _config->Set("RPM::Install-Options::", "--nodeps");
          }
 
-         _cache->releaseLock();
+	 _system->UnLockInner();
          pkgPackageManager::OrderResult Res =
                    iprog->start(rPM, numPackages, numPackagesTotal);
+	 _system->LockInner();
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
                goto gave_wood;
@@ -1534,7 +1535,6 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
          numPackages = 0;
 
-         _cache->lock();
       }
       // Reload the fetcher object and loop again for media swapping
       fetcher.Shutdown();

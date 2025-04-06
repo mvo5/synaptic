@@ -90,6 +90,8 @@ bool SourcesList::ReadSourcePartDeb822(string listpath)
 	 auto const list_uris = FindMultiValue(Tags, "URIs");
 	 auto const list_comp = FindMultiValue(Tags, "Components");
 	 auto list_suite = FindMultiValue(Tags, "Suites");
+	 // XXX: keep an "ExtraStanzas" somewhere here so that
+	 // we keep unknown keys like "signed-by" or "x-foo"
 	 for (auto URI : list_uris) {
 		 for (auto const &S : list_suite) {
 			 bool failed = false;

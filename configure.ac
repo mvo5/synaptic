@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(synaptic, 0.91.6)
+AC_INIT(synaptic, 0.91.7)
 
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AM_CONFIG_HEADER(config.h)

@@ -1,6 +1,6 @@
 
 AM_CPPFLAGS = -I${top_srcdir}/common -I${top_srcdir}/gtk \
-	@GTK_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBTAGCOLL_CFLAGS) $(LIBEPT_CFLAGS) -O0 -g3
+	@GTK_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBTAGCOLL_CFLAGS) $(SQLITE_CFLAGS) -O0 -g3
 
 noinst_PROGRAMS = test_rpackage test_rpackageview test_gtkpkglist test_rpackagefilter
 
@@ -8,7 +8,7 @@ LDADD = \
 	${top_builddir}/common/libsynaptic.a\
 	-lapt-pkg -lX11 @RPM_LIBS@ @DEB_LIBS@ \
 	@GTK_LIBS@ @VTE_LIBS@ @LP_LIBS@\
-	-lpthread $(LIBEPT_LIBS)
+	-lpthread $(SQLITE_LIBS)
 
 test_rpackage_SOURCES= test_rpackage.cc
 

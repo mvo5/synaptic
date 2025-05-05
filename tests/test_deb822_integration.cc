@@ -13,6 +13,7 @@
 
 #include "common/rpackagemanager.h"
 #include "gtk/rgrepositorywindow.h"
+#include <iostream>
 
 class TestDeb822Integration : public CppUnit::TestFixture {
     CPPUNIT_TEST_SUITE(TestDeb822Integration);
@@ -21,6 +22,11 @@ class TestDeb822Integration : public CppUnit::TestFixture {
     CPPUNIT_TEST(testSourceListRefresh);
     CPPUNIT_TEST(testSourceValidation);
     CPPUNIT_TEST(testSourceParsing);
+    CPPUNIT_TEST(testBasicParsing);
+    CPPUNIT_TEST(testMultipleSources);
+    CPPUNIT_TEST(testSourceManager);
+    CPPUNIT_TEST(testInvalidSourceFormat);
+    CPPUNIT_TEST(testFailedInstallationHandling);
     CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -215,6 +221,114 @@ public:
         source = RDeb822Source::fromString(content);
         CPPUNIT_ASSERT(source.isValid());
         CPPUNIT_ASSERT_EQUAL(std::string("deb"), source.getTypes());
+    }
+
+    void testBasicParsing() {
+        std::string content = 
+            "Types: deb deb-src\n"
+            "URIs: http://ftp.de.debian.org/debian/\n"
+            "Suites: trixie\n"
+            "Components: main non-free-firmware\n"
+            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n";
+
+        RDeb822Source source = RDeb822Source::fromString(content);
+        
+        CPPUNIT_ASSERT(source.getTypes() == "deb deb-src");
+        CPPUNIT_ASSERT(source.getUris() == "http://ftp.de.debian.org/debian/");
+        CPPUNIT_ASSERT(source.getSuites() == "trixie");
+        CPPUNIT_ASSERT(source.getComponents() == "main non-free-firmware");
+        CPPUNIT_ASSERT(source.isEnabled());
+        CPPUNIT_ASSERT(source.isValid());
+    }
+
+    void testMultipleSources() {
+        std::string multiContent = 
+            "Types: deb deb-src\n"
+            "URIs: http://ftp.de.debian.org/debian/\n"
+            "Suites: trixie\n"
+            "Components: main non-free-firmware\n"
+            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n\n"
+            "Types: deb deb-src\n"
+            "URIs: http://security.debian.org/debian-security/\n"
+            "Suites: trixie-security\n"
+            "Components: main non-free-firmware\n"
+            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n";
+        
+        std::istringstream iss(multiContent);
+        std::string sourceContent;
+        std::string line;
+        int sourceCount = 0;
+        
+        while (std::getline(iss, line)) {
+            if (line.empty() && !sourceContent.empty()) {
+                RDeb822Source src = RDeb822Source::fromString(sourceContent);
+                if (src.isValid()) {
+                    sourceCount++;
+                    std::cout << "Found source " << sourceCount << ": " 
+                             << src.getUris() << " (" << src.getSuites() << ")" << std::endl;
+                }
+                sourceContent.clear();
+            } else {
+                sourceContent += line + "\n";
+            }
+        }
+        
+        if (!sourceContent.empty()) {
+            RDeb822Source src = RDeb822Source::fromString(sourceContent);
+            if (src.isValid()) {
+                sourceCount++;
+                std::cout << "Found source " << sourceCount << ": " 
+                         << src.getUris() << " (" << src.getSuites() << ")" << std::endl;
+            }
+        }
+        
+        CPPUNIT_ASSERT_EQUAL(2, sourceCount);
+    }
+
+    void testSourceManager() {
+        RSourceManager manager("/etc/apt/sources.list.d");
+        
+        // Test adding source
+        RDeb822Source source;
+        source.setTypes("deb");
+        source.setUris("http://example.com");
+        source.setSuites("stable");
+        source.setComponents("main");
+        
+        CPPUNIT_ASSERT(manager.addSource(source));
+        CPPUNIT_ASSERT_EQUAL(1, (int)manager.getSources().size());
+        
+        // Test removing source
+        CPPUNIT_ASSERT(manager.removeSource(source));
+        CPPUNIT_ASSERT_EQUAL(0, (int)manager.getSources().size());
+    }
+
+    void testInvalidSourceFormat() {
+        // Test with missing required fields
+        std::string invalidSource = "Types: deb\nURIs: http://example.com\n";
+        RDeb822Source source = RDeb822Source::fromString(invalidSource);
+        CPPUNIT_ASSERT(!source.isValid());
+
+        // Test with invalid URI
+        std::string invalidUri = "Types: deb\nURIs: invalid://example.com\nSuites: stable\n";
+        source = RDeb822Source::fromString(invalidUri);
+        CPPUNIT_ASSERT(!source.isValid());
+
+        // Test with empty values
+        std::string emptyValues = "Types: \nURIs: \nSuites: \n";
+        source = RDeb822Source::fromString(emptyValues);
+        CPPUNIT_ASSERT(!source.isValid());
+    }
+
+    void testFailedInstallationHandling() {
+        // Test handling of failed installation
+        std::string pkgName = "test-package";
+        CPPUNIT_ASSERT(pkgLister->handleFailedInstallation(pkgName));
+        
+        // Verify package state after handling
+        RPackage* pkg = pkgLister->getPackage(pkgName);
+        CPPUNIT_ASSERT(pkg != nullptr);
+        CPPUNIT_ASSERT_EQUAL(pkgCache::State::ConfigFiles, pkg->state());
     }
 
 private:

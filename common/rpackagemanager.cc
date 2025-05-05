@@ -6,6 +6,24 @@
 #include <apt-pkg/fileutl.h>
 #include <iostream>
 
+// RPackageManager implementation
+RPackageManager::RPackageManager(pkgPackageManager *pm) : pm(pm) {}
+
+pkgPackageManager::OrderResult RPackageManager::DoInstallPreFork() {
+   Res = pm->OrderInstall();
+   return Res;
+}
+
+#ifdef WITH_DPKG_STATUSFD
+pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork(int statusFd) {
+   return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
+}
+#else
+pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork() {
+   return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
+}
+#endif
+
 // RDeb822Source implementation
 RDeb822Source::RDeb822Source() : enabled(true) {}
 
@@ -91,53 +109,51 @@ RDeb822Source RDeb822Source::fromString(const std::string& content) {
     RDeb822Source source;
     std::istringstream stream(content);
     std::string line;
-    bool inSource = false;
-    std::string currentKey;
-    std::string currentValue;
+    bool hasTypes = false;
+    bool hasUris = false;
+    bool hasSuites = false;
+    bool hasComponents = false;
 
     while (std::getline(stream, line)) {
         // Skip comments and empty lines
         if (line.empty() || line[0] == '#') {
-            if (inSource && !currentKey.empty()) {
-                // Process the last key-value pair
-                source.setField(currentKey, currentValue);
-                currentKey.clear();
-                currentValue.clear();
-            }
-            inSource = false;
             continue;
         }
 
-        // Check for disabled source
-        if (line[0] == '#') {
-            source.enabled = false;
-            line = line.substr(1);
+        // Parse key-value pairs
+        size_t colonPos = line.find(':');
+        if (colonPos == std::string::npos) {
+            continue;
         }
 
-        // Parse key-value pair
-        size_t colonPos = line.find(':');
-        if (colonPos != std::string::npos) {
-            if (inSource && !currentKey.empty()) {
-                // Process the previous key-value pair
-                source.setField(currentKey, currentValue);
-            }
-            currentKey = line.substr(0, colonPos);
-            currentValue = line.substr(colonPos + 1);
-            // Trim whitespace
-            currentKey.erase(0, currentKey.find_first_not_of(" \t"));
-            currentKey.erase(currentKey.find_last_not_of(" \t") + 1);
-            currentValue.erase(0, currentValue.find_first_not_of(" \t"));
-            currentValue.erase(currentValue.find_last_not_of(" \t") + 1);
-            inSource = true;
-        } else if (inSource && !currentValue.empty()) {
-            // Continuation of previous value
-            currentValue += "\n" + line;
+        std::string key = line.substr(0, colonPos);
+        std::string value = line.substr(colonPos + 1);
+        
+        // Trim whitespace
+        key = std::string(APT::String::Strip(key));
+        value = std::string(APT::String::Strip(value));
+
+        if (key == "Types") {
+            source.types = value;
+            hasTypes = true;
+        } else if (key == "URIs") {
+            source.uris = value;
+            hasUris = true;
+        } else if (key == "Suites") {
+            source.suites = value;
+            hasSuites = true;
+        } else if (key == "Components") {
+            source.components = value;
+            hasComponents = true;
+        } else if (key == "Signed-By") {
+            source.signedBy = value;
         }
     }
 
-    // Process the last key-value pair
-    if (inSource && !currentKey.empty()) {
-        source.setField(currentKey, currentValue);
+    // Validate required fields
+    if (!hasTypes || !hasUris || !hasSuites || !hasComponents) {
+        std::cerr << "Warning: Missing required fields in source" << std::endl;
+        return RDeb822Source(); // Return invalid source
     }
 
     return source;
@@ -212,13 +228,20 @@ bool RSourceManager::loadSources() {
         for (const auto& entry : std::filesystem::directory_iterator(sourcesDir)) {
             if (entry.path().extension() == ".sources") {
                 std::cerr << "Loading source file: " << entry.path().string() << std::endl;
-                RDeb822Source source = readSourceFile(entry.path().string());
-                if (source.isValid()) {
-                    std::cerr << "Loaded valid source: " << source.getUris() << " " << source.getSuites() << std::endl;
-                    sources.push_back(source);
-                } else {
-                    std::cerr << "Warning: Invalid source file: " << entry.path().string() << std::endl;
+                
+                // Read the entire file content
+                std::ifstream file(entry.path());
+                if (!file) {
+                    std::cerr << "Error: Could not open file: " << entry.path().string() << std::endl;
+                    continue;
                 }
+                
+                std::string content((std::istreambuf_iterator<char>(file)),
+                                  std::istreambuf_iterator<char>());
+                
+                // Parse sources from the file content
+                std::vector<RDeb822Source> fileSources = parseSources(content);
+                sources.insert(sources.end(), fileSources.begin(), fileSources.end());
             }
         }
         return true;
@@ -226,6 +249,99 @@ bool RSourceManager::loadSources() {
         std::cerr << "Error loading sources: " << e.what() << std::endl;
         return false;
     }
+}
+
+std::vector<RDeb822Source> RSourceManager::parseSources(const std::string& content)
+{
+    std::vector<RDeb822Source> sources;
+    std::map<std::string, std::string> currentFields;
+    
+    std::istringstream iss(content);
+    std::string line;
+    bool inSourceBlock = false;
+    
+    while (std::getline(iss, line)) {
+        // Trim whitespace
+        line = trim(line);
+        
+        // Skip empty lines
+        if (line.empty()) {
+            if (!currentFields.empty()) {
+                RDeb822Source source = createSourceFromFields(currentFields);
+                if (source.isValid()) {
+                    sources.push_back(source);
+                }
+                currentFields.clear();
+            }
+            continue;
+        }
+        
+        // Check for source block start
+        if (line.starts_with("#") && line.find("Modernized") != std::string::npos) {
+            if (!currentFields.empty()) {
+                RDeb822Source source = createSourceFromFields(currentFields);
+                if (source.isValid()) {
+                    sources.push_back(source);
+                }
+                currentFields.clear();
+            }
+            inSourceBlock = true;
+            continue;
+        }
+        
+        // Skip other comments
+        if (line.starts_with("#")) {
+            continue;
+        }
+        
+        // Parse key-value pairs
+        size_t colonPos = line.find(':');
+        if (colonPos != std::string::npos) {
+            std::string key = trim(line.substr(0, colonPos));
+            std::string value = trim(line.substr(colonPos + 1));
+            
+            // Look ahead for continuation lines
+            while (std::getline(iss, line)) {
+                line = trim(line);
+                if (line.empty() || line.starts_with("#") || line.find(':') != std::string::npos) {
+                    // Put the line back for the next iteration
+                    iss.seekg(-static_cast<long>(line.length() + 1), std::ios_base::cur);
+                    break;
+                }
+                value += " " + line;
+            }
+            
+            currentFields[key] = value;
+        }
+    }
+    
+    // Handle the last source
+    if (!currentFields.empty()) {
+        RDeb822Source source = createSourceFromFields(currentFields);
+        if (source.isValid()) {
+            sources.push_back(source);
+        }
+    }
+    
+    return sources;
+}
+
+RDeb822Source RSourceManager::createSourceFromFields(const std::map<std::string, std::string>& fields)
+{
+    RDeb822Source source;
+    
+    // Set required fields
+    source.types = fields.count("Types") ? fields.at("Types") : "";
+    source.uris = fields.count("URIs") ? fields.at("URIs") : "";
+    source.suites = fields.count("Suites") ? fields.at("Suites") : "";
+    source.components = fields.count("Components") ? fields.at("Components") : "";
+    
+    // Set optional fields
+    if (fields.count("Signed-By")) {
+        source.signedBy = fields.at("Signed-By");
+    }
+    
+    return source;
 }
 
 bool RSourceManager::saveSources() const {
@@ -297,4 +413,15 @@ std::string RSourceManager::getSourceFilename(const RDeb822Source& source) const
     std::replace(filename.begin(), filename.end(), '/', '-');
     filename += "-" + source.getSuites() + ".sources";
     return (std::filesystem::path(sourcesDir) / filename).string();
+}
+
+std::string RSourceManager::trim(const std::string& str) const
+{
+    const std::string whitespace = " \t\r\n";
+    size_t start = str.find_first_not_of(whitespace);
+    if (start == std::string::npos) {
+        return "";
+    }
+    size_t end = str.find_last_not_of(whitespace);
+    return str.substr(start, end - start + 1);
 } 

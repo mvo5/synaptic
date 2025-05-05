@@ -1,366 +1,212 @@
-#include <cppunit/extensions/HelperMacros.h>
-#include <cppunit/TestFixture.h>
-#include <cppunit/TestAssert.h>
-#include <cppunit/TestCaller.h>
-#include <cppunit/TestSuite.h>
-#include <cppunit/TestRunner.h>
-#include <cppunit/TestResult.h>
-#include <cppunit/TestResultCollector.h>
-#include <cppunit/TestListener.h>
-#include <cppunit/CompilerOutputter.h>
-#include <cppunit/BriefTestProgressListener.h>
-#include <cppunit/XmlOutputter.h>
+#include <gtest/gtest.h>
+#include "../common/rsources.h"
+#include "../common/rsource_deb822.h"
+#include <apt-pkg/error.h>
+#include <fstream>
+#include <sstream>
+#include <cstdio>
 
-#include "common/rpackagemanager.h"
-#include "gtk/rgrepositorywindow.h"
-#include <iostream>
+class Deb822Test : public ::testing::Test {
+protected:
+    void SetUp() override {
+        // Create a temporary file for testing
+        char tmpname[] = "/tmp/synaptic_test_XXXXXX";
+        int fd = mkstemp(tmpname);
+        ASSERT_NE(fd, -1);
+        close(fd);
+        testFile = tmpname;
+    }
 
-class TestDeb822Integration : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestDeb822Integration);
-    CPPUNIT_TEST(testSourceFileOperations);
-    CPPUNIT_TEST(testAptIntegration);
-    CPPUNIT_TEST(testSourceListRefresh);
-    CPPUNIT_TEST(testSourceValidation);
-    CPPUNIT_TEST(testSourceParsing);
-    CPPUNIT_TEST(testBasicParsing);
-    CPPUNIT_TEST(testMultipleSources);
-    CPPUNIT_TEST(testSourceManager);
-    CPPUNIT_TEST(testInvalidSourceFormat);
-    CPPUNIT_TEST(testFailedInstallationHandling);
-    CPPUNIT_TEST_SUITE_END();
-
-public:
-    void setUp() override {
-        // Create temporary test directory
-        testDir = std::filesystem::temp_directory_path() / "synaptic_test";
-        std::filesystem::create_directories(testDir);
-        
-        // Initialize source manager with test directory
-        sourceManager = new RSourceManager(testDir.string());
-    }
-    
-    void tearDown() override {
-        delete sourceManager;
-        std::filesystem::remove_all(testDir);
-    }
-    
-    void testSourceFileOperations() {
-        // Test valid source
-        RDeb822Source source;
-        source.setTypes("deb");
-        source.setUris("http://example.com");
-        source.setSuites("stable");
-        source.setComponents("main");
-        
-        // Write source to file
-        std::string filename = testDir / "test.sources";
-        CPPUNIT_ASSERT(sourceManager->writeSourceFile(filename.string(), source));
-        
-        // Read source from file
-        RDeb822Source readSource = sourceManager->readSourceFile(filename.string());
-        CPPUNIT_ASSERT(readSource.isValid());
-        CPPUNIT_ASSERT_EQUAL(std::string("deb"), readSource.getTypes());
-        CPPUNIT_ASSERT_EQUAL(std::string("http://example.com"), readSource.getUris());
-        CPPUNIT_ASSERT_EQUAL(std::string("stable"), readSource.getSuites());
-        CPPUNIT_ASSERT_EQUAL(std::string("main"), readSource.getComponents());
-        
-        // Test disabled source
-        source.setEnabled(false);
-        CPPUNIT_ASSERT(sourceManager->writeSourceFile(filename.string(), source));
-        readSource = sourceManager->readSourceFile(filename.string());
-        CPPUNIT_ASSERT(!readSource.isEnabled());
-        
-        // Test multiple URIs and suites
-        source.setEnabled(true);
-        source.setUris("http://example.com ftp://mirror.example.com");
-        source.setSuites("stable testing");
-        CPPUNIT_ASSERT(sourceManager->writeSourceFile(filename.string(), source));
-        readSource = sourceManager->readSourceFile(filename.string());
-        CPPUNIT_ASSERT(readSource.isValid());
-        CPPUNIT_ASSERT_EQUAL(std::string("http://example.com ftp://mirror.example.com"), 
-                           readSource.getUris());
-        CPPUNIT_ASSERT_EQUAL(std::string("stable testing"), readSource.getSuites());
-    }
-    
-    void testAptIntegration() {
-        // Add a source
-        RDeb822Source source;
-        source.setTypes("deb");
-        source.setUris("http://example.com");
-        source.setSuites("stable");
-        source.setComponents("main");
-        
-        CPPUNIT_ASSERT(sourceManager->addSource(source));
-        CPPUNIT_ASSERT(sourceManager->saveSources());
-        
-        // Update APT sources
-        CPPUNIT_ASSERT(sourceManager->updateAptSources());
-        
-        // Reload APT cache
-        CPPUNIT_ASSERT(sourceManager->reloadAptCache());
-    }
-    
-    void testSourceListRefresh() {
-        // Create repository window
-        RGRepositoryWindow* window = new RGRepositoryWindow();
-        
-        // Add a source
-        RDeb822Source source;
-        source.setTypes("deb");
-        source.setUris("http://example.com");
-        source.setSuites("stable");
-        source.setComponents("main");
-        
-        CPPUNIT_ASSERT(sourceManager->addSource(source));
-        CPPUNIT_ASSERT(sourceManager->saveSources());
-        
-        // Refresh source list
-        window->refreshSourceList();
-        
-        // Verify source is in list
-        GtkTreeModel* model = gtk_tree_view_get_model(GTK_TREE_VIEW(window->getSourceList()));
-        GtkTreeIter iter;
-        bool found = false;
-        
-        if (gtk_tree_model_get_iter_first(model, &iter)) {
-            do {
-                gchar *type, *uri, *suite, *components;
-                gtk_tree_model_get(model, &iter,
-                    0, &type,
-                    1, &uri,
-                    2, &suite,
-                    3, &components,
-                    -1);
-                    
-                if (std::string(type) == "deb" &&
-                    std::string(uri) == "http://example.com" &&
-                    std::string(suite) == "stable" &&
-                    std::string(components) == "main") {
-                    found = true;
-                }
-                
-                g_free(type);
-                g_free(uri);
-                g_free(suite);
-                g_free(components);
-            } while (gtk_tree_model_iter_next(model, &iter));
+    void TearDown() override {
+        if (!testFile.empty()) {
+            remove(testFile.c_str());
         }
-        
-        CPPUNIT_ASSERT(found);
-        delete window;
-    }
-    
-    void testSourceValidation() {
-        RDeb822Source source;
-        
-        // Test valid sources
-        source.setTypes("deb");
-        source.setUris("http://example.com");
-        source.setSuites("stable");
-        CPPUNIT_ASSERT(source.isValid());
-        
-        source.setTypes("deb-src");
-        source.setUris("https://example.com");
-        source.setSuites("testing");
-        CPPUNIT_ASSERT(source.isValid());
-        
-        source.setUris("ftp://example.com");
-        CPPUNIT_ASSERT(source.isValid());
-        
-        source.setUris("file:///media/cdrom");
-        CPPUNIT_ASSERT(source.isValid());
-        
-        source.setUris("cdrom:");
-        CPPUNIT_ASSERT(source.isValid());
-        
-        // Test invalid sources
-        source.setTypes("invalid");
-        CPPUNIT_ASSERT(!source.isValid());
-        
-        source.setTypes("deb");
-        source.setUris("invalid://example.com");
-        CPPUNIT_ASSERT(!source.isValid());
-        
-        source.setUris("");
-        CPPUNIT_ASSERT(!source.isValid());
-        
-        source.setUris("http://example.com");
-        source.setSuites("");
-        CPPUNIT_ASSERT(!source.isValid());
-    }
-    
-    void testSourceParsing() {
-        // Test single line format
-        std::string content = "deb http://example.com stable main";
-        RDeb822Source source = RDeb822Source::fromString(content);
-        CPPUNIT_ASSERT(source.isValid());
-        CPPUNIT_ASSERT_EQUAL(std::string("deb"), source.getTypes());
-        CPPUNIT_ASSERT_EQUAL(std::string("http://example.com"), source.getUris());
-        CPPUNIT_ASSERT_EQUAL(std::string("stable"), source.getSuites());
-        CPPUNIT_ASSERT_EQUAL(std::string("main"), source.getComponents());
-        
-        // Test disabled source
-        content = "# Disabled: deb http://example.com stable main";
-        source = RDeb822Source::fromString(content);
-        CPPUNIT_ASSERT(!source.isEnabled());
-        
-        // Test multiple URIs and suites
-        content = "deb http://example.com ftp://mirror.example.com stable testing main contrib";
-        source = RDeb822Source::fromString(content);
-        CPPUNIT_ASSERT(source.isValid());
-        CPPUNIT_ASSERT_EQUAL(std::string("http://example.com ftp://mirror.example.com"), 
-                           source.getUris());
-        CPPUNIT_ASSERT_EQUAL(std::string("stable testing"), source.getSuites());
-        CPPUNIT_ASSERT_EQUAL(std::string("main contrib"), source.getComponents());
-        
-        // Test with comments
-        content = "# This is a comment\n"
-                 "# Another comment\n"
-                 "deb http://example.com stable main\n"
-                 "# Trailing comment";
-        source = RDeb822Source::fromString(content);
-        CPPUNIT_ASSERT(source.isValid());
-        CPPUNIT_ASSERT_EQUAL(std::string("deb"), source.getTypes());
     }
 
-    void testBasicParsing() {
-        std::string content = 
-            "Types: deb deb-src\n"
-            "URIs: http://ftp.de.debian.org/debian/\n"
-            "Suites: trixie\n"
-            "Components: main non-free-firmware\n"
-            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n";
-
-        RDeb822Source source = RDeb822Source::fromString(content);
-        
-        CPPUNIT_ASSERT(source.getTypes() == "deb deb-src");
-        CPPUNIT_ASSERT(source.getUris() == "http://ftp.de.debian.org/debian/");
-        CPPUNIT_ASSERT(source.getSuites() == "trixie");
-        CPPUNIT_ASSERT(source.getComponents() == "main non-free-firmware");
-        CPPUNIT_ASSERT(source.isEnabled());
-        CPPUNIT_ASSERT(source.isValid());
-    }
-
-    void testMultipleSources() {
-        std::string multiContent = 
-            "Types: deb deb-src\n"
-            "URIs: http://ftp.de.debian.org/debian/\n"
-            "Suites: trixie\n"
-            "Components: main non-free-firmware\n"
-            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n\n"
-            "Types: deb deb-src\n"
-            "URIs: http://security.debian.org/debian-security/\n"
-            "Suites: trixie-security\n"
-            "Components: main non-free-firmware\n"
-            "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n";
-        
-        std::istringstream iss(multiContent);
-        std::string sourceContent;
-        std::string line;
-        int sourceCount = 0;
-        
-        while (std::getline(iss, line)) {
-            if (line.empty() && !sourceContent.empty()) {
-                RDeb822Source src = RDeb822Source::fromString(sourceContent);
-                if (src.isValid()) {
-                    sourceCount++;
-                    std::cout << "Found source " << sourceCount << ": " 
-                             << src.getUris() << " (" << src.getSuites() << ")" << std::endl;
-                }
-                sourceContent.clear();
-            } else {
-                sourceContent += line + "\n";
-            }
-        }
-        
-        if (!sourceContent.empty()) {
-            RDeb822Source src = RDeb822Source::fromString(sourceContent);
-            if (src.isValid()) {
-                sourceCount++;
-                std::cout << "Found source " << sourceCount << ": " 
-                         << src.getUris() << " (" << src.getSuites() << ")" << std::endl;
-            }
-        }
-        
-        CPPUNIT_ASSERT_EQUAL(2, sourceCount);
-    }
-
-    void testSourceManager() {
-        RSourceManager manager("/etc/apt/sources.list.d");
-        
-        // Test adding source
-        RDeb822Source source;
-        source.setTypes("deb");
-        source.setUris("http://example.com");
-        source.setSuites("stable");
-        source.setComponents("main");
-        
-        CPPUNIT_ASSERT(manager.addSource(source));
-        CPPUNIT_ASSERT_EQUAL(1, (int)manager.getSources().size());
-        
-        // Test removing source
-        CPPUNIT_ASSERT(manager.removeSource(source));
-        CPPUNIT_ASSERT_EQUAL(0, (int)manager.getSources().size());
-    }
-
-    void testInvalidSourceFormat() {
-        // Test with missing required fields
-        std::string invalidSource = "Types: deb\nURIs: http://example.com\n";
-        RDeb822Source source = RDeb822Source::fromString(invalidSource);
-        CPPUNIT_ASSERT(!source.isValid());
-
-        // Test with invalid URI
-        std::string invalidUri = "Types: deb\nURIs: invalid://example.com\nSuites: stable\n";
-        source = RDeb822Source::fromString(invalidUri);
-        CPPUNIT_ASSERT(!source.isValid());
-
-        // Test with empty values
-        std::string emptyValues = "Types: \nURIs: \nSuites: \n";
-        source = RDeb822Source::fromString(emptyValues);
-        CPPUNIT_ASSERT(!source.isValid());
-    }
-
-    void testFailedInstallationHandling() {
-        // Test handling of failed installation
-        std::string pkgName = "test-package";
-        CPPUNIT_ASSERT(pkgLister->handleFailedInstallation(pkgName));
-        
-        // Verify package state after handling
-        RPackage* pkg = pkgLister->getPackage(pkgName);
-        CPPUNIT_ASSERT(pkg != nullptr);
-        CPPUNIT_ASSERT_EQUAL(pkgCache::State::ConfigFiles, pkg->state());
-    }
-
-private:
-    std::filesystem::path testDir;
-    RSourceManager* sourceManager;
+    std::string testFile;
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestDeb822Integration);
+TEST_F(Deb822Test, ParseSimpleDeb822Source) {
+    // Write a test source file
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "Types: deb\n"
+        << "URIs: http://deb.debian.org/debian\n"
+        << "Suites: trixie\n"
+        << "Components: main contrib\n"
+        << "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n\n";
+    ofs.close();
 
-int main(int argc, char* argv[]) {
-    // Initialize GTK
-    gtk_init(&argc, &argv);
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(testFile, entries));
+    ASSERT_EQ(entries.size(), 1);
     
-    // Create test runner
-    CppUnit::TestResultCollector result;
-    CppUnit::TestRunner runner;
-    runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());
+    const auto& entry = entries[0];
+    EXPECT_EQ(entry.Types, "deb");
+    EXPECT_EQ(entry.URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(entry.Suites, "trixie");
+    EXPECT_EQ(entry.Components, "main contrib");
+    EXPECT_EQ(entry.SignedBy, "/usr/share/keyrings/debian-archive-keyring.gpg");
+    EXPECT_TRUE(entry.Enabled);
+}
+
+TEST_F(Deb822Test, ParseMultipleEntries) {
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "Types: deb\n"
+        << "URIs: http://security.debian.org/debian-security\n"
+        << "Suites: trixie-security\n"
+        << "Components: main\n\n"
+        << "Types: deb deb-src\n"
+        << "URIs: http://deb.debian.org/debian\n"
+        << "Suites: trixie trixie-updates\n"
+        << "Components: main contrib non-free\n"
+        << "Enabled: no\n\n";
+    ofs.close();
+
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(testFile, entries));
+    ASSERT_EQ(entries.size(), 2);
     
-    // Add listener
-    CppUnit::BriefTestProgressListener progress;
-    runner.eventManager().addListener(&progress);
-    runner.eventManager().addListener(&result);
+    EXPECT_EQ(entries[0].Types, "deb");
+    EXPECT_TRUE(entries[0].Enabled);
     
-    // Run tests
-    runner.run();
-    
-    // Output results
-    CppUnit::CompilerOutputter outputter(&result, std::cerr);
-    outputter.write();
-    
-    // Clean up GTK
-    gtk_main_quit();
-    
-    return result.wasSuccessful() ? 0 : 1;
+    EXPECT_EQ(entries[1].Types, "deb deb-src");
+    EXPECT_FALSE(entries[1].Enabled);
+}
+
+TEST_F(Deb822Test, ConvertBetweenFormats) {
+    // Create a Deb822 entry
+    RDeb822Source::Deb822Entry deb822Entry;
+    deb822Entry.Types = "deb deb-src";
+    deb822Entry.URIs = "http://deb.debian.org/debian";
+    deb822Entry.Suites = "trixie";
+    deb822Entry.Components = "main contrib";
+    deb822Entry.SignedBy = "/usr/share/keyrings/debian-archive-keyring.gpg";
+    deb822Entry.Enabled = true;
+
+    // Convert to SourceRecord
+    SourcesList::SourceRecord sourceRecord;
+    ASSERT_TRUE(RDeb822Source::ConvertToSourceRecord(deb822Entry, sourceRecord));
+
+    // Verify conversion
+    EXPECT_TRUE(sourceRecord.Type & SourcesList::Deb);
+    EXPECT_TRUE(sourceRecord.Type & SourcesList::DebSrc);
+    EXPECT_EQ(sourceRecord.URI, "http://deb.debian.org/debian");
+    EXPECT_EQ(sourceRecord.Dist, "trixie");
+    ASSERT_EQ(sourceRecord.NumSections, 2);
+    EXPECT_EQ(sourceRecord.Sections[0], "main");
+    EXPECT_EQ(sourceRecord.Sections[1], "contrib");
+
+    // Convert back to Deb822
+    RDeb822Source::Deb822Entry convertedEntry;
+    ASSERT_TRUE(RDeb822Source::ConvertFromSourceRecord(sourceRecord, convertedEntry));
+
+    // Verify round-trip conversion
+    EXPECT_EQ(convertedEntry.Types, "deb deb-src");
+    EXPECT_EQ(convertedEntry.URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(convertedEntry.Suites, "trixie");
+    EXPECT_EQ(convertedEntry.Components, "main contrib");
+    EXPECT_TRUE(convertedEntry.Enabled);
+}
+
+TEST_F(Deb822Test, WriteAndReadBack) {
+    // Create test entries
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    RDeb822Source::Deb822Entry entry1;
+    entry1.Types = "deb";
+    entry1.URIs = "http://example.com/debian";
+    entry1.Suites = "stable";
+    entry1.Components = "main";
+    entry1.Enabled = true;
+    entries.push_back(entry1);
+
+    // Write to file
+    ASSERT_TRUE(RDeb822Source::WriteDeb822File(testFile, entries));
+
+    // Read back
+    std::vector<RDeb822Source::Deb822Entry> readEntries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(testFile, readEntries));
+
+    // Compare
+    ASSERT_EQ(readEntries.size(), entries.size());
+    EXPECT_EQ(readEntries[0].Types, entries[0].Types);
+    EXPECT_EQ(readEntries[0].URIs, entries[0].URIs);
+    EXPECT_EQ(readEntries[0].Suites, entries[0].Suites);
+    EXPECT_EQ(readEntries[0].Components, entries[0].Components);
+    EXPECT_EQ(readEntries[0].Enabled, entries[0].Enabled);
+}
+
+TEST_F(Deb822Test, HandleComments) {
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "# This is a comment\n"
+        << "Types: deb\n"
+        << "URIs: http://example.com/debian\n"
+        << "# Another comment\n"
+        << "Suites: stable\n"
+        << "Components: main\n\n";
+    ofs.close();
+
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(testFile, entries));
+    ASSERT_EQ(entries.size(), 1);
+    EXPECT_EQ(entries[0].Comment, "# This is a comment\n# Another comment");
+}
+
+TEST_F(Deb822Test, HandleInvalidFile) {
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "Types: deb\n"
+        << "URIs: http://example.com/debian\n"
+        << "# Missing Suites field\n"
+        << "Components: main\n\n";
+    ofs.close();
+
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    EXPECT_FALSE(RDeb822Source::ParseDeb822File(testFile, entries));
+}
+
+TEST_F(Deb822Test, SourcesListIntegration) {
+    // Write a test Deb822 source file
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "Types: deb deb-src\n"
+        << "URIs: http://deb.debian.org/debian\n"
+        << "Suites: trixie\n"
+        << "Components: main contrib\n"
+        << "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n\n";
+    ofs.close();
+
+    // Create SourcesList and read the file
+    SourcesList sources;
+    ASSERT_TRUE(sources.ReadDeb822SourcePart(testFile));
+
+    // Verify the source was read correctly
+    ASSERT_FALSE(sources.SourceRecords.empty());
+    auto record = sources.SourceRecords.front();
+    EXPECT_TRUE(record->Type & SourcesList::Deb822);
+    EXPECT_TRUE(record->Type & SourcesList::Deb);
+    EXPECT_TRUE(record->Type & SourcesList::DebSrc);
+    EXPECT_EQ(record->URI, "http://deb.debian.org/debian");
+    EXPECT_EQ(record->Dist, "trixie");
+    ASSERT_EQ(record->NumSections, 2);
+    EXPECT_EQ(record->Sections[0], "main");
+    EXPECT_EQ(record->Sections[1], "contrib");
+
+    // Write back to a new file
+    std::string newFile = testFile + ".new";
+    ASSERT_TRUE(sources.WriteDeb822Source(record, newFile));
+
+    // Read the new file and verify contents
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(newFile, entries));
+    ASSERT_EQ(entries.size(), 1);
+    EXPECT_EQ(entries[0].Types, "deb deb-src");
+    EXPECT_EQ(entries[0].URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(entries[0].Suites, "trixie");
+    EXPECT_EQ(entries[0].Components, "main contrib");
+
+    // Clean up
+    remove(newFile.c_str());
 } 

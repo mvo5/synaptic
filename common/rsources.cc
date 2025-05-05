@@ -36,6 +36,7 @@
 #include <fstream>
 #include "config.h"
 #include "i18n.h"
+#include "rsource_deb822.h"
 
 SourcesList::~SourcesList()
 {
@@ -217,16 +218,23 @@ bool SourcesList::ReadSourceDir(string Dir)
 
 bool SourcesList::ReadSources()
 {
-   //cout << "SourcesList::ReadSources() " << endl;
-
    bool Res = true;
 
+   // Read classic sources.list format
    string Parts = _config->FindDir("Dir::Etc::sourceparts");
    if (FileExists(Parts) == true)
       Res &= ReadSourceDir(Parts);
    string Main = _config->FindFile("Dir::Etc::sourcelist");
    if (FileExists(Main) == true)
       Res &= ReadSourcePart(Main);
+
+   // Read Deb822 format sources
+   string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
+   if (FileExists(Deb822Parts) == true)
+      Res &= ReadDeb822SourceDir(Deb822Parts);
+   string Deb822Main = _config->FindFile("Dir::Etc::sourcelist.d") + "/debian.sources";
+   if (FileExists(Deb822Main) == true)
+      Res &= ReadDeb822SourcePart(Deb822Main);
 
    return Res;
 }
@@ -291,50 +299,69 @@ void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
 
 bool SourcesList::UpdateSources()
 {
-   list<string> filenames;
-   for (list<SourceRecord *>::iterator it = SourceRecords.begin();
+   ofstream ofs(_config->FindFile("Dir::Etc::sourcelist").c_str(), ios::out);
+   if (!ofs != 0)
+      return _error->Error(_("Error writing sources list"));
+
+   // Group sources by their source file
+   map<string, vector<SourceRecord*>> sourcesByFile;
+   for (list<SourceRecord *>::const_iterator it = SourceRecords.begin();
         it != SourceRecords.end(); it++) {
-      if ((*it)->SourceFile == "")
+      sourcesByFile[(*it)->SourceFile].push_back(*it);
+   }
+
+   // Write each source file
+   for (const auto& pair : sourcesByFile) {
+      const string& sourcePath = pair.first;
+      const vector<SourceRecord*>& records = pair.second;
+
+      // Skip empty source files
+      if (records.empty()) {
          continue;
-      filenames.push_front((*it)->SourceFile);
-   }
-   filenames.sort();
-   filenames.unique();
-
-   for (list<string>::iterator fi = filenames.begin();
-        fi != filenames.end(); fi++) {
-      ofstream ofs((*fi).c_str(), ios::out);
-      if (!ofs != 0)
-         return false;
-
-      for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-           it != SourceRecords.end(); it++) {
-         if ((*fi) != (*it)->SourceFile)
-            continue;
-         string S;
-         if (((*it)->Type & Comment) != 0) {
-            S = (*it)->Comment;
-         } else if ((*it)->URI.empty() || (*it)->Dist.empty()) {
-            continue;
-         } else {
-            if (((*it)->Type & Disabled) != 0)
-               S = "# ";
-
-            S += (*it)->GetType() + " ";
-
-            if ((*it)->VendorID.empty() == false)
-               S += "[" + (*it)->VendorID + "] ";
-
-            S += (*it)->URI + " ";
-            S += (*it)->Dist + " ";
-
-            for (unsigned int J = 0; J < (*it)->NumSections; J++)
-               S += (*it)->Sections[J] + " ";
-         }
-         ofs << S << endl;
       }
-      ofs.close();
+
+      // Check if this is a Deb822 format file
+      bool isDeb822 = false;
+      if (!records.empty() && (records[0]->Type & Deb822)) {
+         isDeb822 = true;
+      }
+
+      // Open the appropriate file for writing
+      ofstream out(sourcePath.c_str(), ios::out);
+      if (!out) {
+         return _error->Error(_("Error writing to %s"), sourcePath.c_str());
+      }
+
+      if (isDeb822) {
+         // Write Deb822 format
+         vector<RDeb822Source::Deb822Entry> entries;
+         for (const auto& record : records) {
+            RDeb822Source::Deb822Entry entry;
+            if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
+               return _error->Error(_("Failed to convert source record to Deb822 format"));
+            }
+            entries.push_back(entry);
+         }
+         if (!RDeb822Source::WriteDeb822File(sourcePath, entries)) {
+            return false;
+         }
+      } else {
+         // Write classic format
+         for (const auto& record : records) {
+            if (record->Type == Comment) {
+               out << record->Comment << endl;
+            } else {
+               out << *record;
+            }
+         }
+      }
+
+      out.close();
+      if (!out) {
+         return _error->Error(_("Error writing to %s"), sourcePath.c_str());
+      }
    }
+
    return true;
 }
 
@@ -558,6 +585,75 @@ ostream &operator<<(ostream &os, const SourcesList::VendorRecord &rec)
    os << "FingerPrint: " << rec.FingerPrint << endl;
    os << "Description: " << rec.Description << endl;
    return os;
+}
+
+bool SourcesList::ReadDeb822SourcePart(string listpath) {
+    vector<RDeb822Source::Deb822Entry> entries;
+    if (!RDeb822Source::ParseDeb822File(listpath, entries)) {
+        return false;
+    }
+
+    for (const auto& entry : entries) {
+        SourceRecord rec;
+        rec.SourceFile = listpath;
+        
+        if (!RDeb822Source::ConvertToSourceRecord(entry, rec)) {
+            return _error->Error(_("Failed to convert Deb822 entry in %s"), listpath.c_str());
+        }
+        
+        rec.Type |= Deb822;  // Mark as Deb822 format
+        AddSourceNode(rec);
+    }
+
+    return true;
+}
+
+bool SourcesList::ReadDeb822SourceDir(string Dir) {
+    DIR *D = opendir(Dir.c_str());
+    if (D == 0)
+        return _error->Errno("opendir", _("Unable to read %s"), Dir.c_str());
+
+    vector<string> List;
+    for (struct dirent * Ent = readdir(D); Ent != 0; Ent = readdir(D)) {
+        if (Ent->d_name[0] == '.')
+            continue;
+
+        // Only look at files ending in .sources
+        if (strcmp(Ent->d_name + strlen(Ent->d_name) - 8, ".sources") != 0)
+            continue;
+
+        // Make sure it is a file and not something else
+        string File = flCombine(Dir, Ent->d_name);
+        struct stat St;
+        if (stat(File.c_str(), &St) != 0 || S_ISREG(St.st_mode) == 0)
+            continue;
+        List.push_back(File);
+    }
+    closedir(D);
+
+    sort(List.begin(), List.end());
+
+    // Read the files
+    for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
+        if (ReadDeb822SourcePart(*I) == false)
+            return false;
+    return true;
+}
+
+bool SourcesList::WriteDeb822Source(SourceRecord *record, string path) {
+    if (!record || !(record->Type & Deb822)) {
+        return _error->Error(_("Not a Deb822 format source"));
+    }
+
+    vector<RDeb822Source::Deb822Entry> entries;
+    RDeb822Source::Deb822Entry entry;
+    
+    if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
+        return _error->Error(_("Failed to convert source record to Deb822 format"));
+    }
+    
+    entries.push_back(entry);
+    return RDeb822Source::WriteDeb822File(path, entries);
 }
 
 // vim:sts=4:sw=4

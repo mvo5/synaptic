@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
+#include <iostream>
 
 // RDeb822Source implementation
 RDeb822Source::RDeb822Source() : enabled(true) {}
@@ -88,67 +89,57 @@ std::string RDeb822Source::toString() const {
 
 RDeb822Source RDeb822Source::fromString(const std::string& content) {
     RDeb822Source source;
-    std::istringstream iss(content);
+    std::istringstream stream(content);
     std::string line;
-    bool isDisabled = false;
-    
-    while (std::getline(iss, line)) {
-        // Skip empty lines
-        if (line.empty()) {
+    bool inSource = false;
+    std::string currentKey;
+    std::string currentValue;
+
+    while (std::getline(stream, line)) {
+        // Skip comments and empty lines
+        if (line.empty() || line[0] == '#') {
+            if (inSource && !currentKey.empty()) {
+                // Process the last key-value pair
+                source.setField(currentKey, currentValue);
+                currentKey.clear();
+                currentValue.clear();
+            }
+            inSource = false;
             continue;
         }
-        
-        // Handle comments
+
+        // Check for disabled source
         if (line[0] == '#') {
-            // Check if this is a disabled source
-            if (line.find("Disabled:") != std::string::npos) {
-                isDisabled = true;
-            }
-            continue;
+            source.enabled = false;
+            line = line.substr(1);
         }
-        
-        // Parse the line
-        std::istringstream lineStream(line);
-        std::string type, uri, suite, components;
-        
-        // Read type
-        if (!(lineStream >> type)) continue;
-        
-        // Read URI (may contain spaces)
-        std::getline(lineStream, uri);
-        size_t suitePos = uri.find_last_of(" \t");
-        if (suitePos != std::string::npos) {
-            suite = uri.substr(suitePos + 1);
-            uri = uri.substr(0, suitePos);
-            
-            // Check for components
-            size_t compPos = suite.find_last_of(" \t");
-            if (compPos != std::string::npos) {
-                components = suite.substr(compPos + 1);
-                suite = suite.substr(0, compPos);
+
+        // Parse key-value pair
+        size_t colonPos = line.find(':');
+        if (colonPos != std::string::npos) {
+            if (inSource && !currentKey.empty()) {
+                // Process the previous key-value pair
+                source.setField(currentKey, currentValue);
             }
+            currentKey = line.substr(0, colonPos);
+            currentValue = line.substr(colonPos + 1);
+            // Trim whitespace
+            currentKey.erase(0, currentKey.find_first_not_of(" \t"));
+            currentKey.erase(currentKey.find_last_not_of(" \t") + 1);
+            currentValue.erase(0, currentValue.find_first_not_of(" \t"));
+            currentValue.erase(currentValue.find_last_not_of(" \t") + 1);
+            inSource = true;
+        } else if (inSource && !currentValue.empty()) {
+            // Continuation of previous value
+            currentValue += "\n" + line;
         }
-        
-        // Trim whitespace
-        type.erase(0, type.find_first_not_of(" \t"));
-        type.erase(type.find_last_not_of(" \t") + 1);
-        uri.erase(0, uri.find_first_not_of(" \t"));
-        uri.erase(uri.find_last_not_of(" \t") + 1);
-        suite.erase(0, suite.find_first_not_of(" \t"));
-        suite.erase(suite.find_last_not_of(" \t") + 1);
-        components.erase(0, components.find_first_not_of(" \t"));
-        components.erase(components.find_last_not_of(" \t") + 1);
-        
-        source.setTypes(type);
-        source.setUris(uri);
-        source.setSuites(suite);
-        source.setComponents(components);
-        source.setEnabled(!isDisabled);
-        
-        // Only process the first valid line
-        break;
     }
-    
+
+    // Process the last key-value pair
+    if (inSource && !currentKey.empty()) {
+        source.setField(currentKey, currentValue);
+    }
+
     return source;
 }
 
@@ -215,19 +206,24 @@ std::vector<RDeb822Source> RSourceManager::getSources() const {
 
 bool RSourceManager::loadSources() {
     sources.clear();
-    
+
     try {
         // Read all .sources files in the sources directory
         for (const auto& entry : std::filesystem::directory_iterator(sourcesDir)) {
             if (entry.path().extension() == ".sources") {
+                std::cerr << "Loading source file: " << entry.path().string() << std::endl;
                 RDeb822Source source = readSourceFile(entry.path().string());
                 if (source.isValid()) {
+                    std::cerr << "Loaded valid source: " << source.getUris() << " " << source.getSuites() << std::endl;
                     sources.push_back(source);
+                } else {
+                    std::cerr << "Warning: Invalid source file: " << entry.path().string() << std::endl;
                 }
             }
         }
         return true;
-    } catch (const std::exception&) {
+    } catch (const std::exception& e) {
+        std::cerr << "Error loading sources: " << e.what() << std::endl;
         return false;
     }
 }

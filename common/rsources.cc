@@ -324,7 +324,7 @@ bool SourcesList::UpdateSources()
       bool isDeb822 = false;
       if (!records.empty() && (records[0]->Type & Deb822)) {
          isDeb822 = true;
-      }
+   }
 
       // Open the appropriate file for writing
       ofstream out(sourcePath.c_str(), ios::out);
@@ -343,16 +343,16 @@ bool SourcesList::UpdateSources()
             entries.push_back(entry);
          }
          if (!RDeb822Source::WriteDeb822File(sourcePath, entries)) {
-            return false;
+         return false;
          }
       } else {
          // Write classic format
          for (const auto& record : records) {
             if (record->Type == Comment) {
                out << record->Comment << endl;
-            } else {
+         } else {
                out << *record;
-            }
+         }
          }
       }
 

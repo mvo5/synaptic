@@ -2106,35 +2106,11 @@ bool RPackageLister::xapianSearch(string searchString)
 
 bool RPackageLister::isMultiarchSystem()
 {
-#ifdef WITH_APT_MULTIARCH_SUPPORT
-   return (APT::Configuration::getArchitectures().size() > 1);
+#if defined(WITH_APT_MULTIARCH_SUPPORT)
+   return _system->MultiArchEnabled();
 #else
    return false;
 #endif
-}
-
-bool RPackageLister::handleFailedInstallation(const string &pkgName)
-{
-   // Get the package
-   RPackage *pkg = getPackage(pkgName);
-   if (!pkg) {
-       return false;
-   }
-
-   // Check if package is in a failed state
-   if (pkg->state() != pkgCache::State::ConfigFiles &&
-       pkg->state() != pkgCache::State::HalfInstalled) {
-       return false;
-   }
-
-   // Try to fix the package
-   pkgCache::PkgIterator pkgIter = pkg->pkg();
-   _cache->markKeep(pkgIter, true, true);
-   
-   // Commit the changes
-   pkgAcquireStatus *status = NULL;
-   RInstallProgress *iprog = NULL;
-   return commitChanges(status, iprog);
 }
 
 // vim:ts=3:sw=3:et

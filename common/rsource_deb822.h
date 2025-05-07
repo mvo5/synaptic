@@ -15,6 +15,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <istream>
 
 class RDeb822Source {
 public:

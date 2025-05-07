@@ -354,9 +354,6 @@ class RPackageLister {
    bool openXapianIndex();
 #endif
 
-   // New method to handle failed installations
-   bool handleFailedInstallation(const string &pkgName);
-
    RPackageLister();
    ~RPackageLister();
 };

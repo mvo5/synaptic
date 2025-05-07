@@ -12,7 +12,7 @@ AM_CPPFLAGS = -I${top_srcdir}/common \
 	@VTE_CFLAGS@ \
 	@LP_CFLAGS@ \
 	@GTK_DISABLE_DEPRECATED@ \
-	$(LIBEPT_CFLAGS)
+	$(SQLITE_CFLAGS)
 
 sbin_PROGRAMS = synaptic 
 
@@ -25,7 +25,7 @@ synaptic_LDADD = \
 	@VTE_LIBS@ @LP_LIBS@\
 	-lutil \
 	-lpthread \
-	$(LIBEPT_LIBS)
+	$(SQLITE_LIBS)
 
 synaptic_SOURCES= \
 	gsynaptic.cc\

@@ -37,8 +37,8 @@
 #include <apt-pkg/acquire.h>
 #include <apt-pkg/progress.h>
 
-#ifdef WITH_EPT
-#include <ept/axi/axi.h>
+#ifdef WITH_SQLITE
+#include <sqlite3.h>
 #endif
 
 #include "rpackagecache.h"
@@ -107,11 +107,6 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-#ifdef WITH_EPT
-   Xapian::Database *_xapianDatabase;
-#endif
-
-
    // Other members.
    vector<RPackage *> _packages;
    vector<int> _packagesIndex;
@@ -140,7 +135,7 @@ class RPackageLister {
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
 
    // helper for the limitBySearch() code
-   bool xapianSearch(string searchString);
+   bool xapianSearch(string searchString, void (*iter)());
 
    public:
 
@@ -210,7 +205,7 @@ class RPackageLister {
 
    public:
    // limit what the current view displays
-   bool limitBySearch(string searchString);
+   bool limitBySearch(string searchString, void (*iter)());
 
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
@@ -348,11 +343,6 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; }
-#ifdef WITH_EPT
-   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
-   bool xapianIndexNeedsUpdate();
-   bool openXapianIndex();
-#endif
 
    RPackageLister();
    ~RPackageLister();

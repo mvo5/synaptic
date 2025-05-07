@@ -118,12 +118,12 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
 		[whether apt-pkg/cdrom.h is present]) )
 
 # check and use libept if available
-PKG_CHECK_MODULES([LIBEPT], [libept >= 1.0],
-                  [AC_DEFINE(WITH_EPT, 1, [build with libept])
-                   AC_SUBST(LIBEPT_CFLAGS)
-	           AC_SUBST(LIBEPT_LIBS)
+PKG_CHECK_MODULES([SQLITE], [sqlite3 >= 1.0],
+                  [AC_DEFINE(WITH_SQLITE, 1, [build with sqlite])
+                   AC_SUBST(SQLITE_CFLAGS)
+	           AC_SUBST(SQLITE_LIBS)
                   ],
-                  [AC_MSG_NOTICE([no libept found, building without])
+                  [AC_MSG_NOTICE([no sqlite found, building without])
                   ])
 
 AC_LANG([C])

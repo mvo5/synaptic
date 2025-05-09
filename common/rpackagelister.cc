@@ -2106,8 +2106,8 @@ bool RPackageLister::xapianSearch(string searchString)
 
 bool RPackageLister::isMultiarchSystem()
 {
-#ifdef WITH_APT_MULTIARCH_SUPPORT
-   return (APT::Configuration::getArchitectures().size() > 1);
+#if defined(WITH_APT_MULTIARCH_SUPPORT)
+   return _system->MultiArchEnabled();
 #else
    return false;
 #endif

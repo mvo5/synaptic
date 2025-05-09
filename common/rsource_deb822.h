@@ -25,6 +25,9 @@ public:
         std::string Suites;       // Space-separated list of suites
         std::string Components;   // Space-separated list of components
         std::string SignedBy;     // Path to keyring file
+        std::string Architectures; // Space-separated list of architectures
+        std::string Languages;    // Space-separated list of languages
+        std::string Targets;      // Space-separated list of targets
         bool Enabled;             // Whether the source is enabled
         std::string Comment;      // Any comments associated with this entry
     };

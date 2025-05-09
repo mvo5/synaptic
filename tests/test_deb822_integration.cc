@@ -209,4 +209,116 @@ TEST_F(Deb822Test, SourcesListIntegration) {
 
     // Clean up
     remove(newFile.c_str());
+}
+
+TEST_F(Deb822Test, ParseAdditionalFields) {
+    std::ofstream ofs(testFile.c_str());
+    ASSERT_TRUE(ofs.is_open());
+    ofs << "Types: deb deb-src\n"
+        << "URIs: http://deb.debian.org/debian\n"
+        << "Suites: trixie\n"
+        << "Components: main contrib\n"
+        << "Architectures: amd64 arm64\n"
+        << "Languages: en fr de\n"
+        << "Targets: stable-updates\n"
+        << "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n\n";
+    ofs.close();
+
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    ASSERT_TRUE(RDeb822Source::ParseDeb822File(testFile, entries));
+    ASSERT_EQ(entries.size(), 1);
+    
+    const auto& entry = entries[0];
+    EXPECT_EQ(entry.Types, "deb deb-src");
+    EXPECT_EQ(entry.URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(entry.Suites, "trixie");
+    EXPECT_EQ(entry.Components, "main contrib");
+    EXPECT_EQ(entry.Architectures, "amd64 arm64");
+    EXPECT_EQ(entry.Languages, "en fr de");
+    EXPECT_EQ(entry.Targets, "stable-updates");
+    EXPECT_EQ(entry.SignedBy, "/usr/share/keyrings/debian-archive-keyring.gpg");
+    EXPECT_TRUE(entry.Enabled);
+}
+
+TEST_F(Deb822Test, ConvertAdditionalFields) {
+    // Create a Deb822 entry with additional fields
+    RDeb822Source::Deb822Entry deb822Entry;
+    deb822Entry.Types = "deb deb-src";
+    deb822Entry.URIs = "http://deb.debian.org/debian";
+    deb822Entry.Suites = "trixie";
+    deb822Entry.Components = "main contrib";
+    deb822Entry.Architectures = "amd64 arm64";
+    deb822Entry.Languages = "en fr de";
+    deb822Entry.Targets = "stable-updates";
+    deb822Entry.SignedBy = "/usr/share/keyrings/debian-archive-keyring.gpg";
+    deb822Entry.Enabled = true;
+
+    // Convert to SourceRecord
+    SourcesList::SourceRecord sourceRecord;
+    ASSERT_TRUE(RDeb822Source::ConvertToSourceRecord(deb822Entry, sourceRecord));
+
+    // Verify conversion
+    EXPECT_TRUE(sourceRecord.Type & SourcesList::Deb);
+    EXPECT_TRUE(sourceRecord.Type & SourcesList::DebSrc);
+    EXPECT_EQ(sourceRecord.URI, "http://deb.debian.org/debian");
+    EXPECT_EQ(sourceRecord.Dist, "trixie");
+    ASSERT_EQ(sourceRecord.NumSections, 2);
+    EXPECT_EQ(sourceRecord.Sections[0], "main");
+    EXPECT_EQ(sourceRecord.Sections[1], "contrib");
+
+    // Check that additional fields are stored in Comment
+    EXPECT_TRUE(sourceRecord.Comment.find("Architectures: amd64 arm64") != std::string::npos);
+    EXPECT_TRUE(sourceRecord.Comment.find("Languages: en fr de") != std::string::npos);
+    EXPECT_TRUE(sourceRecord.Comment.find("Targets: stable-updates") != std::string::npos);
+    EXPECT_TRUE(sourceRecord.Comment.find("Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg") != std::string::npos);
+
+    // Convert back to Deb822
+    RDeb822Source::Deb822Entry convertedEntry;
+    ASSERT_TRUE(RDeb822Source::ConvertFromSourceRecord(sourceRecord, convertedEntry));
+
+    // Verify round-trip conversion
+    EXPECT_EQ(convertedEntry.Types, "deb deb-src");
+    EXPECT_EQ(convertedEntry.URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(convertedEntry.Suites, "trixie");
+    EXPECT_EQ(convertedEntry.Components, "main contrib");
+    EXPECT_EQ(convertedEntry.Architectures, "amd64 arm64");
+    EXPECT_EQ(convertedEntry.Languages, "en fr de");
+    EXPECT_EQ(convertedEntry.Targets, "stable-updates");
+    EXPECT_EQ(convertedEntry.SignedBy, "/usr/share/keyrings/debian-archive-keyring.gpg");
+    EXPECT_TRUE(convertedEntry.Enabled);
+}
+
+TEST_F(Deb822Test, WriteAndReadAdditionalFields) {
+    // Create temporary file
+    std::string tempFile = "temp_test.sources";
+    std::ofstream out(tempFile);
+    out << "Types: deb deb-src\n"
+        << "URIs: http://deb.debian.org/debian\n"
+        << "Suites: trixie\n"
+        << "Components: main contrib\n"
+        << "Architectures: amd64 arm64\n"
+        << "Languages: en fr de\n"
+        << "Targets: stable-updates\n"
+        << "Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg\n";
+    out.close();
+
+    // Read it back
+    std::vector<RDeb822Source::Deb822Entry> entries;
+    std::string error;
+    EXPECT_TRUE(RDeb822Source::ParseDeb822File(tempFile, entries, error)) << error;
+    EXPECT_EQ(entries.size(), 1);
+
+    // Verify fields
+    const auto& entry = entries[0];
+    EXPECT_EQ(entry.Types, "deb deb-src");
+    EXPECT_EQ(entry.URIs, "http://deb.debian.org/debian");
+    EXPECT_EQ(entry.Suites, "trixie");
+    EXPECT_EQ(entry.Components, "main contrib");
+    EXPECT_EQ(entry.Architectures, "amd64 arm64");
+    EXPECT_EQ(entry.Languages, "en fr de");
+    EXPECT_EQ(entry.Targets, "stable-updates");
+    EXPECT_EQ(entry.SignedBy, "/usr/share/keyrings/debian-archive-keyring.gpg");
+
+    // Clean up
+    std::remove(tempFile.c_str());
 } 

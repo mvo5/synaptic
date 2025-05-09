@@ -8,28 +8,28 @@
  * License, or (at your option) any later version.
  */
 
-#ifndef _RSOURCE_DEB822_H
-#define _RSOURCE_DEB822_H
+#ifndef RSOURCE_DEB822_H
+#define RSOURCE_DEB822_H
 
-#include "rsources.h"
 #include <string>
 #include <vector>
 #include <map>
-#include <istream>
+#include <fstream>
+#include "sourcelist.h"
 
 class RDeb822Source {
 public:
     struct Deb822Entry {
-        std::string Types;        // Can be "deb" and/or "deb-src"
-        std::string URIs;         // Space-separated list of URIs
-        std::string Suites;       // Space-separated list of suites
-        std::string Components;   // Space-separated list of components
-        std::string SignedBy;     // Path to keyring file
+        std::string Types;      // Space-separated list of types
+        std::string URIs;       // Space-separated list of URIs
+        std::string Suites;     // Space-separated list of suites
+        std::string Components; // Space-separated list of components
+        std::string SignedBy;   // Path to keyring file
         std::string Architectures; // Space-separated list of architectures
-        std::string Languages;    // Space-separated list of languages
-        std::string Targets;      // Space-separated list of targets
-        bool Enabled;             // Whether the source is enabled
-        std::string Comment;      // Any comments associated with this entry
+        std::string Languages;  // Space-separated list of languages
+        std::string Targets;    // Space-separated list of targets
+        bool Enabled;           // Whether the source is enabled
+        std::string Comment;    // Any comments associated with this entry
     };
 
     static bool ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries);
@@ -38,8 +38,7 @@ public:
     static bool ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry);
 
 private:
-    static bool ParseStanza(std::istream& input, std::map<std::string, std::string>& fields);
-    static void TrimWhitespace(std::string& str);
+    static bool ParseStanza(std::wifstream& file, std::map<std::wstring, std::wstring>& fields);
 };
 
-#endif // _RSOURCE_DEB822_H 
+#endif // RSOURCE_DEB822_H 

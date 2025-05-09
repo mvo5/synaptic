@@ -9,52 +9,58 @@
 #include <apt-pkg/strutl.h>
 #include <fstream>
 #include <sstream>
+#include <locale>
+#include <codecvt>
 #include "i18n.h"
 
 bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
-    std::ifstream file(path.c_str());
+    // Open file with UTF-8 encoding
+    std::wifstream file(path.c_str());
     if (!file) {
         return _error->Error(_("Cannot open %s"), path.c_str());
     }
+    
+    // Set UTF-8 locale
+    file.imbue(std::locale(file.getloc(), new std::codecvt_utf8<wchar_t>));
 
-    std::map<std::string, std::string> fields;
+    std::map<std::wstring, std::wstring> fields;
     while (ParseStanza(file, fields)) {
         Deb822Entry entry;
 
         // Required fields
-        auto types_it = fields.find("Types");
+        auto types_it = fields.find(L"Types");
         if (types_it == fields.end()) {
             return _error->Error(_("Missing Types field in %s"), path.c_str());
         }
-        entry.Types = types_it->second;
+        entry.Types = std::string(types_it->second.begin(), types_it->second.end());
 
-        auto uris_it = fields.find("URIs");
+        auto uris_it = fields.find(L"URIs");
         if (uris_it == fields.end()) {
             return _error->Error(_("Missing URIs field in %s"), path.c_str());
         }
-        entry.URIs = uris_it->second;
+        entry.URIs = std::string(uris_it->second.begin(), uris_it->second.end());
 
-        auto suites_it = fields.find("Suites");
+        auto suites_it = fields.find(L"Suites");
         if (suites_it == fields.end()) {
             return _error->Error(_("Missing Suites field in %s"), path.c_str());
         }
-        entry.Suites = suites_it->second;
+        entry.Suites = std::string(suites_it->second.begin(), suites_it->second.end());
 
         // Optional fields
-        entry.Components = fields["Components"];
-        entry.SignedBy = fields["Signed-By"];
-        entry.Architectures = fields["Architectures"];
-        entry.Languages = fields["Languages"];
-        entry.Targets = fields["Targets"];
+        entry.Components = std::string(fields[L"Components"].begin(), fields[L"Components"].end());
+        entry.SignedBy = std::string(fields[L"Signed-By"].begin(), fields[L"Signed-By"].end());
+        entry.Architectures = std::string(fields[L"Architectures"].begin(), fields[L"Architectures"].end());
+        entry.Languages = std::string(fields[L"Languages"].begin(), fields[L"Languages"].end());
+        entry.Targets = std::string(fields[L"Targets"].begin(), fields[L"Targets"].end());
 
         // Handle enabled/disabled state
-        auto enabled_it = fields.find("Enabled");
-        entry.Enabled = (enabled_it == fields.end()) || (enabled_it->second != "no");
+        auto enabled_it = fields.find(L"Enabled");
+        entry.Enabled = (enabled_it == fields.end()) || (enabled_it->second != L"no");
 
         // Store any comment lines
-        auto comment_it = fields.find("#");
+        auto comment_it = fields.find(L"#");
         if (comment_it != fields.end()) {
-            entry.Comment = comment_it->second;
+            entry.Comment = std::string(comment_it->second.begin(), comment_it->second.end());
         }
 
         entries.push_back(entry);
@@ -65,40 +71,55 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
 }
 
 bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<Deb822Entry>& entries) {
-    std::ofstream file(path.c_str());
+    // Open file with UTF-8 encoding
+    std::wofstream file(path.c_str());
     if (!file) {
         return _error->Error(_("Cannot write to %s"), path.c_str());
     }
+    
+    // Set UTF-8 locale
+    file.imbue(std::locale(file.getloc(), new std::codecvt_utf8<wchar_t>));
 
     for (const auto& entry : entries) {
         if (!entry.Comment.empty()) {
-            file << entry.Comment << "\n";
+            std::wstring wcomment(entry.Comment.begin(), entry.Comment.end());
+            file << wcomment << L"\n";
         }
 
-        file << "Types: " << entry.Types << "\n";
-        file << "URIs: " << entry.URIs << "\n";
-        file << "Suites: " << entry.Suites << "\n";
+        std::wstring wtypes(entry.Types.begin(), entry.Types.end());
+        std::wstring wuris(entry.URIs.begin(), entry.URIs.end());
+        std::wstring wsuites(entry.Suites.begin(), entry.Suites.end());
+        
+        file << L"Types: " << wtypes << L"\n";
+        file << L"URIs: " << wuris << L"\n";
+        file << L"Suites: " << wsuites << L"\n";
+        
         if (!entry.Components.empty()) {
-            file << "Components: " << entry.Components << "\n";
+            std::wstring wcomponents(entry.Components.begin(), entry.Components.end());
+            file << L"Components: " << wcomponents << L"\n";
         }
         if (!entry.SignedBy.empty()) {
-            file << "Signed-By: " << entry.SignedBy << "\n";
+            std::wstring wsignedby(entry.SignedBy.begin(), entry.SignedBy.end());
+            file << L"Signed-By: " << wsignedby << L"\n";
         }
         if (!entry.Architectures.empty()) {
-            file << "Architectures: " << entry.Architectures << "\n";
+            std::wstring warchitectures(entry.Architectures.begin(), entry.Architectures.end());
+            file << L"Architectures: " << warchitectures << L"\n";
         }
         if (!entry.Languages.empty()) {
-            file << "Languages: " << entry.Languages << "\n";
+            std::wstring wlanguages(entry.Languages.begin(), entry.Languages.end());
+            file << L"Languages: " << wlanguages << L"\n";
         }
         if (!entry.Targets.empty()) {
-            file << "Targets: " << entry.Targets << "\n";
+            std::wstring wtargets(entry.Targets.begin(), entry.Targets.end());
+            file << L"Targets: " << wtargets << L"\n";
         }
 
         if (!entry.Enabled) {
-            file << "Enabled: no\n";
+            file << L"Enabled: no\n";
         }
 
-        file << "\n"; // Empty line between stanzas
+        file << L"\n"; // Empty line between stanzas
     }
 
     return true;
@@ -228,72 +249,41 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
     return true;
 }
 
-bool RDeb822Source::ParseStanza(std::istream& input, std::map<std::string, std::string>& fields) {
-    std::string line;
-    std::string current_field;
-    std::string current_value;
+bool RDeb822Source::ParseStanza(std::wifstream& file, std::map<std::wstring, std::wstring>& fields) {
+    std::wstring line;
     bool in_stanza = false;
 
-    while (std::getline(input, line)) {
-        TrimWhitespace(line);
-
-        // Skip empty lines between stanzas
+    while (std::getline(file, line)) {
+        // Skip empty lines
         if (line.empty()) {
             if (in_stanza) {
-                // End of stanza
-                if (!current_field.empty()) {
-                    TrimWhitespace(current_value);
-                    fields[current_field] = current_value;
-                }
-                return true;
+                return true; // End of stanza
             }
             continue;
         }
 
-        // Handle comments
-        if (line[0] == '#') {
-            if (!in_stanza) {
-                // Comment before stanza belongs to next stanza
-                fields["#"] = fields["#"].empty() ? line : fields["#"] + "\n" + line;
-            }
+        // Skip comments
+        if (line[0] == L'#') {
+            fields[L"#"] = line.substr(1);
             continue;
         }
 
-        in_stanza = true;
-
-        // Handle field continuation
-        if (line[0] == ' ' || line[0] == '\t') {
-            if (!current_field.empty()) {
-                current_value += "\n" + line;
-            }
-            continue;
+        // Parse field
+        size_t colon_pos = line.find(L':');
+        if (colon_pos != std::wstring::npos) {
+            in_stanza = true;
+            std::wstring field = line.substr(0, colon_pos);
+            std::wstring value = line.substr(colon_pos + 1);
+            
+            // Trim whitespace
+            while (!field.empty() && std::iswspace(field.back())) field.pop_back();
+            while (!value.empty() && std::iswspace(value.front())) value.erase(0, 1);
+            
+            fields[field] = value;
         }
-
-        // New field
-        if (!current_field.empty()) {
-            TrimWhitespace(current_value);
-            fields[current_field] = current_value;
-        }
-
-        size_t colon = line.find(':');
-        if (colon == std::string::npos) {
-            return _error->Error(_("Invalid line format: %s"), line.c_str());
-        }
-
-        current_field = line.substr(0, colon);
-        current_value = line.substr(colon + 1);
-        TrimWhitespace(current_field);
-        TrimWhitespace(current_value);
     }
 
-    // Handle last field of last stanza
-    if (in_stanza && !current_field.empty()) {
-        TrimWhitespace(current_value);
-        fields[current_field] = current_value;
-        return true;
-    }
-
-    return false;
+    return in_stanza; // Return true if we found any fields
 }
 
 void RDeb822Source::TrimWhitespace(std::string& str) {

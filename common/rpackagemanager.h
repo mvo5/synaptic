@@ -38,6 +38,9 @@
 
 #include <string>
 #include <apt-pkg/pkgcache.h>
+#include <vector>
+#include <map>
+#include <apt-pkg/sourcelist.h>
 
 #define protected public
 #include <apt-pkg/packagemanager.h>

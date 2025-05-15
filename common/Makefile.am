@@ -36,6 +36,8 @@ libsynaptic_a_SOURCES =\
 	rsource_deb822.h \
 	rcacheactor.cc \
 	rcacheactor.h \
+	rpackagemanager.cc \
+	rpackagemanager.h \ 
 	rpackagelistactor.cc \
 	rpackagelistactor.h \
 	rtagcollbuilder.cc \

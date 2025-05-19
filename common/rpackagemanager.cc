@@ -5,6 +5,8 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
 #include <iostream>
+#include <apt-pkg/error.h>
+#include <apt-pkg/progress.h>
 
 // RPackageManager implementation
 RPackageManager::RPackageManager(pkgPackageManager *pm) : pm(pm) {}
@@ -20,7 +22,7 @@ pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork(int statusFd) 
 }
 #else
 pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork() {
-   return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
+   return (pm->Go(nullptr) == false) ? pkgPackageManager::Failed : Res;
 }
 #endif
 

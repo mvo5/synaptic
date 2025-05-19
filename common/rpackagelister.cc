@@ -2106,11 +2106,7 @@ bool RPackageLister::xapianSearch(string searchString)
 
 bool RPackageLister::isMultiarchSystem()
 {
-#if defined(WITH_APT_MULTIARCH_SUPPORT)
-   return _system->MultiArchEnabled();
-#else
-   return false;
-#endif
+   return _system->MultiArchSupport();
 }
 
 // vim:ts=3:sw=3:et

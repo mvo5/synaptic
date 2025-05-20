@@ -9,22 +9,6 @@
 #include <apt-pkg/progress.h>
 
 // RPackageManager implementation
-RPackageManager::RPackageManager(pkgPackageManager *pm) : pm(pm) {}
-
-pkgPackageManager::OrderResult RPackageManager::DoInstallPreFork() {
-   Res = pm->OrderInstall();
-   return Res;
-}
-
-#ifdef WITH_DPKG_STATUSFD
-pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork(int statusFd) {
-   return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
-}
-#else
-pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork() {
-   return (pm->Go(nullptr) == false) ? pkgPackageManager::Failed : Res;
-}
-#endif
 
 // Helper function to check if a string starts with a prefix
 static bool starts_with(const std::string& str, const std::string& prefix) {
@@ -138,8 +122,8 @@ RDeb822Source RDeb822Source::fromString(const std::string& content) {
         std::string value = line.substr(colonPos + 1);
         
         // Trim whitespace
-        key = std::string(APT::String::Strip(key));
-        value = std::string(APT::String::Strip(value));
+        key = trim(key);
+        value = trim(value);
 
         if (key == "Types") {
             source.types = value;
@@ -337,18 +321,13 @@ std::vector<RDeb822Source> RSourceManager::parseSources(const std::string& conte
 RDeb822Source RSourceManager::createSourceFromFields(const std::map<std::string, std::string>& fields)
 {
     RDeb822Source source;
-    
     // Set required fields
-    source.types = fields.count("Types") ? fields.at("Types") : "";
-    source.uris = fields.count("URIs") ? fields.at("URIs") : "";
-    source.suites = fields.count("Suites") ? fields.at("Suites") : "";
-    source.components = fields.count("Components") ? fields.at("Components") : "";
-    
+    if (fields.count("Types")) source.setTypes(fields.at("Types"));
+    if (fields.count("URIs")) source.setUris(fields.at("URIs"));
+    if (fields.count("Suites")) source.setSuites(fields.at("Suites"));
+    if (fields.count("Components")) source.setComponents(fields.at("Components"));
     // Set optional fields
-    if (fields.count("Signed-By")) {
-        source.signedBy = fields.at("Signed-By");
-    }
-    
+    if (fields.count("Signed-By")) source.setSignedBy(fields.at("Signed-By"));
     return source;
 }
 
@@ -425,6 +404,17 @@ std::string RSourceManager::getSourceFilename(const RDeb822Source& source) const
 
 std::string RSourceManager::trim(const std::string& str) const
 {
+    const std::string whitespace = " \t\r\n";
+    size_t start = str.find_first_not_of(whitespace);
+    if (start == std::string::npos) {
+        return "";
+    }
+    size_t end = str.find_last_not_of(whitespace);
+    return str.substr(start, end - start + 1);
+}
+
+// Implement RDeb822Source::trim
+std::string RDeb822Source::trim(const std::string& str) {
     const std::string whitespace = " \t\r\n";
     size_t start = str.find_first_not_of(whitespace);
     if (start == std::string::npos) {

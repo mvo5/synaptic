@@ -69,6 +69,14 @@ public:
     std::string getSignedBy() const { return signedBy; }
     bool isEnabled() const { return enabled; }
 
+    void setTypes(const std::string& t) { types = t; }
+    void setUris(const std::string& u) { uris = u; }
+    void setSuites(const std::string& s) { suites = s; }
+    void setComponents(const std::string& c) { components = c; }
+    void setSignedBy(const std::string& s) { signedBy = s; }
+
+    static std::string trim(const std::string& str);
+
 private:
     std::string types;
     std::string uris;

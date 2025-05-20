@@ -26,40 +26,38 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
     while (ParseStanza(file, fields)) {
         Deb822Entry entry;
         
-        // Check required fields
         if (fields.find(L"Types") == fields.end()) {
             return _error->Error(_("Missing Types field in %s"), path.c_str());
         }
-        entry.Types = APT::String::FromUTF8(fields[L"Types"]);
+        entry.Types = APT::String::FromUTF8(UTF8String(fields[L"Types"]));
         
         if (fields.find(L"URIs") == fields.end()) {
             return _error->Error(_("Missing URIs field in %s"), path.c_str());
         }
-        entry.URIs = APT::String::FromUTF8(fields[L"URIs"]);
+        entry.URIs = APT::String::FromUTF8(UTF8String(fields[L"URIs"]));
         
         if (fields.find(L"Suites") == fields.end()) {
             return _error->Error(_("Missing Suites field in %s"), path.c_str());
         }
-        entry.Suites = APT::String::FromUTF8(fields[L"Suites"]);
+        entry.Suites = APT::String::FromUTF8(UTF8String(fields[L"Suites"]));
         
-        // Optional fields
         if (fields.find(L"Components") != fields.end()) {
-            entry.Components = APT::String::FromUTF8(fields[L"Components"]);
+            entry.Components = APT::String::FromUTF8(UTF8String(fields[L"Components"]));
         }
         if (fields.find(L"Signed-By") != fields.end()) {
-            entry.SignedBy = APT::String::FromUTF8(fields[L"Signed-By"]);
+            entry.SignedBy = APT::String::FromUTF8(UTF8String(fields[L"Signed-By"]));
         }
         if (fields.find(L"Architectures") != fields.end()) {
-            entry.Architectures = APT::String::FromUTF8(fields[L"Architectures"]);
+            entry.Architectures = APT::String::FromUTF8(UTF8String(fields[L"Architectures"]));
         }
         if (fields.find(L"Languages") != fields.end()) {
-            entry.Languages = APT::String::FromUTF8(fields[L"Languages"]);
+            entry.Languages = APT::String::FromUTF8(UTF8String(fields[L"Languages"]));
         }
         if (fields.find(L"Targets") != fields.end()) {
-            entry.Targets = APT::String::FromUTF8(fields[L"Targets"]);
+            entry.Targets = APT::String::FromUTF8(UTF8String(fields[L"Targets"]));
         }
         
-        entry.Enabled = true; // Default to enabled
+        entry.Enabled = true;
         entries.push_back(entry);
         fields.clear();
     }
@@ -105,7 +103,6 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
 }
 
 bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceList::SourceRecord& record) {
-    // Parse types
     bool has_deb = false;
     bool has_deb_src = false;
     std::istringstream typeStream(entry.Types);
@@ -121,7 +118,6 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
     if (has_deb_src) record.Type |= pkgSourceList::DebSrc;
     if (!entry.Enabled) record.Type |= pkgSourceList::Disabled;
     
-    // Parse URIs
     std::istringstream uriStream(entry.URIs);
     std::string uri;
     while (std::getline(uriStream, uri, ' ')) {
@@ -132,7 +128,6 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
         }
     }
     
-    // Parse suites
     std::istringstream suiteStream(entry.Suites);
     std::string suite;
     while (std::getline(suiteStream, suite, ' ')) {
@@ -143,7 +138,6 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
         }
     }
     
-    // Parse components
     std::istringstream compStream(entry.Components);
     std::string comp;
     while (std::getline(compStream, comp, ' ')) {
@@ -157,7 +151,6 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
 }
 
 bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& record, Deb822Entry& entry) {
-    // Set types
     std::stringstream typeStream;
     if (record.Type & pkgSourceList::Deb) {
         typeStream << "deb ";
@@ -168,13 +161,9 @@ bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& r
     entry.Types = typeStream.str();
     TrimWhitespace(entry.Types);
     
-    // Set URI
     entry.URIs = record.URI;
-    
-    // Set suite
     entry.Suites = record.Dist;
     
-    // Set components
     std::stringstream compStream;
     for (const auto& comp : record.Comps) {
         compStream << comp << " ";
@@ -182,7 +171,6 @@ bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& r
     entry.Components = compStream.str();
     TrimWhitespace(entry.Components);
     
-    // Set enabled state
     entry.Enabled = !(record.Type & pkgSourceList::Disabled);
     
     return true;
@@ -204,7 +192,6 @@ bool RDeb822Source::ParseStanza(std::wifstream& file, std::map<std::wstring, std
     bool inStanza = false;
     
     while (std::getline(file, line)) {
-        // Skip empty lines
         if (line.empty()) {
             if (inStanza) {
                 return true;
@@ -212,12 +199,10 @@ bool RDeb822Source::ParseStanza(std::wifstream& file, std::map<std::wstring, std
             continue;
         }
         
-        // Skip comments
         if (line[0] == L'#') {
             continue;
         }
         
-        // Check for stanza start
         if (line.find(L"Types:") != std::wstring::npos) {
             inStanza = true;
         }
@@ -228,7 +213,6 @@ bool RDeb822Source::ParseStanza(std::wifstream& file, std::map<std::wstring, std
                 std::wstring key = line.substr(0, colonPos);
                 std::wstring value = line.substr(colonPos + 1);
                 
-                // Trim whitespace
                 key.erase(0, key.find_first_not_of(L" \t"));
                 key.erase(key.find_last_not_of(L" \t") + 1);
                 value.erase(0, value.find_first_not_of(L" \t"));

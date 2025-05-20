@@ -69,7 +69,9 @@ class RPackageManager {
    }
 #else
    pkgPackageManager::OrderResult DoInstallPostFork() {
-      return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
+      if (pm == NULL)
+         return pkgPackageManager::Failed;
+      return (pm->Go(NULL) == false) ? pkgPackageManager::Failed : Res;
    }
 #endif
 

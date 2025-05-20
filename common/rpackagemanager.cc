@@ -26,6 +26,12 @@ pkgPackageManager::OrderResult RPackageManager::DoInstallPostFork() {
 }
 #endif
 
+// Helper function to check if a string starts with a prefix
+static bool starts_with(const std::string& str, const std::string& prefix) {
+    return str.size() >= prefix.size() && 
+           str.compare(0, prefix.size(), prefix) == 0;
+}
+
 // RDeb822Source implementation
 RDeb822Source::RDeb822Source() : enabled(true) {}
 
@@ -57,11 +63,11 @@ bool RDeb822Source::isValid() const {
         if (uri.empty()) continue;
         
         // Check URI scheme
-        if (uri.starts_with("http://") || 
-            uri.starts_with("https://") || 
-            uri.starts_with("ftp://") ||
-            uri.starts_with("file://") ||
-            uri.starts_with("cdrom:")) {
+        if (starts_with(uri, "http://") ||
+            starts_with(uri, "https://") ||
+            starts_with(uri, "ftp://") ||
+            starts_with(uri, "file://") ||
+            starts_with(uri, "cdrom:")) {
             hasValidUri = true;
         }
     }
@@ -118,7 +124,7 @@ RDeb822Source RDeb822Source::fromString(const std::string& content) {
 
     while (std::getline(stream, line)) {
         // Skip comments and empty lines
-        if (line.empty() || line[0] == '#') {
+        if (line.empty() || starts_with(line, "#")) {
             continue;
         }
 
@@ -279,7 +285,7 @@ std::vector<RDeb822Source> RSourceManager::parseSources(const std::string& conte
         }
         
         // Check for source block start
-        if (line.starts_with("#") && line.find("Modernized") != std::string::npos) {
+        if (starts_with(line, "#") && line.find("Modernized") != std::string::npos) {
             if (!currentFields.empty()) {
                 RDeb822Source source = createSourceFromFields(currentFields);
                 if (source.isValid()) {
@@ -292,7 +298,7 @@ std::vector<RDeb822Source> RSourceManager::parseSources(const std::string& conte
         }
         
         // Skip other comments
-        if (line.starts_with("#")) {
+        if (starts_with(line, "#")) {
             continue;
         }
         
@@ -305,7 +311,7 @@ std::vector<RDeb822Source> RSourceManager::parseSources(const std::string& conte
             // Look ahead for continuation lines
             while (std::getline(iss, line)) {
                 line = trim(line);
-                if (line.empty() || line.starts_with("#") || line.find(':') != std::string::npos) {
+                if (line.empty() || starts_with(line, "#") || line.find(':') != std::string::npos) {
                     // Put the line back for the next iteration
                     iss.seekg(-static_cast<long>(line.length() + 1), std::ios_base::cur);
                     break;

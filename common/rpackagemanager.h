@@ -22,6 +22,16 @@
  * USA
  */
 
+#ifndef RPACKAGEMANAGER_H
+#define RPACKAGEMANAGER_H
+
+#include <string>
+#include <vector>
+#include <map>
+#include <filesystem>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/sourcelist.h>
+
 // We need a different package manager, since we need to do the
 // DoInstall() process in two steps when forking. Without that,
 // the forked package manager would be updated with the new
@@ -36,49 +46,92 @@
 // to export the functionality we need, so that we may avoid this
 // ugly hack.
 
-#include <string>
-#include <apt-pkg/pkgcache.h>
-#include <vector>
-#include <map>
-#include <apt-pkg/sourcelist.h>
-
 #define protected public
 #include <apt-pkg/packagemanager.h>
 #undef protected
 
-#ifndef RPACKAGEMANAGER_H
-#define RPACKAGEMANAGER_H
+class RDeb822Source {
+public:
+    RDeb822Source();
+    RDeb822Source(const std::string& types, const std::string& uris,
+                  const std::string& suites, const std::string& components = "");
 
-class RPackageManager {
+    bool isValid() const;
+    std::string toString() const;
+    static RDeb822Source fromString(const std::string& content);
+    bool operator==(const RDeb822Source& other) const;
+    bool operator!=(const RDeb822Source& other) const;
 
-   protected:
+    std::string getTypes() const { return types; }
+    std::string getUris() const { return uris; }
+    std::string getSuites() const { return suites; }
+    std::string getComponents() const { return components; }
+    std::string getSignedBy() const { return signedBy; }
+    bool isEnabled() const { return enabled; }
 
-   pkgPackageManager::OrderResult Res;
-
-   public:
-
-   pkgPackageManager *pm;
-
-   pkgPackageManager::OrderResult DoInstallPreFork() {
-      Res = pm->OrderInstall();
-      return Res;
-   }
-#ifdef WITH_DPKG_STATUSFD
-   pkgPackageManager::OrderResult DoInstallPostFork(int statusFd=-1) {
-      return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
-   }
-#else
-   pkgPackageManager::OrderResult DoInstallPostFork() {
-      if (pm == NULL)
-         return pkgPackageManager::Failed;
-      return (pm->Go(NULL) == false) ? pkgPackageManager::Failed : Res;
-   }
-#endif
-
-   RPackageManager(pkgPackageManager *pm) : pm(pm) {}
-
+private:
+    std::string types;
+    std::string uris;
+    std::string suites;
+    std::string components;
+    std::string signedBy;
+    bool enabled;
 };
 
+class RSourceManager {
+public:
+    RSourceManager();
+    explicit RSourceManager(const std::string& sourcesDir);
+
+    bool addSource(const RDeb822Source& source);
+    bool removeSource(const RDeb822Source& source);
+    bool updateSource(const RDeb822Source& oldSource, const RDeb822Source& newSource);
+    std::vector<RDeb822Source> getSources() const;
+    bool loadSources();
+    bool saveSources() const;
+    bool updateAptSources();
+    bool reloadAptCache();
+    bool validateSourceFile(const std::string& filename) const;
+
+private:
+    std::string sourcesDir;
+    std::vector<RDeb822Source> sources;
+
+    std::vector<RDeb822Source> parseSources(const std::string& content);
+    RDeb822Source createSourceFromFields(const std::map<std::string, std::string>& fields);
+    bool writeSourceFile(const std::string& filename, const RDeb822Source& source) const;
+    RDeb822Source readSourceFile(const std::string& filename) const;
+    std::string getSourceFilename(const RDeb822Source& source) const;
+    std::string trim(const std::string& str) const;
+};
+
+class RPackageManager {
+protected:
+    pkgPackageManager::OrderResult Res;
+
+public:
+    pkgPackageManager *pm;
+
+    pkgPackageManager::OrderResult DoInstallPreFork() {
+        Res = pm->OrderInstall();
+        return Res;
+    }
+
+#ifdef WITH_DPKG_STATUSFD
+    pkgPackageManager::OrderResult DoInstallPostFork(int statusFd=-1) {
+        return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
+    }
+#else
+    pkgPackageManager::OrderResult DoInstallPostFork() {
+        if (pm == NULL)
+            return pkgPackageManager::Failed;
+        return (pm->Go(NULL) == false) ? pkgPackageManager::Failed : Res;
+    }
 #endif
+
+    RPackageManager(pkgPackageManager *pm) : pm(pm) {}
+};
+
+#endif // RPACKAGEMANAGER_H
 
 // vim:ts=3:sw=3:et

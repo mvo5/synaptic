@@ -17,6 +17,17 @@
 #include <iostream>
 #include <algorithm>
 
+// Helper functions for conversion
+static std::string wstring_to_utf8(const std::wstring& wstr) {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+    return conv.to_bytes(wstr);
+}
+
+static std::wstring utf8_to_wstring(const std::string& str) {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+    return conv.from_bytes(str);
+}
+
 bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
     std::wifstream file(path);
     if (!file) {
@@ -31,33 +42,33 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
         if (fields.find(L"Types") == fields.end()) {
             return _error->Error(_("Missing Types field in %s"), path.c_str());
         }
-        entry.Types = APT::String::FromUTF8(fields[L"Types"]);
+        entry.Types = wstring_to_utf8(fields[L"Types"]);
 
         if (fields.find(L"URIs") == fields.end()) {
             return _error->Error(_("Missing URIs field in %s"), path.c_str());
         }
-        entry.URIs = APT::String::FromUTF8(fields[L"URIs"]);
+        entry.URIs = wstring_to_utf8(fields[L"URIs"]);
 
         if (fields.find(L"Suites") == fields.end()) {
             return _error->Error(_("Missing Suites field in %s"), path.c_str());
         }
-        entry.Suites = APT::String::FromUTF8(fields[L"Suites"]);
+        entry.Suites = wstring_to_utf8(fields[L"Suites"]);
 
         // Optional fields
         if (fields.find(L"Components") != fields.end()) {
-            entry.Components = APT::String::FromUTF8(fields[L"Components"]);
+            entry.Components = wstring_to_utf8(fields[L"Components"]);
         }
         if (fields.find(L"Signed-By") != fields.end()) {
-            entry.SignedBy = APT::String::FromUTF8(fields[L"Signed-By"]);
+            entry.SignedBy = wstring_to_utf8(fields[L"Signed-By"]);
         }
         if (fields.find(L"Architectures") != fields.end()) {
-            entry.Architectures = APT::String::FromUTF8(fields[L"Architectures"]);
+            entry.Architectures = wstring_to_utf8(fields[L"Architectures"]);
         }
         if (fields.find(L"Languages") != fields.end()) {
-            entry.Languages = APT::String::FromUTF8(fields[L"Languages"]);
+            entry.Languages = wstring_to_utf8(fields[L"Languages"]);
         }
         if (fields.find(L"Targets") != fields.end()) {
-            entry.Targets = APT::String::FromUTF8(fields[L"Targets"]);
+            entry.Targets = wstring_to_utf8(fields[L"Targets"]);
         }
         
         entry.Enabled = true; // Default to enabled
@@ -79,24 +90,24 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
             file << L"# Disabled: ";
         }
 
-        file << L"Types: " << APT::String::ToUTF8(entry.Types) << std::endl;
-        file << L"URIs: " << APT::String::ToUTF8(entry.URIs) << std::endl;
-        file << L"Suites: " << APT::String::ToUTF8(entry.Suites) << std::endl;
+        file << L"Types: " << utf8_to_wstring(entry.Types) << std::endl;
+        file << L"URIs: " << utf8_to_wstring(entry.URIs) << std::endl;
+        file << L"Suites: " << utf8_to_wstring(entry.Suites) << std::endl;
         
         if (!entry.Components.empty()) {
-            file << L"Components: " << APT::String::ToUTF8(entry.Components) << std::endl;
+            file << L"Components: " << utf8_to_wstring(entry.Components) << std::endl;
         }
         if (!entry.SignedBy.empty()) {
-            file << L"Signed-By: " << APT::String::ToUTF8(entry.SignedBy) << std::endl;
+            file << L"Signed-By: " << utf8_to_wstring(entry.SignedBy) << std::endl;
         }
         if (!entry.Architectures.empty()) {
-            file << L"Architectures: " << APT::String::ToUTF8(entry.Architectures) << std::endl;
+            file << L"Architectures: " << utf8_to_wstring(entry.Architectures) << std::endl;
         }
         if (!entry.Languages.empty()) {
-            file << L"Languages: " << APT::String::ToUTF8(entry.Languages) << std::endl;
+            file << L"Languages: " << utf8_to_wstring(entry.Languages) << std::endl;
         }
         if (!entry.Targets.empty()) {
-            file << L"Targets: " << APT::String::ToUTF8(entry.Targets) << std::endl;
+            file << L"Targets: " << utf8_to_wstring(entry.Targets) << std::endl;
         }
         
         file << std::endl;

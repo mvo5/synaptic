@@ -209,7 +209,7 @@ TEST_F(Deb822Test, SourcesListIntegration) {
 
     // Clean up
     remove(newFile.c_str());
-}
+} 
 
 TEST_F(Deb822Test, ParseAdditionalFields) {
     std::ofstream ofs(testFile.c_str());

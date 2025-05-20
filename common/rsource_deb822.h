@@ -18,6 +18,7 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
+#include "rsources.h"
 
 class RDeb822Source {
 public:

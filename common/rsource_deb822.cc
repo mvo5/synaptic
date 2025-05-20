@@ -3,6 +3,7 @@
  * Copyright (c) 2025 Synaptic development team          
  */
 
+#include "rsources.h"
 #include "rsource_deb822.h"
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>

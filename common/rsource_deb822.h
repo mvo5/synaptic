@@ -36,8 +36,8 @@ public:
 
     static bool ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries);
     static bool WriteDeb822File(const std::string& path, const std::vector<Deb822Entry>& entries);
-    static bool ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceList::SourceRecord& record);
-    static bool ConvertFromSourceRecord(const pkgSourceList::SourceRecord& record, Deb822Entry& entry);
+    static bool ConvertToSourceRecord(const Deb822Entry& entry, SourcesList::SourceRecord& record);
+    static bool ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry);
 
 private:
     static bool ParseStanza(std::wifstream& file, std::map<std::wstring, std::wstring>& fields);

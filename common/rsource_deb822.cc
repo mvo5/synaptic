@@ -104,8 +104,7 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
     return true;
 }
 
-bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceList::SourceRecord& record) {
-    // Parse types
+bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList::SourceRecord& record) {
     bool has_deb = false;
     bool has_deb_src = false;
     std::istringstream typeStream(entry.Types);
@@ -115,76 +114,97 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
         if (type == "deb") has_deb = true;
         if (type == "deb-src") has_deb_src = true;
     }
-
     record.Type = 0;
-    if (has_deb) record.Type |= pkgSourceList::Deb;
-    if (has_deb_src) record.Type |= pkgSourceList::DebSrc;
-    if (!entry.Enabled) record.Type |= pkgSourceList::Disabled;
-
+    if (has_deb) record.Type |= SourcesList::Deb;
+    if (has_deb_src) record.Type |= SourcesList::DebSrc;
+    if (!entry.Enabled) record.Type |= SourcesList::Disabled;
     // Parse URIs
     std::istringstream uriStream(entry.URIs);
     std::string uri;
     while (std::getline(uriStream, uri, ' ')) {
         TrimWhitespace(uri);
         if (!uri.empty()) {
-    record.URI = uri;
+            record.URI = uri;
             break;
         }
     }
-
     // Parse suites
     std::istringstream suiteStream(entry.Suites);
     std::string suite;
     while (std::getline(suiteStream, suite, ' ')) {
         TrimWhitespace(suite);
         if (!suite.empty()) {
-    record.Dist = suite;
+            record.Dist = suite;
             break;
         }
     }
-
     // Parse components
+    std::vector<std::string> comps;
     std::istringstream compStream(entry.Components);
     std::string comp;
     while (std::getline(compStream, comp, ' ')) {
         TrimWhitespace(comp);
         if (!comp.empty()) {
-            record.Comps.push_back(comp);
+            comps.push_back(comp);
         }
     }
-    
+    // Set Sections
+    if (record.Sections) delete[] record.Sections;
+    record.NumSections = comps.size();
+    if (record.NumSections > 0) {
+        record.Sections = new std::string[record.NumSections];
+        for (unsigned short i = 0; i < record.NumSections; ++i) {
+            record.Sections[i] = comps[i];
+        }
+    } else {
+        record.Sections = nullptr;
+    }
+    // Store additional fields in Comment
+    std::ostringstream comment;
+    if (!entry.SignedBy.empty()) comment << "Signed-By: " << entry.SignedBy << "\n";
+    if (!entry.Architectures.empty()) comment << "Architectures: " << entry.Architectures << "\n";
+    if (!entry.Languages.empty()) comment << "Languages: " << entry.Languages << "\n";
+    if (!entry.Targets.empty()) comment << "Targets: " << entry.Targets << "\n";
+    if (!entry.Comment.empty()) comment << entry.Comment << "\n";
+    record.Comment = comment.str();
     return true;
 }
 
-bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& record, Deb822Entry& entry) {
-    // Set types
+bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry) {
     std::stringstream typeStream;
-    if (record.Type & pkgSourceList::Deb) {
+    if (record.Type & SourcesList::Deb) {
         typeStream << "deb ";
     }
-    if (record.Type & pkgSourceList::DebSrc) {
+    if (record.Type & SourcesList::DebSrc) {
         typeStream << "deb-src ";
     }
     entry.Types = typeStream.str();
     TrimWhitespace(entry.Types);
-
-    // Set URI
     entry.URIs = record.URI;
-    
-    // Set suite
     entry.Suites = record.Dist;
-    
-    // Set components
+    // Components
     std::stringstream compStream;
-    for (const auto& comp : record.Comps) {
-        compStream << comp << " ";
+    for (unsigned short i = 0; i < record.NumSections; ++i) {
+        compStream << record.Sections[i] << " ";
     }
     entry.Components = compStream.str();
     TrimWhitespace(entry.Components);
-    
-    // Set enabled state
-    entry.Enabled = !(record.Type & pkgSourceList::Disabled);
-    
+    entry.Enabled = !(record.Type & SourcesList::Disabled);
+    // Parse additional fields from Comment
+    std::istringstream commentStream(record.Comment);
+    std::string line;
+    while (std::getline(commentStream, line)) {
+        if (line.find("Signed-By:") == 0) entry.SignedBy = line.substr(10);
+        else if (line.find("Architectures:") == 0) entry.Architectures = line.substr(14);
+        else if (line.find("Languages:") == 0) entry.Languages = line.substr(10);
+        else if (line.find("Targets:") == 0) entry.Targets = line.substr(8);
+        else entry.Comment += line + "\n";
+    }
+    TrimWhitespace(entry.SignedBy);
+    TrimWhitespace(entry.Architectures);
+    TrimWhitespace(entry.Languages);
+    TrimWhitespace(entry.Targets);
+    TrimWhitespace(entry.Comment);
     return true;
 }
 

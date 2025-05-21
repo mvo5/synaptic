@@ -39,10 +39,10 @@ public:
     static bool WriteDeb822File(const std::string& path, const std::vector<Deb822Entry>& entries);
     static bool ConvertToSourceRecord(const Deb822Entry& entry, SourcesList::SourceRecord& record);
     static bool ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry);
+    static void TrimWhitespace(std::string& str);
 
 private:
     static bool ParseStanza(std::wifstream& file, std::map<std::wstring, std::wstring>& fields);
-    static void TrimWhitespace(std::string& str);
 };
 
 #endif // RSOURCE_DEB822_H 

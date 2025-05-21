@@ -804,3 +804,33 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
    else
      me->_lst.SwapSources(rec, rec_p);
 }
+
+bool RGRepositoryEditor::ConvertToDeb822() {
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(win),
+        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+        GTK_MESSAGE_QUESTION,
+        GTK_BUTTONS_YES_NO,
+        _("Convert to Deb822 format?"));
+
+    gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
+        _("This will convert your sources to the new Deb822 format.\n"
+          "The conversion will be done in-place and cannot be undone.\n\n"
+          "Do you want to proceed?"));
+
+    gint result = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+
+    return (result == GTK_RESPONSE_YES);
+}
+
+void RGRepositoryEditor::SaveClicked() {
+    // Check if we need to convert to Deb822
+    if (!_config->FindB("Synaptic::UseDeb822", false)) {
+        if (ConvertToDeb822()) {
+            _config->Set("Synaptic::UseDeb822", true);
+        }
+    }
+
+    // Continue with normal save
+    // ... existing save code ...
+}

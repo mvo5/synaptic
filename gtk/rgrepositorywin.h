@@ -94,4 +94,15 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    bool Run();
 };
 
+class RGRepositoryWin {
+public:
+    // ... existing declarations ...
+
+    bool ConvertToDeb822();
+    void SaveClicked();
+
+private:
+    // ... existing private members ...
+};
+
 #endif

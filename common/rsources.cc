@@ -220,21 +220,21 @@ bool SourcesList::ReadSources()
 {
    bool Res = true;
 
-   // Read classic sources.list format
-   string Parts = _config->FindDir("Dir::Etc::sourceparts");
-   if (FileExists(Parts) == true)
-      Res &= ReadSourceDir(Parts);
-   string Main = _config->FindFile("Dir::Etc::sourcelist");
-   if (FileExists(Main) == true)
-      Res &= ReadSourcePart(Main);
-
-   // Read Deb822 format sources
+   // First try to read Deb822 format sources
    string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
-   if (FileExists(Deb822Parts) == true)
+   if (FileExists(Deb822Parts) == true) {
       Res &= ReadDeb822SourceDir(Deb822Parts);
-   string Deb822Main = _config->FindFile("Dir::Etc::sourcelist.d") + "/debian.sources";
-   if (FileExists(Deb822Main) == true)
-      Res &= ReadDeb822SourcePart(Deb822Main);
+   }
+
+   // Then read classic sources.list format
+   string Parts = _config->FindDir("Dir::Etc::sourceparts");
+   if (FileExists(Parts) == true) {
+      Res &= ReadSourceDir(Parts);
+   }
+   string Main = _config->FindFile("Dir::Etc::sourcelist");
+   if (FileExists(Main) == true) {
+      Res &= ReadSourcePart(Main);
+   }
 
    return Res;
 }

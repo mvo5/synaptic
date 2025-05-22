@@ -36,6 +36,7 @@
 #include "rgutils.h"
 #include "config.h"
 #include "i18n.h"
+#include "rsource_deb822.h"
 
 #if HAVE_RPM
 enum { ITEM_TYPE_RPM,
@@ -128,6 +129,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _userDialog = new RGUserDialog(_win);
    _applied = false;
    _lastIter = NULL;
+   _config = new Configuration();
+   _error = GTK_WIDGET(gtk_builder_get_object(_builder, "label_error"));
 
    setTitle(_("Repositories"));
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
@@ -386,6 +389,7 @@ RGRepositoryEditor::~RGRepositoryEditor()
 {
    //gtk_widget_destroy(_win);
    delete _userDialog;
+   delete _config;
 }
 
 
@@ -806,7 +810,7 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
 }
 
 bool RGRepositoryEditor::ConvertToDeb822() {
-    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(win),
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(_win),
         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
         GTK_MESSAGE_QUESTION,
         GTK_BUTTONS_YES_NO,
@@ -820,7 +824,30 @@ bool RGRepositoryEditor::ConvertToDeb822() {
     gint result = gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 
-    return (result == GTK_RESPONSE_YES);
+    if (result != GTK_RESPONSE_YES) {
+        return false;
+    }
+
+    // Convert each source record to Deb822 format
+    for (SourcesListIter I = _lst.SourceRecords.begin(); I != _lst.SourceRecords.end(); I++) {
+        SourcesList::SourceRecord *rec = *I;
+        if (rec == NULL) continue;
+
+        // Create Deb822 entry
+        RDeb822Source::Deb822Entry entry;
+        if (!RDeb822Source::ConvertFromSourceRecord(*rec, entry)) {
+            _userDialog->error(_("Failed to convert source record to Deb822 format"));
+            return false;
+        }
+
+        // Update the source record
+        if (!RDeb822Source::ConvertToSourceRecord(entry, *rec)) {
+            _userDialog->error(_("Failed to update source record with Deb822 format"));
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void RGRepositoryEditor::SaveClicked() {
@@ -828,9 +855,17 @@ void RGRepositoryEditor::SaveClicked() {
     if (!_config->FindB("Synaptic::UseDeb822", false)) {
         if (ConvertToDeb822()) {
             _config->Set("Synaptic::UseDeb822", true);
+            _config->Set("Synaptic::UseDeb822Sources", true);
         }
     }
 
-    // Continue with normal save
-    // ... existing save code ...
+    // Save the sources list
+    if (!_lst.Save()) {
+        _userDialog->error(_("Failed to save sources list"));
+        return;
+    }
+
+    // Update the sources
+    _lst.UpdateSources();
+    _dirty = false;
 }

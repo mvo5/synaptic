@@ -30,8 +30,8 @@
 #include <gtk/gtk.h>
 #include "rsources.h"
 #include "rggtkbuilderwindow.h"
-
 #include "rguserdialog.h"
+#include <apt-pkg/configuration.h>
 
 typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord *>::iterator VendorsListIter;
@@ -66,6 +66,9 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    bool _dirty;
    GdkColor _gray;
 
+   // Configuration
+   Configuration *_config;
+
    void UpdateVendorMenu();
    int VendorMenuIndex(string VendorID);
 
@@ -86,20 +89,20 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    // get values
    void doEdit();
 
-
  public:
    RGRepositoryEditor(RGWindow *parent);
    ~RGRepositoryEditor();
 
    bool Run();
+
+   // Deb822 support
+   bool ConvertToDeb822();
+   void SaveClicked();
 };
 
 class RGRepositoryWin {
 public:
     // ... existing declarations ...
-
-    bool ConvertToDeb822();
-    void SaveClicked();
 
 private:
     // ... existing private members ...

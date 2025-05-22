@@ -104,7 +104,7 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
     return true;
 }
 
-bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceList::SourceRecord& record) {
+bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList::SourceRecord& record) {
     // Parse types
     bool has_deb = false;
     bool has_deb_src = false;
@@ -117,9 +117,9 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
     }
 
     record.Type = 0;
-    if (has_deb) record.Type |= pkgSourceList::Deb;
-    if (has_deb_src) record.Type |= pkgSourceList::DebSrc;
-    if (!entry.Enabled) record.Type |= pkgSourceList::Disabled;
+    if (has_deb) record.Type |= SourcesList::Deb;
+    if (has_deb_src) record.Type |= SourcesList::DebSrc;
+    if (!entry.Enabled) record.Type |= SourcesList::Disabled;
 
     // Parse URIs
     std::istringstream uriStream(entry.URIs);
@@ -166,13 +166,13 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceLis
     return true;
 }
 
-bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& record, Deb822Entry& entry) {
+bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry) {
     // Set types
     std::stringstream typeStream;
-    if (record.Type & pkgSourceList::Deb) {
+    if (record.Type & SourcesList::Deb) {
         typeStream << "deb ";
     }
-    if (record.Type & pkgSourceList::DebSrc) {
+    if (record.Type & SourcesList::DebSrc) {
         typeStream << "deb-src ";
     }
     entry.Types = typeStream.str();
@@ -193,7 +193,7 @@ bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& r
     TrimWhitespace(entry.Components);
     
     // Set enabled state
-    entry.Enabled = !(record.Type & pkgSourceList::Disabled);
+    entry.Enabled = !(record.Type & SourcesList::Disabled);
     
     return true;
 }

@@ -42,7 +42,7 @@ public:
     static void TrimWhitespace(std::string& str);
 
 private:
-    static bool ParseStanza(std::wifstream& file, std::map<std::wstring, std::wstring>& fields);
+    static bool ParseStanza(std::ifstream& file, std::map<std::string, std::string>& fields);
 };
 
 #endif // RSOURCE_DEB822_H 

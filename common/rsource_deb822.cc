@@ -15,21 +15,34 @@
 #include <apt-pkg/error.h>
 #include <iostream>
 #include <algorithm>
-#include "rsources.h"  // Add this for SourcesList::SourceRecord
 
 bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
     std::ifstream file(path);
-    if (!file.is_open()) {
-        _error->Error(_("Could not open file %s"), path.c_str());
-        return false;
+    if (!file) {
+        return _error->Error(_("Cannot open %s"), path.c_str());
     }
 
     std::map<std::string, std::string> fields;
     while (ParseStanza(file, fields)) {
         Deb822Entry entry;
+        
+        // Check required fields
+        if (fields.find("Types") == fields.end()) {
+            return _error->Error(_("Missing Types field in %s"), path.c_str());
+        }
         entry.Types = fields["Types"];
+
+        if (fields.find("URIs") == fields.end()) {
+            return _error->Error(_("Missing URIs field in %s"), path.c_str());
+        }
         entry.URIs = fields["URIs"];
+
+        if (fields.find("Suites") == fields.end()) {
+            return _error->Error(_("Missing Suites field in %s"), path.c_str());
+        }
         entry.Suites = fields["Suites"];
+
+        // Optional fields
         if (fields.find("Components") != fields.end()) {
             entry.Components = fields["Components"];
         }
@@ -45,8 +58,10 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
         if (fields.find("Targets") != fields.end()) {
             entry.Targets = fields["Targets"];
         }
-        entry.Enabled = true;
+        
+        entry.Enabled = true; // Default to enabled
         entries.push_back(entry);
+        fields.clear();
     }
 
     return true;
@@ -54,15 +69,19 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
 
 bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<Deb822Entry>& entries) {
     std::ofstream file(path);
-    if (!file.is_open()) {
-        _error->Error(_("Could not open file %s for writing"), path.c_str());
-        return false;
+    if (!file) {
+        return _error->Error(_("Cannot write to %s"), path.c_str());
     }
 
     for (const auto& entry : entries) {
+        if (!entry.Enabled) {
+            file << "# Disabled: ";
+        }
+
         file << "Types: " << entry.Types << std::endl;
         file << "URIs: " << entry.URIs << std::endl;
         file << "Suites: " << entry.Suites << std::endl;
+        
         if (!entry.Components.empty()) {
             file << "Components: " << entry.Components << std::endl;
         }
@@ -78,26 +97,29 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
         if (!entry.Targets.empty()) {
             file << "Targets: " << entry.Targets << std::endl;
         }
+        
         file << std::endl;
     }
 
     return true;
 }
 
-bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList::SourceRecord& record) {
+bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, pkgSourceList::SourceRecord& record) {
     // Parse types
+    bool has_deb = false;
+    bool has_deb_src = false;
     std::istringstream typeStream(entry.Types);
     std::string type;
-    record.Type = 0;
-    
     while (std::getline(typeStream, type, ' ')) {
         TrimWhitespace(type);
-        if (type == "deb") record.Type |= SourcesList::Deb;
-        if (type == "deb-src") record.Type |= SourcesList::DebSrc;
+        if (type == "deb") has_deb = true;
+        if (type == "deb-src") has_deb_src = true;
     }
-    
-    if (!entry.Enabled) record.Type |= SourcesList::Disabled;
-    record.Type |= SourcesList::Deb822;  // Mark as Deb822 format
+
+    record.Type = 0;
+    if (has_deb) record.Type |= pkgSourceList::Deb;
+    if (has_deb_src) record.Type |= pkgSourceList::DebSrc;
+    if (!entry.Enabled) record.Type |= pkgSourceList::Disabled;
 
     // Parse URIs
     std::istringstream uriStream(entry.URIs);
@@ -124,24 +146,33 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     // Parse components
     std::istringstream compStream(entry.Components);
     std::string comp;
-    record.Comps.clear();
+    std::vector<std::string> sections;
     while (std::getline(compStream, comp, ' ')) {
         TrimWhitespace(comp);
         if (!comp.empty()) {
-            record.Comps.push_back(comp);
+            sections.push_back(comp);
+        }
+    }
+    
+    // Set sections
+    if (!sections.empty()) {
+        record.NumSections = sections.size();
+        record.Sections = new string[record.NumSections];
+        for (unsigned short i = 0; i < record.NumSections; i++) {
+            record.Sections[i] = sections[i];
         }
     }
     
     return true;
 }
 
-bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& record, Deb822Entry& entry) {
+bool RDeb822Source::ConvertFromSourceRecord(const pkgSourceList::SourceRecord& record, Deb822Entry& entry) {
     // Set types
     std::stringstream typeStream;
-    if (record.Type & SourcesList::Deb) {
+    if (record.Type & pkgSourceList::Deb) {
         typeStream << "deb ";
     }
-    if (record.Type & SourcesList::DebSrc) {
+    if (record.Type & pkgSourceList::DebSrc) {
         typeStream << "deb-src ";
     }
     entry.Types = typeStream.str();
@@ -155,14 +186,14 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
     
     // Set components
     std::stringstream compStream;
-    for (const auto& comp : record.Comps) {
-        compStream << comp << " ";
+    for (unsigned short i = 0; i < record.NumSections; i++) {
+        compStream << record.Sections[i] << " ";
     }
     entry.Components = compStream.str();
     TrimWhitespace(entry.Components);
     
     // Set enabled state
-    entry.Enabled = !(record.Type & SourcesList::Disabled);
+    entry.Enabled = !(record.Type & pkgSourceList::Disabled);
     
     return true;
 }

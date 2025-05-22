@@ -19,31 +19,17 @@
 
 bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
     std::ifstream file(path);
-    if (!file) {
-        return _error->Error(_("Cannot open %s"), path.c_str());
+    if (!file.is_open()) {
+        _error->Error(_("Could not open file %s"), path.c_str());
+        return false;
     }
 
     std::map<std::string, std::string> fields;
     while (ParseStanza(file, fields)) {
         Deb822Entry entry;
-        
-        // Check required fields
-        if (fields.find("Types") == fields.end()) {
-            return _error->Error(_("Missing Types field in %s"), path.c_str());
-        }
         entry.Types = fields["Types"];
-
-        if (fields.find("URIs") == fields.end()) {
-            return _error->Error(_("Missing URIs field in %s"), path.c_str());
-        }
         entry.URIs = fields["URIs"];
-
-        if (fields.find("Suites") == fields.end()) {
-            return _error->Error(_("Missing Suites field in %s"), path.c_str());
-        }
         entry.Suites = fields["Suites"];
-
-        // Optional fields
         if (fields.find("Components") != fields.end()) {
             entry.Components = fields["Components"];
         }
@@ -59,10 +45,8 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
         if (fields.find("Targets") != fields.end()) {
             entry.Targets = fields["Targets"];
         }
-        
-        entry.Enabled = true; // Default to enabled
+        entry.Enabled = true;
         entries.push_back(entry);
-        fields.clear();
     }
 
     return true;
@@ -70,19 +54,15 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
 
 bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<Deb822Entry>& entries) {
     std::ofstream file(path);
-    if (!file) {
-        return _error->Error(_("Cannot write to %s"), path.c_str());
+    if (!file.is_open()) {
+        _error->Error(_("Could not open file %s for writing"), path.c_str());
+        return false;
     }
 
     for (const auto& entry : entries) {
-        if (!entry.Enabled) {
-            file << "# Disabled: ";
-        }
-
         file << "Types: " << entry.Types << std::endl;
         file << "URIs: " << entry.URIs << std::endl;
         file << "Suites: " << entry.Suites << std::endl;
-        
         if (!entry.Components.empty()) {
             file << "Components: " << entry.Components << std::endl;
         }
@@ -98,7 +78,6 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
         if (!entry.Targets.empty()) {
             file << "Targets: " << entry.Targets << std::endl;
         }
-        
         file << std::endl;
     }
 

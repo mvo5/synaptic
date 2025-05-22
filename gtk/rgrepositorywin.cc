@@ -130,7 +130,6 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _applied = false;
    _lastIter = NULL;
    _config = new Configuration();
-   _error = GTK_WIDGET(gtk_builder_get_object(_builder, "label_error"));
 
    setTitle(_("Repositories"));
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
@@ -404,7 +403,6 @@ bool RGRepositoryEditor::Run()
    _savedList.ReadSources();
 
    if (_lst.ReadVendors() == false) {
-      _error->Error(_("Cannot read vendors.list file"));
       _userDialog->showErrors();
       return false;
    }
@@ -811,7 +809,7 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
 
 bool RGRepositoryEditor::ConvertToDeb822() {
     GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(_win),
-        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+        (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
         GTK_MESSAGE_QUESTION,
         GTK_BUTTONS_YES_NO,
         _("Convert to Deb822 format?"));
@@ -859,13 +857,11 @@ void RGRepositoryEditor::SaveClicked() {
         }
     }
 
-    // Save the sources list
-    if (!_lst.Save()) {
-        _userDialog->error(_("Failed to save sources list"));
+    // Update the sources list
+    if (!_lst.UpdateSources()) {
+        _userDialog->error(_("Failed to update sources list"));
         return;
     }
 
-    // Update the sources
-    _lst.UpdateSources();
     _dirty = false;
 }

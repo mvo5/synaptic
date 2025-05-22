@@ -36,6 +36,7 @@
 #include "rgutils.h"
 #include "config.h"
 #include "i18n.h"
+#include "rsource_deb822.h"
 
 #if HAVE_RPM
 enum { ITEM_TYPE_RPM,
@@ -128,6 +129,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _userDialog = new RGUserDialog(_win);
    _applied = false;
    _lastIter = NULL;
+   _config = new Configuration();
 
    setTitle(_("Repositories"));
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
@@ -386,6 +388,7 @@ RGRepositoryEditor::~RGRepositoryEditor()
 {
    //gtk_widget_destroy(_win);
    delete _userDialog;
+   delete _config;
 }
 
 
@@ -400,7 +403,6 @@ bool RGRepositoryEditor::Run()
    _savedList.ReadSources();
 
    if (_lst.ReadVendors() == false) {
-      _error->Error(_("Cannot read vendors.list file"));
       _userDialog->showErrors();
       return false;
    }
@@ -803,4 +805,63 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
      me->_lst.SwapSources(rec_p, rec);
    else
      me->_lst.SwapSources(rec, rec_p);
+}
+
+bool RGRepositoryEditor::ConvertToDeb822() {
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(_win),
+        (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+        GTK_MESSAGE_QUESTION,
+        GTK_BUTTONS_YES_NO,
+        _("Convert to Deb822 format?"));
+
+    gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
+        _("This will convert your sources to the new Deb822 format.\n"
+          "The conversion will be done in-place and cannot be undone.\n\n"
+          "Do you want to proceed?"));
+
+    gint result = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+
+    if (result != GTK_RESPONSE_YES) {
+        return false;
+    }
+
+    // Convert each source record to Deb822 format
+    for (SourcesListIter I = _lst.SourceRecords.begin(); I != _lst.SourceRecords.end(); I++) {
+        SourcesList::SourceRecord *rec = *I;
+        if (rec == NULL) continue;
+
+        // Create Deb822 entry
+        RDeb822Source::Deb822Entry entry;
+        if (!RDeb822Source::ConvertFromSourceRecord(*rec, entry)) {
+            _userDialog->error(_("Failed to convert source record to Deb822 format"));
+            return false;
+        }
+
+        // Update the source record
+        if (!RDeb822Source::ConvertToSourceRecord(entry, *rec)) {
+            _userDialog->error(_("Failed to update source record with Deb822 format"));
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void RGRepositoryEditor::SaveClicked() {
+    // Check if we need to convert to Deb822
+    if (!_config->FindB("Synaptic::UseDeb822", false)) {
+        if (ConvertToDeb822()) {
+            _config->Set("Synaptic::UseDeb822", true);
+            _config->Set("Synaptic::UseDeb822Sources", true);
+        }
+    }
+
+    // Update the sources list
+    if (!_lst.UpdateSources()) {
+        _userDialog->error(_("Failed to update sources list"));
+        return;
+    }
+
+    _dirty = false;
 }

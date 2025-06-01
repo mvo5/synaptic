@@ -443,6 +443,9 @@ bool RGRepositoryEditor::Run()
                          DISABLED_COLOR_COLUMN,
                          (*it)->Type & SourcesList::Disabled ? &_gray : NULL,
                          -1);
+
+      // Add debug print after setting data in the list store
+      g_print("DEBUG: Successfully set data for URI: %s\n", (*it)->URI.c_str());
    }
 
 

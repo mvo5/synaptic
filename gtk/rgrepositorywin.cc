@@ -427,6 +427,9 @@ bool RGRepositoryEditor::Run()
          Sections += " ";
       }
 
+      // Add another debug print before appending to the list store
+      g_print("DEBUG: Preparing to append to list store for URI: %s\n", (*it)->URI.c_str());
+
       gtk_list_store_append(_sourcesListStore, &iter);
       gtk_list_store_set(_sourcesListStore, &iter,
                          STATUS_COLUMN, !((*it)->Type &

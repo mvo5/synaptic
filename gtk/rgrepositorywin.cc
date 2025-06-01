@@ -397,10 +397,12 @@ bool RGRepositoryEditor::Run()
    if (_lst.ReadSources() == false) {
       _userDialog->
          warning(_("Ignoring invalid record(s) in sources.list file!"));
-      //return false;
    }
    // keep a backup of the orginal list
    _savedList.ReadSources();
+
+   // Add debug print statement here
+   g_print("DEBUG: Number of source records read into _lst: %lu\n", _lst.SourceRecords.size());
 
    if (_lst.ReadVendors() == false) {
       _userDialog->showErrors();
@@ -415,6 +417,10 @@ bool RGRepositoryEditor::Run()
         it != _lst.SourceRecords.end(); it++) {
       if ((*it)->Type & SourcesList::Comment)
          continue;
+
+      // Add debug print for each source being added to the display
+      g_print("DEBUG: Adding source to display - URI: %s, Type: %s\n", (*it)->URI.c_str(), (*it)->GetType().c_str());
+
       string Sections;
       for (unsigned int J = 0; J < (*it)->NumSections; J++) {
          Sections += (*it)->Sections[J];

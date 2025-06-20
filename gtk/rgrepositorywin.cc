@@ -861,15 +861,7 @@ bool RGRepositoryEditor::ConvertToDeb822() {
 }
 
 void RGRepositoryEditor::SaveClicked() {
-    // Check if we need to convert to Deb822
-    if (!_config->FindB("Synaptic::UseDeb822", false)) {
-        if (ConvertToDeb822()) {
-            _config->Set("Synaptic::UseDeb822", true);
-            _config->Set("Synaptic::UseDeb822Sources", true);
-        }
-    }
-
-    // Update the sources list
+    // Remove auto-conversion to Deb822. Only update sources.
     if (!_lst.UpdateSources()) {
         _userDialog->error(_("Failed to update sources list"));
         return;

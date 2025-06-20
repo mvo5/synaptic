@@ -127,7 +127,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     while (std::getline(uriStream, uri, ' ')) {
         TrimWhitespace(uri);
         if (!uri.empty()) {
-            record.URI = uri;
+    record.URI = uri;
             break;
         }
     }
@@ -138,7 +138,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     while (std::getline(suiteStream, suite, ' ')) {
         TrimWhitespace(suite);
         if (!suite.empty()) {
-            record.Dist = suite;
+    record.Dist = suite;
             break;
         }
     }
@@ -194,6 +194,24 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
     
     // Set enabled state
     entry.Enabled = !(record.Type & SourcesList::Disabled);
+
+    // Parse extra fields from Comment
+    if (!record.Comment.empty()) {
+        std::istringstream iss(record.Comment);
+        std::string line;
+        while (std::getline(iss, line)) {
+            size_t colon = line.find(":");
+            if (colon == std::string::npos) continue;
+            std::string key = line.substr(0, colon);
+            std::string value = line.substr(colon + 1);
+            TrimWhitespace(key);
+            TrimWhitespace(value);
+            if (key == "Signed-By") entry.SignedBy = value;
+            else if (key == "Architectures") entry.Architectures = value;
+            else if (key == "Languages") entry.Languages = value;
+            else if (key == "Targets") entry.Targets = value;
+        }
+    }
     
     return true;
 }

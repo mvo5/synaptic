@@ -220,15 +220,16 @@ bool SourcesList::ReadSources()
 {
    bool Res = true;
 
-   // First try to read Deb822 format sources
+   // First try to read Deb822 format sources from sourcelist.d
    string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
    if (FileExists(Deb822Parts) == true) {
       Res &= ReadDeb822SourceDir(Deb822Parts);
    }
 
-   // Then read classic sources.list format
+   // Then read Deb822 format sources from sourceparts as well
    string Parts = _config->FindDir("Dir::Etc::sourceparts");
    if (FileExists(Parts) == true) {
+      Res &= ReadDeb822SourceDir(Parts);
       Res &= ReadSourceDir(Parts);
    }
    string Main = _config->FindFile("Dir::Etc::sourcelist");

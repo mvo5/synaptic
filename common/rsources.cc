@@ -300,10 +300,6 @@ void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
 
 bool SourcesList::UpdateSources()
 {
-   ofstream ofs(_config->FindFile("Dir::Etc::sourcelist").c_str(), ios::out);
-   if (!ofs != 0)
-      return _error->Error(_("Error writing sources list"));
-
    // Group sources by their source file
    map<string, vector<SourceRecord*>> sourcesByFile;
    for (list<SourceRecord *>::const_iterator it = SourceRecords.begin();
@@ -321,11 +317,11 @@ bool SourcesList::UpdateSources()
          continue;
       }
 
-      // Check if this is a Deb822 format file
+      // Check if this is a Deb822 format file (only .sources files)
       bool isDeb822 = false;
-      if (!records.empty() && (records[0]->Type & Deb822)) {
+      if (sourcePath.size() > 8 && sourcePath.substr(sourcePath.size() - 8) == ".sources") {
          isDeb822 = true;
-   }
+      }
 
       // Open the appropriate file for writing
       ofstream out(sourcePath.c_str(), ios::out);
@@ -344,16 +340,43 @@ bool SourcesList::UpdateSources()
             entries.push_back(entry);
          }
          if (!RDeb822Source::WriteDeb822File(sourcePath, entries)) {
-         return false;
+            return false;
          }
       } else {
-         // Write classic format
+         // Write classic format (deb lines)
          for (const auto& record : records) {
             if (record->Type == Comment) {
                out << record->Comment << endl;
-         } else {
-               out << *record;
-         }
+            } else {
+               // Write as a standard deb/deb-src line, comment if disabled
+               if (record->Type & Disabled) {
+                  out << "# ";
+               }
+               if (record->Type & Deb) {
+                  out << "deb ";
+               } else if (record->Type & DebSrc) {
+                  out << "deb-src ";
+               } else if (record->Type & Rpm) {
+                  out << "rpm ";
+               } else if (record->Type & RpmSrc) {
+                  out << "rpm-src ";
+               } else if (record->Type & RpmDir) {
+                  out << "rpm-dir ";
+               } else if (record->Type & RpmSrcDir) {
+                  out << "rpm-src-dir ";
+               } else if (record->Type & Repomd) {
+                  out << "repomd ";
+               } else if (record->Type & RepomdSrc) {
+                  out << "repomd-src ";
+               } else {
+                  out << "deb "; // fallback
+               }
+               out << record->URI << " " << record->Dist;
+               for (unsigned int J = 0; J < record->NumSections; J++) {
+                  out << " " << record->Sections[J];
+               }
+               out << endl;
+            }
          }
       }
 
@@ -544,38 +567,36 @@ void SourcesList::RemoveVendor(VendorRecord *&rec)
 
 ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
 {
-   os << "Type: ";
-   if ((rec.Type & SourcesList::Comment) != 0)
-      os << "Comment ";
-   if ((rec.Type & SourcesList::Disabled) != 0)
-      os << "Disabled ";
-   if ((rec.Type & SourcesList::Deb) != 0)
-      os << "Deb";
-   if ((rec.Type & SourcesList::DebSrc) != 0)
-      os << "DebSrc";
-   if ((rec.Type & SourcesList::Rpm) != 0)
-      os << "Rpm";
-   if ((rec.Type & SourcesList::RpmSrc) != 0)
-      os << "RpmSrc";
-   if ((rec.Type & SourcesList::RpmDir) != 0)
-      os << "RpmDir";
-   if ((rec.Type & SourcesList::RpmSrcDir) != 0)
-      os << "RpmSrcDir";
-   if ((rec.Type & SourcesList::Repomd) != 0)
-      os << "Repomd";
-   if ((rec.Type & SourcesList::RepomdSrc) != 0)
-      os << "RepomdSrc";
-   os << endl;
-   os << "SourceFile: " << rec.SourceFile << endl;
-   os << "VendorID: " << rec.VendorID << endl;
-   os << "URI: " << rec.URI << endl;
-   os << "Dist: " << rec.Dist << endl;
-   os << "Section(s):" << endl;
-#if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
+   if (rec.Type == SourcesList::Comment) {
+      os << rec.Comment << endl;
+      return os;
    }
-#endif
+   if (rec.Type & SourcesList::Disabled) {
+      os << "# ";
+   }
+   if (rec.Type & SourcesList::Deb) {
+      os << "deb ";
+   } else if (rec.Type & SourcesList::DebSrc) {
+      os << "deb-src ";
+   } else if (rec.Type & SourcesList::Rpm) {
+      os << "rpm ";
+   } else if (rec.Type & SourcesList::RpmSrc) {
+      os << "rpm-src ";
+   } else if (rec.Type & SourcesList::RpmDir) {
+      os << "rpm-dir ";
+   } else if (rec.Type & SourcesList::RpmSrcDir) {
+      os << "rpm-src-dir ";
+   } else if (rec.Type & SourcesList::Repomd) {
+      os << "repomd ";
+   } else if (rec.Type & SourcesList::RepomdSrc) {
+      os << "repomd-src ";
+   } else {
+      os << "deb "; // fallback
+   }
+   os << rec.URI << " " << rec.Dist;
+   for (unsigned int J = 0; J < rec.NumSections; J++) {
+      os << " " << rec.Sections[J];
+   }
    os << endl;
    return os;
 }

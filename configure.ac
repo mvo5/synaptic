@@ -117,14 +117,16 @@ AC_CHECK_HEADER(apt-pkg/cdrom.h,
                 AC_DEFINE(HAVE_APTPKG_CDROM, 1, 
 		[whether apt-pkg/cdrom.h is present]) )
 
-# check and use libept if available
-PKG_CHECK_MODULES([LIBEPT], [libept >= 1.0],
-                  [AC_DEFINE(WITH_EPT, 1, [build with libept])
-                   AC_SUBST(LIBEPT_CFLAGS)
-	           AC_SUBST(LIBEPT_LIBS)
-                  ],
-                  [AC_MSG_NOTICE([no libept found, building without])
-                  ])
+#  xapian based package search feature
+AC_CHECK_PROG(HAVE_XAPIAN,xapian-config,yes,no)
+AS_IF([test "x$HAVE_XAPIAN" = "xyes"],[
+  XAPIAN_CXXFLAGS="$(xapian-config --cxxflags)"
+  XAPIAN_LIBS="$(xapian-config --libs)"
+  AC_DEFINE(HAVE_XAPIAN, 1, [xapian based package search feature])
+ ])
+
+AC_SUBST(XAPIAN_CXXFLAGS)
+AC_SUBST(XAPIAN_LIBS)
 
 AC_LANG([C])
 

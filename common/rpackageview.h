@@ -29,8 +29,8 @@
 #include <string>
 #include <map>
 
-#ifdef WITH_EPT
-#include <ept/axi/axi.h>
+#ifdef HAVE_XAPIAN
+#include <xapian.h>
 #endif
 
 #include "rpackage.h"

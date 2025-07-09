@@ -23,9 +23,9 @@ synaptic_LDADD = \
 	-lapt-pkg -lX11 @RPM_LIBS@ @DEB_LIBS@ \
 	@GTK_LIBS@ \
 	@VTE_LIBS@ @LP_LIBS@\
+	@XAPIAN_LIBS@ \
 	-lutil \
-	-lpthread \
-	$(LIBEPT_LIBS)
+	-lpthread
 
 synaptic_SOURCES= \
 	gsynaptic.cc\

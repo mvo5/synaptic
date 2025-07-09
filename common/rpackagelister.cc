@@ -77,11 +77,13 @@
 
 #include "i18n.h"
 
+const std::string APT_XAPIAN_INDEX_DIR = "/var/lib/apt-xapian-index";
+
 using namespace std;
 
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
    , _xapianDatabase(0)
 #endif
 {
@@ -103,7 +105,7 @@ RPackageLister::RPackageLister()
    _views.push_back(_searchView);
    // its import that we use "_packages" here instead of _nativeArchPackages
    _views.push_back(new RPackageViewArchitecture(_packages));
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
    openXapianIndex();
 #endif
 
@@ -435,7 +437,15 @@ bool RPackageLister::openCache()
    return true;
 }
 
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
+time_t RPackageLister::xapianIndexTimestamp()
+{
+        std::string db = APT_XAPIAN_INDEX_DIR + "/update-timestamp";
+        struct stat st;
+        int rv = stat(db.c_str(), &st);
+        return rv ? 0 : st.st_mtime;
+}
+
 bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
@@ -454,10 +464,10 @@ bool RPackageLister::xapianIndexNeedsUpdate()
    // compare timestamps, rebuild everytime, its now cheap(er) 
    // because we use u-a-x-i --update
    stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-   if(ept::axi::timestamp() < buf.st_mtime) {
+   if(xapianIndexTimestamp() < buf.st_mtime) {
       if(_config->FindB("Debug::Synaptic::Xapian",false))
 	 std::cerr << "xapian outdated " 
-		   << buf.st_mtime - ept::axi::timestamp()  << std::endl;
+		   << buf.st_mtime - xapianIndexTimestamp()  << std::endl;
       return true;
    }
 
@@ -469,7 +479,7 @@ bool RPackageLister::openXapianIndex()
    if(_xapianDatabase)
       delete _xapianDatabase;
    try {
-      _xapianDatabase = new Xapian::Database(ept::axi::path_db());
+      _xapianDatabase = new Xapian::Database(APT_XAPIAN_INDEX_DIR + "/index");
    } catch (Xapian::DatabaseOpeningError) {
       return false;
    };
@@ -1974,11 +1984,11 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 }
 
 
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
 bool RPackageLister::limitBySearch(string searchString)
 {
    //cerr << "limitBySearch(): " << searchString << endl;
-    if (ept::axi::timestamp() == 0)
+    if (xapianIndexTimestamp() == 0)
         return false;
    return xapianSearch(searchString);
 }
@@ -1989,7 +1999,7 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
    static const int defaultQualityCutoff = 15;
    int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", 
                                       defaultQualityCutoff);
-    if (ept::axi::timestamp() == 0) 
+    if (xapianIndexTimestamp() == 0) 
         return false;
 
    try {

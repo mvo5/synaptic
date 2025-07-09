@@ -37,8 +37,8 @@
 #include <apt-pkg/acquire.h>
 #include <apt-pkg/progress.h>
 
-#ifdef WITH_EPT
-#include <ept/axi/axi.h>
+#ifdef HAVE_XAPIAN
+#include <xapian.h>
 #endif
 
 #include "rpackagecache.h"
@@ -107,7 +107,7 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
    Xapian::Database *_xapianDatabase;
 #endif
 
@@ -348,8 +348,9 @@ class RPackageLister {
    bool writeSelections(ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; }
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
    Xapian::Database* xapiandatabase() { return _xapianDatabase; }
+   time_t xapianIndexTimestamp();
    bool xapianIndexNeedsUpdate();
    bool openXapianIndex();
 #endif

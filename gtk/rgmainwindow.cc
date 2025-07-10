@@ -894,6 +894,9 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
       gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
 							  "label_fast_search")),
 			 _("Rebuilding search index"));
+      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
+                                          (me->_builder, "toolbar_filter")), FALSE);
+
    }
    return false;
 }
@@ -917,7 +920,7 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
 						     "label_fast_search")),
 		      _("Quick filter"));
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
-                            (me->_builder, "entry_fast_search")), TRUE);
+                            (me->_builder, "toolbar_filter")), TRUE);
    g_spawn_close_pid(pid);
 }
 

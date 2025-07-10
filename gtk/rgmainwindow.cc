@@ -1567,8 +1567,7 @@ void RGMainWindow::buildInterface()
 
    // only enable fast search if its usable
 #ifdef HAVE_XAPIAN
-   if(!_lister->xapiandatabase() ||
-      !FileExists("/usr/sbin/update-apt-xapian-index"))
+   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
 #endif
    {
       gtk_widget_hide(GTK_WIDGET(

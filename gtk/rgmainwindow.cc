@@ -1568,18 +1568,15 @@ void RGMainWindow::buildInterface()
    // only enable fast search if its usable
 #ifdef HAVE_XAPIAN
    if(!_lister->xapiandatabase() ||
-      !FileExists("/usr/sbin/update-apt-xapian-index")) {
+      !FileExists("/usr/sbin/update-apt-xapian-index"))
+#endif
+   {
       gtk_widget_hide(GTK_WIDGET(
             gtk_builder_get_object(_builder, "toolitem_fast_search")));
       gtk_box_set_center_widget(GTK_BOX(
             gtk_builder_get_object(_builder, "hbox_button_toolbar")), NULL);
    }
-#else
-   gtk_widget_hide(GTK_WIDGET(
-         gtk_builder_get_object(_builder, "toolitem_fast_search")));
-   gtk_box_set_center_widget(GTK_BOX(
-         gtk_builder_get_object(_builder, "hbox_button_toolbar")), NULL);
-#endif
+
    // stuff for the non-root mode
    if(getuid() != 0) {
       GtkWidget *menu;

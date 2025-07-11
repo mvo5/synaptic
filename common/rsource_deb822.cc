@@ -73,7 +73,9 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
         return _error->Error(_("Cannot write to %s"), path.c_str());
     }
 
-    for (const auto& entry : entries) {
+    for (size_t i = 0; i < entries.size(); ++i) {
+        const auto& entry = entries[i];
+        
         if (!entry.Enabled) {
             file << "# Disabled: ";
         }
@@ -98,7 +100,10 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
             file << "Targets: " << entry.Targets << std::endl;
         }
         
-        file << std::endl;
+        // Only add empty line between entries, not after the last one
+        if (i < entries.size() - 1) {
+            file << std::endl;
+        }
     }
 
     return true;
@@ -127,7 +132,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     while (std::getline(uriStream, uri, ' ')) {
         TrimWhitespace(uri);
         if (!uri.empty()) {
-    record.URI = uri;
+            record.URI = uri;
             break;
         }
     }
@@ -138,7 +143,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     while (std::getline(suiteStream, suite, ' ')) {
         TrimWhitespace(suite);
         if (!suite.empty()) {
-    record.Dist = suite;
+            record.Dist = suite;
             break;
         }
     }
@@ -162,6 +167,22 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
             record.Sections[i] = sections[i];
         }
     }
+    
+    // Preserve extra fields in Comment
+    std::stringstream commentStream;
+    if (!entry.SignedBy.empty()) {
+        commentStream << "Signed-By: " << entry.SignedBy << std::endl;
+    }
+    if (!entry.Architectures.empty()) {
+        commentStream << "Architectures: " << entry.Architectures << std::endl;
+    }
+    if (!entry.Languages.empty()) {
+        commentStream << "Languages: " << entry.Languages << std::endl;
+    }
+    if (!entry.Targets.empty()) {
+        commentStream << "Targets: " << entry.Targets << std::endl;
+    }
+    record.Comment = commentStream.str();
     
     return true;
 }

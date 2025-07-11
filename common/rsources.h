@@ -56,12 +56,13 @@ class SourcesList {
       unsigned short NumSections;
       string Comment;
       string SourceFile;
+      bool PreserveOriginalURI;  // Flag to preserve original URI format
 
       bool SetType(string);
       string GetType();
       bool SetURI(string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
+      SourceRecord():Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false) {
       }
       ~SourceRecord() {
          if (Sections)

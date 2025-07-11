@@ -28,6 +28,8 @@
 #include <apt-pkg/sourcelist.h>
 #include <glib.h>
 #include <cassert>
+#include <sstream>
+#include <vector>
 
 #include <gdk/gdk.h>
 
@@ -613,15 +615,26 @@ void RGRepositoryEditor::doEdit()
    rec->NumSections = 0;
 
    const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-   if (Section != 0 && Section[0] != 0)
-      rec->NumSections++;
-
-   rec->Sections = new string[rec->NumSections];
-   rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-
-   if (Section != 0 && Section[0] != 0)
-      rec->Sections[rec->NumSections++] = Section;
+   if (Section != 0 && Section[0] != 0) {
+      // Parse sections properly - split by spaces
+      string sectionsStr = Section;
+      vector<string> sections;
+      stringstream ss(sectionsStr);
+      string section;
+      
+      while (ss >> section) {
+         sections.push_back(section);
+      }
+      
+      rec->NumSections = sections.size();
+      rec->Sections = new string[rec->NumSections];
+      for (unsigned int I = 0; I < rec->NumSections; I++) {
+         rec->Sections[I] = sections[I];
+      }
+   } else {
+      rec->Sections = new string[0];
+      rec->NumSections = 0;
+   }
 
    string Sect;
    for (unsigned int I = 0; I < rec->NumSections; I++) {
@@ -836,7 +849,7 @@ bool RGRepositoryEditor::ConvertToDeb822() {
 
     if (result != GTK_RESPONSE_YES) {
         return false;
-    }
+}
 
     // Convert each source record to Deb822 format
     for (SourcesListIter I = _lst.SourceRecords.begin(); I != _lst.SourceRecords.end(); I++) {

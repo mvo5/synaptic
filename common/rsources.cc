@@ -79,6 +79,7 @@ bool SourcesList::ReadSourcePart(string listpath)
       ifs.getline(buf, sizeof(buf));
 
       rec.SourceFile = listpath;
+      rec.PreserveOriginalURI = true;  // Preserve original URI format when reading
       while (isspace(*p))
          p++;
       if (*p == '#') {
@@ -349,33 +350,38 @@ bool SourcesList::UpdateSources()
                out << record->Comment << endl;
             } else {
                // Write as a standard deb/deb-src line, comment if disabled
+               string line;
                if (record->Type & Disabled) {
-                  out << "# ";
+                  line += "# ";
                }
                if (record->Type & Deb) {
-                  out << "deb ";
+                  line += "deb ";
                } else if (record->Type & DebSrc) {
-                  out << "deb-src ";
+                  line += "deb-src ";
                } else if (record->Type & Rpm) {
-                  out << "rpm ";
+                  line += "rpm ";
                } else if (record->Type & RpmSrc) {
-                  out << "rpm-src ";
+                  line += "rpm-src ";
                } else if (record->Type & RpmDir) {
-                  out << "rpm-dir ";
+                  line += "rpm-dir ";
                } else if (record->Type & RpmSrcDir) {
-                  out << "rpm-src-dir ";
+                  line += "rpm-src-dir ";
                } else if (record->Type & Repomd) {
-                  out << "repomd ";
+                  line += "repomd ";
                } else if (record->Type & RepomdSrc) {
-                  out << "repomd-src ";
+                  line += "repomd-src ";
                } else {
-                  out << "deb "; // fallback
+                  line += "deb "; // fallback
                }
-               out << record->URI << " " << record->Dist;
+               line += record->URI + " " + record->Dist;
                for (unsigned int J = 0; J < record->NumSections; J++) {
-                  out << " " << record->Sections[J];
+                  line += " " + record->Sections[J];
                }
-               out << endl;
+               // Trim trailing space
+               if (!line.empty() && line[line.length()-1] == ' ') {
+                  line.erase(line.length()-1);
+               }
+               out << line << endl;
             }
          }
       }
@@ -446,8 +452,8 @@ bool SourcesList::SourceRecord::SetURI(string S)
    S = SubstVar(S, "$(VERSION)", _config->Find("APT::DistroVersion"));
    URI = S;
 
-   // append a / to the end if one is not already there
-   if (URI[URI.size() - 1] != '/')
+   // Only append / if we're not preserving the original format
+   if (!PreserveOriginalURI && URI[URI.size() - 1] != '/')
       URI += '/';
 
    return true;
@@ -467,6 +473,7 @@ operator=(const SourceRecord &rhs)
    NumSections = rhs.NumSections;
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
+   PreserveOriginalURI = rhs.PreserveOriginalURI;
 
    return *this;
 }

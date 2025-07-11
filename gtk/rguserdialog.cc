@@ -92,8 +92,15 @@ bool RGUserDialog::showErrors()
    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer),utf8(msg.c_str()), -1);
    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textview), GTK_WRAP_WORD);
    gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
-   gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);
+   // We do want the cursor, for accessibility purposes.
+   gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), TRUE);
+   GtkStyleContext *ctx = gtk_widget_get_style_context(textview);
+   gtk_style_context_add_class(ctx, "hidden_cursor");
    gtk_text_view_set_editable(GTK_TEXT_VIEW(textview), FALSE);
+   // place the cursor at the start.
+   GtkTextIter caret;
+	gtk_text_buffer_get_iter_at_offset (buffer, &caret, 0);
+	gtk_text_buffer_place_cursor(buffer, &caret);
    gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll), 
                                        GTK_SHADOW_IN);
    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),

@@ -89,15 +89,10 @@ bool SourcesList::ReadSourcePart(string listpath)
             p++;
       }
 
-      if (*p == '\r' || *p == '\n' || *p == 0) {
-         rec.Type = Comment;
-         rec.Comment = p;
-
-         AddSourceNode(rec);
-         continue;
-      }
-
+      // Try to parse as a source line after '#'. If not valid, treat as comment.
       bool Failed = true;
+      string orig_buf = buf;
+      const char* orig_p = p;
       if (ParseQuoteWord(p, Type) == true &&
           rec.SetType(Type) == true && ParseQuoteWord(p, VURI) == true) {
          if (VURI[0] == '[') {
@@ -112,18 +107,19 @@ bool SourcesList::ReadSourcePart(string listpath)
       }
 
       if (Failed == true) {
+         // If this was a disabled line (started with '#'), but not a valid source, treat as comment
          if (rec.Type == Disabled) {
-            // treat as a comment field
             rec.Type = Comment;
-            rec.Comment = buf;
+            rec.Comment = orig_buf;
          } else {
             // syntax error on line
             rec.Type = Comment;
             string s = "#" + string(buf);
             rec.Comment = s;
             record_ok = false;
-            //return _error->Error(_("Syntax error in line %s"), buf);
          }
+         AddSourceNode(rec);
+         continue;
       }
 #ifndef HAVE_RPM
       // check for absolute dist
@@ -318,6 +314,18 @@ bool SourcesList::UpdateSources()
          continue;
       }
 
+      // Trim trailing blank/comment lines (empty or whitespace-only comments)
+      std::vector<SourceRecord*> trimmed_records = records;
+      while (!trimmed_records.empty()) {
+         SourceRecord* rec = trimmed_records.back();
+         bool is_blank_comment = (rec->Type == Comment) && (rec->Comment.find_first_not_of(" \t\r\n") == std::string::npos);
+         if (is_blank_comment) {
+            trimmed_records.pop_back();
+         } else {
+            break;
+         }
+      }
+
       // Check if this is a Deb822 format file (only .sources files)
       bool isDeb822 = false;
       if (sourcePath.size() > 8 && sourcePath.substr(sourcePath.size() - 8) == ".sources") {
@@ -333,7 +341,7 @@ bool SourcesList::UpdateSources()
       if (isDeb822) {
          // Write Deb822 format
          vector<RDeb822Source::Deb822Entry> entries;
-         for (const auto& record : records) {
+         for (const auto& record : trimmed_records) {
             RDeb822Source::Deb822Entry entry;
             if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
                return _error->Error(_("Failed to convert source record to Deb822 format"));
@@ -345,7 +353,7 @@ bool SourcesList::UpdateSources()
          }
       } else {
          // Write classic format (deb lines)
-         for (const auto& record : records) {
+         for (const auto& record : trimmed_records) {
             if (record->Type == Comment) {
                out << record->Comment << endl;
             } else {

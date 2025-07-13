@@ -429,6 +429,21 @@ bool RGRepositoryEditor::Run()
          Sections += " ";
       }
 
+      // --- NEW: Show both deb and deb-src for Deb822 stanzas ---
+      std::string type_display;
+      bool is_deb = ((*it)->Type & SourcesList::Deb) != 0;
+      bool is_debsrc = ((*it)->Type & SourcesList::DebSrc) != 0;
+      if (is_deb && is_debsrc) {
+         type_display = "deb, deb-src";
+      } else if (is_deb) {
+         type_display = "deb";
+      } else if (is_debsrc) {
+         type_display = "deb-src";
+      } else {
+         type_display = (*it)->GetType();
+      }
+      // --- END NEW ---
+
       // Add another debug print before appending to the list store
       g_print("DEBUG: Preparing to append to list store for URI: %s\n", (*it)->URI.c_str());
 
@@ -436,7 +451,7 @@ bool RGRepositoryEditor::Run()
       gtk_list_store_set(_sourcesListStore, &iter,
                          STATUS_COLUMN, !((*it)->Type &
                                           SourcesList::Disabled),
-                         TYPE_COLUMN, utf8((*it)->GetType().c_str()),
+                         TYPE_COLUMN, utf8(type_display.c_str()),
                          VENDOR_COLUMN, utf8((*it)->VendorID.c_str()),
                          URI_COLUMN, utf8((*it)->URI.c_str()),
                          DISTRIBUTION_COLUMN, utf8((*it)->Dist.c_str()),
@@ -564,42 +579,17 @@ void RGRepositoryEditor::doEdit()
    if (!status)
       rec->Type |= SourcesList::Disabled;
 
-   GtkTreeIter item;
-   int type;
-   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optType), &item);
-   gtk_tree_model_get(GTK_TREE_MODEL(_optTypeMenu), &item,
-                      1, &type,
-                      -1);
-
-   switch (type) {
-      case ITEM_TYPE_DEB:
-         rec->Type |= SourcesList::Deb;
-         break;
-      case ITEM_TYPE_DEBSRC:
-         rec->Type |= SourcesList::DebSrc;
-         break;
-      case ITEM_TYPE_RPM:
-         rec->Type |= SourcesList::Rpm;
-         break;
-      case ITEM_TYPE_RPMSRC:
-         rec->Type |= SourcesList::RpmSrc;
-         break;
-      case ITEM_TYPE_RPMDIR:
-         rec->Type |= SourcesList::RpmDir;
-         break;
-      case ITEM_TYPE_RPMSRCDIR:
-         rec->Type |= SourcesList::RpmSrcDir;
-         break;
-      case ITEM_TYPE_REPOMD:
-         rec->Type |= SourcesList::Repomd;
-         break;
-      case ITEM_TYPE_REPOMDSRC:
-         rec->Type |= SourcesList::RepomdSrc;
-         break;
-      default:
-         _userDialog->error(_("Unknown source type"));
-         return;
-   }
+   // --- NEW: For Deb822, allow both deb and deb-src to be set ---
+   // Parse the type_display string from the TYPE_COLUMN
+   gchar* type_str = NULL;
+   gtk_tree_model_get(GTK_TREE_MODEL(_sourcesListStore), _lastIter, TYPE_COLUMN, &type_str, -1);
+   std::string type_val = type_str ? type_str : "";
+   g_free(type_str);
+   bool set_deb = (type_val.find("deb") != std::string::npos);
+   bool set_debsrc = (type_val.find("deb-src") != std::string::npos);
+   if (set_deb) rec->Type |= SourcesList::Deb;
+   if (set_debsrc) rec->Type |= SourcesList::DebSrc;
+   // --- END NEW ---
 
 #if 0 // PORTME, no vendor id support right now
    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);

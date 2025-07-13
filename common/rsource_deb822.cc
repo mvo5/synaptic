@@ -23,45 +23,109 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
     }
 
     std::map<std::string, std::string> fields;
-    while (ParseStanza(file, fields)) {
+    std::string pending_comments;
+    std::string line;
+    while (std::getline(file, line)) {
+        if (line.empty()) {
+            if (!fields.empty()) {
+                Deb822Entry entry;
+                
+                // Check required fields
+                if (fields.find("Types") == fields.end()) {
+                    fields.clear();
+                    pending_comments.clear();
+                    continue;
+                }
+                entry.Types = fields["Types"];
+
+                if (fields.find("URIs") == fields.end()) {
+                    fields.clear();
+                    pending_comments.clear();
+                    continue;
+                }
+                entry.URIs = fields["URIs"];
+
+                if (fields.find("Suites") == fields.end()) {
+                    fields.clear();
+                    pending_comments.clear();
+                    continue;
+                }
+                entry.Suites = fields["Suites"];
+
+                // Optional fields
+                if (fields.find("Components") != fields.end()) {
+                    entry.Components = fields["Components"];
+                }
+                if (fields.find("Signed-By") != fields.end()) {
+                    entry.SignedBy = fields["Signed-By"];
+                }
+                if (fields.find("Architectures") != fields.end()) {
+                    entry.Architectures = fields["Architectures"];
+                }
+                if (fields.find("Languages") != fields.end()) {
+                    entry.Languages = fields["Languages"];
+                }
+                if (fields.find("Targets") != fields.end()) {
+                    entry.Targets = fields["Targets"];
+                }
+                
+                entry.Enabled = !pending_comments.empty() && pending_comments.find("# Disabled:") == 0 ? false : true;
+                entry.Comment = pending_comments;
+                entries.push_back(entry);
+                fields.clear();
+                pending_comments.clear();
+            }
+            continue;
+        }
+
+        // Detect disabled stanza
+        if (line.find("# Disabled:") == 0) {
+            pending_comments += line + "\n";
+            // Mark as disabled for the next stanza
+            // We'll check this in the stanza handler above
+            continue;
+        }
+
+        // Skip comments
+        if (line[0] == '#') {
+            pending_comments += line + "\n";
+            continue;
+        }
+
+        // Check for stanza start
+        if (line.find("Types:") != std::string::npos) {
+            size_t colonPos = line.find(':');
+            if (colonPos != std::string::npos) {
+                std::string key = line.substr(0, colonPos);
+                std::string value = line.substr(colonPos + 1);
+                
+                // Trim whitespace
+                key.erase(0, key.find_first_not_of(" \t"));
+                key.erase(key.find_last_not_of(" \t") + 1);
+                value.erase(0, value.find_first_not_of(" \t"));
+                value.erase(value.find_last_not_of(" \t") + 1);
+                
+                fields[key] = value;
+            }
+        }
+    }
+    // Handle last stanza
+    if (!fields.empty()) {
         Deb822Entry entry;
         
-        // Check required fields
-        if (fields.find("Types") == fields.end()) {
-            return _error->Error(_("Missing Types field in %s"), path.c_str());
+        if (fields.find("Types") != fields.end() && fields.find("URIs") != fields.end() && fields.find("Suites") != fields.end()) {
+            entry.Types = fields["Types"];
+            entry.URIs = fields["URIs"];
+            entry.Suites = fields["Suites"];
+            if (fields.find("Components") != fields.end()) entry.Components = fields["Components"];
+            if (fields.find("Signed-By") != fields.end()) entry.SignedBy = fields["Signed-By"];
+            if (fields.find("Architectures") != fields.end()) entry.Architectures = fields["Architectures"];
+            if (fields.find("Languages") != fields.end()) entry.Languages = fields["Languages"];
+            if (fields.find("Targets") != fields.end()) entry.Targets = fields["Targets"];
+            entry.Enabled = true;
+            entry.Comment = pending_comments;
+            entries.push_back(entry);
         }
-        entry.Types = fields["Types"];
-
-        if (fields.find("URIs") == fields.end()) {
-            return _error->Error(_("Missing URIs field in %s"), path.c_str());
-        }
-        entry.URIs = fields["URIs"];
-
-        if (fields.find("Suites") == fields.end()) {
-            return _error->Error(_("Missing Suites field in %s"), path.c_str());
-        }
-        entry.Suites = fields["Suites"];
-
-        // Optional fields
-        if (fields.find("Components") != fields.end()) {
-            entry.Components = fields["Components"];
-        }
-        if (fields.find("Signed-By") != fields.end()) {
-            entry.SignedBy = fields["Signed-By"];
-        }
-        if (fields.find("Architectures") != fields.end()) {
-            entry.Architectures = fields["Architectures"];
-        }
-        if (fields.find("Languages") != fields.end()) {
-            entry.Languages = fields["Languages"];
-        }
-        if (fields.find("Targets") != fields.end()) {
-            entry.Targets = fields["Targets"];
-        }
-        
-        entry.Enabled = true; // Default to enabled
-        entries.push_back(entry);
-        fields.clear();
     }
 
     return true;
@@ -76,6 +140,12 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
     for (size_t i = 0; i < entries.size(); ++i) {
         const auto& entry = entries[i];
         
+        // Write preserved comments before stanza
+        if (!entry.Comment.empty()) {
+            file << entry.Comment;
+            if (entry.Comment.back() != '\n') file << "\n";
+        }
+
         if (!entry.Enabled) {
             file << "# Disabled: ";
         }

@@ -217,9 +217,13 @@ bool SourcesList::ReadSources()
 {
    bool Res = true;
 
-   // First try to read Deb822 format sources from sourcelist.d
+   // Use config or fallback to /etc/apt/sources.list.d/
    string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
+   if (Deb822Parts.empty())
+      Deb822Parts = "/etc/apt/sources.list.d/";
+
    if (FileExists(Deb822Parts) == true) {
+      g_print("DEBUG: Scanning Deb822 sources in directory: %s\n", Deb822Parts.c_str());
       Res &= ReadDeb822SourceDir(Deb822Parts);
    }
 

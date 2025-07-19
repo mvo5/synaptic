@@ -556,7 +556,6 @@ void RGRepositoryEditor::doEdit()
 {
    //cout << "RGRepositoryEditor::doEdit()"<<endl;
 
-
    //GtkTreeSelection *selection;
    //selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_sourcesListView));
    if (_lastIter == NULL) {
@@ -571,6 +570,10 @@ void RGRepositoryEditor::doEdit()
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
    assert(rec);
+
+   // --- PATCH: Preserve Deb822 flag ---
+   bool was_deb822 = (rec->Type & SourcesList::Deb822) != 0;
+   // --- END PATCH ---
 
    rec->Type = 0;
    gboolean status;
@@ -590,6 +593,10 @@ void RGRepositoryEditor::doEdit()
    if (set_deb) rec->Type |= SourcesList::Deb;
    if (set_debsrc) rec->Type |= SourcesList::DebSrc;
    // --- END NEW ---
+
+   // --- PATCH: Restore Deb822 flag if it was set ---
+   if (was_deb822) rec->Type |= SourcesList::Deb822;
+   // --- END PATCH ---
 
 #if 0 // PORTME, no vendor id support right now
    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);

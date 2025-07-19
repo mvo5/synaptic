@@ -3,6 +3,8 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
+#include <iostream> // Added for debug prints
+#include <map> // Added for debug prints
 
 RDeb822Source::RDeb822Source()
     : enabled(true)
@@ -89,4 +91,84 @@ std::string RDeb822Source::trim(const std::string& str) {
     }
     size_t end = str.find_last_not_of(whitespace);
     return str.substr(start, end - start + 1);
+} 
+
+bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
+    std::cout << "DEBUG: [Deb822Parser] Opening file: " << path << std::endl;
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        std::cout << "DEBUG: [Deb822Parser] Failed to open file: " << path << std::endl;
+        return false;
+    }
+    std::string line;
+    std::map<std::string, std::string> fields;
+    int stanza_count = 0;
+    while (std::getline(file, line)) {
+        std::cout << "DEBUG: [Deb822Parser] Read line: '" << line << "'" << std::endl;
+        if (line.empty()) {
+            if (!fields.empty()) {
+                std::cout << "DEBUG: [Deb822Parser] End of stanza, fields found:" << std::endl;
+                for (const auto& kv : fields) {
+                    std::cout << "    '" << kv.first << "': '" << kv.second << "'" << std::endl;
+                }
+                Deb822Entry entry;
+                // Check required fields
+                if (fields.find("Types") == fields.end() || fields.find("URIs") == fields.end() || fields.find("Suites") == fields.end()) {
+                    std::cout << "DEBUG: [Deb822Parser] Missing required field in stanza, skipping." << std::endl;
+                    fields.clear();
+                    continue;
+                }
+                entry.Types = fields["Types"];
+                entry.URIs = fields["URIs"];
+                entry.Suites = fields["Suites"];
+                entry.Components = fields.count("Components") ? fields["Components"] : "";
+                entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
+                entry.Enabled = true; // Default to enabled
+                entries.push_back(entry);
+                stanza_count++;
+                fields.clear();
+            }
+            continue;
+        }
+        if (line[0] == '#') {
+            std::cout << "DEBUG: [Deb822Parser] Skipping comment line." << std::endl;
+            continue;
+        }
+        size_t colon = line.find(':');
+        if (colon == std::string::npos) {
+            std::cout << "DEBUG: [Deb822Parser] No colon found in line, skipping." << std::endl;
+            continue;
+        }
+        std::string key = line.substr(0, colon);
+        std::string value = line.substr(colon + 1);
+        // Trim whitespace
+        key.erase(0, key.find_first_not_of(" \t"));
+        key.erase(key.find_last_not_of(" \t") + 1);
+        value.erase(0, value.find_first_not_of(" \t"));
+        value.erase(value.find_last_not_of(" \t") + 1);
+        std::cout << "DEBUG: [Deb822Parser] Parsed field: '" << key << "' = '" << value << "'" << std::endl;
+        fields[key] = value;
+    }
+    // Handle last stanza if file does not end with blank line
+    if (!fields.empty()) {
+        std::cout << "DEBUG: [Deb822Parser] End of file, last stanza fields:" << std::endl;
+        for (const auto& kv : fields) {
+            std::cout << "    '" << kv.first << "': '" << kv.second << "'" << std::endl;
+        }
+        Deb822Entry entry;
+        if (fields.find("Types") == fields.end() || fields.find("URIs") == fields.end() || fields.find("Suites") == fields.end()) {
+            std::cout << "DEBUG: [Deb822Parser] Missing required field in last stanza, skipping." << std::endl;
+        } else {
+            entry.Types = fields["Types"];
+            entry.URIs = fields["URIs"];
+            entry.Suites = fields["Suites"];
+            entry.Components = fields.count("Components") ? fields["Components"] : "";
+            entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
+            entry.Enabled = true;
+            entries.push_back(entry);
+            stanza_count++;
+        }
+    }
+    std::cout << "DEBUG: [Deb822Parser] Parsed " << stanza_count << " stanzas from file: " << path << std::endl;
+    return true;
 } 

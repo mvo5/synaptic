@@ -37,6 +37,7 @@
 #include "config.h"
 #include "i18n.h"
 #include "rsource_deb822.h"
+#include <iostream>
 
 SourcesList::~SourcesList()
 {
@@ -223,7 +224,7 @@ bool SourcesList::ReadSources()
       Deb822Parts = "/etc/apt/sources.list.d/";
 
    if (FileExists(Deb822Parts) == true) {
-      g_print("DEBUG: Scanning Deb822 sources in directory: %s\n", Deb822Parts.c_str());
+      std::cout << "DEBUG: Scanning Deb822 sources in directory: " << Deb822Parts << std::endl;
       Res &= ReadDeb822SourceDir(Deb822Parts);
    }
 

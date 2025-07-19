@@ -16,6 +16,10 @@
 #include <iostream>
 #include <algorithm>
 
+struct Deb822ParserInit {
+    Deb822ParserInit() { std::cout << "TEST: rsource_deb822.cc is being used" << std::endl; }
+} _deb822ParserInit;
+
 bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822Entry>& entries) {
     std::cout << "DEBUG: [Deb822Parser] Opening file: " << path << std::endl;
     std::ifstream file(path);

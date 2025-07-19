@@ -37,7 +37,18 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
                 entry.Suites = fields["Suites"];
                 entry.Components = fields.count("Components") ? fields["Components"] : "";
                 entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
-                entry.Enabled = true; // Default to enabled
+                // Handle Enabled/Disabled fields
+                if (fields.count("Enabled")) {
+                    std::string enabled_val = fields["Enabled"];
+                    std::transform(enabled_val.begin(), enabled_val.end(), enabled_val.begin(), ::tolower);
+                    entry.Enabled = (enabled_val == "yes" || enabled_val == "true" || enabled_val == "1");
+                } else if (fields.count("Disabled")) {
+                    std::string disabled_val = fields["Disabled"];
+                    std::transform(disabled_val.begin(), disabled_val.end(), disabled_val.begin(), ::tolower);
+                    entry.Enabled = !(disabled_val == "yes" || disabled_val == "true" || disabled_val == "1");
+                } else {
+                    entry.Enabled = true; // Default to enabled
+                }
                 entries.push_back(entry);
                 stanza_count++;
                 fields.clear();
@@ -71,7 +82,18 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
             entry.Suites = fields["Suites"];
             entry.Components = fields.count("Components") ? fields["Components"] : "";
             entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
-            entry.Enabled = true;
+            // Handle Enabled/Disabled fields
+            if (fields.count("Enabled")) {
+                std::string enabled_val = fields["Enabled"];
+                std::transform(enabled_val.begin(), enabled_val.end(), enabled_val.begin(), ::tolower);
+                entry.Enabled = (enabled_val == "yes" || enabled_val == "true" || enabled_val == "1");
+            } else if (fields.count("Disabled")) {
+                std::string disabled_val = fields["Disabled"];
+                std::transform(disabled_val.begin(), disabled_val.end(), disabled_val.begin(), ::tolower);
+                entry.Enabled = !(disabled_val == "yes" || disabled_val == "true" || disabled_val == "1");
+            } else {
+                entry.Enabled = true; // Default to enabled
+            }
             entries.push_back(entry);
             stanza_count++;
         }
@@ -94,8 +116,11 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
             if (entry.Comment.back() != '\n') file << "\n";
         }
 
-        if (!entry.Enabled) {
-            file << "# Disabled: ";
+        // Write Enabled field
+        if (entry.Enabled) {
+            file << "Enabled: yes" << std::endl;
+        } else {
+            file << "Enabled: no" << std::endl;
         }
 
         file << "Types: " << entry.Types << std::endl;

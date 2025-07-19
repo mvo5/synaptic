@@ -220,7 +220,8 @@ bool SourcesList::ReadSources()
 
    // Use config or fallback to /etc/apt/sources.list.d/
    string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
-   if (Deb822Parts.empty())
+   std::cout << "DEBUG: Config returned: '" << Deb822Parts << "'" << std::endl;
+   if (Deb822Parts.empty() || Deb822Parts == "/")
       Deb822Parts = "/etc/apt/sources.list.d/";
 
    if (FileExists(Deb822Parts) == true) {

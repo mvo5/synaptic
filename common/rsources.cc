@@ -60,7 +60,6 @@ SourcesList::SourceRecord *SourcesList::AddSourceNode(SourceRecord &rec)
 
 bool SourcesList::ReadSourcePart(string listpath)
 {
-   //cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
    char buf[512];
    const char *p;
    ifstream ifs(listpath.c_str(), ios::in);
@@ -169,8 +168,6 @@ bool SourcesList::ReadSourcePart(string listpath)
 
 bool SourcesList::ReadSourceDir(string Dir)
 {
-   //cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
-
    DIR *D = opendir(Dir.c_str());
    if (D == 0)
       return _error->Errno("opendir", _("Unable to read %s"), Dir.c_str());
@@ -220,12 +217,10 @@ bool SourcesList::ReadSources()
 
    // Use config or fallback to /etc/apt/sources.list.d/
    string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
-   std::cout << "DEBUG: Config returned: '" << Deb822Parts << "'" << std::endl;
    if (Deb822Parts.empty() || Deb822Parts == "/")
       Deb822Parts = "/etc/apt/sources.list.d/";
 
    if (FileExists(Deb822Parts) == true) {
-      std::cout << "DEBUG: Scanning Deb822 sources in directory: " << Deb822Parts << std::endl;
       Res &= ReadDeb822SourceDir(Deb822Parts);
    }
 
@@ -631,20 +626,16 @@ ostream &operator<<(ostream &os, const SourcesList::VendorRecord &rec)
 }
 
 bool SourcesList::ReadDeb822SourcePart(string listpath) {
-    std::cout << "DEBUG: Entering ReadDeb822SourcePart for file: " << listpath << std::endl;
     vector<RDeb822Source::Deb822Entry> entries;
     if (!RDeb822Source::ParseDeb822File(listpath, entries)) {
-        std::cout << "DEBUG: Failed to parse Deb822 file: " << listpath << std::endl;
         return false;
     }
-    std::cout << "DEBUG: Parsed " << entries.size() << " Deb822 entries from file: " << listpath << std::endl;
 
     for (const auto& entry : entries) {
         SourceRecord rec;
         rec.SourceFile = listpath;
         
         if (!RDeb822Source::ConvertToSourceRecord(entry, rec)) {
-            std::cout << "DEBUG: Failed to convert Deb822 entry to SourceRecord in file: " << listpath << std::endl;
             return _error->Error(_("Failed to convert Deb822 entry in %s"), listpath.c_str());
         }
         
@@ -656,7 +647,6 @@ bool SourcesList::ReadDeb822SourcePart(string listpath) {
 }
 
 bool SourcesList::ReadDeb822SourceDir(string Dir) {
-    std::cout << "DEBUG: Entering ReadDeb822SourceDir for directory: " << Dir << std::endl;
     DIR *D = opendir(Dir.c_str());
     if (D == 0)
         return _error->Errno("opendir", _( "Unable to read %s"), Dir.c_str());
@@ -675,7 +665,6 @@ bool SourcesList::ReadDeb822SourceDir(string Dir) {
         struct stat St;
         if (stat(File.c_str(), &St) != 0 || S_ISREG(St.st_mode) == 0)
             continue;
-        std::cout << "DEBUG: Found .sources file: " << File << std::endl;
         List.push_back(File);
     }
     closedir(D);
@@ -684,7 +673,6 @@ bool SourcesList::ReadDeb822SourceDir(string Dir) {
 
     // Read the files
     for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++) {
-        std::cout << "DEBUG: Parsing .sources file: " << *I << std::endl;
         if (ReadDeb822SourcePart(*I) == false)
             return false;
     }

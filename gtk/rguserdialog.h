@@ -80,6 +80,7 @@ class RGGtkBuilderUserDialog : public RGUserDialog
  public:
     RGGtkBuilderUserDialog(RGWindow* parent);
     RGGtkBuilderUserDialog(RGWindow* parent, const char *name);
+    RGGtkBuilderUserDialog(const char *name);
     virtual ~RGGtkBuilderUserDialog()  { gtk_widget_destroy(_dialog); };
 
     void setTitle(string title) { 

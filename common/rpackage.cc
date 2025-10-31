@@ -949,9 +949,9 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
       verstr=string(verstr, verstr.find(':')+1);
    char uri[512];
    if(thumb)
-      snprintf(uri,512,"http://screenshots.debian.net/thumbnail/%s", name());
+      snprintf(uri,512,"https://screenshots.debian.net/thumbnail/%s", name());
    else
-      snprintf(uri,512,"http://screenshots.debian.net/screenshot/%s", name());
+      snprintf(uri,512,"https://screenshots.debian.net/screenshot/%s", name());
 
    //cerr << "uri is: " << uri << endl;
 

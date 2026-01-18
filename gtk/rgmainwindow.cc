@@ -369,21 +369,20 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    assert(pkginfo);
 
    // set everything to non-sensitive (for both pkg != NULL && pkg == NULL)
-   gtk_widget_set_sensitive(_keepM, FALSE);
-   gtk_widget_set_sensitive(_installM, FALSE);
-   gtk_widget_set_sensitive(_reinstallM, FALSE);
-   gtk_widget_set_sensitive(_pkgupgradeM, FALSE);
-   gtk_widget_set_sensitive(_removeM, FALSE);
-   gtk_widget_set_sensitive(_purgeM, FALSE);
-   gtk_widget_set_sensitive(_pkgReconfigureM, FALSE);
-   gtk_widget_set_sensitive(_pkgHelpM, FALSE);
+   setActionEnabled("unmark", false);
+   setActionEnabled("mark-install", false);
+   setActionEnabled("mark-reinstall", false);
+   setActionEnabled("mark-upgrade", false);
+   setActionEnabled("mark-delete", false);
+   setActionEnabled("mark-purge", false);
+   setActionEnabled("configure", false);
+   setActionEnabled("browse-documentation", false);
    gtk_widget_set_sensitive(pkginfo, FALSE);
-   gtk_widget_set_sensitive(_dl_changelogM, FALSE);
-   gtk_widget_set_sensitive(_detailsM, FALSE);
-   gtk_widget_set_sensitive(_propertiesB, FALSE);
-   gtk_widget_set_sensitive(_overrideVersionM, FALSE);
-   gtk_widget_set_sensitive(_pinM, FALSE);
-   gtk_widget_set_sensitive(_autoM, FALSE);
+   setActionEnabled("download-changelog", false);
+   setActionEnabled("package-properties", false);
+   setActionEnabled("override-version", false);
+   setActionEnabled("lock-version", false);
+   setActionEnabled("auto-installed", false);
    gtk_text_buffer_set_text(_pkgCommonTextBuffer,
 			    _("No package is selected.\n"), -1);
 
@@ -401,13 +400,12 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    int flags = pkg->getFlags();
 
    // changelog and properties are always visible
-   gtk_widget_set_sensitive(_dl_changelogM, TRUE);
-   gtk_widget_set_sensitive(_detailsM, TRUE);
-   gtk_widget_set_sensitive(_propertiesB, TRUE);
+   setActionEnabled("download-changelog", true);
+   setActionEnabled("package-properties", true);
    // activate for root only
    if(getuid() == 0) {
-       gtk_widget_set_sensitive(_pinM, TRUE);
-       gtk_widget_set_sensitive(_autoM, TRUE);
+      setActionEnabled("lock-version", true);
+      setActionEnabled("auto-installed", true);
    }    
 
    // set info
@@ -423,21 +421,18 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
    // Pin, if a pin is set, we skip all other checks and return
    if( flags & RPackage::FPinned) {
       _blockActions = TRUE;
-      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), true);
+      setActionStateBool("lock-version", true);
       _blockActions = FALSE;
       return;
    } else {
       _blockActions = TRUE;
-      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_pinM), false);
+      setActionStateBool("lock-version", false);
       _blockActions = FALSE;
    }
 
    // Auto-Flag
    _blockActions = true;
-   if( flags & RPackage::FIsAuto)
-      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), true);
-   else
-      gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_autoM), false);
+   setActionStateBool("auto-installed", ( flags & RPackage::FIsAuto));
    _blockActions = false;
 
    // enable unmark if a action is performed with the pkg
@@ -445,36 +440,43 @@ void RGMainWindow::updatePackageInfo(RPackage *pkg)
       (flags & RPackage::FReInstall) || (flags & RPackage::FUpgrade) || 
       (flags & RPackage::FDowngrade) || (flags & RPackage::FRemove) || 
       (flags & RPackage::FPurge))
-      gtk_widget_set_sensitive(_keepM, TRUE);
+      setActionEnabled("unmark", true);
    // enable install if outdated or not insalled
-   if(!(flags & RPackage::FInstalled))
-      gtk_widget_set_sensitive(_installM, TRUE);
+   if(!(flags & RPackage::FInstalled) && !(flags & RPackage::FInstall))
+      setActionEnabled("mark-install", true);
    // enable reinstall if installed and installable and not outdated
    if(flags & RPackage::FInstalled 
       && !(flags & RPackage::FNotInstallable)
       && !(flags & RPackage::FOutdated))
-      gtk_widget_set_sensitive(_reinstallM, TRUE);
+      setActionEnabled("mark-reinstall", true);
    // enable upgrade is outdated
-   if(flags & RPackage::FOutdated)
-      gtk_widget_set_sensitive(_pkgupgradeM, TRUE);
+   if((flags & RPackage::FOutdated) && !(flags & RPackage::FInstall))
+      setActionEnabled("mark-upgrade", true);
    // enable remove if package is installed
-   if(flags & RPackage::FInstalled)
-      gtk_widget_set_sensitive(_removeM, TRUE);
+   if((flags & RPackage::FInstalled) && (!(flags & RPackage::FRemove) || (flags & RPackage::FPurge)))
+      setActionEnabled("mark-delete", true);
 
    // enable purge if package is installed or has residual config
-   if(flags & RPackage::FInstalled || flags & RPackage::FResidualConfig)
-      gtk_widget_set_sensitive(_purgeM, TRUE);
+   if(((flags & RPackage::FInstalled) || (flags & RPackage::FResidualConfig)) && !(flags & RPackage::FPurge))
+      setActionEnabled("mark-purge", true);
    // enable help if package is installed
    if( flags & RPackage::FInstalled)
-      gtk_widget_set_sensitive(_pkgHelpM, TRUE);
+      setActionEnabled("browse-documentation", true);
    // enable debconf if package is installed and depends on debconf
    if( flags & RPackage::FInstalled && (pkg->dependsOn("debconf") || 
 					pkg->dependsOn("debconf-i18n")))
-       gtk_widget_set_sensitive(_pkgReconfigureM, TRUE);
+       setActionEnabled("mark-purge", true);
 
    if(pkg->getAvailableVersions().size() > 1)
-      gtk_widget_set_sensitive(_overrideVersionM, TRUE);
+      setActionEnabled("override-version", true);
 
+   // Detect the most likely action
+   if (isActionEnabled("unmark"))
+      setActionStateInt("mark-default", PKG_KEEP);
+   else if (isActionEnabled("mark-install") || isActionEnabled("mark-upgrade"))
+      setActionStateInt("mark-default", PKG_INSTALL);
+   else if (isActionEnabled("mark-delete"))
+      setActionStateInt("mark-default", PKG_DELETE);
 }
 
 void RGMainWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
@@ -488,13 +490,15 @@ void RGMainWindow::cbDependsMenuChanged(GtkWidget *self, void *data)
    gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), nr);
 }
 
-void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
+                                              GVariant *parameter,
+                                              gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    if (me->_blockActions)
       return;
    
-   bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
+   bool active = g_variant_get_boolean(parameter);
 
    GtkTreeSelection *selection;
    GtkTreeIter iter;
@@ -538,7 +542,9 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GtkWidget *self, void *data)
 }
 
 // install a specific version
-void RGMainWindow::cbInstallFromVersion(GtkWidget *self, void *data)
+void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer data)
 {
    //cout << "RGMainWindow::cbInstallFromVersion()" << endl;
 
@@ -792,6 +798,32 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
    return failed;
 }
 
+struct ActionClosure
+{
+   RGMainWindow *me;
+   const char *action_name;
+};
+
+static void acceleratorCallback(gpointer data)
+{
+   ActionClosure *c = (ActionClosure *)data;
+   c->me->activateAction(c->action_name, nullptr);
+}
+
+static void setActionShortcut(RGMainWindow *me, GtkAccelGroup *accel_group, const char *action_name, guint key, GdkModifierType mods)
+{
+   ActionClosure *closure = g_new0(ActionClosure, 1);
+   closure->me = me;
+   closure->action_name = action_name;
+
+   gtk_accel_group_connect(
+      accel_group,
+      key,
+      mods,
+      GTK_ACCEL_VISIBLE,
+      g_cclosure_new_swap(G_CALLBACK(acceleratorCallback), closure, (GClosureNotify)g_free));
+}
+
 RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
    : RGGtkBuilderWindow(NULL, name), _lister(packLister), _pkgList(0), 
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
@@ -799,6 +831,77 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
      _fastSearchEventID(-1)
 {
    assert(_win);
+
+   const GActionEntry entries[] = {
+      { "read-markings",            cbOpenClicked                    },
+      { "save-markings",            cbSaveClicked                    },
+      { "save-markings-as",         cbSaveAsClicked                  },
+      { "generate-download-script", cbGenerateDownloadScriptClicked  },
+      { "add-downloaded-packages",  cbAddDownloadedFilesClicked      },
+      { "view-commit-log",          cbViewLogClicked                 },
+      { "quit",                     closeWin                         },
+
+      { "undo",                     cbUndoClicked                    },
+      { "redo",                     cbRedoClicked                    },
+      { "unmark-all",               cbClearAllChangesClicked         },
+      { "search",                   cbFindToolClicked                },
+      { "reload",                   cbUpdateClicked                  },
+      { "add-cdrom",                cbAddCDROM                       },
+      { "mark-all-upgrades",        cbUpgradeClicked                 },
+      { "fix-broken-packages",      cbFixBrokenClicked               },
+      { "mark-packages-by-task",    cbTasksClicked                   },
+      { "apply",                    cbProceedClicked                 },
+
+      { "unmark",                   cbPkgActionUnmark                },
+      { "mark-install",             cbPkgActionMarkInstall           },
+      { "mark-reinstall",           cbPkgActionMarkReinstall         },
+      { "mark-upgrade",             cbPkgActionMarkUpgrade           },
+      { "mark-delete",              cbPkgActionMarkDelete            },
+      { "mark-purge",               cbPkgActionMarkPurge             },
+      { "mark-default",             cbPkgActionDefault,              nullptr, "int32 0"         },
+
+      { "lock-version",             cbMenuPinClicked,                nullptr, "boolean false"   },
+      { "auto-installed",           cbMenuAutoInstalledClicked,      nullptr, "boolean false"   },
+      { "override-version",         cbInstallFromVersion             },
+      { "configure",                cbPkgReconfigureClicked          },
+      { "browse-documentation",     cbPkgHelpClicked                 },
+      { "download-changelog",       cbChangelogDialog                },
+      { "package-properties",       cbDetailsWindow                  },
+      { "install-by-name",          pkgInstallByNameHelper,          "s" },
+
+      { "preferences",              cbShowConfigWindow               },
+      { "repositories",             cbShowSourcesWindow              },
+      { "filters",                  cbShowFilterManagerWindow        },
+      { "set-internal-option",      cbShowSetOptWindow               },
+      { "toolbar-style",            cbMenuToolbarClicked,            "s",     "string 'hide'"   },
+
+      { "help",                     cbHelpAction                     },
+      { "quick-intro",              cbShowWelcomeDialog              },
+      { "icon-legend",              cbShowIconLegendPanel            },
+      { "about",                    cbShowAboutPanel                 }
+   };
+   GSimpleActionGroup *group = g_simple_action_group_new ();
+   g_action_map_add_action_entries (G_ACTION_MAP (group), entries, G_N_ELEMENTS (entries), this);
+   gtk_widget_insert_action_group (GTK_WIDGET(_win), "win", G_ACTION_GROUP(group));
+
+   GtkAccelGroup *accel_group = gtk_accel_group_new();
+   gtk_window_add_accel_group(GTK_WINDOW(_win), accel_group);
+   setActionShortcut(this, accel_group, "quit",                GDK_KEY_Q,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "undo",                GDK_KEY_Z,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "redo",                GDK_KEY_Z,        GDK_SHIFT_MASK);
+   setActionShortcut(this, accel_group, "search",              GDK_KEY_F,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "reload",              GDK_KEY_R,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "mark-all-upgrades",   GDK_KEY_G,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "apply",               GDK_KEY_P,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "unmark",              GDK_KEY_N,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "mark-install",        GDK_KEY_I,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "mark-upgrade",        GDK_KEY_U,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "mark-delete",         GDK_KEY_Delete,   (GdkModifierType) 0);
+   setActionShortcut(this, accel_group, "mark-purge",          GDK_KEY_Delete,   GDK_SHIFT_MASK);
+   setActionShortcut(this, accel_group, "override-version",    GDK_KEY_E,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "download-changelog",  GDK_KEY_L,        GDK_CONTROL_MASK);
+   setActionShortcut(this, accel_group, "package-properties",  GDK_KEY_Return,   GDK_MOD1_MASK);
+   setActionShortcut(this, accel_group, "help",                GDK_KEY_F1,       (GdkModifierType) 0);
 
    _blockActions = false;
    _unsavedChanges = false;
@@ -979,298 +1082,41 @@ void RGMainWindow::buildInterface()
                                       "GtkEntry:not(:selected) { background: #F7F7BE; }", -1, NULL);
    }
 
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_about"),
-                    "activate",
-                    G_CALLBACK(cbShowAboutPanel), this);
+   gtk_menu_shell_bind_model(
+      GTK_MENU_SHELL(gtk_builder_get_object(_builder, "menubar1")),
+      G_MENU_MODEL(gtk_builder_get_object(_builder, "main_menu")),
+      nullptr,
+      false);
 
-   g_signal_connect(gtk_builder_get_object(_builder, "quick_introduction"),
-                    "activate",
-                    G_CALLBACK(cbShowWelcomeDialog), this);
-
-
-   g_signal_connect(gtk_builder_get_object(_builder, "icon_legend"),
-                    "activate",
-                    G_CALLBACK(cbShowIconLegendPanel), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_help"),
-                    "activate",
-                    G_CALLBACK(cbHelpAction), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "button_update"),
-                    "clicked",
-                    G_CALLBACK(cbUpdateClicked), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_update_packages"),
-                    "activate",
-                    G_CALLBACK(cbUpdateClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "button_details"),
-                    "clicked",
-                    G_CALLBACK(cbDetailsWindow), this);
    g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
                     "changed",
                     G_CALLBACK(cbSearchEntryChanged), this);
 
-   _propertiesB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
-   assert(_propertiesB);
-   _upgradeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
-   gtk_tool_button_set_icon_name(GTK_TOOL_BUTTON(_upgradeB), "system-upgrade");
-   _upgradeM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade_all"));
-   g_signal_connect(G_OBJECT(_upgradeB),
-                    "clicked",
-                    G_CALLBACK(cbUpgradeClicked), this);
-   g_signal_connect(G_OBJECT(_upgradeM),
-                    "activate",
-                    G_CALLBACK(cbUpgradeClicked), this);
-
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
-      gtk_widget_hide(_upgradeB);
+      setActionEnabled("mark-all-upgrades", false); // TODO: hide?
       widget = GTK_WIDGET(gtk_builder_get_object(_builder, "alignment_upgrade"));
       gtk_widget_hide(widget);
    }
 
-   _proceedB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
-   _proceedM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_proceed"));
-   g_signal_connect(G_OBJECT(_proceedB),
-                    "clicked",
-                    G_CALLBACK(cbProceedClicked), this);
-   g_signal_connect(G_OBJECT(_proceedM),
-                    "activate",
-                    G_CALLBACK(cbProceedClicked), this);
-
-   _fixBrokenM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_fix_broken_packages"));
-   g_signal_connect(G_OBJECT(_fixBrokenM),
-                    "activate",
-                    G_CALLBACK(cbFixBrokenClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_preferences"),
-                    "activate",
-                    G_CALLBACK(cbShowConfigWindow), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_set_option"),
-                    "activate",
-                    G_CALLBACK(cbShowSetOptWindow), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_repositories"),
-                    "activate",
-                    G_CALLBACK(cbShowSourcesWindow), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_exit"),
-                    "activate",
-                    G_CALLBACK(closeWin), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "edit_filter"),
-                    "activate",
-                    G_CALLBACK(cbShowFilterManagerWindow), this);
-
-   _pkgHelpM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_documentation"));
-   assert(_pkgHelpM);
-   g_signal_connect(G_OBJECT(_pkgHelpM),
-                    "activate",
-                    G_CALLBACK(cbPkgHelpClicked), this);
-
-   _pkgReconfigureM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_configure"));
-   assert(_pkgReconfigureM);
-   g_signal_connect(G_OBJECT(_pkgReconfigureM),
-                    "activate",
-                    G_CALLBACK(cbPkgReconfigureClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "button_search"),
-                    "clicked",
-                    G_CALLBACK(cbFindToolClicked), this);
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_search"),
-                    "activate",
-                    G_CALLBACK(cbFindToolClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "undo1"),
-                    "activate",
-                    G_CALLBACK(cbUndoClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "redo1"),
-                    "activate",
-                    G_CALLBACK(cbRedoClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "clear_all_changes"),
-                    "activate",
-                    G_CALLBACK(cbClearAllChangesClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_tasks"),
-                    "activate",
-                    G_CALLBACK(cbTasksClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_open"),
-                    "activate",
-                    G_CALLBACK(cbOpenClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_save"),
-                    "activate",
-                    G_CALLBACK(cbSaveClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "view_commit_log"),
-                    "activate",
-                    G_CALLBACK(cbViewLogClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_save_as"),
-                      "activate",
-                      G_CALLBACK(cbSaveAsClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "generate_download_script1"),
-                    "activate",
-                    G_CALLBACK(cbGenerateDownloadScriptClicked), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_add_downloadedfiles"),
-                    "activate",
-                    G_CALLBACK(cbAddDownloadedFilesClicked), this);
-
-   widget = _detailsM = GTK_WIDGET(gtk_builder_get_object
-                                   (_builder, "menu_details"));
-   assert(_detailsM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-   g_signal_connect(G_OBJECT(_detailsM),
-                    "activate",
-                    G_CALLBACK(cbDetailsWindow), this);
-
-   widget = _keepM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_keep"));
-   assert(_keepM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = _installM = GTK_WIDGET(gtk_builder_get_object
-                                   (_builder, "menu_install"));
-   assert(_installM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = _reinstallM = GTK_WIDGET(gtk_builder_get_object
-                                     (_builder, "menu_reinstall"));
-   assert(_reinstallM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = _pkgupgradeM = GTK_WIDGET(gtk_builder_get_object
-                                      (_builder, "menu_upgrade"));
-   assert(_pkgupgradeM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = _removeM = GTK_WIDGET(gtk_builder_get_object
-                                  (_builder, "menu_remove"));
-   assert(_removeM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = _purgeM = GTK_WIDGET(gtk_builder_get_object
-                                 (_builder, "menu_purge"));
-   assert(_purgeM);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-#if 0
-   _remove_w_depsM = GTK_WIDGET(gtk_builder_get_object
-                                (_builder, "menu_remove_with_deps"));
-   assert(_remove_w_depsM);
-#endif
-
-   _dl_changelogM = GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "menu_download_changelog"));
-   assert(_dl_changelogM);
 #ifdef HAVE_RPM
-   gtk_widget_hide(_purgeM);
-   gtk_widget_hide(_pkgReconfigureM);
-   gtk_widget_hide(_pkgHelpM);
-   gtk_widget_hide(_dl_changelogM);
-   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
-                              (_builder, "menu_changelog_separator")));
-   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object
-                              (_builder, "separator_debian")));
+   // TODO: hide?
+   setActionEnabled("mark-purge", false);
+   setActionEnabled("configure", false);
+   setActionEnabled("browse-documentation", false);
+   setActionEnabled("download-changelog", false);
 #endif
    
    if(!FileExists(_config->Find("Synaptic::taskHelperProg","/usr/bin/tasksel")))
-      gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder, "menu_tasks")));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_update"));
-   gtk_widget_set_tooltip_text(button,
-                               _("Reload the package information to become "
-                                 "informed about new, removed or upgraded "
-                                 "software packages."));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_upgrade"));
-   gtk_widget_set_tooltip_text(button,
-                               _("Mark all possible upgrades"));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_procceed"));
-   gtk_widget_set_tooltip_text(button,
-                               _("Apply all marked changes"));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_details"));
-   gtk_widget_set_tooltip_text(button,
-                               _("View package properties"));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_search"));
-   gtk_widget_set_tooltip_text(button,
-                               _("Search for packages"));
+      setActionEnabled("mark-packages-by-task", false); // TODO: hide?
 
    GtkWidget *pkgCommonTextView;
    pkgCommonTextView = GTK_WIDGET(gtk_builder_get_object(_builder, "text_descr"));
    assert(pkgCommonTextView);
    _pkgCommonTextBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(pkgCommonTextView));
 
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_keep"),
-                    "activate",
-                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_KEEP));
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_install"),
-                    "activate",
-                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_INSTALL));
-
-   // callback same as for install
-   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_upgrade"));
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-
-   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_reinstall"));
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-   g_signal_connect(G_OBJECT(widget),
-                      "activate",
-                      G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_REINSTALL));
-   
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_remove"),
-                    "activate",
-                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_DELETE));
-#if 0
-   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_remove_with_deps"));
-   assert(widget);
-   g_object_set_data(G_OBJECT(widget), "me", this);
-   g_signal_connect(G_OBJECT(widget),
-                    "activate",
-                    G_CALLBACK(cbPkgAction),
-                                 GINT_TO_POINTER(PKG_DELETE_WITH_DEPS));
-#endif
-
-   widget = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_purge"));
-   assert(widget);
-   g_signal_connect(G_OBJECT(widget),
-                    "activate",
-                    G_CALLBACK(cbPkgAction), GINT_TO_POINTER(PKG_PURGE));
-
-   _pinM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_hold"));
-   g_signal_connect(G_OBJECT(_pinM),
-                    "activate",
-                    G_CALLBACK(cbMenuPinClicked), this);
-
-   _autoM = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_auto_installed"));
-   g_signal_connect(G_OBJECT(_autoM),
-                    "activate",
-                    G_CALLBACK(cbMenuAutoInstalledClicked), this);
-
-   _overrideVersionM = GTK_WIDGET(gtk_builder_get_object(_builder, 
-                                  "menu_override_version"));
-   assert(_overrideVersionM);
-   g_signal_connect(G_OBJECT(_overrideVersionM),
-                    "activate",
-                    G_CALLBACK(cbInstallFromVersion), this);
-
-
    // only if pkg help is enabled
 #ifndef SYNAPTIC_PKG_HOLD
-   gtk_widget_hide(_pinM);
-//    widget = GTK_WIDGET(gtk_builder_get_object(_builder, "separator_hold"));
-//    if (widget != NULL)
-//       gtk_widget_hide(widget);
+   setActionEnabled("lock-version", false);  // TODO: hide?
 #endif
 
    // soc
@@ -1344,150 +1190,19 @@ void RGMainWindow::buildInterface()
    g_signal_connect(G_OBJECT(_treeView), "row-activated",
                     G_CALLBACK(cbPackageListRowActivated), this);
 
-   g_signal_connect(gtk_builder_get_object(_builder, "add_cdrom"),
-                    "activate",
-                    G_CALLBACK(cbAddCDROM), this);
-
-   g_signal_connect(gtk_builder_get_object(_builder, "menu_download_changelog"),
-                    "activate",
-                    G_CALLBACK(cbChangelogDialog), this); 
-
    /* --------------------------------------------------------------- */
 
    // toolbar menu code
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_pixmaps"));
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_signal_connect(G_OBJECT(button),
-                    "activate",
-                    G_CALLBACK(cbMenuToolbarClicked),
-                    GINT_TO_POINTER(GTK_TOOLBAR_ICONS));
    if (_toolbarStyle == GTK_TOOLBAR_ICONS)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_text"));
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_signal_connect(G_OBJECT(button),
-                    "activate",
-                    G_CALLBACK(cbMenuToolbarClicked),
-                    GINT_TO_POINTER(GTK_TOOLBAR_TEXT));
-   if (_toolbarStyle == GTK_TOOLBAR_TEXT)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_both"));
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_signal_connect(G_OBJECT(button),
-                    "activate",
-                    G_CALLBACK(cbMenuToolbarClicked),
-                    GINT_TO_POINTER(GTK_TOOLBAR_BOTH));
-   if (_toolbarStyle == GTK_TOOLBAR_BOTH)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_beside"));
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_signal_connect(G_OBJECT(button),
-                    "activate",
-                    G_CALLBACK(cbMenuToolbarClicked),
-                    GINT_TO_POINTER(GTK_TOOLBAR_BOTH_HORIZ));
-   if (_toolbarStyle == GTK_TOOLBAR_BOTH_HORIZ)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
-   button = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_toolbar_hide"));
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(button), FALSE);
-   g_object_set_data(G_OBJECT(button), "me", this);
-   g_signal_connect(G_OBJECT(button),
-                    "activate",
-                    G_CALLBACK(cbMenuToolbarClicked),
-                    GINT_TO_POINTER(TOOLBAR_HIDE));
-   if (_toolbarStyle == TOOLBAR_HIDE)
-      gtk_menu_item_activate(GTK_MENU_ITEM(button));
-
-   // build popup-menu
-   _popupMenu = gtk_menu_new();
-   menuitem = gtk_menu_item_new_with_label(_("Unmark"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction, (void *)PKG_KEEP);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark for Installation"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction, (void *)PKG_INSTALL);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark for Reinstallation"));
-   g_object_set_data(G_OBJECT(menuitem),"me",this);
-   g_signal_connect(menuitem, "activate",
-		    (GCallback) cbPkgAction, (void*)PKG_REINSTALL);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark for Upgrade"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction, (void *)PKG_INSTALL);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark for Removal"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction, (void *)PKG_DELETE);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark for Complete Removal"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction, (void *)PKG_PURGE);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#ifdef HAVE_RPM
-   gtk_widget_hide(menuitem);
-#endif
-
-#if 0  // disabled for now
-   menuitem = gtk_menu_item_new_with_label(_("Remove Including Orphaned Dependencies"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbPkgAction,
-                    (void *)PKG_DELETE_WITH_DEPS);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_separator_menu_item_new();
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_check_menu_item_new_with_label(_("Hold Current Version"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate", (GCallback) cbMenuPinClicked, this);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#endif
-
-   menuitem = gtk_separator_menu_item_new ();
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Properties"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   g_signal_connect(menuitem, "activate",
-                    (GCallback) cbDetailsWindow, this);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-#ifndef HAVE_RPM // recommends stuff
-   menuitem = gtk_separator_menu_item_new ();
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark Recommended for Installation"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-
-   menuitem = gtk_menu_item_new_with_label(_("Mark Suggested for Installation"));
-   g_object_set_data(G_OBJECT(menuitem), "me", this);
-   gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
-#endif
-
-   gtk_widget_show(_popupMenu);
+      activateAction("toolbar-style", g_variant_new_string("icons-only"));
+   else if (_toolbarStyle == GTK_TOOLBAR_TEXT)
+      activateAction("toolbar-style", g_variant_new_string("text-only"));
+   else if (_toolbarStyle == GTK_TOOLBAR_BOTH)
+      activateAction("toolbar-style", g_variant_new_string("below"));
+   else if (_toolbarStyle == GTK_TOOLBAR_BOTH_HORIZ)
+      activateAction("toolbar-style", g_variant_new_string("beside"));
+   else
+      activateAction("toolbar-style", g_variant_new_string("hide"));
 
    //FIXME/MAYBE: create this dynmaic?!?
    //    for (vector<string>::const_iterator I = views.begin();
@@ -1581,33 +1296,44 @@ void RGMainWindow::buildInterface()
 
    // stuff for the non-root mode
    if(getuid() != 0) {
-      GtkWidget *menu;
-      gtk_widget_set_sensitive(_proceedB, false);
-      gtk_widget_set_sensitive(_proceedM, false);
-      button = GTK_WIDGET(gtk_builder_get_object(_builder, "button_update"));
-      gtk_widget_set_sensitive(button, false);
-      menu = GTK_WIDGET(gtk_builder_get_object
-                        (_builder, "menu_add_downloadedfiles"));
-      gtk_widget_set_sensitive(menu, false);
-      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_repositories"));
-      gtk_widget_set_sensitive(menu, false);
-      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "view_commit_log"));
-      gtk_widget_set_sensitive(menu, false);
-      menu = GTK_WIDGET(gtk_builder_get_object
-                        (_builder, "menu_update_packages"));
-      gtk_widget_set_sensitive(menu, false);
-      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "add_cdrom"));
-      gtk_widget_set_sensitive(menu, false);
-      menu = GTK_WIDGET(gtk_builder_get_object(_builder, "menu_hold"));
-      gtk_widget_set_sensitive(menu, false);
+      setActionEnabled("apply", false);
+      setActionEnabled("add-downloaded-packages", false);
+      setActionEnabled("repositories", false);
+      setActionEnabled("view-commit-log", false);
+      setActionEnabled("reload", false);
+      setActionEnabled("add-cdrom", false);
+      setActionEnabled("lock-version", false);
    }
 
 }
 
+bool RGMainWindow::isActionEnabled(const char *action_name)
+{
+   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   return g_action_group_get_action_enabled(win_actions, action_name);
+}
 
+void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
+{
+   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GAction *action = g_action_map_lookup_action (G_ACTION_MAP (win_actions), action_name);
+   g_simple_action_set_enabled (G_SIMPLE_ACTION(action), enabled);
+}
 
+void RGMainWindow::setActionState(const char *action_name, GVariant *value)
+{
+   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GAction *action = g_action_map_lookup_action (G_ACTION_MAP (win_actions), action_name);
+   g_simple_action_set_state (G_SIMPLE_ACTION(action), value);
+}
 
-void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken, 
+void RGMainWindow::activateAction(const char *action_name, GVariant *value)
+{
+   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   g_action_group_activate_action(win_actions, action_name, value);
+}
+
+void RGMainWindow::pkgInstallHelper(RPackage *pkg, bool fixBroken,
 				    bool reInstall)
 {
    if (pkg->availableVersion() != NULL)
@@ -1686,12 +1412,10 @@ void RGMainWindow::setStatusText(char *text)
       g_free(buffer);
    }
 
-   gtk_widget_set_sensitive(_upgradeB, _lister->upgradable());
-   gtk_widget_set_sensitive(_upgradeM, _lister->upgradable());
+   setActionEnabled("mark-all-upgrades", _lister->upgradable());
 
    if (getuid() == 0) {
-      gtk_widget_set_sensitive(_proceedB, (toInstall + toRemove) != 0);
-      gtk_widget_set_sensitive(_proceedM, (toInstall + toRemove) != 0);
+      setActionEnabled("apply", (toInstall + toRemove) != 0);
    }
    _unsavedChanges = ((toInstall + toRemove) != 0);
 
@@ -1834,18 +1558,82 @@ void RGMainWindow::setTreeLocked(bool flag)
 // Callbacks
 //
 
-void RGMainWindow::cbPkgAction(GtkWidget *self, void *data)
+void RGMainWindow::cbPkgAction(RGPkgAction action)
 {
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-   assert(me);
    // Ignore DEL accelerator when fastsearch has focus
    GtkWidget *entry = GTK_WIDGET(gtk_builder_get_object
-                                 (me->_builder, "entry_fast_search"));
-   if (gtk_widget_has_focus (entry) && GPOINTER_TO_INT(data) == PKG_DELETE) {
+                                 (_builder, "entry_fast_search"));
+   if (gtk_widget_has_focus (entry) && action == PKG_DELETE) {
       return;
    }
-   me->pkgAction((RGPkgAction)GPOINTER_TO_INT(data));
+   pkgAction(action);
 }
+
+void RGMainWindow::cbPkgActionUnmark(GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   me->cbPkgAction(PKG_KEEP);
+}
+
+void RGMainWindow::cbPkgActionMarkInstall(GSimpleAction *action,
+                                          GVariant *parameter,
+                                          gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   me->cbPkgAction(PKG_INSTALL);
+}
+
+void RGMainWindow::cbPkgActionMarkReinstall(GSimpleAction *action,
+                                            GVariant *parameter,
+                                            gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   me->cbPkgAction(PKG_REINSTALL);
+}
+
+void RGMainWindow::cbPkgActionMarkUpgrade(GSimpleAction *action,
+                                          GVariant *parameter,
+                                          gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   // callback same as for install
+   me->cbPkgAction(PKG_INSTALL);
+}
+
+void RGMainWindow::cbPkgActionMarkDelete(GSimpleAction *action,
+                                         GVariant *parameter,
+                                         gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   me->cbPkgAction(PKG_DELETE);
+}
+
+void RGMainWindow::cbPkgActionMarkPurge(GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   me->cbPkgAction(PKG_PURGE);
+}
+
+void RGMainWindow::cbPkgActionDefault(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data)
+{
+   RGMainWindow *me = (RGMainWindow *) data;
+   assert(me);
+   RGPkgAction pkgAction = (RGPkgAction) g_variant_get_int32(parameter);
+   me->cbPkgAction(pkgAction);
+}
+
 
 gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
                                             GdkEventButton *event,
@@ -1905,7 +1693,9 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
    return false;
 }
 
-void RGMainWindow::cbChangelogDialog(GtkWidget *self, void *data)
+void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow*)data;
 
@@ -1968,7 +1758,9 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
    me->setStatusText();
 }
 
-void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
+void RGMainWindow::cbAddCDROM(GSimpleAction *action,
+                              GVariant *parameter,
+                              gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RGCDScanner scan(me, me->_userDialog);
@@ -2000,7 +1792,9 @@ void RGMainWindow::cbAddCDROM(GtkWidget *self, void *data)
 
 
 
-void RGMainWindow::cbTasksClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbTasksClicked(GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer data)
 {
    RGMainWindow *me = (RGMainWindow*)data;
 
@@ -2014,7 +1808,9 @@ void RGMainWindow::cbTasksClicked(GtkWidget *self, void *data)
    me->setBusyCursor(false);
 }
 
-void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbOpenClicked(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data)
 {
    //std::cout << "RGMainWindow::openClicked()" << endl;
    RGMainWindow *me = (RGMainWindow*)data;
@@ -2059,13 +1855,15 @@ void RGMainWindow::cbOpenClicked(GtkWidget *self, void *data)
    gtk_widget_destroy(filesel);
 }
 
-void RGMainWindow::cbSaveClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbSaveClicked(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data)
 {
    //std::cout << "RGMainWindow::saveClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
 
    if (me->selectionsFilename == "") {
-      me->cbSaveAsClicked(self, data);
+      me->cbSaveAsClicked(nullptr, nullptr, data);
       return;
    }
 
@@ -2084,7 +1882,9 @@ void RGMainWindow::cbSaveClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbSaveAsClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbSaveAsClicked(GSimpleAction *action,
+                                   GVariant *parameter,
+                                   gpointer data)
 {
    //std::cout << "RGMainWindow::saveAsClicked()" << endl;
    RGMainWindow *me = (RGMainWindow*)data;
@@ -2107,13 +1907,15 @@ void RGMainWindow::cbSaveAsClicked(GtkWidget *self, void *data)
       me->saveFullState =
 	 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
       // now call save for the actual saving
-      me->cbSaveClicked(self, me);
+      me->cbSaveClicked(nullptr, nullptr, me);
    }
    gtk_widget_destroy(filesel);
 }
 
 
-void RGMainWindow::cbShowConfigWindow(GtkWidget *self, void *data)
+void RGMainWindow::cbShowConfigWindow(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2124,7 +1926,9 @@ void RGMainWindow::cbShowConfigWindow(GtkWidget *self, void *data)
    me->_configWin->show();
 }
 
-void RGMainWindow::cbShowSetOptWindow(GtkWidget *self, void *data)
+void RGMainWindow::cbShowSetOptWindow(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data)
 {
    RGMainWindow *win = (RGMainWindow *) data;
 
@@ -2134,7 +1938,9 @@ void RGMainWindow::cbShowSetOptWindow(GtkWidget *self, void *data)
    win->_setOptWin->show();
 }
 
-void RGMainWindow::cbDetailsWindow(GtkWidget *self, void *data)
+void RGMainWindow::cbDetailsWindow(GSimpleAction *action,
+                                   GVariant *parameter,
+                                   gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    assert(data);
@@ -2164,7 +1970,9 @@ static gboolean kill_repos(GtkWidget *self, GdkEvent *event, void *data)
    return TRUE;
 }
 
-void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
+void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2205,7 +2013,7 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 
    // auto update after repostitory change
    if (Changed == true && ForceReload) {
-      me->cbUpdateClicked(NULL, data);
+      me->cbUpdateClicked(nullptr, nullptr, data);
    } else if(Changed == true && 
 	     _config->FindB("Synaptic::AskForUpdateAfterSrcChange",true)) {
       // ask for update after repo change
@@ -2237,18 +2045,34 @@ void RGMainWindow::cbShowSourcesWindow(GtkWidget *self, void *data)
 	    _config->Set("Synaptic::AskForUpdateAfterSrcChange", false);
       }
       if (response == GTK_RESPONSE_ACCEPT) {
-         me->cbUpdateClicked(NULL, data);
+         me->cbUpdateClicked(nullptr, nullptr, data);
       }
       gtk_widget_destroy (dialog);
    }
 }
 
-void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbMenuToolbarClicked(GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer data)
 {
-   RGMainWindow *me = (RGMainWindow *) g_object_get_data(G_OBJECT(self), "me");
-   GtkWidget *widget;
+   RGMainWindow *me = (RGMainWindow *) data;
+   std::string style = g_variant_get_string(parameter, nullptr);
+
+   g_simple_action_set_state(action, parameter);
+
    // save new toolbar state
-   me->_toolbarStyle = (GtkToolbarStyle) GPOINTER_TO_INT(data);
+   if (style == "icons-only")
+      me->_toolbarStyle = GTK_TOOLBAR_ICONS;
+   else if (style == "text-only")
+      me->_toolbarStyle = GTK_TOOLBAR_TEXT;
+   else if (style == "below")
+      me->_toolbarStyle = GTK_TOOLBAR_BOTH;
+   else if (style == "beside")
+      me->_toolbarStyle = GTK_TOOLBAR_BOTH_HORIZ;
+   else
+      me->_toolbarStyle = (GtkToolbarStyle) TOOLBAR_HIDE;
+
+   GtkWidget *widget;
    GtkWidget *toolbar_main =
          GTK_WIDGET(gtk_builder_get_object(me->_builder, "toolbar_main"));
    GtkWidget *toolbar_search =
@@ -2270,7 +2094,9 @@ void RGMainWindow::cbMenuToolbarClicked(GtkWidget *self, void *data)
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar_search), me->_toolbarStyle);
 }
 
-void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbFindToolClicked(GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2314,7 +2140,9 @@ void RGMainWindow::cbFindToolClicked(GtkWidget *self, void *data)
 
 }
 
-void RGMainWindow::cbShowAboutPanel(GtkWidget *self, void *data)
+void RGMainWindow::cbShowAboutPanel(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
       const char *authors[] = {
       "Alfredo K. Kojima",
@@ -2348,7 +2176,9 @@ void RGMainWindow::cbShowAboutPanel(GtkWidget *self, void *data)
                        NULL);
 }
 
-void RGMainWindow::cbShowIconLegendPanel(GtkWidget *self, void *data)
+void RGMainWindow::cbShowIconLegendPanel(GSimpleAction *action,
+                                         GVariant *parameter,
+                                         gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2357,7 +2187,9 @@ void RGMainWindow::cbShowIconLegendPanel(GtkWidget *self, void *data)
    me->_iconLegendPanel->show();
 }
 
-void RGMainWindow::cbViewLogClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbViewLogClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2368,7 +2200,9 @@ void RGMainWindow::cbViewLogClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbHelpAction(GtkWidget *self, void *data)
+void RGMainWindow::cbHelpAction(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2414,7 +2248,9 @@ void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
 }
 
 
-void RGMainWindow::cbShowFilterManagerWindow(GtkWidget *self, void *data)
+void RGMainWindow::cbShowFilterManagerWindow(GSimpleAction *action,
+                                             GVariant *parameter,
+                                             gpointer data)
 {
 
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2474,7 +2310,9 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
    me->updatePackageInfo(pkg);
 }
 
-void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbClearAllChangesClicked(GSimpleAction *action,
+                                            GVariant *parameter,
+                                            gpointer data)
 {
    //cout << "clearAllChangesClicked" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2497,7 +2335,9 @@ void RGMainWindow::cbClearAllChangesClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbUndoClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbUndoClicked(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data)
 {
    //cout << "undoClicked" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2513,7 +2353,9 @@ void RGMainWindow::cbUndoClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(FALSE);
 }
 
-void RGMainWindow::cbRedoClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbRedoClicked(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data)
 {
    //cout << "redoClicked" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
@@ -2529,7 +2371,9 @@ void RGMainWindow::cbRedoClicked(GtkWidget *self, void *data)
    me->setInterfaceLocked(FALSE);
 }
 
-void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbPkgReconfigureClicked(GSimpleAction *action,
+                                           GVariant *parameter,
+                                           gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    //cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
@@ -2559,7 +2403,9 @@ void RGMainWindow::cbPkgReconfigureClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbPkgHelpClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbPkgHelpClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2643,7 +2489,9 @@ void RGMainWindow::activeWindowToForeground()
       g_critical("activeWindowToForeground(): no active window found\n");
 }
 
-void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbProceedClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RGSummaryWindow *summ;
@@ -2792,7 +2640,9 @@ void RGMainWindow::cbProceedClicked(GtkWidget *self, void *data)
    me->updatePackageInfo(NULL);
 }
 
-void RGMainWindow::cbShowWelcomeDialog(GtkWidget *self, void *data)
+void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RGGtkBuilderUserDialog dia(me);
@@ -2851,7 +2701,9 @@ void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
    me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
 }
 
-void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
+                                   GVariant *parameter,
+                                   gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
@@ -2927,7 +2779,9 @@ void RGMainWindow::cbUpdateClicked(GtkWidget *self, void *data)
    me->setStatusText();
 }
 
-void RGMainWindow::cbFixBrokenClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbFixBrokenClicked(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = me->selectedPackage();
@@ -2946,7 +2800,9 @@ void RGMainWindow::cbFixBrokenClicked(GtkWidget *self, void *data)
 }
 
 
-void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = me->selectedPackage();
@@ -3034,11 +2890,13 @@ void RGMainWindow::cbUpgradeClicked(GtkWidget *self, void *data)
    me->showErrors();
 }
 
-void RGMainWindow::cbMenuPinClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
-   bool active = gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(self));
+   bool active = g_variant_get_boolean(parameter);
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    RPackage *pkg;
@@ -3123,143 +2981,92 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
    int flags = pkg->getFlags();
 
-   if( flags & RPackage::FPinned) 
+   if (flags & RPackage::FPinned)
       return;
 
-   // Gray out buttons that don't make sense, and update image
-   // if necessary.
-   GList *item = gtk_container_get_children(GTK_CONTAINER(me->_popupMenu));
-   gpointer oneclickitem = NULL;
-   for (int i = 0; item != NULL; item = g_list_next(item), i++) {
-
-      gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);
-      gtk_widget_show(GTK_WIDGET(item->data));
-
-      // This must be optimized. -- niemeyer
-
-      // Keep button
-      if (i == 0) {
-         if (!(flags & RPackage::FKeep)) {
-            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-            oneclickitem = item->data;
-         }
-      }
-
-      // Install button
-      if (i == 1 && !(flags & RPackage::FInstalled)
-          && !(flags & RPackage::FInstall)) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-         if (oneclickitem == NULL)
-            oneclickitem = item->data;
-      }
-
-      // Re-install button
-      if (i == 2 && (flags & RPackage::FInstalled) 
-	  && !(flags & RPackage::FOutdated) 
-	  && !(flags & RPackage::FNotInstallable)) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-      }
-
-      // Upgrade button
-      if (i == 3 && (flags & RPackage::FOutdated)
-          && !(flags & RPackage::FInstall)) {
-         gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-         if (oneclickitem == NULL)
-            oneclickitem = item->data;
-      }
-
-      // remove
-      if (i == 4 &&  (flags & RPackage::FInstalled) 
-	  && (!(flags & RPackage::FRemove) || (flags & RPackage::FPurge)) ) {
-            gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-            if (oneclickitem == NULL)
-               oneclickitem = item->data;
-      }
-
-      // Purge
-      if (i == 5 
-	  && (flags&RPackage::FInstalled || flags&RPackage::FResidualConfig) 
-	  && !(flags & RPackage::FPurge) ) {
-	 gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-      }
-
-      // Seperator is i==6 (hide on left click)
-      if(i == 6 && event->button == 1)
-	 gtk_widget_hide(GTK_WIDGET(item->data));
-      // Properties is i==7 (available if only one pkg is selected)
-      if (i == 7) {
-	 if(event->button == 1)
-	    gtk_widget_hide(GTK_WIDGET(item->data));
-	 else if(selected_pkgs.size() == 1)
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-      }
-
-      // i==8 is sperator, hide on left click
-      if(i == 8 && event->button == 1)
-	 gtk_widget_hide(GTK_WIDGET(item->data));
-      // recommends
-      if(i == 9) {
-	 if(event->button == 1)
-	    gtk_widget_hide(GTK_WIDGET(item->data));
-	 else if(selected_pkgs.size() == 1) {
-	    GtkWidget *menu;
-	    menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends);
-	    if(menu != NULL) {
-	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
-	       gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
-	    } else
-	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
-	 }
-      }
-      if(i == 10) {
-	 if(event->button == 1)
-	    gtk_widget_hide(GTK_WIDGET(item->data));
-	 else if(selected_pkgs.size() == 1) {
-	    gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);
-	    GtkWidget *menu;
-	    menu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests); 
-	    if( menu != NULL) {
-	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), TRUE);	    
-	       gtk_menu_item_set_submenu(GTK_MENU_ITEM(item->data), menu);
-	    } else
-	       gtk_widget_set_sensitive(GTK_WIDGET(item->data), FALSE);	    
-	 }
-      }
+   if (event->button == 1 && _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
+      me->activateAction("mark-default", nullptr);
+      return;
    }
 
-   if (event->button == 1 && oneclickitem != NULL &&
-       _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
-      gtk_menu_item_activate(GTK_MENU_ITEM(oneclickitem));
-   } else {
-      gtk_menu_popup_at_pointer(GTK_MENU(me->_popupMenu), (GdkEvent*)event);
+   GMenu *popupMenuModel = g_menu_new();
+   g_menu_append(popupMenuModel, _("Unmark"), "win.unmark");
+   g_menu_append(popupMenuModel, _("Mark for Installation"), "win.mark-install");
+   g_menu_append(popupMenuModel, _("Mark for Reinstallation"), "win.mark-reinstall");
+   g_menu_append(popupMenuModel, _("Mark for Upgrade"), "win.mark-upgrade");
+   g_menu_append(popupMenuModel, _("Mark for Removal"), "win.mark-delete");
+#ifndef HAVE_RPM
+   g_menu_append(popupMenuModel, _("Mark for Complete Removal"), "win.mark-purge");
+#endif
+
+#if 0  // disabled for now
+   g_menu_append(popupMenuModel, _("Remove Including Orphaned Dependencies"), "win.mark-delete-with-deps");
+
+   GMenu *lockSubmenu = g_menu_new();
+   g_menu_append(lockSubmenu, _("Hold Current Version"), "win.lock-version");
+   g_menu_append_section(popupMenuModel, nullptr, G_MENU_MODEL(lockSubmenu));
+#endif
+
+   GMenu *propsSubmenu = g_menu_new();
+   g_menu_append(propsSubmenu, _("Properties"), "win.package-properties");
+   g_menu_append_section(popupMenuModel, nullptr, G_MENU_MODEL(propsSubmenu));
+
+#ifndef HAVE_RPM // recommends stuff
+   if (selected_pkgs.size() == 1) {
+      GMenu *recommendsSection = g_menu_new();
+
+      if (GMenu *recommendedSubmenu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends))
+         g_menu_append_submenu(recommendsSection,
+            _("Mark Recommended for Installation"),
+            G_MENU_MODEL(recommendedSubmenu));
+      else
+         g_menu_append(recommendsSection,
+            _("Mark Recommended for Installation"),
+            nullptr);
+
+      if (GMenu *suggestedSubmenu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests))
+         g_menu_append_submenu(recommendsSection,
+            _("Mark Suggested for Installation"),
+            G_MENU_MODEL(suggestedSubmenu));
+      else
+         g_menu_append(recommendsSection,
+            _("Mark Suggested for Installation"),
+            nullptr);
+
+      g_menu_append_section(popupMenuModel, nullptr, G_MENU_MODEL(recommendsSection));
    }
+#endif
+
+   GdkRectangle rect { 0, 0, 0, 0 };
+   gtk_tree_view_convert_bin_window_to_widget_coords(
+      GTK_TREE_VIEW(treeview),
+      (int)event->x, (int)event->y,
+      &rect.x, &rect.y);
+
+   GtkWidget *popupMenu = gtk_popover_new_from_model(treeview, G_MENU_MODEL(popupMenuModel));
+   gtk_popover_set_pointing_to(GTK_POPOVER(popupMenu), &rect);
+   gtk_popover_popup(GTK_POPOVER(popupMenu));
 }
 
-GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg, 
+GMenu* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 					      pkgCache::Dep::DepType type)
 {
    // safty first
    if(pkg == NULL) return NULL;
    bool found=false;
 
-   GtkWidget *menu = gtk_menu_new();
-   GtkWidget *item;
+   GMenu *menu = g_menu_new();
+   GMenuItem *item;
    vector<DepInformation> deps = pkg->enumDeps();
    for(unsigned int i=0;i<deps.size();i++) {
       if(deps[i].type == type) {
 	 // not virtual
 	 if(!deps[i].isVirtual) {
 	    found = true;
-	    item = gtk_menu_item_new_with_label(deps[i].name);
-	    g_object_set_data(G_OBJECT(item), "me", this);
-	    gtk_widget_show(item);
-	    gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
-	    if(deps[i].isSatisfied)
-	       gtk_widget_set_sensitive(item, false);
-	    else
-	       g_signal_connect(G_OBJECT(item), "activate",
-				G_CALLBACK(pkgInstallByNameHelper), 
-				(void*)deps[i].name);
+	    item = g_menu_item_new(deps[i].name, nullptr);
+	    if(!deps[i].isSatisfied)
+	       g_menu_item_set_action_and_target(item, "win.install-by-name", "s", deps[i].name);
+	    g_menu_append_item(menu, item);
 	 } else {
 	    // TESTME: expand virutal packages (expensive!?!)
 	    const vector<RPackage *> pkgs = _lister->getPackages();
@@ -3268,23 +3075,16 @@ GtkWidget* RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
 	       for(unsigned int j=0;j<d.size();j++)
 		  if(strcoll(deps[i].name, d[j].c_str()) == 0) {
 		     found = true;
-		     item = gtk_menu_item_new_with_label(pkgs[k]->name());
-		     g_object_set_data(G_OBJECT(item), "me", this);
-		     gtk_widget_show(item);
-		     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
+		     item = g_menu_item_new(pkgs[k]->name(), nullptr);
+		     g_menu_append_item(menu, item);
 		     int f = pkgs[k]->getFlags();
- 		     if((f & RPackage::FInstall) || (f & RPackage::FInstalled))
- 			gtk_widget_set_sensitive(item, false);
- 		     else
-			g_signal_connect(G_OBJECT(item), "activate",
-					 G_CALLBACK(pkgInstallByNameHelper), 
-					 (void*)pkgs[k]->name());
+ 		     if(!((f & RPackage::FInstall) || (f & RPackage::FInstalled)))
+              g_menu_item_set_action_and_target(item, "win.install-by-name", "s", pkgs[k]->name());
 		  }
 	    }
 	 }
       }
    }
-   gtk_widget_show(menu);
    if(found)
       return menu;
    else
@@ -3336,12 +3136,14 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
    me->updatePackageInfo(pkg);
 }
 
-void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
+void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
+                                          GVariant *parameter,
+                                          gpointer data)
 {
-   const char *name = (const char*)data;
+   const char *name = g_variant_get_string(parameter, nullptr);
    //cout << "pkgInstallByNameHelper: " << name << endl;
    
-   RGMainWindow *me = (RGMainWindow*)g_object_get_data(G_OBJECT(self), "me");
+   RGMainWindow *me = (RGMainWindow*) data;
 
    RPackage *newpkg = (RPackage *) me->_lister->getPackage(name);
    if (newpkg) {
@@ -3376,7 +3178,9 @@ void RGMainWindow::pkgInstallByNameHelper(GtkWidget *self, void *data)
    }
 }
 
-void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbGenerateDownloadScriptClicked(GSimpleAction *action,
+                                                   GVariant *parameter,
+                                                   gpointer data)
 {
    //cout << "cbGenerateDownloadScriptClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
@@ -3417,7 +3221,9 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GtkWidget *self, void *data)
    chmod(file, 0755);
 }
 
-void RGMainWindow::cbAddDownloadedFilesClicked(GtkWidget *self, void *data)
+void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
+                                               GVariant *parameter,
+                                               gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
 #ifndef HAVE_RPM
@@ -3466,7 +3272,7 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GtkWidget *self, void *data)
    me->_userDialog->showErrors();
    
    // click proceed
-   me->cbProceedClicked(NULL, me);
+   me->cbProceedClicked(nullptr, nullptr, me);
 
 #else
    me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");

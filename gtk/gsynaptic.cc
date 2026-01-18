@@ -200,7 +200,7 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
       // 3600s=1h 
       if((lastUpdate + minimal*3600) < time(NULL)) {
 	 if(update == UPDATE_AUTO) 
-	    mainWindow->cbUpdateClicked(NULL, mainWindow);
+	    mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
 	 else {
 	    RGGtkBuilderUserDialog dia(mainWindow);
 	    int res = dia.run("update_outdated",true);
@@ -214,7 +214,7 @@ void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
 		  _config->Set("Synaptic::update::type", UPDATE_AUTO);
 	    }
 	    if(res == GTK_RESPONSE_OK)
-	       mainWindow->cbUpdateClicked(NULL, mainWindow);
+	       mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
 	 }
       }
    }
@@ -511,9 +511,9 @@ int main(int argc, char **argv)
    if(!cd_mount_point.empty()) {
       _config->Set("Acquire::cdrom::mount",cd_mount_point);
       _config->Set("APT::CDROM::NoMount", true);
-      mainWindow->cbAddCDROM(NULL, mainWindow);
+      mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
    } else if(_config->FindB("Volatile::AskCdrom-Mode",false)) {
-      mainWindow->cbAddCDROM(NULL, mainWindow);
+      mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
       return 0;
    }
 
@@ -530,7 +530,7 @@ int main(int argc, char **argv)
    }
    
    if (_config->FindB("Volatile::startInRepositories", false)) {
-      mainWindow->cbShowSourcesWindow(NULL, mainWindow);
+      mainWindow->cbShowSourcesWindow(NULL, NULL, mainWindow);
    }
 
    // selections from stdin
@@ -554,7 +554,7 @@ int main(int argc, char **argv)
    mainWindow->setInterfaceLocked(false);
 
    if(UpdateMode) {
-      mainWindow->cbUpdateClicked(NULL, mainWindow);
+      mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
       mainWindow->setTreeLocked(true);
       if(!packageLister->openCache()) {
 	 mainWindow->showErrors();
@@ -573,26 +573,26 @@ int main(int argc, char **argv)
 
       while(true)
       {
-	 mainWindow->cbUpdateClicked(NULL, mainWindow);
+	 mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
 	 mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed"));
 	 GtkTreePath *p = gtk_tree_path_new_from_string("0");
 	 mainWindow->cbPackageListRowActivated(NULL, p, NULL, mainWindow);
 
 	 GObject *o = (GObject*)g_object_new( G_TYPE_OBJECT,NULL);
 	 g_object_set_data(o, "me", mainWindow);
-	 mainWindow->cbPkgAction(GTK_WIDGET(o), (void*)PKG_REINSTALL);
-	 mainWindow->cbProceedClicked(NULL, mainWindow);
+	 mainWindow->cbPkgAction(PKG_REINSTALL);
+	 mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
       }
    }
 
    if(_config->FindB("Volatile::Upgrade-Mode",false) 
       || _config->FindB("Volatile::DistUpgrade-Mode",false) ) {
-      mainWindow->cbUpgradeClicked(NULL, mainWindow);
+      mainWindow->cbUpgradeClicked(nullptr, nullptr, mainWindow);
       mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
    }
 
    if(_config->FindB("Volatile::TaskWindow",false)) {
-      mainWindow->cbTasksClicked(NULL, mainWindow);
+      mainWindow->cbTasksClicked(nullptr, nullptr, mainWindow);
    }
 
    string filter = _config->Find("Volatile::initialFilter","");
@@ -600,7 +600,7 @@ int main(int argc, char **argv)
       mainWindow->changeView(PACKAGE_VIEW_CUSTOM, filter);
 
    if (NonInteractive) {
-      mainWindow->cbProceedClicked(NULL, mainWindow);
+      mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
    } else {
       welcome_dialog(mainWindow);
       gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(

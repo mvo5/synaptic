@@ -35,6 +35,7 @@
 #include <gdk/gdkkeysyms-compat.h>
 #include <cmath>
 #include <algorithm>
+#include <functional>
 #include <fstream>
 #include <sstream>
 #include <time.h>
@@ -909,8 +910,8 @@ RGMainWindow::RGMainWindow(RPackageLister *packLister, string name)
 
    _lister->registerObserver(this);
 
-   _toolbarStyle = (GtkToolbarStyle) _config->FindI("Synaptic::ToolbarState",
-                                                    (int)GTK_TOOLBAR_BOTH);
+   _toolbarStyle = (RGToolbarStyle) _config->FindI("Synaptic::ToolbarState",
+                                                   (int)RG_TOOLBAR_BOTH);
 
    // create all the interface stuff
    buildInterface();
@@ -1193,13 +1194,13 @@ void RGMainWindow::buildInterface()
    /* --------------------------------------------------------------- */
 
    // toolbar menu code
-   if (_toolbarStyle == GTK_TOOLBAR_ICONS)
+   if (_toolbarStyle == RG_TOOLBAR_ICONS)
       activateAction("toolbar-style", g_variant_new_string("icons-only"));
-   else if (_toolbarStyle == GTK_TOOLBAR_TEXT)
+   else if (_toolbarStyle == RG_TOOLBAR_TEXT)
       activateAction("toolbar-style", g_variant_new_string("text-only"));
-   else if (_toolbarStyle == GTK_TOOLBAR_BOTH)
+   else if (_toolbarStyle == RG_TOOLBAR_BOTH)
       activateAction("toolbar-style", g_variant_new_string("below"));
-   else if (_toolbarStyle == GTK_TOOLBAR_BOTH_HORIZ)
+   else if (_toolbarStyle == RG_TOOLBAR_BOTH_HORIZ)
       activateAction("toolbar-style", g_variant_new_string("beside"));
    else
       activateAction("toolbar-style", g_variant_new_string("hide"));
@@ -1289,9 +1290,7 @@ void RGMainWindow::buildInterface()
 #endif
    {
       gtk_widget_hide(GTK_WIDGET(
-            gtk_builder_get_object(_builder, "toolitem_fast_search")));
-      gtk_box_set_center_widget(GTK_BOX(
-            gtk_builder_get_object(_builder, "hbox_button_toolbar")), NULL);
+            gtk_builder_get_object(_builder, "toolbar_filter")));
    }
 
    // stuff for the non-root mode
@@ -2051,6 +2050,36 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
    }
 }
 
+static void traverseToolbarButtons(GtkWidget *toolbar,
+                                   std::function<void(GtkWidget*, GtkWidget *, GtkWidget *)> cb)
+{
+   if (!GTK_IS_CONTAINER(toolbar))
+      return;
+   GList *children = gtk_container_get_children(GTK_CONTAINER(toolbar));
+   for (GList *iter = children; iter != NULL; iter = iter->next)
+   {
+      if (GTK_IS_BUTTON(iter->data))
+      {
+         GtkWidget *box = gtk_bin_get_child(GTK_BIN(iter->data));
+         GtkWidget *image = nullptr;
+         GtkWidget *label = nullptr;
+
+         GList *box_children = gtk_container_get_children(GTK_CONTAINER(box));
+         for (GList *iter2 = box_children; iter2 != NULL; iter2 = iter2->next)
+         {
+            if (GTK_IS_IMAGE(iter2->data))
+               image = GTK_WIDGET(iter2->data);
+            else if (GTK_IS_LABEL(iter2->data))
+               label = GTK_WIDGET(iter2->data);
+         }
+         g_list_free(box_children);
+
+         cb(box, image, label);
+      }
+   }
+   g_list_free(children);
+}
+
 void RGMainWindow::cbMenuToolbarClicked(GSimpleAction *action,
                                         GVariant *parameter,
                                         gpointer data)
@@ -2060,38 +2089,54 @@ void RGMainWindow::cbMenuToolbarClicked(GSimpleAction *action,
 
    g_simple_action_set_state(action, parameter);
 
+   GtkWidget *toolbar =
+         GTK_WIDGET(gtk_builder_get_object(me->_builder, "hbox_button_toolbar"));
+   assert(toolbar);
+
    // save new toolbar state
    if (style == "icons-only")
-      me->_toolbarStyle = GTK_TOOLBAR_ICONS;
-   else if (style == "text-only")
-      me->_toolbarStyle = GTK_TOOLBAR_TEXT;
-   else if (style == "below")
-      me->_toolbarStyle = GTK_TOOLBAR_BOTH;
-   else if (style == "beside")
-      me->_toolbarStyle = GTK_TOOLBAR_BOTH_HORIZ;
-   else
-      me->_toolbarStyle = (GtkToolbarStyle) TOOLBAR_HIDE;
-
-   GtkWidget *widget;
-   GtkWidget *toolbar_main =
-         GTK_WIDGET(gtk_builder_get_object(me->_builder, "toolbar_main"));
-   GtkWidget *toolbar_search =
-         GTK_WIDGET(gtk_builder_get_object(me->_builder, "toolbar_search"));
-   assert(toolbar_main);
-   assert(toolbar_search);
-
-   if (me->_toolbarStyle == TOOLBAR_HIDE) {
-      widget = GTK_WIDGET(gtk_builder_get_object
-                          (me->_builder, "hbox_button_toolbar"));
-      gtk_widget_hide(widget);
-      return;
-   } else {
-      widget = GTK_WIDGET(gtk_builder_get_object
-                          (me->_builder, "hbox_button_toolbar"));
-      gtk_widget_show(widget);
+   {
+      me->_toolbarStyle = RG_TOOLBAR_ICONS;
+      traverseToolbarButtons(toolbar, [](GtkWidget* box, GtkWidget* image, GtkWidget* label) {
+         gtk_widget_show(image);
+         gtk_widget_hide(label);
+      });
+      gtk_widget_show(toolbar);
    }
-   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar_main), me->_toolbarStyle);
-   gtk_toolbar_set_style(GTK_TOOLBAR(toolbar_search), me->_toolbarStyle);
+   else if (style == "text-only")
+   {
+      me->_toolbarStyle = RG_TOOLBAR_TEXT;
+      traverseToolbarButtons(toolbar, [](GtkWidget* box, GtkWidget* image, GtkWidget* label) {
+         gtk_widget_hide(image);
+         gtk_widget_show(label);
+      });
+      gtk_widget_show(toolbar);
+   }
+   else if (style == "below")
+   {
+      me->_toolbarStyle = RG_TOOLBAR_BOTH;
+      traverseToolbarButtons(toolbar, [](GtkWidget* box, GtkWidget* image, GtkWidget* label) {
+         gtk_orientable_set_orientation(GTK_ORIENTABLE(box), GTK_ORIENTATION_VERTICAL);
+         gtk_widget_show(image);
+         gtk_widget_show(label);
+      });
+      gtk_widget_show(toolbar);
+   }
+   else if (style == "beside")
+   {
+      me->_toolbarStyle = RG_TOOLBAR_BOTH_HORIZ;
+      traverseToolbarButtons(toolbar, [](GtkWidget* box, GtkWidget* image, GtkWidget* label) {
+         gtk_orientable_set_orientation(GTK_ORIENTABLE(box), GTK_ORIENTATION_HORIZONTAL);
+         gtk_widget_show(image);
+         gtk_widget_show(label);
+      });
+      gtk_widget_show(toolbar);
+   }
+   else
+   {
+      me->_toolbarStyle = RG_TOOLBAR_HIDE;
+      gtk_widget_hide(toolbar);
+   }
 }
 
 void RGMainWindow::cbFindToolClicked(GSimpleAction *action,

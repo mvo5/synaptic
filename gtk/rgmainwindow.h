@@ -44,7 +44,13 @@ using namespace std;
 #include "rgpkgdetails.h"
 #include "rglogview.h"
 
-#define TOOLBAR_HIDE -1
+typedef enum {
+   RG_TOOLBAR_HIDE = -1,
+   RG_TOOLBAR_ICONS = 0,
+   RG_TOOLBAR_TEXT = 1,
+   RG_TOOLBAR_BOTH = 2,
+   RG_TOOLBAR_BOTH_HORIZ = 3
+} RGToolbarStyle;
 
 class RGSourcesWindow;
 class RGPreferencesWindow;
@@ -86,7 +92,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    RPackageLister *_lister;
 
    // interface stuff
-   GtkToolbarStyle _toolbarStyle; // hide, small, normal toolbar
+   RGToolbarStyle _toolbarStyle; // hide, small, normal toolbar
 
    GtkTreeModel *_pkgList;   // the custom list model for the packages
    GtkWidget *_treeView;     // the display widget

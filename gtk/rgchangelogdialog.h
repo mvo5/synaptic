@@ -22,6 +22,7 @@
 #include <rpackage.h>
 #include <rgfetchprogress.h>
 #include <rguserdialog.h>
+#include <rgutils.h>
 #include <cassert>
 
-void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
+task<nothing> ShowChangelogDialog(RGWindow *me, RPackage *pkg);

@@ -290,5 +290,18 @@ int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
       return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
+task<int> RGGtkBuilderUserDialog::co_run(const char *name, bool return_gtk_response)
+{
+   if(name != NULL)
+      init(name);
+
+   res = (GtkResponseType) co_await co_run_dialog(GTK_DIALOG(_dialog));
+   gtk_widget_hide(_dialog);
+
+   if(return_gtk_response)
+      co_return res;
+   else
+      co_return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
+}
 
 // vim:sts=4:sw=4

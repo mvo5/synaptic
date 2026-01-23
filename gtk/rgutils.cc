@@ -315,4 +315,48 @@ const char *utf8(const char *str)
    }
    return escaped;
 }
+
+void g_main_context_schedule(std::coroutine_handle<> h)
+{
+   g_main_context_invoke(
+      g_main_context_default(),
+      [](gpointer data) -> gboolean {
+         auto h = std::coroutine_handle<>::from_address(data);
+         h.resume();
+         return G_SOURCE_REMOVE;
+      },
+      h.address()
+   );
+}
+
+struct DialogResponseCallback {
+   std::function<void(int)> func;
+};
+
+static void destroy_dialog_response_callback(gpointer data, GClosure *)
+{
+   delete static_cast<DialogResponseCallback *>(data);
+}
+
+static void on_dialog_response(GtkDialog *, int response_id, gpointer user_data)
+{
+   auto *callback = static_cast<DialogResponseCallback *>(user_data);
+   callback->func(response_id);
+}
+
+Awaiter<int> co_run_dialog(GtkDialog *dialog)
+{
+   gtk_window_present(GTK_WINDOW(dialog));
+   return Awaiter<int> {
+      [dialog](std::function<void(int)> callback) {
+         auto *handler = new DialogResponseCallback { std::move(callback) };
+         g_signal_connect_data(dialog, "response",
+            G_CALLBACK(on_dialog_response),
+            handler,
+            destroy_dialog_response_callback,
+            G_CONNECT_DEFAULT);
+      }
+   };
+}
+
 // vim:ts=3:sw=3:et

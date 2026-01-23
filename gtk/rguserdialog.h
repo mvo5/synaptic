@@ -27,6 +27,7 @@
 
 #include "ruserdialog.h"
 #include "rgwindow.h"
+#include "rgutils.h"
 
 class RGUserDialog : public RUserDialog
 {
@@ -87,6 +88,7 @@ class RGGtkBuilderUserDialog : public RGUserDialog
     }
 
     int run(const char *name=NULL, bool return_gtk_response=false);
+    task<int> co_run(const char *name=NULL, bool return_gtk_response=false);
     GtkBuilder *getGtkBuilder() { return builder; };
 };
 #endif

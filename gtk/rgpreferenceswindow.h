@@ -97,7 +97,9 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    static void cbToggleColumn(GtkWidget *self, char *path, void *data);
 
    // callbacks
-   static void changeFontAction(GtkWidget *self, void *data);
+   static void changeDefaultFontAction(GtkWidget *self, void *data);
+   static void changeTerminalFontAction(GtkWidget *self, void *data);
+   task<nothing> co_changeFont(const char *propName, const char *defaultValue);
    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
    static void checkbuttonUserTerminalFontToggled(GtkWidget *self,
                                                   void *data);
@@ -123,6 +125,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    static void clearCacheAction(GtkWidget *self, void *data);
 
    static void colorClicked(GtkWidget *self, void *data);
+   task<nothing> co_colorClicked(int status);
    static void buttonAuthenticationClicked(GtkWidget *self, void *data);
 
    static void useProxyToggled(GtkWidget *self, void *data);

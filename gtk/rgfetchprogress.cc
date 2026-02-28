@@ -70,7 +70,7 @@ bool RGFetchProgress::close()
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-   : RGGtkBuilderWindow(win, "fetch"), _cursorDirty(false), _sock(NULL)
+   : RGGtkBuilderWindow(win, "fetch"), _cursorDirty(false)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
@@ -125,9 +125,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    g_signal_connect(GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
                                  "clicked",
                                  G_CALLBACK(stopDownload), this);
-
-   PangoContext *context = gdk_pango_context_get();
-   _layout = pango_layout_new(context);
 
    gtk_widget_realize(_win);
 
@@ -369,11 +366,7 @@ void RGFetchProgress::Stop()
 {
    //cout << "RGFetchProgress::Stop()" << endl;
    RGFlushInterface();
-   if(_sock != NULL) {
-      gtk_widget_destroy(_sock);
-   } else {
-      hide();
-   }
+   hide();
    pkgAcquireStatus::Stop();
 
    //FIXME: this needs to be handled in a better way (gtk-2 maybe?)

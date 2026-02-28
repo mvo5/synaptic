@@ -83,9 +83,6 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
 
    GtkWidget *_popupMenu; // Popup menu of the terminal
 
-   // if we run embedded
-   GtkWidget *_sock;
-
    bool _startCounting;
 
    RGUserDialog *_userDialog;

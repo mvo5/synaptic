@@ -57,7 +57,7 @@ using namespace std;
 
 
 RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main) 
-   : RInstallProgress(), RGGtkBuilderWindow(main, "zvtinstallprogress"), _sock(NULL)
+   : RInstallProgress(), RGGtkBuilderWindow(main, "zvtinstallprogress")
 {
    setTitle(_("Applying Changes"));
 
@@ -173,11 +173,7 @@ void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)
    } 
 
    RGFlushInterface();
-   if(me->_sock != NULL) {
-      gtk_widget_destroy(me->_sock);
-   } else {
-      me->hide();
-   }
+   me->hide();
 }
 
 bool RGTermInstallProgress::close()
@@ -185,19 +181,6 @@ bool RGTermInstallProgress::close()
    stopShell(NULL, this);
    return true;
 }
-
-gboolean RGTermInstallProgress::zvtFocus (GtkWidget *widget,
-					 GdkEventButton *event,
-					 gpointer user_data)
-{
-   //cout << "zvtFocus" << endl;
-    
-   gtk_widget_grab_focus(widget);
-    
-   return FALSE;
-}
-
-
 
 
 pkgPackageManager::OrderResult 

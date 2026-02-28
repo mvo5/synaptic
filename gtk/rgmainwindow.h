@@ -196,7 +196,7 @@ public:
    };
 
  public:
-   RGMainWindow(RPackageLister *packLister, string name);
+   RGMainWindow(GtkApplication *app, RPackageLister *packLister, string name);
    virtual ~RGMainWindow() {};
 
    void refreshTable(RPackage *selectedPkg = NULL,bool setAdjustments=true);

@@ -330,7 +330,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 					   RPackageLister *lister)
 
    : RInstallProgress(), RGGtkBuilderWindow(main, "rgdebinstall_progress"),
-     _totalActions(0), _progress(0), _sock(0), _userDialog(0)
+     _totalActions(0), _progress(0), _userDialog(0)
 
 {
    // timeout in sec until the expander is expanded 
@@ -795,11 +795,7 @@ void RGDebInstallProgress::finishUpdate()
    _config->Set("Synaptic::closeZvt", autoClose	? "true" : "false");
 
    // hide and finish
-   if(_sock != NULL) {
-      gtk_widget_destroy(_sock);
-   } else {
-      hide();
-   }
+   hide();
 }
 
 void RGDebInstallProgress::prepare(RPackageLister *lister)

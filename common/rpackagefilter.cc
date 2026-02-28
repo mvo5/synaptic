@@ -807,6 +807,7 @@ bool RFilePackageFilter::addFile(string file)
      pkgs.insert(pkgs.begin(), string(str));
   }
   in.close();
+  return true;
 }
 
 bool RFilePackageFilter::filter(RPackage *pkg)

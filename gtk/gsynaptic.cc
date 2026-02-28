@@ -61,76 +61,34 @@ typedef enum {
 } UpdateType;
 
 
-bool ShowHelp(CommandLine & CmdL)
-{
-   std::cout <<
-#ifndef HAVE_RPM
-      PACKAGE " for Debian " VERSION
-#else
-      _config->Find("Synaptic::MyName", PACKAGE) + " " VERSION
-#endif
-      "\n\n" <<
-      _("Usage: synaptic [options]\n") <<
-      _("-h   This help text\n") <<
-      _("-r   Open in the repository screen\n") <<
-      _("-f=? Give an alternative filter file\n") <<
-      _("-t   Give an alternative main window title (e.g. hostname with `uname -n`)\n") <<
-      _("-i=? Start with the initial Filter with given name\n") <<
-      _("-o=? Set an arbitrary configuration option, eg -o dir::cache=/tmp\n")<<
-      _("--upgrade-mode  Call Upgrade and display changes\n") <<
-      _("--dist-upgrade-mode  Call DistUpgrade and display changes\n") <<
-      _("--update-at-startup  Call \"Reload\" on startup\n")<<
-      _("--non-interactive Never prompt for user input\n") << 
-      _("--task-window Open with task window\n") <<
-      _("--add-cdrom Add a cdrom at startup (needs path for cdrom)\n") <<
-      _("--ask-cdrom Ask for adding a cdrom and exit\n") <<
-      _("--test-me-harder  Run test in a loop\n");
-   exit(0);
-}
+static gint applicationHandleLocalOptions(GApplication* app,
+                                          GVariantDict* options,
+                                          gpointer user_data);
+static void applicationStartup(GApplication* app, gpointer user_data);
+static void applicationActivate(GApplication* app, gpointer user_data);
 
-CommandLine::Args Args[] = {
-   {
-   'h', "help", "help", 0}
-   , {
-   'f', "filter-file", "Volatile::filterFile", CommandLine::HasArg}
-   , {
-   'r', "repositories", "Volatile::startInRepositories", 0}
-   , {
-   'i', "initial-filter", "Volatile::initialFilter", CommandLine::HasArg}
-   , {
-   0, "set-selections", "Volatile::Set-Selections", 0}
-   , {
-   0, "set-selections-file", "Volatile::Set-Selections-File", CommandLine::HasArg}
-   , {
-   0, "non-interactive", "Volatile::Non-Interactive", 0}
-   , {
-   0, "upgrade-mode", "Volatile::Upgrade-Mode", 0}
-   , {
-   0, "dist-upgrade-mode", "Volatile::DistUpgrade-Mode", 0}
-   , {
-   0, "add-cdrom", "Volatile::AddCdrom-Mode", CommandLine::HasArg}
-   , {
-   0, "ask-cdrom", "Volatile::AskCdrom-Mode", 0}
-   , {
-   0, "parent-window-id", "Volatile::ParentWindowId", CommandLine::HasArg}
-   , {
-   0, "progress-str", "Volatile::InstallProgressStr", CommandLine::HasArg} 
-   , {
-   0, "finish-str", "Volatile::InstallFinishedStr", CommandLine::HasArg} 
-   , {
-   't', "title", "Volatile::MyName", CommandLine::HasArg}
-   , {
-   0, "update-at-startup", "Volatile::Update-Mode", 0}
-   , {
-   0, "hide-main-window", "Volatile::HideMainwindow", 0}
-   , {
-   0, "task-window", "Volatile::TaskWindow", 0}
-   , {
-   0, "test-me-harder", "Volatile::TestMeHarder", 0}
-   , {
-   'o', "option", 0, CommandLine::ArbItem}
-   , {
-   0, 0, 0, 0}
+
+static GOptionEntry option_entries[] = {
+   { "repositories",          'r',  G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Open in the repository screen"), nullptr },
+   { "filter-file",           'f',  G_OPTION_FLAG_NONE,   G_OPTION_ARG_FILENAME,     nullptr, N_("Give an alternative filter file"), N_("<filter-file>") },
+   { "title",                 't',  G_OPTION_FLAG_NONE,   G_OPTION_ARG_STRING,       nullptr, N_("Give an alternative main window title (e.g. hostname with `uname -n`)"), N_("title") },
+   { "initial-filter",        'i',  G_OPTION_FLAG_NONE,   G_OPTION_ARG_STRING,       nullptr, N_("Start with the initial filter with given name"), N_("<filter-name>") },
+   { "option",                'o',  G_OPTION_FLAG_NONE,   G_OPTION_ARG_STRING_ARRAY, nullptr, N_("Set an arbitrary configuration option, eg -o dir::cache=/tmp"), N_("<option>") },
+   { "upgrade-mode",          '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Call Upgrade and display changes"), nullptr },
+   { "dist-upgrade-mode",     '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Call DistUpgrade and display changes"), nullptr },
+   { "update-at-startup",     '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Call \"Reload\" on startup"), nullptr },
+   { "non-interactive",       '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Never prompt for user input"), nullptr },
+   { "task-window",           '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Open with task window"), nullptr },
+   { "add-cdrom",             '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_STRING,       nullptr, N_("Add a cdrom at startup"), N_("<path-for-cdrom>") },
+   { "ask-cdrom",             '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Ask for adding a cdrom and exit"), nullptr },
+   { "test-me-harder",        '\0', G_OPTION_FLAG_NONE,   G_OPTION_ARG_NONE,         nullptr, N_("Run test in a loop"), nullptr },
+   { "set-selections",        '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,         nullptr, nullptr, nullptr },
+   { "set-selections-file",   '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING,       nullptr, nullptr, nullptr },
+   { "parent-window-id",      '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING,       nullptr, nullptr, nullptr },
+   { "progress-str",          '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING,       nullptr, nullptr, nullptr },
+   { "finish-str",            '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_STRING,       nullptr, nullptr, nullptr },
+   { "hide-main-window",      '\0', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,         nullptr, nullptr, nullptr },
+   { 0 }
 };
 
 
@@ -407,28 +365,87 @@ int main(int argc, char **argv)
 #endif
 #endif
 
-   if (!gtk_init_check(&argc, &argv)) {
-      std::cout <<
-         _("Failed to initialize GTK.\n") <<
-         "\n" <<
-         _("Probably you're running Synaptic on Wayland with root permission.\n") <<
-         _("Please restart your session without Wayland, or run Synaptic without root permission\n");
-      exit(1);
-   };
-   //XSynchronize(dpy, 1);
-   
-   // read the cmdline
-   CommandLine CmdL(Args, _config);
+   GtkApplication *app = gtk_application_new(
+      "io.github.mvo5.synaptic",
+      G_APPLICATION_DEFAULT_FLAGS);
 
-   if (CmdL.Parse(argc, (const char **)argv) == false) {
-      RGUserDialog userDialog;
-      userDialog.showErrors();
-      exit(1);
+   g_application_add_main_option_entries(G_APPLICATION(app), option_entries);
+
+   g_signal_connect(app, "startup",
+      G_CALLBACK(applicationStartup), nullptr);
+   g_signal_connect(app, "handle-local-options",
+      G_CALLBACK(applicationHandleLocalOptions), nullptr);
+   g_signal_connect(app, "activate",
+      G_CALLBACK(applicationActivate), nullptr);
+
+   int status = g_application_run(G_APPLICATION(app), argc, argv);
+   g_object_unref(app);
+
+   return status;
+}
+
+static gint applicationHandleLocalOptions(GApplication* app,
+                                          GVariantDict* options,
+                                          gpointer user_data)
+{
+   gboolean flag;
+   gchar *arg;
+   gchar **args;
+
+   if (g_variant_dict_lookup(options, "repositories", "b", &flag))
+      _config->Set("Volatile::startInRepositories", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "filter-file", "&s", &arg))
+      _config->Set("Volatile::filterFile", arg);
+   if (g_variant_dict_lookup(options, "title", "&s", &arg))
+      _config->Set("Volatile::MyName", arg);
+   if (g_variant_dict_lookup(options, "initial-filter", "&s", &arg))
+      _config->Set("Volatile::initialFilter", arg);
+   if (g_variant_dict_lookup(options, "option", "^a&s", &args)) {
+      for (int i = 0; args[i] != nullptr; ++i) {
+         arg = args[i];
+         printf ("OPTION %s\n", arg); fflush(stdout);
+         const char *p = strchr(arg, '=');
+         if (p)
+            _config->Set(string(arg, p - arg), p + 1);
+         else
+            g_warning (_("Option %s: Configuration item specification must have an =<val>."), arg);
+      }
+      g_free(args);
    }
-   
-   if (_config->FindB("help") == true)
-      ShowHelp(CmdL);
+   if (g_variant_dict_lookup(options, "upgrade-mode", "b", &flag))
+      _config->Set("Volatile::Upgrade-Mode", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "dist-upgrade-mode", "b", &flag))
+      _config->Set("Volatile::DistUpgrade-Mode", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "update-at-startup", "b", &flag))
+      _config->Set("Volatile::Update-Mode", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "non-interactive", "b", &flag))
+      _config->Set("Volatile::Non-Interactive", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "task-window", "b", &flag))
+      _config->Set("Volatile::TaskWindow", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "add-cdrom", "&s", &arg))
+      _config->Set("Volatile::AddCdrom-Mode", arg);
+   if (g_variant_dict_lookup(options, "ask-cdrom", "b", &flag))
+      _config->Set("Volatile::AskCdrom-Mode", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "test-me-harder", "b", &flag))
+      _config->Set("Volatile::TestMeHarder", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "set-selections", "b", &flag))
+      _config->Set("Volatile::Set-Selections", flag ? "true" : "false");
+   if (g_variant_dict_lookup(options, "set-selections-file", "&s", &arg))
+      _config->Set("Volatile::Set-Selections-File", arg);
+   if (g_variant_dict_lookup(options, "parent-window-id", "&s", &arg))
+      _config->Set("Volatile::ParentWindowId", arg);
+   if (g_variant_dict_lookup(options, "progress-str", "&s", &arg))
+      _config->Set("Volatile::InstallProgressStr", arg);
+   if (g_variant_dict_lookup(options, "finish-str", "&s", &arg))
+      _config->Set("Volatile::InstallFinishedStr", arg);
+   if (g_variant_dict_lookup(options, "hide-main-window", "b", &flag))
+      _config->Set("Volatile::HideMainwindow", flag ? "true" : "false");
 
+   return -1;
+}
+
+static void applicationStartup(GApplication* app, gpointer user_data)
+{
    if (getuid() != 0) {
       RGUserDialog userDialog;
       userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
@@ -447,9 +464,6 @@ int main(int argc, char **argv)
       exit(1);
    }
 
-   bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
-   bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
-
    // check if there is another application runing and
    // act accordingly
    check_and_aquire_lock();
@@ -462,9 +476,20 @@ int main(int argc, char **argv)
    // init the static pkgStatus class. this loads the status pixmaps 
    // and colors
    RGPackageStatus::pkgStatus.init();
+}
+
+static void applicationActivate(GApplication* app, gpointer user_data)
+{
+   if (auto window = gtk_application_get_active_window(GTK_APPLICATION(app))) {
+      gtk_window_present(window);
+      return;
+   }
+
+   bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
+   bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
    RPackageLister *packageLister = new RPackageLister();
-   RGMainWindow *mainWindow = new RGMainWindow(packageLister, "main");
+   RGMainWindow *mainWindow = new RGMainWindow(GTK_APPLICATION(app), packageLister, "main");
 
    // install a sigusr1 signal handler and put window into 
    // foreground when called. use the io_watch trick because gtk is not
@@ -472,12 +497,12 @@ int main(int argc, char **argv)
    // SIGUSR1 handling via pipes  
    if (pipe (sigterm_unix_signal_pipe_fds) != 0) {
       g_warning ("Could not setup pipe, errno=%d", errno);
-      return 1;
+      exit(1);
    }
    sigterm_iochn = g_io_channel_unix_new (sigterm_unix_signal_pipe_fds[0]);
    if (sigterm_iochn == NULL) {
       g_warning("Could not create GIOChannel");
-      return 1;
+      exit(1);
    }
    g_io_add_watch (sigterm_iochn, G_IO_IN, sigterm_iochn_data, mainWindow);
    signal (SIGUSR1, handle_sigusr1);
@@ -514,7 +539,7 @@ int main(int argc, char **argv)
       mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
    } else if(_config->FindB("Volatile::AskCdrom-Mode",false)) {
       mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
-      return 0;
+      exit(0);
    }
 
    //no need to open a cache that will invalid after the update
@@ -601,19 +626,13 @@ int main(int argc, char **argv)
 
    if (NonInteractive) {
       mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
+      exit(0);
    } else {
       welcome_dialog(mainWindow);
       gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
                                           mainWindow->getGtkBuilder(),
                                           "entry_fast_search")));
-#if 0
-      update_check(mainWindow, packageLister);
-#endif 
-      gtk_main();
    }
-
-   return 0;
 }
-
 
 // vim:sts=4:sw=4

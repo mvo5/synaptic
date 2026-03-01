@@ -63,6 +63,9 @@ void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
       gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
    }
    
+   // place the cursor at the start
+   gtk_text_buffer_place_cursor(buffer, &start);
+   
    dia.run();
 
    // clean up

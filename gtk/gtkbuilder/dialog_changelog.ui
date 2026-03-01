@@ -57,6 +57,7 @@
                 <property name="label" translatable="yes">Complete changelog of the latest version:</property>
                 <property name="use_markup">True</property>
                 <property name="xalign">0</property>
+                <property name="mnemonic_widget">textview_changelog</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -78,7 +79,10 @@
                     <property name="editable">False</property>
                     <property name="left_margin">3</property>
                     <property name="right_margin">3</property>
-                    <property name="cursor_visible">False</property>
+                    <property name="cursor_visible">True</property>
+                    <style>
+                      <class name="hidden_cursor"></class>
+                    </style>
                   </object>
                 </child>
               </object>

@@ -43,7 +43,8 @@ class SourcesList {
       RpmDir = 1 << 6,
       RpmSrcDir = 1 << 7,
       Repomd = 1 << 8,
-      RepomdSrc = 1 << 9
+      RepomdSrc = 1 << 9,
+      Deb822 = 1 << 10  // New type for Deb822 format
    };
 
    struct SourceRecord {
@@ -55,12 +56,13 @@ class SourcesList {
       unsigned short NumSections;
       string Comment;
       string SourceFile;
+      bool PreserveOriginalURI;  // Flag to preserve original URI format
 
       bool SetType(string);
       string GetType();
       bool SetURI(string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
+      SourceRecord():Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false) {
       }
       ~SourceRecord() {
          if (Sections)
@@ -96,6 +98,11 @@ class SourcesList {
    bool ReadSourceDir(string Dir);
    bool ReadSources();
    bool UpdateSources();
+
+   // New methods for Deb822 support
+   bool ReadDeb822SourcePart(string listpath);
+   bool ReadDeb822SourceDir(string Dir);
+   bool WriteDeb822Source(SourceRecord *record, string path);
 
    VendorRecord *AddVendor(string VendorID,
                            string FingerPrint, string Description);

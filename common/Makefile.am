@@ -1,5 +1,3 @@
-
-
 noinst_LIBRARIES = libsynaptic.a
 
 AM_CPPFLAGS = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ \
@@ -34,8 +32,12 @@ libsynaptic_a_SOURCES =\
 	raptoptions.h\
 	rsources.cc \
 	rsources.h \
+	rsource_deb822.cc \
+	rsource_deb822.h \
 	rcacheactor.cc \
 	rcacheactor.h \
+	rpackagemanager.cc \
+	rpackagemanager.h \ 
 	rpackagelistactor.cc \
 	rpackagelistactor.h \
 	rtagcollbuilder.cc \

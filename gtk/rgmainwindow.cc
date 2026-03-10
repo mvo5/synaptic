@@ -1699,13 +1699,15 @@ void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
 {
    RGMainWindow *me = (RGMainWindow*)data;
 
-   RPackage *pkg = me->selectedPackage();
-   if(pkg == NULL)
-      return;
-    
-   me->setInterfaceLocked(TRUE);
-   ShowChangelogDialog(me, pkg);
-   me->setInterfaceLocked(FALSE);
+   start_task([me]() -> task<nothing> {
+      RPackage *pkg = me->selectedPackage();
+      if (pkg != NULL) {
+         me->setInterfaceLocked(TRUE);
+         co_await ShowChangelogDialog(me, pkg);
+         me->setInterfaceLocked(FALSE);
+      }
+      co_return nothing {};
+   });
 }
 
 

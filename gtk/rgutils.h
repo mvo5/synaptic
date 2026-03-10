@@ -24,6 +24,12 @@
 #define _RGMISC_H_
 
 #include <vector>
+#include <functional>
+#include <coroutine>
+#include <exception>
+#include <optional>
+#include <utility>
+#include <type_traits>
 
 enum {
    PIXMAP_COLUMN,
@@ -59,5 +65,197 @@ bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);
 
 std::string MarkupEscapeString(std::string str);
 std::string MarkupUnescapeString(std::string str);
+
+struct nothing {};
+
+void g_main_context_schedule(std::coroutine_handle<> h);
+
+template <typename F>
+void start_task(F&& f)
+{
+   f().start_detached();
+}
+
+template <typename T>
+struct task_awaitable;
+
+template <typename T>
+struct task_awaitable_owned;
+
+template <typename T>
+class task {
+public:
+   struct promise_type {
+      std::optional<T> value;
+      std::exception_ptr exception;
+      std::coroutine_handle<> continuation;
+      bool detached = false;
+
+      task get_return_object() {
+         return task {
+            std::coroutine_handle<promise_type>::from_promise(*this)
+         };
+      }
+
+      std::suspend_always initial_suspend() noexcept { return {}; }
+      auto final_suspend() noexcept {
+         struct final_awaiter {
+            bool await_ready() const noexcept { return false; }
+
+            void await_suspend(std::coroutine_handle<promise_type> h) const noexcept
+            {
+               auto &promise = h.promise();
+               if (promise.continuation) {
+                  promise.continuation.resume();
+               }
+               if (promise.detached) {
+                  h.destroy();
+               }
+            }
+
+            void await_resume() const noexcept {}
+         };
+
+         return final_awaiter {};
+      }
+
+      void return_value(T v) { value = std::move(v); }
+      void unhandled_exception() { exception = std::current_exception(); }
+   };
+
+   using handle_t = std::coroutine_handle<promise_type>;
+
+   explicit task(handle_t h) : h_(h) {}
+   task(task&& o) noexcept : h_(o.h_) { o.h_ = {}; }
+   ~task() { if (h_) h_.destroy(); }
+
+   T result() {
+      if (h_.promise().exception)
+         std::rethrow_exception(h_.promise().exception);
+      if (!h_.promise().value) {
+         if constexpr (std::is_same_v<T, nothing>) {
+            return nothing {};
+         }
+      }
+      return std::move(*h_.promise().value);
+   }
+
+   handle_t handle() const { return h_; }
+
+   void start_detached()
+   {
+      if (!h_)
+         return;
+
+      h_.promise().detached = true;
+      g_main_context_schedule(h_);
+      h_ = {};
+   }
+
+   auto operator co_await() & { return task_awaitable<T>{*this}; }
+   auto operator co_await() && { return task_awaitable_owned<T>{std::move(*this)}; }
+
+private:
+   handle_t h_;
+};
+
+struct sleep_ms {
+   int ms;
+
+   bool await_ready() const noexcept { return false; }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      auto* source = g_timeout_source_new(ms);
+      g_source_set_callback(
+         source,
+         [](gpointer data) -> gboolean {
+            auto h = std::coroutine_handle<>::from_address(data);
+            h.resume();
+            return G_SOURCE_REMOVE;
+         },
+         h.address(),
+         nullptr
+      );
+      g_source_attach(source, g_main_context_default());
+      g_source_unref(source);
+   }
+
+   void await_resume() const noexcept {}
+};
+
+template <typename T>
+struct task_awaitable {
+   task<T>& t;
+
+   bool await_ready() const noexcept { return false; }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      t.handle().promise().continuation = h;
+      t.handle().resume();
+   }
+
+   T await_resume()
+   {
+      return t.result();
+   }
+};
+
+template <typename T>
+struct task_awaitable_owned {
+   task<T> t;
+
+   bool await_ready() const noexcept { return false; }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      t.handle().promise().continuation = h;
+      t.handle().resume();
+   }
+
+   T await_resume()
+   {
+      return t.result();
+   }
+};
+
+template<typename T>
+struct Awaiter {
+   using F = std::function<void(std::function<void(T)>)>;
+
+   F func;
+   std::coroutine_handle<> handle;
+   std::optional<T> result;
+   std::exception_ptr exception;
+
+   explicit Awaiter(F&& f) : func(std::forward<F>(f)) {}
+
+   bool await_ready() const { return false; }
+
+   void await_suspend(std::coroutine_handle<> h) {
+      handle = h;
+      try {
+         func([this](T value) {
+            result = std::move(value);
+            if (handle) {
+               handle.resume();
+            }
+         });
+      } catch (...) {
+         exception = std::current_exception();
+         handle.resume();
+      }
+   }
+
+   T await_resume() {
+      if (exception) {
+         std::rethrow_exception(exception);
+      }
+      return std::move(result.value());
+   }
+};
+
+Awaiter<int> co_run_dialog(GtkDialog *dialog);
 
 #endif

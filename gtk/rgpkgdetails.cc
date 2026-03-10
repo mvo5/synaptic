@@ -182,7 +182,11 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 {
    RPackage *pkg = (RPackage*)data;
    RGWindow *parent = (RGWindow*)g_object_get_data(G_OBJECT(button), "me");
-   ShowChangelogDialog(parent, pkg);
+
+   start_task([parent, pkg]() -> task<nothing> {
+      co_await ShowChangelogDialog(parent, pkg);
+      co_return nothing {};
+   });
 }
 
 gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label, 

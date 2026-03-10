@@ -20,7 +20,7 @@
 
 #include "rgchangelogdialog.h"
 
-void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
+task<nothing> ShowChangelogDialog(RGWindow *me, RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(me);;
    status->setDescription(_("Downloading Changelog"),
@@ -63,7 +63,7 @@ void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
       gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
    }
    
-   dia.run();
+   co_await dia.co_run();
 
    // clean up
    delete status;

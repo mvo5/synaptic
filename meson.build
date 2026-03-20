@@ -226,29 +226,31 @@ foreach lang : ['C', 'es', 'hr', 'sv']
   )
 endforeach
 
-doc_html_files = files(
-  'doc/html/C/apa.html',
-  'doc/html/C/apas02.html',
-  'doc/html/C/apas03.html',
-  'doc/html/C/ar01s02.html',
-  'doc/html/C/ar01s03.html',
-  'doc/html/C/ar01s04.html',
-  'doc/html/C/ar01s05.html',
-  'doc/html/C/ar01s06.html',
-  'doc/html/C/ar01s07.html',
-  'doc/html/C/ar01s08.html',
-  'doc/html/C/index.html',
-)
-install_data(doc_html_files, install_dir: join_paths(get_option('datadir'), 'synaptic', 'html'))
-install_data(
-  files(
-    'help/C/figures/synaptic-categories.png',
-    'help/C/figures/synaptic-filter.png',
-    'help/C/figures/synaptic-packagedetails.png',
-    'help/C/figures/synaptic-packagelist.png',
-    'help/C/figures/synaptic-repositories.png',
-    'help/C/figures/synaptic-start.png',
-    'help/C/figures/synaptic-toolbar.png',
-  ),
-  install_dir: join_paths(get_option('datadir'), 'synaptic', 'html', 'figures'),
-)
+if fs.exists('doc/html/C/index.html')
+  doc_html_files = files(
+    'doc/html/C/apa.html',
+    'doc/html/C/apas02.html',
+    'doc/html/C/apas03.html',
+    'doc/html/C/ar01s02.html',
+    'doc/html/C/ar01s03.html',
+    'doc/html/C/ar01s04.html',
+    'doc/html/C/ar01s05.html',
+    'doc/html/C/ar01s06.html',
+    'doc/html/C/ar01s07.html',
+    'doc/html/C/ar01s08.html',
+    'doc/html/C/index.html',
+  )
+  install_data(doc_html_files, install_dir: join_paths(get_option('datadir'), 'synaptic', 'html'))
+  install_data(
+    files(
+      'help/C/figures/synaptic-categories.png',
+      'help/C/figures/synaptic-filter.png',
+      'help/C/figures/synaptic-packagedetails.png',
+      'help/C/figures/synaptic-packagelist.png',
+      'help/C/figures/synaptic-repositories.png',
+      'help/C/figures/synaptic-start.png',
+      'help/C/figures/synaptic-toolbar.png',
+    ),
+    install_dir: join_paths(get_option('datadir'), 'synaptic', 'html', 'figures'),
+  )
+endif

@@ -70,6 +70,20 @@ void RGFlushInterface()
    }
 }
 
+static void AddRun0Environment(std::vector<const gchar*> &prefix)
+{
+   if(getenv("DISPLAY") != NULL)
+      prefix.push_back("--setenv=DISPLAY");
+   if(getenv("WAYLAND_DISPLAY") != NULL)
+      prefix.push_back("--setenv=WAYLAND_DISPLAY");
+   if(getenv("XAUTHORITY") != NULL)
+      prefix.push_back("--setenv=XAUTHORITY");
+   if(getenv("XDG_RUNTIME_DIR") != NULL)
+      prefix.push_back("--setenv=XDG_RUNTIME_DIR");
+   if(getenv("DBUS_SESSION_BUS_ADDRESS") != NULL)
+      prefix.push_back("--setenv=DBUS_SESSION_BUS_ADDRESS");
+}
+
 /*
  * SizeToStr: Converts a size long into a human-readable SI string
  * ----------------------------------------------------
@@ -121,7 +135,7 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
        return true;
     }
     bool getuidbyname = false;
-    // try pkexec first, then sudo
+    // try pkexec first, then sudo, then run0
     sudo_user = getenv("PKEXEC_UID");
     
     if (sudo_user == NULL) {
@@ -155,6 +169,13 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
     if(FileExists("/usr/bin/sudo") && sudo_user != NULL)
     {
        prefix.push_back("/usr/bin/sudo");
+       prefix.push_back("-u");
+       prefix.push_back(sudo_user);
+    }
+    else if(FileExists("/usr/bin/run0") && sudo_user != NULL)
+    {
+       prefix.push_back("/usr/bin/run0");
+       AddRun0Environment(prefix);
        prefix.push_back("-u");
        prefix.push_back(sudo_user);
     }

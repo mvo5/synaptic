@@ -1,2 +1,28 @@
 #!/bin/sh
-pkexec "/usr/sbin/synaptic" "$@"
+
+if command -v pkexec >/dev/null 2>&1; then
+	exec pkexec "/usr/sbin/synaptic" "$@"
+fi
+
+if command -v run0 >/dev/null 2>&1; then
+	set -- "/usr/sbin/synaptic" "$@"
+	if [ -n "${DBUS_SESSION_BUS_ADDRESS+x}" ]; then
+		set -- "--setenv=DBUS_SESSION_BUS_ADDRESS" "$@"
+	fi
+	if [ -n "${XDG_RUNTIME_DIR+x}" ]; then
+		set -- "--setenv=XDG_RUNTIME_DIR" "$@"
+	fi
+	if [ -n "${XAUTHORITY+x}" ]; then
+		set -- "--setenv=XAUTHORITY" "$@"
+	fi
+	if [ -n "${WAYLAND_DISPLAY+x}" ]; then
+		set -- "--setenv=WAYLAND_DISPLAY" "$@"
+	fi
+	if [ -n "${DISPLAY+x}" ]; then
+		set -- "--setenv=DISPLAY" "$@"
+	fi
+	exec run0 "$@"
+fi
+
+echo "synaptic-pkexec: pkexec or run0 is required" >&2
+exit 1

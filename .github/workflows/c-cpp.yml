@@ -18,14 +18,15 @@ jobs:
         sudo apt update
         sudo apt build-dep -y ./
         #Devscripts for bringing in debuild
-        sudo apt install devscripts -y
+        sudo apt install meson ninja-build appstream libpolkit-gobject-1-dev devscripts -y
 
-    - name: autogen.sh
-      run: ./autogen.sh
     - name: configure
-      run: ./configure
-    - name: make
-      run: make
+      run: |
+        mkdir builddir
+        meson setup builddir
+    - name: build
+      run: |
+        meson compile -C builddir
     - name: debuild
       run: debuild -B -us -uc
     - name: install deb

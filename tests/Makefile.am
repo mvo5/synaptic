@@ -1,5 +1,5 @@
 
-AM_CPPFLAGS = -I${top_srcdir}/common -I${top_srcdir}/gtk \
+AM_CPPFLAGS = -I${top_srcdir} -I${top_srcdir}/common -I${top_srcdir}/gtk \
 	@GTK_CFLAGS@ @VTE_CFLAGS@ @LP_CFLAGS@ $(LIBTAGCOLL_CFLAGS) $(LIBEPT_CFLAGS) -O0 -g3
 
 noinst_PROGRAMS = test_rpackage test_rpackageview test_gtkpkglist test_rpackagefilter
@@ -22,5 +22,4 @@ test_gtkpkglist_SOURCES= test_gtkpkglist.cc \
 	${top_srcdir}/gtk/rgpkgtreeview.cc\
 	${top_srcdir}/gtk/gtkpkglist.cc
 
-CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~) 
-
+CLEANFILES= $(wildcard *_wrap.*) $(wildcard *~)

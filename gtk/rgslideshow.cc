@@ -1,15 +1,13 @@
-#include "config.h"
-
-#include <sys/types.h>
-#include <dirent.h>
-
-#include <gtk/gtk.h>
-
-#include <algorithm>
-#include <string>
-#include <vector>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgslideshow.h"
+
+#include <algorithm>
+#include <cstddef>
+#include <dirent.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 

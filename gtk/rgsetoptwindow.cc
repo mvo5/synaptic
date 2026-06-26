@@ -20,11 +20,20 @@
  * USA
  */
 
-#include "config.h"
-
-#include <apt-pkg/configuration.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgsetoptwindow.h"
+
+#include "rggtkbuilderwindow.h"
+
+#include <apt-pkg/configuration.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
 
 void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 {

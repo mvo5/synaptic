@@ -20,6 +20,6 @@
 
 //#pragma implementation
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "rtagcollbuilder.h"
+#include "rtagcollbuilder.h"  // IWYU pragma: associated

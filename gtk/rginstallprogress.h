@@ -23,13 +23,20 @@
 #ifndef _RGINSTALLPROGRESS_H_
 #define _RGINSTALLPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"
-#include "rgslideshow.h"
+#include "rinstallprogress.h"
+
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <map>
+#include <string>
 
 class RGMainWindow;
+class RGSlideShow;
+class RGWindow;
+class RPackageLister;
 
 class RGInstallProgressMsgs:public RGGtkBuilderWindow {
 

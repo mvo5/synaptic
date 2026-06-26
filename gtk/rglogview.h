@@ -23,10 +23,15 @@
 #ifndef _RGLOGVIEW_H_
 #define _RGLOGVIEW_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
 
 class RGLogView : public RGGtkBuilderWindow {
  protected:

@@ -22,26 +22,30 @@
  * USA
  */
 
-#include "config.h"
-
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <iostream>
-#include <cstdio>
-#include <apt-pkg/error.h>
-#include <apt-pkg/install-progress.h>
-#ifdef HAVE_RPM
-#include <apt-pkg/configuration.h>
-#endif
+#include "config.h"  // IWYU pragma: associated
 
 #include "rinstallprogress.h"
 
 #include "i18n.h"
-std::string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now.");
-std::string RInstallProgress::errorMsg = _("\nNot all changes and updates succeeded. For further details of the failure, please expand the 'Details' panel below.");
-std::string RInstallProgress::incompleteMsg = 
+
+#include <apt-pkg/install-progress.h>
+#include <apt-pkg/packagemanager.h>
+#include <stdlib.h>
+#include <string>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#ifdef HAVE_RPM
+#include <apt-pkg/configuration.h>
+#include <fcntl.h>
+#endif
+
+using namespace std;
+
+string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now.");
+string RInstallProgress::errorMsg = _("\nNot all changes and updates succeeded. For further details of the failure, please expand the 'Details' panel below.");
+string RInstallProgress::incompleteMsg = 
       _("\nSuccessfully installed all packages of the current medium. "
 	"To continue the installation with the next medium close "
 	"this window.");
@@ -63,7 +67,6 @@ const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 
    return "Unknown install result.";
 }
-
 
 pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackages,

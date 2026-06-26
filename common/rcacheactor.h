@@ -25,10 +25,16 @@
 #ifndef _RCACHEACTOR_H
 #define _RCACHEACTOR_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
+#include "rpackage.h"
 #include "rpackagelister.h"
+
+#include <cstddef>
+#include <map>
 #include <regex.h>
+#include <string>
+#include <vector>
 
 class RCacheActor:public RCacheObserver {
  public:

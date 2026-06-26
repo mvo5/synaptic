@@ -25,10 +25,14 @@
 #ifndef RGUSERDIALOG_H
 #define RGUSERDIALOG_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "ruserdialog.h"
 #include "rgwindow.h"
+#include "ruserdialog.h"
+
+#include <cstddef>
+#include <gtk/gtk.h>
+#include <string>
 
 class RGUserDialog : public RUserDialog
 {
@@ -48,9 +52,7 @@ public:
 	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
 	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
 	    bool defaultResponse=true);
-
 };
-
 
 /*
  * A alternative interface for the ruserdialog, here is how it works:

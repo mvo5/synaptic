@@ -24,12 +24,19 @@
 #ifndef RGCDSCANNER_H
 #define RGCDSCANNER_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
 #include "rcdscanner.h"
-#include "rggtkbuilderwindow.h"
+
+#include "rgwindow.h"
+#include "ruserdialog.h"
+
+#include <gtk/gtk.h>
+#include <string>
+
+using namespace std;
 
 class RGMainWindow;
 

@@ -25,14 +25,18 @@
 #ifndef RGPKGCDROM_H
 #define RGPKGCDROM_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rggtkbuilderwindow.h"
+#include "rgwindow.h"
+
 #include <apt-pkg/cdrom.h>
+#include <gtk/gtk.h>
+#include <string>
 
 class RGMainWindow;
+class RUserDialog;
 
 class RGCDScanner:public pkgCdromStatus, public RGWindow {
  protected:

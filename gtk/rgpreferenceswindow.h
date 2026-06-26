@@ -23,10 +23,18 @@
 #ifndef _GTK_RGPREFERENCESWINDOW_H
 #define _GTK_RGPREFERENCESWINDOW_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
-#include "rgmainwindow.h"
+
+#include "gtk/gtkcssprovider.h"
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGMainWindow;
+class RGWindow;
+class RPackageLister;
 
 class RGPreferencesWindow:public RGGtkBuilderWindow {
    bool _blockAction;
@@ -121,7 +129,6 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    void readFiles();
    void readNetwork();
    void readDistribution();
-
 
    static void closeAction(GtkWidget *self, void *data);
    static void doneAction(GtkWidget *self, void *data);

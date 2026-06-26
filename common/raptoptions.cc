@@ -20,26 +20,31 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <fstream>
-#include <sstream>
-#include <dirent.h>
-
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/tagfile.h>
-#include <apt-pkg/policy.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/fileutl.h>
+#include "raptoptions.h"
 
 #include "i18n.h"
 #include "rconfiguration.h"
-#include "raptoptions.h"
 
-RAPTOptions *_roptions = new RAPTOptions;
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
+#include <apt-pkg/versionmatch.h>
+#include <cctype>
+#include <cstdio>
+#include <cstring>
+#include <dirent.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <utility>
 
 using namespace std;
+
+RAPTOptions *_roptions = new RAPTOptions;
 
 ostream &operator<<(ostream &os, const RAPTOptions::packageOptions &o)
 {

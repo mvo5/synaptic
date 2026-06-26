@@ -25,43 +25,60 @@
  * USA
  */
 
-#include "config.h"
-
-#include <cassert>
-#include <stdlib.h>
-#include <unistd.h>
-#include <map>
-#include <sstream>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <time.h>
-#include <algorithm>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpackagelister.h"
-#include "rpackagecache.h"
-#include "rpackagefilter.h"
-#include "rconfiguration.h"
-#include "raptoptions.h"
-#include "rinstallprogress.h"
-#include "rcacheactor.h"
 
-#include <apt-pkg/error.h>
-#include <apt-pkg/progress.h>
-#include <apt-pkg/algorithms.h>
-#include <apt-pkg/pkgrecords.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/acquire.h>
+#include "i18n.h"
+#include "raptoptions.h"
+#include "rcacheactor.h"
+#include "rconfiguration.h"
+#include "rinstallprogress.h"
+#include "rpackage.h"
+#include "rpackagecache.h"
+#include "rpackageview.h"
+#include "ruserdialog.h"
+
+#include <algorithm>
 #include <apt-pkg/acquire-item.h>
+#include <apt-pkg/acquire.h>
+#include <apt-pkg/algorithms.h>
+#include <apt-pkg/aptconfiguration.h>
 #include <apt-pkg/clean.h>
-#include <apt-pkg/version.h>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/depcache.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/hashes.h>
+#include <apt-pkg/macros.h>
+#include <apt-pkg/packagemanager.h>
+#include <apt-pkg/pkgrecords.h>
+#include <apt-pkg/pkgsystem.h>
+#include <apt-pkg/progress.h>
+#include <apt-pkg/sourcelist.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
 #include <apt-pkg/update.h>
 #include <apt-pkg/upgrade.h>
+#include <apt-pkg/version.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <dirent.h>
+#include <iostream>
+#include <map>
+#include <regex.h>
+#include <set>
+#include <sstream>
+#include <string>
+#include <strings.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <utility>
+#include <vector>
 
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/pkgsystem.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/hashes.h>
 #ifndef HAVE_RPM
 #include <apt-pkg/debfile.h>
 #endif
@@ -70,12 +87,9 @@
 #include <apt-pkg/luaiface.h>
 #endif
 
-#include <algorithm>
-#include <cstdio>
-
-#include "sections_trans.h"
-
-#include "i18n.h"
+#ifdef HAVE_XAPIAN
+#include <xapian.h>
+#endif
 
 const std::string APT_XAPIAN_INDEX_DIR = "/var/lib/apt-xapian-index";
 

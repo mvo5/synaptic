@@ -24,7 +24,7 @@
 #ifndef RUSERDIALOG_H
 #define RUSERDIALOG_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 class RUserDialog {
  public:

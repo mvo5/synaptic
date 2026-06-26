@@ -20,37 +20,41 @@
  * USA
  */
 
-#include "config.h"
-
-#include <iostream>
+#include "config.h"  // IWYU pragma: associated
 
 #include "i18n.h"
-
-#include "rconfiguration.h"
 #include "raptoptions.h"
-#include "rpackagelister.h"
-#include <cmath>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/cmndline.h>
-#include <apt-pkg/error.h>
-#include <X11/Xlib.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <cstdlib>
-#include <cassert>
-#include <errno.h>
-#include <fstream>
-#include <cstring>
-
+#include "rconfiguration.h"
 #include "rgmainwindow.h"
-#include "rguserdialog.h"
-#include "locale.h"
-#include "stdio.h"
-#include "rgutils.h"
 #include "rgpackagestatus.h"
+#include "rguserdialog.h"
+#include "rgutils.h"
+#include "rpackagelister.h"
+#include "rpackageview.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <cassert>
+#include <cerrno>
+#include <clocale>
+#include <csignal>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <fcntl.h>
+#include <fstream>
+#include <gio/gio.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <libintl.h>
+#include <string>
+#include <sys/types.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -59,7 +63,6 @@ typedef enum {
    UPDATE_CLOSE,
    UPDATE_AUTO
 } UpdateType;
-
 
 static gint applicationHandleLocalOptions(GApplication* app,
                                           GVariantDict* options,

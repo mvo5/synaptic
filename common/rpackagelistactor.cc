@@ -1,14 +1,11 @@
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpackagelistactor.h"
+
 #include "rpackagelister.h"
 
-#include <apt-pkg/error.h>
-#include <apt-pkg/tagfile.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/configuration.h>
 #include <algorithm>
-#include <fnmatch.h>
+#include <vector>
 
 using namespace std;
 

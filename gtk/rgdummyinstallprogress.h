@@ -23,11 +23,9 @@
 #ifndef _RGDUMMYINSTALLPROGRESS_H_
 #define _RGDUMMYINSTALLPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rinstallprogress.h"
-#include "rgwindow.h"
-
 
 class RGDummyInstallProgress:public RInstallProgress {
  protected:

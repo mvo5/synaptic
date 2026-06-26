@@ -26,22 +26,23 @@
 #ifndef _RGMAINWINDOW_H_
 #define _RGMAINWINDOW_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "rpackagelister.h"
-
-#include <gtk/gtk.h>
-#include <vector>
-#include <set>
-
-#include "rgtaskswin.h"
-#include "rgfetchprogress.h"
-#include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"
-#include "rgiconlegend.h"
-#include "gtkpkglist.h"
-#include "rgpkgdetails.h"
-#include "rglogview.h"
+#include "rpackagelister.h"
+#include "rpackageview.h"
+
+#include <apt-pkg/pkgcache.h>
+#include <cstddef>
+#include <gdk/gdk.h>
+#include <gio/gio.h>
+#include <gio/gmenu.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <string>
+#include <vector>
 
 typedef enum {
    RG_TOOLBAR_HIDE = -1,
@@ -51,16 +52,21 @@ typedef enum {
    RG_TOOLBAR_BOTH_HORIZ = 3
 } RGToolbarStyle;
 
-class RGSourcesWindow;
-class RGPreferencesWindow;
+class RGAboutPanel;
+class RGFetchProgress;
 class RGFilterManagerWindow;
 class RGFilterWindow;
 class RGFindWindow;
+class RGIconLegendPanel;
+class RGLogView;
+class RGPkgDetailsWindow;
+class RGPreferencesWindow;
 class RGSetOptWindow;
-class RGAboutPanel;
-
+class RGSourcesWindow;
+class RGTasksWin;
 class RGUserDialog;
-class RGCacheProgress;
+class RGWindow;
+class RPackage;
 
 typedef enum {
    PKG_KEEP,
@@ -81,7 +87,6 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
       UPGRADE_NORMAL = 0,
       UPGRADE_DIST = 1
    } UpgradeType;
-
 
    bool _unsavedChanges;
    bool _blockActions;        // block signals from the action and hold buttons
@@ -131,9 +136,11 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    bool isActionEnabled(const char *action_name);
    void setActionEnabled(const char *action_name, bool enabled);
    void setActionState(const char *action_name, GVariant *value);
+
    void setActionStateBool(const char *action_name, bool value) {
       setActionState(action_name, g_variant_new_boolean(value));
    }
+
    void setActionStateInt(const char *action_name, int value) {
       setActionState(action_name, g_variant_new_int32(value));
    }

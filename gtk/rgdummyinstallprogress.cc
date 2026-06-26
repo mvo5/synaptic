@@ -20,19 +20,19 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgdummyinstallprogress.h"
+
 #include "rgutils.h"
 
+#include <gtk/gtk.h>
 #include <unistd.h>
-#include <stdio.h>
 
 void RGDummyInstallProgress::startUpdate()
 {
    RGFlushInterface();
 }
-
 
 void RGDummyInstallProgress::finishUpdate()
 {

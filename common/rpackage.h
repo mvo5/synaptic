@@ -29,18 +29,19 @@
 #ifndef _RPACKAGE_H_
 #define _RPACKAGE_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <cstring>
-#include <vector>
-
-#include <apt-pkg/pkgcache.h>
-#include <apt-pkg/acquire.h>
-#include "rconfiguration.h"
 #include "i18n.h"
 
-class pkgDepCache;
+#include <apt-pkg/pkgcache.h>
+#include <cstring>
+#include <string>
+#include <utility>
+#include <vector>
+
 class RPackageLister;
+class pkgAcquire;
+class pkgDepCache;
 class pkgRecords;
 
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };

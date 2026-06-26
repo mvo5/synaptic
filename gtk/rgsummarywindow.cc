@@ -22,23 +22,29 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <X11/keysym.h>
+#include "rgsummarywindow.h"
+
+#include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rguserdialog.h"
+#include "rpackage.h"
+#include "rpackagelister.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/strutl.h>
-
-#include "rpackagelister.h"
-
-#include <stdio.h>
-#include <string>
 #include <cassert>
+#include <cstdio>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <libintl.h>
+#include <string>
+#include <vector>
 
-#include "rgsummarywindow.h"
-#include "rguserdialog.h"
-
-#include "i18n.h"
+class RGWindow;
 
 using namespace std;
 
@@ -100,7 +106,6 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       }
    }
 #endif
-
 
    if (essential.size() > 0) {
       /* (Essentail) removed */
@@ -194,7 +199,6 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       }
   }
 
-
    if (held.size() > 0) {
       gtk_tree_store_append(me->_treeStore, &iter, NULL);
       gtk_tree_store_set(me->_treeStore, &iter,
@@ -206,11 +210,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
                             PKG_COLUMN, (*p)->name(), -1);
       }
    }
-
-   
-
 }
-
 
 void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
 {
@@ -325,7 +325,6 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
       gtk_button_set_label(GTK_BUTTON(self),_("_Show Details"));
    }
 }
-
 
 RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 : RGGtkBuilderWindow(wwin, "summary")
@@ -478,8 +477,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    else
       skipTaskbar(false);
 }
-
-
 
 bool RGSummaryWindow::showAndConfirm()
 {

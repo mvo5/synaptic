@@ -22,22 +22,29 @@
  * USA
  */
 
-#include "config.h"
-
-#include <iostream>
-#include <algorithm>
-#include <cstdio>
-#include <fnmatch.h>
-#include <string.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/error.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpackagefilter.h"
-#include "rpackagelister.h"
-#include "rpackage.h"
 
 #include "i18n.h"
+#include "rpackage.h"
+#include "rpackagelister.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
+#include <cstdio>
+#include <cstring>
+#include <fnmatch.h>
+#include <fstream>
+#include <iostream>
+#include <regex.h>
+#include <stdlib.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 

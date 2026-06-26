@@ -22,25 +22,30 @@
  * USA
  */
 
-#include "config.h"
-
-#include <math.h>
-#include <apt-pkg/acquire-item.h>
-#include <apt-pkg/acquire-worker.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/error.h>
-#include <apt-pkg/strutl.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgfetchprogress.h"
+
+#include "i18n.h"
+#include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
 
-#include <stdio.h>
-#include <pango/pango.h>
-#include <gtk/gtk.h>
+#include <apt-pkg/acquire-item.h>
+#include <apt-pkg/acquire-worker.h>
+#include <apt-pkg/acquire.h>
+#include <apt-pkg/macros.h>
+#include <apt-pkg/strutl.h>
 #include <cassert>
+#include <cmath>
+#include <cstdio>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <unistd.h>
 
-#include "i18n.h"
+class RGWindow;
 
 using namespace std;
 
@@ -160,7 +165,6 @@ void RGFetchProgress::expanderActivate(GObject    *object,
       gtk_window_set_resizable(GTK_WINDOW(win), FALSE);
 }
 
-
 void RGFetchProgress::cursorChanged(GtkTreeView *self, void *data)
 {
    //cout << "cursor-changed" << endl;
@@ -198,8 +202,6 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
    g_free(msg);
    return true;
 
-
-
 #if 0 // this code can be used when apt fixed ubuntu #2281 (patch pending)
    bool res = !userDialog.proceed(msg);
    //cout << "Media change " << res << endl;
@@ -215,7 +217,6 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
    }
 #endif
 }
-
 
 void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc & Itm, int status)
 {
@@ -235,7 +236,6 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc & Itm, int status)
       refreshTable(Itm.Owner->ID - 1, false);
    }
 }
-
 
 void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc & Itm)
 {
@@ -261,7 +261,6 @@ void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
    RGFlushInterface();
 }
 
-
 void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
    if (Itm.Owner->Status == pkgAcquire::Item::StatIdle)
@@ -271,7 +270,6 @@ void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 
    RGFlushInterface();
 }
-
 
 bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 {
@@ -353,7 +351,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
    return !_cancelled;
 }
 
-
 void RGFetchProgress::Start()
 {
    //cout << "RGFetchProgress::Start()" << endl;
@@ -362,7 +359,6 @@ void RGFetchProgress::Start()
 
    RGFlushInterface();
 }
-
 
 void RGFetchProgress::Stop()
 {
@@ -377,15 +373,12 @@ void RGFetchProgress::Stop()
    RGFlushInterface();
 }
 
-
-
 void RGFetchProgress::stopDownload(GtkWidget *self, void *data)
 {
    RGFetchProgress *me = (RGFetchProgress *) data;
 
    me->_cancelled = true;
 }
-
 
 char* RGFetchProgress::getStatusStr(int status)
 {
@@ -424,7 +417,6 @@ int RGFetchProgress::getStatusPercent(int status)
 
    return status;
 }
-
 
 void RGFetchProgress::refreshTable(int row, bool append)
 {

@@ -17,17 +17,28 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <algorithm>
-#include <gtk/gtk.h>
+#include "gtkpkglist.h"
+
+#include "rgpackagestatus.h"
+#include "rgutils.h"
+#include "rpackage.h"
+#include "rpackagelister.h"
+
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/strutl.h>
 #include <cassert>
-#include "gtkpkglist.h"
-#include "rgutils.h"
-#include "rgpackagestatus.h"
-#include "rpackagelister.h"
+#include <cstddef>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 

@@ -20,15 +20,23 @@
  * USA
  */
 
-#include "config.h"
-
-#include <cassert>
-#include <cstring>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgfindwindow.h"
-#include "rgutils.h"
-#include "i18n.h"
 
+#include "i18n.h"
+#include "rggtkbuilderwindow.h"
+
+#include <apt-pkg/configuration.h>
+#include <cassert>
+#include <cstring>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
 
 gchar* RGFindWindow::getFindString()
 {
@@ -50,7 +58,6 @@ int RGFindWindow::getSearchType()
 
    return searchType;
 }
-
 
 void RGFindWindow::doFind(GtkWindow *widget, void *data)
 {
@@ -93,7 +100,6 @@ void RGFindWindow::cbEntryChanged(GtkWindow *widget, void *data)
    else
       gtk_widget_set_sensitive(me->_findB, FALSE);
 }
-
 
 RGFindWindow::RGFindWindow(RGWindow *win)
 : RGGtkBuilderWindow(win, "find"), _prevSearches(0)

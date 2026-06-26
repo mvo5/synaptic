@@ -20,16 +20,21 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include <string>
-#include <stdio.h>
-#include <cstdlib>
-#include <cstring>
+#include "rgpackagestatus.h"
 
 #include "rgutils.h"
-#include "rgpackagestatus.h"
+#include "rpackagestatus.h"
+
+#include <apt-pkg/configuration.h>
+#include <cstdio>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <string>
+
+class RPackage;
 
 // RPackageStatus stuff
 RGPackageStatus RGPackageStatus::pkgStatus;
@@ -83,7 +88,6 @@ void RGPackageStatus::init()
    initColors();
    initPixbufs();
 }
-
 
 GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
 {

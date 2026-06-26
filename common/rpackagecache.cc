@@ -20,20 +20,24 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpackagecache.h"
-#include "rconfiguration.h"
-#include "i18n.h"
 
-#include <assert.h>
+#include "i18n.h"
+#include "rconfiguration.h"
+
 #include <algorithm>
+#include <apt-pkg/depcache.h>
 #include <apt-pkg/error.h>
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/pkgcachegen.h>
-#include <apt-pkg/configuration.h>
+#include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/policy.h>
-#include <apt-pkg/fileutl.h>
+#include <apt-pkg/sourcelist.h>
+#include <cstddef>
+#include <string>
+#include <vector>
+
+class pkgIndexFile;
 
 using namespace std;
 

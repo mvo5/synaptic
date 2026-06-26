@@ -25,10 +25,15 @@
 #ifndef _RGCHANGESWINDOW_H
 #define _RGCHANGESWINDOW_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <gtk/gtk.h>
+#include <vector>
+
+class RGWindow;
+class RPackage;
 class RPackageLister;
 
 class RGChangesWindow:public RGGtkBuilderWindow {

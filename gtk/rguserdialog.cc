@@ -22,20 +22,27 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
+
+#include "i18n.h"
+#include "rguserdialog.h"
+#include "rgutils.h"
+#include "rgwindow.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
-
-#include <gtk/gtk.h>
+#include <cassert>
+#include <cstddef>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
-
-#include <assert.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <ruserdialog.h>
 #include <string>
-#include "i18n.h"
-#include "rguserdialog.h"
-#include "rgutils.h"
 
 using namespace std;
 

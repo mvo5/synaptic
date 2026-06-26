@@ -25,27 +25,19 @@
 #ifndef _RPACKAGEFILTER_H_
 #define _RPACKAGEFILTER_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <set>
-#include <vector>
-#include <string>
+#include <apt-pkg/pkgcache.h>
 #include <fstream>
-#include <iostream>
-#include <apt-pkg/tagfile.h>
-
 #include <regex.h>
-
-#include "rpackagelister.h"
-
-class RPackage;
-class RPackageLister;
+#include <set>
+#include <string>
+#include <vector>
 
 class Configuration;
-
+class RPackage;
 
 class RPackageFilter {
-
 
    public:
 

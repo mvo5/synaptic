@@ -20,14 +20,25 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <cassert>
 #include "rgiconlegend.h"
-#include "rgutils.h"
-#include "rgpackagestatus.h"
 
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rgpackagestatus.h"
+
+#include <apt-pkg/configuration.h>
+#include <cassert>
+#include <cstddef>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
 
 static void closeWindow(GtkWidget *self, void *data)
 {
@@ -35,7 +46,6 @@ static void closeWindow(GtkWidget *self, void *data)
 
    me->hide();
 }
-
 
 RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 : RGGtkBuilderWindow(parent, "iconlegend")
@@ -60,7 +70,6 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
       gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
    }
-
 
    // package support status 
    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);

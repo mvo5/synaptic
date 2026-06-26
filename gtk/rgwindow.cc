@@ -20,12 +20,19 @@
  * USA
  */
 
-#include "config.h"
-
-#include <apt-pkg/fileutl.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgwindow.h"
+
 #include "rgutils.h"
+
+#include <cstddef>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
 
 using namespace std;
 

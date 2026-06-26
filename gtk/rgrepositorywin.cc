@@ -23,20 +23,29 @@
  * USA
  */
 
-#include "config.h"
-
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/sourcelist.h>
-#include <glib.h>
-#include <cassert>
-
-#include <gdk/gdk.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgrepositorywin.h"
+
+#include "i18n.h"
+#include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
-#include "i18n.h"
+#include "ruserdialog.h"
+
+#include <apt-pkg/error.h>
+#include <apt-pkg/sourcelist.h>
+#include <cassert>
+#include <cstddef>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
 
 using namespace std;
 

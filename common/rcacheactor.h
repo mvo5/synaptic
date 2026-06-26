@@ -22,8 +22,8 @@
  * USA
  */
 
-#ifndef RCACHEACTOR_H
-#define RCACHEACTOR_H
+#ifndef _RCACHEACTOR_H
+#define _RCACHEACTOR_H
 
 #include "rpackagelister.h"
 #include <regex.h>

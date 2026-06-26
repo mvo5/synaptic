@@ -18,6 +18,9 @@
  * USA
  */
 
+#ifndef _GTK_RGCHANGELOGDIALOG_H
+#define _GTK_RGCHANGELOGDIALOG_H
+
 #include <rgwindow.h>
 #include <rpackage.h>
 #include <rgfetchprogress.h>
@@ -25,3 +28,5 @@
 #include <cassert>
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
+
+#endif

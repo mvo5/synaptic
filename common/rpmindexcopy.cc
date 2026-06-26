@@ -84,7 +84,6 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
    map<string, bool> GlobalReleases;
 
    for (vector<string>::iterator I = List.begin(); I != List.end(); I++) {
-      string OrigPath = string(*I, CDROM.length());
       unsigned long FileSize = 0;
 
       // Open the package file

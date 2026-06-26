@@ -145,6 +145,11 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
                                                      "textview"));
    GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
    gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
+
+   // place the cursor at the start
+   GtkTextIter caret;
+	gtk_text_buffer_get_iter_at_offset (tb, &caret, 0);
+	gtk_text_buffer_place_cursor(tb, &caret);
    
    dia.run();
 

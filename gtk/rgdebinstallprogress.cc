@@ -274,6 +274,10 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    GtkTextBuffer *text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer,diff.c_str(),-1);
+   // place the cursor at the start
+   GtkTextIter caret;
+	gtk_text_buffer_get_iter_at_offset (text_buffer, &caret, 0);
+   gtk_text_buffer_place_cursor(text_buffer, &caret);
 
    int res = dia.run(NULL,true);
    if(res ==  GTK_RESPONSE_YES)

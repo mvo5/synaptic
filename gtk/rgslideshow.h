@@ -23,7 +23,11 @@
 #ifndef _RGSLIDESHOW_H_
 #define _RGSLIDESHOW_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
+
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
 
 class RGSlideShow {
 

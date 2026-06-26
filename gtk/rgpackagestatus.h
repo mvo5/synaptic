@@ -23,10 +23,14 @@
 #ifndef _RGPACKAGESTATUS_H_
 #define _RGPACKAGESTATUS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "rpackage.h"
 #include "rpackagestatus.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+
+class RPackage;
 
 class RGPackageStatus : public RPackageStatus {
  protected:

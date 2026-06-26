@@ -1,15 +1,19 @@
-#include "config.h"
-
-#include <algorithm>
-#include <vector>
-#include <utility>
-
-#include <apt-pkg/configuration.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgpkgtreeview.h"
-#include "rgutils.h"
 
 #include "i18n.h"
+#include "rgutils.h"
+
+#include <algorithm>
+#include <apt-pkg/configuration.h>
+#include <cstddef>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <utility>
+#include <vector>
 
 // needed for the buildTreeView function
 struct mysort {

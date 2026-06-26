@@ -23,11 +23,11 @@
 #ifndef _RAPTOPTIONS_H_
 #define _RAPTOPTIONS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include <map>
+#include <iostream>
 #include <string>
-#include <apt-pkg/configuration.h>
 
 class RAPTOptions {
  public:

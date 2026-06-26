@@ -22,25 +22,26 @@
  * USA
  */
 
-#include "config.h"
-
-#include <pwd.h>
-#include <sys/types.h>
-
-#include <sys/stat.h>
-#include <sys/types.h>
-
-#include <unistd.h>
-
-#include <apt-pkg/init.h>
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/pkgsystem.h>
-#include <apt-pkg/fileutl.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rconfiguration.h"
 
 #include "i18n.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/init.h>
+#include <apt-pkg/pkgsystem.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <pwd.h>
+#include <string>
+#include <sys/stat.h>
+#include <unistd.h>
 
 using namespace std;
    

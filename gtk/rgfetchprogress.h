@@ -23,13 +23,19 @@
 #ifndef _RGFETCHPROGRESS_H_
 #define _RGFETCHPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
+
+#include "rggtkbuilderwindow.h"
 
 #include <apt-pkg/acquire.h>
-
-#include <vector>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 #include <set>
-#include "rggtkbuilderwindow.h"
+#include <string>
+#include <vector>
+
+class RGWindow;
 
 class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 

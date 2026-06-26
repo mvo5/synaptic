@@ -23,13 +23,17 @@
 #ifndef _GTK_RGFINDWINDOW_H
 #define _GTK_RGFINDWINDOW_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
-#include "rpackagefilter.h"
+
+#include <cstddef>
+#include <glib.h>
+#include <gtk/gtk.h>
 
 class RGFindWindow;
+class RGWindow;
 
 typedef void RGFindWindowFindAction(void *self, RGFindWindow * win);
 

@@ -23,17 +23,15 @@
 #ifndef _RGCACHEPROGRESS_H_
 #define _RGCACHEPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include <apt-pkg/progress.h>
-
 #include <gtk/gtk.h>
 
 class RGCacheProgress:public OpProgress {
    GtkWidget *_parent;
    GtkWidget *_label;
    GtkWidget *_prog;
-
 
    bool _mapped;
 
@@ -48,6 +46,5 @@ class RGCacheProgress:public OpProgress {
    virtual void Update();
    virtual void Done();
 };
-
 
 #endif

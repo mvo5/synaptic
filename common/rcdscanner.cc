@@ -20,27 +20,27 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include <sys/stat.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-#include <cstdio>
-
-#include <apt-pkg/error.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/cdromutl.h>
-#include <apt-pkg/strutl.h>
+#include "rcdscanner.h"
 
 #include "i18n.h"
-#include "rcdscanner.h"
+
+#include <algorithm>
+#include <apt-pkg/cdromutl.h>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/strutl.h>
+#include <cstdio>
+#include <dirent.h>
+#include <fcntl.h>
+#include <fstream>
+#include <iostream>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #ifdef HAVE_RPM
 #include "rpmindexcopy.h"

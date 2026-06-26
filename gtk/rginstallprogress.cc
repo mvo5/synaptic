@@ -20,21 +20,35 @@
  * USA
  */
 
-#include "config.h"
-
-#include "rgmainwindow.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rginstallprogress.h"
 
-#include <apt-pkg/configuration.h>
-#include <gtk/gtk.h>
-
-#include <unistd.h>
-#include <stdio.h>
-#include <cstdlib>
-#include <cstring>
-
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rgmainwindow.h"
+#include "rgslideshow.h"
+#include "rgutils.h"
+#include "rinstallprogress.h"
+#include "rpackage.h"
+#include "rpackagelister.h"
+
+#include <apt-pkg/configuration.h>
+#include <cstdio>
+#include <cstdlib>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <map>
+#include <pango/pango-font.h>
+#include <string.h>
+#include <string>
+#include <unistd.h>
+#include <utility>
+
+class RGWindow;
 
 using namespace std;
 

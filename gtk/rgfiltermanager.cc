@@ -22,15 +22,27 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <cstdio>
-#include <cstring>
-#include <cassert>
-#include "rpackageview.h"
 #include "rgfiltermanager.h"
 
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rgutils.h"
+#include "rgwindow.h"
+#include "rpackagefilter.h"
+#include "rpackageview.h"
+
+#include <cassert>
+#include <cstring>
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <set>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -295,7 +307,6 @@ void RGFilterManagerWindow::statusInvertClicked(GObject *o, gpointer data)
    }
 }
 
-
 void RGFilterManagerWindow::statusAllClicked(GObject *o, gpointer data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
@@ -315,15 +326,12 @@ void RGFilterManagerWindow::statusNoneClicked(GObject *o, gpointer data)
    }
 }
 
-
 void RGFilterManagerWindow::patternNew(GObject *o, gpointer data)
 {
    //cout << "void RGFilterManagerWindow::patternNew()" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
 
    me->setPatternRow(-1, false, (RPatternPackageFilter::DepType) 0, "");
-
-
 }
 
 void RGFilterManagerWindow::patternDelete(GObject *o, gpointer data)
@@ -340,7 +348,6 @@ void RGFilterManagerWindow::patternDelete(GObject *o, gpointer data)
       gtk_list_store_remove(GTK_LIST_STORE(model), &iter);
    }
 }
-
 
 void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 {
@@ -447,7 +454,6 @@ gint RGFilterManagerWindow::deleteEventAction(GtkWidget *widget,
    return (TRUE);
 }
 
-
 void RGFilterManagerWindow::readFilters()
 {
    _selectedFilter = NULL;
@@ -490,7 +496,6 @@ void RGFilterManagerWindow::readFilters()
    RGWindow::show();
 }
 
-
 void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
                                          gpointer data)
 {
@@ -532,7 +537,6 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
    }
 }
 
-
 // mvo: helper function 
 GtkTreePath *RGFilterManagerWindow::treeview_find_path_from_text(GtkTreeModel *
                                                                  model,
@@ -560,7 +564,6 @@ GtkTreePath *RGFilterManagerWindow::treeview_find_path_from_text(GtkTreeModel *
 
    return NULL;
 }
-
 
 void RGFilterManagerWindow::setSectionFilter(RSectionPackageFilter & f)
 {
@@ -597,8 +600,6 @@ void RGFilterManagerWindow::setSectionFilter(RSectionPackageFilter & f)
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_exclGB), TRUE);
    }
 }
-
-
 
 void RGFilterManagerWindow::setStatusFilter(RStatusPackageFilter & f)
 {
@@ -647,7 +648,6 @@ bool RGFilterManagerWindow::setPatternRow(int row,
 
    return true;
 }
-
 
 void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
 {
@@ -716,7 +716,6 @@ void RGFilterManagerWindow::getStatusFilter(RStatusPackageFilter & f)
    f.setStatus(type);
 }
 
-
 void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 {
    GtkTreeIter iter;
@@ -784,14 +783,12 @@ void RGFilterManagerWindow::editFilter(RFilter *filter)
    setPatternFilter(filter->pattern);
 }
 
-
 void RGFilterManagerWindow::applyChanges(RFilter *filter)
 {
    getSectionFilter(filter->section);
    getStatusFilter(filter->status);
    getPatternFilter(filter->pattern);
 }
-
 
 void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
 {
@@ -826,8 +823,6 @@ void RGFilterManagerWindow::addFilterAction(GtkWidget *self, void *data)
    me->editFilter();
 }
 
-
-
 void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
 {
 
@@ -854,8 +849,6 @@ void RGFilterManagerWindow::applyFilterAction(GtkWidget *self, void *data)
    me->applyChanges(filter);
 }
 
-
-
 void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
 {
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
@@ -878,8 +871,6 @@ void RGFilterManagerWindow::removeFilterAction(GtkWidget *self, void *data)
       me->_selectedPath = NULL;
    }
 }
-
-
 
 void RGFilterManagerWindow::cancelAction(GtkWidget *self, void *data)
 {
@@ -915,9 +906,3 @@ void RGFilterManagerWindow::okAction(GtkWidget *self, void *data)
    me->_filterview->storeFilters();
    me->close();
 }
-
-
-
-
-
-

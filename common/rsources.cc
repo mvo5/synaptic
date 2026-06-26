@@ -23,20 +23,26 @@
  * USA
  */
 
-#include "config.h"
-
-#include <sys/stat.h>
-#include <dirent.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rsources.h"
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/error.h>
-#include <algorithm>
-#include <fstream>
+
 #include "i18n.h"
+
+#include <algorithm>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/strutl.h>
+#include <cctype>
+#include <cstring>
+#include <dirent.h>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <string>
+#include <sys/stat.h>
+#include <vector>
 
 using namespace std;
 
@@ -216,7 +222,6 @@ bool SourcesList::ReadSourceDir(string Dir)
          return false;
    return true;
 }
-
 
 bool SourcesList::ReadSources()
 {

@@ -22,17 +22,25 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rgmainwindow.h"
 #include "rgpkgcdrom.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rgmainwindow.h"
+#include "rgutils.h"
+#include "rgwindow.h"
+#include "ruserdialog.h"
+
+#include <gobject/gclosure.h>
+#include <apt-pkg/cdrom.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
 
 using namespace std;
 
@@ -51,7 +59,6 @@ class RGDiscName : public RGGtkBuilderWindow
 
    bool run(string &name);
 };
-
 
 void RGCDScanner::Update(string text, int current)
 {
@@ -115,8 +122,6 @@ bool RGCDScanner::run()
 
    return scanner.Add(this);
 }
-
-
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
 : RGGtkBuilderWindow(wwin, "disc_name")

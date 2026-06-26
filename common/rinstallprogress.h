@@ -25,9 +25,11 @@
 #ifndef _RINSTALLPROGRESS_H_
 #define _RINSTALLPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include <apt-pkg/packagemanager.h>
+
+#include <string>
 
 class RInstallProgress {
  protected:

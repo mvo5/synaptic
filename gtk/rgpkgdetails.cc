@@ -21,19 +21,36 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <cassert>
+#include "rgpkgdetails.h"
 
 #include "i18n.h"
-#include "rgwindow.h"
-#include "rgmainwindow.h"
-#include "rgpkgdetails.h"
-#include "rggtkbuilderwindow.h"
-#include "rpackage.h"
-#include "rgpackagestatus.h"
 #include "rgchangelogdialog.h"
+#include "rgfetchprogress.h"
+#include "rggtkbuilderwindow.h"
+#include "rgmainwindow.h"
+#include "rgpackagestatus.h"
+#include "rgutils.h"
+#include "rpackage.h"
 #include "sections_trans.h"
+
+#include <apt-pkg/acquire.h>
+#include <apt-pkg/configuration.h>
+#include <cassert>
+#include <cstring>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <pango/pango-font.h>
+#include <string>
+#include <utility>
+#include <vector>
+
+class RGWindow;
 
 using namespace std;
 

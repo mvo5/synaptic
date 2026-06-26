@@ -24,11 +24,18 @@
 #ifndef _RGPKGDETAILS_H
 #define _RGPKGDETAILS_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include "rpackage.h"
 #include "rggtkbuilderwindow.h"
+#include "rpackage.h"
+
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
+
+class RGWindow;
 
 class RGPkgDetailsWindow : public RGGtkBuilderWindow {
    

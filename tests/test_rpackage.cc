@@ -1,10 +1,15 @@
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <apt-pkg/init.h>
-#include <iostream>
-
-#include "rpackagelister.h"
 #include "rpackage.h"
+#include "rpackagelister.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/init.h>
+#include <apt-pkg/pkgsystem.h>
+#include <ctime>
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 

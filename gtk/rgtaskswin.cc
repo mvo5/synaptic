@@ -20,15 +20,27 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include <cassert>
-#include <list>
 #include "rgtaskswin.h"
+
+#include "i18n.h"
+#include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
-#include "i18n.h"
+#include "rgutils.h"
+
+#include <apt-pkg/configuration.h>
+#include <cassert>
+#include <cstdio>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
+
+class RGWindow;
 
 using namespace std;
 
@@ -156,7 +168,6 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
    me->setBusyCursor(false);
 }
 
-
 void RGTasksWin::cell_toggled_callback (GtkCellRendererToggle *cell,
 					gchar *path_string,
 					gpointer user_data)
@@ -206,7 +217,6 @@ void RGTasksWin::selection_changed_callback(GtkTreeSelection *selection,
 
    gtk_widget_set_sensitive(me->_detailsButton, sensitiv);
 }
-
 
 RGTasksWin::RGTasksWin(RGWindow *parent) 
    : RGGtkBuilderWindow(parent, "tasks")

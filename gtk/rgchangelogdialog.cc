@@ -18,14 +18,25 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "i18n.h"
 #include "rgchangelogdialog.h"
 #include "rgfetchprogress.h"
 #include "rguserdialog.h"
+#include "rgutils.h"
+#include "rpackage.h"
 
+#include <apt-pkg/acquire.h>
 #include <cassert>
+#include <cstddef>
+#include <fstream>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <unistd.h>
+
+class RGWindow;
 
 using namespace std;
 

@@ -23,19 +23,27 @@
 #ifndef _RGDEBINSTALLPROGRESS_H_
 #define _RGDEBINSTALLPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef WITH_DPKG_STATUSFD
 
-#include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"
-#include "rguserdialog.h"
-#include<map>
+#include "rinstallprogress.h"
+
+#include <apt-pkg/packagemanager.h>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <map>
+#include <string>
+#include <sys/types.h>
 #include <vte/vte.h>
 
-
 class RGMainWindow;
-
+class RGUserDialog;
+class RPackageLister;
 
 class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow 
 {
@@ -70,7 +78,6 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    static const int NR_REINSTALL_STAGES=6;
    static char *reinstall_stages[NR_REINSTALL_STAGES];
    static char *reinstall_stages_translations[NR_REINSTALL_STAGES];
-
 
    // widgets
    GtkWidget *_label_status;
@@ -146,6 +153,6 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
 
 };
 
-#endif
+#endif // WITH_DPKG_STATUSFD
 
 #endif

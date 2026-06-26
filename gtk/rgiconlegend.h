@@ -23,16 +23,16 @@
 #ifndef _RGICONLEGEND_H_
 #define _RGICONLEGEND_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+class RGWindow;
 
 class RGIconLegendPanel:public RGGtkBuilderWindow {
  public:
    RGIconLegendPanel(RGWindow *parent);
    virtual ~RGIconLegendPanel() {};
 };
-
 
 #endif

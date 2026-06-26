@@ -23,15 +23,20 @@
 #ifndef _RGTERMINSTALLPROGRESS_H_
 #define _RGTERMINSTALLPROGRESS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_TERMINAL
 
-#include "rgmainwindow.h"
+#include "rggtkbuilderwindow.h"
 #include "rinstallprogress.h"
-#include "rgwindow.h"
 
+#include <apt-pkg/packagemanager.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <sys/types.h>
 #include <vte/vte.h>
+
+class RGMainWindow;
 
 class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow {
   GtkWidget *_term;

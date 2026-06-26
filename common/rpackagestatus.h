@@ -29,16 +29,12 @@
 #ifndef _RPACKAGESTATUS_H_
 #define _RPACKAGESTATUS_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <time.h>
-#include <vector>
 #include <string>
-#include <sstream>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
+#include <vector>
 
-#include "rpackage.h"
+class RPackage;
 
 class RPackageStatus {
  public:

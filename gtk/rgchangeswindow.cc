@@ -22,22 +22,24 @@
  * USA
  */
 
-#include "config.h"
-
-#include <X11/keysym.h>
-
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/strutl.h>
-
-#include "rpackagelister.h"
-
-#include <stdio.h>
-#include <string>
-#include <cassert>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgchangeswindow.h"
 
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rpackage.h"
+
+#include <cassert>
+#include <cstdio>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
+
+class RGWindow;
+class RPackageLister;
 
 using namespace std;
 
@@ -61,8 +63,6 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
    gtk_dialog_set_default_response (GTK_DIALOG(_win),
 				    GTK_RESPONSE_OK);
 }
-
-
 
 void RGChangesWindow::confirm(RPackageLister *lister,
 			      vector<RPackage *> &kept,

@@ -26,13 +26,19 @@
 #ifndef _RGREPOSITORYWIN_H
 #define _RGREPOSITORYWIN_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include "rsources.h"
 #include "rggtkbuilderwindow.h"
+#include "rsources.h"
 
-#include "rguserdialog.h"
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <list>
+#include <string>
+
+class RGUserDialog;
+class RGWindow;
 
 typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;

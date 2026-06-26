@@ -23,10 +23,13 @@
 #ifndef RPACKAGELISTACTOR_H
 #define RPACKAGELISTACTOR_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpackagelister.h"
-#include <iostream>
+
+#include <vector>
+
+class RPackage;
 
 class RPackageListActor : public RPackageObserver {
 

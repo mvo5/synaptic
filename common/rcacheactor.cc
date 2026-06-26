@@ -1,14 +1,21 @@
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rcacheactor.h"
-#include "rpackagelister.h"
 
-#include <apt-pkg/error.h>
-#include <apt-pkg/tagfile.h>
-#include <apt-pkg/strutl.h>
+#include "rpackage.h"
+#include "rpackagelister.h"
+#include <apt-pkg/fileutl.h>
+
 #include <apt-pkg/configuration.h>
-#include <algorithm>
+#include <apt-pkg/error.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
+#include <cstddef>
 #include <fnmatch.h>
+#include <regex.h>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace std;
 
@@ -46,10 +53,6 @@ void RCacheActor::notifyCachePostChange()
          run(toRemove, ACTION_REMOVE);
    }
 }
-
-
-
-
 
 RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
                                              string fileName)
@@ -193,7 +196,5 @@ void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
       }
    }
 }
-
-
 
 // vim:sts=3:sw=3

@@ -23,11 +23,15 @@
 #ifndef _RGTASKSWIN_H_
 #define _RGTASKSWIN_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <glib.h>
+#include <gtk/gtk.h>
+
 class RGMainWindow;
+class RGWindow;
 
 class RGTasksWin : public RGGtkBuilderWindow {
  protected:
@@ -44,8 +48,6 @@ class RGTasksWin : public RGGtkBuilderWindow {
 				      gpointer user_data);
    static void selection_changed_callback(GtkTreeSelection *selection,
 				    gpointer user_data);
-
-
 
  public:
    RGTasksWin(RGWindow *parent);

@@ -20,6 +20,9 @@
  * USA
  */
 
+#ifndef _GTK_RGSETOPTWINDOW_H
+#define _GTK_RGSETOPTWINDOW_H
+
 #include "rggtkbuilderwindow.h"
 
 class RGSetOptWindow:public RGGtkBuilderWindow {
@@ -34,3 +37,5 @@ class RGSetOptWindow:public RGGtkBuilderWindow {
    };
 
 };
+
+#endif

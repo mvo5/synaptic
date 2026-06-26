@@ -22,9 +22,8 @@
  * USA
  */
 
-
-#ifndef RGCHANGESWINDOW_H
-#define RGCHANGESWINDOW_H
+#ifndef _RGCHANGESWINDOW_H
+#define _RGCHANGESWINDOW_H
 
 #include "rggtkbuilderwindow.h"
 

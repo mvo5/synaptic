@@ -25,8 +25,9 @@
 #ifndef _RGWINDOW_H_
 #define _RGWINDOW_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
+#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <string>
 
@@ -35,7 +36,7 @@ class RGWindow {
    GtkWidget *_win;
    GtkWidget *_topBox;
 
-   static bool windowCloseCallback(GtkWidget *widget, GdkEvent * event);
+   static bool windowCloseCallback(GtkWidget *widget, GdkEvent *event);
    virtual bool close();
 
  public:

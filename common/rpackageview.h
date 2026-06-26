@@ -25,20 +25,19 @@
 #ifndef RPACKAGEVIEW_H
 #define RPACKAGEVIEW_H
 
-#include "config.h"
-
-#include <string>
-#include <map>
-
-#ifdef HAVE_XAPIAN
-#include <xapian.h>
-#endif
-
-#include "rpackage.h"
-#include "rpackagefilter.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "i18n.h"
+#include "rpackage.h"
 
+#include <cctype>
+#include <cstddef>
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
+
+class OpProgress;
 struct RFilter;
 
 enum {PACKAGE_VIEW_SECTION,

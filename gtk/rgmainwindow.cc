@@ -24,62 +24,78 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <cassert>
-#include <stdio.h>
-#include <ctype.h>
-#include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/gdkkeysyms-compat.h>
-#include <cmath>
-#include <algorithm>
-#include <functional>
-#include <fstream>
-#include <sstream>
-#include <time.h>
+#include "rgmainwindow.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-
-#include <pwd.h>
-
+#include "gtkpkglist.h"
+#include "i18n.h"
 #include "raptoptions.h"
 #include "rconfiguration.h"
-#include "rgmainwindow.h"
-#include "rgfindwindow.h"
-#include "rgfiltermanager.h"
-#include "rpackagefilter.h"
-#include "raptoptions.h"
-
-#include "rgrepositorywin.h"
-#include "rgpreferenceswindow.h"
-#include "rgsummarywindow.h"
-#include "rgchangeswindow.h"
-#include "rgcdscanner.h"
-#include "rgpkgcdrom.h"
-#include "rgsetoptwindow.h"
-#include "rgchangelogdialog.h"
-#include "rgfetchprogress.h"
-#include "rgpkgdetails.h"
 #include "rgcacheprogress.h"
-#include "rguserdialog.h"
-#include "rginstallprogress.h"
-#include "rgdummyinstallprogress.h"
+#include "rgchangelogdialog.h"
+#include "rgchangeswindow.h"
 #include "rgdebinstallprogress.h"
-#include "rgterminstallprogress.h"
-#include "rgutils.h"
-#include "sections_trans.h"
+#include "rgfetchprogress.h"
+#include "rgfiltermanager.h"
+#include "rgfindwindow.h"
+#include "rggtkbuilderwindow.h"
+#include "rgiconlegend.h"
+#include "rglogview.h"
+#include "rgpkgcdrom.h"
+#include "rgpkgdetails.h"
 #include "rgpkgtreeview.h"
+#include "rgpreferenceswindow.h"
+#include "rgrepositorywin.h"
+#include "rgsetoptwindow.h"
+#include "rgsummarywindow.h"
+#include "rgtaskswin.h"
+#include "rgterminstallprogress.h"
+#include "rguserdialog.h"
+#include "rgutils.h"
+#include "rgwindow.h"
+#include "rinstallprogress.h"
+#include "rpackage.h"
+#include "rpackagecache.h"
+#include "rpackagelister.h"
+#include "rpackageview.h"
 
-#include "i18n.h"
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/depcache.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/strutl.h>
+#include <cassert>
+#include <cmath>
+#include <cstring>
+#include <ctime>
+#include <fstream>
+#include <functional>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkkeysyms-compat.h>
+#include <gdk/gdkkeysyms.h>
+#include <gio/gmenu.h>
+#include <gio/gmenumodel.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <iostream>
+#include <libintl.h>
+#include <pwd.h>
+#include <signal.h>
+#include <sstream>
+#include <stdlib.h>
+#include <string>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <unistd.h>
+#include <utility>
+#include <vector>
 
 // include it here because depcache.h hates us if we have it before
 #include <gdk/gdkx.h>
@@ -215,7 +231,6 @@ void RGMainWindow::refreshSubViewList()
    }
 }
 
-
 RPackage *RGMainWindow::selectedPackage()
 {
    if (_pkgList == NULL)
@@ -273,7 +288,6 @@ string RGMainWindow::selectedSubView()
 
    return ret;
 }
-
 
 bool RGMainWindow::showErrors()
 {
@@ -884,6 +898,7 @@ RGMainWindow::RGMainWindow(GtkApplication *app, RPackageLister *packLister, stri
       { "icon-legend",              cbShowIconLegendPanel            },
       { "about",                    cbShowAboutPanel                 }
    };
+
    GSimpleActionGroup *group = g_simple_action_group_new ();
    g_action_map_add_action_entries (G_ACTION_MAP (group), entries, G_N_ELEMENTS (entries), this);
    gtk_widget_insert_action_group (GTK_WIDGET(_win), "win", G_ACTION_GROUP(group));
@@ -1003,7 +1018,6 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 			 _("Rebuilding search index"));
       gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
                                           (me->_builder, "toolbar_filter")), FALSE);
-
    }
    return false;
 }
@@ -1031,10 +1045,8 @@ void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
    g_spawn_close_pid(pid);
 }
 
-
 void RGMainWindow::buildTreeView()
 {
- 
    // remove old tree columns
    if (_treeView) {
       // unset model fist, otherwise the _remove_column takes *ages*
@@ -1057,7 +1069,6 @@ void RGMainWindow::buildTreeView()
    setupTreeView(_treeView);
    _pkgList = GTK_TREE_MODEL(gtk_pkg_list_new(_lister));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
-
 }
 
 void RGMainWindow::buildInterface()
@@ -1710,7 +1721,6 @@ void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
    me->setInterfaceLocked(FALSE);
 }
 
-
 void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
                                              GtkTreePath *path,
                                              GtkTreeViewColumn *arg2,
@@ -1791,8 +1801,6 @@ void RGMainWindow::cbAddCDROM(GSimpleAction *action,
    }
    me->setInterfaceLocked(FALSE);
 }
-
-
 
 void RGMainWindow::cbTasksClicked(GSimpleAction *action,
                                   GVariant *parameter,
@@ -2246,7 +2254,6 @@ void RGMainWindow::cbViewLogClicked(GSimpleAction *action,
    me->_logView->readLogs();
    me->_logView->show();
 }
-
 
 void RGMainWindow::cbHelpAction(GSimpleAction *action,
                                 GVariant *parameter,

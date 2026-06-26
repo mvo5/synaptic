@@ -21,7 +21,7 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include <apt-pkg/error.h>
 #include <string>

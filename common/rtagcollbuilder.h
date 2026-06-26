@@ -23,7 +23,7 @@
 
 #if 0 // PORTME
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_DEBTAGS
 //#pragma interface
@@ -33,6 +33,8 @@
 #include <TagCollection.h>
 #include "rpackage.h"
 #include "rpackagelister.h"
+
+#include <string>
 
 // TagcollConsumer that builds a tagged collection for synaptic
 class RTagcollBuilder:public TagcollConsumer<std::string> {

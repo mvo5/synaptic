@@ -23,15 +23,15 @@
 #ifndef _RGGTKBUILDERWINDOW_H_
 #define _RGGTKBUILDERWINDOW_H_
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-#include <string>
-#include <iostream>
-#include <vector>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgwindow.h"
-#include "rgutils.h"
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
 
 class RGGtkBuilderWindow:public RGWindow {
  protected:

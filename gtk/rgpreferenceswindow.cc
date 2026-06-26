@@ -22,22 +22,34 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/strutl.h>
-#include <gtk/gtk.h>
-#include <cassert>
-#include <cstring>
-#include <cstdlib>
-
-#include "rconfiguration.h"
 #include "rgpreferenceswindow.h"
-#include "rguserdialog.h"
-#include "rgpackagestatus.h"
 
 #include "i18n.h"
+#include "rconfiguration.h"
+#include "rggtkbuilderwindow.h"
+#include "rgmainwindow.h"
+#include "rgpackagestatus.h"
+#include "rguserdialog.h"
+#include "rgwindow.h"
+#include "rpackagelister.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/strutl.h>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 

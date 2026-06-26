@@ -1,21 +1,22 @@
-#include "config.h"
-
-#include <apt-pkg/error.h>
-#include <apt-pkg/progress.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/tagfile.h>
-
-#include <iostream>
-#include <map>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <stdio.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rpmindexcopy.h"
 
 #include "i18n.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/progress.h>
+#include <apt-pkg/strutl.h>
+#include <cstdlib>
+#include <cstring>
+#include <map>
+#include <stdio.h>
+#include <string>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <vector>
 
 using namespace std;
 

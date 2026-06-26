@@ -1,7 +1,7 @@
 #ifndef RTAGCOLFILTER_H
 #define RTAGCOLFILTER_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_DEBTAG
 
@@ -30,7 +30,6 @@
 #include <TagcollConsumer.h>
 #include <TagcollFilter.h>
 
-#include <map>
 #include <string>
 #include "rpackage.h"
 #include "rpackagelister.h"

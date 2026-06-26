@@ -21,10 +21,10 @@
 #ifndef _GTK_RGCHANGELOGDIALOG_H
 #define _GTK_RGCHANGELOGDIALOG_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include "rgwindow.h"
-#include "rpackage.h"
+class RGWindow;
+class RPackage;
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
 

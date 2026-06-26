@@ -20,21 +20,22 @@
  * USA
  */
 
-#include "config.h"
-
-#include <apt-pkg/fileutl.h>
-
-#include <gdk/gdkx.h>
-#include <gtk/gtk.h>
-#include <string>
-#include <stdio.h>
-#include <cstdlib>
-#include <cstring>
-#include <pwd.h>
-#include <assert.h>
-#include <iostream>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgutils.h"
+
+#include <apt-pkg/fileutl.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <pwd.h>
+#include <string>
+#include <vector>
 
 // helper
 GdkPixbuf *

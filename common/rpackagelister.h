@@ -25,42 +25,40 @@
 #ifndef _RPACKAGELISTER_H_
 #define _RPACKAGELISTER_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <regex.h>
-#include <apt-pkg/depcache.h>
-#include <apt-pkg/acquire.h>
+#include "rpackagecache.h"
+#include "rpackagestatus.h"
+
+#include <apt-pkg/pkgcache.h>
 #include <apt-pkg/progress.h>
+#include <ctime>
+#include <istream>
+#include <list>
+#include <regex.h>
+#include <set>
+#include <string>
+#include <vector>
+
+#ifdef HAVE_RPM
+#include <apt-pkg/depcache.h>
+#endif
 
 #ifdef HAVE_XAPIAN
 #include <xapian.h>
 #endif
 
-#include "rpackagecache.h"
-#include "rpackage.h"
-#include "rpackagestatus.h"
-#include "rpackageview.h"
-#include "ruserdialog.h"
-
+class FileFd;
 class OpProgress;
-class RPackageCache;
-class RPackageFilter;
 class RCacheActor;
+class RInstallProgress;
+class RPackage;
+class RPackageView;
 class RPackageViewFilter;
 class RPackageViewSearch;
-class pkgRecords;
+class RUserDialog;
 class pkgAcquireStatus;
-class pkgPackageManager;
-
-
-struct RFilter;
-class RPackageView;
-
-class RInstallProgress;
+class pkgRecords;
 
 class RPackageObserver {
  public:
@@ -93,7 +91,6 @@ class sortFunc {
    }
 };
 
-
 class RPackageLister {
 
    protected:
@@ -106,7 +103,6 @@ class RPackageLister {
 #ifdef HAVE_XAPIAN
    Xapian::Database *_xapianDatabase;
 #endif
-
 
    // Other members.
    std::vector<RPackage *> _packages;

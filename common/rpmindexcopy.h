@@ -1,4 +1,3 @@
-
 /* ######################################################################
 
    Index Copying - Aid for copying and verifying the index files
@@ -9,13 +8,10 @@
 #ifndef RPMINDEXCOPY_H
 #define RPMINDEXCOPY_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <vector>
 #include <string>
-
-class pkgTagSection;
-class FileFd;
+#include <vector>
 
 class RPMIndexCopy {
  protected:

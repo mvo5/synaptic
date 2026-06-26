@@ -20,14 +20,15 @@
 #ifndef GTKPKGLIST_H
 #define GTKPKGLIST_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include "rpackagelister.h"
 #include "rcacheactor.h"
-#include "rpackagelistactor.h"
 #include "rgutils.h"
+#include "rpackagelistactor.h"
 
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 
 #define GTK_TYPE_PKG_LIST			(gtk_pkg_list_get_type ())
 #define GTK_PKG_LIST(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_PKG_LIST, GtkPkgList))
@@ -36,9 +37,10 @@
 #define GTK_IS_PKG_LIST_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PKG_LIST))
 #define GTK_PKG_LIST_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_PKG_LIST, GtkPkgListClass))
 
+class RPackageLister;
+
 typedef struct _GtkPkgList GtkPkgList;
 typedef struct _GtkPkgListClass GtkPkgListClass;
-
 
 struct _GtkPkgList {
    GObject parent;
@@ -55,7 +57,6 @@ struct _GtkPkgList {
 struct _GtkPkgListClass {
    GObjectClass parent_class;
 };
-
 
 GType gtk_pkg_list_get_type();
 GtkPkgList *gtk_pkg_list_new(RPackageLister *lister);
@@ -76,7 +77,6 @@ class RCacheActorPkgList : public RCacheActor {
                       GtkTreeView *pkgView)
       : RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
-
 
 class RPackageListActorPkgList:public RPackageListActor {
 

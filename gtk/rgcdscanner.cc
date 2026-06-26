@@ -20,17 +20,19 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include "rgmainwindow.h"
 #include "rgcdscanner.h"
 
-#include <unistd.h>
-#include <stdio.h>
-
 #include "i18n.h"
+#include "rgmainwindow.h"
+
+#include <apt-pkg/configuration.h>
+#include <cstdio>
+#include <gtk/gtk.h>
+#include <unistd.h>
 
 class RGDiscName:public RGGtkBuilderWindow {
  protected:
@@ -46,7 +48,6 @@ class RGDiscName:public RGGtkBuilderWindow {
 
    bool run(string &name);
 };
-
 
 void RGCDScanner::update(string text, int current)
 {

@@ -25,17 +25,22 @@
 #ifndef _RGFILTERMANAGER_H_
 #define _RGFILTERMANAGER_H_
 
-#include "config.h"
-
-#include <gtk/gtk.h>
-#include "rggtkbuilderwindow.h"
-#include "rpackagefilter.h"
-#include "rgutils.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "i18n.h"
+#include "rggtkbuilderwindow.h"
+#include "rpackagefilter.h"
 
+#include <cstddef>
+#include <gdk/gdk.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
+
+class RGWindow;
 class RPackageViewFilter;
-class RGFilterManagerWindow;
 
 // must be in the same order as of the check buttons
 static const RStatusPackageFilter::Types StatusMasks[] = {
@@ -66,7 +71,6 @@ static char *ActOptions[] = {
    NULL
 };
 
-
 static char *DepOptions[] = {
    _("Package name"),
    _("Description"),
@@ -83,8 +87,6 @@ static char *DepOptions[] = {
    _("Component"),                 // Component (e.g. main, universe)
    NULL
 };
-
-
 
 typedef void RGFilterEditorCloseAction(void *self, bool okcancel);
 
@@ -210,6 +212,5 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    void readFilters();
 
 };
-
 
 #endif

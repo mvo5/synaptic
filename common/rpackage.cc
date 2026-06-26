@@ -26,39 +26,43 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
+
+#include "rpackage.h"
 
 #include "i18n.h"
-#include "rpackage.h"
+#include "rconfiguration.h"
+#include "rpackagecache.h"
 #include "rpackagelister.h"
 
 #include <algorithm>
-#include <assert.h>
-#include <cstdio>
-#include <fstream>
-#include <map>
-#include <string>
-#include <sstream>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-
 #include <apt-pkg/acquire-item.h>
+#include <apt-pkg/acquire.h>
 #include <apt-pkg/algorithms.h>
-#include <apt-pkg/cacheiterators.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
+#include <apt-pkg/hashes.h>
+#include <apt-pkg/indexfile.h>
 #include <apt-pkg/metaindex.h>
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/pkgrecords.h>
-#include <apt-pkg/policy.h>
-#include <apt-pkg/srcrecords.h>
+#include <apt-pkg/sourcelist.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/tagfile.h>
-#include <apt-pkg/version.h>
 #include <apt-pkg/versionmatch.h>
+#include <cstdio>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <utility>
+#include <vector>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>

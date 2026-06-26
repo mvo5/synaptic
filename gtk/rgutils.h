@@ -23,8 +23,13 @@
 #ifndef _RGMISC_H_
 #define _RGMISC_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
 #include <vector>
 
 enum {

@@ -23,9 +23,13 @@
 #ifndef _GTK_RGSETOPTWINDOW_H
 #define _GTK_RGSETOPTWINDOW_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
+
+#include <gtk/gtk.h>
+
+class RGWindow;
 
 class RGSetOptWindow:public RGGtkBuilderWindow {
 

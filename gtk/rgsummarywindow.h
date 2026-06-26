@@ -25,13 +25,14 @@
 #ifndef _RGSUMMARYWINDOW_H_
 #define _RGSUMMARYWINDOW_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <gtk/gtk.h>
 
+class RGWindow;
 class RPackageLister;
-
 
 class RGSummaryWindow:public RGGtkBuilderWindow {
    GtkWidget *_topF;

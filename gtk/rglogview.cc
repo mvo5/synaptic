@@ -20,19 +20,29 @@
  * USA
  */
 
-#include "config.h"
-
-#include <cassert>
-#include <cstring>
-#include <map>
-#include <utility>
-#include <apt-pkg/fileutl.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rglogview.h"
-#include "rgutils.h"
-#include "rconfiguration.h"
 
 #include "i18n.h"
+#include "rconfiguration.h"
+#include "rggtkbuilderwindow.h"
+#include "rgutils.h"
+#include "rgwindow.h"
+
+#include <apt-pkg/fileutl.h>
+#include <cassert>
+#include <cstdio>
+#include <cstring>
+#include <ctime>
+#include <fstream>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <map>
+#include <string>
+#include <utility>
 
 using namespace std;
 

@@ -20,37 +20,38 @@
  * USA
  */
 
-#include "config.h"
-
-#include <pty.h>
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef HAVE_TERMINAL
 
-#include "i18n.h"
-
 #include "rgterminstallprogress.h"
+
+#include "i18n.h"
+#include "rconfiguration.h"
+#include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
-#include "rconfiguration.h"
+#include "rgutils.h"
+#include "rinstallprogress.h"
 
-#include <X11/Xlib.h>
-#include <iostream>
-#include <cerrno>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
 #include <apt-pkg/install-progress.h>
-#include <apt-pkg/pkgsystem.h>
 #include <cassert>
+#include <cerrno>
+#include <csignal>
 #include <cstring>
-#include <cstdlib>
-
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <pango/pango-font.h>
+#include <pty.h>
+#include <stdlib.h>
+#include <string>
+#include <unistd.h>
 #include <vte/vte.h>
-
-#include <cstdlib>
-#include <cstring>
 
 using namespace std;
 

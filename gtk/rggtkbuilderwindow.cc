@@ -20,16 +20,28 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
+
+#include "rggtkbuilderwindow.h"
+
+#include "i18n.h"
+#include "rgutils.h"
+#include "rgwindow.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
-
-#include <gdk/gdkx.h>
-
 #include <cassert>
-#include "i18n.h"
-#include "rggtkbuilderwindow.h"
+#include <cstddef>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <pango/pango-font.h>
+#include <string>
+#include <vector>
 
 using namespace std;
 

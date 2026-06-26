@@ -26,10 +26,11 @@
 #ifndef _RSOURCES_H
 #define _RSOURCES_H
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <string>
+#include <iostream>
 #include <list>
+#include <string>
 
 class SourcesList {
  public:

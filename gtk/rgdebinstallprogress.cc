@@ -20,38 +20,48 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifdef WITH_DPKG_STATUSFD
-#include <math.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <pty.h>
 
-#include "rgmainwindow.h"
-
+#include "i18n.h"
 #include "rgdebinstallprogress.h"
+#include "rggtkbuilderwindow.h"
+#include "rgmainwindow.h"
 #include "rguserdialog.h"
-
+#include "rgutils.h"
+#include "rinstallprogress.h"
+#include "rpackagelister.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/install-progress.h>
-#include <gtk/gtk.h>
-
-#include <unistd.h>
-#include <cstdio>
-#include <cstdlib>
-
-#include <vte/vte.h>
-#include <gdk/gdkkeysyms.h>
+#include <apt-pkg/packagemanager.h>
+#include <cerrno>
+#include <cmath>
+#include <cstring>
+#include <ctime>
+#include <fcntl.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms-compat.h>
-
-#include "i18n.h"
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <iostream>
+#include <pango/pango-font.h>
+#include <pty.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <sys/un.h>
+#include <unistd.h>
+#include <vte/vte.h>
 
 using namespace std;
 
@@ -95,8 +105,6 @@ write_fd(int fd, void *ptr, size_t nbytes, int sendfd)
 
         return(sendmsg(fd, &msg, 0));
 }
-
-
 
 ssize_t
 read_fd(int fd, void *ptr, size_t nbytes, int *recvfd)
@@ -204,7 +212,6 @@ int ipc_recv_fd()
    return fd;
 }
 
-
 void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 {
    string primary, secondary;
@@ -301,9 +308,7 @@ void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
    //kill(me->_child_id, SIGQUIT);
    kill(me->_child_id, SIGTERM);
    //kill(me->_child_id, SIGKILL);
-   
 }
-
 
 void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
 {
@@ -824,5 +829,4 @@ void RGDebInstallProgress::prepare(RPackageLister *lister)
 
 }
 
-#endif
-
+#endif // WITH_DPKG_STATUSFD

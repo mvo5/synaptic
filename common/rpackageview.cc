@@ -22,23 +22,32 @@
  * USA
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <apt-pkg/version.h>
-#include <apt-pkg/pkgrecords.h>
-#include <apt-pkg/configuration.h>
+#include "rpackageview.h"
 
 #include "i18n.h"
-#include "rpackage.h"
-#include "rpackageview.h"
 #include "rconfiguration.h"
-
-#include <map>
-#include <vector>
-#include <sstream>
-#include <algorithm>
-
+#include "rpackage.h"
+#include "rpackagefilter.h"
 #include "sections_trans.h"
+
+#include <algorithm>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/pkgsystem.h>
+#include <apt-pkg/progress.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/version.h>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <set>
+#include <sstream>
+#include <string.h>
+#include <string>
+#include <utility>
+#include <vector>
 
 using namespace std;
 
@@ -393,7 +402,6 @@ vector<string> RPackageViewFilter::getFilterNames()
    return filters;
 }
 
-
 void RPackageViewFilter::addPackage(RPackage *pkg)
 {
    // nothing to do for now, may add some sort of caching later
@@ -407,7 +415,6 @@ const set<string>& RPackageViewFilter::getSections()
 	    _sectionList.insert(_all[i]->section());
    return _sectionList;
 }
-
 
 void RPackageViewFilter::storeFilters()
 {
@@ -648,7 +655,6 @@ void RPackageViewOrigin::addPackage(RPackage *package)
    }
 }
 
-
 void RPackageViewArchitecture::addPackage(RPackage *package)
 {
    string arch = "arch: " + package->arch();
@@ -659,7 +665,5 @@ void RPackageViewArchitecture::addPackage(RPackage *package)
 
    _view[arch].push_back(package);
 }
-
-
 
 // vim:sts=3:sw=3

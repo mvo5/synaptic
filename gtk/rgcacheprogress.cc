@@ -20,12 +20,15 @@
  * USA
  */
 
-#include "config.h"
-
-#include <math.h>
+#include "config.h"  // IWYU pragma: associated
 
 #include "rgcacheprogress.h"
+
 #include "rgutils.h"
+
+#include <cmath>
+#include <gtk/gtk.h>
+#include <string>
 
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 : _parent(parent), _label(label)
@@ -42,12 +45,10 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
    _mapped = false;
 }
 
-
 RGCacheProgress::~RGCacheProgress()
 {
    //gtk_widget_destroy(_prog);
 }
-
 
 void RGCacheProgress::Update()
 {
@@ -72,9 +73,7 @@ void RGCacheProgress::Update()
                                     (float)Percent / 100.0);
 
    RGFlushInterface();
-
 }
-
 
 void RGCacheProgress::Done()
 {

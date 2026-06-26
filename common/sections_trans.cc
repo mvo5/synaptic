@@ -3,12 +3,16 @@
  *
  */
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <libintl.h>
+#include "sections_trans.h"
 
 #include "i18n.h"
-#include "sections_trans.h"
+
+#include <apt-pkg/strutl.h>
+#include <cstddef>
+#include <sstream>
+#include <string>
 
 using namespace std;
 

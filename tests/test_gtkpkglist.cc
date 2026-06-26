@@ -1,20 +1,16 @@
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-
-#include <apt-pkg/init.h>
-#include <apt-pkg/configuration.h>
-#include <iostream>
-
+#include "gtkpkglist.h"
+#include "rgpkgtreeview.h"
 #include "rpackagelister.h"
-#include "rpackageview.h"
-#include "rpackage.h"
 
-#include "gtk/gtkpkglist.h"
-#include "gtk/rgmainwindow.h"
-#include "gtk/rgpkgtreeview.h"
-
-using namespace std;
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/init.h>
+#include <apt-pkg/pkgsystem.h>
+#include <cstddef>
+#include <gtk/gtk.h>
+#include <iostream>
+#include <string>
 
 int main(int argc, char **argv)
 {

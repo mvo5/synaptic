@@ -23,22 +23,18 @@
 #ifndef _RPACKAGECACHE_H_
 #define _RPACKAGECACHE_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
+#include <apt-pkg/cachefile.h>
+#include <apt-pkg/pkgcache.h>
 #include <map>
 #include <string>
 #include <vector>
 
-#include <apt-pkg/cachefile.h>
-#include <apt-pkg/depcache.h>
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/pkgsystem.h>
-#include <apt-pkg/policy.h>
-
 class OpProgress;
-
-class pkgCache;
-
+class pkgDepCache;
+class pkgIndexFile;
+class pkgSourceList;
 
 class RPackageCache {
    pkgCacheFile cache;
@@ -71,6 +67,5 @@ class RPackageCache {
    ~RPackageCache() {
    }
 };
-
 
 #endif

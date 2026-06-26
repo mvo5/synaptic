@@ -23,7 +23,7 @@
 #ifndef _RCDSCANNER_H_
 #define _RCDSCANNER_H_
 
-#include "config.h"
+#include "config.h"  // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 

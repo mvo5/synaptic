@@ -20,7 +20,6 @@
  * USA
  */
 
-
 #ifndef _RGDEBINSTALLPROGRESS_H_
 #define _RGDEBINSTALLPROGRESS_H_
 

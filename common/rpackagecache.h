@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RPACKAGECACHE_H_
 #define _RPACKAGECACHE_H_
+
+#include "config.h"
 
 #include <map>
 #include <string>

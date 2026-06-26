@@ -22,9 +22,10 @@
  * USA
  */
 
-
 #ifndef RPACKAGEVIEW_H
 #define RPACKAGEVIEW_H
+
+#include "config.h"
 
 #include <string>
 #include <map>

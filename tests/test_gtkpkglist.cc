@@ -1,10 +1,11 @@
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <apt-pkg/init.h>
 #include <apt-pkg/configuration.h>
 #include <iostream>
 
-#include "config.h"
 #include "rpackagelister.h"
 #include "rpackageview.h"
 #include "rpackage.h"

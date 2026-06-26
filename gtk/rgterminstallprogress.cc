@@ -20,9 +20,9 @@
  * USA
  */
 
-#include <pty.h>
-
 #include "config.h"
+
+#include <pty.h>
 
 #ifdef HAVE_TERMINAL
 

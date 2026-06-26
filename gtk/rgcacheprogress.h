@@ -23,6 +23,8 @@
 #ifndef _RGCACHEPROGRESS_H_
 #define _RGCACHEPROGRESS_H_
 
+#include "config.h"
+
 #include <apt-pkg/progress.h>
 
 #include <gtk/gtk.h>

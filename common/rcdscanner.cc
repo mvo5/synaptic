@@ -20,7 +20,8 @@
  * USA
  */
 
-#include<config.h>
+#include "config.h"
+
 #ifndef HAVE_APTPKG_CDROM
 
 #include <sys/stat.h>

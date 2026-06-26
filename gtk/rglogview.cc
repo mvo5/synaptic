@@ -20,13 +20,14 @@
  * USA
  */
 
+#include "config.h"
+
 #include <cassert>
 #include <cstring>
 #include <map>
 #include <utility>
 #include <apt-pkg/fileutl.h>
 
-#include "config.h"
 #include "rglogview.h"
 #include "rgutils.h"
 #include "rconfiguration.h"

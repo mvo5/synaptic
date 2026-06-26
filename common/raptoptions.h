@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RAPTOPTIONS_H_
 #define _RAPTOPTIONS_H_
+
+#include "config.h"
 
 #include <map>
 #include <string>

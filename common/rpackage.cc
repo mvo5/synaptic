@@ -26,7 +26,6 @@
  * USA
  */
 
-
 #include "config.h"
 
 #include "rpackage.h"
@@ -44,7 +43,6 @@
 #include <sys/types.h>
 #include <assert.h>
 #include <sstream>
-
 
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/depcache.h>

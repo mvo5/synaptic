@@ -22,11 +22,10 @@
  * USA
  */
 
-
-
 #ifndef _RPACKAGELISTER_H_
 #define _RPACKAGELISTER_H_
 
+#include "config.h"
 
 #include <vector>
 #include <list>
@@ -46,7 +45,6 @@
 #include "rpackagestatus.h"
 #include "rpackageview.h"
 #include "ruserdialog.h"
-#include "config.h"
 
 using namespace std;
 

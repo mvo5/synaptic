@@ -20,9 +20,10 @@
  * USA
  */
 
+#include "config.h"
+
 #include <apt-pkg/configuration.h>
 
-#include "config.h"
 #include "i18n.h"
 
 #include "rgsetoptwindow.h"

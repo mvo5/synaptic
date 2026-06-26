@@ -1,3 +1,4 @@
+#include "config.h"
 
 #include "rpackagelistactor.h"
 #include "rpackagelister.h"

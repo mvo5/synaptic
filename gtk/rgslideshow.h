@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RGSLIDESHOW_H_
 #define _RGSLIDESHOW_H_
+
+#include "config.h"
 
 using namespace std;
 

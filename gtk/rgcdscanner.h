@@ -24,7 +24,8 @@
 #ifndef RGCDSCANNER_H
 #define RGCDSCANNER_H
 
-#include <config.h>
+#include "config.h"
+
 #ifndef HAVE_APTPKG_CDROM
 
 #include "rcdscanner.h"

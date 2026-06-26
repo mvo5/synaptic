@@ -23,6 +23,8 @@
 #ifndef _GTK_RGSETOPTWINDOW_H
 #define _GTK_RGSETOPTWINDOW_H
 
+#include "config.h"
+
 #include "rggtkbuilderwindow.h"
 
 class RGSetOptWindow:public RGGtkBuilderWindow {

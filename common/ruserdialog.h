@@ -24,6 +24,8 @@
 #ifndef RUSERDIALOG_H
 #define RUSERDIALOG_H
 
+#include "config.h"
+
 class RUserDialog {
  public:
    enum ButtonsType {

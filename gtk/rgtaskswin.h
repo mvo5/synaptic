@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RGTASKSWIN_H_
 #define _RGTASKSWIN_H_
+
+#include "config.h"
 
 #include "rggtkbuilderwindow.h"
 

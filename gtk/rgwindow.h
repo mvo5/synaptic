@@ -22,9 +22,10 @@
  * USA
  */
 
-
 #ifndef _RGWINDOW_H_
 #define _RGWINDOW_H_
+
+#include "config.h"
 
 #include <gtk/gtk.h>
 #include <string>

@@ -18,6 +18,8 @@
  * USA
  */
 
+#include "config.h"
+
 #include "rgchangelogdialog.h"
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg)

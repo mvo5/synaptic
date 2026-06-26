@@ -19,11 +19,12 @@
 
 // (based on pkg_changelog)
 //
-// mvo: taken from aptitude with a big _thankyou_ 
+// mvo: taken from aptitude with a big _thankyou_
+
+#include "config.h"
 
 #include "pkg_acqfile.h"
 
-#include "config.h"
 #include "i18n.h"
 
 #include <stdio.h>

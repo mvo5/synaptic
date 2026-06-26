@@ -25,6 +25,8 @@
 #ifndef RGUSERDIALOG_H
 #define RGUSERDIALOG_H
 
+#include "config.h"
+
 #include "ruserdialog.h"
 #include "rgwindow.h"
 

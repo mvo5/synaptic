@@ -25,6 +25,8 @@
 #ifndef _RGCHANGESWINDOW_H
 #define _RGCHANGESWINDOW_H
 
+#include "config.h"
+
 #include "rggtkbuilderwindow.h"
 
 class RPackageLister;

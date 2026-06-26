@@ -5,6 +5,8 @@
 #ifndef _HAVE_SECTIONS_TRANS_H
 #define _HAVE_SECTIONS_TRANS_H
 
+#include "config.h"
+
 #include <string>
 #include <sstream>
 #include <iostream>

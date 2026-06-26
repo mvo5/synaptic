@@ -1,3 +1,4 @@
+#include "config.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/progress.h>

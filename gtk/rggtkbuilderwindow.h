@@ -20,7 +20,6 @@
  * USA
  */
 
-
 #ifndef _RGGTKBUILDERWINDOW_H_
 #define _RGGTKBUILDERWINDOW_H_
 

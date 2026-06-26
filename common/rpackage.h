@@ -26,10 +26,10 @@
  * USA
  */
 
-
-
 #ifndef _RPACKAGE_H_
 #define _RPACKAGE_H_
+
+#include "config.h"
 
 #include <vector>
 

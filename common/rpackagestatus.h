@@ -29,6 +29,8 @@
 #ifndef _RPACKAGESTATUS_H_
 #define _RPACKAGESTATUS_H_
 
+#include "config.h"
+
 #include <time.h>
 #include <vector>
 #include <string>

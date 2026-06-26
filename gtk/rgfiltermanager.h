@@ -25,6 +25,8 @@
 #ifndef _RGFILTERMANAGER_H_
 #define _RGFILTERMANAGER_H_
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"

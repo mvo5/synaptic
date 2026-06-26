@@ -20,9 +20,8 @@
  * USA
  */
 
-
-
 #include "config.h"
+
 #include <fstream>
 #include <sstream>
 #include <dirent.h>

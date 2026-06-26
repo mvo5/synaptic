@@ -20,17 +20,16 @@
  * USA
  */
 
-
 #ifndef _RGFETCHPROGRESS_H_
 #define _RGFETCHPROGRESS_H_
+
+#include "config.h"
 
 #include <apt-pkg/acquire.h>
 
 #include <vector>
 #include <set>
 #include "rggtkbuilderwindow.h"
-
-
 
 class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 

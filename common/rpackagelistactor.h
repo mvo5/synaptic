@@ -23,6 +23,8 @@
 #ifndef RPACKAGELISTACTOR_H
 #define RPACKAGELISTACTOR_H
 
+#include "config.h"
+
 #include "rpackagelister.h"
 #include <iostream>
 

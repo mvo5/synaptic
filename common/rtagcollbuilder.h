@@ -22,6 +22,9 @@
  */
 
 #if 0 // PORTME
+
+#include "config.h"
+
 #ifdef HAVE_DEBTAGS
 //#pragma interface
 

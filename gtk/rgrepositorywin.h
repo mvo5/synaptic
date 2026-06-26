@@ -23,9 +23,10 @@
  * USA
  */
 
-
 #ifndef _RGREPOSITORYWIN_H
 #define _RGREPOSITORYWIN_H
+
+#include "config.h"
 
 #include <gtk/gtk.h>
 #include "rsources.h"

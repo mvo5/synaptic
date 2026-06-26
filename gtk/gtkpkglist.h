@@ -20,6 +20,8 @@
 #ifndef GTKPKGLIST_H
 #define GTKPKGLIST_H
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include "rpackagelister.h"
 #include "rcacheactor.h"

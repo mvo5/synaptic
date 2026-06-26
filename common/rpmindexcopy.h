@@ -9,6 +9,8 @@
 #ifndef RPMINDEXCOPY_H
 #define RPMINDEXCOPY_H
 
+#include "config.h"
+
 #include <vector>
 #include <string>
 

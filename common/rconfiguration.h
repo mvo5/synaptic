@@ -22,9 +22,10 @@
  * USA
  */
 
-
 #ifndef _RCONFIGURATION_H_
 #define _RCONFIGURATION_H_
+
+#include "config.h"
 
 #include <string>
 #include <fstream>

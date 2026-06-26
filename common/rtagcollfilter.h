@@ -1,6 +1,8 @@
 #ifndef RTAGCOLFILTER_H
 #define RTAGCOLFILTER_H
 
+#include "config.h"
+
 #ifdef HAVE_DEBTAG
 
 /*

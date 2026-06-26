@@ -20,9 +20,9 @@
  * USA
  */
 
-#include <iostream>
-
 #include "config.h"
+
+#include <iostream>
 
 #include "i18n.h"
 

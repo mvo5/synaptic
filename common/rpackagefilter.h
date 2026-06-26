@@ -22,9 +22,10 @@
  * USA
  */
 
-
 #ifndef _RPACKAGEFILTER_H_
 #define _RPACKAGEFILTER_H_
+
+#include "config.h"
 
 #include <set>
 #include <vector>

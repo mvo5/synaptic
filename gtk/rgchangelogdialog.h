@@ -21,6 +21,8 @@
 #ifndef _GTK_RGCHANGELOGDIALOG_H
 #define _GTK_RGCHANGELOGDIALOG_H
 
+#include "config.h"
+
 #include <rgwindow.h>
 #include <rpackage.h>
 #include <rgfetchprogress.h>

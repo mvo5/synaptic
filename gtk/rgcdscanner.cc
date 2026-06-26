@@ -21,6 +21,7 @@
  */
 
 #include "config.h"
+
 #ifndef HAVE_APTPKG_CDROM
 
 #include "rgmainwindow.h"

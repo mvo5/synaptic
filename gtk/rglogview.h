@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RGLOGVIEW_H_
 #define _RGLOGVIEW_H_
+
+#include "config.h"
 
 #include "rggtkbuilderwindow.h"
 

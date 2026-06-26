@@ -4,6 +4,8 @@
 #ifndef _COMMON_PKG_ACQFILE_H
 #define _COMMON_PKG_ACQFILE_H
 
+#include "config.h"
+
 #include <apt-pkg/acquire-item.h>
 
 // new APT has a proper pkgAcqFile so all good

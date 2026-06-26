@@ -23,6 +23,8 @@
 #ifndef _RGTERMINSTALLPROGRESS_H_
 #define _RGTERMINSTALLPROGRESS_H_
 
+#include "config.h"
+
 #ifdef HAVE_TERMINAL
 
 #include "rgmainwindow.h"

@@ -23,6 +23,8 @@
  * USA
  */
 
+#include "config.h"
+
 #include <sys/stat.h>
 #include <dirent.h>
 
@@ -34,7 +36,6 @@
 #include <apt-pkg/error.h>
 #include <algorithm>
 #include <fstream>
-#include "config.h"
 #include "i18n.h"
 
 SourcesList::~SourcesList()

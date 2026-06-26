@@ -1,7 +1,8 @@
+#include "config.h"
+
 #include <apt-pkg/init.h>
 #include <iostream>
 
-#include "config.h"
 #include "rpackagelister.h"
 #include "rpackage.h"
 

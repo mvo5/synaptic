@@ -20,9 +20,10 @@
  * USA
  */
 
-
 #ifndef _RGICONLEGEND_H_
 #define _RGICONLEGEND_H_
+
+#include "config.h"
 
 #include "rggtkbuilderwindow.h"
 

@@ -23,9 +23,10 @@
  * USA
  */
 
-
 #ifndef _RGMAINWINDOW_H_
 #define _RGMAINWINDOW_H_
+
+#include "config.h"
 
 using namespace std;
 

@@ -20,7 +20,6 @@
  * USA
  */
 
-
 #include "config.h"
 
 #include "rpackagecache.h"

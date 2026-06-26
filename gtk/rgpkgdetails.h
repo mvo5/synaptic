@@ -24,6 +24,8 @@
 #ifndef _RGPKGDETAILS_H
 #define _RGPKGDETAILS_H
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 #include "rpackage.h"
 #include "rggtkbuilderwindow.h"

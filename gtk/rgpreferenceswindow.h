@@ -23,6 +23,8 @@
 #ifndef _GTK_RGPREFERENCESWINDOW_H
 #define _GTK_RGPREFERENCESWINDOW_H
 
+#include "config.h"
+
 #include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 

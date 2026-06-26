@@ -1,9 +1,10 @@
+#include "config.h"
+
 #include <apt-pkg/init.h>
 #include <apt-pkg/error.h>
 #include <iostream>
 #include <cstdlib>
 
-#include "config.h"
 #include "rpackagelister.h"
 #include "rpackage.h"
 

@@ -26,6 +26,8 @@
  * USA
  */
 
+#include "config.h"
+
 #include <apt-pkg/tagfile.h>
 #include <apt-pkg/strutl.h>
 #include "rpackagestatus.h"

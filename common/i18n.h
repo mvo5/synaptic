@@ -24,7 +24,7 @@
 #define _I18N_H_
 
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include "config.h"
 #endif
 
 #ifdef ENABLE_NLS

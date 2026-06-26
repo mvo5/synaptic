@@ -20,9 +20,9 @@
  * USA
  */
 
-#include <math.h>
-
 #include "config.h"
+
+#include <math.h>
 
 #include "rgcacheprogress.h"
 #include "rgutils.h"

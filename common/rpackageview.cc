@@ -22,6 +22,8 @@
  * USA
  */
 
+#include "config.h"
+
 #include <apt-pkg/version.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>

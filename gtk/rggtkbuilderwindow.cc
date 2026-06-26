@@ -19,13 +19,15 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
  */
+
+#include "config.h"
+
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
 
 #include <gdk/gdkx.h>
 
 #include <cassert>
-#include "config.h"
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
 

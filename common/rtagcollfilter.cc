@@ -20,4 +20,6 @@
 
 //#pragma implementation
 
+#include "config.h"
+
 #include "rtagcollfilter.h"

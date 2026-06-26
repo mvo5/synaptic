@@ -23,6 +23,7 @@
 #ifndef _RGPACKAGESTATUS_H_
 #define _RGPACKAGESTATUS_H_
 
+#include "config.h"
 
 #include "rpackage.h"
 #include "rpackagestatus.h"

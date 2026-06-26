@@ -25,7 +25,8 @@
 #ifndef RGPKGCDROM_H
 #define RGPKGCDROM_H
 
-#include <config.h>
+#include "config.h"
+
 #ifdef HAVE_APTPKG_CDROM
 
 #include "rggtkbuilderwindow.h"

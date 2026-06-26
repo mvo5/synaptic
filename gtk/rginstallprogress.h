@@ -20,10 +20,10 @@
  * USA
  */
 
-
 #ifndef _RGINSTALLPROGRESS_H_
 #define _RGINSTALLPROGRESS_H_
 
+#include "config.h"
 
 #include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"

@@ -26,6 +26,8 @@
 #ifndef _RSOURCES_H
 #define _RSOURCES_H
 
+#include "config.h"
+
 #include <string>
 #include <list>
 

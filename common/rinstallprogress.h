@@ -22,12 +22,12 @@
  * USA
  */
 
-
 #ifndef _RINSTALLPROGRESS_H_
 #define _RINSTALLPROGRESS_H_
 
-#include <apt-pkg/packagemanager.h>
 #include "config.h"
+
+#include <apt-pkg/packagemanager.h>
 
 class RInstallProgress {
  protected:

@@ -22,11 +22,11 @@
  * USA
  */
 
+#include "config.h"
 
 #include <cstdio>
 #include <cstring>
 #include <cassert>
-#include "config.h"
 #include "rpackageview.h"
 #include "rgfiltermanager.h"
 

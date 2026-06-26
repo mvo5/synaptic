@@ -23,6 +23,8 @@
 #ifndef _GTK_RGFINDWINDOW_H
 #define _GTK_RGFINDWINDOW_H
 
+#include "config.h"
+
 #include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"
 

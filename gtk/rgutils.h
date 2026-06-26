@@ -23,6 +23,8 @@
 #ifndef _RGMISC_H_
 #define _RGMISC_H_
 
+#include "config.h"
+
 #include <vector>
 
 enum {

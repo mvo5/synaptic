@@ -222,44 +222,42 @@ const char *RPackage::priority()
 }
 
 #ifndef HAVE_RPM
-const char *RPackage::installedFiles()
+string RPackage::installedFiles()
 {
-   static string filelist;
-   vector<string> sV;
-   string s;
-
-   filelist.erase(filelist.begin(), filelist.end());
-
-   // try normal file first
+   // Try the normal file name first:
    string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
-   // try multiarch name next
    if (!FileExists(f))
+   {
+      // Try the multiarch file name next:
       f = "/var/lib/dpkg/info/" + string(name()) + ":" + arch() + ".list";
-   if (FileExists(f)) {
-      ifstream in(f.c_str());
-      if (!in != 0)
-         return "";
-      while (in.eof() == false) {
-         getline(in, s);
-         sV.push_back( s );
+      if (!FileExists(f))
+      {
+         return "The list of installed files is only available for installed packages!";
       }
-      sort(sV.begin(), sV.end());
-      for (unsigned int i = 1; i < sV.size(); i++)
-         filelist += sV[i] + "\n";
-
-      return filelist.c_str();
    }
-   filelist = _("The list of installed files is only available for installed packages");
+      
+   ifstream in(f);
+   if (!in) return "The list of installed files could not be retrieved!";
+   
+   vector<string> sV;
+   while (!in.eof())
+   {
+      string s;
+      getline(in, s);
+      if (!s.empty()) sV.push_back(s);
+   }
+   
+   sort(sV.begin(), sV.end());
+   
+   string filelist;
+   for (size_t i = 0; i < sV.size(); i++)
+   {
+      filelist += sV[i] + "\n";
+   }
 
-   return filelist.c_str();
+   return filelist;
 }
-#else
-const char *RPackage::installedFiles()
-{
-   return "";
-}
-#endif
-
+#endif // HAVE_RPM
 
 const char *RPackage::description()
 {

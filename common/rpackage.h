@@ -145,7 +145,10 @@ class RPackage {
 
    const char *summary();
    const char *description();
-   const char *installedFiles();
+   
+#ifndef HAVE_RPM
+   std::string installedFiles();
+#endif
 
    std::string arch();
 

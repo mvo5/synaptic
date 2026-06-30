@@ -580,9 +580,11 @@ static void applicationActivate(GApplication* app, gpointer user_data)
       exit(0);
    } else {
       welcome_dialog(mainWindow);
+#ifdef WITH_QUICK_FILTER
       gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
                                           mainWindow->getGtkBuilder(),
                                           "entry_fast_search")));
+#endif // WITH_QUICK_FILTER
    }
 }
 

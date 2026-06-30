@@ -44,8 +44,8 @@
 #include <apt-pkg/depcache.h>
 #endif
 
-#ifdef HAVE_XAPIAN
-#include <xapian.h>
+#ifdef WITH_QUICK_FILTER
+#include <sqlite3.h>
 #endif
 
 class FileFd;
@@ -100,9 +100,9 @@ class RPackageLister {
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-#ifdef HAVE_XAPIAN
-   Xapian::Database *_xapianDatabase;
-#endif
+   #ifdef WITH_QUICK_FILTER
+      sqlite3 *_quickFilterDb = nullptr;
+   #endif
 
    // Other members.
    std::vector<RPackage *> _packages;
@@ -130,12 +130,13 @@ class RPackageLister {
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
    RPackageViewSearch *_searchView; // the package view that does the (simple) search
-
-   // helper for the limitBySearch() code
-   bool xapianSearch(std::string searchString);
-
+   
    public:
 
+#ifdef WITH_QUICK_FILTER
+   bool applyQuickFilter(std::string searchString);
+#endif
+   
    unsigned int _viewMode;
 
    typedef enum {
@@ -201,8 +202,6 @@ class RPackageLister {
    std::list<pkgState> redoStack;
 
    public:
-   // limit what the current view displays
-   bool limitBySearch(std::string searchString);
 
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
@@ -340,17 +339,23 @@ class RPackageLister {
    bool writeSelections(std::ostream &out, bool fullState);
 
    RPackageCache* getCache() { return _cache; }
-#ifdef HAVE_XAPIAN
-   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
-   time_t xapianIndexTimestamp();
-   bool xapianIndexNeedsUpdate();
-   bool openXapianIndex();
-#endif
+
+   #ifdef WITH_QUICK_FILTER
+   
+      // Use the sqlite based quick search feature.
+   
+      bool openQuickFilterDb();
+   
+      static bool BeginQuickFilterDbInsertion(sqlite3 *db);
+      static bool EndQuickFilterDbInsertion(sqlite3 *db);
+      static bool AddPackageToQuickFilterDb(sqlite3 *db, const std::string_view &name, const std::string_view &description);
+      static bool populateQuickFilterDb(sqlite3 *db, std::vector<RPackage *> &packages);
+
+   #endif
 
    RPackageLister();
    ~RPackageLister();
 };
-
 
 #endif
 

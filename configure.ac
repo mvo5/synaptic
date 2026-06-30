@@ -5,6 +5,9 @@ AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
+: ${CFLAGS="-O3 -flto -fuse-linker-plugin -pipe"}
+: ${CXXFLAGS="-O3 -flto -fuse-linker-plugin -pipe"}
+
 dnl Checks for programs.
 AC_ISC_POSIX
 AC_PROG_CC
@@ -37,9 +40,6 @@ if test x"$GTK" = xno; then
 	AC_MSG_ERROR([ Gtk is not installed, you need to install it to get a GUI])
 fi
 dnl fi
-
-
-
 
 dnl Check for rpm version 
 dnl =====================
@@ -111,16 +111,11 @@ AC_CHECK_HEADER(apt-pkg/metaindex.h, AC_DEFINE(WITH_APT_AUTH, 1, [build with apt
 # check if we have apts new-style cdrom.h
 AC_CHECK_HEADER(apt-pkg/cdrom.h, AC_DEFINE(HAVE_APTPKG_CDROM, 1, [whether apt-pkg/cdrom.h is present]) )
 
-#  xapian based package search feature
-AC_CHECK_PROG(HAVE_XAPIAN,xapian-config,yes,no)
-AS_IF([test "x$HAVE_XAPIAN" = "xyes"],[
-  XAPIAN_CXXFLAGS="$(xapian-config --cxxflags)"
-  XAPIAN_LIBS="$(xapian-config --libs)"
-  AC_DEFINE(HAVE_XAPIAN, 1, [xapian based package search feature])
- ])
-
-AC_SUBST(XAPIAN_CXXFLAGS)
-AC_SUBST(XAPIAN_LIBS)
+# SQLITE dependencies:
+AC_DEFINE(WITH_QUICK_FILTER, , [Sqlite based package quick filter feature])
+PKG_CHECK_MODULES([SQLITE], [sqlite3])
+AC_SUBST([SQLITE_CFLAGS])
+AC_SUBST([SQLITE_LIBS])
 
 AC_LANG([C])
 

@@ -83,23 +83,17 @@
 #include <apt-pkg/debfile.h>
 #endif
 
+#ifdef WITH_QUICK_FILTER
+#include <sqlite3.h>
+#endif
+
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
 #endif
 
-#ifdef HAVE_XAPIAN
-#include <xapian.h>
-#endif
-
-const std::string APT_XAPIAN_INDEX_DIR = "/var/lib/apt-xapian-index";
-
 using namespace std;
 
-RPackageLister::RPackageLister()
-   : _records(0), _progMeter(new OpProgress)
-#ifdef HAVE_XAPIAN
-   , _xapianDatabase(0)
-#endif
+RPackageLister::RPackageLister() : _records(0), _progMeter(new OpProgress)
 {
    _cache = new RPackageCache();
 
@@ -119,9 +113,10 @@ RPackageLister::RPackageLister()
    _views.push_back(_searchView);
    // its import that we use "_packages" here instead of _nativeArchPackages
    _views.push_back(new RPackageViewArchitecture(_packages));
-#ifdef HAVE_XAPIAN
-   openXapianIndex();
-#endif
+   
+   #ifdef WITH_QUICK_FILTER
+      openQuickFilterDb();
+   #endif
 
    if (_viewMode >= _views.size())
       _viewMode = 0;
@@ -142,6 +137,10 @@ RPackageLister::RPackageLister()
 
 RPackageLister::~RPackageLister()
 {
+   #ifdef WITH_QUICK_FILTER
+      sqlite3_close_v2(_quickFilterDb);
+   #endif
+   
    for (vector<RCacheActor *>::iterator I = _actors.begin();
         I != _actors.end(); I++)
       delete(*I);
@@ -324,15 +323,15 @@ bool RPackageLister::openCache()
    _error->Discard();
 
    // only lock if we run as root
-   bool lock = true;
-   if(getuid() != 0)
-      lock = false;
+   bool lock = (getuid() == 0);
 
-   if (!_cache->open(_progMeter,lock)) {
+   if (!_cache->open(_progMeter, lock))
+   {
       _progMeter->Done();
       _cacheValid = false;
       return _error->Error("_cache->open() failed, cannot continue.");
    }
+   
    _progMeter->Done();
 
    pkgDepCache *deps = _cache->deps();
@@ -431,7 +430,21 @@ bool RPackageLister::openCache()
             sectionSet.insert(Ver.Section());
       }
    }
+      
+   #ifdef WITH_QUICK_FILTER
+   
+      // Open and populate the quick search database.
+      if (openQuickFilterDb())
+      {
+         if (!populateQuickFilterDb(_quickFilterDb, _packages))
+         {
+            sqlite3_close_v2(_quickFilterDb);
+            _quickFilterDb = nullptr;
+         }
+      }
 
+   #endif
+   
    // refresh the views
    for (unsigned int i = 0; i != _views.size(); i++)
       _views[i]->refresh();
@@ -451,55 +464,192 @@ bool RPackageLister::openCache()
    return true;
 }
 
-#ifdef HAVE_XAPIAN
-time_t RPackageLister::xapianIndexTimestamp()
+#ifdef WITH_QUICK_FILTER
+
+// Initializes the database and sets the _quickFilterDb pointer.
+// In case of error returns false and _quickFilterDb is set to nullptr)
+bool RPackageLister::openQuickFilterDb()
 {
-        std::string db = APT_XAPIAN_INDEX_DIR + "/update-timestamp";
-        struct stat st;
-        int rv = stat(db.c_str(), &st);
-        return rv ? 0 : st.st_mtime;
-}
+   if (_quickFilterDb == nullptr)
+   {
+      // First time initialization: Open the database (in memory) and create the tables.
+      
+      sqlite3 *db; // The _quickSearchDb pointer only gets updated after full successful initialization (otherwise it remains set to nullptr).
+      
+      if (sqlite3_open_v2("", &db, SQLITE_OPEN_MEMORY | SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_PRIVATECACHE, NULL) != SQLITE_OK)
+      {
+         _error->Error(_("Unable to open the quick search database!"));
+         return false;
+      }
+      
+      // https://sqlite.org/pragma.html#pragma_journal_mode
+      if (sqlite3_exec(db, "PRAGMA journal_mode = OFF", nullptr, nullptr, nullptr) != SQLITE_OK)
+      {
+         _error->Warning(_("Unable to set the quick search database journal_mode!"));
+      }
+      
+      // https://sqlite.org/pragma.html#pragma_synchronous
+      if (sqlite3_exec(db, "PRAGMA synchronous = OFF", nullptr, nullptr, nullptr) != SQLITE_OK)
+      {
+         _error->Warning(_("Unable to set the quick search database synchronous mode!"));
+      }
+      
+      // SQLITE_LIMIT_WORKER_THREADS: The maximum number of auxiliary worker threads that a single prepared statement may start.
+      sqlite3_limit(db, SQLITE_LIMIT_WORKER_THREADS, 4);
 
-bool RPackageLister::xapianIndexNeedsUpdate()
-{
-   struct stat buf;
-   
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "xapainIndexNeedsUpdate()" << std::endl;
-
-   // check the xapian index
-   if(FileExists("/usr/sbin/update-apt-xapian-index") && 
-      (!_xapianDatabase )) {
-      if(_config->FindB("Debug::Synaptic::Xapian",false))
-	 std::cerr << "xapain index not build yet" << std::endl;
-      return true;
-   } 
-
-   // compare timestamps, rebuild everytime, its now cheap(er) 
-   // because we use u-a-x-i --update
-   stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-   if(xapianIndexTimestamp() < buf.st_mtime) {
-      if(_config->FindB("Debug::Synaptic::Xapian",false))
-	 std::cerr << "xapian outdated " 
-		   << buf.st_mtime - xapianIndexTimestamp()  << std::endl;
-      return true;
+      // Create the table for the text searches:
+      if (sqlite3_exec(db, "CREATE VIRTUAL TABLE fts USING fts5(name, description)", nullptr, nullptr, nullptr) != SQLITE_OK)
+      {
+         _error->Error(_("Unable to create the quick search database tables!"));
+         sqlite3_close(db);
+         return false;
+      }
+      
+      _quickFilterDb = db;
+   }
+   else
+   {
+      // Empty the database.
+      if (sqlite3_exec(_quickFilterDb, "DELETE FROM fts", nullptr, nullptr, nullptr) != SQLITE_OK)
+      {
+         _error->Error(_("Unable to empty the quick search database tables!"));
+         sqlite3_close(_quickFilterDb);
+         _quickFilterDb = nullptr;
+         return false;
+      }
    }
 
-   return false;
-}
-
-bool RPackageLister::openXapianIndex()
-{
-   if(_xapianDatabase)
-      delete _xapianDatabase;
-   try {
-      _xapianDatabase = new Xapian::Database(APT_XAPIAN_INDEX_DIR + "/index");
-   } catch (Xapian::DatabaseOpeningError) {
-      return false;
-   };
    return true;
 }
-#endif
+
+// Inform the database that a bulk insertion (transaction) is starting.
+// Returns false in case of error.
+bool RPackageLister::BeginQuickFilterDbInsertion(sqlite3 *db)
+{
+   if (db != nullptr)
+   {
+      static sqlite3_stmt *stmt = nullptr;
+      
+      if (stmt == nullptr)
+      {
+         if (sqlite3_prepare_v3(db,  "BEGIN DEFERRED", -1, SQLITE_PREPARE_PERSISTENT, &stmt, nullptr) != SQLITE_OK)
+         {
+            fprintf(stderr, "Can't prepare the BEGIN statement!\n");
+            stmt = nullptr;
+            return false;
+         }
+      }
+      
+      if (sqlite3_reset(stmt) != SQLITE_OK)
+      {
+         fprintf(stderr, "Can't reset the BEGIN statement!\n");
+         return false;
+      }
+      
+      if (sqlite3_step(stmt) != SQLITE_DONE)
+      {
+         fprintf(stderr, "The execution of the BEGIN statement failed!\n");
+         return false;
+      }
+   }
+   
+   return true;
+}
+
+// Inform the database that a bulk insertion (transaction) is finished.
+// Returns false in case of error.
+bool RPackageLister::EndQuickFilterDbInsertion(sqlite3 *db)
+{
+   if (db != nullptr)
+   {
+      static sqlite3_stmt *stmt = nullptr;
+      
+      if (stmt == nullptr)
+      {
+         if (sqlite3_prepare_v3(db,  "END", -1, SQLITE_PREPARE_PERSISTENT, &stmt, nullptr) != SQLITE_OK)
+         {
+            _error->Error(_("Unable to prepare the END statement!"));
+            stmt = nullptr;
+            return false;
+         }
+      }
+      
+      if (sqlite3_reset(stmt) != SQLITE_OK)
+      {
+         _error->Error(_("Unable to reset the END statement!"));
+         return false;
+      }
+      
+      if (sqlite3_step(stmt) != SQLITE_DONE)
+      {
+         _error->Error(_("Unable to execute the END statement!"));
+         return false;
+      }
+   }
+
+   return true;
+}
+
+bool RPackageLister::AddPackageToQuickFilterDb(sqlite3 *db, const string_view &name, const string_view &description)
+{
+   static sqlite3_stmt *stmt = nullptr;
+   
+   if (stmt == nullptr)
+   {
+      if (sqlite3_prepare_v3(db,  "INSERT INTO fts VALUES(?, ?)", -1, SQLITE_PREPARE_PERSISTENT, &stmt, nullptr) != SQLITE_OK)
+      {
+         _error->Error(_("Unable to prepare the INSERT statement!"));
+         stmt = nullptr;
+         return false;
+      }
+   }
+   
+   if (sqlite3_reset(stmt) != SQLITE_OK)
+   {
+      _error->Error(_("Unable to reset the INSERT statement!"));
+      return false;
+   }
+   
+   if (sqlite3_bind_text(stmt, 1, name.data(), name.length(), SQLITE_STATIC) != SQLITE_OK)
+   {
+      _error->Error(_("Unable to bind the name to the statement!"));
+      return false;
+   }
+   
+   if (sqlite3_bind_text(stmt, 2, description.data(), description.length(), SQLITE_STATIC) != SQLITE_OK)
+   {
+      _error->Error(_("Unable to bind the description to the statement!"));
+      return false;
+   }
+   
+   if (sqlite3_step(stmt) != SQLITE_DONE)
+   {
+      _error->Error(_("Unable to execute the INSERT statement!"));
+      return false;
+   }
+   
+   return true;
+}
+
+bool RPackageLister::populateQuickFilterDb(sqlite3 *db, vector<RPackage *> &packages)
+{
+   if (BeginQuickFilterDbInsertion(db))
+   {
+      for (RPackage *package : packages)
+      {
+         if (!AddPackageToQuickFilterDb(db, package->name(), package->description()))
+         {
+            return false;
+         }
+      }
+
+      EndQuickFilterDbInsertion(db);
+   }
+   
+   return true;
+}
+
+#endif // WITH_QUICK_FILTER
 
 void RPackageLister::applyInitialSelection()
 {
@@ -1982,136 +2132,65 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 #endif
 }
 
+#ifdef WITH_QUICK_FILTER
 
-#ifdef HAVE_XAPIAN
-bool RPackageLister::limitBySearch(string searchString)
+bool RPackageLister::applyQuickFilter(string searchString)
 {
-   //cerr << "limitBySearch(): " << searchString << endl;
-    if (xapianIndexTimestamp() == 0)
-        return false;
-   return xapianSearch(searchString);
-}
-
-bool RPackageLister::xapianSearch(string unsplitSearchString)
-{
-   //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
-   static const int defaultQualityCutoff = 15;
-   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", 
-                                      defaultQualityCutoff);
-    if (xapianIndexTimestamp() == 0) 
-        return false;
-
-   try {
-      int maxItems = _xapianDatabase->get_doccount();
-      Xapian::Enquire enquire(*_xapianDatabase);
-      Xapian::QueryParser parser;
-      parser.set_database(*_xapianDatabase);
-      parser.add_prefix("name","XP");
-      parser.add_prefix("section","XS");
-      // default op is AND to narrow down the resultset
-      parser.set_default_op( Xapian::Query::OP_AND );
+   if (_quickFilterDb == nullptr)
+   {
+      return false;  // Quick search not available.
+   }
    
-      /* Workaround to allow searching an hyphenated package name using a prefix (name:)
-       * LP: #282995
-       * Xapian currently doesn't support wildcard for boolean prefix and 
-       * doesn't handle implicit wildcards at the end of hypenated phrases.
-       *
-       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu res*'
-       * however 'name:(ubuntu* res*) won't return any result because the 
-       * index is built with the full package name
-       */
-      // Always search for the package name
-      string xpString = "name:";
-      string::size_type pos = unsplitSearchString.find_first_of(" ,;");
-      if (pos > 0) {
-          xpString += unsplitSearchString.substr(0,pos);
-      } else {
-          xpString += unsplitSearchString;
-      }
-      Xapian::Query xpQuery = parser.parse_query(xpString);
-
-      pos = 0;
-      while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
-         unsplitSearchString.replace(pos, 1, " ");
-         pos+=1;
-      }
-
-      if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-         std::cerr << "searching for : " << unsplitSearchString << std::endl;
-      
-      // Build the query
-      // apply a weight factor to XP term to increase relevancy on package name
-      Xapian::Query query = parser.parse_query(unsplitSearchString, 
-         Xapian::QueryParser::FLAG_WILDCARD |
-         Xapian::QueryParser::FLAG_BOOLEAN |
-         Xapian::QueryParser::FLAG_PARTIAL);
-      query = Xapian::Query(Xapian::Query::OP_OR, query, 
-              Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
-      enquire.set_query(query);
-      Xapian::MSet matches = enquire.get_mset(0, maxItems);
-
-      if(_config->FindB("Debug::Synaptic::Xapian",false)) {
-         cerr << "enquire: " << enquire.get_description() << endl;
-         cerr << "matches estimated: " << matches.get_matches_estimated() << " results found" << endl;
-      }
-
-      // Retrieve the results
-      int top_percent = 0;
-      _viewPackages.clear();
-      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
+   _viewPackages.clear();
+   
+   static sqlite3_stmt *selectStmt = nullptr;
+   
+   if (selectStmt == nullptr)
+   {
+      if (sqlite3_prepare_v2(_quickFilterDb,  "SELECT DISTINCT name FROM fts(?)" , -1, &selectStmt, nullptr) != SQLITE_OK)
       {
-         RPackage* pkg = getPackage(i.get_document().get_data());
-         // Filter out results that apt doesn't know
-         if (!pkg || !_selectedView->hasPackage(pkg))
-            continue;
-
-         // Save the confidence interval of the top value, to use it as
-         // a reference to compute an adaptive quality cutoff
-         if (top_percent == 0)
-            top_percent = i.get_percent();
+         //fprintf(stderr, "Can't prepare the sql select statement!\n");
+         selectStmt = nullptr;
+         return false;
+      }
+   }
    
-         // Stop producing if the quality goes below a cutoff point
-         if (i.get_percent() < qualityCutoff * top_percent / 100)
-         {
-            cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
-            break;
-         }
+   sqlite3_reset(selectStmt);
    
-         if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-            cerr << i.get_rank() + 1 << ": " << i.get_percent() << "% docid=" << *i << "	[" << i.get_document().get_data() << "]" << endl;
-         _viewPackages.push_back(pkg);
-         }
-      // re-apply sort criteria only if an explicit search is set
-      if (_sortMode != LIST_SORT_DEFAULT)
-          sortPackages(_sortMode);
-      return true;
-   } catch (const Xapian::Error & error) {
-      /* We are here if a Xapian call failed. The main cause is a parser exception.
-       * The error message is always in English currently. 
-       * The possible parser errors are:
-       *    Unknown range operation
-       *    parse error
-       *    Syntax: <expression> AND <expression>
-       *    Syntax: <expression> AND NOT <expression>
-       *    Syntax: <expression> NOT <expression>
-       *    Syntax: <expression> OR <expression>
-       *    Syntax: <expression> XOR <expression>
-       */
-      cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg() << endl;
+   if (sqlite3_bind_text(selectStmt, 1, searchString.data(), searchString.size(), nullptr) != SQLITE_OK)
+   {
+      fprintf(stderr, "Can't bind the select statement!\n");
       return false;
    }
-}
-#else
-bool RPackageLister::limitBySearch(string searchString)
-{
-   return false;
+   
+   int rc;
+   while ((rc = sqlite3_step(selectStmt)) == SQLITE_ROW)
+   {
+      const char *name = (const char *) sqlite3_column_text(selectStmt, 0);
+      RPackage *pkg = getPackage(name);
+      
+      // Filter out results that apt doesn't know:
+      if ((pkg == nullptr) || !_selectedView->hasPackage(pkg))
+      {
+         continue;
+      }
+
+      _viewPackages.push_back(pkg);
+   }
+   
+   if (rc != SQLITE_DONE)
+   {
+      //fprintf(stderr, "The select statement finished with error!\n");
+      return false;
+   }
+   
+   // re-apply sort criteria only if an explicit search is set
+   if (_sortMode != LIST_SORT_DEFAULT) sortPackages(_sortMode);
+   
+   return true;
 }
 
-bool RPackageLister::xapianSearch(string searchString) 
-{ 
-   return false; 
-}
-#endif
+#endif // WITH_QUICK_FILTER
 
 bool RPackageLister::isMultiarchSystem()
 {

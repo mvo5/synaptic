@@ -121,11 +121,13 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    RGUserDialog *_userDialog;
    RGFetchProgress *_fetchProgress;
    RGWindow *_installProgress;
-
+   
+#ifdef WITH_QUICK_FILTER
    // fast search stuff
    int _fastSearchEventID;
    GtkWidget *_entry_fast_search;
    static GtkCssProvider *_fastSearchCssProvider;
+#endif // WITH_QUICK_FILTER
 
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
@@ -190,16 +192,12 @@ public:
 
    // helpers for search-as-you-type 
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
-   static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
-   static gboolean xapianDoSearch(void *data);
-   static gboolean xapianDoIndexUpdate(void *data);
+   static gboolean applyQuickFilter(void *data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
-   virtual void notifyPreFilteredChange() {
-   };
-   virtual void notifyPostFilteredChange() {
-   };
+   virtual void notifyPreFilteredChange() {}
+   virtual void notifyPostFilteredChange() {}
 
  public:
    RGMainWindow(GtkApplication *app, RPackageLister *packLister, std::string name);

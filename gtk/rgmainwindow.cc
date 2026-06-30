@@ -323,13 +323,15 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
       ioprintf(clog, "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n", 
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
-
+   
+#ifdef WITH_QUICK_FILTER
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
    if(str != NULL && strlen(str) > 1) {
       if(_config->FindB("Debug::Synaptic::View",false))
-	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
-      _lister->limitBySearch(str);
+	 cerr << "RGMainWindow::refreshTable: rerun doQuickSearch" << endl;
+      _lister->applyQuickFilter(str);
    }
+#endif // WITH_QUICK_FILTER
 
    if(_pkgList == NULL)
    {
@@ -968,81 +970,8 @@ RGMainWindow::RGMainWindow(GtkApplication *app, RPackageLister *packLister, stri
    }
    g_value_unset(&value);
 
-   xapianDoIndexUpdate(this);
-
    // apply the proxy settings
    RGPreferencesWindow::applyProxySettings();
-}
-
-#ifdef HAVE_XAPIAN
-gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
-{
-   RGMainWindow *me = (RGMainWindow *) data;
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "xapianDoIndexUpdate()" << std::endl;
-
-   // no need to update if we run non-interactive
-   if(_config->FindB("Volatile::Non-Interactive", false) == true)
-      return false;
-
-   // check if we need a update
-   if(!me->_lister->xapianIndexNeedsUpdate()) {
-      // if the cache is not open, check back when it is
-      if (me->_lister->packagesSize() == 0)
-	 g_timeout_add_seconds(30, xapianDoIndexUpdate, me);
-      return false;
-   }
-
-   // do not run if we don't have it
-   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
-      return false;
-   // no permission
-   if (getuid() != 0)
-      return false;
-
-   // if we make it to this point, we need a xapian update
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "running update-apt-xapian-index" << std::endl;
-   GPid pid;
-   const char *argp[] = {"/usr/bin/nice",
-		   "/usr/bin/ionice","-c3",
-		   "/usr/sbin/update-apt-xapian-index", 
-		   "--update", "-q",
-		   NULL};
-   if(g_spawn_async(NULL, const_cast<char **>(argp), NULL, 
-		    (GSpawnFlags)(G_SPAWN_DO_NOT_REAP_CHILD),
-		    NULL, NULL, &pid, NULL)) {
-      g_child_watch_add(pid,  (GChildWatchFunc)xapianIndexUpdateFinished, me);
-      gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
-							  "label_fast_search")),
-			 _("Rebuilding search index"));
-      gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
-                                          (me->_builder, "toolbar_filter")), FALSE);
-   }
-   return false;
-}
-#else
-gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
-{
-   return false;
-}
-#endif
-
-void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void* data)
-{
-   RGMainWindow *me = (RGMainWindow *) data;
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
-      std::cerr << "xapianIndexUpdateFinished: "  
-		<< WEXITSTATUS(status) << std::endl;
-#ifdef HAVE_XAPIAN
-   me->_lister->openXapianIndex();
-#endif
-   gtk_label_set_text(GTK_LABEL(gtk_builder_get_object(me->_builder, 
-						     "label_fast_search")),
-		      _("Quick filter"));
-   gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
-                            (me->_builder, "toolbar_filter")), TRUE);
-   g_spawn_close_pid(pid);
 }
 
 void RGMainWindow::buildTreeView()
@@ -1102,10 +1031,12 @@ void RGMainWindow::buildInterface()
       G_MENU_MODEL(gtk_builder_get_object(_builder, "main_menu")),
       nullptr,
       false);
-
+   
+#ifdef WITH_QUICK_FILTER
    g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
                     "changed",
                     G_CALLBACK(cbSearchEntryChanged), this);
+#endif // WITH_QUICK_FILTER
 
    if (_config->FindB("Synaptic::NoUpgradeButtons", false) == true) {
       setActionEnabled("mark-all-upgrades", false); // TODO: hide?
@@ -1294,18 +1225,11 @@ void RGMainWindow::buildInterface()
    GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
    gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
 				"start_interactive_search", 0);
-
+   
+#ifdef WITH_QUICK_FILTER
    _entry_fast_search = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "entry_fast_search"));
-
-   // only enable fast search if its usable
-#ifdef HAVE_XAPIAN
-   if(!FileExists("/usr/sbin/update-apt-xapian-index"))
-#endif
-   {
-      gtk_widget_hide(GTK_WIDGET(
-            gtk_builder_get_object(_builder, "toolbar_filter")));
-   }
+#endif // WITH_QUICK_FILTER
 
    // stuff for the non-root mode
    if(getuid() != 0) {
@@ -2163,10 +2087,12 @@ void RGMainWindow::cbFindToolClicked(GSimpleAction *action,
    me->_findWin->selectText();
    int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-
+         
+#ifdef WITH_QUICK_FILTER
       // clear the quick search, otherwise both apply and that is
       // confusing
       gtk_entry_set_text(GTK_ENTRY(me->_entry_fast_search), "");
+#endif // WITH_QUICK_FILTER
 
       string str = me->_findWin->getFindString();
       me->setBusyCursor(true);
@@ -2709,7 +2635,9 @@ void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
-gboolean RGMainWindow::xapianDoSearch(void *data)
+#ifdef WITH_QUICK_FILTER
+
+gboolean RGMainWindow::applyQuickFilter(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
@@ -2718,7 +2646,7 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
    me->_fastSearchEventID = -1;
    me->setBusyCursor(true);
    RGFlushInterface();
-   if(str == NULL || strlen(str) <= 1) {
+   if (str == NULL || strlen(str) <= 1) {
       // reset the color
       gtk_style_context_remove_provider(styleContext, GTK_STYLE_PROVIDER(_fastSearchCssProvider));
       // if the user has cleared the search, refresh the view
@@ -2728,7 +2656,7 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
       me->_lister->reapplyFilter();
       me->refreshTable();
       me->setBusyCursor(false);
-   } else if(strlen(str) > 1) {
+   } else if (strlen(str) > 1) {
       // only search when there is more than one char entered, single
       // char searches tend to be very slow
       me->setBusyCursor(true);
@@ -2745,16 +2673,20 @@ gboolean RGMainWindow::xapianDoSearch(void *data)
    return FALSE;
 }
 
-void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
+void RGMainWindow::cbSearchEntryChanged(GtkWidget *, void *data)
 {
    //cerr << "RGMainWindow::cbSearchEntryChanged()" << endl;
    RGMainWindow *me = (RGMainWindow *) data;
-   if(me->_fastSearchEventID > 0) {
+   if (me->_fastSearchEventID > 0) {
       g_source_remove(me->_fastSearchEventID);
       me->_fastSearchEventID = -1;
    }
-   me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
+   
+   // Start the search task after a (500ms) timeout.
+   me->_fastSearchEventID = g_timeout_add(500, applyQuickFilter, me);
 }
+
+#endif // WITH_QUICK_FILTER
 
 void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
                                    GVariant *parameter,
@@ -2823,10 +2755,7 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
    me->_lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
-
-   // check if the index needs to be rebuild
-   me->xapianDoIndexUpdate(me);
-
+   
    me->setTreeLocked(FALSE);
    me->refreshTable();
    me->refreshSubViewList();

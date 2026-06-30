@@ -6,6 +6,7 @@ AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_bui
 	@VTE_CFLAGS@ \
 	@LP_CFLAGS@ \
 	@APT_PKG_CFLAGS@ \
+	@APT_PKG_CFLAGS@ \
 	$(LIBTAGCOLL_CFLAGS) \
 	-O0 -g3
 
@@ -19,7 +20,7 @@ LDADD = \
 	@VTE_LIBS@ \
 	@LP_LIBS@ \
 	@APT_PKG_LIBS@ \
-	@XAPIAN_LIBS@ \
+	@SQLITE_LIBS@ \
 	-lpthread \
 	-lutil \
 	-lX11

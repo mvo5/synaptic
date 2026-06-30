@@ -46,6 +46,10 @@
 #include <string>
 #include <vector>
 
+#include <apt-pkg/tagfile.h>
+#include <string>
+#include <vector>
+
 using namespace std;
 
 const char *RPatternPackageFilter::TypeName[] = {

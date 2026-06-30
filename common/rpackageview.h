@@ -167,10 +167,13 @@ class RPackageViewSearch : public RPackageView {
    std::map<std::string, searchItem> searchHistory;
    searchItem _currentSearchItem;
    int found; // nr of found pkgs for the last search
+   
+public:
+   
+#ifdef WITH_QUICK_FILTER   
+   bool applyQuickFilter();
+#endif // WITH_QUICK_FILTER
 
-   bool xapianSearch();
-
- public:
  RPackageViewSearch(std::vector<RPackage *> &allPkgs)
     : RPackageView(allPkgs), found(0) {}
 

@@ -11,8 +11,7 @@ AM_CPPFLAGS = -I${top_srcdir}/common \
 	@GTK_CFLAGS@ \
 	@VTE_CFLAGS@ \
 	@LP_CFLAGS@ \
-	@GTK_DISABLE_DEPRECATED@ \
-	$(LIBEPT_CFLAGS)
+	@GTK_DISABLE_DEPRECATED@
 
 sbin_PROGRAMS = synaptic 
 

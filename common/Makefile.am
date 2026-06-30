@@ -3,7 +3,6 @@
 noinst_LIBRARIES = libsynaptic.a
 
 AM_CPPFLAGS = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ \
-	$(LIBEPT_CFLAGS) \
 	-DSYNAPTICLOCALEDIR=\""$(synapticlocaledir)"\" \
 	-DSYNAPTICSTATEDIR=\""$(localstatedir)"\"
 

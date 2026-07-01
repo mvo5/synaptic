@@ -29,15 +29,16 @@
 #include "rgwindow.h"
 
 
-class RGDummyInstallProgress:public RInstallProgress {
+class RGDummyInstallProgress : public RInstallProgress
+{
  protected:
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
 
  public:
-   RGDummyInstallProgress():RInstallProgress() {};
-   virtual ~ RGDummyInstallProgress() {};
+   RGDummyInstallProgress() : RInstallProgress() {};
+   virtual ~RGDummyInstallProgress() {};
 };
 
 #endif

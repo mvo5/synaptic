@@ -30,12 +30,14 @@
 
 void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 {
-   RGSetOptWindow *me = (RGSetOptWindow *) data;
+   RGSetOptWindow *me = (RGSetOptWindow *)data;
 
-   GtkWidget *entry_name = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
-   GtkWidget *entry_value = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
+   GtkWidget *entry_name =
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
+   GtkWidget *entry_value =
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
 
-   const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
+   const gchar *name  = gtk_entry_get_text(GTK_ENTRY(entry_name));
    const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
 
    _config->Set(name, value);
@@ -43,23 +45,21 @@ void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 
 void RGSetOptWindow::DoClose(GtkWindow *widget, void *data)
 {
-   RGSetOptWindow *me = (RGSetOptWindow *) data;
+   RGSetOptWindow *me = (RGSetOptWindow *)data;
 
    me->hide();
 }
 
 RGSetOptWindow::RGSetOptWindow(RGWindow *win)
-: RGGtkBuilderWindow(win, "setopt")
+   : RGGtkBuilderWindow(win, "setopt")
 {
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_apply")),
-                    "clicked",
-                    G_CALLBACK(DoApply), this);
+   g_signal_connect(
+      GTK_WIDGET(gtk_builder_get_object(_builder, "button_apply")), "clicked",
+      G_CALLBACK(DoApply), this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_close")),
-                    "clicked",
-                    G_CALLBACK(DoClose), this);
+   g_signal_connect(
+      GTK_WIDGET(gtk_builder_get_object(_builder, "button_close")), "clicked",
+      G_CALLBACK(DoClose), this);
 
    setTitle("");
    skipTaskbar(true);

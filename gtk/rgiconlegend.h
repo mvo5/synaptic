@@ -28,7 +28,8 @@
 #include "rggtkbuilderwindow.h"
 
 
-class RGIconLegendPanel:public RGGtkBuilderWindow {
+class RGIconLegendPanel : public RGGtkBuilderWindow
+{
  public:
    RGIconLegendPanel(RGWindow *parent);
    virtual ~RGIconLegendPanel() {};

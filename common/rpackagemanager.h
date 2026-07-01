@@ -44,34 +44,36 @@
 #undef protected
 
 #ifndef RPACKAGEMANAGER_H
-#define RPACKAGEMANAGER_H
+#   define RPACKAGEMANAGER_H
 
-class RPackageManager {
+class RPackageManager
+{
 
-   protected:
-
+ protected:
    pkgPackageManager::OrderResult Res;
 
-   public:
-
+ public:
    pkgPackageManager *pm;
 
-   pkgPackageManager::OrderResult DoInstallPreFork() {
+   pkgPackageManager::OrderResult DoInstallPreFork()
+   {
       Res = pm->OrderInstall();
       return Res;
    }
-#ifdef WITH_DPKG_STATUSFD
-   pkgPackageManager::OrderResult DoInstallPostFork(int statusFd=-1) {
+#   ifdef WITH_DPKG_STATUSFD
+   pkgPackageManager::OrderResult DoInstallPostFork(int statusFd = -1)
+   {
       return (pm->Go(statusFd) == false) ? pkgPackageManager::Failed : Res;
    }
-#else
-   pkgPackageManager::OrderResult DoInstallPostFork() {
+#   else
+   pkgPackageManager::OrderResult DoInstallPostFork()
+   {
       return (pm->Go() == false) ? pkgPackageManager::Failed : Res;
    }
-#endif
+#   endif
 
-   RPackageManager(pkgPackageManager *pm) : pm(pm) {}
-
+   RPackageManager(pkgPackageManager *pm) : pm(pm)
+   {}
 };
 
 #endif

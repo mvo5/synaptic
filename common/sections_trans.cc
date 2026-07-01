@@ -140,8 +140,7 @@ const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "contrib"
    //              Free software that depends on non-free software
    {"contrib", _("contrib")},
-   {NULL, NULL}
-};
+   {NULL, NULL}};
 
 #ifndef HAVE_RPM
 string trans_section(string sec)

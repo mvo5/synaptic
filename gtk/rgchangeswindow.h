@@ -31,26 +31,24 @@
 
 class RPackageLister;
 
-class RGChangesWindow:public RGGtkBuilderWindow {
-   enum {
-      PKG_COLUMN,
-      N_COLUMNS
-   };
+class RGChangesWindow : public RGGtkBuilderWindow
+{
+   enum { PKG_COLUMN, N_COLUMNS };
 
-   GtkWidget *_tree;
+   GtkWidget    *_tree;
    GtkTreeStore *_treeStore;
 
  public:
    RGChangesWindow(RGWindow *win);
 
-   void confirm(RPackageLister *lister,
-		vector<RPackage *> &kept,
-		vector<RPackage *> &toInstall,
-		vector<RPackage *> &toReInstall,
-		vector<RPackage *> &toUpgrade,
-		vector<RPackage *> &toRemove,
-		vector<RPackage *> &toDowngrade,
-		vector<RPackage *> &notAuthenticated);
+   void confirm(RPackageLister     *lister,
+                vector<RPackage *> &kept,
+                vector<RPackage *> &toInstall,
+                vector<RPackage *> &toReInstall,
+                vector<RPackage *> &toUpgrade,
+                vector<RPackage *> &toRemove,
+                vector<RPackage *> &toDowngrade,
+                vector<RPackage *> &notAuthenticated);
 };
 
 #endif

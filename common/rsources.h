@@ -33,45 +33,49 @@
 
 using namespace std;
 
-class SourcesList {
+class SourcesList
+{
  public:
    enum RecType {
-      Deb = 1 << 0,
-      DebSrc = 1 << 1,
-      Rpm = 1 << 2,
-      RpmSrc = 1 << 3,
-      Disabled = 1 << 4,
-      Comment = 1 << 5,
-      RpmDir = 1 << 6,
+      Deb       = 1 << 0,
+      DebSrc    = 1 << 1,
+      Rpm       = 1 << 2,
+      RpmSrc    = 1 << 3,
+      Disabled  = 1 << 4,
+      Comment   = 1 << 5,
+      RpmDir    = 1 << 6,
       RpmSrcDir = 1 << 7,
-      Repomd = 1 << 8,
+      Repomd    = 1 << 8,
       RepomdSrc = 1 << 9
    };
 
-   struct SourceRecord {
-      unsigned int Type;
-      string VendorID;
-      string URI;
-      string Dist;
-      string *Sections;
+   struct SourceRecord
+   {
+      unsigned int   Type;
+      string         VendorID;
+      string         URI;
+      string         Dist;
+      string        *Sections;
       unsigned short NumSections;
-      string Comment;
-      string SourceFile;
+      string         Comment;
+      string         SourceFile;
 
-      bool SetType(string);
+      bool   SetType(string);
       string GetType();
-      bool SetURI(string);
+      bool   SetURI(string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
-      }
-      ~SourceRecord() {
+      SourceRecord() : Type(0), Sections(0), NumSections(0)
+      {}
+      ~SourceRecord()
+      {
          if (Sections)
-            delete[]Sections;
+            delete[] Sections;
       }
       SourceRecord &operator=(const SourceRecord &);
    };
 
-   struct VendorRecord {
+   struct VendorRecord
+   {
       string VendorID;
       string FingerPrint;
       string Description;
@@ -85,31 +89,33 @@ class SourcesList {
    VendorRecord *AddVendorNode(VendorRecord &);
 
  public:
-   SourceRecord *AddSource(RecType Type,
-                           string VendorID,
-                           string URI,
-                           string Dist,
-                           string *Sections,
-                           unsigned short count, string SourceFile);
+   SourceRecord *AddSource(RecType        Type,
+                           string         VendorID,
+                           string         URI,
+                           string         Dist,
+                           string        *Sections,
+                           unsigned short count,
+                           string         SourceFile);
    SourceRecord *AddEmptySource();
-   void RemoveSource(SourceRecord *&);
-   void SwapSources( SourceRecord *&, SourceRecord *& );
-   bool ReadSourcePart(string listpath);
-   bool ReadSourceDir(string Dir);
-   bool ReadSources();
-   bool UpdateSources();
+   void          RemoveSource(SourceRecord *&);
+   void          SwapSources(SourceRecord *&, SourceRecord *&);
+   bool          ReadSourcePart(string listpath);
+   bool          ReadSourceDir(string Dir);
+   bool          ReadSources();
+   bool          UpdateSources();
 
    VendorRecord *AddVendor(string VendorID,
-                           string FingerPrint, string Description);
-   void RemoveVendor(VendorRecord *&);
-   bool ReadVendors();
-   bool UpdateVendors();
+                           string FingerPrint,
+                           string Description);
+   void          RemoveVendor(VendorRecord *&);
+   bool          ReadVendors();
+   bool          UpdateVendors();
 
-   SourcesList() {
-   }
+   SourcesList()
+   {}
    ~SourcesList();
 };
 
-ostream &operator <<(ostream &, const SourcesList::SourceRecord &);
+ostream &operator<<(ostream &, const SourcesList::SourceRecord &);
 
 #endif

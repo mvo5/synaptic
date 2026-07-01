@@ -2,8 +2,8 @@
 /* ######################################################################
 
    Index Copying - Aid for copying and verifying the index files
-   
-   ##################################################################### 
+
+   #####################################################################
  */
 
 #ifndef RPMINDEXCOPY_H
@@ -17,9 +17,9 @@
 class pkgTagSection;
 class FileFd;
 
-class RPMIndexCopy {
+class RPMIndexCopy
+{
  protected:
-
    std::string RipComponent(std::string Path);
    std::string RipDirectory(std::string Path);
    std::string RipDistro(std::string Path);
@@ -27,17 +27,16 @@ class RPMIndexCopy {
    void ConvertToSourceList(std::string CD, std::string &Path);
 
  public:
-
-   bool CopyPackages(std::string CDROM, 
-                     std::string Name, 
+   bool CopyPackages(std::string               CDROM,
+                     std::string               Name,
                      std::vector<std::string> &List);
 };
 
 
-class RPMPackageCopy:public RPMIndexCopy {
-};
+class RPMPackageCopy : public RPMIndexCopy
+{};
 
-class RPMSourceCopy:public RPMIndexCopy {
-};
+class RPMSourceCopy : public RPMIndexCopy
+{};
 
 #endif

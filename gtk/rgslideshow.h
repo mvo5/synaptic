@@ -21,30 +21,30 @@
  */
 
 #ifndef _RGSLIDESHOW_H_
-#define _RGSLIDESHOW_H_
+#   define _RGSLIDESHOW_H_
 
-#include "config.h"
+#   include "config.h"
 
 using namespace std;
 
-class RGSlideShow {
+class RGSlideShow
+{
 
  protected:
-
-   GtkImage * _image;
-   int _totalSteps;
-   int _currentStep;
+   GtkImage      *_image;
+   int            _totalSteps;
+   int            _currentStep;
    vector<string> _imageFileList;
 
  public:
-
    void step();
    void refresh();
-   void setTotalSteps(int totalSteps) {
+   void setTotalSteps(int totalSteps)
+   {
       _totalSteps = totalSteps;
    };
 
-   RGSlideShow(GtkImage * image, string imgPath);
+   RGSlideShow(GtkImage *image, string imgPath);
 };
 
 #endif

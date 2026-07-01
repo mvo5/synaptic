@@ -1,11 +1,11 @@
-/* rgmisc.cc 
- * 
+/* rgmisc.cc
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -39,19 +39,18 @@
 
 
 // helper
-GdkPixbuf *
-get_gdk_pixbuf(const gchar *name, int size)
+GdkPixbuf *get_gdk_pixbuf(const gchar *name, int size)
 {
    GtkIconTheme *theme;
-   GdkPixbuf *pixbuf;
-   GError *error = NULL;
+   GdkPixbuf    *pixbuf;
+   GError       *error = NULL;
 
-   theme = gtk_icon_theme_get_default();
-   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
-				     (GtkIconLookupFlags)0, &error);
-   if (pixbuf == NULL) 
-      std::cerr << "Warning, failed to load: " << name 
-		<< error->message << std::endl;
+   theme  = gtk_icon_theme_get_default();
+   pixbuf = gtk_icon_theme_load_icon(theme, name, size, (GtkIconLookupFlags)0,
+                                     &error);
+   if (pixbuf == NULL)
+      std::cerr << "Warning, failed to load: " << name << error->message
+                << std::endl;
 
    return pixbuf;
 }
@@ -60,7 +59,7 @@ GtkWidget *get_gtk_image(const gchar *name, int size)
 {
    GdkPixbuf *buf;
    buf = get_gdk_pixbuf(name, size);
-   if(!buf)
+   if (!buf)
       return NULL;
    return gtk_image_new_from_pixbuf(buf);
 }
@@ -72,17 +71,17 @@ void RGFlushInterface()
    }
 }
 
-static void AddRun0Environment(std::vector<const gchar*> &prefix)
+static void AddRun0Environment(std::vector<const gchar *> &prefix)
 {
-   if(getenv("DISPLAY") != NULL)
+   if (getenv("DISPLAY") != NULL)
       prefix.push_back("--setenv=DISPLAY");
-   if(getenv("WAYLAND_DISPLAY") != NULL)
+   if (getenv("WAYLAND_DISPLAY") != NULL)
       prefix.push_back("--setenv=WAYLAND_DISPLAY");
-   if(getenv("XAUTHORITY") != NULL)
+   if (getenv("XAUTHORITY") != NULL)
       prefix.push_back("--setenv=XAUTHORITY");
-   if(getenv("XDG_RUNTIME_DIR") != NULL)
+   if (getenv("XDG_RUNTIME_DIR") != NULL)
       prefix.push_back("--setenv=XDG_RUNTIME_DIR");
-   if(getenv("DBUS_SESSION_BUS_ADDRESS") != NULL)
+   if (getenv("DBUS_SESSION_BUS_ADDRESS") != NULL)
       prefix.push_back("--setenv=DBUS_SESSION_BUS_ADDRESS");
 }
 
@@ -93,12 +92,12 @@ static void AddRun0Environment(std::vector<const gchar*> &prefix)
  * unit. The maximum length of the string will be five characters unless the
  * size is more than ten yottabytes.
  *
- * mvo: we use out own SizeToStr function as the SI spec says we need a 
+ * mvo: we use out own SizeToStr function as the SI spec says we need a
  *      space between the number and the unit (this isn't the case in stock apt
  */
 std::string SizeToStr(double Size)
 {
-   char S[300];
+   char   S[300];
    double ASize;
    if (Size >= 0) {
       ASize = Size;
@@ -109,8 +108,8 @@ std::string SizeToStr(double Size)
    /* Bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, exabytes,
     * zettabytes, yottabytes.
     */
-   char Ext[] = { ' ', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' };
-   int I = 0;
+   char Ext[] = {' ', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'};
+   int  I     = 0;
    while (I <= 8) {
       if (ASize < 100 && I != 0) {
          snprintf(S, 300, "%.1f %cB", ASize, Ext[I]);
@@ -127,39 +126,38 @@ std::string SizeToStr(double Size)
    return S;
 }
 
-bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
+bool RunAsSudoUserCommand(std::vector<const gchar *> cmd)
 {
-   std::vector<const gchar*> prefix;
-    gchar *sudo_user;
-    passwd* pwd;
-    if (cmd.empty()) {
-       std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
-       return true;
-    }
-    bool getuidbyname = false;
-    // try pkexec first, then sudo, then run0
-    sudo_user = getenv("PKEXEC_UID");
-    
-    if (sudo_user == NULL) {
-       sudo_user = getenv("SUDO_UID");
-    }
-    if (sudo_user == NULL) {
-       sudo_user = getenv("USER");
-       getuidbyname = true;
-    }
-    if (sudo_user == NULL) {
-       return false;
-    }
-    if(strncmp("root", sudo_user, strlen("root")) == 0){
-        return false;
-    }
-    if(!getuidbyname){
-        pwd = getpwuid(atoi(sudo_user));
-    }
-    else{
-         pwd = getpwnam(sudo_user);
-    }
-    sudo_user = pwd->pw_name;
+   std::vector<const gchar *> prefix;
+   gchar                     *sudo_user;
+   passwd                    *pwd;
+   if (cmd.empty()) {
+      std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
+      return true;
+   }
+   bool getuidbyname = false;
+   // try pkexec first, then sudo, then run0
+   sudo_user = getenv("PKEXEC_UID");
+
+   if (sudo_user == NULL) {
+      sudo_user = getenv("SUDO_UID");
+   }
+   if (sudo_user == NULL) {
+      sudo_user    = getenv("USER");
+      getuidbyname = true;
+   }
+   if (sudo_user == NULL) {
+      return false;
+   }
+   if (strncmp("root", sudo_user, strlen("root")) == 0) {
+      return false;
+   }
+   if (!getuidbyname) {
+      pwd = getpwuid(atoi(sudo_user));
+   } else {
+      pwd = getpwnam(sudo_user);
+   }
+   sudo_user = pwd->pw_name;
 #if 0 // does not work for some reason
     if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)
     {
@@ -168,21 +166,18 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
        prefix.push_back(sudo_user);
     }
 #endif
-    if(FileExists("/usr/bin/sudo") && sudo_user != NULL)
-    {
-       prefix.push_back("/usr/bin/sudo");
-       prefix.push_back("-u");
-       prefix.push_back(sudo_user);
-    }
-    else if(FileExists("/usr/bin/run0") && sudo_user != NULL)
-    {
-       prefix.push_back("/usr/bin/run0");
-       AddRun0Environment(prefix);
-       prefix.push_back("-u");
-       prefix.push_back(sudo_user);
-    }
-    // insert the prefix string
-    cmd.insert(cmd.begin(), prefix.begin(), prefix.end());
+   if (FileExists("/usr/bin/sudo") && sudo_user != NULL) {
+      prefix.push_back("/usr/bin/sudo");
+      prefix.push_back("-u");
+      prefix.push_back(sudo_user);
+   } else if (FileExists("/usr/bin/run0") && sudo_user != NULL) {
+      prefix.push_back("/usr/bin/run0");
+      AddRun0Environment(prefix);
+      prefix.push_back("-u");
+      prefix.push_back(sudo_user);
+   }
+   // insert the prefix string
+   cmd.insert(cmd.begin(), prefix.begin(), prefix.end());
 
 #if 0
     for(std::vector<const gchar*>::iterator it = cmd.begin();
@@ -190,23 +185,23 @@ bool RunAsSudoUserCommand(std::vector<const gchar*> cmd)
        printf("cmd '%s'\n", *it);
 #endif
 
-    // build the c way to make g_spawn_async happy
-    char **c_cmd = new char*[cmd.size()+1];
-    int i;
-    for(i=0; i<cmd.size(); i++)
-       c_cmd[i] = (gchar*)cmd[i];
-    c_cmd[i] = NULL;
+   // build the c way to make g_spawn_async happy
+   char **c_cmd = new char *[cmd.size() + 1];
+   int    i;
+   for (i = 0; i < cmd.size(); i++)
+      c_cmd[i] = (gchar *)cmd[i];
+   c_cmd[i] = NULL;
 
-    GError *error = NULL;
-    g_spawn_async("/", c_cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
-    if (error != NULL) {
-       std::cerr << "Failed to run cmd: " << cmd[0] << std::endl;
-    }
+   GError *error = NULL;
+   g_spawn_async("/", c_cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
+   if (error != NULL) {
+      std::cerr << "Failed to run cmd: " << cmd[0] << std::endl;
+   }
 
-    // and free the memory again
-    delete [] c_cmd;
+   // and free the memory again
+   delete[] c_cmd;
 
-    return true;
+   return true;
 }
 
 bool is_binary_in_path(const char *program)
@@ -226,7 +221,7 @@ bool is_binary_in_path(const char *program)
    return false;
 }
 
-char *gtk_get_string_from_color(GdkRGBA * colp)
+char *gtk_get_string_from_color(GdkRGBA *colp)
 {
    static char *_str = NULL;
 
@@ -252,8 +247,8 @@ void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp)
    }
 
    new_color = g_new(GdkRGBA, 1);
-   result = gdk_rgba_parse(new_color, cpp);
-   *colp = new_color;
+   result    = gdk_rgba_parse(new_color, cpp);
+   *colp     = new_color;
 }
 
 const char *utf8_to_locale(const char *str)
@@ -287,16 +282,17 @@ const char *utf8(const char *str)
  * ----------------------------------------------------
  * @unescaped: string to escape markup from
  *
- * we use g_markup_escape_text which only support 5 standard entities: 
+ * we use g_markup_escape_text which only support 5 standard entities:
  * &amp; &lt; &gt; &quot; &apos;
  * We must escape the string used as list item of a GtkTree
  */
- std::string MarkupEscapeString(std::string unescaped) {
+std::string MarkupEscapeString(std::string unescaped)
+{
    std::string escaped;
-   char *c_esc = g_markup_escape_text(unescaped.c_str(), -1);
-   escaped = std::string(c_esc);
+   char       *c_esc = g_markup_escape_text(unescaped.c_str(), -1);
+   escaped           = std::string(c_esc);
    g_free(c_esc);
-   return escaped;  
+   return escaped;
 }
 
 /*
@@ -305,35 +301,36 @@ const char *utf8(const char *str)
  * @escaped: string to unescape markup from
  * unescaped entities: &amp; &lt; &gt; &quot; &apos;
  *
- * sadly there is no simple way to unescape a previously escaped string with 
+ * sadly there is no simple way to unescape a previously escaped string with
  * g_markup_escape_text
  */
- std::string MarkupUnescapeString(std::string escaped) {
-   size_t pos = 0, end = 0;
+std::string MarkupUnescapeString(std::string escaped)
+{
+   size_t      pos = 0, end = 0;
    std::string entity, str;
-   while ((pos = escaped.find("&", pos)) != std::string::npos ) {
+   while ((pos = escaped.find("&", pos)) != std::string::npos) {
       end = escaped.find(";", pos);
       if (end == std::string::npos)
-          break;
+         break;
 
-      entity = escaped.substr(pos,end-pos+1);
-      str = "";
-      if(entity == "&lt;")
+      entity = escaped.substr(pos, end - pos + 1);
+      str    = "";
+      if (entity == "&lt;")
          str = "<";
-      else if(entity == "&gt;")
+      else if (entity == "&gt;")
          str = ">";
-      else if(entity == "&amp;")
+      else if (entity == "&amp;")
          str = "&";
-      else if(entity == "&quot;")
+      else if (entity == "&quot;")
          str = "\"";
-      else if(entity == "&apos;")
+      else if (entity == "&apos;")
          str = "'";
 
-      if(!str.empty()) {
-          escaped.replace(pos, entity.size(), str);
-          pos++; 
+      if (!str.empty()) {
+         escaped.replace(pos, entity.size(), str);
+         pos++;
       } else {
-          pos = end;
+         pos = end;
       }
    }
    return escaped;

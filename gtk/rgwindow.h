@@ -32,32 +32,38 @@
 
 using namespace std;
 
-class RGWindow {
+class RGWindow
+{
  protected:
    GtkWidget *_win;
    GtkWidget *_topBox;
 
-   static bool windowCloseCallback(GtkWidget *widget, GdkEvent * event);
+   static bool  windowCloseCallback(GtkWidget *widget, GdkEvent *event);
    virtual bool close();
 
  public:
-   inline virtual GtkWidget *window() {
+   inline virtual GtkWidget *window()
+   {
       return _win;
    };
 
    virtual void setTitle(string title);
 
-   inline virtual void hide() {
+   inline virtual void hide()
+   {
       gtk_widget_hide(_win);
    };
-   inline virtual void show() {
+   inline virtual void show()
+   {
       gtk_widget_show(_win);
    };
 
    RGWindow() : _win(0), _topBox(0) {};
    RGWindow(string name, bool makeBox = true);
-   RGWindow(RGWindow *parent, string name, bool makeBox = true,
-            bool closable = true);
+   RGWindow(RGWindow *parent,
+            string    name,
+            bool      makeBox  = true,
+            bool      closable = true);
    virtual ~RGWindow();
 };
 

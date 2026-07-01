@@ -1,11 +1,11 @@
 /* rgpackagestatus.h - UI elements for the package status
- * 
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -28,10 +28,11 @@
 #include "rpackage.h"
 #include "rpackagestatus.h"
 
-class RGPackageStatus : public RPackageStatus {
+class RGPackageStatus : public RPackageStatus
+{
  protected:
    GdkPixbuf *StatusPixbuf[N_STATUS_COUNT];
-   GdkRGBA *StatusColors[N_STATUS_COUNT];
+   GdkRGBA   *StatusColors[N_STATUS_COUNT];
 
    GdkPixbuf *supportedPix;
 
@@ -43,18 +44,20 @@ class RGPackageStatus : public RPackageStatus {
    static RGPackageStatus pkgStatus;
 
    virtual void init();
-   
+
    // this is what the package listers use
-   GdkRGBA *getBgColor(RPackage *pkg);
+   GdkRGBA   *getBgColor(RPackage *pkg);
    GdkPixbuf *getSupportedPix(RPackage *pkg);
    GdkPixbuf *getPixbuf(RPackage *pkg);
-   GdkPixbuf *getPixbuf(int i) {
+   GdkPixbuf *getPixbuf(int i)
+   {
       return StatusPixbuf[i];
    }
 
    // this is for the configuration of the colors
-   void setColor(int i, GdkRGBA * new_color);
-   GdkRGBA *getColor(int i) {
+   void     setColor(int i, GdkRGBA *new_color);
+   GdkRGBA *getColor(int i)
+   {
       return StatusColors[i];
    };
    // save color configuration to disk

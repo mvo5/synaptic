@@ -25,34 +25,36 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  */
 
-//#pragma interface
+// #pragma interface
 
-#include <TagcollConsumer.h>
-#include <TagcollFilter.h>
+#   include <TagcollConsumer.h>
+#   include <TagcollFilter.h>
 
-#include <map>
-#include <string>
-#include "rpackage.h"
-#include "rpackagelister.h"
+#   include <map>
+#   include <string>
+#   include "rpackage.h"
+#   include "rpackagelister.h"
 
-class RTagcollFilter:public TagcollFilter<std::string> {
+class RTagcollFilter : public TagcollFilter<std::string>
+{
  protected:
    RPackageLister *_lister;
 
  public:
-   RTagcollFilter(RPackageLister *lister) throw()
- :   _lister(lister) {
-   }
+   RTagcollFilter(RPackageLister *lister) throw() : _lister(lister)
+   {}
 
-   virtual void consume(const std::string &item) throw() {
+   virtual void consume(const std::string &item) throw()
+   {
       // make sure that only elements we know about are displayed
       // this should really use getElementInDisplayList
       if (_lister->getElement(item) != NULL)
          consumer->consume(item);
    }
 
-   virtual void consume(const std::string &item,
-                        const OpSet<std::string> &tags) throw() {
+   virtual void consume(const std::string        &item,
+                        const OpSet<std::string> &tags) throw()
+   {
       // make sure that only elements we know about are displayed
       // this should really use getElementInDisplayList
       if (_lister->getElement(item) != NULL)

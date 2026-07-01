@@ -1,12 +1,12 @@
 /* ruserdialog.cc
- * 
- * Copyright (c) 2003 Conectiva S/A 
- * 
+ *
+ * Copyright (c) 2003 Conectiva S/A
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -34,7 +34,7 @@ bool RUserDialog::showErrors()
 
    while (!_error->empty()) {
       std::string message;
-      bool iserror = _error->PopMessage(message);
+      bool        iserror = _error->PopMessage(message);
 
       // Ignore some stupid error messages.
       if (message == "Tried to dequeue a fetching object")

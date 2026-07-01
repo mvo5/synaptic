@@ -29,7 +29,8 @@
 
 #include <gtk/gtk.h>
 
-class RGCacheProgress:public OpProgress {
+class RGCacheProgress : public OpProgress
+{
    GtkWidget *_parent;
    GtkWidget *_label;
    GtkWidget *_prog;
@@ -41,7 +42,8 @@ class RGCacheProgress:public OpProgress {
    RGCacheProgress(GtkWidget *parent, GtkWidget *label);
    ~RGCacheProgress();
 
-   inline GtkWidget *widget() {
+   inline GtkWidget *widget()
+   {
       return _prog;
    };
 

@@ -1,6 +1,6 @@
 /*
  * TagcollConsumer that builds a tagged collection
- * 
+ *
  * Copyright (C) 2003  Enrico Zini <enrico@debian.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  */
 
-//#pragma implementation
+// #pragma implementation
 
 #include "config.h"
 

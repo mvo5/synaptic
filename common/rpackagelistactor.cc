@@ -24,7 +24,7 @@ void RPackageListActor::notifyPostFilteredChange()
    for (unsigned int i = 0; i < currentList.size(); i++) {
       I = find(removedList.begin(), removedList.end(), currentList[i]);
       if (I != removedList.end())
-	 removedList.erase(I);
+         removedList.erase(I);
       else
          insertedList.push_back(currentList[i]);
    }

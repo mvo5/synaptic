@@ -1,11 +1,11 @@
 /* rpackagecache.cc - package cache wrapper
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
- * 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -38,7 +38,7 @@
 
 bool RPackageCache::open(OpProgress *progress, bool locking)
 {
-   if(locking)
+   if (locking)
       lock();
 
    if (_error->PendingError())
@@ -54,7 +54,7 @@ bool RPackageCache::open(OpProgress *progress, bool locking)
 
    _trust_cache.clear();
 
-   //progress.Done();
+   // progress.Done();
    if (_error->PendingError())
       return false;
 
@@ -65,31 +65,31 @@ bool RPackageCache::open(OpProgress *progress, bool locking)
    return true;
 }
 
-vector<string> RPackageCache::getPolicyArchives(bool filenames_only=false)
+vector<string> RPackageCache::getPolicyArchives(bool filenames_only = false)
 {
-   //std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
+   // std::cout << "RPackageCache::getPolicyComponents() " << std::endl;
 
    vector<string> archives;
-   for (pkgCache::PkgFileIterator F = pkgCache(cache).FileBegin(); F.end() == false;
-        F++) {
+   for (pkgCache::PkgFileIterator F = pkgCache(cache).FileBegin();
+        F.end() == false; F++) {
       pkgIndexFile *Indx;
       list()->FindIndex(F, Indx);
       _system->FindIndex(F, Indx);
 
-      if(filenames_only) {
-	 if(F.FileName())
-	    archives.push_back(F.FileName());
+      if (filenames_only) {
+         if (F.FileName())
+            archives.push_back(F.FileName());
       } else {
-	 if (!F.RelStr().empty()) {
-	    //printf("Archive: %s, Origin: %s, Component: %s, Filename: %s\n", 
-	    //       F.Archive(), F.Origin(), F.Component(), F.FileName());
-	    if (F.Archive() != NULL) {
-	       if (find(archives.begin(), archives.end(), F.Archive())
-		   == archives.end()) {
-		  archives.push_back(F.Archive());
-	       }
-	    }
-	 }
+         if (!F.RelStr().empty()) {
+            // printf("Archive: %s, Origin: %s, Component: %s, Filename: %s\n",
+            //        F.Archive(), F.Origin(), F.Component(), F.FileName());
+            if (F.Archive() != NULL) {
+               if (find(archives.begin(), archives.end(), F.Archive()) ==
+                   archives.end()) {
+                  archives.push_back(F.Archive());
+               }
+            }
+         }
       }
    }
    return archives;
@@ -104,7 +104,7 @@ bool RPackageCache::lock()
    _system->Lock();
    _locked = true;
 
-   //FIXME: should depend on the result of _system->lock()
+   // FIXME: should depend on the result of _system->lock()
    return true;
 }
 

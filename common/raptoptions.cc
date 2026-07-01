@@ -1,11 +1,11 @@
 /* raptoptions.cc - configuration handling
- * 
- * Copyright (c) 2000, 2001 Conectiva S/A 
- * 
+ *
+ * Copyright (c) 2000, 2001 Conectiva S/A
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -74,10 +74,10 @@ bool RAPTOptions::store()
 
 bool RAPTOptions::restore()
 {
-   string pkg, line;
+   string         pkg, line;
    packageOptions o;
 
-   //cout << "bool RAPTOptions::restore()" << endl;
+   // cout << "bool RAPTOptions::restore()" << endl;
 
    ifstream in;
    if (!RPackageOptionsFile(in))
@@ -92,9 +92,9 @@ bool RAPTOptions::restore()
    }
 
    // upgrade code for older synaptic versions, can go away in the future
-   if(FileExists(RConfDir()+"/preferences"))
-      rename(string(RConfDir()+"/preferences").c_str(),
-	     string(RStateDir()+"/preferences").c_str());
+   if (FileExists(RConfDir() + "/preferences"))
+      rename(string(RConfDir() + "/preferences").c_str(),
+             string(RStateDir() + "/preferences").c_str());
 
 
    // pining stuff
@@ -103,7 +103,7 @@ bool RAPTOptions::restore()
    if (!FileExists(File))
       return true;
 
-   FileFd Fd(File, FileFd::ReadOnly);
+   FileFd     Fd(File, FileFd::ReadOnly);
    pkgTagFile TF(&Fd);
    if (_error->PendingError() == true) {
       return false;
@@ -112,9 +112,8 @@ bool RAPTOptions::restore()
    while (TF.Step(Tags) == true) {
       string Name = Tags.FindS("Package");
       if (Name.empty() == true)
-         return _error->
-            Error(_
-                  ("Invalid record in the preferences file, no Package header"));
+         return _error->Error(
+            _("Invalid record in the preferences file, no Package header"));
       if (Name == "*")
          Name = string();
 
@@ -124,7 +123,8 @@ bool RAPTOptions::restore()
          continue;
 
       const char *Word = Start;
-      for (; Word != End && isspace(*Word) == 0; Word++);
+      for (; Word != End && isspace(*Word) == 0; Word++)
+         ;
 
       // Parse the type, we are only interesseted in "version" for now
       pkgVersionMatch::MatchType Type;
@@ -132,7 +132,8 @@ bool RAPTOptions::restore()
          Type = pkgVersionMatch::Version;
       else
          continue;
-      for (; Word != End && isspace(*Word) != 0; Word++);
+      for (; Word != End && isspace(*Word) != 0; Word++)
+         ;
 
       setPackageLock(Name.c_str(), true);
    }
@@ -153,20 +154,20 @@ bool RAPTOptions::getPackageDebconf(const char *package)
    if (_packageOptions.find(tmp) == _packageOptions.end())
       return false;
 
-   //cout << "getPackageOrphaned("<<package<<") called"<<endl;
+   // cout << "getPackageOrphaned("<<package<<") called"<<endl;
    return _packageOptions[tmp].isDebconf;
 }
 
 
 void RAPTOptions::setPackageDebconf(const char *package, bool flag)
 {
-   //cout << "debconf called pkg: " << package << endl;
+   // cout << "debconf called pkg: " << package << endl;
    _packageOptions[string(package)].isDebconf = flag;
 }
 
 void RAPTOptions::rereadDebconf()
 {
-   //cout << "void RAPTOptions::rereadDebconf()" << endl;
+   // cout << "void RAPTOptions::rereadDebconf()" << endl;
 
    // forget about any previously debconf packages
    for (packageOptionsIter it = _roptions->_packageOptions.begin();
@@ -175,15 +176,15 @@ void RAPTOptions::rereadDebconf()
    }
 
    // read dir
-   const char infodir[] = "/var/lib/dpkg/info";
+   const char infodir[]   = "/var/lib/dpkg/info";
    const char configext[] = ".config";
 
-   DIR *dir;
+   DIR           *dir;
    struct dirent *dent;
-   char *point;
+   char          *point;
 
    if ((dir = opendir(infodir)) == NULL) {
-      //cerr << "Error opening " << infodir << endl;
+      // cerr << "Error opening " << infodir << endl;
       return;
    }
    for (int i = 3; (dent = readdir(dir)); i++) {
@@ -191,7 +192,7 @@ void RAPTOptions::rereadDebconf()
          continue;
       if (strcmp(point, configext) == 0) {
          memset(point, 0, strlen(point));
-         //cout << (dent->d_name) << endl;
+         // cout << (dent->d_name) << endl;
          setPackageDebconf(dent->d_name, true);
       }
    }
@@ -206,23 +207,23 @@ void RAPTOptions::rereadOrphaned()
       (*it).second.isOrphaned = false;
    }
 
-   //mvo: call deborphan and read package list from it
-   //     TODO: make deborphan a library to make this cleaner
+   // mvo: call deborphan and read package list from it
+   //      TODO: make deborphan a library to make this cleaner
    FILE *fp;
-   char buf[255];
-   char cmd[] = "/usr/bin/deborphan";
-   //FIXME: fail silently if deborphan is not installed - change this?
+   char  buf[255];
+   char  cmd[] = "/usr/bin/deborphan";
+   // FIXME: fail silently if deborphan is not installed - change this?
    if (!FileExists(cmd))
       return;
    fp = popen(cmd, "r");
    if (fp == NULL) {
-      //cerr << "deborphan failed" << endl;
+      // cerr << "deborphan failed" << endl;
       return;
    }
    while (fgets(buf, sizeof(buf), fp) != NULL) {
       // remove newline at end and strip architecture suffix
       buf[strcspn(buf, "\n:")] = '\0';
-      //cout << "buf: " << buf << endl;
+      // cout << "buf: " << buf << endl;
       setPackageOrphaned(buf, true);
    }
    pclose(fp);
@@ -236,14 +237,14 @@ bool RAPTOptions::getPackageOrphaned(const char *package)
    if (_packageOptions.find(tmp) == _packageOptions.end())
       return false;
 
-   //cout << "getPackageOrphaned("<<package<<") called"<<endl;
+   // cout << "getPackageOrphaned("<<package<<") called"<<endl;
    return _packageOptions[tmp].isOrphaned;
 }
 
 
 void RAPTOptions::setPackageOrphaned(const char *package, bool flag)
 {
-   //cout << "orphaned called pkg: " << package << endl;
+   // cout << "orphaned called pkg: " << package << endl;
    _packageOptions[string(package)].isOrphaned = flag;
 }
 

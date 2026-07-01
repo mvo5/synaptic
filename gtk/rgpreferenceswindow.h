@@ -28,13 +28,15 @@
 #include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
 
-class RGPreferencesWindow:public RGGtkBuilderWindow {
+class RGPreferencesWindow : public RGGtkBuilderWindow
+{
    bool _blockAction;
 
-   enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
+   enum { TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN };
 
-   struct column_struct {
-      gboolean visible;
+   struct column_struct
+   {
+      gboolean    visible;
       const char *name;
       const char *visible_name;
    };
@@ -42,15 +44,15 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    GtkCssProvider *_css_provider;
 
    // the names for the VisibleColumnsTreeView
-   static const char *column_names[];
-   static const char *column_visible_names[];
+   static const char    *column_names[];
+   static const char    *column_visible_names[];
    static const gboolean column_visible_defaults[];
 
    static const char *removal_actions[];
    static const char *update_ask[];
    static const char *upgrade_method[];
 
-   RGMainWindow *_mainWin;
+   RGMainWindow   *_mainWin;
    RPackageLister *_lister;
    // option buttons
    GtkWidget *_optionShowAllPkgInfoInMain;
@@ -80,7 +82,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
 
    // policy settings
    GtkWidget *_comboDefaultDistro;
-   string _defaultDistro;
+   string     _defaultDistro;
 
    bool _dirty;
 
@@ -89,31 +91,30 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    // distro selection
    static void cbArchiveSelection(GtkWidget *self, void *data);
    static void cbRadioDistributionChanged(GtkWidget *self, void *data);
-   bool distroChanged;
+   bool        distroChanged;
    // the http proxy configuration
    static void cbHttpProxyEntryChanged(GtkWidget *self, void *data);
 
    // treeview stuff
-   void readTreeViewValues();
+   void          readTreeViewValues();
    GtkListStore *_listColumns;
-   GtkWidget *_treeView;
-   static void cbMoveColumnUp(GtkWidget *self, void *data);
-   static void cbMoveColumnDown(GtkWidget *self, void *data);
-   static void cbToggleColumn(GtkWidget *self, char *path, void *data);
+   GtkWidget    *_treeView;
+   static void   cbMoveColumnUp(GtkWidget *self, void *data);
+   static void   cbMoveColumnDown(GtkWidget *self, void *data);
+   static void   cbToggleColumn(GtkWidget *self, char *path, void *data);
 
    // callbacks
    static void changeFontAction(GtkWidget *self, void *data);
    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
-   static void checkbuttonUserTerminalFontToggled(GtkWidget *self,
-                                                  void *data);
+   static void checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data);
 
    static void saveAction(GtkWidget *self, void *data);
-   void saveGeneral();
-   void saveColumnsAndFonts();
-   void saveColors();
-   void saveFiles();
-   void saveNetwork();
-   void saveDistribution();
+   void        saveGeneral();
+   void        saveColumnsAndFonts();
+   void        saveColors();
+   void        saveFiles();
+   void        saveNetwork();
+   void        saveDistribution();
 
    void readGeneral();
    void readColumnsAndFonts();

@@ -1,14 +1,14 @@
 /* rgrepositorywin.h - gtk editor for the sources.list file
- * 
+ *
  * Copyright (c) (c) 1999 Patrick Cole <z@amused.net>
- *               (c) 2002 Synaptic development team 
+ *               (c) 2002 Synaptic development team
  *
  * Author: Patrick Cole <z@amused.net>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -37,38 +37,39 @@
 typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
-class RGRepositoryEditor:RGGtkBuilderWindow {
+class RGRepositoryEditor : RGGtkBuilderWindow
+{
    SourcesList _lst, _savedList;
 
    int _selectedRow;
 
    // the gtktreeview
-   GtkWidget *_sourcesListView;
+   GtkWidget    *_sourcesListView;
    GtkListStore *_sourcesListStore;
-   GtkTreeIter *_lastIter;
+   GtkTreeIter  *_lastIter;
 
-   GtkWidget *_editTable;
-   GtkWidget *_optVendor;
+   GtkWidget    *_editTable;
+   GtkWidget    *_optVendor;
    GtkListStore *_optVendorMenu;
-   GtkWidget *_entryURI;
-   GtkWidget *_entrySect;
-   GtkWidget *_optType;
+   GtkWidget    *_entryURI;
+   GtkWidget    *_entrySect;
+   GtkWidget    *_optType;
    GtkListStore *_optTypeMenu;
-   GtkWidget *_entryDist;
-   //GtkWidget *_cbEnabled;
-   
+   GtkWidget    *_entryDist;
+   // GtkWidget *_cbEnabled;
+
    GtkWidget *_upBut;
    GtkWidget *_downBut;
    GtkWidget *_deleteBut;
 
    RGUserDialog *_userDialog;
 
-   bool _applied;
-   bool _dirty;
+   bool     _applied;
+   bool     _dirty;
    GdkColor _gray;
 
    void UpdateVendorMenu();
-   int VendorMenuIndex(string VendorID);
+   int  VendorMenuIndex(string VendorID);
 
    // static event handlers
    static void DoClear(GtkWidget *, gpointer);
@@ -81,9 +82,9 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
 
    // treeview item toggled
-   static void item_toggled(GtkCellRendererToggle *cell, 
-			    gchar *path_str, 
-			    gpointer data);
+   static void item_toggled(GtkCellRendererToggle *cell,
+                            gchar                 *path_str,
+                            gpointer               data);
    // get values
    void doEdit();
 

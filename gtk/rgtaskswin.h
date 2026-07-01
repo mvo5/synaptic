@@ -29,30 +29,28 @@
 
 class RGMainWindow;
 
-class RGTasksWin : public RGGtkBuilderWindow {
+class RGTasksWin : public RGGtkBuilderWindow
+{
  protected:
    RGMainWindow *_mainWin;
    GtkListStore *_store;
-   GtkWidget *_taskView;
-   GtkWidget *_detailsButton;
+   GtkWidget    *_taskView;
+   GtkWidget    *_detailsButton;
 
    static void cbButtonOkClicked(GtkWidget *self, void *data);
    static void cbButtonCancelClicked(GtkWidget *self, void *data);
    static void cbButtonDetailsClicked(GtkWidget *self, void *data);
-   static void cell_toggled_callback (GtkCellRendererToggle *cell,
-				      gchar *path_string,
-				      gpointer user_data);
+   static void cell_toggled_callback(GtkCellRendererToggle *cell,
+                                     gchar                 *path_string,
+                                     gpointer               user_data);
    static void selection_changed_callback(GtkTreeSelection *selection,
-				    gpointer user_data);
-
+                                          gpointer          user_data);
 
 
  public:
    RGTasksWin(RGWindow *parent);
-   virtual ~ RGTasksWin() {
-   };
+   virtual ~RGTasksWin() {};
 };
-
 
 
 #endif

@@ -24,7 +24,7 @@ string RPMIndexCopy::RipComponent(string Path)
    const char *begin;
    const char *end;
 
-   end = strrchr(Path.c_str(), '.');
+   end   = strrchr(Path.c_str(), '.');
    begin = strchr(strrchr(Path.c_str(), '/'), '.') + 1;
    if (begin < strrchr(end, '/'))
       return string(end + 1);
@@ -60,8 +60,7 @@ static int strrcmp_(const char *a, const char *b)
 }
 #endif
 
-bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
-                                vector<string> &List)
+bool RPMIndexCopy::CopyPackages(string CDROM, string Name, vector<string> &List)
 {
    OpTextProgress Progress;
 
@@ -83,7 +82,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
    map<string, bool> GlobalReleases;
 
    for (vector<string>::iterator I = List.begin(); I != List.end(); I++) {
-      string OrigPath = string(*I, CDROM.length());
+      string        OrigPath = string(*I, CDROM.length());
       unsigned long FileSize = 0;
 
       // Open the package file
@@ -112,8 +111,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
          // Fork bzip2
          int Process = fork();
          if (Process < 0)
-            return _error->Errno("fork",
-                                 "Internal Error: couldn't fork bzip2. Please report.");
+            return _error->Errno(
+               "fork", "Internal Error: couldn't fork bzip2. Please report.");
 
          // The child
          if (Process == 0) {
@@ -130,9 +129,9 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
             exit(100);
          }
          // Wait for gzip to finish
-         if (ExecWait
-             (Process, _config->Find("Dir::Bin::bzip2", "bzip2").c_str(),
-              false) == false)
+         if (ExecWait(Process,
+                      _config->Find("Dir::Bin::bzip2", "bzip2").c_str(),
+                      false) == false)
             return _error->Error(_("bzip2 failed, perhaps the disk is full."));
 
          Pkg.Seek(0);
@@ -181,10 +180,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
 
             // Copy the component release file
             sprintf(S, "cdrom:[%s]/%s/%s", Name.c_str(),
-                    RipDirectory(*I).c_str() + CDROM.length(),
-                    release.c_str());
-            string TargetF =
-               _config->FindDir("Dir::State::lists") + "partial/";
+                    RipDirectory(*I).c_str() + CDROM.length(), release.c_str());
+            string TargetF = _config->FindDir("Dir::State::lists") + "partial/";
             TargetF += URItoFileName(S);
             if (FileExists(RipDirectory(*I) + release) == true) {
                FileFd Target(TargetF, FileFd::WriteEmpty);
@@ -210,7 +207,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
       string Prefix = "";
       /* Mangle the source to be in the proper notation with
          prefix dist [component] */
-//      *I = string(*I,Prefix.length());
+      //      *I = string(*I,Prefix.length());
       ConvertToSourceList(CDROM, *I);
       *I = Prefix + ' ' + *I;
 
@@ -220,8 +217,6 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
 
    return true;
 }
-
-
 
 
 void RPMIndexCopy::ConvertToSourceList(string CD, string &Path)

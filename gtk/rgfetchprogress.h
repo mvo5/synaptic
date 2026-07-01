@@ -31,41 +31,42 @@
 #include <set>
 #include "rggtkbuilderwindow.h"
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
+class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
+{
 
-   struct Item {
+   struct Item
+   {
       string descr;
       string uri;
       string size;
-      int status;
+      int    status;
    };
 
    vector<Item> _items;
 
-   GtkWidget *_table;
+   GtkWidget    *_table;
    GtkListStore *_tableListStore;
-   set<int> _tableRows;
+   set<int>      _tableRows;
 
    GtkWidget *_mainProgressBar; // GtkProgressBar
 
    GtkTreeViewColumn *_statusColumn;
-   GtkCellRenderer *_statusRenderer;
-   bool _cancelled;
+   GtkCellRenderer   *_statusRenderer;
+   bool               _cancelled;
 
-   void updateStatus(pkgAcquire::ItemDesc & Itm, int status);
+   void        updateStatus(pkgAcquire::ItemDesc &Itm, int status);
    static void stopDownload(GtkWidget *self, void *data);
 
-   static void cursorChanged(GtkTreeView *treeview,
-			     gpointer user_data);
+   static void cursorChanged(GtkTreeView *treeview, gpointer user_data);
    static void expanderActivate(GObject    *object,
-				GParamSpec *param_spec,
-				gpointer    user_data);
-   bool _cursorDirty;
+                                GParamSpec *param_spec,
+                                gpointer    user_data);
+   bool        _cursorDirty;
 
    char *getStatusStr(int status);
-   int getStatusPercent(int status);
-   void refreshTable(int row, bool append = false);
-   //GdkPixmap *statusDraw(int width, int height, int status);
+   int   getStatusPercent(int status);
+   void  refreshTable(int row, bool append = false);
+   // GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
    virtual bool MediaChange(string Media, string Drive);
@@ -77,10 +78,10 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    virtual void Stop();
    virtual bool close();
 
-   bool Pulse(pkgAcquire * Owner);
+   bool Pulse(pkgAcquire *Owner);
 
    // set description of the current task (main and additonal explaination)
-   void setDescription(string mainText, string secondText="");
+   void setDescription(string mainText, string secondText = "");
 
 
    RGFetchProgress(RGWindow *win);

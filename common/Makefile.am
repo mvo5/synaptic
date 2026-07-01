@@ -15,8 +15,6 @@ AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_bui
 	@DEB_HDRS@
 
 libsynaptic_a_SOURCES =\
-	pkg_acqfile.cc\
-	pkg_acqfile.h\
 	rconfiguration.cc\
 	rconfiguration.h\
 	rinstallprogress.cc\

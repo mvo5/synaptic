@@ -28,38 +28,36 @@
 
 #include "config.h"
 
+#include "i18n.h"
 #include "rpackage.h"
 #include "rpackagelister.h"
-#include "pkg_acqfile.h"
 
-#include "i18n.h"
-
-#include <map>
 #include <algorithm>
-#include <fstream>
+#include <assert.h>
 #include <cstdio>
-#include <unistd.h>
+#include <fstream>
+#include <map>
+#include <sstream>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <assert.h>
-#include <sstream>
+#include <unistd.h>
 
-#include <apt-pkg/pkgrecords.h>
-#include <apt-pkg/depcache.h>
-#include <apt-pkg/srcrecords.h>
+#include <apt-pkg/acquire-item.h>
 #include <apt-pkg/algorithms.h>
-#include <apt-pkg/error.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/tagfile.h>
-#include <apt-pkg/policy.h>
-#include <apt-pkg/strutl.h>
 #include <apt-pkg/cacheiterators.h>
-#include <apt-pkg/pkgcache.h>
-#include <apt-pkg/versionmatch.h>
-#include <apt-pkg/version.h>
-#include <apt-pkg/policy.h>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/depcache.h>
+#include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/metaindex.h>
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/pkgrecords.h>
+#include <apt-pkg/policy.h>
+#include <apt-pkg/srcrecords.h>
+#include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
+#include <apt-pkg/version.h>
+#include <apt-pkg/versionmatch.h>
 
 #ifdef WITH_LUA
 #include <apt-pkg/luaiface.h>
@@ -955,7 +953,7 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 
    string filename = RTmpDir()+"/tmp_sh";
    unlink(filename.c_str());
-   new pkgAcqFileSane(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    int res = fetcher->Run();
    //cerr << "res: " << res << endl;
@@ -974,7 +972,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir()+"/tmp_cl";
 
-   new pkgAcqFileSane(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
    //cerr << "**DEBUG** origin: " << origin() << endl;
    //cerr << "**DEBUG** uri: " << uri << endl;
    //cerr << "**DEBUG** filename: " << filename << endl;

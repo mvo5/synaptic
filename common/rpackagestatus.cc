@@ -30,6 +30,8 @@
 
 #include <apt-pkg/tagfile.h>
 #include <apt-pkg/strutl.h>
+
+#include "i18n.h"
 #include "rpackagestatus.h"
 
 // init the static release array so that we need to

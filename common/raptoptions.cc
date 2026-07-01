@@ -33,11 +33,9 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/fileutl.h>
 
+#include "i18n.h"
 #include "rconfiguration.h"
 #include "raptoptions.h"
-
-#include "i18n.h"
-
 
 RAPTOptions *_roptions = new RAPTOptions;
 

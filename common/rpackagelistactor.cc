@@ -2,7 +2,6 @@
 
 #include "rpackagelistactor.h"
 #include "rpackagelister.h"
-#include "i18n.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/tagfile.h>

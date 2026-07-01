@@ -34,9 +34,7 @@
 #include <assert.h>
 #include <iostream>
 
-#include "i18n.h"
 #include "rgutils.h"
-
 
 // helper
 GdkPixbuf *

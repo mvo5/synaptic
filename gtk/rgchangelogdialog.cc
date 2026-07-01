@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include "i18n.h"
 #include "rgchangelogdialog.h"
 #include "rgfetchprogress.h"
 #include "rguserdialog.h"

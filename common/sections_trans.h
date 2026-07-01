@@ -11,7 +11,6 @@
 #include <sstream>
 #include <iostream>
 #include <apt-pkg/strutl.h>
-#include "i18n.h"
 
 using namespace std;
 

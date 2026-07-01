@@ -25,6 +25,7 @@
 
 #include "config.h"
 
+#include "i18n.h"
 #include "rggtkbuilderwindow.h"
 #include "rpackagefilter.h"
 

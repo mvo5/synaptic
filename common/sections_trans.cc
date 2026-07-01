@@ -7,6 +7,7 @@
 
 #include <libintl.h>
 
+#include "i18n.h"
 #include "sections_trans.h"
 
 const char *transtable[][2] = {

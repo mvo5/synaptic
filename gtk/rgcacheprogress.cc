@@ -27,9 +27,6 @@
 #include "rgcacheprogress.h"
 #include "rgutils.h"
 
-#include "i18n.h"
-
-
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 : _parent(parent), _label(label)
 {

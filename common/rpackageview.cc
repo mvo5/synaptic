@@ -27,6 +27,8 @@
 #include <apt-pkg/version.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>
+
+#include "i18n.h"
 #include "rpackage.h"
 #include "rpackageview.h"
 #include "rconfiguration.h"

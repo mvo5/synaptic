@@ -24,6 +24,8 @@
 #include "config.h"
 
 #include <cassert>
+
+#include "i18n.h"
 #include "rgwindow.h"
 #include "rgmainwindow.h"
 #include "rgpkgdetails.h"

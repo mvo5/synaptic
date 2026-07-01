@@ -25,8 +25,6 @@
 
 #include "pkg_acqfile.h"
 
-#include "i18n.h"
-
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>

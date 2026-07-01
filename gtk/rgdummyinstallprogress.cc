@@ -28,8 +28,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include "i18n.h"
-
 void RGDummyInstallProgress::startUpdate()
 {
    RGFlushInterface();

@@ -23,7 +23,7 @@
 #include "config.h"
 
 #include <apt-pkg/fileutl.h>
-#include "i18n.h"
+
 #include "rgwindow.h"
 #include "rgutils.h"
 

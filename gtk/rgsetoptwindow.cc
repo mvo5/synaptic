@@ -24,8 +24,6 @@
 
 #include <apt-pkg/configuration.h>
 
-#include "i18n.h"
-
 #include "rgsetoptwindow.h"
 
 void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)

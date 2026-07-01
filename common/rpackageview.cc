@@ -27,9 +27,9 @@
 #include <apt-pkg/version.h>
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/configuration.h>
-#include <rpackage.h>
-#include <rpackageview.h>
-#include <rconfiguration.h>
+#include "rpackage.h"
+#include "rpackageview.h"
+#include "rconfiguration.h"
 
 #include <map>
 #include <vector>

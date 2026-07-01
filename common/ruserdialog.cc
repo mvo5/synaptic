@@ -25,7 +25,7 @@
 
 #include <apt-pkg/error.h>
 #include <string>
-#include <ruserdialog.h>
+#include "ruserdialog.h"
 
 bool RUserDialog::showErrors()
 {

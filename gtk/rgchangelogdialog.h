@@ -23,11 +23,8 @@
 
 #include "config.h"
 
-#include <rgwindow.h>
-#include <rpackage.h>
-#include <rgfetchprogress.h>
-#include <rguserdialog.h>
-#include <cassert>
+#include "rgwindow.h"
+#include "rpackage.h"
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
 

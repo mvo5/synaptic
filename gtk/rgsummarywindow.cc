@@ -37,6 +37,7 @@
 
 #include "rgsummarywindow.h"
 #include "rguserdialog.h"
+#include "rgutils.h"
 
 #include "i18n.h"
 
@@ -480,20 +481,20 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
 
 
 
-bool RGSummaryWindow::showAndConfirm()
+task<bool> RGSummaryWindow::showAndConfirm()
 {
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_dlonlyB),
                                 _config->FindB("Volatile::Download-Only",
                                                false));
-   int res = gtk_dialog_run(GTK_DIALOG(_win));
+   int res = co_await co_run_dialog(GTK_DIALOG(_win));
    bool confirmed = (res == GTK_RESPONSE_APPLY);
 
    RGUserDialog userDialog(this);
    if (confirmed && _potentialBreak
-       && userDialog.warning(_("Essential packages will be removed.\n"
+       && co_await userDialog.warning(_("Essential packages will be removed.\n"
                                "This may render your system unusable!\n")
                              , false) == false)
-      return false;
+      co_return false;
 
    _config->Set("Volatile::Download-Only",
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB)) ?
@@ -504,5 +505,5 @@ bool RGSummaryWindow::showAndConfirm()
                 "true" : "false");
 #endif
 
-   return confirmed;
+   co_return confirmed;
 }

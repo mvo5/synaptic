@@ -35,7 +35,7 @@ executable(
   'synaptic',
   gtk_sources,
   install: true,
-  install_dir: get_option('sbindir'),
+  install_dir: get_option('bindir'),
   cpp_args: base_cpp_args + gtk_cpp_args + rpm_compile_args,
   dependencies: gui_deps,
   include_directories: [root_inc, common_inc, gtk_inc],

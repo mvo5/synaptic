@@ -24,7 +24,7 @@ libsynaptic = static_library(
   'synaptic',
   common_sources,
   cpp_args: base_cpp_args + rpm_compile_args,
-  dependencies: common_deps,
+  dependencies: common_deps + [task_dep],
   include_directories: [root_inc, common_inc],
 )
 

@@ -301,7 +301,7 @@ class RPackageLister {
    bool distUpgrade();
    bool cleanPackageCache(bool forceClean = false);
    bool updateCache(pkgAcquireStatus *status, string &error);
-   bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
+   task<bool> commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
 
    // some information
    bool getDownloadUris(vector<string> &uris);

@@ -27,12 +27,14 @@
 #include "rgwindow.h"
 #include "rgutils.h"
 
-bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
+gboolean RGWindow::windowCloseCallback(GtkWidget *window, gpointer user_data)
 {
    //cout << "windowCloseCallback" << endl;
-   RGWindow *rwin = (RGWindow *) g_object_get_data(G_OBJECT(window), "me");
-
-   return rwin->close();
+   RGWindow *rwin = (RGWindow *) user_data;
+   start_task([rwin]() -> task<void> {
+      bool _close = co_await rwin->close();
+   });
+   return true;
 }
 
 RGWindow::RGWindow(string name, bool makeBox)
@@ -102,11 +104,11 @@ void RGWindow::setTitle(string title)
    gtk_window_set_title(GTK_WINDOW(_win), (char *)title.c_str());
 }
 
-bool RGWindow::close()
+task<bool> RGWindow::close()
 {
    //cout << "RGWindow::close()" << endl;
    hide();
-   return true;
+   co_return true;
 }
 
 // vim:ts=3:sw=3:et

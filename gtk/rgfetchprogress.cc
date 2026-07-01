@@ -62,11 +62,10 @@ static const int COLUMN_PERCENT_WIDTH=100;
 static const int COLUMN_PERCENT_HEIGHT=18;
 
 
-bool RGFetchProgress::close()
+task<bool> RGFetchProgress::close()
 {
    stopDownload(NULL, this);
-   
-   return TRUE;
+   co_return true;
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
@@ -184,16 +183,18 @@ void RGFetchProgress::setDescription(string mainText, string secondText)
 
 bool RGFetchProgress::MediaChange(string Media, string Drive)
 {
-   gchar *msg;
+   start_task([this, Media, Drive]() -> task<void> {
+      gchar *msg;
 
-   msg = g_strdup_printf(_("Please insert the disk labeled:\n%s\nin drive %s"),
-			 Media.c_str(), Drive.c_str());
+      msg = g_strdup_printf(_("Please insert the disk labeled:\n%s\nin drive %s"),
+		   Media.c_str(), Drive.c_str());
 
-   RGUserDialog userDialog(this);
-   _cancelled = !userDialog.proceed(msg);
+      RGUserDialog userDialog(this);
+      _cancelled = !co_await userDialog.proceed(msg);
 
-   RGFlushInterface();
-   g_free(msg);
+      co_await RGFlushInterface();
+      g_free(msg);
+   });
    return true;
 
 
@@ -240,7 +241,9 @@ void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc & Itm)
    //cout << "void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)" << endl;
    updateStatus(Itm, DLHit);
 
-   RGFlushInterface();
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 
@@ -248,7 +251,9 @@ void RGFetchProgress::Fetch(pkgAcquire::ItemDesc & Itm)
 {
    updateStatus(Itm, DLQueued);
 
-   RGFlushInterface();
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 
@@ -256,7 +261,9 @@ void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 {
    updateStatus(Itm, DLDone);
 
-   RGFlushInterface();
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 
@@ -267,7 +274,9 @@ void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 
    updateStatus(Itm, DLFailed);
 
-   RGFlushInterface();
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 
@@ -288,14 +297,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
    // work-around a stupid problem with libapt
    if(CurrentItems == TotalItems)
       percent=100.0;
-
-   // only do something if there is some real progress
-   if (fabsf(percent-
-            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar))*100.0) < 0.1) 
-   {
-      RGFlushInterface();
-      return !_cancelled;
-   }
 
    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
                                  percent / 100.0);
@@ -346,8 +347,6 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);
    g_free(s);
 
-   RGFlushInterface();
-
    return !_cancelled;
 }
 
@@ -358,21 +357,25 @@ void RGFetchProgress::Start()
    pkgAcquireStatus::Start();
    _cancelled = false;
 
-   RGFlushInterface();
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 
 void RGFetchProgress::Stop()
 {
    //cout << "RGFetchProgress::Stop()" << endl;
-   RGFlushInterface();
    hide();
    pkgAcquireStatus::Stop();
 
    //FIXME: this needs to be handled in a better way (gtk-2 maybe?)
    sleep(1);                    // this sucks, but if ommited, the window will not always
    // closed (e.g. when a package is only deleted)
-   RGFlushInterface();
+
+   start_task([]() -> task<void> {
+      co_await RGFlushInterface();
+   });
 }
 
 

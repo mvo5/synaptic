@@ -24,8 +24,9 @@
 #include "config.h"
 
 #include "rgwindow.h"
+#include <rgutils.h>
 #include "rpackage.h"
 
-void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
+task<void> ShowChangelogDialog(RGWindow *me, RPackage *pkg);
 
 #endif

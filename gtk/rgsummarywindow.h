@@ -57,7 +57,7 @@ class RGSummaryWindow:public RGGtkBuilderWindow {
  public:
    RGSummaryWindow(RGWindow *win, RPackageLister *lister);
 
-   bool showAndConfirm();
+   task<bool> showAndConfirm();
 };
 
 #endif

@@ -29,6 +29,7 @@
 
 #include <gtk/gtk.h>
 #include <string>
+#include "coroutines.h"
 
 using namespace std;
 
@@ -37,8 +38,8 @@ class RGWindow {
    GtkWidget *_win;
    GtkWidget *_topBox;
 
-   static bool windowCloseCallback(GtkWidget *widget, GdkEvent * event);
-   virtual bool close();
+   static gboolean windowCloseCallback(GtkWidget *widget, gpointer user_data);
+   virtual task<bool> close();
 
  public:
    inline virtual GtkWidget *window() {

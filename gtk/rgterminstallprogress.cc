@@ -114,7 +114,7 @@ void RGTermInstallProgress::child_exited(VteTerminal *vteterminal,
    me->child_has_exited=true;
 }
 
-void RGTermInstallProgress::startUpdate()
+task<void> RGTermInstallProgress::startUpdate()
 {
    GtkWidget *win =  GTK_WIDGET(gtk_builder_get_object
                                 (_builder, "window_zvtinstallprogress"));
@@ -129,14 +129,14 @@ void RGTermInstallProgress::startUpdate()
 
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
    gtk_widget_set_sensitive(_closeB, false);
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGTermInstallProgress::finishUpdate()
+task<void> RGTermInstallProgress::finishUpdate()
 {
    gtk_widget_set_sensitive(_closeB, true);
    
-   RGFlushInterface();
+   co_await RGFlushInterface();
    _updateFinished = true;
 
    _config->Set("Synaptic::closeZvt", 
@@ -152,7 +152,7 @@ void RGTermInstallProgress::finishUpdate()
    if(res == 0 &&(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF)) ||
 		  _config->FindB("Volatile::Non-Interactive", false))) {
       hide();
-      return;
+      co_return;
    }
 
    const char *msg = _(getResultStr(res));
@@ -165,25 +165,26 @@ void RGTermInstallProgress::finishUpdate()
 void RGTermInstallProgress::stopShell(GtkWidget *self, void* data)
 {
    RGTermInstallProgress *me = (RGTermInstallProgress*)data;  
+   start_task([me]() -> task<void> {
+      if (!me->_updateFinished) {
+         gtk_label_set_markup(GTK_LABEL(me->_statusL),
+			      _("<i>Can't close while running</i>"));
+         co_return;
+      }
 
-   if(!me->_updateFinished) {
-      gtk_label_set_markup(GTK_LABEL(me->_statusL), 
-			   _("<i>Can't close while running</i>"));
-      return;
-   } 
-
-   RGFlushInterface();
-   me->hide();
+      co_await RGFlushInterface();
+      me->hide();
+   });
 }
 
-bool RGTermInstallProgress::close()
+task<bool> RGTermInstallProgress::close()
 {
    stopShell(NULL, this);
-   return true;
+   co_return true;
 }
 
 
-pkgPackageManager::OrderResult 
+task<pkgPackageManager::OrderResult>
 RGTermInstallProgress::start(pkgPackageManager *pm,
 			    int numPackages,
 			    int numPackagesTotal)
@@ -195,7 +196,7 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-      return res;
+      co_return res;
 
    int master;
    _child_id = forkpty(&master, NULL, NULL, NULL);
@@ -221,7 +222,7 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
    if (err != NULL) {
       std::cerr << "failed to create new pty: " << err->message << std::endl;
       g_error_free (err);
-      return pkgPackageManager::Failed;
+      co_return pkgPackageManager::Failed;
    }
 
    vte_terminal_set_pty(VTE_TERMINAL(_term), pty);
@@ -239,17 +240,12 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
 
    ::close(master);
 
-   return res;
+   co_return res;
 }
 
-void RGTermInstallProgress::updateInterface()
-{    
-   if (gtk_events_pending()) {
-      while (gtk_events_pending()) gtk_main_iteration();
-   } else {
-      // 0.1 secs 
-      usleep(10000);
-   }
+task<void> RGTermInstallProgress::updateInterface()
+{
+   co_await RGFlushInterface();
 }
 
 

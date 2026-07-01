@@ -131,11 +131,12 @@ void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
 {
    //cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
-   
-   doShowBigScreenshot(pkg);
+   start_task([pkg]() -> task<void> {
+      co_await doShowBigScreenshot(pkg);
+   });
 }
 
-void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
+task<void> RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(NULL);;
    pkgAcquire fetcher(status);
@@ -147,44 +148,46 @@ void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
    gtk_widget_show(img);
    GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG (win));
    gtk_container_add(GTK_CONTAINER(content_area), img);
-   gtk_dialog_run(GTK_DIALOG(win));
+   co_await co_run_dialog(GTK_DIALOG(win));
    gtk_widget_destroy(win);
 }
 
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info*)data;
+   start_task([button, si]() -> task<void> {
+      if(_config->FindB("Synaptic::InlineScreenshots") == false)
+      {
+         co_await doShowBigScreenshot(si->pkg);
+      } else {
 
-   if(_config->FindB("Synaptic::InlineScreenshots") == false)
-   {
-      doShowBigScreenshot(si->pkg);
-      return;
-   } else {
+         // hide button
+         gtk_widget_hide(button);
 
-      // hide button
-      gtk_widget_hide(button);
-      
-      // get screenshot
-      RGFetchProgress *status = new RGFetchProgress(NULL);;
-      pkgAcquire fetcher(status);
-      string filename = si->pkg->getScreenshotFile(&fetcher);
-      GtkWidget *event = gtk_event_box_new();
-      GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-      gtk_container_add(GTK_CONTAINER(event), img);
-      g_signal_connect(G_OBJECT(event), "button_press_event", 
-                       G_CALLBACK(cbShowBigScreenshot), 
-                       (void*)si->pkg);
-      gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview), 
-                                        GTK_WIDGET(event), si->anchor);
-      gtk_widget_show_all(event);
-   }
+         // get screenshot
+         RGFetchProgress *status = new RGFetchProgress(NULL);;
+         pkgAcquire fetcher(status);
+         string filename = si->pkg->getScreenshotFile(&fetcher);
+         GtkWidget *event = gtk_event_box_new();
+         GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+         gtk_container_add(GTK_CONTAINER(event), img);
+         g_signal_connect(G_OBJECT(event), "button_press_event",
+                        G_CALLBACK(cbShowBigScreenshot),
+                        (void*)si->pkg);
+         gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview),
+                                          GTK_WIDGET(event), si->anchor);
+         gtk_widget_show_all(event);
+      }
+   });
 }
 
 void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 {
    RPackage *pkg = (RPackage*)data;
    RGWindow *parent = (RGWindow*)g_object_get_data(G_OBJECT(button), "me");
-   ShowChangelogDialog(parent, pkg);
+   start_task([parent, pkg]() -> task<void> {
+      co_await ShowChangelogDialog(parent, pkg);
+   });
 }
 
 gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label, 
@@ -382,7 +385,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gchar *str;
    vector<string> list;
    vector<pair<string,string> > versions = pkg->getAvailableVersions();
-   for(int i=0;i<versions.size();i++) {
+   for(size_t i=0;i<versions.size();i++) {
       // TRANSLATORS: this the format of the available versions in 
       // the "Properties/Available versions" window
       // e.g. "0.56 (unstable)"

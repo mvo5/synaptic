@@ -27,6 +27,8 @@
 #include "rgwindow.h"
 #include "rgutils.h"
 
+using namespace std;
+
 bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
 {
    //cout << "windowCloseCallback" << endl;

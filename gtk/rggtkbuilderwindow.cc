@@ -31,6 +31,7 @@
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
 
+using namespace std;
 
 /*  the convention is that the top window is named:
    "window_$windowname" in your gtkbuilder-source 

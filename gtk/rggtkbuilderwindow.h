@@ -33,15 +33,13 @@
 #include "rgwindow.h"
 #include "rgutils.h"
 
-using namespace std;
-
 class RGGtkBuilderWindow:public RGWindow {
  protected:
    GtkBuilder *_builder;
    GdkCursor *_busyCursor;
 
  public:
-   RGGtkBuilderWindow(RGWindow *parent, string name, string main_widget = "");
+   RGGtkBuilderWindow(RGWindow *parent, std::string name, std::string main_widget = "");
 
    void skipTaskbar(bool value) {
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
@@ -57,7 +55,7 @@ class RGGtkBuilderWindow:public RGWindow {
    bool setTextView(const char *widget_name, const char *value,
 		    bool useHeadline=false);
    bool setPixmap(const char *widget_name, GdkPixbuf *value);
-   bool setTreeList(const char *widget_name, vector<string> values,
+   bool setTreeList(const char *widget_name, std::vector<std::string> values,
 		    bool useMarkup=false);
 
    GtkBuilder* getGtkBuilder() {return _builder;};

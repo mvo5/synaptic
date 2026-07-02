@@ -34,6 +34,8 @@
 #include "i18n.h"
 #include "rpackagestatus.h"
 
+using namespace std;
+
 // init the static release array so that we need to
 // run lsb_release only once
 char RPackageStatus::release[255] = {0,};

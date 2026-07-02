@@ -38,6 +38,8 @@
 #include "rgutils.h"
 #include "i18n.h"
 
+using namespace std;
+
 #if HAVE_RPM
 enum { ITEM_TYPE_RPM,
    ITEM_TYPE_RPMSRC,

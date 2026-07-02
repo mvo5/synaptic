@@ -47,7 +47,7 @@ class RCacheActor:public RCacheObserver {
 
  public:
 
-   virtual void run(vector<RPackage *> &List, int Action) = 0;
+   virtual void run(std::vector<RPackage *> &List, int Action) = 0;
 
    virtual void notifyCachePreChange() {
       updateState();
@@ -77,20 +77,20 @@ class RCacheActor:public RCacheObserver {
 class RCacheActorRecommends:public RCacheActor {
  protected:
 
-   typedef vector<string> ListType;
-   typedef map<string, ListType> MapType;
-   typedef map<regex_t *, ListType> RegexMapType;
+   typedef std::vector<std::string> ListType;
+   typedef std::map<std::string, ListType> MapType;
+   typedef std::map<regex_t *, ListType> RegexMapType;
 
    MapType _map;
    MapType _map_wildcard;
    RegexMapType _map_regex;
 
-   string _langLast;
+   std::string _langLast;
    ListType _langCache;
 
    void setLanguageCache();
 
-   inline bool actOnPkg(string name, int Action) {
+   inline bool actOnPkg(std::string name, int Action) {
       RPackage *Pkg = _lister->getPackage(name);
       if (Pkg != NULL) {
          switch (Action) {
@@ -112,11 +112,11 @@ class RCacheActorRecommends:public RCacheActor {
 
  public:
 
-   virtual void run(vector<RPackage *> &List, int Action);
+   virtual void run(std::vector<RPackage *> &List, int Action);
 
    virtual void notifyCachePostChange();
 
-   RCacheActorRecommends(RPackageLister *lister, string FileName);
+   RCacheActorRecommends(RPackageLister *lister, std::string FileName);
    virtual ~RCacheActorRecommends();
 };
 

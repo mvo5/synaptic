@@ -34,8 +34,8 @@
 
 #include "rguserdialog.h"
 
-typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
-typedef list<SourcesList::VendorRecord *>::iterator VendorsListIter;
+typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
+typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
 class RGRepositoryEditor:RGGtkBuilderWindow {
    SourcesList _lst, _savedList;
@@ -68,7 +68,7 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    GdkColor _gray;
 
    void UpdateVendorMenu();
-   int VendorMenuIndex(string VendorID);
+   int VendorMenuIndex(std::string VendorID);
 
    // static event handlers
    static void DoClear(GtkWidget *, gpointer);

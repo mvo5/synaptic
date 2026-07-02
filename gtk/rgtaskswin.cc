@@ -30,6 +30,8 @@
 #include "rguserdialog.h"
 #include "i18n.h"
 
+using namespace std;
+
 enum {
    TASK_CHECKBOX_COLUMN,
    TASK_SENSITIVE_COLUMN,

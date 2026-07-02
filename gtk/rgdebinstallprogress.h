@@ -93,13 +93,13 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    int _terminalTimeout;
 
    // this map contains the name and a pointer to the stages arrays
-   map<string, char**> _actionsMap;
+   std::map<std::string, char**> _actionsMap;
 
    // this map contains the name and a pointer to the translation arrays
-   map<string, char**> _translationsMap;
+   std::map<std::string, char**> _translationsMap;
 
    // this map contains what stage is already completted
-   map<string, int> _stagesMap;
+   std::map<std::string, int> _stagesMap;
 
    // last time something changed
    time_t last_term_action;

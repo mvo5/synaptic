@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <fnmatch.h>
 
+using namespace std;
+
 void RCacheActor::notifyCachePostChange()
 {
    //cout << "RCacheActor::notifyCachePostChange()" << endl;

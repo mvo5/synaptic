@@ -80,7 +80,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
 
    // policy settings
    GtkWidget *_comboDefaultDistro;
-   string _defaultDistro;
+   std::string _defaultDistro;
 
    bool _dirty;
 

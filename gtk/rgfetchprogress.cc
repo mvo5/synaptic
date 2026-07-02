@@ -42,6 +42,8 @@
 
 #include "i18n.h"
 
+using namespace std;
+
 enum {
    DLDone = -1,
    DLQueued = -2,

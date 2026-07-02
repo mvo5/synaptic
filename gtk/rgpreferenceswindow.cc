@@ -39,6 +39,8 @@
 
 #include "i18n.h"
 
+using namespace std;
+
 enum { FONT_DEFAULT, FONT_TERMINAL };
 
 const char * RGPreferencesWindow::column_names[] = 

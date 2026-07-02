@@ -30,33 +30,31 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
-
 class Configuration;
 
 bool RWriteConfigFile(Configuration &Conf);
 
-bool RInitConfiguration(string confFileName);
+bool RInitConfiguration(std::string confFileName);
 
 bool RReadFilterData(Configuration &config);
-bool RFilterDataOutFile(ofstream &out);
+bool RFilterDataOutFile(std::ofstream &out);
 
-bool RPackageOptionsFile(ofstream &out);
-bool RPackageOptionsFile(ifstream &in);
+bool RPackageOptionsFile(std::ofstream &out);
+bool RPackageOptionsFile(std::ifstream &in);
 
 
 // get the default conf dir
-string RConfDir();
+std::string RConfDir();
 
 // this needs to be a safe tmp dir (like /root/.synaptic/tmp) to store
 // small files like changelogs or pinfiles (preferences)
-string RTmpDir();
+std::string RTmpDir();
 
 // state dir - we store the locked packages (preferences file) here
 //             possible other stuff in the future
-string RStateDir();
+std::string RStateDir();
 
 // we store the commit history here
-string RLogDir();
+std::string RLogDir();
 
 #endif

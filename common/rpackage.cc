@@ -65,6 +65,8 @@
 
 #include "raptoptions.h"
 
+using namespace std;
+
 static int descrBufferSize = 4096;
 static char *descrBuffer = new char[descrBufferSize];
 

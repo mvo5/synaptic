@@ -40,8 +40,6 @@
 
 #include "rpackage.h"
 
-using namespace std;
-
 class RPackageStatus {
  public:
    enum PkgStatus {
@@ -56,9 +54,9 @@ class RPackageStatus {
    static char release[255];
 
    // the supported archive-labels and components
-   vector<string> supportedLabels;
-   vector<string> supportedOrigins;
-   vector<string> supportedComponents;
+   std::vector<std::string> supportedLabels;
+   std::vector<std::string> supportedOrigins;
+   std::vector<std::string> supportedComponents;
    bool markUnsupported;
 
    // this is the short string to load the icons

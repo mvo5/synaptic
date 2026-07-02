@@ -49,7 +49,7 @@ class RGLogView : public RGGtkBuilderWindow {
 
    // set new logbuffer text
    void clearLogBuf();
-   void appendLogBuf(string text);
+   void appendLogBuf(std::string text);
 
  public:
    RGLogView(RGWindow *parent);

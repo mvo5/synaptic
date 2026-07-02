@@ -161,7 +161,7 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    GtkWidget *_patternList;     /* GtkTreeView */
    GtkListStore *_patternListStore;
    bool setPatternRow(int row, bool exclude,
-                      RPatternPackageFilter::DepType type, string pattern);
+                      RPatternPackageFilter::DepType type, std::string pattern);
    static void patternSelectionChanged(GtkTreeSelection *selection,
                                        gpointer data);
    static void patternChanged(GObject *o, gpointer data);
@@ -180,7 +180,7 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
 
    // the lister is always needed
    RPackageViewFilter *_filterview;
-   vector<RFilter *> _saveFilters;
+   std::vector<RFilter *> _saveFilters;
 
 #ifdef HAVE_DEBTAGS
    // the tags stuff

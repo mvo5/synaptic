@@ -30,8 +30,6 @@
 #include <gtk/gtk.h>
 #include <string>
 
-using namespace std;
-
 class RGWindow {
  protected:
    GtkWidget *_win;
@@ -45,7 +43,7 @@ class RGWindow {
       return _win;
    };
 
-   virtual void setTitle(string title);
+   virtual void setTitle(std::string title);
 
    inline virtual void hide() {
       gtk_widget_hide(_win);
@@ -55,8 +53,8 @@ class RGWindow {
    };
 
    RGWindow() : _win(0), _topBox(0) {};
-   RGWindow(string name, bool makeBox = true);
-   RGWindow(RGWindow *parent, string name, bool makeBox = true,
+   RGWindow(std::string name, bool makeBox = true);
+   RGWindow(RGWindow *parent, std::string name, bool makeBox = true,
             bool closable = true);
    virtual ~RGWindow();
 };

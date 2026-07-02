@@ -35,6 +35,7 @@
 #include <apt-pkg/policy.h>
 #include <apt-pkg/fileutl.h>
 
+using namespace std;
 
 bool RPackageCache::open(OpProgress *progress, bool locking)
 {

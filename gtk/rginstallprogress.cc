@@ -36,6 +36,8 @@
 
 #include "i18n.h"
 
+using namespace std;
+
 RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
 : RGGtkBuilderWindow(win, "rginstall_progress_msgs"),
 _currentPackage(0), _hasHeader(false)

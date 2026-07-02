@@ -52,7 +52,7 @@
 #include "rgutils.h"
 #include "rgpackagestatus.h"
 
-
+using namespace std;
 
 typedef enum {
    UPDATE_ASK,

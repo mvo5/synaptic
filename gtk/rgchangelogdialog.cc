@@ -27,6 +27,8 @@
 
 #include <cassert>
 
+using namespace std;
+
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(me);;

@@ -37,6 +37,8 @@
 #include "rguserdialog.h"
 #include "rgutils.h"
 
+using namespace std;
+
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {
    GtkResponseType *res = (GtkResponseType *) user_data;

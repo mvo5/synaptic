@@ -35,6 +35,8 @@
 #include "rgchangelogdialog.h"
 #include "sections_trans.h"
 
+using namespace std;
+
 RGPkgDetailsWindow::RGPkgDetailsWindow(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "details")
 {

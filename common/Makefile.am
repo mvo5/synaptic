@@ -2,9 +2,17 @@
 
 noinst_LIBRARIES = libsynaptic.a
 
-AM_CPPFLAGS = -I/usr/include/apt-pkg @RPM_HDRS@ @DEB_HDRS@ \
-	-DSYNAPTICLOCALEDIR=\""$(synapticlocaledir)"\" \
-	-DSYNAPTICSTATEDIR=\""$(localstatedir)"\"
+AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_builddir@ \
+	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+	-DSYNAPTICSTATEDIR=\""$(localstatedir)"\" \
+	@GTK_DISABLE_DEPRECATED@ \
+	@GTK_CFLAGS@ \
+	@VTE_CFLAGS@ \
+	@LP_CFLAGS@ \
+	@APT_PKG_CFLAGS@ \
+	@RPM_HDRS@ \
+	@DEB_HDRS@
 
 libsynaptic_a_SOURCES =\
 	pkg_acqfile.cc\

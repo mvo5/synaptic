@@ -22,8 +22,6 @@ GETTEXT_PACKAGE=synaptic
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",[description])
 AC_PROG_INTLTOOL([0.23])
-synapticlocaledir='${prefix}/${DATADIRNAME}/locale'
-AC_SUBST(synapticlocaledir)
      
 dnl we build for gtk3 by default now
 pkg_modules="gtk+-3.0 >= 3.4.0, pango >= 1.0.0, glib-2.0"
@@ -102,20 +100,18 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(unistd.h libintl.h iconv.h)
 
-# check apt configuration 
 AC_LANG([C++])
-# bail out if we don't have apts headers
-AC_CHECK_HEADER(apt-pkg/configuration.h, [],
- AC_ERROR([You need the apt-pkg headers installed to compile synaptic.]))
+
+# Look for apt-pkg:
+PKG_CHECK_MODULES([APT_PKG], [apt-pkg])
+AC_SUBST([APT_PKG_CFLAGS])
+AC_SUBST([APT_PKG_LIBS])
 
 # if metaindex is there we use a apt with authentication support
-AC_CHECK_HEADER(apt-pkg/metaindex.h,
-        AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support] )
-)
+AC_CHECK_HEADER(apt-pkg/metaindex.h, AC_DEFINE(WITH_APT_AUTH, 1, [build with apt auth support]))
+
 # check if we have apts new-style cdrom.h
-AC_CHECK_HEADER(apt-pkg/cdrom.h, 
-                AC_DEFINE(HAVE_APTPKG_CDROM, 1, 
-		[whether apt-pkg/cdrom.h is present]) )
+AC_CHECK_HEADER(apt-pkg/cdrom.h, AC_DEFINE(HAVE_APTPKG_CDROM, 1, [whether apt-pkg/cdrom.h is present]) )
 
 #  xapian based package search feature
 AC_CHECK_PROG(HAVE_XAPIAN,xapian-config,yes,no)

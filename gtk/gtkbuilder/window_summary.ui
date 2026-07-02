@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="window_summary">
     <property name="can_focus">False</property>
     <property name="border_width">6</property>
     <property name="modal">True</property>
-    <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
@@ -23,7 +21,6 @@
                 <property name="label" translatable="yes">_Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="can_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Return to the main screen</property>
                 <property name="use_underline">True</property>
@@ -41,7 +38,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="has_focus">True</property>
-                <property name="can_default">True</property>
                 <property name="has_default">True</property>
                 <property name="receives_default">False</property>
                 <property name="tooltip_text" translatable="yes">Apply all marked changes</property>
@@ -144,7 +140,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
-                        <property name="shadow_type">in</property>
+                        <property name="has-frame">True</property>
                         <child>
                           <object class="GtkTreeView" id="treeview_summary">
                             <property name="visible">True</property>
@@ -361,14 +357,7 @@
                             <property name="receives_default">False</property>
                             <property name="tooltip_text" translatable="yes">The package files will be downloaded, but not installed</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0.5</property>
-                            <property name="draw_indicator">True</property>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">0</property>
-                          </packing>
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="checkbutton_check_signatures">
@@ -377,21 +366,9 @@
                             <property name="receives_default">False</property>
                             <property name="tooltip_text" translatable="yes">Vendors sign their packages to verify the origin and integrity of the packages. Disabling the verification is a security risk.</property>
                             <property name="use_underline">True</property>
-                            <property name="xalign">0.5</property>
-                            <property name="draw_indicator">True</property>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
                         </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">6</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>

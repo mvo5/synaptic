@@ -58,8 +58,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
 
    setTitle(_("Filters"));
 
-   _busyCursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
-
    _comboPatternWhat = GTK_WIDGET(gtk_builder_get_object(_builder, "combobox_pattern_what"));
    comboStore = GTK_LIST_STORE(
                    gtk_combo_box_get_model(
@@ -141,7 +139,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                       "changed",
                       G_CALLBACK(filterNameChanged), this);
 
-   g_signal_connect(G_OBJECT(_win), "delete_event",
+   g_signal_connect(G_OBJECT(_win), "close-request",
                       G_CALLBACK(deleteEventAction), this);
 
 
@@ -268,7 +266,7 @@ void RGFilterManagerWindow::filterNameChanged(GObject *o, gpointer data)
    if (me->_selectedPath == NULL || me->_selectedFilter == NULL)
       return;
 
-   const gchar *s = gtk_entry_get_text(GTK_ENTRY(me->_filterEntry));
+   const gchar *s = gtk_editable_get_text(GTK_EDITABLE(me->_filterEntry));
    // test for empty filtername
    if (s == NULL || !strcmp(s, ""))
       return;
@@ -288,8 +286,8 @@ void RGFilterManagerWindow::statusInvertClicked(GObject *o, gpointer data)
 
    gboolean x;
    for (int i = 0; i < NrOfStatusBits; i++) {
-      x = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_statusB[i]));
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_statusB[i]), !x);
+      x = gtk_check_button_get_active(GTK_CHECK_BUTTON(me->_statusB[i]));
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(me->_statusB[i]), !x);
    }
 }
 
@@ -300,7 +298,7 @@ void RGFilterManagerWindow::statusAllClicked(GObject *o, gpointer data)
    //cout << "RGFilterManagerWindow::statusAllClicked()"<<endl;
 
    for (int i = 0; i < NrOfStatusBits; i++) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_statusB[i]), TRUE);
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(me->_statusB[i]), TRUE);
    }
 }
 
@@ -309,7 +307,7 @@ void RGFilterManagerWindow::statusNoneClicked(GObject *o, gpointer data)
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;
    //cout << "RGFilterManagerWindow::statusNoneClicked()"<<endl;
    for (int i = 0; i < NrOfStatusBits; i++) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_statusB[i]), FALSE);
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(me->_statusB[i]), FALSE);
    }
 }
 
@@ -370,7 +368,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 
    GtkWidget *patternEntry = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                   "entry_pattern_text"));
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(patternEntry));
+   const gchar *str = gtk_editable_get_text(GTK_EDITABLE(patternEntry));
 
    // get path
    GtkTreeSelection *selection;
@@ -426,7 +424,7 @@ void RGFilterManagerWindow::patternSelectionChanged(GtkTreeSelection *
 
       GtkWidget *patternText = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                     "entry_pattern_text"));
-      gtk_entry_set_text(GTK_ENTRY(patternText), text);
+      gtk_editable_set_text(GTK_EDITABLE(patternText), text);
       g_free(dopatt);
       g_free(what);
       g_free(text);
@@ -471,7 +469,7 @@ void RGFilterManagerWindow::readFilters()
       editFilter();
    }
 
-   gtk_entry_set_text(GTK_ENTRY(_filterEntry), "");
+   gtk_editable_set_text(GTK_EDITABLE(_filterEntry), "");
    
    // cleanup previous saved filters
    for(vector<RFilter*>::const_iterator I = _saveFilters.begin();
@@ -513,7 +511,7 @@ void RGFilterManagerWindow::selectAction(GtkTreeSelection *selection,
       //cout << "path is " << gtk_tree_path_to_string(me->_selectedPath) << endl;
       me->_selectedFilter = filter;
       //cout << "You selected" << filter << endl;
-      gtk_entry_set_text(GTK_ENTRY(me->_filterEntry), filtername);
+      gtk_editable_set_text(GTK_EDITABLE(me->_filterEntry), filtername);
       g_free(filtername);
 
       me->editFilter();
@@ -587,12 +585,12 @@ void RGFilterManagerWindow::setSectionFilter(RSectionPackageFilter & f)
    assert(_inclGB);
    GtkWidget *_exclGB = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_excl"));
    assert(_exclGB);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_inclGB), FALSE);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_exclGB), FALSE);
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_inclGB), FALSE);
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_exclGB), FALSE);
    if (f.inclusive()) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_inclGB), TRUE);
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_inclGB), TRUE);
    } else {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_exclGB), TRUE);
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_exclGB), TRUE);
    }
 }
 
@@ -606,7 +604,7 @@ void RGFilterManagerWindow::setStatusFilter(RStatusPackageFilter & f)
    int type = f.status();
 
    for (i = 0; i < NrOfStatusBits; i++) {
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_statusB[i]),
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_statusB[i]),
                                    (type & StatusMasks[i]) ? TRUE : FALSE);
    }
 
@@ -660,11 +658,11 @@ void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
       setPatternRow(-1, exclude, type, utf8(pattern.c_str()));
    }
    if(f.getAndMode())
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
+      gtk_check_button_set_active(GTK_CHECK_BUTTON
                                    (gtk_builder_get_object(_builder,
                                     "radiobutton_properties_and")), TRUE);
    else
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
+      gtk_check_button_set_active(GTK_CHECK_BUTTON
                                    (gtk_builder_get_object(_builder,
                                     "radiobutton_properties_or")), TRUE);
 }
@@ -679,7 +677,7 @@ void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
 
    GtkWidget *w = GTK_WIDGET(gtk_builder_get_object(_builder, "radiobutton_incl"));
    assert(w);
-   int inclusive = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(w));
+   int inclusive = gtk_check_button_get_active(GTK_CHECK_BUTTON(w));
    f.setInclusive(inclusive == TRUE);
    f.clear();
 
@@ -708,7 +706,7 @@ void RGFilterManagerWindow::getStatusFilter(RStatusPackageFilter & f)
    int i;
    int type = 0;
    for (i = 0; i < NrOfStatusBits; i++) {
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_statusB[i])))
+      if (gtk_check_button_get_active(GTK_CHECK_BUTTON(_statusB[i])))
          type |= StatusMasks[i];
    }
    f.setStatus(type);
@@ -760,7 +758,7 @@ void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
       g_free(text);
    }
    
-   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+   f.setAndMode(gtk_check_button_get_active(GTK_CHECK_BUTTON
                                              (gtk_builder_get_object(_builder,
                                               "radiobutton_properties_and"))));
 

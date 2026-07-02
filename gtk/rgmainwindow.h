@@ -127,7 +127,9 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
-   // init stuff 
+   GActionGroup *win_actions;
+
+   // init stuff
    void buildInterface();
    void buildTreeView();
    bool isActionEnabled(const char *action_name);
@@ -148,11 +150,14 @@ public:
    // display/table releated
    void refreshSubViewList();
 
-   virtual bool close();
+   virtual task<bool> close();
    static void closeWin(GSimpleAction *action,
                         GVariant *parameter,
-                        gpointer me) {
-      ((RGMainWindow *) me)->close();
+                        gpointer data) {
+      auto me = (RGMainWindow *) data;
+      start_task([me]() -> task<void> {
+         co_await me->close();
+      });
    };
 
    // misc
@@ -164,13 +169,13 @@ public:
    string selectedSubView();
 
    // helpers
-   void pkgAction(RGPkgAction action);
-   bool askStateChange(RPackageLister::pkgState, 
+   task<void> pkgAction(RGPkgAction action);
+   task<bool> askStateChange(RPackageLister::pkgState,
                        const vector<RPackage *> &exclude = vector<RPackage*>());
-   bool checkForFailedInst(vector<RPackage *> instPkgs);
+   task<bool> checkForFailedInst(vector<RPackage *> instPkgs);
    void pkgInstallHelper(RPackage *pkg, bool fixBroken = true, 
 			 bool reInstall = false);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false,
+   task<void> pkgRemoveHelper(RPackage *pkg, bool purge = false,
 		   	bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);
 
@@ -186,7 +191,7 @@ public:
    // helpers for search-as-you-type 
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
    static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
-   static gboolean xapianDoSearch(void *data);
+   static void xapianDoSearch(void *data);
    static gboolean xapianDoIndexUpdate(void *data);
 
    // RPackageObserver
@@ -202,12 +207,12 @@ public:
 
    void refreshTable(RPackage *selectedPkg = NULL,bool setAdjustments=true);
 
-   void changeView(int view, string subView="");
+   task<void> changeView(int view, string subView="");
 
    // install the list of packagenames and display a changes window
    void selectToInstall(vector<string> packagenames);
 
-   void setInterfaceLocked(bool flag);
+   task<void> setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
    void rebuildTreeView() {
       buildTreeView();
@@ -219,9 +224,9 @@ public:
    void activeWindowToForeground();
 
    void saveState();
-   bool restoreState();
+   task<bool> restoreState();
 
-   bool showErrors();
+   task<bool> showErrors();
 
    GMenu* buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
 
@@ -255,14 +260,16 @@ public:
                                   GVariant *parameter,
                                   gpointer data);
 
-   static gboolean cbPackageListClicked(GtkWidget *treeview,
-                                        GdkEventButton *event,
+   static void cbPackageListClicked(GtkGestureClick* gesture,
+                                        gint n_press,
+                                        double x,
+                                        double y,
                                         gpointer data);
 
-   static void cbTreeviewPopupMenu(GtkWidget *treeview,
-                                   GdkEventButton *event,
-                                   RGMainWindow *me,
-                                   vector<RPackage *> selected_pkgs);
+   void cbTreeviewPopupMenu(int button,
+                            double x,
+                            double y,
+                            vector<RPackage *> selected_pkgs);
 
    static void cbChangelogDialog(GSimpleAction *action,
                                  GVariant *parameter,

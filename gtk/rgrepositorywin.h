@@ -65,7 +65,7 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    bool _applied;
    bool _dirty;
-   GdkColor _gray;
+   GdkRGBA _gray;
 
    void UpdateVendorMenu();
    int VendorMenuIndex(string VendorID);
@@ -92,7 +92,7 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    RGRepositoryEditor(RGWindow *parent);
    ~RGRepositoryEditor();
 
-   bool Run();
+   task<bool> Run();
 };
 
 #endif

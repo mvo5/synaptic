@@ -26,6 +26,8 @@
 
 #include "config.h"
 
+#include "coroutines.h"
+
 class RUserDialog {
  public:
    enum ButtonsType {
@@ -42,29 +44,30 @@ class RUserDialog {
       DialogError
    };
 
-   virtual bool message(const char *msg,
+   virtual task<bool> message(const char *msg,
                         DialogType dialog = DialogInfo,
                         ButtonsType buttons = ButtonsDefault,
                         bool defres = true) = 0;
 
-   virtual bool confirm(const char *msg, bool defres = true) {
-      return message(msg, DialogQuestion, ButtonsYesNo, defres);
+   virtual task<bool> confirm(const char *msg, bool defres = true) {
+      co_return co_await message(msg, DialogQuestion, ButtonsYesNo, defres);
    }
 
-   virtual bool proceed(const char *msg, bool defres = true) {
-      return message(msg, DialogInfo, ButtonsOkCancel, defres);
+   virtual task<bool> proceed(const char *msg, bool defres = true) {
+      co_return co_await message(msg, DialogInfo, ButtonsOkCancel, defres);
    }
 
-   virtual bool warning(const char *msg, bool nocancel = true) {
-      return nocancel ? message(msg, DialogWarning)
-         : message(msg, DialogWarning, ButtonsOkCancel, false);
+   virtual task<bool> warning(const char *msg, bool nocancel = true) {
+      co_return nocancel
+         ? co_await message(msg, DialogWarning)
+         : co_await message(msg, DialogWarning, ButtonsOkCancel, false);
    }
 
-   virtual void error(const char *msg) {
-      message(msg, DialogError);
+   virtual task<void> error(const char *msg) {
+      co_await message(msg, DialogError);
    }
 
-   virtual bool showErrors();
+   virtual task<bool> showErrors();
 
 };
 

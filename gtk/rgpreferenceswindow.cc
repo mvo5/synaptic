@@ -68,11 +68,11 @@ void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
 {
    // this function strips http:// from a entred proxy url
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
-   const gchar *text = gtk_entry_get_text(GTK_ENTRY(self));
+   const gchar *text = gtk_editable_get_text(GTK_EDITABLE(self));
    gchar *new_text = NULL;
    if(g_str_has_prefix(text, "http://")) {
       new_text = g_strdup_printf("%s", &text[strlen("http://")]);
-      gtk_entry_set_text(GTK_ENTRY(self), new_text);
+      gtk_editable_set_text(GTK_EDITABLE(self), new_text);
    }
    if(new_text != NULL)
       g_free(new_text);
@@ -102,7 +102,7 @@ void RGPreferencesWindow::cbRadioDistributionChanged(GtkWidget *self,
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
    
    // we are only interested in the active one
-   if(me->_blockAction || !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self))) 
+   if(me->_blockAction || !gtk_check_button_get_active(GTK_CHECK_BUTTON(self)))
       return;
    
    gchar *defaultDistro = (gchar*)g_object_get_data(G_OBJECT(self),"defaultDistro");
@@ -196,7 +196,7 @@ void RGPreferencesWindow::saveGeneral()
    int i;
 
    // show package properties in main window
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionShowAllPkgInfoInMain));
    _config->Set("Synaptic::ShowAllPkgInfoInMain", newval ? "true" : "false");
    // apply the changes
    GtkWidget *notebook = GTK_WIDGET(gtk_builder_get_object
@@ -218,15 +218,15 @@ void RGPreferencesWindow::saveGeneral()
    }
 
    // Ask to confirm changes also affecting other packages
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionAskRelated));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionAskRelated));
    _config->Set("Synaptic::AskRelated", newval ? "true" : "false");
 
    // Consider recommended packages as dependencies
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionCheckRecom));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionCheckRecom));
    _config->Set("APT::Install-Recommends", newval ? "true" : "false");
 
    // Clicking on the status icon marks the most likely action
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionOneClick));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionOneClick));
    _config->Set("Synaptic::OneClickOnStatusActions", newval ? "true" : "false");
 
    // Removal of packages: 
@@ -251,11 +251,11 @@ void RGPreferencesWindow::saveGeneral()
    _config->Set("Synaptic::undoStackSize", maxUndo);
 
    // Apply changes in a terminal window
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionUseTerminal));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionUseTerminal));
    _config->Set("Synaptic::UseTerminal", newval ? "true" : "false");
 
    // Ask to quit after the changes have been applied successfully
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionAskQuit));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionAskQuit));
    _config->Set("Synaptic::AskQuitOnProceed", newval ? "true" : "false");
 
 }
@@ -265,7 +265,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
    bool newval;
 
    // Use custom application font
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_font")));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_font")));
    _config->Set("Synaptic::useUserFont", newval);
 
    GValue value = { 0, };
@@ -283,7 +283,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
    }
    g_value_unset(&value);
 
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font")));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font")));
    _config->Set("Synaptic::useUserTerminalFont", newval);
    
 
@@ -325,7 +325,7 @@ void RGPreferencesWindow::saveColors()
 
    // save the colors
    RGPackageStatus::pkgStatus.saveColors();
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_optionUseStatusColors));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_optionUseStatusColors));
    _config->Set("Synaptic::UseStatusColors", newval ? "true" : "false");
 }
 
@@ -334,13 +334,13 @@ void RGPreferencesWindow::saveFiles()
    bool newval;
 
    // cache
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_cacheClean));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_cacheClean));
    _config->Set("Synaptic::CleanCache", newval ? "true" : "false");
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_cacheAutoClean));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_cacheAutoClean));
    _config->Set("Synaptic::AutoCleanCache", newval ? "true" : "false");
 
    // history
-   newval = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_delHistory));
+   newval = gtk_check_button_get_active(GTK_CHECK_BUTTON(_delHistory));
    if(!newval) {
       _config->Set("Synaptic::delHistory", -1);
       return;
@@ -357,24 +357,24 @@ void RGPreferencesWindow::saveNetwork()
    const gchar *http, *ftp, *noProxy;
    int httpPort, ftpPort;
 
-   useProxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_useProxy));
+   useProxy = gtk_check_button_get_active(GTK_CHECK_BUTTON(_useProxy));
    _config->Set("Synaptic::useProxy", useProxy);
    // http
-   http = gtk_entry_get_text(
-      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_http_proxy")));
+   http = gtk_editable_get_text(
+      GTK_EDITABLE(gtk_builder_get_object(_builder, "entry_http_proxy")));
    _config->Set("Synaptic::httpProxy", http);
    httpPort = (int) gtk_spin_button_get_value(
       GTK_SPIN_BUTTON(gtk_builder_get_object(_builder,"spinbutton_http_port")));
    _config->Set("Synaptic::httpProxyPort", httpPort);
    // ftp
-   ftp = gtk_entry_get_text(
-      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_ftp_proxy")));
+   ftp = gtk_editable_get_text(
+      GTK_EDITABLE(gtk_builder_get_object(_builder, "entry_ftp_proxy")));
    _config->Set("Synaptic::ftpProxy", ftp);
    ftpPort = (int) gtk_spin_button_get_value(
       GTK_SPIN_BUTTON(gtk_builder_get_object(_builder,"spinbutton_ftp_port")));
    _config->Set("Synaptic::ftpProxyPort", ftpPort);
-   noProxy = gtk_entry_get_text(
-      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_no_proxy")));
+   noProxy = gtk_editable_get_text(
+      GTK_EDITABLE(gtk_builder_get_object(_builder, "entry_no_proxy")));
    _config->Set("Synaptic::noProxy", noProxy);
 
    applyProxySettings();
@@ -436,42 +436,40 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
    me->closeAction(self, data);
 }
 
-void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
+void RGPreferencesWindow::changeDefaultFontAction(GtkWidget *self, void *data)
 {
-   const char *fontName, *propName;
-   
-   switch (GPOINTER_TO_INT(data)) {
-      case FONT_DEFAULT:
-         propName = "Synaptic::FontName";
-	      fontName = "sans 10";
-         break;
-      case FONT_TERMINAL:
-         propName = "Synaptic::TerminalFontName";
-	      fontName = "monospace 10";
-         break;
-      default:
-         cerr << "changeFontAction called with unknown argument" << endl;
-         return;
-   }
+   auto me = static_cast<RGPreferencesWindow *>(data);
+   start_task([me]() -> task<void> {
+      co_await me->co_changeFont("Synaptic::FontName", "sans 10");
+   });
+}
 
+void RGPreferencesWindow::changeTerminalFontAction(GtkWidget *self, void *data)
+{
+   auto me = static_cast<RGPreferencesWindow *>(data);
+   start_task([me]() -> task<void> {
+      co_await me->co_changeFont("Synaptic::TerminalFontName", "monospace 10");
+   });
+}
+
+task<void> RGPreferencesWindow::co_changeFont(const char *propName, const char *defaultValue)
+{
    GtkWidget *fontsel = gtk_font_chooser_dialog_new(_("Choose font"),
-         GTK_WINDOW(gtk_widget_get_toplevel(self)));
+         GTK_WINDOW(gtk_widget_get_root(_win)));
+   gtk_window_set_modal(GTK_WINDOW(fontsel), true);
 
    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontsel),
-                             _config->Find(propName, fontName).c_str());
+                             _config->Find(propName, defaultValue).c_str());
 
-   gint result = gtk_dialog_run(GTK_DIALOG(fontsel));
-   if (result != GTK_RESPONSE_OK) {
-      gtk_widget_destroy(fontsel);
-      return;
-   }
-
-   fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
-   //cout << "fontname: " << fontName << endl;
+   int result = co_await co_run_dialog(GTK_DIALOG(fontsel));
+   if (result == GTK_RESPONSE_OK) {
+      auto fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
+      //cout << "fontname: " << fontName << endl;
 
    _config->Set(propName, fontName);
+   }
 
-   gtk_widget_destroy(fontsel);
+   gtk_window_destroy(GTK_WINDOW(fontsel));
 }
 
 void RGPreferencesWindow::clearCacheAction(GtkWidget *self, void *data)
@@ -484,20 +482,20 @@ void RGPreferencesWindow::clearCacheAction(GtkWidget *self, void *data)
 void RGPreferencesWindow::readGeneral()
 {
    // Allow regular expressions in searches and filters
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionShowAllPkgInfoInMain),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionShowAllPkgInfoInMain),
                                 _config->FindB("Synaptic::ShowAllPkgInfoInMain", false));
 
    // Ask to confirm changes also affecting other packages
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionAskRelated),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionAskRelated),
                                 _config->FindB("Synaptic::AskRelated", true));
 
    // Consider recommended packages as dependencies
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionCheckRecom),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionCheckRecom),
                                 _config->FindB("APT::Install-Recommends",
                                                false));
 
    // Clicking on the status icon marks the most likely action
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionOneClick),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionOneClick),
                                 _config->FindB("Synaptic::OneClickOnStatusActions",
                                                false));
 
@@ -542,12 +540,12 @@ void RGPreferencesWindow::readGeneral()
 #endif
 #endif
 #endif
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionUseTerminal),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionUseTerminal),
                                 _config->FindB("Synaptic::UseTerminal",
                                                UseTerminal));
 
    // Ask to quit after the changes have been applied successfully
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionAskQuit),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionAskQuit),
                                 _config->FindB("Synaptic::AskQuitOnProceed",
                                                false));
 }
@@ -556,12 +554,12 @@ void RGPreferencesWindow::readColumnsAndFonts()
 {
    // font stuff
    bool b = _config->FindB("Synaptic::useUserFont", false);
-   gtk_toggle_button_set_active(
-      GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder,
+   gtk_check_button_set_active(
+      GTK_CHECK_BUTTON(gtk_builder_get_object(_builder,
                                              "checkbutton_user_font")), b);
    b = _config->FindB("Synaptic::useUserTerminalFont", false);
-   gtk_toggle_button_set_active(
-      GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder,
+   gtk_check_button_set_active(
+      GTK_CHECK_BUTTON(gtk_builder_get_object(_builder,
                                              "checkbutton_user_terminal_font")), b);
 
    readTreeViewValues();
@@ -575,7 +573,7 @@ void RGPreferencesWindow::readColors()
    GtkWidget *button = NULL;
 
    // Color packages by their status
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_optionUseStatusColors),
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_optionUseStatusColors),
                                 _config->FindB("Synaptic::UseStatusColors",
                                                true));
 
@@ -603,7 +601,7 @@ void RGPreferencesWindow::readColors()
             color_string);
          g_free(color_string);
       }
-      gtk_css_provider_load_from_data(_css_provider, custom_css->str, -1, NULL);
+      gtk_css_provider_load_from_data(_css_provider, custom_css->str, -1);
       g_free(color_button);
    }
    g_string_free(custom_css, TRUE);
@@ -615,23 +613,19 @@ void RGPreferencesWindow::readFiles()
    bool postClean = _config->FindB("Synaptic::CleanCache", false);
    bool postAutoClean = _config->FindB("Synaptic::AutoCleanCache", true);
 
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheClean), postClean);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_cacheAutoClean), 
-				postAutoClean);
-
    if (postClean)
-      gtk_button_clicked(GTK_BUTTON(_cacheClean));
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_cacheClean), true);
    else if (postAutoClean)
-      gtk_button_clicked(GTK_BUTTON(_cacheAutoClean));
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_cacheAutoClean), true);
    else
-      gtk_button_clicked(GTK_BUTTON(_cacheLeave));
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_cacheLeave), true);
 
    // history
    int delHistory = _config->FindI("Synaptic::delHistory", -1);
    if(delHistory < 0) 
-      gtk_button_clicked(GTK_BUTTON(_keepHistory));
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_keepHistory), true);
    else {
-      gtk_button_clicked(GTK_BUTTON(_delHistory));      
+      gtk_check_button_set_active(GTK_CHECK_BUTTON(_delHistory), true);
       gtk_spin_button_set_value(GTK_SPIN_BUTTON(_spinDelHistory), 
 				delHistory);      
    }
@@ -641,14 +635,14 @@ void RGPreferencesWindow::readNetwork()
 {
    // proxy stuff
    bool useProxy = _config->FindB("Synaptic::useProxy", false);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(gtk_builder_get_object
                                                   (_builder,"radio_no_proxy")),
                                                   !useProxy);
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object
                             (_builder, "table_proxy")),
                             useProxy);
    string str = _config->Find("Synaptic::httpProxy", "");
-   gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object
+   gtk_editable_set_text(GTK_EDITABLE(gtk_builder_get_object
                                 (_builder, "entry_http_proxy")), str.c_str());
    int i = _config->FindI("Synaptic::httpProxyPort", 3128);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON
@@ -656,13 +650,13 @@ void RGPreferencesWindow::readNetwork()
                               (_builder, "spinbutton_http_port")), i);
 
    str = _config->Find("Synaptic::ftpProxy", "");
-   gtk_entry_set_text(
-      GTK_ENTRY(gtk_builder_get_object(_builder, "entry_ftp_proxy")), str.c_str());
+   gtk_editable_set_text(
+      GTK_EDITABLE(gtk_builder_get_object(_builder, "entry_ftp_proxy")), str.c_str());
    i = _config->FindI("Synaptic::ftpProxyPort", 3128);
    gtk_spin_button_set_value(
       GTK_SPIN_BUTTON(gtk_builder_get_object(_builder, "spinbutton_ftp_port")), i);
    str = _config->Find("Synaptic::noProxy", "");
-   gtk_entry_set_text(GTK_ENTRY(gtk_builder_get_object(_builder,
+   gtk_editable_set_text(GTK_EDITABLE(gtk_builder_get_object(_builder,
                                                        "entry_no_proxy")),
                       str.c_str());
 
@@ -713,7 +707,7 @@ void RGPreferencesWindow::readDistribution()
       gtk_widget_set_sensitive(GTK_WIDGET(_comboDefaultDistro),TRUE);
    }
    assert(button);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(button), TRUE);
 
 
    // set up combo-box
@@ -903,27 +897,37 @@ void RGPreferencesWindow::cbToggleColumn(GtkWidget *self, char*path_string,
 
 void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
 {
+   RGPreferencesWindow *me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
+   int status = GPOINTER_TO_INT(data);
+
+   start_task([me, status]() -> task<void> {
+      co_await me->co_colorClicked(status);
+   });
+}
+
+task<void> RGPreferencesWindow::co_colorClicked(int status)
+{
    GtkWidget *color_dialog;
-   RGPreferencesWindow *me;
-   me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
    color_dialog = gtk_color_chooser_dialog_new(_("Color selection"),
-         GTK_WINDOW(gtk_builder_get_object(me->_builder, "window_preferences")));
+         GTK_WINDOW(window()));
+   gtk_window_set_modal(GTK_WINDOW(color_dialog), true);
    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(color_dialog), false);
 
    GdkRGBA *color = NULL;
-   color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
+   color = RGPackageStatus::pkgStatus.getColor(status);
    if (color != NULL)
       gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(color_dialog), color);
 
-   if (gtk_dialog_run(GTK_DIALOG(color_dialog)) == GTK_RESPONSE_OK) {
+   int response_id = co_await co_run_dialog(GTK_DIALOG(color_dialog));
+   if (response_id == GTK_RESPONSE_OK) {
       GdkRGBA current_color;
       gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(color_dialog), &current_color);
-      RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
+      RGPackageStatus::pkgStatus.setColor(status,
 					  gdk_rgba_copy(&current_color));
-      me->readColors();
+      readColors();
    }
-   gtk_widget_destroy(color_dialog);
+   gtk_window_destroy(GTK_WINDOW(color_dialog));
 }
 
 void RGPreferencesWindow::useProxyToggled(GtkWidget *self, void *data)
@@ -932,7 +936,7 @@ void RGPreferencesWindow::useProxyToggled(GtkWidget *self, void *data)
    bool useProxy;
 
    RGPreferencesWindow *me = (RGPreferencesWindow *) data;
-   useProxy = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(me->_useProxy));
+   useProxy = gtk_check_button_get_active(GTK_CHECK_BUTTON(me->_useProxy));
    gtk_widget_set_sensitive(GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                                               "table_proxy")),
                             useProxy);
@@ -948,7 +952,7 @@ void RGPreferencesWindow::checkbuttonUserFontToggled(GtkWidget *self,
    GtkWidget *check =
       GTK_WIDGET(gtk_builder_get_object(me->_builder, "checkbutton_user_font"));
    gtk_widget_set_sensitive(button,
-                            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+                            gtk_check_button_get_active(GTK_CHECK_BUTTON
                                                          (check)));
 }
 
@@ -963,7 +967,7 @@ void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self,
       GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                         "checkbutton_user_terminal_font"));
    gtk_widget_set_sensitive(button,
-                            gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
+                            gtk_check_button_get_active(GTK_CHECK_BUTTON
                                                          (check)));
 }
 
@@ -1171,7 +1175,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_default_font"),
                     "clicked",
-                    G_CALLBACK(changeFontAction),GINT_TO_POINTER(FONT_DEFAULT));
+                    G_CALLBACK(changeDefaultFontAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font"),
                     "toggled",
@@ -1182,8 +1186,8 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_terminal_font"),
                                  "clicked",
-                                 G_CALLBACK(changeFontAction),
-                                 GINT_TO_POINTER(FONT_TERMINAL));
+                                 G_CALLBACK(changeTerminalFontAction),
+                                 this);
 
    checkbuttonUserTerminalFontToggled(NULL, this);
    checkbuttonUserFontToggled(NULL, this);
@@ -1220,30 +1224,31 @@ void
 RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me = (RGPreferencesWindow *)data;
+   start_task([me]() -> task<void> {
+      RGGtkBuilderUserDialog dia(me, "authentication");
+      GtkBuilder *dia_xml = dia.getGtkBuilder();
+      GtkWidget *entry_user = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_username"));
+      GtkWidget *entry_pass = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_password"));
 
-   RGGtkBuilderUserDialog dia(me, "authentication");
-   GtkBuilder *dia_xml = dia.getGtkBuilder();
-   GtkWidget *entry_user = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_username"));
-   GtkWidget *entry_pass = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_password"));
+      // now set the values
+      string now_user =  _config->Find("Synaptic::httpProxyUser","");
+      gtk_editable_set_text(GTK_EDITABLE(entry_user), now_user.c_str());
+      string now_pass =   _config->Find("Synaptic::httpProxyPass","");
+      gtk_editable_set_text(GTK_EDITABLE(entry_pass), now_pass.c_str());
 
-   // now set the values
-   string now_user =  _config->Find("Synaptic::httpProxyUser","");
-   gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
-   string now_pass =   _config->Find("Synaptic::httpProxyPass","");
-   gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
+      int res = co_await dia.co_run();
 
-   int res = dia.run();
+      if(!res)
+         co_return;
 
-   if(!res) 
-      return;
+      // get the entered data
+      const gchar *user = gtk_editable_get_text(GTK_EDITABLE(entry_user));
+      const gchar *pass = gtk_editable_get_text(GTK_EDITABLE(entry_pass));
 
-   // get the entered data
-   const gchar *user = gtk_entry_get_text(GTK_ENTRY(entry_user));
-   const gchar *pass = gtk_entry_get_text(GTK_ENTRY(entry_pass));
-   
-   // write out the configuration   
-   _config->Set("Synaptic::httpProxyUser",user);
-   _config->Set("Synaptic::httpProxyPass",pass);
+      // write out the configuration
+      _config->Set("Synaptic::httpProxyUser",user);
+      _config->Set("Synaptic::httpProxyPass",pass);
+   });
 }
 
 // vim:ts=3:sw=3:et

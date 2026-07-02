@@ -44,42 +44,30 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
                       "clicked",
                       G_CALLBACK(closeWindow), this);
-   GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
-   assert(vbox);
+   GtkGrid *grid = GTK_GRID(gtk_builder_get_object(_builder, "grid_main"));
+   assert(grid);
 
-   GtkWidget *hbox, *label, *pix;
+   GtkWidget *label, *pix;
+   int i;
 
-   for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
-      hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-
-      pix = gtk_image_new_from_pixbuf(RGPackageStatus::pkgStatus.getPixbuf(i));
-      gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
+   for (i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
+      pix = gtk_image_new_from_icon_name(RGPackageStatus::pkgStatus.getPixbuf(i).c_str());
+      gtk_grid_attach(grid, pix, 0, i + 1, 1, 1);
 
       label = gtk_label_new(RGPackageStatus::pkgStatus.getLongStatusString(i));
-      gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-
-      gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+      gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+      gtk_grid_attach(grid, label, 1, i + 1, 1, 1);
    }
 
-
    // package support status 
-   hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-   GtkIconTheme *theme;
-   GdkPixbuf *pixbuf;
-   GError *error = NULL;
-   const gchar *name = "package-supported";
-   theme = gtk_icon_theme_get_default();
-   pixbuf = gtk_icon_theme_load_icon(theme, name, 16, 
-				     (GtkIconLookupFlags)0, &error);
+   pix = gtk_image_new_from_icon_name("package-supported");
+   gtk_grid_attach(grid, pix, 0, i + 1, 1, 1);
 
-   pix = gtk_image_new_from_pixbuf(pixbuf);
-   gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
    label = gtk_label_new(_config->Find("Synaptic::supported-text",
 				       _("Package is supported")).c_str());
-   gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-   gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+   gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+   gtk_grid_attach(grid, label, 1, i + 1, 1, 1);
 
-   gtk_widget_show_all(vbox);
    //skipTaskbar(true);
    show();
 }

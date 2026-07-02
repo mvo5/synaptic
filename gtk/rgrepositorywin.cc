@@ -31,7 +31,7 @@
 #include <glib.h>
 #include <cassert>
 
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 #include "rgrepositorywin.h"
 #include "rguserdialog.h"
@@ -82,42 +82,43 @@ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *)g_object_get_data(G_OBJECT(cell), "me");
    GtkTreeModel *model = (GtkTreeModel *) data;
-   GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-   GtkTreeIter iter;
-   gboolean toggle_item;
-   gchar *section = NULL;
+   start_task([me, path_str, model]() -> task<void> {
+       GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+       GtkTreeIter iter;
+       gboolean toggle_item;
+       gchar *section = NULL;
 
-   /* get toggled iter */
-   gtk_tree_model_get_iter(model, &iter, path);
-   gtk_tree_model_get(model, &iter, 
-		      STATUS_COLUMN, &toggle_item, 
-		      SECTIONS_COLUMN, &section, -1);
+       /* get toggled iter */
+       gtk_tree_model_get_iter(model, &iter, path);
+       gtk_tree_model_get(model, &iter,
+		          STATUS_COLUMN, &toggle_item,
+		          SECTIONS_COLUMN, &section, -1);
 
-   /* do something with the value */
-   toggle_item ^= 1;
+       /* do something with the value */
+       toggle_item ^= 1;
 
-   // special warty check
-   if(toggle_item && section && g_strrstr(section, "universe")) {
-      gchar *msg = _("You are adding the \"universe\" component.\n\n "
-		     "Packages in this component are not supported. "
-		     "Are you sure?");
-      if(!me->_userDialog->message(msg, RUserDialog::DialogWarning,
-				   RUserDialog::ButtonsOkCancel)) {
-	 gtk_tree_path_free(path);
-	 g_free(section);
-	 return;
-      }
-   }
+       // special warty check
+       if (toggle_item && section && g_strrstr(section, "universe")) {
+          gchar *msg = _("You are adding the \"universe\" component.\n\n "
+		         "Packages in this component are not supported. "
+		         "Are you sure?");
+          if (!co_await me->_userDialog->message(msg, RUserDialog::DialogWarning, RUserDialog::ButtonsOkCancel)) {
+             gtk_tree_path_free(path);
+             g_free(section);
+             co_return;
+          }
+       }
 
-   /* set new value */
-   gtk_list_store_set(GTK_LIST_STORE(model), &iter,
-                      STATUS_COLUMN, toggle_item, -1);
+       /* set new value */
+       gtk_list_store_set(GTK_LIST_STORE(model), &iter,
+                          STATUS_COLUMN, toggle_item, -1);
 
-   me->_dirty = true;
+       me->_dirty = true;
 
-   /* clean up */
-   g_free(section);
-   gtk_tree_path_free(path);
+       /* clean up */
+       g_free(section);
+       gtk_tree_path_free(path);
+   });
 }
 
 
@@ -377,7 +378,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
 
-   gtk_window_resize(GTK_WINDOW(_win), 620, 400);
+   gtk_widget_set_size_request(GTK_WIDGET(_win), 620, 400);
    skipTaskbar(true);
    show();
 }
@@ -390,10 +391,10 @@ RGRepositoryEditor::~RGRepositoryEditor()
 }
 
 
-bool RGRepositoryEditor::Run()
+task<bool> RGRepositoryEditor::Run()
 {
    if (_lst.ReadSources() == false) {
-      _userDialog->
+      co_await _userDialog->
          warning(_("Ignoring invalid record(s) in sources.list file!"));
       //return false;
    }
@@ -402,8 +403,8 @@ bool RGRepositoryEditor::Run()
 
    if (_lst.ReadVendors() == false) {
       _error->Error(_("Cannot read vendors.list file"));
-      _userDialog->showErrors();
-      return false;
+      co_await _userDialog->showErrors();
+      co_return false;
    }
 
    // FIXME: is this good enough?
@@ -438,8 +439,8 @@ bool RGRepositoryEditor::Run()
 
    UpdateVendorMenu();
 
-   gtk_main();
-   return _applied;
+   co_await co_run_window(GTK_WINDOW(_win));
+   co_return _applied;
 }
 
 void RGRepositoryEditor::UpdateVendorMenu()
@@ -482,9 +483,9 @@ void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 
    gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor), 0);
-   gtk_entry_set_text(GTK_ENTRY(me->_entryURI), "");
-   gtk_entry_set_text(GTK_ENTRY(me->_entryDist), "");
-   gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entryURI), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entryDist), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entrySect), "");
 }
 
 void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
@@ -593,19 +594,19 @@ void RGRepositoryEditor::doEdit()
                       -1);
    rec->VendorID = type;
 #endif
-   rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
-   rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
+   rec->URI = gtk_editable_get_text(GTK_EDITABLE(_entryURI));
+   rec->Dist = gtk_editable_get_text(GTK_EDITABLE(_entryDist));
 
    delete[]rec->Sections;
    rec->NumSections = 0;
 
-   const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+   const char *Section = gtk_editable_get_text(GTK_EDITABLE(_entrySect));
    if (Section != 0 && Section[0] != 0)
       rec->NumSections++;
 
    rec->Sections = new string[rec->NumSections];
    rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+   Section = gtk_editable_get_text(GTK_EDITABLE(_entrySect));
 
    if (Section != 0 && Section[0] != 0)
       rec->Sections[rec->NumSections++] = Section;
@@ -669,14 +670,15 @@ void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
       return;
    }
 
-   gtk_main_quit();
    me->_applied = me->_dirty;
+   gtk_window_close (GTK_WINDOW (me->_win));
 }
 
 void RGRepositoryEditor::DoCancel(GtkWidget *, gpointer data)
 {
-   //RGRepositoryEditor *me = (RGRepositoryEditor *)data;
-   gtk_main_quit();
+   RGRepositoryEditor *me = (RGRepositoryEditor *)data;
+
+   gtk_window_close (GTK_WINDOW (me->_win));
 }
 
 
@@ -724,9 +726,9 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor),
                                   me->VendorMenuIndex(rec->VendorID));
 
-      gtk_entry_set_text(GTK_ENTRY(me->_entryURI), utf8(rec->URI.c_str()));
-      gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
-      gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
+      gtk_editable_set_text(GTK_EDITABLE(me->_entryURI), utf8(rec->URI.c_str()));
+      gtk_editable_set_text(GTK_EDITABLE(me->_entryDist), utf8(rec->Dist.c_str()));
+      gtk_editable_set_text(GTK_EDITABLE(me->_entrySect), "");
 
       for (unsigned int I = 0; I < rec->NumSections; I++) {
          int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));

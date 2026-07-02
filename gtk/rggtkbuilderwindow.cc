@@ -25,8 +25,6 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/fileutl.h>
 
-#include <gdk/gdkx.h>
-
 #include <cassert>
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
@@ -37,7 +35,6 @@
 */
 RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mainName)
 {
-   _busyCursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
    _builder = gtk_builder_new ();
 
    // for development
@@ -73,10 +70,7 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
       gtk_window_set_transient_for(GTK_WINDOW(_win), 
 				   GTK_WINDOW(parent->window()));
 
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
-   gtk_window_set_icon(GTK_WINDOW(_win), icon);
+   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_free(filename);
    g_free(local_filename);
@@ -85,11 +79,12 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
    //gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
    g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(G_OBJECT(_win), "delete-event",
+   g_signal_connect(G_OBJECT(_win), "close-request",
                     G_CALLBACK(windowCloseCallback), this);
    _topBox = NULL;
 
    // honor foreign parent windows (to make embedding easy)
+/*
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
       GdkWindow *win = gdk_x11_window_foreign_new_for_display(
@@ -99,13 +94,15 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
 	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_win)), win);
       }
    }
+*/
    // if we have no parent, don't skip the taskbar hint
+/*
    if(_config->FindB("Volatile::HideMainwindow",false) && id < 0)
    {
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), FALSE);
       gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
    }
-
+*/
 }
 
 bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
@@ -240,14 +237,14 @@ bool RGGtkBuilderWindow::setTextView(const char *widget_name,
    return true;
 }
 
-bool RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
+bool RGGtkBuilderWindow::setPixmap(const char *widget_name, const char *value)
 {
    GtkWidget *pix = GTK_WIDGET (gtk_builder_get_object (_builder, widget_name));
    if (pix == NULL) {
       cout << "textview == NULL with: " << widget_name << endl;
       return false;
    }
-   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
+   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value);
    
    return true;
 }
@@ -256,9 +253,9 @@ void RGGtkBuilderWindow::setBusyCursor(bool flag)
 {
    if(flag) {
       if(gtk_widget_get_visible(_win))
-	 gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
+         gtk_widget_set_cursor_from_name(window(), "watch");
    } else {
       if(gtk_widget_get_visible(_win))
-	 gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
+         gtk_widget_set_cursor(window(), NULL);
    }
 }

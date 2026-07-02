@@ -27,31 +27,34 @@
 #include "rgwindow.h"
 #include "rgutils.h"
 
-bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
+gboolean RGWindow::windowCloseCallback(GtkWidget *window, gpointer user_data)
 {
    //cout << "windowCloseCallback" << endl;
-   RGWindow *rwin = (RGWindow *) g_object_get_data(G_OBJECT(window), "me");
-
-   return rwin->close();
+   RGWindow *rwin = (RGWindow *) user_data;
+   start_task([rwin]() -> task<void> {
+      bool _close = co_await rwin->close();
+   });
+   return true;
 }
 
 RGWindow::RGWindow(string name, bool makeBox)
 {
    //std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
-   _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   _win = gtk_window_new();
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
-   gtk_window_set_icon(GTK_WINDOW(_win), icon);
+   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(G_OBJECT(_win), "delete-event",
+   g_signal_connect(G_OBJECT(_win), "close-request",
                     G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-      gtk_container_add(GTK_CONTAINER(_win), _topBox);
-      gtk_widget_show(_topBox);
-      gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
+      gtk_window_set_child(GTK_WINDOW(_win), _topBox);
+      gtk_widget_set_margin_top(_topBox, 5);
+      gtk_widget_set_margin_bottom(_topBox, 5);
+      gtk_widget_set_margin_start(_topBox, 5);
+      gtk_widget_set_margin_end(_topBox, 5);
    } else {
       _topBox = NULL;
    }
@@ -66,19 +69,21 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
    //std::cout 
    //<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool closable)"
    //<< endl;
-   _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   _win = gtk_window_new();
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-   g_signal_connect(G_OBJECT(_win), "delete-event",
+   g_signal_connect(G_OBJECT(_win), "close-request",
                     G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-      gtk_container_add(GTK_CONTAINER(_win), _topBox);
-      gtk_widget_show(_topBox);
-      gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
+      gtk_window_set_child(GTK_WINDOW(_win), _topBox);
+      gtk_widget_set_margin_top(_topBox, 5);
+      gtk_widget_set_margin_bottom(_topBox, 5);
+      gtk_widget_set_margin_start(_topBox, 5);
+      gtk_widget_set_margin_end(_topBox, 5);
    } else {
       _topBox = NULL;
    }
@@ -93,7 +98,7 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
 RGWindow::~RGWindow()
 {
    //cout << "~RGWindow"<<endl;
-   gtk_widget_destroy(_win);
+   gtk_window_destroy(GTK_WINDOW(_win));
 }
 
 
@@ -102,11 +107,11 @@ void RGWindow::setTitle(string title)
    gtk_window_set_title(GTK_WINDOW(_win), (char *)title.c_str());
 }
 
-bool RGWindow::close()
+task<bool> RGWindow::close()
 {
    //cout << "RGWindow::close()" << endl;
    hide();
-   return true;
+   co_return true;
 }
 
 // vim:ts=3:sw=3:et

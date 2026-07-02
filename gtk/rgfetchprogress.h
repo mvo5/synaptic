@@ -75,7 +75,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    virtual void Fail(pkgAcquire::ItemDesc &Itm);
    virtual void Start();
    virtual void Stop();
-   virtual bool close();
+   virtual task<bool> close();
 
    bool Pulse(pkgAcquire * Owner);
 

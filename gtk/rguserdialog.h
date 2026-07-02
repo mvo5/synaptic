@@ -29,6 +29,7 @@
 
 #include "ruserdialog.h"
 #include "rgwindow.h"
+#include "rgutils.h"
 
 class RGUserDialog : public RUserDialog
 {
@@ -42,9 +43,9 @@ public:
     RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
     RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
     
-    virtual bool showErrors();
+    virtual task<bool> showErrors();
 
-    virtual bool message(const char *msg,
+    virtual task<bool> message(const char *msg,
 	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
 	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
 	    bool defres=true);
@@ -82,13 +83,13 @@ class RGGtkBuilderUserDialog : public RGUserDialog
  public:
     RGGtkBuilderUserDialog(RGWindow* parent);
     RGGtkBuilderUserDialog(RGWindow* parent, const char *name);
-    virtual ~RGGtkBuilderUserDialog()  { gtk_widget_destroy(_dialog); };
+    virtual ~RGGtkBuilderUserDialog()  { gtk_window_destroy(GTK_WINDOW(_dialog)); };
 
     void setTitle(string title) { 
        gtk_window_set_title(GTK_WINDOW(_dialog),title.c_str());
     }
 
-    int run(const char *name=NULL, bool return_gtk_response=false);
+    task<int> co_run(const char *name=NULL, bool return_gtk_response=false);
     GtkBuilder *getGtkBuilder() { return builder; };
 };
 #endif

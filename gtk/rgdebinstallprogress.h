@@ -114,18 +114,18 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
-   virtual bool close();
+   virtual task<void> startUpdate();
+   virtual task<void> updateInterface();
+   virtual task<void> finishUpdate();
+   virtual task<bool> close();
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+   virtual task<pkgPackageManager::OrderResult> start(pkgPackageManager *pm,
 		   				int numPackages = 0,
 						int totalPackages = 0);
 
    virtual void prepare(RPackageLister *lister);
    
-   void conffile(gchar *conffile, gchar *status);
+   task<void> conffile(gchar *conffile, gchar *status);
 
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);
@@ -133,12 +133,19 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    static void content_changed(GObject *object, gpointer    user_data);
    static void expander_callback(GObject *object,GParamSpec *param_spec,
 				  gpointer    user_data);
-   static gboolean key_press_event(GtkWidget   *widget,
-				   GdkEventKey *event,
-				   gpointer     user_data);
-   static gboolean cbTerminalClicked(GtkWidget *widget, GdkEventButton *event,
-           gpointer user_data);
-   static void cbMenuitemClicked(GtkMenuItem *menuitem, gpointer user_data);
+   static gboolean key_press_event(GtkEventControllerKey* controller,
+                                   guint keyval,
+                                   guint keycode,
+                                   GdkModifierType state,
+                                   gpointer user_data);
+   static void cbTerminalClicked(GtkGestureClick* gesture,
+                                 gint n_press,
+                                 gdouble x,
+                                 gdouble y,
+                                 gpointer user_data);
+   static void cbTeerminalAction(GSimpleAction* action,
+                                 GVariant* parameter,
+                                 gpointer user_data);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);

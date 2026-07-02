@@ -436,9 +436,8 @@ gtk_tag_tree_get_value(GtkTreeModel *tree_model,
        {
           if (pkg == NULL)
              return;
-          GdkPixbuf *pix;
-          pix = RPackageStatus::pkgStatus.getPixbuf(pkg);
-          g_value_set_object(value, pix);
+          std::string icon_name = RPackageStatus::pkgStatus.getPixbuf(pkg);
+          g_value_set_string(value, icon_name.c_str());
           break;
        }
    }

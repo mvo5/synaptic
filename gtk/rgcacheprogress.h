@@ -28,6 +28,7 @@
 #include <apt-pkg/progress.h>
 
 #include <gtk/gtk.h>
+#include "coroutines.h"
 
 class RGCacheProgress:public OpProgress {
    GtkWidget *_parent;

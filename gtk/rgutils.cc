@@ -24,7 +24,6 @@
 
 #include <apt-pkg/fileutl.h>
 
-#include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <stdio.h>
@@ -36,38 +35,9 @@
 
 #include "rgutils.h"
 
-// helper
-GdkPixbuf *
-get_gdk_pixbuf(const gchar *name, int size)
+task<void> RGFlushInterface()
 {
-   GtkIconTheme *theme;
-   GdkPixbuf *pixbuf;
-   GError *error = NULL;
-
-   theme = gtk_icon_theme_get_default();
-   pixbuf = gtk_icon_theme_load_icon(theme, name, size, 
-				     (GtkIconLookupFlags)0, &error);
-   if (pixbuf == NULL) 
-      std::cerr << "Warning, failed to load: " << name 
-		<< error->message << std::endl;
-
-   return pixbuf;
-}
-
-GtkWidget *get_gtk_image(const gchar *name, int size)
-{
-   GdkPixbuf *buf;
-   buf = get_gdk_pixbuf(name, size);
-   if(!buf)
-      return NULL;
-   return gtk_image_new_from_pixbuf(buf);
-}
-
-void RGFlushInterface()
-{
-   while (gtk_events_pending()) {
-      gtk_main_iteration();
-   }
+   co_await glib_idle {};
 }
 
 static void AddRun0Environment(std::vector<const gchar*> &prefix)
@@ -336,4 +306,65 @@ const char *utf8(const char *str)
    }
    return escaped;
 }
+
+struct DialogResponseCallback {
+   std::function<void(int)> func;
+};
+
+static void destroy_dialog_response_callback(gpointer data, GClosure *)
+{
+   delete static_cast<DialogResponseCallback *>(data);
+}
+
+static void on_dialog_response(GtkDialog *, int response_id, gpointer user_data)
+{
+   auto *callback = static_cast<DialogResponseCallback *>(user_data);
+   callback->func(response_id);
+}
+
+Awaiter<int> co_run_dialog(GtkDialog *dialog)
+{
+   gtk_window_present(GTK_WINDOW(dialog));
+   return Awaiter<int> {
+      [dialog](std::function<void(int)> callback) {
+         auto *handler = new DialogResponseCallback { std::move(callback) };
+         g_signal_connect_data(dialog, "response",
+            G_CALLBACK(on_dialog_response),
+            handler,
+            destroy_dialog_response_callback,
+            G_CONNECT_DEFAULT);
+      }
+   };
+}
+
+struct WindowResponseCallback {
+   std::function<void(nothing)> func;
+};
+
+static void destroy_window_close_callback(gpointer data, GClosure *)
+{
+   delete static_cast<WindowResponseCallback *>(data);
+}
+
+static void on_window_close(GtkWindow *, gpointer user_data)
+{
+   auto *callback = static_cast<WindowResponseCallback *>(user_data);
+   callback->func(nothing {});
+}
+
+Awaiter<nothing> co_run_window(GtkWindow *window)
+{
+   gtk_window_present(window);
+   return Awaiter<nothing> {
+      [window](std::function<void(nothing)> callback) {
+         auto *handler = new WindowResponseCallback { std::move(callback) };
+         g_signal_connect_data(window, "hide",
+            G_CALLBACK(on_window_close),
+            handler,
+            destroy_window_close_callback,
+            G_CONNECT_DEFAULT);
+      }
+   };
+}
+
 // vim:ts=3:sw=3:et

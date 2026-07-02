@@ -48,7 +48,7 @@ void setupTreeView(GtkWidget *treeview)
       renderer = gtk_cell_renderer_pixbuf_new();
       // TRANSLATORS: Column header for the column "Status" in the package list
       column = gtk_tree_view_column_new_with_attributes(_("S"), renderer,
-                                                        "pixbuf",
+                                                        "icon-name",
                                                         PIXMAP_COLUMN, NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);
       gtk_tree_view_column_set_fixed_width(column, 20);
@@ -63,7 +63,7 @@ void setupTreeView(GtkWidget *treeview)
    if(visible) {
       renderer = gtk_cell_renderer_pixbuf_new();
       column = gtk_tree_view_column_new_with_attributes(" ", renderer,
-                                                        "pixbuf",
+                                                        "icon-name",
                                                         SUPPORTED_COLUMN, 
 							NULL);
       gtk_tree_view_column_set_sizing(column, GTK_TREE_VIEW_COLUMN_FIXED);

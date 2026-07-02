@@ -35,7 +35,6 @@
 #include "rconfiguration.h"
 #include "rgpreferenceswindow.h"
 #include "rguserdialog.h"
-#include "gsynaptic.h"
 #include "rgpackagestatus.h"
 
 #include "i18n.h"

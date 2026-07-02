@@ -7,11 +7,10 @@ AM_CPPFLAGS = -I${top_srcdir}/common \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DSYNAPTIC_GTKBUILDERDIR=\""$(datadir)/synaptic/gtkbuilder/"\" \
 	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
-	-DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED \
+	@GTK_DISABLE_DEPRECATED@ \
 	@GTK_CFLAGS@ \
 	@VTE_CFLAGS@ \
-	@LP_CFLAGS@ \
-	@GTK_DISABLE_DEPRECATED@
+	@LP_CFLAGS@
 
 sbin_PROGRAMS = synaptic 
 

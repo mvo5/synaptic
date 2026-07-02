@@ -176,15 +176,14 @@ AC_ARG_WITH(launchpad-integration,
 	]
 )
 
-AC_ARG_WITH(pkg-hold, 
-	[  --with-pkg-hold   build with experimental package "hold" feature],
-        AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature] )
+AC_ARG_WITH(pkg-hold,
+        [  --with-pkg-hold: Build with experimental package "hold" feature],
+        AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature])
 )
 
-AC_ARG_WITH(gtk-disable-deprecated,
-        [  --with-gtk-disable-deprecated  build with -DGTK_DISABLE_DEPRECATED],
-        [GTK_DISABLE_DEPRECATED="-DGTK_DISABLE_DEPRECATED"
-         AC_SUBST(GTK_DISABLE_DEPRECATED)]
+AC_ARG_ENABLE(gtk-deprecated,
+        [  --enable-gtk-deprecated: Build without setting -DGTK_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DG_DISABLE_DEPRECATED],
+        [AC_SUBST(GTK_DISABLE_DEPRECATED,["-DGTK_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DG_DISABLE_DEPRECATED"])]
 )
 
 #use multiarch unless the user disables it

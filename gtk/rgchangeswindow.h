@@ -44,13 +44,13 @@ class RGChangesWindow:public RGGtkBuilderWindow {
    RGChangesWindow(RGWindow *win);
 
    void confirm(RPackageLister *lister,
-		vector<RPackage *> &kept,
-		vector<RPackage *> &toInstall,
-		vector<RPackage *> &toReInstall,
-		vector<RPackage *> &toUpgrade,
-		vector<RPackage *> &toRemove,
-		vector<RPackage *> &toDowngrade,
-		vector<RPackage *> &notAuthenticated);
+		std::vector<RPackage *> &kept,
+		std::vector<RPackage *> &toInstall,
+		std::vector<RPackage *> &toReInstall,
+		std::vector<RPackage *> &toUpgrade,
+		std::vector<RPackage *> &toRemove,
+		std::vector<RPackage *> &toDowngrade,
+		std::vector<RPackage *> &notAuthenticated);
 };
 
 #endif

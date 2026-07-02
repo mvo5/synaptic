@@ -51,8 +51,9 @@
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkkeysyms-compat.h>
 
-
 #include "i18n.h"
+
+using namespace std;
 
 void RGDebInstallProgress::child_exited(VteTerminal *vteterminal,
 					gint ret,

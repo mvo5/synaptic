@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <fnmatch.h>
 
+using namespace std;
+
 void RPackageListActor::notifyPostFilteredChange()
 {
    vector<RPackage *> removedList;

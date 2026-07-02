@@ -31,8 +31,6 @@
 #include <string>
 #include <list>
 
-using namespace std;
-
 class SourcesList {
  public:
    enum RecType {
@@ -50,17 +48,17 @@ class SourcesList {
 
    struct SourceRecord {
       unsigned int Type;
-      string VendorID;
-      string URI;
-      string Dist;
-      string *Sections;
+      std::string VendorID;
+      std::string URI;
+      std::string Dist;
+      std::string *Sections;
       unsigned short NumSections;
-      string Comment;
-      string SourceFile;
+      std::string Comment;
+      std::string SourceFile;
 
-      bool SetType(string);
-      string GetType();
-      bool SetURI(string);
+      bool SetType(std::string);
+      std::string GetType();
+      bool SetURI(std::string);
 
       SourceRecord():Type(0), Sections(0), NumSections(0) {
       }
@@ -72,13 +70,13 @@ class SourcesList {
    };
 
    struct VendorRecord {
-      string VendorID;
-      string FingerPrint;
-      string Description;
+      std::string VendorID;
+      std::string FingerPrint;
+      std::string Description;
    };
 
-   list<SourceRecord *> SourceRecords;
-   list<VendorRecord *> VendorRecords;
+   std::list<SourceRecord *> SourceRecords;
+   std::list<VendorRecord *> VendorRecords;
 
  private:
    SourceRecord *AddSourceNode(SourceRecord &);
@@ -86,21 +84,21 @@ class SourcesList {
 
  public:
    SourceRecord *AddSource(RecType Type,
-                           string VendorID,
-                           string URI,
-                           string Dist,
-                           string *Sections,
-                           unsigned short count, string SourceFile);
+                           std::string VendorID,
+                           std::string URI,
+                           std::string Dist,
+                           std::string *Sections,
+                           unsigned short count, std::string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
    void SwapSources( SourceRecord *&, SourceRecord *& );
-   bool ReadSourcePart(string listpath);
-   bool ReadSourceDir(string Dir);
+   bool ReadSourcePart(std::string listpath);
+   bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();
 
-   VendorRecord *AddVendor(string VendorID,
-                           string FingerPrint, string Description);
+   VendorRecord *AddVendor(std::string VendorID,
+                           std::string FingerPrint, std::string Description);
    void RemoveVendor(VendorRecord *&);
    bool ReadVendors();
    bool UpdateVendors();
@@ -110,6 +108,6 @@ class SourcesList {
    ~SourcesList();
 };
 
-ostream &operator <<(ostream &, const SourcesList::SourceRecord &);
+std::ostream &operator <<(std::ostream &, const SourcesList::SourceRecord &);
 
 #endif

@@ -41,7 +41,7 @@ class RGPkgDetailsWindow : public RGGtkBuilderWindow {
       bool thumb;
    };
 
-   static vector<string> formatDepInformation(vector<DepInformation> deps);
+   static std::vector<std::string> formatDepInformation(std::vector<DepInformation> deps);
    static void cbDependsMenuChanged(GtkWidget *self, void *data);
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbShowScreenshot(GtkWidget *button, void *data);

@@ -68,7 +68,7 @@ class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
 
    bool _startCounting;
 
-   map<string, string> _summaryMap;
+   std::map<std::string, std::string> _summaryMap;
 
    RGInstallProgressMsgs _msgs;
 

@@ -42,9 +42,10 @@
 
 #include "i18n.h"
 
+using namespace std;
+   
 static string ConfigFilePath;
 static string ConfigFileDir;
-
 
 // #ifndef HAVE_RPM
 // bool _ReadConfigFile(Configuration &Conf,string FName,bool AsSectional = false,

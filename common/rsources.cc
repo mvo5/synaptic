@@ -38,6 +38,8 @@
 #include <fstream>
 #include "i18n.h"
 
+using namespace std;
+
 SourcesList::~SourcesList()
 {
    for (list<SourceRecord *>::iterator it = SourceRecords.begin();

@@ -10,6 +10,8 @@
 #include "i18n.h"
 #include "sections_trans.h"
 
+using namespace std;
+
 const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "admin"
    {"admin", _("System Administration")},

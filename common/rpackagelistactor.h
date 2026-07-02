@@ -40,11 +40,11 @@ class RPackageListActor : public RPackageObserver {
    protected:
 
    RPackageLister *_lister;
-   vector<RPackage *> _lastDisplayList;
+   std::vector<RPackage *> _lastDisplayList;
 
    public:
 
-   virtual void run(vector<RPackage *> &List, int listEvent) = 0;
+   virtual void run(std::vector<RPackage *> &List, int listEvent) = 0;
 
    virtual void notifyPreFilteredChange() {
       updateState();

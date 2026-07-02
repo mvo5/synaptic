@@ -39,6 +39,7 @@
 
 #include "i18n.h"
 
+using namespace std;
 
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
 : RGGtkBuilderWindow(wwin, "changes")

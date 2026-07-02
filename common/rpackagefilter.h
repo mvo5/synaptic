@@ -38,8 +38,6 @@
 
 #include "rpackagelister.h"
 
-using namespace std;
-
 class RPackage;
 class RPackageLister;
 
@@ -56,8 +54,8 @@ class RPackageFilter {
    virtual bool filter(RPackage *pkg) = 0;
    virtual void reset() = 0;
 
-   virtual bool read(Configuration &conf, string key) = 0;
-   virtual bool write(ofstream &out, string pad) = 0;
+   virtual bool read(Configuration &conf, std::string key) = 0;
+   virtual bool write(std::ofstream &out, std::string pad) = 0;
 
    RPackageFilter() {}
    virtual ~RPackageFilter() {}
@@ -70,7 +68,7 @@ class RSectionPackageFilter : public RPackageFilter {
 
    protected:
 
-   vector<string> _groups;
+   std::vector<std::string> _groups;
    bool _inclusive;             // include or exclude the packages
 
    public:
@@ -88,14 +86,14 @@ class RSectionPackageFilter : public RPackageFilter {
    void setInclusive(bool flag) { _inclusive = flag; }
    bool inclusive();
 
-   inline void addSection(string group) { _groups.push_back(group); }
+   inline void addSection(std::string group) { _groups.push_back(group); }
    int count();
-   string section(int index);
+   std::string section(int index);
    void clear();
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 };
 
 extern const char *RPFPattern;
@@ -122,11 +120,11 @@ class RPatternPackageFilter : public RPackageFilter {
  protected:
    struct Pattern {
       DepType where;
-      string pattern;
+      std::string pattern;
       bool exclusive;
-        vector<regex_t *> regexps;
+        std::vector<regex_t *> regexps;
    };
-   vector<Pattern> _patterns;
+   std::vector<Pattern> _patterns;
 
    bool and_mode; // patterns are applied in "AND" mode if true, "OR" if false
 
@@ -153,9 +151,9 @@ class RPatternPackageFilter : public RPackageFilter {
 
    inline virtual const char *type() { return RPFPattern; }
 
-   void addPattern(DepType type, string pattern, bool exclusive);
+   void addPattern(DepType type, std::string pattern, bool exclusive);
    inline int count() { return _patterns.size(); }
-   inline void getPattern(int index, DepType &type, string &pattern,
+   inline void getPattern(int index, DepType &type, std::string &pattern,
                           bool &exclusive) {
       type = _patterns[index].where;
       pattern = _patterns[index].pattern;
@@ -166,8 +164,8 @@ class RPatternPackageFilter : public RPackageFilter {
    void setAndMode(bool b) { and_mode=b; }
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 };
 
 
@@ -211,8 +209,8 @@ class RStatusPackageFilter : public RPackageFilter {
    inline int status() { return _status; }
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 };
 
 
@@ -229,8 +227,8 @@ class RPriorityPackageFilter:public RPackageFilter {
    inline virtual const char *type() { return RPFPriority; }
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 };
 
 
@@ -242,11 +240,11 @@ class RReducedViewPackageFilter : public RPackageFilter {
 
    bool _enabled;
 
-   set<string> _hide;
-   vector<string> _hide_wildcard;
-   vector<regex_t *> _hide_regex;
+   std::set<std::string> _hide;
+   std::vector<std::string> _hide_wildcard;
+   std::vector<regex_t *> _hide_regex;
 
-   void addFile(string FileName);
+   void addFile(std::string FileName);
 
    public:
 
@@ -258,8 +256,8 @@ class RReducedViewPackageFilter : public RPackageFilter {
    inline virtual const char *type() { return RPFReducedView; }
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 
    void enable() { _enabled = true; }
    void disable() { _enabled = false; }
@@ -271,8 +269,8 @@ class RFilePackageFilter : public RPackageFilter {
 
    protected:
 
-   string filename;
-   set<string> pkgs;
+   std::string filename;
+   std::set<std::string> pkgs;
 
    public:
 
@@ -282,11 +280,11 @@ class RFilePackageFilter : public RPackageFilter {
    inline virtual void reset() {}
    inline virtual const char *type() { return RPFFile; }
 
-   bool addFile(string file);
+   bool addFile(std::string file);
 
    virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, string key);
-   virtual bool write(ofstream &out, string pad);
+   virtual bool read(Configuration &conf, std::string key);
+   virtual bool write(std::ofstream &out, std::string pad);
 };
 
 
@@ -299,11 +297,11 @@ struct RFilter {
           priority(), reducedview(), preset()
    {}
 
-   void setName(string name);
-   string getName();
+   void setName(std::string name);
+   std::string getName();
 
-   bool read(Configuration &conf, string key);
-   bool write(ofstream &out);
+   bool read(Configuration &conf, std::string key);
+   bool write(std::ofstream &out);
    bool apply(RPackage *package);
    void reset();
 
@@ -318,7 +316,7 @@ struct RFilter {
 
    protected:
 
-   string name;
+   std::string name;
 };
 
 

@@ -38,8 +38,6 @@
 #include "rconfiguration.h"
 #include "i18n.h"
 
-using namespace std;
-
 class pkgDepCache;
 class RPackageLister;
 class pkgRecords;
@@ -87,13 +85,13 @@ class RPackage {
 
    protected:
 
-   string fullname;
+   std::string fullname;
    pkgRecords *_records;
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
 
    // save the default candidate version to undo version selection
-   string _defaultCandVer;
+   std::string _defaultCandVer;
 
    bool _notify;
 
@@ -149,40 +147,40 @@ class RPackage {
    const char *description();
    const char *installedFiles();
 
-   string arch();
+   std::string arch();
 
    // package is also available for the native architecture
    // (note that packages installed are never considered a duplicate
    bool isMultiArchDuplicate();
 
    // get changelog file from the debian server
-   string getChangelogFile(pkgAcquire *fetcher);
+   std::string getChangelogFile(pkgAcquire *fetcher);
    // get screenshot file from the debian server
-   string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
+   std::string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
 
-   vector<string> provides();
+   std::vector<std::string> provides();
 
    // get all available versions (version, release)
-   vector<pair<string, string> > getAvailableVersions();
+   std::vector<std::pair<std::string, std::string> > getAvailableVersions();
 
    // get origins url of the package (e.g. http://security.ubuntu.com)
-   vector<string> getCandidateOriginSiteUrls();
+   std::vector<std::string> getCandidateOriginSiteUrls();
    // get origin "archive" release header (e.g. karmic, karmic-updates)
-   vector<string> getCandidateOriginSuites();
+   std::vector<std::string> getCandidateOriginSuites();
    // get origin "origin" release header (e.g. Ubuntu,
-   string getCandidateOriginStr();
+   std::string getCandidateOriginStr();
 
    // get the release file for the givel origin label string
-   string getReleaseFileForOrigin(string label, string release);
+   std::string getReleaseFileForOrigin(std::string label, std::string release);
 
    // get installed component (like main, contrib, non-free)
-   string component();
+   std::string component();
 
    // get label of download site
-   string label();
+   std::string label();
 
    // get origin (Origin tag from the release file)
-   string origin();
+   std::string origin();
 
    const char *maintainer();
    const char *homepage();
@@ -192,10 +190,10 @@ class RPackage {
    long installedSize();
 
    // get tag from pkg record
-   string findTagFromPkgRecord(const char *tag);
+   std::string findTagFromPkgRecord(const char *tag);
 
    // get the raw package record
-   string getRawRecord(bool useCandidateVersion=true);
+   std::string getRawRecord(bool useCandidateVersion=true);
 
    // sourcepkg
    const char *srcPackage();
@@ -210,10 +208,10 @@ class RPackage {
    bool dependsOn(const char *pkgname);
 
    // getDeps of installed pkg
-   vector<DepInformation> enumDeps(bool useCanidateVersion=false);
+   std::vector<DepInformation> enumDeps(bool useCanidateVersion=false);
 
    // reverse dependencies
-   vector<DepInformation> enumRDeps();
+   std::vector<DepInformation> enumRDeps();
 
    int getFlags();
 
@@ -244,16 +242,16 @@ class RPackage {
    void setRemoveWithDeps(bool shallow, bool purge = false);
 
    // mainpulate the candiate version
-   bool setVersion(string verTag);
+   bool setVersion(std::string verTag);
    void unsetVersion();
-   string showWhyInstBroken();
+   std::string showWhyInstBroken();
 
    RPackage(RPackageLister *lister, pkgDepCache *depcache,
             pkgRecords *records, pkgCache::PkgIterator &pkg);
    ~RPackage();
 
    private:
-   string getChangelogURI();
+   std::string getChangelogURI();
 };
 
 

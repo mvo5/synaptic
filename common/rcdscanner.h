@@ -32,10 +32,7 @@
 
 #include "rpackagelister.h"
 
-using namespace std;
-
 class Configuration;
-
 
 class RCDScanProgress {
 
@@ -47,7 +44,7 @@ class RCDScanProgress {
       _total = total;
    }
 
-   virtual void update(string text, int current) = 0;
+   virtual void update(std::string text, int current) = 0;
 };
 
 class RCDScanner {
@@ -74,34 +71,34 @@ class RCDScanner {
       STEP_LAST
    };
 
-   vector<string> _pkgList;
-   vector<string> _srcList;
-   string _infoDir;
+   std::vector<std::string> _pkgList;
+   std::vector<std::string> _srcList;
+   std::string _infoDir;
 
-   string _cdId;
-   string _cdName;
-   string _cdOldName;
+   std::string _cdId;
+   std::string _cdName;
+   std::string _cdOldName;
 
    bool _cdromMounted;
    bool _scannedOk;
 
-   string pkgSourceType() const;
-   string srcSourceType() const;
-   bool scanDirectory(string path, RCDScanProgress *progress, int depth = 0);
+   std::string pkgSourceType() const;
+   std::string srcSourceType() const;
+   bool scanDirectory(std::string path, RCDScanProgress *progress, int depth = 0);
 
-   void cleanPkgList(vector<string> &list);
-   void cleanSrcList(vector<string> &list);
+   void cleanPkgList(std::vector<std::string> &list);
+   void cleanSrcList(std::vector<std::string> &list);
 
    bool writeDatabase();
-   bool writeSourceList(vector<string> &list, bool pkg);
+   bool writeSourceList(std::vector<std::string> &list, bool pkg);
 
  public:
    bool start(RCDScanProgress *progress);
    bool finish(RCDScanProgress *progress);
    void unmount();
 
-   string getDiscName();
-   bool setDiscName(string name);
+   std::string getDiscName();
+   bool setDiscName(std::string name);
 
    void countLists(int &pkgLists, int &srcLists);
 

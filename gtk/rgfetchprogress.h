@@ -34,17 +34,17 @@
 class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 
    struct Item {
-      string descr;
-      string uri;
-      string size;
+      std::string descr;
+      std::string uri;
+      std::string size;
       int status;
    };
 
-   vector<Item> _items;
+   std::vector<Item> _items;
 
    GtkWidget *_table;
    GtkListStore *_tableListStore;
-   set<int> _tableRows;
+   std::set<int> _tableRows;
 
    GtkWidget *_mainProgressBar; // GtkProgressBar
 
@@ -68,7 +68,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    //GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
-   virtual bool MediaChange(string Media, string Drive);
+   virtual bool MediaChange(std::string Media, std::string Drive);
    virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
    virtual void Fetch(pkgAcquire::ItemDesc &Itm);
    virtual void Done(pkgAcquire::ItemDesc &Itm);
@@ -80,7 +80,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    bool Pulse(pkgAcquire * Owner);
 
    // set description of the current task (main and additonal explaination)
-   void setDescription(string mainText, string secondText="");
+   void setDescription(std::string mainText, std::string secondText="");
 
 
    RGFetchProgress(RGWindow *win);

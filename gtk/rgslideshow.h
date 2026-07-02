@@ -25,8 +25,6 @@
 
 #include "config.h"
 
-using namespace std;
-
 class RGSlideShow {
 
  protected:
@@ -34,7 +32,7 @@ class RGSlideShow {
    GtkImage * _image;
    int _totalSteps;
    int _currentStep;
-   vector<string> _imageFileList;
+   std::vector<std::string> _imageFileList;
 
  public:
 
@@ -44,7 +42,7 @@ class RGSlideShow {
       _totalSteps = totalSteps;
    };
 
-   RGSlideShow(GtkImage * image, string imgPath);
+   RGSlideShow(GtkImage * image, std::string imgPath);
 };
 
 #endif

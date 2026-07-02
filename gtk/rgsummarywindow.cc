@@ -40,6 +40,7 @@
 
 #include "i18n.h"
 
+using namespace std;
 
 void RGSummaryWindow::buildTree(RGSummaryWindow *me)
 {

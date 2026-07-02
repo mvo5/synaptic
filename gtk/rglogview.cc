@@ -34,6 +34,8 @@
 
 #include "i18n.h"
 
+using namespace std;
+
 enum { COLUMN_LOG_DAY, 
        COLUMN_LOG_FILENAME, 
        COLUMN_LOG_TYPE, 

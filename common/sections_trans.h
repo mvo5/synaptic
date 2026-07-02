@@ -12,8 +12,6 @@
 #include <iostream>
 #include <apt-pkg/strutl.h>
 
-using namespace std;
-
-string trans_section(string sec);
+std::string trans_section(std::string sec);
 
 #endif

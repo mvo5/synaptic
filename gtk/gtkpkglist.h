@@ -69,7 +69,7 @@ class RCacheActorPkgList : public RCacheActor {
 
    public:
 
-   virtual void run(vector<RPackage *> &List, int Action);
+   virtual void run(std::vector<RPackage *> &List, int Action);
 
    RCacheActorPkgList(RPackageLister *lister,
                       GtkPkgList *pkgList,
@@ -87,7 +87,7 @@ class RPackageListActorPkgList:public RPackageListActor {
 
    public:
 
-   virtual void run(vector<RPackage *> &List, int listEvent);
+   virtual void run(std::vector<RPackage *> &List, int listEvent);
 
    RPackageListActorPkgList(RPackageLister *lister,
                             GtkPkgList *pkgList,

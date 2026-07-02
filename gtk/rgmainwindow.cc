@@ -84,6 +84,8 @@
 // include it here because depcache.h hates us if we have it before
 #include <gdk/gdkx.h>
 
+using namespace std;
+
 const char *relOptions[] = {
    N_("Dependencies"),
    N_("Dependants"),

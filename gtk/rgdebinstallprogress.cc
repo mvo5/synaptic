@@ -33,7 +33,6 @@
 #include <pty.h>
 
 #include "rgmainwindow.h"
-#include "gsynaptic.h"
 
 #include "rgdebinstallprogress.h"
 #include "rguserdialog.h"

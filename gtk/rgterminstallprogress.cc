@@ -32,7 +32,6 @@
 #include "rgmainwindow.h"
 #include "rguserdialog.h"
 #include "rconfiguration.h"
-#include "gsynaptic.h"
 
 #include <X11/Xlib.h>
 #include <iostream>

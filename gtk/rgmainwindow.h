@@ -127,7 +127,9 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
-   // init stuff 
+   GActionGroup *win_actions;
+
+   // init stuff
    void buildInterface();
    void buildTreeView();
    bool isActionEnabled(const char *action_name);
@@ -258,14 +260,16 @@ public:
                                   GVariant *parameter,
                                   gpointer data);
 
-   static gboolean cbPackageListClicked(GtkWidget *treeview,
-                                        GdkEventButton *event,
+   static void cbPackageListClicked(GtkGestureClick* gesture,
+                                        gint n_press,
+                                        double x,
+                                        double y,
                                         gpointer data);
 
-   static void cbTreeviewPopupMenu(GtkWidget *treeview,
-                                   GdkEventButton *event,
-                                   RGMainWindow *me,
-                                   vector<RPackage *> selected_pkgs);
+   void cbTreeviewPopupMenu(int button,
+                            double x,
+                            double y,
+                            vector<RPackage *> selected_pkgs);
 
    static void cbChangelogDialog(GSimpleAction *action,
                                  GVariant *parameter,

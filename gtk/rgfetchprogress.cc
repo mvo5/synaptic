@@ -127,10 +127,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
    gtk_widget_realize(_win);
 
-   // reset the urgency hint here (gtk seems to like showing it for
-   // dialogs that come up)
-   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
-
    // emit a signal if the user changed the cursor
    g_signal_connect(G_OBJECT(_table), "cursor-changed", 
 		    G_CALLBACK(cursorChanged), this);

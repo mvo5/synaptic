@@ -49,10 +49,10 @@ class RGWindow {
    virtual void setTitle(string title);
 
    inline virtual void hide() {
-      gtk_widget_hide(_win);
+      gtk_widget_set_visible(_win, false);
    };
    inline virtual void show() {
-      gtk_widget_show(_win);
+      gtk_window_present(GTK_WINDOW(_win));
    };
 
    RGWindow() : _win(0), _topBox(0) {};

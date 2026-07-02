@@ -30,13 +30,9 @@
 
 class RGPackageStatus : public RPackageStatus {
  protected:
-   GdkPixbuf *StatusPixbuf[N_STATUS_COUNT];
    GdkRGBA *StatusColors[N_STATUS_COUNT];
 
-   GdkPixbuf *supportedPix;
-
    void initColors();
-   void initPixbufs();
 
  public:
    // this static object is used for all access
@@ -46,11 +42,9 @@ class RGPackageStatus : public RPackageStatus {
    
    // this is what the package listers use
    GdkRGBA *getBgColor(RPackage *pkg);
-   GdkPixbuf *getSupportedPix(RPackage *pkg);
-   GdkPixbuf *getPixbuf(RPackage *pkg);
-   GdkPixbuf *getPixbuf(int i) {
-      return StatusPixbuf[i];
-   }
+   const char *getSupportedPix(RPackage *pkg);
+   std::string getPixbuf(RPackage *pkg);
+   std::string getPixbuf(int i);
 
    // this is for the configuration of the colors
    void setColor(int i, GdkRGBA * new_color);

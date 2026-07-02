@@ -83,10 +83,10 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    pango_font_description_free(fontdesc);
 
    GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"));
-   gtk_box_pack_start(GTK_BOX(box), _term, TRUE, TRUE, 0);
-   gtk_box_pack_end(GTK_BOX(box), _scrollbar, FALSE, FALSE, 0);
-   gtk_widget_show(_term);
-   gtk_widget_show(_scrollbar);
+   gtk_widget_set_hexpand(_term, TRUE);
+   gtk_widget_set_vexpand(_term, TRUE);
+   gtk_box_append(GTK_BOX(box), _term);
+   gtk_box_append(GTK_BOX(box), _scrollbar);
 
    _closeOnF = GTK_WIDGET(gtk_builder_get_object(_builder,
                                                  "checkbutton_close_after_pm"));
@@ -118,7 +118,6 @@ task<void> RGTermInstallProgress::startUpdate()
 {
    GtkWidget *win =  GTK_WIDGET(gtk_builder_get_object
                                 (_builder, "window_zvtinstallprogress"));
-   gtk_widget_show_all(win);
 
    child_has_exited=false;
    g_signal_connect(VTE_TERMINAL(_term), "child-exited",

@@ -38,13 +38,13 @@ using namespace std;
 class RGGtkBuilderWindow:public RGWindow {
  protected:
    GtkBuilder *_builder;
-   GdkCursor *_busyCursor;
 
  public:
    RGGtkBuilderWindow(RGWindow *parent, string name, string main_widget = "");
 
    void skipTaskbar(bool value) {
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
+      // TODO: remove method
+      // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
    }
 
    // show busy cursor over main window
@@ -56,7 +56,7 @@ class RGGtkBuilderWindow:public RGWindow {
    bool setLabel(const char *name, const long value);
    bool setTextView(const char *widget_name, const char *value,
 		    bool useHeadline=false);
-   bool setPixmap(const char *widget_name, GdkPixbuf *value);
+   bool setPixmap(const char *widget_name, const char *value);
    bool setTreeList(const char *widget_name, vector<string> values,
 		    bool useMarkup=false);
 

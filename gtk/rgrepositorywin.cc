@@ -378,7 +378,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
 
-   gtk_window_resize(GTK_WINDOW(_win), 620, 400);
+   gtk_widget_set_size_request(GTK_WIDGET(_win), 620, 400);
    skipTaskbar(true);
    show();
 }
@@ -483,9 +483,9 @@ void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 
    gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor), 0);
-   gtk_entry_set_text(GTK_ENTRY(me->_entryURI), "");
-   gtk_entry_set_text(GTK_ENTRY(me->_entryDist), "");
-   gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entryURI), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entryDist), "");
+   gtk_editable_set_text(GTK_EDITABLE(me->_entrySect), "");
 }
 
 void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
@@ -594,19 +594,19 @@ void RGRepositoryEditor::doEdit()
                       -1);
    rec->VendorID = type;
 #endif
-   rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
-   rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
+   rec->URI = gtk_editable_get_text(GTK_EDITABLE(_entryURI));
+   rec->Dist = gtk_editable_get_text(GTK_EDITABLE(_entryDist));
 
    delete[]rec->Sections;
    rec->NumSections = 0;
 
-   const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+   const char *Section = gtk_editable_get_text(GTK_EDITABLE(_entrySect));
    if (Section != 0 && Section[0] != 0)
       rec->NumSections++;
 
    rec->Sections = new string[rec->NumSections];
    rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+   Section = gtk_editable_get_text(GTK_EDITABLE(_entrySect));
 
    if (Section != 0 && Section[0] != 0)
       rec->Sections[rec->NumSections++] = Section;
@@ -726,9 +726,9 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor),
                                   me->VendorMenuIndex(rec->VendorID));
 
-      gtk_entry_set_text(GTK_ENTRY(me->_entryURI), utf8(rec->URI.c_str()));
-      gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
-      gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
+      gtk_editable_set_text(GTK_EDITABLE(me->_entryURI), utf8(rec->URI.c_str()));
+      gtk_editable_set_text(GTK_EDITABLE(me->_entryDist), utf8(rec->Dist.c_str()));
+      gtk_editable_set_text(GTK_EDITABLE(me->_entrySect), "");
 
       for (unsigned int I = 0; I < rec->NumSections; I++) {
          int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));

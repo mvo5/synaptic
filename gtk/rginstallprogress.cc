@@ -50,7 +50,7 @@ _currentPackage(0), _hasHeader(false)
                                  G_CALLBACK(onCloseClicked), this);
    _cssProvider = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(textView);
-   gtk_css_provider_load_from_data(_cssProvider, "TextView { font-family: helvetica; font-size: 10pt; }", -1, NULL);
+   gtk_css_provider_load_from_data(_cssProvider, "TextView { font-family: helvetica; font-size: 10pt; }", -1);
    gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    PangoFontDescription *font;
    font = pango_font_description_from_string("helvetica bold 10");
@@ -140,7 +140,7 @@ task<void> RGInstallProgress::finishUpdate()
 					      _("APT system reports:\n%s"), 
 					      utf8(buf));
       co_await co_run_dialog(GTK_DIALOG(dia));
-      gtk_widget_destroy(dia);
+      gtk_window_destroy(GTK_WINDOW(dia));
    }
 
    if (_startCounting) {
@@ -318,12 +318,12 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 
    _cssProviderBold = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(_label);
-   gtk_css_provider_load_from_data(_cssProviderBold, "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }", -1, NULL);
+   gtk_css_provider_load_from_data(_cssProviderBold, "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }", -1);
    gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProviderBold), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   
    _cssProvider = gtk_css_provider_new();
    styleContext = gtk_widget_get_style_context(_labelSummary);
-   gtk_css_provider_load_from_data(_cssProvider, "Label { font-family: helvetica; font-size: 10pt; }", -1, NULL);
+   gtk_css_provider_load_from_data(_cssProvider, "Label { font-family: helvetica; font-size: 10pt; }", -1);
    gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
    gtk_label_set_text(GTK_LABEL(_label), "");

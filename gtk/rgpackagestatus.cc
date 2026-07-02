@@ -64,24 +64,12 @@ void RGPackageStatus::initColors()
    }
 }
 
-void RGPackageStatus::initPixbufs()
-{
-   const int statusPixbufSize = 22;
-
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      gchar *s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
-      StatusPixbuf[i] = get_gdk_pixbuf(s, statusPixbufSize);
-   }
-   supportedPix = get_gdk_pixbuf("package-supported", statusPixbufSize);
-}
-
 // class that finds out what do display to get user
 void RGPackageStatus::init()
 {
    RPackageStatus::init();
 
    initColors();
-   initPixbufs();
 }
 
 
@@ -90,17 +78,22 @@ GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
    return StatusColors[getStatus(pkg)];
 }
 
-GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
+const char *RGPackageStatus::getSupportedPix(RPackage *pkg)
 {
    if(isSupported(pkg))
-      return supportedPix;
+      return "package-supported";
    else
       return NULL;
 }
 
-GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
+std::string RGPackageStatus::getPixbuf(RPackage *pkg)
 {
-   return StatusPixbuf[getStatus(pkg)];
+   return getPixbuf(getStatus(pkg));
+}
+
+std::string RGPackageStatus::getPixbuf(int i) {
+   // assert 0 <= i && i < N_STATUS_COUNT
+   return std::string("package-") + PackageStatusShortString[i];
 }
 
 void RGPackageStatus::setColor(int i, GdkRGBA * new_color)

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.0"/>
   <object class="GtkWindow" id="window_tasks">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
     <property name="default_width">400</property>
     <property name="default_height">400</property>
     <child>
@@ -71,7 +69,7 @@ These are preselected groups of packages to perform each task. If you select a t
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="shadow_type">in</property>
+                        <property name="has-frame">True</property>
                         <child>
                           <object class="GtkTreeView" id="treeview_tasks">
                             <property name="visible">True</property>
@@ -128,7 +126,6 @@ These are preselected groups of packages to perform each task. If you select a t
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_details_clicked" swapped="no"/>
@@ -144,7 +141,6 @@ These are preselected groups of packages to perform each task. If you select a t
                     <property name="label" translatable="yes">_Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_cancel_clicked" swapped="no"/>
@@ -161,7 +157,6 @@ These are preselected groups of packages to perform each task. If you select a t
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="use_underline">True</property>
                     <signal name="clicked" handler="on_button_ok_clicked" swapped="no"/>

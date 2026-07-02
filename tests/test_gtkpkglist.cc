@@ -18,7 +18,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-   gtk_init(&argc, &argv);
+   gtk_init();
 
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
@@ -47,13 +47,13 @@ int main(int argc, char **argv)
              << gtk_tree_model_iter_n_children(pkglist, NULL) 
              << std::endl;
 
-   GtkWidget *scroll =  gtk_scrolled_window_new(NULL, NULL);
-   gtk_container_add(GTK_CONTAINER(scroll), treeview);
+   GtkWidget *scroll =  gtk_scrolled_window_new();
+   gtk_scrolled_window_set_child (GTK_SCROLLED_WINDOW(scroll), treeview);
 
-   GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_container_add(GTK_CONTAINER(win), scroll);
+   GtkWidget *win = gtk_window_new();
+   gtk_window_set_child(GTK_WINDOW(win), scroll);
    gtk_window_set_default_size(GTK_WINDOW(win), 600, 400);
-   gtk_widget_show_all(win);
+   gtk_widget_show(win);
 
-   gtk_main();
+// TODO:   gtk_main();
 }

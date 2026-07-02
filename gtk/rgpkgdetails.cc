@@ -125,9 +125,11 @@ RGPkgDetailsWindow::formatDepInformation(vector<DepInformation> deps)
    return depStrings;
 }
 
-void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box, 
-                                             GdkEventButton *event, 
-                                             void *data)
+void RGPkgDetailsWindow::cbShowBigScreenshot(GtkGestureClick* gesture,
+                                             gint n_press,
+                                             gdouble x,
+                                             gdouble y,
+                                             gpointer data)
 {
    //cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
@@ -141,15 +143,15 @@ task<void> RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
    RGFetchProgress *status = new RGFetchProgress(NULL);;
    pkgAcquire fetcher(status);
    string filename = pkg->getScreenshotFile(&fetcher, false);
-   GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+   GtkWidget *img = gtk_picture_new_for_filename(filename.c_str());
    GtkWidget *win = gtk_dialog_new();
    gtk_window_set_default_size(GTK_WINDOW(win), 500, 400);
    gtk_dialog_add_button(GTK_DIALOG(win), _("_Close"), GTK_RESPONSE_CLOSE);
-   gtk_widget_show(img);
    GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG (win));
-   gtk_container_add(GTK_CONTAINER(content_area), img);
+   gtk_widget_set_vexpand(img, TRUE);
+   gtk_box_append(GTK_BOX(content_area), img);
    co_await co_run_dialog(GTK_DIALOG(win));
-   gtk_widget_destroy(win);
+   gtk_window_destroy(GTK_WINDOW(win));
 }
 
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
@@ -168,16 +170,15 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
          RGFetchProgress *status = new RGFetchProgress(NULL);;
          pkgAcquire fetcher(status);
          string filename = si->pkg->getScreenshotFile(&fetcher);
-         GtkWidget *event = gtk_event_box_new();
-         GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-         gtk_container_add(GTK_CONTAINER(event), img);
-         g_signal_connect(G_OBJECT(event), "button_press_event",
-                        G_CALLBACK(cbShowBigScreenshot),
-                        (void*)si->pkg);
-         gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview),
-                                          GTK_WIDGET(event), si->anchor);
-         gtk_widget_show_all(event);
-      }
+          GtkWidget *img = gtk_picture_new_for_filename(filename.c_str());
+          GtkGesture *click_controller = gtk_gesture_click_new();
+          g_signal_connect(G_OBJECT(click_controller), "pressed",
+                           G_CALLBACK(cbShowBigScreenshot),
+                           (void*)si->pkg);
+          gtk_widget_add_controller(img, GTK_EVENT_CONTROLLER(click_controller));
+          gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(si->textview),
+                                            GTK_WIDGET(img), si->anchor);
+       }
    });
 }
 
@@ -249,7 +250,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
        me->setLabel("label_maintainer", pkg->maintainer());
    }
 
-   me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
+   me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg).c_str());
    me->setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
    me->setLabel("label_priority", pkg->priority());
    me->setLabel("label_section", trans_section(pkg->section()).c_str());
@@ -291,21 +292,18 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gtk_text_buffer_get_start_iter(buf, &start);
    gtk_text_buffer_apply_tag_by_name(buf, "bold", &start, &it);
    // set emblems 
-   GdkPixbuf *pixbuf = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
+   const char *pixbuf = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
    if(pixbuf != NULL) {
       // insert space
       gtk_text_buffer_insert(buf, &it, " ", 1);
       // make image
-      emblem = gtk_image_new_from_pixbuf(pixbuf);
+      emblem = gtk_image_new_from_icon_name(pixbuf);
       gtk_image_set_pixel_size(GTK_IMAGE(emblem), 16);
-      // set eventbox and tooltip
-      GtkWidget *event = gtk_event_box_new();
-      gtk_container_add(GTK_CONTAINER(event), emblem);
-      gtk_widget_set_tooltip_text(event, _("This application is supported by the distribution"));
+      // set tooltip
+      gtk_widget_set_tooltip_text(emblem, _("This application is supported by the distribution"));
       // create anchor
       GtkTextChildAnchor *anchor = gtk_text_buffer_create_child_anchor(buf, &it);
-      gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), event, anchor);
-      gtk_widget_show_all(event);
+      gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), emblem, anchor);
    }
 
    // add button to get screenshot

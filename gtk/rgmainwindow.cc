@@ -30,9 +30,6 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms.h>
-#include <gdk/gdkkeysyms-compat.h>
 #include <cmath>
 #include <algorithm>
 #include <functional>
@@ -80,9 +77,6 @@
 #include "rgpkgtreeview.h"
 
 #include "i18n.h"
-
-// include it here because depcache.h hates us if we have it before
-#include <gdk/gdkx.h>
 
 const char *relOptions[] = {
    N_("Dependencies"),
@@ -308,7 +302,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 	       selectedPkg != NULL ? selectedPkg->name() : "(no pkg)", 
 	       setAdjustment);
 
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
+   const gchar *str = gtk_editable_get_text(GTK_EDITABLE(_entry_fast_search));
    if(str != NULL && strlen(str) > 1) {
       if(_config->FindB("Debug::Synaptic::View",false))
 	 cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
@@ -802,30 +796,13 @@ task<bool> RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
    co_return failed;
 }
 
-struct ActionClosure
+static void setActionShortcut(RGMainWindow *me, GtkShortcutController *shortcuts, const char *action_name, guint key, GdkModifierType mods)
 {
-   RGMainWindow *me;
-   const char *action_name;
-};
-
-static void acceleratorCallback(gpointer data)
-{
-   ActionClosure *c = (ActionClosure *)data;
-   c->me->activateAction(c->action_name, nullptr);
-}
-
-static void setActionShortcut(RGMainWindow *me, GtkAccelGroup *accel_group, const char *action_name, guint key, GdkModifierType mods)
-{
-   ActionClosure *closure = g_new0(ActionClosure, 1);
-   closure->me = me;
-   closure->action_name = action_name;
-
-   gtk_accel_group_connect(
-      accel_group,
-      key,
-      mods,
-      GTK_ACCEL_VISIBLE,
-      g_cclosure_new_swap(G_CALLBACK(acceleratorCallback), closure, (GClosureNotify)g_free));
+   gtk_shortcut_controller_add_shortcut(
+      shortcuts,
+      gtk_shortcut_new(
+         gtk_keyval_trigger_new(key, mods),
+         gtk_named_action_new((std::string("win.") + action_name).c_str())));
 }
 
 RGMainWindow::RGMainWindow(GtkApplication *app, RPackageLister *packLister, string name)
@@ -885,28 +862,28 @@ RGMainWindow::RGMainWindow(GtkApplication *app, RPackageLister *packLister, stri
       { "icon-legend",              cbShowIconLegendPanel            },
       { "about",                    cbShowAboutPanel                 }
    };
-   GSimpleActionGroup *group = g_simple_action_group_new ();
-   g_action_map_add_action_entries (G_ACTION_MAP (group), entries, G_N_ELEMENTS (entries), this);
-   gtk_widget_insert_action_group (GTK_WIDGET(_win), "win", G_ACTION_GROUP(group));
+   win_actions = G_ACTION_GROUP(g_simple_action_group_new());
+   g_action_map_add_action_entries(G_ACTION_MAP(win_actions), entries, G_N_ELEMENTS(entries), this);
+   gtk_widget_insert_action_group(GTK_WIDGET(_win), "win", G_ACTION_GROUP(win_actions));
 
-   GtkAccelGroup *accel_group = gtk_accel_group_new();
-   gtk_window_add_accel_group(GTK_WINDOW(_win), accel_group);
-   setActionShortcut(this, accel_group, "quit",                GDK_KEY_Q,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "undo",                GDK_KEY_Z,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "redo",                GDK_KEY_Z,        GDK_SHIFT_MASK);
-   setActionShortcut(this, accel_group, "search",              GDK_KEY_F,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "reload",              GDK_KEY_R,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "mark-all-upgrades",   GDK_KEY_G,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "apply",               GDK_KEY_P,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "unmark",              GDK_KEY_N,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "mark-install",        GDK_KEY_I,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "mark-upgrade",        GDK_KEY_U,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "mark-delete",         GDK_KEY_Delete,   (GdkModifierType) 0);
-   setActionShortcut(this, accel_group, "mark-purge",          GDK_KEY_Delete,   GDK_SHIFT_MASK);
-   setActionShortcut(this, accel_group, "override-version",    GDK_KEY_E,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "download-changelog",  GDK_KEY_L,        GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "package-properties",  GDK_KEY_Return,   GDK_MOD1_MASK);
-   setActionShortcut(this, accel_group, "help",                GDK_KEY_F1,       (GdkModifierType) 0);
+   GtkShortcutController *shortcuts = GTK_SHORTCUT_CONTROLLER(gtk_shortcut_controller_new());
+   setActionShortcut(this, shortcuts, "quit",                GDK_KEY_Q,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "undo",                GDK_KEY_Z,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "redo",                GDK_KEY_Z,        GDK_SHIFT_MASK);
+   setActionShortcut(this, shortcuts, "search",              GDK_KEY_F,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "reload",              GDK_KEY_R,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "mark-all-upgrades",   GDK_KEY_G,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "apply",               GDK_KEY_P,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "unmark",              GDK_KEY_N,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "mark-install",        GDK_KEY_I,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "mark-upgrade",        GDK_KEY_U,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "mark-delete",         GDK_KEY_Delete,   (GdkModifierType) 0);
+   setActionShortcut(this, shortcuts, "mark-purge",          GDK_KEY_Delete,   GDK_SHIFT_MASK);
+   setActionShortcut(this, shortcuts, "override-version",    GDK_KEY_E,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "download-changelog",  GDK_KEY_L,        GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "package-properties",  GDK_KEY_Return,   GDK_ALT_MASK);
+   setActionShortcut(this, shortcuts, "help",                GDK_KEY_F1,       (GdkModifierType) 0);
+   gtk_widget_add_controller(GTK_WIDGET(_win), GTK_EVENT_CONTROLLER(shortcuts));
 
    _blockActions = false;
    _unsavedChanges = false;
@@ -1068,29 +1045,20 @@ void RGMainWindow::buildInterface()
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
-   gtk_window_set_icon(GTK_WINDOW(_win), icon);
+   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
-   gtk_window_resize(GTK_WINDOW(_win),
+   gtk_window_set_default_size(GTK_WINDOW(_win),
                      _config->FindI("Synaptic::windowWidth", 640),
                      _config->FindI("Synaptic::windowHeight", 480));
-   gtk_window_move(GTK_WINDOW(_win),
-                   _config->FindI("Synaptic::windowX", 100),
-                   _config->FindI("Synaptic::windowY", 100));
+
    if(_config->FindB("Synaptic::Maximized",false))
       gtk_window_maximize(GTK_WINDOW(_win));
 
    if (_fastSearchCssProvider == NULL) {
       _fastSearchCssProvider = gtk_css_provider_new();
       gtk_css_provider_load_from_data(_fastSearchCssProvider,
-                                      "GtkEntry:not(:selected) { background: #F7F7BE; }", -1, NULL);
+                                      "GtkEntry:not(:selected) { background: #F7F7BE; }", -1);
    }
-
-   gtk_menu_shell_bind_model(
-      GTK_MENU_SHELL(gtk_builder_get_object(_builder, "menubar1")),
-      G_MENU_MODEL(gtk_builder_get_object(_builder, "main_menu")),
-      nullptr,
-      false);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
                     "changed",
@@ -1183,8 +1151,11 @@ void RGMainWindow::buildInterface()
    // build the treeview
    buildTreeView();
 
-   g_signal_connect(G_OBJECT(_treeView), "button-press-event",
+   GtkGesture* click_controller = gtk_gesture_click_new();
+   gtk_gesture_single_set_button (GTK_GESTURE_SINGLE (click_controller), 0);
+   g_signal_connect(click_controller, "pressed",
                     (GCallback) cbPackageListClicked, this);
+   gtk_widget_add_controller (GTK_WIDGET(_treeView), GTK_EVENT_CONTROLLER(click_controller));
 
    GtkTreeSelection *select;
    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
@@ -1280,9 +1251,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(G_OBJECT(select), "changed",
                     G_CALLBACK(cbChangedSubView), this);
 
-   GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
-   gtk_binding_entry_add_signal(binding_set, GDK_s, GDK_CONTROL_MASK,
-				"start_interactive_search", 0);
+//   GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
+//   gtk_binding_entry_add_signal(binding_set, GDK_KEY_s, GDK_CONTROL_MASK,
+//				"start_interactive_search", 0);
 
    _entry_fast_search = GTK_WIDGET(gtk_builder_get_object
                                    (_builder, "entry_fast_search"));
@@ -1311,27 +1282,23 @@ void RGMainWindow::buildInterface()
 
 bool RGMainWindow::isActionEnabled(const char *action_name)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    return g_action_group_get_action_enabled(win_actions, action_name);
 }
 
 void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    GAction *action = g_action_map_lookup_action (G_ACTION_MAP (win_actions), action_name);
    g_simple_action_set_enabled (G_SIMPLE_ACTION(action), enabled);
 }
 
 void RGMainWindow::setActionState(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    GAction *action = g_action_map_lookup_action (G_ACTION_MAP (win_actions), action_name);
    g_simple_action_set_state (G_SIMPLE_ACTION(action), value);
 }
 
 void RGMainWindow::activateAction(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    g_action_group_activate_action(win_actions, action_name, value);
 }
 
@@ -1439,19 +1406,10 @@ void RGMainWindow::saveState()
    _config->Set("Synaptic::hpanedPos",
                 gtk_paned_get_position(GTK_PANED(hpaned)));
 
-   GtkAllocation allocation;
-   gtk_widget_get_allocation(_win, &allocation);
-   _config->Set("Synaptic::windowWidth", allocation.width);
-   _config->Set("Synaptic::windowHeight", allocation.height);
-   gint x, y;
-   gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
-   _config->Set("Synaptic::windowX", x);
-   _config->Set("Synaptic::windowY", y);
+   _config->Set("Synaptic::windowWidth", gtk_widget_get_width(_win));
+   _config->Set("Synaptic::windowHeight", gtk_widget_get_height(_win));
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-   if(gdk_window_get_state(gtk_widget_get_window(_win)) & GDK_WINDOW_STATE_MAXIMIZED)
-      _config->Set("Synaptic::Maximized", true);
-   else
-      _config->Set("Synaptic::Maximized", false);
+   _config->Set("Synaptic::Maximized", gtk_window_is_maximized(GTK_WINDOW(_win)));
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
@@ -1526,7 +1484,7 @@ task<void> RGMainWindow::setInterfaceLocked(bool flag)
 
       gtk_widget_set_sensitive(_win, FALSE);
       if(gtk_widget_get_visible(_win))
-	 gdk_window_set_cursor(gtk_widget_get_window(_win), _busyCursor);
+         gtk_widget_set_cursor_from_name(GTK_WIDGET(_win), "watch");
    } else {
       assert(_interfaceLocked > 0);
 
@@ -1536,7 +1494,7 @@ task<void> RGMainWindow::setInterfaceLocked(bool flag)
 
       gtk_widget_set_sensitive(_win, TRUE);
       if(gtk_widget_get_visible(_win))
-	 gdk_window_set_cursor(gtk_widget_get_window(_win), NULL);
+         gtk_widget_set_cursor_from_name(GTK_WIDGET(_win), NULL);
    }
 
    // fast enough with the new fixed-height mode
@@ -1636,11 +1594,17 @@ void RGMainWindow::cbPkgActionDefault(GSimpleAction *action,
 }
 
 
-gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
-                                            GdkEventButton *event,
+void RGMainWindow::cbPackageListClicked(GtkGestureClick* gesture,
+                                            int n_press,
+                                            double x,
+                                            double y,
                                             gpointer data)
 {
    //cout << "RGMainWindow::cbPackageListClicked()" << endl;
+
+   int button = gtk_gesture_single_get_button(GTK_GESTURE_SINGLE(gesture));
+   GdkModifierType state = gdk_event_get_modifier_state(
+      gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(gesture)));
 
    RGMainWindow *me = (RGMainWindow *) data;
    RPackage *pkg = NULL;
@@ -1648,32 +1612,30 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
    GtkTreeViewColumn *column;
 
    /* Single clicks only */
-   if (event->type == GDK_BUTTON_PRESS) {
+   if (n_press == 1) {
       GtkTreeSelection *selection;
       GtkTreeIter iter;
 
-      if(!(event->window == gtk_tree_view_get_bin_window(GTK_TREE_VIEW(treeview))))
-	 return false;
-
-      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-      if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
-                                        (int)event->x, (int)event->y,
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+      if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(me->_treeView),
+                                        (int)x, (int)y,
                                         &path, &column, NULL, NULL)) {
 
          /* Check if it's either a right-button click, or a left-button
           * click on the status column. */
-         if (!(event->button == 3 ||
-               (event->button == 1 && 
+         if (!(button == 3 ||
+               (button == 1 &&
                 strcmp(gtk_tree_view_column_get_title(column), "S") == 0)))
-            return false;
+            return;
 
          vector<RPackage *> selected_pkgs;
          GList *li = NULL;
 
          // Treat click with CONTROL as additional selection
-	 if((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK
-	    && !gtk_tree_selection_path_is_selected(selection, path))
-            gtk_tree_selection_unselect_all(selection);
+         if ((state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK
+            && !gtk_tree_selection_path_is_selected(selection, path)) {
+               gtk_tree_selection_unselect_all(selection);
+         }
          gtk_tree_selection_select_path(selection, path);
 
          li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
@@ -1686,12 +1648,10 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
                selected_pkgs.push_back(pkg);
          }
 
-         cbTreeviewPopupMenu(treeview, event, me, selected_pkgs);
-         return true;
+         me->cbTreeviewPopupMenu(button, x, y, selected_pkgs);
+         return;
       }
    }
-
-   return false;
 }
 
 void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
@@ -1861,7 +1821,7 @@ void RGMainWindow::cbOpenClicked(GSimpleAction *action,
          me->setStatusText();
          co_await me->setInterfaceLocked(FALSE);
       }
-      gtk_widget_destroy(filesel);
+      gtk_window_destroy(GTK_WINDOW(filesel));
    });
 }
 
@@ -1918,7 +1878,7 @@ void RGMainWindow::cbSaveAsClicked(GSimpleAction *action,
          // now call save for the actual saving
          me->cbSaveClicked(nullptr, nullptr, me);
       }
-      gtk_widget_destroy(filesel);
+      gtk_window_destroy(GTK_WINDOW(filesel));
    });
 }
 
@@ -2042,10 +2002,10 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
          gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog), msgstr);
          gtk_dialog_add_buttons(GTK_DIALOG(dialog), _("_Cancel"), GTK_RESPONSE_REJECT, _("_Reload"), GTK_RESPONSE_ACCEPT, NULL);
          GtkWidget* reload_button = gtk_dialog_get_widget_for_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-         GtkWidget* refresh_image = gtk_image_new_from_icon_name("view-refresh", GTK_ICON_SIZE_BUTTON);
-         gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
+         GtkWidget* refresh_image = gtk_image_new_from_icon_name("view-refresh");
+         gtk_button_set_child(GTK_BUTTON(reload_button), refresh_image);
          cb = gtk_check_button_new_with_label(_("Never show this message again"));
-         gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), cb, true, true, 0);
+         gtk_box_append(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))), cb);
          gint response = co_await co_run_dialog (GTK_DIALOG (dialog));
          gtk_widget_hide(dialog);
          if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
@@ -2054,7 +2014,7 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
          if (response == GTK_RESPONSE_ACCEPT) {
             me->cbUpdateClicked(nullptr, nullptr, me);
          }
-         gtk_widget_destroy(dialog);
+         gtk_window_destroy(GTK_WINDOW(dialog));
       }
    });
 }
@@ -2062,31 +2022,32 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
 static void traverseToolbarButtons(GtkWidget *toolbar,
                                    std::function<void(GtkWidget*, GtkWidget *, GtkWidget *)> cb)
 {
-   if (!GTK_IS_CONTAINER(toolbar))
+   if (!GTK_IS_WIDGET(toolbar))
       return;
-   GList *children = gtk_container_get_children(GTK_CONTAINER(toolbar));
-   for (GList *iter = children; iter != NULL; iter = iter->next)
+
+   for (GtkWidget *child = gtk_widget_get_first_child(toolbar);
+        child != NULL;
+        child = gtk_widget_get_next_sibling(child))
    {
-      if (GTK_IS_BUTTON(iter->data))
+      if (GTK_IS_BUTTON(child))
       {
-         GtkWidget *box = gtk_bin_get_child(GTK_BIN(iter->data));
+         GtkWidget *box = gtk_button_get_child(GTK_BUTTON(child));
          GtkWidget *image = nullptr;
          GtkWidget *label = nullptr;
 
-         GList *box_children = gtk_container_get_children(GTK_CONTAINER(box));
-         for (GList *iter2 = box_children; iter2 != NULL; iter2 = iter2->next)
+         for (GtkWidget *box_child = gtk_widget_get_first_child(box);
+              box_child != NULL;
+              box_child = gtk_widget_get_next_sibling(box_child))
          {
-            if (GTK_IS_IMAGE(iter2->data))
-               image = GTK_WIDGET(iter2->data);
-            else if (GTK_IS_LABEL(iter2->data))
-               label = GTK_WIDGET(iter2->data);
+            if (GTK_IS_IMAGE(box_child))
+               image = GTK_WIDGET(box_child);
+            else if (GTK_IS_LABEL(box_child))
+               label = GTK_WIDGET(box_child);
          }
-         g_list_free(box_children);
 
          cb(box, image, label);
       }
    }
-   g_list_free(children);
 }
 
 void RGMainWindow::cbMenuToolbarClicked(GSimpleAction *action,
@@ -2164,7 +2125,7 @@ void RGMainWindow::cbFindToolClicked(GSimpleAction *action,
 
          // clear the quick search, otherwise both apply and that is
          // confusing
-         gtk_entry_set_text(GTK_ENTRY(me->_entry_fast_search), "");
+         gtk_editable_set_text(GTK_EDITABLE(me->_entry_fast_search), "");
 
          string str = me->_findWin->getFindString();
          me->setBusyCursor(true);
@@ -2716,7 +2677,7 @@ void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
                                  (dia.getGtkBuilder(), "checkbutton_show_again"));
       assert(cb);
       _config->Set("Synaptic::showWelcomeDialog",
-                   gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+                   gtk_check_button_get_active(GTK_CHECK_BUTTON(cb)));
    });
 }
 
@@ -2724,7 +2685,7 @@ void RGMainWindow::xapianDoSearch(void *data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
    start_task([me]() -> task<void> {
-      const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
+      const gchar *str = gtk_editable_get_text(GTK_EDITABLE(me->_entry_fast_search));
       GtkStyleContext *styleContext = gtk_widget_get_style_context(me->_entry_fast_search);
 
       me->_fastSearchEventID = -1;
@@ -2842,7 +2803,7 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
       me->refreshSubViewList();
       co_await me->setInterfaceLocked(FALSE);
       me->setStatusText();
-  });
+   });
 }
 
 void RGMainWindow::cbFixBrokenClicked(GSimpleAction *action,
@@ -3038,9 +2999,9 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    });
 }
 
-void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
-                                       GdkEventButton *event,
-                                       RGMainWindow *me,
+void RGMainWindow::cbTreeviewPopupMenu(int button,
+                                       double x,
+                                       double y,
                                        vector<RPackage *> selected_pkgs)
 {
    // Nothing selected, shouldn't happen, but we play safely.
@@ -3056,8 +3017,8 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    if (flags & RPackage::FPinned)
       return;
 
-   if (event->button == 1 && _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
-      me->activateAction("mark-default", nullptr);
+   if (button == 1 && _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
+      activateAction("mark-default", nullptr);
       return;
    }
 
@@ -3087,7 +3048,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    if (selected_pkgs.size() == 1) {
       GMenu *recommendsSection = g_menu_new();
 
-      if (GMenu *recommendedSubmenu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends))
+      if (GMenu *recommendedSubmenu = buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends))
          g_menu_append_submenu(recommendsSection,
             _("Mark Recommended for Installation"),
             G_MENU_MODEL(recommendedSubmenu));
@@ -3096,7 +3057,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
             _("Mark Recommended for Installation"),
             nullptr);
 
-      if (GMenu *suggestedSubmenu = me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests))
+      if (GMenu *suggestedSubmenu = buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests))
          g_menu_append_submenu(recommendsSection,
             _("Mark Suggested for Installation"),
             G_MENU_MODEL(suggestedSubmenu));
@@ -3111,11 +3072,11 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
    GdkRectangle rect { 0, 0, 0, 0 };
    gtk_tree_view_convert_bin_window_to_widget_coords(
-      GTK_TREE_VIEW(treeview),
-      (int)event->x, (int)event->y,
+      GTK_TREE_VIEW(_treeView),
+      (int)x, (int)y,
       &rect.x, &rect.y);
 
-   GtkWidget *popupMenu = gtk_popover_new_from_model(treeview, G_MENU_MODEL(popupMenuModel));
+   GtkWidget *popupMenu = gtk_popover_menu_new_from_model(G_MENU_MODEL(popupMenuModel));
    gtk_popover_set_pointing_to(GTK_POPOVER(popupMenu), &rect);
    gtk_popover_popup(GTK_POPOVER(popupMenu));
 }
@@ -3282,7 +3243,7 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GSimpleAction *action,
 					    NULL);
       int res = co_await co_run_dialog(GTK_DIALOG(filesel));
       GFile *selected_file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
-      gtk_widget_destroy(filesel);
+      gtk_window_destroy(GTK_WINDOW(filesel));
       if(res != GTK_RESPONSE_ACCEPT) {
          g_object_unref(selected_file);
          co_return;
@@ -3318,7 +3279,7 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
 					    NULL);
       int res = co_await co_run_dialog(GTK_DIALOG(filesel));
       GFile *selected_file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
-      gtk_widget_destroy(filesel);
+      gtk_window_destroy(GTK_WINDOW(filesel));
       if(res != GTK_RESPONSE_ACCEPT) {
          g_object_unref(selected_file);
          co_return;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="3.0"/>
   <object class="GtkWindow" id="window_repositories">
     <property name="can_focus">False</property>
     <property name="border_width">6</property>
@@ -28,7 +27,7 @@
                   <object class="GtkScrolledWindow" id="scrolledwindow1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="shadow_type">in</property>
+                    <property name="has-frame">True</property>
                     <child>
                       <object class="GtkTreeView" id="treeview_repositories">
                         <property name="width_request">400</property>
@@ -59,7 +58,6 @@
                         <property name="label" translatable="yes">_Up</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="can_default">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <signal name="clicked" handler="on_button_updown_clicked" swapped="no"/>
@@ -75,7 +73,6 @@
                         <property name="label" translatable="yes">_Down</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="can_default">True</property>
                         <property name="receives_default">False</property>
                         <property name="use_underline">True</property>
                         <signal name="clicked" handler="on_button_updown_clicked" swapped="no"/>
@@ -312,7 +309,6 @@
                     <property name="label" translatable="yes">_New</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
                     <property name="use_underline">True</property>
@@ -329,7 +325,6 @@
                     <property name="label" translatable="yes">_Delete</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
                     <property name="use_underline">True</property>
@@ -359,7 +354,6 @@
                     <property name="label" translatable="yes">_Cancel</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
                     <property name="use_underline">True</property>
@@ -376,7 +370,6 @@
                     <property name="label" translatable="yes">_OK</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="can_default">True</property>
                     <property name="receives_default">False</property>
                     <property name="border_width">5</property>
                     <property name="use_underline">True</property>

@@ -33,8 +33,8 @@ void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
    GtkWidget *entry_name = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
    GtkWidget *entry_value = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
 
-   const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
-   const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
+   const gchar *name = gtk_editable_get_text(GTK_EDITABLE(entry_name));
+   const gchar *value = gtk_editable_get_text(GTK_EDITABLE(entry_value));
 
    _config->Set(name, value);
 }

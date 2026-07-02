@@ -88,22 +88,25 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 300, 120);
 
-   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
+   gtk_box_set_spacing(GTK_BOX(_topBox), 10);
+   gtk_widget_set_margin_top(_topBox, 10);
+   gtk_widget_set_margin_bottom(_topBox, 10);
+   gtk_widget_set_margin_start(_topBox, 10);
+   gtk_widget_set_margin_end(_topBox, 10);
 
    _label = gtk_label_new("\n\n");
-   gtk_widget_show(_label);
-   gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+   gtk_widget_set_hexpand(_label, true);
+   gtk_widget_set_vexpand(_label, true);
+   gtk_box_append(GTK_BOX(_topBox),_label);
 
    _pbar = gtk_progress_bar_new();
    gtk_widget_show(_pbar);
    gtk_widget_set_size_request(_pbar, -1, 25);
-   gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+   gtk_box_append(GTK_BOX(_topBox), _pbar);
 
    //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_win), 
                                 GTK_WINDOW(main->window()));
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 task<bool> RGCDScanner::run()
@@ -121,7 +124,7 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
 {
    setTitle(_("Disc Label"));
    _textEntry = GTK_WIDGET(gtk_builder_get_object(_builder, "text_entry"));
-   gtk_entry_set_text(GTK_ENTRY(_textEntry), defaultName.c_str());
+   gtk_editable_set_text(GTK_EDITABLE(_textEntry), defaultName.c_str());
 
    g_signal_connect(gtk_builder_get_object(_builder, "ok"),
                     "clicked",
@@ -129,11 +132,8 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
    g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
                     "clicked",
                     G_CALLBACK(onCancelClicked), this);
-   gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_win), 
                                 GTK_WINDOW(wwin->window()));
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 void RGDiscName::onOkClicked(GtkWidget *self, void *data)
@@ -152,9 +152,8 @@ void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
 task<bool> RGDiscName::run(string &discName)
 {
    _userConfirmed = false;
-   show();
    co_await co_run_window (GTK_WINDOW (_win));
-   discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
+   discName = gtk_editable_get_text(GTK_EDITABLE(_textEntry));
    co_return _userConfirmed;
 }
 

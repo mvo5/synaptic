@@ -125,7 +125,6 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    GtkWidget *_comboPatternWhat;
    GtkWidget *_comboPatternDo;
    GtkWidget *_filterEntry;     /* GtkEntry */
-   GdkCursor *_busyCursor;
 
    GtkWidget *_filterDetailsBox;        // detail box
 

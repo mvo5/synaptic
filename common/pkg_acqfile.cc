@@ -23,14 +23,11 @@
 
 #include "config.h"
 
-#include "pkg_acqfile.h"
+#include <apt-pkg/macros.h>   // Provides the definition of APT_PKG_MAJOR.
 
-#include <stdio.h>
-#include <errno.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <sys/stat.h>
+#if APT_PKG_MAJOR < 5
+
+#include "pkg_acqfile.h"
 
 #include <apt-pkg/error.h>
 #include <apt-pkg/configuration.h>
@@ -40,8 +37,8 @@
 #include <apt-pkg/pkgrecords.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/indexfile.h>
-
-#if APT_PKG_MAJOR < 5
+#include <apt-pkg/hashes.h>
+#include <string>
 
 // Let's all sing a song about apt-pkg's brokenness..
 pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner,

@@ -23,7 +23,6 @@
 #include "config.h"
 
 #include "rgmainwindow.h"
-#include "gsynaptic.h"
 
 #include "rginstallprogress.h"
 

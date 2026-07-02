@@ -26,7 +26,6 @@
 
 #include "rgmainwindow.h"
 #include "rgcdscanner.h"
-#include "gsynaptic.h"
 
 #include <unistd.h>
 #include <stdio.h>

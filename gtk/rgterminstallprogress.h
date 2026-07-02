@@ -46,11 +46,11 @@ protected:
   bool child_has_exited;
   static void child_exited(VteTerminal *vteterminal, gint ret,
 			   gpointer data);
-  virtual void startUpdate();
-  virtual void updateInterface();
-  virtual void finishUpdate();
+  virtual task<void> startUpdate();
+  virtual task<void> updateInterface();
+  virtual task<void> finishUpdate();
   static void stopShell(GtkWidget *self, void* data);
-  virtual bool close();
+  virtual task<bool> close();
 
   pid_t _child_id;
 
@@ -58,7 +58,7 @@ public:
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+   virtual task<pkgPackageManager::OrderResult> start(pkgPackageManager *pm,
 		   				int numPackages = 0,
 						int totalPackages = 0);
 

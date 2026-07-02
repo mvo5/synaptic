@@ -43,13 +43,13 @@ static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
    *res = (GtkResponseType) id;
 }
 
-bool RGUserDialog::showErrors()
+task<bool> RGUserDialog::showErrors()
 {
    GtkWidget *dia;
    std::string err,warn;
    
    if (_error->empty())
-      return false;
+      co_return false;
 
    while (!_error->empty()) {
       string message;
@@ -119,14 +119,14 @@ bool RGUserDialog::showErrors()
       }
    }
 
-   gtk_dialog_run(GTK_DIALOG(dia));
+   co_await co_run_dialog(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
 
-   return true;
+   co_return true;
 }
 
 
-bool RGUserDialog::message(const char *msg,
+task<bool> RGUserDialog::message(const char *msg,
                            RUserDialog::DialogType dialog,
                            RUserDialog::ButtonsType buttons, bool defres)
 {
@@ -212,9 +212,9 @@ bool RGUserDialog::message(const char *msg,
       }
    }
 
-   gtk_dialog_run(GTK_DIALOG(dia));
+   co_await co_run_dialog(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
+   co_return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
 // RGGtkBuilderUserDialog
@@ -279,18 +279,18 @@ void RGGtkBuilderUserDialog::init(const char *name)
    g_free(main_widget);
 }
 
-int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
+task<int> RGGtkBuilderUserDialog::co_run(const char *name, bool return_gtk_response)
 {
    if(name != NULL)
       init(name);
 
-   res = (GtkResponseType) gtk_dialog_run(GTK_DIALOG(_dialog));
+   res = (GtkResponseType) co_await co_run_dialog(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
 
    if(return_gtk_response)
-      return res;
+      co_return res;
    else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
+      co_return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
 }
 
 

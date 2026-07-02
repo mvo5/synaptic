@@ -65,7 +65,7 @@ const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 }
 
 
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
+task<pkgPackageManager::OrderResult> RInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackages,
                                                        int numPackagesTotal)
 {
@@ -82,7 +82,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-       return res;
+       co_return res;
 
    /*
     * This will make a pipe from where we can read child's output
@@ -121,7 +121,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-       return res;
+       co_return res;
 
    _child_id = fork();
 
@@ -132,19 +132,19 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    }
 #endif
 
-   startUpdate();
+   co_await startUpdate();
    while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
+      co_await updateInterface();
 
    res = (pkgPackageManager::OrderResult) WEXITSTATUS(ret);
 
-   finishUpdate();
+   co_await finishUpdate();
 
 #ifdef HAVE_RPM
    close(_childin);
 #endif
 
-   return res;
+   co_return res;
 }
 
 // vim:sts=4:sw=4

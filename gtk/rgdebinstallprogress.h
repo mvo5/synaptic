@@ -114,18 +114,18 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
-   virtual bool close();
+   virtual task<void> startUpdate();
+   virtual task<void> updateInterface();
+   virtual task<void> finishUpdate();
+   virtual task<bool> close();
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+   virtual task<pkgPackageManager::OrderResult> start(pkgPackageManager *pm,
 		   				int numPackages = 0,
 						int totalPackages = 0);
 
    virtual void prepare(RPackageLister *lister);
    
-   void conffile(gchar *conffile, gchar *status);
+   task<void> conffile(gchar *conffile, gchar *status);
 
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);

@@ -436,40 +436,38 @@ void RGPreferencesWindow::doneAction(GtkWidget *self, void *data)
    me->closeAction(self, data);
 }
 
-void RGPreferencesWindow::changeFontAction(GtkWidget *self, void *data)
+void RGPreferencesWindow::changeDefaultFontAction(GtkWidget *self, void *data)
 {
-   const char *fontName, *propName;
-   
-   switch (GPOINTER_TO_INT(data)) {
-      case FONT_DEFAULT:
-         propName = "Synaptic::FontName";
-	      fontName = "sans 10";
-         break;
-      case FONT_TERMINAL:
-         propName = "Synaptic::TerminalFontName";
-	      fontName = "monospace 10";
-         break;
-      default:
-         cerr << "changeFontAction called with unknown argument" << endl;
-         return;
-   }
+   auto me = static_cast<RGPreferencesWindow *>(data);
+   start_task([me]() -> task<void> {
+      co_await me->co_changeFont("Synaptic::FontName", "sans 10");
+   });
+}
 
+void RGPreferencesWindow::changeTerminalFontAction(GtkWidget *self, void *data)
+{
+   auto me = static_cast<RGPreferencesWindow *>(data);
+   start_task([me]() -> task<void> {
+      co_await me->co_changeFont("Synaptic::TerminalFontName", "monospace 10");
+   });
+}
+
+task<void> RGPreferencesWindow::co_changeFont(const char *propName, const char *defaultValue)
+{
    GtkWidget *fontsel = gtk_font_chooser_dialog_new(_("Choose font"),
-         GTK_WINDOW(gtk_widget_get_toplevel(self)));
+         GTK_WINDOW(gtk_widget_get_toplevel(_win)));
+   gtk_window_set_modal(GTK_WINDOW(fontsel), true);
 
    gtk_font_chooser_set_font(GTK_FONT_CHOOSER(fontsel),
-                             _config->Find(propName, fontName).c_str());
+                             _config->Find(propName, defaultValue).c_str());
 
-   gint result = gtk_dialog_run(GTK_DIALOG(fontsel));
-   if (result != GTK_RESPONSE_OK) {
-      gtk_widget_destroy(fontsel);
-      return;
-   }
-
-   fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
-   //cout << "fontname: " << fontName << endl;
+   int result = co_await co_run_dialog(GTK_DIALOG(fontsel));
+   if (result == GTK_RESPONSE_OK) {
+      auto fontName = gtk_font_chooser_get_font(GTK_FONT_CHOOSER(fontsel));
+      //cout << "fontname: " << fontName << endl;
 
    _config->Set(propName, fontName);
+   }
 
    gtk_widget_destroy(fontsel);
 }
@@ -903,25 +901,35 @@ void RGPreferencesWindow::cbToggleColumn(GtkWidget *self, char*path_string,
 
 void RGPreferencesWindow::colorClicked(GtkWidget *self, void *data)
 {
+   RGPreferencesWindow *me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
+   int status = GPOINTER_TO_INT(data);
+
+   start_task([me, status]() -> task<void> {
+      co_await me->co_colorClicked(status);
+   });
+}
+
+task<void> RGPreferencesWindow::co_colorClicked(int status)
+{
    GtkWidget *color_dialog;
-   RGPreferencesWindow *me;
-   me = (RGPreferencesWindow *) g_object_get_data(G_OBJECT(self), "me");
 
    color_dialog = gtk_color_chooser_dialog_new(_("Color selection"),
-         GTK_WINDOW(gtk_builder_get_object(me->_builder, "window_preferences")));
+         GTK_WINDOW(window()));
+   gtk_window_set_modal(GTK_WINDOW(color_dialog), true);
    gtk_color_chooser_set_use_alpha(GTK_COLOR_CHOOSER(color_dialog), false);
 
    GdkRGBA *color = NULL;
-   color = RGPackageStatus::pkgStatus.getColor(GPOINTER_TO_INT(data));
+   color = RGPackageStatus::pkgStatus.getColor(status);
    if (color != NULL)
       gtk_color_chooser_set_rgba(GTK_COLOR_CHOOSER(color_dialog), color);
 
-   if (gtk_dialog_run(GTK_DIALOG(color_dialog)) == GTK_RESPONSE_OK) {
+   int response_id = co_await co_run_dialog(GTK_DIALOG(color_dialog));
+   if (response_id == GTK_RESPONSE_OK) {
       GdkRGBA current_color;
       gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(color_dialog), &current_color);
-      RGPackageStatus::pkgStatus.setColor(GPOINTER_TO_INT(data),
+      RGPackageStatus::pkgStatus.setColor(status,
 					  gdk_rgba_copy(&current_color));
-      me->readColors();
+      readColors();
    }
    gtk_widget_destroy(color_dialog);
 }
@@ -1171,7 +1179,7 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_default_font"),
                     "clicked",
-                    G_CALLBACK(changeFontAction),GINT_TO_POINTER(FONT_DEFAULT));
+                    G_CALLBACK(changeDefaultFontAction), this);
 
    g_signal_connect(gtk_builder_get_object(_builder, "checkbutton_user_terminal_font"),
                     "toggled",
@@ -1182,8 +1190,8 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win,
 
    g_signal_connect(gtk_builder_get_object(_builder, "button_terminal_font"),
                                  "clicked",
-                                 G_CALLBACK(changeFontAction),
-                                 GINT_TO_POINTER(FONT_TERMINAL));
+                                 G_CALLBACK(changeTerminalFontAction),
+                                 this);
 
    checkbuttonUserTerminalFontToggled(NULL, this);
    checkbuttonUserFontToggled(NULL, this);
@@ -1220,30 +1228,31 @@ void
 RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self, void *data)
 {
    RGPreferencesWindow *me = (RGPreferencesWindow *)data;
+   start_task([me]() -> task<void> {
+      RGGtkBuilderUserDialog dia(me, "authentication");
+      GtkBuilder *dia_xml = dia.getGtkBuilder();
+      GtkWidget *entry_user = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_username"));
+      GtkWidget *entry_pass = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_password"));
 
-   RGGtkBuilderUserDialog dia(me, "authentication");
-   GtkBuilder *dia_xml = dia.getGtkBuilder();
-   GtkWidget *entry_user = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_username"));
-   GtkWidget *entry_pass = GTK_WIDGET(gtk_builder_get_object(dia_xml,"entry_password"));
+      // now set the values
+      string now_user =  _config->Find("Synaptic::httpProxyUser","");
+      gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
+      string now_pass =   _config->Find("Synaptic::httpProxyPass","");
+      gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
 
-   // now set the values
-   string now_user =  _config->Find("Synaptic::httpProxyUser","");
-   gtk_entry_set_text(GTK_ENTRY(entry_user), now_user.c_str());
-   string now_pass =   _config->Find("Synaptic::httpProxyPass","");
-   gtk_entry_set_text(GTK_ENTRY(entry_pass), now_pass.c_str());
+      int res = co_await dia.co_run();
 
-   int res = dia.run();
+      if(!res)
+         co_return;
 
-   if(!res) 
-      return;
+      // get the entered data
+      const gchar *user = gtk_entry_get_text(GTK_ENTRY(entry_user));
+      const gchar *pass = gtk_entry_get_text(GTK_ENTRY(entry_pass));
 
-   // get the entered data
-   const gchar *user = gtk_entry_get_text(GTK_ENTRY(entry_user));
-   const gchar *pass = gtk_entry_get_text(GTK_ENTRY(entry_pass));
-   
-   // write out the configuration   
-   _config->Set("Synaptic::httpProxyUser",user);
-   _config->Set("Synaptic::httpProxyPass",pass);
+      // write out the configuration
+      _config->Set("Synaptic::httpProxyUser",user);
+      _config->Set("Synaptic::httpProxyPass",pass);
+   });
 }
 
 // vim:ts=3:sw=3:et

@@ -147,13 +147,11 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkTable" id="table1">
+                          <object class="GtkGrid" id="table1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="n_rows">2</property>
-                            <property name="n_columns">2</property>
-                            <property name="column_spacing">12</property>
-                            <property name="row_spacing">6</property>
+                            <property name="column-spacing">12</property>
+                            <property name="row-spacing">6</property>
                             <child>
                               <object class="GtkLabel" id="label70">
                                 <property name="visible">True</property>
@@ -162,8 +160,8 @@
                                 <property name="label" translatable="yes">Search:</property>
                               </object>
                               <packing>
-                                <property name="x_options">GTK_FILL</property>
-                                <property name="y_options"/>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">0</property>
                               </packing>
                             </child>
                             <child>
@@ -175,10 +173,8 @@
                                 <property name="use_markup">True</property>
                               </object>
                               <packing>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
-                                <property name="x_options">GTK_FILL</property>
-                                <property name="y_options"/>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">1</property>
                               </packing>
                             </child>
                             <child>
@@ -186,12 +182,11 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="model">ls_lookin</property>
+                                <property name="hexpand">True</property>
                               </object>
                               <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
-                                <property name="top_attach">1</property>
-                                <property name="bottom_attach">2</property>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">1</property>
                               </packing>
                             </child>
                             <child>
@@ -200,6 +195,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="model">ls_search_cache</property>
                                 <property name="has_entry">True</property>
+                                <property name="hexpand">True</property>
                                 <child internal-child="entry">
                                   <object class="GtkEntry" id="combobox-entry">
                                     <property name="can_focus">True</property>
@@ -207,8 +203,8 @@
                                 </child>
                               </object>
                               <packing>
-                                <property name="left_attach">1</property>
-                                <property name="right_attach">2</property>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">0</property>
                               </packing>
                             </child>
                           </object>

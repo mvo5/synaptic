@@ -51,9 +51,10 @@ struct ItemDesc
 class SwigAcquireStatus : public pkgAcquireStatus
 {
  protected:
-   virtual bool Pulse(pkgAcquire *Owner) {
-      pkgAcquireStatus::Pulse(Owner);
-      UpdatePulse(FetchedBytes, CurrentCPS, CurrentItems);
+   virtual task<bool> Pulse(pkgAcquire *Owner) {
+      bool result = co_await pkgAcquireStatus::Pulse(Owner);
+      co_await UpdatePulse(FetchedBytes, CurrentCPS, CurrentItems);
+      co_return result;
    }
 
  public:
@@ -63,18 +64,18 @@ class SwigAcquireStatus : public pkgAcquireStatus
    }
 
    // Called to change media
-   virtual bool MediaChange(string Media,string Drive) = 0;
+   virtual task<bool> MediaChange(string Media,string Drive) = 0;
 
    // Each of these is called by the workers when an event occures
-   virtual void IMSHit(ItemDesc &/*Itm*/) {}
-   virtual void Fetch(ItemDesc &/*Itm*/) {}
-   virtual void Done(ItemDesc &/*Itm*/) {}
-   virtual void Fail(ItemDesc &/*Itm*/) {}
-   virtual void UpdatePulse(double FetchedBytes, double CurrentCPS, unsigned long CurrentItems) {}
-   virtual void Start() {
-      pkgAcquireStatus::Start();
+   virtual task<void> IMSHit(ItemDesc &/*Itm*/) { co_return; }
+   virtual task<void> Fetch(ItemDesc &/*Itm*/) { co_return; }
+   virtual task<void> Done(ItemDesc &/*Itm*/) { co_return; }
+   virtual task<void> Fail(ItemDesc &/*Itm*/) { co_return; }
+   virtual task<void> UpdatePulse(double FetchedBytes, double CurrentCPS, unsigned long CurrentItems) { co_return; }
+   virtual task<void> Start() {
+      co_await pkgAcquireStatus::Start();
    }
-   virtual void Stop() {
-      pkgAcquireStatus::Stop();
+   virtual task<void> Stop() {
+      co_await pkgAcquireStatus::Stop();
    }
 };

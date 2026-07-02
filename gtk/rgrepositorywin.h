@@ -92,7 +92,7 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    RGRepositoryEditor(RGWindow *parent);
    ~RGRepositoryEditor();
 
-   bool Run();
+   task<bool> Run();
 };
 
 #endif

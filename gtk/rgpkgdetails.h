@@ -49,7 +49,7 @@ class RGPkgDetailsWindow : public RGGtkBuilderWindow {
    static void cbShowChangelog(GtkWidget *button, void *data);
    static gboolean cbOpenHomepage(GtkWidget *button, void *data);
    static gboolean cbOpenLink(GtkWidget *button, gchar *uri, void *data);
-   static void doShowBigScreenshot(RPackage *pkg);
+   static task<void> doShowBigScreenshot(RPackage *pkg);
 
  public:
    RGPkgDetailsWindow(RGWindow *parent);

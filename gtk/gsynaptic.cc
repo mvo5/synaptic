@@ -112,13 +112,13 @@ static void SetLanguages()
    _config->Set("Volatile::Languages", LangList);
 }
 
-void welcome_dialog(RGMainWindow *mainWindow)
+task<void> welcome_dialog(RGMainWindow *mainWindow)
 {
       // show welcome dialog
       if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
 	  !_config->FindB("Volatile::Upgrade-Mode",false)) {
          RGGtkBuilderUserDialog dia(mainWindow);
-         dia.run("welcome");
+         co_await dia.co_run("welcome");
          GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
                                               "checkbutton_show_again"));
          assert(cb);
@@ -126,58 +126,6 @@ void welcome_dialog(RGMainWindow *mainWindow)
                       gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
       }
 }
-
-void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
-{
-   struct stat st;
-
-   // check when the last update happend updates
-   UpdateType update =
-      (UpdateType) _config->FindI("Synaptic::update::type", UPDATE_ASK);
-   if(update != UPDATE_CLOSE) {
-      // check when last update happend
-      int lastUpdate = _config->FindI("Synaptic::update::last",0);
-      int minimal= _config->FindI("Synaptic::update::minimalIntervall", 48);
-
-      // check for the mtime of the various package lists
-      vector<string> filenames = lister->getPolicyArchives(true);
-      for (int i=0;i<filenames.size();i++) {
-	 stat(filenames[i].c_str(), &st);
-	 if(filenames[i] != "/var/lib/dpkg/status")
-	    lastUpdate = max(lastUpdate, (int)st.st_mtime);
-      }
-      
-      // new apt uses this
-      string update_stamp = _config->FindDir("Dir::State","var/lib/apt");
-      update_stamp += "update-stamp";
-      if(FileExists(update_stamp)) {
-	 stat(update_stamp.c_str(), &st);
-	 lastUpdate = max(lastUpdate, (int)st.st_mtime);
-      }
-
-      // 3600s=1h 
-      if((lastUpdate + minimal*3600) < time(NULL)) {
-	 if(update == UPDATE_AUTO) 
-	    mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-	 else {
-	    RGGtkBuilderUserDialog dia(mainWindow);
-	    int res = dia.run("update_outdated",true);
-	    GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
-						 "checkbutton_remember"));
-	    assert(cb);
-	    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
-	       if(res == GTK_RESPONSE_CANCEL)
-		  _config->Set("Synaptic::update::type", UPDATE_CLOSE);
-	       if(res == GTK_RESPONSE_OK)
-		  _config->Set("Synaptic::update::type", UPDATE_AUTO);
-	    }
-	    if(res == GTK_RESPONSE_OK)
-	       mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-	 }
-      }
-   }
-}
-
 
 // lock stuff
 static int sigterm_unix_signal_pipe_fds[2];
@@ -256,6 +204,13 @@ pid_t TestLock(string File)
    return (fl.l_pid);
 }
 
+void bring_process_to_foreground(pid_t pid)
+{
+   cout << "Another synaptic is running. Trying to bring it to the foreground" << endl;
+   kill(pid, SIGUSR1);
+   exit(0);
+}
+
 // check if we can get a lock, must be done after we read the configuration
 // if a lock is found and the app is synaptic send it a "come to foreground"
 // signal (USR1) or if not synaptic display a error and exit
@@ -265,10 +220,10 @@ pid_t TestLock(string File)
 //       *) if not, send signal
 // 2. check if we can get a /var/lib/dpkg/lock 
 //    *) if not, show message and fail
-void check_and_aquire_lock()
+static int check_and_aquire_lock()
 {
    if (getuid() != 0) 
-      return;
+      return 0;
 
    GtkWidget *dia;
    gchar *msg = NULL;
@@ -309,14 +264,16 @@ void check_and_aquire_lock()
 					NULL);
 
          gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
-	 gtk_dialog_run(GTK_DIALOG(dia));
-	 gtk_widget_destroy(dia);
-      }
-      g_free(msg);
+         g_free(msg);
 
-      cout << "Another synaptic is running. Trying to bring it to the foreground" << endl;
-      kill(LockedApp, SIGUSR1);
-      exit(0);
+         g_signal_connect_swapped(dia, "response",
+            G_CALLBACK(bring_process_to_foreground),
+            GINT_TO_POINTER(LockedApp));
+         gtk_window_present(GTK_WINDOW(dia));
+         return 1;
+      } else {
+         bring_process_to_foreground(LockedApp);
+      }
    }
 
    // 2. test if we can get a lock
@@ -336,9 +293,13 @@ void check_and_aquire_lock()
 					NULL);
 
       gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
-      gtk_dialog_run(GTK_DIALOG(dia));
       g_free(msg);
-      exit(1);
+
+      g_signal_connect_swapped(dia, "response",
+         G_CALLBACK(exit),
+         GINT_TO_POINTER(1));
+      gtk_window_present(GTK_WINDOW(dia));
+      return 1;
    }
    
    // we can't get a lock?!?
@@ -351,6 +312,8 @@ void check_and_aquire_lock()
       _error->DumpErrors();
       exit(1);
    }
+
+   return 0;
 }
 
 int main(int argc, char **argv)
@@ -466,7 +429,10 @@ static void applicationStartup(GApplication* app, gpointer user_data)
 
    // check if there is another application runing and
    // act accordingly
-   check_and_aquire_lock();
+   int code = check_and_aquire_lock();
+   if (code) {
+      return;
+   }
 
    // read configuration early
    _roptions->restore();
@@ -484,9 +450,6 @@ static void applicationActivate(GApplication* app, gpointer user_data)
       gtk_window_present(window);
       return;
    }
-
-   bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
-   bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
    RPackageLister *packageLister = new RPackageLister();
    RGMainWindow *mainWindow = new RGMainWindow(GTK_APPLICATION(app), packageLister, "main");
@@ -528,111 +491,114 @@ static void applicationActivate(GApplication* app, gpointer user_data)
    else
       mainWindow->show();
 
-   RGFlushInterface();
+   start_task([mainWindow, packageLister]() -> task<void> {
+      bool UpdateMode = _config->FindB("Volatile::Update-Mode",false);
+      bool NonInteractive = _config->FindB("Volatile::Non-Interactive", false);
 
-   mainWindow->setInterfaceLocked(true);
+      co_await mainWindow->setInterfaceLocked(true);
 
-   string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
-   if(!cd_mount_point.empty()) {
-      _config->Set("Acquire::cdrom::mount",cd_mount_point);
-      _config->Set("APT::CDROM::NoMount", true);
-      mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
-   } else if(_config->FindB("Volatile::AskCdrom-Mode",false)) {
-      mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
-      exit(0);
-   }
-
-   //no need to open a cache that will invalid after the update
-   if(!UpdateMode) {
-      mainWindow->setTreeLocked(true);
-      if(!packageLister->openCache()) {
-	 mainWindow->showErrors();
-	 exit(1);
+      string cd_mount_point = _config->Find("Volatile::AddCdrom-Mode", "");
+      if(!cd_mount_point.empty()) {
+         _config->Set("Acquire::cdrom::mount",cd_mount_point);
+         _config->Set("APT::CDROM::NoMount", true);
+         mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
+      } else if(_config->FindB("Volatile::AskCdrom-Mode",false)) {
+         mainWindow->cbAddCDROM(nullptr, nullptr, mainWindow);
+         exit(0);
       }
-      mainWindow->restoreState();
-      mainWindow->showErrors();
-      mainWindow->setTreeLocked(false);
-   }
-   
-   if (_config->FindB("Volatile::startInRepositories", false)) {
-      mainWindow->cbShowSourcesWindow(NULL, NULL, mainWindow);
-   }
 
-   // selections from stdin
-   if (_config->FindB("Volatile::Set-Selections", false) == true) {
-      packageLister->unregisterObserver(mainWindow);
-      packageLister->readSelections(cin);
-      packageLister->registerObserver(mainWindow);
-   }
-
-   // selections from a file
-   string selections_filename;
-   selections_filename = _config->Find("Volatile::Set-Selections-File", "");
-   if (selections_filename != "") {
-      packageLister->unregisterObserver(mainWindow);
-      ifstream selfile(selections_filename.c_str());
-      packageLister->readSelections(selfile);
-      selfile.close();
-      packageLister->registerObserver(mainWindow);
-   }
-
-   mainWindow->setInterfaceLocked(false);
-
-   if(UpdateMode) {
-      mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-      mainWindow->setTreeLocked(true);
-      if(!packageLister->openCache()) {
-	 mainWindow->showErrors();
-	 exit(1);
+      //no need to open a cache that will invalid after the update
+      if(!UpdateMode) {
+         mainWindow->setTreeLocked(true);
+         if(!packageLister->openCache()) {
+            co_await mainWindow->showErrors();
+            exit(1);
+         }
+         co_await mainWindow->restoreState();
+         co_await mainWindow->showErrors();
+         mainWindow->setTreeLocked(false);
       }
-      mainWindow->restoreState();
-      mainWindow->setTreeLocked(false);
-      mainWindow->showErrors();
-      mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
-   }
 
-   if(_config->FindB("Volatile::TestMeHarder", false))
-   {
-      _config->Set("Volatile::Non-Interactive","true");
-      _config->Set("Synaptic::closeZvt","true");
+      if (_config->FindB("Volatile::startInRepositories", false)) {
+         mainWindow->cbShowSourcesWindow(NULL, NULL, mainWindow);
+      }
 
-      while(true)
+      // selections from stdin
+      if (_config->FindB("Volatile::Set-Selections", false) == true) {
+         packageLister->unregisterObserver(mainWindow);
+         packageLister->readSelections(cin);
+         packageLister->registerObserver(mainWindow);
+      }
+
+      // selections from a file
+      string selections_filename;
+      selections_filename = _config->Find("Volatile::Set-Selections-File", "");
+      if (selections_filename != "") {
+         packageLister->unregisterObserver(mainWindow);
+         ifstream selfile(selections_filename.c_str());
+         packageLister->readSelections(selfile);
+         selfile.close();
+         packageLister->registerObserver(mainWindow);
+      }
+
+      co_await mainWindow->setInterfaceLocked(false);
+
+      if(UpdateMode) {
+         mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
+         mainWindow->setTreeLocked(true);
+         if(!packageLister->openCache()) {
+            co_await mainWindow->showErrors();
+            exit(1);
+         }
+         co_await mainWindow->restoreState();
+         mainWindow->setTreeLocked(false);
+         co_await mainWindow->showErrors();
+         co_await mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed (upgradable)"));
+      }
+
+      if(_config->FindB("Volatile::TestMeHarder", false))
       {
-	 mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-	 mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed"));
-	 GtkTreePath *p = gtk_tree_path_new_from_string("0");
-	 mainWindow->cbPackageListRowActivated(NULL, p, NULL, mainWindow);
+         _config->Set("Volatile::Non-Interactive","true");
+         _config->Set("Synaptic::closeZvt","true");
 
-	 GObject *o = (GObject*)g_object_new( G_TYPE_OBJECT,NULL);
-	 g_object_set_data(o, "me", mainWindow);
-	 mainWindow->cbPkgAction(PKG_REINSTALL);
-	 mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
+         while(true)
+         {
+            mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
+            co_await mainWindow->changeView(PACKAGE_VIEW_STATUS, _("Installed"));
+            GtkTreePath *p = gtk_tree_path_new_from_string("0");
+            mainWindow->cbPackageListRowActivated(NULL, p, NULL, mainWindow);
+
+            GObject *o = (GObject*)g_object_new( G_TYPE_OBJECT,NULL);
+            g_object_set_data(o, "me", mainWindow);
+            mainWindow->cbPkgAction(PKG_REINSTALL);
+            mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
+         }
       }
-   }
 
-   if(_config->FindB("Volatile::Upgrade-Mode",false) 
-      || _config->FindB("Volatile::DistUpgrade-Mode",false) ) {
-      mainWindow->cbUpgradeClicked(nullptr, nullptr, mainWindow);
-      mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
-   }
+      if(_config->FindB("Volatile::Upgrade-Mode",false)
+         || _config->FindB("Volatile::DistUpgrade-Mode",false) ) {
+         mainWindow->cbUpgradeClicked(nullptr, nullptr, mainWindow);
+         co_await mainWindow->changeView(PACKAGE_VIEW_CUSTOM, _("Marked Changes"));
+      }
 
-   if(_config->FindB("Volatile::TaskWindow",false)) {
-      mainWindow->cbTasksClicked(nullptr, nullptr, mainWindow);
-   }
+      if(_config->FindB("Volatile::TaskWindow",false)) {
+         mainWindow->cbTasksClicked(nullptr, nullptr, mainWindow);
+      }
 
-   string filter = _config->Find("Volatile::initialFilter","");
-   if(filter != "")
-      mainWindow->changeView(PACKAGE_VIEW_CUSTOM, filter);
+      string filter = _config->Find("Volatile::initialFilter","");
+      if(filter != "")
+         co_await mainWindow->changeView(PACKAGE_VIEW_CUSTOM, filter);
 
-   if (NonInteractive) {
-      mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
-      exit(0);
-   } else {
-      welcome_dialog(mainWindow);
-      gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
-                                          mainWindow->getGtkBuilder(),
-                                          "entry_fast_search")));
-   }
+      if (NonInteractive) {
+         mainWindow->cbProceedClicked(nullptr, nullptr, mainWindow);
+         exit(0);
+      } else {
+         co_await welcome_dialog(mainWindow);
+         gtk_widget_grab_focus( GTK_WIDGET(gtk_builder_get_object(
+                                             mainWindow->getGtkBuilder(),
+                                             "entry_fast_search")));
+      }
+   });
 }
 
 // vim:sts=4:sw=4

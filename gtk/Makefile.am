@@ -1,16 +1,17 @@
 SUBDIRS = gtkbuilder
 
 
-AM_CPPFLAGS = -I${top_srcdir}/common \
-	-I${top_srcdir}/pixmaps  \
+AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_builddir@ \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
+	-DSYNAPTICSTATEDIR=\""$(localstatedir)"\" \
 	-DSYNAPTIC_GTKBUILDERDIR=\""$(datadir)/synaptic/gtkbuilder/"\" \
 	-DSYNAPTIC_PIXMAPDIR=\""$(datadir)/synaptic/pixmaps/"\" \
 	@GTK_DISABLE_DEPRECATED@ \
 	@GTK_CFLAGS@ \
 	@VTE_CFLAGS@ \
-	@LP_CFLAGS@
+	@LP_CFLAGS@ \
+	@APT_PKG_CFLAGS@
 
 sbin_PROGRAMS = synaptic 
 
@@ -18,9 +19,13 @@ sbin_PROGRAMS = synaptic
 
 synaptic_LDADD = \
 	${top_builddir}/common/libsynaptic.a\
-	-lapt-pkg -lX11 @RPM_LIBS@ @DEB_LIBS@ \
+	-lapt-pkg -lX11 \
+	@RPM_LIBS@ \
+	@DEB_LIBS@ \
 	@GTK_LIBS@ \
-	@VTE_LIBS@ @LP_LIBS@\
+	@VTE_LIBS@ \
+	@LP_LIBS@ \
+	@APT_PKG_LIBS@ \
 	@XAPIAN_LIBS@ \
 	-lutil \
 	-lpthread

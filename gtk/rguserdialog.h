@@ -23,32 +23,30 @@
  */
 
 #ifndef RGUSERDIALOG_H
-#define RGUSERDIALOG_H
+#   define RGUSERDIALOG_H
 
-#include "config.h"
+#   include "config.h"
 
-#include "ruserdialog.h"
-#include "rgwindow.h"
+#   include "ruserdialog.h"
+#   include "rgwindow.h"
 
 class RGUserDialog : public RUserDialog
 {
-protected:
+ protected:
+   GtkWidget *_parentWindow;
 
-    GtkWidget *_parentWindow;
+ public:
+   RGUserDialog() : _parentWindow(0) {};
+   RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
+   RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
 
-public:
+   virtual bool showErrors();
 
-    RGUserDialog() : _parentWindow(0) {};
-    RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
-    RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
-    
-    virtual bool showErrors();
-
-    virtual bool message(const char *msg,
-	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
-	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
-	    bool defres=true);
-
+   virtual bool message(
+      const char              *msg,
+      RUserDialog::DialogType  dialog  = RUserDialog::DialogInfo,
+      RUserDialog::ButtonsType buttons = RUserDialog::ButtonsOk,
+      bool                     defres  = true);
 };
 
 
@@ -58,15 +56,15 @@ public:
  * the buttons must have valid RESPONSE_IDs attached
  * see gtkbuilder/dialog_quit.ui as an example
  * Example:
-  	RGGtkBuilderUserDialog dia(this);
-	// return true is user clicked on a button with GTK_RESPONSE_OK
-	if(dia->run("quit")) {
-	    do_response_ok_stuff();
-	} else {
+   RGGtkBuilderUserDialog dia(this);
+   // return true is user clicked on a button with GTK_RESPONSE_OK
+   if(dia->run("quit")) {
+       do_response_ok_stuff();
+   } else {
             do_not_ok_stuff();
         }
  *
- * 
+ *
  * if you need more complex interaction, use the getGtkBuilder() call to ask
  * for specific widgets in the dialog (see gtkbuilder/dialog_upgrade.ui as
  * example.
@@ -74,22 +72,29 @@ public:
 class RGGtkBuilderUserDialog : public RGUserDialog
 {
  protected:
-    GtkWidget *_dialog;
-    GtkResponseType res;
-    GtkBuilder *builder;
-    void init(const char *name);
+   GtkWidget      *_dialog;
+   GtkResponseType res;
+   GtkBuilder     *builder;
+   void            init(const char *name);
 
  public:
-    RGGtkBuilderUserDialog(RGWindow* parent);
-    RGGtkBuilderUserDialog(RGWindow* parent, const char *name);
-    virtual ~RGGtkBuilderUserDialog()  { gtk_widget_destroy(_dialog); };
+   RGGtkBuilderUserDialog(RGWindow *parent);
+   RGGtkBuilderUserDialog(RGWindow *parent, const char *name);
+   virtual ~RGGtkBuilderUserDialog()
+   {
+      gtk_widget_destroy(_dialog);
+   };
 
-    void setTitle(string title) { 
-       gtk_window_set_title(GTK_WINDOW(_dialog),title.c_str());
-    }
+   void setTitle(string title)
+   {
+      gtk_window_set_title(GTK_WINDOW(_dialog), title.c_str());
+   }
 
-    int run(const char *name=NULL, bool return_gtk_response=false);
-    GtkBuilder *getGtkBuilder() { return builder; };
+   int         run(const char *name = NULL, bool return_gtk_response = false);
+   GtkBuilder *getGtkBuilder()
+   {
+      return builder;
+   };
 };
 #endif
 

@@ -31,16 +31,15 @@
 
 using namespace std;
 
-class RAPTOptions {
+class RAPTOptions
+{
  public:
-
-   class packageOptions {
+   class packageOptions
+   {
     public:
       packageOptions()
-    :
-      isLocked(false), isOrphaned(false), isNew(false),
-      isDebconf(false) {
-      }
+         : isLocked(false), isOrphaned(false), isNew(false), isDebconf(false)
+      {}
       bool isLocked;
       bool isOrphaned;
       bool isNew;
@@ -65,7 +64,7 @@ class RAPTOptions {
    void setPackageNew(const char *package, bool flag = true);
    void forgetNewPackages();
 
-   bool getFlag(const char *key);
+   bool   getFlag(const char *key);
    string getString(const char *key);
 
    void setFlag(const char *key, bool value);
@@ -73,7 +72,7 @@ class RAPTOptions {
 
  private:
    map<string, packageOptions> _packageOptions;
-   map<string, string> _options;
+   map<string, string>         _options;
 };
 
 extern RAPTOptions *_roptions;

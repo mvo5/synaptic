@@ -23,20 +23,20 @@
  */
 
 #ifndef _RPACKAGEFILTER_H_
-#define _RPACKAGEFILTER_H_
+#   define _RPACKAGEFILTER_H_
 
-#include "config.h"
+#   include "config.h"
 
-#include <set>
-#include <vector>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <apt-pkg/tagfile.h>
+#   include <set>
+#   include <vector>
+#   include <string>
+#   include <fstream>
+#   include <iostream>
+#   include <apt-pkg/tagfile.h>
 
-#include <regex.h>
+#   include <regex.h>
 
-#include "rpackagelister.h"
+#   include "rpackagelister.h"
 
 using namespace std;
 
@@ -46,52 +46,65 @@ class RPackageLister;
 class Configuration;
 
 
-class RPackageFilter {
+class RPackageFilter
+{
 
 
-   public:
-
+ public:
    virtual const char *type() = 0;
 
    virtual bool filter(RPackage *pkg) = 0;
-   virtual void reset() = 0;
+   virtual void reset()               = 0;
 
    virtual bool read(Configuration &conf, string key) = 0;
-   virtual bool write(ofstream &out, string pad) = 0;
+   virtual bool write(ofstream &out, string pad)      = 0;
 
-   RPackageFilter() {}
-   virtual ~RPackageFilter() {}
+   RPackageFilter()
+   {}
+   virtual ~RPackageFilter()
+   {}
 };
 
 
 extern const char *RPFSection;
 
-class RSectionPackageFilter : public RPackageFilter {
+class RSectionPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    vector<string> _groups;
-   bool _inclusive;             // include or exclude the packages
+   bool           _inclusive; // include or exclude the packages
 
-   public:
+ public:
+   RSectionPackageFilter() : _inclusive(false)
+   {}
+   virtual ~RSectionPackageFilter()
+   {}
 
-   RSectionPackageFilter() : _inclusive(false) {}
-   virtual ~RSectionPackageFilter() {}
-
-   inline virtual void reset() {
+   inline virtual void reset()
+   {
       clear();
       _inclusive = false;
    }
 
-   inline virtual const char *type() { return RPFSection; }
+   inline virtual const char *type()
+   {
+      return RPFSection;
+   }
 
-   void setInclusive(bool flag) { _inclusive = flag; }
+   void setInclusive(bool flag)
+   {
+      _inclusive = flag;
+   }
    bool inclusive();
 
-   inline void addSection(string group) { _groups.push_back(group); }
-   int count();
+   inline void addSection(string group)
+   {
+      _groups.push_back(group);
+   }
+   int    count();
    string section(int index);
-   void clear();
+   void   clear();
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -100,7 +113,8 @@ class RSectionPackageFilter : public RPackageFilter {
 
 extern const char *RPFPattern;
 
-class RPatternPackageFilter : public RPackageFilter {
+class RPatternPackageFilter : public RPackageFilter
+{
  public:
    typedef enum {
       Name,
@@ -110,21 +124,22 @@ class RPatternPackageFilter : public RPackageFilter {
       Depends,
       Provides,
       Conflicts,
-      Replaces,                 // (or obsoletes)
+      Replaces, // (or obsoletes)
       Recommends,
       Suggests,
-      RDepends,                  // reverse depends
-      Origin,                   // package origin (like security.debian.org)
-      Component                   // package component (e.g. main)
+      RDepends, // reverse depends
+      Origin,   // package origin (like security.debian.org)
+      Component // package component (e.g. main)
    } DepType;
 
 
  protected:
-   struct Pattern {
-      DepType where;
-      string pattern;
-      bool exclusive;
-        vector<regex_t *> regexps;
+   struct Pattern
+   {
+      DepType           where;
+      string            pattern;
+      bool              exclusive;
+      vector<regex_t *> regexps;
    };
    vector<Pattern> _patterns;
 
@@ -134,36 +149,55 @@ class RPatternPackageFilter : public RPackageFilter {
    inline bool filterVersion(Pattern pat, RPackage *pkg);
    inline bool filterDescription(Pattern pat, RPackage *pkg);
    inline bool filterMaintainer(Pattern pat, RPackage *pkg);
-   inline bool filterDepends(Pattern pat, RPackage *pkg,
-			     pkgCache::Dep::DepType filterType);
+   inline bool filterDepends(Pattern                pat,
+                             RPackage              *pkg,
+                             pkgCache::Dep::DepType filterType);
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
    inline bool filterOrigin(Pattern pat, RPackage *pkg);
    inline bool filterComponent(Pattern pat, RPackage *pkg);
 
  public:
-
    static const char *TypeName[];
 
-   RPatternPackageFilter() : and_mode(true) {}
+   RPatternPackageFilter() : and_mode(true)
+   {}
    RPatternPackageFilter(RPatternPackageFilter &f);
    virtual ~RPatternPackageFilter();
 
-   inline virtual void reset() { clear(); }
+   inline virtual void reset()
+   {
+      clear();
+   }
 
-   inline virtual const char *type() { return RPFPattern; }
+   inline virtual const char *type()
+   {
+      return RPFPattern;
+   }
 
-   void addPattern(DepType type, string pattern, bool exclusive);
-   inline int count() { return _patterns.size(); }
-   inline void getPattern(int index, DepType &type, string &pattern,
-                          bool &exclusive) {
-      type = _patterns[index].where;
-      pattern = _patterns[index].pattern;
+   void       addPattern(DepType type, string pattern, bool exclusive);
+   inline int count()
+   {
+      return _patterns.size();
+   }
+   inline void getPattern(int      index,
+                          DepType &type,
+                          string  &pattern,
+                          bool    &exclusive)
+   {
+      type      = _patterns[index].where;
+      pattern   = _patterns[index].pattern;
       exclusive = _patterns[index].exclusive;
    }
    void clear();
-   bool getAndMode() { return and_mode; }
-   void setAndMode(bool b) { and_mode=b; }
+   bool getAndMode()
+   {
+      return and_mode;
+   }
+   void setAndMode(bool b)
+   {
+      and_mode = b;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -173,42 +207,53 @@ class RPatternPackageFilter : public RPackageFilter {
 
 extern const char *RPFStatus;
 
-class RStatusPackageFilter : public RPackageFilter {
+class RStatusPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    int _status;
 
-   public:
-
+ public:
    enum Types {
-      Installed = 1 << 0,
-      Upgradable = 1 << 1,      // installed but upgradable
-      Broken = 1 << 2,          // installed but dependencies are broken
-      NotInstalled = 1 << 3,
-      MarkInstall = 1 << 4,
-      MarkRemove = 1 << 5,
-      MarkKeep = 1 << 6,
-      NewPackage = 1 << 7,      // new Package (after update)
-      PinnedPackage = 1 << 8,   // pinned Package (never upgrade)
-      OrphanedPackage = 1 << 9, // orphaned (identfied with deborphan)
-      ResidualConfig = 1 << 10, // not installed but has config left
-      NotInstallable = 1 << 11,  // the package is not aviailable in repository
+      Installed       = 1 << 0,
+      Upgradable      = 1 << 1, // installed but upgradable
+      Broken          = 1 << 2, // installed but dependencies are broken
+      NotInstalled    = 1 << 3,
+      MarkInstall     = 1 << 4,
+      MarkRemove      = 1 << 5,
+      MarkKeep        = 1 << 6,
+      NewPackage      = 1 << 7,  // new Package (after update)
+      PinnedPackage   = 1 << 8,  // pinned Package (never upgrade)
+      OrphanedPackage = 1 << 9,  // orphaned (identfied with deborphan)
+      ResidualConfig  = 1 << 10, // not installed but has config left
+      NotInstallable  = 1 << 11, // the package is not aviailable in repository
       UpstreamUpgradable = 1 << 12, // new upstream version
-      AutoInstalled = 1 << 13, // automatically installed
+      AutoInstalled      = 1 << 13, // automatically installed
       Garbage = 1 << 14, // automatically installed and no longer required
       NowPolicyBroken = 1 << 15,
-      ManualInstalled = 1 << 16,  // !AutoInstalled
+      ManualInstalled = 1 << 16, // !AutoInstalled
    };
 
    RStatusPackageFilter() : _status(~0)
    {}
-   inline virtual void reset() { _status = ~0; }
+   inline virtual void reset()
+   {
+      _status = ~0;
+   }
 
-   inline virtual const char *type() { return RPFStatus; }
+   inline virtual const char *type()
+   {
+      return RPFStatus;
+   }
 
-   inline void setStatus(int status) { _status = status; }
-   inline int status() { return _status; }
+   inline void setStatus(int status)
+   {
+      _status = status;
+   }
+   inline int status()
+   {
+      return _status;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -218,15 +263,20 @@ class RStatusPackageFilter : public RPackageFilter {
 
 extern const char *RPFPriority;
 
-class RPriorityPackageFilter:public RPackageFilter {
+class RPriorityPackageFilter : public RPackageFilter
+{
 
-   public:
+ public:
+   RPriorityPackageFilter()
+   {}
 
-   RPriorityPackageFilter()  {}
+   inline virtual void reset()
+   {}
 
-   inline virtual void reset() {}
-
-   inline virtual const char *type() { return RPFPriority; }
+   inline virtual const char *type()
+   {
+      return RPFPriority;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
@@ -236,51 +286,68 @@ class RPriorityPackageFilter:public RPackageFilter {
 
 extern const char *RPFReducedView;
 
-class RReducedViewPackageFilter : public RPackageFilter {
+class RReducedViewPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    bool _enabled;
 
-   set<string> _hide;
-   vector<string> _hide_wildcard;
+   set<string>       _hide;
+   vector<string>    _hide_wildcard;
    vector<regex_t *> _hide_regex;
 
    void addFile(string FileName);
 
-   public:
-
-   RReducedViewPackageFilter() : _enabled(false) {}
+ public:
+   RReducedViewPackageFilter() : _enabled(false)
+   {}
    ~RReducedViewPackageFilter();
 
-   inline virtual void reset() { _hide.clear(); }
+   inline virtual void reset()
+   {
+      _hide.clear();
+   }
 
-   inline virtual const char *type() { return RPFReducedView; }
+   inline virtual const char *type()
+   {
+      return RPFReducedView;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, string key);
    virtual bool write(ofstream &out, string pad);
 
-   void enable() { _enabled = true; }
-   void disable() { _enabled = false; }
+   void enable()
+   {
+      _enabled = true;
+   }
+   void disable()
+   {
+      _enabled = false;
+   }
 };
 
 extern const char *RPFFile;
 
-class RFilePackageFilter : public RPackageFilter {
+class RFilePackageFilter : public RPackageFilter
+{
 
-   protected:
-
-   string filename;
+ protected:
+   string      filename;
    set<string> pkgs;
 
-   public:
+ public:
+   RFilePackageFilter()
+   {}
+   virtual ~RFilePackageFilter()
+   {}
 
-   RFilePackageFilter() {}
-   virtual ~RFilePackageFilter() {}
-
-   inline virtual void reset() {}
-   inline virtual const char *type() { return RPFFile; }
+   inline virtual void reset()
+   {}
+   inline virtual const char *type()
+   {
+      return RPFFile;
+   }
 
    bool addFile(string file);
 
@@ -290,16 +357,15 @@ class RFilePackageFilter : public RPackageFilter {
 };
 
 
-struct RFilter {
+struct RFilter
+{
 
-   public:
-
+ public:
    RFilter()
-      :   section(), pattern(), status(),
-          priority(), reducedview(), preset()
+      : section(), pattern(), status(), priority(), reducedview(), preset()
    {}
 
-   void setName(string name);
+   void   setName(string name);
    string getName();
 
    bool read(Configuration &conf, string key);
@@ -307,17 +373,16 @@ struct RFilter {
    bool apply(RPackage *package);
    void reset();
 
-   RSectionPackageFilter section;
-   RPatternPackageFilter pattern;
-   RStatusPackageFilter status;
-   RPriorityPackageFilter priority;
+   RSectionPackageFilter     section;
+   RPatternPackageFilter     pattern;
+   RStatusPackageFilter      status;
+   RPriorityPackageFilter    priority;
    RReducedViewPackageFilter reducedview;
-   RFilePackageFilter file;
+   RFilePackageFilter        file;
 
    bool preset;
 
-   protected:
-
+ protected:
    string name;
 };
 

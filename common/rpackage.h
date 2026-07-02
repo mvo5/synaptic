@@ -27,16 +27,16 @@
  */
 
 #ifndef _RPACKAGE_H_
-#define _RPACKAGE_H_
+#   define _RPACKAGE_H_
 
-#include "config.h"
+#   include "config.h"
 
-#include <vector>
+#   include <vector>
 
-#include <apt-pkg/pkgcache.h>
-#include <apt-pkg/acquire.h>
-#include "rconfiguration.h"
-#include "i18n.h"
+#   include <apt-pkg/pkgcache.h>
+#   include <apt-pkg/acquire.h>
+#   include "rconfiguration.h"
+#   include "i18n.h"
 
 using namespace std;
 
@@ -48,48 +48,49 @@ enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier
 // (and added "RDepends" as last element)
-static const char *DepTypeStr[] =
-   {"",
-    _("Depends"),
-    _("PreDepends"),
-    _("Suggests"),
-    _("Recommends"),
-    _("Conflicts"),
-    _("Replaces"),
-    _("Obsoletes"),
-    _("Breaks"),
-    _("Enhances"),
-    /* padding */
-    "",
-    "",
-    "",
-    "",
-    "",
-    // make sure this is always the last member
-    _("Dependency of"),
+static const char *DepTypeStr[] = {
+   "",
+   _("Depends"),
+   _("PreDepends"),
+   _("Suggests"),
+   _("Recommends"),
+   _("Conflicts"),
+   _("Replaces"),
+   _("Obsoletes"),
+   _("Breaks"),
+   _("Enhances"),
+   /* padding */
+   "",
+   "",
+   "",
+   "",
+   "",
+   // make sure this is always the last member
+   _("Dependency of"),
 };
 
-typedef struct  {
-   pkgCache::Dep::DepType type; // type as enum
-   const char* name;            // target pkg name
-   const char* version;         // target version
-   const char* versionComp;     // target version compare type ( << , > etc)
-   bool isSatisfied;            // dependecy is satified
-   bool isVirtual;              // package is virtual
-   bool isOr;                   // or dependency (with next pkg)
+typedef struct
+{
+   pkgCache::Dep::DepType type;    // type as enum
+   const char            *name;    // target pkg name
+   const char            *version; // target version
+   const char *versionComp;        // target version compare type ( << , > etc)
+   bool        isSatisfied;        // dependecy is satified
+   bool        isVirtual;          // package is virtual
+   bool        isOr;               // or dependency (with next pkg)
 } DepInformation;
 
 
-class RPackage {
+class RPackage
+{
 
  public:
    RPackageLister *_lister;
 
-   protected:
-
-   string fullname;
-   pkgRecords *_records;
-   pkgDepCache *_depcache;
+ protected:
+   string                 fullname;
+   pkgRecords            *_records;
+   pkgDepCache           *_depcache;
    pkgCache::PkgIterator *_package;
 
    // save the default candidate version to undo version selection
@@ -99,11 +100,10 @@ class RPackage {
 
    // Virtual pkgs provided by this one.
    // FIXME: broken right now
-   //bool isShallowDependency(RPackage *pkg);
+   // bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:
-
    enum Flags {
       FKeep             = 1 << 0,
       FInstall          = 1 << 1,
@@ -128,17 +128,15 @@ class RPackage {
       FIsAuto           = 1 << 20,
       FIsGarbage        = 1 << 21,
       FNowPolicyBroken  = 1 << 22,
-      FInstPolicyBroken  = 1 << 23,
+      FInstPolicyBroken = 1 << 23,
    };
 
-   enum UpdateImportance {
-      IUnknown,
-      INormal,
-      ICritical,
-      ISecurity
-   };
+   enum UpdateImportance { IUnknown, INormal, ICritical, ISecurity };
 
-   pkgCache::PkgIterator *package() { return _package; }
+   pkgCache::PkgIterator *package()
+   {
+      return _package;
+   }
 
    const char *name();
 
@@ -163,7 +161,7 @@ class RPackage {
    vector<string> provides();
 
    // get all available versions (version, release)
-   vector<pair<string, string> > getAvailableVersions();
+   vector<pair<string, string>> getAvailableVersions();
 
    // get origins url of the package (e.g. http://security.ubuntu.com)
    vector<string> getCandidateOriginSiteUrls();
@@ -189,28 +187,28 @@ class RPackage {
    const char *vendor();
 
    const char *installedVersion();
-   long installedSize();
+   long        installedSize();
 
    // get tag from pkg record
    string findTagFromPkgRecord(const char *tag);
 
    // get the raw package record
-   string getRawRecord(bool useCandidateVersion=true);
+   string getRawRecord(bool useCandidateVersion = true);
 
    // sourcepkg
    const char *srcPackage();
 
    // relative to version that would be installed
-   const char *availableVersion();
+   const char           *availableVersion();
    pkgCache::VerIterator availableVersionIter();
-   long availableInstalledSize();
-   long availablePackageSize();
+   long                  availableInstalledSize();
+   long                  availablePackageSize();
 
    // does the pkg depends on this one?
    bool dependsOn(const char *pkgname);
 
    // getDeps of installed pkg
-   vector<DepInformation> enumDeps(bool useCanidateVersion=false);
+   vector<DepInformation> enumDeps(bool useCanidateVersion = false);
 
    // reverse dependencies
    vector<DepInformation> enumRDeps();
@@ -228,10 +226,12 @@ class RPackage {
 
    void setPinned(bool flag);
 
-   void setNew(bool flag = true) {
+   void setNew(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FNew) : (_boolFlags & ~FNew);
    }
-   void setOrphaned(bool flag = true) {
+   void setOrphaned(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & ~FOrphaned);
    }
 
@@ -244,15 +244,17 @@ class RPackage {
    void setRemoveWithDeps(bool shallow, bool purge = false);
 
    // mainpulate the candiate version
-   bool setVersion(string verTag);
-   void unsetVersion();
+   bool   setVersion(string verTag);
+   void   unsetVersion();
    string showWhyInstBroken();
 
-   RPackage(RPackageLister *lister, pkgDepCache *depcache,
-            pkgRecords *records, pkgCache::PkgIterator &pkg);
+   RPackage(RPackageLister        *lister,
+            pkgDepCache           *depcache,
+            pkgRecords            *records,
+            pkgCache::PkgIterator &pkg);
    ~RPackage();
 
-   private:
+ private:
    string getChangelogURI();
 };
 

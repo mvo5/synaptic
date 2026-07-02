@@ -3,7 +3,7 @@
 
 /*
  * TagcollConsumer that builds a tagged collection
- * 
+ *
  * Copyright (C) 2003  Enrico Zini <enrico@debian.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -23,16 +23,16 @@
 
 #if 0 // PORTME
 
-#include "config.h"
+#   include "config.h"
 
-#ifdef HAVE_DEBTAGS
+#   ifdef HAVE_DEBTAGS
 //#pragma interface
 
-#include <HandleMaker.h>
-#include <TagcollConsumer.h>
-#include <TagCollection.h>
-#include "rpackage.h"
-#include "rpackagelister.h"
+#      include <HandleMaker.h>
+#      include <TagcollConsumer.h>
+#      include <TagCollection.h>
+#      include "rpackage.h"
+#      include "rpackagelister.h"
 
 // TagcollConsumer that builds a tagged collection for synaptic
 class RTagcollBuilder:public TagcollConsumer<std::string> {
@@ -89,7 +89,7 @@ class RTagcollBuilder:public TagcollConsumer<std::string> {
    }
 };
 
-#endif //HAVE_DEBTAGS
+#   endif // HAVE_DEBTAGS
 
 // vim:set ts=4 sw=4:
 #endif

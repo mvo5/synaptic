@@ -1,17 +1,17 @@
 /* rpackagestatus.cc - wrapper for accessing packagestatus information
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002-2008 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
- * 
+ *
  * Portions Taken from Gnome APT
  *   Copyright (C) 1998 Havoc Pennington <hp@pobox.com>
- * 
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -36,17 +36,26 @@
 
 // init the static release array so that we need to
 // run lsb_release only once
-char RPackageStatus::release[255] = {0,};
+char RPackageStatus::release[255] = {
+   0,
+};
 
 // class that finds out what do display to get user
 void RPackageStatus::init()
 {
-   const char *status_short[N_STATUS_COUNT] = {
-      "install", "reinstall", "upgrade", "downgrade", "remove",
-      "purge", "available", "available-locked",
-      "installed-updated", "installed-outdated", "installed-locked",
-      "broken", "new"
-   };
+   const char *status_short[N_STATUS_COUNT] = {"install",
+                                               "reinstall",
+                                               "upgrade",
+                                               "downgrade",
+                                               "remove",
+                                               "purge",
+                                               "available",
+                                               "available-locked",
+                                               "installed-updated",
+                                               "installed-outdated",
+                                               "installed-locked",
+                                               "broken",
+                                               "new"};
    memcpy(PackageStatusShortString, status_short, sizeof(status_short));
 
    const char *status_long[N_STATUS_COUNT] = {
@@ -62,92 +71,96 @@ void RPackageStatus::init()
       _("Installed (upgradable)"),
       _("Installed (locked to the current version)"),
       _("Broken"),
-      _("Not installed (new in repository)")
-   };
+      _("Not installed (new in repository)")};
    memcpy(PackageStatusLongString, status_long, sizeof(status_long));
 
 
    // check for unsupported stuff
-   if(_config->FindB("Synaptic::mark-unsupported", true)) {
+   if (_config->FindB("Synaptic::mark-unsupported", true)) {
       string s, labels, origin, components;
       markUnsupported = true;
 
       // read supported labels
 #if defined(VENDOR_DERIVES_FROM_UBUNTU)
-      labels = _config->Find("Synaptic::supported-label", "Ubuntu UbuntuESM UbuntuESMApps");
+      labels = _config->Find("Synaptic::supported-label",
+                             "Ubuntu UbuntuESM UbuntuESMApps");
 #else
-      labels = _config->Find("Synaptic::supported-label", "Debian Debian-Security");
+      labels =
+         _config->Find("Synaptic::supported-label", "Debian Debian-Security");
 #endif
       stringstream sst1(labels);
-      while(!sst1.eof()) {
-	 sst1 >> s;
-	 supportedLabels.push_back(s);
+      while (!sst1.eof()) {
+         sst1 >> s;
+         supportedLabels.push_back(s);
       }
 
       // read supported origins
 #if defined(VENDOR_DERIVES_FROM_UBUNTU)
-      origin = _config->Find("Synaptic::supported-origins", "Ubuntu UbuntuESM UbuntuESMApps");
+      origin = _config->Find("Synaptic::supported-origins",
+                             "Ubuntu UbuntuESM UbuntuESMApps");
 #else
       origin = _config->Find("Synaptic::supported-origins", "Debian");
 #endif
       stringstream sst2(origin);
-      while(!sst2.eof()) {
-	 sst2 >> s;
-	 supportedOrigins.push_back(s);
+      while (!sst2.eof()) {
+         sst2 >> s;
+         supportedOrigins.push_back(s);
       }
-      
+
       // read supported components
 #if defined(VENDOR_DERIVES_FROM_UBUNTU)
-      components = _config->Find("Synaptic::supported-components", "main restricted");
+      components =
+         _config->Find("Synaptic::supported-components", "main restricted");
 #else
-      components = _config->Find("Synaptic::supported-components", "main updates/main");
+      components =
+         _config->Find("Synaptic::supported-components", "main updates/main");
 #endif
       stringstream sst3(components);
-      while(!sst3.eof()) {
-	 sst3 >> s;
-	 supportedComponents.push_back(s);
+      while (!sst3.eof()) {
+         sst3 >> s;
+         supportedComponents.push_back(s);
       }
-   } 
+   }
 
    // init the static release once
-   FILE *fp = popen("lsb_release -c -s","r");
-   if(fp) {
+   FILE *fp = popen("lsb_release -c -s", "r");
+   if (fp) {
       fgets((char *)RPackageStatus::release, 255, fp);
       pclose(fp);
       _strstrip(release);
-   } 
+   }
 }
 
-bool RPackageStatus::isSupported(RPackage *pkg) 
+bool RPackageStatus::isSupported(RPackage *pkg)
 {
    bool res = true;
 
-   if(markUnsupported) {
+   if (markUnsupported) {
       bool sc, sl, so;
 
-      sc=sl=so=false;
+      sc = sl = so = false;
 
       string component = pkg->component();
-      string label = pkg->label();
-      string origin = pkg->origin();
+      string label     = pkg->label();
+      string origin    = pkg->origin();
 
-      for(unsigned int i=0;i<supportedComponents.size();i++) {
-	 if(supportedComponents[i] == component) {
-	    sc = true;
-	    break;
-	 }
+      for (unsigned int i = 0; i < supportedComponents.size(); i++) {
+         if (supportedComponents[i] == component) {
+            sc = true;
+            break;
+         }
       }
-      for(unsigned int i=0;i<supportedLabels.size();i++) {
-	 if(supportedLabels[i] == label) {
-	    sl = true;
-	    break;
-	 }
+      for (unsigned int i = 0; i < supportedLabels.size(); i++) {
+         if (supportedLabels[i] == label) {
+            sl = true;
+            break;
+         }
       }
-      for(unsigned int i=0;i<supportedOrigins.size();i++) {
-	 if(supportedOrigins[i] == origin) {
-	    so = true;
-	    break;
-	 }
+      for (unsigned int i = 0; i < supportedOrigins.size(); i++) {
+         if (supportedOrigins[i] == origin) {
+            so = true;
+            break;
+         }
       }
 
       res = (sc & sl & so & pkg->isTrusted());
@@ -159,7 +172,7 @@ bool RPackageStatus::isSupported(RPackage *pkg)
 int RPackageStatus::getStatus(RPackage *pkg)
 {
    int flags = pkg->getFlags();
-   int ret = NotInstalled;
+   int ret   = NotInstalled;
 
    if (pkg->wouldBreak()) {
       ret = IsBroken;
@@ -194,42 +207,44 @@ int RPackageStatus::getStatus(RPackage *pkg)
    return ret;
 }
 
-bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res) 
+bool RPackageStatus::maintenanceEndTime(RPackage *pkg, struct tm *res)
 {
-   //cerr << "RPackageStatus::maintenanceEndTime()" << std::endl;
+   // cerr << "RPackageStatus::maintenanceEndTime()" << std::endl;
 
    pkgTagSection sec;
-   time_t release_date = -1;
+   time_t        release_date = -1;
 
-   string distro = _config->Find("Synaptic::supported-label");
+   string distro      = _config->Find("Synaptic::supported-label");
    string releaseFile = pkg->getReleaseFileForOrigin(distro, release);
-   if(!FileExists(releaseFile)) {
+   if (!FileExists(releaseFile)) {
       // happens e.g. when there is no release file and is harmless
-      //cerr << "mainenanceEndTime(): can not find file: " << releaseFile << endl;
+      // cerr << "mainenanceEndTime(): can not find file: " << releaseFile <<
+      // endl;
       return false;
    }
-   
+
    // read the relase file
-   FileFd fd(releaseFile, FileFd::ReadOnly);
+   FileFd     fd(releaseFile, FileFd::ReadOnly);
    pkgTagFile t(&fd);
    t.Step(sec);
 
    // get the time_t form the string
-   if(!RFC1123StrToTime(sec.FindS("Date").c_str(), release_date))
+   if (!RFC1123StrToTime(sec.FindS("Date").c_str(), release_date))
       return false;
 
-   // if its not a supported package, return 0 
-   if(!isSupported(pkg))
+   // if its not a supported package, return 0
+   if (!isSupported(pkg))
       return false;
 
    // now calculate the time until there is support
    gmtime_r(&release_date, res);
-   
-   const int support_time =_config->FindI("Synaptic::supported-month", 0);
+
+   const int support_time = _config->FindI("Synaptic::supported-month", 0);
    if (support_time <= 0)
       return false;
 
-   res->tm_year += (support_time / 12) + ((res->tm_mon + support_time % 12) / 12);
+   res->tm_year +=
+      (support_time / 12) + ((res->tm_mon + support_time % 12) / 12);
    res->tm_mon = (res->tm_mon + support_time) % 12;
 
    return true;

@@ -48,8 +48,8 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::Broken,
    RStatusPackageFilter::NewPackage,
    RStatusPackageFilter::PinnedPackage,
-   RStatusPackageFilter::OrphanedPackage,       // debian only
-   RStatusPackageFilter::ResidualConfig,        // debian only
+   RStatusPackageFilter::OrphanedPackage, // debian only
+   RStatusPackageFilter::ResidualConfig,  // debian only
    RStatusPackageFilter::NotInstallable,
    RStatusPackageFilter::UpstreamUpgradable,
    RStatusPackageFilter::AutoInstalled,
@@ -58,37 +58,32 @@ static const RStatusPackageFilter::Types StatusMasks[] = {
    RStatusPackageFilter::ManualInstalled,
 };
 
-static const int NrOfStatusBits = sizeof(StatusMasks)/sizeof(RStatusPackageFilter::Types);
+static const int NrOfStatusBits =
+   sizeof(StatusMasks) / sizeof(RStatusPackageFilter::Types);
 
-static char *ActOptions[] = {
-   _("Includes"),
-   _("Excludes"),
-   NULL
-};
+static char *ActOptions[] = {_("Includes"), _("Excludes"), NULL};
 
 
-static char *DepOptions[] = {
-   _("Package name"),
-   _("Description"),
-   _("Maintainer"),
-   _("Version number"),
-   _("Dependencies"),           // depends, predepends etc
-   _("Provided packages"),      // provides and name
-   _("Conflicting packages"),   // conflicts
-   _("Replaced packages"),      // replaces/obsoletes
-   _("Recommendations"), ///recommends
-   _("Suggestions"),   // suggests
-   _("Dependent packages"),   // Reverse Depends
-   _("Origin"),                 // Origin (e.g. security.debian.org)
-   _("Component"),                 // Component (e.g. main, universe)
-   NULL
-};
-
+static char *DepOptions[] = {_("Package name"),
+                             _("Description"),
+                             _("Maintainer"),
+                             _("Version number"),
+                             _("Dependencies"),      // depends, predepends etc
+                             _("Provided packages"), // provides and name
+                             _("Conflicting packages"), // conflicts
+                             _("Replaced packages"),    // replaces/obsoletes
+                             _("Recommendations"),      /// recommends
+                             _("Suggestions"),          // suggests
+                             _("Dependent packages"),   // Reverse Depends
+                             _("Origin"), // Origin (e.g. security.debian.org)
+                             _("Component"), // Component (e.g. main, universe)
+                             NULL};
 
 
 typedef void RGFilterEditorCloseAction(void *self, bool okcancel);
 
-class RGFilterManagerWindow:public RGGtkBuilderWindow {
+class RGFilterManagerWindow : public RGGtkBuilderWindow
+{
    static void addFilterAction(GtkWidget *self, void *data);
    static void removeFilterAction(GtkWidget *self, void *data);
 
@@ -100,8 +95,9 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    static void includeTagAction(GtkWidget *self, void *data);
    static void excludeTagAction(GtkWidget *self, void *data);
 
-   static gint deleteEventAction(GtkWidget *widget, GdkEvent * event,
-                                 gpointer data);
+   static gint deleteEventAction(GtkWidget *widget,
+                                 GdkEvent  *event,
+                                 gpointer   data);
 
    static void selectAction(GtkTreeSelection *selection, gpointer data);
 
@@ -111,11 +107,11 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    void editFilter();
 
    // helpers
-   void setSectionFilter(RSectionPackageFilter & f);
-   void getSectionFilter(RSectionPackageFilter & f);
+   void setSectionFilter(RSectionPackageFilter &f);
+   void getSectionFilter(RSectionPackageFilter &f);
 
-   void setStatusFilter(RStatusPackageFilter & f);
-   void getStatusFilter(RStatusPackageFilter & f);
+   void setStatusFilter(RStatusPackageFilter &f);
+   void getStatusFilter(RStatusPackageFilter &f);
 
    void setPatternFilter(RPatternPackageFilter &f);
    void getPatternFilter(RPatternPackageFilter &f);
@@ -124,29 +120,22 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
 
    GtkWidget *_comboPatternWhat;
    GtkWidget *_comboPatternDo;
-   GtkWidget *_filterEntry;     /* GtkEntry */
+   GtkWidget *_filterEntry; /* GtkEntry */
    GdkCursor *_busyCursor;
 
-   GtkWidget *_filterDetailsBox;        // detail box
+   GtkWidget *_filterDetailsBox; // detail box
 
    // the filter list
-   GtkWidget *_filterList;      /* GtkTreeView */
+   GtkWidget    *_filterList; /* GtkTreeView */
    GtkListStore *_filterListStore;
-   GtkTreePath *_selectedPath;
-   RFilter *_selectedFilter;
-   enum {
-      NAME_COLUMN,
-      FILTER_COLUMN,
-      N_COLUMNS
-   };
+   GtkTreePath  *_selectedPath;
+   RFilter      *_selectedFilter;
+   enum { NAME_COLUMN, FILTER_COLUMN, N_COLUMNS };
 
    // the section list
-   GtkWidget *_sectionList;     /* GtkTreeView */
+   GtkWidget    *_sectionList; /* GtkTreeView */
    GtkListStore *_sectionListStore;
-   enum {
-      SECTION_COLUMN,
-      SECTION_N_COLUMNS
-   };
+   enum { SECTION_COLUMN, SECTION_N_COLUMNS };
 
    // status filter buttons
    GtkWidget *_statusB[NrOfStatusBits];
@@ -158,21 +147,23 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
       PATTERN_TEXT_COLUMN,
       PATTERN_N_COLUMNS
    };
-   GtkWidget *_patternList;     /* GtkTreeView */
+   GtkWidget    *_patternList; /* GtkTreeView */
    GtkListStore *_patternListStore;
-   bool setPatternRow(int row, bool exclude,
-                      RPatternPackageFilter::DepType type, string pattern);
-   static void patternSelectionChanged(GtkTreeSelection *selection,
-                                       gpointer data);
-   static void patternChanged(GObject *o, gpointer data);
-   static void patternNew(GObject *o, gpointer data);
-   static void patternDelete(GObject *o, gpointer data);
-   static void statusAllClicked(GObject *o, gpointer data);
-   static void statusInvertClicked(GObject *o, gpointer data);
-   static void statusNoneClicked(GObject *o, gpointer data);
-   void applyChanges(RFilter *filter);
-   static void filterNameChanged(GObject *o, gpointer data);
-   void filterAvailableTags();
+   bool          setPatternRow(int                            row,
+                               bool                           exclude,
+                               RPatternPackageFilter::DepType type,
+                               string                         pattern);
+   static void   patternSelectionChanged(GtkTreeSelection *selection,
+                                         gpointer          data);
+   static void   patternChanged(GObject *o, gpointer data);
+   static void   patternNew(GObject *o, gpointer data);
+   static void   patternDelete(GObject *o, gpointer data);
+   static void   statusAllClicked(GObject *o, gpointer data);
+   static void   statusInvertClicked(GObject *o, gpointer data);
+   static void   statusNoneClicked(GObject *o, gpointer data);
+   void          applyChanges(RFilter *filter);
+   static void   filterNameChanged(GObject *o, gpointer data);
+   void          filterAvailableTags();
 
    // the view menu
    GtkWidget *_optionmenu_view_mode;
@@ -180,27 +171,27 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
 
    // the lister is always needed
    RPackageViewFilter *_filterview;
-   vector<RFilter *> _saveFilters;
+   vector<RFilter *>   _saveFilters;
 
 #ifdef HAVE_DEBTAGS
    // the tags stuff
-   GtkTreeView *_availableTagsView;
+   GtkTreeView  *_availableTagsView;
    GtkListStore *_availableTagsList;
 
-   GtkTreeView *_includedTagsView;
+   GtkTreeView  *_includedTagsView;
    GtkListStore *_includedTagsList;
 
-   GtkTreeView *_excludedTagsView;
+   GtkTreeView  *_excludedTagsView;
    GtkListStore *_excludedTagsList;
 
-   static void treeViewExcludeClicked(GtkTreeView *treeview,
-                                      GtkTreePath *arg1,
+   static void treeViewExcludeClicked(GtkTreeView       *treeview,
+                                      GtkTreePath       *arg1,
                                       GtkTreeViewColumn *arg2,
-                                      gpointer user_data);
-   static void treeViewIncludeClicked(GtkTreeView *treeview,
-                                      GtkTreePath *arg1,
+                                      gpointer           user_data);
+   static void treeViewIncludeClicked(GtkTreeView       *treeview,
+                                      GtkTreePath       *arg1,
                                       GtkTreeViewColumn *arg2,
-                                      gpointer user_data);
+                                      gpointer           user_data);
 #endif
 
  public:
@@ -208,7 +199,6 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
 
    // need to be called before show or run_dialog
    void readFilters();
-
 };
 
 

@@ -28,23 +28,25 @@
 #include "rggtkbuilderwindow.h"
 
 
-class RGLogView : public RGGtkBuilderWindow {
+class RGLogView : public RGGtkBuilderWindow
+{
  protected:
-   static void cbCloseClicked(GtkWidget *self, void *data);
-   static void cbButtonFind(GtkWidget *self, void *data);
-   static void cbTreeSelectionChanged(GtkTreeSelection *selection, 
-				      gpointer data);
-   static gboolean filter_func(GtkTreeModel *model, GtkTreeIter *iter,
-			       gpointer data);
+   static void     cbCloseClicked(GtkWidget *self, void *data);
+   static void     cbButtonFind(GtkWidget *self, void *data);
+   static void     cbTreeSelectionChanged(GtkTreeSelection *selection,
+                                          gpointer          data);
+   static gboolean filter_func(GtkTreeModel *model,
+                               GtkTreeIter  *iter,
+                               gpointer      data);
 
    // some widgets
-   GtkWidget *_treeView;
-   GtkWidget *_entryFind;
-   GtkWidget *_textView;
+   GtkWidget  *_treeView;
+   GtkWidget  *_entryFind;
+   GtkWidget  *_textView;
    GtkTextTag *_markTag;
 
    // data
-   const gchar *findStr;
+   const gchar  *findStr;
    GtkTreeModel *_realModel;
 
    // set new logbuffer text
@@ -55,7 +57,7 @@ class RGLogView : public RGGtkBuilderWindow {
    RGLogView(RGWindow *parent);
 
    virtual void show();
-   void readLogs();
+   void         readLogs();
 
    virtual ~RGLogView() {};
 };

@@ -27,37 +27,39 @@
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include <vector>
-#include <string>
+#   include <vector>
+#   include <string>
 
-#include "rpackagelister.h"
+#   include "rpackagelister.h"
 
 using namespace std;
 
 class Configuration;
 
 
-class RCDScanProgress {
+class RCDScanProgress
+{
 
  protected:
    int _total;
 
  public:
-   void setTotal(int total) {
+   void setTotal(int total)
+   {
       _total = total;
    }
 
    virtual void update(string text, int current) = 0;
 };
 
-class RCDScanner {
+class RCDScanner
+{
 
    Configuration *_database;
 
    RUserDialog *_userDialog;
 
  protected:
-
    enum {
       STEP_PREPARE = 1,
       STEP_UNMOUNT,
@@ -76,7 +78,7 @@ class RCDScanner {
 
    vector<string> _pkgList;
    vector<string> _srcList;
-   string _infoDir;
+   string         _infoDir;
 
    string _cdId;
    string _cdName;
@@ -87,7 +89,7 @@ class RCDScanner {
 
    string pkgSourceType() const;
    string srcSourceType() const;
-   bool scanDirectory(string path, RCDScanProgress *progress, int depth = 0);
+   bool   scanDirectory(string path, RCDScanProgress *progress, int depth = 0);
 
    void cleanPkgList(vector<string> &list);
    void cleanSrcList(vector<string> &list);
@@ -101,13 +103,13 @@ class RCDScanner {
    void unmount();
 
    string getDiscName();
-   bool setDiscName(string name);
+   bool   setDiscName(string name);
 
    void countLists(int &pkgLists, int &srcLists);
 
    RCDScanner(RUserDialog *userDialog)
- :   _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0) {
-   }
+      : _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0)
+   {}
 };
 
 #endif

@@ -44,44 +44,42 @@
 #if APT_PKG_MAJOR < 5
 
 // Let's all sing a song about apt-pkg's brokenness..
-pkgAcqFileSane::pkgAcqFileSane(pkgAcquire *Owner,
-                               std::string URI,
-                               HashStringList const &hsl,
+pkgAcqFileSane::pkgAcqFileSane(pkgAcquire              *Owner,
+                               std::string              URI,
+                               HashStringList const    &hsl,
                                unsigned long long const Size,
-                               std::string Description,
-                               std::string ShortDesc,
-                               std::string const &DestDir,
-                               std::string const &filename)
- : Item(Owner)
+                               std::string              Description,
+                               std::string              ShortDesc,
+                               std::string const       &DestDir,
+                               std::string const       &filename)
+   : Item(Owner)
 {
-  Retries=_config->FindI("Acquire::Retries",0);
-  DestFile=filename;
+   Retries  = _config->FindI("Acquire::Retries", 0);
+   DestFile = filename;
 
-  Desc.URI=URI;
-  Desc.Description=Description;
-  Desc.Owner=this;
-  Desc.ShortDesc=ShortDesc;
+   Desc.URI         = URI;
+   Desc.Description = Description;
+   Desc.Owner       = this;
+   Desc.ShortDesc   = ShortDesc;
 
-  QueueURI(Desc);
+   QueueURI(Desc);
 }
 
 // Straight from acquire-item.cc
 /* Here we try other sources */
-void pkgAcqFileSane::Failed(std::string Message,pkgAcquire::MethodConfig *Cnf)
+void pkgAcqFileSane::Failed(std::string Message, pkgAcquire::MethodConfig *Cnf)
 {
-  ErrorText = LookupTag(Message,"Message");
+   ErrorText = LookupTag(Message, "Message");
 
-  // This is the retry counter
-  if (Retries != 0 &&
-      Cnf->LocalOnly == false &&
-      StringToBool(LookupTag(Message,"Transient-Failure"),false) == true)
-    {
+   // This is the retry counter
+   if (Retries != 0 && Cnf->LocalOnly == false &&
+       StringToBool(LookupTag(Message, "Transient-Failure"), false) == true) {
       Retries--;
       QueueURI(Desc);
       return;
-    }
+   }
 
-  Item::Failed(Message,Cnf);
+   Item::Failed(Message, Cnf);
 }
 
 #endif

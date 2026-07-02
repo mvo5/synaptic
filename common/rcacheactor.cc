@@ -12,24 +12,23 @@
 
 void RCacheActor::notifyCachePostChange()
 {
-   //cout << "RCacheActor::notifyCachePostChange()" << endl;
+   // cout << "RCacheActor::notifyCachePostChange()" << endl;
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
-   vector<RPackage *> toReInstall; 
+   vector<RPackage *> toReInstall;
    vector<RPackage *> toUpgrade;
    vector<RPackage *> toRemove;
    vector<RPackage *> toDowngrade;
    vector<RPackage *> notAuthenticated;
-   vector<RPackage *> exclude;        // empty
+   vector<RPackage *> exclude; // empty
 
-   //cout << "_laststate: " << _laststate << endl;
+   // cout << "_laststate: " << _laststate << endl;
    if (_laststate == NULL)
       return;
 
    if (_lister->getStateChanges(*_laststate, toKeep, toInstall, toReInstall,
                                 toUpgrade, toRemove, toDowngrade,
-				notAuthenticated,
-                                exclude, false)) {
+                                notAuthenticated, exclude, false)) {
       if (toKeep.empty() == false)
          run(toKeep, ACTION_KEEP);
       if (toInstall.empty() == false)
@@ -46,27 +45,24 @@ void RCacheActor::notifyCachePostChange()
 }
 
 
-
-
-
 RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
-                                             string FileName)
-: RCacheActor(lister)
+                                             string          FileName)
+   : RCacheActor(lister)
 {
    FileFd F(FileName, FileFd::ReadOnly);
    if (_error->PendingError()) {
       _error->Error("could not open recommends file %s", FileName.c_str());
       return;
    }
-   pkgTagFile Tags(&F);
+   pkgTagFile    Tags(&F);
    pkgTagSection Section;
 
    string Name;
    string Match;
    string Recommends;
    while (Tags.Step(Section)) {
-      string Name = Section.FindS("Name");
-      string Match = Section.FindS("Match");
+      string Name       = Section.FindS("Name");
+      string Match      = Section.FindS("Match");
       string Recommends = Section.FindS("Recommends");
       if (Name.empty() == true || Recommends.empty() == true)
          continue;
@@ -80,9 +76,8 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
          regex_t *ptrn = new regex_t;
          if (regcomp(ptrn, Name.c_str(),
                      REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
-            _error->
-               Warning("Bad regular expression '%s' in Recommends file.",
-                       Name.c_str());
+            _error->Warning("Bad regular expression '%s' in Recommends file.",
+                            Name.c_str());
             delete ptrn;
          } else
             List = &_map_regex[ptrn];
@@ -90,7 +85,7 @@ RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
 
       if (List != NULL) {
          const char *C = Recommends.c_str();
-         string S;
+         string      S;
          while (*C != 0) {
             if (ParseQuoteWord(C, S))
                List->push_back(S);
@@ -121,7 +116,7 @@ void RCacheActorRecommends::setLanguageCache()
    _langLast = LangList;
 
    const char *C = LangList.c_str();
-   string S;
+   string      S;
    while (*C != 0) {
       if (ParseQuoteWord(C, S)) {
          string::size_type end;
@@ -147,8 +142,8 @@ void RCacheActorRecommends::notifyCachePostChange()
 void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
 {
    setLanguageCache();
-   const char *name;
-   const ListType *List;
+   const char             *name;
+   const ListType         *List;
    MapType::const_iterator MapI;
    for (vector<RPackage *>::const_iterator PkgI = PkgList.begin();
         PkgI != PkgList.end(); PkgI++) {
@@ -159,8 +154,8 @@ void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
          List = &MapI->second;
       } else {
          if (_map_wildcard.empty() == false) {
-            for (MapI = _map_wildcard.begin();
-                 MapI != _map_wildcard.end(); MapI++) {
+            for (MapI = _map_wildcard.begin(); MapI != _map_wildcard.end();
+                 MapI++) {
                if (fnmatch(MapI->first.c_str(), name, 0) == 0) {
                   List = &MapI->second;
                   break;
@@ -181,9 +176,9 @@ void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
          for (ListType::const_iterator ListI = List->begin();
               ListI != List->end(); ListI++) {
             const string &Recommends = *ListI;
-            if (actOnPkg(Recommends, Action) == false
-                && Recommends.find("$(LANG)") != string::npos) {
-               for (vector < string >::const_iterator LI = _langCache.begin();
+            if (actOnPkg(Recommends, Action) == false &&
+                Recommends.find("$(LANG)") != string::npos) {
+               for (vector<string>::const_iterator LI = _langCache.begin();
                     LI != _langCache.end(); LI++) {
                   string Parsed = SubstVar(Recommends, "$(LANG)", *LI);
                   actOnPkg(Parsed, Action);
@@ -193,7 +188,6 @@ void RCacheActorRecommends::run(vector<RPackage *> &PkgList, int Action)
       }
    }
 }
-
 
 
 // vim:sts=3:sw=3

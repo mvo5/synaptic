@@ -1,16 +1,16 @@
 /* rpackagelister.cc - package cache and list manipulation
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002-2004 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
- * 
+ *
  * Portions Taken from apt-get
  *   Copyright (C) Jason Gunthorpe
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -63,11 +63,11 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/hashes.h>
 #ifndef HAVE_RPM
-#include <apt-pkg/debfile.h>
+#   include <apt-pkg/debfile.h>
 #endif
 
 #ifdef WITH_LUA
-#include <apt-pkg/luaiface.h>
+#   include <apt-pkg/luaiface.h>
 #endif
 
 #include <algorithm>
@@ -84,24 +84,25 @@ using namespace std;
 RPackageLister::RPackageLister()
    : _records(0), _progMeter(new OpProgress)
 #ifdef HAVE_XAPIAN
-   , _xapianDatabase(0)
+     ,
+     _xapianDatabase(0)
 #endif
 {
    _cache = new RPackageCache();
 
    _searchData.pattern = NULL;
    _searchData.isRegex = false;
-   _viewMode = _config->FindI("Synaptic::ViewMode", 0);
-   _updating = true;
-   _sortMode = LIST_SORT_DEFAULT;
+   _viewMode           = _config->FindI("Synaptic::ViewMode", 0);
+   _updating           = true;
+   _sortMode           = LIST_SORT_DEFAULT;
 
-   // keep order in sync with rpackageview.h 
+   // keep order in sync with rpackageview.h
    _views.push_back(new RPackageViewSections(_nativeArchPackages));
    _views.push_back(new RPackageViewStatus(_nativeArchPackages));
    _views.push_back(new RPackageViewOrigin(_nativeArchPackages));
    _filterView = new RPackageViewFilter(_nativeArchPackages);
    _views.push_back(_filterView);
-   _searchView =  new RPackageViewSearch(_nativeArchPackages);
+   _searchView = new RPackageViewSearch(_nativeArchPackages);
    _views.push_back(_searchView);
    // its import that we use "_packages" here instead of _nativeArchPackages
    _views.push_back(new RPackageViewArchitecture(_packages));
@@ -128,9 +129,9 @@ RPackageLister::RPackageLister()
 
 RPackageLister::~RPackageLister()
 {
-   for (vector<RCacheActor *>::iterator I = _actors.begin();
-        I != _actors.end(); I++)
-      delete(*I);
+   for (vector<RCacheActor *>::iterator I = _actors.begin(); I != _actors.end();
+        I++)
+      delete (*I);
 
    delete _cache;
 }
@@ -138,10 +139,10 @@ RPackageLister::~RPackageLister()
 void RPackageLister::setView(unsigned int index)
 {
    // only save this config if it is not a search
-   if(index != PACKAGE_VIEW_SEARCH)
+   if (index != PACKAGE_VIEW_SEARCH)
       _config->Set("Synaptic::ViewMode", index);
 
-   if(index < _views.size())
+   if (index < _views.size())
       _selectedView = _views[index];
    else
       _selectedView = _views[0];
@@ -162,27 +163,27 @@ vector<string> RPackageLister::getSubViews()
 
 bool RPackageLister::setSubView(string newSubView)
 {
-   if(_config->FindB("Debug::Synaptic::View",false))
-      ioprintf(clog, "RPackageLister::setSubView(): newSubView '%s'\n", 
-	       newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
+   if (_config->FindB("Debug::Synaptic::View", false))
+      ioprintf(clog, "RPackageLister::setSubView(): newSubView '%s'\n",
+               newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
 
-   if(newSubView.empty())
+   if (newSubView.empty())
       _selectedView->showAll();
    else
       _selectedView->setSelected(newSubView);
 
    notifyChange(NULL);
 
-   if(_config->FindB("Debug::Synaptic::View",false))
-      ioprintf(clog, "/RPackageLister::setSubView(): newSubView '%s'\n", 
-	       newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
+   if (_config->FindB("Debug::Synaptic::View", false))
+      ioprintf(clog, "/RPackageLister::setSubView(): newSubView '%s'\n",
+               newSubView.size() > 0 ? newSubView.c_str() : "(empty)");
 
    return true;
 }
 
 static string getServerErrorMessage(string errm)
 {
-   string msg;
+   string            msg;
    string::size_type pos = errm.find("server said");
    if (pos != string::npos) {
       msg = string(errm.c_str() + pos + sizeof("server said"));
@@ -195,27 +196,30 @@ static string getServerErrorMessage(string errm)
 void RPackageLister::notifyPreChange(RPackage *pkg)
 {
    for (vector<RPackageObserver *>::const_iterator I =
-        _packageObservers.begin(); I != _packageObservers.end(); I++) {
+           _packageObservers.begin();
+        I != _packageObservers.end(); I++) {
       (*I)->notifyPreFilteredChange();
    }
 }
 
 void RPackageLister::notifyPostChange(RPackage *pkg)
 {
-   if(_config->FindB("Debug::Synaptic::View",false))
+   if (_config->FindB("Debug::Synaptic::View", false))
       ioprintf(clog, "RPackageLister::notifyPostChange(): '%s'\n",
-	       pkg == NULL ? "NULL" : pkg->name());
+               pkg == NULL ? "NULL" : pkg->name());
 
    reapplyFilter();
 
    for (vector<RPackageObserver *>::const_iterator I =
-        _packageObservers.begin(); I != _packageObservers.end(); I++) {
+           _packageObservers.begin();
+        I != _packageObservers.end(); I++) {
       (*I)->notifyPostFilteredChange();
    }
 
    if (pkg != NULL) {
       for (vector<RPackageObserver *>::const_iterator I =
-           _packageObservers.begin(); I != _packageObservers.end(); I++) {
+              _packageObservers.begin();
+           I != _packageObservers.end(); I++) {
          (*I)->notifyChange(pkg);
       }
    }
@@ -246,25 +250,24 @@ void RPackageLister::notifyCacheOpen()
 {
    undoStack.clear();
    redoStack.clear();
-   for (vector<RCacheObserver *>::const_iterator I =
-        _cacheObservers.begin(); I != _cacheObservers.end(); I++) {
+   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
+        I != _cacheObservers.end(); I++) {
       (*I)->notifyCacheOpen();
    }
-
 }
 
 void RPackageLister::notifyCachePreChange()
 {
-   for (vector<RCacheObserver *>::const_iterator I =
-        _cacheObservers.begin(); I != _cacheObservers.end(); I++) {
+   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
+        I != _cacheObservers.end(); I++) {
       (*I)->notifyCachePreChange();
    }
 }
 
 void RPackageLister::notifyCachePostChange()
 {
-   for (vector<RCacheObserver *>::const_iterator I =
-        _cacheObservers.begin(); I != _cacheObservers.end(); I++) {
+   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
+        I != _cacheObservers.end(); I++) {
       (*I)->notifyCachePostChange();
    }
 }
@@ -303,7 +306,7 @@ bool RPackageLister::openCache()
 {
    static bool firstRun = true;
 
-   if(_config->FindB("Debug::Synaptic::View",false))
+   if (_config->FindB("Debug::Synaptic::View", false))
       clog << "RPackageLister::openCache()" << endl;
 
    // Flush old errors
@@ -311,10 +314,10 @@ bool RPackageLister::openCache()
 
    // only lock if we run as root
    bool lock = true;
-   if(getuid() != 0)
+   if (getuid() != 0)
       lock = false;
 
-   if (!_cache->open(_progMeter,lock)) {
+   if (!_cache->open(_progMeter, lock)) {
       _progMeter->Done();
       _cacheValid = false;
       return _error->Error("_cache->open() failed, cannot continue.");
@@ -327,13 +330,15 @@ bool RPackageLister::openCache()
    if (pkgApplyStatus(*deps) == false) {
       _cacheValid = false;
       return _error->Error(_("Internal error opening cache (%d). "
-                             "Please report."), 1);
+                             "Please report."),
+                           1);
    }
 
    if (_error->PendingError()) {
       _cacheValid = false;
       return _error->Error(_("Internal error opening cache (%d). "
-                             "Please report."), 2);
+                             "Please report."),
+                           2);
    }
 
    if (_records)
@@ -343,7 +348,8 @@ bool RPackageLister::openCache()
    if (_error->PendingError()) {
       _cacheValid = false;
       return _error->Error(_("Internal error opening cache (%d). "
-                             "Please report."), 3);
+                             "Please report."),
+                           3);
    }
 
    for (vector<RPackage *>::iterator I = _packages.begin();
@@ -361,14 +367,14 @@ bool RPackageLister::openCache()
    _packagesIndex.resize(packageCount, -1);
 
    string pkgName;
-   int count = 0;
+   int    count = 0;
 
    bool showAllMultiArch = _config->FindB("Synaptic::ShowAllMultiArch", false);
 
    _installedCount = 0;
 
    map<string, RPackage *> pkgmap;
-   set<string> sectionSet;
+   set<string>             sectionSet;
 
    for (unsigned int i = 0; i != _views.size(); i++)
       _views[i]->clear();
@@ -381,7 +387,7 @@ bool RPackageLister::openCache()
       else if (I->VersionList == 0)
          continue; // Exclude virtual packages.
 
-      RPackage *pkg = new RPackage(this, deps, _records, I);
+      RPackage *pkg         = new RPackage(this, deps, _records, I);
       _packagesIndex[I->ID] = count;
       _packages.push_back(pkg);
       count++;
@@ -397,19 +403,19 @@ bool RPackageLister::openCache()
       // Find out about new packages.
       if (firstRun) {
          packageNames.insert(pkgName);
-	 // check for saved-new status
-	 if (_roptions->getPackageNew(pkgName.c_str()))
-	    pkg->setNew(true);
+         // check for saved-new status
+         if (_roptions->getPackageNew(pkgName.c_str()))
+            pkg->setNew(true);
       } else if (packageNames.find(pkgName) == packageNames.end()) {
          pkg->setNew();
          _roptions->setPackageNew(pkgName.c_str());
          packageNames.insert(pkgName);
-      } else  if (_roptions->getPackageNew(pkgName.c_str())) {
-	 pkg->setNew(true);
+      } else if (_roptions->getPackageNew(pkgName.c_str())) {
+         pkg->setNew(true);
       }
 
-      if (_roptions->getPackageLock(pkgName.c_str())) 
-	 pkg->setPinned(true);
+      if (_roptions->getPackageLock(pkgName.c_str()))
+         pkg->setPinned(true);
 
       // Gather list of sections.
       for (auto Ver = I.VersionList(); !Ver.end(); Ver++) {
@@ -440,34 +446,33 @@ bool RPackageLister::openCache()
 #ifdef HAVE_XAPIAN
 time_t RPackageLister::xapianIndexTimestamp()
 {
-        std::string db = APT_XAPIAN_INDEX_DIR + "/update-timestamp";
-        struct stat st;
-        int rv = stat(db.c_str(), &st);
-        return rv ? 0 : st.st_mtime;
+   std::string db = APT_XAPIAN_INDEX_DIR + "/update-timestamp";
+   struct stat st;
+   int         rv = stat(db.c_str(), &st);
+   return rv ? 0 : st.st_mtime;
 }
 
 bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
-   
-   if(_config->FindB("Debug::Synaptic::Xapian",false))
+
+   if (_config->FindB("Debug::Synaptic::Xapian", false))
       std::cerr << "xapainIndexNeedsUpdate()" << std::endl;
 
    // check the xapian index
-   if(FileExists("/usr/sbin/update-apt-xapian-index") && 
-      (!_xapianDatabase )) {
-      if(_config->FindB("Debug::Synaptic::Xapian",false))
-	 std::cerr << "xapain index not build yet" << std::endl;
+   if (FileExists("/usr/sbin/update-apt-xapian-index") && (!_xapianDatabase)) {
+      if (_config->FindB("Debug::Synaptic::Xapian", false))
+         std::cerr << "xapain index not build yet" << std::endl;
       return true;
-   } 
+   }
 
-   // compare timestamps, rebuild everytime, its now cheap(er) 
+   // compare timestamps, rebuild everytime, its now cheap(er)
    // because we use u-a-x-i --update
    stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
-   if(xapianIndexTimestamp() < buf.st_mtime) {
-      if(_config->FindB("Debug::Synaptic::Xapian",false))
-	 std::cerr << "xapian outdated " 
-		   << buf.st_mtime - xapianIndexTimestamp()  << std::endl;
+   if (xapianIndexTimestamp() < buf.st_mtime) {
+      if (_config->FindB("Debug::Synaptic::Xapian", false))
+         std::cerr << "xapian outdated "
+                   << buf.st_mtime - xapianIndexTimestamp() << std::endl;
       return true;
    }
 
@@ -476,7 +481,7 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 
 bool RPackageLister::openXapianIndex()
 {
-   if(_xapianDatabase)
+   if (_xapianDatabase)
       delete _xapianDatabase;
    try {
       _xapianDatabase = new Xapian::Database(APT_XAPIAN_INDEX_DIR + "/index");
@@ -502,7 +507,8 @@ void RPackageLister::applyInitialSelection()
 RPackage *RPackageLister::getPackage(pkgCache::PkgIterator &iter)
 {
    if (iter->ID > _packagesIndex.size()) {
-      //std::cerr << "requesting ID " << iter->ID << " but packageIndex size is only " << _packagesIndex.size() << std::endl;
+      // std::cerr << "requesting ID " << iter->ID << " but packageIndex size is
+      // only " << _packagesIndex.size() << std::endl;
       return NULL;
    }
    int index = _packagesIndex[iter->ID];
@@ -537,11 +543,12 @@ bool RPackageLister::fixBroken()
    if (_cache->deps()->BrokenCount() == 0)
       return true;
 
-   if (pkgFixBroken(*_cache->deps()) == false
-       || _cache->deps()->BrokenCount() != 0)
+   if (pkgFixBroken(*_cache->deps()) == false ||
+       _cache->deps()->BrokenCount() != 0)
       return _error->Error(_("Unable to correct dependencies"));
    if (pkgMinimizeUpgrade(*_cache->deps()) == false)
-      return _error->Error(_("Unable to mark upgrades\nCheck your system for errors."));
+      return _error->Error(
+         _("Unable to mark upgrades\nCheck your system for errors."));
 
    reapplyFilter();
 
@@ -551,9 +558,12 @@ bool RPackageLister::fixBroken()
 
 bool RPackageLister::upgrade()
 {
-   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::FORBID_REMOVE_PACKAGES | APT::Upgrade::FORBID_INSTALL_NEW_PACKAGES) == false) {
-      return _error->
-         Error(_("Internal Error, AllUpgrade broke stuff. Please report."));
+   if (APT::Upgrade::Upgrade(*_cache->deps(),
+                             APT::Upgrade::FORBID_REMOVE_PACKAGES |
+                                APT::Upgrade::FORBID_INSTALL_NEW_PACKAGES) ==
+       false) {
+      return _error->Error(
+         _("Internal Error, AllUpgrade broke stuff. Please report."));
    }
 #ifdef WITH_LUA
    _lua->SetDepCache(_cache->deps());
@@ -561,7 +571,7 @@ bool RPackageLister::upgrade()
    _lua->ResetCaches();
 #endif
 
-   //reapplyFilter();
+   // reapplyFilter();
    notifyChange(NULL);
 
    return true;
@@ -570,7 +580,8 @@ bool RPackageLister::upgrade()
 
 bool RPackageLister::distUpgrade()
 {
-   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::ALLOW_EVERYTHING) == false) {
+   if (APT::Upgrade::Upgrade(*_cache->deps(), APT::Upgrade::ALLOW_EVERYTHING) ==
+       false) {
       cout << _("dist upgrade Failed") << endl;
       return false;
    }
@@ -580,7 +591,7 @@ bool RPackageLister::distUpgrade()
    _lua->ResetCaches();
 #endif
 
-   //reapplyFilter();
+   // reapplyFilter();
    notifyChange(NULL);
 
    return true;
@@ -592,7 +603,7 @@ void RPackageLister::reapplyFilter()
    if (_updating)
       return;
 
-   if(_config->FindB("Debug::Synaptic::View",false))
+   if (_config->FindB("Debug::Synaptic::View", false))
       clog << "RPackageLister::reapplyFilter()" << endl;
 
    _selectedView->refresh();
@@ -612,167 +623,187 @@ void RPackageLister::reapplyFilter()
    sortPackages(_sortMode);
 }
 
-static const int status_sort_magic = (  RPackage::FInstalled 
-				      | RPackage::FOutdated 
-				      | RPackage::FNew);
-struct statusSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return (x->getFlags() & (status_sort_magic))  <
-	     (y->getFlags() & (status_sort_magic));
-}};
+static const int status_sort_magic =
+   (RPackage::FInstalled | RPackage::FOutdated | RPackage::FNew);
+struct statusSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      return (x->getFlags() & (status_sort_magic)) <
+             (y->getFlags() & (status_sort_magic));
+   }
+};
 
-struct instSizeSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
+struct instSizeSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
       return x->installedSize() < y->installedSize();
-}};
+   }
+};
 
-struct dlSizeSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
+struct dlSizeSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
       return x->availablePackageSize() < y->availablePackageSize();
-}};
+   }
+};
 
-struct componentSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
+struct componentSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
       return x->component() < y->component();
-}};
+   }
+};
 
-struct sectionSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return std::strcmp(x->section(), y->section())<0;
-}};
+struct sectionSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      return std::strcmp(x->section(), y->section()) < 0;
+   }
+};
 
 // version string compare
 int verstrcmp(const char *x, const char *y)
 {
-   if(x && y) 
+   if (x && y)
       return _system->VS->CmpVersion(x, y) < 0;
-   
+
    // if we compare with a non-existring version
-   if(y == NULL)
+   if (y == NULL)
       return false;
    return true;
 }
 
-struct versionSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return verstrcmp(y->availableVersion(),
-		       x->availableVersion());
+struct versionSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      return verstrcmp(y->availableVersion(), x->availableVersion());
    }
 };
 
-struct instVersionSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return verstrcmp(y->installedVersion(),
-		       x->installedVersion());
-}};
+struct instVersionSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      return verstrcmp(y->installedVersion(), x->installedVersion());
+   }
+};
 
-struct supportedPartFunc {
+struct supportedPartFunc
+{
  protected:
-   bool _ascent;
+   bool           _ascent;
    RPackageStatus _status;
+
  public:
-   supportedPartFunc(bool ascent, RPackageStatus &s) 
+   supportedPartFunc(bool ascent, RPackageStatus &s)
       : _ascent(ascent), _status(s) {};
-   bool operator() (RPackage *x) {
-      return (_ascent==_status.isSupported(x));
+   bool operator()(RPackage *x)
+   {
+      return (_ascent == _status.isSupported(x));
    }
 };
 
-struct nameSortFunc {
-   bool operator() (RPackage *x, RPackage *y) {
-      return std::strcmp(x->name(), y->name())<0;
-}};
+struct nameSortFunc
+{
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      return std::strcmp(x->name(), y->name()) < 0;
+   }
+};
 
 
-
-void RPackageLister::sortPackages(vector<RPackage *> &packages, 
-				  listSortMode mode)
+void RPackageLister::sortPackages(vector<RPackage *> &packages,
+                                  listSortMode        mode)
 {
    _sortMode = mode;
    if (packages.empty())
       return;
 
-   if(_config->FindB("Debug::Synaptic::View",false))
+   if (_config->FindB("Debug::Synaptic::View", false))
       clog << "RPackageLister::sortPackages(): " << packages.size() << endl;
 
-   /* Always sort by name to have packages ordered inside another sort 
+   /* Always sort by name to have packages ordered inside another sort
     * criteria */
-   sort(packages.begin(), packages.end(), 
-      sortFunc<nameSortFunc>(true));
+   sort(packages.begin(), packages.end(), sortFunc<nameSortFunc>(true));
 
-   switch(mode) {
-   case LIST_SORT_NAME_ASC:
-   case LIST_SORT_DEFAULT:
-      // Do nothing, already done
-      break;
-   case LIST_SORT_NAME_DES:
-      sort(packages.begin(), packages.end(), 
-		  sortFunc<nameSortFunc>(false));
-      break;
-   case LIST_SORT_SIZE_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<instSizeSortFunc>(true));
-      break;
-   case LIST_SORT_SIZE_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<instSizeSortFunc>(false));
-      break;
-   case LIST_SORT_DLSIZE_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<dlSizeSortFunc>(true));
-      break;
-   case LIST_SORT_DLSIZE_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<dlSizeSortFunc>(false));
-      break;
-   case LIST_SORT_COMPONENT_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<componentSortFunc>(true));
-      break;
-   case LIST_SORT_COMPONENT_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<componentSortFunc>(false));
-      break;
-   case LIST_SORT_SECTION_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<sectionSortFunc>(true));
-      break;
-   case LIST_SORT_SECTION_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<sectionSortFunc>(false));
-      break;
-   case LIST_SORT_STATUS_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<statusSortFunc>(true));
-      break;
-   case LIST_SORT_STATUS_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<statusSortFunc>(false));
-      break;
-   case LIST_SORT_SUPPORTED_ASC:
-      stable_partition(packages.begin(), packages.end(), 
-		  supportedPartFunc(false, _pkgStatus));
-      break;
-   case LIST_SORT_SUPPORTED_DES:
-      stable_partition(packages.begin(), packages.end(), 
-		  supportedPartFunc(true, _pkgStatus));
-      break;
-   case LIST_SORT_VERSION_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<versionSortFunc>(true));
-      break;
-   case LIST_SORT_VERSION_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<versionSortFunc>(false));
-      break;
-   case LIST_SORT_INST_VERSION_ASC:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<instVersionSortFunc>(true));
-      break;
-   case LIST_SORT_INST_VERSION_DES:
-      stable_sort(packages.begin(), packages.end(), 
-		  sortFunc<instVersionSortFunc>(false));
-      break;
+   switch (mode) {
+      case LIST_SORT_NAME_ASC:
+      case LIST_SORT_DEFAULT:
+         // Do nothing, already done
+         break;
+      case LIST_SORT_NAME_DES:
+         sort(packages.begin(), packages.end(), sortFunc<nameSortFunc>(false));
+         break;
+      case LIST_SORT_SIZE_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<instSizeSortFunc>(true));
+         break;
+      case LIST_SORT_SIZE_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<instSizeSortFunc>(false));
+         break;
+      case LIST_SORT_DLSIZE_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<dlSizeSortFunc>(true));
+         break;
+      case LIST_SORT_DLSIZE_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<dlSizeSortFunc>(false));
+         break;
+      case LIST_SORT_COMPONENT_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<componentSortFunc>(true));
+         break;
+      case LIST_SORT_COMPONENT_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<componentSortFunc>(false));
+         break;
+      case LIST_SORT_SECTION_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<sectionSortFunc>(true));
+         break;
+      case LIST_SORT_SECTION_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<sectionSortFunc>(false));
+         break;
+      case LIST_SORT_STATUS_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<statusSortFunc>(true));
+         break;
+      case LIST_SORT_STATUS_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<statusSortFunc>(false));
+         break;
+      case LIST_SORT_SUPPORTED_ASC:
+         stable_partition(packages.begin(), packages.end(),
+                          supportedPartFunc(false, _pkgStatus));
+         break;
+      case LIST_SORT_SUPPORTED_DES:
+         stable_partition(packages.begin(), packages.end(),
+                          supportedPartFunc(true, _pkgStatus));
+         break;
+      case LIST_SORT_VERSION_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<versionSortFunc>(true));
+         break;
+      case LIST_SORT_VERSION_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<versionSortFunc>(false));
+         break;
+      case LIST_SORT_INST_VERSION_ASC:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<instVersionSortFunc>(true));
+         break;
+      case LIST_SORT_INST_VERSION_DES:
+         stable_sort(packages.begin(), packages.end(),
+                     sortFunc<instVersionSortFunc>(false));
+         break;
    }
 }
 
@@ -810,14 +841,14 @@ int RPackageLister::findNextPackage()
 
    for (unsigned i = _searchData.last + 1; i < _viewPackages.size(); i++) {
       if (_searchData.isRegex) {
-         if (regexec(&_searchData.regex, _viewPackages[i]->name(),
-                     0, NULL, 0) == 0) {
+         if (regexec(&_searchData.regex, _viewPackages[i]->name(), 0, NULL,
+                     0) == 0) {
             _searchData.last = i;
             return i;
          }
       } else {
-         if (strncasecmp(_searchData.pattern, _viewPackages[i]->name(),
-                         len) == 0) {
+         if (strncasecmp(_searchData.pattern, _viewPackages[i]->name(), len) ==
+             0) {
             _searchData.last = i;
             return i;
          }
@@ -826,19 +857,21 @@ int RPackageLister::findNextPackage()
    return -1;
 }
 
-void RPackageLister::getStats(int &installed, int &broken,
-                              int &toInstall, int &toRemove,
+void RPackageLister::getStats(int    &installed,
+                              int    &broken,
+                              int    &toInstall,
+                              int    &toRemove,
                               double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
 
    if (deps != NULL) {
       sizeChange = deps->UsrSize();
-      
+
       installed = _installedCount;
-      broken = deps->BrokenCount();
+      broken    = deps->BrokenCount();
       toInstall = deps->InstCount();
-      toRemove = deps->DelCount();
+      toRemove  = deps->DelCount();
    } else
       sizeChange = installed = broken = toInstall = toRemove = 0;
 }
@@ -847,9 +880,9 @@ void RPackageLister::getStats(int &installed, int &broken,
 void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 {
    dlCount = 0;
-   dlSize = _cache->deps()->DebSize();
+   dlSize  = _cache->deps()->DebSize();
 
-   pkgAcquire Fetcher;
+   pkgAcquire         Fetcher;
    pkgPackageManager *PM = _system->CreatePM(_cache->deps());
    if (!PM->GetArchives(&Fetcher, _cache->list(), _records)) {
       delete PM;
@@ -860,45 +893,47 @@ void RPackageLister::getDownloadSummary(int &dlCount, double &dlSize)
 }
 
 
-void RPackageLister::getSummary(int &held, int &kept, int &essential,
-                                int &toInstall, int &toReInstall,
-				int &toUpgrade, int &toRemove,
-                                int &toDowngrade, int &unauthenticated,
-				double &sizeChange)
+void RPackageLister::getSummary(int    &held,
+                                int    &kept,
+                                int    &essential,
+                                int    &toInstall,
+                                int    &toReInstall,
+                                int    &toUpgrade,
+                                int    &toRemove,
+                                int    &toDowngrade,
+                                int    &unauthenticated,
+                                double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
-   unsigned i;
+   unsigned     i;
 
-   held = 0;
-   kept = 0;
-   essential = 0;
-   toInstall = 0;
-   toReInstall = 0;
-   toUpgrade = 0;
-   toDowngrade = 0;
-   toRemove = 0;
-   unauthenticated =0;
+   held            = 0;
+   kept            = 0;
+   essential       = 0;
+   toInstall       = 0;
+   toReInstall     = 0;
+   toUpgrade       = 0;
+   toDowngrade     = 0;
+   toRemove        = 0;
+   unauthenticated = 0;
 
    for (i = 0; i < _packages.size(); i++) {
       int flags = _packages[i]->getFlags();
 
       // These flags will never be set together.
-      int status = flags & (RPackage::FKeep |
-                            RPackage::FNewInstall |
-                            RPackage::FReInstall |
-                            RPackage::FUpgrade |
-                            RPackage::FDowngrade |
-                            RPackage::FRemove);
+      int status = flags & (RPackage::FKeep | RPackage::FNewInstall |
+                            RPackage::FReInstall | RPackage::FUpgrade |
+                            RPackage::FDowngrade | RPackage::FRemove);
 
 #ifdef WITH_APT_AUTH
-      switch(status) {
-      case RPackage::FNewInstall:
-      case RPackage::FInstall:
-      case RPackage::FReInstall:
-      case RPackage::FUpgrade:
-	 if(!_packages[i]->isTrusted()) 
-	    unauthenticated++;
-	 break;
+      switch (status) {
+         case RPackage::FNewInstall:
+         case RPackage::FInstall:
+         case RPackage::FReInstall:
+         case RPackage::FUpgrade:
+            if (!_packages[i]->isTrusted())
+               unauthenticated++;
+            break;
       }
 #endif
 
@@ -933,9 +968,10 @@ void RPackageLister::getSummary(int &held, int &kept, int &essential,
 }
 
 
-
-struct bla:public binary_function<RPackage *, RPackage *, bool> {
-   bool operator() (RPackage *a, RPackage *b) {
+struct bla : public binary_function<RPackage *, RPackage *, bool>
+{
+   bool operator()(RPackage *a, RPackage *b)
+   {
       return strcmp(a->name(), b->name()) < 0;
    }
 };
@@ -979,10 +1015,10 @@ void RPackageLister::undo()
 
 void RPackageLister::redo()
 {
-   //cout << "RPackageLister::redo()" << endl;
+   // cout << "RPackageLister::redo()" << endl;
    pkgState state;
    if (redoStack.empty()) {
-      //cout << "redoStack empty" << endl;
+      // cout << "redoStack empty" << endl;
       return;
    }
    saveState(state);
@@ -1006,30 +1042,30 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 }
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
-                                     vector<RPackage *> &toKeep,
-                                     vector<RPackage *> &toInstall,
-                                     vector<RPackage *> &toReInstall,
-                                     vector<RPackage *> &toUpgrade,
-                                     vector<RPackage *> &toRemove,
-                                     vector<RPackage *> &toDowngrade,
-				     vector<RPackage *> &notAuthenticated,
+                                     vector<RPackage *>       &toKeep,
+                                     vector<RPackage *>       &toInstall,
+                                     vector<RPackage *>       &toReInstall,
+                                     vector<RPackage *>       &toUpgrade,
+                                     vector<RPackage *>       &toRemove,
+                                     vector<RPackage *>       &toDowngrade,
+                                     vector<RPackage *>       &notAuthenticated,
                                      const vector<RPackage *> &exclude,
-                                     bool sorted)
+                                     bool                      sorted)
 {
    bool changed = false;
 
    state.UnIgnoreAll();
    if (exclude.empty() == false) {
-      for (vector<RPackage *>::iterator I = exclude.begin();
-           I != exclude.end(); I++)
+      for (vector<RPackage *>::iterator I = exclude.begin(); I != exclude.end();
+           I++)
          state.Ignore(*(*I)->package());
    }
 
    pkgDepCache &Cache = *_cache->deps();
    for (unsigned int i = 0; i != _packages.size(); i++) {
-      RPackage *RPkg = _packages[i];
-      pkgCache::PkgIterator &Pkg = *RPkg->package();
-      pkgDepCache::StateCache & PkgState = Cache[Pkg];
+      RPackage                *RPkg     = _packages[i];
+      pkgCache::PkgIterator   &Pkg      = *RPkg->package();
+      pkgDepCache::StateCache &PkgState = Cache[Pkg];
       if (PkgState.Mode != state[Pkg].Mode && state.Ignored(Pkg) == false) {
          if (PkgState.Upgrade()) {
             toUpgrade.push_back(RPkg);
@@ -1038,9 +1074,9 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
             toInstall.push_back(RPkg);
             changed = true;
          } else if (PkgState.Install()) {
-	     toReInstall.push_back(RPkg);
-	     changed = true;
-	 } else if (PkgState.Delete()) {
+            toReInstall.push_back(RPkg);
+            changed = true;
+         } else if (PkgState.Delete()) {
             toRemove.push_back(RPkg);
             changed = true;
          } else if (PkgState.Keep()) {
@@ -1073,7 +1109,7 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 #else
 void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
-   //cout << "RPackageLister::saveState()" << endl;
+   // cout << "RPackageLister::saveState()" << endl;
    state.clear();
    state.reserve(_packages.size());
    for (unsigned i = 0; i < _packages.size(); i++) {
@@ -1083,13 +1119,13 @@ void RPackageLister::saveState(RPackageLister::pkgState &state)
 
 void RPackageLister::restoreState(RPackageLister::pkgState &state)
 {
-   pkgDepCache *deps = _cache->deps();
+   pkgDepCache             *deps = _cache->deps();
    pkgDepCache::ActionGroup group(*deps);
 
    for (unsigned i = 0; i < _packages.size(); i++) {
-      RPackage *pkg = _packages[i];
-      int flags = pkg->getFlags();
-      int oldflags = state[i];
+      RPackage *pkg      = _packages[i];
+      int       flags    = pkg->getFlags();
+      int       oldflags = state[i];
 
       if (oldflags != flags) {
          if (oldflags & RPackage::FReInstall) {
@@ -1101,9 +1137,9 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
             deps->MarkDelete(*(pkg->package()), oldflags & RPackage::FPurge);
          } else if (oldflags & RPackage::FKeep) {
             deps->MarkKeep(*(pkg->package()), false);
-	 }
-	 // fix the auto flag
-	 deps->MarkAuto(*pkg->package(), (oldflags & RPackage::FIsAuto));
+         }
+         // fix the auto flag
+         deps->MarkAuto(*pkg->package(), (oldflags & RPackage::FIsAuto));
       }
    }
    notifyChange(NULL);
@@ -1111,15 +1147,15 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
 
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
-                                     vector<RPackage *> &toKeep,
-                                     vector<RPackage *> &toInstall,
-                                     vector<RPackage *> &toReInstall,
-                                     vector<RPackage *> &toUpgrade,
-                                     vector<RPackage *> &toRemove,
-                                     vector<RPackage *> &toDowngrade,
-				     vector<RPackage *> &notAuthenticated,
+                                     vector<RPackage *>       &toKeep,
+                                     vector<RPackage *>       &toInstall,
+                                     vector<RPackage *>       &toReInstall,
+                                     vector<RPackage *>       &toUpgrade,
+                                     vector<RPackage *>       &toRemove,
+                                     vector<RPackage *>       &toDowngrade,
+                                     vector<RPackage *>       &notAuthenticated,
                                      const vector<RPackage *> &exclude,
-                                     bool sorted)
+                                     bool                      sorted)
 {
    bool changed = false;
 
@@ -1129,28 +1165,26 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
       if (state[i] != flags) {
 
          // These flags will never be set together.
-         int status = flags & (RPackage::FHeld |
-                               RPackage::FNewInstall |
-                               RPackage::FReInstall |
-                               RPackage::FUpgrade |
-                               RPackage::FDowngrade |
-                               RPackage::FRemove);
+         int status = flags & (RPackage::FHeld | RPackage::FNewInstall |
+                               RPackage::FReInstall | RPackage::FUpgrade |
+                               RPackage::FDowngrade | RPackage::FRemove);
 
-	 // add packages to the not-authenticated list if they are going to
-	 // be installed in some way
-	 switch(status) {
-	 case RPackage::FNewInstall:
-	 case RPackage::FReInstall:
-	 case RPackage::FUpgrade:
-	 case RPackage::FDowngrade:
-	    if(!_packages[i]->isTrusted()) {
-	       notAuthenticated.push_back(_packages[i]);
-	       changed = true;
-	    }
-	 }
-	 
-	 if(find(exclude.begin(), exclude.end(),_packages[i]) != exclude.end())
-	    continue;
+         // add packages to the not-authenticated list if they are going to
+         // be installed in some way
+         switch (status) {
+            case RPackage::FNewInstall:
+            case RPackage::FReInstall:
+            case RPackage::FUpgrade:
+            case RPackage::FDowngrade:
+               if (!_packages[i]->isTrusted()) {
+                  notAuthenticated.push_back(_packages[i]);
+                  changed = true;
+               }
+         }
+
+         if (find(exclude.begin(), exclude.end(), _packages[i]) !=
+             exclude.end())
+            continue;
 
          switch (status) {
             case RPackage::FNewInstall:
@@ -1199,7 +1233,6 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
          sort(toRemove.begin(), toRemove.end(), bla());
       if (toDowngrade.empty() == false)
          sort(toDowngrade.begin(), toDowngrade.end(), bla());
-
    }
 
    return changed;
@@ -1216,23 +1249,20 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         vector<RPackage *> &toPurge,
                                         vector<RPackage *> &toDowngrade,
 #ifdef WITH_APT_AUTH
-					vector<string> &notAuthenticated,
+                                        vector<string> &notAuthenticated,
 #endif
                                         double &sizeChange)
 {
    pkgDepCache *deps = _cache->deps();
 
    for (unsigned int i = 0; i < _packages.size(); i++) {
-      RPackage *pkg = _packages[i];
-      int flags = pkg->getFlags();
+      RPackage *pkg   = _packages[i];
+      int       flags = pkg->getFlags();
 
       // These flags will never be set together.
-      int status = flags & (RPackage::FKeep |
-                            RPackage::FNewInstall |
-                            RPackage::FReInstall |
-                            RPackage::FUpgrade |
-                            RPackage::FDowngrade |
-                            RPackage::FRemove);
+      int status = flags & (RPackage::FKeep | RPackage::FNewInstall |
+                            RPackage::FReInstall | RPackage::FUpgrade |
+                            RPackage::FDowngrade | RPackage::FRemove);
 
       switch (status) {
 
@@ -1262,9 +1292,9 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
          case RPackage::FRemove:
             if (flags & RPackage::FImportant)
                essential.push_back(pkg);
-            else if(flags & RPackage::FPurge)
-	       toPurge.push_back(pkg);
-	    else
+            else if (flags & RPackage::FPurge)
+               toPurge.push_back(pkg);
+            else
                toRemove.push_back(pkg);
             break;
       }
@@ -1279,14 +1309,14 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
    sort(toPurge.begin(), toPurge.end(), bla());
    sort(held.begin(), held.end(), bla());
 #ifdef WITH_APT_AUTH
-   pkgAcquire Fetcher(NULL);
+   pkgAcquire         Fetcher(NULL);
    pkgPackageManager *PM = _system->CreatePM(_cache->deps());
    if (!PM->GetArchives(&Fetcher, _cache->list(), _records)) {
       delete PM;
       return;
    }
-   for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin(); 
-	I < Fetcher.ItemsEnd(); ++I) {
+   for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin();
+        I < Fetcher.ItemsEnd(); ++I) {
       if (!(*I)->IsTrusted()) {
          notAuthenticated.push_back(string((*I)->ShortDesc()));
       }
@@ -1300,14 +1330,14 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 {
    assert(_cache->list() != NULL);
    // Get the source list
-   //pkgSourceList List;
+   // pkgSourceList List;
    _cache->list()->ReadMainList();
 
    // Lock the list directory
    FileFd Lock;
    if (_config->FindB("Debug::NoLocking", false) == false) {
       Lock.Fd(GetLock(_config->FindDir("Dir::State::Lists") + "lock"));
-      //cout << "lock in : " << _config->FindDir("Dir::State::Lists") << endl;
+      // cout << "lock in : " << _config->FindDir("Dir::State::Lists") << endl;
       if (_error->PendingError() == true)
          return _error->Error(_("Unable to lock the list directory"));
    }
@@ -1316,15 +1346,13 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 
 
 #ifndef HAVE_RPM
-// apt-0.7.10 has the new UpdateList code in algorithms, we use it
+   // apt-0.7.10 has the new UpdateList code in algorithms, we use it
    string s;
-   bool res = ListUpdate(*status, *_cache->list(), 5000);
-   if(res == false)
-   {
-      while(!_error->empty())
-      {
-	 bool isError = _error->PopMessage(s);
-	 error += s;
+   bool   res = ListUpdate(*status, *_cache->list(), 5000);
+   if (res == false) {
+      while (!_error->empty()) {
+         bool isError = _error->PopMessage(s);
+         error += s;
       }
    }
    return res;
@@ -1356,20 +1384,20 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    if (Fetcher.Run() == pkgAcquire::Failed)
       return false;
 
-   //bool AuthFailed = false;
+   // bool AuthFailed = false;
    Failed = false;
-   string failedURI;/* = _("Some index files failed to download, they "
-			"have been ignored, or old ones used instead:\n");
-		    */
+   string failedURI; /* = _("Some index files failed to download, they "
+          "have been ignored, or old ones used instead:\n");
+           */
    for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin();
         I != Fetcher.ItemsEnd(); I++) {
       if ((*I)->Status == pkgAcquire::Item::StatDone)
          continue;
       (*I)->Finished();
-      if((*I)->ErrorText.empty())
-	 failedURI += (*I)->DescURI() + "\n";
+      if ((*I)->ErrorText.empty())
+         failedURI += (*I)->DescURI() + "\n";
       else
-	 failedURI += (*I)->DescURI() + ": " + (*I)->ErrorText + "\n";
+         failedURI += (*I)->DescURI() + ": " + (*I)->ErrorText + "\n";
       Failed = true;
    }
 
@@ -1377,14 +1405,14 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    if (!Failed && _config->FindB("APT::Get::List-Cleanup", true) == true) {
       if (Fetcher.Clean(_config->FindDir("Dir::State::lists")) == false ||
           Fetcher.Clean(_config->FindDir("Dir::State::lists") + "partial/") ==
-          false)
+             false)
          return false;
    }
    if (Failed == true) {
-      //cout << failedURI << endl;
+      // cout << failedURI << endl;
       error = failedURI;
       //_error->Error(failedURI.c_str());
-      return false; 
+      return false;
    }
    return true;
 #endif
@@ -1392,14 +1420,14 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 
 bool RPackageLister::getDownloadUris(vector<string> &uris)
 {
-   pkgAcquire fetcher;
+   pkgAcquire         fetcher;
    pkgPackageManager *PM = _system->CreatePM(_cache->deps());
    if (!PM->GetArchives(&fetcher, _cache->list(), _records)) {
       delete PM;
       return false;
    }
    for (pkgAcquire::ItemIterator I = fetcher.ItemsBegin();
-	I != fetcher.ItemsEnd(); I++) {
+        I != fetcher.ItemsEnd(); I++) {
       uris.push_back((*I)->DescURI());
    }
 
@@ -1411,16 +1439,16 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
                                    RInstallProgress *iprog)
 {
    FileFd lock;
-   int numPackages = 0;
-   int numPackagesTotal;
-   bool Ret = true;
+   int    numPackages = 0;
+   int    numPackagesTotal;
+   bool   Ret = true;
 
    _updating = true;
 
    if (!lockPackageCache(lock))
       return false;
 
-   if(_config->FindB("Synaptic::Log::Changes",true))
+   if (_config->FindB("Synaptic::Log::Changes", true))
       makeCommitLog();
 
    pkgAcquire fetcher(status);
@@ -1428,8 +1456,8 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    assert(_cache->list() != NULL);
    // Read the source list
    if (_cache->list()->ReadMainList() == false) {
-      _userDialog->
-         warning(_("Ignoring invalid record(s) in sources.list file!"));
+      _userDialog->warning(
+         _("Ignoring invalid record(s) in sources.list file!"));
    }
 
    pkgPackageManager *rPM;
@@ -1445,10 +1473,10 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
 #ifdef HAVE_RPM
       if (fetcher.Run() == pkgAcquire::Failed)
-	 goto gave_wood;
+         goto gave_wood;
 #else
       if (fetcher.Run(50000) == pkgAcquire::Failed)
-	 goto gave_wood;
+         goto gave_wood;
 #endif
 
       string serverError;
@@ -1461,7 +1489,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
            I != fetcher.ItemsEnd(); I++) {
 
          numPackagesTotal += 1;
-         
+
          if ((*I)->Status == pkgAcquire::Item::StatDone && (*I)->Complete) {
             numPackages += 1;
             continue;
@@ -1472,16 +1500,16 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             continue;
          }
 
-	 (*I)->Finished();
+         (*I)->Finished();
 
-         string errm = (*I)->ErrorText;
-	 ostringstream tmp;
-    // TRANSLATORS: Error message after a failed download.
-    //              The first %s is the URL and the second 
-    //              one is a detailed error message that
-    //              is provided by apt
-	 ioprintf(tmp, _("Failed to fetch %s\n  %s\n\n"), 
-		  (*I)->DescURI().c_str(), errm.c_str());
+         string        errm = (*I)->ErrorText;
+         ostringstream tmp;
+         // TRANSLATORS: Error message after a failed download.
+         //              The first %s is the URL and the second
+         //              one is a detailed error message that
+         //              is provided by apt
+         ioprintf(tmp, _("Failed to fetch %s\n  %s\n\n"),
+                  (*I)->DescURI().c_str(), errm.c_str());
 
          serverError = getServerErrorMessage(errm);
 
@@ -1500,11 +1528,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          if (Transient)
             goto gave_wood;
 
-	 if (numPackages == 0)
-	     goto gave_wood;
+         if (numPackages == 0)
+            goto gave_wood;
 
-         message =
-            _("Some of the packages could not be retrieved from the server(s).\n");
+         message = _("Some of the packages could not be retrieved from the "
+                     "server(s).\n");
          if (!serverError.empty())
             message += "(" + serverError + ")\n";
          message += _("Do you want to continue, ignoring these packages?");
@@ -1518,18 +1546,18 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          goto gave_wood;
       }
       // need this so that we first fetch everything and then install (for CDs)
-      if (Transient == false
-          || _config->FindB("Acquire::CDROM::Copy-All", false) == false) {
+      if (Transient == false ||
+          _config->FindB("Acquire::CDROM::Copy-All", false) == false) {
 
          if (Transient == true) {
             // We must do that in a system independent way. */
             _config->Set("RPM::Install-Options::", "--nodeps");
          }
 
-	 _system->UnLockInner();
+         _system->UnLockInner();
          pkgPackageManager::OrderResult Res =
-                   iprog->start(rPM, numPackages, numPackagesTotal);
-	 _system->LockInner();
+            iprog->start(rPM, numPackages, numPackagesTotal);
+         _system->LockInner();
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
                goto gave_wood;
@@ -1544,7 +1572,6 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             break;
 
          numPackages = 0;
-
       }
       // Reload the fetcher object and loop again for media swapping
       fetcher.Shutdown();
@@ -1553,70 +1580,68 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          goto gave_wood;
    }
 
-   //cout << _("Finished.")<<endl;
+   // cout << _("Finished.")<<endl;
 
 
    // erase downloaded packages
    cleanPackageCache();
 
-   if(_config->FindB("Synaptic::Log::Changes",true))
+   if (_config->FindB("Synaptic::Log::Changes", true))
       writeCommitLog();
 
    delete rPM;
    return Ret;
 
- gave_wood:
+gave_wood:
    delete rPM;
    return false;
 }
 
 void RPackageLister::writeCommitLog()
 {
-   struct tm *t = localtime(&_logTime);
+   struct tm    *t = localtime(&_logTime);
    ostringstream tmp;
-   ioprintf(tmp, "%.4i-%.2i-%.2i.%.2i%.2i%.2i.log", 1900+t->tm_year, 
-	    t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+   ioprintf(tmp, "%.4i-%.2i-%.2i.%.2i%.2i%.2i.log", 1900 + t->tm_year,
+            t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
 
    string logfile = RLogDir() + tmp.str();
-   FILE *f = fopen(logfile.c_str(),"w+");
-   if(f == NULL) {
+   FILE  *f       = fopen(logfile.c_str(), "w+");
+   if (f == NULL) {
       _error->Error("Failed to write commit log");
       return;
    }
    fputs(_logEntry.c_str(), f);
    fclose(f);
-
 }
 
 void RPackageLister::cleanCommitLog()
 {
    int maxKeep = _config->FindI("Synaptic::delHistory", -1);
-   //cout << "RPackageLister::cleanCommitLog(): " << maxKeep << endl;
-   if(maxKeep < 0)
+   // cout << "RPackageLister::cleanCommitLog(): " << maxKeep << endl;
+   if (maxKeep < 0)
       return;
-   
-   string logfile, entry;
-   struct stat buf;
-   struct dirent *dent;
-   time_t now = time(NULL);
-   DIR *dir = opendir(RLogDir().c_str());
-   while((dent=readdir(dir)) != NULL) {
-      entry = string(dent->d_name);
-      if(logfile == "." || logfile == "..")
-	 continue;
-      logfile = RLogDir()+entry;
-      if(stat(logfile.c_str(), &buf) != 0) {
-	 cerr << "logfile: " << logfile << endl;
-	 perror("cleanCommitLog(), stat: ");
-	 continue;
-      }
-      if((buf.st_mtime+(60*60*24*maxKeep)) < now) {
-// 	 cout << "older than " << maxKeep << " days: " << logfile << endl;
-// 	 cout << "now: " << now 
-// 	      << " ctime: " << buf.st_mtime+(60*60*24*maxKeep) << endl;
-	 unlink(logfile.c_str());
-      }
 
+   string         logfile, entry;
+   struct stat    buf;
+   struct dirent *dent;
+   time_t         now = time(NULL);
+   DIR           *dir = opendir(RLogDir().c_str());
+   while ((dent = readdir(dir)) != NULL) {
+      entry = string(dent->d_name);
+      if (logfile == "." || logfile == "..")
+         continue;
+      logfile = RLogDir() + entry;
+      if (stat(logfile.c_str(), &buf) != 0) {
+         cerr << "logfile: " << logfile << endl;
+         perror("cleanCommitLog(), stat: ");
+         continue;
+      }
+      if ((buf.st_mtime + (60 * 60 * 24 * maxKeep)) < now) {
+         // 	 cout << "older than " << maxKeep << " days: " << logfile <<
+         // endl; 	 cout << "now: " << now
+         // 	      << " ctime: " << buf.st_mtime+(60*60*24*maxKeep) << endl;
+         unlink(logfile.c_str());
+      }
    }
    closedir(dir);
 }
@@ -1624,8 +1649,9 @@ void RPackageLister::cleanCommitLog()
 void RPackageLister::makeCommitLog()
 {
    time(&_logTime);
-   _logEntry = string("Commit Log for ") + string(ctime(&_logTime)) + string("\n");
-   _logEntry.reserve(2*8192); // make it big by default 
+   _logEntry =
+      string("Commit Log for ") + string(ctime(&_logTime)) + string("\n");
+   _logEntry.reserve(2 * 8192); // make it big by default
 
    vector<RPackage *> held;
    vector<RPackage *> kept;
@@ -1642,78 +1668,77 @@ void RPackageLister::makeCommitLog()
 
    double sizeChange;
 
-   getDetailedSummary(held, kept, essential,
-		      toInstall,toReInstall,toUpgrade, 
-		      toRemove, toPurge, toDowngrade, 
+   getDetailedSummary(held, kept, essential, toInstall, toReInstall, toUpgrade,
+                      toRemove, toPurge, toDowngrade,
 #ifdef WITH_APT_AUTH
-		      notAuthenticated,
+                      notAuthenticated,
 #endif
-		      sizeChange);
+                      sizeChange);
 
-   if(essential.size() > 0) {
+   if (essential.size() > 0) {
       //_logEntry += _("\n<b>Removed the following ESSENTIAL packages:</b>\n");
       _logEntry += _("\nRemoved the following ESSENTIAL packages:\n");
       for (vector<RPackage *>::const_iterator p = essential.begin();
-	   p != essential.end(); p++) {
-	 _logEntry += (*p)->name() + string("\n");
+           p != essential.end(); p++) {
+         _logEntry += (*p)->name() + string("\n");
       }
    }
-   
-   if(toDowngrade.size() > 0) {
+
+   if (toDowngrade.size() > 0) {
       //_logEntry += _("\n<b>Downgraded the following packages:</b>\n");
       _logEntry += _("\nDowngraded the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
-	   p != toDowngrade.end(); p++) {
-	 _logEntry += (*p)->name() + string("\n");
+           p != toDowngrade.end(); p++) {
+         _logEntry += (*p)->name() + string("\n");
       }
    }
 
-   if(toPurge.size() > 0) {
+   if (toPurge.size() > 0) {
       //_logEntry += _("\n<b>Completely removed the following packages:</b>\n");
       _logEntry += _("\nCompletely removed the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toPurge.begin();
-	   p != toPurge.end(); p++) {
-	 _logEntry += (*p)->name() + string("\n");
+           p != toPurge.end(); p++) {
+         _logEntry += (*p)->name() + string("\n");
       }
    }
 
-   if(toRemove.size() > 0) {
+   if (toRemove.size() > 0) {
       //_logEntry += _("\n<b>Removed the following packages:</b>\n");
       _logEntry += _("\nRemoved the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toRemove.begin();
-	   p != toRemove.end(); p++) {
-	 _logEntry += (*p)->name() + string("\n");
+           p != toRemove.end(); p++) {
+         _logEntry += (*p)->name() + string("\n");
       }
    }
 
-   if(toUpgrade.size() > 0) {
+   if (toUpgrade.size() > 0) {
       //_logEntry += _("\n<b>Upgraded the following packages:</b>\n");
       _logEntry += _("\nUpgraded the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
-	   p != toUpgrade.end(); p++) {
-	 _logEntry += (*p)->name() + string(" (") + (*p)->installedVersion() 
-	    + string(")") + string(" to ") + (*p)->availableVersion() 
-	    + string("\n");
+           p != toUpgrade.end(); p++) {
+         _logEntry += (*p)->name() + string(" (") + (*p)->installedVersion() +
+                      string(")") + string(" to ") + (*p)->availableVersion() +
+                      string("\n");
       }
    }
 
-   if(toInstall.size() > 0) {
+   if (toInstall.size() > 0) {
       //_logEntry += _("\n<b>Installed the following packages:</b>\n");
       _logEntry += _("\nInstalled the following packages:\n");
       for (vector<RPackage *>::const_iterator p = toInstall.begin();
-	   p != toInstall.end(); p++) {
-	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 
-	    + string(")") + string("\n");
+           p != toInstall.end(); p++) {
+         _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() +
+                      string(")") + string("\n");
       }
    }
 
-   if(toReInstall.size() > 0) {
+   if (toReInstall.size() > 0) {
       //_logEntry += _("\n<b>Reinstalled the following packages:</b>\n");
       _logEntry += _("\nReinstalled the following packages:\n");
-      for (vector<RPackage*>::const_iterator p = toReInstall.begin(); 
-	   p != toReInstall.end(); p++) {
-	 _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() 
-	    + string(")") + string("\n");
+      for (vector<RPackage *>::const_iterator p = toReInstall.begin();
+           p != toReInstall.end(); p++) {
+         _logEntry += (*p)->name() + string(" (") + (*p)->availableVersion() +
+                      string(")") + string("\n");
       }
    }
 }
@@ -1724,7 +1749,8 @@ bool RPackageLister::lockPackageCache(FileFd &lock)
 
    if (_config->FindB("Debug::NoLocking", false) == false) {
       lock.Fd(GetLock(_config->FindDir("Dir::Cache::Archives") + "lock"));
-      //cout << "lock is: " << _config->FindDir("Dir::Cache::Archives") << endl;
+      // cout << "lock is: " << _config->FindDir("Dir::Cache::Archives") <<
+      // endl;
       if (_error->PendingError() == true)
          return _error->Error(_("Unable to lock the download directory"));
    }
@@ -1748,13 +1774,23 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
 
       lockPackageCache(lock);
 
-      class SimpleCleaner : public pkgArchiveCleaner {
+      class SimpleCleaner : public pkgArchiveCleaner
+      {
 #if APT_PKG_ABI >= 590
-         void Erase(int const dirfd, char const * const File, std::string const &Pkg, std::string const &Ver,struct stat const &St) override {
+         void Erase(int const          dirfd,
+                    char const *const  File,
+                    std::string const &Pkg,
+                    std::string const &Ver,
+                    struct stat const &St) override
+         {
             RemoveFileAt("Cleaner::Erase", dirfd, File);
          }
 #else
-         void Erase(const char * File, std::string /*Pkg*/, std::string /*Ver*/, struct stat & /*St*/) override {
+         void Erase(const char *File,
+                    std::string /*Pkg*/,
+                    std::string /*Ver*/,
+                    struct stat & /*St*/) override
+         {
             RemoveFile("Cleaner::Erase", File);
          }
 #endif
@@ -1762,8 +1798,8 @@ bool RPackageLister::cleanPackageCache(bool forceClean)
 
       bool res;
 
-      res = cleaner.Go(_config->FindDir("Dir::Cache::archives"),
-                       *_cache->deps());
+      res =
+         cleaner.Go(_config->FindDir("Dir::Cache::archives"), *_cache->deps());
 
       if (!res)
          return false;
@@ -1793,7 +1829,7 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 
       // Full state saves all installed packages.
       if (flags & RPackage::FInstall ||
-          fullState && (flags &RPackage::FInstalled)) {
+          fullState && (flags & RPackage::FInstalled)) {
          out << _packages[i]->name() << "\t\tinstall" << endl;
       } else if (flags & RPackage::FPurge) {
          out << _packages[i]->name() << "\t\tpurge" << endl;
@@ -1808,13 +1844,9 @@ bool RPackageLister::writeSelections(ostream &out, bool fullState)
 bool RPackageLister::readSelections(istream &in)
 {
    std::string Buffer;
-   int CurLine = 0;
-   enum Action {
-      ACTION_INSTALL,
-      ACTION_UNINSTALL,
-      ACTION_PURGE
-   };
-   map<string, int> actionMap;
+   int         CurLine = 0;
+   enum Action { ACTION_INSTALL, ACTION_UNINSTALL, ACTION_PURGE };
+   map<string, int>         actionMap;
    pkgDepCache::ActionGroup group(*_cache->deps());
 
    while (in.eof() == false) {
@@ -1823,24 +1855,22 @@ bool RPackageLister::readSelections(istream &in)
       CurLine++;
 
       if (in.fail() && !in.eof())
-         return _error->Error(_("Line %u too long in markings file."),
-                              CurLine);
+         return _error->Error(_("Line %u too long in markings file."), CurLine);
 
-      std::string CS = std::string{APT::String::Strip(SubstVar(Buffer, "\t", "        "))};
+      std::string CS =
+         std::string{APT::String::Strip(SubstVar(Buffer, "\t", "        "))};
 
       // Comment or blank
       if (CS[0] == '#' || CS[0] == 0)
          continue;
 
-      auto C = CS.c_str();
+      auto   C = CS.c_str();
       string PkgName;
       if (ParseQuoteWord(C, PkgName) == false)
-         return _error->Error(_("Malformed line %u in markings file"),
-                              CurLine);
+         return _error->Error(_("Malformed line %u in markings file"), CurLine);
       string Action;
       if (ParseQuoteWord(C, Action) == false)
-         return _error->Error(_("Malformed line %u in markings file"),
-                              CurLine);
+         return _error->Error(_("Malformed line %u in markings file"), CurLine);
 
       // install
       if (Action[0] == 'i') {
@@ -1858,37 +1888,37 @@ bool RPackageLister::readSelections(istream &in)
       int Size = actionMap.size();
       _progMeter->OverallProgress(0, Size, Size, _("Setting markings..."));
       _progMeter->SubProgress(Size);
-      pkgDepCache &Cache = *_cache->deps();
+      pkgDepCache       &Cache = *_cache->deps();
       pkgProblemResolver Fix(&Cache);
       // XXX Should protect whatever is already selected in the cache.
       pkgCache::PkgIterator Pkg;
-      int Pos = 0;
+      int                   Pos = 0;
       for (map<string, int>::const_iterator I = actionMap.begin();
            I != actionMap.end(); I++) {
          Pkg = Cache.FindPkg((*I).first);
          if (Pkg.end() == false) {
-	    Fix.Clear(Pkg);
-	    Fix.Protect(Pkg);
+            Fix.Clear(Pkg);
+            Fix.Protect(Pkg);
             switch ((*I).second) {
                case ACTION_INSTALL:
-		  if(_config->FindB("Volatile::SetSelectionDoReInstall",false))
-		     Cache.SetReInstall(Pkg, true);
-		  if(_config->FindB("Volatile::SetSelectionsNoFix",false))
-		     Cache.MarkInstall(Pkg, false);
-		  else
-		     Cache.MarkInstall(Pkg, true);
+                  if (_config->FindB("Volatile::SetSelectionDoReInstall",
+                                     false))
+                     Cache.SetReInstall(Pkg, true);
+                  if (_config->FindB("Volatile::SetSelectionsNoFix", false))
+                     Cache.MarkInstall(Pkg, false);
+                  else
+                     Cache.MarkInstall(Pkg, true);
                   break;
 
                case ACTION_UNINSTALL:
-		  Fix.Remove(Pkg);
+                  Fix.Remove(Pkg);
                   Cache.MarkDelete(Pkg, false);
                   break;
 
                case ACTION_PURGE:
-		  Fix.Remove(Pkg);
+                  Fix.Remove(Pkg);
                   Cache.MarkDelete(Pkg, true);
                   break;
-
             }
          }
          if ((Pos++) % 5 == 0)
@@ -1905,7 +1935,6 @@ bool RPackageLister::readSelections(istream &in)
       // refresh all views
       for (unsigned int i = 0; i != _views.size(); i++)
          _views[i]->refresh();
-
    }
 
    return true;
@@ -1914,67 +1943,68 @@ bool RPackageLister::readSelections(istream &in)
 bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 {
 #ifndef HAVE_RPM
-   //cout << "addArchiveToCache() " << archive << endl;
+   // cout << "addArchiveToCache() " << archive << endl;
 
-   // do sanity checking on the file (do we need this 
+   // do sanity checking on the file (do we need this
    // version, arch, or a different one etc)
-   FileFd in(archive, FileFd::ReadOnly);
-   debDebFile deb(in);
+   FileFd                        in(archive, FileFd::ReadOnly);
+   debDebFile                    deb(in);
    debDebFile::MemControlExtract Extract("control");
-   if(!Extract.Read(deb)) {
+   if (!Extract.Read(deb)) {
       cerr << "read failed" << endl;
       return false;
    }
    pkgTagSection tag;
-   if(!tag.Scan(Extract.Control,Extract.Length+2)) {
+   if (!tag.Scan(Extract.Control, Extract.Length + 2)) {
       cerr << "scan failed" << endl;
       return false;
    }
    // do we have the pkg
-   pkgname = tag.FindS("Package");
+   pkgname       = tag.FindS("Package");
    RPackage *pkg = this->getPackage(pkgname);
-   if(pkg == NULL) {
+   if (pkg == NULL) {
       cerr << "Can't find pkg " << pkgname << endl;
       return false;
    }
    // is it the right architecture?
-   if(tag.FindS("Architecture") != "all" &&
-      tag.FindS("Architecture") != _config->Find("APT::Architecture")) {
+   if (tag.FindS("Architecture") != "all" &&
+       tag.FindS("Architecture") != _config->Find("APT::Architecture")) {
       cerr << "Ignoring different architecture for " << pkgname << endl;
       return false;
    }
-   
+
    // correct version?
-   string debVer = tag.FindS("Version");
+   string debVer  = tag.FindS("Version");
    string candVer = "_invalid_";
-   if(pkg->availableVersion() != NULL)
+   if (pkg->availableVersion() != NULL)
       candVer = pkg->availableVersion();
-   if(debVer != candVer) {
-      cerr << "Ignoring " << pkgname << " (different versions: "
-	   << debVer << " != " << candVer  << endl;
+   if (debVer != candVer) {
+      cerr << "Ignoring " << pkgname << " (different versions: " << debVer
+           << " != " << candVer << endl;
       return false;
    }
 
    // md5sum check
    // first get the md5 of the candidate
-   pkgDepCache *dcache = _cache->deps();
-   pkgCache::VerIterator ver = dcache->GetCandidateVersion(*pkg->package());
-   pkgCache::VerFileIterator Vf = ver.FileList(); 
-   pkgRecords::Parser &Parse = _records->Lookup(Vf);
-   HashStringList hashes = Parse.Hashes();
+   pkgDepCache              *dcache = _cache->deps();
+   pkgCache::VerIterator     ver = dcache->GetCandidateVersion(*pkg->package());
+   pkgCache::VerFileIterator Vf  = ver.FileList();
+   pkgRecords::Parser       &Parse  = _records->Lookup(Vf);
+   HashStringList            hashes = Parse.Hashes();
    // then calc the hashes of the pkg
    Hashes debHashes(hashes);
    in.Seek(0);
-   debHashes.AddFD(in.Fd(),in.Size());
-   if(hashes != debHashes.GetHashStringList()) {
-      cerr << "Ignoring " << pkgname << " hashes does not match"<< endl;
+   debHashes.AddFD(in.Fd(), in.Size());
+   if (hashes != debHashes.GetHashStringList()) {
+      cerr << "Ignoring " << pkgname << " hashes does not match" << endl;
       return false;
    }
-      
+
    // copy to the cache
    in.Seek(0);
-   FileFd out(_config->FindDir("Dir::Cache::archives")+string(flNotDir(archive)),
-	      FileFd::WriteAny);
+   FileFd out(_config->FindDir("Dir::Cache::archives") +
+                 string(flNotDir(archive)),
+              FileFd::WriteAny);
    CopyFile(in, out);
 
    return true;
@@ -1987,81 +2017,82 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 #ifdef HAVE_XAPIAN
 bool RPackageLister::limitBySearch(string searchString)
 {
-   //cerr << "limitBySearch(): " << searchString << endl;
-    if (xapianIndexTimestamp() == 0)
-        return false;
+   // cerr << "limitBySearch(): " << searchString << endl;
+   if (xapianIndexTimestamp() == 0)
+      return false;
    return xapianSearch(searchString);
 }
 
 bool RPackageLister::xapianSearch(string unsplitSearchString)
 {
-   //std::cerr << "RPackageLister::xapianSearch()" << std::endl;
+   // std::cerr << "RPackageLister::xapianSearch()" << std::endl;
    static const int defaultQualityCutoff = 15;
-   int qualityCutoff = _config->FindI("Synaptic::Xapian::qualityCutoff", 
-                                      defaultQualityCutoff);
-    if (xapianIndexTimestamp() == 0) 
-        return false;
+   int              qualityCutoff =
+      _config->FindI("Synaptic::Xapian::qualityCutoff", defaultQualityCutoff);
+   if (xapianIndexTimestamp() == 0)
+      return false;
 
    try {
-      int maxItems = _xapianDatabase->get_doccount();
-      Xapian::Enquire enquire(*_xapianDatabase);
+      int                 maxItems = _xapianDatabase->get_doccount();
+      Xapian::Enquire     enquire(*_xapianDatabase);
       Xapian::QueryParser parser;
       parser.set_database(*_xapianDatabase);
-      parser.add_prefix("name","XP");
-      parser.add_prefix("section","XS");
+      parser.add_prefix("name", "XP");
+      parser.add_prefix("section", "XS");
       // default op is AND to narrow down the resultset
-      parser.set_default_op( Xapian::Query::OP_AND );
-   
-      /* Workaround to allow searching an hyphenated package name using a prefix (name:)
-       * LP: #282995
-       * Xapian currently doesn't support wildcard for boolean prefix and 
-       * doesn't handle implicit wildcards at the end of hypenated phrases.
+      parser.set_default_op(Xapian::Query::OP_AND);
+
+      /* Workaround to allow searching an hyphenated package name using a prefix
+       * (name:) LP: #282995 Xapian currently doesn't support wildcard for
+       * boolean prefix and doesn't handle implicit wildcards at the end of
+       * hypenated phrases.
        *
-       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu res*'
-       * however 'name:(ubuntu* res*) won't return any result because the 
+       * e.g searching for name:ubuntu-res will be equivalent to 'name:ubuntu
+       * res*' however 'name:(ubuntu* res*) won't return any result because the
        * index is built with the full package name
        */
       // Always search for the package name
-      string xpString = "name:";
-      string::size_type pos = unsplitSearchString.find_first_of(" ,;");
+      string            xpString = "name:";
+      string::size_type pos      = unsplitSearchString.find_first_of(" ,;");
       if (pos > 0) {
-          xpString += unsplitSearchString.substr(0,pos);
+         xpString += unsplitSearchString.substr(0, pos);
       } else {
-          xpString += unsplitSearchString;
+         xpString += unsplitSearchString;
       }
       Xapian::Query xpQuery = parser.parse_query(xpString);
 
       pos = 0;
-      while ( (pos = unsplitSearchString.find("-", pos)) != string::npos ) {
+      while ((pos = unsplitSearchString.find("-", pos)) != string::npos) {
          unsplitSearchString.replace(pos, 1, " ");
-         pos+=1;
+         pos += 1;
       }
 
-      if(_config->FindB("Debug::Synaptic::Xapian",false)) 
+      if (_config->FindB("Debug::Synaptic::Xapian", false))
          std::cerr << "searching for : " << unsplitSearchString << std::endl;
-      
+
       // Build the query
       // apply a weight factor to XP term to increase relevancy on package name
-      Xapian::Query query = parser.parse_query(unsplitSearchString, 
-         Xapian::QueryParser::FLAG_WILDCARD |
-         Xapian::QueryParser::FLAG_BOOLEAN |
-         Xapian::QueryParser::FLAG_PARTIAL);
-      query = Xapian::Query(Xapian::Query::OP_OR, query, 
-              Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
+      Xapian::Query query = parser.parse_query(
+         unsplitSearchString, Xapian::QueryParser::FLAG_WILDCARD |
+                                 Xapian::QueryParser::FLAG_BOOLEAN |
+                                 Xapian::QueryParser::FLAG_PARTIAL);
+      query = Xapian::Query(
+         Xapian::Query::OP_OR, query,
+         Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
       enquire.set_query(query);
       Xapian::MSet matches = enquire.get_mset(0, maxItems);
 
-      if(_config->FindB("Debug::Synaptic::Xapian",false)) {
+      if (_config->FindB("Debug::Synaptic::Xapian", false)) {
          cerr << "enquire: " << enquire.get_description() << endl;
-         cerr << "matches estimated: " << matches.get_matches_estimated() << " results found" << endl;
+         cerr << "matches estimated: " << matches.get_matches_estimated()
+              << " results found" << endl;
       }
 
       // Retrieve the results
       int top_percent = 0;
       _viewPackages.clear();
-      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i)
-      {
-         RPackage* pkg = getPackage(i.get_document().get_data());
+      for (Xapian::MSetIterator i = matches.begin(); i != matches.end(); ++i) {
+         RPackage *pkg = getPackage(i.get_document().get_data());
          // Filter out results that apt doesn't know
          if (!pkg || !_selectedView->hasPackage(pkg))
             continue;
@@ -2070,35 +2101,35 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          // a reference to compute an adaptive quality cutoff
          if (top_percent == 0)
             top_percent = i.get_percent();
-   
+
          // Stop producing if the quality goes below a cutoff point
-         if (i.get_percent() < qualityCutoff * top_percent / 100)
-         {
-            cerr << "Discarding: " << i.get_percent() << " over " << qualityCutoff * top_percent / 100 << endl;
+         if (i.get_percent() < qualityCutoff * top_percent / 100) {
+            cerr << "Discarding: " << i.get_percent() << " over "
+                 << qualityCutoff * top_percent / 100 << endl;
             break;
          }
-   
-         if(_config->FindB("Debug::Synaptic::Xapian",false)) 
-            cerr << i.get_rank() + 1 << ": " << i.get_percent() << "% docid=" << *i << "	[" << i.get_document().get_data() << "]" << endl;
+
+         if (_config->FindB("Debug::Synaptic::Xapian", false))
+            cerr << i.get_rank() + 1 << ": " << i.get_percent()
+                 << "% docid=" << *i << "	[" << i.get_document().get_data()
+                 << "]" << endl;
          _viewPackages.push_back(pkg);
-         }
+      }
       // re-apply sort criteria only if an explicit search is set
       if (_sortMode != LIST_SORT_DEFAULT)
-          sortPackages(_sortMode);
+         sortPackages(_sortMode);
       return true;
-   } catch (const Xapian::Error & error) {
-      /* We are here if a Xapian call failed. The main cause is a parser exception.
-       * The error message is always in English currently. 
-       * The possible parser errors are:
-       *    Unknown range operation
-       *    parse error
-       *    Syntax: <expression> AND <expression>
-       *    Syntax: <expression> AND NOT <expression>
+   } catch (const Xapian::Error &error) {
+      /* We are here if a Xapian call failed. The main cause is a parser
+       * exception. The error message is always in English currently. The
+       * possible parser errors are: Unknown range operation parse error Syntax:
+       * <expression> AND <expression> Syntax: <expression> AND NOT <expression>
        *    Syntax: <expression> NOT <expression>
        *    Syntax: <expression> OR <expression>
        *    Syntax: <expression> XOR <expression>
        */
-      cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg() << endl;
+      cerr << "Exception in RPackageLister::xapianSearch():" << error.get_msg()
+           << endl;
       return false;
    }
 }
@@ -2108,9 +2139,9 @@ bool RPackageLister::limitBySearch(string searchString)
    return false;
 }
 
-bool RPackageLister::xapianSearch(string searchString) 
-{ 
-   return false; 
+bool RPackageLister::xapianSearch(string searchString)
+{
+   return false;
 }
 #endif
 

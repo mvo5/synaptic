@@ -29,7 +29,8 @@
 
 #include <apt-pkg/packagemanager.h>
 
-class RInstallProgress {
+class RInstallProgress
+{
  protected:
    int _stdout;
    int _stderr;
@@ -47,22 +48,24 @@ class RInstallProgress {
    static std::string errorMsg;
    static std::string incompleteMsg;
 
-   virtual void startUpdate() {
-   }
-   virtual void updateInterface() {
-   }
-   virtual void finishUpdate() {
-   }
+   virtual void startUpdate()
+   {}
+   virtual void updateInterface()
+   {}
+   virtual void finishUpdate()
+   {}
 
  public:
    // get a str feed to the user with the result of the install run
-   virtual const char* getResultStr(pkgPackageManager::OrderResult);
+   virtual const char *getResultStr(pkgPackageManager::OrderResult);
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
+                                                int numPackages      = 0,
                                                 int numPackagesTotal = 0);
 
 
-   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {}
+   RInstallProgress()
+      : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)
+   {}
 };
 
 

@@ -31,22 +31,21 @@
 
 class RGFindWindow;
 
-typedef void RGFindWindowFindAction(void *self, RGFindWindow * win);
+typedef void RGFindWindowFindAction(void *self, RGFindWindow *win);
 
-static char *SearchTypes[] = {
-   _("Name"),
-   _("Description and Name"),
-   _("Maintainer"),
-   _("Version"),
-   _("Dependencies"),           // depends, predepends etc
-   _("Provided packages"),      // provides and name
-   NULL
-};
+static char *SearchTypes[] = {_("Name"),
+                              _("Description and Name"),
+                              _("Maintainer"),
+                              _("Version"),
+                              _("Dependencies"),      // depends, predepends etc
+                              _("Provided packages"), // provides and name
+                              NULL};
 
-class RGFindWindow:public RGGtkBuilderWindow {
+class RGFindWindow : public RGGtkBuilderWindow
+{
 
-   //RPatternPackageFilter::DepType _searchType;
-   GList *_prevSearches;
+   // RPatternPackageFilter::DepType _searchType;
+   GList     *_prevSearches;
    GtkWidget *_comboFind, *_findB, *_comboSearchType;
 
    static void doFind(GtkWindow *widget, void *data);
@@ -55,13 +54,12 @@ class RGFindWindow:public RGGtkBuilderWindow {
 
  public:
    RGFindWindow(RGWindow *owner);
-   virtual ~RGFindWindow() {
-   };
+   virtual ~RGFindWindow() {};
 
    int getSearchType();
 
-   gchar* getFindString();
-   void selectText();
+   gchar *getFindString();
+   void   selectText();
 };
 
 #endif

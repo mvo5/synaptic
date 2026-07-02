@@ -28,13 +28,13 @@
 #include "rgutils.h"
 
 RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
-: _parent(parent), _label(label)
+   : _parent(parent), _label(label)
 {
-//     _prog = gtk_progress_bar_new();
+   //     _prog = gtk_progress_bar_new();
 
-//     gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
+   //     gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-//     gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
+   //     gtk_box_pack_start(GTK_BOX(_parent), _prog, FALSE, TRUE, 0);
 
    _prog = parent;
    gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
@@ -45,14 +45,14 @@ RGCacheProgress::RGCacheProgress(GtkWidget *parent, GtkWidget *label)
 
 RGCacheProgress::~RGCacheProgress()
 {
-   //gtk_widget_destroy(_prog);
+   // gtk_widget_destroy(_prog);
 }
 
 
 void RGCacheProgress::Update()
 {
    if (!CheckChange()) {
-      //RGFlushInterface();
+      // RGFlushInterface();
       return;
    }
 
@@ -66,13 +66,12 @@ void RGCacheProgress::Update()
       gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
    // only call set_fraction when the changes are noticable (0.1%)
-   if (fabs(Percent-
-            gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog))*100.0) > 0.1)
-      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 
+   if (fabs(Percent - gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog)) *
+                         100.0) > 0.1)
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog),
                                     (float)Percent / 100.0);
 
    RGFlushInterface();
-
 }
 
 

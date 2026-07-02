@@ -1,0 +1,95 @@
+Language:        Cpp
+
+# --- Indentation ---
+IndentWidth:     3
+TabWidth:        3
+UseTab:          Never
+
+# --- Column width ---
+ColumnLimit:     80
+
+# --- Alignment ---
+AlignAfterOpenBracket:                      Align
+AlignConsecutiveAssignments:                true
+AlignConsecutiveDeclarations:               true
+AllowAllParametersOfDeclarationOnNextLine:  false
+AllowShortBlocksOnASingleLine:              false
+AllowShortCaseLabelsOnASingleLine:          false
+AllowShortFunctionsOnASingleLine:           None
+AllowShortIfStatementsOnASingleLine:        false
+AllowShortLoopsOnASingleLine:               false
+
+# --- Braces (Allman for functions/classes, inline for control flow) ---
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass:            true
+  AfterControlStatement: false
+  AfterEnum:             false
+  AfterFunction:         true
+  AfterNamespace:        false
+  AfterObjCDeclaration:  true
+  AfterStruct:           true
+  AfterUnion:            true
+  AfterExternBlock:      false
+  BeforeCatch:           false
+  BeforeElse:            false
+  BeforeLambdaBody:      false
+  BeforeWhile:           false
+  SplitEmptyFunction:    false
+  SplitEmptyRecord:      false
+  SplitEmptyNamespace:   false
+
+# --- Constructor initializer lists ---
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth:              3
+NamespaceIndentation:                           None
+
+# --- Continuation indent ---
+ContinuationIndentWidth: 3
+Cpp11BracedListStyle:    true
+DerivePointerAlignment:  false
+
+# --- Function definitions ---
+IncludeBlocks:              Preserve
+IndentCaseLabels:           true
+IndentGotoLabels:           true
+IndentPPDirectives:         AfterHash
+IndentWrappedFunctionNames: true
+
+# --- Line breaking ---
+KeepEmptyLinesAtTheStartOfBlocks:     true
+MaxEmptyLinesToKeep:                  2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment:                  300
+PenaltyBreakString:                   1000
+PenaltyExcessCharacter:               1000000
+PenaltyReturnTypeOnItsOwnLine:        200
+
+# --- Namespace ---
+SortIncludes:              false
+SortUsingDeclarations:     false
+Standard:                  c++17
+
+# --- Spaces ---
+SpaceAfterCStyleCast:               false
+SpaceAfterTemplateKeyword:          true
+SpaceBeforeAssignmentOperators:     true
+SpaceBeforeCpp11BracedList:         false
+SpaceBeforeCtorInitializerColon:    true
+SpaceBeforeRangeBasedForLoopColon:  true
+SpaceInEmptyParentheses:            false
+SpacesBeforeTrailingComments:       1
+SpacesInContainerLiterals:          true
+
+# --- Statement folding ---
+SpaceAfterLogicalNot:      false
+StatementMacros:
+  - TODO
+  - FIXME
+
+# --- Wrap ---
+BinPackArguments:          true
+BinPackLongBracedList:     false
+BinPackParameters:         false
+CompactNamespaces:         false
+PenaltyBreakFirstLessLess: 0

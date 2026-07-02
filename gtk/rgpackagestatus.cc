@@ -1,11 +1,11 @@
 /* rgpackagestatus.cc  - package status UI stuff
- * 
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -37,29 +37,28 @@ RGPackageStatus RGPackageStatus::pkgStatus;
 void RGPackageStatus::initColors()
 {
    const char *default_status_colors[N_STATUS_COUNT] = {
-      "#8ae234",  // install
-      "#4e9a06",  // re-install
-      "#fce94f",  // upgrade
-      "#ad7fa8",  // downgrade
-      "#ef2929",  // remove
-      "#a40000",  // purge
-      NULL,       // available
-      "#a40000",  // available-locked
-      NULL,       // installed-updated
-      NULL,       // installed-outdated
-      "#a40000",  // installed-locked 
-      NULL,       // broken
-      NULL        // new
+      "#8ae234", // install
+      "#4e9a06", // re-install
+      "#fce94f", // upgrade
+      "#ad7fa8", // downgrade
+      "#ef2929", // remove
+      "#a40000", // purge
+      NULL,      // available
+      "#a40000", // available-locked
+      NULL,      // installed-updated
+      NULL,      // installed-outdated
+      "#a40000", // installed-locked
+      NULL,      // broken
+      NULL       // new
    };
 
    gchar *config_string;
    for (int i = 0; i < N_STATUS_COUNT; i++) {
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
-      gtk_get_color_from_string(_config->
-                                Find(config_string,
-                                     default_status_colors[i]).c_str(),
-                                &StatusColors[i]);
+      config_string =
+         g_strdup_printf("Synaptic::color-%s", PackageStatusShortString[i]);
+      gtk_get_color_from_string(
+         _config->Find(config_string, default_status_colors[i]).c_str(),
+         &StatusColors[i]);
       g_free(config_string);
    }
 }
@@ -92,7 +91,7 @@ GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
 
 GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
 {
-   if(isSupported(pkg))
+   if (isSupported(pkg))
       return supportedPix;
    else
       return NULL;
@@ -103,7 +102,7 @@ GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
    return StatusPixbuf[getStatus(pkg)];
 }
 
-void RGPackageStatus::setColor(int i, GdkRGBA * new_color)
+void RGPackageStatus::setColor(int i, GdkRGBA *new_color)
 {
    StatusColors[i] = new_color;
 }
@@ -113,8 +112,8 @@ void RGPackageStatus::saveColors()
    gchar *color_string, *config_string;
    for (int i = 0; i < N_STATUS_COUNT; i++) {
       color_string = gtk_get_string_from_color(StatusColors[i]);
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
+      config_string =
+         g_strdup_printf("Synaptic::color-%s", PackageStatusShortString[i]);
 
       _config->Set(config_string, color_string);
       g_free(config_string);

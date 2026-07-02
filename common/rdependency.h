@@ -30,7 +30,8 @@ class pkgCache;
 struct pkgCache::Dependency;
 
 
-class RDependency {
+class RDependency
+{
  private:
    pkgCache::DepIterator *_dep;
 

@@ -21,48 +21,47 @@
  */
 
 #ifndef RPACKAGELISTACTOR_H
-#define RPACKAGELISTACTOR_H
+#   define RPACKAGELISTACTOR_H
 
-#include "config.h"
+#   include "config.h"
 
-#include "rpackagelister.h"
-#include <iostream>
+#   include "rpackagelister.h"
+#   include <iostream>
 
-class RPackageListActor : public RPackageObserver {
+class RPackageListActor : public RPackageObserver
+{
 
-   public:
+ public:
+   enum listEvent { PKG_ADDED, PKG_REMOVED };
 
-   enum listEvent {
-      PKG_ADDED,
-      PKG_REMOVED
-   };
-
-   protected:
-
-   RPackageLister *_lister;
+ protected:
+   RPackageLister    *_lister;
    vector<RPackage *> _lastDisplayList;
 
-   public:
-
+ public:
    virtual void run(vector<RPackage *> &List, int listEvent) = 0;
 
-   virtual void notifyPreFilteredChange() {
+   virtual void notifyPreFilteredChange()
+   {
       updateState();
    }
 
    virtual void notifyPostFilteredChange();
-   virtual void notifyChange(RPackage *pkg) {}
+   virtual void notifyChange(RPackage *pkg)
+   {}
 
-   virtual void updateState() {
+   virtual void updateState()
+   {
       _lastDisplayList = _lister->getPackages();
    }
 
-   RPackageListActor(RPackageLister *lister)
-         : _lister(lister) {
+   RPackageListActor(RPackageLister *lister) : _lister(lister)
+   {
       _lister->registerObserver(this);
    }
 
-   virtual ~RPackageListActor() {
+   virtual ~RPackageListActor()
+   {
       _lister->unregisterObserver(this);
    }
 };

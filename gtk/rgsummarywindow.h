@@ -33,21 +33,19 @@
 class RPackageLister;
 
 
-class RGSummaryWindow:public RGGtkBuilderWindow {
-   GtkWidget *_topF;
-   GtkWidget *_middleF;
-   GtkWidget *_summaryL;
-   GtkWidget *_summarySpaceL;
-   bool _potentialBreak;
+class RGSummaryWindow : public RGGtkBuilderWindow
+{
+   GtkWidget      *_topF;
+   GtkWidget      *_middleF;
+   GtkWidget      *_summaryL;
+   GtkWidget      *_summarySpaceL;
+   bool            _potentialBreak;
    RPackageLister *_lister;
-   GtkWidget *_dlonlyB;
-   GtkWidget *_checkSigsB;
+   GtkWidget      *_dlonlyB;
+   GtkWidget      *_checkSigsB;
 
-   enum {
-      PKG_COLUMN,
-      N_COLUMNS
-   };
-   GtkWidget *_tree;
+   enum { PKG_COLUMN, N_COLUMNS };
+   GtkWidget    *_tree;
    GtkTreeStore *_treeStore;
 
    static void buildTree(RGSummaryWindow *me);

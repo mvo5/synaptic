@@ -29,14 +29,14 @@
 
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rggtkbuilderwindow.h"
-#include <apt-pkg/cdrom.h>
+#   include "rggtkbuilderwindow.h"
+#   include <apt-pkg/cdrom.h>
 
 class RGMainWindow;
 
-class RGCDScanner:public pkgCdromStatus, public RGWindow {
+class RGCDScanner : public pkgCdromStatus, public RGWindow
+{
  protected:
-
    GtkWidget *_label;
    GtkWidget *_pbar;
 
@@ -50,7 +50,6 @@ class RGCDScanner:public pkgCdromStatus, public RGWindow {
    void Update(string text, int current);
 
    bool run();
-
 };
 
 #endif

@@ -31,13 +31,14 @@
 
 class RGMainWindow;
 
-class RGInstallProgressMsgs:public RGGtkBuilderWindow {
+class RGInstallProgressMsgs : public RGGtkBuilderWindow
+{
 
    GtkTextBuffer *_textBuffer;
-   static void onCloseClicked(GtkWidget *self, void *data);
+   static void    onCloseClicked(GtkWidget *self, void *data);
 
    const char *_currentPackage;
-   bool _hasHeader;
+   bool        _hasHeader;
 
    GtkCssProvider *_cssProvider;
 
@@ -56,7 +57,8 @@ class RGInstallProgressMsgs:public RGGtkBuilderWindow {
    ~RGInstallProgressMsgs();
 };
 
-class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
+class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
+{
 
    GtkWidget *_label;
    GtkWidget *_labelSummary;

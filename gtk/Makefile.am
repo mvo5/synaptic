@@ -18,8 +18,7 @@ sbin_PROGRAMS = synaptic
 #synaptic_LDFLAGS= --export-dynamic
 
 synaptic_LDADD = \
-	${top_builddir}/common/libsynaptic.a\
-	-lapt-pkg -lX11 \
+	${top_builddir}/common/libsynaptic.a \
 	@RPM_LIBS@ \
 	@DEB_LIBS@ \
 	@GTK_LIBS@ \
@@ -27,8 +26,9 @@ synaptic_LDADD = \
 	@LP_LIBS@ \
 	@APT_PKG_LIBS@ \
 	@XAPIAN_LIBS@ \
+	-lpthread \
 	-lutil \
-	-lpthread
+	-lX11
 
 synaptic_SOURCES= \
 	gsynaptic.cc\

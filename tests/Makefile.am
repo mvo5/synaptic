@@ -1,8 +1,6 @@
 
 AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_builddir@ \
-	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_LOCALE_DIR=\""$(localedir)"\" \
-	-DSYNAPTICSTATEDIR=\""$(localstatedir)"\" \
+	@SYNAPTIC_APP_PATHS@ \
 	@GTK_DISABLE_DEPRECATED@ \
 	@GTK_CFLAGS@ \
 	@VTE_CFLAGS@ \

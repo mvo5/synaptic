@@ -172,6 +172,26 @@ AC_ARG_WITH(launchpad-integration,
 	]
 )
 
+# IDEs and code analisys tools need to know about the externally defined symbols,
+# so, for those scenarios, here those are added to the config.h file with default values.
+# Otherwise they're injected at build time (through the -D command line arguments in the makefiles).
+AC_ARG_ENABLE(ide-integration, [  --enable-ide-integration: Define default values in config.h for the injected symbols for the IDEs and code analisys tools.])
+AS_IF([test "x$enable_ide_integration" = "xyes"],
+    [
+        # These default values define relative paths to the current folder (i.e., where the executable is).
+        AC_DEFINE(PACKAGE_DATA_DIR, "./share", Default value for the IDEs and code analisys tools.)
+        AC_DEFINE(PACKAGE_LOCALE_DIR, "./share/locale", Default value for the IDEs and code analisys tools.)
+        AC_DEFINE(SYNAPTICSTATEDIR, "./var", Default value for the IDEs and code analisys tools.)
+        AC_DEFINE(SYNAPTIC_GTKBUILDERDIR, "./gtkbuilder/", Default value for the IDEs and code analisys tools.)
+        AC_DEFINE(SYNAPTIC_PIXMAPDIR, "./pixmaps/", Default value for the IDEs and code analisys tools.)
+    ],
+    [
+        # The paths defined here are replaced at make time by the standard values (as defined by GNU for the "Variables for Installation Directories").
+        # They can be adjusted by passing the --prefix option to autogen.
+        AC_SUBST(SYNAPTIC_APP_PATHS,'-DPACKAGE_DATA_DIR=\""${datadir}"\" -DPACKAGE_LOCALE_DIR=\""${localedir}"\" -DSYNAPTICSTATEDIR=\""${localstatedir}"\" -DSYNAPTIC_GTKBUILDERDIR=\""${datadir}/synaptic/gtkbuilder/"\" -DSYNAPTIC_PIXMAPDIR=\""${datadir}/synaptic/pixmaps/"\"')
+    ]
+)
+
 AC_ARG_WITH(pkg-hold,
         [  --with-pkg-hold: Build with experimental package "hold" feature],
         AC_DEFINE(SYNAPTIC_PKG_HOLD, 1, [build with package pin feature])

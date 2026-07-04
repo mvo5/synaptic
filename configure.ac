@@ -9,7 +9,6 @@ dnl Checks for programs.
 AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
-AC_HEADER_STDC
 AC_PROG_CXX
 AC_PROG_MAKE_SET
 AC_PROG_RANLIB
@@ -97,7 +96,6 @@ AC_CHECK_LIB(apt-inst, main, [DEB_LIBS=-lapt-inst], [DEB_LIBS=])
 AC_SUBST(DEB_LIBS)
 
 dnl Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS(unistd.h libintl.h iconv.h)
 
 AC_LANG([C++])

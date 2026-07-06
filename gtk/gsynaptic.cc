@@ -127,58 +127,6 @@ void welcome_dialog(RGMainWindow *mainWindow)
       }
 }
 
-void update_check(RGMainWindow *mainWindow, RPackageLister *lister)
-{
-   struct stat st;
-
-   // check when the last update happend updates
-   UpdateType update =
-      (UpdateType) _config->FindI("Synaptic::update::type", UPDATE_ASK);
-   if(update != UPDATE_CLOSE) {
-      // check when last update happend
-      int lastUpdate = _config->FindI("Synaptic::update::last",0);
-      int minimal= _config->FindI("Synaptic::update::minimalIntervall", 48);
-
-      // check for the mtime of the various package lists
-      vector<string> filenames = lister->getPolicyArchives(true);
-      for (int i=0;i<filenames.size();i++) {
-	 stat(filenames[i].c_str(), &st);
-	 if(filenames[i] != "/var/lib/dpkg/status")
-	    lastUpdate = max(lastUpdate, (int)st.st_mtime);
-      }
-      
-      // new apt uses this
-      string update_stamp = _config->FindDir("Dir::State","var/lib/apt");
-      update_stamp += "update-stamp";
-      if(FileExists(update_stamp)) {
-	 stat(update_stamp.c_str(), &st);
-	 lastUpdate = max(lastUpdate, (int)st.st_mtime);
-      }
-
-      // 3600s=1h 
-      if((lastUpdate + minimal*3600) < time(NULL)) {
-	 if(update == UPDATE_AUTO) 
-	    mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-	 else {
-	    RGGtkBuilderUserDialog dia(mainWindow);
-	    int res = dia.run("update_outdated",true);
-	    GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(),
-						 "checkbutton_remember"));
-	    assert(cb);
-	    if(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
-	       if(res == GTK_RESPONSE_CANCEL)
-		  _config->Set("Synaptic::update::type", UPDATE_CLOSE);
-	       if(res == GTK_RESPONSE_OK)
-		  _config->Set("Synaptic::update::type", UPDATE_AUTO);
-	    }
-	    if(res == GTK_RESPONSE_OK)
-	       mainWindow->cbUpdateClicked(nullptr, nullptr, mainWindow);
-	 }
-      }
-   }
-}
-
-
 // lock stuff
 static int sigterm_unix_signal_pipe_fds[2];
 static GIOChannel *sigterm_iochn;

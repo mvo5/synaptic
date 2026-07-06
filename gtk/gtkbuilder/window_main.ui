@@ -221,10 +221,29 @@
               </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-          </packing>
+        </child>
+        <child>
+          <object class="GtkInfoBar" id="no_root_infobar">
+            <property name="visible">False</property>
+            <property name="can_focus">False</property>
+            <property name="message-type">info</property>
+            <child internal-child="content_area">
+              <object class="GtkBox">
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Starting "Synaptic Package Manager" without administrative privileges</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">You will not be able to apply any changes, but you can still export the marked changes or create a download script for them.</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
           <object class="GtkPaned" id="hpaned_main">
@@ -1319,7 +1338,6 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -1389,11 +1407,6 @@
               </object>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">4</property>
-          </packing>
         </child>
       </object>
     </child>

@@ -1086,6 +1086,10 @@ void RGMainWindow::buildInterface()
                                       "GtkEntry:not(:selected) { background: #F7F7BE; }", -1, NULL);
    }
 
+   if (getuid() != 0) {
+      gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(_builder, "no_root_infobar")));
+   }
+
    gtk_menu_shell_bind_model(
       GTK_MENU_SHELL(gtk_builder_get_object(_builder, "menubar1")),
       G_MENU_MODEL(gtk_builder_get_object(_builder, "main_menu")),

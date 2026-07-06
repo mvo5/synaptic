@@ -31,6 +31,7 @@
 
 #include "config.h"
 
+#include <cstring>
 #include <vector>
 
 #include <apt-pkg/pkgcache.h>
@@ -245,7 +246,13 @@ class RPackage {
    bool setVersion(std::string verTag);
    void unsetVersion();
    std::string showWhyInstBroken();
-
+   
+   // Custom sort comparator to be used with std::sort.
+   inline static bool byNameAscending(RPackage *a, RPackage *b)
+   {
+      return strcmp(a->name(), b->name()) < 0;
+   };
+   
    RPackage(RPackageLister *lister, pkgDepCache *depcache,
             pkgRecords *records, pkgCache::PkgIterator &pkg);
    ~RPackage();

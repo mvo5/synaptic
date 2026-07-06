@@ -1,11 +1,11 @@
 #!/bin/sh
 
 if command -v pkexec >/dev/null 2>&1; then
-	exec pkexec "/usr/sbin/synaptic" "$@"
+	exec pkexec "/usr/bin/synaptic" "$@"
 fi
 
 if command -v run0 >/dev/null 2>&1; then
-	set -- "/usr/sbin/synaptic" "$@"
+	set -- "/usr/bin/synaptic" "$@"
 	if [ -n "${DBUS_SESSION_BUS_ADDRESS+x}" ]; then
 		set -- "--setenv=DBUS_SESSION_BUS_ADDRESS" "$@"
 	fi

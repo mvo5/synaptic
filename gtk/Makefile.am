@@ -13,7 +13,7 @@ AM_CPPFLAGS = -I@top_srcdir@ -I@top_srcdir@/common -I@top_srcdir@/gtk -I@top_bui
 	@LP_CFLAGS@ \
 	@APT_PKG_CFLAGS@
 
-sbin_PROGRAMS = synaptic 
+bin_PROGRAMS = synaptic 
 
 #synaptic_LDFLAGS= --export-dynamic
 

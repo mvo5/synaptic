@@ -55,7 +55,7 @@ ln -s %{_bindir}/consolehelper %{buildroot}%{_bindir}/synaptic
 mkdir -p %{buildroot}%{_sysconfdir}/security/console.apps
 cat << EOF > %{buildroot}%{_sysconfdir}/security/console.apps/synaptic
 USER=root
-PROGRAM=%{_sbindir}/synaptic
+PROGRAM=%{_bindir}/synaptic
 SESSION=true
 FALLBACK=false
 EOF
@@ -97,7 +97,6 @@ rm -rf %{buildroot}
 %{_sysconfdir}/security/console.apps/%{name}
 %exclude %{_sysconfdir}/X11/sysconfig/%{name}.desktop
 %{_bindir}/%{name}
-%{_sbindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}
 %{_datadir}/gnome/help/synaptic

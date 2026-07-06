@@ -90,7 +90,6 @@ rm -rf %{buildroot}
 %defattr(0644,root,root,755)
 %doc COPYING* README* TODO
 %defattr(755,root,root)
-%{_sbindir}/synaptic
 %{_bindir}/synaptic
 
 # menu
@@ -134,7 +133,6 @@ listado.
 
 %files
 %defattr(755,root,root)
-%{_sbindir}/gsynaptic
 %{_bindir}/gsynaptic
 
 # menu

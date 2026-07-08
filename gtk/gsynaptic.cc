@@ -464,6 +464,12 @@ static void applicationStartup(GApplication* app, gpointer user_data)
    // init the static pkgStatus class. this loads the status pixmaps 
    // and colors
    RGPackageStatus::pkgStatus.init();
+
+   // inject CSS
+   GtkCssProvider *css = gtk_css_provider_new();
+   gtk_css_provider_load_from_data(css, "box.info { padding: 10px; color: black; background-color: #f1e6d9 }", -1, nullptr);
+   gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(css), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+   g_object_unref(css);
 }
 
 static void applicationActivate(GApplication* app, gpointer user_data)

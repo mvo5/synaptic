@@ -1087,7 +1087,9 @@ void RGMainWindow::buildInterface()
    }
 
    if (getuid() != 0) {
-      gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(_builder, "no_root_infobar")));
+      auto infobar = GTK_WIDGET(gtk_builder_get_object(_builder, "no_root_infobar"));
+      gtk_style_context_add_class(gtk_widget_get_style_context(infobar), "info");
+      gtk_widget_show(infobar);
    }
 
    gtk_menu_shell_bind_model(

@@ -223,24 +223,20 @@
           </object>
         </child>
         <child>
-          <object class="GtkInfoBar" id="no_root_infobar">
+          <object class="GtkBox" id="no_root_infobar">
             <property name="visible">False</property>
             <property name="can_focus">False</property>
-            <property name="message-type">info</property>
-            <child internal-child="content_area">
-              <object class="GtkBox">
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Starting "Synaptic Package Manager" without administrative privileges</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">You will not be able to apply any changes, but you can still export the marked changes or create a download script for them.</property>
-                  </object>
-                </child>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Running without administrative privileges</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">You will not be able to apply any changes, but you can still export the marked changes or create a download script for them.</property>
               </object>
             </child>
           </object>

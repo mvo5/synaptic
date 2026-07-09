@@ -70,13 +70,13 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    gtk_widget_set_can_focus (_scrollbar, FALSE);
    vte_terminal_set_scrollback_lines(VTE_TERMINAL(_term), 10000);
 
-   const char *s;
-   if(_config->FindB("Synaptic::useUserTerminalFont")) {
-      s = _config->Find("Synaptic::TerminalFontName").c_str();
+   string s;
+   if (_config->FindB("Synaptic::useUserTerminalFont")) {
+      s = _config->Find("Synaptic::TerminalFontName");
    } else {
-      s = "monospace 10";
+      s = "monospace 10"s;
    }
-   PangoFontDescription *fontdesc = pango_font_description_from_string(s);
+   PangoFontDescription *fontdesc = pango_font_description_from_string(s.c_str());
    vte_terminal_set_font(VTE_TERMINAL(_term), fontdesc);
    pango_font_description_free(fontdesc);
 

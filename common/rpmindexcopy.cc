@@ -121,12 +121,13 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
             dup2(Pkg.Fd(), STDOUT_FILENO);
             SetCloseExec(STDIN_FILENO, false);
             SetCloseExec(STDOUT_FILENO, false);
-
+            
+            const string bzipDir = _config->Find("Dir::Bin::bzip2", "bzip2");
             const char *Args[3];
-            Args[0] = _config->Find("Dir::Bin::bzip2", "bzip2").c_str();
+            Args[0] = bzipDir.c_str();
             Args[1] = "-d";
             Args[2] = 0;
-            execvp(Args[0], (char **)Args);
+            execvp(Args[0], (char **) Args);
             exit(100);
          }
          // Wait for gzip to finish

@@ -45,14 +45,14 @@ class RUserDialog {
    virtual bool message(const char *msg,
                         DialogType dialog = DialogInfo,
                         ButtonsType buttons = ButtonsDefault,
-                        bool defres = true) = 0;
+                        bool defaultResponse = true) = 0;
 
-   virtual bool confirm(const char *msg, bool defres = true) {
-      return message(msg, DialogQuestion, ButtonsYesNo, defres);
+   virtual bool confirm(const char *msg, bool defaultResponse = true) {
+      return message(msg, DialogQuestion, ButtonsYesNo, defaultResponse);
    }
 
-   virtual bool proceed(const char *msg, bool defres = true) {
-      return message(msg, DialogInfo, ButtonsOkCancel, defres);
+   virtual bool proceed(const char *msg, bool defaultResponse = true) {
+      return message(msg, DialogInfo, ButtonsOkCancel, defaultResponse);
    }
 
    virtual bool warning(const char *msg, bool nocancel = true) {

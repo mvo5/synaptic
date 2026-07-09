@@ -1150,26 +1150,23 @@ bool RPackage::isShallowDependency(RPackage *pkg)
 
 
 // format: first version, second archives
-vector<pair<string, string> > RPackage::getAvailableVersions()
+vector<pair<string, string>> RPackage::getAvailableVersions()
 {
-   string VerTag;
-   vector<pair<string, string> > versions;
+   vector<pair<string, string>> versions;
 
    // Get available Versions.
-   for (pkgCache::VerIterator Ver = _package->VersionList();
-        Ver.end() == false; Ver++) {
+   for (pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
 
       // We always take the first available version.
       pkgCache::VerFileIterator VF = Ver.FileList();
       if (!VF.end()) {
          pkgCache::PkgFileIterator File = VF.File();
-
-         if (File.Archive() != 0)
-            versions.push_back(pair < string,
-                               string > (Ver.VerStr(), File.Archive()));
-         else
-            versions.push_back(pair < string,
-                               string > (Ver.VerStr(), File.Site()));
+            
+         if (File.Archive() != NULL) {
+            versions.push_back(pair<string, string>(Ver.VerStr(), File.Archive()));
+         } else {
+            versions.push_back(pair<string, string>(Ver.VerStr(), File.Site()));
+         }
       }
    }
 

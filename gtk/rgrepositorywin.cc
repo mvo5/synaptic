@@ -407,10 +407,7 @@ bool RGRepositoryEditor::Run()
       _userDialog->showErrors();
       return false;
    }
-
-   // FIXME: is this good enough?
-   _gray.red = _gray.green = _gray.blue = 0xAA00;
-
+   
    GtkTreeIter iter;
    for (SourcesListIter it = _lst.SourceRecords.begin();
         it != _lst.SourceRecords.end(); it++) {

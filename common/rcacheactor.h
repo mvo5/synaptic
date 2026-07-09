@@ -116,7 +116,7 @@ class RCacheActorRecommends:public RCacheActor {
 
    virtual void notifyCachePostChange();
 
-   RCacheActorRecommends(RPackageLister *lister, std::string FileName);
+   RCacheActorRecommends(RPackageLister *lister, std::string fileName);
    virtual ~RCacheActorRecommends();
 };
 

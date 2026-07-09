@@ -52,50 +52,48 @@ void RCacheActor::notifyCachePostChange()
 
 
 RCacheActorRecommends::RCacheActorRecommends(RPackageLister *lister,
-                                             string FileName)
+                                             string fileName)
 : RCacheActor(lister)
 {
-   FileFd F(FileName, FileFd::ReadOnly);
+   FileFd f(fileName, FileFd::ReadOnly);
    if (_error->PendingError()) {
-      _error->Error("could not open recommends file %s", FileName.c_str());
+      _error->Error("Could not open recommends file %s", fileName.c_str());
       return;
    }
-   pkgTagFile Tags(&F);
-   pkgTagSection Section;
+   
+   pkgTagFile tags(&f);
+   pkgTagSection section;
 
-   string Name;
-   string Match;
-   string Recommends;
-   while (Tags.Step(Section)) {
-      string Name = Section.FindS("Name");
-      string Match = Section.FindS("Match");
-      string Recommends = Section.FindS("Recommends");
-      if (Name.empty() == true || Recommends.empty() == true)
-         continue;
+   while (tags.Step(section)) {
+      const string name = section.FindS("Name");
+      const string match = section.FindS("Match");
+      const string recommends = section.FindS("Recommends");
 
-      ListType *List = NULL;
-      if (Match.empty() == true || Match == "exact") {
-         List = &_map[Name];
-      } else if (Match == "wildcard") {
-         List = &_map_wildcard[Name];
-      } else if (Match == "regex") {
+      if (name.empty() || recommends.empty()) continue;
+
+      ListType *list = NULL;
+      if (match.empty() || match == "exact") {
+         list = &_map[name];
+      } else if (match == "wildcard") {
+         list = &_map_wildcard[name];
+      } else if (match == "regex") {
          regex_t *ptrn = new regex_t;
-         if (regcomp(ptrn, Name.c_str(),
+         if (regcomp(ptrn, name.c_str(),
                      REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
             _error->
                Warning("Bad regular expression '%s' in Recommends file.",
-                       Name.c_str());
+                       name.c_str());
             delete ptrn;
          } else
-            List = &_map_regex[ptrn];
+            list = &_map_regex[ptrn];
       }
 
-      if (List != NULL) {
-         const char *C = Recommends.c_str();
-         string S;
-         while (*C != 0) {
-            if (ParseQuoteWord(C, S))
-               List->push_back(S);
+      if (list != NULL) {
+         const char *c = recommends.c_str();
+         while (*c != 0) {
+            string s;
+            if (ParseQuoteWord(c, s))
+               list->push_back(s);
          }
       }
    }

@@ -47,7 +47,7 @@ public:
     virtual bool message(const char *msg,
 	    RUserDialog::DialogType dialog=RUserDialog::DialogInfo,
 	    RUserDialog::ButtonsType buttons=RUserDialog::ButtonsOk,
-	    bool defres=true);
+	    bool defaultResponse=true);
 
 };
 

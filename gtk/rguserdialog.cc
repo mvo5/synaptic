@@ -130,7 +130,7 @@ bool RGUserDialog::showErrors()
 
 bool RGUserDialog::message(const char *msg,
                            RUserDialog::DialogType dialog,
-                           RUserDialog::ButtonsType buttons, bool defres)
+                           RUserDialog::ButtonsType buttons, bool defaultResponse)
 {
    GtkWidget *dia;
    GtkResponseType res;
@@ -170,33 +170,26 @@ bool RGUserDialog::message(const char *msg,
          break;
    }
 
-   dia = gtk_message_dialog_new (GTK_WINDOW(_parentWindow),
-                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                 gtkmessage, gtkbuttons, NULL);
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
+   dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
+                                GTK_DIALOG_DESTROY_WITH_PARENT,
+                                gtkmessage, gtkbuttons, NULL);
+   GdkPixbuf *icon = get_gdk_pixbuf("synaptic");
    gtk_window_set_icon(GTK_WINDOW(dia), icon);
 
-   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG(dia), utf8(msg));
+   gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), utf8(msg));
    gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
 
-   if (defres) {
-      switch (buttons) {
-         case RUserDialog::ButtonsOkCancel:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_OK);
-            break;
-         case RUserDialog::ButtonsYesNo:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_YES);
-            break;
+   switch (buttons) {
+      case RUserDialog::ButtonsOkCancel: {
+         gtk_dialog_set_default_response(GTK_DIALOG(dia), defaultResponse ? GTK_RESPONSE_OK : GTK_RESPONSE_CANCEL);
+         break;
       }
-   } else {
-      switch (buttons) {
-         case RUserDialog::ButtonsOkCancel:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia),
-                                            GTK_RESPONSE_CANCEL);
-            break;
-         case RUserDialog::ButtonsYesNo:
-            gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_NO);
-            break;
+      case RUserDialog::ButtonsYesNo: {
+         gtk_dialog_set_default_response(GTK_DIALOG(dia), defaultResponse ? GTK_RESPONSE_YES : GTK_RESPONSE_NO);
+         break;
+      }
+      default: {
+         break;
       }
    }
 

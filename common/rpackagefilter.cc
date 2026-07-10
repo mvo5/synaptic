@@ -460,7 +460,7 @@ bool RPatternPackageFilter::write(ofstream &out, string pad)
 
    out << pad + "patterns {" << endl;
 
-   for (int i = 0; i < count(); i++) {
+   for (size_t i = 0; i < count(); i++) {
       getPattern(i, type, pat, excl);
       out << pad + "  " + TypeName[(int)type] + ";"
          << " \"" << pat << "\"; " << (excl ? "true;" : "false;") << endl;

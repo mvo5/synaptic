@@ -651,24 +651,21 @@ bool RGFilterManagerWindow::setPatternRow(int row,
 
 void RGFilterManagerWindow::setPatternFilter(RPatternPackageFilter &f)
 {
-   //cout << "RGFilterEditor::setPatternFilter()"<<endl;
-
    gtk_list_store_clear(_patternListStore);
-   for (int i = 0; i < f.count(); i++) {
+
+   for (size_t i = 0; i < f.count(); i++) {
       RPatternPackageFilter::DepType type;
-      string pattern, s;
+      string pattern;
       bool exclude;
       f.getPattern(i, type, pattern, exclude);
       setPatternRow(-1, exclude, type, utf8(pattern.c_str()));
    }
-   if(f.getAndMode())
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                   (gtk_builder_get_object(_builder,
-                                    "radiobutton_properties_and")), TRUE);
-   else
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                   (gtk_builder_get_object(_builder,
-                                    "radiobutton_properties_or")), TRUE);
+
+   if (f.getAndMode()) {
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "radiobutton_properties_and")), TRUE);
+   } else {
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "radiobutton_properties_or")), TRUE);
+   }
 }
 
 void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)

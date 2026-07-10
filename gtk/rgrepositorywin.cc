@@ -418,20 +418,19 @@ bool RGRepositoryEditor::Run()
    }
    
    GtkTreeIter iter;
-   for (SourcesListIter it = _lst.SourceRecords.begin();
-        it != _lst.SourceRecords.end(); it++) {
-      if ((*it)->Type & SourcesList::Comment)
-         continue;
+   for (SourcesListIter it = _lst.SourceRecords.begin(); it != _lst.SourceRecords.end(); it++)
+   {
+      if ((*it)->Type & SourcesList::Comment) continue;
+
       string Sections;
-      for (unsigned int J = 0; J < (*it)->NumSections; J++) {
-         Sections += (*it)->Sections[J];
+      for (const string section: (*it)->Sections) {
+         Sections += section;
          Sections += " ";
       }
 
       gtk_list_store_append(_sourcesListStore, &iter);
       gtk_list_store_set(_sourcesListStore, &iter,
-                         STATUS_COLUMN, !((*it)->Type &
-                                          SourcesList::Disabled),
+                         STATUS_COLUMN, !((*it)->Type & SourcesList::Disabled),
                          TYPE_COLUMN, utf8((*it)->GetType().c_str()),
                          VENDOR_COLUMN, utf8((*it)->VendorID.c_str()),
                          URI_COLUMN, utf8((*it)->URI.c_str()),
@@ -442,7 +441,6 @@ bool RGRepositoryEditor::Run()
                          (*it)->Type & SourcesList::Disabled ? &_gray : NULL,
                          -1);
    }
-
 
    UpdateVendorMenu();
 
@@ -601,42 +599,29 @@ void RGRepositoryEditor::doEdit()
                       -1);
    rec->VendorID = type;
 #endif
+
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
-   delete[]rec->Sections;
-   rec->NumSections = 0;
+   rec->Sections.clear();
 
    const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-   if (Section != 0 && Section[0] != 0)
-      rec->NumSections++;
 
-   rec->Sections = new string[rec->NumSections];
-   rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-
-   if (Section != 0 && Section[0] != 0)
-      rec->Sections[rec->NumSections++] = Section;
-
-   string Sect;
-   for (unsigned int I = 0; I < rec->NumSections; I++) {
-      Sect += rec->Sections[I];
-      Sect += " ";
+   if ((Section != NULL) && (Section[0] != 0)) {
+      rec->Sections.push_back(Section);
    }
 
    /* repaint screen */
    gtk_list_store_set(_sourcesListStore, _lastIter,
-                      STATUS_COLUMN, !(rec->Type &
-                                       SourcesList::Disabled),
+                      STATUS_COLUMN, !(rec->Type & SourcesList::Disabled),
                       TYPE_COLUMN, utf8(rec->GetType().c_str()),
                       VENDOR_COLUMN, utf8(rec->VendorID.c_str()),
                       URI_COLUMN, utf8(rec->URI.c_str()),
                       DISTRIBUTION_COLUMN, utf8(rec->Dist.c_str()),
-                      SECTIONS_COLUMN, utf8(Sect.c_str()),
+                      SECTIONS_COLUMN, utf8((Section != NULL) ? Section : ""),
                       RECORD_COLUMN, (gpointer) (rec),
                       DISABLED_COLOR_COLUMN,
                       (rec->Type & SourcesList::Disabled ? &_gray : NULL), -1);
-
 }
 
 void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
@@ -736,12 +721,9 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
       gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
 
-      for (unsigned int I = 0; I < rec->NumSections; I++) {
+      for (const string section : rec->Sections) {
          int pos = gtk_editable_get_position(GTK_EDITABLE(me->_entrySect));
-         gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect),
-                                  utf8(rec->Sections[I].c_str()),
-                                  -1,
-                                  &pos);
+         gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect), utf8(section.c_str()), -1, &pos);
          gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect), " ", -1, &pos);
       }
    } else {

@@ -27,9 +27,9 @@
 
 #include "config.h"  // IWYU pragma: associated
 
-#include <iostream>
 #include <list>
 #include <string>
+#include <vector>
 
 class SourcesList {
  public:
@@ -51,8 +51,7 @@ class SourcesList {
       std::string VendorID;
       std::string URI;
       std::string Dist;
-      std::string *Sections;
-      unsigned short NumSections;
+      std::vector<std::string> Sections;
       std::string Comment;
       std::string SourceFile;
 
@@ -60,12 +59,8 @@ class SourcesList {
       std::string GetType();
       bool SetURI(std::string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
-      }
-      ~SourceRecord() {
-         if (Sections)
-            delete[]Sections;
-      }
+      SourceRecord():Type(0) {}
+      ~SourceRecord() {}
       SourceRecord &operator=(const SourceRecord &);
    };
 

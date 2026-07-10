@@ -132,6 +132,7 @@ bool SourcesList::ReadSourcePart(string listpath)
             //return _error->Error(_("Syntax error in line %s"), buf);
          }
       }
+
 #ifndef HAVE_RPM
       // check for absolute dist
       if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size() - 1] == '/') {
@@ -147,29 +148,23 @@ bool SourcesList::ReadSourcePart(string listpath)
       }
 #endif
 
-      const char *tmp = p;
-      rec.NumSections = 0;
-      while (ParseQuoteWord(p, Section) == true)
-         rec.NumSections++;
-      if (rec.NumSections > 0) {
-         p = tmp;
-         rec.Sections = new string[rec.NumSections];
-         rec.NumSections = 0;
-         while (ParseQuoteWord(p, Section) == true) {
-            // comments inside the record are preserved
-            if (Section[0] == '#') {
-               SourceRecord rec;
-               string s = Section + string(p);
-               rec.Type = Comment;
-               rec.Comment = s;
-               rec.SourceFile = listpath;
-               AddSourceNode(rec);
-               break;
-            } else {
-               rec.Sections[rec.NumSections++] = Section;
-            }
+      rec.Sections.clear();
+
+      while (ParseQuoteWord(p, Section) == true) {
+         // comments inside the record are preserved
+         if (Section[0] == '#') {
+            SourceRecord rec;
+            string s = Section + string(p);
+            rec.Type = Comment;
+            rec.Comment = s;
+            rec.SourceFile = listpath;
+            AddSourceNode(rec);
+            break;
+         } else {
+            rec.Sections.push_back(Section);
          }
       }
+
       AddSourceNode(rec);
    }
 
@@ -250,7 +245,6 @@ SourcesList::SourceRecord *SourcesList::AddEmptySource()
    rec.VendorID = "";
    rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
    rec.Dist = "";
-   rec.NumSections = 0;
    return AddSourceNode(rec);
 }
 
@@ -262,18 +256,18 @@ SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
                                                    string SourceFile)
 {
    SourceRecord rec;
+
+   if (!rec.SetURI(URI)) return NULL;
+
    rec.Type = Type;
    rec.VendorID = VendorID;
    rec.SourceFile = SourceFile;
-
-   if (rec.SetURI(URI) == false) {
-      return NULL;
-   }
    rec.Dist = Dist;
-   rec.NumSections = count;
-   rec.Sections = new string[count];
-   for (unsigned int i = 0; i < count; i++)
-      rec.Sections[i] = Sections[i];
+
+   rec.Sections.clear();
+   for (unsigned short i = 0; i < count; i++) {
+      rec.Sections.push_back(Sections[i]);
+   }
 
    return AddSourceNode(rec);
 }
@@ -336,8 +330,9 @@ bool SourcesList::UpdateSources()
             S += (*it)->URI + " ";
             S += (*it)->Dist + " ";
 
-            for (unsigned int J = 0; J < (*it)->NumSections; J++)
-               S += (*it)->Sections[J] + " ";
+            for (const string section: (*it)->Sections) {
+               S += section + " ";
+            }
          }
          ofs << S << endl;
       }
@@ -410,18 +405,23 @@ bool SourcesList::SourceRecord::SetURI(string S)
    return true;
 }
 
-SourcesList::SourceRecord &SourcesList::SourceRecord::
-operator=(const SourceRecord &rhs)
+// Needed for a proper deep copy of the record.
+SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(const SourceRecord &rhs)
 {
-   // Needed for a proper deep copy of the record; uses the string operator= to properly copy the strings
+   if (this == &rhs) return *this;
+
    Type = rhs.Type;
    VendorID = rhs.VendorID;
    URI = rhs.URI;
    Dist = rhs.Dist;
-   Sections = new string[rhs.NumSections];
-   for (unsigned int I = 0; I < rhs.NumSections; I++)
-      Sections[I] = rhs.Sections[I];
-   NumSections = rhs.NumSections;
+
+   Sections.clear();
+   Sections.reserve(rhs.Sections.size());
+
+   for (const string s : rhs.Sections) {
+      Sections.push_back(s);
+   }
+
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
 
@@ -552,8 +552,8 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
    os << "Dist: " << rec.Dist << endl;
    os << "Section(s):" << endl;
 #if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
+   for (const string section: rec.Sections) {
+      cout << "\t" << section << endl;
    }
 #endif
    os << endl;

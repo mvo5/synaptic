@@ -449,18 +449,15 @@ void RPatternPackageFilter::addPattern(DepType type, const string &pattern, bool
 
 bool RPatternPackageFilter::write(ofstream &out, string pad)
 {
-   DepType type;
-   string pat;
-   bool excl;
-
    out << pad + "andMode " << and_mode << ";" << endl;
-
    out << pad + "patterns {" << endl;
 
    for (size_t i = 0; i < count(); i++) {
+      DepType type;
+      string pat;
+      bool excl;
       getPattern(i, type, pat, excl);
-      out << pad + "  " + TypeName[(int)type] + ";"
-         << " \"" << pat << "\"; " << (excl ? "true;" : "false;") << endl;
+      out << pad + "  " + TypeName[(int)type] + ";" << " \"" << pat << "\"; " << (excl ? "true;" : "false;") << endl;
    }
 
    out << pad + "};" << endl;

@@ -8,4 +8,4 @@
 
 #include <string>
 
-std::string trans_section(std::string sec);
+std::string trans_section(const std::string &sec);

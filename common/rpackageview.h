@@ -28,6 +28,7 @@
 
 #include "i18n.h"
 #include "rpackage.h"
+#include "sections_trans.h"
 
 #include <cctype>
 #include <cstddef>
@@ -109,7 +110,6 @@ class RPackageView
    virtual void refresh();
 };
 
-
 class RPackageViewSections : public RPackageView
 {
  public:
@@ -122,7 +122,12 @@ class RPackageViewSections : public RPackageView
       return _("Sections");
    };
 
-   void addPackage(RPackage *package);
+   inline void addPackage(RPackage *package)
+   {
+      std::string section = trans_section(package->section());
+      section[0] = static_cast<char>(std::toupper(static_cast<unsigned char>(section[0])));
+      _view[section].push_back(package);
+   }
 };
 
 class RPackageViewAlphabetic : public RPackageView

@@ -30,7 +30,6 @@
 #include "rconfiguration.h"
 #include "rpackage.h"
 #include "rpackagefilter.h"
-#include "sections_trans.h"
 
 #include <algorithm>
 #include <apt-pkg/configuration.h>
@@ -103,12 +102,6 @@ void RPackageView::refresh()
       if (_all[i])
          addPackage(_all[i]);
    }
-}
-
-void RPackageViewSections::addPackage(RPackage *package)
-{
-   string str = trans_section(package->section());
-   _view[str].push_back(package);
 }
 
 RPackageViewStatus::RPackageViewStatus(vector<RPackage *> &allPkgs)

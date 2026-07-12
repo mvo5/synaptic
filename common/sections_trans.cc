@@ -9,10 +9,9 @@
 
 #include "i18n.h"
 
-#include <apt-pkg/strutl.h>
 #include <cstddef>
-#include <sstream>
 #include <string>
+#include <string_view>
 
 using namespace std;
 
@@ -150,39 +149,35 @@ const char *transtable[][2] = {
    {NULL, NULL}};
 
 #ifndef HAVE_RPM
-string trans_section(string sec)
+
+static string_view find_translation(const string_view &s)
 {
-   string str = sec;
-   string suffix;
-   // if we have something like "contrib/web", make "contrib" the
-   // suffix and translate it independently
+   if (s.empty()) return s;
+
+   for (size_t i = 0; transtable[i][0] != NULL; i++) {
+      if (s == transtable[i][0]) return _(transtable[i][1]);
+   }
+
+   return s;   // No translation found: Return the original string.
+}
+
+string trans_section(const string &section)
+{
+   string_view str = (!section.empty()) ? string_view(section) : string_view("Unknown");
+
+   // if we have something like "contrib/web", make "contrib" the suffix and translate it independently
    string::size_type n = str.find("/");
+
    if (n != string::npos) {
-      suffix = str.substr(0, n);
-      str.erase(0, n + 1);
-      for (int i = 0; transtable[i][0] != NULL; i++) {
-         if (suffix == transtable[i][0]) {
-            suffix = _(transtable[i][1]);
-            break;
-         }
-      }
+      string_view prefix = find_translation(str.substr(n + 1));
+      string_view suffix = find_translation(string_view(str.data(), n));   // NOLINT(bugprone-suspicious-stringview-data-usage): n is whithin the string_view bounds.
+      return string(prefix).append(" (").append(suffix).append(")");
+   } else {
+      return string(find_translation(str));
    }
-   for (int i = 0; transtable[i][0] != NULL; i++) {
-      if (str == transtable[i][0]) {
-         str = _(transtable[i][1]);
-         break;
-      }
-   }
-   // if we have a suffix, add it
-   if (!suffix.empty()) {
-      ostringstream out;
-      ioprintf(out, "%s (%s)", str.c_str(), suffix.c_str());
-      str = out.str();
-   }
-   return str;
 }
 #else
-string trans_section(string sec)
+string trans_section(const string &sec)
 {
    return dgettext("rpm", sec.c_str());
 }

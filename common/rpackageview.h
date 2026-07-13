@@ -78,9 +78,9 @@ class RPackageView {
       _selectedName.clear();
    }
 
-   virtual std::vector<std::string> getSubViews();
+   virtual std::vector<std::string> getSubViews() const;
 
-   virtual std::string getName() = 0;
+   virtual std::string getName() const = 0;
    virtual void addPackage(RPackage *package) = 0;
 
    typedef std::vector<RPackage *>::iterator iterator;
@@ -100,7 +100,7 @@ class RPackageViewSections : public RPackageView {
  public:
    RPackageViewSections(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
 
-   std::string getName() {
+   std::string getName() const {
       return _("Sections");
    };
 
@@ -110,7 +110,7 @@ class RPackageViewSections : public RPackageView {
 class RPackageViewAlphabetic : public RPackageView {
  public:
    RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() {
+   std::string getName() const {
       return _("Alphabetic");
    }
 
@@ -124,7 +124,7 @@ class RPackageViewAlphabetic : public RPackageView {
 class RPackageViewArchitecture : public RPackageView {
  public:
    RPackageViewArchitecture(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() {
+   std::string getName() const {
       return _("Architecture");
    }
 
@@ -134,7 +134,7 @@ class RPackageViewArchitecture : public RPackageView {
 class RPackageViewOrigin : public RPackageView {
  public:
    RPackageViewOrigin(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() {
+   std::string getName() const {
       return _("Origin");
    }
 
@@ -150,7 +150,7 @@ class RPackageViewStatus:public RPackageView {
  public:
    RPackageViewStatus(std::vector<RPackage *> &allPkgs);
 
-   std::string getName() {
+   std::string getName() const {
       return _("Status");
    }
 
@@ -177,12 +177,12 @@ class RPackageViewSearch : public RPackageView {
    int setSearch(std::string searchName, int type, std::string searchString,
 		 OpProgress &searchProgress);
 
-   std::string getName() {
+   std::string getName() const {
       return _("Search History");
    }
 
    // return search history here
-   virtual std::vector<std::string> getSubViews();
+   virtual std::vector<std::string> getSubViews() const;
    virtual bool setSelected(std::string name);
 
    void addPackage(RPackage *package);
@@ -232,7 +232,7 @@ class RPackageViewFilter : public RPackageView {
    // we never need to clear because we build the view "on-demand"
    virtual void clear() { clearSelection(); }
 
-   std::string getName() {
+   std::string getName() const {
       return _("Custom");
    }
 

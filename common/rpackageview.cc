@@ -64,12 +64,13 @@ bool RPackageView::setSelected(string name)
    return _hasSelection;
 }
 
-vector<string> RPackageView::getSubViews()
+vector<string> RPackageView::getSubViews() const
 {
    vector<string> subViews;
-   for (map<string, vector<RPackage *> >::iterator I = _view.begin();
-        I != _view.end(); I++)
-      subViews.push_back((*I).first);
+   subViews.reserve(_view.size());
+   for (const std::pair<string, vector<RPackage *>> &subView : _view) {
+      subViews.push_back(subView.first);
+   }
    return subViews;
 }
 
@@ -287,13 +288,13 @@ bool RPackageViewSearch::setSelected(string name)
    return RPackageView::setSelected(name);
 }
 
-vector<string> RPackageViewSearch::getSubViews()
+vector<string> RPackageViewSearch::getSubViews() const
 {
    vector<string> subviews;
-   for(map<string, searchItem>::iterator I = searchHistory.begin();
-       I != searchHistory.end();
-       I++)
-     subviews.push_back((*I).first);
+   subviews.reserve(searchHistory.size());
+   for (const std::pair<string, searchItem> &subView : searchHistory) {
+      subviews.push_back(subView.first);
+   }
    return subviews;
 }
 

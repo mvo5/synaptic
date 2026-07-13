@@ -212,8 +212,8 @@ class RPackageLister {
    }
 
    void setView(unsigned int index);
-   std::vector<std::string> getViews();
-   std::vector<std::string> getSubViews();
+   std::vector<std::string> getViews() const;
+   std::vector<std::string> getSubViews() const;
 
    // set subView (if newView is empty, set to all packages)
    bool setSubView(std::string newView="");

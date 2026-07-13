@@ -161,15 +161,17 @@ void RPackageLister::setView(unsigned int index)
       _selectedView = _views[0];
 }
 
-vector<string> RPackageLister::getViews()
+vector<string> RPackageLister::getViews() const
 {
    vector<string> views;
-   for (unsigned int i = 0; i != _views.size(); i++)
-      views.push_back(_views[i]->getName());
+   views.reserve(_views.size());
+   for (const RPackageView *view : _views) {
+      views.push_back(view->getName());
+   }
    return views;
 }
 
-vector<string> RPackageLister::getSubViews()
+vector<string> RPackageLister::getSubViews() const
 {
    return _selectedView->getSubViews();
 }

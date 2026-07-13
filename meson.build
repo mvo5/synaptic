@@ -1,7 +1,7 @@
 project(
   'synaptic',
   ['c', 'cpp'],
-  version: '0.90.1',
+  version: '0.91.7',
   default_options: [
     'warning_level=1',
     'cpp_std=gnu++17',

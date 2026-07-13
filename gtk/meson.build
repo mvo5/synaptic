@@ -42,36 +42,4 @@ executable(
   link_with: libsynaptic,
 )
 
-install_data(
-  files(
-    'gtkbuilder/dialog_authentication.ui',
-    'gtkbuilder/dialog_changelog.ui',
-    'gtkbuilder/dialog_change_version.ui',
-    'gtkbuilder/dialog_conffile.ui',
-    'gtkbuilder/dialog_quit.ui',
-    'gtkbuilder/dialog_task_descr.ui',
-    'gtkbuilder/dialog_unmet.ui',
-    'gtkbuilder/dialog_update_failed.ui',
-    'gtkbuilder/dialog_upgrade.ui',
-    'gtkbuilder/dialog_welcome.ui',
-    'gtkbuilder/window_changes.ui',
-    'gtkbuilder/window_details.ui',
-    'gtkbuilder/window_disc_name.ui',
-    'gtkbuilder/window_fetch.ui',
-    'gtkbuilder/window_filters.ui',
-    'gtkbuilder/window_find.ui',
-    'gtkbuilder/window_iconlegend.ui',
-    'gtkbuilder/window_logview.ui',
-    'gtkbuilder/window_main.ui',
-    'gtkbuilder/window_preferences.ui',
-    'gtkbuilder/window_repositories.ui',
-    'gtkbuilder/window_rgdebinstall_progress.ui',
-    'gtkbuilder/window_rginstall_progress_msgs.ui',
-    'gtkbuilder/window_rginstall_progress.ui',
-    'gtkbuilder/window_setopt.ui',
-    'gtkbuilder/window_summary.ui',
-    'gtkbuilder/window_tasks.ui',
-    'gtkbuilder/window_zvtinstallprogress.ui',
-  ),
-  install_dir: join_paths(get_option('datadir'), 'synaptic', 'gtkbuilder'),
-)
+subdir('gtkbuilder')

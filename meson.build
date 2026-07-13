@@ -20,7 +20,6 @@ abs_datadir = datadir.startswith('/') ? datadir : join_paths(prefix, datadir)
 abs_localedir = localedir.startswith('/') ? localedir : join_paths(prefix, localedir)
 abs_localstatedir = localstatedir.startswith('/') ? localstatedir : join_paths(prefix, localstatedir)
 
-synaptic_gtkbuilderdir = join_paths(abs_datadir, 'synaptic', 'gtkbuilder') + '/'
 synaptic_pixmapdir = join_paths(abs_datadir, 'synaptic', 'pixmaps') + '/'
 
 cc = meson.get_compiler('c')
@@ -109,7 +108,6 @@ conf.set_quoted('GETTEXT_PACKAGE', 'synaptic')
 conf.set_quoted('PACKAGE', meson.project_name())
 conf.set_quoted('PACKAGE_DATA_DIR', abs_datadir)
 conf.set_quoted('PACKAGE_LOCALE_DIR', abs_localedir)
-conf.set_quoted('SYNAPTIC_GTKBUILDERDIR', synaptic_gtkbuilderdir)
 conf.set_quoted('SYNAPTIC_PIXMAPDIR', synaptic_pixmapdir)
 conf.set_quoted('SYNAPTICLOCALEDIR', abs_localedir)
 conf.set_quoted('SYNAPTICSTATEDIR', abs_localstatedir)
@@ -158,7 +156,6 @@ base_cpp_args = [
   '-DGETTEXT_PACKAGE="synaptic"',
   '-DPACKAGE_DATA_DIR="@0@"'.format(abs_datadir),
   '-DPACKAGE_LOCALE_DIR="@0@"'.format(abs_localedir),
-  '-DSYNAPTIC_GTKBUILDERDIR="@0@"'.format(synaptic_gtkbuilderdir),
   '-DSYNAPTIC_PIXMAPDIR="@0@"'.format(synaptic_pixmapdir),
   '-DSYNAPTICLOCALEDIR="@0@"'.format(abs_localedir),
   '-DSYNAPTICSTATEDIR="@0@"'.format(abs_localstatedir),

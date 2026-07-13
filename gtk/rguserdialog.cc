@@ -32,7 +32,6 @@
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
-#include <apt-pkg/fileutl.h>
 #include <cassert>
 #include <cstddef>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -235,7 +234,6 @@ RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
 void RGGtkBuilderUserDialog::init(const char *name)
 {
    gchar *main_widget = NULL;
-   guint builder_status;
    GError* error = NULL;
 
    //cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
@@ -244,7 +242,7 @@ void RGGtkBuilderUserDialog::init(const char *name)
    std::string resource_path = std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
    main_widget = g_strdup_printf("dialog_%s", name);
    if (!gtk_builder_add_from_resource (builder, resource_path.c_str(), &error)) {
-      g_warning ("Couldn't load builder file: %s", error->message);
+      g_warning ("Couldn't load builder resource: %s", error->message);
       g_error_free (error);
    }
    _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));

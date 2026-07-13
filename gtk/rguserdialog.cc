@@ -28,6 +28,7 @@
 #include "rguserdialog.h"
 #include "rgutils.h"
 #include "rgwindow.h"
+#include "ruserdialog.h"
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
@@ -41,7 +42,6 @@
 #include <glib.h>
 #include <gobject/gclosure.h>
 #include <gtk/gtk.h>
-#include <ruserdialog.h>
 #include <string>
 
 using namespace std;

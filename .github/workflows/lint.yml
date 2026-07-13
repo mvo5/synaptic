@@ -1,0 +1,27 @@
+name: Lint
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  whitespace:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        # full history to reach the merge base
+        fetch-depth: 0
+
+    - name: check for introduced trailing whitespace
+      run: |
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          base="origin/${{ github.base_ref }}"
+        else
+          base="HEAD~1"
+        fi
+        ./tools/lint-whitespace.sh "$base"

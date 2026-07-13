@@ -17,8 +17,9 @@ jobs:
       run: |
         sudo apt update
         sudo apt build-dep -y ./
-        #Devscripts for bringing in debuild
-        sudo apt install meson ninja-build appstream libpolkit-gobject-1-dev devscripts -y
+        # devscripts provides debuild (CI tooling, not a package build-dep);
+        # everything the build needs must come from debian/control via build-dep
+        sudo apt install -y devscripts
 
     - name: configure
       run: |
@@ -36,4 +37,23 @@ jobs:
       run: sudo apt install ../synaptic_*.deb
     - name: remove deb
       run: sudo apt remove synaptic
-# TODO ? add make check or distcheck?
+
+  # Build in a minimal Debian container using only the declared Build-Depends,
+  # so a missing build-dep fails here instead of slipping through to a buildd.
+  clean-build:
+
+    runs-on: ubuntu-latest
+    container:
+      image: debian:sid
+
+    steps:
+    - name: install base build tooling
+      run: |
+        apt-get update
+        apt-get install -y --no-install-recommends \
+          git build-essential dpkg-dev fakeroot ca-certificates
+    - uses: actions/checkout@v7
+    - name: install declared build-deps only
+      run: apt-get build-dep -y ./
+    - name: build package in clean environment
+      run: dpkg-buildpackage -B -us -uc

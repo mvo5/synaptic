@@ -45,6 +45,9 @@ test_gtkpkglist = executable(
   link_with: libsynaptic,
 )
 
-test('test_rpackage', test_rpackage, env: test_env)
+# test_rpackage and test_rpackageview read every package's record from the
+# on-disk Packages files; on a cold container cache that exceeds meson's 30s
+# default, so give them headroom
+test('test_rpackage', test_rpackage, env: test_env, timeout: 300)
 test('test_rpackagefilter', test_rpackagefilter, env: test_env)
-test('test_rpackageview', test_rpackageview, env: test_env)
+test('test_rpackageview', test_rpackageview, env: test_env, timeout: 300)

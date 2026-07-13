@@ -29,7 +29,6 @@
 #include "rgwindow.h"
 
 #include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
 #include <cassert>
 #include <cstddef>
 #include <gdk/gdk.h>
@@ -53,7 +52,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
    _busyCursor = gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
    _builder = gtk_builder_new ();
 
-   // for development
    gchar *main_widget = NULL;
    GError* error = NULL;
 
@@ -64,7 +62,7 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
 
    std::string resource_path = "/io/github/mvo5/synaptic/ui/window_" + name + ".ui";
    if (!gtk_builder_add_from_resource (_builder, resource_path.c_str(), &error)) {
-      g_warning ("Couldn't load builder file: %s", error->message);
+      g_warning ("Couldn't load builder resource: %s", error->message);
       g_error_free (error);
    }
 

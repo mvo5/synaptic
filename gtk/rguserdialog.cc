@@ -241,19 +241,11 @@ void RGGtkBuilderUserDialog::init(const char *name)
    //cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
 
    builder = gtk_builder_new();
-   std::string filename = std::string("gtkbuilder/dialog_")+name+std::string(".ui");
+   std::string resource_path = std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
    main_widget = g_strdup_printf("dialog_%s", name);
-   if (FileExists(filename)) {
-      if (!gtk_builder_add_from_file (builder, filename.c_str(), &error)) {
-         g_warning ("Couldn't load builder file: %s", error->message);
-         g_error_free (error);
-      }
-   } else {
-      filename = std::string(SYNAPTIC_GTKBUILDERDIR "dialog_") + name + std::string(".ui");
-      if (!gtk_builder_add_from_file (builder, filename.c_str(), &error)) {
-         g_warning ("Couldn't load builder file: %s", error->message);
-         g_error_free (error);
-      }
+   if (!gtk_builder_add_from_resource (builder, resource_path.c_str(), &error)) {
+      g_warning ("Couldn't load builder file: %s", error->message);
+      g_error_free (error);
    }
    _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
    assert(_dialog);

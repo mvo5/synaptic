@@ -54,31 +54,20 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
    _builder = gtk_builder_new ();
 
    // for development
-   gchar *filename = NULL;
-   gchar *local_filename = NULL;
    gchar *main_widget = NULL;
    GError* error = NULL;
 
-   filename = g_strdup_printf("window_%s.ui", name.c_str());
-   local_filename = g_strdup_printf("gtkbuilder/%s", filename);
    if (mainName.empty())
       main_widget = g_strdup_printf("window_%s", name.c_str());
    else
       main_widget = g_strdup_printf("window_%s", mainName.c_str());
-   if (FileExists(local_filename)) {
-      if (!gtk_builder_add_from_file (_builder, local_filename, &error)) {
-         g_warning ("Couldn't load builder file: %s", error->message);
-         g_error_free (error);
-      }
-   } else {
-      g_free(filename);
-      filename =
-         g_strdup_printf(SYNAPTIC_GTKBUILDERDIR "window_%s.ui", name.c_str());
-      if (!gtk_builder_add_from_file (_builder, filename, &error)) {
-         g_warning ("Couldn't load builder file: %s", error->message);
-         g_error_free (error);
-      }
+
+   std::string resource_path = "/io/github/mvo5/synaptic/ui/window_" + name + ".ui";
+   if (!gtk_builder_add_from_resource (_builder, resource_path.c_str(), &error)) {
+      g_warning ("Couldn't load builder file: %s", error->message);
+      g_error_free (error);
    }
+
    _win = GTK_WIDGET (gtk_builder_get_object (_builder, main_widget));
    assert(_win);
 
@@ -91,8 +80,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
    GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
    gtk_window_set_icon(GTK_WINDOW(_win), icon);
 
-   g_free(filename);
-   g_free(local_filename);
    g_free(main_widget);
 
    //gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());

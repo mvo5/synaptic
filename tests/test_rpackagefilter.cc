@@ -22,8 +22,11 @@ int main(int argc, char **argv)
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
    if (!RInitConfiguration("synaptic.conf")) {
+      // build chroots have no writable HOME; skip rather than fail (77 = skip)
       _error->DumpErrors();
-      std::exit(1);
+      std::cerr << "SKIP: could not initialize synaptic configuration "
+                   "(no writable HOME?)" << std::endl;
+      std::exit(77);
    }
 
    RFilter *filter, *filter_copy;

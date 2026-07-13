@@ -1,7 +1,7 @@
 project(
   'synaptic',
   ['c', 'cpp'],
-  version: '0.90.1',
+  version: '0.91.7',
   default_options: [
     'warning_level=1',
     'cpp_std=gnu++17',
@@ -9,7 +9,6 @@ project(
 )
 
 i18n = import('i18n')
-fs = import('fs')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')

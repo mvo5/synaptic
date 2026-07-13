@@ -397,17 +397,7 @@ static gint applicationHandleLocalOptions(GApplication* app,
 
 static void applicationStartup(GApplication* app, gpointer user_data)
 {
-   if (getuid() != 0) {
-      RGUserDialog userDialog;
-      userDialog.warning(g_strdup_printf("<b><big>%s</big></b>\n\n%s",
-                                         _("Starting \"Synaptic Package Manager\" without "
-                                           "administrative privileges"),
-				         _("You will not be able to apply "
-				           "any changes, but you can still "
-					   "export the marked changes or "
-					   "create a download script "
-					   "for them.")));
-   }
+   gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), PACKAGE_DATA_DIR "/synaptic/icons");
 
    if (!RInitConfiguration("synaptic.conf")) {
       RGUserDialog userDialog;

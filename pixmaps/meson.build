@@ -1,3 +1,5 @@
+pkg_icon_dir = datadir / meson.project_name() / 'icons' / 'hicolor'
+
 install_data(
   files(
     'update_small.png',
@@ -50,6 +52,11 @@ install_data(
 install_data(
   files('hicolor/24x24/actions/system-upgrade.png'),
   install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '24x24', 'actions'),
+)
+
+install_data(
+  ['warning.svg'],
+  install_dir: pkg_icon_dir / 'scalable' / 'categories',
 )
 
 install_data(

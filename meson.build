@@ -9,6 +9,7 @@ project(
 )
 
 i18n = import('i18n')
+gnome = import('gnome')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
@@ -210,3 +211,7 @@ subdir('pixmaps')
 subdir('man')
 subdir('help')
 subdir('tests')
+gnome.post_install(
+  gtk_update_icon_cache: true,
+  update_desktop_database: true,
+)

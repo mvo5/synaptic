@@ -718,53 +718,42 @@ void RGFilterManagerWindow::getStatusFilter(RStatusPackageFilter & f)
 
 void RGFilterManagerWindow::getPatternFilter(RPatternPackageFilter &f)
 {
-   GtkTreeIter iter;
-   bool exclude;
-   string pattern;
-   RPatternPackageFilter::DepType type;
-   gchar *dopatt, *what, *text;
-
-   //cout << "RGFilterEditor::getPatternFilter()"<<endl;
    f.reset();
 
-   bool valid =
-      gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_patternListStore),
-                                    &iter);
+   // Walk through the list, reading each row.
+   GtkTreeIter iter;
+   bool valid = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_patternListStore), &iter);
    while (valid) {
-      /* Walk through the list, reading each row */
+      gchar *dopatt;
+      gchar *what;
+      gchar *text;
       gtk_tree_model_get(GTK_TREE_MODEL(_patternListStore),
                          &iter,
                          PATTERN_DO_COLUMN, &dopatt,
                          PATTERN_WHAT_COLUMN, &what,
                          PATTERN_TEXT_COLUMN, &text, -1);
+
       // first look at the "act" code
-      if (strcmp(dopatt, ActOptions[0]) == 0)
-         exclude = false;
-      else
-         exclude = true;
+      bool exclude = (strcmp(dopatt, ActOptions[0]) != 0);
 
       // then check the options
-      for (int j = 0; DepOptions[j]; j++) {
+      for (size_t j = 0; DepOptions[j] != NULL; j++) {
          if (strcmp(what, _(DepOptions[j])) == 0) {
-            type = (RPatternPackageFilter::DepType) j;
+            // then do the pattern (we convert the text to locale to support translated descriptions)
+            RPatternPackageFilter::DepType type = (RPatternPackageFilter::DepType) j;
+            f.addPattern(type, utf8_to_locale(text), exclude);
             break;
          }
       }
-      // then do the pattern (we convert the text to locale to support 
-      // translated descriptions)
-      f.addPattern(type, utf8_to_locale(text), exclude);
 
-      valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_patternListStore),
-                                       &iter);
+      valid = gtk_tree_model_iter_next(GTK_TREE_MODEL(_patternListStore), &iter);
+
       g_free(dopatt);
       g_free(what);
       g_free(text);
    }
    
-   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                             (gtk_builder_get_object(_builder,
-                                              "radiobutton_properties_and"))));
-
+   f.setAndMode(gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(gtk_builder_get_object(_builder, "radiobutton_properties_and"))));
 }
 
 void RGFilterManagerWindow::editFilter()

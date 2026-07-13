@@ -221,10 +221,6 @@
               </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-          </packing>
         </child>
         <child>
           <object class="GtkPaned" id="hpaned_main">
@@ -1319,7 +1315,6 @@
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -1386,14 +1381,34 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkBox" id="no_root_info">
+                    <property name="spacing">6</property>
+                    <property name="tooltip-text" translatable="yes">You will not be able to apply any changes, but you can still export the marked changes or create a download script for them.</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="icon-name">warning</property>
+                        <property name="icon-size">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Running without administrative privileges</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">4</property>
-          </packing>
         </child>
       </object>
     </child>

@@ -514,8 +514,13 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
    RGMainWindow *me = (RGMainWindow *) data;
    if (me->_blockActions)
       return;
-   
-   bool active = g_variant_get_boolean(parameter);
+
+   // activating a stateful action without parameter type passes
+   // parameter == NULL, so toggle the current state ourselves
+   GVariant *state = g_action_get_state(G_ACTION(action));
+   bool active = !g_variant_get_boolean(state);
+   g_variant_unref(state);
+   g_simple_action_set_state(action, g_variant_new_boolean(active));
 
    GtkTreeSelection *selection;
    GtkTreeIter iter;
@@ -2955,13 +2960,19 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
 {
    RGMainWindow *me = (RGMainWindow *) data;
 
-   bool active = g_variant_get_boolean(parameter);
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    RPackage *pkg;
 
    if (me->_blockActions)
       return;
+
+   // activating a stateful action without parameter type passes
+   // parameter == NULL, so toggle the current state ourselves
+   GVariant *state = g_action_get_state(G_ACTION(action));
+   bool active = !g_variant_get_boolean(state);
+   g_variant_unref(state);
+   g_simple_action_set_state(action, g_variant_new_boolean(active));
 
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
    GList *li, *list;

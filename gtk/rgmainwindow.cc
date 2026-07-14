@@ -2279,7 +2279,7 @@ void RGMainWindow::cbHelpAction(GSimpleAction *action,
       cmd.push_back("ghelp:synaptic");
    } else {
       cmd.push_back("/usr/bin/xdg-open");
-      cmd.push_back(PACKAGE_DATA_DIR "/synaptic/html/index.html");
+      cmd.push_back(PACKAGE_DATA_DIR "/html/index.html");
    }
 
    if (cmd.empty()) {

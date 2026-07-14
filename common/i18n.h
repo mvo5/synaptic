@@ -23,9 +23,7 @@
 #ifndef _I18N_H_
 #define _I18N_H_
 
-#ifdef HAVE_CONFIG_H
 #include "config.h"  // IWYU pragma: associated
-#endif
 
 #ifdef ENABLE_NLS
 #include <locale.h>

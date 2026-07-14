@@ -397,7 +397,7 @@ static gint applicationHandleLocalOptions(GApplication* app,
 
 static void applicationStartup(GApplication* app, gpointer user_data)
 {
-   gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), PACKAGE_DATA_DIR "/synaptic/icons");
+   gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(), PACKAGE_DATA_DIR "/icons");
 
    if (!RInitConfiguration("synaptic.conf")) {
       RGUserDialog userDialog;

@@ -1,4 +1,4 @@
-pkg_icon_dir = datadir / meson.project_name() / 'icons' / 'hicolor'
+pkg_icon_dir = pkg_datadir / 'icons' / 'hicolor'
 
 install_data(
   files(
@@ -16,7 +16,7 @@ install_data(
     'cnc.png',
     'logo.png',
   ),
-  install_dir: join_paths(get_option('datadir'), 'synaptic', 'gtkbuilder'),
+  install_dir: pkg_datadir / 'gtkbuilder',
 )
 
 install_data(
@@ -25,7 +25,7 @@ install_data(
     'yellow.png',
     'red.png',
   ),
-  install_dir: join_paths(get_option('datadir'), 'synaptic', 'pixmaps'),
+  install_dir: pkg_datadir / 'pixmaps',
 )
 
 install_data(
@@ -46,12 +46,12 @@ install_data(
     'hicolor/16x16/actions/package-upgrade.png',
     'hicolor/16x16/actions/system-upgrade.png',
   ),
-  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '16x16', 'actions'),
+  install_dir: datadir / 'icons' / 'hicolor' / '16x16' / 'actions',
 )
 
 install_data(
   files('hicolor/24x24/actions/system-upgrade.png'),
-  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '24x24', 'actions'),
+  install_dir: datadir / 'icons' / 'hicolor' / '24x24' / 'actions',
 )
 
 install_data(
@@ -61,10 +61,10 @@ install_data(
 
 install_data(
   files('hicolor/256x256/apps/synaptic.png'),
-  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', '256x256', 'apps'),
+  install_dir: datadir / 'icons' / 'hicolor' / '256x256' / 'apps',
 )
 
 install_data(
   files('hicolor/scalable/apps/synaptic.svg'),
-  install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', 'scalable', 'apps'),
+  install_dir: datadir / 'icons' / 'hicolor' / 'scalable' / 'apps',
 )

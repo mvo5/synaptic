@@ -12,15 +12,12 @@ i18n = import('i18n')
 gnome = import('gnome')
 
 prefix = get_option('prefix')
-datadir = get_option('datadir')
-localedir = get_option('localedir')
-localstatedir = get_option('localstatedir')
+bindir = prefix / get_option('bindir')
+datadir = prefix / get_option('datadir')
+localedir = prefix / get_option('localedir')
+localstatedir = prefix / get_option('localstatedir')
 
-abs_datadir = datadir.startswith('/') ? datadir : join_paths(prefix, datadir)
-abs_localedir = localedir.startswith('/') ? localedir : join_paths(prefix, localedir)
-abs_localstatedir = localstatedir.startswith('/') ? localstatedir : join_paths(prefix, localstatedir)
-
-synaptic_pixmapdir = join_paths(abs_datadir, 'synaptic', 'pixmaps') + '/'
+pkg_datadir = datadir / meson.project_name()
 
 cc = meson.get_compiler('c')
 cpp = meson.get_compiler('cpp')
@@ -104,13 +101,11 @@ if dpkg_vendor.found()
 endif
 
 conf = configuration_data()
-conf.set_quoted('GETTEXT_PACKAGE', 'synaptic')
+conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf.set_quoted('PACKAGE', meson.project_name())
-conf.set_quoted('PACKAGE_DATA_DIR', abs_datadir)
-conf.set_quoted('PACKAGE_LOCALE_DIR', abs_localedir)
-conf.set_quoted('SYNAPTIC_PIXMAPDIR', synaptic_pixmapdir)
-conf.set_quoted('SYNAPTICLOCALEDIR', abs_localedir)
-conf.set_quoted('SYNAPTICSTATEDIR', abs_localstatedir)
+conf.set_quoted('PACKAGE_DATA_DIR', pkg_datadir)
+conf.set_quoted('PACKAGE_LOCALE_DIR', localedir)
+conf.set_quoted('SYNAPTICSTATEDIR', localstatedir)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set('ENABLE_NLS', 1)
 
@@ -151,16 +146,6 @@ endif
 
 configure_file(output: 'config.h', configuration: conf)
 
-base_cpp_args = [
-  '-DHAVE_CONFIG_H',
-  '-DGETTEXT_PACKAGE="synaptic"',
-  '-DPACKAGE_DATA_DIR="@0@"'.format(abs_datadir),
-  '-DPACKAGE_LOCALE_DIR="@0@"'.format(abs_localedir),
-  '-DSYNAPTIC_PIXMAPDIR="@0@"'.format(synaptic_pixmapdir),
-  '-DSYNAPTICLOCALEDIR="@0@"'.format(abs_localedir),
-  '-DSYNAPTICSTATEDIR="@0@"'.format(abs_localstatedir),
-  '-DVERSION="@0@"'.format(meson.project_version()),
-]
 gtk_cpp_args = [
   '-DG_DISABLE_DEPRECATED',
   '-DGDK_DISABLE_DEPRECATED',
@@ -208,6 +193,7 @@ subdir('pixmaps')
 subdir('man')
 subdir('help')
 subdir('tests')
+
 gnome.post_install(
   gtk_update_icon_cache: true,
   update_desktop_database: true,

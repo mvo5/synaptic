@@ -154,11 +154,6 @@ configure_file(output: 'config.h', configuration: conf)
 base_cpp_args = [
   '-DHAVE_CONFIG_H',
   '-DGETTEXT_PACKAGE="synaptic"',
-  '-DPACKAGE_DATA_DIR="@0@"'.format(abs_datadir),
-  '-DPACKAGE_LOCALE_DIR="@0@"'.format(abs_localedir),
-  '-DSYNAPTIC_PIXMAPDIR="@0@"'.format(synaptic_pixmapdir),
-  '-DSYNAPTICLOCALEDIR="@0@"'.format(abs_localedir),
-  '-DSYNAPTICSTATEDIR="@0@"'.format(abs_localstatedir),
   '-DVERSION="@0@"'.format(meson.project_version()),
 ]
 gtk_cpp_args = [

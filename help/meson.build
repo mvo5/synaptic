@@ -26,10 +26,10 @@ custom_target(
     'sh', '@OUTPUT@', '@INPUT@',
   ],
   install: true,
-  install_dir: datadir / 'synaptic',
+  install_dir: pkg_datadir,
 )
 
 install_subdir(
   'C/figures',
-  install_dir: datadir / 'synaptic' / 'html',
+  install_dir: pkg_datadir / 'html',
 )

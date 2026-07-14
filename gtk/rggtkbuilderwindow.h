@@ -34,17 +34,11 @@ class RGGtkBuilderWindow : public RGWindow
 {
  protected:
    GtkBuilder *_builder;
-   GdkCursor *_busyCursor;
 
  public:
    RGGtkBuilderWindow(RGWindow *parent,
                       std::string name,
                       std::string main_widget = "");
-
-   void skipTaskbar(bool value)
-   {
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
-   }
 
    // show busy cursor over main window
    void setBusyCursor(bool flag = true);

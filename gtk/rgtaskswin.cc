@@ -33,9 +33,6 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstdio>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>

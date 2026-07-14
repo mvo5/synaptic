@@ -35,8 +35,7 @@ task = cmake.subproject('task', options: task_options)
 task_dep = task.get_variable('beman_task_dep')
 
 threads_dep = dependency('threads')
-gtk_dep = dependency('gtk+-3.0', version: '>= 3.4.0')
-pango_dep = dependency('pango', version: '>= 1.0.0')
+gtk_dep = dependency('gtk4', version: '>= 4.20.0')
 tbb_dep = dependency('tbb')
 glib_dep = dependency('glib-2.0')
 apt_pkg_dep = dependency('apt-pkg', required: true)
@@ -78,7 +77,7 @@ endif
 have_apt_auth = cpp.has_header('apt-pkg/metaindex.h', dependencies: apt_pkg_dep)
 have_aptpkg_cdrom = cpp.has_header('apt-pkg/cdrom.h', dependencies: apt_pkg_dep)
 
-vte_dep = dependency('vte-2.91', version: '>= 0.5', required: false)
+vte_dep = dependency('vte-2.91-gtk4', version: '>= 0.5', required: false)
 have_vte = vte_dep.found()
 
 if get_option('dpkg_progress').enabled() and not have_vte
@@ -175,7 +174,6 @@ gui_deps = [
   task_dep,
   tbb_dep,
   gtk_dep,
-  pango_dep,
   glib_dep,
   apt_pkg_dep,
   x11_dep,

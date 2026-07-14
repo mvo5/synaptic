@@ -28,8 +28,6 @@
 #include "rggtkbuilderwindow.h"
 #include "rpackage.h"
 
-#include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
@@ -54,9 +52,11 @@ class RGPkgDetailsWindow : public RGGtkBuilderWindow
    static void cbDependsMenuChanged(GtkWidget *self, void *data);
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbShowScreenshot(GtkWidget *button, void *data);
-   static void cbShowBigScreenshot(GtkWidget *button,
-                                   GdkEventButton *event,
-                                   void *data);
+   static void cbShowBigScreenshot(GtkGestureClick *gesture,
+                                   gint n_press,
+                                   gdouble x,
+                                   gdouble y,
+                                   gpointer data);
    static void cbShowChangelog(GtkWidget *button, void *data);
    static gboolean cbOpenHomepage(GtkWidget *button, void *data);
    static gboolean cbOpenLink(GtkWidget *button, gchar *uri, void *data);

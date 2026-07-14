@@ -114,9 +114,8 @@ bool RAPTOptions::restore()
    while (TF.Step(Tags) == true) {
       string Name = Tags.FindS("Package");
       if (Name.empty() == true)
-         return _error->
-            Error(_
-                  ("Invalid record in the preferences file, no Package header"));
+         return _error->Error(
+            _("Invalid record in the preferences file, no Package header"));
       if (Name == "*")
          Name = string();
 

@@ -30,9 +30,6 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstring>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
@@ -147,5 +144,4 @@ RGFindWindow::RGFindWindow(RGWindow *win)
    gtk_widget_set_sensitive(_findB, FALSE);
 
    setTitle(_("Find"));
-   skipTaskbar(true);
 }

@@ -27,7 +27,6 @@
 #include "rggtkbuilderwindow.h"
 #include "rgutils.h"
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 class RGMainWindow;

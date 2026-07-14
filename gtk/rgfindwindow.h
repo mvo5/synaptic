@@ -28,7 +28,6 @@
 #include "rggtkbuilderwindow.h"
 
 #include <cstddef>
-#include <glib.h>
 #include <gtk/gtk.h>
 
 class RGFindWindow;

@@ -38,9 +38,7 @@
 #include <cstdlib>
 #include <gtk/gtk.h>
 #include <map>
-#include <string.h>
 #include <string>
-#include <unistd.h>
 #include <utility>
 
 class RGWindow;
@@ -64,15 +62,13 @@ RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
    gtk_css_provider_load_from_data(
       _cssProvider,
       "TextView { font-family: helvetica; font-size: 10pt; }",
-      -1,
-      NULL);
+      -1);
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProvider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    PangoFontDescription *font;
    font = pango_font_description_from_string("helvetica bold 10");
    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
-   skipTaskbar(true);
 }
 
 RGInstallProgressMsgs::~RGInstallProgressMsgs()
@@ -83,11 +79,12 @@ RGInstallProgressMsgs::~RGInstallProgressMsgs()
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 {
    RGInstallProgressMsgs *me = (RGInstallProgressMsgs *)data;
-   gtk_window_close(GTK_WINDOW(me->_win));
+   me->close();
 }
+
 void RGInstallProgressMsgs::close()
 {
-   gtk_main_quit();
+   gtk_window_close(GTK_WINDOW(_win));
 }
 
 void RGInstallProgressMsgs::addText(const char *text, bool bold)
@@ -154,7 +151,7 @@ task<void> RGInstallProgress::finishUpdate()
                                               _("APT system reports:\n%s"),
                                               utf8(buf));
       co_await co_run_dialog(GTK_DIALOG(dia));
-      gtk_widget_destroy(dia);
+      gtk_window_destroy(GTK_WINDOW(dia));
    }
 
    if (_startCounting) {
@@ -341,8 +338,7 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    gtk_css_provider_load_from_data(
       _cssProviderBold,
       "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }",
-      -1,
-      NULL);
+      -1);
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProviderBold),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -350,10 +346,7 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    _cssProvider = gtk_css_provider_new();
    styleContext = gtk_widget_get_style_context(_labelSummary);
    gtk_css_provider_load_from_data(
-      _cssProvider,
-      "Label { font-family: helvetica; font-size: 10pt; }",
-      -1,
-      NULL);
+      _cssProvider, "Label { font-family: helvetica; font-size: 10pt; }", -1);
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProvider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -364,8 +357,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbar), 0.01);
    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(_pbarTotal), 0.01);
-
-   skipTaskbar(true);
 }
 
 RGInstallProgress::~RGInstallProgress()

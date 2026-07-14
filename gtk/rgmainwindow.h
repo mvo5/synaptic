@@ -34,13 +34,8 @@
 
 #include <apt-pkg/pkgcache.h>
 #include <cstddef>
-#include <gdk/gdk.h>
-#include <gio/gio.h>
-#include <gio/gmenu.h>
 #include <glib.h>
-#include <glib/gtypes.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <string>
 #include <vector>
 
@@ -130,6 +125,8 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
 
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
+
+   GActionGroup *win_actions;
 
    // init stuff
    void buildInterface();
@@ -269,14 +266,16 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
                                   GVariant *parameter,
                                   gpointer data);
 
-   static gboolean cbPackageListClicked(GtkWidget *treeview,
-                                        GdkEventButton *event,
-                                        gpointer data);
+   static void cbPackageListClicked(GtkGestureClick *gesture,
+                                    gint n_press,
+                                    double x,
+                                    double y,
+                                    gpointer data);
 
-   static void cbTreeviewPopupMenu(GtkWidget *treeview,
-                                   GdkEventButton *event,
-                                   RGMainWindow *me,
-                                   std::vector<RPackage *> selected_pkgs);
+   void cbTreeviewPopupMenu(int button,
+                            double x,
+                            double y,
+                            std::vector<RPackage *> selected_pkgs);
 
    static void cbChangelogDialog(GSimpleAction *action,
                                  GVariant *parameter,

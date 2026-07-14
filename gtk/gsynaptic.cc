@@ -355,7 +355,7 @@ pid_t TestLock(string File)
 
          gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), msg);
          co_await co_run_dialog(GTK_DIALOG(dia));
-         gtk_widget_destroy(dia);
+         gtk_window_destroy(GTK_WINDOW(dia));
       }
       g_free(msg);
 
@@ -489,8 +489,9 @@ static gint applicationHandleLocalOptions(GApplication *app,
 
 static void applicationStartup(GApplication *app, gpointer user_data)
 {
-   gtk_icon_theme_append_search_path(gtk_icon_theme_get_default(),
-                                     PACKAGE_DATA_DIR "/icons");
+   gtk_icon_theme_add_search_path(
+      gtk_icon_theme_get_for_display(gdk_display_get_default()),
+      PACKAGE_DATA_DIR "/icons");
 
    if (!RInitConfiguration("synaptic.conf")) {
       start_task([app]() -> task<void> {

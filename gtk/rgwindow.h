@@ -31,18 +31,22 @@
 
 class RGWindow
 {
+ private:
+   GtkShortcutController *_shortcutController;
+
  protected:
    GtkWidget *_win;
 
-   static gboolean windowCloseCallback(GtkWidget *widget,
-                                       GdkEvent *event,
-                                       gpointer data);
+   static gboolean windowCloseCallback(GtkWidget *widget, gpointer data);
    virtual void close();
 
    void init();
 
-   RGWindow() : _win(nullptr)
+   RGWindow() : _win(nullptr), _shortcutController(nullptr)
    {}
+
+   GtkShortcutController *getShortcutController();
+   void hideByEscape();
 
  public:
    inline virtual GtkWidget *window()
@@ -54,12 +58,12 @@ class RGWindow
 
    inline virtual void hide()
    {
-      gtk_widget_hide(_win);
+      gtk_widget_set_visible(_win, false);
    }
 
    inline virtual void show()
    {
-      gtk_widget_show(_win);
+      gtk_window_present(GTK_WINDOW(_win));
    }
 
    explicit RGWindow(RGWindow *parent, std::string name);

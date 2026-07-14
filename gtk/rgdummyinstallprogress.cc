@@ -26,9 +26,6 @@
 
 #include "rgutils.h"
 
-#include <gtk/gtk.h>
-#include <unistd.h>
-
 task<void> RGDummyInstallProgress::startUpdate()
 {
    co_await RGFlushInterface();

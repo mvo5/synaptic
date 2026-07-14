@@ -25,8 +25,6 @@
 #include "rgutils.h"
 #include "rpackagelistactor.h"
 
-#include <glib-object.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 
 #define GTK_TYPE_PKG_LIST (gtk_pkg_list_get_type())

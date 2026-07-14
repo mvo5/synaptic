@@ -80,16 +80,16 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    pango_font_description_free(fontdesc);
 
    GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(_builder, "hbox_vte"));
-   gtk_box_pack_start(GTK_BOX(box), _term, TRUE, TRUE, 0);
-   gtk_box_pack_end(GTK_BOX(box), _scrollbar, FALSE, FALSE, 0);
-   gtk_widget_show(_term);
-   gtk_widget_show(_scrollbar);
+   gtk_widget_set_hexpand(_term, TRUE);
+   gtk_widget_set_vexpand(_term, TRUE);
+   gtk_box_append(GTK_BOX(box), _term);
+   gtk_box_append(GTK_BOX(box), _scrollbar);
 
    _closeOnF = GTK_WIDGET(
       gtk_builder_get_object(_builder, "checkbutton_close_after_pm"));
    assert(_closeOnF);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF),
-                                _config->FindB("Synaptic::closeZvt", false));
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_closeOnF),
+                               _config->FindB("Synaptic::closeZvt", false));
 
    _statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    _closeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
@@ -114,7 +114,6 @@ task<void> RGTermInstallProgress::startUpdate()
 {
    GtkWidget *win =
       GTK_WIDGET(gtk_builder_get_object(_builder, "window_zvtinstallprogress"));
-   gtk_widget_show_all(win);
 
    child_has_exited = false;
    g_signal_connect(
@@ -135,7 +134,7 @@ task<void> RGTermInstallProgress::finishUpdate()
    _updateFinished = true;
 
    _config->Set("Synaptic::closeZvt",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF))
+                gtk_check_button_get_active(GTK_CHECK_BUTTON(_closeOnF))
                    ? "true"
                    : "false");
 
@@ -145,9 +144,8 @@ task<void> RGTermInstallProgress::finishUpdate()
       co_await userDialog.showErrors();
    }
 
-   if (res == 0 &&
-       (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF)) ||
-        _config->FindB("Volatile::Non-Interactive", false))) {
+   if (res == 0 && (gtk_check_button_get_active(GTK_CHECK_BUTTON(_closeOnF)) ||
+                    _config->FindB("Volatile::Non-Interactive", false))) {
       hide();
       co_return;
    }

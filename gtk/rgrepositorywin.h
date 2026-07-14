@@ -31,8 +31,6 @@
 #include "rsources.h"
 #include "coroutines.h"
 
-#include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <list>
 #include <string>

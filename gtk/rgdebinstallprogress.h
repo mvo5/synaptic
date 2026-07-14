@@ -134,13 +134,19 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    static void expander_callback(GObject *object,
                                  GParamSpec *param_spec,
                                  gpointer user_data);
-   static gboolean key_press_event(GtkWidget *widget,
-                                   GdkEventKey *event,
+   static gboolean key_press_event(GtkEventControllerKey *controller,
+                                   guint keyval,
+                                   guint keycode,
+                                   GdkModifierType state,
                                    gpointer user_data);
-   static gboolean cbTerminalClicked(GtkWidget *widget,
-                                     GdkEventButton *event,
-                                     gpointer user_data);
-   static void cbMenuitemClicked(GtkMenuItem *menuitem, gpointer user_data);
+   static void cbTerminalClicked(GtkGestureClick *gesture,
+                                 gint n_press,
+                                 gdouble x,
+                                 gdouble y,
+                                 gpointer user_data);
+   static void cbTeerminalAction(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer user_data);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);

@@ -144,13 +144,17 @@ class RPatternPackageFilter : public RPackageFilter {
    inline virtual const char *type() { return RPFPattern; }
 
    void addPattern(DepType type, std::string pattern, bool exclusive);
-   inline int count() { return _patterns.size(); }
-   inline void getPattern(int index, DepType &type, std::string &pattern,
-                          bool &exclusive) {
+
+   inline size_t count() {
+      return _patterns.size();
+   }
+
+   inline void getPattern(size_t index, DepType &type, std::string &pattern, bool &exclusive) {
       type = _patterns[index].where;
       pattern = _patterns[index].pattern;
       exclusive = _patterns[index].exclusive;
    }
+
    void clear();
    bool getAndMode() { return and_mode; }
    void setAndMode(bool b) { and_mode=b; }

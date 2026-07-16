@@ -62,7 +62,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 
-      pix = gtk_image_new_from_pixbuf(RGPackageStatus::pkgStatus.getPixbuf(i));
+      pix = gtk_image_new_from_icon_name(RGPackageStatus::pkgStatus.getIconName(i), GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
 
       label = gtk_label_new(RGPackageStatus::pkgStatus.getLongStatusString(i));
@@ -73,15 +73,7 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
 
    // package support status 
    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-   GtkIconTheme *theme;
-   GdkPixbuf *pixbuf;
-   GError *error = NULL;
-   const gchar *name = "package-supported";
-   theme = gtk_icon_theme_get_default();
-   pixbuf = gtk_icon_theme_load_icon(theme, name, 16, 
-				     (GtkIconLookupFlags)0, &error);
-
-   pix = gtk_image_new_from_pixbuf(pixbuf);
+   pix = gtk_image_new_from_icon_name("package-supported", GTK_ICON_SIZE_BUTTON);
    gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
    label = gtk_label_new(_config->Find("Synaptic::supported-text",
 				       _("Package is supported")).c_str());

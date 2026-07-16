@@ -1083,8 +1083,7 @@ void RGMainWindow::buildInterface()
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
-   gtk_window_set_icon(GTK_WINDOW(_win), icon);
+   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    gtk_window_resize(GTK_WINDOW(_win),
                      _config->FindI("Synaptic::windowWidth", 640),

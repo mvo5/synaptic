@@ -54,7 +54,7 @@ class RGGtkBuilderWindow:public RGWindow {
    bool setLabel(const char *name, const long value);
    bool setTextView(const char *widget_name, const char *value,
 		    bool useHeadline=false);
-   bool setPixmap(const char *widget_name, GdkPixbuf *value);
+   bool setPixmap(const char *widget_name, const char *value);
    bool setTreeList(const char *widget_name, std::vector<std::string> values,
 		    bool useMarkup=false);
 

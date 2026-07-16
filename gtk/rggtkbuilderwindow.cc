@@ -75,8 +75,7 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, string name, string mai
 
    gtk_window_set_position(GTK_WINDOW(_win),
 			   GTK_WIN_POS_CENTER_ON_PARENT);
-   GdkPixbuf *icon = get_gdk_pixbuf( "synaptic" );
-   gtk_window_set_icon(GTK_WINDOW(_win), icon);
+   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_free(main_widget);
 
@@ -225,14 +224,14 @@ bool RGGtkBuilderWindow::setTextView(const char *widget_name,
    return true;
 }
 
-bool RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
+bool RGGtkBuilderWindow::setPixmap(const char *widget_name, const char *value)
 {
    GtkWidget *pix = GTK_WIDGET (gtk_builder_get_object (_builder, widget_name));
    if (pix == NULL) {
       cout << "textview == NULL with: " << widget_name << endl;
       return false;
    }
-   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
+   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value, GTK_ICON_SIZE_BUTTON);
    
    return true;
 }

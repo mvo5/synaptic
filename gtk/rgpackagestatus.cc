@@ -28,10 +28,9 @@
 #include "rpackagestatus.h"
 
 #include <apt-pkg/configuration.h>
+#include <cassert>
 #include <cstdio>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <glib.h>
+#include <gtk/gtk.h>
 #include <string>
 
 class RPackage;
@@ -66,18 +65,9 @@ void RGPackageStatus::initColors()
                                      default_status_colors[i]).c_str(),
                                 &StatusColors[i]);
       g_free(config_string);
-   }
-}
 
-void RGPackageStatus::initPixbufs()
-{
-   const int statusPixbufSize = 22;
-
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      gchar *s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
-      StatusPixbuf[i] = get_gdk_pixbuf(s, statusPixbufSize);
+      Statusicons[i] = std::string("package-") + PackageStatusShortString[i];
    }
-   supportedPix = get_gdk_pixbuf("package-supported", statusPixbufSize);
 }
 
 // class that finds out what do display to get user
@@ -86,7 +76,6 @@ void RGPackageStatus::init()
    RPackageStatus::init();
 
    initColors();
-   initPixbufs();
 }
 
 GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
@@ -94,17 +83,22 @@ GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
    return StatusColors[getStatus(pkg)];
 }
 
-GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
+const char *RGPackageStatus::getSupportedIconName(RPackage *pkg)
 {
    if(isSupported(pkg))
-      return supportedPix;
+      return "package-supported";
    else
       return NULL;
 }
 
-GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
+const char *RGPackageStatus::getIconName(RPackage *pkg)
 {
-   return StatusPixbuf[getStatus(pkg)];
+   return getIconName(getStatus(pkg));
+}
+
+const char *RGPackageStatus::getIconName(int i) {
+   assert(0 <= i && i < N_STATUS_COUNT);
+   return Statusicons[i].c_str();
 }
 
 void RGPackageStatus::setColor(int i, GdkRGBA * new_color)

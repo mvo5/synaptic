@@ -1061,8 +1061,8 @@ void RGMainWindow::buildTreeView()
       for (GList * li = g_list_first(columns); 
            li != NULL;
            li = g_list_next(li)) {
-         int i = gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
-                                             GTK_TREE_VIEW_COLUMN(li->data));
+         gtk_tree_view_remove_column(GTK_TREE_VIEW(_treeView),
+                                     GTK_TREE_VIEW_COLUMN(li->data));
       }
       // need to free the list here
       g_list_free(columns);
@@ -1078,7 +1078,7 @@ void RGMainWindow::buildTreeView()
 
 void RGMainWindow::buildInterface()
 {
-   GtkWidget *img, *menuitem, *widget, *button;
+   GtkWidget *widget;
 
    // here is a pointer to rgmainwindow for every widget that needs it
    g_object_set_data(G_OBJECT(_win), "me", this);
@@ -2557,10 +2557,9 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *) data;
-   RGSummaryWindow *summ;
 
    // nothing to do
-   int listed, installed, broken;
+   int installed, broken;
    int toInstall, toRemove;
    double size;
    me->_lister->getStats(installed, broken, toInstall, toRemove, size);

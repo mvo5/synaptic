@@ -189,9 +189,6 @@ RGTermInstallProgress::start(pkgPackageManager *pm,
 {
    //cout << "RGTermInstallProgress::start()" << endl;
 
-   void *dummy;
-   int open_max, ret = 250;
-
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
       return res;

@@ -308,7 +308,6 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 {
    RGSummaryWindow *me = (RGSummaryWindow *) data;
    GtkWidget *s,*d;
-   GtkWidget *info;
 
    s = GTK_WIDGET(gtk_builder_get_object(me->_builder,
                                          "scrolledwindow_summary"));

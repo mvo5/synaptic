@@ -142,7 +142,6 @@ void RGLogView::cbTreeSelectionChanged(GtkTreeSelection *selection,
    
    GtkTreeIter iter;
    GtkTreeModel *model;
-   GtkTextIter start, end;
    gchar *file = NULL;
 
    if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
@@ -259,8 +258,6 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    //cout << "RGLogView::cbButtonFind()" << endl;
    RGLogView *me = (RGLogView*)data;
    GtkTreeModel *filter_model, *empty_row_filter;
-   GtkTreeIter iter; 
-   gchar *file;
 
    GtkTreeModel *model = me->_realModel;
    if(model == NULL) {

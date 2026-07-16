@@ -212,7 +212,6 @@ char *gtk_get_string_from_color(GdkRGBA * colp)
 void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp)
 {
    GdkRGBA *new_color;
-   gboolean result;
 
    // "" means no color
    if (cpp == NULL || strlen(cpp) == 0) {
@@ -221,7 +220,11 @@ void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp)
    }
 
    new_color = g_new(GdkRGBA, 1);
-   result = gdk_rgba_parse(new_color, cpp);
+   if (!gdk_rgba_parse(new_color, cpp)) {
+      g_free(new_color);
+      *colp = NULL;
+      return;
+   }
    *colp = new_color;
 }
 

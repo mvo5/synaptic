@@ -633,7 +633,6 @@ string RPackage::showWhyInstBroken()
 {
    pkgCache::DepIterator depI;
    pkgCache::VerIterator Ver;
-   bool First = true;
    ostringstream out;
 
    pkgDepCache::StateCache & State = (*_depcache)[*_package];
@@ -738,7 +737,6 @@ string RPackage::showWhyInstBroken()
                ioprintf(out, " (%s %s)", Start.CompType(), Start.TargetVer());
          }
 
-         First = false;
          FirstOr = false;
 
          if (Start != End)
@@ -960,8 +958,7 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    unlink(filename.c_str());
    new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
-   int res = fetcher->Run();
-   //cerr << "res: " << res << endl;
+   fetcher->Run();
 
    return filename;
 }
@@ -1050,7 +1047,6 @@ vector<string> RPackage::getCandidateOriginSiteUrls()
 
 void RPackage::setPinned(bool flag)
 {
-   FILE *out;
    struct stat stat_buf;
 
    string File =RStateDir() + "/preferences";

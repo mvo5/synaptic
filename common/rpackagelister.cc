@@ -1324,7 +1324,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    {
       while(!_error->empty())
       {
-	 bool isError = _error->PopMessage(s);
+	 _error->PopMessage(s);
 	 error += s;
       }
    }

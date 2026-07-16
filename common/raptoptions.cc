@@ -31,7 +31,6 @@
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/tagfile.h>
-#include <apt-pkg/versionmatch.h>
 #include <cctype>
 #include <cstdio>
 #include <cstring>
@@ -130,10 +129,7 @@ bool RAPTOptions::restore()
       for (; Word != End && isspace(*Word) == 0; Word++);
 
       // Parse the type, we are only interesseted in "version" for now
-      pkgVersionMatch::MatchType Type;
-      if (stringcasecmp(Start, Word, "version") == 0 && Name.empty() == false)
-         Type = pkgVersionMatch::Version;
-      else
+      if (stringcasecmp(Start, Word, "version") != 0 || Name.empty() == true)
          continue;
       for (; Word != End && isspace(*Word) != 0; Word++);
 

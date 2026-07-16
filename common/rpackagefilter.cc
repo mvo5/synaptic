@@ -340,7 +340,6 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
    bool found;
    //   bool and_mode = _config->FindB("Synaptic::Filters::andMode", true);
    bool globalfound = and_mode;
-   bool useregexp = _config->FindB("Synaptic::UseRegexp", false);
 
    bool debug = _config->FindB("Debug::Synaptic::Filters", false);
 
@@ -634,14 +633,9 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
       if (!(flags & RPackage::FInstalled))
       {
 	 pkgCache::DepIterator D;
-	 bool inOr = false;
 	 // FIXME: or-dependencies are not considered properly
 	 for (D = pkg->package()->RevDependsList(); D.end() == false; D++)
-	 {	    
-	    if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or)
-	       inOr = true;
-	    else
-	       inOr = false;
+	 {
 	    pkgCache::PkgIterator parent = D.ParentPkg();
 	    if(parent->CurrentVer != 0)
 	    {

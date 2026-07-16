@@ -52,7 +52,6 @@ string RInstallProgress::incompleteMsg =
 
 const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 {
-   int size;
    switch( res ) {
    case 0: // completed
       return finishMsg.c_str();
@@ -72,7 +71,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackages,
                                                        int numPackagesTotal)
 {
-   void *dummy;
    pkgPackageManager::OrderResult res;
    int ret;
    pid_t _child_id;

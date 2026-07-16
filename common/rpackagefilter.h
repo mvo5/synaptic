@@ -358,7 +358,7 @@ struct RFilter
    {}
 
    void setName(std::string name);
-   std::string getName();
+   std::string getName() const;
 
    bool read(Configuration &conf, std::string key);
    bool write(std::ofstream &out);

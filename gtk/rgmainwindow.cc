@@ -540,6 +540,8 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
       pkg->setAuto(active);
       li = g_list_next(li);
    }
+   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_free(list);
 
    // write it
    GtkWidget *progress = GTK_WIDGET(gtk_builder_get_object

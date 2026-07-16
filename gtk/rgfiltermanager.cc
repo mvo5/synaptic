@@ -353,8 +353,7 @@ void RGFilterManagerWindow::patternChanged(GObject *o, gpointer data)
 {
    RPatternPackageFilter::DepType type;
    bool exclude;
-   int i, nr;
-   GtkWidget* menu, item;
+   int nr;
 
    //cout << "patternChanged" << endl;
    RGFilterManagerWindow *me = (RGFilterManagerWindow *) data;

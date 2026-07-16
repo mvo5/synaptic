@@ -112,7 +112,6 @@ read_fd(int fd, void *ptr, size_t nbytes, int *recvfd)
         struct msghdr   msg;
         struct iovec    iov[1];
         ssize_t  n;
-        int newfd;
 
         union {
           struct cmsghdr        cm;
@@ -175,8 +174,6 @@ int ipc_send_fd(int fd)
 
 int ipc_recv_fd()
 {
-   int ret;
-
    // setup socket
    struct sockaddr_un servaddr,cliaddr;
    char c;
@@ -238,7 +235,6 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    g_free(m);
 
    // diff stuff
-   bool quot=false;
    int i=0;
    string orig_file, new_file;
 
@@ -395,7 +391,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    gtk_box_pack_end(GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder,"hbox_vte"))), scrollbar, FALSE, FALSE, 0);
 
    // Terminal contextual menu
-   GtkWidget *img, *menuitem;
+   GtkWidget *menuitem;
    _popupMenu = gtk_menu_new();
    menuitem = gtk_menu_item_new_with_label(_("Copy"));
    g_object_set_data(G_OBJECT(menuitem), "me", this);
@@ -528,7 +524,6 @@ void RGDebInstallProgress::updateInterface()
 {
    char buf[2];
    static char line[1024] = "";
-   int i=0;
 
    while (1) {
 
@@ -637,9 +632,7 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(pkgPackageManager *pm
                                                        int numPackages,
                                                        int numPackagesTotal)
 {
-   void *dummy;
    pkgPackageManager::OrderResult res;
-   int ret;
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)

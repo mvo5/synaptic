@@ -80,7 +80,6 @@ const char *RGPreferencesWindow::upgrade_method[] =
 void RGPreferencesWindow::cbHttpProxyEntryChanged(GtkWidget *self, void *data)
 {
    // this function strips http:// from a entred proxy url
-   RGPreferencesWindow *me = (RGPreferencesWindow *) data;
    const gchar *text = gtk_entry_get_text(GTK_ENTRY(self));
    gchar *new_text = NULL;
    if(g_str_has_prefix(text, "http://")) {

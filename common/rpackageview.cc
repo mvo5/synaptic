@@ -68,7 +68,7 @@ vector<string> RPackageView::getSubViews() const
 {
    vector<string> subViews;
    subViews.reserve(_view.size());
-   for (const std::pair<string, vector<RPackage *>> &subView : _view) {
+   for (const auto &subView : _view) {
       subViews.push_back(subView.first);
    }
    return subViews;
@@ -292,7 +292,7 @@ vector<string> RPackageViewSearch::getSubViews() const
 {
    vector<string> subviews;
    subviews.reserve(searchHistory.size());
-   for (const std::pair<string, searchItem> &subView : searchHistory) {
+   for (const auto &subView : searchHistory) {
       subviews.push_back(subView.first);
    }
    return subviews;

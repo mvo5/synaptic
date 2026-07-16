@@ -143,7 +143,7 @@ class RPatternPackageFilter : public RPackageFilter {
 
    inline virtual const char *type() { return RPFPattern; }
 
-   void addPattern(DepType type, std::string pattern, bool exclusive);
+   void addPattern(DepType type, const std::string &pattern, bool exclusive);
 
    inline size_t count() {
       return _patterns.size();

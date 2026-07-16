@@ -415,40 +415,37 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
    return globalfound;
 }
 
-
-void RPatternPackageFilter::addPattern(DepType type, string pattern,
-                                       bool exclusive)
+void RPatternPackageFilter::addPattern(DepType type, const string &pattern, bool exclusive)
 {
-   //cout << "adding pattern: " << pattern << endl;
-   Pattern pat;
-   pat.where = type;
-   pat.pattern = pattern;
-   pat.exclusive = exclusive;
-
-   // compile the regexps
-   string S;
-   const char *C = pattern.c_str();
-
    vector<regex_t *> regexps;
-   while (*C != 0) {
-      if (ParseQuoteWord(C, S) == true) {
+
+   const char *c = pattern.c_str();	// This pointer is advanced by ParseQuoteWord().
+   while (*c != 0) {
+      string s;
+      if (ParseQuoteWord(c, s)) {
          regex_t *reg = new regex_t;
-         if (regcomp(reg, S.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) !=
-             0) {
+         if (regcomp(reg, s.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
             cerr << "regexp compilation error" << endl;
-            for (unsigned int i = 0; i < regexps.size(); i++) {
-               regfree(regexps[i]);
+            delete reg;
+            for (regex_t *r : regexps) {
+               regfree(r);
+               delete r;
             }
             return;
          }
          regexps.push_back(reg);
       }
    }
-   pat.regexps = regexps;
+
+   Pattern pat = {
+      .where = type,
+      .pattern = pattern,
+      .exclusive = exclusive,
+      .regexps = regexps
+   };
 
    _patterns.push_back(pat);
 }
-
 
 bool RPatternPackageFilter::write(ofstream &out, string pad)
 {
@@ -531,16 +528,12 @@ void RPatternPackageFilter::clear()
    _patterns.erase(_patterns.begin(), _patterns.end());
 }
 
-
 RPatternPackageFilter::~RPatternPackageFilter()
 {
    //cout << "RPatternPackageFilter::~RPatternPackageFilter()" << endl;
 
    this->clear();
 }
-
-
-
 
 bool RStatusPackageFilter::filter(RPackage *pkg)
 {

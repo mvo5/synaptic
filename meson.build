@@ -3,10 +3,17 @@ project(
   ['c', 'cpp'],
   version: '0.91.7',
   default_options: [
-    'warning_level=1',
-    'cpp_std=gnu++17',
-  ],
+    # The buildtype=plain option in Meson disables default compiler flags, allowing you to
+    # specify custom build flags for total control over the build process.
+    # This is often used by distro packagers to ensure consistent and controlled builds.
+    'buildtype=plain',
+    'warning_level=0',
+    'cpp_std=c++17',
+  ]
 )
+
+# Note: The test project overrides the optimization options in its meson.buid file.
+add_global_arguments('-O3', '-flto=auto', '-fuse-linker-plugin', '-pipe', language : 'cpp')
 
 i18n = import('i18n')
 gnome = import('gnome')

@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGCACHEPROGRESS_H_
-#define _RGCACHEPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -46,5 +45,3 @@ class RGCacheProgress:public OpProgress {
    virtual void Update();
    virtual void Done();
 };
-
-#endif

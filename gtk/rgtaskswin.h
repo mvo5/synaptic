@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGTASKSWIN_H_
-#define _RGTASKSWIN_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -54,7 +53,3 @@ class RGTasksWin : public RGGtkBuilderWindow {
    virtual ~ RGTasksWin() {
    };
 };
-
-
-
-#endif

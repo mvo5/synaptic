@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RPACKAGECACHE_H_
-#define _RPACKAGECACHE_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -67,5 +66,3 @@ class RPackageCache {
    ~RPackageCache() {
    }
 };
-
-#endif

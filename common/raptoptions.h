@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RAPTOPTIONS_H_
-#define _RAPTOPTIONS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -80,5 +79,3 @@ typedef std::map<std::string, RAPTOptions::packageOptions>::iterator packageOpti
 
 std::ostream &operator<<(std::ostream &os, const RAPTOptions::packageOptions &);
 std::istream &operator>>(std::istream &is, RAPTOptions::packageOptions &o);
-
-#endif

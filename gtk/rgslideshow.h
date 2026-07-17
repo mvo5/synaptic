@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGSLIDESHOW_H_
-#define _RGSLIDESHOW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -48,7 +47,3 @@ class RGSlideShow {
 
    RGSlideShow(GtkImage * image, std::string imgPath);
 };
-
-#endif
-
-// vim:sts=3:sw=3

@@ -21,8 +21,7 @@
  * USA
  */
 
-#ifndef RGCDSCANNER_H
-#define RGCDSCANNER_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -56,5 +55,4 @@ class RGCDScanner:public RCDScanProgress, public RGWindow {
 
 };
 
-#endif
 #endif

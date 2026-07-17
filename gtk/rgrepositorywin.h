@@ -23,8 +23,7 @@
  * USA
  */
 
-#ifndef _RGREPOSITORYWIN_H
-#define _RGREPOSITORYWIN_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -100,5 +99,3 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    bool Run();
 };
-
-#endif

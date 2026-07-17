@@ -26,8 +26,7 @@
  * USA
  */
 
-#ifndef _RPACKAGE_H_
-#define _RPACKAGE_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -264,8 +263,3 @@ class RPackage {
    private:
    std::string getChangelogURI();
 };
-
-
-#endif
-
-// vim:ts=3:sw=3:et

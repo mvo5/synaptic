@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RGSUMMARYWINDOW_H_
-#define _RGSUMMARYWINDOW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -60,5 +59,3 @@ class RGSummaryWindow:public RGGtkBuilderWindow {
 
    bool showAndConfirm();
 };
-
-#endif

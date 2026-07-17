@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RCONFIGURATION_H_
-#define _RCONFIGURATION_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -56,5 +55,3 @@ std::string RStateDir();
 
 // we store the commit history here
 std::string RLogDir();
-
-#endif

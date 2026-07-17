@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RPACKAGELISTER_H_
-#define _RPACKAGELISTER_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -350,8 +349,3 @@ class RPackageLister {
    RPackageLister();
    ~RPackageLister();
 };
-
-
-#endif
-
-// vim:ts=3:sw=3:et

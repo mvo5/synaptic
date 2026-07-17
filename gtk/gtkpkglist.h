@@ -17,8 +17,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef GTKPKGLIST_H
-#define GTKPKGLIST_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -94,7 +93,3 @@ class RPackageListActorPkgList:public RPackageListActor {
                             GtkTreeView *pkgView)
       : RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
-
-#endif /* GTKPKGLIST_H */
-
-// vim:ts=3:sw=3:et

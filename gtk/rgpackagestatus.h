@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGPACKAGESTATUS_H_
-#define _RGPACKAGESTATUS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -58,6 +57,3 @@ class RGPackageStatus : public RPackageStatus {
    // save color configuration to disk
    void saveColors();
 };
-
-
-#endif

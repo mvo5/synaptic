@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RGWINDOW_H_
-#define _RGWINDOW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -59,5 +58,3 @@ class RGWindow {
             bool closable = true);
    virtual ~RGWindow();
 };
-
-#endif

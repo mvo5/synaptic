@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _GTK_RGFINDWINDOW_H
-#define _GTK_RGFINDWINDOW_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -67,5 +66,3 @@ class RGFindWindow:public RGGtkBuilderWindow {
    gchar* getFindString();
    void selectText();
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef RTAGCOLFILTER_H
-#define RTAGCOLFILTER_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -62,4 +61,3 @@ class RTagcollFilter:public TagcollFilter<std::string> {
 // vim:set ts=4 sw=4:
 
 #endif // HAVE_DEBTAGS
-#endif

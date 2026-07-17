@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RGCHANGESWINDOW_H
-#define _RGCHANGESWINDOW_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -57,5 +56,3 @@ class RGChangesWindow:public RGGtkBuilderWindow {
 		std::vector<RPackage *> &toDowngrade,
 		std::vector<RPackage *> &notAuthenticated);
 };
-
-#endif

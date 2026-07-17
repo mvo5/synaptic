@@ -26,8 +26,7 @@
  * USA
  */
 
-#ifndef _RPACKAGESTATUS_H_
-#define _RPACKAGESTATUS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -88,5 +87,3 @@ class RPackageStatus {
    // return the time until the package is supported
    bool maintenanceEndTime(RPackage *pkg, struct tm *support_end_tm);
 };
-
-#endif

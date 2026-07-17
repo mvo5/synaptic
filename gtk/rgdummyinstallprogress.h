@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGDUMMYINSTALLPROGRESS_H_
-#define _RGDUMMYINSTALLPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -37,5 +36,3 @@ class RGDummyInstallProgress:public RInstallProgress {
    RGDummyInstallProgress():RInstallProgress() {};
    virtual ~ RGDummyInstallProgress() {};
 };
-
-#endif

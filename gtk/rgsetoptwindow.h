@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _GTK_RGSETOPTWINDOW_H
-#define _GTK_RGSETOPTWINDOW_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -43,5 +42,3 @@ class RGSetOptWindow:public RGGtkBuilderWindow {
    };
 
 };
-
-#endif

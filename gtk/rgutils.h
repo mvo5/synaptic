@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGMISC_H_
-#define _RGMISC_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -60,5 +59,3 @@ bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);
 
 std::string MarkupEscapeString(std::string str);
 std::string MarkupUnescapeString(std::string str);
-
-#endif

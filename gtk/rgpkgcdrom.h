@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef RGPKGCDROM_H
-#define RGPKGCDROM_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -57,5 +56,4 @@ class RGCDScanner:public pkgCdromStatus, public RGWindow {
 
 };
 
-#endif
 #endif

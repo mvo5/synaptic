@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGDEBINSTALLPROGRESS_H_
-#define _RGDEBINSTALLPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -154,5 +153,3 @@ class RGDebInstallProgress:public RInstallProgress, public RGGtkBuilderWindow
 };
 
 #endif // WITH_DPKG_STATUSFD
-
-#endif

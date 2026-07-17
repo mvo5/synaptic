@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RCDSCANNER_H_
-#define _RCDSCANNER_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -107,5 +106,4 @@ class RCDScanner {
    }
 };
 
-#endif
 #endif

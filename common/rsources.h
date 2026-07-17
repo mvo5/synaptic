@@ -23,8 +23,7 @@
  * USA
  */
 
-#ifndef _RSOURCES_H
-#define _RSOURCES_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -110,5 +109,3 @@ class SourcesList {
 };
 
 std::ostream &operator <<(std::ostream &, const SourcesList::SourceRecord &);
-
-#endif

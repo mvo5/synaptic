@@ -18,8 +18,7 @@
  * USA
  */
 
-#ifndef _GTK_RGCHANGELOGDIALOG_H
-#define _GTK_RGCHANGELOGDIALOG_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -27,5 +26,3 @@ class RGWindow;
 class RPackage;
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
-
-#endif

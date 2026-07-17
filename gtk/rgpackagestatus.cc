@@ -38,7 +38,7 @@ class RPackage;
 // RPackageStatus stuff
 RGPackageStatus RGPackageStatus::pkgStatus;
 
-void RGPackageStatus::initColors()
+void RGPackageStatus::initColorsAndIcons()
 {
    const char *default_status_colors[N_STATUS_COUNT] = {
       "#8ae234",  // install
@@ -66,7 +66,7 @@ void RGPackageStatus::initColors()
                                 &StatusColors[i]);
       g_free(config_string);
 
-      Statusicons[i] = std::string("package-") + PackageStatusShortString[i];
+      StatusIcons[i] = std::string("package-") + PackageStatusShortString[i];
    }
 }
 
@@ -75,7 +75,7 @@ void RGPackageStatus::init()
 {
    RPackageStatus::init();
 
-   initColors();
+   initColorsAndIcons();
 }
 
 GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
@@ -96,9 +96,10 @@ const char *RGPackageStatus::getIconName(RPackage *pkg)
    return getIconName(getStatus(pkg));
 }
 
-const char *RGPackageStatus::getIconName(int i) {
+const char *RGPackageStatus::getIconName(int i)
+{
    assert(0 <= i && i < N_STATUS_COUNT);
-   return Statusicons[i].c_str();
+   return StatusIcons[i].c_str();
 }
 
 void RGPackageStatus::setColor(int i, GdkRGBA * new_color)

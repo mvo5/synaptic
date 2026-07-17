@@ -129,7 +129,7 @@ bool RAPTOptions::restore()
       for (; Word != End && isspace(*Word) == 0; Word++);
 
       // Parse the type, we are only interesseted in "version" for now
-      if (stringcasecmp(Start, Word, "version") != 0 || Name.empty() == true)
+      if (stringcasecmp(Start, Word, "version") != 0 || Name.empty())
          continue;
       for (; Word != End && isspace(*Word) != 0; Word++);
 

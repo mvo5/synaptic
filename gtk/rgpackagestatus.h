@@ -34,9 +34,9 @@ class RGPackageStatus : public RPackageStatus
 {
  protected:
    GdkRGBA *StatusColors[N_STATUS_COUNT];
-   std::string Statusicons[N_STATUS_COUNT];
+   std::string StatusIcons[N_STATUS_COUNT];
 
-   void initColors();
+   void initColorsAndIcons();
 
  public:
    // this static object is used for all access

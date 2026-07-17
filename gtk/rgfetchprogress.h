@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGFETCHPROGRESS_H_
-#define _RGFETCHPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -91,5 +90,3 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
 
    RGFetchProgress(RGWindow *win);
 };
-
-#endif

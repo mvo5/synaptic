@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef RGUSERDIALOG_H
-#define RGUSERDIALOG_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -93,6 +92,3 @@ class RGGtkBuilderUserDialog : public RGUserDialog
     int run(const char *name=NULL, bool return_gtk_response=false);
     GtkBuilder *getGtkBuilder() { return builder; };
 };
-#endif
-
-// vim:sts=4:sw=4

@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGTERMINSTALLPROGRESS_H_
-#define _RGTERMINSTALLPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -70,5 +69,3 @@ public:
 };
 
 #endif /* HAVT_TERMINAL */
-
-#endif

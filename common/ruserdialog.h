@@ -21,8 +21,7 @@
  * USA
  */
 
-#ifndef RUSERDIALOG_H
-#define RUSERDIALOG_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -67,7 +66,3 @@ class RUserDialog {
    virtual bool showErrors();
 
 };
-
-#endif
-
-// vim:sts=4:sw=4

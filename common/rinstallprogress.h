@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RINSTALLPROGRESS_H_
-#define _RINSTALLPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -66,6 +65,3 @@ class RInstallProgress {
 
    RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {}
 };
-
-
-#endif

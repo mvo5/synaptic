@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _GTK_RGPREFERENCESWINDOW_H
-#define _GTK_RGPREFERENCESWINDOW_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -147,5 +146,3 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    // call this to set the proxy stuff for apt
    static void applyProxySettings();
 };
-
-#endif

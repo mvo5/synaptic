@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RPACKAGEFILTER_H_
-#define _RPACKAGEFILTER_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -314,8 +313,3 @@ struct RFilter {
 
    std::string name;
 };
-
-
-#endif
-
-// vim:ts=3:sw=3:et

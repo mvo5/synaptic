@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _I18N_H_
-#define _I18N_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -50,7 +49,4 @@
 # define _(String) (String)
 # undef  N_
 # define N_(String) (String)
-#endif
-
-
 #endif

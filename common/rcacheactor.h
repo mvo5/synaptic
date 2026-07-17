@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RCACHEACTOR_H
-#define _RCACHEACTOR_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -125,7 +124,3 @@ class RCacheActorRecommends:public RCacheActor {
    RCacheActorRecommends(RPackageLister *lister, std::string fileName);
    virtual ~RCacheActorRecommends();
 };
-
-#endif
-
-// vim:sts=3:sw=3

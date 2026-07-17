@@ -21,8 +21,7 @@
  * USA
  */
 
-#ifndef _RGPKGDETAILS_H
-#define _RGPKGDETAILS_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -64,4 +63,3 @@ class RGPkgDetailsWindow : public RGGtkBuilderWindow {
 			    bool setTitle=false);
    ~RGPkgDetailsWindow();
 };
-#endif

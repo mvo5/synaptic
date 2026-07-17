@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGICONLEGEND_H_
-#define _RGICONLEGEND_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -34,5 +33,3 @@ class RGIconLegendPanel:public RGGtkBuilderWindow {
    RGIconLegendPanel(RGWindow *parent);
    virtual ~RGIconLegendPanel() {};
 };
-
-#endif

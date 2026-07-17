@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGINSTALLPROGRESS_H_
-#define _RGINSTALLPROGRESS_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -95,5 +94,3 @@ class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
    ~RGInstallProgress();
 };
-
-#endif

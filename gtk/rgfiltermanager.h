@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef _RGFILTERMANAGER_H_
-#define _RGFILTERMANAGER_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -212,5 +211,3 @@ class RGFilterManagerWindow:public RGGtkBuilderWindow {
    void readFilters();
 
 };
-
-#endif

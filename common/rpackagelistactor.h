@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef RPACKAGELISTACTOR_H
-#define RPACKAGELISTACTOR_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -69,8 +68,3 @@ class RPackageListActor : public RPackageObserver {
       _lister->unregisterObserver(this);
    }
 };
-
-
-#endif
-
-// vim:sts=3:sw=3

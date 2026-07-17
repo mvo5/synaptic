@@ -17,8 +17,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GTK_TAG_TREE_H__
-#define __GTK_TAG_TREE_H__
+#pragma once
 
 #include "config.h"
 
@@ -77,5 +76,3 @@ GtkTagTree *gtk_tag_tree_new(RPackageLister *_lister,
 void test_tag_tree(GtkTagTree *);
 
 #endif // HAVE_DEBTAGS
-
-#endif /* __GTK_TREE_STORE_H__ */

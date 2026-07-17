@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGLOGVIEW_H_
-#define _RGLOGVIEW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -64,6 +63,3 @@ class RGLogView : public RGGtkBuilderWindow {
 
    virtual ~RGLogView() {};
 };
-
-
-#endif

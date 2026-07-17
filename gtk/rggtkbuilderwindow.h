@@ -20,8 +20,7 @@
  * USA
  */
 
-#ifndef _RGGTKBUILDERWINDOW_H_
-#define _RGGTKBUILDERWINDOW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -60,5 +59,3 @@ class RGGtkBuilderWindow:public RGWindow {
 
    GtkBuilder* getGtkBuilder() {return _builder;};
 };
-
-#endif

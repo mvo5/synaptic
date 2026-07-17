@@ -23,8 +23,7 @@
  * USA
  */
 
-#ifndef _RGMAINWINDOW_H_
-#define _RGMAINWINDOW_H_
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -395,6 +394,3 @@ public:
                                        gpointer data);
 
 };
-
-
-#endif

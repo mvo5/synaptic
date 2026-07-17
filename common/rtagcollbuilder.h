@@ -1,5 +1,4 @@
-#ifndef RTAGCOLL_BUILDER_H
-#define RTAGCOLL_BUILDER_H
+#pragma once
 
 /*
  * TagcollConsumer that builds a tagged collection
@@ -94,5 +93,4 @@ class RTagcollBuilder:public TagcollConsumer<std::string> {
 #endif //HAVE_DEBTAGS
 
 // vim:set ts=4 sw=4:
-#endif
 #endif

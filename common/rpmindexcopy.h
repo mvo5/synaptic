@@ -5,8 +5,7 @@
    ##################################################################### 
  */
 
-#ifndef RPMINDEXCOPY_H
-#define RPMINDEXCOPY_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -35,5 +34,3 @@ class RPMPackageCopy:public RPMIndexCopy {
 
 class RPMSourceCopy:public RPMIndexCopy {
 };
-
-#endif

@@ -22,8 +22,7 @@
  * USA
  */
 
-#ifndef RPACKAGEVIEW_H
-#define RPACKAGEVIEW_H
+#pragma once
 
 #include "config.h"  // IWYU pragma: associated
 
@@ -238,8 +237,3 @@ class RPackageViewFilter : public RPackageView {
 
    void addPackage(RPackage *package);
 };
-
-
-#endif
-
-// vim:sts=3:sw=3

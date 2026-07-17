@@ -20,7 +20,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rginstallprogress.h"
 
@@ -53,20 +53,27 @@ class RGWindow;
 using namespace std;
 
 RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
-: RGGtkBuilderWindow(win, "rginstall_progress_msgs"),
-_currentPackage(0), _hasHeader(false)
+   : RGGtkBuilderWindow(win, "rginstall_progress_msgs"), _currentPackage(0),
+     _hasHeader(false)
 {
    setTitle(_("Package Manager output"));
-   GtkWidget *textView = GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                           "textview"));
+   GtkWidget *textView =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "textview"));
    _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
    g_signal_connect(gtk_builder_get_object(_builder, "close"),
-                                 "clicked",
-                                 G_CALLBACK(onCloseClicked), this);
+                    "clicked",
+                    G_CALLBACK(onCloseClicked),
+                    this);
    _cssProvider = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(textView);
-   gtk_css_provider_load_from_data(_cssProvider, "TextView { font-family: helvetica; font-size: 10pt; }", -1, NULL);
-   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+   gtk_css_provider_load_from_data(
+      _cssProvider,
+      "TextView { font-family: helvetica; font-size: 10pt; }",
+      -1,
+      NULL);
+   gtk_style_context_add_provider(styleContext,
+                                  GTK_STYLE_PROVIDER(_cssProvider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
    PangoFontDescription *font;
    font = pango_font_description_from_string("helvetica bold 10");
    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
@@ -80,7 +87,7 @@ RGInstallProgressMsgs::~RGInstallProgressMsgs()
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 {
-   //RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
+   // RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
    gtk_main_quit();
 }
 
@@ -95,8 +102,8 @@ void RGInstallProgressMsgs::addText(const char *text, bool bold)
    GtkTextIter enditer;
    gtk_text_buffer_get_end_iter(_textBuffer, &enditer);
    if (bold == true)
-      gtk_text_buffer_insert_with_tags_by_name(_textBuffer, &enditer,
-                                               text, -1, "bold", NULL);
+      gtk_text_buffer_insert_with_tags_by_name(
+         _textBuffer, &enditer, text, -1, "bold", NULL);
    else
       gtk_text_buffer_insert(_textBuffer, &enditer, text, -1);
 }
@@ -109,8 +116,7 @@ void RGInstallProgressMsgs::addLine(const char *text)
          header = g_strdup_printf(_("\nWhile installing package %s:\n\n"),
                                   _currentPackage);
       else
-         header =
-            g_strdup_printf(_("\nWhile preparing for installation:\n\n"));
+         header = g_strdup_printf(_("\nWhile preparing for installation:\n\n"));
       addText(header, true);
       _hasHeader = true;
    }
@@ -149,11 +155,11 @@ void RGInstallProgress::finishUpdate()
    int len = read(_childin, buf, 1023);
    if (len > 0) {
       GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(this->window()),
-					      GTK_DIALOG_DESTROY_WITH_PARENT,
-					      GTK_MESSAGE_ERROR, 
-					      GTK_BUTTONS_OK, 
-					      _("APT system reports:\n%s"), 
-					      utf8(buf));
+                                              GTK_DIALOG_DESTROY_WITH_PARENT,
+                                              GTK_MESSAGE_ERROR,
+                                              GTK_BUTTONS_OK,
+                                              _("APT system reports:\n%s"),
+                                              utf8(buf));
       gtk_dialog_run(GTK_DIALOG(dia));
       gtk_widget_destroy(dia);
    }
@@ -222,8 +228,7 @@ void RGInstallProgress::updateInterface()
                gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar), 0);
                _donePackages += 1;
                val = ((float)_donePackages) / _numPackages;
-               gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal),
-                                             val);
+               gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
                _donePackagesTotal += 1;
                if (_ss) {
                   _ss->setTotalSteps(_numPackagesTotal);
@@ -261,9 +266,9 @@ void RGInstallProgress::updateInterface()
    }
 }
 
-class GeometryParser {
+class GeometryParser
+{
  protected:
-
    int _width;
    int _height;
    int _xpos;
@@ -273,38 +278,44 @@ class GeometryParser {
    bool ParsePosition(char **pos);
 
  public:
-
-   int Width() {
+   int Width()
+   {
       return _width;
    };
-   int Height() {
+   int Height()
+   {
       return _height;
    };
-   int XPos() {
+   int XPos()
+   {
       return _xpos;
    };
-   int YPos() {
+   int YPos()
+   {
       return _ypos;
    };
 
-   bool HasSize() {
+   bool HasSize()
+   {
       return _width != -1 && _height != -1;
    };
-   bool HasPosition() {
+   bool HasPosition()
+   {
       return _xpos != -1 && _ypos != -1;
    };
 
    bool Parse(string Geo);
 
    GeometryParser(string Geo = "")
- :   _width(-1), _height(-1), _xpos(-1), _ypos(-1) {
+      : _width(-1), _height(-1), _xpos(-1), _ypos(-1)
+   {
       Parse(Geo);
    };
 };
 
-RGInstallProgress::RGInstallProgress(RGMainWindow *main,
-                                     RPackageLister *lister)
-: RInstallProgress(), RGGtkBuilderWindow(main, "rginstall_progress"), _msgs(main)
+RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
+   : RInstallProgress(), RGGtkBuilderWindow(main, "rginstall_progress"),
+     _msgs(main)
 {
    prepare(lister);
    setTitle(_("Applying Changes"));
@@ -316,11 +327,12 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
    if (Geo.HasSize())
       gtk_widget_set_size_request(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
    if (Geo.HasPosition())
-      gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
+      gtk_window_set_transient_for(GTK_WINDOW(_win),
+                                   GTK_WINDOW(main->window()));
 
    _label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"));
-   _labelSummary = GTK_WIDGET(gtk_builder_get_object(_builder,
-                                                     "label_summary"));
+   _labelSummary =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
    _pbar = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_package"));
    _pbarTotal = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"));
    _image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
@@ -336,13 +348,25 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main,
 
    _cssProviderBold = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(_label);
-   gtk_css_provider_load_from_data(_cssProviderBold, "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }", -1, NULL);
-   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProviderBold), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-  
+   gtk_css_provider_load_from_data(
+      _cssProviderBold,
+      "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }",
+      -1,
+      NULL);
+   gtk_style_context_add_provider(styleContext,
+                                  GTK_STYLE_PROVIDER(_cssProviderBold),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
    _cssProvider = gtk_css_provider_new();
    styleContext = gtk_widget_get_style_context(_labelSummary);
-   gtk_css_provider_load_from_data(_cssProvider, "Label { font-family: helvetica; font-size: 10pt; }", -1, NULL);
-   gtk_style_context_add_provider(styleContext, GTK_STYLE_PROVIDER(_cssProvider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+   gtk_css_provider_load_from_data(
+      _cssProvider,
+      "Label { font-family: helvetica; font-size: 10pt; }",
+      -1,
+      NULL);
+   gtk_style_context_add_provider(styleContext,
+                                  GTK_STYLE_PROVIDER(_cssProvider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
    gtk_label_set_text(GTK_LABEL(_label), "");
    gtk_label_set_text(GTK_LABEL(_labelSummary), "");

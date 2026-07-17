@@ -1,4 +1,4 @@
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "gtkpkglist.h"
 #include "rgpkgtreeview.h"
@@ -18,20 +18,18 @@ int main(int argc, char **argv)
 
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
-   
+
    _config->Set("Debug::Synaptic::View", true);
-   
+
    RPackageLister *lister = new RPackageLister();
    lister->openCache();
    lister->setView(0);
    lister->setSubView("");
 
-   std::cerr << "lister all packages size: " 
-             << lister->packagesSize()
+   std::cerr << "lister all packages size: " << lister->packagesSize()
              << std::endl;
 
-   std::cerr << "lister visible size: " 
-             << lister->viewPackagesSize()
+   std::cerr << "lister visible size: " << lister->viewPackagesSize()
              << std::endl;
 
    GtkTreeModel *pkglist = GTK_TREE_MODEL(gtk_pkg_list_new(lister));
@@ -39,11 +37,10 @@ int main(int argc, char **argv)
    setupTreeView(treeview);
    gtk_tree_view_set_model(GTK_TREE_VIEW(treeview), pkglist);
 
-   std::cerr << "size model: " 
-             << gtk_tree_model_iter_n_children(pkglist, NULL) 
+   std::cerr << "size model: " << gtk_tree_model_iter_n_children(pkglist, NULL)
              << std::endl;
 
-   GtkWidget *scroll =  gtk_scrolled_window_new(NULL, NULL);
+   GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
    gtk_container_add(GTK_CONTAINER(scroll), treeview);
 
    GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);

@@ -22,28 +22,28 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
 
-class RGSlideShow {
+class RGSlideShow
+{
 
  protected:
-
-   GtkImage * _image;
+   GtkImage *_image;
    int _totalSteps;
    int _currentStep;
    std::vector<std::string> _imageFileList;
 
  public:
-
    void step();
    void refresh();
-   void setTotalSteps(int totalSteps) {
+   void setTotalSteps(int totalSteps)
+   {
       _totalSteps = totalSteps;
    };
 
-   RGSlideShow(GtkImage * image, std::string imgPath);
+   RGSlideShow(GtkImage *image, std::string imgPath);
 };

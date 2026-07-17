@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -35,12 +35,14 @@ class RGMainWindow;
 class RGWindow;
 class RPackageLister;
 
-class RGPreferencesWindow:public RGGtkBuilderWindow {
+class RGPreferencesWindow : public RGGtkBuilderWindow
+{
    bool _blockAction;
 
-   enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
+   enum { TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN };
 
-   struct column_struct {
+   struct column_struct
+   {
       gboolean visible;
       const char *name;
       const char *visible_name;
@@ -111,8 +113,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    // callbacks
    static void changeFontAction(GtkWidget *self, void *data);
    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
-   static void checkbuttonUserTerminalFontToggled(GtkWidget *self,
-                                                  void *data);
+   static void checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data);
 
    static void saveAction(GtkWidget *self, void *data);
    void saveGeneral();

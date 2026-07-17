@@ -1,4 +1,4 @@
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rconfiguration.h"
 #include "rpackageview.h"
@@ -25,18 +25,18 @@ int main(int argc, char **argv)
       // build chroots have no writable HOME; skip rather than fail (77 = skip)
       _error->DumpErrors();
       std::cerr << "SKIP: could not initialize synaptic configuration "
-                   "(no writable HOME?)" << std::endl;
+                   "(no writable HOME?)"
+                << std::endl;
       std::exit(77);
    }
 
    RFilter *filter, *filter_copy;
    vector<RPackage *> pkgs;
    RPackageViewFilter filter_view(pkgs);
-   for(int i=0; i < filter_view.nrOfFilters(); i++) {
+   for (int i = 0; i < filter_view.nrOfFilters(); i++) {
       filter = filter_view.findFilter(i);
       std::cerr << "orig: " << filter->getName()
-                << " and-mode: " << filter->pattern.getAndMode()
-                << std::endl;
+                << " and-mode: " << filter->pattern.getAndMode() << std::endl;
       filter_copy = new RFilter(*filter);
       std::cerr << "copy: " << filter_copy->getName()
                 << " and-mode: " << filter_copy->pattern.getAndMode()
@@ -46,8 +46,6 @@ int main(int argc, char **argv)
       delete filter_copy;
       filter = filter_view.findFilter(i);
       std::cerr << "orig: " << filter->getName()
-                << " and-mode: " << filter->pattern.getAndMode()
-                << std::endl;
+                << " and-mode: " << filter->pattern.getAndMode() << std::endl;
    }
-      
 }

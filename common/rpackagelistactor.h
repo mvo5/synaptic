@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagelister.h"
 
@@ -30,41 +30,40 @@
 
 class RPackage;
 
-class RPackageListActor : public RPackageObserver {
+class RPackageListActor : public RPackageObserver
+{
 
-   public:
+ public:
+   enum listEvent { PKG_ADDED, PKG_REMOVED };
 
-   enum listEvent {
-      PKG_ADDED,
-      PKG_REMOVED
-   };
-
-   protected:
-
+ protected:
    RPackageLister *_lister;
    std::vector<RPackage *> _lastDisplayList;
 
-   public:
-
+ public:
    virtual void run(std::vector<RPackage *> &List, int listEvent) = 0;
 
-   virtual void notifyPreFilteredChange() {
+   virtual void notifyPreFilteredChange()
+   {
       updateState();
    }
 
    virtual void notifyPostFilteredChange();
-   virtual void notifyChange(RPackage *pkg) {}
+   virtual void notifyChange(RPackage *pkg)
+   {}
 
-   virtual void updateState() {
+   virtual void updateState()
+   {
       _lastDisplayList = _lister->getPackages();
    }
 
-   RPackageListActor(RPackageLister *lister)
-         : _lister(lister) {
+   RPackageListActor(RPackageLister *lister) : _lister(lister)
+   {
       _lister->registerObserver(this);
    }
 
-   virtual ~RPackageListActor() {
+   virtual ~RPackageListActor()
+   {
       _lister->unregisterObserver(this);
    }
 };

@@ -25,13 +25,14 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <iostream>
 #include <list>
 #include <string>
 
-class SourcesList {
+class SourcesList
+{
  public:
    enum RecType {
       Deb = 1 << 0,
@@ -46,7 +47,8 @@ class SourcesList {
       RepomdSrc = 1 << 9
    };
 
-   struct SourceRecord {
+   struct SourceRecord
+   {
       unsigned int Type;
       std::string VendorID;
       std::string URI;
@@ -60,16 +62,18 @@ class SourcesList {
       std::string GetType();
       bool SetURI(std::string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0) {
-      }
-      ~SourceRecord() {
+      SourceRecord() : Type(0), Sections(0), NumSections(0)
+      {}
+      ~SourceRecord()
+      {
          if (Sections)
-            delete[]Sections;
+            delete[] Sections;
       }
       SourceRecord &operator=(const SourceRecord &);
    };
 
-   struct VendorRecord {
+   struct VendorRecord
+   {
       std::string VendorID;
       std::string FingerPrint;
       std::string Description;
@@ -88,24 +92,26 @@ class SourcesList {
                            std::string URI,
                            std::string Dist,
                            std::string *Sections,
-                           unsigned short count, std::string SourceFile);
+                           unsigned short count,
+                           std::string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
-   void SwapSources( SourceRecord *&, SourceRecord *& );
+   void SwapSources(SourceRecord *&, SourceRecord *&);
    bool ReadSourcePart(std::string listpath);
    bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();
 
    VendorRecord *AddVendor(std::string VendorID,
-                           std::string FingerPrint, std::string Description);
+                           std::string FingerPrint,
+                           std::string Description);
    void RemoveVendor(VendorRecord *&);
    bool ReadVendors();
    bool UpdateVendors();
 
-   SourcesList() {
-   }
+   SourcesList()
+   {}
    ~SourcesList();
 };
 
-std::ostream &operator <<(std::ostream &, const SourcesList::SourceRecord &);
+std::ostream &operator<<(std::ostream &, const SourcesList::SourceRecord &);

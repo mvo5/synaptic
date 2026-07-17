@@ -1,11 +1,11 @@
 /* rgmisc.h
- * 
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <gtk/gtk.h>
 #include <string>
@@ -48,8 +48,8 @@ void RGFlushInterface();
 
 bool is_binary_in_path(const char *program);
 
-char *gtk_get_string_from_color(GdkRGBA * colp);
-void gtk_get_color_from_string(const char *cpp, GdkRGBA ** colp);
+char *gtk_get_string_from_color(GdkRGBA *colp);
+void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp);
 
 const char *utf8_to_locale(const char *str);
 const char *utf8(const char *str);

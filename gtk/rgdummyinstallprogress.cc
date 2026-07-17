@@ -20,7 +20,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rgdummyinstallprogress.h"
 

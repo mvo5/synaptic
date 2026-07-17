@@ -22,7 +22,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
 #include "rguserdialog.h"
@@ -47,15 +47,15 @@ using namespace std;
 
 static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
 {
-   GtkResponseType *res = (GtkResponseType *) user_data;
-   *res = (GtkResponseType) id;
+   GtkResponseType *res = (GtkResponseType *)user_data;
+   *res = (GtkResponseType)id;
 }
 
 bool RGUserDialog::showErrors()
 {
    GtkWidget *dia;
-   std::string err,warn;
-   
+   std::string err, warn;
+
    if (_error->empty())
       return false;
 
@@ -69,60 +69,65 @@ bool RGUserDialog::showErrors()
 
       if (!message.empty()) {
          if (iserror)
-            err = err + "E: " + message+ "\n";
+            err = err + "E: " + message + "\n";
          else
-            warn = warn + "W: " + message+ "\n";
+            warn = warn + "W: " + message + "\n";
       }
    }
    string msg;
    GtkMessageType msg_type = GTK_MESSAGE_ERROR;
-   if(err.empty()) {
+   if (err.empty()) {
       msg_type = GTK_MESSAGE_WARNING;
       msg = warn;
    } else
-      msg = err + "\n"+ warn;
+      msg = err + "\n" + warn;
    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                msg_type, GTK_BUTTONS_CLOSE,
-				NULL);
-   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG(dia),
-				  g_strdup_printf("<b><big>%s</big></b>\n\n%s",
-				                  _("An error occurred"), 
-				                  _("The following details "
-						    "are provided:")));
+                                msg_type,
+                                GTK_BUTTONS_CLOSE,
+                                NULL);
+   gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia),
+                                 g_strdup_printf("<b><big>%s</big></b>\n\n%s",
+                                                 _("An error occurred"),
+                                                 _("The following details "
+                                                   "are provided:")));
    gtk_dialog_set_default_response(GTK_DIALOG(dia), GTK_RESPONSE_CLOSE);
    gtk_window_set_icon_name(GTK_WINDOW(dia), "synaptic");
 
    gtk_widget_set_size_request(dia, 500, 300);
    gtk_window_set_resizable(GTK_WINDOW(dia), TRUE);
    gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
-   GtkWidget *scroll = gtk_scrolled_window_new(NULL,NULL);
+   GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
    GtkWidget *textview = gtk_text_view_new();
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
-   gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer),utf8(msg.c_str()), -1);
+   gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), utf8(msg.c_str()), -1);
    gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(textview), GTK_WRAP_WORD);
    gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);
    gtk_text_view_set_editable(GTK_TEXT_VIEW(textview), FALSE);
-   gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll), 
+   gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll),
                                        GTK_SHADOW_IN);
-   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
+   gtk_scrolled_window_set_policy(
+      GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
    gtk_container_set_border_width(GTK_CONTAINER(scroll), 6);
    gtk_container_add(GTK_CONTAINER(scroll), textview);
    gtk_widget_show_all(scroll);
-   gtk_container_add_with_properties(GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))), scroll, "expand", TRUE, NULL);
+   gtk_container_add_with_properties(
+      GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))),
+      scroll,
+      "expand",
+      TRUE,
+      NULL);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
-      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
-         gdk_display_get_default(), id);
-      if(win) {
-	 gtk_widget_realize(dia);
-	 gdk_window_set_transient_for(
-            GDK_WINDOW(gtk_widget_get_window(dia)), win);
+      GdkWindow *win =
+         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
+      if (win) {
+         gtk_widget_realize(dia);
+         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
+                                      win);
       }
    }
 
@@ -135,7 +140,8 @@ bool RGUserDialog::showErrors()
 
 bool RGUserDialog::message(const char *msg,
                            RUserDialog::DialogType dialog,
-                           RUserDialog::ButtonsType buttons, bool defaultResponse)
+                           RUserDialog::ButtonsType buttons,
+                           bool defaultResponse)
 {
    GtkWidget *dia;
    GtkResponseType res;
@@ -177,7 +183,9 @@ bool RGUserDialog::message(const char *msg,
 
    dia = gtk_message_dialog_new(GTK_WINDOW(_parentWindow),
                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                gtkmessage, gtkbuttons, NULL);
+                                gtkmessage,
+                                gtkbuttons,
+                                NULL);
    gtk_window_set_icon_name(GTK_WINDOW(dia), "synaptic");
 
    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), utf8(msg));
@@ -185,11 +193,15 @@ bool RGUserDialog::message(const char *msg,
 
    switch (buttons) {
       case RUserDialog::ButtonsOkCancel: {
-         gtk_dialog_set_default_response(GTK_DIALOG(dia), defaultResponse ? GTK_RESPONSE_OK : GTK_RESPONSE_CANCEL);
+         gtk_dialog_set_default_response(GTK_DIALOG(dia),
+                                         defaultResponse ? GTK_RESPONSE_OK
+                                                         : GTK_RESPONSE_CANCEL);
          break;
       }
       case RUserDialog::ButtonsYesNo: {
-         gtk_dialog_set_default_response(GTK_DIALOG(dia), defaultResponse ? GTK_RESPONSE_YES : GTK_RESPONSE_NO);
+         gtk_dialog_set_default_response(GTK_DIALOG(dia),
+                                         defaultResponse ? GTK_RESPONSE_YES
+                                                         : GTK_RESPONSE_NO);
          break;
       }
       default: {
@@ -197,34 +209,36 @@ bool RGUserDialog::message(const char *msg,
       }
    }
 
-   g_signal_connect(G_OBJECT(dia), "response",
-                    G_CALLBACK(actionResponse), (gpointer) & res);
+   g_signal_connect(
+      G_OBJECT(dia), "response", G_CALLBACK(actionResponse), (gpointer)&res);
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0) {
-      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
-         gdk_display_get_default(), id);
-      if(win) {
-	 gtk_widget_realize(dia);
-	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)), win);
+      GdkWindow *win =
+         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
+      if (win) {
+         gtk_widget_realize(dia);
+         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
+                                      win);
       }
    }
 
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
+   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+          (res == GTK_RESPONSE_CLOSE);
 }
 
 // RGGtkBuilderUserDialog
-RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent, const char *name)
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent,
+                                               const char *name)
 {
    _parentWindow = parent->window();
    init(name);
 }
 
-RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
-   : builder(0)
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent) : builder(0)
 {
    _parentWindow = parent->window();
 }
@@ -232,36 +246,36 @@ RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent)
 void RGGtkBuilderUserDialog::init(const char *name)
 {
    gchar *main_widget = NULL;
-   GError* error = NULL;
+   GError *error = NULL;
 
-   //cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
+   // cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
 
    builder = gtk_builder_new();
-   std::string resource_path = std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
+   std::string resource_path =
+      std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
    main_widget = g_strdup_printf("dialog_%s", name);
-   if (!gtk_builder_add_from_resource (builder, resource_path.c_str(), &error)) {
-      g_warning ("Couldn't load builder resource: %s", error->message);
-      g_error_free (error);
+   if (!gtk_builder_add_from_resource(builder, resource_path.c_str(), &error)) {
+      g_warning("Couldn't load builder resource: %s", error->message);
+      g_error_free(error);
    }
    _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
    assert(_dialog);
    gtk_window_set_icon_name(GTK_WINDOW(_dialog), "synaptic");
 
-   gtk_window_set_position(GTK_WINDOW(_dialog),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
-   if(gtk_window_get_modal(GTK_WINDOW(_dialog)))
+   gtk_window_set_position(GTK_WINDOW(_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
+   if (gtk_window_get_modal(GTK_WINDOW(_dialog)))
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_dialog), 
-				GTK_WINDOW(_parentWindow));
+   gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);
    if (id > 0 && !gtk_widget_get_visible(_parentWindow)) {
-      GdkWindow *win = gdk_x11_window_foreign_new_for_display(
-         gdk_display_get_default(), id);
-      if(win) {
-	 gtk_widget_realize(_dialog);
-	 gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
+      GdkWindow *win =
+         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
+      if (win) {
+         gtk_widget_realize(_dialog);
+         gdk_window_set_transient_for(
+            GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
       }
    }
 
@@ -270,16 +284,17 @@ void RGGtkBuilderUserDialog::init(const char *name)
 
 int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
 {
-   if(name != NULL)
+   if (name != NULL)
       init(name);
 
-   res = (GtkResponseType) gtk_dialog_run(GTK_DIALOG(_dialog));
+   res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
 
-   if(return_gtk_response)
+   if (return_gtk_response)
       return res;
    else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) || (res == GTK_RESPONSE_CLOSE);
+      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+             (res == GTK_RESPONSE_CLOSE);
 }
 
 

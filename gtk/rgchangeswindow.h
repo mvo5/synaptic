@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -35,11 +35,9 @@ class RGWindow;
 class RPackage;
 class RPackageLister;
 
-class RGChangesWindow:public RGGtkBuilderWindow {
-   enum {
-      PKG_COLUMN,
-      N_COLUMNS
-   };
+class RGChangesWindow : public RGGtkBuilderWindow
+{
+   enum { PKG_COLUMN, N_COLUMNS };
 
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
@@ -48,11 +46,11 @@ class RGChangesWindow:public RGGtkBuilderWindow {
    RGChangesWindow(RGWindow *win);
 
    void confirm(RPackageLister *lister,
-		std::vector<RPackage *> &kept,
-		std::vector<RPackage *> &toInstall,
-		std::vector<RPackage *> &toReInstall,
-		std::vector<RPackage *> &toUpgrade,
-		std::vector<RPackage *> &toRemove,
-		std::vector<RPackage *> &toDowngrade,
-		std::vector<RPackage *> &notAuthenticated);
+                std::vector<RPackage *> &kept,
+                std::vector<RPackage *> &toInstall,
+                std::vector<RPackage *> &toReInstall,
+                std::vector<RPackage *> &toUpgrade,
+                std::vector<RPackage *> &toRemove,
+                std::vector<RPackage *> &toDowngrade,
+                std::vector<RPackage *> &notAuthenticated);
 };

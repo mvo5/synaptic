@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
@@ -34,21 +34,20 @@
 class RGFindWindow;
 class RGWindow;
 
-typedef void RGFindWindowFindAction(void *self, RGFindWindow * win);
+typedef void RGFindWindowFindAction(void *self, RGFindWindow *win);
 
-static char *SearchTypes[] = {
-   _("Name"),
-   _("Description and Name"),
-   _("Maintainer"),
-   _("Version"),
-   _("Dependencies"),           // depends, predepends etc
-   _("Provided packages"),      // provides and name
-   NULL
-};
+static char *SearchTypes[] = {_("Name"),
+                              _("Description and Name"),
+                              _("Maintainer"),
+                              _("Version"),
+                              _("Dependencies"),      // depends, predepends etc
+                              _("Provided packages"), // provides and name
+                              NULL};
 
-class RGFindWindow:public RGGtkBuilderWindow {
+class RGFindWindow : public RGGtkBuilderWindow
+{
 
-   //RPatternPackageFilter::DepType _searchType;
+   // RPatternPackageFilter::DepType _searchType;
    GList *_prevSearches;
    GtkWidget *_comboFind, *_findB, *_comboSearchType;
 
@@ -58,11 +57,10 @@ class RGFindWindow:public RGGtkBuilderWindow {
 
  public:
    RGFindWindow(RGWindow *owner);
-   virtual ~RGFindWindow() {
-   };
+   virtual ~RGFindWindow() {};
 
    int getSearchType();
 
-   gchar* getFindString();
+   gchar *getFindString();
    void selectText();
 };

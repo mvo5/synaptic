@@ -22,22 +22,21 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <map>
 #include <iostream>
 #include <string>
 
-class RAPTOptions {
+class RAPTOptions
+{
  public:
-
-   class packageOptions {
+   class packageOptions
+   {
     public:
       packageOptions()
-    :
-      isLocked(false), isOrphaned(false), isNew(false),
-      isDebconf(false) {
-      }
+         : isLocked(false), isOrphaned(false), isNew(false), isDebconf(false)
+      {}
       bool isLocked;
       bool isOrphaned;
       bool isNew;
@@ -75,7 +74,8 @@ class RAPTOptions {
 
 extern RAPTOptions *_roptions;
 
-typedef std::map<std::string, RAPTOptions::packageOptions>::iterator packageOptionsIter;
+typedef std::map<std::string, RAPTOptions::packageOptions>::iterator
+   packageOptionsIter;
 
 std::ostream &operator<<(std::ostream &os, const RAPTOptions::packageOptions &);
 std::istream &operator>>(std::istream &is, RAPTOptions::packageOptions &o);

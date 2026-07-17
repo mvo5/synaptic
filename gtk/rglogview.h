@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -32,14 +32,16 @@
 
 class RGWindow;
 
-class RGLogView : public RGGtkBuilderWindow {
+class RGLogView : public RGGtkBuilderWindow
+{
  protected:
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbButtonFind(GtkWidget *self, void *data);
-   static void cbTreeSelectionChanged(GtkTreeSelection *selection, 
-				      gpointer data);
-   static gboolean filter_func(GtkTreeModel *model, GtkTreeIter *iter,
-			       gpointer data);
+   static void cbTreeSelectionChanged(GtkTreeSelection *selection,
+                                      gpointer data);
+   static gboolean filter_func(GtkTreeModel *model,
+                               GtkTreeIter *iter,
+                               gpointer data);
 
    // some widgets
    GtkWidget *_treeView;

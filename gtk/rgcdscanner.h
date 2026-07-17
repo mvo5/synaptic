@@ -1,4 +1,4 @@
-/* rgcdscanner.h - copy of the apt-cdrom.cc stuff for apt's without a library 
+/* rgcdscanner.h - copy of the apt-cdrom.cc stuff for apt's without a library
  *                 interface
  *
  * Copyright (c) 2000, 2001 Conectiva S/A
@@ -23,36 +23,34 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include "rcdscanner.h"
+#   include "rcdscanner.h"
 
-#include "rgwindow.h"
-#include "ruserdialog.h"
+#   include "rgwindow.h"
+#   include "ruserdialog.h"
 
-#include <gtk/gtk.h>
-#include <string>
+#   include <gtk/gtk.h>
+#   include <string>
 
 using namespace std;
 
 class RGMainWindow;
 
-class RGCDScanner:public RCDScanProgress, public RGWindow {
+class RGCDScanner : public RCDScanProgress, public RGWindow
+{
  protected:
-
    GtkWidget *_label;
    GtkWidget *_pbar;
 
    RUserDialog *_userDialog;
 
  public:
-
    RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
    void update(string text, int current);
    bool run();
-
 };
 
 #endif

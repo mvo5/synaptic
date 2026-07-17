@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <apt-pkg/pkgcache.h>
 #include <fstream>
@@ -36,10 +36,10 @@
 class Configuration;
 class RPackage;
 
-class RPackageFilter {
+class RPackageFilter
+{
 
-   public:
-
+ public:
    virtual const char *type() = 0;
 
    virtual bool filter(RPackage *pkg) = 0;
@@ -48,36 +48,49 @@ class RPackageFilter {
    virtual bool read(Configuration &conf, std::string key) = 0;
    virtual bool write(std::ofstream &out, std::string pad) = 0;
 
-   RPackageFilter() {}
-   virtual ~RPackageFilter() {}
+   RPackageFilter()
+   {}
+   virtual ~RPackageFilter()
+   {}
 };
 
 
 extern const char *RPFSection;
 
-class RSectionPackageFilter : public RPackageFilter {
+class RSectionPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    std::vector<std::string> _groups;
-   bool _inclusive;             // include or exclude the packages
+   bool _inclusive; // include or exclude the packages
 
-   public:
+ public:
+   RSectionPackageFilter() : _inclusive(false)
+   {}
+   virtual ~RSectionPackageFilter()
+   {}
 
-   RSectionPackageFilter() : _inclusive(false) {}
-   virtual ~RSectionPackageFilter() {}
-
-   inline virtual void reset() {
+   inline virtual void reset()
+   {
       clear();
       _inclusive = false;
    }
 
-   inline virtual const char *type() { return RPFSection; }
+   inline virtual const char *type()
+   {
+      return RPFSection;
+   }
 
-   void setInclusive(bool flag) { _inclusive = flag; }
+   void setInclusive(bool flag)
+   {
+      _inclusive = flag;
+   }
    bool inclusive();
 
-   inline void addSection(std::string group) { _groups.push_back(group); }
+   inline void addSection(std::string group)
+   {
+      _groups.push_back(group);
+   }
    int count();
    std::string section(int index);
    void clear();
@@ -89,7 +102,8 @@ class RSectionPackageFilter : public RPackageFilter {
 
 extern const char *RPFPattern;
 
-class RPatternPackageFilter : public RPackageFilter {
+class RPatternPackageFilter : public RPackageFilter
+{
  public:
    typedef enum {
       Name,
@@ -99,21 +113,22 @@ class RPatternPackageFilter : public RPackageFilter {
       Depends,
       Provides,
       Conflicts,
-      Replaces,                 // (or obsoletes)
+      Replaces, // (or obsoletes)
       Recommends,
       Suggests,
-      RDepends,                  // reverse depends
-      Origin,                   // package origin (like security.debian.org)
-      Component                   // package component (e.g. main)
+      RDepends, // reverse depends
+      Origin,   // package origin (like security.debian.org)
+      Component // package component (e.g. main)
    } DepType;
 
 
  protected:
-   struct Pattern {
+   struct Pattern
+   {
       DepType where;
       std::string pattern;
       bool exclusive;
-        std::vector<regex_t *> regexps;
+      std::vector<regex_t *> regexps;
    };
    std::vector<Pattern> _patterns;
 
@@ -123,40 +138,58 @@ class RPatternPackageFilter : public RPackageFilter {
    inline bool filterVersion(Pattern pat, RPackage *pkg);
    inline bool filterDescription(Pattern pat, RPackage *pkg);
    inline bool filterMaintainer(Pattern pat, RPackage *pkg);
-   inline bool filterDepends(Pattern pat, RPackage *pkg,
-			     pkgCache::Dep::DepType filterType);
+   inline bool filterDepends(Pattern pat,
+                             RPackage *pkg,
+                             pkgCache::Dep::DepType filterType);
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
    inline bool filterOrigin(Pattern pat, RPackage *pkg);
    inline bool filterComponent(Pattern pat, RPackage *pkg);
 
  public:
-
    static const char *TypeName[];
 
-   RPatternPackageFilter() : and_mode(true) {}
+   RPatternPackageFilter() : and_mode(true)
+   {}
    RPatternPackageFilter(RPatternPackageFilter &f);
    virtual ~RPatternPackageFilter();
 
-   inline virtual void reset() { clear(); }
+   inline virtual void reset()
+   {
+      clear();
+   }
 
-   inline virtual const char *type() { return RPFPattern; }
+   inline virtual const char *type()
+   {
+      return RPFPattern;
+   }
 
    void addPattern(DepType type, const std::string &pattern, bool exclusive);
 
-   inline size_t count() {
+   inline size_t count()
+   {
       return _patterns.size();
    }
 
-   inline void getPattern(size_t index, DepType &type, std::string &pattern, bool &exclusive) {
+   inline void getPattern(size_t index,
+                          DepType &type,
+                          std::string &pattern,
+                          bool &exclusive)
+   {
       type = _patterns[index].where;
       pattern = _patterns[index].pattern;
       exclusive = _patterns[index].exclusive;
    }
 
    void clear();
-   bool getAndMode() { return and_mode; }
-   void setAndMode(bool b) { and_mode=b; }
+   bool getAndMode()
+   {
+      return and_mode;
+   }
+   void setAndMode(bool b)
+   {
+      and_mode = b;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, std::string key);
@@ -166,18 +199,17 @@ class RPatternPackageFilter : public RPackageFilter {
 
 extern const char *RPFStatus;
 
-class RStatusPackageFilter : public RPackageFilter {
+class RStatusPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    int _status;
 
-   public:
-
+ public:
    enum Types {
       Installed = 1 << 0,
-      Upgradable = 1 << 1,      // installed but upgradable
-      Broken = 1 << 2,          // installed but dependencies are broken
+      Upgradable = 1 << 1, // installed but upgradable
+      Broken = 1 << 2,     // installed but dependencies are broken
       NotInstalled = 1 << 3,
       MarkInstall = 1 << 4,
       MarkRemove = 1 << 5,
@@ -186,22 +218,34 @@ class RStatusPackageFilter : public RPackageFilter {
       PinnedPackage = 1 << 8,   // pinned Package (never upgrade)
       OrphanedPackage = 1 << 9, // orphaned (identfied with deborphan)
       ResidualConfig = 1 << 10, // not installed but has config left
-      NotInstallable = 1 << 11,  // the package is not aviailable in repository
+      NotInstallable = 1 << 11, // the package is not aviailable in repository
       UpstreamUpgradable = 1 << 12, // new upstream version
-      AutoInstalled = 1 << 13, // automatically installed
+      AutoInstalled = 1 << 13,      // automatically installed
       Garbage = 1 << 14, // automatically installed and no longer required
       NowPolicyBroken = 1 << 15,
-      ManualInstalled = 1 << 16,  // !AutoInstalled
+      ManualInstalled = 1 << 16, // !AutoInstalled
    };
 
    RStatusPackageFilter() : _status(~0)
    {}
-   inline virtual void reset() { _status = ~0; }
+   inline virtual void reset()
+   {
+      _status = ~0;
+   }
 
-   inline virtual const char *type() { return RPFStatus; }
+   inline virtual const char *type()
+   {
+      return RPFStatus;
+   }
 
-   inline void setStatus(int status) { _status = status; }
-   inline int status() { return _status; }
+   inline void setStatus(int status)
+   {
+      _status = status;
+   }
+   inline int status()
+   {
+      return _status;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, std::string key);
@@ -211,15 +255,20 @@ class RStatusPackageFilter : public RPackageFilter {
 
 extern const char *RPFPriority;
 
-class RPriorityPackageFilter:public RPackageFilter {
+class RPriorityPackageFilter : public RPackageFilter
+{
 
-   public:
+ public:
+   RPriorityPackageFilter()
+   {}
 
-   RPriorityPackageFilter()  {}
+   inline virtual void reset()
+   {}
 
-   inline virtual void reset() {}
-
-   inline virtual const char *type() { return RPFPriority; }
+   inline virtual const char *type()
+   {
+      return RPFPriority;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, std::string key);
@@ -229,10 +278,10 @@ class RPriorityPackageFilter:public RPackageFilter {
 
 extern const char *RPFReducedView;
 
-class RReducedViewPackageFilter : public RPackageFilter {
+class RReducedViewPackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    bool _enabled;
 
    std::set<std::string> _hide;
@@ -241,39 +290,56 @@ class RReducedViewPackageFilter : public RPackageFilter {
 
    void addFile(std::string FileName);
 
-   public:
-
-   RReducedViewPackageFilter() : _enabled(false) {}
+ public:
+   RReducedViewPackageFilter() : _enabled(false)
+   {}
    ~RReducedViewPackageFilter();
 
-   inline virtual void reset() { _hide.clear(); }
+   inline virtual void reset()
+   {
+      _hide.clear();
+   }
 
-   inline virtual const char *type() { return RPFReducedView; }
+   inline virtual const char *type()
+   {
+      return RPFReducedView;
+   }
 
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, std::string key);
    virtual bool write(std::ofstream &out, std::string pad);
 
-   void enable() { _enabled = true; }
-   void disable() { _enabled = false; }
+   void enable()
+   {
+      _enabled = true;
+   }
+   void disable()
+   {
+      _enabled = false;
+   }
 };
 
 extern const char *RPFFile;
 
-class RFilePackageFilter : public RPackageFilter {
+class RFilePackageFilter : public RPackageFilter
+{
 
-   protected:
-
+ protected:
    std::string filename;
    std::set<std::string> pkgs;
 
-   public:
+ public:
+   RFilePackageFilter()
+   {}
+   virtual ~RFilePackageFilter()
+   {}
 
-   RFilePackageFilter() {}
-   virtual ~RFilePackageFilter() {}
-
-   inline virtual void reset() {}
-   inline virtual const char *type() { return RPFFile; }
+   inline virtual void reset()
+   {}
+   inline virtual const char *type()
+   {
+      return RPFFile;
+   }
 
    bool addFile(std::string file);
 
@@ -283,13 +349,12 @@ class RFilePackageFilter : public RPackageFilter {
 };
 
 
-struct RFilter {
+struct RFilter
+{
 
-   public:
-
+ public:
    RFilter()
-      :   section(), pattern(), status(),
-          priority(), reducedview(), preset()
+      : section(), pattern(), status(), priority(), reducedview(), preset()
    {}
 
    void setName(std::string name);
@@ -309,7 +374,6 @@ struct RFilter {
 
    bool preset;
 
-   protected:
-
+ protected:
    std::string name;
 };

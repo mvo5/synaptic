@@ -1,4 +1,4 @@
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rpmindexcopy.h"
 
@@ -61,8 +61,7 @@ static int strrcmp_(const char *a, const char *b)
 }
 #endif
 
-bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
-                                vector<string> &List)
+bool RPMIndexCopy::CopyPackages(string CDROM, string Name, vector<string> &List)
 {
    OpTextProgress Progress;
 
@@ -112,8 +111,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
          // Fork bzip2
          int Process = fork();
          if (Process < 0)
-            return _error->Errno("fork",
-                                 "Internal Error: couldn't fork bzip2. Please report.");
+            return _error->Errno(
+               "fork", "Internal Error: couldn't fork bzip2. Please report.");
 
          // The child
          if (Process == 0) {
@@ -121,19 +120,19 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
             dup2(Pkg.Fd(), STDOUT_FILENO);
             SetCloseExec(STDIN_FILENO, false);
             SetCloseExec(STDOUT_FILENO, false);
-            
+
             const string bzipDir = _config->Find("Dir::Bin::bzip2", "bzip2");
             const char *Args[3];
             Args[0] = bzipDir.c_str();
             Args[1] = "-d";
             Args[2] = 0;
-            execvp(Args[0], (char **) Args);
+            execvp(Args[0], (char **)Args);
             exit(100);
          }
          // Wait for gzip to finish
-         if (ExecWait
-             (Process, _config->Find("Dir::Bin::bzip2", "bzip2").c_str(),
-              false) == false)
+         if (ExecWait(Process,
+                      _config->Find("Dir::Bin::bzip2", "bzip2").c_str(),
+                      false) == false)
             return _error->Error(_("bzip2 failed, perhaps the disk is full."));
 
          Pkg.Seek(0);
@@ -153,8 +152,8 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
          return false;
 
       // Setup the progress meter
-      Progress.OverallProgress(CurrentSize, TotalSize, FileSize,
-                               string("Reading Indexes"));
+      Progress.OverallProgress(
+         CurrentSize, TotalSize, FileSize, string("Reading Indexes"));
 
       // Parse
       Progress.SubProgress(Pkg.Size());
@@ -181,11 +180,12 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
                release += "." + RipComponent(*I);
 
             // Copy the component release file
-            sprintf(S, "cdrom:[%s]/%s/%s", Name.c_str(),
+            sprintf(S,
+                    "cdrom:[%s]/%s/%s",
+                    Name.c_str(),
                     RipDirectory(*I).c_str() + CDROM.length(),
                     release.c_str());
-            string TargetF =
-               _config->FindDir("Dir::State::lists") + "partial/";
+            string TargetF = _config->FindDir("Dir::State::lists") + "partial/";
             TargetF += URItoFileName(S);
             if (FileExists(RipDirectory(*I) + release) == true) {
                FileFd Target(TargetF, FileFd::WriteEmpty);
@@ -211,7 +211,7 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
       string Prefix = "";
       /* Mangle the source to be in the proper notation with
          prefix dist [component] */
-//      *I = string(*I,Prefix.length());
+      //      *I = string(*I,Prefix.length());
       ConvertToSourceList(CDROM, *I);
       *I = Prefix + ' ' + *I;
 
@@ -221,8 +221,6 @@ bool RPMIndexCopy::CopyPackages(string CDROM, string Name,
 
    return true;
 }
-
-
 
 
 void RPMIndexCopy::ConvertToSourceList(string CD, string &Path)

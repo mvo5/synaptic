@@ -20,33 +20,33 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include "rcdscanner.h"
+#   include "rcdscanner.h"
 
-#include "i18n.h"
+#   include "i18n.h"
 
-#include <algorithm>
-#include <apt-pkg/cdromutl.h>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/error.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/strutl.h>
-#include <cstdio>
-#include <dirent.h>
-#include <fcntl.h>
-#include <fstream>
-#include <iostream>
-#include <sys/stat.h>
-#include <unistd.h>
+#   include <algorithm>
+#   include <apt-pkg/cdromutl.h>
+#   include <apt-pkg/configuration.h>
+#   include <apt-pkg/error.h>
+#   include <apt-pkg/fileutl.h>
+#   include <apt-pkg/strutl.h>
+#   include <cstdio>
+#   include <dirent.h>
+#   include <fcntl.h>
+#   include <fstream>
+#   include <iostream>
+#   include <sys/stat.h>
+#   include <unistd.h>
 
-#ifdef HAVE_RPM
-#include "rpmindexcopy.h"
-#else
-#include <apt-pkg/indexcopy.h>
-#endif
+#   ifdef HAVE_RPM
+#      include "rpmindexcopy.h"
+#   else
+#      include <apt-pkg/indexcopy.h>
+#   endif
 
 using namespace std;
 
@@ -98,7 +98,7 @@ void ReduceSourcelist(string CD, vector<string> &List)
    }
 }
 
-                                                                        /*}}} */
+/*}}} */
 bool RCDScanner::writeDatabase()
 {
    _database->Set("CD::" + _cdId, _cdName);
@@ -109,8 +109,8 @@ bool RCDScanner::writeDatabase()
    unlink(NewFile.c_str());
    ofstream Out(NewFile.c_str());
    if (!Out)
-      return _error->Errno("ofstream::ofstream",
-                           _("Failed to open %s.new"), DFile.c_str());
+      return _error->Errno(
+         "ofstream::ofstream", _("Failed to open %s.new"), DFile.c_str());
 
    /* Write out all of the configuration directives by walking the
       configuration tree */
@@ -135,8 +135,10 @@ bool RCDScanner::writeDatabase()
 
    rename(DFile.c_str(), string(DFile + '~').c_str());
    if (rename(NewFile.c_str(), DFile.c_str()) != 0)
-      return _error->Errno("rename", _("Failed to rename %s.new to %s"),
-                           DFile.c_str(), DFile.c_str());
+      return _error->Errno("rename",
+                           _("Failed to rename %s.new to %s"),
+                           DFile.c_str(),
+                           DFile.c_str());
 
    return true;
 }
@@ -150,7 +152,7 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
 
    string File = _config->FindFile("Dir::Etc::sourcelist");
 
-   // Open the stream for reading 
+   // Open the stream for reading
    ifstream F((FileExists(File) ? File.c_str() : "/dev/null"), ios::in);
    if (!F != 0)
       return _error->Errno("ifstream::ifstream", "Opening %s", File.c_str());
@@ -159,8 +161,8 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
    unlink(NewFile.c_str());
    ofstream Out(NewFile.c_str());
    if (!Out)
-      return _error->Errno("ofstream::ofstream",
-                           _("Failed to open %s.new"), File.c_str());
+      return _error->Errno(
+         "ofstream::ofstream", _("Failed to open %s.new"), File.c_str());
 
    // Create a short uri without the path
    string ShortURI = "cdrom:[" + _cdName + "]/";
@@ -196,14 +198,12 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
       }
 
       if (First == true) {
-         for (vector<string>::iterator I = list.begin(); I != list.end();
-              I++) {
+         for (vector<string>::iterator I = list.begin(); I != list.end(); I++) {
             string::size_type Space = (*I).find(' ');
             if (Space == string::npos)
                return _error->Error(_("Internal error"));
-            Out << Type << " cdrom:[" << _cdName << "]/" << string(*I, 0,
-                                                                   Space) <<
-               " " << string(*I, Space + 1) << endl;
+            Out << Type << " cdrom:[" << _cdName << "]/" << string(*I, 0, Space)
+                << " " << string(*I, Space + 1) << endl;
          }
       }
       First = false;
@@ -212,17 +212,18 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
       string cType;
       string URI;
       const char *C = Buffer;
-      if (ParseQuoteWord(C, cType) == false || ParseQuoteWord(C, URI) == false) {
+      if (ParseQuoteWord(C, cType) == false ||
+          ParseQuoteWord(C, URI) == false) {
          Out << Buffer << endl;
          continue;
       }
       // Omit lines like this one
-      if (cType != Type
-          || (string(URI, 0, ShortURI.length()) != ShortURI &&
-              string(URI, 0, ShortURI.length()) != ShortURI2 &&
-              (_cdOldName.empty()
-               || (string(URI, 0, ShortOldURI.length()) != ShortOldURI &&
-                   string(URI, 0, ShortOldURI.length()) != ShortOldURI2)))) {
+      if (cType != Type ||
+          (string(URI, 0, ShortURI.length()) != ShortURI &&
+           string(URI, 0, ShortURI.length()) != ShortURI2 &&
+           (_cdOldName.empty() ||
+            (string(URI, 0, ShortOldURI.length()) != ShortOldURI &&
+             string(URI, 0, ShortOldURI.length()) != ShortOldURI2)))) {
          Out << Buffer << endl;
          continue;
       }
@@ -235,9 +236,8 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
          if (Space == string::npos)
             return _error->Error(_("Internal error"));
 
-         Out << Type << " cdrom:[" << _cdName << "]/" << string(*I, 0,
-                                                                Space) << " "
-            << string(*I, Space + 1) << endl;
+         Out << Type << " cdrom:[" << _cdName << "]/" << string(*I, 0, Space)
+             << " " << string(*I, Space + 1) << endl;
       }
    }
 
@@ -245,8 +245,10 @@ bool RCDScanner::writeSourceList(vector<string> &list, bool pkg)
 
    rename(File.c_str(), string(File + '~').c_str());
    if (rename(NewFile.c_str(), File.c_str()) != 0)
-      return _error->Errno("rename", _("Failed to rename %s.new to %s"),
-                           File.c_str(), File.c_str());
+      return _error->Errno("rename",
+                           _("Failed to rename %s.new to %s"),
+                           File.c_str(),
+                           File.c_str());
 
    return true;
 }
@@ -322,8 +324,8 @@ bool RCDScanner::start(RCDScanProgress *progress)
    if (_pkgList.size() == 0 && _srcList.size() == 0) {
       progress->update(_("Unmounting CD-ROM..."), STEP_UNMOUNT2);
 
-      if (_cdromMounted
-          && _config->FindB("APT::CDROM::NoMount", false) == false) {
+      if (_cdromMounted &&
+          _config->FindB("APT::CDROM::NoMount", false) == false) {
          UnmountCdrom(CDROM);
          _cdromMounted = false;
       }
@@ -367,8 +369,7 @@ string RCDScanner::getDiscName()
 
 bool RCDScanner::setDiscName(string name)
 {
-   if (name.empty() == true ||
-       name.find('"') != string::npos ||
+   if (name.empty() == true || name.find('"') != string::npos ||
        name.find('[') != string::npos || name.find(']') != string::npos)
       return false;
    _cdName = name;
@@ -391,13 +392,13 @@ bool RCDScanner::finish(RCDScanProgress *progress)
       return false;
    }
    // Copy the package files to the state directory
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    RPMPackageCopy Copy;
    RPMSourceCopy SrcCopy;
-#else
+#   else
    PackageCopy Copy;
    SourceCopy SrcCopy;
-#endif
+#   endif
 
    progress->update(_("Copying package lists..."), STEP_COPY);
 
@@ -413,8 +414,7 @@ bool RCDScanner::finish(RCDScanProgress *progress)
    ReduceSourcelist(CDROM, _pkgList);
    ReduceSourcelist(CDROM, _srcList);
 
-   if (!writeSourceList(_pkgList, true)
-       || !writeSourceList(_srcList, false)) {
+   if (!writeSourceList(_pkgList, true) || !writeSourceList(_srcList, false)) {
       return false;
    }
 
@@ -441,8 +441,8 @@ void RCDScanner::unmount()
 bool DropBinaryArch(vector<string> &List)
 {
    char S[300];
-   snprintf(S, sizeof(S), "/binary-%s/",
-            _config->Find("Apt::Architecture").c_str());
+   snprintf(
+      S, sizeof(S), "/binary-%s/", _config->Find("Apt::Architecture").c_str());
 
    for (unsigned int I = 0; I < List.size(); I++) {
       const char *Str = List[I].c_str();
@@ -469,7 +469,7 @@ bool DropBinaryArch(vector<string> &List)
    return true;
 }
 
-                                                                        /*}}} */
+/*}}} */
 // Score - We compute a 'score' for a path                              /*{{{*/
 // ---------------------------------------------------------------------
 /* Paths are scored based on how close they come to what I consider
@@ -478,10 +478,10 @@ bool DropBinaryArch(vector<string> &List)
 int Score(string Path)
 {
    int Res = 0;
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    if (Path.find("base/") != string::npos)
       Res = 1;
-#else
+#   else
    if (Path.find("stable/") != string::npos)
       Res += 29;
    if (Path.find("/binary-") != string::npos)
@@ -504,11 +504,11 @@ int Score(string Path)
       Res += 10;
    if (Path.find("/debian/") != string::npos)
       Res -= 10;
-#endif
+#   endif
    return Res;
 }
 
-                                                                        /*}}} */
+/*}}} */
 // DropRepeats - Drop repeated files resulting from symlinks            /*{{{*/
 // ---------------------------------------------------------------------
 /* Here we go and stat every file that we found and strip dup inodes. */
@@ -521,8 +521,7 @@ bool DropRepeats(vector<string> &List, const char *Name)
       if (stat((List[I]).c_str(), &Buf) != 0 &&
           stat((List[I] + Name).c_str(), &Buf) != 0 &&
           stat((List[I] + Name + ".gz").c_str(), &Buf) != 0)
-         _error->Errno("stat", _("Failed to stat %s%s"), List[I].c_str(),
-                       Name);
+         _error->Errno("stat", _("Failed to stat %s%s"), List[I].c_str(), Name);
       Inodes[I] = Buf.st_ino;
    }
 
@@ -561,42 +560,42 @@ bool DropRepeats(vector<string> &List, const char *Name)
 
 void RCDScanner::cleanPkgList(vector<string> &list)
 {
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    DropRepeats(list, "pkglist");
-#else
+#   else
    DropBinaryArch(list);
    DropRepeats(list, "Packages");
-#endif
+#   endif
 }
 
 void RCDScanner::cleanSrcList(vector<string> &list)
 {
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    DropRepeats(list, "srclist");
-#else
+#   else
    DropRepeats(list, "Sources");
-#endif
+#   endif
 }
 
 string RCDScanner::pkgSourceType() const
 {
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    return "rpm";
-#else
+#   else
    return "deb";
-#endif
+#   endif
 }
 
 string RCDScanner::srcSourceType() const
 {
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    return "rpm-src";
-#else
+#   else
    return "deb-src";
-#endif
+#   endif
 }
 
-#if 0
+#   if 0
 static int strrcmp_(const char *a, const char *b)
 {
    int la = strlen(a);
@@ -610,10 +609,9 @@ static int strrcmp_(const char *a, const char *b)
    else
       return strcmp(&b[lb - la], a);
 }
-#endif
+#   endif
 
-bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
-                               int Depth)
+bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress, int Depth)
 {
    static ino_t Inodes[9];
    if (Depth >= 7)
@@ -635,12 +633,12 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
    if (stat(".aptignr", &Buf) == 0)
       return true;
 
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
    bool Found = false;
    if (stat("release", &Buf) == 0)
       Found = true;
-#else
-   /* Aha! We found some package files. We assume that everything under 
+#   else
+   /* Aha! We found some package files. We assume that everything under
       this dir is controlled by those package files so we don't look down
       anymore */
    if (stat("Packages", &Buf) == 0 || stat("Packages.gz", &Buf) == 0) {
@@ -657,28 +655,28 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
       if (_config->FindB("APT::CDROM::Thorough", false) == false)
          return true;
    }
-#endif
+#   endif
 
    DIR *D = opendir(".");
    if (D == 0)
       return _error->Errno("opendir", _("Unable to read %s"), CD.c_str());
 
    // Run over the directory
-   for (struct dirent * Dir = readdir(D); Dir != 0; Dir = readdir(D)) {
+   for (struct dirent *Dir = readdir(D); Dir != 0; Dir = readdir(D)) {
       // Skip some files..
       if (strcmp(Dir->d_name, ".") == 0 || strcmp(Dir->d_name, "..") == 0 ||
-          //strcmp(Dir->d_name,"source") == 0 ||
+          // strcmp(Dir->d_name,"source") == 0 ||
           strcmp(Dir->d_name, ".disk") == 0 ||
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
           strncmp(Dir->d_name, "RPMS", 4) == 0 ||
           strncmp(Dir->d_name, "doc", 3) == 0)
-#else
+#   else
           strcmp(Dir->d_name, "experimental") == 0 ||
           strcmp(Dir->d_name, "binary-all") == 0)
-#endif
+#   endif
          continue;
 
-#ifdef HAVE_RPM
+#   ifdef HAVE_RPM
       if (strncmp(Dir->d_name, "pkglist.", 8) == 0 &&
           strcmp(Dir->d_name + strlen(Dir->d_name) - 4, ".bz2") == 0) {
          _pkgList.push_back(CD + string(Dir->d_name));
@@ -694,7 +692,7 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
       if (_config->FindB("APT::CDROM::Thorough", false) == false &&
           Found == true)
          continue;
-#endif
+#   endif
 
       // See if the name is a sub directory
       struct stat Buf;
@@ -719,8 +717,7 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress,
          break;
 
       if (chdir(CD.c_str()) != 0)
-         return _error->Errno("chdir", _("Unable to change to %s"),
-                              CD.c_str());
+         return _error->Errno("chdir", _("Unable to change to %s"), CD.c_str());
    }
 
    closedir(D);

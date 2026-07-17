@@ -28,20 +28,30 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <string>
 #include <vector>
 
 class RPackage;
 
-class RPackageStatus {
+class RPackageStatus
+{
  public:
    enum PkgStatus {
-      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
-      NotInstalled, NotInstalledLocked,
-      InstalledUpdated, InstalledOutdated, InstalledLocked,
-      IsBroken, IsNew,
+      ToInstall,
+      ToReInstall,
+      ToUpgrade,
+      ToDowngrade,
+      ToRemove,
+      ToPurge,
+      NotInstalled,
+      NotInstalledLocked,
+      InstalledUpdated,
+      InstalledOutdated,
+      InstalledLocked,
+      IsBroken,
+      IsNew,
       N_STATUS_COUNT
    };
 
@@ -64,21 +74,26 @@ class RPackageStatus {
 
 
  public:
-   RPackageStatus() : markUnsupported(false) {}
-   virtual ~RPackageStatus() {}
+   RPackageStatus() : markUnsupported(false)
+   {}
+   virtual ~RPackageStatus()
+   {}
 
    // this reads the pixmaps and the colors
    virtual void init();
 
    // here we get the description for the States
-   const char *getLongStatusString(int i) {
+   const char *getLongStatusString(int i)
+   {
       return PackageStatusLongString[i];
    }
-   const char *getLongStatusString(RPackage *pkg) {
+   const char *getLongStatusString(RPackage *pkg)
+   {
       return PackageStatusLongString[getStatus(pkg)];
    }
 
-   const char *getShortStatusString(int i) {
+   const char *getShortStatusString(int i)
+   {
       return PackageStatusShortString[i];
    }
 

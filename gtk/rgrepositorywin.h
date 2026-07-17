@@ -1,14 +1,14 @@
 /* rgrepositorywin.h - gtk editor for the sources.list file
- * 
+ *
  * Copyright (c) (c) 1999 Patrick Cole <z@amused.net>
- *               (c) 2002 Synaptic development team 
+ *               (c) 2002 Synaptic development team
  *
  * Author: Patrick Cole <z@amused.net>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 #include "rsources.h"
@@ -42,7 +42,8 @@ class RGWindow;
 typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
-class RGRepositoryEditor:RGGtkBuilderWindow {
+class RGRepositoryEditor : RGGtkBuilderWindow
+{
    SourcesList _lst, _savedList;
 
    int _selectedRow;
@@ -60,8 +61,8 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    GtkWidget *_optType;
    GtkListStore *_optTypeMenu;
    GtkWidget *_entryDist;
-   //GtkWidget *_cbEnabled;
-   
+   // GtkWidget *_cbEnabled;
+
    GtkWidget *_upBut;
    GtkWidget *_downBut;
    GtkWidget *_deleteBut;
@@ -70,7 +71,7 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    bool _applied;
    bool _dirty;
-   const GdkRGBA _gray = { 0xAA00, 0xAA00, 0xAA00, 1.0 };
+   const GdkRGBA _gray = {0xAA00, 0xAA00, 0xAA00, 1.0};
 
    void UpdateVendorMenu();
    int VendorMenuIndex(std::string VendorID);
@@ -86,9 +87,9 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
 
    // treeview item toggled
-   static void item_toggled(GtkCellRendererToggle *cell, 
-			    gchar *path_str, 
-			    gpointer data);
+   static void item_toggled(GtkCellRendererToggle *cell,
+                            gchar *path_str,
+                            gpointer data);
    // get values
    void doEdit();
 

@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -30,15 +30,13 @@
 
 class RGWindow;
 
-class RGSetOptWindow:public RGGtkBuilderWindow {
+class RGSetOptWindow : public RGGtkBuilderWindow
+{
 
    static void DoApply(GtkWindow *widget, void *data);
    static void DoClose(GtkWindow *widget, void *data);
 
  public:
-
    RGSetOptWindow(RGWindow *owner);
-   virtual ~ RGSetOptWindow() {
-   };
-
+   virtual ~RGSetOptWindow() {};
 };

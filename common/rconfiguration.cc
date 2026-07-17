@@ -22,7 +22,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rconfiguration.h"
 
@@ -44,17 +44,17 @@
 #include <unistd.h>
 
 using namespace std;
-   
+
 static string ConfigFilePath;
 static string ConfigFileDir;
 
 // #ifndef HAVE_RPM
-// bool _ReadConfigFile(Configuration &Conf,string FName,bool AsSectional = false,
+// bool _ReadConfigFile(Configuration &Conf,string FName,bool AsSectional =
+// false,
 //                  unsigned Depth = 0);
 // #endif
 
-static void dumpToFile(const Configuration::Item *Top, ostream &out,
-                       string pad)
+static void dumpToFile(const Configuration::Item *Top, ostream &out, string pad)
 {
    while (Top) {
       out << pad << Top->Tag << " \"" << Top->Value << "\"";
@@ -71,34 +71,34 @@ static void dumpToFile(const Configuration::Item *Top, ostream &out,
       }
 
       if (pad.empty())
-         break;                 // dump only synaptic section
+         break; // dump only synaptic section
 
       Top = Top->Next;
    }
 }
 
 
-
 bool RWriteConfigFile(Configuration &Conf)
 {
    const Configuration::Item *Synaptic;
 
-   // when running non-interactivly don't save any config (there should be no 
+   // when running non-interactivly don't save any config (there should be no
    // need)
-   if(_config->FindB("Volatile::Non-Interactive", false) == true) 
+   if (_config->FindB("Volatile::Non-Interactive", false) == true)
       return true;
 
    // store option 'consider recommended packages as dependencies'
    // to config of apt if we run as root
    if (getuid() == 0) {
-      string aptConfPath = _config->FindDir("Dir::Etc::parts", "/etc/apt/apt.conf.d/")
-                         + "99synaptic";
+      string aptConfPath =
+         _config->FindDir("Dir::Etc::parts", "/etc/apt/apt.conf.d/") +
+         "99synaptic";
 
       int old_umask = umask(0022);
       ofstream aptfile(aptConfPath.c_str(), ios::out);
       if (!aptfile != 0) {
-         cerr << "cannot open " << aptConfPath.c_str() <<
-                 " to write APT::Install-Recommends" << endl;
+         cerr << "cannot open " << aptConfPath.c_str()
+              << " to write APT::Install-Recommends" << endl;
       } else {
          if (_config->FindB("APT::Install-Recommends", false))
             aptfile << "APT::Install-Recommends \"true\";" << endl;
@@ -109,10 +109,10 @@ bool RWriteConfigFile(Configuration &Conf)
       umask(old_umask);
    }
    // and backup Install-Recommends to config of synaptic
-   _config->Set("Synaptic::Install-Recommends",
-                _config->FindB("APT::Install-Recommends",
-                _config->FindB("Synaptic::Install-Recommends",
-                false)));
+   _config->Set(
+      "Synaptic::Install-Recommends",
+      _config->FindB("APT::Install-Recommends",
+                     _config->FindB("Synaptic::Install-Recommends", false)));
 
    ofstream cfile(ConfigFilePath.c_str(), ios::out);
    if (!cfile != 0)
@@ -145,9 +145,8 @@ static bool checkConfigDir(string &path)
 
    pwd = getpwuid(getuid());
    if (!pwd) {
-      return _error->Errno("getpwuid",
-                           _
-                           ("ERROR: Could not get password entry for superuser"));
+      return _error->Errno(
+         "getpwuid", _("ERROR: Could not get password entry for superuser"));
    }
 
    home_dir = string(pwd->pw_dir);
@@ -156,28 +155,28 @@ static bool checkConfigDir(string &path)
    buf = getenv("XDG_CONFIG_HOME");
 
    if (buf) {
-     l = strlen(buf) - 1;
-     if (buf[l] == '/') {
-       buf[l] = '\0';
-     }
-     xdg_data_dir=buf;
+      l = strlen(buf) - 1;
+      if (buf[l] == '/') {
+         buf[l] = '\0';
+      }
+      xdg_data_dir = buf;
 
-     // Guarantee that XDG_CONFIG_HOME is inside home directory.
-     if (xdg_data_dir.substr(0,home_dir.length()) != home_dir) {
-       xdg_data_dir = home_dir + "/.config";
-       cerr << "Warning: XDG_CONFIG_HOME=" << buf
-	    << " is not in the home directory. Using " << xdg_data_dir
-	    << " instead." << std::endl;
-     }
+      // Guarantee that XDG_CONFIG_HOME is inside home directory.
+      if (xdg_data_dir.substr(0, home_dir.length()) != home_dir) {
+         xdg_data_dir = home_dir + "/.config";
+         cerr << "Warning: XDG_CONFIG_HOME=" << buf
+              << " is not in the home directory. Using " << xdg_data_dir
+              << " instead." << std::endl;
+      }
    }
 
-   //path = "/etc/synaptic";
+   // path = "/etc/synaptic";
    path = xdg_data_dir + "/synaptic";
 
-   if (! CreateDirectory(home_dir, xdg_data_dir)) {
+   if (!CreateDirectory(home_dir, xdg_data_dir)) {
       return _error->Errno("mkdir",
-			   _("ERROR: could not create XDG home directory %s"),
-			   xdg_data_dir.c_str());
+                           _("ERROR: could not create XDG home directory %s"),
+                           xdg_data_dir.c_str());
    }
 
    // Move old config dir (if any) to the new one
@@ -185,18 +184,18 @@ static bool checkConfigDir(string &path)
    if (stat(old_path.c_str(), &stbuf) == 0 &&
        rename(old_path.c_str(), path.c_str()) < 0) {
       return _error->Errno("rename",
-			   _("ERROR: could not move old configuration "
-			     "directory %s to the new configuration "
-			     "directory %s"),
-			   old_path.c_str(), path.c_str());
+                           _("ERROR: could not move old configuration "
+                             "directory %s to the new configuration "
+                             "directory %s"),
+                           old_path.c_str(),
+                           path.c_str());
    }
 
-   if (stat(path.c_str(), &stbuf) < 0 &&
-       mkdir(path.c_str(), 0700) < 0) {
-      return _error->Errno("mkdir",
-			   _
-			   ("ERROR: could not create configuration directory %s"),
-			   path.c_str());
+   if (stat(path.c_str(), &stbuf) < 0 && mkdir(path.c_str(), 0700) < 0) {
+      return _error->Errno(
+         "mkdir",
+         _("ERROR: could not create configuration directory %s"),
+         path.c_str());
    }
    return true;
 }
@@ -206,8 +205,8 @@ string RConfDir()
 {
    static string confDir;
    if (!checkConfigDir(confDir))
-      cerr << "checkConfigDir() failed! please report to mvo@debian.org" <<
-         endl;
+      cerr << "checkConfigDir() failed! please report to mvo@debian.org"
+           << endl;
    return confDir;
 }
 
@@ -217,10 +216,10 @@ string RStateDir()
    static string stateDir = string(SYNAPTICSTATEDIR);
    if (stat(stateDir.c_str(), &stbuf) < 0) {
       if (mkdir(stateDir.c_str(), 0755) < 0) {
-	 _error->Errno("mkdir",
-		       _("ERROR: could not create state directory %s"),
-		       stateDir.c_str());
-	 return "";
+         _error->Errno("mkdir",
+                       _("ERROR: could not create state directory %s"),
+                       stateDir.c_str());
+         return "";
       }
    }
 
@@ -234,10 +233,10 @@ string RTmpDir()
    static string tmpDir = RConfDir() + string("/tmp/");
    if (stat(tmpDir.c_str(), &stbuf) < 0) {
       if (mkdir(tmpDir.c_str(), 0700) < 0) {
-	 _error->Errno("mkdir",
-		       _("ERROR: could not create tmp directory %s"),
-		       tmpDir.c_str());
-	 return "";
+         _error->Errno("mkdir",
+                       _("ERROR: could not create tmp directory %s"),
+                       tmpDir.c_str());
+         return "";
       }
    }
 
@@ -252,10 +251,10 @@ string RLogDir()
 
    if (stat(logDir.c_str(), &stbuf) < 0) {
       if (mkdir(logDir.c_str(), 0700) < 0) {
-	 _error->Errno("mkdir",
-		       _("ERROR: could not create log directory %s"),
-		       logDir.c_str());
-	 return "";
+         _error->Errno("mkdir",
+                       _("ERROR: could not create log directory %s"),
+                       logDir.c_str());
+         return "";
       }
    }
 
@@ -287,16 +286,16 @@ bool RInitConfiguration(string confFileName)
 
    // read Install-Recommends, preferably from APT:: if we run as root
    // or from Synaptic:: otherwise
-   if(getuid() == 0) {
-      _config->Set("APT::Install-Recommends",
-                   _config->FindB("APT::Install-Recommends",
-                   _config->FindB("Synaptic::Install-Recommends",
-                   false)));
+   if (getuid() == 0) {
+      _config->Set(
+         "APT::Install-Recommends",
+         _config->FindB("APT::Install-Recommends",
+                        _config->FindB("Synaptic::Install-Recommends", false)));
    } else {
-      _config->Set("APT::Install-Recommends",
-                   _config->FindB("Synaptic::Install-Recommends",
-                   _config->FindB("APT::Install-Recommends",
-                   false)));
+      _config->Set(
+         "APT::Install-Recommends",
+         _config->FindB("Synaptic::Install-Recommends",
+                        _config->FindB("APT::Install-Recommends", false)));
    }
 
    return true;
@@ -325,9 +324,8 @@ bool RPackageOptionsFile(ofstream &out)
    string path = ConfigFileDir + "/options";
    out.open(path.c_str());
    if (!out != 0)
-      return _error->Errno("ofstream",
-                           _("ERROR: couldn't open %s for writing"),
-                           path.c_str());
+      return _error->Errno(
+         "ofstream", _("ERROR: couldn't open %s for writing"), path.c_str());
    return true;
 }
 
@@ -337,8 +335,9 @@ bool RPackageOptionsFile(ifstream &in)
    in.open(path.c_str());
    if (!in != 0)
       return false;
-//      return _error->Errno("ifstream", _("ERROR: couldn't open %s for reading"),
-//                           path.c_str());
+   //      return _error->Errno("ifstream", _("ERROR: couldn't open %s for
+   //      reading"),
+   //                           path.c_str());
    return true;
 }
 
@@ -351,8 +350,8 @@ bool RFilterDataOutFile(ofstream &out)
    out.open(path.c_str(), ios::out);
 
    if (!out != 0)
-      return _error->Errno("ofstream", _("couldn't open %s for writing"),
-                           path.c_str());
+      return _error->Errno(
+         "ofstream", _("couldn't open %s for writing"), path.c_str());
 
    return true;
 }

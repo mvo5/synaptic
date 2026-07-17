@@ -695,7 +695,7 @@ void RGFilterManagerWindow::getSectionFilter(RSectionPackageFilter & f)
       list = g_list_next(list);
    }
    // free the list
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 }
 

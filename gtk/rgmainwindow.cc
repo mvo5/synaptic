@@ -255,7 +255,7 @@ RPackage *RGMainWindow::selectedPackage()
 
 
    // free the list
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
 
@@ -540,7 +540,7 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
       pkg->setAuto(active);
       li = g_list_next(li);
    }
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
    // write it
@@ -779,7 +779,7 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    if (ask)
       _lister->registerObserver(this);
 
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
    refreshSubViewList();
@@ -2369,7 +2369,7 @@ void RGMainWindow::cbSelectedRow(GtkTreeSelection *selection, gpointer data)
       return;
 
    // free the list
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
    me->updatePackageInfo(pkg);
@@ -3025,7 +3025,7 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    g_free((void *)file);
 
    // free the list
-   g_list_foreach(list, (void (*)(void *, void *))gtk_tree_path_free, NULL);
+   g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
    me->_lister->registerObserver(me);

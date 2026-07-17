@@ -22,31 +22,31 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifdef ENABLE_NLS
-#include <locale.h>
-# include <libintl.h>
-# define _(String) gettext (String)
-# ifdef gettext_noop
-#  define N_(String) gettext_noop (String)
-# else
-#  define N_(String) (String)
-# endif
+#   include <locale.h>
+#   include <libintl.h>
+#   define _(String) gettext(String)
+#   ifdef gettext_noop
+#      define N_(String) gettext_noop(String)
+#   else
+#      define N_(String) (String)
+#   endif
 #else
 /* Stubs that do something close enough.  */
-# undef  textdomain
-# define textdomain(String) (String)
-# undef  gettext
-# define gettext(String) (String)
-# undef  dgettext
-# define dgettext(Domain,Message) (Message)
-# undef  dcgettext
-# define dcgettext(Domain,Message,Type) (Message)
-# undef  bindtextdomain
-# define bindtextdomain(Domain,Directory) (Domain)
-# undef  _
-# define _(String) (String)
-# undef  N_
-# define N_(String) (String)
+#   undef textdomain
+#   define textdomain(String) (String)
+#   undef gettext
+#   define gettext(String) (String)
+#   undef dgettext
+#   define dgettext(Domain, Message) (Message)
+#   undef dcgettext
+#   define dcgettext(Domain, Message, Type) (Message)
+#   undef bindtextdomain
+#   define bindtextdomain(Domain, Directory) (Domain)
+#   undef _
+#   define _(String) (String)
+#   undef N_
+#   define N_(String) (String)
 #endif

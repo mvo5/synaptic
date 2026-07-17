@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
 #include "rpackage.h"
@@ -39,19 +39,20 @@
 class OpProgress;
 struct RFilter;
 
-enum {PACKAGE_VIEW_SECTION,
-      PACKAGE_VIEW_STATUS,
-      PACKAGE_VIEW_ORIGIN,
-      PACKAGE_VIEW_CUSTOM,
-      PACKAGE_VIEW_SEARCH,
-      PACKAGE_VIEW_ARCHITECTURE,
-      N_PACKAGE_VIEWS
+enum {
+   PACKAGE_VIEW_SECTION,
+   PACKAGE_VIEW_STATUS,
+   PACKAGE_VIEW_ORIGIN,
+   PACKAGE_VIEW_CUSTOM,
+   PACKAGE_VIEW_SEARCH,
+   PACKAGE_VIEW_ARCHITECTURE,
+   N_PACKAGE_VIEWS
 };
 
-class RPackageView {
+class RPackageView
+{
  protected:
-
-   std::map<std::string, std::vector<RPackage *> > _view;
+   std::map<std::string, std::vector<RPackage *>> _view;
 
    bool _hasSelection;
    std::string _selectedName;
@@ -63,15 +64,24 @@ class RPackageView {
    std::vector<RPackage *> &_all;
 
  public:
-   RPackageView(std::vector<RPackage *> &allPackages): _all(allPackages) {}
-   virtual ~RPackageView() {}
+   RPackageView(std::vector<RPackage *> &allPackages) : _all(allPackages)
+   {}
+   virtual ~RPackageView()
+   {}
 
-   bool hasSelection() { return _hasSelection; }
-   std::string getSelected() { return _selectedName; }
+   bool hasSelection()
+   {
+      return _hasSelection;
+   }
+   std::string getSelected()
+   {
+      return _selectedName;
+   }
    bool hasPackage(RPackage *pkg);
    virtual bool setSelected(std::string name);
 
-   void showAll() {
+   void showAll()
+   {
       _selectedView = _all;
       _hasSelection = false;
       _selectedName.clear();
@@ -84,8 +94,14 @@ class RPackageView {
 
    typedef std::vector<RPackage *>::iterator iterator;
 
-   virtual iterator begin() { return _selectedView.begin(); }
-   virtual iterator end() { return _selectedView.end(); }
+   virtual iterator begin()
+   {
+      return _selectedView.begin();
+   }
+   virtual iterator end()
+   {
+      return _selectedView.end();
+   }
 
    virtual void clear();
    virtual void clearSelection();
@@ -94,53 +110,69 @@ class RPackageView {
 };
 
 
-
-class RPackageViewSections : public RPackageView {
+class RPackageViewSections : public RPackageView
+{
  public:
-   RPackageViewSections(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
+   RPackageViewSections(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
 
-   std::string getName() const {
+   std::string getName() const
+   {
       return _("Sections");
    };
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewAlphabetic : public RPackageView {
+class RPackageViewAlphabetic : public RPackageView
+{
  public:
-   RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() const {
+   RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Alphabetic");
    }
 
-   void addPackage(RPackage *package) {
-      char letter[2] = { ' ', '\0' };
+   void addPackage(RPackage *package)
+   {
+      char letter[2] = {' ', '\0'};
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    }
 };
 
-class RPackageViewArchitecture : public RPackageView {
+class RPackageViewArchitecture : public RPackageView
+{
  public:
-   RPackageViewArchitecture(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() const {
+   RPackageViewArchitecture(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Architecture");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewOrigin : public RPackageView {
+class RPackageViewOrigin : public RPackageView
+{
  public:
-   RPackageViewOrigin(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   std::string getName() const {
+   RPackageViewOrigin(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Origin");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewStatus:public RPackageView {
+class RPackageViewStatus : public RPackageView
+{
  protected:
    // mark the software as unsupported in status view
    bool markUnsupported;
@@ -149,15 +181,18 @@ class RPackageViewStatus:public RPackageView {
  public:
    RPackageViewStatus(std::vector<RPackage *> &allPkgs);
 
-   std::string getName() const {
+   std::string getName() const
+   {
       return _("Status");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewSearch : public RPackageView {
-   struct searchItem {
+class RPackageViewSearch : public RPackageView
+{
+   struct searchItem
+   {
       std::vector<std::string> searchStrings;
       std::string searchName;
       int searchType;
@@ -170,13 +205,17 @@ class RPackageViewSearch : public RPackageView {
    bool xapianSearch();
 
  public:
- RPackageViewSearch(std::vector<RPackage *> &allPkgs)
-    : RPackageView(allPkgs), found(0) {}
+   RPackageViewSearch(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs), found(0)
+   {}
 
-   int setSearch(std::string searchName, int type, std::string searchString,
-		 OpProgress &searchProgress);
+   int setSearch(std::string searchName,
+                 int type,
+                 std::string searchString,
+                 OpProgress &searchProgress);
 
-   std::string getName() const {
+   std::string getName() const
+   {
       return _("Search History");
    }
 
@@ -187,14 +226,16 @@ class RPackageViewSearch : public RPackageView {
    void addPackage(RPackage *package);
 
    // no-op
-   virtual void refresh() {}
+   virtual void refresh()
+   {}
 };
 
 
-class RPackageViewFilter : public RPackageView {
+class RPackageViewFilter : public RPackageView
+{
  protected:
    std::vector<RFilter *> _filterL;
-   std::set<std::string> _sectionList;   // list of all available package sections
+   std::set<std::string> _sectionList; // list of all available package sections
 
  public:
    void storeFilters();
@@ -208,9 +249,13 @@ class RPackageViewFilter : public RPackageView {
 
    void makePresetFilters();
 
-   RFilter* findFilter(std::string name);
-   unsigned int nrOfFilters() { return _filterL.size(); }
-   RFilter *findFilter(unsigned int index) {
+   RFilter *findFilter(std::string name);
+   unsigned int nrOfFilters()
+   {
+      return _filterL.size();
+   }
+   RFilter *findFilter(unsigned int index)
+   {
       if (index > _filterL.size())
          return NULL;
       else
@@ -229,9 +274,13 @@ class RPackageViewFilter : public RPackageView {
    virtual iterator begin();
 
    // we never need to clear because we build the view "on-demand"
-   virtual void clear() { clearSelection(); }
+   virtual void clear()
+   {
+      clearSelection();
+   }
 
-   std::string getName() const {
+   std::string getName() const
+   {
       return _("Custom");
    }
 

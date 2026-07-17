@@ -1,11 +1,11 @@
 /* rgpackagestatus.h - UI elements for the package status
- * 
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagestatus.h"
 
@@ -30,7 +30,8 @@
 
 class RPackage;
 
-class RGPackageStatus : public RPackageStatus {
+class RGPackageStatus : public RPackageStatus
+{
  protected:
    GdkRGBA *StatusColors[N_STATUS_COUNT];
    std::string Statusicons[N_STATUS_COUNT];
@@ -42,7 +43,7 @@ class RGPackageStatus : public RPackageStatus {
    static RGPackageStatus pkgStatus;
 
    virtual void init();
-   
+
    // this is what the package listers use
    GdkRGBA *getBgColor(RPackage *pkg);
    const char *getSupportedIconName(RPackage *pkg);
@@ -50,8 +51,9 @@ class RGPackageStatus : public RPackageStatus {
    const char *getIconName(int i);
 
    // this is for the configuration of the colors
-   void setColor(int i, GdkRGBA * new_color);
-   GdkRGBA *getColor(int i) {
+   void setColor(int i, GdkRGBA *new_color);
+   GdkRGBA *getColor(int i)
+   {
       return StatusColors[i];
    };
    // save color configuration to disk

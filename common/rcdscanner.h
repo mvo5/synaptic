@@ -22,38 +22,40 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include <vector>
-#include <string>
+#   include <vector>
+#   include <string>
 
-#include "rpackagelister.h"
+#   include "rpackagelister.h"
 
 class Configuration;
 
-class RCDScanProgress {
+class RCDScanProgress
+{
 
  protected:
    int _total;
 
  public:
-   void setTotal(int total) {
+   void setTotal(int total)
+   {
       _total = total;
    }
 
    virtual void update(std::string text, int current) = 0;
 };
 
-class RCDScanner {
+class RCDScanner
+{
 
    Configuration *_database;
 
    RUserDialog *_userDialog;
 
  protected:
-
    enum {
       STEP_PREPARE = 1,
       STEP_UNMOUNT,
@@ -83,7 +85,9 @@ class RCDScanner {
 
    std::string pkgSourceType() const;
    std::string srcSourceType() const;
-   bool scanDirectory(std::string path, RCDScanProgress *progress, int depth = 0);
+   bool scanDirectory(std::string path,
+                      RCDScanProgress *progress,
+                      int depth = 0);
 
    void cleanPkgList(std::vector<std::string> &list);
    void cleanSrcList(std::vector<std::string> &list);
@@ -102,8 +106,8 @@ class RCDScanner {
    void countLists(int &pkgLists, int &srcLists);
 
    RCDScanner(RUserDialog *userDialog)
- :   _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0) {
-   }
+      : _database(0), _userDialog(userDialog), _cdromMounted(0), _scannedOk(0)
+   {}
 };
 
 #endif

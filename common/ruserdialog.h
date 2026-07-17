@@ -23,9 +23,10 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
-class RUserDialog {
+class RUserDialog
+{
  public:
    enum ButtonsType {
       ButtonsDefault,
@@ -34,35 +35,33 @@ class RUserDialog {
       ButtonsYesNo
    };
 
-   enum DialogType {
-      DialogInfo,
-      DialogWarning,
-      DialogQuestion,
-      DialogError
-   };
+   enum DialogType { DialogInfo, DialogWarning, DialogQuestion, DialogError };
 
    virtual bool message(const char *msg,
                         DialogType dialog = DialogInfo,
                         ButtonsType buttons = ButtonsDefault,
                         bool defaultResponse = true) = 0;
 
-   virtual bool confirm(const char *msg, bool defaultResponse = true) {
+   virtual bool confirm(const char *msg, bool defaultResponse = true)
+   {
       return message(msg, DialogQuestion, ButtonsYesNo, defaultResponse);
    }
 
-   virtual bool proceed(const char *msg, bool defaultResponse = true) {
+   virtual bool proceed(const char *msg, bool defaultResponse = true)
+   {
       return message(msg, DialogInfo, ButtonsOkCancel, defaultResponse);
    }
 
-   virtual bool warning(const char *msg, bool nocancel = true) {
+   virtual bool warning(const char *msg, bool nocancel = true)
+   {
       return nocancel ? message(msg, DialogWarning)
-         : message(msg, DialogWarning, ButtonsOkCancel, false);
+                      : message(msg, DialogWarning, ButtonsOkCancel, false);
    }
 
-   virtual void error(const char *msg) {
+   virtual void error(const char *msg)
+   {
       message(msg, DialogError);
    }
 
    virtual bool showErrors();
-
 };

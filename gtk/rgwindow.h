@@ -24,13 +24,14 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <string>
 
-class RGWindow {
+class RGWindow
+{
  protected:
    GtkWidget *_win;
    GtkWidget *_topBox;
@@ -39,22 +40,27 @@ class RGWindow {
    virtual bool close();
 
  public:
-   inline virtual GtkWidget *window() {
+   inline virtual GtkWidget *window()
+   {
       return _win;
    };
 
    virtual void setTitle(std::string title);
 
-   inline virtual void hide() {
+   inline virtual void hide()
+   {
       gtk_widget_hide(_win);
    };
-   inline virtual void show() {
+   inline virtual void show()
+   {
       gtk_widget_show(_win);
    };
 
    RGWindow() : _win(0), _topBox(0) {};
    RGWindow(std::string name, bool makeBox = true);
-   RGWindow(RGWindow *parent, std::string name, bool makeBox = true,
+   RGWindow(RGWindow *parent,
+            std::string name,
+            bool makeBox = true,
             bool closable = true);
    virtual ~RGWindow();
 };

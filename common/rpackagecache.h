@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include <apt-pkg/cachefile.h>
 #include <apt-pkg/pkgcache.h>
@@ -35,25 +35,29 @@ class pkgDepCache;
 class pkgIndexFile;
 class pkgSourceList;
 
-class RPackageCache {
+class RPackageCache
+{
    pkgCacheFile cache;
    // speed up IsTrusted()
-   std::map<pkgCache::PkgFileIterator, pkgIndexFile*> _trust_cache;
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile *> _trust_cache;
 
    bool _locked;
 
  public:
-   inline pkgDepCache *deps() {
+   inline pkgDepCache *deps()
+   {
       return cache.GetDepCache();
    }
-   inline pkgSourceList *list() {
+   inline pkgSourceList *list()
+   {
       return cache.GetSourceList();
    }
-   inline std::map<pkgCache::PkgFileIterator, pkgIndexFile*>& trust_cache() {
+   inline std::map<pkgCache::PkgFileIterator, pkgIndexFile *> &trust_cache()
+   {
       return _trust_cache;
    }
 
-   bool open(OpProgress *progress, bool lock=true);
+   bool open(OpProgress *progress, bool lock = true);
 
    std::vector<std::string> getPolicyArchives(bool filenames_only);
 
@@ -61,8 +65,7 @@ class RPackageCache {
    void releaseLock();
 
    RPackageCache() : _locked(false)
-   {
-   }
-   ~RPackageCache() {
-   }
+   {}
+   ~RPackageCache()
+   {}
 };

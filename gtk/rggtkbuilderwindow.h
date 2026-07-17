@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rgwindow.h"
 
@@ -32,30 +32,39 @@
 #include <string>
 #include <vector>
 
-class RGGtkBuilderWindow:public RGWindow {
+class RGGtkBuilderWindow : public RGWindow
+{
  protected:
    GtkBuilder *_builder;
    GdkCursor *_busyCursor;
 
  public:
-   RGGtkBuilderWindow(RGWindow *parent, std::string name, std::string main_widget = "");
+   RGGtkBuilderWindow(RGWindow *parent,
+                      std::string name,
+                      std::string main_widget = "");
 
-   void skipTaskbar(bool value) {
+   void skipTaskbar(bool value)
+   {
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
    }
 
    // show busy cursor over main window
-   void setBusyCursor(bool flag=true);
+   void setBusyCursor(bool flag = true);
 
    // functions to set various widgets
    bool setLabel(const char *name, const char *value);
    bool setMarkup(const char *widget_name, const char *value);
    bool setLabel(const char *name, const long value);
-   bool setTextView(const char *widget_name, const char *value,
-		    bool useHeadline=false);
+   bool setTextView(const char *widget_name,
+                    const char *value,
+                    bool useHeadline = false);
    bool setPixmap(const char *widget_name, const char *value);
-   bool setTreeList(const char *widget_name, std::vector<std::string> values,
-		    bool useMarkup=false);
+   bool setTreeList(const char *widget_name,
+                    std::vector<std::string> values,
+                    bool useMarkup = false);
 
-   GtkBuilder* getGtkBuilder() {return _builder;};
+   GtkBuilder *getGtkBuilder()
+   {
+      return _builder;
+   };
 };

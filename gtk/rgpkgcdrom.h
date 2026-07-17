@@ -24,22 +24,22 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rgwindow.h"
+#   include "rgwindow.h"
 
-#include <apt-pkg/cdrom.h>
-#include <gtk/gtk.h>
-#include <string>
+#   include <apt-pkg/cdrom.h>
+#   include <gtk/gtk.h>
+#   include <string>
 
 class RGMainWindow;
 class RUserDialog;
 
-class RGCDScanner:public pkgCdromStatus, public RGWindow {
+class RGCDScanner : public pkgCdromStatus, public RGWindow
+{
  protected:
-
    GtkWidget *_label;
    GtkWidget *_pbar;
 
@@ -53,7 +53,6 @@ class RGCDScanner:public pkgCdromStatus, public RGWindow {
    void Update(std::string text, int current);
 
    bool run();
-
 };
 
 #endif

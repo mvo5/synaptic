@@ -1,13 +1,13 @@
 /* rpackagefilter.cc - filters for package listing
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002,2003 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -22,7 +22,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagefilter.h"
 
@@ -48,22 +48,20 @@
 
 using namespace std;
 
-const char *RPatternPackageFilter::TypeName[] = {
-   N_("Name"),
-   N_("Description"),
-   N_("Maintainer"),
-   N_("Version"),
-   N_("Depends"),
-   N_("Provides"),
-   N_("Conflicts"),
-   N_("Replaces"),
-   N_("Recommends"),
-   N_("Suggests"),
-   N_("ReverseDepends"),
-   N_("Origin"),
-   N_("Component"),
-   NULL
-};
+const char *RPatternPackageFilter::TypeName[] = {N_("Name"),
+                                                 N_("Description"),
+                                                 N_("Maintainer"),
+                                                 N_("Version"),
+                                                 N_("Depends"),
+                                                 N_("Provides"),
+                                                 N_("Conflicts"),
+                                                 N_("Replaces"),
+                                                 N_("Recommends"),
+                                                 N_("Suggests"),
+                                                 N_("ReverseDepends"),
+                                                 N_("Origin"),
+                                                 N_("Component"),
+                                                 NULL};
 
 
 const char *RPFStatus = _("Status");
@@ -108,7 +106,8 @@ bool RSectionPackageFilter::filter(RPackage *pkg)
    sec = pkg->section();
 
    for (vector<string>::const_iterator iter = _groups.begin();
-        iter != _groups.end(); iter++) {
+        iter != _groups.end();
+        iter++) {
       if (sec == (*iter)) {
          return _inclusive ? true : false;
       }
@@ -144,7 +143,7 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
    top = conf.Tree(string(key + "::sections").c_str());
    if (top != NULL) {
       for (top = top->Child; top != NULL; top = top->Next)
-	 addSection(top->Value);
+         addSection(top->Value);
    }
 
    return true;
@@ -153,20 +152,20 @@ bool RSectionPackageFilter::read(Configuration &conf, string key)
 
 bool RPatternPackageFilter::filterName(Pattern pat, RPackage *pkg)
 {
-   bool found=true;
+   bool found = true;
 
    const char *name = pkg->name();
-// if we want "real" nouseregexp support, we need to split the string
-// here like we do with regexp
-//              if(!useregexp) {
-//                  if(strcasestr(name, iter->pattern.c_str()) == NULL) {
-//                      found = false;
-//                  } 
+   // if we want "real" nouseregexp support, we need to split the string
+   // here like we do with regexp
+   //              if(!useregexp) {
+   //                  if(strcasestr(name, iter->pattern.c_str()) == NULL) {
+   //                      found = false;
+   //                  }
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
       if (regexec(pat.regexps[i], name, 0, NULL, 0) == 0)
-	 found &= true;
+         found &= true;
       else
-	 found = false;
+         found = false;
    }
    return found;
 }
@@ -179,14 +178,14 @@ bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
    const char *version = pkg->availableVersion();
    if (version == NULL) {
       version = pkg->installedVersion();
-   } 
-   
-   if(version != NULL) {
+   }
+
+   if (version != NULL) {
       for (unsigned int i = 0; i < pat.regexps.size(); i++) {
-	 if (regexec(pat.regexps[i], version, 0, NULL, 0) == 0)
-	    found &= true;
-	 else
-	    found = false;
+         if (regexec(pat.regexps[i], version, 0, NULL, 0) == 0)
+            found &= true;
+         else
+            found = false;
       }
    } else {
       found = false;
@@ -196,17 +195,17 @@ bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
 
 bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 {
-   bool found=true;
+   bool found = true;
    const char *s1 = pkg->summary();
    const char *s2 = pkg->description();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
       if (regexec(pat.regexps[i], s1, 0, NULL, 0) == 0) {
-	 found &= true;
+         found &= true;
       } else {
-	 if (regexec(pat.regexps[i], s2, 0, NULL, 0) == 0)
-	    found &= true;
-	 else
-	    found = false;
+         if (regexec(pat.regexps[i], s2, 0, NULL, 0) == 0)
+            found &= true;
+         else
+            found = false;
       }
    }
    return found;
@@ -214,32 +213,33 @@ bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 
 bool RPatternPackageFilter::filterMaintainer(Pattern pat, RPackage *pkg)
 {
-   bool found=true;
+   bool found = true;
    const char *maint = pkg->maintainer();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
       if (regexec(pat.regexps[i], maint, 0, NULL, 0) == 0) {
-	 found &= true;
+         found &= true;
       } else {
-	 found = false;
+         found = false;
       }
    }
    return found;
 }
 
-bool RPatternPackageFilter::filterDepends(Pattern pat, RPackage *pkg,
-					  pkgCache::Dep::DepType filterType)
+bool RPatternPackageFilter::filterDepends(Pattern pat,
+                                          RPackage *pkg,
+                                          pkgCache::Dep::DepType filterType)
 {
    vector<DepInformation> deps = pkg->enumDeps();
 
    if (pat.regexps.size() == 0) {
       return true;
    }
-   
-   for(unsigned int i=0;i<deps.size();i++) {
-      if(deps[i].type == filterType) {
-	    if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
-	       return true;
-	    }
+
+   for (unsigned int i = 0; i < deps.size(); i++) {
+      if (deps[i].type == filterType) {
+         if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
+            return true;
+         }
       }
    }
    return false;
@@ -253,11 +253,11 @@ bool RPatternPackageFilter::filterProvides(Pattern pat, RPackage *pkg)
    if (pat.regexps.size() == 0) {
       return true;
    }
-   
+
    for (unsigned int i = 0; i < provides.size(); i++) {
       if (regexec(pat.regexps[0], provides[i].c_str(), 0, NULL, 0) == 0) {
-	 found = true;
-	 break;
+         found = true;
+         break;
       }
    }
    return found;
@@ -289,10 +289,10 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
    if (pat.regexps.size() == 0) {
       return true;
    }
-   
-   for(unsigned int i=0;i<deps.size();i++) {
+
+   for (unsigned int i = 0; i < deps.size(); i++) {
       if (regexec(pat.regexps[0], deps[i].name, 0, NULL, 0) == 0) {
-	 return true;
+         return true;
       }
    }
    return false;
@@ -300,17 +300,15 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
 {
    bool found = false;
-   vector<string>origins = pkg->getCandidateOriginSiteUrls();
+   vector<string> origins = pkg->getCandidateOriginSiteUrls();
 
    if (pat.regexps.size() == 0) {
       return true;
    }
-   
-   for (vector<string>::iterator it = origins.begin();
-        it != origins.end();
-        ++it)
-   {
-      if(regexec(pat.regexps[0],(*it).c_str(), 0, NULL, 0) == 0) {
+
+   for (vector<string>::iterator it = origins.begin(); it != origins.end();
+        ++it) {
+      if (regexec(pat.regexps[0], (*it).c_str(), 0, NULL, 0) == 0) {
          found = true;
       }
    }
@@ -327,10 +325,10 @@ bool RPatternPackageFilter::filterComponent(Pattern pat, RPackage *pkg)
    if (pat.regexps.size() == 0) {
       return true;
    }
-   
-   if(regexec(pat.regexps[0],origin.c_str(), 0, NULL, 0) == 0) {
+
+   if (regexec(pat.regexps[0], origin.c_str(), 0, NULL, 0) == 0) {
       found = true;
-   } 
+   }
 
    return found;
 }
@@ -347,56 +345,58 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
       return true;
 
    for (vector<Pattern>::const_iterator iter = _patterns.begin();
-        iter != _patterns.end(); iter++) {
-      
+        iter != _patterns.end();
+        iter++) {
+
       Pattern pat = (*iter);
-      switch(iter->where) {
-      case Name:
-	 found = filterName(pat, pkg);
-	 break;
-      case Description:
-	 found = filterDescription(pat, pkg);
-	 break;
-      case Maintainer:
-	 found = filterMaintainer(pat, pkg);
-	 break;
-      case Version:
-	 found = filterVersion(pat,pkg);
-	 break;
-      case Depends:
-	 found = filterDepends(pat, pkg, pkgCache::Dep::Depends);
-	 break;
-      case Conflicts:
-	 found = filterDepends(pat, pkg, pkgCache::Dep::Conflicts);
-	 break;
-      case Replaces:
-	 found = filterDepends(pat, pkg, pkgCache::Dep::Replaces);
-	 break;
-      case Recommends:
-	 found =  filterDepends(pat, pkg, pkgCache::Dep::Recommends);
-	 break;
-      case Suggests:
-	 found = filterDepends(pat, pkg, pkgCache::Dep::Suggests);
-	 break;
-      case Provides:
-	 found = filterProvides(pat, pkg);
-	 break;
-      case RDepends:
-	 found = filterRDepends(pat, pkg);
-	 break;
-      case Origin:
-	 found = filterOrigin(pat, pkg);
-	 break;
-      case Component:
-	 found = filterComponent(pat, pkg);
-	 break;
-      default:
-	 cerr << "unknown pattern package filter (shouldn't happen) " << endl;
+      switch (iter->where) {
+         case Name:
+            found = filterName(pat, pkg);
+            break;
+         case Description:
+            found = filterDescription(pat, pkg);
+            break;
+         case Maintainer:
+            found = filterMaintainer(pat, pkg);
+            break;
+         case Version:
+            found = filterVersion(pat, pkg);
+            break;
+         case Depends:
+            found = filterDepends(pat, pkg, pkgCache::Dep::Depends);
+            break;
+         case Conflicts:
+            found = filterDepends(pat, pkg, pkgCache::Dep::Conflicts);
+            break;
+         case Replaces:
+            found = filterDepends(pat, pkg, pkgCache::Dep::Replaces);
+            break;
+         case Recommends:
+            found = filterDepends(pat, pkg, pkgCache::Dep::Recommends);
+            break;
+         case Suggests:
+            found = filterDepends(pat, pkg, pkgCache::Dep::Suggests);
+            break;
+         case Provides:
+            found = filterProvides(pat, pkg);
+            break;
+         case RDepends:
+            found = filterRDepends(pat, pkg);
+            break;
+         case Origin:
+            found = filterOrigin(pat, pkg);
+            break;
+         case Component:
+            found = filterComponent(pat, pkg);
+            break;
+         default:
+            cerr << "unknown pattern package filter (shouldn't happen) "
+                 << endl;
       }
 
       if (found && debug)
-         clog << "RPatternPackageFilter::filter match for "
-              << pkg->name() << endl;
+         clog << "RPatternPackageFilter::filter match for " << pkg->name()
+              << endl;
 
       // each filter is applied in AND fasion
       // that means a include depends "mono" and include name "sharp"
@@ -405,25 +405,29 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
          found = !found;
       }
 
-      if(and_mode)
-	 globalfound &= found;
+      if (and_mode)
+         globalfound &= found;
       else
-	 globalfound |= found;
+         globalfound |= found;
    }
 
    return globalfound;
 }
 
-void RPatternPackageFilter::addPattern(DepType type, const string &pattern, bool exclusive)
+void RPatternPackageFilter::addPattern(DepType type,
+                                       const string &pattern,
+                                       bool exclusive)
 {
    vector<regex_t *> regexps;
 
-   const char *c = pattern.c_str();	// This pointer is advanced by ParseQuoteWord().
+   const char *c =
+      pattern.c_str(); // This pointer is advanced by ParseQuoteWord().
    while (*c != 0) {
       string s;
       if (ParseQuoteWord(c, s)) {
          regex_t *reg = new regex_t;
-         if (regcomp(reg, s.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
+         if (regcomp(reg, s.c_str(), REG_EXTENDED | REG_ICASE | REG_NOSUB) !=
+             0) {
             cerr << "regexp compilation error" << endl;
             delete reg;
             for (regex_t *r : regexps) {
@@ -436,12 +440,10 @@ void RPatternPackageFilter::addPattern(DepType type, const string &pattern, bool
       }
    }
 
-   Pattern pat = {
-      .where = type,
-      .pattern = pattern,
-      .exclusive = exclusive,
-      .regexps = regexps
-   };
+   Pattern pat = {.where = type,
+                  .pattern = pattern,
+                  .exclusive = exclusive,
+                  .regexps = regexps};
 
    _patterns.push_back(pat);
 }
@@ -456,7 +458,8 @@ bool RPatternPackageFilter::write(ofstream &out, string pad)
       string pat;
       bool excl;
       getPattern(i, type, pat, excl);
-      out << pad + "  " + TypeName[(int)type] + ";" << " \"" << pat << "\"; " << (excl ? "true;" : "false;") << endl;
+      out << pad + "  " + TypeName[(int)type] + ";" << " \"" << pat << "\"; "
+          << (excl ? "true;" : "false;") << endl;
    }
 
    out << pad + "};" << endl;
@@ -481,20 +484,19 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
    top = top->Child;
    while (top) {
       int i;
-      for (i = 0; TypeName[i] && top->Value != TypeName[i]; i++) 
-	 /* nothing */
-	 ;
+      for (i = 0; TypeName[i] && top->Value != TypeName[i]; i++)
+         /* nothing */
+         ;
 
-      type = (DepType) i;
+      type = (DepType)i;
       top = top->Next;
       pat = top->Value;
       top = top->Next;
       excl = top->Value == "true";
       top = top->Next;
 
-      if(TypeName[i] != NULL)
-	 addPattern(type, pat, excl);
-      
+      if (TypeName[i] != NULL)
+         addPattern(type, pat, excl);
    }
 
    return true;
@@ -503,10 +505,11 @@ bool RPatternPackageFilter::read(Configuration &conf, string key)
 // copy constructor
 RPatternPackageFilter::RPatternPackageFilter(RPatternPackageFilter &f)
 {
-   //cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
+   // cout << "RPatternPackageFilter(&RPatternPackageFilter f)" << endl;
    for (unsigned int i = 0; i < f._patterns.size(); i++) {
       addPattern(f._patterns[i].where,
-                 f._patterns[i].pattern, f._patterns[i].exclusive);
+                 f._patterns[i].pattern,
+                 f._patterns[i].exclusive);
    }
    and_mode = f.and_mode;
 }
@@ -517,7 +520,7 @@ void RPatternPackageFilter::clear()
    for (unsigned int i = 0; i < _patterns.size(); i++) {
       for (unsigned int j = 0; j < _patterns[i].regexps.size(); j++) {
          regfree(_patterns[i].regexps[j]);
-         delete(regex_t *) _patterns[i].regexps[j];
+         delete (regex_t *)_patterns[i].regexps[j];
       }
    }
 
@@ -526,7 +529,7 @@ void RPatternPackageFilter::clear()
 
 RPatternPackageFilter::~RPatternPackageFilter()
 {
-   //cout << "RPatternPackageFilter::~RPatternPackageFilter()" << endl;
+   // cout << "RPatternPackageFilter::~RPatternPackageFilter()" << endl;
 
    this->clear();
 }
@@ -542,7 +545,7 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
 
    if (_status & MarkInstall) {
       // this is a bit of a hack (to include reinstall here)
-      // it would be better to seperate this 
+      // it would be better to seperate this
       if ((flags & RPackage::FInstall) || (flags & RPackage::FReInstall))
          return true;
    }
@@ -574,22 +577,22 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
 
    if (_status & UpstreamUpgradable) {
       if (flags & RPackage::FOutdated) {
-	 char *s;
-	 char instVer[301];
-	 char availVer[301];
-	 strncpy(instVer, pkg->installedVersion(), 300);
-	 strncpy(availVer, pkg->availableVersion(), 300);
-	 
-	 // strip from last "-" on
-	 s = strrchr(instVer,'-');
-	 if(s != NULL)
-	    *s = '\0';
-	 s = strrchr(availVer,'-');
-	 if(s != NULL)
-	    *s = '\0';
+         char *s;
+         char instVer[301];
+         char availVer[301];
+         strncpy(instVer, pkg->installedVersion(), 300);
+         strncpy(availVer, pkg->availableVersion(), 300);
 
-	 if(strcmp(instVer,availVer) != 0)
-	    return true;
+         // strip from last "-" on
+         s = strrchr(instVer, '-');
+         if (s != NULL)
+            *s = '\0';
+         s = strrchr(availVer, '-');
+         if (s != NULL)
+            *s = '\0';
+
+         if (strcmp(instVer, availVer) != 0)
+            return true;
       }
    }
 
@@ -630,27 +633,23 @@ bool RStatusPackageFilter::filter(RPackage *pkg)
    }
 
    if (_status & NowPolicyBroken) {
-      if (!(flags & RPackage::FInstalled))
-      {
-	 pkgCache::DepIterator D;
-	 // FIXME: or-dependencies are not considered properly
-	 for (D = pkg->package()->RevDependsList(); D.end() == false; D++)
-	 {
-	    pkgCache::PkgIterator parent = D.ParentPkg();
-	    if(parent->CurrentVer != 0)
-	    {
-	       RPackage *p = pkg->_lister->getPackage(parent);
-	       if(p != NULL)
-		  if(p->getFlags() & RPackage::FNowPolicyBroken)
-		     return true;
-	    }
-	 }
+      if (!(flags & RPackage::FInstalled)) {
+         pkgCache::DepIterator D;
+         // FIXME: or-dependencies are not considered properly
+         for (D = pkg->package()->RevDependsList(); D.end() == false; D++) {
+            pkgCache::PkgIterator parent = D.ParentPkg();
+            if (parent->CurrentVer != 0) {
+               RPackage *p = pkg->_lister->getPackage(parent);
+               if (p != NULL)
+                  if (p->getFlags() & RPackage::FNowPolicyBroken)
+                     return true;
+            }
+         }
       }
    }
 
    if (_status & ManualInstalled) {
-      if ( !(flags & RPackage::FIsAuto) && 
-            (flags & RPackage::FInstalled))
+      if (!(flags & RPackage::FIsAuto) && (flags & RPackage::FInstalled))
          return true;
    }
 
@@ -696,7 +695,8 @@ RReducedViewPackageFilter::~RReducedViewPackageFilter()
 {
    if (_hide_regex.empty() == false) {
       for (vector<regex_t *>::const_iterator I = _hide_regex.begin();
-           I != _hide_regex.end(); I++) {
+           I != _hide_regex.end();
+           I++) {
          delete *I;
       }
    }
@@ -711,14 +711,16 @@ bool RReducedViewPackageFilter::filter(RPackage *pkg)
       return false;
    if (_hide_wildcard.empty() == false) {
       for (vector<string>::const_iterator I = _hide_wildcard.begin();
-           I != _hide_wildcard.end(); I++) {
+           I != _hide_wildcard.end();
+           I++) {
          if (fnmatch(I->c_str(), name, 0) == 0)
             return false;
       }
    }
    if (_hide_regex.empty() == false) {
       for (vector<regex_t *>::const_iterator I = _hide_regex.begin();
-           I != _hide_regex.end(); I++) {
+           I != _hide_regex.end();
+           I++) {
          if (regexec(*I, name, 0, 0, 0) == 0)
             return false;
       }
@@ -754,12 +756,12 @@ void RReducedViewPackageFilter::addFile(string FileName)
             _hide_wildcard.push_back(Name);
          } else if (Match == "regex") {
             regex_t *ptrn = new regex_t;
-            if (regcomp(ptrn, Name.c_str(),
+            if (regcomp(ptrn,
+                        Name.c_str(),
                         REG_EXTENDED | REG_ICASE | REG_NOSUB) != 0) {
-               _error->
-                  Warning(_
-                          ("Bad regular expression '%s' in ReducedView file."),
-                          Name.c_str());
+               _error->Warning(
+                  _("Bad regular expression '%s' in ReducedView file."),
+                  Name.c_str());
                delete ptrn;
             } else
                _hide_regex.push_back(ptrn);
@@ -778,8 +780,8 @@ bool RReducedViewPackageFilter::read(Configuration &conf, string key)
 {
    _enabled = conf.FindB(key + "::enabled");
    if (_enabled == true) {
-      string FileName = _config->Find("Synaptic::ReducedViewFile",
-                                      "/etc/apt/metadata");
+      string FileName =
+         _config->Find("Synaptic::ReducedViewFile", "/etc/apt/metadata");
       if (FileExists(FileName))
          addFile(FileName);
    }
@@ -788,17 +790,17 @@ bool RReducedViewPackageFilter::read(Configuration &conf, string key)
 
 bool RFilePackageFilter::addFile(string file)
 {
-  char str[255];
-  filename = file;
-  ifstream in(file.c_str());
-  if(!in) 
-     return false;
-  while(in) {
-     in.getline(str, 255);  
-     pkgs.insert(pkgs.begin(), string(str));
-  }
-  in.close();
-  return true;
+   char str[255];
+   filename = file;
+   ifstream in(file.c_str());
+   if (!in)
+      return false;
+   while (in) {
+      in.getline(str, 255);
+      pkgs.insert(pkgs.begin(), string(str));
+   }
+   in.close();
+   return true;
 }
 
 bool RFilePackageFilter::filter(RPackage *pkg)
@@ -825,7 +827,7 @@ bool RFilePackageFilter::read(Configuration &conf, string key)
    top = conf.Tree(string(key + "::file").c_str());
    if (top != NULL) {
       for (top = top->Child; top != NULL; top = top->Next)
-	 filename = top->Value;
+         filename = top->Value;
    }
 
    return true;
@@ -867,14 +869,15 @@ void RFilter::reset()
 void RFilter::setName(string s)
 {
    if (s.empty()) {
-      cerr <<
-         "Internal Error: empty filter name!? should _never_ happen, please report"
-         << endl;
+      cerr << "Internal Error: empty filter name!? should _never_ happen, "
+              "please report"
+           << endl;
       name = "unknown";
    } else {
       if (s.length() > 55) {
          cerr << "Internal Error: filter name is longer than 55 chars!? "
-            "Will be truncated.Please report" << endl;
+                 "Will be truncated.Please report"
+              << endl;
          s.resize(55);
          name = s;
       } else {
@@ -893,7 +896,7 @@ bool RFilter::read(Configuration &conf, string key)
 {
    bool res = true;
 
-   //cout << "reading filter "<< name << endl;
+   // cout << "reading filter "<< name << endl;
 
    res &= section.read(conf, key + "::section");
    res &= status.read(conf, key + "::status");
@@ -909,7 +912,7 @@ bool RFilter::write(ofstream &out)
 {
    bool res = true;
 
-   //cout <<"writing filter: \""<<name<<"\""<<endl;
+   // cout <<"writing filter: \""<<name<<"\""<<endl;
 
    if (name.empty()) {
       if (getenv("DEBUG_SYNAPTIC"))
@@ -945,7 +948,6 @@ bool RFilter::write(ofstream &out)
 
    return res;
 }
-
 
 
 // vim:sts=3:sw=3

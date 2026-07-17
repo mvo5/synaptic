@@ -20,7 +20,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rgiconlegend.h"
 
@@ -42,18 +42,19 @@ class RGWindow;
 
 static void closeWindow(GtkWidget *self, void *data)
 {
-   RGIconLegendPanel *me = (RGIconLegendPanel *) data;
+   RGIconLegendPanel *me = (RGIconLegendPanel *)data;
 
    me->hide();
 }
 
 RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
-: RGGtkBuilderWindow(parent, "iconlegend")
+   : RGGtkBuilderWindow(parent, "iconlegend")
 {
    setTitle(_("Icon Legend"));
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
-                      "clicked",
-                      G_CALLBACK(closeWindow), this);
+                    "clicked",
+                    G_CALLBACK(closeWindow),
+                    this);
    GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
    assert(vbox);
 
@@ -62,7 +63,8 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
    for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
 
-      pix = gtk_image_new_from_icon_name(RGPackageStatus::pkgStatus.getIconName(i), GTK_ICON_SIZE_BUTTON);
+      pix = gtk_image_new_from_icon_name(
+         RGPackageStatus::pkgStatus.getIconName(i), GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
 
       label = gtk_label_new(RGPackageStatus::pkgStatus.getLongStatusString(i));
@@ -71,16 +73,18 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
       gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
    }
 
-   // package support status 
+   // package support status
    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-   pix = gtk_image_new_from_icon_name("package-supported", GTK_ICON_SIZE_BUTTON);
+   pix =
+      gtk_image_new_from_icon_name("package-supported", GTK_ICON_SIZE_BUTTON);
    gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
-   label = gtk_label_new(_config->Find("Synaptic::supported-text",
-				       _("Package is supported")).c_str());
+   label = gtk_label_new(
+      _config->Find("Synaptic::supported-text", _("Package is supported"))
+         .c_str());
    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
    gtk_widget_show_all(vbox);
-   //skipTaskbar(true);
+   // skipTaskbar(true);
    show();
 }

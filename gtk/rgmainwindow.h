@@ -1,14 +1,14 @@
 /* rgmainwindow.h - main window of application
- * 
+ *
  * Copyright (c) 2001 Alfredo K. Kojima
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 #include "rpackagelister.h"
@@ -79,7 +79,8 @@ typedef enum {
 
 extern const char *relOptions[];
 
-class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
+class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
+{
 
    typedef enum {
       UPGRADE_ASK = -1,
@@ -88,8 +89,8 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    } UpgradeType;
 
    bool _unsavedChanges;
-   bool _blockActions;        // block signals from the action and hold buttons
-   int _interfaceLocked;      
+   bool _blockActions; // block signals from the action and hold buttons
+   int _interfaceLocked;
 
    // the central class that has all the package information
    RPackageLister *_lister;
@@ -97,8 +98,8 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // interface stuff
    RGToolbarStyle _toolbarStyle; // hide, small, normal toolbar
 
-   GtkTreeModel *_pkgList;   // the custom list model for the packages
-   GtkWidget *_treeView;     // the display widget
+   GtkTreeModel *_pkgList; // the custom list model for the packages
+   GtkWidget *_treeView;   // the display widget
 
    // the left-side view
    GtkWidget *_subViewList;
@@ -129,23 +130,24 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
-   // init stuff 
+   // init stuff
    void buildInterface();
    void buildTreeView();
    bool isActionEnabled(const char *action_name);
    void setActionEnabled(const char *action_name, bool enabled);
    void setActionState(const char *action_name, GVariant *value);
 
-   void setActionStateBool(const char *action_name, bool value) {
+   void setActionStateBool(const char *action_name, bool value)
+   {
       setActionState(action_name, g_variant_new_boolean(value));
    }
 
-   void setActionStateInt(const char *action_name, int value) {
+   void setActionStateInt(const char *action_name, int value)
+   {
       setActionState(action_name, g_variant_new_int32(value));
    }
 
-public:
-
+ public:
    void activateAction(const char *action_name, GVariant *value);
 
  private:
@@ -153,10 +155,9 @@ public:
    void refreshSubViewList();
 
    virtual bool close();
-   static void closeWin(GSimpleAction *action,
-                        GVariant *parameter,
-                        gpointer me) {
-      ((RGMainWindow *) me)->close();
+   static void closeWin(GSimpleAction *action, GVariant *parameter, gpointer me)
+   {
+      ((RGMainWindow *)me)->close();
    };
 
    // misc
@@ -169,16 +170,19 @@ public:
 
    // helpers
    void pkgAction(RGPkgAction action);
-   bool askStateChange(RPackageLister::pkgState, 
-                       const std::vector<RPackage *> &exclude = std::vector<RPackage*>());
+   bool askStateChange(
+      RPackageLister::pkgState,
+      const std::vector<RPackage *> &exclude = std::vector<RPackage *>());
    bool checkForFailedInst(std::vector<RPackage *> instPkgs);
-   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true, 
-			 bool reInstall = false);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false,
-		   	bool withDeps = false);
+   void pkgInstallHelper(RPackage *pkg,
+                         bool fixBroken = true,
+                         bool reInstall = false);
+   void pkgRemoveHelper(RPackage *pkg,
+                        bool purge = false,
+                        bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);
 
-   // helper for recommends/suggests 
+   // helper for recommends/suggests
    static void pkgInstallByNameHelper(GSimpleAction *action,
                                       GVariant *parameter,
                                       gpointer data);
@@ -187,33 +191,34 @@ public:
                                     GVariant *parameter,
                                     gpointer data);
 
-   // helpers for search-as-you-type 
+   // helpers for search-as-you-type
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
-   static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
+   static void xapianIndexUpdateFinished(GPid pid, gint status, void *data);
    static gboolean xapianDoSearch(void *data);
    static gboolean xapianDoIndexUpdate(void *data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
-   virtual void notifyPreFilteredChange() {
-   };
-   virtual void notifyPostFilteredChange() {
-   };
+   virtual void notifyPreFilteredChange() {};
+   virtual void notifyPostFilteredChange() {};
 
  public:
-   RGMainWindow(GtkApplication *app, RPackageLister *packLister, std::string name);
+   RGMainWindow(GtkApplication *app,
+                RPackageLister *packLister,
+                std::string name);
    virtual ~RGMainWindow() {};
 
-   void refreshTable(RPackage *selectedPkg = NULL,bool setAdjustments=true);
+   void refreshTable(RPackage *selectedPkg = NULL, bool setAdjustments = true);
 
-   void changeView(int view, std::string subView="");
+   void changeView(int view, std::string subView = "");
 
    // install the list of packagenames and display a changes window
    void selectToInstall(std::vector<std::string> packagenames);
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
-   void rebuildTreeView() {
+   void rebuildTreeView()
+   {
       buildTreeView();
    };
 
@@ -227,7 +232,7 @@ public:
 
    bool showErrors();
 
-   GMenu* buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
+   GMenu *buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
 
 
    // --------------------------------------------------------------------
@@ -348,8 +353,8 @@ public:
    static void cbShowFilterManagerWindow(GSimpleAction *action,
                                          GVariant *parameter,
                                          gpointer data);
-   static void cbSaveFilterAction(void *self, RGFilterWindow * rwin);
-   static void cbCloseFilterAction(void *self, RGFilterWindow * rwin);
+   static void cbSaveFilterAction(void *self, RGFilterWindow *rwin);
+   static void cbCloseFilterAction(void *self, RGFilterWindow *rwin);
    static void cbCloseFilterManagerAction(void *self, bool okcancel);
 
    // search menu
@@ -385,12 +390,11 @@ public:
                                    GVariant *parameter,
                                    gpointer data);
 
-   // the buttons 
+   // the buttons
    static void cbPkgHelpClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
    static void cbPkgReconfigureClicked(GSimpleAction *action,
                                        GVariant *parameter,
                                        gpointer data);
-
 };

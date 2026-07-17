@@ -20,23 +20,23 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #ifndef HAVE_APTPKG_CDROM
 
-#include "rgcdscanner.h"
+#   include "rgcdscanner.h"
 
-#include "i18n.h"
-#include "rgmainwindow.h"
+#   include "i18n.h"
+#   include "rgmainwindow.h"
 
-#include <apt-pkg/configuration.h>
-#include <cstdio>
-#include <gtk/gtk.h>
-#include <unistd.h>
+#   include <apt-pkg/configuration.h>
+#   include <cstdio>
+#   include <gtk/gtk.h>
+#   include <unistd.h>
 
-class RGDiscName:public RGGtkBuilderWindow {
+class RGDiscName : public RGGtkBuilderWindow
+{
  protected:
-
    GtkWidget *_textEntry;
    bool _userConfirmed;
 
@@ -59,7 +59,7 @@ void RGCDScanner::update(string text, int current)
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-: RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
+   : RCDScanProgress(), RGWindow(main, "cdscanner", true, false)
 {
    setTitle(_("Scanning CD-ROM"));
 
@@ -78,11 +78,9 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
    gtk_widget_set_usize(_pbar, -1, 25);
    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
 
-   //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_win), 
-                                GTK_WINDOW(main->window()));
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
+   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
+   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 bool RGCDScanner::run()
@@ -91,33 +89,33 @@ bool RGCDScanner::run()
    RCDScanner scanner(_userDialog);
 
    if (_config->FindB("Volatile::Non-Interactive", false)) {
-      if(scanner.start(this)) {
-	 scanner.setDiscName(scanner.getDiscName());
-	 scanner.finish(this);
+      if (scanner.start(this)) {
+         scanner.setDiscName(scanner.getDiscName());
+         scanner.finish(this);
       }
    } else {
       if (scanner.start(this)) {
-	 string name;
-	 RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
-	 while (1) {
-	    if (!discName->run(name)) {
-	       delete discName;
-	       scanner.unmount();
-	       return false;
-	    }
-	    if (scanner.setDiscName(name))
-	       break;
-	    _userDialog->error(_("Invalid disc name!"));
-	 }
-	 delete discName;
-	 res = scanner.finish(this);
+         string name;
+         RGDiscName *discName = new RGDiscName(this, scanner.getDiscName());
+         while (1) {
+            if (!discName->run(name)) {
+               delete discName;
+               scanner.unmount();
+               return false;
+            }
+            if (scanner.setDiscName(name))
+               break;
+            _userDialog->error(_("Invalid disc name!"));
+         }
+         delete discName;
+         res = scanner.finish(this);
       }
    }
    return res;
 }
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
-: RGGtkBuilderWindow(wwin, "disc_name")
+   : RGGtkBuilderWindow(wwin, "disc_name")
 {
    setTitle(_("Disc Label"));
    _textEntry = GTK_WINDOW(gtk_builder_get_object(_builder, "text_entry"));
@@ -125,21 +123,21 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
 
    g_signal_connect(gtk_builder_get_object(_builder, "ok"),
                     "clicked",
-                    G_CALLBACK(onOkClicked), this);
+                    G_CALLBACK(onOkClicked),
+                    this);
    g_signal_connect(gtk_builder_get_object(_builder, "cancel"),
                     "clicked",
-                    G_CALLBACK(onCancelClicked), this);
+                    G_CALLBACK(onCancelClicked),
+                    this);
 
-   //gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_win), 
-                                GTK_WINDOW(wwin->window()));
-   gtk_window_set_position(GTK_WINDOW(_win),
-			   GTK_WIN_POS_CENTER_ON_PARENT);
+   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(wwin->window()));
+   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 void RGDiscName::onOkClicked(GtkWidget *self, void *data)
 {
-   RGDiscName *me = (RGDiscName *) data;
+   RGDiscName *me = (RGDiscName *)data;
    me->_userConfirmed = true;
    gtk_main_quit();
 }

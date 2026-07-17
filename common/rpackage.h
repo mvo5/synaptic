@@ -28,7 +28,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
 
@@ -47,45 +47,46 @@ enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier
 // (and added "RDepends" as last element)
-static const char *DepTypeStr[] =
-   {"",
-    _("Depends"),
-    _("PreDepends"),
-    _("Suggests"),
-    _("Recommends"),
-    _("Conflicts"),
-    _("Replaces"),
-    _("Obsoletes"),
-    _("Breaks"),
-    _("Enhances"),
-    /* padding */
-    "",
-    "",
-    "",
-    "",
-    "",
-    // make sure this is always the last member
-    _("Dependency of"),
+static const char *DepTypeStr[] = {
+   "",
+   _("Depends"),
+   _("PreDepends"),
+   _("Suggests"),
+   _("Recommends"),
+   _("Conflicts"),
+   _("Replaces"),
+   _("Obsoletes"),
+   _("Breaks"),
+   _("Enhances"),
+   /* padding */
+   "",
+   "",
+   "",
+   "",
+   "",
+   // make sure this is always the last member
+   _("Dependency of"),
 };
 
-typedef struct  {
+typedef struct
+{
    pkgCache::Dep::DepType type; // type as enum
-   const char* name;            // target pkg name
-   const char* version;         // target version
-   const char* versionComp;     // target version compare type ( << , > etc)
+   const char *name;            // target pkg name
+   const char *version;         // target version
+   const char *versionComp;     // target version compare type ( << , > etc)
    bool isSatisfied;            // dependecy is satified
    bool isVirtual;              // package is virtual
    bool isOr;                   // or dependency (with next pkg)
 } DepInformation;
 
 
-class RPackage {
+class RPackage
+{
 
  public:
    RPackageLister *_lister;
 
-   protected:
-
+ protected:
    std::string fullname;
    pkgRecords *_records;
    pkgDepCache *_depcache;
@@ -98,46 +99,43 @@ class RPackage {
 
    // Virtual pkgs provided by this one.
    // FIXME: broken right now
-   //bool isShallowDependency(RPackage *pkg);
+   // bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:
-
    enum Flags {
-      FKeep             = 1 << 0,
-      FInstall          = 1 << 1,
-      FNewInstall       = 1 << 2,
-      FReInstall        = 1 << 3,
-      FUpgrade          = 1 << 4,
-      FDowngrade        = 1 << 5,
-      FRemove           = 1 << 6,
-      FHeld             = 1 << 7,
-      FInstalled        = 1 << 8,
-      FOutdated         = 1 << 9,
-      FNowBroken        = 1 << 10,
-      FInstBroken       = 1 << 11,
-      FOrphaned         = 1 << 12,
-      FPinned           = 1 << 13,
-      FNew              = 1 << 14,
-      FResidualConfig   = 1 << 15,
-      FNotInstallable   = 1 << 16,
-      FPurge            = 1 << 17,
-      FImportant        = 1 << 18,
-      FOverrideVersion  = 1 << 19,
-      FIsAuto           = 1 << 20,
-      FIsGarbage        = 1 << 21,
-      FNowPolicyBroken  = 1 << 22,
-      FInstPolicyBroken  = 1 << 23,
+      FKeep = 1 << 0,
+      FInstall = 1 << 1,
+      FNewInstall = 1 << 2,
+      FReInstall = 1 << 3,
+      FUpgrade = 1 << 4,
+      FDowngrade = 1 << 5,
+      FRemove = 1 << 6,
+      FHeld = 1 << 7,
+      FInstalled = 1 << 8,
+      FOutdated = 1 << 9,
+      FNowBroken = 1 << 10,
+      FInstBroken = 1 << 11,
+      FOrphaned = 1 << 12,
+      FPinned = 1 << 13,
+      FNew = 1 << 14,
+      FResidualConfig = 1 << 15,
+      FNotInstallable = 1 << 16,
+      FPurge = 1 << 17,
+      FImportant = 1 << 18,
+      FOverrideVersion = 1 << 19,
+      FIsAuto = 1 << 20,
+      FIsGarbage = 1 << 21,
+      FNowPolicyBroken = 1 << 22,
+      FInstPolicyBroken = 1 << 23,
    };
 
-   enum UpdateImportance {
-      IUnknown,
-      INormal,
-      ICritical,
-      ISecurity
-   };
+   enum UpdateImportance { IUnknown, INormal, ICritical, ISecurity };
 
-   pkgCache::PkgIterator *package() { return _package; }
+   pkgCache::PkgIterator *package()
+   {
+      return _package;
+   }
 
    const char *name();
 
@@ -146,7 +144,7 @@ class RPackage {
 
    const char *summary();
    const char *description();
-   
+
 #ifndef HAVE_RPM
    std::string installedFiles();
 #endif
@@ -165,7 +163,7 @@ class RPackage {
    std::vector<std::string> provides();
 
    // get all available versions (version, release)
-   std::vector<std::pair<std::string, std::string> > getAvailableVersions();
+   std::vector<std::pair<std::string, std::string>> getAvailableVersions();
 
    // get origins url of the package (e.g. http://security.ubuntu.com)
    std::vector<std::string> getCandidateOriginSiteUrls();
@@ -197,7 +195,7 @@ class RPackage {
    std::string findTagFromPkgRecord(const char *tag);
 
    // get the raw package record
-   std::string getRawRecord(bool useCandidateVersion=true);
+   std::string getRawRecord(bool useCandidateVersion = true);
 
    // sourcepkg
    const char *srcPackage();
@@ -212,7 +210,7 @@ class RPackage {
    bool dependsOn(const char *pkgname);
 
    // getDeps of installed pkg
-   std::vector<DepInformation> enumDeps(bool useCanidateVersion=false);
+   std::vector<DepInformation> enumDeps(bool useCanidateVersion = false);
 
    // reverse dependencies
    std::vector<DepInformation> enumRDeps();
@@ -230,10 +228,12 @@ class RPackage {
 
    void setPinned(bool flag);
 
-   void setNew(bool flag = true) {
+   void setNew(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FNew) : (_boolFlags & ~FNew);
    }
-   void setOrphaned(bool flag = true) {
+   void setOrphaned(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & ~FOrphaned);
    }
 
@@ -249,17 +249,19 @@ class RPackage {
    bool setVersion(std::string verTag);
    void unsetVersion();
    std::string showWhyInstBroken();
-   
+
    // Custom sort comparator to be used with std::sort.
    inline static bool byNameAscending(RPackage *a, RPackage *b)
    {
       return strcmp(a->name(), b->name()) < 0;
    };
-   
-   RPackage(RPackageLister *lister, pkgDepCache *depcache,
-            pkgRecords *records, pkgCache::PkgIterator &pkg);
+
+   RPackage(RPackageLister *lister,
+            pkgDepCache *depcache,
+            pkgRecords *records,
+            pkgCache::PkgIterator &pkg);
    ~RPackage();
 
-   private:
+ private:
    std::string getChangelogURI();
 };

@@ -22,7 +22,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -36,9 +36,11 @@
 
 class RGWindow;
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
+class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
+{
 
-   struct Item {
+   struct Item
+   {
       std::string descr;
       std::string uri;
       std::string size;
@@ -57,20 +59,19 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    GtkCellRenderer *_statusRenderer;
    bool _cancelled;
 
-   void updateStatus(pkgAcquire::ItemDesc & Itm, int status);
+   void updateStatus(pkgAcquire::ItemDesc &Itm, int status);
    static void stopDownload(GtkWidget *self, void *data);
 
-   static void cursorChanged(GtkTreeView *treeview,
-			     gpointer user_data);
-   static void expanderActivate(GObject    *object,
-				GParamSpec *param_spec,
-				gpointer    user_data);
+   static void cursorChanged(GtkTreeView *treeview, gpointer user_data);
+   static void expanderActivate(GObject *object,
+                                GParamSpec *param_spec,
+                                gpointer user_data);
    bool _cursorDirty;
 
    char *getStatusStr(int status);
    int getStatusPercent(int status);
    void refreshTable(int row, bool append = false);
-   //GdkPixmap *statusDraw(int width, int height, int status);
+   // GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
    virtual bool MediaChange(std::string Media, std::string Drive);
@@ -82,10 +83,10 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow {
    virtual void Stop();
    virtual bool close();
 
-   bool Pulse(pkgAcquire * Owner);
+   bool Pulse(pkgAcquire *Owner);
 
    // set description of the current task (main and additonal explaination)
-   void setDescription(std::string mainText, std::string secondText="");
+   void setDescription(std::string mainText, std::string secondText = "");
 
 
    RGFetchProgress(RGWindow *win);

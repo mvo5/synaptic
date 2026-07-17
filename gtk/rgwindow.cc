@@ -20,7 +20,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rgwindow.h"
 
@@ -36,24 +36,24 @@
 
 using namespace std;
 
-bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent * event)
+bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
 {
-   //cout << "windowCloseCallback" << endl;
-   RGWindow *rwin = (RGWindow *) g_object_get_data(G_OBJECT(window), "me");
+   // cout << "windowCloseCallback" << endl;
+   RGWindow *rwin = (RGWindow *)g_object_get_data(G_OBJECT(window), "me");
 
    return rwin->close();
 }
 
 RGWindow::RGWindow(string name, bool makeBox)
 {
-   //std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
+   // std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(G_OBJECT(_win), "delete-event",
-                    G_CALLBACK(windowCloseCallback), this);
+   g_signal_connect(
+      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -64,23 +64,24 @@ RGWindow::RGWindow(string name, bool makeBox)
       _topBox = NULL;
    }
 
-   //gtk_widget_realize(_win);
-   //gtk_widget_show_all(_win);
+   // gtk_widget_realize(_win);
+   // gtk_widget_show_all(_win);
 }
 
 
 RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
 {
-   //std::cout 
-   //<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool closable)"
+   // std::cout
+   //<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool
+   //closable)"
    //<< endl;
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
    gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
    g_object_set_data(G_OBJECT(_win), "me", this);
 
-   g_signal_connect(G_OBJECT(_win), "delete-event",
-                    G_CALLBACK(windowCloseCallback), this);
+   g_signal_connect(
+      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
 
    if (makeBox) {
       _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -91,16 +92,15 @@ RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
       _topBox = NULL;
    }
 
-   //gtk_widget_realize(_win);
+   // gtk_widget_realize(_win);
 
-   gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                GTK_WINDOW(parent->window()));
+   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
 }
 
 
 RGWindow::~RGWindow()
 {
-   //cout << "~RGWindow"<<endl;
+   // cout << "~RGWindow"<<endl;
    gtk_widget_destroy(_win);
 }
 
@@ -112,7 +112,7 @@ void RGWindow::setTitle(string title)
 
 bool RGWindow::close()
 {
-   //cout << "RGWindow::close()" << endl;
+   // cout << "RGWindow::close()" << endl;
    hide();
    return true;
 }

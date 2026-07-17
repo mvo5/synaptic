@@ -26,7 +26,7 @@
  * USA
  */
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackage.h"
 
@@ -65,7 +65,7 @@
 #include <vector>
 
 #ifdef WITH_LUA
-#include <apt-pkg/luaiface.h>
+#   include <apt-pkg/luaiface.h>
 #endif
 
 #include "raptoptions.h"
@@ -78,10 +78,12 @@ static char *descrBuffer = new char[descrBufferSize];
 static char *parseDescription(string descr);
 
 
-RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
-                   pkgRecords *records, pkgCache::PkgIterator &pkg)
-: _lister(lister), _records(records), _depcache(depcache),
-  _notify(true), _boolFlags(0)
+RPackage::RPackage(RPackageLister *lister,
+                   pkgDepCache *depcache,
+                   pkgRecords *records,
+                   pkgCache::PkgIterator &pkg)
+   : _lister(lister), _records(records), _depcache(depcache), _notify(true),
+     _boolFlags(0)
 {
    _package = new pkgCache::PkgIterator(pkg);
 
@@ -89,7 +91,7 @@ RPackage::RPackage(RPackageLister *lister, pkgDepCache *depcache,
    fullname = _package->FullName(true);
 #endif
 
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandVersion != NULL)
       _defaultCandVer = State.CandVersion;
 }
@@ -110,7 +112,8 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 
 const char *RPackage::section()
 {
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       const char *s = ver.Section();
       if (s != NULL)
@@ -124,7 +127,8 @@ const char *RPackage::srcPackage()
 {
    static string _srcPkg;
 
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
       _srcPkg = parser.SourcePkg().empty() ? name() : parser.SourcePkg();
@@ -139,10 +143,11 @@ const char *RPackage::summary()
 {
    static string _summary;
 
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgCache::DescIterator Desc = ver.TranslatedDescription();
-      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
+      pkgRecords::Parser &parser = _records->Lookup(Desc.FileList());
       _summary = parser.ShortDesc();
       return _summary.c_str();
    }
@@ -153,9 +158,10 @@ const char *RPackage::summary()
 const char *RPackage::maintainer()
 {
    static string _maintainer;
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
       _maintainer = parser.Maintainer();
       return _maintainer.c_str();
    }
@@ -165,11 +171,12 @@ const char *RPackage::maintainer()
 const char *RPackage::homepage()
 {
    static string _homepage;
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
-      pkgRecords::Parser & parser = _records->Lookup(ver.FileList());
+      pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
       _homepage = parser.Homepage();
-      return _homepage .c_str();
+      return _homepage.c_str();
    }
    return "";
 }
@@ -202,7 +209,7 @@ const char *RPackage::installedVersion()
 
 const char *RPackage::availableVersion()
 {
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0)
       return NULL;
    return State.CandidateVerIter(*_depcache).VerStr();
@@ -210,16 +217,17 @@ const char *RPackage::availableVersion()
 
 pkgCache::VerIterator RPackage::availableVersionIter()
 {
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
-//    if (State.CandidateVer == 0)
-//       return NULL;
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
+   //    if (State.CandidateVer == 0)
+   //       return NULL;
    return State.CandidateVerIter(*_depcache);
 }
 
 
 const char *RPackage::priority()
 {
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (ver != 0)
       return ver.PriorityType();
    else
@@ -231,32 +239,31 @@ string RPackage::installedFiles()
 {
    // Try the normal file name first:
    string f = "/var/lib/dpkg/info/" + string(name()) + ".list";
-   if (!FileExists(f))
-   {
+   if (!FileExists(f)) {
       // Try the multiarch file name next:
       f = "/var/lib/dpkg/info/" + string(name()) + ":" + arch() + ".list";
-      if (!FileExists(f))
-      {
-         return "The list of installed files is only available for installed packages!";
+      if (!FileExists(f)) {
+         return "The list of installed files is only available for installed "
+                "packages!";
       }
    }
-      
+
    ifstream in(f);
-   if (!in) return "The list of installed files could not be retrieved!";
-   
+   if (!in)
+      return "The list of installed files could not be retrieved!";
+
    vector<string> sV;
-   while (!in.eof())
-   {
+   while (!in.eof()) {
       string s;
       getline(in, s);
-      if (!s.empty()) sV.push_back(s);
+      if (!s.empty())
+         sV.push_back(s);
    }
-   
+
    sort(sV.begin(), sV.end());
-   
+
    string filelist;
-   for (size_t i = 0; i < sV.size(); i++)
-   {
+   for (size_t i = 0; i < sV.size(); i++) {
       filelist += sV[i] + "\n";
    }
 
@@ -267,11 +274,12 @@ string RPackage::installedFiles()
 const char *RPackage::description()
 {
    static string _description;
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
       pkgCache::DescIterator Desc = ver.TranslatedDescription();
-      pkgRecords::Parser & parser = _records->Lookup(Desc.FileList());
+      pkgRecords::Parser &parser = _records->Lookup(Desc.FileList());
       _description = parseDescription(parser.LongDesc());
       return _description.c_str();
    } else {
@@ -282,16 +290,16 @@ const char *RPackage::description()
 string RPackage::getRawRecord(bool useCandidateVersion)
 {
    pkgCache::VerIterator ver;
-   if(!useCandidateVersion)
+   if (!useCandidateVersion)
       ver = (*_depcache)[*_package].InstVerIter(*_depcache);
-   if(useCandidateVersion || ver.end())
+   if (useCandidateVersion || ver.end())
       ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   if(ver.end() == false) {
+   if (ver.end() == false) {
       const char *start, *stop;
       unsigned long len;
-      pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
+      pkgRecords::Parser &rec = _records->Lookup(ver.FileList());
       rec.GetRec(start, stop);
-      len = stop-start;
+      len = stop - start;
       return string(start, len);
    }
    return string();
@@ -299,19 +307,20 @@ string RPackage::getRawRecord(bool useCandidateVersion)
 
 string RPackage::findTagFromPkgRecord(const char *tag)
 {
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    if (!ver.end()) {
       const char *start, *stop;
       pkgTagSection sec;
       unsigned long len;
 
-      pkgRecords::Parser &rec=_records->Lookup(ver.FileList());
+      pkgRecords::Parser &rec = _records->Lookup(ver.FileList());
       rec.GetRec(start, stop);
-      len = stop-start;
+      len = stop - start;
       // add +1 to ensure we have the double lineline in the buffer
-      if (start && sec.Scan(start, len+1))
-	 return sec.FindS(tag);
+      if (start && sec.Scan(start, len + 1))
+         return sec.FindS(tag);
    }
 
    return string();
@@ -330,7 +339,7 @@ long RPackage::installedSize()
 
 long RPackage::availableInstalledSize()
 {
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0)
       return -1;
    return State.CandidateVerIter(*_depcache)->InstalledSize;
@@ -338,7 +347,7 @@ long RPackage::availableInstalledSize()
 
 long RPackage::availablePackageSize()
 {
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0)
       return -1;
    return State.CandidateVerIter(*_depcache)->Size;
@@ -389,8 +398,8 @@ int RPackage::getFlags()
    if (state.InstBroken())
       flags |= FInstBroken;
 
-   if ((*_package)->Flags & (pkgCache::Flag::Important |
-                             pkgCache::Flag::Essential))
+   if ((*_package)->Flags &
+       (pkgCache::Flag::Important | pkgCache::Flag::Essential))
       flags |= FImportant;
 
    if ((*_package)->CurrentState == pkgCache::State::ConfigFiles)
@@ -415,7 +424,7 @@ int RPackage::getFlags()
    return flags | _boolFlags;
 }
 
-const char* RPackage::name()
+const char *RPackage::name()
 {
 #ifdef WITH_APT_MULTIARCH_SUPPORT
    return fullname.c_str();
@@ -518,28 +527,29 @@ vector<DepInformation> RPackage::enumRDeps()
    DepInformation dep;
    pkgCache::VerIterator Cur;
 
-   for(pkgCache::DepIterator D = _package->RevDependsList(); D.end() != true; D++) {
+   for (pkgCache::DepIterator D = _package->RevDependsList(); D.end() != true;
+        D++) {
       // clear old values
-      dep.isOr=dep.isVirtual=false;
-      dep.name=dep.version=dep.versionComp=NULL;
+      dep.isOr = dep.isVirtual = false;
+      dep.name = dep.version = dep.versionComp = NULL;
 
       // check target and or-depends status
       pkgCache::PkgIterator Trg = D.TargetPkg();
       if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or) {
-	 dep.version = _("or dependency");
-	 dep.versionComp = "";
+         dep.version = _("or dependency");
+         dep.versionComp = "";
       }
 
       // HACK: we (ab)use the DepType for the dependency type,
       //       but add our own RDepends type that is always the
       //       last element of DepTypeStr[]
       // FIXME: make this less hacky
-      int nr_elements = sizeof(DepTypeStr)/sizeof(char*);
-      dep.type = (pkgCache::Dep::DepType)(nr_elements-1);
+      int nr_elements = sizeof(DepTypeStr) / sizeof(char *);
+      dep.type = (pkgCache::Dep::DepType)(nr_elements - 1);
       dep.name = D.ParentPkg().Name();
 
-      if(Trg->VersionList == 0)
-	 dep.isVirtual=true;
+      if (Trg->VersionList == 0)
+         dep.isVirtual = true;
 
       deps.push_back(dep);
    }
@@ -627,7 +637,6 @@ vector<RPackage *> RPackage::getInstalledDeps()
 #endif
 
 
-
 /* Mostly taken from apt-get.cc:ShowBroken() */
 string RPackage::showWhyInstBroken()
 {
@@ -635,17 +644,20 @@ string RPackage::showWhyInstBroken()
    pkgCache::VerIterator Ver;
    ostringstream out;
 
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    Ver = State.CandidateVerIter(*_depcache);
 
    // check if there is actually something to install
    if (Ver == 0) {
       ioprintf(out,
-               _
-               ("\nPackage %s has no available version, but exists in the database.\n"
-                "This typically means that the package was mentioned in a dependency and "
-                "never uploaded, has been obsoleted or is not available with the contents "
-                "of sources.list\n"), _package->Name());
+               _("\nPackage %s has no available version, but exists in the "
+                 "database.\n"
+                 "This typically means that the package was mentioned in a "
+                 "dependency and "
+                 "never uploaded, has been obsoleted or is not available with "
+                 "the contents "
+                 "of sources.list\n"),
+               _package->Name());
       return out.str();
    }
 
@@ -671,67 +683,82 @@ string RPackage::showWhyInstBroken()
             ioprintf(out, " ");
             pkgCache::VerIterator Ver =
                (*_depcache)[Targ].InstVerIter(*_depcache);
-	    // add minimal version information
-	    string requiredVersion;
-	    if(Start.TargetVer() != 0)
-	       requiredVersion = "("+string(Start.CompType())+string(Start.TargetVer())+")";
+            // add minimal version information
+            string requiredVersion;
+            if (Start.TargetVer() != 0)
+               requiredVersion = "(" + string(Start.CompType()) +
+                                 string(Start.TargetVer()) + ")";
             if (Ver.end() == false) {
                if (FirstOr == false)
-		  // TRANSLATORS: dependency error message, example:
-		  // "apt 0.5.4 but 0.5.3 is to be installed"
-                  ioprintf(out, _("\t%s %s but %s is to be installed"),
-                           Start.TargetPkg().Name(), requiredVersion.c_str(),
-			   Ver.VerStr());
+                  // TRANSLATORS: dependency error message, example:
+                  // "apt 0.5.4 but 0.5.3 is to be installed"
+                  ioprintf(out,
+                           _("\t%s %s but %s is to be installed"),
+                           Start.TargetPkg().Name(),
+                           requiredVersion.c_str(),
+                           Ver.VerStr());
                else
-		  // TRANSLATORS: dependency error message, example:
-		  // "Depends: apt 0.5.4 but 0.5.3 is to be installed"
-                  ioprintf(out, _(" %s: %s %s but %s is to be installed"),
-                           End.DepType(), Start.TargetPkg().Name(),
-			   requiredVersion.c_str(), Ver.VerStr());
+                  // TRANSLATORS: dependency error message, example:
+                  // "Depends: apt 0.5.4 but 0.5.3 is to be installed"
+                  ioprintf(out,
+                           _(" %s: %s %s but %s is to be installed"),
+                           End.DepType(),
+                           Start.TargetPkg().Name(),
+                           requiredVersion.c_str(),
+                           Ver.VerStr());
             } else {
                if ((*_depcache)[Targ].CandidateVerIter(*_depcache).end() ==
                    true) {
                   if (Targ->ProvidesList == 0)
                      if (FirstOr == false)
-			// TRANSLATORS: dependency error message, example:
-			// "apt 0.5.4 but it is not installable"
-                        ioprintf(out, _("\t%s %s but it is not installable"),
+                        // TRANSLATORS: dependency error message, example:
+                        // "apt 0.5.4 but it is not installable"
+                        ioprintf(out,
+                                 _("\t%s %s but it is not installable"),
                                  Start.TargetPkg().Name(),
-				 requiredVersion.c_str());
+                                 requiredVersion.c_str());
                      else
-			// TRANSLATORS: dependency error message, example:
-			// "Depends: apt 0.5.4  but it is not installable",
-                        ioprintf(out, "%s: %s %s but it is not installable",
-                                 End.DepType(), Start.TargetPkg().Name(),
-				 requiredVersion.c_str());
+                        // TRANSLATORS: dependency error message, example:
+                        // "Depends: apt 0.5.4  but it is not installable",
+                        ioprintf(out,
+                                 "%s: %s %s but it is not installable",
+                                 End.DepType(),
+                                 Start.TargetPkg().Name(),
+                                 requiredVersion.c_str());
                   else if (FirstOr == false)
-		     // TRANSLATORS: dependency error message, example:
-		     // "apt but it is a virtual package"
-                     ioprintf(out, _("\t%s but it is a virtual package"),
+                     // TRANSLATORS: dependency error message, example:
+                     // "apt but it is a virtual package"
+                     ioprintf(out,
+                              _("\t%s but it is a virtual package"),
                               Start.TargetPkg().Name());
                   else
-		     // TRANSLATORS: dependency error message, example:
-		     // "Depends: apt but it is a virtual package"
-                     ioprintf(out, _("%s: %s but it is a virtual package"),
-                              End.DepType(), Start.TargetPkg().Name());
+                     // TRANSLATORS: dependency error message, example:
+                     // "Depends: apt but it is a virtual package"
+                     ioprintf(out,
+                              _("%s: %s but it is a virtual package"),
+                              End.DepType(),
+                              Start.TargetPkg().Name());
                } else if (FirstOr == false)
-		  // TRANSLATORS: dependency error message, example:
-		  // "apt but it is not going to be installed"
-                  ioprintf(out, _("\t%s but it is not going to be installed"),
+                  // TRANSLATORS: dependency error message, example:
+                  // "apt but it is not going to be installed"
+                  ioprintf(out,
+                           _("\t%s but it is not going to be installed"),
                            Start.TargetPkg().Name());
                else
-		  // TRANSLATORS: dependency error message, example:
-		  // "Depends: apt but it is not going to be installed"
-                  ioprintf(out, _("%s: %s but it is not going to be installed"),
-                           End.DepType(), Start.TargetPkg().Name());
+                  // TRANSLATORS: dependency error message, example:
+                  // "Depends: apt but it is not going to be installed"
+                  ioprintf(out,
+                           _("%s: %s but it is not going to be installed"),
+                           End.DepType(),
+                           Start.TargetPkg().Name());
             }
          } else {
             // virtual pkgs
             if (FirstOr == false)
                ioprintf(out, "\t%s", Start.TargetPkg().Name());
             else
-               ioprintf(out, " %s: %s", End.DepType(),
-                        Start.TargetPkg().Name());
+               ioprintf(
+                  out, " %s: %s", End.DepType(), Start.TargetPkg().Name());
             // Show a quick summary of the version requirements
             if (Start.TargetVer() != 0)
                ioprintf(out, " (%s %s)", Start.CompType(), Start.TargetVer());
@@ -758,25 +785,25 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
    DepInformation dep;
    pkgCache::VerIterator Cur;
 
-   if(!useCanidateVersion)
+   if (!useCanidateVersion)
       Cur = (*_depcache)[*_package].InstVerIter(*_depcache);
-   if(useCanidateVersion || Cur.end())
+   if (useCanidateVersion || Cur.end())
       Cur = (*_depcache)[*_package].CandidateVerIter(*_depcache);
 
    // no information found
-   if(Cur.end())
+   if (Cur.end())
       return deps;
 
-   for(pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
+   for (pkgCache::DepIterator D = Cur.DependsList(); D.end() != true; D++) {
 
       // clear old values
-      dep.isOr=dep.isVirtual=dep.isSatisfied=false;
-      dep.name=dep.version=dep.versionComp=NULL;
+      dep.isOr = dep.isVirtual = dep.isSatisfied = false;
+      dep.name = dep.version = dep.versionComp = NULL;
 
       // check target and or-depends status
       pkgCache::PkgIterator Trg = D.TargetPkg();
       if ((D->CompareOp & pkgCache::Dep::Or) == pkgCache::Dep::Or)
-	 dep.isOr=true;
+         dep.isOr = true;
 
       // common information
       dep.type = (pkgCache::Dep::DepType)D->Type;
@@ -787,10 +814,10 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
           pkgDepCache::DepGInstall)
          dep.isSatisfied = true;
       if (Trg->VersionList == 0) {
-	 dep.isVirtual = true;
+         dep.isVirtual = true;
       } else {
-	 dep.version=D.TargetVer();
-	 dep.versionComp=D.CompType();
+         dep.version = D.TargetVer();
+         dep.versionComp = D.CompType();
       }
       deps.push_back(dep);
    }
@@ -801,9 +828,9 @@ vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 bool RPackage::dependsOn(const char *pkgname)
 {
    vector<DepInformation> deps = enumDeps();
-   for(unsigned int i=0;i<deps.size();i++)
-      if(strcmp(pkgname, deps[i].name) == 0)
-	 return true;
+   for (unsigned int i = 0; i < deps.size(); i++)
+      if (strcmp(pkgname, deps[i].name) == 0)
+         return true;
    return false;
 }
 
@@ -811,32 +838,30 @@ bool RPackage::dependsOn(const char *pkgname)
 bool RPackage::isTrusted()
 {
    pkgCache::VerIterator Ver;
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    Ver = State.CandidateVerIter(*_depcache);
    if (Ver == 0) {
-      //cerr << "CanidateVer == 0" << endl;
+      // cerr << "CanidateVer == 0" << endl;
       return false;
    }
-   pkgSourceList *Sources=_lister->getCache()->list();
-   std::map<pkgCache::PkgFileIterator, pkgIndexFile*>::iterator it;
-   for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++)
-   {
+   pkgSourceList *Sources = _lister->getCache()->list();
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile *>::iterator it;
+   for (pkgCache::VerFileIterator i = Ver.FileList(); i.end() == false; i++) {
       pkgIndexFile *Index;
 
       // FIXME: instead of doing his dance (he trust cache is just
       //        a couple of items big, that should be done in apt itself
       it = _lister->getCache()->trust_cache().find(i.File());
       if (it == _lister->getCache()->trust_cache().end()) {
-         if (Sources->FindIndex(i.File(),Index) == false)
+         if (Sources->FindIndex(i.File(), Index) == false)
             continue;
       } else {
-            Index = (*it).second;
+         Index = (*it).second;
       }
       _lister->getCache()->trust_cache().insert(
-         pair<pkgCache::PkgFileIterator, pkgIndexFile*>(i.File(), Index) );
+         pair<pkgCache::PkgFileIterator, pkgIndexFile *>(i.File(), Index));
 
-      if (_config->FindB("Debug::pkgAcquire::Auth", false))
-      {
+      if (_config->FindB("Debug::pkgAcquire::Auth", false)) {
          std::cerr << "Checking index: " << Index->Describe()
                    << "(Trusted=" << Index->IsTrusted() << ")\n";
       }
@@ -886,7 +911,7 @@ void RPackage::setKeep()
 void RPackage::setInstall()
 {
    _depcache->MarkInstall(*_package, true);
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
 
    // FIXME: can't we get rid of it here?
    // if there is something wrong, try to fix it
@@ -900,7 +925,7 @@ void RPackage::setInstall()
 
 #ifdef WITH_LUA
    _lua->SetDepCache(_depcache);
-   _lua->SetGlobal("package", ((pkgCache::Package *) * _package));
+   _lua->SetGlobal("package", ((pkgCache::Package *)*_package));
    _lua->RunScripts("Scripts::Synaptic::SetInstall", true);
    _lua->ResetGlobals();
    _lua->ResetCaches();
@@ -912,9 +937,9 @@ void RPackage::setInstall()
 
 void RPackage::setReInstall(bool flag)
 {
-    _depcache->SetReInstall(*_package, flag);
-    if (_notify)
-	_lister->notifyChange(this);
+   _depcache->SetReInstall(*_package, flag);
+   if (_notify)
+      _lister->notifyChange(this);
 }
 
 
@@ -938,25 +963,27 @@ void RPackage::setRemove(bool purge)
 string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 {
    string descr("Screenshot for ");
-   descr+=name();
+   descr += name();
 
    string verstr;
-   if(availableVersion() != NULL)
+   if (availableVersion() != NULL)
       verstr = availableVersion();
 
-   if(verstr.find(':')!=verstr.npos)
-      verstr=string(verstr, verstr.find(':')+1);
+   if (verstr.find(':') != verstr.npos)
+      verstr = string(verstr, verstr.find(':') + 1);
    char uri[512];
-   if(thumb)
-      snprintf(uri,512,"https://screenshots.debian.net/thumbnail/%s", name());
+   if (thumb)
+      snprintf(uri, 512, "https://screenshots.debian.net/thumbnail/%s", name());
    else
-      snprintf(uri,512,"https://screenshots.debian.net/screenshot/%s", name());
+      snprintf(
+         uri, 512, "https://screenshots.debian.net/screenshot/%s", name());
 
-   //cerr << "uri is: " << uri << endl;
+   // cerr << "uri is: " << uri << endl;
 
-   string filename = RTmpDir()+"/tmp_sh";
+   string filename = RTmpDir() + "/tmp_sh";
    unlink(filename.c_str());
-   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFile(
+      fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    fetcher->Run();
 
@@ -966,30 +993,33 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
 string RPackage::getChangelogFile(pkgAcquire *fetcher)
 {
    string descr("Changelog for ");
-   descr+=name();
+   descr += name();
 
    pkgCache::VerIterator Ver = availableVersionIter();
    std::string uri = pkgAcqChangelog::URI(Ver);
-   
-   // no need to translate this, the changelog is in english anyway
-   string filename = RTmpDir()+"/tmp_cl";
 
-   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
-   //cerr << "**DEBUG** origin: " << origin() << endl;
-   //cerr << "**DEBUG** uri: " << uri << endl;
-   //cerr << "**DEBUG** filename: " << filename << endl;
+   // no need to translate this, the changelog is in english anyway
+   string filename = RTmpDir() + "/tmp_cl";
+
+   new pkgAcqFile(
+      fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   // cerr << "**DEBUG** origin: " << origin() << endl;
+   // cerr << "**DEBUG** uri: " << uri << endl;
+   // cerr << "**DEBUG** filename: " << filename << endl;
 
 
    ofstream out(filename.c_str());
-   if(fetcher->Run() == pkgAcquire::Failed) {
+   if (fetcher->Run() == pkgAcquire::Failed) {
       out << "Failed to download the list of changes. " << endl;
       out << "Please check your Internet connection." << endl;
       // FIXME: Need to dequeue the item
    } else {
       struct stat filestatus;
-      stat(filename.c_str(), &filestatus );
+      stat(filename.c_str(), &filestatus);
       if (filestatus.st_size == 0) {
-         out << "This change is not coming from a source that supports changelogs.\n" << endl;
+         out << "This change is not coming from a source that supports "
+                "changelogs.\n"
+             << endl;
          out << "Failed to fetch the changelog for " << name() << endl;
          if (uri.empty())
             out << "URI was empty" << endl;
@@ -1004,11 +1034,12 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
 
 string RPackage::getCandidateOriginStr()
 {
-   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   if(Ver.end())
+   pkgCache::VerIterator Ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (Ver.end())
       return "";
    pkgCache::VerFileIterator VF = Ver.FileList();
-   if(!VF.end() && VF.File() && VF.File().Origin())
+   if (!VF.end() && VF.File() && VF.File().Origin())
       return VF.File().Origin();
    return "";
 }
@@ -1016,13 +1047,13 @@ string RPackage::getCandidateOriginStr()
 vector<string> RPackage::getCandidateOriginSuites()
 {
    vector<string> res;
-   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   if(Ver.end())
+   pkgCache::VerIterator Ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (Ver.end())
       return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   for ( ; !VF.end(); VF++)
-   {
-      if(VF.File() && VF.File().Archive())
+   for (; !VF.end(); VF++) {
+      if (VF.File() && VF.File().Archive())
          res.push_back(string(VF.File().Archive()));
    }
 
@@ -1032,13 +1063,13 @@ vector<string> RPackage::getCandidateOriginSuites()
 vector<string> RPackage::getCandidateOriginSiteUrls()
 {
    vector<string> res;
-   pkgCache::VerIterator Ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   if(Ver.end())
+   pkgCache::VerIterator Ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (Ver.end())
       return res;
    pkgCache::VerFileIterator VF = Ver.FileList();
-   for ( ; !VF.end(); VF++)
-   {
-      if(VF.File() && VF.File().Site())
+   for (; !VF.end(); VF++) {
+      if (VF.File() && VF.File().Site())
          res.push_back(string(VF.File().Site()));
    }
    return res;
@@ -1049,7 +1080,7 @@ void RPackage::setPinned(bool flag)
 {
    struct stat stat_buf;
 
-   string File =RStateDir() + "/preferences";
+   string File = RStateDir() + "/preferences";
 
    _boolFlags = flag ? (_boolFlags | FPinned) : (_boolFlags & FPinned);
 
@@ -1063,13 +1094,13 @@ void RPackage::setPinned(bool flag)
       out << "Package: " << name() << endl;
       // if the package is not installed, we pin it to the available version
       // and prevent installation of this package this way
-      if(installedVersion() != NULL)
-	 out << "Pin: version " << installedVersion() << endl;
+      if (installedVersion() != NULL)
+         out << "Pin: version " << installedVersion() << endl;
       else
-	 out << "Pin: version " << " 0.0 " << endl;
+         out << "Pin: version " << " 0.0 " << endl;
       out << "Pin-Priority: "
-         << _config->FindI("Synaptic::DefaultPinPriority", 1001)
-         << endl << endl;
+          << _config->FindI("Synaptic::DefaultPinPriority", 1001) << endl
+          << endl;
    } else {
       // delete package from pinning file
       stat(File.c_str(), &stat_buf);
@@ -1088,9 +1119,8 @@ void RPackage::setPinned(bool flag)
       while (TF.Step(Tags) == true) {
          string Name = Tags.FindS("Package");
          if (Name.empty() == true) {
-            _error->
-               Error(_
-                     ("Invalid record in the preferences file, no Package header"));
+            _error->Error(
+               _("Invalid record in the preferences file, no Package header"));
             return;
          }
          if (Name != name())
@@ -1151,15 +1181,17 @@ vector<pair<string, string>> RPackage::getAvailableVersions()
    vector<pair<string, string>> versions;
 
    // Get available Versions.
-   for (pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false; Ver++) {
+   for (pkgCache::VerIterator Ver = _package->VersionList(); Ver.end() == false;
+        Ver++) {
 
       // We always take the first available version.
       pkgCache::VerFileIterator VF = Ver.FileList();
       if (!VF.end()) {
          pkgCache::PkgFileIterator File = VF.File();
-            
+
          if (File.Archive() != NULL) {
-            versions.push_back(pair<string, string>(Ver.VerStr(), File.Archive()));
+            versions.push_back(
+               pair<string, string>(Ver.VerStr(), File.Archive()));
          } else {
             versions.push_back(pair<string, string>(Ver.VerStr(), File.Site()));
          }
@@ -1181,16 +1213,15 @@ bool RPackage::setVersion(string verTag)
    _depcache->SetCandidateVersion(Ver);
 
    string archive;
-   for (pkgCache::VerFileIterator VF = Ver.FileList();
-        VF.end() == false;
-        VF++)
-   {
+   for (pkgCache::VerFileIterator VF = Ver.FileList(); VF.end() == false;
+        VF++) {
       if (!VF.File() || !VF.File().Archive())
          continue;
-      //std::cerr << "vf: " << VF.File().Archive() << std::endl;
+      // std::cerr << "vf: " << VF.File().Archive() << std::endl;
       archive = VF.File().Archive();
-      if(!_depcache->SetCandidateRelease(Ver, archive))
-         std::cerr << "Failed to SetCandidateRelease for " << archive << std::endl;
+      if (!_depcache->SetCandidateRelease(Ver, archive))
+         std::cerr << "Failed to SetCandidateRelease for " << archive
+                   << std::endl;
       break;
    }
 
@@ -1201,7 +1232,7 @@ bool RPackage::setVersion(string verTag)
 
 void RPackage::unsetVersion()
 {
-   //cout << "set version to " << _defaultCandVer << endl;
+   // cout << "set version to " << _defaultCandVer << endl;
    setVersion(_defaultCandVer);
    _boolFlags &= ~FOverrideVersion;
 }
@@ -1210,12 +1241,13 @@ vector<string> RPackage::provides()
 {
    vector<string> provides;
 
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0)
       return provides;
 
    for (pkgCache::PrvIterator Prv =
-        State.CandidateVerIter(*_depcache).ProvidesList(); Prv.end() != true;
+           State.CandidateVerIter(*_depcache).ProvidesList();
+        Prv.end() != true;
         Prv++) {
       provides.push_back(Prv.Name());
    }
@@ -1263,7 +1295,7 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
       }
 
       RPackage *depackage = _lister->getPackage(depPkg);
-      //cout << "testing(RPackage): " << depackage->name() << endl;
+      // cout << "testing(RPackage): " << depackage->name() << endl;
 
       if (!depackage)
          continue;
@@ -1287,12 +1319,12 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 static char *debParser(string descr)
 {
    unsigned int i;
-   string::size_type nlpos=0;
+   string::size_type nlpos = 0;
 
    nlpos = descr.find('\n');
    // delete first line
    if (nlpos != string::npos)
-      descr.erase(0, nlpos + 2);        // del "\n " too
+      descr.erase(0, nlpos + 2); // del "\n " too
 
    while (nlpos < descr.length()) {
       nlpos = descr.find('\n', nlpos);
@@ -1311,11 +1343,12 @@ static char *debParser(string descr)
          continue;
       }
       // skip ws
-      while (descr[++i] == ' ');
+      while (descr[++i] == ' ')
+         ;
 
-//      // not a list, erase nl
-//       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
-//      descr.erase(nlpos,1);
+      //      // not a list, erase nl
+      //       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
+      //      descr.erase(nlpos,1);
 
       nlpos++;
    }
@@ -1327,7 +1360,7 @@ static char *rpmParser(string descr)
    string::size_type pos = descr.find('\n');
    // delete first line
    if (pos != string::npos)
-      descr.erase(0, pos + 2);  // del "\n " too
+      descr.erase(0, pos + 2); // del "\n " too
 
    strcpy(descrBuffer, descr.c_str());
    return descrBuffer;
@@ -1339,7 +1372,7 @@ static char *stripWsParser(string descr)
    const char *p;
 
    p = descr.c_str();
-   end = p + descr.size();      // mvo: hackish, but works
+   end = p + descr.size(); // mvo: hackish, but works
 
 
    int state = 0;
@@ -1411,33 +1444,34 @@ string RPackage::component()
    string res;
 #ifdef WITH_APT_AUTH
    // the apt-secure patch breaks File.Component
-   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver =
+      (*_depcache)[*_package].CandidateVerIter(*_depcache);
    const char *s = NULL;
    if (!ver.end())
       s = ver.Section();
 
-   if(s == NULL)
+   if (s == NULL)
       return "";
 
    string src_section(s);
-   if(src_section.find('/')!=src_section.npos)
-      src_section=string(src_section, 0, src_section.find('/'));
+   if (src_section.find('/') != src_section.npos)
+      src_section = string(src_section, 0, src_section.find('/'));
    else
-      src_section="main";
+      src_section = "main";
    res = src_section;
 #else
    pkgCache::VerIterator Ver;
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0) {
-      //cout << "CanidateVer == 0" << endl;
+      // cout << "CanidateVer == 0" << endl;
       return "";
    }
    Ver = State.CandidateVerIter(*_depcache);
    pkgCache::VerFileIterator VF = Ver.FileList();
    pkgCache::PkgFileIterator File = VF.File();
 
-   if(File.Component() == NULL) {
-      //cout << "File.Component() == NULL" << endl;
+   if (File.Component() == NULL) {
+      // cout << "File.Component() == NULL" << endl;
       return "";
    }
 
@@ -1447,22 +1481,21 @@ string RPackage::component()
 }
 
 
-
 string RPackage::label()
 {
    string res;
    pkgCache::VerIterator Ver;
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0) {
-      //cout << "CanidateVer == 0" << endl;
+      // cout << "CanidateVer == 0" << endl;
       return "";
    }
    Ver = State.CandidateVerIter(*_depcache);
    pkgCache::VerFileIterator VF = Ver.FileList();
    pkgCache::PkgFileIterator File = VF.File();
 
-   if(File.Label() == NULL) {
-      //cout << "File.Component() == NULL" << endl;
+   if (File.Label() == NULL) {
+      // cout << "File.Component() == NULL" << endl;
       return "";
    }
 
@@ -1475,7 +1508,7 @@ string RPackage::origin()
 {
    string res;
    pkgCache::VerIterator Ver;
-   pkgDepCache::StateCache & State = (*_depcache)[*_package];
+   pkgDepCache::StateCache &State = (*_depcache)[*_package];
    if (State.CandidateVer == 0) {
       return "";
    }
@@ -1483,7 +1516,7 @@ string RPackage::origin()
    pkgCache::VerFileIterator VF = Ver.FileList();
    pkgCache::PkgFileIterator File = VF.File();
 
-   if(File.Origin() == NULL) {
+   if (File.Origin() == NULL) {
       return "";
    }
 
@@ -1492,24 +1525,24 @@ string RPackage::origin()
    return res;
 }
 
-static pkgCache::PkgFileIterator
-_searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
+static pkgCache::PkgFileIterator _searchPkgFileIter(pkgCache::PkgIterator *Pkg,
+                                                    string label,
+                                                    string release)
 {
    pkgCache::VerIterator Ver;
    pkgCache::VerFileIterator VF;
    pkgCache::PkgFileIterator PF;
 
-   for(Ver = Pkg->VersionList();!Ver.end();Ver++) {
-      for(VF = Ver.FileList();!VF.end(); VF++) {
-	 for(PF = VF.File(); !PF.end(); PF++) {
-	    if(!PF.end() &&
-	       PF.Label() && string(PF.Label()) == label &&
-	       PF.Origin() && string(PF.Origin()) == label &&
-	       PF.Archive() && PF.Archive() == release) {
-	       //cerr << "found: " << PF.FileName() << endl;
-	       return PF;
-	    }
-	 }
+   for (Ver = Pkg->VersionList(); !Ver.end(); Ver++) {
+      for (VF = Ver.FileList(); !VF.end(); VF++) {
+         for (PF = VF.File(); !PF.end(); PF++) {
+            if (!PF.end() && PF.Label() && string(PF.Label()) == label &&
+                PF.Origin() && string(PF.Origin()) == label && PF.Archive() &&
+                PF.Archive() == release) {
+               // cerr << "found: " << PF.FileName() << endl;
+               return PF;
+            }
+         }
       }
    }
    PF = pkgCache::PkgFileIterator(*Pkg->Cache());
@@ -1520,24 +1553,25 @@ _searchPkgFileIter(pkgCache::PkgIterator *Pkg, string label, string release)
 string RPackage::getReleaseFileForOrigin(string label, string release)
 {
    pkgIndexFile *index;
-   pkgCache::PkgFileIterator found = _searchPkgFileIter(_package, label, string(release));
+   pkgCache::PkgFileIterator found =
+      _searchPkgFileIter(_package, label, string(release));
    if (found.end())
       return "";
 
    // search for the matching meta-index
    pkgSourceList *list = _lister->getCache()->list();
-   if(list->FindIndex(found, index)) {
+   if (list->FindIndex(found, index)) {
       vector<metaIndex *>::const_iterator I;
-      for(I=list->begin(); I != list->end(); I++) {
-	 vector<pkgIndexFile *>  *ifv = (*I)->GetIndexFiles();
-	 if(find(ifv->begin(), ifv->end(), index) != ifv->end()) {
-	    string uri = _config->FindDir("Dir::State::lists");
-	    uri += URItoFileName((*I)->GetURI());
-	    uri += "dists_";
-	    uri += (*I)->GetDist();
-	    uri += "_Release";
-	    return uri;
-	 }
+      for (I = list->begin(); I != list->end(); I++) {
+         vector<pkgIndexFile *> *ifv = (*I)->GetIndexFiles();
+         if (find(ifv->begin(), ifv->end(), index) != ifv->end()) {
+            string uri = _config->FindDir("Dir::State::lists");
+            uri += URItoFileName((*I)->GetURI());
+            uri += "dists_";
+            uri += (*I)->GetDist();
+            uri += "_Release";
+            return uri;
+         }
       }
    }
 

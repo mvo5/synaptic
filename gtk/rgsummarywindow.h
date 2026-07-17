@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "config.h"  // IWYU pragma: associated
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
@@ -33,7 +33,8 @@
 class RGWindow;
 class RPackageLister;
 
-class RGSummaryWindow:public RGGtkBuilderWindow {
+class RGSummaryWindow : public RGGtkBuilderWindow
+{
    GtkWidget *_topF;
    GtkWidget *_middleF;
    GtkWidget *_summaryL;
@@ -43,10 +44,7 @@ class RGSummaryWindow:public RGGtkBuilderWindow {
    GtkWidget *_dlonlyB;
    GtkWidget *_checkSigsB;
 
-   enum {
-      PKG_COLUMN,
-      N_COLUMNS
-   };
+   enum { PKG_COLUMN, N_COLUMNS };
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
 

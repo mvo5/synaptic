@@ -1350,7 +1350,7 @@ void RGMainWindow::buildInterface()
 
    GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
    gtk_binding_entry_add_signal(
-      binding_set, GDK_s, GDK_CONTROL_MASK, "start_interactive_search", 0);
+      binding_set, GDK_KEY_s, GDK_CONTROL_MASK, "start_interactive_search", 0);
 
    _entry_fast_search =
       GTK_WIDGET(gtk_builder_get_object(_builder, "entry_fast_search"));
@@ -1587,10 +1587,10 @@ bool RGMainWindow::restoreState()
 }
 
 
-bool RGMainWindow::close()
+void RGMainWindow::close()
 {
    if (_interfaceLocked > 0)
-      return true;
+      return;
 
    RGGtkBuilderUserDialog dia(this);
    if (_unsavedChanges == false || dia.run("quit")) {
@@ -1599,7 +1599,6 @@ bool RGMainWindow::close()
       showErrors();
       exit(0);
    }
-   return true;
 }
 
 
@@ -2698,7 +2697,7 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    RGFetchProgress *fprogress = me->_fetchProgress = new RGFetchProgress(me);
    fprogress->setDescription(_("Downloading Package Files"), "");
    //			     _("The package files will be cached locally for
-   //installation."));
+   // installation."));
 
    // Do not let the treeview access the cache during the update.
    me->setTreeLocked(TRUE);

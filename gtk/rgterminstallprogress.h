@@ -30,7 +30,6 @@
 #   include "rinstallprogress.h"
 
 #   include <apt-pkg/packagemanager.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
 #   include <sys/types.h>
 #   include <vte/vte.h>
@@ -54,7 +53,7 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    virtual void updateInterface();
    virtual void finishUpdate();
    static void stopShell(GtkWidget *self, void *data);
-   virtual bool close();
+   virtual void close() override;
 
    pid_t _child_id;
 

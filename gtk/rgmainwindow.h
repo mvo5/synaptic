@@ -154,7 +154,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    // display/table releated
    void refreshSubViewList();
 
-   virtual bool close();
+   virtual void close() override;
    static void closeWin(GSimpleAction *action, GVariant *parameter, gpointer me)
    {
       ((RGMainWindow *)me)->close();

@@ -41,12 +41,8 @@
 #   include <cerrno>
 #   include <csignal>
 #   include <cstring>
-#   include <glib-object.h>
-#   include <glib.h>
-#   include <gobject/gclosure.h>
 #   include <gtk/gtk.h>
 #   include <iostream>
-#   include <pango/pango-font.h>
 #   include <pty.h>
 #   include <stdlib.h>
 #   include <string>
@@ -177,10 +173,9 @@ void RGTermInstallProgress::stopShell(GtkWidget *self, void *data)
    me->hide();
 }
 
-bool RGTermInstallProgress::close()
+void RGTermInstallProgress::close()
 {
    stopShell(NULL, this);
-   return true;
 }
 
 

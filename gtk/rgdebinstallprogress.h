@@ -30,11 +30,7 @@
 #   include "rinstallprogress.h"
 
 #   include <apt-pkg/packagemanager.h>
-#   include <gdk/gdk.h>
-#   include <glib-object.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
-#   include <gtk/gtkcssprovider.h>
 #   include <map>
 #   include <string>
 #   include <sys/types.h>
@@ -122,7 +118,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    virtual void startUpdate();
    virtual void updateInterface();
    virtual void finishUpdate();
-   virtual bool close();
+   virtual void close() override;
 
    virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
                                                 int numPackages = 0,

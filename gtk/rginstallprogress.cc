@@ -36,13 +36,8 @@
 #include <apt-pkg/configuration.h>
 #include <cstdio>
 #include <cstdlib>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <map>
-#include <pango/pango-font.h>
 #include <string.h>
 #include <string>
 #include <unistd.h>
@@ -91,10 +86,9 @@ void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
    gtk_main_quit();
 }
 
-bool RGInstallProgressMsgs::close()
+void RGInstallProgressMsgs::close()
 {
    gtk_main_quit();
-   return true;
 }
 
 void RGInstallProgressMsgs::addText(const char *text, bool bold)
@@ -462,5 +456,3 @@ bool GeometryParser::Parse(string Geo)
 
    return ret;
 }
-
-// vim:ts=3:sw=3:et

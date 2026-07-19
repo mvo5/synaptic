@@ -154,7 +154,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    // display/table releated
    void refreshSubViewList();
 
-   virtual bool close();
+   virtual void close() override;
    static void closeWin(GSimpleAction *action, GVariant *parameter, gpointer me)
    {
       ((RGMainWindow *)me)->close();
@@ -186,15 +186,17 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void pkgInstallByNameHelper(GSimpleAction *action,
                                       GVariant *parameter,
                                       gpointer data);
+   void pkgInstallByName(const char *name);
    // install a non-standard version
    static void cbInstallFromVersion(GSimpleAction *action,
                                     GVariant *parameter,
                                     gpointer data);
+   void installFromVersion();
 
    // helpers for search-as-you-type
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
    static void xapianIndexUpdateFinished(GPid pid, gint status, void *data);
-   static gboolean xapianDoSearch(void *data);
+   static void xapianDoSearch(void *data);
    static gboolean xapianDoIndexUpdate(void *data);
 
    // RPackageObserver
@@ -282,6 +284,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
                                          GtkTreePath *arg1,
                                          GtkTreeViewColumn *arg2,
                                          gpointer user_data);
+   void packageListRowActivated(GtkTreeView *treeview, GtkTreePath *path);
 
    static void cbChangedView(GtkWidget *self, void *);
    static void cbChangedSubView(GtkTreeSelection *selection, gpointer data);
@@ -294,23 +297,29 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void cbTasksClicked(GSimpleAction *action,
                               GVariant *parameter,
                               gpointer data);
+   void tasksClicked();
    static void cbOpenClicked(GSimpleAction *action,
                              GVariant *parameter,
                              gpointer data);
+   void openClicked();
    static void cbSaveClicked(GSimpleAction *action,
                              GVariant *parameter,
                              gpointer data);
+   void saveClicked();
    static void cbSaveAsClicked(GSimpleAction *action,
                                GVariant *parameter,
                                gpointer data);
+   void saveAsClicked();
    std::string selectionsFilename;
    bool saveFullState;
    static void cbGenerateDownloadScriptClicked(GSimpleAction *action,
                                                GVariant *parameter,
                                                gpointer data);
+   void generateDownloadScript();
    static void cbAddDownloadedFilesClicked(GSimpleAction *action,
                                            GVariant *parameter,
                                            gpointer data);
+   void addDownloadedFiles();
    static void cbViewLogClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
@@ -319,48 +328,59 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void cbUndoClicked(GSimpleAction *action,
                              GVariant *parameter,
                              gpointer data);
+   void undo();
    static void cbRedoClicked(GSimpleAction *action,
                              GVariant *parameter,
                              gpointer data);
+   void redo();
    static void cbClearAllChangesClicked(GSimpleAction *action,
                                         GVariant *parameter,
                                         gpointer data);
+   void clearAllChanges();
    static void cbUpdateClicked(GSimpleAction *action,
                                GVariant *parameter,
                                gpointer data);
+   void updateClicked();
    static void cbAddCDROM(GSimpleAction *action,
                           GVariant *parameter,
                           gpointer data);
+   void addCDROM();
    static void cbFixBrokenClicked(GSimpleAction *action,
                                   GVariant *parameter,
                                   gpointer data);
+   void fixBroken();
    static void cbUpgradeClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
+   void upgrade();
    static void cbProceedClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
+   void applyChanges();
 
    // packages menu
    static void cbMenuPinClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
+   void pin(bool active);
    static void cbMenuAutoInstalledClicked(GSimpleAction *action,
                                           GVariant *parameter,
                                           gpointer data);
+   void autoInstalled(bool active);
 
    // filter menu
    static void cbShowFilterManagerWindow(GSimpleAction *action,
                                          GVariant *parameter,
                                          gpointer data);
+   void showFilterManagerWindow();
    static void cbSaveFilterAction(void *self, RGFilterWindow *rwin);
    static void cbCloseFilterAction(void *self, RGFilterWindow *rwin);
-   static void cbCloseFilterManagerAction(void *self, bool okcancel);
 
    // search menu
    static void cbFindToolClicked(GSimpleAction *action,
                                  GVariant *parameter,
                                  gpointer data);
+   void findTool();
 
    // preferences menu
    static void cbShowConfigWindow(GSimpleAction *action,
@@ -372,6 +392,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void cbShowSourcesWindow(GSimpleAction *action,
                                    GVariant *parameter,
                                    gpointer data);
+   void showSourcesWindow();
    static void cbMenuToolbarClicked(GSimpleAction *action,
                                     GVariant *parameter,
                                     gpointer data);
@@ -380,6 +401,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void cbHelpAction(GSimpleAction *action,
                             GVariant *parameter,
                             gpointer data);
+   void helpAction();
    static void cbShowIconLegendPanel(GSimpleAction *action,
                                      GVariant *parameter,
                                      gpointer data);
@@ -389,12 +411,15 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    static void cbShowWelcomeDialog(GSimpleAction *action,
                                    GVariant *parameter,
                                    gpointer data);
+   void showWelcomeDialog();
 
    // the buttons
    static void cbPkgHelpClicked(GSimpleAction *action,
                                 GVariant *parameter,
                                 gpointer data);
+   void pkgHelp();
    static void cbPkgReconfigureClicked(GSimpleAction *action,
                                        GVariant *parameter,
                                        gpointer data);
+   void pkgReconfigureClicked();
 };

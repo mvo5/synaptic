@@ -26,8 +26,6 @@
 
 #include "rgwindow.h"
 
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
@@ -66,5 +64,5 @@ class RGGtkBuilderWindow : public RGWindow
    GtkBuilder *getGtkBuilder()
    {
       return _builder;
-   };
+   }
 };

@@ -30,7 +30,6 @@
 #   include "rinstallprogress.h"
 
 #   include <apt-pkg/packagemanager.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
 #   include <sys/types.h>
 #   include <vte/vte.h>
@@ -50,11 +49,11 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
  protected:
    bool child_has_exited;
    static void child_exited(VteTerminal *vteterminal, gint ret, gpointer data);
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
+   [[nodiscard]] virtual task<void> startUpdate();
+   [[nodiscard]] virtual task<void> updateInterface();
+   [[nodiscard]] virtual task<void> finishUpdate();
    static void stopShell(GtkWidget *self, void *data);
-   virtual bool close();
+   virtual void close() override;
 
    pid_t _child_id;
 
@@ -62,9 +61,8 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int totalPackages = 0);
+   [[nodiscard]] virtual task<pkgPackageManager::OrderResult>
+      start(pkgPackageManager *pm, int numPackages = 0, int totalPackages = 0);
 };
 
 #endif /* HAVT_TERMINAL */

@@ -1467,8 +1467,8 @@ bool RPackageLister::getDownloadUris(vector<string> &uris)
    return true;
 }
 
-bool RPackageLister::commitChanges(pkgAcquireStatus *status,
-                                   RInstallProgress *iprog)
+task<bool> RPackageLister::commitChanges(pkgAcquireStatus *status,
+                                         RInstallProgress *iprog)
 {
    FileFd lock;
    int numPackages = 0;
@@ -1478,7 +1478,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    _updating = true;
 
    if (!lockPackageCache(lock))
-      return false;
+      co_return false;
 
    if (_config->FindB("Synaptic::Log::Changes", true))
       makeCommitLog();
@@ -1488,7 +1488,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    assert(_cache->list() != NULL);
    // Read the source list
    if (_cache->list()->ReadMainList() == false) {
-      _userDialog->warning(
+      co_await _userDialog->warning(
          _("Ignoring invalid record(s) in sources.list file!"));
    }
 
@@ -1554,7 +1554,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
       if (_config->FindB("Volatile::Download-Only", false)) {
          _updating = false;
-         return !Failed;
+         co_return !Failed;
       }
 
       if (Failed) {
@@ -1572,7 +1572,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             message += "(" + serverError + ")\n";
          message += _("Do you want to continue, ignoring these packages?");
 
-         if (!_userDialog->confirm(message.c_str()))
+         if (!co_await _userDialog->confirm(message.c_str()))
             goto gave_wood;
       }
       // Try to deal with missing package files
@@ -1591,7 +1591,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
          _system->UnLockInner();
          pkgPackageManager::OrderResult Res =
-            iprog->start(rPM, numPackages, numPackagesTotal);
+            co_await iprog->start(rPM, numPackages, numPackagesTotal);
          _system->LockInner();
          if (Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false)
@@ -1625,11 +1625,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       writeCommitLog();
 
    delete rPM;
-   return Ret;
+   co_return Ret;
 
 gave_wood:
    delete rPM;
-   return false;
+   co_return false;
 }
 
 void RPackageLister::writeCommitLog()

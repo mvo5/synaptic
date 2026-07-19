@@ -39,13 +39,7 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstring>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
-#include <pango/pango-font.h>
 #include <string>
 #include <utility>
 #include <vector>
@@ -146,40 +140,38 @@ vector<string> RGPkgDetailsWindow::formatDepInformation(
    return depStrings;
 }
 
-void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
-                                             GdkEventButton *event,
-                                             void *data)
+void RGPkgDetailsWindow::cbShowBigScreenshot(GtkGestureClick *gesture,
+                                             gint n_press,
+                                             gdouble x,
+                                             gdouble y,
+                                             gpointer data)
 {
    // cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
-
    doShowBigScreenshot(pkg);
 }
 
 void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(NULL);
-   ;
+
    pkgAcquire fetcher(status);
    string filename = pkg->getScreenshotFile(&fetcher, false);
-   GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+   GtkWidget *img = gtk_picture_new_for_filename(filename.c_str());
    GtkWidget *win = gtk_dialog_new();
    gtk_window_set_default_size(GTK_WINDOW(win), 500, 400);
    gtk_dialog_add_button(GTK_DIALOG(win), _("_Close"), GTK_RESPONSE_CLOSE);
-   gtk_widget_show(img);
    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(win));
-   gtk_container_add(GTK_CONTAINER(content_area), img);
-   gtk_dialog_run(GTK_DIALOG(win));
-   gtk_widget_destroy(win);
+   gtk_widget_set_vexpand(img, TRUE);
+   g_signal_connect(win, "response", G_CALLBACK(gtk_window_destroy), nullptr);
+   gtk_window_present(GTK_WINDOW(win));
 }
 
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info *)data;
-
    if (_config->FindB("Synaptic::InlineScreenshots") == false) {
       doShowBigScreenshot(si->pkg);
-      return;
    } else {
 
       // hide button
@@ -187,19 +179,18 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 
       // get screenshot
       RGFetchProgress *status = new RGFetchProgress(NULL);
-      ;
+
       pkgAcquire fetcher(status);
       string filename = si->pkg->getScreenshotFile(&fetcher);
-      GtkWidget *event = gtk_event_box_new();
-      GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-      gtk_container_add(GTK_CONTAINER(event), img);
-      g_signal_connect(G_OBJECT(event),
-                       "button_press_event",
+      GtkWidget *img = gtk_picture_new_for_filename(filename.c_str());
+      GtkGesture *click_controller = gtk_gesture_click_new();
+      g_signal_connect(G_OBJECT(click_controller),
+                       "pressed",
                        G_CALLBACK(cbShowBigScreenshot),
                        (void *)si->pkg);
+      gtk_widget_add_controller(img, GTK_EVENT_CONTROLLER(click_controller));
       gtk_text_view_add_child_at_anchor(
-         GTK_TEXT_VIEW(si->textview), GTK_WIDGET(event), si->anchor);
-      gtk_widget_show_all(event);
+         GTK_TEXT_VIEW(si->textview), GTK_WIDGET(img), si->anchor);
    }
 }
 
@@ -207,7 +198,9 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 {
    RPackage *pkg = (RPackage *)data;
    RGWindow *parent = (RGWindow *)g_object_get_data(G_OBJECT(button), "me");
-   ShowChangelogDialog(parent, pkg);
+   start_task([parent, pkg]() -> task<void> {
+      co_await ShowChangelogDialog(parent, pkg);
+   });
 }
 
 gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label,
@@ -314,18 +307,16 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       // insert space
       gtk_text_buffer_insert(buf, &it, " ", 1);
       // make image
-      emblem = gtk_image_new_from_icon_name(icon_name, GTK_ICON_SIZE_BUTTON);
+      emblem = gtk_image_new_from_icon_name(icon_name);
       gtk_image_set_pixel_size(GTK_IMAGE(emblem), 16);
-      // set eventbox and tooltip
-      GtkWidget *event = gtk_event_box_new();
-      gtk_container_add(GTK_CONTAINER(event), emblem);
+      // set tooltip
       gtk_widget_set_tooltip_text(
-         event, _("This application is supported by the distribution"));
+         emblem, _("This application is supported by the distribution"));
       // create anchor
       GtkTextChildAnchor *anchor =
          gtk_text_buffer_create_child_anchor(buf, &it);
-      gtk_text_view_add_child_at_anchor(GTK_TEXT_VIEW(textview), event, anchor);
-      gtk_widget_show_all(event);
+      gtk_text_view_add_child_at_anchor(
+         GTK_TEXT_VIEW(textview), emblem, anchor);
    }
 
    // add button to get screenshot
@@ -401,7 +392,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gchar *str;
    vector<string> list;
    vector<pair<string, string>> versions = pkg->getAvailableVersions();
-   for (int i = 0; i < versions.size(); i++) {
+   for (size_t i = 0; i < versions.size(); i++) {
       // TRANSLATORS: this the format of the available versions in
       // the "Properties/Available versions" window
       // e.g. "0.56 (unstable)"

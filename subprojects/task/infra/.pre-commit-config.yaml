@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1
+    hooks:
+      - id: codespell
+
+    # CMake linting and formatting
+  - repo: https://github.com/BlankSpruce/gersemi
+    rev: 0.22.3
+    hooks:
+    - id: gersemi
+      name: CMake linting
+      exclude: ^.*/tests/.*/data/ # Exclude test data directories

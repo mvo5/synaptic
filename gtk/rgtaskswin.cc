@@ -33,9 +33,6 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstdio>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
@@ -92,13 +89,13 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
 
    //   cout << "cmd: " << cmd << endl;
 
-   vector<string> packages;
+   me->packages.clear();
    // only act if at least one task was selected
    if (act) {
       char buf[255];
       FILE *f = popen(cmd.c_str(), "r");
       while (fgets(buf, 254, f) != NULL) {
-         packages.push_back(string(g_strstrip(buf)));
+         me->packages.push_back(string(g_strstrip(buf)));
       }
       pclose(f);
 
@@ -112,8 +109,6 @@ void RGTasksWin::cbButtonOkClicked(GtkWidget *self, void *data)
 
    me->setBusyCursor(false);
    me->hide();
-
-   me->_mainWin->selectToInstall(packages);
 }
 
 void RGTasksWin::cbButtonCancelClicked(GtkWidget *self, void *data)
@@ -127,49 +122,51 @@ void RGTasksWin::cbButtonDetailsClicked(GtkWidget *self, void *data)
 {
    // cout << "cbButtonDetailsClicked(GtkWidget *self, void *data)"<<endl;
    RGTasksWin *me = (RGTasksWin *)data;
+   start_task([me]() -> task<void> {
+      me->setBusyCursor(true);
 
-   me->setBusyCursor(true);
+      // get selected task-name
+      GtkTreeIter iter;
+      GtkTreeSelection *selection;
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_taskView));
+      if (!gtk_tree_selection_get_selected(
+             selection, (GtkTreeModel **)(&me->_store), &iter)) {
+         co_return;
+      }
+      gchar *str;
+      gtk_tree_model_get(
+         GTK_TREE_MODEL(me->_store), &iter, TASK_NAME_COLUMN, &str, -1);
 
-   // get selected task-name
-   GtkTreeIter iter;
-   GtkTreeSelection *selection;
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_taskView));
-   if (!gtk_tree_selection_get_selected(
-          selection, (GtkTreeModel **)(&me->_store), &iter)) {
-      return;
-   }
-   gchar *str;
-   gtk_tree_model_get(
-      GTK_TREE_MODEL(me->_store), &iter, TASK_NAME_COLUMN, &str, -1);
+      // ask tasksel about the selected task
+      string cmd =
+         _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") +
+         " --task-desc " + string(str);
+      string taskDescr;
+      char buf[255];
+      FILE *f = popen(cmd.c_str(), "r");
+      while (fgets(buf, 254, f) != NULL) {
+         taskDescr += string(buf);
+      }
 
-   // ask tasksel about the selected task
-   string cmd = _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel") +
-                " --task-desc " + string(str);
-   string taskDescr;
-   char buf[255];
-   FILE *f = popen(cmd.c_str(), "r");
-   while (fgets(buf, 254, f) != NULL) {
-      taskDescr += string(buf);
-   }
+      // display the result in a nice dialog
+      RGGtkBuilderUserDialog dia(me, "task_descr");
 
-   // display the result in a nice dialog
-   RGGtkBuilderUserDialog dia(me, "task_descr");
+      // TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop"
+      // or "mail server")
+      gchar *title = g_strdup_printf(_("Description %s"), str);
+      dia.setTitle(title);
 
-   // TRANSLATORS: Title of the task window - %s is the task (e.g. "desktop" or
-   // "mail server")
-   gchar *title = g_strdup_printf(_("Description %s"), str);
-   dia.setTitle(title);
+      GtkWidget *tv =
+         GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));
+      GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
+      gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
 
-   GtkWidget *tv =
-      GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));
-   GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
-   gtk_text_buffer_set_text(tb, utf8(taskDescr.c_str()), -1);
+      co_await dia.co_run();
 
-   dia.run();
-
-   g_free(str);
-   g_free(title);
-   me->setBusyCursor(false);
+      g_free(str);
+      g_free(title);
+      me->setBusyCursor(false);
+   });
 }
 
 void RGTasksWin::cell_toggled_callback(GtkCellRendererToggle *cell,
@@ -321,3 +318,11 @@ RGTasksWin::RGTasksWin(RGWindow *parent) : RGGtkBuilderWindow(parent, "tasks")
                     (GCallback)cbButtonDetailsClicked,
                     this);
 };
+
+task<std::vector<std::string>> RGTasksWin::selectTasks()
+{
+   packages.clear();
+   co_await co_run_window(GTK_WINDOW(window()));
+
+   co_return std::move(packages);
+}

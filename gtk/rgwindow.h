@@ -26,41 +26,46 @@
 
 #include "config.h" // IWYU pragma: associated
 
-#include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <string>
 
 class RGWindow
 {
+ private:
+   GtkShortcutController *_shortcutController;
+
  protected:
    GtkWidget *_win;
-   GtkWidget *_topBox;
 
-   static bool windowCloseCallback(GtkWidget *widget, GdkEvent *event);
-   virtual bool close();
+   static gboolean windowCloseCallback(GtkWidget *widget, gpointer data);
+   virtual void close();
+
+   void init();
+
+   RGWindow() : _win(nullptr), _shortcutController(nullptr)
+   {}
+
+   GtkShortcutController *getShortcutController();
+   void hideByEscape();
 
  public:
    inline virtual GtkWidget *window()
    {
       return _win;
-   };
+   }
 
    virtual void setTitle(std::string title);
 
    inline virtual void hide()
    {
-      gtk_widget_hide(_win);
-   };
+      gtk_widget_set_visible(_win, false);
+   }
+
    inline virtual void show()
    {
-      gtk_widget_show(_win);
-   };
+      gtk_window_present(GTK_WINDOW(_win));
+   }
 
-   RGWindow() : _win(0), _topBox(0) {};
-   RGWindow(std::string name, bool makeBox = true);
-   RGWindow(RGWindow *parent,
-            std::string name,
-            bool makeBox = true,
-            bool closable = true);
+   explicit RGWindow(RGWindow *parent, std::string name);
    virtual ~RGWindow();
 };

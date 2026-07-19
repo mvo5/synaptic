@@ -22,7 +22,9 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "coroutines.h"
+
 class RGWindow;
 class RPackage;
 
-void ShowChangelogDialog(RGWindow *me, RPackage *pkg);
+[[nodiscard]] task<void> ShowChangelogDialog(RGWindow *me, RPackage *pkg);

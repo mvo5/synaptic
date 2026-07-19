@@ -31,14 +31,8 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <iostream>
-#include <pango/pango-font.h>
 #include <string>
 #include <vector>
 
@@ -51,8 +45,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
                                        string name,
                                        string mainName)
 {
-   _busyCursor =
-      gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
    _builder = gtk_builder_new();
 
    gchar *main_widget = NULL;
@@ -73,39 +65,15 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
 
    _win = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget));
    assert(_win);
+   init();
 
    if (parent != NULL)
       gtk_window_set_transient_for(GTK_WINDOW(_win),
                                    GTK_WINDOW(parent->window()));
 
-   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_free(main_widget);
-
-   // gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-
-   g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(
-      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
-   _topBox = NULL;
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(_win);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_win)),
-                                      win);
-      }
-   }
-   // if we have no parent, don't skip the taskbar hint
-   if (_config->FindB("Volatile::HideMainwindow", false) && id < 0) {
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), FALSE);
-      gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
-   }
 }
 
 bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
@@ -239,7 +207,7 @@ bool RGGtkBuilderWindow::setPixmap(const char *widget_name, const char *value)
       cout << "textview == NULL with: " << widget_name << endl;
       return false;
    }
-   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value, GTK_ICON_SIZE_BUTTON);
+   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value);
 
    return true;
 }
@@ -248,9 +216,9 @@ void RGGtkBuilderWindow::setBusyCursor(bool flag)
 {
    if (flag) {
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
+         gtk_widget_set_cursor_from_name(window(), "watch");
    } else {
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
+         gtk_widget_set_cursor(window(), NULL);
    }
 }

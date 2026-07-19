@@ -27,8 +27,6 @@
 #include "rggtkbuilderwindow.h"
 
 #include <apt-pkg/acquire.h>
-#include <glib-object.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <set>
 #include <string>
@@ -81,7 +79,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    virtual void Fail(pkgAcquire::ItemDesc &Itm);
    virtual void Start();
    virtual void Stop();
-   virtual bool close();
+   virtual void close() override;
 
    bool Pulse(pkgAcquire *Owner);
 

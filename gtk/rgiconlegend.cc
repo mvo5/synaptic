@@ -31,10 +31,6 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
@@ -55,36 +51,30 @@ RGIconLegendPanel::RGIconLegendPanel(RGWindow *parent)
                     "clicked",
                     G_CALLBACK(closeWindow),
                     this);
-   GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
-   assert(vbox);
+   GtkGrid *grid = GTK_GRID(gtk_builder_get_object(_builder, "grid_main"));
+   assert(grid);
 
-   GtkWidget *hbox, *label, *pix;
+   GtkWidget *label, *pix;
+   int i;
 
-   for (int i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
-      hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-
+   for (i = 0; i < RGPackageStatus::N_STATUS_COUNT; i++) {
       pix = gtk_image_new_from_icon_name(
-         RGPackageStatus::pkgStatus.getIconName(i), GTK_ICON_SIZE_BUTTON);
-      gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
+         RGPackageStatus::pkgStatus.getIconName(i));
+      gtk_grid_attach(grid, pix, 0, i + 1, 1, 1);
 
       label = gtk_label_new(RGPackageStatus::pkgStatus.getLongStatusString(i));
-      gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-
-      gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+      gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+      gtk_grid_attach(grid, label, 1, i + 1, 1, 1);
    }
 
    // package support status
-   hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
-   pix =
-      gtk_image_new_from_icon_name("package-supported", GTK_ICON_SIZE_BUTTON);
-   gtk_box_pack_start(GTK_BOX(hbox), pix, FALSE, FALSE, 0);
+   pix = gtk_image_new_from_icon_name("package-supported");
+   gtk_grid_attach(grid, pix, 0, i + 1, 1, 1);
    label = gtk_label_new(
       _config->Find("Synaptic::supported-text", _("Package is supported"))
          .c_str());
-   gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-   gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+   gtk_label_set_xalign(GTK_LABEL(label), 0.0);
+   gtk_grid_attach(grid, label, 1, i + 1, 1, 1);
 
-   gtk_widget_show_all(vbox);
-   // skipTaskbar(true);
    show();
 }

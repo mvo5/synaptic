@@ -34,30 +34,18 @@
 #include <apt-pkg/error.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
 using namespace std;
 
-static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
-{
-   GtkResponseType *res = (GtkResponseType *)user_data;
-   *res = (GtkResponseType)id;
-}
-
-bool RGUserDialog::showErrors()
+task<bool> RGUserDialog::showErrors()
 {
    GtkWidget *dia;
    std::string err, warn;
 
    if (_error->empty())
-      return false;
+      co_return false;
 
    while (!_error->empty()) {
       string message;
@@ -96,8 +84,14 @@ bool RGUserDialog::showErrors()
 
    gtk_widget_set_size_request(dia, 500, 300);
    gtk_window_set_resizable(GTK_WINDOW(dia), TRUE);
-   gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
-   GtkWidget *scroll = gtk_scrolled_window_new(NULL, NULL);
+
+   GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dia));
+   gtk_widget_set_margin_top(content_area, 6);
+   gtk_widget_set_margin_bottom(content_area, 6);
+   gtk_widget_set_margin_start(content_area, 6);
+   gtk_widget_set_margin_end(content_area, 6);
+
+   GtkWidget *scroll = gtk_scrolled_window_new();
    GtkWidget *textview = gtk_text_view_new();
    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textview));
    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(buffer), utf8(msg.c_str()), -1);
@@ -105,46 +99,31 @@ bool RGUserDialog::showErrors()
    gtk_text_view_set_left_margin(GTK_TEXT_VIEW(textview), 3);
    gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(textview), FALSE);
    gtk_text_view_set_editable(GTK_TEXT_VIEW(textview), FALSE);
-   gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(scroll),
-                                       GTK_SHADOW_IN);
+   gtk_scrolled_window_set_has_frame(GTK_SCROLLED_WINDOW(scroll), TRUE);
    gtk_scrolled_window_set_policy(
       GTK_SCROLLED_WINDOW(scroll), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-   gtk_container_set_border_width(GTK_CONTAINER(scroll), 6);
-   gtk_container_add(GTK_CONTAINER(scroll), textview);
-   gtk_widget_show_all(scroll);
-   gtk_container_add_with_properties(
-      GTK_CONTAINER(gtk_dialog_get_content_area(GTK_DIALOG(dia))),
-      scroll,
-      "expand",
-      TRUE,
-      NULL);
+   gtk_widget_set_margin_top(scroll, 6);
+   gtk_widget_set_margin_bottom(scroll, 6);
+   gtk_widget_set_margin_start(scroll, 6);
+   gtk_widget_set_margin_end(scroll, 6);
+   gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scroll), textview);
+   gtk_widget_set_hexpand(scroll, TRUE);
+   gtk_widget_set_vexpand(scroll, TRUE);
+   gtk_box_append(GTK_BOX(content_area), scroll);
 
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
+   co_await co_run_dialog(GTK_DIALOG(dia));
+   gtk_window_destroy(GTK_WINDOW(dia));
 
-   gtk_dialog_run(GTK_DIALOG(dia));
-   gtk_widget_destroy(dia);
-
-   return true;
+   co_return true;
 }
 
 
-bool RGUserDialog::message(const char *msg,
-                           RUserDialog::DialogType dialog,
-                           RUserDialog::ButtonsType buttons,
-                           bool defaultResponse)
+task<bool> RGUserDialog::message(const char *msg,
+                                 RUserDialog::DialogType dialog,
+                                 RUserDialog::ButtonsType buttons,
+                                 bool defaultResponse)
 {
    GtkWidget *dia;
-   GtkResponseType res;
    GtkMessageType gtkmessage;
    GtkButtonsType gtkbuttons;
 
@@ -189,7 +168,6 @@ bool RGUserDialog::message(const char *msg,
    gtk_window_set_icon_name(GTK_WINDOW(dia), "synaptic");
 
    gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dia), utf8(msg));
-   gtk_container_set_border_width(GTK_CONTAINER(dia), 6);
 
    switch (buttons) {
       case RUserDialog::ButtonsOkCancel: {
@@ -209,25 +187,10 @@ bool RGUserDialog::message(const char *msg,
       }
    }
 
-   g_signal_connect(
-      G_OBJECT(dia), "response", G_CALLBACK(actionResponse), (gpointer)&res);
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
-
-   gtk_dialog_run(GTK_DIALOG(dia));
-   gtk_widget_destroy(dia);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
-          (res == GTK_RESPONSE_CLOSE);
+   auto res = co_await co_run_dialog(GTK_DIALOG(dia));
+   gtk_window_destroy(GTK_WINDOW(dia));
+   co_return(res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+      (res == GTK_RESPONSE_CLOSE);
 }
 
 // RGGtkBuilderUserDialog
@@ -262,40 +225,23 @@ void RGGtkBuilderUserDialog::init(const char *name)
    assert(_dialog);
    gtk_window_set_icon_name(GTK_WINDOW(_dialog), "synaptic");
 
-   gtk_window_set_position(GTK_WINDOW(_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
-   if (gtk_window_get_modal(GTK_WINDOW(_dialog)))
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0 && !gtk_widget_get_visible(_parentWindow)) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(_dialog);
-         gdk_window_set_transient_for(
-            GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
-      }
-   }
 
    g_free(main_widget);
 }
 
-int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
+task<int> RGGtkBuilderUserDialog::co_run(const char *name,
+                                         bool return_gtk_response)
 {
    if (name != NULL)
       init(name);
 
-   res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
+   res = (GtkResponseType)co_await co_run_dialog(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
 
    if (return_gtk_response)
-      return res;
+      co_return res;
    else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
-             (res == GTK_RESPONSE_CLOSE);
+      co_return(res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+         (res == GTK_RESPONSE_CLOSE);
 }
-
-
-// vim:sts=4:sw=4

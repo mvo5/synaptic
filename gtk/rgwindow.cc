@@ -26,95 +26,71 @@
 
 #include "rgutils.h"
 
-#include <cstddef>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <glib-object.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
-using namespace std;
-
-bool RGWindow::windowCloseCallback(GtkWidget *window, GdkEvent *event)
+gboolean RGWindow::windowCloseCallback(GtkWidget *window, gpointer data)
 {
-   // cout << "windowCloseCallback" << endl;
-   RGWindow *rwin = (RGWindow *)g_object_get_data(G_OBJECT(window), "me");
-
-   return rwin->close();
+   ((RGWindow *)data)->close();
+   return TRUE;
 }
 
-RGWindow::RGWindow(string name, bool makeBox)
+void RGWindow::init()
 {
-   // std::cout << "RGWindow::RGWindow(string name, bool makeBox)" << endl;
-   _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
-
-   g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(
-      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
-
-   if (makeBox) {
-      _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-      gtk_container_add(GTK_CONTAINER(_win), _topBox);
-      gtk_widget_show(_topBox);
-      gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
-   } else {
-      _topBox = NULL;
-   }
-
-   // gtk_widget_realize(_win);
-   // gtk_widget_show_all(_win);
-}
-
-
-RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox, bool closable)
-{
-   // std::cout
-   //<< "RGWindow::RGWindow(RGWindow *parent, string name, bool makeBox,  bool
-   //closable)"
-   //<< endl;
-   _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-
    g_object_set_data(G_OBJECT(_win), "me", this);
 
    g_signal_connect(
-      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
+      G_OBJECT(_win), "close-request", G_CALLBACK(windowCloseCallback), this);
+}
 
-   if (makeBox) {
-      _topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-      gtk_container_add(GTK_CONTAINER(_win), _topBox);
-      gtk_widget_show(_topBox);
-      gtk_container_set_border_width(GTK_CONTAINER(_topBox), 5);
-   } else {
-      _topBox = NULL;
-   }
 
-   // gtk_widget_realize(_win);
+RGWindow::RGWindow(RGWindow *parent, std::string name)
+{
+   _win = gtk_window_new();
+   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
 
+   init();
    gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
 }
 
-
 RGWindow::~RGWindow()
 {
-   // cout << "~RGWindow"<<endl;
-   gtk_widget_destroy(_win);
+   gtk_widget_hide(_win);
 }
 
-
-void RGWindow::setTitle(string title)
+void RGWindow::setTitle(std::string title)
 {
    gtk_window_set_title(GTK_WINDOW(_win), (char *)title.c_str());
 }
 
-bool RGWindow::close()
+GtkShortcutController *RGWindow::getShortcutController()
 {
-   // cout << "RGWindow::close()" << endl;
-   hide();
-   return true;
+   if (!_shortcutController) {
+      _shortcutController =
+         GTK_SHORTCUT_CONTROLLER(gtk_shortcut_controller_new());
+      gtk_widget_add_controller(GTK_WIDGET(_win),
+                                GTK_EVENT_CONTROLLER(_shortcutController));
+   }
+   return _shortcutController;
 }
 
-// vim:ts=3:sw=3:et
+void RGWindow::hideByEscape()
+{
+   gtk_shortcut_controller_add_shortcut(
+      getShortcutController(),
+      gtk_shortcut_new(
+         gtk_keyval_trigger_new(GDK_KEY_Escape, GDK_NO_MODIFIER_MASK),
+         gtk_callback_action_new(
+            [](GtkWidget *, GVariant *, gpointer data) -> gboolean {
+               auto me = static_cast<RGWindow *>(data);
+               gtk_widget_hide(me->_win);
+               return TRUE;
+            },
+            this,
+            nullptr)));
+}
+
+void RGWindow::close()
+{
+   hide();
+}

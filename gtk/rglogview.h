@@ -26,7 +26,6 @@
 
 #include "rggtkbuilderwindow.h"
 
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <string>
 

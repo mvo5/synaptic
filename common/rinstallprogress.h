@@ -30,6 +30,8 @@
 
 #include <string>
 
+#include "coroutines.h"
+
 class RInstallProgress
 {
  protected:
@@ -49,22 +51,31 @@ class RInstallProgress
    static std::string errorMsg;
    static std::string incompleteMsg;
 
-   virtual void startUpdate()
-   {}
-   virtual void updateInterface()
-   {}
-   virtual void finishUpdate()
-   {}
+   [[nodiscard]] virtual task<void> startUpdate()
+   {
+      co_return;
+   }
+   [[nodiscard]] virtual task<void> updateInterface()
+   {
+      co_return;
+   }
+   [[nodiscard]] virtual task<void> finishUpdate()
+   {
+      co_return;
+   }
 
  public:
    // get a str feed to the user with the result of the install run
    virtual const char *getResultStr(pkgPackageManager::OrderResult);
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int numPackagesTotal = 0);
+   [[nodiscard]] virtual task<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int numPackagesTotal = 0);
 
 
    RInstallProgress()
       : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)
+   {}
+   virtual ~RInstallProgress()
    {}
 };

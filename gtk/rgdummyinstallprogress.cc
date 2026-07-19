@@ -26,25 +26,17 @@
 
 #include "rgutils.h"
 
-#include <gtk/gtk.h>
-#include <unistd.h>
-
-void RGDummyInstallProgress::startUpdate()
+task<void> RGDummyInstallProgress::startUpdate()
 {
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGDummyInstallProgress::finishUpdate()
+task<void> RGDummyInstallProgress::finishUpdate()
 {
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGDummyInstallProgress::updateInterface()
+task<void> RGDummyInstallProgress::updateInterface()
 {
-   if (gtk_events_pending()) {
-      while (gtk_events_pending())
-         gtk_main_iteration();
-   } else {
-      usleep(1000000);
-   }
+   co_await sleep_ms{1000};
 }

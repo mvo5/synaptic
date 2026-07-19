@@ -29,9 +29,8 @@
 
 #include "rggtkbuilderwindow.h"
 #include "rsources.h"
+#include "coroutines.h"
 
-#include <gdk/gdk.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <list>
 #include <string>
@@ -42,7 +41,7 @@ class RGWindow;
 typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
 typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
-class RGRepositoryEditor : RGGtkBuilderWindow
+class RGRepositoryEditor : public RGGtkBuilderWindow
 {
    SourcesList _lst, _savedList;
 
@@ -81,22 +80,24 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    static void DoAdd(GtkWidget *, gpointer);
    static void DoUpDown(GtkWidget *, gpointer);
    static void DoRemove(GtkWidget *, gpointer);
-   static void DoOK(GtkWidget *, gpointer);
+   static void cbDoOK(GtkWidget *, gpointer);
+   [[nodiscard]] task<void> doOK();
    static void DoCancel(GtkWidget *, gpointer);
    static void VendorsWindow(GtkWidget *, gpointer);
-   static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
+   static void cbSelectionChanged(GtkTreeSelection *selection, gpointer data);
+   [[nodiscard]] task<void> selectionChanged(GtkTreeSelection *selection);
 
    // treeview item toggled
    static void item_toggled(GtkCellRendererToggle *cell,
                             gchar *path_str,
                             gpointer data);
    // get values
-   void doEdit();
+   [[nodiscard]] task<void> doEdit();
 
 
  public:
    RGRepositoryEditor(RGWindow *parent);
    ~RGRepositoryEditor();
 
-   bool Run();
+   [[nodiscard]] task<bool> Run();
 };

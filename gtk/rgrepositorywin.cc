@@ -92,41 +92,49 @@ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
    RGRepositoryEditor *me =
       (RGRepositoryEditor *)g_object_get_data(G_OBJECT(cell), "me");
    GtkTreeModel *model = (GtkTreeModel *)data;
-   GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
-   GtkTreeIter iter;
-   gboolean toggle_item;
-   gchar *section = NULL;
+   start_task([me, path_str, model]() -> task<void> {
+      GtkTreePath *path = gtk_tree_path_new_from_string(path_str);
+      GtkTreeIter iter;
+      gboolean toggle_item;
+      gchar *section = NULL;
 
-   /* get toggled iter */
-   gtk_tree_model_get_iter(model, &iter, path);
-   gtk_tree_model_get(
-      model, &iter, STATUS_COLUMN, &toggle_item, SECTIONS_COLUMN, &section, -1);
+      /* get toggled iter */
+      gtk_tree_model_get_iter(model, &iter, path);
+      gtk_tree_model_get(model,
+                         &iter,
+                         STATUS_COLUMN,
+                         &toggle_item,
+                         SECTIONS_COLUMN,
+                         &section,
+                         -1);
 
-   /* do something with the value */
-   toggle_item ^= 1;
+      /* do something with the value */
+      toggle_item ^= 1;
 
-   // special warty check
-   if (toggle_item && section && g_strrstr(section, "universe")) {
-      gchar *msg = _("You are adding the \"universe\" component.\n\n "
-                     "Packages in this component are not supported. "
-                     "Are you sure?");
-      if (!me->_userDialog->message(
-             msg, RUserDialog::DialogWarning, RUserDialog::ButtonsOkCancel)) {
-         gtk_tree_path_free(path);
-         g_free(section);
-         return;
+      // special warty check
+      if (toggle_item && section && g_strrstr(section, "universe")) {
+         gchar *msg = _("You are adding the \"universe\" component.\n\n "
+                        "Packages in this component are not supported. "
+                        "Are you sure?");
+         if (!co_await me->_userDialog->message(msg,
+                                                RUserDialog::DialogWarning,
+                                                RUserDialog::ButtonsOkCancel)) {
+            gtk_tree_path_free(path);
+            g_free(section);
+            co_return;
+         }
       }
-   }
 
-   /* set new value */
-   gtk_list_store_set(
-      GTK_LIST_STORE(model), &iter, STATUS_COLUMN, toggle_item, -1);
+      /* set new value */
+      gtk_list_store_set(
+         GTK_LIST_STORE(model), &iter, STATUS_COLUMN, toggle_item, -1);
 
-   me->_dirty = true;
+      me->_dirty = true;
 
-   /* clean up */
-   g_free(section);
-   gtk_tree_path_free(path);
+      /* clean up */
+      g_free(section);
+      gtk_tree_path_free(path);
+   });
 }
 
 
@@ -401,10 +409,10 @@ RGRepositoryEditor::~RGRepositoryEditor()
 }
 
 
-bool RGRepositoryEditor::Run()
+task<bool> RGRepositoryEditor::Run()
 {
    if (_lst.ReadSources() == false) {
-      _userDialog->warning(
+      co_await _userDialog->warning(
          _("Ignoring invalid record(s) in sources.list file!"));
       // return false;
    }
@@ -413,8 +421,8 @@ bool RGRepositoryEditor::Run()
 
    if (_lst.ReadVendors() == false) {
       _error->Error(_("Cannot read vendors.list file"));
-      _userDialog->showErrors();
-      return false;
+      co_await _userDialog->showErrors();
+      co_return false;
    }
 
    GtkTreeIter iter;
@@ -454,8 +462,8 @@ bool RGRepositoryEditor::Run()
 
    UpdateVendorMenu();
 
-   gtk_main();
-   return _applied;
+   co_await co_run_window(GTK_WINDOW(_win));
+   co_return _applied;
 }
 
 void RGRepositoryEditor::UpdateVendorMenu()
@@ -550,7 +558,7 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
    me->_dirty = true;
 }
 
-void RGRepositoryEditor::doEdit()
+task<void> RGRepositoryEditor::doEdit()
 {
    // cout << "RGRepositoryEditor::doEdit()"<<endl;
 
@@ -559,7 +567,7 @@ void RGRepositoryEditor::doEdit()
    // selection = gtk_tree_view_get_selection(GTK_TREE_VIEW (_sourcesListView));
    if (_lastIter == NULL) {
       // cout << "deadbeef"<<endl;
-      return;
+      co_return;
    }
 
    GtkTreeModel *model = GTK_TREE_MODEL(_sourcesListStore);
@@ -608,8 +616,8 @@ void RGRepositoryEditor::doEdit()
          rec->Type |= SourcesList::RepomdSrc;
          break;
       default:
-         _userDialog->error(_("Unknown source type"));
-         return;
+         co_await _userDialog->error(_("Unknown source type"));
+         co_return;
    }
 
 #if 0 // PORTME, no vendor id support right now
@@ -692,30 +700,31 @@ void RGRepositoryEditor::DoRemove(GtkWidget *, gpointer data)
 void RGRepositoryEditor::cbDoOK(GtkWidget *, gpointer data)
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *)data;
-   me->doOK();
+   start_task([me]() -> task<void> { co_await me->doOK(); });
 }
 
-void RGRepositoryEditor::doOK()
+task<void> RGRepositoryEditor::doOK()
 {
-   doEdit();
+   co_await doEdit();
    _lst.UpdateSources();
 
    // check if we actually can parse the sources.list
    pkgSourceList List;
    if (!List.ReadMainList()) {
-      _userDialog->showErrors();
+      co_await _userDialog->showErrors();
       _savedList.UpdateSources();
-      return;
+      co_return;
    }
 
-   gtk_main_quit();
    _applied = _dirty;
+   gtk_window_close(GTK_WINDOW(_win));
 }
 
 void RGRepositoryEditor::DoCancel(GtkWidget *, gpointer data)
 {
-   // RGRepositoryEditor *me = (RGRepositoryEditor *)data;
-   gtk_main_quit();
+   RGRepositoryEditor *me = (RGRepositoryEditor *)data;
+
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
 
 
@@ -724,10 +733,12 @@ void RGRepositoryEditor::cbSelectionChanged(GtkTreeSelection *selection,
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *)data;
    // cout << "RGRepositoryEditor::SelectionChanged()"<<endl;
-   me->selectionChanged(selection);
+   start_task([me, selection]() -> task<void> {
+      co_await me->selectionChanged(selection);
+   });
 }
 
-void RGRepositoryEditor::selectionChanged(GtkTreeSelection *selection)
+task<void> RGRepositoryEditor::selectionChanged(GtkTreeSelection *selection)
 {
    GtkTreeIter iter;
    GtkTreeModel *model;
@@ -738,7 +749,7 @@ void RGRepositoryEditor::selectionChanged(GtkTreeSelection *selection)
    gtk_widget_set_sensitive(_deleteBut, TRUE);
 
    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-      doEdit(); // save the old row
+      co_await doEdit(); // save the old row
       if (_lastIter != NULL)
          gtk_tree_iter_free(_lastIter);
       _lastIter = gtk_tree_iter_copy(&iter);

@@ -27,6 +27,13 @@
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
+#include <functional>
+#include <coroutine>
+#include <exception>
+#include <optional>
+#include <utility>
+#include <type_traits>
+#include "coroutines.h"
 
 enum {
    PIXMAP_COLUMN,
@@ -44,7 +51,7 @@ enum {
    N_COLUMNS
 };
 
-void RGFlushInterface();
+[[nodiscard]] task<void> RGFlushInterface();
 
 bool is_binary_in_path(const char *program);
 
@@ -59,3 +66,194 @@ bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);
 
 std::string MarkupEscapeString(std::string str);
 std::string MarkupUnescapeString(std::string str);
+
+struct [[nodiscard]] sleep_ms
+{
+   int ms;
+
+   bool await_ready() const noexcept
+   {
+      return false;
+   }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      g_timeout_add_once(
+         ms,
+         [](gpointer data) {
+            auto h = std::coroutine_handle<>::from_address(data);
+            h.resume();
+         },
+         h.address());
+   }
+
+   void await_resume() const noexcept
+   {}
+};
+
+struct [[nodiscard]] glib_idle
+{
+   bool await_ready() const noexcept
+   {
+      return false;
+   }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      g_idle_add_once(
+         [](gpointer data) {
+            auto h = std::coroutine_handle<>::from_address(data);
+            h.resume();
+         },
+         h.address());
+   }
+
+   void await_resume() const noexcept
+   {}
+};
+
+struct [[nodiscard]] dialog_response
+{
+   GtkDialog *dialog;
+   int *response;
+
+   explicit dialog_response(GtkDialog *dialog)
+      : dialog(dialog), response(new int{-1})
+   {}
+
+   bool await_ready() const
+   {
+      return false;
+   }
+   void await_suspend(std::coroutine_handle<> h);
+   int await_resume() const noexcept
+   {
+      return *response;
+   }
+};
+
+[[nodiscard]] dialog_response co_run_dialog(GtkDialog *dialog);
+
+struct [[nodiscard]] window_hide
+{
+   GtkWindow *window;
+
+   bool await_ready() const
+   {
+      return false;
+   }
+   void await_suspend(std::coroutine_handle<> h);
+   void await_resume() const noexcept
+   {}
+};
+
+[[nodiscard]] window_hide co_run_window(GtkWindow *window);
+
+struct [[nodiscard]] glib_scheduler
+{
+   bool await_ready() const noexcept
+   {
+      return false;
+   }
+
+   void await_suspend(std::coroutine_handle<> h)
+   {
+      g_main_context_invoke(
+         g_main_context_default(),
+         [](gpointer data) -> gboolean {
+            auto h = std::coroutine_handle<>::from_address(data);
+            h.resume();
+            return G_SOURCE_REMOVE;
+         },
+         h.address());
+   }
+
+   void await_resume() const noexcept
+   {}
+};
+
+template <class T> void destroy_later(T *&obj) noexcept
+{
+   if (!obj)
+      return;
+   T *ptr = obj;
+   obj = nullptr;
+   g_idle_add_once([](gpointer data) { delete static_cast<T *>(data); }, ptr);
+}
+
+struct DetachedTaskOperationBase
+{
+   virtual ~DetachedTaskOperationBase() = default;
+};
+
+struct DetachedTaskReceiver
+{
+   using receiver_concept = beman::execution::receiver_tag;
+
+   DetachedTaskOperationBase *operation = nullptr;
+
+   struct Env
+   {
+      auto query(beman::execution::get_scheduler_t) const noexcept
+      {
+         return beman::execution::inline_scheduler{};
+      }
+   };
+
+   auto get_env() const noexcept
+   {
+      return Env{};
+   }
+
+   void set_value() && noexcept
+   {
+      destroy_later(operation);
+   }
+
+   template <typename Error> void set_error(Error &&) && noexcept
+   {
+      destroy_later(operation);
+   }
+
+   void set_stopped() && noexcept
+   {
+      destroy_later(operation);
+   }
+};
+
+template <typename Operation>
+struct DetachedTaskOperation : DetachedTaskOperationBase
+{
+   std::move_only_function<task<void>()> *func;
+   Operation operation;
+
+   explicit DetachedTaskOperation(std::move_only_function<task<void>()> *func)
+      : func(func),
+        operation(
+           beman::execution::connect((*func)(), DetachedTaskReceiver{this}))
+   {}
+
+   ~DetachedTaskOperation()
+   {
+      delete func;
+   }
+
+   void start() noexcept
+   {
+      beman::execution::start(operation);
+   }
+};
+
+template <typename F> void start_task(F &&f)
+{
+   auto *ff = new std::move_only_function<task<void>()>{
+      [fn = std::forward<F>(f)]() -> task<void> {
+         co_await glib_scheduler{};
+         co_await fn();
+      }};
+
+   using Operation = decltype(beman::execution::connect(
+      std::move((*ff)()), DetachedTaskReceiver{}));
+   auto *operation = new DetachedTaskOperation<Operation>(ff);
+   operation->start();
+}

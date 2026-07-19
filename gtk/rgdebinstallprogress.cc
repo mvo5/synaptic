@@ -168,7 +168,7 @@ int ipc_send_fd(int fd)
    return 0;
 }
 
-int ipc_recv_fd()
+static int ipc_recv_fd()
 {
    // setup socket
    struct sockaddr_un servaddr, cliaddr;
@@ -194,7 +194,6 @@ int ipc_recv_fd()
       if (connfd > 0)
          break;
       usleep(1000);
-      RGFlushInterface();
    }
    // read_fd
    read_fd(connfd, &c, 1, &fd);
@@ -205,7 +204,7 @@ int ipc_recv_fd()
    return fd;
 }
 
-void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
+task<void> RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 {
    string primary, secondary;
    gchar *m, *s, *p;
@@ -283,7 +282,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
       gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer, diff.c_str(), -1);
 
-   int res = dia.run(NULL, true);
+   int res = co_await dia.co_run(NULL, true);
    if (res == GTK_RESPONSE_YES)
       vte_terminal_feed_child(VTE_TERMINAL(_term), "y\n", 2);
    else
@@ -293,11 +292,11 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
    last_term_action = time(NULL);
 }
 
-void RGDebInstallProgress::startUpdate()
+task<void> RGDebInstallProgress::startUpdate()
 {
    child_has_exited = false;
    show();
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
 void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
@@ -475,25 +474,26 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
 
    // user pressed ctrl-c
    if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
-      gchar *summary = _("Ctrl-c pressed");
-      char *msg = _("This will abort the operation and may leave the system "
-                    "in a broken state. Are you sure you want to do that?");
-      GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(me->_win),
-                                              GTK_DIALOG_DESTROY_WITH_PARENT,
-                                              GTK_MESSAGE_WARNING,
-                                              GTK_BUTTONS_YES_NO,
-                                              "%s",
-                                              summary);
-      gtk_message_dialog_format_secondary_text(
-         GTK_MESSAGE_DIALOG(dia), "%s", msg);
-      int res = gtk_dialog_run(GTK_DIALOG(dia));
-      gtk_widget_destroy(dia);
-      switch (res) {
-         case GTK_RESPONSE_YES:
-            return false;
-         case GTK_RESPONSE_NO:
-            return true;
-      }
+      start_task([me]() -> task<void> {
+         gchar *summary = _("Ctrl-c pressed");
+         char *msg = _("This will abort the operation and may leave the system "
+                       "in a broken state. Are you sure you want to do that?");
+         GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(me->_win),
+                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                 GTK_MESSAGE_WARNING,
+                                                 GTK_BUTTONS_YES_NO,
+                                                 "%s",
+                                                 summary);
+         gtk_message_dialog_format_secondary_text(
+            GTK_MESSAGE_DIALOG(dia), "%s", msg);
+         int res = co_await co_run_dialog(GTK_DIALOG(dia));
+         gtk_widget_destroy(dia);
+         if (res == GTK_RESPONSE_YES) {
+            vte_terminal_feed_child(
+               VTE_TERMINAL(me->_term), "\x03", 1); // Send Ctrl+C to terminal
+         }
+      });
+      return true;
    } else if (event->keyval == GDK_KEY_C &&
               event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
       // ctrl+shift+C copy to clipboard to mimic gnome-terminal behavior
@@ -547,7 +547,7 @@ void RGDebInstallProgress::terminalAction(GtkWidget *terminal,
    }
 }
 
-void RGDebInstallProgress::updateInterface()
+task<void> RGDebInstallProgress::updateInterface()
 {
    char buf[2];
    static char line[1024] = "";
@@ -592,7 +592,7 @@ void RGDebInstallProgress::updateInterface()
          } else if (strstr(status, "pmconffile") != NULL) {
             // conffile-request from dpkg, needs to be parsed different
             // cout << split[2] << " " << split[3] << endl;
-            conffile(pkg, split[3]);
+            co_await conffile(pkg, split[3]);
          } else {
             _startCounting = true;
             gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 0);
@@ -624,7 +624,7 @@ void RGDebInstallProgress::updateInterface()
    time_t now = time(NULL);
 
    if (!_startCounting) {
-      usleep(100000);
+      co_await sleep_ms{100};
       gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
       // wait until we get the first message from apt
       last_term_action = now;
@@ -647,14 +647,8 @@ void RGDebInstallProgress::updateInterface()
       gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
    }
 
-
-   if (gtk_events_pending()) {
-      while (gtk_events_pending())
-         gtk_main_iteration();
-   } else {
-      // 25fps
-      usleep(1000000 / 25);
-   }
+   // 25fps
+   co_await sleep_ms{40};
 }
 
 std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(
@@ -672,16 +666,18 @@ std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(
    if (_child_id < 0) {
       cerr << "vte_terminal_forkpty() failed. " << strerror(errno) << endl;
       res = pkgPackageManager::Failed;
-      GtkWidget *dialog;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(window()),
-                                      GTK_DIALOG_DESTROY_WITH_PARENT,
-                                      GTK_MESSAGE_ERROR,
-                                      GTK_BUTTONS_CLOSE,
-                                      NULL);
-      gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog),
-                                    _("Error failed to fork pty"));
-      gtk_dialog_run(GTK_DIALOG(dialog));
-      gtk_widget_destroy(dialog);
+      /*
+            GtkWidget *dialog;
+            dialog = gtk_message_dialog_new(GTK_WINDOW(window()),
+                                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                                            GTK_MESSAGE_ERROR,
+                                            GTK_BUTTONS_CLOSE,
+                                            NULL);
+            gtk_message_dialog_set_markup(GTK_MESSAGE_DIALOG(dialog),
+                                          _("Error failed to fork pty"));
+            co_await co_run_dialog(GTK_DIALOG(dialog));
+            gtk_widget_destroy(dialog);
+      */
       return res;
    } else if (_child_id == 0) {
       int fd[2];
@@ -753,12 +749,12 @@ std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::poll()
 }
 
 
-void RGDebInstallProgress::finishUpdate()
+task<void> RGDebInstallProgress::finishUpdate()
 {
    if (_startCounting) {
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);
    }
-   RGFlushInterface();
+   co_await RGFlushInterface();
 
    GtkWidget *_closeB =
       GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
@@ -794,7 +790,7 @@ void RGDebInstallProgress::finishUpdate()
       case 1: // error
          gtk_image_set_from_icon_name(
             GTK_IMAGE(img), "dialog-error", GTK_ICON_SIZE_DIALOG);
-         _userDialog->showErrors();
+         co_await _userDialog->showErrors();
          break;
       case 2: // incomplete
          gtk_image_set_from_icon_name(
@@ -806,8 +802,7 @@ void RGDebInstallProgress::finishUpdate()
    // wait for user action
    while (true) {
       // events
-      while (gtk_events_pending())
-         gtk_main_iteration();
+      co_await glib_idle{};
 
       // user clicked "close" button
       if (_updateFinished)
@@ -819,7 +814,7 @@ void RGDebInstallProgress::finishUpdate()
          break;
 
       // wait a bit
-      g_usleep(100000);
+      co_await sleep_ms{100};
    }
 
    // set the value again, it may have changed

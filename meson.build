@@ -4,12 +4,15 @@ project(
   version: '0.91.7',
   default_options: [
     'warning_level=1',
-    'cpp_std=gnu++17',
+    'cpp_std=c++23',
   ],
 )
 
+add_project_arguments('-fcoroutines', language: ['cpp'])
+
 i18n = import('i18n')
 gnome = import('gnome')
+cmake = import('cmake')
 
 prefix = get_option('prefix')
 bindir = prefix / get_option('bindir')
@@ -26,9 +29,15 @@ root_inc = include_directories('.')
 common_inc = include_directories('common')
 gtk_inc = include_directories('gtk')
 
+task_options = cmake.subproject_options()
+task_options.add_cmake_defines({'BEMAN_USE_MODULES': 'OFF'})
+task = cmake.subproject('task', options: task_options)
+task_dep = task.get_variable('beman_task_dep')
+
 threads_dep = dependency('threads')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.4.0')
 pango_dep = dependency('pango', version: '>= 1.0.0')
+tbb_dep = dependency('tbb')
 glib_dep = dependency('glib-2.0')
 apt_pkg_dep = dependency('apt-pkg', required: true)
 x11_dep = cpp.find_library('X11', required: true)
@@ -153,7 +162,7 @@ gtk_cpp_args = [
   '-DGDK_PIXBUF_DISABLE_DEPRECATED',
 ]
 
-common_deps = [apt_pkg_dep]
+common_deps = [apt_pkg_dep, task_dep]
 common_deps += rpm_deps
 if apt_inst_dep.found()
   common_deps += [apt_inst_dep]
@@ -163,6 +172,8 @@ if have_xapian
 endif
 
 gui_deps = [
+  task_dep,
+  tbb_dep,
   gtk_dep,
   pango_dep,
   glib_dep,

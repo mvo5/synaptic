@@ -152,14 +152,13 @@ void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
 {
    // cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
-
    doShowBigScreenshot(pkg);
 }
 
 void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(NULL);
-   ;
+
    pkgAcquire fetcher(status);
    string filename = pkg->getScreenshotFile(&fetcher, false);
    GtkWidget *img = gtk_image_new_from_file(filename.c_str());
@@ -169,17 +168,15 @@ void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
    gtk_widget_show(img);
    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(win));
    gtk_container_add(GTK_CONTAINER(content_area), img);
-   gtk_dialog_run(GTK_DIALOG(win));
-   gtk_widget_destroy(win);
+   g_signal_connect(win, "response", G_CALLBACK(gtk_widget_destroy), nullptr);
+   gtk_window_present(GTK_WINDOW(win));
 }
 
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info *)data;
-
    if (_config->FindB("Synaptic::InlineScreenshots") == false) {
       doShowBigScreenshot(si->pkg);
-      return;
    } else {
 
       // hide button
@@ -187,7 +184,7 @@ void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 
       // get screenshot
       RGFetchProgress *status = new RGFetchProgress(NULL);
-      ;
+
       pkgAcquire fetcher(status);
       string filename = si->pkg->getScreenshotFile(&fetcher);
       GtkWidget *event = gtk_event_box_new();
@@ -207,7 +204,9 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 {
    RPackage *pkg = (RPackage *)data;
    RGWindow *parent = (RGWindow *)g_object_get_data(G_OBJECT(button), "me");
-   ShowChangelogDialog(parent, pkg);
+   start_task([parent, pkg]() -> task<void> {
+      co_await ShowChangelogDialog(parent, pkg);
+   });
 }
 
 gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label,
@@ -401,7 +400,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gchar *str;
    vector<string> list;
    vector<pair<string, string>> versions = pkg->getAvailableVersions();
-   for (int i = 0; i < versions.size(); i++) {
+   for (size_t i = 0; i < versions.size(); i++) {
       // TRANSLATORS: this the format of the available versions in
       // the "Properties/Available versions" window
       // e.g. "0.56 (unstable)"

@@ -28,6 +28,7 @@
 
 #include "rpackagecache.h"
 #include "rpackagestatus.h"
+#include "coroutines.h"
 
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/progress.h>
@@ -333,7 +334,8 @@ class RPackageLister
    bool distUpgrade();
    bool cleanPackageCache(bool forceClean = false);
    bool updateCache(pkgAcquireStatus *status, std::string &error);
-   bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
+   [[nodiscard]] task<bool> commitChanges(pkgAcquireStatus *status,
+                                          RInstallProgress *iprog);
 
    // some information
    bool getDownloadUris(std::vector<std::string> &uris);

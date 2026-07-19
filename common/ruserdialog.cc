@@ -27,10 +27,10 @@
 #include <string>
 #include "ruserdialog.h"
 
-bool RUserDialog::showErrors()
+task<bool> RUserDialog::showErrors()
 {
    if (_error->empty())
-      return false;
+      co_return false;
 
    while (!_error->empty()) {
       std::string message;
@@ -42,13 +42,13 @@ bool RUserDialog::showErrors()
 
       if (!message.empty()) {
          if (iserror)
-            error(message.c_str());
+            co_await error(message.c_str());
          else
-            warning(message.c_str());
+            co_await warning(message.c_str());
       }
    }
 
-   return true;
+   co_return true;
 }
 
 // vim:ts=3:sw=3:et

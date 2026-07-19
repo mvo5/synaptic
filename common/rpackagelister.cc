@@ -1468,8 +1468,8 @@ bool RPackageLister::getDownloadUris(vector<string> &uris)
    return true;
 }
 
-bool RPackageLister::commitChanges(pkgAcquireStatus *status,
-                                   RInstallProgress *iprog)
+task<bool> RPackageLister::commitChanges(pkgAcquireStatus *status,
+                                         RInstallProgress *iprog)
 {
    FileFd lock;
    int numPackages = 0;
@@ -1479,7 +1479,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    _updating = true;
 
    if (!lockPackageCache(lock))
-      return false;
+      co_return false;
 
    if (_config->FindB("Synaptic::Log::Changes", true))
       makeCommitLog();
@@ -1489,7 +1489,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    assert(_cache->list() != NULL);
    // Read the source list
    if (_cache->list()->ReadMainList() == false) {
-      _userDialog->warning(
+      co_await _userDialog->warning(
          _("Ignoring invalid record(s) in sources.list file!"));
    }
 
@@ -1497,7 +1497,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
    if (!rPM->GetArchives(&fetcher, _cache->list(), _records) ||
        _error->PendingError()) {
-      return false;
+      co_return false;
    }
 
    // ripped from apt-get
@@ -1506,11 +1506,11 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
 #ifdef HAVE_RPM
       if (fetcher.Run() == pkgAcquire::Failed) {
-         return false;
+         co_return false;
       }
 #else
       if (fetcher.Run(50000) == pkgAcquire::Failed) {
-         return false;
+         co_return false;
       }
 #endif
 
@@ -1557,14 +1557,14 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
 
       if (_config->FindB("Volatile::Download-Only", false)) {
          _updating = false;
-         return !Failed;
+         co_return !Failed;
       }
 
       if (Failed) {
          string message;
 
          if (Transient || numPackages == 0) {
-            return false;
+            co_return false;
          }
 
          message = _("Some of the packages could not be retrieved from the "
@@ -1573,14 +1573,14 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             message += "(" + serverError + ")\n";
          message += _("Do you want to continue, ignoring these packages?");
 
-         if (!_userDialog->confirm(message.c_str())) {
-            return false;
+         if (!co_await _userDialog->confirm(message.c_str())) {
+            co_return false;
          }
       }
       // Try to deal with missing package files
       if (Failed == true && rPM->FixMissing() == false) {
          _error->Error(_("Unable to correct missing packages"));
-         return false;
+         co_return false;
       }
       // need this so that we first fetch everything and then install (for CDs)
       if (Transient == false ||
@@ -1595,16 +1595,16 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          std::optional<pkgPackageManager::OrderResult> Res;
          Res = iprog->start(rPM.get(), numPackages, numPackagesTotal);
          if (!Res.has_value()) {
-            iprog->startUpdate();
+            co_await iprog->startUpdate();
             while (!(Res = iprog->poll()).has_value()) {
-               iprog->updateInterface();
+               co_await iprog->updateInterface();
             }
-            iprog->finishUpdate();
+            co_await iprog->finishUpdate();
          }
          _system->LockInner();
          if (*Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false) {
-               return false;
+               co_return false;
             }
             Ret = false;
             // TODO: We must not discard errors here. The right
@@ -1622,7 +1622,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       fetcher.Shutdown();
 
       if (!rPM->GetArchives(&fetcher, _cache->list(), _records)) {
-         return false;
+         co_return false;
       }
    }
 
@@ -1635,7 +1635,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (_config->FindB("Synaptic::Log::Changes", true))
       writeCommitLog();
 
-   return Ret;
+   co_return Ret;
 }
 
 void RPackageLister::writeCommitLog()

@@ -72,18 +72,7 @@
 #include <ctime>
 #include <fstream>
 #include <functional>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkkeysyms-compat.h>
-#include <gdk/gdkkeysyms.h>
-#include <gio/gmenu.h>
-#include <gio/gmenumodel.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <glib/gtypes.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <iostream>
 #include <libintl.h>
 #include <pwd.h>
@@ -1350,7 +1339,7 @@ void RGMainWindow::buildInterface()
 
    GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
    gtk_binding_entry_add_signal(
-      binding_set, GDK_s, GDK_CONTROL_MASK, "start_interactive_search", 0);
+      binding_set, GDK_KEY_s, GDK_CONTROL_MASK, "start_interactive_search", 0);
 
    _entry_fast_search =
       GTK_WIDGET(gtk_builder_get_object(_builder, "entry_fast_search"));
@@ -2049,20 +2038,6 @@ void RGMainWindow::cbDetailsWindow(GSimpleAction *action,
 
    RGPkgDetailsWindow::fillInValues(me->_pkgDetails, pkg, true);
    me->_pkgDetails->show();
-}
-
-// helper to hide the "please wait" message
-static void plug_added(GtkWidget *sock, void *data)
-{
-   gtk_widget_show(sock);
-   gtk_widget_hide(GTK_WIDGET(data));
-}
-
-static gboolean kill_repos(GtkWidget *self, GdkEvent *event, void *data)
-{
-   GPid pid = *(GPid *)data;
-   kill(pid, SIGQUIT);
-   return TRUE;
 }
 
 void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
@@ -3464,5 +3439,3 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
    me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");
 #endif
 }
-
-// vim:ts=3:sw=3:et

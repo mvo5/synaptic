@@ -34,12 +34,6 @@
 #include <apt-pkg/error.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
@@ -118,18 +112,6 @@ bool RGUserDialog::showErrors()
       "expand",
       TRUE,
       NULL);
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
 
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
@@ -212,18 +194,6 @@ bool RGUserDialog::message(const char *msg,
    g_signal_connect(
       G_OBJECT(dia), "response", G_CALLBACK(actionResponse), (gpointer)&res);
 
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
-
    gtk_dialog_run(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
    return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
@@ -267,18 +237,6 @@ void RGGtkBuilderUserDialog::init(const char *name)
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
 
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0 && !gtk_widget_get_visible(_parentWindow)) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(_dialog);
-         gdk_window_set_transient_for(
-            GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
-      }
-   }
-
    g_free(main_widget);
 }
 
@@ -296,6 +254,3 @@ int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
       return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
              (res == GTK_RESPONSE_CLOSE);
 }
-
-
-// vim:sts=4:sw=4

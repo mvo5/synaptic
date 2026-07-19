@@ -31,14 +31,8 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <iostream>
-#include <pango/pango-font.h>
 #include <string>
 #include <vector>
 
@@ -89,23 +83,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
    g_signal_connect(
       G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
    _topBox = NULL;
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(_win);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(_win)),
-                                      win);
-      }
-   }
-   // if we have no parent, don't skip the taskbar hint
-   if (_config->FindB("Volatile::HideMainwindow", false) && id < 0) {
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), FALSE);
-      gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
-   }
 }
 
 bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)

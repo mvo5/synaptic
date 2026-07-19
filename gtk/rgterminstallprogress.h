@@ -52,7 +52,7 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    bool child_has_exited;
    static void child_exited(VteTerminal *vteterminal, gint ret, gpointer data);
    static void stopShell(GtkWidget *self, void *data);
-   virtual bool close();
+   virtual void close() override;
 
  public:
    RGTermInstallProgress(RGMainWindow *main);

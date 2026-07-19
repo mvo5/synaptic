@@ -56,7 +56,7 @@ class RGInstallProgressMsgs : public RGGtkBuilderWindow
 
    virtual bool empty();
    virtual void run();
-   virtual bool close();
+   virtual void close() override;
 
    RGInstallProgressMsgs(RGWindow *win);
    ~RGInstallProgressMsgs();

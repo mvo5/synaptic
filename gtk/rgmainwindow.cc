@@ -1578,10 +1578,10 @@ bool RGMainWindow::restoreState()
 }
 
 
-bool RGMainWindow::close()
+void RGMainWindow::close()
 {
    if (_interfaceLocked > 0)
-      return true;
+      return;
 
    RGGtkBuilderUserDialog dia(this);
    if (_unsavedChanges == false || dia.run("quit")) {
@@ -1590,7 +1590,6 @@ bool RGMainWindow::close()
       showErrors();
       exit(0);
    }
-   return true;
 }
 
 
@@ -2675,7 +2674,7 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    RGFetchProgress *fprogress = me->_fetchProgress = new RGFetchProgress(me);
    fprogress->setDescription(_("Downloading Package Files"), "");
    //			     _("The package files will be cached locally for
-   //installation."));
+   // installation."));
 
    // Do not let the treeview access the cache during the update.
    me->setTreeLocked(TRUE);

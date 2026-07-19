@@ -37,8 +37,6 @@
 
 #   include <gobject/gclosure.h>
 #   include <apt-pkg/cdrom.h>
-#   include <glib-object.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
 #   include <string>
 
@@ -56,7 +54,7 @@ class RGDiscName : public RGGtkBuilderWindow
  public:
    RGDiscName(RGWindow *wwin, const string defaultName);
 
-   bool run(string &name);
+   [[nodiscard]] task<bool> run(string &name);
 };
 
 void RGCDScanner::Update(string text, int current)
@@ -68,28 +66,27 @@ void RGCDScanner::Update(string text, int current)
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
                                     ((float)current) / totalSteps);
    show();
-   RGFlushInterface();
 }
 
 bool RGCDScanner::ChangeCdrom()
 {
-   return _userDialog->proceed(_("Please insert a disc in the drive."));
+   // TODO
+   // co_return co_await _userDialog->proceed(_("Please insert a disc in the
+   // drive."));
+   return false;
 }
 
 bool RGCDScanner::AskCdromName(string &name)
 {
    // cout << "askCdromName()" << endl;
    RGDiscName discName(this, name);
-
-   if (!discName.run(name)) {
-      return false;
-   }
-
-   return true;
+   // TODO
+   //   co_return co_await discName.run(name);
+   return false;
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-   : pkgCdromStatus(), RGWindow(main, "cdscanner", true, false)
+   : pkgCdromStatus(), RGWindow(main, "cdscanner")
 {
    setTitle(_("Scanning CD-ROM"));
 
@@ -97,27 +94,32 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 300, 120);
 
-   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
+   GtkWidget *topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+   gtk_container_add(GTK_CONTAINER(_win), topBox);
+   gtk_widget_set_margin_top(topBox, 12);
+   gtk_widget_set_margin_bottom(topBox, 12);
+   gtk_widget_set_margin_start(topBox, 12);
+   gtk_widget_set_margin_end(topBox, 12);
 
    _label = gtk_label_new("\n\n");
-   gtk_widget_show(_label);
-   gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(topBox), _label, TRUE, TRUE, 10);
 
    _pbar = gtk_progress_bar_new();
-   gtk_widget_show(_pbar);
    gtk_widget_set_size_request(_pbar, -1, 25);
-   gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(topBox), _pbar, FALSE, TRUE, 0);
 
-   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_widget_show_all(topBox);
+
    gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
    gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
-bool RGCDScanner::run()
+task<bool> RGCDScanner::run()
 {
    pkgCdrom scanner;
 
-   return scanner.Add(this);
+   bool result = scanner.Add(this);
+   co_return result;
 }
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
@@ -144,21 +146,22 @@ void RGDiscName::onOkClicked(GtkWidget *self, void *data)
 {
    RGDiscName *me = (RGDiscName *)data;
    me->_userConfirmed = true;
-   gtk_main_quit();
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
 
 void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
 {
-   gtk_main_quit();
+   RGDiscName *me = (RGDiscName *)data;
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
 
-bool RGDiscName::run(string &discName)
+task<bool> RGDiscName::run(string &discName)
 {
    _userConfirmed = false;
    show();
-   gtk_main();
+   co_await co_run_window(GTK_WINDOW(_win));
    discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
-   return _userConfirmed;
+   co_return _userConfirmed;
 }
 
 #endif

@@ -27,6 +27,7 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "rgwindow.h"
+#include "rgutils.h"
 #include "ruserdialog.h"
 
 #include <cstddef>
@@ -43,9 +44,9 @@ class RGUserDialog : public RUserDialog
    RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
    RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
 
-   virtual bool showErrors();
+   [[nodiscard]] virtual task<bool> showErrors();
 
-   virtual bool message(
+   [[nodiscard]] virtual task<bool> message(
       const char *msg,
       RUserDialog::DialogType dialog = RUserDialog::DialogInfo,
       RUserDialog::ButtonsType buttons = RUserDialog::ButtonsOk,
@@ -92,7 +93,8 @@ class RGGtkBuilderUserDialog : public RGUserDialog
       gtk_window_set_title(GTK_WINDOW(_dialog), title.c_str());
    }
 
-   int run(const char *name = NULL, bool return_gtk_response = false);
+   [[nodiscard]] task<int> co_run(const char *name = NULL,
+                                  bool return_gtk_response = false);
    GtkBuilder *getGtkBuilder()
    {
       return builder;

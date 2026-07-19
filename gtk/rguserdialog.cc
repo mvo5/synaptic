@@ -34,30 +34,18 @@
 #include <apt-pkg/error.h>
 #include <cassert>
 #include <cstddef>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 
 using namespace std;
 
-static void actionResponse(GtkDialog *dialog, gint id, gpointer user_data)
-{
-   GtkResponseType *res = (GtkResponseType *)user_data;
-   *res = (GtkResponseType)id;
-}
-
-bool RGUserDialog::showErrors()
+task<bool> RGUserDialog::showErrors()
 {
    GtkWidget *dia;
    std::string err, warn;
 
    if (_error->empty())
-      return false;
+      co_return false;
 
    while (!_error->empty()) {
       string message;
@@ -119,32 +107,19 @@ bool RGUserDialog::showErrors()
       TRUE,
       NULL);
 
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
-
-   gtk_dialog_run(GTK_DIALOG(dia));
+   co_await co_run_dialog(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
 
-   return true;
+   co_return true;
 }
 
 
-bool RGUserDialog::message(const char *msg,
-                           RUserDialog::DialogType dialog,
-                           RUserDialog::ButtonsType buttons,
-                           bool defaultResponse)
+task<bool> RGUserDialog::message(const char *msg,
+                                 RUserDialog::DialogType dialog,
+                                 RUserDialog::ButtonsType buttons,
+                                 bool defaultResponse)
 {
    GtkWidget *dia;
-   GtkResponseType res;
    GtkMessageType gtkmessage;
    GtkButtonsType gtkbuttons;
 
@@ -209,25 +184,10 @@ bool RGUserDialog::message(const char *msg,
       }
    }
 
-   g_signal_connect(
-      G_OBJECT(dia), "response", G_CALLBACK(actionResponse), (gpointer)&res);
-
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(dia);
-         gdk_window_set_transient_for(GDK_WINDOW(gtk_widget_get_window(dia)),
-                                      win);
-      }
-   }
-
-   gtk_dialog_run(GTK_DIALOG(dia));
+   auto res = co_await co_run_dialog(GTK_DIALOG(dia));
    gtk_widget_destroy(dia);
-   return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
-          (res == GTK_RESPONSE_CLOSE);
+   co_return(res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+      (res == GTK_RESPONSE_CLOSE);
 }
 
 // RGGtkBuilderUserDialog
@@ -267,35 +227,21 @@ void RGGtkBuilderUserDialog::init(const char *name)
       gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
 
-   // honor foreign parent windows (to make embedding easy)
-   int id = _config->FindI("Volatile::ParentWindowId", -1);
-   if (id > 0 && !gtk_widget_get_visible(_parentWindow)) {
-      GdkWindow *win =
-         gdk_x11_window_foreign_new_for_display(gdk_display_get_default(), id);
-      if (win) {
-         gtk_widget_realize(_dialog);
-         gdk_window_set_transient_for(
-            GDK_WINDOW(gtk_widget_get_window(_dialog)), win);
-      }
-   }
-
    g_free(main_widget);
 }
 
-int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
+task<int> RGGtkBuilderUserDialog::co_run(const char *name,
+                                         bool return_gtk_response)
 {
    if (name != NULL)
       init(name);
 
-   res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
+   res = (GtkResponseType)co_await co_run_dialog(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
 
    if (return_gtk_response)
-      return res;
+      co_return res;
    else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
-             (res == GTK_RESPONSE_CLOSE);
+      co_return(res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
+         (res == GTK_RESPONSE_CLOSE);
 }
-
-
-// vim:sts=4:sw=4

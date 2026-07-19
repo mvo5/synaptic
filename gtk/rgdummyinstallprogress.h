@@ -29,9 +29,9 @@
 class RGDummyInstallProgress : public RInstallProgress
 {
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
+   [[nodiscard]] virtual task<void> startUpdate();
+   [[nodiscard]] virtual task<void> updateInterface();
+   [[nodiscard]] virtual task<void> finishUpdate();
 
  public:
    RGDummyInstallProgress() : RInstallProgress() {};

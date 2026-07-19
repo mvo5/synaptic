@@ -28,7 +28,6 @@
 #include "rinstallprogress.h"
 
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <map>
 #include <string>
 
@@ -56,8 +55,8 @@ class RGInstallProgressMsgs : public RGGtkBuilderWindow
    virtual void addLine(const char *line);
 
    virtual bool empty();
-   virtual void run();
-   virtual bool close();
+   [[nodiscard]] virtual task<void> run();
+   virtual void close() override;
 
    RGInstallProgressMsgs(RGWindow *win);
    ~RGInstallProgressMsgs();
@@ -86,9 +85,9 @@ class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProviderBold;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
+   [[nodiscard]] virtual task<void> startUpdate();
+   [[nodiscard]] virtual task<void> updateInterface();
+   [[nodiscard]] virtual task<void> finishUpdate();
 
    virtual void prepare(RPackageLister *lister);
 

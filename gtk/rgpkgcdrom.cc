@@ -37,8 +37,6 @@
 
 #   include <gobject/gclosure.h>
 #   include <apt-pkg/cdrom.h>
-#   include <glib-object.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
 #   include <string>
 
@@ -89,7 +87,7 @@ bool RGCDScanner::AskCdromName(string &name)
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
-   : pkgCdromStatus(), RGWindow(main, "cdscanner", true, false)
+   : pkgCdromStatus(), RGWindow(main, "cdscanner")
 {
    setTitle(_("Scanning CD-ROM"));
 
@@ -97,18 +95,22 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 300, 120);
 
-   gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
+   GtkWidget *topBox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+   gtk_container_add(GTK_CONTAINER(_win), topBox);
+   gtk_widget_set_margin_top(topBox, 12);
+   gtk_widget_set_margin_bottom(topBox, 12);
+   gtk_widget_set_margin_start(topBox, 12);
+   gtk_widget_set_margin_end(topBox, 12);
 
    _label = gtk_label_new("\n\n");
-   gtk_widget_show(_label);
-   gtk_box_pack_start(GTK_BOX(_topBox), _label, TRUE, TRUE, 10);
+   gtk_box_pack_start(GTK_BOX(topBox), _label, TRUE, TRUE, 10);
 
    _pbar = gtk_progress_bar_new();
-   gtk_widget_show(_pbar);
    gtk_widget_set_size_request(_pbar, -1, 25);
-   gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(topBox), _pbar, FALSE, TRUE, 0);
 
-   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
+   gtk_widget_show_all(topBox);
+
    gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
    gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
 }

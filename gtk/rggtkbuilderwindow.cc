@@ -73,6 +73,7 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
 
    _win = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget));
    assert(_win);
+   init();
 
    if (parent != NULL)
       gtk_window_set_transient_for(GTK_WINDOW(_win),
@@ -82,13 +83,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_free(main_widget);
-
-   // gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-
-   g_object_set_data(G_OBJECT(_win), "me", this);
-   g_signal_connect(
-      G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
-   _topBox = NULL;
 
    // honor foreign parent windows (to make embedding easy)
    int id = _config->FindI("Volatile::ParentWindowId", -1);

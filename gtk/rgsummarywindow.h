@@ -26,6 +26,7 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "coroutines.h"
 #include "rggtkbuilderwindow.h"
 
 #include <gtk/gtk.h>
@@ -55,5 +56,5 @@ class RGSummaryWindow : public RGGtkBuilderWindow
  public:
    RGSummaryWindow(RGWindow *win, RPackageLister *lister);
 
-   bool showAndConfirm();
+   [[nodiscard]] task<bool> showAndConfirm();
 };

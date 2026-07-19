@@ -1,0 +1,46 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-json
+      - id: check-yaml
+        exclude: ^\.clang-(format|tidy)$
+      - id: check-added-large-files
+
+  # Config file: .codespellrc
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.2
+    hooks:
+      - id: codespell
+        files: ^.*\.(cmake|cpp|cppm|hpp|txt|md|mds|json|js|in|yaml|yml|py|toml)$
+        args: ["--write", "--ignore-words", ".codespellignore" ]
+
+  - repo: https://github.com/bemanproject/beman-tidy
+    rev: v0.4.0
+    hooks:
+    - id: beman-tidy
+
+  # Clang-format for C++
+  # This brings in a portable version of clang-format.
+  # See also: https://github.com/ssciwr/clang-format-wheel
+  # Config file: .clang-format
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v22.1.4
+    hooks:
+      - id: clang-format
+        types_or: [c++, c, json, javascript]
+        exclude: docs/TODO.json
+
+  # CMake linting and formatting
+  - repo: https://github.com/BlankSpruce/gersemi-pre-commit
+    rev: 0.27.2
+    hooks:
+      - id: gersemi
+        name: CMake linting
+        exclude: ^.*/tests/.*/data/ # Exclude test data directories
+
+exclude: 'infra/'

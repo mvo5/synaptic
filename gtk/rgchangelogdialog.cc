@@ -40,7 +40,7 @@ class RGWindow;
 
 using namespace std;
 
-void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
+task<void> ShowChangelogDialog(RGWindow *me, RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(me);
    ;
@@ -83,7 +83,7 @@ void ShowChangelogDialog(RGWindow *me, RPackage *pkg)
       gtk_text_buffer_insert_at_cursor(buffer, "\n", -1);
    }
 
-   dia.run();
+   co_await dia.co_run();
 
    // clean up
    delete status;

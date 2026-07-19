@@ -86,7 +86,7 @@ std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-      return res;
+      co_return res;
 
    /*
     * This will make a pipe from where we can read child's output

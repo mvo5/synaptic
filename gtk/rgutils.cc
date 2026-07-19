@@ -34,11 +34,9 @@
 #include <string>
 #include <vector>
 
-void RGFlushInterface()
+task<void> RGFlushInterface()
 {
-   while (gtk_events_pending()) {
-      gtk_main_iteration();
-   }
+   co_await glib_idle{};
 }
 
 static void AddRun0Environment(std::vector<const gchar *> &prefix)
@@ -308,4 +306,63 @@ std::string MarkupUnescapeString(std::string escaped)
    }
    return escaped;
 }
+
+struct DialogResponseClosure
+{
+   int *response;
+   std::coroutine_handle<> h;
+};
+
+static void dialog_response_callback(GtkDialog *dialog,
+                                     int response_id,
+                                     gpointer data)
+{
+   g_signal_handlers_disconnect_by_data(dialog, data);
+
+   auto *closure = static_cast<DialogResponseClosure *>(data);
+   *closure->response = response_id;
+   if (closure->h) {
+      closure->h.resume();
+      closure->h = {};
+   }
+}
+
+void dialog_response::await_suspend(std::coroutine_handle<> h)
+{
+   g_signal_connect_data(
+      dialog,
+      "response",
+      G_CALLBACK(dialog_response_callback),
+      new DialogResponseClosure{response, h},
+      [](gpointer data, GClosure *) {
+         delete static_cast<DialogResponseClosure *>(data);
+      },
+      G_CONNECT_DEFAULT);
+}
+
+dialog_response co_run_dialog(GtkDialog *dialog)
+{
+   gtk_window_present(GTK_WINDOW(dialog));
+   return dialog_response{dialog};
+}
+
+static void window_hide_callback(GtkWindow *window, gpointer data)
+{
+   g_signal_handlers_disconnect_by_data(window, data);
+   if (auto h = std::coroutine_handle<>::from_address(data))
+      h.resume();
+}
+
+void window_hide::await_suspend(std::coroutine_handle<> h)
+{
+   g_signal_connect(
+      window, "hide", G_CALLBACK(window_hide_callback), h.address());
+}
+
+window_hide co_run_window(GtkWindow *window)
+{
+   gtk_window_present(window);
+   return window_hide{window};
+}
+
 // vim:ts=3:sw=3:et

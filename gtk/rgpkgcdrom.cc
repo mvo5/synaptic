@@ -54,7 +54,7 @@ class RGDiscName : public RGGtkBuilderWindow
  public:
    RGDiscName(RGWindow *wwin, const string defaultName);
 
-   bool run(string &name);
+   [[nodiscard]] task<bool> run(string &name);
 };
 
 void RGCDScanner::Update(string text, int current)
@@ -66,24 +66,23 @@ void RGCDScanner::Update(string text, int current)
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
                                     ((float)current) / totalSteps);
    show();
-   RGFlushInterface();
 }
 
 bool RGCDScanner::ChangeCdrom()
 {
-   return _userDialog->proceed(_("Please insert a disc in the drive."));
+   // TODO
+   // co_return co_await _userDialog->proceed(_("Please insert a disc in the
+   // drive."));
+   return false;
 }
 
 bool RGCDScanner::AskCdromName(string &name)
 {
    // cout << "askCdromName()" << endl;
    RGDiscName discName(this, name);
-
-   if (!discName.run(name)) {
-      return false;
-   }
-
-   return true;
+   // TODO
+   //   co_return co_await discName.run(name);
+   return false;
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
@@ -115,11 +114,12 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
    gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
-bool RGCDScanner::run()
+task<bool> RGCDScanner::run()
 {
    pkgCdrom scanner;
 
-   return scanner.Add(this);
+   bool result = scanner.Add(this);
+   co_return result;
 }
 
 RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
@@ -146,21 +146,22 @@ void RGDiscName::onOkClicked(GtkWidget *self, void *data)
 {
    RGDiscName *me = (RGDiscName *)data;
    me->_userConfirmed = true;
-   gtk_main_quit();
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
 
 void RGDiscName::onCancelClicked(GtkWidget *self, void *data)
 {
-   gtk_main_quit();
+   RGDiscName *me = (RGDiscName *)data;
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
 
-bool RGDiscName::run(string &discName)
+task<bool> RGDiscName::run(string &discName)
 {
    _userConfirmed = false;
    show();
-   gtk_main();
+   co_await co_run_window(GTK_WINDOW(_win));
    discName = gtk_entry_get_text(GTK_ENTRY(_textEntry));
-   return _userConfirmed;
+   co_return _userConfirmed;
 }
 
 #endif

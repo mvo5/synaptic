@@ -25,6 +25,7 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
+#include "coroutines.h"
 
 #include "gtk/gtkcssprovider.h"
 #include <glib.h>
@@ -111,11 +112,15 @@ class RGPreferencesWindow : public RGGtkBuilderWindow
    static void cbToggleColumn(GtkWidget *self, char *path, void *data);
 
    // callbacks
-   static void changeFontAction(GtkWidget *self, void *data);
+   static void changeDefaultFontAction(GtkWidget *self, void *data);
+   static void changeTerminalFontAction(GtkWidget *self, void *data);
+   [[nodiscard]] task<void> changeFont(const char *propName,
+                                       const char *defaultValue);
    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
    static void checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data);
 
-   static void saveAction(GtkWidget *self, void *data);
+   static void cbSaveAction(GtkWidget *self, void *data);
+   [[nodiscard]] task<void> saveAction();
    void saveGeneral();
    void saveColumnsAndFonts();
    void saveColors();
@@ -131,10 +136,12 @@ class RGPreferencesWindow : public RGGtkBuilderWindow
    void readDistribution();
 
    static void closeAction(GtkWidget *self, void *data);
-   static void doneAction(GtkWidget *self, void *data);
+   static void cbDoneAction(GtkWidget *self, void *data);
+   [[nodiscard]] task<void> doneAction();
    static void clearCacheAction(GtkWidget *self, void *data);
 
-   static void colorClicked(GtkWidget *self, void *data);
+   static void cbColorClicked(GtkWidget *self, void *data);
+   [[nodiscard]] task<void> colorClicked(int status);
    static void buttonAuthenticationClicked(GtkWidget *self, void *data);
 
    static void useProxyToggled(GtkWidget *self, void *data);

@@ -44,11 +44,6 @@
 #include <cstring>
 #include <fcntl.h>
 #include <fstream>
-#include <gio/gio.h>
-#include <glib-object.h>
-#include <glib.h>
-#include <glib/gtypes.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <iostream>
 #include <libintl.h>
@@ -167,13 +162,6 @@ static GOptionEntry option_entries[] = {
     nullptr,
     nullptr},
    {"set-selections-file",
-    '\0',
-    G_OPTION_FLAG_HIDDEN,
-    G_OPTION_ARG_STRING,
-    nullptr,
-    nullptr,
-    nullptr},
-   {"parent-window-id",
     '\0',
     G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_STRING,
@@ -456,8 +444,6 @@ static gint applicationHandleLocalOptions(GApplication *app,
    if (g_variant_dict_lookup(options, "option", "^a&s", &args)) {
       for (int i = 0; args[i] != nullptr; ++i) {
          arg = args[i];
-         printf("OPTION %s\n", arg);
-         fflush(stdout);
          const char *p = strchr(arg, '=');
          if (p)
             _config->Set(string(arg, p - arg), p + 1);
@@ -488,8 +474,6 @@ static gint applicationHandleLocalOptions(GApplication *app,
       _config->Set("Volatile::Set-Selections", flag ? "true" : "false");
    if (g_variant_dict_lookup(options, "set-selections-file", "&s", &arg))
       _config->Set("Volatile::Set-Selections-File", arg);
-   if (g_variant_dict_lookup(options, "parent-window-id", "&s", &arg))
-      _config->Set("Volatile::ParentWindowId", arg);
    if (g_variant_dict_lookup(options, "progress-str", "&s", &arg))
       _config->Set("Volatile::InstallProgressStr", arg);
    if (g_variant_dict_lookup(options, "finish-str", "&s", &arg))
@@ -679,5 +663,3 @@ static void applicationActivate(GApplication *app, gpointer user_data)
          mainWindow->getGtkBuilder(), "entry_fast_search")));
    }
 }
-
-// vim:sts=4:sw=4

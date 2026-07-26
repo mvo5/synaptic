@@ -75,8 +75,6 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
                                                        int numPackagesTotal)
 {
    pkgPackageManager::OrderResult res;
-   int ret;
-   pid_t _child_id;
 
    // cout << "RInstallProgress::start()" << endl;
 
@@ -136,13 +134,18 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    }
 #endif
 
-   startUpdate();
-   while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
+   return pkgPackageManager::OrderResult::Incomplete;
+}
 
-   res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+pkgPackageManager::OrderResult RInstallProgress::poll()
+{
+   int ret;
+   if (waitpid(_child_id, &ret, WNOHANG) == 0) {
+      return pkgPackageManager::OrderResult::Incomplete;
+   }
 
-   finishUpdate();
+   pkgPackageManager::OrderResult res =
+      (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
 
 #ifdef HAVE_RPM
    close(_childin);
@@ -150,5 +153,3 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    return res;
 }
-
-// vim:sts=4:sw=4

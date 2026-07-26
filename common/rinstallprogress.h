@@ -32,6 +32,9 @@
 
 class RInstallProgress
 {
+ private:
+   pid_t _child_id;
+
  protected:
    int _stdout;
    int _stderr;
@@ -49,20 +52,23 @@ class RInstallProgress
    static std::string errorMsg;
    static std::string incompleteMsg;
 
+   // get a str feed to the user with the result of the install run
+   virtual const char *getResultStr(pkgPackageManager::OrderResult);
+
+ public:
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+                                                int numPackages = 0,
+                                                int numPackagesTotal = 0);
+   virtual pkgPackageManager::OrderResult poll();
+   virtual void finish()
+   {}
+
    virtual void startUpdate()
    {}
    virtual void updateInterface()
    {}
    virtual void finishUpdate()
    {}
-
- public:
-   // get a str feed to the user with the result of the install run
-   virtual const char *getResultStr(pkgPackageManager::OrderResult);
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int numPackagesTotal = 0);
-
 
    RInstallProgress()
       : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)

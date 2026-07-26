@@ -42,15 +42,8 @@
 #   include <cstring>
 #   include <ctime>
 #   include <fcntl.h>
-#   include <gdk/gdk.h>
-#   include <gdk/gdkkeysyms-compat.h>
-#   include <glib.h>
-#   include <glib/gtypes.h>
-#   include <gobject/gclosure.h>
 #   include <gtk/gtk.h>
-#   include <gtk/gtkcssprovider.h>
 #   include <iostream>
-#   include <pango/pango-font.h>
 #   include <pty.h>
 #   include <signal.h>
 #   include <stdio.h>
@@ -481,7 +474,7 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
    RGDebInstallProgress *me = (RGDebInstallProgress *)user_data;
 
    // user pressed ctrl-c
-   if (event->keyval == GDK_c && event->state & GDK_CONTROL_MASK) {
+   if (event->keyval == GDK_KEY_c && event->state & GDK_CONTROL_MASK) {
       gchar *summary = _("Ctrl-c pressed");
       char *msg = _("This will abort the operation and may leave the system "
                     "in a broken state. Are you sure you want to do that?");
@@ -501,15 +494,15 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
          case GTK_RESPONSE_NO:
             return true;
       }
-   } else if (event->keyval == GDK_C &&
+   } else if (event->keyval == GDK_KEY_C &&
               event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
       // ctrl+shift+C copy to clipboard to mimic gnome-terminal behavior
       me->terminalAction(me->_term, EDIT_COPY);
       return true;
-   } else if (event->keyval == GDK_a && event->state & GDK_CONTROL_MASK) {
+   } else if (event->keyval == GDK_KEY_a && event->state & GDK_CONTROL_MASK) {
       me->terminalAction(me->_term, EDIT_SELECT_ALL);
       return true;
-   } else if (event->keyval == GDK_A &&
+   } else if (event->keyval == GDK_KEY_A &&
               event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) {
       me->terminalAction(me->_term, EDIT_SELECT_NONE);
       return true;
@@ -675,7 +668,6 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(
    if (res == pkgPackageManager::Failed)
       return res;
 
-   int master;
    _child_id = forkpty(&master, NULL, NULL, NULL);
    if (_child_id < 0) {
       cerr << "vte_terminal_forkpty() failed. " << strerror(errno) << endl;
@@ -744,11 +736,13 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(
    _numPackages = numPackages;
    _numPackagesTotal = numPackagesTotal;
 
-   startUpdate();
-   while (!child_has_exited)
-      updateInterface();
+   return pkgPackageManager::OrderResult::Incomplete;
+}
 
-   finishUpdate();
+pkgPackageManager::OrderResult RGDebInstallProgress::poll()
+{
+   if (!child_has_exited)
+      return pkgPackageManager::OrderResult::Incomplete;
 
    ::close(_childin);
    ::close(master);

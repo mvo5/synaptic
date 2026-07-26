@@ -31,10 +31,7 @@
 
 #   include <apt-pkg/packagemanager.h>
 #   include <gdk/gdk.h>
-#   include <glib-object.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
-#   include <gtk/gtkcssprovider.h>
 #   include <map>
 #   include <string>
 #   include <sys/types.h>
@@ -110,6 +107,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    // last time something changed
    time_t last_term_action;
 
+   int master;
    pid_t _child_id;
    pkgPackageManager::OrderResult res;
    bool child_has_exited;
@@ -119,14 +117,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
    virtual bool close();
-
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int totalPackages = 0);
 
    virtual void prepare(RPackageLister *lister);
 
@@ -150,6 +141,15 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
    virtual ~RGDebInstallProgress();
+
+   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
+                                                int numPackages = 0,
+                                                int totalPackages = 0) override;
+   virtual pkgPackageManager::OrderResult poll() override;
+
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
 };
 
 #endif // WITH_DPKG_STATUSFD

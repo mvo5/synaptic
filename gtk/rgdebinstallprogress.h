@@ -33,6 +33,7 @@
 #   include <gdk/gdk.h>
 #   include <gtk/gtk.h>
 #   include <map>
+#   include <optional>
 #   include <string>
 #   include <sys/types.h>
 #   include <vte/vte.h>
@@ -142,10 +143,11 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
    virtual ~RGDebInstallProgress();
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int totalPackages = 0) override;
-   virtual pkgPackageManager::OrderResult poll() override;
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int totalPackages = 0) override;
+   virtual std::optional<pkgPackageManager::OrderResult> poll() override;
 
    virtual void startUpdate() override;
    virtual void updateInterface() override;

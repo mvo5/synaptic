@@ -31,6 +31,7 @@
 
 #   include <apt-pkg/packagemanager.h>
 #   include <gtk/gtk.h>
+#   include <optional>
 #   include <sys/types.h>
 #   include <vte/vte.h>
 
@@ -59,10 +60,11 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int totalPackages = 0) override;
-   virtual pkgPackageManager::OrderResult poll() override;
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int totalPackages = 0) override;
+   virtual std::optional<pkgPackageManager::OrderResult> poll() override;
    virtual void finish() override;
 
    virtual void startUpdate() override;

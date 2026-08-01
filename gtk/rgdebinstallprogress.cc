@@ -44,6 +44,7 @@
 #   include <fcntl.h>
 #   include <gtk/gtk.h>
 #   include <iostream>
+#   include <optional>
 #   include <pty.h>
 #   include <signal.h>
 #   include <stdio.h>
@@ -657,7 +658,7 @@ void RGDebInstallProgress::updateInterface()
    }
 }
 
-pkgPackageManager::OrderResult RGDebInstallProgress::start(
+std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(
    pkgPackageManager *pm,
    int numPackages,
    int numPackagesTotal)
@@ -736,13 +737,13 @@ pkgPackageManager::OrderResult RGDebInstallProgress::start(
    _numPackages = numPackages;
    _numPackagesTotal = numPackagesTotal;
 
-   return pkgPackageManager::OrderResult::Incomplete;
+   return std::nullopt;
 }
 
-pkgPackageManager::OrderResult RGDebInstallProgress::poll()
+std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::poll()
 {
    if (!child_has_exited)
-      return pkgPackageManager::OrderResult::Incomplete;
+      return std::nullopt;
 
    ::close(_childin);
    ::close(master);

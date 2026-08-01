@@ -43,6 +43,7 @@
 #   include <cstring>
 #   include <gtk/gtk.h>
 #   include <iostream>
+#   include <optional>
 #   include <pty.h>
 #   include <stdlib.h>
 #   include <string>
@@ -180,7 +181,7 @@ bool RGTermInstallProgress::close()
 }
 
 
-pkgPackageManager::OrderResult RGTermInstallProgress::start(
+std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::start(
    pkgPackageManager *pm,
    int numPackages,
    int numPackagesTotal)
@@ -224,15 +225,15 @@ pkgPackageManager::OrderResult RGTermInstallProgress::start(
    //        we can set it?
    vte_terminal_watch_child(VTE_TERMINAL(_term), _child_id);
 
-   return pkgPackageManager::OrderResult::Incomplete;
+   return std::nullopt;
 }
 
-pkgPackageManager::OrderResult RGTermInstallProgress::poll()
+std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::poll()
 {
    // make sure that the child has really exited and we catched the
    // return code
    if (!child_has_exited)
-      return pkgPackageManager::OrderResult::Incomplete;
+      return std::nullopt;
 
    ::close(master);
 

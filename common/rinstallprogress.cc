@@ -30,6 +30,7 @@
 
 #include <apt-pkg/install-progress.h>
 #include <apt-pkg/packagemanager.h>
+#include <optional>
 #include <stdlib.h>
 #include <string>
 #include <sys/types.h>
@@ -70,9 +71,10 @@ const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
    return "Unknown install result.";
 }
 
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
-                                                       int numPackages,
-                                                       int numPackagesTotal)
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
+   pkgPackageManager *pm,
+   int numPackages,
+   int numPackagesTotal)
 {
    pkgPackageManager::OrderResult res;
 
@@ -134,14 +136,14 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    }
 #endif
 
-   return pkgPackageManager::OrderResult::Incomplete;
+   return std::nullopt;
 }
 
-pkgPackageManager::OrderResult RInstallProgress::poll()
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::poll()
 {
-   int ret;
+   int ret = 0;
    if (waitpid(_child_id, &ret, WNOHANG) == 0) {
-      return pkgPackageManager::OrderResult::Incomplete;
+      return std::nullopt;
    }
 
    pkgPackageManager::OrderResult res =

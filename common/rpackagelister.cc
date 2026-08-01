@@ -69,6 +69,7 @@
 #include <dirent.h>
 #include <iostream>
 #include <map>
+#include <optional>
 #include <regex.h>
 #include <set>
 #include <sstream>
@@ -1591,22 +1592,17 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          }
 
          _system->UnLockInner();
-         pkgPackageManager::OrderResult Res;
+         std::optional<pkgPackageManager::OrderResult> Res;
          Res = iprog->start(rPM.get(), numPackages, numPackagesTotal);
-         if (Res == pkgPackageManager::Incomplete) {
+         if (!Res.has_value()) {
             iprog->startUpdate();
-            while (1) {
-               Res = iprog->poll();
-               if (Res == pkgPackageManager::OrderResult::Incomplete) {
-                  iprog->updateInterface();
-               } else {
-                  break;
-               }
+            while (!(Res = iprog->poll()).has_value()) {
+               iprog->updateInterface();
             }
             iprog->finishUpdate();
          }
          _system->LockInner();
-         if (Res == pkgPackageManager::Failed || _error->PendingError()) {
+         if (*Res == pkgPackageManager::Failed || _error->PendingError()) {
             if (Transient == false) {
                return false;
             }
@@ -1617,7 +1613,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             //_error->DumpErrors();
             _error->Discard();
          }
-         if (Res == pkgPackageManager::Completed)
+         if (*Res == pkgPackageManager::Completed)
             break;
 
          numPackages = 0;

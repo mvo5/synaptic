@@ -28,6 +28,7 @@
 
 #include <apt-pkg/packagemanager.h>
 
+#include <optional>
 #include <string>
 
 class RInstallProgress
@@ -56,10 +57,14 @@ class RInstallProgress
    virtual const char *getResultStr(pkgPackageManager::OrderResult);
 
  public:
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int numPackagesTotal = 0);
-   virtual pkgPackageManager::OrderResult poll();
+   // std::nullopt means the child is still running; a plain OrderResult
+   // would be ambiguous here as Incomplete is a real child result
+   // (media swap needed)
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int numPackagesTotal = 0);
+   virtual std::optional<pkgPackageManager::OrderResult> poll();
    virtual void finish()
    {}
 

@@ -142,12 +142,16 @@ std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
 std::optional<pkgPackageManager::OrderResult> RInstallProgress::poll()
 {
    int ret = 0;
-   if (waitpid(_child_id, &ret, WNOHANG) == 0) {
+   pid_t pid = waitpid(_child_id, &ret, WNOHANG);
+   if (pid == 0) {
       return std::nullopt;
    }
 
+   // WEXITSTATUS of a signal-killed child is 0, i.e. Completed
    pkgPackageManager::OrderResult res =
-      (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+      (pid > 0 && WIFEXITED(ret))
+         ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+         : pkgPackageManager::Failed;
 
 #ifdef HAVE_RPM
    close(_childin);

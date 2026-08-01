@@ -107,7 +107,8 @@ void RGTermInstallProgress::child_exited(VteTerminal *vteterminal,
 {
    RGTermInstallProgress *me = (RGTermInstallProgress *)data;
 
-   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+   me->res = WIFEXITED(ret) ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+                            : pkgPackageManager::Failed;
    me->child_has_exited = true;
 }
 

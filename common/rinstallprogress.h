@@ -33,10 +33,9 @@
 
 class RInstallProgress
 {
- private:
+ protected:
    pid_t _child_id;
 
- protected:
    int _stdout;
    int _stderr;
    int _childin;

@@ -109,7 +109,6 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    time_t last_term_action;
 
    int master;
-   pid_t _child_id;
    pkgPackageManager::OrderResult res;
    bool child_has_exited;
    static void child_exited(VteTerminal *vteterminal, gint ret, gpointer data);

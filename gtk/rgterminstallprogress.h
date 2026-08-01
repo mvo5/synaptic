@@ -54,8 +54,6 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    static void stopShell(GtkWidget *self, void *data);
    virtual bool close();
 
-   pid_t _child_id;
-
  public:
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};

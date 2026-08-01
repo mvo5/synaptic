@@ -65,7 +65,8 @@ void RGDebInstallProgress::child_exited(VteTerminal *vteterminal,
 {
    RGDebInstallProgress *me = (RGDebInstallProgress *)data;
 
-   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+   me->res = WIFEXITED(ret) ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+                            : pkgPackageManager::Failed;
    me->child_has_exited = true;
 }
 

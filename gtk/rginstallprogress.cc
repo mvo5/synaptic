@@ -36,13 +36,8 @@
 #include <apt-pkg/configuration.h>
 #include <cstdio>
 #include <cstdlib>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <map>
-#include <pango/pango-font.h>
 #include <string.h>
 #include <string>
 #include <unistd.h>

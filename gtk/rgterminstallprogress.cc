@@ -41,12 +41,9 @@
 #   include <cerrno>
 #   include <csignal>
 #   include <cstring>
-#   include <glib-object.h>
-#   include <glib.h>
-#   include <gobject/gclosure.h>
 #   include <gtk/gtk.h>
 #   include <iostream>
-#   include <pango/pango-font.h>
+#   include <optional>
 #   include <pty.h>
 #   include <stdlib.h>
 #   include <string>
@@ -110,7 +107,8 @@ void RGTermInstallProgress::child_exited(VteTerminal *vteterminal,
 {
    RGTermInstallProgress *me = (RGTermInstallProgress *)data;
 
-   me->res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+   me->res = WIFEXITED(ret) ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+                            : pkgPackageManager::Failed;
    me->child_has_exited = true;
 }
 
@@ -184,7 +182,7 @@ bool RGTermInstallProgress::close()
 }
 
 
-pkgPackageManager::OrderResult RGTermInstallProgress::start(
+std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::start(
    pkgPackageManager *pm,
    int numPackages,
    int numPackagesTotal)
@@ -195,7 +193,6 @@ pkgPackageManager::OrderResult RGTermInstallProgress::start(
    if (res == pkgPackageManager::Failed)
       return res;
 
-   int master;
    _child_id = forkpty(&master, NULL, NULL, NULL);
    if (_child_id < 0) {
       cerr << "Internal Error: impossible to fork children. Synaptics is going "
@@ -229,13 +226,15 @@ pkgPackageManager::OrderResult RGTermInstallProgress::start(
    //        we can set it?
    vte_terminal_watch_child(VTE_TERMINAL(_term), _child_id);
 
-   startUpdate();
+   return std::nullopt;
+}
+
+std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::poll()
+{
    // make sure that the child has really exited and we catched the
    // return code
-   while (!child_has_exited)
-      updateInterface();
-
-   finishUpdate();
+   if (!child_has_exited)
+      return std::nullopt;
 
    ::close(master);
 
@@ -253,7 +252,12 @@ void RGTermInstallProgress::updateInterface()
    }
 }
 
+void RGTermInstallProgress::finish()
+{
+   while (gtk_widget_get_visible(GTK_WIDGET(window()))) {
+      RGFlushInterface();
+      usleep(100000);
+   }
+}
 
 #endif
-
-// vim:sts=3:sw=3

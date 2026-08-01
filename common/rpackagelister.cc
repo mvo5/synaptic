@@ -69,6 +69,7 @@
 #include <dirent.h>
 #include <iostream>
 #include <map>
+#include <optional>
 #include <regex.h>
 #include <set>
 #include <sstream>
@@ -1492,23 +1493,25 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          _("Ignoring invalid record(s) in sources.list file!"));
    }
 
-   pkgPackageManager *rPM;
-   rPM = _system->CreatePM(_cache->deps());
+   std::unique_ptr<pkgPackageManager> rPM{_system->CreatePM(_cache->deps())};
 
    if (!rPM->GetArchives(&fetcher, _cache->list(), _records) ||
-       _error->PendingError())
-      goto gave_wood;
+       _error->PendingError()) {
+      return false;
+   }
 
    // ripped from apt-get
    while (1) {
       bool Transient = false;
 
 #ifdef HAVE_RPM
-      if (fetcher.Run() == pkgAcquire::Failed)
-         goto gave_wood;
+      if (fetcher.Run() == pkgAcquire::Failed) {
+         return false;
+      }
 #else
-      if (fetcher.Run(50000) == pkgAcquire::Failed)
-         goto gave_wood;
+      if (fetcher.Run(50000) == pkgAcquire::Failed) {
+         return false;
+      }
 #endif
 
       string serverError;
@@ -1560,11 +1563,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       if (Failed) {
          string message;
 
-         if (Transient)
-            goto gave_wood;
-
-         if (numPackages == 0)
-            goto gave_wood;
+         if (Transient || numPackages == 0) {
+            return false;
+         }
 
          message = _("Some of the packages could not be retrieved from the "
                      "server(s).\n");
@@ -1572,13 +1573,14 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             message += "(" + serverError + ")\n";
          message += _("Do you want to continue, ignoring these packages?");
 
-         if (!_userDialog->confirm(message.c_str()))
-            goto gave_wood;
+         if (!_userDialog->confirm(message.c_str())) {
+            return false;
+         }
       }
       // Try to deal with missing package files
       if (Failed == true && rPM->FixMissing() == false) {
          _error->Error(_("Unable to correct missing packages"));
-         goto gave_wood;
+         return false;
       }
       // need this so that we first fetch everything and then install (for CDs)
       if (Transient == false ||
@@ -1590,12 +1592,20 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
          }
 
          _system->UnLockInner();
-         pkgPackageManager::OrderResult Res =
-            iprog->start(rPM, numPackages, numPackagesTotal);
+         std::optional<pkgPackageManager::OrderResult> Res;
+         Res = iprog->start(rPM.get(), numPackages, numPackagesTotal);
+         if (!Res.has_value()) {
+            iprog->startUpdate();
+            while (!(Res = iprog->poll()).has_value()) {
+               iprog->updateInterface();
+            }
+            iprog->finishUpdate();
+         }
          _system->LockInner();
-         if (Res == pkgPackageManager::Failed || _error->PendingError()) {
-            if (Transient == false)
-               goto gave_wood;
+         if (*Res == pkgPackageManager::Failed || _error->PendingError()) {
+            if (Transient == false) {
+               return false;
+            }
             Ret = false;
             // TODO: We must not discard errors here. The right
             //       solution is to use an "error stack", as
@@ -1603,7 +1613,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
             //_error->DumpErrors();
             _error->Discard();
          }
-         if (Res == pkgPackageManager::Completed)
+         if (*Res == pkgPackageManager::Completed)
             break;
 
          numPackages = 0;
@@ -1611,8 +1621,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
       // Reload the fetcher object and loop again for media swapping
       fetcher.Shutdown();
 
-      if (!rPM->GetArchives(&fetcher, _cache->list(), _records))
-         goto gave_wood;
+      if (!rPM->GetArchives(&fetcher, _cache->list(), _records)) {
+         return false;
+      }
    }
 
    // cout << _("Finished.")<<endl;
@@ -1624,12 +1635,7 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (_config->FindB("Synaptic::Log::Changes", true))
       writeCommitLog();
 
-   delete rPM;
    return Ret;
-
-gave_wood:
-   delete rPM;
-   return false;
 }
 
 void RPackageLister::writeCommitLog()

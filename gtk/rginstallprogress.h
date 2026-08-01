@@ -28,7 +28,6 @@
 #include "rinstallprogress.h"
 
 #include <gtk/gtk.h>
-#include <gtk/gtkcssprovider.h>
 #include <map>
 #include <string>
 
@@ -86,13 +85,13 @@ class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProviderBold;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
-
    virtual void prepare(RPackageLister *lister);
 
  public:
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
    ~RGInstallProgress();
+
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
 };

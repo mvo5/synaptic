@@ -51,6 +51,8 @@
 #include "rgsummarywindow.h"
 #include "rgtaskswin.h"
 #include "rgterminstallprogress.h"
+#include "rginstallprogress.h"
+#include "rgdummyinstallprogress.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
 #include "rgwindow.h"
@@ -2702,9 +2704,8 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    bool UseTerminal = true;
 #      endif // DPKG
 #   endif    // HAVE_RPM
-   RGTermInstallProgress *term = NULL;
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
-      iprogress = term = new RGTermInstallProgress(me);
+      iprogress = new RGTermInstallProgress(me);
    else
 #endif // HAVE_TERMINAL
 
@@ -2723,16 +2724,7 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    // bool result = me->_lister->commitChanges(fprogress, iprogress);
    me->_lister->commitChanges(fprogress, iprogress);
 
-   // FIXME: move this into the terminal class
-#ifdef HAVE_TERMINAL
-   // wait until the term dialog is closed
-   if (term != NULL) {
-      while (gtk_widget_get_visible(GTK_WIDGET(term->window()))) {
-         RGFlushInterface();
-         usleep(100000);
-      }
-   }
-#endif
+   iprogress->finish();
    delete fprogress;
    me->_fetchProgress = NULL;
    delete iprogress;

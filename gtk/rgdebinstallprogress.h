@@ -31,11 +31,9 @@
 
 #   include <apt-pkg/packagemanager.h>
 #   include <gdk/gdk.h>
-#   include <glib-object.h>
-#   include <glib.h>
 #   include <gtk/gtk.h>
-#   include <gtk/gtkcssprovider.h>
 #   include <map>
+#   include <optional>
 #   include <string>
 #   include <sys/types.h>
 #   include <vte/vte.h>
@@ -110,7 +108,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    // last time something changed
    time_t last_term_action;
 
-   pid_t _child_id;
+   int master;
    pkgPackageManager::OrderResult res;
    bool child_has_exited;
    static void child_exited(VteTerminal *vteterminal, gint ret, gpointer data);
@@ -119,14 +117,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
    virtual bool close();
-
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int totalPackages = 0);
 
    virtual void prepare(RPackageLister *lister);
 
@@ -150,6 +141,16 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
    virtual ~RGDebInstallProgress();
+
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int totalPackages = 0) override;
+   virtual std::optional<pkgPackageManager::OrderResult> poll() override;
+
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
 };
 
 #endif // WITH_DPKG_STATUSFD

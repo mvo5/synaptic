@@ -30,6 +30,7 @@
 
 #include <apt-pkg/install-progress.h>
 #include <apt-pkg/packagemanager.h>
+#include <optional>
 #include <stdlib.h>
 #include <string>
 #include <sys/types.h>
@@ -70,13 +71,12 @@ const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
    return "Unknown install result.";
 }
 
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
-                                                       int numPackages,
-                                                       int numPackagesTotal)
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
+   pkgPackageManager *pm,
+   int numPackages,
+   int numPackagesTotal)
 {
    pkgPackageManager::OrderResult res;
-   int ret;
-   pid_t _child_id;
 
    // cout << "RInstallProgress::start()" << endl;
 
@@ -136,13 +136,22 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    }
 #endif
 
-   startUpdate();
-   while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
+   return std::nullopt;
+}
 
-   res = (pkgPackageManager::OrderResult)WEXITSTATUS(ret);
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::poll()
+{
+   int ret = 0;
+   pid_t pid = waitpid(_child_id, &ret, WNOHANG);
+   if (pid == 0) {
+      return std::nullopt;
+   }
 
-   finishUpdate();
+   // WEXITSTATUS of a signal-killed child is 0, i.e. Completed
+   pkgPackageManager::OrderResult res =
+      (pid > 0 && WIFEXITED(ret))
+         ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+         : pkgPackageManager::Failed;
 
 #ifdef HAVE_RPM
    close(_childin);
@@ -150,5 +159,3 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    return res;
 }
-
-// vim:sts=4:sw=4

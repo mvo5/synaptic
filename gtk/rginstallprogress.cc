@@ -86,10 +86,9 @@ void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
    gtk_main_quit();
 }
 
-bool RGInstallProgressMsgs::close()
+void RGInstallProgressMsgs::close()
 {
    gtk_main_quit();
-   return true;
 }
 
 void RGInstallProgressMsgs::addText(const char *text, bool bold)
@@ -457,5 +456,3 @@ bool GeometryParser::Parse(string Geo)
 
    return ret;
 }
-
-// vim:ts=3:sw=3:et

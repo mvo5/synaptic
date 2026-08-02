@@ -318,12 +318,10 @@ void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
    me->_updateFinished = true;
 }
 
-bool RGDebInstallProgress::close()
+void RGDebInstallProgress::close()
 {
    if (child_has_exited)
       cbClose(NULL, this);
-
-   return TRUE;
 }
 
 RGDebInstallProgress::~RGDebInstallProgress()

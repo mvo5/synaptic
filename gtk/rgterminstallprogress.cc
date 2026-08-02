@@ -175,10 +175,9 @@ void RGTermInstallProgress::stopShell(GtkWidget *self, void *data)
    me->hide();
 }
 
-bool RGTermInstallProgress::close()
+void RGTermInstallProgress::close()
 {
    stopShell(NULL, this);
-   return true;
 }
 
 

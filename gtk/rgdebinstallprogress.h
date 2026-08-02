@@ -30,7 +30,6 @@
 #   include "rinstallprogress.h"
 
 #   include <apt-pkg/packagemanager.h>
-#   include <gdk/gdk.h>
 #   include <gtk/gtk.h>
 #   include <map>
 #   include <optional>
@@ -117,7 +116,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
-   virtual bool close();
+   virtual void close() override;
 
    virtual void prepare(RPackageLister *lister);
 

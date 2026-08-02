@@ -39,8 +39,6 @@
 #include <cassert>
 #include <cmath>
 #include <cstdio>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <unistd.h>
@@ -64,11 +62,9 @@ static const int COLUMN_PERCENT_WIDTH = 100;
 static const int COLUMN_PERCENT_HEIGHT = 18;
 
 
-bool RGFetchProgress::close()
+void RGFetchProgress::close()
 {
    stopDownload(NULL, this);
-
-   return TRUE;
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)

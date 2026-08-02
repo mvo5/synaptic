@@ -81,10 +81,12 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    static void DoAdd(GtkWidget *, gpointer);
    static void DoUpDown(GtkWidget *, gpointer);
    static void DoRemove(GtkWidget *, gpointer);
-   static void DoOK(GtkWidget *, gpointer);
+   static void cbDoOK(GtkWidget *, gpointer);
+   void doOK();
    static void DoCancel(GtkWidget *, gpointer);
    static void VendorsWindow(GtkWidget *, gpointer);
-   static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
+   static void cbSelectionChanged(GtkTreeSelection *selection, gpointer data);
+   void selectionChanged(GtkTreeSelection *selection);
 
    // treeview item toggled
    static void item_toggled(GtkCellRendererToggle *cell,

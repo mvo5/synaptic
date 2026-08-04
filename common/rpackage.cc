@@ -960,7 +960,9 @@ void RPackage::setRemove(bool purge)
       _lister->notifyChange(this);
 }
 
-string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
+task<string> RPackage::getScreenshotFile(pkgAcquire *fetcher,
+                                         RPkgAcquireStatusAsync *status,
+                                         bool thumb)
 {
    string descr("Screenshot for ");
    descr += name();
@@ -985,12 +987,13 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
    new pkgAcqFile(
       fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
-   fetcher->Run();
+   co_await acquireRunAsync(fetcher, status);
 
-   return filename;
+   co_return filename;
 }
 
-string RPackage::getChangelogFile(pkgAcquire *fetcher)
+task<string> RPackage::getChangelogFile(pkgAcquire *fetcher,
+                                        RPkgAcquireStatusAsync *status)
 {
    string descr("Changelog for ");
    descr += name();
@@ -1009,7 +1012,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
 
 
    ofstream out(filename.c_str());
-   if (fetcher->Run() == pkgAcquire::Failed) {
+   if (co_await acquireRunAsync(fetcher, status) == pkgAcquire::Failed) {
       out << "Failed to download the list of changes. " << endl;
       out << "Please check your Internet connection." << endl;
       // FIXME: Need to dequeue the item
@@ -1029,7 +1032,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    };
    out.close();
 
-   return filename;
+   co_return filename;
 }
 
 string RPackage::getCandidateOriginStr()

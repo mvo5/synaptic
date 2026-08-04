@@ -1,4 +1,5 @@
 common_sources = files(
+  'racquireasync.cc',
   'rconfiguration.cc',
   'rinstallprogress.cc',
   'rpackage.cc',

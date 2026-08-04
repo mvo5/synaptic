@@ -21,6 +21,7 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
+#include "racquireasync.h"
 #include "rgchangelogdialog.h"
 #include "rgfetchprogress.h"
 #include "rguserdialog.h"
@@ -31,7 +32,6 @@
 #include <cassert>
 #include <cstddef>
 #include <fstream>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <unistd.h>
@@ -43,13 +43,13 @@ using namespace std;
 task<void> ShowChangelogDialog(RGWindow *me, RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(me);
-   ;
+
    status->setDescription(_("Downloading Changelog"),
                           _("The changelog contains information about the"
                             " changes and closed bugs in each version of"
                             " the package."));
-   pkgAcquire fetcher(status);
-   string filename = pkg->getChangelogFile(&fetcher);
+   pkgAcquire fetcher;
+   string filename = co_await pkg->getChangelogFile(&fetcher, status);
 
    RGGtkBuilderUserDialog dia(me, "changelog");
 

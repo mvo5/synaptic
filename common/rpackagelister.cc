@@ -31,6 +31,7 @@
 
 #include "i18n.h"
 #include "raptoptions.h"
+#include "racquireasync.h"
 #include "rcacheactor.h"
 #include "rconfiguration.h"
 #include "rinstallprogress.h"
@@ -69,13 +70,16 @@
 #include <dirent.h>
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <optional>
+#include <queue>
 #include <regex.h>
 #include <set>
 #include <sstream>
 #include <string>
 #include <strings.h>
 #include <sys/stat.h>
+#include <thread>
 #include <unistd.h>
 #include <utility>
 #include <vector>
@@ -1468,7 +1472,7 @@ bool RPackageLister::getDownloadUris(vector<string> &uris)
    return true;
 }
 
-task<bool> RPackageLister::commitChanges(pkgAcquireStatus *status,
+task<bool> RPackageLister::commitChanges(RPkgAcquireStatusAsync *status,
                                          RInstallProgress *iprog)
 {
    FileFd lock;
@@ -1484,7 +1488,7 @@ task<bool> RPackageLister::commitChanges(pkgAcquireStatus *status,
    if (_config->FindB("Synaptic::Log::Changes", true))
       makeCommitLog();
 
-   pkgAcquire fetcher(status);
+   pkgAcquire fetcher;
 
    assert(_cache->list() != NULL);
    // Read the source list
@@ -1504,15 +1508,11 @@ task<bool> RPackageLister::commitChanges(pkgAcquireStatus *status,
    while (1) {
       bool Transient = false;
 
-#ifdef HAVE_RPM
-      if (fetcher.Run() == pkgAcquire::Failed) {
+      auto result = co_await acquireRunAsync(&fetcher, status, 50000);
+      if (result == pkgAcquire::Failed)
          co_return false;
-      }
-#else
-      if (fetcher.Run(50000) == pkgAcquire::Failed) {
-         co_return false;
-      }
-#endif
+      else
+         break;
 
       string serverError;
 

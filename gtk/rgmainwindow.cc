@@ -2965,7 +2965,12 @@ task<void> RGMainWindow::updateClicked()
    // update cache and forget about the previous new packages
    // (only if no error occurred)
    string error;
-   if (!_lister->updateCache(progress, error)) {
+   bool updateCacheResult = co_await runWithStatusAsync<bool>(
+      [this, &error](pkgAcquireStatus &progress) -> bool {
+         return _lister->updateCache(&progress, error);
+      },
+      progress);
+   if (!updateCacheResult) {
       RGGtkBuilderUserDialog dia(this, "update_failed");
       GtkWidget *tv =
          GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));

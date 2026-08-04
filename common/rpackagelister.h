@@ -30,6 +30,7 @@
 #include "rpackagestatus.h"
 #include "coroutines.h"
 
+#include <apt-pkg/acquire.h>
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/progress.h>
 #include <ctime>
@@ -59,6 +60,7 @@ class RPackageViewSearch;
 class RUserDialog;
 class pkgAcquireStatus;
 class pkgRecords;
+class RPkgAcquireStatusAsync;
 
 class RPackageObserver
 {
@@ -334,7 +336,7 @@ class RPackageLister
    bool distUpgrade();
    bool cleanPackageCache(bool forceClean = false);
    bool updateCache(pkgAcquireStatus *status, std::string &error);
-   [[nodiscard]] task<bool> commitChanges(pkgAcquireStatus *status,
+   [[nodiscard]] task<bool> commitChanges(RPkgAcquireStatusAsync *status,
                                           RInstallProgress *iprog);
 
    // some information

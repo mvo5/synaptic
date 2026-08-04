@@ -26,6 +26,7 @@
 #include "rgpkgdetails.h"
 
 #include "i18n.h"
+#include "racquireasync.h"
 #include "rgchangelogdialog.h"
 #include "rgfetchprogress.h"
 #include "rggtkbuilderwindow.h"
@@ -152,15 +153,15 @@ void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
 {
    // cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
-   doShowBigScreenshot(pkg);
+   start_task([pkg] -> task<void> { co_await doShowBigScreenshot(pkg); });
 }
 
-void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
+task<void> RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(NULL);
 
-   pkgAcquire fetcher(status);
-   string filename = pkg->getScreenshotFile(&fetcher, false);
+   pkgAcquire fetcher;
+   string filename = co_await pkg->getScreenshotFile(&fetcher, status, false);
    GtkWidget *img = gtk_image_new_from_file(filename.c_str());
    GtkWidget *win = gtk_dialog_new();
    gtk_window_set_default_size(GTK_WINDOW(win), 500, 400);
@@ -175,29 +176,31 @@ void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info *)data;
-   if (_config->FindB("Synaptic::InlineScreenshots") == false) {
-      doShowBigScreenshot(si->pkg);
-   } else {
+   start_task([si, button]() -> task<void> {
+      if (_config->FindB("Synaptic::InlineScreenshots") == false) {
+         co_await doShowBigScreenshot(si->pkg);
+      } else {
+         // hide button
+         gtk_widget_hide(button);
 
-      // hide button
-      gtk_widget_hide(button);
+         // get screenshot
+         RGFetchProgress *status = new RGFetchProgress(NULL);
 
-      // get screenshot
-      RGFetchProgress *status = new RGFetchProgress(NULL);
-
-      pkgAcquire fetcher(status);
-      string filename = si->pkg->getScreenshotFile(&fetcher);
-      GtkWidget *event = gtk_event_box_new();
-      GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-      gtk_container_add(GTK_CONTAINER(event), img);
-      g_signal_connect(G_OBJECT(event),
-                       "button_press_event",
-                       G_CALLBACK(cbShowBigScreenshot),
-                       (void *)si->pkg);
-      gtk_text_view_add_child_at_anchor(
-         GTK_TEXT_VIEW(si->textview), GTK_WIDGET(event), si->anchor);
-      gtk_widget_show_all(event);
-   }
+         pkgAcquire fetcher;
+         string filename =
+            co_await si->pkg->getScreenshotFile(&fetcher, status);
+         GtkWidget *event = gtk_event_box_new();
+         GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+         gtk_container_add(GTK_CONTAINER(event), img);
+         g_signal_connect(G_OBJECT(event),
+                          "button_press_event",
+                          G_CALLBACK(cbShowBigScreenshot),
+                          (void *)si->pkg);
+         gtk_text_view_add_child_at_anchor(
+            GTK_TEXT_VIEW(si->textview), GTK_WIDGET(event), si->anchor);
+         gtk_widget_show_all(event);
+      }
+   });
 }
 
 void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)

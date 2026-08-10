@@ -1,100 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.18.3 -->
 <interface>
-  <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="dialog_changelog">
     <property name="width_request">600</property>
     <property name="height_request">400</property>
     <property name="visible">False</property>
-    <property name="can_focus">False</property>
-    <property name="border_width">6</property>
     <property name="modal">True</property>
-    <property name="type_hint">normal</property>
-    <child internal-child="vbox">
+    <child internal-child="content_area">
       <object class="GtkBox" id="dialog-vbox1">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
+        <property name="margin-start">12</property>
+        <property name="margin-end">12</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
         <property name="spacing">6</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="closebutton1">
-                <property name="label" translatable="yes">_Close</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="can_default">True</property>
-                <property name="receives_default">False</property>
-                <property name="use_underline">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="label" translatable="yes">Complete changelog of the latest version:</property>
+            <property name="use_markup">True</property>
+            <property name="xalign">0</property>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
-          <object class="GtkBox" id="box2">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
+          <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="has-frame">True</property>
+            <property name="vexpand">True</property>
             <child>
-              <object class="GtkLabel" id="label1">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Complete changelog of the latest version:</property>
-                <property name="use_markup">True</property>
-                <property name="xalign">0</property>
+              <object class="GtkTextView" id="textview_changelog">
+                <property name="pixels_above_lines">3</property>
+                <property name="pixels_below_lines">3</property>
+                <property name="editable">False</property>
+                <property name="left_margin">3</property>
+                <property name="right_margin">3</property>
+                <property name="cursor_visible">False</property>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkScrolledWindow" id="scrolledwindow1">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="shadow_type">in</property>
-                <child>
-                  <object class="GtkTextView" id="textview_changelog">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="pixels_above_lines">3</property>
-                    <property name="pixels_below_lines">3</property>
-                    <property name="editable">False</property>
-                    <property name="left_margin">3</property>
-                    <property name="right_margin">3</property>
-                    <property name="cursor_visible">False</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
+      </object>
+    </child>
+    <child type="action">
+      <object class="GtkButton" id="closebutton1">
+        <property name="label" translatable="yes">_Close</property>
+        <property name="receives_default">False</property>
+        <property name="use_underline">True</property>
       </object>
     </child>
     <action-widgets>

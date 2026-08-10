@@ -32,8 +32,6 @@
 
 #include <cassert>
 #include <cstdio>
-#include <glib-object.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>

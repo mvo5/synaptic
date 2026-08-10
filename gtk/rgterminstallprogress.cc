@@ -81,16 +81,16 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    pango_font_description_free(fontdesc);
 
    GtkWidget *box = GTK_WIDGET(gtk_builder_get_object(_builder, "hbox_vte"));
-   gtk_box_pack_start(GTK_BOX(box), _term, TRUE, TRUE, 0);
-   gtk_box_pack_end(GTK_BOX(box), _scrollbar, FALSE, FALSE, 0);
-   gtk_widget_show(_term);
-   gtk_widget_show(_scrollbar);
+   gtk_widget_set_hexpand(_term, TRUE);
+   gtk_widget_set_vexpand(_term, TRUE);
+   gtk_box_append(GTK_BOX(box), _term);
+   gtk_box_append(GTK_BOX(box), _scrollbar);
 
    _closeOnF = GTK_WIDGET(
       gtk_builder_get_object(_builder, "checkbutton_close_after_pm"));
    assert(_closeOnF);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_closeOnF),
-                                _config->FindB("Synaptic::closeZvt", false));
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_closeOnF),
+                               _config->FindB("Synaptic::closeZvt", false));
 
    _statusL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    _closeB = GTK_WIDGET(gtk_builder_get_object(_builder, "button_close"));
@@ -112,11 +112,10 @@ void RGTermInstallProgress::child_exited(VteTerminal *vteterminal,
    me->child_has_exited = true;
 }
 
-void RGTermInstallProgress::startUpdate()
+task<void> RGTermInstallProgress::startUpdate()
 {
    GtkWidget *win =
       GTK_WIDGET(gtk_builder_get_object(_builder, "window_zvtinstallprogress"));
-   gtk_widget_show_all(win);
 
    child_has_exited = false;
    g_signal_connect(
@@ -126,32 +125,31 @@ void RGTermInstallProgress::startUpdate()
 
    gtk_label_set_markup(GTK_LABEL(_statusL), _("<i>Running...</i>"));
    gtk_widget_set_sensitive(_closeB, false);
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGTermInstallProgress::finishUpdate()
+task<void> RGTermInstallProgress::finishUpdate()
 {
    gtk_widget_set_sensitive(_closeB, true);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
    _updateFinished = true;
 
    _config->Set("Synaptic::closeZvt",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF))
+                gtk_check_button_get_active(GTK_CHECK_BUTTON(_closeOnF))
                    ? "true"
                    : "false");
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
       RGUserDialog userDialog(this);
-      userDialog.showErrors();
+      co_await userDialog.showErrors();
    }
 
-   if (res == 0 &&
-       (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_closeOnF)) ||
-        _config->FindB("Volatile::Non-Interactive", false))) {
+   if (res == 0 && (gtk_check_button_get_active(GTK_CHECK_BUTTON(_closeOnF)) ||
+                    _config->FindB("Volatile::Non-Interactive", false))) {
       hide();
-      return;
+      co_return;
    }
 
    const char *msg = _(getResultStr(res));
@@ -164,15 +162,16 @@ void RGTermInstallProgress::finishUpdate()
 void RGTermInstallProgress::stopShell(GtkWidget *self, void *data)
 {
    RGTermInstallProgress *me = (RGTermInstallProgress *)data;
+   start_task([me]() -> task<void> {
+      if (!me->_updateFinished) {
+         gtk_label_set_markup(GTK_LABEL(me->_statusL),
+                              _("<i>Can't close while running</i>"));
+         co_return;
+      }
 
-   if (!me->_updateFinished) {
-      gtk_label_set_markup(GTK_LABEL(me->_statusL),
-                           _("<i>Can't close while running</i>"));
-      return;
-   }
-
-   RGFlushInterface();
-   me->hide();
+      co_await RGFlushInterface();
+      me->hide();
+   });
 }
 
 void RGTermInstallProgress::close()
@@ -240,22 +239,16 @@ std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::poll()
    return res;
 }
 
-void RGTermInstallProgress::updateInterface()
+task<void> RGTermInstallProgress::updateInterface()
 {
-   if (gtk_events_pending()) {
-      while (gtk_events_pending())
-         gtk_main_iteration();
-   } else {
-      // 0.1 secs
-      usleep(10000);
-   }
+   co_await RGFlushInterface();
 }
 
-void RGTermInstallProgress::finish()
+task<void> RGTermInstallProgress::finish()
 {
    while (gtk_widget_get_visible(GTK_WIDGET(window()))) {
-      RGFlushInterface();
-      usleep(100000);
+      co_await RGFlushInterface();
+      co_await sleep_ms{100};
    }
 }
 

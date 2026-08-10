@@ -55,7 +55,7 @@ void RGCDScanner::update(string text, int current)
    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbar),
                                  ((float)current) / _total);
    show();
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
 RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)

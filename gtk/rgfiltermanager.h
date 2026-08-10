@@ -31,9 +31,6 @@
 #include "rpackagefilter.h"
 
 #include <cstddef>
-#include <gdk/gdk.h>
-#include <glib-object.h>
-#include <glib.h>
 #include <gtk/gtk.h>
 #include <string>
 #include <vector>
@@ -97,9 +94,7 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
    static void includeTagAction(GtkWidget *self, void *data);
    static void excludeTagAction(GtkWidget *self, void *data);
 
-   static gint deleteEventAction(GtkWidget *widget,
-                                 GdkEvent *event,
-                                 gpointer data);
+   static gint deleteEventAction(GtkWidget *widget, gpointer data);
 
    static void selectAction(GtkTreeSelection *selection, gpointer data);
 
@@ -123,7 +118,6 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
    GtkWidget *_comboPatternWhat;
    GtkWidget *_comboPatternDo;
    GtkWidget *_filterEntry; /* GtkEntry */
-   GdkCursor *_busyCursor;
 
    GtkWidget *_filterDetailsBox; // detail box
 
@@ -133,14 +127,7 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
    GtkTreePath *_selectedPath;
    RFilter *_selectedFilter;
    enum { NAME_COLUMN, FILTER_COLUMN, N_COLUMNS };
-
-   // the section list
-   GtkWidget *_sectionList; /* GtkTreeView */
-   GtkListStore *_sectionListStore;
    enum { SECTION_COLUMN, SECTION_N_COLUMNS };
-
-   // status filter buttons
-   GtkWidget *_statusB[NrOfStatusBits];
 
    // the pattern list
    enum {
@@ -149,6 +136,13 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
       PATTERN_TEXT_COLUMN,
       PATTERN_N_COLUMNS
    };
+
+   // the section list
+   GtkWidget *_sectionList; /* GtkTreeView */
+   GtkListStore *_sectionListStore;
+
+   // status filter buttons
+   GtkWidget *_statusB[NrOfStatusBits];
    GtkWidget *_patternList; /* GtkTreeView */
    GtkListStore *_patternListStore;
    bool setPatternRow(int row,

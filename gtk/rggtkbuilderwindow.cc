@@ -45,8 +45,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
                                        string name,
                                        string mainName)
 {
-   _busyCursor =
-      gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
    _builder = gtk_builder_new();
 
    gchar *main_widget = NULL;
@@ -73,7 +71,6 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
       gtk_window_set_transient_for(GTK_WINDOW(_win),
                                    GTK_WINDOW(parent->window()));
 
-   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
    g_free(main_widget);
@@ -210,7 +207,7 @@ bool RGGtkBuilderWindow::setPixmap(const char *widget_name, const char *value)
       cout << "textview == NULL with: " << widget_name << endl;
       return false;
    }
-   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value, GTK_ICON_SIZE_BUTTON);
+   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value);
 
    return true;
 }
@@ -219,9 +216,9 @@ void RGGtkBuilderWindow::setBusyCursor(bool flag)
 {
    if (flag) {
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
+         gtk_widget_set_cursor_from_name(window(), "watch");
    } else {
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
+         gtk_widget_set_cursor(window(), NULL);
    }
 }

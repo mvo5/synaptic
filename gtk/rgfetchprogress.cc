@@ -129,10 +129,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
 
    gtk_widget_realize(_win);
 
-   // reset the urgency hint here (gtk seems to like showing it for
-   // dialogs that come up)
-   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
-
    // emit a signal if the user changed the cursor
    g_signal_connect(
       G_OBJECT(_table), "cursor-changed", G_CALLBACK(cursorChanged), this);
@@ -183,7 +179,7 @@ void RGFetchProgress::setDescription(string mainText, string secondText)
    g_free(str);
 }
 
-bool RGFetchProgress::MediaChange(string Media, string Drive)
+task<bool> RGFetchProgress::MediaChange(string Media, string Drive)
 {
    gchar *msg;
 
@@ -192,11 +188,11 @@ bool RGFetchProgress::MediaChange(string Media, string Drive)
                          Drive.c_str());
 
    RGUserDialog userDialog(this);
-   _cancelled = !userDialog.proceed(msg);
+   _cancelled = !co_await userDialog.proceed(msg);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
    g_free(msg);
-   return true;
+   co_return true;
 
 #if 0 // this code can be used when apt fixed ubuntu #2281 (patch pending)
    bool res = !userDialog.proceed(msg);
@@ -233,64 +229,57 @@ void RGFetchProgress::updateStatus(pkgAcquire::ItemDesc &Itm, int status)
    }
 }
 
-void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
+task<void> RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)
 {
    // cout << "void RGFetchProgress::IMSHit(pkgAcquire::ItemDesc &Itm)" << endl;
    updateStatus(Itm, DLHit);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
 
-void RGFetchProgress::Fetch(pkgAcquire::ItemDesc &Itm)
+task<void> RGFetchProgress::Fetch(pkgAcquire::ItemDesc &Itm)
 {
    updateStatus(Itm, DLQueued);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
 
-void RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
+task<void> RGFetchProgress::Done(pkgAcquire::ItemDesc &Itm)
 {
    updateStatus(Itm, DLDone);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
+task<void> RGFetchProgress::Fail(pkgAcquire::ItemDesc &Itm)
 {
    if (Itm.Owner->Status == pkgAcquire::Item::StatIdle)
-      return;
+      co_return;
 
    updateStatus(Itm, DLFailed);
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
 bool RGFetchProgress::Pulse(pkgAcquire *Owner)
 {
    // cout << "RGFetchProgress::Pulse(pkgAcquire *Owner)" << endl;
 
-   pkgAcquireStatus::Pulse(Owner);
+   _status.Pulse(Owner);
 
    // only show here if there is actually something to download/get
-   if (TotalBytes > 0 && !gtk_widget_get_visible(_win))
+   if (_status.TotalBytes > 0 && !gtk_widget_get_visible(_win))
       show();
 
-   float percent = long(double((CurrentBytes + CurrentItems) * 100.0) /
-                        double(TotalBytes + TotalItems));
+   float percent =
+      long(double((_status.CurrentBytes + _status.CurrentItems) * 100.0) /
+           double(_status.TotalBytes + _status.TotalItems));
 
    // work-around a stupid problem with libapt
-   if (CurrentItems == TotalItems)
+   if (_status.CurrentItems == _status.TotalItems)
       percent = 100.0;
-
-   // only do something if there is some real progress
-   if (fabsf(percent -
-             gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_mainProgressBar)) *
-                100.0) < 0.1) {
-      RGFlushInterface();
-      return !_cancelled;
-   }
 
    gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_mainProgressBar),
                                  percent / 100.0);
@@ -316,20 +305,22 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
    }
 
    unsigned long ETA;
-   if (CurrentCPS > 0)
-      ETA = (unsigned long)((TotalBytes - CurrentBytes) / CurrentCPS);
+   if (_status.CurrentCPS > 0)
+      ETA = (unsigned long)((_status.TotalBytes - _status.CurrentBytes) /
+                            _status.CurrentCPS);
    else
       ETA = 0;
 
    // if the ETA is greater than two weeks, show unknown time
    if (ETA > 14 * 24 * 60 * 60)
       ETA = 0;
-   long i = CurrentItems < TotalItems ? CurrentItems + 1 : CurrentItems;
+   long i = _status.CurrentItems < _status.TotalItems ? _status.CurrentItems + 1
+                                                      : _status.CurrentItems;
    gchar *s;
    GObject *label_eta = gtk_builder_get_object(_builder, "label_eta");
-   if (CurrentCPS != 0 && ETA != 0) {
+   if (_status.CurrentCPS != 0 && ETA != 0) {
       s = g_strdup_printf(_("Download rate: %s/s - %s remaining"),
-                          SizeToStr(CurrentCPS).c_str(),
+                          SizeToStr(_status.CurrentCPS).c_str(),
                           TimeToStr(ETA).c_str());
       gtk_label_set_text(GTK_LABEL(GTK_WIDGET(label_eta)), s);
       g_free(s);
@@ -337,35 +328,33 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
       gtk_label_set_text(GTK_LABEL(GTK_WIDGET(label_eta)),
                          _("Download rate: ..."));
    }
-   s = g_strdup_printf(_("Downloading file %li of %li"), i, TotalItems);
+   s = g_strdup_printf(_("Downloading file %li of %li"), i, _status.TotalItems);
    gtk_progress_bar_set_text(GTK_PROGRESS_BAR(_mainProgressBar), s);
    g_free(s);
-
-   RGFlushInterface();
 
    return !_cancelled;
 }
 
-void RGFetchProgress::Start()
+task<void> RGFetchProgress::Start()
 {
    // cout << "RGFetchProgress::Start()" << endl;
-   pkgAcquireStatus::Start();
+   _status.Start();
    _cancelled = false;
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGFetchProgress::Stop()
+task<void> RGFetchProgress::Stop()
 {
    // cout << "RGFetchProgress::Stop()" << endl;
-   RGFlushInterface();
    hide();
-   pkgAcquireStatus::Stop();
+   _status.Stop();
 
    // FIXME: this needs to be handled in a better way (gtk-2 maybe?)
    sleep(1); // this sucks, but if ommited, the window will not always
    // closed (e.g. when a package is only deleted)
-   RGFlushInterface();
+
+   co_await RGFlushInterface();
 }
 
 void RGFetchProgress::stopDownload(GtkWidget *self, void *data)

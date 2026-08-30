@@ -203,14 +203,14 @@ bool RGGtkBuilderWindow::setTextView(const char *widget_name,
    return true;
 }
 
-bool RGGtkBuilderWindow::setPixmap(const char *widget_name, const char *value)
+bool RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
 {
    GtkWidget *pix = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
    if (pix == NULL) {
       cout << "textview == NULL with: " << widget_name << endl;
       return false;
    }
-   gtk_image_set_from_icon_name(GTK_IMAGE(pix), value, GTK_ICON_SIZE_BUTTON);
+   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
 
    return true;
 }

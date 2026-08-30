@@ -65,8 +65,32 @@ void RGPackageStatus::initColorsAndIcons()
          &StatusColors[i]);
       g_free(config_string);
 
-      StatusIcons[i] = std::string("package-") + PackageStatusShortString[i];
+      gchar *icon_name =
+         g_strdup_printf("package-%s", PackageStatusShortString[i]);
+      StatusPixbuf[i] = loadStatusIcon(icon_name);
+      g_free(icon_name);
    }
+   supportedPix = loadStatusIcon("package-supported");
+}
+
+// Exact-name lookup only: GTK's GENERIC_FALLBACK (always used by
+// icon-name renderers) tries every theme in the chain with the fallback
+// names too, so a theme shipping a generic "package" icon (e.g. Tango)
+// would shadow the "package-*" icons.
+GdkPixbuf *RGPackageStatus::loadStatusIcon(const char *icon_name)
+{
+   const int statusPixbufSize = 16;
+   GError *error = NULL;
+   GdkPixbuf *pix = gtk_icon_theme_load_icon(gtk_icon_theme_get_default(),
+                                             icon_name,
+                                             statusPixbufSize,
+                                             GTK_ICON_LOOKUP_FORCE_SIZE,
+                                             &error);
+   if (pix == NULL) {
+      g_warning("failed to load icon %s: %s", icon_name, error->message);
+      g_error_free(error);
+   }
+   return pix;
 }
 
 // class that finds out what do display to get user
@@ -82,23 +106,23 @@ GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
    return StatusColors[getStatus(pkg)];
 }
 
-const char *RGPackageStatus::getSupportedIconName(RPackage *pkg)
+GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
 {
    if (isSupported(pkg))
-      return "package-supported";
+      return supportedPix;
    else
       return NULL;
 }
 
-const char *RGPackageStatus::getIconName(RPackage *pkg)
+GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
 {
-   return getIconName(getStatus(pkg));
+   return getPixbuf(getStatus(pkg));
 }
 
-const char *RGPackageStatus::getIconName(int i)
+GdkPixbuf *RGPackageStatus::getPixbuf(int i)
 {
    assert(0 <= i && i < N_STATUS_COUNT);
-   return StatusIcons[i].c_str();
+   return StatusPixbuf[i];
 }
 
 void RGPackageStatus::setColor(int i, GdkRGBA *new_color)

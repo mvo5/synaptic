@@ -268,7 +268,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       me->setLabel("label_maintainer", pkg->maintainer());
    }
 
-   me->setPixmap("image_state", RGPackageStatus::pkgStatus.getIconName(pkg));
+   me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
    me->setLabel("label_state",
                 RGPackageStatus::pkgStatus.getLongStatusString(pkg));
    me->setLabel("label_priority", pkg->priority());
@@ -309,13 +309,12 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gtk_text_buffer_get_start_iter(buf, &start);
    gtk_text_buffer_apply_tag_by_name(buf, "bold", &start, &it);
    // set emblems
-   const char *icon_name = RGPackageStatus::pkgStatus.getSupportedIconName(pkg);
-   if (icon_name != NULL) {
+   GdkPixbuf *supported = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
+   if (supported != NULL) {
       // insert space
       gtk_text_buffer_insert(buf, &it, " ", 1);
       // make image
-      emblem = gtk_image_new_from_icon_name(icon_name, GTK_ICON_SIZE_BUTTON);
-      gtk_image_set_pixel_size(GTK_IMAGE(emblem), 16);
+      emblem = gtk_image_new_from_pixbuf(supported);
       // set eventbox and tooltip
       GtkWidget *event = gtk_event_box_new();
       gtk_container_add(GTK_CONTAINER(event), emblem);
